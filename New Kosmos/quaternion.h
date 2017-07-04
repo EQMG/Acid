@@ -1,8 +1,10 @@
 #pragma once
 
-class quaternion
-{
-public:
-	quaternion();
-	~quaternion();
-};
+namespace flounder {
+	class quaternion
+	{
+	public:
+		quaternion();
+		~quaternion();
+	};
+}
