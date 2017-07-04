@@ -1,0 +1,4 @@
+﻿  main.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\maths.h(158): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Flounder Engine.vcxproj -> C:\Users\mattp\Documents\Flounder C++\Debug\Flounder Engine.exe
+  Flounder Engine.vcxproj -> C:\Users\mattp\Documents\Flounder C++\Debug\Flounder Engine.pdb (Partial PDB)
