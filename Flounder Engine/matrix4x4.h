@@ -291,12 +291,12 @@ namespace flounder {
 		/// <summary>
 		/// Generates a random unit vector from within a cone.
 		/// </summary>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <param name="coneDirection"> The cones direction. </param>
 		/// <param name="angle"> The cones major angle.
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// </param>
 		/// <returns> The destination vector. </returns>
-		static vector3 *generateRandomUnitVectorWithinCone(vector3 *destination, vector3 *coneDirection, float angle);
+		static vector3 *generateRandomUnitVectorWithinCone(vector3 *coneDirection, float angle, vector3 *destination);
 
 		/// <summary>
 		/// Sets this matrix to be the identity matrix.

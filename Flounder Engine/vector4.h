@@ -141,12 +141,6 @@ namespace flounder {
 		/// <returns> The destination vector. </returns>
 		static vector4 *normalize(vector4 *source, vector4 *destination);
 
-
-
-
-
-
-
 		/// <summary>
 		/// Translates this vector.
 		/// </summary>
@@ -172,10 +166,10 @@ namespace flounder {
 		/// <summary>
 		/// Scales this vector.
 		/// </summary>
-		/// <param name="scale"> The scale factor.
+		/// <param name="scalar"> The scale factor.
 		/// </param>
 		/// <returns> This. </returns>
-		vector4 *scale(float scale);
+		vector4 *scale(float scalar);
 
 		/// <summary>
 		/// Gets if all the components to the vector are zero.

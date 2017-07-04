@@ -18,10 +18,10 @@ namespace flounder {
 
 	vector4::~vector4()
 	{
-		delete &x;
-		delete &y;
-		delete &z;
-		delete &w;
+	//	delete &x;
+	//	delete &y;
+	//	delete &z;
+	//	delete &w;
 	}
 
 	vector4 *vector4::set(float x, float y, float z, float w)
@@ -136,7 +136,15 @@ namespace flounder {
 		}
 
 		float length = source->length();
-		return destination->set(source->x / length, source->y / length, source->z / length, source->w / length);
+
+		if (length != 0.0f)
+		{
+			return destination->set(source->x / length, source->y / length, source->z / length, source->w / length);
+		}
+		else
+		{
+			throw std::invalid_argument("Zero length vector");
+		}
 	}
 
 	vector4 *vector4::translate(float x, float y, float z, float w)
@@ -159,26 +167,12 @@ namespace flounder {
 
 	vector4 *vector4::normalize()
 	{
-		float length = this->length();
-
-		if (length != 0.0f)
-		{
-			float l = 1.0f / length;
-			return scale(l);
-		}
-		else
-		{
-			throw std::invalid_argument("Zero length vector");
-		}
+		return normalize(this, this);
 	}
 
-	vector4 *vector4::scale(float scale)
+	vector4 *vector4::scale(float scalar)
 	{
-		x *= scale;
-		y *= scale;
-		z *= scale;
-		w *= scale;
-		return this;
+		return scale(this, scalar, this);
 	}
 
 	bool vector4::isZero()

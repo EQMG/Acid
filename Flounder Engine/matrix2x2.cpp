@@ -18,10 +18,10 @@ namespace flounder {
 
 	matrix2x2::~matrix2x2()
 	{
-		delete &m00;
-		delete &m01;
-		delete &m10;
-		delete &m11;
+	//	delete &m00;
+	//	delete &m01;
+	//	delete &m10;
+	//	delete &m11;
 	}
 
 	matrix2x2 *matrix2x2::set(matrix2x2 *source)
@@ -158,7 +158,7 @@ namespace flounder {
 
 	matrix2x2 *matrix2x2::negate(matrix2x2 *source, matrix2x2 *destination)
 	{
-		if (destination == 0)
+		if (destination == NULL)
 		{
 			destination = new matrix2x2();
 		}
@@ -172,7 +172,7 @@ namespace flounder {
 
 	matrix2x2 *matrix2x2::transpose(matrix2x2 *source, matrix2x2 *destination)
 	{
-		if (destination == 0)
+		if (destination == NULL)
 		{
 			destination = new matrix2x2();
 		}

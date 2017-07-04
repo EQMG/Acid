@@ -167,7 +167,15 @@ namespace flounder {
 		}
 
 		float length = source->length();
-		return destination->set(source->x / length, source->y / length, source->z / length);
+
+		if (length != 0.0f)
+		{
+			return destination->set(source->x / length, source->y / length, source->z / length);
+		}
+		else
+		{
+			throw std::invalid_argument("Zero length vector");
+		}
 	}
 
 	vector3 *vector3::maxVector(vector3 *a, vector3 *b)
@@ -220,8 +228,10 @@ namespace flounder {
 			destination = new vector3();
 		}
 
-		float theta = rand() * 2.0f * PI;
-		float z = rand() * 2.0f - 1.0f;
+		float theta = __random();
+		theta *= 2.0f * PI;
+		float z = __random();
+		z *= 2.0f - 1.0f;
 		float rootOneMinusZSquared = sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * cos(theta);
 		float y = rootOneMinusZSquared * sin(theta);
@@ -239,12 +249,13 @@ namespace flounder {
 		{
 			vector3 *randomVector = generateRandomUnitVector(NULL);
 			vector3::cross(randomVector, normal, destination);
+			delete randomVector;
 		} while (destination->length() == 0.0f);
 
 		destination->normalize();
 		destination->scale(radius);
-		float a = rand();
-		float b = rand();
+		float a = __random();
+		float b = __random();
 
 		if (a > b)
 		{
@@ -255,7 +266,7 @@ namespace flounder {
 
 		float randX = b * cos(2.0f * PI * (a / b));
 		float randY = b * sin(2.0f * PI * (a / b));
-		float distance = (new vector3(randX, randY, 0.0f))->length();
+		float distance = vector3(randX, randY, 0.0f).length();
 		destination->scale(distance);
 		return destination;
 	}
@@ -279,33 +290,17 @@ namespace flounder {
 
 	vector3 *vector3::negate()
 	{
-		this->x = -x;
-		this->y = -y;
-		this->z = -z;
-		return this;
+		return negate(this, this);
 	}
 
 	vector3 *vector3::normalize()
 	{
-		float length = this->length();
-
-		if (length != 0.0f)
-		{
-			float l = 1.0f / length;
-			return scale(l);
-		}
-		else
-		{
-			throw std::invalid_argument("Zero length vector");
-		}
+		return normalize(this, this);
 	}
 
-	vector3 *vector3::scale(float scale)
+	vector3 *vector3::scale(float scalar)
 	{
-		this->x *= scale;
-		this->y *= scale;
-		this->z *= scale;
-		return this;
+		return scale(this, scalar, this);
 	}
 
 	bool vector3::isZero()

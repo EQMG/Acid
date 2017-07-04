@@ -18,22 +18,22 @@ namespace flounder {
 
 	matrix4x4::~matrix4x4()
 	{
-		delete &m00;
-		delete &m01;
-		delete &m02;
-		delete &m03;
-		delete &m10;
-		delete &m11;
-		delete &m12;
-		delete &m13;
-		delete &m20;
-		delete &m21;
-		delete &m22;
-		delete &m23;
-		delete &m30;
-		delete &m31;
-		delete &m32;
-		delete &m33;
+	//	delete &m00;
+	//	delete &m01;
+	//	delete &m02;
+	//	delete &m03;
+	//	delete &m10;
+	//	delete &m11;
+	//	delete &m12;
+	//	delete &m13;
+	//	delete &m20;
+	//	delete &m21;
+	//	delete &m22;
+	//	delete &m23;
+	//	delete &m30;
+	//	delete &m31;
+	//	delete &m32;
+	//	delete &m33;
 	}
 
 	matrix4x4 * matrix4x4::set(matrix4x4 *source)
@@ -509,15 +509,25 @@ namespace flounder {
 			destination = new vector3();
 		}
 
-		matrix4x4 *matrix = matrix4x4::transformationMatrix(new vector3(0.0f, 0.0f, 0.0f), rotation, new vector3(1.0f, 1.0f, 1.0f), 0);
-		vector4 *direction4 = new vector4(source->x, source->y, source->z, 1.0f);
-		matrix4x4::transform(matrix, direction4, direction4);
-		return destination->set(direction4->x, direction4->y, direction4->z);
+		matrix4x4 matrix = matrix4x4::transformationMatrix(&vector3(0.0f, 0.0f, 0.0f), rotation, &vector3(1.0f, 1.0f, 1.0f), 0);
+		vector4 direction4 = vector4(source->x, source->y, source->z, 1.0f);
+		matrix4x4::transform(&matrix, &direction4, &direction4);
+		return destination->set(direction4.x, direction4.y, direction4.z);
+	}
+
+	matrix4x4 *matrix4x4::transformationMatrix(vector2 *translation, float scale, matrix4x4 *destination)
+	{
+		return transformationMatrix(&vector3(translation->x, translation->y, 0.0f), &vector3(0.0f, 0.0f, 0.0f), &vector3(scale, scale, scale), destination);
+	}
+
+	matrix4x4 *matrix4x4::transformationMatrix(vector2 *translation, vector3 *scale, matrix4x4 *destination)
+	{
+		return transformationMatrix(&vector3(translation->x, translation->y, 0.0f), &vector3(0.0f, 0.0f, 0.0f), scale, destination);
 	}
 
 	matrix4x4 *matrix4x4::transformationMatrix(vector3 *translation, vector3 *rotation, float scale, matrix4x4 *destination)
 	{
-		return transformationMatrix(translation, rotation, new vector3(scale, scale, scale), destination);
+		return transformationMatrix(translation, rotation, &vector3(scale, scale, scale), destination);
 	}
 
 	matrix4x4 *matrix4x4::transformationMatrix(vector3 *translation, vector3 *rotation, vector3 *scale, matrix4x4 *destination)
@@ -536,15 +546,15 @@ namespace flounder {
 
 		if (rotation != NULL && rotation->lengthSquared() != 0.0f)
 		{
-			matrix4x4::rotate(destination, new vector3(1.0f, 0.0f, 0.0f), maths::toRadians(rotation->x), destination); // Rotate the X component.
-			matrix4x4::rotate(destination, new vector3(0.0f, 1.0f, 0.0f), maths::toRadians(rotation->y), destination); // Rotate the Y component.
-			matrix4x4::rotate(destination, new vector3(0.0f, 0.0f, 1.0f), maths::toRadians(rotation->z), destination); // Rotate the Z component.
+			matrix4x4::rotate(destination, &vector3(1.0f, 0.0f, 0.0f), __radians(rotation->x), destination); // Rotate the X component.
+			matrix4x4::rotate(destination, &vector3(0.0f, 1.0f, 0.0f), __radians(rotation->y), destination); // Rotate the Y component.
+			matrix4x4::rotate(destination, &vector3(0.0f, 0.0f, 1.0f), __radians(rotation->z), destination); // Rotate the Z component.
 		}
 
 		// Only scales if there is a scale.
 		if (scale != NULL && scale->x != 1.0f && scale->y != 1.0f && scale->z != 1.0f)
 		{
-			matrix4x4::scale(destination, new vector4(scale->x, scale->y, scale->z, 1.0f), destination);
+			matrix4x4::scale(destination, &vector4(scale->x, scale->y, scale->z, 1.0f), destination);
 		}
 
 		return destination;
@@ -558,7 +568,7 @@ namespace flounder {
 		}
 
 		destination->setIdentity();
-		float yScale = 1.0f / tan(maths::toRadians(fov / 2.0f));
+		float yScale = 1.0f / tan(__radians(fov / 2.0f));
 		float xScale = yScale / aspectRatio;
 		float length = zFar - zNear;
 
@@ -604,17 +614,17 @@ namespace flounder {
 			destination = new vector3();
 		}
 
-		vector4 *point4 = new vector4(worldSpace->x, worldSpace->y, worldSpace->z, 1.0f);
-		point4 = matrix4x4::transform(viewMatrix, point4, NULL);
-		point4 = matrix4x4::transform(projectionMatrix, point4, NULL);
-		vector3 *point = new vector3(point4);
+		vector4 point4 = vector4(worldSpace->x, worldSpace->y, worldSpace->z, 1.0f);
+		point4 = matrix4x4::transform(viewMatrix, &point4, NULL);
+		point4 = matrix4x4::transform(projectionMatrix, &point4, NULL);
+		vector3 point = vector3(&point4);
 
-		point->x /= point->z;
-		point->y /= point->z;
-		return destination->set(point->x, point->y, point->z);
+		point.x /= point.z;
+		point.y /= point.z;
+		return destination->set(point.x, point.y, point.z);
 	}
 
-	vector3 * matrix4x4::generateRandomUnitVectorWithinCone(vector3 * destination, vector3 * coneDirection, float angle)
+	vector3 * matrix4x4::generateRandomUnitVectorWithinCone(vector3 *coneDirection, float angle, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -622,30 +632,32 @@ namespace flounder {
 		}
 
 		float cosAngle = cos(angle);
-		float theta = rand() * 2.0f * PI;
-		float z = cosAngle + rand() * (1.0f - cosAngle);
+		float theta = __random();
+		theta *= 2.0f * PI;
+		float z = cosAngle + __random();
+		z *= (1.0f - cosAngle);
 		float rootOneMinusZSquared = sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * cos(theta);
 		float y = rootOneMinusZSquared * sin(theta);
 
-		vector4 *direction = new vector4(x, y, z, 1.0f);
+		vector4 direction = vector4(x, y, z, 1.0f);
 
 		if ((coneDirection->x != 0.0F) || (coneDirection->y != 0.0F) || ((coneDirection->z != 1.0f) && (coneDirection->z != -1.0f)))
 		{
-			vector3 *rotateAxis = vector3::cross(coneDirection, new vector3(0.0f, 0.0f, 1.0f), NULL);
-			rotateAxis->normalize();
-			float rotateAngle = acos(vector3::dot(coneDirection, new vector3(0.0f, 0.0f, 1.0f)));
-			matrix4x4 *rotationMatrix = new matrix4x4();
-			rotationMatrix->setIdentity();
-			matrix4x4::rotate(rotationMatrix, rotateAxis, -rotateAngle, rotationMatrix);
-			matrix4x4::transform(rotationMatrix, direction, direction);
+			vector3 rotateAxis = vector3::cross(coneDirection, &vector3(0.0f, 0.0f, 1.0f), NULL);
+			rotateAxis.normalize();
+			float rotateAngle = acos(vector3::dot(coneDirection, &vector3(0.0f, 0.0f, 1.0f)));
+			matrix4x4 rotationMatrix = matrix4x4();
+			rotationMatrix.setIdentity();
+			matrix4x4::rotate(&rotationMatrix, &rotateAxis, -rotateAngle, &rotationMatrix);
+			matrix4x4::transform(&rotationMatrix, &direction, &direction);
 		}
 		else if (coneDirection->z == -1.0f)
 		{
-			direction->z *= -1.0f;
+			direction.z *= -1.0f;
 		}
 
-		return destination->set(direction->x, direction->y, direction->z);
+		return destination->set(&direction);
 	}
 
 	matrix4x4 *matrix4x4::setIdentity()

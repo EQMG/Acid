@@ -114,7 +114,7 @@ namespace flounder {
 			destination = new vector2();
 		}
 
-		double theta = maths::toRadians(angle);
+		double theta = __radians(angle);
 		return destination->set(static_cast<float>(source->x * cos(theta) - source->y * sin(theta)), static_cast<float>(source->x * sin(theta) + source->y * cos(theta)));
 	}
 
@@ -125,7 +125,7 @@ namespace flounder {
 			destination = new vector2();
 		}
 
-		double theta = maths::toRadians(angle);
+		double theta = __radians(angle);
 		return destination->set(static_cast<float>(((source->x - rotationAxis->x) * cos(theta)) - ((source->y - rotationAxis->y) * sin(theta) + rotationAxis->x)), static_cast<float>(((source->x - rotationAxis->x) * sin(theta)) + ((source->y - rotationAxis->y) * cos(theta) + rotationAxis->y)));
 	}
 
@@ -147,7 +147,15 @@ namespace flounder {
 		}
 
 		float length = source->length();
-		return destination->set(source->x / length, source->y / length);
+
+		if (length != 0.0f)
+		{
+			return destination->set(source->x / length, source->y / length);
+		}
+		else
+		{
+			throw std::invalid_argument("Zero length vector");
+		}
 	}
 
 	vector2 *vector2::maxVector(vector2 *a, vector2 *b)
@@ -184,7 +192,7 @@ namespace flounder {
 
 	vector2 *vector2::getVectorDistance(vector2 *point1, vector2 *point2, vector2 *destination)
 	{
-		if (destination == 0)
+		if (destination == NULL)
 		{
 			destination = new vector2();
 		}
@@ -209,31 +217,17 @@ namespace flounder {
 
 	vector2 *vector2::negate()
 	{
-		x = -x;
-		y = -y;
-		return this;
+		return negate(this, this);
 	}
 
 	vector2 *vector2::normalize()
 	{
-		float length = this->length();
-
-		if (length != 0.0f)
-		{
-			float l = 1.0f / length;
-			return scale(l);
-		}
-		else
-		{
-			throw std::invalid_argument("Zero length vector");
-		}
+		return normalize(this, this);
 	}
 
-	vector2 *vector2::scale(float scale)
+	vector2 *vector2::scale(float scalar)
 	{
-		x *= scale;
-		y *= scale;
-		return this;
+		return scale(this, scalar, this);
 	}
 
 	bool vector2::isZero()
@@ -243,7 +237,7 @@ namespace flounder {
 
 	float vector2::length()
 	{
-		return static_cast<float>(sqrt(lengthSquared()));
+		return sqrt(lengthSquared());
 	}
 
 	float vector2::lengthSquared()

@@ -12,11 +12,11 @@ namespace flounder {
 
 	delta::~delta()
 	{
-		delete &m_currentFrameTime;
-		delete &m_lastFrameTime;
+	//	delete &m_currentFrameTime;
+	//	delete &m_lastFrameTime;
 
-		delete &m_change;
-		delete &m_time;
+	//	delete &m_change;
+	//	delete &m_time;
 	}
 
 	void delta::update()

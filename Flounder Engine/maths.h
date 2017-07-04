@@ -10,6 +10,10 @@
 #define ANG2RAD PI / DEGREES_IN_HALF_CIRCLE
 #define LOG_HALF log(0.5f)
 
+#define __radians(a) (a * (PI / DEGREES_IN_HALF_CIRCLE))
+#define __degrees(b) (b * (PI / DEGREES_IN_HALF_CIRCLE))
+#define __random() (((double) rand()) / RAND_MAX);
+
 namespace flounder {
 	/// <summary>
 	/// A class that holds many various math functions.
@@ -18,32 +22,13 @@ namespace flounder {
 	{
 	public:
 		/// <summary>
-		/// Converts degrees to radians.
-		/// </summary>
-		/// <param name="degrees">The value in degrees</param>
-		/// <returns>A value in radians.</returns>
-		static float toRadians(const float& degrees) {
-			return degrees * (PI / DEGREES_IN_HALF_CIRCLE);
-		}
-
-		/// <summary>
-		/// Converts radians to degrees.
-		/// </summary>
-		/// <param name="radians">The value in radians</param>
-		/// <returns>A value in degrees.</returns>
-		static float toDegrees(const float& radians)
-		{
-			return radians * (DEGREES_IN_HALF_CIRCLE / PI);
-		}
-
-		/// <summary>
 		/// Does a mod like the GLSL function.
 		/// </summary>
 		/// <param name="x"> The first value. </param>
 		/// <param name="y"> The second value.
 		/// </param>
 		/// <returns> The resultant mod. </returns>
-		static double mod(double x, double y)
+		static double mod(const double x, const double y)
 		{
 			return x - y * floor(x / y);
 		}
@@ -54,7 +39,7 @@ namespace flounder {
 		/// <param name="angle"> The source angle.
 		/// </param>
 		/// <returns> The normalized angle. </returns>
-		static double normalizeAngle(double angle)
+		static double normalizeAngle(const double angle)
 		{
 			if (angle >= 360.0f)
 			{
@@ -75,10 +60,10 @@ namespace flounder {
 		/// <param name="place"> How many places after the decimal to round to.
 		/// </param>
 		/// <returns> The rounded value. </returns>
-		static float roundToPlace(float value, int place)
+		static float roundToPlace(const float value, const int place)
 		{
 			float placeMul = pow(10.0f, place);
-			return round((value)* placeMul) / placeMul;
+			return round(value * placeMul) / placeMul;
 		}
 
 		/// <summary>
@@ -88,7 +73,7 @@ namespace flounder {
 		/// <param name="value"> The value.
 		/// </param>
 		/// <returns> Returns a value with deadband applied. </returns>
-		static float deadband(float min, float value)
+		static float deadband(const float min, const float value)
 		{
 			return abs(value) >= abs(min) ? value : 0.0f;
 		}
@@ -101,7 +86,7 @@ namespace flounder {
 		/// <param name="max"> The largest value of the result.
 		/// </param>
 		/// <returns> {@code value}, clamped between {@code min} and {@code max}. </returns>
-		static float clamp(float value, float min, float max)
+		static float clamp(const float value, const float min, const float max)
 		{
 			return (value < min) ? min : (value > max) ? max : value;
 		}
@@ -113,7 +98,7 @@ namespace flounder {
 		/// <param name="limit"> The limit.
 		/// </param>
 		/// <returns> A limited value. </returns>
-		static float limit(float value, float limit)
+		static float limit(const float value, const float limit)
 		{
 			return value > limit ? limit : value;
 		}
@@ -126,7 +111,7 @@ namespace flounder {
 		/// <param name="eps"> EPS is the measure of equality.
 		/// </param>
 		/// <returns> If both are almost equal. </returns>
-		static bool almostEqual(double a, double b, double eps)
+		static bool almostEqual(const double a, const double b, const double eps)
 		{
 			return abs(a - b) < eps;
 		}
@@ -139,10 +124,10 @@ namespace flounder {
 		/// <param name="blend"> The blend value.
 		/// </param>
 		/// <returns> Returns a interpolated value. </returns>
-		static float cosInterpolate(float a, float b, float blend)
+		static float cosInterpolate(const float a, const float b, const float blend)
 		{
 			double ft = blend * PI;
-			float f = (1.0f - (float)cos(ft)) * 0.5f;
+			float f = (1.0f - (float) cos(ft)) * 0.5f;
 			return a * (1.0f - f) + b * f;
 		}
 
@@ -154,7 +139,7 @@ namespace flounder {
 		/// <param name="x"> The sample.
 		/// </param>
 		/// <returns> The resulting stepped value. </returns>
-		static float smoothlyStep(float edge0, float edge1, float x)
+		static float smoothlyStep(const float edge0, const float edge1, const float x)
 		{
 			float t = clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
 			return t * t * (3.0f - 2.0f * t);
@@ -167,10 +152,11 @@ namespace flounder {
 		/// <param name="max"> The max value.
 		/// </param>
 		/// <returns> The randomly selected value within the range. </returns>
-		static float randomInRange(float min, float max)
+		static float randomInRange(const float min, const float max)
 		{
 			float range = max - min;
-			float scaled = rand() * range;
+			float scaled = __random();
+			scaled *= range;
 			return scaled + min; // == (rand.nextDouble() * (max-min)) + min;
 		}
 
@@ -181,12 +167,12 @@ namespace flounder {
 		/// <param name="upperLimit"> The upper number.
 		/// </param>
 		/// <returns> The final random number. </returns>
-		static double logRandom(double lowerLimit, double upperLimit)
+		static double logRandom(const double lowerLimit, const double upperLimit)
 		{
 			double logLower = log(lowerLimit);
 			double logUpper = log(upperLimit);
 
-			double raw = rand();
+			double raw = __random();
 			double result = exp(raw * (logUpper - logLower) + logLower);
 
 			if (result < lowerLimit)
@@ -209,14 +195,14 @@ namespace flounder {
 		/// <param name="mean"> The mean of the distribution.
 		/// </param>
 		/// <returns> A normally distributed value. </returns>
-		static float normallyDistributedSingle(float standardDeviation, float mean)
+		static float normallyDistributedSingle(const float standardDeviation, const float mean)
 		{
 			// Intentionally duplicated to avoid IEnumerable overhead.
-			double u1 = rand(); // These are uniform(0,1) random doubles.
-			double u2 = rand();
+			double u1 = __random(); // These are uniform(0,1) random doubles.
+			double u2 = __random();
 
-			double x1 = sqrt(-2.0f * log(u1));
-			double x2 = 2.0f * PI * u2;
+			double x1 = sqrt(-2.0 * log(u1));
+			double x2 = 2.0 * PI * u2;
 			double z1 = x1 * sin(x2); // Random normal(0,1)
 			return (float)z1 * standardDeviation + mean;
 		}
