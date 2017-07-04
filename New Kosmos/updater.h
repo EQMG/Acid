@@ -1,7 +1,5 @@
 #pragma once
 
-#include "timingref.h"
-
 /// <summary>
 /// A class used to define how the framework will run updates and timings.
 /// </summary>
@@ -16,12 +14,6 @@ public:
 	/// Disposed the framework if initialised.
 	/// </summary>
 	virtual void dispose() = 0;
-
-	/// <summary>
-	/// Sets the timing reference for this updater.
-	/// </summary>
-	/// <param name="timeOffset"> The new timing reference. </param>
-	virtual void setTiming(timingref*) = 0;
 
 	/// <summary>
 	/// Gets the added/removed time for the framework (seconds).

@@ -161,12 +161,15 @@
   <ItemGroup>
     <ClCompile Include="colour.cpp" />
     <ClCompile Include="delta.cpp" />
+    <ClCompile Include="display.cpp" />
+    <ClCompile Include="file.cpp" />
     <ClCompile Include="kosmos.cpp" />
     <ClCompile Include="matrix2x2.cpp" />
     <ClCompile Include="matrix3x3.cpp" />
     <ClCompile Include="matrix4x4.cpp" />
     <ClCompile Include="quaternion.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="updaterglfw.cpp" />
     <ClCompile Include="vector2.cpp" />
     <ClCompile Include="vector3.cpp" />
     <ClCompile Include="vector4.cpp" />
@@ -175,8 +178,11 @@
   <ItemGroup>
     <ClInclude Include="colour.h" />
     <ClInclude Include="delta.h" />
+    <ClInclude Include="display.h" />
     <ClInclude Include="extension.h" />
+    <ClInclude Include="file.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="helperstring.h" />
     <ClInclude Include="maths.h" />
     <ClInclude Include="matrix2x2.h" />
     <ClInclude Include="matrix3x3.h" />
@@ -184,8 +190,8 @@
     <ClInclude Include="module.h" />
     <ClInclude Include="quaternion.h" />
     <ClInclude Include="timer.h" />
-    <ClInclude Include="timingref.h" />
     <ClInclude Include="updater.h" />
+    <ClInclude Include="updaterglfw.h" />
     <ClInclude Include="vector2.h" />
     <ClInclude Include="vector3.h" />
     <ClInclude Include="vector4.h" />
