@@ -1,30 +1,32 @@
 #pragma once
 
-/// <summary>
-/// A class for handing and calculating deltas.
-/// </summary>
-class delta
-{
-private:
-	double m_currentFrameTime = 0;
-	double m_lastFrameTime = 0;
-
-public:	
-	double m_change = 0;
-	double m_time = 0;
-
+namespace flounder {
 	/// <summary>
-	/// Creates a new change handler.
+	/// A class for handing and calculating deltas.
 	/// </summary>
-	delta();
+	class delta
+	{
+	private:
+		double m_currentFrameTime = 0;
+		double m_lastFrameTime = 0;
 
-	/// <summary>
-	/// Deconstructor for the delta.
-	/// </summary>
-	~delta();
+	public:
+		double m_change = 0;
+		double m_time = 0;
 
-	/// <summary>
-	/// Updates change and times.
-	/// </summary>
-	void update();
-};
+		/// <summary>
+		/// Creates a new change handler.
+		/// </summary>
+		delta();
+
+		/// <summary>
+		/// Deconstructor for the delta.
+		/// </summary>
+		~delta();
+
+		/// <summary>
+		/// Updates change and times.
+		/// </summary>
+		void update();
+	};
+}

@@ -4,10 +4,13 @@
 #include <iostream>
 
 #include "framework.h"
+#include "updaterglfw.h"
 
-int main()
-{
-	framework framework = new framework((std::string) "New Kosmos", NULL, 60, new extension[0]);
-	framework.run();
-    return 0;
+namespace flounder {
+	int main()
+	{
+		framework &framework = new framework(); // (std::string) "New Kosmos", new updaterglfw(), 60, new extension[0]
+		framework->run();
+		return 0;
+	}
 }
