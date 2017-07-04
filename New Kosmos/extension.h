@@ -1,6 +1,8 @@
 #pragma once
 
-class extension {
-private:
-public:
-};
+namespace flounder {
+	class extension {
+	private:
+	public:
+	};
+}

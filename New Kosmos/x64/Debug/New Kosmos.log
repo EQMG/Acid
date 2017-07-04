@@ -1,16 +1,7 @@
 ﻿  kosmos.cpp
-c:\users\mattp\documents\flounder c++\new kosmos\module.h(18): warning C4091: 'static ': ignored on left of 'module::updateflag' when no variable is declared
-c:\users\mattp\documents\flounder c++\new kosmos\framework.h(167): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\mattp\documents\flounder c++\new kosmos\kosmos.cpp(10): error C2061: syntax error: identifier 'framework'
-c:\users\mattp\documents\flounder c++\new kosmos\kosmos.cpp(10): error C2512: 'framework': no appropriate default constructor available
-  c:\users\mattp\documents\flounder c++\new kosmos\framework.h(17): note: see declaration of 'framework'
-  file.cpp
-c:\users\mattp\documents\flounder c++\new kosmos\helperstring.h(14): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(439): note: see declaration of 'strtok'
-c:\users\mattp\documents\flounder c++\new kosmos\helperstring.h(18): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(439): note: see declaration of 'strtok'
-  display.cpp
-c:\users\mattp\documents\flounder c++\new kosmos\module.h(18): warning C4091: 'static ': ignored on left of 'module::updateflag' when no variable is declared
-c:\users\mattp\documents\flounder c++\new kosmos\framework.h(167): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\mattp\documents\flounder c++\new kosmos\display.cpp(20): error C2276: '&': illegal operation on bound member function expression
-  Generating Code...
+c:\users\mattp\documents\flounder c++\new kosmos\module.h(19): warning C4091: 'static ': ignored on left of 'founder::module::updateflag' when no variable is declared
+c:\users\mattp\documents\flounder c++\new kosmos\framework.h(168): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+display.obj : error LNK2019: unresolved external symbol "private: static void __cdecl founder::display::error_callback(int,char const *)" (?error_callback@display@founder@@CAXHPEBD@Z) referenced in function "public: virtual void __cdecl founder::display::init(void)" (?init@display@founder@@UEAAXXZ)
+updaterglfw.obj : error LNK2001: unresolved external symbol "private: static class founder::framework * founder::framework::M_INSTANCE" (?M_INSTANCE@framework@founder@@0PEAV12@EA)
+C:\Users\mattp\Documents\Flounder C++\x64\Debug\New Kosmos.exe : fatal error LNK1120: 2 unresolved externals
