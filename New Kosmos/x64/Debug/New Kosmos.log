@@ -1,12 +1,16 @@
-﻿  colour.cpp
+﻿  kosmos.cpp
+c:\users\mattp\documents\flounder c++\new kosmos\module.h(18): warning C4091: 'static ': ignored on left of 'module::updateflag' when no variable is declared
+c:\users\mattp\documents\flounder c++\new kosmos\framework.h(167): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\mattp\documents\flounder c++\new kosmos\kosmos.cpp(10): error C2061: syntax error: identifier 'framework'
+c:\users\mattp\documents\flounder c++\new kosmos\kosmos.cpp(10): error C2512: 'framework': no appropriate default constructor available
+  c:\users\mattp\documents\flounder c++\new kosmos\framework.h(17): note: see declaration of 'framework'
+  file.cpp
+c:\users\mattp\documents\flounder c++\new kosmos\helperstring.h(14): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(439): note: see declaration of 'strtok'
+c:\users\mattp\documents\flounder c++\new kosmos\helperstring.h(18): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(439): note: see declaration of 'strtok'
+  display.cpp
+c:\users\mattp\documents\flounder c++\new kosmos\module.h(18): warning C4091: 'static ': ignored on left of 'module::updateflag' when no variable is declared
+c:\users\mattp\documents\flounder c++\new kosmos\framework.h(167): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\mattp\documents\flounder c++\new kosmos\display.cpp(20): error C2276: '&': illegal operation on bound member function expression
   Generating Code...
-  Skipping... (no relevant changes detected)
-  vector4.cpp
-  vector3.cpp
-  vector2.cpp
-  matrix4x4.cpp
-  matrix3x3.cpp
-  matrix2x2.cpp
-  kosmos.cpp
-  New Kosmos.vcxproj -> c:\users\mattp\documents\Flounder C++\x64\Debug\New Kosmos.exe
-  New Kosmos.vcxproj -> c:\users\mattp\documents\Flounder C++\x64\Debug\New Kosmos.pdb (Partial PDB)
