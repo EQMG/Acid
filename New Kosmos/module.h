@@ -8,18 +8,24 @@
 /// A simple interface used for defining framework modules.
 /// </summary>
 class module {
-private:
-	bool m_extensionChange;
 protected:
 	std::vector<module*> m_dependencies;
 	std::vector<extension*> m_extensions;
+	bool m_extensionChange;
 public:
+	static enum updateflag {
+		ALWAYS, BEFORE, AFTER
+	};
+
+	module::updateflag flag;
+
 	/// <summary>
 	/// Creates a new module object.
 	/// </summary>
 	/// <param name="dependencies"> The list of module classes this module depends on. </param>
-	module(std::vector<module*> dependencies)
+	module(module::updateflag flag, std::vector<module*> dependencies)
 	{
+		this->flag = flag;
 		this->m_dependencies = dependencies;
 		this->m_extensions = std::vector<extension*>();
 		this->m_extensionChange = true;
@@ -35,7 +41,12 @@ public:
 
 	virtual void init() = 0;
 	virtual void update() = 0;
+	virtual void render() = 0;
 	virtual void dispose() = 0;
+
+	module::updateflag getFlag() {
+		return flag;
+	}
 
 	/// <summary>
 	/// Registers an extension with a module.
