@@ -1,7 +1,0 @@
-﻿  kosmos.cpp
-c:\users\mattp\documents\flounder c++\new kosmos\module.h(19): warning C4091: 'static ': ignored on left of 'founder::module::updateflag' when no variable is declared
-c:\users\mattp\documents\flounder c++\new kosmos\framework.h(168): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-display.obj : error LNK2019: unresolved external symbol "private: static void __cdecl founder::display::error_callback(int,char const *)" (?error_callback@display@founder@@CAXHPEBD@Z) referenced in function "public: virtual void __cdecl founder::display::init(void)" (?init@display@founder@@UEAAXXZ)
-updaterglfw.obj : error LNK2001: unresolved external symbol "private: static class founder::framework * founder::framework::M_INSTANCE" (?M_INSTANCE@framework@founder@@0PEAV12@EA)
-C:\Users\mattp\Documents\Flounder C++\x64\Debug\New Kosmos.exe : fatal error LNK1120: 2 unresolved externals
