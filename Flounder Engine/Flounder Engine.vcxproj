@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{551AFCCE-04E2-41F8-9075-D2D7A4903EEC}</ProjectGuid>
+    <ProjectGuid>{E58316B5-4D6C-4EE6-898E-DE7BD1069A08}</ProjectGuid>
     <RootNamespace>FlounderEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -70,19 +70,30 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-    </ClCompile>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\libs\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -91,10 +102,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -104,37 +118,56 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\libs\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="colour.cpp" />
-    <ClCompile Include="delta.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="matrix2x2.cpp" />
-    <ClCompile Include="matrix3x3.cpp" />
-    <ClCompile Include="matrix4x4.cpp" />
-    <ClCompile Include="quaternion.cpp" />
-    <ClCompile Include="timer.cpp" />
-    <ClCompile Include="vector2.cpp" />
-    <ClCompile Include="vector3.cpp" />
-    <ClCompile Include="vector4.cpp" />
+    <ClCompile Include="Sources\devices\joysticks.cpp" />
+    <ClCompile Include="Sources\devices\mouse.cpp" />
+    <ClCompile Include="Sources\devices\sound.cpp" />
+    <ClCompile Include="Sources\logger\logger.cpp" />
+    <ClCompile Include="Sources\devices\keyboard.cpp" />
+    <ClCompile Include="Sources\maths\colour.cpp" />
+    <ClCompile Include="Sources\maths\delta.cpp" />
+    <ClCompile Include="Sources\devices\display.cpp" />
+    <ClCompile Include="Sources\main.cpp" />
+    <ClCompile Include="Sources\maths\matrix2x2.cpp" />
+    <ClCompile Include="Sources\maths\matrix3x3.cpp" />
+    <ClCompile Include="Sources\maths\matrix4x4.cpp" />
+    <ClCompile Include="Sources\maths\quaternion.cpp" />
+    <ClCompile Include="Sources\maths\timer.cpp" />
+    <ClCompile Include="Sources\maths\vector2.cpp" />
+    <ClCompile Include="Sources\maths\vector3.cpp" />
+    <ClCompile Include="Sources\maths\vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="colour.h" />
-    <ClInclude Include="delta.h" />
-    <ClInclude Include="maths.h" />
-    <ClInclude Include="matrix2x2.h" />
-    <ClInclude Include="matrix3x3.h" />
-    <ClInclude Include="matrix4x4.h" />
-    <ClInclude Include="quaternion.h" />
-    <ClInclude Include="timer.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="vector3.h" />
-    <ClInclude Include="vector4.h" />
+    <ClInclude Include="Sources\devices\joysticks.h" />
+    <ClInclude Include="Sources\devices\sound.h" />
+    <ClInclude Include="Sources\framework\module.h" />
+    <ClInclude Include="Sources\devices\mouse.h" />
+    <ClInclude Include="Sources\logger\logger.h" />
+    <ClInclude Include="Sources\devices\keyboard.h" />
+    <ClInclude Include="Sources\flounder.h" />
+    <ClInclude Include="Sources\framework\framework.h" />
+    <ClInclude Include="Sources\maths\colour.h" />
+    <ClInclude Include="Sources\maths\delta.h" />
+    <ClInclude Include="Sources\devices\display.h" />
+    <ClInclude Include="Sources\maths\maths.h" />
+    <ClInclude Include="Sources\maths\matrix2x2.h" />
+    <ClInclude Include="Sources\maths\matrix3x3.h" />
+    <ClInclude Include="Sources\maths\matrix4x4.h" />
+    <ClInclude Include="Sources\maths\quaternion.h" />
+    <ClInclude Include="Sources\maths\timer.h" />
+    <ClInclude Include="Sources\maths\vector2.h" />
+    <ClInclude Include="Sources\maths\vector3.h" />
+    <ClInclude Include="Sources\maths\vector4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
