@@ -1,4 +1,10 @@
-﻿  main.cpp
-c:\users\mattp\documents\flounder c++\flounder engine\maths.h(158): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Flounder Engine.vcxproj -> C:\Users\mattp\Documents\Flounder C++\Debug\Flounder Engine.exe
-  Flounder Engine.vcxproj -> C:\Users\mattp\Documents\Flounder C++\Debug\Flounder Engine.pdb (Partial PDB)
+﻿  sound.cpp
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+main.obj : error LNK2001: unresolved external symbol "private: static class flounder::framework * flounder::framework::G_INSTANCE" (?G_INSTANCE@framework@flounder@@0PAV12@A)
+mouse.obj : error LNK2001: unresolved external symbol "private: static class flounder::framework * flounder::framework::G_INSTANCE" (?G_INSTANCE@framework@flounder@@0PAV12@A)
+sound.obj : error LNK2001: unresolved external symbol "private: static class flounder::framework * flounder::framework::G_INSTANCE" (?G_INSTANCE@framework@flounder@@0PAV12@A)
+keyboard.obj : error LNK2001: unresolved external symbol "private: static class flounder::framework * flounder::framework::G_INSTANCE" (?G_INSTANCE@framework@flounder@@0PAV12@A)
+display.obj : error LNK2001: unresolved external symbol "private: static class flounder::framework * flounder::framework::G_INSTANCE" (?G_INSTANCE@framework@flounder@@0PAV12@A)
+sound.obj : error LNK2019: unresolved external symbol "public: void __thiscall flounder::logger::error<char const *>(char const *)" (??$error@PBD@logger@flounder@@QAEXPBD@Z) referenced in function "public: void __thiscall flounder::sound::init(void)" (?init@sound@flounder@@QAEXXZ)
+display.obj : error LNK2019: unresolved external symbol __imp__glewInit@0 referenced in function "public: void __thiscall flounder::display::init(void)" (?init@display@flounder@@QAEXXZ)
+C:\Users\mattp\documents\Flounder C++\Debug\Flounder Engine.exe : fatal error LNK1120: 3 unresolved externals

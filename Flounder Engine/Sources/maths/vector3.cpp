@@ -228,9 +228,9 @@ namespace flounder {
 			destination = new vector3();
 		}
 
-		float theta = __random();
+		float theta = (float)__random();
 		theta *= 2.0f * PI;
-		float z = __random();
+		float z = (float)__random();
 		z *= 2.0f - 1.0f;
 		float rootOneMinusZSquared = sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * cos(theta);
@@ -254,8 +254,8 @@ namespace flounder {
 
 		destination->normalize();
 		destination->scale(radius);
-		float a = __random();
-		float b = __random();
+		float a = (float) __random();
+		float b = (float) __random();
 
 		if (a > b)
 		{

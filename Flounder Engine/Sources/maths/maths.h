@@ -155,7 +155,7 @@ namespace flounder {
 		static float randomInRange(const float min, const float max)
 		{
 			float range = max - min;
-			float scaled = __random();
+			float scaled = (float) __random();
 			scaled *= range;
 			return scaled + min; // == (rand.nextDouble() * (max-min)) + min;
 		}
