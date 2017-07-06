@@ -34,7 +34,8 @@ namespace flounder {
 		m_lastMousePositionY = m_mousePositionY;
 
 		// Fixes snaps when toggling cursor.
-		if (m_cursorDisabled != m_lastCursorDisabled) {
+		if (m_cursorDisabled != m_lastCursorDisabled) 
+		{
 			m_mouseDeltaX = 0.0f;
 			m_mouseDeltaY = 0.0f;
 
@@ -42,7 +43,8 @@ namespace flounder {
 		}
 
 		// Updates the mouse wheel using a smooth scroll technique.
-		if (m_mouseDeltaWheel != 0.0f) {
+		if (m_mouseDeltaWheel != 0.0f) 
+		{
 			m_mouseDeltaWheel -= framework::get()->getDelta() * ((m_mouseDeltaWheel < 0.0f) ? -1.0f : 1.0f);
 			m_mouseDeltaWheel = maths::deadband(0.1f, m_mouseDeltaWheel);
 		}
@@ -61,7 +63,7 @@ namespace flounder {
 		m_cursorDisabled = disabled;
 	}
 
-	bool mouse::getMouse(int button)
+	bool mouse::getButton(int button)
 	{
 		return m_mouseButtons[button] != GLFW_RELEASE;
 	}

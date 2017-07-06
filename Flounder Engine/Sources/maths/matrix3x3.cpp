@@ -18,15 +18,6 @@ namespace flounder {
 
 	matrix3x3::~matrix3x3()
 	{
-	//	delete &m00;
-	//	delete &m01;
-	//	delete &m02;
-	//	delete &m10;
-	//	delete &m11;
-	//	delete &m12;
-	//	delete &m20;
-	//	delete &m21;
-	//	delete &m22;
 	}
 
 	matrix3x3 *matrix3x3::set(matrix3x3 *source)
@@ -268,7 +259,7 @@ namespace flounder {
 
 	float *matrix3x3::toArray(matrix3x3 *matrix)
 	{
-		float result[9];
+		float *result = new float[9];
 		result[0] = matrix->m00;
 		result[1] = matrix->m01;
 		result[2] = matrix->m02;

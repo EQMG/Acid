@@ -31,6 +31,11 @@ namespace flounder {
 
 			if (glfwJoystickPresent(i)) 
 			{
+				if (!joy->connected)
+				{
+					logger::get()->log(std::string("Joystick '") + glfwGetJoystickName(i) + std::string("' connected!"));
+				}
+
 				joy->connected = true;
 				joy->name = glfwGetJoystickName(i);
 				joy->axes = glfwGetJoystickAxes(i, &joy->axecount);
@@ -38,6 +43,11 @@ namespace flounder {
 			}
 			else 
 			{
+				if (joy->connected)
+				{
+					logger::get()->log("Joystick disconnected!");
+				}
+
 				joy->connected = false;
 			}
 		}

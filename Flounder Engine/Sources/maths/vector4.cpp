@@ -18,10 +18,6 @@ namespace flounder {
 
 	vector4::~vector4()
 	{
-	//	delete &x;
-	//	delete &y;
-	//	delete &z;
-	//	delete &w;
 	}
 
 	vector4 *vector4::set(float x, float y, float z, float w)

@@ -9,20 +9,17 @@ namespace flounder {
 	{
 	}
 
-	template<typename T>
-	void logger::log(T value)
+	void logger::log(std::string value)
 	{
 		std::cout << "Log: " << value << std::endl;
 	}
 
-	template<typename T>
-	void logger::warning(T value)
+	void logger::warning(std::string value)
 	{
 		std::cout << "Log: " << value << std::endl;
 	}
 
-	template<typename T>
-	void logger::error(T value)
+	void logger::error(std::string value)
 	{
 		std::cout << "Log: " << value << std::endl;
 	}
