@@ -23,21 +23,7 @@ namespace flounder {
 		m_focused = true;
 		m_windowPosX = 0;
 		m_windowPosY = 0;
-	}
 
-	display::~display()
-	{
-		// Free the window callbacks and destroy the window.
-		glfwDestroyWindow(m_window);
-
-		// Terminate GLFW.
-		glfwTerminate();
-
-		m_closed = false;
-	}
-
-	void display::init()
-	{
 		// Set the error error callback
 		glfwSetErrorCallback(callbackError);
 
@@ -62,7 +48,7 @@ namespace flounder {
 
 		glfwWindowHint(GLFW_STENCIL_BITS, 8); // Fixes 16 bit stencil bits in macOS.
 		glfwWindowHint(GLFW_STEREO, GLFW_FALSE); // No stereo view!
-		
+
 		// Use FBO antialiasing instead!
 		//if (samples > 0) {
 		//	glfwWindowHint(GLFW_SAMPLES, samples); // The number of MSAA samples to use.
@@ -125,26 +111,37 @@ namespace flounder {
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 
 		// Initialize the GLEW library.
-		if (glewInit() != GLEW_OK) {
-			//	logger::get()->error("Could not init GLEW!");
-			framework::get()->requestClose(true);
-		}
+		//if (glewInit() != GLEW_OK) {
+		//	logger::get()->error("Could not init GLEW!");
+		//	framework::get()->requestClose(true);
+		//}
 
 		// System logs.
-	//	logger::get()->log("If you are getting errors, please write a description of how you get the error, and copy this log: https://github.com/Equilibrium-Games/Flounder-Engine/issues");
-	//	logger::get()->log("");
-	//	logger::get()->log("===== This is not an error message, it is a system info log. =====");
-	//	logger::get()->log("Flounder Framework Version: " + framework::get()->getVersion()->getVersion());
-	//	logger::get()->log("Flounder Operating System: " + System.getProperty("os.name"));
-	//	logger::get()->log("Flounder GLFW Version: " + std::string(glfwGetVersionString()));
-	//	logger::get()->log("Flounder OpenGL Version: " + glGetString(GL_VERSION));
-	//	logger::get()->log("Flounder OpenGL Vendor: " + glGetString(GL_VENDOR));
-	//	logger::get()->log("Flounder Is OpenGL Modern: " + FlounderOpenGL.get().isModern());
-	//	logger::get()->log("Flounder Total Memory Available To JVM (bytes): " + Runtime.getRuntime().totalMemory());
-	//	logger::get()->log("Flounder Maximum FBO Size: " + glGetInteger(GL_MAX_RENDERBUFFER_SIZE_EXT));
-	//	logger::get()->log("Flounder Maximum Texture Size: " + glGetInteger(GL_MAX_TEXTURE_SIZE));
-	//	logger::get()->log("Flounder Maximum Anisotropy: " + glGetFloat(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT));
-	//	logger::get()->log("===== End of system info log. =====\n");
+		//	logger::get()->log("If you are getting errors, please write a description of how you get the error, and copy this log: https://github.com/Equilibrium-Games/Flounder-Engine/issues");
+		//	logger::get()->log("");
+		//	logger::get()->log("===== This is not an error message, it is a system info log. =====");
+		//	logger::get()->log("Flounder Framework Version: " + framework::get()->getVersion()->getVersion());
+		//	logger::get()->log("Flounder Operating System: " + System.getProperty("os.name"));
+		//	logger::get()->log("Flounder GLFW Version: " + std::string(glfwGetVersionString()));
+		//	logger::get()->log("Flounder OpenGL Version: " + glGetString(GL_VERSION));
+		//	logger::get()->log("Flounder OpenGL Vendor: " + glGetString(GL_VENDOR));
+		//	logger::get()->log("Flounder Is OpenGL Modern: " + FlounderOpenGL.get().isModern());
+		//	logger::get()->log("Flounder Total Memory Available To JVM (bytes): " + Runtime.getRuntime().totalMemory());
+		//	logger::get()->log("Flounder Maximum FBO Size: " + glGetInteger(GL_MAX_RENDERBUFFER_SIZE_EXT));
+		//	logger::get()->log("Flounder Maximum Texture Size: " + glGetInteger(GL_MAX_TEXTURE_SIZE));
+		//	logger::get()->log("Flounder Maximum Anisotropy: " + glGetFloat(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT));
+		//	logger::get()->log("===== End of system info log. =====\n");
+	}
+
+	display::~display()
+	{
+		// Free the window callbacks and destroy the window.
+		glfwDestroyWindow(m_window);
+
+		// Terminate GLFW.
+		glfwTerminate();
+
+		m_closed = false;
 	}
 
 	void display::update()

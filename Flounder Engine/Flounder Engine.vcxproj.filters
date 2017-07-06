@@ -63,7 +63,16 @@
     <ClCompile Include="Sources\devices\joysticks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\devices\sound.cpp">
+    <ClCompile Include="Sources\framework\framework.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\framework\module.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\devices\audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\framework\glfw\glfwupdater.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,7 +134,13 @@
     <ClInclude Include="Sources\devices\joysticks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\devices\sound.h">
+    <ClInclude Include="Sources\devices\audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\framework\updater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\framework\glfw\glfwupdater.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

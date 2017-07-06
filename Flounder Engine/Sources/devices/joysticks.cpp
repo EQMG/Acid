@@ -21,10 +21,6 @@ namespace flounder {
 		delete m_connected;
 	}
 
-	void joysticks::init()
-	{
-	}
-
 	void joysticks::update()
 	{
 		// For each joystick check if connected and update.

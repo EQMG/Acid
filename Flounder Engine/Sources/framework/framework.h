@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "module.h"
+#include "updater.h"
 
 #include "../maths/maths.h"
 
@@ -26,6 +27,8 @@ namespace flounder {
 		bool m_error;
 		int m_fpsLimit;
 
+		updater *m_updater;
+
 	public:
 		static framework *get() {
 			return G_INSTANCE;
@@ -36,108 +39,38 @@ namespace flounder {
 		/// </summary>
 		/// <param name="unlocalizedName"> The name to be used when determining where the roaming save files are saved. </param>
 		/// <param name="fpsLimit"> The limit to FPS, (-1 disables limits). </param>
-		framework(const std::string &unlocalizedName, int fpsLimit)
-		{
-			// Sets the static object to this new one.
-			framework::G_INSTANCE = this;
+		framework(const std::string &unlocalizedName, int fpsLimit);
 
-			// Sets the instances name.
-			m_unlocalizedName = unlocalizedName;
+		~framework();
 
-			// Registers these modules as global, we do this as everyone loves these guys <3
-			// registerModules(loadModule(FlounderLogger::typeid)); // TODO
+		void run(updater* updater);
 
-			// Force registers the extensions, as the framework was null when they were constructed.
-			//for (int i = 0; i < sizeof(extensions); i++)
-			//{
-			//	//	registerModule(loadModule(extensions[i].getModule())).registerExtension(extensions[i]); // TODO
-			//}
+		module *getInstance(std::string name);
 
-			m_initialized = false;
-			m_running = true;
-			m_error = false;
-			m_fpsLimit = fpsLimit;
-		}
+		std::string framework::getUnlocalizedName();
 
-		~framework() {
-		}
+		float framework::getTimeOffset();
 
-		void run() {
-		}
+		void framework::setTimeOffset(float timeOffset);
 
-		module *getInstance(std::string name) {
-			return NULL;
-		}
+		float framework::getDelta();
 
-		std::string framework::getUnlocalizedName()
-		{
-			return m_unlocalizedName;
-		}
+		float framework::getDeltaRender();
 
-		float framework::getTimeOffset()
-		{
-			return 0.0f; //  updater::getTimeOffset();
-		}
+		float framework::getTimeSec();
 
-		void framework::setTimeOffset(float timeOffset)
-		{
-			// updater::setTimeOffset(timeOffset);
-		}
+		float framework::getTimeMs();
 
-		float framework::getDelta()
-		{
-			return 0.0f; // updater::getDelta();
-		}
+		bool framework::isInitialized();
 
-		float framework::getDeltaRender()
-		{
-			return 0.0f; // updater::getDeltaRender();
-		}
+		void framework::setInitialized(bool initialized);
 
-		float framework::getTimeSec()
-		{
-			return 0.0f; // updater::getTimeSec();
-		}
+		bool framework::isRunning();
 
-		float framework::getTimeMs()
-		{
-			return 0.0f; // updater::getTimeMs();
-		}
+		void framework::requestClose(bool error);
 
-		bool framework::isInitialized()
-		{
-			return m_initialized;
-		}
+		int framework::getFpsLimit();
 
-		void framework::setInitialized(bool initialized)
-		{
-			m_initialized = initialized;
-		}
-
-		bool framework::isRunning()
-		{
-			return m_running;
-		}
-
-		void framework::requestClose(bool error)
-		{
-			m_running = false;
-
-			// A statement in case it was already true.
-			if (error)
-			{
-				m_error = true;
-			}
-		}
-
-		int framework::getFpsLimit()
-		{
-			return m_fpsLimit;
-		}
-
-		void framework::setFpsLimit(int fpsLimit)
-		{
-			m_fpsLimit = fpsLimit;
-		}
+		void framework::setFpsLimit(int fpsLimit);
 	};
 }

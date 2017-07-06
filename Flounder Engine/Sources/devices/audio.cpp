@@ -1,15 +1,7 @@
-#include "sound.h"
+#include "audio.h"
 
 namespace flounder {
-	sound::sound()
-	{
-	}
-
-	sound::~sound()
-	{
-	}
-
-	void sound::init()
+	audio::audio()
 	{
 		// Creates the OpenAL contexts.
 		m_device = alcOpenDevice(NULL);
@@ -21,14 +13,18 @@ namespace flounder {
 		ALenum alError = alGetError();
 
 		if (alError != GL_NO_ERROR) {
-			logger::get()->error("OpenAL Error: " + alError);
+			//	logger::get()->error("OpenAL Error: " + alError);
 		}
 
 		// Creates a new sound model.
 		alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
 	}
 
-	void sound::update()
+	audio::~audio()
+	{
+	}
+
+	void audio::update()
 	{
 	//	vector3 cameraPosition = FlounderSound.get().getCameraPosition();
 
