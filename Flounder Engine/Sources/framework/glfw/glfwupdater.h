@@ -2,6 +2,7 @@
 
 #include "../updater.h"
 
+#include "../../camera/camera.h"
 #include "../../devices/audio.h"
 #include "../../devices/display.h"
 #include "../../devices/joysticks.h"
@@ -19,6 +20,7 @@ namespace flounder {
 		keyboard *m_keyboard;
 		mouse *m_mouse;
 		audio *m_audio;
+		camera *m_camera;
 
 	public:
 		glfwupdater();

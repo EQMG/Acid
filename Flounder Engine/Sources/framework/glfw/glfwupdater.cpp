@@ -13,6 +13,7 @@ namespace flounder {
 		delete m_keyboard;
 		delete m_mouse;
 		delete m_audio;
+		delete m_camera;
 	}
 
 	void glfwupdater::init()
@@ -23,24 +24,34 @@ namespace flounder {
 		m_keyboard = new keyboard();
 		m_mouse = new mouse;
 		m_audio = new audio;
+		m_camera = new camera();
 	}
 
 	void flounder::glfwupdater::update()
 	{
+		// Pre-Update
 		m_joysticks->update();
 		m_keyboard->update();
 		m_mouse->update();
 		m_audio->update();
+		m_camera->update();
 
+		// Update
+
+		// Post-Update
+
+		// Render
 		glClear(GL_COLOR_BUFFER_BIT);
-		glClearColor(mouse::get()->getPositionX(), 0.0f, mouse::get()->getPositionY(), 1.0f);
-
+		glClearColor(m_keyboard->getKey(GLFW_KEY_W), 0.0f, mouse::get()->getPositionY(), 1.0f);
 		m_display->update();
 	}
 
 	module *flounder::glfwupdater::getInstance(std::string name)
 	{
-		if (name == "audio") {
+		if (name == "camera") {
+			return m_camera;
+		}
+		else if (name == "audio") {
 			return m_audio;
 		}
 		else if (name == "display") 

@@ -18,10 +18,6 @@ namespace flounder {
 
 	matrix2x2::~matrix2x2()
 	{
-	//	delete &m00;
-	//	delete &m01;
-	//	delete &m10;
-	//	delete &m11;
 	}
 
 	matrix2x2 *matrix2x2::set(matrix2x2 *source)
@@ -187,7 +183,7 @@ namespace flounder {
 
 	float *matrix2x2::toArray(matrix2x2 *matrix)
 	{
-		float result[16];
+		float *result = new float[4];
 		result[0] = matrix->m00;
 		result[1] = matrix->m01;
 		result[2] = matrix->m10;

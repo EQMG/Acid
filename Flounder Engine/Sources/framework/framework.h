@@ -43,7 +43,9 @@ namespace flounder {
 
 		~framework();
 
-		void run(updater* updater);
+		void loadUpdater(updater* updater);
+
+		void run();
 
 		module *getInstance(std::string name);
 

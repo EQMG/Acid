@@ -61,7 +61,7 @@ namespace flounder {
 		/// <param name="button"> The mouse button to test.
 		/// </param>
 		/// <returns> If the mouse button is currently pressed. </returns>
-		bool getMouse(int button);
+		bool getButton(int button);
 
 		/// <summary>
 		/// Gets the mouses screen x position.

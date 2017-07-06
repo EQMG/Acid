@@ -22,6 +22,7 @@ namespace flounder {
 
 	bool keyboard::getKey(int key)
 	{
+	//	std::cout << m_keyboardKeys[key] << std::endl;
 		return m_keyboardKeys[key] != GLFW_RELEASE;
 	}
 
@@ -30,20 +31,22 @@ namespace flounder {
 		return m_keyboardChar;
 	}
 
-	void callbackKey(GLFWwindow * window, int key, int scancode, int action, int mods)
+	void callbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
 		// TODO: Play with mods.
 
-		if (key < 0 || key > GLFW_KEY_LAST) {
-		//	logger::get()->error("Invalid action attempted with key " + key);
+		if (key < 0 || key > GLFW_KEY_LAST) 
+		{
+			logger::get()->error("Invalid action attempted with key " + key);
 		}
 		else
 		{
+		//	std::cout << key << ":" << action << std::endl;
 			keyboard::get()->m_keyboardKeys[key] = action;
 		}
 	}
 
-	void callbackChar(GLFWwindow * window, unsigned int codepoint)
+	void callbackChar(GLFWwindow *window, unsigned int codepoint)
 	{
 		keyboard::get()->m_keyboardChar = codepoint;
 	}

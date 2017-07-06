@@ -23,9 +23,6 @@ namespace flounder {
 
 	vector3::~vector3()
 	{
-		delete &x;
-		delete &y;
-		delete &z;
 	}
 
 	vector3 *vector3::set(float x, float y, float z)
