@@ -28,8 +28,9 @@ namespace flounder {
 		glfwSetErrorCallback(callbackError);
 
 		// Initialize the GLFW library.
-		if (!glfwInit()) {
-		//	logger::get()->error("Could not init GLFW!");
+		if (!glfwInit()) 
+		{
+			logger::get()->error("Could not init GLFW!");
 			framework::get()->requestClose(true);
 		}
 
@@ -41,7 +42,8 @@ namespace flounder {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_glfwMinor);
 
 		// For new GLFW, and macOS.
-		if (m_glfwMajor >= 3 && m_glfwMinor >= 2) {
+		if (m_glfwMajor >= 3 && m_glfwMinor >= 2) 
+		{
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		}
@@ -58,7 +60,8 @@ namespace flounder {
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
 
-		if (m_fullscreen) {
+		if (m_fullscreen) 
+		{
 			m_fullscreenWidth = videoMode->width;
 			m_fullscreenHeight = videoMode->height;
 		}
@@ -69,8 +72,9 @@ namespace flounder {
 		m_focused = true;
 
 		// Gets any window errors.
-		if (m_window == NULL) {
-		//	logger::get()->error("Could not create the window! Update your graphics drivers and ensure your computer supports OpenGL!");
+		if (m_window == NULL) 
+		{
+			logger::get()->error("Could not create the window! Update your graphics drivers and ensure your computer supports OpenGL!");
 			framework::get()->requestClose(true);
 			glfwTerminate();
 		}
@@ -98,8 +102,9 @@ namespace flounder {
 		// Gets any OpenGL errors.
 		GLenum glError = glGetError();
 
-		if (glError != GL_NO_ERROR) {
-		//	logger::get()->error("OpenGL Capability Error: " + glError);
+		if (glError != GL_NO_ERROR) 
+		{
+			logger::get()->error("OpenGL Capability Error: " + glError);
 			framework::get()->requestClose(true);
 		}
 
@@ -111,10 +116,11 @@ namespace flounder {
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 
 		// Initialize the GLEW library.
-		//if (glewInit() != GLEW_OK) {
-		//	logger::get()->error("Could not init GLEW!");
-		//	framework::get()->requestClose(true);
-		//}
+		if (glewInit() != GLEW_OK) 
+		{
+			logger::get()->error("Could not init GLEW!");
+			framework::get()->requestClose(true);
+		}
 
 		// System logs.
 		//	logger::get()->log("If you are getting errors, please write a description of how you get the error, and copy this log: https://github.com/Equilibrium-Games/Flounder-Engine/issues");

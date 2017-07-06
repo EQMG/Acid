@@ -24,11 +24,14 @@ namespace flounder {
 		delete m_updater;
 	}
 
-	void framework::run(updater* updater)
+	void framework::loadUpdater(updater *updater)
 	{
 		m_updater = updater;
 		m_updater->init();
+	}
 
+	void framework::run()
+	{
 		while (m_running) 
 		{
 			m_updater->update();

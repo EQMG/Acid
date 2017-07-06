@@ -18,22 +18,6 @@ namespace flounder {
 
 	matrix4x4::~matrix4x4()
 	{
-	//	delete &m00;
-	//	delete &m01;
-	//	delete &m02;
-	//	delete &m03;
-	//	delete &m10;
-	//	delete &m11;
-	//	delete &m12;
-	//	delete &m13;
-	//	delete &m20;
-	//	delete &m21;
-	//	delete &m22;
-	//	delete &m23;
-	//	delete &m30;
-	//	delete &m31;
-	//	delete &m32;
-	//	delete &m33;
 	}
 
 	matrix4x4 * matrix4x4::set(matrix4x4 *source)
@@ -461,7 +445,7 @@ namespace flounder {
 
 	float *matrix4x4::toArray(matrix4x4 *matrix)
 	{
-		float result[16];
+		float *result = new float[16];
 		result[0] = matrix->m00;
 		result[1] = matrix->m01;
 		result[2] = matrix->m02;
@@ -604,6 +588,23 @@ namespace flounder {
 		destination->m13 = ty;
 		destination->m23 = tz;
 		destination->m33 = 1.0f;
+		return destination;
+	}
+
+	matrix4x4 *matrix4x4::viewMatrix(vector3 *position, vector3 *rotation, matrix4x4 *destination)
+	{
+		if (destination == NULL)
+		{
+			destination = new matrix4x4();
+		}
+
+		destination->setIdentity();
+		position->negate();
+		matrix4x4::rotate(destination, &vector3(1.0f, 0.0f, 0.0f), (float) __radians(rotation->x), destination);
+		matrix4x4::rotate(destination, &vector3(0.0f, 1.0f, 0.0f), (float) __radians(-rotation->y), destination);
+		matrix4x4::rotate(destination, &vector3(0.0f, 0.0f, 1.0f), (float) __radians(rotation->z), destination);
+		matrix4x4::translate(destination, position, destination);
+		position->negate();
 		return destination;
 	}
 
