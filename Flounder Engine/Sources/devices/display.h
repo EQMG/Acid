@@ -42,7 +42,7 @@ namespace flounder {
 		friend static void callbackFrame(GLFWwindow* window, int width, int height);
 	public:
 		static display* get() {
-			return static_cast<display*>(framework::get()->getInstance("display"));
+			return (display*) framework::get()->getInstance("display");
 		}
 
 		/// <summary>
@@ -54,8 +54,6 @@ namespace flounder {
 		/// Deconstructor for the keyboard.
 		/// </summary>
 		~display();
-
-		void init();
 
 		void update();
 

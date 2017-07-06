@@ -11,7 +11,7 @@ namespace flounder {
 	public:
 		static logger *get()
 		{
-			return static_cast<logger*>(framework::get()->getInstance("logger"));
+			return (logger*) framework::get()->getInstance("logger");
 		}
 
 		logger();

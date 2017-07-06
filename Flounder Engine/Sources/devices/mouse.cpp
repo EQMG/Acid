@@ -10,20 +10,17 @@ namespace flounder {
 		
 		m_cursorDisabled = false;
 		m_lastCursorDisabled = false;
-	}
 
-	mouse::~mouse()
-	{
-		delete m_mouseButtons;
-	}
-
-	void mouse::init()
-	{
 		// Sets the mouses callbacks.
 		glfwSetScrollCallback(display::get()->getWindow(), callbackScroll);
 		glfwSetMouseButtonCallback(display::get()->getWindow(), callbackMouseButton);
 		glfwSetCursorPosCallback(display::get()->getWindow(), callbackCursorPos);
 		glfwSetCursorEnterCallback(display::get()->getWindow(), callbackCursorEnter);
+	}
+
+	mouse::~mouse()
+	{
+		delete m_mouseButtons;
 	}
 
 	void mouse::update()

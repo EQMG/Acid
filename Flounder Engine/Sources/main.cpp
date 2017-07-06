@@ -1,19 +1,13 @@
 #include <iostream>
 
-#include "logger\logger.h"
-#include "devices\display.h"
-#include "devices\joysticks.h"
-#include "devices\mouse.h"
-#include "devices\keyboard.h"
-
 #include "framework\framework.h"
+#include "framework\glfw\glfwupdater.h"
 
 using namespace flounder;
 
 int main() {
-	framework *l_framework = new framework("Flounder C++", -1);
-	l_framework->run();
-	delete l_framework;
-	system("PAUSE");
+	framework("Flounder C++", -1).run(new glfwupdater());
+	std::cout << "Press enter to close the console!" << std::endl;
+	std::getchar();
 	return 0;
 }
