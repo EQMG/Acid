@@ -33,7 +33,7 @@ namespace flounder {
 		friend static void callbackCursorEnter(GLFWwindow* window, int entered);
 	public:
 		static mouse* get() {
-			return static_cast<mouse*>(framework::get()->getInstance("mouse"));
+			return (mouse*) framework::get()->getInstance("mouse");
 		}
 
 		/// <summary>
@@ -45,8 +45,6 @@ namespace flounder {
 		/// Deconstructor for the mouse.
 		/// </summary>
 		~mouse();
-
-		void init();
 
 		void update();
 

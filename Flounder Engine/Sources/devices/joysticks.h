@@ -25,7 +25,7 @@ namespace flounder {
 		joystick **m_connected;
 	public:
 		static joysticks* get() {
-			return static_cast<joysticks*>(framework::get()->getInstance("joysticks"));
+			return (joysticks*) framework::get()->getInstance("joysticks");
 		}
 
 		/// <summary>
@@ -37,8 +37,6 @@ namespace flounder {
 		/// Deconstructor for the joysticks.
 		/// </summary>
 		~joysticks();
-
-		void init();
 
 		void update();
 

@@ -129,9 +129,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\framework\glfw\glfwupdater.cpp" />
     <ClCompile Include="Sources\devices\joysticks.cpp" />
     <ClCompile Include="Sources\devices\mouse.cpp" />
-    <ClCompile Include="Sources\devices\sound.cpp" />
+    <ClCompile Include="Sources\devices\audio.cpp" />
+    <ClCompile Include="Sources\framework\framework.cpp" />
+    <ClCompile Include="Sources\framework\module.cpp" />
     <ClCompile Include="Sources\logger\logger.cpp" />
     <ClCompile Include="Sources\devices\keyboard.cpp" />
     <ClCompile Include="Sources\maths\colour.cpp" />
@@ -148,10 +151,12 @@
     <ClCompile Include="Sources\maths\vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\framework\glfw\glfwupdater.h" />
     <ClInclude Include="Sources\devices\joysticks.h" />
-    <ClInclude Include="Sources\devices\sound.h" />
+    <ClInclude Include="Sources\devices\audio.h" />
     <ClInclude Include="Sources\framework\module.h" />
     <ClInclude Include="Sources\devices\mouse.h" />
+    <ClInclude Include="Sources\framework\updater.h" />
     <ClInclude Include="Sources\logger\logger.h" />
     <ClInclude Include="Sources\devices\keyboard.h" />
     <ClInclude Include="Sources\flounder.h" />
