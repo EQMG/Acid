@@ -278,6 +278,15 @@ namespace flounder {
 		static matrix4x4 *orthographicMatrix(float left, float right, float bottom, float top, float near, float far, matrix4x4 *destination);
 
 		/// <summary>
+		/// Creates a new view matrix, or updates a existing one.
+		/// </summary>
+		/// <param name="position"> The cameras position. </param>
+		/// <param name="rotation"> The cameras rotation. </param>
+		/// </param>
+		/// <returns> The transformation matrix. </returns>
+		static matrix4x4 *viewMatrix(vector3 *position, vector3 *rotation, matrix4x4 *destination);
+
+		/// <summary>
 		/// Transforms a 3D world point into screen space.
 		/// </summary>
 		/// <param name="worldSpace"> The point to get into screen space. </param>

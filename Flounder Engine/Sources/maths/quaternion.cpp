@@ -23,10 +23,6 @@ namespace flounder {
 
 	quaternion::~quaternion()
 	{
-		//	delete &x;
-		//	delete &y;
-		//	delete &z;
-		//	delete &w;
 	}
 
 	quaternion *quaternion::set(float x, float y, float z, float w)

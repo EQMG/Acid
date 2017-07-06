@@ -18,8 +18,6 @@ namespace flounder {
 
 	vector2::~vector2()
 	{
-		delete &x;
-		delete &y;
 	}
 
 	vector2 *vector2::set(float x, float y)
