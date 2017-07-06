@@ -5,18 +5,15 @@ namespace flounder {
 	{
 		m_keyboardKeys = new int[GLFW_KEY_LAST + 1];
 		m_keyboardChar = 0;
+
+		// Sets the keyboards callbacks.
+		glfwSetKeyCallback(display::get()->getWindow(), callbackKey);
+		glfwSetCharCallback(display::get()->getWindow(), callbackChar);
 	}
 
 	keyboard::~keyboard()
 	{
 		delete m_keyboardKeys;
-	}
-
-	void keyboard::init()
-	{
-		// Sets the keyboards callbacks.
-		glfwSetKeyCallback(display::get()->getWindow(), callbackKey);
-		glfwSetCharCallback(display::get()->getWindow(), callbackChar);
 	}
 
 	void keyboard::update()
@@ -38,7 +35,7 @@ namespace flounder {
 		// TODO: Play with mods.
 
 		if (key < 0 || key > GLFW_KEY_LAST) {
-			//	logger::get()->error("Invalid action attempted with key " + key);
+		//	logger::get()->error("Invalid action attempted with key " + key);
 		}
 		else
 		{

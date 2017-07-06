@@ -19,7 +19,7 @@ namespace flounder {
 		friend static void callbackChar(GLFWwindow* window, unsigned int codepoint);
 	public:
 		static keyboard* get() {
-			return static_cast<keyboard*>(framework::get()->getInstance("keyboard"));
+			return (keyboard*) framework::get()->getInstance("keyboard");
 		}
 
 		/// <summary>
@@ -31,8 +31,6 @@ namespace flounder {
 		/// Deconstructor for the keyboard.
 		/// </summary>
 		~keyboard();
-
-		void init();
 
 		void update();
 
