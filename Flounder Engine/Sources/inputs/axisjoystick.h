@@ -23,7 +23,8 @@ namespace flounder {
 		/// <param name="joystick"> The joystick. Should be one of the GLFW.JOYSTICK values. </param>
 		/// <param name="n_args"> The number axes of joystick axes being checked. </param>
 		/// <param name="..."> The axes on the joystick being checked. </param>
-		axisjoystick(int joystick, int n_args, ...) {
+		axisjoystick(int joystick, int n_args, ...) 
+		{
 			m_joystick = joystick;
 			m_count = n_args;
 			m_axes = new int[n_args];
@@ -42,11 +43,13 @@ namespace flounder {
 		/// <summary>
 		/// Deconstructor for the axis joystick.
 		/// </summary>
-		~axisjoystick() {
+		~axisjoystick() 
+		{
 			delete m_axes;
 		}
 
-		float getAmount() override {
+		float getAmount() override 
+		{
 			if (m_count == 0 || !joysticks::get()->isConnected(m_joystick))
 			{
 				return 0.0f;

@@ -15,6 +15,7 @@ namespace flounder {
 		}
 
 		logger();
+
 		~logger();
 
 		/// <summary>

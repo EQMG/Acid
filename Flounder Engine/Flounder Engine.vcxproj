@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\maincamera.cpp" />
+    <ClCompile Include="Game\mainplayer.cpp" />
     <ClCompile Include="Sources\physics\frustum.cpp" />
     <ClCompile Include="Sources\physics\ray.cpp" />
     <ClCompile Include="Sources\camera\camera.cpp" />
@@ -154,9 +155,14 @@
     <ClCompile Include="Sources\maths\vector3.cpp" />
     <ClCompile Include="Sources\maths\vector4.cpp" />
     <ClCompile Include="Sources\physics\sphere.cpp" />
+    <ClCompile Include="Sources\tasks\tasks.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\maincamera.h" />
+    <ClInclude Include="Game\mainplayer.h" />
+    <ClInclude Include="Sources\factory\ifactory.h" />
+    <ClInclude Include="Sources\factory\ifactorybuilder.h" />
+    <ClInclude Include="Sources\factory\ifactoryobject.h" />
     <ClInclude Include="Sources\helpers\helperarray.h" />
     <ClInclude Include="Sources\physics\collider.h" />
     <ClInclude Include="Sources\physics\frustum.h" />
@@ -194,6 +200,8 @@
     <ClInclude Include="Sources\maths\vector3.h" />
     <ClInclude Include="Sources\maths\vector4.h" />
     <ClInclude Include="Sources\physics\sphere.h" />
+    <ClInclude Include="Sources\tasks\itask.h" />
+    <ClInclude Include="Sources\tasks\tasks.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

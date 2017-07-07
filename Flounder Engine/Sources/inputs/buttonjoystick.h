@@ -23,7 +23,8 @@ namespace flounder {
 		/// <param name="joystick"> The joystick. Should be one of the GLFW.JOYSTICK values. </param>
 		/// <param name="n_args"> The number buttons of joystick buttons being checked. </param>
 		/// <param name="..."> The buttons on the joystick being checked. </param>
-		buttonjoystick(int joystick, int n_args, ...) {
+		buttonjoystick(int joystick, int n_args, ...) 
+		{
 			m_joystick = joystick;
 			m_count = n_args;
 			m_buttons = new int[n_args];
@@ -43,7 +44,8 @@ namespace flounder {
 		/// <summary>
 		/// Deconstructor for the button joystick.
 		/// </summary>
-		~buttonjoystick() {
+		~buttonjoystick() 
+		{
 			delete m_buttons;
 		}
 
@@ -64,7 +66,8 @@ namespace flounder {
 			return false;
 		}
 
-		bool wasDown() override {
+		bool wasDown() override 
+		{
 			bool stillDown = m_wasDown && isDown();
 			m_wasDown = isDown();
 			return m_wasDown == !stillDown;
