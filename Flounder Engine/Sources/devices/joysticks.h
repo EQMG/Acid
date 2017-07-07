@@ -12,7 +12,11 @@ namespace flounder {
 	class joysticks : public module
 	{
 	private:
-		struct joystick {
+		/// <summary>
+		/// A definition for a connected joystick.
+		/// </summary>
+		struct joystick 
+		{
 			bool connected = false;
 			int id;
 			const char *name;
@@ -24,7 +28,8 @@ namespace flounder {
 
 		joystick **m_connected;
 	public:
-		static joysticks* get() {
+		static joysticks* get() 
+		{
 			return (joysticks*) framework::get()->getInstance("joysticks");
 		}
 

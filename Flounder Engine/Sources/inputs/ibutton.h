@@ -1,17 +1,16 @@
 #pragma once
 
-namespace flounder
-{
+namespace flounder {
 	/// <summary>
 	/// Interface for a binary input device.
 	/// </summary>
 	class ibutton
 	{
+	public:
 		/// <summary>
 		/// Returns whether this button is currently pressed.
 		/// </summary>
 		/// <returns> True if the button is pressed, false otherwise. </returns>
-	public:
 		virtual bool isDown() = 0;
 
 		/// <summary>

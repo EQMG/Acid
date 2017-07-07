@@ -21,7 +21,8 @@ namespace flounder {
 		/// </summary>
 		/// <param name="n_args"> The number keys of keyboard buttons being checked. </param>
 		/// <param name="..."> The keys on the keyboard being checked. </param>
-		buttonkeyboard(int n_args, ...) {
+		buttonkeyboard(int n_args, ...) 
+		{
 			m_count = n_args;
 			m_keys = new int[n_args];
 			m_wasDown = false;
@@ -40,11 +41,13 @@ namespace flounder {
 		/// <summary>
 		/// Deconstructor for the button keyboard.
 		/// </summary>
-		~buttonkeyboard() {
+		~buttonkeyboard() 
+		{
 			delete m_keys;
 		}
 
-		bool isDown() override {
+		bool isDown() override 
+		{
 			if (m_count == 0)
 			{
 				return false;
@@ -61,7 +64,8 @@ namespace flounder {
 			return false;
 		}
 
-		bool wasDown() override {
+		bool wasDown() override 
+		{
 			bool stillDown = m_wasDown && isDown();
 			m_wasDown = isDown();
 			return m_wasDown == !stillDown;

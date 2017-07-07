@@ -1,7 +1,8 @@
 #pragma once
 
 namespace flounder {
-	class module {
+	class module 
+	{
 	private:
 	public:
 		module();

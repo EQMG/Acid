@@ -79,6 +79,18 @@ namespace flounder {
 		}
 
 		/// <summary>
+		/// Used to floor the value if less than the min.
+		/// </summary>
+		/// <param name="min"> The minimum value. </param>
+		/// <param name="value"> The value.
+		/// </param>
+		/// <returns> Returns a value with deadband applied. </returns>
+		static double deadband(const double min, const double value)
+		{
+			return abs(value) >= abs(min) ? value : 0.0;
+		}
+
+		/// <summary>
 		/// Ensures {@code value} is in the range of {@code min} to {@code max}. If {@code value} is greater than {@code max}, this will return {@code max}. If {@code value} is less than {@code min}, this will return {@code min}. Otherwise, {@code value} is returned unchanged.
 		/// </summary>
 		/// <param name="value"> The value to clamp. </param>

@@ -12,16 +12,11 @@ namespace flounder {
 
 	delta::~delta()
 	{
-	//	delete &m_currentFrameTime;
-	//	delete &m_lastFrameTime;
-
-	//	delete &m_change;
-	//	delete &m_time;
 	}
 
-	void delta::update(float timeMs)
+	void delta::update()
 	{
-		m_currentFrameTime = timeMs / 1000.0;
+		m_currentFrameTime = framework::get()->getTimeSec();
 		m_change = m_currentFrameTime - m_lastFrameTime;
 		m_lastFrameTime = m_currentFrameTime;
 		m_time += m_change;

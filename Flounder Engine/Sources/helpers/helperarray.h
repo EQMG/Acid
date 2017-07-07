@@ -1,7 +1,8 @@
 #pragma once
 
 namespace flounder {
-	class helperarray {
+	class helperarray 
+	{
 	public:
 		static float** recFloatArray(int size1, int size2)
 		{

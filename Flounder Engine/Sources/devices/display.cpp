@@ -191,9 +191,9 @@ namespace flounder {
 		glfwSetWindowSize(m_window, width, height);
 	}
 
-	float display::getAspectRatio()
+	double display::getAspectRatio()
 	{
-		return ((float)getWidth()) / ((float)getHeight());
+		return ((double) getWidth()) / ((double) getHeight());
 	}
 
 	std::string display::getTitle()

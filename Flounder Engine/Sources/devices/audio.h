@@ -16,7 +16,8 @@ namespace flounder {
 		ALCcontext *m_context;
 		int *buffers;
 	public:
-		static audio* get() {
+		static audio* get() 
+		{
 			return (audio*) framework::get()->getInstance("audio"); 
 		}
 
