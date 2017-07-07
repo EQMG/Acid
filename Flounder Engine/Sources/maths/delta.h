@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../framework/framework.h"
+
 namespace flounder {
 	/// <summary>
 	/// A class for handing and calculating deltas.
@@ -26,8 +28,7 @@ namespace flounder {
 		/// <summary>
 		/// Updates change and times.
 		/// </summary>
-		/// <param name="timeMs"> The current time in ms. </param>
-		void update(float timeMs);
+		void update();
 
 		/// <summary>
 		/// Gets the current change.

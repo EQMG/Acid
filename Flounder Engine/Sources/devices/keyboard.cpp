@@ -6,6 +6,11 @@ namespace flounder {
 		m_keyboardKeys = new int[GLFW_KEY_LAST + 1];
 		m_keyboardChar = 0;
 
+		// Sets the default state of the keys to released.
+		for (int i = 0; i < GLFW_KEY_LAST + 1; i++) {
+			m_keyboardKeys[i] = GLFW_RELEASE;
+		}
+
 		// Sets the keyboards callbacks.
 		glfwSetKeyCallback(display::get()->getWindow(), callbackKey);
 		glfwSetCharCallback(display::get()->getWindow(), callbackChar);
@@ -22,7 +27,6 @@ namespace flounder {
 
 	bool keyboard::getKey(int key)
 	{
-	//	std::cout << m_keyboardKeys[key] << std::endl;
 		return m_keyboardKeys[key] != GLFW_RELEASE;
 	}
 
@@ -41,7 +45,6 @@ namespace flounder {
 		}
 		else
 		{
-		//	std::cout << key << ":" << action << std::endl;
 			keyboard::get()->m_keyboardKeys[key] = action;
 		}
 	}

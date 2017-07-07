@@ -18,7 +18,8 @@ namespace flounder {
 		friend static void callbackKey(GLFWwindow* window, int key, int scancode, int action, int mods);
 		friend static void callbackChar(GLFWwindow* window, unsigned int codepoint);
 	public:
-		static keyboard* get() {
+		static keyboard* get() 
+		{
 			return (keyboard*) framework::get()->getInstance("keyboard");
 		}
 
@@ -38,8 +39,7 @@ namespace flounder {
 		/// Gets whether or not a particular key is currently pressed.
 		/// <p>GLFW Actions: GLFW_PRESS, GLFW_RELEASE, GLFW_REPEAT</p>
 		/// </summary>
-		/// <param name="key"> The key to test.
-		/// </param>
+		/// <param name="key"> The key to test. </param>
 		/// <returns> If the key is currently pressed. </returns>
 		bool getKey(int key);
 

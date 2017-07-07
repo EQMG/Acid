@@ -33,10 +33,6 @@ namespace flounder {
 
 	colour::~colour()
 	{
-	//	delete &r;
-	//	delete &g;
-	//	delete &b;
-	//	delete &a;
 	}
 
 	colour *colour::set(colour *source)
