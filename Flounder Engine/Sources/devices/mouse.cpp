@@ -5,11 +5,16 @@ namespace flounder {
 	{
 		m_mouseButtons = new int[GLFW_MOUSE_BUTTON_LAST];
 		m_displaySelected = true;
-		m_mousePositionX = 0.5f;
-		m_mousePositionY = 0.5f;	
+		m_mousePositionX = 0.5;
+		m_mousePositionY = 0.5;	
 		
 		m_cursorDisabled = false;
 		m_lastCursorDisabled = false;
+
+		// Sets the default state of the buttons to released.
+		for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST + 1; i++) {
+			m_mouseButtons[i] = GLFW_RELEASE;
+		}
 
 		// Sets the mouses callbacks.
 		glfwSetScrollCallback(display::get()->getWindow(), callbackScroll);
@@ -36,17 +41,17 @@ namespace flounder {
 		// Fixes snaps when toggling cursor.
 		if (m_cursorDisabled != m_lastCursorDisabled) 
 		{
-			m_mouseDeltaX = 0.0f;
-			m_mouseDeltaY = 0.0f;
+			m_mouseDeltaX = 0.0;
+			m_mouseDeltaY = 0.0;
 
 			m_lastCursorDisabled = m_cursorDisabled;
 		}
 
 		// Updates the mouse wheel using a smooth scroll technique.
-		if (m_mouseDeltaWheel != 0.0f) 
+		if (m_mouseDeltaWheel != 0.0) 
 		{
-			m_mouseDeltaWheel -= framework::get()->getDelta() * ((m_mouseDeltaWheel < 0.0f) ? -1.0f : 1.0f);
-			m_mouseDeltaWheel = maths::deadband(0.1f, m_mouseDeltaWheel);
+			m_mouseDeltaWheel -= framework::get()->getDelta() * ((m_mouseDeltaWheel < 0.0) ? -1.0 : 1.0);
+			m_mouseDeltaWheel = maths::deadband(0.1, m_mouseDeltaWheel);
 		}
 	}
 
@@ -68,32 +73,32 @@ namespace flounder {
 		return m_mouseButtons[button] != GLFW_RELEASE;
 	}
 
-	float mouse::getPositionX()
+	double mouse::getPositionX()
 	{
 		return m_mousePositionX;
 	}
 
-	float mouse::getPositionY()
+	double mouse::getPositionY()
 	{
 		return m_mousePositionY;
 	}
 
-	void mouse::setPosition(float cursorX, float cursorY)
+	void mouse::setPosition(double cursorX, double cursorY)
 	{
 		glfwSetCursorPos(display::get()->getWindow(), cursorX, cursorY);
 	}
 
-	float mouse::getDeltaX()
+	double mouse::getDeltaX()
 	{
 		return m_mouseDeltaX;
 	}
 
-	float mouse::getDeltaY()
+	double mouse::getDeltaY()
 	{
 		return m_mouseDeltaY;
 	}
 
-	float mouse::getDeltaWheel()
+	double mouse::getDeltaWheel()
 	{
 		return m_mouseDeltaWheel;
 	}

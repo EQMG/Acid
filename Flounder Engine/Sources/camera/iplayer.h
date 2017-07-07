@@ -3,7 +3,8 @@
 #include "../maths/vector3.h"
 
 namespace flounder {
-	class iplayer {
+	class iplayer
+	{
 	public:
 		/// <summary>
 		/// Checks inputs and carries out player movement. Should be called every frame.

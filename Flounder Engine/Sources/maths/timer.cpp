@@ -1,26 +1,24 @@
 #include "timer.h"
 
 namespace flounder {
-	timer::timer(double interval, float timeMs)
+	timer::timer(double interval)
 	{
-		m_startTime = timeMs;
-		m_interval = m_interval * 1000.0;
+		m_startTime = framework::get()->getTimeMs();
+		m_interval = interval * 1000.0;
 	}
 
 	timer::~timer()
 	{
-	//	delete &m_startTime;
-	//	delete &m_interval;
 	}
 
-	bool timer::isPassedTime(float timeMs)
+	bool timer::isPassedTime()
 	{
-		return timeMs - m_startTime > m_interval;
+		return framework::get()->getTimeMs() - m_startTime >= m_interval;
 	}
 
-	void timer::resetStartTime(float timeMs)
+	void timer::resetStartTime()
 	{
-		this->m_startTime = timeMs;
+		this->m_startTime = framework::get()->getTimeMs();
 	}
 
 	double timer::getInterval()
@@ -28,9 +26,9 @@ namespace flounder {
 		return m_interval / 1000.0;
 	}
 
-	void timer::setInterval(double interval, float timeMs)
+	void timer::setInterval(double interval)
 	{
 		this->m_interval = interval * 1000.0;
-		this->m_startTime = timeMs;
+		this->m_startTime = framework::get()->getTimeMs();
 	}
 }

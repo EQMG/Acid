@@ -41,7 +41,8 @@ namespace flounder {
 		friend static void callbackSize(GLFWwindow* window, int width, int height);
 		friend static void callbackFrame(GLFWwindow* window, int width, int height);
 	public:
-		static display* get() {
+		static display* get() 
+		{
 			return (display*) framework::get()->getInstance("display");
 		}
 
@@ -84,7 +85,7 @@ namespace flounder {
 		/// Gets the aspect ratio between the displays width and height.
 		/// </summary>
 		/// <returns> The aspect ratio. </returns>
-		float getAspectRatio();
+		double getAspectRatio();
 
 		/// <summary>
 		/// Gets the window's title.

@@ -15,13 +15,13 @@ namespace flounder {
 	//	file *customMouse;
 
 		int *m_mouseButtons;
-		float m_lastMousePositionX;
-		float m_lastMousePositionY;
-		float m_mousePositionX;
-		float m_mousePositionY;
-		float m_mouseDeltaX;
-		float m_mouseDeltaY;
-		float m_mouseDeltaWheel;
+		double m_lastMousePositionX;
+		double m_lastMousePositionY;
+		double m_mousePositionX;
+		double m_mousePositionY;
+		double m_mouseDeltaX;
+		double m_mouseDeltaY;
+		double m_mouseDeltaWheel;
 		bool m_displaySelected;
 
 		bool m_cursorDisabled;
@@ -32,7 +32,8 @@ namespace flounder {
 		friend static void callbackCursorPos(GLFWwindow* window, double xpos, double ypos);
 		friend static void callbackCursorEnter(GLFWwindow* window, int entered);
 	public:
-		static mouse* get() {
+		static mouse* get() 
+		{
 			return (mouse*) framework::get()->getInstance("mouse");
 		}
 
@@ -58,8 +59,7 @@ namespace flounder {
 		/// Gets whether or not a particular mouse button is currently pressed.
 		/// <p>GLFW Actions: GLFW_PRESS, GLFW_RELEASE, GLFW_REPEAT</p>
 		/// </summary>
-		/// <param name="button"> The mouse button to test.
-		/// </param>
+		/// <param name="button"> The mouse button to test. </param>
 		/// <returns> If the mouse button is currently pressed. </returns>
 		bool getButton(int button);
 
@@ -67,33 +67,38 @@ namespace flounder {
 		/// Gets the mouses screen x position.
 		/// </summary>
 		/// <returns> The mouses x position. </returns>
-		float getPositionX();
+		double getPositionX();
 
 		/// <summary>
 		/// Gets the mouses screen y position.
 		/// </summary>
 		/// <returns> The mouses y position. </returns>
-		float getPositionY();
+		double getPositionY();
 
-		void setPosition(float cursorX, float cursorY);
+		/// <summary>
+		/// Sets the mouse position by calling glfwSetCursorPos.
+		/// </summary>
+		/// <param name="cursorX"> The x position in screenspace. </param>
+		/// <param name="cursorY"> The y position in screenspace. </param>
+		void setPosition(double cursorX, double cursorY);
 		
 		/// <summary>
 		/// Gets the mouses delta x.
 		/// </summary>
 		/// <returns> The mouses delta x. </returns>
-		float getDeltaX();
+		double getDeltaX();
 
 		/// <summary>
 		/// Gets the mouses delta y.
 		/// </summary>
 		/// <returns> The mouses delta y. </returns>
-		float getDeltaY();
+		double getDeltaY();
 
 		/// <summary>
 		/// Gets the mouses wheel delta.
 		/// </summary>
 		/// <returns> The mouses wheel delta. </returns>
-		float getDeltaWheel();
+		double getDeltaWheel();
 		
 		/// <summary>
 		/// Gets if the display is selected.

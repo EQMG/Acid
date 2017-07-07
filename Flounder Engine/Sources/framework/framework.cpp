@@ -32,7 +32,7 @@ namespace flounder {
 
 	void framework::run()
 	{
-		while (m_running) 
+		while (m_running)
 		{
 			m_updater->update();
 		}
@@ -46,36 +46,6 @@ namespace flounder {
 	std::string framework::getUnlocalizedName()
 	{
 		return m_unlocalizedName;
-	}
-
-	float framework::getTimeOffset()
-	{
-		return 0.0f; //  updater::getTimeOffset();
-	}
-
-	void framework::setTimeOffset(float timeOffset)
-	{
-		// updater::setTimeOffset(timeOffset);
-	}
-
-	float framework::getDelta()
-	{
-		return 0.0f; // updater::getDelta();
-	}
-
-	float framework::getDeltaRender()
-	{
-		return 0.0f; // updater::getDeltaRender();
-	}
-
-	float framework::getTimeSec()
-	{
-		return 0.0f; // updater::getTimeSec();
-	}
-
-	float framework::getTimeMs()
-	{
-		return 0.0f; // updater::getTimeMs();
 	}
 
 	bool framework::isInitialized()
@@ -112,5 +82,6 @@ namespace flounder {
 	void framework::setFpsLimit(int fpsLimit)
 	{
 		m_fpsLimit = fpsLimit;
+		m_updater->setFpsLimit(fpsLimit);
 	}
 }

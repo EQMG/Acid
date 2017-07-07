@@ -28,9 +28,9 @@ namespace flounder {
 		int m_fpsLimit;
 
 		updater *m_updater;
-
 	public:
-		static framework *get() {
+		static framework *get() 
+		{
 			return G_INSTANCE;
 		}
 
@@ -51,17 +51,17 @@ namespace flounder {
 
 		std::string framework::getUnlocalizedName();
 
-		float framework::getTimeOffset();
+		inline double framework::getTimeOffset() { return m_updater->getTimeOffset(); }
 
-		void framework::setTimeOffset(float timeOffset);
+		inline void framework::setTimeOffset(double timeOffset) { m_updater->setTimeOffset(timeOffset); }
 
-		float framework::getDelta();
+		inline double framework::getDelta() { return m_updater->getDelta(); }
 
-		float framework::getDeltaRender();
+		inline double framework::getDeltaRender() { return m_updater->getDeltaRender(); }
 
-		float framework::getTimeSec();
+		inline double framework::getTimeSec() { return m_updater->getTimeSec(); }
 
-		float framework::getTimeMs();
+		inline double framework::getTimeMs() { return m_updater->getTimeMs(); }
 
 		bool framework::isInitialized();
 

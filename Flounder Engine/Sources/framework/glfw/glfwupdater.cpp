@@ -7,7 +7,14 @@ namespace flounder {
 
 	glfwupdater::~glfwupdater()
 	{
+		delete m_deltaUpdate;
+		delete m_deltaRender;
+		delete m_timerUpdate;
+		delete m_timerRender;
+		delete m_timerLog;
+
 		delete m_logger;
+		delete m_tasks;
 		delete m_display;
 		delete m_joysticks;
 		delete m_keyboard;
@@ -18,7 +25,16 @@ namespace flounder {
 
 	void glfwupdater::init()
 	{
+		m_startTime = glfwGetTime();
+		m_timeOffset = 0.0;
+		m_deltaUpdate = new delta();
+		m_deltaRender = new delta();
+		m_timerUpdate = new timer(1.0 / 60.0);
+		m_timerRender = new timer(1.0 / framework::get()->getFpsLimit());
+		m_timerLog = new timer(1.0);
+
 		m_logger = new logger();
+		m_tasks = new tasks();
 		m_display = new display();
 		m_joysticks = new joysticks();
 		m_keyboard = new keyboard();
@@ -29,21 +45,53 @@ namespace flounder {
 
 	void flounder::glfwupdater::update()
 	{
-		// Pre-Update
-		m_joysticks->update();
-		m_keyboard->update();
-		m_mouse->update();
-		m_audio->update();
-		m_camera->update();
+		// Always-Update
 
-		// Update
+		if (m_timerUpdate->isPassedTime())
+		{
+			// Resets the timer.
+			m_timerUpdate->resetStartTime();
 
-		// Post-Update
+			// Updates the frameworks delta.
+			m_deltaUpdate->update();
 
-		// Render
-		glClear(GL_COLOR_BUFFER_BIT);
-		glClearColor(m_keyboard->getKey(GLFW_KEY_W), 0.0f, mouse::get()->getPositionY(), 1.0f);
-		m_display->update();
+			// Pre-Update
+			m_tasks->update();
+
+			m_joysticks->update();
+			m_keyboard->update();
+			m_mouse->update();
+			m_audio->update();
+			m_camera->update();
+
+			// Update
+
+			// Post-Update
+		}
+
+		// Logs the fps to the console.
+		if (m_timerLog->isPassedTime()) {
+			// Resets the timer.
+			m_timerLog->resetStartTime();
+
+			std::cout << "FPS: " << 1.0 / getDeltaRender() << ", UPS: " << 1.0 / getDelta() << std::endl;
+		}
+
+		// Renders when needed.
+		// ( || framework::get()->getFpsLimit() == -1 || framework::get()->getFpsLimit() > 1000.0f) && maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 10.0)
+		if (m_timerRender->isPassedTime())
+		{
+			// Resets the timer.
+			m_timerRender->resetStartTime();
+
+			// Updates the render delta, and render time extension.
+			m_deltaRender->update();
+
+			// Render
+			glClear(GL_COLOR_BUFFER_BIT);
+			glClearColor((GLclampf) m_keyboard->getKey(GLFW_KEY_W), (GLclampf) 0.0, (GLclampf) mouse::get()->getPositionY(), (GLclampf) 1.0);
+			m_display->update();
+		}
 	}
 
 	module *flounder::glfwupdater::getInstance(std::string name)

@@ -21,7 +21,8 @@ namespace flounder {
 		/// </summary>
 		/// <param name="n_args"> The number buttons of mouse buttons being checked. </param>
 		/// <param name="..."> The buttons on the mouse being checked. </param>
-		buttonmouse(int n_args, ...) {
+		buttonmouse(int n_args, ...) 
+		{
 			m_count = n_args;
 			m_buttons = new int[n_args];
 			m_wasDown = false;
@@ -40,11 +41,13 @@ namespace flounder {
 		/// <summary>
 		/// Deconstructor for the button mouse.
 		/// </summary>
-		~buttonmouse() {
+		~buttonmouse() 
+		{
 			delete m_buttons;
 		}
 
-		bool isDown() override {
+		bool isDown() override 
+		{
 			if (m_count == 0)
 			{
 				return false;
@@ -61,7 +64,8 @@ namespace flounder {
 			return false;
 		}
 
-		bool wasDown() override {
+		bool wasDown() override 
+		{
 			bool stillDown = m_wasDown && isDown();
 			m_wasDown = isDown();
 			return m_wasDown == !stillDown;
