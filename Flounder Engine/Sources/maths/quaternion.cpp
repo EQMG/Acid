@@ -110,7 +110,7 @@ namespace flounder {
 
 		if (tr >= 0.0)
 		{
-			float s = sqrt(tr + 1.0);
+			float s = (float) sqrt(tr + 1.0);
 			w = s * 0.5f;
 			s = 0.5f / s;
 			x = (source->m21 - source->m12) * s;
@@ -264,16 +264,16 @@ namespace flounder {
 			destination = new matrix4x4();
 		}
 
-		double xSquared = source->x * source->x;
-		double twoXY = 2.0f * source->x * source->y;
-		double twoXZ = 2.0f * source->x * source->z;
-		double twoXW = 2.0f * source->x * source->w;
-		double ySquared = source->y *source->y;
-		double twoYZ = 2.0f * source->y * source->z;
-		double twoYW = 2.0f * source->y * source->w;
-		double twoZW = 2.0f * source->z * source->w;
-		double zSquared = source->z * source->z;
-		double wSquared = source->w * source->w;
+		float xSquared = source->x * source->x;
+		float twoXY = 2.0f * source->x * source->y;
+		float twoXZ = 2.0f * source->x * source->z;
+		float twoXW = 2.0f * source->x * source->w;
+		float ySquared = source->y *source->y;
+		float twoYZ = 2.0f * source->y * source->z;
+		float twoYW = 2.0f * source->y * source->w;
+		float twoZW = 2.0f * source->z * source->w;
+		float zSquared = source->z * source->z;
+		float wSquared = source->w * source->w;
 
 		destination->m00 = wSquared + xSquared - ySquared - zSquared;
 		destination->m01 = twoXY - twoZW;
@@ -301,15 +301,16 @@ namespace flounder {
 			destination = new matrix4x4();
 		}
 
-		const float xy = source->x * source->y;
-		const float xz = source->x * source->z;
-		const float xw = source->x * source->w;
-		const float yz = source->y * source->z;
-		const float yw = source->y * source->w;
-		const float zw = source->z * source->w;
-		const float xSquared = source->x * source->x;
-		const float ySquared = source->y * source->y;
-		const float zSquared = source->z * source->z;
+		float xy = source->x * source->y;
+		float xz = source->x * source->z;
+		float xw = source->x * source->w;
+		float yz = source->y * source->z;
+		float yw = source->y * source->w;
+		float zw = source->z * source->w;
+		float xSquared = source->x * source->x;
+		float ySquared = source->y * source->y;
+		float zSquared = source->z * source->z;
+
 		destination->m00 = 1.0f - 2.0f * (ySquared + zSquared);
 		destination->m01 = 2.0f * (xy - zw);
 		destination->m02 = 2.0f * (xz + yw);

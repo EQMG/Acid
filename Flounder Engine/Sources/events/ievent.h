@@ -1,0 +1,27 @@
+#pragma once
+
+namespace flounder {
+	/// <summary>
+	/// A simple event listener and runner.
+	/// </summary>
+	class ievent 
+	{
+	public:
+		/// <summary>
+		/// Gets if the event has occurred.
+		/// </summary>
+		/// <returns> The event has occurred. </returns>
+		virtual bool eventTriggered() = 0;
+
+		/// <summary>
+		/// Run when a event has occurred.
+		/// </summary>
+		virtual void onEvent() = 0;
+
+		/// <summary>
+		/// Gets if the event is removed after it has run once.
+		/// </summary>
+		/// <returns> If the even will run. </returns>
+		virtual bool removeAfterEvent() = 0;
+	};
+}

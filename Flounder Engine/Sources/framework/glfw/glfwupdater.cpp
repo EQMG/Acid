@@ -15,12 +15,16 @@ namespace flounder {
 
 		delete m_logger;
 		delete m_tasks;
+		delete m_processing;
 		delete m_display;
 		delete m_joysticks;
 		delete m_keyboard;
 		delete m_mouse;
 		delete m_audio;
 		delete m_camera;
+
+		delete m_buttonFullscreen;
+		delete m_interpolation;
 	}
 
 	void glfwupdater::init()
@@ -35,12 +39,16 @@ namespace flounder {
 
 		m_logger = new logger();
 		m_tasks = new tasks();
+		m_processing = new processing();
 		m_display = new display();
 		m_joysticks = new joysticks();
 		m_keyboard = new keyboard();
 		m_mouse = new mouse;
 		m_audio = new audio;
 		m_camera = new camera();
+
+		m_buttonFullscreen = new buttonkeyboard(1, GLFW_KEY_F11);
+		m_interpolation = new smoothfloat(0.5f, 1.0f);
 	}
 
 	void flounder::glfwupdater::update()
@@ -57,6 +65,7 @@ namespace flounder {
 
 			// Pre-Update
 			m_tasks->update();
+			m_processing->update();
 
 			m_joysticks->update();
 			m_keyboard->update();
@@ -65,6 +74,9 @@ namespace flounder {
 			m_camera->update();
 
 			// Update
+			if (m_buttonFullscreen->wasDown()) {
+				display::get()->setFullscreen(!display::get()->isFullscreen());
+			}
 
 			// Post-Update
 		}

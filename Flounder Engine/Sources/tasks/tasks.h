@@ -9,7 +9,7 @@ namespace flounder {
 	class tasks : public module
 	{
 	private:
-		std::vector<itask*> m_tasks;
+		std::vector<itask*> *m_tasks;
 	public:
 		static tasks *get()
 		{
