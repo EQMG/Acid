@@ -131,6 +131,9 @@
   <ItemGroup>
     <ClCompile Include="Game\maincamera.cpp" />
     <ClCompile Include="Game\mainplayer.cpp" />
+    <ClCompile Include="Sources\visual\interpolation\smoothfloat.cpp" />
+    <ClCompile Include="Sources\processing\processing.cpp" />
+    <ClCompile Include="Sources\processing\opengl\processoropengl.cpp" />
     <ClCompile Include="Sources\physics\frustum.cpp" />
     <ClCompile Include="Sources\physics\ray.cpp" />
     <ClCompile Include="Sources\camera\camera.cpp" />
@@ -155,11 +158,20 @@
     <ClCompile Include="Sources\maths\vector3.cpp" />
     <ClCompile Include="Sources\maths\vector4.cpp" />
     <ClCompile Include="Sources\physics\sphere.cpp" />
+    <ClCompile Include="Sources\processing\resource\processorresource.cpp" />
     <ClCompile Include="Sources\tasks\tasks.cpp" />
+    <ClCompile Include="Sources\visual\valuedriver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\maincamera.h" />
     <ClInclude Include="Game\mainplayer.h" />
+    <ClInclude Include="Sources\visual\interpolation\smoothfloat.h" />
+    <ClInclude Include="Sources\processing\processing.h" />
+    <ClInclude Include="Sources\processing\opengl\processoropengl.h" />
+    <ClInclude Include="Sources\events\ievent.h" />
+    <ClInclude Include="Sources\events\ieventchange.h" />
+    <ClInclude Include="Sources\events\ieventstandard.h" />
+    <ClInclude Include="Sources\events\ieventtime.h" />
     <ClInclude Include="Sources\factory\ifactory.h" />
     <ClInclude Include="Sources\factory\ifactorybuilder.h" />
     <ClInclude Include="Sources\factory\ifactoryobject.h" />
@@ -200,8 +212,15 @@
     <ClInclude Include="Sources\maths\vector3.h" />
     <ClInclude Include="Sources\maths\vector4.h" />
     <ClInclude Include="Sources\physics\sphere.h" />
+    <ClInclude Include="Sources\processing\iprocessor.h" />
+    <ClInclude Include="Sources\processing\irequest.h" />
+    <ClInclude Include="Sources\processing\opengl\requestopengl.h" />
+    <ClInclude Include="Sources\processing\queue.h" />
+    <ClInclude Include="Sources\processing\resource\processorresource.h" />
+    <ClInclude Include="Sources\processing\resource\requestresource.h" />
     <ClInclude Include="Sources\tasks\itask.h" />
     <ClInclude Include="Sources\tasks\tasks.h" />
+    <ClInclude Include="Sources\visual\valuedriver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -28,7 +28,8 @@ namespace flounder {
 		/// <param name="y"> The second value.
 		/// </param>
 		/// <returns> The resultant mod. </returns>
-		static double mod(const double x, const double y)
+		template<typename t>
+		static t mod(const t x, const t y)
 		{
 			return x - y * floor(x / y);
 		}
@@ -39,15 +40,16 @@ namespace flounder {
 		/// <param name="angle"> The source angle.
 		/// </param>
 		/// <returns> The normalized angle. </returns>
-		static double normalizeAngle(const double angle)
+		template<typename t>
+		static t normalizeAngle(const t angle)
 		{
-			if (angle >= 360.0f)
+			if (angle >= (t) 360.0)
 			{
-				return angle - 360.0f;
+				return angle - (t) 360.0;
 			}
-			else if (angle < 0.0f)
+			else if (angle < (t) 0.0)
 			{
-				return angle + 360.0f;
+				return angle + (t) 360.0;
 			}
 
 			return angle;
@@ -60,9 +62,10 @@ namespace flounder {
 		/// <param name="place"> How many places after the decimal to round to.
 		/// </param>
 		/// <returns> The rounded value. </returns>
-		static float roundToPlace(const float value, const int place)
+		template<typename t>
+		static t roundToPlace(const t value, const int place)
 		{
-			float placeMul = pow(10.0f, place);
+			t placeMul = (t) pow(10.0, place);
 			return round(value * placeMul) / placeMul;
 		}
 
@@ -73,21 +76,10 @@ namespace flounder {
 		/// <param name="value"> The value.
 		/// </param>
 		/// <returns> Returns a value with deadband applied. </returns>
-		static float deadband(const float min, const float value)
+		template<typename t>
+		static t deadband(const t min, const t value)
 		{
-			return abs(value) >= abs(min) ? value : 0.0f;
-		}
-
-		/// <summary>
-		/// Used to floor the value if less than the min.
-		/// </summary>
-		/// <param name="min"> The minimum value. </param>
-		/// <param name="value"> The value.
-		/// </param>
-		/// <returns> Returns a value with deadband applied. </returns>
-		static double deadband(const double min, const double value)
-		{
-			return abs(value) >= abs(min) ? value : 0.0;
+			return abs(value) >= abs(min) ? value : (t) 0.0;
 		}
 
 		/// <summary>
@@ -98,7 +90,8 @@ namespace flounder {
 		/// <param name="max"> The largest value of the result.
 		/// </param>
 		/// <returns> {@code value}, clamped between {@code min} and {@code max}. </returns>
-		static float clamp(const float value, const float min, const float max)
+		template<typename t>
+		static t clamp(const t value, const t min, const t max)
 		{
 			return (value < min) ? min : (value > max) ? max : value;
 		}
@@ -110,7 +103,8 @@ namespace flounder {
 		/// <param name="limit"> The limit.
 		/// </param>
 		/// <returns> A limited value. </returns>
-		static float limit(const float value, const float limit)
+		template<typename t>
+		static t limit(const t value, const t limit)
 		{
 			return value > limit ? limit : value;
 		}
@@ -123,7 +117,8 @@ namespace flounder {
 		/// <param name="eps"> EPS is the measure of equality.
 		/// </param>
 		/// <returns> If both are almost equal. </returns>
-		static bool almostEqual(const double a, const double b, const double eps)
+		template<typename t>
+		static bool almostEqual(const t a, const t b, const t eps)
 		{
 			return abs(a - b) < eps;
 		}
@@ -136,7 +131,8 @@ namespace flounder {
 		/// <param name="blend"> The blend value.
 		/// </param>
 		/// <returns> Returns a interpolated value. </returns>
-		static float cosInterpolate(const float a, const float b, const float blend)
+		template<typename t>
+		static t cosInterpolate(const t a, const t b, const t blend)
 		{
 			double ft = blend * PI;
 			float f = (1.0f - (float) cos(ft)) * 0.5f;
@@ -151,10 +147,11 @@ namespace flounder {
 		/// <param name="x"> The sample.
 		/// </param>
 		/// <returns> The resulting stepped value. </returns>
-		static float smoothlyStep(const float edge0, const float edge1, const float x)
+		template<typename t>
+		static t smoothlyStep(const t edge0, const t edge1, const t x)
 		{
-			float t = clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
-			return t * t * (3.0f - 2.0f * t);
+			float s = clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
+			return s * s * (3.0f - 2.0f * t);
 		}
 
 		/// <summary>

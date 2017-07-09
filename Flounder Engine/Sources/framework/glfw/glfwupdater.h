@@ -9,10 +9,14 @@
 #include "../../devices/keyboard.h"
 #include "../../devices/mouse.h"
 #include "../../logger/logger.h"
+#include "../../processing/processing.h"
 #include "../../tasks/tasks.h"
 
 #include "../../maths/delta.h"
 #include "../../maths/timer.h"
+
+#include "../../inputs/buttonkeyboard.h"
+#include "../../visual/interpolation/smoothfloat.h"
 
 namespace flounder {
 	class glfwupdater : public updater
@@ -28,12 +32,16 @@ namespace flounder {
 
 		logger *m_logger;
 		tasks *m_tasks;
+		processing *m_processing;
 		display *m_display;
 		joysticks *m_joysticks;
 		keyboard *m_keyboard;
 		mouse *m_mouse;
 		audio *m_audio;
 		camera *m_camera;
+
+		ibutton *m_buttonFullscreen;
+		smoothfloat *m_interpolation;
 	public:
 		glfwupdater();
 

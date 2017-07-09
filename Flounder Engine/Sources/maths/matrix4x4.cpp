@@ -633,9 +633,9 @@ namespace flounder {
 		}
 
 		float cosAngle = cos(angle);
-		float theta = __random();
+		float theta = (float) __random();
 		theta *= 2.0f * PI;
-		float z = cosAngle + __random();
+		float z = cosAngle + (float)__random();
 		z *= (1.0f - cosAngle);
 		float rootOneMinusZSquared = sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * cos(theta);
