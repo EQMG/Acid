@@ -14,6 +14,15 @@ int main() {
 
 	camera::get()->loadCamera(new maincamera());
 	camera::get()->loadPlayer(new mainplayer());
+	
+	auto meme = []() -> void 
+	{
+		std::cout << "Dank Memes!" << std::endl;
+	};
+
+	meme();
+
+	// tasks::get()->addTask(NULL);
 
 	m_framework->run();
 	delete m_framework;

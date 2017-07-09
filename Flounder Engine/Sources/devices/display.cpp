@@ -252,7 +252,7 @@ namespace flounder {
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
 
-		// logger::get()->log(fullscreen ? "Display is going fullscreen." : "Display is going windowed.");
+		logger::get()->log(fullscreen ? "Display is going fullscreen." : "Display is going windowed.");
 
 		if (fullscreen) {
 			m_fullscreenWidth = videoMode->width;
