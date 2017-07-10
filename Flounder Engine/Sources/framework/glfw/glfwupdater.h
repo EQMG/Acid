@@ -9,14 +9,18 @@
 #include "../../devices/keyboard.h"
 #include "../../devices/mouse.h"
 #include "../../events/events.h"
+#include "../../loaders/loaders.h"
 #include "../../logger/logger.h"
+#include "../../models/models.h"
+#include "../../renderer/renderer.h"
+#include "../../shaders/shaders.h"
+#include "../../standards/standards.h"
 #include "../../processing/processing.h"
 #include "../../tasks/tasks.h"
+#include "../../textures/textures.h"
 
 #include "../../maths/delta.h"
 #include "../../maths/timer.h"
-
-#include "../../inputs/buttonkeyboard.h"
 
 namespace flounder {
 	class glfwupdater : public iupdater
@@ -39,9 +43,13 @@ namespace flounder {
 		keyboard *m_keyboard;
 		mouse *m_mouse;
 		audio *m_audio;
+		standards *m_standards;
 		camera *m_camera;
-
-		ibutton *m_buttonFullscreen;
+		shaders *m_shaders;
+		textures *m_textures;
+		models *m_models;
+		loaders *m_loaders;
+		renderer *m_renderer;
 	public:
 		glfwupdater();
 

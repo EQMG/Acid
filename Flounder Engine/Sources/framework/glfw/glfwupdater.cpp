@@ -22,9 +22,13 @@ namespace flounder {
 		delete m_keyboard;
 		delete m_mouse;
 		delete m_audio;
+		delete m_standards;
 		delete m_camera;
-
-		delete m_buttonFullscreen;
+		delete m_shaders;
+		delete m_textures;
+		delete m_models;
+		delete m_loaders;
+		delete m_renderer;
 	}
 
 	void glfwupdater::create()
@@ -46,24 +50,37 @@ namespace flounder {
 		m_keyboard = new keyboard();
 		m_mouse = new mouse;
 		m_audio = new audio;
+		m_standards = new standards();
 		m_camera = new camera();
-
-		m_buttonFullscreen = new buttonkeyboard(1, GLFW_KEY_F11);
+		m_shaders = new shaders();
+		m_textures = new textures();
+		m_models = new models();
+		m_loaders = new loaders();
+		m_renderer = new renderer();
 	}
 
 	void glfwupdater::init()
 	{
 		m_logger->init();
-		m_events->init();
-		m_events->init();
-		m_tasks->init();
-		m_processing->init();
+
 		m_display->init();
 		m_joysticks->init();
 		m_keyboard->init();
 		m_mouse->init();
 		m_audio->init();
+
+		m_standards->init();
+
+		m_events->init();
+		m_tasks->init();
+		m_processing->init();
+
 		m_camera->init();
+		m_shaders->init();
+		m_textures->init();
+		m_models->init();
+		m_loaders->init();
+		m_renderer->init();
 	}
 
 	void flounder::glfwupdater::update()
@@ -80,20 +97,24 @@ namespace flounder {
 			m_deltaUpdate->update();
 
 			// Pre-Update
-			m_events->update();
-			m_tasks->update();
-			m_processing->update();
-
 			m_joysticks->update();
 			m_keyboard->update();
 			m_mouse->update();
 			m_audio->update();
 			m_camera->update();
 
+			m_standards->update();
+
+			m_events->update();
+			m_tasks->update();
+			m_processing->update();
+
+			m_shaders->update();
+			m_textures->update();
+			m_models->update();
+			m_loaders->update();
+
 			// Update
-			if (m_buttonFullscreen->wasDown()) {
-				display::get()->setFullscreen(!display::get()->isFullscreen());
-			}
 
 			// Post-Update
 		}
@@ -117,8 +138,7 @@ namespace flounder {
 			m_deltaRender->update();
 
 			// Render
-			glClear(GL_COLOR_BUFFER_BIT);
-			glClearColor((GLclampf) m_keyboard->getKey(GLFW_KEY_W), (GLclampf) 0.0, (GLclampf) mouse::get()->getPositionY(), (GLclampf) 1.0);
+			m_renderer->update();
 			m_display->update();
 		}
 	}
@@ -151,9 +171,29 @@ namespace flounder {
 		{
 			return m_events;
 		}
+		else if (name == "loaders")
+		{
+			return m_loaders;
+		}
 		else if (name == "logger")
 		{
 			return m_logger;
+		}
+		else if (name == "models")
+		{
+			return m_models;
+		}
+		else if (name == "renderer")
+		{
+			return m_renderer;
+		}
+		else if (name == "shaders")
+		{
+			return m_shaders;
+		}
+		else if (name == "standards")
+		{
+			return m_standards;
 		}
 		else if (name == "processing")
 		{
@@ -162,6 +202,10 @@ namespace flounder {
 		else if (name == "tasks")
 		{
 			return m_tasks;
+		}
+		else if (name == "textures")
+		{
+			return m_textures;
 		}
 
 		return NULL;

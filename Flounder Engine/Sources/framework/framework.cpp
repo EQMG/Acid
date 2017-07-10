@@ -30,10 +30,13 @@ namespace flounder {
 		m_updater->create();
 	}
 
-	void framework::run()
+	void framework::init()
 	{
 		m_updater->init();
+	}
 
+	void framework::run()
+	{
 		while (m_running)
 		{
 			m_updater->update();

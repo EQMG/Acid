@@ -2,6 +2,7 @@
 
 namespace flounder {
 	audio::audio()
+		: imodule()
 	{
 	}
 
