@@ -12,16 +12,18 @@
 using namespace flounder;
 
 int main() {
-	framework *m_framework = new framework("Flounder C++", -1);
+	framework *m_framework = new framework("Flounder Game", -1);
 	m_framework->loadUpdater(new glfwupdater());
+
+	display::get()->load(3, 2, 1080, 720, "Flounder Game", new file("res/flounder.png"), false, true, 0, false);
 
 	camera::get()->loadCamera(new maincamera());
 	camera::get()->loadPlayer(new mainplayer());
 	
-	buttonmouse *buttonLeft = new buttonmouse(1, GLFW_MOUSE_BUTTON_LEFT);
+	buttonmouse *m_buttonLeft = new buttonmouse(1, GLFW_MOUSE_BUTTON_LEFT);
 	events::get()->addEvent(
 		new ieventstandard(false, [&]() { 
-			return buttonLeft->wasDown(); 
+			return m_buttonLeft->wasDown();
 		}, []() {
 			logger::get()->log("Left mouse button was down!"); 
 		})
@@ -32,7 +34,7 @@ int main() {
 	});
 
 	m_framework->run();
-	delete buttonLeft;
+	delete m_buttonLeft;
 	delete m_framework;
 
 	std::cout << "Press enter to close the console!" << std::endl;

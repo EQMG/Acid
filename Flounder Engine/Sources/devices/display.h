@@ -6,7 +6,8 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "FreeImage.h"
+
+#include "../textures/stb_image.h"
 
 namespace flounder {
 	/// <summary>
@@ -57,6 +58,10 @@ namespace flounder {
 		/// Deconstructor for the display.
 		/// </summary>
 		~display();
+
+		void load(const int glfwMajor, const int glfwMinor, const int width, const int height, const std::string title, file *icon, const bool vsync, const bool antialiasing, const int samples, const bool fullscreen);
+
+		void init();
 
 		void update();
 

@@ -24,6 +24,8 @@ namespace flounder {
 
 		void loadProcessor(iprocessor *processor);
 
+		void init();
+
 		void update();
 
 		/// <summary>

@@ -26,6 +26,8 @@ namespace flounder {
 
 		void loadPlayer(iplayer *player);
 
+		void init();
+
 		void update();
 
 		inline icamera *getCamera() { return m_camera; }

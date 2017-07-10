@@ -29,6 +29,8 @@ namespace flounder {
 		/// </summary>
 		~events();
 
+		void init();
+
 		void update();
 
 		/// <summary>

@@ -10,7 +10,7 @@ namespace flounder {
 		std::string name;
 
 	public:
-		static const char FILE_SEPARATOR;
+		static const std::string FILE_SEPARATOR;
 		static file *const RES_FOLDER;
 
 		/// <summary>

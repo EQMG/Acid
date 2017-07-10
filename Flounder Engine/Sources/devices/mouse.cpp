@@ -3,11 +3,20 @@
 namespace flounder {
 	mouse::mouse()
 	{
+	}
+
+	mouse::~mouse()
+	{
+		delete m_mouseButtons;
+	}
+
+	void mouse::init()
+	{
 		m_mouseButtons = new int[GLFW_MOUSE_BUTTON_LAST];
 		m_displaySelected = true;
 		m_mousePositionX = 0.5;
-		m_mousePositionY = 0.5;	
-		
+		m_mousePositionY = 0.5;
+
 		m_cursorDisabled = false;
 		m_lastCursorDisabled = false;
 
@@ -21,11 +30,6 @@ namespace flounder {
 		glfwSetMouseButtonCallback(display::get()->getWindow(), callbackMouseButton);
 		glfwSetCursorPosCallback(display::get()->getWindow(), callbackCursorPos);
 		glfwSetCursorEnterCallback(display::get()->getWindow(), callbackCursorEnter);
-	}
-
-	mouse::~mouse()
-	{
-		delete m_mouseButtons;
 	}
 
 	void mouse::update()
