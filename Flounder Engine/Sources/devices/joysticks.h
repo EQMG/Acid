@@ -43,6 +43,8 @@ namespace flounder {
 		/// </summary>
 		~joysticks();
 
+		void init();
+
 		void update();
 
 		/// <summary>

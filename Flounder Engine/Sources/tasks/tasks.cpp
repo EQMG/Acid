@@ -11,6 +11,10 @@ namespace flounder {
 		delete m_tasks;
 	}
 
+	void tasks::init()
+	{
+	}
+
 	void tasks::update()
 	{
 		for (auto task : *m_tasks) 

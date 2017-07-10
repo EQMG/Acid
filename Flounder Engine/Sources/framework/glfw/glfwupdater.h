@@ -47,6 +47,8 @@ namespace flounder {
 
 		~glfwupdater();
 
+		void create() override;
+
 		void init() override;
 
 		void update() override;

@@ -27,11 +27,13 @@ namespace flounder {
 	void framework::loadUpdater(iupdater *iupdater)
 	{
 		m_updater = iupdater;
-		m_updater->init();
+		m_updater->create();
 	}
 
 	void framework::run()
 	{
+		m_updater->init();
+
 		while (m_running)
 		{
 			m_updater->update();

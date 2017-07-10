@@ -18,6 +18,10 @@ namespace flounder {
 
 		~logger();
 
+		void init();
+
+		void update();
+
 		/// <summary>
 		/// Logs strings sent into a .log file, and if {@code LOG_TO_CONSOLE} is enabled it will also be logged to the IDEs console.
 		/// </summary>

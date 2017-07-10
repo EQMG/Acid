@@ -31,6 +31,8 @@ namespace flounder {
 		/// </summary>
 		~audio();
 
+		void init();
+
 		void update();
 	};
 }

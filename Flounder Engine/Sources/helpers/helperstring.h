@@ -6,36 +6,19 @@
 namespace flounder {
 	class helperstring {
 	public:
-		static std::vector<std::string> split(const std::string &str, const char &sep)
-		{
-			std::string next;
-			std::vector<std::string> result;
+		static std::vector<std::string> split(const std::string str, const std::string sep) {
+			char* cstr = const_cast<char*>(str.c_str());
+			char* current;
+			std::vector<std::string> arr;
+			current = strtok(cstr, sep.c_str());
 
-			// For each character in the string.
-			for (std::string::const_iterator it = str.begin(); it != str.end(); it++) {
-				// If we've hit the terminal character.
-				if (*it == sep) {
-					// If we have some characters accumulated.
-					if (!next.empty()) 
-					{
-						// Add them to the result vector.
-						result.push_back(next);
-						next.clear();
-					}
-				}
-				else 
-				{
-					// Accumulate the next character into the sequence.
-					next += *it;
-				}
-			}
-
-			if (!next.empty())
+			while (current != NULL) 
 			{
-				result.push_back(next);
+				arr.push_back(current);
+				current = strtok(NULL, sep.c_str());
 			}
 
-			return result;
+			return arr;
 		}
 	};
 }

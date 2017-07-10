@@ -3,6 +3,14 @@
 namespace flounder {
 	audio::audio()
 	{
+	}
+
+	audio::~audio()
+	{
+	}
+
+	void audio::init()
+	{
 		// Creates the OpenAL contexts.
 		m_device = alcOpenDevice(NULL);
 
@@ -18,10 +26,6 @@ namespace flounder {
 
 		// Creates a new sound model.
 		alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
-	}
-
-	audio::~audio()
-	{
 	}
 
 	void audio::update()
