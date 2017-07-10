@@ -4,7 +4,7 @@
 #include "../framework/framework.h"
 
 namespace flounder {
-	class logger : public module
+	class logger : public imodule
 	{
 	private:
 

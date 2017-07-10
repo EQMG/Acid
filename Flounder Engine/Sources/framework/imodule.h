@@ -1,11 +1,18 @@
 #pragma once
 
 namespace flounder {
-	class module 
+	class imodule 
 	{
 	private:
 	public:
-		module();
-		~module();
+		imodule()
+		{
+
+		}
+
+		~imodule()
+		{
+
+		}
 	};
 }

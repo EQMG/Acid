@@ -1,5 +1,8 @@
 #pragma once
 
+#include <iostream>
+#include <functional>
+
 namespace flounder {
 	/// <summary>
 	/// A simple event listener and runner.

@@ -1,13 +1,13 @@
 #pragma once
 
 #include <string>
-#include "module.h"
+#include "imodule.h"
 
 namespace flounder {
 	/// <summary>
 	/// A class used to define how the framework will run updates and timings.
 	/// </summary>
-	class updater 
+	class iupdater 
 	{
 	public:
 		virtual void init() = 0;
@@ -22,7 +22,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="key"> The module name/key to get. </param>
 		/// <returns> The module object. </returns>
-		virtual module *getInstance(std::string name) = 0;
+		virtual imodule *getInstance(std::string name) = 0;
 
 		/// <summary>
 		/// Gets the added/removed time for the framework (seconds).

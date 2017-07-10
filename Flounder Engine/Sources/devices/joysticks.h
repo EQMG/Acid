@@ -9,7 +9,7 @@ namespace flounder {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
-	class joysticks : public module
+	class joysticks : public imodule
 	{
 	private:
 		/// <summary>

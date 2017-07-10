@@ -14,6 +14,7 @@ namespace flounder {
 		delete m_timerLog;
 
 		delete m_logger;
+		delete m_events;
 		delete m_tasks;
 		delete m_processing;
 		delete m_display;
@@ -24,7 +25,6 @@ namespace flounder {
 		delete m_camera;
 
 		delete m_buttonFullscreen;
-		delete m_interpolation;
 	}
 
 	void glfwupdater::init()
@@ -38,6 +38,7 @@ namespace flounder {
 		m_timerLog = new timer(1.0);
 
 		m_logger = new logger();
+		m_events = new events();
 		m_tasks = new tasks();
 		m_processing = new processing();
 		m_display = new display();
@@ -48,7 +49,6 @@ namespace flounder {
 		m_camera = new camera();
 
 		m_buttonFullscreen = new buttonkeyboard(1, GLFW_KEY_F11);
-		m_interpolation = new smoothfloat(0.5f, 1.0f);
 	}
 
 	void flounder::glfwupdater::update()
@@ -64,6 +64,7 @@ namespace flounder {
 			m_deltaUpdate->update();
 
 			// Pre-Update
+			m_events->update();
 			m_tasks->update();
 			m_processing->update();
 
@@ -106,7 +107,7 @@ namespace flounder {
 		}
 	}
 
-	module *flounder::glfwupdater::getInstance(std::string name)
+	imodule *flounder::glfwupdater::getInstance(std::string name)
 	{
 		if (name == "camera") {
 			return m_camera;
@@ -130,9 +131,21 @@ namespace flounder {
 		{
 			return m_mouse;
 		}
+		else if (name == "events")
+		{
+			return m_events;
+		}
 		else if (name == "logger")
 		{
 			return m_logger;
+		}
+		else if (name == "processing")
+		{
+			return m_processing;
+		}
+		else if (name == "tasks")
+		{
+			return m_tasks;
 		}
 
 		return NULL;

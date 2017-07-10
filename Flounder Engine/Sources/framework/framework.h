@@ -4,11 +4,12 @@
 #include <string>
 #include <vector>
 
-#include "module.h"
-#include "updater.h"
+#include "imodule.h"
+#include "iupdater.h"
 
-#include "../maths/maths.h"
-
+/// <summary>
+/// The base Flounder folder.
+/// </summary>
 namespace flounder {
 	/// <summary>
 	/// A framework used for simplifying the creation of complicated Java applications. By using flexible Module loading and Extension injecting, it allows the engine to be used for Networking, Imaging, AIs, Games, and many more applications.
@@ -27,7 +28,7 @@ namespace flounder {
 		bool m_error;
 		int m_fpsLimit;
 
-		updater *m_updater;
+		iupdater *m_updater;
 	public:
 		static framework *get() 
 		{
@@ -43,11 +44,11 @@ namespace flounder {
 
 		~framework();
 
-		void loadUpdater(updater* updater);
+		void loadUpdater(iupdater* iupdater);
 
 		void run();
 
-		module *getInstance(std::string name);
+		imodule *getInstance(std::string name);
 
 		std::string framework::getUnlocalizedName();
 

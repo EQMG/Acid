@@ -1,25 +1,36 @@
 #pragma once
 
+#include "../maths/maths.h"
+
 namespace flounder {
 	/// <summary>
 	/// Represents a driver that changes over time.
 	/// </summary>
-	class valuedriver
+	class idriver
 	{
 	private:
 		float m_length;
+		float m_actualTime;
 		float m_currentTime;
 	public:
 		/// <summary>
 		/// Creates a new driver with a length.
 		/// </summary>
 		/// <param name="length"> The drivers length. </param>
-		valuedriver(const float length);
+		idriver(const float length)
+		{
+			m_length = length;
+			m_actualTime = 0.0f;
+			m_currentTime = 0.0f;
+		}
 
 		/// <summary>
 		/// Deconstructor for value driver.
 		/// </summary>
-		~valuedriver();
+		~idriver()
+		{
+
+		}
 
 		/// <summary>
 		/// Updates the driver with the passed time.
@@ -27,7 +38,14 @@ namespace flounder {
 		/// <param name="delta"> The time between the last update.
 		/// </param>
 		/// <returns> The calculated value. </returns>
-		float update(float delta);
+		float update(float delta)
+		{
+			m_actualTime += delta;
+			m_currentTime += delta;
+			m_currentTime = fmod(m_currentTime, m_length);
+			float time = m_currentTime / m_length;
+			return calculate(time);
+		}
 	protected:
 		/// <summary>
 		/// Calculates the new value.
@@ -35,6 +53,8 @@ namespace flounder {
 		/// <param name="time"> The time into the drivers life.
 		/// </param>
 		/// <returns> The calculated value. </returns>
-		virtual float calculateValue(float time) = 0;
+		virtual float calculate(const float time) = 0;
+
+		inline const float getActualTime() { return m_actualTime; }
 	};
 }
