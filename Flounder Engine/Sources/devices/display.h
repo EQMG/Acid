@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../framework/framework.h"
-#include "../logger/logger.h"
-#include "../resources/file.h"
-
+#include <String>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#include "../framework/framework.h"
+#include "../logger/logger.h"
 
 #include "../textures/stb_image.h"
 
@@ -25,7 +25,7 @@ namespace flounder {
 		int m_fullscreenHeight;
 
 		std::string m_title;
-		file *m_icon;
+		std::string m_icon;
 		bool m_vsync;
 		bool m_antialiasing;
 		int m_samples;
@@ -59,7 +59,7 @@ namespace flounder {
 		/// </summary>
 		~display();
 
-		void load(const int glfwMajor, const int glfwMinor, const int width, const int height, const std::string title, file *icon, const bool vsync, const bool antialiasing, const int samples, const bool fullscreen);
+		void load(const int glfwMajor, const int glfwMinor, const int width, const int height, const std::string title, std::string icon, const bool vsync, const bool antialiasing, const int samples, const bool fullscreen);
 
 		void init();
 

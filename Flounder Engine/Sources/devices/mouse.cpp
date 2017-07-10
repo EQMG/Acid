@@ -2,6 +2,7 @@
 
 namespace flounder {
 	mouse::mouse()
+		: imodule()
 	{
 	}
 

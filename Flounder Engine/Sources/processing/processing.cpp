@@ -2,6 +2,7 @@
 
 namespace flounder {
 	processing::processing()
+		: imodule()
 	{
 		m_processors = new std::vector<iprocessor*>();
 	}

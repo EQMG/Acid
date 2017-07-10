@@ -33,6 +33,6 @@ namespace flounder {
 
 	void maincamera::reflect(float waterHeight)
 	{
-		throw std::logic_error("Function maincamera::reflect not yet implemented");
+		throw std::logic_error("Function maincamera::reflect not yet implemented!");
 	}
 }

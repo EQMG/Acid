@@ -2,6 +2,7 @@
 
 namespace flounder {
 	keyboard::keyboard()
+		: imodule()
 	{
 	}
 
