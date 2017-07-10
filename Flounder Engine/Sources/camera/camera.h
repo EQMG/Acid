@@ -7,7 +7,7 @@
 #include "iplayer.h"
 
 namespace flounder {
-	class camera : public module
+	class camera : public imodule
 	{
 	private:
 		icamera *m_camera;

@@ -8,7 +8,7 @@
 #include "opengl\processoropengl.h"
 
 namespace flounder {
-	class processing : public module
+	class processing : public imodule
 	{
 	private:
 		std::vector<iprocessor*> *m_processors;

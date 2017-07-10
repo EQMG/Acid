@@ -10,28 +10,44 @@ namespace flounder {
 	{
 	private:
 		bool m_repeat;
+		std::function<bool()> m_triggered;
+		std::function<void()> m_onEvent;
 
 	public:
 		/// <summary>
 		/// Creates a new standard event.
 		/// </summary>
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
-		ieventstandard(bool repeat)
+		/// <param name="triggered"> A function called to check if the event was triggered. </param>
+		/// <param name="onEvent"> A function called when the event is triggered. </param>
+		ieventstandard(bool repeat, std::function<bool()> triggered, std::function<void()> onEvent)
 		{
 			m_repeat = repeat;
+			m_triggered = triggered;
+			m_onEvent = onEvent;
 		}
 
 		/// <summary>
 		/// Creates a new standard event that repeats.
 		/// </summary>
-		ieventstandard()
+		/// <param name="triggered"> A function called to check if the event was triggered. </param>
+		/// <param name="onEvent"> A function called when the event is triggered. </param>
+		ieventstandard(std::function<bool()> triggered, std::function<void()> onEvent)
 		{
 			m_repeat = true;
+			m_triggered = triggered;
+			m_onEvent = onEvent;
 		}
 
-		virtual bool eventTriggered() override = 0;
+		bool eventTriggered() override
+		{
+			return m_triggered();
+		}
 
-		virtual void onEvent() override = 0;
+		void onEvent() override
+		{
+			return m_onEvent();
+		}
 
 		inline bool removeAfterEvent() override { return !m_repeat; }
 	};

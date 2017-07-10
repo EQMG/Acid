@@ -1,15 +1,15 @@
 #pragma once
 
 #include <iostream>
+#include <functional>
 #include <vector>
 #include "../framework/framework.h"
-#include "itask.h"
 
 namespace flounder {
-	class tasks : public module
+	class tasks : public imodule
 	{
 	private:
-		std::vector<itask*> *m_tasks;
+		std::vector<std::function<void()>> *m_tasks;
 	public:
 		static tasks *get()
 		{
@@ -26,12 +26,6 @@ namespace flounder {
 		/// Adds an task to the que.
 		/// </summary>
 		/// <param name="task"> The task to add. </param>
-		inline void addTask(itask *task);
-
-		/// <summary>
-		/// Removes a task from the que.
-		/// </summary>
-		/// <param name="task"> The task to remove. </param>
-		inline void removeTask(itask *task);
+		void addTask(std::function<void()> task);
 	};
 }
