@@ -33,6 +33,8 @@ namespace flounder {
 		/// </summary>
 		~keyboard();
 
+		void init();
+
 		void update();
 
 		/// <summary>

@@ -20,6 +20,8 @@ namespace flounder {
 
 		~tasks();
 
+		void init();
+
 		void update();
 
 		/// <summary>

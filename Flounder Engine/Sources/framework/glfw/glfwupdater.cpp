@@ -27,7 +27,7 @@ namespace flounder {
 		delete m_buttonFullscreen;
 	}
 
-	void glfwupdater::init()
+	void glfwupdater::create()
 	{
 		m_startTime = glfwGetTime();
 		m_timeOffset = 0.0;
@@ -51,9 +51,25 @@ namespace flounder {
 		m_buttonFullscreen = new buttonkeyboard(1, GLFW_KEY_F11);
 	}
 
+	void glfwupdater::init()
+	{
+		m_logger->init();
+		m_events->init();
+		m_events->init();
+		m_tasks->init();
+		m_processing->init();
+		m_display->init();
+		m_joysticks->init();
+		m_keyboard->init();
+		m_mouse->init();
+		m_audio->init();
+		m_camera->init();
+	}
+
 	void flounder::glfwupdater::update()
 	{
 		// Always-Update
+		m_logger->update();
 
 		if (m_timerUpdate->isPassedTime())
 		{

@@ -3,6 +3,15 @@
 namespace flounder {
 	keyboard::keyboard()
 	{
+	}
+
+	keyboard::~keyboard()
+	{
+		delete m_keyboardKeys;
+	}
+
+	void keyboard::init()
+	{
 		m_keyboardKeys = new int[GLFW_KEY_LAST + 1];
 		m_keyboardChar = 0;
 
@@ -14,11 +23,6 @@ namespace flounder {
 		// Sets the keyboards callbacks.
 		glfwSetKeyCallback(display::get()->getWindow(), callbackKey);
 		glfwSetCharCallback(display::get()->getWindow(), callbackChar);
-	}
-
-	keyboard::~keyboard()
-	{
-		delete m_keyboardKeys;
 	}
 
 	void keyboard::update()

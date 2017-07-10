@@ -49,6 +49,8 @@ namespace flounder {
 		/// </summary>
 		~mouse();
 
+		void init();
+
 		void update();
 
 		/// <summary>
