@@ -2,15 +2,17 @@
 
 #include "../framework/framework.h"
 #include "../logger/logger.h"
+#include "../resources/file.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "FreeImage.h"
 
 namespace flounder {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class display : public module
+	class display : public imodule
 	{
 	private:
 		int m_glfwMajor;
@@ -22,7 +24,7 @@ namespace flounder {
 		int m_fullscreenHeight;
 
 		std::string m_title;
-	//	file[] m_icons;
+		file *m_icon;
 		bool m_vsync;
 		bool m_antialiasing;
 		int m_samples;
@@ -52,7 +54,7 @@ namespace flounder {
 		display();
 
 		/// <summary>
-		/// Deconstructor for the keyboard.
+		/// Deconstructor for the display.
 		/// </summary>
 		~display();
 

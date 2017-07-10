@@ -24,9 +24,9 @@ namespace flounder {
 		delete m_updater;
 	}
 
-	void framework::loadUpdater(updater *updater)
+	void framework::loadUpdater(iupdater *iupdater)
 	{
-		m_updater = updater;
+		m_updater = iupdater;
 		m_updater->init();
 	}
 
@@ -38,7 +38,7 @@ namespace flounder {
 		}
 	}
 
-	module *framework::getInstance(std::string name)
+	imodule *framework::getInstance(std::string name)
 	{
 		return m_updater->getInstance(name);
 	}

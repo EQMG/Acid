@@ -6,6 +6,9 @@
 #include "maincamera.h"
 #include "mainplayer.h"
 
+#include "../Sources/inputs/buttonmouse.h"
+#include "../Sources/events/ieventstandard.h"
+
 using namespace flounder;
 
 int main() {
@@ -15,19 +18,24 @@ int main() {
 	camera::get()->loadCamera(new maincamera());
 	camera::get()->loadPlayer(new mainplayer());
 	
-	auto meme = []() -> void 
-	{
-		std::cout << "Dank Memes!" << std::endl;
-	};
+	buttonmouse *buttonLeft = new buttonmouse(1, GLFW_MOUSE_BUTTON_LEFT);
+	events::get()->addEvent(
+		new ieventstandard(false, [&]() { 
+			return buttonLeft->wasDown(); 
+		}, []() {
+			logger::get()->log("Left mouse button was down!"); 
+		})
+	);
 
-	meme();
-
-	// tasks::get()->addTask(NULL);
+	tasks::get()->addTask([&]() {
+		logger::get()->log("Hello world!");
+	});
 
 	m_framework->run();
+	delete buttonLeft;
 	delete m_framework;
 
 	std::cout << "Press enter to close the console!" << std::endl;
-	std::getchar();
+	std::cin.get();
 	return 0;
 }

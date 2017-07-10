@@ -9,7 +9,7 @@ namespace flounder {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the keyboard keys.
 	/// </summary>
-	class keyboard : public module
+	class keyboard : public imodule
 	{
 	private:
 		int *m_keyboardKeys;

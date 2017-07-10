@@ -63,9 +63,6 @@
     <ClCompile Include="Sources\framework\framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\framework\module.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\devices\audio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -108,7 +105,28 @@
     <ClCompile Include="Sources\visual\interpolation\smoothfloat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\visual\valuedriver.cpp">
+    <ClCompile Include="Sources\visual\driverconstant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\visual\driverlinear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\visual\driverslide.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\visual\driversinwave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\visual\driverbounce.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\visual\driverfade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\events\events.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\resources\file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -120,9 +138,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\framework\framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\framework\module.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\logger\logger.h">
@@ -171,9 +186,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\devices\audio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\framework\updater.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\framework\glfw\glfwupdater.h">
@@ -239,9 +251,6 @@
     <ClInclude Include="Sources\factory\ifactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\tasks\itask.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\tasks\tasks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -284,7 +293,40 @@
     <ClInclude Include="Sources\visual\interpolation\smoothfloat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\visual\valuedriver.h">
+    <ClInclude Include="Sources\visual\idriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\visual\driverconstant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\visual\driverlinear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\visual\driverslide.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\visual\driversinwave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\visual\driverbounce.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\visual\driverfade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\events\events.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\framework\imodule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\framework\iupdater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\helpers\helperstring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\resources\file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

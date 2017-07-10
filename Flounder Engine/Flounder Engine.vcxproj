@@ -76,10 +76,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Libraries\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.Lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -103,12 +104,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Libraries\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.Lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,6 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\resources\file.cpp" />
+    <ClCompile Include="Sources\events\events.cpp" />
+    <ClCompile Include="Sources\visual\driverbounce.cpp" />
+    <ClCompile Include="Sources\visual\driverfade.cpp" />
+    <ClCompile Include="Sources\visual\driversinwave.cpp" />
+    <ClCompile Include="Sources\visual\driverslide.cpp" />
+    <ClCompile Include="Sources\visual\driverlinear.cpp" />
+    <ClCompile Include="Sources\visual\driverconstant.cpp" />
     <ClCompile Include="Game\maincamera.cpp" />
     <ClCompile Include="Game\mainplayer.cpp" />
     <ClCompile Include="Sources\visual\interpolation\smoothfloat.cpp" />
@@ -142,7 +152,6 @@
     <ClCompile Include="Sources\devices\mouse.cpp" />
     <ClCompile Include="Sources\devices\audio.cpp" />
     <ClCompile Include="Sources\framework\framework.cpp" />
-    <ClCompile Include="Sources\framework\module.cpp" />
     <ClCompile Include="Sources\logger\logger.cpp" />
     <ClCompile Include="Sources\devices\keyboard.cpp" />
     <ClCompile Include="Sources\maths\colour.cpp" />
@@ -160,9 +169,17 @@
     <ClCompile Include="Sources\physics\sphere.cpp" />
     <ClCompile Include="Sources\processing\resource\processorresource.cpp" />
     <ClCompile Include="Sources\tasks\tasks.cpp" />
-    <ClCompile Include="Sources\visual\valuedriver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\resources\file.h" />
+    <ClInclude Include="Sources\events\events.h" />
+    <ClInclude Include="Sources\helpers\helperstring.h" />
+    <ClInclude Include="Sources\visual\driverbounce.h" />
+    <ClInclude Include="Sources\visual\driverfade.h" />
+    <ClInclude Include="Sources\visual\driversinwave.h" />
+    <ClInclude Include="Sources\visual\driverslide.h" />
+    <ClInclude Include="Sources\visual\driverlinear.h" />
+    <ClInclude Include="Sources\visual\driverconstant.h" />
     <ClInclude Include="Game\maincamera.h" />
     <ClInclude Include="Game\mainplayer.h" />
     <ClInclude Include="Sources\visual\interpolation\smoothfloat.h" />
@@ -186,9 +203,9 @@
     <ClInclude Include="Sources\framework\glfw\glfwupdater.h" />
     <ClInclude Include="Sources\devices\joysticks.h" />
     <ClInclude Include="Sources\devices\audio.h" />
-    <ClInclude Include="Sources\framework\module.h" />
+    <ClInclude Include="Sources\framework\imodule.h" />
     <ClInclude Include="Sources\devices\mouse.h" />
-    <ClInclude Include="Sources\framework\updater.h" />
+    <ClInclude Include="Sources\framework\iupdater.h" />
     <ClInclude Include="Sources\inputs\axisjoystick.h" />
     <ClInclude Include="Sources\inputs\buttonjoystick.h" />
     <ClInclude Include="Sources\inputs\buttonkeyboard.h" />
@@ -218,9 +235,8 @@
     <ClInclude Include="Sources\processing\queue.h" />
     <ClInclude Include="Sources\processing\resource\processorresource.h" />
     <ClInclude Include="Sources\processing\resource\requestresource.h" />
-    <ClInclude Include="Sources\tasks\itask.h" />
     <ClInclude Include="Sources\tasks\tasks.h" />
-    <ClInclude Include="Sources\visual\valuedriver.h" />
+    <ClInclude Include="Sources\visual\idriver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,7 +12,7 @@ namespace flounder {
 		m_fullscreenHeight = 1080;
 
 		m_title = "Flounder C++";
-		//this->icons = new file[]{};
+		m_icon = new file("res/flounder.png");
 		m_vsync = false;
 		m_antialiasing = true;
 		m_samples = 0;
@@ -88,6 +88,9 @@ namespace flounder {
 		glfwMakeContextCurrent(m_window);
 
 		// TODO: Creates a window icon for this GLFW display.
+		GLFWimage icons[1];
+		//icons[0].pixels = (unsigned char*) FreeImage_Load(FIF_PNG, m_icon->getPath().c_str());
+		glfwSetWindowIcon(m_window, 1, icons);
 
 		// Enables VSync if requested.
 		glfwSwapInterval(m_vsync ? 1 : 0);
