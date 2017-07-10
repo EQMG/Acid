@@ -1,9 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-#include <vector>
-
 #include "imodule.h"
 #include "iupdater.h"
 
@@ -45,6 +41,8 @@ namespace flounder {
 		~framework();
 
 		void loadUpdater(iupdater* iupdater);
+
+		void init();
 
 		void run();
 

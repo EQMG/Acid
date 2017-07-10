@@ -2,6 +2,7 @@
 
 namespace flounder {
 	logger::logger()
+		: imodule()
 	{
 	}
 

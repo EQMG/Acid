@@ -131,8 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Sources\resources\file.cpp" />
+    <ClCompile Include="Game\mainrenderer.cpp" />
+    <ClCompile Include="Game\maininstance.cpp" />
+    <ClCompile Include="Sources\loaders\loaders.cpp" />
+    <ClCompile Include="Sources\models\models.cpp" />
+    <ClCompile Include="Sources\renderer\renderer.cpp" />
     <ClCompile Include="Sources\events\events.cpp" />
+    <ClCompile Include="Sources\shaders\shaders.cpp" />
+    <ClCompile Include="Sources\standards\standards.cpp" />
     <ClCompile Include="Sources\textures\stb_image.c" />
     <ClCompile Include="Sources\visual\driverbounce.cpp" />
     <ClCompile Include="Sources\visual\driverfade.cpp" />
@@ -170,11 +176,25 @@
     <ClCompile Include="Sources\physics\sphere.cpp" />
     <ClCompile Include="Sources\processing\resource\processorresource.cpp" />
     <ClCompile Include="Sources\tasks\tasks.cpp" />
+    <ClCompile Include="Sources\shaders\uniforms\uniformint.cpp" />
+    <ClCompile Include="Sources\textures\textures.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\resources\file.h" />
+    <ClInclude Include="Game\mainrenderer.h" />
+    <ClInclude Include="Game\maininstance.h" />
+    <ClInclude Include="Sources\helpers\helperfile.h" />
+    <ClInclude Include="Sources\loaders\loaders.h" />
+    <ClInclude Include="Sources\models\models.h" />
+    <ClInclude Include="Sources\renderer\renderer.h" />
+    <ClInclude Include="Sources\renderer\irenderer.h" />
+    <ClInclude Include="Sources\renderer\irenderermaster.h" />
     <ClInclude Include="Sources\events\events.h" />
     <ClInclude Include="Sources\helpers\helperstring.h" />
+    <ClInclude Include="Sources\shaders\shader.h" />
+    <ClInclude Include="Sources\shaders\shaders.h" />
+    <ClInclude Include="Sources\shaders\uniforms\iuniform.h" />
+    <ClInclude Include="Sources\standards\istandard.h" />
+    <ClInclude Include="Sources\standards\standards.h" />
     <ClInclude Include="Sources\textures\stb_image.h" />
     <ClInclude Include="Sources\visual\driverbounce.h" />
     <ClInclude Include="Sources\visual\driverfade.h" />
@@ -239,6 +259,8 @@
     <ClInclude Include="Sources\processing\resource\requestresource.h" />
     <ClInclude Include="Sources\tasks\tasks.h" />
     <ClInclude Include="Sources\visual\idriver.h" />
+    <ClInclude Include="Sources\shaders\uniforms\uniformint.h" />
+    <ClInclude Include="Sources\textures\textures.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

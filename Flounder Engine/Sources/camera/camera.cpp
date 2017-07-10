@@ -2,6 +2,7 @@
 
 namespace flounder {
 	camera::camera()
+		: imodule()
 	{
 		m_camera = NULL;
 		m_player = NULL;

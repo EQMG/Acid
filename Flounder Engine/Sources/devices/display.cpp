@@ -2,6 +2,7 @@
 
 namespace flounder {
 	display::display()
+		: imodule()
 	{
 		m_glfwMajor = 3;
 		m_glfwMinor = 2;
@@ -12,7 +13,7 @@ namespace flounder {
 		m_fullscreenHeight = 0;
 
 		m_title = "Flounder C++";
-		m_icon = new file("res/flounder.png");
+		m_icon = "Resources/flounder.png";
 		m_vsync = false;
 		m_antialiasing = true;
 		m_samples = 0;
@@ -36,7 +37,7 @@ namespace flounder {
 		m_closed = false;
 	}
 
-	void display::load(const int glfwMajor, const int glfwMinor, const int width, const int height, const std::string title, file *icon, const bool vsync, const bool antialiasing, const int samples, const bool fullscreen)
+	void display::load(const int glfwMajor, const int glfwMinor, const int width, const int height, const std::string title, std::string icon, const bool vsync, const bool antialiasing, const int samples, const bool fullscreen)
 	{
 		m_glfwMajor = glfwMajor;
 		m_glfwMinor = glfwMinor;
@@ -118,22 +119,19 @@ namespace flounder {
 		glfwMakeContextCurrent(m_window);
 
 		// TODO: Creates a window icon for this GLFW display.
-		if (m_icon != NULL)
+		GLFWimage icons[1];
 		{
-			GLFWimage icons[1];
-			{
-				int width = 0;
-				int height = 0;
-				int components = 0;
-				stbi_uc *imageData = stbi_load(m_icon->getPath().c_str(), &width, &height, &components, 4);
-				icons[0].pixels = imageData;
-				icons[0].width = width;
-				icons[0].height = height;
+			int width = 0;
+			int height = 0;
+			int components = 0;
+			stbi_uc *imageData = stbi_load(m_icon.c_str(), &width, &height, &components, 4);
+			icons[0].pixels = imageData;
+			icons[0].width = width;
+			icons[0].height = height;
 
-				stbi_image_free(imageData);
-			}
-			glfwSetWindowIcon(m_window, 1, icons);
+			//stbi_image_free(imageData);
 		}
+		glfwSetWindowIcon(m_window, 1, icons);
 
 		// Enables VSync if requested.
 		glfwSwapInterval(m_vsync ? 1 : 0);
