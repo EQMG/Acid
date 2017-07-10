@@ -6,10 +6,10 @@ namespace flounder {
 		m_glfwMajor = 3;
 		m_glfwMinor = 2;
 
-		m_windowWidth = 1080;
-		m_windowHeight = 720;
-		m_fullscreenWidth = 1920;
-		m_fullscreenHeight = 1080;
+		m_windowWidth = 720;
+		m_windowHeight = 480;
+		m_fullscreenWidth = 0;
+		m_fullscreenHeight = 0;
 
 		m_title = "Flounder C++";
 		m_icon = new file("res/flounder.png");
@@ -23,12 +23,42 @@ namespace flounder {
 		m_focused = true;
 		m_windowPosX = 0;
 		m_windowPosY = 0;
+	}
 
+	display::~display()
+	{
+		// Free the window callbacks and destroy the window.
+		glfwDestroyWindow(m_window);
+
+		// Terminate GLFW.
+		glfwTerminate();
+
+		m_closed = false;
+	}
+
+	void display::load(const int glfwMajor, const int glfwMinor, const int width, const int height, const std::string title, file *icon, const bool vsync, const bool antialiasing, const int samples, const bool fullscreen)
+	{
+		m_glfwMajor = glfwMajor;
+		m_glfwMinor = glfwMinor;
+
+		m_windowWidth = width;
+		m_windowHeight = height;
+
+		m_title = title;
+		m_icon = icon;
+		m_vsync = vsync;
+		m_antialiasing = antialiasing;
+		m_samples = samples;
+		m_fullscreen = fullscreen;
+	}
+
+	void display::init()
+	{
 		// Set the error error callback
 		glfwSetErrorCallback(callbackError);
 
 		// Initialize the GLFW library.
-		if (!glfwInit()) 
+		if (!glfwInit())
 		{
 			logger::get()->error("Could not init GLFW!");
 			framework::get()->requestClose(true);
@@ -42,7 +72,7 @@ namespace flounder {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_glfwMinor);
 
 		// For new GLFW, and macOS.
-		if (m_glfwMajor >= 3 && m_glfwMinor >= 2) 
+		if (m_glfwMajor >= 3 && m_glfwMinor >= 2)
 		{
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -60,7 +90,7 @@ namespace flounder {
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
 
-		if (m_fullscreen) 
+		if (m_fullscreen)
 		{
 			m_fullscreenWidth = videoMode->width;
 			m_fullscreenHeight = videoMode->height;
@@ -72,7 +102,7 @@ namespace flounder {
 		m_focused = true;
 
 		// Gets any window errors.
-		if (m_window == NULL) 
+		if (m_window == NULL)
 		{
 			logger::get()->error("Could not create the window! Update your graphics drivers and ensure your computer supports OpenGL!");
 			framework::get()->requestClose(true);
@@ -88,9 +118,22 @@ namespace flounder {
 		glfwMakeContextCurrent(m_window);
 
 		// TODO: Creates a window icon for this GLFW display.
-		GLFWimage icons[1];
-		//icons[0].pixels = (unsigned char*) FreeImage_Load(FIF_PNG, m_icon->getPath().c_str());
-		glfwSetWindowIcon(m_window, 1, icons);
+		if (m_icon != NULL)
+		{
+			GLFWimage icons[1];
+			{
+				int width = 0;
+				int height = 0;
+				int components = 0;
+				stbi_uc *imageData = stbi_load(m_icon->getPath().c_str(), &width, &height, &components, 4);
+				icons[0].pixels = imageData;
+				icons[0].width = width;
+				icons[0].height = height;
+
+				stbi_image_free(imageData);
+			}
+			glfwSetWindowIcon(m_window, 1, icons);
+		}
 
 		// Enables VSync if requested.
 		glfwSwapInterval(m_vsync ? 1 : 0);
@@ -105,7 +148,7 @@ namespace flounder {
 		// Gets any OpenGL errors.
 		GLenum glError = glGetError();
 
-		if (glError != GL_NO_ERROR) 
+		if (glError != GL_NO_ERROR)
 		{
 			logger::get()->error("OpenGL Capability Error: " + glError);
 			framework::get()->requestClose(true);
@@ -119,7 +162,7 @@ namespace flounder {
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 
 		// Initialize the GLEW library.
-		if (glewInit() != GLEW_OK) 
+		if (glewInit() != GLEW_OK)
 		{
 			logger::get()->error("Could not init GLEW!");
 			framework::get()->requestClose(true);
@@ -140,17 +183,6 @@ namespace flounder {
 		//	logger::get()->log("Flounder Maximum Texture Size: " + glGetInteger(GL_MAX_TEXTURE_SIZE));
 		//	logger::get()->log("Flounder Maximum Anisotropy: " + glGetFloat(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT));
 		//	logger::get()->log("===== End of system info log. =====\n");
-	}
-
-	display::~display()
-	{
-		// Free the window callbacks and destroy the window.
-		glfwDestroyWindow(m_window);
-
-		// Terminate GLFW.
-		glfwTerminate();
-
-		m_closed = false;
 	}
 
 	void display::update()

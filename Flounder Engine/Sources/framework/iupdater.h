@@ -10,6 +10,8 @@ namespace flounder {
 	class iupdater 
 	{
 	public:
+		virtual void create() = 0;
+
 		virtual void init() = 0;
 
 		/// <summary>

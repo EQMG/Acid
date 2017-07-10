@@ -23,6 +23,10 @@ namespace flounder {
 		m_player = player;
 	}
 
+	void camera::init()
+	{
+	}
+
 	void camera::update()
 	{
 		if (m_player != NULL)

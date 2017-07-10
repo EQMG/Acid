@@ -1,7 +1,7 @@
 #include "file.h"
 
 namespace flounder {
-	const char file::FILE_SEPARATOR = '/';
+	const std::string file::FILE_SEPARATOR = "/";
 	file *const file::RES_FOLDER = new file((std::string) "res");
 
 	file::file(std::string path)

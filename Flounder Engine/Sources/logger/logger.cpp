@@ -9,6 +9,14 @@ namespace flounder {
 	{
 	}
 
+	void logger::init()
+	{
+	}
+
+	void logger::update()
+	{
+	}
+
 	void logger::log(std::string value)
 	{
 		std::cout << "Log: " << value << std::endl;
