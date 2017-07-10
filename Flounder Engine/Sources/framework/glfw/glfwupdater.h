@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../updater.h"
+#include "../iupdater.h"
 
 #include "../../camera/camera.h"
 #include "../../devices/audio.h"
@@ -8,6 +8,7 @@
 #include "../../devices/joysticks.h"
 #include "../../devices/keyboard.h"
 #include "../../devices/mouse.h"
+#include "../../events/events.h"
 #include "../../logger/logger.h"
 #include "../../processing/processing.h"
 #include "../../tasks/tasks.h"
@@ -16,10 +17,9 @@
 #include "../../maths/timer.h"
 
 #include "../../inputs/buttonkeyboard.h"
-#include "../../visual/interpolation/smoothfloat.h"
 
 namespace flounder {
-	class glfwupdater : public updater
+	class glfwupdater : public iupdater
 	{
 	private:
 		double m_startTime;
@@ -31,6 +31,7 @@ namespace flounder {
 		timer *m_timerLog;
 
 		logger *m_logger;
+		events *m_events;
 		tasks *m_tasks;
 		processing *m_processing;
 		display *m_display;
@@ -41,7 +42,6 @@ namespace flounder {
 		camera *m_camera;
 
 		ibutton *m_buttonFullscreen;
-		smoothfloat *m_interpolation;
 	public:
 		glfwupdater();
 
@@ -51,7 +51,7 @@ namespace flounder {
 
 		void update() override;
 
-		module *getInstance(std::string name) override;
+		imodule *getInstance(std::string name) override;
 
 		inline double getTimeOffset() override { return m_timeOffset; };
 

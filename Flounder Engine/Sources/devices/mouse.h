@@ -3,13 +3,15 @@
 #include "../framework/framework.h"
 #include "../logger/logger.h"
 
+#include "../maths/maths.h"
+
 #include "display.h"
 
 namespace flounder {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
-	class mouse : public module
+	class mouse : public imodule
 	{
 	private:
 	//	file *customMouse;
