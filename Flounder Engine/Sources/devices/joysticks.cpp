@@ -2,6 +2,7 @@
 
 namespace flounder {
 	joysticks::joysticks()
+		: imodule()
 	{
 	}
 

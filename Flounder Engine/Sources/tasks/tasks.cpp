@@ -2,6 +2,7 @@
 
 namespace flounder {
 	tasks::tasks()
+		: imodule()
 	{
 		m_tasks = new std::vector<std::function<void()>>();
 	}
@@ -17,9 +18,9 @@ namespace flounder {
 
 	void tasks::update()
 	{
-		for (auto task : *m_tasks) 
+		for (std::vector<std::function<void()>>::iterator it = m_tasks->begin(); it != m_tasks->end(); ++it)
 		{
-			task();
+			(*it)();
 		}
 
 		m_tasks->clear();

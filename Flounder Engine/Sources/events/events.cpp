@@ -9,6 +9,11 @@ namespace flounder {
 
 	events::~events()
 	{
+		for (std::vector<ievent*>::iterator it = m_events->begin(); it != m_events->end(); ++it)
+		{
+			delete *it;
+		}
+
 		delete m_events;
 	}
 
