@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../framework/framework.h"
-#include "../logger/logger.h"
 
 #include "display.h"
 
@@ -53,7 +52,7 @@ namespace flounder {
 		/// <param name="id"> The joystick to check connection with.
 		/// </param>
 		/// <returns> If the joystick is connected. </returns>
-		bool isConnected(int id);
+		bool isConnected(const int id);
 
 		/// <summary>
 		/// Gets the name of the joystick.
@@ -61,7 +60,7 @@ namespace flounder {
 		/// <param name="id"> The joystick of interest.
 		/// </param>
 		/// <returns> The joysticks name. </returns>
-		const char *getName(int id);
+		const char *getName(const int id);
 
 		/// <summary>
 		/// Gets the value of a joystick's axis.
@@ -70,7 +69,7 @@ namespace flounder {
 		/// <param name="axis"> The axis of interest.
 		/// </param>
 		/// <returns> The value of the joystick's axis. </returns>
-		float getAxis(int id, int axis);
+		float getAxis(const int id, const int axis);
 
 		/// <summary>
 		/// Gets the whether a button on a joystick is pressed.
@@ -79,7 +78,7 @@ namespace flounder {
 		/// <param name="button"> The button of interest.
 		/// </param>
 		/// <returns> Whether a button on a joystick is pressed. </returns>
-		bool getButton(int id, int button);
+		bool getButton(const int id, const int button);
 
 		/// <summary>
 		/// Gets the number of axes the joystick offers.
@@ -87,7 +86,7 @@ namespace flounder {
 		/// <param name="id"> The joystick of interest.
 		/// </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		int getCountAxes(int id);
+		int getCountAxes(const int id);
 
 		/// <summary>
 		/// Gets the number of buttons the joystick offers.
@@ -95,6 +94,6 @@ namespace flounder {
 		/// <param name="id"> The joystick of interest.
 		/// </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		int getCountButtons(int id);
+		int getCountButtons(const int id);
 	};
 }

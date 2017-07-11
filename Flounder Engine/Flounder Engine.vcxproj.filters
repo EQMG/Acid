@@ -21,9 +21,6 @@
     <ClCompile Include="Sources\devices\keyboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\logger\logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\maths\colour.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -201,9 +198,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\framework\framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\logger\logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\maths\colour.h">

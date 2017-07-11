@@ -1,8 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <cmath>
-
+#include "maths.h"
 #include "vector2.h"
 #include "vector3.h"
 #include "vector4.h"
@@ -34,7 +32,7 @@ namespace flounder {
 		/// Constructor for matrix4x4.
 		/// </summary>
 		/// <param name="source"> Creates this matrix out of a 16 element array. </param>
-		matrix4x4(float source[16]);
+		matrix4x4(const float source[16]);
 
 		/// <summary>
 		/// Deconstructor for matrix4x4.
@@ -55,7 +53,7 @@ namespace flounder {
 		/// <param name="source"> The source array.
 		/// </param>
 		/// <returns> This. </returns>
-		matrix4x4 *set(float source[16]);
+		matrix4x4 *set(const float source[16]);
 
 		/// <summary>
 		/// Set the source matrix to be the identity matrix.
@@ -181,7 +179,7 @@ namespace flounder {
 		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
 		/// </param>
 		/// <returns> The destination matrix. </returns>
-		static matrix4x4 *rotate(matrix4x4 *source, vector3 *axis, float angle, matrix4x4 *destination);
+		static matrix4x4 *rotate(matrix4x4 *source, vector3 *axis, const float angle, matrix4x4 *destination);
 
 		/// <summary>
 		/// Turns a 4x4 matrix into an array.
@@ -217,7 +215,7 @@ namespace flounder {
 		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
 		/// </param>
 		/// <returns> Returns the transformation matrix. </returns>
-		static matrix4x4 *transformationMatrix(vector2 *translation, float scale, matrix4x4 *destination);
+		static matrix4x4 *transformationMatrix(vector2 *translation, const float scale, matrix4x4 *destination);
 
 		/// <summary>
 		/// Creates a new transformation matrix for a object in 2d flounder.space.
@@ -238,7 +236,7 @@ namespace flounder {
 		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
 		/// </param>
 		/// <returns> Returns the transformation matrix. </returns>
-		static matrix4x4 *transformationMatrix(vector3 *translation, vector3 *rotation, float scale, matrix4x4 *destination);
+		static matrix4x4 *transformationMatrix(vector3 *translation, vector3 *rotation, const float scale, matrix4x4 *destination);
 
 		/// <summary>
 		/// Creates a new transformation matrix for a object in 3d flounder.space.
@@ -261,7 +259,7 @@ namespace flounder {
 		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
 		/// </param>
 		/// <returns> The transformation matrix. </returns>
-		static matrix4x4 *perspectiveMatrix(float fov, float aspectRatio, float zNear, float zFar, matrix4x4 *destination);
+		static matrix4x4 *perspectiveMatrix(const float fov, const float aspectRatio, const float zNear, const float zFar, matrix4x4 *destination);
 
 		/// <summary>
 		/// Creates a new orthographic matrix, or updates a existing one.
@@ -275,7 +273,7 @@ namespace flounder {
 		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
 		/// </param>
 		/// <returns> The transformation matrix. </returns>
-		static matrix4x4 *orthographicMatrix(float left, float right, float bottom, float top, float near, float far, matrix4x4 *destination);
+		static matrix4x4 *orthographicMatrix(const float left, const float right, const float bottom, const float top, const float near, const float far, matrix4x4 *destination);
 
 		/// <summary>
 		/// Creates a new view matrix, or updates a existing one.
@@ -354,6 +352,6 @@ namespace flounder {
 		/// <param name="t22"> m22
 		/// </param>
 		/// <returns> The determinant of the 3x3 matrix. </returns>
-		static float determinant3x3(float t00, float t01, float t02, float t10, float t11, float t12, float t20, float t21, float t22);
+		static float determinant3x3(const float t00, const float t01, const float t02, const float t10, const float t11, const float t12, const float t20, const float t21, const float t22);
 	};
 }

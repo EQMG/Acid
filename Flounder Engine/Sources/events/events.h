@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../framework/framework.h"
-#include "ievent.h"
-
 #include "../tasks/tasks.h"
+
+#include "ievent.h"
 
 namespace flounder {
 	/// <summary>
@@ -34,13 +34,13 @@ namespace flounder {
 		void update();
 
 		/// <summary>
-		/// Adds an event to the listening que.
+		/// Adds an event to the listening list.
 		/// </summary>
 		/// <param name="event"> The event to add. </param>
 		void addEvent(ievent *event);
 
 		/// <summary>
-		/// Removes a event to the listening que.
+		/// Removes a event to the listening list.
 		/// </summary>
 		/// <param name="event"> The event to remove. </param>
 		void removeEvent(ievent *event);

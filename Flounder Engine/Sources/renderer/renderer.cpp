@@ -34,7 +34,7 @@ namespace flounder {
 		prepareNewRenderParse(colour->r, colour->g, colour->b);
 	}
 
-	void renderer::prepareNewRenderParse(float r, float g, float b)
+	void renderer::prepareNewRenderParse(const float r, const float g, const float b)
 	{
 		glClearColor(r, g, b, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -43,7 +43,7 @@ namespace flounder {
 		enableDepthTesting();
 	}
 
-	void renderer::cullBackFaces(bool cull)
+	void renderer::cullBackFaces(const bool cull)
 	{
 		if (cull && !m_cullingBackFace) {
 			glEnable(GL_CULL_FACE);
@@ -66,7 +66,7 @@ namespace flounder {
 		glDisable(GL_DEPTH_TEST);
 	}
 
-	void renderer::depthMask(bool depthMask)
+	void renderer::depthMask(const bool depthMask)
 	{
 		m_depthMask = depthMask;
 		glDepthMask(depthMask);
@@ -77,7 +77,7 @@ namespace flounder {
 		return m_inWireframe;
 	}
 
-	void renderer::goWireframe(bool goWireframe)
+	void renderer::goWireframe(const bool goWireframe)
 	{
 		if (goWireframe && !m_inWireframe)
 		{
@@ -123,7 +123,7 @@ namespace flounder {
 		}
 	}
 
-	void renderer::antialias(bool enable)
+	void renderer::antialias(const bool enable)
 	{
 		if (enable && !m_antialiasing)
 		{
@@ -137,7 +137,7 @@ namespace flounder {
 		}
 	}
 
-	void renderer::bindVAO(int vaoID, int n_args, ...)
+	void renderer::bindVAO(const int vaoID, const int n_args, ...)
 	{
 		glBindVertexArray(vaoID);
 
@@ -153,7 +153,7 @@ namespace flounder {
 		va_end(ap);
 	}
 
-	void renderer::unbindVAO(int n_args, ...)
+	void renderer::unbindVAO(const int n_args, ...)
 	{
 		va_list ap;
 		va_start(ap, n_args);
@@ -169,12 +169,12 @@ namespace flounder {
 		glBindVertexArray(0);
 	}
 
-	void renderer::scissor(int x, int y, int width, int height)
+	void renderer::scissor(const int x, const int y, const int width, const int height)
 	{
 		glScissor(x, y, width, height);
 	}
 
-	void renderer::bindTexture(texture *texture, int bankID)
+	void renderer::bindTexture(texture *texture, const int bankID)
 	{
 		if (texture == NULL || texture->getTextureID() == -1) 
 		{
@@ -185,7 +185,7 @@ namespace flounder {
 		glBindTexture(texture->getGlType(), texture->getTextureID());
 	}
 
-	void renderer::bindTexture(int textureID, int glTarget, int bankID)
+	void renderer::bindTexture(const int textureID, const int glTarget, const int bankID)
 	{
 		if (textureID == -1) 
 		{
@@ -196,7 +196,7 @@ namespace flounder {
 		glBindTexture(glTarget, textureID);
 	}
 
-	void renderer::bindTextureLOD(int textureID, int lodBias, int bankID)
+	void renderer::bindTextureLOD(const int textureID, const int lodBias, const int bankID)
 	{
 		if (textureID == -1) 
 		{
@@ -209,17 +209,17 @@ namespace flounder {
 		glActiveTexture(0);
 	}
 
-	void renderer::renderArrays(GLenum glMode, GLsizei glLength)
+	void renderer::renderArrays(const GLenum glMode, const GLsizei glLength)
 	{
 		glDrawArrays(glMode, 0, glLength);
 	}
 
-	void renderer::renderElements(GLenum glMode, GLenum glType, GLsizei glLength)
+	void renderer::renderElements(const GLenum glMode, const GLenum glType, const GLsizei glLength)
 	{
 		glDrawElements(glMode, glLength, glType, 0);
 	}
 
-	void renderer::renderInstanced(GLenum glMode, GLsizei glLength, GLsizei glPrimCount)
+	void renderer::renderInstanced(const GLenum glMode, const GLsizei glLength, const GLsizei glPrimCount)
 	{
 		glDrawArraysInstanced(glMode, 0, glLength, glPrimCount);
 		// glDrawArraysInstancedARB(glMode, 0, glLength, glPrimCount);

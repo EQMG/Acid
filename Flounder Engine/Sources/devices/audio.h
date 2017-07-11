@@ -3,8 +3,9 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
+#include "../camera/camera.h"
 #include "../framework/framework.h"
-#include "../logger/logger.h"
+#include "../maths/vector3.h"
 
 #include "display.h"
 

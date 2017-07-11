@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <iostream>
-#include <String>
+#include <string>
 #include <fstream>
 
 namespace flounder {

@@ -1,8 +1,10 @@
 #pragma once
 
 #include <stdarg.h>
-#include "ibutton.h"
+
 #include "../devices/mouse.h"
+
+#include "ibutton.h"
 
 namespace flounder {
 	/// <summary>
@@ -21,7 +23,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="n_args"> The number buttons of mouse buttons being checked. </param>
 		/// <param name="..."> The buttons on the mouse being checked. </param>
-		buttonmouse(int n_args, ...) 
+		buttonmouse(const int n_args, ...)
 		{
 			m_count = n_args;
 			m_buttons = new int[n_args];

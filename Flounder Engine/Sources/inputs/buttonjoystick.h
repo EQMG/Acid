@@ -1,8 +1,10 @@
 #pragma once
 
 #include <stdarg.h>
-#include "ibutton.h"
+
 #include "../devices/joysticks.h"
+
+#include "ibutton.h"
 
 namespace flounder {
 	/// <summary>
@@ -23,7 +25,7 @@ namespace flounder {
 		/// <param name="joystick"> The joystick. Should be one of the GLFW.JOYSTICK values. </param>
 		/// <param name="n_args"> The number buttons of joystick buttons being checked. </param>
 		/// <param name="..."> The buttons on the joystick being checked. </param>
-		buttonjoystick(int joystick, int n_args, ...) 
+		buttonjoystick(const int joystick, const int n_args, ...)
 		{
 			m_joystick = joystick;
 			m_count = n_args;

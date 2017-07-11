@@ -1,7 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <cmath>
+#include "maths.h"
 
 #include "vector2.h"
 #include "vector4.h"
@@ -26,7 +25,7 @@ namespace flounder {
 		/// <param name="x"> Start x. </param>
 		/// <param name="y"> Start y. </param>
 		/// <param name="z"> Start z. </param>
-		vector3(float x, float y, float z);
+		vector3(const float x, const float y, const float z);
 
 		/// <summary>
 		/// Constructor for vector3.
@@ -53,7 +52,7 @@ namespace flounder {
 		/// <param name="z"> The new Z value.
 		/// </param>
 		/// <returns> This. </returns>
-		vector3 *set(float x, float y, float z);
+		vector3 *set(const float x, const float y, const float z);
 
 		/// <summary>
 		/// Loads from another vector3.
@@ -147,7 +146,7 @@ namespace flounder {
 		/// <param name="destination"> The destination vector or null if a new vector is to be created.
 		/// </param>
 		/// <returns> The destination vector. </returns>
-		static vector3 *scale(vector3 *source, float scalar, vector3 *destination);
+		static vector3 *scale(vector3 *source, const float scalar, vector3 *destination);
 
 		/// <summary>
 		/// Instead of calling vector3::rotate, call matrix4x4::rotate! This method will throw a exception!
@@ -255,7 +254,7 @@ namespace flounder {
 		/// <param name="radius"> The circles radius.
 		/// </param>
 		/// <returns> The destination vector. </returns>
-		static vector3 *randomPointOnCircle(vector3 *destination, vector3 *normal, float radius);
+		static vector3 *randomPointOnCircle(vector3 *destination, vector3 *normal, const float radius);
 
 		/// <summary>
 		/// Gets the height on a point off of a 3d triangle.
@@ -276,7 +275,7 @@ namespace flounder {
 		/// <param name="z"> the translation in z.
 		/// </param>
 		/// <returns> This. </returns>
-		vector3 *translate(float x, float y, float z);
+		vector3 *translate(const float x, const float y, const float z);
 
 		/// <summary>
 		/// Negates this vector.
@@ -285,7 +284,7 @@ namespace flounder {
 		vector3 *negate();
 
 		/// <summary>
-		/// Normalises this vector.
+		/// Normalizes this vector.
 		/// </summary>
 		/// <returns> This. </returns>
 		vector3 *normalize();
@@ -295,8 +294,8 @@ namespace flounder {
 		/// </summary>
 		/// <param name="scalar"> The scale factor.
 		/// </param>
-		/// <returns> this. </returns>
-		vector3 *scale(float scalar);
+		/// <returns> This. </returns>
+		vector3 *scale(const float scalar);
 
 		/// <summary>
 		/// Gets if all the components to the vector are zero.

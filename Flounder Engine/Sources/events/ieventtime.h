@@ -1,7 +1,8 @@
 #pragma once
 
-#include "ievent.h"
 #include "../maths/timer.h"
+
+#include "ievent.h"
 
 namespace flounder {
 	/// <summary>
@@ -18,7 +19,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="interval"> The amount of seconds in the future to run the event. </param>
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
-		ieventtime(float interval, bool repeat)
+		ieventtime(const float interval, const bool repeat)
 		{
 			m_timer = new timer(interval);
 			m_repeat = repeat;

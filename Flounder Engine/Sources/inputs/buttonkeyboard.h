@@ -1,8 +1,10 @@
 #pragma once
 
 #include <stdarg.h>
-#include "ibutton.h"
+
 #include "../devices/keyboard.h"
+
+#include "ibutton.h"
 
 namespace flounder {
 	/// <summary>
@@ -21,7 +23,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="n_args"> The number keys of keyboard buttons being checked. </param>
 		/// <param name="..."> The keys on the keyboard being checked. </param>
-		buttonkeyboard(int n_args, ...) 
+		buttonkeyboard(const int n_args, ...)
 		{
 			m_count = n_args;
 			m_keys = new int[n_args];

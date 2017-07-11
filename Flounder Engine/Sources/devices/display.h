@@ -1,12 +1,11 @@
 #pragma once
 
-#include <String>
+#include <iostream>
+#include <string>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include "../framework/framework.h"
-#include "../logger/logger.h"
-
 #include "../textures/stb_image.h"
 
 namespace flounder {
@@ -90,7 +89,7 @@ namespace flounder {
 
 		int getWindowHeight();
 
-		void setWindowSize(int width, int height);
+		void setWindowSize(const int width, const int height);
 
 		/// <summary>
 		/// Gets the aspect ratio between the displays width and height.
@@ -114,7 +113,7 @@ namespace flounder {
 		/// Sets the display to use VSync or not.
 		/// </summary>
 		/// <param name="vsync"> Weather or not to use vSync. </param>
-		void setVSync(bool vsync);
+		void setVSync(const bool vsync);
 
 		/// <summary>
 		/// Gets if the display requests antialiased images.
@@ -126,7 +125,7 @@ namespace flounder {
 		/// Requests the display to antialias.
 		/// </summary>
 		/// <param name="antialiasing"> If the display should antialias. </param>
-		void setAntialiasing(bool antialiasing);
+		void setAntialiasing(const bool antialiasing);
 
 		/// <summary>
 		/// Gets how many MSAA samples should be done before swapping buffers.
@@ -138,7 +137,7 @@ namespace flounder {
 		/// Gets how many MSAA samples should be done before swapping buffers. Zero disables multisampling. GLFW_DONT_CARE means no preference.
 		/// </summary>
 		/// <param name="samples"> The amount of MSAA samples. </param>
-		void setSamples(int samples);
+		void setSamples(const int samples);
 
 		/// <summary>
 		/// Gets weather the display is fullscreen or not.
@@ -150,7 +149,7 @@ namespace flounder {
 		/// Sets the display to be fullscreen or windowed.
 		/// </summary>
 		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
-		void setFullscreen(bool fullscreen);
+		void setFullscreen(const bool fullscreen);
 
 		/// <summary>
 		/// Gets the current GLFW window.

@@ -1,11 +1,11 @@
 #pragma once
 
 #include "../framework/framework.h"
-#include "iprocessor.h"
-#include "irequest.h"
 
 #include "resource\processorresource.h"
 #include "opengl\processoropengl.h"
+#include "iprocessor.h"
+#include "irequest.h"
 
 namespace flounder {
 	class processing : public imodule

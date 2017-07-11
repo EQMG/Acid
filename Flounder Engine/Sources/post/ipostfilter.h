@@ -1,8 +1,10 @@
 #pragma once
-class ipostfilter
-{
-public:
-	ipostfilter();
-	~ipostfilter();
-};
 
+namespace flounder {
+	class ipostfilter
+	{
+	public:
+		ipostfilter();
+		~ipostfilter();
+	};
+}

@@ -60,7 +60,7 @@ namespace flounder {
 		}
 	}
 
-	void mouse::setCursorHidden(bool disabled)
+	void mouse::setCursorHidden(const bool disabled)
 	{
 		if (m_cursorDisabled != disabled) {
 			glfwSetInputMode(display::get()->getWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
@@ -73,7 +73,7 @@ namespace flounder {
 		m_cursorDisabled = disabled;
 	}
 
-	bool mouse::getButton(int button)
+	bool mouse::getButton(const int button)
 	{
 		return m_mouseButtons[button] != GLFW_RELEASE;
 	}
@@ -88,7 +88,7 @@ namespace flounder {
 		return m_mousePositionY;
 	}
 
-	void mouse::setPosition(double cursorX, double cursorY)
+	void mouse::setPosition(const double cursorX, const double cursorY)
 	{
 		glfwSetCursorPos(display::get()->getWindow(), cursorX, cursorY);
 	}

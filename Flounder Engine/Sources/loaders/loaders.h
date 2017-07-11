@@ -1,9 +1,9 @@
 #pragma once
 
+#include <GL\glew.h>
 #include <vector>
 #include <map>
 
-#include <GL\glew.h>
 #include "../framework/framework.h"
 
 namespace flounder {

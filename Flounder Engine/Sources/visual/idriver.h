@@ -38,7 +38,7 @@ namespace flounder {
 		/// <param name="delta"> The time between the last update.
 		/// </param>
 		/// <returns> The calculated value. </returns>
-		float update(float delta)
+		float update(const float delta)
 		{
 			m_actualTime += delta;
 			m_currentTime += delta;

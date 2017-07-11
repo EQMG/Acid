@@ -1,7 +1,9 @@
 #pragma once
 
 #include <string>
+
 #include "../devices/display.h"
+
 #include "depthbuffer.h"
 
 namespace flounder {

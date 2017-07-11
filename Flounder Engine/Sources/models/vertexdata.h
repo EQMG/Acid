@@ -25,7 +25,7 @@ namespace flounder {
 		vector3 *m_averagedTangent;
 
 	public:
-		vertexdata(int index, vector3 *position);
+		vertexdata(const int index, vector3 *position);
 
 		~vertexdata();
 
@@ -37,7 +37,7 @@ namespace flounder {
 
 		inline int getNormalIndex() { return m_normalIndex; }
 
-		inline void setNormalIndex(int normalIndex) { m_normalIndex = normalIndex; }
+		inline void setNormalIndex(const int normalIndex) { m_normalIndex = normalIndex; }
 
 		inline vertexdata *getDuplicateVertex() { return m_duplicateVertex; }
 

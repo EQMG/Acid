@@ -46,13 +46,13 @@ namespace flounder {
 
 		void run();
 
-		imodule *getInstance(std::string name);
+		imodule *getInstance(const std::string &name);
 
 		std::string framework::getUnlocalizedName();
 
 		inline double framework::getTimeOffset() { return m_updater->getTimeOffset(); }
 
-		inline void framework::setTimeOffset(double timeOffset) { m_updater->setTimeOffset(timeOffset); }
+		inline void framework::setTimeOffset(const double timeOffset) { m_updater->setTimeOffset(timeOffset); }
 
 		inline double framework::getDelta() { return m_updater->getDelta(); }
 
@@ -64,14 +64,14 @@ namespace flounder {
 
 		bool framework::isInitialized();
 
-		void framework::setInitialized(bool initialized);
+		void framework::setInitialized(const bool initialized);
 
 		bool framework::isRunning();
 
-		void framework::requestClose(bool error);
+		void framework::requestClose(const bool error);
 
 		int framework::getFpsLimit();
 
-		void framework::setFpsLimit(int fpsLimit);
+		void framework::setFpsLimit(const int fpsLimit);
 	};
 }
