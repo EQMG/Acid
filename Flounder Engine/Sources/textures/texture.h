@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <GL/glew.h>
 
 namespace flounder {
 	class texture
@@ -11,9 +12,14 @@ namespace flounder {
 		/// </summary>
 		texture();
 
+		texture(int n_args, ...);
+
 		/// <summary>
 		/// Deconstructor for the texture object.
 		/// </summary>
 		~texture();
+
+		int getTextureID() { return 1; }
+		GLenum getGlType() { return GL_TEXTURE; }
 	};
 }

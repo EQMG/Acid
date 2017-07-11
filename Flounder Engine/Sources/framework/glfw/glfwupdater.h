@@ -14,6 +14,7 @@
 #include "../../models/models.h"
 #include "../../renderer/renderer.h"
 #include "../../shaders/shaders.h"
+#include "../../skybox/skybox.h"
 #include "../../standards/standards.h"
 #include "../../processing/processing.h"
 #include "../../tasks/tasks.h"
@@ -50,6 +51,8 @@ namespace flounder {
 		models *m_models;
 		loaders *m_loaders;
 		renderer *m_renderer;
+
+		skybox *m_skybox;
 	public:
 		glfwupdater();
 

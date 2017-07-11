@@ -2,6 +2,9 @@
 
 #include "../camera/icamera.h"
 #include "../maths/vector4.h"
+#include "../shaders/shader.h"
+#include "../textures/texture.h"
+#include "renderer.h"
 
 namespace flounder {
 	/// <summary>

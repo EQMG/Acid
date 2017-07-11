@@ -29,6 +29,8 @@ namespace flounder {
 		delete m_models;
 		delete m_loaders;
 		delete m_renderer;
+
+		delete m_skybox;
 	}
 
 	void glfwupdater::create()
@@ -57,6 +59,8 @@ namespace flounder {
 		m_models = new models();
 		m_loaders = new loaders();
 		m_renderer = new renderer();
+
+		m_skybox = new skybox();
 	}
 
 	void glfwupdater::init()
@@ -81,6 +85,8 @@ namespace flounder {
 		m_models->init();
 		m_loaders->init();
 		m_renderer->init();
+
+		m_skybox->init();
 	}
 
 	void flounder::glfwupdater::update()
@@ -113,6 +119,8 @@ namespace flounder {
 			m_textures->update();
 			m_models->update();
 			m_loaders->update();
+
+			m_skybox->update();
 
 			// Update
 
@@ -190,6 +198,10 @@ namespace flounder {
 		else if (name == "shaders")
 		{
 			return m_shaders;
+		}
+		else if (name == "skybox")
+		{
+			return m_skybox;
 		}
 		else if (name == "standards")
 		{
