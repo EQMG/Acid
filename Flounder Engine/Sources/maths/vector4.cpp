@@ -6,12 +6,12 @@ namespace flounder {
 		this->set(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 
-	vector4::vector4(float x, float y, float z, float w)
+	vector4::vector4(const float x, const float y, const float z, const float w)
 	{
 		this->set(x, y, z, w);
 	}
 
-	vector4::vector4(vector4 * source)
+	vector4::vector4(vector4 *source)
 	{
 		this->set(source);
 	}
@@ -20,7 +20,7 @@ namespace flounder {
 	{
 	}
 
-	vector4 *vector4::set(float x, float y, float z, float w)
+	vector4 *vector4::set(const float x, const float y, const float z, const float w)
 	{
 		this->x = x;
 		this->y = y;
@@ -96,7 +96,7 @@ namespace flounder {
 			dls = 1.0f;
 		}
 
-		return static_cast<float>(acos(dls));
+		return (float) acos(dls);
 	}
 
 	float vector4::dot(vector4 *left, vector4 *right)
@@ -104,7 +104,7 @@ namespace flounder {
 		return left->x * right->x + left->y * right->y + left->z * right->z + left->w * right->w;
 	}
 
-	vector4 * vector4::scale(vector4 * source, float scalar, vector4 * destination)
+	vector4 *vector4::scale(vector4 *source, const float scalar, vector4 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -143,7 +143,7 @@ namespace flounder {
 		}
 	}
 
-	vector4 *vector4::translate(float x, float y, float z, float w)
+	vector4 *vector4::translate(const float x, const float y, const float z, const float w)
 	{
 		this->x += x;
 		this->y += y;
@@ -166,7 +166,7 @@ namespace flounder {
 		return normalize(this, this);
 	}
 
-	vector4 *vector4::scale(float scalar)
+	vector4 *vector4::scale(const float scalar)
 	{
 		return scale(this, scalar, this);
 	}

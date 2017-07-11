@@ -1,7 +1,7 @@
 #include "fbo.h"
 
 namespace flounder {
-	fbo::fbo(fbobuilder *builder)
+	fbo::fbo(const fbobuilder *builder)
 	{
 		m_depthBufferType = builder->m_depthBufferType;
 		m_useColourBuffer = builder->m_useColourBuffer;
@@ -92,7 +92,7 @@ namespace flounder {
 		glDrawBuffers(m_attachments, m_drawBuffers);
 	}
 
-	void fbo::createTextureAttachment(int attachment)
+	void fbo::createTextureAttachment(const int attachment)
 	{
 		glGenTextures(1, &m_colourTexture[attachment - GL_COLOR_ATTACHMENT0]);
 		glBindTexture(GL_TEXTURE_2D, m_colourTexture[attachment - GL_COLOR_ATTACHMENT0]);
@@ -136,7 +136,7 @@ namespace flounder {
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_depthTexture, 0);
 	}
 
-	void fbo::attachMultisampleColourBuffer(int attachment)
+	void fbo::attachMultisampleColourBuffer(const int attachment)
 	{
 		glGenRenderbuffers(1, &m_colourBuffer[attachment - GL_COLOR_ATTACHMENT0]);
 		glBindRenderbuffer(GL_RENDERBUFFER, m_colourBuffer[attachment - GL_COLOR_ATTACHMENT0]);
@@ -243,7 +243,7 @@ namespace flounder {
 		}
 	}
 
-	void fbo::resolveFBO(fbo *source, int readBuffer, int drawBuffer, fbo *output)
+	void fbo::resolveFBO(fbo *source, const int readBuffer, const int drawBuffer, fbo *output)
 	{
 		output->updateSize();
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, output->m_frameBuffer);

@@ -30,7 +30,7 @@ namespace flounder {
 	{
 	}
 
-	bool keyboard::getKey(int key)
+	bool keyboard::getKey(const int key)
 	{
 		return m_keyboardKeys[key] != GLFW_RELEASE;
 	}
@@ -46,7 +46,7 @@ namespace flounder {
 
 		if (key < 0 || key > GLFW_KEY_LAST) 
 		{
-			logger::get()->error("Invalid action attempted with key " + key);
+			std::cout << "Invalid action attempted with key " << key << std::endl;
 		}
 		else
 		{

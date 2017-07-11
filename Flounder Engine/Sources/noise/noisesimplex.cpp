@@ -20,11 +20,11 @@ namespace flounder {
 	{
 		float n0, n1, n2; // Noise contributions from the three corners.
 		// Skew the input space to determine which SIMPLEX cell we're in.
-		const float F2 = 0.5f * (static_cast<float>(sqrt(3.0f)) - 1.0f);
+		const float F2 = 0.5f * ((float)(sqrt(3.0f)) - 1.0f);
 		float s = (xin + yin) * F2; // Hairy factor for 2D.
 		int i = fastfloor(xin + s);
 		int j = fastfloor(yin + s);
-		const float G2 = (3.0f - static_cast<float>(sqrt(3.0f))) / 6.0f;
+		const float G2 = (3.0f - (float)(sqrt(3.0f))) / 6.0f;
 		float t = (i + j) * G2;
 		float X0 = i - t; // Unskew the cell origin back to (x,y) space.
 		float Y0 = j - t;

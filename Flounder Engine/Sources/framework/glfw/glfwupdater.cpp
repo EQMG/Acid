@@ -13,7 +13,6 @@ namespace flounder {
 		delete m_timerRender;
 		delete m_timerLog;
 
-		delete m_logger;
 		delete m_events;
 		delete m_tasks;
 		delete m_processing;
@@ -40,7 +39,6 @@ namespace flounder {
 		m_timerRender = new timer(1.0 / framework::get()->getFpsLimit());
 		m_timerLog = new timer(1.0);
 
-		m_logger = new logger();
 		m_events = new events();
 		m_tasks = new tasks();
 		m_processing = new processing();
@@ -59,8 +57,6 @@ namespace flounder {
 
 	void glfwupdater::init()
 	{
-		m_logger->init();
-
 		m_display->init();
 		m_joysticks->init();
 		m_keyboard->init();
@@ -83,7 +79,6 @@ namespace flounder {
 	void flounder::glfwupdater::update()
 	{
 		// Always-Update
-		m_logger->update();
 
 		if (m_timerUpdate->isPassedTime())
 		{
@@ -139,7 +134,7 @@ namespace flounder {
 		}
 	}
 
-	imodule *flounder::glfwupdater::getInstance(std::string name)
+	imodule *flounder::glfwupdater::getInstance(const std::string &name)
 	{
 		if (name == "camera") {
 			return m_camera;
@@ -170,10 +165,6 @@ namespace flounder {
 		else if (name == "loaders")
 		{
 			return m_loaders;
-		}
-		else if (name == "logger")
-		{
-			return m_logger;
 		}
 		else if (name == "renderer")
 		{

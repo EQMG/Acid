@@ -1,8 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <cmath>
-
+#include "maths.h"
 #include "vector2.h"
 
 namespace flounder {
@@ -30,7 +28,7 @@ namespace flounder {
 		/// Constructor for matrix2x2.
 		/// </summary>
 		/// <param name="source"> Creates this matrix out of a 4 element array. </param>
-		matrix2x2(float source[4]);
+		matrix2x2(const float source[4]);
 
 		/// <summary>
 		/// Deconstructor for matrix2x2.
@@ -51,7 +49,7 @@ namespace flounder {
 		/// <param name="source"> The source array.
 		/// </param>
 		/// <returns> This. </returns>
-		matrix2x2 *set(float source[4]);
+		matrix2x2 *set(const float source[4]);
 
 		/// <summary>
 		/// Set the source matrix to be the identity matrix.

@@ -6,7 +6,7 @@ namespace flounder {
 		this->set(0.0f, 0.0f);
 	}
 
-	vector2::vector2(float x, float y)
+	vector2::vector2(const float x, const float y)
 	{
 		this->set(x, y);
 	}
@@ -20,7 +20,7 @@ namespace flounder {
 	{
 	}
 
-	vector2 *vector2::set(float x, float y)
+	vector2 *vector2::set(const float x, const float y)
 	{
 		this->x = x;
 		this->y = y;
@@ -87,7 +87,7 @@ namespace flounder {
 			dls = 1.0f;
 		}
 
-		return static_cast<float>(acos(dls));
+		return (float) acos(dls);
 	}
 
 	float vector2::dot(vector2 *left, vector2 *right)
@@ -95,7 +95,7 @@ namespace flounder {
 		return left->x * right->x + left->y * right->y;
 	}
 
-	vector2 *vector2::scale(vector2 *source, float scalar, vector2 *destination)
+	vector2 *vector2::scale(vector2 *source, const float scalar, vector2 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -105,7 +105,7 @@ namespace flounder {
 		return destination->set(source->x * scalar, source->y * scalar);
 	}
 
-	vector2 *vector2::rotate(vector2 *source, float angle, vector2 *destination)
+	vector2 *vector2::rotate(vector2 *source, const float angle, vector2 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -113,10 +113,10 @@ namespace flounder {
 		}
 
 		double theta = __radians(angle);
-		return destination->set(static_cast<float>(source->x * cos(theta) - source->y * sin(theta)), static_cast<float>(source->x * sin(theta) + source->y * cos(theta)));
+		return destination->set((float) (source->x * cos(theta) - source->y * sin(theta)), (float) (source->x * sin(theta) + source->y * cos(theta)));
 	}
 
-	vector2 *vector2::rotate(vector2 *source, float angle, vector2 *rotationAxis, vector2 *destination)
+	vector2 *vector2::rotate(vector2 *source, const float angle, vector2 *rotationAxis, vector2 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -124,7 +124,7 @@ namespace flounder {
 		}
 
 		double theta = __radians(angle);
-		return destination->set(static_cast<float>(((source->x - rotationAxis->x) * cos(theta)) - ((source->y - rotationAxis->y) * sin(theta) + rotationAxis->x)), static_cast<float>(((source->x - rotationAxis->x) * sin(theta)) + ((source->y - rotationAxis->y) * cos(theta) + rotationAxis->y)));
+		return destination->set((float)(((source->x - rotationAxis->x) * cos(theta)) - ((source->y - rotationAxis->y) * sin(theta) + rotationAxis->x)), (float)(((source->x - rotationAxis->x) * sin(theta)) + ((source->y - rotationAxis->y) * cos(theta) + rotationAxis->y)));
 	}
 
 	vector2 *vector2::negate(vector2 *source, vector2 *destination)
@@ -185,7 +185,7 @@ namespace flounder {
 
 	float vector2::getDistance(vector2 *point1, vector2 *point2)
 	{
-		return static_cast<float>(sqrt(pow(point2->x - point1->x, 2) + pow(point2->y - point1->y, 2)));
+		return (float)(sqrt(pow(point2->x - point1->x, 2) + pow(point2->y - point1->y, 2)));
 	}
 
 	vector2 *vector2::getVectorDistance(vector2 *point1, vector2 *point2, vector2 *destination)
@@ -195,10 +195,10 @@ namespace flounder {
 			destination = new vector2();
 		}
 
-		return destination->set(static_cast<float>(pow(point2->x - point1->x, 2)), static_cast<float>(pow(point2->y - point1->y, 2)));
+		return destination->set((float)(pow(point2->x - point1->x, 2)), (float)(pow(point2->y - point1->y, 2)));
 	}
 
-	bool vector2::pointInTriangle(vector2 * point, vector2 * v1, vector2 * v2, vector2 * v3)
+	bool vector2::pointInTriangle(vector2 *point, vector2 *v1, vector2 *v2, vector2 *v3)
 	{
 		bool b1 = (point->x - v2->x) * (v1->y - v2->y) - (v1->x - v2->x) * (point->y - v2->y);
 		bool b2 = (point->x - v3->x) * (v2->y - v3->y) - (v2->x - v3->x) * (point->y - v3->y);
@@ -206,7 +206,7 @@ namespace flounder {
 		return ((b1 == b2) && (b2 == b3));
 	}
 
-	vector2 *vector2::translate(float x, float y)
+	vector2 *vector2::translate(const float x, const float y)
 	{
 		this->x += x;
 		this->y += y;
@@ -223,7 +223,7 @@ namespace flounder {
 		return normalize(this, this);
 	}
 
-	vector2 *vector2::scale(float scalar)
+	vector2 *vector2::scale(const float scalar)
 	{
 		return scale(this, scalar, this);
 	}

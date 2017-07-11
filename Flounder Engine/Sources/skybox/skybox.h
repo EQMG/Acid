@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../framework/framework.h"
 #include "../camera/camera.h"
+#include "../framework/framework.h"
 #include "../lights/fog.h"
 #include "../maths/matrix4x4.h"
 #include "../maths/vector3.h"
-#include "../textures/texture.h"
 #include "../models/model.h"
+#include "../textures/texture.h"
 
 namespace flounder {
 	class skybox : public imodule

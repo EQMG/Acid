@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include "../framework/framework.h"
 
 #include "icamera.h"

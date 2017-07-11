@@ -1,11 +1,10 @@
 #pragma once
 
-#include <iostream>
-#include <thread>
+#include "../../framework/framework.h"
+
+#include "requestresource.h"
 #include "../iprocessor.h"
 #include "../queue.h"
-#include "requestresource.h"
-#include "../../framework/framework.h"
 
 namespace flounder {
 	/// <summary>

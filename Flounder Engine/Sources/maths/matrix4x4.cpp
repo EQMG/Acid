@@ -6,12 +6,12 @@ namespace flounder {
 		this->setIdentity();
 	}
 
-	matrix4x4::matrix4x4(matrix4x4 * source)
+	matrix4x4::matrix4x4(matrix4x4 *source)
 	{
 		source->set(source);
 	}
 
-	matrix4x4::matrix4x4(float source[16])
+	matrix4x4::matrix4x4(const float source[16])
 	{
 		this->set(source);
 	}
@@ -41,7 +41,7 @@ namespace flounder {
 		return this;
 	}
 
-	matrix4x4 *matrix4x4::set(float source[16])
+	matrix4x4 *matrix4x4::set(const float source[16])
 	{
 		this->m00 = source[0];
 		this->m01 = source[1];
@@ -365,7 +365,7 @@ namespace flounder {
 		return destination;
 	}
 
-	matrix4x4 * matrix4x4::translate(matrix4x4 * left, vector2 * right, matrix4x4 * destination)
+	matrix4x4 *matrix4x4::translate(matrix4x4 *left, vector2 *right, matrix4x4 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -393,15 +393,15 @@ namespace flounder {
 		return destination;
 	}
 
-	matrix4x4 *matrix4x4::rotate(matrix4x4 *source, vector3 *axis, float angle, matrix4x4 *destination)
+	matrix4x4 *matrix4x4::rotate(matrix4x4 *source, vector3 *axis, const float angle, matrix4x4 *destination)
 	{
 		if (destination == NULL)
 		{
 			destination = new matrix4x4();
 		}
 
-		float c = static_cast<float>(cos(angle));
-		float s = static_cast<float>(sin(angle));
+		float c = (float) cos(angle);
+		float s = (float) sin(angle);
 		float o = 1.0f - c;
 		float xy = axis->x * axis->y;
 		float yz = axis->y * axis->z;
@@ -486,7 +486,7 @@ namespace flounder {
 		return source;
 	}
 
-	vector3 * matrix4x4::rotate(vector3 * source, vector3 * rotation, vector3 * destination)
+	vector3 *matrix4x4::rotate(vector3 *source, vector3 *rotation, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -499,7 +499,7 @@ namespace flounder {
 		return destination->set(direction4.x, direction4.y, direction4.z);
 	}
 
-	matrix4x4 *matrix4x4::transformationMatrix(vector2 *translation, float scale, matrix4x4 *destination)
+	matrix4x4 *matrix4x4::transformationMatrix(vector2 *translation, const float scale, matrix4x4 *destination)
 	{
 		return transformationMatrix(&vector3(translation->x, translation->y, 0.0f), &vector3(0.0f, 0.0f, 0.0f), &vector3(scale, scale, scale), destination);
 	}
@@ -509,7 +509,7 @@ namespace flounder {
 		return transformationMatrix(&vector3(translation->x, translation->y, 0.0f), &vector3(0.0f, 0.0f, 0.0f), scale, destination);
 	}
 
-	matrix4x4 *matrix4x4::transformationMatrix(vector3 *translation, vector3 *rotation, float scale, matrix4x4 *destination)
+	matrix4x4 *matrix4x4::transformationMatrix(vector3 *translation, vector3 *rotation, const float scale, matrix4x4 *destination)
 	{
 		return transformationMatrix(translation, rotation, &vector3(scale, scale, scale), destination);
 	}
@@ -544,7 +544,7 @@ namespace flounder {
 		return destination;
 	}
 
-	matrix4x4 *matrix4x4::perspectiveMatrix(float fov, float aspectRatio, float zNear, float zFar, matrix4x4 *destination)
+	matrix4x4 *matrix4x4::perspectiveMatrix(const float fov, const float aspectRatio, const float zNear, const float zFar, matrix4x4 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -565,7 +565,7 @@ namespace flounder {
 		return destination;
 	}
 
-	matrix4x4 *matrix4x4::orthographicMatrix(float left, float right, float bottom, float top, float near, float far, matrix4x4 *destination)
+	matrix4x4 *matrix4x4::orthographicMatrix(const float left, const float right, const float bottom, const float top, const float near, const float far, matrix4x4 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -625,7 +625,7 @@ namespace flounder {
 		return destination->set(point.x, point.y, point.z);
 	}
 
-	vector3 * matrix4x4::generateRandomUnitVectorWithinCone(vector3 *coneDirection, float angle, vector3 *destination)
+	vector3 *matrix4x4::generateRandomUnitVectorWithinCone(vector3 *coneDirection, const float angle, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -694,7 +694,8 @@ namespace flounder {
 	{
 		return setZero(this);
 	}
-	float matrix4x4::determinant3x3(float t00, float t01, float t02, float t10, float t11, float t12, float t20, float t21, float t22)
+
+	float matrix4x4::determinant3x3(const float t00, const float t01, const float t02, const float t10, const float t11, const float t12, const float t20, const float t21, const float t22)
 	{
 		return t00 * (t11 * t22 - t12 * t21) + t01 * (t12 * t20 - t10 * t22) + t02 * (t10 * t21 - t11 * t20);
 	}

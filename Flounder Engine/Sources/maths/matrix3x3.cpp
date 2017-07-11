@@ -11,7 +11,7 @@ namespace flounder {
 		source->set(source);
 	}
 
-	matrix3x3::matrix3x3(float source[9])
+	matrix3x3::matrix3x3(const float source[9])
 	{
 		this->set(source);
 	}
@@ -34,7 +34,7 @@ namespace flounder {
 		return this;
 	}
 
-	matrix3x3 * matrix3x3::set(float source[9])
+	matrix3x3 *matrix3x3::set(const float source[9])
 	{
 		this->m00 = source[0];
 		this->m01 = source[1];
@@ -146,7 +146,7 @@ namespace flounder {
 		return destination;
 	}
 
-	matrix3x3 * matrix3x3::scale(matrix3x3 * left, vector3 * right, matrix3x3 * destination)
+	matrix3x3 *matrix3x3::scale(matrix3x3 *left, vector3 *right, matrix3x3 *destination)
 	{
 		if (destination == NULL)
 		{

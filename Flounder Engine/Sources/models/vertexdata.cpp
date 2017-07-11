@@ -3,7 +3,7 @@
 namespace flounder {
 	const int vertexdata::NO_INDEX = -1;
 
-	vertexdata::vertexdata(int index, vector3 *position)
+	vertexdata::vertexdata(const int index, vector3 *position)
 	{
 		m_position = position;
 

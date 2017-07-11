@@ -34,7 +34,7 @@ namespace flounder {
 			return (text.compare(0, token.length(), token) == 0);
 		}
 
-		static int findCharPos(const std::string& line, char c) {
+		static int findCharPos(const std::string& line, const char c) {
 			for (int i = 0; i < line.length(); i++) 
 			{
 				if (line.at(i) == c) 
@@ -62,7 +62,7 @@ namespace flounder {
 			return result;
 		}
 
-		static std::string substring(const std::string& str, int start, int end)
+		static std::string substring(const std::string& str, const int start, const int end)
 		{
 			std::string result = str;
 			result = result.substr(start, end - start);
