@@ -1,9 +1,12 @@
 #pragma once
 
 #include <string>
+#include <map>
 #include "../logger/logger.h"
+#include "../processing/processing.h"
 #include "ifactory.h"
 #include "ifactoryobject.h"
+#include "factoryrequest.h"
 
 namespace flounder {
 	/// <summary>
@@ -42,7 +45,7 @@ namespace flounder {
 		/// <returns> The factory object that has been created. </returns>
 		ifactoryobject *builderCreate(std::string name)
 		{
-			ifactoryobject *object = m_factory->getLoaded()->find(name);
+			ifactoryobject *object = m_factory->getLoaded()->find(name)->second;
 
 			if (object == NULL)
 			{
@@ -50,7 +53,7 @@ namespace flounder {
 
 				m_factory->getLoaded()->erase(name);
 				object = m_factory->newObject();
-				processors::get()->sendRequest(new factoryrequest(name, m_factory, object, this));
+				processing::get()->sendRequest(new factoryrequest(name, m_factory, this, object));
 				m_factory->getLoaded()->insert(name, object);
 			}
 

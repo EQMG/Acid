@@ -177,6 +177,15 @@
     <ClCompile Include="Sources\models\vertexdata.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\textures\textureobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\shaders\shaderbuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\factory\factoryrequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\devices\display.h">
@@ -441,6 +450,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\models\vertexdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\textures\textureobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\shaders\shaderbuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\factory\factoryrequest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

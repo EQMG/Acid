@@ -34,6 +34,8 @@ namespace flounder {
 		// Terminate GLFW.
 		glfwTerminate();
 
+		delete m_window;
+
 		m_closed = false;
 	}
 

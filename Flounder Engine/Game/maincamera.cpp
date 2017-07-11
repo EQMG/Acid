@@ -31,7 +31,7 @@ namespace flounder {
 		m_viewRay->update(m_position, &vector2((float) mouse::get()->getPositionX(), (float) mouse::get()->getPositionY()), m_viewMatrix, m_projectionMatrix);
 	}
 
-	void maincamera::reflect(float waterHeight)
+	void maincamera::reflect(const float waterHeight)
 	{
 		throw std::logic_error("Function maincamera::reflect not yet implemented!");
 	}

@@ -1,9 +1,55 @@
-﻿  vertexdata.cpp
-  noiseperlin.cpp
-  noisesimplex.cpp
+﻿  shaderbuilder.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactory.h(47): error C2061: syntax error: identifier 'ifactorybuilder'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactory.h(54): error C2061: syntax error: identifier 'ifactorybuilder'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(55): error C2061: syntax error: identifier 'factoryrequest'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(55): error C2660: 'flounder::processing::sendRequest': function does not take 4 arguments
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(55): error C2143: syntax error: missing ';' before ')'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(55): error C2059: syntax error: ')'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(56): error C2664: 'std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::insert(std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>>,const std::pair<const _Kty,_Ty> &)': cannot convert argument 1 from 'std::string' to 'std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>>'
+          with
+          [
+              _Kty=std::string,
+              _Ty=flounder::ifactoryobject *,
+              _Pr=std::less<std::string>,
+              _Alloc=std::allocator<std::pair<const std::string,flounder::ifactoryobject *>>
+          ]
+          and
+          [
+              _Kty=std::string,
+              _Ty=flounder::ifactoryobject *
+          ]
+  c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(56): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shaderbuilder.cpp(5): error C2512: 'flounder::ifactorybuilder': no appropriate default constructor available
+  c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(15): note: see declaration of 'flounder::ifactorybuilder'
+  factoryrequest.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(17): error C2143: syntax error: missing ';' before '*'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(17): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(17): error C2238: unexpected token(s) preceding ';'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(23): error C2061: syntax error: identifier 'ifactory'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(25): error C2065: 'm_factory': undeclared identifier
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(25): error C2065: 'factory': undeclared identifier
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(47): error C2065: 'm_factory': undeclared identifier
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(47): error C2227: left of '->getLoaded' must point to class/struct/union/generic type
+  c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(47): note: type is 'unknown-type'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(47): error C2227: left of '->find' must point to class/struct/union/generic type
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(47): error C2227: left of '->second' must point to class/struct/union/generic type
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(51): error C2065: 'm_factory': undeclared identifier
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(51): error C2227: left of '->getFactoryName' must point to class/struct/union/generic type
+  c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(51): note: type is 'unknown-type'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(53): error C2065: 'm_factory': undeclared identifier
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(53): error C2227: left of '->getLoaded' must point to class/struct/union/generic type
+  c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(53): note: type is 'unknown-type'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(53): error C2227: left of '->erase' must point to class/struct/union/generic type
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(54): error C2065: 'm_factory': undeclared identifier
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(54): error C2227: left of '->newObject' must point to class/struct/union/generic type
+  c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(54): note: type is 'unknown-type'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(55): error C2061: syntax error: identifier 'factoryrequest'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(55): error C2065: 'm_factory': undeclared identifier
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(55): error C2660: 'flounder::processing::sendRequest': function does not take 4 arguments
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(55): error C2143: syntax error: missing ';' before ')'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(55): error C2059: syntax error: ')'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(56): error C2065: 'm_factory': undeclared identifier
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(56): error C2227: left of '->getLoaded' must point to class/struct/union/generic type
+  c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(56): note: type is 'unknown-type'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\factory\ifactorybuilder.h(56): error C2227: left of '->insert' must point to class/struct/union/generic type
   Generating Code...
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\mattp\documents\Flounder C++\x64\Debug\vc120.pdb'; linking object as if no debug info
-  Flounder Engine.vcxproj -> C:\Users\mattp\documents\Flounder C++\x64\Debug\Flounder Engine.exe
-  Flounder Engine.vcxproj -> C:\Users\mattp\documents\Flounder C++\x64\Debug\Flounder Engine.pdb (Partial PDB)
