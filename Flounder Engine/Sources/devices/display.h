@@ -70,6 +70,10 @@ namespace flounder {
 		/// </summary>
 		void screenshot();
 
+		inline int getGlfwMajor() { return m_glfwMajor; }
+
+		inline int getGlfwMinor() { return m_glfwMinor; }
+
 		/// <summary>
 		/// Gets the width of the display in pixels.
 		/// </summary>

@@ -24,7 +24,6 @@ namespace flounder {
 			return arr;
 		}
 
-
 		static bool startsWith(const std::string& text, const std::string& token)
 		{
 			if (text.length() < token.length())
@@ -58,7 +57,23 @@ namespace flounder {
 			const auto strEnd = str.find_last_not_of(whitespace);
 			const auto strRange = strEnd - strBegin + 1;
 
-			return str.substr(strBegin, strRange);
+			std::string result = str;
+			result = result.substr(strBegin, strRange);
+			return result;
+		}
+
+		static std::string substring(const std::string& str, int start, int end)
+		{
+			std::string result = str;
+			result = result.substr(start, end - start);
+			return result;
+		}
+
+		static std::string replaceAll(const std::string& str, const char& token)
+		{
+			std::string result = str;
+			result.erase(std::remove(result.begin(), result.end(), token), result.end());
+			return result;
 		}
 	};
 }

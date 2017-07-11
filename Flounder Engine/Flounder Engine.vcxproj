@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\skybox\rendererskybox.cpp" />
     <ClCompile Include="Sources\noise\noisesimplex.cpp" />
     <ClCompile Include="Sources\noise\noiseperlin.cpp" />
     <ClCompile Include="Sources\noise\noiseclassic.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="Sources\events\events.cpp" />
     <ClCompile Include="Sources\shaders\shader.cpp" />
     <ClCompile Include="Sources\shaders\shaders.cpp" />
+    <ClCompile Include="Sources\skybox\skybox.cpp" />
     <ClCompile Include="Sources\standards\standards.cpp" />
     <ClCompile Include="Sources\textures\stb_image.c" />
     <ClCompile Include="Sources\visual\driverbounce.cpp" />
@@ -183,12 +185,13 @@
     <ClCompile Include="Sources\physics\sphere.cpp" />
     <ClCompile Include="Sources\processing\resource\processorresource.cpp" />
     <ClCompile Include="Sources\tasks\tasks.cpp" />
-    <ClCompile Include="Sources\shaders\uniforms\uniformint.cpp" />
     <ClCompile Include="Sources\textures\textures.cpp" />
     <ClCompile Include="Sources\models\vertexdata.cpp" />
     <ClCompile Include="Sources\textures\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\models\model.h" />
+    <ClInclude Include="Sources\skybox\rendererskybox.h" />
     <ClInclude Include="Sources\noise\noisesimplex.h" />
     <ClInclude Include="Sources\noise\noiseperlin.h" />
     <ClInclude Include="Sources\noise\noiseclassic.h" />
@@ -207,7 +210,7 @@
     <ClInclude Include="Sources\helpers\helperstring.h" />
     <ClInclude Include="Sources\shaders\shader.h" />
     <ClInclude Include="Sources\shaders\shaders.h" />
-    <ClInclude Include="Sources\shaders\uniforms\iuniform.h" />
+    <ClInclude Include="Sources\skybox\skybox.h" />
     <ClInclude Include="Sources\standards\istandard.h" />
     <ClInclude Include="Sources\standards\standards.h" />
     <ClInclude Include="Sources\textures\stb_image.h" />
@@ -271,7 +274,6 @@
     <ClInclude Include="Sources\processing\resource\requestresource.h" />
     <ClInclude Include="Sources\tasks\tasks.h" />
     <ClInclude Include="Sources\visual\idriver.h" />
-    <ClInclude Include="Sources\shaders\uniforms\uniformint.h" />
     <ClInclude Include="Sources\textures\textures.h" />
     <ClInclude Include="Sources\models\vertexdata.h" />
     <ClInclude Include="Sources\textures\texture.h" />
