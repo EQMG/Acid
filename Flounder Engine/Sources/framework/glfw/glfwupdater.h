@@ -11,14 +11,11 @@
 #include "../../events/events.h"
 #include "../../loaders/loaders.h"
 #include "../../logger/logger.h"
-#include "../../models/models.h"
 #include "../../renderer/renderer.h"
-#include "../../shaders/shaders.h"
 #include "../../skybox/skybox.h"
 #include "../../standards/standards.h"
 #include "../../processing/processing.h"
 #include "../../tasks/tasks.h"
-#include "../../textures/textures.h"
 
 #include "../../maths/delta.h"
 #include "../../maths/timer.h"
@@ -46,9 +43,6 @@ namespace flounder {
 		audio *m_audio;
 		standards *m_standards;
 		camera *m_camera;
-		shaders *m_shaders;
-		textures *m_textures;
-		models *m_models;
 		loaders *m_loaders;
 		renderer *m_renderer;
 
