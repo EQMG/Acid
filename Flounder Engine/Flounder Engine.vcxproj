@@ -131,8 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\noise\noisesimplex.cpp" />
+    <ClCompile Include="Sources\noise\noiseperlin.cpp" />
+    <ClCompile Include="Sources\noise\noiseclassic.cpp" />
+    <ClCompile Include="Sources\lights\light.cpp" />
+    <ClCompile Include="Sources\lights\attenuation.cpp" />
     <ClCompile Include="Game\mainrenderer.cpp" />
     <ClCompile Include="Game\maininstance.cpp" />
+    <ClCompile Include="Sources\lights\fog.cpp" />
     <ClCompile Include="Sources\loaders\loaders.cpp" />
     <ClCompile Include="Sources\models\models.cpp" />
     <ClCompile Include="Sources\renderer\renderer.cpp" />
@@ -178,11 +184,18 @@
     <ClCompile Include="Sources\tasks\tasks.cpp" />
     <ClCompile Include="Sources\shaders\uniforms\uniformint.cpp" />
     <ClCompile Include="Sources\textures\textures.cpp" />
+    <ClCompile Include="Sources\models\vertexdata.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\noise\noisesimplex.h" />
+    <ClInclude Include="Sources\noise\noiseperlin.h" />
+    <ClInclude Include="Sources\noise\noiseclassic.h" />
+    <ClInclude Include="Sources\lights\light.h" />
+    <ClInclude Include="Sources\lights\attenuation.h" />
     <ClInclude Include="Game\mainrenderer.h" />
     <ClInclude Include="Game\maininstance.h" />
     <ClInclude Include="Sources\helpers\helperfile.h" />
+    <ClInclude Include="Sources\lights\fog.h" />
     <ClInclude Include="Sources\loaders\loaders.h" />
     <ClInclude Include="Sources\models\models.h" />
     <ClInclude Include="Sources\renderer\renderer.h" />
@@ -261,6 +274,7 @@
     <ClInclude Include="Sources\visual\idriver.h" />
     <ClInclude Include="Sources\shaders\uniforms\uniformint.h" />
     <ClInclude Include="Sources\textures\textures.h" />
+    <ClInclude Include="Sources\models\vertexdata.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
