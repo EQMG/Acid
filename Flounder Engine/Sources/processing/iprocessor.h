@@ -18,11 +18,5 @@ namespace flounder {
 		/// </summary>
 		/// <param name="request"> The request object to add to the que. </param>
 		virtual void addRequestToQueue(irequest *request) = 0;
-
-		/// <summary>
-		/// Gets the request id used for requests.
-		/// </summary>
-		/// <returns> The request id used. </returns>
-		virtual int getRequestId() = 0;
 	};
 }
