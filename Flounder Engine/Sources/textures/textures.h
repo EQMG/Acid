@@ -1,10 +1,7 @@
 #pragma once
 
-#include <String>
-#include <map>
+#include <GL/glew.h>
 #include "../framework/framework.h"
-
-#include "textureobject.h"
 
 namespace flounder {
 	/// <summary>
@@ -13,8 +10,6 @@ namespace flounder {
 	class textures : public imodule
 	{
 	private:
-		std::map<std::string, ifactoryobject*> *loaded;
-
 		float m_anisotropyLevel;
 	public:
 		static textures *get()
@@ -35,5 +30,13 @@ namespace flounder {
 		void init();
 
 		void update();
+
+		/// <summary>
+		/// Gets the current anisotropy level for textures with anisotropy enabled to use.
+		/// </summary>
+		/// <returns> The current anisotropy level. </returns>
+		virtual float getAnisotropyLevel() { return m_anisotropyLevel; }
+
+		virtual void setAnisotropyLevel(const float anisotropyLevel) { m_anisotropyLevel = anisotropyLevel; }
 	};
 }

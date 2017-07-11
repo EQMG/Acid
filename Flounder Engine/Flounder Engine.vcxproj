@@ -131,8 +131,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Sources\factory\factoryrequest.cpp" />
-    <ClCompile Include="Sources\shaders\shaderbuilder.cpp" />
     <ClCompile Include="Sources\noise\noisesimplex.cpp" />
     <ClCompile Include="Sources\noise\noiseperlin.cpp" />
     <ClCompile Include="Sources\noise\noiseclassic.cpp" />
@@ -145,6 +143,7 @@
     <ClCompile Include="Sources\models\models.cpp" />
     <ClCompile Include="Sources\renderer\renderer.cpp" />
     <ClCompile Include="Sources\events\events.cpp" />
+    <ClCompile Include="Sources\shaders\shader.cpp" />
     <ClCompile Include="Sources\shaders\shaders.cpp" />
     <ClCompile Include="Sources\standards\standards.cpp" />
     <ClCompile Include="Sources\textures\stb_image.c" />
@@ -187,11 +186,9 @@
     <ClCompile Include="Sources\shaders\uniforms\uniformint.cpp" />
     <ClCompile Include="Sources\textures\textures.cpp" />
     <ClCompile Include="Sources\models\vertexdata.cpp" />
-    <ClCompile Include="Sources\textures\textureobject.cpp" />
+    <ClCompile Include="Sources\textures\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\factory\factoryrequest.h" />
-    <ClInclude Include="Sources\shaders\shaderbuilder.h" />
     <ClInclude Include="Sources\noise\noisesimplex.h" />
     <ClInclude Include="Sources\noise\noiseperlin.h" />
     <ClInclude Include="Sources\noise\noiseclassic.h" />
@@ -229,9 +226,6 @@
     <ClInclude Include="Sources\events\ieventchange.h" />
     <ClInclude Include="Sources\events\ieventstandard.h" />
     <ClInclude Include="Sources\events\ieventtime.h" />
-    <ClInclude Include="Sources\factory\ifactory.h" />
-    <ClInclude Include="Sources\factory\ifactorybuilder.h" />
-    <ClInclude Include="Sources\factory\ifactoryobject.h" />
     <ClInclude Include="Sources\helpers\helperarray.h" />
     <ClInclude Include="Sources\physics\collider.h" />
     <ClInclude Include="Sources\physics\frustum.h" />
@@ -280,7 +274,7 @@
     <ClInclude Include="Sources\shaders\uniforms\uniformint.h" />
     <ClInclude Include="Sources\textures\textures.h" />
     <ClInclude Include="Sources\models\vertexdata.h" />
-    <ClInclude Include="Sources\textures\textureobject.h" />
+    <ClInclude Include="Sources\textures\texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

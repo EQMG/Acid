@@ -30,7 +30,5 @@ namespace flounder {
 		/// Completes all requests left in queue.
 		/// </summary>
 		void completeAllRequests();
-
-		int getRequestId() override;
 	};
 }

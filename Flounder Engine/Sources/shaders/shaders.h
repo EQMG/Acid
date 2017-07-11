@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../framework/framework.h"
+#include "shader.h"
 
 namespace flounder {
 	class shaders : public imodule

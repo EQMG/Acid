@@ -30,9 +30,6 @@ int main() {
 	m_framework->init();
 	
 	// Adds game elements to the framework.
-	std::string readFile = helperfile::readFile("Resources/shaders/skybox/skyboxFragment.glsl");
-	std::cout << readFile << std::endl;
-
 	buttonmouse *m_buttonLeft = new buttonmouse(1, GLFW_MOUSE_BUTTON_LEFT);
 	events::get()->addEvent(
 		new ieventstandard(false, [&]() { 
@@ -46,10 +43,16 @@ int main() {
 		logger::get()->log("Hello world!");
 	});
 
+	shader *m_shader = new shader(2,
+		new shadertype(GL_VERTEX_SHADER, "Resources/shaders/skybox/skyboxVertex.glsl"),
+		new shadertype(GL_FRAGMENT_SHADER, "Resources/shaders/skybox/skyboxFragment.glsl")
+	);
+
 	// Runs the framework loop.
 	m_framework->run();
 
 	// Deletes the framework.
+	delete m_shader;
 	delete m_buttonLeft;
 	delete m_framework;
 
