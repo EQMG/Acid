@@ -44,26 +44,10 @@ int main() {
 		})
 	);
 
-	tasks::get()->addTask([&]() {
-		logger::get()->log("Hello world!");
-	});
-
-	shader *m_shader = new shader(2,
-		new shadertype(GL_VERTEX_SHADER, "Resources/shaders/skybox/skyboxVertex.glsl"),
-		new shadertype(GL_FRAGMENT_SHADER, "Resources/shaders/skybox/skyboxFragment.glsl")
-	);
-
-	shader *m_shader2 = new shader(2,
-		new shadertype(GL_VERTEX_SHADER, "Resources/shaders/filters/defaultVertex.glsl"),
-		new shadertype(GL_FRAGMENT_SHADER, "Resources/shaders/filters/mrtFragment.glsl")
-	);
-
 	// Runs the framework loop.
 	m_framework->run();
 
 	// Deletes the framework.
-	delete m_shader2;
-	delete m_shader;
 	delete m_buttonLeft;
 	delete m_framework;
 
