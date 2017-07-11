@@ -4,6 +4,8 @@
 #include <map>
 #include "../framework/framework.h"
 
+#include "textureobject.h"
+
 namespace flounder {
 	/// <summary>
 	/// A module used for loading texture files.
