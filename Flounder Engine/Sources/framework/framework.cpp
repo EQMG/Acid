@@ -43,7 +43,7 @@ namespace flounder {
 		}
 	}
 
-	imodule *framework::getInstance(std::string name)
+	imodule *framework::getInstance(const std::string &name)
 	{
 		return m_updater->getInstance(name);
 	}
@@ -58,7 +58,7 @@ namespace flounder {
 		return m_initialized;
 	}
 
-	void framework::setInitialized(bool initialized)
+	void framework::setInitialized(const bool initialized)
 	{
 		m_initialized = initialized;
 	}
@@ -68,7 +68,7 @@ namespace flounder {
 		return m_running;
 	}
 
-	void framework::requestClose(bool error)
+	void framework::requestClose(const bool error)
 	{
 		m_running = false;
 
@@ -84,7 +84,7 @@ namespace flounder {
 		return m_fpsLimit;
 	}
 
-	void framework::setFpsLimit(int fpsLimit)
+	void framework::setFpsLimit(const int fpsLimit)
 	{
 		m_fpsLimit = fpsLimit;
 		m_updater->setFpsLimit(fpsLimit);

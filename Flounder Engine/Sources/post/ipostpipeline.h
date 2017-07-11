@@ -1,8 +1,10 @@
 #pragma once
-class ipostpipeline
-{
-public:
-	ipostpipeline();
-	~ipostpipeline();
-};
 
+namespace flounder {
+	class ipostpipeline
+	{
+	public:
+		ipostpipeline();
+		~ipostpipeline();
+	};
+}

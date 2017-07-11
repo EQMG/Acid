@@ -1,11 +1,11 @@
 #pragma once
 
-#include "intersect.h"
-#include "frustum.h"
-#include "ray.h"
-
 #include "../maths/colour.h"
 #include "../maths/vector3.h"
+
+#include "frustum.h"
+#include "intersect.h"
+#include "ray.h"
 
 namespace flounder {
 	/// <summary>

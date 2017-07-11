@@ -1,7 +1,7 @@
 #include "timer.h"
 
 namespace flounder {
-	timer::timer(double interval)
+	timer::timer(const double interval)
 	{
 		m_startTime = framework::get()->getTimeMs();
 		m_interval = interval * 1000.0;
@@ -26,7 +26,7 @@ namespace flounder {
 		return m_interval / 1000.0;
 	}
 
-	void timer::setInterval(double interval)
+	void timer::setInterval(const double interval)
 	{
 		this->m_interval = interval * 1000.0;
 		this->m_startTime = framework::get()->getTimeMs();

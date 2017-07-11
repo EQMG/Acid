@@ -188,63 +188,63 @@ namespace flounder {
 		}
 	}
 
-	GLint shader::getUniform(std::string name)
+	GLint shader::getUniform(const std::string &name)
 	{
 		return glGetUniformLocation(m_programID, name.c_str());
 	}
 
-	void shader::loadUniform(std::string name, const bool value)
+	void shader::loadUniform(const std::string &name, const bool value)
 	{
 		glUniform1i(getUniform(name), value);
 	}
 
-	void shader::loadUniform(std::string name, const float value)
+	void shader::loadUniform(const std::string &name, const float value)
 	{
 		glUniform1f(getUniform(name), value);
 	}
 
-	void shader::loadUniform(std::string name, const int value)
+	void shader::loadUniform(const std::string &name, const int value)
 	{
 		glUniform1i(getUniform(name), value);
 	}
 
-	void shader::loadUniform(std::string name, colour *value)
+	void shader::loadUniform(const std::string &name, colour *value)
 	{
 		glUniform4f(getUniform(name), value->r, value->g, value->b, value->a);
 	}
 
-	void shader::loadUniform(std::string name, matrix2x2 *value)
+	void shader::loadUniform(const std::string &name, matrix2x2 *value)
 	{
 		float *a = matrix2x2::toArray(value);
 		glUniformMatrix2fv(getUniform(name), 1, GL_FALSE, a);
 		delete a;
 	}
 
-	void shader::loadUniform(std::string name, matrix3x3 *value)
+	void shader::loadUniform(const std::string &name, matrix3x3 *value)
 	{
 		float *a = matrix3x3::toArray(value);
 		glUniformMatrix3fv(getUniform(name), 1, GL_FALSE, a);
 		delete a;
 	}
 
-	void shader::loadUniform(std::string name, matrix4x4 *value)
+	void shader::loadUniform(const std::string &name, matrix4x4 *value)
 	{
 		float *a = matrix4x4::toArray(value);
 		glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, a);
 		delete a;
 	}
 
-	void shader::loadUniform(std::string name, vector2 *value)
+	void shader::loadUniform(const std::string &name, vector2 *value)
 	{
 		glUniform2f(getUniform(name), value->x, value->y);
 	}
 
-	void shader::loadUniform(std::string name, vector3 *value)
+	void shader::loadUniform(const std::string &name, vector3 *value)
 	{
 		glUniform3f(getUniform(name), value->x, value->y, value->z);
 	}
 
-	void shader::loadUniform(std::string name, vector4 *value)
+	void shader::loadUniform(const std::string &name, vector4 *value)
 	{
 		glUniform4f(getUniform(name), value->x, value->y, value->z, value->w);
 	}

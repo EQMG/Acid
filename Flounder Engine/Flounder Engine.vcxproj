@@ -105,6 +105,10 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -122,6 +126,10 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -171,7 +179,6 @@
     <ClCompile Include="Sources\devices\mouse.cpp" />
     <ClCompile Include="Sources\devices\audio.cpp" />
     <ClCompile Include="Sources\framework\framework.cpp" />
-    <ClCompile Include="Sources\logger\logger.cpp" />
     <ClCompile Include="Sources\devices\keyboard.cpp" />
     <ClCompile Include="Sources\maths\colour.cpp" />
     <ClCompile Include="Sources\maths\delta.cpp" />
@@ -256,7 +263,6 @@
     <ClInclude Include="Sources\inputs\buttonmouse.h" />
     <ClInclude Include="Sources\inputs\iaxis.h" />
     <ClInclude Include="Sources\inputs\ibutton.h" />
-    <ClInclude Include="Sources\logger\logger.h" />
     <ClInclude Include="Sources\devices\keyboard.h" />
     <ClInclude Include="Sources\flounder.h" />
     <ClInclude Include="Sources\framework\framework.h" />

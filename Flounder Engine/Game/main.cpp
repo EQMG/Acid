@@ -25,7 +25,7 @@ int main() {
 	camera::get()->loadCamera(new maincamera());
 	camera::get()->loadPlayer(new mainplayer());
 
-	// Initalizes the framework.
+	// Initializes the framework.
 	m_framework->init();
 
 	renderer::get()->loadRendererMaster(new mainrenderer());
@@ -40,7 +40,7 @@ int main() {
 		new ieventstandard(false, [&]() { 
 			return m_buttonLeft->wasDown();
 		}, []() {
-			logger::get()->log("Left mouse button was down!"); 
+			std::cout << "Left mouse button was down!" << std::endl;
 		})
 	);
 

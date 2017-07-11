@@ -5,7 +5,7 @@
 namespace flounder {
 	class model {
 	public:
-		model(std::string path)
+		model(const std::string &path)
 		{
 
 		}

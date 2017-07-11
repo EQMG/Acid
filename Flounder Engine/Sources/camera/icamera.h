@@ -1,10 +1,11 @@
 #pragma once
 
-#include "iplayer.h"
 #include "../maths/vector3.h"
 #include "../maths/matrix4x4.h"
 #include "../physics/frustum.h"
 #include "../physics/ray.h"
+
+#include "iplayer.h"
 
 namespace flounder {
 	class icamera {

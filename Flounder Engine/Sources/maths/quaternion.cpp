@@ -6,7 +6,7 @@ namespace flounder {
 		this->set(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 
-	quaternion::quaternion(float x, float y, float z, float w)
+	quaternion::quaternion(const float x, const float y, const float z, const float w)
 	{
 		this->set(x, y, z, w);
 	}
@@ -25,7 +25,7 @@ namespace flounder {
 	{
 	}
 
-	quaternion *quaternion::set(float x, float y, float z, float w)
+	quaternion *quaternion::set(const float x, const float y, const float z, const float w)
 	{
 		this->x = x;
 		this->y = y;
@@ -153,7 +153,7 @@ namespace flounder {
 		return this;
 	}
 
-	quaternion * quaternion::setIdentity(quaternion * source)
+	quaternion *quaternion::setIdentity(quaternion *source)
 	{
 		source->x = 0.0f;
 		source->y = 0.0f;
@@ -189,7 +189,7 @@ namespace flounder {
 		return left->x * right->x + left->y * right->y + left->z * right->z + left->w * right->w;
 	}
 
-	quaternion *quaternion::slerp(quaternion *left, quaternion *right, float progression)
+	quaternion *quaternion::slerp(quaternion *left, quaternion *right, const float progression)
 	{
 		left->normalize();
 		right->normalize();
@@ -218,7 +218,7 @@ namespace flounder {
 		return new quaternion(newX, newY, newZ, newW);
 	}
 
-	quaternion * quaternion::scale(quaternion * source, float scalar, quaternion * destination)
+	quaternion * quaternion::scale(quaternion * source, const float scalar, quaternion * destination)
 	{
 		if (destination == NULL)
 		{
@@ -294,7 +294,7 @@ namespace flounder {
 		return destination;
 	}
 
-	matrix4x4 * quaternion::toRotationMatrix(quaternion * source, matrix4x4 * destination)
+	matrix4x4 *quaternion::toRotationMatrix(quaternion *source, matrix4x4 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -330,22 +330,22 @@ namespace flounder {
 		return destination;
 	}
 
-	quaternion * quaternion::setIdentity()
+	quaternion *quaternion::setIdentity()
 	{
 		return setIdentity(this);
 	}
 
-	quaternion * quaternion::negate()
+	quaternion *quaternion::negate()
 	{
 		return negate(this, this);
 	}
 
-	quaternion * quaternion::normalize()
+	quaternion *quaternion::normalize()
 	{
 		return normalize(this, this);
 	}
 
-	quaternion * quaternion::scale(float scalar)
+	quaternion *quaternion::scale(const float scalar)
 	{
 		return scale(this, scalar, this);
 	}

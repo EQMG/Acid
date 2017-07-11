@@ -38,7 +38,7 @@ namespace flounder {
 			{
 				if (!joy->connected)
 				{
-					logger::get()->log(std::string("Joystick '") + glfwGetJoystickName(i) + std::string("' connected!"));
+					std::cout << "Joystick connected: " << glfwGetJoystickName(i) << std::endl;
 				}
 
 				joy->connected = true;
@@ -50,7 +50,7 @@ namespace flounder {
 			{
 				if (joy->connected)
 				{
-					logger::get()->log("Joystick disconnected!");
+					std::cout << "Joystick disconnected!" << std::endl;
 				}
 
 				joy->connected = false;
@@ -58,32 +58,32 @@ namespace flounder {
 		}
 	}
 
-	bool joysticks::isConnected(int id)
+	bool joysticks::isConnected(const int id)
 	{
 		return m_connected[id]->connected;
 	}
 
-	const char *joysticks::getName(int id)
+	const char *joysticks::getName(const int id)
 	{
 		return m_connected[id]->name;
 	}
 
-	float joysticks::getAxis(int id, int axis)
+	float joysticks::getAxis(const int id, const int axis)
 	{
 		return m_connected[id]->axes[axis];
 	}
 
-	bool joysticks::getButton(int id, int button)
+	bool joysticks::getButton(const int id, const int button)
 	{
 		return m_connected[id]->buttons[button];
 	}
 
-	int joysticks::getCountAxes(int id)
+	int joysticks::getCountAxes(const int id)
 	{
 		return m_connected[id]->axecount;
 	}
 
-	int joysticks::getCountButtons(int id)
+	int joysticks::getCountButtons(const int id)
 	{
 		return m_connected[id]->buttoncount;
 	}

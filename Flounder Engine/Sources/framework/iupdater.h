@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "imodule.h"
 
 namespace flounder {
@@ -24,7 +25,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="key"> The module name/key to get. </param>
 		/// <returns> The module object. </returns>
-		virtual imodule *getInstance(std::string name) = 0;
+		virtual imodule *getInstance(const std::string &name) = 0;
 
 		/// <summary>
 		/// Gets the added/removed time for the framework (seconds).
@@ -36,7 +37,7 @@ namespace flounder {
 		/// Sets the time offset for the framework (seconds).
 		/// </summary>
 		/// <param name="timeOffset"> The new time offset. </param>
-		virtual void setTimeOffset(double timeOffset) = 0;
+		virtual void setTimeOffset(const double timeOffset) = 0;
 
 		/// <summary>
 		/// Gets the delta (seconds) between updates.
@@ -54,7 +55,7 @@ namespace flounder {
 		/// Sets the FPS limit for the updater, called by the framework.
 		/// </summary>
 		/// <param name="fpsLimit"> The new fps limit. </param>
-		virtual void setFpsLimit(double fpsLimit) = 0;
+		virtual void setFpsLimit(const double fpsLimit) = 0;
 
 		/// <summary>
 		/// Gets the current time of the framework instance.
