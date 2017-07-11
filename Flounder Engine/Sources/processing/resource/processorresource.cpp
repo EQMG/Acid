@@ -50,9 +50,4 @@ namespace flounder {
 			m_queue->acceptNextRequest()->executeRequestResource();
 		}
 	}
-
-	int processorresource::getRequestId()
-	{
-		return 1;
-	}
 }

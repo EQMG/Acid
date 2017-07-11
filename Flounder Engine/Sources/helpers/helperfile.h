@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <iostream>
 #include <String>
 #include <fstream>
 
@@ -12,7 +13,7 @@ namespace flounder {
 			
 			if (!ifs.is_open())
 			{
-				std::cout << "Could not file file: " << filepath << std::endl;
+				std::cout << "Could not find file: " << filepath << std::endl;
 			}
 
 			std::string content(

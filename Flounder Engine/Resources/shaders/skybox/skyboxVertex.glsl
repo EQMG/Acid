@@ -12,6 +12,10 @@ uniform vec4 clipPlane;
 //---------OUT------------
 out vec3 pass_textureCoords;
 
+uniform vec3 pepes[13];
+const float DANK = 0.0;
+const float MEME = 1.0;
+
 //---------MAIN------------
 void main(void) {
 	vec4 worldPosition = modelMatrix * vec4(in_position, 1.0);
