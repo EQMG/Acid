@@ -56,7 +56,7 @@ namespace flounder {
 
 		inline matrix4x4 *getProjectionMatrix() override { return m_projectionMatrix; }
 
-		void reflect(float waterHeight) override;
+		void reflect(const float waterHeight) override;
 
 		inline vector3 *getPosition() override { return m_position; }
 

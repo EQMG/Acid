@@ -131,6 +131,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\factory\factoryrequest.cpp" />
+    <ClCompile Include="Sources\shaders\shaderbuilder.cpp" />
     <ClCompile Include="Sources\noise\noisesimplex.cpp" />
     <ClCompile Include="Sources\noise\noiseperlin.cpp" />
     <ClCompile Include="Sources\noise\noiseclassic.cpp" />
@@ -185,8 +187,11 @@
     <ClCompile Include="Sources\shaders\uniforms\uniformint.cpp" />
     <ClCompile Include="Sources\textures\textures.cpp" />
     <ClCompile Include="Sources\models\vertexdata.cpp" />
+    <ClCompile Include="Sources\textures\textureobject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\factory\factoryrequest.h" />
+    <ClInclude Include="Sources\shaders\shaderbuilder.h" />
     <ClInclude Include="Sources\noise\noisesimplex.h" />
     <ClInclude Include="Sources\noise\noiseperlin.h" />
     <ClInclude Include="Sources\noise\noiseclassic.h" />
@@ -275,6 +280,7 @@
     <ClInclude Include="Sources\shaders\uniforms\uniformint.h" />
     <ClInclude Include="Sources\textures\textures.h" />
     <ClInclude Include="Sources\models\vertexdata.h" />
+    <ClInclude Include="Sources\textures\textureobject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
