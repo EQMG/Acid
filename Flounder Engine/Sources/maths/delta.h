@@ -2,6 +2,8 @@
 
 #include "../framework/framework.h"
 
+#include "maths.h"
+
 namespace flounder {
 	/// <summary>
 	/// A class for handing and calculating deltas.

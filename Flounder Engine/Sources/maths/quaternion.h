@@ -25,7 +25,7 @@ namespace flounder {
 		/// <param name="y"> Start y. </param>
 		/// <param name="z"> Start z. </param>
 		/// <param name="w"> Start w. </param>
-		quaternion(float x, float y, float z, float w);
+		quaternion(const float x, const float y, const float z, const float w);
 
 		/// <summary>
 		/// Constructor for quaternion.
@@ -53,7 +53,7 @@ namespace flounder {
 		/// <param name="w"> The new W value.
 		/// </param>
 		/// <returns> This. </returns>
-		quaternion *set(float x, float y, float z, float w);
+		quaternion *set(const float x, const float y, const float z, const float w);
 
 		/// <summary>
 		/// Loads from another quaternion.
@@ -130,7 +130,7 @@ namespace flounder {
 		/// <param name="right"> The right source quaternion.</param>
 		/// <param name="progression"> The progression. </param>
 		/// <returns> Left slerp right. </returns>
-		static quaternion *slerp(quaternion *left, quaternion *right, float progression);
+		static quaternion *slerp(quaternion *left, quaternion *right, const float progression);
 
 		/// <summary>
 		/// Scales a quaternion by a scalar and places the result in the destination vector.
@@ -140,7 +140,7 @@ namespace flounder {
 		/// <param name="destination"> The destination vector or null if a new vector is to be created.
 		/// </param>
 		/// <returns> The destination vector. </returns>
-		static quaternion *scale(quaternion *source, float scalar, quaternion *destination);
+		static quaternion *scale(quaternion *source, const float scalar, quaternion *destination);
 
 		/// <summary>
 		/// Negates a quaternion and places the result in the destination quaternion.
@@ -191,7 +191,7 @@ namespace flounder {
 		quaternion *negate();
 
 		/// <summary>
-		/// Normalises this vector.
+		/// Normalizes this vector.
 		/// </summary>
 		/// <returns> This. </returns>
 		quaternion *normalize();
@@ -202,7 +202,7 @@ namespace flounder {
 		/// <param name="scalar"> The scale factor.
 		/// </param>
 		/// <returns> This. </returns>
-		quaternion *scale(float scalar);
+		quaternion *scale(const float scalar);
 
 		/// <summary>
 		/// Gets if all the components to the quaternion are zero.

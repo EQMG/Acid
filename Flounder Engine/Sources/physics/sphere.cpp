@@ -7,13 +7,13 @@ namespace flounder {
 		m_position = new vector3();
 	}
 
-	sphere::sphere(float radius)
+	sphere::sphere(const float radius)
 	{
 		m_radius = radius;
 		m_position = new vector3();
 	}
 
-	sphere::sphere(float radius, vector3 *position)
+	sphere::sphere(const float radius, vector3 *position)
 	{
 		m_radius = radius;
 		m_position = position;
@@ -30,7 +30,7 @@ namespace flounder {
 		delete m_position;
 	}
 
-	collider *sphere::update(vector3 *position, vector3 *rotation, float scale, collider *destination)
+	collider *sphere::update(vector3 *position, vector3 *rotation, const float scale, collider *destination)
 	{
 		if (destination == NULL)
 		{
@@ -97,7 +97,7 @@ namespace flounder {
 			return new intersect(false, -1.0f);
 		}
 
-		float distSqrt = static_cast<float>(sqrt(disc));
+		float distSqrt = (float)(sqrt(disc));
 		float q;
 
 		if (b < 0.0f)

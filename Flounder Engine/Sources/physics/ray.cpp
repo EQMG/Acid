@@ -1,7 +1,7 @@
 #include "ray.h"
 
 namespace flounder {
-	ray::ray(bool useMouse, vector2 *screenStart)
+	ray::ray(const bool useMouse, vector2 *screenStart)
 	{
 		m_useMouse = useMouse;
 		m_screenStart = screenStart;
@@ -67,7 +67,7 @@ namespace flounder {
 		updateWorldCoords(m_eyeCoords);
 	}
 
-	vector3 *ray::getPointOnRay(float distance, vector3 *destination)
+	vector3 *ray::getPointOnRay(const float distance, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -96,7 +96,7 @@ namespace flounder {
 		return destination->set((coords->x / coords->w + 1.0f) / 2.0f, 1.0f - (coords->y / coords->w + 1.0f) / 2.0f, coords->z);
 	}
 
-	void ray::updateNormalisedDeviceCoordinates(float mouseX, float mouseY)
+	void ray::updateNormalisedDeviceCoordinates(const float mouseX, const float mouseY)
 	{
 		float x = (2.0f * mouseX) - 1.0f;
 		float y = (2.0f * mouseY) - 1.0f;

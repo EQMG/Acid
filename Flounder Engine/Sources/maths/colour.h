@@ -28,7 +28,7 @@ namespace flounder {
 		/// <param name="r"> The new R value. </param>
 		/// <param name="g"> The new G value. </param>
 		/// <param name="b"> The new B value. </param>
-		colour(float r, float g, float b);
+		colour(const float r, const float g, const float b);
 
 		/// <summary>
 		/// Constructor for colour.
@@ -37,7 +37,7 @@ namespace flounder {
 		/// <param name="g"> The new G value. </param>
 		/// <param name="b"> The new B value. </param>
 		/// <param name="convert"> Converts the colours from 0-255 to 0-1. </param>
-		colour(float r, float g, float b, bool convert);
+		colour(const float r, const float g, const float b, const bool convert);
 
 		/// <summary>
 		/// Constructor for colour.
@@ -46,7 +46,7 @@ namespace flounder {
 		/// <param name="g"> The new G value. </param>
 		/// <param name="b"> The new B value. </param>
 		/// <param name="a"> The new A value. </param>
-		colour(float r, float g, float b, float a);
+		colour(const float r, const float g, const float b, const float a);
 
 		/// <summary>
 		/// Constructor for Colour.
@@ -56,7 +56,7 @@ namespace flounder {
 		/// <param name="b"> The new B value. </param>
 		/// <param name="a"> The new A value. </param>
 		/// <param name="convert"> Converts the colours from 0-255 to 0-1. </param>
-		colour(float r, float g, float b, float a, bool convert);
+		colour(const float r, const float g, const float b, const float a, const bool convert);
 
 		/// <summary>
 		/// Deconstructor for colour.
@@ -77,7 +77,7 @@ namespace flounder {
 		/// <param name="g"> The new G value. </param>
 		/// <param name="b"> The new B value. </param>
 		/// <returns> This. </returns>
-		colour *set(float r, float g, float b);
+		colour *set(const float r, const float g, const float b);
 
 		/// <summary>
 		/// Sets values in the colour.
@@ -87,7 +87,7 @@ namespace flounder {
 		/// <param name="b"> The new B value. </param>
 		/// <param name="convert"> Converts the colours from 0-255 to 0-1. </param>
 		/// <returns> This. </returns>
-		colour *set(float r, float g, float b, bool convert);
+		colour *set(const float r, const float g, const float b, const bool convert);
 
 		/// <summary>
 		/// Sets values in the colour.
@@ -97,7 +97,7 @@ namespace flounder {
 		/// <param name="b"> The new B value. </param>
 		/// <param name="a"> The new A value. </param>
 		/// <returns> This. </returns>
-		colour *set(float r, float g, float b, float a);
+		colour *set(const float r, const float g, const float b, const float a);
 
 		/// <summary>
 		/// Sets values in the colour.
@@ -108,7 +108,7 @@ namespace flounder {
 		/// <param name="a"> The new A value. </param>
 		/// <param name="convert"> Converts the colours from 0-255 to 0-1. </param>
 		/// <returns> This. </returns>
-		colour *set(float r, float g, float b, float a, bool convert);
+		colour *set(const float r, const float g, const float b, const float a, const bool convert);
 
 		/// <summary>
 		/// Adds two colours together and places the result in the destination colour.
@@ -169,7 +169,7 @@ namespace flounder {
 		/// <param name="scalar"> The scaling value.
 		/// </param>
 		/// <returns> this. </returns>
-		colour *scale(float scalar);
+		colour *scale(const float scalar);
 
 		/// <returns> The length of the colour. </returns>
 		float length();

@@ -63,7 +63,7 @@ namespace flounder {
 		// Initialize the GLFW library.
 		if (!glfwInit())
 		{
-			logger::get()->error("Could not init GLFW!");
+			std::cout << "Could not init GLFW!" << std::endl;
 			framework::get()->requestClose(true);
 		}
 
@@ -107,7 +107,7 @@ namespace flounder {
 		// Gets any window errors.
 		if (m_window == NULL)
 		{
-			logger::get()->error("Could not create the window! Update your graphics drivers and ensure your computer supports OpenGL!");
+			std::cout << "Could not create the window! Update your graphics drivers and ensure your computer supports OpenGL!" << std::endl;
 			framework::get()->requestClose(true);
 			glfwTerminate();
 		}
@@ -150,7 +150,7 @@ namespace flounder {
 
 		if (glError != GL_NO_ERROR)
 		{
-			logger::get()->error("OpenGL Capability Error: " + glError);
+			std::cout << "Failed to load OpenGL!" << std::endl << glError << std::endl;
 			framework::get()->requestClose(true);
 		}
 
@@ -164,7 +164,7 @@ namespace flounder {
 		// Initialize the GLEW library.
 		if (glewInit() != GLEW_OK)
 		{
-			logger::get()->error("Could not init GLEW!");
+			std::cout << "Could not init GLEW!" << std::endl;
 			framework::get()->requestClose(true);
 		}
 
@@ -219,7 +219,7 @@ namespace flounder {
 		return m_windowHeight;
 	}
 
-	void display::setWindowSize(int width, int height)
+	void display::setWindowSize(const int width, const int height)
 	{
 		m_windowWidth = width;
 		m_windowHeight = height;
@@ -241,7 +241,7 @@ namespace flounder {
 		return m_vsync;
 	}
 
-	void display::setVSync(bool vsync)
+	void display::setVSync(const bool vsync)
 	{
 		m_vsync = vsync;
 		glfwSwapInterval(vsync ? 1 : 0);
@@ -256,7 +256,7 @@ namespace flounder {
 		return m_antialiasing;
 	}
 
-	void display::setAntialiasing(bool antialiasing)
+	void display::setAntialiasing(const bool antialiasing)
 	{
 		m_antialiasing = antialiasing;
 	}
@@ -266,7 +266,7 @@ namespace flounder {
 		return m_samples;
 	}
 
-	void display::setSamples(int samples)
+	void display::setSamples(const int samples)
 	{
 		m_samples = samples;
 		glfwWindowHint(GLFW_SAMPLES, samples);
@@ -277,7 +277,7 @@ namespace flounder {
 		return m_fullscreen;
 	}
 
-	void display::setFullscreen(bool fullscreen)
+	void display::setFullscreen(const bool fullscreen)
 	{
 		if (m_fullscreen == fullscreen) {
 			return;
@@ -287,7 +287,7 @@ namespace flounder {
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
 
-		logger::get()->log(fullscreen ? "Display is going fullscreen." : "Display is going windowed.");
+		std::cout << (fullscreen ? "Display is going fullscreen." : "Display is going windowed.") << std::endl;
 
 		if (fullscreen) {
 			m_fullscreenWidth = videoMode->width;

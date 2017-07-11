@@ -20,7 +20,7 @@ namespace flounder {
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
 		/// <param name="triggered"> A function called to check if the event was triggered. </param>
 		/// <param name="onEvent"> A function called when the event is triggered. </param>
-		ieventstandard(bool repeat, std::function<bool()> triggered, std::function<void()> onEvent)
+		ieventstandard(const bool repeat, const std::function<bool()> triggered, const std::function<void()> onEvent)
 		{
 			m_repeat = repeat;
 			m_triggered = triggered;
@@ -32,7 +32,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="triggered"> A function called to check if the event was triggered. </param>
 		/// <param name="onEvent"> A function called when the event is triggered. </param>
-		ieventstandard(std::function<bool()> triggered, std::function<void()> onEvent)
+		ieventstandard(const std::function<bool()> triggered, const std::function<void()> onEvent)
 		{
 			m_repeat = true;
 			m_triggered = triggered;

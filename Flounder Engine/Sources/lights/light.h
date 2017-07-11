@@ -2,6 +2,7 @@
 
 #include "../maths/colour.h"
 #include "../maths/vector3.h"
+
 #include "attenuation.h"
 
 namespace flounder {

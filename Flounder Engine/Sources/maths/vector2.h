@@ -1,8 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <cmath>
-
 #include "maths.h"
 
 namespace flounder {
@@ -24,7 +21,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="x"> Start x. </param>
 		/// <param name="y"> Start y. </param>
-		vector2(float x, float y);
+		vector2(const float x, const float y);
 
 		/// <summary>
 		/// Constructor for vector2.
@@ -43,7 +40,7 @@ namespace flounder {
 		/// <param name="x"> The new X value. </param>
 		/// <param name="y"> The new Y value. </param>
 		/// <returns> This. </returns>
-		vector2 *set(float x, float y);
+		vector2 *set(const float x, const float y);
 
 		/// <summary>
 		/// Loads from another vector2.
@@ -119,7 +116,7 @@ namespace flounder {
 		/// <param name="destination"> The destination vector or null if a new vector is to be created.
 		/// </param>
 		/// <returns> The destination vector. </returns>
-		static vector2 *scale(vector2 *source, float scalar, vector2 *destination);
+		static vector2 *scale(vector2 *source, const float scalar, vector2 *destination);
 
 		/// <summary>
 		/// Rotates a vector and places the result in the destination vector.
@@ -129,7 +126,7 @@ namespace flounder {
 		/// <param name="destination"> The destination vector or null if a new vector is to be created.
 		/// </param>
 		/// <returns> The destination vector. </returns>
-		static vector2 *rotate(vector2 *source, float angle, vector2 *destination);
+		static vector2 *rotate(vector2 *source, const float angle, vector2 *destination);
 
 		/// <summary>
 		/// Rotates a vector around a point and places the result in the destination vector.
@@ -140,7 +137,7 @@ namespace flounder {
 		/// <param name="destination"> The destination vector or null if a new vector is to be created.
 		/// </param>
 		/// <returns> The destination vector. </returns>
-		static vector2 *rotate(vector2 *source, float angle, vector2 *rotationAxis, vector2 *destination);
+		static vector2 *rotate(vector2 *source, const float angle, vector2 *rotationAxis, vector2 *destination);
 
 		/// <summary>
 		/// Negates a vector and places the result in the destination vector.
@@ -240,7 +237,7 @@ namespace flounder {
 		/// <param name="y"> the translation in y.
 		/// </param>
 		/// <returns> This. </returns>
-		vector2 *translate(float x, float y);
+		vector2 *translate(const float x, const float y);
 
 		/// <summary>
 		/// Negates this vector.
@@ -249,7 +246,7 @@ namespace flounder {
 		vector2 *negate();
 
 		/// <summary>
-		/// Normalises this vector.
+		/// Normalizes this vector.
 		/// </summary>
 		/// <returns> This. </returns>
 		vector2 *normalize();
@@ -259,8 +256,8 @@ namespace flounder {
 		/// </summary>
 		/// <param name="scalar"> The scale factor.
 		/// </param>
-		/// <returns> this. </returns>
-		vector2 *scale(float scalar);
+		/// <returns> This. </returns>
+		vector2 *scale(const float scalar);
 
 		/// <summary>
 		/// Gets if all the components to the vector are zero.

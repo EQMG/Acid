@@ -6,7 +6,7 @@ namespace flounder {
 		this->set(0.0f, 0.0f, 0.0f);
 	}
 
-	vector3::vector3(float x, float y, float z)
+	vector3::vector3(const float x, const float y, const float z)
 	{
 		this->set(x, y, z);
 	}
@@ -25,7 +25,7 @@ namespace flounder {
 	{
 	}
 
-	vector3 *vector3::set(float x, float y, float z)
+	vector3 *vector3::set(const float x, const float y, const float z)
 	{
 		this->x = x;
 		this->y = y;
@@ -112,7 +112,7 @@ namespace flounder {
 			dls = 1.0f;
 		}
 
-		return static_cast<float>(acos(dls));
+		return (float) acos(dls);
 	}
 
 	float vector3::dot(vector3 *left, vector3 *right)
@@ -120,7 +120,7 @@ namespace flounder {
 		return left->x * right->x + left->y * right->y + left->z * right->z;
 	}
 
-	vector3 *vector3::cross(vector3 * left, vector3 * right, vector3 * destination)
+	vector3 *vector3::cross(vector3 *left, vector3 *right, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -130,7 +130,7 @@ namespace flounder {
 		return destination->set(left->y * right->z - left->z * right->y, right->x * left->z - right->z * left->x, left->x * right->y - left->y * right->x);
 	}
 
-	vector3 *vector3::scale(vector3 * source, float scalar, vector3 * destination)
+	vector3 *vector3::scale(vector3 *source, const float scalar, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -140,12 +140,12 @@ namespace flounder {
 		return destination->set(source->x * scalar, source->y * scalar, source->z * scalar);
 	}
 
-	vector3 *vector3::rotate(vector3 * source, vector3 * rotation, vector3 * destination)
+	vector3 *vector3::rotate(vector3 *source, vector3 *rotation, vector3 *destination)
 	{
 		throw std::logic_error("Instead of calling vector3::rotate, call matrix4x4::rotate!");
 	}
 
-	vector3 *vector3::negate(vector3 * source, vector3 * destination)
+	vector3 *vector3::negate(vector3 *source, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -155,8 +155,7 @@ namespace flounder {
 		return destination->set(-source->x, -source->y, -source->z);
 	}
 
-
-	vector3 *vector3::normalize(vector3 * source, vector3 * destination)
+	vector3 *vector3::normalize(vector3 *source, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -218,7 +217,7 @@ namespace flounder {
 		return destination->set(pow(point2->x - point1->x, 2), pow(point2->y - point1->y, 2), pow(point2->z - point1->z, 2));
 	}
 
-	vector3 * vector3::generateRandomUnitVector(vector3 * destination)
+	vector3 *vector3::generateRandomUnitVector(vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -235,7 +234,7 @@ namespace flounder {
 		return destination->set(x, y, z);
 	}
 
-	vector3 * vector3::randomPointOnCircle(vector3 * destination, vector3 * normal, float radius)
+	vector3 *vector3::randomPointOnCircle(vector3 *destination, vector3 *normal, const float radius)
 	{
 		if (destination == NULL)
 		{
@@ -277,7 +276,7 @@ namespace flounder {
 		return l1 * p1->y + l2 * p2->y + l3 * p3->y;
 	}
 
-	vector3 *vector3::translate(float x, float y, float z)
+	vector3 *vector3::translate(const float x, const float y, const float z)
 	{
 		this->x += x;
 		this->y += y;
@@ -295,7 +294,7 @@ namespace flounder {
 		return normalize(this, this);
 	}
 
-	vector3 *vector3::scale(float scalar)
+	vector3 *vector3::scale(const float scalar)
 	{
 		return scale(this, scalar, this);
 	}

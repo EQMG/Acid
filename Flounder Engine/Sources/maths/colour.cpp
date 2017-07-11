@@ -11,22 +11,22 @@ namespace flounder {
 		this->set(0.0f, 0.0f, 0.0f, 1.0f);
 	}
 
-	colour::colour(float r, float g, float b)
+	colour::colour(const float r, const float g, const float b)
 	{
 		this->set(r, g, b);
 	}
 
-	colour::colour(float r, float g, float b, bool convert)
+	colour::colour(const float r, const float g, const float b, const bool convert)
 	{
 		this->set(r, g, b, convert);
 	}
 
-	colour::colour(float r, float g, float b, float a)
+	colour::colour(const float r, const float g, const float b, const float a)
 	{
 		this->set(r, g, b, a);
 	}
 
-	colour::colour(float r, float g, float b, float a, bool convert)
+	colour::colour(const float r, const float g, const float b, const float a, const bool convert)
 	{
 		this->set(r, g, b, a, convert);
 	}
@@ -40,12 +40,12 @@ namespace flounder {
 		return this->set(source->r, source->g, source->b, source->a);
 	}
 
-	colour *colour::set(float r, float g, float b)
+	colour *colour::set(const float r, const float g, const float b)
 	{
 		return set(r, g, b, false);
 	}
 
-	colour *colour::set(float r, float g, float b, bool convert)
+	colour *colour::set(const float r, const float g, const float b, const bool convert)
 	{
 		if (convert)
 		{
@@ -63,12 +63,12 @@ namespace flounder {
 		return this;
 	}
 
-	colour *colour::set(float r, float g, float b, float a)
+	colour *colour::set(const float r, const float g, const float b, const float a)
 	{
 		return set(r, g, b, a, false);
 	}
 
-	colour *colour::set(float r, float g, float b, float a, bool convert)
+	colour *colour::set(const float r, const float g, const float b, const float a, const bool convert)
 	{
 		if (convert)
 		{
@@ -128,7 +128,7 @@ namespace flounder {
 		return destination->set(left->r / right->r, left->g / right->g, left->b / right->b, left->a / right->a);
 	}
 
-	colour *colour::interpolate(colour *left, colour *right, float blend, colour *destination)
+	colour *colour::interpolate(colour *left, colour *right, const float blend, colour *destination)
 	{
 		if (destination == NULL)
 		{
@@ -149,7 +149,7 @@ namespace flounder {
 		return result;
 	}
 
-	colour *colour::scale(float scalar)
+	colour *colour::scale(const float scalar)
 	{
 		this->r *= scalar;
 		this->g *= scalar;

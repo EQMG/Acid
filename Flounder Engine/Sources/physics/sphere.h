@@ -18,14 +18,14 @@ namespace flounder {
 		/// Creates a new sphere
 		/// </summary>
 		/// <param name="radius"> The spheres radius. </param>
-		sphere(float radius);
+		sphere(const float radius);
 
 		/// <summary>
 		/// Creates a new sphere
 		/// </summary>
 		/// <param name="radius"> The spheres radius. </param>
 		/// <param name="position"> The spheres initial position. </param>
-		sphere(float radius, vector3 *position);
+		sphere(const float radius, vector3 *position);
 
 		/// <summary>
 		/// Creates a new sphere from another sphere source.
@@ -38,7 +38,7 @@ namespace flounder {
 		/// </summary>
 		~sphere();
 
-		collider *update(vector3 *position, vector3 *rotation, float scale, collider *destination) override;
+		collider *update(vector3 *position, vector3 *rotation, const float scale, collider *destination) override;
 
 		vector3 *resolveCollision(collider *other, vector3 *positionDelta, vector3 *destination) override;
 
@@ -64,7 +64,7 @@ namespace flounder {
 		/// Sets the radius of the sphere.
 		/// </summary>
 		/// <param name="radius"> The new sphere radius. </param>
-		inline void setRadius(float radius) { m_radius = radius; };
+		inline void setRadius(const float radius) { m_radius = radius; };
 
 		/// <summary>
 		/// Gets the radius of the position.

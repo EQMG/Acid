@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+
 #include "shadertype.h"
 
 namespace flounder {

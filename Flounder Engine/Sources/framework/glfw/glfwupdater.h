@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../iupdater.h"
-
 #include "../../camera/camera.h"
 #include "../../devices/audio.h"
 #include "../../devices/display.h"
@@ -10,15 +8,15 @@
 #include "../../devices/mouse.h"
 #include "../../events/events.h"
 #include "../../loaders/loaders.h"
-#include "../../logger/logger.h"
+#include "../../maths/delta.h"
+#include "../../maths/timer.h"
 #include "../../renderer/renderer.h"
 #include "../../skybox/skybox.h"
 #include "../../standards/standards.h"
 #include "../../processing/processing.h"
 #include "../../tasks/tasks.h"
 
-#include "../../maths/delta.h"
-#include "../../maths/timer.h"
+#include "../iupdater.h"
 
 namespace flounder {
 	class glfwupdater : public iupdater
@@ -32,7 +30,6 @@ namespace flounder {
 		timer *m_timerRender;
 		timer *m_timerLog;
 
-		logger *m_logger;
 		events *m_events;
 		tasks *m_tasks;
 		processing *m_processing;
@@ -58,17 +55,17 @@ namespace flounder {
 
 		void update() override;
 
-		imodule *getInstance(std::string name) override;
+		imodule *getInstance(const std::string &name) override;
 
 		inline double getTimeOffset() override { return m_timeOffset; };
 
-		inline void setTimeOffset(double timeOffset) override { m_timeOffset = timeOffset; };
+		inline void setTimeOffset(const double timeOffset) override { m_timeOffset = timeOffset; };
 
 		inline double getDelta() override { return m_deltaUpdate->getChange(); };
 
 		inline double getDeltaRender() override { return m_deltaRender->getChange(); };
 
-		inline void setFpsLimit(double fpsLimit) override { this->m_timerRender->setInterval(1.0 / fpsLimit);  };
+		inline void setFpsLimit(const double fpsLimit) override { this->m_timerRender->setInterval(1.0 / fpsLimit);  };
 
 		inline double getTimeSec() override { return (glfwGetTime() - m_startTime) + m_timeOffset; };
 

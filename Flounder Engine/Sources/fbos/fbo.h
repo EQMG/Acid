@@ -3,7 +3,9 @@
 #include <iostream>
 #include <cmath>
 #include <GL/glew.h>
+
 #include "../devices/display.h"
+
 #include "depthbuffer.h"
 #include "fbobuilder.h"
 
@@ -42,7 +44,7 @@ namespace flounder {
 		/// A new OpenGL FBO object.
 		/// </summary>
 		/// <param name="builder"> The fbo builder to load the fbo from. </param>
-		fbo(fbobuilder *builder);
+		fbo(const fbobuilder *builder);
 
 		/// <summary>
 		/// Deconstructor for the fbo.
@@ -56,13 +58,13 @@ namespace flounder {
 
 		void determineDrawBuffers();
 
-		void createTextureAttachment(int attachment);
+		void createTextureAttachment(const int attachment);
 
 		void createDepthBufferAttachment();
 
 		void createDepthTextureAttachment();
 
-		void attachMultisampleColourBuffer(int attachment);
+		void attachMultisampleColourBuffer(const int attachment);
 
 		void limitFBOSize();
 
@@ -138,6 +140,6 @@ namespace flounder {
 		/// <param name="readBuffer"> The colour attachment to be read from. </param>
 		/// <param name="drawBuffer"> The colour draw buffer to be written to. </param>
 		/// <param name="output"> The other FBO to blit to. </param>
-		static void resolveFBO(fbo *source, int readBuffer, int drawBuffer, fbo *output);
+		static void resolveFBO(fbo *source, const int readBuffer, const int drawBuffer, fbo *output);
 	};
 }
