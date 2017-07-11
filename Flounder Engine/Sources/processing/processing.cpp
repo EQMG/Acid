@@ -42,11 +42,7 @@ namespace flounder {
 	{
 		for (auto *processor : *m_processors)
 		{
-			if (processor->getRequestId() == request->getRequestId())
-			{
-				processor->addRequestToQueue(request);
-				return;
-			}
+			processor->addRequestToQueue(request);
 		}
 	}
 }

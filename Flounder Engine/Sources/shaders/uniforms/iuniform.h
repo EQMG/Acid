@@ -14,14 +14,14 @@ namespace flounder {
 		static const int NOT_FOUND = -1;
 
 		std::string m_name;
-		shader *m_shader;
+		shader *m_programID;
 
 		int m_location;
 	protected:
 		iuniform(const std::string &name, shader *shader)
 		{
 			m_name = name;
-			m_shader = shader;
+			m_programID = shader;
 		}
 
 		inline int getLocation() { return m_location; }

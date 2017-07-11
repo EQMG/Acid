@@ -35,7 +35,7 @@ namespace flounder {
 
 	void processoropengl::addRequestToQueue(irequest *request)
 	{
-		if (request == NULL)
+		if (dynamic_cast<requestopengl*>(request) == NULL)
 		{
 			return;
 		}
@@ -49,10 +49,5 @@ namespace flounder {
 		{
 			m_queue->acceptNextRequest()->executeRequestGL();
 		}
-	}
-
-	int processoropengl::getRequestId()
-	{
-		return 2;
 	}
 }
