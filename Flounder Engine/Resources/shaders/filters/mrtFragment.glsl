@@ -1,7 +1,7 @@
 #version
 
 //---------INCLUDES------------
-#include "maths.glsl"
+#include "Resources/shaders/maths.glsl"
 
 //---------CONSTANT------------
 const int LIGHTS = 64;

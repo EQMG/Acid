@@ -1,7 +1,7 @@
 #version
 
 //---------INCLUDES------------
-#include "maths.glsl"
+#include "Resources/shaders/maths.glsl"
 
 //---------IN------------
 in vec3 pass_textureCoords;
