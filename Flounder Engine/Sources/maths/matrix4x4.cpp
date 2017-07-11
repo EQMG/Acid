@@ -20,7 +20,7 @@ namespace flounder {
 	{
 	}
 
-	matrix4x4 * matrix4x4::set(matrix4x4 *source)
+	matrix4x4 *matrix4x4::set(matrix4x4 *source)
 	{
 		this->m00 = source->m00;
 		this->m01 = source->m01;
@@ -41,7 +41,7 @@ namespace flounder {
 		return this;
 	}
 
-	matrix4x4 * matrix4x4::set(float source[16])
+	matrix4x4 *matrix4x4::set(float source[16])
 	{
 		this->m00 = source[0];
 		this->m01 = source[1];
@@ -211,7 +211,7 @@ namespace flounder {
 		return destination;
 	}
 
-	matrix4x4 * matrix4x4::scale(matrix4x4 * left, vector4 * right, matrix4x4 * destination)
+	matrix4x4 *matrix4x4::scale(matrix4x4 *left, vector4 *right, matrix4x4 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -379,7 +379,7 @@ namespace flounder {
 		return destination;
 	}
 
-	matrix4x4 * matrix4x4::translate(matrix4x4 * left, vector3 * right, matrix4x4 * destination)
+	matrix4x4 *matrix4x4::translate(matrix4x4 *left, vector3 *right, matrix4x4 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -393,7 +393,7 @@ namespace flounder {
 		return destination;
 	}
 
-	matrix4x4 * matrix4x4::rotate(matrix4x4 * source, vector3 * axis, float angle, matrix4x4 * destination)
+	matrix4x4 *matrix4x4::rotate(matrix4x4 *source, vector3 *axis, float angle, matrix4x4 *destination)
 	{
 		if (destination == NULL)
 		{

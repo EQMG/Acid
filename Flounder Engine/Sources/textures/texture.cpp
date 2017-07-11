@@ -5,6 +5,10 @@ namespace flounder {
 	{
 	}
 
+	texture::texture(int n_args, ...)
+	{
+	}
+
 	texture::~texture()
 	{
 	}

@@ -3,15 +3,19 @@
 namespace flounder {
 	mainrenderer::mainrenderer()
 	{
+		m_infinity = new vector4(0.0f, 1.0f, 0.0f, INFINITY);
+		m_skybox = new rendererskybox();
 	}
 
 	mainrenderer::~mainrenderer()
 	{
+		delete m_infinity;
+		delete m_skybox;
 	}
 
 	void mainrenderer::render()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
-		glClearColor((GLclampf) 0.0, (GLclampf) 0.0, (GLclampf)mouse::get()->getPositionY(), (GLclampf) 1.0);
+		renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f);
+		m_skybox->render(m_infinity, camera::get()->getCamera());
 	}
 }
