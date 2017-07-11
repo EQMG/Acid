@@ -24,9 +24,6 @@ namespace flounder {
 		delete m_audio;
 		delete m_standards;
 		delete m_camera;
-		delete m_shaders;
-		delete m_textures;
-		delete m_models;
 		delete m_loaders;
 		delete m_renderer;
 
@@ -54,9 +51,6 @@ namespace flounder {
 		m_audio = new audio;
 		m_standards = new standards();
 		m_camera = new camera();
-		m_shaders = new shaders();
-		m_textures = new textures();
-		m_models = new models();
 		m_loaders = new loaders();
 		m_renderer = new renderer();
 
@@ -80,9 +74,6 @@ namespace flounder {
 		m_processing->init();
 
 		m_camera->init();
-		m_shaders->init();
-		m_textures->init();
-		m_models->init();
 		m_loaders->init();
 		m_renderer->init();
 
@@ -115,9 +106,6 @@ namespace flounder {
 			m_tasks->update();
 			m_processing->update();
 
-			m_shaders->update();
-			m_textures->update();
-			m_models->update();
 			m_loaders->update();
 
 			m_skybox->update();
@@ -187,17 +175,9 @@ namespace flounder {
 		{
 			return m_logger;
 		}
-		else if (name == "models")
-		{
-			return m_models;
-		}
 		else if (name == "renderer")
 		{
 			return m_renderer;
-		}
-		else if (name == "shaders")
-		{
-			return m_shaders;
 		}
 		else if (name == "skybox")
 		{
@@ -214,10 +194,6 @@ namespace flounder {
 		else if (name == "tasks")
 		{
 			return m_tasks;
-		}
-		else if (name == "textures")
-		{
-			return m_textures;
 		}
 
 		return NULL;

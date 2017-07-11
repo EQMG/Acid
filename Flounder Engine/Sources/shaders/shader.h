@@ -16,28 +16,10 @@
 #include "../maths/vector3.h"
 #include "../maths/vector4.h"
 
+#include "shadertype.h"
+#include "shaderbuilder.h"
+
 namespace flounder {
-	/// <summary>
-	/// A struct that represents a shader type.
-	/// </summary>
-	class shadertype {
-	public:
-		int m_shaderType;
-		std::string m_file;
-		std::string m_string;
-		GLuint m_shaderID;
-
-		shadertype(int shaderType, std::string file)
-		{
-			m_shaderType = shaderType;
-			m_file = file;
-		}
-
-		~shadertype()
-		{
-		}
-	};
-
 	/// <summary>
 	/// Class that represents a loaded shader.
 	/// </summary>
@@ -48,17 +30,22 @@ namespace flounder {
 		std::vector<std::string> *m_layoutBindings;
 		std::vector<std::string> *m_uniforms;
 
+		std::string m_name;
 		GLuint m_programID;
 	public:
 		/// <summary>
 		/// Creates a new shader.
 		/// </summary>
-		/// <param name="n_args"> The number of shader types being loaded. </param>
-		/// <param name="..."> The shader types being loaded. </param>
-		shader(int n_args, ...);
+		/// <param name="builder"> The shader builder to load the shader from. </param>
+		shader(shaderbuilder *builder);
 
+		/// <summary>
+		/// Deconstructor for the shader.
+		/// </summary>
 		~shader();
 	private:
+		void loadTypes();
+
 		void loadType(shadertype* type);
 
 		std::string processLine(const std::string &line);
@@ -68,29 +55,88 @@ namespace flounder {
 		void deleteTypes();
 
 		void loadBindings();
-
-		void loadUniforms();
 	public:
+		/// <summary>
+		/// Gets the loaded name for the shader.
+		/// </summary>
+		/// <returns> The shaders name. </returns>
+		inline std::string getName() { return m_name; }
+
+		/// <summary>
+		/// Gets a uniform location from a name.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <returns> The uniform location. </returns>
 		GLint getUniform(std::string name);
 
+		/// <summary>
+		/// Loads a boolean into a uniform.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(std::string name, const bool value);
 
+		/// <summary>
+		/// Loads a float into a uniform.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(std::string name, const float value);
 
+		/// <summary>
+		/// Loads a int/sampler2D into a uniform.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(std::string name, const int value);
 
+		/// <summary>
+		/// Loads a colour into a uniform.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(std::string name, colour *value);
 
+		/// <summary>
+		/// Loads a matrix 2x2 into a uniform.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(std::string name, matrix2x2 *value);
 
+		/// <summary>
+		/// Loads a matrix 3x3 into a uniform.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(std::string name, matrix3x3 *value);
 
+		/// <summary>
+		/// Loads a matrix 4x4 into a uniform.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(std::string name, matrix4x4 *value);
 
+		/// <summary>
+		/// Loads a vector 2 into a uniform.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(std::string name, vector2 *value);
 
+		/// <summary>
+		/// Loads a vector 3 into a uniform.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(std::string name, vector3 *value);
 
+		/// <summary>
+		/// Loads a vector 4 into a uniform.
+		/// </summary>
+		/// <param name="name"> The uniforms name. </param>
+		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(std::string name, vector4 *value);
 
 		/// <summary>

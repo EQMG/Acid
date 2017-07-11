@@ -131,6 +131,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\fbos\fbo.cpp" />
+    <ClCompile Include="Sources\fbos\fbobuilder.cpp" />
+    <ClCompile Include="Sources\post\ipostfilter.cpp" />
+    <ClCompile Include="Sources\post\ipostpipeline.cpp" />
+    <ClCompile Include="Sources\shaders\shaderbuilder.cpp" />
     <ClCompile Include="Sources\skybox\rendererskybox.cpp" />
     <ClCompile Include="Sources\noise\noisesimplex.cpp" />
     <ClCompile Include="Sources\noise\noiseperlin.cpp" />
@@ -141,11 +146,9 @@
     <ClCompile Include="Game\maininstance.cpp" />
     <ClCompile Include="Sources\lights\fog.cpp" />
     <ClCompile Include="Sources\loaders\loaders.cpp" />
-    <ClCompile Include="Sources\models\models.cpp" />
     <ClCompile Include="Sources\renderer\renderer.cpp" />
     <ClCompile Include="Sources\events\events.cpp" />
     <ClCompile Include="Sources\shaders\shader.cpp" />
-    <ClCompile Include="Sources\shaders\shaders.cpp" />
     <ClCompile Include="Sources\skybox\skybox.cpp" />
     <ClCompile Include="Sources\standards\standards.cpp" />
     <ClCompile Include="Sources\textures\stb_image.c" />
@@ -185,12 +188,18 @@
     <ClCompile Include="Sources\physics\sphere.cpp" />
     <ClCompile Include="Sources\processing\resource\processorresource.cpp" />
     <ClCompile Include="Sources\tasks\tasks.cpp" />
-    <ClCompile Include="Sources\textures\textures.cpp" />
     <ClCompile Include="Sources\models\vertexdata.cpp" />
     <ClCompile Include="Sources\textures\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\fbos\fbo.h" />
+    <ClInclude Include="Sources\fbos\depthbuffer.h" />
+    <ClInclude Include="Sources\fbos\fbobuilder.h" />
+    <ClInclude Include="Sources\post\ipostfilter.h" />
+    <ClInclude Include="Sources\post\ipostpipeline.h" />
+    <ClInclude Include="Sources\shaders\shaderbuilder.h" />
     <ClInclude Include="Sources\models\model.h" />
+    <ClInclude Include="Sources\shaders\shadertype.h" />
     <ClInclude Include="Sources\skybox\rendererskybox.h" />
     <ClInclude Include="Sources\noise\noisesimplex.h" />
     <ClInclude Include="Sources\noise\noiseperlin.h" />
@@ -202,14 +211,12 @@
     <ClInclude Include="Sources\helpers\helperfile.h" />
     <ClInclude Include="Sources\lights\fog.h" />
     <ClInclude Include="Sources\loaders\loaders.h" />
-    <ClInclude Include="Sources\models\models.h" />
     <ClInclude Include="Sources\renderer\renderer.h" />
     <ClInclude Include="Sources\renderer\irenderer.h" />
     <ClInclude Include="Sources\renderer\irenderermaster.h" />
     <ClInclude Include="Sources\events\events.h" />
     <ClInclude Include="Sources\helpers\helperstring.h" />
     <ClInclude Include="Sources\shaders\shader.h" />
-    <ClInclude Include="Sources\shaders\shaders.h" />
     <ClInclude Include="Sources\skybox\skybox.h" />
     <ClInclude Include="Sources\standards\istandard.h" />
     <ClInclude Include="Sources\standards\standards.h" />
@@ -274,7 +281,6 @@
     <ClInclude Include="Sources\processing\resource\requestresource.h" />
     <ClInclude Include="Sources\tasks\tasks.h" />
     <ClInclude Include="Sources\visual\idriver.h" />
-    <ClInclude Include="Sources\textures\textures.h" />
     <ClInclude Include="Sources\models\vertexdata.h" />
     <ClInclude Include="Sources\textures\texture.h" />
   </ItemGroup>

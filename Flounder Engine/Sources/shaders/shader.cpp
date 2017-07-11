@@ -1,26 +1,17 @@
 #include "shader.h"
 
 namespace flounder {
-	shader::shader(int n_args, ...)
+	shader::shader(shaderbuilder *builder)
 	{
-		m_shaderTypes = new std::vector<shadertype*>();
+		m_name = builder->m_name;
+		m_shaderTypes = builder->m_types;
 		m_layoutLocations = new std::vector<std::string>();
 		m_layoutBindings = new std::vector<std::string>();
 		m_uniforms = new std::vector<std::string>();
 
+		// Creates the shader and loads it to the GPU.
 		m_programID = glCreateProgram();
-
-		va_list ap;
-		va_start(ap, n_args);
-
-		for (int i = 0; i < n_args; i++)
-		{
-			shadertype* type = va_arg(ap, shadertype*);
-			loadType(type);
-			m_shaderTypes->push_back(type);
-		}
-
-		va_end(ap);
+		loadTypes();
 
 		loadLocations();
 
@@ -32,7 +23,6 @@ namespace flounder {
 		loadBindings();
 
 		glUseProgram(0);
-		loadUniforms();
 	}
 
 	shader::~shader()
@@ -44,6 +34,14 @@ namespace flounder {
 
 		glUseProgram(0);
 		glDeleteProgram(m_programID);
+	}
+
+	void shader::loadTypes()
+	{
+		for (std::vector<shadertype*>::iterator it = m_shaderTypes->begin(); it < m_shaderTypes->end(); it++)
+		{
+			loadType(*it);
+		}
 	}
 
 	void shader::loadType(shadertype* type)
@@ -101,7 +99,7 @@ namespace flounder {
 		}
 		else if (line.find("#include") != std::string::npos)
 		{
-			std::string includeFile = helperstring::substring(line, 8 + 1, line.length() - 1);
+			std::string includeFile = helperstring::substring(line, 8 + 1, line.length() - 1); // "#include".length = 8
 			includeFile = helperstring::replaceAll(includeFile, '\\s+');
 			includeFile = helperstring::replaceAll(includeFile, '\"');
 
@@ -123,7 +121,7 @@ namespace flounder {
 		}
 		else if (helperstring::startsWith(line, "uniform"))
 		{
-			std::string uniformString = helperstring::substring(line, 7 + 1, line.length() - 1);
+			std::string uniformString = helperstring::substring(line, 7 + 1, line.length() - 1); // "uniform".length = 7
 
 			std::vector<std::string> split = helperstring::split(uniformString, " ");
 
@@ -187,16 +185,6 @@ namespace flounder {
 
 			int location = glGetUniformLocation(m_programID, bindingName.c_str());
 			glUniform1i(location, index);
-		}
-	}
-
-	void shader::loadUniforms()
-	{
-		for (std::vector<std::string>::iterator it = m_uniforms->begin(); it < m_uniforms->end(); it++)
-		{
-			int location = glGetUniformLocation(m_programID, (*it).c_str());
-
-			// std::cout << *it << ":" << location << std::endl;
 		}
 	}
 
