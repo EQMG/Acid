@@ -12,7 +12,7 @@ namespace flounder {
 	class mouse : public imodule
 	{
 	private:
-	//	file *customMouse;
+		std::string m_customMouse;
 
 		int *m_mouseButtons;
 		double m_lastMousePositionX;
@@ -46,6 +46,8 @@ namespace flounder {
 		/// Deconstructor for the mouse.
 		/// </summary>
 		~mouse();
+
+		void load(const std::string &customMouse);
 
 		void init();
 

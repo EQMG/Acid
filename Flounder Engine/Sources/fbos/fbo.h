@@ -58,6 +58,8 @@ namespace flounder {
 
 		void determineDrawBuffers();
 
+		void limitFBOSize();
+
 		void createTextureAttachment(const int attachment);
 
 		void createDepthBufferAttachment();
@@ -65,8 +67,6 @@ namespace flounder {
 		void createDepthTextureAttachment();
 
 		void attachMultisampleColourBuffer(const int attachment);
-
-		void limitFBOSize();
 
 		void clear();
 	public:

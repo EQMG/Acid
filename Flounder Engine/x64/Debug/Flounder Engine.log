@@ -1,25 +1,3 @@
-﻿  vector4.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  skybox.cpp
-  rendererskybox.cpp
-  shader.cpp
-  renderer.cpp
-  sphere.cpp
-  ray.cpp
-  frustum.cpp
-  vertexdata.cpp
-  vector3.cpp
-  quaternion.cpp
-  matrix4x4.cpp
-  matrix3x3.cpp
-  light.cpp
-  glfwupdater.cpp
-  audio.cpp
-  camera.cpp
-  mainrenderer.cpp
-  mainplayer.cpp
-  maincamera.cpp
-  main.cpp
+﻿  mouse.cpp
   Flounder Engine.vcxproj -> C:\Users\mattp\documents\Flounder C++\x64\Debug\Flounder Engine.exe
   Flounder Engine.vcxproj -> C:\Users\mattp\documents\Flounder C++\x64\Debug\Flounder Engine.pdb (Partial PDB)
