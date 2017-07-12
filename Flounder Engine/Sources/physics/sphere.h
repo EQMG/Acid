@@ -76,6 +76,6 @@ namespace flounder {
 		/// Sets the position of the sphere.
 		/// </summary>
 		/// <param name="position"> The new sphere position. </param>
-		inline void setPosition(vector3 *position) { m_position->set(position); };
+		inline void setPosition(vector3 *position) { m_position->set(*position); };
 	};
 }
