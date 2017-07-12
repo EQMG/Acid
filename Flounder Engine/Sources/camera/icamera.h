@@ -53,7 +53,7 @@ namespace flounder {
 		/// Prepares the camera for the reflection render pass.
 		/// </summary>
 		/// <param name="waterHeight"> The height of the water to be reflected on. </param>
-		virtual void reflect(const float waterHeight) = 0;
+		virtual void reflect(const float &waterHeight) = 0;
 
 		/// <summary>
 		/// Gets the cameras 3D position in the world.

@@ -42,7 +42,7 @@ namespace flounder {
 
 	void ray::update(vector3 *currentPosition, vector2 *mousePosition, matrix4x4 *viewMatrix, matrix4x4 *projectionMatrix)
 	{
-		m_origin->set(currentPosition);
+		m_origin->set(*currentPosition);
 
 		if (m_useMouse)
 		{
@@ -52,7 +52,7 @@ namespace flounder {
 		{
 			if (m_screenStart != 0)
 			{
-				m_normalizedCoords->set(m_screenStart);
+				m_normalizedCoords->set(*m_screenStart);
 			}
 			else
 			{
@@ -60,8 +60,8 @@ namespace flounder {
 			}
 		}
 
-		m_viewMatrix->set(viewMatrix);
-		m_projectionMatrix->set(projectionMatrix);
+		m_viewMatrix->set(*viewMatrix);
+		m_projectionMatrix->set(*projectionMatrix);
 		m_clipCoords->set(m_normalizedCoords->x, m_normalizedCoords->y, -1.0f, 1.0f);
 		updateEyeCoords(m_clipCoords);
 		updateWorldCoords(m_eyeCoords);
@@ -74,7 +74,7 @@ namespace flounder {
 			destination = new vector3();
 		}
 
-		return vector3::add(m_origin, destination->set(m_currentRay)->scale(distance), destination);
+		return vector3::add(*m_origin, *destination->set(*m_currentRay)->scale(distance), destination);
 	}
 
 	vector3 *ray::convertToScreenSpace(vector3 *position, vector3 *destination)
@@ -85,8 +85,8 @@ namespace flounder {
 		}
 
 		vector4 *coords = new vector4(position->x, position->y, position->z, 1.0f);
-		matrix4x4::transform(m_viewMatrix, coords, coords);
-		matrix4x4::transform(m_projectionMatrix, coords, coords);
+		matrix4x4::transform(*m_viewMatrix, *coords, coords);
+		matrix4x4::transform(*m_projectionMatrix, *coords, coords);
 
 		if (coords->w < 0.0f)
 		{
@@ -105,15 +105,15 @@ namespace flounder {
 
 	void ray::updateEyeCoords(vector4 *clipCoords)
 	{
-		m_invertedProjection = matrix4x4::invert(m_projectionMatrix, m_invertedProjection);
-		matrix4x4::transform(m_invertedProjection, m_clipCoords, m_eyeCoords);
+		m_invertedProjection = matrix4x4::invert(*m_projectionMatrix, m_invertedProjection);
+		matrix4x4::transform(*m_invertedProjection, *m_clipCoords, m_eyeCoords);
 		m_eyeCoords->set(m_eyeCoords->x, m_eyeCoords->y, -1.0f, 0.0f);
 	}
 
 	void ray::updateWorldCoords(vector4 *eyeCoords)
 	{
-		matrix4x4::invert(m_viewMatrix, m_invertedView);
-		matrix4x4::transform(m_invertedView, m_eyeCoords, m_rayWorld);
+		matrix4x4::invert(*m_viewMatrix, m_invertedView);
+		matrix4x4::transform(*m_invertedView, *m_eyeCoords, m_rayWorld);
 		m_currentRay->set(m_rayWorld->x, m_rayWorld->y, m_rayWorld->z);
 	}
 }

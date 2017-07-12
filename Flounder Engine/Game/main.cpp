@@ -36,6 +36,11 @@ int main() {
 	);
 
 	texture *m_textureTest = new texture((new texturebuilder())->setFile("Resources/undefined.png"));
+
+	colour m_test = colour(0.2f, 0.3f, 0.0f, 1.0f);
+	colour m_result = colour();
+	colour::add(m_test, colour(0.2f, 0.1f, 0.1f), &m_result);
+	std::cout << m_result.r << ", " << m_result.g << ", " << m_result.b << ", " << m_result.a << std::endl;
 	
 	// Adds game elements to the framework.
 	buttonmouse *m_buttonLeft = new buttonmouse(1, GLFW_MOUSE_BUTTON_LEFT);

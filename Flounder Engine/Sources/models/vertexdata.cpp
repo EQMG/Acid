@@ -43,7 +43,7 @@ namespace flounder {
 
 		for (std::vector<vector3*>::iterator it = m_tangents->begin(); it < m_tangents->end(); it++)
 		{
-			vector3::add(m_averagedTangent, *it, m_averagedTangent);
+			vector3::add(*m_averagedTangent, **it, m_averagedTangent);
 		}
 
 		if (m_averagedTangent->length() > 0.0f)

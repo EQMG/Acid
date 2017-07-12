@@ -22,12 +22,12 @@ namespace flounder {
 		m_time += m_change;
 	}
 
-	double delta::getChange()
+	double &delta::getChange()
 	{
 		return m_change;
 	}
 
-	double delta::getTime()
+	double &delta::getTime()
 	{
 		return m_time;
 	}

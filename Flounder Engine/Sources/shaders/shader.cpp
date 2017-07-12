@@ -217,21 +217,21 @@ namespace flounder {
 
 	void shader::loadUniform(const std::string &name, matrix2x2 *value)
 	{
-		float *a = matrix2x2::toArray(value);
+		float *a = matrix2x2::toArray(*value);
 		glUniformMatrix2fv(getUniform(name), 1, GL_FALSE, a);
 		delete a;
 	}
 
 	void shader::loadUniform(const std::string &name, matrix3x3 *value)
 	{
-		float *a = matrix3x3::toArray(value);
+		float *a = matrix3x3::toArray(*value);
 		glUniformMatrix3fv(getUniform(name), 1, GL_FALSE, a);
 		delete a;
 	}
 
 	void shader::loadUniform(const std::string &name, matrix4x4 *value)
 	{
-		float *a = matrix4x4::toArray(value);
+		float *a = matrix4x4::toArray(*value);
 		glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, a);
 		delete a;
 	}

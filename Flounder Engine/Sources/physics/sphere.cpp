@@ -22,7 +22,7 @@ namespace flounder {
 	sphere::sphere(sphere *source)
 	{
 		m_radius = source->m_radius;
-		m_position = new vector3(source->m_position);
+		m_position = new vector3(*source->m_position);
 	}
 
 	sphere::~sphere()
@@ -40,7 +40,7 @@ namespace flounder {
 		sphere *source = static_cast<sphere*>(destination);
 
 		source->m_radius = m_radius * scale;
-		source->m_position->set(position);
+		source->m_position->set(*position);
 
 		return source;
 	}
@@ -70,7 +70,7 @@ namespace flounder {
 
 	collider *sphere::clone()
 	{
-		return new sphere(m_radius, new vector3(m_position));
+		return new sphere(m_radius, new vector3(*m_position));
 	}
 
 	intersect *sphere::intersects(collider *other)
@@ -82,11 +82,11 @@ namespace flounder {
 	{
 		float t;
 
-		vector3 *L = vector3::subtract(other->getOrigin(), m_position, NULL);
+		vector3 *L = vector3::subtract(*other->getOrigin(), *m_position, NULL);
 
-		float a = vector3::dot(other->getCurrentRay(), other->getCurrentRay());
-		float b = 2.0f * (vector3::dot(other->getCurrentRay(), L));
-		float c = (vector3::dot(L, L)) - (m_radius * m_radius);
+		float a = vector3::dot(*other->getCurrentRay(), *other->getCurrentRay());
+		float b = 2.0f * (vector3::dot(*other->getCurrentRay(), *L));
+		float c = (vector3::dot(*L, *L)) - (m_radius * m_radius);
 
 		float disc = b * b - 4.0f * a * c;
 
@@ -166,6 +166,6 @@ namespace flounder {
 
 	bool sphere::contains(vector3 *point)
 	{
-		return vector3::getDistanceSquared(m_position, point) <= m_radius * m_radius;
+		return vector3::getDistanceSquared(*m_position, *point) <= m_radius * m_radius;
 	}
 }
