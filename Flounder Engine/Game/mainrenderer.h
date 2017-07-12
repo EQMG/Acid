@@ -15,7 +15,7 @@ namespace flounder {
 
 		rendererskybox *m_skybox;
 
-		fbo *m_fboTest;
+		fbo *m_fboRenderer;
 	public:
 		mainrenderer();
 

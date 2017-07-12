@@ -49,31 +49,31 @@ namespace flounder {
 		/// </summary>
 		/// <param name="type"> The depth buffer to use.
 		/// </param>
-		/// <returns> this. </returns>
+		/// <returns> This. </returns>
 		fbobuilder *depthBuffer(const depthbuffer type);
 
 		/// <summary>
 		/// Disables the colour buffer.
 		/// </summary>
-		/// <returns> this. </returns>
+		/// <returns> This. </returns>
 		fbobuilder *noColourBuffer();
 
 		/// <summary>
 		/// Sets the texture to not use linear filtering.
 		/// </summary>
-		/// <returns> this. </returns>
+		/// <returns> This. </returns>
 		fbobuilder *nearestFiltering();
 
 		/// <summary>
 		/// Sets if the textures will even be bothered with wrapping.
 		/// </summary>
-		/// <returns> this. </returns>
+		/// <returns> This. </returns>
 		fbobuilder *disableTextureWrap();
 
 		/// <summary>
 		/// Sets the texture to repeat.
 		/// </summary>
-		/// <returns> this. </returns>
+		/// <returns> This. </returns>
 		fbobuilder *repeatTexture();
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="alpha"> If the alpha channel will be enabled.
 		/// </param>
-		/// <returns> this. </returns>
+		/// <returns> This. </returns>
 		fbobuilder *withAlphaChannel(const bool alpha);
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="samples"> How many MFAA samples should be used on the FBO. Zero disables multisampling.
 		/// </param>
-		/// <returns> this. </returns>
+		/// <returns> This. </returns>
 		fbobuilder *antialias(const int samples);
 
 		/// <summary>
@@ -97,7 +97,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="attachments"> The amount of attachments to create.
 		/// </param>
-		/// <returns> this. </returns>
+		/// <returns> This. </returns>
 		fbobuilder *attachments(const int attachments);
 
 		/// <summary>
@@ -105,7 +105,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="sizeScalar"> A scalar factor between the FBO and the screen, enabled when {@code fitToScreen} is enabled. (1.0f disables scalar).
 		/// </param>
-		/// <returns> this. </returns>
+		/// <returns> This. </returns>
 		fbobuilder *fitToScreen(const float sizeScalar);
 	};
 }

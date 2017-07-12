@@ -126,14 +126,20 @@ namespace flounder {
 			int width = 0;
 			int height = 0;
 			int components = 0;
-			stbi_uc *imageData = stbi_load(m_icon.c_str(), &width, &height, &components, 4);
-			icons[0].pixels = imageData;
+			stbi_uc *data = stbi_load(m_icon.c_str(), &width, &height, &components, 4);
+
+			if (data == NULL)
+			{
+				std::cerr << "Unable to load texture: " << data << std::endl;
+			}
+
+			icons[0].pixels = data;
 			icons[0].width = width;
 			icons[0].height = height;
 
-			//stbi_image_free(imageData);
+			glfwSetWindowIcon(m_window, 1, icons);
+			stbi_image_free(data);
 		}
-		glfwSetWindowIcon(m_window, 1, icons);
 
 		// Enables VSync if requested.
 		glfwSwapInterval(m_vsync ? 1 : 0);

@@ -23,6 +23,8 @@ namespace flounder {
 		loadBindings();
 
 		glUseProgram(0);
+
+		delete builder;
 	}
 
 	shader::~shader()

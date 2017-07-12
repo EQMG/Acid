@@ -19,7 +19,7 @@ namespace flounder {
 		/// Creates a new shader builder.
 		/// </summary>
 		/// <param name="name"> The name. </param>
-		shaderbuilder(const std::string &name);
+		shaderbuilder();
 
 		/// <summary>
 		/// Deconstructor for the shader builder.
@@ -27,10 +27,17 @@ namespace flounder {
 		~shaderbuilder();
 
 		/// <summary>
+		/// Sets the name of the shader.
+		/// </summary>
+		/// <param name="name"> The shaders name. </param>
+		/// <returns> This. </returns>
+		shaderbuilder *addName(const std::string &name);
+
+		/// <summary>
 		/// Adds a new shader type to the load pool.
 		/// </summary>
 		/// <param name="type"> The shader type to add. </param>
-		/// <returns> this. </returns>
+		/// <returns> This. </returns>
 		shaderbuilder *addType(shadertype *type);
 	};
 }

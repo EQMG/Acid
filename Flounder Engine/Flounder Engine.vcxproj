@@ -77,6 +77,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Libraries\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -90,6 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Libraries\libs\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -109,6 +111,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -130,6 +133,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -159,6 +163,7 @@
     <ClCompile Include="Sources\shaders\shader.cpp" />
     <ClCompile Include="Sources\skybox\skybox.cpp" />
     <ClCompile Include="Sources\standards\standards.cpp" />
+    <ClCompile Include="Sources\textures\texturebuilder.cpp" />
     <ClCompile Include="Sources\textures\stb_image.c" />
     <ClCompile Include="Sources\visual\driverbounce.cpp" />
     <ClCompile Include="Sources\visual\driverfade.cpp" />
@@ -227,6 +232,7 @@
     <ClInclude Include="Sources\skybox\skybox.h" />
     <ClInclude Include="Sources\standards\istandard.h" />
     <ClInclude Include="Sources\standards\standards.h" />
+    <ClInclude Include="Sources\textures\texturebuilder.h" />
     <ClInclude Include="Sources\textures\stb_image.h" />
     <ClInclude Include="Sources\visual\driverbounce.h" />
     <ClInclude Include="Sources\visual\driverfade.h" />
