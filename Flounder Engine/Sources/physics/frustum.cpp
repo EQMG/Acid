@@ -13,8 +13,8 @@ namespace flounder {
 
 	void frustum::update(matrix4x4 *viewMatrix, matrix4x4 *projectionMatrix)
 	{
-		float *view = matrix4x4::toArray(viewMatrix);
-		float *proj = matrix4x4::toArray(projectionMatrix);
+		float *view = matrix4x4::toArray(*viewMatrix);
+		float *proj = matrix4x4::toArray(*projectionMatrix);
 		float *clip = new float[16];
 
 		clip[0] = view[0] * proj[0] + view[1] * proj[4] + view[2] * proj[8] + view[3] * proj[12];

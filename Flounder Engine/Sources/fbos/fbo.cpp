@@ -40,10 +40,10 @@ namespace flounder {
 	{
 		clear();
 		//delete m_frameBuffer;
-		delete m_colourTexture;
+		delete[] m_colourTexture;
 		//delete m_depthTexture;
 		//delete m_depthBuffer;
-		delete m_colourBuffer;
+		delete[] m_colourBuffer;
 	}
 
 	void fbo::initialize()

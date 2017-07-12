@@ -56,12 +56,12 @@ namespace flounder {
 
 		inline matrix4x4 *getProjectionMatrix() override { return m_projectionMatrix; }
 
-		void reflect(const float waterHeight) override;
+		void reflect(const float &waterHeight) override;
 
 		inline vector3 *getPosition() override { return m_position; }
 
 		inline vector3 *getRotation() override { return m_rotation; }
 
-		inline void setRotation(vector3 *rotation) override { m_rotation->set(rotation); }
+		inline void setRotation(vector3 *rotation) override { m_rotation->set(*rotation); }
 	};
 }

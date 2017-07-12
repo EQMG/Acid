@@ -17,7 +17,7 @@ namespace flounder {
 		/// Creates a new timer.
 		/// </summary>
 		/// <param name="interval"> The time between events (seconds). </param>
-		timer(const double interval);
+		timer(const double &interval);
 
 		/// <summary>
 		/// Deconstructor for the timer.
@@ -45,6 +45,6 @@ namespace flounder {
 		/// Gets the timers interval. (Seconds, Resets timer).
 		/// </summary>
 		/// <param name="interval"> The new timer interval. </param>
-		void setInterval(const double interval);
+		void setInterval(const double &interval);
 	};
 }

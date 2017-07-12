@@ -6,9 +6,9 @@ namespace flounder {
 		this->setIdentity();
 	}
 
-	matrix3x3::matrix3x3(matrix3x3 *source)
+	matrix3x3::matrix3x3(const matrix3x3 &source)
 	{
-		source->set(source);
+		this->set(source);
 	}
 
 	matrix3x3::matrix3x3(const float source[9])
@@ -20,17 +20,17 @@ namespace flounder {
 	{
 	}
 
-	matrix3x3 *matrix3x3::set(matrix3x3 *source)
+	matrix3x3 *matrix3x3::set(const matrix3x3 &source)
 	{
-		this->m00 = source->m00;
-		this->m01 = source->m01;
-		this->m02 = source->m02;
-		this->m10 = source->m10;
-		this->m11 = source->m11;
-		this->m12 = source->m12;
-		this->m20 = source->m20;
-		this->m21 = source->m21;
-		this->m22 = source->m22;
+		this->m00 = source.m00;
+		this->m01 = source.m01;
+		this->m02 = source.m02;
+		this->m10 = source.m10;
+		this->m11 = source.m11;
+		this->m12 = source.m12;
+		this->m20 = source.m20;
+		this->m21 = source.m21;
+		this->m22 = source.m22;
 		return this;
 	}
 
@@ -61,60 +61,66 @@ namespace flounder {
 		source->m22 = 1.0f;
 		return source;
 	}
-	matrix3x3 *matrix3x3::add(matrix3x3 *left, matrix3x3 *right, matrix3x3 *destination)
+
+	float matrix3x3::determinant(const matrix3x3 &source)
+	{
+		return source.m00 * (source.m11 * source.m22 - source.m12 * source.m21) + source.m01 * (source.m12 * source.m20 - source.m10 * source.m22) + source.m02 * (source.m10 * source.m21 - source.m11 * source.m20);
+	}
+
+	matrix3x3 *matrix3x3::add(const matrix3x3 &left, const matrix3x3 &right, matrix3x3 *destination)
 	{
 		if (destination == NULL)
 		{
 			destination = new matrix3x3();
 		}
 
-		destination->m00 = left->m00 + right->m00;
-		destination->m01 = left->m01 + right->m01;
-		destination->m02 = left->m02 + right->m02;
-		destination->m10 = left->m10 + right->m10;
-		destination->m11 = left->m11 + right->m11;
-		destination->m12 = left->m12 + right->m12;
-		destination->m20 = left->m20 + right->m20;
-		destination->m21 = left->m21 + right->m21;
-		destination->m22 = left->m22 + right->m22;
+		destination->m00 = left.m00 + right.m00;
+		destination->m01 = left.m01 + right.m01;
+		destination->m02 = left.m02 + right.m02;
+		destination->m10 = left.m10 + right.m10;
+		destination->m11 = left.m11 + right.m11;
+		destination->m12 = left.m12 + right.m12;
+		destination->m20 = left.m20 + right.m20;
+		destination->m21 = left.m21 + right.m21;
+		destination->m22 = left.m22 + right.m22;
 		return destination;
 	}
 
-	matrix3x3 *matrix3x3::subtract(matrix3x3 *left, matrix3x3 *right, matrix3x3 *destination)
+	matrix3x3 *matrix3x3::subtract(const matrix3x3 &left, const matrix3x3 &right, matrix3x3 *destination)
 	{
 		if (destination == NULL)
 		{
 			destination = new matrix3x3();
 		}
 
-		destination->m00 = left->m00 - right->m00;
-		destination->m01 = left->m01 - right->m01;
-		destination->m02 = left->m02 - right->m02;
-		destination->m10 = left->m10 - right->m10;
-		destination->m11 = left->m11 - right->m11;
-		destination->m12 = left->m12 - right->m12;
-		destination->m20 = left->m20 - right->m20;
-		destination->m21 = left->m21 - right->m21;
-		destination->m22 = left->m22 - right->m22;
+		destination->m00 = left.m00 - right.m00;
+		destination->m01 = left.m01 - right.m01;
+		destination->m02 = left.m02 - right.m02;
+		destination->m10 = left.m10 - right.m10;
+		destination->m11 = left.m11 - right.m11;
+		destination->m12 = left.m12 - right.m12;
+		destination->m20 = left.m20 - right.m20;
+		destination->m21 = left.m21 - right.m21;
+		destination->m22 = left.m22 - right.m22;
 		return destination;
 	}
 
-	matrix3x3 *matrix3x3::multiply(matrix3x3 *left, matrix3x3 *right, matrix3x3 *destination)
+	matrix3x3 *matrix3x3::multiply(const matrix3x3 &left, const matrix3x3 &right, matrix3x3 *destination)
 	{
 		if (destination == NULL)
 		{
 			destination = new matrix3x3();
 		}
 
-		float m00 = left->m00 * right->m00 + left->m10 * right->m01 + left->m20 * right->m02;
-		float m01 = left->m01 * right->m00 + left->m11 * right->m01 + left->m21 * right->m02;
-		float m02 = left->m02 * right->m00 + left->m12 * right->m01 + left->m22 * right->m02;
-		float m10 = left->m00 * right->m10 + left->m10 * right->m11 + left->m20 * right->m12;
-		float m11 = left->m01 * right->m10 + left->m11 * right->m11 + left->m21 * right->m12;
-		float m12 = left->m02 * right->m10 + left->m12 * right->m11 + left->m22 * right->m12;
-		float m20 = left->m00 * right->m20 + left->m10 * right->m21 + left->m20 * right->m22;
-		float m21 = left->m01 * right->m20 + left->m11 * right->m21 + left->m21 * right->m22;
-		float m22 = left->m02 * right->m20 + left->m12 * right->m21 + left->m22 * right->m22;
+		float m00 = left.m00 * right.m00 + left.m10 * right.m01 + left.m20 * right.m02;
+		float m01 = left.m01 * right.m00 + left.m11 * right.m01 + left.m21 * right.m02;
+		float m02 = left.m02 * right.m00 + left.m12 * right.m01 + left.m22 * right.m02;
+		float m10 = left.m00 * right.m10 + left.m10 * right.m11 + left.m20 * right.m12;
+		float m11 = left.m01 * right.m10 + left.m11 * right.m11 + left.m21 * right.m12;
+		float m12 = left.m02 * right.m10 + left.m12 * right.m11 + left.m22 * right.m12;
+		float m20 = left.m00 * right.m20 + left.m10 * right.m21 + left.m20 * right.m22;
+		float m21 = left.m01 * right.m20 + left.m11 * right.m21 + left.m21 * right.m22;
+		float m22 = left.m02 * right.m20 + left.m12 * right.m21 + left.m22 * right.m22;
 
 		destination->m00 = m00;
 		destination->m01 = m01;
@@ -128,7 +134,7 @@ namespace flounder {
 		return destination;
 	}
 
-	vector3 *matrix3x3::transform(matrix3x3 *left, vector3 *right, vector3 *destination)
+	vector3 *matrix3x3::transform(const matrix3x3 &left, const vector3 &right, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -136,40 +142,37 @@ namespace flounder {
 		}
 
 
-		float x = left->m00 * right->x + left->m10 * right->y + left->m20 * right->z;
-		float y = left->m01 * right->x + left->m11 * right->y + left->m21 * right->z;
-		float z = left->m02 * right->x + left->m12 * right->y + left->m22 * right->z;
+		float x = left.m00 * right.x + left.m10 * right.y + left.m20 * right.z;
+		float y = left.m01 * right.x + left.m11 * right.y + left.m21 * right.z;
+		float z = left.m02 * right.x + left.m12 * right.y + left.m22 * right.z;
 
-		destination->x = x;
-		destination->y = y;
-		destination->z = z;
-		return destination;
+		return destination->set(x, y, z);
 	}
 
-	matrix3x3 *matrix3x3::scale(matrix3x3 *left, vector3 *right, matrix3x3 *destination)
+	matrix3x3 *matrix3x3::scale(const matrix3x3 &left, const vector3 &right, matrix3x3 *destination)
 	{
 		if (destination == NULL)
 		{
 			destination = new matrix3x3();
 		}
 
-		destination->m00 = left->m00 * right->x;
-		destination->m01 = left->m01 * right->x;
-		destination->m02 = left->m02 * right->x;
-		destination->m10 = left->m10 * right->y;
-		destination->m11 = left->m11 * right->y;
-		destination->m12 = left->m12 * right->y;
-		destination->m20 = left->m20 * right->z;
-		destination->m21 = left->m21 * right->z;
-		destination->m22 = left->m22 * right->z;
+		destination->m00 = left.m00 * right.x;
+		destination->m01 = left.m01 * right.x;
+		destination->m02 = left.m02 * right.x;
+		destination->m10 = left.m10 * right.y;
+		destination->m11 = left.m11 * right.y;
+		destination->m12 = left.m12 * right.y;
+		destination->m20 = left.m20 * right.z;
+		destination->m21 = left.m21 * right.z;
+		destination->m22 = left.m22 * right.z;
 		return destination;
 	}
 
-	matrix3x3 *matrix3x3::invert(matrix3x3 *source, matrix3x3 *destination)
+	matrix3x3 *matrix3x3::invert(const matrix3x3 &source, matrix3x3 *destination)
 	{
-		float determinant = source->determinant();
+		float d = determinant(source);
 
-		if (determinant != 0.0f)
+		if (d != 0.0f)
 		{
 			if (destination == NULL)
 			{
@@ -179,18 +182,18 @@ namespace flounder {
 			/*
 			* Does it the ordinary way. inv(A) = 1/det(A) * adj(T), where adj(T) = transpose(Conjugate Matrix) m00 m01 m02 m10 m11 m12 m20 m21 m22
 			*/
-			float determinant_inv = 1.0f / determinant;
+			float determinant_inv = 1.0f / d;
 
 			// Get the conjugate matrix.
-			float t00 = source->m11 * source->m22 - source->m12 * source->m21;
-			float t01 = -source->m10 * source->m22 + source->m12 * source->m20;
-			float t02 = source->m10 * source->m21 - source->m11 * source->m20;
-			float t10 = -source->m01 * source->m22 + source->m02 * source->m21;
-			float t11 = source->m00 * source->m22 - source->m02 * source->m20;
-			float t12 = -source->m00 * source->m21 + source->m01 * source->m20;
-			float t20 = source->m01 * source->m12 - source->m02 * source->m11;
-			float t21 = -source->m00 * source->m12 + source->m02 * source->m10;
-			float t22 = source->m00 * source->m11 - source->m01 * source->m10;
+			float t00 = source.m11 * source.m22 - source.m12 * source.m21;
+			float t01 = -source.m10 * source.m22 + source.m12 * source.m20;
+			float t02 = source.m10 * source.m21 - source.m11 * source.m20;
+			float t10 = -source.m01 * source.m22 + source.m02 * source.m21;
+			float t11 = source.m00 * source.m22 - source.m02 * source.m20;
+			float t12 = -source.m00 * source.m21 + source.m01 * source.m20;
+			float t20 = source.m01 * source.m12 - source.m02 * source.m11;
+			float t21 = -source.m00 * source.m12 + source.m02 * source.m10;
+			float t22 = source.m00 * source.m11 - source.m01 * source.m10;
 
 			destination->m00 = t00 * determinant_inv;
 			destination->m11 = t11 * determinant_inv;
@@ -209,41 +212,41 @@ namespace flounder {
 		}
 	}
 
-	matrix3x3 *matrix3x3::negate(matrix3x3 *source, matrix3x3 *destination)
+	matrix3x3 *matrix3x3::negate(const matrix3x3 &source, matrix3x3 *destination)
 	{
 		if (destination == NULL)
 		{
 			destination = new matrix3x3();
 		}
 
-		destination->m00 = -source->m00;
-		destination->m01 = -source->m02;
-		destination->m02 = -source->m01;
-		destination->m10 = -source->m10;
-		destination->m11 = -source->m12;
-		destination->m12 = -source->m11;
-		destination->m20 = -source->m20;
-		destination->m21 = -source->m22;
-		destination->m22 = -source->m21;
+		destination->m00 = -source.m00;
+		destination->m01 = -source.m02;
+		destination->m02 = -source.m01;
+		destination->m10 = -source.m10;
+		destination->m11 = -source.m12;
+		destination->m12 = -source.m11;
+		destination->m20 = -source.m20;
+		destination->m21 = -source.m22;
+		destination->m22 = -source.m21;
 		return destination;
 	}
 
-	matrix3x3 *matrix3x3::transpose(matrix3x3 *source, matrix3x3 *destination)
+	matrix3x3 *matrix3x3::transpose(const matrix3x3 &source, matrix3x3 *destination)
 	{
 		if (destination == NULL)
 		{
 			destination = new matrix3x3();
 		}
 
-		float m00 = source->m00;
-		float m01 = source->m10;
-		float m02 = source->m20;
-		float m10 = source->m01;
-		float m11 = source->m11;
-		float m12 = source->m21;
-		float m20 = source->m02;
-		float m21 = source->m12;
-		float m22 = source->m22;
+		float m00 = source.m00;
+		float m01 = source.m10;
+		float m02 = source.m20;
+		float m10 = source.m01;
+		float m11 = source.m11;
+		float m12 = source.m21;
+		float m20 = source.m02;
+		float m21 = source.m12;
+		float m22 = source.m22;
 
 		destination->m00 = m00;
 		destination->m01 = m01;
@@ -257,18 +260,18 @@ namespace flounder {
 		return destination;
 	}
 
-	float *matrix3x3::toArray(matrix3x3 *matrix)
+	float *matrix3x3::toArray(const matrix3x3 &matrix)
 	{
 		float *result = new float[9];
-		result[0] = matrix->m00;
-		result[1] = matrix->m01;
-		result[2] = matrix->m02;
-		result[3] = matrix->m10;
-		result[4] = matrix->m11;
-		result[5] = matrix->m12;
-		result[6] = matrix->m20;
-		result[7] = matrix->m21;
-		result[8] = matrix->m22;
+		result[0] = matrix.m00;
+		result[1] = matrix.m01;
+		result[2] = matrix.m02;
+		result[3] = matrix.m10;
+		result[4] = matrix.m11;
+		result[5] = matrix.m12;
+		result[6] = matrix.m20;
+		result[7] = matrix.m21;
+		result[8] = matrix.m22;
 		return result;
 	}
 
@@ -293,22 +296,22 @@ namespace flounder {
 
 	float matrix3x3::determinant()
 	{
-		return m00 * (m11 * m22 - m12 * m21) + m01 * (m12 * m20 - m10 * m22) + m02 * (m10 * m21 - m11 * m20);
+		return determinant(*this);
 	}
 
 	matrix3x3 *matrix3x3::invert()
 	{
-		return invert(this, this);
+		return invert(*this, this);
 	}
 
 	matrix3x3 *matrix3x3::negate()
 	{
-		return negate(this, this);
+		return negate(*this, this);
 	}
 
 	matrix3x3 *matrix3x3::transpose()
 	{
-		return transpose(this, this);
+		return transpose(*this, this);
 	}
 
 	matrix3x3 *matrix3x3::setZero()

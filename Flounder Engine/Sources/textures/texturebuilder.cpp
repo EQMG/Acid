@@ -45,7 +45,7 @@ namespace flounder {
 
 	texturebuilder *texturebuilder::clampToBorder(colour *border)
 	{
-		m_border->set(border);
+		m_border->set(*border);
 		m_clampToBorder = true;
 		m_clampEdges = false;
 		return this;
