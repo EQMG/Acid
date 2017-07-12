@@ -189,6 +189,9 @@
     <ClCompile Include="Sources\fbos\fbo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\textures\texturebuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\devices\display.h">
@@ -459,6 +462,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\fbos\fbo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\textures\texturebuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

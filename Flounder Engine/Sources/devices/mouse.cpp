@@ -4,11 +4,17 @@ namespace flounder {
 	mouse::mouse()
 		: imodule()
 	{
+		m_customMouse = "";
 	}
 
 	mouse::~mouse()
 	{
 		delete m_mouseButtons;
+	}
+
+	void mouse::load(const std::string &customMouse)
+	{
+		m_customMouse = customMouse;
 	}
 
 	void mouse::init()
@@ -31,6 +37,29 @@ namespace flounder {
 		glfwSetMouseButtonCallback(display::get()->getWindow(), callbackMouseButton);
 		glfwSetCursorPosCallback(display::get()->getWindow(), callbackCursorPos);
 		glfwSetCursorEnterCallback(display::get()->getWindow(), callbackCursorEnter);
+
+		// Loads a custom cursor.
+		if (!m_customMouse.empty())
+		{
+			int width = 0;
+			int height = 0;
+			int components = 0;
+			stbi_uc *data = stbi_load(m_customMouse.c_str(), &width, &height, &components, 4);
+
+			if (data == NULL)
+			{
+				std::cerr << "Unable to load texture: " << m_customMouse << std::endl;
+			}
+
+			GLFWimage *image = new GLFWimage();
+			image->pixels = data;
+			image->width = width;
+			image->height = height;
+
+			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
+			glfwSetCursor(display::get()->getWindow(), cursor);
+			stbi_image_free(data);
+		}
 	}
 
 	void mouse::update()
