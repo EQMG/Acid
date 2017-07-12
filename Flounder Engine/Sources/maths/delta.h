@@ -36,12 +36,12 @@ namespace flounder {
 		/// Gets the current change.
 		/// </summary>
 		/// <returns> The change. </returns>
-		double getChange();
+		double &getChange();
 
 		/// <summary>
 		/// Gets the time, all deltas added up.
 		/// </summary>
 		/// <returns> The time. </returns>
-		double getTime();
+		double &getTime();
 	};
 }

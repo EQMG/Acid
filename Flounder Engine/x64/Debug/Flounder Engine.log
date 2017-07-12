@@ -1,3 +1,15 @@
-﻿  mouse.cpp
+﻿  maincamera.cpp
+  Generating Code...
+  Compiling...
+  main.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  skybox.cpp
+  rendererskybox.cpp
+  glfwupdater.cpp
+  audio.cpp
+  camera.cpp
+  mainrenderer.cpp
   Flounder Engine.vcxproj -> C:\Users\mattp\documents\Flounder C++\x64\Debug\Flounder Engine.exe
   Flounder Engine.vcxproj -> C:\Users\mattp\documents\Flounder C++\x64\Debug\Flounder Engine.pdb (Partial PDB)

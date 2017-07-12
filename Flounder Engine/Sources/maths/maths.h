@@ -29,7 +29,7 @@ namespace flounder {
 		/// </param>
 		/// <returns> The resultant mod. </returns>
 		template<typename t>
-		static t mod(const t x, const t y)
+		static t mod(const t &x, const t &y)
 		{
 			return x - y * floor(x / y);
 		}
@@ -41,7 +41,7 @@ namespace flounder {
 		/// </param>
 		/// <returns> The normalized angle. </returns>
 		template<typename t>
-		static t normalizeAngle(const t angle)
+		static t normalizeAngle(const t &angle)
 		{
 			if (angle >= (t) 360.0)
 			{
@@ -63,7 +63,7 @@ namespace flounder {
 		/// </param>
 		/// <returns> The rounded value. </returns>
 		template<typename t>
-		static t roundToPlace(const t value, const int place)
+		static t roundToPlace(const t &value, const int &place)
 		{
 			t placeMul = (t) pow(10.0, place);
 			return round(value * placeMul) / placeMul;
@@ -77,7 +77,7 @@ namespace flounder {
 		/// </param>
 		/// <returns> Returns a value with deadband applied. </returns>
 		template<typename t>
-		static t deadband(const t min, const t value)
+		static t deadband(const t &min, const t &value)
 		{
 			return abs(value) >= abs(min) ? value : (t) 0.0;
 		}
@@ -91,7 +91,7 @@ namespace flounder {
 		/// </param>
 		/// <returns> {@code value}, clamped between {@code min} and {@code max}. </returns>
 		template<typename t>
-		static t clamp(const t value, const t min, const t max)
+		static t clamp(const t &value, const t &min, const t &max)
 		{
 			return (value < min) ? min : (value > max) ? max : value;
 		}
@@ -104,7 +104,7 @@ namespace flounder {
 		/// </param>
 		/// <returns> A limited value. </returns>
 		template<typename t>
-		static t limit(const t value, const t limit)
+		static t limit(const t &value, const t &limit)
 		{
 			return value > limit ? limit : value;
 		}
@@ -118,7 +118,7 @@ namespace flounder {
 		/// </param>
 		/// <returns> If both are almost equal. </returns>
 		template<typename t>
-		static bool almostEqual(const t a, const t b, const t eps)
+		static bool almostEqual(const t &a, const t &b, const t &eps)
 		{
 			return abs(a - b) < eps;
 		}
@@ -132,7 +132,7 @@ namespace flounder {
 		/// </param>
 		/// <returns> Returns a interpolated value. </returns>
 		template<typename t>
-		static t cosInterpolate(const t a, const t b, const t blend)
+		static t cosInterpolate(const t &a, const t &b, const t &blend)
 		{
 			double ft = blend * PI;
 			float f = (1.0f - (float) cos(ft)) * 0.5f;
@@ -148,7 +148,7 @@ namespace flounder {
 		/// </param>
 		/// <returns> The resulting stepped value. </returns>
 		template<typename t>
-		static t smoothlyStep(const t edge0, const t edge1, const t x)
+		static t smoothlyStep(const t &edge0, const t &edge1, const t &x)
 		{
 			float s = clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
 			return s * s * (3.0f - 2.0f * t);
@@ -161,7 +161,7 @@ namespace flounder {
 		/// <param name="max"> The max value.
 		/// </param>
 		/// <returns> The randomly selected value within the range. </returns>
-		static float randomInRange(const float min, const float max)
+		static float randomInRange(const float &min, const float &max)
 		{
 			float range = max - min;
 			float scaled = (float) __random();
@@ -176,7 +176,7 @@ namespace flounder {
 		/// <param name="upperLimit"> The upper number.
 		/// </param>
 		/// <returns> The final random number. </returns>
-		static double logRandom(const double lowerLimit, const double upperLimit)
+		static double logRandom(const double &lowerLimit, const double &upperLimit)
 		{
 			double logLower = log(lowerLimit);
 			double logUpper = log(upperLimit);
@@ -204,7 +204,7 @@ namespace flounder {
 		/// <param name="mean"> The mean of the distribution.
 		/// </param>
 		/// <returns> A normally distributed value. </returns>
-		static float normallyDistributedSingle(const float standardDeviation, const float mean)
+		static float normallyDistributedSingle(const float &standardDeviation, const float &mean)
 		{
 			// Intentionally duplicated to avoid IEnumerable overhead.
 			double u1 = __random(); // These are uniform(0,1) random doubles.
