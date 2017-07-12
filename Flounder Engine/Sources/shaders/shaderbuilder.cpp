@@ -1,14 +1,19 @@
 #include "shaderbuilder.h"
 
 namespace flounder {
-	shaderbuilder::shaderbuilder(const std::string &name)
+	shaderbuilder::shaderbuilder()
 	{
-		m_name = name;
 		m_types = new std::vector<shadertype*>();
 	}
 
 	shaderbuilder::~shaderbuilder()
 	{
+	}
+
+	shaderbuilder *shaderbuilder::addName(const std::string &name)
+	{
+		m_name = name;
+		return this;
 	}
 
 	shaderbuilder *shaderbuilder::addType(shadertype *type)

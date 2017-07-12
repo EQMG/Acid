@@ -1,3 +1,6 @@
+#ifndef stb_image_h__
+#define stb_image_h__
+
 ////   begin header file  ////////////////////////////////////////////////////
 //
 // Limitations:
@@ -259,3 +262,4 @@ extern "C" {
 //
 //
 ////   end header file   /////////////////////////////////////////////////////
+#endif // stb_image_h__

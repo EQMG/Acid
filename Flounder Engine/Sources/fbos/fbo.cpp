@@ -30,6 +30,10 @@ namespace flounder {
 		}
 
 		m_hasGivenResolveError = false;
+
+		initialize();
+
+		delete builder;
 	}
 
 	fbo::~fbo()
@@ -50,7 +54,8 @@ namespace flounder {
 		if (m_useColourBuffer) {
 			determineDrawBuffers();
 		}
-		else {
+		else 
+		{
 			glDrawBuffer(GL_FALSE);
 		}
 
@@ -90,6 +95,15 @@ namespace flounder {
 	void fbo::determineDrawBuffers()
 	{
 		glDrawBuffers(m_attachments, m_drawBuffers);
+	}
+
+	void fbo::limitFBOSize()
+	{
+		int maxSize = 0;
+		glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE_EXT, &maxSize);
+
+		m_width = __min(maxSize, m_width);
+		m_height = __min(maxSize, m_height);
 	}
 
 	void fbo::createTextureAttachment(const int attachment)
@@ -142,18 +156,6 @@ namespace flounder {
 		glBindRenderbuffer(GL_RENDERBUFFER, m_colourBuffer[attachment - GL_COLOR_ATTACHMENT0]);
 		glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_samples, m_alphaChannel ? GL_RGBA8 : GL_RGB8, m_width, m_height);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, attachment, GL_RENDERBUFFER, m_colourBuffer[attachment - GL_COLOR_ATTACHMENT0]);
-	}
-
-	void fbo::limitFBOSize()
-	{
-		int *maxSize = 0;
-		
-		glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE_EXT, maxSize);
-
-		m_width = __min(*maxSize, m_width);
-		m_height = __min(*maxSize, m_height);
-
-		delete maxSize;
 	}
 
 	void fbo::clear()
@@ -214,6 +216,10 @@ namespace flounder {
 
 	void fbo::blitToScreen()
 	{
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+		glDrawBuffer(GL_BACK);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_frameBuffer);
+		glBlitFramebuffer(0, 0, m_width, m_height, 0, 0, display::get()->getWidth(), display::get()->getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	}
 
 	void fbo::setSamples(const int samples)
