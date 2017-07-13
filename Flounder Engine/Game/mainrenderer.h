@@ -20,7 +20,6 @@ namespace flounder {
 		fbo *m_fboRenderer;
 
 		idriver *m_driverR;
-		idriver *m_driverB;
 	public:
 		mainrenderer();
 

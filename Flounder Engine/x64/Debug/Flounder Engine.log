@@ -1,15 +1,97 @@
-﻿  maincamera.cpp
-  Generating Code...
-  Compiling...
+﻿  texture.cpp
+  vertexdata.cpp
+  tasks.cpp
+  processorresource.cpp
+  sphere.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\physics\sphere.h(41): warning C4373: 'flounder::sphere::update': virtual function overrides 'flounder::collider::update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
+  c:\users\mattp\documents\flounder c++\flounder engine\sources\physics\collider.h(25): note: see declaration of 'flounder::collider::update'
+  vector4.cpp
+  vector3.cpp
+  vector2.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\maths\vector2.cpp(253): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+  timer.cpp
+  quaternion.cpp
+  matrix4x4.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\maths\matrix4x4.cpp(89): warning C4552: '-': operator has no effect; expected operator with side-effect
+c:\users\mattp\documents\flounder c++\flounder engine\sources\maths\matrix4x4.cpp(90): warning C4552: '+': operator has no effect; expected operator with side-effect
+c:\users\mattp\documents\flounder c++\flounder engine\sources\maths\matrix4x4.cpp(91): warning C4552: '-': operator has no effect; expected operator with side-effect
+  matrix3x3.cpp
+  matrix2x2.cpp
   main.cpp
 c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  skybox.cpp
-  rendererskybox.cpp
-  glfwupdater.cpp
+  display.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\devices\display.cpp(37): warning C4150: deletion of pointer to incomplete type 'GLFWwindow'; no destructor called
+  c:\users\mattp\documents\flounder c++\libraries\headers\glfw\glfw3.h(789): note: see declaration of 'GLFWwindow'
+  delta.cpp
+  colour.cpp
+  keyboard.cpp
+  framework.cpp
   audio.cpp
+  Generating Code...
+  Compiling...
+  mouse.cpp
+  joysticks.cpp
+  glfwupdater.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   camera.cpp
+  ray.cpp
+  frustum.cpp
+  processoropengl.cpp
+  processing.cpp
+  smoothfloat.cpp
+  mainplayer.cpp
+  maincamera.cpp
+  driverconstant.cpp
+  driverlinear.cpp
+  driverslide.cpp
+  driversinwave.cpp
+  driverfade.cpp
+  driverbounce.cpp
+  standards.cpp
+  skybox.cpp
+  shader.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(207): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(208): warning C4305: 'argument': truncation from 'int' to 'const char'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(208): warning C4309: 'argument': truncation of constant value
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(219): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(224): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(229): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(246): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(247): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(248): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(252): warning C4305: 'argument': truncation from 'int' to 'const char'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(252): warning C4309: 'argument': truncation of constant value
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(284): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(287): warning C4305: 'argument': truncation from 'int' to 'const char'
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shader.cpp(287): warning C4309: 'argument': truncation of constant value
+  Generating Code...
+  Compiling...
+  events.cpp
+  renderer.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  loaders.cpp
+  fog.cpp
+  maininstance.cpp
   mainrenderer.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\mattp\documents\flounder c++\flounder engine\game\mainrenderer.cpp(28): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+  attenuation.cpp
+  light.cpp
+  noiseclassic.cpp
+  noiseperlin.cpp
+  noisesimplex.cpp
+  rendererskybox.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  ipostpipeline.cpp
+  ipostfilter.cpp
+  fbo.cpp
+  Generating Code...
+  stb_image.c
+c:\users\mattp\documents\flounder c++\flounder engine\sources\textures\stb_image.c(502): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+c:\users\mattp\documents\flounder c++\flounder engine\sources\textures\stb_image.c(515): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\mattp\documents\Flounder C++\x64\Debug\vc120.pdb'; linking object as if no debug info
   Flounder Engine.vcxproj -> C:\Users\mattp\documents\Flounder C++\x64\Debug\Flounder Engine.exe
   Flounder Engine.vcxproj -> C:\Users\mattp\documents\Flounder C++\x64\Debug\Flounder Engine.pdb (Partial PDB)

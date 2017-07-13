@@ -9,7 +9,6 @@ namespace flounder {
 		m_fboRenderer = fbo::newFBO()->fitToScreen(1.0f)->attachments(3)->withAlphaChannel(false)->depthBuffer(TEXTURE)->create();
 
 		m_driverR = new driversinwave(0.0f, 1.0f, 3.0f);
-		m_driverB = new driverbounce(1.0f, 0.0f, 6.0f);
 	}
 
 	mainrenderer::~mainrenderer()
@@ -18,7 +17,6 @@ namespace flounder {
 		delete m_skybox;
 		delete m_fboRenderer;
 		delete m_driverR;
-		delete m_driverB;
 	}
 
 	void mainrenderer::render()
@@ -28,8 +26,7 @@ namespace flounder {
 
 		// Scene rendering.
 		float r = m_driverR->update(framework::get()->getDeltaRender());
-		float b = m_driverB->update(framework::get()->getDeltaRender());
-		renderer::get()->prepareNewRenderParse(r, 0.0f, b);
+		renderer::get()->prepareNewRenderParse(r, 0.0f, 0.0f);
 		m_skybox->render(m_infinity, camera::get()->getCamera());
 
 		// Unbinds the render FBO.
