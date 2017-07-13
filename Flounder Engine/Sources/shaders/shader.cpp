@@ -16,7 +16,7 @@ namespace flounder {
 		return this;
 	}
 
-	shader::builder *shader::builder::addType(shadertype *type)
+	shader::builder *shader::builder::addType(const shadertype &type)
 	{
 		m_shader->m_shaderTypes->push_back(type);
 		return this;
@@ -46,9 +46,10 @@ namespace flounder {
 	shader::shader()
 	{
 		m_name = "";
-		m_shaderTypes = new std::vector<shadertype*>();
+		m_shaderTypes = new std::vector<shadertype>();
 		m_layoutLocations = new std::vector<std::string>();
 		m_layoutBindings = new std::vector<std::string>();
+		m_constants = new std::vector<std::pair<std::string, std::string>>();
 		m_uniforms = new std::vector<std::string>();
 
 		m_programID = NULL;
@@ -59,6 +60,7 @@ namespace flounder {
 		delete m_shaderTypes;
 		delete m_layoutLocations;
 		delete m_layoutBindings;
+		delete m_constants;
 		delete m_uniforms;
 
 		glUseProgram(0);
@@ -143,9 +145,9 @@ namespace flounder {
 
 	void shader::loadTypes()
 	{
-		for (std::vector<shadertype*>::iterator it = m_shaderTypes->begin(); it < m_shaderTypes->end(); it++)
+		for (std::vector<shadertype>::iterator it = m_shaderTypes->begin(); it < m_shaderTypes->end(); it++)
 		{
-			loadType(*it);
+			loadType(&*it);
 		}
 	}
 
@@ -188,7 +190,7 @@ namespace flounder {
 	{
 		std::string result = line;
 
-		if (line.find("#version") != std::string::npos)
+		if (helperstring::contains(line, "#version"))
 		{
 			int major = display::get()->getGlfwMajor();
 			int minor = display::get()->getGlfwMinor();
@@ -202,7 +204,7 @@ namespace flounder {
 				result = "#version 130";
 			}
 		}
-		else if (line.find("#include") != std::string::npos)
+		else if (helperstring::contains(line, "#include"))
 		{
 			std::string includeFile = helperstring::substring(line, 8 + 1, line.length() - 1); // "#include".length = 8
 			includeFile = helperstring::replaceAll(includeFile, '\\s+');
@@ -213,25 +215,62 @@ namespace flounder {
 		}
 		else if (helperstring::startsWith(line, "layout"))
 		{
-			if (line.find("location") != std::string::npos)
+			if (helperstring::contains(line, "location"))
 			{
 				m_layoutLocations->push_back(line);
 				result = helperstring::trim(helperstring::substring(line, helperstring::findCharPos(line, ')') + 1, line.length()));
 			}
-			else if (line.find("binding") != std::string::npos)
+			else if (helperstring::contains(line, "binding"))
 			{
 				m_layoutBindings->push_back(line);
 				result = helperstring::trim(helperstring::substring(line, helperstring::findCharPos(line, ')') + 1, line.length()));
 			}
 		}
+		else if (helperstring::startsWith(line, "const"))
+		{
+			std::string constString = line.substr(5 + 1, line.length() - 1);
+			constString.erase(std::remove(constString.begin(), constString.end(), ';'), constString.end());
+
+			std::string constType = helperstring::trim(constString.substr(0, helperstring::findCharPos(constString, ' ')));
+
+			constString = helperstring::trim(constString.substr(helperstring::findCharPos(constString, ' '), constString.length()));
+
+			std::vector<std::string> split = helperstring::split(constString, "=");
+
+			std::string constName = helperstring::trim(split.at(0));
+			std::string constValue = helperstring::trim(split.at(1));
+
+			m_constants->push_back(std::pair<std::string, std::string>(constName, constValue));
+		}
 		else if (helperstring::startsWith(line, "uniform"))
 		{
 			std::string uniformString = helperstring::substring(line, 7 + 1, line.length() - 1); // "uniform".length = 7
+
+			std::vector<std::string> split1 = helperstring::split(uniformString, "=");
+
+			if (split1.size() != 0)
+			{
+				uniformString = split1.at(0);
+			}
 
 			std::vector<std::string> split = helperstring::split(uniformString, " ");
 
 			std::string uniformType = helperstring::trim(split.at(0));
 			std::string uniformName = helperstring::trim(split.at(1));
+
+			if (uniformString.find("[") != std::string::npos && uniformString.find("]") != std::string::npos)
+			{
+
+				if (uniformName.find("[") != std::string::npos && uniformName.find("]") != std::string::npos)
+				{
+					uniformName = helperstring::trim(uniformName.substr(0, helperstring::findCharPos(uniformName, '[')));
+				}
+
+				std::string arraySize = helperstring::trim(uniformString.substr(helperstring::findCharPos(uniformString, '[') + 1, uniformString.length() - 1));
+				arraySize.erase(std::remove(arraySize.begin(), arraySize.end(), ']'), arraySize.end());
+
+				std::cout << line << " : " << uniformName << ":" << arraySize << std::endl;
+			}
 
 			m_uniforms->push_back(uniformName);
 		}
@@ -270,10 +309,10 @@ namespace flounder {
 
 	void shader::deleteTypes()
 	{
-		for (std::vector<shadertype*>::iterator it = m_shaderTypes->begin(); it < m_shaderTypes->end(); it++)
+		for (std::vector<shadertype>::iterator it = m_shaderTypes->begin(); it < m_shaderTypes->end(); it++)
 		{
-			glDetachShader(m_programID, (*it)->m_shaderID);
-			glDeleteShader((*it)->m_shaderID);
+			glDetachShader(m_programID, (*it).m_shaderID);
+			glDeleteShader((*it).m_shaderID);
 		}
 	}
 

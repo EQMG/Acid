@@ -54,7 +54,7 @@ namespace flounder {
 			/// </summary>
 			/// <param name="type"> The shader type to add. </param>
 			/// <returns> This. </returns>
-			builder *addType(shadertype *type);
+			builder *addType(const shadertype &type);
 
 			/// <summary>
 			/// Creates a shader from the builder.
@@ -64,9 +64,10 @@ namespace flounder {
 		};
 	protected:
 		std::string m_name;
-		std::vector<shadertype*> *m_shaderTypes;
+		std::vector<shadertype> *m_shaderTypes;
 		std::vector<std::string> *m_layoutLocations;
 		std::vector<std::string> *m_layoutBindings;
+		std::vector<std::pair<std::string, std::string>> *m_constants;
 		std::vector<std::string> *m_uniforms;
 
 		GLuint m_programID;

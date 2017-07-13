@@ -34,6 +34,11 @@ namespace flounder {
 			return (text.compare(0, token.length(), token) == 0);
 		}
 
+		static bool contains(const std::string& text, const std::string& token)
+		{
+			return text.find(token) != std::string::npos;
+		}
+
 		static int findCharPos(const std::string& line, const char c) {
 			for (int i = 0; i < line.length(); i++) 
 			{
