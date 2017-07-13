@@ -144,10 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Sources\fbos\fbo.cpp" />
-    <ClCompile Include="Sources\fbos\fbobuilder.cpp" />
     <ClCompile Include="Sources\post\ipostfilter.cpp" />
     <ClCompile Include="Sources\post\ipostpipeline.cpp" />
-    <ClCompile Include="Sources\shaders\shaderbuilder.cpp" />
     <ClCompile Include="Sources\skybox\rendererskybox.cpp" />
     <ClCompile Include="Sources\noise\noisesimplex.cpp" />
     <ClCompile Include="Sources\noise\noiseperlin.cpp" />
@@ -163,7 +161,6 @@
     <ClCompile Include="Sources\shaders\shader.cpp" />
     <ClCompile Include="Sources\skybox\skybox.cpp" />
     <ClCompile Include="Sources\standards\standards.cpp" />
-    <ClCompile Include="Sources\textures\texturebuilder.cpp" />
     <ClCompile Include="Sources\textures\stb_image.c" />
     <ClCompile Include="Sources\visual\driverbounce.cpp" />
     <ClCompile Include="Sources\visual\driverfade.cpp" />
@@ -206,10 +203,8 @@
   <ItemGroup>
     <ClInclude Include="Sources\fbos\fbo.h" />
     <ClInclude Include="Sources\fbos\depthbuffer.h" />
-    <ClInclude Include="Sources\fbos\fbobuilder.h" />
     <ClInclude Include="Sources\post\ipostfilter.h" />
     <ClInclude Include="Sources\post\ipostpipeline.h" />
-    <ClInclude Include="Sources\shaders\shaderbuilder.h" />
     <ClInclude Include="Sources\models\model.h" />
     <ClInclude Include="Sources\shaders\shadertype.h" />
     <ClInclude Include="Sources\skybox\rendererskybox.h" />
@@ -232,7 +227,6 @@
     <ClInclude Include="Sources\skybox\skybox.h" />
     <ClInclude Include="Sources\standards\istandard.h" />
     <ClInclude Include="Sources\standards\standards.h" />
-    <ClInclude Include="Sources\textures\texturebuilder.h" />
     <ClInclude Include="Sources\textures\stb_image.h" />
     <ClInclude Include="Sources\visual\driverbounce.h" />
     <ClInclude Include="Sources\visual\driverfade.h" />

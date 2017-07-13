@@ -174,22 +174,13 @@
     <ClCompile Include="Sources\skybox\rendererskybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\shaders\shaderbuilder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\post\ipostfilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sources\post\ipostpipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\fbos\fbobuilder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\fbos\fbo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\textures\texturebuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -443,9 +434,6 @@
     <ClInclude Include="Sources\models\model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\shaders\shaderbuilder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\shaders\shadertype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -458,13 +446,7 @@
     <ClInclude Include="Sources\fbos\depthbuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\fbos\fbobuilder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\fbos\fbo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\textures\texturebuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

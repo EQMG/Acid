@@ -19,7 +19,7 @@ namespace flounder {
 		/// <param name="start"> The start value. </param>
 		/// <param name="end"> The end value. </param>
 		/// <param name="length"> The length between two waves. </param>
-		driverbounce(const float start, const float end, const float length);
+		driverbounce(const float &start, const float &end, const float &length);
 
 		/// <summary>
 		/// Deconstructor for bounce driver.
@@ -27,6 +27,6 @@ namespace flounder {
 		~driverbounce();
 
 	protected:
-		float calculate(const float time) override;
+		float calculate(const float &time) override;
 	};
 }

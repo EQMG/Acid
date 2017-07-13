@@ -1,13 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <cmath>
 #include <GL/glew.h>
 
 #include "../devices/display.h"
 
 #include "depthbuffer.h"
-#include "fbobuilder.h"
 
 namespace flounder {
 	/// <summary>
@@ -15,7 +15,104 @@ namespace flounder {
 	/// </summary>
 	class fbo
 	{
-	private:
+		/// <summary>
+		/// A builder used to set fbo parameters for loading.
+		/// </summary>
+		class builder
+		{
+		private:
+			fbo *m_fbo;
+		public:
+			/// <summary>
+			/// Creates a new fbo builder.
+			/// </summary>
+			builder();
+
+			/// <summary>
+			/// Deconstructor for the shader builder.
+			/// </summary>
+			~builder();
+
+			/// <summary>
+			/// Sets the size of the fbo.
+			/// </summary>
+			/// <param name="width"> The fbos's initial width. </param>
+			/// <param name="height"> The fbos's initial height. </param>
+			/// <returns> This. </returns>
+			builder *setSize(const int &width, const int &height);
+
+			/// <summary>
+			/// Sets the type of depth buffer to use.
+			/// </summary>
+			/// <param name="type"> The depth buffer to use.
+			/// </param>
+			/// <returns> This. </returns>
+			builder *depthBuffer(const depthbuffer &type);
+
+			/// <summary>
+			/// Disables the colour buffer.
+			/// </summary>
+			/// <returns> This. </returns>
+			builder *noColourBuffer();
+
+			/// <summary>
+			/// Sets the texture to not use linear filtering.
+			/// </summary>
+			/// <returns> This. </returns>
+			builder *nearestFiltering();
+
+			/// <summary>
+			/// Sets if the textures will even be bothered with wrapping.
+			/// </summary>
+			/// <returns> This. </returns>
+			builder *disableTextureWrap();
+
+			/// <summary>
+			/// Sets the texture to repeat.
+			/// </summary>
+			/// <returns> This. </returns>
+			builder *repeatTexture();
+
+			/// <summary>
+			/// Enables / disables the alpha channel.
+			/// </summary>
+			/// <param name="alpha"> If the alpha channel will be enabled.
+			/// </param>
+			/// <returns> This. </returns>
+			builder *withAlphaChannel(const bool &alpha);
+
+			/// <summary>
+			/// Sets antialiased to true and adds samples.
+			/// </summary>
+			/// <param name="samples"> How many MFAA samples should be used on the FBO. Zero disables multisampling.
+			/// </param>
+			/// <returns> This. </returns>
+			builder *antialias(const int &samples);
+
+			/// <summary>
+			/// Sets the amount of colour attachments to create.
+			/// </summary>
+			/// <param name="attachments"> The amount of attachments to create.
+			/// </param>
+			/// <returns> This. </returns>
+			builder *attachments(const int &attachments);
+
+			/// <summary>
+			/// Sets if the FBO will be fit to the screen.
+			/// </summary>
+			/// <param name="sizeScalar"> A scalar factor between the FBO and the screen, enabled when {@code fitToScreen} is enabled. (1.0f disables scalar).
+			/// </param>
+			/// <returns> This. </returns>
+			builder *fitToScreen(const float &sizeScalar);
+
+			/// <summary>
+			/// Creates a fbo from the builder.
+			/// </summary>
+			/// <returns> The created fbo. </returns>
+			fbo *create();
+		};
+
+	protected:
 		depthbuffer m_depthBufferType;
 		bool m_useColourBuffer;
 		bool m_linearFiltering;
@@ -39,37 +136,22 @@ namespace flounder {
 
 		bool m_hasGivenResolveError;
 
-	public:
 		/// <summary>
 		/// A new OpenGL FBO object.
 		/// </summary>
-		/// <param name="builder"> The fbo builder to load the fbo from. </param>
-		fbo(const fbobuilder *builder);
-
+		fbo();
+	public:
 		/// <summary>
 		/// Deconstructor for the fbo.
 		/// </summary>
 		~fbo();
-	private:
+
 		/// <summary>
-		/// Initializes the FBO.
+		/// Creates a new fbo builder that is used to configure a fbo.
 		/// </summary>
-		void initialize();
+		/// <returns> The fbo builder. </returns>
+		static builder *newFBO();
 
-		void determineDrawBuffers();
-
-		void limitFBOSize();
-
-		void createTextureAttachment(const int attachment);
-
-		void createDepthBufferAttachment();
-
-		void createDepthTextureAttachment();
-
-		void attachMultisampleColourBuffer(const int attachment);
-
-		void clear();
-	public:
 		/// <summary>
 		/// Binds the FBO so it can be rendered too.
 		/// </summary>
@@ -141,5 +223,24 @@ namespace flounder {
 		/// <param name="drawBuffer"> The colour draw buffer to be written to. </param>
 		/// <param name="output"> The other FBO to blit to. </param>
 		static void resolveFBO(fbo *source, const int readBuffer, const int drawBuffer, fbo *output);
+	private:
+		/// <summary>
+		/// Initializes the FBO.
+		/// </summary>
+		void initialize();
+
+		void determineDrawBuffers();
+
+		void limitFBOSize();
+
+		void createTextureAttachment(const int attachment);
+
+		void createDepthBufferAttachment();
+
+		void createDepthTextureAttachment();
+
+		void attachMultisampleColourBuffer(const int attachment);
+
+		void clear();
 	};
 }

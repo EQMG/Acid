@@ -1,7 +1,7 @@
 #include "driverslide.h"
 
 namespace flounder {
-	driverslide::driverslide(const float start, const float end, const float length)
+	driverslide::driverslide(const float &start, const float &end, const float &length)
 		: idriver(length)
 	{
 		m_start = start;
@@ -14,7 +14,7 @@ namespace flounder {
 	{
 	}
 
-	float driverslide::calculate(const float time)
+	float driverslide::calculate(const float &time)
 	{
 		if (!m_reachedTarget && time >= m_max)
 		{

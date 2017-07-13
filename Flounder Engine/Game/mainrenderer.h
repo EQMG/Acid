@@ -4,6 +4,8 @@
 #include "../Sources/renderer/renderer.h"
 
 #include "../Sources/fbos/fbo.h"
+#include "../Sources/visual/driverbounce.h"
+#include "../Sources/visual/driversinwave.h"
 
 #include "../Sources/skybox/rendererskybox.h"
 
@@ -16,6 +18,9 @@ namespace flounder {
 		rendererskybox *m_skybox;
 
 		fbo *m_fboRenderer;
+
+		idriver *m_driverR;
+		idriver *m_driverB;
 	public:
 		mainrenderer();
 

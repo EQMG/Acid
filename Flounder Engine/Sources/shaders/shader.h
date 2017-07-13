@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 #include <map>
 #include <stdarg.h>
@@ -15,7 +16,6 @@
 #include "../maths/vector3.h"
 #include "../maths/vector4.h"
 
-#include "shaderbuilder.h"
 #include "shadertype.h"
 
 namespace flounder {
@@ -23,43 +23,86 @@ namespace flounder {
 	/// Class that represents a loaded shader.
 	/// </summary>
 	class shader {
-	private:
+		/// <summary>
+		/// A builder used to set shader parameters for loading.
+		/// </summary>
+		class builder
+		{
+		private:
+			shader *m_shader;
+		public:
+			/// <summary>
+			/// Creates a new shader builder.
+			/// </summary>
+			/// <param name="name"> The name. </param>
+			builder();
+
+			/// <summary>
+			/// Deconstructor for the shader builder.
+			/// </summary>
+			~builder();
+
+			/// <summary>
+			/// Sets the name of the shader.
+			/// </summary>
+			/// <param name="name"> The shaders name. </param>
+			/// <returns> This. </returns>
+			builder *addName(const std::string &name);
+
+			/// <summary>
+			/// Adds a new shader type to the load pool.
+			/// </summary>
+			/// <param name="type"> The shader type to add. </param>
+			/// <returns> This. </returns>
+			builder *addType(shadertype *type);
+
+			/// <summary>
+			/// Creates a shader from the builder.
+			/// </summary>
+			/// <returns> The created shader. </returns>
+			shader *create();
+		};
+	protected:
+		std::string m_name;
 		std::vector<shadertype*> *m_shaderTypes;
 		std::vector<std::string> *m_layoutLocations;
 		std::vector<std::string> *m_layoutBindings;
 		std::vector<std::string> *m_uniforms;
 
-		std::string m_name;
 		GLuint m_programID;
-	public:
+
 		/// <summary>
 		/// Creates a new shader.
 		/// </summary>
-		/// <param name="builder"> The shader builder to load the shader from. </param>
-		shader(shaderbuilder *builder);
+		shader();
 
+	public:
 		/// <summary>
 		/// Deconstructor for the shader.
 		/// </summary>
 		~shader();
-	private:
-		void loadTypes();
 
-		void loadType(shadertype* type);
-
-		std::string processLine(const std::string &line);
-
-		void loadLocations();
-
-		void deleteTypes();
-
-		void loadBindings();
+		/// <summary>
+		/// Creates a new shader builder that is used to configure a shader.
+		/// </summary>
+		/// <returns> The shader builder. </returns>
+		static builder *newShader();
 	public:
 		/// <summary>
 		/// Gets the loaded name for the shader.
 		/// </summary>
 		/// <returns> The shaders name. </returns>
 		inline std::string getName() { return m_name; }
+
+		/// <summary>
+		/// Starts the shader program.
+		/// </summary>
+		void start();
+
+		/// <summary>
+		/// Stops the shader program.
+		/// </summary>
+		void stop();
 
 		/// <summary>
 		/// Gets a uniform location from a name.
@@ -137,15 +180,17 @@ namespace flounder {
 		/// <param name="name"> The uniforms name. </param>
 		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(const std::string &name, vector4 *value);
+	private:
+		void loadTypes();
 
-		/// <summary>
-		/// Starts the shader program.
-		/// </summary>
-		void start();
+		void loadType(shadertype* type);
 
-		/// <summary>
-		/// Stops the shader program.
-		/// </summary>
-		void stop();
+		std::string processLine(const std::string &line);
+
+		void loadLocations();
+
+		void deleteTypes();
+
+		void loadBindings();
 	};
 }

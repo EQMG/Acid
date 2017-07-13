@@ -2,15 +2,102 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <stdarg.h>
 #include <GL/glew.h>
 
+#include "../maths/colour.h"
+
 #include "stb_image.h"
-#include "texturebuilder.h"
 
 namespace flounder {
+	/// <summary>
+	/// Class that represents a loaded texture.
+	/// </summary>
 	class texture
 	{
-	private:
+		/// <summary>
+		/// A builder used to set texture parameters for loading.
+		/// </summary>
+		class builder
+		{
+		private:
+			texture *m_texture;
+		public:
+			/// <summary>
+			/// Creates a new texture builder.
+			/// </summary>
+			builder();
+
+			/// <summary>
+			/// Deconstructor for the texture builder.
+			/// </summary>
+			~builder();
+
+			/// <summary>
+			/// Sets the textures source file.
+			/// </summary>
+			/// <param name="file"> The source file. </param>
+			/// <returns> This. </returns>
+			builder *setFile(const std::string &file);
+
+			/// <summary>
+			/// Sets the cubemap source files.
+			/// </summary>
+			/// <param name="n_args"> The number of cubemap files being loaded. </param>
+			/// <param name="..."> The source cubemap files. </param>
+			/// <returns> This. </returns>
+			builder *setCubemap(const int n_args, ...);
+
+			/// <summary>
+			/// Clamps the texture to a coloured border.
+			/// </summary>
+			/// <param name="border"> The coloured border. </param>
+			/// <returns> This. </returns>
+			builder *clampToBorder(colour *border);
+
+			/// <summary>
+			/// Clamps the texture to the edges.
+			/// </summary>
+			/// <returns> This. </returns>
+			builder *clampEdges();
+
+			/// <summary>
+			/// Selects nearest filtering.
+			/// </summary>
+			/// <returns> This. </returns>
+			builder *nearestFiltering();
+
+			/// <summary>
+			/// Disables mipmapping.
+			/// </summary>
+			/// <returns> This. </returns>
+			builder *noMipmap();
+
+			/// <summary>
+			/// Disables anisotropic filtering.
+			/// </summary>
+			/// <returns> This. </returns>
+			builder *noFiltering();
+
+			/// <summary>
+			/// Sets the starting number of texture rows (default = 1).
+			/// </summary>
+			/// <param name="numberOfRows"> The new number of rows. </param>
+			/// <returns> This. </returns>
+			builder *setNumberOfRows(const int &numberOfRows);
+
+			/// <summary>
+			/// Creates a texture from the builder.
+			/// </summary>
+			/// <returns> The created texture. </returns>
+			texture *create();
+		};
+	protected:
+		std::string m_file;
+		std::string *m_cubemap;
+		int m_cubemapCount;
+
 		int m_width;
 		int m_height;
 		bool m_hasAlpha;
@@ -24,22 +111,23 @@ namespace flounder {
 
 		GLenum m_glType;
 		GLuint m_textureID;
-	public:
+
 		/// <summary>
 		/// A new OpenGL texture object.
 		/// </summary>
-		/// <param name="builder"> The texture builder to load the shader from. </param>
-		texture(texturebuilder *builder);
-
+		texture();
+	public:
 		/// <summary>
 		/// Deconstructor for the texture object.
 		/// </summary>
 		~texture();
-	private:
-		GLuint loadTexture(const std::string &file);
 
-		GLuint loadCubemap(const int count, std::string *cubemap);
-	public:
+		/// <summary>
+		/// Creates a new texture builder that is used to configure a texture.
+		/// </summary>
+		/// <returns> The texture builder. </returns>
+		static builder *newTexture();
+
 		/// <summary>
 		/// Gets the width of the texture.
 		/// </summary>
@@ -62,7 +150,7 @@ namespace flounder {
 		/// Sets if the texture has alpha.
 		/// </summary>
 		/// <param name="hasAlpha"> If the texture has alpha. </param>
-		inline void setHasAlpha(const bool hasAlpha) { m_hasAlpha = hasAlpha; }
+		inline void setHasAlpha(const bool &hasAlpha) { m_hasAlpha = hasAlpha; }
 
 		/// <summary>
 		/// Gets the number of texture rows.
@@ -74,7 +162,7 @@ namespace flounder {
 		/// Sets the number of texture rows.
 		/// </summary>
 		/// <param name="numberOfRows"> The number of texture rows. </param>
-		inline void setNumberOfRows(const int numberOfRows) { m_numberOfRows = numberOfRows; }
+		inline void setNumberOfRows(const int &numberOfRows) { m_numberOfRows = numberOfRows; }
 
 		/// <summary>
 		/// The OpenGL type of texture loaded.
@@ -87,5 +175,10 @@ namespace flounder {
 		/// </summary>
 		/// <returns> The textures ID. </returns>
 		inline GLuint getTextureID() { return m_textureID; }
+	private:
+		GLuint loadTexture(const std::string &file);
+
+		GLuint loadCubemap(const int count, std::string *cubemap);
 	};
+
 }

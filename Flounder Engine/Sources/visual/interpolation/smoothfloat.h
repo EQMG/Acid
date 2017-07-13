@@ -16,7 +16,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="initialValue"> The initial value. </param>
 		/// <param name="agility"> The agility for increasing actual. </param>
-		smoothfloat(const float initialValue, const float agility);
+		smoothfloat(const float &initialValue, const float &agility);
 
 		/// <summary>
 		/// Deconstructor for smooth float.
@@ -27,13 +27,13 @@ namespace flounder {
 		/// Updates the driver with the passed time.
 		/// </summary>
 		/// <param name="delta"> The time between the last update. </param>
-		void update(const float delta);
+		void update(const float &delta);
 
 		/// <summary>
 		/// Sets the target for the smooth float.
 		/// </summary>
 		/// <param name="target"> The new target. </param>
-		inline void setTarget(const float target) { m_target = target; }
+		inline void setTarget(const float &target) { m_target = target; }
 
 		/// <summary>
 		/// Gets the smooth floats current target.
@@ -45,7 +45,7 @@ namespace flounder {
 		/// Increases the smooth floats target.
 		/// </summary>
 		/// <param name="increase"> How much to increase the target by. </param>
-		inline void increaseTarget(const float increase) { m_target += increase; }
+		inline void increaseTarget(const float &increase) { m_target += increase; }
 
 		/// <summary>
 		/// Gets the currently calculated value.
