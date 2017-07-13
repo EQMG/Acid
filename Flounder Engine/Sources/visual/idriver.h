@@ -17,7 +17,7 @@ namespace flounder {
 		/// Creates a new driver with a length.
 		/// </summary>
 		/// <param name="length"> The drivers length. </param>
-		idriver(const float length)
+		idriver(const float &length)
 		{
 			m_length = length;
 			m_actualTime = 0.0f;
@@ -38,7 +38,7 @@ namespace flounder {
 		/// <param name="delta"> The time between the last update.
 		/// </param>
 		/// <returns> The calculated value. </returns>
-		float update(const float delta)
+		float update(const float &delta)
 		{
 			m_actualTime += delta;
 			m_currentTime += delta;
@@ -53,7 +53,7 @@ namespace flounder {
 		/// <param name="time"> The time into the drivers life.
 		/// </param>
 		/// <returns> The calculated value. </returns>
-		virtual float calculate(const float time) = 0;
+		virtual float calculate(const float &time) = 0;
 
 		inline const float getActualTime() { return m_actualTime; }
 	};

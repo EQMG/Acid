@@ -18,7 +18,7 @@ namespace flounder {
 		/// <param name="startValue"> The start value. </param>
 		/// <param name="endValue"> The end value. </param>
 		/// <param name="length"> The time to go between values. </param>
-		driverlinear(const float startValue, const float endValue, const float length);
+		driverlinear(const float &startValue, const float &endValue, const float &length);
 
 		/// <summary>
 		/// Deconstructor for linear driver.
@@ -26,6 +26,6 @@ namespace flounder {
 		~driverlinear();
 
 	protected:
-		float calculate(const float time) override;
+		float calculate(const float &time) override;
 	};
 }

@@ -1,40 +1,130 @@
 #include "texture.h"
 
 namespace flounder {
-	texture::texture(texturebuilder *builder)
+	texture::builder::builder()
 	{
-		m_width = 0;
-		m_height = 0;
-		m_hasAlpha = false;
-		m_border = builder->m_border;
-		m_clampToBorder = builder->m_clampToBorder;
-		m_clampEdges = builder->m_clampEdges;
-		m_mipmap = builder->m_mipmap;
-		m_anisotropic = builder->m_anisotropic;
-		m_nearest = builder->m_nearest;
-		m_numberOfRows = builder->m_numberOfRows;
+		m_texture = new texture();
+	}
 
-		if (builder->m_cubemapCount != 0)
+	texture::builder::~builder()
+	{
+	}
+
+	texture::builder *texture::builder::setFile(const std::string &file)
+	{
+		m_texture->m_file = file;
+		return this;
+	}
+
+	texture::builder *texture::builder::setCubemap(const int n_args, ...)
+	{
+		m_texture->m_cubemap = new std::string[n_args];
+		m_texture->m_cubemapCount = n_args;
+
+		va_list ap;
+		va_start(ap, n_args);
+
+		for (int i = 0; i < n_args; i++)
 		{
-			m_glType = GL_TEXTURE_CUBE_MAP;
-			m_textureID = loadCubemap(builder->m_cubemapCount, builder->m_cubemap);
+			m_texture->m_cubemap[i] = va_arg(ap, const char*);
 		}
-		else if (!builder->m_file.empty())
+
+		va_end(ap);
+
+		return this;
+	}
+
+	texture::builder *texture::builder::clampToBorder(colour *border)
+	{
+		m_texture->m_border->set(*border);
+		m_texture->m_clampToBorder = true;
+		m_texture->m_clampEdges = false;
+		return this;
+	}
+
+	texture::builder *texture::builder::clampEdges()
+	{
+		m_texture->m_clampToBorder = false;
+		m_texture->m_clampEdges = true;
+		return this;
+	}
+
+	texture::builder *texture::builder::nearestFiltering()
+	{
+		m_texture->m_nearest = true;
+		return this;
+	}
+
+	texture::builder *texture::builder::noMipmap()
+	{
+		m_texture->m_mipmap = true;
+		m_texture->m_anisotropic = false;
+		return this;
+	}
+
+	texture::builder *texture::builder::noFiltering()
+	{
+		m_texture->m_anisotropic = false;
+		return this;
+	}
+
+	texture::builder *texture::builder::setNumberOfRows(const int &numberOfRows)
+	{
+		m_texture->m_numberOfRows = numberOfRows;
+		return this;
+	}
+
+	texture *texture::builder::create()
+	{
+		if (m_texture->m_cubemapCount != 0)
 		{
-			m_glType = GL_TEXTURE_2D;
-			m_textureID = loadTexture(builder->m_file);
+			m_texture->m_glType = GL_TEXTURE_CUBE_MAP;
+			m_texture->m_textureID = m_texture->loadCubemap(m_texture->m_cubemapCount, m_texture->m_cubemap);
+		}
+		else if (!m_texture->m_file.empty())
+		{
+			m_texture->m_glType = GL_TEXTURE_2D;
+			m_texture->m_textureID = m_texture->loadTexture(m_texture->m_file);
 		}
 		else
 		{
-			std::cerr << "Could not find a texture or cubemap from the builder: " << builder << std::endl;
+			std::cerr << "Could not find a texture or cubemap from the builder: " << this << std::endl;
 		}
 
-		delete builder;
+		delete this;
+		return m_texture;
+	}
+
+	texture::texture()
+	{
+		m_file = "";
+		m_cubemap = NULL;
+		m_cubemapCount = 0;
+
+		m_width = 0;
+		m_height = 0;
+		m_hasAlpha = false;
+		m_border = new colour();
+		m_clampToBorder = false;
+		m_clampEdges = false;
+		m_mipmap = true;
+		m_anisotropic = true;
+		m_nearest = false;
+		m_numberOfRows = 1;
+
+		m_glType = NULL;
+		m_textureID = NULL;
 	}
 
 	texture::~texture()
 	{
 		glDeleteTextures(1, &m_textureID);
+		delete m_border;
+	}
+
+	texture::builder *texture::newTexture()
+	{
+		return new builder();
 	}
 
 	GLuint texture::loadTexture(const std::string &file)

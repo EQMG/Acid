@@ -30,12 +30,13 @@ int main() {
 	m_framework->init();
 
 	renderer::get()->loadRendererMaster(new mainrenderer());
-	skybox::get()->loadTexture(new texture((new texturebuilder())
+	skybox::get()->loadTexture(texture::newTexture()
 		->setCubemap(6, "Resources/skybox/starsRight.png", "Resources/skybox/starsLeft.png", "Resources/skybox/starsTop.png",
-		"Resources/skybox/starsBottom.png", "Resources/skybox/starsBack.png", "Resources/skybox/starsFront.png"))
+		"Resources/skybox/starsBottom.png", "Resources/skybox/starsBack.png", "Resources/skybox/starsFront.png")
+		->create()
 	);
 
-	texture *m_textureTest = new texture((new texturebuilder())->setFile("Resources/undefined.png"));
+	texture *m_textureTest = texture::newTexture()->setFile("Resources/undefined.png")->create();
 
 	colour m_test = colour(0.2f, 0.3f, 0.0f, 1.0f);
 	colour m_result = colour();

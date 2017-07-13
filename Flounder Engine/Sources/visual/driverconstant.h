@@ -15,7 +15,7 @@ namespace flounder {
 		/// Creates a new constant driver.
 		/// </summary>
 		/// <param name="constant"> The constant value. </param>
-		driverconstant(const float constant);
+		driverconstant(const float &constant);
 
 		/// <summary>
 		/// Deconstructor for constant driver.
@@ -23,6 +23,6 @@ namespace flounder {
 		~driverconstant();
 
 	protected:
-		float calculate(const float time) override;
+		float calculate(const float &time) override;
 	};
 }
