@@ -1,0 +1,96 @@
+﻿  fbo.cpp
+  ipostfilter.cpp
+  ipostpipeline.cpp
+  rendererskybox.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\../helpers/helperstring.h(43): warning C4018: '<': signed/unsigned mismatch
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  noisesimplex.cpp
+  noiseperlin.cpp
+  noiseclassic.cpp
+  light.cpp
+  attenuation.cpp
+  mainrenderer.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\../helpers/helperstring.h(43): warning C4018: '<': signed/unsigned mismatch
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+Game\mainrenderer.cpp(28): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+  maininstance.cpp
+  fog.cpp
+  loaders.cpp
+  renderer.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\../helpers/helperstring.h(43): warning C4018: '<': signed/unsigned mismatch
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  events.cpp
+  shader.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\../helpers/helperstring.h(43): warning C4018: '<': signed/unsigned mismatch
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+Sources\shaders\shader.cpp(210): warning C4305: 'argument': truncation from 'int' to 'const char'
+Sources\shaders\shader.cpp(210): warning C4309: 'argument': truncation of constant value
+Sources\shaders\shader.cpp(291): warning C4305: 'argument': truncation from 'int' to 'const char'
+Sources\shaders\shader.cpp(291): warning C4309: 'argument': truncation of constant value
+Sources\shaders\shader.cpp(326): warning C4305: 'argument': truncation from 'int' to 'const char'
+Sources\shaders\shader.cpp(326): warning C4309: 'argument': truncation of constant value
+  skybox.cpp
+  standards.cpp
+  driverbounce.cpp
+  driverfade.cpp
+  Compiling...
+  driversinwave.cpp
+  driverslide.cpp
+  driverlinear.cpp
+  driverconstant.cpp
+  maincamera.cpp
+  mainplayer.cpp
+  smoothfloat.cpp
+  processing.cpp
+  processoropengl.cpp
+  frustum.cpp
+  ray.cpp
+  camera.cpp
+  glfwupdater.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\../helpers/helperstring.h(43): warning C4018: '<': signed/unsigned mismatch
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  joysticks.cpp
+  mouse.cpp
+  audio.cpp
+  framework.cpp
+  keyboard.cpp
+  colour.cpp
+  delta.cpp
+  Compiling...
+  display.cpp
+Sources\devices\display.cpp(37): warning C4150: deletion of pointer to incomplete type 'GLFWwindow'; no destructor called
+  C:\Users\mattp\documents\Flounder C++\Libraries\headers\GLFW/glfw3.h(789): note: see declaration of 'GLFWwindow'
+  main.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\../helpers/helperstring.h(43): warning C4018: '<': signed/unsigned mismatch
+c:\users\mattp\documents\flounder c++\flounder engine\sources\shaders\shadertype.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  matrix2x2.cpp
+  matrix3x3.cpp
+  matrix4x4.cpp
+Sources\maths\matrix4x4.cpp(89): warning C4552: '-': operator has no effect; expected operator with side-effect
+Sources\maths\matrix4x4.cpp(90): warning C4552: '+': operator has no effect; expected operator with side-effect
+Sources\maths\matrix4x4.cpp(91): warning C4552: '-': operator has no effect; expected operator with side-effect
+  quaternion.cpp
+  timer.cpp
+  vector2.cpp
+Sources\maths\vector2.cpp(253): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+  vector3.cpp
+  vector4.cpp
+  sphere.cpp
+c:\users\mattp\documents\flounder c++\flounder engine\sources\physics\sphere.h(41): warning C4373: 'flounder::sphere::update': virtual function overrides 'flounder::collider::update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
+  c:\users\mattp\documents\flounder c++\flounder engine\sources\physics\collider.h(25): note: see declaration of 'flounder::collider::update'
+  processorresource.cpp
+  tasks.cpp
+  vertexdata.cpp
+  texture.cpp
+  stb_image.c
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  All 1649 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+OpenAL32.lib(dogfs00058.o) : error LNK2026: module unsafe for SAFESEH image.
+OpenAL32.lib(dogfs00152.o) : error LNK2026: module unsafe for SAFESEH image.
+OpenAL32.lib(dogfs00021.o) : error LNK2026: module unsafe for SAFESEH image.
+OpenAL32.lib(dogfs00153.o) : error LNK2026: module unsafe for SAFESEH image.
+OpenAL32.lib(dogfs00134.o) : error LNK2026: module unsafe for SAFESEH image.
+OpenAL32.lib(dogfs00098.o) : error LNK2026: module unsafe for SAFESEH image.
+C:\Users\mattp\documents\Flounder C++\Release\Flounder Engine.exe : fatal error LNK1281: Unable to generate SAFESEH image.

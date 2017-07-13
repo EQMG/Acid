@@ -3,7 +3,7 @@
 namespace flounder {
 	fbo::builder::builder()
 	{
-		m_fbo = new fbo();
+		m_fbo = new fbo(this);
 	}
 
 	fbo::builder::~builder()
@@ -85,7 +85,7 @@ namespace flounder {
 
 	flounder::fbo *fbo::builder::create()
 	{
-		for (int i = 0; i < m_fbo->m_attachments; i++)
+		for (unsigned int i = 0; i < m_fbo->m_attachments; i++)
 		{
 			m_fbo->m_drawBuffers[i] = GL_COLOR_ATTACHMENT0 + i;
 		}
@@ -94,12 +94,14 @@ namespace flounder {
 
 		m_fbo->initialize();
 
-		delete this;
+		//delete this;
 		return m_fbo;
 	}
 
-	fbo::fbo()
+	fbo::fbo(builder *builder)
 	{
+		m_builder = builder;
+
 		m_depthBufferType = NONE;
 		m_useColourBuffer = true;
 		m_linearFiltering = true;
@@ -126,6 +128,9 @@ namespace flounder {
 	fbo::~fbo()
 	{
 		clear();
+
+		delete m_builder;
+
 		//delete m_frameBuffer;
 		delete[] m_colourTexture;
 		//delete m_depthTexture;
@@ -214,7 +219,7 @@ namespace flounder {
 			std::cout << "Warning, resolving two FBO's (" << source << ", " << output << ") with different attachment sizes, be warned this may not work properly instead use resolveFBO(int readBuffer, int drawBuffer, FBO outputFBO)." << std::endl;
 		}
 
-		for (int a = 0; a < source->m_attachments; a++) 
+		for (unsigned int a = 0; a < source->m_attachments; a++)
 		{
 			resolveFBO(source, a, a, output);
 		}
@@ -238,7 +243,8 @@ namespace flounder {
 		glGenFramebuffers(1, &m_frameBuffer);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
 
-		if (m_useColourBuffer) {
+		if (m_useColourBuffer) 
+		{
 			determineDrawBuffers();
 		}
 		else
@@ -248,10 +254,11 @@ namespace flounder {
 
 		limitFBOSize();
 
-		if (!m_antialiased) {
+		if (!m_antialiased) 
+		{
 			if (m_useColourBuffer)
 			{
-				for (int i = 0; i < m_attachments; i++)
+				for (unsigned int i = 0; i < m_attachments; i++)
 				{
 					createTextureAttachment(GL_COLOR_ATTACHMENT0 + i);
 				}
@@ -268,7 +275,7 @@ namespace flounder {
 		}
 		else
 		{
-			for (int i = 0; i < m_attachments; i++)
+			for (unsigned int i = 0; i < m_attachments; i++)
 			{
 				attachMultisampleColourBuffer(GL_COLOR_ATTACHMENT0 + i);
 			}

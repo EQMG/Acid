@@ -3,7 +3,7 @@
 namespace flounder {
 	texture::builder::builder()
 	{
-		m_texture = new texture();
+		m_texture = new texture(this);
 	}
 
 	texture::builder::~builder()
@@ -24,7 +24,7 @@ namespace flounder {
 		va_list ap;
 		va_start(ap, n_args);
 
-		for (int i = 0; i < n_args; i++)
+		for (unsigned int i = 0; i < n_args; i++)
 		{
 			m_texture->m_cubemap[i] = va_arg(ap, const char*);
 		}
@@ -79,24 +79,26 @@ namespace flounder {
 		if (m_texture->m_cubemapCount != 0)
 		{
 			m_texture->m_glType = GL_TEXTURE_CUBE_MAP;
-			m_texture->m_textureID = m_texture->loadCubemap(m_texture->m_cubemapCount, m_texture->m_cubemap);
+			m_texture->loadFromCubemap(m_texture->m_cubemapCount, m_texture->m_cubemap);
 		}
 		else if (!m_texture->m_file.empty())
 		{
 			m_texture->m_glType = GL_TEXTURE_2D;
-			m_texture->m_textureID = m_texture->loadTexture(m_texture->m_file);
+			m_texture->loadFromTexture(m_texture->m_file);
 		}
 		else
 		{
 			std::cerr << "Could not find a texture or cubemap from the builder: " << this << std::endl;
 		}
 
-		delete this;
+		//delete this;
 		return m_texture;
 	}
 
-	texture::texture()
+	texture::texture(builder *builder)
 	{
+		m_builder = builder;
+
 		m_file = "";
 		m_cubemap = NULL;
 		m_cubemapCount = 0;
@@ -119,6 +121,9 @@ namespace flounder {
 	texture::~texture()
 	{
 		glDeleteTextures(1, &m_textureID);
+
+		delete m_builder;
+
 		delete m_border;
 	}
 
@@ -127,7 +132,7 @@ namespace flounder {
 		return new builder();
 	}
 
-	GLuint texture::loadTexture(const std::string &file)
+	void texture::loadFromTexture(const std::string &file)
 	{
 		int numComponents = 0;
 		stbi_uc *data = stbi_load(file.c_str(), &m_width, &m_height, &numComponents, 4);
@@ -137,9 +142,8 @@ namespace flounder {
 			std::cerr << "Unable to load texture: " << file << std::endl;
 		}
 
-		GLuint result = 0;
-		glGenTextures(1, &result);
-		glBindTexture(GL_TEXTURE_2D, result);
+		glGenTextures(1, &m_textureID);
+		glBindTexture(GL_TEXTURE_2D, m_textureID);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
@@ -186,19 +190,16 @@ namespace flounder {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		}
-
-		return result;
 	}
 
-	GLuint texture::loadCubemap(const int count, std::string *cubemap)
+	void texture::loadFromCubemap(const int count, std::string *cubemap)
 	{
-		GLuint result = 0;
-		glGenTextures(1, &result);
+		glGenTextures(1, &m_textureID);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, result);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		for (int i = 0; i < count; i++)
+		for (unsigned int i = 0; i < count; i++)
 		{
 			int numComponents = 0;
 			stbi_uc *data = stbi_load(cubemap[i].c_str(), &m_width, &m_height, &numComponents, 4);
@@ -217,7 +218,5 @@ namespace flounder {
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
-		return result;
 	}
 }
