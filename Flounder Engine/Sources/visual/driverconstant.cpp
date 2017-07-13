@@ -1,7 +1,7 @@
 #include "driverconstant.h"
 
 namespace flounder {
-	driverconstant::driverconstant(const float constant)
+	driverconstant::driverconstant(const float &constant)
 		: idriver(1.0f)
 	{
 		m_value = constant;
@@ -11,7 +11,7 @@ namespace flounder {
 	{
 	}
 
-	float driverconstant::calculate(const float time)
+	float driverconstant::calculate(const float &time)
 	{
 		return m_value;
 	}

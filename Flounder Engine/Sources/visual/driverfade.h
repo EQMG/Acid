@@ -20,7 +20,7 @@ namespace flounder {
 		/// <param name="end"> The end time. </param>
 		/// <param name="peak"> The peak value. </param>
 		/// <param name="length"> The time taken to get to the end. </param>
-		driverfade(const float start, const float end, const float peak, const float length);
+		driverfade(const float &start, const float &end, const float &peak, const float &length);
 
 		/// <summary>
 		/// Deconstructor for fade driver.
@@ -37,7 +37,7 @@ namespace flounder {
 		/// Sets the start time.
 		/// </summary>
 		/// <param name="start"> The new start time. </param>
-		inline void setStart(const float start) { m_start = start; }
+		inline void setStart(const float &start) { m_start = start; }
 
 		/// <summary>
 		/// Gets the end time.
@@ -49,7 +49,7 @@ namespace flounder {
 		/// Sets the end time.
 		/// </summary>
 		/// <param name="end"> The new end time. </param>
-		inline void setEnd(const float end) { m_end = end; }
+		inline void setEnd(const float &end) { m_end = end; }
 
 		/// <summary>
 		/// Gets the peak value.
@@ -61,8 +61,8 @@ namespace flounder {
 		/// Sets the peak value.
 		/// </summary>
 		/// <param name="peak"> The new peak value. </param>
-		inline void setPeak(const float peak) { m_peak = peak; }
+		inline void setPeak(const float &peak) { m_peak = peak; }
 	protected:
-		float calculate(const float time) override;
+		float calculate(const float &time) override;
 	};
 }

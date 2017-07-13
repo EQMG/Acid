@@ -1,30 +1,57 @@
 #include "shader.h"
 
 namespace flounder {
-	shader::shader(shaderbuilder *builder)
+	shader::builder::builder()
 	{
-		m_name = builder->m_name;
-		m_shaderTypes = builder->m_types;
+		m_shader = new shader();
+	}
+
+	shader::builder::~builder()
+	{
+	}
+
+	shader::builder *shader::builder::addName(const std::string &name)
+	{
+		m_shader->m_name = name;
+		return this;
+	}
+
+	shader::builder *shader::builder::addType(shadertype *type)
+	{
+		m_shader->m_shaderTypes->push_back(type);
+		return this;
+	}
+
+	flounder::shader *shader::builder::create()
+	{
+		// Creates the shader and loads it to the GPU.
+		m_shader->m_programID = glCreateProgram();
+		m_shader->loadTypes();
+
+		m_shader->loadLocations();
+
+		glLinkProgram(m_shader->m_programID);
+		glValidateProgram(m_shader->m_programID);
+		m_shader->deleteTypes();
+
+		glUseProgram(m_shader->m_programID);
+		m_shader->loadBindings();
+
+		glUseProgram(0);
+
+		delete this;
+		return m_shader;
+	}
+
+	shader::shader()
+	{
+		m_name = "";
+		m_shaderTypes = new std::vector<shadertype*>();
 		m_layoutLocations = new std::vector<std::string>();
 		m_layoutBindings = new std::vector<std::string>();
 		m_uniforms = new std::vector<std::string>();
 
-		// Creates the shader and loads it to the GPU.
-		m_programID = glCreateProgram();
-		loadTypes();
-
-		loadLocations();
-
-		glLinkProgram(m_programID);
-		glValidateProgram(m_programID);
-		deleteTypes();
-
-		glUseProgram(m_programID);
-		loadBindings();
-
-		glUseProgram(0);
-
-		delete builder;
+		m_programID = NULL;
 	}
 
 	shader::~shader()
@@ -36,6 +63,82 @@ namespace flounder {
 
 		glUseProgram(0);
 		glDeleteProgram(m_programID);
+	}
+
+	shader::builder *shader::newShader()
+	{
+		return new builder();
+	}
+
+	void shader::start()
+	{
+		glUseProgram(m_programID);
+	}
+
+	void shader::stop()
+	{
+		glUseProgram(0);
+	}
+
+	GLint shader::getUniform(const std::string &name)
+	{
+		return glGetUniformLocation(m_programID, name.c_str());
+	}
+
+	void shader::loadUniform(const std::string &name, const bool value)
+	{
+		glUniform1i(getUniform(name), value);
+	}
+
+	void shader::loadUniform(const std::string &name, const float value)
+	{
+		glUniform1f(getUniform(name), value);
+	}
+
+	void shader::loadUniform(const std::string &name, const int value)
+	{
+		glUniform1i(getUniform(name), value);
+	}
+
+	void shader::loadUniform(const std::string &name, colour *value)
+	{
+		glUniform4f(getUniform(name), value->r, value->g, value->b, value->a);
+	}
+
+	void shader::loadUniform(const std::string &name, matrix2x2 *value)
+	{
+		float *a = matrix2x2::toArray(*value);
+		glUniformMatrix2fv(getUniform(name), 1, GL_FALSE, a);
+		delete a;
+	}
+
+	void shader::loadUniform(const std::string &name, matrix3x3 *value)
+	{
+		float *a = matrix3x3::toArray(*value);
+		glUniformMatrix3fv(getUniform(name), 1, GL_FALSE, a);
+		delete a;
+	}
+
+	void shader::loadUniform(const std::string &name, matrix4x4 *value)
+	{
+		float *a = matrix4x4::toArray(*value);
+		glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, a);
+		delete a;
+	}
+
+	void shader::loadUniform(const std::string &name, vector2 *value)
+	{
+		glUniform2f(getUniform(name), value->x, value->y);
+	}
+
+	void shader::loadUniform(const std::string &name, vector3 *value)
+	{
+		glUniform3f(getUniform(name), value->x, value->y, value->z);
+	}
+
+	void shader::loadUniform(const std::string &name, vector4 *value)
+	{
+		glUniform4f(getUniform(name), value->x, value->y, value->z, value->w);
 	}
 
 	void shader::loadTypes()
@@ -188,76 +291,5 @@ namespace flounder {
 			int location = glGetUniformLocation(m_programID, bindingName.c_str());
 			glUniform1i(location, index);
 		}
-	}
-
-	GLint shader::getUniform(const std::string &name)
-	{
-		return glGetUniformLocation(m_programID, name.c_str());
-	}
-
-	void shader::loadUniform(const std::string &name, const bool value)
-	{
-		glUniform1i(getUniform(name), value);
-	}
-
-	void shader::loadUniform(const std::string &name, const float value)
-	{
-		glUniform1f(getUniform(name), value);
-	}
-
-	void shader::loadUniform(const std::string &name, const int value)
-	{
-		glUniform1i(getUniform(name), value);
-	}
-
-	void shader::loadUniform(const std::string &name, colour *value)
-	{
-		glUniform4f(getUniform(name), value->r, value->g, value->b, value->a);
-	}
-
-	void shader::loadUniform(const std::string &name, matrix2x2 *value)
-	{
-		float *a = matrix2x2::toArray(*value);
-		glUniformMatrix2fv(getUniform(name), 1, GL_FALSE, a);
-		delete a;
-	}
-
-	void shader::loadUniform(const std::string &name, matrix3x3 *value)
-	{
-		float *a = matrix3x3::toArray(*value);
-		glUniformMatrix3fv(getUniform(name), 1, GL_FALSE, a);
-		delete a;
-	}
-
-	void shader::loadUniform(const std::string &name, matrix4x4 *value)
-	{
-		float *a = matrix4x4::toArray(*value);
-		glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, a);
-		delete a;
-	}
-
-	void shader::loadUniform(const std::string &name, vector2 *value)
-	{
-		glUniform2f(getUniform(name), value->x, value->y);
-	}
-
-	void shader::loadUniform(const std::string &name, vector3 *value)
-	{
-		glUniform3f(getUniform(name), value->x, value->y, value->z);
-	}
-
-	void shader::loadUniform(const std::string &name, vector4 *value)
-	{
-		glUniform4f(getUniform(name), value->x, value->y, value->z, value->w);
-	}
-
-	void shader::start()
-	{
-		glUseProgram(m_programID);
-	}
-
-	void shader::stop()
-	{
-		glUseProgram(0);
 	}
 }

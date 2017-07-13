@@ -18,7 +18,7 @@ namespace flounder {
 		/// <param name="min"> The min value. </param>
 		/// <param name="max"> The max value. </param>
 		/// <param name="length"> The length between two waves. </param>
-		driversinwave(const float min, const float max, const float length);
+		driversinwave(const float &min, const float &max, const float &length);
 
 		/// <summary>
 		/// Deconstructor for sin wave driver.
@@ -26,6 +26,6 @@ namespace flounder {
 		~driversinwave();
 
 	protected:
-		float calculate(const float time) override;
+		float calculate(const float &time) override;
 	};
 }

@@ -1,7 +1,7 @@
 #include "driverlinear.h"
 
 namespace flounder {
-	driverlinear::driverlinear(const float startValue, const float endValue, const float length)
+	driverlinear::driverlinear(const float &startValue, const float &endValue, const float &length)
 		: idriver(length)
 	{
 		m_startValue = startValue;
@@ -12,7 +12,7 @@ namespace flounder {
 	{
 	}
 
-	float driverlinear::calculate(const float time)
+	float driverlinear::calculate(const float &time)
 	{
 		return m_startValue + time * m_difference;
 	}

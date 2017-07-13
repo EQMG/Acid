@@ -1,7 +1,7 @@
 #include "driverbounce.h"
 
 namespace flounder {
-	driverbounce::driverbounce(const float start, const float end, const float length)
+	driverbounce::driverbounce(const float &start, const float &end, const float &length)
 		: idriver(length)
 	{
 		m_start = start;
@@ -13,7 +13,7 @@ namespace flounder {
 	{
 	}
 
-	float driverbounce::calculate(const float time)
+	float driverbounce::calculate(const float &time)
 	{
 		float value = 0.5f + (float) sin(PI * 2.0 * time) * 0.5f;
 
