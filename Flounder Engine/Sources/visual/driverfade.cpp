@@ -1,7 +1,7 @@
 #include "driverfade.h"
 
 namespace flounder {
-	driverfade::driverfade(const float start, const float end, const float peak, const float length)
+	driverfade::driverfade(const float &start, const float &end, const float &peak, const float &length)
 		: idriver(length)
 	{
 		m_start = start;
@@ -13,7 +13,7 @@ namespace flounder {
 	{
 	}
 
-	float driverfade::calculate(const float time)
+	float driverfade::calculate(const float &time)
 	{
 		if (time < m_start)
 		{

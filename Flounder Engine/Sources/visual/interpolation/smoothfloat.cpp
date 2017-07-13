@@ -1,7 +1,7 @@
 #include "smoothfloat.h"
 
 namespace flounder {
-	smoothfloat::smoothfloat(const float initialValue, const float agility)
+	smoothfloat::smoothfloat(const float &initialValue, const float &agility)
 	{
 		m_target = initialValue;
 		m_actual = initialValue;
@@ -12,7 +12,7 @@ namespace flounder {
 	{
 	}
 
-	void smoothfloat::update(const float delta)
+	void smoothfloat::update(const float &delta)
 	{
 		float offset = m_target - m_actual;
 		float change = offset * delta * m_agility;

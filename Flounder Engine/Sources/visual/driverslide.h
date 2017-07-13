@@ -20,7 +20,7 @@ namespace flounder {
 		/// <param name="start"> The start value. </param>
 		/// <param name="end"> The end value. </param>
 		/// <param name="length"> The time to get to the end value. </param>
-		driverslide(const float start, const float end, const float length);
+		driverslide(const float &start, const float &end, const float &length);
 
 		/// <summary>
 		/// Deconstructor for slide driver.
@@ -28,6 +28,6 @@ namespace flounder {
 		~driverslide();
 
 	protected:
-		float calculate(const float time) override;
+		float calculate(const float &time) override;
 	};
 }
