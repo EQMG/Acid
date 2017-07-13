@@ -3,7 +3,7 @@
 namespace flounder {
 	shader::builder::builder()
 	{
-		m_shader = new shader();
+		m_shader = new shader(this);
 	}
 
 	shader::builder::~builder()
@@ -39,12 +39,13 @@ namespace flounder {
 
 		glUseProgram(0);
 
-		delete this;
 		return m_shader;
 	}
 
-	shader::shader()
+	shader::shader(builder *builder)
 	{
+		m_builder = builder;
+
 		m_name = "";
 		m_shaderTypes = new std::vector<shadertype>();
 		m_layoutLocations = new std::vector<std::string>();
@@ -57,6 +58,8 @@ namespace flounder {
 
 	shader::~shader()
 	{
+		delete m_builder;
+
 		delete m_shaderTypes;
 		delete m_layoutLocations;
 		delete m_layoutBindings;
@@ -268,8 +271,28 @@ namespace flounder {
 
 				std::string arraySize = helperstring::trim(uniformString.substr(helperstring::findCharPos(uniformString, '[') + 1, uniformString.length() - 1));
 				arraySize.erase(std::remove(arraySize.begin(), arraySize.end(), ']'), arraySize.end());
+				int size = 0;
 
-				std::cout << line << " : " << uniformName << ":" << arraySize << std::endl;
+				if (helperstring::isInteger(arraySize))
+				{
+					size = atoi(arraySize.c_str());
+				}
+				else
+				{
+					for (std::vector<std::pair<std::string, std::string>>::iterator it = m_constants->begin(); it < m_constants->end(); it++)
+					{
+						if ((*it).first == arraySize)
+						{
+							size = atoi((*it).second.c_str());
+							break;
+						}
+					}
+				}
+
+				for (unsigned int i = 0; i < size; i++)
+				{
+					m_uniforms->push_back(uniformName + "[" + std::to_string(i) + "]");
+				}
 			}
 
 			m_uniforms->push_back(uniformName);

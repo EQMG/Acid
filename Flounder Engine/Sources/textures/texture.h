@@ -94,6 +94,8 @@ namespace flounder {
 			texture *create();
 		};
 	protected:
+		builder *m_builder;
+
 		std::string m_file;
 		std::string *m_cubemap;
 		int m_cubemapCount;
@@ -115,7 +117,8 @@ namespace flounder {
 		/// <summary>
 		/// A new OpenGL texture object.
 		/// </summary>
-		texture();
+		/// <param name="builder"> The texture builder. </param>
+		texture(builder *builder);
 	public:
 		/// <summary>
 		/// Deconstructor for the texture object.
@@ -176,9 +179,9 @@ namespace flounder {
 		/// <returns> The textures ID. </returns>
 		inline GLuint getTextureID() { return m_textureID; }
 	private:
-		GLuint loadTexture(const std::string &file);
+		void loadFromTexture(const std::string &file);
 
-		GLuint loadCubemap(const int count, std::string *cubemap);
+		void loadFromCubemap(const int count, std::string *cubemap);
 	};
 
 }

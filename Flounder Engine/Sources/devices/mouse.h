@@ -57,7 +57,7 @@ namespace flounder {
 		/// Sets if the operating systems cursor is hidden whilst in the display.
 		/// </summary>
 		/// <param name="disabled"> If the system cursor should be disabled or hidden when not shown. </param>
-		void setCursorHidden(const bool disabled);
+		void setCursorHidden(const bool &disabled);
 
 		/// <summary>
 		/// Gets whether or not a particular mouse button is currently pressed.
@@ -65,7 +65,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="button"> The mouse button to test. </param>
 		/// <returns> If the mouse button is currently pressed. </returns>
-		bool getButton(const int button);
+		bool getButton(const unsigned int &button);
 
 		/// <summary>
 		/// Gets the mouses screen x position.
@@ -84,7 +84,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="cursorX"> The x position in screenspace. </param>
 		/// <param name="cursorY"> The y position in screenspace. </param>
-		void setPosition(const double cursorX, const double cursorY);
+		void setPosition(const double &cursorX, const double &cursorY);
 		
 		/// <summary>
 		/// Gets the mouses delta x.

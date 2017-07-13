@@ -17,7 +17,8 @@ namespace flounder {
 		m_keyboardChar = 0;
 
 		// Sets the default state of the keys to released.
-		for (int i = 0; i < GLFW_KEY_LAST + 1; i++) {
+		for (unsigned int i = 0; i < GLFW_KEY_LAST + 1; i++) 
+		{
 			m_keyboardKeys[i] = GLFW_RELEASE;
 		}
 
@@ -30,7 +31,7 @@ namespace flounder {
 	{
 	}
 
-	bool keyboard::getKey(const int key)
+	bool keyboard::getKey(unsigned const int &key)
 	{
 		return m_keyboardKeys[key] != GLFW_RELEASE;
 	}

@@ -63,6 +63,8 @@ namespace flounder {
 			shader *create();
 		};
 	protected:
+		builder *m_builder;
+
 		std::string m_name;
 		std::vector<shadertype> *m_shaderTypes;
 		std::vector<std::string> *m_layoutLocations;
@@ -75,8 +77,8 @@ namespace flounder {
 		/// <summary>
 		/// Creates a new shader.
 		/// </summary>
-		shader();
-
+		/// <param name="builder"> The shaders builder. </param>
+		shader(builder *builder);
 	public:
 		/// <summary>
 		/// Deconstructor for the shader.
@@ -88,7 +90,7 @@ namespace flounder {
 		/// </summary>
 		/// <returns> The shader builder. </returns>
 		static builder *newShader();
-	public:
+
 		/// <summary>
 		/// Gets the loaded name for the shader.
 		/// </summary>

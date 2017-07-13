@@ -44,7 +44,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="key"> The key to test. </param>
 		/// <returns> If the key is currently pressed. </returns>
-		bool getKey(const int key);
+		bool getKey(unsigned const int &key);
 
 		/// <summary>
 		/// Gets the current user input, ASCII Dec value.
