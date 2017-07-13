@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Sources\fbos\fbo.cpp" />
+    <ClCompile Include="Sources\models\model.cpp" />
     <ClCompile Include="Sources\post\ipostfilter.cpp" />
     <ClCompile Include="Sources\post\ipostpipeline.cpp" />
     <ClCompile Include="Sources\skybox\rendererskybox.cpp" />
