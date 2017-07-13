@@ -113,6 +113,8 @@ namespace flounder {
 		};
 
 	protected:
+		builder *m_builder;
+
 		depthbuffer m_depthBufferType;
 		bool m_useColourBuffer;
 		bool m_linearFiltering;
@@ -137,9 +139,10 @@ namespace flounder {
 		bool m_hasGivenResolveError;
 
 		/// <summary>
-		/// A new OpenGL FBO object.
+		/// A new OpenGL fbo object.
 		/// </summary>
-		fbo();
+		/// <param name="builder"> The fbo builder. </param>
+		fbo(builder *builder);
 	public:
 		/// <summary>
 		/// Deconstructor for the fbo.

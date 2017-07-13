@@ -24,7 +24,7 @@ namespace flounder {
 			return arr;
 		}
 
-		static bool startsWith(const std::string& text, const std::string& token)
+		static bool startsWith(const std::string &text, const std::string &token)
 		{
 			if (text.length() < token.length())
 			{
@@ -34,13 +34,26 @@ namespace flounder {
 			return (text.compare(0, token.length(), token) == 0);
 		}
 
-		static bool contains(const std::string& text, const std::string& token)
+		static bool contains(const std::string &text, const std::string &token)
 		{
 			return text.find(token) != std::string::npos;
 		}
 
-		static int findCharPos(const std::string& line, const char c) {
-			for (int i = 0; i < line.length(); i++) 
+		static inline bool isInteger(const std::string &text)
+		{
+			if (text.empty() || ((!isdigit(text[0])) && (text[0] != '-') && (text[0] != '+'))) 
+			{
+				return false;
+			}
+
+			char *p;
+			strtol(text.c_str(), &p, 10);
+
+			return (*p == 0);
+		}
+
+		static int findCharPos(const std::string &line, const char c) {
+			for (unsigned int i = 0; i < line.length(); i++)
 			{
 				if (line.at(i) == c) 
 				{
@@ -51,7 +64,7 @@ namespace flounder {
 			return 0;
 		}
 
-		static std::string trim(const std::string& str, const std::string& whitespace = " \t") {
+		static std::string trim(const std::string &str, const std::string &whitespace = " \t") {
 			const auto strBegin = str.find_first_not_of(whitespace);
 
 			if (strBegin == std::string::npos)
@@ -67,14 +80,14 @@ namespace flounder {
 			return result;
 		}
 
-		static std::string substring(const std::string& str, const int start, const int end)
+		static std::string substring(const std::string &str, const int start, const int end)
 		{
 			std::string result = str;
 			result = result.substr(start, end - start);
 			return result;
 		}
 
-		static std::string replaceAll(const std::string& str, const char& token)
+		static std::string replaceAll(const std::string &str, const char& token)
 		{
 			std::string result = str;
 			result.erase(std::remove(result.begin(), result.end(), token), result.end());

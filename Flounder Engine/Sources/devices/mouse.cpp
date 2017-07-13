@@ -28,7 +28,8 @@ namespace flounder {
 		m_lastCursorDisabled = false;
 
 		// Sets the default state of the buttons to released.
-		for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST + 1; i++) {
+		for (unsigned int i = 0; i < GLFW_MOUSE_BUTTON_LAST + 1; i++) 
+		{
 			m_mouseButtons[i] = GLFW_RELEASE;
 		}
 
@@ -89,7 +90,7 @@ namespace flounder {
 		}
 	}
 
-	void mouse::setCursorHidden(const bool disabled)
+	void mouse::setCursorHidden(const bool &disabled)
 	{
 		if (m_cursorDisabled != disabled) {
 			glfwSetInputMode(display::get()->getWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
@@ -102,7 +103,7 @@ namespace flounder {
 		m_cursorDisabled = disabled;
 	}
 
-	bool mouse::getButton(const int button)
+	bool mouse::getButton(const unsigned int &button)
 	{
 		return m_mouseButtons[button] != GLFW_RELEASE;
 	}
@@ -117,7 +118,7 @@ namespace flounder {
 		return m_mousePositionY;
 	}
 
-	void mouse::setPosition(const double cursorX, const double cursorY)
+	void mouse::setPosition(const double &cursorX, const double &cursorY)
 	{
 		glfwSetCursorPos(display::get()->getWindow(), cursorX, cursorY);
 	}
