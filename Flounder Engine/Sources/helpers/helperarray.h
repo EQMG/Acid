@@ -8,7 +8,7 @@ namespace flounder {
 		{
 			float **array = new float*[size1];
 			
-			for (unsigned int i = 0; i < size1; i++)
+			for (int i = 0; i < size1; i++)
 			{
 				array[i] = new float[size2];
 			}

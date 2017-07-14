@@ -250,7 +250,7 @@ namespace flounder {
 
 	bool vector2::isZero()
 	{
-		return x == 0.0f & y == 0.0f;
+		return x == 0.0f && y == 0.0f;
 	}
 
 	float vector2::length()
