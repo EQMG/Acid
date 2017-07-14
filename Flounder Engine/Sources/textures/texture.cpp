@@ -24,7 +24,7 @@ namespace flounder {
 		va_list ap;
 		va_start(ap, n_args);
 
-		for (unsigned int i = 0; i < n_args; i++)
+		for (int i = 0; i < n_args; i++)
 		{
 			m_texture->m_cubemap[i] = va_arg(ap, const char*);
 		}
@@ -199,7 +199,7 @@ namespace flounder {
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		for (unsigned int i = 0; i < count; i++)
+		for (int i = 0; i < count; i++)
 		{
 			int numComponents = 0;
 			stbi_uc *data = stbi_load(cubemap[i].c_str(), &m_width, &m_height, &numComponents, 4);
