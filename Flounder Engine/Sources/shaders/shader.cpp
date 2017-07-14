@@ -289,7 +289,7 @@ namespace flounder {
 					}
 				}
 
-				for (unsigned int i = 0; i < size; i++)
+				for (int i = 0; i < size; i++)
 				{
 					m_uniforms->push_back(uniformName + "[" + std::to_string(i) + "]");
 				}

@@ -144,7 +144,7 @@ namespace flounder {
 		va_list ap;
 		va_start(ap, n_args);
 
-		for (unsigned int i = 0; i < n_args; i++)
+		for (int i = 0; i < n_args; i++)
 		{
 			int attribute = va_arg(ap, int);
 			glEnableVertexAttribArray(attribute);
@@ -158,7 +158,7 @@ namespace flounder {
 		va_list ap;
 		va_start(ap, n_args);
 
-		for (unsigned int i = 0; i < n_args; i++)
+		for (int i = 0; i < n_args; i++)
 		{
 			int attribute = va_arg(ap, int);
 			glDisableVertexAttribArray(attribute);

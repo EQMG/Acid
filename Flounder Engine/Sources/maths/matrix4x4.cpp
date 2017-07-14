@@ -85,9 +85,9 @@ namespace flounder {
 
 	float matrix4x4::determinant(const matrix4x4 &source)
 	{
-		return (source.m00 * (source.m11 * source.m22 * source.m33 + source.m12 * source.m23 * source.m31 + source.m13 * source.m21 * source.m32 - source.m13 * source.m22 * source.m31 - source.m11 * source.m23 * source.m32 - source.m12 * source.m21 * source.m33));
-			- (source.m01 * (source.m10 * source.m22 * source.m33 + source.m12 * source.m23 * source.m30 + source.m13 * source.m20 * source.m32 - source.m13 * source.m22 * source.m30 - source.m10 * source.m23 * source.m32 - source.m12 * source.m20 * source.m33));
-			+ (source.m02 * (source.m10 * source.m21 * source.m33 + source.m11 * source.m23 * source.m30 + source.m13 * source.m20 * source.m31 - source.m13 * source.m21 * source.m30 - source.m10 * source.m23 * source.m31 - source.m11 * source.m20 * source.m33));
+		return (source.m00 * (source.m11 * source.m22 * source.m33 + source.m12 * source.m23 * source.m31 + source.m13 * source.m21 * source.m32 - source.m13 * source.m22 * source.m31 - source.m11 * source.m23 * source.m32 - source.m12 * source.m21 * source.m33))
+			- (source.m01 * (source.m10 * source.m22 * source.m33 + source.m12 * source.m23 * source.m30 + source.m13 * source.m20 * source.m32 - source.m13 * source.m22 * source.m30 - source.m10 * source.m23 * source.m32 - source.m12 * source.m20 * source.m33))
+			+ (source.m02 * (source.m10 * source.m21 * source.m33 + source.m11 * source.m23 * source.m30 + source.m13 * source.m20 * source.m31 - source.m13 * source.m21 * source.m30 - source.m10 * source.m23 * source.m31 - source.m11 * source.m20 * source.m33))
 			- (source.m03 * (source.m10 * source.m21 * source.m32 + source.m11 * source.m22 * source.m30 + source.m12 * source.m20 * source.m31 - source.m12 * source.m21 * source.m30 - source.m10 * source.m22 * source.m31 - source.m11 * source.m20 * source.m32));
 	}
 

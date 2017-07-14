@@ -38,10 +38,10 @@ namespace flounder {
 		/// <param name="delta"> The time between the last update.
 		/// </param>
 		/// <returns> The calculated value. </returns>
-		float update(const float &delta)
+		float update(const double &delta)
 		{
-			m_actualTime += delta;
-			m_currentTime += delta;
+			m_actualTime += (float) delta;
+			m_currentTime += (float) delta;
 			m_currentTime = fmod(m_currentTime, m_length);
 			float time = m_currentTime / m_length;
 			return calculate(time);
