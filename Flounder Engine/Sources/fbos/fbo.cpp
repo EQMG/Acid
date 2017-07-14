@@ -85,7 +85,7 @@ namespace flounder {
 
 	flounder::fbo *fbo::builder::create()
 	{
-		for (unsigned int i = 0; i < m_fbo->m_attachments; i++)
+		for (int i = 0; i < m_fbo->m_attachments; i++)
 		{
 			m_fbo->m_drawBuffers[i] = GL_COLOR_ATTACHMENT0 + i;
 		}
@@ -219,7 +219,7 @@ namespace flounder {
 			std::cout << "Warning, resolving two FBO's (" << source << ", " << output << ") with different attachment sizes, be warned this may not work properly instead use resolveFBO(int readBuffer, int drawBuffer, FBO outputFBO)." << std::endl;
 		}
 
-		for (unsigned int a = 0; a < source->m_attachments; a++)
+		for (int a = 0; a < source->m_attachments; a++)
 		{
 			resolveFBO(source, a, a, output);
 		}
@@ -258,7 +258,7 @@ namespace flounder {
 		{
 			if (m_useColourBuffer)
 			{
-				for (unsigned int i = 0; i < m_attachments; i++)
+				for (int i = 0; i < m_attachments; i++)
 				{
 					createTextureAttachment(GL_COLOR_ATTACHMENT0 + i);
 				}
@@ -275,7 +275,7 @@ namespace flounder {
 		}
 		else
 		{
-			for (unsigned int i = 0; i < m_attachments; i++)
+			for (int i = 0; i < m_attachments; i++)
 			{
 				attachMultisampleColourBuffer(GL_COLOR_ATTACHMENT0 + i);
 			}
