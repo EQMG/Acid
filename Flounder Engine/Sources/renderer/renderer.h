@@ -49,7 +49,8 @@ namespace flounder {
 		/// <param name="r"> The r component of the clear colour. </param>
 		/// <param name="g"> The g component of the clear colour. </param>
 		/// <param name="b"> The b component of the clear colour. </param>
-		void prepareNewRenderParse(const float r, const float g, const float b);
+		/// <param name="a"> The a component of the clear colour. </param>
+		void prepareNewRenderParse(const float &r, const float &g, const float &b, const float &a);
 
 		/// <summary>
 		/// Toggles the culling of back-faces.

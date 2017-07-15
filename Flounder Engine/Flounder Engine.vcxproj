@@ -148,7 +148,7 @@
     <ClCompile Include="Sources\models\model.cpp" />
     <ClCompile Include="Sources\physics\aabb.cpp" />
     <ClCompile Include="Sources\post\ipostfilter.cpp" />
-    <ClCompile Include="Sources\post\ipostpipeline.cpp" />
+    <ClCompile Include="Sources\post\filters\filtercrt.cpp" />
     <ClCompile Include="Sources\skybox\rendererskybox.cpp" />
     <ClCompile Include="Sources\noise\noisesimplex.cpp" />
     <ClCompile Include="Sources\noise\noiseperlin.cpp" />
@@ -211,6 +211,7 @@
     <ClInclude Include="Sources\post\ipostfilter.h" />
     <ClInclude Include="Sources\post\ipostpipeline.h" />
     <ClInclude Include="Sources\models\model.h" />
+    <ClInclude Include="Sources\post\filters\filtercrt.h" />
     <ClInclude Include="Sources\shaders\shadertype.h" />
     <ClInclude Include="Sources\skybox\rendererskybox.h" />
     <ClInclude Include="Sources\noise\noisesimplex.h" />
