@@ -10,7 +10,8 @@
 #include "display.h"
 
 namespace flounder {
-	class audio : public imodule
+	class audio : 
+		public imodule
 	{
 	private:
 		ALCdevice *m_device;

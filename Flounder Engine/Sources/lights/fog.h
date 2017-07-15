@@ -23,7 +23,7 @@ namespace flounder {
 		/// <param name="gradient"> The gradient of the fog. </param>
 		/// <param name="lowerLimit"> At what height will the skybox fog begin to appear. </param>
 		/// <param name="upperLimit"> At what height will there be skybox no fog. </param>
-		fog(colour *colour, const float density, const float gradient, const float lowerLimit, const float upperLimit);
+		fog(colour *colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit);
 
 		/// <summary>
 		/// Deconstructor for fog.

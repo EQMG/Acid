@@ -1,6 +1,30 @@
 #include "maincamera.h"
 
 namespace flounder {
+	maincamera::maincamera()
+	{
+		m_position = new vector3();
+		m_rotation = new vector3();
+
+		m_viewMatrix = new matrix4x4();
+		m_projectionMatrix = new matrix4x4();
+
+		m_viewFrustum = new frustum();
+		m_viewRay = new ray(false, new vector2(0.5f, 0.5f));
+	}
+
+	maincamera::~maincamera()
+	{
+		delete m_position;
+		delete m_rotation;
+
+		delete m_viewMatrix;
+		delete m_projectionMatrix;
+
+		delete m_viewFrustum;
+		delete m_viewRay;
+	}
+
 	float maincamera::getNearPlane()
 	{
 		return 0.1f;

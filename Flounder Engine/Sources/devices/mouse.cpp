@@ -1,8 +1,8 @@
 #include "mouse.h"
 
 namespace flounder {
-	mouse::mouse()
-		: imodule()
+	mouse::mouse() : 
+		imodule()
 	{
 		m_customMouse = "";
 	}
@@ -108,12 +108,12 @@ namespace flounder {
 		return m_mouseButtons[button] != GLFW_RELEASE;
 	}
 
-	double mouse::getPositionX()
+	double &mouse::getPositionX()
 	{
 		return m_mousePositionX;
 	}
 
-	double mouse::getPositionY()
+	double &mouse::getPositionY()
 	{
 		return m_mousePositionY;
 	}
@@ -123,27 +123,27 @@ namespace flounder {
 		glfwSetCursorPos(display::get()->getWindow(), cursorX, cursorY);
 	}
 
-	double mouse::getDeltaX()
+	double &mouse::getDeltaX()
 	{
 		return m_mouseDeltaX;
 	}
 
-	double mouse::getDeltaY()
+	double &mouse::getDeltaY()
 	{
 		return m_mouseDeltaY;
 	}
 
-	double mouse::getDeltaWheel()
+	double &mouse::getDeltaWheel()
 	{
 		return m_mouseDeltaWheel;
 	}
 
-	bool mouse::isDisplaySelected()
+	bool &mouse::isDisplaySelected()
 	{
 		return m_displaySelected;
 	}
 
-	bool mouse::isCursorDisabled()
+	bool &mouse::isCursorDisabled()
 	{
 		return m_cursorDisabled;
 	}

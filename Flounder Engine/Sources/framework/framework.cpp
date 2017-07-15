@@ -3,7 +3,7 @@
 namespace flounder {
 	framework *framework::G_INSTANCE = NULL;
 
-	framework::framework(const std::string & unlocalizedName, int fpsLimit)
+	framework::framework(const std::string &unlocalizedName, const int &fpsLimit)
 	{
 		// Sets the static object to this new one.
 		framework::G_INSTANCE = this;
@@ -58,7 +58,7 @@ namespace flounder {
 		return m_initialized;
 	}
 
-	void framework::setInitialized(const bool initialized)
+	void framework::setInitialized(const bool &initialized)
 	{
 		m_initialized = initialized;
 	}
@@ -68,7 +68,7 @@ namespace flounder {
 		return m_running;
 	}
 
-	void framework::requestClose(const bool error)
+	void framework::requestClose(const bool &error)
 	{
 		m_running = false;
 
@@ -84,7 +84,7 @@ namespace flounder {
 		return m_fpsLimit;
 	}
 
-	void framework::setFpsLimit(const int fpsLimit)
+	void framework::setFpsLimit(const int &fpsLimit)
 	{
 		m_fpsLimit = fpsLimit;
 		m_updater->setFpsLimit(fpsLimit);

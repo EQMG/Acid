@@ -37,7 +37,7 @@ namespace flounder {
 		/// Sets the time offset for the framework (seconds).
 		/// </summary>
 		/// <param name="timeOffset"> The new time offset. </param>
-		virtual void setTimeOffset(const double timeOffset) = 0;
+		virtual void setTimeOffset(const double &timeOffset) = 0;
 
 		/// <summary>
 		/// Gets the delta (seconds) between updates.
@@ -55,7 +55,7 @@ namespace flounder {
 		/// Sets the FPS limit for the updater, called by the framework.
 		/// </summary>
 		/// <param name="fpsLimit"> The new fps limit. </param>
-		virtual void setFpsLimit(const double fpsLimit) = 0;
+		virtual void setFpsLimit(const double &fpsLimit) = 0;
 
 		/// <summary>
 		/// Gets the current time of the framework instance.

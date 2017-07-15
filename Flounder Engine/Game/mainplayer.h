@@ -4,7 +4,8 @@
 #include "../Sources/framework/framework.h"
 
 namespace flounder {
-	class mainplayer : public iplayer
+	class mainplayer : 
+		public iplayer
 	{
 	private:
 		vector3 *m_position;

@@ -12,7 +12,8 @@ namespace flounder {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class display : public imodule
+	class display : 
+		public imodule
 	{
 	private:
 		int m_glfwMajor;
@@ -20,6 +21,7 @@ namespace flounder {
 
 		int m_windowWidth;
 		int m_windowHeight;
+		double m_aspectRatio;
 		int m_fullscreenWidth;
 		int m_fullscreenHeight;
 
@@ -69,87 +71,87 @@ namespace flounder {
 		/// </summary>
 		void screenshot();
 
-		inline int getGlfwMajor() { return m_glfwMajor; }
+		inline int &getGlfwMajor() { return m_glfwMajor; }
 
-		inline int getGlfwMinor() { return m_glfwMinor; }
+		inline int &getGlfwMinor() { return m_glfwMinor; }
 
 		/// <summary>
 		/// Gets the width of the display in pixels.
 		/// </summary>
 		/// <returns> The width of the display. </returns>
-		int getWidth();
+		int &getWidth();
 
-		int getWindowWidth();
+		int &getWindowWidth();
 
 		/// <summary>
 		/// Gets the height of the display in pixels.
 		/// </summary>
 		/// <returns> The height of the display. </returns>
-		int getHeight();
+		int &getHeight();
 
-		int getWindowHeight();
+		int &getWindowHeight();
 
-		void setWindowSize(const int width, const int height);
+		void setWindowSize(const int &width, const int &height);
 
 		/// <summary>
 		/// Gets the aspect ratio between the displays width and height.
 		/// </summary>
 		/// <returns> The aspect ratio. </returns>
-		double getAspectRatio();
+		double &getAspectRatio();
 
 		/// <summary>
 		/// Gets the window's title.
 		/// </summary>
 		/// <returns> The window's title. </returns>
-		std::string getTitle();
+		std::string &getTitle();
 
 		/// <summary>
 		/// Gets if the display is using vSync.
 		/// </summary>
 		/// <returns> If VSync is enabled. </returns>
-		bool isVSync();
+		bool &isVSync();
 
 		/// <summary>
 		/// Sets the display to use VSync or not.
 		/// </summary>
 		/// <param name="vsync"> Weather or not to use vSync. </param>
-		void setVSync(const bool vsync);
+		void setVSync(const bool &vsync);
 
 		/// <summary>
 		/// Gets if the display requests antialiased images.
 		/// </summary>
 		/// <returns> If using antialiased images. </returns>
-		bool isAntialiasing();
+		bool &isAntialiasing();
 
 		/// <summary>
 		/// Requests the display to antialias.
 		/// </summary>
 		/// <param name="antialiasing"> If the display should antialias. </param>
-		void setAntialiasing(const bool antialiasing);
+		void setAntialiasing(const bool &antialiasing);
 
 		/// <summary>
 		/// Gets how many MSAA samples should be done before swapping buffers.
 		/// </summary>
 		/// <returns> Amount of MSAA samples. </returns>
-		int getSamples();
+		int &getSamples();
 
 		/// <summary>
 		/// Gets how many MSAA samples should be done before swapping buffers. Zero disables multisampling. GLFW_DONT_CARE means no preference.
 		/// </summary>
 		/// <param name="samples"> The amount of MSAA samples. </param>
-		void setSamples(const int samples);
+		void setSamples(const int &samples);
 
 		/// <summary>
 		/// Gets weather the display is fullscreen or not.
 		/// </summary>
 		/// <returns> Fullscreen or windowed. </returns>
-		bool isFullscreen();
+		bool &isFullscreen();
 
 		/// <summary>
 		/// Sets the display to be fullscreen or windowed.
 		/// </summary>
 		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
-		void setFullscreen(const bool fullscreen);
+		void setFullscreen(const bool &fullscreen);
 
 		/// <summary>
 		/// Gets the current GLFW window.
@@ -161,24 +163,24 @@ namespace flounder {
 		/// Gets if the GLFW display is closed.
 		/// </summary>
 		/// <returns> If the GLFW display is closed. </returns>
-		bool isClosed();
+		bool &isClosed();
 
 		/// <summary>
 		/// Gets if the GLFW display is selected.
 		/// </summary>
 		/// <returns> If the GLFW display is selected. </returns>
-		bool isFocused();
+		bool &isFocused();
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows x position. </returns>
-		int getWindowXPos();
+		int &getWindowXPos();
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows Y position. </returns>
-		int getWindowYPos();
+		int &getWindowYPos();
 	};
 }

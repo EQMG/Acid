@@ -136,10 +136,12 @@ namespace flounder {
 
 	imodule *flounder::glfwupdater::getInstance(const std::string &name)
 	{
-		if (name == "camera") {
+		if (name == "camera") 
+		{
 			return m_camera;
 		}
-		else if (name == "audio") {
+		else if (name == "audio") 
+		{
 			return m_audio;
 		}
 		else if (name == "display") 

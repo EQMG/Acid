@@ -6,7 +6,8 @@ namespace flounder {
 	/// <summary>
 	/// A extension used with the processing class to define a processor.
 	/// </summary>
-	class iprocessor {
+	class iprocessor 
+	{
 	public:
 		/// <summary>
 		/// Run when updating the processor.

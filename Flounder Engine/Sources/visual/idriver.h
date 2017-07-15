@@ -29,14 +29,12 @@ namespace flounder {
 		/// </summary>
 		~idriver()
 		{
-
 		}
 
 		/// <summary>
 		/// Updates the driver with the passed time.
 		/// </summary>
-		/// <param name="delta"> The time between the last update.
-		/// </param>
+		/// <param name="delta"> The time between the last update. </param>
 		/// <returns> The calculated value. </returns>
 		float update(const double &delta)
 		{
@@ -55,6 +53,6 @@ namespace flounder {
 		/// <returns> The calculated value. </returns>
 		virtual float calculate(const float &time) = 0;
 
-		inline const float getActualTime() { return m_actualTime; }
+		inline float &getActualTime() { return m_actualTime; }
 	};
 }

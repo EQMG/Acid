@@ -1,8 +1,8 @@
 #include "audio.h"
 
 namespace flounder {
-	audio::audio()
-		: imodule()
+	audio::audio() : 
+		imodule()
 	{
 	}
 
@@ -21,7 +21,8 @@ namespace flounder {
 		// Checks for errors.
 		ALenum alError = alGetError();
 
-		if (alError != GL_NO_ERROR) {
+		if (alError != GL_NO_ERROR) 
+		{
 			std::cout << "Failed to load OpenAL!" << std::endl << alError << std::endl;
 		}
 
@@ -31,7 +32,8 @@ namespace flounder {
 
 	void audio::update()
 	{
-		if (camera::get()->getCamera() != NULL) {
+		if (camera::get()->getCamera() != NULL) 
+		{
 			vector3 *cameraPosition = camera::get()->getCamera()->getPosition();
 			alListener3f(AL_POSITION, cameraPosition->x, cameraPosition->y, cameraPosition->z);
 		}

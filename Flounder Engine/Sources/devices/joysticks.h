@@ -8,7 +8,8 @@ namespace flounder {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
-	class joysticks : public imodule
+	class joysticks : 
+		public imodule
 	{
 	private:
 		/// <summary>
@@ -49,16 +50,14 @@ namespace flounder {
 		/// <summary>
 		/// Determines if the GLFW joystick is connected
 		/// </summary>
-		/// <param name="id"> The joystick to check connection with.
-		/// </param>
+		/// <param name="id"> The joystick to check connection with. </param>
 		/// <returns> If the joystick is connected. </returns>
-		bool isConnected(const unsigned int &id);
+		bool &isConnected(const unsigned int &id);
 
 		/// <summary>
 		/// Gets the name of the joystick.
 		/// </summary>
-		/// <param name="id"> The joystick of interest.
-		/// </param>
+		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The joysticks name. </returns>
 		const char *getName(const unsigned int &id);
 
@@ -66,8 +65,7 @@ namespace flounder {
 		/// Gets the value of a joysticks axis.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
-		/// <param name="axis"> The axis of interest.
-		/// </param>
+		/// <param name="axis"> The axis of interest. </param>
 		/// <returns> The value of the joystick's axis. </returns>
 		float getAxis(const unsigned int &id, const unsigned int &axis);
 
@@ -75,25 +73,22 @@ namespace flounder {
 		/// Gets the whether a button on a joystick is pressed.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
-		/// <param name="button"> The button of interest.
-		/// </param>
+		/// <param name="button"> The button of interest. </param>
 		/// <returns> Whether a button on a joystick is pressed. </returns>
 		bool getButton(const unsigned int &id, const unsigned int &button);
 
 		/// <summary>
 		/// Gets the number of axes the joystick offers.
 		/// </summary>
-		/// <param name="id"> The joystick of interest.
-		/// </param>
+		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		int getCountAxes(const unsigned int &id);
+		int &getCountAxes(const unsigned int &id);
 
 		/// <summary>
 		/// Gets the number of buttons the joystick offers.
 		/// </summary>
-		/// <param name="id"> The joystick of interest.
-		/// </param>
+		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		int getCountButtons(const unsigned int &id);
+		int &getCountButtons(const unsigned int &id);
 	};
 }

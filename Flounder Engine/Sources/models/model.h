@@ -100,7 +100,7 @@ namespace flounder {
 
 		vertexdata *processDataVertex(vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices);
 
-		vertexdata *dealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, int newTextureIndex, int newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices);
+		vertexdata *dealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices);
 
 		void calculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<vector2> *textures);
 
