@@ -4,16 +4,16 @@ namespace flounder {
 	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader)
 	{
 		m_shader = shader::newShader()->addName(filterName)
-			->addType(shadertype(GL_VERTEX_SHADER, "Resources/shaders/skybox/skyboxVertex.glsl", loadtype::FILE))
+			->addType(shadertype(GL_VERTEX_SHADER, "Resources/shaders/filters/defaultVertex.glsl", loadtype::FILE))
 			->addType(shadertype(GL_FRAGMENT_SHADER, fragmentShader, loadtype::FILE))->create();
-		m_fbo = fbo::newFBO()->fitToScreen(true)->create();
+		m_fbo = fbo::newFBO()->fitToScreen(1.0f)->create();
 		m_model = model::newModel()->setFile("Resources/models/filter.obj")->create();
 	}
 
 	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader, fbo *fbo)
 	{
 		m_shader = shader::newShader()->addName(filterName)
-			->addType(shadertype(GL_VERTEX_SHADER, "Resources/shaders/skybox/skyboxVertex.glsl", loadtype::FILE))
+			->addType(shadertype(GL_VERTEX_SHADER, "Resources/shaders/filters/defaultVertex.glsl", loadtype::FILE))
 			->addType(shadertype(GL_FRAGMENT_SHADER, fragmentShader, loadtype::FILE))->create();
 		m_fbo = fbo;
 		m_model = model::newModel()->setFile("Resources/models/filter.obj")->create();
@@ -22,7 +22,7 @@ namespace flounder {
 	ipostfilter::ipostfilter(shader *shader)
 	{
 		m_shader = shader;
-		m_fbo = fbo::newFBO()->fitToScreen(true)->create();
+		m_fbo = fbo::newFBO()->fitToScreen(1.0f)->create();
 		m_model = model::newModel()->setFile("Resources/models/filter.obj")->create();
 	}
 
@@ -44,7 +44,7 @@ namespace flounder {
 		bool lastWireframe = renderer::get()->isInWireframe();
 
 		m_fbo->bindFrameBuffer();
-		renderer::get()->prepareNewRenderParse(1.0f, 0.0f, 1.0f);
+		renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 1.0f);
 		m_shader->start();
 		storeValues();
 		renderer::get()->antialias(false);
@@ -64,7 +64,7 @@ namespace flounder {
 
 		va_end(ap);
 
-		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, m_model->getVaoLength()/2); // Render post filter.
+		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, m_model->getVaoLength()); // Render post filter.
 
 		renderer::get()->unbindVAO(2, 0, 1);
 		renderer::get()->goWireframe(lastWireframe);

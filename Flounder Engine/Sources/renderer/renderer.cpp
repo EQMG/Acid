@@ -38,12 +38,12 @@ namespace flounder {
 
 	void renderer::prepareNewRenderParse(colour *colour)
 	{
-		prepareNewRenderParse(colour->r, colour->g, colour->b);
+		prepareNewRenderParse(colour->r, colour->g, colour->b, colour->a);
 	}
 
-	void renderer::prepareNewRenderParse(const float r, const float g, const float b)
+	void renderer::prepareNewRenderParse(const float &r, const float &g, const float &b, const float &a)
 	{
-		glClearColor(r, g, b, 0.0f);
+		glClearColor(r, g, b, a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		disableBlending();
 		cullBackFaces(true);
