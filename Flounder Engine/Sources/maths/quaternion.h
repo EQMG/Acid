@@ -50,16 +50,14 @@ namespace flounder {
 		/// <param name="x"> The new X value. </param>
 		/// <param name="y"> The new Y value. </param>
 		/// <param name="z"> The new Z value. </param>
-		/// <param name="w"> The new W value.
-		/// </param>
+		/// <param name="w"> The new W value. </param>
 		/// <returns> This. </returns>
 		quaternion *set(const float &x, const float &y, const float &z, const float &w);
 
 		/// <summary>
 		/// Loads from another quaternion.
 		/// </summary>
-		/// <param name="source"> The source quaternion.
-		/// </param>
+		/// <param name="source"> The source quaternion. </param>
 		/// <returns> This. </returns>
 		quaternion *set(const quaternion &source);
 
@@ -73,16 +71,14 @@ namespace flounder {
 		/// <summary>
 		/// Loads from a matrix4x4.
 		/// </summary>
-		/// <param name="source"> The source matrix.
-		/// </param>
+		/// <param name="source"> The source matrix. </param>
 		/// <returns> This. </returns>
 		quaternion *set(const matrix4x4 &source);
 
 		/// <summary>
 		/// Loads from a matrix3x3.
 		/// </summary>
-		/// <param name="source"> The source matrix.
-		/// </param>
+		/// <param name="source"> The source matrix. </param>
 		/// <returns> This. </returns>
 		quaternion *set(const matrix3x3 &source);
 
@@ -98,8 +94,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source quaternion. </param>
 		/// <param name="right"> The right source quaternion. </param>
-		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created.
-		/// </param>
+		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created.</param>
 		/// <returns> The destination quaternion. </returns>
 		static quaternion *multiply(const quaternion &left, const quaternion &right, quaternion *destination);
 
@@ -108,8 +103,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source quaternion. </param>
 		/// <param name="right"> The right source quaternion. </param>
-		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created.
-		/// </param>
+		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created. </param>
 		/// <returns> The destination quaternion. </returns>
 		static quaternion *multiplyInverse(const quaternion &left, const quaternion &right, quaternion *destination);
 
@@ -117,8 +111,7 @@ namespace flounder {
 		/// Calculates the dot product of the two quaternions.
 		/// </summary>
 		/// <param name="left"> The left source quaternion. </param>
-		/// <param name="right"> The right source quaternion.
-		/// </param>
+		/// <param name="right"> The right source quaternion. </param>
 		/// <returns> Left dot right. </returns>
 		static float dot(const quaternion &left, const quaternion &right);
 
@@ -137,8 +130,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
 		/// <param name="scalar"> The scalar value. </param>
-		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created.
-		/// </param>
+		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created. </param>
 		/// <returns> The destination quaternion. </returns>
 		static quaternion *scale(const quaternion &source, const float &scalar, quaternion *destination);
 
@@ -146,8 +138,7 @@ namespace flounder {
 		/// Negates a quaternion and places the result in the destination quaternion.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
-		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created.
-		/// </param>
+		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created. </param>
 		/// <returns> The destination quaternion. </returns>
 		static quaternion *negate(const quaternion &source, quaternion *destination);
 
@@ -213,8 +204,7 @@ namespace flounder {
 		/// <summary>
 		/// Scales this quaternion.
 		/// </summary>
-		/// <param name="scalar"> The scale factor.
-		/// </param>
+		/// <param name="scalar"> The scale factor. </param>
 		/// <returns> This. </returns>
 		quaternion *scale(const float &scalar);
 

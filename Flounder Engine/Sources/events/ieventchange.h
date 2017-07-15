@@ -4,7 +4,8 @@
 
 namespace flounder {
 	template<typename t>
-	class ieventchange : public ievent
+	class ieventchange : 
+		public ievent
 	{
 	private:
 		t *m_reference;

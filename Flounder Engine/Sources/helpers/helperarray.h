@@ -4,7 +4,7 @@ namespace flounder {
 	class helperarray 
 	{
 	public:
-		static float **recFloatArray(const int size1, const int size2)
+		static float **recFloatArray(const int &size1, const int &size2)
 		{
 			float **array = new float*[size1];
 			

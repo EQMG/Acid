@@ -5,7 +5,9 @@
 #include "../Sources/camera/icamera.h"
 
 namespace flounder {
-	class maincamera : public icamera {
+	class maincamera : 
+		public icamera 
+	{
 	private:
 		vector3 *m_position;
 		vector3 *m_rotation;
@@ -16,29 +18,9 @@ namespace flounder {
 		frustum *m_viewFrustum;
 		ray *m_viewRay;
 	public:
-		maincamera()
-		{
-			m_position = new vector3();
-			m_rotation = new vector3();
+		maincamera();
 
-			m_viewMatrix = new matrix4x4();
-			m_projectionMatrix = new matrix4x4();
-
-			m_viewFrustum = new frustum();
-			m_viewRay = new ray(false, new vector2(0.5f, 0.5f));
-		}
-
-		~maincamera()
-		{
-			delete m_position;
-			delete m_rotation;
-
-			delete m_viewMatrix;
-			delete m_projectionMatrix;
-
-			delete m_viewFrustum;
-			delete m_viewRay;
-		}
+		~maincamera();
 
 		float getNearPlane() override;
 

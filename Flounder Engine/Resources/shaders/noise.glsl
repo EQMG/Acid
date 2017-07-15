@@ -10,23 +10,28 @@
 //               https://github.com/stegu/webgl-noise
 //
 
-vec3 mod289(vec3 x) {
+vec3 mod289(vec3 x) 
+{
   return x - floor(x * (1.0 / 289.0)) * 289.0;
 }
 
-vec4 mod289(vec4 x) {
+vec4 mod289(vec4 x) 
+{
   return x - floor(x * (1.0 / 289.0)) * 289.0;
 }
 
-vec4 permute(vec4 x) {
+vec4 permute(vec4 x) 
+{
      return mod289(((x * 34.0) + 1.0) * x);
 }
 
-vec4 taylorInvSqrt(vec4 r) {
+vec4 taylorInvSqrt(vec4 r) 
+{
   return 1.79284291400159 - 0.85373472095314 * r;
 }
 
-float snoise3(vec3 v) {
+float snoise3(vec3 v) 
+{
   const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
   const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
 
@@ -96,6 +101,7 @@ float snoise3(vec3 v) {
   return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
 }
 
-float snoise2(vec2 v) {
+float snoise2(vec2 v)
+{
     return snoise3(vec3(v, 0.0));
 }

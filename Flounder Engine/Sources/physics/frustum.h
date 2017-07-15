@@ -52,10 +52,9 @@ namespace flounder {
 		/// </summary>
 		/// <param name="x"> The points X coord. </param>
 		/// <param name="y"> The points Y coord. </param>
-		/// <param name="z"> The points Z coord.
-		/// </param>
+		/// <param name="z"> The points Z coord. </param>
 		/// <returns> True if contained, false if outside. </returns>
-		bool pointInFrustum(float x, float y, float z);
+		bool pointInFrustum(const float &x, const float &y, const float &z);
 
 		/// <summary>
 		/// Is the sphere contained in the frustum?
@@ -63,10 +62,9 @@ namespace flounder {
 		/// <param name="x"> The sphere X coord. </param>
 		/// <param name="y"> The sphere Y coord. </param>
 		/// <param name="z"> The sphere Z coord. </param>
-		/// <param name="radius"> The spheres radius.
-		/// </param>
+		/// <param name="radius"> The spheres radius. </param>
 		/// <returns> True if contained, false if outside. </returns>
-		bool sphereInFrustum(float x, float y, float z, float radius);
+		bool sphereInFrustum(const float &x, const float &y, const float &z, const float &radius);
 
 		/// <summary>
 		/// Is the cube contained partially in the frustum?
@@ -76,11 +74,10 @@ namespace flounder {
 		/// <param name="z1"> The point 1's Z coord. </param>
 		/// <param name="x2"> The point 2's X coord. </param>
 		/// <param name="y2"> The point 2's Y coord. </param>
-		/// <param name="z2"> The point 2's Z coord.
-		/// </param>
+		/// <param name="z2"> The point 2's Z coord. </param>
 		/// <returns> True if partially contained, false if outside. </returns>
-		bool cubeInFrustum(float x1, float y1, float z1, float x2, float y2, float z2);
+		bool cubeInFrustum(const float &x1, const float &y1, const float &z1, const float &x2, const float &y2, const float &z2);
 	private:
-		void normalizePlane(float **frustum, int side);
+		void normalizePlane(float **frustum, const int &side);
 	};
 }

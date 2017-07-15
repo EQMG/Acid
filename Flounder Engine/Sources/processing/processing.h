@@ -8,7 +8,8 @@
 #include "irequest.h"
 
 namespace flounder {
-	class processing : public imodule
+	class processing : 
+		public imodule
 	{
 	private:
 		std::vector<iprocessor*> *m_processors;

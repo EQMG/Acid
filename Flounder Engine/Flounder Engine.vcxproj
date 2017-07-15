@@ -143,12 +143,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\deferred\deferredrenderer.cpp" />
     <ClCompile Include="Sources\post\filters\filternegative.cpp" />
     <ClCompile Include="Sources\fbos\fbo.cpp" />
     <ClCompile Include="Sources\models\model.cpp" />
     <ClCompile Include="Sources\physics\aabb.cpp" />
     <ClCompile Include="Sources\post\ipostfilter.cpp" />
     <ClCompile Include="Sources\post\filters\filtercrt.cpp" />
+    <ClCompile Include="Sources\post\filters\filterfxaa.cpp" />
+    <ClCompile Include="Sources\post\filters\filteremboss.cpp" />
+    <ClCompile Include="Sources\post\filters\filtergrain.cpp" />
+    <ClCompile Include="Sources\post\filters\filtergrey.cpp" />
+    <ClCompile Include="Sources\post\filters\filterpixel.cpp" />
     <ClCompile Include="Sources\skybox\rendererskybox.cpp" />
     <ClCompile Include="Sources\noise\noisesimplex.cpp" />
     <ClCompile Include="Sources\noise\noiseperlin.cpp" />
@@ -204,6 +210,7 @@
     <ClCompile Include="Sources\textures\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\deferred\deferredrenderer.h" />
     <ClInclude Include="Sources\post\filters\filternegative.h" />
     <ClInclude Include="Sources\fbos\fbo.h" />
     <ClInclude Include="Sources\fbos\depthbuffer.h" />
@@ -212,6 +219,11 @@
     <ClInclude Include="Sources\post\ipostpipeline.h" />
     <ClInclude Include="Sources\models\model.h" />
     <ClInclude Include="Sources\post\filters\filtercrt.h" />
+    <ClInclude Include="Sources\post\filters\filterfxaa.h" />
+    <ClInclude Include="Sources\post\filters\filteremboss.h" />
+    <ClInclude Include="Sources\post\filters\filtergrain.h" />
+    <ClInclude Include="Sources\post\filters\filtergrey.h" />
+    <ClInclude Include="Sources\post\filters\filterpixel.h" />
     <ClInclude Include="Sources\shaders\shadertype.h" />
     <ClInclude Include="Sources\skybox\rendererskybox.h" />
     <ClInclude Include="Sources\noise\noisesimplex.h" />

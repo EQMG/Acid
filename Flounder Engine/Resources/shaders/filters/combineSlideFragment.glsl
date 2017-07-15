@@ -12,8 +12,10 @@ uniform vec4 slideSpace;
 layout(location = 0) out vec4 out_colour;
 
 //---------MAIN------------
-void main(void) {
-   if (slideSpace.x <= pass_textureCoords.x && slideSpace.y >= pass_textureCoords.x && slideSpace.z <= pass_textureCoords.y && slideSpace.w >= pass_textureCoords.y) {
+void main(void)
+{
+   if (slideSpace.x <= pass_textureCoords.x && slideSpace.y >= pass_textureCoords.x && slideSpace.z <= pass_textureCoords.y && slideSpace.w >= pass_textureCoords.y) 
+   {
 	   out_colour = texture(originalTexture, pass_textureCoords);
    } else {
 	   out_colour = texture(otherTexture, pass_textureCoords);

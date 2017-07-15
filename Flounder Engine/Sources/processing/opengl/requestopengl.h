@@ -6,7 +6,9 @@ namespace flounder {
 	/// <summary>
 	/// Interface for executable OpenGL requests.
 	/// </summary>
-	class requestopengl : public irequest {
+	class requestopengl : 
+		public irequest 
+	{
 	public:
 		/// <summary>
 		/// Executed when the request is being processed.

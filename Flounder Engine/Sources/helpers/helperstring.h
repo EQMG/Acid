@@ -9,7 +9,7 @@
 namespace flounder {
 	class helperstring {
 	public:
-		static std::vector<std::string> split(const std::string str, const std::string sep) {
+		static std::vector<std::string> split(const std::string &str, const std::string &sep) {
 			char* cstr = const_cast<char*>(str.c_str());
 			char* current;
 			std::vector<std::string> arr;
@@ -52,7 +52,7 @@ namespace flounder {
 			return (*p == 0);
 		}
 
-		static int findCharPos(const std::string &line, const char c) {
+		static int findCharPos(const std::string &line, const char &c) {
 			for (unsigned int i = 0; i < line.length(); i++)
 			{
 				if (line.at(i) == c) 
@@ -80,14 +80,14 @@ namespace flounder {
 			return result;
 		}
 
-		static std::string substring(const std::string &str, const int start, const int end)
+		static std::string substring(const std::string &str, const int &start, const int &end)
 		{
 			std::string result = str;
 			result = result.substr(start, end - start);
 			return result;
 		}
 
-		static std::string replaceAll(const std::string &str, const char& token)
+		static std::string replaceAll(const std::string &str, const char &token)
 		{
 			std::string result = str;
 			result.erase(std::remove(result.begin(), result.end(), token), result.end());

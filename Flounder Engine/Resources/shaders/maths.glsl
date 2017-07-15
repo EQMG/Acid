@@ -1,4 +1,5 @@
-mat2 finverse(mat2 m) {
+mat2 finverse(mat2 m) 
+{
 	mat2 adj;
 	adj[0][0] = m[1][1];
 	adj[0][1] = -m[0][1];
@@ -8,7 +9,8 @@ mat2 finverse(mat2 m) {
 	return adj / det;
 }
 
-mat3 finverse(mat3 m) {
+mat3 finverse(mat3 m) 
+{
 	mat3 adj;
 	adj[0][0] = +(m[1][1] * m[2][2] - m[2][1] * m[1][2]);
 	adj[1][0] = -(m[1][0] * m[2][2] - m[2][0] * m[1][2]);
@@ -25,7 +27,8 @@ mat3 finverse(mat3 m) {
 	return adj / det;
 }
 
-mat4 finverse(mat4 m) {
+mat4 finverse(mat4 m) 
+{
 	float SubFactor00 = m[2][2] * m[3][3] - m[3][2] * m[2][3];
 	float SubFactor01 = m[2][1] * m[3][3] - m[3][1] * m[2][3];
 	float SubFactor02 = m[2][1] * m[3][2] - m[3][1] * m[2][2];
@@ -73,7 +76,8 @@ mat4 finverse(mat4 m) {
 	return adj / det;
 }
 
-mat4 frotationMatrix(float angle, float xAxis, float yAxis, float zAxis) {
+mat4 frotationMatrix(float angle, float xAxis, float yAxis, float zAxis) 
+{
 	vec3 axis = normalize(vec3(xAxis, yAxis, zAxis));
 	float s = sin(angle);
 	float c = cos(angle);
@@ -81,7 +85,8 @@ mat4 frotationMatrix(float angle, float xAxis, float yAxis, float zAxis) {
 	return mat4(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s, 0, oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s, 0, oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c, 0, 0, 0, 0, 1);
 }
 
-float fsmoothlyStep(float edge0, float edge1, float x) {
+float fsmoothlyStep(float edge0, float edge1, float x) 
+{
 	float t = clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
 	return t * t * (3.0 - 2.0 * t);
 }

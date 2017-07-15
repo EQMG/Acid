@@ -147,10 +147,12 @@ namespace flounder {
 		}
 
 		// Averages out vertex tangents, and disabled non set vertices,
-		for (vertexdata *vertex : vertices) {
+		for (vertexdata *vertex : vertices) 
+		{
 			vertex->averageTangents();
 
-			if (!vertex->isSet()) {
+			if (!vertex->isSet()) 
+			{
 				vertex->setTextureIndex(0);
 				vertex->setNormalIndex(0);
 			}
@@ -198,7 +200,8 @@ namespace flounder {
 		int textureIndex = (int)vertex.y - 1;
 		int normalIndex = (int)vertex.z - 1;
 
-		if (!currentVertex->isSet()) {
+		if (!currentVertex->isSet()) 
+		{
 			currentVertex->setTextureIndex(textureIndex);
 			currentVertex->setNormalIndex(normalIndex);
 			indices->push_back(index);
@@ -210,7 +213,7 @@ namespace flounder {
 		}
 	}
 
-	vertexdata *model::dealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, int newTextureIndex, int newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices)
+	vertexdata *model::dealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices)
 	{
 		if (previousVertex->hasSameTextureAndNormal(newTextureIndex, newNormalIndex)) 
 		{

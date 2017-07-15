@@ -1,15 +1,15 @@
 #include "processing.h"
 
 namespace flounder {
-	processing::processing()
-		: imodule()
+	processing::processing() : 
+		imodule()
 	{
 		m_processors = new std::vector<iprocessor*>();
 	}
 
 	processing::~processing()
 	{
-		for (auto *processor : *m_processors)
+		for (auto processor : *m_processors)
 		{
 			delete processor;
 		}
@@ -32,7 +32,7 @@ namespace flounder {
 
 	void processing::update()
 	{
-		for (auto *processor : *m_processors)
+		for (auto processor : *m_processors)
 		{
 			processor->update();
 		}
@@ -40,7 +40,7 @@ namespace flounder {
 
 	void processing::sendRequest(irequest *request)
 	{
-		for (auto *processor : *m_processors)
+		for (auto processor : *m_processors)
 		{
 			processor->addRequestToQueue(request);
 		}

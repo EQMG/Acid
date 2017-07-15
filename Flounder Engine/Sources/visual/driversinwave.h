@@ -24,7 +24,6 @@ namespace flounder {
 		/// Deconstructor for sin wave driver.
 		/// </summary>
 		~driversinwave();
-
 	protected:
 		float calculate(const float &time) override;
 	};

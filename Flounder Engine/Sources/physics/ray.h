@@ -35,7 +35,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="useMouse"> If the ray will use the mouse coords or to start from screenStart. </param>
 		/// <param name="screenStart"> If useMouse is false then this will be used as the rays start. </param>
-		ray(const bool useMouse, vector2 *screenStart);
+		ray(const bool &useMouse, vector2 *screenStart);
 
 		/// <summary>
 		/// Deconstructor for the ray.
@@ -45,7 +45,7 @@ namespace flounder {
 		/// <summary>
 		/// Updates the ray to a new position.
 		/// </summary>
-		/// <param name="currentPosition"> The new position. </param
+		/// <param name="currentPosition"> The new position. </param>
 		/// <param name="currentPosition"> The mouses xy screen space position. </param>
 		/// <param name="viewMatrix"> The cameras view matrix. </param>
 		/// <param name="projectionMatrix"> The projection view matrix. </param>
@@ -55,17 +55,15 @@ namespace flounder {
 		/// Gets a point on the ray.
 		/// </summary>
 		/// <param name="distance"> Distance down the ray to sample. </param>
-		/// <param name="destination"> The destination vector, if null one will be created.
-		/// </param>
+		/// <param name="destination"> The destination vector, if null one will be created. </param>
 		/// <returns> Returns the destination vector. </returns>
-		vector3 *getPointOnRay(const float distance, vector3 *destination);
+		vector3 *getPointOnRay(const float &distance, vector3 *destination);
 
 		/// <summary>
 		/// Converts a position from world space to screen space.
 		/// </summary>
 		/// <param name="position"> The position to convert. </param>
-		/// <param name="destination"> The destination point. X and Y being screen space coords and Z being the distance to the camera.
-		/// </param>
+		/// <param name="destination"> The destination point. X and Y being screen space coords and Z being the distance to the camera. </param>
 		/// <returns> Returns the destination vector. </returns>
 		vector3 *convertToScreenSpace(vector3 *position, vector3 *destination);
 
@@ -81,7 +79,7 @@ namespace flounder {
 		/// <returns> The current ray. </returns>
 		inline vector3 *getCurrentRay() { return m_currentRay; };
 	private:
-		void updateNormalisedDeviceCoordinates(const float mouseX, const float mouseY);
+		void updateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY);
 
 		void updateEyeCoords(vector4 *clipCoords);
 

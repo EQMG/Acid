@@ -1,8 +1,8 @@
 #include "camera.h"
 
 namespace flounder {
-	camera::camera()
-		: imodule()
+	camera::camera() : 
+		imodule()
 	{
 		m_camera = NULL;
 		m_player = NULL;

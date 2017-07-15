@@ -11,7 +11,8 @@ uniform float strength;
 layout(location = 0) out vec4 out_colour;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	vec4 colour = texture(originalTexture, pass_textureCoords);
 
     float x = (pass_textureCoords.x + 4.0) * (pass_textureCoords.y + 4.0) * 10.0;

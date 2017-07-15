@@ -14,7 +14,8 @@ uniform float steps;
 layout(location = 0) out vec4 out_colour;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	// Work out how much to blur based on the mid point.
 	float amount = pow((pass_textureCoords.y * centre) * 2.0 - 1.0, 2.0) * blurAmount;
 	float offsetMin = (float(steps - 1.0)) / -2.0;
@@ -24,8 +25,10 @@ void main(void) {
 	out_colour = vec4(0.0, 0.0, 0.0, 1.0);
 
 	// From minimum offset to maximum offset.
-	for (float offsetX = offsetMin; offsetX <= offsetMax; ++offsetX) {
-		for (float offsetY = offsetMin; offsetY <= offsetMax; ++offsetY) {
+	for (float offsetX = offsetMin; offsetX <= offsetMax; ++offsetX) 
+	{
+		for (float offsetY = offsetMin; offsetY <= offsetMax; ++offsetY) 
+		{
 			// Copy the coord so we can mess with it.
 			vec2 tempTextureCoords = pass_textureCoords.xy;
 
@@ -38,6 +41,6 @@ void main(void) {
 		}
 	}
 		
-	// Because we are doing an average, we divide by the amount (x AND y, hence STEPS * steps).
+	// Because we are doing an average, we divide by the amount (x AND y, hence steps * steps).
 	out_colour /= float(steps * steps);
 }

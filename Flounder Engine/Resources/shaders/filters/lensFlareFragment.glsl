@@ -14,11 +14,13 @@ uniform vec2 displaySize;
 layout(location = 0) out vec4 out_colour;
 
 //---------LENS FLARE------------
-vec3 lensflare(bool process, vec2 uv, vec3 pos) {
+vec3 lensflare(bool process, vec2 uv, vec3 pos) 
+{
 	vec2 uvd = uv * length(uv);
 	vec3 colour = vec3(0.0);
 
-    if (process) {
+    if (process) 
+	{
         vec2 uvx = mix(uv, uvd, 1.0);
         float f2 = max(1.0 / (1.0 + 32.0 * pow(length(uvx + 0.8 * pos.xy), 2.0)), 0.0) * 0.25;
         float f22 = max(1.0 / (1.0 + 32.0 * pow(length(uvx + 0.85 * pos.xy), 2.0)), 0.0) * 0.23;
@@ -52,12 +54,14 @@ vec3 lensflare(bool process, vec2 uv, vec3 pos) {
 }
 
 //---------INSIDE SCREEN------------
-bool insideScreen(vec2 test) {
+bool insideScreen(vec2 test) 
+{
     return test.x >= 0.0 && test.x <= 1.0 && test.y >= 0.0 && test.y <= 1.0;
 }
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
     vec2 sunCoord = (sunPosition.xy + 1.0) / 2.0;
 
 	vec4 albedo = texture(originalAlbedo, pass_textureCoords);

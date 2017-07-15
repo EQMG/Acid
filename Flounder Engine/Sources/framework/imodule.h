@@ -7,12 +7,10 @@ namespace flounder {
 	public:
 		imodule()
 		{
-
 		}
 
 		~imodule()
 		{
-
 		}
 	};
 }

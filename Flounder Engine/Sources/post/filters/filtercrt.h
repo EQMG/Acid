@@ -14,7 +14,7 @@ namespace flounder {
 		float m_scanLineSize;
 		float m_scanIntensity;
 	public:
-		filtercrt(colour *screenColour, float curveAmountX, float curveAmountY, float scanLineSize, float scanIntensity);
+		filtercrt(colour *screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity);
 
 		~filtercrt();
 

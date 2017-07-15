@@ -12,7 +12,8 @@ uniform float scale;
 layout(location = 0) out vec4 out_colour;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	out_colour = vec4(0.0);
 
 	float part = 1.0 / height;

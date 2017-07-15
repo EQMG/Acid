@@ -15,7 +15,8 @@ const float FXAA_REDUCE_MIN = (1.0 / 128.0);
 const float FXAA_REDUCE_MUL = (1.0 / 8.0);
 
 //---------APPLY FXAA------------
-vec4 applyFXAA(sampler2D original, vec2 fragCoord, vec2 resolution) {
+vec4 applyFXAA(sampler2D original, vec2 fragCoord, vec2 resolution)
+{
 	vec2 inverseResolution = vec2(1.0 / resolution.x, 1.0 / resolution.y);
 	vec3 rgbNW = texture(original, fragCoord + vec2(-1.0, -1.0) * inverseResolution).rgb;
 	vec3 rgbNE = texture(original, fragCoord + vec2(1.0, -1.0) * inverseResolution).rgb;
@@ -47,15 +48,19 @@ vec4 applyFXAA(sampler2D original, vec2 fragCoord, vec2 resolution) {
   	vec3 rgbB = rgbA * (1.0/2.0) + (1.0/4.0) * (texture(original, fragCoord.xy + dir * (0.0/3.0 - 0.5)).xyz + texture(original, fragCoord.xy + dir * (3.0/3.0 - 0.5)).xyz);
   	float lumaB = dot(rgbB, luma);
 
-	if ((lumaB < lumaMin) || (lumaB > lumaMax)) {
+	if ((lumaB < lumaMin) || (lumaB > lumaMax)) 
+	{
 		return vec4(rgbA, 1.0);
-	} else {
+	} 
+	else
+	{
 		return vec4(rgbB, 1.0);
 	}
 }
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	ivec2 originalSize = textureSize(originalTexture, 0);
 	out_colour = applyFXAA(originalTexture, pass_textureCoords, vec2(originalSize.x, originalSize.y));
 }

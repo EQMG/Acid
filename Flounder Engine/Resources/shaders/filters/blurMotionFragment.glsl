@@ -15,20 +15,22 @@ uniform mat4 viewMatrix;
 uniform mat4 lastViewMatrix;
 uniform float delta;
 
-const float numSamples = 8.0;
+const float SAMPLES = 8.0;
 
 //---------OUT------------
 layout(location = 0) out vec4 out_colour;
 
 //---------CALCULATE LOCATION------------
-vec3 decodeLocation() {
+vec3 decodeLocation() 
+{
     float depth = texture(originalDepth, pass_textureCoords).r;
     vec4 p = finverse(projectionMatrix) * (vec4(pass_textureCoords, depth, 1.0) * 2.0 - 1.0);
     return vec3(finverse(viewMatrix) * vec4(p.xyz / p.w, 1.0));
 }
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
     // Gets the currebt world position for this fragment.
 	vec4 worldPosition = vec4(decodeLocation(), 1.0);
 
@@ -44,9 +46,10 @@ void main(void) {
     // Samples the texture to produce a blur in the velocity.
     vec3 sampled_colour = vec3(0.0);
 
-    for (float i = 1.0; i < numSamples; ++i){
+    for (float i = 1.0; i < SAMPLES; ++i)
+	{
         sampled_colour += texture(originalTexture, pass_textureCoords + (i * velocity)).rgb;
     }
 
-    out_colour = vec4(sampled_colour / numSamples, 1.0);
+    out_colour = vec4(sampled_colour / SAMPLES, 1.0);
 }
