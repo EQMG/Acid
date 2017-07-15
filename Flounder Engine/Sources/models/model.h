@@ -1,9 +1,18 @@
 #pragma once
 
+#include <iostream>
 #include <string>
+#include <vector>
 #include <GL/glew.h>
 
+#include "../helpers/helperfile.h"
+#include "../helpers/helperstring.h"
+#include "../maths/vector2.h"
+#include "../maths/vector3.h"
+#include "../physics/aabb.h"
 #include "../loaders/loaders.h"
+
+#include "vertexdata.h"
 
 namespace flounder {
 	/// <summary>
@@ -37,6 +46,17 @@ namespace flounder {
 			builder *setFile(const std::string &file);
 
 			/// <summary>
+			/// Sets the values to load to the model.
+			/// </summary>
+			/// <param name="indices"> The model indices. </param>
+			/// <param name="vertices"> The model vertices. </param>
+			/// <param name="textures"> The model textures. </param>
+			/// <param name="normals"> The model normals. </param>
+			/// <param name="tangents"> The model tangents. </param>
+			/// <returns> This. </returns>
+			builder* setDirectly(std::vector<int> *indices, std::vector<float> *vertices, std::vector<float> *textures, std::vector<float> *normals, std::vector<float> *tangents);
+
+			/// <summary>
 			/// Creates a model from the builder.
 			/// </summary>
 			/// <returns> The created model. </returns>
@@ -47,11 +67,13 @@ namespace flounder {
 
 		std::string m_file;
 
-		float *m_vertices;
-		float *m_textures;
-		float *m_normals;
-		float *m_tangents;
-		int *m_indices;
+		std::vector<int> *m_indices;
+		std::vector<float> *m_vertices;
+		std::vector<float> *m_textures;
+		std::vector<float> *m_normals;
+		std::vector<float> *m_tangents;
+
+		aabb *m_aabb;
 
 		GLuint m_vaoID;
 		GLuint m_vaoLength;
@@ -76,6 +98,14 @@ namespace flounder {
 	private:
 		void loadFromFile(const std::string &file);
 
+		vertexdata *processDataVertex(vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices);
+
+		vertexdata *dealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, int newTextureIndex, int newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices);
+
+		void calculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<vector2> *textures);
+
 		void loadToOpenGL();
+
+		void createAABB();
 	};
 }
