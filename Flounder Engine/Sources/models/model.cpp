@@ -277,7 +277,6 @@ namespace flounder {
 		if (m_indices != NULL)
 		{
 			m_vaoLength = m_indices->size();
-			std::cout << m_file << ": " << m_vaoLength << std::endl;
 		}
 		else
 		{

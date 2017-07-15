@@ -8,10 +8,6 @@
 #include "maininstance.h"
 #include "mainrenderer.h"
 
-#include "../Sources/inputs/buttonmouse.h"
-#include "../Sources/events/ieventstandard.h"
-#include "../Sources/helpers/helperfile.h"
-
 using namespace flounder;
 
 int main() {
@@ -36,29 +32,10 @@ int main() {
 		->create()
 	);
 
-	texture *m_textureTest = texture::newTexture()->setFile("Resources/undefined.png")->create();
-
-	colour m_test = colour(0.2f, 0.3f, 0.0f, 1.0f);
-	colour m_result = colour();
-	colour::add(m_test, colour(0.2f, 0.1f, 0.1f), &m_result);
-	std::cout << m_result.r << ", " << m_result.g << ", " << m_result.b << ", " << m_result.a << std::endl;
-	
-	// Adds game elements to the framework.
-	buttonmouse *m_buttonLeft = new buttonmouse(1, GLFW_MOUSE_BUTTON_LEFT);
-	events::get()->addEvent(
-		new ieventstandard(false, [&]() { 
-			return m_buttonLeft->wasDown();
-		}, []() {
-			std::cout << "Left mouse button was down!" << std::endl;
-		})
-	);
-
 	// Runs the framework loop.
 	m_framework->run();
 
 	// Deletes the framework.
-	delete m_buttonLeft;
-	delete m_textureTest;
 	delete m_framework;
 
 	// Pauses the console.

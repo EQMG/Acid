@@ -12,7 +12,7 @@ namespace flounder {
 	/// </summary>
 	class ipostfilter
 	{
-	private:
+	protected:
 		shader *m_shader;
 		fbo *m_fbo;
 		model *m_model;

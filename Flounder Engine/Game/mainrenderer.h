@@ -4,7 +4,7 @@
 #include "../Sources/renderer/renderer.h"
 
 #include "../Sources/fbos/fbo.h"
-#include "../Sources/post/filters/filternegative.h"
+#include "../Sources/post/filters/filtercrt.h"
 #include "../Sources/skybox/rendererskybox.h"
 
 namespace flounder {
@@ -16,7 +16,7 @@ namespace flounder {
 		rendererskybox *m_skybox;
 
 		fbo *m_fboRenderer;
-		filternegative *m_filterNegative;
+		filtercrt *m_filterCrt;
 	public:
 		mainrenderer();
 
