@@ -4,8 +4,8 @@ namespace flounder {
 	rendererskybox::rendererskybox()
 	{
 		m_shader = shader::newShader()->addName("skybox")
-			->addType(shadertype(GL_VERTEX_SHADER, "Resources/shaders/skybox/skyboxVertex.glsl"))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "Resources/shaders/skybox/skyboxFragment.glsl"))
+			->addType(shadertype(GL_VERTEX_SHADER, "Resources/shaders/skybox/skyboxVertex.glsl", loadtype::FILE))
+			->addType(shadertype(GL_FRAGMENT_SHADER, "Resources/shaders/skybox/skyboxFragment.glsl", loadtype::FILE))
 			->create();
 	}
 
@@ -34,9 +34,9 @@ namespace flounder {
 		renderer::get()->bindVAO(skybox::get()->getModel()->getVaoID(), 1, 0);
 		renderer::get()->bindTexture(skybox::get()->getTexture(), 0);
 
-	//	renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, skybox::get()->getModel()->getVaoLength());
+		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, skybox::get()->getModel()->getVaoLength());
 
-		renderer::get()->unbindVAO(0);
+		renderer::get()->unbindVAO(1, 0);
 		renderer::get()->depthMask(true);
 
 		m_shader->stop();

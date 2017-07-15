@@ -8,7 +8,7 @@ namespace flounder {
 
 	float maincamera::getFarPlane()
 	{
-		return 100.0f;
+		return 1000.0f;
 	}
 
 	float maincamera::getFOV()

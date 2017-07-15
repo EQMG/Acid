@@ -5,6 +5,13 @@ namespace flounder {
 		: imodule()
 	{
 		m_renderermaster = NULL;
+
+		m_cullingBackFace = false;
+		m_depthMask = true;
+		m_inWireframe = false;
+		m_isAlphaBlending = false;
+		m_additiveBlending = false;
+		m_antialiasing = false;
 	}
 
 	renderer::~renderer()

@@ -12,7 +12,7 @@ namespace flounder {
 	private:
 		static const int NO_INDEX;
 
-		vector3 *m_position;
+		vector3 m_position;
 
 		int m_textureIndex;
 		int m_normalIndex;
@@ -21,15 +21,15 @@ namespace flounder {
 		int m_index;
 		float m_length;
 
-		std::vector<vector3*> *m_tangents;
-		vector3 *m_averagedTangent;
+		std::vector<vector3*> m_tangents;
+		vector3 m_averagedTangent;
 
 	public:
-		vertexdata(const int index, vector3 *position);
+		vertexdata(const int index, vector3 position);
 
 		~vertexdata();
 
-		inline vector3 *getPosition() { return m_position; }
+		inline vector3 getPosition() { return m_position; }
 
 		inline int getTextureIndex() { return m_textureIndex; }
 
@@ -51,8 +51,10 @@ namespace flounder {
 
 		void averageTangents();
 
-		inline bool isSet() { return (m_textureIndex != NO_INDEX) && (m_normalIndex != NO_INDEX); }
+		inline vector3 getAverageTangent() { return m_averagedTangent; }
 
-		inline bool hasSameTextureAndNormal(const int textureIndexOther, const int normalIndexOther) { return textureIndexOther == m_textureIndex && normalIndexOther == m_normalIndex; }
+		bool isSet();
+
+		bool hasSameTextureAndNormal(const int textureIndexOther, const int normalIndexOther);
 	};
 }
