@@ -6,7 +6,7 @@ namespace flounder {
 	{
 		m_size = 250.0f;
 		m_texture = NULL;
-	//	m_model = model::newModel()->setFile("Resources/skybox/skyboxCube.obj")->create();
+		m_model = NULL;
 
 		m_rotation = new vector3();
 		m_modelMatrix = new matrix4x4();
@@ -31,6 +31,7 @@ namespace flounder {
 
 	void skybox::init()
 	{
+		m_model = model::newModel()->setFile("Resources/skybox/skyboxSphere.obj")->create();
 	}
 
 	void skybox::update()

@@ -122,7 +122,6 @@ namespace flounder {
 		m_depthBuffer = NULL;
 		m_colourBuffer = new GLuint[m_attachments];
 		m_drawBuffers = new GLenum[m_attachments];
-		m_drawBuffers = NULL;
 	}
 
 	fbo::~fbo()

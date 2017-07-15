@@ -156,18 +156,31 @@ namespace flounder {
 
 	void shader::loadType(shadertype* type)
 	{
-		type->m_string = "";
+		std::string fileLoaded = "";
 
-		std::string fileLoaded = helperfile::readFile(type->m_file);
+		if (type->m_loadtype == loadtype::FILE)
+		{
+			fileLoaded = helperfile::readFile(type->m_load);
+		}
+		else if (type->m_loadtype == loadtype::STRING)
+		{
+			fileLoaded = std::string(type->m_load);
+		}
+		else
+		{
+			std::cerr << "Could not find a file/string to load for the shader type: " << type << std::endl;
+		}
+
+		type->m_processedString = ""; // Clears the string so the shader can be processed.
 		std::vector<std::string> lines = helperstring::split(fileLoaded, "\n");
 
 		for (std::vector<std::string>::iterator it = lines.begin(); it < lines.end(); it++)
 		{
 			std::string line = helperstring::trim(*it);
-			type->m_string += processLine(line) + "\n";
+			type->m_processedString += processLine(line) + "\n";
 		}
 
-		const char* source = type->m_string.c_str();
+		const char* source = type->m_processedString.c_str();
 		type->m_shaderID = glCreateShader(type->m_shaderType);
 		glShaderSource(type->m_shaderID, 1, &source, NULL);
 		glCompileShader(type->m_shaderID);
@@ -193,7 +206,11 @@ namespace flounder {
 	{
 		std::string result = line;
 
-		if (helperstring::contains(line, "#version"))
+		if (helperstring::startsWith(line, "//"))
+		{
+			result = "";
+		}
+		else if (helperstring::contains(line, "#version"))
 		{
 			int major = display::get()->getGlfwMajor();
 			int minor = display::get()->getGlfwMinor();
@@ -214,7 +231,14 @@ namespace flounder {
 			includeFile = helperstring::replaceAll(includeFile, '\"');
 
 			std::string includeString = helperfile::readFile(includeFile);
-			result = includeString;
+			std::vector<std::string> includeLines = helperstring::split(includeString, "\n");
+			result = "";
+
+			for (std::vector<std::string>::iterator it = includeLines.begin(); it < includeLines.end(); it++)
+			{
+				std::string includeLine = helperstring::trim(*it);
+				result += processLine(includeLine) + "\n";
+			}
 		}
 		else if (helperstring::startsWith(line, "layout"))
 		{
@@ -261,10 +285,10 @@ namespace flounder {
 			std::string uniformType = helperstring::trim(split.at(0));
 			std::string uniformName = helperstring::trim(split.at(1));
 
-			if (uniformString.find("[") != std::string::npos && uniformString.find("]") != std::string::npos)
+			if (helperstring::contains(uniformString, "[") && helperstring::contains(uniformString, "]"))
 			{
 
-				if (uniformName.find("[") != std::string::npos && uniformName.find("]") != std::string::npos)
+				if (helperstring::contains(uniformName, "[") && helperstring::contains(uniformName, "]"))
 				{
 					uniformName = helperstring::trim(uniformName.substr(0, helperstring::findCharPos(uniformName, '[')));
 				}
