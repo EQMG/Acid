@@ -29,11 +29,6 @@ int main() {
 	// Initializes the framework.
 	m_framework->init();
 
-	shader *m_postMRT = shader::newShader()->addName("postMRT")
-		->addType(shadertype(GL_FRAGMENT_SHADER, "Resources/shaders/filters/mrtFragment.glsl"))
-		->create();
-	model *m_model1 = model::newModel()->setFile("Resources/models/aabb.obj")->create();
-
 	renderer::get()->loadRendererMaster(new mainrenderer());
 	skybox::get()->loadTexture(texture::newTexture()
 		->setCubemap(6, "Resources/skybox/starsRight.png", "Resources/skybox/starsLeft.png", "Resources/skybox/starsTop.png",
@@ -62,8 +57,6 @@ int main() {
 	m_framework->run();
 
 	// Deletes the framework.
-	delete m_model1;
-	delete m_postMRT;
 	delete m_buttonLeft;
 	delete m_textureTest;
 	delete m_framework;

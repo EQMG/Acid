@@ -1,8 +1,10 @@
 #pragma once
 
-#include <GL\glew.h>
+#include <iostream>
 #include <vector>
 #include <map>
+#include <stdarg.h>
+#include <GL\glew.h>
 
 #include "../framework/framework.h"
 
@@ -34,6 +36,10 @@ namespace flounder {
 		/// <returns> The ID of the VAO. </returns>
 		GLuint createVAO();
 
+		void unbindVAO();
+
+		//GLuint storeInterleavedDataInVAO(GLuint vaoID, const std::vector<GLfloat> &data, const int &n_args, ...);
+
 		/// <summary>
 		/// Creates an index buffer and binds it to a VAO.
 		/// </summary>
@@ -41,7 +47,7 @@ namespace flounder {
 		/// <param name="indices"> The array of indices to be stored in the index buffer.
 		/// </param>
 		/// <returns> The ID of the index buffer VBO. </returns>
-		GLuint createIndicesVBO(GLuint vaoID, int *indices);
+		GLuint createIndicesVBO(GLuint vaoID, const std::vector<GLint> &indices);
 
 		/// <summary>
 		/// Stores a float array of data into a FBO.
@@ -52,6 +58,6 @@ namespace flounder {
 		/// <param name="coordSize"> The size of data being store.
 		/// </param>
 		/// <returns> The new FBO's ID. </returns>
-		GLuint storeDataInVBO(GLuint vaoID, float *data, int attributeNumber, int coordSize);
+		GLuint storeDataInVBO(GLuint vaoID, const std::vector<GLfloat> &data, int attributeNumber, int coordSize);
 	};
 }

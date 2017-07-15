@@ -197,7 +197,7 @@ namespace flounder {
 
 		inline GLuint getFrameBuffer() { return m_frameBuffer; }
 
-		inline GLuint *getColourTexture() { return m_colourTexture; }
+		inline GLuint getColourTexture(int readBuffer) { return m_colourTexture[readBuffer]; }
 
 		/// <summary>
 		/// Gets the depth texture.

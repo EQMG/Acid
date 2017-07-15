@@ -4,9 +4,7 @@
 #include "../Sources/renderer/renderer.h"
 
 #include "../Sources/fbos/fbo.h"
-#include "../Sources/visual/driverbounce.h"
-#include "../Sources/visual/driversinwave.h"
-
+#include "../Sources/post/filters/filternegative.h"
 #include "../Sources/skybox/rendererskybox.h"
 
 namespace flounder {
@@ -18,8 +16,7 @@ namespace flounder {
 		rendererskybox *m_skybox;
 
 		fbo *m_fboRenderer;
-
-		idriver *m_driverR;
+		filternegative *m_filterNegative;
 	public:
 		mainrenderer();
 
