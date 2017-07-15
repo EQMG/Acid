@@ -1,7 +1,8 @@
 #pragma once
 
 namespace flounder {
-	class irequest {
+	class irequest 
+	{
 	public:
 		/// <summary>
 		/// Gets the request id.

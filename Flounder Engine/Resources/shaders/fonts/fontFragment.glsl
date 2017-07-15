@@ -18,7 +18,8 @@ uniform vec2 edgeData;
 layout(location = 0) out vec4 out_colour;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	float distance = texture(fontTexture, pass_textureCoords).a;
 	float alpha = fsmoothlyStep((1.0 - edgeData.x) - edgeData.y, 1.0 - edgeData.x, distance);
 	float outlineAlpha = fsmoothlyStep((1.0 - borderSizes.x) - borderSizes.y, 1.0 - borderSizes.x, distance);
@@ -28,11 +29,13 @@ void main(void) {
 	out_colour = vec4(overallColour, overallAlpha);
 	out_colour.a *= colour.a;
 
-	if (polygonMode) {
+	if (polygonMode) 
+	{
 		out_colour = vec4(1.0, 0.0, 0.0, colour.a);
 	}
 
-	if (out_colour.a < 0.05){
+	if (out_colour.a < 0.05)
+	{
 		out_colour = vec4(0.0);
 		discard;
 	}

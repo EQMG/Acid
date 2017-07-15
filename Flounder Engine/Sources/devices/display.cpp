@@ -1,14 +1,15 @@
 #include "display.h"
 
 namespace flounder {
-	display::display()
-		: imodule()
+	display::display() : 
+		imodule()
 	{
 		m_glfwMajor = 3;
 		m_glfwMinor = 2;
 
 		m_windowWidth = 720;
 		m_windowHeight = 480;
+		m_aspectRatio = 1.5f;
 		m_fullscreenWidth = 0;
 		m_fullscreenHeight = 0;
 
@@ -46,6 +47,7 @@ namespace flounder {
 
 		m_windowWidth = width;
 		m_windowHeight = height;
+		m_aspectRatio = width / height;
 
 		m_title = title;
 		m_icon = icon;
@@ -97,6 +99,7 @@ namespace flounder {
 		{
 			m_fullscreenWidth = videoMode->width;
 			m_fullscreenHeight = videoMode->height;
+			m_aspectRatio = videoMode->width / videoMode->height;
 		}
 
 		// Create a windowed mode window and its OpenGL context.
@@ -205,49 +208,49 @@ namespace flounder {
 		// TODO
 	}
 
-	int display::getWidth()
+	int &display::getWidth()
 	{
 		return m_fullscreen ? m_fullscreenWidth : m_windowWidth;
 	}
 
-	int display::getWindowWidth()
+	int &display::getWindowWidth()
 	{
 		return m_windowWidth;
 	}
 
-	int display::getHeight()
+	int &display::getHeight()
 	{
 		return m_fullscreen ? m_fullscreenHeight : m_windowHeight;
 	}
 
-	int display::getWindowHeight()
+	int &display::getWindowHeight()
 	{
 		return m_windowHeight;
 	}
 
-	void display::setWindowSize(const int width, const int height)
+	void display::setWindowSize(const int &width, const int &height)
 	{
 		m_windowWidth = width;
 		m_windowHeight = height;
 		glfwSetWindowSize(m_window, width, height);
 	}
 
-	double display::getAspectRatio()
+	double &display::getAspectRatio()
 	{
-		return ((double) getWidth()) / ((double) getHeight());
+		return m_aspectRatio;
 	}
 
-	std::string display::getTitle()
+	std::string &display::getTitle()
 	{
 		return m_title;
 	}
 
-	bool display::isVSync()
+	bool &display::isVSync()
 	{
 		return m_vsync;
 	}
 
-	void display::setVSync(const bool vsync)
+	void display::setVSync(const bool &vsync)
 	{
 		m_vsync = vsync;
 		glfwSwapInterval(vsync ? 1 : 0);
@@ -257,33 +260,33 @@ namespace flounder {
 		}
 	}
 
-	bool display::isAntialiasing()
+	bool &display::isAntialiasing()
 	{
 		return m_antialiasing;
 	}
 
-	void display::setAntialiasing(const bool antialiasing)
+	void display::setAntialiasing(const bool &antialiasing)
 	{
 		m_antialiasing = antialiasing;
 	}
 
-	int display::getSamples()
+	int &display::getSamples()
 	{
 		return m_samples;
 	}
 
-	void display::setSamples(const int samples)
+	void display::setSamples(const int &samples)
 	{
 		m_samples = samples;
 		glfwWindowHint(GLFW_SAMPLES, samples);
 	}
 
-	bool display::isFullscreen()
+	bool &display::isFullscreen()
 	{
 		return m_fullscreen;
 	}
 
-	void display::setFullscreen(const bool fullscreen)
+	void display::setFullscreen(const bool &fullscreen)
 	{
 		if (m_fullscreen == fullscreen) {
 			return;
@@ -295,7 +298,8 @@ namespace flounder {
 
 		std::cout << (fullscreen ? "Display is going fullscreen." : "Display is going windowed.") << std::endl;
 
-		if (fullscreen) {
+		if (fullscreen) 
+		{
 			m_fullscreenWidth = videoMode->width;
 			m_fullscreenHeight = videoMode->height;
 			glfwSetWindowMonitor(m_window, monitor, 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
@@ -313,22 +317,22 @@ namespace flounder {
 		return m_window;
 	}
 
-	bool display::isClosed()
+	bool &display::isClosed()
 	{
 		return m_closed;
 	}
 
-	bool display::isFocused()
+	bool &display::isFocused()
 	{
 		return m_focused;
 	}
 
-	int display::getWindowXPos()
+	int &display::getWindowXPos()
 	{
 		return m_windowPosX;
 	}
 
-	int display::getWindowYPos()
+	int &display::getWindowYPos()
 	{
 		return m_windowPosY;
 	}
@@ -362,6 +366,7 @@ namespace flounder {
 		if (!display::get()->m_fullscreen) {
 			display::get()->m_windowWidth = width;
 			display::get()->m_windowHeight = height;
+			display::get()->m_aspectRatio = width / height;
 		}
 	}
 

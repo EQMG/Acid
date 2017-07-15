@@ -46,7 +46,9 @@ namespace flounder {
 		m_fbo->bindFrameBuffer();
 		renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 1.0f);
 		m_shader->start();
+
 		storeValues();
+
 		renderer::get()->antialias(false);
 		renderer::get()->disableDepthTesting();
 		renderer::get()->cullBackFaces(true);

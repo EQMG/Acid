@@ -14,9 +14,10 @@ uniform float moveIt;
 layout(location = 0) out vec4 out_colour;
 
 //---------MAIN------------
-void main(void) {
+void main(void)
+{
 	vec2 t0 = pass_textureCoords;
-	t0.x += cos(pass_textureCoords.y * 4.0 * 2.0 * 3.14 + moveIt) * DI;
-	t0.y += sin(pass_textureCoords.x * 4.0 * 2.0 * 3.14 + moveIt) * DI;
+	t0.x += cos(2.0 * 3.14 * pass_textureCoords.y * 4.0 + moveIt) * DI;
+	t0.y += sin(2.0 * 3.14 * pass_textureCoords.x * 4.0 + moveIt) * DI;
 	out_colour = texture(originalTexture, t0);
 }

@@ -23,20 +23,26 @@ uniform float swayHeight;
 uniform vec2 swayOffset;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	vec4 totalLocalPos = vec4(0.0);
 
-    if (animated) {
-        for (int i = 0; i < MAX_WEIGHTS; i++){
+    if (animated) 
+	{
+        for (int i = 0; i < MAX_WEIGHTS; i++)
+		{
 		    mat4 jointTransform = jointTransforms[in_jointIndices[i]];
             vec4 posePosition = jointTransform * vec4(in_position, 1.0);
             totalLocalPos += posePosition * in_weights[i];
         }
-	} else {
+	} 
+	else 
+	{
 	    totalLocalPos = vec4(in_position, 1.0);
 	}
 
-	if (swaying) {
+	if (swaying) 
+	{
 	    vec4 swayColour = texture(swayMap, in_textureCoords);
 	    float swayPower = 0.5 * exp(log(length(swayColour.rgb)) / 3.0) * (totalLocalPos.y / swayHeight) * length(totalLocalPos.xyz);
 	    totalLocalPos.x += swayPower * swayOffset.x;

@@ -27,10 +27,12 @@ uniform bool ignoreLighting;
 uniform bool useGlowMap;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	vec4 diffuseColour = texture(diffuseMap, pass_textureCoords);
 
-	if (diffuseColour.a < 0.1){
+	if (diffuseColour.a < 0.1)
+	{
 		out_albedo = vec4(0.0);
 	    out_normals = vec4(0.0);
 	    out_extras = vec4(0.0);
@@ -40,11 +42,13 @@ void main(void) {
 	bool glowing = false;
 	float glow = reflectivity;
 
-	if (useGlowMap) {
+	if (useGlowMap) 
+	{
 	    vec4 glowColour = texture(glowMap, pass_textureCoords);
 	    glow += length(glowColour.rgb);
 
-	    if (glowColour.r > 0.5) {
+	    if (glowColour.r > 0.5) 
+		{
 	        glowing = true;
 	    }
 	}

@@ -17,7 +17,8 @@ uniform float moveTime;
 layout(location = 0) out vec4 out_colour;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	vec2 tc = vec2(pass_textureCoords.x, pass_textureCoords.y);
 
 	// Distance from the center
@@ -41,7 +42,8 @@ void main(void) {
 	colour.rgb += sin((tc.y + moveTime) * scanLineSize) * scanIntensity;
 
 	// Cutoff
-	if (tc.y > 1.0 || tc.x < 0.0 || tc.x > 1.0 || tc.y < 0.0) {
+	if (tc.y > 1.0 || tc.x < 0.0 || tc.x > 1.0 || tc.y < 0.0) 
+	{
 		colour = vec4(0.0);
 	}
 

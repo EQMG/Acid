@@ -17,7 +17,8 @@ out vec4 pass_positionRelativeToCam;
 out vec3 pass_surfaceNormal;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	vec4 worldPosition = modelMatrix * vec4(in_position, 1.0);
 	mat4 modelViewMatrix = viewMatrix * modelMatrix;
 	pass_positionRelativeToCam = modelViewMatrix * vec4(in_position, 1.0);

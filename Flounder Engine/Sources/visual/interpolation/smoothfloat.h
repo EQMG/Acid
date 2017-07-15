@@ -39,7 +39,7 @@ namespace flounder {
 		/// Gets the smooth floats current target.
 		/// </summary>
 		/// <returns> The target. </returns>
-		inline const float getTarget() { return m_target; }
+		inline float &getTarget() { return m_target; }
 
 		/// <summary>
 		/// Increases the smooth floats target.
@@ -51,6 +51,6 @@ namespace flounder {
 		/// Gets the currently calculated value.
 		/// </summary>
 		/// <returns> The calculated value. </returns>
-		inline const float get() { return m_actual; }
+		inline float &get() { return m_actual; }
 	};
 }

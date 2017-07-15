@@ -35,12 +35,15 @@ out vec2 pass_textureCoords;
 out vec3 pass_surfaceNormal;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	vec4 totalLocalPos = vec4(0.0);
 	vec4 totalNormal = vec4(0.0);
 
-    if (animated) {
-        for (int i = 0; i < MAX_WEIGHTS; i++){
+    if (animated)
+	{
+        for (int i = 0; i < MAX_WEIGHTS; i++)
+		{
 		    mat4 jointTransform = jointTransforms[in_jointIndices[i]];
             vec4 posePosition = jointTransform * vec4(in_position, 1.0);
             totalLocalPos += posePosition * in_weights[i];
@@ -48,14 +51,17 @@ void main(void) {
             vec4 worldNormal = jointTransform * vec4(in_normal, 0.0);
             totalNormal += worldNormal * in_weights[i];
         }
-	} else {
+	} 
+	else 
+	{
 	    totalLocalPos = vec4(in_position, 1.0);
 	    totalNormal = vec4(in_normal, 0.0);
 	}
 
 	pass_textureCoords = (in_textureCoords / atlasRows) + atlasOffset;
 
-	if (swaying) {
+	if (swaying) 
+	{
 	    vec4 swayColour = texture(swayMap, in_textureCoords);
 	    float swayPower = 0.5 * exp(log(length(swayColour.rgb)) / 3.0) * (totalLocalPos.y / swayHeight) * length(totalLocalPos.xyz);
 	    totalLocalPos.x += swayPower * swayOffset.x;

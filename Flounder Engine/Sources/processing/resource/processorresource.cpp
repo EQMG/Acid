@@ -33,7 +33,7 @@ namespace flounder {
 		}
 	}
 
-	void processorresource::addRequestToQueue(irequest * request)
+	void processorresource::addRequestToQueue(irequest *request)
 	{
 		if (request == NULL)
 		{

@@ -13,7 +13,8 @@ uniform vec4 clipPlane;
 out vec3 pass_textureCoords;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	vec4 worldPosition = modelMatrix * vec4(in_position, 1.0);
 
 	gl_ClipDistance[0] = dot(worldPosition, clipPlane);

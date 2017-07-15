@@ -12,15 +12,19 @@ uniform vec2 displaySize;
 layout(location = 0) out vec4 out_colour;
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	vec2 coord;
 
-	if (pass_textureCoords.x < 1.0) {
+	if (pass_textureCoords.x < 1.0) 
+	{
 		float dx = pixelSize * (1.0 / displaySize.x);
 		float dy = pixelSize * (1.0 / displaySize.y);
 		coord.x = dx * floor(pass_textureCoords.x / dx);
 		coord.y = dy * floor(pass_textureCoords.y / dy);
-	} else if (pass_textureCoords.x > 1.0) {
+	} 
+	else if (pass_textureCoords.x > 1.0) 
+	{
 		coord = pass_textureCoords;
 	}
 

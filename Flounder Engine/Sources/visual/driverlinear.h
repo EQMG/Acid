@@ -24,7 +24,6 @@ namespace flounder {
 		/// Deconstructor for linear driver.
 		/// </summary>
 		~driverlinear();
-
 	protected:
 		float calculate(const float &time) override;
 	};

@@ -72,7 +72,7 @@ namespace flounder {
 		return result;
 	}*/
 
-	GLuint loaders::createIndicesVBO(GLuint vaoID, const std::vector<GLint> &indices)
+	GLuint loaders::createIndicesVBO(GLuint &vaoID, const std::vector<GLint> &indices)
 	{
 		GLuint result;
 		glGenBuffers(1, &result);
@@ -83,7 +83,7 @@ namespace flounder {
 		return result;
 	}
 
-	GLuint loaders::storeDataInVBO(GLuint vaoID, const std::vector<GLfloat> &data, int attributeNumber, int coordSize)
+	GLuint loaders::storeDataInVBO(GLuint &vaoID, const std::vector<GLfloat> &data, const int &attributeNumber, const int &coordSize)
 	{
 		GLuint result;
 		glGenBuffers(1, &result);

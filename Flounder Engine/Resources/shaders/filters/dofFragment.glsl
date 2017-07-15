@@ -27,18 +27,21 @@ uniform float farPlane;
 layout(location = 0) out vec4 out_colour;
 
 //---------GET DEPTH FACTOR------------
-float getDepthFactor(float depth, float upperLimit){
+float getDepthFactor(float depth, float upperLimit)
+{
 	return clamp(depth/upperLimit, 0.0, 1.0);
 }
 
 //---------CALCULATE DEPTH------------
-float calculateDepth(){
+float calculateDepth()
+{
 	float depth = texture(depthTexture, pass_textureCoords).r;
 	return 2.0 * nearPlane * farPlane / (farPlane + nearPlane - (2.0 * depth - 1.0) * (farPlane - nearPlane));
 }
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	vec3 originalColour = texture(originalTexture, pass_textureCoords).rgb;
 	vec3 blurColour = texture(blurredTexture, pass_textureCoords).rgb;
 
