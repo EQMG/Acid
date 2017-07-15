@@ -374,8 +374,7 @@ namespace flounder {
 			value = helperstring::trim(value);
 			int index = atoi(value.c_str());
 
-			int location = glGetUniformLocation(m_programID, bindingName.c_str());
-			glUniform1i(location, index);
+			loadUniform(bindingName, index);
 		}
 	}
 }
