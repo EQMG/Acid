@@ -1,7 +1,7 @@
 #include "filtercrt.h"
 
 namespace flounder {
-	filtercrt::filtercrt(colour *screenColour, float curveAmountX, float curveAmountY, float scanLineSize, float scanIntensity) :
+	filtercrt::filtercrt(colour *screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
 		ipostfilter("filterNegative", "Resources/shaders/filters/crtFragment.glsl")
 	{
 		m_screenColour = screenColour;
@@ -18,7 +18,7 @@ namespace flounder {
 
 	void filtercrt::storeValues()
 	{
-		m_shader->loadUniform("screenColour", m_screenColour);
+		m_shader->loadUniform("screenColour", *m_screenColour);
 		m_shader->loadUniform("curveAmountX", m_curveAmountX * (float) display::get()->getAspectRatio());
 		m_shader->loadUniform("curveAmountY", m_curveAmountY);
 		m_shader->loadUniform("scanLineSize", m_scanLineSize);

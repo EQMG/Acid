@@ -17,12 +17,12 @@ namespace flounder {
 	void rendererskybox::render(vector4 *clipPlane, icamera *camera)
 	{
 		m_shader->start();
-		m_shader->loadUniform("projectionMatrix", camera->getProjectionMatrix());
-		m_shader->loadUniform("viewMatrix", camera->getViewMatrix());
-		m_shader->loadUniform("modelMatrix", skybox::get()->getModelMatrix());
-		m_shader->loadUniform("clipPlane", clipPlane);
+		m_shader->loadUniform("projectionMatrix", *camera->getProjectionMatrix());
+		m_shader->loadUniform("viewMatrix", *camera->getViewMatrix());
+		m_shader->loadUniform("modelMatrix", *skybox::get()->getModelMatrix());
+		m_shader->loadUniform("clipPlane", *clipPlane);
 		m_shader->loadUniform("polygonMode", renderer::get()->isInWireframe());
-		m_shader->loadUniform("skyColour", skybox::get()->getFog()->m_colour);
+		m_shader->loadUniform("skyColour", *skybox::get()->getFog()->m_colour);
 		m_shader->loadUniform("blendFactor", skybox::get()->getBlend());
 
 		renderer::get()->antialias(display::get()->isAntialiasing());

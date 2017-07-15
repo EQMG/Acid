@@ -42,24 +42,21 @@ namespace flounder {
 		/// <summary>
 		/// Loads from another matrix4x4.
 		/// </summary>
-		/// <param name="source"> The source matrix.
-		/// </param>
+		/// <param name="source"> The source matrix. </param>
 		/// <returns> This. </returns>
 		matrix4x4 *set(const matrix4x4 &source);
 
 		/// <summary>
 		/// Loads from a 16 element array.
 		/// </summary>
-		/// <param name="source"> The source array.
-		/// </param>
+		/// <param name="source"> The source array. </param>
 		/// <returns> This. </returns>
 		matrix4x4 *set(const float source[16]);
 
 		/// <summary>
 		/// Set the source matrix to be the identity matrix.
 		/// </summary>
-		/// <param name="source"> The matrix to set to the identity.
-		/// </param>
+		/// <param name="source"> The matrix to set to the identity. </param>
 		/// <returns> The source matrix. </returns>
 		static matrix4x4 *setIdentity(matrix4x4 *source);
 
@@ -75,8 +72,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix4x4 *add(const matrix4x4 &left, const matrix4x4 &right, matrix4x4 *destination);
 
@@ -85,8 +81,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix4x4 *subtract(const matrix4x4 &left, const matrix4x4 &right, matrix4x4 *destination);
 
@@ -95,8 +90,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector4 *multiply(const matrix4x4 &left, const vector4 &right, vector4 *destination);
 
@@ -105,8 +99,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix4x4 *multiply(const matrix4x4 &left, const matrix4x4 &right, matrix4x4 *destination);
 
@@ -115,8 +108,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new matrix is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector4 *transform(const matrix4x4 &left, const vector4 &right, vector4 *destination);
 
@@ -125,8 +117,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix4x4 *scale(const matrix4x4 &left, const vector4 &right, matrix4x4 *destination);
 
@@ -134,8 +125,7 @@ namespace flounder {
 		/// Inverts the source matrix and puts the result in the destination matrix.
 		/// </summary>
 		/// <param name="source"> The source matrix to be inverted. </param>
-		/// <param name="destination"> The destination matrix, or null if a new one is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix, or null if a new one is to be created. </param>
 		/// <returns> The inverted matrix, or null if source can't be reverted. </returns>
 		static matrix4x4 *invert(const matrix4x4 &source, matrix4x4 *destination);
 
@@ -143,8 +133,7 @@ namespace flounder {
 		/// Negates the source matrix and places the result in the destination matrix.
 		/// </summary>
 		/// <param name="source"> The source matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The negated matrix. </returns>
 		static matrix4x4 *negate(const matrix4x4 &source, matrix4x4 *destination);
 
@@ -152,8 +141,7 @@ namespace flounder {
 		/// Transpose the source matrix and places the result in the destination matrix.
 		/// </summary>
 		/// <param name="source"> The source matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The transposed matrix. </returns>
 		static matrix4x4 *transpose(const matrix4x4 &source, matrix4x4 *destination);
 
@@ -162,8 +150,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix4x4 *translate(const matrix4x4 &left, const vector2 &right, matrix4x4 *destination);
 
@@ -172,8 +159,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix4x4 *translate(const matrix4x4 &left, const vector3 &right, matrix4x4 *destination);
 
@@ -183,24 +169,21 @@ namespace flounder {
 		/// <param name="source"> The source matrix. </param>
 		/// <param name="axis"> The vector representing the rotation axis. Must be normalized. </param>
 		/// <param name="angle"> the angle, in radians. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix4x4 *rotate(const matrix4x4 &source, const vector3 &axis, const float &angle, matrix4x4 *destination);
 
 		/// <summary>
 		/// Turns a 4x4 matrix into an array.
 		/// </summary>
-		/// <param name="matrix"> The matrix to turn into an array.
-		/// </param>
+		/// <param name="matrix"> The matrix to turn into an array. </param>
 		/// <returns> A 16 float array. </returns>
 		static float *toArray(const matrix4x4 &matrix);
 
 		/// <summary>
 		/// Sets the source matrix to 0.
 		/// </summary>
-		/// <param name="source"> The matrix to be set to 0.
-		/// </param>
+		/// <param name="source"> The matrix to be set to 0. </param>
 		/// <returns> The matrix set to zero. </returns>
 		static matrix4x4 *setZero(matrix4x4 *source);
 
@@ -209,8 +192,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <param name="rotation"> The rotation amount. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector3 *rotate(const vector3 &source, const vector3 &rotation, vector3 *destination);
 
@@ -219,8 +201,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="translation"> Translation amount the XY. </param>
 		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> Returns the transformation matrix. </returns>
 		static matrix4x4 *transformationMatrix(const vector2 &translation, const float &scale, matrix4x4 *destination);
 
@@ -229,8 +210,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="translation"> Translation amount the XY. </param>
 		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> Returns the transformation matrix. </returns>
 		static matrix4x4 *transformationMatrix(const vector2 &translation, const vector3 &scale, matrix4x4 *destination);
 
@@ -240,8 +220,7 @@ namespace flounder {
 		/// <param name="translation"> Translation amount the XYZ. </param>
 		/// <param name="rotation"> Rotation amount the XYZ. </param>
 		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> Returns the transformation matrix. </returns>
 		static matrix4x4 *transformationMatrix(const vector3 &translation, const vector3 &rotation, const float &scale, matrix4x4 *destination);
 
@@ -251,8 +230,7 @@ namespace flounder {
 		/// <param name="translation"> Translation amount the XYZ. </param>
 		/// <param name="rotation"> Rotation amount the XYZ. </param>
 		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> Returns the transformation matrix. </returns>
 		static matrix4x4 *transformationMatrix(const vector3 &translation, const vector3 &rotation, const vector3 &scale, matrix4x4 *destination);
 
@@ -263,8 +241,7 @@ namespace flounder {
 		/// <param name="aspectRatio"> The cameras aspect ratio. </param>
 		/// <param name="zNear"> The cameras near plane. </param>
 		/// <param name="zFar"> The cameras far plane. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The transformation matrix. </returns>
 		static matrix4x4 *perspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar, matrix4x4 *destination);
 
@@ -277,8 +254,7 @@ namespace flounder {
 		/// <param name="top"> The top plane. </param>
 		/// <param name="near"> The near plane. </param>
 		/// <param name="far"> The far plane. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created.
-		/// </param>
+		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
 		/// <returns> The transformation matrix. </returns>
 		static matrix4x4 *orthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &near, const float &far, matrix4x4 *destination);
 
@@ -287,7 +263,6 @@ namespace flounder {
 		/// </summary>
 		/// <param name="position"> The cameras position. </param>
 		/// <param name="rotation"> The cameras rotation. </param>
-		/// </param>
 		/// <returns> The transformation matrix. </returns>
 		static matrix4x4 *viewMatrix(const vector3 &position, const vector3 &rotation, matrix4x4 *destination);
 
@@ -297,8 +272,7 @@ namespace flounder {
 		/// <param name="worldSpace"> The point to get into screen space. </param>
 		/// <param name="viewMatrix"> The cameras view matrix. </param>
 		/// <param name="projectionMatrix"> The cameras projection matrix. </param>
-		/// <param name="destination"> The vector to write into.
-		/// </param>
+		/// <param name="destination"> The vector to write into. </param>
 		/// <returns> A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). </returns>
 		static vector3 *worldToScreenSpace(const vector3 &worldSpace, const matrix4x4 &viewMatrix, const matrix4x4 &projectionMatrix, vector3 *destination);
 
@@ -306,9 +280,8 @@ namespace flounder {
 		/// Generates a random unit vector from within a cone.
 		/// </summary>
 		/// <param name="coneDirection"> The cones direction. </param>
-		/// <param name="angle"> The cones major angle.
+		/// <param name="angle"> The cones major angle. </param>
 		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
-		/// </param>
 		/// <returns> The destination vector. </returns>
 		static vector3 *generateRandomUnitVectorWithinCone(const vector3 &coneDirection, const float &angle, vector3 *destination);
 
@@ -348,20 +321,6 @@ namespace flounder {
 		/// <returns> this-> </returns>
 		matrix4x4 *setZero();
 	private:
-		/// <summary>
-		/// Calculates the determinant of a 3x3 matrix.
-		/// </summary>
-		/// <param name="t00"> m00 </param>
-		/// <param name="t01"> m01 </param>
-		/// <param name="t02"> m02 </param>
-		/// <param name="t10"> m10 </param>
-		/// <param name="t11"> m11 </param>
-		/// <param name="t12"> m12 </param>
-		/// <param name="t20"> m20 </param>
-		/// <param name="t21"> m21 </param>
-		/// <param name="t22"> m22
-		/// </param>
-		/// <returns> The determinant of the 3x3 matrix. </returns>
 		static float determinant3x3(const float &t00, const float &t01, const float &t02, const float &t10, const float &t11, const float &t12, const float &t20, const float &t21, const float &t22);
 	};
 }

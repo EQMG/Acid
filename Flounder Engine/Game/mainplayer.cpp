@@ -1,7 +1,8 @@
 #include "mainplayer.h"
 
 namespace flounder {
-	mainplayer::mainplayer()
+	mainplayer::mainplayer() :
+		iplayer()
 	{
 		m_position = new vector3();
 		m_rotation = new vector3();

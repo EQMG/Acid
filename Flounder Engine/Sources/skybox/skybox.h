@@ -36,7 +36,7 @@ namespace flounder {
 
 		void update();
 
-		inline float getSize() { return m_size; }
+		inline float &getSize() { return m_size; }
 
 		inline void setSize(const float size) { m_size = size; }
 
@@ -54,7 +54,7 @@ namespace flounder {
 
 		inline void setFog(fog *fog) { m_fog = fog; }
 
-		inline float getBlend() { return m_blend; }
+		inline float &getBlend() { return m_blend; }
 
 		inline void setBlend(const float blend) { m_blend = blend; }
 	};

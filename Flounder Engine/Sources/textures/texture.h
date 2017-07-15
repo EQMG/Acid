@@ -135,19 +135,19 @@ namespace flounder {
 		/// Gets the width of the texture.
 		/// </summary>
 		/// <returns> The textures width. </returns>
-		inline int getWidth() { return m_width; }
+		inline int &getWidth() { return m_width; }
 
 		/// <summary>
 		/// Gets the height of the texture.
 		/// </summary>
 		/// <returns> The textures height. </returns>
-		inline int getHeight() { return m_height; }
+		inline int &getHeight() { return m_height; }
 
 		/// <summary>
 		/// Gets if the texture has alpha.
 		/// </summary>
 		/// <returns> If the texture has alpha. </returns>
-		inline bool hasAlpha() { return m_hasAlpha; }
+		inline bool &hasAlpha() { return m_hasAlpha; }
 
 		/// <summary>
 		/// Sets if the texture has alpha.
@@ -159,7 +159,7 @@ namespace flounder {
 		/// Gets the number of texture rows.
 		/// </summary>
 		/// <returns> The number of texture rows. </returns>
-		inline int getNumberOfRows() { return m_numberOfRows; }
+		inline int &getNumberOfRows() { return m_numberOfRows; }
 
 		/// <summary>
 		/// Sets the number of texture rows.

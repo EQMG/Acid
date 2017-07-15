@@ -86,14 +86,14 @@ namespace flounder {
 		normalizePlane(m_frustum, BACK);
 
 		// Deletes the arrays used to update the frustum.
-		delete []view;
-		delete []proj;
-		delete []clip;
+		delete [] view;
+		delete [] proj;
+		delete [] clip;
 	}
 
-	bool frustum::pointInFrustum(float x, float y, float z)
+	bool frustum::pointInFrustum(const float &x, const float &y, const float &z)
 	{
-		for (unsigned int i = 0; i < 6; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			if (m_frustum[i][0] * x + m_frustum[i][1] * y + m_frustum[i][2] * z + m_frustum[i][3] <= 0.0f)
 			{
@@ -104,9 +104,9 @@ namespace flounder {
 		return true;
 	}
 
-	bool frustum::sphereInFrustum(float x, float y, float z, float radius)
+	bool frustum::sphereInFrustum(const float &x, const float &y, const float &z, const float &radius)
 	{
-		for (unsigned int i = 0; i < 6; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			if (m_frustum[i][0] * x + m_frustum[i][1] * y + m_frustum[i][2] * z + m_frustum[i][3] <= -radius)
 			{
@@ -117,9 +117,9 @@ namespace flounder {
 		return true;
 	}
 
-	bool frustum::cubeInFrustum(float x1, float y1, float z1, float x2, float y2, float z2)
+	bool frustum::cubeInFrustum(const float &x1, const float &y1, const float &z1, const float &x2, const float &y2, const float &z2)
 	{
-		for (unsigned int i = 0; i < 6; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			if (m_frustum[i][0] * x1 + m_frustum[i][1] * y1 + m_frustum[i][2] * z1 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x2 + m_frustum[i][1] * y1 + m_frustum[i][2] * z1 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x1 + m_frustum[i][1] * y2 + m_frustum[i][2] * z1 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x2 + m_frustum[i][1] * y2 + m_frustum[i][2] * z1 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x1 + m_frustum[i][1] * y1 + m_frustum[i][2] * z2 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x2 + m_frustum[i][1] * y1 + m_frustum[i][2] * z2 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x1 + m_frustum[i][1] * y2 + m_frustum[i][2] * z2 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x2 + m_frustum[i][1] * y2 + m_frustum[i][2] * z2 + m_frustum[i][3] <= 0.0f)
 			{
@@ -130,7 +130,7 @@ namespace flounder {
 		return true;
 	}
 
-	void frustum::normalizePlane(float **frustum, int side)
+	void frustum::normalizePlane(float **frustum, const int &side)
 	{
 		float magnitude = sqrt(m_frustum[side][A] * m_frustum[side][A] + m_frustum[side][B] * m_frustum[side][B] + m_frustum[side][C] * m_frustum[side][C]);
 		m_frustum[side][A] /= magnitude;

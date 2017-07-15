@@ -45,8 +45,7 @@ namespace flounder {
 		/// <summary>
 		/// Loads from another vector2.
 		/// </summary>
-		/// <param name="source"> The source vector.
-		/// </param>
+		/// <param name="source"> The source vector. </param>
 		/// <returns> This. </returns>
 		vector2 *set(const vector2 &source);
 
@@ -55,8 +54,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source vector. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *add(const vector2 &left, const vector2 &right, vector2 *destination);
 
@@ -65,8 +63,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source vector. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *subtract(const vector2 &left, const vector2 &right, vector2 *destination);
 
@@ -75,8 +72,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source vector. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *multiply(const vector2 &left, const vector2 &right, vector2 *destination);
 
@@ -85,8 +81,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source vector. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *divide(const vector2 &left, const vector2 &right, vector2 *destination);
 
@@ -94,8 +89,7 @@ namespace flounder {
 		/// Calculates the angle between two vectors.
 		/// </summary>
 		/// <param name="left"> The left source vector. </param>
-		/// <param name="right"> The right source vector.
-		/// </param>
+		/// <param name="right"> The right source vector. </param>
 		/// <returns> The angle between the two vectors, in radians. </returns>
 		static float angle(const vector2 &left, const vector2 &right);
 
@@ -103,8 +97,7 @@ namespace flounder {
 		/// Calculates the dot product of the two vectors.
 		/// </summary>
 		/// <param name="left"> The left source vector. </param>
-		/// <param name="right"> The right source vector.
-		/// </param>
+		/// <param name="right"> The right source vector. </param>
 		/// <returns> Left dot right. </returns>
 		static float dot(const vector2 &left, const vector2 &right);
 
@@ -113,8 +106,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <param name="scalar"> The scalar value. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *scale(const vector2 &source, const float &scalar, vector2 *destination);
 
@@ -123,8 +115,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <param name="angle"> The angle to rotate by <b>in degrees</b>. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *rotate(const vector2 &source, const float &angle, vector2 *destination);
 
@@ -134,8 +125,7 @@ namespace flounder {
 		/// <param name="source"> The source vector. </param>
 		/// <param name="angle"> The angle to rotate by <b>in degrees</b>. </param>
 		/// <param name="rotationAxis"> The point to rotate the vector around. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *rotate(const vector2 &source, const float &angle, const vector2 &rotationAxis, vector2 *destination);
 
@@ -143,8 +133,7 @@ namespace flounder {
 		/// Negates a vector and places the result in the destination vector.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *negate(const vector2 &source, vector2 *destination);
 
@@ -152,9 +141,7 @@ namespace flounder {
 		/// Normalizes a vector and places the result in the destination vector.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *normalize(const vector2 &source, vector2 *destination);
 
@@ -176,9 +163,8 @@ namespace flounder {
 		/// Gets the maximum vector size.
 		/// </summary>
 		/// <param name="a"> The first vector to get values from. </param>
-		/// <param name="b"> The second vector to get values from.
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="b"> The second vector to get values from. </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *maxVector(const vector2 &a, const vector2 &b, vector2 *destination);
 
@@ -186,25 +172,22 @@ namespace flounder {
 		/// Gets the lowest vector size.
 		/// </summary>
 		/// <param name="a"> The first vector to get values from. </param>
-		/// <param name="b"> The second vector to get values from.
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="b"> The second vector to get values from. </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector2 *minVector(const vector2 &a, const vector2 &b, vector2 *destination);
 
 		/// <summary>
 		/// Gets the maximum value in a vector.
 		/// </summary>
-		/// <param name="vector"> The value to get the maximum value from.
-		/// </param>
+		/// <param name="vector"> The value to get the maximum value from. </param>
 		/// <returns> The maximum value. </returns>
 		static float maxComponent(const vector2 &vector);
 
 		/// <summary>
 		/// Gets the lowest value in a vector.
 		/// </summary>
-		/// <param name="vector"> The value to get the lowest value from.
-		/// </param>
+		/// <param name="vector"> The value to get the lowest value from. </param>
 		/// <returns> The lowest value. </returns>
 		static float minComponent(const vector2 &vector);
 
@@ -212,8 +195,7 @@ namespace flounder {
 		/// Gets the distance between two points squared.
 		/// </summary>
 		/// <param name="point1"> The first point. </param>
-		/// <param name="point2"> The second point.
-		/// </param>
+		/// <param name="point2"> The second point. </param>
 		/// <returns> The squared distance between the two points. </returns>
 		static float getDistanceSquared(const vector2 &point1, const vector2 &point2);
 
@@ -221,8 +203,7 @@ namespace flounder {
 		/// Gets the total distance between 2 vectors.
 		/// </summary>
 		/// <param name="point1"> The first point. </param>
-		/// <param name="point2"> The second point.
-		/// </param>
+		/// <param name="point2"> The second point. </param>
 		/// <returns> The total distance between the points. </returns>
 		static float getDistance(const vector2 &point1, const vector2 &point2);
 
@@ -231,8 +212,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="point1"> The first point. </param>
 		/// <param name="point2"> The second point. </param>
-		/// <param name="destination"> The destination vector or null if a new vector is to be created.
-		/// </param>
+		/// <param name="destination"> The destination vector or null if a new vector is to be created. </param>
 		/// <returns> The vector distance between the points. </returns>
 		static vector2 *getVectorDistance(const vector2 &point1, const vector2 &point2, vector2 *destination);
 
@@ -241,9 +221,8 @@ namespace flounder {
 		/// </summary>
 		/// <param name="point"> The point to check. </param>
 		/// <param name="v1"> The first triangle vertex. </param>
-		/// <param name="v2"> The second triangle vertex </param>
-		/// <param name="v3"> The third triangle vertex
-		/// </param>
+		/// <param name="v2"> The second triangle vertex. </param>
+		/// <param name="v3"> The third triangle vertex. </param>
 		/// <returns> If the point is in a triangle. </returns>
 		static bool pointInTriangle(const vector2 &point, const vector2 &v1, const vector2 &v2, const vector2 &v3);
 
@@ -251,8 +230,7 @@ namespace flounder {
 		/// Translates this vector.
 		/// </summary>
 		/// <param name="x"> The translation in x. </param>
-		/// <param name="y"> the translation in y.
-		/// </param>
+		/// <param name="y"> the translation in y. </param>
 		/// <returns> This. </returns>
 		vector2 *translate(const float &x, const float &y);
 
@@ -271,8 +249,7 @@ namespace flounder {
 		/// <summary>
 		/// Scales this vector.
 		/// </summary>
-		/// <param name="scalar"> The scale factor.
-		/// </param>
+		/// <param name="scalar"> The scale factor. </param>
 		/// <returns> This. </returns>
 		vector2 *scale(const float &scalar);
 

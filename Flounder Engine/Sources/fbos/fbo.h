@@ -44,8 +44,7 @@ namespace flounder {
 			/// <summary>
 			/// Sets the type of depth buffer to use.
 			/// </summary>
-			/// <param name="type"> The depth buffer to use.
-			/// </param>
+			/// <param name="type"> The depth buffer to use. </param>
 			/// <returns> This. </returns>
 			builder *depthBuffer(const depthbuffer &type);
 
@@ -76,32 +75,28 @@ namespace flounder {
 			/// <summary>
 			/// Enables / disables the alpha channel.
 			/// </summary>
-			/// <param name="alpha"> If the alpha channel will be enabled.
-			/// </param>
+			/// <param name="alpha"> If the alpha channel will be enabled. </param>
 			/// <returns> This. </returns>
 			builder *withAlphaChannel(const bool &alpha);
 
 			/// <summary>
 			/// Sets antialiased to true and adds samples.
 			/// </summary>
-			/// <param name="samples"> How many MFAA samples should be used on the FBO. Zero disables multisampling.
-			/// </param>
+			/// <param name="samples"> How many MFAA samples should be used on the FBO. Zero disables multisampling. </param>
 			/// <returns> This. </returns>
 			builder *antialias(const int &samples);
 
 			/// <summary>
 			/// Sets the amount of colour attachments to create.
 			/// </summary>
-			/// <param name="attachments"> The amount of attachments to create.
-			/// </param>
+			/// <param name="attachments"> The amount of attachments to create. </param>
 			/// <returns> This. </returns>
 			builder *attachments(const int &attachments);
 
 			/// <summary>
 			/// Sets if the FBO will be fit to the screen.
 			/// </summary>
-			/// <param name="sizeScalar"> A scalar factor between the FBO and the screen, enabled when {@code fitToScreen} is enabled. (1.0f disables scalar).
-			/// </param>
+			/// <param name="sizeScalar"> A scalar factor between the FBO and the screen, enabled when {@code fitToScreen} is enabled. (1.0f disables scalar). </param>
 			/// <returns> This. </returns>
 			builder *fitToScreen(const float &sizeScalar);
 

@@ -7,7 +7,8 @@
 #include "../framework/framework.h"
 
 namespace flounder {
-	class tasks : public imodule
+	class tasks :
+		public imodule
 	{
 	private:
 		std::vector<std::function<void()>> *m_tasks;

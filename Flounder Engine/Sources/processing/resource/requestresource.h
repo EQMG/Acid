@@ -6,7 +6,9 @@ namespace flounder {
 	/// <summary>
 	/// Interface for executable resource requests.
 	/// </summary>
-	class requestresource : public irequest {
+	class requestresource : 
+		public irequest 
+	{
 	public:
 		/// <summary>
 		/// Executed when the request is being processed.

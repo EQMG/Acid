@@ -31,7 +31,7 @@ namespace flounder {
 		/// Gets the start time.
 		/// </summary>
 		/// <returns> The start time. </returns>
-		inline const float getStart() { return m_start; }
+		inline float &getStart() { return m_start; }
 
 		/// <summary>
 		/// Sets the start time.
@@ -43,7 +43,7 @@ namespace flounder {
 		/// Gets the end time.
 		/// </summary>
 		/// <returns> The ebd time. </returns>
-		inline const float getEnd() { return m_end; }
+		inline float &getEnd() { return m_end; }
 
 		/// <summary>
 		/// Sets the end time.
@@ -55,7 +55,7 @@ namespace flounder {
 		/// Gets the peak value.
 		/// </summary>
 		/// <returns> The peak value. </returns>
-		inline const float getPeak() { return m_peak; }
+		inline float &getPeak() { return m_peak; }
 
 		/// <summary>
 		/// Sets the peak value.

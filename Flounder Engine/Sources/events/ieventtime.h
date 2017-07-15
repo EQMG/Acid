@@ -19,7 +19,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="interval"> The amount of seconds in the future to run the event. </param>
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
-		ieventtime(const float interval, const bool repeat)
+		ieventtime(const float &interval, const bool &repeat)
 		{
 			m_timer = new timer(interval);
 			m_repeat = repeat;

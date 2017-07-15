@@ -115,8 +115,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source colour. </param>
 		/// <param name="right"> The right source colour. </param>
-		/// <param name="destination"> The destination colour or null if a new colour is to be created.
-		/// </param>
+		/// <param name="destination"> The destination colour or null if a new colour is to be created. </param>
 		/// <returns> The destination colour. </returns>
 		static colour *add(const colour &left, const colour &right, colour *destination);
 
@@ -182,8 +181,7 @@ namespace flounder {
 		/// <summary>
 		/// Scales the colour by a scalar.
 		/// </summary>
-		/// <param name="scalar"> The scaling value.
-		/// </param>
+		/// <param name="scalar"> The scaling value. </param>
 		/// <returns> this. </returns>
 		colour *scale(const float scalar);
 

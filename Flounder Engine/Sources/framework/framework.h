@@ -36,7 +36,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="unlocalizedName"> The name to be used when determining where the roaming save files are saved. </param>
 		/// <param name="fpsLimit"> The limit to FPS, (-1 disables limits). </param>
-		framework(const std::string &unlocalizedName, int fpsLimit);
+		framework(const std::string &unlocalizedName, const int &fpsLimit);
 
 		~framework();
 
@@ -52,7 +52,7 @@ namespace flounder {
 
 		inline double framework::getTimeOffset() { return m_updater->getTimeOffset(); }
 
-		inline void framework::setTimeOffset(const double timeOffset) { m_updater->setTimeOffset(timeOffset); }
+		inline void framework::setTimeOffset(const double &timeOffset) { m_updater->setTimeOffset(timeOffset); }
 
 		inline double framework::getDelta() { return m_updater->getDelta(); }
 
@@ -64,14 +64,14 @@ namespace flounder {
 
 		bool framework::isInitialized();
 
-		void framework::setInitialized(const bool initialized);
+		void framework::setInitialized(const bool &initialized);
 
 		bool framework::isRunning();
 
-		void framework::requestClose(const bool error);
+		void framework::requestClose(const bool &error);
 
 		int framework::getFpsLimit();
 
-		void framework::setFpsLimit(const int fpsLimit);
+		void framework::setFpsLimit(const int &fpsLimit);
 	};
 }
