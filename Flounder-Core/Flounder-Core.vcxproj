@@ -71,24 +71,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
-    <TargetExt>.lib</TargetExt>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\.objs\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
-    <TargetExt>.lib</TargetExt>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\.objs\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
-    <TargetExt>.lib</TargetExt>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\.objs\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
-    <TargetExt>.lib</TargetExt>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\.objs\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -99,6 +95,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
@@ -115,6 +112,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
@@ -136,6 +134,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <PreprocessToFile>false</PreprocessToFile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -160,6 +159,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <PreprocessToFile>false</PreprocessToFile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

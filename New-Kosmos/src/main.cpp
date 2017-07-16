@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include <framework/framework.h>
-#include <framework/glfw/glfwupdater.h>
+#include "framework/framework.h"
+#include "framework/glfw/glfwupdater.h"
 
 #include "maincamera.h"
 #include "mainplayer.h"

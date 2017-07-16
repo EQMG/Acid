@@ -6,8 +6,8 @@
 Flounder is a cross platform high speed C++ OpenGL 2D/3D game engine.
 
 Libraries:
- * GLFW and GLFW for desktop OpenGL
  * STB image loading
+ * OpenGL GLFW and GLEW 
  * OpenAL Soft
 
 Supported platforms:
