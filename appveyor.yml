@@ -1,8 +1,0 @@
-version: 0.1.{build}
-configuration:
-- Debug
-- Release
-platform: Win64
-build:
-  project: Flounder C++.sln
-  verbosity: minimal
