@@ -1,14 +1,14 @@
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/LOGO.jpg" alt="flounder" width=225>
-
-[![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt78wov7o?svg=true)](https://ci.appveyor.com/project/MatthewAlbrecht/flounder)
+<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/logo.jpg" alt="flounder" width=225>
 
 # Flounder v0.1
+[![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt78wov7o?svg=true)](https://ci.appveyor.com/project/MatthewAlbrecht/flounder)
+
 Flounder is a cross platform high speed C++ OpenGL 2D/3D game engine.
 
 Libraries:
- * GLFW / GLFW for OpenGL
+ * GLFW and GLFW for desktop OpenGL
  * STB image loading
- * OpenAL with alut sound loaders
+ * OpenAL Soft
 
 Supported platforms:
  * Windows
