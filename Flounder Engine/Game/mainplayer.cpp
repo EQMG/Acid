@@ -16,6 +16,6 @@ namespace flounder {
 
 	void mainplayer::update()
 	{
-		m_rotation->y += framework::get()->getDelta() * 5.0f;
+		m_rotation->y += (float)framework::get()->getDelta() * 5.0f;
 	}
 }
