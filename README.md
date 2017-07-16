@@ -1,4 +1,6 @@
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/LOGO.jpg" alt="flounder" width=128>
+<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/LOGO.jpg" alt="flounder" width=150>
+
+[![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt78wov7o?svg=true)](https://ci.appveyor.com/project/MatthewAlbrecht/flounder)
 
 # Flounder v0.1
 Flounder is a cross platform high speed C++ OpenGL 2D/3D game engine.
@@ -30,5 +32,14 @@ Features:
  * 3D skyboxes
  * Avalable visual drivers and maths classes
  * Flexable inputs
+ * 3D audio and music
+ * Networking
+ * Animations
+ 
+Plans:
+ * Android/IOS
+ * Web platform
+ * Consoles/Switch?
+ * Add more features from Flounder on Java
 
-[Read more on our website](https://equilibrium.games/)
+[Read more on our website](https://equilibrium.games)
