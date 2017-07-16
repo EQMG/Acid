@@ -1,0 +1,172 @@
+\hypertarget{classflounder_1_1icamera}{}\section{flounder\+:\+:icamera Class Reference}
+\label{classflounder_1_1icamera}\index{flounder\+::icamera@{flounder\+::icamera}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1icamera_a6595ce926a1d18c0df8c5a7b5665963d}\label{classflounder_1_1icamera_a6595ce926a1d18c0df8c5a7b5665963d}} 
+virtual float \hyperlink{classflounder_1_1icamera_a6595ce926a1d18c0df8c5a7b5665963d}{get\+Near\+Plane} ()=0
+\begin{DoxyCompactList}\small\item\em \begin{DoxyReturn}{Returns}
+The distance of the near pane of the view frustum. 
+\end{DoxyReturn}
+\end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1icamera_a682021a9ff1653ce4bf7288f94980633}\label{classflounder_1_1icamera_a682021a9ff1653ce4bf7288f94980633}} 
+virtual float \hyperlink{classflounder_1_1icamera_a682021a9ff1653ce4bf7288f94980633}{get\+Far\+Plane} ()=0
+\begin{DoxyCompactList}\small\item\em \begin{DoxyReturn}{Returns}
+The distance of the view frustum\textquotesingle{}s far plane. 
+\end{DoxyReturn}
+\end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1icamera_a60d622d1c9731da45bf49255dea95122}\label{classflounder_1_1icamera_a60d622d1c9731da45bf49255dea95122}} 
+virtual float \hyperlink{classflounder_1_1icamera_a60d622d1c9731da45bf49255dea95122}{get\+F\+OV} ()=0
+\begin{DoxyCompactList}\small\item\em \begin{DoxyReturn}{Returns}
+The field of view angle for the view frustum. 
+\end{DoxyReturn}
+\end{DoxyCompactList}\item 
+virtual void \hyperlink{classflounder_1_1icamera_ac7dc04e6fed5a9269c3d6ef11807fe99}{update} (\hyperlink{classflounder_1_1iplayer}{iplayer} $\ast$player)=0
+\begin{DoxyCompactList}\small\item\em Checks inputs and carries out smooth camera movement. Should be called every frame. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1frustum}{frustum} $\ast$ \hyperlink{classflounder_1_1icamera_a6727d2cb720be2830e44ece8ad8e106b}{get\+View\+Frustum} ()=0
+\begin{DoxyCompactList}\small\item\em Gets the view frustum created by the current camera position and rotation. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1ray}{ray} $\ast$ \hyperlink{classflounder_1_1icamera_a9b461abd1e1fd39127d3f2bc531aa847}{get\+View\+Ray} ()=0
+\begin{DoxyCompactList}\small\item\em Gets the ray that extends from the cameras position though the screen. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1icamera_a64b4b040c903d37b3963aa2774c379db}{get\+View\+Matrix} ()=0
+\begin{DoxyCompactList}\small\item\em Gets the view matrix created by the current camera position and rotation. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1icamera_a551908ec508ef29f1652c830cbe554f4}{get\+Projection\+Matrix} ()=0
+\begin{DoxyCompactList}\small\item\em Gets the projection matrix used in the current scene render. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classflounder_1_1icamera_a20ee0d37d318012ac51e132ed02af6da}{reflect} (const float \&water\+Height)=0
+\begin{DoxyCompactList}\small\item\em Prepares the camera for the reflection render pass. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1icamera_a1b3e1ee504b631da4baa1454304729e7}{get\+Position} ()=0
+\begin{DoxyCompactList}\small\item\em Gets the cameras 3D position in the world. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1icamera_aa4d73bdf412e90c6d8747fc075568ff1}{get\+Rotation} ()=0
+\begin{DoxyCompactList}\small\item\em Gets the cameras 3D rotation in the world, where x=pitch, y=yaw, z=roll. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classflounder_1_1icamera_abe51adbcadd5533bb1cd074d05179cd4}{set\+Rotation} (\hyperlink{classflounder_1_1vector3}{vector3} $\ast$rotation)=0
+\begin{DoxyCompactList}\small\item\em Sets the rotation of the camera, where x=pitch, y=yaw, z=roll. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1icamera_a1b3e1ee504b631da4baa1454304729e7}\label{classflounder_1_1icamera_a1b3e1ee504b631da4baa1454304729e7}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!get\+Position@{get\+Position}}
+\index{get\+Position@{get\+Position}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{get\+Position()}{getPosition()}}
+{\footnotesize\ttfamily virtual \hyperlink{classflounder_1_1vector3}{vector3}$\ast$ flounder\+::icamera\+::get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the cameras 3D position in the world. 
+
+\begin{DoxyReturn}{Returns}
+The cameras 3D position in the world. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1icamera_a551908ec508ef29f1652c830cbe554f4}\label{classflounder_1_1icamera_a551908ec508ef29f1652c830cbe554f4}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!get\+Projection\+Matrix@{get\+Projection\+Matrix}}
+\index{get\+Projection\+Matrix@{get\+Projection\+Matrix}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{get\+Projection\+Matrix()}{getProjectionMatrix()}}
+{\footnotesize\ttfamily virtual \hyperlink{classflounder_1_1matrix4x4}{matrix4x4}$\ast$ flounder\+::icamera\+::get\+Projection\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the projection matrix used in the current scene render. 
+
+\begin{DoxyReturn}{Returns}
+The projection matrix used in the current scene render. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1icamera_aa4d73bdf412e90c6d8747fc075568ff1}\label{classflounder_1_1icamera_aa4d73bdf412e90c6d8747fc075568ff1}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!get\+Rotation@{get\+Rotation}}
+\index{get\+Rotation@{get\+Rotation}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{get\+Rotation()}{getRotation()}}
+{\footnotesize\ttfamily virtual \hyperlink{classflounder_1_1vector3}{vector3}$\ast$ flounder\+::icamera\+::get\+Rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the cameras 3D rotation in the world, where x=pitch, y=yaw, z=roll. 
+
+\begin{DoxyReturn}{Returns}
+The cameras 3D rotation in the world, where x=pitch, y=yaw, z=roll. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1icamera_a6727d2cb720be2830e44ece8ad8e106b}\label{classflounder_1_1icamera_a6727d2cb720be2830e44ece8ad8e106b}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!get\+View\+Frustum@{get\+View\+Frustum}}
+\index{get\+View\+Frustum@{get\+View\+Frustum}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{get\+View\+Frustum()}{getViewFrustum()}}
+{\footnotesize\ttfamily virtual \hyperlink{classflounder_1_1frustum}{frustum}$\ast$ flounder\+::icamera\+::get\+View\+Frustum (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the view frustum created by the current camera position and rotation. 
+
+\begin{DoxyReturn}{Returns}
+The view frustum created by the current camera position and rotation. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1icamera_a64b4b040c903d37b3963aa2774c379db}\label{classflounder_1_1icamera_a64b4b040c903d37b3963aa2774c379db}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!get\+View\+Matrix@{get\+View\+Matrix}}
+\index{get\+View\+Matrix@{get\+View\+Matrix}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{get\+View\+Matrix()}{getViewMatrix()}}
+{\footnotesize\ttfamily virtual \hyperlink{classflounder_1_1matrix4x4}{matrix4x4}$\ast$ flounder\+::icamera\+::get\+View\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the view matrix created by the current camera position and rotation. 
+
+\begin{DoxyReturn}{Returns}
+The view matrix created by the current camera position and rotation. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1icamera_a9b461abd1e1fd39127d3f2bc531aa847}\label{classflounder_1_1icamera_a9b461abd1e1fd39127d3f2bc531aa847}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!get\+View\+Ray@{get\+View\+Ray}}
+\index{get\+View\+Ray@{get\+View\+Ray}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{get\+View\+Ray()}{getViewRay()}}
+{\footnotesize\ttfamily virtual \hyperlink{classflounder_1_1ray}{ray}$\ast$ flounder\+::icamera\+::get\+View\+Ray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the ray that extends from the cameras position though the screen. 
+
+\begin{DoxyReturn}{Returns}
+The cameras ray. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1icamera_a20ee0d37d318012ac51e132ed02af6da}\label{classflounder_1_1icamera_a20ee0d37d318012ac51e132ed02af6da}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!reflect@{reflect}}
+\index{reflect@{reflect}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{reflect()}{reflect()}}
+{\footnotesize\ttfamily virtual void flounder\+::icamera\+::reflect (\begin{DoxyParamCaption}\item[{const float \&}]{water\+Height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Prepares the camera for the reflection render pass. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em water\+Height} & The height of the water to be reflected on. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1icamera_abe51adbcadd5533bb1cd074d05179cd4}\label{classflounder_1_1icamera_abe51adbcadd5533bb1cd074d05179cd4}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!set\+Rotation@{set\+Rotation}}
+\index{set\+Rotation@{set\+Rotation}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{set\+Rotation()}{setRotation()}}
+{\footnotesize\ttfamily virtual void flounder\+::icamera\+::set\+Rotation (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{rotation }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Sets the rotation of the camera, where x=pitch, y=yaw, z=roll. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rotation} & The cameras new rotation. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1icamera_ac7dc04e6fed5a9269c3d6ef11807fe99}\label{classflounder_1_1icamera_ac7dc04e6fed5a9269c3d6ef11807fe99}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!update@{update}}
+\index{update@{update}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily virtual void flounder\+::icamera\+::update (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1iplayer}{iplayer} $\ast$}]{player }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Checks inputs and carries out smooth camera movement. Should be called every frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em player} & The movement and rotation controller to read from. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/camera/icamera.\+h\end{DoxyCompactItemize}

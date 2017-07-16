@@ -1,0 +1,444 @@
+\hypertarget{classflounder_1_1display}{}\section{flounder\+:\+:display Class Reference}
+\label{classflounder_1_1display}\index{flounder\+::display@{flounder\+::display}}
+
+
+A module used for the creation, updating and destruction of the display.  
+
+
+
+
+{\ttfamily \#include $<$display.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:display\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1display}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1display_ac0a3910222a928f1fc60193cd65c0530}{display} ()
+\begin{DoxyCompactList}\small\item\em Creates a new G\+L\+FW display manager. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1display_a272f9080af9079cbb3890b18c3e4d394}{$\sim$display} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the display. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1display_a78e07792dd8cf4beb15105d9c1684cfe}\label{classflounder_1_1display_a78e07792dd8cf4beb15105d9c1684cfe}} 
+void {\bfseries load} (const int glfw\+Major, const int glfw\+Minor, const int width, const int height, const std\+::string title, std\+::string icon, const bool vsync, const bool antialiasing, const int samples, const bool fullscreen)
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_adc7a2890c7089ce9e058afa2f8fc9b5c}\label{classflounder_1_1display_adc7a2890c7089ce9e058afa2f8fc9b5c}} 
+void {\bfseries init} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a3ba18c2ab1d02fb943ad112b35d3ea75}\label{classflounder_1_1display_a3ba18c2ab1d02fb943ad112b35d3ea75}} 
+void {\bfseries update} ()
+\item 
+void \hyperlink{classflounder_1_1display_af27b3f93977c32c79ad9522672e484c5}{screenshot} ()
+\begin{DoxyCompactList}\small\item\em Takes a screenshot of the current image of the display and saves it into the screenshots folder a png image. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1display_acb43834a6c2c274e9a94153d17c6282f}\label{classflounder_1_1display_acb43834a6c2c274e9a94153d17c6282f}} 
+int \& {\bfseries get\+Glfw\+Major} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a2ae2dfe06f903b17ab77a907dadbc38a}\label{classflounder_1_1display_a2ae2dfe06f903b17ab77a907dadbc38a}} 
+int \& {\bfseries get\+Glfw\+Minor} ()
+\item 
+int \& \hyperlink{classflounder_1_1display_ac2b45bb8c8924b985895f2b08c03c3d9}{get\+Width} ()
+\begin{DoxyCompactList}\small\item\em Gets the width of the display in pixels. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1display_ac47027c6b34d260ccaf148e4e762cdbe}\label{classflounder_1_1display_ac47027c6b34d260ccaf148e4e762cdbe}} 
+int \& {\bfseries get\+Window\+Width} ()
+\item 
+int \& \hyperlink{classflounder_1_1display_a2b3cea6e41121de9d790acf027036167}{get\+Height} ()
+\begin{DoxyCompactList}\small\item\em Gets the height of the display in pixels. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1display_af1d306cb8353a7cdfe7daae4727028fc}\label{classflounder_1_1display_af1d306cb8353a7cdfe7daae4727028fc}} 
+int \& {\bfseries get\+Window\+Height} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a13edcfe35505b3e164010ed1b232e5d1}\label{classflounder_1_1display_a13edcfe35505b3e164010ed1b232e5d1}} 
+void {\bfseries set\+Window\+Size} (const int \&width, const int \&height)
+\item 
+double \& \hyperlink{classflounder_1_1display_a7b32aeb7809ad48663ce6eb4596b37a3}{get\+Aspect\+Ratio} ()
+\begin{DoxyCompactList}\small\item\em Gets the aspect ratio between the displays width and height. \end{DoxyCompactList}\item 
+std\+::string \& \hyperlink{classflounder_1_1display_ad5fc46c79d236783ac883878ec065f36}{get\+Title} ()
+\begin{DoxyCompactList}\small\item\em Gets the window\textquotesingle{}s title. \end{DoxyCompactList}\item 
+bool \& \hyperlink{classflounder_1_1display_a0cc7e0037aa9a45127de4db882c5a632}{is\+V\+Sync} ()
+\begin{DoxyCompactList}\small\item\em Gets if the display is using v\+Sync. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1display_a172501e1e99cde228d86fab59a3a636b}{set\+V\+Sync} (const bool \&vsync)
+\begin{DoxyCompactList}\small\item\em Sets the display to use V\+Sync or not. \end{DoxyCompactList}\item 
+bool \& \hyperlink{classflounder_1_1display_a5542894b942b11b8fa30e51e98a389ba}{is\+Antialiasing} ()
+\begin{DoxyCompactList}\small\item\em Gets if the display requests antialiased images. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1display_ae9a340bfa09dfd6d08ebc0d21b4c77b0}{set\+Antialiasing} (const bool \&antialiasing)
+\begin{DoxyCompactList}\small\item\em Requests the display to antialias. \end{DoxyCompactList}\item 
+int \& \hyperlink{classflounder_1_1display_ab498a060b8f23e54be9116f452a8b92a}{get\+Samples} ()
+\begin{DoxyCompactList}\small\item\em Gets how many M\+S\+AA samples should be done before swapping buffers. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1display_ae1bf2028faaf411fedc80ca511a2e739}{set\+Samples} (const int \&samples)
+\begin{DoxyCompactList}\small\item\em Gets how many M\+S\+AA samples should be done before swapping buffers. Zero disables multisampling. G\+L\+F\+W\+\_\+\+D\+O\+N\+T\+\_\+\+C\+A\+RE means no preference. \end{DoxyCompactList}\item 
+bool \& \hyperlink{classflounder_1_1display_a70a2476a798800089f947e4ff98476ba}{is\+Fullscreen} ()
+\begin{DoxyCompactList}\small\item\em Gets weather the display is fullscreen or not. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1display_ae5ee27f982e6a947305dc6e71a23021b}{set\+Fullscreen} (const bool \&fullscreen)
+\begin{DoxyCompactList}\small\item\em Sets the display to be fullscreen or windowed. \end{DoxyCompactList}\item 
+G\+L\+F\+Wwindow $\ast$ \hyperlink{classflounder_1_1display_a5cdcd3dddce4cf63ac45503b03e96689}{get\+Window} ()
+\begin{DoxyCompactList}\small\item\em Gets the current G\+L\+FW window. \end{DoxyCompactList}\item 
+bool \& \hyperlink{classflounder_1_1display_afc0a47cb7ce2423076e4868b6b280fea}{is\+Closed} ()
+\begin{DoxyCompactList}\small\item\em Gets if the G\+L\+FW display is closed. \end{DoxyCompactList}\item 
+bool \& \hyperlink{classflounder_1_1display_a8319a69deefd25fb5b1d7dddabd35df9}{is\+Focused} ()
+\begin{DoxyCompactList}\small\item\em Gets if the G\+L\+FW display is selected. \end{DoxyCompactList}\item 
+int \& \hyperlink{classflounder_1_1display_acd9fd5a794f2c31633d5e0a707b53861}{get\+Window\+X\+Pos} ()
+\begin{DoxyCompactList}\small\item\em Gets the windows Y position of the display in pixels. \end{DoxyCompactList}\item 
+int \& \hyperlink{classflounder_1_1display_a59dab9f2452adfce71b7d156dc9ca688}{get\+Window\+Y\+Pos} ()
+\begin{DoxyCompactList}\small\item\em Gets the windows Y position of the display in pixels. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a7c7015939f48bf4526bb0330ea4fcd2f}\label{classflounder_1_1display_a7c7015939f48bf4526bb0330ea4fcd2f}} 
+static \hyperlink{classflounder_1_1display}{display} $\ast$ {\bfseries get} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_ac6adba7cfd74600fbb124758d81f3fef}\label{classflounder_1_1display_ac6adba7cfd74600fbb124758d81f3fef}} 
+int {\bfseries m\+\_\+glfw\+Major}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_abe5ded7b2a974c3be4f45a67460cbff1}\label{classflounder_1_1display_abe5ded7b2a974c3be4f45a67460cbff1}} 
+int {\bfseries m\+\_\+glfw\+Minor}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a860cf35cfa01a455432e56da56b42715}\label{classflounder_1_1display_a860cf35cfa01a455432e56da56b42715}} 
+int {\bfseries m\+\_\+window\+Width}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_ac645ec5d7726988bc1bf9d1ea3bc92d1}\label{classflounder_1_1display_ac645ec5d7726988bc1bf9d1ea3bc92d1}} 
+int {\bfseries m\+\_\+window\+Height}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a54d05378c6c5085ed6c49ff94fa8c4b0}\label{classflounder_1_1display_a54d05378c6c5085ed6c49ff94fa8c4b0}} 
+double {\bfseries m\+\_\+aspect\+Ratio}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_ad4970ad3855b5b34565f6c5fe17ee383}\label{classflounder_1_1display_ad4970ad3855b5b34565f6c5fe17ee383}} 
+int {\bfseries m\+\_\+fullscreen\+Width}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a5ba749a0a474ac113ec21fbbb0544688}\label{classflounder_1_1display_a5ba749a0a474ac113ec21fbbb0544688}} 
+int {\bfseries m\+\_\+fullscreen\+Height}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a2c2b649d019390dab458de301bb57c01}\label{classflounder_1_1display_a2c2b649d019390dab458de301bb57c01}} 
+std\+::string {\bfseries m\+\_\+title}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a4d7ba13c8c98370491cd396e4530dc8d}\label{classflounder_1_1display_a4d7ba13c8c98370491cd396e4530dc8d}} 
+std\+::string {\bfseries m\+\_\+icon}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a43e081e66465e2cc75a5cca35d81a81f}\label{classflounder_1_1display_a43e081e66465e2cc75a5cca35d81a81f}} 
+bool {\bfseries m\+\_\+vsync}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_af6818746f20ea2cbb50e9fcdae3ffa75}\label{classflounder_1_1display_af6818746f20ea2cbb50e9fcdae3ffa75}} 
+bool {\bfseries m\+\_\+antialiasing}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_ace88ce0f05106aefbd44cc2a45b6c448}\label{classflounder_1_1display_ace88ce0f05106aefbd44cc2a45b6c448}} 
+int {\bfseries m\+\_\+samples}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a738b31e17f1cfaba3832829dd9ee4bc0}\label{classflounder_1_1display_a738b31e17f1cfaba3832829dd9ee4bc0}} 
+bool {\bfseries m\+\_\+fullscreen}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a264c3a43ec52675d327e2912743d70da}\label{classflounder_1_1display_a264c3a43ec52675d327e2912743d70da}} 
+G\+L\+F\+Wwindow $\ast$ {\bfseries m\+\_\+window}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a8c238cb4806c6dd0610a8edff1e75471}\label{classflounder_1_1display_a8c238cb4806c6dd0610a8edff1e75471}} 
+bool {\bfseries m\+\_\+closed}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a4ab2cf4e642518efcc8f1b6d9d6dda84}\label{classflounder_1_1display_a4ab2cf4e642518efcc8f1b6d9d6dda84}} 
+bool {\bfseries m\+\_\+focused}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a31c63bef47c639477a34f71fe086cea5}\label{classflounder_1_1display_a31c63bef47c639477a34f71fe086cea5}} 
+int {\bfseries m\+\_\+window\+PosX}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a63d9f9bd2d295379fc53a8c2b9efba78}\label{classflounder_1_1display_a63d9f9bd2d295379fc53a8c2b9efba78}} 
+int {\bfseries m\+\_\+window\+PosY}
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_afc3020989fe0bea586c4d29c212aa133}\label{classflounder_1_1display_afc3020989fe0bea586c4d29c212aa133}} 
+static friend void {\bfseries callback\+Error} (int error, const char $\ast$description)
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_ab8f70edb9d5031a7096126204355e7d6}\label{classflounder_1_1display_ab8f70edb9d5031a7096126204355e7d6}} 
+static friend void {\bfseries callback\+Close} (G\+L\+F\+Wwindow $\ast$window)
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_ad73b79cccf7cb1720abb1576fadb6118}\label{classflounder_1_1display_ad73b79cccf7cb1720abb1576fadb6118}} 
+static friend void {\bfseries callback\+Focus} (G\+L\+F\+Wwindow $\ast$window, int focused)
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a669fa2672c0ea83c27f30860b8fae4ca}\label{classflounder_1_1display_a669fa2672c0ea83c27f30860b8fae4ca}} 
+static friend void {\bfseries callback\+Position} (G\+L\+F\+Wwindow $\ast$window, int xpos, int ypos)
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a3b32ab42fc1ab57513d277fdcdd0f83f}\label{classflounder_1_1display_a3b32ab42fc1ab57513d277fdcdd0f83f}} 
+static friend void {\bfseries callback\+Size} (G\+L\+F\+Wwindow $\ast$window, int width, int height)
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a0766de23b80536533330a6f97bded5be}\label{classflounder_1_1display_a0766de23b80536533330a6f97bded5be}} 
+static friend void {\bfseries callback\+Frame} (G\+L\+F\+Wwindow $\ast$window, int width, int height)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A module used for the creation, updating and destruction of the display. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1display_ac0a3910222a928f1fc60193cd65c0530}\label{classflounder_1_1display_ac0a3910222a928f1fc60193cd65c0530}} 
+\index{flounder\+::display@{flounder\+::display}!display@{display}}
+\index{display@{display}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily flounder\+::display\+::display (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new G\+L\+FW display manager. 
+
+\mbox{\Hypertarget{classflounder_1_1display_a272f9080af9079cbb3890b18c3e4d394}\label{classflounder_1_1display_a272f9080af9079cbb3890b18c3e4d394}} 
+\index{flounder\+::display@{flounder\+::display}!````~display@{$\sim$display}}
+\index{````~display@{$\sim$display}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{$\sim$display()}{~display()}}
+{\footnotesize\ttfamily flounder\+::display\+::$\sim$display (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the display. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1display_a7b32aeb7809ad48663ce6eb4596b37a3}\label{classflounder_1_1display_a7b32aeb7809ad48663ce6eb4596b37a3}} 
+\index{flounder\+::display@{flounder\+::display}!get\+Aspect\+Ratio@{get\+Aspect\+Ratio}}
+\index{get\+Aspect\+Ratio@{get\+Aspect\+Ratio}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{get\+Aspect\+Ratio()}{getAspectRatio()}}
+{\footnotesize\ttfamily double \& flounder\+::display\+::get\+Aspect\+Ratio (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the aspect ratio between the displays width and height. 
+
+\begin{DoxyReturn}{Returns}
+The aspect ratio. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_a2b3cea6e41121de9d790acf027036167}\label{classflounder_1_1display_a2b3cea6e41121de9d790acf027036167}} 
+\index{flounder\+::display@{flounder\+::display}!get\+Height@{get\+Height}}
+\index{get\+Height@{get\+Height}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{get\+Height()}{getHeight()}}
+{\footnotesize\ttfamily int \& flounder\+::display\+::get\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the height of the display in pixels. 
+
+\begin{DoxyReturn}{Returns}
+The height of the display. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_ab498a060b8f23e54be9116f452a8b92a}\label{classflounder_1_1display_ab498a060b8f23e54be9116f452a8b92a}} 
+\index{flounder\+::display@{flounder\+::display}!get\+Samples@{get\+Samples}}
+\index{get\+Samples@{get\+Samples}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{get\+Samples()}{getSamples()}}
+{\footnotesize\ttfamily int \& flounder\+::display\+::get\+Samples (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets how many M\+S\+AA samples should be done before swapping buffers. 
+
+\begin{DoxyReturn}{Returns}
+Amount of M\+S\+AA samples. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_ad5fc46c79d236783ac883878ec065f36}\label{classflounder_1_1display_ad5fc46c79d236783ac883878ec065f36}} 
+\index{flounder\+::display@{flounder\+::display}!get\+Title@{get\+Title}}
+\index{get\+Title@{get\+Title}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{get\+Title()}{getTitle()}}
+{\footnotesize\ttfamily std\+::string \& flounder\+::display\+::get\+Title (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the window\textquotesingle{}s title. 
+
+\begin{DoxyReturn}{Returns}
+The window\textquotesingle{}s title. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_ac2b45bb8c8924b985895f2b08c03c3d9}\label{classflounder_1_1display_ac2b45bb8c8924b985895f2b08c03c3d9}} 
+\index{flounder\+::display@{flounder\+::display}!get\+Width@{get\+Width}}
+\index{get\+Width@{get\+Width}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{get\+Width()}{getWidth()}}
+{\footnotesize\ttfamily int \& flounder\+::display\+::get\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the width of the display in pixels. 
+
+\begin{DoxyReturn}{Returns}
+The width of the display. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_a5cdcd3dddce4cf63ac45503b03e96689}\label{classflounder_1_1display_a5cdcd3dddce4cf63ac45503b03e96689}} 
+\index{flounder\+::display@{flounder\+::display}!get\+Window@{get\+Window}}
+\index{get\+Window@{get\+Window}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{get\+Window()}{getWindow()}}
+{\footnotesize\ttfamily G\+L\+F\+Wwindow $\ast$ flounder\+::display\+::get\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the current G\+L\+FW window. 
+
+\begin{DoxyReturn}{Returns}
+The current G\+L\+FW window. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_acd9fd5a794f2c31633d5e0a707b53861}\label{classflounder_1_1display_acd9fd5a794f2c31633d5e0a707b53861}} 
+\index{flounder\+::display@{flounder\+::display}!get\+Window\+X\+Pos@{get\+Window\+X\+Pos}}
+\index{get\+Window\+X\+Pos@{get\+Window\+X\+Pos}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{get\+Window\+X\+Pos()}{getWindowXPos()}}
+{\footnotesize\ttfamily int \& flounder\+::display\+::get\+Window\+X\+Pos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the windows Y position of the display in pixels. 
+
+\begin{DoxyReturn}{Returns}
+The windows x position. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_a59dab9f2452adfce71b7d156dc9ca688}\label{classflounder_1_1display_a59dab9f2452adfce71b7d156dc9ca688}} 
+\index{flounder\+::display@{flounder\+::display}!get\+Window\+Y\+Pos@{get\+Window\+Y\+Pos}}
+\index{get\+Window\+Y\+Pos@{get\+Window\+Y\+Pos}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{get\+Window\+Y\+Pos()}{getWindowYPos()}}
+{\footnotesize\ttfamily int \& flounder\+::display\+::get\+Window\+Y\+Pos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the windows Y position of the display in pixels. 
+
+\begin{DoxyReturn}{Returns}
+The windows Y position. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_a5542894b942b11b8fa30e51e98a389ba}\label{classflounder_1_1display_a5542894b942b11b8fa30e51e98a389ba}} 
+\index{flounder\+::display@{flounder\+::display}!is\+Antialiasing@{is\+Antialiasing}}
+\index{is\+Antialiasing@{is\+Antialiasing}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{is\+Antialiasing()}{isAntialiasing()}}
+{\footnotesize\ttfamily bool \& flounder\+::display\+::is\+Antialiasing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets if the display requests antialiased images. 
+
+\begin{DoxyReturn}{Returns}
+If using antialiased images. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_afc0a47cb7ce2423076e4868b6b280fea}\label{classflounder_1_1display_afc0a47cb7ce2423076e4868b6b280fea}} 
+\index{flounder\+::display@{flounder\+::display}!is\+Closed@{is\+Closed}}
+\index{is\+Closed@{is\+Closed}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{is\+Closed()}{isClosed()}}
+{\footnotesize\ttfamily bool \& flounder\+::display\+::is\+Closed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets if the G\+L\+FW display is closed. 
+
+\begin{DoxyReturn}{Returns}
+If the G\+L\+FW display is closed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_a8319a69deefd25fb5b1d7dddabd35df9}\label{classflounder_1_1display_a8319a69deefd25fb5b1d7dddabd35df9}} 
+\index{flounder\+::display@{flounder\+::display}!is\+Focused@{is\+Focused}}
+\index{is\+Focused@{is\+Focused}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{is\+Focused()}{isFocused()}}
+{\footnotesize\ttfamily bool \& flounder\+::display\+::is\+Focused (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets if the G\+L\+FW display is selected. 
+
+\begin{DoxyReturn}{Returns}
+If the G\+L\+FW display is selected. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_a70a2476a798800089f947e4ff98476ba}\label{classflounder_1_1display_a70a2476a798800089f947e4ff98476ba}} 
+\index{flounder\+::display@{flounder\+::display}!is\+Fullscreen@{is\+Fullscreen}}
+\index{is\+Fullscreen@{is\+Fullscreen}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{is\+Fullscreen()}{isFullscreen()}}
+{\footnotesize\ttfamily bool \& flounder\+::display\+::is\+Fullscreen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets weather the display is fullscreen or not. 
+
+\begin{DoxyReturn}{Returns}
+Fullscreen or windowed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_a0cc7e0037aa9a45127de4db882c5a632}\label{classflounder_1_1display_a0cc7e0037aa9a45127de4db882c5a632}} 
+\index{flounder\+::display@{flounder\+::display}!is\+V\+Sync@{is\+V\+Sync}}
+\index{is\+V\+Sync@{is\+V\+Sync}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{is\+V\+Sync()}{isVSync()}}
+{\footnotesize\ttfamily bool \& flounder\+::display\+::is\+V\+Sync (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets if the display is using v\+Sync. 
+
+\begin{DoxyReturn}{Returns}
+If V\+Sync is enabled. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_af27b3f93977c32c79ad9522672e484c5}\label{classflounder_1_1display_af27b3f93977c32c79ad9522672e484c5}} 
+\index{flounder\+::display@{flounder\+::display}!screenshot@{screenshot}}
+\index{screenshot@{screenshot}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{screenshot()}{screenshot()}}
+{\footnotesize\ttfamily void flounder\+::display\+::screenshot (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Takes a screenshot of the current image of the display and saves it into the screenshots folder a png image. 
+
+\mbox{\Hypertarget{classflounder_1_1display_ae9a340bfa09dfd6d08ebc0d21b4c77b0}\label{classflounder_1_1display_ae9a340bfa09dfd6d08ebc0d21b4c77b0}} 
+\index{flounder\+::display@{flounder\+::display}!set\+Antialiasing@{set\+Antialiasing}}
+\index{set\+Antialiasing@{set\+Antialiasing}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{set\+Antialiasing()}{setAntialiasing()}}
+{\footnotesize\ttfamily void flounder\+::display\+::set\+Antialiasing (\begin{DoxyParamCaption}\item[{const bool \&}]{antialiasing }\end{DoxyParamCaption})}
+
+
+
+Requests the display to antialias. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em antialiasing} & If the display should antialias. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1display_ae5ee27f982e6a947305dc6e71a23021b}\label{classflounder_1_1display_ae5ee27f982e6a947305dc6e71a23021b}} 
+\index{flounder\+::display@{flounder\+::display}!set\+Fullscreen@{set\+Fullscreen}}
+\index{set\+Fullscreen@{set\+Fullscreen}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{set\+Fullscreen()}{setFullscreen()}}
+{\footnotesize\ttfamily void flounder\+::display\+::set\+Fullscreen (\begin{DoxyParamCaption}\item[{const bool \&}]{fullscreen }\end{DoxyParamCaption})}
+
+
+
+Sets the display to be fullscreen or windowed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fullscreen} & Weather or not to be fullscreen. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1display_ae1bf2028faaf411fedc80ca511a2e739}\label{classflounder_1_1display_ae1bf2028faaf411fedc80ca511a2e739}} 
+\index{flounder\+::display@{flounder\+::display}!set\+Samples@{set\+Samples}}
+\index{set\+Samples@{set\+Samples}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{set\+Samples()}{setSamples()}}
+{\footnotesize\ttfamily void flounder\+::display\+::set\+Samples (\begin{DoxyParamCaption}\item[{const int \&}]{samples }\end{DoxyParamCaption})}
+
+
+
+Gets how many M\+S\+AA samples should be done before swapping buffers. Zero disables multisampling. G\+L\+F\+W\+\_\+\+D\+O\+N\+T\+\_\+\+C\+A\+RE means no preference. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em samples} & The amount of M\+S\+AA samples. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1display_a172501e1e99cde228d86fab59a3a636b}\label{classflounder_1_1display_a172501e1e99cde228d86fab59a3a636b}} 
+\index{flounder\+::display@{flounder\+::display}!set\+V\+Sync@{set\+V\+Sync}}
+\index{set\+V\+Sync@{set\+V\+Sync}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{set\+V\+Sync()}{setVSync()}}
+{\footnotesize\ttfamily void flounder\+::display\+::set\+V\+Sync (\begin{DoxyParamCaption}\item[{const bool \&}]{vsync }\end{DoxyParamCaption})}
+
+
+
+Sets the display to use V\+Sync or not. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vsync} & Weather or not to use v\+Sync. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/devices/display.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/devices/display.\+cpp\end{DoxyCompactItemize}

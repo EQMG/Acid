@@ -1,0 +1,518 @@
+\hypertarget{classflounder_1_1matrix3x3}{}\section{flounder\+:\+:matrix3x3 Class Reference}
+\label{classflounder_1_1matrix3x3}\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+
+
+Holds a 2x2 matrix.  
+
+
+
+
+{\ttfamily \#include $<$matrix3x3.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1matrix3x3_a8cec519a274c98786bd433454631bedc}{matrix3x3} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}. The matrix is initialised to the identity. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1matrix3x3_a792adf7aa264b4008dae571b96575a82}{matrix3x3} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&source)
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1matrix3x3_afcc212e6794a0630818e111cabdcfcf1}{matrix3x3} (const float source\mbox{[}9\mbox{]})
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1matrix3x3_a9c59ba01efb971983a30a5d1f57b3f35}{$\sim$matrix3x3} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a92f9629e15583801761d99116bc8fe46}{set} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&source)
+\begin{DoxyCompactList}\small\item\em Loads from another \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a8afe0392663cacadae79be59c612def4}{set} (const float source\mbox{[}9\mbox{]})
+\begin{DoxyCompactList}\small\item\em Loads from a 9 element array. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a64d71b44dc94a221da4ed01ac5cbcbf8}{set\+Identity} ()
+\begin{DoxyCompactList}\small\item\em Sets this matrix to be the identity matrix. \end{DoxyCompactList}\item 
+float \hyperlink{classflounder_1_1matrix3x3_a6c25560ee28e4d9190fe33b4559dd4e1}{determinant} ()
+\begin{DoxyCompactList}\small\item\em Gets the determinant of this matrix. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_add38efb997787cf7e335ad35f8f34311}{invert} ()
+\begin{DoxyCompactList}\small\item\em Inverts this matrix. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a708825b3079c7c8626cd84095d292021}{negate} ()
+\begin{DoxyCompactList}\small\item\em Negates this matrix. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a2cfe1b42645dda116f8251ef183c4028}{transpose} ()
+\begin{DoxyCompactList}\small\item\em Transposes this matrix \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_abcc962b1acd586ec1f3ad554f1eb32f7}{set\+Zero} ()
+\begin{DoxyCompactList}\small\item\em Sets this matrix to 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_adf3b56d6ebbfae9a30ba46b220ca619b}{set\+Identity} (\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$source)
+\begin{DoxyCompactList}\small\item\em Set the source matrix to be the identity matrix. \end{DoxyCompactList}\item 
+static float \hyperlink{classflounder_1_1matrix3x3_a617309da3506ce9a683573855a31ce22}{determinant} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&source)
+\begin{DoxyCompactList}\small\item\em Gets the determinant of this matrix. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_af2284c32da51595e16e9802b9f398ac7}{add} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&left, const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&right, \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Adds two matrices together and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a1463caf26c6c57264d767f09f3ef954d}{subtract} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&left, const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&right, \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Subtracts two matrices together and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a7c46f7546804f85fc8d8c55f39c044fd}{multiply} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&left, const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&right, \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Multiplies two matrices together and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a2dac915fcc72afd4016f3b22086f6294}{transform} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&left, const \hyperlink{classflounder_1_1vector3}{vector3} \&right, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Transforms a matrix by a vector and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a3686f4eacc8d164c69afd7509a3e48e0}{scale} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&left, const \hyperlink{classflounder_1_1vector3}{vector3} \&right, \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Scales a matrix by a vector and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a894192d848137b9261503b6b9b203fd3}{invert} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&source, \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Inverts the source matrix and puts the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_a3a464138550b479c57f034658b9528b7}{negate} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&source, \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Negates the source matrix and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_ab29360c43ea7f2dbc9cd3a56cd68fc17}{transpose} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&source, \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Transpose the source matrix and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static float $\ast$ \hyperlink{classflounder_1_1matrix3x3_ae8e1750d62bd1061ae0e39e26794b23b}{to\+Array} (const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&matrix)
+\begin{DoxyCompactList}\small\item\em Turns a 3x3 matrix into an array. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ \hyperlink{classflounder_1_1matrix3x3_abfa43745d8f828a4751dc727c3186546}{set\+Zero} (\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$source)
+\begin{DoxyCompactList}\small\item\em Sets the source matrix to 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a465b47630298b5627e2997d77fe729f4}\label{classflounder_1_1matrix3x3_a465b47630298b5627e2997d77fe729f4}} 
+float {\bfseries m00}
+\item 
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a7194989fce437a18fa2c93235ec83135}\label{classflounder_1_1matrix3x3_a7194989fce437a18fa2c93235ec83135}} 
+float {\bfseries m01}
+\item 
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a556ef18a78cf1fb0d5074da28703739a}\label{classflounder_1_1matrix3x3_a556ef18a78cf1fb0d5074da28703739a}} 
+float {\bfseries m02}
+\item 
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a69f884a34173f41fab37b14345a10ab3}\label{classflounder_1_1matrix3x3_a69f884a34173f41fab37b14345a10ab3}} 
+float {\bfseries m10}
+\item 
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_acbd3337fafa04c878f3fa4470b64570d}\label{classflounder_1_1matrix3x3_acbd3337fafa04c878f3fa4470b64570d}} 
+float {\bfseries m11}
+\item 
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_afc69abe45ccaed7bea70f105b1a7d340}\label{classflounder_1_1matrix3x3_afc69abe45ccaed7bea70f105b1a7d340}} 
+float {\bfseries m12}
+\item 
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a0fcc7f369143b25fa96fa0afcd6072bc}\label{classflounder_1_1matrix3x3_a0fcc7f369143b25fa96fa0afcd6072bc}} 
+float {\bfseries m20}
+\item 
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a6ebaddf0733efea893b029b71235e745}\label{classflounder_1_1matrix3x3_a6ebaddf0733efea893b029b71235e745}} 
+float {\bfseries m21}
+\item 
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a3769439070e2da98355d530b0f05a374}\label{classflounder_1_1matrix3x3_a3769439070e2da98355d530b0f05a374}} 
+float {\bfseries m22}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Holds a 2x2 matrix. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a8cec519a274c98786bd433454631bedc}\label{classflounder_1_1matrix3x3_a8cec519a274c98786bd433454631bedc}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!matrix3x3@{matrix3x3}}
+\index{matrix3x3@{matrix3x3}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{matrix3x3()}{matrix3x3()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily flounder\+::matrix3x3\+::matrix3x3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}. The matrix is initialised to the identity. 
+
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a792adf7aa264b4008dae571b96575a82}\label{classflounder_1_1matrix3x3_a792adf7aa264b4008dae571b96575a82}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!matrix3x3@{matrix3x3}}
+\index{matrix3x3@{matrix3x3}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{matrix3x3()}{matrix3x3()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily flounder\+::matrix3x3\+::matrix3x3 (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Constructor for \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Creates this matrix out of a existing one. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_afcc212e6794a0630818e111cabdcfcf1}\label{classflounder_1_1matrix3x3_afcc212e6794a0630818e111cabdcfcf1}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!matrix3x3@{matrix3x3}}
+\index{matrix3x3@{matrix3x3}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{matrix3x3()}{matrix3x3()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily flounder\+::matrix3x3\+::matrix3x3 (\begin{DoxyParamCaption}\item[{const float}]{source\mbox{[}9\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Constructor for \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Creates this matrix out of a 9 element array. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a9c59ba01efb971983a30a5d1f57b3f35}\label{classflounder_1_1matrix3x3_a9c59ba01efb971983a30a5d1f57b3f35}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!````~matrix3x3@{$\sim$matrix3x3}}
+\index{````~matrix3x3@{$\sim$matrix3x3}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{$\sim$matrix3x3()}{~matrix3x3()}}
+{\footnotesize\ttfamily flounder\+::matrix3x3\+::$\sim$matrix3x3 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_af2284c32da51595e16e9802b9f398ac7}\label{classflounder_1_1matrix3x3_af2284c32da51595e16e9802b9f398ac7}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!add@{add}}
+\index{add@{add}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::add (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{right,  }\item[{\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Adds two matrices together and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source matrix. \\
+\hline
+{\em destination} & The destination matrix or null if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a617309da3506ce9a683573855a31ce22}\label{classflounder_1_1matrix3x3_a617309da3506ce9a683573855a31ce22}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!determinant@{determinant}}
+\index{determinant@{determinant}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{determinant()}{determinant()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float flounder\+::matrix3x3\+::determinant (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the determinant of this matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The matrix to set to the identity. \begin{DoxyReturn}{Returns}
+The determinant of the matrix. 
+\end{DoxyReturn}
+\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a6c25560ee28e4d9190fe33b4559dd4e1}\label{classflounder_1_1matrix3x3_a6c25560ee28e4d9190fe33b4559dd4e1}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!determinant@{determinant}}
+\index{determinant@{determinant}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{determinant()}{determinant()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float flounder\+::matrix3x3\+::determinant (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the determinant of this matrix. 
+
+\begin{DoxyReturn}{Returns}
+The determinant of the matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a894192d848137b9261503b6b9b203fd3}\label{classflounder_1_1matrix3x3_a894192d848137b9261503b6b9b203fd3}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!invert@{invert}}
+\index{invert@{invert}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{invert()}{invert()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::invert (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{source,  }\item[{\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Inverts the source matrix and puts the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source matrix to be inverted. \\
+\hline
+{\em destination} & The destination matrix, or null if a new one is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The inverted matrix, or null if source can\textquotesingle{}t be reverted. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_add38efb997787cf7e335ad35f8f34311}\label{classflounder_1_1matrix3x3_add38efb997787cf7e335ad35f8f34311}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!invert@{invert}}
+\index{invert@{invert}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{invert()}{invert()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::invert (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Inverts this matrix. 
+
+\begin{DoxyReturn}{Returns}
+this-\/$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a7c46f7546804f85fc8d8c55f39c044fd}\label{classflounder_1_1matrix3x3_a7c46f7546804f85fc8d8c55f39c044fd}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!multiply@{multiply}}
+\index{multiply@{multiply}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{multiply()}{multiply()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::multiply (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{right,  }\item[{\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Multiplies two matrices together and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source matrix. \\
+\hline
+{\em destination} & The destination matrix or null if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a3a464138550b479c57f034658b9528b7}\label{classflounder_1_1matrix3x3_a3a464138550b479c57f034658b9528b7}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!negate@{negate}}
+\index{negate@{negate}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{negate()}{negate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::negate (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{source,  }\item[{\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Negates the source matrix and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source matrix. \\
+\hline
+{\em destination} & The destination matrix or null if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The negated matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a708825b3079c7c8626cd84095d292021}\label{classflounder_1_1matrix3x3_a708825b3079c7c8626cd84095d292021}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!negate@{negate}}
+\index{negate@{negate}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{negate()}{negate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::negate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Negates this matrix. 
+
+\begin{DoxyReturn}{Returns}
+this-\/$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a3686f4eacc8d164c69afd7509a3e48e0}\label{classflounder_1_1matrix3x3_a3686f4eacc8d164c69afd7509a3e48e0}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!scale@{scale}}
+\index{scale@{scale}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{scale()}{scale()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::scale (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{right,  }\item[{\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Scales a matrix by a vector and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+{\em destination} & The destination matrix or null if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a92f9629e15583801761d99116bc8fe46}\label{classflounder_1_1matrix3x3_a92f9629e15583801761d99116bc8fe46}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!set@{set}}
+\index{set@{set}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::set (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Loads from another \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source matrix. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a8afe0392663cacadae79be59c612def4}\label{classflounder_1_1matrix3x3_a8afe0392663cacadae79be59c612def4}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!set@{set}}
+\index{set@{set}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::set (\begin{DoxyParamCaption}\item[{const float}]{source\mbox{[}9\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Loads from a 9 element array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_adf3b56d6ebbfae9a30ba46b220ca619b}\label{classflounder_1_1matrix3x3_adf3b56d6ebbfae9a30ba46b220ca619b}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!set\+Identity@{set\+Identity}}
+\index{set\+Identity@{set\+Identity}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{set\+Identity()}{setIdentity()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::set\+Identity (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Set the source matrix to be the identity matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The matrix to set to the identity. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The source matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a64d71b44dc94a221da4ed01ac5cbcbf8}\label{classflounder_1_1matrix3x3_a64d71b44dc94a221da4ed01ac5cbcbf8}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!set\+Identity@{set\+Identity}}
+\index{set\+Identity@{set\+Identity}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{set\+Identity()}{setIdentity()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::set\+Identity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets this matrix to be the identity matrix. 
+
+\begin{DoxyReturn}{Returns}
+this-\/$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_abfa43745d8f828a4751dc727c3186546}\label{classflounder_1_1matrix3x3_abfa43745d8f828a4751dc727c3186546}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!set\+Zero@{set\+Zero}}
+\index{set\+Zero@{set\+Zero}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{set\+Zero()}{setZero()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::set\+Zero (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Sets the source matrix to 0. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The matrix to be set to 0. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The matrix set to zero. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_abcc962b1acd586ec1f3ad554f1eb32f7}\label{classflounder_1_1matrix3x3_abcc962b1acd586ec1f3ad554f1eb32f7}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!set\+Zero@{set\+Zero}}
+\index{set\+Zero@{set\+Zero}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{set\+Zero()}{setZero()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::set\+Zero (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets this matrix to 0. 
+
+\begin{DoxyReturn}{Returns}
+this-\/$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a1463caf26c6c57264d767f09f3ef954d}\label{classflounder_1_1matrix3x3_a1463caf26c6c57264d767f09f3ef954d}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!subtract@{subtract}}
+\index{subtract@{subtract}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{subtract()}{subtract()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::subtract (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{right,  }\item[{\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Subtracts two matrices together and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source matrix. \\
+\hline
+{\em destination} & The destination matrix or null if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_ae8e1750d62bd1061ae0e39e26794b23b}\label{classflounder_1_1matrix3x3_ae8e1750d62bd1061ae0e39e26794b23b}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!to\+Array@{to\+Array}}
+\index{to\+Array@{to\+Array}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{to\+Array()}{toArray()}}
+{\footnotesize\ttfamily float $\ast$ flounder\+::matrix3x3\+::to\+Array (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{matrix }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Turns a 3x3 matrix into an array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em matrix} & The matrix to turn into an array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A 9 float array. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a2dac915fcc72afd4016f3b22086f6294}\label{classflounder_1_1matrix3x3_a2dac915fcc72afd4016f3b22086f6294}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!transform@{transform}}
+\index{transform@{transform}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{transform()}{transform()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ flounder\+::matrix3x3\+::transform (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{right,  }\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Transforms a matrix by a vector and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+{\em destination} & The destination vector or null if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_ab29360c43ea7f2dbc9cd3a56cd68fc17}\label{classflounder_1_1matrix3x3_ab29360c43ea7f2dbc9cd3a56cd68fc17}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!transpose@{transpose}}
+\index{transpose@{transpose}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{transpose()}{transpose()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::transpose (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{source,  }\item[{\hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Transpose the source matrix and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source matrix. \\
+\hline
+{\em destination} & The destination matrix or null if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The transposed matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix3x3_a2cfe1b42645dda116f8251ef183c4028}\label{classflounder_1_1matrix3x3_a2cfe1b42645dda116f8251ef183c4028}} 
+\index{flounder\+::matrix3x3@{flounder\+::matrix3x3}!transpose@{transpose}}
+\index{transpose@{transpose}!flounder\+::matrix3x3@{flounder\+::matrix3x3}}
+\subsubsection{\texorpdfstring{transpose()}{transpose()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} $\ast$ flounder\+::matrix3x3\+::transpose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Transposes this matrix 
+
+\begin{DoxyReturn}{Returns}
+this-\/$>$ 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/matrix3x3.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/matrix3x3.\+cpp\end{DoxyCompactItemize}

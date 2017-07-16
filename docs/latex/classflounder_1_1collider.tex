@@ -1,0 +1,63 @@
+\hypertarget{classflounder_1_1collider}{}\section{flounder\+:\+:collider Class Reference}
+\label{classflounder_1_1collider}\index{flounder\+::collider@{flounder\+::collider}}
+
+
+A simple class that represents a physical shape.  
+
+
+
+
+{\ttfamily \#include $<$collider.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:collider\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1collider}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{classflounder_1_1collider}{collider} $\ast$ \hyperlink{classflounder_1_1collider_a87949f913283dcedab16b8bdfb73e8fa}{update} (\hyperlink{classflounder_1_1vector3}{vector3} $\ast$position, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$rotation, const float \&scale, \hyperlink{classflounder_1_1collider}{collider} $\ast$destination)=0
+\begin{DoxyCompactList}\small\item\em Clones this collder into the destination and updates it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A simple class that represents a physical shape. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1collider_a87949f913283dcedab16b8bdfb73e8fa}\label{classflounder_1_1collider_a87949f913283dcedab16b8bdfb73e8fa}} 
+\index{flounder\+::collider@{flounder\+::collider}!update@{update}}
+\index{update@{update}!flounder\+::collider@{flounder\+::collider}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily virtual \hyperlink{classflounder_1_1collider}{collider}$\ast$ flounder\+::collider\+::update (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{position,  }\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{rotation,  }\item[{const float \&}]{scale,  }\item[{\hyperlink{classflounder_1_1collider}{collider} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Clones this collder into the destination and updates it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The amount to move. \\
+\hline
+{\em rotation} & The amount to rotate. \\
+\hline
+{\em scale} & The amount to scale the object. \\
+\hline
+{\em destination} & The collider to store the new data in. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classflounder_1_1sphere_a7be08c96c7a4295eb6c2a4ee6c004266}{flounder\+::sphere}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/physics/collider.\+h\end{DoxyCompactItemize}

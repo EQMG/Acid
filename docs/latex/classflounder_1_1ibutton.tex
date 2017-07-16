@@ -1,0 +1,71 @@
+\hypertarget{classflounder_1_1ibutton}{}\section{flounder\+:\+:ibutton Class Reference}
+\label{classflounder_1_1ibutton}\index{flounder\+::ibutton@{flounder\+::ibutton}}
+
+
+Interface for a binary input device.  
+
+
+
+
+{\ttfamily \#include $<$ibutton.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:ibutton\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1ibutton}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classflounder_1_1ibutton_ab64fd22a75ea66ce67fd9b1ad34fd837}{is\+Down} ()=0
+\begin{DoxyCompactList}\small\item\em Returns whether this button is currently pressed. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classflounder_1_1ibutton_a5fb7b3493c0ea0e67bb9defc272da0d3}{was\+Down} ()=0
+\begin{DoxyCompactList}\small\item\em Gets if the key is down and was not down before. Key press recognized as one click. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Interface for a binary input device. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1ibutton_ab64fd22a75ea66ce67fd9b1ad34fd837}\label{classflounder_1_1ibutton_ab64fd22a75ea66ce67fd9b1ad34fd837}} 
+\index{flounder\+::ibutton@{flounder\+::ibutton}!is\+Down@{is\+Down}}
+\index{is\+Down@{is\+Down}!flounder\+::ibutton@{flounder\+::ibutton}}
+\subsubsection{\texorpdfstring{is\+Down()}{isDown()}}
+{\footnotesize\ttfamily virtual bool flounder\+::ibutton\+::is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Returns whether this button is currently pressed. 
+
+\begin{DoxyReturn}{Returns}
+True if the button is pressed, false otherwise. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classflounder_1_1buttonjoystick_ab6682d3554e007ef473c4595339f86f1}{flounder\+::buttonjoystick}, \hyperlink{classflounder_1_1buttonkeyboard_a432555049251cec48431e4f14b6aa34b}{flounder\+::buttonkeyboard}, and \hyperlink{classflounder_1_1buttonmouse_ab4d7ecd54f144f03886b5ef467666be1}{flounder\+::buttonmouse}.
+
+\mbox{\Hypertarget{classflounder_1_1ibutton_a5fb7b3493c0ea0e67bb9defc272da0d3}\label{classflounder_1_1ibutton_a5fb7b3493c0ea0e67bb9defc272da0d3}} 
+\index{flounder\+::ibutton@{flounder\+::ibutton}!was\+Down@{was\+Down}}
+\index{was\+Down@{was\+Down}!flounder\+::ibutton@{flounder\+::ibutton}}
+\subsubsection{\texorpdfstring{was\+Down()}{wasDown()}}
+{\footnotesize\ttfamily virtual bool flounder\+::ibutton\+::was\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets if the key is down and was not down before. Key press recognized as one click. 
+
+\begin{DoxyReturn}{Returns}
+Is the key down and was not down before? 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classflounder_1_1buttonjoystick_a99302b1345fa773ec839290ae6c406e7}{flounder\+::buttonjoystick}, \hyperlink{classflounder_1_1buttonkeyboard_abc6b3c8cf9398f2a896408e390fd3a01}{flounder\+::buttonkeyboard}, and \hyperlink{classflounder_1_1buttonmouse_a7dad01481ebb01755db054a0acbc8159}{flounder\+::buttonmouse}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/inputs/ibutton.\+h\end{DoxyCompactItemize}

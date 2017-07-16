@@ -1,0 +1,128 @@
+\hypertarget{classflounder_1_1keyboard}{}\section{flounder\+:\+:keyboard Class Reference}
+\label{classflounder_1_1keyboard}\index{flounder\+::keyboard@{flounder\+::keyboard}}
+
+
+A module used for the creation, updating and destruction of the keyboard keys.  
+
+
+
+
+{\ttfamily \#include $<$keyboard.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:keyboard\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1keyboard}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1keyboard_a2545f195eb7f57530cdc9056f641702c}{keyboard} ()
+\begin{DoxyCompactList}\small\item\em Creates a new G\+L\+FW keyboard manager. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1keyboard_a7af3194a3ee06eb4e58b9a9adf5a6e52}{$\sim$keyboard} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the keyboard. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1keyboard_a3d9ab826717b006314448da06ca24bf5}\label{classflounder_1_1keyboard_a3d9ab826717b006314448da06ca24bf5}} 
+void {\bfseries init} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1keyboard_a6acbbf73165839182d1cbb868c71708e}\label{classflounder_1_1keyboard_a6acbbf73165839182d1cbb868c71708e}} 
+void {\bfseries update} ()
+\item 
+bool \hyperlink{classflounder_1_1keyboard_a26448bc1e44c9bfa9af882d53e599721}{get\+Key} (unsigned const int \&key)
+\begin{DoxyCompactList}\small\item\em Gets whether or not a particular key is currently pressed. \end{DoxyCompactList}\item 
+int \hyperlink{classflounder_1_1keyboard_ad941be3ae52b1c60437695d8faf1b6d7}{get\+Keyboard\+Char} ()
+\begin{DoxyCompactList}\small\item\em Gets the current user input, A\+S\+C\+II Dec value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1keyboard_a7493bf7e18bf4b5fc7679a3e8b10ec27}\label{classflounder_1_1keyboard_a7493bf7e18bf4b5fc7679a3e8b10ec27}} 
+static \hyperlink{classflounder_1_1keyboard}{keyboard} $\ast$ {\bfseries get} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1keyboard_a001e792e18b8f7bf5814029e8684578b}\label{classflounder_1_1keyboard_a001e792e18b8f7bf5814029e8684578b}} 
+int $\ast$ {\bfseries m\+\_\+keyboard\+Keys}
+\item 
+\mbox{\Hypertarget{classflounder_1_1keyboard_a451428c05636425eb75a4fcaced9722c}\label{classflounder_1_1keyboard_a451428c05636425eb75a4fcaced9722c}} 
+unsigned int {\bfseries m\+\_\+keyboard\+Char}
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1keyboard_a3d2cf2b20a6cc547f9713721b611f3a5}\label{classflounder_1_1keyboard_a3d2cf2b20a6cc547f9713721b611f3a5}} 
+static friend void {\bfseries callback\+Key} (G\+L\+F\+Wwindow $\ast$window, int key, int scancode, int action, int mods)
+\item 
+\mbox{\Hypertarget{classflounder_1_1keyboard_a9b3f2468fcab78376eaf4085ca8c4172}\label{classflounder_1_1keyboard_a9b3f2468fcab78376eaf4085ca8c4172}} 
+static friend void {\bfseries callback\+Char} (G\+L\+F\+Wwindow $\ast$window, unsigned int codepoint)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A module used for the creation, updating and destruction of the keyboard keys. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1keyboard_a2545f195eb7f57530cdc9056f641702c}\label{classflounder_1_1keyboard_a2545f195eb7f57530cdc9056f641702c}} 
+\index{flounder\+::keyboard@{flounder\+::keyboard}!keyboard@{keyboard}}
+\index{keyboard@{keyboard}!flounder\+::keyboard@{flounder\+::keyboard}}
+\subsubsection{\texorpdfstring{keyboard()}{keyboard()}}
+{\footnotesize\ttfamily flounder\+::keyboard\+::keyboard (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new G\+L\+FW keyboard manager. 
+
+\mbox{\Hypertarget{classflounder_1_1keyboard_a7af3194a3ee06eb4e58b9a9adf5a6e52}\label{classflounder_1_1keyboard_a7af3194a3ee06eb4e58b9a9adf5a6e52}} 
+\index{flounder\+::keyboard@{flounder\+::keyboard}!````~keyboard@{$\sim$keyboard}}
+\index{````~keyboard@{$\sim$keyboard}!flounder\+::keyboard@{flounder\+::keyboard}}
+\subsubsection{\texorpdfstring{$\sim$keyboard()}{~keyboard()}}
+{\footnotesize\ttfamily flounder\+::keyboard\+::$\sim$keyboard (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the keyboard. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1keyboard_a26448bc1e44c9bfa9af882d53e599721}\label{classflounder_1_1keyboard_a26448bc1e44c9bfa9af882d53e599721}} 
+\index{flounder\+::keyboard@{flounder\+::keyboard}!get\+Key@{get\+Key}}
+\index{get\+Key@{get\+Key}!flounder\+::keyboard@{flounder\+::keyboard}}
+\subsubsection{\texorpdfstring{get\+Key()}{getKey()}}
+{\footnotesize\ttfamily bool flounder\+::keyboard\+::get\+Key (\begin{DoxyParamCaption}\item[{unsigned const int \&}]{key }\end{DoxyParamCaption})}
+
+
+
+Gets whether or not a particular key is currently pressed. 
+
+G\+L\+FW Actions\+: G\+L\+F\+W\+\_\+\+P\+R\+E\+SS, G\+L\+F\+W\+\_\+\+R\+E\+L\+E\+A\+SE, G\+L\+F\+W\+\_\+\+R\+E\+P\+E\+AT
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key to test. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If the key is currently pressed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1keyboard_ad941be3ae52b1c60437695d8faf1b6d7}\label{classflounder_1_1keyboard_ad941be3ae52b1c60437695d8faf1b6d7}} 
+\index{flounder\+::keyboard@{flounder\+::keyboard}!get\+Keyboard\+Char@{get\+Keyboard\+Char}}
+\index{get\+Keyboard\+Char@{get\+Keyboard\+Char}!flounder\+::keyboard@{flounder\+::keyboard}}
+\subsubsection{\texorpdfstring{get\+Keyboard\+Char()}{getKeyboardChar()}}
+{\footnotesize\ttfamily int flounder\+::keyboard\+::get\+Keyboard\+Char (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the current user input, A\+S\+C\+II Dec value. 
+
+\begin{DoxyReturn}{Returns}
+The current keyboard char. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/devices/keyboard.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/devices/keyboard.\+cpp\end{DoxyCompactItemize}

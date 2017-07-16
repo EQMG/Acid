@@ -1,0 +1,127 @@
+\hypertarget{classflounder_1_1idriver}{}\section{flounder\+:\+:idriver Class Reference}
+\label{classflounder_1_1idriver}\index{flounder\+::idriver@{flounder\+::idriver}}
+
+
+Represents a driver that changes over time.  
+
+
+
+
+{\ttfamily \#include $<$idriver.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:idriver\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.212121cm]{classflounder_1_1idriver}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1idriver_a84bafd01e3984ededbb170a5efbad0f0}{idriver} (const float \&length)
+\begin{DoxyCompactList}\small\item\em Creates a new driver with a length. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1idriver_a873c8a53f058e3df6467bfec55dc3ae2}{$\sim$idriver} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for value driver. \end{DoxyCompactList}\item 
+float \hyperlink{classflounder_1_1idriver_a1131c4e506fa5bfe3fae51b6636a09a9}{update} (const double \&\hyperlink{classflounder_1_1delta}{delta})
+\begin{DoxyCompactList}\small\item\em Updates the driver with the passed time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual float \hyperlink{classflounder_1_1idriver_a034c4159dc98c4c37ffdfaae64e4a16d}{calculate} (const float \&time)=0
+\begin{DoxyCompactList}\small\item\em Calculates the new value. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1idriver_a9ace6252faea58243061cc0743fa3451}\label{classflounder_1_1idriver_a9ace6252faea58243061cc0743fa3451}} 
+float \& {\bfseries get\+Actual\+Time} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1idriver_a24b0f7c3245fccec35c7bd8475501227}\label{classflounder_1_1idriver_a24b0f7c3245fccec35c7bd8475501227}} 
+float {\bfseries m\+\_\+length}
+\item 
+\mbox{\Hypertarget{classflounder_1_1idriver_a323a95dedeb8e0a2c6e4a0e62268799f}\label{classflounder_1_1idriver_a323a95dedeb8e0a2c6e4a0e62268799f}} 
+float {\bfseries m\+\_\+actual\+Time}
+\item 
+\mbox{\Hypertarget{classflounder_1_1idriver_a8b16f2ff43ceb60aeaf74dc0f137a829}\label{classflounder_1_1idriver_a8b16f2ff43ceb60aeaf74dc0f137a829}} 
+float {\bfseries m\+\_\+current\+Time}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a driver that changes over time. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1idriver_a84bafd01e3984ededbb170a5efbad0f0}\label{classflounder_1_1idriver_a84bafd01e3984ededbb170a5efbad0f0}} 
+\index{flounder\+::idriver@{flounder\+::idriver}!idriver@{idriver}}
+\index{idriver@{idriver}!flounder\+::idriver@{flounder\+::idriver}}
+\subsubsection{\texorpdfstring{idriver()}{idriver()}}
+{\footnotesize\ttfamily flounder\+::idriver\+::idriver (\begin{DoxyParamCaption}\item[{const float \&}]{length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new driver with a length. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em length} & The drivers length. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1idriver_a873c8a53f058e3df6467bfec55dc3ae2}\label{classflounder_1_1idriver_a873c8a53f058e3df6467bfec55dc3ae2}} 
+\index{flounder\+::idriver@{flounder\+::idriver}!````~idriver@{$\sim$idriver}}
+\index{````~idriver@{$\sim$idriver}!flounder\+::idriver@{flounder\+::idriver}}
+\subsubsection{\texorpdfstring{$\sim$idriver()}{~idriver()}}
+{\footnotesize\ttfamily flounder\+::idriver\+::$\sim$idriver (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Deconstructor for value driver. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1idriver_a034c4159dc98c4c37ffdfaae64e4a16d}\label{classflounder_1_1idriver_a034c4159dc98c4c37ffdfaae64e4a16d}} 
+\index{flounder\+::idriver@{flounder\+::idriver}!calculate@{calculate}}
+\index{calculate@{calculate}!flounder\+::idriver@{flounder\+::idriver}}
+\subsubsection{\texorpdfstring{calculate()}{calculate()}}
+{\footnotesize\ttfamily virtual float flounder\+::idriver\+::calculate (\begin{DoxyParamCaption}\item[{const float \&}]{time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Calculates the new value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & The time into the drivers life. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The calculated value. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classflounder_1_1driverfade_af0720c2a60e768dfa9702a43969bf65d}{flounder\+::driverfade}, \hyperlink{classflounder_1_1driverbounce_a2781832b47206849a0028ee75a4772e4}{flounder\+::driverbounce}, \hyperlink{classflounder_1_1driverslide_aecbe9478f7ea9b1a781413f9284643c6}{flounder\+::driverslide}, \hyperlink{classflounder_1_1driverlinear_a7f645c05d7a8bdb555bbf70aca7c630e}{flounder\+::driverlinear}, \hyperlink{classflounder_1_1driversinwave_ae5c3d8d4bd38082ad2b0396029d45e66}{flounder\+::driversinwave}, and \hyperlink{classflounder_1_1driverconstant_acf786b61ab46ea1ebf8d9a802c33c441}{flounder\+::driverconstant}.
+
+\mbox{\Hypertarget{classflounder_1_1idriver_a1131c4e506fa5bfe3fae51b6636a09a9}\label{classflounder_1_1idriver_a1131c4e506fa5bfe3fae51b6636a09a9}} 
+\index{flounder\+::idriver@{flounder\+::idriver}!update@{update}}
+\index{update@{update}!flounder\+::idriver@{flounder\+::idriver}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily float flounder\+::idriver\+::update (\begin{DoxyParamCaption}\item[{const double \&}]{delta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Updates the driver with the passed time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The time between the last update. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The calculated value. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/visual/idriver.\+h\end{DoxyCompactItemize}

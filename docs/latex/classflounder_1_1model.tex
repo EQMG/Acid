@@ -1,0 +1,134 @@
+\hypertarget{classflounder_1_1model}{}\section{flounder\+:\+:model Class Reference}
+\label{classflounder_1_1model}\index{flounder\+::model@{flounder\+::model}}
+
+
+Class that represents a loaded model.  
+
+
+
+
+{\ttfamily \#include $<$model.\+h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classflounder_1_1model_1_1builder}{builder}
+\begin{DoxyCompactList}\small\item\em A builder used to set model parameters for loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_ab057b09c76aef84cd52ba2b8dfa3f3de}\label{classflounder_1_1model_ab057b09c76aef84cd52ba2b8dfa3f3de}} 
+G\+Luint {\bfseries get\+Vao\+ID} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a25e92fa495585a691c80be98fb1d9a98}\label{classflounder_1_1model_a25e92fa495585a691c80be98fb1d9a98}} 
+G\+Luint {\bfseries get\+Vao\+Length} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classflounder_1_1model_1_1builder}{builder} $\ast$ \hyperlink{classflounder_1_1model_a55bec80a4092dbe35c319c49d1d50ed8}{new\+Model} ()
+\begin{DoxyCompactList}\small\item\em Creates a new model builder that is used to configure a model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1model_a6a27604e53fce127b6f6da4fb4d74972}{model} (\hyperlink{classflounder_1_1model_1_1builder}{builder} $\ast$\hyperlink{classflounder_1_1model_1_1builder}{builder})
+\begin{DoxyCompactList}\small\item\em Creates a new model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a5cfec173aa5b5c45c9a7bfd85af43478}\label{classflounder_1_1model_a5cfec173aa5b5c45c9a7bfd85af43478}} 
+\hyperlink{classflounder_1_1model_1_1builder}{builder} $\ast$ {\bfseries m\+\_\+builder}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a176fa436cac56744160e1c2c8698a450}\label{classflounder_1_1model_a176fa436cac56744160e1c2c8698a450}} 
+std\+::string {\bfseries m\+\_\+file}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_af2bd62f69d8a22d555aa25c19864c466}\label{classflounder_1_1model_af2bd62f69d8a22d555aa25c19864c466}} 
+std\+::vector$<$ int $>$ $\ast$ {\bfseries m\+\_\+indices}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_af393e750e6079f663accbeae1302fbe2}\label{classflounder_1_1model_af393e750e6079f663accbeae1302fbe2}} 
+std\+::vector$<$ float $>$ $\ast$ {\bfseries m\+\_\+vertices}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a526a0012b1124f8aca381978a628a044}\label{classflounder_1_1model_a526a0012b1124f8aca381978a628a044}} 
+std\+::vector$<$ float $>$ $\ast$ {\bfseries m\+\_\+textures}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_ae7f461a9d7f7a0731d90db5861cfd219}\label{classflounder_1_1model_ae7f461a9d7f7a0731d90db5861cfd219}} 
+std\+::vector$<$ float $>$ $\ast$ {\bfseries m\+\_\+normals}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a22c6766cb5cdb737f37579630bbbb961}\label{classflounder_1_1model_a22c6766cb5cdb737f37579630bbbb961}} 
+std\+::vector$<$ float $>$ $\ast$ {\bfseries m\+\_\+tangents}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a95212f2754f856a37eb8c27aaa8dbf15}\label{classflounder_1_1model_a95212f2754f856a37eb8c27aaa8dbf15}} 
+\hyperlink{classflounder_1_1aabb}{aabb} $\ast$ {\bfseries m\+\_\+aabb}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a3ba4ffa3a5671c06e6935a96b127d092}\label{classflounder_1_1model_a3ba4ffa3a5671c06e6935a96b127d092}} 
+G\+Luint {\bfseries m\+\_\+vao\+ID}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a40ad8b92e750a578c0ec1072b1778da9}\label{classflounder_1_1model_a40ad8b92e750a578c0ec1072b1778da9}} 
+G\+Luint {\bfseries m\+\_\+vao\+Length}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a34c636bee22fcf36fa2a2fcfe0bdadb3}\label{classflounder_1_1model_a34c636bee22fcf36fa2a2fcfe0bdadb3}} 
+void {\bfseries load\+From\+File} (const std\+::string \&file)
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a24e81bf6b3ec2c428975e6419ebf18ca}\label{classflounder_1_1model_a24e81bf6b3ec2c428975e6419ebf18ca}} 
+\hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$ {\bfseries process\+Data\+Vertex} (\hyperlink{classflounder_1_1vector3}{vector3} vertex, std\+::vector$<$ \hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$$>$ $\ast$vertices, std\+::vector$<$ int $>$ $\ast$indices)
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_a2a5bafcc900a83c0add5b20d3f6ee0c0}\label{classflounder_1_1model_a2a5bafcc900a83c0add5b20d3f6ee0c0}} 
+\hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$ {\bfseries deal\+With\+Already\+Processed\+Data\+Vertex} (\hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$previous\+Vertex, const int \&new\+Texture\+Index, const int \&new\+Normal\+Index, std\+::vector$<$ int $>$ $\ast$indices, std\+::vector$<$ \hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$$>$ $\ast$vertices)
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_ad8eafa9f1c1afde95f7b4035a7e83f59}\label{classflounder_1_1model_ad8eafa9f1c1afde95f7b4035a7e83f59}} 
+void {\bfseries calculate\+Tangents} (\hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$v0, \hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$v1, \hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$v2, std\+::vector$<$ \hyperlink{classflounder_1_1vector2}{vector2} $>$ $\ast$textures)
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_acf5f1c0df19c406ff98214b376e0d997}\label{classflounder_1_1model_acf5f1c0df19c406ff98214b376e0d997}} 
+void {\bfseries load\+To\+Open\+GL} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1model_adc9de7f0f5a067bd1d1a775986bd3578}\label{classflounder_1_1model_adc9de7f0f5a067bd1d1a775986bd3578}} 
+void {\bfseries create\+A\+A\+BB} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class that represents a loaded model. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1model_a6a27604e53fce127b6f6da4fb4d74972}\label{classflounder_1_1model_a6a27604e53fce127b6f6da4fb4d74972}} 
+\index{flounder\+::model@{flounder\+::model}!model@{model}}
+\index{model@{model}!flounder\+::model@{flounder\+::model}}
+\subsubsection{\texorpdfstring{model()}{model()}}
+{\footnotesize\ttfamily flounder\+::model\+::model (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1model_1_1builder}{builder} $\ast$}]{builder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Creates a new model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & The models builder. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1model_a55bec80a4092dbe35c319c49d1d50ed8}\label{classflounder_1_1model_a55bec80a4092dbe35c319c49d1d50ed8}} 
+\index{flounder\+::model@{flounder\+::model}!new\+Model@{new\+Model}}
+\index{new\+Model@{new\+Model}!flounder\+::model@{flounder\+::model}}
+\subsubsection{\texorpdfstring{new\+Model()}{newModel()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1model_1_1builder}{model\+::builder} $\ast$ flounder\+::model\+::new\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new model builder that is used to configure a model. 
+
+\begin{DoxyReturn}{Returns}
+The model builder. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/models/model.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/models/model.\+cpp\end{DoxyCompactItemize}

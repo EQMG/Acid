@@ -1,0 +1,210 @@
+\hypertarget{classflounder_1_1ray}{}\section{flounder\+:\+:ray Class Reference}
+\label{classflounder_1_1ray}\index{flounder\+::ray@{flounder\+::ray}}
+
+
+Holds a 3 dimensional ray.  
+
+
+
+
+{\ttfamily \#include $<$ray.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1ray_adc2baacdaf66bd982c3b48827d53d103}{ray} (const bool \&use\+Mouse, \hyperlink{classflounder_1_1vector2}{vector2} $\ast$screen\+Start)
+\begin{DoxyCompactList}\small\item\em Creates a new 3D ray. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1ray_a22e1374c250bbad557f01428b95d7fe1}{$\sim$ray} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the ray. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1ray_a66cad92bcca61f25755e21b1d54edb99}{update} (\hyperlink{classflounder_1_1vector3}{vector3} $\ast$current\+Position, \hyperlink{classflounder_1_1vector2}{vector2} $\ast$mouse\+Position, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$view\+Matrix, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$projection\+Matrix)
+\begin{DoxyCompactList}\small\item\em Updates the ray to a new position. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1ray_ae13e7a6d1df979371e75e7f7cfcec130}{get\+Point\+On\+Ray} (const float \&distance, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Gets a point on the ray. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1ray_acaa86f1a2a66ab56e7854a4ea11160a7}{convert\+To\+Screen\+Space} (\hyperlink{classflounder_1_1vector3}{vector3} $\ast$position, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Converts a position from world space to screen space. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1ray_af0a3765b066ae26607ca7a8b905b3d0b}{get\+Origin} ()
+\begin{DoxyCompactList}\small\item\em Gets the rays origin. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1ray_a675aec0722a9db426b32f598fdd3157a}{get\+Current\+Ray} ()
+\begin{DoxyCompactList}\small\item\em Gets the current ray. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_a1a85163a820b3cd2f691dc6587f187d5}\label{classflounder_1_1ray_a1a85163a820b3cd2f691dc6587f187d5}} 
+void {\bfseries update\+Normalised\+Device\+Coordinates} (const float \&mouseX, const float \&mouseY)
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_a68cfbe54fdc766005edf19690cf5599c}\label{classflounder_1_1ray_a68cfbe54fdc766005edf19690cf5599c}} 
+void {\bfseries update\+Eye\+Coords} (\hyperlink{classflounder_1_1vector4}{vector4} $\ast$clip\+Coords)
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_a1005f85f5e2cb3c2eaced3049838f3da}\label{classflounder_1_1ray_a1005f85f5e2cb3c2eaced3049838f3da}} 
+void {\bfseries update\+World\+Coords} (\hyperlink{classflounder_1_1vector4}{vector4} $\ast$eye\+Coords)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_a29cb277f94777bb82494064d06a64e8d}\label{classflounder_1_1ray_a29cb277f94777bb82494064d06a64e8d}} 
+bool {\bfseries m\+\_\+use\+Mouse}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_a7fa26bf98a40e4dcae407ca32596c13f}\label{classflounder_1_1ray_a7fa26bf98a40e4dcae407ca32596c13f}} 
+\hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries m\+\_\+screen\+Start}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_ad62ceb6dffd9e46a2dd6233a3f4ba610}\label{classflounder_1_1ray_ad62ceb6dffd9e46a2dd6233a3f4ba610}} 
+\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ {\bfseries m\+\_\+view\+Matrix}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_a62131776d6440a0d5b55fa84907e8128}\label{classflounder_1_1ray_a62131776d6440a0d5b55fa84907e8128}} 
+\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ {\bfseries m\+\_\+projection\+Matrix}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_aea6b4658a11f84101113a76a3107851e}\label{classflounder_1_1ray_aea6b4658a11f84101113a76a3107851e}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+origin}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_ace55d10e8446f517a24ae9823255e24c}\label{classflounder_1_1ray_ace55d10e8446f517a24ae9823255e24c}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+current\+Ray}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_afc4d1ed6dd597f9b40d597d904a5dfa1}\label{classflounder_1_1ray_afc4d1ed6dd597f9b40d597d904a5dfa1}} 
+\hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries m\+\_\+normalized\+Coords}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_ab4558ebb27dac7df1e69866192badeba}\label{classflounder_1_1ray_ab4558ebb27dac7df1e69866192badeba}} 
+\hyperlink{classflounder_1_1vector4}{vector4} $\ast$ {\bfseries m\+\_\+clip\+Coords}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_a916df1a61e87ae25f6322b312509f47a}\label{classflounder_1_1ray_a916df1a61e87ae25f6322b312509f47a}} 
+\hyperlink{classflounder_1_1vector4}{vector4} $\ast$ {\bfseries m\+\_\+eye\+Coords}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_ae9ea495f09833c26124017cfbc13cb2e}\label{classflounder_1_1ray_ae9ea495f09833c26124017cfbc13cb2e}} 
+\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ {\bfseries m\+\_\+inverted\+Projection}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_abf3da66dbe2079a9cfe4eb09c2bb5f78}\label{classflounder_1_1ray_abf3da66dbe2079a9cfe4eb09c2bb5f78}} 
+\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ {\bfseries m\+\_\+inverted\+View}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_a219e9b5ea7681efc7e1ac98903a159ed}\label{classflounder_1_1ray_a219e9b5ea7681efc7e1ac98903a159ed}} 
+\hyperlink{classflounder_1_1vector4}{vector4} $\ast$ {\bfseries m\+\_\+ray\+World}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Holds a 3 dimensional ray. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1ray_adc2baacdaf66bd982c3b48827d53d103}\label{classflounder_1_1ray_adc2baacdaf66bd982c3b48827d53d103}} 
+\index{flounder\+::ray@{flounder\+::ray}!ray@{ray}}
+\index{ray@{ray}!flounder\+::ray@{flounder\+::ray}}
+\subsubsection{\texorpdfstring{ray()}{ray()}}
+{\footnotesize\ttfamily flounder\+::ray\+::ray (\begin{DoxyParamCaption}\item[{const bool \&}]{use\+Mouse,  }\item[{\hyperlink{classflounder_1_1vector2}{vector2} $\ast$}]{screen\+Start }\end{DoxyParamCaption})}
+
+
+
+Creates a new 3D ray. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em use\+Mouse} & If the ray will use the mouse coords or to start from screen\+Start. \\
+\hline
+{\em screen\+Start} & If use\+Mouse is false then this will be used as the rays start. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1ray_a22e1374c250bbad557f01428b95d7fe1}\label{classflounder_1_1ray_a22e1374c250bbad557f01428b95d7fe1}} 
+\index{flounder\+::ray@{flounder\+::ray}!````~ray@{$\sim$ray}}
+\index{````~ray@{$\sim$ray}!flounder\+::ray@{flounder\+::ray}}
+\subsubsection{\texorpdfstring{$\sim$ray()}{~ray()}}
+{\footnotesize\ttfamily flounder\+::ray\+::$\sim$ray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the ray. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1ray_acaa86f1a2a66ab56e7854a4ea11160a7}\label{classflounder_1_1ray_acaa86f1a2a66ab56e7854a4ea11160a7}} 
+\index{flounder\+::ray@{flounder\+::ray}!convert\+To\+Screen\+Space@{convert\+To\+Screen\+Space}}
+\index{convert\+To\+Screen\+Space@{convert\+To\+Screen\+Space}!flounder\+::ray@{flounder\+::ray}}
+\subsubsection{\texorpdfstring{convert\+To\+Screen\+Space()}{convertToScreenSpace()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ flounder\+::ray\+::convert\+To\+Screen\+Space (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{position,  }\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{destination }\end{DoxyParamCaption})}
+
+
+
+Converts a position from world space to screen space. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The position to convert. \\
+\hline
+{\em destination} & The destination point. X and Y being screen space coords and Z being the distance to the camera. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1ray_a675aec0722a9db426b32f598fdd3157a}\label{classflounder_1_1ray_a675aec0722a9db426b32f598fdd3157a}} 
+\index{flounder\+::ray@{flounder\+::ray}!get\+Current\+Ray@{get\+Current\+Ray}}
+\index{get\+Current\+Ray@{get\+Current\+Ray}!flounder\+::ray@{flounder\+::ray}}
+\subsubsection{\texorpdfstring{get\+Current\+Ray()}{getCurrentRay()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3}$\ast$ flounder\+::ray\+::get\+Current\+Ray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the current ray. 
+
+\begin{DoxyReturn}{Returns}
+The current ray. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1ray_af0a3765b066ae26607ca7a8b905b3d0b}\label{classflounder_1_1ray_af0a3765b066ae26607ca7a8b905b3d0b}} 
+\index{flounder\+::ray@{flounder\+::ray}!get\+Origin@{get\+Origin}}
+\index{get\+Origin@{get\+Origin}!flounder\+::ray@{flounder\+::ray}}
+\subsubsection{\texorpdfstring{get\+Origin()}{getOrigin()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3}$\ast$ flounder\+::ray\+::get\+Origin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the rays origin. 
+
+\begin{DoxyReturn}{Returns}
+The rays origin. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1ray_ae13e7a6d1df979371e75e7f7cfcec130}\label{classflounder_1_1ray_ae13e7a6d1df979371e75e7f7cfcec130}} 
+\index{flounder\+::ray@{flounder\+::ray}!get\+Point\+On\+Ray@{get\+Point\+On\+Ray}}
+\index{get\+Point\+On\+Ray@{get\+Point\+On\+Ray}!flounder\+::ray@{flounder\+::ray}}
+\subsubsection{\texorpdfstring{get\+Point\+On\+Ray()}{getPointOnRay()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ flounder\+::ray\+::get\+Point\+On\+Ray (\begin{DoxyParamCaption}\item[{const float \&}]{distance,  }\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{destination }\end{DoxyParamCaption})}
+
+
+
+Gets a point on the ray. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em distance} & Distance down the ray to sample. \\
+\hline
+{\em destination} & The destination vector, if null one will be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1ray_a66cad92bcca61f25755e21b1d54edb99}\label{classflounder_1_1ray_a66cad92bcca61f25755e21b1d54edb99}} 
+\index{flounder\+::ray@{flounder\+::ray}!update@{update}}
+\index{update@{update}!flounder\+::ray@{flounder\+::ray}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::ray\+::update (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{current\+Position,  }\item[{\hyperlink{classflounder_1_1vector2}{vector2} $\ast$}]{mouse\+Position,  }\item[{\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$}]{view\+Matrix,  }\item[{\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$}]{projection\+Matrix }\end{DoxyParamCaption})}
+
+
+
+Updates the ray to a new position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em current\+Position} & The new position. \\
+\hline
+{\em current\+Position} & The mouses xy screen space position. \\
+\hline
+{\em view\+Matrix} & The cameras view matrix. \\
+\hline
+{\em projection\+Matrix} & The projection view matrix. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/physics/ray.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/physics/ray.\+cpp\end{DoxyCompactItemize}
