@@ -1,7 +1,9 @@
 #pragma once
 
-#include <camera/iplayer.h>
-#include <framework/framework.h>
+#include "camera\iplayer.h"
+#include "framework\framework.h"
+
+#include "maths\maths.h"
 
 namespace flounder {
 	class mainplayer : 

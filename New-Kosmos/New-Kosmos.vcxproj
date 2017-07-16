@@ -19,6 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Flounder-Core\Flounder-Core.vcxproj">
+      <Project>{e58316b5-4d6c-4ee6-898e-de7bd1069a08}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\maincamera.cpp" />
     <ClCompile Include="src\maininstance.cpp" />
@@ -87,26 +92,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>
     </LinkIncremental>
-    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\.objs\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>
     </LinkIncremental>
-    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\.objs\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>
     </LinkIncremental>
-    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\.objs\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>
     </LinkIncremental>
-    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\.objs\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -114,26 +119,28 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Flounder-Core\src\;$(SolutionDir)external\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\includes;$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;Flounder Core.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Flounder-Core\bin\$(Configuration) $(Platform)\;$(SolutionDir)external\libs\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
       <Command>
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>XCOPY "$(LocalDebuggerWorkingDirectory)res"  "$(OutDir)\res\" /S /Y
-XCOPY "$(SolutionDir)Flounder-Core\res"  "$(OutDir)\res\" /S /Y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>
@@ -146,17 +153,18 @@ XCOPY "$(SolutionDir)Flounder-Core\res"  "$(OutDir)\res\" /S /Y</Command>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Flounder-Core\src\;$(SolutionDir)external\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\includes;$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;Flounder Core.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Flounder-Core\bin\$(Configuration) $(Platform)\;$(SolutionDir)external\libs\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
@@ -165,8 +173,8 @@ XCOPY "$(SolutionDir)Flounder-Core\res"  "$(OutDir)\res\" /S /Y</Command>
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>XCOPY "$(LocalDebuggerWorkingDirectory)res"  "$(OutDir)\res\" /S /Y
-XCOPY "$(SolutionDir)Flounder-Core\res"  "$(OutDir)\res\" /S /Y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>
@@ -181,27 +189,31 @@ XCOPY "$(SolutionDir)Flounder-Core\res"  "$(OutDir)\res\" /S /Y</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Flounder-Core\src\;$(SolutionDir)external\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\includes;$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;Flounder Core.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Flounder-Core\bin\$(Configuration) $(Platform)\;$(SolutionDir)external\libs\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>XCOPY "$(LocalDebuggerWorkingDirectory)res"  "$(OutDir)res\" /S /Y
+XCOPY "$(SolutionDir)Flounder-Core\res"  "$(OutDir)res\" /S /Y
+XCOPY "$(SolutionDir)external\dlls\$(PlatformTarget)"  "$(OutDir)" /S /Y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>XCOPY "$(LocalDebuggerWorkingDirectory)res"  "$(OutDir)\res\" /S /Y
-XCOPY "$(SolutionDir)Flounder-Core\res"  "$(OutDir)\res\" /S /Y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>
@@ -216,27 +228,31 @@ XCOPY "$(SolutionDir)Flounder-Core\res"  "$(OutDir)\res\" /S /Y</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Flounder-Core\src\;$(SolutionDir)external\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\includes;$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;Flounder Core.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Flounder-Core\bin\$(Configuration) $(Platform)\;$(SolutionDir)external\libs\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>XCOPY "$(LocalDebuggerWorkingDirectory)res"  "$(OutDir)res\" /S /Y
+XCOPY "$(SolutionDir)Flounder-Core\res"  "$(OutDir)res\" /S /Y
+XCOPY "$(SolutionDir)external\dlls\$(PlatformTarget)"  "$(OutDir)" /S /Y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>XCOPY "$(LocalDebuggerWorkingDirectory)res"  "$(OutDir)\res\" /S /Y
-XCOPY "$(SolutionDir)Flounder-Core\res"  "$(OutDir)\res\" /S /Y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>
