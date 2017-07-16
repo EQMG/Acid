@@ -33,7 +33,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebuglibs>false</UseDebuglibs>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -46,7 +46,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebuglibs>false</UseDebuglibs>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -71,24 +71,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Configuration) $(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)bin\$(Configuration) $(Platform)\$(ProjectName)\build\</IntDir>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Configuration) $(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)bin\$(Configuration) $(Platform)\$(ProjectName)\build\</IntDir>
-    <TargetExt>.dll</TargetExt>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\$(Configuration) $(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)bin\$(Configuration) $(Platform)\$(ProjectName)\build\</IntDir>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\$(Configuration) $(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)bin\$(Configuration) $(Platform)\$(ProjectName)\build\</IntDir>
-    <TargetExt>.dll</TargetExt>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(Platform)\.objs\</IntDir>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -101,7 +101,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -117,7 +117,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -140,7 +140,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -164,7 +164,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
