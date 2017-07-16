@@ -2,6 +2,7 @@
 
 #include <AL/al.h>
 #include <AL/alc.h>
+#include <AL/alut.h>
 
 #include "../camera/camera.h"
 #include "../framework/framework.h"
