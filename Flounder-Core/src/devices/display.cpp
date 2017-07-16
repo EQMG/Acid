@@ -131,15 +131,18 @@ namespace flounder {
 
 			if (data == NULL)
 			{
-				std::cerr << "Unable to load texture: " << data << std::endl;
+				std::cerr << "Unable to load texture: " << m_icon << std::endl;
+			}
+			else
+			{
+				GLFWimage icons[1];
+				icons[0].pixels = data;
+				icons[0].width = width;
+				icons[0].height = height;
+
+				glfwSetWindowIcon(m_window, 1, icons);
 			}
 
-			GLFWimage icons[1];
-			icons[0].pixels = data;
-			icons[0].width = width;
-			icons[0].height = height;
-
-			glfwSetWindowIcon(m_window, 1, icons);
 			stbi_image_free(data);
 		}
 

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <standards/istandard.h>
-#include <renderer/renderer.h>
+#include "standards/istandard.h"
+#include "renderer/renderer.h"
 
-#include <inputs/buttonkeyboard.h>
-#include <inputs/buttonmouse.h>
+#include "inputs/buttonkeyboard.h"
+#include "inputs/buttonmouse.h"
 
 namespace flounder {
 	class maininstance : public istandard

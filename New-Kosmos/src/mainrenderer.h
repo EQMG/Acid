@@ -1,15 +1,15 @@
 #pragma once
 
-#include <renderer/irenderermaster.h>
-#include <renderer/renderer.h>
+#include "renderer/irenderermaster.h"
+#include "renderer/renderer.h"
 
-#include <devices/keyboard.h>
-#include <deferred/deferredrenderer.h>
-#include <fbos/fbo.h>
-#include <post/filters/filterfxaa.h>
-#include <post/filters/filtergrain.h>
-#include <post/filters/filtercrt.h>
-#include <skybox/rendererskybox.h>
+#include "devices/keyboard.h"
+#include "deferred/deferredrenderer.h"
+#include "fbos/fbo.h"
+#include "post/filters/filterfxaa.h"
+#include "post/filters/filtergrain.h"
+#include "post/filters/filtercrt.h"
+#include "skybox/rendererskybox.h"
 
 namespace flounder {
 	class mainrenderer : public irenderermaster
