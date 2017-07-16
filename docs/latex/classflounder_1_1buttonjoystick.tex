@@ -1,0 +1,122 @@
+\hypertarget{classflounder_1_1buttonjoystick}{}\section{flounder\+:\+:buttonjoystick Class Reference}
+\label{classflounder_1_1buttonjoystick}\index{flounder\+::buttonjoystick@{flounder\+::buttonjoystick}}
+
+
+Button from a joystick.  
+
+
+
+
+{\ttfamily \#include $<$buttonjoystick.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:buttonjoystick\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1buttonjoystick}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1buttonjoystick_a1b31996ff3588c033e85839aef2d35c8}{buttonjoystick} (const int \&joystick, const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Creates a new button joystick. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1buttonjoystick_aece2e8931c528cef0a266f17b2eba88b}{$\sim$buttonjoystick} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the button joystick. \end{DoxyCompactList}\item 
+bool \hyperlink{classflounder_1_1buttonjoystick_ab6682d3554e007ef473c4595339f86f1}{is\+Down} () override
+\begin{DoxyCompactList}\small\item\em Returns whether this button is currently pressed. \end{DoxyCompactList}\item 
+bool \hyperlink{classflounder_1_1buttonjoystick_a99302b1345fa773ec839290ae6c406e7}{was\+Down} () override
+\begin{DoxyCompactList}\small\item\em Gets if the key is down and was not down before. Key press recognized as one click. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1buttonjoystick_a3a6e21dff8b11ac6a58cfae4d33093ab}\label{classflounder_1_1buttonjoystick_a3a6e21dff8b11ac6a58cfae4d33093ab}} 
+int {\bfseries m\+\_\+joystick}
+\item 
+\mbox{\Hypertarget{classflounder_1_1buttonjoystick_a2fa5decb08acdaf813707747bfccccd9}\label{classflounder_1_1buttonjoystick_a2fa5decb08acdaf813707747bfccccd9}} 
+int {\bfseries m\+\_\+count}
+\item 
+\mbox{\Hypertarget{classflounder_1_1buttonjoystick_ad7f15d3fc515ec73cbbb755883c5dd0e}\label{classflounder_1_1buttonjoystick_ad7f15d3fc515ec73cbbb755883c5dd0e}} 
+int $\ast$ {\bfseries m\+\_\+buttons}
+\item 
+\mbox{\Hypertarget{classflounder_1_1buttonjoystick_a2338ec61fb31f2299d7373faedf33d24}\label{classflounder_1_1buttonjoystick_a2338ec61fb31f2299d7373faedf33d24}} 
+bool {\bfseries m\+\_\+was\+Down}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Button from a joystick. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1buttonjoystick_a1b31996ff3588c033e85839aef2d35c8}\label{classflounder_1_1buttonjoystick_a1b31996ff3588c033e85839aef2d35c8}} 
+\index{flounder\+::buttonjoystick@{flounder\+::buttonjoystick}!buttonjoystick@{buttonjoystick}}
+\index{buttonjoystick@{buttonjoystick}!flounder\+::buttonjoystick@{flounder\+::buttonjoystick}}
+\subsubsection{\texorpdfstring{buttonjoystick()}{buttonjoystick()}}
+{\footnotesize\ttfamily flounder\+::buttonjoystick\+::buttonjoystick (\begin{DoxyParamCaption}\item[{const int \&}]{joystick,  }\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new button joystick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick} & The joystick. Should be one of the G\+L\+F\+W.\+J\+O\+Y\+S\+T\+I\+CK values. \\
+\hline
+{\em n\+\_\+args} & The number buttons of joystick buttons being checked. \\
+\hline
+{\em ...} & The buttons on the joystick being checked. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1buttonjoystick_aece2e8931c528cef0a266f17b2eba88b}\label{classflounder_1_1buttonjoystick_aece2e8931c528cef0a266f17b2eba88b}} 
+\index{flounder\+::buttonjoystick@{flounder\+::buttonjoystick}!````~buttonjoystick@{$\sim$buttonjoystick}}
+\index{````~buttonjoystick@{$\sim$buttonjoystick}!flounder\+::buttonjoystick@{flounder\+::buttonjoystick}}
+\subsubsection{\texorpdfstring{$\sim$buttonjoystick()}{~buttonjoystick()}}
+{\footnotesize\ttfamily flounder\+::buttonjoystick\+::$\sim$buttonjoystick (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Deconstructor for the button joystick. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1buttonjoystick_ab6682d3554e007ef473c4595339f86f1}\label{classflounder_1_1buttonjoystick_ab6682d3554e007ef473c4595339f86f1}} 
+\index{flounder\+::buttonjoystick@{flounder\+::buttonjoystick}!is\+Down@{is\+Down}}
+\index{is\+Down@{is\+Down}!flounder\+::buttonjoystick@{flounder\+::buttonjoystick}}
+\subsubsection{\texorpdfstring{is\+Down()}{isDown()}}
+{\footnotesize\ttfamily bool flounder\+::buttonjoystick\+::is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns whether this button is currently pressed. 
+
+\begin{DoxyReturn}{Returns}
+True if the button is pressed, false otherwise. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1ibutton_ab64fd22a75ea66ce67fd9b1ad34fd837}{flounder\+::ibutton}.
+
+\mbox{\Hypertarget{classflounder_1_1buttonjoystick_a99302b1345fa773ec839290ae6c406e7}\label{classflounder_1_1buttonjoystick_a99302b1345fa773ec839290ae6c406e7}} 
+\index{flounder\+::buttonjoystick@{flounder\+::buttonjoystick}!was\+Down@{was\+Down}}
+\index{was\+Down@{was\+Down}!flounder\+::buttonjoystick@{flounder\+::buttonjoystick}}
+\subsubsection{\texorpdfstring{was\+Down()}{wasDown()}}
+{\footnotesize\ttfamily bool flounder\+::buttonjoystick\+::was\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets if the key is down and was not down before. Key press recognized as one click. 
+
+\begin{DoxyReturn}{Returns}
+Is the key down and was not down before? 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1ibutton_a5fb7b3493c0ea0e67bb9defc272da0d3}{flounder\+::ibutton}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/inputs/buttonjoystick.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,61 @@
+\hypertarget{classflounder_1_1ipostpipeline}{}\section{flounder\+:\+:ipostpipeline Class Reference}
+\label{classflounder_1_1ipostpipeline}\index{flounder\+::ipostpipeline@{flounder\+::ipostpipeline}}
+
+
+Represents a system of post effects.  
+
+
+
+
+{\ttfamily \#include $<$ipostpipeline.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}{render\+Pipeline} (const int n\+\_\+args,...)=0
+\begin{DoxyCompactList}\small\item\em Renders the post pipeline. \end{DoxyCompactList}\item 
+virtual fbo $\ast$ \hyperlink{classflounder_1_1ipostpipeline_a08f5d19b9652528337b73c2f4e0e4258}{get\+Output} ()=0
+\begin{DoxyCompactList}\small\item\em Gets the fbo containing the pipeline output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a system of post effects. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1ipostpipeline_a08f5d19b9652528337b73c2f4e0e4258}\label{classflounder_1_1ipostpipeline_a08f5d19b9652528337b73c2f4e0e4258}} 
+\index{flounder\+::ipostpipeline@{flounder\+::ipostpipeline}!get\+Output@{get\+Output}}
+\index{get\+Output@{get\+Output}!flounder\+::ipostpipeline@{flounder\+::ipostpipeline}}
+\subsubsection{\texorpdfstring{get\+Output()}{getOutput()}}
+{\footnotesize\ttfamily virtual fbo$\ast$ flounder\+::ipostpipeline\+::get\+Output (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the fbo containing the pipeline output. 
+
+\begin{DoxyReturn}{Returns}
+The output fbo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}\label{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}} 
+\index{flounder\+::ipostpipeline@{flounder\+::ipostpipeline}!render\+Pipeline@{render\+Pipeline}}
+\index{render\+Pipeline@{render\+Pipeline}!flounder\+::ipostpipeline@{flounder\+::ipostpipeline}}
+\subsubsection{\texorpdfstring{render\+Pipeline()}{renderPipeline()}}
+{\footnotesize\ttfamily virtual void flounder\+::ipostpipeline\+::render\+Pipeline (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Renders the post pipeline. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being sent to the pipeline. \\
+\hline
+{\em textures} & A list of textures in indexed order to be bound for the shader program. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/post/ipostpipeline.\+h\end{DoxyCompactItemize}

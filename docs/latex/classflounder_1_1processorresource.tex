@@ -1,0 +1,95 @@
+\hypertarget{classflounder_1_1processorresource}{}\section{flounder\+:\+:processorresource Class Reference}
+\label{classflounder_1_1processorresource}\index{flounder\+::processorresource@{flounder\+::processorresource}}
+
+
+A extension that is responsible for processing resource requests.  
+
+
+
+
+{\ttfamily \#include $<$processorresource.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:processorresource\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1processorresource}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classflounder_1_1processorresource_afaeb27a9673c1f9b4366b537b7c0d377}{update} () override
+\begin{DoxyCompactList}\small\item\em Run when updating the processor. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1processorresource_a4ae0dda615f98e93faadda22e74d61e2}{add\+Request\+To\+Queue} (\hyperlink{classflounder_1_1irequest}{irequest} $\ast$request) override
+\begin{DoxyCompactList}\small\item\em Used to add a request into the processor. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1processorresource_afde339d8e44544307abd585e8294fa85}{complete\+All\+Requests} ()
+\begin{DoxyCompactList}\small\item\em Completes all requests left in queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1processorresource_a4354aede707e752eba415c76f19ec104}\label{classflounder_1_1processorresource_a4354aede707e752eba415c76f19ec104}} 
+\hyperlink{classflounder_1_1queue}{queue}$<$ \hyperlink{classflounder_1_1requestresource}{requestresource} $\ast$ $>$ $\ast$ {\bfseries m\+\_\+queue}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1processorresource_a917c9a6b5d8f009ede0ce05b237aed09}\label{classflounder_1_1processorresource_a917c9a6b5d8f009ede0ce05b237aed09}} 
+static const double {\bfseries M\+A\+X\+\_\+\+T\+I\+M\+E\+\_\+\+M\+I\+L\+L\+IS} = 8.\+0f
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A extension that is responsible for processing resource requests. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1processorresource_a4ae0dda615f98e93faadda22e74d61e2}\label{classflounder_1_1processorresource_a4ae0dda615f98e93faadda22e74d61e2}} 
+\index{flounder\+::processorresource@{flounder\+::processorresource}!add\+Request\+To\+Queue@{add\+Request\+To\+Queue}}
+\index{add\+Request\+To\+Queue@{add\+Request\+To\+Queue}!flounder\+::processorresource@{flounder\+::processorresource}}
+\subsubsection{\texorpdfstring{add\+Request\+To\+Queue()}{addRequestToQueue()}}
+{\footnotesize\ttfamily void flounder\+::processorresource\+::add\+Request\+To\+Queue (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1irequest}{irequest} $\ast$}]{request }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Used to add a request into the processor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & The request object to add to the que. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classflounder_1_1iprocessor_ad721814a6a2c69f526527c7b2f57a11b}{flounder\+::iprocessor}.
+
+\mbox{\Hypertarget{classflounder_1_1processorresource_afde339d8e44544307abd585e8294fa85}\label{classflounder_1_1processorresource_afde339d8e44544307abd585e8294fa85}} 
+\index{flounder\+::processorresource@{flounder\+::processorresource}!complete\+All\+Requests@{complete\+All\+Requests}}
+\index{complete\+All\+Requests@{complete\+All\+Requests}!flounder\+::processorresource@{flounder\+::processorresource}}
+\subsubsection{\texorpdfstring{complete\+All\+Requests()}{completeAllRequests()}}
+{\footnotesize\ttfamily void flounder\+::processorresource\+::complete\+All\+Requests (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Completes all requests left in queue. 
+
+\mbox{\Hypertarget{classflounder_1_1processorresource_afaeb27a9673c1f9b4366b537b7c0d377}\label{classflounder_1_1processorresource_afaeb27a9673c1f9b4366b537b7c0d377}} 
+\index{flounder\+::processorresource@{flounder\+::processorresource}!update@{update}}
+\index{update@{update}!flounder\+::processorresource@{flounder\+::processorresource}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::processorresource\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Run when updating the processor. 
+
+
+
+Implements \hyperlink{classflounder_1_1iprocessor_ad2edfece3465ec3dbe0a5feac26bdbc3}{flounder\+::iprocessor}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/processing/resource/processorresource.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/processing/resource/processorresource.\+cpp\end{DoxyCompactItemize}

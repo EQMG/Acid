@@ -1,0 +1,694 @@
+\hypertarget{classflounder_1_1vector4}{}\section{flounder\+:\+:vector4 Class Reference}
+\label{classflounder_1_1vector4}\index{flounder\+::vector4@{flounder\+::vector4}}
+
+
+Holds a 4-\/tuple vector.  
+
+
+
+
+{\ttfamily \#include $<$vector4.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1vector4_ab2f9a25788fea44dcf9c748af1302897}{vector4} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{classflounder_1_1vector4}{vector4}. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector4_aa319f876f373f25cd5ffa25dc92566c8}{vector4} (const float \&x, const float \&y, const float \&z, const float \&w)
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{classflounder_1_1vector4}{vector4}. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector4_af14114413eaf1ec39718c0045cbb3b6c}{vector4} (const \hyperlink{classflounder_1_1vector4}{vector4} \&source)
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{classflounder_1_1vector4}{vector4}. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector4_af9e1d52c2640d3b0128ee619e07d50ce}{$\sim$vector4} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for \hyperlink{classflounder_1_1vector4}{vector4}. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_a3a3f14d68f1339830065a542efc18bbb}{set} (const float \&x, const float \&y, const float \&z, const float \&w)
+\begin{DoxyCompactList}\small\item\em Sets values in the vector. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_a57a89cbc720c8d7c439d915fddf03048}{set} (const \hyperlink{classflounder_1_1vector4}{vector4} \&source)
+\begin{DoxyCompactList}\small\item\em Loads from another \hyperlink{classflounder_1_1vector4}{vector4}. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_a3aa7c17918a15e289b0ae6b77a4cb27d}{translate} (const float \&x, const float \&y, const float \&z, const float \&w)
+\begin{DoxyCompactList}\small\item\em Translates this vector. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_a024aa43916f5c77623010019e31c5791}{negate} ()
+\begin{DoxyCompactList}\small\item\em Negates this vector. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_aa9eec0ab63428f78de24ac90f2a20206}{normalize} ()
+\begin{DoxyCompactList}\small\item\em Normalizes this vector. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_af31ae2dc6c068dd8ca5f831418e61d0f}{scale} (const float \&scalar)
+\begin{DoxyCompactList}\small\item\em Scales this vector. \end{DoxyCompactList}\item 
+bool \hyperlink{classflounder_1_1vector4_a5671fd3884e240a005b1e870040b17ed}{is\+Zero} ()
+\begin{DoxyCompactList}\small\item\em Gets if all the components to the vector are zero. \end{DoxyCompactList}\item 
+float \hyperlink{classflounder_1_1vector4_ad21f01ec6397b385f7aef3335726fb25}{length} ()
+\begin{DoxyCompactList}\small\item\em Gets the length of the vector. \end{DoxyCompactList}\item 
+float \hyperlink{classflounder_1_1vector4_a335e6cb17910722580079ff41bf352f1}{length\+Squared} ()
+\begin{DoxyCompactList}\small\item\em Gets the length squared of the vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_a2171bb079fe5452b29bf8e8cfda37cfc}{add} (const \hyperlink{classflounder_1_1vector4}{vector4} \&left, const \hyperlink{classflounder_1_1vector4}{vector4} \&right, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Adds two vectors together and places the result in the destination vector. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_ace85efb2fa107a044262f171c710d0aa}{subtract} (const \hyperlink{classflounder_1_1vector4}{vector4} \&left, const \hyperlink{classflounder_1_1vector4}{vector4} \&right, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Subtracts two vectors from each other and places the result in the destination vector. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_ab19ea20a89c5c50ef7220a082ba99e85}{multiply} (const \hyperlink{classflounder_1_1vector4}{vector4} \&left, const \hyperlink{classflounder_1_1vector4}{vector4} \&right, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Multiplies two vectors from each other and places the result in the destination vector. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_a6b1441973022af2df2de1aa886c9f370}{divide} (const \hyperlink{classflounder_1_1vector4}{vector4} \&left, const \hyperlink{classflounder_1_1vector4}{vector4} \&right, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Divides two vectors from each other and places the result in the destination vector. \end{DoxyCompactList}\item 
+static float \hyperlink{classflounder_1_1vector4_af942da47d6d34b4159da4911f36dcff2}{angle} (const \hyperlink{classflounder_1_1vector4}{vector4} \&left, const \hyperlink{classflounder_1_1vector4}{vector4} \&right)
+\begin{DoxyCompactList}\small\item\em Calculates the angle between two vectors. \end{DoxyCompactList}\item 
+static float \hyperlink{classflounder_1_1vector4_a6ee7f029c5143428d421d404461a4a5b}{dot} (const \hyperlink{classflounder_1_1vector4}{vector4} \&left, const \hyperlink{classflounder_1_1vector4}{vector4} \&right)
+\begin{DoxyCompactList}\small\item\em Calculates the dot product of the two vectors. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_a5b5371c3619896e32b0332a336a10ee3}{scale} (const \hyperlink{classflounder_1_1vector4}{vector4} \&source, const float \&scalar, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Scales a vector by a scalar and places the result in the destination vector. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_a32652955e52bc37f0aa83dbcd86ca432}{negate} (const \hyperlink{classflounder_1_1vector4}{vector4} \&source, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Negates a vector and places the result in the destination vector. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_a9e6b492a08b3e69b63badb88dada1129}{normalize} (const \hyperlink{classflounder_1_1vector4}{vector4} \&source, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Normalizes a vector and places the result in the destination vector. \end{DoxyCompactList}\item 
+static float \hyperlink{classflounder_1_1vector4_a0e726e01876f3383d857fa6c4e45c293}{length} (const \hyperlink{classflounder_1_1vector4}{vector4} \&source)
+\begin{DoxyCompactList}\small\item\em Gets the length of the vector. \end{DoxyCompactList}\item 
+static float \hyperlink{classflounder_1_1vector4_a39b1fe0dc549e692807b92b757c5fb95}{length\+Squared} (const \hyperlink{classflounder_1_1vector4}{vector4} \&source)
+\begin{DoxyCompactList}\small\item\em Gets the length of the vector. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_ab54994d53838a60f6cfa2519b931974e}{max\+Vector} (const \hyperlink{classflounder_1_1vector4}{vector4} \&a, const \hyperlink{classflounder_1_1vector4}{vector4} \&b, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Gets the maximum vector size. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_afa41f2596ff30b2a840ee4c7ab7d571c}{min\+Vector} (const \hyperlink{classflounder_1_1vector4}{vector4} \&a, const \hyperlink{classflounder_1_1vector4}{vector4} \&b, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Gets the lowest vector size. \end{DoxyCompactList}\item 
+static float \hyperlink{classflounder_1_1vector4_ae9825f135cc1cefd981779b7df9bf1f6}{max\+Component} (const \hyperlink{classflounder_1_1vector4}{vector4} \&vector)
+\begin{DoxyCompactList}\small\item\em Gets the maximum value in a vector. \end{DoxyCompactList}\item 
+static float \hyperlink{classflounder_1_1vector4_af80703e6424fc955beb942b9af78e934}{min\+Component} (const \hyperlink{classflounder_1_1vector4}{vector4} \&vector)
+\begin{DoxyCompactList}\small\item\em Gets the lowest value in a vector. \end{DoxyCompactList}\item 
+static float \hyperlink{classflounder_1_1vector4_a09dce41520478186f5afd2bef8290776}{get\+Distance\+Squared} (const \hyperlink{classflounder_1_1vector4}{vector4} \&point1, const \hyperlink{classflounder_1_1vector4}{vector4} \&point2)
+\begin{DoxyCompactList}\small\item\em Gets the distance between two points squared. \end{DoxyCompactList}\item 
+static float \hyperlink{classflounder_1_1vector4_a24128e65e05cc5430c905349b859dfc1}{get\+Distance} (const \hyperlink{classflounder_1_1vector4}{vector4} \&point1, const \hyperlink{classflounder_1_1vector4}{vector4} \&point2)
+\begin{DoxyCompactList}\small\item\em Gets the total distance between 2 vectors. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_a211be3c7da1bdc5a2b71661b291e140d}{get\+Vector\+Distance} (const \hyperlink{classflounder_1_1vector4}{vector4} \&point1, const \hyperlink{classflounder_1_1vector4}{vector4} \&point2, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Gets the vector distance between 2 vectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vector4_affb861c081e42dbb5c2f63ecf4f07bb9}\label{classflounder_1_1vector4_affb861c081e42dbb5c2f63ecf4f07bb9}} 
+float {\bfseries x}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vector4_a7dd1786ca39496a55ef6c4244020aa3b}\label{classflounder_1_1vector4_a7dd1786ca39496a55ef6c4244020aa3b}} 
+float {\bfseries y}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vector4_acff3319d224de3df57866b985291a398}\label{classflounder_1_1vector4_acff3319d224de3df57866b985291a398}} 
+float {\bfseries z}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vector4_ad4e06ca3f8c633a0b7422559a9d1f8bd}\label{classflounder_1_1vector4_ad4e06ca3f8c633a0b7422559a9d1f8bd}} 
+float {\bfseries w}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Holds a 4-\/tuple vector. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1vector4_ab2f9a25788fea44dcf9c748af1302897}\label{classflounder_1_1vector4_ab2f9a25788fea44dcf9c748af1302897}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!vector4@{vector4}}
+\index{vector4@{vector4}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{vector4()}{vector4()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily flounder\+::vector4\+::vector4 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for \hyperlink{classflounder_1_1vector4}{vector4}. 
+
+\mbox{\Hypertarget{classflounder_1_1vector4_aa319f876f373f25cd5ffa25dc92566c8}\label{classflounder_1_1vector4_aa319f876f373f25cd5ffa25dc92566c8}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!vector4@{vector4}}
+\index{vector4@{vector4}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{vector4()}{vector4()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily flounder\+::vector4\+::vector4 (\begin{DoxyParamCaption}\item[{const float \&}]{x,  }\item[{const float \&}]{y,  }\item[{const float \&}]{z,  }\item[{const float \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Constructor for \hyperlink{classflounder_1_1vector4}{vector4}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Start x. \\
+\hline
+{\em y} & Start y. \\
+\hline
+{\em z} & Start z. \\
+\hline
+{\em w} & Start w. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1vector4_af14114413eaf1ec39718c0045cbb3b6c}\label{classflounder_1_1vector4_af14114413eaf1ec39718c0045cbb3b6c}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!vector4@{vector4}}
+\index{vector4@{vector4}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{vector4()}{vector4()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily flounder\+::vector4\+::vector4 (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Constructor for \hyperlink{classflounder_1_1vector4}{vector4}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Creates this vector out of a existing one. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1vector4_af9e1d52c2640d3b0128ee619e07d50ce}\label{classflounder_1_1vector4_af9e1d52c2640d3b0128ee619e07d50ce}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!````~vector4@{$\sim$vector4}}
+\index{````~vector4@{$\sim$vector4}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{$\sim$vector4()}{~vector4()}}
+{\footnotesize\ttfamily flounder\+::vector4\+::$\sim$vector4 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for \hyperlink{classflounder_1_1vector4}{vector4}. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1vector4_a2171bb079fe5452b29bf8e8cfda37cfc}\label{classflounder_1_1vector4_a2171bb079fe5452b29bf8e8cfda37cfc}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!add@{add}}
+\index{add@{add}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::add (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{right,  }\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Adds two vectors together and places the result in the destination vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source vector. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+{\em destination} & The destination vector or null if a new vector is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_af942da47d6d34b4159da4911f36dcff2}\label{classflounder_1_1vector4_af942da47d6d34b4159da4911f36dcff2}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!angle@{angle}}
+\index{angle@{angle}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{angle()}{angle()}}
+{\footnotesize\ttfamily float flounder\+::vector4\+::angle (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Calculates the angle between two vectors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source vector. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The angle between the two vectors, in radians. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a6b1441973022af2df2de1aa886c9f370}\label{classflounder_1_1vector4_a6b1441973022af2df2de1aa886c9f370}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!divide@{divide}}
+\index{divide@{divide}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{divide()}{divide()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::divide (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{right,  }\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Divides two vectors from each other and places the result in the destination vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source vector. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+{\em destination} & The destination vector or null if a new vector is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a6ee7f029c5143428d421d404461a4a5b}\label{classflounder_1_1vector4_a6ee7f029c5143428d421d404461a4a5b}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!dot@{dot}}
+\index{dot@{dot}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{dot()}{dot()}}
+{\footnotesize\ttfamily float flounder\+::vector4\+::dot (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{right }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Calculates the dot product of the two vectors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source vector. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Left dot right. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a24128e65e05cc5430c905349b859dfc1}\label{classflounder_1_1vector4_a24128e65e05cc5430c905349b859dfc1}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!get\+Distance@{get\+Distance}}
+\index{get\+Distance@{get\+Distance}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{get\+Distance()}{getDistance()}}
+{\footnotesize\ttfamily float flounder\+::vector4\+::get\+Distance (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{point1,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{point2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the total distance between 2 vectors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em point1} & The first point. \\
+\hline
+{\em point2} & The second point. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The total distance between the points. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a09dce41520478186f5afd2bef8290776}\label{classflounder_1_1vector4_a09dce41520478186f5afd2bef8290776}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!get\+Distance\+Squared@{get\+Distance\+Squared}}
+\index{get\+Distance\+Squared@{get\+Distance\+Squared}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{get\+Distance\+Squared()}{getDistanceSquared()}}
+{\footnotesize\ttfamily float flounder\+::vector4\+::get\+Distance\+Squared (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{point1,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{point2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the distance between two points squared. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em point1} & The first point. \\
+\hline
+{\em point2} & The second point. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The squared distance between the two points. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a211be3c7da1bdc5a2b71661b291e140d}\label{classflounder_1_1vector4_a211be3c7da1bdc5a2b71661b291e140d}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!get\+Vector\+Distance@{get\+Vector\+Distance}}
+\index{get\+Vector\+Distance@{get\+Vector\+Distance}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{get\+Vector\+Distance()}{getVectorDistance()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::get\+Vector\+Distance (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{point1,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{point2,  }\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the vector distance between 2 vectors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em point1} & The first point. \\
+\hline
+{\em point2} & The second point. \\
+\hline
+{\em destination} & The destination vector or null if a new vector is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The vector distance between the points. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a5671fd3884e240a005b1e870040b17ed}\label{classflounder_1_1vector4_a5671fd3884e240a005b1e870040b17ed}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!is\+Zero@{is\+Zero}}
+\index{is\+Zero@{is\+Zero}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{is\+Zero()}{isZero()}}
+{\footnotesize\ttfamily bool flounder\+::vector4\+::is\+Zero (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets if all the components to the vector are zero. 
+
+\begin{DoxyReturn}{Returns}
+If the vector is zero. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a0e726e01876f3383d857fa6c4e45c293}\label{classflounder_1_1vector4_a0e726e01876f3383d857fa6c4e45c293}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!length@{length}}
+\index{length@{length}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{length()}{length()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float flounder\+::vector4\+::length (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the length of the vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The length of the vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_ad21f01ec6397b385f7aef3335726fb25}\label{classflounder_1_1vector4_ad21f01ec6397b385f7aef3335726fb25}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!length@{length}}
+\index{length@{length}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{length()}{length()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float flounder\+::vector4\+::length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the length of the vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The length of the vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a39b1fe0dc549e692807b92b757c5fb95}\label{classflounder_1_1vector4_a39b1fe0dc549e692807b92b757c5fb95}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!length\+Squared@{length\+Squared}}
+\index{length\+Squared@{length\+Squared}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{length\+Squared()}{lengthSquared()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float flounder\+::vector4\+::length\+Squared (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the length of the vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The length squared of the vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a335e6cb17910722580079ff41bf352f1}\label{classflounder_1_1vector4_a335e6cb17910722580079ff41bf352f1}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!length\+Squared@{length\+Squared}}
+\index{length\+Squared@{length\+Squared}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{length\+Squared()}{lengthSquared()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float flounder\+::vector4\+::length\+Squared (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the length squared of the vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The length squared of the vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_ae9825f135cc1cefd981779b7df9bf1f6}\label{classflounder_1_1vector4_ae9825f135cc1cefd981779b7df9bf1f6}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!max\+Component@{max\+Component}}
+\index{max\+Component@{max\+Component}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{max\+Component()}{maxComponent()}}
+{\footnotesize\ttfamily float flounder\+::vector4\+::max\+Component (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{vector }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the maximum value in a vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vector} & The value to get the maximum value from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The maximum value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_ab54994d53838a60f6cfa2519b931974e}\label{classflounder_1_1vector4_ab54994d53838a60f6cfa2519b931974e}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!max\+Vector@{max\+Vector}}
+\index{max\+Vector@{max\+Vector}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{max\+Vector()}{maxVector()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::max\+Vector (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{a,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{b,  }\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the maximum vector size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The first vector to get values from. \\
+\hline
+{\em b} & The second vector to get values from. \\
+\hline
+{\em destination} & The destination vector or null if a new vector is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_af80703e6424fc955beb942b9af78e934}\label{classflounder_1_1vector4_af80703e6424fc955beb942b9af78e934}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!min\+Component@{min\+Component}}
+\index{min\+Component@{min\+Component}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{min\+Component()}{minComponent()}}
+{\footnotesize\ttfamily float flounder\+::vector4\+::min\+Component (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{vector }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the lowest value in a vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vector} & The value to get the lowest value from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The lowest value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_afa41f2596ff30b2a840ee4c7ab7d571c}\label{classflounder_1_1vector4_afa41f2596ff30b2a840ee4c7ab7d571c}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!min\+Vector@{min\+Vector}}
+\index{min\+Vector@{min\+Vector}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{min\+Vector()}{minVector()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::min\+Vector (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{a,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{b,  }\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the lowest vector size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The first vector to get values from. \\
+\hline
+{\em b} & The second vector to get values from. \\
+\hline
+{\em destination} & The destination vector or null if a new vector is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_ab19ea20a89c5c50ef7220a082ba99e85}\label{classflounder_1_1vector4_ab19ea20a89c5c50ef7220a082ba99e85}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!multiply@{multiply}}
+\index{multiply@{multiply}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{multiply()}{multiply()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::multiply (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{right,  }\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Multiplies two vectors from each other and places the result in the destination vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source vector. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+{\em destination} & The destination vector or null if a new vector is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a32652955e52bc37f0aa83dbcd86ca432}\label{classflounder_1_1vector4_a32652955e52bc37f0aa83dbcd86ca432}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!negate@{negate}}
+\index{negate@{negate}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{negate()}{negate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::negate (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{source,  }\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Negates a vector and places the result in the destination vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source vector. \\
+\hline
+{\em destination} & The destination vector or null if a new vector is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a024aa43916f5c77623010019e31c5791}\label{classflounder_1_1vector4_a024aa43916f5c77623010019e31c5791}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!negate@{negate}}
+\index{negate@{negate}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{negate()}{negate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::negate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Negates this vector. 
+
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a9e6b492a08b3e69b63badb88dada1129}\label{classflounder_1_1vector4_a9e6b492a08b3e69b63badb88dada1129}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!normalize@{normalize}}
+\index{normalize@{normalize}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{normalize()}{normalize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::normalize (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{source,  }\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Normalizes a vector and places the result in the destination vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source vector. \\
+\hline
+{\em destination} & The destination vector or null if a new vector is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_aa9eec0ab63428f78de24ac90f2a20206}\label{classflounder_1_1vector4_aa9eec0ab63428f78de24ac90f2a20206}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!normalize@{normalize}}
+\index{normalize@{normalize}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{normalize()}{normalize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::normalize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Normalizes this vector. 
+
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a5b5371c3619896e32b0332a336a10ee3}\label{classflounder_1_1vector4_a5b5371c3619896e32b0332a336a10ee3}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!scale@{scale}}
+\index{scale@{scale}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{scale()}{scale()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::scale (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{source,  }\item[{const float \&}]{scalar,  }\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Scales a vector by a scalar and places the result in the destination vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source vector. \\
+\hline
+{\em scalar} & The scalar value. \\
+\hline
+{\em destination} & The destination vector or null if a new vector is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_af31ae2dc6c068dd8ca5f831418e61d0f}\label{classflounder_1_1vector4_af31ae2dc6c068dd8ca5f831418e61d0f}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!scale@{scale}}
+\index{scale@{scale}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{scale()}{scale()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::scale (\begin{DoxyParamCaption}\item[{const float \&}]{scalar }\end{DoxyParamCaption})}
+
+
+
+Scales this vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scalar} & The scale factor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a3a3f14d68f1339830065a542efc18bbb}\label{classflounder_1_1vector4_a3a3f14d68f1339830065a542efc18bbb}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!set@{set}}
+\index{set@{set}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::set (\begin{DoxyParamCaption}\item[{const float \&}]{x,  }\item[{const float \&}]{y,  }\item[{const float \&}]{z,  }\item[{const float \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Sets values in the vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The new X value. \\
+\hline
+{\em y} & The new Y value. \\
+\hline
+{\em z} & The new Z value. \\
+\hline
+{\em w} & The new W value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a57a89cbc720c8d7c439d915fddf03048}\label{classflounder_1_1vector4_a57a89cbc720c8d7c439d915fddf03048}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!set@{set}}
+\index{set@{set}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::set (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Loads from another \hyperlink{classflounder_1_1vector4}{vector4}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_ace85efb2fa107a044262f171c710d0aa}\label{classflounder_1_1vector4_ace85efb2fa107a044262f171c710d0aa}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!subtract@{subtract}}
+\index{subtract@{subtract}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{subtract()}{subtract()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::subtract (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{right,  }\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Subtracts two vectors from each other and places the result in the destination vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source vector. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+{\em destination} & The destination vector or null if a new vector is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1vector4_a3aa7c17918a15e289b0ae6b77a4cb27d}\label{classflounder_1_1vector4_a3aa7c17918a15e289b0ae6b77a4cb27d}} 
+\index{flounder\+::vector4@{flounder\+::vector4}!translate@{translate}}
+\index{translate@{translate}!flounder\+::vector4@{flounder\+::vector4}}
+\subsubsection{\texorpdfstring{translate()}{translate()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ flounder\+::vector4\+::translate (\begin{DoxyParamCaption}\item[{const float \&}]{x,  }\item[{const float \&}]{y,  }\item[{const float \&}]{z,  }\item[{const float \&}]{w }\end{DoxyParamCaption})}
+
+
+
+Translates this vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The translation in x. \\
+\hline
+{\em y} & the translation in y. \\
+\hline
+{\em z} & the translation in z. \\
+\hline
+{\em w} & the translation in w. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/vector4.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/vector4.\+cpp\end{DoxyCompactItemize}

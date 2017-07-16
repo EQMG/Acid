@@ -1,0 +1,112 @@
+\hypertarget{classflounder_1_1delta}{}\section{flounder\+:\+:delta Class Reference}
+\label{classflounder_1_1delta}\index{flounder\+::delta@{flounder\+::delta}}
+
+
+A class for handing and calculating deltas.  
+
+
+
+
+{\ttfamily \#include $<$delta.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1delta_a6996799d2f9423e994e2beb84dc3ba09}{delta} ()
+\begin{DoxyCompactList}\small\item\em Creates a new change handler. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1delta_af9eb174b15b3730a45a903e988dac1e8}{$\sim$delta} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the delta. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1delta_a6f87fd0b76d229ec490a07a565c2afd0}{update} ()
+\begin{DoxyCompactList}\small\item\em Updates change and times. \end{DoxyCompactList}\item 
+double \& \hyperlink{classflounder_1_1delta_a59d00ad5b5752e6e69f35d7a294c2788}{get\+Change} ()
+\begin{DoxyCompactList}\small\item\em Gets the current change. \end{DoxyCompactList}\item 
+double \& \hyperlink{classflounder_1_1delta_a86e834ff826cd867bb64099f94195f05}{get\+Time} ()
+\begin{DoxyCompactList}\small\item\em Gets the time, all deltas added up. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1delta_a922814fee4d3ad0be3f643b1801c9328}\label{classflounder_1_1delta_a922814fee4d3ad0be3f643b1801c9328}} 
+double {\bfseries m\+\_\+current\+Frame\+Time}
+\item 
+\mbox{\Hypertarget{classflounder_1_1delta_ac623d44d1250523c1b54801450924f7c}\label{classflounder_1_1delta_ac623d44d1250523c1b54801450924f7c}} 
+double {\bfseries m\+\_\+last\+Frame\+Time}
+\item 
+\mbox{\Hypertarget{classflounder_1_1delta_ad2cf30b37da5d4fd9b6a0871f59838fc}\label{classflounder_1_1delta_ad2cf30b37da5d4fd9b6a0871f59838fc}} 
+double {\bfseries m\+\_\+change}
+\item 
+\mbox{\Hypertarget{classflounder_1_1delta_abace656b4a93f9b24b1c9000e3c441ee}\label{classflounder_1_1delta_abace656b4a93f9b24b1c9000e3c441ee}} 
+double {\bfseries m\+\_\+time}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A class for handing and calculating deltas. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1delta_a6996799d2f9423e994e2beb84dc3ba09}\label{classflounder_1_1delta_a6996799d2f9423e994e2beb84dc3ba09}} 
+\index{flounder\+::delta@{flounder\+::delta}!delta@{delta}}
+\index{delta@{delta}!flounder\+::delta@{flounder\+::delta}}
+\subsubsection{\texorpdfstring{delta()}{delta()}}
+{\footnotesize\ttfamily flounder\+::delta\+::delta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new change handler. 
+
+\mbox{\Hypertarget{classflounder_1_1delta_af9eb174b15b3730a45a903e988dac1e8}\label{classflounder_1_1delta_af9eb174b15b3730a45a903e988dac1e8}} 
+\index{flounder\+::delta@{flounder\+::delta}!````~delta@{$\sim$delta}}
+\index{````~delta@{$\sim$delta}!flounder\+::delta@{flounder\+::delta}}
+\subsubsection{\texorpdfstring{$\sim$delta()}{~delta()}}
+{\footnotesize\ttfamily flounder\+::delta\+::$\sim$delta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the delta. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1delta_a59d00ad5b5752e6e69f35d7a294c2788}\label{classflounder_1_1delta_a59d00ad5b5752e6e69f35d7a294c2788}} 
+\index{flounder\+::delta@{flounder\+::delta}!get\+Change@{get\+Change}}
+\index{get\+Change@{get\+Change}!flounder\+::delta@{flounder\+::delta}}
+\subsubsection{\texorpdfstring{get\+Change()}{getChange()}}
+{\footnotesize\ttfamily double \& flounder\+::delta\+::get\+Change (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the current change. 
+
+\begin{DoxyReturn}{Returns}
+The change. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1delta_a86e834ff826cd867bb64099f94195f05}\label{classflounder_1_1delta_a86e834ff826cd867bb64099f94195f05}} 
+\index{flounder\+::delta@{flounder\+::delta}!get\+Time@{get\+Time}}
+\index{get\+Time@{get\+Time}!flounder\+::delta@{flounder\+::delta}}
+\subsubsection{\texorpdfstring{get\+Time()}{getTime()}}
+{\footnotesize\ttfamily double \& flounder\+::delta\+::get\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the time, all deltas added up. 
+
+\begin{DoxyReturn}{Returns}
+The time. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1delta_a6f87fd0b76d229ec490a07a565c2afd0}\label{classflounder_1_1delta_a6f87fd0b76d229ec490a07a565c2afd0}} 
+\index{flounder\+::delta@{flounder\+::delta}!update@{update}}
+\index{update@{update}!flounder\+::delta@{flounder\+::delta}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::delta\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates change and times. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/delta.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/delta.\+cpp\end{DoxyCompactItemize}

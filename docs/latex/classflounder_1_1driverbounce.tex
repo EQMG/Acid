@@ -1,0 +1,109 @@
+\hypertarget{classflounder_1_1driverbounce}{}\section{flounder\+:\+:driverbounce Class Reference}
+\label{classflounder_1_1driverbounce}\index{flounder\+::driverbounce@{flounder\+::driverbounce}}
+
+
+A bounce driver that uses a sine wave.  
+
+
+
+
+{\ttfamily \#include $<$driverbounce.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:driverbounce\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1driverbounce}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1driverbounce_a92651c598bb5e6b7d8d8f686fc07bcd1}{driverbounce} (const float \&start, const float \&end, const float \&length)
+\begin{DoxyCompactList}\small\item\em Creates a new sine wave driver. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1driverbounce_ae077e73f2f73847898a149a2812c3ea5}{$\sim$driverbounce} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for bounce driver. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{classflounder_1_1driverbounce_a2781832b47206849a0028ee75a4772e4}{calculate} (const float \&time) override
+\begin{DoxyCompactList}\small\item\em Calculates the new value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1driverbounce_a3227c13c05f51b7e16297a16ceaba2ce}\label{classflounder_1_1driverbounce_a3227c13c05f51b7e16297a16ceaba2ce}} 
+float {\bfseries m\+\_\+start}
+\item 
+\mbox{\Hypertarget{classflounder_1_1driverbounce_ad1158cd9f43b9af60f40f8a974f5e369}\label{classflounder_1_1driverbounce_ad1158cd9f43b9af60f40f8a974f5e369}} 
+float {\bfseries m\+\_\+amplitude}
+\item 
+\mbox{\Hypertarget{classflounder_1_1driverbounce_abd011916f956cd1364a1ef3c275dd733}\label{classflounder_1_1driverbounce_abd011916f956cd1364a1ef3c275dd733}} 
+float {\bfseries m\+\_\+length}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A bounce driver that uses a sine wave. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1driverbounce_a92651c598bb5e6b7d8d8f686fc07bcd1}\label{classflounder_1_1driverbounce_a92651c598bb5e6b7d8d8f686fc07bcd1}} 
+\index{flounder\+::driverbounce@{flounder\+::driverbounce}!driverbounce@{driverbounce}}
+\index{driverbounce@{driverbounce}!flounder\+::driverbounce@{flounder\+::driverbounce}}
+\subsubsection{\texorpdfstring{driverbounce()}{driverbounce()}}
+{\footnotesize\ttfamily flounder\+::driverbounce\+::driverbounce (\begin{DoxyParamCaption}\item[{const float \&}]{start,  }\item[{const float \&}]{end,  }\item[{const float \&}]{length }\end{DoxyParamCaption})}
+
+
+
+Creates a new sine wave driver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & The start value. \\
+\hline
+{\em end} & The end value. \\
+\hline
+{\em length} & The length between two waves. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1driverbounce_ae077e73f2f73847898a149a2812c3ea5}\label{classflounder_1_1driverbounce_ae077e73f2f73847898a149a2812c3ea5}} 
+\index{flounder\+::driverbounce@{flounder\+::driverbounce}!````~driverbounce@{$\sim$driverbounce}}
+\index{````~driverbounce@{$\sim$driverbounce}!flounder\+::driverbounce@{flounder\+::driverbounce}}
+\subsubsection{\texorpdfstring{$\sim$driverbounce()}{~driverbounce()}}
+{\footnotesize\ttfamily flounder\+::driverbounce\+::$\sim$driverbounce (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for bounce driver. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1driverbounce_a2781832b47206849a0028ee75a4772e4}\label{classflounder_1_1driverbounce_a2781832b47206849a0028ee75a4772e4}} 
+\index{flounder\+::driverbounce@{flounder\+::driverbounce}!calculate@{calculate}}
+\index{calculate@{calculate}!flounder\+::driverbounce@{flounder\+::driverbounce}}
+\subsubsection{\texorpdfstring{calculate()}{calculate()}}
+{\footnotesize\ttfamily float flounder\+::driverbounce\+::calculate (\begin{DoxyParamCaption}\item[{const float \&}]{time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Calculates the new value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & The time into the drivers life. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The calculated value. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1idriver_a034c4159dc98c4c37ffdfaae64e4a16d}{flounder\+::idriver}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/visual/driverbounce.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/visual/driverbounce.\+cpp\end{DoxyCompactItemize}

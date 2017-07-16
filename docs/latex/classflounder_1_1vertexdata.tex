@@ -1,0 +1,103 @@
+\hypertarget{classflounder_1_1vertexdata}{}\section{flounder\+:\+:vertexdata Class Reference}
+\label{classflounder_1_1vertexdata}\index{flounder\+::vertexdata@{flounder\+::vertexdata}}
+
+
+A class that represents a single model vertex, used when loading O\+BJ files.  
+
+
+
+
+{\ttfamily \#include $<$vertexdata.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a8103c1f427f47cf525e7e36797482a28}\label{classflounder_1_1vertexdata_a8103c1f427f47cf525e7e36797482a28}} 
+{\bfseries vertexdata} (const int index, \hyperlink{classflounder_1_1vector3}{vector3} position)
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a8abf042f88e6508d49fd5cb9526f3c83}\label{classflounder_1_1vertexdata_a8abf042f88e6508d49fd5cb9526f3c83}} 
+\hyperlink{classflounder_1_1vector3}{vector3} {\bfseries get\+Position} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_aa278e38948bfb19e530c18c48540d053}\label{classflounder_1_1vertexdata_aa278e38948bfb19e530c18c48540d053}} 
+int {\bfseries get\+Texture\+Index} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_ae3465e492ba9d4afe163d64daff89932}\label{classflounder_1_1vertexdata_ae3465e492ba9d4afe163d64daff89932}} 
+void {\bfseries set\+Texture\+Index} (int texture\+Index)
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_abfc67072c49c14d5b32a0a40c768ea71}\label{classflounder_1_1vertexdata_abfc67072c49c14d5b32a0a40c768ea71}} 
+int {\bfseries get\+Normal\+Index} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a65c0ec8ab102a2e3c70c4d1d8841d55c}\label{classflounder_1_1vertexdata_a65c0ec8ab102a2e3c70c4d1d8841d55c}} 
+void {\bfseries set\+Normal\+Index} (const int normal\+Index)
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a327cec5468493906f425e00c43533e40}\label{classflounder_1_1vertexdata_a327cec5468493906f425e00c43533e40}} 
+\hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$ {\bfseries get\+Duplicate\+Vertex} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a480b179725867cec7672db07d6b7101c}\label{classflounder_1_1vertexdata_a480b179725867cec7672db07d6b7101c}} 
+void {\bfseries set\+Duplicate\+Vertex} (\hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$duplicate\+Vertex)
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a0495c9a5a0b393aa8a60acc791f811ea}\label{classflounder_1_1vertexdata_a0495c9a5a0b393aa8a60acc791f811ea}} 
+int {\bfseries get\+Index} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_aedcb3926d616bb3a2cb4acf97961e44c}\label{classflounder_1_1vertexdata_aedcb3926d616bb3a2cb4acf97961e44c}} 
+float {\bfseries get\+Length} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a30bbe72d9f20899bca357a52b1b61b59}\label{classflounder_1_1vertexdata_a30bbe72d9f20899bca357a52b1b61b59}} 
+void {\bfseries add\+Tangent} (\hyperlink{classflounder_1_1vector3}{vector3} $\ast$tangent)
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a93b35e0e8387d6f530354df1bdeca6a5}\label{classflounder_1_1vertexdata_a93b35e0e8387d6f530354df1bdeca6a5}} 
+void {\bfseries average\+Tangents} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a59fa7932a8788664d3cfc33f04598069}\label{classflounder_1_1vertexdata_a59fa7932a8788664d3cfc33f04598069}} 
+\hyperlink{classflounder_1_1vector3}{vector3} {\bfseries get\+Average\+Tangent} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_ab176408a67cacb2af12d7c5ff9ea06ef}\label{classflounder_1_1vertexdata_ab176408a67cacb2af12d7c5ff9ea06ef}} 
+bool {\bfseries is\+Set} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_ab03f3d4ddd418cbfa474bfec3e82522c}\label{classflounder_1_1vertexdata_ab03f3d4ddd418cbfa474bfec3e82522c}} 
+bool {\bfseries has\+Same\+Texture\+And\+Normal} (const int texture\+Index\+Other, const int normal\+Index\+Other)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a2724e76a7939b58a9cfc4a06f4ed2e49}\label{classflounder_1_1vertexdata_a2724e76a7939b58a9cfc4a06f4ed2e49}} 
+\hyperlink{classflounder_1_1vector3}{vector3} {\bfseries m\+\_\+position}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a2e1bbe8132aee676c2c0f591c22add25}\label{classflounder_1_1vertexdata_a2e1bbe8132aee676c2c0f591c22add25}} 
+int {\bfseries m\+\_\+texture\+Index}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a7dabb349ae805c1c4f724b31fbbdd8f2}\label{classflounder_1_1vertexdata_a7dabb349ae805c1c4f724b31fbbdd8f2}} 
+int {\bfseries m\+\_\+normal\+Index}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a75c4ade5f2d6376a8526b95a9959d84a}\label{classflounder_1_1vertexdata_a75c4ade5f2d6376a8526b95a9959d84a}} 
+\hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$ {\bfseries m\+\_\+duplicate\+Vertex}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a456182b8e51af2bef2482bcca993731c}\label{classflounder_1_1vertexdata_a456182b8e51af2bef2482bcca993731c}} 
+int {\bfseries m\+\_\+index}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a7b4695e3e683c6b6217b8dd5ff40ce8d}\label{classflounder_1_1vertexdata_a7b4695e3e683c6b6217b8dd5ff40ce8d}} 
+float {\bfseries m\+\_\+length}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a7494c4e657be36b6940881952fea9a1d}\label{classflounder_1_1vertexdata_a7494c4e657be36b6940881952fea9a1d}} 
+std\+::vector$<$ \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ $>$ {\bfseries m\+\_\+tangents}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_a774e65a9dd054cff7284cfaf3577dcd6}\label{classflounder_1_1vertexdata_a774e65a9dd054cff7284cfaf3577dcd6}} 
+\hyperlink{classflounder_1_1vector3}{vector3} {\bfseries m\+\_\+averaged\+Tangent}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1vertexdata_aedc69c8a9ed41f18f62a91481c737d75}\label{classflounder_1_1vertexdata_aedc69c8a9ed41f18f62a91481c737d75}} 
+static const int {\bfseries N\+O\+\_\+\+I\+N\+D\+EX} = -\/1
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A class that represents a single model vertex, used when loading O\+BJ files. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/models/vertexdata.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/models/vertexdata.\+cpp\end{DoxyCompactItemize}

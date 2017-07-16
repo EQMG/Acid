@@ -1,0 +1,117 @@
+\hypertarget{classflounder_1_1buttonkeyboard}{}\section{flounder\+:\+:buttonkeyboard Class Reference}
+\label{classflounder_1_1buttonkeyboard}\index{flounder\+::buttonkeyboard@{flounder\+::buttonkeyboard}}
+
+
+Keys from a keyboard.  
+
+
+
+
+{\ttfamily \#include $<$buttonkeyboard.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:buttonkeyboard\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1buttonkeyboard}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1buttonkeyboard_a1cb133f346df9c1f0f401574bde868bc}{buttonkeyboard} (const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Creates a new button keyboard. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1buttonkeyboard_a76e965d16462442aaae33fe6fd2421ea}{$\sim$buttonkeyboard} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the button keyboard. \end{DoxyCompactList}\item 
+bool \hyperlink{classflounder_1_1buttonkeyboard_a432555049251cec48431e4f14b6aa34b}{is\+Down} () override
+\begin{DoxyCompactList}\small\item\em Returns whether this button is currently pressed. \end{DoxyCompactList}\item 
+bool \hyperlink{classflounder_1_1buttonkeyboard_abc6b3c8cf9398f2a896408e390fd3a01}{was\+Down} () override
+\begin{DoxyCompactList}\small\item\em Gets if the key is down and was not down before. Key press recognized as one click. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1buttonkeyboard_ac388d5c303d2bd2cddfc90853256d910}\label{classflounder_1_1buttonkeyboard_ac388d5c303d2bd2cddfc90853256d910}} 
+int {\bfseries m\+\_\+count}
+\item 
+\mbox{\Hypertarget{classflounder_1_1buttonkeyboard_a6347baab78a95b15c0c54c3d65355fde}\label{classflounder_1_1buttonkeyboard_a6347baab78a95b15c0c54c3d65355fde}} 
+int $\ast$ {\bfseries m\+\_\+keys}
+\item 
+\mbox{\Hypertarget{classflounder_1_1buttonkeyboard_a0d8fc28fc7e8293fa401a0b048dc26b6}\label{classflounder_1_1buttonkeyboard_a0d8fc28fc7e8293fa401a0b048dc26b6}} 
+bool {\bfseries m\+\_\+was\+Down}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Keys from a keyboard. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1buttonkeyboard_a1cb133f346df9c1f0f401574bde868bc}\label{classflounder_1_1buttonkeyboard_a1cb133f346df9c1f0f401574bde868bc}} 
+\index{flounder\+::buttonkeyboard@{flounder\+::buttonkeyboard}!buttonkeyboard@{buttonkeyboard}}
+\index{buttonkeyboard@{buttonkeyboard}!flounder\+::buttonkeyboard@{flounder\+::buttonkeyboard}}
+\subsubsection{\texorpdfstring{buttonkeyboard()}{buttonkeyboard()}}
+{\footnotesize\ttfamily flounder\+::buttonkeyboard\+::buttonkeyboard (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new button keyboard. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number keys of keyboard buttons being checked. \\
+\hline
+{\em ...} & The keys on the keyboard being checked. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1buttonkeyboard_a76e965d16462442aaae33fe6fd2421ea}\label{classflounder_1_1buttonkeyboard_a76e965d16462442aaae33fe6fd2421ea}} 
+\index{flounder\+::buttonkeyboard@{flounder\+::buttonkeyboard}!````~buttonkeyboard@{$\sim$buttonkeyboard}}
+\index{````~buttonkeyboard@{$\sim$buttonkeyboard}!flounder\+::buttonkeyboard@{flounder\+::buttonkeyboard}}
+\subsubsection{\texorpdfstring{$\sim$buttonkeyboard()}{~buttonkeyboard()}}
+{\footnotesize\ttfamily flounder\+::buttonkeyboard\+::$\sim$buttonkeyboard (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Deconstructor for the button keyboard. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1buttonkeyboard_a432555049251cec48431e4f14b6aa34b}\label{classflounder_1_1buttonkeyboard_a432555049251cec48431e4f14b6aa34b}} 
+\index{flounder\+::buttonkeyboard@{flounder\+::buttonkeyboard}!is\+Down@{is\+Down}}
+\index{is\+Down@{is\+Down}!flounder\+::buttonkeyboard@{flounder\+::buttonkeyboard}}
+\subsubsection{\texorpdfstring{is\+Down()}{isDown()}}
+{\footnotesize\ttfamily bool flounder\+::buttonkeyboard\+::is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns whether this button is currently pressed. 
+
+\begin{DoxyReturn}{Returns}
+True if the button is pressed, false otherwise. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1ibutton_ab64fd22a75ea66ce67fd9b1ad34fd837}{flounder\+::ibutton}.
+
+\mbox{\Hypertarget{classflounder_1_1buttonkeyboard_abc6b3c8cf9398f2a896408e390fd3a01}\label{classflounder_1_1buttonkeyboard_abc6b3c8cf9398f2a896408e390fd3a01}} 
+\index{flounder\+::buttonkeyboard@{flounder\+::buttonkeyboard}!was\+Down@{was\+Down}}
+\index{was\+Down@{was\+Down}!flounder\+::buttonkeyboard@{flounder\+::buttonkeyboard}}
+\subsubsection{\texorpdfstring{was\+Down()}{wasDown()}}
+{\footnotesize\ttfamily bool flounder\+::buttonkeyboard\+::was\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets if the key is down and was not down before. Key press recognized as one click. 
+
+\begin{DoxyReturn}{Returns}
+Is the key down and was not down before? 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1ibutton_a5fb7b3493c0ea0e67bb9defc272da0d3}{flounder\+::ibutton}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/inputs/buttonkeyboard.\+h\end{DoxyCompactItemize}

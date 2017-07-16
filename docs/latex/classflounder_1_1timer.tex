@@ -1,0 +1,128 @@
+\hypertarget{classflounder_1_1timer}{}\section{flounder\+:\+:timer Class Reference}
+\label{classflounder_1_1timer}\index{flounder\+::timer@{flounder\+::timer}}
+
+
+A timer implementation for events.  
+
+
+
+
+{\ttfamily \#include $<$timer.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1timer_afbe92e026c43d2cacb8172963e4ab6d9}{timer} (const double \&interval)
+\begin{DoxyCompactList}\small\item\em Creates a new timer. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1timer_a2644c550b3bb6aa1c757287a72ff9179}{$\sim$timer} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the timer. \end{DoxyCompactList}\item 
+bool \hyperlink{classflounder_1_1timer_a2758150edc9d0f3c8f1248183df7c0b5}{is\+Passed\+Time} ()
+\begin{DoxyCompactList}\small\item\em Gets if the interval has been passes for the timer. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1timer_af71405c5ec11d085c91aa26d6a8d994c}{reset\+Start\+Time} ()
+\begin{DoxyCompactList}\small\item\em Adds the intervals value to the start time. \end{DoxyCompactList}\item 
+double \hyperlink{classflounder_1_1timer_a2e96c23a1baa9284269c000a6c6ba181}{get\+Interval} ()
+\begin{DoxyCompactList}\small\item\em Gets what the interval is. (Seconds). \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1timer_a801b9883c757b92eaa957f3222c4791d}{set\+Interval} (const double \&interval)
+\begin{DoxyCompactList}\small\item\em Gets the timers interval. (Seconds, Resets timer). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1timer_a7ef146a638759f7f7737e4f2f2005780}\label{classflounder_1_1timer_a7ef146a638759f7f7737e4f2f2005780}} 
+double {\bfseries m\+\_\+start\+Time}
+\item 
+\mbox{\Hypertarget{classflounder_1_1timer_a02ec188db6ae400abd0a6ecfe5a421fc}\label{classflounder_1_1timer_a02ec188db6ae400abd0a6ecfe5a421fc}} 
+double {\bfseries m\+\_\+interval}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A timer implementation for events. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1timer_afbe92e026c43d2cacb8172963e4ab6d9}\label{classflounder_1_1timer_afbe92e026c43d2cacb8172963e4ab6d9}} 
+\index{flounder\+::timer@{flounder\+::timer}!timer@{timer}}
+\index{timer@{timer}!flounder\+::timer@{flounder\+::timer}}
+\subsubsection{\texorpdfstring{timer()}{timer()}}
+{\footnotesize\ttfamily flounder\+::timer\+::timer (\begin{DoxyParamCaption}\item[{const double \&}]{interval }\end{DoxyParamCaption})}
+
+
+
+Creates a new timer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em interval} & The time between events (seconds). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1timer_a2644c550b3bb6aa1c757287a72ff9179}\label{classflounder_1_1timer_a2644c550b3bb6aa1c757287a72ff9179}} 
+\index{flounder\+::timer@{flounder\+::timer}!````~timer@{$\sim$timer}}
+\index{````~timer@{$\sim$timer}!flounder\+::timer@{flounder\+::timer}}
+\subsubsection{\texorpdfstring{$\sim$timer()}{~timer()}}
+{\footnotesize\ttfamily flounder\+::timer\+::$\sim$timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the timer. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1timer_a2e96c23a1baa9284269c000a6c6ba181}\label{classflounder_1_1timer_a2e96c23a1baa9284269c000a6c6ba181}} 
+\index{flounder\+::timer@{flounder\+::timer}!get\+Interval@{get\+Interval}}
+\index{get\+Interval@{get\+Interval}!flounder\+::timer@{flounder\+::timer}}
+\subsubsection{\texorpdfstring{get\+Interval()}{getInterval()}}
+{\footnotesize\ttfamily double flounder\+::timer\+::get\+Interval (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets what the interval is. (Seconds). 
+
+\begin{DoxyReturn}{Returns}
+The timers current interval. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1timer_a2758150edc9d0f3c8f1248183df7c0b5}\label{classflounder_1_1timer_a2758150edc9d0f3c8f1248183df7c0b5}} 
+\index{flounder\+::timer@{flounder\+::timer}!is\+Passed\+Time@{is\+Passed\+Time}}
+\index{is\+Passed\+Time@{is\+Passed\+Time}!flounder\+::timer@{flounder\+::timer}}
+\subsubsection{\texorpdfstring{is\+Passed\+Time()}{isPassedTime()}}
+{\footnotesize\ttfamily bool flounder\+::timer\+::is\+Passed\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets if the interval has been passes for the timer. 
+
+\begin{DoxyReturn}{Returns}
+If the interval was exceeded. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1timer_af71405c5ec11d085c91aa26d6a8d994c}\label{classflounder_1_1timer_af71405c5ec11d085c91aa26d6a8d994c}} 
+\index{flounder\+::timer@{flounder\+::timer}!reset\+Start\+Time@{reset\+Start\+Time}}
+\index{reset\+Start\+Time@{reset\+Start\+Time}!flounder\+::timer@{flounder\+::timer}}
+\subsubsection{\texorpdfstring{reset\+Start\+Time()}{resetStartTime()}}
+{\footnotesize\ttfamily void flounder\+::timer\+::reset\+Start\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Adds the intervals value to the start time. 
+
+\mbox{\Hypertarget{classflounder_1_1timer_a801b9883c757b92eaa957f3222c4791d}\label{classflounder_1_1timer_a801b9883c757b92eaa957f3222c4791d}} 
+\index{flounder\+::timer@{flounder\+::timer}!set\+Interval@{set\+Interval}}
+\index{set\+Interval@{set\+Interval}!flounder\+::timer@{flounder\+::timer}}
+\subsubsection{\texorpdfstring{set\+Interval()}{setInterval()}}
+{\footnotesize\ttfamily void flounder\+::timer\+::set\+Interval (\begin{DoxyParamCaption}\item[{const double \&}]{interval }\end{DoxyParamCaption})}
+
+
+
+Gets the timers interval. (Seconds, Resets timer). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em interval} & The new timer interval. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/timer.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/timer.\+cpp\end{DoxyCompactItemize}

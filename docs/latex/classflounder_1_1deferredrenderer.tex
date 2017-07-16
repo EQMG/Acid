@@ -1,0 +1,74 @@
+\hypertarget{classflounder_1_1deferredrenderer}{}\section{flounder\+:\+:deferredrenderer Class Reference}
+\label{classflounder_1_1deferredrenderer}\index{flounder\+::deferredrenderer@{flounder\+::deferredrenderer}}
+
+
+A filter-\/like shader/fbo used to process deferred rendering.  
+
+
+
+
+{\ttfamily \#include $<$deferredrenderer.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classflounder_1_1deferredrenderer_af369386b3a61385cd8ec2444662599c3}{apply} (const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Processes the textures provided into the deferred renderer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1deferredrenderer_a6a4c0a21d4bf23bf3a499c3a5c100df3}\label{classflounder_1_1deferredrenderer_a6a4c0a21d4bf23bf3a499c3a5c100df3}} 
+fbo $\ast$ {\bfseries get\+Fbo} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1deferredrenderer_a4385f75bb3b15be6c91da12851432226}\label{classflounder_1_1deferredrenderer_a4385f75bb3b15be6c91da12851432226}} 
+void {\bfseries store\+Values} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1deferredrenderer_aa3b23b38544636f0ac7225fd4a3e6846}\label{classflounder_1_1deferredrenderer_aa3b23b38544636f0ac7225fd4a3e6846}} 
+\hyperlink{classflounder_1_1shader}{shader} $\ast$ {\bfseries m\+\_\+shader}
+\item 
+\mbox{\Hypertarget{classflounder_1_1deferredrenderer_a771f3f5131354fb4dcce1fc1a59957cf}\label{classflounder_1_1deferredrenderer_a771f3f5131354fb4dcce1fc1a59957cf}} 
+fbo $\ast$ {\bfseries m\+\_\+fbo}
+\item 
+\mbox{\Hypertarget{classflounder_1_1deferredrenderer_a4f90f33b5091fc3d1d46d7bb02ce56f8}\label{classflounder_1_1deferredrenderer_a4f90f33b5091fc3d1d46d7bb02ce56f8}} 
+\hyperlink{classflounder_1_1model}{model} $\ast$ {\bfseries m\+\_\+model}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1deferredrenderer_a5f3e9727638d5476a66e69a521db1d40}\label{classflounder_1_1deferredrenderer_a5f3e9727638d5476a66e69a521db1d40}} 
+static const int {\bfseries L\+I\+G\+H\+TS} = 64
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A filter-\/like shader/fbo used to process deferred rendering. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1deferredrenderer_af369386b3a61385cd8ec2444662599c3}\label{classflounder_1_1deferredrenderer_af369386b3a61385cd8ec2444662599c3}} 
+\index{flounder\+::deferredrenderer@{flounder\+::deferredrenderer}!apply@{apply}}
+\index{apply@{apply}!flounder\+::deferredrenderer@{flounder\+::deferredrenderer}}
+\subsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void flounder\+::deferredrenderer\+::apply (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Processes the textures provided into the deferred renderer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being bound to the shader. \\
+\hline
+{\em ...} & The textures being bound to the shader. Colours, normals, extras, depth, shadows. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/deferred/deferredrenderer.\+h\item 
+C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/deferred/deferredrenderer.\+cpp\end{DoxyCompactItemize}
