@@ -28,6 +28,7 @@ namespace flounder {
 
 		// Creates a new sound model.
 		alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
+
 	}
 
 	void audio::update()

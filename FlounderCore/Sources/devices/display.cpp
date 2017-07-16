@@ -9,7 +9,6 @@ namespace flounder {
 
 		m_windowWidth = 720;
 		m_windowHeight = 480;
-		m_aspectRatio = 1.5f;
 		m_fullscreenWidth = 0;
 		m_fullscreenHeight = 0;
 
@@ -47,7 +46,6 @@ namespace flounder {
 
 		m_windowWidth = width;
 		m_windowHeight = height;
-		m_aspectRatio = width / height;
 
 		m_title = title;
 		m_icon = icon;
@@ -201,6 +199,8 @@ namespace flounder {
 
 		// Polls for window events. The key callback will only be invoked during this call.
 		glfwPollEvents();
+
+		m_aspectRatio = getWidth() / getHeight();
 	}
 
 	void display::screenshot()
@@ -366,7 +366,6 @@ namespace flounder {
 		if (!display::get()->m_fullscreen) {
 			display::get()->m_windowWidth = width;
 			display::get()->m_windowHeight = height;
-			display::get()->m_aspectRatio = width / height;
 		}
 	}
 
