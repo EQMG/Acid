@@ -1,6 +1,25 @@
 #include "keyboard.h"
 
 namespace flounder {
+	void callbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
+	{
+		// TODO: Play with mods.
+
+		if (key < 0 || key > GLFW_KEY_LAST)
+		{
+			std::cout << "Invalid action attempted with key " << key << std::endl;
+		}
+		else
+		{
+			keyboard::get()->m_keyboardKeys[key] = action;
+		}
+	}
+
+	void callbackChar(GLFWwindow *window, unsigned int codepoint)
+	{
+		keyboard::get()->m_keyboardChar = codepoint;
+	}
+
 	keyboard::keyboard()
 		: imodule()
 	{
@@ -39,24 +58,5 @@ namespace flounder {
 	int keyboard::getKeyboardChar()
 	{
 		return m_keyboardChar;
-	}
-
-	void callbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
-	{
-		// TODO: Play with mods.
-
-		if (key < 0 || key > GLFW_KEY_LAST) 
-		{
-			std::cout << "Invalid action attempted with key " << key << std::endl;
-		}
-		else
-		{
-			keyboard::get()->m_keyboardKeys[key] = action;
-		}
-	}
-
-	void callbackChar(GLFWwindow *window, unsigned int codepoint)
-	{
-		keyboard::get()->m_keyboardChar = codepoint;
 	}
 }

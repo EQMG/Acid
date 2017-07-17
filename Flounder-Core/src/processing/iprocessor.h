@@ -9,6 +9,14 @@ namespace flounder {
 	class iprocessor 
 	{
 	public:
+		iprocessor()
+		{
+		}
+
+		virtual ~iprocessor()
+		{
+		}
+
 		/// <summary>
 		/// Run when updating the processor.
 		/// </summary>

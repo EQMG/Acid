@@ -1,0 +1,8 @@
+﻿  main.cpp
+c:\users\mattp\documents\flounder\flounder-tools\src\emscripten\main.cpp(33): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(439): note: see declaration of 'strtok'
+c:\users\mattp\documents\flounder\flounder-tools\src\emscripten\main.cpp(38): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(439): note: see declaration of 'strtok'
+c:\users\mattp\documents\flounder\flounder-tools\src\emscripten\main.cpp(101): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+  Flounder-Tools.vcxproj -> C:\Users\mattp\Documents\Flounder\Flounder-Tools\bin\Debug x64\Flounder Tools.exe
+  Flounder-Tools.vcxproj -> C:\Users\mattp\Documents\Flounder\Flounder-Tools\bin\Debug x64\Flounder Tools.pdb (Partial PDB)

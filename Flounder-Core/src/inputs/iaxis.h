@@ -7,6 +7,14 @@ namespace flounder {
 	class iaxis
 	{
 	public:
+		iaxis()
+		{
+		}
+
+		virtual ~iaxis()
+		{
+		}
+
 		/// <summary>
 		/// Gets the current value along the axis. -1 is smallest input, 1 is largest input.
 		/// </summary>

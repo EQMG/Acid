@@ -281,7 +281,7 @@
     <ClCompile Include="src\shaders\shader.cpp" />
     <ClCompile Include="src\skybox\skybox.cpp" />
     <ClCompile Include="src\standards\standards.cpp" />
-    <ClCompile Include="src\textures\stb_image.c" />
+    <ClCompile Include="src\textures\stb_image.cpp" />
     <ClCompile Include="src\visual\driverbounce.cpp" />
     <ClCompile Include="src\visual\driverfade.cpp" />
     <ClCompile Include="src\visual\driversinwave.cpp" />
