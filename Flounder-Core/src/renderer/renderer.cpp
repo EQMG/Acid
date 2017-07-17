@@ -88,6 +88,7 @@ namespace flounder {
 
 	void renderer::goWireframe(const bool &goWireframe)
 	{
+#ifndef FLOUNDER_EMSCRIPTEN
 		if (goWireframe && !m_inWireframe)
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -98,6 +99,7 @@ namespace flounder {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			m_inWireframe = false;
 		}
+#endif
 	}
 
 	void renderer::enableAlphaBlending()
@@ -136,12 +138,12 @@ namespace flounder {
 	{
 		if (enable && !m_antialiasing)
 		{
-			glEnable(GL_MULTISAMPLE);
+		//	glEnable(GL_MULTISAMPLE);
 			m_antialiasing = true;
 		}
 		else if (!enable && m_antialiasing)
 		{
-			glDisable(GL_MULTISAMPLE);
+		//	glDisable(GL_MULTISAMPLE);
 			m_antialiasing = false;
 		}
 	}

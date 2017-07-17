@@ -49,7 +49,7 @@ namespace flounder {
 		/// <param name="currentPosition"> The mouses xy screen space position. </param>
 		/// <param name="viewMatrix"> The cameras view matrix. </param>
 		/// <param name="projectionMatrix"> The projection view matrix. </param>
-		void update(vector3 *currentPosition, vector2 *mousePosition, matrix4x4 *viewMatrix, matrix4x4 *projectionMatrix);
+		void update(const vector3 &currentPosition, const vector2 &mousePosition, const matrix4x4 &viewMatrix, const matrix4x4 &projectionMatrix);
 
 		/// <summary>
 		/// Gets a point on the ray.

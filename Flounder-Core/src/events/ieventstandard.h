@@ -6,7 +6,8 @@ namespace flounder {
 	/// <summary>
 	/// A class that is the most basic implementation of the event interface.
 	/// </summary>
-	class ieventstandard : public ievent
+	class ieventstandard : 
+		public ievent
 	{
 	private:
 		bool m_repeat;
@@ -20,7 +21,8 @@ namespace flounder {
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
 		/// <param name="triggered"> A function called to check if the event was triggered. </param>
 		/// <param name="onEvent"> A function called when the event is triggered. </param>
-		ieventstandard(const bool &repeat, const std::function<bool()> &triggered, const std::function<void()> &onEvent)
+		ieventstandard(const bool &repeat, const std::function<bool()> &triggered, const std::function<void()> &onEvent) :
+			ievent()
 		{
 			m_repeat = repeat;
 			m_triggered = triggered;

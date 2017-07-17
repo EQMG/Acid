@@ -192,7 +192,8 @@ namespace flounder {
 	void fbo::blitToScreen()
 	{
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-		glDrawBuffer(GL_BACK);
+		GLenum targets[1] = { GL_BACK };
+		glDrawBuffers(1, targets);
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_frameBuffer);
 		glBlitFramebuffer(0, 0, m_width, m_height, 0, 0, display::get()->getWidth(), display::get()->getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	}
@@ -231,7 +232,8 @@ namespace flounder {
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, source->m_frameBuffer);
 
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + readBuffer);
-		glDrawBuffer(GL_COLOR_ATTACHMENT0 + drawBuffer);
+		GLenum targets[1] = { static_cast<GLenum>(GL_COLOR_ATTACHMENT0 + drawBuffer) };
+		glDrawBuffers(1, targets);
 		glBlitFramebuffer(0, 0, source->m_width, source->m_height, 0, 0, output->m_width, output->m_height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
 		output->unbindFrameBuffer();
@@ -248,7 +250,8 @@ namespace flounder {
 		}
 		else
 		{
-			glDrawBuffer(GL_FALSE);
+			GLenum targets[1] = { GL_FALSE };
+			glDrawBuffers(1, targets);
 		}
 
 		limitFBOSize();
@@ -293,6 +296,9 @@ namespace flounder {
 	void fbo::limitFBOSize()
 	{
 		int maxSize = 0;
+#ifdef FLOUNDER_EMSCRIPTEN
+#define GL_MAX_RENDERBUFFER_SIZE_EXT      0x84E8
+#endif
 		glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE_EXT, &maxSize);
 
 		m_width = __min(maxSize, m_width);

@@ -14,6 +14,11 @@
 #define __degrees(b) (b * (PI / DEGREES_IN_HALF_CIRCLE))
 #define __random() (((double) rand()) / RAND_MAX);
 
+#ifdef FLOUNDER_EMSCRIPTEN
+#define __min(a, b) (((a) < (b)) ? (a) : (b))
+#define __max(a, b) (((a) > (b)) ? (a) : (b))
+#endif
+
 namespace flounder {
 	/// <summary>
 	/// A class that holds many various math functions.
@@ -75,7 +80,7 @@ namespace flounder {
 		template<typename t>
 		static t deadband(const t &min, const t &value)
 		{
-			return abs(value) >= abs(min) ? value : (t) 0.0;
+			return fabs(value) >= fabs(min) ? value : (t) 0.0;
 		}
 
 		/// <summary>
@@ -113,7 +118,7 @@ namespace flounder {
 		template<typename t>
 		static bool almostEqual(const t &a, const t &b, const t &eps)
 		{
-			return abs(a - b) < eps;
+			return fabs(a - b) < eps;
 		}
 
 		/// <summary>

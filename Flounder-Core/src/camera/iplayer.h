@@ -6,6 +6,14 @@ namespace flounder {
 	class iplayer
 	{
 	public:
+		iplayer()
+		{
+		}
+
+		virtual ~iplayer()
+		{
+		}
+
 		/// <summary>
 		/// Checks inputs and carries out player movement. Should be called every frame.
 		/// </summary>

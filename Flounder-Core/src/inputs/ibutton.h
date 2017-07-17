@@ -7,6 +7,14 @@ namespace flounder {
 	class ibutton
 	{
 	public:
+		ibutton()
+		{
+		}
+
+		virtual ~ibutton()
+		{
+		}
+
 		/// <summary>
 		/// Returns whether this button is currently pressed.
 		/// </summary>

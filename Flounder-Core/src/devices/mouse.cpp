@@ -1,6 +1,27 @@
 #include "mouse.h"
 
 namespace flounder {
+	void callbackScroll(GLFWwindow *window, double xoffset, double yoffset)
+	{
+		mouse::get()->m_mouseDeltaWheel = (float)yoffset;
+	}
+
+	void callbackMouseButton(GLFWwindow *window, int button, int action, int mods)
+	{
+		mouse::get()->m_mouseButtons[button] = action;
+	}
+
+	void callbackCursorPos(GLFWwindow *window, double xpos, double ypos)
+	{
+		mouse::get()->m_mousePositionX = (float)(xpos / display::get()->getWidth());
+		mouse::get()->m_mousePositionY = (float)(ypos / display::get()->getHeight());
+	}
+
+	void callbackCursorEnter(GLFWwindow *window, int entered)
+	{
+		mouse::get()->m_displaySelected = entered;
+	}
+
 	mouse::mouse() : 
 		imodule()
 	{
@@ -28,7 +49,7 @@ namespace flounder {
 		m_lastCursorDisabled = false;
 
 		// Sets the default state of the buttons to released.
-		for (unsigned int i = 0; i < GLFW_MOUSE_BUTTON_LAST + 1; i++) 
+		for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST + 1; i++) 
 		{
 			m_mouseButtons[i] = GLFW_RELEASE;
 		}
@@ -148,26 +169,5 @@ namespace flounder {
 	bool &mouse::isCursorDisabled()
 	{
 		return m_cursorDisabled;
-	}
-
-	void callbackScroll(GLFWwindow *window, double xoffset, double yoffset)
-	{
-		mouse::get()->m_mouseDeltaWheel = (float)yoffset;
-	}
-
-	void callbackMouseButton(GLFWwindow *window, int button, int action, int mods)
-	{
-		mouse::get()->m_mouseButtons[button] = action;
-	}
-
-	void callbackCursorPos(GLFWwindow *window, double xpos, double ypos)
-	{
-		mouse::get()->m_mousePositionX = (float)(xpos / display::get()->getWidth());
-		mouse::get()->m_mousePositionY = (float)(ypos / display::get()->getHeight());
-	}
-
-	void callbackCursorEnter(GLFWwindow *window, int entered)
-	{
-		mouse::get()->m_displaySelected = entered;
 	}
 }
