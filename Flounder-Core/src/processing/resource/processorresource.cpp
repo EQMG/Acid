@@ -20,11 +20,13 @@ namespace flounder {
 
 		while (m_queue->hasRequests())
 		{
-			m_queue->acceptNextRequest()->executeRequestResource();
+			requestresource* request = m_queue->acceptNextRequest();
+			request->executeRequestResource();
 			double end = framework::get()->getTimeMs();
 			double timeTaken = end - start;
 			remainingTime -= timeTaken;
 			start = end;
+			delete request;
 
 			if (remainingTime < 0.0)
 			{

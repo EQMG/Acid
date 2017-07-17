@@ -87,7 +87,7 @@ namespace flounder {
 			return result;
 		}
 
-		static std::string replaceAll(const std::string &str, const char &token)
+		static std::string removeAll(const std::string &str, const char &token)
 		{
 			std::string result = str;
 			result.erase(std::remove(result.begin(), result.end(), token), result.end());

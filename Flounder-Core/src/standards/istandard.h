@@ -6,6 +6,14 @@ namespace flounder {
 	/// </summary>
 	class istandard {
 	public:
+		istandard()
+		{
+		}
+
+		virtual ~istandard()
+		{
+		}
+
 		/// <summary>
 		/// Run when updating the standards.
 		/// </summary>

@@ -4,6 +4,14 @@ namespace flounder {
 	class irequest 
 	{
 	public:
+		irequest()
+		{
+		}
+
+		virtual ~irequest()
+		{
+		}
+
 		/// <summary>
 		/// Gets the request id.
 		/// </summary>

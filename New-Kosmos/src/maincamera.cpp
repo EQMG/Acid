@@ -51,8 +51,8 @@ namespace flounder {
 		matrix4x4::viewMatrix(*m_position, *m_rotation, m_viewMatrix);
 		matrix4x4::perspectiveMatrix(getFOV(), (float) display::get()->getAspectRatio(), getNearPlane(), getFarPlane(), m_projectionMatrix);
 
-		m_viewFrustum->update(m_projectionMatrix, m_viewMatrix);
-		m_viewRay->update(m_position, &vector2((float) mouse::get()->getPositionX(), (float) mouse::get()->getPositionY()), m_viewMatrix, m_projectionMatrix);
+		m_viewFrustum->update(*m_projectionMatrix, *m_viewMatrix);
+		m_viewRay->update(*m_position, vector2((float) mouse::get()->getPositionX(), (float) mouse::get()->getPositionY()), *m_viewMatrix, *m_projectionMatrix);
 	}
 
 	void maincamera::reflect(const float &waterHeight)

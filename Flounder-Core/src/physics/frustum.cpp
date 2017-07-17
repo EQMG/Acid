@@ -1,6 +1,18 @@
 #include "frustum.h"
 
 namespace flounder {
+	const int frustum::RIGHT = 0;
+	const int frustum::LEFT = 1;
+	const int frustum::BOTTOM = 2;
+	const int frustum::TOP = 3;
+	const int frustum::BACK = 4;
+	const int frustum::FRONT = 5;
+
+	const int frustum::A = 0;
+	const int frustum::B = 1;
+	const int frustum::C = 2;
+	const int frustum::D = 3;
+
 	frustum::frustum()
 	{
 		m_frustum = helperarray::recFloatArray(6, 4);
@@ -11,10 +23,10 @@ namespace flounder {
 		delete m_frustum;
 	}
 
-	void frustum::update(matrix4x4 *viewMatrix, matrix4x4 *projectionMatrix)
+	void frustum::update(const matrix4x4 &viewMatrix, const matrix4x4 &projectionMatrix)
 	{
-		float *view = matrix4x4::toArray(*viewMatrix);
-		float *proj = matrix4x4::toArray(*projectionMatrix);
+		float *view = matrix4x4::toArray(viewMatrix);
+		float *proj = matrix4x4::toArray(projectionMatrix);
 		float *clip = new float[16];
 
 		clip[0] = view[0] * proj[0] + view[1] * proj[4] + view[2] * proj[8] + view[3] * proj[12];
@@ -86,9 +98,9 @@ namespace flounder {
 		normalizePlane(m_frustum, BACK);
 
 		// Deletes the arrays used to update the frustum.
-		delete [] view;
-		delete [] proj;
-		delete [] clip;
+		delete[] view;
+		delete[] proj;
+		delete[] clip;
 	}
 
 	bool frustum::pointInFrustum(const float &x, const float &y, const float &z)

@@ -10,6 +10,14 @@
 namespace flounder {
 	class icamera {
 	public:
+		icamera()
+		{
+		}
+
+		virtual ~icamera()
+		{
+		}
+
 		/// <returns> The distance of the near pane of the view frustum. </returns>
 		virtual float getNearPlane() = 0;
 

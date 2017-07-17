@@ -8,7 +8,8 @@ namespace flounder {
 	/// <summary>
 	/// A class that runs a event after a time has passed.
 	/// </summary>
-	class ieventtime : public ievent
+	class ieventtime : 
+		public ievent
 	{
 	private:
 		timer *m_timer;
@@ -19,7 +20,8 @@ namespace flounder {
 		/// </summary>
 		/// <param name="interval"> The amount of seconds in the future to run the event. </param>
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
-		ieventtime(const float &interval, const bool &repeat)
+		ieventtime(const float &interval, const bool &repeat) :
+			ievent()
 		{
 			m_timer = new timer(interval);
 			m_repeat = repeat;

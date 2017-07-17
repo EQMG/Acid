@@ -32,6 +32,7 @@ namespace flounder {
 				if ((*it)->removeAfterEvent())
 				{
 					m_events->erase(it);
+					delete *it;
 					return; // it--;
 				}
 			}
