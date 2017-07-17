@@ -2,7 +2,13 @@
 
 #include <iostream>
 #include <string>
+
+#ifdef FLOUNDER_EMSCRIPTEN
+#include <emscripten/emscripten.h>
+#else
 #include <GL/glew.h>
+#endif
+
 #include <GLFW/glfw3.h>
 
 #include "../framework/framework.h"
@@ -38,12 +44,12 @@ namespace flounder {
 		int m_windowPosX;
 		int m_windowPosY;
 
-		friend static void callbackError(int error, const char* description);
-		friend static void callbackClose(GLFWwindow* window);
-		friend static void callbackFocus(GLFWwindow* window, int focused);
-		friend static void callbackPosition(GLFWwindow* window, int xpos, int ypos);
-		friend static void callbackSize(GLFWwindow* window, int width, int height);
-		friend static void callbackFrame(GLFWwindow* window, int width, int height);
+		friend void callbackError(int error, const char* description);
+		friend void callbackClose(GLFWwindow* window);
+		friend void callbackFocus(GLFWwindow* window, int focused);
+		friend void callbackPosition(GLFWwindow* window, int xpos, int ypos);
+		friend void callbackSize(GLFWwindow* window, int width, int height);
+		friend void callbackFrame(GLFWwindow* window, int width, int height);
 	public:
 		static display* get() 
 		{

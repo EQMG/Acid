@@ -3,13 +3,10 @@
 namespace flounder {
 	framework *framework::G_INSTANCE = NULL;
 
-	framework::framework(const std::string &unlocalizedName, const int &fpsLimit)
+	framework::framework(const int &fpsLimit)
 	{
 		// Sets the static object to this new one.
 		framework::G_INSTANCE = this;
-
-		// Sets the instances name.
-		m_unlocalizedName = unlocalizedName;
 
 		m_updater = NULL;
 		
@@ -37,35 +34,25 @@ namespace flounder {
 
 	void framework::run()
 	{
+#ifdef FLOUNDER_EMSCRIPTEN
+		std::function<void()> mainLoop = [&]() {
+			while (m_running)
+			{
+				m_updater->update();
+			}
+		};
+		emscripten_set_main_loop_arg(dispatch_main, &mainLoop, 0, 1);
+#else
 		while (m_running)
 		{
 			m_updater->update();
 		}
+#endif
 	}
 
 	imodule *framework::getInstance(const std::string &name)
 	{
 		return m_updater->getInstance(name);
-	}
-
-	std::string framework::getUnlocalizedName()
-	{
-		return m_unlocalizedName;
-	}
-
-	bool framework::isInitialized()
-	{
-		return m_initialized;
-	}
-
-	void framework::setInitialized(const bool &initialized)
-	{
-		m_initialized = initialized;
-	}
-
-	bool framework::isRunning()
-	{
-		return m_running;
 	}
 
 	void framework::requestClose(const bool &error)

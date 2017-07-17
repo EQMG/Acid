@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "flounder.h"
 #include "framework/framework.h"
 #include "framework/glfw/glfwupdater.h"
 
@@ -12,7 +13,7 @@ using namespace flounder;
 
 int main() {
 	// Creates the framework object.
-	framework *m_framework = new framework("kosmos", -1);
+	framework *m_framework = new framework(-1);
 
 	// Loads things to the framework.
 	framework::get()->loadUpdater(new glfwupdater());

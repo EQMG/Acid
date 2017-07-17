@@ -1,18 +1,21 @@
 #pragma once
 
 #include <string>
-#include <GL/glew.h>
 
 namespace flounder {
-	enum loadtype {
+	/// <summary>
+	/// A enum that tells the shader how to load the type.
+	/// </summary>
+	enum loadtype 
+	{
 		FILE, STRING
 	};
 
 	/// <summary>
 	/// A struct that represents a shader type.
 	/// </summary>
-	class shadertype {
-	public:
+	struct shadertype 
+	{
 		GLenum m_shaderType;
 		std::string m_load;
 		loadtype m_loadtype;
