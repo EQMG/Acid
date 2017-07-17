@@ -183,7 +183,7 @@ namespace flounder {
 		}
 		else
 		{
-			std::cerr << "Could not find a file/string to load for the shader type: " << type << std::endl;
+			std::cout << "Could not find a file/string to load for the shader type: " << type << std::endl;
 		}
 
 		type->m_processedString = ""; // Clears the string so the shader can be processed.
@@ -221,12 +221,26 @@ namespace flounder {
 	{
 		std::string result = line;
 
+#ifdef FLOUNDER_EMSCRIPTEN
+		if (helperstring::startsWith(line, "in"))
+		{
+			result = helperstring::replace(line, "in", "varying");
+		}
+		else if (helperstring::startsWith(line, "out"))
+		{
+			result = helperstring::replace(line, "out", "varying");
+		}
+#endif
+
 		if (helperstring::startsWith(line, "//"))
 		{
 			result = "";
 		}
 		else if (helperstring::contains(line, "#version"))
 		{
+#ifdef FLOUNDER_EMSCRIPTEN
+			result = "";
+#else
 			int major = display::get()->getGlfwMajor();
 			int minor = display::get()->getGlfwMinor();
 
@@ -238,6 +252,7 @@ namespace flounder {
 			{
 				result = "#version 130";
 			}
+#endif
 		}
 		else if (helperstring::contains(line, "#include"))
 		{
@@ -358,10 +373,13 @@ namespace flounder {
 			{
 				glBindAttribLocation(m_programID, index, locationName.c_str());
 			}
+#ifndef FLOUNDER_EMSCRIPTEN
+			// TODO: How will deferred rendering work in OpenGL ES 4?
 			else if (locationType.find("out") != std::string::npos)
 			{
 				glBindFragDataLocation(m_programID, index, locationName.c_str());
 			}
+#endif
 			else
 			{
 				std::cout << "Could not find location type of: " << locationType << std::endl;
