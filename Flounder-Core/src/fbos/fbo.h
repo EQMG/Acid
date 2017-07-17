@@ -6,11 +6,13 @@
 
 #ifdef FLOUNDER_EMSCRIPTEN
 #include <emscripten/emscripten.h>
+#include <GLFW/glfw3.h>
 #else
 #include <GL/glew.h>
 #endif
 
 #include "../devices/display.h"
+#include "../maths/maths.h"
 
 #include "depthbuffer.h"
 

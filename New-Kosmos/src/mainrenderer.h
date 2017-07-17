@@ -20,10 +20,10 @@ namespace flounder {
 		rendererskybox *m_skybox;
 
 		fbo *m_fboRenderer;
-		deferredrenderer *m_deferred;
-		filterfxaa *m_filterFxaa;
-		filtergrain *m_filterGrain;
-		filtercrt *m_filterCrt;
+	//	deferredrenderer *m_deferred;
+	//	filterfxaa *m_filterFxaa;
+	//	filtergrain *m_filterGrain;
+	//	filtercrt *m_filterCrt;
 	public:
 		mainrenderer();
 

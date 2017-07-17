@@ -15,7 +15,8 @@ namespace flounder {
 		/// Creates a new change event.
 		/// </summary>
 		/// <param name="reference"> The reference to listen to. </param>
-		ieventchange(t *reference)
+		ieventchange(t *reference) :
+			ievent()
 		{
 			m_reference = reference;
 		}

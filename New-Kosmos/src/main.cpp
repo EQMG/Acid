@@ -19,7 +19,7 @@ int main() {
 	framework::get()->loadUpdater(new glfwupdater());
 
 	display::get()->load(3, 2, 1080, 720, "New Kosmos", "res/newkosmos.png", false, true, 0, false);
-	mouse::get()->load("res/guis/cursor.png");
+	mouse::get()->load("res/cursor.png");
 
 	standards::get()->loadStandard(new maininstance());
 	camera::get()->loadCamera(new maincamera());

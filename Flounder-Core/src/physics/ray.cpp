@@ -40,13 +40,13 @@ namespace flounder {
 		delete m_rayWorld;
 	}
 
-	void ray::update(vector3 *currentPosition, vector2 *mousePosition, matrix4x4 *viewMatrix, matrix4x4 *projectionMatrix)
+	void ray::update(const vector3 &currentPosition, const vector2 &mousePosition, const matrix4x4 &viewMatrix, const matrix4x4 &projectionMatrix)
 	{
-		m_origin->set(*currentPosition);
+		m_origin->set(currentPosition);
 
 		if (m_useMouse)
 		{
-			updateNormalisedDeviceCoordinates(mousePosition->x, mousePosition->y);
+			updateNormalisedDeviceCoordinates(mousePosition.x, mousePosition.y);
 		}
 		else
 		{
@@ -60,8 +60,8 @@ namespace flounder {
 			}
 		}
 
-		m_viewMatrix->set(*viewMatrix);
-		m_projectionMatrix->set(*projectionMatrix);
+		m_viewMatrix->set(viewMatrix);
+		m_projectionMatrix->set(projectionMatrix);
 		m_clipCoords->set(m_normalizedCoords->x, m_normalizedCoords->y, -1.0f, 1.0f);
 		updateEyeCoords(m_clipCoords);
 		updateWorldCoords(m_eyeCoords);

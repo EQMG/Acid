@@ -1,6 +1,43 @@
 #include "display.h"
 
 namespace flounder {
+	void callbackError(int error, const char *description)
+	{
+		fprintf(stderr, "GLFW Error: %s\n", description);
+	}
+
+	void callbackClose(GLFWwindow *window)
+	{
+		display::get()->m_closed = false;
+		framework::get()->requestClose(false);
+	}
+
+	void callbackFocus(GLFWwindow *window, int focused)
+	{
+		display::get()->m_focused = focused;
+	}
+
+	void callbackPosition(GLFWwindow *window, int xpos, int ypos)
+	{
+		if (!display::get()->m_fullscreen) {
+			display::get()->m_windowPosX = xpos;
+			display::get()->m_windowPosY = ypos;
+		}
+	}
+
+	void callbackSize(GLFWwindow *window, int width, int height)
+	{
+		if (!display::get()->m_fullscreen) {
+			display::get()->m_windowWidth = width;
+			display::get()->m_windowHeight = height;
+		}
+	}
+
+	void callbackFrame(GLFWwindow *window, int width, int height)
+	{
+		glViewport(0, 0, width, height);
+	}
+
 	display::display() : 
 		imodule()
 	{
@@ -349,42 +386,5 @@ namespace flounder {
 	int &display::getWindowYPos()
 	{
 		return m_windowPosY;
-	}
-	
-	void callbackError(int error, const char *description)
-	{
-		fprintf(stderr, "GLFW Error: %s\n", description);
-	}
-
-	void callbackClose(GLFWwindow *window)
-	{
-		display::get()->m_closed = false;
-		framework::get()->requestClose(false);
-	}
-
-	void callbackFocus(GLFWwindow *window, int focused)
-	{
-		display::get()->m_focused = focused;
-	}
-
-	void callbackPosition(GLFWwindow *window, int xpos, int ypos)
-	{
-		if (!display::get()->m_fullscreen) {
-			display::get()->m_windowPosX = xpos;
-			display::get()->m_windowPosY = ypos;
-		}
-	}
-
-	void callbackSize(GLFWwindow *window, int width, int height)
-	{
-		if (!display::get()->m_fullscreen) {
-			display::get()->m_windowWidth = width;
-			display::get()->m_windowHeight = height;
-		}
-	}
-
-	void callbackFrame(GLFWwindow *window, int width, int height)
-	{
-		glViewport(0, 0, width, height);
 	}
 }

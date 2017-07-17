@@ -257,8 +257,8 @@ namespace flounder {
 		else if (helperstring::contains(line, "#include"))
 		{
 			std::string includeFile = helperstring::substring(line, 8 + 1, line.length() - 1); // "#include".length = 8
-			includeFile = helperstring::replaceAll(includeFile, '\\s+');
-			includeFile = helperstring::replaceAll(includeFile, '\"');
+			includeFile = helperstring::removeAll(includeFile, '\\s+');
+			includeFile = helperstring::removeAll(includeFile, '\"');
 
 			std::string includeString = helperfile::readFile(includeFile);
 			std::vector<std::string> includeLines = helperstring::split(includeString, "\n");
@@ -365,7 +365,7 @@ namespace flounder {
 			locationType = helperstring::trim(locationType);
 
 			std::string value = helperstring::substring(*it, helperstring::findCharPos((*it), '=') + 1, helperstring::findCharPos((*it), ')'));
-			value = helperstring::replaceAll(value, '\\s+');
+			value = helperstring::removeAll(value, '\\s+');
 			value = helperstring::trim(value);
 			int index = atoi(value.c_str());
 
@@ -403,7 +403,7 @@ namespace flounder {
 			std::string bindingName = helperstring::substring(*it, (*it).find_last_of(" ") + 1, (*it).length() - 1);
 
 			std::string value = helperstring::substring(*it, helperstring::findCharPos((*it), '=') + 1, helperstring::findCharPos((*it), ')'));
-			value = helperstring::replaceAll(value, '\\s+');
+			value = helperstring::removeAll(value, '\\s+');
 			value = helperstring::trim(value);
 			int index = atoi(value.c_str());
 

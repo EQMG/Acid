@@ -5,11 +5,11 @@
 
 #ifdef FLOUNDER_EMSCRIPTEN
 #include <emscripten/emscripten.h>
+#include <GLFW/glfw3.h>
 #else
 #include <GL/glew.h>
-#endif
-
 #include <GLFW/glfw3.h>
+#endif
 
 #include "../framework/framework.h"
 #include "../textures/stb_image.h"

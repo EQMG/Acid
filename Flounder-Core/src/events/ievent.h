@@ -10,6 +10,14 @@ namespace flounder {
 	class ievent 
 	{
 	public:
+		ievent()
+		{
+		}
+
+		virtual ~ievent()
+		{
+		}
+
 		/// <summary>
 		/// Gets if the event has occurred.
 		/// </summary>
