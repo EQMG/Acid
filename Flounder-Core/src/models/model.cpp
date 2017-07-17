@@ -126,7 +126,7 @@ namespace flounder {
 					// The split length of 3 faced + 1 for the f prefix.
 					if (split.size() != 4 || helperstring::contains(line, "//"))
 					{
-						std::cerr << "Error reading the OBJ " << file << ", it does not appear to be UV mapped! The model will not be loaded." << std::endl;
+						std::cout << "Error reading the OBJ " << file << ", it does not appear to be UV mapped! The model will not be loaded." << std::endl;
 						//throw ex
 					}
 

@@ -16,8 +16,8 @@ namespace flounder {
 		int *m_keyboardKeys;
 		unsigned int m_keyboardChar;
 
-		friend static void callbackKey(GLFWwindow* window, int key, int scancode, int action, int mods);
-		friend static void callbackChar(GLFWwindow* window, unsigned int codepoint);
+		friend void callbackKey(GLFWwindow* window, int key, int scancode, int action, int mods);
+		friend void callbackChar(GLFWwindow* window, unsigned int codepoint);
 	public:
 		static keyboard* get() 
 		{

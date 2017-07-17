@@ -3,6 +3,17 @@
 #include "imodule.h"
 #include "iupdater.h"
 
+#ifdef FLOUNDER_EMSCRIPTEN
+#include <functional>
+#include <emscripten/emscripten.h>
+
+static void dispatch_main(void* fp)
+{
+	std::function<void()>* func = (std::function<void()>*)fp;
+	(*func)();
+}
+#endif
+
 /// <summary>
 /// The base Flounder folder.
 /// </summary>
@@ -16,8 +27,6 @@ namespace flounder {
 	{
 	private:
 		static framework *G_INSTANCE;
-
-		std::string m_unlocalizedName;
 
 		bool m_initialized;
 		bool m_running;
@@ -34,9 +43,8 @@ namespace flounder {
 		/// <summary>
 		/// Carries out the setup for basic framework components and the framework. Call <seealso cref="#run()"/> after creating a instance.
 		/// </summary>
-		/// <param name="unlocalizedName"> The name to be used when determining where the roaming save files are saved. </param>
 		/// <param name="fpsLimit"> The limit to FPS, (-1 disables limits). </param>
-		framework(const std::string &unlocalizedName, const int &fpsLimit);
+		framework(const int &fpsLimit);
 
 		~framework();
 
@@ -48,30 +56,28 @@ namespace flounder {
 
 		imodule *getInstance(const std::string &name);
 
-		std::string framework::getUnlocalizedName();
+		inline double getTimeOffset() { return m_updater->getTimeOffset(); }
 
-		inline double framework::getTimeOffset() { return m_updater->getTimeOffset(); }
+		inline void setTimeOffset(const double &timeOffset) { m_updater->setTimeOffset(timeOffset); }
 
-		inline void framework::setTimeOffset(const double &timeOffset) { m_updater->setTimeOffset(timeOffset); }
+		inline double getDelta() { return m_updater->getDelta(); }
 
-		inline double framework::getDelta() { return m_updater->getDelta(); }
+		inline double getDeltaRender() { return m_updater->getDeltaRender(); }
 
-		inline double framework::getDeltaRender() { return m_updater->getDeltaRender(); }
+		inline double getTimeSec() { return m_updater->getTimeSec(); }
 
-		inline double framework::getTimeSec() { return m_updater->getTimeSec(); }
+		inline double getTimeMs() { return m_updater->getTimeMs(); }
 
-		inline double framework::getTimeMs() { return m_updater->getTimeMs(); }
+		inline bool isInitialized() { return m_initialized; }
 
-		bool framework::isInitialized();
+		inline void setInitialized(const bool &initialized) { m_initialized = initialized; }
 
-		void framework::setInitialized(const bool &initialized);
+		inline bool isRunning() { return m_running; }
 
-		bool framework::isRunning();
+		void requestClose(const bool &error);
 
-		void framework::requestClose(const bool &error);
+		int getFpsLimit();
 
-		int framework::getFpsLimit();
-
-		void framework::setFpsLimit(const int &fpsLimit);
+		void setFpsLimit(const int &fpsLimit);
 	};
 }

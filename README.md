@@ -9,11 +9,13 @@ Libraries:
  * STB image loading
  * OpenGL GLFW and GLEW 
  * OpenAL Soft
-
+ * Emscripten
+ 
 Supported platforms:
  * Windows
  * MacOS
  * Linux
+ * Web
 
 Rendering backends:
  * OpenGL
@@ -38,7 +40,6 @@ Features:
  
 Plans:
  * Android/IOS
- * Web platform
  * Consoles/Switch?
  * Add more features from Flounder on Java
 

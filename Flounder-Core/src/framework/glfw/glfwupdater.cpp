@@ -1,7 +1,8 @@
 #include "glfwupdater.h"
 
 namespace flounder {
-	glfwupdater::glfwupdater()
+	glfwupdater::glfwupdater() :
+		iupdater()
 	{
 	}
 

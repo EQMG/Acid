@@ -28,10 +28,10 @@ namespace flounder {
 		bool m_cursorDisabled;
 		bool m_lastCursorDisabled;
 
-		friend static void callbackScroll(GLFWwindow* window, double xoffset, double yoffset);
-		friend static void callbackMouseButton(GLFWwindow* window, int button, int action, int mods);
-		friend static void callbackCursorPos(GLFWwindow* window, double xpos, double ypos);
-		friend static void callbackCursorEnter(GLFWwindow* window, int entered);
+		friend void callbackScroll(GLFWwindow* window, double xoffset, double yoffset);
+		friend void callbackMouseButton(GLFWwindow* window, int button, int action, int mods);
+		friend void callbackCursorPos(GLFWwindow* window, double xpos, double ypos);
+		friend void callbackCursorEnter(GLFWwindow* window, int entered);
 	public:
 		static mouse* get() 
 		{

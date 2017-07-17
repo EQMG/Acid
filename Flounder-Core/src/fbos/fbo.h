@@ -3,7 +3,12 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+
+#ifdef FLOUNDER_EMSCRIPTEN
+#include <emscripten/emscripten.h>
+#else
 #include <GL/glew.h>
+#endif
 
 #include "../devices/display.h"
 
