@@ -4,7 +4,13 @@
 #include <vector>
 #include <map>
 #include <stdarg.h>
-#include <GL\glew.h>
+
+#ifdef FLOUNDER_EMSCRIPTEN
+#include <emscripten/emscripten.h>
+#include <GLFW/glfw3.h>
+#else
+#include <GL/glew.h>
+#endif
 
 #include "../framework/framework.h"
 

@@ -29,8 +29,8 @@ namespace flounder {
 				return false;
 			}
 
-			bool triggered = !newValue->equals(current);
-			current = newValue;
+			bool triggered = newValue != m_current;
+			m_current = newValue;
 			return triggered;
 		}
 

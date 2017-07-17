@@ -88,7 +88,7 @@ namespace flounder {
 		}
 		else
 		{
-			std::cerr << "Could not find a texture or cubemap from the builder: " << this << std::endl;
+			std::cout << "Could not find a texture or cubemap from the builder: " << this << std::endl;
 		}
 
 		//delete this;
@@ -139,14 +139,14 @@ namespace flounder {
 
 		if (data == NULL)
 		{
-			std::cerr << "Unable to load texture: " << file << std::endl;
+			std::cout << "Unable to load texture: " << file << std::endl;
 		}
 
 		glGenTextures(1, &m_textureID);
 		glBindTexture(GL_TEXTURE_2D, m_textureID);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		stbi_image_free(data);
 
 		if (m_mipmap) 
@@ -206,7 +206,7 @@ namespace flounder {
 
 			if (data == NULL)
 			{
-				std::cerr << "Unable to load texture: " << cubemap[i] << std::endl;
+				std::cout << "Unable to load texture: " << cubemap[i] << std::endl;
 			}
 
 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);

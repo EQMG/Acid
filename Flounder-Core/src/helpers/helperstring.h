@@ -93,5 +93,19 @@ namespace flounder {
 			result.erase(std::remove(result.begin(), result.end(), token), result.end());
 			return result;
 		}
+
+		static std::string replace(const std::string& str, const std::string& from, const std::string& to)
+		{
+			std::string result = str;
+			size_t start_pos = result.find(from);
+
+			if (start_pos == std::string::npos)
+			{
+				return NULL;
+			}
+
+			result.replace(start_pos, from.length(), to);
+			return result;
+		}
 	};
 }

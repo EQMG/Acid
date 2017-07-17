@@ -69,8 +69,10 @@ namespace flounder {
 
 		// Configures the window.
 		glfwDefaultWindowHints();
+#ifndef FLOUNDER_EMSCRIPTEN
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // The window will be resizable depending on if it's fullscreen.
+#endif
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, m_glfwMajor);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_glfwMinor);
 
@@ -82,7 +84,9 @@ namespace flounder {
 		}
 
 		glfwWindowHint(GLFW_STENCIL_BITS, 8); // Fixes 16 bit stencil bits in macOS.
+#ifndef FLOUNDER_EMSCRIPTEN
 		glfwWindowHint(GLFW_STEREO, GLFW_FALSE); // No stereo view!
+#endif
 
 		// Use FBO antialiasing instead!
 		//if (samples > 0) {
@@ -131,16 +135,18 @@ namespace flounder {
 
 			if (data == NULL)
 			{
-				std::cerr << "Unable to load texture: " << m_icon << std::endl;
+				std::cout << "Unable to load texture: " << m_icon << std::endl;
 			}
 			else
 			{
+#ifndef FLOUNDER_EMSCRIPTEN
 				GLFWimage icons[1];
 				icons[0].pixels = data;
 				icons[0].width = width;
 				icons[0].height = height;
 
 				glfwSetWindowIcon(m_window, 1, icons);
+#endif
 			}
 
 			stbi_image_free(data);
@@ -172,12 +178,14 @@ namespace flounder {
 		glfwSetWindowSizeCallback(m_window, callbackSize);
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 
+#ifndef FLOUNDER_EMSCRIPTEN
 		// Initialize the GLEW library.
 		if (glewInit() != GLEW_OK)
 		{
 			std::cout << "Could not init GLEW!" << std::endl;
 			framework::get()->requestClose(true);
 		}
+#endif
 
 		// System logs.
 		//	logger::get()->log("If you are getting errors, please write a description of how you get the error, and copy this log: https://github.com/Equilibrium-Games/Flounder-Engine/issues");
@@ -292,6 +300,7 @@ namespace flounder {
 
 	void display::setFullscreen(const bool &fullscreen)
 	{
+#ifndef FLOUNDER_EMSCRIPTEN
 		if (m_fullscreen == fullscreen) {
 			return;
 		}
@@ -314,6 +323,7 @@ namespace flounder {
 			m_windowPosY = (videoMode->height - m_windowHeight) / 2;
 			glfwSetWindowMonitor(m_window, NULL, m_windowPosX, m_windowPosY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
 		}
+#endif
 	}
 
 	GLFWwindow *display::getWindow()
@@ -354,7 +364,7 @@ namespace flounder {
 
 	void callbackFocus(GLFWwindow *window, int focused)
 	{
-		display::get()->m_focused = focused == GLFW_TRUE;
+		display::get()->m_focused = focused;
 	}
 
 	void callbackPosition(GLFWwindow *window, int xpos, int ypos)

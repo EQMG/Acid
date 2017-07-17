@@ -49,9 +49,10 @@ namespace flounder {
 
 			if (data == NULL)
 			{
-				std::cerr << "Unable to load texture: " << m_customMouse << std::endl;
+				std::cout << "Unable to load texture: " << m_customMouse << std::endl;
 			}
 
+#ifndef FLOUNDER_EMSCRIPTEN
 			GLFWimage *image = new GLFWimage();
 			image->pixels = data;
 			image->width = width;
@@ -60,6 +61,7 @@ namespace flounder {
 			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
 			glfwSetCursor(display::get()->getWindow(), cursor);
 			stbi_image_free(data);
+#endif
 		}
 	}
 

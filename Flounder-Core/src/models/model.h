@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <GL/glew.h>
 
 #include "../helpers/helperfile.h"
 #include "../helpers/helperstring.h"

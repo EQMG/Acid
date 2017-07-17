@@ -131,6 +131,7 @@ namespace flounder {
 			return a * (1.0f - f) + b * f;
 		}
 
+#ifndef FLOUNDER_EMSCRIPTEN
 		/// <summary>
 		/// A calculation that steps smoothly between two edges.
 		/// </summary>
@@ -144,6 +145,7 @@ namespace flounder {
 			float s = clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
 			return s * s * (3.0f - 2.0f * t);
 		}
+#endif
 
 		/// <summary>
 		/// Generates a random value from between a range.
