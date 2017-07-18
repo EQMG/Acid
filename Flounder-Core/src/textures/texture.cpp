@@ -157,7 +157,7 @@ namespace flounder {
 
 			if (m_anisotropic) 
 			{
-#ifdef FLOUNDER_EMSCRIPTEN
+#ifdef FLOUNDER_PLATFORM_WEB
 #define GL_TEXTURE_MAX_ANISOTROPY_EXT     0x84FE
 #else
 				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, 0);
@@ -181,7 +181,7 @@ namespace flounder {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		}
-#ifndef FLOUNDER_EMSCRIPTEN
+#ifndef FLOUNDER_PLATFORM_WEB
 		else if (m_clampToBorder) 
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);

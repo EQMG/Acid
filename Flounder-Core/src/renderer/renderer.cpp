@@ -88,7 +88,7 @@ namespace flounder {
 
 	void renderer::goWireframe(const bool &goWireframe)
 	{
-#ifndef FLOUNDER_EMSCRIPTEN
+#ifndef FLOUNDER_PLATFORM_WEB
 		if (goWireframe && !m_inWireframe)
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

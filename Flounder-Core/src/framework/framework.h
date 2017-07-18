@@ -3,7 +3,7 @@
 #include "imodule.h"
 #include "iupdater.h"
 
-#ifdef FLOUNDER_EMSCRIPTEN
+#ifdef FLOUNDER_PLATFORM_WEB
 #include <functional>
 #include <emscripten/emscripten.h>
 
@@ -31,7 +31,6 @@ namespace flounder {
 		bool m_initialized;
 		bool m_running;
 		bool m_error;
-		int m_fpsLimit;
 
 		iupdater *m_updater;
 	public:
@@ -43,8 +42,7 @@ namespace flounder {
 		/// <summary>
 		/// Carries out the setup for basic framework components and the framework. Call <seealso cref="#run()"/> after creating a instance.
 		/// </summary>
-		/// <param name="fpsLimit"> The limit to FPS, (-1 disables limits). </param>
-		framework(const int &fpsLimit);
+		framework();
 
 		~framework();
 
@@ -75,9 +73,5 @@ namespace flounder {
 		inline bool isRunning() { return m_running; }
 
 		void requestClose(const bool &error);
-
-		int getFpsLimit();
-
-		void setFpsLimit(const int &fpsLimit);
 	};
 }

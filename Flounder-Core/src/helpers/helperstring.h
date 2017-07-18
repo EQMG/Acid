@@ -101,7 +101,7 @@ namespace flounder {
 
 			if (start_pos == std::string::npos)
 			{
-				return NULL;
+				return result;
 			}
 
 			result.replace(start_pos, from.length(), to);

@@ -14,7 +14,7 @@
 #define __degrees(b) (b * (PI / DEGREES_IN_HALF_CIRCLE))
 #define __random() (((double) rand()) / RAND_MAX);
 
-#ifdef FLOUNDER_EMSCRIPTEN
+#ifdef FLOUNDER_PLATFORM_WEB
 #define __min(a, b) (((a) < (b)) ? (a) : (b))
 #define __max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
@@ -136,7 +136,7 @@ namespace flounder {
 			return a * (1.0f - f) + b * f;
 		}
 
-#ifndef FLOUNDER_EMSCRIPTEN
+#ifndef FLOUNDER_PLATFORM_WEB
 		/// <summary>
 		/// A calculation that steps smoothly between two edges.
 		/// </summary>

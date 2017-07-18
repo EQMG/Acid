@@ -73,7 +73,7 @@ namespace flounder {
 				std::cout << "Unable to load texture: " << m_customMouse << std::endl;
 			}
 
-#ifndef FLOUNDER_EMSCRIPTEN
+#ifndef FLOUNDER_PLATFORM_WEB
 			GLFWimage *image = new GLFWimage();
 			image->pixels = data;
 			image->width = width;
