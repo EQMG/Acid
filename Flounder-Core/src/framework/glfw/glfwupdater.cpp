@@ -37,8 +37,8 @@ namespace flounder {
 		m_deltaUpdate = new delta();
 		m_deltaRender = new delta();
 		m_timerUpdate = new timer(1.0 / 60.0);
-		m_timerRender = new timer(1.0 / framework::get()->getFpsLimit());
-		m_timerLog = new timer(1.0);
+		m_timerRender = new timer(1.0 / -1.0);
+		m_timerLog = new timer(2.22);
 
 		m_events = new events();
 		m_tasks = new tasks();
@@ -79,6 +79,8 @@ namespace flounder {
 
 	void flounder::glfwupdater::update()
 	{
+		this->m_timerRender->setInterval(1.0 / display::get()->getFpsLimit());
+
 		// Always-Update
 
 		if (m_timerUpdate->isPassedTime())

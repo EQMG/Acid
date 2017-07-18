@@ -3,6 +3,7 @@
 #include "renderer/irenderermaster.h"
 #include "renderer/renderer.h"
 
+#include "devices/mouse.h"
 #include "devices/keyboard.h"
 #include "deferred/deferredrenderer.h"
 #include "fbos/fbo.h"
@@ -20,10 +21,10 @@ namespace flounder {
 		rendererskybox *m_skybox;
 
 		fbo *m_fboRenderer;
-	//	deferredrenderer *m_deferred;
-	//	filterfxaa *m_filterFxaa;
-	//	filtergrain *m_filterGrain;
-	//	filtercrt *m_filterCrt;
+		deferredrenderer *m_deferred;
+		filterfxaa *m_filterFxaa;
+		filtergrain *m_filterGrain;
+		filtercrt *m_filterCrt;
 	public:
 		mainrenderer();
 

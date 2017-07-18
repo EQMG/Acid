@@ -16,7 +16,7 @@ namespace flounder {
 	mainrenderer::~mainrenderer()
 	{
 		delete m_infinity;
-		delete m_skybox;
+	//	delete m_skybox;
 
 		delete m_fboRenderer;
 	//	delete m_deferred;
@@ -31,7 +31,7 @@ namespace flounder {
 		m_fboRenderer->bindFrameBuffer();
 
 		// Scene rendering.
-		renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 0.0f);
+		renderer::get()->prepareNewRenderParse(mouse::get()->getPositionX(), mouse::get()->getPositionY(), 0.0f, 0.0f);
 		m_skybox->render(m_infinity, camera::get()->getCamera());
 
 		// Unbinds the render FBO.
@@ -40,14 +40,14 @@ namespace flounder {
 		// Renders the post pipeline.
 		fbo *output = m_fboRenderer;
 
-		/*m_deferred->apply(4,
-			output->getColourTexture(0), 
-			output->getColourTexture(1), 
-			output->getColourTexture(2), 
-			output->getDepthTexture()
-			//shadowRenderer->getShadowMap()
-		);
-		output = m_deferred->getFbo();*/
+	//	m_deferred->apply(4,
+	//		output->getColourTexture(0), 
+	//		output->getColourTexture(1), 
+	//		output->getColourTexture(2), 
+	//		output->getDepthTexture()
+	//		//shadowRenderer->getShadowMap()
+	//	);
+	//	output = m_deferred->getFbo();
 
 	//	m_filterFxaa->applyFilter(1, output->getColourTexture(0));
 	//	output = m_filterFxaa->getFbo();

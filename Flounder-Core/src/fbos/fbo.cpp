@@ -296,7 +296,7 @@ namespace flounder {
 	void fbo::limitFBOSize()
 	{
 		int maxSize = 0;
-#ifdef FLOUNDER_EMSCRIPTEN
+#ifdef FLOUNDER_PLATFORM_WEB
 #define GL_MAX_RENDERBUFFER_SIZE_EXT      0x84E8
 #endif
 		glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE_EXT, &maxSize);

@@ -51,6 +51,7 @@ namespace flounder {
 
 		m_title = "Flounder C++";
 		m_icon = "";
+		m_fpsLimit = -1.0f;
 		m_vsync = false;
 		m_antialiasing = true;
 		m_samples = 0;
@@ -76,7 +77,7 @@ namespace flounder {
 		m_closed = false;
 	}
 
-	void display::load(const int glfwMajor, const int glfwMinor, const int width, const int height, const std::string title, std::string icon, const bool vsync, const bool antialiasing, const int samples, const bool fullscreen)
+	void display::load(const int &glfwMajor, const int &glfwMinor, const int &width, const int &height, const std::string &title, const std::string &icon, const float &fpsLimit, const bool &vsync, const bool &antialiasing, const int &samples, const bool &fullscreen)
 	{
 		m_glfwMajor = glfwMajor;
 		m_glfwMinor = glfwMinor;
@@ -86,6 +87,7 @@ namespace flounder {
 
 		m_title = title;
 		m_icon = icon;
+		m_fpsLimit = fpsLimit;
 		m_vsync = vsync;
 		m_antialiasing = antialiasing;
 		m_samples = samples;
@@ -106,7 +108,7 @@ namespace flounder {
 
 		// Configures the window.
 		glfwDefaultWindowHints();
-#ifndef FLOUNDER_EMSCRIPTEN
+#ifndef FLOUNDER_PLATFORM_WEB
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // The window will be resizable depending on if it's fullscreen.
 #endif
@@ -121,7 +123,7 @@ namespace flounder {
 		}
 
 		glfwWindowHint(GLFW_STENCIL_BITS, 8); // Fixes 16 bit stencil bits in macOS.
-#ifndef FLOUNDER_EMSCRIPTEN
+#ifndef FLOUNDER_PLATFORM_WEB
 		glfwWindowHint(GLFW_STEREO, GLFW_FALSE); // No stereo view!
 #endif
 
@@ -176,7 +178,7 @@ namespace flounder {
 			}
 			else
 			{
-#ifndef FLOUNDER_EMSCRIPTEN
+#ifndef FLOUNDER_PLATFORM_WEB
 				GLFWimage icons[1];
 				icons[0].pixels = data;
 				icons[0].width = width;
@@ -191,10 +193,6 @@ namespace flounder {
 
 		// Enables VSync if requested.
 		glfwSwapInterval(m_vsync ? 1 : 0);
-
-		if (m_vsync) {
-			framework::get()->setFpsLimit(60);
-		}
 
 		// Shows the OpenGl window.
 		glfwShowWindow(m_window);
@@ -215,7 +213,7 @@ namespace flounder {
 		glfwSetWindowSizeCallback(m_window, callbackSize);
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 
-#ifndef FLOUNDER_EMSCRIPTEN
+#ifndef FLOUNDER_PLATFORM_WEB
 		// Initialize the GLEW library.
 		if (glewInit() != GLEW_OK)
 		{
@@ -294,6 +292,16 @@ namespace flounder {
 		return m_title;
 	}
 
+	int display::getFpsLimit()
+	{
+		return m_fpsLimit;
+	}
+
+	void display::setFpsLimit(const int &fpsLimit)
+	{
+		m_fpsLimit = fpsLimit;
+	}
+
 	bool &display::isVSync()
 	{
 		return m_vsync;
@@ -337,7 +345,7 @@ namespace flounder {
 
 	void display::setFullscreen(const bool &fullscreen)
 	{
-#ifndef FLOUNDER_EMSCRIPTEN
+#ifndef FLOUNDER_PLATFORM_WEB
 		if (m_fullscreen == fullscreen) {
 			return;
 		}

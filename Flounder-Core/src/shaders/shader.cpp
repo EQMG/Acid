@@ -195,6 +195,11 @@ namespace flounder {
 			type->m_processedString += processLine(line) + "\n";
 		}
 
+		std::string i = "C:/Users/mattp/Documents/Flounder/New-Kosmos/bin/" + m_name + std::to_string(type->m_shaderType) + ".glsl";
+		std::ofstream out(i);
+		out << type->m_processedString;
+		out.close();
+
 		const char* source = type->m_processedString.c_str();
 		type->m_shaderID = glCreateShader(type->m_shaderType);
 		glShaderSource(type->m_shaderID, 1, &source, NULL);
@@ -209,7 +214,7 @@ namespace flounder {
 			glGetShaderiv(type->m_shaderID, GL_INFO_LOG_LENGTH, &length);
 			std::vector<char> error(length);
 			glGetShaderInfoLog(type->m_shaderID, length, &length, &error[0]);
-			std::cout << "Failed to compile shader!" << std::endl << &error[0] << std::endl;
+			std::cout << "Failed to compile shader " << m_name << "!" << std::endl << &error[0] << std::endl;
 			glDeleteShader(type->m_shaderID);
 			return;
 		}
@@ -221,24 +226,13 @@ namespace flounder {
 	{
 		std::string result = line;
 
-#ifdef FLOUNDER_EMSCRIPTEN
-		if (helperstring::startsWith(line, "in"))
-		{
-			result = helperstring::replace(line, "in", "varying");
-		}
-		else if (helperstring::startsWith(line, "out"))
-		{
-			result = helperstring::replace(line, "out", "varying");
-		}
-#endif
-
 		if (helperstring::startsWith(line, "//"))
 		{
 			result = "";
 		}
-		else if (helperstring::contains(line, "#version"))
+		else if (helperstring::startsWith(line, "#version"))
 		{
-#ifdef FLOUNDER_EMSCRIPTEN
+#ifdef FLOUNDER_PLATFORM_WEB
 			result = "";
 #else
 			int major = display::get()->getGlfwMajor();
@@ -254,7 +248,7 @@ namespace flounder {
 			}
 #endif
 		}
-		else if (helperstring::contains(line, "#include"))
+		else if (helperstring::startsWith(line, "#include"))
 		{
 			std::string includeFile = helperstring::substring(line, 8 + 1, line.length() - 1); // "#include".length = 8
 			includeFile = helperstring::removeAll(includeFile, '\\s+');
@@ -352,6 +346,44 @@ namespace flounder {
 			m_uniforms->push_back(uniformName);
 		}
 
+		#ifdef FLOUNDER_PLATFORM_WEB
+		if (helperstring::contains(result, "in "))
+		{
+			if (helperstring::startsWith(line, "layout") && helperstring::contains(line, "location"))
+			{
+				result = helperstring::replace(result, "in ", "attribute highp ");
+			}
+			else
+			{
+				result = helperstring::replace(result, "in ", "varying highp ");
+			}
+		}
+		else if (helperstring::contains(result, "out "))
+		{
+			if (helperstring::startsWith(line, "layout") && helperstring::contains(line, "location"))
+			{
+				result = "// ( \"" + line + "\" )OpenGL ES does not support multiple outputs!";
+			}
+			else
+			{
+				result = helperstring::replace(result, "out ", "varying highp ");
+			}
+		}
+		else if (helperstring::contains(line, "uniform "))
+		{
+			if (helperstring::contains(line, " bool ")
+				|| helperstring::contains(line, " int ")
+				|| helperstring::contains(line, " sampler2D "))
+			{
+				result = helperstring::replace(result, "uniform ", "uniform ");
+			}
+			else
+			{
+				result = helperstring::replace(result, "uniform ", "uniform highp ");
+			}
+		}
+		#endif
+
 		return result;
 	}
 
@@ -373,7 +405,7 @@ namespace flounder {
 			{
 				glBindAttribLocation(m_programID, index, locationName.c_str());
 			}
-#ifndef FLOUNDER_EMSCRIPTEN
+#ifndef FLOUNDER_PLATFORM_WEB
 			// TODO: How will deferred rendering work in OpenGL ES 4?
 			else if (locationType.find("out") != std::string::npos)
 			{

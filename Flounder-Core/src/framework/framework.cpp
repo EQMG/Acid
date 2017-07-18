@@ -3,7 +3,7 @@
 namespace flounder {
 	framework *framework::G_INSTANCE = NULL;
 
-	framework::framework(const int &fpsLimit)
+	framework::framework()
 	{
 		// Sets the static object to this new one.
 		framework::G_INSTANCE = this;
@@ -13,7 +13,6 @@ namespace flounder {
 		m_initialized = false;
 		m_running = true;
 		m_error = false;
-		m_fpsLimit = fpsLimit;
 	}
 
 	framework::~framework()
@@ -34,7 +33,7 @@ namespace flounder {
 
 	void framework::run()
 	{
-#ifdef FLOUNDER_EMSCRIPTEN
+#ifdef FLOUNDER_PLATFORM_WEB
 		std::function<void()> mainLoop = [&]() {
 			while (m_running)
 			{
@@ -64,16 +63,5 @@ namespace flounder {
 		{
 			m_error = true;
 		}
-	}
-
-	int framework::getFpsLimit()
-	{
-		return m_fpsLimit;
-	}
-
-	void framework::setFpsLimit(const int &fpsLimit)
-	{
-		m_fpsLimit = fpsLimit;
-		m_updater->setFpsLimit(fpsLimit);
 	}
 }
