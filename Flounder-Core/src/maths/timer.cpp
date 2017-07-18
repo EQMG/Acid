@@ -28,6 +28,11 @@ namespace flounder {
 
 	void timer::setInterval(const double &interval)
 	{
+		if (m_interval == interval * 1000.0)
+		{
+			return;
+		}
+
 		this->m_interval = interval * 1000.0;
 		this->m_startTime = framework::get()->getTimeMs();
 	}

@@ -5,7 +5,7 @@
 #include <vector>
 #include <stdarg.h>
 
-#ifdef FLOUNDER_EMSCRIPTEN
+#ifdef FLOUNDER_PLATFORM_WEB
 #include <emscripten/emscripten.h>
 #include <GLFW/glfw3.h>
 #else

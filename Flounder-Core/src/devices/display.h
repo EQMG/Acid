@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#ifdef FLOUNDER_EMSCRIPTEN
+#ifdef FLOUNDER_PLATFORM_WEB
 #include <emscripten/emscripten.h>
 #include <GLFW/glfw3.h>
 #else
@@ -33,6 +33,7 @@ namespace flounder {
 
 		std::string m_title;
 		std::string m_icon;
+		float m_fpsLimit;
 		bool m_vsync;
 		bool m_antialiasing;
 		int m_samples;
@@ -66,7 +67,7 @@ namespace flounder {
 		/// </summary>
 		~display();
 
-		void load(const int glfwMajor, const int glfwMinor, const int width, const int height, const std::string title, std::string icon, const bool vsync, const bool antialiasing, const int samples, const bool fullscreen);
+		void load(const int &glfwMajor, const int &glfwMinor, const int &width, const int &height, const std::string &title, const std::string &icon, const float &fpsLimit, const bool &vsync, const bool &antialiasing, const int &samples, const bool &fullscreen);
 
 		void init();
 
@@ -110,6 +111,18 @@ namespace flounder {
 		/// </summary>
 		/// <returns> The window's title. </returns>
 		std::string &getTitle();
+
+		/// <summary>
+		/// Gets the fps limit.
+		/// </summary>
+		/// <returns> The fps limit. </returns>
+		int getFpsLimit();
+
+		/// <summary>
+		/// Sets the fps limit. -1 disables limits.
+		/// </summary>
+		/// <param name="fpsLimit"> The new fps limit. </param>
+		void setFpsLimit(const int &fpsLimit);
 
 		/// <summary>
 		/// Gets if the display is using vSync.

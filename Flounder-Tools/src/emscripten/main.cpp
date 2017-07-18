@@ -166,7 +166,7 @@ void generate()
 	system(commandFolder.c_str());
 
 	std::string command = "emcc -std=c++11 -I" + coreHeaders + " " + coreSources + gameSources +
-		" -s USE_GLFW=3 -s FULL_ES3=1 -DFLOUNDER_EMSCRIPTEN=1 -DGLFW_INCLUDE_ES3=1 --memory-init-file 0 --embed-file " + gameRes + 
+		" -s USE_GLFW=3 -s FULL_ES3=1 -DFLOUNDER_PLATFORM_WEB=1 -DGLFW_INCLUDE_ES3=1 --memory-init-file 0 --embed-file " + gameRes + 
 		" -O3 -o " + outputDir + "/floundergame.html";
 	std::cout << std::endl << command << std::endl;
 	system(command.c_str());
