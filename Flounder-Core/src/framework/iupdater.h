@@ -62,12 +62,6 @@ namespace flounder {
 		virtual double getDeltaRender() = 0;
 
 		/// <summary>
-		/// Sets the FPS limit for the updater, called by the framework.
-		/// </summary>
-		/// <param name="fpsLimit"> The new fps limit. </param>
-		virtual void setFpsLimit(const double &fpsLimit) = 0;
-
-		/// <summary>
 		/// Gets the current time of the framework instance.
 		/// </summary>
 		/// <returns> The current framework time in seconds. </returns>

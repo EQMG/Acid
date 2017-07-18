@@ -11,14 +11,15 @@
 
 using namespace flounder;
 
-int main() {
+int main()
+{
 	// Creates the framework object.
-	framework *m_framework = new framework(-1);
+	framework *m_framework = new framework();
 
 	// Loads things to the framework.
 	framework::get()->loadUpdater(new glfwupdater());
 
-	display::get()->load(3, 2, 1080, 720, "New Kosmos", "res/newkosmos.png", false, true, 0, false);
+	display::get()->load(3, 2, 1080, 720, "New Kosmos", "res/newkosmos.png", -1.0f, false, true, 0, false);
 	mouse::get()->load("res/cursor.png");
 
 	standards::get()->loadStandard(new maininstance());

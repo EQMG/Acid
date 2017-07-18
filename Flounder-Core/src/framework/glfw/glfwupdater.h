@@ -65,8 +65,6 @@ namespace flounder {
 
 		inline double getDeltaRender() override { return m_deltaRender->getChange(); };
 
-		inline void setFpsLimit(const double &fpsLimit) override { this->m_timerRender->setInterval(1.0 / fpsLimit);  };
-
 		inline double getTimeSec() override { return (glfwGetTime() - m_startTime) + m_timeOffset; };
 
 		inline double getTimeMs() override { return getTimeSec() * 1000.0; };
