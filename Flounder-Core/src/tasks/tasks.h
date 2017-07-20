@@ -6,7 +6,8 @@
 
 #include "../framework/framework.h"
 
-namespace flounder {
+namespace flounder 
+{
 	class tasks :
 		public imodule
 	{
@@ -15,7 +16,7 @@ namespace flounder {
 	public:
 		static tasks *get()
 		{
-			return (tasks*) framework::get()->getInstance("tasks");
+			return (tasks*)framework::get()->getInstance("tasks");
 		}
 
 		tasks();

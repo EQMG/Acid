@@ -3,7 +3,8 @@
 #include "../helpers/helperarray.h"
 #include "../maths/matrix4x4.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Represents the region of flounder.space in the modeled world that may appear on the screen.
 	/// </summary>
@@ -25,7 +26,6 @@ namespace flounder {
 		static const int D;
 
 		float **m_frustum;
-
 	public:
 		/// <summary>
 		/// Creates a new frustum.
@@ -45,7 +45,7 @@ namespace flounder {
 		void update(const matrix4x4 &viewMatrix, const matrix4x4 &projectionMatrix);
 
 		/// <returns> The planes*value array used to represent the frustum. </returns>
-		inline float **getFrustum() { return m_frustum; };
+		inline float **getFrustum() const { return m_frustum; };
 
 		/// <summary>
 		/// Is the point contained in the frustum?
@@ -54,7 +54,7 @@ namespace flounder {
 		/// <param name="y"> The points Y coord. </param>
 		/// <param name="z"> The points Z coord. </param>
 		/// <returns> True if contained, false if outside. </returns>
-		bool pointInFrustum(const float &x, const float &y, const float &z);
+		bool pointInFrustum(const float &x, const float &y, const float &z) const;
 
 		/// <summary>
 		/// Is the sphere contained in the frustum?
@@ -64,7 +64,7 @@ namespace flounder {
 		/// <param name="z"> The sphere Z coord. </param>
 		/// <param name="radius"> The spheres radius. </param>
 		/// <returns> True if contained, false if outside. </returns>
-		bool sphereInFrustum(const float &x, const float &y, const float &z, const float &radius);
+		bool sphereInFrustum(const float &x, const float &y, const float &z, const float &radius) const;
 
 		/// <summary>
 		/// Is the cube contained partially in the frustum?
@@ -76,7 +76,7 @@ namespace flounder {
 		/// <param name="y2"> The point 2's Y coord. </param>
 		/// <param name="z2"> The point 2's Z coord. </param>
 		/// <returns> True if partially contained, false if outside. </returns>
-		bool cubeInFrustum(const float &x1, const float &y1, const float &z1, const float &x2, const float &y2, const float &z2);
+		bool cubeInFrustum(const float &x1, const float &y1, const float &z1, const float &x2, const float &y2, const float &z2) const;
 	private:
 		void normalizePlane(float **frustum, const int &side);
 	};

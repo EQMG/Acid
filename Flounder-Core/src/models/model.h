@@ -13,7 +13,8 @@
 
 #include "vertexdata.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Class that represents a loaded model.
 	/// </summary>

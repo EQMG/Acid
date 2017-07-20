@@ -7,7 +7,8 @@
 #include "iprocessor.h"
 #include "irequest.h"
 
-namespace flounder {
+namespace flounder 
+{
 	class processing : 
 		public imodule
 	{
@@ -16,7 +17,7 @@ namespace flounder {
 	public:
 		static processing *get()
 		{
-			return (processing*) framework::get()->getInstance("processing");
+			return (processing*)framework::get()->getInstance("processing");
 		}
 
 		processing();

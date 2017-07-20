@@ -1,6 +1,7 @@
 #include "processoropengl.h"
 
-namespace flounder {
+namespace flounder 
+{
 	const double processoropengl::MAX_TIME_MILLIS = 8.0f;
 
 	processoropengl::processoropengl()

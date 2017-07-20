@@ -6,18 +6,18 @@
 #include "inputs/buttonkeyboard.h"
 #include "inputs/buttonmouse.h"
 
-namespace flounder {
-	class maininstance : public istandard
-	{
-	private:
-		ibutton *m_buttonFullscreen;
-		ibutton *m_buttonWireframe;
-		ibutton *m_buttonExit;
-	public:
-		maininstance();
+using namespace flounder;
 
-		~maininstance();
+class maininstance : public istandard
+{
+private:
+	ibutton *m_buttonFullscreen;
+	ibutton *m_buttonWireframe;
+	ibutton *m_buttonExit;
+public:
+	maininstance();
 
-		void update() override;
-	};
-}
+	~maininstance();
+
+	void update() override;
+};

@@ -1,6 +1,7 @@
 #include "vector4.h"
 
-namespace flounder {
+namespace flounder 
+{
 	vector4::vector4()
 	{
 		this->set(0.0f, 0.0f, 0.0f, 0.0f);

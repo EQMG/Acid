@@ -5,7 +5,8 @@
 
 #include "ievent.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A module used for managing events on framework updates.
 	/// </summary>
@@ -16,7 +17,7 @@ namespace flounder {
 	public:
 		static events* get()
 		{
-			return (events*) framework::get()->getInstance("events");
+			return (events*)framework::get()->getInstance("events");
 		}
 
 		/// <summary>

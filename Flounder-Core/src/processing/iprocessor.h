@@ -2,7 +2,8 @@
 
 #include "irequest.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A extension used with the processing class to define a processor.
 	/// </summary>

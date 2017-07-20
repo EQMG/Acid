@@ -1,6 +1,7 @@
 #include "fbo.h"
 
-namespace flounder {
+namespace flounder 
+{
 	fbo::builder::builder()
 	{
 		m_fbo = new fbo(this);

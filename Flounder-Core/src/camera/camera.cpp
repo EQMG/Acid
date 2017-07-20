@@ -1,7 +1,8 @@
 #include "camera.h"
 
-namespace flounder {
-	camera::camera() : 
+namespace flounder 
+{
+	camera::camera() :
 		imodule()
 	{
 		m_camera = NULL;
@@ -14,13 +15,9 @@ namespace flounder {
 		delete m_player;
 	}
 
-	void camera::loadCamera(icamera *camera)
+	void camera::load(icamera *camera, iplayer *player)
 	{
 		m_camera = camera;
-	}
-
-	void camera::loadPlayer(iplayer *player)
-	{
 		m_player = player;
 	}
 
@@ -37,7 +34,7 @@ namespace flounder {
 
 		if (m_camera != NULL)
 		{
-			m_camera->update(m_player);
+			m_camera->update(*m_player);
 		}
 	}
 }

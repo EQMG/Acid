@@ -4,7 +4,8 @@
 
 #include "display.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
@@ -30,7 +31,7 @@ namespace flounder {
 	public:
 		static joysticks* get() 
 		{
-			return (joysticks*) framework::get()->getInstance("joysticks");
+			return (joysticks*)framework::get()->getInstance("joysticks");
 		}
 
 		/// <summary>

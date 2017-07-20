@@ -6,7 +6,8 @@
 
 #include "display.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the keyboard keys.
 	/// </summary>
@@ -14,14 +15,14 @@ namespace flounder {
 	{
 	private:
 		int *m_keyboardKeys;
-		unsigned int m_keyboardChar;
+		int m_keyboardChar;
 
 		friend void callbackKey(GLFWwindow* window, int key, int scancode, int action, int mods);
 		friend void callbackChar(GLFWwindow* window, unsigned int codepoint);
 	public:
 		static keyboard* get() 
 		{
-			return (keyboard*) framework::get()->getInstance("keyboard");
+			return (keyboard*)framework::get()->getInstance("keyboard");
 		}
 
 		/// <summary>
@@ -44,7 +45,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="key"> The key to test. </param>
 		/// <returns> If the key is currently pressed. </returns>
-		bool getKey(unsigned const int &key);
+		bool getKey(const int &key);
 
 		/// <summary>
 		/// Gets the current user input, ASCII Dec value.

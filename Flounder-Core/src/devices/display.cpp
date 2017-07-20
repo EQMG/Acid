@@ -1,6 +1,7 @@
 #include "display.h"
 
-namespace flounder {
+namespace flounder 
+{
 	void callbackError(int error, const char *description)
 	{
 		fprintf(stderr, "GLFW Error: %s\n", description);
@@ -19,7 +20,8 @@ namespace flounder {
 
 	void callbackPosition(GLFWwindow *window, int xpos, int ypos)
 	{
-		if (!display::get()->m_fullscreen) {
+		if (!display::get()->m_fullscreen) 
+		{
 			display::get()->m_windowPosX = xpos;
 			display::get()->m_windowPosY = ypos;
 		}
@@ -27,7 +29,8 @@ namespace flounder {
 
 	void callbackSize(GLFWwindow *window, int width, int height)
 	{
-		if (!display::get()->m_fullscreen) {
+		if (!display::get()->m_fullscreen) 
+		{
 			display::get()->m_windowWidth = width;
 			display::get()->m_windowHeight = height;
 		}
@@ -312,7 +315,8 @@ namespace flounder {
 		m_vsync = vsync;
 		glfwSwapInterval(vsync ? 1 : 0);
 
-		if (vsync) {
+		if (vsync)
+		{
 		//	framework::get()->setFpsLimit(60);
 		}
 	}

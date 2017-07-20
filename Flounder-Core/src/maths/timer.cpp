@@ -1,6 +1,7 @@
 #include "timer.h"
 
-namespace flounder {
+namespace flounder 
+{
 	timer::timer(const double &interval)
 	{
 		m_startTime = framework::get()->getTimeMs();

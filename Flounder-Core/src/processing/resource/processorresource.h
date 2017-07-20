@@ -6,7 +6,8 @@
 #include "../iprocessor.h"
 #include "../queue.h"
 
-namespace flounder {
+namespace flounder
+{
 	/// <summary>
 	/// A extension that is responsible for processing resource requests.
 	/// </summary>

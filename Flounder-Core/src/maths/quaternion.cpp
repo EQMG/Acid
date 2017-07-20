@@ -1,6 +1,7 @@
 #include "quaternion.h"
 
-namespace flounder {
+namespace flounder 
+{
 	quaternion::quaternion()
 	{
 		this->set(0.0f, 0.0f, 0.0f, 0.0f);

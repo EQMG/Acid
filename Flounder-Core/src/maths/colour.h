@@ -2,7 +2,8 @@
 
 #include "maths.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Holds a RGBA colour.
 	/// </summary>
@@ -115,7 +116,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source colour. </param>
 		/// <param name="right"> The right source colour. </param>
-		/// <param name="destination"> The destination colour or null if a new colour is to be created. </param>
+		/// <param name="destination"> The destination colour or NULL if a new colour is to be created. </param>
 		/// <returns> The destination colour. </returns>
 		static colour *add(const colour &left, const colour &right, colour *destination);
 
@@ -124,7 +125,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source colour. </param>
 		/// <param name="right"> The right source colour. </param>
-		/// <param name="destination"> The destination colour or null if a new colour is to be created. </param>
+		/// <param name="destination"> The destination colour or NULL if a new colour is to be created. </param>
 		/// <returns> The destination colour. </returns>
 		static colour *subtract(const colour &left, const colour &right, colour *destination);
 
@@ -133,7 +134,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source colour. </param>
 		/// <param name="right"> The right source colour. </param>
-		/// <param name="destination"> The destination colour or null if a new colour is to be created. </param>
+		/// <param name="destination"> The destination colour or NULL if a new colour is to be created. </param>
 		/// <returns> The destination colour. </returns>
 		static colour *multiply(const colour &left, const colour &right, colour *destination);
 
@@ -142,7 +143,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source colour. </param>
 		/// <param name="right"> The right source colour. </param>
-		/// <param name="destination"> The destination colour or null if a new colour is to be created. </param>
+		/// <param name="destination"> The destination colour or NULL if a new colour is to be created. </param>
 		/// <returns> The destination colour. </returns>
 		static colour *divide(const colour &left, const colour &right, colour *destination);
 
@@ -152,7 +153,7 @@ namespace flounder {
 		/// <param name="left"> The left source colour. </param>
 		/// <param name="right"> The right source colour. </param>
 		/// <param name="blend"> The blend factor. </param>
-		/// <param name="destination"> The destination colour or null if a new colour is to be created. </param>
+		/// <param name="destination"> The destination colour or NULL if a new colour is to be created. </param>
 		/// <returns> The destination colour. </returns>
 		static colour *interpolate(const colour &left, const colour &right, float blend, colour *destination);
 
@@ -160,7 +161,7 @@ namespace flounder {
 		/// Gets a colour representing the unit value of this colour.
 		/// </summary>
 		/// <param name="source"> The source colour. </param>
-		/// <param name="destination"> The destination colour or null if a new colour is to be created. </param>
+		/// <param name="destination"> The destination colour or NULL if a new colour is to be created. </param>
 		/// <returns> The destination colour. </returns>
 		static colour *getUnit(const colour &source, colour *destination);
 

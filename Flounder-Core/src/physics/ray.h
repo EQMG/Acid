@@ -5,7 +5,8 @@
 #include "../maths/vector4.h"
 #include "../maths/matrix4x4.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Holds a 3 dimensional ray.
 	/// </summary>
@@ -55,9 +56,9 @@ namespace flounder {
 		/// Gets a point on the ray.
 		/// </summary>
 		/// <param name="distance"> Distance down the ray to sample. </param>
-		/// <param name="destination"> The destination vector, if null one will be created. </param>
+		/// <param name="destination"> The destination vector, if NULL one will be created. </param>
 		/// <returns> Returns the destination vector. </returns>
-		vector3 *getPointOnRay(const float &distance, vector3 *destination);
+		vector3 *getPointOnRay(const float &distance, vector3 *destination) const;
 
 		/// <summary>
 		/// Converts a position from world space to screen space.
@@ -65,19 +66,19 @@ namespace flounder {
 		/// <param name="position"> The position to convert. </param>
 		/// <param name="destination"> The destination point. X and Y being screen space coords and Z being the distance to the camera. </param>
 		/// <returns> Returns the destination vector. </returns>
-		vector3 *convertToScreenSpace(vector3 *position, vector3 *destination);
+		vector3 *convertToScreenSpace(const vector3 &position, vector3 *destination) const;
 
 		/// <summary>
 		/// Gets the rays origin.
 		/// </summary>
 		/// <returns> The rays origin. </returns>
-		inline vector3 *getOrigin() { return m_origin; };
+		inline vector3 *getOrigin()  const { return m_origin; };
 
 		/// <summary>
 		/// Gets the current ray.
 		/// </summary>
 		/// <returns> The current ray. </returns>
-		inline vector3 *getCurrentRay() { return m_currentRay; };
+		inline vector3 *getCurrentRay()  const { return m_currentRay; };
 	private:
 		void updateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY);
 

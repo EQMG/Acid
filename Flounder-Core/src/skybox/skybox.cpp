@@ -1,8 +1,9 @@
 #include "skybox.h"
 
-namespace flounder {
-	skybox::skybox()
-		: imodule()
+namespace flounder 
+{
+	skybox::skybox() : 
+		imodule()
 	{
 		m_size = 250.0f;
 		m_texture = NULL;
@@ -24,14 +25,14 @@ namespace flounder {
 		delete m_fog;
 	}
 
-	void skybox::loadTexture(texture *texture)
+	void skybox::load(texture *texture, model *model)
 	{
 		m_texture = texture;
+		m_model = model;
 	}
 
 	void skybox::init()
 	{
-		m_model = model::newModel()->setFile("res/skybox/skyboxSphere.obj")->create();
 	}
 
 	void skybox::update()

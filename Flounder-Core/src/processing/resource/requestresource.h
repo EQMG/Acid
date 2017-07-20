@@ -2,7 +2,8 @@
 
 #include "../irequest.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Interface for executable resource requests.
 	/// </summary>

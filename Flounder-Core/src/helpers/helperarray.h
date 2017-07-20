@@ -1,6 +1,7 @@
 #pragma once
 
-namespace flounder {
+namespace flounder 
+{
 	class helperarray 
 	{
 	public:

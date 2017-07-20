@@ -1,6 +1,7 @@
 #include "filteremboss.h"
 
-namespace flounder {
+namespace flounder 
+{
 	filteremboss::filteremboss() :
 		ipostfilter("filterEmboss", "res/shaders/filters/embossFragment.glsl")
 	{

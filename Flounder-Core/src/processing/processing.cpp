@@ -1,6 +1,7 @@
 #include "processing.h"
 
-namespace flounder {
+namespace flounder 
+{
 	processing::processing() : 
 		imodule()
 	{

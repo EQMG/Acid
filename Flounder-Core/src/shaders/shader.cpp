@@ -1,6 +1,7 @@
 #include "shader.h"
 
-namespace flounder {
+namespace flounder 
+{
 	shader::builder::builder()
 	{
 		m_shader = new shader(this);
@@ -345,44 +346,6 @@ namespace flounder {
 
 			m_uniforms->push_back(uniformName);
 		}
-
-		#ifdef FLOUNDER_PLATFORM_WEB
-		if (helperstring::contains(result, "in "))
-		{
-			if (helperstring::startsWith(line, "layout") && helperstring::contains(line, "location"))
-			{
-				result = helperstring::replace(result, "in ", "attribute highp ");
-			}
-			else
-			{
-				result = helperstring::replace(result, "in ", "varying highp ");
-			}
-		}
-		else if (helperstring::contains(result, "out "))
-		{
-			if (helperstring::startsWith(line, "layout") && helperstring::contains(line, "location"))
-			{
-				result = "// ( \"" + line + "\" )OpenGL ES does not support multiple outputs!";
-			}
-			else
-			{
-				result = helperstring::replace(result, "out ", "varying highp ");
-			}
-		}
-		else if (helperstring::contains(line, "uniform "))
-		{
-			if (helperstring::contains(line, " bool ")
-				|| helperstring::contains(line, " int ")
-				|| helperstring::contains(line, " sampler2D "))
-			{
-				result = helperstring::replace(result, "uniform ", "uniform ");
-			}
-			else
-			{
-				result = helperstring::replace(result, "uniform ", "uniform highp ");
-			}
-		}
-		#endif
 
 		return result;
 	}

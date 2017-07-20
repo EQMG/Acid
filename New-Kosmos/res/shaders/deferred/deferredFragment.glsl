@@ -105,8 +105,6 @@ void main(void)
     // Sets a starting colour for this fragment.
     out_colour = vec4(albedo.rgb, 1.0);
 	
-	return; // TODO
-
 	// Gets the data from the extras texture.
 	float shineDamper = extras.r;
 	float glow = extras.g;

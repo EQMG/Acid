@@ -2,7 +2,8 @@
 
 #include <string>
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A enum that tells the shader how to load the type.
 	/// </summary>
