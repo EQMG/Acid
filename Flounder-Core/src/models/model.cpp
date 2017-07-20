@@ -1,6 +1,7 @@
 #include "model.h"
 
-namespace flounder {
+namespace flounder 
+{
 	model::builder::builder()
 	{
 		m_model = new model(this);

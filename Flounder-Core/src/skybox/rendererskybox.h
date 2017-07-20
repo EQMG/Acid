@@ -4,8 +4,10 @@
 
 #include "skybox.h"
 
-namespace flounder {
-	class rendererskybox : public irenderer
+namespace flounder 
+{
+	class rendererskybox : 
+		public irenderer
 	{
 	private:
 		shader *m_shader;
@@ -14,6 +16,6 @@ namespace flounder {
 
 		~rendererskybox();
 
-		void render(vector4 *clipPlane, icamera *camera);
+		void render(const vector4 &clipPlane, const icamera &camera) override;
 	};
 }

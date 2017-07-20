@@ -1,6 +1,7 @@
 #include "vertexdata.h"
 
-namespace flounder {
+namespace flounder 
+{
 	const int vertexdata::NO_INDEX = -1;
 
 	vertexdata::vertexdata(const int index, vector3 position)

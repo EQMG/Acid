@@ -8,8 +8,10 @@
 #include "../models/model.h"
 #include "../textures/texture.h"
 
-namespace flounder {
-	class skybox : public imodule
+namespace flounder 
+{
+	class skybox : 
+		public imodule
 	{
 	private:
 		float m_size;
@@ -30,7 +32,7 @@ namespace flounder {
 
 		~skybox();
 
-		void loadTexture(texture *texture);
+		void load(texture *texture, model *model);
 
 		void init();
 
@@ -42,7 +44,11 @@ namespace flounder {
 
 		inline texture *getTexture() { return m_texture; }
 
+		inline void setTexture(texture *texture) { m_texture = texture; }
+
 		inline model *getModel() { return m_model; }
+
+		inline void setModel(model *model) { m_model = model; }
 
 		inline vector3 *getRotation() { return m_rotation; }
 

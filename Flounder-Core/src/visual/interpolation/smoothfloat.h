@@ -1,6 +1,7 @@
 #pragma once
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A class that smoothly increases its value.
 	/// </summary>
@@ -39,7 +40,7 @@ namespace flounder {
 		/// Gets the smooth floats current target.
 		/// </summary>
 		/// <returns> The target. </returns>
-		inline float &getTarget() { return m_target; }
+		inline float getTarget() { return m_target; }
 
 		/// <summary>
 		/// Increases the smooth floats target.
@@ -51,6 +52,6 @@ namespace flounder {
 		/// Gets the currently calculated value.
 		/// </summary>
 		/// <returns> The calculated value. </returns>
-		inline float &get() { return m_actual; }
+		inline float get() { return m_actual; }
 	};
 }

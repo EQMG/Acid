@@ -254,9 +254,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\entities\entity.cpp" />
     <ClCompile Include="src\inputs\axiscompound.cpp" />
+    <ClCompile Include="src\inputs\axisjoystick.cpp" />
     <ClCompile Include="src\inputs\buttoncompound.cpp" />
     <ClCompile Include="src\deferred\deferredrenderer.cpp" />
+    <ClCompile Include="src\inputs\buttonjoystick.cpp" />
+    <ClCompile Include="src\inputs\buttonkeyboard.cpp" />
+    <ClCompile Include="src\inputs\buttonmouse.cpp" />
     <ClCompile Include="src\post\filters\filternegative.cpp" />
     <ClCompile Include="src\fbos\fbo.cpp" />
     <ClCompile Include="src\models\model.cpp" />
@@ -318,6 +323,7 @@
     <ClCompile Include="src\textures\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\entities\entity.h" />
     <ClInclude Include="src\inputs\axiscompound.h" />
     <ClInclude Include="src\inputs\buttoncompound.h" />
     <ClInclude Include="src\deferred\deferredrenderer.h" />

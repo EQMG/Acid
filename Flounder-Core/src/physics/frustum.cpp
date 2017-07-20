@@ -1,6 +1,7 @@
 #include "frustum.h"
 
-namespace flounder {
+namespace flounder
+{
 	const int frustum::RIGHT = 0;
 	const int frustum::LEFT = 1;
 	const int frustum::BOTTOM = 2;
@@ -103,7 +104,7 @@ namespace flounder {
 		delete[] clip;
 	}
 
-	bool frustum::pointInFrustum(const float &x, const float &y, const float &z)
+	bool frustum::pointInFrustum(const float &x, const float &y, const float &z) const
 	{
 		for (int i = 0; i < 6; i++)
 		{
@@ -116,7 +117,7 @@ namespace flounder {
 		return true;
 	}
 
-	bool frustum::sphereInFrustum(const float &x, const float &y, const float &z, const float &radius)
+	bool frustum::sphereInFrustum(const float &x, const float &y, const float &z, const float &radius) const
 	{
 		for (int i = 0; i < 6; i++)
 		{
@@ -129,7 +130,7 @@ namespace flounder {
 		return true;
 	}
 
-	bool frustum::cubeInFrustum(const float &x1, const float &y1, const float &z1, const float &x2, const float &y2, const float &z2)
+	bool frustum::cubeInFrustum(const float &x1, const float &y1, const float &z1, const float &x2, const float &y2, const float &z2) const
 	{
 		for (int i = 0; i < 6; i++)
 		{

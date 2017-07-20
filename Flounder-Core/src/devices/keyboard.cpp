@@ -1,6 +1,7 @@
 #include "keyboard.h"
 
-namespace flounder {
+namespace flounder
+{
 	void callbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
 		// TODO: Play with mods.
@@ -50,7 +51,7 @@ namespace flounder {
 	{
 	}
 
-	bool keyboard::getKey(unsigned const int &key)
+	bool keyboard::getKey(const int &key)
 	{
 		return m_keyboardKeys[key] != GLFW_RELEASE;
 	}

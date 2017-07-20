@@ -2,7 +2,8 @@
 
 #include "../maths/maths.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Represents a driver that changes over time.
 	/// </summary>
@@ -27,7 +28,7 @@ namespace flounder {
 		/// <summary>
 		/// Deconstructor for value driver.
 		/// </summary>
-		~idriver()
+		virtual ~idriver()
 		{
 		}
 
@@ -53,6 +54,6 @@ namespace flounder {
 		/// <returns> The calculated value. </returns>
 		virtual float calculate(const float &time) = 0;
 
-		inline float &getActualTime() { return m_actualTime; }
+		inline float getActualTime() { return m_actualTime; }
 	};
 }

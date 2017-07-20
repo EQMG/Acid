@@ -9,7 +9,8 @@
 
 #include "display.h"
 
-namespace flounder {
+namespace flounder 
+{
 	class audio : 
 		public imodule
 	{
@@ -20,7 +21,7 @@ namespace flounder {
 	public:
 		static audio* get() 
 		{
-			return (audio*) framework::get()->getInstance("audio"); 
+			return (audio*)framework::get()->getInstance("audio"); 
 		}
 
 		/// <summary>

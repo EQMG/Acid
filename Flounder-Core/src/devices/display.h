@@ -14,11 +14,12 @@
 #include "../framework/framework.h"
 #include "../textures/stb_image.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class display : 
+	class display :
 		public imodule
 	{
 	private:
@@ -38,7 +39,7 @@ namespace flounder {
 		bool m_antialiasing;
 		int m_samples;
 		bool m_fullscreen;
-		
+
 		GLFWwindow *m_window;
 		bool m_closed;
 		bool m_focused;
@@ -52,9 +53,9 @@ namespace flounder {
 		friend void callbackSize(GLFWwindow* window, int width, int height);
 		friend void callbackFrame(GLFWwindow* window, int width, int height);
 	public:
-		static display* get() 
+		static display* get()
 		{
-			return (display*) framework::get()->getInstance("display");
+			return (display*)framework::get()->getInstance("display");
 		}
 
 		/// <summary>

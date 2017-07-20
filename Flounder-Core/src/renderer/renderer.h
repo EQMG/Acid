@@ -6,12 +6,13 @@
 
 #include "irenderermaster.h"
 
-namespace flounder {
+namespace flounder 
+{
 	class renderer :
 		public imodule
 	{
 	private:
-		irenderermaster *m_renderermaster;
+		irenderermaster *m_rendererMaster;
 
 		bool m_cullingBackFace;
 		bool m_depthMask;
@@ -22,20 +23,22 @@ namespace flounder {
 	public:
 		static renderer *get()
 		{
-			return (renderer*) framework::get()->getInstance("renderer");
+			return (renderer*)framework::get()->getInstance("renderer");
 		}
 
 		renderer();
 
 		~renderer();
 
-		void loadRendererMaster(irenderermaster *renderermaster);
+		void load(irenderermaster *rendererMaster);
 
 		void init();
 
 		void update();
 
-		inline irenderermaster *getRendererMaster() { return m_renderermaster; }
+		inline irenderermaster *getRendererMaster() { return m_rendererMaster; }
+
+		inline void setRendererMaster(irenderermaster *rendererMaster) { m_rendererMaster = rendererMaster; }
 
 		/// <summary>
 		/// Prepares the screen for a new render.

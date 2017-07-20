@@ -1,6 +1,7 @@
 #include "ray.h"
 
-namespace flounder {
+namespace flounder 
+{
 	ray::ray(const bool &useMouse, vector2 *screenStart)
 	{
 		m_useMouse = useMouse;
@@ -50,7 +51,7 @@ namespace flounder {
 		}
 		else
 		{
-			if (m_screenStart != 0)
+			if (m_screenStart != NULL)
 			{
 				m_normalizedCoords->set(*m_screenStart);
 			}
@@ -67,7 +68,7 @@ namespace flounder {
 		updateWorldCoords(m_eyeCoords);
 	}
 
-	vector3 *ray::getPointOnRay(const float &distance, vector3 *destination)
+	vector3 *ray::getPointOnRay(const float &distance, vector3 *destination) const
 	{
 		if (destination == NULL)
 		{
@@ -77,14 +78,14 @@ namespace flounder {
 		return vector3::add(*m_origin, *destination->set(*m_currentRay)->scale(distance), destination);
 	}
 
-	vector3 *ray::convertToScreenSpace(vector3 *position, vector3 *destination)
+	vector3 *ray::convertToScreenSpace(const vector3 &position, vector3 *destination) const
 	{
 		if (destination == NULL)
 		{
 			destination = new vector3();
 		}
 
-		vector4 *coords = new vector4(position->x, position->y, position->z, 1.0f);
+		vector4 *coords = new vector4(position.x, position.y, position.z, 1.0f);
 		matrix4x4::transform(*m_viewMatrix, *coords, coords);
 		matrix4x4::transform(*m_projectionMatrix, *coords, coords);
 

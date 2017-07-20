@@ -1,6 +1,7 @@
 #include "deferredrenderer.h"
 
-namespace flounder {
+namespace flounder 
+{
 	deferredrenderer::deferredrenderer()
 	{
 		m_shader = shader::newShader()->addName("deferredRenderer")
@@ -97,7 +98,7 @@ namespace flounder {
 		m_shader->loadUniform("shadowDarkness", shadows::get()->getShadowDarkness() * shadows::get()->getShadowFactor());
 		m_shader->loadUniform("brightnessBoost", shadows::get()->getBrightnessBoost());*/
 
-		if (skybox::get()->getFog() != 0)
+		if (skybox::get()->getFog() != NULL)
 		{
 			m_shader->loadUniform("fogColour", skybox::get()->getFog()->m_colour);
 			m_shader->loadUniform("fogDensity", skybox::get()->getFog()->m_density);

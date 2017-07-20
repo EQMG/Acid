@@ -1,6 +1,7 @@
 #pragma once
 
-namespace flounder {
+namespace flounder 
+{
 	class imodule 
 	{
 	private:
@@ -9,7 +10,7 @@ namespace flounder {
 		{
 		}
 
-		~imodule()
+		virtual ~imodule()
 		{
 		}
 	};

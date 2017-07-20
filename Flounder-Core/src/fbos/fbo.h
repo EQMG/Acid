@@ -16,7 +16,8 @@
 
 #include "depthbuffer.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A class that represents a OpenGL Frame Buffer object.
 	/// </summary>

@@ -18,7 +18,8 @@
 
 #include "shadertype.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Class that represents a loaded shader.
 	/// </summary>

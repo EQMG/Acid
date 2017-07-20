@@ -2,11 +2,13 @@
 
 #include "idriver.h"
 
-namespace flounder {
+namespace flounder
+{
 	/// <summary>
 	/// A driver that has a constant value.
 	/// </summary>
-	class driverconstant : public idriver
+	class driverconstant : 
+		public idriver
 	{
 	private:
 		float m_value;
@@ -21,7 +23,6 @@ namespace flounder {
 		/// Deconstructor for constant driver.
 		/// </summary>
 		~driverconstant();
-
 	protected:
 		float calculate(const float &time) override;
 	};

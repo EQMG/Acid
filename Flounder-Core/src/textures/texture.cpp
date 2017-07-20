@@ -1,6 +1,7 @@
 #include "texture.h"
 
-namespace flounder {
+namespace flounder 
+{
 	texture::builder::builder()
 	{
 		m_texture = new texture(this);
