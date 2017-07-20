@@ -6,7 +6,8 @@
 
 #include "istandard.h"
 
-namespace flounder {
+namespace flounder
+{
 	class standards : public imodule
 	{
 	private:
@@ -21,7 +22,7 @@ namespace flounder {
 
 		~standards();
 
-		void loadStandard(istandard *standard);
+		void addStandard(istandard *standard);
 
 		void init();
 

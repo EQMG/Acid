@@ -5,22 +5,22 @@
 
 #include "maths\maths.h"
 
-namespace flounder {
-	class mainplayer : 
-		public iplayer
-	{
-	private:
-		vector3 *m_position;
-		vector3 *m_rotation;
-	public:
-		mainplayer();
+using namespace flounder;
 
-		~mainplayer();
+class mainplayer :
+	public iplayer
+{
+private:
+	vector3 *m_position;
+	vector3 *m_rotation;
+public:
+	mainplayer();
 
-		void update() override;
+	~mainplayer();
 
-		inline vector3 *getPosition() override { return m_position; }
+	void update() override;
 
-		inline vector3 *getRotation() override { return m_rotation; }
-	};
-}
+	inline vector3 *getPosition() const override { return m_position; }
+
+	inline vector3 *getRotation() const override { return m_rotation; }
+};

@@ -5,8 +5,10 @@
 #include "icamera.h"
 #include "iplayer.h"
 
-namespace flounder {
-	class camera : public imodule
+namespace flounder 
+{
+	class camera : 
+		public imodule
 	{
 	private:
 		icamera *m_camera;
@@ -14,23 +16,25 @@ namespace flounder {
 	public:
 		static camera *get()
 		{
-			return (camera*) framework::get()->getInstance("camera");
+			return (camera*)framework::get()->getInstance("camera");
 		}
 
 		camera();
 
 		~camera();
 
-		void loadCamera(icamera *camera);
-
-		void loadPlayer(iplayer *player);
+		void load(icamera *camera, iplayer *player);
 
 		void init();
 
 		void update();
 
-		inline icamera *getCamera() { return m_camera; }
+		inline icamera *getCamera() const { return m_camera; }
 
-		inline iplayer *getPlayer() { return m_player; }
+		inline void setCamera(icamera *camera) { m_camera = camera; }
+
+		inline iplayer *getPlayer() const { return m_player; }
+
+		inline void setPlayer(iplayer *player) { m_player = player; }
 	};
 }

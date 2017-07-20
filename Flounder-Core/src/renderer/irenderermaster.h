@@ -1,6 +1,7 @@
 #pragma once
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A extension used with irenderers to define a master renderer.
 	/// </summary>

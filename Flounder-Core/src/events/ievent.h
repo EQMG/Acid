@@ -3,17 +3,24 @@
 #include <iostream>
 #include <functional>
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A simple event listener and runner.
 	/// </summary>
 	class ievent 
 	{
 	public:
+		/// <summary>
+		/// Creates a new event.
+		/// </summary>
 		ievent()
 		{
 		}
 
+		/// <summary>
+		/// Deconstructor for the event.
+		/// </summary>
 		virtual ~ievent()
 		{
 		}

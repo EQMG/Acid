@@ -1,6 +1,7 @@
 #include "driverconstant.h"
 
-namespace flounder {
+namespace flounder 
+{
 	driverconstant::driverconstant(const float &constant)
 		: idriver(1.0f)
 	{

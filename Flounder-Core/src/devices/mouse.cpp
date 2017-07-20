@@ -1,9 +1,10 @@
 #include "mouse.h"
 
-namespace flounder {
+namespace flounder 
+{
 	void callbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 	{
-		mouse::get()->m_mouseDeltaWheel = (float)yoffset;
+		mouse::get()->m_mouseDeltaWheel = yoffset;
 	}
 
 	void callbackMouseButton(GLFWwindow *window, int button, int action, int mods)
@@ -13,8 +14,8 @@ namespace flounder {
 
 	void callbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 	{
-		mouse::get()->m_mousePositionX = (float)(xpos / display::get()->getWidth());
-		mouse::get()->m_mousePositionY = (float)(ypos / display::get()->getHeight());
+		mouse::get()->m_mousePositionX = xpos / display::get()->getWidth();
+		mouse::get()->m_mousePositionY = ypos / display::get()->getHeight();
 	}
 
 	void callbackCursorEnter(GLFWwindow *window, int entered)
@@ -126,7 +127,7 @@ namespace flounder {
 		m_cursorDisabled = disabled;
 	}
 
-	bool mouse::getButton(const unsigned int &button)
+	bool mouse::getButton(const int &button)
 	{
 		return m_mouseButtons[button] != GLFW_RELEASE;
 	}

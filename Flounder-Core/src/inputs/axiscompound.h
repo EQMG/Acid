@@ -6,7 +6,8 @@
 
 #include "iaxis.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Axis composed of multiple other axes.
 	/// </summary>
@@ -29,6 +30,6 @@ namespace flounder {
 		/// </summary>
 		~axiscompound();
 
-		float getAmount() override;
+		float getAmount() const override;
 	};
 }

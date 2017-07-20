@@ -1,6 +1,7 @@
 #include "loaders.h"
 
-namespace flounder {
+namespace flounder 
+{
 	loaders::loaders()
 		: imodule()
 	{

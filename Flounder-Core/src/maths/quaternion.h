@@ -4,7 +4,8 @@
 #include "matrix3x3.h"
 #include "matrix4x4.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
 	/// </summary>
@@ -94,7 +95,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source quaternion. </param>
 		/// <param name="right"> The right source quaternion. </param>
-		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created.</param>
+		/// <param name="destination"> The destination quaternion or NULL if a new quaternion is to be created.</param>
 		/// <returns> The destination quaternion. </returns>
 		static quaternion *multiply(const quaternion &left, const quaternion &right, quaternion *destination);
 
@@ -103,7 +104,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source quaternion. </param>
 		/// <param name="right"> The right source quaternion. </param>
-		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created. </param>
+		/// <param name="destination"> The destination quaternion or NULL if a new quaternion is to be created. </param>
 		/// <returns> The destination quaternion. </returns>
 		static quaternion *multiplyInverse(const quaternion &left, const quaternion &right, quaternion *destination);
 
@@ -121,7 +122,7 @@ namespace flounder {
 		/// <param name="left"> The left source normalized quaternion. </param>
 		/// <param name="right"> The right source normalized quaternion.</param>
 		/// <param name="progression"> The progression. </param>
-		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created.
+		/// <param name="destination"> The destination quaternion or NULL if a new quaternion is to be created.
 		/// <returns> Left slerp right. </returns>
 		static quaternion *slerp(const quaternion &left, const quaternion &right, const float &progression, quaternion *destination);
 
@@ -130,7 +131,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
 		/// <param name="scalar"> The scalar value. </param>
-		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created. </param>
+		/// <param name="destination"> The destination quaternion or NULL if a new quaternion is to be created. </param>
 		/// <returns> The destination quaternion. </returns>
 		static quaternion *scale(const quaternion &source, const float &scalar, quaternion *destination);
 
@@ -138,7 +139,7 @@ namespace flounder {
 		/// Negates a quaternion and places the result in the destination quaternion.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
-		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created. </param>
+		/// <param name="destination"> The destination quaternion or NULL if a new quaternion is to be created. </param>
 		/// <returns> The destination quaternion. </returns>
 		static quaternion *negate(const quaternion &source, quaternion *destination);
 
@@ -146,7 +147,7 @@ namespace flounder {
 		/// Normalizes a quaternion and places the result in the destination quaternion.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
-		/// <param name="destination"> The destination quaternion or null if a new quaternion is to be created.</param>
+		/// <param name="destination"> The destination quaternion or NULL if a new quaternion is to be created.</param>
 		/// <returns> The destination quaternion. </returns>
 		static quaternion *normalize(const quaternion &source, quaternion *destination);
 

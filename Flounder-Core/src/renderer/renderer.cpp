@@ -1,10 +1,11 @@
 #include "renderer.h"
 
-namespace flounder {
+namespace flounder 
+{
 	renderer::renderer() :
 		imodule()
 	{
-		m_renderermaster = NULL;
+		m_rendererMaster = NULL;
 
 		m_cullingBackFace = false;
 		m_depthMask = true;
@@ -16,12 +17,12 @@ namespace flounder {
 
 	renderer::~renderer()
 	{
-		delete m_renderermaster;
+		delete m_rendererMaster;
 	}
 
-	void renderer::loadRendererMaster(irenderermaster *renderermaster)
+	void renderer::load(irenderermaster *rendererMaster)
 	{
-		m_renderermaster = renderermaster;
+		m_rendererMaster = rendererMaster;
 	}
 
 	void renderer::init()
@@ -30,9 +31,9 @@ namespace flounder {
 
 	void renderer::update()
 	{
-		if (m_renderermaster != NULL)
+		if (m_rendererMaster != NULL)
 		{
-			m_renderermaster->render();
+			m_rendererMaster->render();
 		}
 	}
 

@@ -1,6 +1,7 @@
 #include "vector2.h"
 
-namespace flounder {
+namespace flounder 
+{
 	vector2::vector2()
 	{
 		this->set(0.0f, 0.0f);

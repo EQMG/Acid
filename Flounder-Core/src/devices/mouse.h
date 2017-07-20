@@ -5,7 +5,8 @@
 
 #include "display.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
@@ -66,7 +67,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="button"> The mouse button to test. </param>
 		/// <returns> If the mouse button is currently pressed. </returns>
-		bool getButton(const unsigned int &button);
+		bool getButton(const int &button);
 
 		/// <summary>
 		/// Gets the mouses screen x position.

@@ -2,11 +2,13 @@
 
 #include "idriver.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A driver that slides to its destination using cosine interpolation.
 	/// </summary>
-	class driverslide : public idriver
+	class driverslide :
+		public idriver
 	{
 	private:
 		float m_start;

@@ -2,11 +2,13 @@
 
 #include "idriver.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A bounce driver that uses a sine wave.
 	/// </summary>
-	class driverbounce : public idriver
+	class driverbounce : 
+		public idriver
 	{
 	private:
 		float m_start;
@@ -25,7 +27,6 @@ namespace flounder {
 		/// Deconstructor for bounce driver.
 		/// </summary>
 		~driverbounce();
-
 	protected:
 		float calculate(const float &time) override;
 	};

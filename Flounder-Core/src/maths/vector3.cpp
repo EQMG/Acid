@@ -1,6 +1,7 @@
 #include "vector3.h"
 
-namespace flounder {
+namespace flounder 
+{
 	vector3::vector3()
 	{
 		this->set(0.0f, 0.0f, 0.0f);

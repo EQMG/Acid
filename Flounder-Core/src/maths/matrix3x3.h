@@ -3,7 +3,8 @@
 #include "maths.h"
 #include "vector3.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Holds a 2x2 matrix.
 	/// </summary>
@@ -69,7 +70,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
+		/// <param name="destination"> The destination matrix or NULL if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix3x3 *add(const matrix3x3 &left, const matrix3x3 &right, matrix3x3 *destination);
 
@@ -78,7 +79,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
+		/// <param name="destination"> The destination matrix or NULL if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix3x3 *subtract(const matrix3x3 &left, const matrix3x3 &right, matrix3x3 *destination);
 
@@ -87,7 +88,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
+		/// <param name="destination"> The destination matrix or NULL if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix3x3 *multiply(const matrix3x3 &left, const matrix3x3 &right, matrix3x3 *destination);
 
@@ -96,7 +97,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or null if a new matrix is to be created. </param>
+		/// <param name="destination"> The destination vector or NULL if a new matrix is to be created. </param>
 		/// <returns> The destination vector. </returns>
 		static vector3 *transform(const matrix3x3 &left, const vector3 &right, vector3 *destination);
 
@@ -105,7 +106,7 @@ namespace flounder {
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
 		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
+		/// <param name="destination"> The destination matrix or NULL if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static matrix3x3 *scale(const matrix3x3 &left, const vector3 &right, matrix3x3 *destination);
 
@@ -113,15 +114,15 @@ namespace flounder {
 		/// Inverts the source matrix and puts the result in the destination matrix.
 		/// </summary>
 		/// <param name="source"> The source matrix to be inverted. </param>
-		/// <param name="destination"> The destination matrix, or null if a new one is to be created. </param>
-		/// <returns> The inverted matrix, or null if source can't be reverted. </returns>
+		/// <param name="destination"> The destination matrix, or NULL if a new one is to be created. </param>
+		/// <returns> The inverted matrix, or NULL if source can't be reverted. </returns>
 		static matrix3x3 *invert(const matrix3x3 &source, matrix3x3 *destination);
 
 		/// <summary>
 		/// Negates the source matrix and places the result in the destination matrix.
 		/// </summary>
 		/// <param name="source"> The source matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
+		/// <param name="destination"> The destination matrix or NULL if a new matrix is to be created. </param>
 		/// <returns> The negated matrix. </returns>
 		static matrix3x3 *negate(const matrix3x3 &source, matrix3x3 *destination);
 
@@ -129,7 +130,7 @@ namespace flounder {
 		/// Transpose the source matrix and places the result in the destination matrix.
 		/// </summary>
 		/// <param name="source"> The source matrix. </param>
-		/// <param name="destination"> The destination matrix or null if a new matrix is to be created. </param>
+		/// <param name="destination"> The destination matrix or NULL if a new matrix is to be created. </param>
 		/// <returns> The transposed matrix. </returns>
 		static matrix3x3 *transpose(const matrix3x3 &source, matrix3x3 *destination);
 

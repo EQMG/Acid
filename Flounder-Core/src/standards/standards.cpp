@@ -1,6 +1,7 @@
 #include "standards.h"
 
-namespace flounder {
+namespace flounder 
+{
 	standards::standards()
 		: imodule()
 	{
@@ -17,7 +18,7 @@ namespace flounder {
 		delete m_standards;
 	}
 
-	void standards::loadStandard(istandard *standard)
+	void standards::addStandard(istandard *standard)
 	{
 		m_standards->push_back(standard);
 	}

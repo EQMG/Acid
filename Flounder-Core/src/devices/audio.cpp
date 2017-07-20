@@ -1,6 +1,7 @@
 #include "audio.h"
 
-namespace flounder {
+namespace flounder
+{
 	audio::audio() : 
 		imodule()
 	{

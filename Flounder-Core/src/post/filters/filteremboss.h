@@ -2,7 +2,8 @@
 
 #include "../ipostfilter.h"
 
-namespace flounder {
+namespace flounder 
+{
 	class filteremboss :
 		public ipostfilter
 	{

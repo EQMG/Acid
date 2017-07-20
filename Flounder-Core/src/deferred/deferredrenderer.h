@@ -10,7 +10,8 @@
 #include "../shaders/shader.h"
 #include "../skybox/skybox.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A filter-like shader/fbo used to process deferred rendering.
 	/// </summary>
@@ -23,8 +24,14 @@ namespace flounder {
 		fbo *m_fbo;
 		model *m_model;
 	public:
+		/// <summary>
+		/// Creates a new deferred renderer.
+		/// </summary>
 		deferredrenderer();
 
+		/// <summary>
+		/// Deconstructor for the deferred renderer.
+		/// </summary>
 		~deferredrenderer();
 
 		/// <summary>
@@ -34,7 +41,7 @@ namespace flounder {
 		/// <param name="..."> The textures being bound to the shader. Colours, normals, extras, depth, shadows. </param>
 		void apply(const int n_args, ...);
 
-		inline fbo *getFbo() { return m_fbo; }
+		inline fbo *getFbo() const { return m_fbo; }
 	private:
 		void storeValues();
 	};

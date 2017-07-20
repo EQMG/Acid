@@ -4,46 +4,44 @@
 #include "devices/mouse.h"
 #include "camera/icamera.h"
 
-namespace flounder {
-	class maincamera : 
-		public icamera 
-	{
-	private:
-		vector3 *m_position;
-		vector3 *m_rotation;
+using namespace flounder;
 
-		matrix4x4 *m_viewMatrix;
-		matrix4x4 *m_projectionMatrix;
+class maincamera :
+	public icamera
+{
+private:
+	vector3 *m_position;
+	vector3 *m_rotation;
 
-		frustum *m_viewFrustum;
-		ray *m_viewRay;
-	public:
-		maincamera();
+	matrix4x4 *m_viewMatrix;
+	matrix4x4 *m_projectionMatrix;
 
-		~maincamera();
+	frustum *m_viewFrustum;
+	ray *m_viewRay;
+public:
+	maincamera();
 
-		float getNearPlane() override;
+	~maincamera();
 
-		float getFarPlane() override;
+	void update(const iplayer &player) override;
 
-		float getFOV() override;
+	void reflect(const float &waterHeight) override;
 
-		void update(iplayer *player) override;
+	float getNearPlane() const override { return 0.1f; }
 
-		inline frustum *getViewFrustum() override { return m_viewFrustum; }
+	float getFarPlane() const override { return 1000.0f; }
 
-		inline ray *getViewRay() override { return m_viewRay; }
+	float getFOV() const override { return 60.0f; }
 
-		inline matrix4x4 *getViewMatrix() override { return m_viewMatrix; }
+	inline frustum *getViewFrustum() const override { return m_viewFrustum; }
 
-		inline matrix4x4 *getProjectionMatrix() override { return m_projectionMatrix; }
+	inline ray *getViewRay() const override { return m_viewRay; }
 
-		void reflect(const float &waterHeight) override;
+	inline matrix4x4 *getViewMatrix() const override { return m_viewMatrix; }
 
-		inline vector3 *getPosition() override { return m_position; }
+	inline matrix4x4 *getProjectionMatrix() const override { return m_projectionMatrix; }
 
-		inline vector3 *getRotation() override { return m_rotation; }
+	inline vector3 *getPosition() const override { return m_position; }
 
-		inline void setRotation(vector3 *rotation) override { m_rotation->set(*rotation); }
-	};
-}
+	inline vector3 *getRotation() const override { return m_rotation; }
+};

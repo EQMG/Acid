@@ -1,6 +1,7 @@
 #pragma once
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Classic Perlin noise in 3D.
 	/// </summary>

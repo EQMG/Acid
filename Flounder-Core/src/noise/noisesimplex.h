@@ -2,7 +2,8 @@
 
 #include <cmath>
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Simplex noise in 2D, 3D and 4D.
 	/// </summary>

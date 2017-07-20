@@ -1,6 +1,7 @@
 #include "delta.h"
 
-namespace flounder {
+namespace flounder 
+{
 	delta::delta()
 	{
 		m_currentFrameTime = 0.0;

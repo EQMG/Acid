@@ -4,8 +4,10 @@
 #include <string>
 #include <fstream>
 
-namespace flounder {
-	class helperfile {
+namespace flounder 
+{
+	class helperfile 
+	{
 	public:
 		static std::string readFile(const std::string &filepath)
 		{

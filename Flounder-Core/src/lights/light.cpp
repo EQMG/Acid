@@ -1,6 +1,7 @@
 #include "light.h"
 
-namespace flounder {
+namespace flounder 
+{
 	light::light(colour *colour, vector3 *position)
 	{
 		m_colour = colour;

@@ -1,6 +1,7 @@
 #include "processorresource.h"
 
-namespace flounder {
+namespace flounder 
+{
 	const double processorresource::MAX_TIME_MILLIS = 8.0f;
 
 	processorresource::processorresource()
@@ -37,7 +38,7 @@ namespace flounder {
 
 	void processorresource::addRequestToQueue(irequest *request)
 	{
-		if (request == NULL)
+		if (dynamic_cast<requestresource*>(request) == NULL)
 		{
 			return;
 		}

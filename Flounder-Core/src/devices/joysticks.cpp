@@ -1,6 +1,7 @@
 #include "joysticks.h"
 
-namespace flounder {
+namespace flounder 
+{
 	joysticks::joysticks() : 
 		imodule()
 	{
