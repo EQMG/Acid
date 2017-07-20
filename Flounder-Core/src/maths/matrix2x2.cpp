@@ -1,6 +1,7 @@
 #include "matrix2x2.h"
 
-namespace flounder {
+namespace flounder 
+{
 	matrix2x2::matrix2x2()
 	{
 		this->setIdentity();

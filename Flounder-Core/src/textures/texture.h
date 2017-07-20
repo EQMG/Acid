@@ -16,7 +16,8 @@
 
 #include "stb_image.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Class that represents a loaded texture.
 	/// </summary>

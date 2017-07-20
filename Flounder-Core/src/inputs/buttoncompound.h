@@ -4,7 +4,8 @@
 
 #include "ibutton.h"
 
-namespace flounder {
+namespace flounder
+{
 	/// <summary>
 	/// Handles multiple buttons at once.
 	/// </summary>
@@ -28,7 +29,7 @@ namespace flounder {
 		/// </summary>
 		~buttoncompound();
 
-		bool isDown() override;
+		bool isDown() const override;
 
 		bool wasDown() override;
 	};

@@ -17,7 +17,8 @@ static void dispatch_main(void* fp)
 /// <summary>
 /// The base Flounder folder.
 /// </summary>
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A framework used for simplifying the creation of complicated Java applications. By using flexible Module loading and Extension injecting, it allows the engine to be used for Networking, Imaging, AIs, Games, and many more applications.
 	/// Start off by creating a new Framework object in your main thread, using Extensions in the constructor. By using Extensions: Modules can be required and therefor loaded into the framework.

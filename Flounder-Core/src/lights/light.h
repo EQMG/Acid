@@ -5,7 +5,8 @@
 
 #include "attenuation.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Represents a point light, contains a colour, position and attenuation.
 	/// </summary>

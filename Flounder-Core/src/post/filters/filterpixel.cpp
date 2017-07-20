@@ -1,6 +1,7 @@
 #include "filterpixel.h"
 
-namespace flounder {
+namespace flounder
+{
 	filterpixel::filterpixel(const float &pixelSize) :
 		ipostfilter("filterGrain", "res/shaders/filters/grainFragment.glsl")
 	{

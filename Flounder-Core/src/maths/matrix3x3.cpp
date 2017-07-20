@@ -1,6 +1,7 @@
 #include "matrix3x3.h"
 
-namespace flounder {
+namespace flounder 
+{
 	matrix3x3::matrix3x3()
 	{
 		this->setIdentity();

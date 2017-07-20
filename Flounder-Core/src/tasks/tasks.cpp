@@ -1,6 +1,7 @@
 #include "tasks.h"
 
-namespace flounder {
+namespace flounder 
+{
 	tasks::tasks() : 
 		imodule()
 	{

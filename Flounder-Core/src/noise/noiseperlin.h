@@ -2,7 +2,8 @@
 
 #include "../helpers/helperarray.h"
 
-namespace flounder {
+namespace flounder
+{
 	/// <summary>
 	/// Computes Perlin Noise for three dimensions.
 	/// <p>

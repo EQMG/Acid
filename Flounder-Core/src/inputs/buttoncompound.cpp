@@ -1,6 +1,7 @@
 #include "buttoncompound.h"
 
-namespace flounder {
+namespace flounder 
+{
 	buttoncompound::buttoncompound(const int n_args, ...) :
 		ibutton()
 	{
@@ -24,7 +25,7 @@ namespace flounder {
 		delete m_buttons;
 	}
 
-	bool buttoncompound::isDown()
+	bool buttoncompound::isDown() const
 	{
 		for (int i = 0; i < m_count; i++)
 		{

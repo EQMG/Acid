@@ -1,6 +1,7 @@
 #pragma once
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// Interface for a binary input device.
 	/// </summary>
@@ -19,7 +20,7 @@ namespace flounder {
 		/// Returns whether this button is currently pressed.
 		/// </summary>
 		/// <returns> True if the button is pressed, false otherwise. </returns>
-		virtual bool isDown() = 0;
+		virtual bool isDown() const = 0;
 
 		/// <summary>
 		/// Gets if the key is down and was not down before. Key press recognized as one click.

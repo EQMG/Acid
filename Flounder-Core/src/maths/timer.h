@@ -2,7 +2,8 @@
 
 #include "../framework/framework.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A timer implementation for events.
 	/// </summary>

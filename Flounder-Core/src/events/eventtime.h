@@ -4,49 +4,35 @@
 
 #include "ievent.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A class that runs a event after a time has passed.
 	/// </summary>
-	class ieventtime : 
+	class eventtime :
 		public ievent
 	{
 	private:
 		timer *m_timer;
 		bool m_repeat;
+		std::function<void()> m_onEvent;
 	public:
 		/// <summary>
 		/// Creates a new time event.
 		/// </summary>
 		/// <param name="interval"> The amount of seconds in the future to run the event. </param>
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
-		ieventtime(const float &interval, const bool &repeat) :
-			ievent()
-		{
-			m_timer = new timer(interval);
-			m_repeat = repeat;
-		}
+		/// <param name="onEvent"> A function called when the event is triggered. </param>
+		eventtime(const float &interval, const bool &repeat, const std::function<void()> &onEvent);
 
 		/// <summary>
 		/// Deconstructor for the timed event.
 		/// </summary>
-		~ieventtime()
-		{
-			delete m_timer;
-		}
+		~eventtime();
 
-		bool eventTriggered() override
-		{
-			if (m_timer->isPassedTime())
-			{
-				m_timer->resetStartTime();
-				return true;
-			}
+		bool eventTriggered() override;
 
-			return false;
-		}
-
-		virtual void onEvent() override = 0;
+		void onEvent() override;
 
 		inline bool removeAfterEvent() override { return !m_repeat; }
 	};

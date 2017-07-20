@@ -6,10 +6,13 @@
 #include <cctype>
 #include <locale>
 
-namespace flounder {
-	class helperstring {
+namespace flounder 
+{
+	class helperstring 
+	{
 	public:
-		static std::vector<std::string> split(const std::string &str, const std::string &sep) {
+		static std::vector<std::string> split(const std::string &str, const std::string &sep) 
+		{
 			char* cstr = const_cast<char*>(str.c_str());
 			char* current;
 			std::vector<std::string> arr;
@@ -64,7 +67,8 @@ namespace flounder {
 			return 0;
 		}
 
-		static std::string trim(const std::string &str, const std::string &whitespace = " \t") {
+		static std::string trim(const std::string &str, const std::string &whitespace = " \t") 
+		{
 			const auto strBegin = str.find_first_not_of(whitespace);
 
 			if (strBegin == std::string::npos)

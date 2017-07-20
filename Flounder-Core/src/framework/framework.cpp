@@ -1,6 +1,7 @@
 #include "framework.h"
 
-namespace flounder {
+namespace flounder 
+{
 	framework *framework::G_INSTANCE = NULL;
 
 	framework::framework()

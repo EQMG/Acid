@@ -2,11 +2,13 @@
 
 #include "idriver.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A driver that linearly increases its value.
 	/// </summary>
-	class driverlinear : public idriver
+	class driverlinear : 
+		public idriver
 	{
 	private:
 		float m_startValue;

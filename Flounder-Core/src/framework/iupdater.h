@@ -4,7 +4,8 @@
 
 #include "imodule.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A class used to define how the framework will run updates and timings.
 	/// </summary>
@@ -13,12 +14,10 @@ namespace flounder {
 	public:
 		iupdater()
 		{
-
 		}
 
 		virtual ~iupdater()
 		{
-
 		}
 
 		virtual void create() = 0;

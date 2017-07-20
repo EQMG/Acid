@@ -1,6 +1,7 @@
 #include "colour.h"
 
-namespace flounder {
+namespace flounder 
+{
 	colour::colour()
 	{
 		this->set(0.0f, 0.0f, 0.0f, 1.0f);

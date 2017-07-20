@@ -18,7 +18,8 @@
 
 #include "../iupdater.h"
 
-namespace flounder {
+namespace flounder
+{
 	class glfwupdater : public iupdater
 	{
 	private:

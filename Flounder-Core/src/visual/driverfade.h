@@ -2,11 +2,13 @@
 
 #include "idriver.h"
 
-namespace flounder {
+namespace flounder 
+{
 	/// <summary>
 	/// A driver that fades from start to end.
 	/// </summary>
-	class driverfade : public idriver
+	class driverfade : 
+		public idriver
 	{
 	private:
 		float m_start;

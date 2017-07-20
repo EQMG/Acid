@@ -12,24 +12,25 @@
 #include "post/filters/filtercrt.h"
 #include "skybox/rendererskybox.h"
 
-namespace flounder {
-	class mainrenderer : public irenderermaster
-	{
-	private:
-		vector4 *m_infinity;
+using namespace flounder;
 
-		rendererskybox *m_skybox;
+class mainrenderer :
+	public irenderermaster
+{
+private:
+	vector4 m_infinity;
 
-		fbo *m_fboRenderer;
-		deferredrenderer *m_deferred;
-		filterfxaa *m_filterFxaa;
-		filtergrain *m_filterGrain;
-		filtercrt *m_filterCrt;
-	public:
-		mainrenderer();
+	rendererskybox *m_skybox;
 
-		~mainrenderer();
+	fbo *m_fboRenderer;
+	deferredrenderer *m_deferred;
+	filterfxaa *m_filterFxaa;
+	filtergrain *m_filterGrain;
+	filtercrt *m_filterCrt;
+public:
+	mainrenderer();
 
-		void render() override;
-	};
-}
+	~mainrenderer();
+
+	void render() override;
+};

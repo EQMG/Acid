@@ -1,6 +1,7 @@
 #include "axiscompound.h"
 
-namespace flounder {
+namespace flounder 
+{
 	axiscompound::axiscompound(const int n_args, ...) :
 		iaxis()
 	{
@@ -23,7 +24,7 @@ namespace flounder {
 		delete m_axes;
 	}
 
-	float axiscompound::getAmount()
+	float axiscompound::getAmount() const
 	{
 		float result = 0.0f;
 

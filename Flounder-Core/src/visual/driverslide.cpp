@@ -1,6 +1,7 @@
 #include "driverslide.h"
 
-namespace flounder {
+namespace flounder 
+{
 	driverslide::driverslide(const float &start, const float &end, const float &length)
 		: idriver(length)
 	{

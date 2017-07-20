@@ -1,6 +1,7 @@
 #include "filtercrt.h"
 
-namespace flounder {
+namespace flounder 
+{
 	filtercrt::filtercrt(colour *screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
 		ipostfilter("filterNegative", "res/shaders/filters/crtFragment.glsl")
 	{
