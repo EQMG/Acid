@@ -6,12 +6,12 @@
 
 #include "ibutton.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Button from a mouse.
 	/// </summary>
-	class buttonmouse : 
+	class buttonmouse :
 		public ibutton
 	{
 	private:
@@ -33,6 +33,6 @@ namespace flounder
 
 		bool isDown() const override;
 
-		bool wasDown();
+		bool wasDown() override;
 	};
 }

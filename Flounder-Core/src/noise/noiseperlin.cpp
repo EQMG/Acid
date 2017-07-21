@@ -1,6 +1,6 @@
 #include "noiseperlin.h"
 
-namespace flounder 
+namespace flounder
 {
 	noiseperlin::noiseperlin(const int seed)
 	{

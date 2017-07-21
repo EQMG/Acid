@@ -5,7 +5,7 @@
 
 #include "ievent.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A module used for managing events on framework updates.
@@ -15,24 +15,28 @@ namespace flounder
 	private:
 		std::vector<ievent*> *m_events;
 	public:
-		static events* get()
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
+		static events *get()
 		{
-			return (events*)framework::get()->getInstance("events");
+			return static_cast<events*>(framework::get()->getInstance("events"));
 		}
 
 		/// <summary>
-		/// Creates a new event manager.
+		/// Creates a new events module.
 		/// </summary>
 		events();
 
 		/// <summary>
-		/// Deconstructor for events.
+		/// Deconstructor for the events module.
 		/// </summary>
 		~events();
 
-		void init();
+		void init() override;
 
-		void update();
+		void update() override;
 
 		/// <summary>
 		/// Adds an event to the listening list.

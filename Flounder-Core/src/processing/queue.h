@@ -2,21 +2,28 @@
 
 #include <vector>
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Holds requests in a simple que.
 	/// </summary>
 	template<typename t>
-	class queue {
+	class queue
+	{
 	private:
 		std::vector<t> *m_queue;
 	public:
+		/// <summary>
+		/// Creates a new queue.
+		/// </summary>
 		queue()
 		{
 			m_queue = new std::vector<t>();
 		}
 
+		/// <summary>
+		/// Deconstructor for the queue.
+		/// </summary>
 		~queue()
 		{
 			delete m_queue;

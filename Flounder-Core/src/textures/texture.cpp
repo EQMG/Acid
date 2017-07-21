@@ -1,6 +1,6 @@
 #include "texture.h"
 
-namespace flounder 
+namespace flounder
 {
 	texture::builder::builder()
 	{
@@ -150,13 +150,13 @@ namespace flounder
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		stbi_image_free(data);
 
-		if (m_mipmap) 
+		if (m_mipmap)
 		{
 			glGenerateMipmap(GL_TEXTURE_2D);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-			if (m_anisotropic) 
+			if (m_anisotropic)
 			{
 #ifdef FLOUNDER_PLATFORM_WEB
 #define GL_TEXTURE_MAX_ANISOTROPY_EXT     0x84FE
@@ -166,7 +166,7 @@ namespace flounder
 				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 4); // TODO: FlounderTextures.get().getAnisotropyLevel()
 			}
 		}
-		else if (m_nearest) 
+		else if (m_nearest)
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -177,22 +177,22 @@ namespace flounder
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
 
-		if (m_clampEdges) 
+		if (m_clampEdges)
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		}
 #ifndef FLOUNDER_PLATFORM_WEB
-		else if (m_clampToBorder) 
+		else if (m_clampToBorder)
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-			GLfloat *buffer = new GLfloat[4]{ m_border->r, m_border->g, m_border->b, m_border->a };
+			GLfloat *buffer = new GLfloat[4]{m_border->m_r, m_border->m_g, m_border->m_b, m_border->m_a};
 			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, buffer);
-			delete buffer;
+			delete[] buffer;
 		}
 #endif
-		else 
+		else
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

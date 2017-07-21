@@ -2,12 +2,12 @@
 
 #include "idriver.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A bounce driver that uses a sine wave.
 	/// </summary>
-	class driverbounce : 
+	class driverbounce :
 		public idriver
 	{
 	private:

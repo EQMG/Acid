@@ -13,12 +13,13 @@
 
 #include "vertexdata.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Class that represents a loaded model.
 	/// </summary>
-	class model {
+	class model
+	{
 		/// <summary>
 		/// A builder used to set model parameters for loading.
 		/// </summary>
@@ -54,7 +55,7 @@ namespace flounder
 			/// <param name="normals"> The model normals. </param>
 			/// <param name="tangents"> The model tangents. </param>
 			/// <returns> This. </returns>
-			builder* setDirectly(std::vector<int> *indices, std::vector<float> *vertices, std::vector<float> *textures, std::vector<float> *normals, std::vector<float> *tangents);
+			builder *setDirectly(std::vector<int> *indices, std::vector<float> *vertices, std::vector<float> *textures, std::vector<float> *normals, std::vector<float> *tangents);
 
 			/// <summary>
 			/// Creates a model from the builder.
@@ -62,8 +63,9 @@ namespace flounder
 			/// <returns> The created model. </returns>
 			model *create();
 		};
+
 	protected:
-		builder *m_builder; 
+		builder *m_builder;
 
 		std::string m_file;
 
@@ -84,6 +86,9 @@ namespace flounder
 		/// <param name="builder"> The models builder. </param>
 		model(builder *builder);
 	public:
+		/// <summary>
+		/// Deconstructor for the model.
+		/// </summary>
 		~model();
 
 		/// <summary>
@@ -92,10 +97,22 @@ namespace flounder
 		/// <returns> The model builder. </returns>
 		static builder *newModel();
 
-		GLuint getVaoID() { return m_vaoID; }
+		/// <summary>
+		/// Gets the OpenGL VAO ID.
+		/// </summary>
+		/// <returns> The VAO ID. </returns>
+		GLuint getVaoID() const { return m_vaoID; }
 
-		GLuint getVaoLength() { return m_vaoLength; }
+		/// <summary>
+		/// Gets the OpenGL VAO length.
+		/// </summary>
+		/// <returns> The VAO length. </returns>
+		GLuint getVaoLength() const { return m_vaoLength; }
 	private:
+		/// <summary>
+		/// Loads the model object from a model file.
+		/// </summary>
+		/// <param name="file"> The file to load from. </param>
 		void loadFromFile(const std::string &file);
 
 		vertexdata *processDataVertex(vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices);

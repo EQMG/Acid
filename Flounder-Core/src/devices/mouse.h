@@ -5,12 +5,12 @@
 
 #include "display.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
-	class mouse : 
+	class mouse :
 		public imodule
 	{
 	private:
@@ -29,31 +29,39 @@ namespace flounder
 		bool m_cursorDisabled;
 		bool m_lastCursorDisabled;
 
-		friend void callbackScroll(GLFWwindow* window, double xoffset, double yoffset);
-		friend void callbackMouseButton(GLFWwindow* window, int button, int action, int mods);
-		friend void callbackCursorPos(GLFWwindow* window, double xpos, double ypos);
-		friend void callbackCursorEnter(GLFWwindow* window, int entered);
+		friend void callbackScroll(GLFWwindow *window, double xoffset, double yoffset);
+		friend void callbackMouseButton(GLFWwindow *window, int button, int action, int mods);
+		friend void callbackCursorPos(GLFWwindow *window, double xpos, double ypos);
+		friend void callbackCursorEnter(GLFWwindow *window, int entered);
 	public:
-		static mouse* get() 
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
+		static mouse *get()
 		{
-			return (mouse*) framework::get()->getInstance("mouse");
+			return static_cast<mouse*>(framework::get()->getInstance("mouse"));
 		}
 
 		/// <summary>
-		/// Creates a new GLFW mouse manager.
+		/// Creates a new mouse module.
 		/// </summary>
 		mouse();
 
 		/// <summary>
-		/// Deconstructor for the mouse.
+		/// Deconstructor for the mouse module.
 		/// </summary>
 		~mouse();
 
+		/// <summary>
+		/// Loads the mouse module with inital values.
+		/// </summary>
+		/// <param name="customMouse"> The custom cursor file path. </param>
 		void load(const std::string &customMouse);
 
-		void init();
+		void init() override;
 
-		void update();
+		void update() override;
 
 		/// <summary>
 		/// Sets if the operating systems cursor is hidden whilst in the display.
@@ -73,13 +81,13 @@ namespace flounder
 		/// Gets the mouses screen x position.
 		/// </summary>
 		/// <returns> The mouses x position. </returns>
-		double &getPositionX();
+		double getPositionX();
 
 		/// <summary>
 		/// Gets the mouses screen y position.
 		/// </summary>
 		/// <returns> The mouses y position. </returns>
-		double &getPositionY();
+		double getPositionY();
 
 		/// <summary>
 		/// Sets the mouse position by calling glfwSetCursorPos.
@@ -87,35 +95,35 @@ namespace flounder
 		/// <param name="cursorX"> The x position in screenspace. </param>
 		/// <param name="cursorY"> The y position in screenspace. </param>
 		void setPosition(const double &cursorX, const double &cursorY);
-		
+
 		/// <summary>
 		/// Gets the mouses delta x.
 		/// </summary>
 		/// <returns> The mouses delta x. </returns>
-		double &getDeltaX();
+		double getDeltaX();
 
 		/// <summary>
 		/// Gets the mouses delta y.
 		/// </summary>
 		/// <returns> The mouses delta y. </returns>
-		double &getDeltaY();
+		double getDeltaY();
 
 		/// <summary>
 		/// Gets the mouses wheel delta.
 		/// </summary>
 		/// <returns> The mouses wheel delta. </returns>
-		double &getDeltaWheel();
-		
+		double getDeltaWheel();
+
 		/// <summary>
 		/// Gets if the display is selected.
 		/// </summary>
 		/// <returns> If the display is selected. </returns>
-		bool &isDisplaySelected();
-		
+		bool isDisplaySelected();
+
 		/// <summary>
 		/// If the cursor is hidden, the mouse is the display locked if true.
 		/// </summary>
 		/// <returns> If the cursor is hidden. </returns>
-		bool &isCursorDisabled();
+		bool isCursorDisabled();
 	};
 }

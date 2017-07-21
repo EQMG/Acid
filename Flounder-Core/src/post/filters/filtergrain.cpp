@@ -1,6 +1,6 @@
 #include "filtergrain.h"
 
-namespace flounder 
+namespace flounder
 {
 	filtergrain::filtergrain(const float &strength) :
 		ipostfilter("filterGrain", "res/shaders/filters/grainFragment.glsl")

@@ -6,7 +6,7 @@
 #include "../renderer/renderer.h"
 #include "../shaders/shader.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Represents a post effect shader and on application saves the result into a fbo.
@@ -18,15 +18,38 @@ namespace flounder
 		fbo *m_fbo;
 		model *m_model;
 	public:
+		/// <summary>
+		/// Creates a new post effect filter
+		/// </summary>
+		/// <param name="filterName"> The name for the filter. </param>
+		/// <param name="fragmentShader"> The fragment shader file. </param>
 		ipostfilter(const std::string &filterName, const std::string &fragmentShader);
 
+		/// <summary>
+		/// Creates a new post effect filter
+		/// </summary>
+		/// <param name="filterName"> The name for the filter. </param>
+		/// <param name="fragmentShader"> The fragment shader file. </param>
+		/// <param name="fbo"> The fbo to render into. </param>
 		ipostfilter(const std::string &filterName, const std::string &fragmentShader, fbo *fbo);
 
+		/// <summary>
+		/// Creates a new post effect filter
+		/// </summary>
+		/// <param name="shader"> The shader for the filter. </param>
 		ipostfilter(shader *shader);
 
+		/// <summary>
+		/// Creates a new post effect filter
+		/// </summary>
+		/// <param name="shader"> The shader for the filter. </param>
+		/// <param name="fbo"> The fbo to render into. </param>
 		ipostfilter(shader *shader, fbo *fbo);
 
-		~ipostfilter();
+		/// <summary>
+		/// Deconstructor for the post filter.
+		/// </summary>
+		virtual ~ipostfilter();
 
 		/// <summary>
 		/// Renders the filter to its fbo.
@@ -40,6 +63,10 @@ namespace flounder
 		/// </summary>
 		virtual void storeValues() = 0;
 
-		inline fbo *getFbo() { return m_fbo; }
+		/// <summary>
+		/// Gets the fbo the filter rendered into.
+		/// </summary>
+		/// <returns> The fbo. </returns>
+		inline fbo *getFbo() const { return m_fbo; }
 	};
 }

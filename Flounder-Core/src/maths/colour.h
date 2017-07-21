@@ -2,7 +2,7 @@
 
 #include "maths.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Holds a RGBA colour.
@@ -10,7 +10,7 @@ namespace flounder
 	class colour
 	{
 	public:
-		float r, g, b, a;
+		float m_r, m_g, m_b, m_a;
 
 		/// <summary>
 		/// Constructor for colour.

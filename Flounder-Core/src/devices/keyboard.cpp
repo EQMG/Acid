@@ -21,8 +21,8 @@ namespace flounder
 		keyboard::get()->m_keyboardChar = codepoint;
 	}
 
-	keyboard::keyboard()
-		: imodule()
+	keyboard::keyboard() : 
+		imodule()
 	{
 	}
 
@@ -37,7 +37,7 @@ namespace flounder
 		m_keyboardChar = 0;
 
 		// Sets the default state of the keys to released.
-		for (unsigned int i = 0; i < GLFW_KEY_LAST + 1; i++) 
+		for (unsigned int i = 0; i < GLFW_KEY_LAST + 1; i++)
 		{
 			m_keyboardKeys[i] = GLFW_RELEASE;
 		}

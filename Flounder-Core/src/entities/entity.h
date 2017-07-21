@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder 
+namespace flounder
 {
 	class entity
 	{

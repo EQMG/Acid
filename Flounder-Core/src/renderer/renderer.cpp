@@ -1,6 +1,6 @@
 #include "renderer.h"
 
-namespace flounder 
+namespace flounder
 {
 	renderer::renderer() :
 		imodule()
@@ -39,7 +39,7 @@ namespace flounder
 
 	void renderer::prepareNewRenderParse(colour *colour)
 	{
-		prepareNewRenderParse(colour->r, colour->g, colour->b, colour->a);
+		prepareNewRenderParse(colour->m_r, colour->m_g, colour->m_b, colour->m_a);
 	}
 
 	void renderer::prepareNewRenderParse(const float &r, const float &g, const float &b, const float &a)
@@ -53,13 +53,13 @@ namespace flounder
 
 	void renderer::cullBackFaces(const bool &cull)
 	{
-		if (cull && !m_cullingBackFace) 
+		if (cull && !m_cullingBackFace)
 		{
 			glEnable(GL_CULL_FACE);
 			glCullFace(GL_BACK);
 			m_cullingBackFace = true;
 		}
-		else if (!cull && m_cullingBackFace) 
+		else if (!cull && m_cullingBackFace)
 		{
 			glDisable(GL_CULL_FACE);
 			m_cullingBackFace = false;
@@ -139,12 +139,12 @@ namespace flounder
 	{
 		if (enable && !m_antialiasing)
 		{
-		//	glEnable(GL_MULTISAMPLE);
+			//	glEnable(GL_MULTISAMPLE);
 			m_antialiasing = true;
 		}
 		else if (!enable && m_antialiasing)
 		{
-		//	glDisable(GL_MULTISAMPLE);
+			//	glDisable(GL_MULTISAMPLE);
 			m_antialiasing = false;
 		}
 	}

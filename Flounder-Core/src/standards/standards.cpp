@@ -1,9 +1,9 @@
 #include "standards.h"
 
-namespace flounder 
+namespace flounder
 {
-	standards::standards()
-		: imodule()
+	standards::standards() : 
+		imodule()
 	{
 		m_standards = new std::vector<istandard*>();
 	}

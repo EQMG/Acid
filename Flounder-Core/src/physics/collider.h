@@ -7,12 +7,12 @@
 #include "intersect.h"
 #include "ray.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A simple class that represents a physical shape.
 	/// </summary>
-	class collider 
+	class collider
 	{
 	public:
 		/// <summary>

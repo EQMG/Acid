@@ -1,12 +1,12 @@
 #include "ipostfilter.h"
 
-namespace flounder 
+namespace flounder
 {
 	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader)
 	{
 		m_shader = shader::newShader()->addName(filterName)
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, fragmentShader, loadtype::FILE))->create();
+		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.glsl", loadtype::FILE))
+		                              ->addType(shadertype(GL_FRAGMENT_SHADER, fragmentShader, loadtype::FILE))->create();
 		m_fbo = fbo::newFBO()->fitToScreen(1.0f)->create();
 		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
 	}
@@ -14,8 +14,8 @@ namespace flounder
 	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader, fbo *fbo)
 	{
 		m_shader = shader::newShader()->addName(filterName)
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, fragmentShader, loadtype::FILE))->create();
+		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.glsl", loadtype::FILE))
+		                              ->addType(shadertype(GL_FRAGMENT_SHADER, fragmentShader, loadtype::FILE))->create();
 		m_fbo = fbo;
 		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
 	}
@@ -31,7 +31,7 @@ namespace flounder
 	{
 		m_shader = shader;
 		m_fbo = fbo;
-		delete m_model;
+		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
 	}
 
 	ipostfilter::~ipostfilter()

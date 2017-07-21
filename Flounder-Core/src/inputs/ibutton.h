@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Interface for a binary input device.
@@ -8,10 +8,16 @@ namespace flounder
 	class ibutton
 	{
 	public:
+		/// <summary>
+		/// Creates a new axis.
+		/// </summary>
 		ibutton()
 		{
 		}
 
+		/// <summary>
+		/// Deconstructor for the axis.
+		/// </summary>
 		virtual ~ibutton()
 		{
 		}

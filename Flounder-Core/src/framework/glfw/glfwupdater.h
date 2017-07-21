@@ -62,9 +62,9 @@ namespace flounder
 
 		inline void setTimeOffset(const double &timeOffset) override { m_timeOffset = timeOffset; };
 
-		inline double getDelta() override { return m_deltaUpdate->getChange(); };
+		inline double getDelta() override { return m_deltaUpdate->m_change; };
 
-		inline double getDeltaRender() override { return m_deltaRender->getChange(); };
+		inline double getDeltaRender() override { return m_deltaRender->m_change; };
 
 		inline double getTimeSec() override { return (glfwGetTime() - m_startTime) + m_timeOffset; };
 

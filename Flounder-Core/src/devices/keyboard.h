@@ -6,7 +6,7 @@
 
 #include "display.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the keyboard keys.
@@ -17,27 +17,31 @@ namespace flounder
 		int *m_keyboardKeys;
 		int m_keyboardChar;
 
-		friend void callbackKey(GLFWwindow* window, int key, int scancode, int action, int mods);
-		friend void callbackChar(GLFWwindow* window, unsigned int codepoint);
+		friend void callbackKey(GLFWwindow *window, int key, int scancode, int action, int mods);
+		friend void callbackChar(GLFWwindow *window, unsigned int codepoint);
 	public:
-		static keyboard* get() 
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
+		static keyboard *get()
 		{
-			return (keyboard*)framework::get()->getInstance("keyboard");
+			return static_cast<keyboard*>(framework::get()->getInstance("keyboard"));
 		}
 
 		/// <summary>
-		/// Creates a new GLFW keyboard manager.
+		/// Creates a new keyboard module.
 		/// </summary>
 		keyboard();
 
 		/// <summary>
-		/// Deconstructor for the keyboard.
+		/// Deconstructor for the keyboard module.
 		/// </summary>
-		~keyboard();
+		~keyboard() override;
 
-		void init();
+		void init() override;
 
-		void update();
+		void update() override;
 
 		/// <summary>
 		/// Gets whether or not a particular key is currently pressed.

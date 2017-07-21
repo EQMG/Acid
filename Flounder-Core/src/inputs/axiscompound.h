@@ -6,7 +6,7 @@
 
 #include "iaxis.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Axis composed of multiple other axes.

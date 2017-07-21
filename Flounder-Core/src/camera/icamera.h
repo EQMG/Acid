@@ -7,12 +7,12 @@
 
 #include "iplayer.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// This class is used throughout the engine wherever the camera is involved, so that the engine doesn't rely at all on the camera's implementation.
 	/// </summary>
-	class icamera 
+	class icamera
 	{
 	public:
 		/// <summary>

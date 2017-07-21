@@ -1,6 +1,6 @@
 #include "model.h"
 
-namespace flounder 
+namespace flounder
 {
 	model::builder::builder()
 	{
@@ -102,7 +102,8 @@ namespace flounder
 			{
 				std::string prefix = split.at(0);
 
-				if (prefix == "#") {
+				if (prefix == "#")
+				{
 					continue;
 				}
 
@@ -134,7 +135,7 @@ namespace flounder
 					std::vector<std::string> vertex1 = helperstring::split(split.at(1), "/");
 					std::vector<std::string> vertex2 = helperstring::split(split.at(2), "/");
 					std::vector<std::string> vertex3 = helperstring::split(split.at(3), "/");
-					
+
 					vertexdata *v0 = processDataVertex(vector3(stoi(vertex1.at(0)), stoi(vertex1.at(1)), stoi(vertex1.at(2))), &vertices, &indices);
 					vertexdata *v1 = processDataVertex(vector3(stoi(vertex2.at(0)), stoi(vertex2.at(1)), stoi(vertex2.at(2))), &vertices, &indices);
 					vertexdata *v2 = processDataVertex(vector3(stoi(vertex3.at(0)), stoi(vertex3.at(1)), stoi(vertex3.at(2))), &vertices, &indices);
@@ -148,11 +149,11 @@ namespace flounder
 		}
 
 		// Averages out vertex tangents, and disabled non set vertices,
-		for (vertexdata *vertex : vertices) 
+		for (vertexdata *vertex : vertices)
 		{
 			vertex->averageTangents();
 
-			if (!vertex->isSet()) 
+			if (!vertex->isSet())
 			{
 				vertex->setTextureIndex(0);
 				vertex->setNormalIndex(0);
@@ -175,20 +176,20 @@ namespace flounder
 			vector3 normalVector = normals.at(currentVertex->getNormalIndex());
 			vector3 tangent = currentVertex->getAverageTangent();
 
-			m_vertices->push_back(position.x);
-			m_vertices->push_back(position.y);
-			m_vertices->push_back(position.z);
+			m_vertices->push_back(position.m_x);
+			m_vertices->push_back(position.m_y);
+			m_vertices->push_back(position.m_z);
 
-			m_textures->push_back(textureCoord.x);
-			m_textures->push_back(1.0f - textureCoord.y);
+			m_textures->push_back(textureCoord.m_x);
+			m_textures->push_back(1.0f - textureCoord.m_y);
 
-			m_normals->push_back(normalVector.x);
-			m_normals->push_back(normalVector.y);
-			m_normals->push_back(normalVector.z);
+			m_normals->push_back(normalVector.m_x);
+			m_normals->push_back(normalVector.m_y);
+			m_normals->push_back(normalVector.m_z);
 
-			m_tangents->push_back(tangent.x);
-			m_tangents->push_back(tangent.y);
-			m_tangents->push_back(tangent.z);
+			m_tangents->push_back(tangent.m_x);
+			m_tangents->push_back(tangent.m_y);
+			m_tangents->push_back(tangent.m_z);
 
 			delete currentVertex;
 		}
@@ -196,19 +197,19 @@ namespace flounder
 
 	vertexdata *model::processDataVertex(vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices)
 	{
-		int index = (int)vertex.x - 1;
+		int index = (int) vertex.m_x - 1;
 		vertexdata *currentVertex = vertices->at(index);
-		int textureIndex = (int)vertex.y - 1;
-		int normalIndex = (int)vertex.z - 1;
+		int textureIndex = (int) vertex.m_y - 1;
+		int normalIndex = (int) vertex.m_z - 1;
 
-		if (!currentVertex->isSet()) 
+		if (!currentVertex->isSet())
 		{
 			currentVertex->setTextureIndex(textureIndex);
 			currentVertex->setNormalIndex(normalIndex);
 			indices->push_back(index);
 			return currentVertex;
 		}
-		else 
+		else
 		{
 			return dealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
 		}
@@ -216,20 +217,20 @@ namespace flounder
 
 	vertexdata *model::dealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices)
 	{
-		if (previousVertex->hasSameTextureAndNormal(newTextureIndex, newNormalIndex)) 
+		if (previousVertex->hasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{
 			indices->push_back(previousVertex->getIndex());
 			return previousVertex;
 		}
-		else 
+		else
 		{
 			vertexdata *anotherVertex = previousVertex->getDuplicateVertex();
 
-			if (anotherVertex != NULL) 
+			if (anotherVertex != NULL)
 			{
 				return dealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
 			}
-			else 
+			else
 			{
 				vertexdata *duplicateVertex = new vertexdata(vertices->size(), previousVertex->getPosition());
 				duplicateVertex->setTextureIndex(newTextureIndex);
@@ -252,9 +253,9 @@ namespace flounder
 		vector2 *deltaUv1 = vector2::subtract(uv1, uv0, NULL);
 		vector2 *deltaUv2 = vector2::subtract(uv2, uv0, NULL);
 
-		float r = 1.0f / (deltaUv1->x * deltaUv2->y - deltaUv1->y * deltaUv2->x);
-		deltaPos1->scale(deltaUv2->y);
-		deltaPos2->scale(deltaUv1->y);
+		float r = 1.0f / (deltaUv1->m_x * deltaUv2->m_y - deltaUv1->m_y * deltaUv2->m_x);
+		deltaPos1->scale(deltaUv2->m_y);
+		deltaPos2->scale(deltaUv1->m_y);
 
 		vector3 *tangent = vector3::subtract(*deltaPos1, *deltaPos2, NULL);
 		tangent->scale(r);

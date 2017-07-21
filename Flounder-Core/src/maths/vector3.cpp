@@ -1,6 +1,6 @@
 #include "vector3.h"
 
-namespace flounder 
+namespace flounder
 {
 	vector3::vector3()
 	{
@@ -28,25 +28,25 @@ namespace flounder
 
 	vector3 *vector3::set(const float &x, const float &y, const float &z)
 	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
+		this->m_x = x;
+		this->m_y = y;
+		this->m_z = z;
 		return this;
 	}
 
 	vector3 *vector3::set(const vector3 &source)
 	{
-		this->x = source.x;
-		this->y = source.y;
-		this->z = source.z;
+		this->m_x = source.m_x;
+		this->m_y = source.m_y;
+		this->m_z = source.m_z;
 		return this;
 	}
 
 	vector3 *vector3::set(const vector4 &source)
 	{
-		this->x = source.x;
-		this->y = source.y;
-		this->z = source.z;
+		this->m_x = source.m_x;
+		this->m_y = source.m_y;
+		this->m_z = source.m_z;
 		return this;
 	}
 
@@ -57,7 +57,7 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		return destination->set(left.x + right.x, left.y + right.y, left.z + right.z);
+		return destination->set(left.m_x + right.m_x, left.m_y + right.m_y, left.m_z + right.m_z);
 	}
 
 	vector3 *vector3::subtract(const vector3 &left, const vector3 &right, vector3 *destination)
@@ -67,7 +67,7 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		return destination->set(left.x - right.x, left.y - right.y, left.z - right.z);
+		return destination->set(left.m_x - right.m_x, left.m_y - right.m_y, left.m_z - right.m_z);
 	}
 
 	vector3 *vector3::multiply(const vector3 &left, const vector3 &right, vector3 *destination)
@@ -77,7 +77,7 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		return destination->set(left.x * right.x, left.y * right.y, left.z * right.z);
+		return destination->set(left.m_x * right.m_x, left.m_y * right.m_y, left.m_z * right.m_z);
 	}
 
 	vector3 *vector3::divide(const vector3 &left, const vector3 &right, vector3 *destination)
@@ -87,7 +87,7 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		return destination->set(left.x / right.x, left.y / right.y, left.z / right.z);
+		return destination->set(left.m_x / right.m_x, left.m_y / right.m_y, left.m_z / right.m_z);
 	}
 
 	float vector3::angle(const vector3 &left, const vector3 &right)
@@ -108,7 +108,7 @@ namespace flounder
 
 	float vector3::dot(const vector3 &left, const vector3 &right)
 	{
-		return left.x * right.x + left.y * right.y + left.z * right.z;
+		return left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z;
 	}
 
 	vector3 *vector3::cross(const vector3 &left, const vector3 &right, vector3 *destination)
@@ -118,7 +118,7 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		return destination->set(left.y * right.z - left.z * right.y, right.x * left.z - right.z * left.x, left.x * right.y - left.y * right.x);
+		return destination->set(left.m_y * right.m_z - left.m_z * right.m_y, right.m_x * left.m_z - right.m_z * left.m_x, left.m_x * right.m_y - left.m_y * right.m_x);
 	}
 
 	vector3 *vector3::scale(const vector3 &source, const float &scalar, vector3 *destination)
@@ -128,7 +128,7 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		return destination->set(source.x * scalar, source.y * scalar, source.z * scalar);
+		return destination->set(source.m_x * scalar, source.m_y * scalar, source.m_z * scalar);
 	}
 
 	vector3 *vector3::rotate(const vector3 &source, vector3 *rotation, vector3 *destination)
@@ -143,7 +143,7 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		return destination->set(-source.x, -source.y, -source.z);
+		return destination->set(-source.m_x, -source.m_y, -source.m_z);
 	}
 
 	vector3 *vector3::normalize(const vector3 &source, vector3 *destination)
@@ -157,7 +157,7 @@ namespace flounder
 
 		if (l != 0.0f)
 		{
-			return destination->set(source.x / l, source.y / l, source.z / l);
+			return destination->set(source.m_x / l, source.m_y / l, source.m_z / l);
 		}
 		else
 		{
@@ -172,7 +172,7 @@ namespace flounder
 
 	float vector3::lengthSquared(const vector3 &source)
 	{
-		return source.x * source.x + source.y * source.y + source.z * source.z;
+		return source.m_x * source.m_x + source.m_y * source.m_y + source.m_z * source.m_z;
 	}
 
 	vector3 *vector3::maxVector(const vector3 &a, const vector3 &b, vector3 *destination)
@@ -182,7 +182,7 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		return destination->set(__max(a.x, b.x), __max(a.y, b.y), __max(a.z, b.z));
+		return destination->set(__max(a.m_x, b.m_x), __max(a.m_y, b.m_y), __max(a.m_z, b.m_z));
 	}
 
 	vector3 *vector3::minVector(const vector3 &a, const vector3 &b, vector3 *destination)
@@ -192,30 +192,30 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		return destination->set(__min(a.x, b.x), __min(a.y, b.y), __min(a.z, b.z));
+		return destination->set(__min(a.m_x, b.m_x), __min(a.m_y, b.m_y), __min(a.m_z, b.m_z));
 	}
 
 	float vector3::maxComponent(const vector3 &vector)
 	{
-		return __max(vector.x, __max(vector.y, vector.z));
+		return __max(vector.m_x, __max(vector.m_y, vector.m_z));
 	}
 
 	float vector3::minComponent(const vector3 &vector)
 	{
-		return __min(vector.x, __min(vector.y, vector.z));
+		return __min(vector.m_x, __min(vector.m_y, vector.m_z));
 	}
 
 	float vector3::getDistanceSquared(const vector3 &point1, const vector3 &point2)
 	{
-		float dx = point1.x - point2.x;
-		float dy = point1.y - point2.y;
-		float dz = point1.z - point2.z;
+		float dx = point1.m_x - point2.m_x;
+		float dy = point1.m_y - point2.m_y;
+		float dz = point1.m_z - point2.m_z;
 		return dx * dx + dy * dy + dz * dz;
 	}
 
 	float vector3::getDistance(const vector3 &point1, const vector3 &point2)
 	{
-		return sqrt(pow(point2.x - point1.x, 2) + pow(point2.y - point1.y, 2) + pow(point2.z - point1.z, 2));
+		return sqrt(pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2) + pow(point2.m_z - point1.m_z, 2));
 	}
 
 	vector3 *vector3::getVectorDistance(const vector3 &point1, const vector3 &point2, vector3 *destination)
@@ -225,7 +225,7 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		return destination->set(pow(point2.x - point1.x, 2), pow(point2.y - point1.y, 2), pow(point2.z - point1.z, 2));
+		return destination->set(pow(point2.m_x - point1.m_x, 2), pow(point2.m_y - point1.m_y, 2), pow(point2.m_z - point1.m_z, 2));
 	}
 
 	vector3 *vector3::generateRandomUnitVector(vector3 *destination)
@@ -235,9 +235,9 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		float theta = (float)__random();
+		float theta = (float) __random();
 		theta *= 2.0f * PI;
-		float z = (float)__random();
+		float z = (float) __random();
 		z *= 2.0f - 1.0f;
 		float rootOneMinusZSquared = sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * cos(theta);
@@ -257,7 +257,8 @@ namespace flounder
 			vector3 *randomVector = generateRandomUnitVector(NULL);
 			vector3::cross(*randomVector, normal, destination);
 			delete randomVector;
-		} while (length(*destination) == 0.0f);
+		}
+		while (length(*destination) == 0.0f);
 
 		destination->normalize();
 		destination->scale(radius);
@@ -280,18 +281,18 @@ namespace flounder
 
 	float vector3::baryCentric(const vector3 &p1, const vector3 &p2, const vector3 &p3, const vector3 &pos)
 	{
-		float det = (p2.z - p3.z) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.z - p3.z);
-		float l1 = ((p2.z - p3.z) * (pos.x - p3.x) + (p3.x - p2.x) * (pos.y - p3.z)) / det;
-		float l2 = ((p3.z - p1.z) * (pos.x - p3.x) + (p1.x - p3.x) * (pos.y - p3.z)) / det;
+		float det = (p2.m_z - p3.m_z) * (p1.m_x - p3.m_x) + (p3.m_x - p2.m_x) * (p1.m_z - p3.m_z);
+		float l1 = ((p2.m_z - p3.m_z) * (pos.m_x - p3.m_x) + (p3.m_x - p2.m_x) * (pos.m_y - p3.m_z)) / det;
+		float l2 = ((p3.m_z - p1.m_z) * (pos.m_x - p3.m_x) + (p1.m_x - p3.m_x) * (pos.m_y - p3.m_z)) / det;
 		float l3 = 1.0f - l1 - l2;
-		return l1 * p1.y + l2 * p2.y + l3 * p3.y;
+		return l1 * p1.m_y + l2 * p2.m_y + l3 * p3.m_y;
 	}
 
 	vector3 *vector3::translate(const float &x, const float &y, const float &z)
 	{
-		this->x += x;
-		this->y += y;
-		this->z += z;
+		this->m_x += x;
+		this->m_y += y;
+		this->m_z += z;
 		return this;
 	}
 
@@ -310,17 +311,17 @@ namespace flounder
 		return scale(*this, scalar, this);
 	}
 
-	bool vector3::isZero()
+	bool vector3::isZero() const
 	{
-		return x == 0.0f && y == 0.0f && z == 0.0f;
+		return m_x == 0.0f && m_y == 0.0f && m_z == 0.0f;
 	}
 
-	float vector3::length()
+	float vector3::length() const
 	{
 		return length(*this);
 	}
 
-	float vector3::lengthSquared()
+	float vector3::lengthSquared() const
 	{
 		return lengthSquared(*this);
 	}

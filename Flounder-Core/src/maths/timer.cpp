@@ -1,6 +1,6 @@
 #include "timer.h"
 
-namespace flounder 
+namespace flounder
 {
 	timer::timer(const double &interval)
 	{

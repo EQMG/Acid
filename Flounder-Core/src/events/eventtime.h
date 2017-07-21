@@ -1,10 +1,12 @@
 #pragma once
 
+#include <functional>
+
 #include "../maths/timer.h"
 
 #include "ievent.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A class that runs a event after a time has passed.

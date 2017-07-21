@@ -7,12 +7,12 @@
 
 #include "iaxis.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Axis from a joystick.
 	/// </summary>
-	class axisjoystick : 
+	class axisjoystick :
 		public iaxis
 	{
 	private:

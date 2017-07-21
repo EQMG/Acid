@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Classic Perlin noise in 3D.
@@ -25,7 +25,7 @@ namespace flounder
 		// Classic Perlin noise, 3D version.
 		float noise(float x, float y, float z);
 
-		inline int getSeed() { return m_seed; }
+		inline int getSeed() const { return m_seed; }
 
 		inline void setSeed(const int seed) { m_seed = seed; }
 	private:

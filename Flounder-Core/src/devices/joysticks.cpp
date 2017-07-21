@@ -1,8 +1,8 @@
 #include "joysticks.h"
 
-namespace flounder 
+namespace flounder
 {
-	joysticks::joysticks() : 
+	joysticks::joysticks() :
 		imodule()
 	{
 	}
@@ -33,10 +33,10 @@ namespace flounder
 		// For each joystick check if connected and update.
 		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
 		{
-			joystick* joy = m_connected[i];
+			joystick *joy = m_connected[i];
 			joy->id = i;
 
-			if (glfwJoystickPresent(i)) 
+			if (glfwJoystickPresent(i))
 			{
 				if (!joy->connected)
 				{
@@ -48,7 +48,7 @@ namespace flounder
 				joy->axes = glfwGetJoystickAxes(i, &joy->axecount);
 				joy->buttons = glfwGetJoystickButtons(i, &joy->buttoncount);
 			}
-			else 
+			else
 			{
 				if (joy->connected)
 				{
@@ -61,32 +61,32 @@ namespace flounder
 #endif
 	}
 
-	bool &joysticks::isConnected(const unsigned int &id)
+	bool joysticks::isConnected(const int &id)
 	{
 		return m_connected[id]->connected;
 	}
 
-	const char *joysticks::getName(const unsigned int &id)
+	const char *joysticks::getName(const int &id)
 	{
 		return m_connected[id]->name;
 	}
 
-	float joysticks::getAxis(const unsigned int &id, const unsigned int &axis)
+	float joysticks::getAxis(const int &id, const int &axis)
 	{
 		return m_connected[id]->axes[axis];
 	}
 
-	bool joysticks::getButton(const unsigned int &id, const unsigned int &button)
+	bool joysticks::getButton(const int &id, const int &button)
 	{
 		return m_connected[id]->buttons[button];
 	}
 
-	int &joysticks::getCountAxes(const unsigned int &id)
+	int joysticks::getCountAxes(const int &id)
 	{
 		return m_connected[id]->axecount;
 	}
 
-	int &joysticks::getCountButtons(const unsigned int &id)
+	int joysticks::getCountButtons(const int &id)
 	{
 		return m_connected[id]->buttoncount;
 	}
