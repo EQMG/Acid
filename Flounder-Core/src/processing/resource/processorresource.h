@@ -18,8 +18,14 @@ namespace flounder
 
 		queue<requestresource*> *m_queue;
 	public:
+		/// <summary>
+		/// Creates a new resource processor.
+		/// </summary>
 		processorresource();
 
+		/// <summary>
+		/// Deconstructor for the resource processor.
+		/// </summary>
 		~processorresource();
 
 		void update() override;

@@ -1,25 +1,25 @@
 #include "quaternion.h"
 
-namespace flounder 
+namespace flounder
 {
 	quaternion::quaternion()
 	{
-		this->set(0.0f, 0.0f, 0.0f, 0.0f);
+		set(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 
 	quaternion::quaternion(const float &x, const float &y, const float &z, const float &w)
 	{
-		this->set(x, y, z, w);
+		set(x, y, z, w);
 	}
 
 	quaternion::quaternion(const quaternion &source)
 	{
-		this->set(source);
+		set(source);
 	}
 
 	quaternion::quaternion(const matrix4x4 &source)
 	{
-		this->set(source);
+		set(source);
 	}
 
 	quaternion::~quaternion()
@@ -28,73 +28,73 @@ namespace flounder
 
 	quaternion *quaternion::set(const float &x, const float &y, const float &z, const float &w)
 	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
-		this->w = w;
+		m_x = x;
+		m_y = y;
+		m_z = z;
+		m_w = w;
 		return this;
 	}
 
 	quaternion *quaternion::set(const quaternion &source)
 	{
-		this->x = source.x;
-		this->y = source.y;
-		this->z = source.z;
-		this->w = source.w;
+		m_x = source.m_x;
+		m_y = source.m_y;
+		m_z = source.m_z;
+		m_w = source.m_w;
 		return this;
 	}
 
 	quaternion *quaternion::set(const vector4 &source)
 	{
-		float n = sqrt(x * x + y * y + z * z);
-		float s = sin(0.5f * source.w) / n;
-		this->x = source.x * s;
-		this->y = source.y * s;
-		this->z = source.z * s;
-		this->w = cos(0.5f * source.w);
+		float n = sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+		float s = sin(0.5f * source.m_w) / n;
+		m_x = source.m_x * s;
+		m_y = source.m_y * s;
+		m_z = source.m_z * s;
+		m_w = cos(0.5f * source.m_w);
 		return this;
 	}
 
 	quaternion *quaternion::set(const matrix4x4 &source)
 	{
-		this->x = 0.0f;
-		this->y = 0.0f;
-		this->z = 0.0f;
-		this->w = 0.0f;
+		m_x = 0.0f;
+		m_y = 0.0f;
+		m_z = 0.0f;
+		m_w = 0.0f;
 
-		float diagonal = source.m00 + source.m11 + source.m22;
+		float diagonal = source.m_00 + source.m_11 + source.m_22;
 
 		if (diagonal > 0.0f)
 		{
 			float w4 = sqrt(diagonal + 1.0f) * 2.0f;
-			w = w4 / 4.0f;
-			x = (source.m21 - source.m12) / w4;
-			y = (source.m02 - source.m20) / w4;
-			z = (source.m10 - source.m01) / w4;
+			m_w = w4 / 4.0f;
+			m_x = (source.m_21 - source.m_12) / w4;
+			m_y = (source.m_02 - source.m_20) / w4;
+			m_z = (source.m_10 - source.m_01) / w4;
 		}
-		else if ((source.m00 > source.m11) && (source.m00 > source.m22))
+		else if ((source.m_00 > source.m_11) && (source.m_00 > source.m_22))
 		{
-			float x4 = sqrt(1.0f + source.m00 - source.m11 - source.m22) * 2.0f;
-			w = (source.m21 - source.m12) / x4;
-			x = x4 / 4.0f;
-			y = (source.m01 + source.m10) / x4;
-			z = (source.m02 + source.m20) / x4;
+			float x4 = sqrt(1.0f + source.m_00 - source.m_11 - source.m_22) * 2.0f;
+			m_w = (source.m_21 - source.m_12) / x4;
+			m_x = x4 / 4.0f;
+			m_y = (source.m_01 + source.m_10) / x4;
+			m_z = (source.m_02 + source.m_20) / x4;
 		}
-		else if (source.m11 > source.m22)
+		else if (source.m_11 > source.m_22)
 		{
-			float y4 = sqrt(1.0f + source.m11 - source.m00 - source.m22 * 2.0f);
-			w = (source.m02 - source.m20) / y4;
-			x = (source.m01 + source.m10) / y4;
-			y = y4 / 4.0f;
-			z = (source.m12 + source.m21) / y4;
+			float y4 = sqrt(1.0f + source.m_11 - source.m_00 - source.m_22 * 2.0f);
+			m_w = (source.m_02 - source.m_20) / y4;
+			m_x = (source.m_01 + source.m_10) / y4;
+			m_y = y4 / 4.0f;
+			m_z = (source.m_12 + source.m_21) / y4;
 		}
 		else
 		{
-			float z4 = sqrt(1.0f + source.m22 - source.m00 - source.m11) * 2.0f;
-			w = (source.m10 - source.m01) / z4;
-			x = (source.m02 + source.m20) / z4;
-			y = (source.m12 + source.m21) / z4;
-			z = z4 / 4.0f;
+			float z4 = sqrt(1.0f + source.m_22 - source.m_00 - source.m_11) * 2.0f;
+			m_w = (source.m_10 - source.m_01) / z4;
+			m_x = (source.m_02 + source.m_20) / z4;
+			m_y = (source.m_12 + source.m_21) / z4;
+			m_z = z4 / 4.0f;
 		}
 
 		return this;
@@ -102,52 +102,52 @@ namespace flounder
 
 	quaternion *quaternion::set(const matrix3x3 &source)
 	{
-		this->x = 0.0f;
-		this->y = 0.0f;
-		this->z = 0.0f;
-		this->w = 0.0f;
+		m_x = 0.0f;
+		m_y = 0.0f;
+		m_z = 0.0f;
+		m_w = 0.0f;
 
-		float tr = source.m00 + source.m11 + source.m22;
+		float tr = source.m_00 + source.m_11 + source.m_22;
 
 		if (tr >= 0.0)
 		{
 			float s = sqrt(tr + 1.0f);
-			w = s * 0.5f;
+			m_w = s * 0.5f;
 			s = 0.5f / s;
-			x = (source.m21 - source.m12) * s;
-			y = (source.m02 - source.m20) * s;
-			z = (source.m10 - source.m01) * s;
+			m_x = (source.m_21 - source.m_12) * s;
+			m_y = (source.m_02 - source.m_20) * s;
+			m_z = (source.m_10 - source.m_01) * s;
 		}
 		else
 		{
-			float max = __max(__max(source.m00, source.m11), source.m22);
+			float max = __max(__max(source.m_00, source.m_11), source.m_22);
 
-			if (max == source.m00)
+			if (max == source.m_00)
 			{
-				float s = sqrt(source.m00 - (source.m11 + source.m22) + 1.0f);
-				x = s * 0.5f;
+				float s = sqrt(source.m_00 - (source.m_11 + source.m_22) + 1.0f);
+				m_x = s * 0.5f;
 				s = 0.5f / s;
-				y = (source.m01 + source.m10) * s;
-				z = (source.m20 + source.m02) * s;
-				w = (source.m21 - source.m12) * s;
+				m_y = (source.m_01 + source.m_10) * s;
+				m_z = (source.m_20 + source.m_02) * s;
+				m_w = (source.m_21 - source.m_12) * s;
 			}
-			else if (max == source.m11)
+			else if (max == source.m_11)
 			{
-				float s = sqrt(source.m11 - (source.m22 + source.m00) + 1.0f);
-				y = s * 0.5f;
+				float s = sqrt(source.m_11 - (source.m_22 + source.m_00) + 1.0f);
+				m_y = s * 0.5f;
 				s = 0.5f / s;
-				z = (source.m12 + source.m21) * s;
-				x = (source.m01 + source.m10) * s;
-				w = (source.m02 - source.m20) * s;
+				m_z = (source.m_12 + source.m_21) * s;
+				m_x = (source.m_01 + source.m_10) * s;
+				m_w = (source.m_02 - source.m_20) * s;
 			}
 			else
 			{
-				float s = sqrt(source.m22 - (source.m00 + source.m11) + 1.0f);
-				z = s * 0.5f;
+				float s = sqrt(source.m_22 - (source.m_00 + source.m_11) + 1.0f);
+				m_z = s * 0.5f;
 				s = 0.5f / s;
-				x = (source.m20 + source.m02) * s;
-				y = (source.m12 + source.m21) * s;
-				w = (source.m10 - source.m01) * s;
+				m_x = (source.m_20 + source.m_02) * s;
+				m_y = (source.m_12 + source.m_21) * s;
+				m_w = (source.m_10 - source.m_01) * s;
 			}
 		}
 
@@ -156,10 +156,10 @@ namespace flounder
 
 	quaternion *quaternion::setIdentity(quaternion *source)
 	{
-		source->x = 0.0f;
-		source->y = 0.0f;
-		source->z = 0.0f;
-		source->w = 1.0f;
+		source->m_x = 0.0f;
+		source->m_y = 0.0f;
+		source->m_z = 0.0f;
+		source->m_w = 1.0f;
 		return source;
 	}
 
@@ -170,7 +170,7 @@ namespace flounder
 			destination = new quaternion();
 		}
 
-		return destination->set(left.x * right.w + left.w * right.x + left.y * right.z - left.z * right.y, left.y * right.w + left.w * right.y + left.z * right.x - left.x * right.z, left.z * right.w + left.w * right.z + left.x * right.y - left.y * right.x, left.w * right.w - left.x * right.x - left.y * right.y - left.z * right.z);
+		return destination->set(left.m_x * right.m_w + left.m_w * right.m_x + left.m_y * right.m_z - left.m_z * right.m_y, left.m_y * right.m_w + left.m_w * right.m_y + left.m_z * right.m_x - left.m_x * right.m_z, left.m_z * right.m_w + left.m_w * right.m_z + left.m_x * right.m_y - left.m_y * right.m_x, left.m_w * right.m_w - left.m_x * right.m_x - left.m_y * right.m_y - left.m_z * right.m_z);
 	}
 
 	quaternion *quaternion::multiplyInverse(const quaternion &left, const quaternion &right, quaternion *destination)
@@ -182,12 +182,12 @@ namespace flounder
 
 		float n = lengthSquared(right);
 		n = (n == 0.0f ? n : 1.0f / n);
-		return destination->set((left.x * right.w - left.w * right.x - left.y * right.z + left.z * right.y) * n, (left.y * right.w - left.w * right.y - left.z * right.x + left.x * right.z) * n, (left.z * right.w - left.w * right.z - left.x * right.y + left.y * right.x) * n, (left.w * right.w + left.x * right.x + left.y * right.y + left.z * right.z) * n);
+		return destination->set((left.m_x * right.m_w - left.m_w * right.m_x - left.m_y * right.m_z + left.m_z * right.m_y) * n, (left.m_y * right.m_w - left.m_w * right.m_y - left.m_z * right.m_x + left.m_x * right.m_z) * n, (left.m_z * right.m_w - left.m_w * right.m_z - left.m_x * right.m_y + left.m_y * right.m_x) * n, (left.m_w * right.m_w + left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z) * n);
 	}
 
 	float quaternion::dot(const quaternion &left, const quaternion &right)
 	{
-		return left.x * right.x + left.y * right.y + left.z * right.z + left.w * right.w;
+		return left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z + left.m_w * right.m_w;
 	}
 
 	quaternion *quaternion::slerp(const quaternion &left, const quaternion &right, const float &progression, quaternion *destination)
@@ -197,7 +197,7 @@ namespace flounder
 			destination = new quaternion();
 		}
 
-		const float &d = left.x * right.x + left.y * right.y + left.z * right.z + left.w * right.w;
+		const float &d = left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z + left.m_w * right.m_w;
 		float absDot = d < 0.0f ? -d : d;
 		float scale0 = 1.0f - progression;
 		float scale1 = progression;
@@ -215,10 +215,10 @@ namespace flounder
 			scale1 = -scale1;
 		}
 
-		float newX = (scale0 * left.x) + (scale1 * right.x);
-		float newY = (scale0 * left.y) + (scale1 * right.y);
-		float newZ = (scale0 * left.z) + (scale1 * right.z);
-		float newW = (scale0 * left.w) + (scale1 * right.w);
+		float newX = (scale0 * left.m_x) + (scale1 * right.m_x);
+		float newY = (scale0 * left.m_y) + (scale1 * right.m_y);
+		float newZ = (scale0 * left.m_z) + (scale1 * right.m_z);
+		float newW = (scale0 * left.m_w) + (scale1 * right.m_w);
 		return destination->set(newX, newY, newZ, newW);
 	}
 
@@ -229,7 +229,7 @@ namespace flounder
 			destination = new quaternion();
 		}
 
-		return destination->set(source.x * scalar, source.y * scalar, source.z * scalar, source.w * scalar);
+		return destination->set(source.m_x * scalar, source.m_y * scalar, source.m_z * scalar, source.m_w * scalar);
 	}
 
 	quaternion *quaternion::negate(const quaternion &source, quaternion *destination)
@@ -239,7 +239,7 @@ namespace flounder
 			destination = new quaternion();
 		}
 
-		return destination->set(-source.x, -source.y, -source.z, -source.w);
+		return destination->set(-source.m_x, -source.m_y, -source.m_z, -source.m_w);
 	}
 
 	quaternion *quaternion::normalize(const quaternion &source, quaternion *destination)
@@ -250,10 +250,10 @@ namespace flounder
 		}
 
 		float l = length(source);
-		
+
 		if (l != 0.0f)
 		{
-			return destination->set(source.x / l, source.y / l, source.z / l, source.w / l);
+			return destination->set(source.m_x / l, source.m_y / l, source.m_z / l, source.m_w / l);
 		}
 		else
 		{
@@ -268,7 +268,7 @@ namespace flounder
 
 	float quaternion::lengthSquared(const quaternion &source)
 	{
-		return source.x * source.x + source.y * source.y + source.z * source.z + source.w * source.w;
+		return source.m_x * source.m_x + source.m_y * source.m_y + source.m_z * source.m_z + source.m_w * source.m_w;
 	}
 
 	matrix4x4 *quaternion::toMatrix(const quaternion &source, matrix4x4 *destination)
@@ -278,33 +278,33 @@ namespace flounder
 			destination = new matrix4x4();
 		}
 
-		float xSquared = source.x * source.x;
-		float twoXY = 2.0f * source.x * source.y;
-		float twoXZ = 2.0f * source.x * source.z;
-		float twoXW = 2.0f * source.x * source.w;
-		float ySquared = source.y *source.y;
-		float twoYZ = 2.0f * source.y * source.z;
-		float twoYW = 2.0f * source.y * source.w;
-		float twoZW = 2.0f * source.z * source.w;
-		float zSquared = source.z * source.z;
-		float wSquared = source.w * source.w;
+		float xSquared = source.m_x * source.m_x;
+		float twoXY = 2.0f * source.m_x * source.m_y;
+		float twoXZ = 2.0f * source.m_x * source.m_z;
+		float twoXW = 2.0f * source.m_x * source.m_w;
+		float ySquared = source.m_y * source.m_y;
+		float twoYZ = 2.0f * source.m_y * source.m_z;
+		float twoYW = 2.0f * source.m_y * source.m_w;
+		float twoZW = 2.0f * source.m_z * source.m_w;
+		float zSquared = source.m_z * source.m_z;
+		float wSquared = source.m_w * source.m_w;
 
-		destination->m00 = wSquared + xSquared - ySquared - zSquared;
-		destination->m01 = twoXY - twoZW;
-		destination->m02 = twoXZ + twoYW;
-		destination->m03 = 0.0f;
-		destination->m10 = twoXY + twoZW;
-		destination->m11 = wSquared - xSquared + ySquared - zSquared;
-		destination->m12 = twoYZ - twoXW;
-		destination->m13 = 0.0f;
-		destination->m20 = twoXZ - twoYW;
-		destination->m21 = twoYZ + twoXW;
-		destination->m22 = wSquared - xSquared - ySquared + zSquared;
-		destination->m23 = 0.0f;
-		destination->m30 = 0.0f;
-		destination->m31 = 0.0f;
-		destination->m32 = 0.0f;
-		destination->m33 = 1.0f;
+		destination->m_00 = wSquared + xSquared - ySquared - zSquared;
+		destination->m_01 = twoXY - twoZW;
+		destination->m_02 = twoXZ + twoYW;
+		destination->m_03 = 0.0f;
+		destination->m_10 = twoXY + twoZW;
+		destination->m_11 = wSquared - xSquared + ySquared - zSquared;
+		destination->m_12 = twoYZ - twoXW;
+		destination->m_13 = 0.0f;
+		destination->m_20 = twoXZ - twoYW;
+		destination->m_21 = twoYZ + twoXW;
+		destination->m_22 = wSquared - xSquared - ySquared + zSquared;
+		destination->m_23 = 0.0f;
+		destination->m_30 = 0.0f;
+		destination->m_31 = 0.0f;
+		destination->m_32 = 0.0f;
+		destination->m_33 = 1.0f;
 		return destination;
 	}
 
@@ -315,32 +315,32 @@ namespace flounder
 			destination = new matrix4x4();
 		}
 
-		float xy = source.x * source.y;
-		float xz = source.x * source.z;
-		float xw = source.x * source.w;
-		float yz = source.y * source.z;
-		float yw = source.y * source.w;
-		float zw = source.z * source.w;
-		float xSquared = source.x * source.x;
-		float ySquared = source.y * source.y;
-		float zSquared = source.z * source.z;
+		float xy = source.m_x * source.m_y;
+		float xz = source.m_x * source.m_z;
+		float xw = source.m_x * source.m_w;
+		float yz = source.m_y * source.m_z;
+		float yw = source.m_y * source.m_w;
+		float zw = source.m_z * source.m_w;
+		float xSquared = source.m_x * source.m_x;
+		float ySquared = source.m_y * source.m_y;
+		float zSquared = source.m_z * source.m_z;
 
-		destination->m00 = 1.0f - 2.0f * (ySquared + zSquared);
-		destination->m01 = 2.0f * (xy - zw);
-		destination->m02 = 2.0f * (xz + yw);
-		destination->m03 = 0.0f;
-		destination->m10 = 2.0f * (xy + zw);
-		destination->m11 = 1.0f - 2.0f * (xSquared + zSquared);
-		destination->m12 = 2.0f * (yz - xw);
-		destination->m13 = 0.0f;
-		destination->m20 = 2.0f * (xz - yw);
-		destination->m21 = 2.0f * (yz + xw);
-		destination->m22 = 1.0f - 2.0f * (xSquared + ySquared);
-		destination->m23 = 0.0f;
-		destination->m30 = 0.0f;
-		destination->m31 = 0.0f;
-		destination->m32 = 0.0f;
-		destination->m33 = 1.0f;
+		destination->m_00 = 1.0f - 2.0f * (ySquared + zSquared);
+		destination->m_01 = 2.0f * (xy - zw);
+		destination->m_02 = 2.0f * (xz + yw);
+		destination->m_03 = 0.0f;
+		destination->m_10 = 2.0f * (xy + zw);
+		destination->m_11 = 1.0f - 2.0f * (xSquared + zSquared);
+		destination->m_12 = 2.0f * (yz - xw);
+		destination->m_13 = 0.0f;
+		destination->m_20 = 2.0f * (xz - yw);
+		destination->m_21 = 2.0f * (yz + xw);
+		destination->m_22 = 1.0f - 2.0f * (xSquared + ySquared);
+		destination->m_23 = 0.0f;
+		destination->m_30 = 0.0f;
+		destination->m_31 = 0.0f;
+		destination->m_32 = 0.0f;
+		destination->m_33 = 1.0f;
 		return destination;
 	}
 
@@ -364,17 +364,17 @@ namespace flounder
 		return scale(*this, scalar, this);
 	}
 
-	bool quaternion::isZero()
+	bool quaternion::isZero() const
 	{
-		return x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f;
+		return m_x == 0.0f && m_y == 0.0f && m_z == 0.0f && m_w == 0.0f;
 	}
 
-	float quaternion::length()
+	float quaternion::length() const
 	{
 		return length(*this);
 	}
 
-	float quaternion::lengthSquared()
+	float quaternion::lengthSquared() const
 	{
 		return lengthSquared(*this);
 	}

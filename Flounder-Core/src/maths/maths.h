@@ -19,7 +19,7 @@
 #define __max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A class that holds many various math functions.
@@ -209,7 +209,7 @@ namespace flounder
 			double x1 = sqrt(-2.0 * log(u1));
 			double x2 = 2.0 * PI * u2;
 			double z1 = x1 * sin(x2); // Random normal(0,1)
-			return (float)z1 * standardDeviation + mean;
+			return (float) z1 * standardDeviation + mean;
 		}
 	};
 }

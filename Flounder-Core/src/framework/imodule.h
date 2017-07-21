@@ -1,17 +1,35 @@
 #pragma once
 
-namespace flounder 
+namespace flounder
 {
-	class imodule 
+	/// <summary>
+	/// A simple interface used for defining framework modules.
+	/// </summary>
+	class imodule
 	{
-	private:
 	public:
+		/// <summary>
+		/// Creates a new module.
+		/// </summary>
 		imodule()
 		{
 		}
 
+		/// <summary>
+		/// Deconstructor for the module.
+		/// </summary>
 		virtual ~imodule()
 		{
 		}
+
+		/// <summary>
+		/// The initialize function for the module.
+		/// </summary>
+		virtual void init() = 0;
+
+		/// <summary>
+		/// The update function for the module.
+		/// </summary>
+		virtual void update() = 0;
 	};
 }

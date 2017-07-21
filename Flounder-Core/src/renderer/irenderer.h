@@ -7,7 +7,7 @@
 
 #include "renderer.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Represents a sub renderer in the engine.
@@ -15,6 +15,20 @@ namespace flounder
 	class irenderer
 	{
 	public:
+		/// <summary>
+		/// Creates a new renderer.
+		/// </summary>
+		irenderer()
+		{
+		}
+
+		/// <summary>
+		/// Deconstructor for the renderer.
+		/// </summary>
+		virtual ~irenderer()
+		{
+		}
+
 		/// <summary>
 		/// Called when the renderer is needed to be rendered.
 		/// </summary>

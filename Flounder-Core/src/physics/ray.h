@@ -5,7 +5,7 @@
 #include "../maths/vector4.h"
 #include "../maths/matrix4x4.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Holds a 3 dimensional ray.
@@ -29,7 +29,6 @@ namespace flounder
 		matrix4x4 *m_invertedProjection;
 		matrix4x4 *m_invertedView;
 		vector4 *m_rayWorld;
-
 	public:
 		/// <summary>
 		/// Creates a new 3D ray.
@@ -72,13 +71,13 @@ namespace flounder
 		/// Gets the rays origin.
 		/// </summary>
 		/// <returns> The rays origin. </returns>
-		inline vector3 *getOrigin()  const { return m_origin; };
+		inline vector3 *getOrigin() const { return m_origin; };
 
 		/// <summary>
 		/// Gets the current ray.
 		/// </summary>
 		/// <returns> The current ray. </returns>
-		inline vector3 *getCurrentRay()  const { return m_currentRay; };
+		inline vector3 *getCurrentRay() const { return m_currentRay; };
 	private:
 		void updateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY);
 

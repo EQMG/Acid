@@ -1,14 +1,11 @@
 #pragma once
 
-#include <iostream>
-#include <functional>
-
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A simple event listener and runner.
 	/// </summary>
-	class ievent 
+	class ievent
 	{
 	public:
 		/// <summary>

@@ -1,35 +1,35 @@
 #include "colour.h"
 
-namespace flounder 
+namespace flounder
 {
 	colour::colour()
 	{
-		this->set(0.0f, 0.0f, 0.0f, 1.0f);
+		set(0.0f, 0.0f, 0.0f, 1.0f);
 	}
 
 	colour::colour(const float &r, const float &g, const float &b)
 	{
-		this->set(r, g, b);
+		set(r, g, b);
 	}
 
 	colour::colour(const float &r, const float &g, const float &b, const bool &convert)
 	{
-		this->set(r, g, b, convert);
+		set(r, g, b, convert);
 	}
 
 	colour::colour(const float &r, const float &g, const float &b, const float &a)
 	{
-		this->set(r, g, b, a);
+		set(r, g, b, a);
 	}
 
 	colour::colour(const float &r, const float &g, const float &b, const float &a, const bool &convert)
 	{
-		this->set(r, g, b, a, convert);
+		set(r, g, b, a, convert);
 	}
 
 	colour::colour(const colour &source)
 	{
-		this->set(source);
+		set(source);
 	}
 
 	colour::~colour()
@@ -45,15 +45,15 @@ namespace flounder
 	{
 		if (convert)
 		{
-			this->r = r / 255.0f;
-			this->g = g / 255.0f;
-			this->b = b / 255.0f;
+			m_r = r / 255.0f;
+			m_g = g / 255.0f;
+			m_b = b / 255.0f;
 		}
 		else
 		{
-			this->r = r;
-			this->g = g;
-			this->b = b;
+			m_r = r;
+			m_g = g;
+			m_b = b;
 		}
 
 		return this;
@@ -68,17 +68,17 @@ namespace flounder
 	{
 		if (convert)
 		{
-			this->r = r / 255.0f;
-			this->g = g / 255.0f;
-			this->b = b / 255.0f;
-			this->a = a / 255.0f;
+			m_r = r / 255.0f;
+			m_g = g / 255.0f;
+			m_b = b / 255.0f;
+			m_a = a / 255.0f;
 		}
 		else
 		{
-			this->r = r;
-			this->g = g;
-			this->b = b;
-			this->a = a;
+			m_r = r;
+			m_g = g;
+			m_b = b;
+			m_a = a;
 		}
 
 		return this;
@@ -86,7 +86,7 @@ namespace flounder
 
 	colour *colour::set(const colour &source)
 	{
-		return this->set(source.r, source.g, source.b, source.a);
+		return set(source.m_r, source.m_g, source.m_b, source.m_a);
 	}
 
 	colour *colour::add(const colour &left, const colour &right, colour *destination)
@@ -96,7 +96,7 @@ namespace flounder
 			destination = new colour();
 		}
 
-		return destination->set(left.r + right.r, left.g + right.g, left.b + right.b, left.a + right.a);
+		return destination->set(left.m_r + right.m_r, left.m_g + right.m_g, left.m_b + right.m_b, left.m_a + right.m_a);
 	}
 
 	colour *colour::subtract(const colour &left, const colour &right, colour *destination)
@@ -106,7 +106,7 @@ namespace flounder
 			destination = new colour();
 		}
 
-		return destination->set(left.r - right.r, left.g - right.g, left.b - right.b, left.a - right.a);
+		return destination->set(left.m_r - right.m_r, left.m_g - right.m_g, left.m_b - right.m_b, left.m_a - right.m_a);
 	}
 
 	colour *colour::multiply(const colour &left, const colour &right, colour *destination)
@@ -116,7 +116,7 @@ namespace flounder
 			destination = new colour();
 		}
 
-		return destination->set(left.r * right.r, left.g * right.g, left.b * right.b, left.a * right.a);
+		return destination->set(left.m_r * right.m_r, left.m_g * right.m_g, left.m_b * right.m_b, left.m_a * right.m_a);
 	}
 
 	colour *colour::divide(const colour &left, const colour &right, colour *destination)
@@ -126,7 +126,7 @@ namespace flounder
 			destination = new colour();
 		}
 
-		return destination->set(left.r / right.r, left.g / right.g, left.b / right.b, left.a / right.a);
+		return destination->set(left.m_r / right.m_r, left.m_g / right.m_g, left.m_b / right.m_b, left.m_a / right.m_a);
 	}
 
 	colour *colour::interpolate(const colour &left, const colour &right, const float blend, colour *destination)
@@ -136,10 +136,10 @@ namespace flounder
 			destination = new colour();
 		}
 
-		float r = ((1.0f - blend) * left.r) + (blend * right.r);
-		float g = ((1.0f - blend) * left.g) + (blend * right.g);
-		float b = ((1.0f - blend) * left.b) + (blend * right.b);
-		float a = ((1.0f - blend) * left.a) + (blend * right.a);
+		float r = ((1.0f - blend) * left.m_r) + (blend * right.m_r);
+		float g = ((1.0f - blend) * left.m_g) + (blend * right.m_g);
+		float b = ((1.0f - blend) * left.m_b) + (blend * right.m_b);
+		float a = ((1.0f - blend) * left.m_a) + (blend * right.m_a);
 		return destination->set(r, g, b, a);
 	}
 
@@ -161,14 +161,14 @@ namespace flounder
 
 	float colour::lengthSquared(const colour &source)
 	{
-		return pow(source.r, 2) + pow(source.g, 2) + pow(source.b, 2) + pow(source.a, 2);
+		return pow(source.m_r, 2) + pow(source.m_g, 2) + pow(source.m_b, 2) + pow(source.m_a, 2);
 	}
 
 	colour *colour::scale(const float scalar)
 	{
-		this->r *= scalar;
-		this->g *= scalar;
-		this->b *= scalar;
+		m_r *= scalar;
+		m_g *= scalar;
+		m_b *= scalar;
 		return this;
 	}
 

@@ -1,6 +1,6 @@
 #include "framework.h"
 
-namespace flounder 
+namespace flounder
 {
 	framework *framework::G_INSTANCE = NULL;
 
@@ -10,7 +10,7 @@ namespace flounder
 		framework::G_INSTANCE = this;
 
 		m_updater = NULL;
-		
+
 		m_initialized = false;
 		m_running = true;
 		m_error = false;
@@ -21,9 +21,9 @@ namespace flounder
 		delete m_updater;
 	}
 
-	void framework::loadUpdater(iupdater *iupdater)
+	void framework::load(iupdater *updater)
 	{
-		m_updater = iupdater;
+		m_updater = updater;
 		m_updater->create();
 	}
 

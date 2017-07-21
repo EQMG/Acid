@@ -1,6 +1,6 @@
 #include "delta.h"
 
-namespace flounder 
+namespace flounder
 {
 	delta::delta()
 	{
@@ -21,15 +21,5 @@ namespace flounder
 		m_change = m_currentFrameTime - m_lastFrameTime;
 		m_lastFrameTime = m_currentFrameTime;
 		m_time += m_change;
-	}
-
-	double &delta::getChange()
-	{
-		return m_change;
-	}
-
-	double &delta::getTime()
-	{
-		return m_time;
 	}
 }

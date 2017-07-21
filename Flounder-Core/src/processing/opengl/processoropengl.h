@@ -6,7 +6,7 @@
 #include "../iprocessor.h"
 #include "../queue.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A extension that is responsible for processing OpenGL requests.
@@ -18,8 +18,14 @@ namespace flounder
 
 		queue<requestopengl*> *m_queue;
 	public:
+		/// <summary>
+		/// Creates a new opengl processor.
+		/// </summary>
 		processoropengl();
 
+		/// <summary>
+		/// Deconstructor for the opengl processor.
+		/// </summary>
 		~processoropengl();
 
 		void update() override;

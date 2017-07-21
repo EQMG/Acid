@@ -1,20 +1,20 @@
 #include "matrix2x2.h"
 
-namespace flounder 
+namespace flounder
 {
 	matrix2x2::matrix2x2()
 	{
-		this->setIdentity();
+		setIdentity();
 	}
 
 	matrix2x2::matrix2x2(const matrix2x2 &source)
 	{
-		this->set(source);
+		set(source);
 	}
 
 	matrix2x2::matrix2x2(const float source[4])
 	{
-		this->set(source);
+		set(source);
 	}
 
 	matrix2x2::~matrix2x2()
@@ -23,34 +23,34 @@ namespace flounder
 
 	matrix2x2 *matrix2x2::set(const matrix2x2 &source)
 	{
-		this->m00 = source.m00;
-		this->m01 = source.m01;
-		this->m10 = source.m10;
-		this->m11 = source.m11;
+		m_00 = source.m_00;
+		m_01 = source.m_01;
+		m_10 = source.m_10;
+		m_11 = source.m_11;
 		return this;
 	}
 
 	matrix2x2 *matrix2x2::set(const float source[4])
 	{
-		this->m00 = source[0];
-		this->m01 = source[1];
-		this->m10 = source[2];
-		this->m11 = source[3];
+		m_00 = source[0];
+		m_01 = source[1];
+		m_10 = source[2];
+		m_11 = source[3];
 		return this;
 	}
 
 	matrix2x2 *matrix2x2::setIdentity(matrix2x2 *source)
 	{
-		source->m00 = 1.0f;
-		source->m01 = 0.0f;
-		source->m10 = 0.0f;
-		source->m11 = 1.0f;
+		source->m_00 = 1.0f;
+		source->m_01 = 0.0f;
+		source->m_10 = 0.0f;
+		source->m_11 = 1.0f;
 		return source;
 	}
 
 	float matrix2x2::determinant(const matrix2x2 &source)
 	{
-		return source.m00 * source.m11 - source.m01 * source.m10;
+		return source.m_00 * source.m_11 - source.m_01 * source.m_10;
 	}
 
 	matrix2x2 *matrix2x2::add(const matrix2x2 &left, const matrix2x2 &right, matrix2x2 *destination)
@@ -60,10 +60,10 @@ namespace flounder
 			destination = new matrix2x2();
 		}
 
-		destination->m00 = left.m00 + right.m00;
-		destination->m01 = left.m01 + right.m01;
-		destination->m10 = left.m10 + right.m10;
-		destination->m11 = left.m11 + right.m11;
+		destination->m_00 = left.m_00 + right.m_00;
+		destination->m_01 = left.m_01 + right.m_01;
+		destination->m_10 = left.m_10 + right.m_10;
+		destination->m_11 = left.m_11 + right.m_11;
 		return destination;
 	}
 
@@ -74,10 +74,10 @@ namespace flounder
 			destination = new matrix2x2();
 		}
 
-		destination->m00 = left.m00 - right.m00;
-		destination->m01 = left.m01 - right.m01;
-		destination->m10 = left.m10 - right.m10;
-		destination->m11 = left.m11 - right.m11;
+		destination->m_00 = left.m_00 - right.m_00;
+		destination->m_01 = left.m_01 - right.m_01;
+		destination->m_10 = left.m_10 - right.m_10;
+		destination->m_11 = left.m_11 - right.m_11;
 		return destination;
 	}
 
@@ -88,15 +88,15 @@ namespace flounder
 			destination = new matrix2x2();
 		}
 
-		float m00 = left.m00 * right.m00 + left.m10 * right.m01;
-		float m01 = left.m01 * right.m00 + left.m11 * right.m01;
-		float m10 = left.m00 * right.m10 + left.m10 * right.m11;
-		float m11 = left.m01 * right.m10 + left.m11 * right.m11;
+		float m00 = left.m_00 * right.m_00 + left.m_10 * right.m_01;
+		float m01 = left.m_01 * right.m_00 + left.m_11 * right.m_01;
+		float m10 = left.m_00 * right.m_10 + left.m_10 * right.m_11;
+		float m11 = left.m_01 * right.m_10 + left.m_11 * right.m_11;
 
-		destination->m00 = m00;
-		destination->m01 = m01;
-		destination->m10 = m10;
-		destination->m11 = m11;
+		destination->m_00 = m00;
+		destination->m_01 = m01;
+		destination->m_10 = m10;
+		destination->m_11 = m11;
 		return destination;
 	}
 
@@ -107,23 +107,23 @@ namespace flounder
 			destination = new vector2();
 		}
 
-		float x = left.m00 * right.x + left.m10 * right.y;
-		float y = left.m01 * right.x + left.m11 * right.y;
+		float x = left.m_00 * right.m_x + left.m_10 * right.m_y;
+		float y = left.m_01 * right.m_x + left.m_11 * right.m_y;
 
 		return destination->set(x, y);
 	}
 
-	matrix2x2 *matrix2x2::scale(const matrix2x2 &left, const vector2 &right, matrix2x2 * destination)
+	matrix2x2 *matrix2x2::scale(const matrix2x2 &left, const vector2 &right, matrix2x2 *destination)
 	{
 		if (destination == NULL)
 		{
 			destination = new matrix2x2();
 		}
 
-		destination->m00 = left.m00 * right.x;
-		destination->m01 = left.m01 * right.x;
-		destination->m10 = left.m10 * right.y;
-		destination->m11 = left.m11 * right.y;
+		destination->m_00 = left.m_00 * right.m_x;
+		destination->m_01 = left.m_01 * right.m_x;
+		destination->m_10 = left.m_10 * right.m_y;
+		destination->m_11 = left.m_11 * right.m_y;
 		return destination;
 	}
 
@@ -139,15 +139,15 @@ namespace flounder
 			}
 
 			float determinant_inv = 1.0f / d;
-			float t00 = source.m11 * determinant_inv;
-			float t01 = -source.m01 * determinant_inv;
-			float t11 = source.m00 * determinant_inv;
-			float t10 = -source.m10 * determinant_inv;
+			float t00 = source.m_11 * determinant_inv;
+			float t01 = -source.m_01 * determinant_inv;
+			float t11 = source.m_00 * determinant_inv;
+			float t10 = -source.m_10 * determinant_inv;
 
-			destination->m00 = t00;
-			destination->m01 = t01;
-			destination->m10 = t10;
-			destination->m11 = t11;
+			destination->m_00 = t00;
+			destination->m_01 = t01;
+			destination->m_10 = t10;
+			destination->m_11 = t11;
 			return destination;
 		}
 		else
@@ -163,10 +163,10 @@ namespace flounder
 			destination = new matrix2x2();
 		}
 
-		destination->m00 = -source.m00;
-		destination->m01 = -source.m01;
-		destination->m10 = -source.m10;
-		destination->m11 = -source.m11;
+		destination->m_00 = -source.m_00;
+		destination->m_01 = -source.m_01;
+		destination->m_10 = -source.m_10;
+		destination->m_11 = -source.m_11;
 		return destination;
 	}
 
@@ -177,30 +177,30 @@ namespace flounder
 			destination = new matrix2x2();
 		}
 
-		float m01 = source.m10;
-		float m10 = source.m01;
+		float m01 = source.m_10;
+		float m10 = source.m_01;
 
-		destination->m01 = m01;
-		destination->m10 = m10;
+		destination->m_01 = m01;
+		destination->m_10 = m10;
 		return destination;
 	}
 
 	float *matrix2x2::toArray(const matrix2x2 &matrix)
 	{
 		float *result = new float[4];
-		result[0] = matrix.m00;
-		result[1] = matrix.m01;
-		result[2] = matrix.m10;
-		result[3] = matrix.m11;
+		result[0] = matrix.m_00;
+		result[1] = matrix.m_01;
+		result[2] = matrix.m_10;
+		result[3] = matrix.m_11;
 		return result;
 	}
 
 	matrix2x2 *matrix2x2::setZero(matrix2x2 *source)
 	{
-		source->m00 = 0.0f;
-		source->m01 = 0.0f;
-		source->m10 = 0.0f;
-		source->m11 = 0.0f;
+		source->m_00 = 0.0f;
+		source->m_01 = 0.0f;
+		source->m_10 = 0.0f;
+		source->m_11 = 0.0f;
 		return source;
 	}
 

@@ -1,6 +1,6 @@
 #include "events.h"
 
-namespace flounder 
+namespace flounder
 {
 	events::events()
 		: imodule()

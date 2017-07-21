@@ -1,6 +1,6 @@
 #include "glfwupdater.h"
 
-namespace flounder 
+namespace flounder
 {
 	glfwupdater::glfwupdater() :
 		iupdater()
@@ -115,7 +115,8 @@ namespace flounder
 		}
 
 		// Logs the fps to the console.
-		if (m_timerLog->isPassedTime()) {
+		if (m_timerLog->isPassedTime())
+		{
 			// Resets the timer.
 			m_timerLog->resetStartTime();
 
@@ -140,15 +141,15 @@ namespace flounder
 
 	imodule *flounder::glfwupdater::getInstance(const std::string &name)
 	{
-		if (name == "camera") 
+		if (name == "camera")
 		{
 			return m_camera;
 		}
-		else if (name == "audio") 
+		else if (name == "audio")
 		{
 			return m_audio;
 		}
-		else if (name == "display") 
+		else if (name == "display")
 		{
 			return m_display;
 		}

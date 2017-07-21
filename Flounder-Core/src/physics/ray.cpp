@@ -1,6 +1,6 @@
 #include "ray.h"
 
-namespace flounder 
+namespace flounder
 {
 	ray::ray(const bool &useMouse, vector2 *screenStart)
 	{
@@ -47,7 +47,7 @@ namespace flounder
 
 		if (m_useMouse)
 		{
-			updateNormalisedDeviceCoordinates(mousePosition.x, mousePosition.y);
+			updateNormalisedDeviceCoordinates(mousePosition.m_x, mousePosition.m_y);
 		}
 		else
 		{
@@ -63,7 +63,7 @@ namespace flounder
 
 		m_viewMatrix->set(viewMatrix);
 		m_projectionMatrix->set(projectionMatrix);
-		m_clipCoords->set(m_normalizedCoords->x, m_normalizedCoords->y, -1.0f, 1.0f);
+		m_clipCoords->set(m_normalizedCoords->m_x, m_normalizedCoords->m_y, -1.0f, 1.0f);
 		updateEyeCoords(m_clipCoords);
 		updateWorldCoords(m_eyeCoords);
 	}
@@ -85,16 +85,16 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		vector4 *coords = new vector4(position.x, position.y, position.z, 1.0f);
+		vector4 *coords = new vector4(position.m_x, position.m_y, position.m_z, 1.0f);
 		matrix4x4::transform(*m_viewMatrix, *coords, coords);
 		matrix4x4::transform(*m_projectionMatrix, *coords, coords);
 
-		if (coords->w < 0.0f)
+		if (coords->m_w < 0.0f)
 		{
 			return NULL;
 		}
 
-		return destination->set((coords->x / coords->w + 1.0f) / 2.0f, 1.0f - (coords->y / coords->w + 1.0f) / 2.0f, coords->z);
+		return destination->set((coords->m_x / coords->m_w + 1.0f) / 2.0f, 1.0f - (coords->m_y / coords->m_w + 1.0f) / 2.0f, coords->m_z);
 	}
 
 	void ray::updateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY)
@@ -108,13 +108,13 @@ namespace flounder
 	{
 		m_invertedProjection = matrix4x4::invert(*m_projectionMatrix, m_invertedProjection);
 		matrix4x4::transform(*m_invertedProjection, *m_clipCoords, m_eyeCoords);
-		m_eyeCoords->set(m_eyeCoords->x, m_eyeCoords->y, -1.0f, 0.0f);
+		m_eyeCoords->set(m_eyeCoords->m_x, m_eyeCoords->m_y, -1.0f, 0.0f);
 	}
 
 	void ray::updateWorldCoords(vector4 *eyeCoords)
 	{
 		matrix4x4::invert(*m_viewMatrix, m_invertedView);
 		matrix4x4::transform(*m_invertedView, *m_eyeCoords, m_rayWorld);
-		m_currentRay->set(m_rayWorld->x, m_rayWorld->y, m_rayWorld->z);
+		m_currentRay->set(m_rayWorld->m_x, m_rayWorld->m_y, m_rayWorld->m_z);
 	}
 }

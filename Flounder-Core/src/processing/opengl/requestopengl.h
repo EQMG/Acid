@@ -2,13 +2,13 @@
 
 #include "../irequest.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Interface for executable OpenGL requests.
 	/// </summary>
-	class requestopengl : 
-		public irequest 
+	class requestopengl :
+		public irequest
 	{
 	public:
 		/// <summary>

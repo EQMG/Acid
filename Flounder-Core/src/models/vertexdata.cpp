@@ -1,6 +1,6 @@
 #include "vertexdata.h"
 
-namespace flounder 
+namespace flounder
 {
 	const int vertexdata::NO_INDEX = -1;
 
@@ -22,7 +22,7 @@ namespace flounder
 
 	vertexdata::~vertexdata()
 	{
-	//	delete m_duplicateVertex;
+		//	delete m_duplicateVertex;
 	}
 
 	void vertexdata::addTangent(vector3 *tangent)

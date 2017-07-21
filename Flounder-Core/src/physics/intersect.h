@@ -1,11 +1,11 @@
 #pragma once
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A class that represents bounding intersect data.
 	/// </summary>
-	class intersect 
+	class intersect
 	{
 	private:
 		bool m_intersects;
@@ -16,7 +16,7 @@ namespace flounder
 		/// </summary>
 		/// <param name="intersects"> If there is a collision. </param>
 		/// <param name="distance"> What distance that collision is at. </param>
-		intersect(bool intersects, float distance) 
+		intersect(bool intersects, float distance)
 		{
 			m_intersects = intersects;
 			m_distance = distance;
@@ -25,7 +25,7 @@ namespace flounder
 		/// <summary>
 		/// Deconstructor for the intersect.
 		/// </summary>
-		~intersect() 
+		~intersect()
 		{
 		}
 

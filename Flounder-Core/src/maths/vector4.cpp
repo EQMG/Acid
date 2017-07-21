@@ -1,6 +1,6 @@
 #include "vector4.h"
 
-namespace flounder 
+namespace flounder
 {
 	vector4::vector4()
 	{
@@ -23,19 +23,19 @@ namespace flounder
 
 	vector4 *vector4::set(const float &x, const float &y, const float &z, const float &w)
 	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
-		this->w = w;
+		this->m_x = x;
+		this->m_y = y;
+		this->m_z = z;
+		this->m_w = w;
 		return this;
 	}
 
 	vector4 *vector4::set(const vector4 &source)
 	{
-		this->x = source.x;
-		this->y = source.y;
-		this->z = source.z;
-		this->w = source.w;
+		this->m_x = source.m_x;
+		this->m_y = source.m_y;
+		this->m_z = source.m_z;
+		this->m_w = source.m_w;
 		return this;
 	}
 
@@ -46,7 +46,7 @@ namespace flounder
 			destination = new vector4();
 		}
 
-		return destination->set(left.x + right.x, left.y + right.y, left.z + right.z, left.w + right.w);
+		return destination->set(left.m_x + right.m_x, left.m_y + right.m_y, left.m_z + right.m_z, left.m_w + right.m_w);
 	}
 
 	vector4 *vector4::subtract(const vector4 &left, const vector4 &right, vector4 *destination)
@@ -56,7 +56,7 @@ namespace flounder
 			destination = new vector4();
 		}
 
-		return destination->set(left.x - right.x, left.y - right.y, left.z - right.z, left.w - right.w);
+		return destination->set(left.m_x - right.m_x, left.m_y - right.m_y, left.m_z - right.m_z, left.m_w - right.m_w);
 	}
 
 	vector4 *vector4::multiply(const vector4 &left, const vector4 &right, vector4 *destination)
@@ -66,7 +66,7 @@ namespace flounder
 			destination = new vector4();
 		}
 
-		return destination->set(left.x * right.x, left.y * right.y, left.z * right.z, left.w * right.w);
+		return destination->set(left.m_x * right.m_x, left.m_y * right.m_y, left.m_z * right.m_z, left.m_w * right.m_w);
 	}
 
 	vector4 *vector4::divide(const vector4 &left, const vector4 &right, vector4 *destination)
@@ -76,7 +76,7 @@ namespace flounder
 			destination = new vector4();
 		}
 
-		return destination->set(left.x / right.x, left.y / right.y, left.z / right.z, left.w / right.w);
+		return destination->set(left.m_x / right.m_x, left.m_y / right.m_y, left.m_z / right.m_z, left.m_w / right.m_w);
 	}
 
 	float vector4::angle(const vector4 &left, const vector4 &right)
@@ -97,7 +97,7 @@ namespace flounder
 
 	float vector4::dot(const vector4 &left, const vector4 &right)
 	{
-		return left.x * right.x + left.y * right.y + left.z * right.z + left.w * right.w;
+		return left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z + left.m_w * right.m_w;
 	}
 
 	vector4 *vector4::scale(const vector4 &source, const float &scalar, vector4 *destination)
@@ -107,7 +107,7 @@ namespace flounder
 			destination = new vector4();
 		}
 
-		return destination->set(source.x * scalar, source.y * scalar, source.z * scalar, source.w * scalar);
+		return destination->set(source.m_x * scalar, source.m_y * scalar, source.m_z * scalar, source.m_w * scalar);
 	}
 
 	vector4 *vector4::negate(const vector4 &source, vector4 *destination)
@@ -117,7 +117,7 @@ namespace flounder
 			destination = new vector4();
 		}
 
-		return destination->set(-source.x, -source.y, -source.z, -source.w);
+		return destination->set(-source.m_x, -source.m_y, -source.m_z, -source.m_w);
 	}
 
 	vector4 *vector4::normalize(const vector4 &source, vector4 *destination)
@@ -131,7 +131,7 @@ namespace flounder
 
 		if (l != 0.0f)
 		{
-			return destination->set(source.x / l, source.y / l, source.z / l, source.w / l);
+			return destination->set(source.m_x / l, source.m_y / l, source.m_z / l, source.m_w / l);
 		}
 		else
 		{
@@ -146,7 +146,7 @@ namespace flounder
 
 	float vector4::lengthSquared(const vector4 &source)
 	{
-		return source.x * source.x + source.y * source.y + source.z * source.z + source.w * source.w;
+		return source.m_x * source.m_x + source.m_y * source.m_y + source.m_z * source.m_z + source.m_w * source.m_w;
 	}
 
 	vector4 *vector4::maxVector(const vector4 &a, const vector4 &b, vector4 *destination)
@@ -156,7 +156,7 @@ namespace flounder
 			destination = new vector4();
 		}
 
-		return destination->set(__max(a.x, b.x), __max(a.y, b.y), __max(a.z, b.z), __max(a.w, b.w));
+		return destination->set(__max(a.m_x, b.m_x), __max(a.m_y, b.m_y), __max(a.m_z, b.m_z), __max(a.m_w, b.m_w));
 	}
 
 	vector4 *vector4::minVector(const vector4 &a, const vector4 &b, vector4 *destination)
@@ -166,31 +166,31 @@ namespace flounder
 			destination = new vector4();
 		}
 
-		return destination->set(__min(a.x, b.x), __min(a.y, b.y), __min(a.z, b.z), __min(a.w, b.w));
+		return destination->set(__min(a.m_x, b.m_x), __min(a.m_y, b.m_y), __min(a.m_z, b.m_z), __min(a.m_w, b.m_w));
 	}
 
 	float vector4::maxComponent(const vector4 &vector)
 	{
-		return __max(vector.x, __max(vector.y, __max(vector.z, vector.w)));
+		return __max(vector.m_x, __max(vector.m_y, __max(vector.m_z, vector.m_w)));
 	}
 
 	float vector4::minComponent(const vector4 &vector)
 	{
-		return __min(vector.x, __min(vector.y, __min(vector.z, vector.w)));
+		return __min(vector.m_x, __min(vector.m_y, __min(vector.m_z, vector.m_w)));
 	}
 
 	float vector4::getDistanceSquared(const vector4 &point1, const vector4 &point2)
 	{
-		float dx = point1.x - point2.x;
-		float dy = point1.y - point2.y;
-		float dz = point1.z - point2.z;
-		float dw = point1.w - point2.w;
+		float dx = point1.m_x - point2.m_x;
+		float dy = point1.m_y - point2.m_y;
+		float dz = point1.m_z - point2.m_z;
+		float dw = point1.m_w - point2.m_w;
 		return dx * dx + dy * dy + dz * dz + dw * dw;
 	}
 
 	float vector4::getDistance(const vector4 &point1, const vector4 &point2)
 	{
-		return (float) sqrt(pow(point2.x - point1.x, 2) + pow(point2.y - point1.y, 2) + pow(point2.z - point1.z, 2) + pow(point2.w - point1.w, 2));
+		return (float) sqrt(pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2) + pow(point2.m_z - point1.m_z, 2) + pow(point2.m_w - point1.m_w, 2));
 	}
 
 	vector4 *vector4::getVectorDistance(const vector4 &point1, const vector4 &point2, vector4 *destination)
@@ -200,24 +200,24 @@ namespace flounder
 			destination = new vector4();
 		}
 
-		return destination->set(pow(point2.x - point1.x, 2), pow(point2.y - point1.y, 2), pow(point2.z - point1.z, 2), pow(point2.w - point1.w, 2));
+		return destination->set(pow(point2.m_x - point1.m_x, 2), pow(point2.m_y - point1.m_y, 2), pow(point2.m_z - point1.m_z, 2), pow(point2.m_w - point1.m_w, 2));
 	}
 
 	vector4 *vector4::translate(const float &x, const float &y, const float &z, const float &w)
 	{
-		this->x += x;
-		this->y += y;
-		this->z += z;
-		this->w += w;
+		this->m_x += x;
+		this->m_y += y;
+		this->m_z += z;
+		this->m_w += w;
 		return this;
 	}
 
 	vector4 *vector4::negate()
 	{
-		this->x = -x;
-		this->y = -y;
-		this->z = -z;
-		this->w = -w;
+		this->m_x = -m_x;
+		this->m_y = -m_y;
+		this->m_z = -m_z;
+		this->m_w = -m_w;
 		return this;
 	}
 
@@ -231,17 +231,17 @@ namespace flounder
 		return scale(*this, scalar, this);
 	}
 
-	bool vector4::isZero()
+	bool vector4::isZero() const
 	{
-		return x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f;
+		return m_x == 0.0f && m_y == 0.0f && m_z == 0.0f && m_w == 0.0f;
 	}
 
-	float vector4::length()
+	float vector4::length() const
 	{
 		return length(*this);
 	}
 
-	float vector4::lengthSquared()
+	float vector4::lengthSquared() const
 	{
 		return lengthSquared(*this);
 	}

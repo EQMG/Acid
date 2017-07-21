@@ -26,9 +26,10 @@ std::string readFile(const std::string &filepath)
 	return content;
 }
 
-std::vector<std::string> split(const std::string &str, const std::string &sep) {
-	char* cstr = const_cast<char*>(str.c_str());
-	char* current;
+std::vector<std::string> split(const std::string &str, const std::string &sep)
+{
+	char *cstr = const_cast<char*>(str.c_str());
+	char *current;
 	std::vector<std::string> arr;
 	current = strtok(cstr, sep.c_str());
 
@@ -41,7 +42,8 @@ std::vector<std::string> split(const std::string &str, const std::string &sep) {
 	return arr;
 }
 
-std::string trim(const std::string &str, const std::string &whitespace = " \t") {
+std::string trim(const std::string &str, const std::string &whitespace = " \t")
+{
 	const auto strBegin = str.find_first_not_of(whitespace);
 
 	if (strBegin == std::string::npos)
@@ -79,7 +81,7 @@ std::string substring(const std::string &str, const int &start, const int &end)
 	return result;
 }
 
-std::string replace(const std::string& str, const std::string& from, const std::string& to)
+std::string replace(const std::string &str, const std::string &from, const std::string &to)
 {
 	std::string result = str;
 	size_t start_pos = result.find(from);
@@ -166,7 +168,7 @@ void generate()
 	system(commandFolder.c_str());
 
 	std::string command = "emcc -std=c++11 -I" + coreHeaders + " " + coreSources + gameSources +
-		" -s USE_GLFW=3 -s FULL_ES3=1 -DFLOUNDER_PLATFORM_WEB=1 -DGLFW_INCLUDE_ES3=1 --memory-init-file 0 --embed-file " + gameRes + 
+		" -s USE_GLFW=3 -s FULL_ES3=1 -DFLOUNDER_PLATFORM_WEB=1 -DGLFW_INCLUDE_ES3=1 --memory-init-file 0 --embed-file " + gameRes +
 		" -O3 -o " + outputDir + "/floundergame.html";
 	std::cout << std::endl << command << std::endl;
 	system(command.c_str());

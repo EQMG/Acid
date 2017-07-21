@@ -1,6 +1,6 @@
 #include "processoropengl.h"
 
-namespace flounder 
+namespace flounder
 {
 	const double processoropengl::MAX_TIME_MILLIS = 8.0f;
 
@@ -21,7 +21,7 @@ namespace flounder
 
 		while (m_queue->hasRequests())
 		{
-			requestopengl* request = m_queue->acceptNextRequest();
+			requestopengl *request = m_queue->acceptNextRequest();
 			request->executeRequestGL();
 			double end = framework::get()->getTimeMs();
 			double timeTaken = end - start;

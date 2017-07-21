@@ -7,7 +7,7 @@ namespace flounder
 	/// <summary>
 	/// A driver that has a constant value.
 	/// </summary>
-	class driverconstant : 
+	class driverconstant :
 		public idriver
 	{
 	private:

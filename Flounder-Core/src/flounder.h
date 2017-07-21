@@ -18,9 +18,9 @@
 
 #include "events/events.h"
 #include "events/ievent.h"
-#include "events/ieventchange.h"
-#include "events/ieventstandard.h"
-#include "events/ieventtime.h"
+#include "events/eventchange.h"
+#include "events/eventstandard.h"
+#include "events/eventtime.h"
 
 #include "fbos/depthbuffer.h"
 #include "fbos/fbo.h"

@@ -18,12 +18,13 @@
 
 #include "shadertype.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Class that represents a loaded shader.
 	/// </summary>
-	class shader {
+	class shader
+	{
 		/// <summary>
 		/// A builder used to set shader parameters for loading.
 		/// </summary>
@@ -63,6 +64,7 @@ namespace flounder
 			/// <returns> The created shader. </returns>
 			shader *create();
 		};
+
 	protected:
 		builder *m_builder;
 
@@ -213,7 +215,7 @@ namespace flounder
 	private:
 		void loadTypes();
 
-		void loadType(shadertype* type);
+		void loadType(shadertype *type);
 
 		std::string processLine(const std::string &line);
 

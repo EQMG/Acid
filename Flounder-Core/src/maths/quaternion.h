@@ -4,7 +4,7 @@
 #include "matrix3x3.h"
 #include "matrix4x4.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
@@ -12,7 +12,7 @@ namespace flounder
 	class quaternion
 	{
 	public:
-		float x, y, z, w;
+		float m_x, m_y, m_z, m_w;
 
 		/// <summary>
 		/// Constructor for quaternion.
@@ -213,20 +213,20 @@ namespace flounder
 		/// Gets if all the components to the quaternion are zero.
 		/// </summary>
 		/// <returns> If the quaternion is zero. </returns>
-		bool isZero();
+		bool isZero() const;
 
 		/// <summary>
 		/// Gets the length of the quaternion.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
 		/// <returns> The length of the quaternion. </returns>
-		float length();
+		float length() const;
 
 		/// <summary>
 		/// Gets the length squared of the quaternion.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
 		/// <returns> The length squared of the quaternion. </returns>
-		float lengthSquared();
+		float lengthSquared() const;
 	};
 }

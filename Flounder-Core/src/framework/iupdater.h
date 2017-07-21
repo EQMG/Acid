@@ -4,18 +4,24 @@
 
 #include "imodule.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A class used to define how the framework will run updates and timings.
 	/// </summary>
-	class iupdater 
+	class iupdater
 	{
 	public:
+		/// <summary>
+		/// Creates a new updater.
+		/// </summary>
 		iupdater()
 		{
 		}
 
+		/// <summary>
+		/// Deconstructor for the updater.
+		/// </summary>
 		virtual ~iupdater()
 		{
 		}
@@ -24,9 +30,6 @@ namespace flounder
 
 		virtual void init() = 0;
 
-		/// <summary>
-		/// Function called by the framework to update the engine.
-		/// </summary>
 		virtual void update() = 0;
 
 		/// <summary>

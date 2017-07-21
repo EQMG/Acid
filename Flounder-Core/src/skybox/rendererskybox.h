@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../renderer/irenderer.h" 
+#include "../renderer/irenderer.h"
 
 #include "skybox.h"
 
-namespace flounder 
+namespace flounder
 {
-	class rendererskybox : 
+	class rendererskybox :
 		public irenderer
 	{
 	private:

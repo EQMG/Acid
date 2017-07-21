@@ -2,7 +2,7 @@
 
 #include "../ipostfilter.h"
 
-namespace flounder 
+namespace flounder
 {
 	class filternegative :
 		public ipostfilter

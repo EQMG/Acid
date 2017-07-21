@@ -2,7 +2,7 @@
 
 #include "../maths/maths.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Represents a driver that changes over time.
@@ -45,6 +45,7 @@ namespace flounder
 			float time = m_currentTime / m_length;
 			return calculate(time);
 		}
+
 	protected:
 		/// <summary>
 		/// Calculates the new value.

@@ -6,26 +6,33 @@
 
 #include "../framework/framework.h"
 
-namespace flounder 
+namespace flounder
 {
+	/// <summary>
+	/// A module used for managing tasks on framework updates.
+	/// </summary>
 	class tasks :
 		public imodule
 	{
 	private:
 		std::vector<std::function<void()>> *m_tasks;
 	public:
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
 		static tasks *get()
 		{
-			return (tasks*)framework::get()->getInstance("tasks");
+			return static_cast<tasks*>(framework::get()->getInstance("tasks"));
 		}
 
 		tasks();
 
 		~tasks();
 
-		void init();
+		void init() override;
 
-		void update();
+		void update() override;
 
 		/// <summary>
 		/// Adds an task to the que.

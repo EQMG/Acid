@@ -14,7 +14,7 @@
 #include "../framework/framework.h"
 #include "../textures/stb_image.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
@@ -46,42 +46,68 @@ namespace flounder
 		int m_windowPosX;
 		int m_windowPosY;
 
-		friend void callbackError(int error, const char* description);
-		friend void callbackClose(GLFWwindow* window);
-		friend void callbackFocus(GLFWwindow* window, int focused);
-		friend void callbackPosition(GLFWwindow* window, int xpos, int ypos);
-		friend void callbackSize(GLFWwindow* window, int width, int height);
-		friend void callbackFrame(GLFWwindow* window, int width, int height);
+		friend void callbackError(int error, const char *description);
+		friend void callbackClose(GLFWwindow *window);
+		friend void callbackFocus(GLFWwindow *window, int focused);
+		friend void callbackPosition(GLFWwindow *window, int xpos, int ypos);
+		friend void callbackSize(GLFWwindow *window, int width, int height);
+		friend void callbackFrame(GLFWwindow *window, int width, int height);
 	public:
-		static display* get()
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
+		static display *get()
 		{
-			return (display*)framework::get()->getInstance("display");
+			return static_cast<display*>(framework::get()->getInstance("display"));
 		}
 
 		/// <summary>
-		/// Creates a new GLFW display manager.
+		/// Creates a new display module.
 		/// </summary>
 		display();
 
 		/// <summary>
-		/// Deconstructor for the display.
+		/// Deconstructor for the display module.
 		/// </summary>
 		~display();
 
+		/// <summary>
+		/// Loads the display module with inital values.
+		/// </summary>
+		/// <param name="glfwMajor"> The GLFW major verson. </param>
+		/// <param name="glfwMinor"> The GLFW minor verson. </param>
+		/// <param name="width"> The displays inital width. </param>
+		/// <param name="height"> The displays inital width. </param>
+		/// <param name="title"> The displays title. </param>
+		/// <param name="icon"> The displays icon image path. </param>
+		/// <param name="fpsLimit"> The displays inital FPS limit. </param>
+		/// <param name="vsync"> If the display will start with vsync on. </param>
+		/// <param name="antialiasing"> If the display will start with antialiased. </param>
+		/// <param name="samples"> How many samples will be initaly used to antialias. </param>
+		/// <param name="fullscreen"> If the display will start fullscreen. </param>
 		void load(const int &glfwMajor, const int &glfwMinor, const int &width, const int &height, const std::string &title, const std::string &icon, const float &fpsLimit, const bool &vsync, const bool &antialiasing, const int &samples, const bool &fullscreen);
 
-		void init();
+		void init() override;
 
-		void update();
+		void update() override;
 
 		/// <summary>
 		/// Takes a screenshot of the current image of the display and saves it into the screenshots folder a png image.
 		/// </summary>
 		void screenshot();
 
-		inline int &getGlfwMajor() { return m_glfwMajor; }
+		/// <summary>
+		/// Gets the GLFW major verson.
+		/// </summary>
+		/// <returns> The GLFW major verson. </returns>
+		inline int getGlfwMajor() { return m_glfwMajor; }
 
-		inline int &getGlfwMinor() { return m_glfwMinor; }
+		/// <summary>
+		/// Gets the GLFW minor verson.
+		/// </summary>
+		/// <returns> The GLFW minor verson. </returns>
+		inline int getGlfwMinor() { return m_glfwMinor; }
 
 		/// <summary>
 		/// Gets the width of the display in pixels.
@@ -89,6 +115,10 @@ namespace flounder
 		/// <returns> The width of the display. </returns>
 		int &getWidth();
 
+		/// <summary>
+		/// Gets the non-fullscreen width of the display in pixels.
+		/// </summary>
+		/// <returns> The width of the display. </returns>
 		int &getWindowWidth();
 
 		/// <summary>
@@ -97,15 +127,24 @@ namespace flounder
 		/// <returns> The height of the display. </returns>
 		int &getHeight();
 
+		/// <summary>
+		/// Gets the non-fullscreen height of the display in pixels.
+		/// </summary>
+		/// <returns> The height of the display. </returns>
 		int &getWindowHeight();
-
-		void setWindowSize(const int &width, const int &height);
 
 		/// <summary>
 		/// Gets the aspect ratio between the displays width and height.
 		/// </summary>
 		/// <returns> The aspect ratio. </returns>
 		double &getAspectRatio();
+
+		/// <summary>
+		/// Sets window size to a new size.
+		/// </summary>
+		/// <param name="width"> The new width in pixels. </param>
+		/// <param name="height"> The new height in pixels. </param>
+		void setWindowSize(const int &width, const int &height);
 
 		/// <summary>
 		/// Gets the window's title.
@@ -129,7 +168,7 @@ namespace flounder
 		/// Gets if the display is using vSync.
 		/// </summary>
 		/// <returns> If VSync is enabled. </returns>
-		bool &isVSync();
+		bool isVSync();
 
 		/// <summary>
 		/// Sets the display to use VSync or not.
@@ -141,7 +180,7 @@ namespace flounder
 		/// Gets if the display requests antialiased images.
 		/// </summary>
 		/// <returns> If using antialiased images. </returns>
-		bool &isAntialiasing();
+		bool isAntialiasing();
 
 		/// <summary>
 		/// Requests the display to antialias.
@@ -153,7 +192,7 @@ namespace flounder
 		/// Gets how many MSAA samples should be done before swapping buffers.
 		/// </summary>
 		/// <returns> Amount of MSAA samples. </returns>
-		int &getSamples();
+		int getSamples();
 
 		/// <summary>
 		/// Gets how many MSAA samples should be done before swapping buffers. Zero disables multisampling. GLFW_DONT_CARE means no preference.
@@ -165,7 +204,7 @@ namespace flounder
 		/// Gets weather the display is fullscreen or not.
 		/// </summary>
 		/// <returns> Fullscreen or windowed. </returns>
-		bool &isFullscreen();
+		bool isFullscreen();
 
 		/// <summary>
 		/// Sets the display to be fullscreen or windowed.
@@ -183,24 +222,24 @@ namespace flounder
 		/// Gets if the GLFW display is closed.
 		/// </summary>
 		/// <returns> If the GLFW display is closed. </returns>
-		bool &isClosed();
+		bool isClosed();
 
 		/// <summary>
 		/// Gets if the GLFW display is selected.
 		/// </summary>
 		/// <returns> If the GLFW display is selected. </returns>
-		bool &isFocused();
+		bool isFocused();
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows x position. </returns>
-		int &getWindowXPos();
+		int getWindowXPos();
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows Y position. </returns>
-		int &getWindowYPos();
+		int getWindowYPos();
 	};
 }

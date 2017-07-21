@@ -255,6 +255,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\entities\entity.cpp" />
+    <ClCompile Include="src\events\eventchange.cpp" />
+    <ClCompile Include="src\events\eventstandard.cpp" />
+    <ClCompile Include="src\events\eventtime.cpp" />
     <ClCompile Include="src\inputs\axiscompound.cpp" />
     <ClCompile Include="src\inputs\axisjoystick.cpp" />
     <ClCompile Include="src\inputs\buttoncompound.cpp" />
@@ -370,9 +373,9 @@
     <ClInclude Include="src\processing\processing.h" />
     <ClInclude Include="src\processing\opengl\processoropengl.h" />
     <ClInclude Include="src\events\ievent.h" />
-    <ClInclude Include="src\events\ieventchange.h" />
-    <ClInclude Include="src\events\ieventstandard.h" />
-    <ClInclude Include="src\events\ieventtime.h" />
+    <ClInclude Include="src\events\eventchange.h" />
+    <ClInclude Include="src\events\eventstandard.h" />
+    <ClInclude Include="src\events\eventtime.h" />
     <ClInclude Include="src\helpers\helperarray.h" />
     <ClInclude Include="src\physics\collider.h" />
     <ClInclude Include="src\physics\frustum.h" />
