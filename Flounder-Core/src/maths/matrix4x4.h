@@ -5,7 +5,7 @@
 #include "vector3.h"
 #include "vector4.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Holds a 4x4 matrix.
@@ -13,10 +13,10 @@ namespace flounder
 	class matrix4x4
 	{
 	public:
-		float m00, m01, m02, m03;
-		float m10, m11, m12, m13;
-		float m20, m21, m22, m23;
-		float m30, m31, m32, m33;
+		float m_00, m_01, m_02, m_03;
+		float m_10, m_11, m_12, m_13;
+		float m_20, m_21, m_22, m_23;
+		float m_30, m_31, m_32, m_33;
 
 		/// <summary>
 		/// Constructor for matrix4x4. The matrix is initialised to the identity.

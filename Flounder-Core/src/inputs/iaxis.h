@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Interface for an axis based input device.
@@ -8,10 +8,16 @@ namespace flounder
 	class iaxis
 	{
 	public:
+		/// <summary>
+		/// Creates a new axis.
+		/// </summary>
 		iaxis()
 		{
 		}
 
+		/// <summary>
+		/// Deconstructor for the axis.
+		/// </summary>
 		virtual ~iaxis()
 		{
 		}

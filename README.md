@@ -32,6 +32,8 @@ Features:
  * Component entity system
  * 3D shadow mapping
  * 3D skyboxes
+ * OBJ model file loading
+ * JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC texture loading
  * Avalable visual drivers and maths classes
  * Flexable inputs
  * 3D audio and music

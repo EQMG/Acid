@@ -16,7 +16,7 @@
 
 #include "stb_image.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Class that represents a loaded texture.
@@ -100,6 +100,7 @@ namespace flounder
 			/// <returns> The created texture. </returns>
 			texture *create();
 		};
+
 	protected:
 		builder *m_builder;
 
@@ -142,19 +143,19 @@ namespace flounder
 		/// Gets the width of the texture.
 		/// </summary>
 		/// <returns> The textures width. </returns>
-		inline int &getWidth() { return m_width; }
+		inline int getWidth() const { return m_width; }
 
 		/// <summary>
 		/// Gets the height of the texture.
 		/// </summary>
 		/// <returns> The textures height. </returns>
-		inline int &getHeight() { return m_height; }
+		inline int getHeight() const { return m_height; }
 
 		/// <summary>
 		/// Gets if the texture has alpha.
 		/// </summary>
 		/// <returns> If the texture has alpha. </returns>
-		inline bool &hasAlpha() { return m_hasAlpha; }
+		inline bool hasAlpha() const { return m_hasAlpha; }
 
 		/// <summary>
 		/// Sets if the texture has alpha.
@@ -166,7 +167,7 @@ namespace flounder
 		/// Gets the number of texture rows.
 		/// </summary>
 		/// <returns> The number of texture rows. </returns>
-		inline int &getNumberOfRows() { return m_numberOfRows; }
+		inline int getNumberOfRows() const { return m_numberOfRows; }
 
 		/// <summary>
 		/// Sets the number of texture rows.
@@ -178,17 +179,24 @@ namespace flounder
 		/// The OpenGL type of texture loaded.
 		/// </summary>
 		/// <returns> The OpenGL texture type. </returns>
-		inline GLenum getGlType() { return m_glType; }
+		inline GLenum getGlType() const { return m_glType; }
 
 		/// <summary>
 		/// Gets the textures ID.
 		/// </summary>
 		/// <returns> The textures ID. </returns>
-		inline GLuint getTextureID() { return m_textureID; }
+		inline GLuint getTextureID() const { return m_textureID; }
 	private:
+		/// <summary>
+		/// Loads the texture object from a texture file.
+		/// </summary>
+		/// <param name="file"> The file to load from. </param>
 		void loadFromTexture(const std::string &file);
 
+		/// <summary>
+		/// Loads the texture object from a cubemap texture files.
+		/// </summary>
+		/// <param name="cubemap"> The cubemap files to load from. </param>
 		void loadFromCubemap(const int count, std::string *cubemap);
 	};
-
 }

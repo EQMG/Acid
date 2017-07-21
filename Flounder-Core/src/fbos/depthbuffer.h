@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// The types of depth buffers that can be used in a FBO.

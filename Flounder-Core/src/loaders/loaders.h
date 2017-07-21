@@ -14,28 +14,33 @@
 
 #include "../framework/framework.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A module used for loading and managing OpenGL VAO's and VBO's.
 	/// </summary>
-	class loaders : public imodule
+	class loaders : 
+		public imodule
 	{
 	private:
 		std::map<GLuint, std::vector<GLuint>*> *m_loaded;
 	public:
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
 		static loaders *get()
 		{
-			return (loaders*)framework::get()->getInstance("loaders");
+			return static_cast<loaders*>(framework::get()->getInstance("loaders"));
 		}
 
 		loaders();
 
 		~loaders();
 
-		void init();
+		void init() override;
 
-		void update();
+		void update() override;
 
 		/// <summary>
 		/// Creates an empty VAO.

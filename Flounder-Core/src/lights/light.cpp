@@ -1,19 +1,15 @@
 #include "light.h"
 
-namespace flounder 
+namespace flounder
 {
 	light::light(colour *colour, vector3 *position)
 	{
-		m_colour = colour;
-		m_position = position;
-		m_attenuation = new attenuation(1.0f, 0.0f, 0.0f);
+		set(colour, position, new attenuation(1.0f, 0.0f, 0.0f));
 	}
 
 	light::light(colour *colour, vector3 *position, attenuation *attenuation)
 	{
-		m_colour = colour;
-		m_position = position;
-		m_attenuation = attenuation;
+		set(colour, position, attenuation);
 	}
 
 	light::~light()
@@ -21,5 +17,20 @@ namespace flounder
 		delete m_colour;
 		delete m_position;
 		delete m_attenuation;
+	}
+
+	light *light::set(colour *colour, vector3 *position)
+	{
+		m_colour = colour;
+		m_position = position;
+		return this;
+	}
+
+	light *light::set(colour *colour, vector3 *position, attenuation *attenuation)
+	{
+		m_colour = colour;
+		m_position = position;
+		m_attenuation = attenuation;
+		return this;
 	}
 }

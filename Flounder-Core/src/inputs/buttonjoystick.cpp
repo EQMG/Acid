@@ -2,7 +2,7 @@
 
 namespace flounder
 {
-	buttonjoystick::buttonjoystick(const int & joystick, const int n_args, ...) :
+	buttonjoystick::buttonjoystick(const int &joystick, const int n_args, ...) :
 		ibutton()
 	{
 		m_joystick = joystick;
@@ -26,7 +26,7 @@ namespace flounder
 		delete m_buttons;
 	}
 
-	bool buttonjoystick::isDown() const 
+	bool buttonjoystick::isDown() const
 	{
 		if (m_count == 0 || !joysticks::get()->isConnected(m_joystick))
 		{

@@ -2,23 +2,31 @@
 
 #include <string>
 #include <vector>
-#include <algorithm> 
+#include <algorithm>
 #include <cctype>
 #include <locale>
 
-namespace flounder 
+namespace flounder
 {
-	class helperstring 
+	/// <summary>
+	/// A helper for C++ strings.
+	/// </summary>
+	class helperstring
 	{
 	public:
-		static std::vector<std::string> split(const std::string &str, const std::string &sep) 
+		/// <summary>
+		/// Splits a string by a seperator.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <param name="sep"> The seperator. </param>
+		/// <returns> The split string vector. </returns>
+		static std::vector<std::string> split(const std::string &str, const std::string &sep)
 		{
-			char* cstr = const_cast<char*>(str.c_str());
-			char* current;
+			char *cstr = const_cast<char*>(str.c_str());
 			std::vector<std::string> arr;
-			current = strtok(cstr, sep.c_str());
+			char *current = strtok(cstr, sep.c_str());
 
-			while (current != NULL) 
+			while (current != NULL)
 			{
 				arr.push_back(current);
 				current = strtok(NULL, sep.c_str());
@@ -27,38 +35,62 @@ namespace flounder
 			return arr;
 		}
 
-		static bool startsWith(const std::string &text, const std::string &token)
+		/// <summary>
+		/// Gets if a string starts with a token.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <param name="token"> The token. </param>
+		/// <returns> If a string starts with the token. </returns>
+		static bool startsWith(const std::string &str, const std::string &token)
 		{
-			if (text.length() < token.length())
+			if (str.length() < token.length())
 			{
 				return false;
 			}
 
-			return (text.compare(0, token.length(), token) == 0);
+			return (str.compare(0, token.length(), token) == 0);
 		}
 
-		static bool contains(const std::string &text, const std::string &token)
+		/// <summary>
+		/// Gets if a string contains a token.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <param name="token"> The token. </param>
+		/// <returns> If a string contains the token. </returns>
+		static bool contains(const std::string &str, const std::string &token)
 		{
-			return text.find(token) != std::string::npos;
+			return str.find(token) != std::string::npos;
 		}
 
-		static inline bool isInteger(const std::string &text)
+		/// <summary>
+		/// Gets if a string is a integer.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <returns> If a string is a integer. </returns>
+		static bool isInteger(const std::string &str)
 		{
-			if (text.empty() || ((!isdigit(text[0])) && (text[0] != '-') && (text[0] != '+'))) 
+			if (str.empty() || ((!isdigit(str[0])) && (str[0] != '-') && (str[0] != '+')))
 			{
 				return false;
 			}
 
 			char *p;
-			strtol(text.c_str(), &p, 10);
+			strtol(str.c_str(), &p, 10);
 
 			return (*p == 0);
 		}
 
-		static int findCharPos(const std::string &line, const char &c) {
-			for (unsigned int i = 0; i < line.length(); i++)
+		/// <summary>
+		/// Gets the first char index in the string.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <param name="c"> The char to look for. </param>
+		/// <returns> The char index. </returns>
+		static int findCharPos(const std::string &str, const char &c)
+		{
+			for (unsigned int i = 0; i < str.length(); i++)
 			{
-				if (line.at(i) == c) 
+				if (str.at(i) == c)
 				{
 					return i;
 				}
@@ -67,7 +99,13 @@ namespace flounder
 			return 0;
 		}
 
-		static std::string trim(const std::string &str, const std::string &whitespace = " \t") 
+		/// <summary>
+		/// Trims the left and right side of a string of whitespace.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <param name="whitespace"> The whitespace type. </param>
+		/// <returns> The trimmed string. </returns>
+		static std::string trim(const std::string &str, const std::string &whitespace = " \t")
 		{
 			const auto strBegin = str.find_first_not_of(whitespace);
 
@@ -84,6 +122,13 @@ namespace flounder
 			return result;
 		}
 
+		/// <summary>
+		/// Takes a substring of a string between two bounds.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <param name="start"> The left bound. </param>
+		/// <param name="end"> The right bound. </param>
+		/// <returns> The substring of the string. </returns>
 		static std::string substring(const std::string &str, const int &start, const int &end)
 		{
 			std::string result = str;
@@ -91,6 +136,12 @@ namespace flounder
 			return result;
 		}
 
+		/// <summary>
+		/// Removes all tokens from a string.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <param name="token"> The token. </param>
+		/// <returns> The string with the tokens removed. </returns>
 		static std::string removeAll(const std::string &str, const char &token)
 		{
 			std::string result = str;
@@ -98,17 +149,24 @@ namespace flounder
 			return result;
 		}
 
-		static std::string replace(const std::string& str, const std::string& from, const std::string& to)
+		/// <summary>
+		/// Replaces all tokens from a string.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <param name="token"> The token. </param>
+		/// <param name="to"> The string to replace the tokens with. </param>
+		/// <returns> The string with the tokens replaced. </returns>
+		static std::string replace(const std::string &str, const std::string &token, const std::string &to)
 		{
 			std::string result = str;
-			size_t start_pos = result.find(from);
+			size_t start_pos = result.find(token);
 
 			if (start_pos == std::string::npos)
 			{
 				return result;
 			}
 
-			result.replace(start_pos, from.length(), to);
+			result.replace(start_pos, token.length(), to);
 			return result;
 		}
 	};

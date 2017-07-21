@@ -2,7 +2,7 @@
 
 namespace flounder
 {
-	template <typename t>
+	template<typename t>
 	eventchange<t>::eventchange(t *reference, const std::function<void()> &onEvent) :
 		ievent()
 	{

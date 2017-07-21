@@ -8,9 +8,9 @@
 #include "../models/model.h"
 #include "../textures/texture.h"
 
-namespace flounder 
+namespace flounder
 {
-	class skybox : 
+	class skybox :
 		public imodule
 	{
 	private:
@@ -23,9 +23,13 @@ namespace flounder
 		fog *m_fog;
 		float m_blend;
 	public:
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
 		static skybox *get()
 		{
-			return (skybox*) framework::get()->getInstance("skybox");
+			return static_cast<skybox*>(framework::get()->getInstance("skybox"));
 		}
 
 		skybox();
@@ -34,9 +38,9 @@ namespace flounder
 
 		void load(texture *texture, model *model);
 
-		void init();
+		void init() override;
 
-		void update();
+		void update() override;
 
 		inline float &getSize() { return m_size; }
 

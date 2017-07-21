@@ -2,7 +2,7 @@
 
 namespace flounder
 {
-	axisjoystick::axisjoystick(const int & joystick, const int n_args, ...) :
+	axisjoystick::axisjoystick(const int &joystick, const int n_args, ...) :
 		iaxis()
 	{
 		m_joystick = joystick;
@@ -27,7 +27,7 @@ namespace flounder
 
 	float axisjoystick::getAmount() const
 	{
-		if (m_count == 0 || !joysticks::get()->isConnected(m_joystick))
+		if (m_count == NULL || !joysticks::get()->isConnected(m_joystick))
 		{
 			return 0.0f;
 		}

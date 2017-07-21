@@ -1,6 +1,6 @@
 #include "buttoncompound.h"
 
-namespace flounder 
+namespace flounder
 {
 	buttoncompound::buttoncompound(const int n_args, ...) :
 		ibutton()

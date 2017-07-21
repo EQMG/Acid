@@ -1,8 +1,8 @@
 #include "tasks.h"
 
-namespace flounder 
+namespace flounder
 {
-	tasks::tasks() : 
+	tasks::tasks() :
 		imodule()
 	{
 		m_tasks = new std::vector<std::function<void()>>();

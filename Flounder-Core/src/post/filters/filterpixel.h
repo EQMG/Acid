@@ -3,7 +3,7 @@
 #include "../../devices/display.h"
 #include "../ipostfilter.h"
 
-namespace flounder 
+namespace flounder
 {
 	class filterpixel :
 		public ipostfilter

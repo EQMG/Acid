@@ -7,28 +7,32 @@
 #include "iprocessor.h"
 #include "irequest.h"
 
-namespace flounder 
+namespace flounder
 {
-	class processing : 
+	class processing :
 		public imodule
 	{
 	private:
 		std::vector<iprocessor*> *m_processors;
 	public:
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
 		static processing *get()
 		{
-			return (processing*)framework::get()->getInstance("processing");
+			return static_cast<processing*>(framework::get()->getInstance("processing"));
 		}
 
 		processing();
 
 		~processing();
 
-		void loadProcessor(iprocessor *processor);
+		void init() override;
 
-		void init();
+		void update() override;
 
-		void update();
+		void addProcessor(iprocessor *processor);
 
 		/// <summary>
 		/// Sends a new resource request to be added to a que.

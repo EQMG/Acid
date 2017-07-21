@@ -1,13 +1,15 @@
 #pragma once
 
+#include <functional>
+
 #include "ievent.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A class that is the most basic implementation of the event interface.
 	/// </summary>
-	class eventstandard : 
+	class eventstandard :
 		public ievent
 	{
 	private:

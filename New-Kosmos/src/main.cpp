@@ -17,9 +17,9 @@ int main()
 	framework *m_framework = new framework();
 
 	// Loads things to the framework.
-	framework::get()->loadUpdater(new glfwupdater());
+	framework::get()->load(new glfwupdater());
 
-	display::get()->load(3, 2, 1080, 720, "New Kosmos", "res/newkosmos.png", -1.0f, false, true, 0, false);
+	display::get()->load(3, 0, 1080, 720, "New Kosmos", "res/newkosmos.png", -1.0f, false, true, 0, false);
 	mouse::get()->load("res/cursor.png");
 
 	camera::get()->load(new maincamera(), new mainplayer());
@@ -29,10 +29,9 @@ int main()
 	m_framework->init();
 
 	renderer::get()->load(new mainrenderer());
-	skybox::get()->load(texture::newTexture()
-		->setCubemap(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png",
-		"res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png")
-		->create(),
+	skybox::get()->load(
+		texture::newTexture()->setCubemap(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png")
+		                     ->create(),
 		model::newModel()->setFile("res/skybox/skyboxSphere.obj")->create()
 	);
 

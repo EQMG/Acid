@@ -2,7 +2,7 @@
 
 #include "collider.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A axis-aligned bounding box.

@@ -2,12 +2,12 @@
 
 #include "idriver.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A driver that linearly increases its value.
 	/// </summary>
-	class driverlinear : 
+	class driverlinear :
 		public idriver
 	{
 	private:

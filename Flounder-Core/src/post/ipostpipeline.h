@@ -2,7 +2,7 @@
 
 #include "../fbos/fbo.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Represents a system of post effects.

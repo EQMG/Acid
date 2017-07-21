@@ -1,8 +1,8 @@
 #include "skybox.h"
 
-namespace flounder 
+namespace flounder
 {
-	skybox::skybox() : 
+	skybox::skybox() :
 		imodule()
 	{
 		m_size = 250.0f;

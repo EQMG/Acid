@@ -1,8 +1,8 @@
 #include "processing.h"
 
-namespace flounder 
+namespace flounder
 {
-	processing::processing() : 
+	processing::processing() :
 		imodule()
 	{
 		m_processors = new std::vector<iprocessor*>();
@@ -18,17 +18,17 @@ namespace flounder
 		delete m_processors;
 	}
 
-	void processing::loadProcessor(iprocessor *processor)
-	{
-		m_processors->push_back(processor);
-	}
-
 	void processing::init()
 	{
 		// Manually adds the two base processors, these will be added into the modules loop, but are needed now.
 		// If these are not added in the init loop, nothing will be able to be initially processed!
 		m_processors->push_back(new processorresource());
 		m_processors->push_back(new processoropengl());
+	}
+
+	void processing::addProcessor(iprocessor *processor)
+	{
+		m_processors->push_back(processor);
 	}
 
 	void processing::update()

@@ -1,6 +1,6 @@
 #include "fbo.h"
 
-namespace flounder 
+namespace flounder
 {
 	fbo::builder::builder()
 	{
@@ -131,10 +131,7 @@ namespace flounder
 
 		delete m_builder;
 
-		//delete m_frameBuffer;
 		delete[] m_colourTexture;
-		//delete m_depthTexture;
-		//delete m_depthBuffer;
 		delete[] m_colourBuffer;
 	}
 
@@ -163,8 +160,8 @@ namespace flounder
 		{
 			int displayWidth = display::get()->getWidth();
 			int displayHeight = display::get()->getHeight();
-			int reverseWidth = (int)(displayWidth * m_sizeScalar);
-			int reverseHeight = (int)(displayHeight * m_sizeScalar);
+			int reverseWidth = static_cast<int>(displayWidth * m_sizeScalar);
+			int reverseHeight = static_cast<int>(displayHeight * m_sizeScalar);
 
 			if (displayWidth == 0 || displayHeight == 0)
 			{
@@ -173,9 +170,9 @@ namespace flounder
 
 			if (m_width != reverseWidth || m_height != reverseHeight)
 			{
-				int newWidth = (int) (displayWidth * m_sizeScalar);
-				int newHeight = (int) (displayHeight * m_sizeScalar);
-				
+				int newWidth = static_cast<int>(displayWidth * m_sizeScalar);
+				int newHeight = static_cast<int>(displayHeight * m_sizeScalar);
+
 				//	if (newWidth < FlounderFBOs.get().getMaxFBOSize() && newHeight < FlounderFBOs.get().getMaxFBOSize()) { // TODO: Fix this ghetto way of fixing the creation of millions of FBOs on old PCs.
 				m_width = newWidth;
 				m_height = newHeight;
@@ -193,7 +190,7 @@ namespace flounder
 	void fbo::blitToScreen()
 	{
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-		GLenum targets[1] = { GL_BACK };
+		GLenum targets[1] = {GL_BACK};
 		glDrawBuffers(1, targets);
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_frameBuffer);
 		glBlitFramebuffer(0, 0, m_width, m_height, 0, 0, display::get()->getWidth(), display::get()->getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
@@ -213,7 +210,7 @@ namespace flounder
 
 	void fbo::resolveFBO(fbo *source, fbo *output)
 	{
-		if (source->m_attachments != output->m_attachments && output->m_hasGivenResolveError != output->m_hasGivenResolveError) 
+		if (source->m_attachments != output->m_attachments && output->m_hasGivenResolveError != output->m_hasGivenResolveError)
 		{
 			source->m_hasGivenResolveError = true;
 			output->m_hasGivenResolveError = true;
@@ -233,7 +230,7 @@ namespace flounder
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, source->m_frameBuffer);
 
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + readBuffer);
-		GLenum targets[1] = { static_cast<GLenum>(GL_COLOR_ATTACHMENT0 + drawBuffer) };
+		GLenum targets[1] = {static_cast<GLenum>(GL_COLOR_ATTACHMENT0 + drawBuffer)};
 		glDrawBuffers(1, targets);
 		glBlitFramebuffer(0, 0, source->m_width, source->m_height, 0, 0, output->m_width, output->m_height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
@@ -245,19 +242,19 @@ namespace flounder
 		glGenFramebuffers(1, &m_frameBuffer);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
 
-		if (m_useColourBuffer) 
+		if (m_useColourBuffer)
 		{
 			determineDrawBuffers();
 		}
 		else
 		{
-			GLenum targets[1] = { GL_FALSE };
+			GLenum targets[1] = {GL_FALSE};
 			glDrawBuffers(1, targets);
 		}
 
 		limitFBOSize();
 
-		if (!m_antialiased) 
+		if (!m_antialiased)
 		{
 			if (m_useColourBuffer)
 			{

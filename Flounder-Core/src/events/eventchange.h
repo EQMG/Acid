@@ -1,11 +1,17 @@
 #pragma once
 
+#include <functional>
+
 #include "ievent.h"
 
-namespace flounder 
+namespace flounder
 {
+	/// <summary>
+	/// A class that acts as a basic change listener for a value.
+	/// </summary>
+	/// @param <T> The type of value to find change with. </param>
 	template<typename t>
-	class eventchange : 
+	class eventchange :
 		public ievent
 	{
 	private:
