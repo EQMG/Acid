@@ -1,6 +1,6 @@
 #include "attenuation.h"
 
-namespace flounder 
+namespace flounder
 {
 	attenuation::attenuation(const float &constant, const float &linear, const float &exponent)
 	{
@@ -16,17 +16,19 @@ namespace flounder
 	{
 	}
 
-	void attenuation::set(const float &constant, const float &linear, const float &exponent)
+	attenuation attenuation::set(const float &constant, const float &linear, const float &exponent)
 	{
 		m_constant = constant;
 		m_linear = linear;
 		m_exponent = exponent;
+		return this;
 	}
 
-	void attenuation::set(attenuation *source)
+	attenuation attenuation::set(attenuation *source)
 	{
 		m_constant = source->m_constant;
 		m_linear = source->m_linear;
 		m_exponent = source->m_exponent;
+		return this;
 	}
 }

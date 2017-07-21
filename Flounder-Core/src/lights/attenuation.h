@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Attenuation is used in calculating the range of lights.
@@ -32,8 +32,20 @@ namespace flounder
 		/// </summary>
 		~attenuation();
 
-		void set(const float &constant, const float &linear, const float &exponent);
+		/// <summary>
+		/// Sets values in the attenuation.
+		/// </summary>
+		/// <param name="constant"> The new constant value. </param>
+		/// <param name="linear"> The new linear value. </param>
+		/// <param name="exponent"> The new exponent value. </param>
+		/// <returns> This. </returns>
+		attenuation set(const float &constant, const float &linear, const float &exponent);
 
-		void set(attenuation *source);
+		/// <summary>
+		/// Sets values in the attenuation.
+		/// </summary>
+		/// <param name="source"> Creates this attenuation out of a existing one. </param>
+		/// <returns> This. </returns>
+		attenuation set(attenuation *source);
 	};
 }

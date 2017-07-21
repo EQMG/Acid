@@ -2,9 +2,9 @@
 
 #include "collider.h"
 
-namespace flounder 
+namespace flounder
 {
-	class sphere : 
+	class sphere :
 		public collider
 	{
 	public:

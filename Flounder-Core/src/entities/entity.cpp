@@ -1,6 +1,6 @@
 #include "entity.h"
 
-namespace flounder 
+namespace flounder
 {
 	entity::entity()
 	{

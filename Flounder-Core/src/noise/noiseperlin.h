@@ -20,5 +20,9 @@ namespace flounder
 		noiseperlin(const int seed);
 
 		~noiseperlin();
+
+		inline int getSeed() const { return m_seed; }
+
+		inline void setSeed(const int seed) { m_seed = seed; }
 	};
 }

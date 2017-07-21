@@ -1,6 +1,6 @@
 #include "display.h"
 
-namespace flounder 
+namespace flounder
 {
 	void callbackError(int error, const char *description)
 	{
@@ -20,7 +20,7 @@ namespace flounder
 
 	void callbackPosition(GLFWwindow *window, int xpos, int ypos)
 	{
-		if (!display::get()->m_fullscreen) 
+		if (!display::get()->m_fullscreen)
 		{
 			display::get()->m_windowPosX = xpos;
 			display::get()->m_windowPosY = ypos;
@@ -29,7 +29,7 @@ namespace flounder
 
 	void callbackSize(GLFWwindow *window, int width, int height)
 	{
-		if (!display::get()->m_fullscreen) 
+		if (!display::get()->m_fullscreen)
 		{
 			display::get()->m_windowWidth = width;
 			display::get()->m_windowHeight = height;
@@ -41,7 +41,7 @@ namespace flounder
 		glViewport(0, 0, width, height);
 	}
 
-	display::display() : 
+	display::display() :
 		imodule()
 	{
 		m_glfwMajor = 3;
@@ -278,16 +278,16 @@ namespace flounder
 		return m_windowHeight;
 	}
 
+	double &display::getAspectRatio()
+	{
+		return m_aspectRatio;
+	}
+
 	void display::setWindowSize(const int &width, const int &height)
 	{
 		m_windowWidth = width;
 		m_windowHeight = height;
 		glfwSetWindowSize(m_window, width, height);
-	}
-
-	double &display::getAspectRatio()
-	{
-		return m_aspectRatio;
 	}
 
 	std::string &display::getTitle()
@@ -305,7 +305,7 @@ namespace flounder
 		m_fpsLimit = fpsLimit;
 	}
 
-	bool &display::isVSync()
+	bool display::isVSync()
 	{
 		return m_vsync;
 	}
@@ -317,11 +317,11 @@ namespace flounder
 
 		if (vsync)
 		{
-		//	framework::get()->setFpsLimit(60);
+			//	framework::get()->setFpsLimit(60);
 		}
 	}
 
-	bool &display::isAntialiasing()
+	bool display::isAntialiasing()
 	{
 		return m_antialiasing;
 	}
@@ -331,7 +331,7 @@ namespace flounder
 		m_antialiasing = antialiasing;
 	}
 
-	int &display::getSamples()
+	int display::getSamples()
 	{
 		return m_samples;
 	}
@@ -342,7 +342,7 @@ namespace flounder
 		glfwWindowHint(GLFW_SAMPLES, samples);
 	}
 
-	bool &display::isFullscreen()
+	bool display::isFullscreen()
 	{
 		return m_fullscreen;
 	}
@@ -350,7 +350,8 @@ namespace flounder
 	void display::setFullscreen(const bool &fullscreen)
 	{
 #ifndef FLOUNDER_PLATFORM_WEB
-		if (m_fullscreen == fullscreen) {
+		if (m_fullscreen == fullscreen)
+		{
 			return;
 		}
 
@@ -360,13 +361,13 @@ namespace flounder
 
 		std::cout << (fullscreen ? "Display is going fullscreen." : "Display is going windowed.") << std::endl;
 
-		if (fullscreen) 
+		if (fullscreen)
 		{
 			m_fullscreenWidth = videoMode->width;
 			m_fullscreenHeight = videoMode->height;
 			glfwSetWindowMonitor(m_window, monitor, 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
 		}
-		else 
+		else
 		{
 			m_windowPosX = (videoMode->width - m_windowWidth) / 2;
 			m_windowPosY = (videoMode->height - m_windowHeight) / 2;
@@ -380,22 +381,22 @@ namespace flounder
 		return m_window;
 	}
 
-	bool &display::isClosed()
+	bool display::isClosed()
 	{
 		return m_closed;
 	}
 
-	bool &display::isFocused()
+	bool display::isFocused()
 	{
 		return m_focused;
 	}
 
-	int &display::getWindowXPos()
+	int display::getWindowXPos()
 	{
 		return m_windowPosX;
 	}
 
-	int &display::getWindowYPos()
+	int display::getWindowYPos()
 	{
 		return m_windowPosY;
 	}

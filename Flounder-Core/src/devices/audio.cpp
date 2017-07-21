@@ -2,7 +2,7 @@
 
 namespace flounder
 {
-	audio::audio() : 
+	audio::audio() :
 		imodule()
 	{
 	}
@@ -22,22 +22,21 @@ namespace flounder
 		// Checks for errors.
 		ALenum alError = alGetError();
 
-		if (alError != GL_NO_ERROR) 
+		if (alError != GL_NO_ERROR)
 		{
 			std::cout << "Failed to load OpenAL!" << std::endl << alError << std::endl;
 		}
 
 		// Creates a new sound model.
 		alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
-
 	}
 
 	void audio::update()
 	{
-		if (camera::get()->getCamera() != NULL) 
+		if (camera::get()->getCamera() != NULL)
 		{
 			vector3 *cameraPosition = camera::get()->getCamera()->getPosition();
-			alListener3f(AL_POSITION, cameraPosition->x, cameraPosition->y, cameraPosition->z);
+			alListener3f(AL_POSITION, cameraPosition->m_x, cameraPosition->m_y, cameraPosition->m_z);
 		}
 	}
 }

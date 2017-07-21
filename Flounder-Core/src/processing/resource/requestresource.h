@@ -2,13 +2,13 @@
 
 #include "../irequest.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Interface for executable resource requests.
 	/// </summary>
-	class requestresource : 
-		public irequest 
+	class requestresource :
+		public irequest
 	{
 	public:
 		/// <summary>

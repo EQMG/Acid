@@ -5,7 +5,7 @@
 #include "vector2.h"
 #include "vector4.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Holds a 3-tuple vector.
@@ -13,7 +13,7 @@ namespace flounder
 	class vector3
 	{
 	public:
-		float x, y, z;
+		float m_x, m_y, m_z;
 
 		/// <summary>
 		/// Constructor for vector3.
@@ -292,20 +292,20 @@ namespace flounder
 		/// Gets if all the components to the vector are zero.
 		/// </summary>
 		/// <returns> If the vector is zero. </returns>
-		bool isZero();
+		bool isZero() const;
 
 		/// <summary>
 		/// Gets the length of the vector.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <returns> The length of the vector. </returns>
-		float length();
+		float length() const;
 
 		/// <summary>
 		/// Gets the length squared of the vector.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <returns> The length squared of the vector. </returns>
-		float lengthSquared();
+		float lengthSquared() const;
 	};
 }

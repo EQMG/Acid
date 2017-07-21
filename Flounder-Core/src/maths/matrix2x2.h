@@ -3,7 +3,7 @@
 #include "maths.h"
 #include "vector2.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Holds a 2x2 matrix.
@@ -11,8 +11,8 @@ namespace flounder
 	class matrix2x2
 	{
 	public:
-		float m00, m01;
-		float m10, m11;
+		float m_00, m_01;
+		float m_10, m_11;
 
 		/// <summary>
 		/// Constructor for matrix2x2. The matrix is initialised to the identity.

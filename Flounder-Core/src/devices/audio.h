@@ -9,9 +9,12 @@
 
 #include "display.h"
 
-namespace flounder 
+namespace flounder
 {
-	class audio : 
+	/// <summary>
+	/// A module used for loading, managing and playing a variety of different sound types.
+	/// </summary>
+	class audio :
 		public imodule
 	{
 	private:
@@ -19,23 +22,27 @@ namespace flounder
 		ALCcontext *m_context;
 		int *buffers;
 	public:
-		static audio* get() 
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
+		static audio *get()
 		{
-			return (audio*)framework::get()->getInstance("audio"); 
+			return static_cast<audio*>(framework::get()->getInstance("audio"));
 		}
 
 		/// <summary>
-		/// Creates a new GLFW sound manager.
+		/// Creates a new audio module.
 		/// </summary>
 		audio();
 
 		/// <summary>
-		/// Deconstructor for the sound manager.
+		/// Deconstructor for the audio module.
 		/// </summary>
 		~audio();
 
-		void init();
+		void init() override;
 
-		void update();
+		void update() override;
 	};
 }

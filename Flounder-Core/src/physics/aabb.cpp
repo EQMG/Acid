@@ -1,6 +1,6 @@
 #include "aabb.h"
 
-namespace flounder 
+namespace flounder
 {
 	aabb::aabb()
 	{

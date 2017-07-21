@@ -8,14 +8,22 @@
 
 namespace flounder
 {
-	class standards : public imodule
+	/// <summary>
+	/// A module used for managing simple update injection standards.
+	/// </summary>
+	class standards : 
+		public imodule
 	{
 	private:
 		std::vector<istandard*> *m_standards;
 	public:
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
 		static standards *get()
 		{
-			return (standards*)framework::get()->getInstance("standards");
+			return static_cast<standards*>(framework::get()->getInstance("standards"));
 		}
 
 		standards();
@@ -24,8 +32,8 @@ namespace flounder
 
 		void addStandard(istandard *standard);
 
-		void init();
+		void init() override;
 
-		void update();
+		void update() override;
 	};
 }

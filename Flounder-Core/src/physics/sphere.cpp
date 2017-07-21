@@ -1,6 +1,6 @@
 #include "sphere.h"
 
-namespace flounder 
+namespace flounder
 {
 	sphere::sphere()
 	{
@@ -61,9 +61,9 @@ namespace flounder
 		const sphere &sphere2 = dynamic_cast<const sphere&>(other);
 		float d = sphere2.m_radius + m_radius;
 
-		float xDif = m_position->x - sphere2.m_position->x;
-		float yDif = m_position->y - sphere2.m_position->y;
-		float zDif = m_position->z - sphere2.m_position->z;
+		float xDif = m_position->m_x - sphere2.m_position->m_x;
+		float yDif = m_position->m_y - sphere2.m_position->m_y;
+		float zDif = m_position->m_z - sphere2.m_position->m_z;
 		float distance = xDif * xDif + yDif * yDif + zDif * zDif;
 		// TODO: Resolve!
 		return destination;
@@ -111,15 +111,16 @@ namespace flounder
 
 			return new intersect(distanceSquared > 0.0f, static_cast<float>(sqrt(distanceSquared)));
 		}
-		else */if (&dynamic_cast<const sphere&>(other) != NULL)
+		else */
+		if (&dynamic_cast<const sphere&>(other) != NULL)
 		{
 			const sphere &sphere2 = static_cast<const sphere&>(other);
 
 			float d = sphere2.m_radius + m_radius;
 
-			float xDif = m_position->x - sphere2.m_position->x;
-			float yDif = m_position->y - sphere2.m_position->y;
-			float zDif = m_position->z - sphere2.m_position->z;
+			float xDif = m_position->m_x - sphere2.m_position->m_x;
+			float yDif = m_position->m_y - sphere2.m_position->m_y;
+			float zDif = m_position->m_z - sphere2.m_position->m_z;
 			float distance = xDif * xDif + yDif * yDif + zDif * zDif;
 
 			bool intersects = d * d > distance;
@@ -189,7 +190,7 @@ namespace flounder
 
 	bool sphere::inFrustum(const frustum &frustum)
 	{
-		return frustum.sphereInFrustum(m_position->x, m_position->y, m_position->z, m_radius);
+		return frustum.sphereInFrustum(m_position->m_x, m_position->m_y, m_position->m_z, m_radius);
 	}
 
 	bool sphere::contains(const collider &other)
@@ -203,13 +204,13 @@ namespace flounder
 
 		if (&sphere2 != NULL)
 		{
-			return 
-				sphere2.m_position->x + sphere2.m_radius - 1.0f <= m_position->x + m_radius - 1.0f &&
-				sphere2.m_position->x - sphere2.m_radius + m_radius >= m_position->x - m_radius + 1.0f &&
-				sphere2.m_position->y + sphere2.m_radius - 1.0f <= m_position->y + m_radius - 1.0f &&
-				sphere2.m_position->y - sphere2.m_radius + 1.0f >= m_position->y - m_radius + 1.0f &&
-				sphere2.m_position->z + sphere2.m_radius - 1.0f <= m_position->z + m_radius - 1.0f &&
-				sphere2.m_position->z - sphere2.m_radius + 1.0f >= m_position->z - m_radius + 1.0f;
+			return
+				sphere2.m_position->m_x + sphere2.m_radius - 1.0f <= m_position->m_x + m_radius - 1.0f &&
+				sphere2.m_position->m_x - sphere2.m_radius + m_radius >= m_position->m_x - m_radius + 1.0f &&
+				sphere2.m_position->m_y + sphere2.m_radius - 1.0f <= m_position->m_y + m_radius - 1.0f &&
+				sphere2.m_position->m_y - sphere2.m_radius + 1.0f >= m_position->m_y - m_radius + 1.0f &&
+				sphere2.m_position->m_z + sphere2.m_radius - 1.0f <= m_position->m_z + m_radius - 1.0f &&
+				sphere2.m_position->m_z - sphere2.m_radius + 1.0f >= m_position->m_z - m_radius + 1.0f;
 		}
 
 		return false;

@@ -1,6 +1,6 @@
 #include "loaders.h"
 
-namespace flounder 
+namespace flounder
 {
 	loaders::loaders()
 		: imodule()
@@ -91,7 +91,7 @@ namespace flounder
 		// m_loaded->at(vaoID).push_back(result);
 
 		glBindBuffer(GL_ARRAY_BUFFER, result);
-		glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data() , GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), GL_STATIC_DRAW);
 		glVertexAttribPointer(attributeNumber, coordSize, GL_FLOAT, false, 0, NULL);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		return result;

@@ -1,6 +1,6 @@
 #include "shader.h"
 
-namespace flounder 
+namespace flounder
 {
 	shader::builder::builder()
 	{
@@ -123,7 +123,7 @@ namespace flounder
 
 	void shader::loadUniform(const std::string &name, const colour &value)
 	{
-		glUniform4f(getUniform(name), value.r, value.g, value.b, value.a);
+		glUniform4f(getUniform(name), value.m_r, value.m_g, value.m_b, value.m_a);
 	}
 
 	void shader::loadUniform(const std::string &name, const matrix2x2 &value)
@@ -149,17 +149,17 @@ namespace flounder
 
 	void shader::loadUniform(const std::string &name, const vector2 &value)
 	{
-		glUniform2f(getUniform(name), value.x, value.y);
+		glUniform2f(getUniform(name), value.m_x, value.m_y);
 	}
 
 	void shader::loadUniform(const std::string &name, const vector3 &value)
 	{
-		glUniform3f(getUniform(name), value.x, value.y, value.z);
+		glUniform3f(getUniform(name), value.m_x, value.m_y, value.m_z);
 	}
 
 	void shader::loadUniform(const std::string &name, const vector4 &value)
 	{
-		glUniform4f(getUniform(name), value.x, value.y, value.z, value.w);
+		glUniform4f(getUniform(name), value.m_x, value.m_y, value.m_z, value.m_w);
 	}
 
 	void shader::loadTypes()
@@ -170,7 +170,7 @@ namespace flounder
 		}
 	}
 
-	void shader::loadType(shadertype* type)
+	void shader::loadType(shadertype *type)
 	{
 		std::string fileLoaded = "";
 
@@ -196,12 +196,12 @@ namespace flounder
 			type->m_processedString += processLine(line) + "\n";
 		}
 
-		std::string i = "C:/Users/mattp/Documents/Flounder/New-Kosmos/bin/" + m_name + std::to_string(type->m_shaderType) + ".glsl";
-		std::ofstream out(i);
-		out << type->m_processedString;
-		out.close();
+	//	std::string i = "C:/Users/mattp/Documents/Flounder/New-Kosmos/bin/" + m_name + std::to_string(type->m_shaderType) + ".glsl";
+	//	std::ofstream out(i);
+	//	out << type->m_processedString;
+	//	out.close();
 
-		const char* source = type->m_processedString.c_str();
+		const char *source = type->m_processedString.c_str();
 		type->m_shaderID = glCreateShader(type->m_shaderType);
 		glShaderSource(type->m_shaderID, 1, &source, NULL);
 		glCompileShader(type->m_shaderID);
@@ -312,7 +312,6 @@ namespace flounder
 
 			if (helperstring::contains(uniformString, "[") && helperstring::contains(uniformString, "]"))
 			{
-
 				if (helperstring::contains(uniformName, "[") && helperstring::contains(uniformName, "]"))
 				{
 					uniformName = helperstring::trim(uniformName.substr(0, helperstring::findCharPos(uniformName, '[')));

@@ -1,6 +1,6 @@
 #include "mouse.h"
 
-namespace flounder 
+namespace flounder
 {
 	void callbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 	{
@@ -23,7 +23,7 @@ namespace flounder
 		mouse::get()->m_displaySelected = entered;
 	}
 
-	mouse::mouse() : 
+	mouse::mouse() :
 		imodule()
 	{
 		m_customMouse = "";
@@ -50,7 +50,7 @@ namespace flounder
 		m_lastCursorDisabled = false;
 
 		// Sets the default state of the buttons to released.
-		for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST + 1; i++) 
+		for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST + 1; i++)
 		{
 			m_mouseButtons[i] = GLFW_RELEASE;
 		}
@@ -98,7 +98,7 @@ namespace flounder
 		m_lastMousePositionY = m_mousePositionY;
 
 		// Fixes snaps when toggling cursor.
-		if (m_cursorDisabled != m_lastCursorDisabled) 
+		if (m_cursorDisabled != m_lastCursorDisabled)
 		{
 			m_mouseDeltaX = 0.0;
 			m_mouseDeltaY = 0.0;
@@ -107,7 +107,7 @@ namespace flounder
 		}
 
 		// Updates the mouse wheel using a smooth scroll technique.
-		if (m_mouseDeltaWheel != 0.0) 
+		if (m_mouseDeltaWheel != 0.0)
 		{
 			m_mouseDeltaWheel -= framework::get()->getDelta() * ((m_mouseDeltaWheel < 0.0) ? -1.0 : 1.0);
 			m_mouseDeltaWheel = maths::deadband(0.1, m_mouseDeltaWheel);
@@ -116,10 +116,12 @@ namespace flounder
 
 	void mouse::setCursorHidden(const bool &disabled)
 	{
-		if (m_cursorDisabled != disabled) {
+		if (m_cursorDisabled != disabled)
+		{
 			glfwSetInputMode(display::get()->getWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
 
-			if (!disabled && m_cursorDisabled) {
+			if (!disabled && m_cursorDisabled)
+			{
 				glfwSetCursorPos(display::get()->getWindow(), m_mousePositionX * display::get()->getWidth(), m_mousePositionY * display::get()->getHeight());
 			}
 		}
@@ -132,12 +134,12 @@ namespace flounder
 		return m_mouseButtons[button] != GLFW_RELEASE;
 	}
 
-	double &mouse::getPositionX()
+	double mouse::getPositionX()
 	{
 		return m_mousePositionX;
 	}
 
-	double &mouse::getPositionY()
+	double mouse::getPositionY()
 	{
 		return m_mousePositionY;
 	}
@@ -147,27 +149,27 @@ namespace flounder
 		glfwSetCursorPos(display::get()->getWindow(), cursorX, cursorY);
 	}
 
-	double &mouse::getDeltaX()
+	double mouse::getDeltaX()
 	{
 		return m_mouseDeltaX;
 	}
 
-	double &mouse::getDeltaY()
+	double mouse::getDeltaY()
 	{
 		return m_mouseDeltaY;
 	}
 
-	double &mouse::getDeltaWheel()
+	double mouse::getDeltaWheel()
 	{
 		return m_mouseDeltaWheel;
 	}
 
-	bool &mouse::isDisplaySelected()
+	bool mouse::isDisplaySelected()
 	{
 		return m_displaySelected;
 	}
 
-	bool &mouse::isCursorDisabled()
+	bool mouse::isCursorDisabled()
 	{
 		return m_cursorDisabled;
 	}

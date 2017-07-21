@@ -6,12 +6,12 @@
 
 #include "ibutton.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Button from a joystick.
 	/// </summary>
-	class buttonjoystick : 
+	class buttonjoystick :
 		public ibutton
 	{
 	private:

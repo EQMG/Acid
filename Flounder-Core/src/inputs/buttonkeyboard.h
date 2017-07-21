@@ -6,7 +6,7 @@
 
 #include "ibutton.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Keys from a keyboard.

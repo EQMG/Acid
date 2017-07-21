@@ -1,6 +1,6 @@
 #include "camera.h"
 
-namespace flounder 
+namespace flounder
 {
 	camera::camera() :
 		imodule()

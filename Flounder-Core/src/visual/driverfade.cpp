@@ -1,6 +1,6 @@
 #include "driverfade.h"
 
-namespace flounder 
+namespace flounder
 {
 	driverfade::driverfade(const float &start, const float &end, const float &peak, const float &length)
 		: idriver(length)

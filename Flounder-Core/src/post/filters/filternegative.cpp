@@ -1,6 +1,6 @@
 #include "filternegative.h"
 
-namespace flounder 
+namespace flounder
 {
 	filternegative::filternegative() :
 		ipostfilter("filterNegative", "res/shaders/filters/negativeFragment.glsl")

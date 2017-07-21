@@ -27,7 +27,7 @@ namespace flounder
 
 	bool buttonmouse::isDown() const
 	{
-		if (m_count == 0)
+		if (m_count == NULL)
 		{
 			return false;
 		}

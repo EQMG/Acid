@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// Simplex noise in 2D, 3D and 4D.
@@ -31,7 +31,7 @@ namespace flounder
 		// 4D SIMPLEX noise
 		float noise(float x, float y, float z, float w);
 
-		inline int getSeed() { return m_seed; }
+		inline int getSeed() const { return m_seed; }
 
 		inline void setSeed(const int seed) { m_seed = seed; }
 	private:

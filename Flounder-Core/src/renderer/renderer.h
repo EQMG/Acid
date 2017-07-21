@@ -6,7 +6,7 @@
 
 #include "irenderermaster.h"
 
-namespace flounder 
+namespace flounder
 {
 	class renderer :
 		public imodule
@@ -21,9 +21,13 @@ namespace flounder
 		bool m_additiveBlending;
 		bool m_antialiasing;
 	public:
+		/// <summary>
+		/// Gets this framework instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
 		static renderer *get()
 		{
-			return (renderer*)framework::get()->getInstance("renderer");
+			return static_cast<renderer*>(framework::get()->getInstance("renderer"));
 		}
 
 		renderer();
@@ -32,9 +36,9 @@ namespace flounder
 
 		void load(irenderermaster *rendererMaster);
 
-		void init();
+		void init() override;
 
-		void update();
+		void update() override;
 
 		inline irenderermaster *getRendererMaster() { return m_rendererMaster; }
 

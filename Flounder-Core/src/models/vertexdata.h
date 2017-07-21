@@ -3,7 +3,7 @@
 #include <vector>
 #include "../maths/vector3.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A class that represents a single model vertex, used when loading OBJ files.
@@ -30,29 +30,29 @@ namespace flounder
 
 		~vertexdata();
 
-		inline vector3 getPosition() { return m_position; }
+		inline vector3 getPosition() const { return m_position; }
 
-		inline int getTextureIndex() { return m_textureIndex; }
+		inline int getTextureIndex() const { return m_textureIndex; }
 
 		inline void setTextureIndex(int textureIndex) { m_textureIndex = textureIndex; }
 
-		inline int getNormalIndex() { return m_normalIndex; }
+		inline int getNormalIndex() const { return m_normalIndex; }
 
 		inline void setNormalIndex(const int normalIndex) { m_normalIndex = normalIndex; }
 
-		inline vertexdata *getDuplicateVertex() { return m_duplicateVertex; }
+		inline vertexdata *getDuplicateVertex() const { return m_duplicateVertex; }
 
 		inline void setDuplicateVertex(vertexdata *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
-		inline int getIndex() { return m_index; }
+		inline int getIndex() const { return m_index; }
 
-		inline float getLength() { return m_length; }
+		inline float getLength() const { return m_length; }
 
 		void addTangent(vector3 *tangent);
 
 		void averageTangents();
 
-		inline vector3 getAverageTangent() { return m_averagedTangent; }
+		inline vector3 getAverageTangent() const { return m_averagedTangent; }
 
 		bool isSet();
 

@@ -1,12 +1,12 @@
 #include "deferredrenderer.h"
 
-namespace flounder 
+namespace flounder
 {
 	deferredrenderer::deferredrenderer()
 	{
 		m_shader = shader::newShader()->addName("deferredRenderer")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/deferred/deferredVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/deferred/deferredFragment.glsl", loadtype::FILE))->create();
+		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/deferred/deferredVertex.glsl", loadtype::FILE))
+		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/deferred/deferredFragment.glsl", loadtype::FILE))->create();
 		m_fbo = fbo::newFBO()->fitToScreen(1.0f)->create();
 		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
 	}

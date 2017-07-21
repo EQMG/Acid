@@ -2,18 +2,24 @@
 
 #include "irequest.h"
 
-namespace flounder 
+namespace flounder
 {
 	/// <summary>
 	/// A extension used with the processing class to define a processor.
 	/// </summary>
-	class iprocessor 
+	class iprocessor
 	{
 	public:
+		/// <summary>
+		/// Creates a new processor.
+		/// </summary>
 		iprocessor()
 		{
 		}
 
+		/// <summary>
+		/// Deconstructor for the processor.
+		/// </summary>
 		virtual ~iprocessor()
 		{
 		}
