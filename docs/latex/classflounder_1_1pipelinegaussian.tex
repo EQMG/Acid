@@ -1,0 +1,80 @@
+\hypertarget{classflounder_1_1pipelinegaussian}{}\section{flounder\+:\+:pipelinegaussian Class Reference}
+\label{classflounder_1_1pipelinegaussian}\index{flounder\+::pipelinegaussian@{flounder\+::pipelinegaussian}}
+Inheritance diagram for flounder\+:\+:pipelinegaussian\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1pipelinegaussian}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinegaussian_a77e6dea87b6a7b14184c08449e9b965a}\label{classflounder_1_1pipelinegaussian_a77e6dea87b6a7b14184c08449e9b965a}} 
+{\bfseries pipelinegaussian} (const int \&width, const int \&height)
+\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinegaussian_a54aada433e11cfe54917179803ba9038}\label{classflounder_1_1pipelinegaussian_a54aada433e11cfe54917179803ba9038}} 
+{\bfseries pipelinegaussian} (const float \&size\+Scalar)
+\item 
+void \hyperlink{classflounder_1_1pipelinegaussian_a2d6372f1b428c3a09bf6fc2efaee3c83}{render\+Pipeline} (const int n\+\_\+args,...) override
+\begin{DoxyCompactList}\small\item\em Renders the post pipeline. \end{DoxyCompactList}\item 
+fbo $\ast$ \hyperlink{classflounder_1_1pipelinegaussian_aae27c8214a8a544b1ab96ddd2383a2b2}{get\+Output} () override
+\begin{DoxyCompactList}\small\item\em Gets the fbo containing the pipeline output. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinegaussian_a3d05857ef2339b8ec0b974b3d6b08871}\label{classflounder_1_1pipelinegaussian_a3d05857ef2339b8ec0b974b3d6b08871}} 
+void {\bfseries set\+Scale\+Value} (const float \&scale\+Value)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinegaussian_aaca52c35dffac3b900d75d8804b63edb}\label{classflounder_1_1pipelinegaussian_aaca52c35dffac3b900d75d8804b63edb}} 
+\hyperlink{classflounder_1_1filterblurhorizontal}{filterblurhorizontal} $\ast$ {\bfseries m\+\_\+filter\+Blur\+Horizontal}
+\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinegaussian_a07b5554a4df22a6a2edc97660578a6a1}\label{classflounder_1_1pipelinegaussian_a07b5554a4df22a6a2edc97660578a6a1}} 
+\hyperlink{classflounder_1_1filterblurvertical}{filterblurvertical} $\ast$ {\bfseries m\+\_\+filter\+Blur\+Vertical}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1pipelinegaussian_aae27c8214a8a544b1ab96ddd2383a2b2}\label{classflounder_1_1pipelinegaussian_aae27c8214a8a544b1ab96ddd2383a2b2}} 
+\index{flounder\+::pipelinegaussian@{flounder\+::pipelinegaussian}!get\+Output@{get\+Output}}
+\index{get\+Output@{get\+Output}!flounder\+::pipelinegaussian@{flounder\+::pipelinegaussian}}
+\subsubsection{\texorpdfstring{get\+Output()}{getOutput()}}
+{\footnotesize\ttfamily fbo $\ast$ flounder\+::pipelinegaussian\+::get\+Output (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets the fbo containing the pipeline output. 
+
+\begin{DoxyReturn}{Returns}
+The output fbo. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1ipostpipeline_a08f5d19b9652528337b73c2f4e0e4258}{flounder\+::ipostpipeline}.
+
+\mbox{\Hypertarget{classflounder_1_1pipelinegaussian_a2d6372f1b428c3a09bf6fc2efaee3c83}\label{classflounder_1_1pipelinegaussian_a2d6372f1b428c3a09bf6fc2efaee3c83}} 
+\index{flounder\+::pipelinegaussian@{flounder\+::pipelinegaussian}!render\+Pipeline@{render\+Pipeline}}
+\index{render\+Pipeline@{render\+Pipeline}!flounder\+::pipelinegaussian@{flounder\+::pipelinegaussian}}
+\subsubsection{\texorpdfstring{render\+Pipeline()}{renderPipeline()}}
+{\footnotesize\ttfamily void flounder\+::pipelinegaussian\+::render\+Pipeline (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Renders the post pipeline. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being sent to the pipeline. \\
+\hline
+{\em textures} & A list of textures in indexed order to be bound for the shader program. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}{flounder\+::ipostpipeline}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/post/pipelines/pipelinegaussian.\+h\item 
+Flounder-\/\+Core/src/post/pipelines/pipelinegaussian.\+cpp\end{DoxyCompactItemize}

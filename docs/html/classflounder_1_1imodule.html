@@ -63,19 +63,25 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classflounder_1_1imodule-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">flounder::imodule Class Reference</div>  </div>
+<div class="title">flounder::imodule Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A simple interface used for defining framework modules.  
+ <a href="classflounder_1_1imodule.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="imodule_8h_source.html">imodule.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for flounder::imodule:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classflounder_1_1imodule.png" usemap="#flounder::imodule_map" alt=""/>
   <map id="flounder::imodule_map" name="flounder::imodule_map">
-<area href="classflounder_1_1audio.html" alt="flounder::audio" shape="rect" coords="137,56,264,80"/>
-<area href="classflounder_1_1camera.html" alt="flounder::camera" shape="rect" coords="137,112,264,136"/>
+<area href="classflounder_1_1audio.html" title="A module used for loading, managing and playing a variety of different sound types. " alt="flounder::audio" shape="rect" coords="137,56,264,80"/>
+<area href="classflounder_1_1camera.html" title="A module used for managing cameras in 2D and 3D worlds. " alt="flounder::camera" shape="rect" coords="137,112,264,136"/>
 <area href="classflounder_1_1display.html" title="A module used for the creation, updating and destruction of the display. " alt="flounder::display" shape="rect" coords="137,168,264,192"/>
 <area href="classflounder_1_1events.html" title="A module used for managing events on framework updates. " alt="flounder::events" shape="rect" coords="137,224,264,248"/>
 <area href="classflounder_1_1joysticks.html" title="A module used for the creation, updating and destruction of the joysticks. " alt="flounder::joysticks" shape="rect" coords="137,280,264,304"/>
@@ -84,12 +90,144 @@ Inheritance diagram for flounder::imodule:</div>
 <area href="classflounder_1_1mouse.html" title="A module used for the creation, updating and destruction of the mouse. " alt="flounder::mouse" shape="rect" coords="137,448,264,472"/>
 <area href="classflounder_1_1processing.html" alt="flounder::processing" shape="rect" coords="137,504,264,528"/>
 <area href="classflounder_1_1skybox.html" alt="flounder::skybox" shape="rect" coords="137,560,264,584"/>
-<area href="classflounder_1_1standards.html" alt="flounder::standards" shape="rect" coords="137,616,264,640"/>
-<area href="classflounder_1_1tasks.html" alt="flounder::tasks" shape="rect" coords="137,672,264,696"/>
+<area href="classflounder_1_1standards.html" title="A module used for managing simple update injection standards. " alt="flounder::standards" shape="rect" coords="137,616,264,640"/>
+<area href="classflounder_1_1tasks.html" title="A module used for managing tasks on framework updates. " alt="flounder::tasks" shape="rect" coords="137,672,264,696"/>
 </map>
  </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aa0b5648a6adbcf8c333820d967a37aeb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">imodule</a> ()</td></tr>
+<tr class="memdesc:aa0b5648a6adbcf8c333820d967a37aeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new module.  <a href="#aa0b5648a6adbcf8c333820d967a37aeb">More...</a><br /></td></tr>
+<tr class="separator:aa0b5648a6adbcf8c333820d967a37aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a519b8530d27d6c21d591e12e776ef834"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">~imodule</a> ()</td></tr>
+<tr class="memdesc:a519b8530d27d6c21d591e12e776ef834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the module.  <a href="#a519b8530d27d6c21d591e12e776ef834">More...</a><br /></td></tr>
+<tr class="separator:a519b8530d27d6c21d591e12e776ef834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1725ef346952884d0741de61aba1e0c7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a1725ef346952884d0741de61aba1e0c7">init</a> ()=0</td></tr>
+<tr class="memdesc:a1725ef346952884d0741de61aba1e0c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialize function for the module.  <a href="#a1725ef346952884d0741de61aba1e0c7">More...</a><br /></td></tr>
+<tr class="separator:a1725ef346952884d0741de61aba1e0c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a53d48a46b5f6b16a92b2cd8503f74a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a9a53d48a46b5f6b16a92b2cd8503f74a">update</a> ()=0</td></tr>
+<tr class="memdesc:a9a53d48a46b5f6b16a92b2cd8503f74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the module.  <a href="#a9a53d48a46b5f6b16a92b2cd8503f74a">More...</a><br /></td></tr>
+<tr class="separator:a9a53d48a46b5f6b16a92b2cd8503f74a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A simple interface used for defining framework modules. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa0b5648a6adbcf8c333820d967a37aeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0b5648a6adbcf8c333820d967a37aeb">&#9670;&nbsp;</a></span>imodule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">flounder::imodule::imodule </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new module. </p>
+
+</div>
+</div>
+<a id="a519b8530d27d6c21d591e12e776ef834"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a519b8530d27d6c21d591e12e776ef834">&#9670;&nbsp;</a></span>~imodule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual flounder::imodule::~imodule </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Deconstructor for the module. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1725ef346952884d0741de61aba1e0c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1725ef346952884d0741de61aba1e0c7">&#9670;&nbsp;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void flounder::imodule::init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The initialize function for the module. </p>
+
+<p>Implemented in <a class="el" href="classflounder_1_1display.html#aa28a814bc8ba635c99aa4b707bac3259">flounder::display</a>, <a class="el" href="classflounder_1_1mouse.html#a8a550ad472e61ed74ca42c07777bdd1f">flounder::mouse</a>, <a class="el" href="classflounder_1_1joysticks.html#a6bb77cff38ccbdcdde66495afc538b1a">flounder::joysticks</a>, <a class="el" href="classflounder_1_1camera.html#a3deb0358c2a67ad864a630adaf566c4e">flounder::camera</a>, <a class="el" href="classflounder_1_1audio.html#acc0f4ebb4b42b0ef055ef8dd14f1a9da">flounder::audio</a>, <a class="el" href="classflounder_1_1keyboard.html#a624374ba5d79431171a44ed332e63322">flounder::keyboard</a>, <a class="el" href="classflounder_1_1loaders.html#af99df6ebe1886b87efbca82842be0d0d">flounder::loaders</a>, <a class="el" href="classflounder_1_1skybox.html#ad298f30a9e35657726bc8043a687cab7">flounder::skybox</a>, <a class="el" href="classflounder_1_1events.html#a3256dce85cd1a62a6126812dab9c4630">flounder::events</a>, <a class="el" href="classflounder_1_1standards.html#a74dd1bd0e18bc72d985073a0771790fc">flounder::standards</a>, <a class="el" href="classflounder_1_1tasks.html#a1527c16072936c764b990d3b9fd8786e">flounder::tasks</a>, and <a class="el" href="classflounder_1_1processing.html#a5c9545d8a02d836bc198982750f24f49">flounder::processing</a>.</p>
+
+</div>
+</div>
+<a id="a9a53d48a46b5f6b16a92b2cd8503f74a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a53d48a46b5f6b16a92b2cd8503f74a">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void flounder::imodule::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The update function for the module. </p>
+
+<p>Implemented in <a class="el" href="classflounder_1_1display.html#a799c6a76fcac1a0ca56dfd6b8d7993fa">flounder::display</a>, <a class="el" href="classflounder_1_1mouse.html#aa1b1d60e1d1cf4ec7d19eaef65e040bc">flounder::mouse</a>, <a class="el" href="classflounder_1_1joysticks.html#a346fc03cae7164d6eb927333d1ae725f">flounder::joysticks</a>, <a class="el" href="classflounder_1_1camera.html#a6b2da3a1c348764d3cf954db5ac5b357">flounder::camera</a>, <a class="el" href="classflounder_1_1audio.html#aabff6a1996b8571404023b6ac17009b6">flounder::audio</a>, <a class="el" href="classflounder_1_1keyboard.html#a9fe79eabe905466fd90413d2c3b68841">flounder::keyboard</a>, <a class="el" href="classflounder_1_1loaders.html#a9becf522a74f35f7e3dc7839577ba736">flounder::loaders</a>, <a class="el" href="classflounder_1_1skybox.html#a9c961cf6d878f40f0294905415981234">flounder::skybox</a>, <a class="el" href="classflounder_1_1events.html#a7fc08fdb5dc615a924dd0d55996747dc">flounder::events</a>, <a class="el" href="classflounder_1_1standards.html#a681e682db67c10abb814cf0f8daf086a">flounder::standards</a>, <a class="el" href="classflounder_1_1tasks.html#a32e51c65b63e8c98097d5d40c1912e5c">flounder::tasks</a>, and <a class="el" href="classflounder_1_1processing.html#ac096299eb1b5b67739586900710d4206">flounder::processing</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/framework/<a class="el" href="imodule_8h_source.html">imodule.h</a></li>
+<li>Flounder-Core/src/framework/<a class="el" href="imodule_8h_source.html">imodule.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

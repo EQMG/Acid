@@ -22,7 +22,7 @@ Inheritance diagram for flounder\+:\+:buttonjoystick\+:\begin{figure}[H]
 \begin{DoxyCompactList}\small\item\em Creates a new button joystick. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1buttonjoystick_aece2e8931c528cef0a266f17b2eba88b}{$\sim$buttonjoystick} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the button joystick. \end{DoxyCompactList}\item 
-bool \hyperlink{classflounder_1_1buttonjoystick_ab6682d3554e007ef473c4595339f86f1}{is\+Down} () override
+bool \hyperlink{classflounder_1_1buttonjoystick_adf53e97310b757108a417f5d4e6c5ab0}{is\+Down} () const override
 \begin{DoxyCompactList}\small\item\em Returns whether this button is currently pressed. \end{DoxyCompactList}\item 
 bool \hyperlink{classflounder_1_1buttonjoystick_a99302b1345fa773ec839290ae6c406e7}{was\+Down} () override
 \begin{DoxyCompactList}\small\item\em Gets if the key is down and was not down before. Key press recognized as one click. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -53,7 +53,7 @@ Button from a joystick.
 \index{flounder\+::buttonjoystick@{flounder\+::buttonjoystick}!buttonjoystick@{buttonjoystick}}
 \index{buttonjoystick@{buttonjoystick}!flounder\+::buttonjoystick@{flounder\+::buttonjoystick}}
 \subsubsection{\texorpdfstring{buttonjoystick()}{buttonjoystick()}}
-{\footnotesize\ttfamily flounder\+::buttonjoystick\+::buttonjoystick (\begin{DoxyParamCaption}\item[{const int \&}]{joystick,  }\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily flounder\+::buttonjoystick\+::buttonjoystick (\begin{DoxyParamCaption}\item[{const int \&}]{joystick,  }\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
 
 
 
@@ -72,7 +72,7 @@ Creates a new button joystick.
 \index{flounder\+::buttonjoystick@{flounder\+::buttonjoystick}!````~buttonjoystick@{$\sim$buttonjoystick}}
 \index{````~buttonjoystick@{$\sim$buttonjoystick}!flounder\+::buttonjoystick@{flounder\+::buttonjoystick}}
 \subsubsection{\texorpdfstring{$\sim$buttonjoystick()}{~buttonjoystick()}}
-{\footnotesize\ttfamily flounder\+::buttonjoystick\+::$\sim$buttonjoystick (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily flounder\+::buttonjoystick\+::$\sim$buttonjoystick (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -81,11 +81,11 @@ Deconstructor for the button joystick.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1buttonjoystick_ab6682d3554e007ef473c4595339f86f1}\label{classflounder_1_1buttonjoystick_ab6682d3554e007ef473c4595339f86f1}} 
+\mbox{\Hypertarget{classflounder_1_1buttonjoystick_adf53e97310b757108a417f5d4e6c5ab0}\label{classflounder_1_1buttonjoystick_adf53e97310b757108a417f5d4e6c5ab0}} 
 \index{flounder\+::buttonjoystick@{flounder\+::buttonjoystick}!is\+Down@{is\+Down}}
 \index{is\+Down@{is\+Down}!flounder\+::buttonjoystick@{flounder\+::buttonjoystick}}
 \subsubsection{\texorpdfstring{is\+Down()}{isDown()}}
-{\footnotesize\ttfamily bool flounder\+::buttonjoystick\+::is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily bool flounder\+::buttonjoystick\+::is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -96,13 +96,13 @@ True if the button is pressed, false otherwise.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1ibutton_ab64fd22a75ea66ce67fd9b1ad34fd837}{flounder\+::ibutton}.
+Implements \hyperlink{classflounder_1_1ibutton_af99b936d7329f74a27768ce6eb181327}{flounder\+::ibutton}.
 
 \mbox{\Hypertarget{classflounder_1_1buttonjoystick_a99302b1345fa773ec839290ae6c406e7}\label{classflounder_1_1buttonjoystick_a99302b1345fa773ec839290ae6c406e7}} 
 \index{flounder\+::buttonjoystick@{flounder\+::buttonjoystick}!was\+Down@{was\+Down}}
 \index{was\+Down@{was\+Down}!flounder\+::buttonjoystick@{flounder\+::buttonjoystick}}
 \subsubsection{\texorpdfstring{was\+Down()}{wasDown()}}
-{\footnotesize\ttfamily bool flounder\+::buttonjoystick\+::was\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily bool flounder\+::buttonjoystick\+::was\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -117,6 +117,7 @@ Implements \hyperlink{classflounder_1_1ibutton_a5fb7b3493c0ea0e67bb9defc272da0d3
 
 
 
-The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/inputs/buttonjoystick.\+h\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/inputs/buttonjoystick.\+h\item 
+Flounder-\/\+Core/src/inputs/buttonjoystick.\+cpp\end{DoxyCompactItemize}

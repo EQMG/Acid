@@ -71,35 +71,47 @@ $(function() {
 <div class="title">flounder::audio Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A module used for loading, managing and playing a variety of different sound types.  
+ <a href="classflounder_1_1audio.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="audio_8h_source.html">audio.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for flounder::audio:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classflounder_1_1audio.png" usemap="#flounder::audio_map" alt=""/>
   <map id="flounder::audio_map" name="flounder::audio_map">
-<area href="classflounder_1_1imodule.html" alt="flounder::imodule" shape="rect" coords="0,0,108,24"/>
+<area href="classflounder_1_1imodule.html" title="A simple interface used for defining framework modules. " alt="flounder::imodule" shape="rect" coords="0,0,108,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0aabbb226f542847145d89adb1144c16"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1audio.html#a0aabbb226f542847145d89adb1144c16">audio</a> ()</td></tr>
-<tr class="memdesc:a0aabbb226f542847145d89adb1144c16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new GLFW sound manager.  <a href="#a0aabbb226f542847145d89adb1144c16">More...</a><br /></td></tr>
+<tr class="memdesc:a0aabbb226f542847145d89adb1144c16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new audio module.  <a href="#a0aabbb226f542847145d89adb1144c16">More...</a><br /></td></tr>
 <tr class="separator:a0aabbb226f542847145d89adb1144c16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb4d3bbb9ae399385a3abfe6e4e6d7ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1audio.html#afb4d3bbb9ae399385a3abfe6e4e6d7ee">~audio</a> ()</td></tr>
-<tr class="memdesc:afb4d3bbb9ae399385a3abfe6e4e6d7ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the sound manager.  <a href="#afb4d3bbb9ae399385a3abfe6e4e6d7ee">More...</a><br /></td></tr>
+<tr class="memdesc:afb4d3bbb9ae399385a3abfe6e4e6d7ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the audio module.  <a href="#afb4d3bbb9ae399385a3abfe6e4e6d7ee">More...</a><br /></td></tr>
 <tr class="separator:afb4d3bbb9ae399385a3abfe6e4e6d7ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5c529c490824dd24844192fd904a802"><td class="memItemLeft" align="right" valign="top"><a id="aa5c529c490824dd24844192fd904a802"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
-<tr class="separator:aa5c529c490824dd24844192fd904a802"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95fffe6a580452d2118e28f4872108ed"><td class="memItemLeft" align="right" valign="top"><a id="a95fffe6a580452d2118e28f4872108ed"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> ()</td></tr>
-<tr class="separator:a95fffe6a580452d2118e28f4872108ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc0f4ebb4b42b0ef055ef8dd14f1a9da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1audio.html#acc0f4ebb4b42b0ef055ef8dd14f1a9da">init</a> () override</td></tr>
+<tr class="memdesc:acc0f4ebb4b42b0ef055ef8dd14f1a9da"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialize function for the module.  <a href="#acc0f4ebb4b42b0ef055ef8dd14f1a9da">More...</a><br /></td></tr>
+<tr class="separator:acc0f4ebb4b42b0ef055ef8dd14f1a9da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabff6a1996b8571404023b6ac17009b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1audio.html#aabff6a1996b8571404023b6ac17009b6">update</a> () override</td></tr>
+<tr class="memdesc:aabff6a1996b8571404023b6ac17009b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the module.  <a href="#aabff6a1996b8571404023b6ac17009b6">More...</a><br /></td></tr>
+<tr class="separator:aabff6a1996b8571404023b6ac17009b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classflounder_1_1imodule"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classflounder_1_1imodule')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classflounder_1_1imodule.html">flounder::imodule</a></td></tr>
+<tr class="memitem:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">imodule</a> ()</td></tr>
+<tr class="memdesc:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new module.  <a href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">More...</a><br /></td></tr>
+<tr class="separator:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">~imodule</a> ()</td></tr>
+<tr class="memdesc:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the module.  <a href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">More...</a><br /></td></tr>
+<tr class="separator:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac827774b8855e8a921ef9141c2515df8"><td class="memItemLeft" align="right" valign="top"><a id="ac827774b8855e8a921ef9141c2515df8"></a>
-static <a class="el" href="classflounder_1_1audio.html">audio</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()</td></tr>
+<tr class="memitem:ac827774b8855e8a921ef9141c2515df8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classflounder_1_1audio.html">audio</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1audio.html#ac827774b8855e8a921ef9141c2515df8">get</a> ()</td></tr>
+<tr class="memdesc:ac827774b8855e8a921ef9141c2515df8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets this framework instance.  <a href="#ac827774b8855e8a921ef9141c2515df8">More...</a><br /></td></tr>
 <tr class="separator:ac827774b8855e8a921ef9141c2515df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -114,7 +126,9 @@ ALCcontext *&#160;</td><td class="memItemRight" valign="bottom"><b>m_context</b>
 int *&#160;</td><td class="memItemRight" valign="bottom"><b>buffers</b></td></tr>
 <tr class="separator:a58379153a6620d70633e20b4660502ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A module used for loading, managing and playing a variety of different sound types. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0aabbb226f542847145d89adb1144c16"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0aabbb226f542847145d89adb1144c16">&#9670;&nbsp;</a></span>audio()</h2>
 
@@ -130,7 +144,7 @@ int *&#160;</td><td class="memItemRight" valign="bottom"><b>buffers</b></td></tr
       </table>
 </div><div class="memdoc">
 
-<p>Creates a new GLFW sound manager. </p>
+<p>Creates a new audio module. </p>
 
 </div>
 </div>
@@ -149,13 +163,100 @@ int *&#160;</td><td class="memItemRight" valign="bottom"><b>buffers</b></td></tr
       </table>
 </div><div class="memdoc">
 
-<p>Deconstructor for the sound manager. </p>
+<p>Deconstructor for the audio module. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac827774b8855e8a921ef9141c2515df8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac827774b8855e8a921ef9141c2515df8">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classflounder_1_1audio.html">audio</a>* flounder::audio::get </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets this framework instance. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current module instance. </dd></dl>
+
+</div>
+</div>
+<a id="acc0f4ebb4b42b0ef055ef8dd14f1a9da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc0f4ebb4b42b0ef055ef8dd14f1a9da">&#9670;&nbsp;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::audio::init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The initialize function for the module. </p>
+
+<p>Implements <a class="el" href="classflounder_1_1imodule.html#a1725ef346952884d0741de61aba1e0c7">flounder::imodule</a>.</p>
+
+</div>
+</div>
+<a id="aabff6a1996b8571404023b6ac17009b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabff6a1996b8571404023b6ac17009b6">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::audio::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The update function for the module. </p>
+
+<p>Implements <a class="el" href="classflounder_1_1imodule.html#a9a53d48a46b5f6b16a92b2cd8503f74a">flounder::imodule</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/devices/<a class="el" href="audio_8h_source.html">audio.h</a></li>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/devices/audio.cpp</li>
+<li>Flounder-Core/src/devices/<a class="el" href="audio_8h_source.html">audio.h</a></li>
+<li>Flounder-Core/src/devices/audio.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

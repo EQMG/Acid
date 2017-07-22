@@ -32,11 +32,11 @@ Holds a 4-\/tuple vector.
 \begin{DoxyCompactList}\small\item\em Normalizes this vector. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1vector4_af31ae2dc6c068dd8ca5f831418e61d0f}{scale} (const float \&scalar)
 \begin{DoxyCompactList}\small\item\em Scales this vector. \end{DoxyCompactList}\item 
-bool \hyperlink{classflounder_1_1vector4_a5671fd3884e240a005b1e870040b17ed}{is\+Zero} ()
+bool \hyperlink{classflounder_1_1vector4_a6fdd6ed7ac306906c8d28aa10159f5c5}{is\+Zero} () const
 \begin{DoxyCompactList}\small\item\em Gets if all the components to the vector are zero. \end{DoxyCompactList}\item 
-float \hyperlink{classflounder_1_1vector4_ad21f01ec6397b385f7aef3335726fb25}{length} ()
+float \hyperlink{classflounder_1_1vector4_ac0615801260a6a2b35eb5812c4834ac9}{length} () const
 \begin{DoxyCompactList}\small\item\em Gets the length of the vector. \end{DoxyCompactList}\item 
-float \hyperlink{classflounder_1_1vector4_a335e6cb17910722580079ff41bf352f1}{length\+Squared} ()
+float \hyperlink{classflounder_1_1vector4_a872050dbf8c90f8cf7f42d14d6dbe793}{length\+Squared} () const
 \begin{DoxyCompactList}\small\item\em Gets the length squared of the vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -80,17 +80,17 @@ static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflou
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1vector4_affb861c081e42dbb5c2f63ecf4f07bb9}\label{classflounder_1_1vector4_affb861c081e42dbb5c2f63ecf4f07bb9}} 
-float {\bfseries x}
+\mbox{\Hypertarget{classflounder_1_1vector4_a6aad1a0bbbdb2a338a621b7a86446b42}\label{classflounder_1_1vector4_a6aad1a0bbbdb2a338a621b7a86446b42}} 
+float {\bfseries m\+\_\+x}
 \item 
-\mbox{\Hypertarget{classflounder_1_1vector4_a7dd1786ca39496a55ef6c4244020aa3b}\label{classflounder_1_1vector4_a7dd1786ca39496a55ef6c4244020aa3b}} 
-float {\bfseries y}
+\mbox{\Hypertarget{classflounder_1_1vector4_a89806f130cc77171ea29ccd0bdc65685}\label{classflounder_1_1vector4_a89806f130cc77171ea29ccd0bdc65685}} 
+float {\bfseries m\+\_\+y}
 \item 
-\mbox{\Hypertarget{classflounder_1_1vector4_acff3319d224de3df57866b985291a398}\label{classflounder_1_1vector4_acff3319d224de3df57866b985291a398}} 
-float {\bfseries z}
+\mbox{\Hypertarget{classflounder_1_1vector4_a101ae9937f3a9bfdc3b7dca5e90d39bc}\label{classflounder_1_1vector4_a101ae9937f3a9bfdc3b7dca5e90d39bc}} 
+float {\bfseries m\+\_\+z}
 \item 
-\mbox{\Hypertarget{classflounder_1_1vector4_ad4e06ca3f8c633a0b7422559a9d1f8bd}\label{classflounder_1_1vector4_ad4e06ca3f8c633a0b7422559a9d1f8bd}} 
-float {\bfseries w}
+\mbox{\Hypertarget{classflounder_1_1vector4_a0f94de958c3ae8097e009d0526345b5b}\label{classflounder_1_1vector4_a0f94de958c3ae8097e009d0526345b5b}} 
+float {\bfseries m\+\_\+w}
 \end{DoxyCompactItemize}
 
 
@@ -175,7 +175,7 @@ Adds two vectors together and places the result in the destination vector.
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination vector or null if a new vector is to be created. \\
+{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -217,7 +217,7 @@ Divides two vectors from each other and places the result in the destination vec
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination vector or null if a new vector is to be created. \\
+{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -299,17 +299,17 @@ Gets the vector distance between 2 vectors.
 \hline
 {\em point2} & The second point. \\
 \hline
-{\em destination} & The destination vector or null if a new vector is to be created. \\
+{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The vector distance between the points. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1vector4_a5671fd3884e240a005b1e870040b17ed}\label{classflounder_1_1vector4_a5671fd3884e240a005b1e870040b17ed}} 
+\mbox{\Hypertarget{classflounder_1_1vector4_a6fdd6ed7ac306906c8d28aa10159f5c5}\label{classflounder_1_1vector4_a6fdd6ed7ac306906c8d28aa10159f5c5}} 
 \index{flounder\+::vector4@{flounder\+::vector4}!is\+Zero@{is\+Zero}}
 \index{is\+Zero@{is\+Zero}!flounder\+::vector4@{flounder\+::vector4}}
 \subsubsection{\texorpdfstring{is\+Zero()}{isZero()}}
-{\footnotesize\ttfamily bool flounder\+::vector4\+::is\+Zero (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool flounder\+::vector4\+::is\+Zero (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
 
@@ -336,11 +336,11 @@ Gets the length of the vector.
 \begin{DoxyReturn}{Returns}
 The length of the vector. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1vector4_ad21f01ec6397b385f7aef3335726fb25}\label{classflounder_1_1vector4_ad21f01ec6397b385f7aef3335726fb25}} 
+\mbox{\Hypertarget{classflounder_1_1vector4_ac0615801260a6a2b35eb5812c4834ac9}\label{classflounder_1_1vector4_ac0615801260a6a2b35eb5812c4834ac9}} 
 \index{flounder\+::vector4@{flounder\+::vector4}!length@{length}}
 \index{length@{length}!flounder\+::vector4@{flounder\+::vector4}}
 \subsubsection{\texorpdfstring{length()}{length()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily float flounder\+::vector4\+::length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily float flounder\+::vector4\+::length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
 
@@ -372,11 +372,11 @@ Gets the length of the vector.
 \begin{DoxyReturn}{Returns}
 The length squared of the vector. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1vector4_a335e6cb17910722580079ff41bf352f1}\label{classflounder_1_1vector4_a335e6cb17910722580079ff41bf352f1}} 
+\mbox{\Hypertarget{classflounder_1_1vector4_a872050dbf8c90f8cf7f42d14d6dbe793}\label{classflounder_1_1vector4_a872050dbf8c90f8cf7f42d14d6dbe793}} 
 \index{flounder\+::vector4@{flounder\+::vector4}!length\+Squared@{length\+Squared}}
 \index{length\+Squared@{length\+Squared}!flounder\+::vector4@{flounder\+::vector4}}
 \subsubsection{\texorpdfstring{length\+Squared()}{lengthSquared()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily float flounder\+::vector4\+::length\+Squared (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily float flounder\+::vector4\+::length\+Squared (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
 
@@ -424,7 +424,7 @@ Gets the maximum vector size.
 \hline
 {\em b} & The second vector to get values from. \\
 \hline
-{\em destination} & The destination vector or null if a new vector is to be created. \\
+{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -464,7 +464,7 @@ Gets the lowest vector size.
 \hline
 {\em b} & The second vector to get values from. \\
 \hline
-{\em destination} & The destination vector or null if a new vector is to be created. \\
+{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -486,7 +486,7 @@ Multiplies two vectors from each other and places the result in the destination 
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination vector or null if a new vector is to be created. \\
+{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -506,7 +506,7 @@ Negates a vector and places the result in the destination vector.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source vector. \\
 \hline
-{\em destination} & The destination vector or null if a new vector is to be created. \\
+{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -539,7 +539,7 @@ Normalizes a vector and places the result in the destination vector.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source vector. \\
 \hline
-{\em destination} & The destination vector or null if a new vector is to be created. \\
+{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -574,7 +574,7 @@ Scales a vector by a scalar and places the result in the destination vector.
 \hline
 {\em scalar} & The scalar value. \\
 \hline
-{\em destination} & The destination vector or null if a new vector is to be created. \\
+{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -656,7 +656,7 @@ Subtracts two vectors from each other and places the result in the destination v
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination vector or null if a new vector is to be created. \\
+{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -690,5 +690,5 @@ This.
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/vector4.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/vector4.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/maths/vector4.\+h\item 
+Flounder-\/\+Core/src/maths/vector4.\+cpp\end{DoxyCompactItemize}

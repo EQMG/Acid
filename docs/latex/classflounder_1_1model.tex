@@ -17,12 +17,12 @@ class \hyperlink{classflounder_1_1model_1_1builder}{builder}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1model_ab057b09c76aef84cd52ba2b8dfa3f3de}\label{classflounder_1_1model_ab057b09c76aef84cd52ba2b8dfa3f3de}} 
-G\+Luint {\bfseries get\+Vao\+ID} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1model_a25e92fa495585a691c80be98fb1d9a98}\label{classflounder_1_1model_a25e92fa495585a691c80be98fb1d9a98}} 
-G\+Luint {\bfseries get\+Vao\+Length} ()
-\end{DoxyCompactItemize}
+\hyperlink{classflounder_1_1model_afd864365f858cc9bc0bf260bb6212a76}{$\sim$model} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the model. \end{DoxyCompactList}\item 
+G\+Luint \hyperlink{classflounder_1_1model_a6c228ad9bf9ae4897cc3b4a40be8e65e}{get\+Vao\+ID} () const
+\begin{DoxyCompactList}\small\item\em Gets the Open\+GL V\+AO ID. \end{DoxyCompactList}\item 
+G\+Luint \hyperlink{classflounder_1_1model_a224a933a01c0b0c73c7ce2876a519394}{get\+Vao\+Length} () const
+\begin{DoxyCompactList}\small\item\em Gets the Open\+GL V\+AO length. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -58,7 +58,7 @@ std\+::vector$<$ float $>$ $\ast$ {\bfseries m\+\_\+normals}
 std\+::vector$<$ float $>$ $\ast$ {\bfseries m\+\_\+tangents}
 \item 
 \mbox{\Hypertarget{classflounder_1_1model_a95212f2754f856a37eb8c27aaa8dbf15}\label{classflounder_1_1model_a95212f2754f856a37eb8c27aaa8dbf15}} 
-\hyperlink{classflounder_1_1aabb}{aabb} $\ast$ {\bfseries m\+\_\+aabb}
+aabb $\ast$ {\bfseries m\+\_\+aabb}
 \item 
 \mbox{\Hypertarget{classflounder_1_1model_a3ba4ffa3a5671c06e6935a96b127d092}\label{classflounder_1_1model_a3ba4ffa3a5671c06e6935a96b127d092}} 
 G\+Luint {\bfseries m\+\_\+vao\+ID}
@@ -69,9 +69,8 @@ G\+Luint {\bfseries m\+\_\+vao\+Length}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1model_a34c636bee22fcf36fa2a2fcfe0bdadb3}\label{classflounder_1_1model_a34c636bee22fcf36fa2a2fcfe0bdadb3}} 
-void {\bfseries load\+From\+File} (const std\+::string \&file)
-\item 
+void \hyperlink{classflounder_1_1model_a34c636bee22fcf36fa2a2fcfe0bdadb3}{load\+From\+File} (const std\+::string \&file)
+\begin{DoxyCompactList}\small\item\em Loads the model object from a model file. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classflounder_1_1model_a24e81bf6b3ec2c428975e6419ebf18ca}\label{classflounder_1_1model_a24e81bf6b3ec2c428975e6419ebf18ca}} 
 \hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$ {\bfseries process\+Data\+Vertex} (\hyperlink{classflounder_1_1vector3}{vector3} vertex, std\+::vector$<$ \hyperlink{classflounder_1_1vertexdata}{vertexdata} $\ast$$>$ $\ast$vertices, std\+::vector$<$ int $>$ $\ast$indices)
 \item 
@@ -110,9 +109,60 @@ Creates a new model.
 {\em builder} & The models builder. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1model_afd864365f858cc9bc0bf260bb6212a76}\label{classflounder_1_1model_afd864365f858cc9bc0bf260bb6212a76}} 
+\index{flounder\+::model@{flounder\+::model}!````~model@{$\sim$model}}
+\index{````~model@{$\sim$model}!flounder\+::model@{flounder\+::model}}
+\subsubsection{\texorpdfstring{$\sim$model()}{~model()}}
+{\footnotesize\ttfamily flounder\+::model\+::$\sim$model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the model. 
+
 
 
 \subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1model_a6c228ad9bf9ae4897cc3b4a40be8e65e}\label{classflounder_1_1model_a6c228ad9bf9ae4897cc3b4a40be8e65e}} 
+\index{flounder\+::model@{flounder\+::model}!get\+Vao\+ID@{get\+Vao\+ID}}
+\index{get\+Vao\+ID@{get\+Vao\+ID}!flounder\+::model@{flounder\+::model}}
+\subsubsection{\texorpdfstring{get\+Vao\+I\+D()}{getVaoID()}}
+{\footnotesize\ttfamily G\+Luint flounder\+::model\+::get\+Vao\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the Open\+GL V\+AO ID. 
+
+\begin{DoxyReturn}{Returns}
+The V\+AO ID. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1model_a224a933a01c0b0c73c7ce2876a519394}\label{classflounder_1_1model_a224a933a01c0b0c73c7ce2876a519394}} 
+\index{flounder\+::model@{flounder\+::model}!get\+Vao\+Length@{get\+Vao\+Length}}
+\index{get\+Vao\+Length@{get\+Vao\+Length}!flounder\+::model@{flounder\+::model}}
+\subsubsection{\texorpdfstring{get\+Vao\+Length()}{getVaoLength()}}
+{\footnotesize\ttfamily G\+Luint flounder\+::model\+::get\+Vao\+Length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the Open\+GL V\+AO length. 
+
+\begin{DoxyReturn}{Returns}
+The V\+AO length. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1model_a34c636bee22fcf36fa2a2fcfe0bdadb3}\label{classflounder_1_1model_a34c636bee22fcf36fa2a2fcfe0bdadb3}} 
+\index{flounder\+::model@{flounder\+::model}!load\+From\+File@{load\+From\+File}}
+\index{load\+From\+File@{load\+From\+File}!flounder\+::model@{flounder\+::model}}
+\subsubsection{\texorpdfstring{load\+From\+File()}{loadFromFile()}}
+{\footnotesize\ttfamily void flounder\+::model\+::load\+From\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Loads the model object from a model file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & The file to load from. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1model_a55bec80a4092dbe35c319c49d1d50ed8}\label{classflounder_1_1model_a55bec80a4092dbe35c319c49d1d50ed8}} 
 \index{flounder\+::model@{flounder\+::model}!new\+Model@{new\+Model}}
 \index{new\+Model@{new\+Model}!flounder\+::model@{flounder\+::model}}
@@ -130,5 +180,5 @@ The model builder.
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/models/model.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/models/model.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/models/model.\+h\item 
+Flounder-\/\+Core/src/models/model.\+cpp\end{DoxyCompactItemize}

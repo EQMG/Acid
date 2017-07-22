@@ -80,17 +80,23 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a1eb8e53d1705eaee945d28677fb41bcc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1deferredrenderer.html#a1eb8e53d1705eaee945d28677fb41bcc">deferredrenderer</a> ()</td></tr>
+<tr class="memdesc:a1eb8e53d1705eaee945d28677fb41bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new deferred renderer.  <a href="#a1eb8e53d1705eaee945d28677fb41bcc">More...</a><br /></td></tr>
+<tr class="separator:a1eb8e53d1705eaee945d28677fb41bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b884375d735aa7670be432b7567ec0b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1deferredrenderer.html#a7b884375d735aa7670be432b7567ec0b">~deferredrenderer</a> ()</td></tr>
+<tr class="memdesc:a7b884375d735aa7670be432b7567ec0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the deferred renderer.  <a href="#a7b884375d735aa7670be432b7567ec0b">More...</a><br /></td></tr>
+<tr class="separator:a7b884375d735aa7670be432b7567ec0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af369386b3a61385cd8ec2444662599c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1deferredrenderer.html#af369386b3a61385cd8ec2444662599c3">apply</a> (const int n_args,...)</td></tr>
 <tr class="memdesc:af369386b3a61385cd8ec2444662599c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes the textures provided into the deferred renderer.  <a href="#af369386b3a61385cd8ec2444662599c3">More...</a><br /></td></tr>
 <tr class="separator:af369386b3a61385cd8ec2444662599c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a4c0a21d4bf23bf3a499c3a5c100df3"><td class="memItemLeft" align="right" valign="top"><a id="a6a4c0a21d4bf23bf3a499c3a5c100df3"></a>
-fbo *&#160;</td><td class="memItemRight" valign="bottom"><b>getFbo</b> ()</td></tr>
-<tr class="separator:a6a4c0a21d4bf23bf3a499c3a5c100df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59a752dd9810f3809ff9e29bc92636e9"><td class="memItemLeft" align="right" valign="top">fbo *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1deferredrenderer.html#a59a752dd9810f3809ff9e29bc92636e9">getFbo</a> () const</td></tr>
+<tr class="memdesc:a59a752dd9810f3809ff9e29bc92636e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the fbo the filter rendered into.  <a href="#a59a752dd9810f3809ff9e29bc92636e9">More...</a><br /></td></tr>
+<tr class="separator:a59a752dd9810f3809ff9e29bc92636e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a4385f75bb3b15be6c91da12851432226"><td class="memItemLeft" align="right" valign="top"><a id="a4385f75bb3b15be6c91da12851432226"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>storeValues</b> ()</td></tr>
+<tr class="memitem:a4385f75bb3b15be6c91da12851432226"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1deferredrenderer.html#a4385f75bb3b15be6c91da12851432226">storeValues</a> ()</td></tr>
+<tr class="memdesc:a4385f75bb3b15be6c91da12851432226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started.  <a href="#a4385f75bb3b15be6c91da12851432226">More...</a><br /></td></tr>
 <tr class="separator:a4385f75bb3b15be6c91da12851432226"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -113,7 +119,46 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>LIGHTS</b
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A filter-like shader/fbo used to process deferred rendering. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a1eb8e53d1705eaee945d28677fb41bcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1eb8e53d1705eaee945d28677fb41bcc">&#9670;&nbsp;</a></span>deferredrenderer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">flounder::deferredrenderer::deferredrenderer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new deferred renderer. </p>
+
+</div>
+</div>
+<a id="a7b884375d735aa7670be432b7567ec0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b884375d735aa7670be432b7567ec0b">&#9670;&nbsp;</a></span>~deferredrenderer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">flounder::deferredrenderer::~deferredrenderer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deconstructor for the deferred renderer. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="af369386b3a61385cd8ec2444662599c3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af369386b3a61385cd8ec2444662599c3">&#9670;&nbsp;</a></span>apply()</h2>
 
@@ -151,9 +196,64 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>LIGHTS</b
 
 </div>
 </div>
+<a id="a59a752dd9810f3809ff9e29bc92636e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59a752dd9810f3809ff9e29bc92636e9">&#9670;&nbsp;</a></span>getFbo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">fbo* flounder::deferredrenderer::getFbo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the fbo the filter rendered into. </p>
+<dl class="section return"><dt>Returns</dt><dd>The fbo. </dd></dl>
+
+</div>
+</div>
+<a id="a4385f75bb3b15be6c91da12851432226"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4385f75bb3b15be6c91da12851432226">&#9670;&nbsp;</a></span>storeValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::deferredrenderer::storeValues </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/deferred/<a class="el" href="deferredrenderer_8h_source.html">deferredrenderer.h</a></li>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/deferred/deferredrenderer.cpp</li>
+<li>Flounder-Core/src/deferred/<a class="el" href="deferredrenderer_8h_source.html">deferredrenderer.h</a></li>
+<li>Flounder-Core/src/deferred/deferredrenderer.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

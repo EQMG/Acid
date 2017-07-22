@@ -19,15 +19,13 @@ Inheritance diagram for flounder\+:\+:events\+:\begin{figure}[H]
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classflounder_1_1events_ae354f15876d95e28706b1d96dcd790af}{events} ()
-\begin{DoxyCompactList}\small\item\em Creates a new event manager. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Creates a new events module. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1events_aaf446dc74703b8ce1c04f5cf8cb06eed}{$\sim$events} ()
-\begin{DoxyCompactList}\small\item\em Deconstructor for events. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classflounder_1_1events_ad51c30a5d072275fb54fad357bf763c7}\label{classflounder_1_1events_ad51c30a5d072275fb54fad357bf763c7}} 
-void {\bfseries init} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1events_ac9735bc63eeda2d2af17586abbb5b95a}\label{classflounder_1_1events_ac9735bc63eeda2d2af17586abbb5b95a}} 
-void {\bfseries update} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Deconstructor for the events module. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1events_a3256dce85cd1a62a6126812dab9c4630}{init} () override
+\begin{DoxyCompactList}\small\item\em The initialize function for the module. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1events_a7fc08fdb5dc615a924dd0d55996747dc}{update} () override
+\begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1events_a6cb8ff41cf2fbf6a92ca78c122f07eb9}{add\+Event} (\hyperlink{classflounder_1_1ievent}{ievent} $\ast$event)
 \begin{DoxyCompactList}\small\item\em Adds an event to the listening list. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1events_a957a88d282b2caa50cc87bbe039de095}{remove\+Event} (\hyperlink{classflounder_1_1ievent}{ievent} $\ast$event)
@@ -35,9 +33,8 @@ void \hyperlink{classflounder_1_1events_a957a88d282b2caa50cc87bbe039de095}{remov
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1events_aba09dc039ab9ddb860932a3f8d964f1e}\label{classflounder_1_1events_aba09dc039ab9ddb860932a3f8d964f1e}} 
-static \hyperlink{classflounder_1_1events}{events} $\ast$ {\bfseries get} ()
-\end{DoxyCompactItemize}
+static \hyperlink{classflounder_1_1events}{events} $\ast$ \hyperlink{classflounder_1_1events_aba09dc039ab9ddb860932a3f8d964f1e}{get} ()
+\begin{DoxyCompactList}\small\item\em Gets this framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -60,7 +57,7 @@ A module used for managing events on framework updates.
 
 
 
-Creates a new event manager. 
+Creates a new events module. 
 
 \mbox{\Hypertarget{classflounder_1_1events_aaf446dc74703b8ce1c04f5cf8cb06eed}\label{classflounder_1_1events_aaf446dc74703b8ce1c04f5cf8cb06eed}} 
 \index{flounder\+::events@{flounder\+::events}!````~events@{$\sim$events}}
@@ -70,7 +67,7 @@ Creates a new event manager.
 
 
 
-Deconstructor for events. 
+Deconstructor for the events module. 
 
 
 
@@ -90,6 +87,33 @@ Adds an event to the listening list.
 {\em event} & The event to add. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1events_aba09dc039ab9ddb860932a3f8d964f1e}\label{classflounder_1_1events_aba09dc039ab9ddb860932a3f8d964f1e}} 
+\index{flounder\+::events@{flounder\+::events}!get@{get}}
+\index{get@{get}!flounder\+::events@{flounder\+::events}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily static \hyperlink{classflounder_1_1events}{events}$\ast$ flounder\+::events\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this framework instance. 
+
+\begin{DoxyReturn}{Returns}
+The current module instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1events_a3256dce85cd1a62a6126812dab9c4630}\label{classflounder_1_1events_a3256dce85cd1a62a6126812dab9c4630}} 
+\index{flounder\+::events@{flounder\+::events}!init@{init}}
+\index{init@{init}!flounder\+::events@{flounder\+::events}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void flounder\+::events\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The initialize function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a1725ef346952884d0741de61aba1e0c7}{flounder\+::imodule}.
+
 \mbox{\Hypertarget{classflounder_1_1events_a957a88d282b2caa50cc87bbe039de095}\label{classflounder_1_1events_a957a88d282b2caa50cc87bbe039de095}} 
 \index{flounder\+::events@{flounder\+::events}!remove\+Event@{remove\+Event}}
 \index{remove\+Event@{remove\+Event}!flounder\+::events@{flounder\+::events}}
@@ -105,9 +129,23 @@ Removes a event to the listening list.
 {\em event} & The event to remove. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1events_a7fc08fdb5dc615a924dd0d55996747dc}\label{classflounder_1_1events_a7fc08fdb5dc615a924dd0d55996747dc}} 
+\index{flounder\+::events@{flounder\+::events}!update@{update}}
+\index{update@{update}!flounder\+::events@{flounder\+::events}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::events\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The update function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a9a53d48a46b5f6b16a92b2cd8503f74a}{flounder\+::imodule}.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/events/events.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/events/events.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/events/events.\+h\item 
+Flounder-\/\+Core/src/events/events.\+cpp\end{DoxyCompactItemize}

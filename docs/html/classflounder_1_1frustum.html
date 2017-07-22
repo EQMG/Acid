@@ -86,23 +86,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4496169c4a40c7d68447a3d1197e7fb4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#a4496169c4a40c7d68447a3d1197e7fb4">~frustum</a> ()</td></tr>
 <tr class="memdesc:a4496169c4a40c7d68447a3d1197e7fb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for frustum.  <a href="#a4496169c4a40c7d68447a3d1197e7fb4">More...</a><br /></td></tr>
 <tr class="separator:a4496169c4a40c7d68447a3d1197e7fb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad78881f3840433f864caf99c6cf05ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#aad78881f3840433f864caf99c6cf05ea">update</a> (<a class="el" href="classflounder_1_1matrix4x4.html">matrix4x4</a> *viewMatrix, <a class="el" href="classflounder_1_1matrix4x4.html">matrix4x4</a> *projectionMatrix)</td></tr>
-<tr class="memdesc:aad78881f3840433f864caf99c6cf05ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a frustum from the view and projection matrix.  <a href="#aad78881f3840433f864caf99c6cf05ea">More...</a><br /></td></tr>
-<tr class="separator:aad78881f3840433f864caf99c6cf05ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48c31a1320af527a49362c369b84af11"><td class="memItemLeft" align="right" valign="top"><a id="a48c31a1320af527a49362c369b84af11"></a>
-float **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#a48c31a1320af527a49362c369b84af11">getFrustum</a> ()</td></tr>
-<tr class="memdesc:a48c31a1320af527a49362c369b84af11"><td class="mdescLeft">&#160;</td><td class="mdescRight"><dl class="section return"><dt>Returns</dt><dd>The planes*value array used to represent the frustum. </dd></dl>
+<tr class="memitem:a02691e8f1da2d158915f6e267768153d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#a02691e8f1da2d158915f6e267768153d">update</a> (const <a class="el" href="classflounder_1_1matrix4x4.html">matrix4x4</a> &amp;viewMatrix, const <a class="el" href="classflounder_1_1matrix4x4.html">matrix4x4</a> &amp;projectionMatrix)</td></tr>
+<tr class="memdesc:a02691e8f1da2d158915f6e267768153d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a frustum from the view and projection matrix.  <a href="#a02691e8f1da2d158915f6e267768153d">More...</a><br /></td></tr>
+<tr class="separator:a02691e8f1da2d158915f6e267768153d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af529ca96b9da6e9f417a50465f80fb5d"><td class="memItemLeft" align="right" valign="top"><a id="af529ca96b9da6e9f417a50465f80fb5d"></a>
+float **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#af529ca96b9da6e9f417a50465f80fb5d">getFrustum</a> () const</td></tr>
+<tr class="memdesc:af529ca96b9da6e9f417a50465f80fb5d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><dl class="section return"><dt>Returns</dt><dd>The planes*value array used to represent the frustum. </dd></dl>
 <br /></td></tr>
-<tr class="separator:a48c31a1320af527a49362c369b84af11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfe244e060c21bccdb17b0559b02fb28"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#acfe244e060c21bccdb17b0559b02fb28">pointInFrustum</a> (const float &amp;x, const float &amp;y, const float &amp;z)</td></tr>
-<tr class="memdesc:acfe244e060c21bccdb17b0559b02fb28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the point contained in the frustum?  <a href="#acfe244e060c21bccdb17b0559b02fb28">More...</a><br /></td></tr>
-<tr class="separator:acfe244e060c21bccdb17b0559b02fb28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bf94867773ceeca026fef4bce20a87b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#a3bf94867773ceeca026fef4bce20a87b">sphereInFrustum</a> (const float &amp;x, const float &amp;y, const float &amp;z, const float &amp;radius)</td></tr>
-<tr class="memdesc:a3bf94867773ceeca026fef4bce20a87b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the sphere contained in the frustum?  <a href="#a3bf94867773ceeca026fef4bce20a87b">More...</a><br /></td></tr>
-<tr class="separator:a3bf94867773ceeca026fef4bce20a87b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac06cf7669fe9170e1485eb95095a6a98"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#ac06cf7669fe9170e1485eb95095a6a98">cubeInFrustum</a> (const float &amp;x1, const float &amp;y1, const float &amp;z1, const float &amp;x2, const float &amp;y2, const float &amp;z2)</td></tr>
-<tr class="memdesc:ac06cf7669fe9170e1485eb95095a6a98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the cube contained partially in the frustum?  <a href="#ac06cf7669fe9170e1485eb95095a6a98">More...</a><br /></td></tr>
-<tr class="separator:ac06cf7669fe9170e1485eb95095a6a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:af529ca96b9da6e9f417a50465f80fb5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a679f1c37ad7b4faf1efa7e235c3871aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#a679f1c37ad7b4faf1efa7e235c3871aa">pointInFrustum</a> (const float &amp;x, const float &amp;y, const float &amp;z) const</td></tr>
+<tr class="memdesc:a679f1c37ad7b4faf1efa7e235c3871aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the point contained in the frustum?  <a href="#a679f1c37ad7b4faf1efa7e235c3871aa">More...</a><br /></td></tr>
+<tr class="separator:a679f1c37ad7b4faf1efa7e235c3871aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae49a0c95a40a3f0d6779a6a63cb8a17e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#ae49a0c95a40a3f0d6779a6a63cb8a17e">sphereInFrustum</a> (const float &amp;x, const float &amp;y, const float &amp;z, const float &amp;radius) const</td></tr>
+<tr class="memdesc:ae49a0c95a40a3f0d6779a6a63cb8a17e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the sphere contained in the frustum?  <a href="#ae49a0c95a40a3f0d6779a6a63cb8a17e">More...</a><br /></td></tr>
+<tr class="separator:ae49a0c95a40a3f0d6779a6a63cb8a17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93a76dc0315351105d4ced1c28e12994"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1frustum.html#a93a76dc0315351105d4ced1c28e12994">cubeInFrustum</a> (const float &amp;x1, const float &amp;y1, const float &amp;z1, const float &amp;x2, const float &amp;y2, const float &amp;z2) const</td></tr>
+<tr class="memdesc:a93a76dc0315351105d4ced1c28e12994"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the cube contained partially in the frustum?  <a href="#a93a76dc0315351105d4ced1c28e12994">More...</a><br /></td></tr>
+<tr class="separator:a93a76dc0315351105d4ced1c28e12994"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -191,8 +191,8 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>D</b> = 3
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac06cf7669fe9170e1485eb95095a6a98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac06cf7669fe9170e1485eb95095a6a98">&#9670;&nbsp;</a></span>cubeInFrustum()</h2>
+<a id="a93a76dc0315351105d4ced1c28e12994"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93a76dc0315351105d4ced1c28e12994">&#9670;&nbsp;</a></span>cubeInFrustum()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -236,7 +236,7 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>D</b> = 3
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -257,8 +257,8 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>D</b> = 3
 
 </div>
 </div>
-<a id="acfe244e060c21bccdb17b0559b02fb28"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acfe244e060c21bccdb17b0559b02fb28">&#9670;&nbsp;</a></span>pointInFrustum()</h2>
+<a id="a679f1c37ad7b4faf1efa7e235c3871aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a679f1c37ad7b4faf1efa7e235c3871aa">&#9670;&nbsp;</a></span>pointInFrustum()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -284,7 +284,7 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>D</b> = 3
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -302,8 +302,8 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>D</b> = 3
 
 </div>
 </div>
-<a id="a3bf94867773ceeca026fef4bce20a87b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3bf94867773ceeca026fef4bce20a87b">&#9670;&nbsp;</a></span>sphereInFrustum()</h2>
+<a id="ae49a0c95a40a3f0d6779a6a63cb8a17e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae49a0c95a40a3f0d6779a6a63cb8a17e">&#9670;&nbsp;</a></span>sphereInFrustum()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -335,7 +335,7 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>D</b> = 3
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -354,8 +354,8 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>D</b> = 3
 
 </div>
 </div>
-<a id="aad78881f3840433f864caf99c6cf05ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad78881f3840433f864caf99c6cf05ea">&#9670;&nbsp;</a></span>update()</h2>
+<a id="a02691e8f1da2d158915f6e267768153d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02691e8f1da2d158915f6e267768153d">&#9670;&nbsp;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -363,13 +363,13 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>D</b> = 3
         <tr>
           <td class="memname">void flounder::frustum::update </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classflounder_1_1matrix4x4.html">matrix4x4</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="classflounder_1_1matrix4x4.html">matrix4x4</a> &amp;&#160;</td>
           <td class="paramname"><em>viewMatrix</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classflounder_1_1matrix4x4.html">matrix4x4</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="classflounder_1_1matrix4x4.html">matrix4x4</a> &amp;&#160;</td>
           <td class="paramname"><em>projectionMatrix</em>&#160;</td>
         </tr>
         <tr>
@@ -392,8 +392,8 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>D</b> = 3
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/physics/<a class="el" href="frustum_8h_source.html">frustum.h</a></li>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/physics/frustum.cpp</li>
+<li>Flounder-Core/src/physics/<a class="el" href="frustum_8h_source.html">frustum.h</a></li>
+<li>Flounder-Core/src/physics/frustum.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

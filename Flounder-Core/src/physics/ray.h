@@ -19,9 +19,6 @@ namespace flounder
 		matrix4x4 *m_viewMatrix;
 		matrix4x4 *m_projectionMatrix;
 
-		vector3 *m_origin;
-		vector3 *m_currentRay;
-
 		vector2 *m_normalizedCoords;
 		vector4 *m_clipCoords;
 		vector4 *m_eyeCoords;
@@ -30,6 +27,9 @@ namespace flounder
 		matrix4x4 *m_invertedView;
 		vector4 *m_rayWorld;
 	public:
+		vector3 *m_origin;
+		vector3 *m_currentRay;
+
 		/// <summary>
 		/// Creates a new 3D ray.
 		/// </summary>
@@ -66,18 +66,6 @@ namespace flounder
 		/// <param name="destination"> The destination point. X and Y being screen space coords and Z being the distance to the camera. </param>
 		/// <returns> Returns the destination vector. </returns>
 		vector3 *convertToScreenSpace(const vector3 &position, vector3 *destination) const;
-
-		/// <summary>
-		/// Gets the rays origin.
-		/// </summary>
-		/// <returns> The rays origin. </returns>
-		inline vector3 *getOrigin() const { return m_origin; };
-
-		/// <summary>
-		/// Gets the current ray.
-		/// </summary>
-		/// <returns> The current ray. </returns>
-		inline vector3 *getCurrentRay() const { return m_currentRay; };
 	private:
 		void updateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY);
 

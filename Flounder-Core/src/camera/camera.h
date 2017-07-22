@@ -7,6 +7,9 @@
 
 namespace flounder
 {
+	/// <summary>
+	/// A module used for managing cameras in 2D and 3D worlds.
+	/// </summary>
 	class camera :
 		public imodule
 	{

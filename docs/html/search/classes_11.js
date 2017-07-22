@@ -1,7 +1,7 @@
 var searchData=
 [
   ['shader',['shader',['../classflounder_1_1shader.html',1,'flounder']]],
-  ['shadertype',['shadertype',['../classflounder_1_1shadertype.html',1,'flounder']]],
+  ['shadertype',['shadertype',['../structflounder_1_1shadertype.html',1,'flounder']]],
   ['skybox',['skybox',['../classflounder_1_1skybox.html',1,'flounder']]],
   ['smoothfloat',['smoothfloat',['../classflounder_1_1smoothfloat.html',1,'flounder']]],
   ['sphere',['sphere',['../classflounder_1_1sphere.html',1,'flounder']]],

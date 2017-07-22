@@ -71,32 +71,44 @@ $(function() {
 <div class="title">flounder::standards Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A module used for managing simple update injection standards.  
+ <a href="classflounder_1_1standards.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="standards_8h_source.html">standards.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for flounder::standards:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classflounder_1_1standards.png" usemap="#flounder::standards_map" alt=""/>
   <map id="flounder::standards_map" name="flounder::standards_map">
-<area href="classflounder_1_1imodule.html" alt="flounder::imodule" shape="rect" coords="0,0,120,24"/>
+<area href="classflounder_1_1imodule.html" title="A simple interface used for defining framework modules. " alt="flounder::imodule" shape="rect" coords="0,0,120,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a14c1cbffc50a0ace8d72adf68b00cd45"><td class="memItemLeft" align="right" valign="top"><a id="a14c1cbffc50a0ace8d72adf68b00cd45"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>loadStandard</b> (<a class="el" href="classflounder_1_1istandard.html">istandard</a> *standard)</td></tr>
-<tr class="separator:a14c1cbffc50a0ace8d72adf68b00cd45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d722bf238dde5aed717ad2010b399b8"><td class="memItemLeft" align="right" valign="top"><a id="a3d722bf238dde5aed717ad2010b399b8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
-<tr class="separator:a3d722bf238dde5aed717ad2010b399b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a633285a4fd3d3d535a35859e181b74a3"><td class="memItemLeft" align="right" valign="top"><a id="a633285a4fd3d3d535a35859e181b74a3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> ()</td></tr>
-<tr class="separator:a633285a4fd3d3d535a35859e181b74a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94f42d8cb4b1d27ee00952cdcd73c367"><td class="memItemLeft" align="right" valign="top"><a id="a94f42d8cb4b1d27ee00952cdcd73c367"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addStandard</b> (<a class="el" href="classflounder_1_1istandard.html">istandard</a> *standard)</td></tr>
+<tr class="separator:a94f42d8cb4b1d27ee00952cdcd73c367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74dd1bd0e18bc72d985073a0771790fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1standards.html#a74dd1bd0e18bc72d985073a0771790fc">init</a> () override</td></tr>
+<tr class="memdesc:a74dd1bd0e18bc72d985073a0771790fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialize function for the module.  <a href="#a74dd1bd0e18bc72d985073a0771790fc">More...</a><br /></td></tr>
+<tr class="separator:a74dd1bd0e18bc72d985073a0771790fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a681e682db67c10abb814cf0f8daf086a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1standards.html#a681e682db67c10abb814cf0f8daf086a">update</a> () override</td></tr>
+<tr class="memdesc:a681e682db67c10abb814cf0f8daf086a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the module.  <a href="#a681e682db67c10abb814cf0f8daf086a">More...</a><br /></td></tr>
+<tr class="separator:a681e682db67c10abb814cf0f8daf086a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classflounder_1_1imodule"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classflounder_1_1imodule')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classflounder_1_1imodule.html">flounder::imodule</a></td></tr>
+<tr class="memitem:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">imodule</a> ()</td></tr>
+<tr class="memdesc:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new module.  <a href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">More...</a><br /></td></tr>
+<tr class="separator:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">~imodule</a> ()</td></tr>
+<tr class="memdesc:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the module.  <a href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">More...</a><br /></td></tr>
+<tr class="separator:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af31cbc5c0616e052b210cc821ebdd8d5"><td class="memItemLeft" align="right" valign="top"><a id="af31cbc5c0616e052b210cc821ebdd8d5"></a>
-static <a class="el" href="classflounder_1_1standards.html">standards</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()</td></tr>
+<tr class="memitem:af31cbc5c0616e052b210cc821ebdd8d5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classflounder_1_1standards.html">standards</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1standards.html#af31cbc5c0616e052b210cc821ebdd8d5">get</a> ()</td></tr>
+<tr class="memdesc:af31cbc5c0616e052b210cc821ebdd8d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets this framework instance.  <a href="#af31cbc5c0616e052b210cc821ebdd8d5">More...</a><br /></td></tr>
 <tr class="separator:af31cbc5c0616e052b210cc821ebdd8d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -105,9 +117,98 @@ Private Attributes</h2></td></tr>
 std::vector&lt; <a class="el" href="classflounder_1_1istandard.html">istandard</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_standards</b></td></tr>
 <tr class="separator:a022e3fe7bc232e076b6b2fe260f7cbde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A module used for managing simple update injection standards. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="af31cbc5c0616e052b210cc821ebdd8d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af31cbc5c0616e052b210cc821ebdd8d5">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classflounder_1_1standards.html">standards</a>* flounder::standards::get </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets this framework instance. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current module instance. </dd></dl>
+
+</div>
+</div>
+<a id="a74dd1bd0e18bc72d985073a0771790fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74dd1bd0e18bc72d985073a0771790fc">&#9670;&nbsp;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::standards::init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The initialize function for the module. </p>
+
+<p>Implements <a class="el" href="classflounder_1_1imodule.html#a1725ef346952884d0741de61aba1e0c7">flounder::imodule</a>.</p>
+
+</div>
+</div>
+<a id="a681e682db67c10abb814cf0f8daf086a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a681e682db67c10abb814cf0f8daf086a">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::standards::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The update function for the module. </p>
+
+<p>Implements <a class="el" href="classflounder_1_1imodule.html#a9a53d48a46b5f6b16a92b2cd8503f74a">flounder::imodule</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/standards/<a class="el" href="standards_8h_source.html">standards.h</a></li>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/standards/standards.cpp</li>
+<li>Flounder-Core/src/standards/<a class="el" href="standards_8h_source.html">standards.h</a></li>
+<li>Flounder-Core/src/standards/standards.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

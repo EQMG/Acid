@@ -18,7 +18,11 @@ Inheritance diagram for flounder\+:\+:irenderer\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-virtual void \hyperlink{classflounder_1_1irenderer_a62a52634ed51582f1c79a4de33e049a3}{render} (\hyperlink{classflounder_1_1vector4}{vector4} $\ast$clip\+Plane, \hyperlink{classflounder_1_1icamera}{icamera} $\ast$\hyperlink{classflounder_1_1camera}{camera})=0
+\hyperlink{classflounder_1_1irenderer_a2a7c7ca8dbde0b7322a49ed909c9b6f6}{irenderer} ()
+\begin{DoxyCompactList}\small\item\em Creates a new renderer. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1irenderer_a241b5071119fdfe45630e366dfa16e2b}{$\sim$irenderer} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the renderer. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classflounder_1_1irenderer_a3f355dc39e2680bf3f3441d3dfaaa010}{render} (const \hyperlink{classflounder_1_1vector4}{vector4} \&clip\+Plane, const \hyperlink{classflounder_1_1icamera}{icamera} \&\hyperlink{classflounder_1_1camera}{camera})=0
 \begin{DoxyCompactList}\small\item\em Called when the renderer is needed to be rendered. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -27,12 +31,35 @@ Represents a sub renderer in the engine.
 
 
 
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1irenderer_a2a7c7ca8dbde0b7322a49ed909c9b6f6}\label{classflounder_1_1irenderer_a2a7c7ca8dbde0b7322a49ed909c9b6f6}} 
+\index{flounder\+::irenderer@{flounder\+::irenderer}!irenderer@{irenderer}}
+\index{irenderer@{irenderer}!flounder\+::irenderer@{flounder\+::irenderer}}
+\subsubsection{\texorpdfstring{irenderer()}{irenderer()}}
+{\footnotesize\ttfamily flounder\+::irenderer\+::irenderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new renderer. 
+
+\mbox{\Hypertarget{classflounder_1_1irenderer_a241b5071119fdfe45630e366dfa16e2b}\label{classflounder_1_1irenderer_a241b5071119fdfe45630e366dfa16e2b}} 
+\index{flounder\+::irenderer@{flounder\+::irenderer}!````~irenderer@{$\sim$irenderer}}
+\index{````~irenderer@{$\sim$irenderer}!flounder\+::irenderer@{flounder\+::irenderer}}
+\subsubsection{\texorpdfstring{$\sim$irenderer()}{~irenderer()}}
+{\footnotesize\ttfamily virtual flounder\+::irenderer\+::$\sim$irenderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the renderer. 
+
+
+
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1irenderer_a62a52634ed51582f1c79a4de33e049a3}\label{classflounder_1_1irenderer_a62a52634ed51582f1c79a4de33e049a3}} 
+\mbox{\Hypertarget{classflounder_1_1irenderer_a3f355dc39e2680bf3f3441d3dfaaa010}\label{classflounder_1_1irenderer_a3f355dc39e2680bf3f3441d3dfaaa010}} 
 \index{flounder\+::irenderer@{flounder\+::irenderer}!render@{render}}
 \index{render@{render}!flounder\+::irenderer@{flounder\+::irenderer}}
 \subsubsection{\texorpdfstring{render()}{render()}}
-{\footnotesize\ttfamily virtual void flounder\+::irenderer\+::render (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1vector4}{vector4} $\ast$}]{clip\+Plane,  }\item[{\hyperlink{classflounder_1_1icamera}{icamera} $\ast$}]{camera }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily virtual void flounder\+::irenderer\+::render (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{clip\+Plane,  }\item[{const \hyperlink{classflounder_1_1icamera}{icamera} \&}]{camera }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -47,10 +74,10 @@ Called when the renderer is needed to be rendered.
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classflounder_1_1rendererskybox_a3903974ac1a1e2af5b5a8fcbfe8ea433}{flounder\+::rendererskybox}.
+Implemented in \hyperlink{classflounder_1_1rendererskybox_a66714b2e580cd64a30e92d78a0260a33}{flounder\+::rendererskybox}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/renderer/irenderer.\+h\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/renderer/irenderer.\+h\end{DoxyCompactItemize}

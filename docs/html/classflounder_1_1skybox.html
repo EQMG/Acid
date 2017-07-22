@@ -77,21 +77,21 @@ Inheritance diagram for flounder::skybox:</div>
  <div class="center">
   <img src="classflounder_1_1skybox.png" usemap="#flounder::skybox_map" alt=""/>
   <map id="flounder::skybox_map" name="flounder::skybox_map">
-<area href="classflounder_1_1imodule.html" alt="flounder::imodule" shape="rect" coords="0,0,108,24"/>
+<area href="classflounder_1_1imodule.html" title="A simple interface used for defining framework modules. " alt="flounder::imodule" shape="rect" coords="0,0,108,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a56b2c4d80af17be74f249e9af1909751"><td class="memItemLeft" align="right" valign="top"><a id="a56b2c4d80af17be74f249e9af1909751"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>loadTexture</b> (<a class="el" href="classflounder_1_1texture.html">texture</a> *<a class="el" href="classflounder_1_1texture.html">texture</a>)</td></tr>
-<tr class="separator:a56b2c4d80af17be74f249e9af1909751"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8492f806112e0f0b42c990bc7d3cbd21"><td class="memItemLeft" align="right" valign="top"><a id="a8492f806112e0f0b42c990bc7d3cbd21"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
-<tr class="separator:a8492f806112e0f0b42c990bc7d3cbd21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b368ba1d40f9dc7008875e720f28dc6"><td class="memItemLeft" align="right" valign="top"><a id="a0b368ba1d40f9dc7008875e720f28dc6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> ()</td></tr>
-<tr class="separator:a0b368ba1d40f9dc7008875e720f28dc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab76e6523423f67b73e804dc06464d8bc"><td class="memItemLeft" align="right" valign="top"><a id="ab76e6523423f67b73e804dc06464d8bc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> (<a class="el" href="classflounder_1_1texture.html">texture</a> *<a class="el" href="classflounder_1_1texture.html">texture</a>, <a class="el" href="classflounder_1_1model.html">model</a> *<a class="el" href="classflounder_1_1model.html">model</a>)</td></tr>
+<tr class="separator:ab76e6523423f67b73e804dc06464d8bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad298f30a9e35657726bc8043a687cab7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1skybox.html#ad298f30a9e35657726bc8043a687cab7">init</a> () override</td></tr>
+<tr class="memdesc:ad298f30a9e35657726bc8043a687cab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialize function for the module.  <a href="#ad298f30a9e35657726bc8043a687cab7">More...</a><br /></td></tr>
+<tr class="separator:ad298f30a9e35657726bc8043a687cab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c961cf6d878f40f0294905415981234"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1skybox.html#a9c961cf6d878f40f0294905415981234">update</a> () override</td></tr>
+<tr class="memdesc:a9c961cf6d878f40f0294905415981234"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the module.  <a href="#a9c961cf6d878f40f0294905415981234">More...</a><br /></td></tr>
+<tr class="separator:a9c961cf6d878f40f0294905415981234"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d78d655d39bec325636c5672d744f5f"><td class="memItemLeft" align="right" valign="top"><a id="a0d78d655d39bec325636c5672d744f5f"></a>
 float &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSize</b> ()</td></tr>
 <tr class="separator:a0d78d655d39bec325636c5672d744f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -101,9 +101,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setSize</b> (const fl
 <tr class="memitem:a20c6e39b06419ed1e8614f70044aff04"><td class="memItemLeft" align="right" valign="top"><a id="a20c6e39b06419ed1e8614f70044aff04"></a>
 <a class="el" href="classflounder_1_1texture.html">texture</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getTexture</b> ()</td></tr>
 <tr class="separator:a20c6e39b06419ed1e8614f70044aff04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52535c9e9cc91303301be8337f5d56b3"><td class="memItemLeft" align="right" valign="top"><a id="a52535c9e9cc91303301be8337f5d56b3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setTexture</b> (<a class="el" href="classflounder_1_1texture.html">texture</a> *<a class="el" href="classflounder_1_1texture.html">texture</a>)</td></tr>
+<tr class="separator:a52535c9e9cc91303301be8337f5d56b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a451efb79710eec0ce2f14bec9cc85111"><td class="memItemLeft" align="right" valign="top"><a id="a451efb79710eec0ce2f14bec9cc85111"></a>
 <a class="el" href="classflounder_1_1model.html">model</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getModel</b> ()</td></tr>
 <tr class="separator:a451efb79710eec0ce2f14bec9cc85111"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72040c886a38cfc5dccb1b7d93471bee"><td class="memItemLeft" align="right" valign="top"><a id="a72040c886a38cfc5dccb1b7d93471bee"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setModel</b> (<a class="el" href="classflounder_1_1model.html">model</a> *<a class="el" href="classflounder_1_1model.html">model</a>)</td></tr>
+<tr class="separator:a72040c886a38cfc5dccb1b7d93471bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a887c324dbc5174dd38d8be6e2fb9ed04"><td class="memItemLeft" align="right" valign="top"><a id="a887c324dbc5174dd38d8be6e2fb9ed04"></a>
 <a class="el" href="classflounder_1_1vector3.html">vector3</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getRotation</b> ()</td></tr>
 <tr class="separator:a887c324dbc5174dd38d8be6e2fb9ed04"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,11 +131,18 @@ float &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getBlend</b> (
 <tr class="memitem:a8699bb525b6a2c1e300fc59d0038f70e"><td class="memItemLeft" align="right" valign="top"><a id="a8699bb525b6a2c1e300fc59d0038f70e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setBlend</b> (const float blend)</td></tr>
 <tr class="separator:a8699bb525b6a2c1e300fc59d0038f70e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classflounder_1_1imodule"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classflounder_1_1imodule')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classflounder_1_1imodule.html">flounder::imodule</a></td></tr>
+<tr class="memitem:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">imodule</a> ()</td></tr>
+<tr class="memdesc:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new module.  <a href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">More...</a><br /></td></tr>
+<tr class="separator:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">~imodule</a> ()</td></tr>
+<tr class="memdesc:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the module.  <a href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">More...</a><br /></td></tr>
+<tr class="separator:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a4d6b3b6d783e4ad3d3f060cbd0e04e7c"><td class="memItemLeft" align="right" valign="top"><a id="a4d6b3b6d783e4ad3d3f060cbd0e04e7c"></a>
-static <a class="el" href="classflounder_1_1skybox.html">skybox</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()</td></tr>
+<tr class="memitem:a4d6b3b6d783e4ad3d3f060cbd0e04e7c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classflounder_1_1skybox.html">skybox</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1skybox.html#a4d6b3b6d783e4ad3d3f060cbd0e04e7c">get</a> ()</td></tr>
+<tr class="memdesc:a4d6b3b6d783e4ad3d3f060cbd0e04e7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets this framework instance.  <a href="#a4d6b3b6d783e4ad3d3f060cbd0e04e7c">More...</a><br /></td></tr>
 <tr class="separator:a4d6b3b6d783e4ad3d3f060cbd0e04e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -156,9 +169,96 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_size</b></td></tr>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>m_blend</b></td></tr>
 <tr class="separator:a09c5b61727e96dfd822d95255d23badc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a4d6b3b6d783e4ad3d3f060cbd0e04e7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d6b3b6d783e4ad3d3f060cbd0e04e7c">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classflounder_1_1skybox.html">skybox</a>* flounder::skybox::get </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets this framework instance. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current module instance. </dd></dl>
+
+</div>
+</div>
+<a id="ad298f30a9e35657726bc8043a687cab7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad298f30a9e35657726bc8043a687cab7">&#9670;&nbsp;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::skybox::init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The initialize function for the module. </p>
+
+<p>Implements <a class="el" href="classflounder_1_1imodule.html#a1725ef346952884d0741de61aba1e0c7">flounder::imodule</a>.</p>
+
+</div>
+</div>
+<a id="a9c961cf6d878f40f0294905415981234"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c961cf6d878f40f0294905415981234">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::skybox::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The update function for the module. </p>
+
+<p>Implements <a class="el" href="classflounder_1_1imodule.html#a9a53d48a46b5f6b16a92b2cd8503f74a">flounder::imodule</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/skybox/<a class="el" href="skybox_8h_source.html">skybox.h</a></li>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/skybox/skybox.cpp</li>
+<li>Flounder-Core/src/skybox/<a class="el" href="skybox_8h_source.html">skybox.h</a></li>
+<li>Flounder-Core/src/skybox/skybox.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -18,12 +18,10 @@ Inheritance diagram for flounder\+:\+:loaders\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1loaders_a6330a3de582baf8c55f5adc0c66cd503}\label{classflounder_1_1loaders_a6330a3de582baf8c55f5adc0c66cd503}} 
-void {\bfseries init} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1loaders_a74a01b7e9fe2c91750bfbe12a9be9671}\label{classflounder_1_1loaders_a74a01b7e9fe2c91750bfbe12a9be9671}} 
-void {\bfseries update} ()
-\item 
+void \hyperlink{classflounder_1_1loaders_af99df6ebe1886b87efbca82842be0d0d}{init} () override
+\begin{DoxyCompactList}\small\item\em The initialize function for the module. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1loaders_a9becf522a74f35f7e3dc7839577ba736}{update} () override
+\begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
 G\+Luint \hyperlink{classflounder_1_1loaders_a90123e47d1422f5e202a7ac439fee050}{create\+V\+AO} ()
 \begin{DoxyCompactList}\small\item\em Creates an empty V\+AO. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classflounder_1_1loaders_ad408dde74d3bcf097ce9dd97c29e7f12}\label{classflounder_1_1loaders_ad408dde74d3bcf097ce9dd97c29e7f12}} 
@@ -36,9 +34,8 @@ G\+Luint \hyperlink{classflounder_1_1loaders_a035a42c2f558c1f126cc54729388fca3}{
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1loaders_ac57855261d2d43c545cac42e9efe981a}\label{classflounder_1_1loaders_ac57855261d2d43c545cac42e9efe981a}} 
-static \hyperlink{classflounder_1_1loaders}{loaders} $\ast$ {\bfseries get} ()
-\end{DoxyCompactItemize}
+static \hyperlink{classflounder_1_1loaders}{loaders} $\ast$ \hyperlink{classflounder_1_1loaders_ac57855261d2d43c545cac42e9efe981a}{get} ()
+\begin{DoxyCompactList}\small\item\em Gets this framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -86,6 +83,33 @@ Creates an empty V\+AO.
 \begin{DoxyReturn}{Returns}
 The ID of the V\+AO. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1loaders_ac57855261d2d43c545cac42e9efe981a}\label{classflounder_1_1loaders_ac57855261d2d43c545cac42e9efe981a}} 
+\index{flounder\+::loaders@{flounder\+::loaders}!get@{get}}
+\index{get@{get}!flounder\+::loaders@{flounder\+::loaders}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily static \hyperlink{classflounder_1_1loaders}{loaders}$\ast$ flounder\+::loaders\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this framework instance. 
+
+\begin{DoxyReturn}{Returns}
+The current module instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1loaders_af99df6ebe1886b87efbca82842be0d0d}\label{classflounder_1_1loaders_af99df6ebe1886b87efbca82842be0d0d}} 
+\index{flounder\+::loaders@{flounder\+::loaders}!init@{init}}
+\index{init@{init}!flounder\+::loaders@{flounder\+::loaders}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void flounder\+::loaders\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The initialize function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a1725ef346952884d0741de61aba1e0c7}{flounder\+::imodule}.
+
 \mbox{\Hypertarget{classflounder_1_1loaders_a035a42c2f558c1f126cc54729388fca3}\label{classflounder_1_1loaders_a035a42c2f558c1f126cc54729388fca3}} 
 \index{flounder\+::loaders@{flounder\+::loaders}!store\+Data\+In\+V\+BO@{store\+Data\+In\+V\+BO}}
 \index{store\+Data\+In\+V\+BO@{store\+Data\+In\+V\+BO}!flounder\+::loaders@{flounder\+::loaders}}
@@ -110,9 +134,23 @@ Stores a float array of data into a F\+BO.
 \begin{DoxyReturn}{Returns}
 The new F\+BO\textquotesingle{}s ID. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1loaders_a9becf522a74f35f7e3dc7839577ba736}\label{classflounder_1_1loaders_a9becf522a74f35f7e3dc7839577ba736}} 
+\index{flounder\+::loaders@{flounder\+::loaders}!update@{update}}
+\index{update@{update}!flounder\+::loaders@{flounder\+::loaders}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::loaders\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The update function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a9a53d48a46b5f6b16a92b2cd8503f74a}{flounder\+::imodule}.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/loaders/loaders.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/loaders/loaders.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/loaders/loaders.\+h\item 
+Flounder-\/\+Core/src/loaders/loaders.\+cpp\end{DoxyCompactItemize}

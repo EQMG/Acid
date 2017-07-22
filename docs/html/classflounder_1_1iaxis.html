@@ -80,21 +80,83 @@ Inheritance diagram for flounder::iaxis:</div>
  <div class="center">
   <img src="classflounder_1_1iaxis.png" usemap="#flounder::iaxis_map" alt=""/>
   <map id="flounder::iaxis_map" name="flounder::iaxis_map">
-<area href="classflounder_1_1axisjoystick.html" title="Axis from a joystick. " alt="flounder::axisjoystick" shape="rect" coords="0,56,129,80"/>
+<area href="classflounder_1_1axiscompound.html" title="Axis composed of multiple other axes. " alt="flounder::axiscompound" shape="rect" coords="0,56,145,80"/>
+<area href="classflounder_1_1axisjoystick.html" title="Axis from a joystick. " alt="flounder::axisjoystick" shape="rect" coords="155,56,300,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a067a133edfde2ee8e2689df71328bf03"><td class="memItemLeft" align="right" valign="top">virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1iaxis.html#a067a133edfde2ee8e2689df71328bf03">getAmount</a> ()=0</td></tr>
-<tr class="memdesc:a067a133edfde2ee8e2689df71328bf03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current value along the axis. -1 is smallest input, 1 is largest input.  <a href="#a067a133edfde2ee8e2689df71328bf03">More...</a><br /></td></tr>
-<tr class="separator:a067a133edfde2ee8e2689df71328bf03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f181144a1e6cd74008fdf0dbff1db4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1iaxis.html#a0f181144a1e6cd74008fdf0dbff1db4c">iaxis</a> ()</td></tr>
+<tr class="memdesc:a0f181144a1e6cd74008fdf0dbff1db4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new axis.  <a href="#a0f181144a1e6cd74008fdf0dbff1db4c">More...</a><br /></td></tr>
+<tr class="separator:a0f181144a1e6cd74008fdf0dbff1db4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0c72fa9b05f3151dbefc48ce7249f66"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1iaxis.html#ad0c72fa9b05f3151dbefc48ce7249f66">~iaxis</a> ()</td></tr>
+<tr class="memdesc:ad0c72fa9b05f3151dbefc48ce7249f66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the axis.  <a href="#ad0c72fa9b05f3151dbefc48ce7249f66">More...</a><br /></td></tr>
+<tr class="separator:ad0c72fa9b05f3151dbefc48ce7249f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a990ecb5ffa5ec07b3d5e2e4016b2e4a0"><td class="memItemLeft" align="right" valign="top">virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1iaxis.html#a990ecb5ffa5ec07b3d5e2e4016b2e4a0">getAmount</a> () const =0</td></tr>
+<tr class="memdesc:a990ecb5ffa5ec07b3d5e2e4016b2e4a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current value along the axis. -1 is smallest input, 1 is largest input.  <a href="#a990ecb5ffa5ec07b3d5e2e4016b2e4a0">More...</a><br /></td></tr>
+<tr class="separator:a990ecb5ffa5ec07b3d5e2e4016b2e4a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for an axis based input device. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a067a133edfde2ee8e2689df71328bf03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a067a133edfde2ee8e2689df71328bf03">&#9670;&nbsp;</a></span>getAmount()</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0f181144a1e6cd74008fdf0dbff1db4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f181144a1e6cd74008fdf0dbff1db4c">&#9670;&nbsp;</a></span>iaxis()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">flounder::iaxis::iaxis </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new axis. </p>
+
+</div>
+</div>
+<a id="ad0c72fa9b05f3151dbefc48ce7249f66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0c72fa9b05f3151dbefc48ce7249f66">&#9670;&nbsp;</a></span>~iaxis()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual flounder::iaxis::~iaxis </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Deconstructor for the axis. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a990ecb5ffa5ec07b3d5e2e4016b2e4a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a990ecb5ffa5ec07b3d5e2e4016b2e4a0">&#9670;&nbsp;</a></span>getAmount()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -106,7 +168,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">virtual float flounder::iaxis::getAmount </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -119,12 +181,12 @@ Public Member Functions</h2></td></tr>
 <p>Gets the current value along the axis. -1 is smallest input, 1 is largest input. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current value of the axis in the range (-1, 1). </dd></dl>
 
-<p>Implemented in <a class="el" href="classflounder_1_1axisjoystick.html#ace3ec0cbb5c9958fe8e8fb6996fc81c3">flounder::axisjoystick</a>.</p>
+<p>Implemented in <a class="el" href="classflounder_1_1axisjoystick.html#ae1c3dafedcb9458be0172e83f4197dac">flounder::axisjoystick</a>, and <a class="el" href="classflounder_1_1axiscompound.html#aad0f38f1a532c269cd0e803953861400">flounder::axiscompound</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/inputs/<a class="el" href="iaxis_8h_source.html">iaxis.h</a></li>
+<li>Flounder-Core/src/inputs/<a class="el" href="iaxis_8h_source.html">iaxis.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -20,6 +20,9 @@
 
 namespace flounder
 {
+	/// <summary>
+	/// The default GLFW updater for the framework.
+	/// </summary>
 	class glfwupdater : public iupdater
 	{
 	private:

@@ -11,6 +11,20 @@ namespace flounder
 	{
 	public:
 		/// <summary>
+		/// Creates a new post pipeline.
+		/// </summary>
+		ipostpipeline()
+		{
+		}
+
+		/// <summary>
+		/// Deconstructor for the post pipeline.
+		/// </summary>
+		virtual ~ipostpipeline()
+		{
+		}
+
+		/// <summary>
 		/// Renders the post pipeline.
 		/// </summary>
 		/// <param name="n_args"> The number textures being sent to the pipeline. </param>

@@ -93,12 +93,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aece2e8931c528cef0a266f17b2eba88b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1buttonjoystick.html#aece2e8931c528cef0a266f17b2eba88b">~buttonjoystick</a> ()</td></tr>
 <tr class="memdesc:aece2e8931c528cef0a266f17b2eba88b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the button joystick.  <a href="#aece2e8931c528cef0a266f17b2eba88b">More...</a><br /></td></tr>
 <tr class="separator:aece2e8931c528cef0a266f17b2eba88b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6682d3554e007ef473c4595339f86f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1buttonjoystick.html#ab6682d3554e007ef473c4595339f86f1">isDown</a> () override</td></tr>
-<tr class="memdesc:ab6682d3554e007ef473c4595339f86f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether this button is currently pressed.  <a href="#ab6682d3554e007ef473c4595339f86f1">More...</a><br /></td></tr>
-<tr class="separator:ab6682d3554e007ef473c4595339f86f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf53e97310b757108a417f5d4e6c5ab0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1buttonjoystick.html#adf53e97310b757108a417f5d4e6c5ab0">isDown</a> () const override</td></tr>
+<tr class="memdesc:adf53e97310b757108a417f5d4e6c5ab0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether this button is currently pressed.  <a href="#adf53e97310b757108a417f5d4e6c5ab0">More...</a><br /></td></tr>
+<tr class="separator:adf53e97310b757108a417f5d4e6c5ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99302b1345fa773ec839290ae6c406e7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1buttonjoystick.html#a99302b1345fa773ec839290ae6c406e7">wasDown</a> () override</td></tr>
 <tr class="memdesc:a99302b1345fa773ec839290ae6c406e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the key is down and was not down before. Key press recognized as one click.  <a href="#a99302b1345fa773ec839290ae6c406e7">More...</a><br /></td></tr>
 <tr class="separator:a99302b1345fa773ec839290ae6c406e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classflounder_1_1ibutton"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classflounder_1_1ibutton')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classflounder_1_1ibutton.html">flounder::ibutton</a></td></tr>
+<tr class="memitem:a76aa7e3a4cc57c267ef8380462e9c2b6 inherit pub_methods_classflounder_1_1ibutton"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ibutton.html#a76aa7e3a4cc57c267ef8380462e9c2b6">ibutton</a> ()</td></tr>
+<tr class="memdesc:a76aa7e3a4cc57c267ef8380462e9c2b6 inherit pub_methods_classflounder_1_1ibutton"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new axis.  <a href="classflounder_1_1ibutton.html#a76aa7e3a4cc57c267ef8380462e9c2b6">More...</a><br /></td></tr>
+<tr class="separator:a76aa7e3a4cc57c267ef8380462e9c2b6 inherit pub_methods_classflounder_1_1ibutton"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff254102cfa10ee61da7801c2027ac43 inherit pub_methods_classflounder_1_1ibutton"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ibutton.html#aff254102cfa10ee61da7801c2027ac43">~ibutton</a> ()</td></tr>
+<tr class="memdesc:aff254102cfa10ee61da7801c2027ac43 inherit pub_methods_classflounder_1_1ibutton"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the axis.  <a href="classflounder_1_1ibutton.html#aff254102cfa10ee61da7801c2027ac43">More...</a><br /></td></tr>
+<tr class="separator:aff254102cfa10ee61da7801c2027ac43 inherit pub_methods_classflounder_1_1ibutton"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -123,9 +130,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_wasDown</b></td></t
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">flounder::buttonjoystick::buttonjoystick </td>
@@ -151,11 +155,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_wasDown</b></td></t
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Creates a new button joystick. </p>
@@ -175,9 +174,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_wasDown</b></td></t
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">flounder::buttonjoystick::~buttonjoystick </td>
@@ -186,11 +182,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_wasDown</b></td></t
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Deconstructor for the button joystick. </p>
@@ -198,8 +189,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_wasDown</b></td></t
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab6682d3554e007ef473c4595339f86f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6682d3554e007ef473c4595339f86f1">&#9670;&nbsp;</a></span>isDown()</h2>
+<a id="adf53e97310b757108a417f5d4e6c5ab0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf53e97310b757108a417f5d4e6c5ab0">&#9670;&nbsp;</a></span>isDown()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -211,12 +202,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_wasDown</b></td></t
           <td class="memname">bool flounder::buttonjoystick::isDown </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -224,7 +215,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_wasDown</b></td></t
 <p>Returns whether this button is currently pressed. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if the button is pressed, false otherwise. </dd></dl>
 
-<p>Implements <a class="el" href="classflounder_1_1ibutton.html#ab64fd22a75ea66ce67fd9b1ad34fd837">flounder::ibutton</a>.</p>
+<p>Implements <a class="el" href="classflounder_1_1ibutton.html#af99b936d7329f74a27768ce6eb181327">flounder::ibutton</a>.</p>
 
 </div>
 </div>
@@ -246,7 +237,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_wasDown</b></td></t
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -258,8 +249,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_wasDown</b></td></t
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/inputs/<a class="el" href="buttonjoystick_8h_source.html">buttonjoystick.h</a></li>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>Flounder-Core/src/inputs/<a class="el" href="buttonjoystick_8h_source.html">buttonjoystick.h</a></li>
+<li>Flounder-Core/src/inputs/buttonjoystick.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -1,10 +1,2 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(937,5): warning MSB8027: Two or more files with the name of main.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are src\emscripten\main.cpp, src\header\main.cpp.
-  main.cpp
-c:\users\mattp\documents\flounder\flounder-tools\src\emscripten\main.cpp(34): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(439): note: see declaration of 'strtok'
-c:\users\mattp\documents\flounder\flounder-tools\src\emscripten\main.cpp(39): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(439): note: see declaration of 'strtok'
-c:\users\mattp\documents\flounder\flounder-tools\src\emscripten\main.cpp(103): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
-C:\Users\mattp\Documents\Flounder\Flounder-Tools\bin\Debug x64\.objs\main.obj : warning LNK4042: object specified more than once; extras ignored
-  Flounder-Tools.vcxproj -> C:\Users\mattp\Documents\Flounder\Flounder-Tools\bin\Debug x64\Flounder Tools.exe
-  Flounder-Tools.vcxproj -> C:\Users\mattp\Documents\Flounder\Flounder-Tools\bin\Debug x64\Flounder Tools.pdb (Partial PDB)
+﻿MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Users\mattp\Documents\Flounder\Flounder-Tools\bin\Debug x64\Flounder Tools.exe : fatal error LNK1120: 1 unresolved externals

@@ -1,0 +1,83 @@
+\hypertarget{classflounder_1_1pipelinepaused}{}\section{flounder\+:\+:pipelinepaused Class Reference}
+\label{classflounder_1_1pipelinepaused}\index{flounder\+::pipelinepaused@{flounder\+::pipelinepaused}}
+Inheritance diagram for flounder\+:\+:pipelinepaused\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1pipelinepaused}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classflounder_1_1pipelinepaused_ac3f87a0c31db13f6b25eaf02431c6644}{render\+Pipeline} (const int n\+\_\+args,...) override
+\begin{DoxyCompactList}\small\item\em Renders the post pipeline. \end{DoxyCompactList}\item 
+fbo $\ast$ \hyperlink{classflounder_1_1pipelinepaused_a7824b6364878b5aaf57921e2a7a4915a}{get\+Output} () override
+\begin{DoxyCompactList}\small\item\em Gets the fbo containing the pipeline output. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinepaused_a1e19831a7dfe80d52eb93021cfec88fd}\label{classflounder_1_1pipelinepaused_a1e19831a7dfe80d52eb93021cfec88fd}} 
+void {\bfseries set\+Blur\+Factor} (const float \&blur\+Factor)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinepaused_aef4803533d019bb584e30a9debf8af0c}\label{classflounder_1_1pipelinepaused_aef4803533d019bb584e30a9debf8af0c}} 
+\hyperlink{classflounder_1_1filterdarken}{filterdarken} $\ast$ {\bfseries m\+\_\+filter\+Darken}
+\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinepaused_a6e4395e9c9dbd6ff4d0e77fec39ddb12}\label{classflounder_1_1pipelinepaused_a6e4395e9c9dbd6ff4d0e77fec39ddb12}} 
+\hyperlink{classflounder_1_1pipelinegaussian}{pipelinegaussian} $\ast$ {\bfseries m\+\_\+pipeline\+Gaussian1}
+\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinepaused_a605ccd633c6bbeddb66ecdd96de4ffba}\label{classflounder_1_1pipelinepaused_a605ccd633c6bbeddb66ecdd96de4ffba}} 
+\hyperlink{classflounder_1_1pipelinegaussian}{pipelinegaussian} $\ast$ {\bfseries m\+\_\+pipeline\+Gaussian2}
+\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinepaused_addb73e22ca935d192d7dd5968e6e8016}\label{classflounder_1_1pipelinepaused_addb73e22ca935d192d7dd5968e6e8016}} 
+\hyperlink{classflounder_1_1filtercombine}{filtercombine} $\ast$ {\bfseries m\+\_\+filter\+Combine}
+\item 
+\mbox{\Hypertarget{classflounder_1_1pipelinepaused_aa92c86b99eebfd54ae3da5af986c3b4c}\label{classflounder_1_1pipelinepaused_aa92c86b99eebfd54ae3da5af986c3b4c}} 
+float {\bfseries m\+\_\+blur\+Factor}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1pipelinepaused_a7824b6364878b5aaf57921e2a7a4915a}\label{classflounder_1_1pipelinepaused_a7824b6364878b5aaf57921e2a7a4915a}} 
+\index{flounder\+::pipelinepaused@{flounder\+::pipelinepaused}!get\+Output@{get\+Output}}
+\index{get\+Output@{get\+Output}!flounder\+::pipelinepaused@{flounder\+::pipelinepaused}}
+\subsubsection{\texorpdfstring{get\+Output()}{getOutput()}}
+{\footnotesize\ttfamily fbo $\ast$ flounder\+::pipelinepaused\+::get\+Output (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets the fbo containing the pipeline output. 
+
+\begin{DoxyReturn}{Returns}
+The output fbo. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1ipostpipeline_a08f5d19b9652528337b73c2f4e0e4258}{flounder\+::ipostpipeline}.
+
+\mbox{\Hypertarget{classflounder_1_1pipelinepaused_ac3f87a0c31db13f6b25eaf02431c6644}\label{classflounder_1_1pipelinepaused_ac3f87a0c31db13f6b25eaf02431c6644}} 
+\index{flounder\+::pipelinepaused@{flounder\+::pipelinepaused}!render\+Pipeline@{render\+Pipeline}}
+\index{render\+Pipeline@{render\+Pipeline}!flounder\+::pipelinepaused@{flounder\+::pipelinepaused}}
+\subsubsection{\texorpdfstring{render\+Pipeline()}{renderPipeline()}}
+{\footnotesize\ttfamily void flounder\+::pipelinepaused\+::render\+Pipeline (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Renders the post pipeline. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being sent to the pipeline. \\
+\hline
+{\em textures} & A list of textures in indexed order to be bound for the shader program. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}{flounder\+::ipostpipeline}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/post/pipelines/pipelinepaused.\+h\item 
+Flounder-\/\+Core/src/post/pipelines/pipelinepaused.\+cpp\end{DoxyCompactItemize}

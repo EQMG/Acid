@@ -18,14 +18,19 @@ Inheritance diagram for flounder\+:\+:iupdater\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classflounder_1_1iupdater_acbbc1766a8c236ba89ff55eee9b25850}{iupdater} ()
+\begin{DoxyCompactList}\small\item\em Creates a new updater. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1iupdater_a70569371d9b898b7d30442a4463fbee4}{$\sim$iupdater} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the updater. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classflounder_1_1iupdater_adf13e2f8614c4c404cf3b4beb44f2674}\label{classflounder_1_1iupdater_adf13e2f8614c4c404cf3b4beb44f2674}} 
 virtual void {\bfseries create} ()=0
 \item 
 \mbox{\Hypertarget{classflounder_1_1iupdater_a5128e5ed39459981c40f17ec7d1de331}\label{classflounder_1_1iupdater_a5128e5ed39459981c40f17ec7d1de331}} 
 virtual void {\bfseries init} ()=0
 \item 
-virtual void \hyperlink{classflounder_1_1iupdater_a9f9102652e1ec25f7e9fc9b1cd57a041}{update} ()=0
-\begin{DoxyCompactList}\small\item\em Function called by the framework to update the engine. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1iupdater_a9f9102652e1ec25f7e9fc9b1cd57a041}\label{classflounder_1_1iupdater_a9f9102652e1ec25f7e9fc9b1cd57a041}} 
+virtual void {\bfseries update} ()=0
+\item 
 virtual \hyperlink{classflounder_1_1imodule}{imodule} $\ast$ \hyperlink{classflounder_1_1iupdater_a391b1788b5c139b199ed48033da1b88d}{get\+Instance} (const std\+::string \&name)=0
 \begin{DoxyCompactList}\small\item\em Gets a module from the updater. \end{DoxyCompactList}\item 
 virtual double \hyperlink{classflounder_1_1iupdater_abd983cbbeed27f28e9be768a2d3b69f2}{get\+Time\+Offset} ()=0
@@ -36,8 +41,6 @@ virtual double \hyperlink{classflounder_1_1iupdater_a1e8d40602f9799fc82d96d5b845
 \begin{DoxyCompactList}\small\item\em Gets the delta (seconds) between updates. \end{DoxyCompactList}\item 
 virtual double \hyperlink{classflounder_1_1iupdater_a00d7cf530cfbd7f83c8903328da14027}{get\+Delta\+Render} ()=0
 \begin{DoxyCompactList}\small\item\em Gets the delta (seconds) between renders. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classflounder_1_1iupdater_a09eee014e76b7a0217d2bcdf41e0f3f4}{set\+Fps\+Limit} (const double \&fps\+Limit)=0
-\begin{DoxyCompactList}\small\item\em Sets the F\+PS limit for the updater, called by the framework. \end{DoxyCompactList}\item 
 virtual double \hyperlink{classflounder_1_1iupdater_a071086b844e1f90d7f3577e80c9c09fe}{get\+Time\+Sec} ()=0
 \begin{DoxyCompactList}\small\item\em Gets the current time of the framework instance. \end{DoxyCompactList}\item 
 virtual double \hyperlink{classflounder_1_1iupdater_a56548faad88ad85e0cb4bc96af0912d6}{get\+Time\+Ms} ()=0
@@ -46,6 +49,29 @@ virtual double \hyperlink{classflounder_1_1iupdater_a56548faad88ad85e0cb4bc96af0
 
 \subsection{Detailed Description}
 A class used to define how the framework will run updates and timings. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1iupdater_acbbc1766a8c236ba89ff55eee9b25850}\label{classflounder_1_1iupdater_acbbc1766a8c236ba89ff55eee9b25850}} 
+\index{flounder\+::iupdater@{flounder\+::iupdater}!iupdater@{iupdater}}
+\index{iupdater@{iupdater}!flounder\+::iupdater@{flounder\+::iupdater}}
+\subsubsection{\texorpdfstring{iupdater()}{iupdater()}}
+{\footnotesize\ttfamily flounder\+::iupdater\+::iupdater (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new updater. 
+
+\mbox{\Hypertarget{classflounder_1_1iupdater_a70569371d9b898b7d30442a4463fbee4}\label{classflounder_1_1iupdater_a70569371d9b898b7d30442a4463fbee4}} 
+\index{flounder\+::iupdater@{flounder\+::iupdater}!````~iupdater@{$\sim$iupdater}}
+\index{````~iupdater@{$\sim$iupdater}!flounder\+::iupdater@{flounder\+::iupdater}}
+\subsubsection{\texorpdfstring{$\sim$iupdater()}{~iupdater()}}
+{\footnotesize\ttfamily virtual flounder\+::iupdater\+::$\sim$iupdater (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the updater. 
 
 
 
@@ -157,25 +183,6 @@ The current framework time in seconds.
 
 Implemented in \hyperlink{classflounder_1_1glfwupdater_a6982b83970693347bfa460adc04cf984}{flounder\+::glfwupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1iupdater_a09eee014e76b7a0217d2bcdf41e0f3f4}\label{classflounder_1_1iupdater_a09eee014e76b7a0217d2bcdf41e0f3f4}} 
-\index{flounder\+::iupdater@{flounder\+::iupdater}!set\+Fps\+Limit@{set\+Fps\+Limit}}
-\index{set\+Fps\+Limit@{set\+Fps\+Limit}!flounder\+::iupdater@{flounder\+::iupdater}}
-\subsubsection{\texorpdfstring{set\+Fps\+Limit()}{setFpsLimit()}}
-{\footnotesize\ttfamily virtual void flounder\+::iupdater\+::set\+Fps\+Limit (\begin{DoxyParamCaption}\item[{const double \&}]{fps\+Limit }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
-
-
-
-Sets the F\+PS limit for the updater, called by the framework. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em fps\+Limit} & The new fps limit. \\
-\hline
-\end{DoxyParams}
-
-
-Implemented in \hyperlink{classflounder_1_1glfwupdater_a8beaa82a7604b9ae11baf3f822e86113}{flounder\+::glfwupdater}.
-
 \mbox{\Hypertarget{classflounder_1_1iupdater_aa6aa143e40a5a39bcd53753798438ea1}\label{classflounder_1_1iupdater_aa6aa143e40a5a39bcd53753798438ea1}} 
 \index{flounder\+::iupdater@{flounder\+::iupdater}!set\+Time\+Offset@{set\+Time\+Offset}}
 \index{set\+Time\+Offset@{set\+Time\+Offset}!flounder\+::iupdater@{flounder\+::iupdater}}
@@ -195,22 +202,8 @@ Sets the time offset for the framework (seconds).
 
 Implemented in \hyperlink{classflounder_1_1glfwupdater_a7dc4371863e39a3a7870e4a2ac539fed}{flounder\+::glfwupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1iupdater_a9f9102652e1ec25f7e9fc9b1cd57a041}\label{classflounder_1_1iupdater_a9f9102652e1ec25f7e9fc9b1cd57a041}} 
-\index{flounder\+::iupdater@{flounder\+::iupdater}!update@{update}}
-\index{update@{update}!flounder\+::iupdater@{flounder\+::iupdater}}
-\subsubsection{\texorpdfstring{update()}{update()}}
-{\footnotesize\ttfamily virtual void flounder\+::iupdater\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
-
-
-
-Function called by the framework to update the engine. 
-
-
-
-Implemented in \hyperlink{classflounder_1_1glfwupdater_a2443d270f702e67ab44c7afb88c71a5e}{flounder\+::glfwupdater}.
-
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/framework/iupdater.\+h\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/framework/iupdater.\+h\end{DoxyCompactItemize}

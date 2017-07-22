@@ -9,23 +9,20 @@ Inheritance diagram for flounder\+:\+:processing\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1processing_a16372c976ba80a8b5cce9aa8afa5be6c}\label{classflounder_1_1processing_a16372c976ba80a8b5cce9aa8afa5be6c}} 
-void {\bfseries load\+Processor} (\hyperlink{classflounder_1_1iprocessor}{iprocessor} $\ast$processor)
-\item 
-\mbox{\Hypertarget{classflounder_1_1processing_af4df3d8b578c2831a0e5ff38c0f48f90}\label{classflounder_1_1processing_af4df3d8b578c2831a0e5ff38c0f48f90}} 
-void {\bfseries init} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1processing_a6841aa8834d27d41540b50f5cb0d25b5}\label{classflounder_1_1processing_a6841aa8834d27d41540b50f5cb0d25b5}} 
-void {\bfseries update} ()
+void \hyperlink{classflounder_1_1processing_a5c9545d8a02d836bc198982750f24f49}{init} () override
+\begin{DoxyCompactList}\small\item\em The initialize function for the module. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1processing_ac096299eb1b5b67739586900710d4206}{update} () override
+\begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1processing_a9ae5080b9ed1099aae8db7db034c9eee}\label{classflounder_1_1processing_a9ae5080b9ed1099aae8db7db034c9eee}} 
+void {\bfseries add\+Processor} (\hyperlink{classflounder_1_1iprocessor}{iprocessor} $\ast$processor)
 \item 
 void \hyperlink{classflounder_1_1processing_addb84aad44d50ae3fa9513cddcea9968}{send\+Request} (\hyperlink{classflounder_1_1irequest}{irequest} $\ast$request)
 \begin{DoxyCompactList}\small\item\em Sends a new resource request to be added to a que. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1processing_a9d533a541a2a514d201ff2c37782d44d}\label{classflounder_1_1processing_a9d533a541a2a514d201ff2c37782d44d}} 
-static \hyperlink{classflounder_1_1processing}{processing} $\ast$ {\bfseries get} ()
-\end{DoxyCompactItemize}
+static \hyperlink{classflounder_1_1processing}{processing} $\ast$ \hyperlink{classflounder_1_1processing_a9d533a541a2a514d201ff2c37782d44d}{get} ()
+\begin{DoxyCompactList}\small\item\em Gets this framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -35,6 +32,33 @@ std\+::vector$<$ \hyperlink{classflounder_1_1iprocessor}{iprocessor} $\ast$ $>$ 
 
 
 \subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1processing_a9d533a541a2a514d201ff2c37782d44d}\label{classflounder_1_1processing_a9d533a541a2a514d201ff2c37782d44d}} 
+\index{flounder\+::processing@{flounder\+::processing}!get@{get}}
+\index{get@{get}!flounder\+::processing@{flounder\+::processing}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily static \hyperlink{classflounder_1_1processing}{processing}$\ast$ flounder\+::processing\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this framework instance. 
+
+\begin{DoxyReturn}{Returns}
+The current module instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1processing_a5c9545d8a02d836bc198982750f24f49}\label{classflounder_1_1processing_a5c9545d8a02d836bc198982750f24f49}} 
+\index{flounder\+::processing@{flounder\+::processing}!init@{init}}
+\index{init@{init}!flounder\+::processing@{flounder\+::processing}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void flounder\+::processing\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The initialize function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a1725ef346952884d0741de61aba1e0c7}{flounder\+::imodule}.
+
 \mbox{\Hypertarget{classflounder_1_1processing_addb84aad44d50ae3fa9513cddcea9968}\label{classflounder_1_1processing_addb84aad44d50ae3fa9513cddcea9968}} 
 \index{flounder\+::processing@{flounder\+::processing}!send\+Request@{send\+Request}}
 \index{send\+Request@{send\+Request}!flounder\+::processing@{flounder\+::processing}}
@@ -50,9 +74,23 @@ Sends a new resource request to be added to a que.
 {\em request} & The resource request to add. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1processing_ac096299eb1b5b67739586900710d4206}\label{classflounder_1_1processing_ac096299eb1b5b67739586900710d4206}} 
+\index{flounder\+::processing@{flounder\+::processing}!update@{update}}
+\index{update@{update}!flounder\+::processing@{flounder\+::processing}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::processing\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The update function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a9a53d48a46b5f6b16a92b2cd8503f74a}{flounder\+::imodule}.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/processing/processing.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/processing/processing.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/processing/processing.\+h\item 
+Flounder-\/\+Core/src/processing/processing.\+cpp\end{DoxyCompactItemize}

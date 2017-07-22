@@ -83,101 +83,114 @@ Inheritance diagram for flounder::display:</div>
  <div class="center">
   <img src="classflounder_1_1display.png" usemap="#flounder::display_map" alt=""/>
   <map id="flounder::display_map" name="flounder::display_map">
-<area href="classflounder_1_1imodule.html" alt="flounder::imodule" shape="rect" coords="0,0,108,24"/>
+<area href="classflounder_1_1imodule.html" title="A simple interface used for defining framework modules. " alt="flounder::imodule" shape="rect" coords="0,0,108,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac0a3910222a928f1fc60193cd65c0530"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ac0a3910222a928f1fc60193cd65c0530">display</a> ()</td></tr>
-<tr class="memdesc:ac0a3910222a928f1fc60193cd65c0530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new GLFW display manager.  <a href="#ac0a3910222a928f1fc60193cd65c0530">More...</a><br /></td></tr>
+<tr class="memdesc:ac0a3910222a928f1fc60193cd65c0530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new display module.  <a href="#ac0a3910222a928f1fc60193cd65c0530">More...</a><br /></td></tr>
 <tr class="separator:ac0a3910222a928f1fc60193cd65c0530"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a272f9080af9079cbb3890b18c3e4d394"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a272f9080af9079cbb3890b18c3e4d394">~display</a> ()</td></tr>
-<tr class="memdesc:a272f9080af9079cbb3890b18c3e4d394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the display.  <a href="#a272f9080af9079cbb3890b18c3e4d394">More...</a><br /></td></tr>
+<tr class="memdesc:a272f9080af9079cbb3890b18c3e4d394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the display module.  <a href="#a272f9080af9079cbb3890b18c3e4d394">More...</a><br /></td></tr>
 <tr class="separator:a272f9080af9079cbb3890b18c3e4d394"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78e07792dd8cf4beb15105d9c1684cfe"><td class="memItemLeft" align="right" valign="top"><a id="a78e07792dd8cf4beb15105d9c1684cfe"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> (const int glfwMajor, const int glfwMinor, const int width, const int height, const std::string title, std::string icon, const bool vsync, const bool antialiasing, const int samples, const bool fullscreen)</td></tr>
-<tr class="separator:a78e07792dd8cf4beb15105d9c1684cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc7a2890c7089ce9e058afa2f8fc9b5c"><td class="memItemLeft" align="right" valign="top"><a id="adc7a2890c7089ce9e058afa2f8fc9b5c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
-<tr class="separator:adc7a2890c7089ce9e058afa2f8fc9b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ba18c2ab1d02fb943ad112b35d3ea75"><td class="memItemLeft" align="right" valign="top"><a id="a3ba18c2ab1d02fb943ad112b35d3ea75"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> ()</td></tr>
-<tr class="separator:a3ba18c2ab1d02fb943ad112b35d3ea75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1ad6ed9b98b6f760fecd2e31d84357b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ac1ad6ed9b98b6f760fecd2e31d84357b">load</a> (const int &amp;glfwMajor, const int &amp;glfwMinor, const int &amp;width, const int &amp;height, const std::string &amp;title, const std::string &amp;icon, const float &amp;fpsLimit, const bool &amp;vsync, const bool &amp;antialiasing, const int &amp;samples, const bool &amp;fullscreen)</td></tr>
+<tr class="memdesc:ac1ad6ed9b98b6f760fecd2e31d84357b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the display module with inital values.  <a href="#ac1ad6ed9b98b6f760fecd2e31d84357b">More...</a><br /></td></tr>
+<tr class="separator:ac1ad6ed9b98b6f760fecd2e31d84357b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa28a814bc8ba635c99aa4b707bac3259"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#aa28a814bc8ba635c99aa4b707bac3259">init</a> () override</td></tr>
+<tr class="memdesc:aa28a814bc8ba635c99aa4b707bac3259"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialize function for the module.  <a href="#aa28a814bc8ba635c99aa4b707bac3259">More...</a><br /></td></tr>
+<tr class="separator:aa28a814bc8ba635c99aa4b707bac3259"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a799c6a76fcac1a0ca56dfd6b8d7993fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a799c6a76fcac1a0ca56dfd6b8d7993fa">update</a> () override</td></tr>
+<tr class="memdesc:a799c6a76fcac1a0ca56dfd6b8d7993fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the module.  <a href="#a799c6a76fcac1a0ca56dfd6b8d7993fa">More...</a><br /></td></tr>
+<tr class="separator:a799c6a76fcac1a0ca56dfd6b8d7993fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af27b3f93977c32c79ad9522672e484c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#af27b3f93977c32c79ad9522672e484c5">screenshot</a> ()</td></tr>
 <tr class="memdesc:af27b3f93977c32c79ad9522672e484c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes a screenshot of the current image of the display and saves it into the screenshots folder a png image.  <a href="#af27b3f93977c32c79ad9522672e484c5">More...</a><br /></td></tr>
 <tr class="separator:af27b3f93977c32c79ad9522672e484c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb43834a6c2c274e9a94153d17c6282f"><td class="memItemLeft" align="right" valign="top"><a id="acb43834a6c2c274e9a94153d17c6282f"></a>
-int &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getGlfwMajor</b> ()</td></tr>
-<tr class="separator:acb43834a6c2c274e9a94153d17c6282f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ae2dfe06f903b17ab77a907dadbc38a"><td class="memItemLeft" align="right" valign="top"><a id="a2ae2dfe06f903b17ab77a907dadbc38a"></a>
-int &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getGlfwMinor</b> ()</td></tr>
-<tr class="separator:a2ae2dfe06f903b17ab77a907dadbc38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e6a9e9ea60e2f8d0850ea689abb0569"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a5e6a9e9ea60e2f8d0850ea689abb0569">getGlfwMajor</a> ()</td></tr>
+<tr class="memdesc:a5e6a9e9ea60e2f8d0850ea689abb0569"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the GLFW major verson.  <a href="#a5e6a9e9ea60e2f8d0850ea689abb0569">More...</a><br /></td></tr>
+<tr class="separator:a5e6a9e9ea60e2f8d0850ea689abb0569"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6fbd123308dce6a0d8f281a9ea55b37"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ac6fbd123308dce6a0d8f281a9ea55b37">getGlfwMinor</a> ()</td></tr>
+<tr class="memdesc:ac6fbd123308dce6a0d8f281a9ea55b37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the GLFW minor verson.  <a href="#ac6fbd123308dce6a0d8f281a9ea55b37">More...</a><br /></td></tr>
+<tr class="separator:ac6fbd123308dce6a0d8f281a9ea55b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2b45bb8c8924b985895f2b08c03c3d9"><td class="memItemLeft" align="right" valign="top">int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ac2b45bb8c8924b985895f2b08c03c3d9">getWidth</a> ()</td></tr>
 <tr class="memdesc:ac2b45bb8c8924b985895f2b08c03c3d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the width of the display in pixels.  <a href="#ac2b45bb8c8924b985895f2b08c03c3d9">More...</a><br /></td></tr>
 <tr class="separator:ac2b45bb8c8924b985895f2b08c03c3d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac47027c6b34d260ccaf148e4e762cdbe"><td class="memItemLeft" align="right" valign="top"><a id="ac47027c6b34d260ccaf148e4e762cdbe"></a>
-int &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getWindowWidth</b> ()</td></tr>
+<tr class="memitem:ac47027c6b34d260ccaf148e4e762cdbe"><td class="memItemLeft" align="right" valign="top">int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ac47027c6b34d260ccaf148e4e762cdbe">getWindowWidth</a> ()</td></tr>
+<tr class="memdesc:ac47027c6b34d260ccaf148e4e762cdbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the non-fullscreen width of the display in pixels.  <a href="#ac47027c6b34d260ccaf148e4e762cdbe">More...</a><br /></td></tr>
 <tr class="separator:ac47027c6b34d260ccaf148e4e762cdbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b3cea6e41121de9d790acf027036167"><td class="memItemLeft" align="right" valign="top">int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a2b3cea6e41121de9d790acf027036167">getHeight</a> ()</td></tr>
 <tr class="memdesc:a2b3cea6e41121de9d790acf027036167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the height of the display in pixels.  <a href="#a2b3cea6e41121de9d790acf027036167">More...</a><br /></td></tr>
 <tr class="separator:a2b3cea6e41121de9d790acf027036167"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1d306cb8353a7cdfe7daae4727028fc"><td class="memItemLeft" align="right" valign="top"><a id="af1d306cb8353a7cdfe7daae4727028fc"></a>
-int &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getWindowHeight</b> ()</td></tr>
+<tr class="memitem:af1d306cb8353a7cdfe7daae4727028fc"><td class="memItemLeft" align="right" valign="top">int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#af1d306cb8353a7cdfe7daae4727028fc">getWindowHeight</a> ()</td></tr>
+<tr class="memdesc:af1d306cb8353a7cdfe7daae4727028fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the non-fullscreen height of the display in pixels.  <a href="#af1d306cb8353a7cdfe7daae4727028fc">More...</a><br /></td></tr>
 <tr class="separator:af1d306cb8353a7cdfe7daae4727028fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13edcfe35505b3e164010ed1b232e5d1"><td class="memItemLeft" align="right" valign="top"><a id="a13edcfe35505b3e164010ed1b232e5d1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setWindowSize</b> (const int &amp;width, const int &amp;height)</td></tr>
-<tr class="separator:a13edcfe35505b3e164010ed1b232e5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b32aeb7809ad48663ce6eb4596b37a3"><td class="memItemLeft" align="right" valign="top">double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a7b32aeb7809ad48663ce6eb4596b37a3">getAspectRatio</a> ()</td></tr>
 <tr class="memdesc:a7b32aeb7809ad48663ce6eb4596b37a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the aspect ratio between the displays width and height.  <a href="#a7b32aeb7809ad48663ce6eb4596b37a3">More...</a><br /></td></tr>
 <tr class="separator:a7b32aeb7809ad48663ce6eb4596b37a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13edcfe35505b3e164010ed1b232e5d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a13edcfe35505b3e164010ed1b232e5d1">setWindowSize</a> (const int &amp;width, const int &amp;height)</td></tr>
+<tr class="memdesc:a13edcfe35505b3e164010ed1b232e5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets window size to a new size.  <a href="#a13edcfe35505b3e164010ed1b232e5d1">More...</a><br /></td></tr>
+<tr class="separator:a13edcfe35505b3e164010ed1b232e5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5fc46c79d236783ac883878ec065f36"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ad5fc46c79d236783ac883878ec065f36">getTitle</a> ()</td></tr>
 <tr class="memdesc:ad5fc46c79d236783ac883878ec065f36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the window's title.  <a href="#ad5fc46c79d236783ac883878ec065f36">More...</a><br /></td></tr>
 <tr class="separator:ad5fc46c79d236783ac883878ec065f36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cc7e0037aa9a45127de4db882c5a632"><td class="memItemLeft" align="right" valign="top">bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a0cc7e0037aa9a45127de4db882c5a632">isVSync</a> ()</td></tr>
-<tr class="memdesc:a0cc7e0037aa9a45127de4db882c5a632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the display is using vSync.  <a href="#a0cc7e0037aa9a45127de4db882c5a632">More...</a><br /></td></tr>
-<tr class="separator:a0cc7e0037aa9a45127de4db882c5a632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea9d5368ecd65c53e634d1cec52f9718"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#aea9d5368ecd65c53e634d1cec52f9718">getFpsLimit</a> ()</td></tr>
+<tr class="memdesc:aea9d5368ecd65c53e634d1cec52f9718"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the fps limit.  <a href="#aea9d5368ecd65c53e634d1cec52f9718">More...</a><br /></td></tr>
+<tr class="separator:aea9d5368ecd65c53e634d1cec52f9718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d24403c951e5a043675c3e7b02c3c34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a7d24403c951e5a043675c3e7b02c3c34">setFpsLimit</a> (const int &amp;fpsLimit)</td></tr>
+<tr class="memdesc:a7d24403c951e5a043675c3e7b02c3c34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the fps limit. -1 disables limits.  <a href="#a7d24403c951e5a043675c3e7b02c3c34">More...</a><br /></td></tr>
+<tr class="separator:a7d24403c951e5a043675c3e7b02c3c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75f2ff773d4d26740df8531b20b0a091"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a75f2ff773d4d26740df8531b20b0a091">isVSync</a> ()</td></tr>
+<tr class="memdesc:a75f2ff773d4d26740df8531b20b0a091"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the display is using vSync.  <a href="#a75f2ff773d4d26740df8531b20b0a091">More...</a><br /></td></tr>
+<tr class="separator:a75f2ff773d4d26740df8531b20b0a091"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a172501e1e99cde228d86fab59a3a636b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a172501e1e99cde228d86fab59a3a636b">setVSync</a> (const bool &amp;vsync)</td></tr>
 <tr class="memdesc:a172501e1e99cde228d86fab59a3a636b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the display to use VSync or not.  <a href="#a172501e1e99cde228d86fab59a3a636b">More...</a><br /></td></tr>
 <tr class="separator:a172501e1e99cde228d86fab59a3a636b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5542894b942b11b8fa30e51e98a389ba"><td class="memItemLeft" align="right" valign="top">bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a5542894b942b11b8fa30e51e98a389ba">isAntialiasing</a> ()</td></tr>
-<tr class="memdesc:a5542894b942b11b8fa30e51e98a389ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the display requests antialiased images.  <a href="#a5542894b942b11b8fa30e51e98a389ba">More...</a><br /></td></tr>
-<tr class="separator:a5542894b942b11b8fa30e51e98a389ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab36d40e6a3be5272853e13e45da750b8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ab36d40e6a3be5272853e13e45da750b8">isAntialiasing</a> ()</td></tr>
+<tr class="memdesc:ab36d40e6a3be5272853e13e45da750b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the display requests antialiased images.  <a href="#ab36d40e6a3be5272853e13e45da750b8">More...</a><br /></td></tr>
+<tr class="separator:ab36d40e6a3be5272853e13e45da750b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9a340bfa09dfd6d08ebc0d21b4c77b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ae9a340bfa09dfd6d08ebc0d21b4c77b0">setAntialiasing</a> (const bool &amp;antialiasing)</td></tr>
 <tr class="memdesc:ae9a340bfa09dfd6d08ebc0d21b4c77b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests the display to antialias.  <a href="#ae9a340bfa09dfd6d08ebc0d21b4c77b0">More...</a><br /></td></tr>
 <tr class="separator:ae9a340bfa09dfd6d08ebc0d21b4c77b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab498a060b8f23e54be9116f452a8b92a"><td class="memItemLeft" align="right" valign="top">int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ab498a060b8f23e54be9116f452a8b92a">getSamples</a> ()</td></tr>
-<tr class="memdesc:ab498a060b8f23e54be9116f452a8b92a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets how many MSAA samples should be done before swapping buffers.  <a href="#ab498a060b8f23e54be9116f452a8b92a">More...</a><br /></td></tr>
-<tr class="separator:ab498a060b8f23e54be9116f452a8b92a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f1438e0d64121ae94e3e1f1931dc09a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a3f1438e0d64121ae94e3e1f1931dc09a">getSamples</a> ()</td></tr>
+<tr class="memdesc:a3f1438e0d64121ae94e3e1f1931dc09a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets how many MSAA samples should be done before swapping buffers.  <a href="#a3f1438e0d64121ae94e3e1f1931dc09a">More...</a><br /></td></tr>
+<tr class="separator:a3f1438e0d64121ae94e3e1f1931dc09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1bf2028faaf411fedc80ca511a2e739"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ae1bf2028faaf411fedc80ca511a2e739">setSamples</a> (const int &amp;samples)</td></tr>
 <tr class="memdesc:ae1bf2028faaf411fedc80ca511a2e739"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets how many MSAA samples should be done before swapping buffers. Zero disables multisampling. GLFW_DONT_CARE means no preference.  <a href="#ae1bf2028faaf411fedc80ca511a2e739">More...</a><br /></td></tr>
 <tr class="separator:ae1bf2028faaf411fedc80ca511a2e739"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70a2476a798800089f947e4ff98476ba"><td class="memItemLeft" align="right" valign="top">bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a70a2476a798800089f947e4ff98476ba">isFullscreen</a> ()</td></tr>
-<tr class="memdesc:a70a2476a798800089f947e4ff98476ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets weather the display is fullscreen or not.  <a href="#a70a2476a798800089f947e4ff98476ba">More...</a><br /></td></tr>
-<tr class="separator:a70a2476a798800089f947e4ff98476ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9a50aad9e26ea3f3a074d1dbe19c58a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ad9a50aad9e26ea3f3a074d1dbe19c58a">isFullscreen</a> ()</td></tr>
+<tr class="memdesc:ad9a50aad9e26ea3f3a074d1dbe19c58a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets weather the display is fullscreen or not.  <a href="#ad9a50aad9e26ea3f3a074d1dbe19c58a">More...</a><br /></td></tr>
+<tr class="separator:ad9a50aad9e26ea3f3a074d1dbe19c58a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5ee27f982e6a947305dc6e71a23021b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#ae5ee27f982e6a947305dc6e71a23021b">setFullscreen</a> (const bool &amp;fullscreen)</td></tr>
 <tr class="memdesc:ae5ee27f982e6a947305dc6e71a23021b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the display to be fullscreen or windowed.  <a href="#ae5ee27f982e6a947305dc6e71a23021b">More...</a><br /></td></tr>
 <tr class="separator:ae5ee27f982e6a947305dc6e71a23021b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5cdcd3dddce4cf63ac45503b03e96689"><td class="memItemLeft" align="right" valign="top">GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a5cdcd3dddce4cf63ac45503b03e96689">getWindow</a> ()</td></tr>
 <tr class="memdesc:a5cdcd3dddce4cf63ac45503b03e96689"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current GLFW window.  <a href="#a5cdcd3dddce4cf63ac45503b03e96689">More...</a><br /></td></tr>
 <tr class="separator:a5cdcd3dddce4cf63ac45503b03e96689"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc0a47cb7ce2423076e4868b6b280fea"><td class="memItemLeft" align="right" valign="top">bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#afc0a47cb7ce2423076e4868b6b280fea">isClosed</a> ()</td></tr>
-<tr class="memdesc:afc0a47cb7ce2423076e4868b6b280fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the GLFW display is closed.  <a href="#afc0a47cb7ce2423076e4868b6b280fea">More...</a><br /></td></tr>
-<tr class="separator:afc0a47cb7ce2423076e4868b6b280fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8319a69deefd25fb5b1d7dddabd35df9"><td class="memItemLeft" align="right" valign="top">bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a8319a69deefd25fb5b1d7dddabd35df9">isFocused</a> ()</td></tr>
-<tr class="memdesc:a8319a69deefd25fb5b1d7dddabd35df9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the GLFW display is selected.  <a href="#a8319a69deefd25fb5b1d7dddabd35df9">More...</a><br /></td></tr>
-<tr class="separator:a8319a69deefd25fb5b1d7dddabd35df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd9fd5a794f2c31633d5e0a707b53861"><td class="memItemLeft" align="right" valign="top">int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#acd9fd5a794f2c31633d5e0a707b53861">getWindowXPos</a> ()</td></tr>
-<tr class="memdesc:acd9fd5a794f2c31633d5e0a707b53861"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the windows Y position of the display in pixels.  <a href="#acd9fd5a794f2c31633d5e0a707b53861">More...</a><br /></td></tr>
-<tr class="separator:acd9fd5a794f2c31633d5e0a707b53861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59dab9f2452adfce71b7d156dc9ca688"><td class="memItemLeft" align="right" valign="top">int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a59dab9f2452adfce71b7d156dc9ca688">getWindowYPos</a> ()</td></tr>
-<tr class="memdesc:a59dab9f2452adfce71b7d156dc9ca688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the windows Y position of the display in pixels.  <a href="#a59dab9f2452adfce71b7d156dc9ca688">More...</a><br /></td></tr>
-<tr class="separator:a59dab9f2452adfce71b7d156dc9ca688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af187a33ad8b4e112a638adfdd3062fb3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#af187a33ad8b4e112a638adfdd3062fb3">isClosed</a> ()</td></tr>
+<tr class="memdesc:af187a33ad8b4e112a638adfdd3062fb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the GLFW display is closed.  <a href="#af187a33ad8b4e112a638adfdd3062fb3">More...</a><br /></td></tr>
+<tr class="separator:af187a33ad8b4e112a638adfdd3062fb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57dbf90706399fb0511b50740a1b77da"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a57dbf90706399fb0511b50740a1b77da">isFocused</a> ()</td></tr>
+<tr class="memdesc:a57dbf90706399fb0511b50740a1b77da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the GLFW display is selected.  <a href="#a57dbf90706399fb0511b50740a1b77da">More...</a><br /></td></tr>
+<tr class="separator:a57dbf90706399fb0511b50740a1b77da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbf55bdf135324664810751f3ab27d82"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#adbf55bdf135324664810751f3ab27d82">getWindowXPos</a> ()</td></tr>
+<tr class="memdesc:adbf55bdf135324664810751f3ab27d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the windows Y position of the display in pixels.  <a href="#adbf55bdf135324664810751f3ab27d82">More...</a><br /></td></tr>
+<tr class="separator:adbf55bdf135324664810751f3ab27d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92e7674dcd56f1e3f8b617a9b3fb625d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a92e7674dcd56f1e3f8b617a9b3fb625d">getWindowYPos</a> ()</td></tr>
+<tr class="memdesc:a92e7674dcd56f1e3f8b617a9b3fb625d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the windows Y position of the display in pixels.  <a href="#a92e7674dcd56f1e3f8b617a9b3fb625d">More...</a><br /></td></tr>
+<tr class="separator:a92e7674dcd56f1e3f8b617a9b3fb625d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classflounder_1_1imodule"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classflounder_1_1imodule')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classflounder_1_1imodule.html">flounder::imodule</a></td></tr>
+<tr class="memitem:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">imodule</a> ()</td></tr>
+<tr class="memdesc:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new module.  <a href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">More...</a><br /></td></tr>
+<tr class="separator:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">~imodule</a> ()</td></tr>
+<tr class="memdesc:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the module.  <a href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">More...</a><br /></td></tr>
+<tr class="separator:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a7c7015939f48bf4526bb0330ea4fcd2f"><td class="memItemLeft" align="right" valign="top"><a id="a7c7015939f48bf4526bb0330ea4fcd2f"></a>
-static <a class="el" href="classflounder_1_1display.html">display</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()</td></tr>
+<tr class="memitem:a7c7015939f48bf4526bb0330ea4fcd2f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classflounder_1_1display.html">display</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1display.html#a7c7015939f48bf4526bb0330ea4fcd2f">get</a> ()</td></tr>
+<tr class="memdesc:a7c7015939f48bf4526bb0330ea4fcd2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets this framework instance.  <a href="#a7c7015939f48bf4526bb0330ea4fcd2f">More...</a><br /></td></tr>
 <tr class="separator:a7c7015939f48bf4526bb0330ea4fcd2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -209,6 +222,9 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_title</b></t
 <tr class="memitem:a4d7ba13c8c98370491cd396e4530dc8d"><td class="memItemLeft" align="right" valign="top"><a id="a4d7ba13c8c98370491cd396e4530dc8d"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_icon</b></td></tr>
 <tr class="separator:a4d7ba13c8c98370491cd396e4530dc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1409aa430c7fd27729d69ba8d992e9ac"><td class="memItemLeft" align="right" valign="top"><a id="a1409aa430c7fd27729d69ba8d992e9ac"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fpsLimit</b></td></tr>
+<tr class="separator:a1409aa430c7fd27729d69ba8d992e9ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43e081e66465e2cc75a5cca35d81a81f"><td class="memItemLeft" align="right" valign="top"><a id="a43e081e66465e2cc75a5cca35d81a81f"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_vsync</b></td></tr>
 <tr class="separator:a43e081e66465e2cc75a5cca35d81a81f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -239,24 +255,24 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>m_windowPosY</b></td><
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:afc3020989fe0bea586c4d29c212aa133"><td class="memItemLeft" align="right" valign="top"><a id="afc3020989fe0bea586c4d29c212aa133"></a>
-static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackError</b> (int error, const char *description)</td></tr>
-<tr class="separator:afc3020989fe0bea586c4d29c212aa133"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8f70edb9d5031a7096126204355e7d6"><td class="memItemLeft" align="right" valign="top"><a id="ab8f70edb9d5031a7096126204355e7d6"></a>
-static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackClose</b> (GLFWwindow *window)</td></tr>
-<tr class="separator:ab8f70edb9d5031a7096126204355e7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad73b79cccf7cb1720abb1576fadb6118"><td class="memItemLeft" align="right" valign="top"><a id="ad73b79cccf7cb1720abb1576fadb6118"></a>
-static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackFocus</b> (GLFWwindow *window, int focused)</td></tr>
-<tr class="separator:ad73b79cccf7cb1720abb1576fadb6118"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a669fa2672c0ea83c27f30860b8fae4ca"><td class="memItemLeft" align="right" valign="top"><a id="a669fa2672c0ea83c27f30860b8fae4ca"></a>
-static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackPosition</b> (GLFWwindow *window, int xpos, int ypos)</td></tr>
-<tr class="separator:a669fa2672c0ea83c27f30860b8fae4ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b32ab42fc1ab57513d277fdcdd0f83f"><td class="memItemLeft" align="right" valign="top"><a id="a3b32ab42fc1ab57513d277fdcdd0f83f"></a>
-static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackSize</b> (GLFWwindow *window, int width, int height)</td></tr>
-<tr class="separator:a3b32ab42fc1ab57513d277fdcdd0f83f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0766de23b80536533330a6f97bded5be"><td class="memItemLeft" align="right" valign="top"><a id="a0766de23b80536533330a6f97bded5be"></a>
-static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackFrame</b> (GLFWwindow *window, int width, int height)</td></tr>
-<tr class="separator:a0766de23b80536533330a6f97bded5be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e2f7636c5e3fe93e7ae254f055d2ac1"><td class="memItemLeft" align="right" valign="top"><a id="a6e2f7636c5e3fe93e7ae254f055d2ac1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackError</b> (int error, const char *description)</td></tr>
+<tr class="separator:a6e2f7636c5e3fe93e7ae254f055d2ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1fb7c8678d6c41a7b539440f01df61e"><td class="memItemLeft" align="right" valign="top"><a id="ad1fb7c8678d6c41a7b539440f01df61e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackClose</b> (GLFWwindow *window)</td></tr>
+<tr class="separator:ad1fb7c8678d6c41a7b539440f01df61e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac00c6be12bf18837bd3960c3ba402f3f"><td class="memItemLeft" align="right" valign="top"><a id="ac00c6be12bf18837bd3960c3ba402f3f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackFocus</b> (GLFWwindow *window, int focused)</td></tr>
+<tr class="separator:ac00c6be12bf18837bd3960c3ba402f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d3d8fb74851349d8a437aa6a3f2b35"><td class="memItemLeft" align="right" valign="top"><a id="a39d3d8fb74851349d8a437aa6a3f2b35"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackPosition</b> (GLFWwindow *window, int xpos, int ypos)</td></tr>
+<tr class="separator:a39d3d8fb74851349d8a437aa6a3f2b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af765170864757051f6a767c26700bb82"><td class="memItemLeft" align="right" valign="top"><a id="af765170864757051f6a767c26700bb82"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackSize</b> (GLFWwindow *window, int width, int height)</td></tr>
+<tr class="separator:af765170864757051f6a767c26700bb82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d3e5fdd07e5059768ff51de12b0b29f"><td class="memItemLeft" align="right" valign="top"><a id="a0d3e5fdd07e5059768ff51de12b0b29f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackFrame</b> (GLFWwindow *window, int width, int height)</td></tr>
+<tr class="separator:a0d3e5fdd07e5059768ff51de12b0b29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A module used for the creation, updating and destruction of the display. </p>
@@ -276,7 +292,7 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
       </table>
 </div><div class="memdoc">
 
-<p>Creates a new GLFW display manager. </p>
+<p>Creates a new display module. </p>
 
 </div>
 </div>
@@ -295,11 +311,39 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
       </table>
 </div><div class="memdoc">
 
-<p>Deconstructor for the display. </p>
+<p>Deconstructor for the display module. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7c7015939f48bf4526bb0330ea4fcd2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c7015939f48bf4526bb0330ea4fcd2f">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classflounder_1_1display.html">display</a>* flounder::display::get </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets this framework instance. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current module instance. </dd></dl>
+
+</div>
+</div>
 <a id="a7b32aeb7809ad48663ce6eb4596b37a3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7b32aeb7809ad48663ce6eb4596b37a3">&#9670;&nbsp;</a></span>getAspectRatio()</h2>
 
@@ -317,6 +361,82 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 <p>Gets the aspect ratio between the displays width and height. </p>
 <dl class="section return"><dt>Returns</dt><dd>The aspect ratio. </dd></dl>
+
+</div>
+</div>
+<a id="aea9d5368ecd65c53e634d1cec52f9718"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea9d5368ecd65c53e634d1cec52f9718">&#9670;&nbsp;</a></span>getFpsLimit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flounder::display::getFpsLimit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the fps limit. </p>
+<dl class="section return"><dt>Returns</dt><dd>The fps limit. </dd></dl>
+
+</div>
+</div>
+<a id="a5e6a9e9ea60e2f8d0850ea689abb0569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e6a9e9ea60e2f8d0850ea689abb0569">&#9670;&nbsp;</a></span>getGlfwMajor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flounder::display::getGlfwMajor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the GLFW major verson. </p>
+<dl class="section return"><dt>Returns</dt><dd>The GLFW major verson. </dd></dl>
+
+</div>
+</div>
+<a id="ac6fbd123308dce6a0d8f281a9ea55b37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6fbd123308dce6a0d8f281a9ea55b37">&#9670;&nbsp;</a></span>getGlfwMinor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flounder::display::getGlfwMinor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the GLFW minor verson. </p>
+<dl class="section return"><dt>Returns</dt><dd>The GLFW minor verson. </dd></dl>
 
 </div>
 </div>
@@ -340,14 +460,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="ab498a060b8f23e54be9116f452a8b92a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab498a060b8f23e54be9116f452a8b92a">&#9670;&nbsp;</a></span>getSamples()</h2>
+<a id="a3f1438e0d64121ae94e3e1f1931dc09a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f1438e0d64121ae94e3e1f1931dc09a">&#9670;&nbsp;</a></span>getSamples()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int &amp; flounder::display::getSamples </td>
+          <td class="memname">int flounder::display::getSamples </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -420,14 +540,54 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="acd9fd5a794f2c31633d5e0a707b53861"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd9fd5a794f2c31633d5e0a707b53861">&#9670;&nbsp;</a></span>getWindowXPos()</h2>
+<a id="af1d306cb8353a7cdfe7daae4727028fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1d306cb8353a7cdfe7daae4727028fc">&#9670;&nbsp;</a></span>getWindowHeight()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int &amp; flounder::display::getWindowXPos </td>
+          <td class="memname">int &amp; flounder::display::getWindowHeight </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the non-fullscreen height of the display in pixels. </p>
+<dl class="section return"><dt>Returns</dt><dd>The height of the display. </dd></dl>
+
+</div>
+</div>
+<a id="ac47027c6b34d260ccaf148e4e762cdbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac47027c6b34d260ccaf148e4e762cdbe">&#9670;&nbsp;</a></span>getWindowWidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int &amp; flounder::display::getWindowWidth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the non-fullscreen width of the display in pixels. </p>
+<dl class="section return"><dt>Returns</dt><dd>The width of the display. </dd></dl>
+
+</div>
+</div>
+<a id="adbf55bdf135324664810751f3ab27d82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbf55bdf135324664810751f3ab27d82">&#9670;&nbsp;</a></span>getWindowXPos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flounder::display::getWindowXPos </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -440,14 +600,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="a59dab9f2452adfce71b7d156dc9ca688"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59dab9f2452adfce71b7d156dc9ca688">&#9670;&nbsp;</a></span>getWindowYPos()</h2>
+<a id="a92e7674dcd56f1e3f8b617a9b3fb625d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92e7674dcd56f1e3f8b617a9b3fb625d">&#9670;&nbsp;</a></span>getWindowYPos()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int &amp; flounder::display::getWindowYPos </td>
+          <td class="memname">int flounder::display::getWindowYPos </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -460,14 +620,43 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="a5542894b942b11b8fa30e51e98a389ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5542894b942b11b8fa30e51e98a389ba">&#9670;&nbsp;</a></span>isAntialiasing()</h2>
+<a id="aa28a814bc8ba635c99aa4b707bac3259"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa28a814bc8ba635c99aa4b707bac3259">&#9670;&nbsp;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::display::init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The initialize function for the module. </p>
+
+<p>Implements <a class="el" href="classflounder_1_1imodule.html#a1725ef346952884d0741de61aba1e0c7">flounder::imodule</a>.</p>
+
+</div>
+</div>
+<a id="ab36d40e6a3be5272853e13e45da750b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab36d40e6a3be5272853e13e45da750b8">&#9670;&nbsp;</a></span>isAntialiasing()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool &amp; flounder::display::isAntialiasing </td>
+          <td class="memname">bool flounder::display::isAntialiasing </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -480,14 +669,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="afc0a47cb7ce2423076e4868b6b280fea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc0a47cb7ce2423076e4868b6b280fea">&#9670;&nbsp;</a></span>isClosed()</h2>
+<a id="af187a33ad8b4e112a638adfdd3062fb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af187a33ad8b4e112a638adfdd3062fb3">&#9670;&nbsp;</a></span>isClosed()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool &amp; flounder::display::isClosed </td>
+          <td class="memname">bool flounder::display::isClosed </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -500,14 +689,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="a8319a69deefd25fb5b1d7dddabd35df9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8319a69deefd25fb5b1d7dddabd35df9">&#9670;&nbsp;</a></span>isFocused()</h2>
+<a id="a57dbf90706399fb0511b50740a1b77da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57dbf90706399fb0511b50740a1b77da">&#9670;&nbsp;</a></span>isFocused()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool &amp; flounder::display::isFocused </td>
+          <td class="memname">bool flounder::display::isFocused </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -520,14 +709,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="a70a2476a798800089f947e4ff98476ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70a2476a798800089f947e4ff98476ba">&#9670;&nbsp;</a></span>isFullscreen()</h2>
+<a id="ad9a50aad9e26ea3f3a074d1dbe19c58a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9a50aad9e26ea3f3a074d1dbe19c58a">&#9670;&nbsp;</a></span>isFullscreen()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool &amp; flounder::display::isFullscreen </td>
+          <td class="memname">bool flounder::display::isFullscreen </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -540,14 +729,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="a0cc7e0037aa9a45127de4db882c5a632"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cc7e0037aa9a45127de4db882c5a632">&#9670;&nbsp;</a></span>isVSync()</h2>
+<a id="a75f2ff773d4d26740df8531b20b0a091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75f2ff773d4d26740df8531b20b0a091">&#9670;&nbsp;</a></span>isVSync()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool &amp; flounder::display::isVSync </td>
+          <td class="memname">bool flounder::display::isVSync </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -557,6 +746,106 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 <p>Gets if the display is using vSync. </p>
 <dl class="section return"><dt>Returns</dt><dd>If VSync is enabled. </dd></dl>
+
+</div>
+</div>
+<a id="ac1ad6ed9b98b6f760fecd2e31d84357b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1ad6ed9b98b6f760fecd2e31d84357b">&#9670;&nbsp;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::display::load </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>glfwMajor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>glfwMinor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>title</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>icon</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>fpsLimit</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>vsync</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>antialiasing</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>samples</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>fullscreen</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads the display module with inital values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">glfwMajor</td><td>The GLFW major verson. </td></tr>
+    <tr><td class="paramname">glfwMinor</td><td>The GLFW minor verson. </td></tr>
+    <tr><td class="paramname">width</td><td>The displays inital width. </td></tr>
+    <tr><td class="paramname">height</td><td>The displays inital width. </td></tr>
+    <tr><td class="paramname">title</td><td>The displays title. </td></tr>
+    <tr><td class="paramname">icon</td><td>The displays icon image path. </td></tr>
+    <tr><td class="paramname">fpsLimit</td><td>The displays inital FPS limit. </td></tr>
+    <tr><td class="paramname">vsync</td><td>If the display will start with vsync on. </td></tr>
+    <tr><td class="paramname">antialiasing</td><td>If the display will start with antialiased. </td></tr>
+    <tr><td class="paramname">samples</td><td>How many samples will be initaly used to antialias. </td></tr>
+    <tr><td class="paramname">fullscreen</td><td>If the display will start fullscreen. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -599,6 +888,32 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">antialiasing</td><td>If the display should antialias. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7d24403c951e5a043675c3e7b02c3c34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d24403c951e5a043675c3e7b02c3c34">&#9670;&nbsp;</a></span>setFpsLimit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::display::setFpsLimit </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>fpsLimit</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the fps limit. -1 disables limits. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fpsLimit</td><td>The new fps limit. </td></tr>
   </table>
   </dd>
 </dl>
@@ -683,9 +998,75 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
+<a id="a13edcfe35505b3e164010ed1b232e5d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13edcfe35505b3e164010ed1b232e5d1">&#9670;&nbsp;</a></span>setWindowSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::display::setWindowSize </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>height</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets window size to a new size. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>The new width in pixels. </td></tr>
+    <tr><td class="paramname">height</td><td>The new height in pixels. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a799c6a76fcac1a0ca56dfd6b8d7993fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a799c6a76fcac1a0ca56dfd6b8d7993fa">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::display::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The update function for the module. </p>
+
+<p>Implements <a class="el" href="classflounder_1_1imodule.html#a9a53d48a46b5f6b16a92b2cd8503f74a">flounder::imodule</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/devices/<a class="el" href="display_8h_source.html">display.h</a></li>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/devices/display.cpp</li>
+<li>Flounder-Core/src/devices/<a class="el" href="display_8h_source.html">display.h</a></li>
+<li>Flounder-Core/src/devices/display.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

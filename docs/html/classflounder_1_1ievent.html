@@ -80,14 +80,20 @@ Inheritance diagram for flounder::ievent:</div>
  <div class="center">
   <img src="classflounder_1_1ievent.png" usemap="#flounder::ievent_map" alt=""/>
   <map id="flounder::ievent_map" name="flounder::ievent_map">
-<area href="classflounder_1_1ieventchange.html" alt="flounder::ieventchange&lt; t &gt;" shape="rect" coords="0,56,168,80"/>
-<area href="classflounder_1_1ieventstandard.html" title="A class that is the most basic implementation of the event interface. " alt="flounder::ieventstandard" shape="rect" coords="178,56,346,80"/>
-<area href="classflounder_1_1ieventtime.html" title="A class that runs a event after a time has passed. " alt="flounder::ieventtime" shape="rect" coords="356,56,524,80"/>
+<area href="classflounder_1_1eventchange.html" title="A class that acts as a basic change listener for a value. " alt="flounder::eventchange&lt; t &gt;" shape="rect" coords="0,56,165,80"/>
+<area href="classflounder_1_1eventstandard.html" title="A class that is the most basic implementation of the event interface. " alt="flounder::eventstandard" shape="rect" coords="175,56,340,80"/>
+<area href="classflounder_1_1eventtime.html" title="A class that runs a event after a time has passed. " alt="flounder::eventtime" shape="rect" coords="350,56,515,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a87c44726337bd80b2b18a01ccdd562c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ievent.html#a87c44726337bd80b2b18a01ccdd562c6">ievent</a> ()</td></tr>
+<tr class="memdesc:a87c44726337bd80b2b18a01ccdd562c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new event.  <a href="#a87c44726337bd80b2b18a01ccdd562c6">More...</a><br /></td></tr>
+<tr class="separator:a87c44726337bd80b2b18a01ccdd562c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af559376463c0e0643c67f8812169007c"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ievent.html#af559376463c0e0643c67f8812169007c">~ievent</a> ()</td></tr>
+<tr class="memdesc:af559376463c0e0643c67f8812169007c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the event.  <a href="#af559376463c0e0643c67f8812169007c">More...</a><br /></td></tr>
+<tr class="separator:af559376463c0e0643c67f8812169007c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4462f66feef99ef4e3521c00f4edd0c9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ievent.html#a4462f66feef99ef4e3521c00f4edd0c9">eventTriggered</a> ()=0</td></tr>
 <tr class="memdesc:a4462f66feef99ef4e3521c00f4edd0c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the event has occurred.  <a href="#a4462f66feef99ef4e3521c00f4edd0c9">More...</a><br /></td></tr>
 <tr class="separator:a4462f66feef99ef4e3521c00f4edd0c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -100,7 +106,62 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A simple event listener and runner. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a87c44726337bd80b2b18a01ccdd562c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87c44726337bd80b2b18a01ccdd562c6">&#9670;&nbsp;</a></span>ievent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">flounder::ievent::ievent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new event. </p>
+
+</div>
+</div>
+<a id="af559376463c0e0643c67f8812169007c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af559376463c0e0643c67f8812169007c">&#9670;&nbsp;</a></span>~ievent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual flounder::ievent::~ievent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Deconstructor for the event. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a4462f66feef99ef4e3521c00f4edd0c9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4462f66feef99ef4e3521c00f4edd0c9">&#9670;&nbsp;</a></span>eventTriggered()</h2>
 
@@ -127,7 +188,7 @@ Public Member Functions</h2></td></tr>
 <p>Gets if the event has occurred. </p>
 <dl class="section return"><dt>Returns</dt><dd>The event has occurred. </dd></dl>
 
-<p>Implemented in <a class="el" href="classflounder_1_1ieventstandard.html#a7586cc333f29136b135f92685dc6f91b">flounder::ieventstandard</a>, <a class="el" href="classflounder_1_1ieventtime.html#a471aad4d2412507875077747ea9ea7a6">flounder::ieventtime</a>, and <a class="el" href="classflounder_1_1ieventchange.html#a0119e298c97f8457db4024523c97c429">flounder::ieventchange&lt; t &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classflounder_1_1eventstandard.html#a88224b7246627df26a08ec9e286e7496">flounder::eventstandard</a>, <a class="el" href="classflounder_1_1eventtime.html#a67a616128c8e4701f7e229172c5e80a5">flounder::eventtime</a>, and <a class="el" href="classflounder_1_1eventchange.html#a2ae3c1f7ae4342dfff2aae6f11b0b413">flounder::eventchange&lt; t &gt;</a>.</p>
 
 </div>
 </div>
@@ -156,7 +217,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Run when a event has occurred. </p>
 
-<p>Implemented in <a class="el" href="classflounder_1_1ieventstandard.html#ac559905d5c7f4067ecc474742a1e24b8">flounder::ieventstandard</a>, <a class="el" href="classflounder_1_1ieventtime.html#abef43da596dc22fc9b7104fff88c1a9d">flounder::ieventtime</a>, and <a class="el" href="classflounder_1_1ieventchange.html#ab4977a4a6c22b93e82ea294d0d906a9e">flounder::ieventchange&lt; t &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classflounder_1_1eventstandard.html#af25e174b30e7d23698024b2c1ae9ac4c">flounder::eventstandard</a>, <a class="el" href="classflounder_1_1eventtime.html#a1b066c00fa959786bb1e9bbd1d212691">flounder::eventtime</a>, and <a class="el" href="classflounder_1_1eventchange.html#aa4fd4c3c28ac6927c3a810c8775f232d">flounder::eventchange&lt; t &gt;</a>.</p>
 
 </div>
 </div>
@@ -186,12 +247,12 @@ Public Member Functions</h2></td></tr>
 <p>Gets if the event is removed after it has run once. </p>
 <dl class="section return"><dt>Returns</dt><dd>If the even will run. </dd></dl>
 
-<p>Implemented in <a class="el" href="classflounder_1_1ieventstandard.html#ac54c83ea92a634d2f389e712afda83fc">flounder::ieventstandard</a>, <a class="el" href="classflounder_1_1ieventtime.html#af64c856310e8249439d0c847943e3490">flounder::ieventtime</a>, and <a class="el" href="classflounder_1_1ieventchange.html#a6c7872d176004b7dfb4a01e90221976d">flounder::ieventchange&lt; t &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classflounder_1_1eventstandard.html#ac4b9d57605f7f81c7c7e1cb981002f2f">flounder::eventstandard</a>, <a class="el" href="classflounder_1_1eventtime.html#ad765cd1e3b8fe2bf95f2290f5c625af1">flounder::eventtime</a>, and <a class="el" href="classflounder_1_1eventchange.html#ab3d476ecb51140e93886dc320ee44c33">flounder::eventchange&lt; t &gt;</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/events/<a class="el" href="ievent_8h_source.html">ievent.h</a></li>
+<li>Flounder-Core/src/events/<a class="el" href="ievent_8h_source.html">ievent.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

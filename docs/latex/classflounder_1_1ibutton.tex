@@ -12,13 +12,17 @@ Interface for a binary input device.
 Inheritance diagram for flounder\+:\+:ibutton\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.000000cm]{classflounder_1_1ibutton}
+\includegraphics[height=1.696970cm]{classflounder_1_1ibutton}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-virtual bool \hyperlink{classflounder_1_1ibutton_ab64fd22a75ea66ce67fd9b1ad34fd837}{is\+Down} ()=0
+\hyperlink{classflounder_1_1ibutton_a76aa7e3a4cc57c267ef8380462e9c2b6}{ibutton} ()
+\begin{DoxyCompactList}\small\item\em Creates a new axis. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1ibutton_aff254102cfa10ee61da7801c2027ac43}{$\sim$ibutton} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the axis. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classflounder_1_1ibutton_af99b936d7329f74a27768ce6eb181327}{is\+Down} () const =0
 \begin{DoxyCompactList}\small\item\em Returns whether this button is currently pressed. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classflounder_1_1ibutton_a5fb7b3493c0ea0e67bb9defc272da0d3}{was\+Down} ()=0
 \begin{DoxyCompactList}\small\item\em Gets if the key is down and was not down before. Key press recognized as one click. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -29,12 +33,35 @@ Interface for a binary input device.
 
 
 
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1ibutton_a76aa7e3a4cc57c267ef8380462e9c2b6}\label{classflounder_1_1ibutton_a76aa7e3a4cc57c267ef8380462e9c2b6}} 
+\index{flounder\+::ibutton@{flounder\+::ibutton}!ibutton@{ibutton}}
+\index{ibutton@{ibutton}!flounder\+::ibutton@{flounder\+::ibutton}}
+\subsubsection{\texorpdfstring{ibutton()}{ibutton()}}
+{\footnotesize\ttfamily flounder\+::ibutton\+::ibutton (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new axis. 
+
+\mbox{\Hypertarget{classflounder_1_1ibutton_aff254102cfa10ee61da7801c2027ac43}\label{classflounder_1_1ibutton_aff254102cfa10ee61da7801c2027ac43}} 
+\index{flounder\+::ibutton@{flounder\+::ibutton}!````~ibutton@{$\sim$ibutton}}
+\index{````~ibutton@{$\sim$ibutton}!flounder\+::ibutton@{flounder\+::ibutton}}
+\subsubsection{\texorpdfstring{$\sim$ibutton()}{~ibutton()}}
+{\footnotesize\ttfamily virtual flounder\+::ibutton\+::$\sim$ibutton (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the axis. 
+
+
+
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1ibutton_ab64fd22a75ea66ce67fd9b1ad34fd837}\label{classflounder_1_1ibutton_ab64fd22a75ea66ce67fd9b1ad34fd837}} 
+\mbox{\Hypertarget{classflounder_1_1ibutton_af99b936d7329f74a27768ce6eb181327}\label{classflounder_1_1ibutton_af99b936d7329f74a27768ce6eb181327}} 
 \index{flounder\+::ibutton@{flounder\+::ibutton}!is\+Down@{is\+Down}}
 \index{is\+Down@{is\+Down}!flounder\+::ibutton@{flounder\+::ibutton}}
 \subsubsection{\texorpdfstring{is\+Down()}{isDown()}}
-{\footnotesize\ttfamily virtual bool flounder\+::ibutton\+::is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily virtual bool flounder\+::ibutton\+::is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -45,7 +72,7 @@ True if the button is pressed, false otherwise.
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classflounder_1_1buttonjoystick_ab6682d3554e007ef473c4595339f86f1}{flounder\+::buttonjoystick}, \hyperlink{classflounder_1_1buttonkeyboard_a432555049251cec48431e4f14b6aa34b}{flounder\+::buttonkeyboard}, and \hyperlink{classflounder_1_1buttonmouse_ab4d7ecd54f144f03886b5ef467666be1}{flounder\+::buttonmouse}.
+Implemented in \hyperlink{classflounder_1_1buttonjoystick_adf53e97310b757108a417f5d4e6c5ab0}{flounder\+::buttonjoystick}, \hyperlink{classflounder_1_1buttonkeyboard_a401cfc086e9729adbf8ac3c72ae59fca}{flounder\+::buttonkeyboard}, \hyperlink{classflounder_1_1buttonmouse_ad4f5435d1141e54169c96a4ff8ea8ab7}{flounder\+::buttonmouse}, and \hyperlink{classflounder_1_1buttoncompound_a60ac6caaca37cd841c725259906a9196}{flounder\+::buttoncompound}.
 
 \mbox{\Hypertarget{classflounder_1_1ibutton_a5fb7b3493c0ea0e67bb9defc272da0d3}\label{classflounder_1_1ibutton_a5fb7b3493c0ea0e67bb9defc272da0d3}} 
 \index{flounder\+::ibutton@{flounder\+::ibutton}!was\+Down@{was\+Down}}
@@ -62,10 +89,10 @@ Is the key down and was not down before?
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classflounder_1_1buttonjoystick_a99302b1345fa773ec839290ae6c406e7}{flounder\+::buttonjoystick}, \hyperlink{classflounder_1_1buttonkeyboard_abc6b3c8cf9398f2a896408e390fd3a01}{flounder\+::buttonkeyboard}, and \hyperlink{classflounder_1_1buttonmouse_a7dad01481ebb01755db054a0acbc8159}{flounder\+::buttonmouse}.
+Implemented in \hyperlink{classflounder_1_1buttonjoystick_a99302b1345fa773ec839290ae6c406e7}{flounder\+::buttonjoystick}, \hyperlink{classflounder_1_1buttonkeyboard_abc6b3c8cf9398f2a896408e390fd3a01}{flounder\+::buttonkeyboard}, \hyperlink{classflounder_1_1buttonmouse_a7dad01481ebb01755db054a0acbc8159}{flounder\+::buttonmouse}, and \hyperlink{classflounder_1_1buttoncompound_ae14c6ee933dbc2550f16bc6307f20989}{flounder\+::buttoncompound}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/inputs/ibutton.\+h\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/inputs/ibutton.\+h\end{DoxyCompactItemize}

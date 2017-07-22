@@ -3,7 +3,7 @@
 
 
 A framework used for simplifying the creation of complicated Java applications. By using flexible Module loading and Extension injecting, it allows the engine to be used for Networking, Imaging, A\+Is, Games, and many more applications. Start off by creating a new Framework object in your main thread, using Extensions in the constructor. By using Extensions\+: Modules can be required and therefor loaded into the framework. Implementing interfaces like \begin{DoxySeeAlso}{See also}
-Standard, \#run()
+\hyperlink{classflounder_1_1standards}{standards}, \hyperlink{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}{run()}
 
 
 \end{DoxySeeAlso}
@@ -17,75 +17,50 @@ with your extension can allow you do task specific things with your Extensions. 
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classflounder_1_1framework_a65b26709246ffe005c7660752147edb9}{framework} (const std\+::string \&unlocalized\+Name, const int \&fps\+Limit)
+\hyperlink{classflounder_1_1framework_ae7f076f63f78093952477e83174120f9}{framework} ()
 \begin{DoxyCompactList}\small\item\em Carries out the setup for basic framework components and the framework. Call \begin{DoxySeeAlso}{See also}
-\#run()
+\hyperlink{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}{run()}
 
 
 \end{DoxySeeAlso}
 after creating a instance. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a9aa08fa1643b8063cc05c10ce2e1aa54}\label{classflounder_1_1framework_a9aa08fa1643b8063cc05c10ce2e1aa54}} 
-void {\bfseries load\+Updater} (\hyperlink{classflounder_1_1iupdater}{iupdater} $\ast$\hyperlink{classflounder_1_1iupdater}{iupdater})
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a88d0efc8e63448e5f342260ffd23054a}\label{classflounder_1_1framework_a88d0efc8e63448e5f342260ffd23054a}} 
-void {\bfseries init} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}\label{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}} 
-void {\bfseries run} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a84a2314d26174ab02b48bcda8fd5b4e4}\label{classflounder_1_1framework_a84a2314d26174ab02b48bcda8fd5b4e4}} 
-\hyperlink{classflounder_1_1imodule}{imodule} $\ast$ {\bfseries get\+Instance} (const std\+::string \&name)
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a27422918888d1eef6778c33bb3c655d1}\label{classflounder_1_1framework_a27422918888d1eef6778c33bb3c655d1}} 
-std\+::string {\bfseries framework\+::get\+Unlocalized\+Name} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_af26e334ebe0d5462ba3ba6ed58e83f23}\label{classflounder_1_1framework_af26e334ebe0d5462ba3ba6ed58e83f23}} 
-double {\bfseries framework\+::get\+Time\+Offset} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_aa8c8dd515d06adbe3a4bf83fb328453a}\label{classflounder_1_1framework_aa8c8dd515d06adbe3a4bf83fb328453a}} 
-void {\bfseries framework\+::set\+Time\+Offset} (const double \&time\+Offset)
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a1e235b88481613cc96c9fd71e32c6ec7}\label{classflounder_1_1framework_a1e235b88481613cc96c9fd71e32c6ec7}} 
-double {\bfseries framework\+::get\+Delta} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a78983b7a21add198232f6b2afeec62ad}\label{classflounder_1_1framework_a78983b7a21add198232f6b2afeec62ad}} 
-double {\bfseries framework\+::get\+Delta\+Render} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a122a50cf701f06913a20470f2b86e293}\label{classflounder_1_1framework_a122a50cf701f06913a20470f2b86e293}} 
-double {\bfseries framework\+::get\+Time\+Sec} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_aa9d22f7af8d1b6e871666b127ddaa135}\label{classflounder_1_1framework_aa9d22f7af8d1b6e871666b127ddaa135}} 
-double {\bfseries framework\+::get\+Time\+Ms} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a21dd36efabe66181027181771be6ef97}\label{classflounder_1_1framework_a21dd36efabe66181027181771be6ef97}} 
-bool {\bfseries framework\+::is\+Initialized} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_ad9a2b8281000eee4e65e3ccbe988edef}\label{classflounder_1_1framework_ad9a2b8281000eee4e65e3ccbe988edef}} 
-void {\bfseries framework\+::set\+Initialized} (const bool \&initialized)
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_ae1ba1a1b3d3a457991a7139612aed781}\label{classflounder_1_1framework_ae1ba1a1b3d3a457991a7139612aed781}} 
-bool {\bfseries framework\+::is\+Running} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a824d3e5c8afa607a3fa7f8b45b5b3d3a}\label{classflounder_1_1framework_a824d3e5c8afa607a3fa7f8b45b5b3d3a}} 
-void {\bfseries framework\+::request\+Close} (const bool \&error)
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a93f94b27dc57295c507e54ce9993ae8b}\label{classflounder_1_1framework_a93f94b27dc57295c507e54ce9993ae8b}} 
-int {\bfseries framework\+::get\+Fps\+Limit} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_afc03f1b305c2af306b1d393594d1f084}\label{classflounder_1_1framework_afc03f1b305c2af306b1d393594d1f084}} 
-void {\bfseries framework\+::set\+Fps\+Limit} (const int \&fps\+Limit)
-\end{DoxyCompactItemize}
+\hyperlink{classflounder_1_1framework_a4f5440b66d1c2e7e35d9dc7fd733f944}{$\sim$framework} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the framework. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1framework_a1c6123166e03e5ee0effc375cb7a800c}{load} (\hyperlink{classflounder_1_1iupdater}{iupdater} $\ast$updater)
+\begin{DoxyCompactList}\small\item\em Loads the framework module with inital values. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1framework_a88d0efc8e63448e5f342260ffd23054a}{init} ()
+\begin{DoxyCompactList}\small\item\em The initialize function for the updater. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}{run} ()
+\begin{DoxyCompactList}\small\item\em The update function for the updater. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1imodule}{imodule} $\ast$ \hyperlink{classflounder_1_1framework_a84a2314d26174ab02b48bcda8fd5b4e4}{get\+Instance} (const std\+::string \&name)
+\begin{DoxyCompactList}\small\item\em Gets a module instance by name. \end{DoxyCompactList}\item 
+double \hyperlink{classflounder_1_1framework_a611e6fcdc2f2f484ebf8bbbdceacd45b}{get\+Time\+Offset} () const
+\begin{DoxyCompactList}\small\item\em Gets the added/removed time for the framework (seconds). \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1framework_aa4d08f34e622916ecd4a5f5f55bbac88}{set\+Time\+Offset} (const double \&time\+Offset) const
+\begin{DoxyCompactList}\small\item\em Sets the time offset for the framework (seconds). \end{DoxyCompactList}\item 
+double \hyperlink{classflounder_1_1framework_a46219c3eae921c9819e7228ec2d8d904}{get\+Delta} () const
+\begin{DoxyCompactList}\small\item\em Gets the delta (seconds) between updates. \end{DoxyCompactList}\item 
+double \hyperlink{classflounder_1_1framework_ae4020c8f9baeda03fe5ef8ceb6f1d286}{get\+Delta\+Render} () const
+\begin{DoxyCompactList}\small\item\em Gets the delta (seconds) between renders. \end{DoxyCompactList}\item 
+double \hyperlink{classflounder_1_1framework_acac765a2dd8e09267b7d6ce0620b8e55}{get\+Time\+Sec} () const
+\begin{DoxyCompactList}\small\item\em Gets the current time of the framework instance. \end{DoxyCompactList}\item 
+double \hyperlink{classflounder_1_1framework_a1f60ddf8e191eb9182b3e90007d8f9a1}{get\+Time\+Ms} () const
+\begin{DoxyCompactList}\small\item\em Gets the current time of the framework instance. \end{DoxyCompactList}\item 
+bool \hyperlink{classflounder_1_1framework_ad217b91b7e0f46f305105045396dcdf3}{is\+Initialized} () const
+\begin{DoxyCompactList}\small\item\em Gets if the framework has been initialized. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1framework_a06963c9a669b09c6e33547a6766432df}{set\+Initialized} (const bool \&initialized)
+\begin{DoxyCompactList}\small\item\em Sets if the framework has been initialized. \end{DoxyCompactList}\item 
+bool \hyperlink{classflounder_1_1framework_a7e2584d7a3443c07b1d5eac2f44da14f}{is\+Running} () const
+\begin{DoxyCompactList}\small\item\em Gets if the framework is running. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1framework_ad443bf70cbc62d372cf39939cd7c2e09}{request\+Close} (const bool \&error)
+\begin{DoxyCompactList}\small\item\em Requests the framework to delete and stop the gameloop. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1framework_a1b1dbf1058cc4589b090326baf1beb87}\label{classflounder_1_1framework_a1b1dbf1058cc4589b090326baf1beb87}} 
-static \hyperlink{classflounder_1_1framework}{framework} $\ast$ {\bfseries get} ()
-\end{DoxyCompactItemize}
+static \hyperlink{classflounder_1_1framework}{framework} $\ast$ \hyperlink{classflounder_1_1framework_a1b1dbf1058cc4589b090326baf1beb87}{get} ()
+\begin{DoxyCompactList}\small\item\em Gets this framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a0c8838aa68911d49e5d645a76cd4c882}\label{classflounder_1_1framework_a0c8838aa68911d49e5d645a76cd4c882}} 
-std\+::string {\bfseries m\+\_\+unlocalized\+Name}
 \item 
 \mbox{\Hypertarget{classflounder_1_1framework_aa8d5bd06f84d96cd899a2dc0a923f6c0}\label{classflounder_1_1framework_aa8d5bd06f84d96cd899a2dc0a923f6c0}} 
 bool {\bfseries m\+\_\+initialized}
@@ -95,9 +70,6 @@ bool {\bfseries m\+\_\+running}
 \item 
 \mbox{\Hypertarget{classflounder_1_1framework_a330204f666427dfaeb7b0e2557b678e9}\label{classflounder_1_1framework_a330204f666427dfaeb7b0e2557b678e9}} 
 bool {\bfseries m\+\_\+error}
-\item 
-\mbox{\Hypertarget{classflounder_1_1framework_a1d378181c630d013eb5841eaad4b0f3a}\label{classflounder_1_1framework_a1d378181c630d013eb5841eaad4b0f3a}} 
-int {\bfseries m\+\_\+fps\+Limit}
 \item 
 \mbox{\Hypertarget{classflounder_1_1framework_a5b02f37837a680807cb9e84e7172a6a3}\label{classflounder_1_1framework_a5b02f37837a680807cb9e84e7172a6a3}} 
 \hyperlink{classflounder_1_1iupdater}{iupdater} $\ast$ {\bfseries m\+\_\+updater}
@@ -112,7 +84,7 @@ static \hyperlink{classflounder_1_1framework}{framework} $\ast$ {\bfseries G\+\_
 
 \subsection{Detailed Description}
 A framework used for simplifying the creation of complicated Java applications. By using flexible Module loading and Extension injecting, it allows the engine to be used for Networking, Imaging, A\+Is, Games, and many more applications. Start off by creating a new Framework object in your main thread, using Extensions in the constructor. By using Extensions\+: Modules can be required and therefor loaded into the framework. Implementing interfaces like \begin{DoxySeeAlso}{See also}
-Standard, \#run()
+\hyperlink{classflounder_1_1standards}{standards}, \hyperlink{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}{run()}
 
 
 \end{DoxySeeAlso}
@@ -121,31 +93,239 @@ with your extension can allow you do task specific things with your Extensions. 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classflounder_1_1framework_a65b26709246ffe005c7660752147edb9}\label{classflounder_1_1framework_a65b26709246ffe005c7660752147edb9}} 
+\mbox{\Hypertarget{classflounder_1_1framework_ae7f076f63f78093952477e83174120f9}\label{classflounder_1_1framework_ae7f076f63f78093952477e83174120f9}} 
 \index{flounder\+::framework@{flounder\+::framework}!framework@{framework}}
 \index{framework@{framework}!flounder\+::framework@{flounder\+::framework}}
 \subsubsection{\texorpdfstring{framework()}{framework()}}
-{\footnotesize\ttfamily flounder\+::framework\+::framework (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{unlocalized\+Name,  }\item[{const int \&}]{fps\+Limit }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily flounder\+::framework\+::framework (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
 Carries out the setup for basic framework components and the framework. Call \begin{DoxySeeAlso}{See also}
-\#run()
+\hyperlink{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}{run()}
 
 
 \end{DoxySeeAlso}
 after creating a instance. 
 
+\mbox{\Hypertarget{classflounder_1_1framework_a4f5440b66d1c2e7e35d9dc7fd733f944}\label{classflounder_1_1framework_a4f5440b66d1c2e7e35d9dc7fd733f944}} 
+\index{flounder\+::framework@{flounder\+::framework}!````~framework@{$\sim$framework}}
+\index{````~framework@{$\sim$framework}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{$\sim$framework()}{~framework()}}
+{\footnotesize\ttfamily flounder\+::framework\+::$\sim$framework (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the framework. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1framework_a1b1dbf1058cc4589b090326baf1beb87}\label{classflounder_1_1framework_a1b1dbf1058cc4589b090326baf1beb87}} 
+\index{flounder\+::framework@{flounder\+::framework}!get@{get}}
+\index{get@{get}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily static \hyperlink{classflounder_1_1framework}{framework}$\ast$ flounder\+::framework\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this framework instance. 
+
+\begin{DoxyReturn}{Returns}
+The current framework instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1framework_a46219c3eae921c9819e7228ec2d8d904}\label{classflounder_1_1framework_a46219c3eae921c9819e7228ec2d8d904}} 
+\index{flounder\+::framework@{flounder\+::framework}!get\+Delta@{get\+Delta}}
+\index{get\+Delta@{get\+Delta}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{get\+Delta()}{getDelta()}}
+{\footnotesize\ttfamily double flounder\+::framework\+::get\+Delta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the delta (seconds) between updates. 
+
+\begin{DoxyReturn}{Returns}
+The delta between updates. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1framework_ae4020c8f9baeda03fe5ef8ceb6f1d286}\label{classflounder_1_1framework_ae4020c8f9baeda03fe5ef8ceb6f1d286}} 
+\index{flounder\+::framework@{flounder\+::framework}!get\+Delta\+Render@{get\+Delta\+Render}}
+\index{get\+Delta\+Render@{get\+Delta\+Render}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{get\+Delta\+Render()}{getDeltaRender()}}
+{\footnotesize\ttfamily double flounder\+::framework\+::get\+Delta\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the delta (seconds) between renders. 
+
+\begin{DoxyReturn}{Returns}
+The delta between renders. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1framework_a84a2314d26174ab02b48bcda8fd5b4e4}\label{classflounder_1_1framework_a84a2314d26174ab02b48bcda8fd5b4e4}} 
+\index{flounder\+::framework@{flounder\+::framework}!get\+Instance@{get\+Instance}}
+\index{get\+Instance@{get\+Instance}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{get\+Instance()}{getInstance()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1imodule}{imodule} $\ast$ flounder\+::framework\+::get\+Instance (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})}
+
+
+
+Gets a module instance by name. 
+
 
 \begin{DoxyParams}{Parameters}
-{\em unlocalized\+Name} & The name to be used when determining where the roaming save files are saved. \\
+{\em name} & The module name to find. \\
 \hline
-{\em fps\+Limit} & The limit to F\+PS, (-\/1 disables limits). \\
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The found module. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1framework_a1f60ddf8e191eb9182b3e90007d8f9a1}\label{classflounder_1_1framework_a1f60ddf8e191eb9182b3e90007d8f9a1}} 
+\index{flounder\+::framework@{flounder\+::framework}!get\+Time\+Ms@{get\+Time\+Ms}}
+\index{get\+Time\+Ms@{get\+Time\+Ms}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{get\+Time\+Ms()}{getTimeMs()}}
+{\footnotesize\ttfamily double flounder\+::framework\+::get\+Time\+Ms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the current time of the framework instance. 
+
+\begin{DoxyReturn}{Returns}
+The current framework time in milliseconds. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1framework_a611e6fcdc2f2f484ebf8bbbdceacd45b}\label{classflounder_1_1framework_a611e6fcdc2f2f484ebf8bbbdceacd45b}} 
+\index{flounder\+::framework@{flounder\+::framework}!get\+Time\+Offset@{get\+Time\+Offset}}
+\index{get\+Time\+Offset@{get\+Time\+Offset}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{get\+Time\+Offset()}{getTimeOffset()}}
+{\footnotesize\ttfamily double flounder\+::framework\+::get\+Time\+Offset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the added/removed time for the framework (seconds). 
+
+\begin{DoxyReturn}{Returns}
+The time offset. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1framework_acac765a2dd8e09267b7d6ce0620b8e55}\label{classflounder_1_1framework_acac765a2dd8e09267b7d6ce0620b8e55}} 
+\index{flounder\+::framework@{flounder\+::framework}!get\+Time\+Sec@{get\+Time\+Sec}}
+\index{get\+Time\+Sec@{get\+Time\+Sec}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{get\+Time\+Sec()}{getTimeSec()}}
+{\footnotesize\ttfamily double flounder\+::framework\+::get\+Time\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the current time of the framework instance. 
+
+\begin{DoxyReturn}{Returns}
+The current framework time in seconds. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1framework_a88d0efc8e63448e5f342260ffd23054a}\label{classflounder_1_1framework_a88d0efc8e63448e5f342260ffd23054a}} 
+\index{flounder\+::framework@{flounder\+::framework}!init@{init}}
+\index{init@{init}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void flounder\+::framework\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The initialize function for the updater. 
+
+\mbox{\Hypertarget{classflounder_1_1framework_ad217b91b7e0f46f305105045396dcdf3}\label{classflounder_1_1framework_ad217b91b7e0f46f305105045396dcdf3}} 
+\index{flounder\+::framework@{flounder\+::framework}!is\+Initialized@{is\+Initialized}}
+\index{is\+Initialized@{is\+Initialized}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{is\+Initialized()}{isInitialized()}}
+{\footnotesize\ttfamily bool flounder\+::framework\+::is\+Initialized (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets if the framework has been initialized. 
+
+\begin{DoxyReturn}{Returns}
+If the framework has been initialized. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1framework_a7e2584d7a3443c07b1d5eac2f44da14f}\label{classflounder_1_1framework_a7e2584d7a3443c07b1d5eac2f44da14f}} 
+\index{flounder\+::framework@{flounder\+::framework}!is\+Running@{is\+Running}}
+\index{is\+Running@{is\+Running}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{is\+Running()}{isRunning()}}
+{\footnotesize\ttfamily bool flounder\+::framework\+::is\+Running (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets if the framework is running. 
+
+\begin{DoxyReturn}{Returns}
+If the framework is running. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1framework_a1c6123166e03e5ee0effc375cb7a800c}\label{classflounder_1_1framework_a1c6123166e03e5ee0effc375cb7a800c}} 
+\index{flounder\+::framework@{flounder\+::framework}!load@{load}}
+\index{load@{load}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily void flounder\+::framework\+::load (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1iupdater}{iupdater} $\ast$}]{updater }\end{DoxyParamCaption})}
+
+
+
+Loads the framework module with inital values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em updater} & The updater. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1framework_ad443bf70cbc62d372cf39939cd7c2e09}\label{classflounder_1_1framework_ad443bf70cbc62d372cf39939cd7c2e09}} 
+\index{flounder\+::framework@{flounder\+::framework}!request\+Close@{request\+Close}}
+\index{request\+Close@{request\+Close}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{request\+Close()}{requestClose()}}
+{\footnotesize\ttfamily void flounder\+::framework\+::request\+Close (\begin{DoxyParamCaption}\item[{const bool \&}]{error }\end{DoxyParamCaption})}
+
+
+
+Requests the framework to delete and stop the gameloop. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & If a bad error occured. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}\label{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}} 
+\index{flounder\+::framework@{flounder\+::framework}!run@{run}}
+\index{run@{run}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void flounder\+::framework\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The update function for the updater. 
+
+\mbox{\Hypertarget{classflounder_1_1framework_a06963c9a669b09c6e33547a6766432df}\label{classflounder_1_1framework_a06963c9a669b09c6e33547a6766432df}} 
+\index{flounder\+::framework@{flounder\+::framework}!set\+Initialized@{set\+Initialized}}
+\index{set\+Initialized@{set\+Initialized}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{set\+Initialized()}{setInitialized()}}
+{\footnotesize\ttfamily void flounder\+::framework\+::set\+Initialized (\begin{DoxyParamCaption}\item[{const bool \&}]{initialized }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets if the framework has been initialized. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em initialized} & If the framework has been initialized. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1framework_aa4d08f34e622916ecd4a5f5f55bbac88}\label{classflounder_1_1framework_aa4d08f34e622916ecd4a5f5f55bbac88}} 
+\index{flounder\+::framework@{flounder\+::framework}!set\+Time\+Offset@{set\+Time\+Offset}}
+\index{set\+Time\+Offset@{set\+Time\+Offset}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{set\+Time\+Offset()}{setTimeOffset()}}
+{\footnotesize\ttfamily void flounder\+::framework\+::set\+Time\+Offset (\begin{DoxyParamCaption}\item[{const double \&}]{time\+Offset }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the time offset for the framework (seconds). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+Offset} & The new time offset. \\
 \hline
 \end{DoxyParams}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/framework/framework.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/framework/framework.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/framework/framework.\+h\item 
+Flounder-\/\+Core/src/framework/framework.\+cpp\end{DoxyCompactItemize}

@@ -18,7 +18,11 @@ Inheritance diagram for flounder\+:\+:iaxis\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-virtual float \hyperlink{classflounder_1_1iaxis_a067a133edfde2ee8e2689df71328bf03}{get\+Amount} ()=0
+\hyperlink{classflounder_1_1iaxis_a0f181144a1e6cd74008fdf0dbff1db4c}{iaxis} ()
+\begin{DoxyCompactList}\small\item\em Creates a new axis. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1iaxis_ad0c72fa9b05f3151dbefc48ce7249f66}{$\sim$iaxis} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the axis. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classflounder_1_1iaxis_a990ecb5ffa5ec07b3d5e2e4016b2e4a0}{get\+Amount} () const =0
 \begin{DoxyCompactList}\small\item\em Gets the current value along the axis. -\/1 is smallest input, 1 is largest input. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -27,12 +31,35 @@ Interface for an axis based input device.
 
 
 
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1iaxis_a0f181144a1e6cd74008fdf0dbff1db4c}\label{classflounder_1_1iaxis_a0f181144a1e6cd74008fdf0dbff1db4c}} 
+\index{flounder\+::iaxis@{flounder\+::iaxis}!iaxis@{iaxis}}
+\index{iaxis@{iaxis}!flounder\+::iaxis@{flounder\+::iaxis}}
+\subsubsection{\texorpdfstring{iaxis()}{iaxis()}}
+{\footnotesize\ttfamily flounder\+::iaxis\+::iaxis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new axis. 
+
+\mbox{\Hypertarget{classflounder_1_1iaxis_ad0c72fa9b05f3151dbefc48ce7249f66}\label{classflounder_1_1iaxis_ad0c72fa9b05f3151dbefc48ce7249f66}} 
+\index{flounder\+::iaxis@{flounder\+::iaxis}!````~iaxis@{$\sim$iaxis}}
+\index{````~iaxis@{$\sim$iaxis}!flounder\+::iaxis@{flounder\+::iaxis}}
+\subsubsection{\texorpdfstring{$\sim$iaxis()}{~iaxis()}}
+{\footnotesize\ttfamily virtual flounder\+::iaxis\+::$\sim$iaxis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the axis. 
+
+
+
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1iaxis_a067a133edfde2ee8e2689df71328bf03}\label{classflounder_1_1iaxis_a067a133edfde2ee8e2689df71328bf03}} 
+\mbox{\Hypertarget{classflounder_1_1iaxis_a990ecb5ffa5ec07b3d5e2e4016b2e4a0}\label{classflounder_1_1iaxis_a990ecb5ffa5ec07b3d5e2e4016b2e4a0}} 
 \index{flounder\+::iaxis@{flounder\+::iaxis}!get\+Amount@{get\+Amount}}
 \index{get\+Amount@{get\+Amount}!flounder\+::iaxis@{flounder\+::iaxis}}
 \subsubsection{\texorpdfstring{get\+Amount()}{getAmount()}}
-{\footnotesize\ttfamily virtual float flounder\+::iaxis\+::get\+Amount (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily virtual float flounder\+::iaxis\+::get\+Amount (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -43,10 +70,10 @@ The current value of the axis in the range (-\/1, 1).
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classflounder_1_1axisjoystick_ace3ec0cbb5c9958fe8e8fb6996fc81c3}{flounder\+::axisjoystick}.
+Implemented in \hyperlink{classflounder_1_1axisjoystick_ae1c3dafedcb9458be0172e83f4197dac}{flounder\+::axisjoystick}, and \hyperlink{classflounder_1_1axiscompound_aad0f38f1a532c269cd0e803953861400}{flounder\+::axiscompound}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/inputs/iaxis.\+h\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/inputs/iaxis.\+h\end{DoxyCompactItemize}

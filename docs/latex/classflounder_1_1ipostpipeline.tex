@@ -9,9 +9,19 @@ Represents a system of post effects.
 
 {\ttfamily \#include $<$ipostpipeline.\+h$>$}
 
+Inheritance diagram for flounder\+:\+:ipostpipeline\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1ipostpipeline}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classflounder_1_1ipostpipeline_a778c68518cfcdf1de4052264538b28d3}{ipostpipeline} ()
+\begin{DoxyCompactList}\small\item\em Creates a new post pipeline. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1ipostpipeline_a5d8e916ae2d5a3153449a61caa4399f6}{$\sim$ipostpipeline} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the post pipeline. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}{render\+Pipeline} (const int n\+\_\+args,...)=0
 \begin{DoxyCompactList}\small\item\em Renders the post pipeline. \end{DoxyCompactList}\item 
 virtual fbo $\ast$ \hyperlink{classflounder_1_1ipostpipeline_a08f5d19b9652528337b73c2f4e0e4258}{get\+Output} ()=0
@@ -20,6 +30,29 @@ virtual fbo $\ast$ \hyperlink{classflounder_1_1ipostpipeline_a08f5d19b9652528337
 
 \subsection{Detailed Description}
 Represents a system of post effects. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1ipostpipeline_a778c68518cfcdf1de4052264538b28d3}\label{classflounder_1_1ipostpipeline_a778c68518cfcdf1de4052264538b28d3}} 
+\index{flounder\+::ipostpipeline@{flounder\+::ipostpipeline}!ipostpipeline@{ipostpipeline}}
+\index{ipostpipeline@{ipostpipeline}!flounder\+::ipostpipeline@{flounder\+::ipostpipeline}}
+\subsubsection{\texorpdfstring{ipostpipeline()}{ipostpipeline()}}
+{\footnotesize\ttfamily flounder\+::ipostpipeline\+::ipostpipeline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new post pipeline. 
+
+\mbox{\Hypertarget{classflounder_1_1ipostpipeline_a5d8e916ae2d5a3153449a61caa4399f6}\label{classflounder_1_1ipostpipeline_a5d8e916ae2d5a3153449a61caa4399f6}} 
+\index{flounder\+::ipostpipeline@{flounder\+::ipostpipeline}!````~ipostpipeline@{$\sim$ipostpipeline}}
+\index{````~ipostpipeline@{$\sim$ipostpipeline}!flounder\+::ipostpipeline@{flounder\+::ipostpipeline}}
+\subsubsection{\texorpdfstring{$\sim$ipostpipeline()}{~ipostpipeline()}}
+{\footnotesize\ttfamily virtual flounder\+::ipostpipeline\+::$\sim$ipostpipeline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the post pipeline. 
 
 
 
@@ -37,6 +70,10 @@ Gets the fbo containing the pipeline output.
 \begin{DoxyReturn}{Returns}
 The output fbo. 
 \end{DoxyReturn}
+
+
+Implemented in \hyperlink{classflounder_1_1pipelinepaused_a7824b6364878b5aaf57921e2a7a4915a}{flounder\+::pipelinepaused}, \hyperlink{classflounder_1_1pipelinebloom_a0ab1108f9115014014f7a8bd5ca5ac34}{flounder\+::pipelinebloom}, and \hyperlink{classflounder_1_1pipelinegaussian_aae27c8214a8a544b1ab96ddd2383a2b2}{flounder\+::pipelinegaussian}.
+
 \mbox{\Hypertarget{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}\label{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}} 
 \index{flounder\+::ipostpipeline@{flounder\+::ipostpipeline}!render\+Pipeline@{render\+Pipeline}}
 \index{render\+Pipeline@{render\+Pipeline}!flounder\+::ipostpipeline@{flounder\+::ipostpipeline}}
@@ -56,6 +93,10 @@ Renders the post pipeline.
 \end{DoxyParams}
 
 
+Implemented in \hyperlink{classflounder_1_1pipelinepaused_ac3f87a0c31db13f6b25eaf02431c6644}{flounder\+::pipelinepaused}, \hyperlink{classflounder_1_1pipelinebloom_a5f3e5c81ec41947b31f80027911addd0}{flounder\+::pipelinebloom}, and \hyperlink{classflounder_1_1pipelinegaussian_a2d6372f1b428c3a09bf6fc2efaee3c83}{flounder\+::pipelinegaussian}.
+
+
+
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/post/ipostpipeline.\+h\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/post/ipostpipeline.\+h\end{DoxyCompactItemize}

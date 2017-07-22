@@ -1,8 +1,6 @@
 #pragma once
 
-#include "devices/display.h"
-#include "devices/mouse.h"
-#include "camera/icamera.h"
+#include <flounder.h>
 
 using namespace flounder;
 

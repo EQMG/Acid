@@ -16,16 +16,21 @@ Holds a 3 dimensional ray.
 \begin{DoxyCompactList}\small\item\em Creates a new 3D ray. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1ray_a22e1374c250bbad557f01428b95d7fe1}{$\sim$ray} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the ray. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1ray_a66cad92bcca61f25755e21b1d54edb99}{update} (\hyperlink{classflounder_1_1vector3}{vector3} $\ast$current\+Position, \hyperlink{classflounder_1_1vector2}{vector2} $\ast$mouse\+Position, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$view\+Matrix, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$projection\+Matrix)
+void \hyperlink{classflounder_1_1ray_ade6d4c4db0c0f68eaa2b0f00b0c6724c}{update} (const \hyperlink{classflounder_1_1vector3}{vector3} \&current\+Position, const \hyperlink{classflounder_1_1vector2}{vector2} \&mouse\+Position, const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&view\+Matrix, const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&projection\+Matrix)
 \begin{DoxyCompactList}\small\item\em Updates the ray to a new position. \end{DoxyCompactList}\item 
-\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1ray_ae13e7a6d1df979371e75e7f7cfcec130}{get\+Point\+On\+Ray} (const float \&distance, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$destination)
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1ray_ab08982d3adaaa4ea6db3e1615749a298}{get\+Point\+On\+Ray} (const float \&distance, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$destination) const
 \begin{DoxyCompactList}\small\item\em Gets a point on the ray. \end{DoxyCompactList}\item 
-\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1ray_acaa86f1a2a66ab56e7854a4ea11160a7}{convert\+To\+Screen\+Space} (\hyperlink{classflounder_1_1vector3}{vector3} $\ast$position, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$destination)
-\begin{DoxyCompactList}\small\item\em Converts a position from world space to screen space. \end{DoxyCompactList}\item 
-\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1ray_af0a3765b066ae26607ca7a8b905b3d0b}{get\+Origin} ()
-\begin{DoxyCompactList}\small\item\em Gets the rays origin. \end{DoxyCompactList}\item 
-\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1ray_a675aec0722a9db426b32f598fdd3157a}{get\+Current\+Ray} ()
-\begin{DoxyCompactList}\small\item\em Gets the current ray. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1ray_a6770cbc5a1826141b46e08be39d542b5}{convert\+To\+Screen\+Space} (const \hyperlink{classflounder_1_1vector3}{vector3} \&position, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$destination) const
+\begin{DoxyCompactList}\small\item\em Converts a position from world space to screen space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_aea6b4658a11f84101113a76a3107851e}\label{classflounder_1_1ray_aea6b4658a11f84101113a76a3107851e}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+origin}
+\item 
+\mbox{\Hypertarget{classflounder_1_1ray_ace55d10e8446f517a24ae9823255e24c}\label{classflounder_1_1ray_ace55d10e8446f517a24ae9823255e24c}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+current\+Ray}
+\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -52,12 +57,6 @@ bool {\bfseries m\+\_\+use\+Mouse}
 \item 
 \mbox{\Hypertarget{classflounder_1_1ray_a62131776d6440a0d5b55fa84907e8128}\label{classflounder_1_1ray_a62131776d6440a0d5b55fa84907e8128}} 
 \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ {\bfseries m\+\_\+projection\+Matrix}
-\item 
-\mbox{\Hypertarget{classflounder_1_1ray_aea6b4658a11f84101113a76a3107851e}\label{classflounder_1_1ray_aea6b4658a11f84101113a76a3107851e}} 
-\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+origin}
-\item 
-\mbox{\Hypertarget{classflounder_1_1ray_ace55d10e8446f517a24ae9823255e24c}\label{classflounder_1_1ray_ace55d10e8446f517a24ae9823255e24c}} 
-\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+current\+Ray}
 \item 
 \mbox{\Hypertarget{classflounder_1_1ray_afc4d1ed6dd597f9b40d597d904a5dfa1}\label{classflounder_1_1ray_afc4d1ed6dd597f9b40d597d904a5dfa1}} 
 \hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries m\+\_\+normalized\+Coords}
@@ -115,11 +114,11 @@ Deconstructor for the ray.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1ray_acaa86f1a2a66ab56e7854a4ea11160a7}\label{classflounder_1_1ray_acaa86f1a2a66ab56e7854a4ea11160a7}} 
+\mbox{\Hypertarget{classflounder_1_1ray_a6770cbc5a1826141b46e08be39d542b5}\label{classflounder_1_1ray_a6770cbc5a1826141b46e08be39d542b5}} 
 \index{flounder\+::ray@{flounder\+::ray}!convert\+To\+Screen\+Space@{convert\+To\+Screen\+Space}}
 \index{convert\+To\+Screen\+Space@{convert\+To\+Screen\+Space}!flounder\+::ray@{flounder\+::ray}}
 \subsubsection{\texorpdfstring{convert\+To\+Screen\+Space()}{convertToScreenSpace()}}
-{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ flounder\+::ray\+::convert\+To\+Screen\+Space (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{position,  }\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{destination }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ flounder\+::ray\+::convert\+To\+Screen\+Space (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{position,  }\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{destination }\end{DoxyParamCaption}) const}
 
 
 
@@ -135,37 +134,11 @@ Converts a position from world space to screen space.
 \begin{DoxyReturn}{Returns}
 Returns the destination vector. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1ray_a675aec0722a9db426b32f598fdd3157a}\label{classflounder_1_1ray_a675aec0722a9db426b32f598fdd3157a}} 
-\index{flounder\+::ray@{flounder\+::ray}!get\+Current\+Ray@{get\+Current\+Ray}}
-\index{get\+Current\+Ray@{get\+Current\+Ray}!flounder\+::ray@{flounder\+::ray}}
-\subsubsection{\texorpdfstring{get\+Current\+Ray()}{getCurrentRay()}}
-{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3}$\ast$ flounder\+::ray\+::get\+Current\+Ray (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Gets the current ray. 
-
-\begin{DoxyReturn}{Returns}
-The current ray. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1ray_af0a3765b066ae26607ca7a8b905b3d0b}\label{classflounder_1_1ray_af0a3765b066ae26607ca7a8b905b3d0b}} 
-\index{flounder\+::ray@{flounder\+::ray}!get\+Origin@{get\+Origin}}
-\index{get\+Origin@{get\+Origin}!flounder\+::ray@{flounder\+::ray}}
-\subsubsection{\texorpdfstring{get\+Origin()}{getOrigin()}}
-{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3}$\ast$ flounder\+::ray\+::get\+Origin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Gets the rays origin. 
-
-\begin{DoxyReturn}{Returns}
-The rays origin. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1ray_ae13e7a6d1df979371e75e7f7cfcec130}\label{classflounder_1_1ray_ae13e7a6d1df979371e75e7f7cfcec130}} 
+\mbox{\Hypertarget{classflounder_1_1ray_ab08982d3adaaa4ea6db3e1615749a298}\label{classflounder_1_1ray_ab08982d3adaaa4ea6db3e1615749a298}} 
 \index{flounder\+::ray@{flounder\+::ray}!get\+Point\+On\+Ray@{get\+Point\+On\+Ray}}
 \index{get\+Point\+On\+Ray@{get\+Point\+On\+Ray}!flounder\+::ray@{flounder\+::ray}}
 \subsubsection{\texorpdfstring{get\+Point\+On\+Ray()}{getPointOnRay()}}
-{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ flounder\+::ray\+::get\+Point\+On\+Ray (\begin{DoxyParamCaption}\item[{const float \&}]{distance,  }\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{destination }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ flounder\+::ray\+::get\+Point\+On\+Ray (\begin{DoxyParamCaption}\item[{const float \&}]{distance,  }\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{destination }\end{DoxyParamCaption}) const}
 
 
 
@@ -175,17 +148,17 @@ Gets a point on the ray.
 \begin{DoxyParams}{Parameters}
 {\em distance} & Distance down the ray to sample. \\
 \hline
-{\em destination} & The destination vector, if null one will be created. \\
+{\em destination} & The destination vector, if N\+U\+LL one will be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Returns the destination vector. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1ray_a66cad92bcca61f25755e21b1d54edb99}\label{classflounder_1_1ray_a66cad92bcca61f25755e21b1d54edb99}} 
+\mbox{\Hypertarget{classflounder_1_1ray_ade6d4c4db0c0f68eaa2b0f00b0c6724c}\label{classflounder_1_1ray_ade6d4c4db0c0f68eaa2b0f00b0c6724c}} 
 \index{flounder\+::ray@{flounder\+::ray}!update@{update}}
 \index{update@{update}!flounder\+::ray@{flounder\+::ray}}
 \subsubsection{\texorpdfstring{update()}{update()}}
-{\footnotesize\ttfamily void flounder\+::ray\+::update (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1vector3}{vector3} $\ast$}]{current\+Position,  }\item[{\hyperlink{classflounder_1_1vector2}{vector2} $\ast$}]{mouse\+Position,  }\item[{\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$}]{view\+Matrix,  }\item[{\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$}]{projection\+Matrix }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void flounder\+::ray\+::update (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{current\+Position,  }\item[{const \hyperlink{classflounder_1_1vector2}{vector2} \&}]{mouse\+Position,  }\item[{const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&}]{view\+Matrix,  }\item[{const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&}]{projection\+Matrix }\end{DoxyParamCaption})}
 
 
 
@@ -206,5 +179,5 @@ Updates the ray to a new position.
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/physics/ray.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/physics/ray.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/physics/ray.\+h\item 
+Flounder-\/\+Core/src/physics/ray.\+cpp\end{DoxyCompactItemize}

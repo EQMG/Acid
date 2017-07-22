@@ -87,6 +87,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a352cc02167e091a1c05d560d96ca3636"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1light.html#a352cc02167e091a1c05d560d96ca3636">~light</a> ()</td></tr>
 <tr class="memdesc:a352cc02167e091a1c05d560d96ca3636"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for light.  <a href="#a352cc02167e091a1c05d560d96ca3636">More...</a><br /></td></tr>
 <tr class="separator:a352cc02167e091a1c05d560d96ca3636"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac01c16e7d4436d43205a33aa9662813a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classflounder_1_1light.html">light</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1light.html#ac01c16e7d4436d43205a33aa9662813a">set</a> (<a class="el" href="classflounder_1_1colour.html">colour</a> *<a class="el" href="classflounder_1_1colour.html">colour</a>, <a class="el" href="classflounder_1_1vector3.html">vector3</a> *position)</td></tr>
+<tr class="memdesc:ac01c16e7d4436d43205a33aa9662813a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets values in the light.  <a href="#ac01c16e7d4436d43205a33aa9662813a">More...</a><br /></td></tr>
+<tr class="separator:ac01c16e7d4436d43205a33aa9662813a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5f447bd799982f1d8012b09b25fd6ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classflounder_1_1light.html">light</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1light.html#aa5f447bd799982f1d8012b09b25fd6ec">set</a> (<a class="el" href="classflounder_1_1colour.html">colour</a> *<a class="el" href="classflounder_1_1colour.html">colour</a>, <a class="el" href="classflounder_1_1vector3.html">vector3</a> *position, attenuation *attenuation)</td></tr>
+<tr class="memdesc:aa5f447bd799982f1d8012b09b25fd6ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets values in the light.  <a href="#aa5f447bd799982f1d8012b09b25fd6ec">More...</a><br /></td></tr>
+<tr class="separator:aa5f447bd799982f1d8012b09b25fd6ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -203,9 +209,93 @@ attenuation *&#160;</td><td class="memItemRight" valign="bottom"><b>m_attenuatio
 
 </div>
 </div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac01c16e7d4436d43205a33aa9662813a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac01c16e7d4436d43205a33aa9662813a">&#9670;&nbsp;</a></span>set() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classflounder_1_1light.html">light</a> * flounder::light::set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classflounder_1_1colour.html">colour</a> *&#160;</td>
+          <td class="paramname"><em>colour</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classflounder_1_1vector3.html">vector3</a> *&#160;</td>
+          <td class="paramname"><em>position</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets values in the light. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">colour</td><td>The colour of the light. </td></tr>
+    <tr><td class="paramname">position</td><td>The world position of the light. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This. </dd></dl>
+
+</div>
+</div>
+<a id="aa5f447bd799982f1d8012b09b25fd6ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5f447bd799982f1d8012b09b25fd6ec">&#9670;&nbsp;</a></span>set() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classflounder_1_1light.html">light</a> * flounder::light::set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classflounder_1_1colour.html">colour</a> *&#160;</td>
+          <td class="paramname"><em>colour</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classflounder_1_1vector3.html">vector3</a> *&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">attenuation *&#160;</td>
+          <td class="paramname"><em>attenuation</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets values in the light. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">colour</td><td>The colour of the light. </td></tr>
+    <tr><td class="paramname">position</td><td>The world position of the light. </td></tr>
+    <tr><td class="paramname">attenuation</td><td>How much the intensity of the light is lost over a distance. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/lights/<a class="el" href="light_8h_source.html">light.h</a></li>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/lights/light.cpp</li>
+<li>Flounder-Core/src/lights/<a class="el" href="light_8h_source.html">light.h</a></li>
+<li>Flounder-Core/src/lights/light.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

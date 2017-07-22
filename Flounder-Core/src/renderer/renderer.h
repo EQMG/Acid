@@ -30,18 +30,36 @@ namespace flounder
 			return static_cast<renderer*>(framework::get()->getInstance("renderer"));
 		}
 
+		/// <summary>
+		/// Creates a new renderer module.
+		/// </summary>
 		renderer();
 
+		/// <summary>
+		/// Deconstructor for the renderer module.
+		/// </summary>
 		~renderer();
 
+		/// <summary>
+		/// Loads the renderer module with inital values.
+		/// </summary>
+		/// <param name="rendererMaster"> The inital master renderer. </param>
 		void load(irenderermaster *rendererMaster);
 
 		void init() override;
 
 		void update() override;
 
+		/// <summary>
+		/// Gets the current master renderer object.
+		/// </summary>
+		/// <returns> The current master renderer. </returns>
 		inline irenderermaster *getRendererMaster() { return m_rendererMaster; }
 
+		/// <summary>
+		/// Sets the current master renderer to a new master renderer.
+		/// </summary>
+		/// <param name="rendererMaster"> The new master renderer. </param>
 		inline void setRendererMaster(irenderermaster *rendererMaster) { m_rendererMaster = rendererMaster; }
 
 		/// <summary>
@@ -75,8 +93,15 @@ namespace flounder
 		/// </summary>
 		void disableDepthTesting();
 
+		/// <summary>
+		/// Sets if the objects rendered will be added to the depth mask.
+		/// </summary>
+		/// <param name="depthMask"> Should the depth mask be enabled. </param>
 		void depthMask(const bool &depthMask);
 
+		/// <summary>
+		/// Gets if the display currently in wireframe mode.
+		/// </summary>
 		/// <returns> Is the display currently in wireframe mode. </returns>
 		bool isInWireframe();
 
@@ -122,7 +147,19 @@ namespace flounder
 		/// <param name="..."> Attributes to disable. </param>
 		void unbindVAO(const int n_args, ...);
 
-		void scissor(const int &x, const int &y, const int &width, const int &height);
+		/// <summary>
+		/// Enables OpenGL for the scissor test.
+		/// </summary>
+		/// <param name="x"> The x position in pixels. </param>
+		/// <param name="y"> The y position in pixels. </param>
+		/// <param name="width"> The width in pixels. </param>
+		/// <param name="height"> The height in pixels. </param>
+		void scissorEnable(const int &x, const int &y, const int &width, const int &height);
+
+		/// <summary>
+		/// Disables the scissor test.
+		/// </summary>
+		void scissorDisable();
 
 		/// <summary>
 		/// Binds a OpenGL texture to a blank ID.

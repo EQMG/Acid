@@ -83,62 +83,69 @@ Inheritance diagram for flounder::mouse:</div>
  <div class="center">
   <img src="classflounder_1_1mouse.png" usemap="#flounder::mouse_map" alt=""/>
   <map id="flounder::mouse_map" name="flounder::mouse_map">
-<area href="classflounder_1_1imodule.html" alt="flounder::imodule" shape="rect" coords="0,0,108,24"/>
+<area href="classflounder_1_1imodule.html" title="A simple interface used for defining framework modules. " alt="flounder::imodule" shape="rect" coords="0,0,108,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a60e59355a55844e8ca559e2f6b9c82e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a60e59355a55844e8ca559e2f6b9c82e9">mouse</a> ()</td></tr>
-<tr class="memdesc:a60e59355a55844e8ca559e2f6b9c82e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new GLFW mouse manager.  <a href="#a60e59355a55844e8ca559e2f6b9c82e9">More...</a><br /></td></tr>
+<tr class="memdesc:a60e59355a55844e8ca559e2f6b9c82e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new mouse module.  <a href="#a60e59355a55844e8ca559e2f6b9c82e9">More...</a><br /></td></tr>
 <tr class="separator:a60e59355a55844e8ca559e2f6b9c82e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3038f39f358e37d15059af6c1675497b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a3038f39f358e37d15059af6c1675497b">~mouse</a> ()</td></tr>
-<tr class="memdesc:a3038f39f358e37d15059af6c1675497b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the mouse.  <a href="#a3038f39f358e37d15059af6c1675497b">More...</a><br /></td></tr>
+<tr class="memdesc:a3038f39f358e37d15059af6c1675497b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the mouse module.  <a href="#a3038f39f358e37d15059af6c1675497b">More...</a><br /></td></tr>
 <tr class="separator:a3038f39f358e37d15059af6c1675497b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af88cf24fffafeb3e6ed1db19ec40698c"><td class="memItemLeft" align="right" valign="top"><a id="af88cf24fffafeb3e6ed1db19ec40698c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> (const std::string &amp;customMouse)</td></tr>
+<tr class="memitem:af88cf24fffafeb3e6ed1db19ec40698c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#af88cf24fffafeb3e6ed1db19ec40698c">load</a> (const std::string &amp;customMouse)</td></tr>
+<tr class="memdesc:af88cf24fffafeb3e6ed1db19ec40698c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the mouse module with inital values.  <a href="#af88cf24fffafeb3e6ed1db19ec40698c">More...</a><br /></td></tr>
 <tr class="separator:af88cf24fffafeb3e6ed1db19ec40698c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fd2b12c02a2468e246a81da19d3040a"><td class="memItemLeft" align="right" valign="top"><a id="a3fd2b12c02a2468e246a81da19d3040a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
-<tr class="separator:a3fd2b12c02a2468e246a81da19d3040a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42b9afbf11bf6e3bed1fe6ae4508bca0"><td class="memItemLeft" align="right" valign="top"><a id="a42b9afbf11bf6e3bed1fe6ae4508bca0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> ()</td></tr>
-<tr class="separator:a42b9afbf11bf6e3bed1fe6ae4508bca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a550ad472e61ed74ca42c07777bdd1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a8a550ad472e61ed74ca42c07777bdd1f">init</a> () override</td></tr>
+<tr class="memdesc:a8a550ad472e61ed74ca42c07777bdd1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialize function for the module.  <a href="#a8a550ad472e61ed74ca42c07777bdd1f">More...</a><br /></td></tr>
+<tr class="separator:a8a550ad472e61ed74ca42c07777bdd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1b1d60e1d1cf4ec7d19eaef65e040bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#aa1b1d60e1d1cf4ec7d19eaef65e040bc">update</a> () override</td></tr>
+<tr class="memdesc:aa1b1d60e1d1cf4ec7d19eaef65e040bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the module.  <a href="#aa1b1d60e1d1cf4ec7d19eaef65e040bc">More...</a><br /></td></tr>
+<tr class="separator:aa1b1d60e1d1cf4ec7d19eaef65e040bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff9750c7d68e93aea4c2d3c447677a9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#aff9750c7d68e93aea4c2d3c447677a9e">setCursorHidden</a> (const bool &amp;disabled)</td></tr>
 <tr class="memdesc:aff9750c7d68e93aea4c2d3c447677a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets if the operating systems cursor is hidden whilst in the display.  <a href="#aff9750c7d68e93aea4c2d3c447677a9e">More...</a><br /></td></tr>
 <tr class="separator:aff9750c7d68e93aea4c2d3c447677a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa21b270438542e8d77133156a1a43c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#afa21b270438542e8d77133156a1a43c9">getButton</a> (const unsigned int &amp;button)</td></tr>
-<tr class="memdesc:afa21b270438542e8d77133156a1a43c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether or not a particular mouse button is currently pressed.  <a href="#afa21b270438542e8d77133156a1a43c9">More...</a><br /></td></tr>
-<tr class="separator:afa21b270438542e8d77133156a1a43c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e442682cc73d6bcb2be7702c17d1dff"><td class="memItemLeft" align="right" valign="top">double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a2e442682cc73d6bcb2be7702c17d1dff">getPositionX</a> ()</td></tr>
-<tr class="memdesc:a2e442682cc73d6bcb2be7702c17d1dff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses screen x position.  <a href="#a2e442682cc73d6bcb2be7702c17d1dff">More...</a><br /></td></tr>
-<tr class="separator:a2e442682cc73d6bcb2be7702c17d1dff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd3a3246b13da0b537d632057398cf7d"><td class="memItemLeft" align="right" valign="top">double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#abd3a3246b13da0b537d632057398cf7d">getPositionY</a> ()</td></tr>
-<tr class="memdesc:abd3a3246b13da0b537d632057398cf7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses screen y position.  <a href="#abd3a3246b13da0b537d632057398cf7d">More...</a><br /></td></tr>
-<tr class="separator:abd3a3246b13da0b537d632057398cf7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a327552b319742adbb721733510f8a828"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a327552b319742adbb721733510f8a828">getButton</a> (const int &amp;button)</td></tr>
+<tr class="memdesc:a327552b319742adbb721733510f8a828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether or not a particular mouse button is currently pressed.  <a href="#a327552b319742adbb721733510f8a828">More...</a><br /></td></tr>
+<tr class="separator:a327552b319742adbb721733510f8a828"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1f034dd18edcd5099615b7a1958b71d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#ab1f034dd18edcd5099615b7a1958b71d">getPositionX</a> ()</td></tr>
+<tr class="memdesc:ab1f034dd18edcd5099615b7a1958b71d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses screen x position.  <a href="#ab1f034dd18edcd5099615b7a1958b71d">More...</a><br /></td></tr>
+<tr class="separator:ab1f034dd18edcd5099615b7a1958b71d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb426aed882bf8919171e263bd038f3"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#adbb426aed882bf8919171e263bd038f3">getPositionY</a> ()</td></tr>
+<tr class="memdesc:adbb426aed882bf8919171e263bd038f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses screen y position.  <a href="#adbb426aed882bf8919171e263bd038f3">More...</a><br /></td></tr>
+<tr class="separator:adbb426aed882bf8919171e263bd038f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47fae906e36e62f4cfd5939b37a0476c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a47fae906e36e62f4cfd5939b37a0476c">setPosition</a> (const double &amp;cursorX, const double &amp;cursorY)</td></tr>
 <tr class="memdesc:a47fae906e36e62f4cfd5939b37a0476c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the mouse position by calling glfwSetCursorPos.  <a href="#a47fae906e36e62f4cfd5939b37a0476c">More...</a><br /></td></tr>
 <tr class="separator:a47fae906e36e62f4cfd5939b37a0476c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c1a6fdbd6c23fc64bfbbd3deca4af44"><td class="memItemLeft" align="right" valign="top">double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a4c1a6fdbd6c23fc64bfbbd3deca4af44">getDeltaX</a> ()</td></tr>
-<tr class="memdesc:a4c1a6fdbd6c23fc64bfbbd3deca4af44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses delta x.  <a href="#a4c1a6fdbd6c23fc64bfbbd3deca4af44">More...</a><br /></td></tr>
-<tr class="separator:a4c1a6fdbd6c23fc64bfbbd3deca4af44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae252e366acee241385420000dc23b748"><td class="memItemLeft" align="right" valign="top">double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#ae252e366acee241385420000dc23b748">getDeltaY</a> ()</td></tr>
-<tr class="memdesc:ae252e366acee241385420000dc23b748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses delta y.  <a href="#ae252e366acee241385420000dc23b748">More...</a><br /></td></tr>
-<tr class="separator:ae252e366acee241385420000dc23b748"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1d5941ff7835327c4a90e1259934cf2"><td class="memItemLeft" align="right" valign="top">double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#ac1d5941ff7835327c4a90e1259934cf2">getDeltaWheel</a> ()</td></tr>
-<tr class="memdesc:ac1d5941ff7835327c4a90e1259934cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses wheel delta.  <a href="#ac1d5941ff7835327c4a90e1259934cf2">More...</a><br /></td></tr>
-<tr class="separator:ac1d5941ff7835327c4a90e1259934cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af10548a35c672453067ca5adb3da1787"><td class="memItemLeft" align="right" valign="top">bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#af10548a35c672453067ca5adb3da1787">isDisplaySelected</a> ()</td></tr>
-<tr class="memdesc:af10548a35c672453067ca5adb3da1787"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the display is selected.  <a href="#af10548a35c672453067ca5adb3da1787">More...</a><br /></td></tr>
-<tr class="separator:af10548a35c672453067ca5adb3da1787"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a926fbecc60a04f4ca3bc3e8afa9382d4"><td class="memItemLeft" align="right" valign="top">bool &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a926fbecc60a04f4ca3bc3e8afa9382d4">isCursorDisabled</a> ()</td></tr>
-<tr class="memdesc:a926fbecc60a04f4ca3bc3e8afa9382d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the cursor is hidden, the mouse is the display locked if true.  <a href="#a926fbecc60a04f4ca3bc3e8afa9382d4">More...</a><br /></td></tr>
-<tr class="separator:a926fbecc60a04f4ca3bc3e8afa9382d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4109903ff369214a5b6466a014d04dd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#ac4109903ff369214a5b6466a014d04dd">getDeltaX</a> ()</td></tr>
+<tr class="memdesc:ac4109903ff369214a5b6466a014d04dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses delta x.  <a href="#ac4109903ff369214a5b6466a014d04dd">More...</a><br /></td></tr>
+<tr class="separator:ac4109903ff369214a5b6466a014d04dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97c8ce905344917d6b57d9c0c0ea532a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a97c8ce905344917d6b57d9c0c0ea532a">getDeltaY</a> ()</td></tr>
+<tr class="memdesc:a97c8ce905344917d6b57d9c0c0ea532a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses delta y.  <a href="#a97c8ce905344917d6b57d9c0c0ea532a">More...</a><br /></td></tr>
+<tr class="separator:a97c8ce905344917d6b57d9c0c0ea532a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca4c4c0498247db6fafef3ad7fb7a729"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#aca4c4c0498247db6fafef3ad7fb7a729">getDeltaWheel</a> ()</td></tr>
+<tr class="memdesc:aca4c4c0498247db6fafef3ad7fb7a729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses wheel delta.  <a href="#aca4c4c0498247db6fafef3ad7fb7a729">More...</a><br /></td></tr>
+<tr class="separator:aca4c4c0498247db6fafef3ad7fb7a729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68cff5b3c6384eda1048db5894d65887"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a68cff5b3c6384eda1048db5894d65887">isDisplaySelected</a> ()</td></tr>
+<tr class="memdesc:a68cff5b3c6384eda1048db5894d65887"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the display is selected.  <a href="#a68cff5b3c6384eda1048db5894d65887">More...</a><br /></td></tr>
+<tr class="separator:a68cff5b3c6384eda1048db5894d65887"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84181116f71d9f8e3c01afca2aa2554f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a84181116f71d9f8e3c01afca2aa2554f">isCursorDisabled</a> ()</td></tr>
+<tr class="memdesc:a84181116f71d9f8e3c01afca2aa2554f"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the cursor is hidden, the mouse is the display locked if true.  <a href="#a84181116f71d9f8e3c01afca2aa2554f">More...</a><br /></td></tr>
+<tr class="separator:a84181116f71d9f8e3c01afca2aa2554f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classflounder_1_1imodule"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classflounder_1_1imodule')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classflounder_1_1imodule.html">flounder::imodule</a></td></tr>
+<tr class="memitem:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">imodule</a> ()</td></tr>
+<tr class="memdesc:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new module.  <a href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">More...</a><br /></td></tr>
+<tr class="separator:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">~imodule</a> ()</td></tr>
+<tr class="memdesc:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the module.  <a href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">More...</a><br /></td></tr>
+<tr class="separator:a519b8530d27d6c21d591e12e776ef834 inherit pub_methods_classflounder_1_1imodule"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac164dd73c45f0babcb67c9e24f50eff2"><td class="memItemLeft" align="right" valign="top"><a id="ac164dd73c45f0babcb67c9e24f50eff2"></a>
-static <a class="el" href="classflounder_1_1mouse.html">mouse</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()</td></tr>
+<tr class="memitem:ac164dd73c45f0babcb67c9e24f50eff2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classflounder_1_1mouse.html">mouse</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#ac164dd73c45f0babcb67c9e24f50eff2">get</a> ()</td></tr>
+<tr class="memdesc:ac164dd73c45f0babcb67c9e24f50eff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets this framework instance.  <a href="#ac164dd73c45f0babcb67c9e24f50eff2">More...</a><br /></td></tr>
 <tr class="separator:ac164dd73c45f0babcb67c9e24f50eff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -182,18 +189,18 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_lastCursorDisabled<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:af1c7c994792a177bf1c04b724f27ab0e"><td class="memItemLeft" align="right" valign="top"><a id="af1c7c994792a177bf1c04b724f27ab0e"></a>
-static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackScroll</b> (GLFWwindow *window, double xoffset, double yoffset)</td></tr>
-<tr class="separator:af1c7c994792a177bf1c04b724f27ab0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af35ab5226ee16fed45097a267eab6651"><td class="memItemLeft" align="right" valign="top"><a id="af35ab5226ee16fed45097a267eab6651"></a>
-static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackMouseButton</b> (GLFWwindow *window, int button, int action, int mods)</td></tr>
-<tr class="separator:af35ab5226ee16fed45097a267eab6651"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8544e2566e40a897e95f523d720f2740"><td class="memItemLeft" align="right" valign="top"><a id="a8544e2566e40a897e95f523d720f2740"></a>
-static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackCursorPos</b> (GLFWwindow *window, double xpos, double ypos)</td></tr>
-<tr class="separator:a8544e2566e40a897e95f523d720f2740"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe0c23a3b013f6386b71136f194cff81"><td class="memItemLeft" align="right" valign="top"><a id="afe0c23a3b013f6386b71136f194cff81"></a>
-static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackCursorEnter</b> (GLFWwindow *window, int entered)</td></tr>
-<tr class="separator:afe0c23a3b013f6386b71136f194cff81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2050f22852bcbd00f45bbf50b2c307c8"><td class="memItemLeft" align="right" valign="top"><a id="a2050f22852bcbd00f45bbf50b2c307c8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackScroll</b> (GLFWwindow *window, double xoffset, double yoffset)</td></tr>
+<tr class="separator:a2050f22852bcbd00f45bbf50b2c307c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a457df735d06d8eccd01441e30259ffe2"><td class="memItemLeft" align="right" valign="top"><a id="a457df735d06d8eccd01441e30259ffe2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackMouseButton</b> (GLFWwindow *window, int button, int action, int mods)</td></tr>
+<tr class="separator:a457df735d06d8eccd01441e30259ffe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e7012121aefa8ec5b5d77a99f0a1bcd"><td class="memItemLeft" align="right" valign="top"><a id="a2e7012121aefa8ec5b5d77a99f0a1bcd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackCursorPos</b> (GLFWwindow *window, double xpos, double ypos)</td></tr>
+<tr class="separator:a2e7012121aefa8ec5b5d77a99f0a1bcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c957859727233db31fe043bede78aff"><td class="memItemLeft" align="right" valign="top"><a id="a3c957859727233db31fe043bede78aff"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackCursorEnter</b> (GLFWwindow *window, int entered)</td></tr>
+<tr class="separator:a3c957859727233db31fe043bede78aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A module used for the creation, updating and destruction of the mouse. </p>
@@ -213,7 +220,7 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
       </table>
 </div><div class="memdoc">
 
-<p>Creates a new GLFW mouse manager. </p>
+<p>Creates a new mouse module. </p>
 
 </div>
 </div>
@@ -232,13 +239,41 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
       </table>
 </div><div class="memdoc">
 
-<p>Deconstructor for the mouse. </p>
+<p>Deconstructor for the mouse module. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="afa21b270438542e8d77133156a1a43c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa21b270438542e8d77133156a1a43c9">&#9670;&nbsp;</a></span>getButton()</h2>
+<a id="ac164dd73c45f0babcb67c9e24f50eff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac164dd73c45f0babcb67c9e24f50eff2">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classflounder_1_1mouse.html">mouse</a>* flounder::mouse::get </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets this framework instance. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current module instance. </dd></dl>
+
+</div>
+</div>
+<a id="a327552b319742adbb721733510f8a828"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a327552b319742adbb721733510f8a828">&#9670;&nbsp;</a></span>getButton()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -246,7 +281,7 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
         <tr>
           <td class="memname">bool flounder::mouse::getButton </td>
           <td>(</td>
-          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramtype">const int &amp;&#160;</td>
           <td class="paramname"><em>button</em></td><td>)</td>
           <td></td>
         </tr>
@@ -265,14 +300,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="ac1d5941ff7835327c4a90e1259934cf2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1d5941ff7835327c4a90e1259934cf2">&#9670;&nbsp;</a></span>getDeltaWheel()</h2>
+<a id="aca4c4c0498247db6fafef3ad7fb7a729"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca4c4c0498247db6fafef3ad7fb7a729">&#9670;&nbsp;</a></span>getDeltaWheel()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double &amp; flounder::mouse::getDeltaWheel </td>
+          <td class="memname">double flounder::mouse::getDeltaWheel </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -285,14 +320,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="a4c1a6fdbd6c23fc64bfbbd3deca4af44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c1a6fdbd6c23fc64bfbbd3deca4af44">&#9670;&nbsp;</a></span>getDeltaX()</h2>
+<a id="ac4109903ff369214a5b6466a014d04dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4109903ff369214a5b6466a014d04dd">&#9670;&nbsp;</a></span>getDeltaX()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double &amp; flounder::mouse::getDeltaX </td>
+          <td class="memname">double flounder::mouse::getDeltaX </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -305,14 +340,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="ae252e366acee241385420000dc23b748"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae252e366acee241385420000dc23b748">&#9670;&nbsp;</a></span>getDeltaY()</h2>
+<a id="a97c8ce905344917d6b57d9c0c0ea532a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97c8ce905344917d6b57d9c0c0ea532a">&#9670;&nbsp;</a></span>getDeltaY()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double &amp; flounder::mouse::getDeltaY </td>
+          <td class="memname">double flounder::mouse::getDeltaY </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -325,14 +360,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="a2e442682cc73d6bcb2be7702c17d1dff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e442682cc73d6bcb2be7702c17d1dff">&#9670;&nbsp;</a></span>getPositionX()</h2>
+<a id="ab1f034dd18edcd5099615b7a1958b71d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1f034dd18edcd5099615b7a1958b71d">&#9670;&nbsp;</a></span>getPositionX()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double &amp; flounder::mouse::getPositionX </td>
+          <td class="memname">double flounder::mouse::getPositionX </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -345,14 +380,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="abd3a3246b13da0b537d632057398cf7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd3a3246b13da0b537d632057398cf7d">&#9670;&nbsp;</a></span>getPositionY()</h2>
+<a id="adbb426aed882bf8919171e263bd038f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbb426aed882bf8919171e263bd038f3">&#9670;&nbsp;</a></span>getPositionY()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double &amp; flounder::mouse::getPositionY </td>
+          <td class="memname">double flounder::mouse::getPositionY </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -365,14 +400,43 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="a926fbecc60a04f4ca3bc3e8afa9382d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a926fbecc60a04f4ca3bc3e8afa9382d4">&#9670;&nbsp;</a></span>isCursorDisabled()</h2>
+<a id="a8a550ad472e61ed74ca42c07777bdd1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a550ad472e61ed74ca42c07777bdd1f">&#9670;&nbsp;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::mouse::init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The initialize function for the module. </p>
+
+<p>Implements <a class="el" href="classflounder_1_1imodule.html#a1725ef346952884d0741de61aba1e0c7">flounder::imodule</a>.</p>
+
+</div>
+</div>
+<a id="a84181116f71d9f8e3c01afca2aa2554f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84181116f71d9f8e3c01afca2aa2554f">&#9670;&nbsp;</a></span>isCursorDisabled()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool &amp; flounder::mouse::isCursorDisabled </td>
+          <td class="memname">bool flounder::mouse::isCursorDisabled </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -385,14 +449,14 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
-<a id="af10548a35c672453067ca5adb3da1787"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af10548a35c672453067ca5adb3da1787">&#9670;&nbsp;</a></span>isDisplaySelected()</h2>
+<a id="a68cff5b3c6384eda1048db5894d65887"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68cff5b3c6384eda1048db5894d65887">&#9670;&nbsp;</a></span>isDisplaySelected()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool &amp; flounder::mouse::isDisplaySelected </td>
+          <td class="memname">bool flounder::mouse::isDisplaySelected </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -402,6 +466,32 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 <p>Gets if the display is selected. </p>
 <dl class="section return"><dt>Returns</dt><dd>If the display is selected. </dd></dl>
+
+</div>
+</div>
+<a id="af88cf24fffafeb3e6ed1db19ec40698c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af88cf24fffafeb3e6ed1db19ec40698c">&#9670;&nbsp;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::mouse::load </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>customMouse</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads the mouse module with inital values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">customMouse</td><td>The custom cursor file path. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -468,9 +558,38 @@ static friend void&#160;</td><td class="memItemRight" valign="bottom"><b>callbac
 
 </div>
 </div>
+<a id="aa1b1d60e1d1cf4ec7d19eaef65e040bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1b1d60e1d1cf4ec7d19eaef65e040bc">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::mouse::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The update function for the module. </p>
+
+<p>Implements <a class="el" href="classflounder_1_1imodule.html#a9a53d48a46b5f6b16a92b2cd8503f74a">flounder::imodule</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/devices/<a class="el" href="mouse_8h_source.html">mouse.h</a></li>
-<li>C:/Users/mattp/Documents/Flounder/FlounderCore/Sources/devices/mouse.cpp</li>
+<li>Flounder-Core/src/devices/<a class="el" href="mouse_8h_source.html">mouse.h</a></li>
+<li>Flounder-Core/src/devices/mouse.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
