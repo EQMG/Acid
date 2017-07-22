@@ -4,6 +4,9 @@
 
 namespace flounder
 {
+	/// <summary>
+	/// Represents a sphere in a 3d space.
+	/// </summary>
 	class sphere :
 		public collider
 	{

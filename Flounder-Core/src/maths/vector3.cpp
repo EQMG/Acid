@@ -131,7 +131,7 @@ namespace flounder
 		return destination->set(source.m_x * scalar, source.m_y * scalar, source.m_z * scalar);
 	}
 
-	vector3 *vector3::rotate(const vector3 &source, vector3 *rotation, vector3 *destination)
+	vector3 *vector3::rotate(const vector3 &source, const vector3 &rotation, vector3 *destination)
 	{
 		throw std::logic_error("Instead of calling vector3::rotate, call matrix4x4::rotate!");
 	}

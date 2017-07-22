@@ -1,0 +1,134 @@
+\hypertarget{classflounder_1_1eventchange}{}\section{flounder\+:\+:eventchange$<$ t $>$ Class Template Reference}
+\label{classflounder_1_1eventchange}\index{flounder\+::eventchange$<$ t $>$@{flounder\+::eventchange$<$ t $>$}}
+
+
+A class that acts as a basic change listener for a value.  
+
+
+
+
+{\ttfamily \#include $<$eventchange.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:eventchange$<$ t $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1eventchange}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1eventchange_aa10438da0bf89531d04211ede12f2ce1}{eventchange} (t $\ast$reference, const std\+::function$<$ void()$>$ \&\hyperlink{classflounder_1_1eventchange_aa4fd4c3c28ac6927c3a810c8775f232d}{on\+Event})
+\begin{DoxyCompactList}\small\item\em Creates a new change event. \end{DoxyCompactList}\item 
+bool \hyperlink{classflounder_1_1eventchange_a2ae3c1f7ae4342dfff2aae6f11b0b413}{event\+Triggered} () override
+\begin{DoxyCompactList}\small\item\em Gets if the event has occurred. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1eventchange_aa4fd4c3c28ac6927c3a810c8775f232d}{on\+Event} () override
+\begin{DoxyCompactList}\small\item\em Run when a event has occurred. \end{DoxyCompactList}\item 
+bool \hyperlink{classflounder_1_1eventchange_ab3d476ecb51140e93886dc320ee44c33}{remove\+After\+Event} () override
+\begin{DoxyCompactList}\small\item\em Gets if the event is removed after it has run once. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1eventchange_afdea8ccaaa60b91bbe3c7a9f289d846b}\label{classflounder_1_1eventchange_afdea8ccaaa60b91bbe3c7a9f289d846b}} 
+t $\ast$ {\bfseries m\+\_\+reference}
+\item 
+\mbox{\Hypertarget{classflounder_1_1eventchange_a16b6829e51279a681619cdb2efbd1075}\label{classflounder_1_1eventchange_a16b6829e51279a681619cdb2efbd1075}} 
+t {\bfseries m\+\_\+current}
+\item 
+\mbox{\Hypertarget{classflounder_1_1eventchange_ae2631399c18c52ffb7a61f65922609d3}\label{classflounder_1_1eventchange_ae2631399c18c52ffb7a61f65922609d3}} 
+std\+::function$<$ void()$>$ {\bfseries m\+\_\+on\+Event}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename t$>$\newline
+class flounder\+::eventchange$<$ t $>$}
+
+A class that acts as a basic change listener for a value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em $<$\+T$>$} & The type of value to find change with. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1eventchange_aa10438da0bf89531d04211ede12f2ce1}\label{classflounder_1_1eventchange_aa10438da0bf89531d04211ede12f2ce1}} 
+\index{flounder\+::eventchange@{flounder\+::eventchange}!eventchange@{eventchange}}
+\index{eventchange@{eventchange}!flounder\+::eventchange@{flounder\+::eventchange}}
+\subsubsection{\texorpdfstring{eventchange()}{eventchange()}}
+{\footnotesize\ttfamily template$<$typename t $>$ \\
+\hyperlink{classflounder_1_1eventchange}{flounder\+::eventchange}$<$ t $>$\+::\hyperlink{classflounder_1_1eventchange}{eventchange} (\begin{DoxyParamCaption}\item[{t $\ast$}]{reference,  }\item[{const std\+::function$<$ void()$>$ \&}]{on\+Event }\end{DoxyParamCaption})}
+
+
+
+Creates a new change event. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reference} & The reference to listen to. \\
+\hline
+{\em on\+Event} & A function called when the event is triggered. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1eventchange_a2ae3c1f7ae4342dfff2aae6f11b0b413}\label{classflounder_1_1eventchange_a2ae3c1f7ae4342dfff2aae6f11b0b413}} 
+\index{flounder\+::eventchange@{flounder\+::eventchange}!event\+Triggered@{event\+Triggered}}
+\index{event\+Triggered@{event\+Triggered}!flounder\+::eventchange@{flounder\+::eventchange}}
+\subsubsection{\texorpdfstring{event\+Triggered()}{eventTriggered()}}
+{\footnotesize\ttfamily template$<$typename t $>$ \\
+bool \hyperlink{classflounder_1_1eventchange}{flounder\+::eventchange}$<$ t $>$\+::event\+Triggered (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets if the event has occurred. 
+
+\begin{DoxyReturn}{Returns}
+The event has occurred. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1ievent_a4462f66feef99ef4e3521c00f4edd0c9}{flounder\+::ievent}.
+
+\mbox{\Hypertarget{classflounder_1_1eventchange_aa4fd4c3c28ac6927c3a810c8775f232d}\label{classflounder_1_1eventchange_aa4fd4c3c28ac6927c3a810c8775f232d}} 
+\index{flounder\+::eventchange@{flounder\+::eventchange}!on\+Event@{on\+Event}}
+\index{on\+Event@{on\+Event}!flounder\+::eventchange@{flounder\+::eventchange}}
+\subsubsection{\texorpdfstring{on\+Event()}{onEvent()}}
+{\footnotesize\ttfamily template$<$typename t $>$ \\
+void \hyperlink{classflounder_1_1eventchange}{flounder\+::eventchange}$<$ t $>$\+::on\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Run when a event has occurred. 
+
+
+
+Implements \hyperlink{classflounder_1_1ievent_a6c6abe67435870b25eccd57a251a8992}{flounder\+::ievent}.
+
+\mbox{\Hypertarget{classflounder_1_1eventchange_ab3d476ecb51140e93886dc320ee44c33}\label{classflounder_1_1eventchange_ab3d476ecb51140e93886dc320ee44c33}} 
+\index{flounder\+::eventchange@{flounder\+::eventchange}!remove\+After\+Event@{remove\+After\+Event}}
+\index{remove\+After\+Event@{remove\+After\+Event}!flounder\+::eventchange@{flounder\+::eventchange}}
+\subsubsection{\texorpdfstring{remove\+After\+Event()}{removeAfterEvent()}}
+{\footnotesize\ttfamily template$<$typename t $>$ \\
+bool \hyperlink{classflounder_1_1eventchange}{flounder\+::eventchange}$<$ t $>$\+::remove\+After\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets if the event is removed after it has run once. 
+
+\begin{DoxyReturn}{Returns}
+If the even will run. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1ievent_a7017c8803df2397758980cb61020e801}{flounder\+::ievent}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/events/eventchange.\+h\item 
+Flounder-\/\+Core/src/events/eventchange.\+cpp\end{DoxyCompactItemize}

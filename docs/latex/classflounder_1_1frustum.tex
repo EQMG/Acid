@@ -16,19 +16,19 @@ Represents the region of flounder.\+space in the modeled world that may appear o
 \begin{DoxyCompactList}\small\item\em Creates a new frustum. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1frustum_a4496169c4a40c7d68447a3d1197e7fb4}{$\sim$frustum} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for frustum. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1frustum_aad78881f3840433f864caf99c6cf05ea}{update} (\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$view\+Matrix, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$projection\+Matrix)
+void \hyperlink{classflounder_1_1frustum_a02691e8f1da2d158915f6e267768153d}{update} (const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&view\+Matrix, const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&projection\+Matrix)
 \begin{DoxyCompactList}\small\item\em Updates a frustum from the view and projection matrix. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classflounder_1_1frustum_a48c31a1320af527a49362c369b84af11}\label{classflounder_1_1frustum_a48c31a1320af527a49362c369b84af11}} 
-float $\ast$$\ast$ \hyperlink{classflounder_1_1frustum_a48c31a1320af527a49362c369b84af11}{get\+Frustum} ()
+\mbox{\Hypertarget{classflounder_1_1frustum_af529ca96b9da6e9f417a50465f80fb5d}\label{classflounder_1_1frustum_af529ca96b9da6e9f417a50465f80fb5d}} 
+float $\ast$$\ast$ \hyperlink{classflounder_1_1frustum_af529ca96b9da6e9f417a50465f80fb5d}{get\+Frustum} () const
 \begin{DoxyCompactList}\small\item\em \begin{DoxyReturn}{Returns}
 The planes$\ast$value array used to represent the frustum. 
 \end{DoxyReturn}
 \end{DoxyCompactList}\item 
-bool \hyperlink{classflounder_1_1frustum_acfe244e060c21bccdb17b0559b02fb28}{point\+In\+Frustum} (const float \&x, const float \&y, const float \&z)
+bool \hyperlink{classflounder_1_1frustum_a679f1c37ad7b4faf1efa7e235c3871aa}{point\+In\+Frustum} (const float \&x, const float \&y, const float \&z) const
 \begin{DoxyCompactList}\small\item\em Is the point contained in the frustum? \end{DoxyCompactList}\item 
-bool \hyperlink{classflounder_1_1frustum_a3bf94867773ceeca026fef4bce20a87b}{sphere\+In\+Frustum} (const float \&x, const float \&y, const float \&z, const float \&radius)
+bool \hyperlink{classflounder_1_1frustum_ae49a0c95a40a3f0d6779a6a63cb8a17e}{sphere\+In\+Frustum} (const float \&x, const float \&y, const float \&z, const float \&radius) const
 \begin{DoxyCompactList}\small\item\em Is the sphere contained in the frustum? \end{DoxyCompactList}\item 
-bool \hyperlink{classflounder_1_1frustum_ac06cf7669fe9170e1485eb95095a6a98}{cube\+In\+Frustum} (const float \&x1, const float \&y1, const float \&z1, const float \&x2, const float \&y2, const float \&z2)
+bool \hyperlink{classflounder_1_1frustum_a93a76dc0315351105d4ced1c28e12994}{cube\+In\+Frustum} (const float \&x1, const float \&y1, const float \&z1, const float \&x2, const float \&y2, const float \&z2) const
 \begin{DoxyCompactList}\small\item\em Is the cube contained partially in the frustum? \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
@@ -106,11 +106,11 @@ Deconstructor for frustum.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1frustum_ac06cf7669fe9170e1485eb95095a6a98}\label{classflounder_1_1frustum_ac06cf7669fe9170e1485eb95095a6a98}} 
+\mbox{\Hypertarget{classflounder_1_1frustum_a93a76dc0315351105d4ced1c28e12994}\label{classflounder_1_1frustum_a93a76dc0315351105d4ced1c28e12994}} 
 \index{flounder\+::frustum@{flounder\+::frustum}!cube\+In\+Frustum@{cube\+In\+Frustum}}
 \index{cube\+In\+Frustum@{cube\+In\+Frustum}!flounder\+::frustum@{flounder\+::frustum}}
 \subsubsection{\texorpdfstring{cube\+In\+Frustum()}{cubeInFrustum()}}
-{\footnotesize\ttfamily bool flounder\+::frustum\+::cube\+In\+Frustum (\begin{DoxyParamCaption}\item[{const float \&}]{x1,  }\item[{const float \&}]{y1,  }\item[{const float \&}]{z1,  }\item[{const float \&}]{x2,  }\item[{const float \&}]{y2,  }\item[{const float \&}]{z2 }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool flounder\+::frustum\+::cube\+In\+Frustum (\begin{DoxyParamCaption}\item[{const float \&}]{x1,  }\item[{const float \&}]{y1,  }\item[{const float \&}]{z1,  }\item[{const float \&}]{x2,  }\item[{const float \&}]{y2,  }\item[{const float \&}]{z2 }\end{DoxyParamCaption}) const}
 
 
 
@@ -134,11 +134,11 @@ Is the cube contained partially in the frustum?
 \begin{DoxyReturn}{Returns}
 True if partially contained, false if outside. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1frustum_acfe244e060c21bccdb17b0559b02fb28}\label{classflounder_1_1frustum_acfe244e060c21bccdb17b0559b02fb28}} 
+\mbox{\Hypertarget{classflounder_1_1frustum_a679f1c37ad7b4faf1efa7e235c3871aa}\label{classflounder_1_1frustum_a679f1c37ad7b4faf1efa7e235c3871aa}} 
 \index{flounder\+::frustum@{flounder\+::frustum}!point\+In\+Frustum@{point\+In\+Frustum}}
 \index{point\+In\+Frustum@{point\+In\+Frustum}!flounder\+::frustum@{flounder\+::frustum}}
 \subsubsection{\texorpdfstring{point\+In\+Frustum()}{pointInFrustum()}}
-{\footnotesize\ttfamily bool flounder\+::frustum\+::point\+In\+Frustum (\begin{DoxyParamCaption}\item[{const float \&}]{x,  }\item[{const float \&}]{y,  }\item[{const float \&}]{z }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool flounder\+::frustum\+::point\+In\+Frustum (\begin{DoxyParamCaption}\item[{const float \&}]{x,  }\item[{const float \&}]{y,  }\item[{const float \&}]{z }\end{DoxyParamCaption}) const}
 
 
 
@@ -156,11 +156,11 @@ Is the point contained in the frustum?
 \begin{DoxyReturn}{Returns}
 True if contained, false if outside. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1frustum_a3bf94867773ceeca026fef4bce20a87b}\label{classflounder_1_1frustum_a3bf94867773ceeca026fef4bce20a87b}} 
+\mbox{\Hypertarget{classflounder_1_1frustum_ae49a0c95a40a3f0d6779a6a63cb8a17e}\label{classflounder_1_1frustum_ae49a0c95a40a3f0d6779a6a63cb8a17e}} 
 \index{flounder\+::frustum@{flounder\+::frustum}!sphere\+In\+Frustum@{sphere\+In\+Frustum}}
 \index{sphere\+In\+Frustum@{sphere\+In\+Frustum}!flounder\+::frustum@{flounder\+::frustum}}
 \subsubsection{\texorpdfstring{sphere\+In\+Frustum()}{sphereInFrustum()}}
-{\footnotesize\ttfamily bool flounder\+::frustum\+::sphere\+In\+Frustum (\begin{DoxyParamCaption}\item[{const float \&}]{x,  }\item[{const float \&}]{y,  }\item[{const float \&}]{z,  }\item[{const float \&}]{radius }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool flounder\+::frustum\+::sphere\+In\+Frustum (\begin{DoxyParamCaption}\item[{const float \&}]{x,  }\item[{const float \&}]{y,  }\item[{const float \&}]{z,  }\item[{const float \&}]{radius }\end{DoxyParamCaption}) const}
 
 
 
@@ -180,11 +180,11 @@ Is the sphere contained in the frustum?
 \begin{DoxyReturn}{Returns}
 True if contained, false if outside. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1frustum_aad78881f3840433f864caf99c6cf05ea}\label{classflounder_1_1frustum_aad78881f3840433f864caf99c6cf05ea}} 
+\mbox{\Hypertarget{classflounder_1_1frustum_a02691e8f1da2d158915f6e267768153d}\label{classflounder_1_1frustum_a02691e8f1da2d158915f6e267768153d}} 
 \index{flounder\+::frustum@{flounder\+::frustum}!update@{update}}
 \index{update@{update}!flounder\+::frustum@{flounder\+::frustum}}
 \subsubsection{\texorpdfstring{update()}{update()}}
-{\footnotesize\ttfamily void flounder\+::frustum\+::update (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$}]{view\+Matrix,  }\item[{\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$}]{projection\+Matrix }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void flounder\+::frustum\+::update (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&}]{view\+Matrix,  }\item[{const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&}]{projection\+Matrix }\end{DoxyParamCaption})}
 
 
 
@@ -201,5 +201,5 @@ Updates a frustum from the view and projection matrix.
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/physics/frustum.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/physics/frustum.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/physics/frustum.\+h\item 
+Flounder-\/\+Core/src/physics/frustum.\+cpp\end{DoxyCompactItemize}

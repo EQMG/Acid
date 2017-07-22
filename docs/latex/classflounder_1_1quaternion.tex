@@ -40,11 +40,11 @@ A vector like object of the form w + xi + yj + zk, where w, x, y, z are real num
 \begin{DoxyCompactList}\small\item\em Normalizes this quaternion. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1quaternion}{quaternion} $\ast$ \hyperlink{classflounder_1_1quaternion_a1dfbde3777eaa9fca021c63b40d2e2a4}{scale} (const float \&scalar)
 \begin{DoxyCompactList}\small\item\em Scales this quaternion. \end{DoxyCompactList}\item 
-bool \hyperlink{classflounder_1_1quaternion_a36b18505b6d34816d57ff6f29419fbc2}{is\+Zero} ()
+bool \hyperlink{classflounder_1_1quaternion_ab42905249a14376445200771f2d9a4ca}{is\+Zero} () const
 \begin{DoxyCompactList}\small\item\em Gets if all the components to the quaternion are zero. \end{DoxyCompactList}\item 
-float \hyperlink{classflounder_1_1quaternion_afcb607a0604417823b1a37ea842b5ae0}{length} ()
+float \hyperlink{classflounder_1_1quaternion_a850de24f502de1071f91927866a9e966}{length} () const
 \begin{DoxyCompactList}\small\item\em Gets the length of the quaternion. \end{DoxyCompactList}\item 
-float \hyperlink{classflounder_1_1quaternion_a3513c1cae67023bab1f4647abf6f9075}{length\+Squared} ()
+float \hyperlink{classflounder_1_1quaternion_a63bdf3ad75e034d94b0c3dd6e26a7ce8}{length\+Squared} () const
 \begin{DoxyCompactList}\small\item\em Gets the length squared of the quaternion. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -76,17 +76,17 @@ static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{class
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1quaternion_a667c26d9f6145f5de9114dce302b6864}\label{classflounder_1_1quaternion_a667c26d9f6145f5de9114dce302b6864}} 
-float {\bfseries x}
+\mbox{\Hypertarget{classflounder_1_1quaternion_a8b6b137868cee6e3aa53e58142845772}\label{classflounder_1_1quaternion_a8b6b137868cee6e3aa53e58142845772}} 
+float {\bfseries m\+\_\+x}
 \item 
-\mbox{\Hypertarget{classflounder_1_1quaternion_ae2e4f21890847ff8d4525097830eca30}\label{classflounder_1_1quaternion_ae2e4f21890847ff8d4525097830eca30}} 
-float {\bfseries y}
+\mbox{\Hypertarget{classflounder_1_1quaternion_a53179da28d62f0a9d75b09d2f24eb42a}\label{classflounder_1_1quaternion_a53179da28d62f0a9d75b09d2f24eb42a}} 
+float {\bfseries m\+\_\+y}
 \item 
-\mbox{\Hypertarget{classflounder_1_1quaternion_a79ad75b2af6050f7430b077492b81e70}\label{classflounder_1_1quaternion_a79ad75b2af6050f7430b077492b81e70}} 
-float {\bfseries z}
+\mbox{\Hypertarget{classflounder_1_1quaternion_a2d8298945f2ddc70b4fbb5b15b01d372}\label{classflounder_1_1quaternion_a2d8298945f2ddc70b4fbb5b15b01d372}} 
+float {\bfseries m\+\_\+z}
 \item 
-\mbox{\Hypertarget{classflounder_1_1quaternion_a859023d43957077bd9d84ea388597375}\label{classflounder_1_1quaternion_a859023d43957077bd9d84ea388597375}} 
-float {\bfseries w}
+\mbox{\Hypertarget{classflounder_1_1quaternion_a7e2a47a8f02b1c5085110178a4727306}\label{classflounder_1_1quaternion_a7e2a47a8f02b1c5085110178a4727306}} 
+float {\bfseries m\+\_\+w}
 \end{DoxyCompactItemize}
 
 
@@ -190,11 +190,11 @@ Calculates the dot product of the two quaternions.
 \begin{DoxyReturn}{Returns}
 Left dot right. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1quaternion_a36b18505b6d34816d57ff6f29419fbc2}\label{classflounder_1_1quaternion_a36b18505b6d34816d57ff6f29419fbc2}} 
+\mbox{\Hypertarget{classflounder_1_1quaternion_ab42905249a14376445200771f2d9a4ca}\label{classflounder_1_1quaternion_ab42905249a14376445200771f2d9a4ca}} 
 \index{flounder\+::quaternion@{flounder\+::quaternion}!is\+Zero@{is\+Zero}}
 \index{is\+Zero@{is\+Zero}!flounder\+::quaternion@{flounder\+::quaternion}}
 \subsubsection{\texorpdfstring{is\+Zero()}{isZero()}}
-{\footnotesize\ttfamily bool flounder\+::quaternion\+::is\+Zero (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool flounder\+::quaternion\+::is\+Zero (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
 
@@ -221,11 +221,11 @@ Gets the length of the quaternion.
 \begin{DoxyReturn}{Returns}
 The length of the quaternion. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1quaternion_afcb607a0604417823b1a37ea842b5ae0}\label{classflounder_1_1quaternion_afcb607a0604417823b1a37ea842b5ae0}} 
+\mbox{\Hypertarget{classflounder_1_1quaternion_a850de24f502de1071f91927866a9e966}\label{classflounder_1_1quaternion_a850de24f502de1071f91927866a9e966}} 
 \index{flounder\+::quaternion@{flounder\+::quaternion}!length@{length}}
 \index{length@{length}!flounder\+::quaternion@{flounder\+::quaternion}}
 \subsubsection{\texorpdfstring{length()}{length()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily float flounder\+::quaternion\+::length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily float flounder\+::quaternion\+::length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
 
@@ -257,11 +257,11 @@ Gets the length of the quaternion.
 \begin{DoxyReturn}{Returns}
 The length squared of the quaternion. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1quaternion_a3513c1cae67023bab1f4647abf6f9075}\label{classflounder_1_1quaternion_a3513c1cae67023bab1f4647abf6f9075}} 
+\mbox{\Hypertarget{classflounder_1_1quaternion_a63bdf3ad75e034d94b0c3dd6e26a7ce8}\label{classflounder_1_1quaternion_a63bdf3ad75e034d94b0c3dd6e26a7ce8}} 
 \index{flounder\+::quaternion@{flounder\+::quaternion}!length\+Squared@{length\+Squared}}
 \index{length\+Squared@{length\+Squared}!flounder\+::quaternion@{flounder\+::quaternion}}
 \subsubsection{\texorpdfstring{length\+Squared()}{lengthSquared()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily float flounder\+::quaternion\+::length\+Squared (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily float flounder\+::quaternion\+::length\+Squared (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
 
@@ -291,7 +291,7 @@ Sets the value of this quaternion to the quaternion product of quaternions left 
 \hline
 {\em right} & The right source quaternion. \\
 \hline
-{\em destination} & The destination quaternion or null if a new quaternion is to be created.\\
+{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -313,7 +313,7 @@ Multiplies quaternion left by the inverse of quaternion right and places the val
 \hline
 {\em right} & The right source quaternion. \\
 \hline
-{\em destination} & The destination quaternion or null if a new quaternion is to be created. \\
+{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -333,7 +333,7 @@ Negates a quaternion and places the result in the destination quaternion.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source quaternion. \\
 \hline
-{\em destination} & The destination quaternion or null if a new quaternion is to be created. \\
+{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -366,7 +366,7 @@ Normalizes a quaternion and places the result in the destination quaternion.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source quaternion. \\
 \hline
-{\em destination} & The destination quaternion or null if a new quaternion is to be created.\\
+{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -401,7 +401,7 @@ Scales a quaternion by a scalar and places the result in the destination quatern
 \hline
 {\em scalar} & The scalar value. \\
 \hline
-{\em destination} & The destination quaternion or null if a new quaternion is to be created. \\
+{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -570,7 +570,7 @@ Calculates the slerp between the two quaternions, they must be normalized!
 \hline
 {\em progression} & The progression. \\
 \hline
-{\em destination} & The destination quaternion or null if a new quaternion is to be created. \begin{DoxyReturn}{Returns}
+{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created. \begin{DoxyReturn}{Returns}
 Left slerp right. 
 \end{DoxyReturn}
 \\
@@ -620,5 +620,5 @@ The rotation matrix which represents the exact same rotation as this quaternion.
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/quaternion.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/maths/quaternion.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/maths/quaternion.\+h\item 
+Flounder-\/\+Core/src/maths/quaternion.\+cpp\end{DoxyCompactItemize}

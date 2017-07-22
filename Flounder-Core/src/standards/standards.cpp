@@ -2,7 +2,7 @@
 
 namespace flounder
 {
-	standards::standards() : 
+	standards::standards() :
 		imodule()
 	{
 		m_standards = new std::vector<istandard*>();

@@ -254,6 +254,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\post\filters\filterblurvertical.cpp" />
+    <ClCompile Include="src\post\filters\filterblurhorizontal.cpp" />
+    <ClCompile Include="src\post\filters\filtermotion.cpp" />
+    <ClCompile Include="src\post\pipelines\pipelinepaused.cpp" />
+    <ClCompile Include="src\post\pipelines\pipelinegaussian.cpp" />
+    <ClCompile Include="src\post\pipelines\pipelinebloom.cpp" />
     <ClCompile Include="src\entities\entity.cpp" />
     <ClCompile Include="src\events\eventchange.cpp" />
     <ClCompile Include="src\events\eventstandard.cpp" />
@@ -265,6 +271,7 @@
     <ClCompile Include="src\inputs\buttonjoystick.cpp" />
     <ClCompile Include="src\inputs\buttonkeyboard.cpp" />
     <ClCompile Include="src\inputs\buttonmouse.cpp" />
+    <ClCompile Include="src\post\filters\filterbloom2.cpp" />
     <ClCompile Include="src\post\filters\filternegative.cpp" />
     <ClCompile Include="src\fbos\fbo.cpp" />
     <ClCompile Include="src\models\model.cpp" />
@@ -276,6 +283,14 @@
     <ClCompile Include="src\post\filters\filtergrain.cpp" />
     <ClCompile Include="src\post\filters\filtergrey.cpp" />
     <ClCompile Include="src\post\filters\filterpixel.cpp" />
+    <ClCompile Include="src\post\filters\filtertone.cpp" />
+    <ClCompile Include="src\post\filters\filtersepia.cpp" />
+    <ClCompile Include="src\post\filters\filterwobble.cpp" />
+    <ClCompile Include="src\post\filters\filtertiltshift.cpp" />
+    <ClCompile Include="src\post\filters\filterdarken.cpp" />
+    <ClCompile Include="src\post\filters\filtercombine.cpp" />
+    <ClCompile Include="src\post\filters\filterlensflare.cpp" />
+    <ClCompile Include="src\post\filters\filterbloom1.cpp" />
     <ClCompile Include="src\skybox\rendererskybox.cpp" />
     <ClCompile Include="src\noise\noisesimplex.cpp" />
     <ClCompile Include="src\noise\noiseperlin.cpp" />
@@ -326,10 +341,17 @@
     <ClCompile Include="src\textures\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\post\filters\filterblurvertical.h" />
+    <ClInclude Include="src\post\filters\filterblurhorizontal.h" />
+    <ClInclude Include="src\post\filters\filtermotion.h" />
+    <ClInclude Include="src\post\pipelines\pipelinepaused.h" />
+    <ClInclude Include="src\post\pipelines\pipelinegaussian.h" />
+    <ClInclude Include="src\post\pipelines\pipelinebloom.h" />
     <ClInclude Include="src\entities\entity.h" />
     <ClInclude Include="src\inputs\axiscompound.h" />
     <ClInclude Include="src\inputs\buttoncompound.h" />
     <ClInclude Include="src\deferred\deferredrenderer.h" />
+    <ClInclude Include="src\post\filters\filterbloom2.h" />
     <ClInclude Include="src\post\filters\filternegative.h" />
     <ClInclude Include="src\fbos\fbo.h" />
     <ClInclude Include="src\fbos\depthbuffer.h" />
@@ -343,6 +365,14 @@
     <ClInclude Include="src\post\filters\filtergrain.h" />
     <ClInclude Include="src\post\filters\filtergrey.h" />
     <ClInclude Include="src\post\filters\filterpixel.h" />
+    <ClInclude Include="src\post\filters\filtertone.h" />
+    <ClInclude Include="src\post\filters\filtersepia.h" />
+    <ClInclude Include="src\post\filters\filterwobble.h" />
+    <ClInclude Include="src\post\filters\filtertiltshift.h" />
+    <ClInclude Include="src\post\filters\filterdarken.h" />
+    <ClInclude Include="src\post\filters\filtercombine.h" />
+    <ClInclude Include="src\post\filters\filterlensflare.h" />
+    <ClInclude Include="src\post\filters\filterbloom1.h" />
     <ClInclude Include="src\shaders\shadertype.h" />
     <ClInclude Include="src\skybox\rendererskybox.h" />
     <ClInclude Include="src\noise\noisesimplex.h" />

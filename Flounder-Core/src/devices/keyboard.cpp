@@ -21,7 +21,7 @@ namespace flounder
 		keyboard::get()->m_keyboardChar = codepoint;
 	}
 
-	keyboard::keyboard() : 
+	keyboard::keyboard() :
 		imodule()
 	{
 	}

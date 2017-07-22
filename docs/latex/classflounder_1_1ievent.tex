@@ -18,6 +18,10 @@ Inheritance diagram for flounder\+:\+:ievent\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classflounder_1_1ievent_a87c44726337bd80b2b18a01ccdd562c6}{ievent} ()
+\begin{DoxyCompactList}\small\item\em Creates a new event. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1ievent_af559376463c0e0643c67f8812169007c}{$\sim$ievent} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the event. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classflounder_1_1ievent_a4462f66feef99ef4e3521c00f4edd0c9}{event\+Triggered} ()=0
 \begin{DoxyCompactList}\small\item\em Gets if the event has occurred. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classflounder_1_1ievent_a6c6abe67435870b25eccd57a251a8992}{on\+Event} ()=0
@@ -28,6 +32,29 @@ virtual bool \hyperlink{classflounder_1_1ievent_a7017c8803df2397758980cb61020e80
 
 \subsection{Detailed Description}
 A simple event listener and runner. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1ievent_a87c44726337bd80b2b18a01ccdd562c6}\label{classflounder_1_1ievent_a87c44726337bd80b2b18a01ccdd562c6}} 
+\index{flounder\+::ievent@{flounder\+::ievent}!ievent@{ievent}}
+\index{ievent@{ievent}!flounder\+::ievent@{flounder\+::ievent}}
+\subsubsection{\texorpdfstring{ievent()}{ievent()}}
+{\footnotesize\ttfamily flounder\+::ievent\+::ievent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new event. 
+
+\mbox{\Hypertarget{classflounder_1_1ievent_af559376463c0e0643c67f8812169007c}\label{classflounder_1_1ievent_af559376463c0e0643c67f8812169007c}} 
+\index{flounder\+::ievent@{flounder\+::ievent}!````~ievent@{$\sim$ievent}}
+\index{````~ievent@{$\sim$ievent}!flounder\+::ievent@{flounder\+::ievent}}
+\subsubsection{\texorpdfstring{$\sim$ievent()}{~ievent()}}
+{\footnotesize\ttfamily virtual flounder\+::ievent\+::$\sim$ievent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the event. 
 
 
 
@@ -47,7 +74,7 @@ The event has occurred.
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classflounder_1_1ieventstandard_a7586cc333f29136b135f92685dc6f91b}{flounder\+::ieventstandard}, \hyperlink{classflounder_1_1ieventtime_a471aad4d2412507875077747ea9ea7a6}{flounder\+::ieventtime}, and \hyperlink{classflounder_1_1ieventchange_a0119e298c97f8457db4024523c97c429}{flounder\+::ieventchange$<$ t $>$}.
+Implemented in \hyperlink{classflounder_1_1eventstandard_a88224b7246627df26a08ec9e286e7496}{flounder\+::eventstandard}, \hyperlink{classflounder_1_1eventtime_a67a616128c8e4701f7e229172c5e80a5}{flounder\+::eventtime}, and \hyperlink{classflounder_1_1eventchange_a2ae3c1f7ae4342dfff2aae6f11b0b413}{flounder\+::eventchange$<$ t $>$}.
 
 \mbox{\Hypertarget{classflounder_1_1ievent_a6c6abe67435870b25eccd57a251a8992}\label{classflounder_1_1ievent_a6c6abe67435870b25eccd57a251a8992}} 
 \index{flounder\+::ievent@{flounder\+::ievent}!on\+Event@{on\+Event}}
@@ -61,7 +88,7 @@ Run when a event has occurred.
 
 
 
-Implemented in \hyperlink{classflounder_1_1ieventstandard_ac559905d5c7f4067ecc474742a1e24b8}{flounder\+::ieventstandard}, \hyperlink{classflounder_1_1ieventtime_abef43da596dc22fc9b7104fff88c1a9d}{flounder\+::ieventtime}, and \hyperlink{classflounder_1_1ieventchange_ab4977a4a6c22b93e82ea294d0d906a9e}{flounder\+::ieventchange$<$ t $>$}.
+Implemented in \hyperlink{classflounder_1_1eventstandard_af25e174b30e7d23698024b2c1ae9ac4c}{flounder\+::eventstandard}, \hyperlink{classflounder_1_1eventtime_a1b066c00fa959786bb1e9bbd1d212691}{flounder\+::eventtime}, and \hyperlink{classflounder_1_1eventchange_aa4fd4c3c28ac6927c3a810c8775f232d}{flounder\+::eventchange$<$ t $>$}.
 
 \mbox{\Hypertarget{classflounder_1_1ievent_a7017c8803df2397758980cb61020e801}\label{classflounder_1_1ievent_a7017c8803df2397758980cb61020e801}} 
 \index{flounder\+::ievent@{flounder\+::ievent}!remove\+After\+Event@{remove\+After\+Event}}
@@ -78,10 +105,10 @@ If the even will run.
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classflounder_1_1ieventstandard_ac54c83ea92a634d2f389e712afda83fc}{flounder\+::ieventstandard}, \hyperlink{classflounder_1_1ieventtime_af64c856310e8249439d0c847943e3490}{flounder\+::ieventtime}, and \hyperlink{classflounder_1_1ieventchange_a6c7872d176004b7dfb4a01e90221976d}{flounder\+::ieventchange$<$ t $>$}.
+Implemented in \hyperlink{classflounder_1_1eventstandard_ac4b9d57605f7f81c7c7e1cb981002f2f}{flounder\+::eventstandard}, \hyperlink{classflounder_1_1eventtime_ad765cd1e3b8fe2bf95f2290f5c625af1}{flounder\+::eventtime}, and \hyperlink{classflounder_1_1eventchange_ab3d476ecb51140e93886dc320ee44c33}{flounder\+::eventchange$<$ t $>$}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/events/ievent.\+h\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/events/ievent.\+h\end{DoxyCompactItemize}

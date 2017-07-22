@@ -9,15 +9,13 @@ Inheritance diagram for flounder\+:\+:skybox\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1skybox_a56b2c4d80af17be74f249e9af1909751}\label{classflounder_1_1skybox_a56b2c4d80af17be74f249e9af1909751}} 
-void {\bfseries load\+Texture} (\hyperlink{classflounder_1_1texture}{texture} $\ast$\hyperlink{classflounder_1_1texture}{texture})
+\mbox{\Hypertarget{classflounder_1_1skybox_ab76e6523423f67b73e804dc06464d8bc}\label{classflounder_1_1skybox_ab76e6523423f67b73e804dc06464d8bc}} 
+void {\bfseries load} (\hyperlink{classflounder_1_1texture}{texture} $\ast$\hyperlink{classflounder_1_1texture}{texture}, \hyperlink{classflounder_1_1model}{model} $\ast$\hyperlink{classflounder_1_1model}{model})
 \item 
-\mbox{\Hypertarget{classflounder_1_1skybox_a8492f806112e0f0b42c990bc7d3cbd21}\label{classflounder_1_1skybox_a8492f806112e0f0b42c990bc7d3cbd21}} 
-void {\bfseries init} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1skybox_a0b368ba1d40f9dc7008875e720f28dc6}\label{classflounder_1_1skybox_a0b368ba1d40f9dc7008875e720f28dc6}} 
-void {\bfseries update} ()
-\item 
+void \hyperlink{classflounder_1_1skybox_ad298f30a9e35657726bc8043a687cab7}{init} () override
+\begin{DoxyCompactList}\small\item\em The initialize function for the module. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1skybox_a9c961cf6d878f40f0294905415981234}{update} () override
+\begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classflounder_1_1skybox_a0d78d655d39bec325636c5672d744f5f}\label{classflounder_1_1skybox_a0d78d655d39bec325636c5672d744f5f}} 
 float \& {\bfseries get\+Size} ()
 \item 
@@ -27,8 +25,14 @@ void {\bfseries set\+Size} (const float size)
 \mbox{\Hypertarget{classflounder_1_1skybox_a20c6e39b06419ed1e8614f70044aff04}\label{classflounder_1_1skybox_a20c6e39b06419ed1e8614f70044aff04}} 
 \hyperlink{classflounder_1_1texture}{texture} $\ast$ {\bfseries get\+Texture} ()
 \item 
+\mbox{\Hypertarget{classflounder_1_1skybox_a52535c9e9cc91303301be8337f5d56b3}\label{classflounder_1_1skybox_a52535c9e9cc91303301be8337f5d56b3}} 
+void {\bfseries set\+Texture} (\hyperlink{classflounder_1_1texture}{texture} $\ast$\hyperlink{classflounder_1_1texture}{texture})
+\item 
 \mbox{\Hypertarget{classflounder_1_1skybox_a451efb79710eec0ce2f14bec9cc85111}\label{classflounder_1_1skybox_a451efb79710eec0ce2f14bec9cc85111}} 
 \hyperlink{classflounder_1_1model}{model} $\ast$ {\bfseries get\+Model} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1skybox_a72040c886a38cfc5dccb1b7d93471bee}\label{classflounder_1_1skybox_a72040c886a38cfc5dccb1b7d93471bee}} 
+void {\bfseries set\+Model} (\hyperlink{classflounder_1_1model}{model} $\ast$\hyperlink{classflounder_1_1model}{model})
 \item 
 \mbox{\Hypertarget{classflounder_1_1skybox_a887c324dbc5174dd38d8be6e2fb9ed04}\label{classflounder_1_1skybox_a887c324dbc5174dd38d8be6e2fb9ed04}} 
 \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries get\+Rotation} ()
@@ -54,9 +58,8 @@ void {\bfseries set\+Blend} (const float blend)
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1skybox_a4d6b3b6d783e4ad3d3f060cbd0e04e7c}\label{classflounder_1_1skybox_a4d6b3b6d783e4ad3d3f060cbd0e04e7c}} 
-static \hyperlink{classflounder_1_1skybox}{skybox} $\ast$ {\bfseries get} ()
-\end{DoxyCompactItemize}
+static \hyperlink{classflounder_1_1skybox}{skybox} $\ast$ \hyperlink{classflounder_1_1skybox_a4d6b3b6d783e4ad3d3f060cbd0e04e7c}{get} ()
+\begin{DoxyCompactList}\small\item\em Gets this framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -83,7 +86,51 @@ float {\bfseries m\+\_\+blend}
 \end{DoxyCompactItemize}
 
 
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1skybox_a4d6b3b6d783e4ad3d3f060cbd0e04e7c}\label{classflounder_1_1skybox_a4d6b3b6d783e4ad3d3f060cbd0e04e7c}} 
+\index{flounder\+::skybox@{flounder\+::skybox}!get@{get}}
+\index{get@{get}!flounder\+::skybox@{flounder\+::skybox}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily static \hyperlink{classflounder_1_1skybox}{skybox}$\ast$ flounder\+::skybox\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this framework instance. 
+
+\begin{DoxyReturn}{Returns}
+The current module instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1skybox_ad298f30a9e35657726bc8043a687cab7}\label{classflounder_1_1skybox_ad298f30a9e35657726bc8043a687cab7}} 
+\index{flounder\+::skybox@{flounder\+::skybox}!init@{init}}
+\index{init@{init}!flounder\+::skybox@{flounder\+::skybox}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void flounder\+::skybox\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The initialize function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a1725ef346952884d0741de61aba1e0c7}{flounder\+::imodule}.
+
+\mbox{\Hypertarget{classflounder_1_1skybox_a9c961cf6d878f40f0294905415981234}\label{classflounder_1_1skybox_a9c961cf6d878f40f0294905415981234}} 
+\index{flounder\+::skybox@{flounder\+::skybox}!update@{update}}
+\index{update@{update}!flounder\+::skybox@{flounder\+::skybox}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::skybox\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The update function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a9a53d48a46b5f6b16a92b2cd8503f74a}{flounder\+::imodule}.
+
+
+
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/skybox/skybox.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/skybox/skybox.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/skybox/skybox.\+h\item 
+Flounder-\/\+Core/src/skybox/skybox.\+cpp\end{DoxyCompactItemize}

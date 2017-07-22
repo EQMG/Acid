@@ -19,44 +19,40 @@ Inheritance diagram for flounder\+:\+:mouse\+:\begin{figure}[H]
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classflounder_1_1mouse_a60e59355a55844e8ca559e2f6b9c82e9}{mouse} ()
-\begin{DoxyCompactList}\small\item\em Creates a new G\+L\+FW mouse manager. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Creates a new mouse module. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1mouse_a3038f39f358e37d15059af6c1675497b}{$\sim$mouse} ()
-\begin{DoxyCompactList}\small\item\em Deconstructor for the mouse. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classflounder_1_1mouse_af88cf24fffafeb3e6ed1db19ec40698c}\label{classflounder_1_1mouse_af88cf24fffafeb3e6ed1db19ec40698c}} 
-void {\bfseries load} (const std\+::string \&custom\+Mouse)
-\item 
-\mbox{\Hypertarget{classflounder_1_1mouse_a3fd2b12c02a2468e246a81da19d3040a}\label{classflounder_1_1mouse_a3fd2b12c02a2468e246a81da19d3040a}} 
-void {\bfseries init} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1mouse_a42b9afbf11bf6e3bed1fe6ae4508bca0}\label{classflounder_1_1mouse_a42b9afbf11bf6e3bed1fe6ae4508bca0}} 
-void {\bfseries update} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Deconstructor for the mouse module. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1mouse_af88cf24fffafeb3e6ed1db19ec40698c}{load} (const std\+::string \&custom\+Mouse)
+\begin{DoxyCompactList}\small\item\em Loads the mouse module with inital values. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1mouse_a8a550ad472e61ed74ca42c07777bdd1f}{init} () override
+\begin{DoxyCompactList}\small\item\em The initialize function for the module. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1mouse_aa1b1d60e1d1cf4ec7d19eaef65e040bc}{update} () override
+\begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1mouse_aff9750c7d68e93aea4c2d3c447677a9e}{set\+Cursor\+Hidden} (const bool \&disabled)
 \begin{DoxyCompactList}\small\item\em Sets if the operating systems cursor is hidden whilst in the display. \end{DoxyCompactList}\item 
-bool \hyperlink{classflounder_1_1mouse_afa21b270438542e8d77133156a1a43c9}{get\+Button} (const unsigned int \&button)
+bool \hyperlink{classflounder_1_1mouse_a327552b319742adbb721733510f8a828}{get\+Button} (const int \&button)
 \begin{DoxyCompactList}\small\item\em Gets whether or not a particular mouse button is currently pressed. \end{DoxyCompactList}\item 
-double \& \hyperlink{classflounder_1_1mouse_a2e442682cc73d6bcb2be7702c17d1dff}{get\+PositionX} ()
+double \hyperlink{classflounder_1_1mouse_ab1f034dd18edcd5099615b7a1958b71d}{get\+PositionX} ()
 \begin{DoxyCompactList}\small\item\em Gets the mouses screen x position. \end{DoxyCompactList}\item 
-double \& \hyperlink{classflounder_1_1mouse_abd3a3246b13da0b537d632057398cf7d}{get\+PositionY} ()
+double \hyperlink{classflounder_1_1mouse_adbb426aed882bf8919171e263bd038f3}{get\+PositionY} ()
 \begin{DoxyCompactList}\small\item\em Gets the mouses screen y position. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1mouse_a47fae906e36e62f4cfd5939b37a0476c}{set\+Position} (const double \&cursorX, const double \&cursorY)
 \begin{DoxyCompactList}\small\item\em Sets the mouse position by calling glfw\+Set\+Cursor\+Pos. \end{DoxyCompactList}\item 
-double \& \hyperlink{classflounder_1_1mouse_a4c1a6fdbd6c23fc64bfbbd3deca4af44}{get\+DeltaX} ()
+double \hyperlink{classflounder_1_1mouse_ac4109903ff369214a5b6466a014d04dd}{get\+DeltaX} ()
 \begin{DoxyCompactList}\small\item\em Gets the mouses delta x. \end{DoxyCompactList}\item 
-double \& \hyperlink{classflounder_1_1mouse_ae252e366acee241385420000dc23b748}{get\+DeltaY} ()
+double \hyperlink{classflounder_1_1mouse_a97c8ce905344917d6b57d9c0c0ea532a}{get\+DeltaY} ()
 \begin{DoxyCompactList}\small\item\em Gets the mouses delta y. \end{DoxyCompactList}\item 
-double \& \hyperlink{classflounder_1_1mouse_ac1d5941ff7835327c4a90e1259934cf2}{get\+Delta\+Wheel} ()
+double \hyperlink{classflounder_1_1mouse_aca4c4c0498247db6fafef3ad7fb7a729}{get\+Delta\+Wheel} ()
 \begin{DoxyCompactList}\small\item\em Gets the mouses wheel delta. \end{DoxyCompactList}\item 
-bool \& \hyperlink{classflounder_1_1mouse_af10548a35c672453067ca5adb3da1787}{is\+Display\+Selected} ()
+bool \hyperlink{classflounder_1_1mouse_a68cff5b3c6384eda1048db5894d65887}{is\+Display\+Selected} ()
 \begin{DoxyCompactList}\small\item\em Gets if the display is selected. \end{DoxyCompactList}\item 
-bool \& \hyperlink{classflounder_1_1mouse_a926fbecc60a04f4ca3bc3e8afa9382d4}{is\+Cursor\+Disabled} ()
+bool \hyperlink{classflounder_1_1mouse_a84181116f71d9f8e3c01afca2aa2554f}{is\+Cursor\+Disabled} ()
 \begin{DoxyCompactList}\small\item\em If the cursor is hidden, the mouse is the display locked if true. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1mouse_ac164dd73c45f0babcb67c9e24f50eff2}\label{classflounder_1_1mouse_ac164dd73c45f0babcb67c9e24f50eff2}} 
-static \hyperlink{classflounder_1_1mouse}{mouse} $\ast$ {\bfseries get} ()
-\end{DoxyCompactItemize}
+static \hyperlink{classflounder_1_1mouse}{mouse} $\ast$ \hyperlink{classflounder_1_1mouse_ac164dd73c45f0babcb67c9e24f50eff2}{get} ()
+\begin{DoxyCompactList}\small\item\em Gets this framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -99,17 +95,17 @@ bool {\bfseries m\+\_\+last\+Cursor\+Disabled}
 \subsection*{Friends}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1mouse_af1c7c994792a177bf1c04b724f27ab0e}\label{classflounder_1_1mouse_af1c7c994792a177bf1c04b724f27ab0e}} 
-static friend void {\bfseries callback\+Scroll} (G\+L\+F\+Wwindow $\ast$window, double xoffset, double yoffset)
+\mbox{\Hypertarget{classflounder_1_1mouse_a2050f22852bcbd00f45bbf50b2c307c8}\label{classflounder_1_1mouse_a2050f22852bcbd00f45bbf50b2c307c8}} 
+void {\bfseries callback\+Scroll} (G\+L\+F\+Wwindow $\ast$window, double xoffset, double yoffset)
 \item 
-\mbox{\Hypertarget{classflounder_1_1mouse_af35ab5226ee16fed45097a267eab6651}\label{classflounder_1_1mouse_af35ab5226ee16fed45097a267eab6651}} 
-static friend void {\bfseries callback\+Mouse\+Button} (G\+L\+F\+Wwindow $\ast$window, int button, int action, int mods)
+\mbox{\Hypertarget{classflounder_1_1mouse_a457df735d06d8eccd01441e30259ffe2}\label{classflounder_1_1mouse_a457df735d06d8eccd01441e30259ffe2}} 
+void {\bfseries callback\+Mouse\+Button} (G\+L\+F\+Wwindow $\ast$window, int button, int action, int mods)
 \item 
-\mbox{\Hypertarget{classflounder_1_1mouse_a8544e2566e40a897e95f523d720f2740}\label{classflounder_1_1mouse_a8544e2566e40a897e95f523d720f2740}} 
-static friend void {\bfseries callback\+Cursor\+Pos} (G\+L\+F\+Wwindow $\ast$window, double xpos, double ypos)
+\mbox{\Hypertarget{classflounder_1_1mouse_a2e7012121aefa8ec5b5d77a99f0a1bcd}\label{classflounder_1_1mouse_a2e7012121aefa8ec5b5d77a99f0a1bcd}} 
+void {\bfseries callback\+Cursor\+Pos} (G\+L\+F\+Wwindow $\ast$window, double xpos, double ypos)
 \item 
-\mbox{\Hypertarget{classflounder_1_1mouse_afe0c23a3b013f6386b71136f194cff81}\label{classflounder_1_1mouse_afe0c23a3b013f6386b71136f194cff81}} 
-static friend void {\bfseries callback\+Cursor\+Enter} (G\+L\+F\+Wwindow $\ast$window, int entered)
+\mbox{\Hypertarget{classflounder_1_1mouse_a3c957859727233db31fe043bede78aff}\label{classflounder_1_1mouse_a3c957859727233db31fe043bede78aff}} 
+void {\bfseries callback\+Cursor\+Enter} (G\+L\+F\+Wwindow $\ast$window, int entered)
 \end{DoxyCompactItemize}
 
 
@@ -127,7 +123,7 @@ A module used for the creation, updating and destruction of the mouse.
 
 
 
-Creates a new G\+L\+FW mouse manager. 
+Creates a new mouse module. 
 
 \mbox{\Hypertarget{classflounder_1_1mouse_a3038f39f358e37d15059af6c1675497b}\label{classflounder_1_1mouse_a3038f39f358e37d15059af6c1675497b}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!````~mouse@{$\sim$mouse}}
@@ -137,16 +133,29 @@ Creates a new G\+L\+FW mouse manager.
 
 
 
-Deconstructor for the mouse. 
+Deconstructor for the mouse module. 
 
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1mouse_afa21b270438542e8d77133156a1a43c9}\label{classflounder_1_1mouse_afa21b270438542e8d77133156a1a43c9}} 
+\mbox{\Hypertarget{classflounder_1_1mouse_ac164dd73c45f0babcb67c9e24f50eff2}\label{classflounder_1_1mouse_ac164dd73c45f0babcb67c9e24f50eff2}} 
+\index{flounder\+::mouse@{flounder\+::mouse}!get@{get}}
+\index{get@{get}!flounder\+::mouse@{flounder\+::mouse}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily static \hyperlink{classflounder_1_1mouse}{mouse}$\ast$ flounder\+::mouse\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this framework instance. 
+
+\begin{DoxyReturn}{Returns}
+The current module instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1mouse_a327552b319742adbb721733510f8a828}\label{classflounder_1_1mouse_a327552b319742adbb721733510f8a828}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!get\+Button@{get\+Button}}
 \index{get\+Button@{get\+Button}!flounder\+::mouse@{flounder\+::mouse}}
 \subsubsection{\texorpdfstring{get\+Button()}{getButton()}}
-{\footnotesize\ttfamily bool flounder\+::mouse\+::get\+Button (\begin{DoxyParamCaption}\item[{const unsigned int \&}]{button }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool flounder\+::mouse\+::get\+Button (\begin{DoxyParamCaption}\item[{const int \&}]{button }\end{DoxyParamCaption})}
 
 
 
@@ -162,11 +171,11 @@ G\+L\+FW Actions\+: G\+L\+F\+W\+\_\+\+P\+R\+E\+SS, G\+L\+F\+W\+\_\+\+R\+E\+L\+E\
 \begin{DoxyReturn}{Returns}
 If the mouse button is currently pressed. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1mouse_ac1d5941ff7835327c4a90e1259934cf2}\label{classflounder_1_1mouse_ac1d5941ff7835327c4a90e1259934cf2}} 
+\mbox{\Hypertarget{classflounder_1_1mouse_aca4c4c0498247db6fafef3ad7fb7a729}\label{classflounder_1_1mouse_aca4c4c0498247db6fafef3ad7fb7a729}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!get\+Delta\+Wheel@{get\+Delta\+Wheel}}
 \index{get\+Delta\+Wheel@{get\+Delta\+Wheel}!flounder\+::mouse@{flounder\+::mouse}}
 \subsubsection{\texorpdfstring{get\+Delta\+Wheel()}{getDeltaWheel()}}
-{\footnotesize\ttfamily double \& flounder\+::mouse\+::get\+Delta\+Wheel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double flounder\+::mouse\+::get\+Delta\+Wheel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -175,11 +184,11 @@ Gets the mouses wheel delta.
 \begin{DoxyReturn}{Returns}
 The mouses wheel delta. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1mouse_a4c1a6fdbd6c23fc64bfbbd3deca4af44}\label{classflounder_1_1mouse_a4c1a6fdbd6c23fc64bfbbd3deca4af44}} 
+\mbox{\Hypertarget{classflounder_1_1mouse_ac4109903ff369214a5b6466a014d04dd}\label{classflounder_1_1mouse_ac4109903ff369214a5b6466a014d04dd}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!get\+DeltaX@{get\+DeltaX}}
 \index{get\+DeltaX@{get\+DeltaX}!flounder\+::mouse@{flounder\+::mouse}}
 \subsubsection{\texorpdfstring{get\+Delta\+X()}{getDeltaX()}}
-{\footnotesize\ttfamily double \& flounder\+::mouse\+::get\+DeltaX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double flounder\+::mouse\+::get\+DeltaX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -188,11 +197,11 @@ Gets the mouses delta x.
 \begin{DoxyReturn}{Returns}
 The mouses delta x. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1mouse_ae252e366acee241385420000dc23b748}\label{classflounder_1_1mouse_ae252e366acee241385420000dc23b748}} 
+\mbox{\Hypertarget{classflounder_1_1mouse_a97c8ce905344917d6b57d9c0c0ea532a}\label{classflounder_1_1mouse_a97c8ce905344917d6b57d9c0c0ea532a}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!get\+DeltaY@{get\+DeltaY}}
 \index{get\+DeltaY@{get\+DeltaY}!flounder\+::mouse@{flounder\+::mouse}}
 \subsubsection{\texorpdfstring{get\+Delta\+Y()}{getDeltaY()}}
-{\footnotesize\ttfamily double \& flounder\+::mouse\+::get\+DeltaY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double flounder\+::mouse\+::get\+DeltaY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -201,11 +210,11 @@ Gets the mouses delta y.
 \begin{DoxyReturn}{Returns}
 The mouses delta y. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1mouse_a2e442682cc73d6bcb2be7702c17d1dff}\label{classflounder_1_1mouse_a2e442682cc73d6bcb2be7702c17d1dff}} 
+\mbox{\Hypertarget{classflounder_1_1mouse_ab1f034dd18edcd5099615b7a1958b71d}\label{classflounder_1_1mouse_ab1f034dd18edcd5099615b7a1958b71d}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!get\+PositionX@{get\+PositionX}}
 \index{get\+PositionX@{get\+PositionX}!flounder\+::mouse@{flounder\+::mouse}}
 \subsubsection{\texorpdfstring{get\+Position\+X()}{getPositionX()}}
-{\footnotesize\ttfamily double \& flounder\+::mouse\+::get\+PositionX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double flounder\+::mouse\+::get\+PositionX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -214,11 +223,11 @@ Gets the mouses screen x position.
 \begin{DoxyReturn}{Returns}
 The mouses x position. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1mouse_abd3a3246b13da0b537d632057398cf7d}\label{classflounder_1_1mouse_abd3a3246b13da0b537d632057398cf7d}} 
+\mbox{\Hypertarget{classflounder_1_1mouse_adbb426aed882bf8919171e263bd038f3}\label{classflounder_1_1mouse_adbb426aed882bf8919171e263bd038f3}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!get\+PositionY@{get\+PositionY}}
 \index{get\+PositionY@{get\+PositionY}!flounder\+::mouse@{flounder\+::mouse}}
 \subsubsection{\texorpdfstring{get\+Position\+Y()}{getPositionY()}}
-{\footnotesize\ttfamily double \& flounder\+::mouse\+::get\+PositionY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily double flounder\+::mouse\+::get\+PositionY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -227,11 +236,25 @@ Gets the mouses screen y position.
 \begin{DoxyReturn}{Returns}
 The mouses y position. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1mouse_a926fbecc60a04f4ca3bc3e8afa9382d4}\label{classflounder_1_1mouse_a926fbecc60a04f4ca3bc3e8afa9382d4}} 
+\mbox{\Hypertarget{classflounder_1_1mouse_a8a550ad472e61ed74ca42c07777bdd1f}\label{classflounder_1_1mouse_a8a550ad472e61ed74ca42c07777bdd1f}} 
+\index{flounder\+::mouse@{flounder\+::mouse}!init@{init}}
+\index{init@{init}!flounder\+::mouse@{flounder\+::mouse}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void flounder\+::mouse\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The initialize function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a1725ef346952884d0741de61aba1e0c7}{flounder\+::imodule}.
+
+\mbox{\Hypertarget{classflounder_1_1mouse_a84181116f71d9f8e3c01afca2aa2554f}\label{classflounder_1_1mouse_a84181116f71d9f8e3c01afca2aa2554f}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!is\+Cursor\+Disabled@{is\+Cursor\+Disabled}}
 \index{is\+Cursor\+Disabled@{is\+Cursor\+Disabled}!flounder\+::mouse@{flounder\+::mouse}}
 \subsubsection{\texorpdfstring{is\+Cursor\+Disabled()}{isCursorDisabled()}}
-{\footnotesize\ttfamily bool \& flounder\+::mouse\+::is\+Cursor\+Disabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool flounder\+::mouse\+::is\+Cursor\+Disabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -240,11 +263,11 @@ If the cursor is hidden, the mouse is the display locked if true.
 \begin{DoxyReturn}{Returns}
 If the cursor is hidden. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1mouse_af10548a35c672453067ca5adb3da1787}\label{classflounder_1_1mouse_af10548a35c672453067ca5adb3da1787}} 
+\mbox{\Hypertarget{classflounder_1_1mouse_a68cff5b3c6384eda1048db5894d65887}\label{classflounder_1_1mouse_a68cff5b3c6384eda1048db5894d65887}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!is\+Display\+Selected@{is\+Display\+Selected}}
 \index{is\+Display\+Selected@{is\+Display\+Selected}!flounder\+::mouse@{flounder\+::mouse}}
 \subsubsection{\texorpdfstring{is\+Display\+Selected()}{isDisplaySelected()}}
-{\footnotesize\ttfamily bool \& flounder\+::mouse\+::is\+Display\+Selected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool flounder\+::mouse\+::is\+Display\+Selected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -253,6 +276,21 @@ Gets if the display is selected.
 \begin{DoxyReturn}{Returns}
 If the display is selected. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1mouse_af88cf24fffafeb3e6ed1db19ec40698c}\label{classflounder_1_1mouse_af88cf24fffafeb3e6ed1db19ec40698c}} 
+\index{flounder\+::mouse@{flounder\+::mouse}!load@{load}}
+\index{load@{load}!flounder\+::mouse@{flounder\+::mouse}}
+\subsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily void flounder\+::mouse\+::load (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{custom\+Mouse }\end{DoxyParamCaption})}
+
+
+
+Loads the mouse module with inital values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em custom\+Mouse} & The custom cursor file path. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1mouse_aff9750c7d68e93aea4c2d3c447677a9e}\label{classflounder_1_1mouse_aff9750c7d68e93aea4c2d3c447677a9e}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!set\+Cursor\+Hidden@{set\+Cursor\+Hidden}}
 \index{set\+Cursor\+Hidden@{set\+Cursor\+Hidden}!flounder\+::mouse@{flounder\+::mouse}}
@@ -285,9 +323,23 @@ Sets the mouse position by calling glfw\+Set\+Cursor\+Pos.
 {\em cursorY} & The y position in screenspace. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1mouse_aa1b1d60e1d1cf4ec7d19eaef65e040bc}\label{classflounder_1_1mouse_aa1b1d60e1d1cf4ec7d19eaef65e040bc}} 
+\index{flounder\+::mouse@{flounder\+::mouse}!update@{update}}
+\index{update@{update}!flounder\+::mouse@{flounder\+::mouse}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::mouse\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The update function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a9a53d48a46b5f6b16a92b2cd8503f74a}{flounder\+::imodule}.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/devices/mouse.\+h\item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/devices/mouse.\+cpp\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/devices/mouse.\+h\item 
+Flounder-\/\+Core/src/devices/mouse.\+cpp\end{DoxyCompactItemize}

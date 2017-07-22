@@ -22,7 +22,7 @@ Inheritance diagram for flounder\+:\+:buttonmouse\+:\begin{figure}[H]
 \begin{DoxyCompactList}\small\item\em Creates a new button mouse. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1buttonmouse_aa967f7f977040b0f4a58dc10d4414e75}{$\sim$buttonmouse} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the button mouse. \end{DoxyCompactList}\item 
-bool \hyperlink{classflounder_1_1buttonmouse_ab4d7ecd54f144f03886b5ef467666be1}{is\+Down} () override
+bool \hyperlink{classflounder_1_1buttonmouse_ad4f5435d1141e54169c96a4ff8ea8ab7}{is\+Down} () const override
 \begin{DoxyCompactList}\small\item\em Returns whether this button is currently pressed. \end{DoxyCompactList}\item 
 bool \hyperlink{classflounder_1_1buttonmouse_a7dad01481ebb01755db054a0acbc8159}{was\+Down} () override
 \begin{DoxyCompactList}\small\item\em Gets if the key is down and was not down before. Key press recognized as one click. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -50,7 +50,7 @@ Button from a mouse.
 \index{flounder\+::buttonmouse@{flounder\+::buttonmouse}!buttonmouse@{buttonmouse}}
 \index{buttonmouse@{buttonmouse}!flounder\+::buttonmouse@{flounder\+::buttonmouse}}
 \subsubsection{\texorpdfstring{buttonmouse()}{buttonmouse()}}
-{\footnotesize\ttfamily flounder\+::buttonmouse\+::buttonmouse (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily flounder\+::buttonmouse\+::buttonmouse (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
 
 
 
@@ -67,7 +67,7 @@ Creates a new button mouse.
 \index{flounder\+::buttonmouse@{flounder\+::buttonmouse}!````~buttonmouse@{$\sim$buttonmouse}}
 \index{````~buttonmouse@{$\sim$buttonmouse}!flounder\+::buttonmouse@{flounder\+::buttonmouse}}
 \subsubsection{\texorpdfstring{$\sim$buttonmouse()}{~buttonmouse()}}
-{\footnotesize\ttfamily flounder\+::buttonmouse\+::$\sim$buttonmouse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily flounder\+::buttonmouse\+::$\sim$buttonmouse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -76,11 +76,11 @@ Deconstructor for the button mouse.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1buttonmouse_ab4d7ecd54f144f03886b5ef467666be1}\label{classflounder_1_1buttonmouse_ab4d7ecd54f144f03886b5ef467666be1}} 
+\mbox{\Hypertarget{classflounder_1_1buttonmouse_ad4f5435d1141e54169c96a4ff8ea8ab7}\label{classflounder_1_1buttonmouse_ad4f5435d1141e54169c96a4ff8ea8ab7}} 
 \index{flounder\+::buttonmouse@{flounder\+::buttonmouse}!is\+Down@{is\+Down}}
 \index{is\+Down@{is\+Down}!flounder\+::buttonmouse@{flounder\+::buttonmouse}}
 \subsubsection{\texorpdfstring{is\+Down()}{isDown()}}
-{\footnotesize\ttfamily bool flounder\+::buttonmouse\+::is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily bool flounder\+::buttonmouse\+::is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -91,13 +91,13 @@ True if the button is pressed, false otherwise.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1ibutton_ab64fd22a75ea66ce67fd9b1ad34fd837}{flounder\+::ibutton}.
+Implements \hyperlink{classflounder_1_1ibutton_af99b936d7329f74a27768ce6eb181327}{flounder\+::ibutton}.
 
 \mbox{\Hypertarget{classflounder_1_1buttonmouse_a7dad01481ebb01755db054a0acbc8159}\label{classflounder_1_1buttonmouse_a7dad01481ebb01755db054a0acbc8159}} 
 \index{flounder\+::buttonmouse@{flounder\+::buttonmouse}!was\+Down@{was\+Down}}
 \index{was\+Down@{was\+Down}!flounder\+::buttonmouse@{flounder\+::buttonmouse}}
 \subsubsection{\texorpdfstring{was\+Down()}{wasDown()}}
-{\footnotesize\ttfamily bool flounder\+::buttonmouse\+::was\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily bool flounder\+::buttonmouse\+::was\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -112,6 +112,7 @@ Implements \hyperlink{classflounder_1_1ibutton_a5fb7b3493c0ea0e67bb9defc272da0d3
 
 
 
-The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/mattp/\+Documents/\+Flounder/\+Flounder\+Core/\+Sources/inputs/buttonmouse.\+h\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/inputs/buttonmouse.\+h\item 
+Flounder-\/\+Core/src/inputs/buttonmouse.\+cpp\end{DoxyCompactItemize}

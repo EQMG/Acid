@@ -196,10 +196,10 @@ namespace flounder
 			type->m_processedString += processLine(line) + "\n";
 		}
 
-	//	std::string i = "C:/Users/mattp/Documents/Flounder/New-Kosmos/bin/" + m_name + std::to_string(type->m_shaderType) + ".glsl";
-	//	std::ofstream out(i);
-	//	out << type->m_processedString;
-	//	out.close();
+		//	std::string i = "C:/Users/mattp/Documents/Flounder/New-Kosmos/bin/" + m_name + std::to_string(type->m_shaderType) + ".glsl";
+		//	std::ofstream out(i);
+		//	out << type->m_processedString;
+		//	out.close();
 
 		const char *source = type->m_processedString.c_str();
 		type->m_shaderID = glCreateShader(type->m_shaderType);

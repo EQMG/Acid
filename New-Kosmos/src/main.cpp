@@ -1,8 +1,6 @@
 #include <iostream>
 
-#include "flounder.h"
-#include "framework/framework.h"
-#include "framework/glfw/glfwupdater.h"
+#include <flounder.h>
 
 #include "maincamera.h"
 #include "mainplayer.h"

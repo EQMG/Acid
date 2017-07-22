@@ -1,0 +1,96 @@
+\hypertarget{classflounder_1_1axiscompound}{}\section{flounder\+:\+:axiscompound Class Reference}
+\label{classflounder_1_1axiscompound}\index{flounder\+::axiscompound@{flounder\+::axiscompound}}
+
+
+Axis composed of multiple other axes.  
+
+
+
+
+{\ttfamily \#include $<$axiscompound.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:axiscompound\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1axiscompound}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1axiscompound_a5f1704b50b966bca51730f7fecfc3728}{axiscompound} (const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Creates a new compound axis. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1axiscompound_ae6143bb6a584988c55aaa70545ffae91}{$\sim$axiscompound} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the compound axis. \end{DoxyCompactList}\item 
+float \hyperlink{classflounder_1_1axiscompound_aad0f38f1a532c269cd0e803953861400}{get\+Amount} () const override
+\begin{DoxyCompactList}\small\item\em Gets the current value along the axis. -\/1 is smallest input, 1 is largest input. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1axiscompound_ab876ccafbfabb22aac47b09ce4917b0c}\label{classflounder_1_1axiscompound_ab876ccafbfabb22aac47b09ce4917b0c}} 
+int {\bfseries m\+\_\+count}
+\item 
+\mbox{\Hypertarget{classflounder_1_1axiscompound_a5bbc0ced9b75906a09ecfc327db4b42a}\label{classflounder_1_1axiscompound_a5bbc0ced9b75906a09ecfc327db4b42a}} 
+\hyperlink{classflounder_1_1iaxis}{iaxis} $\ast$$\ast$ {\bfseries m\+\_\+axes}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Axis composed of multiple other axes. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1axiscompound_a5f1704b50b966bca51730f7fecfc3728}\label{classflounder_1_1axiscompound_a5f1704b50b966bca51730f7fecfc3728}} 
+\index{flounder\+::axiscompound@{flounder\+::axiscompound}!axiscompound@{axiscompound}}
+\index{axiscompound@{axiscompound}!flounder\+::axiscompound@{flounder\+::axiscompound}}
+\subsubsection{\texorpdfstring{axiscompound()}{axiscompound()}}
+{\footnotesize\ttfamily flounder\+::axiscompound\+::axiscompound (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Creates a new compound axis. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number of axes being added. \\
+\hline
+{\em ...} & The axes on the being added. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1axiscompound_ae6143bb6a584988c55aaa70545ffae91}\label{classflounder_1_1axiscompound_ae6143bb6a584988c55aaa70545ffae91}} 
+\index{flounder\+::axiscompound@{flounder\+::axiscompound}!````~axiscompound@{$\sim$axiscompound}}
+\index{````~axiscompound@{$\sim$axiscompound}!flounder\+::axiscompound@{flounder\+::axiscompound}}
+\subsubsection{\texorpdfstring{$\sim$axiscompound()}{~axiscompound()}}
+{\footnotesize\ttfamily flounder\+::axiscompound\+::$\sim$axiscompound (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the compound axis. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1axiscompound_aad0f38f1a532c269cd0e803953861400}\label{classflounder_1_1axiscompound_aad0f38f1a532c269cd0e803953861400}} 
+\index{flounder\+::axiscompound@{flounder\+::axiscompound}!get\+Amount@{get\+Amount}}
+\index{get\+Amount@{get\+Amount}!flounder\+::axiscompound@{flounder\+::axiscompound}}
+\subsubsection{\texorpdfstring{get\+Amount()}{getAmount()}}
+{\footnotesize\ttfamily float flounder\+::axiscompound\+::get\+Amount (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets the current value along the axis. -\/1 is smallest input, 1 is largest input. 
+
+\begin{DoxyReturn}{Returns}
+The current value of the axis in the range (-\/1, 1). 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1iaxis_a990ecb5ffa5ec07b3d5e2e4016b2e4a0}{flounder\+::iaxis}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/inputs/axiscompound.\+h\item 
+Flounder-\/\+Core/src/inputs/axiscompound.\+cpp\end{DoxyCompactItemize}

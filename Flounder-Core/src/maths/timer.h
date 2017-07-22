@@ -12,7 +12,6 @@ namespace flounder
 	private:
 		double m_startTime;
 		double m_interval;
-
 	public:
 		/// <summary>
 		/// Creates a new timer.
