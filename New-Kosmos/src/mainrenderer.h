@@ -1,16 +1,6 @@
 #pragma once
 
-#include "renderer/irenderermaster.h"
-#include "renderer/renderer.h"
-
-#include "devices/mouse.h"
-#include "devices/keyboard.h"
-#include "deferred/deferredrenderer.h"
-#include "fbos/fbo.h"
-#include "post/filters/filterfxaa.h"
-#include "post/filters/filtergrain.h"
-#include "post/filters/filtercrt.h"
-#include "skybox/rendererskybox.h"
+#include <flounder.h>
 
 using namespace flounder;
 
@@ -26,6 +16,8 @@ private:
 	deferredrenderer *m_deferred;
 	filterfxaa *m_filterFxaa;
 	filtergrain *m_filterGrain;
+	filterlensflare *m_filterLensflare;
+	filtertiltshift *m_filterTiltshift;
 	filtercrt *m_filterCrt;
 public:
 	mainrenderer();

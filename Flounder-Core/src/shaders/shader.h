@@ -213,16 +213,37 @@ namespace flounder
 		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform(const std::string &name, const vector4 &value);
 	private:
+		/// <summary>
+		/// Loads all of the types provided.
+		/// </summary>
 		void loadTypes();
 
+		/// <summary>
+		/// Loads the type into memory.
+		/// </summary>
+		/// <param name="type"> The type. </param>
 		void loadType(shadertype *type);
 
+		/// <summary>
+		/// Processes the shaders line looking for keywords and optimizing for platforms.
+		/// </summary>
+		/// <param name="line"> The line to process. </param>
+		/// <returns> The processed line. </returns>
 		std::string processLine(const std::string &line);
 
+		/// <summary>
+		/// Loads shader locations to make shader usage more simple.
+		/// </summary>
 		void loadLocations();
 
+		/// <summary>
+		/// Clears the loaded types from memory as they are not needed after creating the shader.
+		/// </summary>
 		void deleteTypes();
 
+		/// <summary>
+		/// Loads shader binds to make shader usage more simple.
+		/// </summary>
 		void loadBindings();
 	};
 }
