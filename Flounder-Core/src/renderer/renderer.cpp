@@ -181,9 +181,14 @@ namespace flounder
 		glBindVertexArray(0);
 	}
 
-	void renderer::scissor(const int &x, const int &y, const int &width, const int &height)
+	void renderer::scissorEnable(const int &x, const int &y, const int &width, const int &height)
 	{
 		glScissor(x, y, width, height);
+	}
+
+	void renderer::scissorDisable()
+	{
+		glDisable(GL_SCISSOR_TEST);
 	}
 
 	void renderer::bindTexture(texture *texture, const int &bankID)

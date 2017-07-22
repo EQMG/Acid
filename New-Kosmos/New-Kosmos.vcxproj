@@ -39,10 +39,16 @@
     <ClCompile Include="src\mainrenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="src\maincamera.h" />
     <ClInclude Include="src\maininstance.h" />
     <ClInclude Include="src\mainplayer.h" />
     <ClInclude Include="src\mainrenderer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="New Kosmos.rc" />
+    <ResourceCompile Include="New Kosmos1.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

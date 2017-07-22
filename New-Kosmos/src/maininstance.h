@@ -1,10 +1,6 @@
 #pragma once
 
-#include "standards/istandard.h"
-#include "renderer/renderer.h"
-
-#include "inputs/buttonkeyboard.h"
-#include "inputs/buttonmouse.h"
+#include <flounder.h>
 
 using namespace flounder;
 

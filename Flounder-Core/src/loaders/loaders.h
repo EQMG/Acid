@@ -19,7 +19,7 @@ namespace flounder
 	/// <summary>
 	/// A module used for loading and managing OpenGL VAO's and VBO's.
 	/// </summary>
-	class loaders : 
+	class loaders :
 		public imodule
 	{
 	private:

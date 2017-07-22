@@ -19,8 +19,6 @@ namespace flounder
 
 		void storeValues() override;
 
-		inline float getPixelSize() { return m_pixelSize; }
-
 		inline void setPixelSize(const float &pixelSize) { m_pixelSize = pixelSize; }
 	};
 }

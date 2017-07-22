@@ -2,6 +2,7 @@
 
 #include "../maths/colour.h"
 #include "../maths/vector3.h"
+#include "../maths/matrix4x4.h"
 
 #include "frustum.h"
 #include "intersect.h"

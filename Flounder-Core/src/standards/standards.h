@@ -11,7 +11,7 @@ namespace flounder
 	/// <summary>
 	/// A module used for managing simple update injection standards.
 	/// </summary>
-	class standards : 
+	class standards :
 		public imodule
 	{
 	private:

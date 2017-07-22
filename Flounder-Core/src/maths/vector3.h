@@ -145,7 +145,7 @@ namespace flounder
 		/// <param name="rotation"> The rotation amount. </param>
 		/// <param name="destination"> The destination vector or NULL if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static vector3 *rotate(const vector3 &source, vector3 *rotation, vector3 *destination);
+		static vector3 *rotate(const vector3 &source, const vector3 &rotation, vector3 *destination);
 
 		/// <summary>
 		/// Negates a vector and places the result in the destination vector.
