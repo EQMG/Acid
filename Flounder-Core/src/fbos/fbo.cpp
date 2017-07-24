@@ -91,6 +91,12 @@ namespace flounder
 			m_fbo->m_drawBuffers[i] = GL_COLOR_ATTACHMENT0 + i;
 		}
 
+		if (m_fbo->m_fitToScreen)
+		{
+			m_fbo->m_width = static_cast<int>(display::get()->getWidth() * m_fbo->m_sizeScalar);
+			m_fbo->m_height = static_cast<int>(display::get()->getHeight() * m_fbo->m_sizeScalar);
+		}
+
 		m_fbo->m_hasGivenResolveError = false;
 
 		m_fbo->initialize();
@@ -114,7 +120,7 @@ namespace flounder
 		m_width = display::get()->getWidth();
 		m_height = display::get()->getHeight();
 		m_attachments = 1;
-		m_fitToScreen = true;
+		m_fitToScreen = false;
 		m_sizeScalar = 1.0f;
 
 		m_frameBuffer = NULL;
@@ -206,6 +212,17 @@ namespace flounder
 		}
 
 		m_samples = samples;
+	}
+
+	void fbo::setSizeScalar(const float &sizeScalar)
+	{
+		if (m_fitToScreen && m_sizeScalar == sizeScalar) {
+			return;
+		}
+
+		m_sizeScalar = sizeScalar;
+		m_fitToScreen = true;
+		updateSize();
 	}
 
 	void fbo::resolveFBO(fbo *source, fbo *output)

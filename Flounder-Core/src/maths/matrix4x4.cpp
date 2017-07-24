@@ -405,8 +405,8 @@ namespace flounder
 			destination = new matrix4x4();
 		}
 
-		float c = (float) cos(angle);
-		float s = (float) sin(angle);
+		float c = cos(angle);
+		float s = sin(angle);
 		float o = 1.0f - c;
 		float xy = axis.m_x * axis.m_y;
 		float yz = axis.m_y * axis.m_z;
@@ -607,9 +607,9 @@ namespace flounder
 		destination->setIdentity();
 		vector3 point = vector3(position);
 		point.negate();
-		matrix4x4::rotate(*destination, vector3(1.0f, 0.0f, 0.0f), (float) __radians(rotation.m_x), destination);
-		matrix4x4::rotate(*destination, vector3(0.0f, 1.0f, 0.0f), (float) __radians(-rotation.m_y), destination);
-		matrix4x4::rotate(*destination, vector3(0.0f, 0.0f, 1.0f), (float) __radians(rotation.m_z), destination);
+		matrix4x4::rotate(*destination, vector3(1.0f, 0.0f, 0.0f), __radians(rotation.m_x), destination);
+		matrix4x4::rotate(*destination, vector3(0.0f, 1.0f, 0.0f), __radians(-rotation.m_y), destination);
+		matrix4x4::rotate(*destination, vector3(0.0f, 0.0f, 1.0f), __radians(rotation.m_z), destination);
 		matrix4x4::translate(*destination, point, destination);
 		return destination;
 	}

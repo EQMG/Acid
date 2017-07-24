@@ -254,9 +254,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\config\configdata.cpp" />
+    <ClCompile Include="src\config\config.cpp" />
+    <ClCompile Include="src\particles\spawns\spawnsphere.cpp" />
+    <ClCompile Include="src\particles\spawns\spawncircle.cpp" />
+    <ClCompile Include="src\particles\spawns\spawnline.cpp" />
+    <ClCompile Include="src\particles\spawns\spawnpoint.cpp" />
     <ClCompile Include="src\post\filters\filterblurvertical.cpp" />
     <ClCompile Include="src\post\filters\filterblurhorizontal.cpp" />
     <ClCompile Include="src\post\filters\filtermotion.cpp" />
+    <ClCompile Include="src\post\ipostpipeline.cpp" />
     <ClCompile Include="src\post\pipelines\pipelinepaused.cpp" />
     <ClCompile Include="src\post\pipelines\pipelinegaussian.cpp" />
     <ClCompile Include="src\post\pipelines\pipelinebloom.cpp" />
@@ -339,8 +346,18 @@
     <ClCompile Include="src\tasks\tasks.cpp" />
     <ClCompile Include="src\models\vertexdata.cpp" />
     <ClCompile Include="src\textures\texture.cpp" />
+    <ClCompile Include="src\xml\xmlparser.cpp" />
+    <ClCompile Include="src\xml\xmlnode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\config\configdata.h" />
+    <ClInclude Include="src\config\config.h" />
+    <ClInclude Include="src\config\configsection.h" />
+    <ClInclude Include="src\particles\spawns\spawnsphere.h" />
+    <ClInclude Include="src\particles\spawns\spawncircle.h" />
+    <ClInclude Include="src\particles\spawns\spawnline.h" />
+    <ClInclude Include="src\particles\spawns\ispawnparticle.h" />
+    <ClInclude Include="src\particles\spawns\spawnpoint.h" />
     <ClInclude Include="src\post\filters\filterblurvertical.h" />
     <ClInclude Include="src\post\filters\filterblurhorizontal.h" />
     <ClInclude Include="src\post\filters\filtermotion.h" />
@@ -452,6 +469,8 @@
     <ClInclude Include="src\visual\idriver.h" />
     <ClInclude Include="src\models\vertexdata.h" />
     <ClInclude Include="src\textures\texture.h" />
+    <ClInclude Include="src\xml\xmlparser.h" />
+    <ClInclude Include="src\xml\xmlnode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
