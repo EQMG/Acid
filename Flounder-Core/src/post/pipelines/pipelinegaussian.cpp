@@ -22,10 +22,10 @@ namespace flounder
 		delete m_filterBlurVertical;
 	}
 
-	void pipelinegaussian::renderPipeline(const int n_args, ...)
+	void pipelinegaussian::renderPipeline(const int n_args, va_list args)
 	{
-	//	m_filterBlurHorizontal->applyFilter(textures);
-	//	m_filterBlurVertical->applyFilter(m_filterBlurHorizontal->getFbo()->getColourTexture(0));
+		m_filterBlurHorizontal->applyFilter(1, args[0]);
+		m_filterBlurVertical->applyFilter(1, m_filterBlurHorizontal->getFbo()->getColourTexture(0));
 	}
 
 	fbo *pipelinegaussian::getOutput()

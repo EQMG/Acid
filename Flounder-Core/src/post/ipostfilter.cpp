@@ -42,6 +42,14 @@ namespace flounder
 
 	void ipostfilter::applyFilter(const int n_args, ...)
 	{
+		va_list args;
+		va_start(args, n_args);
+		applyFilter(n_args, args);
+		va_end(args);
+	}
+
+	void ipostfilter::applyFilter(const int n_args, va_list args)
+	{
 		bool lastWireframe = renderer::get()->isInWireframe();
 
 		m_fbo->bindFrameBuffer();
@@ -56,16 +64,11 @@ namespace flounder
 		renderer::get()->goWireframe(false);
 		renderer::get()->bindVAO(m_model->getVaoID(), 2, 0, 1);
 
-		va_list ap;
-		va_start(ap, n_args);
-
 		for (int i = 0; i < n_args; i++)
 		{
-			GLuint texture = va_arg(ap, GLuint);
+			GLuint texture = va_arg(args, GLuint);
 			renderer::get()->bindTexture(texture, GL_TEXTURE_2D, i);
 		}
-
-		va_end(ap);
 
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, m_model->getVaoLength()); // Render post filter.
 

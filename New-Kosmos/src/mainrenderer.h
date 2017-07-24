@@ -19,6 +19,9 @@ private:
 	filterlensflare *m_filterLensflare;
 	filtertiltshift *m_filterTiltshift;
 	filtercrt *m_filterCrt;
+
+	pipelinebloom *m_pipelineBloom;
+	pipelinepaused *m_pipelinePaused;
 public:
 	mainrenderer();
 

@@ -88,7 +88,7 @@ namespace flounder
 			dls = 1.0f;
 		}
 
-		return (float) acos(dls);
+		return acos(dls);
 	}
 
 	float vector2::dot(const vector2 &left, const vector2 &right)
@@ -114,7 +114,7 @@ namespace flounder
 		}
 
 		double theta = __radians(angle);
-		return destination->set((float) (source.m_x * cos(theta) - source.m_y * sin(theta)), (float) (source.m_x * sin(theta) + source.m_y * cos(theta)));
+		return destination->set(source.m_x * cos(theta) - source.m_y * sin(theta), source.m_x * sin(theta) + source.m_y * cos(theta));
 	}
 
 	vector2 *vector2::rotate(const vector2 &source, const float &angle, const vector2 &rotationAxis, vector2 *destination)
@@ -125,7 +125,7 @@ namespace flounder
 		}
 
 		double theta = __radians(angle);
-		return destination->set((float) (((source.m_x - rotationAxis.m_x) * cos(theta)) - ((source.m_y - rotationAxis.m_y) * sin(theta) + rotationAxis.m_x)), (float) (((source.m_x - rotationAxis.m_x) * sin(theta)) + ((source.m_y - rotationAxis.m_y) * cos(theta) + rotationAxis.m_y)));
+		return destination->set(((source.m_x - rotationAxis.m_x) * cos(theta)) - ((source.m_y - rotationAxis.m_y) * sin(theta) + rotationAxis.m_x), ((source.m_x - rotationAxis.m_x) * sin(theta)) + ((source.m_y - rotationAxis.m_y) * cos(theta) + rotationAxis.m_y));
 	}
 
 	vector2 *vector2::negate(const vector2 &source, vector2 *destination)

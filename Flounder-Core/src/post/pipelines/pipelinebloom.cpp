@@ -17,11 +17,11 @@ namespace flounder
 		delete m_filterBloom2;
 	}
 
-	void pipelinebloom::renderPipeline(const int n_args, ...)
+	void pipelinebloom::renderPipeline(const int n_args, va_list args)
 	{
-	//	m_filterBloom1->applyFilter(textures);
-	//	m_pipelineGaussian->renderPipeline(m_filterBloom1->getFbo()->getColourTexture(0));
-	//	m_filterBloom2->applyFilter(textures[0], m_pipelineGaussian->getOutput()->getColourTexture(0)); // Blurred - Colour
+		m_filterBloom1->applyFilter(n_args, args);
+		m_pipelineGaussian->renderPipelineV(1, m_filterBloom1->getFbo()->getColourTexture(0));
+		m_filterBloom2->applyFilter(2, args[0], m_pipelineGaussian->getOutput()->getColourTexture(0)); // Blurred - Colour
 	}
 
 	fbo *pipelinebloom::getOutput()
