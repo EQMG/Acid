@@ -12,11 +12,5 @@
     <ClInclude Include="src\maininstance.h" />
     <ClInclude Include="src\mainplayer.h" />
     <ClInclude Include="src\mainrenderer.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="New Kosmos.rc" />
-    <ResourceCompile Include="New Kosmos1.rc" />
   </ItemGroup>
 </Project>

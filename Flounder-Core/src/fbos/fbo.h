@@ -198,6 +198,10 @@ namespace flounder
 		/// <param name="samples"> The number of antialiasing samples. </param>
 		virtual void setSamples(const int samples);
 
+		inline float getSizeScalar() { return m_sizeScalar; }
+
+		void setSizeScalar(const float &sizeScalar);
+
 		inline GLuint getFrameBuffer() { return m_frameBuffer; }
 
 		inline GLuint getColourTexture(int readBuffer) { return m_colourTexture[readBuffer]; }

@@ -20,6 +20,6 @@ namespace flounder
 
 		inline void setSlideSpaceValue(const vector4 &slideSpaceValue) { m_slideSpaceValue->set(slideSpaceValue); }
 
-		inline void setSlideSpace(const float &x, const float &y, const float &z, const float &w);
+		void setSlideSpace(const float &x, const float &y, const float &z, const float &w);
 	};
 }

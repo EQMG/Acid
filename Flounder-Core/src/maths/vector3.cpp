@@ -103,7 +103,7 @@ namespace flounder
 			dls = 1.0f;
 		}
 
-		return (float) acos(dls);
+		return acos(dls);
 	}
 
 	float vector3::dot(const vector3 &left, const vector3 &right)
@@ -235,9 +235,9 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		float theta = (float) __random();
+		float theta = __random();
 		theta *= 2.0f * PI;
-		float z = (float) __random();
+		float z = __random();
 		z *= 2.0f - 1.0f;
 		float rootOneMinusZSquared = sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * cos(theta);
@@ -262,8 +262,8 @@ namespace flounder
 
 		destination->normalize();
 		destination->scale(radius);
-		float a = (float) __random();
-		float b = (float) __random();
+		float a = __random();
+		float b = __random();
 
 		if (a > b)
 		{

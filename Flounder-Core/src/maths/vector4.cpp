@@ -92,7 +92,7 @@ namespace flounder
 			dls = 1.0f;
 		}
 
-		return (float) acos(dls);
+		return acos(dls);
 	}
 
 	float vector4::dot(const vector4 &left, const vector4 &right)
@@ -190,7 +190,7 @@ namespace flounder
 
 	float vector4::getDistance(const vector4 &point1, const vector4 &point2)
 	{
-		return (float) sqrt(pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2) + pow(point2.m_z - point1.m_z, 2) + pow(point2.m_w - point1.m_w, 2));
+		return sqrt(pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2) + pow(point2.m_z - point1.m_z, 2) + pow(point2.m_w - point1.m_w, 2));
 	}
 
 	vector4 *vector4::getVectorDistance(const vector4 &point1, const vector4 &point2, vector4 *destination)

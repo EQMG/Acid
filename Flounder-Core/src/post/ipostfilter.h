@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdarg.h>
+
 #include "../fbos/fbo.h"
 #include "../loaders/loaders.h"
 #include "../models/model.h"
@@ -57,6 +59,13 @@ namespace flounder
 		/// <param name="n_args"> The number textures being bound to the shader. </param>
 		/// <param name="..."> The textures being bound to the shader. </param>
 		void applyFilter(const int n_args, ...);
+
+		/// <summary>
+		/// Renders the filter to its fbo.
+		/// </summary>
+		/// <param name="n_args"> The number textures being bound to the shader. </param>
+		/// <param name="..."> The textures being bound to the shader. </param>
+		void applyFilter(const int n_args, va_list args);
 
 		/// <summary>
 		/// Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started.
