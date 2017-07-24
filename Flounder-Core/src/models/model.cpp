@@ -197,10 +197,10 @@ namespace flounder
 
 	vertexdata *model::processDataVertex(vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices)
 	{
-		int index = (int) vertex.m_x - 1;
+		int index = static_cast<int>(vertex.m_x) - 1;
 		vertexdata *currentVertex = vertices->at(index);
-		int textureIndex = (int) vertex.m_y - 1;
-		int normalIndex = (int) vertex.m_z - 1;
+		int textureIndex = static_cast<int>(vertex.m_y) - 1;
+		int normalIndex = static_cast<int>(vertex.m_z) - 1;
 
 		if (!currentVertex->isSet())
 		{

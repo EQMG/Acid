@@ -21,18 +21,18 @@ namespace flounder
 		delete m_filterCombine;
 	}
 
-	void pipelinepaused::renderPipeline(const int n_args, ...)
+	void pipelinepaused::renderPipeline(const int n_args, va_list args)
 	{
-	//	m_pipelineGaussian1->renderPipeline(textures);
+		m_pipelineGaussian1->renderPipeline(n_args, args);
 
-	//	m_pipelineGaussian2->setScaleValue(1.25f);
-	//	m_pipelineGaussian2->renderPipeline(m_pipelineGaussian1->getOutput()->getColourTexture(0));
+		m_pipelineGaussian2->setScaleValue(1.25f);
+		m_pipelineGaussian2->renderPipelineV(1, m_pipelineGaussian1->getOutput()->getColourTexture(0));
 
-	//	m_filterDarken->setFactorValue(__max(fabs(1.0f - m_blurFactor), 0.45f));
-	//	m_filterDarken->applyFilter(m_pipelineGaussian2->getOutput()->getColourTexture(0));
+		m_filterDarken->setFactorValue(__max(fabs(1.0f - m_blurFactor), 0.45f));
+		m_filterDarken->applyFilter(1, m_pipelineGaussian2->getOutput()->getColourTexture(0));
 
-	//	m_filterCombine->setSlideSpace(m_blurFactor, 1.0f, 0.0f, 1.0f);
-	//	m_filterCombine->applyFilter(textures[0], m_filterDarken->getFbo()->getColourTexture(0)); // Darken - Colour
+		m_filterCombine->setSlideSpace(m_blurFactor, 1.0f, 0.0f, 1.0f);
+		m_filterCombine->applyFilter(2, args[0], m_filterDarken->getFbo()->getColourTexture(0)); // Darken - Colour
 	}
 
 	fbo *pipelinepaused::getOutput()

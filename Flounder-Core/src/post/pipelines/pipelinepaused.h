@@ -21,7 +21,7 @@ namespace flounder
 
 		~pipelinepaused();
 
-		void renderPipeline(const int n_args, ...) override;
+		void renderPipeline(const int n_args, va_list args) override;
 
 		fbo *getOutput() override;
 

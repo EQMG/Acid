@@ -1,2 +1,0 @@
-﻿MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
-C:\Users\mattp\Documents\Flounder\Flounder-Tools\bin\Debug x64\Flounder Tools.exe : fatal error LNK1120: 1 unresolved externals
