@@ -1,6 +1,6 @@
 #pragma once
 
-#include "collider.h"
+#include "icollider.h"
 
 namespace flounder
 {
@@ -8,12 +8,12 @@ namespace flounder
 	/// A axis-aligned bounding box.
 	/// </summary>
 	class aabb :
-		public collider
+		public icollider
 	{
-	private:
+	public:
 		vector3 *m_minExtents;
 		vector3 *m_maxExtents;
-	public:
+
 		/// <summary>
 		/// Creates a new unit aabb.
 		/// </summary>
@@ -106,17 +106,17 @@ namespace flounder
 		/// <returns> A new aabb, stretched by the specified amounts. </returns>
 		static aabb *stretch(const aabb &source, const float &stretchX, const float &stretchY, const float &stretchZ, aabb *destination);
 
-		collider *update(const vector3 &position, const vector3 &rotation, const float &scale, collider *destination) override;
+		icollider *update(const vector3 &position, const vector3 &rotation, const float &scale, icollider *destination) override;
 
-		vector3 *resolveCollision(const collider &other, const vector3 &positionDelta, vector3 *destination) override;
+		vector3 *resolveCollision(const icollider &other, const vector3 &positionDelta, vector3 *destination) override;
 
-		intersect *intersects(const collider &other) override;
+		intersect *intersects(const icollider &other) override;
 
 		intersect *intersects(const ray &ray) override;
 
 		bool inFrustum(const frustum &frustum) override;
 
-		bool contains(const collider &other) override;
+		bool contains(const icollider &other) override;
 
 		bool contains(const vector3 &point) override;
 

@@ -29,7 +29,12 @@ namespace flounder
 
 	void callbackSize(GLFWwindow *window, int width, int height)
 	{
-		if (!display::get()->m_fullscreen)
+		if (display::get()->m_fullscreen)
+		{
+			display::get()->m_fullscreenWidth = width;
+			display::get()->m_fullscreenHeight = height;
+		}
+		else
 		{
 			display::get()->m_windowWidth = width;
 			display::get()->m_windowHeight = height;
@@ -38,6 +43,7 @@ namespace flounder
 
 	void callbackFrame(GLFWwindow *window, int width, int height)
 	{
+		display::get()->m_aspectRatio = width / height;
 		glViewport(0, 0, width, height);
 	}
 
@@ -95,6 +101,11 @@ namespace flounder
 		m_antialiasing = antialiasing;
 		m_samples = samples;
 		m_fullscreen = fullscreen;
+
+#ifdef FLOUNDER_PLATFORM_WEB
+		m_fpsLimit = 60.0f;
+		m_vsync = true;
+#endif
 	}
 
 	void display::init()
@@ -168,6 +179,7 @@ namespace flounder
 		glfwMakeContextCurrent(m_window);
 
 		// Creates a window icon for this GLFW display.
+#ifndef FLOUNDER_PLATFORM_WEB
 		if (!m_icon.empty())
 		{
 			int width = 0;
@@ -181,18 +193,17 @@ namespace flounder
 			}
 			else
 			{
-#ifndef FLOUNDER_PLATFORM_WEB
 				GLFWimage icons[1];
 				icons[0].pixels = data;
 				icons[0].width = width;
 				icons[0].height = height;
 
 				glfwSetWindowIcon(m_window, 1, icons);
-#endif
 			}
 
 			stbi_image_free(data);
 		}
+#endif
 
 		// Enables VSync if requested.
 		glfwSwapInterval(m_vsync ? 1 : 0);
@@ -250,7 +261,8 @@ namespace flounder
 		// Polls for window events. The key callback will only be invoked during this call.
 		glfwPollEvents();
 
-		m_aspectRatio = getWidth() / getHeight();
+		// Updates the aspect ratio.
+		m_aspectRatio = static_cast<float>(getWidth()) / static_cast<float>(getHeight());
 	}
 
 	void display::screenshot()

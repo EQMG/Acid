@@ -183,6 +183,7 @@ namespace flounder
 
 	void renderer::scissorEnable(const int &x, const int &y, const int &width, const int &height)
 	{
+		glEnable(GL_SCISSOR_TEST);
 		glScissor(x, y, width, height);
 	}
 

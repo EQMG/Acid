@@ -13,20 +13,20 @@ namespace flounder
 	/// <summary>
 	/// A simple class that represents a physical shape.
 	/// </summary>
-	class collider
+	class icollider
 	{
 	public:
 		/// <summary>
 		/// Creates a new collider.
 		/// </summary>
-		collider()
+		icollider()
 		{
 		}
 
 		/// <summary>
 		/// Deconstructor for the collider.
 		/// </summary>
-		virtual ~collider()
+		virtual ~icollider()
 		{
 		}
 
@@ -38,7 +38,7 @@ namespace flounder
 		/// <param name="scale"> The amount to scale the object. </param>
 		/// <param name="destination"> The collider to store the new data in. </param>
 		/// <returns> The destination. </returns>
-		virtual collider *update(const vector3 &position, const vector3 &rotation, const float &scale, collider *destination) = 0;
+		virtual icollider *update(const vector3 &position, const vector3 &rotation, const float &scale, icollider *destination) = 0;
 
 		/// <summary>
 		/// Adjusts a movement amount so that after the move is performed, the this collider will not intersect the {@code right}.
@@ -49,14 +49,14 @@ namespace flounder
 		/// <param name="positionDelta"> The delta movement for the left collider. </param>
 		/// <param name="destination"> Where the final resolved delta should be stored. </param>
 		/// <returns> The new, adjusted verifyMove delta that guarantees no intersection. </returns>
-		virtual vector3 *resolveCollision(const collider &other, const vector3 &positionDelta, vector3 *destination) = 0;
+		virtual vector3 *resolveCollision(const icollider &other, const vector3 &positionDelta, vector3 *destination) = 0;
 
 		/// <summary>
 		/// Tests whether a shape is intersecting this shape.
 		/// </summary>
 		/// <param name="other"> The other shape being tested for intersection. </param>
 		/// <returns> Data about the calculated shape intersection. </returns>
-		virtual intersect *intersects(const collider &other) = 0;
+		virtual intersect *intersects(const icollider &other) = 0;
 
 		/// <summary>
 		/// Tests whether a ray is intersecting this shape.
@@ -77,7 +77,7 @@ namespace flounder
 		/// </summary>
 		/// <param name="other"> The shape being tested for containment. </param>
 		/// <returns> True if {@code other} is contained by this shape, false otherwise. </returns>
-		virtual bool contains(const collider &other) = 0;
+		virtual bool contains(const icollider &other) = 0;
 
 		/// <summary>
 		/// Gets if a point is contained in this shape.

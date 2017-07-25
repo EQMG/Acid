@@ -9,26 +9,26 @@ namespace flounder
 
 	glfwupdater::~glfwupdater()
 	{
-		delete m_deltaUpdate;
+		delete m_audio;
+		delete m_camera;
 		delete m_deltaRender;
-		delete m_timerUpdate;
-		delete m_timerRender;
-		delete m_timerLog;
-
-		delete m_events;
-		delete m_tasks;
-		delete m_processing;
+		delete m_deltaUpdate;
 		delete m_display;
+		delete m_events;
+		delete m_guis;
 		delete m_joysticks;
 		delete m_keyboard;
-		delete m_mouse;
-		delete m_audio;
-		delete m_standards;
-		delete m_camera;
 		delete m_loaders;
+		delete m_mouse;
+		delete m_particles;
+		delete m_processing;
 		delete m_renderer;
-
 		delete m_skybox;
+		delete m_standards;
+		delete m_tasks;
+		delete m_timerLog;
+		delete m_timerRender;
+		delete m_timerUpdate;
 	}
 
 	void glfwupdater::create()
@@ -41,29 +41,30 @@ namespace flounder
 		m_timerRender = new timer(1.0 / -1.0);
 		m_timerLog = new timer(2.22);
 
-		m_events = new events();
-		m_tasks = new tasks();
-		m_processing = new processing();
+		m_audio = new audio;
+		m_camera = new camera();
 		m_display = new display();
+		m_events = new events();
+		m_guis = new guis();
 		m_joysticks = new joysticks();
 		m_keyboard = new keyboard();
-		m_mouse = new mouse;
-		m_audio = new audio;
-		m_standards = new standards();
-		m_camera = new camera();
 		m_loaders = new loaders();
+		m_mouse = new mouse;
+		m_particles = new particles();
+		m_processing = new processing();
 		m_renderer = new renderer();
-
 		m_skybox = new skybox();
+		m_standards = new standards();
+		m_tasks = new tasks();
 	}
 
 	void glfwupdater::init()
 	{
 		m_display->init();
+		m_audio->init();
 		m_joysticks->init();
 		m_keyboard->init();
 		m_mouse->init();
-		m_audio->init();
 
 		m_standards->init();
 
@@ -75,6 +76,8 @@ namespace flounder
 		m_loaders->init();
 		m_renderer->init();
 
+		m_guis->init();
+		m_particles->init();
 		m_skybox->init();
 	}
 
@@ -106,12 +109,13 @@ namespace flounder
 			m_processing->update();
 
 			m_loaders->update();
-
+			m_guis->update();
 			m_skybox->update();
 
 			// Update
 
 			// Post-Update
+			m_particles->update();
 		}
 
 		// Logs the fps to the console.
@@ -169,6 +173,10 @@ namespace flounder
 		{
 			return m_events;
 		}
+		else if (name == "guis")
+		{
+			return m_guis;
+		}
 		else if (name == "loaders")
 		{
 			return m_loaders;
@@ -184,6 +192,10 @@ namespace flounder
 		else if (name == "standards")
 		{
 			return m_standards;
+		}
+		else if (name == "particles")
+		{
+			return m_particles;
 		}
 		else if (name == "processing")
 		{
