@@ -39,8 +39,8 @@ namespace flounder
 		/// <returns> The calculated value. </returns>
 		float update(const double &delta)
 		{
-			m_actualTime += (float) delta;
-			m_currentTime += (float) delta;
+			m_actualTime += static_cast<float>(delta);
+			m_currentTime += static_cast<float>(delta);
 			m_currentTime = fmod(m_currentTime, m_length);
 			float time = m_currentTime / m_length;
 			return calculate(time);

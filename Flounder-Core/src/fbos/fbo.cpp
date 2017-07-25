@@ -216,7 +216,8 @@ namespace flounder
 
 	void fbo::setSizeScalar(const float &sizeScalar)
 	{
-		if (m_fitToScreen && m_sizeScalar == sizeScalar) {
+		if (m_fitToScreen && m_sizeScalar == sizeScalar)
+		{
 			return;
 		}
 

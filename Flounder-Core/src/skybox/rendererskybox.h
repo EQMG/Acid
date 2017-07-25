@@ -17,5 +17,11 @@ namespace flounder
 		~rendererskybox();
 
 		void render(const vector4 &clipPlane, const icamera &camera) override;
+	private:
+		void prepareRendering(const vector4 &clipPlane, const icamera &camera);
+
+		void renderSkybox(skybox *object);
+
+		void endRendering();
 	};
 }

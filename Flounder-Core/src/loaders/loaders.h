@@ -50,8 +50,6 @@ namespace flounder
 
 		void unbindVAO();
 
-		//GLuint storeInterleavedDataInVAO(GLuint vaoID, const std::vector<GLfloat> &data, const int &n_args, ...);
-
 		/// <summary>
 		/// Creates an index buffer and binds it to a VAO.
 		/// </summary>

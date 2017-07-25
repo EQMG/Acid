@@ -3,21 +3,21 @@
 namespace flounder
 {
 	aabb::aabb() :
-		collider()
+		icollider()
 	{
 		m_minExtents = new vector3();
 		m_maxExtents = new vector3();
 	}
 
 	aabb::aabb(vector3 *minExtents, vector3 *maxExtents) :
-		collider()
+		icollider()
 	{
 		m_minExtents = minExtents;
 		m_maxExtents = maxExtents;;
 	}
 
 	aabb::aabb(const aabb &source) :
-		collider()
+		icollider()
 	{
 		m_minExtents = new vector3(*source.m_minExtents);
 		m_maxExtents = new vector3(*source.m_maxExtents);
@@ -138,7 +138,7 @@ namespace flounder
 		return stretch(source, vector3(stretchX, stretchY, stretchZ), destination);
 	}
 
-	collider *aabb::update(const vector3 &position, const vector3 &rotation, const float &scale, collider *destination)
+	icollider *aabb::update(const vector3 &position, const vector3 &rotation, const float &scale, icollider *destination)
 	{
 		if (destination == NULL)
 		{
@@ -221,7 +221,7 @@ namespace flounder
 		return aabb2;
 	}
 
-	vector3 *aabb::resolveCollision(const collider &other, const vector3 &positionDelta, vector3 *destination)
+	vector3 *aabb::resolveCollision(const icollider &other, const vector3 &positionDelta, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -296,7 +296,7 @@ namespace flounder
 		return destination;
 	}
 
-	intersect *aabb::intersects(const collider &other)
+	intersect *aabb::intersects(const icollider &other)
 	{
 		const aabb &aabb2 = dynamic_cast<const aabb&>(other);
 
@@ -408,7 +408,7 @@ namespace flounder
 		return frustum.cubeInFrustum(m_minExtents->m_x, m_minExtents->m_y, m_minExtents->m_z, m_maxExtents->m_x, m_maxExtents->m_y, m_maxExtents->m_z);
 	}
 
-	bool aabb::contains(const collider &other)
+	bool aabb::contains(const icollider &other)
 	{
 		const aabb &aabb2 = dynamic_cast<const aabb&>(other);
 

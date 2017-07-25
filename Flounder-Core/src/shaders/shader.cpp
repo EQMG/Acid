@@ -164,9 +164,9 @@ namespace flounder
 
 	void shader::loadTypes()
 	{
-		for (std::vector<shadertype>::iterator it = m_shaderTypes->begin(); it < m_shaderTypes->end(); it++)
+		for (shadertype type : *m_shaderTypes)
 		{
-			loadType(&*it);
+			loadType(&type);
 		}
 	}
 

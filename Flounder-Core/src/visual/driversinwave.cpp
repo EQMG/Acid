@@ -15,7 +15,7 @@ namespace flounder
 
 	float driversinwave::calculate(const float &time)
 	{
-		float value = 0.5f + (float) sin(2.0 * PI * time) * 0.5f;
+		float value = 0.5f + sin(2.0 * PI * time) * 0.5f;
 		return m_min + value * m_amplitude;
 	}
 }

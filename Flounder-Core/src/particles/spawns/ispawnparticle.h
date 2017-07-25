@@ -15,7 +15,6 @@ namespace flounder
 		/// </summary>
 		ispawnparticle()
 		{
-			
 		}
 
 		/// <summary>
@@ -23,7 +22,6 @@ namespace flounder
 		/// </summary>
 		virtual ~ispawnparticle()
 		{
-			
 		}
 
 		/// <summary>

@@ -28,9 +28,9 @@ namespace flounder
 
 		int m_windowWidth;
 		int m_windowHeight;
-		double m_aspectRatio;
 		int m_fullscreenWidth;
 		int m_fullscreenHeight;
+		double m_aspectRatio;
 
 		std::string m_title;
 		std::string m_icon;
