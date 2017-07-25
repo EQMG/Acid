@@ -34,12 +34,14 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\maincamera.cpp" />
+    <ClCompile Include="src\mainguimanager.cpp" />
     <ClCompile Include="src\maininstance.cpp" />
     <ClCompile Include="src\mainplayer.cpp" />
     <ClCompile Include="src\mainrenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\maincamera.h" />
+    <ClInclude Include="src\mainguimanager.h" />
     <ClInclude Include="src\maininstance.h" />
     <ClInclude Include="src\mainplayer.h" />
     <ClInclude Include="src\mainrenderer.h" />

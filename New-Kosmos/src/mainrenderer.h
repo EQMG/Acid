@@ -10,7 +10,8 @@ class mainrenderer :
 private:
 	vector4 m_infinity;
 
-	rendererskybox *m_skybox;
+	rendererskybox *m_rendererSkybox;
+	rendererguis *m_rendererGuis;
 
 	fbo *m_fboRenderer;
 	deferredrenderer *m_deferred;

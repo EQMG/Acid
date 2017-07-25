@@ -20,7 +20,8 @@ namespace flounder
 	vector3 *spawnline::getBaseSpawnPosition()
 	{
 		m_spawnPosition->set(m_axis->m_x * m_length, m_axis->m_y * m_length, m_axis->m_z * m_length);
-		float s = __random() - 0.5f;
+		float s = __random()
+		- 0.5f;
 		m_spawnPosition->scale(s);
 		return m_spawnPosition;
 	}

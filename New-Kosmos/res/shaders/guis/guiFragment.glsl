@@ -18,7 +18,7 @@ void main(void)
 	out_colour = texture(guiTexture, pass_textureCoords) + vec4(colourOffset, 0.0);
 	out_colour.a *= alpha;
 
-	if (polygonMode)
+	if (polygonMode) 
 	{
 		out_colour = vec4(1.0, 0.0, 0.0, alpha);
 	}

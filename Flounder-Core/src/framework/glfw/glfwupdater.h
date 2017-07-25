@@ -7,13 +7,15 @@
 #include "../../devices/keyboard.h"
 #include "../../devices/mouse.h"
 #include "../../events/events.h"
+#include "../../guis/guis.h"
 #include "../../loaders/loaders.h"
 #include "../../maths/delta.h"
 #include "../../maths/timer.h"
+#include "../../particles/particles.h"
+#include "../../processing/processing.h"
 #include "../../renderer/renderer.h"
 #include "../../skybox/skybox.h"
 #include "../../standards/standards.h"
-#include "../../processing/processing.h"
 #include "../../tasks/tasks.h"
 
 #include "../iupdater.h"
@@ -34,20 +36,21 @@ namespace flounder
 		timer *m_timerRender;
 		timer *m_timerLog;
 
-		events *m_events;
-		tasks *m_tasks;
-		processing *m_processing;
+		audio *m_audio;
+		camera *m_camera;
 		display *m_display;
+		events *m_events;
+		guis *m_guis;
 		joysticks *m_joysticks;
 		keyboard *m_keyboard;
-		mouse *m_mouse;
-		audio *m_audio;
-		standards *m_standards;
-		camera *m_camera;
 		loaders *m_loaders;
+		mouse *m_mouse;
+		particles *m_particles;
+		processing *m_processing;
 		renderer *m_renderer;
-
 		skybox *m_skybox;
+		standards *m_standards;
+		tasks *m_tasks;
 	public:
 		glfwupdater();
 

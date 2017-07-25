@@ -22,7 +22,6 @@ void main(void)
 		(in_position.x - size.x) * transform.z * cos(rotation) - (in_position.y - size.y) * transform.w * sin(rotation),
 		(in_position.x - size.x) * transform.z * sin(rotation) + (in_position.y - size.y) * transform.w * cos(rotation)
 	);
-
 	screenPosition = screenPosition + transform.xy;
 	screenPosition.x = (screenPosition.x / aspectRatio) * 2.0 - 1.0;
 	screenPosition.y = screenPosition.y * -2.0 + 1.0;

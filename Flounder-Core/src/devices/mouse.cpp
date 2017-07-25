@@ -27,6 +27,20 @@ namespace flounder
 		imodule()
 	{
 		m_customMouse = "";
+
+		m_mouseButtons = new int[GLFW_MOUSE_BUTTON_LAST];
+		m_displaySelected = true;
+		m_mousePositionX = 0.5;
+		m_mousePositionY = 0.5;
+
+		m_cursorDisabled = false;
+		m_lastCursorDisabled = false;
+
+		// Sets the default state of the buttons to released.
+		for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST + 1; i++)
+		{
+			m_mouseButtons[i] = GLFW_RELEASE;
+		}
 	}
 
 	mouse::~mouse()
@@ -41,20 +55,6 @@ namespace flounder
 
 	void mouse::init()
 	{
-		m_mouseButtons = new int[GLFW_MOUSE_BUTTON_LAST];
-		m_displaySelected = true;
-		m_mousePositionX = 0.5;
-		m_mousePositionY = 0.5;
-
-		m_cursorDisabled = false;
-		m_lastCursorDisabled = false;
-
-		// Sets the default state of the buttons to released.
-		for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST + 1; i++)
-		{
-			m_mouseButtons[i] = GLFW_RELEASE;
-		}
-
 		// Sets the mouses callbacks.
 		glfwSetScrollCallback(display::get()->getWindow(), callbackScroll);
 		glfwSetMouseButtonCallback(display::get()->getWindow(), callbackMouseButton);
