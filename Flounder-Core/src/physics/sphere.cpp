@@ -3,28 +3,28 @@
 namespace flounder
 {
 	sphere::sphere() :
-		collider()
+		icollider()
 	{
 		m_radius = 1.0f;
 		m_position = new vector3();
 	}
 
 	sphere::sphere(const float &radius) :
-		collider()
+		icollider()
 	{
 		m_radius = radius;
 		m_position = new vector3();
 	}
 
 	sphere::sphere(const float &radius, vector3 *position) :
-		collider()
+		icollider()
 	{
 		m_radius = radius;
 		m_position = position;
 	}
 
 	sphere::sphere(const sphere &source) :
-		collider()
+		icollider()
 	{
 		m_radius = source.m_radius;
 		m_position = new vector3(*source.m_position);
@@ -35,7 +35,7 @@ namespace flounder
 		delete m_position;
 	}
 
-	collider *sphere::update(const vector3 &position, const vector3 &rotation, const float &scale, collider *destination)
+	icollider *sphere::update(const vector3 &position, const vector3 &rotation, const float &scale, icollider *destination)
 	{
 		if (destination == NULL)
 		{
@@ -50,7 +50,7 @@ namespace flounder
 		return source;
 	}
 
-	vector3 *sphere::resolveCollision(const collider &other, const vector3 &positionDelta, vector3 *destination)
+	vector3 *sphere::resolveCollision(const icollider &other, const vector3 &positionDelta, vector3 *destination)
 	{
 		if (destination == NULL)
 		{
@@ -68,7 +68,7 @@ namespace flounder
 		return destination;
 	}
 
-	intersect *sphere::intersects(const collider &other)
+	intersect *sphere::intersects(const icollider &other)
 	{
 		/*if (dynamic_cast<aabb*>(other) != 0)
 		{
@@ -182,7 +182,7 @@ namespace flounder
 		return frustum.sphereInFrustum(m_position->m_x, m_position->m_y, m_position->m_z, m_radius);
 	}
 
-	bool sphere::contains(const collider &other)
+	bool sphere::contains(const icollider &other)
 	{
 		const sphere &sphere2 = dynamic_cast<const sphere&>(other);
 

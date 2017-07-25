@@ -133,11 +133,10 @@ namespace flounder
 		static t cosInterpolate(const t &a, const t &b, const t &blend)
 		{
 			double ft = blend * PI;
-			float f = (1.0f - (float) cos(ft)) * 0.5f;
+			float f = (1.0f - cos(ft)) * 0.5f;
 			return a * (1.0f - f) + b * f;
 		}
 
-#ifndef FLOUNDER_PLATFORM_WEB
 		/// <summary>
 		/// A calculation that steps smoothly between two edges.
 		/// </summary>
@@ -149,9 +148,8 @@ namespace flounder
 		static t smoothlyStep(const t &edge0, const t &edge1, const t &x)
 		{
 			float s = clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
-			return s * s * (3.0f - 2.0f * t);
+			return s * s * (3.0f - 2.0f * s);
 		}
-#endif
 
 		/// <summary>
 		/// Generates a random value from between a range.

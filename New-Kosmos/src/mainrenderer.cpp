@@ -3,7 +3,9 @@
 mainrenderer::mainrenderer()
 {
 	m_infinity = vector4(0.0f, 1.0f, 0.0f, +INFINITY);
-	m_skybox = new rendererskybox();
+
+	m_rendererSkybox = new rendererskybox();
+	m_rendererGuis = new rendererguis();
 
 	m_fboRenderer = fbo::newFBO()->fitToScreen(1.0f)->attachments(3)->withAlphaChannel(false)->depthBuffer(TEXTURE)->create();
 	m_deferred = new deferredrenderer();
@@ -19,7 +21,8 @@ mainrenderer::mainrenderer()
 
 mainrenderer::~mainrenderer()
 {
-	delete m_skybox;
+	delete m_rendererSkybox;
+	delete m_rendererGuis;
 
 	delete m_fboRenderer;
 	delete m_deferred;
@@ -40,8 +43,8 @@ void mainrenderer::render()
 
 	// Scene rendering.
 	icamera *camera = camera::get()->getCamera();
-	renderer::get()->prepareNewRenderParse(mouse::get()->getPositionX(), mouse::get()->getPositionY(), 0.0f, 0.0f);
-	m_skybox->render(m_infinity, *camera);
+	renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 0.0f);
+	m_rendererSkybox->render(m_infinity, *camera);
 
 	// Unbinds the render FBO.
 	m_fboRenderer->unbindFrameBuffer();
@@ -69,8 +72,8 @@ void mainrenderer::render()
 	//m_filterLensflare->applyFilter(1, output->getColourTexture(0));
 	//output = m_filterLensflare->getFbo();
 
-	//m_filterTiltshift->applyFilter(1, output->getColourTexture(0));
-	//output = m_filterTiltshift->getFbo();
+	m_filterTiltshift->applyFilter(1, output->getColourTexture(0));
+	output = m_filterTiltshift->getFbo();
 
 	//m_filterCrt->applyFilter(1, output->getColourTexture(0));
 	//output = m_filterCrt->getFbo();
@@ -78,6 +81,10 @@ void mainrenderer::render()
 	//m_pipelinePaused->setBlurFactor(0.1f);
 	//m_pipelinePaused->renderPipelineV(1, output->getColourTexture(0));
 	//output = m_pipelinePaused->getOutput();
+
+	output->bindFrameBuffer();
+	m_rendererGuis->render(m_infinity, *camera);
+	output->unbindFrameBuffer();
 
 	// Displays the image to the screen.
 	output->blitToScreen();

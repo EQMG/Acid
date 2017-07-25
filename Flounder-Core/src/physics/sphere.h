@@ -1,6 +1,6 @@
 #pragma once
 
-#include "collider.h"
+#include "icollider.h"
 
 namespace flounder
 {
@@ -8,7 +8,7 @@ namespace flounder
 	/// Represents a sphere in a 3d space.
 	/// </summary>
 	class sphere :
-		public collider
+		public icollider
 	{
 	public:
 		float m_radius;
@@ -43,17 +43,17 @@ namespace flounder
 		/// </summary>
 		~sphere();
 
-		collider *update(const vector3 &position, const vector3 &rotation, const float &scale, collider *destination) override;
+		icollider *update(const vector3 &position, const vector3 &rotation, const float &scale, icollider *destination) override;
 
-		vector3 *resolveCollision(const collider &other, const vector3 &positionDelta, vector3 *destination) override;
+		vector3 *resolveCollision(const icollider &other, const vector3 &positionDelta, vector3 *destination) override;
 
-		intersect *intersects(const collider &other) override;
+		intersect *intersects(const icollider &other) override;
 
 		intersect *intersects(const ray &ray) override;
 
 		bool inFrustum(const frustum &frustum) override;
 
-		bool contains(const collider &other) override;
+		bool contains(const icollider &other) override;
 
 		bool contains(const vector3 &point) override;
 	};

@@ -18,7 +18,7 @@ namespace flounder
 	{
 		m_shader->loadUniform("sunPosition", m_sunPosition);
 		m_shader->loadUniform("worldHeight", m_sunHeight);
-		m_shader->loadUniform("displaySize", display::get()->getWidth(), display::get()->getHeight());
+		m_shader->loadUniform("displaySize", static_cast<float>(display::get()->getWidth()), static_cast<float>(display::get()->getHeight()));
 	}
 
 	void filterlensflare::setSunPosition(const vector3 &sunPosition)

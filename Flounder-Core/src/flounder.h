@@ -7,35 +7,35 @@
 #include "camera/camera.h"
 #include "camera/icamera.h"
 #include "camera/iplayer.h"
-
 #include "deferred/deferredrenderer.h"
-
 #include "devices/audio.h"
 #include "devices/display.h"
 #include "devices/joysticks.h"
 #include "devices/keyboard.h"
 #include "devices/mouse.h"
-
 #include "entities/entity.h"
-
 #include "events/eventchange.h"
 #include "events/events.h"
 #include "events/eventstandard.h"
 #include "events/eventtime.h"
 #include "events/ievent.h"
-
 #include "fbos/depthbuffer.h"
 #include "fbos/fbo.h"
-
 #include "framework/framework.h"
 #include "framework/glfw/glfwupdater.h"
 #include "framework/imodule.h"
 #include "framework/iupdater.h"
-
+#include "guis/guis.h"
+#include "guis/guialign.h"
+#include "guis/iguimanager.h"
+#include "guis/guiobject.h"
+#include "guis/overlaystartup.h"
+#include "guis/rendererguis.h"
+#include "guis/screenobject.h"
+#include "guis/screenobjectempty.h"
 #include "helpers/helperarray.h"
 #include "helpers/helperfile.h"
 #include "helpers/helperstring.h"
-
 #include "inputs/axiscompound.h"
 #include "inputs/axisjoystick.h"
 #include "inputs/buttoncompound.h"
@@ -44,13 +44,10 @@
 #include "inputs/buttonmouse.h"
 #include "inputs/iaxis.h"
 #include "inputs/ibutton.h"
-
 #include "lights/attenuation.h"
 #include "lights/fog.h"
 #include "lights/light.h"
-
 #include "loaders/loaders.h"
-
 #include "maths/colour.h"
 #include "maths/delta.h"
 #include "maths/maths.h"
@@ -62,21 +59,26 @@
 #include "maths/vector2.h"
 #include "maths/vector3.h"
 #include "maths/vector4.h"
-
 #include "models/model.h"
 #include "models/vertexdata.h"
-
 #include "noise/noiseclassic.h"
 #include "noise/noiseperlin.h"
 #include "noise/noisesimplex.h"
-
+#include "particles/particle.h"
+#include "particles/particles.h"
+#include "particles/particlesystem.h"
+#include "particles/particletype.h"
+#include "particles/spawns/ispawnparticle.h"
+#include "particles/spawns/spawncircle.h"
+#include "particles/spawns/spawnline.h"
+#include "particles/spawns/spawnpoint.h"
+#include "particles/spawns/spawnsphere.h"
 #include "physics/aabb.h"
-#include "physics/collider.h"
 #include "physics/frustum.h"
+#include "physics/icollider.h"
 #include "physics/intersect.h"
 #include "physics/ray.h"
 #include "physics/sphere.h"
-
 #include "post/filters/filterbloom1.h"
 #include "post/filters/filterbloom2.h"
 #include "post/filters/filterblurhorizontal.h"
@@ -96,12 +98,11 @@
 #include "post/filters/filtertiltshift.h"
 #include "post/filters/filtertone.h"
 #include "post/filters/filterwobble.h"
+#include "post/ipostfilter.h"
+#include "post/ipostpipeline.h"
 #include "post/pipelines/pipelinebloom.h"
 #include "post/pipelines/pipelinegaussian.h"
 #include "post/pipelines/pipelinepaused.h"
-#include "post/ipostfilter.h"
-#include "post/ipostpipeline.h"
-
 #include "processing/iprocessor.h"
 #include "processing/irequest.h"
 #include "processing/opengl/processoropengl.h"
@@ -110,25 +111,21 @@
 #include "processing/queue.h"
 #include "processing/resource/processorresource.h"
 #include "processing/resource/requestresource.h"
-
 #include "renderer/irenderer.h"
 #include "renderer/irenderermaster.h"
 #include "renderer/renderer.h"
-
 #include "shaders/shader.h"
 #include "shaders/shadertype.h"
-
 #include "skybox/rendererskybox.h"
 #include "skybox/skybox.h"
-
+#include "space/ispatialobject.h"
+#include "space/ispatialstructure.h"
+#include "space/structurebasic.h"
 #include "standards/istandard.h"
 #include "standards/standards.h"
-
 #include "tasks/tasks.h"
-
 #include "textures/stb_image.h"
 #include "textures/texture.h"
-
 #include "visual/driverbounce.h"
 #include "visual/driverconstant.h"
 #include "visual/driverfade.h"
