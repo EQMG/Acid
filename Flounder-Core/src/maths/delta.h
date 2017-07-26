@@ -14,10 +14,9 @@ namespace flounder
 	private:
 		double m_currentFrameTime;
 		double m_lastFrameTime;
-	public:
 		double m_change;
 		double m_time;
-
+	public:
 		/// <summary>
 		/// Creates a new change handler.
 		/// </summary>
@@ -32,5 +31,9 @@ namespace flounder
 		/// Updates change and times.
 		/// </summary>
 		void update();
+
+		double getChange() const { return m_change; }
+
+		double getTime() const { return m_time; }
 	};
 }

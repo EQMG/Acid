@@ -15,6 +15,7 @@ namespace flounder
 		delete m_deltaUpdate;
 		delete m_display;
 		delete m_events;
+		delete m_fonts;
 		delete m_guis;
 		delete m_joysticks;
 		delete m_keyboard;
@@ -45,6 +46,7 @@ namespace flounder
 		m_camera = new camera();
 		m_display = new display();
 		m_events = new events();
+		m_fonts = new fonts();
 		m_guis = new guis();
 		m_joysticks = new joysticks();
 		m_keyboard = new keyboard();
@@ -77,6 +79,7 @@ namespace flounder
 		m_renderer->init();
 
 		m_guis->init();
+		m_fonts->init();
 		m_particles->init();
 		m_skybox->init();
 	}
@@ -109,6 +112,7 @@ namespace flounder
 			m_processing->update();
 
 			m_loaders->update();
+			m_fonts->update();
 			m_guis->update();
 			m_skybox->update();
 
@@ -172,6 +176,10 @@ namespace flounder
 		else if (name == "events")
 		{
 			return m_events;
+		}
+		else if (name == "fonts")
+		{
+			return m_fonts;
 		}
 		else if (name == "guis")
 		{

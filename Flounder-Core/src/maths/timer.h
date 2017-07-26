@@ -28,7 +28,7 @@ namespace flounder
 		/// Gets if the interval has been passes for the timer.
 		/// </summary>
 		/// <returns> If the interval was exceeded. </returns>
-		bool isPassedTime();
+		bool isPassedTime() const;
 
 		/// <summary>
 		/// Adds the intervals value to the start time.
@@ -39,7 +39,7 @@ namespace flounder
 		/// Gets what the interval is. (Seconds).
 		/// </summary>
 		/// <returns> The timers current interval. </returns>
-		double getInterval();
+		double getInterval() const;
 
 		/// <summary>
 		/// Gets the timers interval. (Seconds, Resets timer).

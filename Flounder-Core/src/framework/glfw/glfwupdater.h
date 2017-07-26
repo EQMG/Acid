@@ -7,6 +7,7 @@
 #include "../../devices/keyboard.h"
 #include "../../devices/mouse.h"
 #include "../../events/events.h"
+#include "../../fonts/fonts.h"
 #include "../../guis/guis.h"
 #include "../../loaders/loaders.h"
 #include "../../maths/delta.h"
@@ -40,6 +41,7 @@ namespace flounder
 		camera *m_camera;
 		display *m_display;
 		events *m_events;
+		fonts *m_fonts;
 		guis *m_guis;
 		joysticks *m_joysticks;
 		keyboard *m_keyboard;
@@ -68,9 +70,9 @@ namespace flounder
 
 		inline void setTimeOffset(const double &timeOffset) override { m_timeOffset = timeOffset; };
 
-		inline double getDelta() override { return m_deltaUpdate->m_change; };
+		inline double getDelta() override { return m_deltaUpdate->getChange(); };
 
-		inline double getDeltaRender() override { return m_deltaRender->m_change; };
+		inline double getDeltaRender() override { return m_deltaRender->getChange(); };
 
 		inline double getTimeSec() override { return (glfwGetTime() - m_startTime) + m_timeOffset; };
 
