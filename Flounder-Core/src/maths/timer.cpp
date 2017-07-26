@@ -12,7 +12,7 @@ namespace flounder
 	{
 	}
 
-	bool timer::isPassedTime()
+	bool timer::isPassedTime() const
 	{
 		return framework::get()->getTimeMs() - m_startTime >= m_interval;
 	}
@@ -22,7 +22,7 @@ namespace flounder
 		this->m_startTime = framework::get()->getTimeMs();
 	}
 
-	double timer::getInterval()
+	double timer::getInterval() const
 	{
 		return m_interval / 1000.0;
 	}

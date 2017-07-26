@@ -2,8 +2,8 @@
 
 namespace flounder
 {
-	guis::guis()
-		: imodule()
+	guis::guis() : 
+		imodule()
 	{
 		m_guiMaster = NULL;
 		m_selector = new guiselector();
