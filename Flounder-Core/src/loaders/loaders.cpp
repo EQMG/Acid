@@ -2,8 +2,8 @@
 
 namespace flounder
 {
-	loaders::loaders()
-		: imodule()
+	loaders::loaders() : 
+		imodule()
 	{
 		m_loaded = new std::map<GLuint, std::vector<GLuint>*>();
 	}
