@@ -101,7 +101,7 @@ namespace flounder
 	std::vector<line*> text::createStructure(text *object)
 	{
 		std::vector<line*> lines = std::vector<line*>();
-		line *currentLine = new line(m_fonttype->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
+		line *currentLine = new line(object->getFontType()->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
 		word *currentWord = new word();
 
 		for (char &c : object->getTextString())
@@ -115,7 +115,7 @@ namespace flounder
 				if (!added)
 				{
 					lines.push_back(currentLine);
-					currentLine = new line(m_fonttype->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
+					currentLine = new line(object->getFontType()->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
 					currentLine->addWord(currentWord);
 				}
 
@@ -127,7 +127,7 @@ namespace flounder
 				continue;
 			}
 
-			character *character = m_fonttype->getMetadata()->getCharacter(ascii);
+			character *character = object->getFontType()->getMetadata()->getCharacter(ascii);
 			currentWord->addCharacter(character);
 		}
 
@@ -142,7 +142,7 @@ namespace flounder
 		if (!added)
 		{
 			lines.push_back(currentLine);
-			currentLine = new line(m_fonttype->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
+			currentLine = new line(object->getFontType()->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
 			currentLine->addWord(currentWord);
 		}
 
@@ -182,7 +182,7 @@ namespace flounder
 					cursorX += letter->getAdvanceX();
 				}
 
-				cursorX += m_fonttype->getMetadata()->getSpaceWidth();
+				cursorX += object->getFontType()->getMetadata()->getSpaceWidth();
 			}
 
 			cursorX = 0.0;

@@ -73,21 +73,21 @@ namespace flounder
 		/// Then takes the information about the vertices of all the quads and stores it in OpenGL.
 		/// </summary>
 		/// <param name="text"> The unloaded text. </param>
-		void loadText(text *object);
+		static void loadText(text *object);
 
-		std::vector<line*> createStructure(text *object);
+		static std::vector<line*> createStructure(text *object);
 
-		void completeStructure(std::vector<line*> &lines, line *currentLine, word *currentWord, text *object);
+		static void completeStructure(std::vector<line*> &lines, line *currentLine, word *currentWord, text *object);
 
-		void createQuadVertices(text *object, std::vector<line*> lines, std::vector<GLfloat> *vertices, std::vector<GLfloat> *textures);
+		static void createQuadVertices(text *object, std::vector<line*> lines, std::vector<GLfloat> *vertices, std::vector<GLfloat> *textures);
 
-		void addVerticesForCharacter(const double &cursorX, const double &cursorY, character *character, std::vector<float> *vertices);
+		static void addVerticesForCharacter(const double &cursorX, const double &cursorY, character *character, std::vector<float> *vertices);
 
 		static void addVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<GLfloat> *vertices);
 
 		static void addTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<GLfloat> *textures);
 
-		vector2 getBounding(std::vector<GLfloat> *vertices);
+		static vector2 getBounding(std::vector<GLfloat> *vertices);
 	public:
 		/// <summary>
 		/// Changed the current string in this text.

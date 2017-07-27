@@ -21,7 +21,7 @@ namespace flounder
 		delete m_updater;
 	}
 
-	void framework::load(iupdater *updater)
+	void framework::setUpdater(iupdater *updater)
 	{
 		m_updater = updater;
 		m_updater->create();
@@ -29,20 +29,10 @@ namespace flounder
 
 	void framework::run()
 	{
-#ifdef FLOUNDER_PLATFORM_WEB
-		std::function<void()> mainLoop = [&]() {
-			while (m_running)
-			{
-				m_updater->update();
-			}
-		};
-		emscripten_set_main_loop_arg(dispatch_main, &mainLoop, 0, 1);
-#else
 		while (m_running)
 		{
 			m_updater->update();
 		}
-#endif
 	}
 
 	imodule *framework::getInstance(const std::string &name)

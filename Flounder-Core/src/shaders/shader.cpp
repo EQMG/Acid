@@ -233,9 +233,6 @@ namespace flounder
 		}
 		else if (helperstring::startsWith(line, "#version"))
 		{
-#ifdef FLOUNDER_PLATFORM_WEB
-			result = "";
-#else
 			int major = display::get()->getGlfwMajor();
 			int minor = display::get()->getGlfwMinor();
 
@@ -247,7 +244,6 @@ namespace flounder
 			{
 				result = "#version 130";
 			}
-#endif
 		}
 		else if (helperstring::startsWith(line, "#include"))
 		{
@@ -367,13 +363,11 @@ namespace flounder
 			{
 				glBindAttribLocation(m_programID, index, locationName.c_str());
 			}
-#ifndef FLOUNDER_PLATFORM_WEB
 			// TODO: How will deferred rendering work in OpenGL ES 4?
 			else if (locationType.find("out") != std::string::npos)
 			{
 				glBindFragDataLocation(m_programID, index, locationName.c_str());
 			}
-#endif
 			else
 			{
 				std::cout << "Could not find location type of: " << locationType << std::endl;

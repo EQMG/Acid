@@ -72,11 +72,6 @@ namespace flounder
 		m_windowPosX = 0;
 		m_windowPosY = 0;
 
-#ifdef FLOUNDER_PLATFORM_WEB
-		m_fpsLimit = 60.0f;
-		m_vsync = true;
-#endif
-
 		// Set the error error callback
 		glfwSetErrorCallback(callbackError);
 
@@ -89,10 +84,8 @@ namespace flounder
 
 		// Configures the window.
 		glfwDefaultWindowHints();
-#ifndef FLOUNDER_PLATFORM_WEB
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // The window will be resizable depending on if it's fullscreen.
-#endif
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, m_glfwMajor);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_glfwMinor);
 
@@ -104,9 +97,7 @@ namespace flounder
 		}
 
 		glfwWindowHint(GLFW_STENCIL_BITS, 8); // Fixes 16 bit stencil bits in macOS.
-#ifndef FLOUNDER_PLATFORM_WEB
 		glfwWindowHint(GLFW_STEREO, GLFW_FALSE); // No stereo view!
-#endif
 
 		// Get the resolution of the primary monitor.
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
@@ -162,14 +153,12 @@ namespace flounder
 		glfwSetWindowSizeCallback(m_window, callbackSize);
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 
-#ifndef FLOUNDER_PLATFORM_WEB
 		// Initialize the GLEW library.
 		if (glewInit() != GLEW_OK)
 		{
 			std::cout << "Could not init GLEW!" << std::endl;
 			framework::get()->requestClose(true);
 		}
-#endif
 	}
 
 	display::~display()
@@ -251,7 +240,6 @@ namespace flounder
 	void display::setIcon(const std::string &icon)
 	{
 		// Creates a window icon for this GLFW display.
-#ifndef FLOUNDER_PLATFORM_WEB
 		m_icon = icon;
 
 		if (!m_icon.empty())
@@ -277,7 +265,6 @@ namespace flounder
 
 			stbi_image_free(data);
 		}
-#endif
 	}
 
 	int display::getFpsLimit()
@@ -287,11 +274,7 @@ namespace flounder
 
 	void display::setFpsLimit(const int &fpsLimit)
 	{
-#ifndef FLOUNDER_PLATFORM_WEB
 		m_fpsLimit = fpsLimit;
-#else
-		m_fpsLimit = 60;
-#endif
 	}
 
 	bool display::isVSync()
@@ -301,12 +284,7 @@ namespace flounder
 
 	void display::setVSync(const bool &vsync)
 	{
-#ifndef FLOUNDER_PLATFORM_WEB
 		m_vsync = vsync;
-#else
-		m_vsync = true;
-#endif
-
 		glfwSwapInterval(vsync ? 1 : 0);
 	}
 
@@ -338,7 +316,6 @@ namespace flounder
 
 	void display::setFullscreen(const bool &fullscreen)
 	{
-#ifndef FLOUNDER_PLATFORM_WEB
 		if (m_fullscreen == fullscreen)
 		{
 			return;
@@ -362,7 +339,6 @@ namespace flounder
 			m_windowPosY = (videoMode->height - m_windowHeight) / 2;
 			glfwSetWindowMonitor(m_window, NULL, m_windowPosX, m_windowPosY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
 		}
-#endif
 	}
 
 	GLFWwindow *display::getWindow()
