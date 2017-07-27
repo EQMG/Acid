@@ -2,10 +2,12 @@
 
 #include "../events/events.h"
 #include "../events/eventtime.h"
-//#include "../fonts/textobject.h"
+#include "../fonts/fonts.h"
+#include "../fonts/text.h"
 #include "../visual/driverslide.h"
+#include "guis.h"
 #include "guialign.h"
-#include "guiobject.h"
+#include "gui.h"
 #include "screenobject.h"
 
 namespace flounder
@@ -14,9 +16,9 @@ namespace flounder
 		public screenobject
 	{
 	private:
-		guiobject *m_background;
-		guiobject *m_logo;
-		//	textobject *m_text;
+		gui *m_background;
+		gui *m_logo;
+		text *m_text;
 		bool m_starting;
 
 	public:

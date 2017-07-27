@@ -2,30 +2,27 @@
 
 #include "../loaders/loaders.h"
 #include "../renderer/irenderer.h"
+#include "../guis/guis.h"
 
-#include "guis.h"
-#include "gui.h"
+#include "text.h"
 
 namespace flounder
 {
-	class rendererguis :
+	class rendererfonts :
 		public irenderer
 	{
 	private:
 		shader *m_shader;
-
-		GLuint m_vaoID;
-		GLuint m_vaoLength;
 	public:
-		rendererguis();
+		rendererfonts();
 
-		~rendererguis();
+		~rendererfonts();
 
 		void render(const vector4 &clipPlane, const icamera &camera) override;
 	private:
 		void prepareRendering(const vector4 &clipPlane, const icamera &camera);
 
-		void renderGui(gui *object);
+		void renderText(text *object);
 
 		void endRendering();
 	};
