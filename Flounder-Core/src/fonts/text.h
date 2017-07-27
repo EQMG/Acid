@@ -3,14 +3,16 @@
 #include <string>
 
 #include "../framework/framework.h"
-#include "../guis/guialign.h"
-#include "../guis/screenobject.h"
+#include "../loaders/loaders.h"
 #include "../maths/colour.h"
 #include "../maths/vector2.h"
 #include "../visual/idriver.h"
+#include "../uis/uialign.h"
+#include "../uis/uiobject.h"
 #include "../visual/driverconstant.h"
 
 #include "fonttype.h"
+#include "line.h"
 
 namespace flounder
 {
@@ -18,11 +20,11 @@ namespace flounder
 	/// A object the represents a text in a GUI.
 	/// </summary>
 	class text :
-		public screenobject
+		public uiobject
 	{
 	private:
 		std::string m_textString;
-		guialign m_textAlign;
+		uialign m_textAlign;
 
 		std::string m_newText;
 
@@ -56,7 +58,7 @@ namespace flounder
 		/// <param name="font"> The font type to be used in this text. </param>
 		/// <param name="maxLineLength"> The longest line length before the text is wrapped, 1.0 being 100% of the screen width when font size = 1. </param>
 		/// <param name="align"> How the text will align if wrapped. </param>
-		text(screenobject *parent, const vector2 &position, const std::string &text, const float &fontSize, fonttype *fonttype, const float &maxLineLength, const guialign &align);
+		text(uiobject *parent, const vector2 &position, const std::string &text, const float &fontSize, fonttype *fonttype, const float &maxLineLength, const uialign &align);
 
 		/// <summary>
 		/// Deconstructor for the text.
@@ -110,7 +112,7 @@ namespace flounder
 		/// Gets how the text should align.
 		/// </summary>
 		/// <returns> How the text should align. </returns>
-		guialign getTextAlign() { return m_textAlign; }
+		uialign getTextAlign() { return m_textAlign; }
 
 		/// <summary>
 		/// Gets the ID of the text's VAO, which contains all the vertex data for the quads on which the text will be rendered.

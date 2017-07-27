@@ -6,13 +6,15 @@
     <ClCompile Include="src\maininstance.cpp" />
     <ClCompile Include="src\mainplayer.cpp" />
     <ClCompile Include="src\mainrenderer.cpp" />
-    <ClCompile Include="src\mainguimanager.cpp" />
+    <ClCompile Include="src\uis\overlaydebug.cpp" />
+    <ClCompile Include="src\mainuimanager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\maincamera.h" />
     <ClInclude Include="src\maininstance.h" />
     <ClInclude Include="src\mainplayer.h" />
     <ClInclude Include="src\mainrenderer.h" />
-    <ClInclude Include="src\mainguimanager.h" />
+    <ClInclude Include="src\uis\overlaydebug.h" />
+    <ClInclude Include="src\mainuimanager.h" />
   </ItemGroup>
 </Project>

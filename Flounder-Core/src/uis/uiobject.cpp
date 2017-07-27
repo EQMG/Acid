@@ -1,8 +1,8 @@
-﻿#include "screenobject.h"
+﻿#include "uiobject.h"
 
 namespace flounder
 {
-	screenobject::screenobject(screenobject *parent, const vector2 &position, const vector2 &dimensions)
+	uiobject::uiobject(uiobject *parent, const vector2 &position, const vector2 &dimensions)
 	{
 		if (parent != NULL)
 		{
@@ -11,7 +11,7 @@ namespace flounder
 
 		m_visible = true;
 		m_parent = parent;
-		m_children = new std::vector<screenobject*>();
+		m_children = new std::vector<uiobject*>();
 
 		m_position = new vector2(position);
 		m_dimensions = new vector2(dimensions);
@@ -34,7 +34,7 @@ namespace flounder
 		m_scale = 1.0f;
 	}
 
-	screenobject::~screenobject()
+	uiobject::~uiobject()
 	{
 		//	for (screenobject *child : *m_children)
 		//	{
@@ -62,13 +62,13 @@ namespace flounder
 		delete m_scaleDriver;
 	}
 
-	void screenobject::update()
+	void uiobject::update()
 	{
-		for (screenobject *child : *m_children)
+		for (uiobject *child : *m_children)
 		{
 			child->update();
 		}
-		
+
 		m_rotation = m_rotationDriver->update(framework::get()->getDelta());
 		m_alpha = m_alphaDriver->update(framework::get()->getDelta());
 		m_scale = m_scaleDriver->update(framework::get()->getDelta());
@@ -86,7 +86,7 @@ namespace flounder
 		m_screenDimensions->scale(m_scale);
 	}
 
-	bool screenobject::isVisible()
+	bool uiobject::isVisible()
 	{
 		if (m_parent != NULL)
 		{
@@ -98,19 +98,19 @@ namespace flounder
 		}
 	}
 
-	void screenobject::setRotationDriver(idriver *rotationDriver)
+	void uiobject::setRotationDriver(idriver *rotationDriver)
 	{
 		delete m_rotationDriver;
 		m_rotationDriver = rotationDriver;
 	}
 
-	void screenobject::setAlphaDriver(idriver *alphaDriver)
+	void uiobject::setAlphaDriver(idriver *alphaDriver)
 	{
 		delete m_alphaDriver;
 		m_alphaDriver = alphaDriver;
 	}
 
-	float screenobject::getAlpha()
+	float uiobject::getAlpha()
 	{
 		if (m_parent != NULL)
 		{
@@ -122,22 +122,22 @@ namespace flounder
 		}
 	}
 
-	void screenobject::setScaleDriver(idriver *scaleDriver)
+	void uiobject::setScaleDriver(idriver *scaleDriver)
 	{
 		delete m_scaleDriver;
 		m_scaleDriver = scaleDriver;
 	}
 
-	void screenobject::setParent(screenobject *parent)
+	void uiobject::setParent(uiobject *parent)
 	{
 		m_parent->removeChild(this);
 		parent->m_children->push_back(this);
 		m_parent = parent;
 	}
 
-	void screenobject::removeChild(screenobject *child)
+	void uiobject::removeChild(uiobject *child)
 	{
-		for (std::vector<screenobject*>::iterator it = m_children->begin(); it != m_children->end(); ++it)
+		for (std::vector<uiobject*>::iterator it = m_children->begin(); it != m_children->end(); ++it)
 		{
 			if (*it == child)
 			{
@@ -147,13 +147,13 @@ namespace flounder
 		}
 	}
 
-	std::vector<screenobject*> *screenobject::getAll(std::vector<screenobject *> *list)
+	std::vector<uiobject*> *uiobject::getAll(std::vector<uiobject *> *list)
 	{
 		if (isVisible())
 		{
 			list->push_back(this);
 
-			for (screenobject *child : *m_children)
+			for (uiobject *child : *m_children)
 			{
 				child->getAll(list);
 			}

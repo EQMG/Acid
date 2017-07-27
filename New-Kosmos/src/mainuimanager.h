@@ -1,21 +1,26 @@
 ﻿#pragma once
 
 #include <flounder.h>
-#include "guis/iguimanager.h"
-#include "guis/overlaystartup.h"
+#include "uis/iuimanager.h"
+#include "uis/overlaystartup.h"
+
+#include "uis/overlaydebug.h"
 
 using namespace flounder;
 
-class mainguimanager :
-	public iguimanager
+class mainuimanager :
+	public iuimanager
 {
+public:
+	static const float SLIDE_TIME;
 private:
 	colour *m_primaryColour;
 	overlaystartup *m_overlayStartup;
+	overlaydebug *m_overlayDebug;
 public:
-	mainguimanager();
+	mainuimanager();
 
-	~mainguimanager();
+	~mainuimanager();
 
 	void update() override;
 

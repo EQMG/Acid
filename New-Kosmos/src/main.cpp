@@ -4,7 +4,7 @@
 
 #include "maincamera.h"
 #include "mainplayer.h"
-#include "mainguimanager.h"
+#include "mainuimanager.h"
 #include "maininstance.h"
 #include "mainrenderer.h"
 
@@ -26,8 +26,8 @@ int main()
 
 	camera::get()->load(new maincamera(), new mainplayer());
 	standards::get()->addStandard(new maininstance());
-	guis::get()->load(new mainguimanager());
 	renderer::get()->load(new mainrenderer());
+	uis::get()->load(new mainuimanager());
 	skybox::get()->load(
 		texture::newTexture()->setCubemap(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png")
 		                     ->create(),

@@ -2,33 +2,28 @@
 
 #include "../events/events.h"
 #include "../events/eventtime.h"
-#include "../fonts/fonts.h"
-#include "../fonts/text.h"
 #include "../visual/driverslide.h"
-#include "guis.h"
-#include "guialign.h"
-#include "gui.h"
-#include "screenobject.h"
+
+#include "uis.h"
 
 namespace flounder
 {
 	class overlaystartup :
-		public screenobject
+		public uiobject
 	{
 	private:
-		gui *m_background;
-		gui *m_logo;
-		text *m_text;
+		gui *m_guiBackground;
+		gui *m_guiLogo;
+		text *m_textCopyright;
 		bool m_starting;
-
 	public:
-		overlaystartup(screenobject *parent);
+		overlaystartup(uiobject *parent);
 
 		~overlaystartup();
 
 		void updateObject() override;
 
-		inline bool getStarting() { return m_starting; }
+		inline bool isStarting() const { return m_starting; }
 
 		inline void setStarting(const bool &starting) { m_starting = starting; }
 	};

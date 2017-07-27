@@ -2,8 +2,8 @@
 
 namespace flounder
 {
-	gui::gui(screenobject *parent, const vector2 &position, const vector2 &dimensions, texture *texture, const int &selectedRow) :
-		screenobject(parent, position, dimensions)
+	gui::gui(uiobject *parent, const vector2 &position, const vector2 &dimensions, texture *texture, const int &selectedRow) :
+		uiobject(parent, position, dimensions)
 	{
 		setMeshSize(vector2(0.5f, 0.5f));
 

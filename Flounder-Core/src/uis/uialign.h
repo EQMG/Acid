@@ -5,7 +5,7 @@ namespace flounder
 	/// <summary>
 	/// A enum that represents how a gui object will align.
 	/// </summary>
-	enum guialign
+	enum uialign
 	{
 		LEFT,
 		CENTRE,
