@@ -2,12 +2,6 @@
 
 namespace flounder
 {
-	fonttype *const fonts::ARIAL = new fonttype("res/fonts/arial.png", "res/fonts/arial.fnt");
-	fonttype *const fonts::BERLIN_SANS = new fonttype("res/fonts/berlinSans.png", "res/fonts/berlinSans.fnt");
-	fonttype *const fonts::CAFE_FRANCOISE = new fonttype("res/fonts/cafefrancoise.png", "res/fonts/cafefrancoise.fnt");
-	fonttype *const fonts::CANDARA = new fonttype("res/fonts/candara.png", "res/fonts/candara.fnt");
-	fonttype *const fonts::SEGOE = new fonttype("res/fonts/segoe.png", "res/fonts/segoe.fnt");
-
 	fonts::fonts() : 
 		imodule()
 	{
@@ -15,10 +9,20 @@ namespace flounder
 
 	fonts::~fonts()
 	{
+		delete arial;
+		delete berlinSans;
+		delete cafeFrancoise;
+		delete candara;
+		delete segoe;
 	}
 
 	void fonts::init()
 	{
+		arial = new fonttype("res/fonts/arial.png", "res/fonts/arial.fnt");
+		berlinSans = new fonttype("res/fonts/berlinSans.png", "res/fonts/berlinSans.fnt");
+		cafeFrancoise = new fonttype("res/fonts/cafefrancoise.png", "res/fonts/cafefrancoise.fnt");
+		candara = new fonttype("res/fonts/candara.png", "res/fonts/candara.fnt");
+		segoe = new fonttype("res/fonts/segoe.png", "res/fonts/segoe.fnt");
 	}
 
 	void fonts::update()

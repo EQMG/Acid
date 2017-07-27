@@ -9,15 +9,16 @@ namespace flounder
 	/// <summary>
 	/// A module used for that manages gui textures in a container.
 	/// </summary>
-	class fonts : public imodule
+	class fonts : 
+		public imodule
 	{
-	private:
-		static fonttype *const ARIAL;
-		static fonttype *const BERLIN_SANS;
-		static fonttype *const CAFE_FRANCOISE;
-		static fonttype *const CANDARA;
-		static fonttype *const SEGOE;
 	public:
+		fonttype *arial;
+		fonttype *berlinSans;
+		fonttype *cafeFrancoise;
+		fonttype *candara;
+		fonttype *segoe;
+
 		/// <summary>
 		/// Gets this framework instance.
 		/// </summary>
