@@ -38,8 +38,6 @@ namespace flounder
 
 		~loaders();
 
-		void init() override;
-
 		void update() override;
 
 		/// <summary>

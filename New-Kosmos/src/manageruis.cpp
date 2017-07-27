@@ -1,9 +1,9 @@
-﻿#include "mainuimanager.h"
+﻿#include "manageruis.h"
 
-const float mainuimanager::SLIDE_TIME = 0.5f;
+const float manageruis::SLIDE_TIME = 0.5f;
 
-mainuimanager::mainuimanager() :
-	iuimanager()
+manageruis::manageruis() :
+	imanageruis()
 {
 	m_primaryColour = new colour(1.0f, 0.0f, 0.0f);
 	m_overlayStartup = new overlaystartup(uis::get()->getContainer());
@@ -15,14 +15,14 @@ mainuimanager::mainuimanager() :
 	uis::get()->getSelector()->load(0, 0, 1, 0, 1);
 }
 
-mainuimanager::~mainuimanager()
+manageruis::~manageruis()
 {
 	delete m_primaryColour;
 	delete m_overlayStartup;
 	delete m_overlayDebug;
 }
 
-void mainuimanager::update()
+void manageruis::update()
 {
 	if (m_overlayStartup->getAlpha() == 0.0f && m_overlayStartup->isStarting())
 	{
@@ -32,12 +32,12 @@ void mainuimanager::update()
 	}
 }
 
-bool mainuimanager::isGamePaused()
+bool manageruis::isGamePaused()
 {
 	return m_overlayStartup->isStarting();
 }
 
-float mainuimanager::getBlurFactor()
+float manageruis::getBlurFactor()
 {
 	return 0.0f;
 }

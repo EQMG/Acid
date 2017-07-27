@@ -53,15 +53,19 @@ namespace flounder
 		/// </summary>
 		~mouse();
 
-		/// <summary>
-		/// Loads the mouse module with inital values.
-		/// </summary>
-		/// <param name="customMouse"> The custom cursor file path. </param>
-		void load(const std::string &customMouse);
-
-		void init() override;
-
 		void update() override;
+
+		/// <summary>
+		/// Gets the mouses custom mouse file.
+		/// </summary>
+		/// <returns> The custom mouse file. </returns>
+		std::string &getCustomMouse();
+
+		/// <summary>
+		/// Sets the custom mouse file.
+		/// </summary>
+		/// <param name="title"> The new custom mouse file. </param>
+		void setCustomMouse(const std::string &customMouse);
 
 		/// <summary>
 		/// Sets if the operating systems cursor is hidden whilst in the display.

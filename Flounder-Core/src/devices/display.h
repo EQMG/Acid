@@ -72,24 +72,6 @@ namespace flounder
 		/// </summary>
 		~display();
 
-		/// <summary>
-		/// Loads the display module with inital values.
-		/// </summary>
-		/// <param name="glfwMajor"> The GLFW major verson. </param>
-		/// <param name="glfwMinor"> The GLFW minor verson. </param>
-		/// <param name="width"> The displays inital width. </param>
-		/// <param name="height"> The displays inital width. </param>
-		/// <param name="title"> The displays title. </param>
-		/// <param name="icon"> The displays icon image path. </param>
-		/// <param name="fpsLimit"> The displays inital FPS limit. </param>
-		/// <param name="vsync"> If the display will start with vsync on. </param>
-		/// <param name="antialiasing"> If the display will start with antialiased. </param>
-		/// <param name="samples"> How many samples will be initaly used to antialias. </param>
-		/// <param name="fullscreen"> If the display will start fullscreen. </param>
-		void load(const int &glfwMajor, const int &glfwMinor, const int &width, const int &height, const std::string &title, const std::string &icon, const float &fpsLimit, const bool &vsync, const bool &antialiasing, const int &samples, const bool &fullscreen);
-
-		void init() override;
-
 		void update() override;
 
 		/// <summary>
@@ -151,6 +133,24 @@ namespace flounder
 		/// </summary>
 		/// <returns> The window's title. </returns>
 		std::string &getTitle();
+
+		/// <summary>
+		/// Sets window title
+		/// </summary>
+		/// <param name="title"> The new title. </param>
+		void setTitle(const std::string &title);
+
+		/// <summary>
+		/// Gets the window's icon file.
+		/// </summary>
+		/// <returns> The window's icon file. </returns>
+		std::string &getIcon();
+
+		/// <summary>
+		/// Sets window icon image.
+		/// </summary>
+		/// <param name="title"> The new icon file. </param>
+		void setIcon(const std::string &icon);
 
 		/// <summary>
 		/// Gets the fps limit.

@@ -2,13 +2,16 @@
 
 #include "../framework/framework.h"
 
-#include "resource\processorresource.h"
-#include "opengl\processoropengl.h"
+#include "resource/processorresource.h"
+#include "opengl/processoropengl.h"
 #include "iprocessor.h"
 #include "irequest.h"
 
 namespace flounder
 {
+	/// <summary>
+	/// A module used for processing types of requests.
+	/// </summary>
 	class processing :
 		public imodule
 	{
@@ -24,14 +27,22 @@ namespace flounder
 			return static_cast<processing*>(framework::get()->getInstance("processing"));
 		}
 
+		/// <summary>
+		/// Creates a new processing module.
+		/// </summary>
 		processing();
 
+		/// <summary>
+		/// Deconstructor for the processing module.
+		/// </summary>
 		~processing();
-
-		void init() override;
 
 		void update() override;
 
+		/// <summary>
+		/// Adds a processor type to the list of processors.
+		/// </summary>
+		/// <param name="processor"> The processor to add. </param>
 		void addProcessor(iprocessor *processor);
 
 		/// <summary>

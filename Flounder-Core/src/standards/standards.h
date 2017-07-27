@@ -32,8 +32,6 @@ namespace flounder
 
 		void addStandard(istandard *standard);
 
-		void init() override;
-
 		void update() override;
 	};
 }

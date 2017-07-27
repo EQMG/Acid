@@ -34,8 +34,6 @@ namespace flounder
 		/// </summary>
 		~events();
 
-		void init() override;
-
 		void update() override;
 
 		/// <summary>

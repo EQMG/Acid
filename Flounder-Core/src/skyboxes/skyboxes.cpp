@@ -1,8 +1,8 @@
-#include "skybox.h"
+#include "skyboxes.h"
 
 namespace flounder
 {
-	skybox::skybox() :
+	skyboxes::skyboxes() :
 		imodule()
 	{
 		m_size = 250.0f;
@@ -15,7 +15,7 @@ namespace flounder
 		m_blend = 1.0f;
 	}
 
-	skybox::~skybox()
+	skyboxes::~skyboxes()
 	{
 		delete m_texture;
 		delete m_model;
@@ -25,17 +25,13 @@ namespace flounder
 		delete m_fog;
 	}
 
-	void skybox::load(texture *texture, model *model)
+	void skyboxes::load(texture *texture, model *model)
 	{
 		m_texture = texture;
 		m_model = model;
 	}
 
-	void skybox::init()
-	{
-	}
-
-	void skybox::update()
+	void skyboxes::update()
 	{
 		if (camera::get()->getCamera() != NULL)
 		{

@@ -7,20 +7,20 @@ namespace flounder
 	/// <summary>
 	/// A interface used to manage a main UI system.
 	/// </summary>
-	class iuimanager
+	class imanageruis
 	{
 	public:
 		/// <summary>
 		/// Creates a new ui manager.
 		/// </summary>
-		iuimanager()
+		imanageruis()
 		{
 		}
 
 		/// <summary>
 		/// Deconstructor for the ui manager.
 		/// </summary>
-		virtual ~iuimanager()
+		virtual ~imanageruis()
 		{
 		}
 

@@ -98,11 +98,11 @@ namespace flounder
 		m_shader->loadUniform("shadowDarkness", shadows::get()->getShadowDarkness() * shadows::get()->getShadowFactor());
 		m_shader->loadUniform("brightnessBoost", shadows::get()->getBrightnessBoost());*/
 
-		if (skybox::get()->getFog() != NULL)
+		if (skyboxes::get()->getFog() != NULL)
 		{
-			m_shader->loadUniform("fogColour", skybox::get()->getFog()->m_colour);
-			m_shader->loadUniform("fogDensity", skybox::get()->getFog()->m_density);
-			m_shader->loadUniform("fogGradient", skybox::get()->getFog()->m_gradient);
+			m_shader->loadUniform("fogColour", skyboxes::get()->getFog()->m_colour);
+			m_shader->loadUniform("fogDensity", skyboxes::get()->getFog()->m_density);
+			m_shader->loadUniform("fogGradient", skyboxes::get()->getFog()->m_gradient);
 		}
 		else
 		{

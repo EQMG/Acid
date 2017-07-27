@@ -13,10 +13,6 @@ namespace flounder
 		delete m_tasks;
 	}
 
-	void tasks::init()
-	{
-	}
-
 	void tasks::update()
 	{
 		for (std::vector<std::function<void()>>::iterator it = m_tasks->begin(); it != m_tasks->end(); ++it)

@@ -23,10 +23,6 @@ namespace flounder
 		m_standards->push_back(standard);
 	}
 
-	void standards::init()
-	{
-	}
-
 	void standards::update()
 	{
 		for (std::vector<istandard*>::iterator it = m_standards->begin(); it < m_standards->end(); it++)

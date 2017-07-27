@@ -5,7 +5,7 @@ namespace flounder
 	renderer::renderer() :
 		imodule()
 	{
-		m_rendererMaster = NULL;
+		m_managerRender = NULL;
 
 		m_cullingBackFace = false;
 		m_depthMask = true;
@@ -17,23 +17,14 @@ namespace flounder
 
 	renderer::~renderer()
 	{
-		delete m_rendererMaster;
-	}
-
-	void renderer::load(irenderermaster *rendererMaster)
-	{
-		m_rendererMaster = rendererMaster;
-	}
-
-	void renderer::init()
-	{
+		delete m_managerRender;
 	}
 
 	void renderer::update()
 	{
-		if (m_rendererMaster != NULL)
+		if (m_managerRender != NULL)
 		{
-			m_rendererMaster->render();
+			m_managerRender->render();
 		}
 	}
 
