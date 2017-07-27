@@ -114,6 +114,7 @@ namespace flounder
 		if (quadHeight > m_maxSizeY)
 		{
 			m_maxSizeY = quadHeight;
+
 		}
 
 		return new character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);

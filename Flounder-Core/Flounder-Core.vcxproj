@@ -56,6 +56,7 @@
     <ClInclude Include="src\framework\glfw\glfwupdater.h" />
     <ClInclude Include="src\framework\imodule.h" />
     <ClInclude Include="src\framework\iupdater.h" />
+    <ClInclude Include="src\uis\inputdelay.h" />
     <ClInclude Include="src\uis\uialign.h" />
     <ClInclude Include="src\guis\gui.h" />
     <ClInclude Include="src\uis\uis.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="src\framework\framework.cpp" />
     <ClCompile Include="src\framework\glfw\glfwupdater.cpp" />
     <ClCompile Include="src\guis\gui.cpp" />
+    <ClCompile Include="src\uis\inputdelay.cpp" />
     <ClCompile Include="src\uis\uis.cpp" />
     <ClCompile Include="src\uis\uiselector.cpp" />
     <ClCompile Include="src\uis\overlaystartup.cpp" />

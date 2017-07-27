@@ -3,17 +3,6 @@
 #include "imodule.h"
 #include "iupdater.h"
 
-#ifdef FLOUNDER_PLATFORM_WEB
-#include <functional>
-#include <emscripten/emscripten.h>
-
-static void dispatch_main(void* fp)
-{
-	std::function<void()>* func = (std::function<void()>*)fp;
-	(*func)();
-}
-#endif
-
 /// <summary>
 /// The base Flounder folder.
 /// </summary>
@@ -55,10 +44,10 @@ namespace flounder
 		~framework();
 
 		/// <summary>
-		/// Loads the framework module with inital values.
+		/// Loads the updater into the framework.
 		/// </summary>
 		/// <param name="updater"> The updater. </param>
-		void load(iupdater *updater);
+		void setUpdater(iupdater *updater);
 
 		/// <summary>
 		/// The update function for the updater.
