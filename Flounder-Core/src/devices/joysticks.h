@@ -48,8 +48,6 @@ namespace flounder
 		/// </summary>
 		~joysticks();
 
-		void init() override;
-
 		void update() override;
 
 		/// <summary>

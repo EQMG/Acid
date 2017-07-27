@@ -1,6 +1,6 @@
-#include "mainrenderer.h"
+#include "managerrender.h"
 
-mainrenderer::mainrenderer()
+managerrender::managerrender()
 {
 	m_infinity = vector4(0.0f, 1.0f, 0.0f, +INFINITY);
 
@@ -20,7 +20,7 @@ mainrenderer::mainrenderer()
 	m_pipelinePaused = new pipelinepaused();
 }
 
-mainrenderer::~mainrenderer()
+managerrender::~managerrender()
 {
 	delete m_rendererSkybox;
 	delete m_rendererGuis;
@@ -38,7 +38,7 @@ mainrenderer::~mainrenderer()
 	delete m_pipelinePaused;
 }
 
-void mainrenderer::render()
+void managerrender::render()
 {
 	// Binds the render FBO.
 	m_fboRenderer->bindFrameBuffer();

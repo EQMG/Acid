@@ -41,50 +41,17 @@ namespace flounder
 		{
 			m_mouseButtons[i] = GLFW_RELEASE;
 		}
-	}
 
-	mouse::~mouse()
-	{
-		delete m_mouseButtons;
-	}
-
-	void mouse::load(const std::string &customMouse)
-	{
-		m_customMouse = customMouse;
-	}
-
-	void mouse::init()
-	{
 		// Sets the mouses callbacks.
 		glfwSetScrollCallback(display::get()->getWindow(), callbackScroll);
 		glfwSetMouseButtonCallback(display::get()->getWindow(), callbackMouseButton);
 		glfwSetCursorPosCallback(display::get()->getWindow(), callbackCursorPos);
 		glfwSetCursorEnterCallback(display::get()->getWindow(), callbackCursorEnter);
+	}
 
-		// Loads a custom cursor.
-		if (!m_customMouse.empty())
-		{
-			int width = 0;
-			int height = 0;
-			int components = 0;
-			stbi_uc *data = stbi_load(m_customMouse.c_str(), &width, &height, &components, 4);
-
-			if (data == NULL)
-			{
-				std::cout << "Unable to load texture: " << m_customMouse << std::endl;
-			}
-
-#ifndef FLOUNDER_PLATFORM_WEB
-			GLFWimage *image = new GLFWimage();
-			image->pixels = data;
-			image->width = width;
-			image->height = height;
-
-			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
-			glfwSetCursor(display::get()->getWindow(), cursor);
-			stbi_image_free(data);
-#endif
-		}
+	mouse::~mouse()
+	{
+		delete m_mouseButtons;
 	}
 
 	void mouse::update()
@@ -112,6 +79,41 @@ namespace flounder
 			m_mouseDeltaWheel -= framework::get()->getDelta() * ((m_mouseDeltaWheel < 0.0) ? -1.0 : 1.0);
 			m_mouseDeltaWheel = maths::deadband(0.1, m_mouseDeltaWheel);
 		}
+	}
+
+	std::string &mouse::getCustomMouse()
+	{
+		return m_customMouse;
+	}
+
+	void mouse::setCustomMouse(const std::string &customMouse)
+	{
+		// Loads a custom cursor.
+#ifndef FLOUNDER_PLATFORM_WEB
+		m_customMouse = customMouse;
+
+		if (!m_customMouse.empty())
+		{
+			int width = 0;
+			int height = 0;
+			int components = 0;
+			stbi_uc *data = stbi_load(m_customMouse.c_str(), &width, &height, &components, 4);
+
+			if (data == NULL)
+			{
+				std::cout << "Unable to load texture: " << m_customMouse << std::endl;
+			}
+
+			GLFWimage *image = new GLFWimage();
+			image->pixels = data;
+			image->width = width;
+			image->height = height;
+
+			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
+			glfwSetCursor(display::get()->getWindow(), cursor);
+			stbi_image_free(data);
+		}
+#endif
 	}
 
 	void mouse::setCursorHidden(const bool &disabled)

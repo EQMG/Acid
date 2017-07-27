@@ -5,7 +5,7 @@ namespace flounder
 	uis::uis() :
 		imodule()
 	{
-		m_uiManager = NULL;
+		m_managerUis = NULL;
 		m_selector = new uiselector();
 		m_container = new containerscreen(NULL, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), false);
 		m_objects = new std::vector<uiobject*>();
@@ -19,7 +19,7 @@ namespace flounder
 
 	uis::~uis()
 	{
-		delete m_uiManager;
+		delete m_managerUis;
 		delete m_selector;
 		delete m_container;
 		delete m_objects;
@@ -31,21 +31,12 @@ namespace flounder
 		delete segoe;
 	}
 
-	void uis::load(iuimanager *uiManager)
-	{
-		m_uiManager = uiManager;
-	}
-
-	void uis::init()
-	{
-	}
-
 	void uis::update()
 	{
-		if (m_uiManager != NULL)
+		if (m_managerUis != NULL)
 		{
-			m_selector->update(m_uiManager->isGamePaused());
-			m_uiManager->update();
+			m_selector->update(m_managerUis->isGamePaused());
+			m_managerUis->update();
 		}
 
 		m_objects->clear();

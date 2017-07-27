@@ -39,8 +39,6 @@ namespace flounder
 		/// </summary>
 		~keyboard() override;
 
-		void init() override;
-
 		void update() override;
 
 		/// <summary>

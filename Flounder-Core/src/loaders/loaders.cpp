@@ -12,10 +12,6 @@ namespace flounder
 	{
 	}
 
-	void loaders::init()
-	{
-	}
-
 	void loaders::update()
 	{
 	}

@@ -36,15 +36,6 @@ namespace flounder
 		/// </summary>
 		~camera();
 
-		/// <summary>
-		/// Loads the camera module with inital values.
-		/// </summary>
-		/// <param name="camera"> The inital camera. </param>
-		/// <param name="player"> The inital player. </param>
-		void load(icamera *camera, iplayer *player);
-
-		void init() override;
-
 		void update() override;
 
 		/// <summary>

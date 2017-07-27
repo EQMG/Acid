@@ -60,7 +60,7 @@
     <ClInclude Include="src\guis\gui.h" />
     <ClInclude Include="src\uis\uis.h" />
     <ClInclude Include="src\uis\uiselector.h" />
-    <ClInclude Include="src\uis\iuimanager.h" />
+    <ClInclude Include="src\uis\imanageruis.h" />
     <ClInclude Include="src\uis\overlaystartup.h" />
     <ClInclude Include="src\guis\rendererguis.h" />
     <ClInclude Include="src\uis\uiobject.h" />
@@ -144,12 +144,12 @@
     <ClInclude Include="src\processing\resource\processorresource.h" />
     <ClInclude Include="src\processing\resource\requestresource.h" />
     <ClInclude Include="src\renderer\irenderer.h" />
-    <ClInclude Include="src\renderer\irenderermaster.h" />
+    <ClInclude Include="src\renderer\imanagerrender.h" />
     <ClInclude Include="src\renderer\renderer.h" />
     <ClInclude Include="src\shaders\shader.h" />
     <ClInclude Include="src\shaders\shadertype.h" />
-    <ClInclude Include="src\skybox\rendererskybox.h" />
-    <ClInclude Include="src\skybox\skybox.h" />
+    <ClInclude Include="src\skyboxes\rendererskybox.h" />
+    <ClInclude Include="src\skyboxes\skyboxes.h" />
     <ClInclude Include="src\space\ispatialobject.h" />
     <ClInclude Include="src\space\ispatialstructure.h" />
     <ClInclude Include="src\space\structurebasic.h" />
@@ -263,8 +263,8 @@
     <ClCompile Include="src\processing\resource\processorresource.cpp" />
     <ClCompile Include="src\renderer\renderer.cpp" />
     <ClCompile Include="src\shaders\shader.cpp" />
-    <ClCompile Include="src\skybox\rendererskybox.cpp" />
-    <ClCompile Include="src\skybox\skybox.cpp" />
+    <ClCompile Include="src\skyboxes\rendererskybox.cpp" />
+    <ClCompile Include="src\skyboxes\skyboxes.cpp" />
     <ClCompile Include="src\space\structurebasic.cpp" />
     <ClCompile Include="src\standards\standards.cpp" />
     <ClCompile Include="src\tasks\tasks.cpp" />
