@@ -13,7 +13,7 @@
 #include "../../particles/particles.h"
 #include "../../processing/processing.h"
 #include "../../renderer/renderer.h"
-#include "../../skybox/skybox.h"
+#include "../../skyboxes/skyboxes.h"
 #include "../../standards/standards.h"
 #include "../../tasks/tasks.h"
 #include "../../uis/uis.h"
@@ -46,7 +46,7 @@ namespace flounder
 		particles *m_particles;
 		processing *m_processing;
 		renderer *m_renderer;
-		skybox *m_skybox;
+		skyboxes *m_skyboxes;
 		standards *m_standards;
 		tasks *m_tasks;
 		uis *m_uis;
@@ -56,8 +56,6 @@ namespace flounder
 		~glfwupdater();
 
 		void create() override;
-
-		void init() override;
 
 		void update() override;
 

@@ -22,7 +22,7 @@ namespace flounder
 		delete m_particles;
 		delete m_processing;
 		delete m_renderer;
-		delete m_skybox;
+		delete m_skyboxes;
 		delete m_standards;
 		delete m_tasks;
 		delete m_uis;
@@ -51,33 +51,10 @@ namespace flounder
 		m_particles = new particles();
 		m_processing = new processing();
 		m_renderer = new renderer();
-		m_skybox = new skybox();
+		m_skyboxes = new skyboxes();
 		m_standards = new standards();
 		m_tasks = new tasks();
 		m_uis = new uis();
-	}
-
-	void glfwupdater::init()
-	{
-		m_display->init();
-		m_audio->init();
-		m_joysticks->init();
-		m_keyboard->init();
-		m_mouse->init();
-
-		m_standards->init();
-
-		m_events->init();
-		m_tasks->init();
-		m_processing->init();
-
-		m_camera->init();
-		m_loaders->init();
-		m_renderer->init();
-
-		m_uis->init();
-		m_particles->init();
-		m_skybox->init();
 	}
 
 	void flounder::glfwupdater::update()
@@ -109,7 +86,7 @@ namespace flounder
 
 			m_loaders->update();
 			m_uis->update();
-			m_skybox->update();
+			m_skyboxes->update();
 
 			// Update
 
@@ -175,9 +152,9 @@ namespace flounder
 		{
 			return m_renderer;
 		}
-		else if (name == "skybox")
+		else if (name == "skyboxes")
 		{
-			return m_skybox;
+			return m_skyboxes;
 		}
 		else if (name == "standards")
 		{

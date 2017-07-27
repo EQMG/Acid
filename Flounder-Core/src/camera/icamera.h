@@ -41,12 +41,21 @@ namespace flounder
 		/// <param name="waterHeight"> The height of the water to be reflected on. </param>
 		virtual void reflect(const float &waterHeight) = 0;
 
+		/// <summary>
+		/// Gets the distance of the near pane of the view frustum.
+		/// </summary>
 		/// <returns> The distance of the near pane of the view frustum. </returns>
 		virtual float getNearPlane() const = 0;
 
+		/// <summary>
+		/// Gets the distance of the view frustum's far plane.
+		/// </summary>
 		/// <returns> The distance of the view frustum's far plane. </returns>
 		virtual float getFarPlane() const = 0;
 
+		/// <summary>
+		/// Gets the field of view angle for the view frustum.
+		/// </summary>
 		/// <returns> The field of view angle for the view frustum. </returns>
 		virtual float getFOV() const = 0;
 

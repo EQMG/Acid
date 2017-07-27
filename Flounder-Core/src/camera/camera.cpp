@@ -15,16 +15,6 @@ namespace flounder
 		delete m_player;
 	}
 
-	void camera::load(icamera *camera, iplayer *player)
-	{
-		m_camera = camera;
-		m_player = player;
-	}
-
-	void camera::init()
-	{
-	}
-
 	void camera::update()
 	{
 		if (m_player != NULL)

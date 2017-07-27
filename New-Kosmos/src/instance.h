@@ -4,16 +4,16 @@
 
 using namespace flounder;
 
-class maininstance : public istandard
+class instance : public istandard
 {
 private:
 	ibutton *m_buttonFullscreen;
 	ibutton *m_buttonWireframe;
 	ibutton *m_buttonExit;
 public:
-	maininstance();
+	instance();
 
-	~maininstance();
+	~instance();
 
 	void update() override;
 };

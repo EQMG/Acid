@@ -53,8 +53,8 @@ namespace flounder
 		m_glfwMajor = 3;
 		m_glfwMinor = 2;
 
-		m_windowWidth = 720;
-		m_windowHeight = 480;
+		m_windowWidth = 1080;
+		m_windowHeight = 720;
 		m_fullscreenWidth = 0;
 		m_fullscreenHeight = 0;
 
@@ -71,45 +71,12 @@ namespace flounder
 		m_focused = true;
 		m_windowPosX = 0;
 		m_windowPosY = 0;
-	}
-
-	display::~display()
-	{
-		// Free the window callbacks and destroy the window.
-		glfwDestroyWindow(m_window);
-
-		// Terminate GLFW.
-		glfwTerminate();
-
-		// delete m_window;
-
-		m_closed = false;
-	}
-
-	void display::load(const int &glfwMajor, const int &glfwMinor, const int &width, const int &height, const std::string &title, const std::string &icon, const float &fpsLimit, const bool &vsync, const bool &antialiasing, const int &samples, const bool &fullscreen)
-	{
-		m_glfwMajor = glfwMajor;
-		m_glfwMinor = glfwMinor;
-
-		m_windowWidth = width;
-		m_windowHeight = height;
-
-		m_title = title;
-		m_icon = icon;
-		m_fpsLimit = fpsLimit;
-		m_vsync = vsync;
-		m_antialiasing = antialiasing;
-		m_samples = samples;
-		m_fullscreen = fullscreen;
 
 #ifdef FLOUNDER_PLATFORM_WEB
 		m_fpsLimit = 60.0f;
 		m_vsync = true;
 #endif
-	}
 
-	void display::init()
-	{
 		// Set the error error callback
 		glfwSetErrorCallback(callbackError);
 
@@ -140,11 +107,6 @@ namespace flounder
 #ifndef FLOUNDER_PLATFORM_WEB
 		glfwWindowHint(GLFW_STEREO, GLFW_FALSE); // No stereo view!
 #endif
-
-		// Use FBO antialiasing instead!
-		//if (samples > 0) {
-		//	glfwWindowHint(GLFW_SAMPLES, samples); // The number of MSAA samples to use.
-		//}
 
 		// Get the resolution of the primary monitor.
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
@@ -178,33 +140,6 @@ namespace flounder
 		// Creates the OpenGL context.
 		glfwMakeContextCurrent(m_window);
 
-		// Creates a window icon for this GLFW display.
-#ifndef FLOUNDER_PLATFORM_WEB
-		if (!m_icon.empty())
-		{
-			int width = 0;
-			int height = 0;
-			int components = 0;
-			stbi_uc *data = stbi_load(m_icon.c_str(), &width, &height, &components, 4);
-
-			if (data == NULL)
-			{
-				std::cout << "Unable to load texture: " << m_icon << std::endl;
-			}
-			else
-			{
-				GLFWimage icons[1];
-				icons[0].pixels = data;
-				icons[0].width = width;
-				icons[0].height = height;
-
-				glfwSetWindowIcon(m_window, 1, icons);
-			}
-
-			stbi_image_free(data);
-		}
-#endif
-
 		// Enables VSync if requested.
 		glfwSwapInterval(m_vsync ? 1 : 0);
 
@@ -235,22 +170,17 @@ namespace flounder
 			framework::get()->requestClose(true);
 		}
 #endif
+	}
 
-		// System logs.
-		//	logger::get()->log("If you are getting errors, please write a description of how you get the error, and copy this log: https://github.com/Equilibrium-Games/Flounder-Engine/issues");
-		//	logger::get()->log("");
-		//	logger::get()->log("===== This is not an error message, it is a system info log. =====");
-		//	logger::get()->log("Flounder Framework Version: " + framework::get()->getVersion()->getVersion());
-		//	logger::get()->log("Flounder Operating System: " + System.getProperty("os.name"));
-		//	logger::get()->log("Flounder GLFW Version: " + std::string(glfwGetVersionString()));
-		//	logger::get()->log("Flounder OpenGL Version: " + glGetString(GL_VERSION));
-		//	logger::get()->log("Flounder OpenGL Vendor: " + glGetString(GL_VENDOR));
-		//	logger::get()->log("Flounder Is OpenGL Modern: " + FlounderOpenGL.get().isModern());
-		//	logger::get()->log("Flounder Total Memory Available To JVM (bytes): " + Runtime.getRuntime().totalMemory());
-		//	logger::get()->log("Flounder Maximum FBO Size: " + glGetInteger(GL_MAX_RENDERBUFFER_SIZE_EXT));
-		//	logger::get()->log("Flounder Maximum Texture Size: " + glGetInteger(GL_MAX_TEXTURE_SIZE));
-		//	logger::get()->log("Flounder Maximum Anisotropy: " + glGetFloat(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT));
-		//	logger::get()->log("===== End of system info log. =====\n");
+	display::~display()
+	{
+		// Free the window callbacks and destroy the window.
+		glfwDestroyWindow(m_window);
+
+		// Terminate GLFW.
+		glfwTerminate();
+
+		m_closed = false;
 	}
 
 	void display::update()
@@ -307,6 +237,49 @@ namespace flounder
 		return m_title;
 	}
 
+	void display::setTitle(const std::string & title)
+	{
+		m_title = title;
+		glfwSetWindowTitle(m_window, m_title.c_str());
+	}
+
+	std::string &display::getIcon()
+	{
+		return m_icon;
+	}
+
+	void display::setIcon(const std::string &icon)
+	{
+		// Creates a window icon for this GLFW display.
+#ifndef FLOUNDER_PLATFORM_WEB
+		m_icon = icon;
+
+		if (!m_icon.empty())
+		{
+			int width = 0;
+			int height = 0;
+			int components = 0;
+			stbi_uc *data = stbi_load(m_icon.c_str(), &width, &height, &components, 4);
+
+			if (data == NULL)
+			{
+				std::cout << "Unable to load texture: " << m_icon << std::endl;
+			}
+			else
+			{
+				GLFWimage icons[1];
+				icons[0].pixels = data;
+				icons[0].width = width;
+				icons[0].height = height;
+
+				glfwSetWindowIcon(m_window, 1, icons);
+			}
+
+			stbi_image_free(data);
+		}
+#endif
+	}
+
 	int display::getFpsLimit()
 	{
 		return m_fpsLimit;
@@ -314,7 +287,11 @@ namespace flounder
 
 	void display::setFpsLimit(const int &fpsLimit)
 	{
+#ifndef FLOUNDER_PLATFORM_WEB
 		m_fpsLimit = fpsLimit;
+#else
+		m_fpsLimit = 60;
+#endif
 	}
 
 	bool display::isVSync()
@@ -324,13 +301,13 @@ namespace flounder
 
 	void display::setVSync(const bool &vsync)
 	{
+#ifndef FLOUNDER_PLATFORM_WEB
 		m_vsync = vsync;
-		glfwSwapInterval(vsync ? 1 : 0);
+#else
+		m_vsync = true;
+#endif
 
-		if (vsync)
-		{
-			//	framework::get()->setFpsLimit(60);
-		}
+		glfwSwapInterval(vsync ? 1 : 0);
 	}
 
 	bool display::isAntialiasing()

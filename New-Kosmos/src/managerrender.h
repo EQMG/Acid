@@ -4,8 +4,8 @@
 
 using namespace flounder;
 
-class mainrenderer :
-	public irenderermaster
+class managerrender :
+	public imanagerrender
 {
 private:
 	vector4 m_infinity;
@@ -25,9 +25,9 @@ private:
 	pipelinebloom *m_pipelineBloom;
 	pipelinepaused *m_pipelinePaused;
 public:
-	mainrenderer();
+	managerrender();
 
-	~mainrenderer();
+	~managerrender();
 
 	void render() override;
 };

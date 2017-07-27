@@ -19,7 +19,7 @@ namespace flounder
 	void rendererskybox::render(const vector4 &clipPlane, const icamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
-		renderSkybox(skybox::get());
+		renderSkybox(skyboxes::get());
 		endRendering();
 	}
 
@@ -42,19 +42,19 @@ namespace flounder
 		renderer::get()->disableBlending();
 	}
 
-	void rendererskybox::renderSkybox(skybox *object)
+	void rendererskybox::renderSkybox(skyboxes *object)
 	{
 		// Binds the layouts.
-		renderer::get()->bindVAO(skybox::get()->getModel()->getVaoID(), 1, 0);
-		renderer::get()->bindTexture(skybox::get()->getTexture(), 0);
+		renderer::get()->bindVAO(skyboxes::get()->getModel()->getVaoID(), 1, 0);
+		renderer::get()->bindTexture(skyboxes::get()->getTexture(), 0);
 
 		// Loads the uniforms.
-		m_shader->loadUniform("modelMatrix", *skybox::get()->getModelMatrix());
-		m_shader->loadUniform("skyColour", *skybox::get()->getFog()->m_colour);
-		m_shader->loadUniform("blendFactor", skybox::get()->getBlend());
+		m_shader->loadUniform("modelMatrix", *skyboxes::get()->getModelMatrix());
+		m_shader->loadUniform("skyColour", *skyboxes::get()->getFog()->m_colour);
+		m_shader->loadUniform("blendFactor", skyboxes::get()->getBlend());
 
 		// Tells the GPU to render this object.
-		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, skybox::get()->getModel()->getVaoLength());
+		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, skyboxes::get()->getModel()->getVaoLength());
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);

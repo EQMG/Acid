@@ -30,8 +30,6 @@ namespace flounder
 
 		~tasks();
 
-		void init() override;
-
 		void update() override;
 
 		/// <summary>

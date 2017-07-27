@@ -4,7 +4,7 @@
 #include "../shaders/shader.h"
 #include "../textures/texture.h"
 
-#include "irenderermaster.h"
+#include "imanagerrender.h"
 
 namespace flounder
 {
@@ -12,7 +12,7 @@ namespace flounder
 		public imodule
 	{
 	private:
-		irenderermaster *m_rendererMaster;
+		imanagerrender *m_managerRender;
 
 		bool m_cullingBackFace;
 		bool m_depthMask;
@@ -40,27 +40,19 @@ namespace flounder
 		/// </summary>
 		~renderer();
 
-		/// <summary>
-		/// Loads the renderer module with inital values.
-		/// </summary>
-		/// <param name="rendererMaster"> The inital master renderer. </param>
-		void load(irenderermaster *rendererMaster);
-
-		void init() override;
-
 		void update() override;
 
 		/// <summary>
-		/// Gets the current master renderer object.
+		/// Gets the renderer manager.
 		/// </summary>
-		/// <returns> The current master renderer. </returns>
-		inline irenderermaster *getRendererMaster() { return m_rendererMaster; }
+		/// <returns> The renderer manager. </returns>
+		inline imanagerrender *getManager() { return m_managerRender; }
 
 		/// <summary>
-		/// Sets the current master renderer to a new master renderer.
+		/// Sets the current renderer manager to a new renderer manager.
 		/// </summary>
-		/// <param name="rendererMaster"> The new master renderer. </param>
-		inline void setRendererMaster(irenderermaster *rendererMaster) { m_rendererMaster = rendererMaster; }
+		/// <param name="rendererMaster"> The new renderer manager. </param>
+		inline void setManager(imanagerrender *managerRender) { m_managerRender = managerRender; }
 
 		/// <summary>
 		/// Prepares the screen for a new render.

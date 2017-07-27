@@ -6,6 +6,11 @@ namespace flounder
 		imodule()
 	{
 		m_processors = new std::vector<iprocessor*>();
+
+		// Manually adds the two base processors, these will be added into the modules loop, but are needed now.
+		// If these are not added in the init loop, nothing will be able to be initially processed!
+		m_processors->push_back(new processorresource());
+		m_processors->push_back(new processoropengl());
 	}
 
 	processing::~processing()
@@ -16,14 +21,6 @@ namespace flounder
 		}
 
 		delete m_processors;
-	}
-
-	void processing::init()
-	{
-		// Manually adds the two base processors, these will be added into the modules loop, but are needed now.
-		// If these are not added in the init loop, nothing will be able to be initially processed!
-		m_processors->push_back(new processorresource());
-		m_processors->push_back(new processoropengl());
 	}
 
 	void processing::addProcessor(iprocessor *processor)

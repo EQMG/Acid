@@ -1,20 +1,20 @@
-#include "maininstance.h"
+#include "instance.h"
 
-maininstance::maininstance()
+instance::instance()
 {
 	m_buttonFullscreen = new buttonkeyboard(1, GLFW_KEY_F11);
 	m_buttonWireframe = new buttonkeyboard(1, GLFW_KEY_P);
 	m_buttonExit = new buttonkeyboard(1, GLFW_KEY_DELETE);
 }
 
-maininstance::~maininstance()
+instance::~instance()
 {
 	delete m_buttonFullscreen;
 	delete m_buttonWireframe;
 	delete m_buttonExit;
 }
 
-void maininstance::update()
+void instance::update()
 {
 	if (m_buttonFullscreen->wasDown())
 	{
