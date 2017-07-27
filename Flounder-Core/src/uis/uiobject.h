@@ -16,11 +16,11 @@ namespace flounder
 	/// The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
 	/// This class can be extended to create a representation for GUI textures, fonts, etc.
 	/// </summary>
-	class screenobject
+	class uiobject
 	{
 	private:
-		screenobject *m_parent;
-		std::vector<screenobject*> *m_children;
+		uiobject *m_parent;
+		std::vector<uiobject*> *m_children;
 
 		bool m_visible;
 		vector2 *m_position;
@@ -49,12 +49,12 @@ namespace flounder
 		/// <param name="parent"> The parent screen object. </param>
 		/// <param name="position"> The position in relative space (can be changed to screen space be changing {@code #inScreenCoords} to true.) </param>
 		/// <param name="dimensions"> The dimensions of the object, its width is scaled with the aspect ratio so it remains in proportion to the original values. </param>
-		screenobject(screenobject *parent, const vector2 &position, const vector2 &dimensions);
+		uiobject(uiobject *parent, const vector2 &position, const vector2 &dimensions);
 
 		/// <summary>
 		/// Deconstructor for the screen object.
 		/// </summary>
-		virtual ~screenobject();
+		virtual ~uiobject();
 
 		/// <summary>
 		/// Updates this screen object and the extended object.
@@ -70,15 +70,15 @@ namespace flounder
 		/// Gets the parent object.
 		/// </summary>
 		/// <returns> The parent object. </returns>
-		inline screenobject *getParent() { return m_parent; }
+		inline uiobject *getParent() { return m_parent; }
 
 		/// <summary>
 		/// Removes this object from the previous parent and attaches it to another parent.
 		/// </summary>
 		/// <param name="parent"> The new parent object. </param>
-		void setParent(screenobject *parent);
+		void setParent(uiobject *parent);
 
-		inline std::vector<screenobject*> *getChildren() const { return m_children; }
+		inline std::vector<uiobject*> *getChildren() const { return m_children; }
 
 		bool isVisible();
 
@@ -130,7 +130,7 @@ namespace flounder
 		/// Disowns a child from this screen objects children list.
 		/// </summary>
 		/// <param name="child"> The child to disown. </param>
-		void removeChild(screenobject *child);
+		void removeChild(uiobject *child);
 
 		/// <summary>
 		/// Adds this object and its children to a list.
@@ -138,7 +138,7 @@ namespace flounder
 		/// <param name="list"> The list to add to.
 		/// </param>
 		/// <returns> The list that has been added to. </returns>
-		std::vector<screenobject*> *getAll(std::vector<screenobject*> *list);
+		std::vector<uiobject*> *getAll(std::vector<uiobject*> *list);
 
 		/// <summary>
 		/// Gets the positions relative in screen space.

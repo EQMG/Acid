@@ -4,15 +4,14 @@
 #include "../inputs/buttonmouse.h"
 #include "../inputs/buttonjoystick.h"
 #include "../inputs/axisjoystick.h"
-
-#include "screenobject.h"
+#include "../uis/uiobject.h"
 
 namespace flounder
 {
 	/// <summary>
-	/// Represents a virtual cursor that will be used to determine if a gui action was preformed by a device.
+	/// Represents a virtual cursor that will be used to determine if a ui action was preformed by a device.
 	/// </summary>
-	class guiselector
+	class uiselector
 	{
 	private:
 		float m_cursorX, m_cursorY;
@@ -28,9 +27,9 @@ namespace flounder
 		buttonjoystick *m_joystickRight;
 		bool m_joysticksInitialized;
 	public:
-		guiselector();
+		uiselector();
 
-		~guiselector();
+		~uiselector();
 
 		/// <summary>
 		/// Sets up the joystick settings to be used for controlling the virtual cursor.
@@ -50,7 +49,7 @@ namespace flounder
 		/// <param name="object"> The object to check with.
 		/// </param>
 		/// <returns> If the object has the cursor inside of its box. </returns>
-		bool isSelected(const screenobject &object);
+		bool isSelected(const uiobject &object);
 
 		void cancelWasEvent();
 

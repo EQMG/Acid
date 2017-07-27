@@ -25,7 +25,7 @@ namespace flounder
 	{
 		prepareRendering(clipPlane, camera);
 
-		for (screenobject *screenobject : *guis::get()->getObjects())
+		for (uiobject *screenobject : *uis::get()->getObjects())
 		{
 			gui *object = dynamic_cast<gui*>(screenobject);
 

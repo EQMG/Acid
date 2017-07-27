@@ -5,27 +5,27 @@
 namespace flounder
 {
 	/// <summary>
-	/// A interface used to manage a main GUI system.
+	/// A interface used to manage a main UI system.
 	/// </summary>
-	class iguimanager
+	class iuimanager
 	{
 	public:
 		/// <summary>
-		/// Creates a new gui master.
+		/// Creates a new ui manager.
 		/// </summary>
-		iguimanager()
+		iuimanager()
 		{
 		}
 
 		/// <summary>
-		/// Deconstructor for the gui master.
+		/// Deconstructor for the ui manager.
 		/// </summary>
-		virtual ~iguimanager()
+		virtual ~iuimanager()
 		{
 		}
 
 		/// <summary>
-		/// Run when updating the GUI master.
+		/// Run when updating the ui manager.
 		/// </summary>
 		virtual void update() = 0;
 

@@ -3,7 +3,7 @@
 #include "../maths/colour.h"
 #include "../maths/vector2.h"
 #include "../textures/texture.h"
-#include "screenobject.h"
+#include "../uis/uiobject.h"
 
 namespace flounder
 {
@@ -11,7 +11,7 @@ namespace flounder
 	/// A object the represents a texture in a GUI.
 	/// </summary>
 	class gui :
-		public screenobject
+		public uiobject
 	{
 	private:
 		texture *m_texture;
@@ -29,7 +29,7 @@ namespace flounder
 		/// <param name="dimensions"> The objects dimensions. </param>
 		/// <param name="texture"> The objects texture. </param>
 		/// <param name="selectedRow"> The default row of the texture to render from. </param>
-		gui(screenobject *parent, const vector2 &position, const vector2 &dimensions, texture *texture, const int &selectedRow);
+		gui(uiobject *parent, const vector2 &position, const vector2 &dimensions, texture *texture, const int &selectedRow);
 
 		/// <summary>
 		/// Deconstructor for the gui object.

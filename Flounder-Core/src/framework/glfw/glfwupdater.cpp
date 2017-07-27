@@ -15,8 +15,6 @@ namespace flounder
 		delete m_deltaUpdate;
 		delete m_display;
 		delete m_events;
-		delete m_fonts;
-		delete m_guis;
 		delete m_joysticks;
 		delete m_keyboard;
 		delete m_loaders;
@@ -27,7 +25,8 @@ namespace flounder
 		delete m_skybox;
 		delete m_standards;
 		delete m_tasks;
-		delete m_timerLog;
+		delete m_uis;
+
 		delete m_timerRender;
 		delete m_timerUpdate;
 	}
@@ -40,14 +39,11 @@ namespace flounder
 		m_deltaRender = new delta();
 		m_timerUpdate = new timer(1.0 / 60.0);
 		m_timerRender = new timer(1.0 / -1.0);
-		m_timerLog = new timer(2.22);
 
 		m_audio = new audio;
 		m_camera = new camera();
 		m_display = new display();
 		m_events = new events();
-		m_fonts = new fonts();
-		m_guis = new guis();
 		m_joysticks = new joysticks();
 		m_keyboard = new keyboard();
 		m_loaders = new loaders();
@@ -58,6 +54,7 @@ namespace flounder
 		m_skybox = new skybox();
 		m_standards = new standards();
 		m_tasks = new tasks();
+		m_uis = new uis();
 	}
 
 	void glfwupdater::init()
@@ -78,8 +75,7 @@ namespace flounder
 		m_loaders->init();
 		m_renderer->init();
 
-		m_guis->init();
-		m_fonts->init();
+		m_uis->init();
 		m_particles->init();
 		m_skybox->init();
 	}
@@ -112,23 +108,13 @@ namespace flounder
 			m_processing->update();
 
 			m_loaders->update();
-			m_fonts->update();
-			m_guis->update();
+			m_uis->update();
 			m_skybox->update();
 
 			// Update
 
 			// Post-Update
 			m_particles->update();
-		}
-
-		// Logs the fps to the console.
-		if (m_timerLog->isPassedTime())
-		{
-			// Resets the timer.
-			m_timerLog->resetStartTime();
-
-			std::cout << "FPS: " << 1.0 / getDeltaRender() << ", UPS: " << 1.0 / getDelta() << std::endl;
 		}
 
 		// Renders when needed.
@@ -177,13 +163,9 @@ namespace flounder
 		{
 			return m_events;
 		}
-		else if (name == "fonts")
+		else if (name == "uis")
 		{
-			return m_fonts;
-		}
-		else if (name == "guis")
-		{
-			return m_guis;
+			return m_uis;
 		}
 		else if (name == "loaders")
 		{

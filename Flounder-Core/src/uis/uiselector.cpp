@@ -1,8 +1,8 @@
-﻿#include "guiselector.h"
+﻿#include "uiselector.h"
 
 namespace flounder
 {
-	guiselector::guiselector()
+	uiselector::uiselector()
 	{
 		m_cursorX = 0.0f;
 		m_cursorY = 0.0f;
@@ -15,7 +15,7 @@ namespace flounder
 		m_joysticksInitialized = false;
 	}
 
-	guiselector::~guiselector()
+	uiselector::~uiselector()
 	{
 		delete m_mouseLeft;
 		delete m_mouseRight;
@@ -26,7 +26,7 @@ namespace flounder
 		delete m_joystickRight;
 	}
 
-	void guiselector::load(const int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
+	void uiselector::load(const int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
 	{
 		m_selectedJoystick = joystick;
 		m_joystickAxisX = new axisjoystick(joystick, 1, joystickAxisX);
@@ -36,7 +36,7 @@ namespace flounder
 		m_joysticksInitialized = true;
 	}
 
-	void guiselector::update(const bool &paused)
+	void uiselector::update(const bool &paused)
 	{
 		m_leftClick = m_mouseLeft->isDown();
 		m_rightClick = m_mouseRight->isDown();
@@ -64,7 +64,7 @@ namespace flounder
 		}
 	}
 
-	bool guiselector::isSelected(const screenobject &object)
+	bool uiselector::isSelected(const uiobject &object)
 	{
 		// TODO: Account for rotations.
 		float positionX = object.getPosition()->m_x;
@@ -87,7 +87,7 @@ namespace flounder
 		return false;
 	}
 
-	void guiselector::cancelWasEvent()
+	void uiselector::cancelWasEvent()
 	{
 		m_leftWasClick = false;
 		m_rightWasClick = false;

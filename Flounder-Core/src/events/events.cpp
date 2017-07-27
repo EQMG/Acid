@@ -2,7 +2,7 @@
 
 namespace flounder
 {
-	events::events() : 
+	events::events() :
 		imodule()
 	{
 		m_events = new std::vector<ievent*>();

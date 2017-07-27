@@ -2,7 +2,7 @@
 
 #include "../loaders/loaders.h"
 #include "../renderer/irenderer.h"
-#include "../guis/guis.h"
+#include "../uis/uis.h"
 
 #include "text.h"
 

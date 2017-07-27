@@ -2,8 +2,8 @@
 
 namespace flounder
 {
-	text::text(screenobject *parent, const vector2 &position, const std::string &text, const float &fontSize, fonttype *fonttype, const float &maxLineLength, const guialign &align) :
-		screenobject(parent, position, vector2(1.0f, 1.0f))
+	text::text(uiobject *parent, const vector2 &position, const std::string &text, const float &fontSize, fonttype *fonttype, const float &maxLineLength, const uialign &align) :
+		uiobject(parent, position, vector2(1.0f, 1.0f))
 	{
 		setMeshSize(vector2(0.0f, 0.0f));
 		setScaleDriver(new driverconstant(fontSize));
@@ -77,7 +77,6 @@ namespace flounder
 		m_borderSize = m_borderDriver->update(framework::get()->getDelta());
 	}
 
-
 	void text::loadText(text *object)
 	{
 		// Create mesh data.
@@ -105,7 +104,7 @@ namespace flounder
 		line *currentLine = new line(m_fonttype->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
 		word *currentWord = new word();
 
-		for (char& c : object->getTextString())
+		for (char &c : object->getTextString())
 		{
 			int ascii = static_cast<int>(c);
 
@@ -130,11 +129,7 @@ namespace flounder
 
 			character *character = m_fonttype->getMetadata()->getCharacter(ascii);
 			currentWord->addCharacter(character);
-
-		//	std::cout << ascii << ", ";
 		}
-
-		//std::cout << std::endl;
 
 		completeStructure(lines, currentLine, currentWord, object);
 		return lines;
@@ -284,7 +279,7 @@ namespace flounder
 			m_newText = newText;
 		}
 	}
-	
+
 	void text::setMeshInfo(const GLuint &vao, const GLuint &verticesCount)
 	{
 		m_textMeshVao = vao;
