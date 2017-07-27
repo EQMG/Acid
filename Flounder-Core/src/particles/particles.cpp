@@ -18,11 +18,7 @@ namespace flounder
 		delete m_particles;
 		delete m_deadParticles;
 	}
-
-	void particles::init()
-	{
-	}
-
+	
 	void particles::update()
 	{
 		/*//	if (guis::get()->getGuiMaster()->isGamePaused())

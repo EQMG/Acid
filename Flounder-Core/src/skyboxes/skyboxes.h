@@ -10,7 +10,7 @@
 
 namespace flounder
 {
-	class skybox :
+	class skyboxes :
 		public imodule
 	{
 	private:
@@ -27,18 +27,16 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static skybox *get()
+		static skyboxes *get()
 		{
-			return static_cast<skybox*>(framework::get()->getInstance("skybox"));
+			return static_cast<skyboxes*>(framework::get()->getInstance("skyboxes"));
 		}
 
-		skybox();
+		skyboxes();
 
-		~skybox();
+		~skyboxes();
 
 		void load(texture *texture, model *model);
-
-		void init() override;
 
 		void update() override;
 

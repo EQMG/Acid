@@ -4,7 +4,7 @@
 #include "../fonts/text.h"
 #include "../guis/gui.h"
 
-#include "iuimanager.h"
+#include "imanageruis.h"
 #include "uiselector.h"
 #include "containerscreen.h"
 
@@ -17,7 +17,7 @@ namespace flounder
 		public imodule
 	{
 	private:
-		iuimanager *m_uiManager;
+		imanageruis *m_managerUis;
 		uiselector *m_selector;
 		uiobject *m_container;
 		std::vector<uiobject*> *m_objects;
@@ -47,21 +47,19 @@ namespace flounder
 		/// </summary>
 		~uis();
 
-		/// <summary>
-		/// Loads the ui module with inital values.
-		/// </summary>
-		/// <param name="uiManager"> The inital ui master. </param>
-		void load(iuimanager *uiManager);
-
-		void init() override;
-
 		void update() override;
 
 		/// <summary>
-		/// Gets the ui manager.
+		/// Gets the uis manager.
 		/// </summary>
-		/// <returns> The ui manager. </returns>
-		inline iuimanager *getUiManager() { return m_uiManager; };
+		/// <returns> The uis manager. </returns>
+		inline imanageruis *getManager() { return m_managerUis; };
+
+		/// <summary>
+		/// Sets the current uis manager to a new uis manager.
+		/// </summary>
+		/// <param name="managerUis"> The new uis manager. </param>
+		inline void setMaster(imanageruis *managerUis) { m_managerUis = managerUis; }
 
 		/// <summary>
 		/// Gets the screen container.

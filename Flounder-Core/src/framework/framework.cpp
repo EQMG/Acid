@@ -27,11 +27,6 @@ namespace flounder
 		m_updater->create();
 	}
 
-	void framework::init()
-	{
-		m_updater->init();
-	}
-
 	void framework::run()
 	{
 #ifdef FLOUNDER_PLATFORM_WEB

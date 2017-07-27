@@ -1,15 +1,15 @@
 ﻿#pragma once
 
 #include <flounder.h>
-#include "uis/iuimanager.h"
+#include "uis/imanageruis.h"
 #include "uis/overlaystartup.h"
 
 #include "uis/overlaydebug.h"
 
 using namespace flounder;
 
-class mainuimanager :
-	public iuimanager
+class manageruis :
+	public imanageruis
 {
 public:
 	static const float SLIDE_TIME;
@@ -18,9 +18,9 @@ private:
 	overlaystartup *m_overlayStartup;
 	overlaydebug *m_overlayDebug;
 public:
-	mainuimanager();
+	manageruis();
 
-	~mainuimanager();
+	~manageruis();
 
 	void update() override;
 

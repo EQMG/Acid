@@ -2,7 +2,7 @@
 
 #include "../renderer/irenderer.h"
 
-#include "skybox.h"
+#include "skyboxes.h"
 
 namespace flounder
 {
@@ -20,7 +20,7 @@ namespace flounder
 	private:
 		void prepareRendering(const vector4 &clipPlane, const icamera &camera);
 
-		void renderSkybox(skybox *object);
+		void renderSkybox(skyboxes *object);
 
 		void endRendering();
 	};

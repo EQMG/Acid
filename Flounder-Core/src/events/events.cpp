@@ -18,10 +18,6 @@ namespace flounder
 		delete m_events;
 	}
 
-	void events::init()
-	{
-	}
-
 	void events::update()
 	{
 		for (std::vector<ievent*>::iterator it = m_events->begin(); it < m_events->end(); it++)

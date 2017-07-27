@@ -61,11 +61,6 @@ namespace flounder
 		void load(iupdater *updater);
 
 		/// <summary>
-		/// The initialize function for the updater.
-		/// </summary>
-		void init();
-
-		/// <summary>
 		/// The update function for the updater.
 		/// </summary>
 		void run();

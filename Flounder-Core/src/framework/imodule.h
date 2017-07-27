@@ -23,11 +23,6 @@ namespace flounder
 		}
 
 		/// <summary>
-		/// The initialize function for the module.
-		/// </summary>
-		virtual void init() = 0;
-
-		/// <summary>
 		/// The update function for the module.
 		/// </summary>
 		virtual void update() = 0;
