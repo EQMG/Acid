@@ -7,8 +7,6 @@
 #include "../../devices/keyboard.h"
 #include "../../devices/mouse.h"
 #include "../../events/events.h"
-#include "../../fonts/fonts.h"
-#include "../../guis/guis.h"
 #include "../../loaders/loaders.h"
 #include "../../maths/delta.h"
 #include "../../maths/timer.h"
@@ -18,6 +16,7 @@
 #include "../../skybox/skybox.h"
 #include "../../standards/standards.h"
 #include "../../tasks/tasks.h"
+#include "../../uis/uis.h"
 
 #include "../iupdater.h"
 
@@ -35,14 +34,11 @@ namespace flounder
 		delta *m_deltaRender;
 		timer *m_timerUpdate;
 		timer *m_timerRender;
-		timer *m_timerLog;
 
 		audio *m_audio;
 		camera *m_camera;
 		display *m_display;
 		events *m_events;
-		fonts *m_fonts;
-		guis *m_guis;
 		joysticks *m_joysticks;
 		keyboard *m_keyboard;
 		loaders *m_loaders;
@@ -53,6 +49,7 @@ namespace flounder
 		skybox *m_skybox;
 		standards *m_standards;
 		tasks *m_tasks;
+		uis *m_uis;
 	public:
 		glfwupdater();
 

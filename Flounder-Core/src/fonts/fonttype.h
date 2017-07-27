@@ -2,14 +2,9 @@
 
 #include <vector>
 
-#include "../loaders/loaders.h"
 #include "../textures/texture.h"
-#include "../maths/vector2.h"
 
 #include "metafile.h"
-#include "../guis/guialign.h"
-#include "line.h"
-#include "word.h"
 
 namespace flounder
 {

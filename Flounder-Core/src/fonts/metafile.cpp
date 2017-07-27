@@ -110,7 +110,7 @@ namespace flounder
 		double xOffset = (getValueOfVariable("xoffset") + m_padding.at(PAD_LEFT) - DESIRED_PADDING) * m_horizontalPerPixelSize;
 		double yOffset = (getValueOfVariable("yoffset") + (m_padding.at(PAD_TOP) - DESIRED_PADDING)) * m_verticalPerPixelSize;
 		double xAdvance = (getValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
-		
+
 		if (quadHeight > m_maxSizeY)
 		{
 			m_maxSizeY = quadHeight;
