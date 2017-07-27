@@ -14,10 +14,9 @@ int main()
 {
 	// Creates the framework object.
 	framework *m_framework = new framework();
+	m_framework->setUpdater(new glfwupdater());
 
-	// Loads things to the framework.
-	framework::get()->load(new glfwupdater());
-
+	// Initializes the framework modules.
 	display::get()->setWindowSize(1080, 720);
 	display::get()->setTitle("New Kosmos");
 	display::get()->setIcon("res/newkosmos.png");
@@ -29,7 +28,6 @@ int main()
 
 	mouse::get()->setCustomMouse("res/cursor.png");
 
-	// Initializes the framework.
 	camera::get()->setCamera(new maincamera());
 	camera::get()->setPlayer(new mainplayer());
 	renderer::get()->setManager(new managerrender());
