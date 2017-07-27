@@ -10,7 +10,7 @@ namespace flounder
 	/// <summary>
 	/// A object the represents a texture in a GUI.
 	/// </summary>
-	class guiobject :
+	class gui :
 		public screenobject
 	{
 	private:
@@ -29,12 +29,12 @@ namespace flounder
 		/// <param name="dimensions"> The objects dimensions. </param>
 		/// <param name="texture"> The objects texture. </param>
 		/// <param name="selectedRow"> The default row of the texture to render from. </param>
-		guiobject(screenobject *parent, const vector2 &position, const vector2 &dimensions, texture *texture, const int &selectedRow);
+		gui(screenobject *parent, const vector2 &position, const vector2 &dimensions, texture *texture, const int &selectedRow);
 
 		/// <summary>
 		/// Deconstructor for the gui object.
 		/// </summary>
-		~guiobject();
+		~gui();
 
 		void updateObject() override;
 

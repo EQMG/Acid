@@ -1,5 +1,4 @@
 ﻿#include "overlaystartup.h"
-#include "guis.h"
 
 namespace flounder
 {
@@ -8,14 +7,14 @@ namespace flounder
 	{
 		setInScreenCoords(false);
 
-		m_background = new guiobject(this, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), texture::newTexture()->setFile("res/guis/eg_background.png")->create(), 1);
+		m_background = new gui(this, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), texture::newTexture()->setFile("res/guis/eg_background.png")->create(), 1);
 		m_background->setInScreenCoords(true);
 
-		m_logo = new guiobject(this, vector2(0.5f, 0.5f), vector2(0.4f, 0.4f), texture::newTexture()->setFile("res/guis/equilibrium_games.png")->create(), 1);
+		m_logo = new gui(this, vector2(0.5f, 0.5f), vector2(0.4f, 0.4f), texture::newTexture()->setFile("res/guis/equilibrium_games.png")->create(), 1);
 		m_logo->setInScreenCoords(true);
 
-		//	m_text = new textobject(this, vector2(0.5f, 0.82f), " Copyright (C) 2017, Equilibrium Games - All Rights Reserved. This product uses GLFW, GLEW, STB Image, and Steamworks, along with technologies from The Khronos Group Inc.", 1.32f, fonts::get()->CAFE_FRANCOISE, 0.6f, CENTRE);
-		//	m_text->setColour(colour(1.0f, 1.0f, 1.0f));
+		m_text = new text(this, vector2(0.5f, 0.82f), " Copyright (C) 2017, Equilibrium Games - All Rights Reserved. This product uses GLFW, GLEW, STB Image, and Steamworks, along with technologies from The Khronos Group Inc.", 1.32f, fonts::get()->cafeFrancoise, 0.6f, CENTRE);
+		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f));
 
 		m_starting = true;
 

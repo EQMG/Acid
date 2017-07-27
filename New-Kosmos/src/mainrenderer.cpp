@@ -6,6 +6,7 @@ mainrenderer::mainrenderer()
 
 	m_rendererSkybox = new rendererskybox();
 	m_rendererGuis = new rendererguis();
+	m_rendererFonts = new rendererfonts();
 
 	m_fboRenderer = fbo::newFBO()->fitToScreen(1.0f)->attachments(3)->withAlphaChannel(false)->depthBuffer(TEXTURE)->create();
 	m_deferred = new deferredrenderer();
@@ -23,6 +24,7 @@ mainrenderer::~mainrenderer()
 {
 	delete m_rendererSkybox;
 	delete m_rendererGuis;
+	delete m_rendererFonts;
 
 	delete m_fboRenderer;
 	delete m_deferred;
@@ -84,6 +86,7 @@ void mainrenderer::render()
 
 	output->bindFrameBuffer();
 	m_rendererGuis->render(m_infinity, *camera);
+	m_rendererFonts->render(m_infinity, *camera);
 	output->unbindFrameBuffer();
 
 	// Displays the image to the screen.

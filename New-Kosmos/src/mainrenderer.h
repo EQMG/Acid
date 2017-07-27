@@ -12,6 +12,7 @@ private:
 
 	rendererskybox *m_rendererSkybox;
 	rendererguis *m_rendererGuis;
+	rendererfonts *m_rendererFonts;
 
 	fbo *m_fboRenderer;
 	deferredrenderer *m_deferred;

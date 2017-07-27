@@ -29,7 +29,6 @@ namespace flounder
 		static const double LINE_HEIGHT;
 		static const int NEWLINE_ASCII;
 		static const int SPACE_ASCII;
-
 	private:
 		std::map<int, character*> *m_metadata;
 		std::map<std::string, std::string> *m_values;
@@ -100,7 +99,7 @@ namespace flounder
 		/// <returns> The int array of values associated with the variable. </returns>
 		std::vector<int> getValuesOfVariable(const std::string &variable);
 	public:
-		character *getCharacter(const int &ascii) { m_metadata->at(ascii); }
+		character *getCharacter(const int &ascii) {return m_metadata->at(ascii); }
 
 		double getSpaceWidth() const { return m_spaceWidth; }
 
