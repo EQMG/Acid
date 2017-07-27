@@ -20,7 +20,7 @@ namespace flounder
 	{
 		prepareRendering(clipPlane, camera);
 
-		for (screenobject *screenobject : *guis::get()->getObjects())
+		for (uiobject *screenobject : *uis::get()->getObjects())
 		{
 			text *object = dynamic_cast<text*>(screenobject);
 
@@ -51,7 +51,6 @@ namespace flounder
 
 	void rendererfonts::renderText(text *object)
 	{
-
 		// Binds the layouts.
 		renderer::get()->bindVAO(object->getVaoID(), 2, 0, 1);
 		renderer::get()->bindTexture(object->getTexture(), 0);

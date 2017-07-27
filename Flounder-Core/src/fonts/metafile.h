@@ -99,7 +99,7 @@ namespace flounder
 		/// <returns> The int array of values associated with the variable. </returns>
 		std::vector<int> getValuesOfVariable(const std::string &variable);
 	public:
-		character *getCharacter(const int &ascii) {return m_metadata->at(ascii); }
+		character *getCharacter(const int &ascii) { return m_metadata->at(ascii); }
 
 		double getSpaceWidth() const { return m_spaceWidth; }
 
