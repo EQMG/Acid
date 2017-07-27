@@ -25,7 +25,6 @@ namespace flounder
 
 		for (std::string line : lines)
 		{
-		//	std::cout << line << std::endl;
 			processNextLine(line);
 
 			if (helperstring::contains(line, "info"))
@@ -51,6 +50,7 @@ namespace flounder
 
 	void metafile::processNextLine(const std::string &line)
 	{
+		m_values->clear();
 		std::vector<std::string> parts = helperstring::split(line, SPLITTER);
 
 		for (std::string part : parts)

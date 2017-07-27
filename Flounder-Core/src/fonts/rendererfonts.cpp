@@ -1,50 +1,42 @@
-#include "rendererguis.h"
+#include "rendererfonts.h"
 
 namespace flounder
 {
-	rendererguis::rendererguis() :
+	rendererfonts::rendererfonts() :
 		irenderer()
 	{
-		m_shader = shader::newShader()->addName("guis")
-		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/guis/guiVertex.glsl", loadtype::FILE))
-		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/guis/guiFragment.glsl", loadtype::FILE))
+		m_shader = shader::newShader()->addName("fonts")
+		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/fonts/fontVertex.glsl", loadtype::FILE))
+		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/fonts/fontFragment.glsl", loadtype::FILE))
 		                              ->create();
-		std::vector<GLfloat> positions = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f};
-		m_vaoID = loaders::get()->createVAO();
-		loaders::get()->storeDataInVBO(m_vaoID, positions, 0, 2);
-		m_vaoLength = positions.size() / 2;
 	}
 
-	rendererguis::~rendererguis()
+	rendererfonts::~rendererfonts()
 	{
 		delete m_shader;
-		glDeleteVertexArrays(1, &m_vaoID);
 	}
 
-	void rendererguis::render(const vector4 &clipPlane, const icamera &camera)
+	void rendererfonts::render(const vector4 &clipPlane, const icamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 
 		for (screenobject *screenobject : *guis::get()->getObjects())
 		{
-			gui *object = dynamic_cast<gui*>(screenobject);
+			text *object = dynamic_cast<text*>(screenobject);
 
 			if (object != NULL)
 			{
-				renderGui(object);
+				renderText(object);
 			}
 		}
 
 		endRendering();
 	}
 
-	void rendererguis::prepareRendering(const vector4 &clipPlane, const icamera &camera)
+	void rendererfonts::prepareRendering(const vector4 &clipPlane, const icamera &camera)
 	{
 		// Starts the shader.
 		m_shader->start();
-
-		// Binds the layouts.
-		renderer::get()->bindVAO(m_vaoID, 1, 0);
 
 		// Loads the uniforms.
 		m_shader->loadUniform("aspectRatio", static_cast<float>(display::get()->getAspectRatio()));
@@ -57,9 +49,11 @@ namespace flounder
 		renderer::get()->enableAlphaBlending();
 	}
 
-	void rendererguis::renderGui(gui *object)
+	void rendererfonts::renderText(text *object)
 	{
+
 		// Binds the layouts.
+		renderer::get()->bindVAO(object->getVaoID(), 2, 0, 1);
 		renderer::get()->bindTexture(object->getTexture(), 0);
 
 		// Applies the GL scissor test.
@@ -78,22 +72,21 @@ namespace flounder
 		);
 		m_shader->loadUniform("rotation", static_cast<float>(__radians(object->getRotation())));
 
-		m_shader->loadUniform("alpha", object->getAlpha());
-		m_shader->loadUniform("flipTexture", object->getFlipTexture());
-		m_shader->loadUniform("atlasRows", static_cast<float>(object->getTexture()->getNumberOfRows()));
-		m_shader->loadUniform("atlasOffset", *object->getTextureOffset());
-		m_shader->loadUniform("colourOffset", *object->getColourOffset());
+		m_shader->loadUniform("colour", object->getTextColour()->m_r, object->getTextColour()->m_g, object->getTextColour()->m_b, object->getAlpha());
+		m_shader->loadUniform("borderColour", *object->getBorderColour());
+		m_shader->loadUniform("edgeData", object->calculateEdgeStart(), object->calculateAntialiasSize());
+		m_shader->loadUniform("borderSizes", object->getTotalBorderSize(), object->getGlowSize());
 
 		// Tells the GPU to render this object.
-		renderer::get()->renderArrays(GL_TRIANGLE_STRIP, m_vaoLength);
+		renderer::get()->renderArrays(GL_TRIANGLES, object->getVaoLength());
 		renderer::get()->scissorDisable();
+
+		// Unbinds the layouts.
+		renderer::get()->unbindVAO(2, 0, 1);
 	}
 
-	void rendererguis::endRendering()
+	void rendererfonts::endRendering()
 	{
-		// Unbinds the layouts.
-		renderer::get()->unbindVAO(1, 0);
-
 		// Stops the shader.
 		m_shader->stop();
 	}
