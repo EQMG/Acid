@@ -89,7 +89,6 @@ namespace flounder
 	void mouse::setCustomMouse(const std::string &customMouse)
 	{
 		// Loads a custom cursor.
-#ifndef FLOUNDER_PLATFORM_WEB
 		m_customMouse = customMouse;
 
 		if (!m_customMouse.empty())
@@ -113,7 +112,6 @@ namespace flounder
 			glfwSetCursor(display::get()->getWindow(), cursor);
 			stbi_image_free(data);
 		}
-#endif
 	}
 
 	void mouse::setCursorHidden(const bool &disabled)

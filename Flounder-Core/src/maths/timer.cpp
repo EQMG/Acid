@@ -4,8 +4,13 @@ namespace flounder
 {
 	timer::timer(const double &interval)
 	{
-		m_startTime = framework::get()->getTimeMs();
+		m_startTime = 0.0f;
 		m_interval = interval * 1000.0;
+
+		if (framework::get() != NULL)
+		{
+			m_startTime = framework::get()->getTimeMs();
+		}
 	}
 
 	timer::~timer()
