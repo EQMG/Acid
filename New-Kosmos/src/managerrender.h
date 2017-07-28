@@ -11,6 +11,7 @@ private:
 	vector4 m_infinity;
 
 	rendererskyboxes *m_rendererSkyboxes;
+	rendererparticles *m_rendererParticles;
 	rendererguis *m_rendererGuis;
 	rendererfonts *m_rendererFonts;
 
