@@ -130,7 +130,7 @@
 #include "renderer/renderer.h"
 #include "shaders/shader.h"
 #include "shaders/shadertype.h"
-#include "skyboxes/rendererskybox.h"
+#include "skyboxes/rendererskyboxes.h"
 #include "skyboxes/skyboxes.h"
 #include "space/ispatialobject.h"
 #include "space/ispatialstructure.h"

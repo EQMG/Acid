@@ -1,8 +1,8 @@
-#include "rendererskybox.h"
+#include "rendererskyboxes.h"
 
 namespace flounder
 {
-	rendererskybox::rendererskybox() :
+	rendererskyboxes::rendererskyboxes() :
 		irenderer()
 	{
 		m_shader = shader::newShader()->addName("skybox")
@@ -11,19 +11,19 @@ namespace flounder
 		                              ->create();
 	}
 
-	rendererskybox::~rendererskybox()
+	rendererskyboxes::~rendererskyboxes()
 	{
 		delete m_shader;
 	}
 
-	void rendererskybox::render(const vector4 &clipPlane, const icamera &camera)
+	void rendererskyboxes::render(const vector4 &clipPlane, const icamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 		renderSkybox(skyboxes::get());
 		endRendering();
 	}
 
-	void rendererskybox::prepareRendering(const vector4 &clipPlane, const icamera &camera)
+	void rendererskyboxes::prepareRendering(const vector4 &clipPlane, const icamera &camera)
 	{
 		// Starts the shader.
 		m_shader->start();
@@ -42,7 +42,7 @@ namespace flounder
 		renderer::get()->disableBlending();
 	}
 
-	void rendererskybox::renderSkybox(skyboxes *object)
+	void rendererskyboxes::renderSkybox(skyboxes *object)
 	{
 		// Binds the layouts.
 		renderer::get()->bindVAO(skyboxes::get()->getModel()->getVaoID(), 1, 0);
@@ -60,7 +60,7 @@ namespace flounder
 		renderer::get()->unbindVAO(1, 0);
 	}
 
-	void rendererskybox::endRendering()
+	void rendererskyboxes::endRendering()
 	{
 		// Unbinds the layouts.
 		renderer::get()->depthMask(true);

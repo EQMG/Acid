@@ -6,15 +6,15 @@
 
 namespace flounder
 {
-	class rendererskybox :
+	class rendererskyboxes :
 		public irenderer
 	{
 	private:
 		shader *m_shader;
 	public:
-		rendererskybox();
+		rendererskyboxes();
 
-		~rendererskybox();
+		~rendererskyboxes();
 
 		void render(const vector4 &clipPlane, const icamera &camera) override;
 	private:

@@ -52,6 +52,7 @@ namespace flounder
 
 				if (!(*it)->isAlive())
 				{
+					delete *it;
 					iter->second->erase(it);
 				}
 			}
