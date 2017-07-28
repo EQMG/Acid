@@ -70,7 +70,7 @@ void managerrender::render()
 	//output = m_filterGrain->getFbo();
 
 	//m_filterLensflare->setSunPosition(vector3(100.0f, 10.0f, 0.0f));
-	//m_filterLensflare->setSunHeight(0.0f);
+	//m_filterLensflare->setSunHeight(100.0f);
 	//m_filterLensflare->applyFilter(1, output->getColourTexture(0));
 	//output = m_filterLensflare->getFbo();
 
@@ -80,9 +80,9 @@ void managerrender::render()
 	//m_filterCrt->applyFilter(1, output->getColourTexture(0));
 	//output = m_filterCrt->getFbo();
 
-	//m_pipelinePaused->setBlurFactor(0.1f);
-	//m_pipelinePaused->renderPipelineV(1, output->getColourTexture(0));
-	//output = m_pipelinePaused->getOutput();
+//	m_pipelinePaused->setBlurFactor(0.5f);
+//	m_pipelinePaused->renderPipelineV(1, output->getColourTexture(0));
+//	output = m_pipelinePaused->getOutput();
 
 	output->bindFrameBuffer();
 	m_rendererGuis->render(m_infinity, *camera);

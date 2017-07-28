@@ -15,11 +15,6 @@ namespace flounder
 
 	void filtercombine::storeValues()
 	{
-		m_shader->loadUniform("slideSpace", m_slideSpaceValue);
-	}
-
-	void filtercombine::setSlideSpace(const float &x, const float &y, const float &z, const float &w)
-	{
-		m_slideSpaceValue->set(x, y, z, w);
+		m_shader->loadUniform("slideSpace", *m_slideSpaceValue);
 	}
 }
