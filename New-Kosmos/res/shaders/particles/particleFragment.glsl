@@ -8,6 +8,7 @@ in float textureTransparency;
 
 //---------UNIFORM------------
 layout(binding = 0) uniform sampler2D particleTexture;
+uniform bool polygonMode;
 
 //---------OUT------------
 layout(location = 0) out vec4 out_albedo;
@@ -22,6 +23,11 @@ void main(void)
 
 	out_albedo = mix(colour1, colour2, textureBlendFactor);
 	out_albedo.a -= textureTransparency;
+	
+	if (polygonMode) 
+	{
+		out_albedo = vec4(1.0, 0.0, 0.0, 1.0);
+	}
 
 	if (out_albedo.a <= 0.2) 
 	{

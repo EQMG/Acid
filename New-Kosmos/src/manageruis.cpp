@@ -38,7 +38,7 @@ void manageruis::update()
 
 bool manageruis::isGamePaused()
 {
-	return true; // m_overlayStartup->isStarting()
+	return m_overlayStartup->isStarting();
 }
 
 float manageruis::getBlurFactor()

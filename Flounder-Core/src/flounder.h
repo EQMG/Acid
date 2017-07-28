@@ -82,6 +82,7 @@
 #include "particles/particles.h"
 #include "particles/particlesystem.h"
 #include "particles/particletype.h"
+#include "particles/rendererparticles.h"
 #include "particles/spawns/ispawnparticle.h"
 #include "particles/spawns/spawncircle.h"
 #include "particles/spawns/spawnline.h"
