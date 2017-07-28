@@ -51,7 +51,7 @@ namespace flounder
 		imodule()
 	{
 		m_glfwMajor = 3;
-		m_glfwMinor = 2;
+		m_glfwMinor = 0;
 
 		m_windowWidth = 1080;
 		m_windowHeight = 720;

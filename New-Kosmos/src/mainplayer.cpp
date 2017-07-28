@@ -17,7 +17,7 @@ void mainplayer::update()
 {
 	//if (!uis::get()->getManager()->isGamePaused())
 	//{
-	m_rotation->m_y += static_cast<float>(framework::get()->getDelta()) * 16.20f;
-	m_rotation->m_y = maths::normalizeAngle(m_rotation->m_y);
+	//m_rotation->m_y += static_cast<float>(framework::get()->getDelta()) * 16.20f;
+	//m_rotation->m_y = maths::normalizeAngle(m_rotation->m_y);
 	//}
 }

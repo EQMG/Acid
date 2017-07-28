@@ -56,6 +56,7 @@
     <ClInclude Include="src\framework\glfw\glfwupdater.h" />
     <ClInclude Include="src\framework\imodule.h" />
     <ClInclude Include="src\framework\iupdater.h" />
+    <ClInclude Include="src\particles\rendererparticles.h" />
     <ClInclude Include="src\uis\inputslider.h" />
     <ClInclude Include="src\uis\inputgrabber.h" />
     <ClInclude Include="src\uis\inputtext.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="src\framework\framework.cpp" />
     <ClCompile Include="src\framework\glfw\glfwupdater.cpp" />
     <ClCompile Include="src\guis\gui.cpp" />
+    <ClCompile Include="src\particles\rendererparticles.cpp" />
     <ClCompile Include="src\uis\inputslider.cpp" />
     <ClCompile Include="src\uis\inputgrabber.cpp" />
     <ClCompile Include="src\uis\inputtext.cpp" />

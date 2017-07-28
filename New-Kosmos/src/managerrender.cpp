@@ -5,6 +5,7 @@ managerrender::managerrender()
 	m_infinity = vector4(0.0f, 1.0f, 0.0f, +INFINITY);
 
 	m_rendererSkyboxes = new rendererskyboxes();
+	m_rendererParticles = new rendererparticles();
 	m_rendererGuis = new rendererguis();
 	m_rendererFonts = new rendererfonts();
 
@@ -23,6 +24,7 @@ managerrender::managerrender()
 managerrender::~managerrender()
 {
 	delete m_rendererSkyboxes;
+	delete m_rendererParticles;
 	delete m_rendererGuis;
 	delete m_rendererFonts;
 
@@ -47,6 +49,7 @@ void managerrender::render()
 	icamera *camera = camera::get()->getCamera();
 	renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 0.0f);
 	m_rendererSkyboxes->render(m_infinity, *camera);
+	m_rendererParticles->render(m_infinity, *camera);
 
 	// Unbinds the render FBO.
 	m_fboRenderer->unbindFrameBuffer();

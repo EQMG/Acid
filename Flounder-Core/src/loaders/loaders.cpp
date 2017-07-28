@@ -30,7 +30,27 @@ namespace flounder
 		glBindVertexArray(0);
 	}
 
-	GLuint loaders::createIndicesVBO(GLuint &vaoID, const std::vector<GLint> &indices)
+	int loaders::createEmptyVBO(const int &floatCount)
+	{
+		GLuint result;
+		glGenBuffers(1, &result);
+
+		glBindBuffer(GL_ARRAY_BUFFER, result);
+		glBufferData(GL_ARRAY_BUFFER, floatCount * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		return result;
+	}
+
+	void loaders::updateVBO(const GLuint &vboID, const std::vector<GLfloat> &data)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, vboID);
+		glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), GL_STREAM_DRAW);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, data.size() * sizeof(GLfloat), data.data());
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	GLuint loaders::createIndicesVBO(const GLuint &vaoID, const std::vector<GLint> &indices)
 	{
 		GLuint result;
 		glGenBuffers(1, &result);
@@ -41,7 +61,7 @@ namespace flounder
 		return result;
 	}
 
-	GLuint loaders::storeDataInVBO(GLuint &vaoID, const std::vector<GLfloat> &data, const int &attributeNumber, const int &coordSize)
+	GLuint loaders::storeDataInVBO(const GLuint &vaoID, const std::vector<GLfloat> &data, const int &attributeNumber, const int &coordSize)
 	{
 		GLuint result;
 		glGenBuffers(1, &result);
@@ -49,8 +69,21 @@ namespace flounder
 
 		glBindBuffer(GL_ARRAY_BUFFER, result);
 		glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), GL_STATIC_DRAW);
-		glVertexAttribPointer(attributeNumber, coordSize, GL_FLOAT, false, 0, NULL);
+		glVertexAttribPointer(attributeNumber, coordSize, GL_FLOAT, GL_FALSE, 0, NULL);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		return result;
+	}
+
+	void loaders::addInstancedAttribute(const GLuint &vaoID, const GLuint &vboID, const GLuint &attribute, const GLuint &dataSize, const GLuint &instancedDataLength, const GLuint &offset)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, vboID);
+		glBindVertexArray(vaoID);
+
+		unsigned int address = offset * sizeof(GLfloat);
+		glVertexAttribPointer(attribute, dataSize, GL_FLOAT, GL_FALSE, instancedDataLength * sizeof(GLfloat), &address);
+	 	glVertexAttribDivisor(attribute, 1);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 	}
 }
