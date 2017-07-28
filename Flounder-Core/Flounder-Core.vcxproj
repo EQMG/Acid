@@ -56,6 +56,10 @@
     <ClInclude Include="src\framework\glfw\glfwupdater.h" />
     <ClInclude Include="src\framework\imodule.h" />
     <ClInclude Include="src\framework\iupdater.h" />
+    <ClInclude Include="src\uis\inputslider.h" />
+    <ClInclude Include="src\uis\inputgrabber.h" />
+    <ClInclude Include="src\uis\inputtext.h" />
+    <ClInclude Include="src\uis\inputbutton.h" />
     <ClInclude Include="src\uis\inputdelay.h" />
     <ClInclude Include="src\uis\uialign.h" />
     <ClInclude Include="src\guis\gui.h" />
@@ -192,6 +196,10 @@
     <ClCompile Include="src\framework\framework.cpp" />
     <ClCompile Include="src\framework\glfw\glfwupdater.cpp" />
     <ClCompile Include="src\guis\gui.cpp" />
+    <ClCompile Include="src\uis\inputslider.cpp" />
+    <ClCompile Include="src\uis\inputgrabber.cpp" />
+    <ClCompile Include="src\uis\inputtext.cpp" />
+    <ClCompile Include="src\uis\inputbutton.cpp" />
     <ClCompile Include="src\uis\inputdelay.cpp" />
     <ClCompile Include="src\uis\uis.cpp" />
     <ClCompile Include="src\uis\uiselector.cpp" />

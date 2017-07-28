@@ -32,7 +32,5 @@ namespace flounder
 		texture *getTexture() const { return m_texture; }
 
 		metafile *getMetadata() const { return m_metadata; }
-
-		double getMaxSizeY() { m_metadata->getMaxSizeY(); }
 	};
 }

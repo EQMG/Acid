@@ -26,10 +26,8 @@ with your extension can allow you do task specific things with your Extensions. 
 after creating a instance. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1framework_a4f5440b66d1c2e7e35d9dc7fd733f944}{$\sim$framework} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the framework. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1framework_a1c6123166e03e5ee0effc375cb7a800c}{load} (\hyperlink{classflounder_1_1iupdater}{iupdater} $\ast$updater)
-\begin{DoxyCompactList}\small\item\em Loads the framework module with inital values. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1framework_a88d0efc8e63448e5f342260ffd23054a}{init} ()
-\begin{DoxyCompactList}\small\item\em The initialize function for the updater. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1framework_abfa2c0da27ab46791ee7877115afffa3}{set\+Updater} (\hyperlink{classflounder_1_1iupdater}{iupdater} $\ast$updater)
+\begin{DoxyCompactList}\small\item\em Loads the updater into the framework. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}{run} ()
 \begin{DoxyCompactList}\small\item\em The update function for the updater. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1imodule}{imodule} $\ast$ \hyperlink{classflounder_1_1framework_a84a2314d26174ab02b48bcda8fd5b4e4}{get\+Instance} (const std\+::string \&name)
@@ -217,16 +215,6 @@ Gets the current time of the framework instance.
 \begin{DoxyReturn}{Returns}
 The current framework time in seconds. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1framework_a88d0efc8e63448e5f342260ffd23054a}\label{classflounder_1_1framework_a88d0efc8e63448e5f342260ffd23054a}} 
-\index{flounder\+::framework@{flounder\+::framework}!init@{init}}
-\index{init@{init}!flounder\+::framework@{flounder\+::framework}}
-\subsubsection{\texorpdfstring{init()}{init()}}
-{\footnotesize\ttfamily void flounder\+::framework\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
-
-
-
-The initialize function for the updater. 
-
 \mbox{\Hypertarget{classflounder_1_1framework_ad217b91b7e0f46f305105045396dcdf3}\label{classflounder_1_1framework_ad217b91b7e0f46f305105045396dcdf3}} 
 \index{flounder\+::framework@{flounder\+::framework}!is\+Initialized@{is\+Initialized}}
 \index{is\+Initialized@{is\+Initialized}!flounder\+::framework@{flounder\+::framework}}
@@ -253,21 +241,6 @@ Gets if the framework is running.
 \begin{DoxyReturn}{Returns}
 If the framework is running. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1framework_a1c6123166e03e5ee0effc375cb7a800c}\label{classflounder_1_1framework_a1c6123166e03e5ee0effc375cb7a800c}} 
-\index{flounder\+::framework@{flounder\+::framework}!load@{load}}
-\index{load@{load}!flounder\+::framework@{flounder\+::framework}}
-\subsubsection{\texorpdfstring{load()}{load()}}
-{\footnotesize\ttfamily void flounder\+::framework\+::load (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1iupdater}{iupdater} $\ast$}]{updater }\end{DoxyParamCaption})}
-
-
-
-Loads the framework module with inital values. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em updater} & The updater. \\
-\hline
-\end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1framework_ad443bf70cbc62d372cf39939cd7c2e09}\label{classflounder_1_1framework_ad443bf70cbc62d372cf39939cd7c2e09}} 
 \index{flounder\+::framework@{flounder\+::framework}!request\+Close@{request\+Close}}
 \index{request\+Close@{request\+Close}!flounder\+::framework@{flounder\+::framework}}
@@ -321,6 +294,21 @@ Sets the time offset for the framework (seconds).
 
 \begin{DoxyParams}{Parameters}
 {\em time\+Offset} & The new time offset. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1framework_abfa2c0da27ab46791ee7877115afffa3}\label{classflounder_1_1framework_abfa2c0da27ab46791ee7877115afffa3}} 
+\index{flounder\+::framework@{flounder\+::framework}!set\+Updater@{set\+Updater}}
+\index{set\+Updater@{set\+Updater}!flounder\+::framework@{flounder\+::framework}}
+\subsubsection{\texorpdfstring{set\+Updater()}{setUpdater()}}
+{\footnotesize\ttfamily void flounder\+::framework\+::set\+Updater (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1iupdater}{iupdater} $\ast$}]{updater }\end{DoxyParamCaption})}
+
+
+
+Loads the updater into the framework. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em updater} & The updater. \\
 \hline
 \end{DoxyParams}
 

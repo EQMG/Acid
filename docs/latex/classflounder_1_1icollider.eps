@@ -5,7 +5,7 @@
 %%For: 
 %Magnification: 1.00
 %%Orientation: Portrait
-%%BoundingBox: 0 0 500 344.827586
+%%BoundingBox: 0 0 500 338.983051
 %%Pages: 0
 %%BeginSetup
 %%EndSetup
@@ -19,7 +19,7 @@
 /marginwidth 10 def
 /distx 20 def
 /disty 40 def
-/boundaspect 1.450000 def  % aspect ratio of the BoundingBox (width/height)
+/boundaspect 1.475000 def  % aspect ratio of the BoundingBox (width/height)
 /boundx 500 def
 /boundy boundx boundaspect div def
 /xspacing 0 def
@@ -173,8 +173,8 @@
 
 boxfont setfont
 1 boundaspect scale
-(flounder::skybox) cw
-(flounder::imodule) cw
+(flounder::icollider) cw
+(flounder::sphere) cw
 /boxwidth boxwidth marginwidth 2 mul add def
 /xspacing boxwidth distx add def
 /yspacing boxheight disty add def
@@ -186,12 +186,12 @@ boundx scalefactor div boundy scalefactor div scale
 
 % ----- classes -----
 
- (flounder::skybox) 0.000000 0.000000 box
- (flounder::imodule) 0.000000 1.000000 box
+ (flounder::icollider) 0.000000 1.000000 box
+ (flounder::sphere) 0.000000 0.000000 box
 
 % ----- relations -----
 
 solid
-0 0.000000 0.000000 out
+1 0.000000 0.250000 out
 solid
-1 0.000000 1.000000 in
+0 0.000000 0.750000 in

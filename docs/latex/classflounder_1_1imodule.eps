@@ -5,7 +5,7 @@
 %%For: 
 %Magnification: 1.00
 %%Orientation: Portrait
-%%BoundingBox: 0 0 500 962.962963
+%%BoundingBox: 0 0 500 1111.111111
 %%Pages: 0
 %%BeginSetup
 %%EndSetup
@@ -19,12 +19,12 @@
 /marginwidth 10 def
 /distx 20 def
 /disty 40 def
-/boundaspect 0.519231 def  % aspect ratio of the BoundingBox (width/height)
+/boundaspect 0.450000 def  % aspect ratio of the BoundingBox (width/height)
 /boundx 500 def
 /boundy boundx boundaspect div def
 /xspacing 0 def
 /yspacing 0 def
-/rows 13 def
+/rows 15 def
 /cols 2 def
 /scalefactor 0 def
 /boxfont /Times-Roman findfont fontheight scalefont def
@@ -182,10 +182,12 @@ boxfont setfont
 (flounder::keyboard) cw
 (flounder::loaders) cw
 (flounder::mouse) cw
+(flounder::particles) cw
 (flounder::processing) cw
-(flounder::skybox) cw
+(flounder::skyboxes) cw
 (flounder::standards) cw
 (flounder::tasks) cw
+(flounder::uis) cw
 /boxwidth boxwidth marginwidth 2 mul add def
 /xspacing boxwidth distx add def
 /yspacing boxheight disty add def
@@ -197,24 +199,30 @@ boundx scalefactor div boundy scalefactor div scale
 
 % ----- classes -----
 
- (flounder::imodule) 0.000000 12.000000 box
- (flounder::audio) 1.000000 11.000000 box
- (flounder::camera) 1.000000 10.000000 box
- (flounder::display) 1.000000 9.000000 box
- (flounder::events) 1.000000 8.000000 box
- (flounder::joysticks) 1.000000 7.000000 box
- (flounder::keyboard) 1.000000 6.000000 box
- (flounder::loaders) 1.000000 5.000000 box
- (flounder::mouse) 1.000000 4.000000 box
- (flounder::processing) 1.000000 3.000000 box
- (flounder::skybox) 1.000000 2.000000 box
- (flounder::standards) 1.000000 1.000000 box
- (flounder::tasks) 1.000000 0.000000 box
+ (flounder::imodule) 0.000000 14.000000 box
+ (flounder::audio) 1.000000 13.000000 box
+ (flounder::camera) 1.000000 12.000000 box
+ (flounder::display) 1.000000 11.000000 box
+ (flounder::events) 1.000000 10.000000 box
+ (flounder::joysticks) 1.000000 9.000000 box
+ (flounder::keyboard) 1.000000 8.000000 box
+ (flounder::loaders) 1.000000 7.000000 box
+ (flounder::mouse) 1.000000 6.000000 box
+ (flounder::particles) 1.000000 5.000000 box
+ (flounder::processing) 1.000000 4.000000 box
+ (flounder::skyboxes) 1.000000 3.000000 box
+ (flounder::standards) 1.000000 2.000000 box
+ (flounder::tasks) 1.000000 1.000000 box
+ (flounder::uis) 1.000000 0.000000 box
 
 % ----- relations -----
 
 solid
-1 0.000000 11.250000 out
+1 0.000000 13.250000 out
+solid
+0 0.000000 13.500000 hedge
+solid
+0 0.000000 12.500000 hedge
 solid
 0 0.000000 11.500000 hedge
 solid
@@ -240,4 +248,4 @@ solid
 solid
 0 0.000000 0.500000 hedge
 solid
-0.000000 12.000000 0.500000 vedge
+0.000000 14.000000 0.500000 vedge

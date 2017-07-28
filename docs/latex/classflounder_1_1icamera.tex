@@ -20,24 +20,12 @@ virtual void \hyperlink{classflounder_1_1icamera_ac488c3db589fbba024d80d1f41dd79
 \begin{DoxyCompactList}\small\item\em Checks inputs and carries out smooth camera movement. Should be called every frame. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classflounder_1_1icamera_a20ee0d37d318012ac51e132ed02af6da}{reflect} (const float \&water\+Height)=0
 \begin{DoxyCompactList}\small\item\em Prepares the camera for the reflection render pass. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classflounder_1_1icamera_a1b7c9e3be4be8c5aab2a3c1b41430c47}\label{classflounder_1_1icamera_a1b7c9e3be4be8c5aab2a3c1b41430c47}} 
 virtual float \hyperlink{classflounder_1_1icamera_a1b7c9e3be4be8c5aab2a3c1b41430c47}{get\+Near\+Plane} () const =0
-\begin{DoxyCompactList}\small\item\em \begin{DoxyReturn}{Returns}
-The distance of the near pane of the view frustum. 
-\end{DoxyReturn}
-\end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classflounder_1_1icamera_a38f71d53573a018836d899973996a3c0}\label{classflounder_1_1icamera_a38f71d53573a018836d899973996a3c0}} 
+\begin{DoxyCompactList}\small\item\em Gets the distance of the near pane of the view frustum. \end{DoxyCompactList}\item 
 virtual float \hyperlink{classflounder_1_1icamera_a38f71d53573a018836d899973996a3c0}{get\+Far\+Plane} () const =0
-\begin{DoxyCompactList}\small\item\em \begin{DoxyReturn}{Returns}
-The distance of the view frustum\textquotesingle{}s far plane. 
-\end{DoxyReturn}
-\end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classflounder_1_1icamera_a1bf12448ac5ea3ed1ffa7c9a73424dde}\label{classflounder_1_1icamera_a1bf12448ac5ea3ed1ffa7c9a73424dde}} 
+\begin{DoxyCompactList}\small\item\em Gets the distance of the view frustum\textquotesingle{}s far plane. \end{DoxyCompactList}\item 
 virtual float \hyperlink{classflounder_1_1icamera_a1bf12448ac5ea3ed1ffa7c9a73424dde}{get\+F\+OV} () const =0
-\begin{DoxyCompactList}\small\item\em \begin{DoxyReturn}{Returns}
-The field of view angle for the view frustum. 
-\end{DoxyReturn}
-\end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Gets the field of view angle for the view frustum. \end{DoxyCompactList}\item 
 virtual \hyperlink{classflounder_1_1frustum}{frustum} $\ast$ \hyperlink{classflounder_1_1icamera_a854ed7169c5514c18e0bb09e97dfcde6}{get\+View\+Frustum} () const =0
 \begin{DoxyCompactList}\small\item\em Gets the view frustum created by the current camera position and rotation. \end{DoxyCompactList}\item 
 virtual \hyperlink{classflounder_1_1ray}{ray} $\ast$ \hyperlink{classflounder_1_1icamera_ab2ff70f38f2e5a93223d3590b75a3b77}{get\+View\+Ray} () const =0
@@ -81,6 +69,45 @@ Deconstructor for the camera.
 
 
 \subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1icamera_a38f71d53573a018836d899973996a3c0}\label{classflounder_1_1icamera_a38f71d53573a018836d899973996a3c0}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!get\+Far\+Plane@{get\+Far\+Plane}}
+\index{get\+Far\+Plane@{get\+Far\+Plane}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{get\+Far\+Plane()}{getFarPlane()}}
+{\footnotesize\ttfamily virtual float flounder\+::icamera\+::get\+Far\+Plane (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the distance of the view frustum\textquotesingle{}s far plane. 
+
+\begin{DoxyReturn}{Returns}
+The distance of the view frustum\textquotesingle{}s far plane. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1icamera_a1bf12448ac5ea3ed1ffa7c9a73424dde}\label{classflounder_1_1icamera_a1bf12448ac5ea3ed1ffa7c9a73424dde}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!get\+F\+OV@{get\+F\+OV}}
+\index{get\+F\+OV@{get\+F\+OV}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{get\+F\+O\+V()}{getFOV()}}
+{\footnotesize\ttfamily virtual float flounder\+::icamera\+::get\+F\+OV (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the field of view angle for the view frustum. 
+
+\begin{DoxyReturn}{Returns}
+The field of view angle for the view frustum. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1icamera_a1b7c9e3be4be8c5aab2a3c1b41430c47}\label{classflounder_1_1icamera_a1b7c9e3be4be8c5aab2a3c1b41430c47}} 
+\index{flounder\+::icamera@{flounder\+::icamera}!get\+Near\+Plane@{get\+Near\+Plane}}
+\index{get\+Near\+Plane@{get\+Near\+Plane}!flounder\+::icamera@{flounder\+::icamera}}
+\subsubsection{\texorpdfstring{get\+Near\+Plane()}{getNearPlane()}}
+{\footnotesize\ttfamily virtual float flounder\+::icamera\+::get\+Near\+Plane (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the distance of the near pane of the view frustum. 
+
+\begin{DoxyReturn}{Returns}
+The distance of the near pane of the view frustum. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1icamera_aa6639f6919b4bc30b05fc8d73bf57ab2}\label{classflounder_1_1icamera_aa6639f6919b4bc30b05fc8d73bf57ab2}} 
 \index{flounder\+::icamera@{flounder\+::icamera}!get\+Position@{get\+Position}}
 \index{get\+Position@{get\+Position}!flounder\+::icamera@{flounder\+::icamera}}

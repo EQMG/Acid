@@ -22,12 +22,12 @@ Inheritance diagram for flounder\+:\+:mouse\+:\begin{figure}[H]
 \begin{DoxyCompactList}\small\item\em Creates a new mouse module. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1mouse_a3038f39f358e37d15059af6c1675497b}{$\sim$mouse} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the mouse module. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1mouse_af88cf24fffafeb3e6ed1db19ec40698c}{load} (const std\+::string \&custom\+Mouse)
-\begin{DoxyCompactList}\small\item\em Loads the mouse module with inital values. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1mouse_a8a550ad472e61ed74ca42c07777bdd1f}{init} () override
-\begin{DoxyCompactList}\small\item\em The initialize function for the module. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1mouse_aa1b1d60e1d1cf4ec7d19eaef65e040bc}{update} () override
 \begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
+std\+::string \& \hyperlink{classflounder_1_1mouse_a43d0ec3660e698553e9c1f2f4403718e}{get\+Custom\+Mouse} ()
+\begin{DoxyCompactList}\small\item\em Gets the mouses custom mouse file. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1mouse_ab6b1c2f498e6fdef0a2ff827ef93928a}{set\+Custom\+Mouse} (const std\+::string \&custom\+Mouse)
+\begin{DoxyCompactList}\small\item\em Sets the custom mouse file. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1mouse_aff9750c7d68e93aea4c2d3c447677a9e}{set\+Cursor\+Hidden} (const bool \&disabled)
 \begin{DoxyCompactList}\small\item\em Sets if the operating systems cursor is hidden whilst in the display. \end{DoxyCompactList}\item 
 bool \hyperlink{classflounder_1_1mouse_a327552b319742adbb721733510f8a828}{get\+Button} (const int \&button)
@@ -171,6 +171,19 @@ G\+L\+FW Actions\+: G\+L\+F\+W\+\_\+\+P\+R\+E\+SS, G\+L\+F\+W\+\_\+\+R\+E\+L\+E\
 \begin{DoxyReturn}{Returns}
 If the mouse button is currently pressed. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1mouse_a43d0ec3660e698553e9c1f2f4403718e}\label{classflounder_1_1mouse_a43d0ec3660e698553e9c1f2f4403718e}} 
+\index{flounder\+::mouse@{flounder\+::mouse}!get\+Custom\+Mouse@{get\+Custom\+Mouse}}
+\index{get\+Custom\+Mouse@{get\+Custom\+Mouse}!flounder\+::mouse@{flounder\+::mouse}}
+\subsubsection{\texorpdfstring{get\+Custom\+Mouse()}{getCustomMouse()}}
+{\footnotesize\ttfamily std\+::string \& flounder\+::mouse\+::get\+Custom\+Mouse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the mouses custom mouse file. 
+
+\begin{DoxyReturn}{Returns}
+The custom mouse file. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1mouse_aca4c4c0498247db6fafef3ad7fb7a729}\label{classflounder_1_1mouse_aca4c4c0498247db6fafef3ad7fb7a729}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!get\+Delta\+Wheel@{get\+Delta\+Wheel}}
 \index{get\+Delta\+Wheel@{get\+Delta\+Wheel}!flounder\+::mouse@{flounder\+::mouse}}
@@ -236,20 +249,6 @@ Gets the mouses screen y position.
 \begin{DoxyReturn}{Returns}
 The mouses y position. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1mouse_a8a550ad472e61ed74ca42c07777bdd1f}\label{classflounder_1_1mouse_a8a550ad472e61ed74ca42c07777bdd1f}} 
-\index{flounder\+::mouse@{flounder\+::mouse}!init@{init}}
-\index{init@{init}!flounder\+::mouse@{flounder\+::mouse}}
-\subsubsection{\texorpdfstring{init()}{init()}}
-{\footnotesize\ttfamily void flounder\+::mouse\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
-
-
-
-The initialize function for the module. 
-
-
-
-Implements \hyperlink{classflounder_1_1imodule_a1725ef346952884d0741de61aba1e0c7}{flounder\+::imodule}.
-
 \mbox{\Hypertarget{classflounder_1_1mouse_a84181116f71d9f8e3c01afca2aa2554f}\label{classflounder_1_1mouse_a84181116f71d9f8e3c01afca2aa2554f}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!is\+Cursor\+Disabled@{is\+Cursor\+Disabled}}
 \index{is\+Cursor\+Disabled@{is\+Cursor\+Disabled}!flounder\+::mouse@{flounder\+::mouse}}
@@ -276,21 +275,6 @@ Gets if the display is selected.
 \begin{DoxyReturn}{Returns}
 If the display is selected. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1mouse_af88cf24fffafeb3e6ed1db19ec40698c}\label{classflounder_1_1mouse_af88cf24fffafeb3e6ed1db19ec40698c}} 
-\index{flounder\+::mouse@{flounder\+::mouse}!load@{load}}
-\index{load@{load}!flounder\+::mouse@{flounder\+::mouse}}
-\subsubsection{\texorpdfstring{load()}{load()}}
-{\footnotesize\ttfamily void flounder\+::mouse\+::load (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{custom\+Mouse }\end{DoxyParamCaption})}
-
-
-
-Loads the mouse module with inital values. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em custom\+Mouse} & The custom cursor file path. \\
-\hline
-\end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1mouse_aff9750c7d68e93aea4c2d3c447677a9e}\label{classflounder_1_1mouse_aff9750c7d68e93aea4c2d3c447677a9e}} 
 \index{flounder\+::mouse@{flounder\+::mouse}!set\+Cursor\+Hidden@{set\+Cursor\+Hidden}}
 \index{set\+Cursor\+Hidden@{set\+Cursor\+Hidden}!flounder\+::mouse@{flounder\+::mouse}}
@@ -304,6 +288,21 @@ Sets if the operating systems cursor is hidden whilst in the display.
 
 \begin{DoxyParams}{Parameters}
 {\em disabled} & If the system cursor should be disabled or hidden when not shown. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1mouse_ab6b1c2f498e6fdef0a2ff827ef93928a}\label{classflounder_1_1mouse_ab6b1c2f498e6fdef0a2ff827ef93928a}} 
+\index{flounder\+::mouse@{flounder\+::mouse}!set\+Custom\+Mouse@{set\+Custom\+Mouse}}
+\index{set\+Custom\+Mouse@{set\+Custom\+Mouse}!flounder\+::mouse@{flounder\+::mouse}}
+\subsubsection{\texorpdfstring{set\+Custom\+Mouse()}{setCustomMouse()}}
+{\footnotesize\ttfamily void flounder\+::mouse\+::set\+Custom\+Mouse (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{custom\+Mouse }\end{DoxyParamCaption})}
+
+
+
+Sets the custom mouse file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em title} & The new custom mouse file. \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1mouse_a47fae906e36e62f4cfd5939b37a0476c}\label{classflounder_1_1mouse_a47fae906e36e62f4cfd5939b37a0476c}} 

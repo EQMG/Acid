@@ -1,0 +1,240 @@
+\hypertarget{classflounder_1_1particle}{}\section{flounder\+:\+:particle Class Reference}
+\label{classflounder_1_1particle}\index{flounder\+::particle@{flounder\+::particle}}
+
+
+A instance of a particle type.  
+
+
+
+
+{\ttfamily \#include $<$particle.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:particle\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1particle}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1particle_a031b89de2f5f74b55cc97209229eaccd}{particle} (\hyperlink{classflounder_1_1particletype}{particletype} $\ast$particle\+Type, const \hyperlink{classflounder_1_1vector3}{vector3} \&position, const \hyperlink{classflounder_1_1vector3}{vector3} \&velocity, const float \&life\+Length, const float \&rotation, const float \&scale, const float \&gravity\+Effect)
+\begin{DoxyCompactList}\small\item\em Creates a new particle object. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1particle_a156e09a44b655e9d64d90302852ae144}{$\sim$particle} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the particle. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1particle}{particle} $\ast$ \hyperlink{classflounder_1_1particle_a6572109ef15a5cd352d1a8ded68123cb}{set} (\hyperlink{classflounder_1_1particletype}{particletype} $\ast$particle\+Type, const \hyperlink{classflounder_1_1vector3}{vector3} \&position, const \hyperlink{classflounder_1_1vector3}{vector3} \&velocity, const float \&life\+Length, const float \&rotation, const float \&scale, const float \&gravity\+Effect)
+\begin{DoxyCompactList}\small\item\em Sets this particle to a new particle object. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1particle_ad524600c5aa2c2594896cf8702187e7e}{update} ()
+\begin{DoxyCompactList}\small\item\em Updates the particle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1particle_accf9e8afa49a6b0406256e09403106f0}\label{classflounder_1_1particle_accf9e8afa49a6b0406256e09403106f0}} 
+bool {\bfseries is\+Alive} ()
+\item 
+\hyperlink{classflounder_1_1icollider}{icollider} $\ast$ \hyperlink{classflounder_1_1particle_a158ec50298e711488720eaf36600f828}{get\+Collider} () override
+\begin{DoxyCompactList}\small\item\em Gets the shape that fully encloses the object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a29749320a78b2f8d77d07eb4c0515d10}\label{classflounder_1_1particle_a29749320a78b2f8d77d07eb4c0515d10}} 
+\hyperlink{classflounder_1_1particletype}{particletype} $\ast$ {\bfseries get\+Particle\+Type} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a4996acf5600d61e557afdf85a84c90b5}\label{classflounder_1_1particle_a4996acf5600d61e557afdf85a84c90b5}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries get\+Position} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_ad5d490782023e2b74b9572eaf1bad1c7}\label{classflounder_1_1particle_ad5d490782023e2b74b9572eaf1bad1c7}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries get\+Velocity} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a97ed8a79b1dfa9447b819af7681dae41}\label{classflounder_1_1particle_a97ed8a79b1dfa9447b819af7681dae41}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries get\+Change} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a92989b561e40a753eec1e86cb1ed55ab}\label{classflounder_1_1particle_a92989b561e40a753eec1e86cb1ed55ab}} 
+\hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries get\+Texture\+Offset1} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_afaaadfbeabea2755cbc4ba3d702ca964}\label{classflounder_1_1particle_afaaadfbeabea2755cbc4ba3d702ca964}} 
+\hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries get\+Texture\+Offset2} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a51381e975c40699a1c13e58b4938ec37}\label{classflounder_1_1particle_a51381e975c40699a1c13e58b4938ec37}} 
+float {\bfseries get\+Life\+Length} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a8b20ef80546d69f7ade7eed8149ec8e0}\label{classflounder_1_1particle_a8b20ef80546d69f7ade7eed8149ec8e0}} 
+float {\bfseries get\+Rotation} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a18173d2c6adccee46325fd1c116110fa}\label{classflounder_1_1particle_a18173d2c6adccee46325fd1c116110fa}} 
+float {\bfseries get\+Scale} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_ad63243ad144632fc3f1402c2d8896ead}\label{classflounder_1_1particle_ad63243ad144632fc3f1402c2d8896ead}} 
+float {\bfseries get\+Gravity\+Effect} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a47672795730ab744ee1a9b9e6fe32991}\label{classflounder_1_1particle_a47672795730ab744ee1a9b9e6fe32991}} 
+float {\bfseries get\+Elapsed\+Time} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a279e94d13fad7e03bcb293a7fdf7daa9}\label{classflounder_1_1particle_a279e94d13fad7e03bcb293a7fdf7daa9}} 
+float {\bfseries get\+Transparency} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_ad4a7d6a97c28adba15c6fdfe6b46261f}\label{classflounder_1_1particle_ad4a7d6a97c28adba15c6fdfe6b46261f}} 
+float {\bfseries get\+Texture\+Blend\+Factor} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a694ec8ec5b6b43dbd2bc1d0fbbd3cf97}\label{classflounder_1_1particle_a694ec8ec5b6b43dbd2bc1d0fbbd3cf97}} 
+float {\bfseries get\+Distance\+To\+Camera} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_ac263c9719d21291530488c6fbb642dca}\label{classflounder_1_1particle_ac263c9719d21291530488c6fbb642dca}} 
+\hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries update\+Texture\+Offset} (\hyperlink{classflounder_1_1vector2}{vector2} $\ast$offset, const int \&index)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a56865f63987d6d2be289a38f34bcdfd3}\label{classflounder_1_1particle_a56865f63987d6d2be289a38f34bcdfd3}} 
+\hyperlink{classflounder_1_1particletype}{particletype} $\ast$ {\bfseries m\+\_\+particle\+Type}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a9899089085a56b9bf80b13ea2f9e081f}\label{classflounder_1_1particle_a9899089085a56b9bf80b13ea2f9e081f}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+position}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_ab5865cf82a4f63396c710cecdc9fc79a}\label{classflounder_1_1particle_ab5865cf82a4f63396c710cecdc9fc79a}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+velocity}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a419470d74d3164dfacecb80b3db920fb}\label{classflounder_1_1particle_a419470d74d3164dfacecb80b3db920fb}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+change}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_ae3600f9ea12e27d89c2cc7fcdfc77392}\label{classflounder_1_1particle_ae3600f9ea12e27d89c2cc7fcdfc77392}} 
+aabb $\ast$ {\bfseries m\+\_\+aabb}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a923c723b9e8ce4a34c9ffe57d4836166}\label{classflounder_1_1particle_a923c723b9e8ce4a34c9ffe57d4836166}} 
+\hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries m\+\_\+texture\+Offset1}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_ae735df1259257f4aa1aa972fb13a204d}\label{classflounder_1_1particle_ae735df1259257f4aa1aa972fb13a204d}} 
+\hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries m\+\_\+texture\+Offset2}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a12493a5683a2ea3b401c7dec2957d015}\label{classflounder_1_1particle_a12493a5683a2ea3b401c7dec2957d015}} 
+float {\bfseries m\+\_\+life\+Length}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_ae4e5d8997c04eb99b9819913804741f1}\label{classflounder_1_1particle_ae4e5d8997c04eb99b9819913804741f1}} 
+float {\bfseries m\+\_\+rotation}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_ae8686dfaa13dcd03fa8b8ff2bc5e4df7}\label{classflounder_1_1particle_ae8686dfaa13dcd03fa8b8ff2bc5e4df7}} 
+float {\bfseries m\+\_\+scale}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a89fa019cd36d5e6fa542eb33ac9b34b5}\label{classflounder_1_1particle_a89fa019cd36d5e6fa542eb33ac9b34b5}} 
+float {\bfseries m\+\_\+gravity\+Effect}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a828c23414722c25eb3f89b21a419440c}\label{classflounder_1_1particle_a828c23414722c25eb3f89b21a419440c}} 
+float {\bfseries m\+\_\+elapsed\+Time}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_af2ceb2a4d87d3be75e37b57406ff7aee}\label{classflounder_1_1particle_af2ceb2a4d87d3be75e37b57406ff7aee}} 
+float {\bfseries m\+\_\+transparency}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a01141f7b55d500f6585c222c5805c73c}\label{classflounder_1_1particle_a01141f7b55d500f6585c222c5805c73c}} 
+float {\bfseries m\+\_\+texture\+Blend\+Factor}
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_adcb853f70ee498c3a766da5b2b25c529}\label{classflounder_1_1particle_adcb853f70ee498c3a766da5b2b25c529}} 
+float {\bfseries m\+\_\+distance\+To\+Camera}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A instance of a particle type. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1particle_a031b89de2f5f74b55cc97209229eaccd}\label{classflounder_1_1particle_a031b89de2f5f74b55cc97209229eaccd}} 
+\index{flounder\+::particle@{flounder\+::particle}!particle@{particle}}
+\index{particle@{particle}!flounder\+::particle@{flounder\+::particle}}
+\subsubsection{\texorpdfstring{particle()}{particle()}}
+{\footnotesize\ttfamily flounder\+::particle\+::particle (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1particletype}{particletype} $\ast$}]{particle\+Type,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{position,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{velocity,  }\item[{const float \&}]{life\+Length,  }\item[{const float \&}]{rotation,  }\item[{const float \&}]{scale,  }\item[{const float \&}]{gravity\+Effect }\end{DoxyParamCaption})}
+
+
+
+Creates a new particle object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em particle\+Type} & The particle template to build from. \\
+\hline
+{\em position} & The particles initial position. \\
+\hline
+{\em velocity} & The particles initial velocity. \\
+\hline
+{\em life\+Length} & The particles life length. \\
+\hline
+{\em rotation} & The particles rotation. \\
+\hline
+{\em scale} & The particles scale. \\
+\hline
+{\em gravity\+Effect} & The particles gravity effect. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1particle_a156e09a44b655e9d64d90302852ae144}\label{classflounder_1_1particle_a156e09a44b655e9d64d90302852ae144}} 
+\index{flounder\+::particle@{flounder\+::particle}!````~particle@{$\sim$particle}}
+\index{````~particle@{$\sim$particle}!flounder\+::particle@{flounder\+::particle}}
+\subsubsection{\texorpdfstring{$\sim$particle()}{~particle()}}
+{\footnotesize\ttfamily flounder\+::particle\+::$\sim$particle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the particle. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1particle_a158ec50298e711488720eaf36600f828}\label{classflounder_1_1particle_a158ec50298e711488720eaf36600f828}} 
+\index{flounder\+::particle@{flounder\+::particle}!get\+Collider@{get\+Collider}}
+\index{get\+Collider@{get\+Collider}!flounder\+::particle@{flounder\+::particle}}
+\subsubsection{\texorpdfstring{get\+Collider()}{getCollider()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1icollider}{icollider}$\ast$ flounder\+::particle\+::get\+Collider (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets the shape that fully encloses the object. 
+
+\begin{DoxyReturn}{Returns}
+Returns a shape fully enclosing the object. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1ispatialobject_af3867cbb5f35b0296a16af77703e6c81}{flounder\+::ispatialobject}.
+
+\mbox{\Hypertarget{classflounder_1_1particle_a6572109ef15a5cd352d1a8ded68123cb}\label{classflounder_1_1particle_a6572109ef15a5cd352d1a8ded68123cb}} 
+\index{flounder\+::particle@{flounder\+::particle}!set@{set}}
+\index{set@{set}!flounder\+::particle@{flounder\+::particle}}
+\subsubsection{\texorpdfstring{set()}{set()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1particle}{particle} $\ast$ flounder\+::particle\+::set (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1particletype}{particletype} $\ast$}]{particle\+Type,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{position,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{velocity,  }\item[{const float \&}]{life\+Length,  }\item[{const float \&}]{rotation,  }\item[{const float \&}]{scale,  }\item[{const float \&}]{gravity\+Effect }\end{DoxyParamCaption})}
+
+
+
+Sets this particle to a new particle object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em particle\+Type} & The particle template to build from. \\
+\hline
+{\em position} & The particles initial position. \\
+\hline
+{\em velocity} & The particles initial velocity. \\
+\hline
+{\em life\+Length} & The particles life length. \\
+\hline
+{\em rotation} & The particles rotation. \\
+\hline
+{\em scale} & The particles scale. \\
+\hline
+{\em gravity\+Effect} & The particles gravity effect. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1particle_ad524600c5aa2c2594896cf8702187e7e}\label{classflounder_1_1particle_ad524600c5aa2c2594896cf8702187e7e}} 
+\index{flounder\+::particle@{flounder\+::particle}!update@{update}}
+\index{update@{update}!flounder\+::particle@{flounder\+::particle}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::particle\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates the particle. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/particles/particle.\+h\item 
+Flounder-\/\+Core/src/particles/particle.\+cpp\end{DoxyCompactItemize}

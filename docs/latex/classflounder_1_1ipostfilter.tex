@@ -30,6 +30,8 @@ virtual \hyperlink{classflounder_1_1ipostfilter_aca15b2f21a5f07ddcff5dcad764e137
 \begin{DoxyCompactList}\small\item\em Deconstructor for the post filter. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1ipostfilter_a34cced83864d9d6b1c664a0337cd97b2}{apply\+Filter} (const int n\+\_\+args,...)
 \begin{DoxyCompactList}\small\item\em Renders the filter to its fbo. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1ipostfilter_a59407e666a5f2ae9767b9fc0f0e25ced}{apply\+Filter} (const int n\+\_\+args, va\+\_\+list args)
+\begin{DoxyCompactList}\small\item\em Renders the filter to its fbo. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classflounder_1_1ipostfilter_a9b658b4672718d5ac36539875bde722e}{store\+Values} ()=0
 \begin{DoxyCompactList}\small\item\em Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started. \end{DoxyCompactList}\item 
 fbo $\ast$ \hyperlink{classflounder_1_1ipostfilter_ae074e279e1e3c6ddea5df8530802b08b}{get\+Fbo} () const
@@ -138,8 +140,25 @@ Deconstructor for the post filter.
 \mbox{\Hypertarget{classflounder_1_1ipostfilter_a34cced83864d9d6b1c664a0337cd97b2}\label{classflounder_1_1ipostfilter_a34cced83864d9d6b1c664a0337cd97b2}} 
 \index{flounder\+::ipostfilter@{flounder\+::ipostfilter}!apply\+Filter@{apply\+Filter}}
 \index{apply\+Filter@{apply\+Filter}!flounder\+::ipostfilter@{flounder\+::ipostfilter}}
-\subsubsection{\texorpdfstring{apply\+Filter()}{applyFilter()}}
+\subsubsection{\texorpdfstring{apply\+Filter()}{applyFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily void flounder\+::ipostfilter\+::apply\+Filter (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Renders the filter to its fbo. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being bound to the shader. \\
+\hline
+{\em ...} & The textures being bound to the shader. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1ipostfilter_a59407e666a5f2ae9767b9fc0f0e25ced}\label{classflounder_1_1ipostfilter_a59407e666a5f2ae9767b9fc0f0e25ced}} 
+\index{flounder\+::ipostfilter@{flounder\+::ipostfilter}!apply\+Filter@{apply\+Filter}}
+\index{apply\+Filter@{apply\+Filter}!flounder\+::ipostfilter@{flounder\+::ipostfilter}}
+\subsubsection{\texorpdfstring{apply\+Filter()}{applyFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void flounder\+::ipostfilter\+::apply\+Filter (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{va\+\_\+list}]{args }\end{DoxyParamCaption})}
 
 
 

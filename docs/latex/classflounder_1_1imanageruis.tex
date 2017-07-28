@@ -1,0 +1,111 @@
+\hypertarget{classflounder_1_1imanageruis}{}\section{flounder\+:\+:imanageruis Class Reference}
+\label{classflounder_1_1imanageruis}\index{flounder\+::imanageruis@{flounder\+::imanageruis}}
+
+
+A interface used to manage a main UI system.  
+
+
+
+
+{\ttfamily \#include $<$imanageruis.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1imanageruis_a11b6e709a8beb3a82f6febe132a7af1d}{imanageruis} ()
+\begin{DoxyCompactList}\small\item\em Creates a new ui manager. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1imanageruis_adad4d9b86cea3db156f63e659faae623}{$\sim$imanageruis} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the ui manager. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classflounder_1_1imanageruis_a55a6b9eab0233c51c12b8819ba264b95}{update} ()=0
+\begin{DoxyCompactList}\small\item\em Run when updating the ui manager. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classflounder_1_1imanageruis_ad79a86978a96901e62ced2e0e0f09af3}{is\+Game\+Paused} ()=0
+\begin{DoxyCompactList}\small\item\em Gets if the main menu is open. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classflounder_1_1imanageruis_a8acc9382f12a79893306145138034871}{get\+Blur\+Factor} ()=0
+\begin{DoxyCompactList}\small\item\em Gets the main menu\textquotesingle{}s blur factor. \end{DoxyCompactList}\item 
+virtual \hyperlink{classflounder_1_1colour}{colour} $\ast$ \hyperlink{classflounder_1_1imanageruis_add2f4d36a50adc177088f3a56c23a91a}{get\+Primary\+Colour} ()=0
+\begin{DoxyCompactList}\small\item\em The primary colour to be used in UI elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A interface used to manage a main UI system. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1imanageruis_a11b6e709a8beb3a82f6febe132a7af1d}\label{classflounder_1_1imanageruis_a11b6e709a8beb3a82f6febe132a7af1d}} 
+\index{flounder\+::imanageruis@{flounder\+::imanageruis}!imanageruis@{imanageruis}}
+\index{imanageruis@{imanageruis}!flounder\+::imanageruis@{flounder\+::imanageruis}}
+\subsubsection{\texorpdfstring{imanageruis()}{imanageruis()}}
+{\footnotesize\ttfamily flounder\+::imanageruis\+::imanageruis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new ui manager. 
+
+\mbox{\Hypertarget{classflounder_1_1imanageruis_adad4d9b86cea3db156f63e659faae623}\label{classflounder_1_1imanageruis_adad4d9b86cea3db156f63e659faae623}} 
+\index{flounder\+::imanageruis@{flounder\+::imanageruis}!````~imanageruis@{$\sim$imanageruis}}
+\index{````~imanageruis@{$\sim$imanageruis}!flounder\+::imanageruis@{flounder\+::imanageruis}}
+\subsubsection{\texorpdfstring{$\sim$imanageruis()}{~imanageruis()}}
+{\footnotesize\ttfamily virtual flounder\+::imanageruis\+::$\sim$imanageruis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the ui manager. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1imanageruis_a8acc9382f12a79893306145138034871}\label{classflounder_1_1imanageruis_a8acc9382f12a79893306145138034871}} 
+\index{flounder\+::imanageruis@{flounder\+::imanageruis}!get\+Blur\+Factor@{get\+Blur\+Factor}}
+\index{get\+Blur\+Factor@{get\+Blur\+Factor}!flounder\+::imanageruis@{flounder\+::imanageruis}}
+\subsubsection{\texorpdfstring{get\+Blur\+Factor()}{getBlurFactor()}}
+{\footnotesize\ttfamily virtual float flounder\+::imanageruis\+::get\+Blur\+Factor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the main menu\textquotesingle{}s blur factor. 
+
+\begin{DoxyReturn}{Returns}
+The main menu\textquotesingle{}s blur factor. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1imanageruis_add2f4d36a50adc177088f3a56c23a91a}\label{classflounder_1_1imanageruis_add2f4d36a50adc177088f3a56c23a91a}} 
+\index{flounder\+::imanageruis@{flounder\+::imanageruis}!get\+Primary\+Colour@{get\+Primary\+Colour}}
+\index{get\+Primary\+Colour@{get\+Primary\+Colour}!flounder\+::imanageruis@{flounder\+::imanageruis}}
+\subsubsection{\texorpdfstring{get\+Primary\+Colour()}{getPrimaryColour()}}
+{\footnotesize\ttfamily virtual \hyperlink{classflounder_1_1colour}{colour}$\ast$ flounder\+::imanageruis\+::get\+Primary\+Colour (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+The primary colour to be used in UI elements. 
+
+\begin{DoxyReturn}{Returns}
+The primary colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1imanageruis_ad79a86978a96901e62ced2e0e0f09af3}\label{classflounder_1_1imanageruis_ad79a86978a96901e62ced2e0e0f09af3}} 
+\index{flounder\+::imanageruis@{flounder\+::imanageruis}!is\+Game\+Paused@{is\+Game\+Paused}}
+\index{is\+Game\+Paused@{is\+Game\+Paused}!flounder\+::imanageruis@{flounder\+::imanageruis}}
+\subsubsection{\texorpdfstring{is\+Game\+Paused()}{isGamePaused()}}
+{\footnotesize\ttfamily virtual bool flounder\+::imanageruis\+::is\+Game\+Paused (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets if the main menu is open. 
+
+\begin{DoxyReturn}{Returns}
+If the main menu is open. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1imanageruis_a55a6b9eab0233c51c12b8819ba264b95}\label{classflounder_1_1imanageruis_a55a6b9eab0233c51c12b8819ba264b95}} 
+\index{flounder\+::imanageruis@{flounder\+::imanageruis}!update@{update}}
+\index{update@{update}!flounder\+::imanageruis@{flounder\+::imanageruis}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily virtual void flounder\+::imanageruis\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Run when updating the ui manager. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/uis/imanageruis.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,122 @@
+\hypertarget{classflounder_1_1gui}{}\section{flounder\+:\+:gui Class Reference}
+\label{classflounder_1_1gui}\index{flounder\+::gui@{flounder\+::gui}}
+
+
+A object the represents a texture in a G\+UI.  
+
+
+
+
+{\ttfamily \#include $<$gui.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:gui\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1gui}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1gui_a95658ab4bcf45269d6d0c852a913c85d}{gui} (uiobject $\ast$parent, const \hyperlink{classflounder_1_1vector2}{vector2} \&position, const \hyperlink{classflounder_1_1vector2}{vector2} \&dimensions, \hyperlink{classflounder_1_1texture}{texture} $\ast$\hyperlink{classflounder_1_1texture}{texture}, const int \&selected\+Row)
+\begin{DoxyCompactList}\small\item\em Creates a new G\+UI object. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1gui_ab956f28a5e730f928a48490255346787}{$\sim$gui} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the gui object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a4ab9fe21b6a34200aa8b79b0008332b2}\label{classflounder_1_1gui_a4ab9fe21b6a34200aa8b79b0008332b2}} 
+void {\bfseries update\+Object} () override
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_afadb039858588ff99dd4d236d22833ab}\label{classflounder_1_1gui_afadb039858588ff99dd4d236d22833ab}} 
+\hyperlink{classflounder_1_1texture}{texture} $\ast$ {\bfseries get\+Texture} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_acb02288e8176c842ffdb0123561d993d}\label{classflounder_1_1gui_acb02288e8176c842ffdb0123561d993d}} 
+void {\bfseries set\+Texture} (\hyperlink{classflounder_1_1texture}{texture} $\ast$\hyperlink{classflounder_1_1texture}{texture})
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_ad767ee1ea49f217abce7533973d862a9}\label{classflounder_1_1gui_ad767ee1ea49f217abce7533973d862a9}} 
+bool {\bfseries get\+Flip\+Texture} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a0099ff0cbb0e3c9a4b227160043f1fc3}\label{classflounder_1_1gui_a0099ff0cbb0e3c9a4b227160043f1fc3}} 
+void {\bfseries set\+Flip\+Texture} (const bool \&flip\+Texture)
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a09e7d3428923dd2c6b1f71d6275c3b2c}\label{classflounder_1_1gui_a09e7d3428923dd2c6b1f71d6275c3b2c}} 
+int {\bfseries get\+Selected\+Row} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a27cea6ffb465a8de4cbdfbd69ad2df4e}\label{classflounder_1_1gui_a27cea6ffb465a8de4cbdfbd69ad2df4e}} 
+void {\bfseries set\+Selected\+Row} (const int \&selected\+Row)
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a7daf537514e6bfb3155a8f63350971e5}\label{classflounder_1_1gui_a7daf537514e6bfb3155a8f63350971e5}} 
+\hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries get\+Texture\+Offset} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a850b142bfe51d61f2b4c1dc3676bc2e5}\label{classflounder_1_1gui_a850b142bfe51d61f2b4c1dc3676bc2e5}} 
+void {\bfseries set\+Texture\+Offset} (const \hyperlink{classflounder_1_1vector2}{vector2} \&texture\+Offset)
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_afcc8ae6ea69dc4b23c672895a476e595}\label{classflounder_1_1gui_afcc8ae6ea69dc4b23c672895a476e595}} 
+\hyperlink{classflounder_1_1colour}{colour} $\ast$ {\bfseries get\+Colour\+Offset} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a220cfc75d2d7bb565fbb37d954b08f06}\label{classflounder_1_1gui_a220cfc75d2d7bb565fbb37d954b08f06}} 
+void {\bfseries set\+Colour\+Offset} (const \hyperlink{classflounder_1_1colour}{colour} \&colour\+Offset)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a79436b6b873a5fc6b0c539242b1ee98d}\label{classflounder_1_1gui_a79436b6b873a5fc6b0c539242b1ee98d}} 
+\hyperlink{classflounder_1_1texture}{texture} $\ast$ {\bfseries m\+\_\+texture}
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a3ff46ec0f4992a6b0b0099b02a1a20d3}\label{classflounder_1_1gui_a3ff46ec0f4992a6b0b0099b02a1a20d3}} 
+bool {\bfseries m\+\_\+flip\+Texture}
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a9574dbb0684eb23cc000707188f1922d}\label{classflounder_1_1gui_a9574dbb0684eb23cc000707188f1922d}} 
+int {\bfseries m\+\_\+selected\+Row}
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_aa7281add10d424b2c44571a549857dbc}\label{classflounder_1_1gui_aa7281add10d424b2c44571a549857dbc}} 
+\hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries m\+\_\+texture\+Offset}
+\item 
+\mbox{\Hypertarget{classflounder_1_1gui_a075aab9ab9b066143ccce77cd6dca6dd}\label{classflounder_1_1gui_a075aab9ab9b066143ccce77cd6dca6dd}} 
+\hyperlink{classflounder_1_1colour}{colour} $\ast$ {\bfseries m\+\_\+colour\+Offset}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A object the represents a texture in a G\+UI. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1gui_a95658ab4bcf45269d6d0c852a913c85d}\label{classflounder_1_1gui_a95658ab4bcf45269d6d0c852a913c85d}} 
+\index{flounder\+::gui@{flounder\+::gui}!gui@{gui}}
+\index{gui@{gui}!flounder\+::gui@{flounder\+::gui}}
+\subsubsection{\texorpdfstring{gui()}{gui()}}
+{\footnotesize\ttfamily flounder\+::gui\+::gui (\begin{DoxyParamCaption}\item[{uiobject $\ast$}]{parent,  }\item[{const \hyperlink{classflounder_1_1vector2}{vector2} \&}]{position,  }\item[{const \hyperlink{classflounder_1_1vector2}{vector2} \&}]{dimensions,  }\item[{\hyperlink{classflounder_1_1texture}{texture} $\ast$}]{texture,  }\item[{const int \&}]{selected\+Row }\end{DoxyParamCaption})}
+
+
+
+Creates a new G\+UI object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & The objects parent. \\
+\hline
+{\em position} & The objects position relative to the parents. \\
+\hline
+{\em dimensions} & The objects dimensions. \\
+\hline
+{\em texture} & The objects texture. \\
+\hline
+{\em selected\+Row} & The default row of the texture to render from. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1gui_ab956f28a5e730f928a48490255346787}\label{classflounder_1_1gui_ab956f28a5e730f928a48490255346787}} 
+\index{flounder\+::gui@{flounder\+::gui}!````~gui@{$\sim$gui}}
+\index{````~gui@{$\sim$gui}!flounder\+::gui@{flounder\+::gui}}
+\subsubsection{\texorpdfstring{$\sim$gui()}{~gui()}}
+{\footnotesize\ttfamily flounder\+::gui\+::$\sim$gui (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the gui object. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/guis/gui.\+h\item 
+Flounder-\/\+Core/src/guis/gui.\+cpp\end{DoxyCompactItemize}
