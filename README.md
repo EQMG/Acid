@@ -1,7 +1,7 @@
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/logo2.png" alt="flounder" width=225>
+<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/logo.jpg" alt="flounder" width=225>
 
 # Flounder v0.1
-[![Build status](https://ci.appveyor.com/project/Mattparks/flounder)
+[![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt78wov7o?svg=true)](https://ci.appveyor.com/project/Mattparks/flounder)
 
 Flounder is a cross platform high speed C++ OpenGL 2D/3D game engine.
 

@@ -138,18 +138,12 @@ namespace flounder
 
 		inline float getRotation() const { return m_rotation; }
 
-		inline void setRotation(const float &rotation) { m_rotation = rotation; }
-
 		void setAlphaDriver(idriver *alphaDriver);
 
 		float getAlpha();
 
-		inline void setAlpha(const float &alpha) { m_alpha = alpha; }
-
 		void setScaleDriver(idriver *scaleDriver);
 
 		inline float getScale() const { return m_scale; }
-
-		inline void setScale(const float &scale) { m_scale = scale; }
 	};
 }

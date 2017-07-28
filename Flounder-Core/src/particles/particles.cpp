@@ -57,7 +57,6 @@ namespace flounder
 				}
 			}
 		}
-
 	}
 
 	void particles::clear()
