@@ -91,12 +91,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a778c68518cfcdf1de4052264538b28d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ipostpipeline.html#a778c68518cfcdf1de4052264538b28d3">ipostpipeline</a> ()</td></tr>
 <tr class="memdesc:a778c68518cfcdf1de4052264538b28d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new post pipeline.  <a href="#a778c68518cfcdf1de4052264538b28d3">More...</a><br /></td></tr>
 <tr class="separator:a778c68518cfcdf1de4052264538b28d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d8e916ae2d5a3153449a61caa4399f6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ipostpipeline.html#a5d8e916ae2d5a3153449a61caa4399f6">~ipostpipeline</a> ()</td></tr>
-<tr class="memdesc:a5d8e916ae2d5a3153449a61caa4399f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the post pipeline.  <a href="#a5d8e916ae2d5a3153449a61caa4399f6">More...</a><br /></td></tr>
-<tr class="separator:a5d8e916ae2d5a3153449a61caa4399f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a975b354967fa358076d02380feb55265"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ipostpipeline.html#a975b354967fa358076d02380feb55265">renderPipeline</a> (const int n_args,...)=0</td></tr>
-<tr class="memdesc:a975b354967fa358076d02380feb55265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renders the post pipeline.  <a href="#a975b354967fa358076d02380feb55265">More...</a><br /></td></tr>
-<tr class="separator:a975b354967fa358076d02380feb55265"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82ab1aded690131f211c5627c54f2c4c"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ipostpipeline.html#a82ab1aded690131f211c5627c54f2c4c">~ipostpipeline</a> ()</td></tr>
+<tr class="memdesc:a82ab1aded690131f211c5627c54f2c4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the post pipeline.  <a href="#a82ab1aded690131f211c5627c54f2c4c">More...</a><br /></td></tr>
+<tr class="separator:a82ab1aded690131f211c5627c54f2c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb857f2d31022074ed6543f42b6b4c8f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ipostpipeline.html#adb857f2d31022074ed6543f42b6b4c8f">renderPipelineV</a> (const int n_args,...)</td></tr>
+<tr class="memdesc:adb857f2d31022074ed6543f42b6b4c8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renders the post pipeline.  <a href="#adb857f2d31022074ed6543f42b6b4c8f">More...</a><br /></td></tr>
+<tr class="separator:adb857f2d31022074ed6543f42b6b4c8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25255482fdb75f92b8c3f940ca8c583a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ipostpipeline.html#a25255482fdb75f92b8c3f940ca8c583a">renderPipeline</a> (const int n_args, va_list args)=0</td></tr>
+<tr class="memdesc:a25255482fdb75f92b8c3f940ca8c583a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renders the post pipeline.  <a href="#a25255482fdb75f92b8c3f940ca8c583a">More...</a><br /></td></tr>
+<tr class="separator:a25255482fdb75f92b8c3f940ca8c583a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08f5d19b9652528337b73c2f4e0e4258"><td class="memItemLeft" align="right" valign="top">virtual fbo *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ipostpipeline.html#a08f5d19b9652528337b73c2f4e0e4258">getOutput</a> ()=0</td></tr>
 <tr class="memdesc:a08f5d19b9652528337b73c2f4e0e4258"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the fbo containing the pipeline output.  <a href="#a08f5d19b9652528337b73c2f4e0e4258">More...</a><br /></td></tr>
 <tr class="separator:a08f5d19b9652528337b73c2f4e0e4258"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,9 +112,6 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">flounder::ipostpipeline::ipostpipeline </td>
@@ -120,19 +120,14 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Creates a new post pipeline. </p>
 
 </div>
 </div>
-<a id="a5d8e916ae2d5a3153449a61caa4399f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d8e916ae2d5a3153449a61caa4399f6">&#9670;&nbsp;</a></span>~ipostpipeline()</h2>
+<a id="a82ab1aded690131f211c5627c54f2c4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82ab1aded690131f211c5627c54f2c4c">&#9670;&nbsp;</a></span>~ipostpipeline()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +136,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual flounder::ipostpipeline::~ipostpipeline </td>
+          <td class="memname">flounder::ipostpipeline::~ipostpipeline </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -149,7 +144,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -189,8 +184,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a975b354967fa358076d02380feb55265"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a975b354967fa358076d02380feb55265">&#9670;&nbsp;</a></span>renderPipeline()</h2>
+<a id="a25255482fdb75f92b8c3f940ca8c583a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25255482fdb75f92b8c3f940ca8c583a">&#9670;&nbsp;</a></span>renderPipeline()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -207,8 +202,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
+          <td class="paramtype">va_list&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -227,17 +222,55 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n_args</td><td>The number textures being sent to the pipeline. </td></tr>
-    <tr><td class="paramname">textures</td><td>A list of textures in indexed order to be bound for the shader program. </td></tr>
+    <tr><td class="paramname">args</td><td>A list of textures in indexed order to be bound for the shader program. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classflounder_1_1pipelinepaused.html#ac3f87a0c31db13f6b25eaf02431c6644">flounder::pipelinepaused</a>, <a class="el" href="classflounder_1_1pipelinebloom.html#a5f3e5c81ec41947b31f80027911addd0">flounder::pipelinebloom</a>, and <a class="el" href="classflounder_1_1pipelinegaussian.html#a2d6372f1b428c3a09bf6fc2efaee3c83">flounder::pipelinegaussian</a>.</p>
+<p>Implemented in <a class="el" href="classflounder_1_1pipelinepaused.html#ad524695829a716d4726118c2e6ac43a1">flounder::pipelinepaused</a>, <a class="el" href="classflounder_1_1pipelinebloom.html#a6ef1ad3bceb0239ed08148cdbce477e2">flounder::pipelinebloom</a>, and <a class="el" href="classflounder_1_1pipelinegaussian.html#ab5416e0179e9b6175c8e59c07300d253">flounder::pipelinegaussian</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a id="adb857f2d31022074ed6543f42b6b4c8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb857f2d31022074ed6543f42b6b4c8f">&#9670;&nbsp;</a></span>renderPipelineV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::ipostpipeline::renderPipelineV </td>
+          <td>(</td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>n_args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Renders the post pipeline. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n_args</td><td>The number textures being sent to the pipeline. </td></tr>
+    <tr><td class="paramname">...</td><td>A list of textures in indexed order to be bound for the shader program. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>Flounder-Core/src/post/<a class="el" href="ipostpipeline_8h_source.html">ipostpipeline.h</a></li>
+<li>Flounder-Core/src/post/ipostpipeline.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

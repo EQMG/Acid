@@ -81,7 +81,7 @@ Inheritance diagram for flounder::sphere:</div>
  <div class="center">
   <img src="classflounder_1_1sphere.png" usemap="#flounder::sphere_map" alt=""/>
   <map id="flounder::sphere_map" name="flounder::sphere_map">
-<area href="classflounder_1_1collider.html" title="A simple class that represents a physical shape. " alt="flounder::collider" shape="rect" coords="0,0,107,24"/>
+<area href="classflounder_1_1icollider.html" title="A simple class that represents a physical shape. " alt="flounder::icollider" shape="rect" coords="0,0,110,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -102,34 +102,34 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab6f5bcdd6c9f36e582aab2e267b1abcf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1sphere.html#ab6f5bcdd6c9f36e582aab2e267b1abcf">~sphere</a> ()</td></tr>
 <tr class="memdesc:ab6f5bcdd6c9f36e582aab2e267b1abcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the sphere.  <a href="#ab6f5bcdd6c9f36e582aab2e267b1abcf">More...</a><br /></td></tr>
 <tr class="separator:ab6f5bcdd6c9f36e582aab2e267b1abcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc8035d65ddea47c5c79b77d8403e11b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classflounder_1_1collider.html">collider</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1sphere.html#adc8035d65ddea47c5c79b77d8403e11b">update</a> (const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;position, const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;rotation, const float &amp;scale, <a class="el" href="classflounder_1_1collider.html">collider</a> *destination) override</td></tr>
-<tr class="memdesc:adc8035d65ddea47c5c79b77d8403e11b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clones this collder into the destination and updates it.  <a href="#adc8035d65ddea47c5c79b77d8403e11b">More...</a><br /></td></tr>
-<tr class="separator:adc8035d65ddea47c5c79b77d8403e11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa15e90e33b6b6f91a9c3fa55a4e4115e"><td class="memItemLeft" align="right" valign="top"><a id="aa15e90e33b6b6f91a9c3fa55a4e4115e"></a>
-<a class="el" href="classflounder_1_1vector3.html">vector3</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>resolveCollision</b> (const <a class="el" href="classflounder_1_1collider.html">collider</a> &amp;other, const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;positionDelta, <a class="el" href="classflounder_1_1vector3.html">vector3</a> *destination) override</td></tr>
-<tr class="separator:aa15e90e33b6b6f91a9c3fa55a4e4115e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3749a13b6c4cdd93469e50f022d7a097"><td class="memItemLeft" align="right" valign="top"><a id="a3749a13b6c4cdd93469e50f022d7a097"></a>
-<a class="el" href="classflounder_1_1intersect.html">intersect</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>intersects</b> (const <a class="el" href="classflounder_1_1collider.html">collider</a> &amp;other) override</td></tr>
-<tr class="separator:a3749a13b6c4cdd93469e50f022d7a097"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9037b54ff10e6497a13f9836a77816fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classflounder_1_1icollider.html">icollider</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1sphere.html#a9037b54ff10e6497a13f9836a77816fd">update</a> (const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;position, const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;rotation, const float &amp;scale, <a class="el" href="classflounder_1_1icollider.html">icollider</a> *destination) override</td></tr>
+<tr class="memdesc:a9037b54ff10e6497a13f9836a77816fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clones this collder into the destination and updates it.  <a href="#a9037b54ff10e6497a13f9836a77816fd">More...</a><br /></td></tr>
+<tr class="separator:a9037b54ff10e6497a13f9836a77816fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af04afaeb7731499715eed184dd0d5871"><td class="memItemLeft" align="right" valign="top"><a id="af04afaeb7731499715eed184dd0d5871"></a>
+<a class="el" href="classflounder_1_1vector3.html">vector3</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>resolveCollision</b> (const <a class="el" href="classflounder_1_1icollider.html">icollider</a> &amp;other, const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;positionDelta, <a class="el" href="classflounder_1_1vector3.html">vector3</a> *destination) override</td></tr>
+<tr class="separator:af04afaeb7731499715eed184dd0d5871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeda4bb2ba79f620b175863bf9eaa3879"><td class="memItemLeft" align="right" valign="top"><a id="aeda4bb2ba79f620b175863bf9eaa3879"></a>
+<a class="el" href="classflounder_1_1intersect.html">intersect</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>intersects</b> (const <a class="el" href="classflounder_1_1icollider.html">icollider</a> &amp;other) override</td></tr>
+<tr class="separator:aeda4bb2ba79f620b175863bf9eaa3879"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2622ae996a73b39d9836bba2e0d43916"><td class="memItemLeft" align="right" valign="top"><a id="a2622ae996a73b39d9836bba2e0d43916"></a>
 <a class="el" href="classflounder_1_1intersect.html">intersect</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>intersects</b> (const <a class="el" href="classflounder_1_1ray.html">ray</a> &amp;<a class="el" href="classflounder_1_1ray.html">ray</a>) override</td></tr>
 <tr class="separator:a2622ae996a73b39d9836bba2e0d43916"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f926b8c9952282c9f6d251e163e7cbd"><td class="memItemLeft" align="right" valign="top"><a id="a9f926b8c9952282c9f6d251e163e7cbd"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>inFrustum</b> (const <a class="el" href="classflounder_1_1frustum.html">frustum</a> &amp;<a class="el" href="classflounder_1_1frustum.html">frustum</a>) override</td></tr>
 <tr class="separator:a9f926b8c9952282c9f6d251e163e7cbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11527d5a431e137decc2bd84c61662ad"><td class="memItemLeft" align="right" valign="top"><a id="a11527d5a431e137decc2bd84c61662ad"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>contains</b> (const <a class="el" href="classflounder_1_1collider.html">collider</a> &amp;other) override</td></tr>
-<tr class="separator:a11527d5a431e137decc2bd84c61662ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47fbf32870b7380f5eacc795119866fb"><td class="memItemLeft" align="right" valign="top"><a id="a47fbf32870b7380f5eacc795119866fb"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>contains</b> (const <a class="el" href="classflounder_1_1icollider.html">icollider</a> &amp;other) override</td></tr>
+<tr class="separator:a47fbf32870b7380f5eacc795119866fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a357fe4e2124576134bba850bd308b2d5"><td class="memItemLeft" align="right" valign="top"><a id="a357fe4e2124576134bba850bd308b2d5"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>contains</b> (const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;point) override</td></tr>
 <tr class="separator:a357fe4e2124576134bba850bd308b2d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classflounder_1_1collider"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classflounder_1_1collider')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classflounder_1_1collider.html">flounder::collider</a></td></tr>
-<tr class="memitem:ab5398fd751ea6beaeb3d85777633392b inherit pub_methods_classflounder_1_1collider"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1collider.html#ab5398fd751ea6beaeb3d85777633392b">collider</a> ()</td></tr>
-<tr class="memdesc:ab5398fd751ea6beaeb3d85777633392b inherit pub_methods_classflounder_1_1collider"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new collider.  <a href="classflounder_1_1collider.html#ab5398fd751ea6beaeb3d85777633392b">More...</a><br /></td></tr>
-<tr class="separator:ab5398fd751ea6beaeb3d85777633392b inherit pub_methods_classflounder_1_1collider"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d79dbd4483027db6d7080887bcf26e6 inherit pub_methods_classflounder_1_1collider"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1collider.html#a4d79dbd4483027db6d7080887bcf26e6">~collider</a> ()</td></tr>
-<tr class="memdesc:a4d79dbd4483027db6d7080887bcf26e6 inherit pub_methods_classflounder_1_1collider"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the collider.  <a href="classflounder_1_1collider.html#a4d79dbd4483027db6d7080887bcf26e6">More...</a><br /></td></tr>
-<tr class="separator:a4d79dbd4483027db6d7080887bcf26e6 inherit pub_methods_classflounder_1_1collider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classflounder_1_1icollider"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classflounder_1_1icollider')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classflounder_1_1icollider.html">flounder::icollider</a></td></tr>
+<tr class="memitem:a75adcd355b80f9def157cde97c89a1fe inherit pub_methods_classflounder_1_1icollider"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1icollider.html#a75adcd355b80f9def157cde97c89a1fe">icollider</a> ()</td></tr>
+<tr class="memdesc:a75adcd355b80f9def157cde97c89a1fe inherit pub_methods_classflounder_1_1icollider"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new collider.  <a href="classflounder_1_1icollider.html#a75adcd355b80f9def157cde97c89a1fe">More...</a><br /></td></tr>
+<tr class="separator:a75adcd355b80f9def157cde97c89a1fe inherit pub_methods_classflounder_1_1icollider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8520c4acec0d91cd3d8bf1c381ad2da3 inherit pub_methods_classflounder_1_1icollider"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1icollider.html#a8520c4acec0d91cd3d8bf1c381ad2da3">~icollider</a> ()</td></tr>
+<tr class="memdesc:a8520c4acec0d91cd3d8bf1c381ad2da3 inherit pub_methods_classflounder_1_1icollider"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the collider.  <a href="classflounder_1_1icollider.html#a8520c4acec0d91cd3d8bf1c381ad2da3">More...</a><br /></td></tr>
+<tr class="separator:a8520c4acec0d91cd3d8bf1c381ad2da3 inherit pub_methods_classflounder_1_1icollider"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -271,8 +271,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_radius</b></td></t
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="adc8035d65ddea47c5c79b77d8403e11b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc8035d65ddea47c5c79b77d8403e11b">&#9670;&nbsp;</a></span>update()</h2>
+<a id="a9037b54ff10e6497a13f9836a77816fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9037b54ff10e6497a13f9836a77816fd">&#9670;&nbsp;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -281,7 +281,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_radius</b></td></t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classflounder_1_1collider.html">collider</a> * flounder::sphere::update </td>
+          <td class="memname"><a class="el" href="classflounder_1_1icollider.html">icollider</a> * flounder::sphere::update </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;&#160;</td>
           <td class="paramname"><em>position</em>, </td>
@@ -301,7 +301,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_radius</b></td></t
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classflounder_1_1collider.html">collider</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="classflounder_1_1icollider.html">icollider</a> *&#160;</td>
           <td class="paramname"><em>destination</em>&#160;</td>
         </tr>
         <tr>
@@ -329,7 +329,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_radius</b></td></t
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The destination. </dd></dl>
 
-<p>Implements <a class="el" href="classflounder_1_1collider.html#ae185e877868e8783e28e8d74120f2f2b">flounder::collider</a>.</p>
+<p>Implements <a class="el" href="classflounder_1_1icollider.html#a946ddd743680d0abc7b086d49f882e6f">flounder::icollider</a>.</p>
 
 </div>
 </div>

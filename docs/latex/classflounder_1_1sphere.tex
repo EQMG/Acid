@@ -28,13 +28,13 @@ Inheritance diagram for flounder\+:\+:sphere\+:\begin{figure}[H]
 \begin{DoxyCompactList}\small\item\em Creates a new sphere from another sphere source. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1sphere_ab6f5bcdd6c9f36e582aab2e267b1abcf}{$\sim$sphere} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the sphere. \end{DoxyCompactList}\item 
-\hyperlink{classflounder_1_1collider}{collider} $\ast$ \hyperlink{classflounder_1_1sphere_adc8035d65ddea47c5c79b77d8403e11b}{update} (const \hyperlink{classflounder_1_1vector3}{vector3} \&position, const \hyperlink{classflounder_1_1vector3}{vector3} \&rotation, const float \&scale, \hyperlink{classflounder_1_1collider}{collider} $\ast$destination) override
+\hyperlink{classflounder_1_1icollider}{icollider} $\ast$ \hyperlink{classflounder_1_1sphere_a9037b54ff10e6497a13f9836a77816fd}{update} (const \hyperlink{classflounder_1_1vector3}{vector3} \&position, const \hyperlink{classflounder_1_1vector3}{vector3} \&rotation, const float \&scale, \hyperlink{classflounder_1_1icollider}{icollider} $\ast$destination) override
 \begin{DoxyCompactList}\small\item\em Clones this collder into the destination and updates it. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classflounder_1_1sphere_aa15e90e33b6b6f91a9c3fa55a4e4115e}\label{classflounder_1_1sphere_aa15e90e33b6b6f91a9c3fa55a4e4115e}} 
-\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries resolve\+Collision} (const \hyperlink{classflounder_1_1collider}{collider} \&other, const \hyperlink{classflounder_1_1vector3}{vector3} \&position\+Delta, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$destination) override
+\mbox{\Hypertarget{classflounder_1_1sphere_af04afaeb7731499715eed184dd0d5871}\label{classflounder_1_1sphere_af04afaeb7731499715eed184dd0d5871}} 
+\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries resolve\+Collision} (const \hyperlink{classflounder_1_1icollider}{icollider} \&other, const \hyperlink{classflounder_1_1vector3}{vector3} \&position\+Delta, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$destination) override
 \item 
-\mbox{\Hypertarget{classflounder_1_1sphere_a3749a13b6c4cdd93469e50f022d7a097}\label{classflounder_1_1sphere_a3749a13b6c4cdd93469e50f022d7a097}} 
-\hyperlink{classflounder_1_1intersect}{intersect} $\ast$ {\bfseries intersects} (const \hyperlink{classflounder_1_1collider}{collider} \&other) override
+\mbox{\Hypertarget{classflounder_1_1sphere_aeda4bb2ba79f620b175863bf9eaa3879}\label{classflounder_1_1sphere_aeda4bb2ba79f620b175863bf9eaa3879}} 
+\hyperlink{classflounder_1_1intersect}{intersect} $\ast$ {\bfseries intersects} (const \hyperlink{classflounder_1_1icollider}{icollider} \&other) override
 \item 
 \mbox{\Hypertarget{classflounder_1_1sphere_a2622ae996a73b39d9836bba2e0d43916}\label{classflounder_1_1sphere_a2622ae996a73b39d9836bba2e0d43916}} 
 \hyperlink{classflounder_1_1intersect}{intersect} $\ast$ {\bfseries intersects} (const \hyperlink{classflounder_1_1ray}{ray} \&\hyperlink{classflounder_1_1ray}{ray}) override
@@ -42,8 +42,8 @@ Inheritance diagram for flounder\+:\+:sphere\+:\begin{figure}[H]
 \mbox{\Hypertarget{classflounder_1_1sphere_a9f926b8c9952282c9f6d251e163e7cbd}\label{classflounder_1_1sphere_a9f926b8c9952282c9f6d251e163e7cbd}} 
 bool {\bfseries in\+Frustum} (const \hyperlink{classflounder_1_1frustum}{frustum} \&\hyperlink{classflounder_1_1frustum}{frustum}) override
 \item 
-\mbox{\Hypertarget{classflounder_1_1sphere_a11527d5a431e137decc2bd84c61662ad}\label{classflounder_1_1sphere_a11527d5a431e137decc2bd84c61662ad}} 
-bool {\bfseries contains} (const \hyperlink{classflounder_1_1collider}{collider} \&other) override
+\mbox{\Hypertarget{classflounder_1_1sphere_a47fbf32870b7380f5eacc795119866fb}\label{classflounder_1_1sphere_a47fbf32870b7380f5eacc795119866fb}} 
+bool {\bfseries contains} (const \hyperlink{classflounder_1_1icollider}{icollider} \&other) override
 \item 
 \mbox{\Hypertarget{classflounder_1_1sphere_a357fe4e2124576134bba850bd308b2d5}\label{classflounder_1_1sphere_a357fe4e2124576134bba850bd308b2d5}} 
 bool {\bfseries contains} (const \hyperlink{classflounder_1_1vector3}{vector3} \&point) override
@@ -135,11 +135,11 @@ Deconstructor for the sphere.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1sphere_adc8035d65ddea47c5c79b77d8403e11b}\label{classflounder_1_1sphere_adc8035d65ddea47c5c79b77d8403e11b}} 
+\mbox{\Hypertarget{classflounder_1_1sphere_a9037b54ff10e6497a13f9836a77816fd}\label{classflounder_1_1sphere_a9037b54ff10e6497a13f9836a77816fd}} 
 \index{flounder\+::sphere@{flounder\+::sphere}!update@{update}}
 \index{update@{update}!flounder\+::sphere@{flounder\+::sphere}}
 \subsubsection{\texorpdfstring{update()}{update()}}
-{\footnotesize\ttfamily \hyperlink{classflounder_1_1collider}{collider} $\ast$ flounder\+::sphere\+::update (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{position,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{rotation,  }\item[{const float \&}]{scale,  }\item[{\hyperlink{classflounder_1_1collider}{collider} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1icollider}{icollider} $\ast$ flounder\+::sphere\+::update (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{position,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{rotation,  }\item[{const float \&}]{scale,  }\item[{\hyperlink{classflounder_1_1icollider}{icollider} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -161,7 +161,7 @@ The destination.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1collider_ae185e877868e8783e28e8d74120f2f2b}{flounder\+::collider}.
+Implements \hyperlink{classflounder_1_1icollider_a946ddd743680d0abc7b086d49f882e6f}{flounder\+::icollider}.
 
 
 

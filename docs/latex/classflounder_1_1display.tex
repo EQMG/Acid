@@ -22,10 +22,6 @@ Inheritance diagram for flounder\+:\+:display\+:\begin{figure}[H]
 \begin{DoxyCompactList}\small\item\em Creates a new display module. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1display_a272f9080af9079cbb3890b18c3e4d394}{$\sim$display} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the display module. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1display_ac1ad6ed9b98b6f760fecd2e31d84357b}{load} (const int \&glfw\+Major, const int \&glfw\+Minor, const int \&width, const int \&height, const std\+::string \&title, const std\+::string \&icon, const float \&fps\+Limit, const bool \&vsync, const bool \&antialiasing, const int \&samples, const bool \&fullscreen)
-\begin{DoxyCompactList}\small\item\em Loads the display module with inital values. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1display_aa28a814bc8ba635c99aa4b707bac3259}{init} () override
-\begin{DoxyCompactList}\small\item\em The initialize function for the module. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1display_a799c6a76fcac1a0ca56dfd6b8d7993fa}{update} () override
 \begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1display_af27b3f93977c32c79ad9522672e484c5}{screenshot} ()
@@ -48,6 +44,12 @@ void \hyperlink{classflounder_1_1display_a13edcfe35505b3e164010ed1b232e5d1}{set\
 \begin{DoxyCompactList}\small\item\em Sets window size to a new size. \end{DoxyCompactList}\item 
 std\+::string \& \hyperlink{classflounder_1_1display_ad5fc46c79d236783ac883878ec065f36}{get\+Title} ()
 \begin{DoxyCompactList}\small\item\em Gets the window\textquotesingle{}s title. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1display_a48680d3ed1b6842dea7eb5437d6c336f}{set\+Title} (const std\+::string \&title)
+\begin{DoxyCompactList}\small\item\em Sets window title \end{DoxyCompactList}\item 
+std\+::string \& \hyperlink{classflounder_1_1display_ac0506da092e74addb30ca2ecb9b5a0d5}{get\+Icon} ()
+\begin{DoxyCompactList}\small\item\em Gets the window\textquotesingle{}s icon file. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1display_a49ba8d850f666496fabf9133d01091ab}{set\+Icon} (const std\+::string \&icon)
+\begin{DoxyCompactList}\small\item\em Sets window icon image. \end{DoxyCompactList}\item 
 int \hyperlink{classflounder_1_1display_aea9d5368ecd65c53e634d1cec52f9718}{get\+Fps\+Limit} ()
 \begin{DoxyCompactList}\small\item\em Gets the fps limit. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1display_a7d24403c951e5a043675c3e7b02c3c34}{set\+Fps\+Limit} (const int \&fps\+Limit)
@@ -98,14 +100,14 @@ int {\bfseries m\+\_\+window\+Width}
 \mbox{\Hypertarget{classflounder_1_1display_ac645ec5d7726988bc1bf9d1ea3bc92d1}\label{classflounder_1_1display_ac645ec5d7726988bc1bf9d1ea3bc92d1}} 
 int {\bfseries m\+\_\+window\+Height}
 \item 
-\mbox{\Hypertarget{classflounder_1_1display_a54d05378c6c5085ed6c49ff94fa8c4b0}\label{classflounder_1_1display_a54d05378c6c5085ed6c49ff94fa8c4b0}} 
-double {\bfseries m\+\_\+aspect\+Ratio}
-\item 
 \mbox{\Hypertarget{classflounder_1_1display_ad4970ad3855b5b34565f6c5fe17ee383}\label{classflounder_1_1display_ad4970ad3855b5b34565f6c5fe17ee383}} 
 int {\bfseries m\+\_\+fullscreen\+Width}
 \item 
 \mbox{\Hypertarget{classflounder_1_1display_a5ba749a0a474ac113ec21fbbb0544688}\label{classflounder_1_1display_a5ba749a0a474ac113ec21fbbb0544688}} 
 int {\bfseries m\+\_\+fullscreen\+Height}
+\item 
+\mbox{\Hypertarget{classflounder_1_1display_a54d05378c6c5085ed6c49ff94fa8c4b0}\label{classflounder_1_1display_a54d05378c6c5085ed6c49ff94fa8c4b0}} 
+double {\bfseries m\+\_\+aspect\+Ratio}
 \item 
 \mbox{\Hypertarget{classflounder_1_1display_a2c2b649d019390dab458de301bb57c01}\label{classflounder_1_1display_a2c2b649d019390dab458de301bb57c01}} 
 std\+::string {\bfseries m\+\_\+title}
@@ -273,6 +275,19 @@ Gets the height of the display in pixels.
 \begin{DoxyReturn}{Returns}
 The height of the display. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1display_ac0506da092e74addb30ca2ecb9b5a0d5}\label{classflounder_1_1display_ac0506da092e74addb30ca2ecb9b5a0d5}} 
+\index{flounder\+::display@{flounder\+::display}!get\+Icon@{get\+Icon}}
+\index{get\+Icon@{get\+Icon}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{get\+Icon()}{getIcon()}}
+{\footnotesize\ttfamily std\+::string \& flounder\+::display\+::get\+Icon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the window\textquotesingle{}s icon file. 
+
+\begin{DoxyReturn}{Returns}
+The window\textquotesingle{}s icon file. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1display_a3f1438e0d64121ae94e3e1f1931dc09a}\label{classflounder_1_1display_a3f1438e0d64121ae94e3e1f1931dc09a}} 
 \index{flounder\+::display@{flounder\+::display}!get\+Samples@{get\+Samples}}
 \index{get\+Samples@{get\+Samples}!flounder\+::display@{flounder\+::display}}
@@ -377,20 +392,6 @@ Gets the windows Y position of the display in pixels.
 \begin{DoxyReturn}{Returns}
 The windows Y position. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1display_aa28a814bc8ba635c99aa4b707bac3259}\label{classflounder_1_1display_aa28a814bc8ba635c99aa4b707bac3259}} 
-\index{flounder\+::display@{flounder\+::display}!init@{init}}
-\index{init@{init}!flounder\+::display@{flounder\+::display}}
-\subsubsection{\texorpdfstring{init()}{init()}}
-{\footnotesize\ttfamily void flounder\+::display\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
-
-
-
-The initialize function for the module. 
-
-
-
-Implements \hyperlink{classflounder_1_1imodule_a1725ef346952884d0741de61aba1e0c7}{flounder\+::imodule}.
-
 \mbox{\Hypertarget{classflounder_1_1display_ab36d40e6a3be5272853e13e45da750b8}\label{classflounder_1_1display_ab36d40e6a3be5272853e13e45da750b8}} 
 \index{flounder\+::display@{flounder\+::display}!is\+Antialiasing@{is\+Antialiasing}}
 \index{is\+Antialiasing@{is\+Antialiasing}!flounder\+::display@{flounder\+::display}}
@@ -456,41 +457,6 @@ Gets if the display is using v\+Sync.
 \begin{DoxyReturn}{Returns}
 If V\+Sync is enabled. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1display_ac1ad6ed9b98b6f760fecd2e31d84357b}\label{classflounder_1_1display_ac1ad6ed9b98b6f760fecd2e31d84357b}} 
-\index{flounder\+::display@{flounder\+::display}!load@{load}}
-\index{load@{load}!flounder\+::display@{flounder\+::display}}
-\subsubsection{\texorpdfstring{load()}{load()}}
-{\footnotesize\ttfamily void flounder\+::display\+::load (\begin{DoxyParamCaption}\item[{const int \&}]{glfw\+Major,  }\item[{const int \&}]{glfw\+Minor,  }\item[{const int \&}]{width,  }\item[{const int \&}]{height,  }\item[{const std\+::string \&}]{title,  }\item[{const std\+::string \&}]{icon,  }\item[{const float \&}]{fps\+Limit,  }\item[{const bool \&}]{vsync,  }\item[{const bool \&}]{antialiasing,  }\item[{const int \&}]{samples,  }\item[{const bool \&}]{fullscreen }\end{DoxyParamCaption})}
-
-
-
-Loads the display module with inital values. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em glfw\+Major} & The G\+L\+FW major verson. \\
-\hline
-{\em glfw\+Minor} & The G\+L\+FW minor verson. \\
-\hline
-{\em width} & The displays inital width. \\
-\hline
-{\em height} & The displays inital width. \\
-\hline
-{\em title} & The displays title. \\
-\hline
-{\em icon} & The displays icon image path. \\
-\hline
-{\em fps\+Limit} & The displays inital F\+PS limit. \\
-\hline
-{\em vsync} & If the display will start with vsync on. \\
-\hline
-{\em antialiasing} & If the display will start with antialiased. \\
-\hline
-{\em samples} & How many samples will be initaly used to antialias. \\
-\hline
-{\em fullscreen} & If the display will start fullscreen. \\
-\hline
-\end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1display_af27b3f93977c32c79ad9522672e484c5}\label{classflounder_1_1display_af27b3f93977c32c79ad9522672e484c5}} 
 \index{flounder\+::display@{flounder\+::display}!screenshot@{screenshot}}
 \index{screenshot@{screenshot}!flounder\+::display@{flounder\+::display}}
@@ -546,6 +512,21 @@ Sets the display to be fullscreen or windowed.
 {\em fullscreen} & Weather or not to be fullscreen. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1display_a49ba8d850f666496fabf9133d01091ab}\label{classflounder_1_1display_a49ba8d850f666496fabf9133d01091ab}} 
+\index{flounder\+::display@{flounder\+::display}!set\+Icon@{set\+Icon}}
+\index{set\+Icon@{set\+Icon}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{set\+Icon()}{setIcon()}}
+{\footnotesize\ttfamily void flounder\+::display\+::set\+Icon (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{icon }\end{DoxyParamCaption})}
+
+
+
+Sets window icon image. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em title} & The new icon file. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1display_ae1bf2028faaf411fedc80ca511a2e739}\label{classflounder_1_1display_ae1bf2028faaf411fedc80ca511a2e739}} 
 \index{flounder\+::display@{flounder\+::display}!set\+Samples@{set\+Samples}}
 \index{set\+Samples@{set\+Samples}!flounder\+::display@{flounder\+::display}}
@@ -559,6 +540,21 @@ Gets how many M\+S\+AA samples should be done before swapping buffers. Zero disa
 
 \begin{DoxyParams}{Parameters}
 {\em samples} & The amount of M\+S\+AA samples. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1display_a48680d3ed1b6842dea7eb5437d6c336f}\label{classflounder_1_1display_a48680d3ed1b6842dea7eb5437d6c336f}} 
+\index{flounder\+::display@{flounder\+::display}!set\+Title@{set\+Title}}
+\index{set\+Title@{set\+Title}!flounder\+::display@{flounder\+::display}}
+\subsubsection{\texorpdfstring{set\+Title()}{setTitle()}}
+{\footnotesize\ttfamily void flounder\+::display\+::set\+Title (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Sets window title 
+
+
+\begin{DoxyParams}{Parameters}
+{\em title} & The new title. \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1display_a172501e1e99cde228d86fab59a3a636b}\label{classflounder_1_1display_a172501e1e99cde228d86fab59a3a636b}} 

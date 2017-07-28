@@ -20,6 +20,7 @@ var searchData=
   ['filtertone',['filtertone',['../classflounder_1_1filtertone.html',1,'flounder']]],
   ['filterwobble',['filterwobble',['../classflounder_1_1filterwobble.html',1,'flounder']]],
   ['fog',['fog',['../classflounder_1_1fog.html',1,'flounder']]],
+  ['fonttype',['fonttype',['../classflounder_1_1fonttype.html',1,'flounder']]],
   ['framework',['framework',['../classflounder_1_1framework.html',1,'flounder']]],
   ['frustum',['frustum',['../classflounder_1_1frustum.html',1,'flounder']]]
 ];

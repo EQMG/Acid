@@ -1,0 +1,83 @@
+\hypertarget{classflounder_1_1inputtext}{}\section{flounder\+:\+:inputtext Class Reference}
+\label{classflounder_1_1inputtext}\index{flounder\+::inputtext@{flounder\+::inputtext}}
+Inheritance diagram for flounder\+:\+:inputtext\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1inputtext}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_aca56c185b95c971d82206985cd831bf6}\label{classflounder_1_1inputtext_aca56c185b95c971d82206985cd831bf6}} 
+{\bfseries inputtext} (uiobject $\ast$parent, const \hyperlink{classflounder_1_1vector2}{vector2} \&position, const std\+::string \&prefix, const std\+::string \&value, const \hyperlink{namespaceflounder_a70f1871d5c05aa8e078dd37501ce10a9}{uialign} \&align)
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a68496c28c8d375db5d9c2f1e7034c7e8}\label{classflounder_1_1inputtext_a68496c28c8d375db5d9c2f1e7034c7e8}} 
+void {\bfseries update\+Object} () override
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a96d00e15d518ff13c89b71b0a01caf4a}\label{classflounder_1_1inputtext_a96d00e15d518ff13c89b71b0a01caf4a}} 
+std\+::string {\bfseries get\+Prefix} () const
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a58321b833e8a09d930d3e254112e346a}\label{classflounder_1_1inputtext_a58321b833e8a09d930d3e254112e346a}} 
+void {\bfseries set\+Prefix} (const std\+::string \&prefix)
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a62ff597549d6a96e0d59cc6a6d2aa9d3}\label{classflounder_1_1inputtext_a62ff597549d6a96e0d59cc6a6d2aa9d3}} 
+std\+::string {\bfseries get\+Value} () const
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a4317b2a8a39dfd2e654b865191fc27cd}\label{classflounder_1_1inputtext_a4317b2a8a39dfd2e654b865191fc27cd}} 
+void {\bfseries set\+Value} (const std\+::string \&value)
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a9d643963d290e3c8e1de4d085a8de8e3}\label{classflounder_1_1inputtext_a9d643963d290e3c8e1de4d085a8de8e3}} 
+void {\bfseries set\+Action\+Change} (std\+::function$<$ void()$>$ action)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a4794f0a3d09dcc45a286f4eb3511ff3c}\label{classflounder_1_1inputtext_a4794f0a3d09dcc45a286f4eb3511ff3c}} 
+\hyperlink{classflounder_1_1text}{text} $\ast$ {\bfseries m\+\_\+text}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_aa0fdb585208f6385de300a3c11336d0b}\label{classflounder_1_1inputtext_aa0fdb585208f6385de300a3c11336d0b}} 
+\hyperlink{classflounder_1_1gui}{gui} $\ast$ {\bfseries m\+\_\+background}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a4557935932e2527a470fafb6f8cdf178}\label{classflounder_1_1inputtext_a4557935932e2527a470fafb6f8cdf178}} 
+std\+::string {\bfseries m\+\_\+prefix}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_af88291b2fa2dfcb8f3dbace3f9dc4abd}\label{classflounder_1_1inputtext_af88291b2fa2dfcb8f3dbace3f9dc4abd}} 
+std\+::string {\bfseries m\+\_\+value}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a1b03a7a75369059a684e0133adf8d7a0}\label{classflounder_1_1inputtext_a1b03a7a75369059a684e0133adf8d7a0}} 
+\hyperlink{classflounder_1_1inputdelay}{inputdelay} $\ast$ {\bfseries m\+\_\+input\+Delay}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_afd09ad8e2b567f08f86a18c3a8f3143e}\label{classflounder_1_1inputtext_afd09ad8e2b567f08f86a18c3a8f3143e}} 
+int {\bfseries m\+\_\+last\+Key}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a6602ccd5d89133db62b79e113b83a44a}\label{classflounder_1_1inputtext_a6602ccd5d89133db62b79e113b83a44a}} 
+bool {\bfseries m\+\_\+selected}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a58ff602dc0d034d89ff0b598b52c262d}\label{classflounder_1_1inputtext_a58ff602dc0d034d89ff0b598b52c262d}} 
+bool {\bfseries m\+\_\+mouse\+Over}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_af52da18a4fc81af17c310a1db85b8b38}\label{classflounder_1_1inputtext_af52da18a4fc81af17c310a1db85b8b38}} 
+std\+::function$<$ void()$>$ {\bfseries m\+\_\+action\+Change}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a82ca2663330304dbfe7eec79f7e0bdfa}\label{classflounder_1_1inputtext_a82ca2663330304dbfe7eec79f7e0bdfa}} 
+static const float {\bfseries C\+H\+A\+N\+G\+E\+\_\+\+T\+I\+ME} = 0.\+1f
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a052377a3ef7aab2b654dca4af3f6afc8}\label{classflounder_1_1inputtext_a052377a3ef7aab2b654dca4af3f6afc8}} 
+static const float {\bfseries S\+C\+A\+L\+E\+\_\+\+N\+O\+R\+M\+AL} = 1.\+6f
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a839f88d5217fe664f4d27e2c813a7b55}\label{classflounder_1_1inputtext_a839f88d5217fe664f4d27e2c813a7b55}} 
+static const float {\bfseries S\+C\+A\+L\+E\+\_\+\+S\+E\+L\+E\+C\+T\+ED} = 1.\+8f
+\item 
+\mbox{\Hypertarget{classflounder_1_1inputtext_a52effd83ca83261bc2ebc8acd16279e7}\label{classflounder_1_1inputtext_a52effd83ca83261bc2ebc8acd16279e7}} 
+static \hyperlink{classflounder_1_1colour}{colour} $\ast$const {\bfseries C\+O\+L\+O\+U\+R\+\_\+\+N\+O\+R\+M\+AL} = new \hyperlink{classflounder_1_1colour}{colour}(0.\+0f, 0.\+0f, 0.\+0f)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/uis/inputtext.\+h\item 
+Flounder-\/\+Core/src/uis/inputtext.\+cpp\end{DoxyCompactItemize}

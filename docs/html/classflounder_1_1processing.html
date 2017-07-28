@@ -71,6 +71,11 @@ $(function() {
 <div class="title">flounder::processing Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A module used for processing types of requests.  
+ <a href="classflounder_1_1processing.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="processing_8h_source.html">processing.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for flounder::processing:</div>
 <div class="dyncontent">
@@ -83,14 +88,17 @@ Inheritance diagram for flounder::processing:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5c9545d8a02d836bc198982750f24f49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1processing.html#a5c9545d8a02d836bc198982750f24f49">init</a> () override</td></tr>
-<tr class="memdesc:a5c9545d8a02d836bc198982750f24f49"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialize function for the module.  <a href="#a5c9545d8a02d836bc198982750f24f49">More...</a><br /></td></tr>
-<tr class="separator:a5c9545d8a02d836bc198982750f24f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e1e4e71f153a05c6ff7eeef4c745500"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1processing.html#a1e1e4e71f153a05c6ff7eeef4c745500">processing</a> ()</td></tr>
+<tr class="memdesc:a1e1e4e71f153a05c6ff7eeef4c745500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new processing module.  <a href="#a1e1e4e71f153a05c6ff7eeef4c745500">More...</a><br /></td></tr>
+<tr class="separator:a1e1e4e71f153a05c6ff7eeef4c745500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad36e9f1f3ba3ae1cbf101333c03fd0c7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1processing.html#ad36e9f1f3ba3ae1cbf101333c03fd0c7">~processing</a> ()</td></tr>
+<tr class="memdesc:ad36e9f1f3ba3ae1cbf101333c03fd0c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the processing module.  <a href="#ad36e9f1f3ba3ae1cbf101333c03fd0c7">More...</a><br /></td></tr>
+<tr class="separator:ad36e9f1f3ba3ae1cbf101333c03fd0c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac096299eb1b5b67739586900710d4206"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1processing.html#ac096299eb1b5b67739586900710d4206">update</a> () override</td></tr>
 <tr class="memdesc:ac096299eb1b5b67739586900710d4206"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the module.  <a href="#ac096299eb1b5b67739586900710d4206">More...</a><br /></td></tr>
 <tr class="separator:ac096299eb1b5b67739586900710d4206"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ae5080b9ed1099aae8db7db034c9eee"><td class="memItemLeft" align="right" valign="top"><a id="a9ae5080b9ed1099aae8db7db034c9eee"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addProcessor</b> (<a class="el" href="classflounder_1_1iprocessor.html">iprocessor</a> *processor)</td></tr>
+<tr class="memitem:a9ae5080b9ed1099aae8db7db034c9eee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1processing.html#a9ae5080b9ed1099aae8db7db034c9eee">addProcessor</a> (<a class="el" href="classflounder_1_1iprocessor.html">iprocessor</a> *processor)</td></tr>
+<tr class="memdesc:a9ae5080b9ed1099aae8db7db034c9eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a processor type to the list of processors.  <a href="#a9ae5080b9ed1099aae8db7db034c9eee">More...</a><br /></td></tr>
 <tr class="separator:a9ae5080b9ed1099aae8db7db034c9eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:addb84aad44d50ae3fa9513cddcea9968"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1processing.html#addb84aad44d50ae3fa9513cddcea9968">sendRequest</a> (<a class="el" href="classflounder_1_1irequest.html">irequest</a> *request)</td></tr>
 <tr class="memdesc:addb84aad44d50ae3fa9513cddcea9968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a new resource request to be added to a que.  <a href="#addb84aad44d50ae3fa9513cddcea9968">More...</a><br /></td></tr>
@@ -115,7 +123,74 @@ Private Attributes</h2></td></tr>
 std::vector&lt; <a class="el" href="classflounder_1_1iprocessor.html">iprocessor</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_processors</b></td></tr>
 <tr class="separator:a77870c9b9e04569dc459767d11c47da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A module used for processing types of requests. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a1e1e4e71f153a05c6ff7eeef4c745500"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e1e4e71f153a05c6ff7eeef4c745500">&#9670;&nbsp;</a></span>processing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">flounder::processing::processing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new processing module. </p>
+
+</div>
+</div>
+<a id="ad36e9f1f3ba3ae1cbf101333c03fd0c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad36e9f1f3ba3ae1cbf101333c03fd0c7">&#9670;&nbsp;</a></span>~processing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">flounder::processing::~processing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deconstructor for the processing module. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9ae5080b9ed1099aae8db7db034c9eee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ae5080b9ed1099aae8db7db034c9eee">&#9670;&nbsp;</a></span>addProcessor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::processing::addProcessor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classflounder_1_1iprocessor.html">iprocessor</a> *&#160;</td>
+          <td class="paramname"><em>processor</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a processor type to the list of processors. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">processor</td><td>The processor to add. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a9d533a541a2a514d201ff2c37782d44d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9d533a541a2a514d201ff2c37782d44d">&#9670;&nbsp;</a></span>get()</h2>
 
@@ -141,35 +216,6 @@ std::vector&lt; <a class="el" href="classflounder_1_1iprocessor.html">iprocessor
 
 <p>Gets this framework instance. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current module instance. </dd></dl>
-
-</div>
-</div>
-<a id="a5c9545d8a02d836bc198982750f24f49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c9545d8a02d836bc198982750f24f49">&#9670;&nbsp;</a></span>init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::processing::init </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The initialize function for the module. </p>
-
-<p>Implements <a class="el" href="classflounder_1_1imodule.html#a1725ef346952884d0741de61aba1e0c7">flounder::imodule</a>.</p>
 
 </div>
 </div>

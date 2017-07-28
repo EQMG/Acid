@@ -88,12 +88,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4f5440b66d1c2e7e35d9dc7fd733f944"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1framework.html#a4f5440b66d1c2e7e35d9dc7fd733f944">~framework</a> ()</td></tr>
 <tr class="memdesc:a4f5440b66d1c2e7e35d9dc7fd733f944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the framework.  <a href="#a4f5440b66d1c2e7e35d9dc7fd733f944">More...</a><br /></td></tr>
 <tr class="separator:a4f5440b66d1c2e7e35d9dc7fd733f944"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c6123166e03e5ee0effc375cb7a800c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1framework.html#a1c6123166e03e5ee0effc375cb7a800c">load</a> (<a class="el" href="classflounder_1_1iupdater.html">iupdater</a> *updater)</td></tr>
-<tr class="memdesc:a1c6123166e03e5ee0effc375cb7a800c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the framework module with inital values.  <a href="#a1c6123166e03e5ee0effc375cb7a800c">More...</a><br /></td></tr>
-<tr class="separator:a1c6123166e03e5ee0effc375cb7a800c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88d0efc8e63448e5f342260ffd23054a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1framework.html#a88d0efc8e63448e5f342260ffd23054a">init</a> ()</td></tr>
-<tr class="memdesc:a88d0efc8e63448e5f342260ffd23054a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialize function for the updater.  <a href="#a88d0efc8e63448e5f342260ffd23054a">More...</a><br /></td></tr>
-<tr class="separator:a88d0efc8e63448e5f342260ffd23054a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfa2c0da27ab46791ee7877115afffa3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1framework.html#abfa2c0da27ab46791ee7877115afffa3">setUpdater</a> (<a class="el" href="classflounder_1_1iupdater.html">iupdater</a> *updater)</td></tr>
+<tr class="memdesc:abfa2c0da27ab46791ee7877115afffa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the updater into the framework.  <a href="#abfa2c0da27ab46791ee7877115afffa3">More...</a><br /></td></tr>
+<tr class="separator:abfa2c0da27ab46791ee7877115afffa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3a73c8e8f5f0c6ccef3e4de89982434"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1framework.html#aa3a73c8e8f5f0c6ccef3e4de89982434">run</a> ()</td></tr>
 <tr class="memdesc:aa3a73c8e8f5f0c6ccef3e4de89982434"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the updater.  <a href="#aa3a73c8e8f5f0c6ccef3e4de89982434">More...</a><br /></td></tr>
 <tr class="separator:aa3a73c8e8f5f0c6ccef3e4de89982434"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -397,25 +394,6 @@ static <a class="el" href="classflounder_1_1framework.html">framework</a> *&#160
 
 </div>
 </div>
-<a id="a88d0efc8e63448e5f342260ffd23054a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88d0efc8e63448e5f342260ffd23054a">&#9670;&nbsp;</a></span>init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::framework::init </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The initialize function for the updater. </p>
-
-</div>
-</div>
 <a id="ad217b91b7e0f46f305105045396dcdf3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad217b91b7e0f46f305105045396dcdf3">&#9670;&nbsp;</a></span>isInitialized()</h2>
 
@@ -469,32 +447,6 @@ static <a class="el" href="classflounder_1_1framework.html">framework</a> *&#160
 
 <p>Gets if the framework is running. </p>
 <dl class="section return"><dt>Returns</dt><dd>If the framework is running. </dd></dl>
-
-</div>
-</div>
-<a id="a1c6123166e03e5ee0effc375cb7a800c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c6123166e03e5ee0effc375cb7a800c">&#9670;&nbsp;</a></span>load()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::framework::load </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classflounder_1_1iupdater.html">iupdater</a> *&#160;</td>
-          <td class="paramname"><em>updater</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads the framework module with inital values. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">updater</td><td>The updater. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -605,6 +557,32 @@ static <a class="el" href="classflounder_1_1framework.html">framework</a> *&#160
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">timeOffset</td><td>The new time offset. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abfa2c0da27ab46791ee7877115afffa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfa2c0da27ab46791ee7877115afffa3">&#9670;&nbsp;</a></span>setUpdater()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::framework::setUpdater </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classflounder_1_1iupdater.html">iupdater</a> *&#160;</td>
+          <td class="paramname"><em>updater</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads the updater into the framework. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">updater</td><td>The updater. </td></tr>
   </table>
   </dd>
 </dl>

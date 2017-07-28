@@ -95,15 +95,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3038f39f358e37d15059af6c1675497b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a3038f39f358e37d15059af6c1675497b">~mouse</a> ()</td></tr>
 <tr class="memdesc:a3038f39f358e37d15059af6c1675497b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the mouse module.  <a href="#a3038f39f358e37d15059af6c1675497b">More...</a><br /></td></tr>
 <tr class="separator:a3038f39f358e37d15059af6c1675497b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af88cf24fffafeb3e6ed1db19ec40698c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#af88cf24fffafeb3e6ed1db19ec40698c">load</a> (const std::string &amp;customMouse)</td></tr>
-<tr class="memdesc:af88cf24fffafeb3e6ed1db19ec40698c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the mouse module with inital values.  <a href="#af88cf24fffafeb3e6ed1db19ec40698c">More...</a><br /></td></tr>
-<tr class="separator:af88cf24fffafeb3e6ed1db19ec40698c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a550ad472e61ed74ca42c07777bdd1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a8a550ad472e61ed74ca42c07777bdd1f">init</a> () override</td></tr>
-<tr class="memdesc:a8a550ad472e61ed74ca42c07777bdd1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialize function for the module.  <a href="#a8a550ad472e61ed74ca42c07777bdd1f">More...</a><br /></td></tr>
-<tr class="separator:a8a550ad472e61ed74ca42c07777bdd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1b1d60e1d1cf4ec7d19eaef65e040bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#aa1b1d60e1d1cf4ec7d19eaef65e040bc">update</a> () override</td></tr>
 <tr class="memdesc:aa1b1d60e1d1cf4ec7d19eaef65e040bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the module.  <a href="#aa1b1d60e1d1cf4ec7d19eaef65e040bc">More...</a><br /></td></tr>
 <tr class="separator:aa1b1d60e1d1cf4ec7d19eaef65e040bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43d0ec3660e698553e9c1f2f4403718e"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#a43d0ec3660e698553e9c1f2f4403718e">getCustomMouse</a> ()</td></tr>
+<tr class="memdesc:a43d0ec3660e698553e9c1f2f4403718e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mouses custom mouse file.  <a href="#a43d0ec3660e698553e9c1f2f4403718e">More...</a><br /></td></tr>
+<tr class="separator:a43d0ec3660e698553e9c1f2f4403718e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6b1c2f498e6fdef0a2ff827ef93928a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#ab6b1c2f498e6fdef0a2ff827ef93928a">setCustomMouse</a> (const std::string &amp;customMouse)</td></tr>
+<tr class="memdesc:ab6b1c2f498e6fdef0a2ff827ef93928a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the custom mouse file.  <a href="#ab6b1c2f498e6fdef0a2ff827ef93928a">More...</a><br /></td></tr>
+<tr class="separator:ab6b1c2f498e6fdef0a2ff827ef93928a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff9750c7d68e93aea4c2d3c447677a9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1mouse.html#aff9750c7d68e93aea4c2d3c447677a9e">setCursorHidden</a> (const bool &amp;disabled)</td></tr>
 <tr class="memdesc:aff9750c7d68e93aea4c2d3c447677a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets if the operating systems cursor is hidden whilst in the display.  <a href="#aff9750c7d68e93aea4c2d3c447677a9e">More...</a><br /></td></tr>
 <tr class="separator:aff9750c7d68e93aea4c2d3c447677a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -300,6 +300,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackCursorEnter</
 
 </div>
 </div>
+<a id="a43d0ec3660e698553e9c1f2f4403718e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43d0ec3660e698553e9c1f2f4403718e">&#9670;&nbsp;</a></span>getCustomMouse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string &amp; flounder::mouse::getCustomMouse </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the mouses custom mouse file. </p>
+<dl class="section return"><dt>Returns</dt><dd>The custom mouse file. </dd></dl>
+
+</div>
+</div>
 <a id="aca4c4c0498247db6fafef3ad7fb7a729"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aca4c4c0498247db6fafef3ad7fb7a729">&#9670;&nbsp;</a></span>getDeltaWheel()</h2>
 
@@ -400,35 +420,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackCursorEnter</
 
 </div>
 </div>
-<a id="a8a550ad472e61ed74ca42c07777bdd1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a550ad472e61ed74ca42c07777bdd1f">&#9670;&nbsp;</a></span>init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::mouse::init </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The initialize function for the module. </p>
-
-<p>Implements <a class="el" href="classflounder_1_1imodule.html#a1725ef346952884d0741de61aba1e0c7">flounder::imodule</a>.</p>
-
-</div>
-</div>
 <a id="a84181116f71d9f8e3c01afca2aa2554f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a84181116f71d9f8e3c01afca2aa2554f">&#9670;&nbsp;</a></span>isCursorDisabled()</h2>
 
@@ -469,32 +460,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackCursorEnter</
 
 </div>
 </div>
-<a id="af88cf24fffafeb3e6ed1db19ec40698c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af88cf24fffafeb3e6ed1db19ec40698c">&#9670;&nbsp;</a></span>load()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::mouse::load </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>customMouse</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads the mouse module with inital values. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">customMouse</td><td>The custom cursor file path. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="aff9750c7d68e93aea4c2d3c447677a9e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aff9750c7d68e93aea4c2d3c447677a9e">&#9670;&nbsp;</a></span>setCursorHidden()</h2>
 
@@ -515,6 +480,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>callbackCursorEnter</
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">disabled</td><td>If the system cursor should be disabled or hidden when not shown. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab6b1c2f498e6fdef0a2ff827ef93928a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6b1c2f498e6fdef0a2ff827ef93928a">&#9670;&nbsp;</a></span>setCustomMouse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::mouse::setCustomMouse </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>customMouse</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the custom mouse file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td>The new custom mouse file. </td></tr>
   </table>
   </dd>
 </dl>

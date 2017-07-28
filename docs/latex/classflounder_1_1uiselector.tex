@@ -1,0 +1,142 @@
+\hypertarget{classflounder_1_1uiselector}{}\section{flounder\+:\+:uiselector Class Reference}
+\label{classflounder_1_1uiselector}\index{flounder\+::uiselector@{flounder\+::uiselector}}
+
+
+Represents a virtual cursor that will be used to determine if a ui action was preformed by a device.  
+
+
+
+
+{\ttfamily \#include $<$uiselector.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classflounder_1_1uiselector_ad6762253d7fbc30fa9ffd548a758113c}{load} (const int \&joystick, const int \&joystick\+Left\+Click, const int \&joystick\+Right\+Click, const int \&joystick\+AxisX, const int \&joystick\+AxisY)
+\begin{DoxyCompactList}\small\item\em Sets up the joystick settings to be used for controlling the virtual cursor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_ad1c41e87c7c214ee7fc1aa3d33717449}\label{classflounder_1_1uiselector_ad1c41e87c7c214ee7fc1aa3d33717449}} 
+void {\bfseries update} (const bool \&paused)
+\item 
+bool \hyperlink{classflounder_1_1uiselector_a308e91174313dbb9073053bbde938134}{is\+Selected} (const uiobject \&object)
+\begin{DoxyCompactList}\small\item\em Gets if the object provided has the cursor hovered above it. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a8df56d82dec9199e1de6e9786a9138b2}\label{classflounder_1_1uiselector_a8df56d82dec9199e1de6e9786a9138b2}} 
+void {\bfseries cancel\+Was\+Event} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a52dae8a228dcd117227417cc54397d38}\label{classflounder_1_1uiselector_a52dae8a228dcd117227417cc54397d38}} 
+float {\bfseries get\+CursorX} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_ad92827be48f1f15ca5243fe7f9d82ef1}\label{classflounder_1_1uiselector_ad92827be48f1f15ca5243fe7f9d82ef1}} 
+float {\bfseries get\+CursorY} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a9c24b5df2ad35f17c2560a61fd758914}\label{classflounder_1_1uiselector_a9c24b5df2ad35f17c2560a61fd758914}} 
+bool {\bfseries get\+Left\+Click} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_afeef882c0fa3d87858e7b6d1e104344f}\label{classflounder_1_1uiselector_afeef882c0fa3d87858e7b6d1e104344f}} 
+bool {\bfseries get\+Right\+Click} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_acde8e2793e44079cbe55df229cf85337}\label{classflounder_1_1uiselector_acde8e2793e44079cbe55df229cf85337}} 
+bool {\bfseries was\+Left\+Click} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_ad77a8d64a2e57652afd10730511fa19a}\label{classflounder_1_1uiselector_ad77a8d64a2e57652afd10730511fa19a}} 
+bool {\bfseries was\+Right\+Click} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_abc47183d0c03faea4fdd5443cae9b2d4}\label{classflounder_1_1uiselector_abc47183d0c03faea4fdd5443cae9b2d4}} 
+float {\bfseries m\+\_\+cursorX}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a3ff361811f7f4014d1542e9b9d71a9e7}\label{classflounder_1_1uiselector_a3ff361811f7f4014d1542e9b9d71a9e7}} 
+float {\bfseries m\+\_\+cursorY}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a10e906b0b1e40d59d7bdd8068dfc9df7}\label{classflounder_1_1uiselector_a10e906b0b1e40d59d7bdd8068dfc9df7}} 
+bool {\bfseries m\+\_\+left\+Click}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a2276ab565db647ef616772b3380bdc74}\label{classflounder_1_1uiselector_a2276ab565db647ef616772b3380bdc74}} 
+bool {\bfseries m\+\_\+right\+Click}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a8e69fd34520ac4d791d8552ff92048b2}\label{classflounder_1_1uiselector_a8e69fd34520ac4d791d8552ff92048b2}} 
+bool {\bfseries m\+\_\+left\+Was\+Click}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_aee178eccab194f319b49ef334bbf8cb2}\label{classflounder_1_1uiselector_aee178eccab194f319b49ef334bbf8cb2}} 
+bool {\bfseries m\+\_\+right\+Was\+Click}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_ab4aa31f4df7961f6d23ebf65fa12c050}\label{classflounder_1_1uiselector_ab4aa31f4df7961f6d23ebf65fa12c050}} 
+\hyperlink{classflounder_1_1buttonmouse}{buttonmouse} $\ast$ {\bfseries m\+\_\+mouse\+Left}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a3286b3eb15428fe97ddcd37081edff2a}\label{classflounder_1_1uiselector_a3286b3eb15428fe97ddcd37081edff2a}} 
+\hyperlink{classflounder_1_1buttonmouse}{buttonmouse} $\ast$ {\bfseries m\+\_\+mouse\+Right}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_acad951ed7e44e83e99d2d16110d68f95}\label{classflounder_1_1uiselector_acad951ed7e44e83e99d2d16110d68f95}} 
+int {\bfseries m\+\_\+selected\+Joystick}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a513d7f21a6088073ed296c37373fb258}\label{classflounder_1_1uiselector_a513d7f21a6088073ed296c37373fb258}} 
+\hyperlink{classflounder_1_1axisjoystick}{axisjoystick} $\ast$ {\bfseries m\+\_\+joystick\+AxisX}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a138ec9b5d846f372063cc714672f6d3a}\label{classflounder_1_1uiselector_a138ec9b5d846f372063cc714672f6d3a}} 
+\hyperlink{classflounder_1_1axisjoystick}{axisjoystick} $\ast$ {\bfseries m\+\_\+joystick\+AxisY}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a8d342094066c6d366362e0530104b21c}\label{classflounder_1_1uiselector_a8d342094066c6d366362e0530104b21c}} 
+\hyperlink{classflounder_1_1buttonjoystick}{buttonjoystick} $\ast$ {\bfseries m\+\_\+joystick\+Left}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a52229da85a42a16f535c69d00ebf3b3e}\label{classflounder_1_1uiselector_a52229da85a42a16f535c69d00ebf3b3e}} 
+\hyperlink{classflounder_1_1buttonjoystick}{buttonjoystick} $\ast$ {\bfseries m\+\_\+joystick\+Right}
+\item 
+\mbox{\Hypertarget{classflounder_1_1uiselector_a71b7a5667332c7c87e9a972d7e826f05}\label{classflounder_1_1uiselector_a71b7a5667332c7c87e9a972d7e826f05}} 
+bool {\bfseries m\+\_\+joysticks\+Initialized}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a virtual cursor that will be used to determine if a ui action was preformed by a device. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1uiselector_a308e91174313dbb9073053bbde938134}\label{classflounder_1_1uiselector_a308e91174313dbb9073053bbde938134}} 
+\index{flounder\+::uiselector@{flounder\+::uiselector}!is\+Selected@{is\+Selected}}
+\index{is\+Selected@{is\+Selected}!flounder\+::uiselector@{flounder\+::uiselector}}
+\subsubsection{\texorpdfstring{is\+Selected()}{isSelected()}}
+{\footnotesize\ttfamily bool flounder\+::uiselector\+::is\+Selected (\begin{DoxyParamCaption}\item[{const uiobject \&}]{object }\end{DoxyParamCaption})}
+
+
+
+Gets if the object provided has the cursor hovered above it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em object} & The object to check with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If the object has the cursor inside of its box. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1uiselector_ad6762253d7fbc30fa9ffd548a758113c}\label{classflounder_1_1uiselector_ad6762253d7fbc30fa9ffd548a758113c}} 
+\index{flounder\+::uiselector@{flounder\+::uiselector}!load@{load}}
+\index{load@{load}!flounder\+::uiselector@{flounder\+::uiselector}}
+\subsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily void flounder\+::uiselector\+::load (\begin{DoxyParamCaption}\item[{const int \&}]{joystick,  }\item[{const int \&}]{joystick\+Left\+Click,  }\item[{const int \&}]{joystick\+Right\+Click,  }\item[{const int \&}]{joystick\+AxisX,  }\item[{const int \&}]{joystick\+AxisY }\end{DoxyParamCaption})}
+
+
+
+Sets up the joystick settings to be used for controlling the virtual cursor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick} & The joystick ID to attach though. \\
+\hline
+{\em joystick\+Left\+Click} & The joystick key to be used as the left click. \\
+\hline
+{\em joystick\+Right\+Click} & The joystick key to be used as the right click. \\
+\hline
+{\em joystick\+AxisX} & The joystick axis to be used for moving the x axis. \\
+\hline
+{\em joystick\+AxisY} & The joystick axis to be used for moving the y axis. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/uis/uiselector.\+h\item 
+Flounder-\/\+Core/src/uis/uiselector.\+cpp\end{DoxyCompactItemize}

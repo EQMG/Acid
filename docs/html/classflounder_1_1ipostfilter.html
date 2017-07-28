@@ -123,6 +123,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a34cced83864d9d6b1c664a0337cd97b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ipostfilter.html#a34cced83864d9d6b1c664a0337cd97b2">applyFilter</a> (const int n_args,...)</td></tr>
 <tr class="memdesc:a34cced83864d9d6b1c664a0337cd97b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renders the filter to its fbo.  <a href="#a34cced83864d9d6b1c664a0337cd97b2">More...</a><br /></td></tr>
 <tr class="separator:a34cced83864d9d6b1c664a0337cd97b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59407e666a5f2ae9767b9fc0f0e25ced"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ipostfilter.html#a59407e666a5f2ae9767b9fc0f0e25ced">applyFilter</a> (const int n_args, va_list args)</td></tr>
+<tr class="memdesc:a59407e666a5f2ae9767b9fc0f0e25ced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renders the filter to its fbo.  <a href="#a59407e666a5f2ae9767b9fc0f0e25ced">More...</a><br /></td></tr>
+<tr class="separator:a59407e666a5f2ae9767b9fc0f0e25ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b658b4672718d5ac36539875bde722e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ipostfilter.html#a9b658b4672718d5ac36539875bde722e">storeValues</a> ()=0</td></tr>
 <tr class="memdesc:a9b658b4672718d5ac36539875bde722e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started.  <a href="#a9b658b4672718d5ac36539875bde722e">More...</a><br /></td></tr>
 <tr class="separator:a9b658b4672718d5ac36539875bde722e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -318,7 +321,7 @@ fbo *&#160;</td><td class="memItemRight" valign="bottom"><b>m_fbo</b></td></tr>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a34cced83864d9d6b1c664a0337cd97b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34cced83864d9d6b1c664a0337cd97b2">&#9670;&nbsp;</a></span>applyFilter()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a34cced83864d9d6b1c664a0337cd97b2">&#9670;&nbsp;</a></span>applyFilter() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -334,6 +337,43 @@ fbo *&#160;</td><td class="memItemRight" valign="bottom"><b>m_fbo</b></td></tr>
           <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Renders the filter to its fbo. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n_args</td><td>The number textures being bound to the shader. </td></tr>
+    <tr><td class="paramname">...</td><td>The textures being bound to the shader. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a59407e666a5f2ae9767b9fc0f0e25ced"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59407e666a5f2ae9767b9fc0f0e25ced">&#9670;&nbsp;</a></span>applyFilter() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::ipostfilter::applyFilter </td>
+          <td>(</td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>n_args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">va_list&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

@@ -20,9 +20,11 @@ Inheritance diagram for flounder\+:\+:ipostpipeline\+:\begin{figure}[H]
 \item 
 \hyperlink{classflounder_1_1ipostpipeline_a778c68518cfcdf1de4052264538b28d3}{ipostpipeline} ()
 \begin{DoxyCompactList}\small\item\em Creates a new post pipeline. \end{DoxyCompactList}\item 
-virtual \hyperlink{classflounder_1_1ipostpipeline_a5d8e916ae2d5a3153449a61caa4399f6}{$\sim$ipostpipeline} ()
+virtual \hyperlink{classflounder_1_1ipostpipeline_a82ab1aded690131f211c5627c54f2c4c}{$\sim$ipostpipeline} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the post pipeline. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}{render\+Pipeline} (const int n\+\_\+args,...)=0
+void \hyperlink{classflounder_1_1ipostpipeline_adb857f2d31022074ed6543f42b6b4c8f}{render\+PipelineV} (const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Renders the post pipeline. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classflounder_1_1ipostpipeline_a25255482fdb75f92b8c3f940ca8c583a}{render\+Pipeline} (const int n\+\_\+args, va\+\_\+list args)=0
 \begin{DoxyCompactList}\small\item\em Renders the post pipeline. \end{DoxyCompactList}\item 
 virtual fbo $\ast$ \hyperlink{classflounder_1_1ipostpipeline_a08f5d19b9652528337b73c2f4e0e4258}{get\+Output} ()=0
 \begin{DoxyCompactList}\small\item\em Gets the fbo containing the pipeline output. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -38,17 +40,17 @@ Represents a system of post effects.
 \index{flounder\+::ipostpipeline@{flounder\+::ipostpipeline}!ipostpipeline@{ipostpipeline}}
 \index{ipostpipeline@{ipostpipeline}!flounder\+::ipostpipeline@{flounder\+::ipostpipeline}}
 \subsubsection{\texorpdfstring{ipostpipeline()}{ipostpipeline()}}
-{\footnotesize\ttfamily flounder\+::ipostpipeline\+::ipostpipeline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily flounder\+::ipostpipeline\+::ipostpipeline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
 Creates a new post pipeline. 
 
-\mbox{\Hypertarget{classflounder_1_1ipostpipeline_a5d8e916ae2d5a3153449a61caa4399f6}\label{classflounder_1_1ipostpipeline_a5d8e916ae2d5a3153449a61caa4399f6}} 
+\mbox{\Hypertarget{classflounder_1_1ipostpipeline_a82ab1aded690131f211c5627c54f2c4c}\label{classflounder_1_1ipostpipeline_a82ab1aded690131f211c5627c54f2c4c}} 
 \index{flounder\+::ipostpipeline@{flounder\+::ipostpipeline}!````~ipostpipeline@{$\sim$ipostpipeline}}
 \index{````~ipostpipeline@{$\sim$ipostpipeline}!flounder\+::ipostpipeline@{flounder\+::ipostpipeline}}
 \subsubsection{\texorpdfstring{$\sim$ipostpipeline()}{~ipostpipeline()}}
-{\footnotesize\ttfamily virtual flounder\+::ipostpipeline\+::$\sim$ipostpipeline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily flounder\+::ipostpipeline\+::$\sim$ipostpipeline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
 
 
 
@@ -74,11 +76,11 @@ The output fbo.
 
 Implemented in \hyperlink{classflounder_1_1pipelinepaused_a7824b6364878b5aaf57921e2a7a4915a}{flounder\+::pipelinepaused}, \hyperlink{classflounder_1_1pipelinebloom_a0ab1108f9115014014f7a8bd5ca5ac34}{flounder\+::pipelinebloom}, and \hyperlink{classflounder_1_1pipelinegaussian_aae27c8214a8a544b1ab96ddd2383a2b2}{flounder\+::pipelinegaussian}.
 
-\mbox{\Hypertarget{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}\label{classflounder_1_1ipostpipeline_a975b354967fa358076d02380feb55265}} 
+\mbox{\Hypertarget{classflounder_1_1ipostpipeline_a25255482fdb75f92b8c3f940ca8c583a}\label{classflounder_1_1ipostpipeline_a25255482fdb75f92b8c3f940ca8c583a}} 
 \index{flounder\+::ipostpipeline@{flounder\+::ipostpipeline}!render\+Pipeline@{render\+Pipeline}}
 \index{render\+Pipeline@{render\+Pipeline}!flounder\+::ipostpipeline@{flounder\+::ipostpipeline}}
 \subsubsection{\texorpdfstring{render\+Pipeline()}{renderPipeline()}}
-{\footnotesize\ttfamily virtual void flounder\+::ipostpipeline\+::render\+Pipeline (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily virtual void flounder\+::ipostpipeline\+::render\+Pipeline (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{va\+\_\+list}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -88,15 +90,33 @@ Renders the post pipeline.
 \begin{DoxyParams}{Parameters}
 {\em n\+\_\+args} & The number textures being sent to the pipeline. \\
 \hline
-{\em textures} & A list of textures in indexed order to be bound for the shader program. \\
+{\em args} & A list of textures in indexed order to be bound for the shader program. \\
 \hline
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classflounder_1_1pipelinepaused_ac3f87a0c31db13f6b25eaf02431c6644}{flounder\+::pipelinepaused}, \hyperlink{classflounder_1_1pipelinebloom_a5f3e5c81ec41947b31f80027911addd0}{flounder\+::pipelinebloom}, and \hyperlink{classflounder_1_1pipelinegaussian_a2d6372f1b428c3a09bf6fc2efaee3c83}{flounder\+::pipelinegaussian}.
+Implemented in \hyperlink{classflounder_1_1pipelinepaused_ad524695829a716d4726118c2e6ac43a1}{flounder\+::pipelinepaused}, \hyperlink{classflounder_1_1pipelinebloom_a6ef1ad3bceb0239ed08148cdbce477e2}{flounder\+::pipelinebloom}, and \hyperlink{classflounder_1_1pipelinegaussian_ab5416e0179e9b6175c8e59c07300d253}{flounder\+::pipelinegaussian}.
+
+\mbox{\Hypertarget{classflounder_1_1ipostpipeline_adb857f2d31022074ed6543f42b6b4c8f}\label{classflounder_1_1ipostpipeline_adb857f2d31022074ed6543f42b6b4c8f}} 
+\index{flounder\+::ipostpipeline@{flounder\+::ipostpipeline}!render\+PipelineV@{render\+PipelineV}}
+\index{render\+PipelineV@{render\+PipelineV}!flounder\+::ipostpipeline@{flounder\+::ipostpipeline}}
+\subsubsection{\texorpdfstring{render\+Pipeline\+V()}{renderPipelineV()}}
+{\footnotesize\ttfamily void flounder\+::ipostpipeline\+::render\+PipelineV (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
 
 
 
-The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+Renders the post pipeline. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being sent to the pipeline. \\
+\hline
+{\em ...} & A list of textures in indexed order to be bound for the shader program. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-Flounder-\/\+Core/src/post/ipostpipeline.\+h\end{DoxyCompactItemize}
+Flounder-\/\+Core/src/post/ipostpipeline.\+h\item 
+Flounder-\/\+Core/src/post/ipostpipeline.\+cpp\end{DoxyCompactItemize}

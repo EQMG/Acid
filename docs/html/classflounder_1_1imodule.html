@@ -88,10 +88,12 @@ Inheritance diagram for flounder::imodule:</div>
 <area href="classflounder_1_1keyboard.html" title="A module used for the creation, updating and destruction of the keyboard keys. " alt="flounder::keyboard" shape="rect" coords="137,336,264,360"/>
 <area href="classflounder_1_1loaders.html" title="A module used for loading and managing OpenGL VAO&#39;s and VBO&#39;s. " alt="flounder::loaders" shape="rect" coords="137,392,264,416"/>
 <area href="classflounder_1_1mouse.html" title="A module used for the creation, updating and destruction of the mouse. " alt="flounder::mouse" shape="rect" coords="137,448,264,472"/>
-<area href="classflounder_1_1processing.html" alt="flounder::processing" shape="rect" coords="137,504,264,528"/>
-<area href="classflounder_1_1skybox.html" alt="flounder::skybox" shape="rect" coords="137,560,264,584"/>
-<area href="classflounder_1_1standards.html" title="A module used for managing simple update injection standards. " alt="flounder::standards" shape="rect" coords="137,616,264,640"/>
-<area href="classflounder_1_1tasks.html" title="A module used for managing tasks on framework updates. " alt="flounder::tasks" shape="rect" coords="137,672,264,696"/>
+<area href="classflounder_1_1particles.html" title="A manager that manages particles. " alt="flounder::particles" shape="rect" coords="137,504,264,528"/>
+<area href="classflounder_1_1processing.html" title="A module used for processing types of requests. " alt="flounder::processing" shape="rect" coords="137,560,264,584"/>
+<area href="classflounder_1_1skyboxes.html" alt="flounder::skyboxes" shape="rect" coords="137,616,264,640"/>
+<area href="classflounder_1_1standards.html" title="A module used for managing simple update injection standards. " alt="flounder::standards" shape="rect" coords="137,672,264,696"/>
+<area href="classflounder_1_1tasks.html" title="A module used for managing tasks on framework updates. " alt="flounder::tasks" shape="rect" coords="137,728,264,752"/>
+<area href="classflounder_1_1uis.html" title="A module used for that manages gui textures in a container. " alt="flounder::uis" shape="rect" coords="137,784,264,808"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -103,9 +105,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a519b8530d27d6c21d591e12e776ef834"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a519b8530d27d6c21d591e12e776ef834">~imodule</a> ()</td></tr>
 <tr class="memdesc:a519b8530d27d6c21d591e12e776ef834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the module.  <a href="#a519b8530d27d6c21d591e12e776ef834">More...</a><br /></td></tr>
 <tr class="separator:a519b8530d27d6c21d591e12e776ef834"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1725ef346952884d0741de61aba1e0c7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a1725ef346952884d0741de61aba1e0c7">init</a> ()=0</td></tr>
-<tr class="memdesc:a1725ef346952884d0741de61aba1e0c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialize function for the module.  <a href="#a1725ef346952884d0741de61aba1e0c7">More...</a><br /></td></tr>
-<tr class="separator:a1725ef346952884d0741de61aba1e0c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a53d48a46b5f6b16a92b2cd8503f74a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#a9a53d48a46b5f6b16a92b2cd8503f74a">update</a> ()=0</td></tr>
 <tr class="memdesc:a9a53d48a46b5f6b16a92b2cd8503f74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the module.  <a href="#a9a53d48a46b5f6b16a92b2cd8503f74a">More...</a><br /></td></tr>
 <tr class="separator:a9a53d48a46b5f6b16a92b2cd8503f74a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,35 +167,6 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1725ef346952884d0741de61aba1e0c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1725ef346952884d0741de61aba1e0c7">&#9670;&nbsp;</a></span>init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void flounder::imodule::init </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The initialize function for the module. </p>
-
-<p>Implemented in <a class="el" href="classflounder_1_1display.html#aa28a814bc8ba635c99aa4b707bac3259">flounder::display</a>, <a class="el" href="classflounder_1_1mouse.html#a8a550ad472e61ed74ca42c07777bdd1f">flounder::mouse</a>, <a class="el" href="classflounder_1_1joysticks.html#a6bb77cff38ccbdcdde66495afc538b1a">flounder::joysticks</a>, <a class="el" href="classflounder_1_1camera.html#a3deb0358c2a67ad864a630adaf566c4e">flounder::camera</a>, <a class="el" href="classflounder_1_1audio.html#acc0f4ebb4b42b0ef055ef8dd14f1a9da">flounder::audio</a>, <a class="el" href="classflounder_1_1keyboard.html#a624374ba5d79431171a44ed332e63322">flounder::keyboard</a>, <a class="el" href="classflounder_1_1loaders.html#af99df6ebe1886b87efbca82842be0d0d">flounder::loaders</a>, <a class="el" href="classflounder_1_1skybox.html#ad298f30a9e35657726bc8043a687cab7">flounder::skybox</a>, <a class="el" href="classflounder_1_1events.html#a3256dce85cd1a62a6126812dab9c4630">flounder::events</a>, <a class="el" href="classflounder_1_1standards.html#a74dd1bd0e18bc72d985073a0771790fc">flounder::standards</a>, <a class="el" href="classflounder_1_1tasks.html#a1527c16072936c764b990d3b9fd8786e">flounder::tasks</a>, and <a class="el" href="classflounder_1_1processing.html#a5c9545d8a02d836bc198982750f24f49">flounder::processing</a>.</p>
-
-</div>
-</div>
 <a id="a9a53d48a46b5f6b16a92b2cd8503f74a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9a53d48a46b5f6b16a92b2cd8503f74a">&#9670;&nbsp;</a></span>update()</h2>
 
@@ -222,7 +192,7 @@ Public Member Functions</h2></td></tr>
 
 <p>The update function for the module. </p>
 
-<p>Implemented in <a class="el" href="classflounder_1_1display.html#a799c6a76fcac1a0ca56dfd6b8d7993fa">flounder::display</a>, <a class="el" href="classflounder_1_1mouse.html#aa1b1d60e1d1cf4ec7d19eaef65e040bc">flounder::mouse</a>, <a class="el" href="classflounder_1_1joysticks.html#a346fc03cae7164d6eb927333d1ae725f">flounder::joysticks</a>, <a class="el" href="classflounder_1_1camera.html#a6b2da3a1c348764d3cf954db5ac5b357">flounder::camera</a>, <a class="el" href="classflounder_1_1audio.html#aabff6a1996b8571404023b6ac17009b6">flounder::audio</a>, <a class="el" href="classflounder_1_1keyboard.html#a9fe79eabe905466fd90413d2c3b68841">flounder::keyboard</a>, <a class="el" href="classflounder_1_1loaders.html#a9becf522a74f35f7e3dc7839577ba736">flounder::loaders</a>, <a class="el" href="classflounder_1_1skybox.html#a9c961cf6d878f40f0294905415981234">flounder::skybox</a>, <a class="el" href="classflounder_1_1events.html#a7fc08fdb5dc615a924dd0d55996747dc">flounder::events</a>, <a class="el" href="classflounder_1_1standards.html#a681e682db67c10abb814cf0f8daf086a">flounder::standards</a>, <a class="el" href="classflounder_1_1tasks.html#a32e51c65b63e8c98097d5d40c1912e5c">flounder::tasks</a>, and <a class="el" href="classflounder_1_1processing.html#ac096299eb1b5b67739586900710d4206">flounder::processing</a>.</p>
+<p>Implemented in <a class="el" href="classflounder_1_1display.html#a799c6a76fcac1a0ca56dfd6b8d7993fa">flounder::display</a>, <a class="el" href="classflounder_1_1mouse.html#aa1b1d60e1d1cf4ec7d19eaef65e040bc">flounder::mouse</a>, <a class="el" href="classflounder_1_1joysticks.html#a346fc03cae7164d6eb927333d1ae725f">flounder::joysticks</a>, <a class="el" href="classflounder_1_1uis.html#a234b52f70d1819932752a03168f21e10">flounder::uis</a>, <a class="el" href="classflounder_1_1audio.html#aabff6a1996b8571404023b6ac17009b6">flounder::audio</a>, <a class="el" href="classflounder_1_1keyboard.html#a9fe79eabe905466fd90413d2c3b68841">flounder::keyboard</a>, <a class="el" href="classflounder_1_1particles.html#a12f1dd9883cc49987f6ff0ca3105bdb6">flounder::particles</a>, <a class="el" href="classflounder_1_1skyboxes.html#ae94e675bcda78f2af0298a8551b82aa6">flounder::skyboxes</a>, <a class="el" href="classflounder_1_1processing.html#ac096299eb1b5b67739586900710d4206">flounder::processing</a>, <a class="el" href="classflounder_1_1camera.html#a6b2da3a1c348764d3cf954db5ac5b357">flounder::camera</a>, <a class="el" href="classflounder_1_1events.html#a7fc08fdb5dc615a924dd0d55996747dc">flounder::events</a>, <a class="el" href="classflounder_1_1loaders.html#a9becf522a74f35f7e3dc7839577ba736">flounder::loaders</a>, <a class="el" href="classflounder_1_1standards.html#a681e682db67c10abb814cf0f8daf086a">flounder::standards</a>, and <a class="el" href="classflounder_1_1tasks.html#a32e51c65b63e8c98097d5d40c1912e5c">flounder::tasks</a>.</p>
 
 </div>
 </div>
