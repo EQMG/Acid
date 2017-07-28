@@ -153,7 +153,7 @@
     <ClInclude Include="src\renderer\renderer.h" />
     <ClInclude Include="src\shaders\shader.h" />
     <ClInclude Include="src\shaders\shadertype.h" />
-    <ClInclude Include="src\skyboxes\rendererskybox.h" />
+    <ClInclude Include="src\skyboxes\rendererskyboxes.h" />
     <ClInclude Include="src\skyboxes\skyboxes.h" />
     <ClInclude Include="src\space\ispatialobject.h" />
     <ClInclude Include="src\space\ispatialstructure.h" />
@@ -273,7 +273,7 @@
     <ClCompile Include="src\processing\resource\processorresource.cpp" />
     <ClCompile Include="src\renderer\renderer.cpp" />
     <ClCompile Include="src\shaders\shader.cpp" />
-    <ClCompile Include="src\skyboxes\rendererskybox.cpp" />
+    <ClCompile Include="src\skyboxes\rendererskyboxes.cpp" />
     <ClCompile Include="src\skyboxes\skyboxes.cpp" />
     <ClCompile Include="src\space\structurebasic.cpp" />
     <ClCompile Include="src\standards\standards.cpp" />

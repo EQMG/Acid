@@ -10,7 +10,7 @@ class managerrender :
 private:
 	vector4 m_infinity;
 
-	rendererskybox *m_rendererSkybox;
+	rendererskyboxes *m_rendererSkyboxes;
 	rendererguis *m_rendererGuis;
 	rendererfonts *m_rendererFonts;
 
