@@ -5,7 +5,11 @@ const float manageruis::SLIDE_TIME = 0.5f;
 manageruis::manageruis() :
 	imanageruis()
 {
-	m_primaryColour = new colour(1.0f, 0.0f, 0.0f);
+	// m_primaryColour = new colour(0.90196078431f, 0.08235294117f, 0.08235294117f); // Charger Red.
+	// m_primaryColour = new colour(0.1f, 0.8f, 0.2f); // Neon Green.
+	// m_primaryColour = new colour(0.0824f, 0.396f, 0.753f); // Water Blue.
+	m_primaryColour = new colour(0.2f, 0.2f, 1.0f); // Some Blue.
+
 	m_overlayStartup = new overlaystartup(uis::get()->getContainer());
 	m_overlayDebug = new overlaydebug(uis::get()->getContainer());
 

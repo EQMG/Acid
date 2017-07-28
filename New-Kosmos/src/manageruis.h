@@ -15,6 +15,7 @@ public:
 	static const float SLIDE_TIME;
 private:
 	colour *m_primaryColour;
+
 	overlaystartup *m_overlayStartup;
 	overlaydebug *m_overlayDebug;
 public:
