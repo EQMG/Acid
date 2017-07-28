@@ -235,10 +235,8 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		float theta = __random();
-		theta *= 2.0f * PI;
-		float z = __random();
-		z *= 2.0f - 1.0f;
+		float theta = maths::randomInRange(0.0f, 1.0f) * 2.0f * PI;
+		float z = maths::randomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
 		float rootOneMinusZSquared = sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * cos(theta);
 		float y = rootOneMinusZSquared * sin(theta);
@@ -262,8 +260,8 @@ namespace flounder
 
 		destination->normalize();
 		destination->scale(radius);
-		float a = __random();
-		float b = __random();
+		float a = maths::randomInRange(0.0f, 1.0f);
+		float b = maths::randomInRange(0.0f, 1.0f);
 
 		if (a > b)
 		{

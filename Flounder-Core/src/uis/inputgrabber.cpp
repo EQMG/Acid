@@ -7,6 +7,62 @@ namespace flounder
 	const float inputgrabber::SCALE_SELECTED = 1.8f;
 	colour *const inputgrabber::COLOUR_NORMAL = new colour(0.0f, 0.0f, 0.0f);
 
+	grabberjoystick::grabberjoystick(const int &joystick) :
+		igrabber()
+	{
+		m_joystick = joystick;
+	}
+
+	int grabberjoystick::getCurrent(text *object)
+	{
+		int key = -1;
+
+		if (joysticks::get()->isConnected(m_joystick))
+		{
+			for (int i = 0; i < joysticks::get()->getCountButtons(m_joystick); i++)
+			{
+				if (joysticks::get()->getButton(m_joystick, i))
+				{
+					if (i == 0)
+					{
+						if (uis::get()->getSelector()->wasLeftClick() && uis::get()->getSelector()->isSelected(*object))
+						{
+							key = i;
+						}
+					}
+					else
+					{
+						key = i;
+					}
+				}
+			}
+		}
+
+		return key;
+	}
+
+	std::string grabberjoystick::getValue(const int &value)
+	{
+		return std::to_string(value);
+	}
+
+	int grabberkeyboard::getCurrent(text *object)
+	{
+		int key = keyboard::get()->getKeyboardChar();
+		
+		if (key == 0 || !keyboard::get()->getKey(toupper(key)))
+		{
+			key = -1;
+		}
+
+		return key;
+	}
+
+	std::string grabberkeyboard::getValue(const int &value)
+	{
+		return std::string(1, static_cast<char>(value));
+	}
+
 	int grabbermouse::getCurrent(text *object)
 	{
 		int key = -1;
@@ -35,23 +91,6 @@ namespace flounder
 	std::string grabbermouse::getValue(const int &value)
 	{
 		return std::to_string(value);
-	}
-
-	int grabberkeyboard::getCurrent(text *object)
-	{
-		int key = keyboard::get()->getKeyboardChar();
-		
-		if (key == 0 || !keyboard::get()->getKey(toupper(key)))
-		{
-			key = -1;
-		}
-
-		return key;
-	}
-
-	std::string grabberkeyboard::getValue(const int &value)
-	{
-		return std::string(1, static_cast<char>(value));
 	}
 
 	inputgrabber::inputgrabber(uiobject *parent, const vector2 &position, const std::string &prefix, const int &value, igrabber *grabber, const uialign &align) :

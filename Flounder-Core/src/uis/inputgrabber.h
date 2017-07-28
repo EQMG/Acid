@@ -22,7 +22,20 @@ namespace flounder
 		virtual std::string getValue(const int &value) = 0;
 	};
 
-	class grabbermouse :
+	class grabberjoystick :
+		public igrabber
+	{
+	private:
+		int m_joystick;
+	public:
+		grabberjoystick(const int &joystick);
+
+		int getCurrent(text *object) override;
+
+		std::string getValue(const int &value) override;
+	};
+
+	class grabberkeyboard :
 		public igrabber
 	{
 	public:
@@ -31,7 +44,7 @@ namespace flounder
 		std::string getValue(const int &value) override;
 	};
 
-	class grabberkeyboard :
+	class grabbermouse :
 		public igrabber
 	{
 	public:

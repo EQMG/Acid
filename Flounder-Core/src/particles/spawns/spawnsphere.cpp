@@ -19,8 +19,8 @@ namespace flounder
 		vector3::generateRandomUnitVector(m_spawnPosition);
 
 		m_spawnPosition->scale(m_radius);
-		float a = __random();
-		float b = __random();
+		float a = maths::randomInRange(0.0f, 1.0f);
+		float b = maths::randomInRange(0.0f, 1.0f);
 
 		if (a > b)
 		{
@@ -31,7 +31,7 @@ namespace flounder
 
 		float randX = b * cos(2.0f * PI * (a / b));
 		float randY = b * sin(2.0f * PI * (a / b));
-		float distance = (new vector2(randX, randY))->length();
+		float distance = vector2(randX, randY).length();
 		m_spawnPosition->scale(distance);
 		return m_spawnPosition;
 	}
