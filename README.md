@@ -44,6 +44,8 @@ Plans:
  * Android/IOS
  * Consoles/Switch?
  * Add more features from Flounder on Java
+ * ~~Fractional Distillation~~
+ * ~~Flounder Proprietary Scripting Language™~~
 
 [Read the autogen docs](https://equilibrium-games.github.io/Flounder/html/namespaceflounder.html)
 [Code metrics](https://equilibrium-games.github.io/Flounder/loc/LocMetrics.html)
