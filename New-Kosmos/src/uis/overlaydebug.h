@@ -1,10 +1,6 @@
 ﻿#pragma once
 
 #include <flounder.h>
-#include "uis/inputbutton.h"
-#include "uis/inputtext.h"
-#include "uis/inputgrabber.h"
-#include "uis/inputslider.h"
 
 using namespace flounder;
 
@@ -19,8 +15,9 @@ private:
 	inputbutton *m_inputbutton;
 	inputslider *m_inputslider;
 	inputtext *m_inputtext;
-	inputgrabber *m_inputmouse;
+	inputgrabber *m_inputjoystick;
 	inputgrabber *m_inputkeyboard;
+	inputgrabber *m_inputmouse;
 public:
 	overlaydebug(uiobject *parent);
 

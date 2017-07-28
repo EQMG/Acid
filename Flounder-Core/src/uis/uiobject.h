@@ -67,10 +67,36 @@ namespace flounder
 		virtual void updateObject() = 0;
 
 		/// <summary>
+		/// Disowns a child from this screen objects children list.
+		/// </summary>
+		/// <param name="child"> The child to disown. </param>
+		void removeChild(uiobject *child);
+
+		/// <summary>
+		/// Adds this object and its children to a list.
+		/// </summary>
+		/// <param name="list"> The list to add to.
+		/// </param>
+		/// <returns> The list that has been added to. </returns>
+		std::vector<uiobject*> *getAll(std::vector<uiobject*> *list);
+
+		/// <summary>
+		/// Gets the positions relative in screen space.
+		/// </summary>
+		/// <returns> The screen positions. </returns>
+		inline vector2 *getScreenPosition() const { return m_screenPosition; }
+
+		/// <summary>
+		/// Gets the dimensions relative in screen space.
+		/// </summary>
+		/// <returns> The screen dimensions. </returns>
+		inline vector2 *getScreenDimensions() const { return m_screenDimensions; }
+
+		/// <summary>
 		/// Gets the parent object.
 		/// </summary>
 		/// <returns> The parent object. </returns>
-		inline uiobject *getParent() { return m_parent; }
+		inline uiobject *getParent() const { return m_parent; }
 
 		/// <summary>
 		/// Removes this object from the previous parent and attaches it to another parent.
@@ -86,19 +112,19 @@ namespace flounder
 
 		inline vector2 *getPosition() const { return m_position; }
 
-		inline void setPosition(const vector2 &position) { m_position->set(position); }
+		inline void setPosition(const vector2 &position) const { m_position->set(position); }
 
 		inline vector2 *getDimensions() const { return m_dimensions; }
 
-		inline void setDimensions(const vector2 &dimensions) { m_dimensions->set(dimensions); }
+		inline void setDimensions(const vector2 &dimensions) const { m_dimensions->set(dimensions); }
 
 		inline vector2 *getMeshSize() const { return m_meshSize; }
 
-		inline void setMeshSize(const vector2 &meshSize) { m_meshSize->set(meshSize); }
+		inline void setMeshSize(const vector2 &meshSize) const { m_meshSize->set(meshSize); }
 
 		inline vector4 *getScissor() const { return m_scissor; }
 
-		inline void setScissor(const vector4 &scissor) { m_scissor->set(scissor); }
+		inline void setScissor(const vector4 &scissor) const { m_scissor->set(scissor); }
 
 		inline bool getInScreenCoords() const { return m_inScreenCoords; }
 
@@ -106,7 +132,7 @@ namespace flounder
 
 		inline vector2 *getPositionOffsets() const { return m_positionOffsets; }
 
-		inline void setPositionOffsets(const vector2 &positionOffsets) { m_positionOffsets->set(positionOffsets); }
+		inline void setPositionOffsets(const vector2 &positionOffsets) const { m_positionOffsets->set(positionOffsets); }
 
 		void setRotationDriver(idriver *rotationDriver);
 
@@ -125,31 +151,5 @@ namespace flounder
 		inline float getScale() const { return m_scale; }
 
 		inline void setScale(const float &scale) { m_scale = scale; }
-
-		/// <summary>
-		/// Disowns a child from this screen objects children list.
-		/// </summary>
-		/// <param name="child"> The child to disown. </param>
-		void removeChild(uiobject *child);
-
-		/// <summary>
-		/// Adds this object and its children to a list.
-		/// </summary>
-		/// <param name="list"> The list to add to.
-		/// </param>
-		/// <returns> The list that has been added to. </returns>
-		std::vector<uiobject*> *getAll(std::vector<uiobject*> *list);
-
-		/// <summary>
-		/// Gets the positions relative in screen space.
-		/// </summary>
-		/// <returns> The screen positions. </returns>
-		vector2 *getScreenPosition() const { return m_screenPosition; }
-
-		/// <summary>
-		/// Gets the dimensions relative in screen space.
-		/// </summary>
-		/// <returns> The screen dimensions. </returns>
-		vector2 *getScreenDimensions() const { return m_screenDimensions; }
 	};
 }

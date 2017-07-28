@@ -70,7 +70,7 @@ namespace flounder
 		float positionX = object.getPosition()->m_x;
 		float positionY = object.getPosition()->m_y;
 
-		float width = 2.0f * object.getMeshSize()->m_x * object.getScreenDimensions()->m_x / display::get()->getAspectRatio();
+		float width = 2.0f * object.getMeshSize()->m_x * object.getScreenDimensions()->m_x / static_cast<float>(display::get()->getAspectRatio());
 		float height = 2.0f * object.getMeshSize()->m_y * object.getScreenDimensions()->m_y;
 
 		if (mouse::get()->isDisplaySelected() && display::get()->isFocused())

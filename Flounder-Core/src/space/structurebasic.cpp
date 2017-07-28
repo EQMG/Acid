@@ -40,6 +40,12 @@ namespace flounder
 	}
 
 	template<typename t>
+	std::vector<t *> structurebasic<t>::getAll()
+	{
+		return m_objects;
+	}
+
+	template<typename t>
 	std::vector<t*> structurebasic<t>::getAll(std::vector<t*> *result)
 	{
 		for (t value : m_objects)

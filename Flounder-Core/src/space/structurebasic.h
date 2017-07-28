@@ -32,6 +32,8 @@ namespace flounder
 
 		int getSize() override;
 
+		std::vector<t*> getAll() override;
+
 		std::vector<t*> getAll(std::vector<t*> *result) override;
 
 		std::vector<t*> queryInFrustum(frustum *range, std::vector<t*> *result) override;

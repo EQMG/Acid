@@ -54,34 +54,4 @@ namespace flounder
 			}
 		}
 	}
-
-	bool joysticks::isConnected(const int &id)
-	{
-		return m_connected[id]->connected;
-	}
-
-	const char *joysticks::getName(const int &id)
-	{
-		return m_connected[id]->name;
-	}
-
-	float joysticks::getAxis(const int &id, const int &axis)
-	{
-		return m_connected[id]->axes[axis];
-	}
-
-	bool joysticks::getButton(const int &id, const int &button)
-	{
-		return m_connected[id]->buttons[button];
-	}
-
-	int joysticks::getCountAxes(const int &id)
-	{
-		return m_connected[id]->axecount;
-	}
-
-	int joysticks::getCountButtons(const int &id)
-	{
-		return m_connected[id]->buttoncount;
-	}
 }
