@@ -55,14 +55,14 @@ namespace flounder
 		/// </summary>
 		/// <param name="id"> The joystick to check connection with. </param>
 		/// <returns> If the joystick is connected. </returns>
-		bool isConnected(const int &id);
+		inline bool isConnected(const int &id) const { return m_connected[id]->connected; }
 
 		/// <summary>
 		/// Gets the name of the joystick.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The joysticks name. </returns>
-		const char *getName(const int &id);
+		inline const char *getName(const int &id) const { return m_connected[id]->name; }
 
 		/// <summary>
 		/// Gets the value of a joysticks axis.
@@ -70,7 +70,7 @@ namespace flounder
 		/// <param name="id"> The joystick of interest. </param>
 		/// <param name="axis"> The axis of interest. </param>
 		/// <returns> The value of the joystick's axis. </returns>
-		float getAxis(const int &id, const int &axis);
+		inline float getAxis(const int &id, const int &axis) const { return m_connected[id]->axes[axis]; }
 
 		/// <summary>
 		/// Gets the whether a button on a joystick is pressed.
@@ -78,20 +78,20 @@ namespace flounder
 		/// <param name="id"> The joystick of interest. </param>
 		/// <param name="button"> The button of interest. </param>
 		/// <returns> Whether a button on a joystick is pressed. </returns>
-		bool getButton(const int &id, const int &button);
+		inline bool getButton(const int &id, const int &button) const { return m_connected[id]->buttons[button]; }
 
 		/// <summary>
 		/// Gets the number of axes the joystick offers.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		int getCountAxes(const int &id);
+		inline int getCountAxes(const int &id) const { return m_connected[id]->axecount; }
 
 		/// <summary>
 		/// Gets the number of buttons the joystick offers.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		int getCountButtons(const int &id);
+		inline int getCountButtons(const int &id) const { return m_connected[id]->buttoncount; }
 	};
 }

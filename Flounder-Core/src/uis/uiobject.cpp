@@ -86,6 +86,40 @@ namespace flounder
 		m_screenDimensions->scale(m_scale);
 	}
 
+	void uiobject::removeChild(uiobject *child)
+	{
+		for (std::vector<uiobject*>::iterator it = m_children->begin(); it != m_children->end(); ++it)
+		{
+			if (*it == child)
+			{
+				m_children->erase(it);
+				return;
+			}
+		}
+	}
+
+	std::vector<uiobject*> *uiobject::getAll(std::vector<uiobject *> *list)
+	{
+		if (isVisible())
+		{
+			list->push_back(this);
+
+			for (uiobject *child : *m_children)
+			{
+				child->getAll(list);
+			}
+		}
+
+		return list;
+	}
+
+	void uiobject::setParent(uiobject *parent)
+	{
+		m_parent->removeChild(this);
+		parent->m_children->push_back(this);
+		m_parent = parent;
+	}
+
 	bool uiobject::isVisible()
 	{
 		if (m_parent != NULL)
@@ -126,39 +160,5 @@ namespace flounder
 	{
 		delete m_scaleDriver;
 		m_scaleDriver = scaleDriver;
-	}
-
-	void uiobject::setParent(uiobject *parent)
-	{
-		m_parent->removeChild(this);
-		parent->m_children->push_back(this);
-		m_parent = parent;
-	}
-
-	void uiobject::removeChild(uiobject *child)
-	{
-		for (std::vector<uiobject*>::iterator it = m_children->begin(); it != m_children->end(); ++it)
-		{
-			if (*it == child)
-			{
-				m_children->erase(it);
-				return;
-			}
-		}
-	}
-
-	std::vector<uiobject*> *uiobject::getAll(std::vector<uiobject *> *list)
-	{
-		if (isVisible())
-		{
-			list->push_back(this);
-
-			for (uiobject *child : *m_children)
-			{
-				child->getAll(list);
-			}
-		}
-
-		return list;
 	}
 }

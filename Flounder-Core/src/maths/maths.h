@@ -12,7 +12,7 @@
 
 #define __radians(a) (a * (PI / DEGREES_IN_HALF_CIRCLE))
 #define __degrees(b) (b * (PI / DEGREES_IN_HALF_CIRCLE))
-#define __random() (((double) rand()) / RAND_MAX);
+#define __random() (((float) rand()) / RAND_MAX);
 
 #ifndef __min
 #define __min(a, b) (((a) < (b)) ? (a) : (b))
@@ -50,13 +50,13 @@ namespace flounder
 		template<typename t>
 		static t normalizeAngle(const t &angle)
 		{
-			if (angle >= (t) 360.0)
+			if (angle >= static_cast<t>(360.0))
 			{
-				return angle - (t) 360.0;
+				return angle - static_cast<t>(360.0);
 			}
-			else if (angle < (t) 0.0)
+			else if (angle < static_cast<t>(0.0))
 			{
-				return angle + (t) 360.0;
+				return angle + static_cast<t>(360.0);
 			}
 
 			return angle;
@@ -71,7 +71,7 @@ namespace flounder
 		template<typename t>
 		static t roundToPlace(const t &value, const int &place)
 		{
-			t placeMul = (t) pow(10.0, place);
+			t placeMul = static_cast<t>(pow(10.0, place));
 			return round(value * placeMul) / placeMul;
 		}
 
@@ -84,7 +84,7 @@ namespace flounder
 		template<typename t>
 		static t deadband(const t &min, const t &value)
 		{
-			return fabs(value) >= fabs(min) ? value : (t) 0.0;
+			return fabs(value) >= fabs(min) ? value : static_cast<t>(0.0);
 		}
 
 		/// <summary>
@@ -163,7 +163,7 @@ namespace flounder
 		static float randomInRange(const float &min, const float &max)
 		{
 			float range = max - min;
-			float scaled = (float) __random();
+			float scaled = __random();
 			scaled *= range;
 			return scaled + min; // == (rand.nextDouble() * (max-min)) + min;
 		}
@@ -179,7 +179,7 @@ namespace flounder
 			double logLower = log(lowerLimit);
 			double logUpper = log(upperLimit);
 
-			double raw = __random();
+			double raw = maths::randomInRange(0.0f, 1.0f);
 			double result = exp(raw * (logUpper - logLower) + logLower);
 
 			if (result < lowerLimit)
@@ -204,13 +204,13 @@ namespace flounder
 		static float normallyDistributedSingle(const float &standardDeviation, const float &mean)
 		{
 			// Intentionally duplicated to avoid IEnumerable overhead.
-			double u1 = __random(); // These are uniform(0,1) random doubles.
-			double u2 = __random();
+			double u1 = maths::randomInRange(0.0f, 1.0f); 
+			double u2 = maths::randomInRange(0.0f, 1.0f);
 
 			double x1 = sqrt(-2.0 * log(u1));
 			double x2 = 2.0 * PI * u2;
 			double z1 = x1 * sin(x2); // Random normal(0,1)
-			return (float) z1 * standardDeviation + mean;
+			return static_cast<float>(z1) * standardDeviation + mean;
 		}
 	};
 }

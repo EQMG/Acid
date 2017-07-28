@@ -10,6 +10,8 @@ private:
 	ibutton *m_buttonFullscreen;
 	ibutton *m_buttonWireframe;
 	ibutton *m_buttonExit;
+
+	particlesystem *m_systemTest;
 public:
 	instance();
 

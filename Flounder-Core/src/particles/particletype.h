@@ -26,6 +26,9 @@ namespace flounder
 		/// <param name="scale"> The averaged scale for the particle. </param>
 		particletype(const std::string &name, texture *texture, const float &lifeLength, const float &scale);
 
+		/// <summary>
+		/// Deconstructor for the particle type.
+		/// </summary>
 		~particletype();
 
 		inline std::string getName() { return m_name; }
