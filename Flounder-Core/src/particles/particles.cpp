@@ -8,69 +8,55 @@ namespace flounder
 		imodule()
 	{
 		m_particleSystems = new std::vector<particlesystem*>();
-		m_particles = new std::vector<structurebasic<particle*>*>();
-		m_deadParticles = new std::vector<particle*>();
+		m_particles = new std::map<particletype*, std::vector<particle*>*>();
 	}
 
 	particles::~particles()
 	{
 		delete m_particleSystems;
 		delete m_particles;
-		delete m_deadParticles;
 	}
 	
 	void particles::update()
 	{
-		/*//	if (guis::get()->getGuiMaster()->isGamePaused())
+		//	if (guis::get()->getGuiMaster()->isGamePaused())
 		//	{
 		//		return;
 		//	}
-	
-			// Generate particles.
-			for (particlesystem* system : *m_particleSystems)
+
+		// Generate particles.
+		for (particlesystem* system : *m_particleSystems)
+		{
+			particle *created = system->generateParticles();
+
+			if (created != NULL)
 			{
-				system->generateParticles();
-			}
-	
-			// Update particles.
-			for (structurebasic<particle*> *structure : *m_particles)
-			{
-				structurebasic<particle*> particleStructure = *structure;
-	
-				while (particleIterator != m_particles->end())
+				std::vector<particle*> *list = m_particles->find(created->getParticleType())->second;
+				
+				if (list == NULL)
 				{
-					particle *object = *particleIterator;
-					object->update();
-	
-					if (!object->isAlive())
-					{
-						(*particleIterator)->remove();
-						m_deadParticles->push_back(object);
-					}
-					particleIterator++;
+					list = new std::vector<particle*>();
+					m_particles->insert(std::pair<particletype*, std::vector<particle*>*>(created->getParticleType(), list));
+				}
+
+				list->push_back(created);
+			}
+		}
+
+		// Update and kill particles.
+		for(std::map<particletype*, std::vector<particle*>*>::iterator iter = m_particles->begin(); iter != m_particles->end(); ++iter)
+		{
+			for (std::vector<particle*>::iterator it = iter->second->begin(); it != iter->second->end(); ++it)
+			{
+				(*it)->update();
+
+				if (!(*it)->isAlive())
+				{
+					iter->second->erase(it);
 				}
 			}
-	
-			// Update dead particle objects.
-			if (!m_deadParticles->empty())
-			{
-				std::vector<particle*>::const_iterator deadIterator = m_deadParticles->begin();
-	
-				while (deadIterator != m_deadParticles->end())
-				{
-					particle *object = *deadIterator;
-					object->update();
-	
-					if (object->getElapsedTime() > MAX_ELAPSED_TIME)
-					{
-						(*deadIterator)->remove();
-					}
-	
-					deadIterator++;
-				}
-	
-				std::sort(m_deadParticles->begin(), m_deadParticles->end()); // Sorts the list old to new.
-			}*/
+		}
+
 	}
 
 	void particles::clear()
@@ -85,35 +71,13 @@ namespace flounder
 
 	void particles::removeSystem(particlesystem *system)
 	{
-		//	m_particleSystems->remove(system);
-	}
-
-	void particles::addParticle(particletype *particleType, const vector3 &position, const vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect)
-	{
-		/*	particle *result = NULL;
-	
-			if (m_deadParticles->size() > 0)
+		for (std::vector<particlesystem*>::iterator it = m_particleSystems->begin(); it != m_particleSystems->end(); ++it)
+		{
+			if (*it == system)
 			{
-				result = m_deadParticles->at(0)->set(particleType, position, velocity, lifeLength, rotation, scale, gravityEffect);
-				m_deadParticles->remove(0);
+				m_particleSystems->erase(it);
+				return;
 			}
-			else
-			{
-				result = new particle(particleType, position, velocity, lifeLength, rotation, scale, gravityEffect);
-			}
-	
-			for (std::vector<structurebasic<particle*>*>::const_iterator list = m_particles->begin(); list != m_particles->end(); ++list)
-			{
-				//JAVA TO C++ CONVERTER TODO TASK: The following line could not be converted:
-				if ((*list)->getSize() > 0 && (*list)->at(0).getParticleType().equals(result.getParticleType()))
-				{
-					(*list)->add(result);
-					return;
-				}
-			}
-	
-			structurebasic<particle*> *list = new structurebasic<particle*>();
-			list->add(result);
-			m_particles->push_back(list);*/
+		}
 	}
 }

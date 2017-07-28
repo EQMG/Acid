@@ -90,31 +90,31 @@ namespace flounder
 		/// Gets the width of the display in pixels.
 		/// </summary>
 		/// <returns> The width of the display. </returns>
-		int &getWidth();
+		inline int getWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
 
 		/// <summary>
 		/// Gets the non-fullscreen width of the display in pixels.
 		/// </summary>
 		/// <returns> The width of the display. </returns>
-		int &getWindowWidth();
+		inline int getWindowWidth() const { return m_windowWidth; }
 
 		/// <summary>
 		/// Gets the height of the display in pixels.
 		/// </summary>
 		/// <returns> The height of the display. </returns>
-		int &getHeight();
+		inline int getHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
 
 		/// <summary>
 		/// Gets the non-fullscreen height of the display in pixels.
 		/// </summary>
 		/// <returns> The height of the display. </returns>
-		int &getWindowHeight();
+		inline int getWindowHeight() const { return m_windowHeight; }
 
 		/// <summary>
 		/// Gets the aspect ratio between the displays width and height.
 		/// </summary>
 		/// <returns> The aspect ratio. </returns>
-		double &getAspectRatio();
+		inline double getAspectRatio() const { return m_aspectRatio; }
 
 		/// <summary>
 		/// Sets window size to a new size.
@@ -127,7 +127,7 @@ namespace flounder
 		/// Gets the window's title.
 		/// </summary>
 		/// <returns> The window's title. </returns>
-		std::string &getTitle();
+		inline std::string getTitle() const { return m_title; }
 
 		/// <summary>
 		/// Sets window title
@@ -139,7 +139,7 @@ namespace flounder
 		/// Gets the window's icon file.
 		/// </summary>
 		/// <returns> The window's icon file. </returns>
-		std::string &getIcon();
+		inline std::string getIcon() const { return m_icon; }
 
 		/// <summary>
 		/// Sets window icon image.
@@ -151,55 +151,55 @@ namespace flounder
 		/// Gets the fps limit.
 		/// </summary>
 		/// <returns> The fps limit. </returns>
-		int getFpsLimit();
+		inline float getFpsLimit() const { return m_fpsLimit; }
 
 		/// <summary>
 		/// Sets the fps limit. -1 disables limits.
 		/// </summary>
 		/// <param name="fpsLimit"> The new fps limit. </param>
-		void setFpsLimit(const int &fpsLimit);
+		inline void setFpsLimit(const float &fpsLimit) { m_fpsLimit = fpsLimit; }
 
 		/// <summary>
 		/// Gets if the display is using vSync.
 		/// </summary>
 		/// <returns> If VSync is enabled. </returns>
-		bool isVSync();
+		inline bool isVSync() const { return m_vsync; }
 
 		/// <summary>
 		/// Sets the display to use VSync or not.
 		/// </summary>
 		/// <param name="vsync"> Weather or not to use vSync. </param>
-		void setVSync(const bool &vsync);
+		inline void setVSync(const bool &vsync) { m_vsync = vsync; }
 
 		/// <summary>
 		/// Gets if the display requests antialiased images.
 		/// </summary>
 		/// <returns> If using antialiased images. </returns>
-		bool isAntialiasing();
+		inline bool isAntialiasing() const { return m_antialiasing; }
 
 		/// <summary>
 		/// Requests the display to antialias.
 		/// </summary>
 		/// <param name="antialiasing"> If the display should antialias. </param>
-		void setAntialiasing(const bool &antialiasing);
+		inline void setAntialiasing(const bool &antialiasing) { m_antialiasing = antialiasing; }
 
 		/// <summary>
 		/// Gets how many MSAA samples should be done before swapping buffers.
 		/// </summary>
 		/// <returns> Amount of MSAA samples. </returns>
-		int getSamples();
+		inline int getSamples() const { return m_samples; }
 
 		/// <summary>
 		/// Gets how many MSAA samples should be done before swapping buffers. Zero disables multisampling. GLFW_DONT_CARE means no preference.
 		/// </summary>
 		/// <param name="samples"> The amount of MSAA samples. </param>
-		void setSamples(const int &samples);
+		inline void setSamples(const int &samples) { m_samples = samples; }
 
 		/// <summary>
 		/// Gets weather the display is fullscreen or not.
 		/// </summary>
 		/// <returns> Fullscreen or windowed. </returns>
-		bool isFullscreen();
+		inline bool isFullscreen() const { return m_fullscreen; }
 
 		/// <summary>
 		/// Sets the display to be fullscreen or windowed.
@@ -211,30 +211,30 @@ namespace flounder
 		/// Gets the current GLFW window.
 		/// </summary>
 		/// <returns> The current GLFW window. </returns>
-		GLFWwindow *getWindow();
+		inline GLFWwindow *getWindow() const { return m_window; }
 
 		/// <summary>
 		/// Gets if the GLFW display is closed.
 		/// </summary>
 		/// <returns> If the GLFW display is closed. </returns>
-		bool isClosed();
+		inline bool isClosed() const { return m_closed; }
 
 		/// <summary>
 		/// Gets if the GLFW display is selected.
 		/// </summary>
 		/// <returns> If the GLFW display is selected. </returns>
-		bool isFocused();
+		inline bool isFocused() const { return m_focused; }
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows x position. </returns>
-		int getWindowXPos();
+		inline int getWindowXPos() const { return m_windowPosX; }
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows Y position. </returns>
-		int getWindowYPos();
+		inline int getWindowYPos() const { return m_windowPosY; }
 	};
 }

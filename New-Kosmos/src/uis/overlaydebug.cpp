@@ -23,13 +23,18 @@ overlaydebug::overlaydebug(uiobject *parent) :
 	{
 	});
 
-	m_inputmouse = new inputgrabber(this, vector2(0.5f, 0.51f), "Mouse Key: ", 0, new grabbermouse(), CENTRE);
-	m_inputmouse->setActionChange([&]()
+	m_inputjoystick = new inputgrabber(this, vector2(0.5f, 0.51f), "Joystick Key: ", 3, new grabberjoystick(0), CENTRE);
+	m_inputjoystick->setActionChange([&]()
 	{
 	});
 
 	m_inputkeyboard = new inputgrabber(this, vector2(0.5f, 0.58f), "Keyboard Key: ", 'w', new grabberkeyboard(), CENTRE);
 	m_inputkeyboard->setActionChange([&]()
+	{
+	});
+
+	m_inputmouse = new inputgrabber(this, vector2(0.5f, 0.65f), "Mouse Key: ", 0, new grabbermouse(), CENTRE);
+	m_inputmouse->setActionChange([&]()
 	{
 	});
 }
@@ -42,8 +47,9 @@ overlaydebug::~overlaydebug()
 	delete m_inputbutton;
 	delete m_inputslider;
 	delete m_inputtext;
-	delete m_inputmouse;
+	delete m_inputjoystick;
 	delete m_inputkeyboard;
+	delete m_inputmouse;
 }
 
 void overlaydebug::updateObject()

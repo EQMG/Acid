@@ -59,7 +59,7 @@ namespace flounder
 		/// Gets the mouses custom mouse file.
 		/// </summary>
 		/// <returns> The custom mouse file. </returns>
-		std::string &getCustomMouse();
+		std::string getCustomMouse() const { return m_customMouse; }
 
 		/// <summary>
 		/// Sets the custom mouse file.
@@ -79,19 +79,19 @@ namespace flounder
 		/// </summary>
 		/// <param name="button"> The mouse button to test. </param>
 		/// <returns> If the mouse button is currently pressed. </returns>
-		bool getButton(const int &button);
+		inline bool getButton(const int &button) const { return m_mouseButtons[button] != GLFW_RELEASE; }
 
 		/// <summary>
 		/// Gets the mouses screen x position.
 		/// </summary>
 		/// <returns> The mouses x position. </returns>
-		double getPositionX();
+		inline double getPositionX() const { return m_mousePositionX; }
 
 		/// <summary>
 		/// Gets the mouses screen y position.
 		/// </summary>
 		/// <returns> The mouses y position. </returns>
-		double getPositionY();
+		inline double getPositionY() const { return m_mousePositionY; }
 
 		/// <summary>
 		/// Sets the mouse position by calling glfwSetCursorPos.
@@ -104,30 +104,30 @@ namespace flounder
 		/// Gets the mouses delta x.
 		/// </summary>
 		/// <returns> The mouses delta x. </returns>
-		double getDeltaX();
+		inline double getDeltaX() const { return m_mouseDeltaX; }
 
 		/// <summary>
 		/// Gets the mouses delta y.
 		/// </summary>
 		/// <returns> The mouses delta y. </returns>
-		double getDeltaY();
+		inline double getDeltaY() const { return m_mouseDeltaY; }
 
 		/// <summary>
 		/// Gets the mouses wheel delta.
 		/// </summary>
 		/// <returns> The mouses wheel delta. </returns>
-		double getDeltaWheel();
+		inline double getDeltaWheel() const { return m_mouseDeltaWheel; }
 
 		/// <summary>
 		/// Gets if the display is selected.
 		/// </summary>
 		/// <returns> If the display is selected. </returns>
-		bool isDisplaySelected();
+		inline bool isDisplaySelected() const { return m_displaySelected; }
 
 		/// <summary>
 		/// If the cursor is hidden, the mouse is the display locked if true.
 		/// </summary>
 		/// <returns> If the cursor is hidden. </returns>
-		bool isCursorDisabled();
+		inline bool isCursorDisabled() const { return m_cursorDisabled; }
 	};
 }

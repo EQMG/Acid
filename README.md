@@ -46,5 +46,6 @@ Plans:
  * Add more features from Flounder on Java
 
 [Read the autogen docs](https://equilibrium-games.github.io/Flounder/html/namespaceflounder.html)
+[Code metrics](https://equilibrium-games.github.io/Flounder/loc/LocMetrics.html)
 
 [Read more on our website](https://equilibrium.games)

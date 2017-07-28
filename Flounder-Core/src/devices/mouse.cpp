@@ -81,11 +81,6 @@ namespace flounder
 		}
 	}
 
-	std::string &mouse::getCustomMouse()
-	{
-		return m_customMouse;
-	}
-
 	void mouse::setCustomMouse(const std::string &customMouse)
 	{
 		// Loads a custom cursor.
@@ -129,48 +124,8 @@ namespace flounder
 		m_cursorDisabled = disabled;
 	}
 
-	bool mouse::getButton(const int &button)
-	{
-		return m_mouseButtons[button] != GLFW_RELEASE;
-	}
-
-	double mouse::getPositionX()
-	{
-		return m_mousePositionX;
-	}
-
-	double mouse::getPositionY()
-	{
-		return m_mousePositionY;
-	}
-
 	void mouse::setPosition(const double &cursorX, const double &cursorY)
 	{
 		glfwSetCursorPos(display::get()->getWindow(), cursorX, cursorY);
-	}
-
-	double mouse::getDeltaX()
-	{
-		return m_mouseDeltaX;
-	}
-
-	double mouse::getDeltaY()
-	{
-		return m_mouseDeltaY;
-	}
-
-	double mouse::getDeltaWheel()
-	{
-		return m_mouseDeltaWheel;
-	}
-
-	bool mouse::isDisplaySelected()
-	{
-		return m_displaySelected;
-	}
-
-	bool mouse::isCursorDisabled()
-	{
-		return m_cursorDisabled;
 	}
 }
