@@ -2,20 +2,27 @@
 
 namespace flounder
 {
-	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader)
-	{
-		m_shader = shader::newShader()->addName(filterName)
-		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.glsl", loadtype::FILE))
-		                              ->addType(shadertype(GL_FRAGMENT_SHADER, fragmentShader, loadtype::FILE))->create();
-		m_fbo = fbo::newFBO()->fitToScreen(1.0f)->create();
-		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
-	}
-
 	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader, fbo *fbo)
 	{
 		m_shader = shader::newShader()->addName(filterName)
-		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.glsl", loadtype::FILE))
-		                              ->addType(shadertype(GL_FRAGMENT_SHADER, fragmentShader, loadtype::FILE))->create();
+#ifdef FLOUNDER_PLATFORM_WEB
+			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.web.glsl", loadtype::FILE))
+#else
+			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.glsl", loadtype::FILE))
+#endif
+			->addType(shadertype(GL_FRAGMENT_SHADER, fragmentShader, loadtype::FILE))->create();
+		m_fbo = fbo;
+		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
+	}
+
+	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader) :
+		ipostfilter(filterName, fragmentShader, fbo::newFBO()->fitToScreen(1.0f)->create())
+	{
+	}
+
+	ipostfilter::ipostfilter(shader *shader, fbo *fbo)
+	{
+		m_shader = shader;
 		m_fbo = fbo;
 		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
 	}
@@ -24,13 +31,6 @@ namespace flounder
 	{
 		m_shader = shader;
 		m_fbo = fbo::newFBO()->fitToScreen(1.0f)->create();
-		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
-	}
-
-	ipostfilter::ipostfilter(shader *shader, fbo *fbo)
-	{
-		m_shader = shader;
-		m_fbo = fbo;
 		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
 	}
 
@@ -52,8 +52,12 @@ namespace flounder
 	{
 		bool lastWireframe = renderer::get()->isInWireframe();
 
-		m_fbo->bindFrameBuffer();
-		renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 1.0f);
+		if (m_fbo != NULL)
+		{
+			m_fbo->bindFrameBuffer();
+			renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 1.0f);
+		}
+
 		m_shader->start();
 
 		storeValues();
@@ -77,6 +81,10 @@ namespace flounder
 		m_shader->stop();
 		renderer::get()->disableBlending();
 		renderer::get()->enableDepthTesting();
-		m_fbo->unbindFrameBuffer();
+		
+		if (m_fbo != NULL)
+		{
+			m_fbo->unbindFrameBuffer();
+		}
 	}
 }

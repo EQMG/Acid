@@ -3,7 +3,11 @@
 namespace flounder
 {
 	filterblurvertical::filterblurvertical(const float &sizeScalar) :
+#ifdef FLOUNDER_PLATFORM_WEB
+		ipostfilter("filterBlurVertical", "res/shaders/filters/blurverticalFragment.web.glsl", fbo::newFBO()->fitToScreen(sizeScalar)->disableTextureWrap()->create())
+#else
 		ipostfilter("filterBlurVertical", "res/shaders/filters/blurverticalFragment.glsl", fbo::newFBO()->fitToScreen(sizeScalar)->disableTextureWrap()->create())
+#endif
 	{
 		m_heightValue = static_cast<int>(display::get()->getHeight() * sizeScalar);
 		m_scaleValue = 2.0f;
@@ -12,7 +16,11 @@ namespace flounder
 	}
 
 	filterblurvertical::filterblurvertical(const int &width, const int &height) :
+#ifdef FLOUNDER_PLATFORM_WEB
+		ipostfilter("filterBlurVertical", "res/shaders/filters/blurverticalFragment.web.glsl", fbo::newFBO()->setSize(width, height)->disableTextureWrap()->create())
+#else
 		ipostfilter("filterBlurVertical", "res/shaders/filters/blurverticalFragment.glsl", fbo::newFBO()->setSize(width, height)->disableTextureWrap()->create())
+#endif
 	{
 		m_heightValue = height;
 		m_scaleValue = 2.0f;

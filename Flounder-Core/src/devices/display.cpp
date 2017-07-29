@@ -132,7 +132,9 @@ namespace flounder
 		glfwMakeContextCurrent(m_window);
 
 		// Enables VSync if requested.
+#ifndef FLOUNDER_PLATFORM_WEB
 		glfwSwapInterval(m_vsync ? 1 : 0);
+#endif
 
 		// Shows the OpenGl window.
 		glfwShowWindow(m_window);
@@ -147,6 +149,9 @@ namespace flounder
 		}
 
 		// Sets the displays callbacks.
+#ifdef FLOUNDER_PLATFORM_WEB
+		// emscripten_set_resize_callback(nullptr, this, 1, emUICallback); // TODO
+#endif
 		glfwSetWindowCloseCallback(m_window, callbackClose);
 		glfwSetWindowFocusCallback(m_window, callbackFocus);
 		glfwSetWindowPosCallback(m_window, callbackPosition);
@@ -182,8 +187,10 @@ namespace flounder
 		// Polls for window events. The key callback will only be invoked during this call.
 		glfwPollEvents();
 
+#ifndef FLOUNDER_PLATFORM_WEB
 		glfwSwapInterval(m_vsync ? 1 : 0);
 		glfwWindowHint(GLFW_SAMPLES, m_samples);
+#endif
 
 		// Updates the aspect ratio.
 		m_aspectRatio = static_cast<float>(getWidth()) / static_cast<float>(getHeight());
@@ -191,7 +198,9 @@ namespace flounder
 
 	void display::screenshot()
 	{
+#ifndef FLOUNDER_PLATFORM_WEB
 		// TODO
+#endif
 	}
 
 	void display::setWindowSize(const int &width, const int &height)

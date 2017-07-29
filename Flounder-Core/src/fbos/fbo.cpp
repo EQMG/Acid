@@ -150,7 +150,7 @@ namespace flounder
 	{
 		updateSize();
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_frameBuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
 		glViewport(0, 0, m_width, m_height);
 	}
 
@@ -345,7 +345,12 @@ namespace flounder
 
 		if (m_antialiased)
 		{
+#ifndef FLOUNDER_PLATFORM_WEB
 			glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_samples, GL_DEPTH_COMPONENT24, m_width, m_height);
+#else
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, m_width, m_height);
+			std::cerr << "Flounder Web does not support FBO::m_antialiased=true" << std::endl;
+#endif
 		}
 		else
 		{
@@ -367,10 +372,14 @@ namespace flounder
 
 	void fbo::attachMultisampleColourBuffer(const int attachment)
 	{
+#ifndef FLOUNDER_PLATFORM_WEB
 		glGenRenderbuffers(1, &m_colourBuffer[attachment - GL_COLOR_ATTACHMENT0]);
 		glBindRenderbuffer(GL_RENDERBUFFER, m_colourBuffer[attachment - GL_COLOR_ATTACHMENT0]);
 		glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_samples, m_alphaChannel ? GL_RGBA8 : GL_RGB8, m_width, m_height);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, attachment, GL_RENDERBUFFER, m_colourBuffer[attachment - GL_COLOR_ATTACHMENT0]);
+#else
+		std::cerr << "Flounder Web does not support FBO::fbo::attachMultisampleColourBuffer(const int attachment)" << std::endl;
+#endif
 	}
 
 	void fbo::clear()
