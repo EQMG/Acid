@@ -1,19 +1,19 @@
-#include "rendererguis.h"
+#include "rendererentities.h"
 
 namespace flounder
 {
-	rendererguis::rendererguis() :
+	rendererentities::rendererentities() :
 		irenderer()
 	{
 #ifdef FLOUNDER_PLATFORM_WEB
-		m_shader = shader::newShader()->addName("guis")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/guis/guiVertex.web.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/guis/guiFragment.web.glsl", loadtype::FILE))
+		m_shader = shader::newShader()->addName("entities")
+			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/entities/entityVertex.web.glsl", loadtype::FILE))
+			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/entities/entityFragment.web.glsl", loadtype::FILE))
 			->create();
 #else
-		m_shader = shader::newShader()->addName("guis")
-		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/guis/guiVertex.glsl", loadtype::FILE))
-		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/guis/guiFragment.glsl", loadtype::FILE))
+		m_shader = shader::newShader()->addName("entities")
+		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/entities/entityVertex.glsl", loadtype::FILE))
+		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/entities/entityFragment.glsl", loadtype::FILE))
 		                              ->create();
 #endif
 		std::vector<GLfloat> positions = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f};
@@ -22,30 +22,25 @@ namespace flounder
 		m_vaoLength = positions.size() / 2;
 	}
 
-	rendererguis::~rendererguis()
+	rendererentities::~rendererentities()
 	{
 		delete m_shader;
 		glDeleteVertexArrays(1, &m_vaoID);
 	}
 
-	void rendererguis::render(const vector4 &clipPlane, const icamera &camera)
+	void rendererentities::render(const vector4 &clipPlane, const icamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 
-		for (uiobject *screenobject : *uis::get()->getObjects())
+		for (entity *object: *entities::get()->getEntities())
 		{
-			gui *object = dynamic_cast<gui*>(screenobject);
-
-			if (object != NULL)
-			{
-				renderGui(object);
-			}
+			renderEntity(object);
 		}
 
 		endRendering();
 	}
 
-	void rendererguis::prepareRendering(const vector4 &clipPlane, const icamera &camera)
+	void rendererentities::prepareRendering(const vector4 &clipPlane, const icamera &camera)
 	{
 		// Starts the shader.
 		m_shader->start();
@@ -64,18 +59,10 @@ namespace flounder
 		renderer::get()->enableAlphaBlending();
 	}
 
-	void rendererguis::renderGui(gui *object)
+	void rendererentities::renderEntity(entity *object)
 	{
 		// Binds the layouts.
 		renderer::get()->bindTexture(object->getTexture(), 0);
-
-		// Applies the GL scissor test.
-		vector4 *scissor = object->getScissor();
-
-		if (scissor->m_z != -1.0f && scissor->m_w != -1.0f)
-		{
-			renderer::get()->scissorEnable(static_cast<int>(scissor->m_x), static_cast<int>(scissor->m_y), static_cast<int>(scissor->m_z), static_cast<int>(scissor->m_w));
-		}
 
 		// Loads the uniforms.
 		m_shader->loadUniform("size", *object->getMeshSize());
@@ -93,10 +80,9 @@ namespace flounder
 
 		// Tells the GPU to render this object.
 		renderer::get()->renderArrays(GL_TRIANGLE_STRIP, m_vaoLength);
-		renderer::get()->scissorDisable();
 	}
 
-	void rendererguis::endRendering()
+	void rendererentities::endRendering()
 	{
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);

@@ -62,7 +62,7 @@ namespace flounder
 		inline bool getRightClick() { return m_rightClick; }
 
 		inline bool wasLeftClick() { return m_leftWasClick; }
-		
+
 		inline bool wasRightClick() { return m_rightWasClick; }
 	};
 }

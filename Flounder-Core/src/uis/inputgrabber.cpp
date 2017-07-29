@@ -49,7 +49,7 @@ namespace flounder
 	int grabberkeyboard::getCurrent(text *object)
 	{
 		int key = keyboard::get()->getKeyboardChar();
-		
+
 		if (key == 0 || !keyboard::get()->getKey(toupper(key)))
 		{
 			key = -1;

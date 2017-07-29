@@ -204,7 +204,7 @@ namespace flounder
 		static float normallyDistributedSingle(const float &standardDeviation, const float &mean)
 		{
 			// Intentionally duplicated to avoid IEnumerable overhead.
-			double u1 = maths::randomInRange(0.0f, 1.0f); 
+			double u1 = maths::randomInRange(0.0f, 1.0f);
 			double u2 = maths::randomInRange(0.0f, 1.0f);
 
 			double x1 = sqrt(-2.0 * log(u1));

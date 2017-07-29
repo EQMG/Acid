@@ -37,6 +37,8 @@
     <ClInclude Include="src\devices\keyboard.h" />
     <ClInclude Include="src\devices\mouse.h" />
     <ClInclude Include="src\entities\entity.h" />
+    <ClInclude Include="src\entities\rendererentities.h" />
+    <ClInclude Include="src\entities\entities.h" />
     <ClInclude Include="src\events\eventchange.h" />
     <ClInclude Include="src\events\events.h" />
     <ClInclude Include="src\events\eventstandard.h" />
@@ -57,7 +59,7 @@
     <ClInclude Include="src\framework\imodule.h" />
     <ClInclude Include="src\framework\iupdater.h" />
     <ClInclude Include="src\post\filters\filterdefault.h" />
-    <ClInclude Include="src\devices\sound.h" />
+    <ClInclude Include="src\sounds\sound.h" />
     <ClInclude Include="src\uis\inputslider.h" />
     <ClInclude Include="src\uis\inputgrabber.h" />
     <ClInclude Include="src\uis\inputtext.h" />
@@ -172,6 +174,8 @@
     <ClCompile Include="src\devices\keyboard.cpp" />
     <ClCompile Include="src\devices\mouse.cpp" />
     <ClCompile Include="src\entities\entity.cpp" />
+    <ClCompile Include="src\entities\rendererentities.cpp" />
+    <ClCompile Include="src\entities\entities.cpp" />
     <ClCompile Include="src\events\eventchange.cpp" />
     <ClCompile Include="src\events\events.cpp" />
     <ClCompile Include="src\events\eventstandard.cpp" />
@@ -188,7 +192,7 @@
     <ClCompile Include="src\framework\glfw\glfwupdater.cpp" />
     <ClCompile Include="src\guis\gui.cpp" />
     <ClCompile Include="src\post\filters\filterdefault.cpp" />
-    <ClCompile Include="src\devices\sound.cpp" />
+    <ClCompile Include="src\sounds\sound.cpp" />
     <ClCompile Include="src\uis\inputslider.cpp" />
     <ClCompile Include="src\uis\inputgrabber.cpp" />
     <ClCompile Include="src\uis\inputtext.cpp" />

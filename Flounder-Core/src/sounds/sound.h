@@ -23,8 +23,8 @@ namespace flounder
 		bool m_playing;
 		float m_gain;
 	public:
-		sound(const std::string& name, const std::string& filename);
-		
+		sound(const std::string &name, const std::string &filename);
+
 		~sound();
 
 		void play();

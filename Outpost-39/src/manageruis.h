@@ -5,6 +5,7 @@
 #include "uis/overlaystartup.h"
 
 #include "uis/overlaydebug.h"
+#include "uis/overlaymanager.h"
 
 using namespace flounder;
 
@@ -18,6 +19,7 @@ private:
 
 	overlaystartup *m_overlayStartup;
 	overlaydebug *m_overlayDebug;
+	overlaymanager *m_overlayManager;
 public:
 	manageruis();
 

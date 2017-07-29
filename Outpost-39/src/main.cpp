@@ -25,7 +25,7 @@ int main()
 	display::get()->setVSync(false);
 #else
 	display::get()->setFpsLimit(60);
-//	display::get()->setVSync(true);
+	//	display::get()->setVSync(true);
 #endif
 	display::get()->setAntialiasing(true);
 	display::get()->setSamples(0);
@@ -38,6 +38,14 @@ int main()
 	renderer::get()->setManager(new managerrender());
 	uis::get()->setMaster(new manageruis());
 	standards::get()->addStandard(new instance());
+
+	/*audio::add(new sound("music", "res/screenshot.wav"));
+	sound *object = audio::get("music");
+	if (object != NULL)
+	{
+		std::cerr << "Could not find music!" << std::endl;
+		object->loop();
+	}*/
 
 	// Runs the framework loop.
 	m_framework->run();

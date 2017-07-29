@@ -216,7 +216,7 @@ namespace flounder
 		return destination->set(x, y, z, w);
 	}
 
-	matrix4x4 * matrix4x4::scale(const matrix4x4 & left, const vector3 & right, matrix4x4 * destination)
+	matrix4x4 *matrix4x4::scale(const matrix4x4 &left, const vector3 &right, matrix4x4 *destination)
 	{
 		if (destination == NULL)
 		{
