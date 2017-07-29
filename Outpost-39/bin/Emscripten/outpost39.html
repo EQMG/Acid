@@ -28,10 +28,6 @@
 				width: 80%; 
 			}
 			
-			#outputDiv {
-			//	display: none;
-			}
-			
 			div.emscripten { 
 				text-align: center; 
 			}
@@ -104,14 +100,13 @@
 			<input type="checkbox" id="resize">Resize canvas
 			<input type="checkbox" id="pointerLock">Lock/hide mouse pointer
 			&nbsp;&nbsp;&nbsp;
-			<input type="button" value="Fullscreen" onclick="Module.requestFullscreen(document.getElementById('pointerLock').checked, document.getElementById('resize').checked)">
+			<input type="button" value="Fullscreen" onclick="Module.requestFullscreen(document.getElementById('pointerLock').checked, 
+                                                                            document.getElementById('resize').checked)">
 		</div>
 		
-		<div id="outputThingy">
-			<hr/>
-			<textarea class="emscripten" id="outputDiv" rows="8"></textarea>
-			<hr>
-		</div>
+		<hr/>
+		<textarea class="emscripten" id="outputDiv" rows="8"></textarea>
+		<hr>
 		
 		<script type='text/javascript'>
 			var statusElement = document.getElementById('status');

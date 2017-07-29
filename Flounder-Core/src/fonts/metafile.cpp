@@ -139,4 +139,16 @@ namespace flounder
 
 		return result;
 	}
+
+	character *metafile::getCharacter(const int &ascii)
+	{
+		std::map<int, character*>::iterator it = m_metadata->find(ascii);
+
+		if (it != m_metadata->end())
+		{
+			return it->second;
+		}
+
+		return NULL;
+	}
 }

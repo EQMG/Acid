@@ -27,5 +27,9 @@ void main(void)
 
 	pass_textureCoords = in_position;
 	pass_textureCoords = (pass_textureCoords / atlasRows) + atlasOffset;
-//	pass_textureCoords.x = mix(pass_textureCoords.x, 1.0 - pass_textureCoords.x, flipTexture);
+	
+	if (flipTexture)
+	{
+		pass_textureCoords.x = 1.0 - pass_textureCoords.x;
+	}
 }

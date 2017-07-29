@@ -52,8 +52,6 @@ namespace flounder
 
 		vector2 *getTextureOffset() { return m_textureOffset; }
 
-		void setTextureOffset(const vector2 &textureOffset) { m_textureOffset->set(textureOffset); }
-
 		colour *getColourOffset() { return m_colourOffset; }
 
 		void setColourOffset(const colour &colourOffset) { m_colourOffset->set(colourOffset); }

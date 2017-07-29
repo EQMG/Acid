@@ -6,6 +6,7 @@
 #include "../../devices/joysticks.h"
 #include "../../devices/keyboard.h"
 #include "../../devices/mouse.h"
+#include "../../entities/entities.h"
 #include "../../events/events.h"
 #include "../../loaders/loaders.h"
 #include "../../maths/delta.h"
@@ -41,6 +42,7 @@ namespace flounder
 		keyboard *m_keyboard;
 		loaders *m_loaders;
 		mouse *m_mouse;
+		entities *m_entities;
 		processing *m_processing;
 		renderer *m_renderer;
 		standards *m_standards;
