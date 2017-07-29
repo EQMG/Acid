@@ -36,16 +36,15 @@ namespace flounder
 		glGenBuffers(1, &result);
 
 		glBindBuffer(GL_ARRAY_BUFFER, result);
-		glBufferData(GL_ARRAY_BUFFER, floatCount * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, floatCount, NULL, GL_STREAM_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 		return result;
 	}
 
-	void loaders::updateVBO(const GLuint &vboID, const std::vector<GLfloat> &data)
+	void loaders::updateVBO(const GLuint &vboID, const int &floatCount, const std::vector<GLfloat> &data)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
-		glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), GL_STREAM_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, floatCount * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, data.size() * sizeof(GLfloat), data.data());
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
@@ -76,12 +75,12 @@ namespace flounder
 
 	void loaders::addInstancedAttribute(const GLuint &vaoID, const GLuint &vboID, const GLuint &attribute, const GLuint &dataSize, const GLuint &instancedDataLength, const GLuint &offset)
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 		glBindVertexArray(vaoID);
+		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
-		unsigned int address = offset * sizeof(GLfloat);
-		glVertexAttribPointer(attribute, dataSize, GL_FLOAT, GL_FALSE, instancedDataLength * sizeof(GLfloat), &address);
-	 	glVertexAttribDivisor(attribute, 1);
+		glEnableVertexAttribArray(attribute);
+		glVertexAttribPointer(attribute, dataSize, GL_FLOAT, GL_FALSE, instancedDataLength, (void*) offset);
+		glVertexAttribDivisor(attribute, 1);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);

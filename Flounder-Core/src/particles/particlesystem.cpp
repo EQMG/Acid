@@ -14,6 +14,7 @@ namespace flounder
 		m_systemCentre = new vector3();
 		m_velocityCentre = new vector3();
 
+		m_timePassed = 0.0f;
 		m_paused = false;
 
 	//	particles::get()->addSystem(this);
@@ -31,13 +32,11 @@ namespace flounder
 			return NULL;
 		}
 
-		float delta = framework::get()->getDelta();
-		float particlesToCreate = m_pps * delta;
-		int count = static_cast<int>(floor(particlesToCreate));
-		float partialParticle = fmod(particlesToCreate, 1.0f);
+		m_timePassed += framework::get()->getDelta();
 
-		if (maths::randomInRange(0.0f, 1.0f) < partialParticle)
+		if (m_timePassed > (1.0f / m_pps))
 		{
+			m_timePassed = 0.0f;
 			return emitParticle();
 		}
 

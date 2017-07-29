@@ -120,6 +120,15 @@ namespace flounder
 		/// <param name="right"> The right source vector. </param>
 		/// <param name="destination"> The destination matrix or NULL if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
+		static matrix4x4 *scale(const matrix4x4 &left, const vector3 &right, matrix4x4 *destination);
+
+		/// <summary>
+		/// Scales a matrix by a vector and places the result in the destination matrix.
+		/// </summary>
+		/// <param name="left"> The left source matrix. </param>
+		/// <param name="right"> The right source vector. </param>
+		/// <param name="destination"> The destination matrix or NULL if a new matrix is to be created. </param>
+		/// <returns> The destination matrix. </returns>
 		static matrix4x4 *scale(const matrix4x4 &left, const vector4 &right, matrix4x4 *destination);
 
 		/// <summary>
