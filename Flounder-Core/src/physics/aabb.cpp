@@ -245,7 +245,7 @@ namespace flounder
 				newAmountX = aabb2.m_maxExtents->m_x - m_minExtents->m_x;
 			}
 
-			if (abs(newAmountX) < abs(positionDelta.m_x))
+			if (fabs(newAmountX) < fabs(positionDelta.m_x))
 			{
 				destination->m_x = newAmountX;
 			}
@@ -266,7 +266,7 @@ namespace flounder
 				newAmountY = aabb2.m_maxExtents->m_y - m_minExtents->m_y;
 			}
 
-			if (abs(newAmountY) < abs(positionDelta.m_y))
+			if (fabs(newAmountY) < fabs(positionDelta.m_y))
 			{
 				destination->m_y = newAmountY;
 			}
@@ -287,7 +287,7 @@ namespace flounder
 				newAmountZ = aabb2.m_maxExtents->m_z - m_minExtents->m_z;
 			}
 
-			if (abs(newAmountZ) < abs(positionDelta.m_z))
+			if (fabs(newAmountZ) < fabs(positionDelta.m_z))
 			{
 				destination->m_z = newAmountZ;
 			}

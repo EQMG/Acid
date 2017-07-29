@@ -18,10 +18,15 @@ int main()
 
 	// Initializes the framework modules.
 	display::get()->setWindowSize(1080, 720);
-	display::get()->setTitle("New Kosmos");
-	display::get()->setIcon("res/newkosmos.png");
+	display::get()->setTitle("Outpost 39");
+	display::get()->setIcon("res/icon.png");
+//#ifndef FLOUNDER_PLATFORM_WEB
 	display::get()->setFpsLimit(-1);
 	display::get()->setVSync(false);
+//#else
+//	display::get()->setFpsLimit(60);
+//	display::get()->setVSync(true);
+//#endif
 	display::get()->setAntialiasing(true);
 	display::get()->setSamples(0);
 	display::get()->setFullscreen(false);
@@ -33,11 +38,6 @@ int main()
 	renderer::get()->setManager(new managerrender());
 	uis::get()->setMaster(new manageruis());
 	standards::get()->addStandard(new instance());
-	skyboxes::get()->setTexture(
-		texture::newTexture()->setCubemap(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png")
-		                     ->create()
-	);
-	skyboxes::get()->setModel(model::newModel()->setFile("res/skybox/skyboxCube.obj")->create());
 
 	// Runs the framework loop.
 	m_framework->run();
