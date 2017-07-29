@@ -32,6 +32,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ais\aiplayer.cpp" />
     <ClCompile Include="src\uis\overlaymanager.cpp" />
     <ClCompile Include="src\uis\overlaydebug.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -42,6 +43,7 @@
     <ClCompile Include="src\managerrender.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ais\aiplayer.h" />
     <ClInclude Include="src\uis\overlaymanager.h" />
     <ClInclude Include="src\uis\overlaydebug.h" />
     <ClInclude Include="src\maincamera.h" />
