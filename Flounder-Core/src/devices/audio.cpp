@@ -5,34 +5,68 @@ namespace flounder
 	audio::audio() :
 		imodule()
 	{
-		// Creates the OpenAL contexts.
-		m_device = alcOpenDevice(NULL);
+		m_sounds = new std::vector<sound*>();
 
-		m_context = alcCreateContext(m_device, NULL);
-		ALCboolean made = alcMakeContextCurrent(m_context);
-
-		// Checks for errors.
-		ALenum alError = alGetError();
-
-		if (alError != GL_NO_ERROR)
-		{
-			std::cout << "Failed to load OpenAL!" << std::endl << alError << std::endl;
-		}
-
-		// Creates a new sound model.
-		alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
+#ifdef FLOUNDER_PLATFORM_WEB
+		EM_ASM(
+		Module.SoundManager = {};
+		Module.SoundManager.m_sounds = {};
+		Module.SoundManagerAdd = function(name, filename) { Module.SoundManager.m_sounds[name] = new Audio(filename); };
+		Module.SoundManagerPlay = function(name) { Module.SoundManager.m_sounds[name].play(); };
+		Module.SoundManagerPause = function(name) { Module.SoundManager.m_sounds[name].pause(); };
+		Module.SoundManagerStop = function(name) { Module.SoundManagerPause(name); Module.SoundManager.m_sounds[name].currentTime = 0; Module.SoundManager.m_sounds[name].loop = false; };
+		Module.SoundManagerLoop = function(name) { Module.SoundManager.m_sounds[name].play(); Module.SoundManager.m_sounds[name].loop = true; };
+		Module.SoundManagerSetGain = function(name, gain) { Module.SoundManager.m_sounds[name].volume = gain; };
+		);
+#else
+		gc_initialize(0);
+		m_manager = gau_manager_create();
+		m_mixer = gau_manager_mixer(m_manager);
+#endif
 	}
 
 	audio::~audio()
 	{
+		for (int i = 0; i < m_sounds->size(); i++)
+		{
+			delete (*m_sounds)[i];
+		}
+
+#ifdef FLOUNDER_PLATFORM_WEB
+#else
+		gau_manager_destroy(m_manager);
+		gc_shutdown();
+#endif
 	}
 
 	void audio::update()
 	{
-		if (camera::get()->getCamera() != NULL)
+
+#ifdef FLOUNDER_PLATFORM_WEB
+#else
+		gau_manager_update(m_manager);
+#endif
+	}
+
+	sound *audio::add(sound *object)
+	{
+		m_sounds->push_back(object);
+#ifdef FLOUNDER_PLATFORM_WEB
+		SoundManagerAdd(object->getName().c_str(), object->getFileName().c_str());
+#endif
+		return object;
+	}
+
+	sound *audio::get(const std::string & name)
+	{
+		for (sound* sound : *m_sounds)
 		{
-			vector3 *cameraPosition = camera::get()->getCamera()->getPosition();
-			alListener3f(AL_POSITION, cameraPosition->m_x, cameraPosition->m_y, cameraPosition->m_z);
+			if (sound->getName() == name)
+			{
+				return sound;
+			}
 		}
+
+		return NULL;
 	}
 }
