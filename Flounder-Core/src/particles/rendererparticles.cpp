@@ -12,11 +12,11 @@ namespace flounder
 			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/particles/particleVertex.glsl", loadtype::FILE))
 			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/particles/particleFragment.glsl", loadtype::FILE))
 			->create();
-		std::vector<GLfloat> positions = { 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f };
+		std::vector<GLfloat> positions = { -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f };
 		m_vaoID = loaders::get()->createVAO();
 		loaders::get()->storeDataInVBO(m_vaoID, positions, 0, 2);
 		m_vboID = loaders::get()->createEmptyVBO(INSTANCE_DATA_LENGTH * MAX_INSTANCES);
-		m_vaoLength = positions.size() / 2;
+		m_vaoLength = positions.size();
 
 		loaders::get()->addInstancedAttribute(m_vaoID, m_vboID, 1, 4, INSTANCE_DATA_LENGTH, 0);
 		loaders::get()->addInstancedAttribute(m_vaoID, m_vboID, 2, 4, INSTANCE_DATA_LENGTH, 4);
@@ -32,6 +32,8 @@ namespace flounder
 	rendererparticles::~rendererparticles()
 	{
 		delete m_shader;
+		glDeleteBuffers(1, &m_vboID);
+		glDeleteVertexArrays(1, &m_vaoID);
 	}
 
 	void rendererparticles::render(const vector4 &clipPlane, const icamera &camera)
@@ -41,7 +43,7 @@ namespace flounder
 		for (std::map<particletype*, std::vector<particle*>*>::iterator iter = particles::get()->getParticles()->begin(); iter != particles::get()->getParticles()->end(); ++iter)
 		{
 			std::vector<GLfloat> *vboData = new std::vector<GLfloat>();
-			prepareTexturedModel((*iter).first);
+			m_rendered = 0;
 
 			for (std::vector<particle*>::iterator it = iter->second->begin(); it != iter->second->end(); ++it)
 			{
@@ -51,9 +53,7 @@ namespace flounder
 			//	}
 			}
 
-			renderInstances(vboData);
-
-			unbindTexturedModel();
+			renderInstances((*iter).first, vboData);
 			delete vboData;
 		}
 
@@ -77,19 +77,6 @@ namespace flounder
 		// renderer::get()->depthMask(false);
 		renderer::get()->cullBackFaces(true);
 		renderer::get()->enableAlphaBlending();
-
-		m_rendered = 0;
-	}
-
-	void rendererparticles::prepareTexturedModel(particletype *particleType)
-	{
-		renderer::get()->unbindVAO(8, m_vaoID, 0, 1, 2, 3, 4, 5, 6, 7);
-
-		if (particleType->getTexture() != 0)
-		{
-			m_shader->loadUniform("numberOfRows", particleType->getTexture()->getNumberOfRows());
-			renderer::get()->bindTexture(particleType->getTexture(), 0);
-		}
 	}
 
 	void rendererparticles::prepareInstance(particle *particle, const icamera &camera, std::vector<GLfloat> *vboData)
@@ -113,7 +100,7 @@ namespace flounder
 		modelMatrix->m_21 = viewMatrix->m_12;
 		modelMatrix->m_22 = viewMatrix->m_22;
 		matrix4x4::rotate(*modelMatrix, vector3(0.0f, 0.0f, 1.0f), __radians(particle->getRotation()), modelMatrix);
-		matrix4x4::scale(*modelMatrix, vector4(particle->getScale(), particle->getScale(), particle->getScale(), 1.0f), modelMatrix);
+		matrix4x4::scale(*modelMatrix, vector3(particle->getScale(), particle->getScale(), particle->getScale()), modelMatrix);
 
 		vboData->push_back(modelMatrix->m_00);
 		vboData->push_back(modelMatrix->m_01);
@@ -143,15 +130,19 @@ namespace flounder
 		m_rendered++;
 	}
 
-	void rendererparticles::renderInstances(std::vector<GLfloat>* vboData)
+	void rendererparticles::renderInstances(particletype *particleType, std::vector<GLfloat>* vboData)
 	{
-		loaders::get()->updateVBO(m_vboID, *vboData);
+		loaders::get()->updateVBO(m_vboID, INSTANCE_DATA_LENGTH * MAX_INSTANCES, *vboData);
+		renderer::get()->bindVAO(m_vaoID, 8, 0, 1, 2, 3, 4, 5, 6, 7);
 
-		renderer::get()->renderInstanced(GL_TRIANGLE_STRIP, m_vaoLength, vboData->size());
-	}
+		if (particleType->getTexture() != NULL)
+		{
+			m_shader->loadUniform("numberOfRows", particleType->getTexture()->getNumberOfRows());
+			renderer::get()->bindTexture(particleType->getTexture(), 0);
+		}
 
-	void rendererparticles::unbindTexturedModel()
-	{
+		renderer::get()->renderInstanced(GL_TRIANGLE_STRIP, m_vaoLength, m_rendered);
+
 		// renderer::get()->depthMask(true);
 		renderer::get()->disableBlending();
 		renderer::get()->unbindVAO(8, 0, 1, 2, 3, 4, 5, 6, 7);
@@ -161,7 +152,5 @@ namespace flounder
 	{
 		// Stops the shader.
 		m_shader->stop();
-
-//		std::cout << m_rendered << std::endl;
 	}
 }

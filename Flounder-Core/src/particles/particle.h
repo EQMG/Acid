@@ -91,6 +91,8 @@ namespace flounder
 		float getTextureBlendFactor() { return m_textureBlendFactor; }
 
 		float getDistanceToCamera() { return m_distanceToCamera; }
+		
+		bool operator<(const particle& other) const;
 	private:
 		vector2 *updateTextureOffset(vector2 *offset, const int &index);
 	};
