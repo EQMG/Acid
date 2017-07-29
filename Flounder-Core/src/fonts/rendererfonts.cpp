@@ -5,10 +5,17 @@ namespace flounder
 	rendererfonts::rendererfonts() :
 		irenderer()
 	{
+#ifdef FLOUNDER_PLATFORM_WEB
 		m_shader = shader::newShader()->addName("fonts")
-		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/fonts/fontVertex.glsl", loadtype::FILE))
-		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/fonts/fontFragment.glsl", loadtype::FILE))
-		                              ->create();
+			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/fonts/fontVertex.web.glsl", loadtype::FILE))
+			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/fonts/fontFragment.web.glsl", loadtype::FILE))
+			->create();
+#else
+		m_shader = shader::newShader()->addName("fonts")
+			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/fonts/fontVertex.glsl", loadtype::FILE))
+			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/fonts/fontFragment.glsl", loadtype::FILE))
+			->create();
+#endif
 	}
 
 	rendererfonts::~rendererfonts()

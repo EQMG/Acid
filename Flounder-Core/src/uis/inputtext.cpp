@@ -68,18 +68,15 @@ namespace flounder
 
 				if (m_lastKey != 8 || m_inputDelay->canInput())
 				{
-					if (m_value.length() - 1 >= 0)
+					m_value = m_value.substr(0, m_value.length() - 1);
+					m_text->setText(m_prefix + m_value);
+
+					if (m_actionChange != 0)
 					{
-						m_value = m_value.substr(0, m_value.length() - 1);
-						m_text->setText(m_prefix + m_value);
-
-						if (m_actionChange != 0)
-						{
-							m_actionChange();
-						}
-
-						m_lastKey = 8;
+						m_actionChange();
 					}
+
+					m_lastKey = 8;
 				}
 			}
 			else if (keyboard::get()->getKey(GLFW_KEY_ENTER) && m_lastKey != 13)

@@ -12,7 +12,7 @@ namespace flounder
 		public ispatialstructure<t>
 	{
 	private:
-		std::vector<t> *m_objects;
+		std::vector<t*> *m_objects;
 	public:
 		/// <summary>
 		/// Creates a new basic structure.

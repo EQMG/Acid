@@ -10,10 +10,8 @@
 #include "../../loaders/loaders.h"
 #include "../../maths/delta.h"
 #include "../../maths/timer.h"
-#include "../../particles/particles.h"
 #include "../../processing/processing.h"
 #include "../../renderer/renderer.h"
-#include "../../skyboxes/skyboxes.h"
 #include "../../standards/standards.h"
 #include "../../tasks/tasks.h"
 #include "../../uis/uis.h"
@@ -43,10 +41,8 @@ namespace flounder
 		keyboard *m_keyboard;
 		loaders *m_loaders;
 		mouse *m_mouse;
-		particles *m_particles;
 		processing *m_processing;
 		renderer *m_renderer;
-		skyboxes *m_skyboxes;
 		standards *m_standards;
 		tasks *m_tasks;
 		uis *m_uis;

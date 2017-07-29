@@ -3,7 +3,13 @@
 #include <iostream>
 #include <string>
 
+#ifdef FLOUNDER_PLATFORM_WEB
+#include <emscripten/emscripten.h>
+#define GLFW_FALSE false
+#define GLFW_TRUE true
+#else
 #include <GL/glew.h>
+#endif
 #include <GLFW/glfw3.h>
 
 #include "../framework/framework.h"

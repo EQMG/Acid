@@ -4,7 +4,12 @@
 #include <string>
 #include <cmath>
 
+#ifdef FLOUNDER_PLATFORM_WEB
+#include <emscripten/emscripten.h>
+#include <GLFW/glfw3.h>
+#else
 #include <GL/glew.h>
+#endif
 
 #include "../devices/display.h"
 #include "../maths/maths.h"

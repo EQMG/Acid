@@ -19,10 +19,8 @@ namespace flounder
 		delete m_keyboard;
 		delete m_loaders;
 		delete m_mouse;
-		delete m_particles;
 		delete m_processing;
 		delete m_renderer;
-		delete m_skyboxes;
 		delete m_standards;
 		delete m_tasks;
 		delete m_uis;
@@ -48,10 +46,8 @@ namespace flounder
 		m_keyboard = new keyboard();
 		m_loaders = new loaders();
 		m_mouse = new mouse;
-		m_particles = new particles();
 		m_processing = new processing();
 		m_renderer = new renderer();
-		m_skyboxes = new skyboxes();
 		m_standards = new standards();
 		m_tasks = new tasks();
 		m_uis = new uis();
@@ -86,12 +82,10 @@ namespace flounder
 
 			m_loaders->update();
 			m_uis->update();
-			m_skyboxes->update();
 
 			// Update
 
 			// Post-Update
-			m_particles->update();
 		}
 
 		// Renders when needed.
@@ -152,17 +146,9 @@ namespace flounder
 		{
 			return m_renderer;
 		}
-		else if (name == "skyboxes")
-		{
-			return m_skyboxes;
-		}
 		else if (name == "standards")
 		{
 			return m_standards;
-		}
-		else if (name == "particles")
-		{
-			return m_particles;
 		}
 		else if (name == "processing")
 		{

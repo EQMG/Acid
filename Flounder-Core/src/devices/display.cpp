@@ -153,12 +153,14 @@ namespace flounder
 		glfwSetWindowSizeCallback(m_window, callbackSize);
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 
+#ifndef FLOUNDER_PLATFORM_WEB
 		// Initialize the GLEW library.
 		if (glewInit() != GLEW_OK)
 		{
 			std::cout << "Could not init GLEW!" << std::endl;
 			framework::get()->requestClose(true);
 		}
+#endif
 	}
 
 	display::~display()
@@ -212,6 +214,7 @@ namespace flounder
 
 		if (!m_icon.empty())
 		{
+#ifndef FLOUNDER_PLATFORM_WEB
 			int width = 0;
 			int height = 0;
 			int components = 0;
@@ -232,6 +235,7 @@ namespace flounder
 			}
 
 			stbi_image_free(data);
+#endif
 		}
 	}
 
@@ -243,6 +247,8 @@ namespace flounder
 		}
 
 		m_fullscreen = fullscreen;
+
+#ifndef FLOUNDER_PLATFORM_WEB
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
 
@@ -260,5 +266,6 @@ namespace flounder
 			m_windowPosY = (videoMode->height - m_windowHeight) / 2;
 			glfwSetWindowMonitor(m_window, NULL, m_windowPosX, m_windowPosY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
 		}
+#endif
 	}
 }
