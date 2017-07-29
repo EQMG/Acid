@@ -3,8 +3,9 @@
 overlaydebug::overlaydebug(uiobject *parent) :
 	uiobject(parent, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f))
 {
-	m_textFps = createStatus("FPS: 0", 0.94f);
-	m_textUps = createStatus("UPS: 0", 0.97f);
+	m_textText = createStatus("People: 100      Oxygen:150      Water: 172      Food: 56            WARNING", 0.5f, 0.03f, CENTRE);
+	m_textFps = createStatus("FPS: 0", 0.01f, 0.94f, LEFT);
+	m_textUps = createStatus("UPS: 0", 0.01f, 0.97f, LEFT);
 	m_timerUpdate = new timer(0.333f);
 
 	m_inputbutton = new inputbutton(this, vector2(0.5f, 0.3f), "Button", CENTRE);
@@ -69,10 +70,10 @@ void overlaydebug::updateObject()
 	}
 }
 
-text *overlaydebug::createStatus(const std::string &content, const float &positionY)
+text *overlaydebug::createStatus(const std::string &content, const float &positionX, const float &positionY, const uialign &align)
 {
-	text *result = new text(this, vector2(0.01f, 0.01f + positionY), content, 1.0f, uis::get()->candara, 0.5f, LEFT);
-	result->setInScreenCoords(false);
+	text *result = new text(this, vector2(positionX, 0.01f + positionY), content, 1.0f, uis::get()->candara, 1.0f, align);
+	result->setInScreenCoords(true);
 	result->setTextColour(colour(1.0f, 1.0f, 1.0f));
 	result->setBorderColour(colour(0.15f, 0.15f, 0.15f));
 	result->setBorder(new driverconstant(0.04f));
