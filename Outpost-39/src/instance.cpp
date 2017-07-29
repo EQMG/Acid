@@ -1,77 +1,18 @@
 #include "instance.h"
 
-instance::playerai::playerai(texture *texture, const std::string &name)
-{
-	m_entity = new entity(vector2(0.0f, 0.5f), vector2(0.08f, 0.08f), texture, 1);
-	m_entity->addComponent([&](entity *object)
-	{
-		if (m_trackCentre)
-		{
-			traceX(0.5f);
-
-			if (atCentre())
-			{
-				m_trackCentre = false;
-			}
-
-			// Walk anim.
-			object->setSelectedRow(1);
-		}
-		else if (m_sleeping)
-		{
-			if (!atBed())
-			{
-				//	if (m_bedXPos != -1.0f)
-				//	{
-				traceX(m_bedXPos);
-				//	}
-			}
-			else
-			{
-				// m_bedXPos = -1.0f;
-				// GO to seeping state.
-				object->setSelectedRow(4);
-			}
-		}
-	});
-	entities::get()->add(m_entity);
-	setLevel(2);
-
-	m_name = name;
-	m_trackCentre = false;
-	m_sleeping = false;
-	m_bedXPos = -1.0f;
-	m_adventuting = false;
-	m_dead = false;
-}
-
-instance::playerai::~playerai()
-{
-	delete m_entity;
-}
-
-void instance::playerai::traceX(const float &x)
-{
-	bool left = (m_entity->getPosition()->m_x - x) <= 0.0f;
-	const float track_rate = 0.07f;
-
-	if (left)
-	{
-		m_entity->getPosition()->m_x += track_rate * framework::get()->getDelta();
-		m_entity->setFlipTexture(true);
-	}
-	else
-	{
-		m_entity->getPosition()->m_x -= track_rate * framework::get()->getDelta();
-		m_entity->setFlipTexture(false);
-	}
-}
-
 instance::instance()
 {
 	m_buttonFullscreen = new buttonkeyboard(1, GLFW_KEY_F11);
 	m_buttonWireframe = new buttonkeyboard(1, GLFW_KEY_P);
 	m_buttonExit = new buttonkeyboard(1, GLFW_KEY_DELETE);
+	
+	audio::add(new sound("music", "res/handFarts.wav"));
+	sound *object = audio::get("music");
+	if (object != NULL)
+	{
+		std::cerr << "Could not find music!" << std::endl;
+		object->loop();
+	}
 
 	m_time = 0.0f;
 
@@ -95,8 +36,8 @@ instance::instance()
 	});
 	entities::get()->add(m_dome);
 
-	m_ais = std::vector<playerai*>();
-	m_ais.push_back(new playerai(texture::newTexture()->setFile("res/game/player1.png")->setNumberOfRows(2)->create(), "meme"));
+	m_ais = std::vector<aiplayer*>();
+	m_ais.push_back(new aiplayer(texture::newTexture()->setFile("res/game/player1.png")->setNumberOfRows(2)->create(), "decaxon"));
 }
 
 instance::~instance()
@@ -127,20 +68,20 @@ void instance::update()
 
 	m_time += framework::get()->getDelta();
 
-	if (m_terrainDay->getAlpha() < 0.1f)
+	for (aiplayer *ai : m_ais)
 	{
-		for (playerai *ai : m_ais)
+		if (m_terrainDay->getAlpha() < 0.1f)
 		{
-			if (!ai->m_adventuting)
+			if (!ai->isAdventuring())
 			{
-				if (ai->atCentre())
+				if (ai->isAtCentre())
 				{
 					if (ai->getLevel() == 3)
 					{
 						if (!ai->isSleeping())
 						{
-							const float beds[4] = {0.1f, 0.3f, 0.7f, 0.8f};
-							ai->setBed(beds[rand() % 4 + 1]);
+							const float beds[4] = { 0.1f, 0.3f, 0.7f, 0.8f };
+							ai->setBedTarget(beds[rand() % 4 + 1]);
 						}
 					}
 					else

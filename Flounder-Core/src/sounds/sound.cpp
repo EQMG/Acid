@@ -9,14 +9,6 @@ namespace flounder
 		m_filename = filename;
 		m_count = 0;
 
-		std::vector<std::string> split = helperstring::split(m_filename, ".");
-
-		if (split.size() < 2)
-		{
-			std::cout << "Invalid sound file name: " << m_filename << std::endl;
-			return;
-		}
-
 		m_playing = false;
 	}
 
