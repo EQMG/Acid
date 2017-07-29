@@ -363,11 +363,12 @@ namespace flounder
 			{
 				glBindAttribLocation(m_programID, index, locationName.c_str());
 			}
-			// TODO: How will deferred rendering work in OpenGL ES 4?
+#ifndef FLOUNDER_PLATFORM_WEB
 			else if (locationType.find("out") != std::string::npos)
 			{
 				glBindFragDataLocation(m_programID, index, locationName.c_str());
 			}
+#endif
 			else
 			{
 				std::cout << "Could not find location type of: " << locationType << std::endl;
@@ -377,11 +378,13 @@ namespace flounder
 
 	void shader::deleteTypes()
 	{
+#ifndef FLOUNDER_PLATFORM_WEB
 		for (std::vector<shadertype>::iterator it = m_shaderTypes->begin(); it < m_shaderTypes->end(); it++)
 		{
 			glDetachShader(m_programID, (*it).m_shaderID);
 			glDeleteShader((*it).m_shaderID);
 		}
+#endif
 	}
 
 	void shader::loadBindings()

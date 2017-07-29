@@ -8,7 +8,6 @@
 #include "../models/model.h"
 #include "../renderer/renderer.h"
 #include "../shaders/shader.h"
-#include "../skyboxes/skyboxes.h"
 
 namespace flounder
 {
