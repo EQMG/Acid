@@ -11,13 +11,5 @@ src\maincamera.cpp(187): warning C4244: '=': conversion from 'double' to 'float'
   overlaydebug.cpp
   Generating Code...
 MSVCRT.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gc_initialize referenced in function "public: __cdecl flounder::audio::audio(void)" (??0audio@flounder@@QEAA@XZ)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gc_shutdown referenced in function "public: virtual __cdecl flounder::audio::~audio(void)" (??1audio@flounder@@UEAA@XZ)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gau_manager_create referenced in function "public: __cdecl flounder::audio::audio(void)" (??0audio@flounder@@QEAA@XZ)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gau_manager_update referenced in function "public: virtual void __cdecl flounder::audio::update(void)" (?update@audio@flounder@@UEAAXXZ)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gau_manager_mixer referenced in function "public: __cdecl flounder::audio::audio(void)" (??0audio@flounder@@QEAA@XZ)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gau_manager_destroy referenced in function "public: virtual __cdecl flounder::audio::~audio(void)" (??1audio@flounder@@UEAA@XZ)
-Flounder Core.lib(sound.obj) : error LNK2019: unresolved external symbol ga_sound_release referenced in function "public: __cdecl flounder::sound::~sound(void)" (??1sound@flounder@@QEAA@XZ)
-Flounder Core.lib(sound.obj) : error LNK2019: unresolved external symbol gau_load_sound_file referenced in function "public: __cdecl flounder::sound::sound(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (??0sound@flounder@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0@Z)
-C:\Users\mattp\Documents\Flounder\external\libs\x64\gorilla.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
-C:\Users\mattp\Documents\Flounder\Outpost-39\bin\Debug x64\Outpost 39.exe : fatal error LNK1120: 8 unresolved externals
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\mattp\Documents\Flounder\Outpost-39\bin\Debug x64\vc120.pdb'; linking object as if no debug info
+  Outpost-39.vcxproj -> C:\Users\mattp\Documents\Flounder\Outpost-39\bin\Debug x64\Outpost 39.exe

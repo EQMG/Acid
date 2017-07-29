@@ -1,0 +1,1 @@
+function _SoundManagerAdd(name, filename){	Module.SoundManagerAdd(Pointer_stringify(name), Pointer_stringify(filename));}
