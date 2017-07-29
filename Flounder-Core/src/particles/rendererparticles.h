@@ -32,13 +32,9 @@ namespace flounder
 	private:
 		void prepareRendering(const vector4 &clipPlane, const icamera &camera);
 
-		void prepareTexturedModel(particletype *particleType);
-
 		void prepareInstance(particle *particle, const icamera &camera, std::vector<GLfloat> *vboData);
 
-		void renderInstances(std::vector<GLfloat> *vboData);
-
-		void unbindTexturedModel();
+		void renderInstances(particletype *particleType, std::vector<GLfloat> *vboData);
 
 		void endRendering();
 	};

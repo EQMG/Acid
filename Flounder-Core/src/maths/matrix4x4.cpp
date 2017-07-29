@@ -216,6 +216,28 @@ namespace flounder
 		return destination->set(x, y, z, w);
 	}
 
+	matrix4x4 * matrix4x4::scale(const matrix4x4 & left, const vector3 & right, matrix4x4 * destination)
+	{
+		if (destination == NULL)
+		{
+			destination = new matrix4x4();
+		}
+
+		destination->m_00 = left.m_00 * right.m_x;
+		destination->m_01 = left.m_01 * right.m_x;
+		destination->m_02 = left.m_02 * right.m_x;
+		destination->m_03 = left.m_03 * right.m_x;
+		destination->m_10 = left.m_10 * right.m_y;
+		destination->m_11 = left.m_11 * right.m_y;
+		destination->m_12 = left.m_12 * right.m_y;
+		destination->m_13 = left.m_13 * right.m_y;
+		destination->m_20 = left.m_20 * right.m_z;
+		destination->m_21 = left.m_21 * right.m_z;
+		destination->m_22 = left.m_22 * right.m_z;
+		destination->m_23 = left.m_23 * right.m_z;
+		return destination;
+	}
+
 	matrix4x4 *matrix4x4::scale(const matrix4x4 &left, const vector4 &right, matrix4x4 *destination)
 	{
 		if (destination == NULL)

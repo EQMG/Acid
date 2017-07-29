@@ -35,6 +35,7 @@ namespace flounder
 		float m_lifeError;
 		float m_scaleError;
 
+		float m_timePassed;
 		bool m_paused;
 	public:
 		/// <summary>

@@ -79,6 +79,11 @@ namespace flounder
 		updateTextureOffset(m_textureOffset2, index2);
 	}
 
+	bool particle::operator<(const particle &other) const
+	{
+		return m_distanceToCamera > other.m_distanceToCamera;
+	}
+
 	vector2 *particle::updateTextureOffset(vector2 *offset, const int &index)
 	{
 		offset->set(0.0f, 0.0f);

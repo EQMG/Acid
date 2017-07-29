@@ -77,8 +77,8 @@ void managerrender::render()
 	//m_filterLensflare->applyFilter(1, output->getColourTexture(0));
 	//output = m_filterLensflare->getFbo();
 
-	m_filterTiltshift->applyFilter(1, output->getColourTexture(0));
-	output = m_filterTiltshift->getFbo();
+//	m_filterTiltshift->applyFilter(1, output->getColourTexture(0));
+//	output = m_filterTiltshift->getFbo();
 
 	//m_filterCrt->applyFilter(1, output->getColourTexture(0));
 	//output = m_filterCrt->getFbo();

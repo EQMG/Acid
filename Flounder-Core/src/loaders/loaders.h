@@ -56,7 +56,7 @@ namespace flounder
 		/// </summary>
 		/// <param name="vboID"> The FBO to update. </param>
 		/// <param name="data"> The data to add into the FBO. </param>
-		void updateVBO(const GLuint &vboID, const std::vector<GLfloat> &data);
+		void updateVBO(const GLuint &vboID, const int &floatCount, const std::vector<GLfloat> &data);
 
 		/// <summary>
 		/// Creates an index buffer and binds it to a VAO.
