@@ -4,9 +4,9 @@ namespace flounder
 {
 	template<typename t>
 	structurebasic<t>::structurebasic() :
-		ispatialstructure()
+		ispatialstructure<t>()
 	{
-		m_objects = new std::vector<t>();
+		m_objects = new std::vector<t*>();
 	}
 
 	template<typename t>
@@ -24,7 +24,14 @@ namespace flounder
 	template<typename t>
 	void structurebasic<t>::remove(t *object)
 	{
-		m_objects->erase(object);
+		/*for (std::vector<t*>::iterator it = m_objects->begin(); it != m_objects->end(); ++it)
+		{
+			if (*it == object)
+			{
+				m_objects->erase(it);
+				return;
+			}
+		}*/
 	}
 
 	template<typename t>
@@ -61,7 +68,7 @@ namespace flounder
 		{
 			ispatialobject *object = static_cast<ispatialobject*>(value);
 
-			if (object->getCollider() == NULL || object->getCollider()->inFrustum(range))
+			if (object->getCollider() == NULL || object->getCollider()->inFrustum(*range))
 			{
 				result->push_back(value);
 			}
@@ -75,7 +82,7 @@ namespace flounder
 		{
 			ispatialobject *object = static_cast<ispatialobject*>(value);
 
-			if (object->getCollider() == NULL || range->intersects(object->getCollider()) || range->contains(object->getCollider()))
+			if (object->getCollider() == NULL || range->intersects(*object->getCollider()) || range->contains(*object->getCollider()))
 			{
 				result->push_back(value);
 			}

@@ -88,6 +88,7 @@ namespace flounder
 
 		if (!m_customMouse.empty())
 		{
+#ifndef FLOUNDER_PLATFORM_WEB
 			int width = 0;
 			int height = 0;
 			int components = 0;
@@ -106,6 +107,7 @@ namespace flounder
 			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
 			glfwSetCursor(display::get()->getWindow(), cursor);
 			stbi_image_free(data);
+#endif
 		}
 	}
 
