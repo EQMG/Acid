@@ -122,6 +122,7 @@
 #include "renderer/renderer.h"
 #include "shaders/shader.h"
 #include "shaders/shadertype.h"
+#include "devices/sound.h"
 #include "space/ispatialobject.h"
 #include "space/ispatialstructure.h"
 #include "space/structurebasic.h"
