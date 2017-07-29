@@ -25,21 +25,15 @@ namespace flounder
 		/// </summary>
 		/// <param name="filterName"> The name for the filter. </param>
 		/// <param name="fragmentShader"> The fragment shader file. </param>
-		ipostfilter(const std::string &filterName, const std::string &fragmentShader);
-
-		/// <summary>
-		/// Creates a new post effect filter
-		/// </summary>
-		/// <param name="filterName"> The name for the filter. </param>
-		/// <param name="fragmentShader"> The fragment shader file. </param>
 		/// <param name="fbo"> The fbo to render into. </param>
 		ipostfilter(const std::string &filterName, const std::string &fragmentShader, fbo *fbo);
 
 		/// <summary>
 		/// Creates a new post effect filter
 		/// </summary>
-		/// <param name="shader"> The shader for the filter. </param>
-		ipostfilter(shader *shader);
+		/// <param name="filterName"> The name for the filter. </param>
+		/// <param name="fragmentShader"> The fragment shader file. </param>
+		ipostfilter(const std::string &filterName, const std::string &fragmentShader);
 
 		/// <summary>
 		/// Creates a new post effect filter
@@ -47,6 +41,12 @@ namespace flounder
 		/// <param name="shader"> The shader for the filter. </param>
 		/// <param name="fbo"> The fbo to render into. </param>
 		ipostfilter(shader *shader, fbo *fbo);
+
+		/// <summary>
+		/// Creates a new post effect filter
+		/// </summary>
+		/// <param name="shader"> The shader for the filter. </param>
+		ipostfilter(shader *shader);
 
 		/// <summary>
 		/// Deconstructor for the post filter.
