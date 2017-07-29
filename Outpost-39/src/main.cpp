@@ -39,14 +39,6 @@ int main()
 	uis::get()->setMaster(new manageruis());
 	standards::get()->addStandard(new instance());
 
-	/*audio::add(new sound("music", "res/screenshot.wav"));
-	sound *object = audio::get("music");
-	if (object != NULL)
-	{
-		std::cerr << "Could not find music!" << std::endl;
-		object->loop();
-	}*/
-
 	// Runs the framework loop.
 	m_framework->run();
 

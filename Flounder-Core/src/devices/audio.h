@@ -6,7 +6,6 @@
 
 #ifdef FLOUNDER_PLATFORM_WEB
 #include <emscripten/emscripten.h>
-#else
 #endif
 
 #include "../camera/camera.h"

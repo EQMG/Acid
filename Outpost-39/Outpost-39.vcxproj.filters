@@ -9,6 +9,7 @@
     <ClCompile Include="src\mainplayer.cpp" />
     <ClCompile Include="src\maincamera.cpp" />
     <ClCompile Include="src\uis\overlaymanager.cpp" />
+    <ClCompile Include="src\ais\aiplayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\uis\overlaydebug.h" />
@@ -18,5 +19,6 @@
     <ClInclude Include="src\mainplayer.h" />
     <ClInclude Include="src\maincamera.h" />
     <ClInclude Include="src\uis\overlaymanager.h" />
+    <ClInclude Include="src\ais\aiplayer.h" />
   </ItemGroup>
 </Project>
