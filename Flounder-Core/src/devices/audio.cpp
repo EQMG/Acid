@@ -18,10 +18,6 @@ namespace flounder
 		Module.SoundManagerLoop = function(name) { Module.SoundManager.m_sounds[name].play(); Module.SoundManager.m_sounds[name].loop = true; };
 		Module.SoundManagerSetGain = function(name, gain) { Module.SoundManager.m_sounds[name].volume = gain; };
 		);
-#else
-		gc_initialize(0);
-		m_manager = gau_manager_create();
-		m_mixer = gau_manager_mixer(m_manager);
 #endif
 	}
 
@@ -29,13 +25,12 @@ namespace flounder
 	{
 		for (int i = 0; i < m_sounds->size(); i++)
 		{
-			delete (*m_sounds)[i];
+		//	delete (*m_sounds)[i];
 		}
 
+		delete m_sounds;
+
 #ifdef FLOUNDER_PLATFORM_WEB
-#else
-		gau_manager_destroy(m_manager);
-		gc_shutdown();
 #endif
 	}
 
@@ -43,14 +38,12 @@ namespace flounder
 	{
 
 #ifdef FLOUNDER_PLATFORM_WEB
-#else
-		gau_manager_update(m_manager);
 #endif
 	}
 
 	sound *audio::add(sound *object)
 	{
-		m_sounds->push_back(object);
+		audio::get()->m_sounds->push_back(object);
 #ifdef FLOUNDER_PLATFORM_WEB
 		SoundManagerAdd(object->getName().c_str(), object->getFileName().c_str());
 #endif
@@ -59,11 +52,11 @@ namespace flounder
 
 	sound *audio::get(const std::string & name)
 	{
-		for (sound* sound : *m_sounds)
+		for (sound* object : *audio::get()->m_sounds)
 		{
-			if (sound->getName() == name)
+			if (object->getName() == name)
 			{
-				return sound;
+				return object;
 			}
 		}
 

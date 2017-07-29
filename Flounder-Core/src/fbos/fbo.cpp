@@ -149,8 +149,8 @@ namespace flounder
 	void fbo::bindFrameBuffer()
 	{
 		updateSize();
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
+	//	glBindTexture(GL_TEXTURE_2D, 0);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_frameBuffer);
 		glViewport(0, 0, m_width, m_height);
 	}
 
