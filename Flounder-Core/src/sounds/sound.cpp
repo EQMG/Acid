@@ -1,5 +1,5 @@
 ﻿#include "sound.h"
-#include "audio.h"
+#include "../devices/audio.h"
 
 namespace flounder
 {
@@ -10,7 +10,7 @@ namespace flounder
 		m_count = 0;
 
 		std::vector<std::string> split = helperstring::split(m_filename, ".");
-		
+
 		if (split.size() < 2)
 		{
 			std::cout << "Invalid sound file name: " << m_filename << std::endl;
@@ -27,16 +27,15 @@ namespace flounder
 	void sound::play()
 	{
 #ifdef FLOUNDER_PLATFORM_WEB
-		SoundManagerPlay(m_name.c_str());
+		audioPlay(m_name.c_str());
 #endif
 		m_playing = true;
 	}
 
 	void sound::loop()
 	{
-
 #ifdef FLOUNDER_PLATFORM_WEB
-		SoundManagerLoop(m_name.c_str());
+		audioLoop(m_name.c_str());
 #endif
 		m_playing = true;
 	}
@@ -50,7 +49,7 @@ namespace flounder
 
 		m_playing = false;
 #ifdef FLOUNDER_PLATFORM_WEB
-		SoundManagerPause(m_name.c_str());
+		audioPause(m_name.c_str());
 #endif
 	}
 
@@ -63,7 +62,7 @@ namespace flounder
 
 		m_playing = true;
 #ifdef FLOUNDER_PLATFORM_WEB
-		SoundManagerPlay(m_name.c_str());
+		audioPlay(m_name.c_str());
 #endif
 	}
 
@@ -75,7 +74,7 @@ namespace flounder
 		}
 
 #ifdef FLOUNDER_PLATFORM_WEB
-		SoundManagerStop(m_name.c_str());
+		audioStop(m_name.c_str());
 #endif
 		m_playing = false;
 	}
@@ -90,7 +89,7 @@ namespace flounder
 
 		m_gain = gain;
 #ifdef FLOUNDER_PLATFORM_WEB
-		SoundManagerSetGain(m_name.c_str(), gain);
+		audioSetGain(m_name.c_str(), m_gain);
 #endif
 	}
 }

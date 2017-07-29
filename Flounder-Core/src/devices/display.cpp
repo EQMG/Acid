@@ -210,7 +210,7 @@ namespace flounder
 		glfwSetWindowSize(m_window, width, height);
 	}
 
-	void display::setTitle(const std::string & title)
+	void display::setTitle(const std::string &title)
 	{
 		m_title = title;
 		glfwSetWindowTitle(m_window, m_title.c_str());

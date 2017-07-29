@@ -1,14 +1,7 @@
-﻿  instance.cpp
+﻿  overlaymanager.cpp
   main.cpp
-  maincamera.cpp
-src\maincamera.cpp(78): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-src\maincamera.cpp(115): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-src\maincamera.cpp(152): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-src\maincamera.cpp(187): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  mainplayer.cpp
-  managerrender.cpp
+c:\users\mattp\documents\flounder\outpost-39\src\instance.h(37): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
   manageruis.cpp
-  overlaydebug.cpp
   Generating Code...
 MSVCRT.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
 glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\mattp\Documents\Flounder\Outpost-39\bin\Debug x64\vc120.pdb'; linking object as if no debug info

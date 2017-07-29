@@ -81,7 +81,7 @@ namespace flounder
 		m_shader->stop();
 		renderer::get()->disableBlending();
 		renderer::get()->enableDepthTesting();
-		
+
 		if (m_fbo != NULL)
 		{
 			m_fbo->unbindFrameBuffer();

@@ -12,9 +12,9 @@ namespace flounder
 			->create();
 #else
 		m_shader = shader::newShader()->addName("guis")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/guis/guiVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/guis/guiFragment.glsl", loadtype::FILE))
-			->create();
+		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/guis/guiVertex.glsl", loadtype::FILE))
+		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/guis/guiFragment.glsl", loadtype::FILE))
+		                              ->create();
 #endif
 		std::vector<GLfloat> positions = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f};
 		m_vaoID = loaders::get()->createVAO();
