@@ -1,13 +1,11 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 #ifdef FLOUNDER_PLATFORM_WEB
 #include <emscripten/emscripten.h>
 #else
-#define GAU_THREAD_POLICY_MULTI 2
-#include <gorilla/ga.h>
-#include <gorilla/gau.h>
 #endif
 
 #include "../camera/camera.h"
@@ -37,12 +35,7 @@ namespace flounder
 	private:
 		friend class sound;
 
-#ifndef FLOUNDER_PLATFORM_WEB
-		static gau_Manager *m_manager;
-		static ga_Mixer *m_mixer;
-#endif
-
-		static std::vector<sound*> *m_sounds;
+		std::vector<sound*> *m_sounds;
 	public:
 		/// <summary>
 		/// Gets this framework instance.
@@ -68,11 +61,5 @@ namespace flounder
 		static sound* add(sound* object);
 
 		static sound* get(const std::string& name);
-
-#ifndef FLOUNDER_PLATFORM_WEB
-		static gau_Manager * getManager() { return m_manager; }
-
-		static ga_Mixer * getMixer() { return m_mixer; }
-#endif
 	};
 }

@@ -31,8 +31,6 @@ int main()
 	display::get()->setSamples(0);
 	display::get()->setFullscreen(false);
 
-	texture *textureIcon = texture::newTexture()->setFile("res/cursor.png")->create();
-
 	mouse::get()->setCustomMouse("res/cursor.png");
 
 	camera::get()->setCamera(new maincamera());
@@ -45,7 +43,6 @@ int main()
 	m_framework->run();
 
 	// Deletes the framework.
-	delete textureIcon;
 	delete m_framework;
 
 	// Pauses the console.
