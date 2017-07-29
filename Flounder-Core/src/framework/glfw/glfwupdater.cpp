@@ -19,6 +19,7 @@ namespace flounder
 		delete m_keyboard;
 		delete m_loaders;
 		delete m_mouse;
+		delete m_entities;
 		delete m_processing;
 		delete m_renderer;
 		delete m_standards;
@@ -38,14 +39,15 @@ namespace flounder
 		m_timerUpdate = new timer(1.0 / 62.0);
 		m_timerRender = new timer(1.0 / -1.0);
 
+		m_display = new display();
 		m_audio = new audio;
 		m_camera = new camera();
-		m_display = new display();
 		m_events = new events();
 		m_joysticks = new joysticks();
 		m_keyboard = new keyboard();
 		m_loaders = new loaders();
 		m_mouse = new mouse;
+		m_entities = new entities();
 		m_processing = new processing();
 		m_renderer = new renderer();
 		m_standards = new standards();
@@ -84,6 +86,7 @@ namespace flounder
 			m_uis->update();
 
 			// Update
+			m_entities->update();
 
 			// Post-Update
 		}
@@ -129,6 +132,10 @@ namespace flounder
 		else if (name == "mouse")
 		{
 			return m_mouse;
+		}
+		else if (name == "entities")
+		{
+			return m_entities;
 		}
 		else if (name == "events")
 		{

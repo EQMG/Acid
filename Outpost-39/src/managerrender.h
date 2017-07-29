@@ -10,6 +10,7 @@ class managerrender :
 private:
 	vector4 m_infinity;
 
+	rendererentities *m_rendererEntities;
 	rendererguis *m_rendererGuis;
 	rendererfonts *m_rendererFonts;
 

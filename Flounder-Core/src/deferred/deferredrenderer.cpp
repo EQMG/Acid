@@ -106,9 +106,9 @@ namespace flounder
 		}
 		else
 		{*/
-			m_shader->loadUniform("fogColour", 1.0f, 1.0f, 1.0f);
-			m_shader->loadUniform("fogDensity", 0.003f);
-			m_shader->loadUniform("fogGradient", 2.0f);
+		m_shader->loadUniform("fogColour", 1.0f, 1.0f, 1.0f);
+		m_shader->loadUniform("fogDensity", 0.003f);
+		m_shader->loadUniform("fogGradient", 2.0f);
 		//}
 	}
 }

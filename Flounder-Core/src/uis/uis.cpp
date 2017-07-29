@@ -10,6 +10,7 @@ namespace flounder
 		m_container = new containerscreen(NULL, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), false);
 		m_objects = new std::vector<uiobject*>();
 
+		bitWonder = new fonttype("res/fonts/8BitWonder.png", "res/fonts/8BitWonder.fnt");
 		arial = new fonttype("res/fonts/arial.png", "res/fonts/arial.fnt");
 		berlinSans = new fonttype("res/fonts/berlinSans.png", "res/fonts/berlinSans.fnt");
 		cafeFrancoise = new fonttype("res/fonts/cafefrancoise.png", "res/fonts/cafefrancoise.fnt");

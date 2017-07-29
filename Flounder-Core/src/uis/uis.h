@@ -13,7 +13,7 @@ namespace flounder
 	/// <summary>
 	/// A module used for that manages gui textures in a container.
 	/// </summary>
-	class uis : 
+	class uis :
 		public imodule
 	{
 	private:
@@ -22,6 +22,7 @@ namespace flounder
 		uiobject *m_container;
 		std::vector<uiobject*> *m_objects;
 	public:
+		fonttype *bitWonder;
 		fonttype *arial;
 		fonttype *berlinSans;
 		fonttype *cafeFrancoise;
