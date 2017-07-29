@@ -17,6 +17,7 @@ private:
 	filterfxaa *m_filterFxaa;
 	filtergrain *m_filterGrain;
 	filtercrt *m_filterCrt;
+	filterdefault *m_filterDefault;
 
 	pipelinepaused *m_pipelinePaused;
 public:

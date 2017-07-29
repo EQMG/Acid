@@ -1,1 +1,13 @@
-﻿  Outpost-39.vcxproj -> C:\Users\mattp\Documents\Flounder\Outpost-39\bin\Debug x64\Outpost 39.exe
+﻿  instance.cpp
+  main.cpp
+  maincamera.cpp
+src\maincamera.cpp(78): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+src\maincamera.cpp(115): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+src\maincamera.cpp(152): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+src\maincamera.cpp(187): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  mainplayer.cpp
+  managerrender.cpp
+  manageruis.cpp
+  overlaydebug.cpp
+  Generating Code...
+  Outpost-39.vcxproj -> C:\Users\mattp\Documents\Flounder\Outpost-39\bin\Debug x64\Outpost 39.exe

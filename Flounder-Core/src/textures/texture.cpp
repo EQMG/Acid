@@ -152,11 +152,11 @@ namespace flounder
 
 		if (m_mipmap)
 		{
+#ifndef FLOUNDER_PLATFORM_WEB
 			glGenerateMipmap(GL_TEXTURE_2D);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-#ifndef FLOUNDER_PLATFORM_WEB
 			if (m_anisotropic)
 			{
 				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, 0);
