@@ -20,16 +20,18 @@ int main()
 	display::get()->setWindowSize(1080, 720);
 	display::get()->setTitle("Outpost 39");
 	display::get()->setIcon("res/icon.png");
-//#ifndef FLOUNDER_PLATFORM_WEB
-	display::get()->setFpsLimit(-1);
+#ifndef FLOUNDER_PLATFORM_WEB
+	display::get()->setFpsLimit(0);
 	display::get()->setVSync(false);
-//#else
-//	display::get()->setFpsLimit(60);
+#else
+	display::get()->setFpsLimit(60);
 //	display::get()->setVSync(true);
-//#endif
+#endif
 	display::get()->setAntialiasing(true);
 	display::get()->setSamples(0);
 	display::get()->setFullscreen(false);
+
+	texture *textureIcon = texture::newTexture()->setFile("res/cursor.png")->create();
 
 	mouse::get()->setCustomMouse("res/cursor.png");
 
@@ -43,6 +45,7 @@ int main()
 	m_framework->run();
 
 	// Deletes the framework.
+	delete textureIcon;
 	delete m_framework;
 
 	// Pauses the console.

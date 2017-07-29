@@ -91,6 +91,7 @@
 #include "post/filters/filtercombine.h"
 #include "post/filters/filtercrt.h"
 #include "post/filters/filterdarken.h"
+#include "post/filters/filterdefault.h"
 #include "post/filters/filteremboss.h"
 #include "post/filters/filterfxaa.h"
 #include "post/filters/filtergrain.h"

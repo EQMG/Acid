@@ -35,7 +35,7 @@ namespace flounder
 		m_timeOffset = 0.0;
 		m_deltaUpdate = new delta();
 		m_deltaRender = new delta();
-		m_timerUpdate = new timer(1.0 / 60.0);
+		m_timerUpdate = new timer(1.0 / 62.0);
 		m_timerRender = new timer(1.0 / -1.0);
 
 		m_audio = new audio;
@@ -89,8 +89,8 @@ namespace flounder
 		}
 
 		// Renders when needed.
-		// ( || framework::get()->getFpsLimit() == -1 || framework::get()->getFpsLimit() > 1000.0f) && maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 10.0)
-		if (m_timerRender->isPassedTime())
+		if ((m_timerRender->isPassedTime() || display::get()->getFpsLimit() <= 0.0f || display::get()->getFpsLimit() > 1000.0f) && maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 7.0))
+		// if (display::get()->getFpsLimit() <= 0.0f || m_timerRender->isPassedTime())
 		{
 			// Resets the timer.
 			m_timerRender->resetStartTime();
