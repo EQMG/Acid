@@ -10,6 +10,10 @@ aitasksleep::~aitasksleep()
 {
 }
 
+void aitasksleep::start()
+{
+}
+
 void aitasksleep::update()
 {
 	float time = cos(framework::get()->getTimeSec() / instance::DAY_LENGTH);

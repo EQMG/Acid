@@ -2,50 +2,24 @@
 c:\users\mattp\documents\flounder\outpost-39\src\ais\iaitask.h(16): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
   aitaskadventure.cpp
 c:\users\mattp\documents\flounder\outpost-39\src\ais\iaitask.h(16): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  aitaskfade.cpp
+c:\users\mattp\documents\flounder\outpost-39\src\ais\iaitask.h(16): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
   aitasklevel.cpp
 c:\users\mattp\documents\flounder\outpost-39\src\ais\iaitask.h(16): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-src\ais\aitasklevel.cpp(6): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
-src\ais\aitasklevel.cpp(15): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+src\ais\aitasklevel.cpp(8): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+src\ais\aitasklevel.cpp(25): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
   aitasksleep.cpp
 c:\users\mattp\documents\flounder\outpost-39\src\ais\../ais/iaitask.h(16): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-src\ais\aitasksleep.cpp(15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+src\ais\aitasksleep.cpp(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   aitasktargetx.cpp
 c:\users\mattp\documents\flounder\outpost-39\src\ais\iaitask.h(16): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-src\ais\aitasktargetx.cpp(22): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-src\ais\aitasktargetx.cpp(27): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+src\ais\aitasktargetx.cpp(26): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+src\ais\aitasktargetx.cpp(31): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
   instance.cpp
 c:\users\mattp\documents\flounder\outpost-39\src\ais\iaitask.h(16): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-src\instance.cpp(23): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-src\instance.cpp(30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+src\instance.cpp(22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+src\instance.cpp(29): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   main.cpp
 c:\users\mattp\documents\flounder\outpost-39\src\ais\iaitask.h(16): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-  maincamera.cpp
-src\maincamera.cpp(81): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-src\maincamera.cpp(120): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-src\maincamera.cpp(160): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-src\maincamera.cpp(198): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  mainplayer.cpp
-  managerrender.cpp
-  manageruis.cpp
-  overlaydebug.cpp
-  overlaymanager.cpp
   Generating Code...
-MSVCRT.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
-Flounder Core.lib(sound.obj) : error LNK2019: unresolved external symbol ga_sound_release referenced in function "public: __cdecl flounder::sound::~sound(void)" (??1sound@flounder@@QEAA@XZ)
-Flounder Core.lib(sound.obj) : error LNK2019: unresolved external symbol ga_handle_destroy referenced in function "void __cdecl flounder::loop_on_finish(struct ga_Handle *,void *)" (?loop_on_finish@flounder@@YAXPEAUga_Handle@@PEAX@Z)
-Flounder Core.lib(sound.obj) : error LNK2019: unresolved external symbol ga_handle_play referenced in function "public: void __cdecl flounder::sound::play(void)" (?play@sound@flounder@@QEAAXXZ)
-Flounder Core.lib(sound.obj) : error LNK2019: unresolved external symbol ga_handle_stop referenced in function "public: void __cdecl flounder::sound::resume(void)" (?resume@sound@flounder@@QEAAXXZ)
-Flounder Core.lib(sound.obj) : error LNK2019: unresolved external symbol ga_handle_setParamf referenced in function "public: void __cdecl flounder::sound::setGain(float)" (?setGain@sound@flounder@@QEAAXM@Z)
-Flounder Core.lib(sound.obj) : error LNK2019: unresolved external symbol gau_load_sound_file referenced in function "public: __cdecl flounder::sound::sound(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (??0sound@flounder@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0@Z)
-Flounder Core.lib(sound.obj) : error LNK2019: unresolved external symbol gau_create_handle_sound referenced in function "public: void __cdecl flounder::sound::play(void)" (?play@sound@flounder@@QEAAXXZ)
-Flounder Core.lib(sound.obj) : error LNK2001: unresolved external symbol "private: static struct ga_Mixer * flounder::audio::m_mixer" (?m_mixer@audio@flounder@@0PEAUga_Mixer@@EA)
-Flounder Core.lib(audio.obj) : error LNK2001: unresolved external symbol "private: static struct ga_Mixer * flounder::audio::m_mixer" (?m_mixer@audio@flounder@@0PEAUga_Mixer@@EA)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gc_initialize referenced in function "public: __cdecl flounder::audio::audio(void)" (??0audio@flounder@@QEAA@XZ)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gc_shutdown referenced in function "public: virtual __cdecl flounder::audio::~audio(void)" (??1audio@flounder@@UEAA@XZ)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gau_manager_create referenced in function "public: __cdecl flounder::audio::audio(void)" (??0audio@flounder@@QEAA@XZ)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gau_manager_update referenced in function "public: virtual void __cdecl flounder::audio::update(void)" (?update@audio@flounder@@UEAAXXZ)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gau_manager_mixer referenced in function "public: __cdecl flounder::audio::audio(void)" (??0audio@flounder@@QEAA@XZ)
-Flounder Core.lib(audio.obj) : error LNK2019: unresolved external symbol gau_manager_destroy referenced in function "public: virtual __cdecl flounder::audio::~audio(void)" (??1audio@flounder@@UEAA@XZ)
-Flounder Core.lib(audio.obj) : error LNK2001: unresolved external symbol "private: static struct gau_Manager * flounder::audio::m_manager" (?m_manager@audio@flounder@@0PEAUgau_Manager@@EA)
-C:\Users\mattp\Documents\Flounder\external\libs\x64\gorilla.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
-C:\Users\mattp\Documents\Flounder\Outpost-39\bin\Debug x64\Outpost 39.exe : fatal error LNK1120: 15 unresolved externals
+  Outpost-39.vcxproj -> C:\Users\mattp\Documents\Flounder\Outpost-39\bin\Debug x64\Outpost 39.exe

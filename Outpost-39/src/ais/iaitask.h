@@ -21,14 +21,19 @@ protected:
 		return m_lowerHeight - (level * m_levelHeight);
 	}
 public:
+	bool m_started;
+
 	iaitask(entity* object)
 	{
 		m_entity = object;
+		m_started = false;
 	}
 
 	virtual ~iaitask()
 	{
 	}
+
+	virtual void start() = 0;
 
 	virtual void update() = 0;
 

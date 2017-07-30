@@ -24,6 +24,11 @@ function _audioLoop(name)
     Module.audioLoop(Pointer_stringify(name));
 }
 
+function _audioSetPitch(name, pitch)
+{
+    Module.audioSetPitch(Pointer_stringify(name), pitch);
+}
+
 function _audioSetGain(name, gain)
 {
     Module.audioSetGain(Pointer_stringify(name), gain);

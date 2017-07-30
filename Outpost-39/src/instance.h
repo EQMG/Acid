@@ -3,6 +3,8 @@
 #include <flounder.h>
 
 #include "ais/aiplayer.h"
+#include "ais/aitaskadventure.h"
+#include "ais/aitaskfade.h"
 #include "ais/aitasktargetx.h"
 #include "ais/aitasklevel.h"
 #include "ais/aitasksleep.h"
