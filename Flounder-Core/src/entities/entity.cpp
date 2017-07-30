@@ -11,12 +11,14 @@ namespace flounder
 		m_dimensions = new vector2(dimensions);
 		m_meshSize = new vector2(0.5f, 0.5f);
 
+		m_inScreenCoords = true;
+
 		m_screenPosition = new vector2();
 		m_screenDimensions = new vector2();
-		m_positionOffsets = new vector2();
 
 		m_texture = texture;
-		m_flipTexture = false;
+		m_flipX = false;
+		m_flipY = false;
 		m_selectedRow = 0;
 
 		m_textureOffset = new vector2();
@@ -37,7 +39,6 @@ namespace flounder
 
 		delete m_screenPosition;
 		delete m_screenDimensions;
-		delete m_positionOffsets;
 
 		delete m_texture;
 
@@ -53,8 +54,8 @@ namespace flounder
 		}
 
 		m_screenPosition->set(
-			m_position->m_x * static_cast<float>(display::get()->getAspectRatio()) + m_positionOffsets->m_x,
-			m_position->m_y + m_positionOffsets->m_y
+			m_position->m_x * (m_inScreenCoords ? static_cast<float>(display::get()->getAspectRatio()) : 1.0f),
+			m_position->m_y
 		);
 		m_screenDimensions->set(m_dimensions->m_x, m_dimensions->m_y);
 		m_screenDimensions->scale(m_scale);
