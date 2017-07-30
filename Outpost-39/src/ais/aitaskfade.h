@@ -4,19 +4,19 @@
 
 using namespace flounder;
 
-class aitasklevel :
+class aitaskfade :
 	public iaitask
 {
 private:
-	static const float TIME_DELAY;
+	static const float TIME_FADE;
 
-	float m_level;
+	float m_target;
 	bool m_instant;
-	timer *m_timer;
+	driverslide *m_driver;
 public:
-	aitasklevel(entity* object, const int &level, const bool &instant);
+	aitaskfade(entity* object, const float &target, const bool &instant);
 
-	~aitasklevel();
+	~aitaskfade();
 
 	void start() override;
 

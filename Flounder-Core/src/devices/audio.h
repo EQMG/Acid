@@ -7,9 +7,6 @@
 #ifdef FLOUNDER_PLATFORM_WEB
 #include <emscripten/emscripten.h>
 #else
-//#define GAU_THREAD_POLICY_MULTI 2
-#include <gorilla/ga.h>
-#include <gorilla/gau.h>
 #endif
 
 #include "../camera/camera.h"
@@ -25,6 +22,7 @@ extern "C" void audioPlay(const char* name);
 extern "C" void audioPause(const char* name);
 extern "C" void audioStop(const char* name);
 extern "C" void audioLoop(const char* name);
+extern "C" void audioSetPitch(const char* name, double pitch);
 extern "C" void audioSetGain(const char* name, double gain);
 #endif
 
@@ -40,8 +38,6 @@ namespace flounder
 		friend class sound;
 
 #ifndef FLOUNDER_PLATFORM_WEB
-		static gau_Manager* m_manager;
-		static ga_Mixer* m_mixer;
 #endif
 
 		static std::vector<sound*> m_sounds;

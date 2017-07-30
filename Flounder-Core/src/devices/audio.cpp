@@ -39,6 +39,11 @@ namespace flounder
 				Module.audio.m_sounds[name].play();
 				Module.audio.m_sounds[name].loop = true;
 			};
+			Module.audioSetPitch = function(name, pitch)
+			{
+				console.log("Setting pitch to audio: " + name);
+			//	Module.audio.m_sounds[name].pitch = pitch;
+			};
 			Module.audioSetGain = function(name, gain)
 			{
 				console.log("Setting gain to audio: " + name);
@@ -46,9 +51,6 @@ namespace flounder
 			};
 		);
 #else
-		gc_initialize(0);
-		m_manager = gau_manager_create();
-		m_mixer = gau_manager_mixer(m_manager);
 #endif
 	}
 
@@ -60,15 +62,12 @@ namespace flounder
 		}
 
 #ifndef FLOUNDER_PLATFORM_WEB
-		gau_manager_destroy(m_manager);
-		gc_shutdown();
 #endif
 	}
 
 	void audio::update()
 	{
 #ifndef FLOUNDER_PLATFORM_WEB
-		gau_manager_update(m_manager);
 #endif
 	}
 

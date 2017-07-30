@@ -1,7 +1,6 @@
 #include "instance.h"
-#include "ais/aitaskadventure.h"
 
-const float instance::DAY_LENGTH = 30.0f;
+const float instance::DAY_LENGTH = 10.0f;
 
 instance::instance()
 {
@@ -9,12 +8,12 @@ instance::instance()
 	m_buttonWireframe = new buttonkeyboard(1, GLFW_KEY_P);
 	m_buttonExit = new buttonkeyboard(1, GLFW_KEY_DELETE);
 	
-	audio::add(new sound("music", "res/handFarts.wav"));
+	audio::add(new sound("music", "res/BeepBox-Song.wav"));
 	sound *object = audio::get("music");
 	if (object != NULL)
 	{
-		std::cerr << "Could not find music!" << std::endl;
 		object->loop();
+		object->setGain(0.05f);
 	}
 
 	m_terrainDay = new entity(vector2(0.5f, 0.5f), vector2(3.41333f, 1.0f), texture::newTexture()->setFile("res/game/terrainDay.png")->create(), 1);
@@ -39,8 +38,7 @@ instance::instance()
 
 	m_ais = std::vector<aiplayer*>();
 	aiplayer *decaxon = new aiplayer(texture::newTexture()->setFile("res/game/player1.png")->setNumberOfRows(2)->create(), "decaxon");
-	decaxon->addTask(new aitasklevel(decaxon->getEntity(), 0));
-	decaxon->addTask(new aitasktargetx(decaxon->getEntity(), 0.0f));
+	decaxon->addTask(new aitasklevel(decaxon->getEntity(), 0, true));
 	m_ais.push_back(decaxon);
 
 	m_timerFortune = new timer(30.0f);
@@ -79,7 +77,9 @@ void instance::update()
 			if (!ai->containsTask<aitaskadventure>() && !ai->containsTask<aitasksleep>())
 			{
 				ai->addTask(new aitasktargetx(ai->getEntity(), 0.5f));
-				ai->addTask(new aitasklevel(ai->getEntity(), 3));
+				ai->addTask(new aitaskfade(ai->getEntity(), 0.0f, false));
+				ai->addTask(new aitasklevel(ai->getEntity(), 3, false));
+				ai->addTask(new aitaskfade(ai->getEntity(), 1.0f, false));
 				ai->addTask(new aitasktargetx(ai->getEntity(), maths::randomInRange(0.38f, 0.62f)));
 				ai->addTask(new aitasksleep(ai->getEntity()));
 			}
