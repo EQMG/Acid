@@ -16,6 +16,8 @@ public:
 
 	~aitasksleep();
 
+	void start() override;
+
 	void update() override;
 
 	bool isComplete() override;

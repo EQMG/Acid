@@ -10,6 +10,13 @@ aiplayer::aiplayer(texture *texture, const std::string &name)
 		if (m_tasks->size() > 0)
 		{
 			iaitask *task = m_tasks->front();
+			
+			if (!task->m_started)
+			{
+				task->start();
+				task->m_started = true;
+			}
+
 			task->update();
 
 			if (task->isComplete())
