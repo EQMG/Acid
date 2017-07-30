@@ -37,6 +37,7 @@
     <ClCompile Include="src\ais\aitaskadventure.cpp" />
     <ClCompile Include="src\ais\aitasksleep.cpp" />
     <ClCompile Include="src\ais\aitasklevel.cpp" />
+    <ClCompile Include="src\ais\aitaskfade.cpp" />
     <ClCompile Include="src\uis\overlaymanager.cpp" />
     <ClCompile Include="src\uis\overlaydebug.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="src\ais\aitaskadventure.h" />
     <ClInclude Include="src\ais\aitasksleep.h" />
     <ClInclude Include="src\ais\aitasklevel.h" />
+    <ClInclude Include="src\ais\aitaskfade.h" />
     <ClInclude Include="src\uis\overlaymanager.h" />
     <ClInclude Include="src\uis\overlaydebug.h" />
     <ClInclude Include="src\maincamera.h" />
@@ -182,7 +184,7 @@
     <Link>
       <SubSystem>
       </SubSystem>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
@@ -217,7 +219,7 @@
       <SubSystem>
       </SubSystem>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\web</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -250,8 +252,8 @@
     <Link>
       <SubSystem>
       </SubSystem>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\web</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
@@ -323,7 +325,7 @@
       </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -362,7 +364,7 @@ XCOPY "$(SolutionDir)external\dlls\$(PlatformTarget)"  "$(OutDir)" /S /Y</Comman
       </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>

@@ -14,6 +14,11 @@ aitaskadventure::~aitaskadventure()
 	delete m_timer;
 }
 
+void aitaskadventure::start()
+{
+	m_timer->resetStartTime();
+}
+
 void aitaskadventure::update()
 {
 	if (m_timer->isPassedTime())

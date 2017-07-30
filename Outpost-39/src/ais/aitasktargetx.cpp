@@ -13,6 +13,10 @@ aitasktargetx::~aitasktargetx()
 {
 }
 
+void aitasktargetx::start()
+{
+}
+
 void aitasktargetx::update()
 {
 	bool left = (m_entity->getPosition()->m_x - m_targetX) <= 0.0f;

@@ -14,6 +14,7 @@
     <ClCompile Include="src\ais\aitasksleep.cpp" />
     <ClCompile Include="src\ais\aitasktargetx.cpp" />
     <ClCompile Include="src\ais\aitasklevel.cpp" />
+    <ClCompile Include="src\ais\aitaskfade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\uis\overlaydebug.h" />
@@ -29,5 +30,6 @@
     <ClInclude Include="src\ais\aitasksleep.h" />
     <ClInclude Include="src\ais\aitasktargetx.h" />
     <ClInclude Include="src\ais\aitasklevel.h" />
+    <ClInclude Include="src\ais\aitaskfade.h" />
   </ItemGroup>
 </Project>
