@@ -10,6 +10,10 @@
     <ClCompile Include="src\maincamera.cpp" />
     <ClCompile Include="src\uis\overlaymanager.cpp" />
     <ClCompile Include="src\ais\aiplayer.cpp" />
+    <ClCompile Include="src\ais\aitaskadventure.cpp" />
+    <ClCompile Include="src\ais\aitasksleep.cpp" />
+    <ClCompile Include="src\ais\aitasktargetx.cpp" />
+    <ClCompile Include="src\ais\aitasklevel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\uis\overlaydebug.h" />
@@ -20,5 +24,10 @@
     <ClInclude Include="src\maincamera.h" />
     <ClInclude Include="src\uis\overlaymanager.h" />
     <ClInclude Include="src\ais\aiplayer.h" />
+    <ClInclude Include="src\ais\iaitask.h" />
+    <ClInclude Include="src\ais\aitaskadventure.h" />
+    <ClInclude Include="src\ais\aitasksleep.h" />
+    <ClInclude Include="src\ais\aitasktargetx.h" />
+    <ClInclude Include="src\ais\aitasklevel.h" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,7 @@
 #include "instance.h"
+#include "ais/aitaskadventure.h"
+
+const float instance::DAY_LENGTH = 30.0f;
 
 instance::instance()
 {
@@ -14,19 +17,17 @@ instance::instance()
 		object->loop();
 	}
 
-	m_time = 0.0f;
-
 	m_terrainDay = new entity(vector2(0.5f, 0.5f), vector2(3.41333f, 1.0f), texture::newTexture()->setFile("res/game/terrainDay.png")->create(), 1);
 	m_terrainDay->addComponent([&](entity *object)
 	{
-		m_terrainDay->setAlpha(1.0f - cos(m_time / 30.0f));
+		m_terrainDay->setAlpha(cos(framework::get()->getTimeSec() / DAY_LENGTH));
 	});
 	entities::get()->add(m_terrainDay);
 
 	m_terrainNight = new entity(vector2(0.5f, 0.5f), vector2(3.41333f, 1.0f), texture::newTexture()->setFile("res/game/terrainNight.png")->create(), 1);
 	m_terrainNight->addComponent([&](entity *object)
 	{
-		m_terrainNight->setAlpha(cos(m_time / 30.0f));
+		m_terrainNight->setAlpha(1.0f - cos(framework::get()->getTimeSec() / DAY_LENGTH));
 	});
 	entities::get()->add(m_terrainNight);
 
@@ -37,7 +38,12 @@ instance::instance()
 	entities::get()->add(m_dome);
 
 	m_ais = std::vector<aiplayer*>();
-	m_ais.push_back(new aiplayer(texture::newTexture()->setFile("res/game/player1.png")->setNumberOfRows(2)->create(), "decaxon"));
+	aiplayer *decaxon = new aiplayer(texture::newTexture()->setFile("res/game/player1.png")->setNumberOfRows(2)->create(), "decaxon");
+	decaxon->addTask(new aitasklevel(decaxon->getEntity(), 0));
+	decaxon->addTask(new aitasktargetx(decaxon->getEntity(), 0.0f));
+	m_ais.push_back(decaxon);
+
+	m_timerFortune = new timer(30.0f);
 }
 
 instance::~instance()
@@ -66,34 +72,36 @@ void instance::update()
 	}
 #endif
 
-	m_time += framework::get()->getDelta();
-
 	for (aiplayer *ai : m_ais)
 	{
 		if (m_terrainDay->getAlpha() < 0.1f)
 		{
-			if (!ai->isAdventuring())
+			if (!ai->containsTask<aitaskadventure>() && !ai->containsTask<aitasksleep>())
 			{
-				if (ai->isAtCentre())
-				{
-					if (ai->getLevel() == 3)
-					{
-						if (!ai->isSleeping())
-						{
-							const float beds[4] = { 0.1f, 0.3f, 0.7f, 0.8f };
-							ai->setBedTarget(beds[rand() % 4 + 1]);
-						}
-					}
-					else
-					{
-						ai->setLevel(3);
-					}
-				}
-				else
-				{
-					ai->goToCentre();
-				}
+				ai->addTask(new aitasktargetx(ai->getEntity(), 0.5f));
+				ai->addTask(new aitasklevel(ai->getEntity(), 3));
+				ai->addTask(new aitasktargetx(ai->getEntity(), maths::randomInRange(0.38f, 0.62f)));
+				ai->addTask(new aitasksleep(ai->getEntity()));
 			}
 		}
+	}
+
+	if (m_timerFortune->isPassedTime())
+	{
+		float luck = maths::randomInRange(-1.0f, 1.0f);
+
+		// Bad luck ;(
+		if (luck < 0.0f)
+		{
+			std::cout << "Unlucky fortune!" << std::endl;
+		}
+		// Good luck :)
+		else
+		{
+			std::cout << "Lucky fortune!" << std::endl;
+		}
+
+		m_timerFortune->setInterval(maths::randomInRange(30.0f, 60.0f));
+		m_timerFortune->resetStartTime();
 	}
 }

@@ -73,7 +73,8 @@ namespace flounder
 		m_shader->loadUniform("rotation", static_cast<float>(__radians(object->getRotation())));
 
 		m_shader->loadUniform("alpha", object->getAlpha());
-		m_shader->loadUniform("flipTexture", object->getFlipTexture());
+		m_shader->loadUniform("flipX", object->getFlipX());
+		m_shader->loadUniform("flipY", object->getFlipY());
 		m_shader->loadUniform("atlasRows", static_cast<float>(object->getTexture()->getNumberOfRows()));
 		m_shader->loadUniform("atlasOffset", *object->getTextureOffset());
 		m_shader->loadUniform("colourOffset", *object->getColourOffset());

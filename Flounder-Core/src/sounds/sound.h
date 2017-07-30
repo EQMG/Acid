@@ -9,6 +9,8 @@
 #ifdef FLOUNDER_PLATFORM_WEB
 #include <emscripten/emscripten.h>
 #else
+#include <gorilla/ga.h>
+#include <gorilla/gau.h>
 #endif
 
 namespace flounder
@@ -19,6 +21,12 @@ namespace flounder
 		std::string m_name;
 		std::string m_filename;
 		unsigned int m_count;
+
+#ifndef FLOUNDER_PLATFORM_WEB
+		ga_Sound* m_sound;
+		ga_Handle* m_handle;
+		gc_int32 m_position;
+#endif
 
 		bool m_playing;
 		float m_gain;
@@ -46,5 +54,10 @@ namespace flounder
 		inline bool isPlaying() const { return m_playing; }
 
 		inline float getGain() const { return m_gain; }
+
+#ifndef FLOUNDER_PLATFORM_WEB
+		friend void destroy_on_finish(ga_Handle* in_handle, void* in_context);
+		friend void loop_on_finish(ga_Handle* in_handle, void* in_context);
+#endif
 	};
 }

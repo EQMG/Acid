@@ -33,6 +33,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ais\aiplayer.cpp" />
+    <ClCompile Include="src\ais\aitasktargetx.cpp" />
+    <ClCompile Include="src\ais\aitaskadventure.cpp" />
+    <ClCompile Include="src\ais\aitasksleep.cpp" />
+    <ClCompile Include="src\ais\aitasklevel.cpp" />
     <ClCompile Include="src\uis\overlaymanager.cpp" />
     <ClCompile Include="src\uis\overlaydebug.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -44,6 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ais\aiplayer.h" />
+    <ClInclude Include="src\ais\aitasktargetx.h" />
+    <ClInclude Include="src\ais\iaitask.h" />
+    <ClInclude Include="src\ais\aitaskadventure.h" />
+    <ClInclude Include="src\ais\aitasksleep.h" />
+    <ClInclude Include="src\ais\aitasklevel.h" />
     <ClInclude Include="src\uis\overlaymanager.h" />
     <ClInclude Include="src\uis\overlaydebug.h" />
     <ClInclude Include="src\maincamera.h" />
@@ -207,7 +216,7 @@
     <Link>
       <SubSystem>
       </SubSystem>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\web</AdditionalLibraryDirectories>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
@@ -275,7 +284,7 @@
     <Link>
       <SubSystem>
       </SubSystem>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenAL32.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
