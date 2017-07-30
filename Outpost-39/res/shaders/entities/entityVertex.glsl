@@ -8,7 +8,8 @@ uniform float aspectRatio;
 uniform vec2 size;
 uniform vec4 transform;
 uniform float rotation;
-uniform bool flipTexture;
+uniform bool flipX;
+uniform bool flipY; 
 uniform float atlasRows;
 uniform vec2 atlasOffset;
 
@@ -28,6 +29,7 @@ void main(void)
 	gl_Position = vec4(screenPosition, 0.0, 1.0);
 
 	pass_textureCoords = in_position;
+	pass_textureCoords.x = mix(pass_textureCoords.x, 1.0 - pass_textureCoords.x, flipX);
+	pass_textureCoords.y = mix(pass_textureCoords.y, 1.0 - pass_textureCoords.y, flipY);
 	pass_textureCoords = (pass_textureCoords / atlasRows) + atlasOffset;
-	pass_textureCoords.x = mix(pass_textureCoords.x, 1.0 - pass_textureCoords.x, flipTexture);
 }

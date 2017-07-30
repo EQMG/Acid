@@ -3,7 +3,7 @@
 overlaydebug::overlaydebug(uiobject *parent) :
 	uiobject(parent, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f))
 {
-	m_textText = createStatus("People: 100      Oxygen:150      Water: 172      Food: 56            WARNING", 0.5f, 0.03f, CENTRE);
+	m_textText = createStatus("People: 100      Oxygen: 150      Water: 172      Food: 56            WARNING", 0.5f, 0.03f, CENTRE);
 	m_textFps = createStatus("FPS: 0", 0.01f, 0.94f, LEFT);
 	m_textUps = createStatus("UPS: 0", 0.01f, 0.97f, LEFT);
 	m_timerUpdate = new timer(0.333f);

@@ -20,12 +20,14 @@ namespace flounder
 		vector2 *m_dimensions;
 		vector2 *m_meshSize;
 
+		bool m_inScreenCoords;
+
 		vector2 *m_screenPosition;
 		vector2 *m_screenDimensions;
-		vector2 *m_positionOffsets;
 
 		texture *m_texture;
-		bool m_flipTexture;
+		bool m_flipX;
+		bool m_flipY;
 		int m_selectedRow;
 
 		vector2 *m_textureOffset;
@@ -71,17 +73,21 @@ namespace flounder
 		/// <returns> The screen dimensions. </returns>
 		inline vector2 *getScreenDimensions() const { return m_screenDimensions; }
 
-		inline vector2 *getPositionOffsets() const { return m_positionOffsets; }
+		inline bool getInScreenCoords() const { return m_inScreenCoords; }
 
-		inline void setPositionOffsets(const vector2 &positionOffsets) const { m_positionOffsets->set(positionOffsets); }
+		inline void setInScreenCoords(const bool &inScreenCoords) { m_inScreenCoords = inScreenCoords; }
 
 		texture *getTexture() const { return m_texture; }
 
 		void setTexture(texture *texture) { m_texture = texture; }
 
-		bool getFlipTexture() const { return m_flipTexture; }
+		bool getFlipX() const { return m_flipX; }
 
-		void setFlipTexture(const bool &flipTexture) { m_flipTexture = flipTexture; }
+		void setFlipX(const bool &flip) { m_flipX = flip; }
+
+		bool getFlipY() const { return m_flipY; }
+
+		void setFlipY(const bool &flip) { m_flipY = flip; }
 
 		int getSelectedRow() const { return m_selectedRow; }
 
