@@ -30,15 +30,12 @@
     <ClInclude Include="src\camera\camera.h" />
     <ClInclude Include="src\camera\icamera.h" />
     <ClInclude Include="src\camera\iplayer.h" />
-    <ClInclude Include="src\deferred\deferredrenderer.h" />
+    <ClInclude Include="src\deferred\rendererdeferred.h" />
     <ClInclude Include="src\devices\audio.h" />
     <ClInclude Include="src\devices\display.h" />
     <ClInclude Include="src\devices\joysticks.h" />
     <ClInclude Include="src\devices\keyboard.h" />
     <ClInclude Include="src\devices\mouse.h" />
-    <ClInclude Include="src\entities\entity.h" />
-    <ClInclude Include="src\entities\rendererentities.h" />
-    <ClInclude Include="src\entities\entities.h" />
     <ClInclude Include="src\events\eventchange.h" />
     <ClInclude Include="src\events\events.h" />
     <ClInclude Include="src\events\eventstandard.h" />
@@ -70,6 +67,7 @@
     <ClInclude Include="src\particles\spawns\spawnsphere.h" />
     <ClInclude Include="src\post\filters\filterdefault.h" />
     <ClInclude Include="src\skyboxes\rendererskyboxes.h" />
+    <ClInclude Include="src\skyboxes\skybox.h" />
     <ClInclude Include="src\skyboxes\skyboxes.h" />
     <ClInclude Include="src\sounds\sound.h" />
     <ClInclude Include="src\uis\inputslider.h" />
@@ -176,18 +174,18 @@
     <ClInclude Include="src\visual\driverslide.h" />
     <ClInclude Include="src\visual\idriver.h" />
     <ClInclude Include="src\visual\interpolation\smoothfloat.h" />
+    <ClInclude Include="src\waters\rendererwaters.h" />
+    <ClInclude Include="src\waters\water.h" />
+    <ClInclude Include="src\waters\waters.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\camera\camera.cpp" />
-    <ClCompile Include="src\deferred\deferredrenderer.cpp" />
+    <ClCompile Include="src\deferred\rendererdeferred.cpp" />
     <ClCompile Include="src\devices\audio.cpp" />
     <ClCompile Include="src\devices\display.cpp" />
     <ClCompile Include="src\devices\joysticks.cpp" />
     <ClCompile Include="src\devices\keyboard.cpp" />
     <ClCompile Include="src\devices\mouse.cpp" />
-    <ClCompile Include="src\entities\entity.cpp" />
-    <ClCompile Include="src\entities\rendererentities.cpp" />
-    <ClCompile Include="src\entities\entities.cpp" />
     <ClCompile Include="src\events\eventchange.cpp" />
     <ClCompile Include="src\events\events.cpp" />
     <ClCompile Include="src\events\eventstandard.cpp" />
@@ -214,6 +212,7 @@
     <ClCompile Include="src\particles\spawns\spawnsphere.cpp" />
     <ClCompile Include="src\post\filters\filterdefault.cpp" />
     <ClCompile Include="src\skyboxes\rendererskyboxes.cpp" />
+    <ClCompile Include="src\skyboxes\skybox.cpp" />
     <ClCompile Include="src\skyboxes\skyboxes.cpp" />
     <ClCompile Include="src\sounds\sound.cpp" />
     <ClCompile Include="src\uis\inputslider.cpp" />
@@ -297,6 +296,9 @@
     <ClCompile Include="src\visual\driversinwave.cpp" />
     <ClCompile Include="src\visual\driverslide.cpp" />
     <ClCompile Include="src\visual\interpolation\smoothfloat.cpp" />
+    <ClCompile Include="src\waters\rendererwaters.cpp" />
+    <ClCompile Include="src\waters\water.cpp" />
+    <ClCompile Include="src\waters\waters.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -405,12 +407,9 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
-    <Lib>
-      <AdditionalDependencies>gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Web|Win32'">
     <ClCompile>
@@ -425,12 +424,9 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
-    <Lib>
-      <AdditionalDependencies>gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -445,14 +441,8 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <Lib>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Web|x64'">
     <ClCompile>
@@ -469,9 +459,6 @@
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\web</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <Lib>
-      <AdditionalDependencies>gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -494,12 +481,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
-    <Lib>
-      <AdditionalDependencies>gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -522,11 +506,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\$(PlatformTarget)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;OpenGL32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <Lib>
-      <AdditionalDependencies>gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -66,10 +66,10 @@ namespace flounder
 		m_shader->start();
 
 		// Loads the uniforms.
-		m_shader->loadUniform("projectionMatrix", *camera.getProjectionMatrix());
-		m_shader->loadUniform("viewMatrix", *camera.getViewMatrix());
-		m_shader->loadUniform("clipPlane", clipPlane);
-		m_shader->loadUniform("polygonMode", renderer::get()->isInWireframe());
+		m_shader->loadUniform4fv("projectionMatrix", *camera.getProjectionMatrix());
+		m_shader->loadUniform4fv("viewMatrix", *camera.getViewMatrix());
+		m_shader->loadUniform4f("clipPlane", clipPlane);
+		m_shader->loadUniform1i("polygonMode", renderer::get()->isInWireframe());
 
 		// Sets the GPU for rendering this object.
 		renderer::get()->antialias(display::get()->isAntialiasing());
@@ -137,7 +137,7 @@ namespace flounder
 
 		if (particleType->getTexture() != NULL)
 		{
-			m_shader->loadUniform("numberOfRows", particleType->getTexture()->getNumberOfRows());
+			m_shader->loadUniform1f("numberOfRows", static_cast<float>(particleType->getTexture()->getNumberOfRows()));
 			renderer::get()->bindTexture(particleType->getTexture(), 0);
 		}
 

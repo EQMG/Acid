@@ -39,12 +39,15 @@ int main()
 	uis::get()->setMaster(new manageruis());
 	standards::get()->addStandard(new instance());
 
-	standards::get()->addStandard(new instance());
-	skyboxes::get()->setTexture(
-		texture::newTexture()->setCubemap(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png")
-		->create()
-	);
-	skyboxes::get()->setModel(model::newModel()->setFile("res/skybox/skyboxCube.obj")->create());
+	skyboxes::get()->setSkybox(new skybox(
+		texture::newTexture()
+			->setCubemap(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png")
+			->create(),
+		model::newModel()->setFile("res/skybox/skyboxCube.obj")->create()
+	));
+	waters::get()->setWater(new water(
+		vector3(), vector3(), colour(0.0824f, 0.396f, 0.753f), 1.0f
+	));
 
 	// Runs the framework loop.
 	m_framework->run();

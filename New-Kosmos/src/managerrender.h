@@ -13,13 +13,13 @@ private:
 	vector4 m_infinity;
 
 	rendererskyboxes *m_rendererSkyboxes;
-	rendererentities *m_rendererEntities;
+	rendererwaters *m_rendererWaters;
 	rendererparticles *m_rendererParticles;
 	rendererguis *m_rendererGuis;
 	rendererfonts *m_rendererFonts;
 
 	fbo *m_fboRenderer;
-	deferredrenderer *m_deferred;
+	rendererdeferred *m_rendererDeferred;
 	filterfxaa *m_filterFxaa;
 	filtergrain *m_filterGrain;
 	filtercrt *m_filterCrt;
@@ -31,4 +31,14 @@ public:
 	~managerrender();
 
 	void render() override;
+private:
+	void renderWater(icamera *camera);
+
+	void renderShadows(icamera *camera);
+
+	void renderScene(icamera *camera, const vector4 &clipPlane, const bool &waterPass);
+
+	void renderPost(icamera *camera);
+
+	void renderGuis(icamera *camera);
 };
