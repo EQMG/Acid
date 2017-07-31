@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder Core", "Flounder-C
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder Tools", "Flounder-Tools\Flounder-Tools.vcxproj", "{7F1A2721-FCB7-441F-B24A-CAC39966D581}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Outpost 39", "Outpost-39\Outpost-39.vcxproj", "{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "New Kosmos", "New-Kosmos\New-Kosmos.vcxproj", "{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

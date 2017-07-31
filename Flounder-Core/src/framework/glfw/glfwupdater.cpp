@@ -25,9 +25,11 @@ namespace flounder
 		delete m_standards;
 		delete m_tasks;
 		delete m_uis;
+		delete m_particles;
 
 		delete m_timerRender;
 		delete m_timerUpdate;
+		delete m_skyboxes;
 	}
 
 	void glfwupdater::create()
@@ -53,6 +55,8 @@ namespace flounder
 		m_standards = new standards();
 		m_tasks = new tasks();
 		m_uis = new uis();
+		m_particles = new particles();
+		m_skyboxes = new skyboxes;
 	}
 
 	void flounder::glfwupdater::update()
@@ -87,6 +91,8 @@ namespace flounder
 
 			// Update
 			m_entities->update();
+			m_particles->update();
+			m_skyboxes->update();
 
 			// Post-Update
 		}
@@ -164,6 +170,14 @@ namespace flounder
 		else if (name == "tasks")
 		{
 			return m_tasks;
+		}
+		else if (name == "particles")
+		{
+			return m_particles;
+		}
+		else if (name == "skyboxes")
+		{
+			return m_skyboxes;
 		}
 
 		return NULL;
