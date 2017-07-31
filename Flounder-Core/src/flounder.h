@@ -142,3 +142,5 @@
 #include "visual/driverslide.h"
 #include "visual/idriver.h"
 #include "visual/interpolation/smoothfloat.h"
+
+#include "particles/spawns/spawnpoint.h"

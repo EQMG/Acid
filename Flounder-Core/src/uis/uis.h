@@ -22,7 +22,6 @@ namespace flounder
 		uiobject *m_container;
 		std::vector<uiobject*> *m_objects;
 	public:
-		fonttype *bitWonder;
 		fonttype *arial;
 		fonttype *berlinSans;
 		fonttype *cafeFrancoise;

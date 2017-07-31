@@ -13,9 +13,6 @@ namespace flounder
 	{
 	private:
 		shader *m_shader;
-
-		GLuint m_vaoID;
-		GLuint m_vaoLength;
 	public:
 		rendererentities();
 
