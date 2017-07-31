@@ -5,7 +5,7 @@ in vec2 pass_textureCoords;
 
 //---------UNIFORM------------
 layout(binding = 0) uniform sampler2D originalTexture;
-uniform vec4 screenColour;
+uniform vec3 screenColour;
 uniform float curveAmountX;
 uniform float curveAmountY;
 uniform float scanLineSize;
@@ -48,5 +48,5 @@ void main(void)
 	}
 
 	float grey = dot(colour.xyz, vec3(0.299, 0.587, 0.114));
-	out_colour = vec4(screenColour.rgb * grey, 1.0);
+	out_colour = vec4(screenColour * grey, 1.0);
 }

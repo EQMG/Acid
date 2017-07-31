@@ -91,75 +91,95 @@ namespace flounder
 		return glGetUniformLocation(m_programID, name.c_str());
 	}
 
-	void shader::loadUniform(const std::string &name, const bool &value)
+	void shader::loadUniform1i(const std::string &name, const bool &value)
 	{
 		glUniform1i(getUniform(name), value);
 	}
 
-	void shader::loadUniform(const std::string &name, const int &value)
+	void shader::loadUniform1i(const std::string &name, const int &value)
 	{
 		glUniform1i(getUniform(name), value);
 	}
 
-	void shader::loadUniform(const std::string &name, const float &value)
+	void shader::loadUniform1f(const std::string &name, const float &value)
 	{
 		glUniform1f(getUniform(name), value);
 	}
 
-	void shader::loadUniform(const std::string &name, const float &x, const float &y)
+	void shader::loadUniform2f(const std::string &name, const float &x, const float &y)
 	{
 		glUniform2f(getUniform(name), x, y);
 	}
 
-	void shader::loadUniform(const std::string &name, const float &x, const float &y, const float &z)
+	void shader::loadUniform3f(const std::string &name, const float &x, const float &y, const float &z)
 	{
 		glUniform3f(getUniform(name), x, y, z);
 	}
 
-	void shader::loadUniform(const std::string &name, const float &x, const float &y, const float &z, const float &w)
+	void shader::loadUniform4f(const std::string &name, const float &x, const float &y, const float &z, const float &w)
 	{
 		glUniform4f(getUniform(name), x, y, z, w);
 	}
 
-	void shader::loadUniform(const std::string &name, const colour &value)
+	void shader::loadUniform2fv(const std::string &name, float value[4])
 	{
-		glUniform4f(getUniform(name), value.m_r, value.m_g, value.m_b, value.m_a);
+		glUniformMatrix2fv(getUniform(name), 1, GL_FALSE, value);
 	}
 
-	void shader::loadUniform(const std::string &name, const matrix2x2 &value)
+	void shader::loadUniform3fv(const std::string &name, float value[9])
+	{
+		glUniformMatrix3fv(getUniform(name), 1, GL_FALSE, value);
+	}
+
+	void shader::loadUniform4fv(const std::string &name, float value[16])
+	{
+		glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, value);
+	}
+
+	void shader::loadUniform2fv(const std::string &name, const matrix2x2 &value)
 	{
 		float *a = matrix2x2::toArray(value);
-		glUniformMatrix2fv(getUniform(name), 1, GL_FALSE, a);
+		loadUniform2fv(name, a);
 		delete a;
 	}
 
-	void shader::loadUniform(const std::string &name, const matrix3x3 &value)
+	void shader::loadUniform3fv(const std::string &name, const matrix3x3 &value)
 	{
 		float *a = matrix3x3::toArray(value);
-		glUniformMatrix3fv(getUniform(name), 1, GL_FALSE, a);
+		loadUniform3fv(name, a);
 		delete a;
 	}
 
-	void shader::loadUniform(const std::string &name, const matrix4x4 &value)
+	void shader::loadUniform4fv(const std::string &name, const matrix4x4 &value)
 	{
 		float *a = matrix4x4::toArray(value);
-		glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, a);
+		loadUniform4fv(name, a);
 		delete a;
 	}
-
-	void shader::loadUniform(const std::string &name, const vector2 &value)
+	
+	void shader::loadUniform2f(const std::string &name, const vector2 &value)
 	{
-		glUniform2f(getUniform(name), value.m_x, value.m_y);
+		loadUniform2f(name, value.m_x, value.m_y);
 	}
 
-	void shader::loadUniform(const std::string &name, const vector3 &value)
+	void shader::loadUniform3f(const std::string &name, const vector3 &value)
 	{
-		glUniform3f(getUniform(name), value.m_x, value.m_y, value.m_z);
+		loadUniform3f(name, value.m_x, value.m_y, value.m_z);
 	}
 
-	void shader::loadUniform(const std::string &name, const vector4 &value)
+	void shader::loadUniform3f(const std::string &name, const colour &value)
 	{
-		glUniform4f(getUniform(name), value.m_x, value.m_y, value.m_z, value.m_w);
+		loadUniform3f(name, value.m_r, value.m_g, value.m_b);
+	}
+
+	void shader::loadUniform4f(const std::string &name, const vector4 &value)
+	{
+		loadUniform4f(name, value.m_x, value.m_y, value.m_z, value.m_w);
+	}
+
+	void shader::loadUniform4f(const std::string &name, const colour &value)
+	{
+		loadUniform4f(name, value.m_r, value.m_g, value.m_b, value.m_a);
 	}
 
 	void shader::loadTypes()
@@ -398,7 +418,7 @@ namespace flounder
 			value = helperstring::trim(value);
 			int index = atoi(value.c_str());
 
-			loadUniform(bindingName, index);
+			loadUniform1i(bindingName, index);
 		}
 	}
 }

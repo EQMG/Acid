@@ -19,6 +19,6 @@ namespace flounder
 
 	void filterfxaa::storeValues()
 	{
-		m_shader->loadUniform("spanMax", m_spanMax);
+		m_shader->loadUniform1f("spanMax", m_spanMax);
 	}
 }

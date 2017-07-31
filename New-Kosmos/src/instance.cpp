@@ -24,7 +24,7 @@ instance::instance()
 	//	types->push_back(new particletype("yellow", texture::newTexture()->setFile("res/particles/yellowParticle.png")->create(), 10.6f, 0.50f));
 	m_systemTest = new particlesystem(types, new spawnpoint(), 1000, 0.01f, -0.01f);
 	m_systemTest->setSystemCentre(vector3(0.0f, 0.0f, 0.0f));
-	particles::get()->addSystem(m_systemTest);
+	// particles::get()->addSystem(m_systemTest);
 }
 
 instance::~instance()

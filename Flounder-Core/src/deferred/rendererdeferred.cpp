@@ -1,23 +1,28 @@
-#include "deferredrenderer.h"
+#include "rendererdeferred.h"
 
 namespace flounder
 {
-	deferredrenderer::deferredrenderer()
+	rendererdeferred::rendererdeferred(fbo *fbo)
 	{
-		m_shader = shader::newShader()->addName("deferredRenderer")
-		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/deferred/deferredVertex.glsl", loadtype::FILE))
-		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/deferred/deferredFragment.glsl", loadtype::FILE))->create();
-		m_fbo = fbo::newFBO()->fitToScreen(1.0f)->create();
+		m_shader = shader::newShader()->addName("rendererdeferred")
+			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/deferred/deferredVertex.glsl", loadtype::FILE))
+			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/deferred/deferredFragment.glsl", loadtype::FILE))->create();
+		m_fbo = fbo;
 		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
 	}
 
-	deferredrenderer::~deferredrenderer()
+	rendererdeferred::rendererdeferred() :
+		rendererdeferred(fbo::newFBO()->fitToScreen(1.0f)->create())
+	{
+	}
+
+	rendererdeferred::~rendererdeferred()
 	{
 		delete m_shader;
 		delete m_fbo;
 	}
 
-	void deferredrenderer::apply(const int n_args, ...)
+	void rendererdeferred::apply(const int n_args, ...)
 	{
 		bool lastWireframe = renderer::get()->isInWireframe();
 
@@ -54,10 +59,10 @@ namespace flounder
 		m_fbo->unbindFrameBuffer();
 	}
 
-	void deferredrenderer::storeValues()
+	void rendererdeferred::storeValues()
 	{
-		m_shader->loadUniform("projectionMatrix", camera::get()->getCamera()->getProjectionMatrix());
-		m_shader->loadUniform("viewMatrix", camera::get()->getCamera()->getViewMatrix());
+		m_shader->loadUniform4fv("projectionMatrix", *camera::get()->getCamera()->getProjectionMatrix());
+		m_shader->loadUniform4fv("viewMatrix", *camera::get()->getCamera()->getViewMatrix());
 
 		int lightsLoaded = 0;
 
@@ -69,23 +74,29 @@ namespace flounder
 
 				if (lightsLoaded < LIGHTS && componentLight != 0)
 				{
-					shader->getUniformBool("lightActive[" + std::to_string(lightsLoaded) + "]", true);
-					shader->getUniformVec3("lightColour[" + std::to_string(lightsLoaded) + "]", *componentLight->getLight()->getColour());
-					shader->getUniformVec3("lightPosition[" + std::to_string(lightsLoaded) + "]", *componentLight->getLight()->getPosition());
-					shader->getUniformVec3("lightAttenuation[" + std::to_string(lightsLoaded) + "]", *componentLight->getLight()->getAttenuation());
+					m_shader->loadUniform1i("lightActive[" + std::to_string(lightsLoaded) + "]", true);
+					m_shader->loadUniform3f("lightColour[" + std::to_string(lightsLoaded) + "]", *componentLight->getLight()->getColour());
+					m_shader->loadUniform3f("lightPosition[" + std::to_string(lightsLoaded) + "]", *componentLight->getLight()->getPosition());
+					m_shader->loadUniform3f("lightAttenuation[" + std::to_string(lightsLoaded) + "]", *componentLight->getLight()->getAttenuation());
 					lightsLoaded++;
 				}
 			}
 		}*/
 
+		m_shader->loadUniform1i("lightActive[0]", true);
+		m_shader->loadUniform3f("lightColour[0]", 1.0f, 1.0f, 1.0f);
+		m_shader->loadUniform3f("lightPosition[0]", 1000.0f, 1000.0f, 0.0f);
+		m_shader->loadUniform3f("lightAttenuation[0]", 1.0f, 0.0f, 0.0f);
+		lightsLoaded = 1;
+
 		if (lightsLoaded < LIGHTS)
 		{
 			for (int i = lightsLoaded; i < LIGHTS; i++)
 			{
-				m_shader->loadUniform("lightActive[" + std::to_string(i) + "]", false);
-				m_shader->loadUniform("lightColour[" + std::to_string(i) + "]", 0.0f, 0.0f, 0.0f, 0.0f);
-				m_shader->loadUniform("lightPosition[" + std::to_string(i) + "]", 0.0f, 0.0f, 0.0f);
-				m_shader->loadUniform("lightAttenuation[" + std::to_string(i) + "]", 1.0f, 0.0f, 0.0f);
+				m_shader->loadUniform1i("lightActive[" + std::to_string(i) + "]", false);
+				m_shader->loadUniform3f("lightColour[" + std::to_string(i) + "]", 0.0f, 0.0f, 0.0f);
+				m_shader->loadUniform3f("lightPosition[" + std::to_string(i) + "]", 0.0f, 0.0f, 0.0f);
+				m_shader->loadUniform3f("lightAttenuation[" + std::to_string(i) + "]", 1.0f, 0.0f, 0.0f);
 			}
 		}
 
@@ -100,15 +111,15 @@ namespace flounder
 
 		if (skyboxes::get()->getFog() != NULL)
 		{
-			m_shader->loadUniform("fogColour", *skyboxes::get()->getFog()->m_colour);
-			m_shader->loadUniform("fogDensity", skyboxes::get()->getFog()->m_density);
-			m_shader->loadUniform("fogGradient", skyboxes::get()->getFog()->m_gradient);
+			m_shader->loadUniform3f("fogColour", *skyboxes::get()->getFog()->m_colour);
+			m_shader->loadUniform1f("fogDensity", skyboxes::get()->getFog()->m_density);
+			m_shader->loadUniform1f("fogGradient", skyboxes::get()->getFog()->m_gradient);
 		}
 		else
 		{
-			m_shader->loadUniform("fogColour", 1.0f, 1.0f, 1.0f);
-			m_shader->loadUniform("fogDensity", 0.003f);
-			m_shader->loadUniform("fogGradient", 2.0f);
+			m_shader->loadUniform3f("fogColour", 1.0f, 1.0f, 1.0f);
+			m_shader->loadUniform1f("fogDensity", 0.003f);
+			m_shader->loadUniform1f("fogGradient", 2.0f);
 		}
 	}
 }

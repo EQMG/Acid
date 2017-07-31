@@ -20,7 +20,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 
 uniform bool lightActive[LIGHTS];
-uniform vec4 lightColour[LIGHTS];
+uniform vec3 lightColour[LIGHTS];
 uniform vec3 lightPosition[LIGHTS];
 uniform vec3 lightAttenuation[LIGHTS];
 
@@ -34,7 +34,7 @@ uniform float shadowDarkness;
 
 uniform float brightnessBoost;
 
-uniform vec4 fogColour;
+uniform vec3 fogColour;
 uniform float fogDensity;
 uniform float fogGradient;
 
@@ -98,13 +98,13 @@ void main(void)
 	// Ignores anything this is not a rendered object, so mostly the cleared colour.
 	if (albedo.a == 0.0) 
 	{
-	    out_colour = vec4(fogColour.rgb, 1.0);
+	    out_colour = vec4(fogColour, 1.0);
 	    return;
 	}
 
     // Sets a starting colour for this fragment.
     out_colour = vec4(albedo.rgb, 1.0);
-	
+
 	// Gets the data from the extras texture.
 	float shineDamper = extras.r;
 	float glow = extras.g;
@@ -146,12 +146,12 @@ void main(void)
                 float attinuationFactor = lightAttenuation[i].x + (lightAttenuation[i].y * distance) + (lightAttenuation[i].z * distance * distance);
 
                 float brightness = max(dot(normal, unitLightVector), 0.0);
-                totalDiffuse = totalDiffuse + (brightness * lightColour[i].rgb) / attinuationFactor;
+                totalDiffuse = totalDiffuse + (brightness * lightColour[i]) / attinuationFactor;
 
              //   vec3 reflectedLightDirection = reflect(-unitLightVector, normal);
              //   float specularFactor = max(dot(reflectedLightDirection, normalize(toCameraVector)), 0.0);
              //   float dampedFactor = pow(specularFactor, shineDamper);
-             //   totalSpecular = totalSpecular + (dampedFactor * glow * lightColour[i].rgb) / attinuationFactor;
+             //   totalSpecular = totalSpecular + (dampedFactor * glow * lightColour[i]) / attinuationFactor;
             }
         }
 
@@ -161,6 +161,6 @@ void main(void)
 
     if (!ignoreFog) 
 	{
-        out_colour = mix(vec4(fogColour.rgb, 1.0), out_colour, visibility(positionRelativeToCam, fogDensity, fogGradient));
+        out_colour = mix(vec4(fogColour, 1.0), out_colour, visibility(positionRelativeToCam, fogDensity, fogGradient));
     }
 }

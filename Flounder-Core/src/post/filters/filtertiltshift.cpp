@@ -22,9 +22,9 @@ namespace flounder
 
 	void filtertiltshift::storeValues()
 	{
-		m_shader->loadUniform("blurAmount", m_blurAmount);
-		m_shader->loadUniform("centre", m_centre);
-		m_shader->loadUniform("stepSize", m_stepSize);
-		m_shader->loadUniform("steps", m_steps);
+		m_shader->loadUniform1f("blurAmount", m_blurAmount);
+		m_shader->loadUniform1f("centre", m_centre);
+		m_shader->loadUniform1f("stepSize", m_stepSize);
+		m_shader->loadUniform1f("steps", m_steps);
 	}
 }

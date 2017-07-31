@@ -23,6 +23,6 @@ namespace flounder
 
 	void filtergrain::storeValues()
 	{
-		m_shader->loadUniform("strength", m_strength);
+		m_shader->loadUniform1f("strength", m_strength);
 	}
 }

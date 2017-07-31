@@ -7,12 +7,12 @@ varying highp vec2 pass_textureCoords;
 layout(binding = 0) uniform sampler2D guiTexture;
 uniform bool polygonMode;
 uniform highp float alpha;
-uniform highp vec4 colourOffset;
+uniform highp vec3 colourOffset;
 
 //---------MAIN------------
 void main(void) 
 {
-	gl_FragColor = texture2D(guiTexture, pass_textureCoords) + vec4(colourOffset.rgb, 0.0);
+	gl_FragColor = texture2D(guiTexture, pass_textureCoords) + vec4(colourOffset, 0.0);
 	gl_FragColor.a *= alpha;
 
 	if (polygonMode) 
