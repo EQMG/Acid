@@ -54,8 +54,8 @@ namespace flounder
 		renderer::get()->bindVAO(m_vaoID, 1, 0);
 
 		// Loads the uniforms.
-		m_shader->loadUniform("aspectRatio", static_cast<float>(display::get()->getAspectRatio()));
-		m_shader->loadUniform("polygonMode", renderer::get()->isInWireframe());
+		m_shader->loadUniform1f("aspectRatio", static_cast<float>(display::get()->getAspectRatio()));
+		m_shader->loadUniform1i("polygonMode", renderer::get()->isInWireframe());
 
 		// Sets the GPU for rendering this object.
 		renderer::get()->antialias(false);
@@ -78,18 +78,18 @@ namespace flounder
 		}
 
 		// Loads the uniforms.
-		m_shader->loadUniform("size", *object->getMeshSize());
-		m_shader->loadUniform("transform",
+		m_shader->loadUniform2f("size", *object->getMeshSize());
+		m_shader->loadUniform4f("transform",
 		                      object->getScreenPosition()->m_x, object->getScreenPosition()->m_y,
 		                      object->getScreenDimensions()->m_x, object->getScreenDimensions()->m_y
 		);
-		m_shader->loadUniform("rotation", static_cast<float>(__radians(object->getRotation())));
+		m_shader->loadUniform1f("rotation", static_cast<float>(__radians(object->getRotation())));
 
-		m_shader->loadUniform("alpha", object->getAlpha());
-		m_shader->loadUniform("flipTexture", object->getFlipTexture());
-		m_shader->loadUniform("atlasRows", static_cast<float>(object->getTexture()->getNumberOfRows()));
-		m_shader->loadUniform("atlasOffset", *object->getTextureOffset());
-		m_shader->loadUniform("colourOffset", *object->getColourOffset());
+		m_shader->loadUniform1f("alpha", object->getAlpha());
+		m_shader->loadUniform1i("flipTexture", object->getFlipTexture());
+		m_shader->loadUniform1f("atlasRows", static_cast<float>(object->getTexture()->getNumberOfRows()));
+		m_shader->loadUniform2f("atlasOffset", *object->getTextureOffset());
+		m_shader->loadUniform3f("colourOffset", *object->getColourOffset());
 
 		// Tells the GPU to render this object.
 		renderer::get()->renderArrays(GL_TRIANGLE_STRIP, m_vaoLength);

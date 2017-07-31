@@ -19,7 +19,7 @@ namespace flounder
 	void rendererskyboxes::render(const vector4 &clipPlane, const icamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
-		renderSkybox(skyboxes::get());
+		renderSkybox(skyboxes::get()->getSkybox());
 		endRendering();
 	}
 
@@ -29,10 +29,10 @@ namespace flounder
 		m_shader->start();
 
 		// Loads the uniforms.
-		m_shader->loadUniform("projectionMatrix", *camera.getProjectionMatrix());
-		m_shader->loadUniform("viewMatrix", *camera.getViewMatrix());
-		m_shader->loadUniform("clipPlane", clipPlane);
-		m_shader->loadUniform("polygonMode", renderer::get()->isInWireframe());
+		m_shader->loadUniform4fv("projectionMatrix", *camera.getProjectionMatrix());
+		m_shader->loadUniform4fv("viewMatrix", *camera.getViewMatrix());
+		m_shader->loadUniform4f("clipPlane", clipPlane);
+		m_shader->loadUniform1i("polygonMode", renderer::get()->isInWireframe());
 
 		// Sets the GPU for rendering this object.
 		renderer::get()->antialias(display::get()->isAntialiasing());
@@ -42,19 +42,19 @@ namespace flounder
 		renderer::get()->disableBlending();
 	}
 
-	void rendererskyboxes::renderSkybox(skyboxes *object)
+	void rendererskyboxes::renderSkybox(skybox *object)
 	{
 		// Binds the layouts.
-		renderer::get()->bindVAO(skyboxes::get()->getModel()->getVaoID(), 1, 0);
-		renderer::get()->bindTexture(skyboxes::get()->getTexture(), 0);
+		renderer::get()->bindVAO(object->getModel()->getVaoID(), 1, 0);
+		renderer::get()->bindTexture(object->getTexture(), 0);
 
 		// Loads the uniforms.
-		m_shader->loadUniform("modelMatrix", *skyboxes::get()->getModelMatrix());
-		m_shader->loadUniform("skyColour", *skyboxes::get()->getFog()->m_colour);
-		m_shader->loadUniform("blendFactor", skyboxes::get()->getBlend());
+		m_shader->loadUniform4fv("modelMatrix", *object->getModelMatrix());
+		m_shader->loadUniform4f("skyColour", *skyboxes::get()->getFog()->m_colour);
+		m_shader->loadUniform1f("blendFactor", object->getBlend());
 
 		// Tells the GPU to render this object.
-		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, skyboxes::get()->getModel()->getVaoLength());
+		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getModel()->getVaoLength());
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);
