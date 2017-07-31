@@ -16,16 +16,11 @@ namespace flounder
 		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/entities/entityFragment.glsl", loadtype::FILE))
 		                              ->create();
 #endif
-		std::vector<GLfloat> positions = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f};
-		m_vaoID = loaders::get()->createVAO();
-		loaders::get()->storeDataInVBO(m_vaoID, positions, 0, 2);
-		m_vaoLength = positions.size() / 2;
 	}
 
 	rendererentities::~rendererentities()
 	{
 		delete m_shader;
-		glDeleteVertexArrays(1, &m_vaoID);
 	}
 
 	void rendererentities::render(const vector4 &clipPlane, const icamera &camera)
@@ -46,7 +41,7 @@ namespace flounder
 		m_shader->start();
 
 		// Binds the layouts.
-		renderer::get()->bindVAO(m_vaoID, 1, 0);
+		/*renderer::get()->bindVAO(m_vaoID, 1, 0);
 
 		// Loads the uniforms.
 		m_shader->loadUniform("aspectRatio", static_cast<float>(display::get()->getAspectRatio()));
@@ -56,12 +51,12 @@ namespace flounder
 		renderer::get()->antialias(false);
 		renderer::get()->disableDepthTesting();
 		renderer::get()->cullBackFaces(true);
-		renderer::get()->enableAlphaBlending();
+		renderer::get()->enableAlphaBlending();*/
 	}
 
 	void rendererentities::renderEntity(entity *object)
 	{
-		// Binds the layouts.
+		/*// Binds the layouts.
 		renderer::get()->bindTexture(object->getTexture(), 0);
 
 		// Loads the uniforms.
@@ -80,13 +75,13 @@ namespace flounder
 		m_shader->loadUniform("colourOffset", *object->getColourOffset());
 
 		// Tells the GPU to render this object.
-		renderer::get()->renderArrays(GL_TRIANGLE_STRIP, m_vaoLength);
+		renderer::get()->renderArrays(GL_TRIANGLE_STRIP, m_vaoLength);*/
 	}
 
 	void rendererentities::endRendering()
 	{
 		// Unbinds the layouts.
-		renderer::get()->unbindVAO(1, 0);
+		//renderer::get()->unbindVAO(1, 0);
 
 		// Stops the shader.
 		m_shader->stop();

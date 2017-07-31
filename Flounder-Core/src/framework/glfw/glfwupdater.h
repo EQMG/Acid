@@ -16,6 +16,8 @@
 #include "../../standards/standards.h"
 #include "../../tasks/tasks.h"
 #include "../../uis/uis.h"
+#include "../../particles/particles.h"
+#include "../../skyboxes/skyboxes.h"
 
 #include "../iupdater.h"
 
@@ -48,6 +50,8 @@ namespace flounder
 		standards *m_standards;
 		tasks *m_tasks;
 		uis *m_uis;
+		particles *m_particles;
+		skyboxes *m_skyboxes;
 	public:
 		glfwupdater();
 

@@ -70,9 +70,9 @@ namespace flounder
 				if (lightsLoaded < LIGHTS && componentLight != 0)
 				{
 					shader->getUniformBool("lightActive[" + std::to_string(lightsLoaded) + "]", true);
-					shader->getUniformVec3("lightColour[" + std::to_string(lightsLoaded) + "]", componentLight->getLight()->getColour());
-					shader->getUniformVec3("lightPosition[" + std::to_string(lightsLoaded) + "]", componentLight->getLight()->getPosition());
-					shader->getUniformVec3("lightAttenuation[" + std::to_string(lightsLoaded) + "]", componentLight->getLight()->getAttenuation());
+					shader->getUniformVec3("lightColour[" + std::to_string(lightsLoaded) + "]", *componentLight->getLight()->getColour());
+					shader->getUniformVec3("lightPosition[" + std::to_string(lightsLoaded) + "]", *componentLight->getLight()->getPosition());
+					shader->getUniformVec3("lightAttenuation[" + std::to_string(lightsLoaded) + "]", *componentLight->getLight()->getAttenuation());
 					lightsLoaded++;
 				}
 			}
@@ -83,7 +83,7 @@ namespace flounder
 			for (int i = lightsLoaded; i < LIGHTS; i++)
 			{
 				m_shader->loadUniform("lightActive[" + std::to_string(i) + "]", false);
-				m_shader->loadUniform("lightColour[" + std::to_string(i) + "]", 0.0f, 0.0f, 0.0f);
+				m_shader->loadUniform("lightColour[" + std::to_string(i) + "]", 0.0f, 0.0f, 0.0f, 0.0f);
 				m_shader->loadUniform("lightPosition[" + std::to_string(i) + "]", 0.0f, 0.0f, 0.0f);
 				m_shader->loadUniform("lightAttenuation[" + std::to_string(i) + "]", 1.0f, 0.0f, 0.0f);
 			}
@@ -98,17 +98,17 @@ namespace flounder
 		m_shader->loadUniform("shadowDarkness", shadows::get()->getShadowDarkness() * shadows::get()->getShadowFactor());
 		m_shader->loadUniform("brightnessBoost", shadows::get()->getBrightnessBoost());*/
 
-		/*if (skyboxes::get()->getFog() != NULL)
+		if (skyboxes::get()->getFog() != NULL)
 		{
-			m_shader->loadUniform("fogColour", skyboxes::get()->getFog()->m_colour);
+			m_shader->loadUniform("fogColour", *skyboxes::get()->getFog()->m_colour);
 			m_shader->loadUniform("fogDensity", skyboxes::get()->getFog()->m_density);
 			m_shader->loadUniform("fogGradient", skyboxes::get()->getFog()->m_gradient);
 		}
 		else
-		{*/
-		m_shader->loadUniform("fogColour", 1.0f, 1.0f, 1.0f);
-		m_shader->loadUniform("fogDensity", 0.003f);
-		m_shader->loadUniform("fogGradient", 2.0f);
-		//}
+		{
+			m_shader->loadUniform("fogColour", 1.0f, 1.0f, 1.0f);
+			m_shader->loadUniform("fogDensity", 0.003f);
+			m_shader->loadUniform("fogGradient", 2.0f);
+		}
 	}
 }
