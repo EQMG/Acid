@@ -64,7 +64,7 @@ namespace flounder
 
 	model::~model()
 	{
-		//loaders::get()->removeVAO(m_vaoID);
+		glDeleteVertexArrays(1, &m_vaoID);
 
 		delete m_builder;
 

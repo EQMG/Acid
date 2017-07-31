@@ -15,7 +15,7 @@ namespace flounder
 	/// <summary>
 	/// A filter-like shader/fbo used to process deferred rendering.
 	/// </summary>
-	class deferredrenderer
+	class rendererdeferred
 	{
 	private:
 		static const int LIGHTS = 64;
@@ -24,15 +24,17 @@ namespace flounder
 		fbo *m_fbo;
 		model *m_model;
 	public:
+		rendererdeferred(fbo *fbo);
+
 		/// <summary>
 		/// Creates a new deferred renderer.
 		/// </summary>
-		deferredrenderer();
+		rendererdeferred();
 
 		/// <summary>
 		/// Deconstructor for the deferred renderer.
 		/// </summary>
-		~deferredrenderer();
+		~rendererdeferred();
 
 		/// <summary>
 		/// Processes the textures provided into the deferred renderer.

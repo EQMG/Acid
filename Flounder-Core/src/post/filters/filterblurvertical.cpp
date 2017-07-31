@@ -39,7 +39,7 @@ namespace flounder
 			m_heightValue = static_cast<int>(display::get()->getHeight() * m_sizeScalar);
 		}
 
-		m_shader->loadUniform("height", static_cast<float>(m_heightValue));
-		m_shader->loadUniform("scale", m_scaleValue);
+		m_shader->loadUniform1f("height", static_cast<float>(m_heightValue));
+		m_shader->loadUniform1f("scale", m_scaleValue);
 	}
 }

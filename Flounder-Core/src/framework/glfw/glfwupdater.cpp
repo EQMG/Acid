@@ -19,17 +19,17 @@ namespace flounder
 		delete m_keyboard;
 		delete m_loaders;
 		delete m_mouse;
-		delete m_entities;
 		delete m_processing;
 		delete m_renderer;
 		delete m_standards;
 		delete m_tasks;
 		delete m_uis;
 		delete m_particles;
+		delete m_skyboxes;
+		delete m_waters;
 
 		delete m_timerRender;
 		delete m_timerUpdate;
-		delete m_skyboxes;
 	}
 
 	void glfwupdater::create()
@@ -49,7 +49,6 @@ namespace flounder
 		m_keyboard = new keyboard();
 		m_loaders = new loaders();
 		m_mouse = new mouse;
-		m_entities = new entities();
 		m_processing = new processing();
 		m_renderer = new renderer();
 		m_standards = new standards();
@@ -57,6 +56,7 @@ namespace flounder
 		m_uis = new uis();
 		m_particles = new particles();
 		m_skyboxes = new skyboxes;
+		m_waters = new waters();
 	}
 
 	void flounder::glfwupdater::update()
@@ -90,9 +90,9 @@ namespace flounder
 			m_uis->update();
 
 			// Update
-			m_entities->update();
 			m_particles->update();
 			m_skyboxes->update();
+			m_waters->update();
 
 			// Post-Update
 		}
@@ -139,10 +139,6 @@ namespace flounder
 		{
 			return m_mouse;
 		}
-		else if (name == "entities")
-		{
-			return m_entities;
-		}
 		else if (name == "events")
 		{
 			return m_events;
@@ -178,6 +174,10 @@ namespace flounder
 		else if (name == "skyboxes")
 		{
 			return m_skyboxes;
+		}
+		else if (name == "waters")
+		{
+			return m_waters;
 		}
 
 		return NULL;

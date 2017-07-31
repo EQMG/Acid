@@ -20,7 +20,7 @@ namespace flounder
 	private:
 		void prepareRendering(const vector4 &clipPlane, const icamera &camera);
 
-		void renderSkybox(skyboxes *object);
+		void renderSkybox(skybox *object);
 
 		void endRendering();
 	};
