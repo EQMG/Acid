@@ -2,12 +2,12 @@
 
 namespace flounder
 {
-	skybox::skybox(texture *texture, model *model)
+	skybox::skybox(texture *texture, model *model, const float &size)
 	{
 		m_texture = texture;
 		m_model = model;
 
-		m_size = 250.0f;
+		m_size = size;
 		m_blend = 1.0f;
 
 		m_rotation = new vector3();
