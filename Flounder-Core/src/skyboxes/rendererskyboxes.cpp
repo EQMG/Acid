@@ -6,9 +6,9 @@ namespace flounder
 		irenderer()
 	{
 		m_shader = shader::newShader()->addName("skybox")
-		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/skybox/skyboxVertex.glsl", loadtype::FILE))
-		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/skybox/skyboxFragment.glsl", loadtype::FILE))
-		                              ->create();
+			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/skybox/skyboxVertex.glsl", loadtype::FILE))
+			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/skybox/skyboxFragment.glsl", loadtype::FILE))
+			->create();
 	}
 
 	rendererskyboxes::~rendererskyboxes()

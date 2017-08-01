@@ -36,7 +36,7 @@ namespace flounder
 		glGenBuffers(1, &result);
 
 		glBindBuffer(GL_ARRAY_BUFFER, result);
-		glBufferData(GL_ARRAY_BUFFER, floatCount, NULL, GL_STREAM_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, floatCount * sizeof(GLfloat), (GLvoid*) NULL, GL_STREAM_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		return result;
 	}
@@ -75,11 +75,11 @@ namespace flounder
 
 	void loaders::addInstancedAttribute(const GLuint &vaoID, const GLuint &vboID, const GLuint &attribute, const GLuint &dataSize, const GLuint &instancedDataLength, const GLuint &offset)
 	{
-		glBindVertexArray(vaoID);
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
+		glBindVertexArray(vaoID);
 
 		glEnableVertexAttribArray(attribute);
-		glVertexAttribPointer(attribute, dataSize, GL_FLOAT, GL_FALSE, instancedDataLength, (void*) offset);
+		glVertexAttribPointer(attribute, dataSize, GL_FLOAT, GL_FALSE, instancedDataLength * sizeof(GLfloat), (GLvoid*) (offset * sizeof(GLfloat)));
 		glVertexAttribDivisor(attribute, 1);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);

@@ -20,7 +20,7 @@ namespace flounder
 		vector3 *m_rotation;
 		matrix4x4 *m_modelMatrix;
 	public:
-		skybox(texture *texture, model *model);
+		skybox(texture *texture, model *model, const float &size);
 
 		~skybox();
 

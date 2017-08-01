@@ -12,27 +12,20 @@ private:
 	static const float FAR_PLANE;
 	static const float FIELD_OF_VIEW;
 
-	static const float ZOOM_AGILITY;
 	static const float ROTATE_AGILITY;
 	static const float PITCH_AGILITY;
 
 	static const float INFLUENCE_OF_JOYSTICK_DY;
 	static const float INFLUENCE_OF_JOYSTICK_DX;
-	static const float INFLUENCE_OF_JOYSTICK_ZOOM;
 
 	static const float INFLUENCE_OF_MOUSE_DY;
 	static const float INFLUENCE_OF_MOUSE_DX;
-	static const float INFLUENCE_OF_MOUSE_WHEEL;
 
 	static const float MAX_HORIZONTAL_CHANGE;
 	static const float MAX_VERTICAL_CHANGE;
-	static const float MAX_ZOOM_CHANGE;
 
 	static const float MAX_ANGLE_OF_ELEVATION;
 	static const float MIN_ANGLE_OF_ELEVATION;
-	static const float MINIMUM_ZOOM;
-	static const float MAXIMUM_ZOOM;
-	static const float NORMAL_ZOOM;
 
 	vector3 *m_position;
 	vector3 *m_rotation;
@@ -48,13 +41,8 @@ private:
 
 	vector3 *m_targetPosition;
 	vector3 *m_targetRotation;
-	float m_targetZoom;
 	float m_targetElevation;
 	float m_targetRotationAngle;
-
-	float m_actualDistanceFromPoint;
-	float m_horizontalDistanceFromFocus;
-	float m_verticalDistanceFromFocus;
 
 	float m_sensitivity;
 	int m_reangleButton;
@@ -72,15 +60,9 @@ private:
 
 	void calculateVerticalAngle();
 
-	void calculateZoom();
-
 	void updateHorizontalAngle(const float &delta);
 
 	void updatePitchAngle(const float &delta);
-
-	void updateActualZoom(const float &delta);
-
-	void updateDistances();
 
 	void updatePosition();
 public:
