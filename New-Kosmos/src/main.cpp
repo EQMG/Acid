@@ -43,7 +43,8 @@ int main()
 		texture::newTexture()
 			->setCubemap(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png")
 			->create(),
-		model::newModel()->setFile("res/skybox/skyboxCube.obj")->create()
+		model::newModel()->setFile("res/skybox/skyboxCube.obj")->create(),
+		256.0f
 	));
 	waters::get()->setWater(new water(
 		vector3(), vector3(), colour(0.0824f, 0.396f, 0.753f), 1.0f

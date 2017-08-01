@@ -55,6 +55,7 @@
     <ClInclude Include="src\framework\glfw\glfwupdater.h" />
     <ClInclude Include="src\framework\imodule.h" />
     <ClInclude Include="src\framework\iupdater.h" />
+    <ClInclude Include="src\inputs\axisbutton.h" />
     <ClInclude Include="src\particles\particle.h" />
     <ClInclude Include="src\particles\particles.h" />
     <ClInclude Include="src\particles\particlesystem.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="src\framework\framework.cpp" />
     <ClCompile Include="src\framework\glfw\glfwupdater.cpp" />
     <ClCompile Include="src\guis\gui.cpp" />
+    <ClCompile Include="src\inputs\axisbutton.cpp" />
     <ClCompile Include="src\particles\particle.cpp" />
     <ClCompile Include="src\particles\particles.cpp" />
     <ClCompile Include="src\particles\particlesystem.cpp" />

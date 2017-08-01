@@ -10,8 +10,8 @@
 #define ANG2RAD PI / DEGREES_IN_HALF_CIRCLE
 #define LOG_HALF log(0.5f)
 
-#define __radians(a) (a * (PI / DEGREES_IN_HALF_CIRCLE))
-#define __degrees(b) (b * (PI / DEGREES_IN_HALF_CIRCLE))
+#define __radians(a) ((a) * (PI / DEGREES_IN_HALF_CIRCLE))
+#define __degrees(b) ((b) * (DEGREES_IN_HALF_CIRCLE / PI))
 #define __random() (((float) rand()) / RAND_MAX);
 
 #ifndef __min

@@ -633,6 +633,7 @@ namespace flounder
 		matrix4x4::rotate(*destination, vector3(0.0f, 1.0f, 0.0f), __radians(-rotation.m_y), destination);
 		matrix4x4::rotate(*destination, vector3(0.0f, 0.0f, 1.0f), __radians(rotation.m_z), destination);
 		matrix4x4::translate(*destination, point, destination);
+		point.negate();
 		return destination;
 	}
 
