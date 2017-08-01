@@ -37,6 +37,7 @@
 #include "helpers/helperarray.h"
 #include "helpers/helperfile.h"
 #include "helpers/helperstring.h"
+#include "inputs/axisbutton.h"
 #include "inputs/axiscompound.h"
 #include "inputs/axisjoystick.h"
 #include "inputs/buttoncompound.h"

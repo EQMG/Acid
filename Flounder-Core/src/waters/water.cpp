@@ -2,12 +2,12 @@
 
 namespace flounder
 {
-	const float water::WAVE_SPEED = 12.5f;
-	const float water::WAVE_LENGTH = 10.0f;
-	const float water::AMPLITUDE = 0.300f;
+	const float water::WAVE_SPEED = 10.0f;
+	const float water::WAVE_LENGTH = 50.0f;
+	const float water::AMPLITUDE = 1.0f;
 
-	const double water::SQUARE_SIZE = 1.5f;
-	const int water::VERTEX_COUNT = 142;
+	const double water::SQUARE_SIZE = 5.0f;
+	const int water::VERTEX_COUNT = 176;
 
 	const float water::SHINE_DAMPER = 1.0f;
 	const float water::REFLECTIVITY = 0.0f;
