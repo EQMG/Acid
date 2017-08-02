@@ -12,11 +12,6 @@ namespace flounder
 		m_strength = strength;
 	}
 
-	filtergrain::filtergrain() :
-		filtergrain(2.3f)
-	{
-	}
-
 	filtergrain::~filtergrain()
 	{
 	}

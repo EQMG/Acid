@@ -2,26 +2,27 @@
 
 namespace flounder
 {
-	const float water::WAVE_SPEED = 10.0f;
-	const float water::WAVE_LENGTH = 50.0f;
-	const float water::AMPLITUDE = 1.0f;
+	const float water::WAVE_SPEED = 9.0f;
+	const float water::WAVE_LENGTH = 40.0f;
+	const float water::AMPLITUDE = 0.7f;
 
-	const double water::SQUARE_SIZE = 5.0f;
+	const double water::SQUARE_SIZE = 2.598f;
 	const int water::VERTEX_COUNT = 176;
+
+	const colour water::WATER_COLOUR = colour(0.21f, 0.41f, 0.59f);
 
 	const float water::SHINE_DAMPER = 1.0f;
 	const float water::REFLECTIVITY = 0.0f;
 
-	water::water(const vector3 &position, const vector3 &rotation, const colour& tint, const float &scale)
+	water::water(const vector3 &position, const vector3 &rotation)
 	{
 		m_vaoID = 0;
 		m_vaoLength = 0;
 
-		m_colour = new colour(tint);
+		m_colour = new colour(WATER_COLOUR);
 
 		m_position = new vector3(position);
 		m_rotation = new vector3(rotation);
-		m_scale = scale;
 		m_moved = true;
 
 		m_modelMatrix = new matrix4x4();
@@ -47,11 +48,9 @@ namespace flounder
 	{
 		if (m_moved)
 		{
-			matrix4x4::transformationMatrix(*m_position, *m_rotation, m_scale, m_modelMatrix);
+			matrix4x4::transformationMatrix(*m_position, *m_rotation, 1.0f, m_modelMatrix);
 			m_moved = false;
 		}
-
-	//	colour->a = KosmosWater::get_Renamed()->reflectionsEnabled() ? KosmosWater::get_Renamed()->getColourIntensity() : 1.0f;
 	}
 
 	void water::generateMesh()
@@ -85,7 +84,7 @@ namespace flounder
 
 		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
-		m_aabb->update(*m_position, *m_rotation, m_scale, m_aabb);
+		m_aabb->update(*m_position, *m_rotation, 1.0f, m_aabb);
 	}
 
 	void water::storeQuad1(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
@@ -202,12 +201,6 @@ namespace flounder
 	void water::setRotation(const vector3 &rotation)
 	{
 		m_rotation->set(rotation);
-		m_moved = true;
-	}
-
-	void water::setScale(const float &scale)
-	{
-		m_scale = scale;
 		m_moved = true;
 	}
 }

@@ -67,6 +67,9 @@
     <ClInclude Include="src\particles\spawns\spawnpoint.h" />
     <ClInclude Include="src\particles\spawns\spawnsphere.h" />
     <ClInclude Include="src\post\filters\filterdefault.h" />
+    <ClInclude Include="src\shadows\renderershadows.h" />
+    <ClInclude Include="src\shadows\shadowbox.h" />
+    <ClInclude Include="src\shadows\shadows.h" />
     <ClInclude Include="src\skyboxes\rendererskyboxes.h" />
     <ClInclude Include="src\skyboxes\skybox.h" />
     <ClInclude Include="src\skyboxes\skyboxes.h" />
@@ -178,6 +181,7 @@
     <ClInclude Include="src\waters\rendererwaters.h" />
     <ClInclude Include="src\waters\water.h" />
     <ClInclude Include="src\waters\waters.h" />
+    <ClInclude Include="src\worlds\worlds.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\camera\camera.cpp" />
@@ -213,6 +217,9 @@
     <ClCompile Include="src\particles\spawns\spawnpoint.cpp" />
     <ClCompile Include="src\particles\spawns\spawnsphere.cpp" />
     <ClCompile Include="src\post\filters\filterdefault.cpp" />
+    <ClCompile Include="src\shadows\renderershadows.cpp" />
+    <ClCompile Include="src\shadows\shadowbox.cpp" />
+    <ClCompile Include="src\shadows\shadows.cpp" />
     <ClCompile Include="src\skyboxes\rendererskyboxes.cpp" />
     <ClCompile Include="src\skyboxes\skybox.cpp" />
     <ClCompile Include="src\skyboxes\skyboxes.cpp" />
@@ -301,6 +308,7 @@
     <ClCompile Include="src\waters\rendererwaters.cpp" />
     <ClCompile Include="src\waters\water.cpp" />
     <ClCompile Include="src\waters\waters.cpp" />
+    <ClCompile Include="src\worlds\worlds.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

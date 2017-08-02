@@ -8,6 +8,8 @@ class overlaydebug :
 	public uiobject
 {
 private:
+	text *m_textTime;
+	text *m_textPosition;
 	text *m_textFps;
 	text *m_textUps;
 	timer *m_timerUpdate;

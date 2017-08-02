@@ -19,7 +19,6 @@ namespace flounder
 
 		vector3 *m_position;
 		vector3 *m_rotation;
-		float m_scale;
 		bool m_moved;
 
 		matrix4x4 *m_modelMatrix;
@@ -32,10 +31,12 @@ namespace flounder
 		static const double SQUARE_SIZE;
 		static const int VERTEX_COUNT;
 
+		static const colour WATER_COLOUR;
+
 		static const float SHINE_DAMPER;
 		static const float REFLECTIVITY;
 
-		water(const vector3 &position, const vector3 &rotation, const colour& tint, const float &scale);
+		water(const vector3 &position, const vector3 &rotation);
 
 		~water();
 
@@ -86,10 +87,6 @@ namespace flounder
 		vector3 *getRotation() const { return m_rotation; }
 
 		void setRotation(const vector3 &rotation);
-
-		float getScale() const { return m_scale; }
-
-		void setScale(const float &scale);
 
 		matrix4x4 *getModelMatrix() const { return m_modelMatrix; }
 

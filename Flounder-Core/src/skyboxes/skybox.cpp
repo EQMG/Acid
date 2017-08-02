@@ -25,9 +25,6 @@ namespace flounder
 
 	void skybox::update()
 	{
-		if (camera::get()->getCamera() != NULL)
-		{
-			matrix4x4::transformationMatrix(*camera::get()->getCamera()->getPosition(), *m_rotation, m_size, m_modelMatrix);
-		}
+		matrix4x4::transformationMatrix(*camera::get()->getCamera()->getPosition(), *m_rotation, m_size, m_modelMatrix);
 	}
 }
