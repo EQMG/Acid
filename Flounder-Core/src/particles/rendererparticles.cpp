@@ -47,10 +47,7 @@ namespace flounder
 
 			for (std::vector<particle*>::iterator it = iter->second->begin(); it != iter->second->end(); ++it)
 			{
-			//	if ((*it)->getCollider()->inFrustum(*camera.getViewFrustum()))
-			//	{
-					prepareInstance(*it, camera, vboData);
-			//	}
+				prepareInstance(*it, camera, vboData);
 			}
 
 			renderInstances((*iter).first, vboData);

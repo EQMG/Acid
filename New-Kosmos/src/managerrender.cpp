@@ -4,6 +4,7 @@ managerrender::managerrender()
 {
 	m_infinity = vector4(0.0f, 1.0f, 0.0f, +INFINITY);
 
+	m_rendererShadows = new renderershadows();
 	m_rendererSkyboxes = new rendererskyboxes();
 	m_rendererWaters = new rendererwaters();
 	m_rendererParticles = new rendererparticles();
@@ -12,15 +13,16 @@ managerrender::managerrender()
 
 	m_fboRenderer = fbo::newFBO()->fitToScreen(1.0f)->attachments(3)->withAlphaChannel(false)->depthBuffer(TEXTURE)->create();
 	m_rendererDeferred = new rendererdeferred();
-	m_filterFxaa = new filterfxaa(8.0f);
-	m_filterGrain = new filtergrain(2.3f);
-	m_filterCrt = new filtercrt(new colour(0.5f, 1.0f, 0.5f), 0.1f, 0.1f, 1000.0f, 0.1f);
+	m_filterFxaa = new filterfxaa();
+	m_filterGrain = new filtergrain();
+	m_filterCrt = new filtercrt();
 
 	//	m_pipelinePaused = new pipelinepaused();
 }
 
 managerrender::~managerrender()
 {
+	delete m_rendererShadows;
 	delete m_rendererSkyboxes;
 	delete m_rendererWaters;
 	delete m_rendererParticles;
@@ -76,12 +78,12 @@ void managerrender::renderWater(icamera *camera)
 		}
 		glDisable(GL_CLIP_DISTANCE0);
 
-		m_rendererWaters->getRendererDeferred()->apply(4, 
+		m_rendererWaters->getRendererDeferred()->apply(5, 
 			m_rendererWaters->getFboReflection()->getColourTexture(0), 
 			m_rendererWaters->getFboReflection()->getColourTexture(1), 
 			m_rendererWaters->getFboReflection()->getColourTexture(2),
-		 	m_rendererWaters->getFboReflection()->getDepthTexture()
-			// shadowRenderer->getShadowMap()
+		 	m_rendererWaters->getFboReflection()->getDepthTexture(),
+			m_rendererShadows->getFbo()->getDepthTexture()
 		); // Shadow Map -  Depth -  Extras -  Normals -  Colours
 
 		camera->reflect(waters::get()->getWater()->getPosition()->m_y);
@@ -90,6 +92,7 @@ void managerrender::renderWater(icamera *camera)
 
 void managerrender::renderShadows(icamera *camera)
 {
+	m_rendererShadows->render(m_infinity, *camera);
 }
 
 void managerrender::renderScene(icamera *camera, const vector4 &clipPlane, const bool &waterPass)
@@ -110,12 +113,12 @@ void managerrender::renderPost(icamera *camera)
 	// Renders the post pipeline.
 	fbo *output = m_fboRenderer;
 
-	m_rendererDeferred->apply(4,
+	m_rendererDeferred->apply(5,
 		output->getColourTexture(0),
 		output->getColourTexture(1),
 		output->getColourTexture(2),
-		output->getDepthTexture()
-		//shadowRenderer->getShadowMap()
+		output->getDepthTexture(),
+		m_rendererShadows->getFbo()->getDepthTexture()
 	);
 	output = m_rendererDeferred->getFbo();
 

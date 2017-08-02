@@ -3,8 +3,10 @@
 overlaydebug::overlaydebug(uiobject *parent) :
 	uiobject(parent, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f))
 {
-	m_textFps = createStatus("FPS: 0", 0.01f, 0.94f, LEFT);
-	m_textUps = createStatus("UPS: 0", 0.01f, 0.97f, LEFT);
+	m_textTime = createStatus("TIME: 0.0", 0.005f, 0.89f, LEFT);
+	m_textPosition = createStatus("POSITION: 0.0, 0.0, 0.0", 0.005f, 0.92f, LEFT);
+	m_textFps = createStatus("FPS: 0", 0.005f, 0.95f, LEFT);
+	m_textUps = createStatus("UPS: 0", 0.005f, 0.98f, LEFT);
 	m_timerUpdate = new timer(0.333f);
 }
 
@@ -20,6 +22,9 @@ void overlaydebug::updateObject()
 	{
 		m_timerUpdate->resetStartTime();
 
+		vector3 *position = camera::get()->getCamera()->getPosition();
+		m_textTime->setText("TIME: " + std::to_string(static_cast<int>(worlds::get()->getDayFactor() * 100.0f)) + "%");
+		m_textPosition->setText("POSITION: " + std::to_string(static_cast<int>(position->m_x)) + ", " + std::to_string(static_cast<int>(position->m_y)) + ", " + std::to_string(static_cast<int>(position->m_z)));
 		m_textFps->setText("FPS: " + std::to_string(static_cast<int>(1.0 / framework::get()->getDeltaRender())));
 		m_textUps->setText("UPS: " + std::to_string(static_cast<int>(1.0 / framework::get()->getDelta())));
 	}
@@ -27,7 +32,7 @@ void overlaydebug::updateObject()
 
 text *overlaydebug::createStatus(const std::string &content, const float &positionX, const float &positionY, const uialign &align)
 {
-	text *result = new text(this, vector2(positionX, 0.01f + positionY), content, 1.0f, uis::get()->candara, 1.0f, align);
+	text *result = new text(this, vector2(positionX, positionY), content, 1.0f, uis::get()->candara, 1.0f, align);
 	result->setInScreenCoords(true);
 	result->setTextColour(colour(1.0f, 1.0f, 1.0f));
 	result->setBorderColour(colour(0.15f, 0.15f, 0.15f));

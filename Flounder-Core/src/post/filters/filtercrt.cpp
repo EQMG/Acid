@@ -2,14 +2,14 @@
 
 namespace flounder
 {
-	filtercrt::filtercrt(colour *screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
+	filtercrt::filtercrt(const colour &screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
 #ifdef FLOUNDER_PLATFORM_WEB
 		ipostfilter("filterCrt", "res/shaders/filters/crtFragment.web.glsl", NULL)
 #else
 		ipostfilter("filterCrt", "res/shaders/filters/crtFragment.glsl")
 #endif
 	{
-		m_screenColour = screenColour;
+		m_screenColour = new colour(screenColour);
 		m_curveAmountX = curveAmountX;
 		m_curveAmountY = curveAmountY;
 		m_scanLineSize = scanLineSize;

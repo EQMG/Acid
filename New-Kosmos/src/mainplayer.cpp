@@ -4,7 +4,7 @@ const float mainplayer::RUN_SPEED = 6.0f;
 const float mainplayer::STRAFE_SPEED = 4.0f;
 const float mainplayer::BOOST_MUL = 2.0f;
 const float mainplayer::JUMP_POWER = 8.0f;
-const float mainplayer::FLY_SPEED = 20.0f;
+const float mainplayer::FLY_SPEED = 10.0f;
 
 mainplayer::mainplayer() :
 	iplayer()
@@ -74,7 +74,7 @@ void mainplayer::update()
 	{
 		m_currentSpeed *= 0.5f * FLY_SPEED;
 		m_currentStrafeSpeed *= 0.5f * FLY_SPEED;
-		m_currentUpwardSpeed = 5.0f * m_inputNoclip->getAmount() * FLY_SPEED;
+		m_currentUpwardSpeed = 2.0f * m_inputNoclip->getAmount() * FLY_SPEED;
 		if (m_inputBoost->isDown())
 		{
 			m_currentSpeed *= BOOST_MUL;

@@ -12,12 +12,14 @@
 #include "../../maths/timer.h"
 #include "../../processing/processing.h"
 #include "../../renderer/renderer.h"
+#include "../../shadows/shadows.h"
 #include "../../standards/standards.h"
 #include "../../tasks/tasks.h"
 #include "../../uis/uis.h"
 #include "../../particles/particles.h"
 #include "../../skyboxes/skyboxes.h"
 #include "../../waters/waters.h"
+#include "../../worlds/worlds.h"
 
 #include "../iupdater.h"
 
@@ -46,12 +48,14 @@ namespace flounder
 		mouse *m_mouse;
 		processing *m_processing;
 		renderer *m_renderer;
+		shadows *m_shadows;
 		standards *m_standards;
 		tasks *m_tasks;
 		uis *m_uis;
 		particles *m_particles;
 		skyboxes *m_skyboxes;
 		waters *m_waters;
+		worlds *m_worlds;
 	public:
 		glfwupdater();
 

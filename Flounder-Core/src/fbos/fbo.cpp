@@ -226,6 +226,19 @@ namespace flounder
 		updateSize();
 	}
 
+	void fbo::setSize(const int & width, const int & height)
+	{
+		if (!m_fitToScreen && m_width == width && m_height == height)
+		{
+			return;
+		}
+
+		m_width = width;
+		m_height = height;
+		m_fitToScreen = false;
+		updateSize();
+	}
+
 	void fbo::resolveFBO(fbo *source, fbo *output)
 	{
 		if (source->m_attachments != output->m_attachments && output->m_hasGivenResolveError != output->m_hasGivenResolveError)
