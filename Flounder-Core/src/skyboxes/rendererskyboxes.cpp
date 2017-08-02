@@ -50,7 +50,7 @@ namespace flounder
 
 		// Loads the uniforms.
 		m_shader->loadUniform4fv("modelMatrix", *object->getModelMatrix());
-		m_shader->loadUniform4f("skyColour", *skyboxes::get()->getFog()->m_colour);
+		m_shader->loadUniform3f("skyColour", *skyboxes::get()->getFog()->m_colour);
 		m_shader->loadUniform1f("blendFactor", object->getBlend());
 
 		// Tells the GPU to render this object.

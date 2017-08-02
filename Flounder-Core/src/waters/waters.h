@@ -6,6 +6,9 @@
 
 namespace flounder
 {
+	/// <summary>
+	/// A module used for managing water 3D worlds.
+	/// </summary>
 	class waters :
 		public imodule
 	{
@@ -26,8 +29,14 @@ namespace flounder
 			return static_cast<waters*>(framework::get()->getInstance("waters"));
 		}
 
+		/// <summary>
+		/// Creates a new waters module.
+		/// </summary>
 		waters();
 
+		/// <summary>
+		/// Deconstructor for the waters module.
+		/// </summary>
 		~waters();
 
 		void update() override;
@@ -36,20 +45,20 @@ namespace flounder
 
 		inline void setWater(water *water) { m_water = water; }
 
-		float getColourIntensity() const { return m_colourIntensity; }
+		inline float getColourIntensity() const { return m_colourIntensity; }
 
-		void setColourIntensity(const float &colourIntensity) { m_colourIntensity = colourIntensity; }
+		inline void setColourIntensity(const float &colourIntensity) { m_colourIntensity = colourIntensity; }
 
-		bool getEnableReflections() const { return m_enableReflections; }
+		inline bool getEnableReflections() const { return m_enableReflections; }
 
-		void setEnableReflections(const bool &enableReflections) { m_enableReflections = enableReflections; }
+		inline void setEnableReflections(const bool &enableReflections) { m_enableReflections = enableReflections; }
 
-		float getReflectionQuality() const { return m_reflectionQuality; }
+		inline float getReflectionQuality() const { return m_reflectionQuality; }
 
-		void setReflectionQuality(const float &reflectionQuality) { m_reflectionQuality = reflectionQuality; }
+		inline void setReflectionQuality(const float &reflectionQuality) { m_reflectionQuality = reflectionQuality; }
 
-		bool getReflectionShadows() const { return m_reflectionShadows; }
+		inline bool getReflectionShadows() const { return m_reflectionShadows; }
 
-		void setReflectionShadows(const bool &reflectionShadows) { m_reflectionShadows = reflectionShadows; }
+		inline void setReflectionShadows(const bool &reflectionShadows) { m_reflectionShadows = reflectionShadows; }
 	};
 }

@@ -1,7 +1,7 @@
 #include "maincamera.h"
 
 const float maincamera::NEAR_PLANE = 0.1f;
-const float maincamera::FAR_PLANE = 512.1f;
+const float maincamera::FAR_PLANE = 2048.1f;
 const float maincamera::FIELD_OF_VIEW = 70.0f;
 
 const float maincamera::ROTATE_AGILITY = 20.0f;

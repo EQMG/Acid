@@ -201,6 +201,8 @@ namespace flounder
 		inline float getSizeScalar() { return m_sizeScalar; }
 
 		void setSizeScalar(const float &sizeScalar);
+		
+		void setSize(const int &width, const int &height);
 
 		inline GLuint getFrameBuffer() { return m_frameBuffer; }
 

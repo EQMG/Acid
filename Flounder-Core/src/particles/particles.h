@@ -33,8 +33,14 @@ namespace flounder
 			return static_cast<particles*>(framework::get()->getInstance("particles"));
 		}
 
+		/// <summary>
+		/// Creates a new particles module.
+		/// </summary>
 		particles();
 
+		/// <summary>
+		/// Deconstructor for the particles module.
+		/// </summary>
 		~particles();
 
 		void update() override;

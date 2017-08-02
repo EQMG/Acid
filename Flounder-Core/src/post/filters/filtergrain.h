@@ -10,9 +10,7 @@ namespace flounder
 	private:
 		float m_strength;
 	public:
-		filtergrain(const float &strength);
-
-		filtergrain();
+		filtergrain(const float &strength = 2.3f);
 
 		~filtergrain();
 
