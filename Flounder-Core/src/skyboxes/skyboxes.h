@@ -7,6 +7,9 @@
 
 namespace flounder
 {
+	/// <summary>
+	/// A module used for managing skyboxes in 3D worlds.
+	/// </summary>
 	class skyboxes :
 		public imodule
 	{

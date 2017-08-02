@@ -24,7 +24,8 @@ out vec3 pass_surfaceNormal;
 out vec4 pass_clipSpace;
 
 //---------DECODE------------
-vec4 decode(float n){
+vec4 decode(float n)
+{
 	float delta = mod(n, 3.0);
 	float z2 = delta - 1.0;
 	n = (n - delta) / 3.0;
@@ -39,26 +40,30 @@ vec4 decode(float n){
 }
 
 //---------HEIGHT OFFSET------------
-float generateHeight(float x, float z){
-	const float val1 = 0.1;
-	const float val2 = 0.3;
+float generateOffset(float x, float z, float val1, float val2)
+{
 	float radiansX = ((mod(x + z * x * val1, waveLength) / waveLength) + waveTime) * 2.0 * PI;
 	float radiansZ = ((mod(val2 * (z * x + x * z), waveLength) / waveLength) + waveTime * 2.0) * 2.0 * PI;
-	float result = amplitude * 0.5 * (sin(radiansZ) + sin(radiansX));
-	return waterHeight + result;
+	return amplitude * 0.5 * (sin(radiansZ) + sin(radiansX));
+}
+
+vec4 generateVertexOffset(float x, float z)
+{
+	return vec4(generateOffset(x, z, 0.2, 0.1), generateOffset(x, z, 0.1, 0.3), generateOffset(x, z, 0.15, 0.2), 0.0);
 }
 
 //---------MAIN------------
-void main(void) {
+void main(void) 
+{
 	vec4 offsets = decode(in_position.z) * squareSize;
 
 	vec4 thisVertex = modelMatrix * vec4(in_position.x + waterOffset.x, 0.0, in_position.y + waterOffset.z, 1.0);
 	vec4 otherVertex1 = modelMatrix * vec4(in_position.x + waterOffset.x + offsets.z, 0.0, in_position.y + waterOffset.z + offsets.w, 1.0);
 	vec4 otherVertex2 = modelMatrix * vec4(in_position.x + waterOffset.x + offsets.x, 0.0, in_position.y + waterOffset.z + offsets.y, 1.0);
 
-	thisVertex.y += generateHeight(thisVertex.x, thisVertex.z);
-	otherVertex1.y += generateHeight(otherVertex1.x, otherVertex1.z);
-	otherVertex2.y += generateHeight(otherVertex2.x, otherVertex2.z);
+	thisVertex += generateVertexOffset(thisVertex.x, thisVertex.z);
+	otherVertex1 += generateVertexOffset(otherVertex1.x, otherVertex1.z);
+	otherVertex2 += generateVertexOffset(otherVertex2.x, otherVertex2.z);
 
     vec4 worldPosition = thisVertex;
 

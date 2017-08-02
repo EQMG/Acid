@@ -100,14 +100,14 @@ namespace flounder
 			}
 		}
 
-		/*m_shader->loadUniform("shadowSpaceMatrix", shadows::get()->getToShadowMapSpaceMatrix());
-		m_shader->loadUniform("shadowDistance", shadows::get()->getShadowBoxDistance());
-		m_shader->loadUniform("shadowTransition", shadows::get()->getShadowTransition());
-		m_shader->loadUniform("shadowMapSize", shadows::get()->getShadowSize());
-		m_shader->loadUniform("shadowPCF", shadows::get()->getShadowPCF());
-		m_shader->loadUniform("shadowBias", shadows::get()->getShadowBias());
-		m_shader->loadUniform("shadowDarkness", shadows::get()->getShadowDarkness() * shadows::get()->getShadowFactor());
-		m_shader->loadUniform("brightnessBoost", shadows::get()->getBrightnessBoost());*/
+		m_shader->loadUniform4fv("shadowSpaceMatrix", *shadows::get()->getToShadowMapSpaceMatrix());
+		m_shader->loadUniform1f("shadowDistance", shadows::get()->getShadowBoxDistance());
+		m_shader->loadUniform1f("shadowTransition", shadows::get()->getShadowTransition());
+		m_shader->loadUniform1f("shadowMapSize", shadows::get()->getShadowSize());
+		m_shader->loadUniform1f("shadowPCF", shadows::get()->getShadowPCF());
+		m_shader->loadUniform1f("shadowBias", shadows::get()->getShadowBias());
+		m_shader->loadUniform1f("shadowDarkness", shadows::get()->getShadowDarkness() * shadows::get()->getShadowFactor());
+		m_shader->loadUniform1f("brightnessBoost", shadows::get()->getBrightnessBoost());
 
 		if (skyboxes::get()->getFog() != NULL)
 		{

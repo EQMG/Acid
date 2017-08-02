@@ -12,6 +12,7 @@ class managerrender :
 private:
 	vector4 m_infinity;
 
+	renderershadows *m_rendererShadows;
 	rendererskyboxes *m_rendererSkyboxes;
 	rendererwaters *m_rendererWaters;
 	rendererparticles *m_rendererParticles;

@@ -8,11 +8,6 @@ namespace flounder
 		m_spanMax = spanMax;
 	}
 
-	filterfxaa::filterfxaa() :
-		filterfxaa(8.0f)
-	{
-	}
-
 	filterfxaa::~filterfxaa()
 	{
 	}

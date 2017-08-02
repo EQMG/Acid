@@ -23,7 +23,6 @@ namespace flounder
 		vector3 *m_position;
 		vector3 *m_velocity;
 		vector3 *m_change;
-		aabb *m_aabb;
 
 		vector2 *m_textureOffset1;
 		vector2 *m_textureOffset2;
@@ -62,7 +61,7 @@ namespace flounder
 
 		inline bool isAlive() { return m_transparency < 1.0f; }
 
-		icollider *getCollider() override { return m_aabb; }
+		icollider *getCollider() override { return NULL; }
 
 		particletype *getParticleType() { return m_particleType; }
 

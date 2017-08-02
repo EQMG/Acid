@@ -10,9 +10,7 @@ namespace flounder
 	private:
 		float m_spanMax;
 	public:
-		filterfxaa(const float &spanMax);
-
-		filterfxaa();
+		filterfxaa(const float &spanMax = 8.0f);
 
 		~filterfxaa();
 

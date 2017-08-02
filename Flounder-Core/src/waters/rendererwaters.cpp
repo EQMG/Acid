@@ -39,6 +39,12 @@ namespace flounder
 		m_shader->loadUniform4fv("viewMatrix", *camera.getViewMatrix());
 		m_shader->loadUniform4f("clipPlane", clipPlane);
 
+		m_shader->loadUniform3f("waterOffset",
+			2.0f * water::SQUARE_SIZE * round(camera.getPosition()->m_x / (2.0f * water::SQUARE_SIZE)),
+			0.0f,
+			2.0f * water::SQUARE_SIZE * round(camera.getPosition()->m_z / (2.0f * water::SQUARE_SIZE))
+		);
+
 		if (waters::get()->getEnableReflections() && waters::get()->getColourIntensity() != 1.0f)
 		{
 			// Update the quality scalar.

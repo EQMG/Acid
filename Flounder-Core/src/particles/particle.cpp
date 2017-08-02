@@ -8,7 +8,6 @@ namespace flounder
 		m_position = new vector3(position);
 		m_velocity = new vector3(velocity);
 		m_change = new vector3();
-		m_aabb = new aabb();
 
 		m_textureOffset1 = new vector2();
 		m_textureOffset2 = new vector2();
@@ -29,7 +28,6 @@ namespace flounder
 		delete m_position;
 		delete m_velocity;
 		delete m_change;
-		delete m_aabb;
 
 		delete m_textureOffset1;
 		delete m_textureOffset2;
@@ -57,10 +55,6 @@ namespace flounder
 		vector3 *cameraToParticle = vector3::subtract(*camera::get()->getCamera()->getPosition(), *m_position, NULL);
 		m_distanceToCamera = cameraToParticle->lengthSquared();
 		delete cameraToParticle;
-
-		float size = 0.5f * m_particleType->getScale();
-		m_aabb->m_minExtents->set(m_position->m_x - size, m_position->m_y - size, m_position->m_z - size);
-		m_aabb->m_maxExtents->set(m_position->m_x + size, m_position->m_y + size, m_position->m_z + size);
 
 		float lifeFactor = m_elapsedTime / m_lifeLength;
 
