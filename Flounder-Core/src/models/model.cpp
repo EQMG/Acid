@@ -68,11 +68,11 @@ namespace flounder
 
 		delete m_builder;
 
-		delete m_vertices;
+		/*delete m_vertices;
 		delete m_textures;
 		delete m_normals;
 		delete m_tangents;
-		delete m_indices;
+		delete m_indices;*/
 
 		delete m_aabb;
 	}
@@ -272,18 +272,39 @@ namespace flounder
 	void model::loadToOpenGL()
 	{
 		m_vaoID = loaders::get()->createVAO();
-		loaders::get()->createIndicesVBO(m_vaoID, *m_indices);
-		loaders::get()->storeDataInVBO(m_vaoID, *m_vertices, 0, 3);
-		loaders::get()->storeDataInVBO(m_vaoID, *m_textures, 1, 2);
-		loaders::get()->storeDataInVBO(m_vaoID, *m_normals, 2, 3);
-		loaders::get()->storeDataInVBO(m_vaoID, *m_tangents, 3, 3);
+		
+		if (m_indices != NULL)
+		{
+			loaders::get()->createIndicesVBO(m_vaoID, *m_indices);
+		}
+
+		if (m_vertices != NULL)
+		{
+			loaders::get()->storeDataInVBO(m_vaoID, *m_vertices, 0, 3);
+		}
+
+		if (m_textures != NULL)
+		{
+			loaders::get()->storeDataInVBO(m_vaoID, *m_textures, 1, 2);
+		}
+
+		if (m_normals != NULL)
+		{
+			loaders::get()->storeDataInVBO(m_vaoID, *m_normals, 2, 3);
+		}
+
+		if (m_tangents != NULL)
+		{
+			loaders::get()->storeDataInVBO(m_vaoID, *m_tangents, 3, 3);
+		}
+
 		loaders::get()->unbindVAO();
 
 		if (m_indices != NULL)
 		{
 			m_vaoLength = m_indices->size();
 		}
-		else
+		else if (m_vertices != NULL)
 		{
 			m_vaoLength = m_vertices->size() / 3;
 		}

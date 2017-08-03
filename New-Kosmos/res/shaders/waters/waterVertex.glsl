@@ -20,7 +20,7 @@ uniform float squareSize;
 uniform float waterHeight;
 
 //---------OUT------------
-out vec3 pass_surfaceNormal;
+out vec3 pass_normal;
 out vec4 pass_clipSpace;
 
 //---------DECODE------------
@@ -42,15 +42,14 @@ vec4 decode(float n)
 //---------HEIGHT OFFSET------------
 float generateOffset(float x, float z, float val1, float val2)
 {
-	float radiansX = ((mod(x + z * x * val1, waveLength) / waveLength) + waveTime) * 2.0 * PI;
-	float radiansZ = ((mod(val2 * (z * x + x * z), waveLength) / waveLength) + waveTime * 2.0) * 2.0 * PI;
-	return amplitude * 0.5 * (cos(radiansZ + sin(x)) + sin(radiansX - cos(z)));
+	float radiansX = 2.0 * PI * ((mod(x + z * x * val1, waveLength) / waveLength) + waveTime);
+	float radiansZ = 2.0 * PI * ((mod(val2 * (z * x + x * z), waveLength) / waveLength) + waveTime * 2.0);
+	return 0.5 * amplitude * (cos(radiansZ + sin(x)) + sin(radiansX - cos(z)));
 }
 
 vec4 generateVertexOffset(float x, float z)
 {
-//	return vec4(generateOffset(x, z, 0.2, 0.1), generateOffset(x, z, 0.1, 0.3), generateOffset(x, z, 0.15, 0.2), 0.0);
-	return vec4(0.0, generateOffset(x, z, 0.1, 0.3), 0.0, 0.0);
+	return vec4(generateOffset(x, z, 0.2, 0.1), generateOffset(x, z, 0.1, 0.3), generateOffset(x, z, 0.15, 0.2), 0.0);
 }
 
 //---------MAIN------------
@@ -75,6 +74,6 @@ void main(void)
     vec3 bitangent = otherVertex2.xyz - thisVertex.xyz;
     vec3 normal = -cross(tangent, bitangent);
 
-	pass_surfaceNormal = normalize(normal);
+	pass_normal = normalize(normal);
     pass_clipSpace = projectionMatrix * viewMatrix * worldPosition;
 }

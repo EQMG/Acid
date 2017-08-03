@@ -5,6 +5,7 @@
 #include "../uis/uis.h"
 
 #include "gui.h"
+#include "../models/model.h"
 
 namespace flounder
 {
@@ -14,8 +15,7 @@ namespace flounder
 	private:
 		shader *m_shader;
 
-		GLuint m_vaoID;
-		GLuint m_vaoLength;
+		model *m_model;
 	public:
 		rendererguis();
 

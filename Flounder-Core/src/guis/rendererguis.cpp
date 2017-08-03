@@ -16,16 +16,16 @@ namespace flounder
 		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/guis/guiFragment.glsl", loadtype::FILE))
 		                              ->create();
 #endif
-		std::vector<GLfloat> positions = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f};
-		m_vaoID = loaders::get()->createVAO();
-		loaders::get()->storeDataInVBO(m_vaoID, positions, 0, 2);
-		m_vaoLength = positions.size() / 2;
+		std::vector<GLfloat> *vertices = new std::vector<GLfloat>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f };
+		m_model = model::newModel()->setDirectly(NULL, vertices, NULL, NULL, NULL)->create();
+		delete vertices;
 	}
 
 	rendererguis::~rendererguis()
 	{
 		delete m_shader;
-		glDeleteVertexArrays(1, &m_vaoID);
+		
+		delete m_model;
 	}
 
 	void rendererguis::render(const vector4 &clipPlane, const icamera &camera)
@@ -51,7 +51,7 @@ namespace flounder
 		m_shader->start();
 
 		// Binds the layouts.
-		renderer::get()->bindVAO(m_vaoID, 1, 0);
+		renderer::get()->bindVAO(m_model->getVaoID(), 1, 0);
 
 		// Loads the uniforms.
 		m_shader->loadUniform1f("aspectRatio", static_cast<float>(display::get()->getAspectRatio()));
@@ -92,7 +92,7 @@ namespace flounder
 		m_shader->loadUniform3f("colourOffset", *object->getColourOffset());
 
 		// Tells the GPU to render this object.
-		renderer::get()->renderArrays(GL_TRIANGLE_STRIP, m_vaoLength);
+		renderer::get()->renderArrays(GL_TRIANGLE_STRIP, m_model->getVaoLength());
 		renderer::get()->scissorDisable();
 	}
 

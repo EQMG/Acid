@@ -8,14 +8,14 @@
 #include "../maths/matrix4x4.h"
 #include "../noise/noisesimplex.h"
 #include "../physics/aabb.h"
+#include "../models/model.h"
 
 namespace flounder
 {
 	class terrain
 	{
 	private:
-		GLuint m_vaoID;
-		GLuint m_vaoLength;
+		model *m_model;
 
 		vector3 *m_position;
 		vector3 *m_rotation;
@@ -35,13 +35,17 @@ namespace flounder
 	private:
 		void generateMesh();
 
+		void storeVertex(std::vector<GLfloat> *vertices, const vector3 &vertex);
+
+		void storeQuad1(std::vector<GLint> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+
+		void storeQuad2(std::vector<GLint> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+
 		vector3 calculateNormal(const int &x, const int &z, noisesimplex &noise);
 
 		vector3 calculatePosition(const int &x, const int &z, noisesimplex &noise);
 	public:
-		GLuint getVaoID() const { return m_vaoID; }
-
-		GLuint getVaoLength() const { return m_vaoLength; }
+		model *getModel() const { return m_model; }
 
 		vector3 *getPosition() const { return m_position; }
 

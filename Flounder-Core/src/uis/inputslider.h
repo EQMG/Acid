@@ -41,7 +41,7 @@ namespace flounder
 
 		void updateObject() override;
 
-		std::string getText() const { return m_text->getTextString(); }
+		std::string getText() const { return m_text->getText(); }
 
 		void setText(const std::string &string) const { m_text->setText(string); }
 

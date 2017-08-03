@@ -13,8 +13,7 @@ namespace flounder
 
 		m_newText = "";
 
-		m_textMeshVao = -1;
-		m_vertexCount = -1;
+		m_model = NULL;
 
 		m_lineMaxSize = maxLineLength;
 		m_numberOfLines = -1;
@@ -38,7 +37,7 @@ namespace flounder
 
 	text::~text()
 	{
-		glDeleteVertexArrays(1, &m_textMeshVao);
+		delete m_model;
 
 		delete m_textColour;
 		delete m_borderColour;
@@ -51,9 +50,7 @@ namespace flounder
 	{
 		if (isLoaded() && m_newText != "")
 		{
-			glDeleteVertexArrays(1, &m_textMeshVao);
-			m_textMeshVao = -1;
-			m_vertexCount = -1;
+			delete m_model;
 
 			m_textString = m_newText;
 			loadText(this);
@@ -87,11 +84,8 @@ namespace flounder
 		vector2 meshSize = getBounding(vertices);
 
 		// Load mesh data to OpenGL.
-		GLuint vaoID = loaders::get()->createVAO();
-		loaders::get()->storeDataInVBO(vaoID, *vertices, 0, 2);
-		loaders::get()->storeDataInVBO(vaoID, *textures, 1, 2);
-		GLuint verticesCount = vertices->size() / 2;
-		object->setMeshInfo(vaoID, verticesCount);
+		model *loaded = model::newModel()->setDirectly(NULL, vertices, textures, NULL, NULL)->create();
+		object->setModel(loaded);
 		object->setMeshSize(meshSize);
 
 		delete vertices;
@@ -104,7 +98,7 @@ namespace flounder
 		line *currentLine = new line(object->getFontType()->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
 		word *currentWord = new word();
 
-		for (char &c : object->getTextString())
+		for (char &c : object->getText())
 		{
 			int ascii = static_cast<int>(c);
 
@@ -203,16 +197,22 @@ namespace flounder
 	{
 		vertices->push_back(static_cast<float>(x));
 		vertices->push_back(static_cast<float>(y));
+		vertices->push_back(0.0f);
 		vertices->push_back(static_cast<float>(x));
 		vertices->push_back(static_cast<float>(maxY));
+		vertices->push_back(0.0f);
 		vertices->push_back(static_cast<float>(maxX));
 		vertices->push_back(static_cast<float>(maxY));
+		vertices->push_back(0.0f);
 		vertices->push_back(static_cast<float>(maxX));
 		vertices->push_back(static_cast<float>(maxY));
+		vertices->push_back(0.0f);
 		vertices->push_back(static_cast<float>(maxX));
 		vertices->push_back(static_cast<float>(y));
+		vertices->push_back(0.0f);
 		vertices->push_back(static_cast<float>(x));
 		vertices->push_back(static_cast<float>(y));
+		vertices->push_back(0.0f);
 	}
 
 	void text::addTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<GLfloat> *textures)
@@ -265,6 +265,10 @@ namespace flounder
 					maxY = v;
 				}
 
+				i++;
+			}
+			else if (i == 2)
+			{
 				i = 0;
 			}
 		}
@@ -278,12 +282,6 @@ namespace flounder
 		{
 			m_newText = newText;
 		}
-	}
-
-	void text::setMeshInfo(const GLuint &vao, const GLuint &verticesCount)
-	{
-		m_textMeshVao = vao;
-		m_vertexCount = verticesCount;
 	}
 
 	void text::setBorder(idriver *driver)
@@ -362,6 +360,6 @@ namespace flounder
 
 	bool text::isLoaded()
 	{
-		return !m_textString.empty() && m_textMeshVao != -1 && m_vertexCount != -1;
+		return !m_textString.empty() && m_model != NULL;
 	}
 }

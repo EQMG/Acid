@@ -1,9 +1,8 @@
 #version
 
 //---------IN------------
-flat in vec3 pass_surfaceNormal;
-
-//---------UNIFORM------------
+flat in vec3 pass_normal;
+flat in vec3 pass_colour;
 
 //---------OUT------------
 layout(location = 0) out vec4 out_albedo;
@@ -15,9 +14,7 @@ uniform float reflectivity;
 
 //---------MAIN------------
 void main(void) {
-	vec4 diffuseColour = vec4(0.0, 1.0, 0.0, 1.0);
-
-	out_albedo = diffuseColour;
-	out_normals = vec4(pass_surfaceNormal + 1.0 / 2.0, out_albedo.a);
+	out_albedo = vec4(pass_colour, 1.0);
+	out_normals = vec4(pass_normal + 1.0 / 2.0, out_albedo.a);
 	out_extras = vec4(shineDamper, reflectivity, 0.0, out_albedo.a);
 }
