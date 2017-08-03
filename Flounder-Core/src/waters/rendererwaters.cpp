@@ -39,12 +39,6 @@ namespace flounder
 		m_shader->loadUniform4fv("viewMatrix", *camera.getViewMatrix());
 		m_shader->loadUniform4f("clipPlane", clipPlane);
 
-		/*m_shader->loadUniform3f("waterOffset",
-			2.0f * water::SQUARE_SIZE * round(camera.getPosition()->m_x / (2.0f * water::SQUARE_SIZE)),
-			0.0f,
-			2.0f * water::SQUARE_SIZE * round(camera.getPosition()->m_z / (2.0f * water::SQUARE_SIZE))
-		);*/
-
 		if (waters::get()->getEnableReflections() && waters::get()->getColourIntensity() != 1.0f)
 		{
 			// Update the quality scalar.
@@ -73,13 +67,17 @@ namespace flounder
 	void rendererwaters::renderWater(water *object)
 	{
 		// Binds the layouts.
-		renderer::get()->bindVAO(object->getVaoID(), 1, 0);
+		renderer::get()->bindVAO(object->getModel()->getVaoID(), 1, 0);
 
 		// Loads the uniforms.
 		m_shader->loadUniform4fv("modelMatrix", *object->getModelMatrix());
 
-		 m_shader->loadUniform4f("diffuseColour", object->getColour()->m_r, object->getColour()->m_g, object->getColour()->m_b, waters::get()->getEnableReflections() ? waters::get()->getColourIntensity() : 1.0f);
-		//m_shader->loadUniform4f("diffuseColour", *object->getColour());
+		m_shader->loadUniform3f("waterOffset", *object->getOffset());
+
+		 m_shader->loadUniform4f("diffuseColour", 
+			 object->getColour()->m_r, object->getColour()->m_g, object->getColour()->m_b, 
+			 waters::get()->getEnableReflections() ? waters::get()->getColourIntensity() : 1.0f
+		 );
 
 		m_shader->loadUniform1f("waveTime", framework::get()->getTimeSec() / water::WAVE_SPEED);
 		m_shader->loadUniform1f("waveLength", water::WAVE_LENGTH);
@@ -93,7 +91,7 @@ namespace flounder
 		m_shader->loadUniform1i("ignoreReflections", !waters::get()->getEnableReflections());
 
 		// Tells the GPU to render this object.
-		renderer::get()->renderArrays(GL_TRIANGLES, object->getVaoLength());
+		renderer::get()->renderArrays(GL_TRIANGLES, object->getModel()->getVaoLength());
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);

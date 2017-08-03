@@ -2,8 +2,8 @@
 
 //---------IN------------
 layout(location = 0) in vec3 in_position;
-layout(location = 1) in vec2 in_textureCoords;
 layout(location = 2) in vec3 in_normal;
+layout(location = 3) in vec3 in_colour;
 
 //---------UNIFORM------------
 uniform mat4 projectionMatrix;
@@ -12,7 +12,8 @@ uniform vec4 clipPlane;
 uniform mat4 modelMatrix;
 
 //---------OUT------------
-flat out vec3 pass_surfaceNormal;
+flat out vec3 pass_normal;
+flat out vec3 pass_colour;
 
 //---------MAIN------------
 void main(void) {
@@ -24,5 +25,6 @@ void main(void) {
 	gl_ClipDistance[0] = dot(worldPosition, clipPlane);
 	gl_Position = projectionMatrix * viewMatrix * worldPosition;
 
-	pass_surfaceNormal = normalize((modelMatrix * totalNormal).xyz);
+	pass_normal = normalize((modelMatrix * totalNormal).xyz);
+	pass_colour = vec3(in_colour);
 }

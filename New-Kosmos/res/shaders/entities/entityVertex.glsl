@@ -32,7 +32,7 @@ uniform vec2 swayOffset;
 
 //---------OUT------------
 out vec2 pass_textureCoords;
-out vec3 pass_surfaceNormal;
+out vec3 pass_normal;
 
 //---------MAIN------------
 void main(void) {
@@ -67,5 +67,5 @@ void main(void) {
 	gl_ClipDistance[0] = dot(worldPosition, clipPlane);
 	gl_Position = projectionMatrix * viewMatrix * worldPosition;
 
-	pass_surfaceNormal = normalize((modelMatrix * totalNormal).xyz);
+	pass_normal = normalize((modelMatrix * totalNormal).xyz);
 }
