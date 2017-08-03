@@ -19,10 +19,10 @@ namespace flounder
 	
 	void particles::update()
 	{
-		//	if (guis::get()->getGuiMaster()->isGamePaused())
-		//	{
-		//		return;
-		//	}
+		if (uis::get()->getManager()->isGamePaused())
+		{
+			return;
+		}
 
 		// Generate particles.
 		for (particlesystem* system : *m_particleSystems)

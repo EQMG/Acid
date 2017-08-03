@@ -5,6 +5,7 @@
 #include <algorithm>
 
 #include "../framework/framework.h"
+#include "../uis/uis.h"
 #include "../space/structurebasic.h"
 
 #include "particle.h"

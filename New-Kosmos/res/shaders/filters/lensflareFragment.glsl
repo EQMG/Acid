@@ -66,7 +66,7 @@ void main(void)
 
 	vec4 albedo = texture(originalAlbedo, pass_textureCoords);
 	float glow = texture(originalExtras, sunCoord).g;
-	bool process = sunPosition.z >= 0.0 && (glow > 0.4 || !insideScreen(sunCoord));
+	bool process = sunPosition.z >= 0.0; // TODO: && (glow > 0.4 || !insideScreen(sunCoord));
 
 	vec3 colour = vec3(1.4, 1.2, 1.0) * lensflare(process, (pass_textureCoords - 0.5) * (displaySize.x / displaySize.y), sunPosition);
 	out_colour = albedo + vec4(colour, 0.0);

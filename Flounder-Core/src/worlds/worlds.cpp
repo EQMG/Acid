@@ -7,11 +7,17 @@ namespace flounder
 	{
 		m_driverDay = new driverlinear(0.0f, 1.0f, 100.0f);
 		m_factorDay = 0.0f;
+
+		m_sunPosition = new vector3();
+		m_sunColour = new colour();
 	}
 
 	worlds::~worlds()
 	{
 		delete m_driverDay;
+
+		delete m_sunPosition;
+		delete m_sunColour;
 	}
 
 	void worlds::update()
@@ -37,6 +43,12 @@ namespace flounder
 		shadows::get()->setShadowBoxDistance(35.0f);
 		shadows::get()->setShadowTransition(0.0f);
 		shadows::get()->setShadowFactor(getShadowFactor());
+
+		vector3::multiply(*lightPosition, vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
+		vector3::add(*m_sunPosition, *camera::get()->getCamera()->getPosition(), m_sunPosition);
+		
+		colour::interpolate(colour(0.9f, 0.3f, 0.3f), colour(0.0f, 0.0f, 0.0f), getSunriseFactor(), m_sunColour);
+		colour::interpolate(*m_sunColour, colour(1.0f, 1.0f, 1.0f), getShadowFactor(), m_sunColour);
 	}
 
 	float worlds::getDayFactor()
