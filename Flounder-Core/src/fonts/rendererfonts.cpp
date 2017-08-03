@@ -59,7 +59,7 @@ namespace flounder
 	void rendererfonts::renderText(text *object)
 	{
 		// Binds the layouts.
-		renderer::get()->bindVAO(object->getVaoID(), 2, 0, 1);
+		renderer::get()->bindVAO(object->getModel()->getVaoID(), 2, 0, 1);
 		renderer::get()->bindTexture(object->getTexture(), 0);
 
 		// Applies the GL scissor test.
@@ -85,7 +85,7 @@ namespace flounder
 		m_shader->loadUniform2f("borderSizes", object->getTotalBorderSize(), object->getGlowSize());
 
 		// Tells the GPU to render this object.
-		renderer::get()->renderArrays(GL_TRIANGLES, object->getVaoLength());
+		renderer::get()->renderArrays(GL_TRIANGLES, object->getModel()->getVaoLength());
 		renderer::get()->scissorDisable();
 
 		// Unbinds the layouts.

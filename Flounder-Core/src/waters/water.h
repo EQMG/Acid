@@ -8,19 +8,20 @@
 #include "../loaders/loaders.h"
 #include "../textures/texture.h"
 #include "../physics/aabb.h"
+#include "../models/model.h"
 
 namespace flounder
 {
 	class water
 	{
 	private:
-		GLuint m_vaoID;
-		GLuint m_vaoLength;
+		model *m_model;
 
 		colour *m_colour;
 
 		vector3 *m_position;
 		vector3 *m_rotation;
+		vector3 *m_offset;
 		bool m_moved;
 
 		matrix4x4 *m_modelMatrix;
@@ -51,11 +52,11 @@ namespace flounder
 		/// </summary>
 		void generateMesh();
 
-		void storeQuad1(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void storeQuad1(std::vector<GLfloat> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		void storeQuad2(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void storeQuad2(std::vector<GLfloat> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		void storeVertex(std::vector<float> *vertices, const int &index, const vector2 &otherPoint1, const vector2 &otherPoint2);
+		void storeVertex(std::vector<GLfloat> *vertices, const int &index, const vector2 &otherPoint1, const vector2 &otherPoint2);
 
 		/// <summary>
 		/// Encodes the position of 2 vertices in a triangle (relative to the other vertex) into a single float.
@@ -70,9 +71,7 @@ namespace flounder
 	public:
 		float getHeight(const float &x, const float &z);
 
-		GLuint getVaoID() const { return m_vaoID; }
-
-		GLuint getVaoLength() const { return m_vaoLength; }
+		model *getModel() const { return m_model; }
 
 		colour *getColour() const { return m_colour; }
 
@@ -85,6 +84,8 @@ namespace flounder
 		vector3 *getRotation() const { return m_rotation; }
 
 		void setRotation(const vector3 &rotation);
+
+		vector3 *getOffset() const { return m_offset; }
 
 		matrix4x4 *getModelMatrix() const { return m_modelMatrix; }
 

@@ -16,13 +16,13 @@ namespace flounder
 
 	water::water(const vector3 &position, const vector3 &rotation)
 	{
-		m_vaoID = 0;
-		m_vaoLength = 0;
+		m_model = 0;
 
 		m_colour = new colour(WATER_COLOUR);
 
 		m_position = new vector3(position);
 		m_rotation = new vector3(rotation);
+		m_offset = new vector3();
 		m_moved = true;
 
 		m_modelMatrix = new matrix4x4();
@@ -33,12 +33,13 @@ namespace flounder
 
 	water::~water()
 	{
-		glDeleteVertexArrays(1, &m_vaoID);
+		delete m_model;
 
 		delete m_colour;
 
 		delete m_position;
 		delete m_rotation;
+		delete m_offset;
 
 		delete m_modelMatrix;
 		delete m_aabb;
@@ -51,6 +52,12 @@ namespace flounder
 			matrix4x4::transformationMatrix(*m_position, *m_rotation, 1.0f, m_modelMatrix);
 			m_moved = false;
 		}
+
+		m_offset->set(
+			2.0f * water::SQUARE_SIZE * round(camera::get()->getCamera()->getPosition()->m_x / (2.0f * water::SQUARE_SIZE)),
+			0.0f,
+			2.0f * water::SQUARE_SIZE * round(camera::get()->getCamera()->getPosition()->m_z / (2.0f * water::SQUARE_SIZE))
+		);
 	}
 
 	void water::generateMesh()
@@ -77,17 +84,16 @@ namespace flounder
 			}
 		}
 
-		// m_vaoID = loaders::get()->createInterleavedVAO(vertices, 3);
-		m_vaoID = loaders::get()->createVAO();
-		loaders::get()->storeDataInVBO(m_vaoID, *vertices, 0, 3);
-		m_vaoLength = vertices->size() / 3;
+		m_model = model::newModel()->setDirectly(NULL, vertices, NULL, NULL, NULL)->create();
 
 		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
 		m_aabb->update(*m_position, *m_rotation, 1.0f, m_aabb);
+
+		delete vertices;
 	}
 
-	void water::storeQuad1(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void water::storeQuad1(std::vector<GLfloat> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
 		storeVertex(vertices, topLeft, vector2(0.0f, 1.0f), mixed ? vector2(1.0f, 0.0f) : vector2(1.0f, 1.0f));
 		storeVertex(vertices, bottomLeft, mixed ? vector2(1.0f, -1.0f) : vector2(1.0f, 0.0f), vector2(0.0f, -1.0f));
@@ -114,7 +120,7 @@ namespace flounder
 		}
 	}
 
-	void water::storeQuad2(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void water::storeQuad2(std::vector<GLfloat> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
 		storeVertex(vertices, topRight, vector2(-1.0f, 0.0f), mixed ? vector2(0.0f, 1.0f) : vector2(-1.0f, 1.0f));
 		storeVertex(vertices, topLeft, mixed ? vector2(1.0f, 1.0f) : vector2(0.0f, 1.0f), vector2(1.0f, 0.0f));
@@ -141,7 +147,7 @@ namespace flounder
 		}
 	}
 
-	void water::storeVertex(std::vector<float> *vertices, const int &index, const vector2 &otherPoint1, const vector2 &otherPoint2)
+	void water::storeVertex(std::vector<GLfloat> *vertices, const int &index, const vector2 &otherPoint1, const vector2 &otherPoint2)
 	{
 		int gridX = index % VERTEX_COUNT;
 		int gridZ = index / VERTEX_COUNT;
@@ -186,9 +192,9 @@ namespace flounder
 
 		const double val1 = 0.1;
 		const double val2 = 0.3;
-		double radiansX = ((maths::mod(x + z * x * val1, static_cast<double>(WAVE_LENGTH)) / static_cast<double>(WAVE_LENGTH)) + waveTime) * 2.0 * PI;
-		double radiansZ = ((maths::mod(val2 * (z * x + x * z), static_cast<double>(WAVE_LENGTH)) / static_cast<double>(WAVE_LENGTH)) + waveTime * 2.0) * 2.0 * PI;
-		double result = AMPLITUDE * 0.5 * (sin(radiansZ) + sin(radiansX));
+		double radiansX = 2.0 * PI * ((maths::mod(x + z * x * val1, static_cast<double>(WAVE_LENGTH)) / static_cast<double>(WAVE_LENGTH)) + waveTime);
+		double radiansZ = 2.0 * PI * ((maths::mod(val2 * (z * x + x * z), static_cast<double>(WAVE_LENGTH)) / static_cast<double>(WAVE_LENGTH)) + waveTime * 2.0);
+		double result = 0.5 * AMPLITUDE * (cos(radiansZ + sin(x)) + sin(radiansX - cos(z)));
 		return static_cast<float>(m_position->m_y + result);
 	}
 
