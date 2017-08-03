@@ -42,7 +42,7 @@ namespace flounder
 	void rendererterrains::renderTerrain(terrain *object)
 	{
 		// Binds the layouts.
-		renderer::get()->bindVAO(object->getVaoID(), 3, 0, 1, 2);
+		renderer::get()->bindVAO(object->getModel()->getVaoID(), 3, 0, 2, 3);
 
 		// Loads the uniforms.
 		m_shader->loadUniform4fv("modelMatrix", *object->getModelMatrix());
@@ -51,10 +51,10 @@ namespace flounder
 		m_shader->loadUniform1f("reflectivity", 0.0f);
 
 		// Tells the GPU to render this object.
-		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getVaoLength());
+		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getModel()->getVaoLength());
 
 		// Unbinds the layouts.
-		renderer::get()->unbindVAO(3, 0, 1, 2);
+		renderer::get()->unbindVAO(3, 0, 2, 3);
 	}
 
 	void rendererterrains::endRendering()

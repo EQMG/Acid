@@ -13,6 +13,7 @@
 
 #include "fonttype.h"
 #include "line.h"
+#include "../models/model.h"
 
 namespace flounder
 {
@@ -28,8 +29,7 @@ namespace flounder
 
 		std::string m_newText;
 
-		GLuint m_textMeshVao;
-		GLuint m_vertexCount;
+		model *m_model;
 
 		float m_lineMaxSize;
 		int m_numberOfLines;
@@ -90,23 +90,16 @@ namespace flounder
 		static vector2 getBounding(std::vector<GLfloat> *vertices);
 	public:
 		/// <summary>
+		/// Gets the string of text represented.
+		/// </summary>
+		/// <returns> The string of text. </returns>
+		std::string getText() { return m_textString; }
+
+		/// <summary>
 		/// Changed the current string in this text.
 		/// </summary>
 		/// <param name="newText"> The new text, </param>
 		void setText(const std::string &newText);
-
-		/// <summary>
-		/// Sets the loaded mesh data for the text.
-		/// </summary>
-		/// <param name="vao"> The mesh VAO id. </param>
-		/// <param name="verticesCount"> The mesh vertex count. </param>
-		void setMeshInfo(const GLuint &vao, const GLuint &verticesCount);
-
-		/// <summary>
-		/// Gets the string of text represented.
-		/// </summary>
-		/// <returns> The string of text. </returns>
-		std::string getTextString() { return m_textString; }
 
 		/// <summary>
 		/// Gets how the text should align.
@@ -115,16 +108,16 @@ namespace flounder
 		uialign getTextAlign() { return m_textAlign; }
 
 		/// <summary>
-		/// Gets the ID of the text's VAO, which contains all the vertex data for the quads on which the text will be rendered.
+		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
 		/// </summary>
-		/// <returns> The ID of the text's VAO. </returns>
-		int getVaoID() { return m_textMeshVao; }
+		/// <returns> The model of the text. </returns>
+		model *getModel() { return m_model; }
 
 		/// <summary>
-		/// Gets the total number of vertices of all the text's quads.
+		/// Sets the loaded mesh data for the text.
 		/// </summary>
-		/// <returns> The vertices count in the text's VAO. </returns>
-		int getVaoLength() { return m_vertexCount; }
+		/// <param name="model"> The mesh model. </param>
+		void setModel(model *model) { m_model = model; }
 
 		/// <summary>
 		/// Gets font type texture for this text.
