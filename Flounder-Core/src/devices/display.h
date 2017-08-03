@@ -9,8 +9,8 @@
 #define GLFW_TRUE true
 #else
 #include <GL/glew.h>
-#endif
 #include <GLFW/glfw3.h>
+#endif
 
 #include "../framework/framework.h"
 #include "../textures/stb_image.h"

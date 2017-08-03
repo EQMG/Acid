@@ -84,8 +84,8 @@ namespace flounder
 		}*/
 
 		m_shader->loadUniform1i("lightActive[0]", true);
-		m_shader->loadUniform3f("lightColour[0]", 1.0f, 1.0f, 1.0f);
-		m_shader->loadUniform3f("lightPosition[0]", 1000.0f, 1000.0f, 0.0f);
+		m_shader->loadUniform3f("lightColour[0]", *worlds::get()->getSunColour());
+		m_shader->loadUniform3f("lightPosition[0]", *worlds::get()->getSunPosition());
 		m_shader->loadUniform3f("lightAttenuation[0]", 1.0f, 0.0f, 0.0f);
 		lightsLoaded = 1;
 
