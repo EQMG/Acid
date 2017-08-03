@@ -6,6 +6,7 @@ managerrender::managerrender()
 
 	m_rendererShadows = new renderershadows();
 	m_rendererSkyboxes = new rendererskyboxes();
+	m_rendererTerrains = new rendererterrains();
 	m_rendererWaters = new rendererwaters();
 	m_rendererParticles = new rendererparticles();
 	m_rendererGuis = new rendererguis();
@@ -14,16 +15,14 @@ managerrender::managerrender()
 	m_fboRenderer = fbo::newFBO()->fitToScreen(1.0f)->attachments(3)->withAlphaChannel(false)->depthBuffer(TEXTURE)->create();
 	m_rendererDeferred = new rendererdeferred();
 	m_filterFxaa = new filterfxaa();
-	m_filterGrain = new filtergrain();
-	m_filterCrt = new filtercrt();
-
-	//	m_pipelinePaused = new pipelinepaused();
+	m_filterLensFlare = new filterlensflare();
 }
 
 managerrender::~managerrender()
 {
 	delete m_rendererShadows;
 	delete m_rendererSkyboxes;
+	delete m_rendererTerrains;
 	delete m_rendererWaters;
 	delete m_rendererParticles;
 	delete m_rendererGuis;
@@ -32,10 +31,6 @@ managerrender::~managerrender()
 	delete m_fboRenderer;
 	delete m_rendererDeferred;
 	delete m_filterFxaa;
-	delete m_filterGrain;
-	delete m_filterCrt;
-
-	//	delete m_pipelinePaused;
 }
 
 void managerrender::render()
@@ -99,6 +94,7 @@ void managerrender::renderScene(icamera *camera, const vector4 &clipPlane, const
 {
 	renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 0.0f);
 	m_rendererSkyboxes->render(clipPlane, *camera);
+	m_rendererTerrains->render(clipPlane, *camera);
 
 	if (!waterPass)
 	{
@@ -129,11 +125,10 @@ void managerrender::renderPost(icamera *camera)
 	renderGuis(camera);
 	output->unbindFrameBuffer();
 
-	//  m_filterCrt->applyFilter(1, output->getColourTexture(0));
-	//  output = m_filterCrt->getFbo();
-
-	//  m_filterGrain->applyFilter(1, output->getColourTexture(0));
-	//  output = m_filterGrain->getFbo();
+	m_filterLensFlare->setSunPosition(*worlds::get()->getSunPosition());
+	m_filterLensFlare->setSunHeight(worlds::get()->getSunHeight());
+	m_filterLensFlare->applyFilter(1, output->getColourTexture(0));
+	output = m_filterLensFlare->getFbo();
 
 	// Displays the image to the screen.
 	output->blitToScreen();

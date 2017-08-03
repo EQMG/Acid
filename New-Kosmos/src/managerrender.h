@@ -14,6 +14,7 @@ private:
 
 	renderershadows *m_rendererShadows;
 	rendererskyboxes *m_rendererSkyboxes;
+	rendererterrains *m_rendererTerrains;
 	rendererwaters *m_rendererWaters;
 	rendererparticles *m_rendererParticles;
 	rendererguis *m_rendererGuis;
@@ -22,10 +23,7 @@ private:
 	fbo *m_fboRenderer;
 	rendererdeferred *m_rendererDeferred;
 	filterfxaa *m_filterFxaa;
-	filtergrain *m_filterGrain;
-	filtercrt *m_filterCrt;
-
-	pipelinepaused *m_pipelinePaused;
+	filterlensflare *m_filterLensFlare;
 public:
 	managerrender();
 

@@ -74,6 +74,9 @@
     <ClInclude Include="src\skyboxes\skybox.h" />
     <ClInclude Include="src\skyboxes\skyboxes.h" />
     <ClInclude Include="src\sounds\sound.h" />
+    <ClInclude Include="src\terrains\rendererterrains.h" />
+    <ClInclude Include="src\terrains\terrain.h" />
+    <ClInclude Include="src\terrains\terrains.h" />
     <ClInclude Include="src\uis\inputslider.h" />
     <ClInclude Include="src\uis\inputgrabber.h" />
     <ClInclude Include="src\uis\inputtext.h" />
@@ -224,6 +227,9 @@
     <ClCompile Include="src\skyboxes\skybox.cpp" />
     <ClCompile Include="src\skyboxes\skyboxes.cpp" />
     <ClCompile Include="src\sounds\sound.cpp" />
+    <ClCompile Include="src\terrains\rendererterrains.cpp" />
+    <ClCompile Include="src\terrains\terrain.cpp" />
+    <ClCompile Include="src\terrains\terrains.cpp" />
     <ClCompile Include="src\uis\inputslider.cpp" />
     <ClCompile Include="src\uis\inputgrabber.cpp" />
     <ClCompile Include="src\uis\inputtext.cpp" />

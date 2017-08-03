@@ -27,6 +27,7 @@ namespace flounder
 		delete m_uis;
 		delete m_particles;
 		delete m_skyboxes;
+		delete m_terrains;
 		delete m_waters;
 		delete m_worlds;
 
@@ -58,7 +59,8 @@ namespace flounder
 		m_tasks = new tasks();
 		m_uis = new uis();
 		m_particles = new particles();
-		m_skyboxes = new skyboxes;
+		m_skyboxes = new skyboxes();
+		m_terrains = new terrains();
 		m_waters = new waters();
 		m_worlds = new worlds();
 	}
@@ -97,6 +99,7 @@ namespace flounder
 			m_worlds->update();
 			m_particles->update();
 			m_skyboxes->update();
+			m_terrains->update();
 			m_waters->update();
 			m_shadows->update();
 
@@ -176,6 +179,10 @@ namespace flounder
 		else if (name == "tasks")
 		{
 			return m_tasks;
+		}
+		else if (name == "terrains")
+		{
+			return m_terrains;
 		}
 		else if (name == "particles")
 		{

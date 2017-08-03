@@ -15,6 +15,7 @@
 #include "../../shadows/shadows.h"
 #include "../../standards/standards.h"
 #include "../../tasks/tasks.h"
+#include "../../terrains/terrains.h"
 #include "../../uis/uis.h"
 #include "../../particles/particles.h"
 #include "../../skyboxes/skyboxes.h"
@@ -54,6 +55,7 @@ namespace flounder
 		uis *m_uis;
 		particles *m_particles;
 		skyboxes *m_skyboxes;
+		terrains *m_terrains;
 		waters *m_waters;
 		worlds *m_worlds;
 	public:

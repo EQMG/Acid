@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <GL/glew.h>
+
 #include "../camera/camera.h"
 #include "../maths/vector3.h"
 #include "../maths/matrix4x4.h"
@@ -41,13 +43,12 @@ namespace flounder
 		~water();
 
 		void update();
-
+	private:
 		/// <summary>
 		/// Generates the water mesh and loads it to a VAO.
 		/// Generates the {@code float[]} of vertex data which will be loaded to the water's VAO.
 		/// The array contains the vertex x and z positions as well as an encoded indication of which corner of its triangle each vertex lies in.
 		/// </summary>
-	private:
 		void generateMesh();
 
 		void storeQuad1(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
@@ -77,10 +78,7 @@ namespace flounder
 
 		void setColour(const colour &colour) const { m_colour->set(colour); }
 
-		vector3 *getPosition() const
-		{
-			return m_position;
-		}
+		vector3 *getPosition() const { return m_position; }
 
 		void setPosition(const vector3 &position);
 
@@ -90,6 +88,6 @@ namespace flounder
 
 		matrix4x4 *getModelMatrix() const { return m_modelMatrix; }
 
-		aabb * getAabb() const { return m_aabb; }
+		aabb *getAabb() const { return m_aabb; }
 	};
 }

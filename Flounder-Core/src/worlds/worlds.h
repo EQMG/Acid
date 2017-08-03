@@ -18,6 +18,9 @@ namespace flounder
 	private:
 		driverlinear *m_driverDay;
 		float m_factorDay;
+
+		vector3 *m_sunPosition;
+		colour *m_sunColour;
 	public:
 		/// <summary>
 		/// Gets this framework instance.
@@ -49,5 +52,9 @@ namespace flounder
 		float getSunHeight();
 
 		float starIntensity();
+
+		vector3 *getSunPosition() const { return m_sunPosition; }
+
+		colour *getSunColour() const { return m_sunColour; }
 	};
 }
