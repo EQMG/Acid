@@ -8,9 +8,9 @@ namespace flounder
 		m_fboReflection = fbo::newFBO()->fitToScreen(waters::get()->getReflectionQuality())->attachments(3)->withAlphaChannel(true)->depthBuffer(TEXTURE)->create();
 		m_rendererDeferred = new rendererdeferred(fbo::newFBO()->fitToScreen(1.0f)->disableTextureWrap()->create());
 
-		m_shader = shader::newShader()->addName("water")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/water/waterVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/water/waterFragment.glsl", loadtype::FILE))
+		m_shader = shader::newShader()->addName("waters")
+			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/waters/waterVertex.glsl", loadtype::FILE))
+			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/waters/waterFragment.glsl", loadtype::FILE))
 			->create();
 	}
 
@@ -39,11 +39,11 @@ namespace flounder
 		m_shader->loadUniform4fv("viewMatrix", *camera.getViewMatrix());
 		m_shader->loadUniform4f("clipPlane", clipPlane);
 
-		m_shader->loadUniform3f("waterOffset",
+		/*m_shader->loadUniform3f("waterOffset",
 			2.0f * water::SQUARE_SIZE * round(camera.getPosition()->m_x / (2.0f * water::SQUARE_SIZE)),
 			0.0f,
 			2.0f * water::SQUARE_SIZE * round(camera.getPosition()->m_z / (2.0f * water::SQUARE_SIZE))
-		);
+		);*/
 
 		if (waters::get()->getEnableReflections() && waters::get()->getColourIntensity() != 1.0f)
 		{

@@ -2,6 +2,7 @@
 
 //---------IN------------
 in vec3 pass_textureCoords;
+in vec3 pass_worldPosition;
 
 //---------UNIFORM------------
 layout(binding = 0) uniform samplerCube cubeMap;
