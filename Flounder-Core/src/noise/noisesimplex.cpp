@@ -17,20 +17,20 @@ namespace flounder
 	{
 	}
 
-	float noisesimplex::noise(float xin, float yin)
+	float noisesimplex::noise(const float &x, const float &y)
 	{
 		float n0, n1, n2; // Noise contributions from the three corners.
 		// Skew the input space to determine which SIMPLEX cell we're in.
-		const float F2 = 0.5f * ((float) (sqrt(3.0f)) - 1.0f);
-		float s = (xin + yin) * F2; // Hairy factor for 2D.
-		int i = fastfloor(xin + s);
-		int j = fastfloor(yin + s);
-		const float G2 = (3.0f - (float) (sqrt(3.0f))) / 6.0f;
+		const float F2 = 0.5f * (sqrt(3.0f) - 1.0f);
+		float s = (x + y) * F2; // Hairy factor for 2D.
+		int i = fastfloor(x + s);
+		int j = fastfloor(y + s);
+		const float G2 = (3.0f - sqrt(3.0f)) / 6.0f;
 		float t = (i + j) * G2;
 		float X0 = i - t; // Unskew the cell origin back to (x,y) space.
 		float Y0 = j - t;
-		float x0 = xin - X0; // The x,y distances from the cell origin.
-		float y0 = yin - Y0;
+		float x0 = x - X0; // The x,y distances from the cell origin.
+		float y0 = y - Y0;
 
 		// For the 2D case, the SIMPLEX shape is an equilateral triangle. Determine which SIMPLEX we are in.
 		int i1, j1; // Offsets for second (middle) corner of SIMPLEX in (i,j) coords.
@@ -99,26 +99,26 @@ namespace flounder
 
 		// Add contributions from each corner to get the final noise value.
 		// The result is scaled to return values in the interval [-1,1].
-		return (float) (70.0 * (n0 + n1 + n2));
+		return static_cast<float>(70.0 * (n0 + n1 + n2));
 	}
 
-	float noisesimplex::noise(float xin, float yin, float zin)
+	float noisesimplex::noise(const float &x, const float &y, const float &z)
 	{
 		float n0, n1, n2, n3; // Noise contributions from the four corners.
 		// Skew the input space to determine which SIMPLEX cell we're in.
 		const float F3 = 1.0f / 3.0f;
-		float s = (xin + yin + zin) * F3; // Very nice and simple skew factor for 3D.
-		int i = fastfloor(xin + s);
-		int j = fastfloor(yin + s);
-		int k = fastfloor(zin + s);
+		float s = (x + y + z) * F3; // Very nice and simple skew factor for 3D.
+		int i = fastfloor(x + s);
+		int j = fastfloor(y + s);
+		int k = fastfloor(z + s);
 		const float G3 = 1.0f / 6.0f; // Very nice and simple unskew factor, too.
 		float t = (i + j + k) * G3;
 		float X0 = i - t; // Unskew the cell origin back to (x,y,z) space.
 		float Y0 = j - t;
 		float Z0 = k - t;
-		float x0 = xin - X0; // The x,y,z distances from the cell origin.
-		float y0 = yin - Y0;
-		float z0 = zin - Z0;
+		float x0 = x - X0; // The x,y,z distances from the cell origin.
+		float y0 = y - Y0;
+		float z0 = z - Z0;
 
 		// For the 3D case, the simplex shape is a slightly irregular tetrahedron. Determine which simplex we are in.
 		int i1, j1, k1; // Offsets for second corner of SIMPLEX in (i,j,k) coords.
@@ -260,14 +260,14 @@ namespace flounder
 
 		// Add contributions from each corner to get the final noise value.
 		// The result is scaled to stay just inside [-1,1].
-		return (float) (32.0 * (n0 + n1 + n2 + n3));
+		return static_cast<float>(32.0 * (n0 + n1 + n2 + n3));
 	}
 
-	float noisesimplex::noise(float x, float y, float z, float w)
+	float noisesimplex::noise(const float &x, const float &y, const float &z, const float &w)
 	{
 		// The skewing and unskewing factors are hairy again for the 4D case.
-		const float F4 = ((float) (sqrt(5.0f)) - 1.0f) / 4.0f;
-		const float G4 = (5.0f - (float) (sqrt(5.0f))) / 20.0f;
+		const float F4 = (sqrt(5.0f) - 1.0f) / 4.0f;
+		const float G4 = (5.0f - sqrt(5.0f)) / 20.0f;
 		float n0, n1, n2, n3, n4; // Noise contributions from the five corners.
 
 		// Skew the (x,y,z,w) space to determine which cell of 24 simplices we're in.
@@ -416,25 +416,25 @@ namespace flounder
 		}
 
 		// Sum up and scale the result to cover the range [-1,1].
-		return (float) (27.0 * (n0 + n1 + n2 + n3 + n4));
+		return static_cast<float>(27.0 * (n0 + n1 + n2 + n3 + n4));
 	}
 
-	int noisesimplex::fastfloor(float x)
+	int noisesimplex::fastfloor(const float &x)
 	{
 		return x > 0 ? static_cast<int>(x) : static_cast<int>(x) - 1;
 	}
 
-	float noisesimplex::dot(const int *g, const float x, const float y)
+	float noisesimplex::dot(const int *g, const float &x, const float &y)
 	{
 		return g[0] * x + g[1] * y;
 	}
 
-	float noisesimplex::dot(const int *g, const float x, const float y, const float z)
+	float noisesimplex::dot(const int *g, const float &x, const float &y, const float &z)
 	{
 		return g[0] * x + g[1] * y + g[2] * z;
 	}
 
-	float noisesimplex::dot(const int *g, const float x, const float y, const float z, const float w)
+	float noisesimplex::dot(const int *g, const float &x, const float &y, const float &z, const float &w)
 	{
 		return g[0] * x + g[1] * y + g[2] * z + g[3] * w;
 	}
