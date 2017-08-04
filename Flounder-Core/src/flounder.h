@@ -133,6 +133,7 @@
 #include "standards/istandard.h"
 #include "standards/standards.h"
 #include "tasks/tasks.h"
+#include "terrains/biome.h"
 #include "terrains/rendererterrains.h"
 #include "terrains/terrain.h"
 #include "terrains/terrains.h"

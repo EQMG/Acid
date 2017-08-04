@@ -23,25 +23,23 @@ namespace flounder
 		~noisesimplex();
 
 		// 2D SIMPLEX noise
-		float noise(float xin, float yin);
+		float noise(const float &x, const float &y);
 
 		// 3D SIMPLEX noise
-		float noise(float xin, float yin, float zin);
+		float noise(const float &x, const float &y, const float &z);
 
 		// 4D SIMPLEX noise
-		float noise(float x, float y, float z, float w);
-
-		inline int getSeed() const { return m_seed; }
-
-		inline void setSeed(const int seed) { m_seed = seed; }
+		float noise(const float &x, const float &y, const float &z, const float &w);
 	private:
 		// This method is a *lot* faster than using (int)Math.floor(x)
-		static int fastfloor(float x);
+		static int fastfloor(const float &x);
 
-		static float dot(const int *g, const float x, const float y);
+		static float dot(const int *g, const float &x, const float &y);
 
-		static float dot(const int *g, const float x, const float y, const float z);
+		static float dot(const int *g, const float &x, const float &y, const float &z);
 
-		static float dot(const int *g, const float x, const float y, const float z, const float w);
+		static float dot(const int *g, const float &x, const float &y, const float &z, const float &w);
+	public:
+		inline int getSeed() const { return m_seed; }
 	};
 }
