@@ -160,9 +160,10 @@ namespace flounder
 		/// <param name="min"> The min value. </param>
 		/// <param name="max"> The max value. </param>
 		/// <returns> The randomly selected value within the range. </returns>
-		static float randomInRange(const float &min, const float &max)
+		template<typename t>
+		static t randomInRange(const t &min, const t &max)
 		{
-			float range = max - min;
+			t range = max - min;
 			float scaled = __random();
 			scaled *= range;
 			return scaled + min; // == (rand.nextDouble() * (max-min)) + min;

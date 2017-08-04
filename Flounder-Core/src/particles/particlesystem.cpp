@@ -56,7 +56,7 @@ namespace flounder
 			velocity = generateRandomUnitVector();
 		}
 
-		particletype *emitType = m_types->at(static_cast<int>(floor(maths::randomInRange(0, m_types->size()))));
+		particletype *emitType = m_types->at(static_cast<int>(floor(maths::randomInRange(0, static_cast<int>(m_types->size())))));
 
 		velocity->normalize();
 		velocity->scale(generateValue(m_averageSpeed, m_averageSpeed * maths::randomInRange(1.0f- m_speedError, 1.0f + m_speedError)));
