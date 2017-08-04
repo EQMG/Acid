@@ -74,6 +74,7 @@
     <ClInclude Include="src\skyboxes\skybox.h" />
     <ClInclude Include="src\skyboxes\skyboxes.h" />
     <ClInclude Include="src\sounds\sound.h" />
+    <ClInclude Include="src\terrains\biome.h" />
     <ClInclude Include="src\terrains\rendererterrains.h" />
     <ClInclude Include="src\terrains\terrain.h" />
     <ClInclude Include="src\terrains\terrains.h" />
