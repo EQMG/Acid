@@ -27,8 +27,9 @@ namespace flounder
 		matrix4x4 *m_modelMatrix;
 		aabb *m_aabb;
 	public:
-		static const double SQUARE_SIZE;
+		static const float SQUARE_SIZE;
 		static const int VERTEX_COUNT;
+		static const float SIDE_LENGTH;
 
 		terrain(const vector3 &position, const vector3 &rotation, const int &seed);
 
@@ -38,22 +39,20 @@ namespace flounder
 	private:
 		void generateMesh();
 
-		void storeVertex(std::vector<GLfloat> *vertices, const vector3 &vertex);
-
 		void storeQuad1(std::vector<GLint> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
 		void storeQuad2(std::vector<GLint> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		vector3 calculateNormal(const int &x, const int &z);
+		vector3 calculateNormal(const float &x, const float &z);
 
-		colour getBiomeColour(const int &x, const int &z);
+		colour getBiomeColour(const float &x, const float &z);
 
 		float getFactorIsland(const float &x, const float &z);
 
 		float getFactorMoisture(const float & x, const float & y, const float & z);
-
-		vector3 calculatePosition(const int &x, const int &z);
 	public:
+		float getHeight(const float &x, const float &z);
+
 		model *getModel() const { return m_model; }
 
 		vector3 *getPosition() const { return m_position; }
