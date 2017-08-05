@@ -46,9 +46,6 @@ int main()
 		model::newModel()->setFile("res/skybox/skyboxSphere.obj")->create(),
 		2048.0f
 	));
-	terrains::get()->setTerrain(new terrain(
-		vector3(-113.662f, 0.0f, -113.662f), vector3(), 420
-	));
 	waters::get()->setWater(new water(
 		vector3(), vector3()
 	));
