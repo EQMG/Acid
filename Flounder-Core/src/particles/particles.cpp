@@ -25,7 +25,7 @@ namespace flounder
 		}
 
 		// Generate particles.
-		/*for (particlesystem* system : *m_particleSystems)
+		for (particlesystem* system : *m_particleSystems)
 		{
 			particle *created = system->generateParticles();
 
@@ -39,9 +39,12 @@ namespace flounder
 					m_particles->insert(std::pair<particletype*, std::vector<particle*>*>(created->getParticleType(), list));
 				}
 
-				list->push_back(created);
+				if (list != NULL)
+				{
+					list->push_back(created);
+				}
 			}
-		}*/
+		}
 
 		// Update and kill particles.
 		for(std::map<particletype*, std::vector<particle*>*>::iterator iter = m_particles->begin(); iter != m_particles->end(); ++iter)
