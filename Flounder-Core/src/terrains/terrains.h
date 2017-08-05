@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "../framework/framework.h"
 
 #include "terrain.h"
@@ -13,7 +15,7 @@ namespace flounder
 		public imodule
 	{
 	private:
-		terrain *m_terrain;
+		std::vector<terrain*> *m_terrains;
 	public:
 		/// <summary>
 		/// Gets this framework instance.
@@ -36,8 +38,6 @@ namespace flounder
 
 		void update() override;
 
-		terrain *getTerrain() const { return m_terrain; }
-
-		void setTerrain(terrain *terrain) { m_terrain = terrain; }
+		std::vector<terrain*> *getTerrains() const { return m_terrains; }
 	};
 }

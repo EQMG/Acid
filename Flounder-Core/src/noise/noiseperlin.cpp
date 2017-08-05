@@ -26,7 +26,7 @@ namespace flounder
 		while (--i > 0)
 		{
 			k = m_pimp[i];
-			j = static_cast<int>(maths::randomInRange(0l, static_cast<long>(sizeof(long))) & SAMPLE_SIZE);
+			j = static_cast<int>(maths::randomInRange(0l, static_cast<long>(sizeof(long) * 10000)) & SAMPLE_SIZE);
 			m_pimp[i] = m_pimp[j];
 			m_pimp[j] = k;
 		}

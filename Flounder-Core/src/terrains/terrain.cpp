@@ -2,8 +2,9 @@
 
 namespace flounder
 {
-	const double terrain::SQUARE_SIZE = 2.598f;
+	const float terrain::SQUARE_SIZE = 2.598f;
 	const int terrain::VERTEX_COUNT = 176;
+	const float terrain::SIDE_LENGTH = 0.5f * SQUARE_SIZE * static_cast<float>(VERTEX_COUNT - 1);
 
 	terrain::terrain(const vector3 &position, const vector3 &rotation, const int &seed)
 	{
@@ -61,11 +62,15 @@ namespace flounder
 		{
 			for (int row = 0; row < VERTEX_COUNT; row++)
 			{
-				vector3 position = calculatePosition(row, col);
-				vector3 normal = calculateNormal(row, col);
-				colour tint = getBiomeColour(row, col);
+				vector3 vertex = vector3((row * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f), 0.0f, (col * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f));
+				vertex.m_y = getHeight(vertex.m_x, vertex.m_z);
 
-				storeVertex(vertices, position);
+				vector3 normal = calculateNormal(vertex.m_x, vertex.m_z);
+				colour tint = getBiomeColour(vertex.m_x, vertex.m_z); // colour(0.0f, 0.8314f, 0.0f);
+
+				vertices->push_back(vertex.m_x);
+				vertices->push_back(vertex.m_y);
+				vertices->push_back(vertex.m_z);
 
 				normals->push_back(normal.m_x);
 				normals->push_back(normal.m_y);
@@ -99,50 +104,16 @@ namespace flounder
 
 		m_model = model::newModel()->setDirectly(indices, vertices, NULL, normals, colours)->create();
 
-		/*m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
+		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
+		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;
+		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
 		m_aabb->update(*m_position, *m_rotation, 1.0f, m_aabb);
-		std::cout << m_aabb->m_maxExtents->m_x / 2.0f << std::endl;
-		std::cout << m_aabb->m_maxExtents->m_z / 2.0f << std::endl;*/
 
 		delete vertices;
 		delete normals;
 		delete colours;
 		delete indices;
-	}
-
-	void terrain::storeVertex(std::vector<GLfloat> *vertices, const vector3 & vertex)
-	{
-		if (vertex.m_x > m_aabb->m_maxExtents->m_x)
-		{
-			m_aabb->m_maxExtents->m_x = vertex.m_x;
-		}
-		else if (vertex.m_x < m_aabb->m_minExtents->m_x)
-		{
-			m_aabb->m_minExtents->m_x = vertex.m_x;
-		}
-
-		if (vertex.m_y > m_aabb->m_maxExtents->m_y)
-		{
-			m_aabb->m_maxExtents->m_y = vertex.m_y;
-		}
-		else if (vertex.m_y < m_aabb->m_minExtents->m_y)
-		{
-			m_aabb->m_minExtents->m_y = vertex.m_z;
-		}
-
-		if (vertex.m_z > m_aabb->m_maxExtents->m_z)
-		{
-			m_aabb->m_maxExtents->m_z = vertex.m_z;
-		}
-		else if (vertex.m_z < m_aabb->m_minExtents->m_z)
-		{
-			m_aabb->m_minExtents->m_z = vertex.m_z;
-		}
-
-		vertices->push_back(vertex.m_x);
-		vertices->push_back(vertex.m_y);
-		vertices->push_back(vertex.m_z);
 	}
 
 	void terrain::storeQuad1(std::vector<GLint> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
@@ -165,25 +136,29 @@ namespace flounder
 		indices->push_back(mixed ? topLeft : topRight);
 	}
 
-	vector3 terrain::calculateNormal(const int &x, const int &z)
+	vector3 terrain::calculateNormal(const float &x, const float &z)
 	{
-		vector3 positionL = calculatePosition(x - 1, z);
-		vector3 positionR = calculatePosition(x + 1, z);
-		vector3 positionD = calculatePosition(x, z - 1);
-		vector3 positionU = calculatePosition(x, z + 1);
+		vector3 positionL = vector3(x - SQUARE_SIZE, 0.0f, z);
+		positionL.m_y = getHeight(positionL.m_x, positionL.m_z);
+
+		vector3 positionR = vector3(x + SQUARE_SIZE, 0.0f, z);
+		positionR.m_y = getHeight(positionR.m_x, positionR.m_z);
+
+		vector3 positionD = vector3(x, 0.0f, z - SQUARE_SIZE);
+		positionD.m_y = getHeight(positionD.m_x, positionD.m_z);
+
+		vector3 positionU = vector3(x, 0.0f, z + SQUARE_SIZE);
+		positionU.m_y = getHeight(positionU.m_x, positionU.m_z);
 
 		vector3 normal = vector3(positionL.m_y - positionR.m_y, 2.0f, positionD.m_y - positionU.m_y);
 		normal.normalize();
 		return normal;
 	}
 
-	colour terrain::getBiomeColour(const int &x, const int &z)
+	colour terrain::getBiomeColour(const float &x, const float &z)
 	{
-		float worldX = (static_cast<float>(x) * SQUARE_SIZE) + m_position->m_x;
-		float worldZ = (static_cast<float>(z) * SQUARE_SIZE) + m_position->m_z;
-
-		float height = calculatePosition(x, z).m_y;
-		float moisture = getFactorMoisture(worldX, height, worldZ);
+		float height = getHeight(x, z);
+		float moisture = getFactorMoisture(x, height, z);
 
 		if (height <= 0.125f)
 		{
@@ -283,12 +258,12 @@ namespace flounder
 
 	float terrain::getFactorIsland(const float &x, const float &z)
 	{
-		const int worldSize = 1536;
+		const float worldSize = 2000;
 		const float worldIslandInside = 0.8f;
 		const float worldIslandOutside = 1.0f;
 		const float worldIslandParameter = 0.4f;
 
-		float circular = static_cast<float>(sqrt(pow(x, 2) + pow(z, 2))); // The current radius (circular map).
+		float circular = sqrt(pow(x, 2) + pow(z, 2)); // The current radius (circular map).
 		float rectangular = __max(fabs(x), fabs(z)); // The current radius (rectangular map).
 		float reading = ((1.0f - worldIslandParameter) * circular) + (worldIslandParameter * rectangular);
 
@@ -332,30 +307,21 @@ namespace flounder
 		}
 
 		moisture = maths::clamp(moisture, 0.0f, 1.0f);
-
-		return maths::clamp(moisture, 0.0f, 1.0f);
+		return moisture;
 	}
 
-	vector3 terrain::calculatePosition(const int &x, const int &z)
+	float terrain::getHeight(const float & x, const float & z)
 	{
-		float worldX = (static_cast<float>(x) * SQUARE_SIZE) + m_position->m_x;
-		float worldZ = (static_cast<float>(z) * SQUARE_SIZE) + m_position->m_z;
-
 		const float worldNoiseSpread = 400.0f;
 		const float worldNoiseFrequency = 40.0f;
 		const float worldNoiseHeight = 40.0f;
 		const float dayNightCycle = 600.0f;
 		const float dayNightRatio = 0.7f;
-
-		float island = getFactorIsland(worldX, worldZ);
-		float height = island * 1.70f * m_noise->turbulence(
-			worldX / worldNoiseSpread,
-			worldZ / worldNoiseSpread,
-			worldNoiseFrequency
-		);
+		
+		float height = m_noise->turbulence(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
+		height *= getFactorIsland(x, z);
 		height *= worldNoiseHeight;
-
-		return vector3(worldX, height, worldZ);
+		return height;
 	}
 
 	void terrain::setPosition(const vector3 &position)
