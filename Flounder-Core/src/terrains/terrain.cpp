@@ -8,8 +8,6 @@ namespace flounder
 
 	terrain::terrain(const vector3 &position, const vector3 &rotation, const int &seed)
 	{
-		m_noise = new noiseperlin(seed);
-
 		m_model = NULL;
 
 		m_position = new vector3(position);
@@ -24,8 +22,6 @@ namespace flounder
 
 	terrain::~terrain()
 	{
-		delete m_noise;
-
 		delete m_model;
 
 		delete m_position;
@@ -52,21 +48,17 @@ namespace flounder
 		std::vector<GLfloat> *colours = new std::vector<GLfloat>();
 		std::vector<GLint> *indices = new std::vector<GLint>();
 
-		const colour colourDirt = colour(120, 72, 0, true);
-		const colour colourGrass = colour(124, 252, 0, true);
-		const colour colourStone = colour(169, 169, 169, true);
-		const colour colourSnow = colour(235, 235, 245, true);
-		const colour colourSand = colour(194, 178, 128, true);
+		colour tint = colour(0.0f, 0.8314f, 0.0f); // colour(maths::randomInRange(0.0f, 1.0f), maths::randomInRange(0.0f, 1.0f), 0.0f);
 
 		for (int col = 0; col < VERTEX_COUNT; col++)
 		{
 			for (int row = 0; row < VERTEX_COUNT; row++)
 			{
 				vector3 vertex = vector3((row * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f), 0.0f, (col * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f));
-				vertex.m_y = getHeight(vertex.m_x, vertex.m_z);
+				vertex.m_y = getHeight(vertex.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
 
-				vector3 normal = calculateNormal(vertex.m_x, vertex.m_z);
-				colour tint = getBiomeColour(vertex.m_x, vertex.m_z); // colour(0.0f, 0.8314f, 0.0f);
+				vector3 normal = calculateNormal(vertex.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
+				// colour tint = getBiomeColour(vertex.m_x + m_position->m_x, vertex.m_z + m_position->m_z);
 
 				vertices->push_back(vertex.m_x);
 				vertices->push_back(vertex.m_y);
@@ -90,14 +82,15 @@ namespace flounder
 				int topRight = topLeft + 1;
 				int bottomLeft = ((row + 1) * VERTEX_COUNT) + col;
 				int bottomRight = bottomLeft + 1;
+				bool mixed = col % 2 == 0;
 
 				if (row % 2 == 0)
 				{
-					storeQuad1(indices, topLeft, topRight, bottomLeft, bottomRight, col % 2 == 0);
+					storeQuad1(indices, topLeft, topRight, bottomLeft, bottomRight, mixed);
 				}
 				else
 				{
-					storeQuad2(indices, topLeft, topRight, bottomLeft, bottomRight, col % 2 == 0);
+					storeQuad2(indices, topLeft, topRight, bottomLeft, bottomRight, mixed);
 				}
 			}
 		}
@@ -138,19 +131,12 @@ namespace flounder
 
 	vector3 terrain::calculateNormal(const float &x, const float &z)
 	{
-		vector3 positionL = vector3(x - SQUARE_SIZE, 0.0f, z);
-		positionL.m_y = getHeight(positionL.m_x, positionL.m_z);
+		float heightL = getHeight(x - SQUARE_SIZE, z);
+		float heightR = getHeight(x + SQUARE_SIZE, z);
+		float heightD = getHeight(x, z - SQUARE_SIZE);
+		float heightU = getHeight(x, z + SQUARE_SIZE);
 
-		vector3 positionR = vector3(x + SQUARE_SIZE, 0.0f, z);
-		positionR.m_y = getHeight(positionR.m_x, positionR.m_z);
-
-		vector3 positionD = vector3(x, 0.0f, z - SQUARE_SIZE);
-		positionD.m_y = getHeight(positionD.m_x, positionD.m_z);
-
-		vector3 positionU = vector3(x, 0.0f, z + SQUARE_SIZE);
-		positionU.m_y = getHeight(positionU.m_x, positionU.m_z);
-
-		vector3 normal = vector3(positionL.m_y - positionR.m_y, 2.0f, positionD.m_y - positionU.m_y);
+		vector3 normal = vector3(heightL - heightR, 2.0f, heightD - heightU);
 		normal.normalize();
 		return normal;
 	}
@@ -258,7 +244,7 @@ namespace flounder
 
 	float terrain::getFactorIsland(const float &x, const float &z)
 	{
-		const float worldSize = 2000;
+		const float worldSize = SIDE_LENGTH * 6;
 		const float worldIslandInside = 0.8f;
 		const float worldIslandOutside = 1.0f;
 		const float worldIslandParameter = 0.4f;
@@ -303,7 +289,7 @@ namespace flounder
 		}
 		else
 		{
-			moisture += m_noise->turbulence(x / 150.0f, z / 150.0f, 16.0f);
+			moisture += worlds::get()->getNoise()->GetNoise(x / 1.5f, z / 1.5f); // TODO
 		}
 
 		moisture = maths::clamp(moisture, 0.0f, 1.0f);
@@ -312,13 +298,13 @@ namespace flounder
 
 	float terrain::getHeight(const float & x, const float & z)
 	{
-		const float worldNoiseSpread = 400.0f;
+		const float worldNoiseSpread = 1.0f;
 		const float worldNoiseFrequency = 40.0f;
 		const float worldNoiseHeight = 40.0f;
 		const float dayNightCycle = 600.0f;
 		const float dayNightRatio = 0.7f;
 		
-		float height = m_noise->turbulence(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
+		float height = worlds::get()->getNoise()->GetNoise(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
 		height *= getFactorIsland(x, z);
 		height *= worldNoiseHeight;
 		return height;

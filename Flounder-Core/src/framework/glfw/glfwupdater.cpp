@@ -58,11 +58,11 @@ namespace flounder
 		m_standards = new standards();
 		m_tasks = new tasks();
 		m_uis = new uis();
+		m_worlds = new worlds();
 		m_particles = new particles();
 		m_skyboxes = new skyboxes();
 		m_terrains = new terrains();
 		m_waters = new waters();
-		m_worlds = new worlds();
 	}
 
 	void flounder::glfwupdater::update()

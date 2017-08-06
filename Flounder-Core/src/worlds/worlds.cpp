@@ -5,6 +5,13 @@ namespace flounder
 	worlds::worlds() :
 		imodule()
 	{
+		m_noise = new noisefast(420);
+		m_noise->setNoiseType(noisefast::PerlinFractal);
+		m_noise->setInterp(noisefast::Quintic);
+		m_noise->setFractalOctaves(3);
+		m_noise->setFractalLacunarity(1.8f);
+		m_noise->setFractalGain(0.6f);
+
 		m_driverDay = new driverlinear(0.0f, 1.0f, 100.0f);
 		m_factorDay = 0.0f;
 
@@ -14,6 +21,8 @@ namespace flounder
 
 	worlds::~worlds()
 	{
+		delete m_noise;
+
 		delete m_driverDay;
 
 		delete m_sunPosition;
@@ -26,7 +35,7 @@ namespace flounder
 		skybox *skybox = skyboxes::get()->getSkybox();
 		fog *fog = skyboxes::get()->getFog();
 		vector3 *lightPosition = shadows::get()->getLightPosition();
-		m_factorDay = m_driverDay->update(delta);
+		m_factorDay = 0.25f; //  m_driverDay->update(delta);
 
 		skybox->getRotation()->set(360.0f * m_factorDay, 0.0f, 0.0f);
 		matrix4x4::rotate(vector3(0.2f, 0.0f, 0.5f), *skybox->getRotation(), lightPosition);
