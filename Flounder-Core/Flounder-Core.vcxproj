@@ -56,6 +56,7 @@
     <ClInclude Include="src\framework\imodule.h" />
     <ClInclude Include="src\framework\iupdater.h" />
     <ClInclude Include="src\inputs\axisbutton.h" />
+    <ClInclude Include="src\noise\noisefast.h" />
     <ClInclude Include="src\particles\particle.h" />
     <ClInclude Include="src\particles\particles.h" />
     <ClInclude Include="src\particles\particlesystem.h" />
@@ -120,9 +121,6 @@
     <ClInclude Include="src\maths\vector4.h" />
     <ClInclude Include="src\models\model.h" />
     <ClInclude Include="src\models\vertexdata.h" />
-    <ClInclude Include="src\noise\noiseclassic.h" />
-    <ClInclude Include="src\noise\noiseperlin.h" />
-    <ClInclude Include="src\noise\noisesimplex.h" />
     <ClInclude Include="src\physics\aabb.h" />
     <ClInclude Include="src\physics\frustum.h" />
     <ClInclude Include="src\physics\icollider.h" />
@@ -211,6 +209,7 @@
     <ClCompile Include="src\framework\glfw\glfwupdater.cpp" />
     <ClCompile Include="src\guis\gui.cpp" />
     <ClCompile Include="src\inputs\axisbutton.cpp" />
+    <ClCompile Include="src\noise\noisefast.cpp" />
     <ClCompile Include="src\particles\particle.cpp" />
     <ClCompile Include="src\particles\particles.cpp" />
     <ClCompile Include="src\particles\particlesystem.cpp" />
@@ -264,9 +263,6 @@
     <ClCompile Include="src\maths\vector4.cpp" />
     <ClCompile Include="src\models\model.cpp" />
     <ClCompile Include="src\models\vertexdata.cpp" />
-    <ClCompile Include="src\noise\noiseclassic.cpp" />
-    <ClCompile Include="src\noise\noiseperlin.cpp" />
-    <ClCompile Include="src\noise\noisesimplex.cpp" />
     <ClCompile Include="src\physics\aabb.cpp" />
     <ClCompile Include="src\physics\frustum.cpp" />
     <ClCompile Include="src\physics\ray.cpp" />

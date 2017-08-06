@@ -6,7 +6,7 @@
 #include "../skyboxes/skyboxes.h"
 #include "../shadows/shadows.h"
 #include "../visual/driverlinear.h"
-#include "../noise/noiseperlin.h"
+#include "../noise/noisefast.h"
 
 namespace flounder
 {
@@ -17,7 +17,7 @@ namespace flounder
 		public imodule
 	{
 	private:
-		noiseperlin *m_noise;
+		noisefast *m_noise;
 
 		driverlinear *m_driverDay;
 		float m_factorDay;
@@ -46,9 +46,7 @@ namespace flounder
 
 		void update() override;
 
-		noiseperlin *getNoise() const { return m_noise; }
-
-		void setNoise(noiseperlin *noise) { m_noise = noise; }
+		noisefast *getNoise() const { return m_noise; }
 
 		float getDayFactor();
 

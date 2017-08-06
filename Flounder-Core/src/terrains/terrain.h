@@ -3,12 +3,12 @@
 #include <vector>
 #include <GL/glew.h>
 
-#include "../loaders/loaders.h"
 #include "../maths/vector3.h"
 #include "../maths/matrix4x4.h"
-#include "../noise/noiseperlin.h"
 #include "../physics/aabb.h"
 #include "../models/model.h"
+#include "../worlds/worlds.h"
+
 #include "biome.h"
 
 namespace flounder
@@ -16,8 +16,6 @@ namespace flounder
 	class terrain
 	{
 	private:
-		noiseperlin *m_noise;
-
 		model *m_model;
 
 		vector3 *m_position;
