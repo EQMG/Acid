@@ -17,7 +17,7 @@ namespace flounder
 		public imodule
 	{
 	private:
-		vector3 *m_lightPosition;
+		vector3 *m_lightDirection;
 		float m_brightnessBoost;
 
 		int m_shadowSize;
@@ -31,14 +31,7 @@ namespace flounder
 
 		float m_shadowFactor;
 
-		matrix4x4 *m_projectionMatrix;
-		matrix4x4 *m_lightViewMatrix;
-		matrix4x4 *m_projectionViewMatrix;
-		matrix4x4 *m_shadowMapSpaceMatrix;
-		matrix4x4 *m_offset;
-
 		shadowbox *m_shadowBox;
-		aabb *m_shadowAabb;
 	public:
 		/// <summary>
 		/// Gets this framework instance.
@@ -60,7 +53,6 @@ namespace flounder
 		~shadows();
 
 		void update() override;
-
 	private:
 		/// <summary>
 		/// Creates the orthographic projection matrix.
@@ -76,16 +68,10 @@ namespace flounder
 		/// <param name="direction"> The light direct. </param>
 		/// <param name="position"> The center of the shadow box. </param>
 		void updateLightViewMatrix(vector3 *direction, vector3 *position);
-
-		/// <summary>
-		/// Create the offset for part of the conversion to shadow map space.
-		/// </summary>
-		/// <returns> The offset as a matrix. </returns>
-		static matrix4x4 *createOffset();
 	public:
-		inline vector3 *getLightPosition() const { return m_lightPosition; }
+		inline vector3 *getLightDirection() const { return m_lightDirection; }
 
-		inline void setLightPosition(const vector3 &lightPosition) const { m_lightPosition->set(lightPosition); }
+		inline void setLightDirection(const vector3 &lightDirection) const { m_lightDirection->set(lightDirection); }
 
 		inline float getBrightnessBoost() const { return m_brightnessBoost; }
 
@@ -125,21 +111,5 @@ namespace flounder
 
 		/// <returns> The shadow box, so that it can be used by other class to test if engine.entities are inside the box. </returns>
 		shadowbox *getShadowBox() const { return m_shadowBox; }
-
-		aabb *getShadowAabb() const { return m_shadowAabb; }
-
-		matrix4x4 *getProjectionViewMatrix() const { return m_projectionViewMatrix; }
-
-		/// <summary>
-		/// This biased projection-view matrix is used to convert fragments into "shadow map space" when rendering the main render pass.
-		/// </summary>
-		/// <returns> The to-shadow-map-space matrix. </returns>
-		matrix4x4 *getToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
-
-		/// <summary>
-		/// Gets the light's "view" matrix
-		/// </summary>
-		/// <returns> The light's "view" matrix. </returns>
-		matrix4x4 *getLightSpaceTransform() const { return m_lightViewMatrix; }
 	};
 }

@@ -1,4 +1,5 @@
 #include "instance.h"
+#include "entities/components/componentalpha.h"
 
 instance::instance()
 {
@@ -15,8 +16,7 @@ instance::instance()
 		object->setGain(0.1f);
 	}
 
-
-	std::vector<particletype*> *types = new std::vector<particletype*>();
+	/*std::vector<particletype*> *types = new std::vector<particletype*>();
 	types->push_back(new particletype("blue", texture::newTexture()->setFile("res/particles/blueParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));
 	types->push_back(new particletype("green", texture::newTexture()->setFile("res/particles/greenParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));
 	types->push_back(new particletype("purple", texture::newTexture()->setFile("res/particles/purpleParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));
@@ -24,7 +24,12 @@ instance::instance()
 	types->push_back(new particletype("yellow", texture::newTexture()->setFile("res/particles/yellowParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));
 	m_systemTest = new particlesystem(types, new spawncircle(30.0f, vector3(0.0f, 1.0f, 0.0f)), 1000, 1.0f, -0.1f);
 	m_systemTest->setSystemCentre(vector3(0.0f, 0.0f, 0.0f));
-	particles::get()->addSystem(m_systemTest);
+	particles::get()->addSystem(m_systemTest);*/
+	
+	flounder::entity *e = new flounder::entity(NULL, vector3(), vector3());
+	e->addComponent(new componentalpha(1.0f));
+	//componentalpha *ca = e->getComponent<componentalpha*>();
+	//ca->setAlpha(0.5f);
 }
 
 instance::~instance()

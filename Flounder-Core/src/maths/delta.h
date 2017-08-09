@@ -12,10 +12,10 @@ namespace flounder
 	class delta
 	{
 	private:
-		double m_currentFrameTime;
-		double m_lastFrameTime;
-		double m_change;
-		double m_time;
+		float m_currentFrameTime;
+		float m_lastFrameTime;
+		float m_change;
+		float m_time;
 	public:
 		/// <summary>
 		/// Creates a new change handler.
@@ -32,8 +32,8 @@ namespace flounder
 		/// </summary>
 		void update();
 
-		double getChange() const { return m_change; }
+		float getChange() const { return m_change; }
 
-		double getTime() const { return m_time; }
+		float getTime() const { return m_time; }
 	};
 }

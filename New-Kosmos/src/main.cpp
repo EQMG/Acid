@@ -57,7 +57,6 @@ int main()
 	delete m_framework;
 
 	// Pauses the console.
-	std::cout << "Press enter to close the console!" << std::endl;
 	std::cin.get();
 	return 0;
 }

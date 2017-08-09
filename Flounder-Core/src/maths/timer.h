@@ -10,14 +10,14 @@ namespace flounder
 	class timer
 	{
 	private:
-		double m_startTime;
-		double m_interval;
+		float m_startTime;
+		float m_interval;
 	public:
 		/// <summary>
 		/// Creates a new timer.
 		/// </summary>
 		/// <param name="interval"> The time between events (seconds). </param>
-		timer(const double &interval);
+		timer(const float &interval);
 
 		/// <summary>
 		/// Deconstructor for the timer.
@@ -39,12 +39,12 @@ namespace flounder
 		/// Gets what the interval is. (Seconds).
 		/// </summary>
 		/// <returns> The timers current interval. </returns>
-		double getInterval() const;
+		float getInterval() const;
 
 		/// <summary>
 		/// Gets the timers interval. (Seconds, Resets timer).
 		/// </summary>
 		/// <param name="interval"> The new timer interval. </param>
-		void setInterval(const double &interval);
+		void setInterval(const float &interval);
 	};
 }
