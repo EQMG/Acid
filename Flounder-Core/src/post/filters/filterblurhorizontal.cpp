@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filterblurhorizontal::filterblurhorizontal(const float &sizeScalar) :
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 		ipostfilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontalFragment.web.glsl", fbo::newFBO()->fitToScreen(sizeScalar)->create())
 #else
 		ipostfilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontalFragment.glsl", fbo::newFBO()->fitToScreen(sizeScalar)->create())
@@ -16,7 +16,7 @@ namespace flounder
 	}
 
 	filterblurhorizontal::filterblurhorizontal(const int &width, const int &height) :
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 		ipostfilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontalFragment.web.glsl", fbo::newFBO()->setSize(width, height)->create())
 #else
 		ipostfilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontalFragment.glsl", fbo::newFBO()->setSize(width, height)->create())

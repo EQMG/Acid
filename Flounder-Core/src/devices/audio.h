@@ -4,11 +4,7 @@
 #include <vector>
 #include <map>
 
-#ifdef FLOUNDER_PLATFORM_WEB
-#include <emscripten/emscripten.h>
-#else
-#endif
-
+#include "../platform.h"
 #include "../camera/camera.h"
 #include "../framework/framework.h"
 #include "../maths/vector3.h"
@@ -16,7 +12,7 @@
 
 #include "display.h"
 
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 extern "C" void audioAdd(const char* name, const char* filename);
 extern "C" void audioPlay(const char* name);
 extern "C" void audioPause(const char* name);
@@ -36,9 +32,6 @@ namespace flounder
 	{
 	private:
 		friend class sound;
-
-#ifndef FLOUNDER_PLATFORM_WEB
-#endif
 
 		static std::vector<sound*> m_sounds;
 	public:

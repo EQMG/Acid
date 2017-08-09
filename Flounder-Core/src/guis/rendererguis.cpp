@@ -5,7 +5,7 @@ namespace flounder
 	rendererguis::rendererguis() :
 		irenderer()
 	{
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 		m_shader = shader::newShader()->addName("guis")
 			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/guis/guiVertex.web.glsl", loadtype::FILE))
 			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/guis/guiFragment.web.glsl", loadtype::FILE))

@@ -135,7 +135,7 @@ namespace flounder
 		glfwMakeContextCurrent(m_window);
 
 		// Enables VSync if requested.
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 		glfwSwapInterval(m_vsync ? 1 : 0);
 #endif
 
@@ -152,7 +152,7 @@ namespace flounder
 		}
 
 		// Sets the displays callbacks.
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 		// emscripten_set_resize_callback(nullptr, this, 1, emUICallback); // TODO
 #endif
 		glfwSetWindowCloseCallback(m_window, callbackClose);
@@ -161,13 +161,14 @@ namespace flounder
 		glfwSetWindowSizeCallback(m_window, callbackSize);
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_GL
 		// Initialize the GLEW library.
 		if (glewInit() != GLEW_OK)
 		{
 			std::cout << "Could not init GLEW!" << std::endl;
 			framework::get()->requestClose(true);
 		}
+#elif FLOUNDER_API_VULKAN
 #endif
 	}
 
@@ -190,7 +191,7 @@ namespace flounder
 		// Polls for window events. The key callback will only be invoked during this call.
 		glfwPollEvents();
 
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 		glfwSwapInterval(m_vsync ? 1 : 0);
 		glfwWindowHint(GLFW_SAMPLES, m_samples);
 #endif
@@ -201,9 +202,7 @@ namespace flounder
 
 	void display::screenshot()
 	{
-#ifndef FLOUNDER_PLATFORM_WEB
 		// TODO
-#endif
 	}
 
 	void display::setWindowSize(const int &width, const int &height)
@@ -227,7 +226,7 @@ namespace flounder
 
 		if (!m_icon.empty())
 		{
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 			int width = 0;
 			int height = 0;
 			int components = 0;
@@ -261,7 +260,7 @@ namespace flounder
 
 		m_fullscreen = fullscreen;
 
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
 

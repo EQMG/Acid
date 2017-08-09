@@ -3,7 +3,7 @@
 #include "imodule.h"
 #include "iupdater.h"
 
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 #include <functional>
 
 #include <emscripten/emscripten.h>

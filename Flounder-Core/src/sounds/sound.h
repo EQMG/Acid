@@ -6,11 +6,11 @@
 
 #include "../helpers/helperstring.h"
 
-#ifdef FLOUNDER_PLATFORM_WEB
-#include <emscripten/emscripten.h>
-#else
+#ifdef FLOUNDER_API_AL
 //#include <AL/al.h>
 //#include <AL/alc.h>
+#elif FLOUNDER_API_WEB
+#include <emscripten/emscripten.h>
 #endif
 
 namespace flounder
@@ -24,7 +24,7 @@ namespace flounder
 		std::string m_filename;
 		unsigned int m_count;
 
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_AL
 		unsigned int m_buffer;
 		unsigned int m_source;
 #endif

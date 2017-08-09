@@ -156,7 +156,7 @@ namespace flounder
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 			if (m_anisotropic)
 			{
 				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, 0);
@@ -180,7 +180,7 @@ namespace flounder
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		}
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 		else if (m_clampToBorder)
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);

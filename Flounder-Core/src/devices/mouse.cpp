@@ -93,7 +93,7 @@ namespace flounder
 
 		if (!m_customMouse.empty())
 		{
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 			int width = 0;
 			int height = 0;
 			int components = 0;
