@@ -2,58 +2,58 @@
 
 namespace flounder
 {
-	template<typename t>
+	template<class t>
 	structurebasic<t>::structurebasic() :
 		ispatialstructure<t>()
 	{
-		m_objects = new std::vector<t*>();
+		m_objects = new std::vector<t>();
 	}
 
-	template<typename t>
+	template<class t>
 	structurebasic<t>::~structurebasic()
 	{
 		delete m_objects;
 	}
 
-	template<typename t>
-	void structurebasic<t>::add(t *object)
+	template<class t>
+	void structurebasic<t>::add(t object)
 	{
 		m_objects->push_back(object);
 	}
 
-	template<typename t>
-	void structurebasic<t>::remove(t *object)
+	template<class t>
+	void structurebasic<t>::remove(t object)
 	{
-		/*for (std::vector<t*>::iterator it = m_objects->begin(); it != m_objects->end(); ++it)
+		for (std::vector<t>::iterator it = m_objects->begin(); it != m_objects->end(); ++it)
 		{
 			if (*it == object)
 			{
 				m_objects->erase(it);
 				return;
 			}
-		}*/
+		}
 	}
 
-	template<typename t>
+	template<class t>
 	void structurebasic<t>::clear()
 	{
 		m_objects->clear();
 	}
 
-	template<typename t>
+	template<class t>
 	int structurebasic<t>::getSize()
 	{
 		return m_objects->size();
 	}
 
-	template<typename t>
-	std::vector<t *> structurebasic<t>::getAll()
+	template<class t>
+	std::vector<t> *structurebasic<t>::getAll()
 	{
 		return m_objects;
 	}
 
-	template<typename t>
-	std::vector<t*> structurebasic<t>::getAll(std::vector<t*> *result)
+	template<class t>
+	std::vector<t> *structurebasic<t>::getAll(std::vector<t> *result)
 	{
 		for (t value : m_objects)
 		{
@@ -61,8 +61,8 @@ namespace flounder
 		}
 	}
 
-	template<typename t>
-	std::vector<t*> structurebasic<t>::queryInFrustum(frustum *range, std::vector<t *> *result)
+	template<class t>
+	std::vector<t> *structurebasic<t>::queryInFrustum(frustum *range, std::vector<t> *result)
 	{
 		for (t value : m_objects)
 		{
@@ -75,8 +75,8 @@ namespace flounder
 		}
 	}
 
-	template<typename t>
-	std::vector<t*> structurebasic<t>::queryInBounding(icollider *range, std::vector<t *> *result)
+	template<class t>
+	std::vector<t> *structurebasic<t>::queryInBounding(icollider *range, std::vector<t> *result)
 	{
 		for (t value : m_objects)
 		{
@@ -89,7 +89,7 @@ namespace flounder
 		}
 	}
 
-	template<typename t>
+	template<class t>
 	bool structurebasic<t>::contains(ispatialobject *object)
 	{
 		return std::find(m_objects->begin(), m_objects->end(), object) != m_objects->end();

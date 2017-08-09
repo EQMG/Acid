@@ -29,6 +29,8 @@ namespace flounder
 
 	void callbackSize(GLFWwindow *window, int width, int height)
 	{
+		display::get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+
 		if (display::get()->m_fullscreen)
 		{
 			display::get()->m_fullscreenWidth = width;
@@ -43,7 +45,7 @@ namespace flounder
 
 	void callbackFrame(GLFWwindow *window, int width, int height)
 	{
-		display::get()->m_aspectRatio = width / height;
+		display::get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 		glViewport(0, 0, width, height);
 	}
 
@@ -57,6 +59,7 @@ namespace flounder
 		m_windowHeight = 720;
 		m_fullscreenWidth = 0;
 		m_fullscreenHeight = 0;
+		m_aspectRatio = 1.5f;
 
 		m_title = "Flounder C++";
 		m_icon = "";
@@ -107,7 +110,7 @@ namespace flounder
 		{
 			m_fullscreenWidth = videoMode->width;
 			m_fullscreenHeight = videoMode->height;
-			m_aspectRatio = videoMode->width / videoMode->height;
+			m_aspectRatio = static_cast<float>(videoMode->width) / static_cast<float>(videoMode->height);
 		}
 
 		// Create a windowed mode window and its OpenGL context.
@@ -207,6 +210,7 @@ namespace flounder
 	{
 		m_windowWidth = width;
 		m_windowHeight = height;
+		m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 		glfwSetWindowSize(m_window, width, height);
 	}
 

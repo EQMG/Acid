@@ -48,7 +48,7 @@ namespace flounder
 		std::vector<GLfloat> *colours = new std::vector<GLfloat>();
 		std::vector<GLint> *indices = new std::vector<GLint>();
 
-		colour tint = colour(0.0f, 0.8314f, 0.0f); // colour(maths::randomInRange(0.0f, 1.0f), maths::randomInRange(0.0f, 1.0f), 0.0f);
+		colour tint = colour(maths::randomInRange(0.0f, 1.0f), maths::randomInRange(0.0f, 1.0f), 0.0f); // colour(0.0f, 0.8314f, 0.0f);
 
 		for (int col = 0; col < VERTEX_COUNT; col++)
 		{
@@ -289,7 +289,7 @@ namespace flounder
 		}
 		else
 		{
-			moisture += worlds::get()->getNoise()->GetNoise(x / 1.5f, z / 1.5f); // TODO
+			moisture += worlds::get()->getNoise()->getNoise(x / 1.5f, z / 1.5f); // TODO
 		}
 
 		moisture = maths::clamp(moisture, 0.0f, 1.0f);
@@ -304,7 +304,7 @@ namespace flounder
 		const float dayNightCycle = 600.0f;
 		const float dayNightRatio = 0.7f;
 		
-		float height = worlds::get()->getNoise()->GetNoise(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
+		float height = worlds::get()->getNoise()->getNoise(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
 		height *= getFactorIsland(x, z);
 		height *= worldNoiseHeight;
 		return height;

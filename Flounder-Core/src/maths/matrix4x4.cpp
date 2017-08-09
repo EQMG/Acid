@@ -282,16 +282,19 @@ namespace flounder
 			float t01 = -determinant3x3(source.m_10, source.m_12, source.m_13, source.m_20, source.m_22, source.m_23, source.m_30, source.m_32, source.m_33);
 			float t02 = determinant3x3(source.m_10, source.m_11, source.m_13, source.m_20, source.m_21, source.m_23, source.m_30, source.m_31, source.m_33);
 			float t03 = -determinant3x3(source.m_10, source.m_11, source.m_12, source.m_20, source.m_21, source.m_22, source.m_30, source.m_31, source.m_32);
+			
 			// Second row.
 			float t10 = -determinant3x3(source.m_01, source.m_02, source.m_03, source.m_21, source.m_22, source.m_23, source.m_31, source.m_32, source.m_33);
 			float t11 = determinant3x3(source.m_00, source.m_02, source.m_03, source.m_20, source.m_22, source.m_23, source.m_30, source.m_32, source.m_33);
 			float t12 = -determinant3x3(source.m_00, source.m_01, source.m_03, source.m_20, source.m_21, source.m_23, source.m_30, source.m_31, source.m_33);
 			float t13 = determinant3x3(source.m_00, source.m_01, source.m_02, source.m_20, source.m_21, source.m_22, source.m_30, source.m_31, source.m_32);
+			
 			// Third row.
 			float t20 = determinant3x3(source.m_01, source.m_02, source.m_03, source.m_11, source.m_12, source.m_13, source.m_31, source.m_32, source.m_33);
 			float t21 = -determinant3x3(source.m_00, source.m_02, source.m_03, source.m_10, source.m_12, source.m_13, source.m_30, source.m_32, source.m_33);
 			float t22 = determinant3x3(source.m_00, source.m_01, source.m_03, source.m_10, source.m_11, source.m_13, source.m_30, source.m_31, source.m_33);
 			float t23 = -determinant3x3(source.m_00, source.m_01, source.m_02, source.m_10, source.m_11, source.m_12, source.m_30, source.m_31, source.m_32);
+			
 			// Fourth row.
 			float t30 = -determinant3x3(source.m_01, source.m_02, source.m_03, source.m_11, source.m_12, source.m_13, source.m_21, source.m_22, source.m_23);
 			float t31 = determinant3x3(source.m_00, source.m_02, source.m_03, source.m_10, source.m_12, source.m_13, source.m_20, source.m_22, source.m_23);
@@ -627,13 +630,19 @@ namespace flounder
 		}
 
 		destination->setIdentity();
-		vector3 point = vector3(position);
-		point.negate();
-		matrix4x4::rotate(*destination, vector3(1.0f, 0.0f, 0.0f), __radians(rotation.m_x), destination);
-		matrix4x4::rotate(*destination, vector3(0.0f, 1.0f, 0.0f), __radians(-rotation.m_y), destination);
-		matrix4x4::rotate(*destination, vector3(0.0f, 0.0f, 1.0f), __radians(rotation.m_z), destination);
-		matrix4x4::translate(*destination, point, destination);
-		point.negate();
+		
+		if (!rotation.isZero())
+		{
+			matrix4x4::rotate(*destination, vector3(1.0f, 0.0f, 0.0f), __radians(rotation.m_x), destination);
+			matrix4x4::rotate(*destination, vector3(0.0f, 1.0f, 0.0f), __radians(-rotation.m_y), destination);
+			matrix4x4::rotate(*destination, vector3(0.0f, 0.0f, 1.0f), __radians(rotation.m_z), destination);
+		}
+		
+		if (!position.isZero())
+		{
+			matrix4x4::translate(*destination, *vector3(position).negate(), destination);
+		}
+
 		return destination;
 	}
 

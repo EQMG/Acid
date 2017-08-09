@@ -77,37 +77,37 @@ namespace flounder
 		/// Gets the added/removed time for the framework (seconds).
 		/// </summary>
 		/// <returns> The time offset. </returns>
-		inline double getTimeOffset() const { return m_updater->getTimeOffset(); }
+		inline float getTimeOffset() const { return m_updater->getTimeOffset(); }
 
 		/// <summary>
 		/// Sets the time offset for the framework (seconds).
 		/// </summary>
 		/// <param name="timeOffset"> The new time offset. </param>
-		inline void setTimeOffset(const double &timeOffset) const { m_updater->setTimeOffset(timeOffset); }
+		inline void setTimeOffset(const float &timeOffset) const { m_updater->setTimeOffset(timeOffset); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		inline double getDelta() const { return m_updater->getDelta(); }
+		inline float getDelta() const { return m_updater->getDelta(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		inline double getDeltaRender() const { return m_updater->getDeltaRender(); }
+		inline float getDeltaRender() const { return m_updater->getDeltaRender(); }
 
 		/// <summary>
 		/// Gets the current time of the framework instance.
 		/// </summary>
 		/// <returns> The current framework time in seconds. </returns>
-		inline double getTimeSec() const { return m_updater->getTimeSec(); }
+		inline float getTimeSec() const { return m_updater->getTimeSec(); }
 
 		/// <summary>
 		/// Gets the current time of the framework instance.
 		/// </summary>
 		/// <returns> The current framework time in milliseconds. </returns>
-		inline double getTimeMs() const { return m_updater->getTimeMs(); }
+		inline float getTimeMs() const { return m_updater->getTimeMs(); }
 
 		/// <summary>
 		/// Gets if the framework has been initialized.

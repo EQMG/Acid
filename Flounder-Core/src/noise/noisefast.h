@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <random>
 
+#include "../maths/maths.h"
+
 // Hashing
 #define X_PRIME 1619
 #define Y_PRIME 31337
@@ -73,12 +75,6 @@ private:
 
 	static const float VAL_LUT[];
 
-	static const float CELL_2D_X[];
-	static const float CELL_2D_Y[];
-	static const float CELL_3D_X[];
-	static const float CELL_3D_Y[];
-	static const float CELL_3D_Z[];
-
 	static const float F3;
 	static const float G3;
 
@@ -92,9 +88,15 @@ private:
 	static const float CUBIC_2D_BOUNDING;
 	static const float CUBIC_3D_BOUNDING;
 
+	static const float CELL_2D_X[];
+	static const float CELL_2D_Y[];
+	static const float CELL_3D_X[];
+	static const float CELL_3D_Y[];
+	static const float CELL_3D_Z[];
+
 	int m_seed;
-	unsigned char m_perm[512];
-	unsigned char m_perm12[512];
+	unsigned char *m_perm;
+	unsigned char *m_perm12;
 
 	float m_frequency;
 	typeinterp m_interp;
@@ -104,7 +106,6 @@ private:
 	float m_lacunarity;
 	float m_gain;
 	typefractal m_fractalType;
-
 	float m_fractalBounding;
 
 	typecellularfunction m_cellularDistanceFunction;
@@ -228,139 +229,139 @@ public:
 	void setGradientPerturbAmp(float gradientPerturbAmp) { m_gradientPerturbAmp = gradientPerturbAmp; }
 
 	//2D
-	float GetValue(float x, float y) const;
-	float GetValueFractal(float x, float y) const;
+	float getValue(float x, float y) const;
+	float getValueFractal(float x, float y) const;
 
-	float GetPerlin(float x, float y) const;
-	float GetPerlinFractal(float x, float y) const;
+	float getPerlin(float x, float y) const;
+	float getPerlinFractal(float x, float y) const;
 
-	float GetSimplex(float x, float y) const;
-	float GetSimplexFractal(float x, float y) const;
+	float getSimplex(float x, float y) const;
+	float getSimplexFractal(float x, float y) const;
 
-	float GetCellular(float x, float y) const;
+	float getCellular(float x, float y) const;
 
-	float GetWhiteNoise(float x, float y) const;
-	float GetWhiteNoiseInt(int x, int y) const;
+	float getWhiteNoise(float x, float y) const;
+	float getWhiteNoiseInt(int x, int y) const;
 
-	float GetCubic(float x, float y) const;
-	float GetCubicFractal(float x, float y) const;
+	float getCubic(float x, float y) const;
+	float getCubicFractal(float x, float y) const;
 
-	float GetNoise(float x, float y) const;
+	float getNoise(float x, float y) const;
 
-	void GradientPerturb(float &x, float &y) const;
-	void GradientPerturbFractal(float &x, float &y) const;
+	void gradientPerturb(float &x, float &y) const;
+	void gradientPerturbFractal(float &x, float &y) const;
 
 	//3D
-	float GetValue(float x, float y, float z) const;
-	float GetValueFractal(float x, float y, float z) const;
+	float getValue(float x, float y, float z) const;
+	float getValueFractal(float x, float y, float z) const;
 
-	float GetPerlin(float x, float y, float z) const;
-	float GetPerlinFractal(float x, float y, float z) const;
+	float getPerlin(float x, float y, float z) const;
+	float getPerlinFractal(float x, float y, float z) const;
 
-	float GetSimplex(float x, float y, float z) const;
-	float GetSimplexFractal(float x, float y, float z) const;
+	float getSimplex(float x, float y, float z) const;
+	float getSimplexFractal(float x, float y, float z) const;
 
-	float GetCellular(float x, float y, float z) const;
+	float getCellular(float x, float y, float z) const;
 
-	float GetWhiteNoise(float x, float y, float z) const;
-	float GetWhiteNoiseInt(int x, int y, int z) const;
+	float getWhiteNoise(float x, float y, float z) const;
+	float getWhiteNoiseInt(int x, int y, int z) const;
 
-	float GetCubic(float x, float y, float z) const;
-	float GetCubicFractal(float x, float y, float z) const;
+	float getCubic(float x, float y, float z) const;
+	float getCubicFractal(float x, float y, float z) const;
 
-	float GetNoise(float x, float y, float z) const;
+	float getNoise(float x, float y, float z) const;
 
-	void GradientPerturb(float &x, float &y, float &z) const;
-	void GradientPerturbFractal(float &x, float &y, float &z) const;
+	void gradientPerturb(float &x, float &y, float &z) const;
+	void gradientPerturbFractal(float &x, float &y, float &z) const;
 
 	//4D
-	float GetSimplex(float x, float y, float z, float w) const;
+	float getSimplex(float x, float y, float z, float w) const;
 
-	float GetWhiteNoise(float x, float y, float z, float w) const;
-	float GetWhiteNoiseInt(int x, int y, int z, int w) const;
+	float getWhiteNoise(float x, float y, float z, float w) const;
+	float getWhiteNoiseInt(int x, int y, int z, int w) const;
 private:
 	void calculateFractalBounding();
 
 	// Helpers
-	inline static int FastFloor(float f);
-	inline static int FastRound(float f);
-	inline static int FastAbs(int i);
-	inline static float FastAbs(float f);
-	inline static float Lerp(float a, float b, float t);
-	inline static float InterpHermiteFunc(float t);
-	inline static float InterpQuinticFunc(float t);
-	inline static float CubicLerp(float a, float b, float c, float d, float t);
+	inline static int fastFloor(const float &f);
+	inline static int fastRound(const float &f);
 
-	inline unsigned char Index2D_12(unsigned char offset, int x, int y) const;
-	inline unsigned char Index3D_12(unsigned char offset, int x, int y, int z) const;
-	inline unsigned char Index4D_32(unsigned char offset, int x, int y, int z, int w) const;
-	inline unsigned char Index2D_256(unsigned char offset, int x, int y) const;
-	inline unsigned char Index3D_256(unsigned char offset, int x, int y, int z) const;
-	inline unsigned char Index4D_256(unsigned char offset, int x, int y, int z, int w) const;
+	inline static float lerp(const float &a, const float &b, const float &t);
+	inline static float interpHermite(const float &t);
+	inline static float interpQuintic(const float &t);
+	inline static float cubicLerp(const float &a, const float &b, const float &c, const float &d, const float &t);
 
-	static float ValCoord2D(int seed, int x, int y);
-	static float ValCoord3D(int seed, int x, int y, int z);
-	static float ValCoord4D(int seed, int x, int y, int z, int w);
+	inline unsigned char index2D_12(const unsigned char &offset, const int &x, const int &y) const;
+	inline unsigned char index3D_12(const unsigned char &offset, const int &x, const int &y, const int &z) const;
+	inline unsigned char index4D_32(const unsigned char &offset, const int &x, const int &y, const int &z, const int &w) const;
+	inline unsigned char index2D_256(const unsigned char &offset, const int &x, const int &y) const;
+	inline unsigned char index3D_256(const unsigned char &offset, const int &x, const int &y, const int &z) const;
+	inline unsigned char index4D_256(const unsigned char &offset, const int &x, const int &y, const int &z, const int &w) const;
 
-	inline float ValCoord2DFast(unsigned char offset, int x, int y) const;
-	inline float ValCoord3DFast(unsigned char offset, int x, int y, int z) const;
-	inline float GradCoord2D(unsigned char offset, int x, int y, float xd, float yd) const;
-	inline float GradCoord3D(unsigned char offset, int x, int y, int z, float xd, float yd, float zd) const;
-	inline float GradCoord4D(unsigned char offset, int x, int y, int z, int w, float xd, float yd, float zd, float wd) const;
+	static float valCoord2D(const int &seed, const int &x, const int &y);
+	static float valCoord3D(const int &seed, const int &x, const int &y, const int &z);
+	static float valCoord4D(const int &seed, const int &x, const int &y, const int &z, const int &w);
 
-	//2D
-	float SingleValueFractalFBM(float x, float y) const;
-	float SingleValueFractalBillow(float x, float y) const;
-	float SingleValueFractalRigidMulti(float x, float y) const;
-	float SingleValue(unsigned char offset, float x, float y) const;
+	inline float valCoord2DFast(const unsigned char &offset, const int &x, const int &y) const;
+	inline float valCoord3DFast(const unsigned char &offset, const int &x, const int &y, const int &z) const;
 
-	float SinglePerlinFractalFBM(float x, float y) const;
-	float SinglePerlinFractalBillow(float x, float y) const;
-	float SinglePerlinFractalRigidMulti(float x, float y) const;
-	float SinglePerlin(unsigned char offset, float x, float y) const;
+	inline float gradCoord2D(const unsigned char &offset, const int &x, const int &y, const float &xd, const float &yd) const;
+	inline float gradCoord3D(const unsigned char &offset, const int &x, const int &y, const int &z, const float &xd, const float &yd, const float &zd) const;
+	inline float gradCoord4D(const unsigned char &offset, const int &x, const int &y, const int &z, const int &w, const float &xd, const float &yd, const float &zd, const float &wd) const;
+	
+	// 2D
+	float singleValueFractalFBM(float x, float y) const;
+	float singleValueFractalBillow(float x, float y) const;
+	float singleValueFractalRigidMulti(float x, float y) const;
+	float singleValue(const unsigned char &offset, const float &x, const float &y) const;
 
-	float SingleSimplexFractalFBM(float x, float y) const;
-	float SingleSimplexFractalBillow(float x, float y) const;
-	float SingleSimplexFractalRigidMulti(float x, float y) const;
-	float SingleSimplexFractalBlend(float x, float y) const;
-	float SingleSimplex(unsigned char offset, float x, float y) const;
+	float singlePerlinFractalFBM(float x, float y) const;
+	float singlePerlinFractalBillow(float x, float y) const;
+	float singlePerlinFractalRigidMulti(float x, float y) const;
+	float singlePerlin(const unsigned char &offset, const float &x, const float &y) const;
 
-	float SingleCubicFractalFBM(float x, float y) const;
-	float SingleCubicFractalBillow(float x, float y) const;
-	float SingleCubicFractalRigidMulti(float x, float y) const;
-	float SingleCubic(unsigned char offset, float x, float y) const;
+	float singleSimplexFractalFBM(float x, float y) const;
+	float singleSimplexFractalBillow(float x, float y) const;
+	float singleSimplexFractalRigidMulti(float x, float y) const;
+	float singleSimplexFractalBlend(float x, float y) const;
+	float singleSimplex(const unsigned char &offset, const float &x, const float &y) const;
 
-	float SingleCellular(float x, float y) const;
-	float SingleCellular2Edge(float x, float y) const;
+	float singleCubicFractalFBM(float x, float y) const;
+	float singleCubicFractalBillow(float x, float y) const;
+	float singleCubicFractalRigidMulti(float x, float y) const;
+	float singleCubic(const unsigned char &offset, const float &x, const float &y) const;
 
-	void SingleGradientPerturb(unsigned char offset, float warpAmp, float frequency, float &x, float &y) const;
+	float singleCellular(const float &x, const float &y) const;
+	float singleCellular2Edge(const float &x, const float &y) const;
+
+	void singleGradientPerturb(const unsigned char &offset, const float &warpAmp, const float &frequency, float x, float y) const;
 
 	//3D
-	float SingleValueFractalFBM(float x, float y, float z) const;
-	float SingleValueFractalBillow(float x, float y, float z) const;
-	float SingleValueFractalRigidMulti(float x, float y, float z) const;
-	float SingleValue(unsigned char offset, float x, float y, float z) const;
+	float singleValueFractalFBM(float x, float y, float z) const;
+	float singleValueFractalBillow(float x, float y, float z) const;
+	float singleValueFractalRigidMulti(float x, float y, float z) const;
+	float singleValue(const unsigned char &offset, const float &x, const float &y, const float &z) const;
 
-	float SinglePerlinFractalFBM(float x, float y, float z) const;
-	float SinglePerlinFractalBillow(float x, float y, float z) const;
-	float SinglePerlinFractalRigidMulti(float x, float y, float z) const;
-	float SinglePerlin(unsigned char offset, float x, float y, float z) const;
+	float singlePerlinFractalFBM(float x, float y, float z) const;
+	float singlePerlinFractalBillow(float x, float y, float z) const;
+	float singlePerlinFractalRigidMulti(float x, float y, float z) const;
+	float singlePerlin(const unsigned char &offset, const float &x, const float &y, const float &z) const;
 
-	float SingleSimplexFractalFBM(float x, float y, float z) const;
-	float SingleSimplexFractalBillow(float x, float y, float z) const;
-	float SingleSimplexFractalRigidMulti(float x, float y, float z) const;
-	float SingleSimplex(unsigned char offset, float x, float y, float z) const;
+	float singleSimplexFractalFBM(float x, float y, float z) const;
+	float singleSimplexFractalBillow(float x, float y, float z) const;
+	float singleSimplexFractalRigidMulti(float x, float y, float z) const;
+	float singleSimplex(const unsigned char &offset, const float &x, const float &y, const float &z) const;
 
-	float SingleCubicFractalFBM(float x, float y, float z) const;
-	float SingleCubicFractalBillow(float x, float y, float z) const;
-	float SingleCubicFractalRigidMulti(float x, float y, float z) const;
-	float SingleCubic(unsigned char offset, float x, float y, float z) const;
+	float singleCubicFractalFBM(float x, float y, float z) const;
+	float singleCubicFractalBillow(float x, float y, float z) const;
+	float singleCubicFractalRigidMulti(float x, float y, float z) const;
+	float singleCubic(const unsigned char &offset, const float &x, const float &y, const float &z) const;
 
-	float SingleCellular(float x, float y, float z) const;
-	float SingleCellular2Edge(float x, float y, float z) const;
+	float singleCellular(const float &x, const float &y, const float &z) const;
+	float singleCellular2Edge(const float &x, const float &y, const float &z) const;
 
-	void SingleGradientPerturb(unsigned char offset, float warpAmp, float frequency, float &x, float &y, float &z) const;
+	void singleGradientPerturb(const unsigned char &offset, const float &warpAmp, const float &frequency, float x, float y, float z) const;
 
 	//4D
-	float SingleSimplex(unsigned char offset, float x, float y, float z, float w) const;
+	float singleSimplex(const unsigned char &offset, const float &x, const float &y, const float &z, const float &w) const;
 };

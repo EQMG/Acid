@@ -10,8 +10,8 @@
 #define ANG2RAD PI / DEGREES_IN_HALF_CIRCLE
 #define LOG_HALF log(0.5f)
 
-#define __radians(a) ((a) * (PI / DEGREES_IN_HALF_CIRCLE))
-#define __degrees(b) ((b) * (DEGREES_IN_HALF_CIRCLE / PI))
+#define __radians(a) ((a) / DEGREES_IN_HALF_CIRCLE * PI)
+#define __degrees(b) ((b) * DEGREES_IN_HALF_CIRCLE / PI)
 #define __random() (((float) rand()) / RAND_MAX);
 
 #ifndef __min
@@ -71,7 +71,7 @@ namespace flounder
 		template<typename t>
 		static t roundToPlace(const t &value, const int &place)
 		{
-			t placeMul = static_cast<t>(pow(10.0, place));
+			t placeMul = static_cast<t>(pow(10, place));
 			return round(value * placeMul) / placeMul;
 		}
 
@@ -135,9 +135,9 @@ namespace flounder
 		template<typename t>
 		static t cosInterpolate(const t &a, const t &b, const t &blend)
 		{
-			double ft = blend * PI;
-			float f = (1.0f - cos(ft)) * 0.5f;
-			return a * (1.0f - f) + b * f;
+			float ft = static_cast<t>(blend) * PI;
+			float f = 1.0f - cos(ft) * 0.5f;
+			return a * static_cast<t>(1.0f - f) + b * f;
 		}
 
 		/// <summary>
@@ -150,8 +150,8 @@ namespace flounder
 		template<typename t>
 		static t smoothlyStep(const t &edge0, const t &edge1, const t &x)
 		{
-			float s = clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
-			return s * s * (3.0f - 2.0f * s);
+			t s = clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
+			return s * s * (static_cast<t>(3.0 - 2.0) * s);
 		}
 
 		/// <summary>
@@ -165,8 +165,8 @@ namespace flounder
 		{
 			t range = max - min;
 			float scaled = __random();
-			scaled *= range;
-			return scaled + min; // == (rand.nextDouble() * (max-min)) + min;
+			scaled *= static_cast<float>(range);
+			return static_cast<t>(scaled) + min; // == (rand.nextDouble() * (max-min)) + min;
 		}
 
 		/// <summary>

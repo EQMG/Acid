@@ -32,8 +32,8 @@ namespace flounder
 	class glfwupdater : public iupdater
 	{
 	private:
-		double m_startTime;
-		double m_timeOffset;
+		float m_startTime;
+		float m_timeOffset;
 		delta *m_deltaUpdate;
 		delta *m_deltaRender;
 		timer *m_timerUpdate;
@@ -69,16 +69,16 @@ namespace flounder
 
 		imodule *getInstance(const std::string &name) override;
 
-		inline double getTimeOffset() override { return m_timeOffset; };
+		inline float getTimeOffset() override { return m_timeOffset; };
 
-		inline void setTimeOffset(const double &timeOffset) override { m_timeOffset = timeOffset; };
+		inline void setTimeOffset(const float &timeOffset) override { m_timeOffset = timeOffset; };
 
-		inline double getDelta() override { return m_deltaUpdate->getChange(); };
+		inline float getDelta() override { return m_deltaUpdate->getChange(); };
 
-		inline double getDeltaRender() override { return m_deltaRender->getChange(); };
+		inline float getDeltaRender() override { return m_deltaRender->getChange(); };
 
-		inline double getTimeSec() override { return (glfwGetTime() - m_startTime) + m_timeOffset; };
+		inline float getTimeSec() override { return (static_cast<float>(glfwGetTime()) - m_startTime) + m_timeOffset; };
 
-		inline double getTimeMs() override { return getTimeSec() * 1000.0; };
+		inline float getTimeMs() override { return getTimeSec() * 1000.0f; };
 	};
 }

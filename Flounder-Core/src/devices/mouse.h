@@ -17,13 +17,13 @@ namespace flounder
 		std::string m_customMouse;
 
 		int *m_mouseButtons;
-		double m_lastMousePositionX;
-		double m_lastMousePositionY;
-		double m_mousePositionX;
-		double m_mousePositionY;
-		double m_mouseDeltaX;
-		double m_mouseDeltaY;
-		double m_mouseDeltaWheel;
+		float m_lastMousePositionX;
+		float m_lastMousePositionY;
+		float m_mousePositionX;
+		float m_mousePositionY;
+		float m_mouseDeltaX;
+		float m_mouseDeltaY;
+		float m_mouseDeltaWheel;
 		bool m_displaySelected;
 
 		bool m_cursorDisabled;
@@ -85,38 +85,38 @@ namespace flounder
 		/// Gets the mouses screen x position.
 		/// </summary>
 		/// <returns> The mouses x position. </returns>
-		inline double getPositionX() const { return m_mousePositionX; }
+		inline float getPositionX() const { return m_mousePositionX; }
 
 		/// <summary>
 		/// Gets the mouses screen y position.
 		/// </summary>
 		/// <returns> The mouses y position. </returns>
-		inline double getPositionY() const { return m_mousePositionY; }
+		inline float getPositionY() const { return m_mousePositionY; }
 
 		/// <summary>
 		/// Sets the mouse position by calling glfwSetCursorPos.
 		/// </summary>
 		/// <param name="cursorX"> The x position in screenspace. </param>
 		/// <param name="cursorY"> The y position in screenspace. </param>
-		void setPosition(const double &cursorX, const double &cursorY);
+		void setPosition(const float &cursorX, const float &cursorY);
 
 		/// <summary>
 		/// Gets the mouses delta x.
 		/// </summary>
 		/// <returns> The mouses delta x. </returns>
-		inline double getDeltaX() const { return m_mouseDeltaX; }
+		inline float getDeltaX() const { return m_mouseDeltaX; }
 
 		/// <summary>
 		/// Gets the mouses delta y.
 		/// </summary>
 		/// <returns> The mouses delta y. </returns>
-		inline double getDeltaY() const { return m_mouseDeltaY; }
+		inline float getDeltaY() const { return m_mouseDeltaY; }
 
 		/// <summary>
 		/// Gets the mouses wheel delta.
 		/// </summary>
 		/// <returns> The mouses wheel delta. </returns>
-		inline double getDeltaWheel() const { return m_mouseDeltaWheel; }
+		inline float getDeltaWheel() const { return m_mouseDeltaWheel; }
 
 		/// <summary>
 		/// Gets if the display is selected.
