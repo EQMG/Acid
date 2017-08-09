@@ -6,6 +6,7 @@
 #include <stdarg.h>
 
 #include "../platform.h"
+#include "../devices/display.h"
 #include "../maths/colour.h"
 
 #include "stb_image.h"
@@ -94,7 +95,30 @@ namespace flounder
 			/// <returns> The created texture. </returns>
 			texture *create();
 		};
+	public:
+		enum typetexture 
+		{
+			TEXTURE_2D, TEXTURE_CUBE_MAP
+		};
 
+#ifdef FLOUNDER_API_VULKAN
+		struct vktexture 
+		{
+			int32_t m_width, m_height;
+			VkSampler m_sampler;
+			VkImage m_image;
+			VkImageLayout m_imageLayout;
+			VkDeviceMemory m_deviceMemory;
+			VkImageView m_view;
+			int32_t m_mipLevels;
+		};
+#else
+		struct gltexture 
+		{
+			int32_t m_width, m_height;
+			GLuint m_textureID;
+		};
+#endif
 	protected:
 		builder *m_builder;
 
@@ -102,8 +126,6 @@ namespace flounder
 		std::string *m_cubemap;
 		int m_cubemapCount;
 
-		int m_width;
-		int m_height;
 		bool m_hasAlpha;
 		colour *m_border;
 		bool m_clampToBorder;
@@ -113,8 +135,12 @@ namespace flounder
 		bool m_nearest;
 		int m_numberOfRows;
 
-		GLenum m_glType;
-		GLuint m_textureID;
+		typetexture m_textureType;
+#ifdef FLOUNDER_API_VULKAN
+		vktexture m_texture;
+#else
+		gltexture m_texture;
+#endif
 
 		/// <summary>
 		/// A new OpenGL texture object.
@@ -132,18 +158,6 @@ namespace flounder
 		/// </summary>
 		/// <returns> The texture builder. </returns>
 		static builder *newTexture();
-
-		/// <summary>
-		/// Gets the width of the texture.
-		/// </summary>
-		/// <returns> The textures width. </returns>
-		inline int getWidth() const { return m_width; }
-
-		/// <summary>
-		/// Gets the height of the texture.
-		/// </summary>
-		/// <returns> The textures height. </returns>
-		inline int getHeight() const { return m_height; }
 
 		/// <summary>
 		/// Gets if the texture has alpha.
@@ -170,16 +184,24 @@ namespace flounder
 		inline void setNumberOfRows(const int &numberOfRows) { m_numberOfRows = numberOfRows; }
 
 		/// <summary>
-		/// The OpenGL type of texture loaded.
+		/// The textures type.
 		/// </summary>
-		/// <returns> The OpenGL texture type. </returns>
-		inline GLenum getGlType() const { return m_glType; }
+		/// <returns> The textures type. </returns>
+		inline typetexture getTextureType() const { return m_textureType; }
 
+#ifdef FLOUNDER_API_VULKAN
 		/// <summary>
-		/// Gets the textures ID.
+		/// The Vulkan loaded texture.
 		/// </summary>
-		/// <returns> The textures ID. </returns>
-		inline GLuint getTextureID() const { return m_textureID; }
+		/// <returns> The Vulkan loaded texture. </returns>
+		inline vktexture glTextureType() const { return m_texture; }
+#else
+		/// <summary>
+		/// The OpenGL loaded texture.
+		/// </summary>
+		/// <returns> The Vulkan loaded texture. </return
+		inline gltexture getGlTexture() const { return m_texture; }
+#endif
 	private:
 		/// <summary>
 		/// Loads the texture object from a texture file.
