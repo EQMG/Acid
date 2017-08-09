@@ -44,7 +44,7 @@ instance::~instance()
 
 void instance::update()
 {
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 	if (m_buttonFullscreen->wasDown())
 	{
 		display::get()->setFullscreen(!display::get()->isFullscreen());

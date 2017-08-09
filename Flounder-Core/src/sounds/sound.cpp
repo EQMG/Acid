@@ -14,7 +14,7 @@ namespace flounder
 		m_pitch = 1.0f;
 		m_gain = 1.0f;
 
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_AL
 		//unsigned char **data = NULL;
 		//unsigned int *size = NULL;
 		//unsigned int *frequency = NULL;
@@ -32,28 +32,26 @@ namespace flounder
 
 	sound::~sound()
 	{
-#ifndef FLOUNDER_PLATFORM_WEB
-#endif
 	}
 
 	void sound::play()
 	{
-#ifdef FLOUNDER_PLATFORM_WEB
-		audioPlay(m_name.c_str());
-#else
+#ifdef FLOUNDER_API_AL
 		//alSourcei(m_source, AL_LOOPING, false);
 		//alSourcePlay(m_source);
+#elif FLOUNDER_API_WEB
+		audioPlay(m_name.c_str());
 #endif
 		m_playing = true;
 	}
 
 	void sound::loop()
 	{
-#ifdef FLOUNDER_PLATFORM_WEB
-		audioLoop(m_name.c_str());
-#else
+#ifdef FLOUNDER_API_AL
 		//alSourcei(m_source, AL_LOOPING, true);
 		//alSourcePlay(m_source);
+#elif FLOUNDER_API_WEB
+		audioLoop(m_name.c_str());
 #endif
 		m_playing = true;
 	}
@@ -65,12 +63,12 @@ namespace flounder
 			return;
 		}
 
-		m_playing = false;
-#ifdef FLOUNDER_PLATFORM_WEB
-		audioPause(m_name.c_str());
-#else
+#ifdef FLOUNDER_API_AL
 		//alSourcePause(m_source);
+#elif FLOUNDER_API_WEB
+		audioPause(m_name.c_str());
 #endif
+		m_playing = false;
 	}
 
 	void sound::resume()
@@ -81,11 +79,11 @@ namespace flounder
 		}
 
 		m_playing = true;
-#ifdef FLOUNDER_PLATFORM_WEB
-		audioPlay(m_name.c_str());
-#else
+#ifdef FLOUNDER_API_AL
 		//alSourcei(m_source, AL_LOOPING, false);
 		//alSourcePlay(m_source);
+#elif FLOUNDER_API_WEB
+		audioPlay(m_name.c_str());
 #endif
 	}
 
@@ -96,18 +94,17 @@ namespace flounder
 			return;
 		}
 
-#ifdef FLOUNDER_PLATFORM_WEB
-		audioStop(m_name.c_str());
-#else
+#ifdef FLOUNDER_API_AL
 		//alSourceStop(m_source);
+#elif FLOUNDER_API_WEB
+		audioStop(m_name.c_str());
 #endif
 		m_playing = false;
 	}
 
 	void sound::setPosition(const float &x, const float &y, const float &z)
 	{
-#ifdef FLOUNDER_PLATFORM_WEB
-#else
+#ifdef FLOUNDER_API_AL
 		//alSource3f(m_source, AL_POSITION, x, y, z);
 #endif
 	}
@@ -119,8 +116,7 @@ namespace flounder
 
 	void sound::setDirection(const float &x, const float &y, const float &z)
 	{
-#ifdef FLOUNDER_PLATFORM_WEB
-#else
+#ifdef FLOUNDER_API_AL
 		//float direction[3] = { x, y, z };
 		//alSourcefv(m_source, AL_DIRECTION, direction);
 #endif
@@ -133,8 +129,7 @@ namespace flounder
 
 	void sound::setVelocity(const float &x, const float &y, const float &z)
 	{
-#ifdef FLOUNDER_PLATFORM_WEB
-#else
+#ifdef FLOUNDER_API_AL
 		//alSource3f(m_source, AL_VELOCITY, x, y, z);
 #endif
 	}
@@ -152,12 +147,12 @@ namespace flounder
 			return;
 		}
 
-		m_pitch = pitch;
-#ifdef FLOUNDER_PLATFORM_WEB
-		audioSetPitch(m_name.c_str(), m_pitch);
-#else
-		//alSourcef(m_source, AL_PITCH, m_pitch);
+#ifdef FLOUNDER_API_AL
+		//alSourcef(m_source, AL_PITCH, pitch);
+#elif FLOUNDER_API_WEB
+		audioSetPitch(m_name.c_str(), pitch);
 #endif
+		m_pitch = pitch;
 	}
 
 	void sound::setGain(float gain)
@@ -168,11 +163,11 @@ namespace flounder
 			return;
 		}
 
-		m_gain = gain;
-#ifdef FLOUNDER_PLATFORM_WEB
-		audioSetGain(m_name.c_str(), m_gain);
-#else
-		//alSourcef(m_source, AL_GAIN, m_gain);
+#ifdef FLOUNDER_API_AL
+		//alSourcef(m_source, AL_GAIN, gain);
+#elif FLOUNDER_API_WEB
+		audioSetGain(m_name.c_str(), gain);
 #endif
+		m_gain = gain;
 	}
 }

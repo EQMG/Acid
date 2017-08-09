@@ -5,28 +5,26 @@
 
 Flounder is a cross platform high speed C++ OpenGL 2D/3D game engine.
 
-Libraries:
- * STB image loading
- * OpenGL GLFW and GLEW 
- * OpenAL Soft
- * Emscripten
- 
 Supported platforms:
  * Windows
- * MacOS
  * Linux
+ * MacOS
  * Web
 
 Rendering backends:
- * OpenGL
+ * OpenGL - FLOUNDER_API_GL
+ * Vulkan - FLOUNDER_API_VULKAN
+ * WebGL - FLOUNDER_API_WEB
  
 Audio backends:
- * OpenAL
+ * OpenAL - FLOUNDER_API_AL
+ * JS Audio - FLOUNDER_API_WEB
 
 Features:
+ * STB image loading
  * Cross platform
  * High speed
- * 2D and 3D support
+ * Easy to read documented code
  * Deferred rendering
  * Event and tasks systems
  * Component entity system
@@ -41,11 +39,10 @@ Features:
  * Animations
  
 Plans:
- * Android/IOS
- * Consoles/Switch?
+ * Switch, PlayStation, XBox
  * Add more features from Flounder on Java
- * ~~Fractional Distillation~~
- * ~~Flounder Proprietary Scripting Language™~~
+ * Finish the core engine by the end of 2017
+ * A physics engine, ragdoll animations
 
 [Read the autogen docs](https://equilibrium-games.github.io/Flounder/html/namespaceflounder.html)
 

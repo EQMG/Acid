@@ -160,7 +160,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;FLOUNDER_API_AL;FLOUNDER_API_GL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)external\includes\$(PlatformTarget);$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
@@ -194,7 +194,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;FLOUNDER_PLATFORM_WEB;GLFW_INCLUDE_ES3</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_ES3;FLOUNDER_API_WEB</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)external\includes\web;$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
@@ -228,7 +228,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;FLOUNDER_API_AL;FLOUNDER_API_GL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)external\includes\web;$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
@@ -262,7 +262,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;FLOUNDER_PLATFORM_WEB;GLFW_INCLUDE_ES3</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;FLOUNDER_API_WEB</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)external\includes\$(PlatformTarget);$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
@@ -298,7 +298,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;FLOUNDER_API_AL;FLOUNDER_API_GL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)external\includes\$(PlatformTarget);$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -337,7 +337,7 @@ XCOPY "$(SolutionDir)external\dlls\$(PlatformTarget)"  "$(OutDir)" /S /Y</Comman
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;FLOUNDER_API_AL;FLOUNDER_API_GL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)external\includes\$(PlatformTarget);$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>

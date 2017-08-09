@@ -383,7 +383,7 @@ namespace flounder
 			{
 				glBindAttribLocation(m_programID, index, locationName.c_str());
 			}
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 			else if (locationType.find("out") != std::string::npos)
 			{
 				glBindFragDataLocation(m_programID, index, locationName.c_str());
@@ -398,7 +398,7 @@ namespace flounder
 
 	void shader::deleteTypes()
 	{
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 		for (std::vector<shadertype>::iterator it = m_shaderTypes->begin(); it < m_shaderTypes->end(); it++)
 		{
 			glDetachShader(m_programID, (*it).m_shaderID);

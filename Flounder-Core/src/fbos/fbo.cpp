@@ -324,7 +324,7 @@ namespace flounder
 
 	void fbo::limitFBOSize()
 	{
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 #define GL_MAX_RENDERBUFFER_SIZE_EXT      0x84E8
 #endif
 		int maxSize = 0;
@@ -358,7 +358,7 @@ namespace flounder
 
 		if (m_antialiased)
 		{
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 			glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_samples, GL_DEPTH_COMPONENT24, m_width, m_height);
 #else
 			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, m_width, m_height);
@@ -385,7 +385,7 @@ namespace flounder
 
 	void fbo::attachMultisampleColourBuffer(const int attachment)
 	{
-#ifndef FLOUNDER_PLATFORM_WEB
+#ifndef FLOUNDER_API_WEB
 		glGenRenderbuffers(1, &m_colourBuffer[attachment - GL_COLOR_ATTACHMENT0]);
 		glBindRenderbuffer(GL_RENDERBUFFER, m_colourBuffer[attachment - GL_COLOR_ATTACHMENT0]);
 		glRenderbufferStorageMultisample(GL_RENDERBUFFER, m_samples, m_alphaChannel ? GL_RGBA8 : GL_RGB8, m_width, m_height);

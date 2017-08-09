@@ -7,7 +7,7 @@ namespace flounder
 	audio::audio() :
 		imodule()
 	{
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 		EM_ASM(
 			Module.audio = {};
 			Module.audio.m_sounds = {};
@@ -50,7 +50,6 @@ namespace flounder
 				Module.audio.m_sounds[name].volume = gain;
 			};
 		);
-#else
 #endif
 	}
 
@@ -60,21 +59,16 @@ namespace flounder
 		{
 			delete m_sounds[i];
 		}
-
-#ifndef FLOUNDER_PLATFORM_WEB
-#endif
 	}
 
 	void audio::update()
 	{
-#ifndef FLOUNDER_PLATFORM_WEB
-#endif
 	}
 
 	sound *audio::add(sound *object)
 	{
 		m_sounds.push_back(object);
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 		audioAdd(object->getName().c_str(), object->getFileName().c_str());
 #endif
 		return object;

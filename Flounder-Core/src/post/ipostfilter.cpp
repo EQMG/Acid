@@ -5,7 +5,7 @@ namespace flounder
 	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader, fbo *fbo)
 	{
 		m_shader = shader::newShader()->addName(filterName)
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.web.glsl", loadtype::FILE))
 #else
 			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.glsl", loadtype::FILE))

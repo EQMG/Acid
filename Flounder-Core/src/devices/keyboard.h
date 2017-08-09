@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 #include "../framework/framework.h"
 
 #include "display.h"

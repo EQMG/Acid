@@ -5,13 +5,7 @@
 #include <vector>
 #include <stdarg.h>
 
-#ifdef FLOUNDER_PLATFORM_WEB
-#include <emscripten/emscripten.h>
-#include <GLFW/glfw3.h>
-#else
-#include <GL/glew.h>
-#endif
-
+#include "../platform.h"
 #include "../maths/colour.h"
 
 #include "stb_image.h"
