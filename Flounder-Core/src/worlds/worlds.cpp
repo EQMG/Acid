@@ -6,11 +6,12 @@ namespace flounder
 		imodule()
 	{
 		m_noise = new noisefast(420);
-		m_noise->setNoiseType(noisefast::PerlinFractal);
+		m_noise->setNoiseType(noisefast::SimplexFractal);
 		m_noise->setInterp(noisefast::Quintic);
-		m_noise->setFractalOctaves(3);
-		m_noise->setFractalLacunarity(1.8f);
-		m_noise->setFractalGain(0.6f);
+		m_noise->setFrequency(0.005f);
+		m_noise->setFractalOctaves(9);
+		m_noise->setFractalLacunarity(1.5f);
+		m_noise->setFractalGain(0.7f);
 
 		m_driverDay = new driverlinear(0.0f, 1.0f, 100.0f);
 		m_factorDay = 0.0f;
@@ -34,26 +35,25 @@ namespace flounder
 		float delta = framework::get()->getDelta();
 		skybox *skybox = skyboxes::get()->getSkybox();
 		fog *fog = skyboxes::get()->getFog();
-		vector3 *lightPosition = shadows::get()->getLightPosition();
-		m_factorDay = 0.25f; //  m_driverDay->update(delta);
+		vector3 *lightDirection = shadows::get()->getLightDirection();
+		m_factorDay = m_driverDay->update(delta); // 0.25f;
 
 		skybox->getRotation()->set(360.0f * m_factorDay, 0.0f, 0.0f);
-		matrix4x4::rotate(vector3(0.2f, 0.0f, 0.5f), *skybox->getRotation(), lightPosition);
-		lightPosition->normalize();
+		matrix4x4::rotate(vector3(0.2f, 0.0f, 0.5f), *skybox->getRotation(), lightDirection);
+		lightDirection->normalize();
 
 		colour::interpolate(colour(0.9f, 0.3f, 0.3f), colour(0.05f, 0.05f, 0.1f), getSunriseFactor(), fog->m_colour);
 		colour::interpolate(*fog->m_colour, colour(0.0f, 0.3f, 0.7f), getShadowFactor(), fog->m_colour);
 		fog->m_density = 0.006f + ((1.0f - getShadowFactor()) * 0.006f);
 		fog->m_gradient = 2.80f - ((1.0f - getShadowFactor()) * 0.4f);
-
 		skybox->setBlend(starIntensity());
 
-		shadows::get()->setShadowBoxOffset((20.0f * (1.0f - getShadowFactor())) + 10.0f);
-		shadows::get()->setShadowBoxDistance(35.0f);
-		shadows::get()->setShadowTransition(0.0f);
-		shadows::get()->setShadowFactor(getShadowFactor());
+	//	shadows::get()->setShadowBoxOffset((20.0f * (1.0f - getShadowFactor())) + 10.0f);
+	//	shadows::get()->setShadowBoxDistance(35.0f);
+	//	shadows::get()->setShadowTransition(0.0f);
+	//	shadows::get()->setShadowFactor(getShadowFactor());
 
-		vector3::multiply(*lightPosition, vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
+		vector3::multiply(*lightDirection, vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
 		vector3::add(*m_sunPosition, *camera::get()->getCamera()->getPosition(), m_sunPosition);
 		
 		colour::interpolate(colour(0.9f, 0.3f, 0.3f), colour(0.0f, 0.0f, 0.0f), getSunriseFactor(), m_sunColour);

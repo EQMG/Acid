@@ -113,7 +113,7 @@ namespace flounder
 			destination = new vector2();
 		}
 
-		double theta = __radians(angle);
+		float theta = __radians(angle);
 		return destination->set(source.m_x * cos(theta) - source.m_y * sin(theta), source.m_x * sin(theta) + source.m_y * cos(theta));
 	}
 
@@ -124,7 +124,7 @@ namespace flounder
 			destination = new vector2();
 		}
 
-		double theta = __radians(angle);
+		float theta = __radians(angle);
 		return destination->set(((source.m_x - rotationAxis.m_x) * cos(theta)) - ((source.m_y - rotationAxis.m_y) * sin(theta) + rotationAxis.m_x), ((source.m_x - rotationAxis.m_x) * sin(theta)) + ((source.m_y - rotationAxis.m_y) * cos(theta) + rotationAxis.m_y));
 	}
 

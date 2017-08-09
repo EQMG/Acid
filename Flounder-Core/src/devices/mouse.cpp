@@ -4,7 +4,7 @@ namespace flounder
 {
 	void callbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 	{
-		mouse::get()->m_mouseDeltaWheel = yoffset;
+		mouse::get()->m_mouseDeltaWheel = static_cast<float>(yoffset);
 	}
 
 	void callbackMouseButton(GLFWwindow *window, int button, int action, int mods)
@@ -14,8 +14,8 @@ namespace flounder
 
 	void callbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 	{
-		mouse::get()->m_mousePositionX = xpos / display::get()->getWidth();
-		mouse::get()->m_mousePositionY = ypos / display::get()->getHeight();
+		mouse::get()->m_mousePositionX = static_cast<float>(xpos) / static_cast<float>(display::get()->getWidth());
+		mouse::get()->m_mousePositionY = static_cast<float>(ypos) / static_cast<float>(display::get()->getHeight());
 	}
 
 	void callbackCursorEnter(GLFWwindow *window, int entered)
@@ -29,9 +29,14 @@ namespace flounder
 		m_customMouse = "";
 
 		m_mouseButtons = new int[GLFW_MOUSE_BUTTON_LAST];
+		m_lastMousePositionX = 0.5f;
+		m_lastMousePositionY = 0.5f;
+		m_mousePositionX = 0.5f;
+		m_mousePositionY = 0.5f;
+		m_mouseDeltaX = 0.0f;
+		m_mouseDeltaY = 0.0f;
+		m_mouseDeltaWheel = 0.0f;
 		m_displaySelected = true;
-		m_mousePositionX = 0.5;
-		m_mousePositionY = 0.5;
 
 		m_cursorDisabled = false;
 		m_lastCursorDisabled = false;
@@ -76,8 +81,8 @@ namespace flounder
 		// Updates the mouse wheel using a smooth scroll technique.
 		if (m_mouseDeltaWheel != 0.0)
 		{
-			m_mouseDeltaWheel -= framework::get()->getDelta() * ((m_mouseDeltaWheel < 0.0) ? -1.0 : 1.0);
-			m_mouseDeltaWheel = maths::deadband(0.1, m_mouseDeltaWheel);
+			m_mouseDeltaWheel -= framework::get()->getDelta() * ((m_mouseDeltaWheel < 0.0f) ? -1.0f : 1.0f);
+			m_mouseDeltaWheel = maths::deadband(0.1f, m_mouseDeltaWheel);
 		}
 	}
 
@@ -126,8 +131,8 @@ namespace flounder
 		m_cursorDisabled = disabled;
 	}
 
-	void mouse::setPosition(const double &cursorX, const double &cursorY)
+	void mouse::setPosition(const float &cursorX, const float &cursorY)
 	{
-		glfwSetCursorPos(display::get()->getWindow(), cursorX, cursorY);
+		glfwSetCursorPos(display::get()->getWindow(), static_cast<double>(cursorX), static_cast<double>(cursorY));
 	}
 }

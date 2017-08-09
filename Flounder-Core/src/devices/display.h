@@ -31,7 +31,7 @@ namespace flounder
 		int m_windowHeight;
 		int m_fullscreenWidth;
 		int m_fullscreenHeight;
-		double m_aspectRatio;
+		float m_aspectRatio;
 
 		std::string m_title;
 		std::string m_icon;
@@ -120,7 +120,7 @@ namespace flounder
 		/// Gets the aspect ratio between the displays width and height.
 		/// </summary>
 		/// <returns> The aspect ratio. </returns>
-		inline double getAspectRatio() const { return m_aspectRatio; }
+		inline float getAspectRatio() const { return m_aspectRatio; }
 
 		/// <summary>
 		/// Sets window size to a new size.

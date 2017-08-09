@@ -82,7 +82,7 @@ void mainplayer::update()
 		}
 	}
 	// Calculates the deltas to the moved distance, and rotations.
-	double theta = __radians(camera::get()->getCamera()->getRotation()->m_y);
+	float theta = __radians(camera::get()->getCamera()->getRotation()->m_y);
 	float dx = -(m_currentSpeed * sin(theta) + m_currentStrafeSpeed * cos(theta)) * delta;
 	float dy = m_currentUpwardSpeed * delta;
 	float dz = -(m_currentSpeed * cos(theta) - m_currentStrafeSpeed * sin(theta)) * delta;

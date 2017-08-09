@@ -31,7 +31,7 @@ namespace flounder
 		static const float WAVE_LENGTH;
 		static const float AMPLITUDE;
 
-		static const double SQUARE_SIZE;
+		static const float SQUARE_SIZE;
 		static const int VERTEX_COUNT;
 
 		static const colour WATER_COLOUR;

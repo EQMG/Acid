@@ -51,7 +51,7 @@ namespace flounder
 
 				if (m_lastKey != key || m_inputDelay->canInput())
 				{
-					m_value += (static_cast<wchar_t>(key));
+					m_value += static_cast<char>(key);
 					m_text->setText(m_prefix + m_value);
 
 					if (m_actionChange != 0)

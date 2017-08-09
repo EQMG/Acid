@@ -16,21 +16,26 @@ namespace flounder
 	class shadowbox
 	{
 	private:
-		static vector4 const UP;
-		static vector4 const FORWARD;
+		vector3 *m_lightDirection;
+		float m_shadowOffset;
+		float m_shadowDistance;
 
+		matrix4x4 *m_projectionMatrix;
 		matrix4x4 *m_lightViewMatrix;
-		aabb *m_aabb;
+		matrix4x4 *m_projectionViewMatrix;
+		matrix4x4 *m_shadowMapSpaceMatrix;
+		matrix4x4 *m_offset;
+		vector3 *m_centre;
 
-		float m_shadowDistance, m_shadowOffset;
 		float m_farHeight, m_farWidth;
 		float m_nearHeight, m_nearWidth;
+
+		aabb *m_aabb;
 	public:
 		/// <summary>
 		/// Creates a new shadow box and calculates some initial values relating to the camera's view frustum.
 		/// </summary>
-		/// <param name="lightViewMatrix"> Basically the "view matrix" of the light. Can be used to transform a point from world space into "light" space. </param>
-		shadowbox(const matrix4x4 &lightViewMatrix);
+		shadowbox();
 
 		~shadowbox();
 
@@ -40,21 +45,24 @@ namespace flounder
 		/// Objects inside the camera's view (and in range) will be shadowed.
 		/// </summary>
 		/// <param name="camera"> The camera object to be used when calculating the shadow boxes size. </param>
-		/// <param name="shadowDistance"> The shadows distance. </param>
+		/// <param name="lightPosition"> The lights position. </param>
 		/// <param name="shadowOffset"> The shadows offset. </param>
-		void update(const icamera &camera, const float &shadowDistance, const float &shadowOffset);
+		/// <param name="shadowDistance"> The shadows distance. </param>
+		void update(const icamera &camera, const vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance);
 	private:
+		/// <summary>
+		/// Create the offset for part of the conversion to shadow map space.
+		/// </summary>
+		/// <returns> The offset as a matrix. </returns>
+		static matrix4x4 *createOffset();
+
+		void updateShadowBox(const icamera &camera);
+
 		/// <summary>
 		/// Updates the widths and heights of the box panes.
 		/// </summary>
 		/// <param name="camera"> The camera object. </param>
 		void updateWidthsAndHeights(const icamera &camera);
-
-		/// <summary>
-		/// Calculates the rotation of the camera represented as a matrix.
-		/// </summary>
-		/// <returns> The rotation of the camera represented as a matrix. </returns>
-		matrix4x4 *calculateCameraRotationMatrix(const icamera &camera);
 
 		/// <summary>
 		/// Calculates the vertex of each corner of the view frustum in light space.
@@ -76,6 +84,17 @@ namespace flounder
 		/// </param>
 		/// <returns> The relevant corner vertex of the view frustum in light space. </returns>
 		vector4 *calculateLightSpaceFrustumCorner(const vector3 &startPoint, const vector3 &direction, const float &width);
+
+		/// <summary>
+		/// Updates the centre of the shadow box (orthographic projection area).
+		/// </summary>
+		void updateCenter();
+
+		void updateOrthoProjectionMatrix();
+
+		void updateLightViewMatrix();
+
+		void updateViewShadowMatrix();
 	public:
 		/// <summary>
 		/// Test if a bounding sphere intersects the shadow box. Can be used to decide which engine.entities should be rendered in the shadow render pass.
@@ -86,29 +105,19 @@ namespace flounder
 		/// <returns> {@code true} if the sphere intersects the box. </returns>
 		bool isInBox(const vector3 &position, const float &radius);
 
-		/// <summary>
-		/// Gets the centre of the shadow box (orthographic projection area).
-		/// </summary>
-		/// <returns> The centre of the shadow box. </returns>
-		vector3 *getCenter();
+		matrix4x4 *getProjectionViewMatrix() const { return m_projectionViewMatrix; }
 
 		/// <summary>
-		/// Gets the width of the shadow box (orthographic projection area).
+		/// This biased projection-view matrix is used to convert fragments into "shadow map space" when rendering the main render pass.
 		/// </summary>
-		/// <returns> The width of the shadow box. </returns>
-		float getWidth();
+		/// <returns> The to-shadow-map-space matrix. </returns>
+		matrix4x4 *getToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
 
 		/// <summary>
-		/// Gets the height of the shadow box (orthographic projection area).
+		/// Gets the light's "view" matrix
 		/// </summary>
-		/// <returns> The height of the shadow box. </returns>
-		float getHeight();
-
-		/// <summary>
-		/// Gets the length of the shadow box (orthographic projection area).
-		/// </summary>
-		/// <returns> The length of the shadow box. </returns>
-		float getLength();
+		/// <returns> The light's "view" matrix. </returns>
+		matrix4x4 *getLightSpaceTransform() const { return m_lightViewMatrix; }
 
 		aabb *getAabb() const { return m_aabb; }
 	};

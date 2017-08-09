@@ -3,6 +3,7 @@
 #include "../deferred/rendererdeferred.h"
 #include "../fbos/fbo.h"
 #include "../renderer/irenderer.h"
+#include "../terrains/terrains.h"
 
 #include "shadows.h"
 
@@ -23,7 +24,7 @@ namespace flounder
 	private:
 		void prepareRendering(const vector4 &clipPlane, const icamera &camera);
 
-	//	void renderEntity(entity *object);
+		void renderModel(model *object, matrix4x4 *modelMatrix);
 
 		void endRendering();
 	public:

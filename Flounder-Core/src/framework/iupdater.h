@@ -41,36 +41,36 @@ namespace flounder
 		/// Gets the added/removed time for the framework (seconds).
 		/// </summary>
 		/// <returns> The time offset. </returns>
-		virtual double getTimeOffset() = 0;
+		virtual float getTimeOffset() = 0;
 
 		/// <summary>
 		/// Sets the time offset for the framework (seconds).
 		/// </summary>
 		/// <param name="timeOffset"> The new time offset. </param>
-		virtual void setTimeOffset(const double &timeOffset) = 0;
+		virtual void setTimeOffset(const float &timeOffset) = 0;
 
 		/// <summary>
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		virtual double getDelta() = 0;
+		virtual float getDelta() = 0;
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		virtual double getDeltaRender() = 0;
+		virtual float getDeltaRender() = 0;
 
 		/// <summary>
 		/// Gets the current time of the framework instance.
 		/// </summary>
 		/// <returns> The current framework time in seconds. </returns>
-		virtual double getTimeSec() = 0;
+		virtual float getTimeSec() = 0;
 
 		/// <summary>
 		/// Gets the current time of the framework instance.
 		/// </summary>
 		/// <returns> The current framework time in milliseconds. </returns>
-		virtual double getTimeMs() = 0;
+		virtual float getTimeMs() = 0;
 	};
 }
