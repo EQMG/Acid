@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filtercrt::filtercrt(const colour &screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 		ipostfilter("filterCrt", "res/shaders/filters/crtFragment.web.glsl", NULL)
 #else
 		ipostfilter("filterCrt", "res/shaders/filters/crtFragment.glsl")

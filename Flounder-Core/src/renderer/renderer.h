@@ -1,15 +1,9 @@
 #pragma once
 
+#include "../platform.h"
 #include "../framework/framework.h"
 #include "../shaders/shader.h"
 #include "../textures/texture.h"
-
-#ifdef FLOUNDER_PLATFORM_WEB
-#include <emscripten/emscripten.h>
-#include <GLFW/glfw3.h>
-#else
-#include <GL/glew.h>
-#endif
 
 #include "imanagerrender.h"
 

@@ -4,6 +4,8 @@
 // Flounder header file
 //
 
+#include "platform.h"
+
 #include "camera/camera.h"
 #include "camera/icamera.h"
 #include "camera/iplayer.h"
