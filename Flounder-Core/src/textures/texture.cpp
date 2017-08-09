@@ -79,12 +79,12 @@ namespace flounder
 	{
 		if (m_texture->m_cubemapCount != 0)
 		{
-			m_texture->m_glType = GL_TEXTURE_CUBE_MAP;
+			m_texture->m_textureType = TEXTURE_CUBE_MAP;
 			m_texture->loadFromCubemap(m_texture->m_cubemapCount, m_texture->m_cubemap);
 		}
 		else if (!m_texture->m_file.empty())
 		{
-			m_texture->m_glType = GL_TEXTURE_2D;
+			m_texture->m_textureType = TEXTURE_2D;
 			m_texture->loadFromTexture(m_texture->m_file);
 		}
 		else
@@ -104,8 +104,6 @@ namespace flounder
 		m_cubemap = NULL;
 		m_cubemapCount = 0;
 
-		m_width = 0;
-		m_height = 0;
 		m_hasAlpha = false;
 		m_border = new colour();
 		m_clampToBorder = false;
@@ -115,13 +113,23 @@ namespace flounder
 		m_nearest = false;
 		m_numberOfRows = 1;
 
-		m_glType = NULL;
-		m_textureID = NULL;
+#ifdef FLOUNDER_API_VULKAN
+		m_texture = vktexture();
+#else
+		m_texture = gltexture();
+#endif
 	}
 
 	texture::~texture()
 	{
-		glDeleteTextures(1, &m_textureID);
+#ifdef FLOUNDER_API_VULKAN
+		vkDestroyImageView(*display::get()->getVkDevice(), m_texture.m_view, NULL);
+		vkDestroyImage(*display::get()->getVkDevice(), m_texture.m_image, NULL);
+		vkDestroySampler(*display::get()->getVkDevice(), m_texture.m_sampler, NULL);
+		vkFreeMemory(*display::get()->getVkDevice(), m_texture.m_deviceMemory, NULL);
+#else
+		glDeleteTextures(1, &m_texture.m_textureID);
+#endif
 
 		delete m_builder;
 
@@ -136,18 +144,63 @@ namespace flounder
 	void texture::loadFromTexture(const std::string &file)
 	{
 		int numComponents = 0;
-		stbi_uc *data = stbi_load(file.c_str(), &m_width, &m_height, &numComponents, 4);
+		stbi_uc *data = stbi_load(file.c_str(), &m_texture.m_width, &m_texture.m_height, &numComponents, 4);
 
 		if (data == NULL)
 		{
 			std::cout << "Unable to load texture: " << file << std::endl;
 		}
 
-		glGenTextures(1, &m_textureID);
-		glBindTexture(GL_TEXTURE_2D, m_textureID);
+#ifdef FLOUNDER_API_VULKAN
+		if (m_mipmap)
+		{
+			// Setup buffer copy regions for each mip level
+			std::vector<VkBufferImageCopy> bufferCopyRegions;
+			uint32_t offset = 0;
+
+			for (uint32_t i = 0; i < m_texture.m_mipLevels; i++)
+			{
+				VkBufferImageCopy bufferCopyRegion = {};
+				bufferCopyRegion.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+				bufferCopyRegion.imageSubresource.mipLevel = i;
+				bufferCopyRegion.imageSubresource.baseArrayLayer = 0;
+				bufferCopyRegion.imageSubresource.layerCount = 1;
+				bufferCopyRegion.imageExtent.width = m_texture.m_width;
+				bufferCopyRegion.imageExtent.height = m_texture.m_height;
+				bufferCopyRegion.imageExtent.depth = 1;
+				bufferCopyRegion.bufferOffset = offset;
+
+				bufferCopyRegions.push_back(bufferCopyRegion);
+
+				offset += static_cast<uint32_t>(tex2D[i].size());
+			}
+
+			if (m_anisotropic)
+			{
+			}
+		}
+		else if (m_nearest)
+		{
+		}
+		else
+		{
+		}
+
+		if (m_clampEdges)
+		{
+		}
+		else if (m_clampToBorder)
+		{
+		}
+		else
+		{
+		}
+#else
+		glGenTextures(1, &m_texture.m_textureID);
+		glBindTexture(GL_TEXTURE_2D, m_texture.m_textureID);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_texture.m_width, m_texture.m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		stbi_image_free(data);
 
 		if (m_mipmap)
@@ -195,26 +248,29 @@ namespace flounder
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		}
+#endif
 	}
 
 	void texture::loadFromCubemap(const int count, std::string *cubemap)
 	{
-		glGenTextures(1, &m_textureID);
+#ifdef FLOUNDER_API_VULKAN
+#else
+		glGenTextures(1, &m_texture.m_textureID);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture.m_textureID);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 		for (int i = 0; i < count; i++)
 		{
 			int numComponents = 0;
-			stbi_uc *data = stbi_load(cubemap[i].c_str(), &m_width, &m_height, &numComponents, 4);
+			stbi_uc *data = stbi_load(cubemap[i].c_str(), &m_texture.m_width, &m_texture.m_height, &numComponents, 4);
 
 			if (data == NULL)
 			{
 				std::cout << "Unable to load texture: " << cubemap[i] << std::endl;
 			}
 
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, m_texture.m_width, m_texture.m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 			stbi_image_free(data);
 		}
 
@@ -223,5 +279,6 @@ namespace flounder
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+#endif
 	}
 }

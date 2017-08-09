@@ -186,7 +186,16 @@ namespace flounder
 	void renderer::bindTexture(texture *texture, const int &bankID)
 	{
 		glActiveTexture(GL_TEXTURE0 + bankID);
-		glBindTexture(texture->getGlType(), texture->getTextureID());
+
+		switch (texture->getTextureType())
+		{
+		case texture::TEXTURE_2D:
+			glBindTexture(GL_TEXTURE_2D, texture->getGlTexture().m_textureID);
+			break;
+		case texture::TEXTURE_CUBE_MAP:
+			glBindTexture(GL_TEXTURE_CUBE_MAP, texture->getGlTexture().m_textureID);
+			break;
+		}
 	}
 
 	void renderer::bindTexture(const GLint &textureID, const GLenum &glTarget, const int &bankID)

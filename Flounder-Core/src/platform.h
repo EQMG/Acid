@@ -10,8 +10,6 @@
 #include <GLFW/glfw3.h>
 #elif FLOUNDER_API_WEB
 #define GLFW_INCLUDE_ES3
-#define GLFW_FALSE false
-#define GLFW_TRUE true
 #include <emscripten/emscripten.h>
 #include <GLFW/glfw3.h>
 #endif
