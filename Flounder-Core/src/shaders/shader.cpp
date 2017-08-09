@@ -25,6 +25,9 @@ namespace flounder
 
 	flounder::shader *shader::builder::create()
 	{
+		return 0;
+
+#if 0
 		// Creates the shader and loads it to the GPU.
 		m_shader->m_programID = glCreateProgram();
 		m_shader->loadTypes();
@@ -41,6 +44,7 @@ namespace flounder
 		glUseProgram(0);
 
 		return m_shader;
+#endif
 	}
 
 	shader::shader(builder *builder)
@@ -54,7 +58,9 @@ namespace flounder
 		m_constants = new std::vector<std::pair<std::string, std::string>>();
 		m_uniforms = new std::vector<std::string>();
 
+#if 0
 		m_programID = NULL;
+#endif
 	}
 
 	shader::~shader()
@@ -67,8 +73,10 @@ namespace flounder
 		delete m_constants;
 		delete m_uniforms;
 
+#if 0
 		glUseProgram(0);
 		glDeleteProgram(m_programID);
+#endif
 	}
 
 	shader::builder *shader::newShader()
@@ -78,62 +86,87 @@ namespace flounder
 
 	void shader::start()
 	{
+#if 0
 		glUseProgram(m_programID);
+#endif
 	}
 
 	void shader::stop()
 	{
+#if 0
 		glUseProgram(0);
+#endif
 	}
 
-	GLint shader::getUniform(const std::string &name)
+	int shader::getUniform(const std::string &name)
 	{
+		return 0;
+#if 0
 		return glGetUniformLocation(m_programID, name.c_str());
+#endif
 	}
 
 	void shader::loadUniform1i(const std::string &name, const bool &value)
 	{
+#if 0
 		glUniform1i(getUniform(name), value);
+#endif
 	}
 
 	void shader::loadUniform1i(const std::string &name, const int &value)
 	{
+#if 0
 		glUniform1i(getUniform(name), value);
+#endif
 	}
 
 	void shader::loadUniform1f(const std::string &name, const float &value)
 	{
+#if 0
 		glUniform1f(getUniform(name), value);
+#endif
 	}
 
 	void shader::loadUniform2f(const std::string &name, const float &x, const float &y)
 	{
+#if 0
 		glUniform2f(getUniform(name), x, y);
+#endif
 	}
 
 	void shader::loadUniform3f(const std::string &name, const float &x, const float &y, const float &z)
 	{
+#if 0
 		glUniform3f(getUniform(name), x, y, z);
+#endif
 	}
 
 	void shader::loadUniform4f(const std::string &name, const float &x, const float &y, const float &z, const float &w)
 	{
+#if 0
 		glUniform4f(getUniform(name), x, y, z, w);
+#endif
 	}
 
 	void shader::loadUniform2fv(const std::string &name, float value[4])
 	{
+#if 0
 		glUniformMatrix2fv(getUniform(name), 1, GL_FALSE, value);
+#endif
 	}
 
 	void shader::loadUniform3fv(const std::string &name, float value[9])
 	{
+#if 0
 		glUniformMatrix3fv(getUniform(name), 1, GL_FALSE, value);
+#endif
 	}
 
 	void shader::loadUniform4fv(const std::string &name, float value[16])
 	{
+#if 0
 		glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, value);
+#endif
 	}
 
 	void shader::loadUniform2fv(const std::string &name, const matrix2x2 &value)
@@ -222,7 +255,18 @@ namespace flounder
 		//	out.close();
 
 		const char *source = type->m_processedString.c_str();
-		type->m_shaderID = glCreateShader(type->m_shaderType);
+
+#if 0
+		switch(type->m_shaderType)
+		{
+		case VERTEX:
+			type->m_shaderID = glCreateShader(GL_VERTEX_SHADER);
+			break;
+		case FRAGMENT:
+			type->m_shaderID = glCreateShader(GL_FRAGMENT_SHADER);
+			break;
+		}
+
 		glShaderSource(type->m_shaderID, 1, &source, NULL);
 		glCompileShader(type->m_shaderID);
 
@@ -241,6 +285,7 @@ namespace flounder
 		}
 
 		glAttachShader(m_programID, type->m_shaderID);
+#endif
 	}
 
 	std::string shader::processLine(const std::string &line)
@@ -379,26 +424,26 @@ namespace flounder
 			value = helperstring::trim(value);
 			int index = atoi(value.c_str());
 
+#if 0
 			if (locationType.find("in") != std::string::npos)
 			{
 				glBindAttribLocation(m_programID, index, locationName.c_str());
 			}
-#ifndef FLOUNDER_API_WEB
 			else if (locationType.find("out") != std::string::npos)
 			{
 				glBindFragDataLocation(m_programID, index, locationName.c_str());
 			}
-#endif
 			else
 			{
 				std::cout << "Could not find location type of: " << locationType << std::endl;
 			}
+#endif
 		}
 	}
 
 	void shader::deleteTypes()
 	{
-#ifndef FLOUNDER_API_WEB
+#if 0
 		for (std::vector<shadertype>::iterator it = m_shaderTypes->begin(); it < m_shaderTypes->end(); it++)
 		{
 			glDetachShader(m_programID, (*it).m_shaderID);

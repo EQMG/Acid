@@ -18,9 +18,9 @@ namespace flounder
 
 		shader *m_shader;
 
-		GLuint m_vaoID;
-		GLuint m_vboID;
-		GLuint m_vaoLength;
+		int m_vaoID;
+		int m_vboID;
+		int m_vaoLength;
 
 		int m_rendered;
 	public:
@@ -32,9 +32,9 @@ namespace flounder
 	private:
 		void prepareRendering(const vector4 &clipPlane, const icamera &camera);
 
-		void prepareInstance(particle *particle, const icamera &camera, std::vector<GLfloat> *vboData);
+		void prepareInstance(particle *particle, const icamera &camera, std::vector<float> *vboData);
 
-		void renderInstances(particletype *particleType, std::vector<GLfloat> *vboData);
+		void renderInstances(particletype *particleType, std::vector<float> *vboData);
 
 		void endRendering();
 	};

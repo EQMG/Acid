@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <vector>
-#include <GL/glew.h>
 
 #include "../maths/vector3.h"
 #include "../maths/matrix4x4.h"
@@ -37,9 +36,9 @@ namespace flounder
 	private:
 		void generateMesh();
 
-		void storeQuad1(std::vector<GLint> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void storeQuad1(std::vector<int> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		void storeQuad2(std::vector<GLint> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void storeQuad2(std::vector<int> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
 		vector3 calculateNormal(const float &x, const float &z);
 

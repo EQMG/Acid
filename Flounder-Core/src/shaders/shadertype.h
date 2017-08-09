@@ -4,6 +4,12 @@
 
 namespace flounder
 {
+	enum programtype
+	{
+		VERTEX, 
+		FRAGMENT
+	};
+
 	/// <summary>
 	/// A enum that tells the shader how to load the type.
 	/// </summary>
@@ -18,11 +24,13 @@ namespace flounder
 	/// </summary>
 	struct shadertype
 	{
-		GLenum m_shaderType;
+		programtype m_shaderType;
 		std::string m_load;
 		loadtype m_loadtype;
 		std::string m_processedString;
+#if 0
 		GLuint m_shaderID;
+#endif
 
 		/// <summary>
 		/// Creates a new shader type.
@@ -30,13 +38,15 @@ namespace flounder
 		/// <param name="shaderType"> The GL shader type. </param>
 		/// <param name="load"> The GL string to load. </param>
 		/// <param name="type"> The type of GL loading to be done. </param>
-		shadertype(const GLenum &shaderType, const std::string &load, const loadtype &type)
+		shadertype(const programtype &shaderType, const std::string &load, const loadtype &type)
 		{
 			m_shaderType = shaderType;
 			m_load = load;
 			m_loadtype = type;
 			m_processedString = "";
+#if 0
 			m_shaderID = 0;
+#endif
 		}
 
 		/// <summary>

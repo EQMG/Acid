@@ -6,8 +6,8 @@ namespace flounder
 		irenderer()
 	{
 		m_shader = shader::newShader()->addName("terrains")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/terrains/terrainVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/terrains/terrainFragment.glsl", loadtype::FILE))
+			->addType(shadertype(VERTEX, "res/shaders/terrains/terrainVertex.glsl", loadtype::FILE))
+			->addType(shadertype(FRAGMENT, "res/shaders/terrains/terrainFragment.glsl", loadtype::FILE))
 			->create();
 	}
 
@@ -56,7 +56,9 @@ namespace flounder
 		m_shader->loadUniform1f("reflectivity", 0.0f);
 
 		// Tells the GPU to render this object.
+#if 0
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getModel()->getVaoLength());
+#endif
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(3, 0, 2, 3);

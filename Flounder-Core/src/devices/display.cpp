@@ -46,11 +46,13 @@ namespace flounder
 	void callbackFrame(GLFWwindow *window, int width, int height)
 	{
 		display::get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-#ifdef FLOUNDER_API_VULKAN
 		// TODO
-#else
-		glViewport(0, 0, width, height);
-#endif
+	}
+
+	VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT messageFlags, VkDebugReportObjectTypeEXT objectType, uint64_t sourceObject, size_t location, int32_t messageCode, const char *layerPrefix, const char *message, void *userdata)
+	{
+		std::cout << message << std::endl;
+		return false;
 	}
 
 	display::display() :
@@ -74,6 +76,17 @@ namespace flounder
 		m_fullscreen = false;
 
 		m_window = NULL;
+#ifdef FLOUNDER_API_VULKAN
+		m_instance = NULL;
+		m_gpu = NULL;
+		m_graphicsFamilyIndex = 0;
+		m_gpuProperties = {};
+		m_instanceLayerList = std::vector<const char*>();
+		m_instanceExtensionList = std::vector<const char*>();
+		m_deviceExtensionList = std::vector<const char*>();
+		m_debugReport = {};
+		m_device = NULL;
+#endif
 		m_closed = false;
 		m_focused = true;
 		m_windowPosX = 0;
@@ -137,63 +150,125 @@ namespace flounder
 		glfwMakeContextCurrent(m_window);
 
 		// Enables VSync if requested.
-#ifndef FLOUNDER_API_WEB
 		glfwSwapInterval(m_vsync ? 1 : 0);
-#endif
 
 		// Shows the OpenGl window.
 		glfwShowWindow(m_window);
 
 		// Sets the displays callbacks.
-#ifdef FLOUNDER_API_WEB
-		// emscripten_set_resize_callback(nullptr, this, 1, emUICallback); // TODO
-#endif
 		glfwSetWindowCloseCallback(m_window, callbackClose);
 		glfwSetWindowFocusCallback(m_window, callbackFocus);
 		glfwSetWindowPosCallback(m_window, callbackPosition);
 		glfwSetWindowSizeCallback(m_window, callbackSize);
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 
-#ifdef FLOUNDER_API_GL
-		// Gets any OpenGL errors.
-		GLenum glError = glGetError();
-
-		if (glError != GL_NO_ERROR)
-		{
-			std::cout << glError << std::endl;
-			throw std::runtime_error("Failed to init OpenGL!");
-		}
-
-		// Initialize the GLEW library.
-		if (glewInit() != GLEW_OK)
-		{
-			throw std::runtime_error("Failed to init GLEW!");
-		}
-#elif FLOUNDER_API_VULKAN
-		VkApplicationInfo appInfo = {};
-		appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-		appInfo.pApplicationName = m_title.c_str();
-		appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-		appInfo.pEngineName = "Flounder";
-		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-		appInfo.apiVersion = VK_API_VERSION_1_0;
-
-		VkInstanceCreateInfo createInfo = {};
-		createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-		createInfo.pApplicationInfo = &appInfo;
+		// Sets up the debug callbacks and extensions.
+		m_instanceLayerList.push_back("VK_LAYER_LUNARG_standard_validation");
 
 		unsigned int glfwExtensionCount = 0;
 		const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
-		createInfo.enabledExtensionCount = glfwExtensionCount;
-		createInfo.ppEnabledExtensionNames = glfwExtensions;
-		createInfo.enabledLayerCount = 0;
+		for (uint32_t i = 0; i < glfwExtensionCount; i++) 
+		{
+			m_instanceExtensionList.push_back(glfwExtensions[i]);
+		}
 
-		if (vkCreateInstance(&createInfo, NULL, m_instance) != VK_SUCCESS) 
+		m_instanceExtensionList.push_back("VK_EXT_DEBUG_REPORT_EXTENSION_NAME");
+
+		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo{};
+		debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
+		debugCallBackCreateInfo.pfnCallback = vkCallbackDebug;
+		debugCallBackCreateInfo.flags = 
+			// VK_DEBUG_REPORT_INFORMATION_BIT_EXT |
+			VK_DEBUG_REPORT_WARNING_BIT_EXT |
+			VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT |
+			VK_DEBUG_REPORT_ERROR_BIT_EXT |
+			// VK_DEBUG_REPORT_DEBUG_BIT_EXT |
+			0;
+
+		// Sets up the instance.
+		VkApplicationInfo applicationInfo{};
+		applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+		applicationInfo.pApplicationName = m_title.c_str();
+		applicationInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+		applicationInfo.pEngineName = "Flounder";
+		applicationInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 0);
+
+		VkInstanceCreateInfo instanceCreateInfo{};
+		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+		instanceCreateInfo.pApplicationInfo = &applicationInfo;
+		instanceCreateInfo.enabledLayerCount = m_instanceLayerList.size();
+		instanceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
+		instanceCreateInfo.enabledExtensionCount = m_instanceExtensionList.size();
+		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
+		instanceCreateInfo.pNext = &debugCallBackCreateInfo;
+
+		if (vkCreateInstance(&instanceCreateInfo, NULL, &m_instance) != VK_SUCCESS)
 		{
 			throw std::runtime_error("Failed to create Vulkan instance!");
 		}
-#endif
+
+		// Inits debuging.
+		fvkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT)vkGetInstanceProcAddr(m_instance, "vkCreateDebugReportCallbackEXT");
+		fvkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(m_instance, "vkDestroyDebugReportCallbackEXT");
+
+		if (fvkCreateDebugReportCallbackEXT == NULL || fvkDestroyDebugReportCallbackEXT == NULL)
+		{
+			throw std::runtime_error("Failed to find Vulkan callback extensions!");
+		}
+
+		fvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, NULL, &m_debugReport);
+
+		// Gets the physical GPU device.
+		uint32_t gpuCount = 0;
+		vkEnumeratePhysicalDevices(m_instance, &gpuCount, NULL);
+		std::vector<VkPhysicalDevice> gpuList(gpuCount);
+		vkEnumeratePhysicalDevices(m_instance, &gpuCount, gpuList.data());
+		m_gpu = gpuList[0];
+		vkGetPhysicalDeviceProperties(m_gpu, &m_gpuProperties);
+
+		// Gets the families from the GPU,
+		uint32_t familyCount = 0;
+		vkGetPhysicalDeviceQueueFamilyProperties(m_gpu, &familyCount, NULL);
+		std::vector<VkQueueFamilyProperties> familyPropertyList(familyCount);
+		vkGetPhysicalDeviceQueueFamilyProperties(m_gpu, &familyCount, familyPropertyList.data());
+
+		bool foundGraphics = false;
+
+		for (uint32_t i = 0; i < familyCount; i++)
+		{
+			if (familyPropertyList[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
+			{
+				m_graphicsFamilyIndex = i;
+				foundGraphics = true;
+			}
+		}
+
+		if (!foundGraphics)
+		{
+			throw std::runtime_error("Failed to find Vulkan graphics queue bit!");
+		}
+
+		// Gets the GPU family queue.
+		float quePriorities[]{ 1.0f };
+		VkDeviceQueueCreateInfo deviceQueueInfo{};
+		deviceQueueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		deviceQueueInfo.queueFamilyIndex = m_graphicsFamilyIndex;
+		deviceQueueInfo.queueCount = 1;
+		deviceQueueInfo.pQueuePriorities = quePriorities;
+
+		VkDeviceCreateInfo deviceCreateInfo{};
+		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+		deviceCreateInfo.queueCreateInfoCount = 1;
+		deviceCreateInfo.pQueueCreateInfos = &deviceQueueInfo;
+		deviceCreateInfo.enabledExtensionCount = m_deviceExtensionList.size();
+		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
+
+		if (vkCreateDevice(m_gpu, &deviceCreateInfo, NULL, &m_device) != VK_SUCCESS)
+		{
+			throw std::runtime_error("Failed to create Vulkan device!");
+		}
 	}
 
 	display::~display()
@@ -204,10 +279,11 @@ namespace flounder
 		// Terminate GLFW.
 		glfwTerminate();
 
-#if FLOUNDER_API_VULKAN
-vkDestroyDevice(*m_device, NULL);
-vkDestroyInstance(*m_instance, NULL);
-#endif
+		// Destroys vulkan.
+		fvkDestroyDebugReportCallbackEXT(m_instance, m_debugReport, NULL);
+		vkDestroyDevice(m_device, NULL);
+		vkDestroyInstance(m_instance, NULL);
+
 		m_closed = false;
 	}
 
@@ -219,10 +295,8 @@ vkDestroyInstance(*m_instance, NULL);
 		// Polls for window events. The key callback will only be invoked during this call.
 		glfwPollEvents();
 
-#ifndef FLOUNDER_API_WEB
 		glfwSwapInterval(m_vsync ? 1 : 0);
 		glfwWindowHint(GLFW_SAMPLES, m_samples);
-#endif
 
 		// Updates the aspect ratio.
 		m_aspectRatio = static_cast<float>(getWidth()) / static_cast<float>(getHeight());
@@ -254,7 +328,6 @@ vkDestroyInstance(*m_instance, NULL);
 
 		if (!m_icon.empty())
 		{
-#ifndef FLOUNDER_API_WEB
 			int width = 0;
 			int height = 0;
 			int components = 0;
@@ -275,7 +348,6 @@ vkDestroyInstance(*m_instance, NULL);
 			}
 
 			stbi_image_free(data);
-#endif
 		}
 	}
 
@@ -288,7 +360,6 @@ vkDestroyInstance(*m_instance, NULL);
 
 		m_fullscreen = fullscreen;
 
-#ifndef FLOUNDER_API_WEB
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
 
@@ -306,6 +377,5 @@ vkDestroyInstance(*m_instance, NULL);
 			m_windowPosY = (videoMode->height - m_windowHeight) / 2;
 			glfwSetWindowMonitor(m_window, NULL, m_windowPosX, m_windowPosY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
 		}
-#endif
 	}
 }

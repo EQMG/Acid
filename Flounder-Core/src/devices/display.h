@@ -2,8 +2,10 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
-#include "../platform.h"
+#include <vulkan/vulkan.h>
+#include <glfw/glfw3.h>
 #include "../framework/framework.h"
 #include "../textures/stb_image.h"
 
@@ -33,11 +35,19 @@ namespace flounder
 		int m_samples;
 		bool m_fullscreen;
 
+		PFN_vkCreateDebugReportCallbackEXT fvkCreateDebugReportCallbackEXT = NULL;
+		PFN_vkDestroyDebugReportCallbackEXT fvkDestroyDebugReportCallbackEXT = NULL;
+
 		GLFWwindow *m_window;
-#ifdef FLOUNDER_API_VULKAN
-		VkInstance *m_instance;
-		VkDevice *m_device;
-#endif
+		VkInstance m_instance;
+		VkPhysicalDevice m_gpu;
+		uint32_t m_graphicsFamilyIndex;
+		VkPhysicalDeviceProperties m_gpuProperties;
+		std::vector<const char*> m_instanceLayerList;
+		std::vector<const char*> m_instanceExtensionList;
+		std::vector<const char*> m_deviceExtensionList;
+		VkDebugReportCallbackEXT m_debugReport;
+		VkDevice m_device;
 		bool m_closed;
 		bool m_focused;
 		int m_windowPosX;
@@ -49,6 +59,8 @@ namespace flounder
 		friend void callbackPosition(GLFWwindow *window, int xpos, int ypos);
 		friend void callbackSize(GLFWwindow *window, int width, int height);
 		friend void callbackFrame(GLFWwindow *window, int width, int height);
+		friend VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT messageFlags, VkDebugReportObjectTypeEXT objectType, uint64_t sourceObject,
+			size_t location, int32_t messageCode, const char *layerPrefix, const char *message, void *userdata);
 	public:
 		/// <summary>
 		/// Gets this framework instance.
@@ -215,19 +227,23 @@ namespace flounder
 		/// <returns> The current GLFW window. </returns>
 		inline GLFWwindow *getWindow() const { return m_window; }
 
-#ifdef FLOUNDER_API_VULKAN
 		/// <summary>
 		/// Gets the current Vulkan instance.
 		/// </summary>
 		/// <returns> The current Vulkan instance. </returns>
-		inline VkInstance *getVkInstance() const { return m_instance; }
+		inline VkInstance getVkInstance() const { return m_instance; }
+
+		/// <summary>
+		/// Gets the current Vulkan gpu.
+		/// </summary>
+		/// <returns> The current Vulkan gpu. </returns>
+		inline VkPhysicalDevice getVkGpu() const { return m_gpu; }
 
 		/// <summary>
 		/// Gets the current Vulkan device.
 		/// </summary>
 		/// <returns> The current Vulkan device. </returns>
-		inline VkDevice *getVkDevice() const { return m_device; }
-#endif
+		inline VkDevice getVkDevice() const { return m_device; }
 
 		/// <summary>
 		/// Gets if the GLFW display is closed.

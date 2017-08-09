@@ -58,13 +58,17 @@ namespace flounder
 
 		m_aabb = NULL;
 
+#if 0
 		m_vaoID = 0;
 		m_vaoLength = 0;
+#endif
 	}
 
 	model::~model()
 	{
+#if 0
 		glDeleteVertexArrays(1, &m_vaoID);
+#endif
 
 		delete m_builder;
 
@@ -271,6 +275,7 @@ namespace flounder
 
 	void model::loadToOpenGL()
 	{
+#if 0
 		m_vaoID = loaders::get()->createVAO();
 		
 		if (m_indices != NULL)
@@ -308,6 +313,7 @@ namespace flounder
 		{
 			m_vaoLength = m_vertices->size() / 3;
 		}
+#endif
 	}
 
 	void model::createAABB()

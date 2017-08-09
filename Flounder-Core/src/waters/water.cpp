@@ -62,7 +62,7 @@ namespace flounder
 
 	void water::generateMesh()
 	{
-		std::vector<GLfloat> *vertices = new std::vector<GLfloat>();
+		std::vector<float> *vertices = new std::vector<float>();
 
 		for (int col = 0; col < VERTEX_COUNT - 1; col++)
 		{
@@ -93,7 +93,7 @@ namespace flounder
 		delete vertices;
 	}
 
-	void water::storeQuad1(std::vector<GLfloat> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void water::storeQuad1(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
 		storeVertex(vertices, topLeft, vector2(0.0f, 1.0f), mixed ? vector2(1.0f, 0.0f) : vector2(1.0f, 1.0f));
 		storeVertex(vertices, bottomLeft, mixed ? vector2(1.0f, -1.0f) : vector2(1.0f, 0.0f), vector2(0.0f, -1.0f));
@@ -120,7 +120,7 @@ namespace flounder
 		}
 	}
 
-	void water::storeQuad2(std::vector<GLfloat> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void water::storeQuad2(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
 		storeVertex(vertices, topRight, vector2(-1.0f, 0.0f), mixed ? vector2(0.0f, 1.0f) : vector2(-1.0f, 1.0f));
 		storeVertex(vertices, topLeft, mixed ? vector2(1.0f, 1.0f) : vector2(0.0f, 1.0f), vector2(1.0f, 0.0f));
@@ -147,7 +147,7 @@ namespace flounder
 		}
 	}
 
-	void water::storeVertex(std::vector<GLfloat> *vertices, const int &index, const vector2 &otherPoint1, const vector2 &otherPoint2)
+	void water::storeVertex(std::vector<float> *vertices, const int &index, const vector2 &otherPoint1, const vector2 &otherPoint2)
 	{
 		int gridX = index % VERTEX_COUNT;
 		int gridZ = index / VERTEX_COUNT;

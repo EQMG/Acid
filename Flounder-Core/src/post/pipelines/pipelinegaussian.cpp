@@ -24,8 +24,10 @@ namespace flounder
 
 	void pipelinegaussian::renderPipeline(const int n_args, va_list args)
 	{
+#if 0
 		m_filterBlurHorizontal->applyFilter(1, args[0]);
 		m_filterBlurVertical->applyFilter(1, m_filterBlurHorizontal->getFbo()->getColourTexture(0));
+#endif
 	}
 
 	fbo *pipelinegaussian::getOutput()

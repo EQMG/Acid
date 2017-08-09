@@ -3,7 +3,7 @@
 #include "../framework/framework.h"
 
 #include "resource/processorresource.h"
-#include "opengl/processoropengl.h"
+#include "graphic/processorgraphic.h"
 #include "iprocessor.h"
 #include "irequest.h"
 
