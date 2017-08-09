@@ -5,7 +5,7 @@
 #include <map>
 #include <stdarg.h>
 
-#include "../platform.h"
+#include "../devices/display.h"
 #include "../framework/framework.h"
 
 namespace flounder
@@ -17,7 +17,9 @@ namespace flounder
 		public imodule
 	{
 	private:
+#if 0
 		std::map<GLuint, std::vector<GLuint>*> *m_loaded;
+#endif
 	public:
 		/// <summary>
 		/// Gets this framework instance.
@@ -38,7 +40,7 @@ namespace flounder
 		/// Creates an empty VAO.
 		/// </summary>
 		/// <returns> The ID of the VAO. </returns>
-		GLuint createVAO();
+		int createVAO();
 
 		void unbindVAO();
 
@@ -55,7 +57,7 @@ namespace flounder
 		/// </summary>
 		/// <param name="vboID"> The FBO to update. </param>
 		/// <param name="data"> The data to add into the FBO. </param>
-		void updateVBO(const GLuint &vboID, const int &floatCount, const std::vector<GLfloat> &data);
+		void updateVBO(const int &vboID, const int &floatCount, const std::vector<float> &data);
 
 		/// <summary>
 		/// Creates an index buffer and binds it to a VAO.
@@ -63,7 +65,7 @@ namespace flounder
 		/// <param name="vaoID"> The ID of the VAO to which the index buffer should be bound. </param>
 		/// <param name="indices"> The array of indices to be stored in the index buffer. </param>
 		/// <returns> The ID of the index buffer VBO. </returns>
-		GLuint createIndicesVBO(const GLuint &vaoID, const std::vector<GLint> &indices);
+		int createIndicesVBO(const int &vaoID, const std::vector<int> &indices);
 
 		/// <summary>
 		/// Stores a float array of data into a FBO.
@@ -73,7 +75,7 @@ namespace flounder
 		/// <param name="attributeNumber"> The attribute to create the FBO under. </param>
 		/// <param name="coordSize"> The size of data being store. </param>
 		/// <returns> The new FBO's ID. </returns>
-		GLuint storeDataInVBO(const GLuint &vaoID, const std::vector<GLfloat> &data, const int &attributeNumber, const int &coordSize);
+		int storeDataInVBO(const int &vaoID, const std::vector<float> &data, const int &attributeNumber, const int &coordSize);
 
 		/// <summary>
 		/// Adds a instances attribute to a VBO.
@@ -84,6 +86,6 @@ namespace flounder
 		/// <param name="dataSize"> The size of data to add. </param>
 		/// <param name="instancedDataLength"> The length of data to allocate. </param>
 		/// <param name="offset"> The offset between data. </param>
-		void addInstancedAttribute(const GLuint &vaoID, const GLuint &vboID, const GLuint &attribute, const GLuint &dataSize, const GLuint &instancedDataLength, const GLuint &offset);
+		void addInstancedAttribute(const int &vaoID, const int &vboID, const int &attribute, const int &dataSize, const int &instancedDataLength, const int &offset);
 	};
 }

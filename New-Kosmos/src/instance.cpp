@@ -1,5 +1,4 @@
 #include "instance.h"
-#include "entities/components/componentalpha.h"
 
 instance::instance()
 {
@@ -26,10 +25,8 @@ instance::instance()
 	m_systemTest->setSystemCentre(vector3(0.0f, 0.0f, 0.0f));
 	particles::get()->addSystem(m_systemTest);*/
 	
-	flounder::entity *e = new flounder::entity(NULL, vector3(), vector3());
-	e->addComponent(new componentalpha(1.0f));
-	//componentalpha *ca = e->getComponent<componentalpha*>();
-	//ca->setAlpha(0.5f);
+	entitytest *test = new entitytest(NULL, vector3(), vector3());
+	// componentalpha *meme = test->getComponent<componentalpha*>();
 }
 
 instance::~instance()

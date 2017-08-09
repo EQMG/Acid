@@ -2,32 +2,32 @@
 
 #include "../../framework/framework.h"
 
-#include "requestresource.h"
+#include "requestgraphic.h"
 #include "../iprocessor.h"
 #include "../queue.h"
 
 namespace flounder
 {
 	/// <summary>
-	/// A extension that is responsible for processing resource requests.
+	/// A extension that is responsible for processing OpenGL requests.
 	/// </summary>
-	class processorresource :
-	public iprocessor
+	class processorgraphic : 
+		public iprocessor
 	{
 	private:
 		static const double MAX_TIME_MILLIS;
 
-		queue<requestresource*> *m_queue;
+		queue<requestgraphic*> *m_queue;
 	public:
 		/// <summary>
-		/// Creates a new resource processor.
+		/// Creates a new opengl processor.
 		/// </summary>
-		processorresource();
+		processorgraphic();
 
 		/// <summary>
-		/// Deconstructor for the resource processor.
+		/// Deconstructor for the opengl processor.
 		/// </summary>
-		~processorresource();
+		~processorgraphic();
 
 		void update() override;
 

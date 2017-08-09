@@ -5,12 +5,8 @@ namespace flounder
 	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader, fbo *fbo)
 	{
 		m_shader = shader::newShader()->addName(filterName)
-#ifdef FLOUNDER_API_WEB
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.web.glsl", loadtype::FILE))
-#else
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/filters/defaultVertex.glsl", loadtype::FILE))
-#endif
-			->addType(shadertype(GL_FRAGMENT_SHADER, fragmentShader, loadtype::FILE))->create();
+			->addType(shadertype(VERTEX, "res/shaders/filters/defaultVertex.glsl", loadtype::FILE))
+			->addType(shadertype(FRAGMENT, fragmentShader, loadtype::FILE))->create();
 		m_fbo = fbo;
 		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
 	}
@@ -70,11 +66,14 @@ namespace flounder
 
 		for (int i = 0; i < n_args; i++)
 		{
-			GLuint texture = va_arg(args, GLuint);
+#if 0
 			renderer::get()->bindTexture(texture, GL_TEXTURE_2D, i);
+#endif
 		}
 
+#if 0
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, m_model->getVaoLength()); // Render post filter.
+#endif
 
 		renderer::get()->unbindVAO(2, 0, 1);
 		renderer::get()->goWireframe(lastWireframe);

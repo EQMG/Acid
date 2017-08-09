@@ -6,8 +6,8 @@ namespace flounder
 		irenderer()
 	{
 		m_shader = shader::newShader()->addName("skyboxes")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/skyboxes/skyboxVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/skyboxes/skyboxFragment.glsl", loadtype::FILE))
+			->addType(shadertype(VERTEX, "res/shaders/skyboxes/skyboxVertex.glsl", loadtype::FILE))
+			->addType(shadertype(FRAGMENT, "res/shaders/skyboxes/skyboxFragment.glsl", loadtype::FILE))
 			->create();
 	}
 
@@ -54,7 +54,9 @@ namespace flounder
 		m_shader->loadUniform1f("blendFactor", object->getBlend());
 
 		// Tells the GPU to render this object.
+#if 0
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getModel()->getVaoLength());
+#endif
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);

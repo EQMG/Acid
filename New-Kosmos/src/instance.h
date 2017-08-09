@@ -2,6 +2,8 @@
 
 #include <flounder.h>
 
+#include "entities/entitytest.h"
+
 using namespace flounder;
 
 class instance :

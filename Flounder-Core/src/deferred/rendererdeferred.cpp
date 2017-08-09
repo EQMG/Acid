@@ -5,8 +5,8 @@ namespace flounder
 	rendererdeferred::rendererdeferred(fbo *fbo)
 	{
 		m_shader = shader::newShader()->addName("rendererdeferred")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/deferred/deferredVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/deferred/deferredFragment.glsl", loadtype::FILE))->create();
+			->addType(shadertype(VERTEX, "res/shaders/deferred/deferredVertex.glsl", loadtype::FILE))
+			->addType(shadertype(FRAGMENT, "res/shaders/deferred/deferredFragment.glsl", loadtype::FILE))->create();
 		m_fbo = fbo;
 		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
 	}
@@ -43,13 +43,17 @@ namespace flounder
 
 		for (int i = 0; i < n_args; i++)
 		{
-			GLuint texture = va_arg(ap, GLuint);
+			int texture = va_arg(ap, int);
+#if 0
 			renderer::get()->bindTexture(texture, GL_TEXTURE_2D, i);
+#endif
 		}
 
 		va_end(ap);
 
+#if 0
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, m_model->getVaoLength()); // Render post filter.
+#endif
 
 		renderer::get()->unbindVAO(2, 0, 1);
 		renderer::get()->goWireframe(lastWireframe);

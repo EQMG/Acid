@@ -5,7 +5,6 @@
 #include <map>
 #include <stdarg.h>
 
-#include "../platform.h"
 #include "../devices/display.h"
 #include "../helpers/helperfile.h"
 #include "../helpers/helperstring.h"
@@ -65,7 +64,6 @@ namespace flounder
 			/// <returns> The created shader. </returns>
 			shader *create();
 		};
-
 	protected:
 		builder *m_builder;
 
@@ -75,8 +73,6 @@ namespace flounder
 		std::vector<std::string> *m_layoutBindings;
 		std::vector<std::pair<std::string, std::string>> *m_constants;
 		std::vector<std::string> *m_uniforms;
-
-		GLuint m_programID;
 
 		/// <summary>
 		/// Creates a new shader.
@@ -116,7 +112,7 @@ namespace flounder
 		/// </summary>
 		/// <param name="name"> The uniforms name. </param>
 		/// <returns> The uniform location. </returns>
-		GLint getUniform(const std::string &name);
+		int getUniform(const std::string &name);
 
 		/// <summary>
 		/// Loads a boolean into a uniform.

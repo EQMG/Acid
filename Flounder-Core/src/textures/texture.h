@@ -5,7 +5,6 @@
 #include <vector>
 #include <stdarg.h>
 
-#include "../platform.h"
 #include "../devices/display.h"
 #include "../maths/colour.h"
 
@@ -98,27 +97,9 @@ namespace flounder
 	public:
 		enum typetexture 
 		{
-			TEXTURE_2D, TEXTURE_CUBE_MAP
+			typeTexture2D, typeTextureCubeMap
 		};
 
-#ifdef FLOUNDER_API_VULKAN
-		struct vktexture 
-		{
-			int32_t m_width, m_height;
-			VkSampler m_sampler;
-			VkImage m_image;
-			VkImageLayout m_imageLayout;
-			VkDeviceMemory m_deviceMemory;
-			VkImageView m_view;
-			int32_t m_mipLevels;
-		};
-#else
-		struct gltexture 
-		{
-			int32_t m_width, m_height;
-			GLuint m_textureID;
-		};
-#endif
 	protected:
 		builder *m_builder;
 
@@ -136,11 +117,13 @@ namespace flounder
 		int m_numberOfRows;
 
 		typetexture m_textureType;
-#ifdef FLOUNDER_API_VULKAN
-		vktexture m_texture;
-#else
-		gltexture m_texture;
-#endif
+		int32_t m_width, m_height;
+		VkSampler m_sampler;
+		VkImage m_image;
+		VkImageLayout m_imageLayout;
+		VkDeviceMemory m_deviceMemory;
+		VkImageView m_view;
+		int32_t m_mipLevels;
 
 		/// <summary>
 		/// A new OpenGL texture object.
@@ -188,20 +171,6 @@ namespace flounder
 		/// </summary>
 		/// <returns> The textures type. </returns>
 		inline typetexture getTextureType() const { return m_textureType; }
-
-#ifdef FLOUNDER_API_VULKAN
-		/// <summary>
-		/// The Vulkan loaded texture.
-		/// </summary>
-		/// <returns> The Vulkan loaded texture. </returns>
-		inline vktexture glTextureType() const { return m_texture; }
-#else
-		/// <summary>
-		/// The OpenGL loaded texture.
-		/// </summary>
-		/// <returns> The Vulkan loaded texture. </return
-		inline gltexture getGlTexture() const { return m_texture; }
-#endif
 	private:
 		/// <summary>
 		/// Loads the texture object from a texture file.

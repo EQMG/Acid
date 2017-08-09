@@ -79,15 +79,15 @@ namespace flounder
 
 		static void completeStructure(std::vector<line*> &lines, line *currentLine, word *currentWord, text *object);
 
-		static void createQuadVertices(text *object, std::vector<line*> lines, std::vector<GLfloat> *vertices, std::vector<GLfloat> *textures);
+		static void createQuadVertices(text *object, std::vector<line*> lines, std::vector<float> *vertices, std::vector<float> *textures);
 
 		static void addVerticesForCharacter(const double &cursorX, const double &cursorY, character *character, std::vector<float> *vertices);
 
-		static void addVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<GLfloat> *vertices);
+		static void addVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> *vertices);
 
-		static void addTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<GLfloat> *textures);
+		static void addTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> *textures);
 
-		static vector2 getBounding(std::vector<GLfloat> *vertices);
+		static vector2 getBounding(std::vector<float> *vertices);
 	public:
 		/// <summary>
 		/// Gets the string of text represented.
