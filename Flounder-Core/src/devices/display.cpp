@@ -46,7 +46,11 @@ namespace flounder
 	void callbackFrame(GLFWwindow *window, int width, int height)
 	{
 		display::get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+#ifdef FLOUNDER_API_VULKAN
+		// TODO
+#else
 		glViewport(0, 0, width, height);
+#endif
 	}
 
 	display::display() :
@@ -81,8 +85,7 @@ namespace flounder
 		// Initialize the GLFW library.
 		if (!glfwInit())
 		{
-			std::cout << "Could not init GLFW!" << std::endl;
-			framework::get()->requestClose(true);
+			throw std::runtime_error("Failed to init GLFW!");
 		}
 
 		// Configures the window.
@@ -96,7 +99,7 @@ namespace flounder
 		if (m_glfwMajor >= 3 && m_glfwMinor >= 2)
 		{
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
 		}
 
 		glfwWindowHint(GLFW_STENCIL_BITS, 8); // Fixes 16 bit stencil bits in macOS.
@@ -121,9 +124,8 @@ namespace flounder
 		// Gets any window errors.
 		if (m_window == NULL)
 		{
-			std::cout << "Could not create the window! Update your graphics drivers and ensure your computer supports OpenGL!" << std::endl;
-			framework::get()->requestClose(true);
 			glfwTerminate();
+			throw std::runtime_error("Filed to create the GLFW window!");
 		}
 
 		// Centre the window position.
@@ -142,15 +144,6 @@ namespace flounder
 		// Shows the OpenGl window.
 		glfwShowWindow(m_window);
 
-		// Gets any OpenGL errors.
-		GLenum glError = glGetError();
-
-		if (glError != GL_NO_ERROR)
-		{
-			std::cout << "Failed to load OpenGL!" << std::endl << glError << std::endl;
-			framework::get()->requestClose(true);
-		}
-
 		// Sets the displays callbacks.
 #ifdef FLOUNDER_API_WEB
 		// emscripten_set_resize_callback(nullptr, this, 1, emUICallback); // TODO
@@ -162,13 +155,44 @@ namespace flounder
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 
 #ifdef FLOUNDER_API_GL
+		// Gets any OpenGL errors.
+		GLenum glError = glGetError();
+
+		if (glError != GL_NO_ERROR)
+		{
+			std::cout << glError << std::endl;
+			throw std::runtime_error("Failed to init OpenGL!");
+		}
+
 		// Initialize the GLEW library.
 		if (glewInit() != GLEW_OK)
 		{
-			std::cout << "Could not init GLEW!" << std::endl;
-			framework::get()->requestClose(true);
+			throw std::runtime_error("Failed to init GLEW!");
 		}
 #elif FLOUNDER_API_VULKAN
+		VkApplicationInfo appInfo = {};
+		appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+		appInfo.pApplicationName = m_title.c_str();
+		appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+		appInfo.pEngineName = "Flounder";
+		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+		appInfo.apiVersion = VK_API_VERSION_1_0;
+
+		VkInstanceCreateInfo createInfo = {};
+		createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+		createInfo.pApplicationInfo = &appInfo;
+
+		unsigned int glfwExtensionCount = 0;
+		const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+
+		createInfo.enabledExtensionCount = glfwExtensionCount;
+		createInfo.ppEnabledExtensionNames = glfwExtensions;
+		createInfo.enabledLayerCount = 0;
+
+		if (vkCreateInstance(&createInfo, NULL, m_instance) != VK_SUCCESS) 
+		{
+			throw std::runtime_error("Failed to create Vulkan instance!");
+		}
 #endif
 	}
 
@@ -180,6 +204,10 @@ namespace flounder
 		// Terminate GLFW.
 		glfwTerminate();
 
+#if FLOUNDER_API_VULKAN
+vkDestroyDevice(*m_device, NULL);
+vkDestroyInstance(*m_instance, NULL);
+#endif
 		m_closed = false;
 	}
 

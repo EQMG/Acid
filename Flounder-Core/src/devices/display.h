@@ -34,6 +34,10 @@ namespace flounder
 		bool m_fullscreen;
 
 		GLFWwindow *m_window;
+#ifdef FLOUNDER_API_VULKAN
+		VkInstance *m_instance;
+		VkDevice *m_device;
+#endif
 		bool m_closed;
 		bool m_focused;
 		int m_windowPosX;
@@ -210,6 +214,20 @@ namespace flounder
 		/// </summary>
 		/// <returns> The current GLFW window. </returns>
 		inline GLFWwindow *getWindow() const { return m_window; }
+
+#ifdef FLOUNDER_API_VULKAN
+		/// <summary>
+		/// Gets the current Vulkan instance.
+		/// </summary>
+		/// <returns> The current Vulkan instance. </returns>
+		inline VkInstance *getVkInstance() const { return m_instance; }
+
+		/// <summary>
+		/// Gets the current Vulkan device.
+		/// </summary>
+		/// <returns> The current Vulkan device. </returns>
+		inline VkDevice *getVkDevice() const { return m_device; }
+#endif
 
 		/// <summary>
 		/// Gets if the GLFW display is closed.
