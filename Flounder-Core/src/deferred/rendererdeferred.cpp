@@ -100,11 +100,11 @@ namespace flounder
 			}
 		}
 
-		m_shader->loadUniform4fv("shadowSpaceMatrix", *shadows::get()->getToShadowMapSpaceMatrix());
+		m_shader->loadUniform4fv("shadowSpaceMatrix", *shadows::get()->getShadowBox()->getToShadowMapSpaceMatrix());
 		m_shader->loadUniform1f("shadowDistance", shadows::get()->getShadowBoxDistance());
 		m_shader->loadUniform1f("shadowTransition", shadows::get()->getShadowTransition());
-		m_shader->loadUniform1f("shadowMapSize", shadows::get()->getShadowSize());
-		m_shader->loadUniform1f("shadowPCF", shadows::get()->getShadowPCF());
+		m_shader->loadUniform1i("shadowMapSize", shadows::get()->getShadowSize());
+		m_shader->loadUniform1i("shadowPCF", shadows::get()->getShadowPCF());
 		m_shader->loadUniform1f("shadowBias", shadows::get()->getShadowBias());
 		m_shader->loadUniform1f("shadowDarkness", shadows::get()->getShadowDarkness() * shadows::get()->getShadowFactor());
 		m_shader->loadUniform1f("brightnessBoost", shadows::get()->getBrightnessBoost());

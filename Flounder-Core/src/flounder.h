@@ -13,6 +13,8 @@
 #include "devices/joysticks.h"
 #include "devices/keyboard.h"
 #include "devices/mouse.h"
+#include "entities/entity.h"
+#include "entities/icomponent.h"
 #include "events/eventchange.h"
 #include "events/events.h"
 #include "events/eventstandard.h"

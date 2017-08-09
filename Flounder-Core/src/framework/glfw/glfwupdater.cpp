@@ -37,12 +37,12 @@ namespace flounder
 
 	void glfwupdater::create()
 	{
-		m_startTime = glfwGetTime();
-		m_timeOffset = 0.0;
+		m_startTime = static_cast<float>(glfwGetTime());
+		m_timeOffset = 0.0f;
 		m_deltaUpdate = new delta();
 		m_deltaRender = new delta();
-		m_timerUpdate = new timer(1.0 / 62.0);
-		m_timerRender = new timer(1.0 / -1.0);
+		m_timerUpdate = new timer(1.0f / 62.0f);
+		m_timerRender = new timer(1.0f / -1.0f);
 
 		m_display = new display();
 		m_audio = new audio;
@@ -67,7 +67,7 @@ namespace flounder
 
 	void flounder::glfwupdater::update()
 	{
-		this->m_timerRender->setInterval(1.0 / display::get()->getFpsLimit());
+		this->m_timerRender->setInterval(1.0f / display::get()->getFpsLimit());
 
 		// Always-Update
 
@@ -107,7 +107,7 @@ namespace flounder
 		}
 
 		// Renders when needed.
-		if ((m_timerRender->isPassedTime() || display::get()->getFpsLimit() <= 0.0f || display::get()->getFpsLimit() > 1000.0f) && maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 7.0))
+		if ((m_timerRender->isPassedTime() || display::get()->getFpsLimit() <= 0.0f || display::get()->getFpsLimit() > 1000.0f) && maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 7.0f))
 		// if (display::get()->getFpsLimit() <= 0.0f || m_timerRender->isPassedTime())
 		{
 			// Resets the timer.

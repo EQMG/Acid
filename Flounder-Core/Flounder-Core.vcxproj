@@ -36,6 +36,10 @@
     <ClInclude Include="src\devices\joysticks.h" />
     <ClInclude Include="src\devices\keyboard.h" />
     <ClInclude Include="src\devices\mouse.h" />
+    <ClInclude Include="src\entities\components\componentalpha.h" />
+    <ClInclude Include="src\entities\entity.h" />
+    <ClInclude Include="src\entities\entityrender.h" />
+    <ClInclude Include="src\entities\icomponent.h" />
     <ClInclude Include="src\events\eventchange.h" />
     <ClInclude Include="src\events\events.h" />
     <ClInclude Include="src\events\eventstandard.h" />
@@ -193,6 +197,8 @@
     <ClCompile Include="src\devices\joysticks.cpp" />
     <ClCompile Include="src\devices\keyboard.cpp" />
     <ClCompile Include="src\devices\mouse.cpp" />
+    <ClCompile Include="src\entities\components\componentalpha.cpp" />
+    <ClCompile Include="src\entities\entity.cpp" />
     <ClCompile Include="src\events\eventchange.cpp" />
     <ClCompile Include="src\events\events.cpp" />
     <ClCompile Include="src\events\eventstandard.cpp" />

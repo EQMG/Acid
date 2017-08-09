@@ -51,6 +51,29 @@ const float noisefast::VAL_LUT[] =
 	0.3333333333f, -0.8431372549f, 0.2235294118f, -0.3490196078f, -0.6941176471f, 0.8823529412f, 0.4745098039f, 0.4666666667f, -0.7411764706f, -0.2705882353f, 0.968627451f, 0.8196078431f, -0.662745098f, -0.4352941176f, -0.8666666667f, -0.1529411765f,
 };
 
+const float noisefast::F3 = 1.0f / 3.0f;
+const float noisefast::G3 = 1.0f / 6.0f;
+
+const float noisefast::F2 = 0.5f * (sqrt(3.0f) - 1.0f);
+const float noisefast::G2 = (3.0f - sqrt(3.0f)) / 6.0f;
+
+const unsigned char noisefast::SIMPLEX_4D[] =
+{
+	0, 1, 2, 3, 0, 1, 3, 2, 0, 0, 0, 0, 0, 2, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 0,
+	0, 2, 1, 3, 0, 0, 0, 0, 0, 3, 1, 2, 0, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 2, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	1, 2, 0, 3, 0, 0, 0, 0, 1, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 1, 2, 3, 1, 0,
+	1, 0, 2, 3, 1, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 3, 1, 0, 0, 0, 0, 2, 1, 3, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	2, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1, 2, 3, 0, 2, 1, 0, 0, 0, 0, 3, 1, 2, 0,
+	2, 1, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 0, 2, 0, 0, 0, 0, 3, 2, 0, 1, 3, 2, 1, 0
+};
+const float noisefast::F4 = (sqrt(5.0f) - 1.0f) / 4.0f;
+const float noisefast::G4 = (5.0f - sqrt(5.0f)) / 2.0f;
+
+const float noisefast::CUBIC_2D_BOUNDING = 1.0f / (1.5f * 1.5f);
+const float noisefast::CUBIC_3D_BOUNDING = 1.0f / (1.5f * 1.5f * 1.5f);
+
 const float noisefast::CELL_2D_X[] =
 {
 	-0.6440658039f, -0.08028078721f, 0.9983546168f, 0.9869492062f, 0.9284746418f, 0.6051097552f, -0.794167404f, -0.3488667991f, -0.943136526f, -0.9968171318f, 0.8740961579f, 0.1421139764f, 0.4282553608f, -0.9986665833f, 0.9996760121f, -0.06248383632f,
@@ -147,32 +170,12 @@ const float noisefast::CELL_3D_Z[] =
 	0.615630723f, 0.3430367014f, 0.8193658136f, -0.5829600957f, 0.07911697781f, 0.7854296063f, -0.4107442306f, 0.4766964066f, -0.9045999527f, -0.1673856787f, 0.2828077348f, -0.5902737632f, -0.321506229f, -0.5224513133f, -0.4090169985f, -0.3599685311f,
 };
 
-const float noisefast::F3 = 1.0f / 3.0f;
-const float noisefast::G3 = 1.0f / 6.0f;
-
-const float noisefast::F2 = 0.5f * (sqrt(3.0f) - 1.0f);
-const float noisefast::G2 = (3.0f - sqrt(3.0f)) / 6.0f;
-
-const unsigned char noisefast::SIMPLEX_4D[] =
-{
-	0,1,2,3,0,1,3,2,0,0,0,0,0,2,3,1,0,0,0,0,0,0,0,0,0,0,0,0,1,2,3,0,
-	0,2,1,3,0,0,0,0,0,3,1,2,0,3,2,1,0,0,0,0,0,0,0,0,0,0,0,0,1,3,2,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	1,2,0,3,0,0,0,0,1,3,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,3,0,1,2,3,1,0,
-	1,0,2,3,1,0,3,2,0,0,0,0,0,0,0,0,0,0,0,0,2,0,3,1,0,0,0,0,2,1,3,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	2,0,1,3,0,0,0,0,0,0,0,0,0,0,0,0,3,0,1,2,3,0,2,1,0,0,0,0,3,1,2,0,
-	2,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,3,1,0,2,0,0,0,0,3,2,0,1,3,2,1,0
-};
-const float noisefast::F4 = (sqrt(5.0f) - 1.0f) / 4.0f;
-const float noisefast::G4 = (5.0f - sqrt(5.0f)) / 2.0f;
-
-const float noisefast::CUBIC_2D_BOUNDING = 1.0f / (1.5f * 1.5f);
-const float noisefast::CUBIC_3D_BOUNDING = 1.0f / (1.5f * 1.5f * 1.5f);
-
 noisefast::noisefast(int seed)
 {
-	setSeed(seed);
+	m_seed = seed;
+	m_perm = new unsigned char[512];
+	m_perm12 = new unsigned char[512];
+
 	m_frequency = 0.01f;
 	m_interp = Quintic;
 	m_noiseType = Simplex;
@@ -181,8 +184,8 @@ noisefast::noisefast(int seed)
 	m_lacunarity = 2.0f;
 	m_gain = 0.5f;
 	m_fractalType = FBM;
+	m_fractalBounding = 0.0f;
 
-	calculateFractalBounding();
 
 	m_cellularDistanceFunction = Euclidean;
 	m_cellularReturnType = CellValue;
@@ -192,10 +195,17 @@ noisefast::noisefast(int seed)
 	m_cellularJitter = 0.45f;
 
 	m_gradientPerturbAmp = 1.0f;
+
+	setSeed(seed);
+	calculateFractalBounding();
 }
 
 noisefast::~noisefast()
 {
+	delete[] m_perm;
+	delete[] m_perm12;
+
+	delete m_cellularNoiseLookup;
 }
 
 void noisefast::setSeed(int seed)
@@ -240,11 +250,474 @@ void noisefast::getCellularDistance2Indices(int &cellularDistanceIndex0, int &ce
 
 void noisefast::setCellularDistance2Indices(int cellularDistanceIndex0, int cellularDistanceIndex1)
 {
-	m_cellularDistanceIndex0 = std::min(cellularDistanceIndex0, cellularDistanceIndex1);
-	m_cellularDistanceIndex1 = std::max(cellularDistanceIndex0, cellularDistanceIndex1);
+	m_cellularDistanceIndex0 = __min(cellularDistanceIndex0, cellularDistanceIndex1);
+	m_cellularDistanceIndex1 = __max(cellularDistanceIndex0, cellularDistanceIndex1);
 
-	m_cellularDistanceIndex0 = std::min(std::max(m_cellularDistanceIndex0, 0), FN_CELLULAR_INDEX_MAX);
-	m_cellularDistanceIndex1 = std::min(std::max(m_cellularDistanceIndex1, 0), FN_CELLULAR_INDEX_MAX);
+	m_cellularDistanceIndex0 = __min(__max(m_cellularDistanceIndex0, 0), FN_CELLULAR_INDEX_MAX);
+	m_cellularDistanceIndex1 = __min(__max(m_cellularDistanceIndex1, 0), FN_CELLULAR_INDEX_MAX);
+}
+
+// 2D
+float noisefast::getValue(float x, float y) const
+{
+	return singleValue(0, x * m_frequency, y * m_frequency);
+}
+
+float noisefast::getValueFractal(float x, float y) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+
+	switch (m_fractalType)
+	{
+	case FBM:
+		return singleValueFractalFBM(x, y);
+	case Billow:
+		return singleValueFractalBillow(x, y);
+	case RigidMulti:
+		return singleValueFractalRigidMulti(x, y);
+	default:
+		return 0.0f;
+	}
+}
+
+float noisefast::getPerlin(float x, float y) const
+{
+	return singlePerlin(0, x * m_frequency, y * m_frequency);
+}
+
+float noisefast::getPerlinFractal(float x, float y) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+
+	switch (m_fractalType)
+	{
+	case FBM:
+		return singlePerlinFractalFBM(x, y);
+	case Billow:
+		return singlePerlinFractalBillow(x, y);
+	case RigidMulti:
+		return singlePerlinFractalRigidMulti(x, y);
+	default:
+		return 0.0f;
+	}
+}
+
+float noisefast::getSimplex(float x, float y) const
+{
+	return singleSimplex(0, x * m_frequency, y * m_frequency);
+}
+
+float noisefast::getSimplexFractal(float x, float y) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+
+	switch (m_fractalType)
+	{
+	case FBM:
+		return singleSimplexFractalFBM(x, y);
+	case Billow:
+		return singleSimplexFractalBillow(x, y);
+	case RigidMulti:
+		return singleSimplexFractalRigidMulti(x, y);
+	default:
+		return 0.0f;
+	}
+}
+
+float noisefast::getCellular(float x, float y) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+
+	switch (m_cellularReturnType)
+	{
+	case CellValue:
+	case NoiseLookup:
+	case Distance:
+		return singleCellular(x, y);
+	default:
+		return singleCellular2Edge(x, y);
+	}
+}
+
+float noisefast::getWhiteNoise(float x, float y) const
+{
+	return valCoord2D(m_seed,
+		*reinterpret_cast<int*>(&x) ^ (*reinterpret_cast<int*>(&x) >> 16),
+		*reinterpret_cast<int*>(&y) ^ (*reinterpret_cast<int*>(&y) >> 16));
+}
+
+float noisefast::getWhiteNoiseInt(int x, int y) const
+{
+	return valCoord2D(m_seed, x, y);
+}
+
+float noisefast::getCubic(float x, float y) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+
+	return singleCubic(0, x, y);
+}
+
+float noisefast::getCubicFractal(float x, float y) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+
+	switch (m_fractalType)
+	{
+	case FBM:
+		return singleCubicFractalFBM(x, y);
+	case Billow:
+		return singleCubicFractalBillow(x, y);
+	case RigidMulti:
+		return singleCubicFractalRigidMulti(x, y);
+	default:
+		return 0.0f;
+	}
+}
+
+float noisefast::getNoise(float x, float y) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+
+	switch (m_noiseType)
+	{
+	case Value:
+		return singleValue(0, x, y);
+	case ValueFractal:
+		switch (m_fractalType)
+		{
+		case FBM:
+			return singleValueFractalFBM(x, y);
+		case Billow:
+			return singleValueFractalBillow(x, y);
+		case RigidMulti:
+			return singleValueFractalRigidMulti(x, y);
+		}
+	case Perlin:
+		return singlePerlin(0, x, y);
+	case PerlinFractal:
+		switch (m_fractalType)
+		{
+		case FBM:
+			return singlePerlinFractalFBM(x, y);
+		case Billow:
+			return singlePerlinFractalBillow(x, y);
+		case RigidMulti:
+			return singlePerlinFractalRigidMulti(x, y);
+		}
+	case Simplex:
+		return singleSimplex(0, x, y);
+	case SimplexFractal:
+		switch (m_fractalType)
+		{
+		case FBM:
+			return singleSimplexFractalFBM(x, y);
+		case Billow:
+			return singleSimplexFractalBillow(x, y);
+		case RigidMulti:
+			return singleSimplexFractalRigidMulti(x, y);
+		}
+	case Cellular:
+		switch (m_cellularReturnType)
+		{
+		case CellValue:
+		case NoiseLookup:
+		case Distance:
+			return singleCellular(x, y);
+		default:
+			return singleCellular2Edge(x, y);
+		}
+	case WhiteNoise:
+		return getWhiteNoise(x, y);
+	case Cubic:
+		return singleCubic(0, x, y);
+	case CubicFractal:
+		switch (m_fractalType)
+		{
+		case FBM:
+			return singleCubicFractalFBM(x, y);
+		case Billow:
+			return singleCubicFractalBillow(x, y);
+		case RigidMulti:
+			return singleCubicFractalRigidMulti(x, y);
+		}
+	}
+	return 0.0f;
+}
+
+void noisefast::gradientPerturb(float &x, float &y) const
+{
+	singleGradientPerturb(0, m_gradientPerturbAmp, m_frequency, x, y);
+}
+
+void noisefast::gradientPerturbFractal(float &x, float &y) const
+{
+	float amp = m_gradientPerturbAmp * m_fractalBounding;
+	float freq = m_frequency;
+	int i = 0;
+
+	singleGradientPerturb(m_perm[0], amp, m_frequency, x, y);
+
+	while (++i < m_octaves)
+	{
+		freq *= m_lacunarity;
+		amp *= m_gain;
+		singleGradientPerturb(m_perm[i], amp, freq, x, y);
+	}
+}
+
+// 3D
+float noisefast::getValue(float x, float y, float z) const
+{
+	return singleValue(0, x * m_frequency, y * m_frequency, z * m_frequency);
+}
+
+float noisefast::getValueFractal(float x, float y, float z) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+	z *= m_frequency;
+
+	switch (m_fractalType)
+	{
+	case FBM:
+		return singleValueFractalFBM(x, y, z);
+	case Billow:
+		return singleValueFractalBillow(x, y, z);
+	case RigidMulti:
+		return singleValueFractalRigidMulti(x, y, z);
+	default:
+		return 0.0f;
+	}
+}
+
+float noisefast::getPerlin(float x, float y, float z) const
+{
+	return singlePerlin(0, x * m_frequency, y * m_frequency, z * m_frequency);
+}
+
+float noisefast::getPerlinFractal(float x, float y, float z) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+	z *= m_frequency;
+
+	switch (m_fractalType)
+	{
+	case FBM:
+		return singlePerlinFractalFBM(x, y, z);
+	case Billow:
+		return singlePerlinFractalBillow(x, y, z);
+	case RigidMulti:
+		return singlePerlinFractalRigidMulti(x, y, z);
+	default:
+		return 0.0f;
+	}
+}
+
+float noisefast::getSimplex(float x, float y, float z) const
+{
+	return singleSimplex(0, x * m_frequency, y * m_frequency, z * m_frequency);
+}
+
+float noisefast::getSimplexFractal(float x, float y, float z) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+	z *= m_frequency;
+
+	switch (m_fractalType)
+	{
+	case FBM:
+		return singleSimplexFractalFBM(x, y, z);
+	case Billow:
+		return singleSimplexFractalBillow(x, y, z);
+	case RigidMulti:
+		return singleSimplexFractalRigidMulti(x, y, z);
+	default:
+		return 0.0f;
+	}
+}
+
+float noisefast::getCellular(float x, float y, float z) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+	z *= m_frequency;
+
+	switch (m_cellularReturnType)
+	{
+	case CellValue:
+	case NoiseLookup:
+	case Distance:
+		return singleCellular(x, y, z);
+	default:
+		return singleCellular2Edge(x, y, z);
+	}
+}
+
+float noisefast::getWhiteNoise(float x, float y, float z) const
+{
+	return valCoord3D(m_seed,
+		*reinterpret_cast<int*>(&x) ^ (*reinterpret_cast<int*>(&x) >> 16),
+		*reinterpret_cast<int*>(&y) ^ (*reinterpret_cast<int*>(&y) >> 16),
+		*reinterpret_cast<int*>(&z) ^ (*reinterpret_cast<int*>(&z) >> 16));
+}
+
+float noisefast::getWhiteNoiseInt(int x, int y, int z) const
+{
+	return valCoord3D(m_seed, x, y, z);
+}
+
+float noisefast::getCubic(float x, float y, float z) const
+{
+	return singleCubic(0, x * m_frequency, y * m_frequency, z * m_frequency);
+}
+
+float noisefast::getCubicFractal(float x, float y, float z) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+	z *= m_frequency;
+
+	switch (m_fractalType)
+	{
+	case FBM:
+		return singleCubicFractalFBM(x, y, z);
+	case Billow:
+		return singleCubicFractalBillow(x, y, z);
+	case RigidMulti:
+		return singleCubicFractalRigidMulti(x, y, z);
+	default:
+		return 0.0f;
+	}
+}
+
+float noisefast::getNoise(float x, float y, float z) const
+{
+	x *= m_frequency;
+	y *= m_frequency;
+	z *= m_frequency;
+
+	switch (m_noiseType)
+	{
+	case Value:
+		return singleValue(0, x, y, z);
+	case ValueFractal:
+		switch (m_fractalType)
+		{
+		case FBM:
+			return singleValueFractalFBM(x, y, z);
+		case Billow:
+			return singleValueFractalBillow(x, y, z);
+		case RigidMulti:
+			return singleValueFractalRigidMulti(x, y, z);
+		default:
+			return 0.0f;
+		}
+	case Perlin:
+		return singlePerlin(0, x, y, z);
+	case PerlinFractal:
+		switch (m_fractalType)
+		{
+		case FBM:
+			return singlePerlinFractalFBM(x, y, z);
+		case Billow:
+			return singlePerlinFractalBillow(x, y, z);
+		case RigidMulti:
+			return singlePerlinFractalRigidMulti(x, y, z);
+		default:
+			return 0.0f;
+		}
+	case Simplex:
+		return singleSimplex(0, x, y, z);
+	case SimplexFractal:
+		switch (m_fractalType)
+		{
+		case FBM:
+			return singleSimplexFractalFBM(x, y, z);
+		case Billow:
+			return singleSimplexFractalBillow(x, y, z);
+		case RigidMulti:
+			return singleSimplexFractalRigidMulti(x, y, z);
+		default:
+			return 0.0f;
+		}
+	case Cellular:
+		switch (m_cellularReturnType)
+		{
+		case CellValue:
+		case NoiseLookup:
+		case Distance:
+			return singleCellular(x, y, z);
+		default:
+			return singleCellular2Edge(x, y, z);
+		}
+	case WhiteNoise:
+		return getWhiteNoise(x, y, z);
+	case Cubic:
+		return singleCubic(0, x, y, z);
+	case CubicFractal:
+		switch (m_fractalType)
+		{
+		case FBM:
+			return singleCubicFractalFBM(x, y, z);
+		case Billow:
+			return singleCubicFractalBillow(x, y, z);
+		case RigidMulti:
+			return singleCubicFractalRigidMulti(x, y, z);
+		}
+	default:
+		return 0.0f;
+	}
+}
+
+void noisefast::gradientPerturb(float &x, float &y, float &z) const
+{
+	singleGradientPerturb(0, m_gradientPerturbAmp, m_frequency, x, y, z);
+}
+
+void noisefast::gradientPerturbFractal(float &x, float &y, float &z) const
+{
+	float amp = m_gradientPerturbAmp * m_fractalBounding;
+	float freq = m_frequency;
+	int i = 0;
+
+	singleGradientPerturb(m_perm[0], amp, m_frequency, x, y, z);
+
+	while (++i < m_octaves)
+	{
+		freq *= m_lacunarity;
+		amp *= m_gain;
+		singleGradientPerturb(m_perm[i], amp, freq, x, y, z);
+	}
+}
+
+// 4D
+float noisefast::getSimplex(float x, float y, float z, float w) const
+{
+	return singleSimplex(0, x * m_frequency, y * m_frequency, z * m_frequency, w * m_frequency);
+}
+
+float noisefast::getWhiteNoise(float x, float y, float z, float w) const
+{
+	return valCoord4D(m_seed,
+		*reinterpret_cast<int*>(&x) ^ (*reinterpret_cast<int*>(&x) >> 16),
+		*reinterpret_cast<int*>(&y) ^ (*reinterpret_cast<int*>(&y) >> 16),
+		*reinterpret_cast<int*>(&z) ^ (*reinterpret_cast<int*>(&z) >> 16),
+		*reinterpret_cast<int*>(&w) ^ (*reinterpret_cast<int*>(&w) >> 16));
+}
+
+float noisefast::getWhiteNoiseInt(int x, int y, int z, int w) const
+{
+	return valCoord4D(m_seed, x, y, z, w);
 }
 
 void noisefast::calculateFractalBounding()
@@ -261,78 +734,69 @@ void noisefast::calculateFractalBounding()
 	m_fractalBounding = 1.0f / ampFractal;
 }
 
-int noisefast::FastFloor(float f)
+// Helpers
+int noisefast::fastFloor(const float &f)
 {
 	return (f >= 0 ? static_cast<int>(f) : static_cast<int>(f) - 1);
 }
 
-int noisefast::FastRound(float f)
+int noisefast::fastRound(const float &f)
 {
 	return (f >= 0) ? static_cast<int>(f + 0.5f) : static_cast<int>(f - 0.5f);
 }
 
-int noisefast::FastAbs(int i)
-{
-	return abs(i);
-}
-
-float noisefast::FastAbs(float f)
-{
-	return fabs(f);
-}
-
-float noisefast::Lerp(float a, float b, float t)
+float noisefast::lerp(const float &a, const float &b, const float &t)
 {
 	return a + t * (b - a);
 }
 
-float noisefast::InterpHermiteFunc(float t)
+float noisefast::interpHermite(const float &t)
 {
 	return t * t * (3.0f - 2.0f * t);
 }
 
-float noisefast::InterpQuinticFunc(float t)
+float noisefast::interpQuintic(const float &t)
 {
 	return t * t * t * (t * (t * 6.0f - 15.0f) + 10.0f);
 }
 
-float noisefast::CubicLerp(float a, float b, float c, float d, float t)
+float noisefast::cubicLerp(const float &a, const float &b, const float &c, const float &d, const float &t)
 {
 	float p = (d - c) - (a - b);
 	return t * t * t * p + t * t * ((a - b) - p) + t * (c - a) + b;
 }
 
-unsigned char noisefast::Index2D_12(unsigned char offset, int x, int y) const
+unsigned char noisefast::index2D_12(const unsigned char &offset, const int &x, const int &y) const
 {
 	return m_perm12[(x & 0xff) + m_perm[(y & 0xff) + offset]];
 }
 
-unsigned char noisefast::Index3D_12(unsigned char offset, int x, int y, int z) const
+unsigned char noisefast::index3D_12(const unsigned char &offset, const int &x, const int &y, const int &z) const
 {
 	return m_perm12[(x & 0xff) + m_perm[(y & 0xff) + m_perm[(z & 0xff) + offset]]];
 }
 
-unsigned char noisefast::Index4D_32(unsigned char offset, int x, int y, int z, int w) const
+unsigned char noisefast::index4D_32(const unsigned char &offset, const int &x, const int &y, const int &z, const int &w) const
 {
 	return m_perm[(x & 0xff) + m_perm[(y & 0xff) + m_perm[(z & 0xff) + m_perm[(w & 0xff) + offset]]]] & 31;
 }
 
-unsigned char noisefast::Index2D_256(unsigned char offset, int x, int y) const
+unsigned char noisefast::index2D_256(const unsigned char &offset, const int &x, const int &y) const
 {
 	return m_perm[(x & 0xff) + m_perm[(y & 0xff) + offset]];
 }
 
-unsigned char noisefast::Index3D_256(unsigned char offset, int x, int y, int z) const
+unsigned char noisefast::index3D_256(const unsigned char &offset, const int &x, const int &y, const int &z) const
 {
 	return m_perm[(x & 0xff) + m_perm[(y & 0xff) + m_perm[(z & 0xff) + offset]]];
 }
 
-unsigned char noisefast::Index4D_256(unsigned char offset, int x, int y, int z, int w) const
+unsigned char noisefast::index4D_256(const unsigned char &offset, const int &x, const int &y, const int &z, const int &w) const
 {
 	return m_perm[(x & 0xff) + m_perm[(y & 0xff) + m_perm[(z & 0xff) + m_perm[(w & 0xff) + offset]]]];
 }
 
-float noisefast::ValCoord2D(int seed, int x, int y)
+float noisefast::valCoord2D(const int &seed, const int &x, const int &y)
 {
 	int n = seed;
 	n ^= X_PRIME * x;
@@ -340,7 +804,7 @@ float noisefast::ValCoord2D(int seed, int x, int y)
 	return (n * n * n * 60493) / 2147483648.0f;
 }
 
-float noisefast::ValCoord3D(int seed, int x, int y, int z)
+float noisefast::valCoord3D(const int &seed, const int &x, const int &y, const int &z)
 {
 	int n = seed;
 	n ^= X_PRIME * x;
@@ -350,7 +814,7 @@ float noisefast::ValCoord3D(int seed, int x, int y, int z)
 	return (n * n * n * 60493) / 2147483648.0f;
 }
 
-float noisefast::ValCoord4D(int seed, int x, int y, int z, int w)
+float noisefast::valCoord4D(const int &seed, const int &x, const int &y, const int &z, const int &w)
 {
 	int n = seed;
 	n ^= X_PRIME * x;
@@ -360,247 +824,38 @@ float noisefast::ValCoord4D(int seed, int x, int y, int z, int w)
 	return (n * n * n * 60493) / 2147483648.0f;
 }
 
-float noisefast::ValCoord2DFast(unsigned char offset, int x, int y) const
+float noisefast::valCoord2DFast(const unsigned char &offset, const int &x, const int &y) const
 {
-	return VAL_LUT[Index2D_256(offset, x, y)];
+	return VAL_LUT[index2D_256(offset, x, y)];
 }
 
-float noisefast::ValCoord3DFast(unsigned char offset, int x, int y, int z) const
+float noisefast::valCoord3DFast(const unsigned char &offset, const int &x, const int &y, const int &z) const
 {
-	return VAL_LUT[Index3D_256(offset, x, y, z)];
+	return VAL_LUT[index3D_256(offset, x, y, z)];
 }
 
-float noisefast::GradCoord2D(unsigned char offset, int x, int y, float xd, float yd) const
+float noisefast::gradCoord2D(const unsigned char &offset, const int &x, const int &y, const float &xd, const float &yd) const
 {
-	unsigned char lutPos = Index2D_12(offset, x, y);
+	unsigned char lutPos = index2D_12(offset, x, y);
 	return xd * GRAD_X[lutPos] + yd * GRAD_Y[lutPos];
 }
 
-float noisefast::GradCoord3D(unsigned char offset, int x, int y, int z, float xd, float yd, float zd) const
+float noisefast::gradCoord3D(const unsigned char &offset, const int &x, const int &y, const int &z, const float &xd, const float &yd, const float &zd) const
 {
-	unsigned char lutPos = Index3D_12(offset, x, y, z);
+	unsigned char lutPos = index3D_12(offset, x, y, z);
 	return xd * GRAD_X[lutPos] + yd * GRAD_Y[lutPos] + zd * GRAD_Z[lutPos];
 }
 
-float noisefast::GradCoord4D(unsigned char offset, int x, int y, int z, int w, float xd, float yd, float zd, float wd) const
+float noisefast::gradCoord4D(const unsigned char &offset, const int &x, const int &y, const int &z, const int &w, const float &xd, const float &yd, const float &zd, const float &wd) const
 {
-	unsigned char lutPos = Index4D_32(offset, x, y, z, w) << 2;
+	unsigned char lutPos = index4D_32(offset, x, y, z, w) << 2;
 	return xd * GRAD_4D[lutPos] + yd * GRAD_4D[lutPos + 1] + zd * GRAD_4D[lutPos + 2] + wd * GRAD_4D[lutPos + 3];
 }
 
-float noisefast::GetNoise(float x, float y, float z) const
+// 2D
+float noisefast::singleValueFractalFBM(float x, float y) const
 {
-	x *= m_frequency;
-	y *= m_frequency;
-	z *= m_frequency;
-
-	switch (m_noiseType)
-	{
-	case Value:
-		return SingleValue(0, x, y, z);
-	case ValueFractal:
-		switch (m_fractalType)
-		{
-		case FBM:
-			return SingleValueFractalFBM(x, y, z);
-		case Billow:
-			return SingleValueFractalBillow(x, y, z);
-		case RigidMulti:
-			return SingleValueFractalRigidMulti(x, y, z);
-		default:
-			return 0.0f;
-		}
-	case Perlin:
-		return SinglePerlin(0, x, y, z);
-	case PerlinFractal:
-		switch (m_fractalType)
-		{
-		case FBM:
-			return SinglePerlinFractalFBM(x, y, z);
-		case Billow:
-			return SinglePerlinFractalBillow(x, y, z);
-		case RigidMulti:
-			return SinglePerlinFractalRigidMulti(x, y, z);
-		default:
-			return 0.0f;
-		}
-	case Simplex:
-		return SingleSimplex(0, x, y, z);
-	case SimplexFractal:
-		switch (m_fractalType)
-		{
-		case FBM:
-			return SingleSimplexFractalFBM(x, y, z);
-		case Billow:
-			return SingleSimplexFractalBillow(x, y, z);
-		case RigidMulti:
-			return SingleSimplexFractalRigidMulti(x, y, z);
-		default:
-			return 0.0f;
-		}
-	case Cellular:
-		switch (m_cellularReturnType)
-		{
-		case CellValue:
-		case NoiseLookup:
-		case Distance:
-			return SingleCellular(x, y, z);
-		default:
-			return SingleCellular2Edge(x, y, z);
-		}
-	case WhiteNoise:
-		return GetWhiteNoise(x, y, z);
-	case Cubic:
-		return SingleCubic(0, x, y, z);
-	case CubicFractal:
-		switch (m_fractalType)
-		{
-		case FBM:
-			return SingleCubicFractalFBM(x, y, z);
-		case Billow:
-			return SingleCubicFractalBillow(x, y, z);
-		case RigidMulti:
-			return SingleCubicFractalRigidMulti(x, y, z);
-		}
-	default:
-		return 0.0f;
-	}
-}
-
-float noisefast::GetNoise(float x, float y) const
-{
-	x *= m_frequency;
-	y *= m_frequency;
-
-	switch (m_noiseType)
-	{
-	case Value:
-		return SingleValue(0, x, y);
-	case ValueFractal:
-		switch (m_fractalType)
-		{
-		case FBM:
-			return SingleValueFractalFBM(x, y);
-		case Billow:
-			return SingleValueFractalBillow(x, y);
-		case RigidMulti:
-			return SingleValueFractalRigidMulti(x, y);
-		}
-	case Perlin:
-		return SinglePerlin(0, x, y);
-	case PerlinFractal:
-		switch (m_fractalType)
-		{
-		case FBM:
-			return SinglePerlinFractalFBM(x, y);
-		case Billow:
-			return SinglePerlinFractalBillow(x, y);
-		case RigidMulti:
-			return SinglePerlinFractalRigidMulti(x, y);
-		}
-	case Simplex:
-		return SingleSimplex(0, x, y);
-	case SimplexFractal:
-		switch (m_fractalType)
-		{
-		case FBM:
-			return SingleSimplexFractalFBM(x, y);
-		case Billow:
-			return SingleSimplexFractalBillow(x, y);
-		case RigidMulti:
-			return SingleSimplexFractalRigidMulti(x, y);
-		}
-	case Cellular:
-		switch (m_cellularReturnType)
-		{
-		case CellValue:
-		case NoiseLookup:
-		case Distance:
-			return SingleCellular(x, y);
-		default:
-			return SingleCellular2Edge(x, y);
-		}
-	case WhiteNoise:
-		return GetWhiteNoise(x, y);
-	case Cubic:
-		return SingleCubic(0, x, y);
-	case CubicFractal:
-		switch (m_fractalType)
-		{
-		case FBM:
-			return SingleCubicFractalFBM(x, y);
-		case Billow:
-			return SingleCubicFractalBillow(x, y);
-		case RigidMulti:
-			return SingleCubicFractalRigidMulti(x, y);
-		}
-	}
-	return 0.0f;
-}
-
-// White Noise
-float noisefast::GetWhiteNoise(float x, float y, float z, float w) const
-{
-	return ValCoord4D(m_seed,
-		*reinterpret_cast<int*>(&x) ^ (*reinterpret_cast<int*>(&x) >> 16),
-		*reinterpret_cast<int*>(&y) ^ (*reinterpret_cast<int*>(&y) >> 16),
-		*reinterpret_cast<int*>(&z) ^ (*reinterpret_cast<int*>(&z) >> 16),
-		*reinterpret_cast<int*>(&w) ^ (*reinterpret_cast<int*>(&w) >> 16));
-}
-
-float noisefast::GetWhiteNoise(float x, float y, float z) const
-{
-	return ValCoord3D(m_seed,
-		*reinterpret_cast<int*>(&x) ^ (*reinterpret_cast<int*>(&x) >> 16),
-		*reinterpret_cast<int*>(&y) ^ (*reinterpret_cast<int*>(&y) >> 16),
-		*reinterpret_cast<int*>(&z) ^ (*reinterpret_cast<int*>(&z) >> 16));
-}
-
-float noisefast::GetWhiteNoise(float x, float y) const
-{
-	return ValCoord2D(m_seed,
-		*reinterpret_cast<int*>(&x) ^ (*reinterpret_cast<int*>(&x) >> 16),
-		*reinterpret_cast<int*>(&y) ^ (*reinterpret_cast<int*>(&y) >> 16));
-}
-
-float noisefast::GetWhiteNoiseInt(int x, int y, int z, int w) const
-{
-	return ValCoord4D(m_seed, x, y, z, w);
-}
-
-float noisefast::GetWhiteNoiseInt(int x, int y, int z) const
-{
-	return ValCoord3D(m_seed, x, y, z);
-}
-
-float noisefast::GetWhiteNoiseInt(int x, int y) const
-{
-	return ValCoord2D(m_seed, x, y);
-}
-
-// Value Noise
-float noisefast::GetValueFractal(float x, float y, float z) const
-{
-	x *= m_frequency;
-	y *= m_frequency;
-	z *= m_frequency;
-
-	switch (m_fractalType)
-	{
-	case FBM:
-		return SingleValueFractalFBM(x, y, z);
-	case Billow:
-		return SingleValueFractalBillow(x, y, z);
-	case RigidMulti:
-		return SingleValueFractalRigidMulti(x, y, z);
-	default:
-		return 0.0f;
-	}
-}
-
-float noisefast::SingleValueFractalFBM(float x, float y, float z) const
-{
-	float sum = SingleValue(m_perm[0], x, y, z);
+	float sum = singleValue(m_perm[0], x, y);
 	float amp = 1.0f;
 	int i = 0;
 
@@ -608,18 +863,17 @@ float noisefast::SingleValueFractalFBM(float x, float y, float z) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
-		z *= m_lacunarity;
 
 		amp *= m_gain;
-		sum += SingleValue(m_perm[i], x, y, z) * amp;
+		sum += singleValue(m_perm[i], x, y) * amp;
 	}
 
 	return sum * m_fractalBounding;
 }
 
-float noisefast::SingleValueFractalBillow(float x, float y, float z) const
+float noisefast::singleValueFractalBillow(float x, float y) const
 {
-	float sum = FastAbs(SingleValue(m_perm[0], x, y, z)) * 2.0f - 1.0f;
+	float sum = fabs(singleValue(m_perm[0], x, y)) * 2.0f - 1.0f;
 	float amp = 1.0f;
 	int i = 0;
 
@@ -627,18 +881,16 @@ float noisefast::SingleValueFractalBillow(float x, float y, float z) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
-		z *= m_lacunarity;
-
 		amp *= m_gain;
-		sum += (FastAbs(SingleValue(m_perm[i], x, y, z)) * 2.0f - 1.0f) * amp;
+		sum += (fabs(singleValue(m_perm[i], x, y)) * 2.0f - 1.0f) * amp;
 	}
 
 	return sum * m_fractalBounding;
 }
 
-float noisefast::SingleValueFractalRigidMulti(float x, float y, float z) const
+float noisefast::singleValueFractalRigidMulti(float x, float y) const
 {
-	float sum = 1.0f - FastAbs(SingleValue(m_perm[0], x, y, z));
+	float sum = 1.0f - fabs(singleValue(m_perm[0], x, y));
 	float amp = 1.0f;
 	int i = 0;
 
@@ -646,25 +898,654 @@ float noisefast::SingleValueFractalRigidMulti(float x, float y, float z) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
-		z *= m_lacunarity;
 
 		amp *= m_gain;
-		sum -= (1.0f - FastAbs(SingleValue(m_perm[i], x, y, z))) * amp;
+		sum -= (1.0f - fabs(singleValue(m_perm[i], x, y))) * amp;
 	}
 
 	return sum;
 }
 
-float noisefast::GetValue(float x, float y, float z) const
+float noisefast::singleValue(const unsigned char &offset, const float &x, const float &y) const
 {
-	return SingleValue(0, x * m_frequency, y * m_frequency, z * m_frequency);
+	int x0 = fastFloor(x);
+	int y0 = fastFloor(y);
+	int x1 = x0 + 1;
+	int y1 = y0 + 1;
+
+	float xs = 0.0f;
+	float ys = 0.0f;
+
+	switch (m_interp)
+	{
+	case Linear:
+		xs = x - static_cast<float>(x0);
+		ys = y - static_cast<float>(y0);
+		break;
+	case Hermite:
+		xs = interpHermite(x - static_cast<float>(x0));
+		ys = interpHermite(y - static_cast<float>(y0));
+		break;
+	case Quintic:
+		xs = interpQuintic(x - static_cast<float>(x0));
+		ys = interpQuintic(y - static_cast<float>(y0));
+		break;
+	}
+
+	float xf0 = lerp(valCoord2DFast(offset, x0, y0), valCoord2DFast(offset, x1, y0), xs);
+	float xf1 = lerp(valCoord2DFast(offset, x0, y1), valCoord2DFast(offset, x1, y1), xs);
+
+	return lerp(xf0, xf1, ys);
 }
 
-float noisefast::SingleValue(unsigned char offset, float x, float y, float z) const
+float noisefast::singlePerlinFractalFBM(float x, float y) const
 {
-	int x0 = FastFloor(x);
-	int y0 = FastFloor(y);
-	int z0 = FastFloor(z);
+	float sum = singlePerlin(m_perm[0], x, y);
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+
+		amp *= m_gain;
+		sum += singlePerlin(m_perm[i], x, y) * amp;
+	}
+
+	return sum * m_fractalBounding;
+}
+
+float noisefast::singlePerlinFractalBillow(float x, float y) const
+{
+	float sum = fabs(singlePerlin(m_perm[0], x, y)) * 2.0f - 1.0f;
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+
+		amp *= m_gain;
+		sum += (fabs(singlePerlin(m_perm[i], x, y)) * 2.0f - 1.0f) * amp;
+	}
+
+	return sum * m_fractalBounding;
+}
+
+float noisefast::singlePerlinFractalRigidMulti(float x, float y) const
+{
+	float sum = 1.0f - fabs(singlePerlin(m_perm[0], x, y));
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+
+		amp *= m_gain;
+		sum -= (1.0f - fabs(singlePerlin(m_perm[i], x, y))) * amp;
+	}
+
+	return sum;
+}
+
+float noisefast::singlePerlin(const unsigned char &offset, const float &x, const float &y) const
+{
+	int x0 = fastFloor(x);
+	int y0 = fastFloor(y);
+	int x1 = x0 + 1;
+	int y1 = y0 + 1;
+
+	float xs = 0.0f;
+	float ys = 0.0f;
+
+	switch (m_interp)
+	{
+	case Linear:
+		xs = x - static_cast<float>(x0);
+		ys = y - static_cast<float>(y0);
+		break;
+	case Hermite:
+		xs = interpHermite(x - static_cast<float>(x0));
+		ys = interpHermite(y - static_cast<float>(y0));
+		break;
+	case Quintic:
+		xs = interpQuintic(x - static_cast<float>(x0));
+		ys = interpQuintic(y - static_cast<float>(y0));
+		break;
+	}
+
+	float xd0 = x - static_cast<float>(x0);
+	float yd0 = y - static_cast<float>(y0);
+	float xd1 = xd0 - 1.0f;
+	float yd1 = yd0 - 1.0f;
+
+	float xf0 = lerp(gradCoord2D(offset, x0, y0, xd0, yd0), gradCoord2D(offset, x1, y0, xd1, yd0), xs);
+	float xf1 = lerp(gradCoord2D(offset, x0, y1, xd0, yd1), gradCoord2D(offset, x1, y1, xd1, yd1), xs);
+
+	return lerp(xf0, xf1, ys);
+}
+
+float noisefast::singleSimplexFractalFBM(float x, float y) const
+{
+	float sum = singleSimplex(m_perm[0], x, y);
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+
+		amp *= m_gain;
+		sum += singleSimplex(m_perm[i], x, y) * amp;
+	}
+
+	return sum * m_fractalBounding;
+}
+
+float noisefast::singleSimplexFractalBillow(float x, float y) const
+{
+	float sum = fabs(singleSimplex(m_perm[0], x, y)) * 2.0f - 1.0f;
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+
+		amp *= m_gain;
+		sum += (fabs(singleSimplex(m_perm[i], x, y)) * 2.0f - 1.0f) * amp;
+	}
+
+	return sum * m_fractalBounding;
+}
+
+float noisefast::singleSimplexFractalRigidMulti(float x, float y) const
+{
+	float sum = 1.0f - fabs(singleSimplex(m_perm[0], x, y));
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+
+		amp *= m_gain;
+		sum -= (1.0f - fabs(singleSimplex(m_perm[i], x, y))) * amp;
+	}
+
+	return sum;
+}
+
+float noisefast::singleSimplexFractalBlend(float x, float y) const
+{
+	float sum = singleSimplex(m_perm[0], x, y);
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+
+		amp *= m_gain;
+		sum *= singleSimplex(m_perm[i], x, y) * amp + 1.0f;
+	}
+
+	return sum * m_fractalBounding;
+}
+
+float noisefast::singleSimplex(const unsigned char &offset, const float &x, const float &y) const
+{
+	float t = (x + y) * F2;
+	int i = fastFloor(x + t);
+	int j = fastFloor(y + t);
+
+	t = (i + j) * G2;
+	float X0 = i - t;
+	float Y0 = j - t;
+
+	float x0 = x - X0;
+	float y0 = y - Y0;
+
+	int i1, j1;
+
+	if (x0 > y0)
+	{
+		i1 = 1;
+		j1 = 0;
+	}
+	else
+	{
+		i1 = 0;
+		j1 = 1;
+	}
+
+	float x1 = x0 - static_cast<float>(i1) + G2;
+	float y1 = y0 - static_cast<float>(j1) + G2;
+	float x2 = x0 - 1.0f + 2.0f * G2;
+	float y2 = y0 - 1.0f + 2.0f * G2;
+
+	float n0, n1, n2;
+
+	t = 0.5f - x0 * x0 - y0 * y0;
+
+	if (t < 0.0f)
+	{
+		n0 = 0.0f;
+	}
+	else
+	{
+		t *= t;
+		n0 = t * t * gradCoord2D(offset, i, j, x0, y0);
+	}
+
+	t = 0.5f - x1 * x1 - y1 * y1;
+
+	if (t < 0.0f)
+	{
+		n1 = 0.0f;
+	}
+	else
+	{
+		t *= t;
+		n1 = t * t * gradCoord2D(offset, i + i1, j + j1, x1, y1);
+	}
+
+	t = 0.5f - x2 * x2 - y2 * y2;
+
+	if (t < 0.0f)
+	{
+		n2 = 0.0f;
+	}
+	else
+	{
+		t *= t;
+		n2 = t * t * gradCoord2D(offset, i + 1, j + 1, x2, y2);
+	}
+
+	return 70.0f * (n0 + n1 + n2);
+}
+
+float noisefast::singleCubicFractalFBM(float x, float y) const
+{
+	float sum = singleCubic(m_perm[0], x, y);
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+
+		amp *= m_gain;
+		sum += singleCubic(m_perm[i], x, y) * amp;
+	}
+
+	return sum * m_fractalBounding;
+}
+
+float noisefast::singleCubicFractalBillow(float x, float y) const
+{
+	float sum = fabs(singleCubic(m_perm[0], x, y)) * 2.0f - 1.0f;
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+
+		amp *= m_gain;
+		sum += (fabs(singleCubic(m_perm[i], x, y)) * 2.0f - 1.0f) * amp;
+	}
+
+	return sum * m_fractalBounding;
+}
+
+float noisefast::singleCubicFractalRigidMulti(float x, float y) const
+{
+	float sum = 1.0f - fabs(singleCubic(m_perm[0], x, y));
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+
+		amp *= m_gain;
+		sum -= (1.0f - fabs(singleCubic(m_perm[i], x, y))) * amp;
+	}
+
+	return sum;
+}
+
+float noisefast::singleCubic(const unsigned char &offset, const float &x, const float &y) const
+{
+	int x1 = fastFloor(x);
+	int y1 = fastFloor(y);
+
+	int x0 = x1 - 1;
+	int y0 = y1 - 1;
+	int x2 = x1 + 1;
+	int y2 = y1 + 1;
+	int x3 = x1 + 2;
+	int y3 = y1 + 2;
+
+	float xs = x - static_cast<float>(x1);
+	float ys = y - static_cast<float>(y1);
+
+	return cubicLerp(
+		cubicLerp(valCoord2DFast(offset, x0, y0), valCoord2DFast(offset, x1, y0), valCoord2DFast(offset, x2, y0), valCoord2DFast(offset, x3, y0), xs),
+		cubicLerp(valCoord2DFast(offset, x0, y1), valCoord2DFast(offset, x1, y1), valCoord2DFast(offset, x2, y1), valCoord2DFast(offset, x3, y1), xs),
+		cubicLerp(valCoord2DFast(offset, x0, y2), valCoord2DFast(offset, x1, y2), valCoord2DFast(offset, x2, y2), valCoord2DFast(offset, x3, y2), xs),
+		cubicLerp(valCoord2DFast(offset, x0, y3), valCoord2DFast(offset, x1, y3), valCoord2DFast(offset, x2, y3), valCoord2DFast(offset, x3, y3), xs),
+		ys) * CUBIC_2D_BOUNDING;
+}
+
+float noisefast::singleCellular(const float &x, const float &y) const
+{
+	int xr = fastRound(x);
+	int yr = fastRound(y);
+
+	float distance = 999999.0f;
+	int xc = 0;
+	int yc = 0;
+
+	switch (m_cellularDistanceFunction)
+	{
+	default:
+	case Euclidean:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				unsigned char lutPos = index2D_256(0, xi, yi);
+
+				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
+
+				float newDistance = vecX * vecX + vecY * vecY;
+
+				if (newDistance < distance)
+				{
+					distance = newDistance;
+					xc = xi;
+					yc = yi;
+				}
+			}
+		}
+		break;
+	case Manhattan:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				unsigned char lutPos = index2D_256(0, xi, yi);
+
+				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
+
+				float newDistance = (fabs(vecX) + fabs(vecY));
+
+				if (newDistance < distance)
+				{
+					distance = newDistance;
+					xc = xi;
+					yc = yi;
+				}
+			}
+		}
+		break;
+	case Natural:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				unsigned char lutPos = index2D_256(0, xi, yi);
+
+				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
+
+				float newDistance = (fabs(vecX) + fabs(vecY)) + (vecX * vecX + vecY * vecY);
+
+				if (newDistance < distance)
+				{
+					distance = newDistance;
+					xc = xi;
+					yc = yi;
+				}
+			}
+		}
+		break;
+	}
+
+	unsigned char lutPos;
+
+	switch (m_cellularReturnType)
+	{
+	case CellValue:
+		return valCoord2D(m_seed, xc, yc);
+
+	case NoiseLookup:
+		assert(m_cellularNoiseLookup);
+
+		lutPos = index2D_256(0, xc, yc);
+		return m_cellularNoiseLookup->getNoise(xc + CELL_2D_X[lutPos] * m_cellularJitter, yc + CELL_2D_Y[lutPos] * m_cellularJitter);
+	case Distance:
+		return distance;
+	default:
+		return 0.0f;
+	}
+}
+
+float noisefast::singleCellular2Edge(const float &x, const float &y) const
+{
+	int xr = fastRound(x);
+	int yr = fastRound(y);
+
+	float distance[FN_CELLULAR_INDEX_MAX + 1] = { 999999.0f, 999999.0f, 999999.0f, 999999.0f };
+
+	switch (m_cellularDistanceFunction)
+	{
+	default:
+	case Euclidean:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				unsigned char lutPos = index2D_256(0, xi, yi);
+
+				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
+
+				float newDistance = vecX * vecX + vecY * vecY;
+
+				for (int i = m_cellularDistanceIndex1; i > 0; i--)
+				{
+					distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
+				}
+
+				distance[0] = fmin(distance[0], newDistance);
+			}
+		}
+		break;
+	case Manhattan:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				unsigned char lutPos = index2D_256(0, xi, yi);
+
+				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
+
+				float newDistance = fabs(vecX) + fabs(vecY);
+
+				for (int i = m_cellularDistanceIndex1; i > 0; i--)
+				{
+					distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
+				}
+
+				distance[0] = fmin(distance[0], newDistance);
+			}
+		}
+		break;
+	case Natural:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				unsigned char lutPos = index2D_256(0, xi, yi);
+
+				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
+
+				float newDistance = (fabs(vecX) + fabs(vecY)) + (vecX * vecX + vecY * vecY);
+
+				for (int i = m_cellularDistanceIndex1; i > 0; i--)
+				{
+					distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
+				}
+
+				distance[0] = fmin(distance[0], newDistance);
+			}
+		}
+		break;
+	}
+
+	switch (m_cellularReturnType)
+	{
+	case Distance2:
+		return distance[m_cellularDistanceIndex1];
+	case Distance2Add:
+		return distance[m_cellularDistanceIndex1] + distance[m_cellularDistanceIndex0];
+	case Distance2Sub:
+		return distance[m_cellularDistanceIndex1] - distance[m_cellularDistanceIndex0];
+	case Distance2Mul:
+		return distance[m_cellularDistanceIndex1] * distance[m_cellularDistanceIndex0];
+	case Distance2Div:
+		return distance[m_cellularDistanceIndex0] / distance[m_cellularDistanceIndex1];
+	default:
+		return 0.0f;
+	}
+}
+
+void noisefast::singleGradientPerturb(const unsigned char &offset, const float &warpAmp, const float &frequency, float x, float y) const
+{
+	float xf = x * frequency;
+	float yf = y * frequency;
+
+	int x0 = fastFloor(xf);
+	int y0 = fastFloor(yf);
+	int x1 = x0 + 1;
+	int y1 = y0 + 1;
+
+	float xs, ys;
+
+	switch (m_interp)
+	{
+	default:
+	case Linear:
+		xs = xf - static_cast<float>(x0);
+		ys = yf - static_cast<float>(y0);
+		break;
+	case Hermite:
+		xs = interpHermite(xf - static_cast<float>(x0));
+		ys = interpHermite(yf - static_cast<float>(y0));
+		break;
+	case Quintic:
+		xs = interpQuintic(xf - static_cast<float>(x0));
+		ys = interpQuintic(yf - static_cast<float>(y0));
+		break;
+	}
+
+	int lutPos0 = index2D_256(offset, x0, y0);
+	int lutPos1 = index2D_256(offset, x1, y0);
+
+	float lx0x = lerp(CELL_2D_X[lutPos0], CELL_2D_X[lutPos1], xs);
+	float ly0x = lerp(CELL_2D_Y[lutPos0], CELL_2D_Y[lutPos1], xs);
+
+	lutPos0 = index2D_256(offset, x0, y1);
+	lutPos1 = index2D_256(offset, x1, y1);
+
+	float lx1x = lerp(CELL_2D_X[lutPos0], CELL_2D_X[lutPos1], xs);
+	float ly1x = lerp(CELL_2D_Y[lutPos0], CELL_2D_Y[lutPos1], xs);
+
+	x += lerp(lx0x, lx1x, ys) * warpAmp;
+	y += lerp(ly0x, ly1x, ys) * warpAmp;
+}
+
+// 3D
+float noisefast::singleValueFractalFBM(float x, float y, float z) const
+{
+	float sum = singleValue(m_perm[0], x, y, z);
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+		z *= m_lacunarity;
+
+		amp *= m_gain;
+		sum += singleValue(m_perm[i], x, y, z) * amp;
+	}
+
+	return sum * m_fractalBounding;
+}
+
+float noisefast::singleValueFractalBillow(float x, float y, float z) const
+{
+	float sum = fabs(singleValue(m_perm[0], x, y, z)) * 2.0f - 1.0f;
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+		z *= m_lacunarity;
+
+		amp *= m_gain;
+		sum += (fabs(singleValue(m_perm[i], x, y, z)) * 2.0f - 1.0f) * amp;
+	}
+
+	return sum * m_fractalBounding;
+}
+
+float noisefast::singleValueFractalRigidMulti(float x, float y, float z) const
+{
+	float sum = 1.0f - fabs(singleValue(m_perm[0], x, y, z));
+	float amp = 1.0f;
+	int i = 0;
+
+	while (++i < m_octaves)
+	{
+		x *= m_lacunarity;
+		y *= m_lacunarity;
+		z *= m_lacunarity;
+
+		amp *= m_gain;
+		sum -= (1.0f - fabs(singleValue(m_perm[i], x, y, z))) * amp;
+	}
+
+	return sum;
+}
+
+float noisefast::singleValue(const unsigned char &offset, const float &x, const float &y, const float &z) const
+{
+	int x0 = fastFloor(x);
+	int y0 = fastFloor(y);
+	int z0 = fastFloor(z);
 	int x1 = x0 + 1;
 	int y1 = y0 + 1;
 	int z1 = z0 + 1;
@@ -681,49 +1562,31 @@ float noisefast::SingleValue(unsigned char offset, float x, float y, float z) co
 		zs = z - static_cast<float>(z0);
 		break;
 	case Hermite:
-		xs = InterpHermiteFunc(x - static_cast<float>(x0));
-		ys = InterpHermiteFunc(y - static_cast<float>(y0));
-		zs = InterpHermiteFunc(z - static_cast<float>(z0));
+		xs = interpHermite(x - static_cast<float>(x0));
+		ys = interpHermite(y - static_cast<float>(y0));
+		zs = interpHermite(z - static_cast<float>(z0));
 		break;
 	case Quintic:
-		xs = InterpQuinticFunc(x - static_cast<float>(x0));
-		ys = InterpQuinticFunc(y - static_cast<float>(y0));
-		zs = InterpQuinticFunc(z - static_cast<float>(z0));
+		xs = interpQuintic(x - static_cast<float>(x0));
+		ys = interpQuintic(y - static_cast<float>(y0));
+		zs = interpQuintic(z - static_cast<float>(z0));
 		break;
 	}
 
-	float xf00 = Lerp(ValCoord3DFast(offset, x0, y0, z0), ValCoord3DFast(offset, x1, y0, z0), xs);
-	float xf10 = Lerp(ValCoord3DFast(offset, x0, y1, z0), ValCoord3DFast(offset, x1, y1, z0), xs);
-	float xf01 = Lerp(ValCoord3DFast(offset, x0, y0, z1), ValCoord3DFast(offset, x1, y0, z1), xs);
-	float xf11 = Lerp(ValCoord3DFast(offset, x0, y1, z1), ValCoord3DFast(offset, x1, y1, z1), xs);
+	float xf00 = lerp(valCoord3DFast(offset, x0, y0, z0), valCoord3DFast(offset, x1, y0, z0), xs);
+	float xf10 = lerp(valCoord3DFast(offset, x0, y1, z0), valCoord3DFast(offset, x1, y1, z0), xs);
+	float xf01 = lerp(valCoord3DFast(offset, x0, y0, z1), valCoord3DFast(offset, x1, y0, z1), xs);
+	float xf11 = lerp(valCoord3DFast(offset, x0, y1, z1), valCoord3DFast(offset, x1, y1, z1), xs);
 
-	float yf0 = Lerp(xf00, xf10, ys);
-	float yf1 = Lerp(xf01, xf11, ys);
+	float yf0 = lerp(xf00, xf10, ys);
+	float yf1 = lerp(xf01, xf11, ys);
 
-	return Lerp(yf0, yf1, zs);
+	return lerp(yf0, yf1, zs);
 }
 
-float noisefast::GetValueFractal(float x, float y) const
+float noisefast::singlePerlinFractalFBM(float x, float y, float z) const
 {
-	x *= m_frequency;
-	y *= m_frequency;
-
-	switch (m_fractalType)
-	{
-	case FBM:
-		return SingleValueFractalFBM(x, y);
-	case Billow:
-		return SingleValueFractalBillow(x, y);
-	case RigidMulti:
-		return SingleValueFractalRigidMulti(x, y);
-	default:
-		return 0.0f;
-	}
-}
-
-float noisefast::SingleValueFractalFBM(float x, float y) const
-{
-	float sum = SingleValue(m_perm[0], x, y);
+	float sum = singlePerlin(m_perm[0], x, y, z);
 	float amp = 1.0f;
 	int i = 0;
 
@@ -731,17 +1594,18 @@ float noisefast::SingleValueFractalFBM(float x, float y) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
+		z *= m_lacunarity;
 
 		amp *= m_gain;
-		sum += SingleValue(m_perm[i], x, y) * amp;
+		sum += singlePerlin(m_perm[i], x, y, z) * amp;
 	}
 
 	return sum * m_fractalBounding;
 }
 
-float noisefast::SingleValueFractalBillow(float x, float y) const
+float noisefast::singlePerlinFractalBillow(float x, float y, float z) const
 {
-	float sum = FastAbs(SingleValue(m_perm[0], x, y)) * 2.0f - 1.0f;
+	float sum = fabs(singlePerlin(m_perm[0], x, y, z)) * 2.0f - 1.0f;
 	float amp = 1.0f;
 	int i = 0;
 
@@ -749,16 +1613,18 @@ float noisefast::SingleValueFractalBillow(float x, float y) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
+		z *= m_lacunarity;
+
 		amp *= m_gain;
-		sum += (FastAbs(SingleValue(m_perm[i], x, y)) * 2.0f - 1.0f) * amp;
+		sum += (fabs(singlePerlin(m_perm[i], x, y, z)) * 2.0f - 1.0f) * amp;
 	}
 
 	return sum * m_fractalBounding;
 }
 
-float noisefast::SingleValueFractalRigidMulti(float x, float y) const
+float noisefast::singlePerlinFractalRigidMulti(float x, float y, float z) const
 {
-	float sum = 1.0f - FastAbs(SingleValue(m_perm[0], x, y));
+	float sum = 1.0f - fabs(singlePerlin(m_perm[0], x, y, z));
 	float amp = 1.0f;
 	int i = 0;
 
@@ -766,138 +1632,20 @@ float noisefast::SingleValueFractalRigidMulti(float x, float y) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
+		z *= m_lacunarity;
 
 		amp *= m_gain;
-		sum -= (1.0f - FastAbs(SingleValue(m_perm[i], x, y))) * amp;
+		sum -= (1.0f - fabs(singlePerlin(m_perm[i], x, y, z))) * amp;
 	}
 
 	return sum;
 }
 
-float noisefast::GetValue(float x, float y) const
+float noisefast::singlePerlin(const unsigned char &offset, const float &x, const float &y, const float &z) const
 {
-	return SingleValue(0, x * m_frequency, y * m_frequency);
-}
-
-float noisefast::SingleValue(unsigned char offset, float x, float y) const
-{
-	int x0 = FastFloor(x);
-	int y0 = FastFloor(y);
-	int x1 = x0 + 1;
-	int y1 = y0 + 1;
-
-	float xs = 0.0f;
-	float ys = 0.0f;
-
-	switch (m_interp)
-	{
-	case Linear:
-		xs = x - static_cast<float>(x0);
-		ys = y - static_cast<float>(y0);
-		break;
-	case Hermite:
-		xs = InterpHermiteFunc(x - static_cast<float>(x0));
-		ys = InterpHermiteFunc(y - static_cast<float>(y0));
-		break;
-	case Quintic:
-		xs = InterpQuinticFunc(x - static_cast<float>(x0));
-		ys = InterpQuinticFunc(y - static_cast<float>(y0));
-		break;
-	}
-
-	float xf0 = Lerp(ValCoord2DFast(offset, x0, y0), ValCoord2DFast(offset, x1, y0), xs);
-	float xf1 = Lerp(ValCoord2DFast(offset, x0, y1), ValCoord2DFast(offset, x1, y1), xs);
-
-	return Lerp(xf0, xf1, ys);
-}
-
-// Perlin Noise
-float noisefast::GetPerlinFractal(float x, float y, float z) const
-{
-	x *= m_frequency;
-	y *= m_frequency;
-	z *= m_frequency;
-
-	switch (m_fractalType)
-	{
-	case FBM:
-		return SinglePerlinFractalFBM(x, y, z);
-	case Billow:
-		return SinglePerlinFractalBillow(x, y, z);
-	case RigidMulti:
-		return SinglePerlinFractalRigidMulti(x, y, z);
-	default:
-		return 0.0f;
-	}
-}
-
-float noisefast::SinglePerlinFractalFBM(float x, float y, float z) const
-{
-	float sum = SinglePerlin(m_perm[0], x, y, z);
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-		z *= m_lacunarity;
-
-		amp *= m_gain;
-		sum += SinglePerlin(m_perm[i], x, y, z) * amp;
-	}
-
-	return sum * m_fractalBounding;
-}
-
-float noisefast::SinglePerlinFractalBillow(float x, float y, float z) const
-{
-	float sum = FastAbs(SinglePerlin(m_perm[0], x, y, z)) * 2.0f - 1.0f;
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-		z *= m_lacunarity;
-
-		amp *= m_gain;
-		sum += (FastAbs(SinglePerlin(m_perm[i], x, y, z)) * 2.0f - 1.0f) * amp;
-	}
-
-	return sum * m_fractalBounding;
-}
-
-float noisefast::SinglePerlinFractalRigidMulti(float x, float y, float z) const
-{
-	float sum = 1.0f - FastAbs(SinglePerlin(m_perm[0], x, y, z));
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-		z *= m_lacunarity;
-
-		amp *= m_gain;
-		sum -= (1.0f - FastAbs(SinglePerlin(m_perm[i], x, y, z))) * amp;
-	}
-
-	return sum;
-}
-
-float noisefast::GetPerlin(float x, float y, float z) const
-{
-	return SinglePerlin(0, x * m_frequency, y * m_frequency, z * m_frequency);
-}
-
-float noisefast::SinglePerlin(unsigned char offset, float x, float y, float z) const
-{
-	int x0 = FastFloor(x);
-	int y0 = FastFloor(y);
-	int z0 = FastFloor(z);
+	int x0 = fastFloor(x);
+	int y0 = fastFloor(y);
+	int z0 = fastFloor(z);
 	int x1 = x0 + 1;
 	int y1 = y0 + 1;
 	int z1 = z0 + 1;
@@ -914,14 +1662,14 @@ float noisefast::SinglePerlin(unsigned char offset, float x, float y, float z) c
 		zs = z - static_cast<float>(z0);
 		break;
 	case Hermite:
-		xs = InterpHermiteFunc(x - static_cast<float>(x0));
-		ys = InterpHermiteFunc(y - static_cast<float>(y0));
-		zs = InterpHermiteFunc(z - static_cast<float>(z0));
+		xs = interpHermite(x - static_cast<float>(x0));
+		ys = interpHermite(y - static_cast<float>(y0));
+		zs = interpHermite(z - static_cast<float>(z0));
 		break;
 	case Quintic:
-		xs = InterpQuinticFunc(x - static_cast<float>(x0));
-		ys = InterpQuinticFunc(y - static_cast<float>(y0));
-		zs = InterpQuinticFunc(z - static_cast<float>(z0));
+		xs = interpQuintic(x - static_cast<float>(x0));
+		ys = interpQuintic(y - static_cast<float>(y0));
+		zs = interpQuintic(z - static_cast<float>(z0));
 		break;
 	}
 
@@ -932,38 +1680,20 @@ float noisefast::SinglePerlin(unsigned char offset, float x, float y, float z) c
 	float yd1 = yd0 - 1.0f;
 	float zd1 = zd0 - 1.0f;
 
-	float xf00 = Lerp(GradCoord3D(offset, x0, y0, z0, xd0, yd0, zd0), GradCoord3D(offset, x1, y0, z0, xd1, yd0, zd0), xs);
-	float xf10 = Lerp(GradCoord3D(offset, x0, y1, z0, xd0, yd1, zd0), GradCoord3D(offset, x1, y1, z0, xd1, yd1, zd0), xs);
-	float xf01 = Lerp(GradCoord3D(offset, x0, y0, z1, xd0, yd0, zd1), GradCoord3D(offset, x1, y0, z1, xd1, yd0, zd1), xs);
-	float xf11 = Lerp(GradCoord3D(offset, x0, y1, z1, xd0, yd1, zd1), GradCoord3D(offset, x1, y1, z1, xd1, yd1, zd1), xs);
+	float xf00 = lerp(gradCoord3D(offset, x0, y0, z0, xd0, yd0, zd0), gradCoord3D(offset, x1, y0, z0, xd1, yd0, zd0), xs);
+	float xf10 = lerp(gradCoord3D(offset, x0, y1, z0, xd0, yd1, zd0), gradCoord3D(offset, x1, y1, z0, xd1, yd1, zd0), xs);
+	float xf01 = lerp(gradCoord3D(offset, x0, y0, z1, xd0, yd0, zd1), gradCoord3D(offset, x1, y0, z1, xd1, yd0, zd1), xs);
+	float xf11 = lerp(gradCoord3D(offset, x0, y1, z1, xd0, yd1, zd1), gradCoord3D(offset, x1, y1, z1, xd1, yd1, zd1), xs);
 
-	float yf0 = Lerp(xf00, xf10, ys);
-	float yf1 = Lerp(xf01, xf11, ys);
+	float yf0 = lerp(xf00, xf10, ys);
+	float yf1 = lerp(xf01, xf11, ys);
 
-	return Lerp(yf0, yf1, zs);
+	return lerp(yf0, yf1, zs);
 }
 
-float noisefast::GetPerlinFractal(float x, float y) const
+float noisefast::singleSimplexFractalFBM(float x, float y, float z) const
 {
-	x *= m_frequency;
-	y *= m_frequency;
-
-	switch (m_fractalType)
-	{
-	case FBM:
-		return SinglePerlinFractalFBM(x, y);
-	case Billow:
-		return SinglePerlinFractalBillow(x, y);
-	case RigidMulti:
-		return SinglePerlinFractalRigidMulti(x, y);
-	default:
-		return 0.0f;
-	}
-}
-
-float noisefast::SinglePerlinFractalFBM(float x, float y) const
-{
-	float sum = SinglePerlin(m_perm[0], x, y);
+	float sum = singleSimplex(m_perm[0], x, y, z);
 	float amp = 1.0f;
 	int i = 0;
 
@@ -971,17 +1701,18 @@ float noisefast::SinglePerlinFractalFBM(float x, float y) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
+		z *= m_lacunarity;
 
 		amp *= m_gain;
-		sum += SinglePerlin(m_perm[i], x, y) * amp;
+		sum += singleSimplex(m_perm[i], x, y, z) * amp;
 	}
 
 	return sum * m_fractalBounding;
 }
 
-float noisefast::SinglePerlinFractalBillow(float x, float y) const
+float noisefast::singleSimplexFractalBillow(float x, float y, float z) const
 {
-	float sum = FastAbs(SinglePerlin(m_perm[0], x, y)) * 2.0f - 1.0f;
+	float sum = fabs(singleSimplex(m_perm[0], x, y, z)) * 2.0f - 1.0f;
 	float amp = 1.0f;
 	int i = 0;
 
@@ -989,17 +1720,18 @@ float noisefast::SinglePerlinFractalBillow(float x, float y) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
+		z *= m_lacunarity;
 
 		amp *= m_gain;
-		sum += (FastAbs(SinglePerlin(m_perm[i], x, y)) * 2.0f - 1.0f) * amp;
+		sum += (fabs(singleSimplex(m_perm[i], x, y, z)) * 2.0f - 1.0f) * amp;
 	}
 
 	return sum * m_fractalBounding;
 }
 
-float noisefast::SinglePerlinFractalRigidMulti(float x, float y) const
+float noisefast::singleSimplexFractalRigidMulti(float x, float y, float z) const
 {
-	float sum = 1.0f - FastAbs(SinglePerlin(m_perm[0], x, y));
+	float sum = 1.0f - fabs(singleSimplex(m_perm[0], x, y, z));
 	float amp = 1.0f;
 	int i = 0;
 
@@ -1007,144 +1739,21 @@ float noisefast::SinglePerlinFractalRigidMulti(float x, float y) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
+		z *= m_lacunarity;
 
 		amp *= m_gain;
-		sum -= (1.0f - FastAbs(SinglePerlin(m_perm[i], x, y))) * amp;
+		sum -= (1.0f - fabs(singleSimplex(m_perm[i], x, y, z))) * amp;
 	}
 
 	return sum;
 }
 
-float noisefast::GetPerlin(float x, float y) const
-{
-	return SinglePerlin(0, x * m_frequency, y * m_frequency);
-}
-
-float noisefast::SinglePerlin(unsigned char offset, float x, float y) const
-{
-	int x0 = FastFloor(x);
-	int y0 = FastFloor(y);
-	int x1 = x0 + 1;
-	int y1 = y0 + 1;
-
-	float xs = 0.0f;
-	float ys = 0.0f;
-
-	switch (m_interp)
-	{
-	case Linear:
-		xs = x - static_cast<float>(x0);
-		ys = y - static_cast<float>(y0);
-		break;
-	case Hermite:
-		xs = InterpHermiteFunc(x - static_cast<float>(x0));
-		ys = InterpHermiteFunc(y - static_cast<float>(y0));
-		break;
-	case Quintic:
-		xs = InterpQuinticFunc(x - static_cast<float>(x0));
-		ys = InterpQuinticFunc(y - static_cast<float>(y0));
-		break;
-	}
-
-	float xd0 = x - static_cast<float>(x0);
-	float yd0 = y - static_cast<float>(y0);
-	float xd1 = xd0 - 1.0f;
-	float yd1 = yd0 - 1.0f;
-
-	float xf0 = Lerp(GradCoord2D(offset, x0, y0, xd0, yd0), GradCoord2D(offset, x1, y0, xd1, yd0), xs);
-	float xf1 = Lerp(GradCoord2D(offset, x0, y1, xd0, yd1), GradCoord2D(offset, x1, y1, xd1, yd1), xs);
-
-	return Lerp(xf0, xf1, ys);
-}
-
-// Simplex Noise
-float noisefast::GetSimplexFractal(float x, float y, float z) const
-{
-	x *= m_frequency;
-	y *= m_frequency;
-	z *= m_frequency;
-
-	switch (m_fractalType)
-	{
-	case FBM:
-		return SingleSimplexFractalFBM(x, y, z);
-	case Billow:
-		return SingleSimplexFractalBillow(x, y, z);
-	case RigidMulti:
-		return SingleSimplexFractalRigidMulti(x, y, z);
-	default:
-		return 0;
-	}
-}
-
-float noisefast::SingleSimplexFractalFBM(float x, float y, float z) const
-{
-	float sum = SingleSimplex(m_perm[0], x, y, z);
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-		z *= m_lacunarity;
-
-		amp *= m_gain;
-		sum += SingleSimplex(m_perm[i], x, y, z) * amp;
-	}
-
-	return sum * m_fractalBounding;
-}
-
-float noisefast::SingleSimplexFractalBillow(float x, float y, float z) const
-{
-	float sum = FastAbs(SingleSimplex(m_perm[0], x, y, z)) * 2.0f - 1.0f;
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-		z *= m_lacunarity;
-
-		amp *= m_gain;
-		sum += (FastAbs(SingleSimplex(m_perm[i], x, y, z)) * 2.0f - 1.0f) * amp;
-	}
-
-	return sum * m_fractalBounding;
-}
-
-float noisefast::SingleSimplexFractalRigidMulti(float x, float y, float z) const
-{
-	float sum = 1.0f - FastAbs(SingleSimplex(m_perm[0], x, y, z));
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-		z *= m_lacunarity;
-
-		amp *= m_gain;
-		sum -= (1.0f - FastAbs(SingleSimplex(m_perm[i], x, y, z))) * amp;
-	}
-
-	return sum;
-}
-
-float noisefast::GetSimplex(float x, float y, float z) const
-{
-	return SingleSimplex(0, x * m_frequency, y * m_frequency, z * m_frequency);
-}
-
-float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z) const
+float noisefast::singleSimplex(const unsigned char &offset, const float &x, const float &y, const float &z) const
 {
 	float t = (x + y + z) * F3;
-	int i = FastFloor(x + t);
-	int j = FastFloor(y + t);
-	int k = FastFloor(z + t);
+	int i = fastFloor(x + t);
+	int j = fastFloor(y + t);
+	int k = fastFloor(z + t);
 
 	t = (i + j + k) * G3;
 	float X0 = i - t;
@@ -1240,7 +1849,7 @@ float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z) 
 	else
 	{
 		t *= t;
-		n0 = t * t * GradCoord3D(offset, i, j, k, x0, y0, z0);
+		n0 = t * t * gradCoord3D(offset, i, j, k, x0, y0, z0);
 	}
 
 	t = 0.6f - x1 * x1 - y1 * y1 - z1 * z1;
@@ -1252,7 +1861,7 @@ float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z) 
 	else
 	{
 		t *= t;
-		n1 = t * t * GradCoord3D(offset, i + i1, j + j1, k + k1, x1, y1, z1);
+		n1 = t * t * gradCoord3D(offset, i + i1, j + j1, k + k1, x1, y1, z1);
 	}
 
 	t = 0.6f - x2 * x2 - y2 * y2 - z2 * z2;
@@ -1264,7 +1873,7 @@ float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z) 
 	else
 	{
 		t *= t;
-		n2 = t * t * GradCoord3D(offset, i + i2, j + j2, k + k2, x2, y2, z2);
+		n2 = t * t * gradCoord3D(offset, i + i2, j + j2, k + k2, x2, y2, z2);
 	}
 
 	t = 0.6f - x3 * x3 - y3 * y3 - z3 * z3;
@@ -1276,33 +1885,15 @@ float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z) 
 	else
 	{
 		t *= t;
-		n3 = t * t * GradCoord3D(offset, i + 1, j + 1, k + 1, x3, y3, z3);
+		n3 = t * t * gradCoord3D(offset, i + 1, j + 1, k + 1, x3, y3, z3);
 	}
 
 	return 32.0f * (n0 + n1 + n2 + n3);
 }
 
-float noisefast::GetSimplexFractal(float x, float y) const
+float noisefast::singleCubicFractalFBM(float x, float y, float z) const
 {
-	x *= m_frequency;
-	y *= m_frequency;
-
-	switch (m_fractalType)
-	{
-	case FBM:
-		return SingleSimplexFractalFBM(x, y);
-	case Billow:
-		return SingleSimplexFractalBillow(x, y);
-	case RigidMulti:
-		return SingleSimplexFractalRigidMulti(x, y);
-	default:
-		return 0.0f;
-	}
-}
-
-float noisefast::SingleSimplexFractalFBM(float x, float y) const
-{
-	float sum = SingleSimplex(m_perm[0], x, y);
+	float sum = singleCubic(m_perm[0], x, y, z);
 	float amp = 1.0f;
 	int i = 0;
 
@@ -1310,17 +1901,18 @@ float noisefast::SingleSimplexFractalFBM(float x, float y) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
+		z *= m_lacunarity;
 
 		amp *= m_gain;
-		sum += SingleSimplex(m_perm[i], x, y) * amp;
+		sum += singleCubic(m_perm[i], x, y, z) * amp;
 	}
 
 	return sum * m_fractalBounding;
 }
 
-float noisefast::SingleSimplexFractalBillow(float x, float y) const
+float noisefast::singleCubicFractalBillow(float x, float y, float z) const
 {
-	float sum = FastAbs(SingleSimplex(m_perm[0], x, y)) * 2.0f - 1.0f;
+	float sum = fabs(singleCubic(m_perm[0], x, y, z)) * 2.0f - 1.0f;
 	float amp = 1.0f;
 	int i = 0;
 
@@ -1328,17 +1920,18 @@ float noisefast::SingleSimplexFractalBillow(float x, float y) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
-
+		z *= m_lacunarity;
+		
 		amp *= m_gain;
-		sum += (FastAbs(SingleSimplex(m_perm[i], x, y)) * 2.0f - 1.0f) * amp;
+		sum += (fabs(singleCubic(m_perm[i], x, y, z)) * 2.0f - 1.0f) * amp;
 	}
 
 	return sum * m_fractalBounding;
 }
 
-float noisefast::SingleSimplexFractalRigidMulti(float x, float y) const
+float noisefast::singleCubicFractalRigidMulti(float x, float y, float z) const
 {
-	float sum = 1.0f - FastAbs(SingleSimplex(m_perm[0], x, y));
+	float sum = 1.0f - fabs(singleCubic(m_perm[0], x, y, z));
 	float amp = 1.0f;
 	int i = 0;
 
@@ -1346,122 +1939,363 @@ float noisefast::SingleSimplexFractalRigidMulti(float x, float y) const
 	{
 		x *= m_lacunarity;
 		y *= m_lacunarity;
+		z *= m_lacunarity;
 
 		amp *= m_gain;
-		sum -= (1.0f - FastAbs(SingleSimplex(m_perm[i], x, y))) * amp;
+		sum -= (1.0f - fabs(singleCubic(m_perm[i], x, y, z))) * amp;
 	}
 
 	return sum;
 }
 
-float noisefast::SingleSimplexFractalBlend(float x, float y) const
+float noisefast::singleCubic(const unsigned char &offset, const float &x, const float &y, const float &z) const
 {
-	float sum = SingleSimplex(m_perm[0], x, y);
-	float amp = 1.0f;
-	int i = 0;
+	int x1 = fastFloor(x);
+	int y1 = fastFloor(y);
+	int z1 = fastFloor(z);
 
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
+	int x0 = x1 - 1;
+	int y0 = y1 - 1;
+	int z0 = z1 - 1;
+	int x2 = x1 + 1;
+	int y2 = y1 + 1;
+	int z2 = z1 + 1;
+	int x3 = x1 + 2;
+	int y3 = y1 + 2;
+	int z3 = z1 + 2;
 
-		amp *= m_gain;
-		sum *= SingleSimplex(m_perm[i], x, y) * amp + 1.0f;
-	}
+	float xs = x - static_cast<float>(x1);
+	float ys = y - static_cast<float>(y1);
+	float zs = z - static_cast<float>(z1);
 
-	return sum * m_fractalBounding;
+	return cubicLerp(
+		cubicLerp(
+			cubicLerp(valCoord3DFast(offset, x0, y0, z0), valCoord3DFast(offset, x1, y0, z0), valCoord3DFast(offset, x2, y0, z0), valCoord3DFast(offset, x3, y0, z0), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y1, z0), valCoord3DFast(offset, x1, y1, z0), valCoord3DFast(offset, x2, y1, z0), valCoord3DFast(offset, x3, y1, z0), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y2, z0), valCoord3DFast(offset, x1, y2, z0), valCoord3DFast(offset, x2, y2, z0), valCoord3DFast(offset, x3, y2, z0), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y3, z0), valCoord3DFast(offset, x1, y3, z0), valCoord3DFast(offset, x2, y3, z0), valCoord3DFast(offset, x3, y3, z0), xs),
+			ys),
+		cubicLerp(
+			cubicLerp(valCoord3DFast(offset, x0, y0, z1), valCoord3DFast(offset, x1, y0, z1), valCoord3DFast(offset, x2, y0, z1), valCoord3DFast(offset, x3, y0, z1), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y1, z1), valCoord3DFast(offset, x1, y1, z1), valCoord3DFast(offset, x2, y1, z1), valCoord3DFast(offset, x3, y1, z1), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y2, z1), valCoord3DFast(offset, x1, y2, z1), valCoord3DFast(offset, x2, y2, z1), valCoord3DFast(offset, x3, y2, z1), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y3, z1), valCoord3DFast(offset, x1, y3, z1), valCoord3DFast(offset, x2, y3, z1), valCoord3DFast(offset, x3, y3, z1), xs),
+			ys),
+		cubicLerp(
+			cubicLerp(valCoord3DFast(offset, x0, y0, z2), valCoord3DFast(offset, x1, y0, z2), valCoord3DFast(offset, x2, y0, z2), valCoord3DFast(offset, x3, y0, z2), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y1, z2), valCoord3DFast(offset, x1, y1, z2), valCoord3DFast(offset, x2, y1, z2), valCoord3DFast(offset, x3, y1, z2), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y2, z2), valCoord3DFast(offset, x1, y2, z2), valCoord3DFast(offset, x2, y2, z2), valCoord3DFast(offset, x3, y2, z2), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y3, z2), valCoord3DFast(offset, x1, y3, z2), valCoord3DFast(offset, x2, y3, z2), valCoord3DFast(offset, x3, y3, z2), xs),
+			ys),
+		cubicLerp(
+			cubicLerp(valCoord3DFast(offset, x0, y0, z3), valCoord3DFast(offset, x1, y0, z3), valCoord3DFast(offset, x2, y0, z3), valCoord3DFast(offset, x3, y0, z3), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y1, z3), valCoord3DFast(offset, x1, y1, z3), valCoord3DFast(offset, x2, y1, z3), valCoord3DFast(offset, x3, y1, z3), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y2, z3), valCoord3DFast(offset, x1, y2, z3), valCoord3DFast(offset, x2, y2, z3), valCoord3DFast(offset, x3, y2, z3), xs),
+			cubicLerp(valCoord3DFast(offset, x0, y3, z3), valCoord3DFast(offset, x1, y3, z3), valCoord3DFast(offset, x2, y3, z3), valCoord3DFast(offset, x3, y3, z3), xs),
+			ys),
+		zs) * CUBIC_3D_BOUNDING;
 }
 
-float noisefast::GetSimplex(float x, float y) const
+float noisefast::singleCellular(const float &x, const float &y, const float &z) const
 {
-	return SingleSimplex(0, x * m_frequency, y * m_frequency);
+	int xr = fastRound(x);
+	int yr = fastRound(y);
+	int zr = fastRound(z);
+
+	float distance = 999999.0f;
+	int xc = 0;
+	int yc = 0;
+	int zc = 0;
+
+	switch (m_cellularDistanceFunction)
+	{
+	case Euclidean:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				for (int zi = zr - 1; zi <= zr + 1; zi++)
+				{
+					unsigned char lutPos = index3D_256(0, xi, yi, zi);
+
+					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
+
+					float newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
+
+					if (newDistance < distance)
+					{
+						distance = newDistance;
+						xc = xi;
+						yc = yi;
+						zc = zi;
+					}
+				}
+			}
+		}
+		break;
+	case Manhattan:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				for (int zi = zr - 1; zi <= zr + 1; zi++)
+				{
+					unsigned char lutPos = index3D_256(0, xi, yi, zi);
+
+					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
+
+					float newDistance = fabs(vecX) + fabs(vecY) + fabs(vecZ);
+
+					if (newDistance < distance)
+					{
+						distance = newDistance;
+						xc = xi;
+						yc = yi;
+						zc = zi;
+					}
+				}
+			}
+		}
+		break;
+	case Natural:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				for (int zi = zr - 1; zi <= zr + 1; zi++)
+				{
+					unsigned char lutPos = index3D_256(0, xi, yi, zi);
+
+					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
+
+					float newDistance = (fabs(vecX) + fabs(vecY) + fabs(vecZ)) + (vecX * vecX + vecY * vecY + vecZ * vecZ);
+
+					if (newDistance < distance)
+					{
+						distance = newDistance;
+						xc = xi;
+						yc = yi;
+						zc = zi;
+					}
+				}
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+	unsigned char lutPos;
+
+	switch (m_cellularReturnType)
+	{
+	case CellValue:
+		return valCoord3D(m_seed, xc, yc, zc);
+	case NoiseLookup:
+		assert(m_cellularNoiseLookup);
+
+		lutPos = index3D_256(0, xc, yc, zc);
+		return m_cellularNoiseLookup->getNoise(xc + CELL_3D_X[lutPos] * m_cellularJitter, yc + CELL_3D_Y[lutPos] * m_cellularJitter, zc + CELL_3D_Z[lutPos] * m_cellularJitter);
+	case Distance:
+		return distance;
+	default:
+		return 0.0f;
+	}
 }
 
-float noisefast::SingleSimplex(unsigned char offset, float x, float y) const
+float noisefast::singleCellular2Edge(const float &x, const float &y, const float &z) const
 {
-	float t = (x + y) * F2;
-	int i = FastFloor(x + t);
-	int j = FastFloor(y + t);
+	int xr = fastRound(x);
+	int yr = fastRound(y);
+	int zr = fastRound(z);
 
-	t = (i + j) * G2;
-	float X0 = i - t;
-	float Y0 = j - t;
+	float distance[FN_CELLULAR_INDEX_MAX + 1] = { 999999.0f, 999999.0f, 999999.0f, 999999.0f };
 
-	float x0 = x - X0;
-	float y0 = y - Y0;
-
-	int i1, j1;
-
-	if (x0 > y0)
+	switch (m_cellularDistanceFunction)
 	{
-		i1 = 1;
-		j1 = 0;
+	case Euclidean:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				for (int zi = zr - 1; zi <= zr + 1; zi++)
+				{
+					unsigned char lutPos = index3D_256(0, xi, yi, zi);
+
+					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
+
+					float newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
+
+					for (int i = m_cellularDistanceIndex1; i > 0; i--)
+					{
+						distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
+					}
+
+					distance[0] = fmin(distance[0], newDistance);
+				}
+			}
+		}
+		break;
+	case Manhattan:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				for (int zi = zr - 1; zi <= zr + 1; zi++)
+				{
+					unsigned char lutPos = index3D_256(0, xi, yi, zi);
+
+					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
+
+					float newDistance = fabs(vecX) + fabs(vecY) + fabs(vecZ);
+
+					for (int i = m_cellularDistanceIndex1; i > 0; i--)
+					{
+						distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
+					}
+
+					distance[0] = fmin(distance[0], newDistance);
+				}
+			}
+		}
+		break;
+	case Natural:
+		for (int xi = xr - 1; xi <= xr + 1; xi++)
+		{
+			for (int yi = yr - 1; yi <= yr + 1; yi++)
+			{
+				for (int zi = zr - 1; zi <= zr + 1; zi++)
+				{
+					unsigned char lutPos = index3D_256(0, xi, yi, zi);
+
+					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
+
+					float newDistance = (fabs(vecX) + fabs(vecY) + fabs(vecZ)) + (vecX * vecX + vecY * vecY + vecZ * vecZ);
+
+					for (int i = m_cellularDistanceIndex1; i > 0; i--)
+					{
+						distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
+					}
+
+					distance[0] = fmin(distance[0], newDistance);
+				}
+			}
+		}
+		break;
+	default:
+		break;
 	}
-	else
+
+	switch (m_cellularReturnType)
 	{
-		i1 = 0;
-		j1 = 1;
+	case Distance2:
+		return distance[m_cellularDistanceIndex1];
+	case Distance2Add:
+		return distance[m_cellularDistanceIndex1] + distance[m_cellularDistanceIndex0];
+	case Distance2Sub:
+		return distance[m_cellularDistanceIndex1] - distance[m_cellularDistanceIndex0];
+	case Distance2Mul:
+		return distance[m_cellularDistanceIndex1] * distance[m_cellularDistanceIndex0];
+	case Distance2Div:
+		return distance[m_cellularDistanceIndex0] / distance[m_cellularDistanceIndex1];
+	default:
+		return 0.0f;
 	}
-
-	float x1 = x0 - static_cast<float>(i1) + G2;
-	float y1 = y0 - static_cast<float>(j1) + G2;
-	float x2 = x0 - 1.0f + 2.0f * G2;
-	float y2 = y0 - 1.0f + 2.0f * G2;
-
-	float n0, n1, n2;
-
-	t = 0.5f - x0 * x0 - y0 * y0;
-
-	if (t < 0.0f)
-	{
-		n0 = 0.0f;
-	}
-	else
-	{
-		t *= t;
-		n0 = t * t * GradCoord2D(offset, i, j, x0, y0);
-	}
-
-	t = 0.5f - x1 * x1 - y1 * y1;
-
-	if (t < 0.0f)
-	{
-		n1 = 0.0f;
-	}
-	else
-	{
-		t *= t;
-		n1 = t * t * GradCoord2D(offset, i + i1, j + j1, x1, y1);
-	}
-
-	t = 0.5f - x2 * x2 - y2 * y2;
-
-	if (t < 0.0f)
-	{
-		n2 = 0.0f;
-	}
-	else
-	{
-		t *= t;
-		n2 = t * t * GradCoord2D(offset, i + 1, j + 1, x2, y2);
-	}
-
-	return 70.0f * (n0 + n1 + n2);
 }
 
-float noisefast::GetSimplex(float x, float y, float z, float w) const
+void noisefast::singleGradientPerturb(const unsigned char &offset, const float &warpAmp, const float &frequency, float x, float y, float z) const
 {
-	return SingleSimplex(0, x * m_frequency, y * m_frequency, z * m_frequency, w * m_frequency);
+	float xf = x * frequency;
+	float yf = y * frequency;
+	float zf = z * frequency;
+
+	int x0 = fastFloor(xf);
+	int y0 = fastFloor(yf);
+	int z0 = fastFloor(zf);
+	int x1 = x0 + 1;
+	int y1 = y0 + 1;
+	int z1 = z0 + 1;
+
+	float xs, ys, zs;
+
+	switch (m_interp)
+	{
+	default:
+	case Linear:
+		xs = xf - static_cast<float>(x0);
+		ys = yf - static_cast<float>(y0);
+		zs = zf - static_cast<float>(z0);
+		break;
+	case Hermite:
+		xs = interpHermite(xf - static_cast<float>(x0));
+		ys = interpHermite(yf - static_cast<float>(y0));
+		zs = interpHermite(zf - static_cast<float>(z0));
+		break;
+	case Quintic:
+		xs = interpQuintic(xf - static_cast<float>(x0));
+		ys = interpQuintic(yf - static_cast<float>(y0));
+		zs = interpQuintic(zf - static_cast<float>(z0));
+		break;
+	}
+
+	int lutPos0 = index3D_256(offset, x0, y0, z0);
+	int lutPos1 = index3D_256(offset, x1, y0, z0);
+
+	float lx0x = lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
+	float ly0x = lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
+	float lz0x = lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs);
+
+	lutPos0 = index3D_256(offset, x0, y1, z0);
+	lutPos1 = index3D_256(offset, x1, y1, z0);
+
+	float lx1x = lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
+	float ly1x = lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
+	float lz1x = lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs);
+
+	float lx0y = lerp(lx0x, lx1x, ys);
+	float ly0y = lerp(ly0x, ly1x, ys);
+	float lz0y = lerp(lz0x, lz1x, ys);
+
+	lutPos0 = index3D_256(offset, x0, y0, z1);
+	lutPos1 = index3D_256(offset, x1, y0, z1);
+
+	lx0x = lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
+	ly0x = lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
+	lz0x = lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs);
+
+	lutPos0 = index3D_256(offset, x0, y1, z1);
+	lutPos1 = index3D_256(offset, x1, y1, z1);
+
+	lx1x = lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
+	ly1x = lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
+	lz1x = lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs);
+
+	x += lerp(lx0y, lerp(lx0x, lx1x, ys), zs) * warpAmp;
+	y += lerp(ly0y, lerp(ly0x, ly1x, ys), zs) * warpAmp;
+	z += lerp(lz0y, lerp(lz0x, lz1x, ys), zs) * warpAmp;
 }
 
-float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z, float w) const
+// 4D
+float noisefast::singleSimplex(const unsigned char &offset, const float &x, const float &y, const float &z, const float &w) const
 {
 	float n0, n1, n2, n3, n4;
 	float t = (x + y + z + w) * F4;
-	int i = FastFloor(x + t);
-	int j = FastFloor(y + t);
-	int k = FastFloor(z + t);
-	int l = FastFloor(w + t);
+	int i = fastFloor(x + t);
+	int j = fastFloor(y + t);
+	int k = fastFloor(z + t);
+	int l = fastFloor(w + t);
 	t = (i + j + k + l) * G4;
 	float X0 = i - t;
 	float Y0 = j - t;
@@ -1511,7 +2345,7 @@ float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z, 
 	float w4 = w0 - 1.0f + 4.0f * G4;
 
 	t = 0.6f - x0 * x0 - y0 * y0 - z0 * z0 - w0 * w0;
-	
+
 	if (t < 0.0f)
 	{
 		n0 = 0.0f;
@@ -1519,23 +2353,23 @@ float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z, 
 	else
 	{
 		t *= t;
-		n0 = t * t * GradCoord4D(offset, i, j, k, l, x0, y0, z0, w0);
+		n0 = t * t * gradCoord4D(offset, i, j, k, l, x0, y0, z0, w0);
 	}
-	
+
 	t = 0.6f - x1 * x1 - y1 * y1 - z1 * z1 - w1 * w1;
-	
-	if (t < 0.0f) 
+
+	if (t < 0.0f)
 	{
 		n1 = 0.0f;
 	}
 	else
 	{
 		t *= t;
-		n1 = t * t * GradCoord4D(offset, i + i1, j + j1, k + k1, l + l1, x1, y1, z1, w1);
+		n1 = t * t * gradCoord4D(offset, i + i1, j + j1, k + k1, l + l1, x1, y1, z1, w1);
 	}
-	
+
 	t = 0.6f - x2 * x2 - y2 * y2 - z2 * z2 - w2 * w2;
-	
+
 	if (t < 0.0f)
 	{
 		n2 = 0.0f;
@@ -1543,11 +2377,11 @@ float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z, 
 	else
 	{
 		t *= t;
-		n2 = t * t * GradCoord4D(offset, i + i2, j + j2, k + k2, l + l2, x2, y2, z2, w2);
+		n2 = t * t * gradCoord4D(offset, i + i2, j + j2, k + k2, l + l2, x2, y2, z2, w2);
 	}
-	
+
 	t = 0.6f - x3 * x3 - y3 * y3 - z3 * z3 - w3 * w3;
-	
+
 	if (t < 0.0f)
 	{
 		n3 = 0.0f;
@@ -1555,11 +2389,11 @@ float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z, 
 	else
 	{
 		t *= t;
-		n3 = t * t * GradCoord4D(offset, i + i3, j + j3, k + k3, l + l3, x3, y3, z3, w3);
+		n3 = t * t * gradCoord4D(offset, i + i3, j + j3, k + k3, l + l3, x3, y3, z3, w3);
 	}
-	
+
 	t = 0.6f - x4 * x4 - y4 * y4 - z4 * z4 - w4 * w4;
-	
+
 	if (t < 0.0f)
 	{
 		n4 = 0.0f;
@@ -1567,841 +2401,8 @@ float noisefast::SingleSimplex(unsigned char offset, float x, float y, float z, 
 	else
 	{
 		t *= t;
-		n4 = t * t * GradCoord4D(offset, i + 1, j + 1, k + 1, l + 1, x4, y4, z4, w4);
+		n4 = t * t * gradCoord4D(offset, i + 1, j + 1, k + 1, l + 1, x4, y4, z4, w4);
 	}
 
 	return 27.0f * (n0 + n1 + n2 + n3 + n4);
-}
-
-// Cubic Noise
-float noisefast::GetCubicFractal(float x, float y, float z) const
-{
-	x *= m_frequency;
-	y *= m_frequency;
-	z *= m_frequency;
-
-	switch (m_fractalType)
-	{
-	case FBM:
-		return SingleCubicFractalFBM(x, y, z);
-	case Billow:
-		return SingleCubicFractalBillow(x, y, z);
-	case RigidMulti:
-		return SingleCubicFractalRigidMulti(x, y, z);
-	default:
-		return 0.0f;
-	}
-}
-
-float noisefast::SingleCubicFractalFBM(float x, float y, float z) const
-{
-	float sum = SingleCubic(m_perm[0], x, y, z);
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-		z *= m_lacunarity;
-
-		amp *= m_gain;
-		sum += SingleCubic(m_perm[i], x, y, z) * amp;
-	}
-
-	return sum * m_fractalBounding;
-}
-
-float noisefast::SingleCubicFractalBillow(float x, float y, float z) const
-{
-	float sum = FastAbs(SingleCubic(m_perm[0], x, y, z)) * 2.0f - 1.0f;
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-		z *= m_lacunarity;
-
-		amp *= m_gain;
-		sum += (FastAbs(SingleCubic(m_perm[i], x, y, z)) * 2.0f - 1.0f) * amp;
-	}
-
-	return sum * m_fractalBounding;
-}
-
-float noisefast::SingleCubicFractalRigidMulti(float x, float y, float z) const
-{
-	float sum = 1.0f - FastAbs(SingleCubic(m_perm[0], x, y, z));
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-		z *= m_lacunarity;
-
-		amp *= m_gain;
-		sum -= (1.0f - FastAbs(SingleCubic(m_perm[i], x, y, z))) * amp;
-	}
-
-	return sum;
-}
-
-float noisefast::GetCubic(float x, float y, float z) const
-{
-	return SingleCubic(0, x * m_frequency, y * m_frequency, z * m_frequency);
-}
-
-float noisefast::SingleCubic(unsigned char offset, float x, float y, float z) const
-{
-	int x1 = FastFloor(x);
-	int y1 = FastFloor(y);
-	int z1 = FastFloor(z);
-
-	int x0 = x1 - 1;
-	int y0 = y1 - 1;
-	int z0 = z1 - 1;
-	int x2 = x1 + 1;
-	int y2 = y1 + 1;
-	int z2 = z1 + 1;
-	int x3 = x1 + 2;
-	int y3 = y1 + 2;
-	int z3 = z1 + 2;
-
-	float xs = x - static_cast<float>(x1);
-	float ys = y - static_cast<float>(y1);
-	float zs = z - static_cast<float>(z1);
-
-	return CubicLerp(
-		CubicLerp(
-			CubicLerp(ValCoord3DFast(offset, x0, y0, z0), ValCoord3DFast(offset, x1, y0, z0), ValCoord3DFast(offset, x2, y0, z0), ValCoord3DFast(offset, x3, y0, z0), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y1, z0), ValCoord3DFast(offset, x1, y1, z0), ValCoord3DFast(offset, x2, y1, z0), ValCoord3DFast(offset, x3, y1, z0), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y2, z0), ValCoord3DFast(offset, x1, y2, z0), ValCoord3DFast(offset, x2, y2, z0), ValCoord3DFast(offset, x3, y2, z0), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y3, z0), ValCoord3DFast(offset, x1, y3, z0), ValCoord3DFast(offset, x2, y3, z0), ValCoord3DFast(offset, x3, y3, z0), xs),
-			ys),
-		CubicLerp(
-			CubicLerp(ValCoord3DFast(offset, x0, y0, z1), ValCoord3DFast(offset, x1, y0, z1), ValCoord3DFast(offset, x2, y0, z1), ValCoord3DFast(offset, x3, y0, z1), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y1, z1), ValCoord3DFast(offset, x1, y1, z1), ValCoord3DFast(offset, x2, y1, z1), ValCoord3DFast(offset, x3, y1, z1), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y2, z1), ValCoord3DFast(offset, x1, y2, z1), ValCoord3DFast(offset, x2, y2, z1), ValCoord3DFast(offset, x3, y2, z1), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y3, z1), ValCoord3DFast(offset, x1, y3, z1), ValCoord3DFast(offset, x2, y3, z1), ValCoord3DFast(offset, x3, y3, z1), xs),
-			ys),
-		CubicLerp(
-			CubicLerp(ValCoord3DFast(offset, x0, y0, z2), ValCoord3DFast(offset, x1, y0, z2), ValCoord3DFast(offset, x2, y0, z2), ValCoord3DFast(offset, x3, y0, z2), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y1, z2), ValCoord3DFast(offset, x1, y1, z2), ValCoord3DFast(offset, x2, y1, z2), ValCoord3DFast(offset, x3, y1, z2), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y2, z2), ValCoord3DFast(offset, x1, y2, z2), ValCoord3DFast(offset, x2, y2, z2), ValCoord3DFast(offset, x3, y2, z2), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y3, z2), ValCoord3DFast(offset, x1, y3, z2), ValCoord3DFast(offset, x2, y3, z2), ValCoord3DFast(offset, x3, y3, z2), xs),
-			ys),
-		CubicLerp(
-			CubicLerp(ValCoord3DFast(offset, x0, y0, z3), ValCoord3DFast(offset, x1, y0, z3), ValCoord3DFast(offset, x2, y0, z3), ValCoord3DFast(offset, x3, y0, z3), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y1, z3), ValCoord3DFast(offset, x1, y1, z3), ValCoord3DFast(offset, x2, y1, z3), ValCoord3DFast(offset, x3, y1, z3), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y2, z3), ValCoord3DFast(offset, x1, y2, z3), ValCoord3DFast(offset, x2, y2, z3), ValCoord3DFast(offset, x3, y2, z3), xs),
-			CubicLerp(ValCoord3DFast(offset, x0, y3, z3), ValCoord3DFast(offset, x1, y3, z3), ValCoord3DFast(offset, x2, y3, z3), ValCoord3DFast(offset, x3, y3, z3), xs),
-			ys),
-		zs) * CUBIC_3D_BOUNDING;
-}
-
-float noisefast::GetCubicFractal(float x, float y) const
-{
-	x *= m_frequency;
-	y *= m_frequency;
-
-	switch (m_fractalType)
-	{
-	case FBM:
-		return SingleCubicFractalFBM(x, y);
-	case Billow:
-		return SingleCubicFractalBillow(x, y);
-	case RigidMulti:
-		return SingleCubicFractalRigidMulti(x, y);
-	default:
-		return 0.0f;
-	}
-}
-
-float noisefast::SingleCubicFractalFBM(float x, float y) const
-{
-	float sum = SingleCubic(m_perm[0], x, y);
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-
-		amp *= m_gain;
-		sum += SingleCubic(m_perm[i], x, y) * amp;
-	}
-
-	return sum * m_fractalBounding;
-}
-
-float noisefast::SingleCubicFractalBillow(float x, float y) const
-{
-	float sum = FastAbs(SingleCubic(m_perm[0], x, y)) * 2.0f - 1.0f;
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-
-		amp *= m_gain;
-		sum += (FastAbs(SingleCubic(m_perm[i], x, y)) * 2.0f - 1.0f) * amp;
-	}
-
-	return sum * m_fractalBounding;
-}
-
-float noisefast::SingleCubicFractalRigidMulti(float x, float y) const
-{
-	float sum = 1.0f - FastAbs(SingleCubic(m_perm[0], x, y));
-	float amp = 1.0f;
-	int i = 0;
-
-	while (++i < m_octaves)
-	{
-		x *= m_lacunarity;
-		y *= m_lacunarity;
-
-		amp *= m_gain;
-		sum -= (1.0f - FastAbs(SingleCubic(m_perm[i], x, y))) * amp;
-	}
-
-	return sum;
-}
-
-float noisefast::GetCubic(float x, float y) const
-{
-	x *= m_frequency;
-	y *= m_frequency;
-
-	return SingleCubic(0, x, y);
-}
-
-float noisefast::SingleCubic(unsigned char offset, float x, float y) const
-{
-	int x1 = FastFloor(x);
-	int y1 = FastFloor(y);
-
-	int x0 = x1 - 1;
-	int y0 = y1 - 1;
-	int x2 = x1 + 1;
-	int y2 = y1 + 1;
-	int x3 = x1 + 2;
-	int y3 = y1 + 2;
-
-	float xs = x - static_cast<float>(x1);
-	float ys = y - static_cast<float>(y1);
-
-	return CubicLerp(
-		CubicLerp(ValCoord2DFast(offset, x0, y0), ValCoord2DFast(offset, x1, y0), ValCoord2DFast(offset, x2, y0), ValCoord2DFast(offset, x3, y0), xs),
-		CubicLerp(ValCoord2DFast(offset, x0, y1), ValCoord2DFast(offset, x1, y1), ValCoord2DFast(offset, x2, y1), ValCoord2DFast(offset, x3, y1), xs),
-		CubicLerp(ValCoord2DFast(offset, x0, y2), ValCoord2DFast(offset, x1, y2), ValCoord2DFast(offset, x2, y2), ValCoord2DFast(offset, x3, y2), xs),
-		CubicLerp(ValCoord2DFast(offset, x0, y3), ValCoord2DFast(offset, x1, y3), ValCoord2DFast(offset, x2, y3), ValCoord2DFast(offset, x3, y3), xs),
-		ys) * CUBIC_2D_BOUNDING;
-}
-
-// Cellular Noise
-float noisefast::GetCellular(float x, float y, float z) const
-{
-	x *= m_frequency;
-	y *= m_frequency;
-	z *= m_frequency;
-
-	switch (m_cellularReturnType)
-	{
-	case CellValue:
-	case NoiseLookup:
-	case Distance:
-		return SingleCellular(x, y, z);
-	default:
-		return SingleCellular2Edge(x, y, z);
-	}
-}
-
-float noisefast::SingleCellular(float x, float y, float z) const
-{
-	int xr = FastRound(x);
-	int yr = FastRound(y);
-	int zr = FastRound(z);
-
-	float distance = 999999.0f;
-	int xc = 0;
-	int yc = 0;
-	int zc = 0;
-
-	switch (m_cellularDistanceFunction)
-	{
-	case Euclidean:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				for (int zi = zr - 1; zi <= zr + 1; zi++)
-				{
-					unsigned char lutPos = Index3D_256(0, xi, yi, zi);
-
-					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
-					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
-					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
-
-					float newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
-
-					if (newDistance < distance)
-					{
-						distance = newDistance;
-						xc = xi;
-						yc = yi;
-						zc = zi;
-					}
-				}
-			}
-		}
-		break;
-	case Manhattan:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				for (int zi = zr - 1; zi <= zr + 1; zi++)
-				{
-					unsigned char lutPos = Index3D_256(0, xi, yi, zi);
-
-					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
-					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
-					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
-
-					float newDistance = FastAbs(vecX) + FastAbs(vecY) + FastAbs(vecZ);
-
-					if (newDistance < distance)
-					{
-						distance = newDistance;
-						xc = xi;
-						yc = yi;
-						zc = zi;
-					}
-				}
-			}
-		}
-		break;
-	case Natural:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				for (int zi = zr - 1; zi <= zr + 1; zi++)
-				{
-					unsigned char lutPos = Index3D_256(0, xi, yi, zi);
-
-					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
-					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
-					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
-
-					float newDistance = (FastAbs(vecX) + FastAbs(vecY) + FastAbs(vecZ)) + (vecX * vecX + vecY * vecY + vecZ * vecZ);
-
-					if (newDistance < distance)
-					{
-						distance = newDistance;
-						xc = xi;
-						yc = yi;
-						zc = zi;
-					}
-				}
-			}
-		}
-		break;
-	default:
-		break;
-	}
-
-	unsigned char lutPos;
-
-	switch (m_cellularReturnType)
-	{
-	case CellValue:
-		return ValCoord3D(m_seed, xc, yc, zc);
-	case NoiseLookup:
-		assert(m_cellularNoiseLookup);
-
-		lutPos = Index3D_256(0, xc, yc, zc);
-		return m_cellularNoiseLookup->GetNoise(xc + CELL_3D_X[lutPos] * m_cellularJitter, yc + CELL_3D_Y[lutPos] * m_cellularJitter, zc + CELL_3D_Z[lutPos] * m_cellularJitter);
-	case Distance:
-		return distance;
-	default:
-		return 0.0f;
-	}
-}
-
-float noisefast::SingleCellular2Edge(float x, float y, float z) const
-{
-	int xr = FastRound(x);
-	int yr = FastRound(y);
-	int zr = FastRound(z);
-
-	float distance[FN_CELLULAR_INDEX_MAX + 1] = { 999999.0f, 999999.0f, 999999.0f, 999999.0f };
-
-	switch (m_cellularDistanceFunction)
-	{
-	case Euclidean:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				for (int zi = zr - 1; zi <= zr + 1; zi++)
-				{
-					unsigned char lutPos = Index3D_256(0, xi, yi, zi);
-
-					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
-					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
-					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
-
-					float newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
-
-					for (int i = m_cellularDistanceIndex1; i > 0; i--)
-					{
-						distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
-					}
-
-					distance[0] = fmin(distance[0], newDistance);
-				}
-			}
-		}
-		break;
-	case Manhattan:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				for (int zi = zr - 1; zi <= zr + 1; zi++)
-				{
-					unsigned char lutPos = Index3D_256(0, xi, yi, zi);
-
-					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
-					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
-					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
-
-					float newDistance = FastAbs(vecX) + FastAbs(vecY) + FastAbs(vecZ);
-
-					for (int i = m_cellularDistanceIndex1; i > 0; i--)
-					{
-						distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
-					}
-
-					distance[0] = fmin(distance[0], newDistance);
-				}
-			}
-		}
-		break;
-	case Natural:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				for (int zi = zr - 1; zi <= zr + 1; zi++)
-				{
-					unsigned char lutPos = Index3D_256(0, xi, yi, zi);
-
-					float vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
-					float vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
-					float vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
-
-					float newDistance = (FastAbs(vecX) + FastAbs(vecY) + FastAbs(vecZ)) + (vecX * vecX + vecY * vecY + vecZ * vecZ);
-
-					for (int i = m_cellularDistanceIndex1; i > 0; i--)
-					{
-						distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
-					}
-
-					distance[0] = fmin(distance[0], newDistance);
-				}
-			}
-		}
-		break;
-	default:
-		break;
-	}
-
-	switch (m_cellularReturnType)
-	{
-	case Distance2:
-		return distance[m_cellularDistanceIndex1];
-	case Distance2Add:
-		return distance[m_cellularDistanceIndex1] + distance[m_cellularDistanceIndex0];
-	case Distance2Sub:
-		return distance[m_cellularDistanceIndex1] - distance[m_cellularDistanceIndex0];
-	case Distance2Mul:
-		return distance[m_cellularDistanceIndex1] * distance[m_cellularDistanceIndex0];
-	case Distance2Div:
-		return distance[m_cellularDistanceIndex0] / distance[m_cellularDistanceIndex1];
-	default:
-		return 0.0f;
-	}
-}
-
-float noisefast::GetCellular(float x, float y) const
-{
-	x *= m_frequency;
-	y *= m_frequency;
-
-	switch (m_cellularReturnType)
-	{
-	case CellValue:
-	case NoiseLookup:
-	case Distance:
-		return SingleCellular(x, y);
-	default:
-		return SingleCellular2Edge(x, y);
-	}
-}
-
-float noisefast::SingleCellular(float x, float y) const
-{
-	int xr = FastRound(x);
-	int yr = FastRound(y);
-
-	float distance = 999999.0f;
-	int xc = 0;
-	int yc = 0;
-
-	switch (m_cellularDistanceFunction)
-	{
-	default:
-	case Euclidean:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				unsigned char lutPos = Index2D_256(0, xi, yi);
-
-				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
-				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
-
-				float newDistance = vecX * vecX + vecY * vecY;
-
-				if (newDistance < distance)
-				{
-					distance = newDistance;
-					xc = xi;
-					yc = yi;
-				}
-			}
-		}
-		break;
-	case Manhattan:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				unsigned char lutPos = Index2D_256(0, xi, yi);
-
-				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
-				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
-
-				float newDistance = (FastAbs(vecX) + FastAbs(vecY));
-
-				if (newDistance < distance)
-				{
-					distance = newDistance;
-					xc = xi;
-					yc = yi;
-				}
-			}
-		}
-		break;
-	case Natural:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				unsigned char lutPos = Index2D_256(0, xi, yi);
-
-				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
-				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
-
-				float newDistance = (FastAbs(vecX) + FastAbs(vecY)) + (vecX * vecX + vecY * vecY);
-
-				if (newDistance < distance)
-				{
-					distance = newDistance;
-					xc = xi;
-					yc = yi;
-				}
-			}
-		}
-		break;
-	}
-
-	unsigned char lutPos;
-
-	switch (m_cellularReturnType)
-	{
-	case CellValue:
-		return ValCoord2D(m_seed, xc, yc);
-
-	case NoiseLookup:
-		assert(m_cellularNoiseLookup);
-
-		lutPos = Index2D_256(0, xc, yc);
-		return m_cellularNoiseLookup->GetNoise(xc + CELL_2D_X[lutPos] * m_cellularJitter, yc + CELL_2D_Y[lutPos] * m_cellularJitter);
-	case Distance:
-		return distance;
-	default:
-		return 0;
-	}
-}
-
-float noisefast::SingleCellular2Edge(float x, float y) const
-{
-	int xr = FastRound(x);
-	int yr = FastRound(y);
-
-	float distance[FN_CELLULAR_INDEX_MAX + 1] = { 999999.0f, 999999.0f, 999999.0f, 999999.0f };
-
-	switch (m_cellularDistanceFunction)
-	{
-	default:
-	case Euclidean:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				unsigned char lutPos = Index2D_256(0, xi, yi);
-
-				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
-				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
-
-				float newDistance = vecX * vecX + vecY * vecY;
-
-				for (int i = m_cellularDistanceIndex1; i > 0; i--)
-				{
-					distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
-				}
-
-				distance[0] = fmin(distance[0], newDistance);
-			}
-		}
-		break;
-	case Manhattan:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				unsigned char lutPos = Index2D_256(0, xi, yi);
-
-				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
-				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
-
-				float newDistance = FastAbs(vecX) + FastAbs(vecY);
-
-				for (int i = m_cellularDistanceIndex1; i > 0; i--)
-				{
-					distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
-				}
-
-				distance[0] = fmin(distance[0], newDistance);
-			}
-		}
-		break;
-	case Natural:
-		for (int xi = xr - 1; xi <= xr + 1; xi++)
-		{
-			for (int yi = yr - 1; yi <= yr + 1; yi++)
-			{
-				unsigned char lutPos = Index2D_256(0, xi, yi);
-
-				float vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
-				float vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
-
-				float newDistance = (FastAbs(vecX) + FastAbs(vecY)) + (vecX * vecX + vecY * vecY);
-
-				for (int i = m_cellularDistanceIndex1; i > 0; i--)
-				{
-					distance[i] = fmax(fmin(distance[i], newDistance), distance[i - 1]);
-				}
-
-				distance[0] = fmin(distance[0], newDistance);
-			}
-		}
-		break;
-	}
-
-	switch (m_cellularReturnType)
-	{
-	case Distance2:
-		return distance[m_cellularDistanceIndex1];
-	case Distance2Add:
-		return distance[m_cellularDistanceIndex1] + distance[m_cellularDistanceIndex0];
-	case Distance2Sub:
-		return distance[m_cellularDistanceIndex1] - distance[m_cellularDistanceIndex0];
-	case Distance2Mul:
-		return distance[m_cellularDistanceIndex1] * distance[m_cellularDistanceIndex0];
-	case Distance2Div:
-		return distance[m_cellularDistanceIndex0] / distance[m_cellularDistanceIndex1];
-	default:
-		return 0;
-	}
-}
-
-void noisefast::GradientPerturb(float &x, float &y, float &z) const
-{
-	SingleGradientPerturb(0, m_gradientPerturbAmp, m_frequency, x, y, z);
-}
-
-void noisefast::GradientPerturbFractal(float &x, float &y, float &z) const
-{
-	float amp = m_gradientPerturbAmp * m_fractalBounding;
-	float freq = m_frequency;
-	int i = 0;
-
-	SingleGradientPerturb(m_perm[0], amp, m_frequency, x, y, z);
-
-	while (++i < m_octaves)
-	{
-		freq *= m_lacunarity;
-		amp *= m_gain;
-		SingleGradientPerturb(m_perm[i], amp, freq, x, y, z);
-	}
-}
-
-void noisefast::SingleGradientPerturb(unsigned char offset, float warpAmp, float frequency, float &x, float &y, float &z) const
-{
-	float xf = x * frequency;
-	float yf = y * frequency;
-	float zf = z * frequency;
-
-	int x0 = FastFloor(xf);
-	int y0 = FastFloor(yf);
-	int z0 = FastFloor(zf);
-	int x1 = x0 + 1;
-	int y1 = y0 + 1;
-	int z1 = z0 + 1;
-
-	float xs, ys, zs;
-
-	switch (m_interp)
-	{
-	default:
-	case Linear:
-		xs = xf - static_cast<float>(x0);
-		ys = yf - static_cast<float>(y0);
-		zs = zf - static_cast<float>(z0);
-		break;
-	case Hermite:
-		xs = InterpHermiteFunc(xf - static_cast<float>(x0));
-		ys = InterpHermiteFunc(yf - static_cast<float>(y0));
-		zs = InterpHermiteFunc(zf - static_cast<float>(z0));
-		break;
-	case Quintic:
-		xs = InterpQuinticFunc(xf - static_cast<float>(x0));
-		ys = InterpQuinticFunc(yf - static_cast<float>(y0));
-		zs = InterpQuinticFunc(zf - static_cast<float>(z0));
-		break;
-	}
-
-	int lutPos0 = Index3D_256(offset, x0, y0, z0);
-	int lutPos1 = Index3D_256(offset, x1, y0, z0);
-
-	float lx0x = Lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
-	float ly0x = Lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
-	float lz0x = Lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs);
-
-	lutPos0 = Index3D_256(offset, x0, y1, z0);
-	lutPos1 = Index3D_256(offset, x1, y1, z0);
-
-	float lx1x = Lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
-	float ly1x = Lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
-	float lz1x = Lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs);
-
-	float lx0y = Lerp(lx0x, lx1x, ys);
-	float ly0y = Lerp(ly0x, ly1x, ys);
-	float lz0y = Lerp(lz0x, lz1x, ys);
-
-	lutPos0 = Index3D_256(offset, x0, y0, z1);
-	lutPos1 = Index3D_256(offset, x1, y0, z1);
-
-	lx0x = Lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
-	ly0x = Lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
-	lz0x = Lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs);
-
-	lutPos0 = Index3D_256(offset, x0, y1, z1);
-	lutPos1 = Index3D_256(offset, x1, y1, z1);
-
-	lx1x = Lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
-	ly1x = Lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
-	lz1x = Lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs);
-
-	x += Lerp(lx0y, Lerp(lx0x, lx1x, ys), zs) * warpAmp;
-	y += Lerp(ly0y, Lerp(ly0x, ly1x, ys), zs) * warpAmp;
-	z += Lerp(lz0y, Lerp(lz0x, lz1x, ys), zs) * warpAmp;
-}
-
-void noisefast::GradientPerturb(float &x, float &y) const
-{
-	SingleGradientPerturb(0, m_gradientPerturbAmp, m_frequency, x, y);
-}
-
-void noisefast::GradientPerturbFractal(float &x, float &y) const
-{
-	float amp = m_gradientPerturbAmp * m_fractalBounding;
-	float freq = m_frequency;
-	int i = 0;
-
-	SingleGradientPerturb(m_perm[0], amp, m_frequency, x, y);
-
-	while (++i < m_octaves)
-	{
-		freq *= m_lacunarity;
-		amp *= m_gain;
-		SingleGradientPerturb(m_perm[i], amp, freq, x, y);
-	}
-}
-
-void noisefast::SingleGradientPerturb(unsigned char offset, float warpAmp, float frequency, float &x, float &y) const
-{
-	float xf = x * frequency;
-	float yf = y * frequency;
-
-	int x0 = FastFloor(xf);
-	int y0 = FastFloor(yf);
-	int x1 = x0 + 1;
-	int y1 = y0 + 1;
-
-	float xs, ys;
-
-	switch (m_interp)
-	{
-	default:
-	case Linear:
-		xs = xf - static_cast<float>(x0);
-		ys = yf - static_cast<float>(y0);
-		break;
-	case Hermite:
-		xs = InterpHermiteFunc(xf - static_cast<float>(x0));
-		ys = InterpHermiteFunc(yf - static_cast<float>(y0));
-		break;
-	case Quintic:
-		xs = InterpQuinticFunc(xf - static_cast<float>(x0));
-		ys = InterpQuinticFunc(yf - static_cast<float>(y0));
-		break;
-	}
-
-	int lutPos0 = Index2D_256(offset, x0, y0);
-	int lutPos1 = Index2D_256(offset, x1, y0);
-
-	float lx0x = Lerp(CELL_2D_X[lutPos0], CELL_2D_X[lutPos1], xs);
-	float ly0x = Lerp(CELL_2D_Y[lutPos0], CELL_2D_Y[lutPos1], xs);
-
-	lutPos0 = Index2D_256(offset, x0, y1);
-	lutPos1 = Index2D_256(offset, x1, y1);
-
-	float lx1x = Lerp(CELL_2D_X[lutPos0], CELL_2D_X[lutPos1], xs);
-	float ly1x = Lerp(CELL_2D_Y[lutPos0], CELL_2D_Y[lutPos1], xs);
-
-	x += Lerp(lx0x, lx1x, ys) * warpAmp;
-	y += Lerp(ly0x, ly1x, ys) * warpAmp;
 }

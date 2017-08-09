@@ -52,6 +52,9 @@ void managerrender::render()
 
 	// Post rendering.
 	renderPost(camera::get()->getCamera());
+	/*m_rendererShadows->render(m_infinity, *camera::get()->getCamera());
+	m_filterFxaa->applyFilter(1, m_rendererShadows->getFbo()->getDepthTexture());
+	m_filterFxaa->getFbo()->blitToScreen();*/
 }
 
 void managerrender::renderWater(icamera *camera)

@@ -56,7 +56,7 @@ float shadow(sampler2D shadowMap, vec4 shadowCoords, float shadowMapSize)
     float texelSize = 1.0 / shadowMapSize;
     float total = 0.0;
 
-    if (shadowCoords.x > 0.0 && shadowCoords.x < 1.0 && shadowCoords.y > 0.0 && shadowCoords.y < 1.0 && shadowCoords.z > 0.0 && shadowCoords.z < 1.0) 
+    /*if (shadowCoords.x > 0.0 && shadowCoords.x < 1.0 && shadowCoords.y > 0.0 && shadowCoords.y < 1.0 && shadowCoords.z > 0.0 && shadowCoords.z < 1.0) 
 	{
         for (int x = -shadowPCF; x <= shadowPCF; x++) 
 		{
@@ -64,7 +64,7 @@ float shadow(sampler2D shadowMap, vec4 shadowCoords, float shadowMapSize)
 			{
                 float shadowValue = texture(shadowMap, shadowCoords.xy + vec2(x, y) * texelSize).r;
 
-                if (shadowCoords.z > shadowValue + shadowBias)
+                if (shadowCoords.z > shadowValue + shadowBias) 
 				{
                     total += shadowDarkness * shadowCoords.w;
                 }
@@ -73,9 +73,17 @@ float shadow(sampler2D shadowMap, vec4 shadowCoords, float shadowMapSize)
 
         total /= totalTextels;
     } 
-	else 
+	else
 	{
         total = 0.0;
+    }*/
+
+	total = 0.0;
+	float shadowValue = texture(shadowMap, shadowCoords.xy).r;
+   
+	if (shadowCoords.z > shadowValue) 
+	{
+        total += shadowDarkness * shadowCoords.w;
     }
 
     return 1.0 - total;
@@ -122,10 +130,10 @@ void main(void)
         if (shadowDarkness >= 0.07) 
 		{
             vec4 shadowCoords = shadowSpaceMatrix * worldPosition;
-            float distanceAway = length(positionRelativeToCam.xyz);
+            /*float distanceAway = length(positionRelativeToCam.xyz);
             distanceAway = distanceAway - ((shadowDistance * 2.0) - shadowTransition);
             distanceAway = distanceAway / shadowTransition;
-            shadowCoords.w = clamp(1.0 - distanceAway, 0.0, 1.0);
+            shadowCoords.w = clamp(1.0 - distanceAway, 0.0, 1.0);*/
 
             out_colour *= shadow(shadowMap, shadowCoords, shadowMapSize);
         }
@@ -156,7 +164,6 @@ void main(void)
         }
 
         out_colour = (vec4(max(totalDiffuse, boost), 1.0) * out_colour) + vec4(totalSpecular, 0.0);
-
     }
 
     if (!ignoreFog) 

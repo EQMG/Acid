@@ -2,10 +2,10 @@
 
 namespace flounder
 {
-	timer::timer(const double &interval)
+	timer::timer(const float &interval)
 	{
 		m_startTime = 0.0f;
-		m_interval = interval * 1000.0;
+		m_interval = interval * 1000.0f;
 
 		if (framework::get() != NULL)
 		{
@@ -27,19 +27,19 @@ namespace flounder
 		this->m_startTime = framework::get()->getTimeMs();
 	}
 
-	double timer::getInterval() const
+	float timer::getInterval() const
 	{
-		return m_interval / 1000.0;
+		return m_interval / 1000.0f;
 	}
 
-	void timer::setInterval(const double &interval)
+	void timer::setInterval(const float &interval)
 	{
-		if (m_interval == interval * 1000.0)
+		if (m_interval == interval * 1000.0f)
 		{
 			return;
 		}
 
-		this->m_interval = interval * 1000.0;
+		this->m_interval = interval * 1000.0f;
 		this->m_startTime = framework::get()->getTimeMs();
 	}
 }
