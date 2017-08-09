@@ -8,8 +8,8 @@ namespace flounder
 		m_fbo = fbo::newFBO()->setSize(shadows::get()->getShadowSize(), shadows::get()->getShadowSize())->noColourBuffer()->disableTextureWrap()->depthBuffer(TEXTURE)->create();
 
 		m_shader = shader::newShader()->addName("shadows")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/shadows/shadowVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/shadows/shadowFragment.glsl", loadtype::FILE))
+			->addType(shadertype(VERTEX, "res/shaders/shadows/shadowVertex.glsl", loadtype::FILE))
+			->addType(shadertype(FRAGMENT, "res/shaders/shadows/shadowFragment.glsl", loadtype::FILE))
 			->create();
 	}
 
@@ -58,7 +58,9 @@ namespace flounder
 		delete mvp;
 
 		// Tells the GPU to render this object.
+#if 0
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getVaoLength());
+#endif
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);

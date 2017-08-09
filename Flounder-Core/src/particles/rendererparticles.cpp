@@ -9,10 +9,10 @@ namespace flounder
 		irenderer()
 	{
 		m_shader = shader::newShader()->addName("particles")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/particles/particleVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/particles/particleFragment.glsl", loadtype::FILE))
+			->addType(shadertype(VERTEX, "res/shaders/particles/particleVertex.glsl", loadtype::FILE))
+			->addType(shadertype(FRAGMENT, "res/shaders/particles/particleFragment.glsl", loadtype::FILE))
 			->create();
-		std::vector<GLfloat> positions = { -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f };
+		std::vector<float> positions = { -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f };
 		m_vaoID = loaders::get()->createVAO();
 		loaders::get()->storeDataInVBO(m_vaoID, positions, 0, 2);
 		m_vboID = loaders::get()->createEmptyVBO(INSTANCE_DATA_LENGTH * MAX_INSTANCES);
@@ -31,9 +31,11 @@ namespace flounder
 
 	rendererparticles::~rendererparticles()
 	{
-		delete m_shader;
+		delete m_shader; 
+#if 0
 		glDeleteBuffers(1, &m_vboID);
 		glDeleteVertexArrays(1, &m_vaoID);
+#endif
 	}
 
 	void rendererparticles::render(const vector4 &clipPlane, const icamera &camera)
@@ -42,7 +44,7 @@ namespace flounder
 
 		for (std::map<particletype*, std::vector<particle*>*>::iterator iter = particles::get()->getParticles()->begin(); iter != particles::get()->getParticles()->end(); ++iter)
 		{
-			std::vector<GLfloat> *vboData = new std::vector<GLfloat>();
+			std::vector<float> *vboData = new std::vector<float>();
 			m_rendered = 0;
 
 			for (std::vector<particle*>::iterator it = iter->second->begin(); it != iter->second->end(); ++it)
@@ -76,7 +78,7 @@ namespace flounder
 		renderer::get()->enableAlphaBlending();
 	}
 
-	void rendererparticles::prepareInstance(particle *particle, const icamera &camera, std::vector<GLfloat> *vboData)
+	void rendererparticles::prepareInstance(particle *particle, const icamera &camera, std::vector<float> *vboData)
 	{
 		if (m_rendered >= MAX_INSTANCES)
 		{
@@ -127,7 +129,7 @@ namespace flounder
 		m_rendered++;
 	}
 
-	void rendererparticles::renderInstances(particletype *particleType, std::vector<GLfloat>* vboData)
+	void rendererparticles::renderInstances(particletype *particleType, std::vector<float>* vboData)
 	{
 		loaders::get()->updateVBO(m_vboID, INSTANCE_DATA_LENGTH * MAX_INSTANCES, *vboData);
 		renderer::get()->bindVAO(m_vaoID, 8, 0, 1, 2, 3, 4, 5, 6, 7);
@@ -138,7 +140,9 @@ namespace flounder
 			renderer::get()->bindTexture(particleType->getTexture(), 0);
 		}
 
+#if 0
 		renderer::get()->renderInstanced(GL_TRIANGLE_STRIP, m_vaoLength, m_rendered);
+#endif
 
 		// renderer::get()->depthMask(true);
 		renderer::get()->disableBlending();

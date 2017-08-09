@@ -7,14 +7,14 @@ namespace flounder
 	/// <summary>
 	/// Interface for executable OpenGL requests.
 	/// </summary>
-	class requestopengl :
+	class requestgraphic :
 		public irequest
 	{
 	public:
 		/// <summary>
 		/// Executed when the request is being processed.
 		/// </summary>
-		virtual void executeRequestGL() = 0;
+		virtual void executeRequestGraphic() = 0;
 
 		inline int getRequestId() override { return 2; };
 	};

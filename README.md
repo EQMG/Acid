@@ -3,22 +3,12 @@
 # Flounder v0.1
 [![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt78wov7o?svg=true)](https://ci.appveyor.com/project/Mattparks/flounder)
 
-Flounder is a cross platform high speed C++ OpenGL 2D/3D game engine.
+Flounder is a cross platform high speed C++ Vulkan 2D/3D game engine.
 
 Supported platforms:
  * Windows
  * Linux
  * MacOS
- * Web
-
-Rendering backends:
- * OpenGL - FLOUNDER_API_GL
- * Vulkan - FLOUNDER_API_VULKAN
- * WebGL - FLOUNDER_API_WEB
- 
-Audio backends:
- * OpenAL - FLOUNDER_API_AL
- * JS Audio - FLOUNDER_API_WEB
 
 Features:
  * STB image loading

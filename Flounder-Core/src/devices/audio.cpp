@@ -7,50 +7,6 @@ namespace flounder
 	audio::audio() :
 		imodule()
 	{
-#ifdef FLOUNDER_API_WEB
-		EM_ASM(
-			Module.audio = {};
-			Module.audio.m_sounds = {};
-			Module.audioAdd = function(name, filename)
-			{
-				console.log("Adding audio: " + name);
-				Module.audio.m_sounds[name] = new Audio(filename);
-			};
-			Module.audioPlay = function(name)
-			{
-				console.log("Playing audio: " + name);
-				Module.audio.m_sounds[name].play();
-			};
-			Module.audioPause = function(name)
-			{
-				console.log("Pausing audio: " + name);
-				Module.audio.m_sounds[name].pause();
-			};
-			Module.audioStop = function(name)
-			{
-				console.log("Stopping audio: " + name);
-				Module.audioPause(name);
-				Module.audio.m_sounds[name].currentTime = 0;
-				Module.audio.m_sounds[name].loop = false;
-			};
-			Module.audioLoop = function(name)
-			{
-				console.log("Looping audio: " + name);
-				Module.audio.m_sounds[name].play();
-				Module.audio.m_sounds[name].loop = true;
-			};
-			Module.audioSetPitch = function(name, pitch)
-			{
-				console.log("Setting pitch to audio: " + name);
-			//	Module.audio.m_sounds[name].pitch = pitch;
-			};
-			Module.audioSetGain = function(name, gain)
-			{
-				console.log("Setting gain to audio: " + name);
-				Module.audio.m_sounds[name].volume = gain;
-			};
-		);
-#endif
 	}
 
 	audio::~audio()
@@ -68,9 +24,6 @@ namespace flounder
 	sound *audio::add(sound *object)
 	{
 		m_sounds.push_back(object);
-#ifdef FLOUNDER_API_WEB
-		audioAdd(object->getName().c_str(), object->getFileName().c_str());
-#endif
 		return object;
 	}
 

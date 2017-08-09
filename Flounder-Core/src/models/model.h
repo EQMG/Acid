@@ -76,10 +76,7 @@ namespace flounder
 		std::vector<float> *m_tangents;
 
 		aabb *m_aabb;
-
-		GLuint m_vaoID;
-		GLuint m_vaoLength;
-
+		
 		/// <summary>
 		/// Creates a new model.
 		/// </summary>
@@ -97,6 +94,9 @@ namespace flounder
 		/// <returns> The model builder. </returns>
 		static builder *newModel();
 
+		int getVaoID() const { return 0; }
+		int getVaoLength() const { return 0; }
+#if 0
 		/// <summary>
 		/// Gets the OpenGL VAO ID.
 		/// </summary>
@@ -108,6 +108,7 @@ namespace flounder
 		/// </summary>
 		/// <returns> The VAO length. </returns>
 		GLuint getVaoLength() const { return m_vaoLength; }
+#endif
 	private:
 		/// <summary>
 		/// Loads the model object from a model file.

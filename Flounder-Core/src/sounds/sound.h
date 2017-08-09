@@ -4,14 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "../devices/display.h"
 #include "../helpers/helperstring.h"
-
-#ifdef FLOUNDER_API_AL
-//#include <AL/al.h>
-//#include <AL/alc.h>
-#elif FLOUNDER_API_WEB
-#include <emscripten/emscripten.h>
-#endif
 
 namespace flounder
 {
@@ -24,10 +18,8 @@ namespace flounder
 		std::string m_filename;
 		unsigned int m_count;
 
-#ifdef FLOUNDER_API_AL
 		unsigned int m_buffer;
 		unsigned int m_source;
-#endif
 
 		bool m_playing;
 		float m_pitch;

@@ -7,16 +7,16 @@ namespace flounder
 	{
 #ifdef FLOUNDER_API_WEB
 		m_shader = shader::newShader()->addName("guis")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/guis/guiVertex.web.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/guis/guiFragment.web.glsl", loadtype::FILE))
+			->addType(shadertype(VERTEX, "res/shaders/guis/guiVertex.web.glsl", loadtype::FILE))
+			->addType(shadertype(FRAGMENT, "res/shaders/guis/guiFragment.web.glsl", loadtype::FILE))
 			->create();
 #else
 		m_shader = shader::newShader()->addName("guis")
-		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/guis/guiVertex.glsl", loadtype::FILE))
-		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/guis/guiFragment.glsl", loadtype::FILE))
-		                              ->create();
+			->addType(shadertype(VERTEX, "res/shaders/guis/guiVertex.glsl", loadtype::FILE))
+			->addType(shadertype(FRAGMENT, "res/shaders/guis/guiFragment.glsl", loadtype::FILE))
+			->create();
 #endif
-		std::vector<GLfloat> *vertices = new std::vector<GLfloat>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f };
+		std::vector<float> *vertices = new std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f };
 		m_model = model::newModel()->setDirectly(NULL, vertices, NULL, NULL, NULL)->create();
 		delete vertices;
 	}
@@ -92,7 +92,9 @@ namespace flounder
 		m_shader->loadUniform3f("colourOffset", *object->getColourOffset());
 
 		// Tells the GPU to render this object.
+#if 0
 		renderer::get()->renderArrays(GL_TRIANGLE_STRIP, m_model->getVaoLength());
+#endif
 		renderer::get()->scissorDisable();
 	}
 

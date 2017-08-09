@@ -20,8 +20,10 @@ namespace flounder
 	void pipelinebloom::renderPipeline(const int n_args, va_list args)
 	{
 		m_filterBloom1->applyFilter(n_args, args);
+#if 0
 		m_pipelineGaussian->renderPipelineV(1, m_filterBloom1->getFbo()->getColourTexture(0));
 		m_filterBloom2->applyFilter(2, args[0], m_pipelineGaussian->getOutput()->getColourTexture(0)); // Blurred - Colour
+#endif
 	}
 
 	fbo *pipelinebloom::getOutput()

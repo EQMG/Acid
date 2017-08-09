@@ -3,11 +3,7 @@
 namespace flounder
 {
 	filtercombine::filtercombine() :
-#ifdef FLOUNDER_API_WEB
-		ipostfilter("filterCombine", "res/shaders/filters/combineFragment.web.glsl")
-#else
 		ipostfilter("filterCombine", "res/shaders/filters/combineFragment.glsl")
-#endif
 	{
 		m_slideSpaceValue = new vector4(0.0f, 1.0f, 0.0f, 1.0f);
 	}

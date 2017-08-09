@@ -10,7 +10,7 @@ namespace flounder
 		// Manually adds the two base processors, these will be added into the modules loop, but are needed now.
 		// If these are not added in the init loop, nothing will be able to be initially processed!
 		m_processors->push_back(new processorresource());
-		m_processors->push_back(new processoropengl());
+		m_processors->push_back(new processorgraphic());
 	}
 
 	processing::~processing()

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../platform.h"
+#include "../devices/display.h"
 #include "../framework/framework.h"
 #include "../shaders/shader.h"
 #include "../textures/texture.h"
@@ -131,7 +131,7 @@ namespace flounder
 		/// <param name="vaoID"> The VAO to bind. </param>
 		/// <param name="n_args"> The number of attributes to enable. </param>
 		/// <param name="..."> Attributes to enable. </param>
-		void bindVAO(const GLint &vaoID, const int n_args, ...);
+		void bindVAO(const int &vaoID, const int n_args, ...);
 
 		/// <summary>
 		/// Unbinds the current VAO and all attributes.
@@ -167,7 +167,7 @@ namespace flounder
 		/// <param name="textureID"> The texture to bind. </param>
 		/// <param name="glTarget"> The OpenGL texture type to bind to. {@code GL_TEXTURE_CUBE_MAP}, and {@code GL_TEXTURE_2D} are the most common types. </param>
 		/// <param name="bankID"> The shaders blank ID to bind to. </param>
-		void bindTexture(const GLint &textureID, const GLenum &glTarget, const int &bankID);
+		void bindTexture(const int &textureID, const int &glTarget, const int &bankID);
 
 		/// <summary>
 		/// Binds the OpenGL texture to a blank ID.
@@ -175,14 +175,14 @@ namespace flounder
 		/// <param name="textureID"> The texture to bind. </param>
 		/// <param name="lodBias"> The LOD to load to texture at. </param>
 		/// <param name="bankID"> The shaders blank ID to bind to. </param>
-		void bindTextureLOD(const GLint &textureID, const GLint &lodBias, const int &bankID);
+		void bindTextureLOD(const int &textureID, const int &lodBias, const int &bankID);
 
 		/// <summary>
 		/// Renders a bound model on a enabled shader using glDrawArrays.
 		/// </summary>
 		/// <param name="glMode"> The OpenGL mode to draw in. </param>
 		/// <param name="glLength"> The length of the model. </param>
-		void renderArrays(const GLenum &glMode, const GLsizei &glLength);
+		void renderArrays(const int &glMode, const int &glLength);
 
 		/// <summary>
 		/// Renders a bound model on a enabled shader using glDrawElements.
@@ -190,7 +190,7 @@ namespace flounder
 		/// <param name="glMode"> The OpenGL mode to draw in. </param>
 		/// <param name="glType"> The OpenGL type to draw in. </param>
 		/// <param name="glLength"> The length of the model. </param>
-		void renderElements(const GLenum &glMode, const GLenum &glType, const GLsizei &glLength);
+		void renderElements(const int &glMode, const int &glType, const int &glLength);
 
 		/// <summary>
 		/// Renders a bound model on a enabled shader using glDrawArraysInstancedARB.
@@ -198,6 +198,6 @@ namespace flounder
 		/// <param name="glMode"> The OpenGL mode to draw in. </param>
 		/// <param name="glLength"> The length of the model. </param>
 		/// <param name="glPrimCount"> How many primitives rendered. </param>
-		void renderInstanced(const GLenum &glMode, const GLsizei &glLength, const GLsizei &glPrimCount);
+		void renderInstanced(const int &glMode, const int &glLength, const int &glPrimCount);
 	};
 }
