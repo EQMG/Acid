@@ -23,6 +23,7 @@ namespace flounder
 
 	void pipelinepaused::renderPipeline(const int n_args, va_list args)
 	{
+#if 0
 		m_pipelineGaussian1->renderPipeline(n_args, args);
 
 		m_pipelineGaussian2->setScaleValue(1.25f);
@@ -33,6 +34,7 @@ namespace flounder
 
 		m_filterCombine->setSlideSpace(m_blurFactor, 1.0f, 0.0f, 1.0f);
 		m_filterCombine->applyFilter(2, args[0], m_filterDarken->getFbo()->getColourTexture(0)); // Darken - Colour
+#endif
 	}
 
 	fbo *pipelinepaused::getOutput()

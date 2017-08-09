@@ -43,10 +43,10 @@ namespace flounder
 	void terrain::generateMesh()
 	{
 		int count = VERTEX_COUNT * VERTEX_COUNT;
-		std::vector<GLfloat> *vertices = new std::vector<GLfloat>();
-		std::vector<GLfloat> *normals = new std::vector<GLfloat>();
-		std::vector<GLfloat> *colours = new std::vector<GLfloat>();
-		std::vector<GLint> *indices = new std::vector<GLint>();
+		std::vector<float> *vertices = new std::vector<float>();
+		std::vector<float> *normals = new std::vector<float>();
+		std::vector<float> *colours = new std::vector<float>();
+		std::vector<int> *indices = new std::vector<int>();
 
 		colour tint = colour(maths::randomInRange(0.0f, 1.0f), maths::randomInRange(0.0f, 1.0f), 0.0f); // colour(0.0f, 0.8314f, 0.0f);
 
@@ -109,7 +109,7 @@ namespace flounder
 		delete indices;
 	}
 
-	void terrain::storeQuad1(std::vector<GLint> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void terrain::storeQuad1(std::vector<int> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
 		indices->push_back(topLeft);
 		indices->push_back(bottomLeft);
@@ -119,7 +119,7 @@ namespace flounder
 		indices->push_back(mixed ? bottomLeft : topLeft);
 	}
 
-	void terrain::storeQuad2(std::vector<GLint> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void terrain::storeQuad2(std::vector<int> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
 		indices->push_back(topRight);
 		indices->push_back(topLeft);

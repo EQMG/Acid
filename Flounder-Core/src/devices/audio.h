@@ -4,23 +4,12 @@
 #include <vector>
 #include <map>
 
-#include "../platform.h"
 #include "../camera/camera.h"
 #include "../framework/framework.h"
 #include "../maths/vector3.h"
 #include "../sounds/sound.h"
 
 #include "display.h"
-
-#ifdef FLOUNDER_API_WEB
-extern "C" void audioAdd(const char* name, const char* filename);
-extern "C" void audioPlay(const char* name);
-extern "C" void audioPause(const char* name);
-extern "C" void audioStop(const char* name);
-extern "C" void audioLoop(const char* name);
-extern "C" void audioSetPitch(const char* name, double pitch);
-extern "C" void audioSetGain(const char* name, double gain);
-#endif
 
 namespace flounder
 {

@@ -1,0 +1,10 @@
+﻿  instance.cpp
+  main.cpp
+  maincamera.cpp
+  mainplayer.cpp
+  managerrender.cpp
+  manageruis.cpp
+  overlaydebug.cpp
+  overlaymanager.cpp
+  Generating Code...
+  New-Kosmos.vcxproj -> C:\Users\mattp\Documents\Flounder\New-Kosmos\.bin\Debug x64\New Kosmos.exe

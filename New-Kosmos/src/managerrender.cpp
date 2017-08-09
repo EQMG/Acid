@@ -68,6 +68,7 @@ void managerrender::renderWater(icamera *camera)
 			renderShadows(camera);
 		}
 
+#if 0
 		glEnable(GL_CLIP_DISTANCE0);
 		{
 			m_rendererWaters->getFboReflection()->bindFrameBuffer();
@@ -83,6 +84,7 @@ void managerrender::renderWater(icamera *camera)
 		 	m_rendererWaters->getFboReflection()->getDepthTexture(),
 			m_rendererShadows->getFbo()->getDepthTexture()
 		); // Shadow Map -  Depth -  Extras -  Normals -  Colours
+#endif
 
 		camera->reflect(waters::get()->getWater()->getPosition()->m_y);
 	}
@@ -112,6 +114,7 @@ void managerrender::renderPost(icamera *camera)
 	// Renders the post pipeline.
 	fbo *output = m_fboRenderer;
 
+#if 0
 	m_rendererDeferred->apply(5,
 		output->getColourTexture(0),
 		output->getColourTexture(1),
@@ -123,15 +126,18 @@ void managerrender::renderPost(icamera *camera)
 
 	m_filterFxaa->applyFilter(1, output->getColourTexture(0));
 	output = m_filterFxaa->getFbo();
+#endif
 
 	output->bindFrameBuffer();
 	renderGuis(camera);
 	output->unbindFrameBuffer();
 
+#if 0
 	m_filterLensFlare->setSunPosition(*worlds::get()->getSunPosition());
 	m_filterLensFlare->setSunHeight(worlds::get()->getSunHeight());
 	m_filterLensFlare->applyFilter(1, output->getColourTexture(0));
 	output = m_filterLensFlare->getFbo();
+#endif
 
 	// Displays the image to the screen.
 	output->blitToScreen();

@@ -25,7 +25,6 @@ namespace flounder
 
 	void joysticks::update()
 	{
-#ifndef FLOUNDER_API_WEB
 		// For each joystick check if connected and update.
 		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
 		{
@@ -54,6 +53,5 @@ namespace flounder
 				joy->connected = false;
 			}
 		}
-#endif
 	}
 }

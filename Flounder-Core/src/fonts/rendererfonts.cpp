@@ -5,17 +5,10 @@ namespace flounder
 	rendererfonts::rendererfonts() :
 		irenderer()
 	{
-#ifdef FLOUNDER_API_WEB
 		m_shader = shader::newShader()->addName("fonts")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/fonts/fontVertex.web.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/fonts/fontFragment.web.glsl", loadtype::FILE))
+			->addType(shadertype(VERTEX, "res/shaders/fonts/fontVertex.glsl", loadtype::FILE))
+			->addType(shadertype(FRAGMENT, "res/shaders/fonts/fontFragment.glsl", loadtype::FILE))
 			->create();
-#else
-		m_shader = shader::newShader()->addName("fonts")
-		                              ->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/fonts/fontVertex.glsl", loadtype::FILE))
-		                              ->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/fonts/fontFragment.glsl", loadtype::FILE))
-		                              ->create();
-#endif
 	}
 
 	rendererfonts::~rendererfonts()
@@ -85,7 +78,9 @@ namespace flounder
 		m_shader->loadUniform2f("borderSizes", object->getTotalBorderSize(), object->getGlowSize());
 
 		// Tells the GPU to render this object.
+#if 0
 		renderer::get()->renderArrays(GL_TRIANGLES, object->getModel()->getVaoLength());
+#endif
 		renderer::get()->scissorDisable();
 
 		// Unbinds the layouts.

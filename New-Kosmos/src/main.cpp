@@ -20,13 +20,8 @@ int main()
 	display::get()->setWindowSize(1080, 720);
 	display::get()->setTitle("New Kosmos");
 	display::get()->setIcon("res/newkosmos.png");
-#ifndef FLOUNDER_API_WEB
 	display::get()->setFpsLimit(0);
 	display::get()->setVSync(false);
-#else
-	display::get()->setFpsLimit(60);
-	//	display::get()->setVSync(true);
-#endif
 	display::get()->setAntialiasing(true);
 	display::get()->setSamples(0);
 	display::get()->setFullscreen(false);

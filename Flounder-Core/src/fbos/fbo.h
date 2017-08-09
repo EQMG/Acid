@@ -4,7 +4,6 @@
 #include <string>
 #include <cmath>
 
-#include "../platform.h"
 #include "../devices/display.h"
 #include "../maths/maths.h"
 
@@ -126,12 +125,14 @@ namespace flounder
 		bool m_fitToScreen;
 		float m_sizeScalar;
 
+#if 0
 		GLuint m_frameBuffer;
 		GLuint *m_colourTexture;
 		GLuint m_depthTexture;
 		GLuint m_depthBuffer;
 		GLuint *m_colourBuffer;
 		GLenum *m_drawBuffers;
+#endif
 
 		bool m_hasGivenResolveError;
 
@@ -198,6 +199,7 @@ namespace flounder
 		
 		void setSize(const int &width, const int &height);
 
+#if 0
 		inline GLuint getFrameBuffer() { return m_frameBuffer; }
 
 		inline GLuint getColourTexture(int readBuffer) { return m_colourTexture[readBuffer]; }
@@ -213,6 +215,7 @@ namespace flounder
 		inline GLuint getDepthBuffer() { return m_depthBuffer; }
 
 		inline GLuint *getColourBuffer() { return m_colourBuffer; }
+#endif
 
 		/// <summary>
 		/// Blits this FBO and all attachments to another FBO.

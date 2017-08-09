@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <GL/glew.h>
-
 #include "../camera/camera.h"
 #include "../maths/vector3.h"
 #include "../maths/matrix4x4.h"
@@ -52,11 +50,11 @@ namespace flounder
 		/// </summary>
 		void generateMesh();
 
-		void storeQuad1(std::vector<GLfloat> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void storeQuad1(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		void storeQuad2(std::vector<GLfloat> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void storeQuad2(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		void storeVertex(std::vector<GLfloat> *vertices, const int &index, const vector2 &otherPoint1, const vector2 &otherPoint2);
+		void storeVertex(std::vector<float> *vertices, const int &index, const vector2 &otherPoint1, const vector2 &otherPoint2);
 
 		/// <summary>
 		/// Encodes the position of 2 vertices in a triangle (relative to the other vertex) into a single float.

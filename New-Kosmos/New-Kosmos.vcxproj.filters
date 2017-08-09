@@ -18,5 +18,6 @@
     <ClInclude Include="src\mainplayer.h" />
     <ClInclude Include="src\maincamera.h" />
     <ClInclude Include="src\uis\overlaymanager.h" />
+    <ClInclude Include="src\entities\entitytest.h" />
   </ItemGroup>
 </Project>

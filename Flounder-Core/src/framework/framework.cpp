@@ -29,18 +29,10 @@ namespace flounder
 
 	void framework::run()
 	{
-#ifdef FLOUNDER_API_WEB
-		std::function<void()> mainLoop = [&]() 
-		{
-			m_updater->update();
-		};
-		emscripten_set_main_loop_arg(dispatch_main, &mainLoop, 0, 1);
-#else
 		while (m_running)
 		{
 			m_updater->update();
 		}
-#endif
 	}
 
 	imodule *framework::getInstance(const std::string &name)

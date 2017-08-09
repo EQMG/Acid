@@ -3,18 +3,6 @@
 #include "imodule.h"
 #include "iupdater.h"
 
-#ifdef FLOUNDER_API_WEB
-#include <functional>
-
-#include <emscripten/emscripten.h>
-
-static void dispatch_main(void* fp)
-{
-	std::function<void()>* func = (std::function<void()>*)fp;
-	(*func)();
-}
-#endif
-
 /// <summary>
 /// The base Flounder folder.
 /// </summary>

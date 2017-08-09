@@ -78,8 +78,8 @@ namespace flounder
 	{
 		// Create mesh data.
 		std::vector<line*> lines = createStructure(object);
-		std::vector<GLfloat> *vertices = new std::vector<float>();
-		std::vector<GLfloat> *textures = new std::vector<float>();
+		std::vector<float> *vertices = new std::vector<float>();
+		std::vector<float> *textures = new std::vector<float>();
 		createQuadVertices(object, lines, vertices, textures);
 		vector2 meshSize = getBounding(vertices);
 
@@ -143,7 +143,7 @@ namespace flounder
 		lines.push_back(currentLine);
 	}
 
-	void text::createQuadVertices(text *object, std::vector<line*> lines, std::vector<GLfloat> *vertices, std::vector<GLfloat> *textures)
+	void text::createQuadVertices(text *object, std::vector<line*> lines, std::vector<float> *vertices, std::vector<float> *textures)
 	{
 		object->setNumberOfLines(lines.size());
 		double cursorX = 0.0;
@@ -193,7 +193,7 @@ namespace flounder
 		addVertices(x, y, maxX, maxY, vertices);
 	}
 
-	void text::addVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<GLfloat> *vertices)
+	void text::addVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> *vertices)
 	{
 		vertices->push_back(static_cast<float>(x));
 		vertices->push_back(static_cast<float>(y));
@@ -215,7 +215,7 @@ namespace flounder
 		vertices->push_back(0.0f);
 	}
 
-	void text::addTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<GLfloat> *textures)
+	void text::addTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> *textures)
 	{
 		textures->push_back(static_cast<float>(x));
 		textures->push_back(static_cast<float>(y));
@@ -231,7 +231,7 @@ namespace flounder
 		textures->push_back(static_cast<float>(y));
 	}
 
-	vector2 text::getBounding(std::vector<GLfloat> *vertices)
+	vector2 text::getBounding(std::vector<float> *vertices)
 	{
 		float minX = +INFINITY;
 		float minY = +INFINITY;

@@ -9,8 +9,8 @@ namespace flounder
 		m_rendererDeferred = new rendererdeferred(fbo::newFBO()->fitToScreen(1.0f)->disableTextureWrap()->create());
 
 		m_shader = shader::newShader()->addName("waters")
-			->addType(shadertype(GL_VERTEX_SHADER, "res/shaders/waters/waterVertex.glsl", loadtype::FILE))
-			->addType(shadertype(GL_FRAGMENT_SHADER, "res/shaders/waters/waterFragment.glsl", loadtype::FILE))
+			->addType(shadertype(VERTEX, "res/shaders/waters/waterVertex.glsl", loadtype::FILE))
+			->addType(shadertype(FRAGMENT, "res/shaders/waters/waterFragment.glsl", loadtype::FILE))
 			->create();
 	}
 
@@ -47,6 +47,7 @@ namespace flounder
 				m_fboReflection->setSizeScalar(waters::get()->getReflectionQuality());
 			}
 
+#if 0
 			// Binds the reflection FBO.
 			if (m_rendererDeferred != NULL)
 			{
@@ -56,6 +57,7 @@ namespace flounder
 			{
 				renderer::get()->bindTexture(m_fboReflection->getColourTexture(0), GL_TEXTURE_2D, 0);
 			}
+#endif
 		}
 
 		// Sets the GPU for rendering this object.
@@ -91,7 +93,9 @@ namespace flounder
 		m_shader->loadUniform1i("ignoreReflections", !waters::get()->getEnableReflections());
 
 		// Tells the GPU to render this object.
+#if 0
 		renderer::get()->renderArrays(GL_TRIANGLES, object->getModel()->getVaoLength());
+#endif
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);
