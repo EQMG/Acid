@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filtergrain::filtergrain(const float &strength) :
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 		ipostfilter("filterGrain", "res/shaders/filters/grainFragment.web.glsl", NULL)
 #else
 		ipostfilter("filterGrain", "res/shaders/filters/grainFragment.glsl")

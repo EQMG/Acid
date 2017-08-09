@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filtercombine::filtercombine() :
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 		ipostfilter("filterCombine", "res/shaders/filters/combineFragment.web.glsl")
 #else
 		ipostfilter("filterCombine", "res/shaders/filters/combineFragment.glsl")

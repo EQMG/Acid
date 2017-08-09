@@ -5,7 +5,7 @@
 #include <map>
 #include <stdarg.h>
 
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 #include <emscripten/emscripten.h>
 #include <GLFW/glfw3.h>
 #else

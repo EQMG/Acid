@@ -29,7 +29,7 @@ namespace flounder
 
 	void framework::run()
 	{
-#ifdef FLOUNDER_PLATFORM_WEB
+#ifdef FLOUNDER_API_WEB
 		std::function<void()> mainLoop = [&]() 
 		{
 			m_updater->update();

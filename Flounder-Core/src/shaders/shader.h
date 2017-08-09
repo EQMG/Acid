@@ -5,6 +5,7 @@
 #include <map>
 #include <stdarg.h>
 
+#include "../platform.h"
 #include "../devices/display.h"
 #include "../helpers/helperfile.h"
 #include "../helpers/helperstring.h"
