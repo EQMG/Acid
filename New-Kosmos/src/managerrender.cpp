@@ -59,7 +59,7 @@ void managerrender::render()
 
 void managerrender::renderWater(icamera *camera)
 {
-	if (waters::get()->getEnableReflections() && waters::get()->getColourIntensity() != 1.0f && waters::get()->getWater() != NULL)
+	if (waters::get()->getEnableReflections() && waters::get()->getColourIntensity() != 1.0f && waters::get()->getWater() != nullptr)
 	{
 		camera->reflect(waters::get()->getWater()->getPosition()->m_y);
 

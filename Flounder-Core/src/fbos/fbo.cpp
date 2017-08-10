@@ -128,10 +128,10 @@ namespace flounder
 		m_sizeScalar = 1.0f;
 
 #if 0
-		m_frameBuffer = NULL;
+		m_frameBuffer = nullptr;
 		m_colourTexture = new GLuint[m_attachments];
-		m_depthTexture = NULL;
-		m_depthBuffer = NULL;
+		m_depthTexture = nullptr;
+		m_depthBuffer = nullptr;
 		m_colourBuffer = new GLuint[m_attachments];
 		m_drawBuffers = new GLenum[m_attachments];
 #endif
@@ -199,7 +199,7 @@ namespace flounder
 				limitFBOSize();
 				clear();
 
-				std::cout << "Recreating FBO: width: " << m_width << ", and height: " << m_height << std::endl;
+			//	std::cout << "Recreating FBO: width: " << m_width << ", and height: " << m_height << std::endl;
 				initialize();
 			}
 		}
@@ -221,7 +221,7 @@ namespace flounder
 		if (m_samples != samples)
 		{
 			clear();
-			std::cout << "Recreating FBO: width: " << m_width << ", and height: " << m_height << std::endl;
+		//	std::cout << "Recreating FBO: width: " << m_width << ", and height: " << m_height << std::endl;
 			initialize();
 		}
 
@@ -259,7 +259,7 @@ namespace flounder
 		{
 			source->m_hasGivenResolveError = true;
 			output->m_hasGivenResolveError = true;
-			std::cout << "Warning, resolving two FBO's (" << source << ", " << output << ") with different attachment sizes, be warned this may not work properly instead use resolveFBO(int readBuffer, int drawBuffer, FBO outputFBO)." << std::endl;
+		//	std::cout << "Warning, resolving two FBO's (" << source << ", " << output << ") with different attachment sizes, be warned this may not work properly instead use resolveFBO(int readBuffer, int drawBuffer, FBO outputFBO)." << std::endl;
 		}
 
 		for (int a = 0; a < source->m_attachments; a++)
@@ -365,7 +365,7 @@ namespace flounder
 #if 0
 		glGenTextures(1, &m_colourTexture[attachment - GL_COLOR_ATTACHMENT0]);
 		glBindTexture(GL_TEXTURE_2D, m_colourTexture[attachment - GL_COLOR_ATTACHMENT0]);
-		glTexImage2D(GL_TEXTURE_2D, 0, m_alphaChannel ? GL_RGBA : GL_RGB, m_width, m_height, 0, m_alphaChannel ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, m_alphaChannel ? GL_RGBA : GL_RGB, m_width, m_height, 0, m_alphaChannel ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, nullptr);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_linearFiltering ? GL_LINEAR : GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_linearFiltering ? GL_LINEAR : GL_NEAREST);
 
@@ -403,7 +403,7 @@ namespace flounder
 #if 0
 		glGenTextures(1, &m_depthTexture);
 		glBindTexture(GL_TEXTURE_2D, m_depthTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, m_width, m_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, m_width, m_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_depthTexture, 0);

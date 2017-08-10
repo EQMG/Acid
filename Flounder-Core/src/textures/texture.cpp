@@ -101,7 +101,7 @@ namespace flounder
 		m_builder = builder;
 
 		m_file = "";
-		m_cubemap = NULL;
+		m_cubemap = nullptr;
 		m_cubemapCount = 0;
 
 		m_hasAlpha = false;
@@ -116,20 +116,20 @@ namespace flounder
 		m_textureType = typeTexture2D;
 		m_width = 0;
 		m_height = 0;
-		m_sampler = NULL;
-		m_image = NULL;
+		m_sampler = VK_NULL_HANDLE;
+		m_image = VK_NULL_HANDLE;
 		m_imageLayout = {};
-		m_deviceMemory = NULL;
-		m_view = NULL;
+		m_deviceMemory = VK_NULL_HANDLE;
+		m_view = VK_NULL_HANDLE;
 		m_mipLevels = 1;
 	}
 
 	texture::~texture()
 	{
-		vkDestroyImageView(display::get()->getVkDevice(), m_view, NULL);
-		vkDestroyImage(display::get()->getVkDevice(), m_image, NULL);
-		vkDestroySampler(display::get()->getVkDevice(), m_sampler, NULL);
-		vkFreeMemory(display::get()->getVkDevice(), m_deviceMemory, NULL);
+	/*	vkDestroyImageView(display::get()->getVkDevice(), m_view, nullptr);
+		vkDestroyImage(display::get()->getVkDevice(), m_image, nullptr);
+		vkDestroySampler(display::get()->getVkDevice(), m_sampler, nullptr);
+		vkFreeMemory(display::get()->getVkDevice(), m_deviceMemory, nullptr);*/
 #if 0
 		glDeleteTextures(1, &m_texture.m_textureID);
 #endif
@@ -149,7 +149,7 @@ namespace flounder
 		int numComponents = 0;
 		stbi_uc *data = stbi_load(file.c_str(), &m_width, &m_height, &numComponents, 4);
 
-		if (data == NULL)
+		if (data == nullptr)
 		{
 			std::cout << "Unable to load texture: " << file << std::endl;
 		}
@@ -262,7 +262,7 @@ namespace flounder
 			int numComponents = 0;
 			stbi_uc *data = stbi_load(cubemap[i].c_str(), &m_texture.m_width, &m_texture.m_height, &numComponents, 4);
 
-			if (data == NULL)
+			if (data == nullptr)
 			{
 				std::cout << "Unable to load texture: " << cubemap[i] << std::endl;
 			}

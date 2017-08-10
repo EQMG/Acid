@@ -189,7 +189,7 @@ noisefast::noisefast(int seed)
 
 	m_cellularDistanceFunction = Euclidean;
 	m_cellularReturnType = CellValue;
-	m_cellularNoiseLookup = NULL;
+	m_cellularNoiseLookup = nullptr;
 	m_cellularDistanceIndex0 = 0;
 	m_cellularDistanceIndex1 = 1;
 	m_cellularJitter = 0.45f;

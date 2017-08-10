@@ -9,7 +9,7 @@ instance::instance()
 	
 	audio::add(new sound("music", "res/ld39Outpost.wav"));
 	sound *object = audio::get("music");
-	if (object != NULL)
+	if (object != nullptr)
 	{
 		object->loop();
 		object->setGain(0.1f);
@@ -25,7 +25,7 @@ instance::instance()
 	m_systemTest->setSystemCentre(vector3(0.0f, 0.0f, 0.0f));
 	particles::get()->addSystem(m_systemTest);*/
 	
-	entitytest *test = new entitytest(NULL, vector3(), vector3());
+	entitytest *test = new entitytest(nullptr, vector3(), vector3());
 	// componentalpha *meme = test->getComponent<componentalpha*>();
 }
 

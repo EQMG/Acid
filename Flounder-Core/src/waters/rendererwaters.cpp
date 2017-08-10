@@ -49,7 +49,7 @@ namespace flounder
 
 #if 0
 			// Binds the reflection FBO.
-			if (m_rendererDeferred != NULL)
+			if (m_rendererDeferred != nullptr)
 			{
 				renderer::get()->bindTexture(m_rendererDeferred->getFbo()->getColourTexture(0), GL_TEXTURE_2D, 0);
 			}

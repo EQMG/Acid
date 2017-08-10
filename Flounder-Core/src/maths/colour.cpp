@@ -91,7 +91,7 @@ namespace flounder
 
 	colour *colour::add(const colour &left, const colour &right, colour *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new colour();
 		}
@@ -101,7 +101,7 @@ namespace flounder
 
 	colour *colour::subtract(const colour &left, const colour &right, colour *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new colour();
 		}
@@ -111,7 +111,7 @@ namespace flounder
 
 	colour *colour::multiply(const colour &left, const colour &right, colour *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new colour();
 		}
@@ -121,7 +121,7 @@ namespace flounder
 
 	colour *colour::divide(const colour &left, const colour &right, colour *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new colour();
 		}
@@ -131,7 +131,7 @@ namespace flounder
 
 	colour *colour::interpolate(const colour &left, const colour &right, const float blend, colour *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new colour();
 		}
@@ -145,7 +145,7 @@ namespace flounder
 
 	colour *colour::getUnit(const colour &source, colour *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new colour();
 		}

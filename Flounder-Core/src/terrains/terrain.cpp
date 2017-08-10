@@ -8,7 +8,7 @@ namespace flounder
 
 	terrain::terrain(const vector3 &position, const vector3 &rotation, const int &seed)
 	{
-		m_model = NULL;
+		m_model = nullptr;
 
 		m_position = new vector3(position);
 		m_rotation = new vector3(rotation);
@@ -95,7 +95,7 @@ namespace flounder
 			}
 		}
 
-		m_model = model::newModel()->setDirectly(indices, vertices, NULL, normals, colours)->create();
+		m_model = model::newModel()->setDirectly(indices, vertices, nullptr, normals, colours)->create();
 
 		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
 		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;

@@ -27,7 +27,7 @@ namespace flounder
 
 	float axisjoystick::getAmount() const
 	{
-		if (m_count == NULL || !joysticks::get()->isConnected(m_joystick))
+		if (!joysticks::get()->isConnected(m_joystick))
 		{
 			return 0.0f;
 		}

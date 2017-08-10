@@ -27,11 +27,6 @@ namespace flounder
 
 	bool buttonmouse::isDown() const
 	{
-		if (m_count == NULL)
-		{
-			return false;
-		}
-
 		for (int i = 0; i < m_count; i++)
 		{
 			if (mouse::get()->getButton(m_buttons[i]))

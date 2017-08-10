@@ -15,7 +15,7 @@ namespace flounder
 	{
 		t newValue = &m_reference;
 
-		if (newValue == NULL)
+		if (newValue == nullptr)
 		{
 			return false;
 		}

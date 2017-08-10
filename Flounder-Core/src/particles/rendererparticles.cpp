@@ -134,7 +134,7 @@ namespace flounder
 		loaders::get()->updateVBO(m_vboID, INSTANCE_DATA_LENGTH * MAX_INSTANCES, *vboData);
 		renderer::get()->bindVAO(m_vaoID, 8, 0, 1, 2, 3, 4, 5, 6, 7);
 
-		if (particleType->getTexture() != NULL)
+		if (particleType->getTexture() != nullptr)
 		{
 			m_shader->loadUniform1f("numberOfRows", static_cast<float>(particleType->getTexture()->getNumberOfRows()));
 			renderer::get()->bindTexture(particleType->getTexture(), 0);

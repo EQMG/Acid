@@ -53,7 +53,7 @@ namespace flounder
 		renderer::get()->bindVAO(object->getVaoID(), 1, 0);
 
 		// Loads the uniforms.
-		matrix4x4 *mvp = matrix4x4::multiply(*shadows::get()->getShadowBox()->getProjectionViewMatrix(), *modelMatrix, NULL);
+		matrix4x4 *mvp = matrix4x4::multiply(*shadows::get()->getShadowBox()->getProjectionViewMatrix(), *modelMatrix, nullptr);
 		m_shader->loadUniform4fv("mvpMatrix", *mvp);
 		delete mvp;
 

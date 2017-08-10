@@ -29,17 +29,17 @@ namespace flounder
 		{
 			particle *created = system->generateParticles();
 
-			if (created != NULL)
+			if (created != nullptr)
 			{
 				std::vector<particle*> *list = m_particles->find(created->getParticleType())->second;
 				
-				if (list == NULL)
+				if (list == nullptr)
 				{
 					list = new std::vector<particle*>();
 					m_particles->insert(std::pair<particletype*, std::vector<particle*>*>(created->getParticleType(), list));
 				}
 
-				if (list != NULL)
+				if (list != nullptr)
 				{
 					list->push_back(created);
 				}
