@@ -41,7 +41,7 @@ namespace flounder
 
 	vector4 *vector4::add(const vector4 &left, const vector4 &right, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -51,7 +51,7 @@ namespace flounder
 
 	vector4 *vector4::subtract(const vector4 &left, const vector4 &right, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -61,7 +61,7 @@ namespace flounder
 
 	vector4 *vector4::multiply(const vector4 &left, const vector4 &right, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -71,7 +71,7 @@ namespace flounder
 
 	vector4 *vector4::divide(const vector4 &left, const vector4 &right, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -102,7 +102,7 @@ namespace flounder
 
 	vector4 *vector4::scale(const vector4 &source, const float &scalar, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -112,7 +112,7 @@ namespace flounder
 
 	vector4 *vector4::negate(const vector4 &source, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -122,7 +122,7 @@ namespace flounder
 
 	vector4 *vector4::normalize(const vector4 &source, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -151,7 +151,7 @@ namespace flounder
 
 	vector4 *vector4::maxVector(const vector4 &a, const vector4 &b, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -161,7 +161,7 @@ namespace flounder
 
 	vector4 *vector4::minVector(const vector4 &a, const vector4 &b, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -195,7 +195,7 @@ namespace flounder
 
 	vector4 *vector4::getVectorDistance(const vector4 &point1, const vector4 &point2, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}

@@ -7,7 +7,7 @@ namespace flounder
 		m_startTime = 0.0f;
 		m_interval = interval * 1000.0f;
 
-		if (framework::get() != NULL)
+		if (framework::get() != nullptr)
 		{
 			m_startTime = framework::get()->getTimeMs();
 		}

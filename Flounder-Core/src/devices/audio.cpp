@@ -37,6 +37,6 @@ namespace flounder
 			}
 		}
 
-		return NULL;
+		return nullptr;
 	}
 }

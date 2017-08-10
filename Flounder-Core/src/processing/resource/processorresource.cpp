@@ -38,7 +38,7 @@ namespace flounder
 
 	void processorresource::addRequestToQueue(irequest *request)
 	{
-		if (dynamic_cast<requestresource*>(request) == NULL)
+		if (dynamic_cast<requestresource*>(request) == nullptr)
 		{
 			return;
 		}

@@ -1,4 +1,4 @@
-#version
+#version 150 core
 
 //---------IN------------
 flat in vec3 pass_normal;

@@ -1,4 +1,4 @@
-#version
+#version 150 core
 
 //---------CONSTANT------------
 const float DI = 1.0 / 64.0;

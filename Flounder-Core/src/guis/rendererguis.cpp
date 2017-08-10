@@ -17,7 +17,7 @@ namespace flounder
 			->create();
 #endif
 		std::vector<float> *vertices = new std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f };
-		m_model = model::newModel()->setDirectly(NULL, vertices, NULL, NULL, NULL)->create();
+		m_model = model::newModel()->setDirectly(nullptr, vertices, nullptr, nullptr, nullptr)->create();
 		delete vertices;
 	}
 
@@ -36,7 +36,7 @@ namespace flounder
 		{
 			gui *object = dynamic_cast<gui*>(screenobject);
 
-			if (object != NULL)
+			if (object != nullptr)
 			{
 				renderGui(object);
 			}

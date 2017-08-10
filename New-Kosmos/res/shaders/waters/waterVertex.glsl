@@ -1,4 +1,4 @@
-#version 130
+#version 150 core 130
 
 //---------CONSTANT------------
 const float PI = 3.1415926535897932384626433832795;

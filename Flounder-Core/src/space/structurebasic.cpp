@@ -68,7 +68,7 @@ namespace flounder
 		{
 			ispatialobject *object = static_cast<ispatialobject*>(value);
 
-			if (object->getCollider() == NULL || object->getCollider()->inFrustum(*range))
+			if (object->getCollider() == nullptr || object->getCollider()->inFrustum(*range))
 			{
 				result->push_back(value);
 			}
@@ -82,7 +82,7 @@ namespace flounder
 		{
 			ispatialobject *object = static_cast<ispatialobject*>(value);
 
-			if (object->getCollider() == NULL || range->intersects(*object->getCollider()) || range->contains(*object->getCollider()))
+			if (object->getCollider() == nullptr || range->intersects(*object->getCollider()) || range->contains(*object->getCollider()))
 			{
 				result->push_back(value);
 			}

@@ -15,7 +15,7 @@ namespace flounder
 
 	bool word::addCharacter(character *c)
 	{
-		if (c == NULL)
+		if (c == nullptr)
 		{
 			std::cout << "Invalid character detected: " << c << std::endl;
 			return false;

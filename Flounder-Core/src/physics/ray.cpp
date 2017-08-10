@@ -51,7 +51,7 @@ namespace flounder
 		}
 		else
 		{
-			if (m_screenStart != NULL)
+			if (m_screenStart != nullptr)
 			{
 				m_normalizedCoords->set(*m_screenStart);
 			}
@@ -70,7 +70,7 @@ namespace flounder
 
 	vector3 *ray::getPointOnRay(const float &distance, vector3 *destination) const
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -80,7 +80,7 @@ namespace flounder
 
 	vector3 *ray::convertToScreenSpace(const vector3 &position, vector3 *destination) const
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -91,7 +91,7 @@ namespace flounder
 
 		if (coords->m_w < 0.0f)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		return destination->set((coords->m_x / coords->m_w + 1.0f) / 2.0f, 1.0f - (coords->m_y / coords->m_w + 1.0f) / 2.0f, coords->m_z);

@@ -71,7 +71,7 @@ void maincamera::update(const iplayer &player)
 	calculateHorizontalAngle();
 	calculateVerticalAngle();
 
-	if (&player != NULL)
+	if (&player != nullptr)
 	{
 		m_targetPosition->set(*player.getPosition());
 		m_targetRotation->set(*player.getRotation());

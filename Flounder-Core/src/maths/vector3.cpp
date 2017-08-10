@@ -52,7 +52,7 @@ namespace flounder
 
 	vector3 *vector3::add(const vector3 &left, const vector3 &right, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -62,7 +62,7 @@ namespace flounder
 
 	vector3 *vector3::subtract(const vector3 &left, const vector3 &right, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -72,7 +72,7 @@ namespace flounder
 
 	vector3 *vector3::multiply(const vector3 &left, const vector3 &right, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -82,7 +82,7 @@ namespace flounder
 
 	vector3 *vector3::divide(const vector3 &left, const vector3 &right, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -113,7 +113,7 @@ namespace flounder
 
 	vector3 *vector3::cross(const vector3 &left, const vector3 &right, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -123,7 +123,7 @@ namespace flounder
 
 	vector3 *vector3::scale(const vector3 &source, const float &scalar, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -138,7 +138,7 @@ namespace flounder
 
 	vector3 *vector3::negate(const vector3 &source, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -148,7 +148,7 @@ namespace flounder
 
 	vector3 *vector3::normalize(const vector3 &source, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -177,7 +177,7 @@ namespace flounder
 
 	vector3 *vector3::maxVector(const vector3 &a, const vector3 &b, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -187,7 +187,7 @@ namespace flounder
 
 	vector3 *vector3::minVector(const vector3 &a, const vector3 &b, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -220,7 +220,7 @@ namespace flounder
 
 	vector3 *vector3::getVectorDistance(const vector3 &point1, const vector3 &point2, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -230,7 +230,7 @@ namespace flounder
 
 	vector3 *vector3::generateRandomUnitVector(vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -245,14 +245,14 @@ namespace flounder
 
 	vector3 *vector3::randomPointOnCircle(const vector3 &normal, const float &radius, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
 
 		do
 		{
-			vector3 *randomVector = generateRandomUnitVector(NULL);
+			vector3 *randomVector = generateRandomUnitVector(nullptr);
 			vector3::cross(*randomVector, normal, destination);
 			delete randomVector;
 		}

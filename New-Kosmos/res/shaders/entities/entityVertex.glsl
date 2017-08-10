@@ -1,4 +1,4 @@
-#version
+#version 150 core
 
 //---------CONSTANT------------
 const int MAX_JOINTS = 50;

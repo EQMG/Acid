@@ -1,4 +1,4 @@
-#version
+#version 150 core
 
 //---------INCLUDES------------
 #include "res/shaders/maths.glsl"

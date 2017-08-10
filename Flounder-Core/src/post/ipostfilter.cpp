@@ -48,7 +48,7 @@ namespace flounder
 	{
 		bool lastWireframe = renderer::get()->isInWireframe();
 
-		if (m_fbo != NULL)
+		if (m_fbo != nullptr)
 		{
 			m_fbo->bindFrameBuffer();
 			renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 1.0f);
@@ -81,7 +81,7 @@ namespace flounder
 		renderer::get()->disableBlending();
 		renderer::get()->enableDepthTesting();
 
-		if (m_fbo != NULL)
+		if (m_fbo != nullptr)
 		{
 			m_fbo->unbindFrameBuffer();
 		}

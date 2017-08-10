@@ -15,10 +15,10 @@ namespace flounder
 		m_pitch = 1.0f;
 		m_gain = 1.0f;
 
-		//unsigned char **data = NULL;
-		//unsigned int *size = NULL;
-		//unsigned int *frequency = NULL;
-		//short *numChannels = NULL;
+		//unsigned char **data = nullptr;
+		//unsigned int *size = nullptr;
+		//unsigned int *frequency = nullptr;
+		//short *numChannels = nullptr;
 
 		//audio::loadWaveFile(filename, data, size, frequency, numChannels);
 

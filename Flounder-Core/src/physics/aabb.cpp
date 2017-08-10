@@ -31,7 +31,7 @@ namespace flounder
 
 	aabb *aabb::scale(const aabb &source, const vector3 &scale, aabb *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new aabb();
 		}
@@ -49,7 +49,7 @@ namespace flounder
 
 	aabb *aabb::expand(const aabb &source, const vector3 &expand, aabb *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new aabb();
 		}
@@ -67,7 +67,7 @@ namespace flounder
 
 	aabb *aabb::combine(const aabb &left, const aabb &right, aabb *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new aabb();
 		}
@@ -87,7 +87,7 @@ namespace flounder
 
 	aabb *aabb::stretch(const aabb &source, const vector3 &stretch, aabb *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new aabb();
 		}
@@ -140,7 +140,7 @@ namespace flounder
 
 	icollider *aabb::update(const vector3 &position, const vector3 &rotation, const float &scale, icollider *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new aabb();
 		}
@@ -223,7 +223,7 @@ namespace flounder
 
 	vector3 *aabb::resolveCollision(const icollider &other, const vector3 &positionDelta, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -300,9 +300,9 @@ namespace flounder
 	{
 		const aabb &aabb2 = dynamic_cast<const aabb&>(other);
 
-		vector3 *distance1 = vector3::subtract(*m_minExtents, *aabb2.m_maxExtents, NULL);
-		vector3 *distance2 = vector3::subtract(*aabb2.m_minExtents, *m_maxExtents, NULL);
-		vector3 *maxDistance = vector3::maxVector(*distance1, *distance2, NULL);
+		vector3 *distance1 = vector3::subtract(*m_minExtents, *aabb2.m_maxExtents, nullptr);
+		vector3 *distance2 = vector3::subtract(*aabb2.m_minExtents, *m_maxExtents, nullptr);
+		vector3 *maxDistance = vector3::maxVector(*distance1, *distance2, nullptr);
 		float maxDist = vector3::maxComponent(*maxDistance);
 
 		delete distance1;

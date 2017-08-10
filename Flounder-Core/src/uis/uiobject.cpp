@@ -4,7 +4,7 @@ namespace flounder
 {
 	uiobject::uiobject(uiobject *parent, const vector2 &position, const vector2 &dimensions)
 	{
-		if (parent != NULL)
+		if (parent != nullptr)
 		{
 			parent->m_children->push_back(this);
 		}
@@ -41,7 +41,7 @@ namespace flounder
 		//		delete child;
 		//	}
 
-		if (m_parent != NULL)
+		if (m_parent != nullptr)
 		{
 			m_parent->removeChild(this);
 		}
@@ -122,7 +122,7 @@ namespace flounder
 
 	bool uiobject::isVisible()
 	{
-		if (m_parent != NULL)
+		if (m_parent != nullptr)
 		{
 			return m_visible && m_parent->isVisible();
 		}
@@ -146,7 +146,7 @@ namespace flounder
 
 	float uiobject::getAlpha()
 	{
-		if (m_parent != NULL)
+		if (m_parent != nullptr)
 		{
 			return m_alpha * m_parent->getAlpha();
 		}

@@ -50,13 +50,13 @@ namespace flounder
 
 		m_file = "";
 
-		m_vertices = NULL;
-		m_textures = NULL;
-		m_normals = NULL;
-		m_tangents = NULL;
-		m_indices = NULL;
+		m_vertices = nullptr;
+		m_textures = nullptr;
+		m_normals = nullptr;
+		m_tangents = nullptr;
+		m_indices = nullptr;
 
-		m_aabb = NULL;
+		m_aabb = nullptr;
 
 #if 0
 		m_vaoID = 0;
@@ -230,7 +230,7 @@ namespace flounder
 		{
 			vertexdata *anotherVertex = previousVertex->getDuplicateVertex();
 
-			if (anotherVertex != NULL)
+			if (anotherVertex != nullptr)
 			{
 				return dealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
 			}
@@ -249,19 +249,19 @@ namespace flounder
 
 	void model::calculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<vector2> *textures)
 	{
-		vector3 *deltaPos1 = vector3::subtract(v1->getPosition(), v0->getPosition(), NULL);
-		vector3 *deltaPos2 = vector3::subtract(v2->getPosition(), v0->getPosition(), NULL);
+		vector3 *deltaPos1 = vector3::subtract(v1->getPosition(), v0->getPosition(), nullptr);
+		vector3 *deltaPos2 = vector3::subtract(v2->getPosition(), v0->getPosition(), nullptr);
 		vector2 uv0 = textures->at(v0->getTextureIndex());
 		vector2 uv1 = textures->at(v1->getTextureIndex());
 		vector2 uv2 = textures->at(v2->getTextureIndex());
-		vector2 *deltaUv1 = vector2::subtract(uv1, uv0, NULL);
-		vector2 *deltaUv2 = vector2::subtract(uv2, uv0, NULL);
+		vector2 *deltaUv1 = vector2::subtract(uv1, uv0, nullptr);
+		vector2 *deltaUv2 = vector2::subtract(uv2, uv0, nullptr);
 
 		float r = 1.0f / (deltaUv1->m_x * deltaUv2->m_y - deltaUv1->m_y * deltaUv2->m_x);
 		deltaPos1->scale(deltaUv2->m_y);
 		deltaPos2->scale(deltaUv1->m_y);
 
-		vector3 *tangent = vector3::subtract(*deltaPos1, *deltaPos2, NULL);
+		vector3 *tangent = vector3::subtract(*deltaPos1, *deltaPos2, nullptr);
 		tangent->scale(r);
 		v0->addTangent(tangent);
 		v1->addTangent(tangent);
@@ -278,38 +278,38 @@ namespace flounder
 #if 0
 		m_vaoID = loaders::get()->createVAO();
 		
-		if (m_indices != NULL)
+		if (m_indices != nullptr)
 		{
 			loaders::get()->createIndicesVBO(m_vaoID, *m_indices);
 		}
 
-		if (m_vertices != NULL)
+		if (m_vertices != nullptr)
 		{
 			loaders::get()->storeDataInVBO(m_vaoID, *m_vertices, 0, 3);
 		}
 
-		if (m_textures != NULL)
+		if (m_textures != nullptr)
 		{
 			loaders::get()->storeDataInVBO(m_vaoID, *m_textures, 1, 2);
 		}
 
-		if (m_normals != NULL)
+		if (m_normals != nullptr)
 		{
 			loaders::get()->storeDataInVBO(m_vaoID, *m_normals, 2, 3);
 		}
 
-		if (m_tangents != NULL)
+		if (m_tangents != nullptr)
 		{
 			loaders::get()->storeDataInVBO(m_vaoID, *m_tangents, 3, 3);
 		}
 
 		loaders::get()->unbindVAO();
 
-		if (m_indices != NULL)
+		if (m_indices != nullptr)
 		{
 			m_vaoLength = m_indices->size();
 		}
-		else if (m_vertices != NULL)
+		else if (m_vertices != nullptr)
 		{
 			m_vaoLength = m_vertices->size() / 3;
 		}
@@ -318,7 +318,7 @@ namespace flounder
 
 	void model::createAABB()
 	{
-		if (m_aabb == NULL)
+		if (m_aabb == nullptr)
 		{
 			m_aabb = new aabb();
 		}

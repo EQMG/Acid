@@ -26,10 +26,10 @@ namespace flounder
 			std::vector<std::string> arr;
 			char *current = strtok(cstr, sep.c_str());
 
-			while (current != NULL)
+			while (current != nullptr)
 			{
 				arr.push_back(current);
-				current = strtok(NULL, sep.c_str());
+				current = strtok(nullptr, sep.c_str());
 			}
 
 			return arr;

@@ -29,7 +29,7 @@ namespace flounder
 	{
 		if (m_paused || m_types->empty())
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		m_timePassed += framework::get()->getDelta();
@@ -40,7 +40,7 @@ namespace flounder
 			return emitParticle();
 		}
 
-		return NULL;
+		return nullptr;
 	}
 
 	particle *particlesystem::emitParticle()
@@ -63,7 +63,7 @@ namespace flounder
 		vector3::add(*velocity, *m_velocityCentre, velocity);
 		float scale = generateValue(emitType->getScale(), emitType->getScale() * maths::randomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
 		float lifeLength = generateValue(emitType->getLifeLength(), emitType->getLifeLength() * maths::randomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
-		vector3 *spawnPos = vector3::add(*m_systemCentre, *m_spawn->getBaseSpawnPosition(), NULL);
+		vector3 *spawnPos = vector3::add(*m_systemCentre, *m_spawn->getBaseSpawnPosition(), nullptr);
 
 		particle *result = new particle(emitType, *spawnPos, *velocity, lifeLength, generateRotation(), scale, m_gravityEffect);
 
@@ -102,7 +102,7 @@ namespace flounder
 
 		if ((coneDirection->m_x != 0.0f) || (coneDirection->m_y != 0.0f) || ((coneDirection->m_z != 1.0f) && (coneDirection->m_z != -1.0f)))
 		{
-			vector3 *rotateAxis = vector3::cross(*coneDirection, vector3(0.0f, 0.0f, 1.0f), NULL);
+			vector3 *rotateAxis = vector3::cross(*coneDirection, vector3(0.0f, 0.0f, 1.0f), nullptr);
 			rotateAxis->normalize();
 			float rotateAngle = acos(vector3::dot(*coneDirection, vector3(0.0f, 0.0f, 1.0f)));
 			matrix4x4 *rotationMatrix = new matrix4x4();
