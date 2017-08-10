@@ -59,7 +59,7 @@ namespace flounder
 		m_uniforms = new std::vector<std::string>();
 
 #if 0
-		m_programID = NULL;
+		m_programID = nullptr;
 #endif
 	}
 
@@ -267,7 +267,7 @@ namespace flounder
 			break;
 		}
 
-		glShaderSource(type->m_shaderID, 1, &source, NULL);
+		glShaderSource(type->m_shaderID, 1, &source, nullptr);
 		glCompileShader(type->m_shaderID);
 
 		GLint result;
@@ -295,20 +295,6 @@ namespace flounder
 		if (helperstring::startsWith(line, "//"))
 		{
 			result = "";
-		}
-		else if (helperstring::startsWith(line, "#version"))
-		{
-			int major = display::get()->getGlfwMajor();
-			int minor = display::get()->getGlfwMinor();
-
-			if (major >= 3 && minor >= 2)
-			{
-				result = "#version 150 core";
-			}
-			else
-			{
-				result = "#version 130";
-			}
 		}
 		else if (helperstring::startsWith(line, "#include"))
 		{

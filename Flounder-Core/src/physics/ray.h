@@ -55,7 +55,7 @@ namespace flounder
 		/// Gets a point on the ray.
 		/// </summary>
 		/// <param name="distance"> Distance down the ray to sample. </param>
-		/// <param name="destination"> The destination vector, if NULL one will be created. </param>
+		/// <param name="destination"> The destination vector, if nullptr one will be created. </param>
 		/// <returns> Returns the destination vector. </returns>
 		vector3 *getPointOnRay(const float &distance, vector3 *destination) const;
 

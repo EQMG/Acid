@@ -5,7 +5,7 @@ namespace flounder
 	renderer::renderer() :
 		imodule()
 	{
-		m_managerRender = NULL;
+		m_managerRender = nullptr;
 
 		m_cullingBackFace = false;
 		m_depthMask = true;
@@ -22,7 +22,7 @@ namespace flounder
 
 	void renderer::update()
 	{
-		if (m_managerRender != NULL)
+		if (m_managerRender != nullptr)
 		{
 			m_managerRender->render();
 		}

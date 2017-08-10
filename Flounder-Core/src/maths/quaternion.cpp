@@ -165,7 +165,7 @@ namespace flounder
 
 	quaternion *quaternion::multiply(const quaternion &left, const quaternion &right, quaternion *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new quaternion();
 		}
@@ -175,7 +175,7 @@ namespace flounder
 
 	quaternion *quaternion::multiplyInverse(const quaternion &left, const quaternion &right, quaternion *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new quaternion();
 		}
@@ -192,7 +192,7 @@ namespace flounder
 
 	quaternion *quaternion::slerp(const quaternion &left, const quaternion &right, const float &progression, quaternion *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new quaternion();
 		}
@@ -224,7 +224,7 @@ namespace flounder
 
 	quaternion *quaternion::scale(const quaternion &source, const float &scalar, quaternion *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new quaternion();
 		}
@@ -234,7 +234,7 @@ namespace flounder
 
 	quaternion *quaternion::negate(const quaternion &source, quaternion *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new quaternion();
 		}
@@ -244,7 +244,7 @@ namespace flounder
 
 	quaternion *quaternion::normalize(const quaternion &source, quaternion *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new quaternion();
 		}
@@ -273,7 +273,7 @@ namespace flounder
 
 	matrix4x4 *quaternion::toMatrix(const quaternion &source, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -310,7 +310,7 @@ namespace flounder
 
 	matrix4x4 *quaternion::toRotationMatrix(const quaternion &source, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}

@@ -63,14 +63,14 @@ namespace flounder
 	{
 		updateWidthsAndHeights(camera);
 
-		matrix4x4 *rotation = matrix4x4::viewMatrix(vector3(), *camera.getPosition(), NULL); // *camera.getPosition()
-		vector4 *forwardVector4 = matrix4x4::transform(*rotation, vector4(0.0f, 0.0f, -1.0f, 0.0f), NULL);
+		matrix4x4 *rotation = matrix4x4::viewMatrix(vector3(), *camera.getPosition(), nullptr); // *camera.getPosition()
+		vector4 *forwardVector4 = matrix4x4::transform(*rotation, vector4(0.0f, 0.0f, -1.0f, 0.0f), nullptr);
 		vector3 *forwardVector = new vector3(forwardVector4->m_x, forwardVector4->m_y, forwardVector4->m_z);
 
 		vector3 toFar = *vector3(*forwardVector).scale(m_shadowDistance);
 		vector3 toNear = *vector3(*forwardVector).scale(camera.getNearPlane());
-		vector3 *centreNear = vector3::add(toNear, *camera.getPosition(), NULL);
-		vector3 *centreFar = vector3::add(toFar, *camera.getPosition(), NULL);
+		vector3 *centreNear = vector3::add(toNear, *camera.getPosition(), nullptr);
+		vector3 *centreFar = vector3::add(toFar, *camera.getPosition(), nullptr);
 
 		vector4 **points = calculateFrustumVertices(*rotation, *forwardVector, *centreNear, *centreFar);
 
@@ -139,15 +139,15 @@ namespace flounder
 
 	vector4 **shadowbox::calculateFrustumVertices(const matrix4x4 &rotation, const vector3 &forwardVector, const vector3 &centreNear, const vector3 &centreFar)
 	{
-		vector4 *upVector4 = matrix4x4::transform(rotation, vector4(0.0f, 1.0f, 0.0f, 0.0f), NULL);
+		vector4 *upVector4 = matrix4x4::transform(rotation, vector4(0.0f, 1.0f, 0.0f, 0.0f), nullptr);
 		vector3 *upVector = new vector3(upVector4->m_x, upVector4->m_y, upVector4->m_z);
-		vector3 *rightVector = vector3::cross(forwardVector, *upVector, NULL);
+		vector3 *rightVector = vector3::cross(forwardVector, *upVector, nullptr);
 		vector3 downVector = *vector3(*upVector).negate();
 		vector3 leftVector = *vector3(*rightVector).negate();
-		vector3 *farTop = vector3::add(centreFar, *vector3(*upVector).scale(m_farHeight), NULL);
-		vector3 *farBottom = vector3::add(centreFar, *vector3(downVector).scale(m_farHeight), NULL);
-		vector3 *nearTop = vector3::add(centreNear, *vector3(*upVector).scale(m_nearHeight), NULL);
-		vector3 *nearBottom = vector3::add(centreNear, *vector3(downVector).scale(m_nearHeight), NULL);
+		vector3 *farTop = vector3::add(centreFar, *vector3(*upVector).scale(m_farHeight), nullptr);
+		vector3 *farBottom = vector3::add(centreFar, *vector3(downVector).scale(m_farHeight), nullptr);
+		vector3 *nearTop = vector3::add(centreNear, *vector3(*upVector).scale(m_nearHeight), nullptr);
+		vector3 *nearBottom = vector3::add(centreNear, *vector3(downVector).scale(m_nearHeight), nullptr);
 
 		vector4 **points = new vector4*[8];
 		points[0] = calculateLightSpaceFrustumCorner(*farTop, *rightVector, m_farWidth);
@@ -172,7 +172,7 @@ namespace flounder
 
 	vector4 *shadowbox::calculateLightSpaceFrustumCorner(const vector3 &startPoint, const vector3 &direction, const float &width)
 	{
-		vector3 *point = vector3::add(startPoint, *vector3(direction).scale(width), NULL);
+		vector3 *point = vector3::add(startPoint, *vector3(direction).scale(width), nullptr);
 		vector4 *point4f = new vector4(point->m_x, point->m_y, point->m_z, 1.0f);
 		matrix4x4::transform(*m_lightViewMatrix, *point4f, point4f);
 
@@ -186,8 +186,8 @@ namespace flounder
 		float x = (m_aabb->m_minExtents->m_x + m_aabb->m_maxExtents->m_x) / 2.0f;
 		float y = (m_aabb->m_minExtents->m_y + m_aabb->m_maxExtents->m_y) / 2.0f;
 		float z = (m_aabb->m_minExtents->m_z + m_aabb->m_maxExtents->m_z) / 2.0f;
-		matrix4x4 *invertedLight = matrix4x4::invert(*m_lightViewMatrix, NULL);
-		vector4 *centre4 = matrix4x4::transform(*invertedLight, vector4(x, y, z, 1.0f), NULL);
+		matrix4x4 *invertedLight = matrix4x4::invert(*m_lightViewMatrix, nullptr);
+		vector4 *centre4 = matrix4x4::transform(*invertedLight, vector4(x, y, z, 1.0f), nullptr);
 		
 		m_centre->set(centre4->m_x, centre4->m_y, centre4->m_z);
 
@@ -238,7 +238,7 @@ namespace flounder
 		closestPoint->m_z = maths::clamp(entityPos->m_z, m_aabb->m_minExtents->m_z, m_aabb->m_maxExtents->m_z);
 		
 		vector3 *centre = new vector3(entityPos->m_x, entityPos->m_y, entityPos->m_z);
-		vector3 *distance = vector3::subtract(*centre, *closestPoint, NULL);
+		vector3 *distance = vector3::subtract(*centre, *closestPoint, nullptr);
 		float disSquared = distance->lengthSquared();
 
 		delete entityPos;

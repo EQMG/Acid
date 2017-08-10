@@ -31,7 +31,7 @@ namespace flounder
 
 		m_hasChange = false;
 		m_timerChange = new timer(0.2f);
-		m_actionChange = NULL;
+		m_actionChange = nullptr;
 	}
 
 	inputslider::~inputslider()
@@ -71,7 +71,7 @@ namespace flounder
 		// Updates the listener.
 		if (m_hasChange && m_timerChange->isPassedTime())
 		{
-			if (m_actionChange != NULL)
+			if (m_actionChange != nullptr)
 			{
 				m_actionChange();
 			}

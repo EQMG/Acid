@@ -13,7 +13,7 @@ namespace flounder
 
 		m_newText = "";
 
-		m_model = NULL;
+		m_model = nullptr;
 
 		m_lineMaxSize = maxLineLength;
 		m_numberOfLines = -1;
@@ -84,7 +84,7 @@ namespace flounder
 		vector2 meshSize = getBounding(vertices);
 
 		// Load mesh data to OpenGL.
-		model *loaded = model::newModel()->setDirectly(NULL, vertices, textures, NULL, NULL)->create();
+		model *loaded = model::newModel()->setDirectly(nullptr, vertices, textures, nullptr, nullptr)->create();
 		object->setModel(loaded);
 		object->setMeshSize(meshSize);
 
@@ -360,6 +360,6 @@ namespace flounder
 
 	bool text::isLoaded()
 	{
-		return !m_textString.empty() && m_model != NULL;
+		return !m_textString.empty() && m_model != nullptr;
 	}
 }

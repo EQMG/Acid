@@ -5,9 +5,9 @@ namespace flounder
 	uis::uis() :
 		imodule()
 	{
-		m_managerUis = NULL;
+		m_managerUis = nullptr;
 		m_selector = new uiselector();
-		m_container = new containerscreen(NULL, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), false);
+		m_container = new containerscreen(nullptr, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), false);
 		m_objects = new std::vector<uiobject*>();
 
 		arial = new fonttype("res/fonts/arial.png", "res/fonts/arial.fnt");
@@ -33,7 +33,7 @@ namespace flounder
 
 	void uis::update()
 	{
-		if (m_managerUis != NULL)
+		if (m_managerUis != nullptr)
 		{
 			m_selector->update(m_managerUis->isGamePaused());
 			m_managerUis->update();

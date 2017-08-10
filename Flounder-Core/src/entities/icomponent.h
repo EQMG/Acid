@@ -13,7 +13,7 @@ namespace flounder
 	public:
 		icomponent()
 		{
-			m_entity = NULL;
+			m_entity = nullptr;
 		}
 
 		virtual ~icomponent()

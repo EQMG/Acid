@@ -61,7 +61,7 @@ namespace flounder
 
 		inline bool isAlive() { return m_transparency < 1.0f; }
 
-		icollider *getCollider() override { return NULL; }
+		icollider *getCollider() override { return nullptr; }
 
 		particletype *getParticleType() { return m_particleType; }
 

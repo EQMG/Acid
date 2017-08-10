@@ -37,7 +37,7 @@ namespace flounder
 
 	icollider *sphere::update(const vector3 &position, const vector3 &rotation, const float &scale, icollider *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new sphere();
 		}
@@ -52,7 +52,7 @@ namespace flounder
 
 	vector3 *sphere::resolveCollision(const icollider &other, const vector3 &positionDelta, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -121,7 +121,7 @@ namespace flounder
 
 	intersect *sphere::intersects(const ray &ray)
 	{
-		vector3 *L = vector3::subtract(*ray.m_origin, *m_position, NULL);
+		vector3 *L = vector3::subtract(*ray.m_origin, *m_position, nullptr);
 
 		float a = vector3::dot(*ray.m_currentRay, *ray.m_currentRay);
 		float b = 2.0f * (vector3::dot(*ray.m_currentRay, *L));

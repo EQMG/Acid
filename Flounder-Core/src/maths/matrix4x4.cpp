@@ -94,7 +94,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::add(const matrix4x4 &left, const matrix4x4 &right, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -120,7 +120,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::subtract(const matrix4x4 &left, const matrix4x4 &right, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -146,7 +146,7 @@ namespace flounder
 
 	vector4 *matrix4x4::multiply(const matrix4x4 &left, const vector4 &right, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -160,7 +160,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::multiply(const matrix4x4 &left, const matrix4x4 &right, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -203,7 +203,7 @@ namespace flounder
 
 	vector4 *matrix4x4::transform(const matrix4x4 &left, const vector4 &right, vector4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector4();
 		}
@@ -218,7 +218,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::scale(const matrix4x4 &left, const vector3 &right, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -240,7 +240,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::scale(const matrix4x4 &left, const vector4 &right, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -268,9 +268,9 @@ namespace flounder
 	{
 		float d = determinant(source);
 
-		if (d != NULL)
+		if (d != 0.0f)
 		{
-			if (destination == NULL)
+			if (destination == nullptr)
 			{
 				destination = new matrix4x4();
 			}
@@ -322,13 +322,13 @@ namespace flounder
 		}
 		else
 		{
-			return NULL;
+			return nullptr;
 		}
 	}
 
 	matrix4x4 *matrix4x4::negate(const matrix4x4 &source, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -354,7 +354,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::transpose(const matrix4x4 &source, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -397,7 +397,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::translate(const matrix4x4 &left, const vector2 &right, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -411,7 +411,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::translate(const matrix4x4 &left, const vector3 &right, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -425,7 +425,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::rotate(const matrix4x4 &source, const vector3 &axis, const float &angle, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -518,12 +518,12 @@ namespace flounder
 
 	vector3 *matrix4x4::rotate(const vector3 &source, const vector3 &rotation, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
 
-		matrix4x4 *matrix = matrix4x4::transformationMatrix(vector3(0.0f, 0.0f, 0.0f), rotation, vector3(1.0f, 1.0f, 1.0f), NULL);
+		matrix4x4 *matrix = matrix4x4::transformationMatrix(vector3(0.0f, 0.0f, 0.0f), rotation, vector3(1.0f, 1.0f, 1.0f), nullptr);
 		vector4 direction4 = vector4(source.m_x, source.m_y, source.m_z, 1.0f);
 		matrix4x4::transform(*matrix, direction4, &direction4);
 		delete matrix;
@@ -547,7 +547,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::transformationMatrix(const vector3 &translation, const vector3 &rotation, const vector3 &scale, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -577,7 +577,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::perspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -598,7 +598,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::orthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &near, const float &far, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -624,7 +624,7 @@ namespace flounder
 
 	matrix4x4 *matrix4x4::viewMatrix(const vector3 &position, const vector3 &rotation, matrix4x4 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix4x4();
 		}
@@ -648,7 +648,7 @@ namespace flounder
 
 	vector3 *matrix4x4::worldToScreenSpace(const vector3 &worldSpace, const matrix4x4 &viewMatrix, const matrix4x4 &projectionMatrix, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -665,7 +665,7 @@ namespace flounder
 
 	vector3 *matrix4x4::generateRandomUnitVectorWithinCone(const vector3 &coneDirection, const float &angle, vector3 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector3();
 		}
@@ -681,7 +681,7 @@ namespace flounder
 
 		if ((coneDirection.m_x != 0.0F) || (coneDirection.m_y != 0.0F) || ((coneDirection.m_z != 1.0f) && (coneDirection.m_z != -1.0f)))
 		{
-			vector3 *rotateAxis = vector3::cross(coneDirection, vector3(0.0f, 0.0f, 1.0f), NULL);
+			vector3 *rotateAxis = vector3::cross(coneDirection, vector3(0.0f, 0.0f, 1.0f), nullptr);
 			rotateAxis->normalize();
 			float rotateAngle = acos(vector3::dot(coneDirection, vector3(0.0f, 0.0f, 1.0f)));
 			matrix4x4 rotationMatrix = matrix4x4();
