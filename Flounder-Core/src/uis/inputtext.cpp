@@ -27,7 +27,7 @@ namespace flounder
 		m_selected = false;
 		m_mouseOver = false;
 
-		m_actionChange = NULL;
+		m_actionChange = nullptr;
 	}
 
 	inputtext::~inputtext()

@@ -38,7 +38,7 @@ namespace flounder
 
 	void processorgraphic::addRequestToQueue(irequest *request)
 	{
-		if (dynamic_cast<requestgraphic*>(request) == NULL)
+		if (dynamic_cast<requestgraphic*>(request) == nullptr)
 		{
 			return;
 		}

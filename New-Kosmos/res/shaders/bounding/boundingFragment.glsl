@@ -1,4 +1,4 @@
-#version
+#version 150 core
 
 //---------IN------------
 in vec4 pass_positionRelativeToCam;

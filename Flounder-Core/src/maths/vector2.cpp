@@ -37,7 +37,7 @@ namespace flounder
 
 	vector2 *vector2::add(const vector2 &left, const vector2 &right, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -47,7 +47,7 @@ namespace flounder
 
 	vector2 *vector2::subtract(const vector2 &left, const vector2 &right, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -57,7 +57,7 @@ namespace flounder
 
 	vector2 *vector2::multiply(const vector2 &left, const vector2 &right, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -67,7 +67,7 @@ namespace flounder
 
 	vector2 *vector2::divide(const vector2 &left, const vector2 &right, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -98,7 +98,7 @@ namespace flounder
 
 	vector2 *vector2::scale(const vector2 &source, const float &scalar, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -108,7 +108,7 @@ namespace flounder
 
 	vector2 *vector2::rotate(const vector2 &source, const float &angle, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -119,7 +119,7 @@ namespace flounder
 
 	vector2 *vector2::rotate(const vector2 &source, const float &angle, const vector2 &rotationAxis, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -130,7 +130,7 @@ namespace flounder
 
 	vector2 *vector2::negate(const vector2 &source, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -140,7 +140,7 @@ namespace flounder
 
 	vector2 *vector2::normalize(const vector2 &source, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -169,7 +169,7 @@ namespace flounder
 
 	vector2 *vector2::maxVector(const vector2 &a, const vector2 &b, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -179,7 +179,7 @@ namespace flounder
 
 	vector2 *vector2::minVector(const vector2 &a, const vector2 &b, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -211,7 +211,7 @@ namespace flounder
 
 	vector2 *vector2::getVectorDistance(const vector2 &point1, const vector2 &point2, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}

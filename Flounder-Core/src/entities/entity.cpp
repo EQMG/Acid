@@ -13,7 +13,7 @@ namespace flounder
 
 		m_removed = false;
 
-		if (m_structure != NULL)
+		if (m_structure != nullptr)
 		{
 			m_structure->add(this);
 		}
@@ -61,7 +61,7 @@ namespace flounder
 		{
 			if (*it == component)
 			{
-				component->setEntity(NULL);
+				component->setEntity(nullptr);
 				delete component;
 				m_components->erase(it);
 				return;
@@ -76,18 +76,18 @@ namespace flounder
 		{
 			t casted = dynamic_cast<t>(c);
 
-			if (casted != NULL)
+			if (casted != nullptr)
 			{
 				return casted;
 			}
 		}
 
-		return NULL;
+		return nullptr;
 	}
 
 	icollider *entity::getCollider()
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	void entity::remove()

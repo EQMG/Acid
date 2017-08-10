@@ -1,4 +1,4 @@
-#version
+#version 150 core
 
 //---------CONSTANT------------
 const float EXPOSURE = 1.3;

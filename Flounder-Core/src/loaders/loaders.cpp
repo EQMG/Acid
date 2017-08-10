@@ -45,7 +45,7 @@ namespace flounder
 		glGenBuffers(1, &result);
 
 		glBindBuffer(GL_ARRAY_BUFFER, result);
-		glBufferData(GL_ARRAY_BUFFER, floatCount * sizeof(GLfloat), (GLvoid*) NULL, GL_STREAM_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, floatCount * sizeof(GLfloat), (GLvoid*) nullptr, GL_STREAM_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		return result;
 #endif
@@ -55,7 +55,7 @@ namespace flounder
 	{
 #if 0
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
-		glBufferData(GL_ARRAY_BUFFER, floatCount * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, floatCount * sizeof(GLfloat), nullptr, GL_STREAM_DRAW);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, data.size() * sizeof(GLfloat), data.data());
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
@@ -85,7 +85,7 @@ namespace flounder
 
 		glBindBuffer(GL_ARRAY_BUFFER, result);
 		glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), GL_STATIC_DRAW);
-		glVertexAttribPointer(attributeNumber, coordSize, GL_FLOAT, GL_FALSE, 0, NULL);
+		glVertexAttribPointer(attributeNumber, coordSize, GL_FLOAT, GL_FALSE, 0, nullptr);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		return result;
 #endif

@@ -98,7 +98,7 @@ namespace flounder
 			int components = 0;
 			stbi_uc *data = stbi_load(m_customMouse.c_str(), &width, &height, &components, 4);
 
-			if (data == NULL)
+			if (data == nullptr)
 			{
 				std::cout << "Unable to load texture: " << m_customMouse << std::endl;
 			}

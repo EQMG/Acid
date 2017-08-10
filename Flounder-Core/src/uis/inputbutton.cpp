@@ -20,8 +20,8 @@ namespace flounder
 
 		m_mouseOver = false;
 
-		m_actionLeft = NULL;
-		m_actionRight = NULL;
+		m_actionLeft = nullptr;
+		m_actionRight = nullptr;
 	}
 
 	inputbutton::~inputbutton()

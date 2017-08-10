@@ -55,7 +55,7 @@ namespace flounder
 
 	matrix2x2 *matrix2x2::add(const matrix2x2 &left, const matrix2x2 &right, matrix2x2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix2x2();
 		}
@@ -69,7 +69,7 @@ namespace flounder
 
 	matrix2x2 *matrix2x2::subtract(const matrix2x2 &left, const matrix2x2 &right, matrix2x2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix2x2();
 		}
@@ -83,7 +83,7 @@ namespace flounder
 
 	matrix2x2 *matrix2x2::multiply(const matrix2x2 &left, const matrix2x2 &right, matrix2x2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix2x2();
 		}
@@ -102,7 +102,7 @@ namespace flounder
 
 	vector2 *matrix2x2::transform(const matrix2x2 &left, const vector2 &right, vector2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new vector2();
 		}
@@ -115,7 +115,7 @@ namespace flounder
 
 	matrix2x2 *matrix2x2::scale(const matrix2x2 &left, const vector2 &right, matrix2x2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix2x2();
 		}
@@ -133,7 +133,7 @@ namespace flounder
 
 		if (d != 0.0f)
 		{
-			if (destination == NULL)
+			if (destination == nullptr)
 			{
 				destination = new matrix2x2();
 			}
@@ -152,13 +152,13 @@ namespace flounder
 		}
 		else
 		{
-			return NULL;
+			return nullptr;
 		}
 	}
 
 	matrix2x2 *matrix2x2::negate(const matrix2x2 &source, matrix2x2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix2x2();
 		}
@@ -172,7 +172,7 @@ namespace flounder
 
 	matrix2x2 *matrix2x2::transpose(const matrix2x2 &source, matrix2x2 *destination)
 	{
-		if (destination == NULL)
+		if (destination == nullptr)
 		{
 			destination = new matrix2x2();
 		}

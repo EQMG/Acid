@@ -47,18 +47,18 @@ namespace flounder
 			m_transparency += 1.0f * framework::get()->getDelta();
 		}
 
-		if (!isAlive() || camera::get()->getCamera() == NULL)
+		if (!isAlive() || camera::get()->getCamera() == nullptr)
 		{
 			return;
 		}
 
-		vector3 *cameraToParticle = vector3::subtract(*camera::get()->getCamera()->getPosition(), *m_position, NULL);
+		vector3 *cameraToParticle = vector3::subtract(*camera::get()->getCamera()->getPosition(), *m_position, nullptr);
 		m_distanceToCamera = cameraToParticle->lengthSquared();
 		delete cameraToParticle;
 
 		float lifeFactor = m_elapsedTime / m_lifeLength;
 
-		if (m_particleType->getTexture() == NULL)
+		if (m_particleType->getTexture() == nullptr)
 		{
 			return;
 		}

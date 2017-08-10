@@ -24,7 +24,7 @@ namespace flounder
 		{
 			text *object = dynamic_cast<text*>(screenobject);
 
-			if (object != NULL)
+			if (object != nullptr)
 			{
 				renderText(object);
 			}

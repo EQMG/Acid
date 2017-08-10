@@ -5,8 +5,8 @@ namespace flounder
 	camera::camera() :
 		imodule()
 	{
-		m_camera = NULL;
-		m_player = NULL;
+		m_camera = nullptr;
+		m_player = nullptr;
 	}
 
 	camera::~camera()
@@ -17,12 +17,12 @@ namespace flounder
 
 	void camera::update()
 	{
-		if (m_player != NULL)
+		if (m_player != nullptr)
 		{
 			m_player->update();
 		}
 
-		if (m_camera != NULL)
+		if (m_camera != nullptr)
 		{
 			m_camera->update(*m_player);
 		}

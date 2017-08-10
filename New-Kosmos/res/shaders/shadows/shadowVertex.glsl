@@ -1,4 +1,4 @@
-#version
+#version 150 core
 
 //---------IN------------
 layout(location = 0) in vec3 in_position;

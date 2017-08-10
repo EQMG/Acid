@@ -84,7 +84,7 @@ namespace flounder
 			}
 		}
 
-		m_model = model::newModel()->setDirectly(NULL, vertices, NULL, NULL, NULL)->create();
+		m_model = model::newModel()->setDirectly(nullptr, vertices, nullptr, nullptr, nullptr)->create();
 
 		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;

@@ -11,7 +11,7 @@ namespace flounder
 		m_textureIndex = NO_INDEX;
 		m_normalIndex = NO_INDEX;
 
-		m_duplicateVertex = NULL;
+		m_duplicateVertex = nullptr;
 
 		m_index = index;
 		m_length = position.length();

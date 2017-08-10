@@ -83,7 +83,7 @@ namespace flounder
 	{
 		character *c = loadCharacter();
 
-		if (c != NULL)
+		if (c != nullptr)
 		{
 			m_metadata->insert(std::pair<int, character*>(c->getId(), c));
 		}
@@ -96,7 +96,7 @@ namespace flounder
 		if (id == SPACE_ASCII)
 		{
 			m_spaceWidth = (getValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
-			return NULL;
+			return nullptr;
 		}
 
 		double xTextureCoord = (static_cast<double>(getValueOfVariable("x")) + (m_padding.at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
@@ -149,6 +149,6 @@ namespace flounder
 			return it->second;
 		}
 
-		return NULL;
+		return nullptr;
 	}
 }

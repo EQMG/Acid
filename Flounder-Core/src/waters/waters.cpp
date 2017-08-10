@@ -5,7 +5,7 @@ namespace flounder
 	waters::waters() :
 		imodule()
 	{
-		m_water = NULL;
+		m_water = nullptr;
 		m_colourIntensity = 0.7f; 
 		m_enableReflections = false;
 		m_reflectionQuality = 0.6f;
@@ -19,7 +19,7 @@ namespace flounder
 
 	void waters::update()
 	{
-		if (m_water != NULL)
+		if (m_water != nullptr)
 		{
 			m_water->update();
 		}
