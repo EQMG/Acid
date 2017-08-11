@@ -13,6 +13,8 @@ namespace flounder
 		m_isAlphaBlending = false;
 		m_additiveBlending = false;
 		m_antialiasing = false;
+
+		createGraphicsPipeline();
 	}
 
 	renderer::~renderer()
@@ -269,5 +271,9 @@ namespace flounder
 #if 0
 		glDrawArraysInstanced(glMode, 0, glLength, glPrimCount);
 #endif
+	}
+
+	void renderer::createGraphicsPipeline()
+	{
 	}
 }

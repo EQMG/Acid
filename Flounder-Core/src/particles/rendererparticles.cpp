@@ -9,8 +9,8 @@ namespace flounder
 		irenderer()
 	{
 		m_shader = new shader("particles", 2, 
-			shadertype(VERTEX, "res/shaders/particles/particleVertex.glsl", FILE),
-			shadertype(FRAGMENT, "res/shaders/particles/particleFragment.glsl", FILE)
+			shadertype{ VERTEX, "res/shaders/particles/particle.vert.spv" },
+			shadertype{ FRAGMENT, "res/shaders/particles/particle.frag.spv" }
 		);
 		std::vector<float> positions = { -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f };
 		m_vaoID = loaders::get()->createVAO();

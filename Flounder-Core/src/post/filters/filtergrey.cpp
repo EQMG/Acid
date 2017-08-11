@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filtergrey::filtergrey() :
-		ipostfilter("filterGrey", "res/shaders/filters/greyFragment.glsl")
+		ipostfilter("filterGrey", "res/shaders/filters/grey.frag.spv")
 	{
 	}
 

@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filterblurhorizontal::filterblurhorizontal(const float &sizeScalar) :
-		ipostfilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontalFragment.glsl", new fbo(true, sizeScalar))
+		ipostfilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontal.frag.spv", new fbo(true, sizeScalar))
 	{
 		m_widthValue = static_cast<int>(display::get()->getWidth() * sizeScalar);
 		m_scaleValue = 2.0f;
@@ -12,7 +12,7 @@ namespace flounder
 	}
 
 	filterblurhorizontal::filterblurhorizontal(const int &width, const int &height) :
-		ipostfilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontalFragment.glsl", new fbo(width, height))
+		ipostfilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontal.frag.spv", new fbo(width, height))
 	{
 		m_widthValue = width;
 		m_scaleValue = 2.0f;

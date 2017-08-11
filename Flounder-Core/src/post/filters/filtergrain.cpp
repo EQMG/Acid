@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filtergrain::filtergrain(const float &strength) :
-		ipostfilter("filterGrain", "res/shaders/filters/grainFragment.glsl")
+		ipostfilter("filterGrain", "res/shaders/filters/grain.frag.spv")
 	{
 		m_strength = strength;
 	}

@@ -8,8 +8,8 @@ namespace flounder
 		m_fbo = new fbo(shadows::get()->getShadowSize(), shadows::get()->getShadowSize(), TEXTURE, false);
 
 		m_shader = new shader("shadows", 2,
-			shadertype(VERTEX, "res/shaders/shadows/shadowVertex.glsl", FILE),
-			shadertype(FRAGMENT, "res/shaders/shadows/shadowFragment.glsl", FILE)
+			shadertype{ VERTEX, "res/shaders/shadows/shadow.vert.spv" },
+			shadertype{ FRAGMENT, "res/shaders/shadows/shadow.frag.spv" }
 		);
 	}
 

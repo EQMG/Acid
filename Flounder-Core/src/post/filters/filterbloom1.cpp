@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filterbloom1::filterbloom1() :
-		ipostfilter("filterBloom1", "res/shaders/filters/bloom1Fragment.glsl")
+		ipostfilter("filterBloom1", "res/shaders/filters/bloom1.frag.spv")
 	{
 	}
 

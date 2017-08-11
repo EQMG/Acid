@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filtercrt::filtercrt(const colour &screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
-		ipostfilter("filterCrt", "res/shaders/filters/crtFragment.glsl")
+		ipostfilter("filterCrt", "res/shaders/filters/crt.frag.spv")
 	{
 		m_screenColour = new colour(screenColour);
 		m_curveAmountX = curveAmountX;
