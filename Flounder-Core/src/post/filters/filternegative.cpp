@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filternegative::filternegative() :
-		ipostfilter("filterNegative", "res/shaders/filters/negativeFragment.glsl")
+		ipostfilter("filterNegative", "res/shaders/filters/negative.frag.spv")
 	{
 	}
 

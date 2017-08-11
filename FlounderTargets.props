@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties">
+  <ItemType Name="Flounder" DisplayName="GLSL Validator" />
+  <ContentType Name="Flounder" DisplayName="GLSL Validator" ItemType="Flounder" />
+
+  <!-- Note: The FileExtension lines below cause Visual Studio to 
+  	do build time GLSL Validation on any shader files you add
+	to your project.
+
+	If you'd prefer to set this manually on a per-file basis,
+	you may want to comment out the lines below.
+	
+	To manually set up a file for build time
+	GLSL validation, right click on it in the Solution explorer,
+	go to properties, General category (on the left), and
+	select GLSL Validator from the Item Type dropdown.
+  -->
+  <FileExtension Name="*.frag" ContentType="Flounder" />
+  <FileExtension Name="*.vert" ContentType="Flounder" />
+  <FileExtension Name="*.geom" ContentType="Flounder" />
+  <FileExtension Name="*.comp" ContentType="Flounder" />
+  <FileExtension Name="*.tese" ContentType="Flounder" />
+  <FileExtension Name="*.tesc" ContentType="Flounder" />
+</ProjectSchemaDefinitions>

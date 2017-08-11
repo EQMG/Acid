@@ -6,8 +6,8 @@ namespace flounder
 		irenderer()
 	{
 		m_shader = new shader("skyboxes", 2,
-			shadertype(VERTEX, "res/shaders/skyboxes/skyboxVertex.glsl", FILE),
-			shadertype(FRAGMENT, "res/shaders/skyboxes/skyboxFragment.glsl", FILE)
+			shadertype{ VERTEX, "res/shaders/skyboxes/skybox.vert.spv" },
+			shadertype{ FRAGMENT, "res/shaders/skyboxes/skybox.frag.spv" }
 		);
 	}
 

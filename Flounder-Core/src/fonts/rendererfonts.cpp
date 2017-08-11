@@ -6,8 +6,8 @@ namespace flounder
 		irenderer()
 	{
 		m_shader = new shader("fonts", 2,
-			shadertype(VERTEX, "res/shaders/fonts/fontVertex.glsl", FILE),
-			shadertype(FRAGMENT, "res/shaders/fonts/fontFragment.glsl", FILE)
+			shadertype{ VERTEX, "res/shaders/fonts/font.vert.spv" },
+			shadertype{ FRAGMENT, "res/shaders/fonts/font.frag.spv" }
 		);
 	}
 

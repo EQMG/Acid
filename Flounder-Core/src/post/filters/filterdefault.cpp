@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filterdefault::filterdefault() :
-		ipostfilter("filterDefault", "res/shaders/filters/defaultFragment.glsl", nullptr)
+		ipostfilter("filterDefault", "res/shaders/filters/default.frag.spv", nullptr)
 	{
 	}
 
