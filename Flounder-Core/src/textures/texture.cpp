@@ -35,17 +35,8 @@ namespace flounder
 		return this;
 	}
 
-	texture::builder *texture::builder::clampToBorder(colour *border)
-	{
-		m_texture->m_border->set(*border);
-		m_texture->m_clampToBorder = true;
-		m_texture->m_clampEdges = false;
-		return this;
-	}
-
 	texture::builder *texture::builder::clampEdges()
 	{
-		m_texture->m_clampToBorder = false;
 		m_texture->m_clampEdges = true;
 		return this;
 	}
@@ -79,12 +70,12 @@ namespace flounder
 	{
 		if (m_texture->m_cubemapCount != 0)
 		{
-			m_texture->m_textureType = typeTextureCubeMap;
+			m_texture->m_imageType = VK_IMAGE_TYPE_2D;
 			m_texture->loadFromCubemap(m_texture->m_cubemapCount, m_texture->m_cubemap);
 		}
 		else if (!m_texture->m_file.empty())
 		{
-			m_texture->m_textureType = typeTexture2D;
+			m_texture->m_imageType = VK_IMAGE_TYPE_2D;
 			m_texture->loadFromTexture(m_texture->m_file);
 		}
 		else
@@ -105,38 +96,40 @@ namespace flounder
 		m_cubemapCount = 0;
 
 		m_hasAlpha = false;
-		m_border = new colour();
-		m_clampToBorder = false;
 		m_clampEdges = false;
 		m_mipmap = true;
 		m_anisotropic = true;
 		m_nearest = false;
 		m_numberOfRows = 1;
 
-		m_textureType = typeTexture2D;
+		m_stagingBuffer = VK_NULL_HANDLE;
+		m_stagingMemory = VK_NULL_HANDLE;
+
+		m_image = VK_NULL_HANDLE;
+		m_imageMemory = VK_NULL_HANDLE;
+		m_imageView = VK_NULL_HANDLE;
+		m_format = VK_FORMAT_R8G8B8A8_UNORM;
+		m_sampler = VK_NULL_HANDLE;
+		m_imageType = VK_IMAGE_TYPE_2D;
+		m_mipLevels = 1;
+		m_arrayLayers = 1;
+		m_components = 0;
 		m_width = 0;
 		m_height = 0;
-		m_sampler = VK_NULL_HANDLE;
-		m_image = VK_NULL_HANDLE;
-		m_imageLayout = {};
-		m_deviceMemory = VK_NULL_HANDLE;
-		m_view = VK_NULL_HANDLE;
-		m_mipLevels = 1;
+		m_depth = 1;
 	}
 
 	texture::~texture()
 	{
-	/*	vkDestroyImageView(display::get()->getVkDevice(), m_view, nullptr);
+	/*	vkDestroyBuffer(display::get()->getVkDevice(), m_stagingBuffer, nullptr);
+		vkFreeMemory(display::get()->getVkDevice(), m_stagingMemory, nullptr);
+
 		vkDestroyImage(display::get()->getVkDevice(), m_image, nullptr);
-		vkDestroySampler(display::get()->getVkDevice(), m_sampler, nullptr);
-		vkFreeMemory(display::get()->getVkDevice(), m_deviceMemory, nullptr);*/
-#if 0
-		glDeleteTextures(1, &m_texture.m_textureID);
-#endif
+		vkFreeMemory(display::get()->getVkDevice(), m_imageMemory, nullptr);
+		vkDestroyImageView(display::get()->getVkDevice(), m_imageView, nullptr);
+		vkDestroySampler(display::get()->getVkDevice(), m_sampler, nullptr);*/
 
 		delete m_builder;
-
-		delete m_border;
 	}
 
 	texture::builder *texture::newTexture()
@@ -146,57 +139,157 @@ namespace flounder
 
 	void texture::loadFromTexture(const std::string &file)
 	{
-		int numComponents = 0;
-		stbi_uc *data = stbi_load(file.c_str(), &m_width, &m_height, &numComponents, 4);
+		/*if (stbi_info(file.c_str(), &m_width, &m_height, &m_components) == 0)
+		{
+			assert(0 && "Vulkan invalid texture file format.");
+		}
 
-		if (data == nullptr)
+		stbi_uc *stbidata = stbi_load(file.c_str(), &m_width, &m_height, &m_components, 0);
+
+		if (stbidata == nullptr)
 		{
 			std::cout << "Unable to load texture: " << file << std::endl;
 		}
 
-		if (m_mipmap)
+		switch (m_components) {
+		case 1: 
+			m_format = VK_FORMAT_R32_SFLOAT; 
+			break;
+		case 2: 
+			m_format = VK_FORMAT_R32G32_SFLOAT; 
+			break;
+		case 3: 
+			m_format = VK_FORMAT_R32G32B32_SFLOAT; 
+			break;
+		case 4: 
+			m_format = VK_FORMAT_R32G32B32A32_SFLOAT; 
+			break;
+		default:
+			assert(0 && "Vulkan texture components not between 1-4.");
+		}
+
+		float *pixels = new float[m_width * m_height * m_components];
+		
+		for (int i = 0; i < m_width * m_height * m_components; i++)
 		{
-			// Setup buffer copy regions for each mip level
-			std::vector<VkBufferImageCopy> bufferCopyRegions;
-			uint32_t offset = 0;
+			float f = static_cast<float>(stbidata[i]) / static_cast<float>(static_cast<unsigned char>(-1));
+			pixels[i] = f;
+		}
 
-			for (uint32_t i = 0; i < m_mipLevels; i++)
+		stbi_image_free(stbidata);
+
+		VkBufferCreateInfo bufferCreateInfo = {};
+		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		bufferCreateInfo.size = m_width * m_height * m_components * sizeof(float);
+		bufferCreateInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+		display::vkErrorCheck(vkCreateBuffer(display::get()->getVkDevice(), &bufferCreateInfo, nullptr, &m_stagingBuffer));
+
+		VkMemoryRequirements memoryRequirements = {};
+		vkGetBufferMemoryRequirements(display::get()->getVkDevice(), m_stagingBuffer, &memoryRequirements);
+
+		VkMemoryAllocateInfo memoryAllocateInfo = {};
+		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		memoryAllocateInfo.pNext = NULL;
+		memoryAllocateInfo.allocationSize = memoryRequirements.size;
+		memoryAllocateInfo.memoryTypeIndex = 0;
+
+		display::vkErrorCheck(vkAllocateMemory(display::get()->getVkDevice(), &memoryAllocateInfo, nullptr, &m_stagingMemory));
+
+		display::vkErrorCheck(vkBindBufferMemory(display::get()->getVkDevice(), m_stagingBuffer, m_stagingMemory, 0));
+
+		uint8_t *data;
+		display::vkErrorCheck(vkMapMemory(display::get()->getVkDevice(), m_stagingMemory, 0, memoryRequirements.size, 0, (void**)&data));
+		memcpy(data, pixels, bufferCreateInfo.size);
+		vkUnmapMemory(display::get()->getVkDevice(), m_stagingMemory);
+
+		VkImageCreateInfo imageCreateInfo = {};
+		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+		imageCreateInfo.flags = 0;
+		imageCreateInfo.imageType = m_imageType;
+		imageCreateInfo.format = m_format;
+		imageCreateInfo.extent.width = m_width;
+		imageCreateInfo.extent.height = m_height;
+		imageCreateInfo.extent.depth = m_depth;
+		imageCreateInfo.mipLevels = m_mipLevels;
+		imageCreateInfo.arrayLayers = m_arrayLayers;
+		imageCreateInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+		imageCreateInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+		imageCreateInfo.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_PREINITIALIZED;
+
+		display::vkErrorCheck(vkCreateImage(display::get()->getVkDevice(), &imageCreateInfo, nullptr, &m_image));
+
+		VkMemoryRequirements memReq = {};
+		vkGetImageMemoryRequirements(display::get()->getVkDevice(), m_image, &memReq);
+
+		uint32_t memoryType = 0;
+		VkPhysicalDeviceMemoryProperties memProperties = {};
+		vkGetPhysicalDeviceMemoryProperties(display::get()->getVkPhysicalDevice(), &memProperties);
+
+		for (uint32_t i = 0; i < memProperties.memoryTypeCount; ++i)
+		{
+			if ((memReq.memoryTypeBits & (1 << i)) && ((memProperties.memoryTypes[i].propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) == VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT))
 			{
-				VkBufferImageCopy bufferCopyRegion = {};
-				bufferCopyRegion.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-				bufferCopyRegion.imageSubresource.mipLevel = i;
-				bufferCopyRegion.imageSubresource.baseArrayLayer = 0;
-				bufferCopyRegion.imageSubresource.layerCount = 1;
-				bufferCopyRegion.imageExtent.width = m_width;
-				bufferCopyRegion.imageExtent.height = m_height;
-				bufferCopyRegion.imageExtent.depth = 1;
-				bufferCopyRegion.bufferOffset = offset;
-
-				bufferCopyRegions.push_back(bufferCopyRegion);
-
-			//	offset += static_cast<uint32_t>(tex2D[i].size());
-			}
-
-			if (m_anisotropic)
-			{
+				memoryType = i;
 			}
 		}
-		else if (m_nearest)
+
+		VkMemoryAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		allocInfo.allocationSize = memReq.size;
+		allocInfo.memoryTypeIndex = memoryType;
+
+		display::vkErrorCheck(vkAllocateMemory(display::get()->getVkDevice(), &allocInfo, nullptr, &m_imageMemory));
+
+		vkBindImageMemory(display::get()->getVkDevice(), m_image, m_imageMemory, 0);
+
+		VkImageViewCreateInfo viewInfo = {};
+		viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		viewInfo.image = m_image;
+		viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		viewInfo.format = m_format;
+		viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		viewInfo.subresourceRange.baseMipLevel = 0;
+		viewInfo.subresourceRange.levelCount = m_mipLevels;
+		viewInfo.subresourceRange.baseArrayLayer = 0;
+		viewInfo.subresourceRange.layerCount = 1;
+		viewInfo.components = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
+
+		display::vkErrorCheck(vkCreateImageView(display::get()->getVkDevice(), &viewInfo, nullptr, &m_imageView));
+
+		VkSamplerCreateInfo samplerInfo = {};
+		samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
+		samplerInfo.minFilter = VK_FILTER_LINEAR;
+		samplerInfo.magFilter = VK_FILTER_LINEAR;
+		samplerInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
+		samplerInfo.unnormalizedCoordinates = VK_FALSE;
+		samplerInfo.compareEnable = VK_FALSE;
+		samplerInfo.compareOp = VK_COMPARE_OP_ALWAYS;
+		samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+		samplerInfo.mipLodBias = 0.0f;
+		samplerInfo.minLod = 0.0f;
+		samplerInfo.maxLod = 0.0f;
+
+		if (display::get()->getVkProperties().limits.maxSamplerAnisotropy < 0.1f)
 		{
+			samplerInfo.anisotropyEnable = VK_FALSE;
 		}
 		else
 		{
+			samplerInfo.anisotropyEnable = VK_TRUE;
+			samplerInfo.maxAnisotropy = 1.0f;
+		//	samplerInfo.maxAnisotropy = display::get()->getVkProperties().limits.maxSamplerAnisotropy;
 		}
 
-		if (m_clampEdges)
-		{
-		}
-		else if (m_clampToBorder)
-		{
-		}
-		else
-		{
-		}
+		display::vkErrorCheck(vkCreateSampler(display::get()->getVkDevice(), &samplerInfo, nullptr, &m_sampler));
+
+		delete[] pixels;*/
 #if 0
 		glGenTextures(1, &m_texture.m_textureID);
 		glBindTexture(GL_TEXTURE_2D, m_texture.m_textureID);
@@ -232,14 +325,6 @@ namespace flounder
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		}
-		else if (m_clampToBorder)
-		{
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-			GLfloat *buffer = new GLfloat[4]{m_border->m_r, m_border->m_g, m_border->m_b, m_border->m_a};
-			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, buffer);
-			delete[] buffer;
 		}
 		else
 		{

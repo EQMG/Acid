@@ -26,6 +26,9 @@ namespace flounder
 		alGenSources(1, &m_source);
 		alSourcei(m_source, AL_BUFFER, m_buffer);
 
+		std::cout << "m_buffer: " << m_buffer << std::endl;
+		std::cout << "m_source: " << m_source << std::endl;
+
 		delete[] sourceInfo.data;
 	}
 

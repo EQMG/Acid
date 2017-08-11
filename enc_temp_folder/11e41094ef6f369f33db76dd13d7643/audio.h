@@ -8,6 +8,7 @@
 
 #include <al/al.h>
 #include <al/alc.h>
+#define _DEBUG true
 
 #include "../camera/camera.h"
 #include "../framework/framework.h"
