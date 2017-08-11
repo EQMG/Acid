@@ -7,6 +7,9 @@ namespace flounder
 	enum programtype
 	{
 		VERTEX, 
+		TESSELLATION_CONTROL,
+		TESSELLATION_EVALUATION,
+		GEOMETRY,
 		FRAGMENT
 	};
 

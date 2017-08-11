@@ -12,7 +12,7 @@ managerrender::managerrender()
 	m_rendererGuis = new rendererguis();
 	m_rendererFonts = new rendererfonts();
 
-	m_fboRenderer = fbo::newFBO()->fitToScreen(1.0f)->attachments(3)->withAlphaChannel(false)->depthBuffer(TEXTURE)->create();
+	m_fboRenderer = new fbo(true, 1.0f, TEXTURE, false);
 	m_rendererDeferred = new rendererdeferred();
 	m_filterFxaa = new filterfxaa();
 	m_filterLensFlare = new filterlensflare();

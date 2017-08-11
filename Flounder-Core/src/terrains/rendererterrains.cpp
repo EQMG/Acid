@@ -5,10 +5,10 @@ namespace flounder
 	rendererterrains::rendererterrains() :
 		irenderer()
 	{
-		m_shader = shader::newShader()->addName("terrains")
-			->addType(shadertype(VERTEX, "res/shaders/terrains/terrainVertex.glsl", loadtype::FILE))
-			->addType(shadertype(FRAGMENT, "res/shaders/terrains/terrainFragment.glsl", loadtype::FILE))
-			->create();
+		m_shader = new shader("terrains", 2,
+			shadertype(VERTEX, "res/shaders/terrains/terrainVertex.glsl", FILE),
+			shadertype(FRAGMENT, "res/shaders/terrains/terrainFragment.glsl", FILE)
+		);
 	}
 
 	rendererterrains::~rendererterrains()

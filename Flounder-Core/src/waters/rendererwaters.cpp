@@ -5,13 +5,13 @@ namespace flounder
 	rendererwaters::rendererwaters() :
 		irenderer()
 	{
-		m_fboReflection = fbo::newFBO()->fitToScreen(waters::get()->getReflectionQuality())->attachments(3)->withAlphaChannel(true)->depthBuffer(TEXTURE)->create();
-		m_rendererDeferred = new rendererdeferred(fbo::newFBO()->fitToScreen(1.0f)->disableTextureWrap()->create());
+		m_fboReflection = new fbo(true, waters::get()->getReflectionQuality(), TEXTURE, true, 3);
+		m_rendererDeferred = new rendererdeferred();
 
-		m_shader = shader::newShader()->addName("waters")
-			->addType(shadertype(VERTEX, "res/shaders/waters/waterVertex.glsl", loadtype::FILE))
-			->addType(shadertype(FRAGMENT, "res/shaders/waters/waterFragment.glsl", loadtype::FILE))
-			->create();
+		m_shader = new shader("waters", 2, 
+			shadertype(VERTEX, "res/shaders/waters/waterVertex.glsl", FILE),
+			shadertype(FRAGMENT, "res/shaders/waters/waterFragment.glsl", FILE)
+		);
 	}
 
 	rendererwaters::~rendererwaters()

@@ -100,7 +100,7 @@ namespace flounder
 		m_text->setInScreenCoords(true);
 		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f));
 
-		m_background = new gui(this, position, vector2(), texture::newTexture()->setFile("res/guis/buttonText.png")->create(), 1);
+		m_background = new gui(this, position, vector2(), new texture("res/guis/buttonText.png"), 1);
 		m_background->setInScreenCoords(true);
 		m_background->setColourOffset(colour());
 
