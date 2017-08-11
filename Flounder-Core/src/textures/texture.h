@@ -17,89 +17,17 @@ namespace flounder
 	/// </summary>
 	class texture
 	{
-		/// <summary>
-		/// A builder used to set texture parameters for loading.
-		/// </summary>
-		class builder
-		{
-		private:
-			texture *m_texture;
-		public:
-			/// <summary>
-			/// Creates a new texture builder.
-			/// </summary>
-			builder();
-
-			/// <summary>
-			/// Deconstructor for the texture builder.
-			/// </summary>
-			~builder();
-
-			/// <summary>
-			/// Sets the textures source file.
-			/// </summary>
-			/// <param name="file"> The source file. </param>
-			/// <returns> This. </returns>
-			builder *setFile(const std::string &file);
-
-			/// <summary>
-			/// Sets the cubemap source files.
-			/// </summary>
-			/// <param name="n_args"> The number of cubemap files being loaded. </param>
-			/// <param name="..."> The source cubemap files. </param>
-			/// <returns> This. </returns>
-			builder *setCubemap(const int n_args, ...);
-
-			/// <summary>
-			/// Clamps the texture to the edges.
-			/// </summary>
-			/// <returns> This. </returns>
-			builder *clampEdges();
-
-			/// <summary>
-			/// Selects nearest filtering.
-			/// </summary>
-			/// <returns> This. </returns>
-			builder *nearestFiltering();
-
-			/// <summary>
-			/// Disables mipmapping.
-			/// </summary>
-			/// <returns> This. </returns>
-			builder *noMipmap();
-
-			/// <summary>
-			/// Disables anisotropic filtering.
-			/// </summary>
-			/// <returns> This. </returns>
-			builder *noFiltering();
-
-			/// <summary>
-			/// Sets the starting number of texture rows (default = 1).
-			/// </summary>
-			/// <param name="numberOfRows"> The new number of rows. </param>
-			/// <returns> This. </returns>
-			builder *setNumberOfRows(const int &numberOfRows);
-
-			/// <summary>
-			/// Creates a texture from the builder.
-			/// </summary>
-			/// <returns> The created texture. </returns>
-			texture *create();
-		};
-	protected:
-		builder *m_builder;
-
+	private:
 		std::string m_file;
-		std::string *m_cubemap;
 		int m_cubemapCount;
+		std::string *m_cubemap;
 
 		bool m_hasAlpha;
 		bool m_clampEdges;
-		bool m_mipmap;
+		int32_t m_mipLevels;
 		bool m_anisotropic;
 		bool m_nearest;
-		int m_numberOfRows;
+		int32_t m_numberOfRows;
 
 		VkBuffer m_stagingBuffer;
 		VkDeviceMemory m_stagingMemory;
@@ -110,27 +38,31 @@ namespace flounder
 		VkSampler m_sampler;
 		VkImageType m_imageType;
 
-		int32_t m_mipLevels;
-		int32_t m_arrayLayers;
 		int32_t m_components;
 		int32_t m_width, m_height, m_depth;
-
+	public:
 		/// <summary>
 		/// A new OpenGL texture object.
 		/// </summary>
-		/// <param name="builder"> The texture builder. </param>
-		texture(builder *builder);
-	public:
+		/// <param name="file"> The textures file. </param>
+		texture(std::string file, const bool &hasAlpha = false,
+			const bool &clampEdges = false,
+			const int32_t &mipLevels = 1,
+			const bool &anisotropic = true,
+			const bool &nearest = false,
+			const int32_t &numberOfRows = 1);
+
+		/// <summary>
+		/// A new OpenGL cubemap texture object.
+		/// </summary>
+		/// <param name="n_args"> The number of cubemap files. </param>
+		/// <param name="..."> The list of cubemap texture paths. </param>
+		texture(const int n_args, ...);
+
 		/// <summary>
 		/// Deconstructor for the texture object.
 		/// </summary>
 		~texture();
-
-		/// <summary>
-		/// Creates a new texture builder that is used to configure a texture.
-		/// </summary>
-		/// <returns> The texture builder. </returns>
-		static builder *newTexture();
 
 		/// <summary>
 		/// Gets if the texture has alpha.
@@ -148,13 +80,13 @@ namespace flounder
 		/// Gets the number of texture rows.
 		/// </summary>
 		/// <returns> The number of texture rows. </returns>
-		inline int getNumberOfRows() const { return m_numberOfRows; }
+		inline int32_t getNumberOfRows() const { return m_numberOfRows; }
 
 		/// <summary>
 		/// Sets the number of texture rows.
 		/// </summary>
 		/// <param name="numberOfRows"> The number of texture rows. </param>
-		inline void setNumberOfRows(const int &numberOfRows) { m_numberOfRows = numberOfRows; }
+		inline void setNumberOfRows(const int32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
 
 		/// <summary>
 		/// The textures type.
@@ -165,13 +97,11 @@ namespace flounder
 		/// <summary>
 		/// Loads the texture object from a texture file.
 		/// </summary>
-		/// <param name="file"> The file to load from. </param>
-		void loadFromTexture(const std::string &file);
+		void loadFromTexture();
 
 		/// <summary>
 		/// Loads the texture object from a cubemap texture files.
 		/// </summary>
-		/// <param name="cubemap"> The cubemap files to load from. </param>
-		void loadFromCubemap(const int count, std::string *cubemap);
+		void loadFromCubemap();
 	};
 }

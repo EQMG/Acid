@@ -14,9 +14,6 @@ instance::instance()
 		object->loop();
 		object->setGain(0.1f);
 	}*/
-	sound *soundTest = new sound("music", "res/ld39Outpost.wav");
-	soundTest->setGain(1.0f);
-	soundTest->loop();
 
 	/*std::vector<particletype*> *types = new std::vector<particletype*>();
 	types->push_back(new particletype("blue", texture::newTexture()->setFile("res/particles/blueParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));

@@ -4,7 +4,7 @@ namespace flounder
 {
 	fonttype::fonttype(const std::string &textureFile, const std::string &fontFile)
 	{
-		m_texture = texture::newTexture()->setFile(textureFile)->create();
+		m_texture = new texture(textureFile);
 		m_metadata = new metafile(fontFile);
 	}
 

@@ -7,10 +7,10 @@ namespace flounder
 	{
 		setInScreenCoords(false);
 
-		m_guiBackground = new gui(this, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), texture::newTexture()->setFile("res/guis/eg_background.png")->create(), 1);
+		m_guiBackground = new gui(this, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), new texture("res/guis/eg_background.png"), 1);
 		m_guiBackground->setInScreenCoords(true);
 
-		m_guiLogo = new gui(this, vector2(0.5f, 0.5f), vector2(0.4f, 0.4f), texture::newTexture()->setFile("res/guis/equilibrium_games.png")->create(), 1);
+		m_guiLogo = new gui(this, vector2(0.5f, 0.5f), vector2(0.4f, 0.4f), new texture("res/guis/equilibrium_games.png"), 1);
 		m_guiLogo->setInScreenCoords(true);
 
 		m_textCopyright = new text(this, vector2(0.5f, 0.82f), "Copyright (C) 2017, Equilibrium Games - All Rights Reserved. This product uses GLFW, GLEW, and STB Image.", 1.5f, uis::get()->cafeFrancoise, 0.5f, CENTRE);

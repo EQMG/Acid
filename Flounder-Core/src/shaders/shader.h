@@ -25,71 +25,26 @@ namespace flounder
 	/// </summary>
 	class shader
 	{
-		/// <summary>
-		/// A builder used to set shader parameters for loading.
-		/// </summary>
-		class builder
-		{
-		private:
-			shader *m_shader;
-		public:
-			/// <summary>
-			/// Creates a new shader builder.
-			/// </summary>
-			/// <param name="name"> The name. </param>
-			builder();
-
-			/// <summary>
-			/// Deconstructor for the shader builder.
-			/// </summary>
-			~builder();
-
-			/// <summary>
-			/// Sets the name of the shader.
-			/// </summary>
-			/// <param name="name"> The shaders name. </param>
-			/// <returns> This. </returns>
-			builder *addName(const std::string &name);
-
-			/// <summary>
-			/// Adds a new shader type to the load pool.
-			/// </summary>
-			/// <param name="type"> The shader type to add. </param>
-			/// <returns> This. </returns>
-			builder *addType(const shadertype &type);
-
-			/// <summary>
-			/// Creates a shader from the builder.
-			/// </summary>
-			/// <returns> The created shader. </returns>
-			shader *create();
-		};
-	protected:
-		builder *m_builder;
-
+	private:
 		std::string m_name;
 		std::vector<shadertype> *m_shaderTypes;
 		std::vector<std::string> *m_layoutLocations;
 		std::vector<std::string> *m_layoutBindings;
 		std::vector<std::pair<std::string, std::string>> *m_constants;
 		std::vector<std::string> *m_uniforms;
-
+	public:
 		/// <summary>
 		/// Creates a new shader.
 		/// </summary>
-		/// <param name="builder"> The shaders builder. </param>
-		shader(builder *builder);
-	public:
+		/// <param name="name"> The shaders name. </param>
+		/// <param name="n_args"> The number of shader types. </param>
+		/// <param name="..."> The list of shader types. </param>
+		shader(const std::string &name, const int n_args, ...);
+
 		/// <summary>
 		/// Deconstructor for the shader.
 		/// </summary>
 		~shader();
-
-		/// <summary>
-		/// Creates a new shader builder that is used to configure a shader.
-		/// </summary>
-		/// <returns> The shader builder. </returns>
-		static builder *newShader();
 
 		/// <summary>
 		/// Gets the loaded name for the shader.
@@ -239,6 +194,11 @@ namespace flounder
 		/// <param name="value"> The value to load into the uniform. </param>
 		void loadUniform4f(const std::string &name, const colour &value);
 	private:
+		/// <summary>
+		/// Creates the shader.
+		/// </summary>
+		void create();
+
 		/// <summary>
 		/// Loads all of the types provided.
 		/// </summary>

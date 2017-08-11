@@ -2,59 +2,15 @@
 
 namespace flounder
 {
-	model::builder::builder()
+	model::model(const std::string &file)
 	{
-		m_model = new model(this);
-	}
+		m_file = file;
 
-	model::builder::~builder()
-	{
-	}
-
-	model::builder *model::builder::setFile(const std::string &file)
-	{
-		m_model->m_file = file;
-		return this;
-	}
-
-	model::builder *model::builder::setDirectly(std::vector<int> *indices, std::vector<float> *vertices, std::vector<float> *textures, std::vector<float> *normals, std::vector<float> *tangents)
-	{
-		m_model->m_indices = indices;
-		m_model->m_vertices = vertices;
-		m_model->m_textures = textures;
-		m_model->m_normals = normals;
-		m_model->m_tangents = tangents;
-		return this;
-	}
-
-	flounder::model *model::builder::create()
-	{
-		// If the file is set load from the file, otherwise there should be a directly set set-of values.
-		if (!m_model->m_file.empty())
-		{
-			m_model->loadFromFile(m_model->m_file);
-		}
-
-		// Loads the model to OpenGL.
-		m_model->loadToOpenGL();
-
-		// Creates the models boundings.
-		m_model->createAABB();
-
-		return m_model;
-	}
-
-	model::model(builder *builder)
-	{
-		m_builder = builder;
-
-		m_file = "";
-
+		m_indices = nullptr;
 		m_vertices = nullptr;
 		m_textures = nullptr;
 		m_normals = nullptr;
 		m_tangents = nullptr;
-		m_indices = nullptr;
 
 		m_aabb = nullptr;
 
@@ -62,6 +18,28 @@ namespace flounder
 		m_vaoID = 0;
 		m_vaoLength = 0;
 #endif
+
+		loadFromFile();
+	}
+
+	model::model(std::vector<int> *indices, std::vector<float> *vertices, std::vector<float> *textures, std::vector<float> *normals, std::vector<float> *tangents)
+	{
+		m_file = "";
+
+		m_indices = indices;
+		m_vertices = vertices;
+		m_textures = textures;
+		m_normals = normals;
+		m_tangents = tangents;
+
+		m_aabb = nullptr;
+
+#if 0
+		m_vaoID = 0;
+		m_vaoLength = 0;
+#endif
+
+		loadToOpenGL();
 	}
 
 	model::~model()
@@ -69,8 +47,6 @@ namespace flounder
 #if 0
 		glDeleteVertexArrays(1, &m_vaoID);
 #endif
-
-		delete m_builder;
 
 		/*delete m_vertices;
 		delete m_textures;
@@ -81,14 +57,9 @@ namespace flounder
 		delete m_aabb;
 	}
 
-	model::builder *model::newModel()
+	void model::loadFromFile()
 	{
-		return new builder();
-	}
-
-	void model::loadFromFile(const std::string &file)
-	{
-		std::string fileLoaded = helperfile::readFile(file);
+		std::string fileLoaded = helperfile::readFile(m_file);
 		std::vector<std::string> lines = helperstring::split(fileLoaded, "\n");
 
 		std::vector<int> indices = std::vector<int>();
@@ -132,7 +103,7 @@ namespace flounder
 					// The split length of 3 faced + 1 for the f prefix.
 					if (split.size() != 4 || helperstring::contains(line, "//"))
 					{
-						std::cout << "Error reading the OBJ " << file << ", it does not appear to be UV mapped! The model will not be loaded." << std::endl;
+						std::cout << "Error reading the OBJ " << m_file << ", it does not appear to be UV mapped! The model will not be loaded." << std::endl;
 						//throw ex
 					}
 
@@ -147,7 +118,7 @@ namespace flounder
 				}
 				else
 				{
-					std::cout << "OBJ " << file + " unknown line: " << line << std::endl;
+					std::cout << "OBJ " << m_file + " unknown line: " << line << std::endl;
 				}
 			}
 		}

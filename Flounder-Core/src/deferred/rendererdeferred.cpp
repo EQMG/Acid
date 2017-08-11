@@ -4,15 +4,15 @@ namespace flounder
 {
 	rendererdeferred::rendererdeferred(fbo *fbo)
 	{
-		m_shader = shader::newShader()->addName("rendererdeferred")
-			->addType(shadertype(VERTEX, "res/shaders/deferred/deferredVertex.glsl", loadtype::FILE))
-			->addType(shadertype(FRAGMENT, "res/shaders/deferred/deferredFragment.glsl", loadtype::FILE))->create();
-		m_fbo = fbo;
-		m_model = model::newModel()->setFile("res/models/filter.obj")->create();
+		m_shader = new shader("deferred", 2,
+			shadertype(VERTEX, "res/shaders/deferred/deferredVertex.glsl", FILE),
+			shadertype(FRAGMENT, "res/shaders/deferred/deferredFragment.glsl", FILE)
+		);
+		m_model = new model("res/models/filter.obj");
 	}
 
 	rendererdeferred::rendererdeferred() :
-		rendererdeferred(fbo::newFBO()->fitToScreen(1.0f)->create())
+		rendererdeferred(new fbo(true, 1.0f))
 	{
 	}
 

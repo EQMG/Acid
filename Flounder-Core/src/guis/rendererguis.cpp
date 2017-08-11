@@ -5,19 +5,12 @@ namespace flounder
 	rendererguis::rendererguis() :
 		irenderer()
 	{
-#ifdef FLOUNDER_API_WEB
-		m_shader = shader::newShader()->addName("guis")
-			->addType(shadertype(VERTEX, "res/shaders/guis/guiVertex.web.glsl", loadtype::FILE))
-			->addType(shadertype(FRAGMENT, "res/shaders/guis/guiFragment.web.glsl", loadtype::FILE))
-			->create();
-#else
-		m_shader = shader::newShader()->addName("guis")
-			->addType(shadertype(VERTEX, "res/shaders/guis/guiVertex.glsl", loadtype::FILE))
-			->addType(shadertype(FRAGMENT, "res/shaders/guis/guiFragment.glsl", loadtype::FILE))
-			->create();
-#endif
+		m_shader = new shader("guis", 2,
+			shadertype(VERTEX, "res/shaders/guis/guiVertex.glsl", FILE),
+			shadertype(FRAGMENT, "res/shaders/guis/guiFragment.glsl", FILE)
+		);
 		std::vector<float> *vertices = new std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f };
-		m_model = model::newModel()->setDirectly(nullptr, vertices, nullptr, nullptr, nullptr)->create();
+		m_model = new model(nullptr, vertices, nullptr, nullptr, nullptr);
 		delete vertices;
 	}
 
