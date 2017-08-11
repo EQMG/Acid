@@ -1,9 +1,2 @@
-﻿  display.cpp
-src\devices\display.cpp(304): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-src\devices\display.cpp(312): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-src\devices\display.cpp(371): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-  fbo.cpp
-  texture.cpp
-src\textures\texture.cpp(163): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+﻿  audio.cpp
   Flounder-Core.vcxproj -> C:\Users\mattp\Documents\Flounder\Flounder-Core\.bin\Debug x64\Flounder Core.lib

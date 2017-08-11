@@ -8,7 +8,7 @@
 #include "../devices/display.h"
 #include "../maths/colour.h"
 
-#include "stb_image.h"
+#include "../stb/stb_image.h"
 
 namespace flounder
 {
@@ -51,13 +51,6 @@ namespace flounder
 			builder *setCubemap(const int n_args, ...);
 
 			/// <summary>
-			/// Clamps the texture to a coloured border.
-			/// </summary>
-			/// <param name="border"> The coloured border. </param>
-			/// <returns> This. </returns>
-			builder *clampToBorder(colour *border);
-
-			/// <summary>
 			/// Clamps the texture to the edges.
 			/// </summary>
 			/// <returns> This. </returns>
@@ -94,12 +87,6 @@ namespace flounder
 			/// <returns> The created texture. </returns>
 			texture *create();
 		};
-	public:
-		enum typetexture 
-		{
-			typeTexture2D, typeTextureCubeMap
-		};
-
 	protected:
 		builder *m_builder;
 
@@ -108,22 +95,25 @@ namespace flounder
 		int m_cubemapCount;
 
 		bool m_hasAlpha;
-		colour *m_border;
-		bool m_clampToBorder;
 		bool m_clampEdges;
 		bool m_mipmap;
 		bool m_anisotropic;
 		bool m_nearest;
 		int m_numberOfRows;
 
-		typetexture m_textureType;
-		int32_t m_width, m_height;
-		VkSampler m_sampler;
+		VkBuffer m_stagingBuffer;
+		VkDeviceMemory m_stagingMemory;
 		VkImage m_image;
-		VkImageLayout m_imageLayout;
-		VkDeviceMemory m_deviceMemory;
-		VkImageView m_view;
+		VkDeviceMemory m_imageMemory;
+		VkImageView m_imageView;
+		VkFormat m_format;
+		VkSampler m_sampler;
+		VkImageType m_imageType;
+
 		int32_t m_mipLevels;
+		int32_t m_arrayLayers;
+		int32_t m_components;
+		int32_t m_width, m_height, m_depth;
 
 		/// <summary>
 		/// A new OpenGL texture object.
@@ -170,7 +160,7 @@ namespace flounder
 		/// The textures type.
 		/// </summary>
 		/// <returns> The textures type. </returns>
-		inline typetexture getTextureType() const { return m_textureType; }
+		inline VkImageType getTextureType() const { return m_imageType; }
 	private:
 		/// <summary>
 		/// Loads the texture object from a texture file.
