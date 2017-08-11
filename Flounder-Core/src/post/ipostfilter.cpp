@@ -5,8 +5,8 @@ namespace flounder
 	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader, fbo *fbo)
 	{
 		m_shader = new shader(filterName, 2,
-			shadertype(VERTEX, "res/shaders/filters/defaultVertex.glsl", FILE),
-			shadertype(FRAGMENT, fragmentShader, FILE)
+			shadertype{ VERTEX, "res/shaders/filters/default.vert.spv" },
+			shadertype{ FRAGMENT, fragmentShader }
 		);
 		m_fbo = fbo;
 		m_model = new model("res/models/filter.obj");
@@ -15,8 +15,8 @@ namespace flounder
 	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader)
 	{
 		m_shader = new shader(filterName, 2,
-			shadertype(VERTEX, "res/shaders/filters/defaultVertex.glsl", FILE),
-			shadertype(FRAGMENT, fragmentShader, FILE)
+			shadertype{ VERTEX, "res/shaders/filters/default.vert.spv" },
+			shadertype{ FRAGMENT, fragmentShader }
 		);
 		m_fbo = new fbo(true, 1.0f);
 		m_model = new model("res/models/filter.obj");

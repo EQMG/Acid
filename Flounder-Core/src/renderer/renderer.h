@@ -199,5 +199,7 @@ namespace flounder
 		/// <param name="glLength"> The length of the model. </param>
 		/// <param name="glPrimCount"> How many primitives rendered. </param>
 		void renderInstanced(const int &glMode, const int &glLength, const int &glPrimCount);
+	private:
+		void createGraphicsPipeline();
 	};
 }

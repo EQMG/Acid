@@ -5,8 +5,8 @@ namespace flounder
 	rendererdeferred::rendererdeferred(fbo *fbo)
 	{
 		m_shader = new shader("deferred", 2,
-			shadertype(VERTEX, "res/shaders/deferred/deferredVertex.glsl", FILE),
-			shadertype(FRAGMENT, "res/shaders/deferred/deferredFragment.glsl", FILE)
+			shadertype{ VERTEX, "res/shaders/deferred/deferred.vert.spv" },
+			shadertype{ FRAGMENT, "res/shaders/deferred/deferred.frag.spv" }
 		);
 		m_model = new model("res/models/filter.obj");
 	}

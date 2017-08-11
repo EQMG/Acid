@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filtersepia::filtersepia() :
-		ipostfilter("filterSepia", "res/shaders/filters/sepiaFragment.glsl")
+		ipostfilter("filterSepia", "res/shaders/filters/sepia.frag.spv")
 	{
 	}
 

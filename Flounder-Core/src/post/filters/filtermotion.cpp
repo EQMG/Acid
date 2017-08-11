@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filtermotion::filtermotion() :
-		ipostfilter("filterMotion", "res/shaders/filters/motionFragment.glsl")
+		ipostfilter("filterMotion", "res/shaders/filters/motion.frag.spv")
 	{
 		m_lastViewMatrix = new matrix4x4();
 	}
