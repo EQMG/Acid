@@ -1,8 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
+#include <stdlib.h>
 #include <vector>
 #include <map>
+
+#include <al/al.h>
+#include <al/alc.h>
 
 #include "../camera/camera.h"
 #include "../framework/framework.h"
@@ -13,6 +18,17 @@
 
 namespace flounder
 {
+	typedef struct SoundSourceInfo {
+		unsigned int size;
+		unsigned char *data;
+		short formatTag;
+		short channels;
+		int samplesPerSec;
+		int averageBytesPerSec;
+		short blockAlign;
+		short bitsPerSample;
+	} SoundSourceInfo;
+
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.
 	/// </summary>
@@ -21,6 +37,9 @@ namespace flounder
 	{
 	private:
 		friend class sound;
+
+		ALCdevice* m_device;
+		ALCcontext* m_context;
 
 		static std::vector<sound*> m_sounds;
 	public:
@@ -44,6 +63,8 @@ namespace flounder
 		~audio();
 
 		void update() override;
+
+		static SoundSourceInfo loadWaveFile(const std::string path);
 
 		static sound *add(sound *object);
 

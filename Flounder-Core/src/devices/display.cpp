@@ -171,11 +171,11 @@ namespace flounder
 
 		m_instance = VK_NULL_HANDLE;
 		m_physicalDevice = VK_NULL_HANDLE;
-		m_gpuProperties = {};
+		m_physicalDeviceProperties = {};
 		m_instanceLayerList = std::vector<const char*>();
 		m_instanceExtensionList = std::vector<const char*>();
 		m_deviceExtensionList = std::vector<const char*>();
-		m_debugReport = {};
+		m_debugReport = VK_NULL_HANDLE;
 		m_device = VK_NULL_HANDLE;
 
 		// Set the error error callback
@@ -280,21 +280,21 @@ namespace flounder
 
 		m_instanceExtensionList.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
 
-		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo{};
+		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = {};
 		debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
 		debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT;
 		debugCallBackCreateInfo.pfnCallback = vkCallbackDebug;
 
 		// Sets up the instance.
-		VkApplicationInfo applicationInfo{};
+		VkApplicationInfo applicationInfo = {};
 		applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 		applicationInfo.pApplicationName = m_title.c_str();
-		applicationInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+		applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
 		applicationInfo.pEngineName = "Flounder";
-		applicationInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 1, 0);
 		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 0);
 
-		VkInstanceCreateInfo instanceCreateInfo{};
+		VkInstanceCreateInfo instanceCreateInfo = {};
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		instanceCreateInfo.pNext = &debugCallBackCreateInfo;
 		instanceCreateInfo.pApplicationInfo = &applicationInfo;
@@ -326,7 +326,7 @@ namespace flounder
 		std::vector<VkPhysicalDevice> gpuList(gpuCount);
 		vkEnumeratePhysicalDevices(m_instance, &gpuCount, gpuList.data());
 		m_physicalDevice = gpuList[0];
-		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_gpuProperties);
+		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
 
 		// Gets the families from the GPU,
 		uint32_t familyCount = 0;
@@ -353,15 +353,15 @@ namespace flounder
 
 		// Gets the GPU family queue.
 		float quePriorities[]{ 1.0f };
-		VkDeviceQueueCreateInfo deviceQueueInfo{};
+		VkDeviceQueueCreateInfo deviceQueueInfo = {};
 		deviceQueueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		deviceQueueInfo.queueFamilyIndex = graphicsFamilyIndex;
 		deviceQueueInfo.queueCount = 1;
 		deviceQueueInfo.pQueuePriorities = quePriorities;
 
-		VkPhysicalDeviceFeatures deviceFeatures{};
+		VkPhysicalDeviceFeatures deviceFeatures = {};
 
-		VkDeviceCreateInfo deviceCreateInfo{};
+		VkDeviceCreateInfo deviceCreateInfo = {};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 		deviceCreateInfo.queueCreateInfoCount = 1;
 		deviceCreateInfo.pQueueCreateInfos = &deviceQueueInfo;

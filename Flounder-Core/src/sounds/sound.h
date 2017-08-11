@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 
+#include <al/al.h>
+#include <al/alc.h>
+
 #include "../devices/display.h"
 #include "../helpers/helperstring.h"
 

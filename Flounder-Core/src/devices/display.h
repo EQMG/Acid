@@ -7,8 +7,9 @@
 
 #include <vulkan/vulkan.h>
 #include <glfw/glfw3.h>
+
 #include "../framework/framework.h"
-#include "../textures/stb_image.h"
+#include "../stb/stb_image.h"
 
 namespace flounder
 {
@@ -45,7 +46,7 @@ namespace flounder
 
 		VkInstance m_instance;
 		VkPhysicalDevice m_physicalDevice;
-		VkPhysicalDeviceProperties m_gpuProperties;
+		VkPhysicalDeviceProperties m_physicalDeviceProperties;
 		std::vector<const char*> m_instanceLayerList;
 		std::vector<const char*> m_instanceExtensionList;
 		std::vector<const char*> m_deviceExtensionList;
@@ -71,7 +72,7 @@ namespace flounder
 		
 		void fvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks* pAllocator);
 	public:
-		static void vkErrorCheck(VkResult result);
+		inline static void vkErrorCheck(VkResult result);
 
 		/// <summary>
 		/// Gets this framework instance.
@@ -261,6 +262,8 @@ namespace flounder
 		/// </summary>
 		/// <returns> The current Vulkan physical device (gpu). </returns>
 		inline VkPhysicalDevice getVkPhysicalDevice() const { return m_physicalDevice; }
+
+		inline VkPhysicalDeviceProperties getVkProperties() const { return m_physicalDeviceProperties; }
 
 		/// <summary>
 		/// Gets the current Vulkan device.

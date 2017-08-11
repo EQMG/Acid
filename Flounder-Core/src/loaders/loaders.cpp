@@ -20,6 +20,13 @@ namespace flounder
 
 	int loaders::createVAO()
 	{
+		/*VkCommandPoolCreateInfo poolCreateInfo{};
+		poolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+		poolCreateInfo.flags = ;
+		poolCreateInfo.queueFamilyIndex = ;
+
+		vkCreateCommandPool(display::get()->getVkDevice(), &poolCreateInfo);*/
+
 		return 0;
 #if 0
 		GLuint result;
