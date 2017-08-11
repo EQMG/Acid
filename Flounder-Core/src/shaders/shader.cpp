@@ -2,62 +2,24 @@
 
 namespace flounder
 {
-	shader::builder::builder()
+	shader::shader(const std::string &name, const int n_args, ...)
 	{
-		m_shader = new shader(this);
-	}
-
-	shader::builder::~builder()
-	{
-	}
-
-	shader::builder *shader::builder::addName(const std::string &name)
-	{
-		m_shader->m_name = name;
-		return this;
-	}
-
-	shader::builder *shader::builder::addType(const shadertype &type)
-	{
-		m_shader->m_shaderTypes->push_back(type);
-		return this;
-	}
-
-	flounder::shader *shader::builder::create()
-	{
-		return 0;
-
-#if 0
-		// Creates the shader and loads it to the GPU.
-		m_shader->m_programID = glCreateProgram();
-		m_shader->loadTypes();
-
-		m_shader->loadLocations();
-
-		glLinkProgram(m_shader->m_programID);
-		glValidateProgram(m_shader->m_programID);
-		m_shader->deleteTypes();
-
-		glUseProgram(m_shader->m_programID);
-		m_shader->loadBindings();
-
-		glUseProgram(0);
-
-		return m_shader;
-#endif
-	}
-
-	shader::shader(builder *builder)
-	{
-		m_builder = builder;
-
-		m_name = "";
+		m_name = name;
 		m_shaderTypes = new std::vector<shadertype>();
 		m_layoutLocations = new std::vector<std::string>();
 		m_layoutBindings = new std::vector<std::string>();
 		m_constants = new std::vector<std::pair<std::string, std::string>>();
 		m_uniforms = new std::vector<std::string>();
 
+		va_list ap;
+		va_start(ap, n_args);
+
+		for (int i = 0; i < n_args; i++)
+		{
+			m_shaderTypes->push_back(va_arg(ap, shadertype));
+		}
+
+		va_end(ap);
 #if 0
 		m_programID = nullptr;
 #endif
@@ -65,8 +27,6 @@ namespace flounder
 
 	shader::~shader()
 	{
-		delete m_builder;
-
 		delete m_shaderTypes;
 		delete m_layoutLocations;
 		delete m_layoutBindings;
@@ -77,11 +37,6 @@ namespace flounder
 		glUseProgram(0);
 		glDeleteProgram(m_programID);
 #endif
-	}
-
-	shader::builder *shader::newShader()
-	{
-		return new builder();
 	}
 
 	void shader::start()
@@ -213,6 +168,28 @@ namespace flounder
 	void shader::loadUniform4f(const std::string &name, const colour &value)
 	{
 		loadUniform4f(name, value.m_r, value.m_g, value.m_b, value.m_a);
+	}
+
+	void shader::create()
+	{
+#if 0
+		// Creates the shader and loads it to the GPU.
+		m_shader->m_programID = glCreateProgram();
+		m_shader->loadTypes();
+
+		m_shader->loadLocations();
+
+		glLinkProgram(m_shader->m_programID);
+		glValidateProgram(m_shader->m_programID);
+		m_shader->deleteTypes();
+
+		glUseProgram(m_shader->m_programID);
+		m_shader->loadBindings();
+
+		glUseProgram(0);
+
+		return m_shader;
+#endif
 	}
 
 	void shader::loadTypes()
