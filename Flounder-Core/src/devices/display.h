@@ -6,6 +6,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <algorithm>
 
 #include <vulkan/vulkan.h>
 #include <glfw/glfw3.h>
@@ -15,6 +16,24 @@
 
 namespace flounder
 {
+	struct VkQueueFamilyIndices
+	{
+		int graphicsFamily = -1;
+		int presentFamily = -1;
+
+		bool isComplete()
+		{
+			return graphicsFamily >= 0 && presentFamily >= 0;
+		}
+	};
+
+	struct VkSwapChainSupportDetails
+	{
+		VkSurfaceCapabilitiesKHR capabilities;
+		std::vector<VkSurfaceFormatKHR> formats;
+		std::vector<VkPresentModeKHR> presentModes;
+	};
+	
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
@@ -22,24 +41,6 @@ namespace flounder
 		public imodule
 	{
 	private:
-		struct VkQueueFamilyIndices
-		{
-			int graphicsFamily = -1;
-			int presentFamily = -1;
-
-			bool isComplete()
-			{
-				return graphicsFamily >= 0 && presentFamily >= 0;
-			}
-		};
-
-		struct VkSwapChainSupportDetails 
-		{
-			VkSurfaceCapabilitiesKHR capabilities;
-			std::vector<VkSurfaceFormatKHR> formats;
-			std::vector<VkPresentModeKHR> presentModes;
-		};
-
 		static const std::vector<const char*> VALIDATION_LAYERS;
 
 		int m_windowWidth;
@@ -72,8 +73,15 @@ namespace flounder
 		std::vector<const char*> m_instanceExtensionList;
 		std::vector<const char*> m_deviceExtensionList;
 		VkDebugReportCallbackEXT m_debugReport;
-		VkQueueFamilyIndices m_queueIndices;
 		VkDevice m_device;
+
+		VkQueue m_graphicsQueue;
+		VkQueue m_presentQueue;
+
+		VkSwapchainKHR m_swapChain;
+		std::vector<VkImage> m_swapChainImages;
+		VkFormat m_swapChainImageFormat;
+		VkExtent2D m_swapChainExtent;
 
 		friend void callbackError(int error, const char *description);
 		
@@ -293,12 +301,40 @@ namespace flounder
 
 		inline VkPhysicalDeviceProperties getVkProperties() const { return m_physicalDeviceProperties; }
 
-		inline VkQueueFamilyIndices getVkQueueIndices() const { return m_queueIndices; }
-
 		/// <summary>
 		/// Gets the current Vulkan device.
 		/// </summary>
 		/// <returns> The current Vulkan device. </returns>
 		inline VkDevice getVkDevice() const { return m_device; }
+	private:
+		void createWindow();
+
+		void setupLayers();
+
+		void setupExtensions();
+
+		void createInstance();
+
+		void setupDebugCallback();
+
+		void createSurface();
+
+		void pickPhysicalDevice();
+
+		void createLogicalDevice();
+
+		void createSwapChain();
+
+		bool isDeviceSuitable(VkPhysicalDevice device);
+
+		VkQueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+
+		VkSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+
+		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+
+		VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes);
+
+		VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
 	};
 }
