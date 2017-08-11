@@ -63,6 +63,7 @@
     <ClInclude Include="src\skyboxes\skybox.h" />
     <ClInclude Include="src\skyboxes\skyboxes.h" />
     <ClInclude Include="src\sounds\sound.h" />
+    <ClInclude Include="src\stb\stb_image.h" />
     <ClInclude Include="src\terrains\biome.h" />
     <ClInclude Include="src\terrains\rendererterrains.h" />
     <ClInclude Include="src\terrains\terrain.h" />
@@ -158,7 +159,6 @@
     <ClInclude Include="src\standards\istandard.h" />
     <ClInclude Include="src\standards\standards.h" />
     <ClInclude Include="src\tasks\tasks.h" />
-    <ClInclude Include="src\textures\stb_image.h" />
     <ClInclude Include="src\textures\texture.h" />
     <ClInclude Include="src\visual\driverbounce.h" />
     <ClInclude Include="src\visual\driverconstant.h" />
@@ -217,6 +217,7 @@
     <ClCompile Include="src\skyboxes\skybox.cpp" />
     <ClCompile Include="src\skyboxes\skyboxes.cpp" />
     <ClCompile Include="src\sounds\sound.cpp" />
+    <ClCompile Include="src\stb\stb_image.cpp" />
     <ClCompile Include="src\terrains\rendererterrains.cpp" />
     <ClCompile Include="src\terrains\terrain.cpp" />
     <ClCompile Include="src\terrains\terrains.cpp" />
@@ -289,7 +290,6 @@
     <ClCompile Include="src\space\structurebasic.cpp" />
     <ClCompile Include="src\standards\standards.cpp" />
     <ClCompile Include="src\tasks\tasks.cpp" />
-    <ClCompile Include="src\textures\stb_image.cpp" />
     <ClCompile Include="src\textures\texture.cpp" />
     <ClCompile Include="src\visual\driverbounce.cpp" />
     <ClCompile Include="src\visual\driverconstant.cpp" />
@@ -357,7 +357,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -381,7 +381,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
