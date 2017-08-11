@@ -6,8 +6,8 @@ namespace flounder
 		irenderer()
 	{
 		m_shader = new shader("guis", 2,
-			shadertype(VERTEX, "res/shaders/guis/guiVertex.glsl", FILE),
-			shadertype(FRAGMENT, "res/shaders/guis/guiFragment.glsl", FILE)
+			shadertype{ VERTEX, "res/shaders/guis/gui.vert.spv" },
+			shadertype{ FRAGMENT, "res/shaders/guis/gui.frag.spv" }
 		);
 		std::vector<float> *vertices = new std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f };
 		m_model = new model(nullptr, vertices, nullptr, nullptr, nullptr);

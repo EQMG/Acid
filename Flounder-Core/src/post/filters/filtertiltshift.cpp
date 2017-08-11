@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filtertiltshift::filtertiltshift(const float &blurAmount, const float &centre, const float &stepSize, const float &steps) :
-		ipostfilter("filterTiltshift", "res/shaders/filters/tiltshiftFragment.glsl")
+		ipostfilter("filterTiltshift", "res/shaders/filters/tiltshift.frag.spv")
 	{
 		m_blurAmount = blurAmount;
 		m_centre = centre;

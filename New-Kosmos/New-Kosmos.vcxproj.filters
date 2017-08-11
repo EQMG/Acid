@@ -20,4 +20,51 @@
     <ClInclude Include="src\uis\overlaymanager.h" />
     <ClInclude Include="src\entities\entitytest.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\tests\test.frag" />
+    <None Include="res\shaders\tests\test.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Flounder Include="res\shaders\bounding\bounding.frag" />
+    <Flounder Include="res\shaders\bounding\bounding.vert" />
+    <Flounder Include="res\shaders\deferred\deferred.frag" />
+    <Flounder Include="res\shaders\deferred\deferred.vert" />
+    <Flounder Include="res\shaders\entities\entity.frag" />
+    <Flounder Include="res\shaders\entities\entity.vert" />
+    <Flounder Include="res\shaders\filters\bloom1.frag" />
+    <Flounder Include="res\shaders\filters\bloom2.frag" />
+    <Flounder Include="res\shaders\filters\blurhorizontal.frag" />
+    <Flounder Include="res\shaders\filters\blurvertical.frag" />
+    <Flounder Include="res\shaders\filters\combine.frag" />
+    <Flounder Include="res\shaders\filters\crt.frag" />
+    <Flounder Include="res\shaders\filters\darken.frag" />
+    <Flounder Include="res\shaders\filters\default.frag" />
+    <Flounder Include="res\shaders\filters\default.vert" />
+    <Flounder Include="res\shaders\filters\emboss.frag" />
+    <Flounder Include="res\shaders\filters\fxaa.frag" />
+    <Flounder Include="res\shaders\filters\grain.frag" />
+    <Flounder Include="res\shaders\filters\grey.frag" />
+    <Flounder Include="res\shaders\filters\lensflare.frag" />
+    <Flounder Include="res\shaders\filters\motion.frag" />
+    <Flounder Include="res\shaders\filters\negative.frag" />
+    <Flounder Include="res\shaders\filters\pixel.frag" />
+    <Flounder Include="res\shaders\filters\sepia.frag" />
+    <Flounder Include="res\shaders\filters\tiltshift.frag" />
+    <Flounder Include="res\shaders\filters\tone.frag" />
+    <Flounder Include="res\shaders\filters\wobble.frag" />
+    <Flounder Include="res\shaders\fonts\font.frag" />
+    <Flounder Include="res\shaders\fonts\font.vert" />
+    <Flounder Include="res\shaders\guis\gui.frag" />
+    <Flounder Include="res\shaders\guis\gui.vert" />
+    <Flounder Include="res\shaders\particles\particle.frag" />
+    <Flounder Include="res\shaders\particles\particle.vert" />
+    <Flounder Include="res\shaders\shadows\shadow.frag" />
+    <Flounder Include="res\shaders\shadows\shadow.vert" />
+    <Flounder Include="res\shaders\skyboxes\skybox.frag" />
+    <Flounder Include="res\shaders\skyboxes\skybox.vert" />
+    <Flounder Include="res\shaders\terrains\terrain.frag" />
+    <Flounder Include="res\shaders\terrains\terrain.vert" />
+    <Flounder Include="res\shaders\waters\water.frag" />
+    <Flounder Include="res\shaders\waters\water.vert" />
+  </ItemGroup>
 </Project>

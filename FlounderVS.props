@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)/FlounderTargets.props" />
+    <AvailableItemName Include="Flounder">
+      <Targets>Flounder</Targets>
+    </AvailableItemName>
+  </ItemGroup>
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <GLSLVALIDATOREXE>C:/VulkanSDK/1.0.54.0/Bin32/glslangValidator.exe</GLSLVALIDATOREXE>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="GLSLVALIDATOREXE">
+      <Value>$(GLSLVALIDATOREXE)</Value>
+    </BuildMacro>
+  </ItemGroup>
+  <Target Name="Flounder" Inputs="@(Flounder)" BeforeTargets="ClCompile" Outputs="@(Flounder->'$(IntermediateOutputPath)\%(Filename)%(Extension).timestamp')">
+    <Message Text="$(GLSLVALIDATOREXE) &quot;%(Flounder.FullPath)&quot;" Importance="high" />
+    <Exec Command="$(GLSLVALIDATOREXE) &quot;%(Flounder.FullPath)&quot; &amp;&amp; echo 1 &gt; &quot;$(IntermediateOutputPath)\%(Filename)%(Extension).timestamp&quot;" />
+  </Target>
+</Project>

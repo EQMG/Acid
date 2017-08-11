@@ -6,8 +6,8 @@ namespace flounder
 		irenderer()
 	{
 		m_shader = new shader("terrains", 2,
-			shadertype(VERTEX, "res/shaders/terrains/terrainVertex.glsl", FILE),
-			shadertype(FRAGMENT, "res/shaders/terrains/terrainFragment.glsl", FILE)
+			shadertype{ VERTEX, "res/shaders/terrains/terrain.vert.spv" },
+			shadertype{ FRAGMENT, "res/shaders/terrains/terrain.frag.spv" }
 		);
 	}
 

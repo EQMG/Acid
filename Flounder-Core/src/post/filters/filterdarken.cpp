@@ -3,7 +3,7 @@
 namespace flounder
 {
 	filterdarken::filterdarken(const float &factorValue) :
-		ipostfilter("filterDarken", "res/shaders/filters/darkenFragment.glsl")
+		ipostfilter("filterDarken", "res/shaders/filters/darken.frag.spv")
 	{
 		m_factorValue = factorValue;
 	}
