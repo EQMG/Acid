@@ -5,10 +5,10 @@ namespace flounder
 	rendererfonts::rendererfonts() :
 		irenderer()
 	{
-		m_shader = shader::newShader()->addName("fonts")
-			->addType(shadertype(VERTEX, "res/shaders/fonts/fontVertex.glsl", loadtype::FILE))
-			->addType(shadertype(FRAGMENT, "res/shaders/fonts/fontFragment.glsl", loadtype::FILE))
-			->create();
+		m_shader = new shader("fonts", 2,
+			shadertype(VERTEX, "res/shaders/fonts/fontVertex.glsl", FILE),
+			shadertype(FRAGMENT, "res/shaders/fonts/fontFragment.glsl", FILE)
+		);
 	}
 
 	rendererfonts::~rendererfonts()

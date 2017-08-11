@@ -95,7 +95,7 @@ namespace flounder
 			}
 		}
 
-		m_model = model::newModel()->setDirectly(indices, vertices, nullptr, normals, colours)->create();
+		m_model = new model(indices, vertices, nullptr, normals, colours);
 
 		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
 		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;

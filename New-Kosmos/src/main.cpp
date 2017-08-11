@@ -35,10 +35,8 @@ int main()
 	standards::get()->addStandard(new instance());
 
 	skyboxes::get()->setSkybox(new skybox(
-		texture::newTexture()
-			->setCubemap(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png")
-			->create(),
-		model::newModel()->setFile("res/skybox/skyboxSphere.obj")->create(),
+		new texture(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png"),
+		new model("res/skybox/skyboxSphere.obj"),
 		2048.0f
 	));
 	waters::get()->setWater(new water(

@@ -16,114 +16,22 @@ namespace flounder
 	/// </summary>
 	class fbo
 	{
-		/// <summary>
-		/// A builder used to set fbo parameters for loading.
-		/// </summary>
-		class builder
-		{
-		private:
-			fbo *m_fbo;
-		public:
-			/// <summary>
-			/// Creates a new fbo builder.
-			/// </summary>
-			builder();
-
-			/// <summary>
-			/// Deconstructor for the fbo builder.
-			/// </summary>
-			~builder();
-
-			/// <summary>
-			/// Sets the size of the fbo.
-			/// </summary>
-			/// <param name="width"> The fbos's initial width. </param>
-			/// <param name="height"> The fbos's initial height. </param>
-			/// <returns> This. </returns>
-			builder *setSize(const int &width, const int &height);
-
-			/// <summary>
-			/// Sets the type of depth buffer to use.
-			/// </summary>
-			/// <param name="type"> The depth buffer to use. </param>
-			/// <returns> This. </returns>
-			builder *depthBuffer(const depthbuffer &type);
-
-			/// <summary>
-			/// Disables the colour buffer.
-			/// </summary>
-			/// <returns> This. </returns>
-			builder *noColourBuffer();
-
-			/// <summary>
-			/// Sets the texture to not use linear filtering.
-			/// </summary>
-			/// <returns> This. </returns>
-			builder *nearestFiltering();
-
-			/// <summary>
-			/// Sets if the textures will even be bothered with wrapping.
-			/// </summary>
-			/// <returns> This. </returns>
-			builder *disableTextureWrap();
-
-			/// <summary>
-			/// Sets the texture to repeat.
-			/// </summary>
-			/// <returns> This. </returns>
-			builder *repeatTexture();
-
-			/// <summary>
-			/// Enables / disables the alpha channel.
-			/// </summary>
-			/// <param name="alpha"> If the alpha channel will be enabled. </param>
-			/// <returns> This. </returns>
-			builder *withAlphaChannel(const bool &alpha);
-
-			/// <summary>
-			/// Sets antialiased to true and adds samples.
-			/// </summary>
-			/// <param name="samples"> How many MFAA samples should be used on the FBO. Zero disables multisampling. </param>
-			/// <returns> This. </returns>
-			builder *antialias(const int &samples);
-
-			/// <summary>
-			/// Sets the amount of colour attachments to create.
-			/// </summary>
-			/// <param name="attachments"> The amount of attachments to create. </param>
-			/// <returns> This. </returns>
-			builder *attachments(const int &attachments);
-
-			/// <summary>
-			/// Sets if the FBO will be fit to the screen.
-			/// </summary>
-			/// <param name="sizeScalar"> A scalar factor between the FBO and the screen, enabled when {@code fitToScreen} is enabled. (1.0f disables scalar). </param>
-			/// <returns> This. </returns>
-			builder *fitToScreen(const float &sizeScalar);
-
-			/// <summary>
-			/// Creates a fbo from the builder.
-			/// </summary>
-			/// <returns> The created fbo. </returns>
-			fbo *create();
-		};
-
-	protected:
-		builder *m_builder;
+	private:
+		int m_width;
+		int m_height;
+		bool m_fitToScreen;
+		float m_sizeScalar;
 
 		depthbuffer m_depthBufferType;
 		bool m_useColourBuffer;
+		int m_attachments;
 		bool m_linearFiltering;
 		bool m_wrapTextures;
 		bool m_clampEdge;
 		bool m_alphaChannel;
 		bool m_antialiased;
+
 		int m_samples;
-		int m_width;
-		int m_height;
-		int m_attachments;
-		bool m_fitToScreen;
-		float m_sizeScalar;
 
 #if 0
 		GLuint m_frameBuffer;
@@ -136,22 +44,39 @@ namespace flounder
 
 		bool m_hasGivenResolveError;
 
+	public:
 		/// <summary>
 		/// A new OpenGL fbo object.
 		/// </summary>
 		/// <param name="builder"> The fbo builder. </param>
-		fbo(builder *builder);
-	public:
+		fbo(const int &width = 0,
+			const int &height = 0,
+			const depthbuffer &depthBufferType = NONE,
+			const bool &useColourBuffer = true,
+			const int &attachments = 1,
+			const bool &linearFiltering = true,
+			const bool &wrapTextures = false,
+			const bool &clampEdge = true,
+			const bool &alphaChannel = false,
+			const bool &antialiased = false,
+			const int &samples = 0);
+
+		fbo(const bool &fitToScreen = true,
+			const float &sizeScalar = 1.0f,
+			const depthbuffer &depthBufferType = NONE,
+			const bool &useColourBuffer = true,
+			const int &attachments = 1,
+			const bool &linearFiltering = true,
+			const bool &wrapTextures = false ,
+			const bool &clampEdge = true,
+			const bool &alphaChannel = false,
+			const bool &antialiased = false,
+			const int &samples = 0);
+
 		/// <summary>
 		/// Deconstructor for the fbo.
 		/// </summary>
 		~fbo();
-
-		/// <summary>
-		/// Creates a new fbo builder that is used to configure a fbo.
-		/// </summary>
-		/// <returns> The fbo builder. </returns>
-		static builder *newFBO();
 
 		/// <summary>
 		/// Binds the FBO so it can be rendered too.

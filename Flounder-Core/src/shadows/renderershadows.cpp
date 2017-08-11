@@ -5,12 +5,12 @@ namespace flounder
 	renderershadows::renderershadows() :
 		irenderer()
 	{
-		m_fbo = fbo::newFBO()->setSize(shadows::get()->getShadowSize(), shadows::get()->getShadowSize())->noColourBuffer()->disableTextureWrap()->depthBuffer(TEXTURE)->create();
+		m_fbo = new fbo(shadows::get()->getShadowSize(), shadows::get()->getShadowSize(), TEXTURE, false);
 
-		m_shader = shader::newShader()->addName("shadows")
-			->addType(shadertype(VERTEX, "res/shaders/shadows/shadowVertex.glsl", loadtype::FILE))
-			->addType(shadertype(FRAGMENT, "res/shaders/shadows/shadowFragment.glsl", loadtype::FILE))
-			->create();
+		m_shader = new shader("shadows", 2,
+			shadertype(VERTEX, "res/shaders/shadows/shadowVertex.glsl", FILE),
+			shadertype(FRAGMENT, "res/shaders/shadows/shadowFragment.glsl", FILE)
+		);
 	}
 
 	renderershadows::~renderershadows()

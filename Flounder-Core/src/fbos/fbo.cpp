@@ -2,130 +2,23 @@
 
 namespace flounder
 {
-	fbo::builder::builder()
+	fbo::fbo(const int &width, const int &height, const depthbuffer &depthBufferType, const bool &useColourBuffer, const int &attachments, const bool &linearFiltering, const bool &wrapTextures, const bool &clampEdge, const bool &alphaChannel, const bool &antialiased, const int &samples)
 	{
-		m_fbo = new fbo(this);
-	}
-
-	fbo::builder::~builder()
-	{
-	}
-
-	fbo::builder *fbo::builder::setSize(const int &width, const int &height)
-	{
-		m_fbo->m_width = width;
-		m_fbo->m_height = height;
-		return this;
-	}
-
-	fbo::builder *fbo::builder::depthBuffer(const depthbuffer &type)
-	{
-		m_fbo->m_depthBufferType = type;
-		return this;
-	}
-
-	fbo::builder *fbo::builder::noColourBuffer()
-	{
-		m_fbo->m_useColourBuffer = false;
-		return this;
-	}
-
-	fbo::builder *fbo::builder::nearestFiltering()
-	{
-		m_fbo->m_linearFiltering = false;
-		return this;
-	}
-
-	fbo::builder *fbo::builder::disableTextureWrap()
-	{
-		m_fbo->m_wrapTextures = false;
-		return this;
-	}
-
-	fbo::builder *fbo::builder::repeatTexture()
-	{
-		m_fbo->m_clampEdge = false;
-		return this;
-	}
-
-	fbo::builder *fbo::builder::withAlphaChannel(const bool &alpha)
-	{
-		m_fbo->m_alphaChannel = alpha;
-		return this;
-	}
-
-	fbo::builder *fbo::builder::antialias(const int &samples)
-	{
-		m_fbo->m_antialiased = true;
-		m_fbo->m_samples = samples;
-		return this;
-	}
-
-	fbo::builder *fbo::builder::attachments(const int &attachments)
-	{
-		if (m_fbo->m_attachments != attachments)
-		{
-#if 0
-			delete[] m_fbo->m_colourTexture;
-			delete[] m_fbo->m_colourBuffer;
-			delete[] m_fbo->m_drawBuffers;
-			m_fbo->m_attachments = attachments;
-			m_fbo->m_colourTexture = new GLuint[attachments];
-			m_fbo->m_colourBuffer = new GLuint[attachments];
-			m_fbo->m_drawBuffers = new GLenum[attachments];
-#endif
-		}
-
-		return this;
-	}
-
-	fbo::builder *fbo::builder::fitToScreen(const float &sizeScalar)
-	{
-		m_fbo->m_fitToScreen = true;
-		m_fbo->m_sizeScalar = sizeScalar;
-		return this;
-	}
-
-	flounder::fbo *fbo::builder::create()
-	{
-		for (int i = 0; i < m_fbo->m_attachments; i++)
-		{
-#if 0
-			m_fbo->m_drawBuffers[i] = GL_COLOR_ATTACHMENT0 + i;
-#endif
-		}
-
-		if (m_fbo->m_fitToScreen)
-		{
-			m_fbo->m_width = static_cast<int>(display::get()->getWidth() * m_fbo->m_sizeScalar);
-			m_fbo->m_height = static_cast<int>(display::get()->getHeight() * m_fbo->m_sizeScalar);
-		}
-
-		m_fbo->m_hasGivenResolveError = false;
-
-		m_fbo->initialize();
-
-		//delete this;
-		return m_fbo;
-	}
-
-	fbo::fbo(builder *builder)
-	{
-		m_builder = builder;
-
-		m_depthBufferType = NONE;
-		m_useColourBuffer = true;
-		m_linearFiltering = true;
-		m_wrapTextures = true;
-		m_clampEdge = true;
-		m_alphaChannel = false;
-		m_antialiased = false;
-		m_samples = 0;
-		m_width = display::get()->getWidth();
-		m_height = display::get()->getHeight();
-		m_attachments = 1;
+		m_width = width;
+		m_height = height;
 		m_fitToScreen = false;
-		m_sizeScalar = 1.0f;
+		m_sizeScalar = 0.0f;
+
+		m_depthBufferType = depthBufferType;
+		m_useColourBuffer = useColourBuffer;
+		m_attachments = attachments;
+		m_linearFiltering = linearFiltering;
+		m_wrapTextures = wrapTextures;
+		m_clampEdge = clampEdge;
+		m_alphaChannel = alphaChannel;
+		m_antialiased = antialiased;
+
+		m_samples = samples;
 
 #if 0
 		m_frameBuffer = nullptr;
@@ -135,23 +28,48 @@ namespace flounder
 		m_colourBuffer = new GLuint[m_attachments];
 		m_drawBuffers = new GLenum[m_attachments];
 #endif
+
+		initialize();
+	}
+
+	fbo::fbo(const bool &fitToScreen, const float &sizeScalar, const depthbuffer &depthBufferType, const bool &useColourBuffer, const int &attachments, const bool &linearFiltering, const bool &wrapTextures, const bool &clampEdge, const bool &alphaChannel, const bool &antialiased, const int &samples)
+	{
+		m_width = static_cast<int>(display::get()->getWidth() * sizeScalar);
+		m_height = static_cast<int>(display::get()->getHeight() * sizeScalar);
+		m_fitToScreen = fitToScreen;
+		m_sizeScalar = sizeScalar;
+
+		m_depthBufferType = depthBufferType;
+		m_useColourBuffer = useColourBuffer;
+		m_attachments = attachments;
+		m_linearFiltering = linearFiltering;
+		m_wrapTextures = wrapTextures;
+		m_clampEdge = clampEdge;
+		m_alphaChannel = alphaChannel;
+		m_antialiased = antialiased;
+
+		m_samples = samples;
+
+#if 0
+		m_frameBuffer = nullptr;
+		m_colourTexture = new GLuint[m_attachments];
+		m_depthTexture = nullptr;
+		m_depthBuffer = nullptr;
+		m_colourBuffer = new GLuint[m_attachments];
+		m_drawBuffers = new GLenum[m_attachments];
+#endif
+
+		initialize();
 	}
 
 	fbo::~fbo()
 	{
 		clear();
 
-		delete m_builder;
-
 #if 0
 		delete[] m_colourTexture;
 		delete[] m_colourBuffer;
 #endif
-	}
-
-	fbo::builder *fbo::newFBO()
-	{
-		return new builder();
 	}
 
 	void fbo::bindFrameBuffer()
@@ -199,7 +117,7 @@ namespace flounder
 				limitFBOSize();
 				clear();
 
-			//	std::cout << "Recreating FBO: width: " << m_width << ", and height: " << m_height << std::endl;
+				//	std::cout << "Recreating FBO: width: " << m_width << ", and height: " << m_height << std::endl;
 				initialize();
 			}
 		}
@@ -221,7 +139,7 @@ namespace flounder
 		if (m_samples != samples)
 		{
 			clear();
-		//	std::cout << "Recreating FBO: width: " << m_width << ", and height: " << m_height << std::endl;
+			//	std::cout << "Recreating FBO: width: " << m_width << ", and height: " << m_height << std::endl;
 			initialize();
 		}
 
@@ -240,7 +158,7 @@ namespace flounder
 		updateSize();
 	}
 
-	void fbo::setSize(const int & width, const int & height)
+	void fbo::setSize(const int &width, const int &height)
 	{
 		if (!m_fitToScreen && m_width == width && m_height == height)
 		{
@@ -259,7 +177,7 @@ namespace flounder
 		{
 			source->m_hasGivenResolveError = true;
 			output->m_hasGivenResolveError = true;
-		//	std::cout << "Warning, resolving two FBO's (" << source << ", " << output << ") with different attachment sizes, be warned this may not work properly instead use resolveFBO(int readBuffer, int drawBuffer, FBO outputFBO)." << std::endl;
+			//	std::cout << "Warning, resolving two FBO's (" << source << ", " << output << ") with different attachment sizes, be warned this may not work properly instead use resolveFBO(int readBuffer, int drawBuffer, FBO outputFBO)." << std::endl;
 		}
 
 		for (int a = 0; a < source->m_attachments; a++)

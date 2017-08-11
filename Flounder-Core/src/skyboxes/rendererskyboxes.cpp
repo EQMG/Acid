@@ -5,10 +5,10 @@ namespace flounder
 	rendererskyboxes::rendererskyboxes() :
 		irenderer()
 	{
-		m_shader = shader::newShader()->addName("skyboxes")
-			->addType(shadertype(VERTEX, "res/shaders/skyboxes/skyboxVertex.glsl", loadtype::FILE))
-			->addType(shadertype(FRAGMENT, "res/shaders/skyboxes/skyboxFragment.glsl", loadtype::FILE))
-			->create();
+		m_shader = new shader("skyboxes", 2,
+			shadertype(VERTEX, "res/shaders/skyboxes/skyboxVertex.glsl", FILE),
+			shadertype(FRAGMENT, "res/shaders/skyboxes/skyboxFragment.glsl", FILE)
+		);
 	}
 
 	rendererskyboxes::~rendererskyboxes()

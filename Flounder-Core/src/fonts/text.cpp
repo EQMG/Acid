@@ -84,7 +84,7 @@ namespace flounder
 		vector2 meshSize = getBounding(vertices);
 
 		// Load mesh data to OpenGL.
-		model *loaded = model::newModel()->setDirectly(nullptr, vertices, textures, nullptr, nullptr)->create();
+		model *loaded = new model(nullptr, vertices, textures, nullptr, nullptr);
 		object->setModel(loaded);
 		object->setMeshSize(meshSize);
 

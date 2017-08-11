@@ -8,10 +8,10 @@ namespace flounder
 	rendererparticles::rendererparticles() :
 		irenderer()
 	{
-		m_shader = shader::newShader()->addName("particles")
-			->addType(shadertype(VERTEX, "res/shaders/particles/particleVertex.glsl", loadtype::FILE))
-			->addType(shadertype(FRAGMENT, "res/shaders/particles/particleFragment.glsl", loadtype::FILE))
-			->create();
+		m_shader = new shader("particles", 2, 
+			shadertype(VERTEX, "res/shaders/particles/particleVertex.glsl", FILE),
+			shadertype(FRAGMENT, "res/shaders/particles/particleFragment.glsl", FILE)
+		);
 		std::vector<float> positions = { -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f };
 		m_vaoID = loaders::get()->createVAO();
 		loaders::get()->storeDataInVBO(m_vaoID, positions, 0, 2);
