@@ -2,7 +2,7 @@
 
 namespace flounder
 {
-	const std::vector<const char*> display::VALIDATION_LAYERS = { "VK_LAYER_LUNARG_standard_validation" };
+	const std::vector<const char*> display::VALIDATION_LAYERS = {"VK_LAYER_LUNARG_standard_validation"};
 
 	void callbackError(int error, const char *description)
 	{
@@ -51,31 +51,31 @@ namespace flounder
 		// TODO
 	}
 
-	VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT messageFlags, VkDebugReportObjectTypeEXT objectType, uint64_t sourceObject, size_t location, int32_t messageCode, const char *layerPrefix, const char *message, void *userdata)
+	VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code,   const char *layerPrefix,  const char *msg, void *userData)
 	{
-		std::cout << message << std::endl;
+		std::cout << "Validation layer: " << msg << std::endl;
 		return false;
 	}
 
-	VkResult display::fvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT * pCreateInfo, const VkAllocationCallbacks * pAllocator, VkDebugReportCallbackEXT * pCallback)
+	VkResult display::fvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback)
 	{
-		auto func = (PFN_vkCreateDebugReportCallbackEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT");
-		
-		if (func != nullptr) 
+		auto func = (PFN_vkCreateDebugReportCallbackEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT");
+
+		if (func != nullptr)
 		{
 			return func(instance, pCreateInfo, pAllocator, pCallback);
 		}
-		else 
+		else
 		{
 			return VK_ERROR_EXTENSION_NOT_PRESENT;
 		}
 	}
 
-	void display::fvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks * pAllocator)
+	void display::fvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator)
 	{
-		auto func = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT");
-		
-		if (func != nullptr) 
+		auto func = (PFN_vkDestroyDebugReportCallbackEXT) vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT");
+
+		if (func != nullptr)
 		{
 			func(instance, callback, pAllocator);
 		}
@@ -83,8 +83,10 @@ namespace flounder
 
 	void display::vkErrorCheck(VkResult result)
 	{
-		if (result < 0) {
-			switch (result) {
+		if (result < 0)
+		{
+			switch (result)
+			{
 			case VK_ERROR_OUT_OF_HOST_MEMORY:
 				std::cout << "VK_ERROR_OUT_OF_HOST_MEMORY" << std::endl;
 				break;
@@ -170,12 +172,14 @@ namespace flounder
 		m_validationLayers = true;
 
 		m_instance = VK_NULL_HANDLE;
+		m_surface = VK_NULL_HANDLE;
 		m_physicalDevice = VK_NULL_HANDLE;
 		m_physicalDeviceProperties = {};
 		m_instanceLayerList = std::vector<const char*>();
 		m_instanceExtensionList = std::vector<const char*>();
 		m_deviceExtensionList = std::vector<const char*>();
 		m_debugReport = VK_NULL_HANDLE;
+		m_queueIndices = {};
 		m_device = VK_NULL_HANDLE;
 
 		// Set the error error callback
@@ -189,10 +193,10 @@ namespace flounder
 
 		// Configures the window.
 		glfwDefaultWindowHints();
-		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
-		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // The window will be resizable depending on if it's fullscreen.
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // The window will be resizable depending on if it's fullscreen.
 
 		// For new GLFW, and macOS.
 		glfwWindowHint(GLFW_STENCIL_BITS, 8); // Fixes 16 bit stencil bits in macOS.
@@ -248,20 +252,20 @@ namespace flounder
 			std::vector<VkLayerProperties> instanceLayerProperties(layerCount);
 			vkEnumerateInstanceLayerProperties(&layerCount, instanceLayerProperties.data());
 
-			for (const char* layerName : VALIDATION_LAYERS)
+			for (const char *layerName : VALIDATION_LAYERS)
 			{
 				bool layerFound = false;
 
-				for (const auto& layerProperties : instanceLayerProperties) 
+				for (const auto &layerProperties : instanceLayerProperties)
 				{
-					if (strcmp(layerName, layerProperties.layerName) == 0) 
+					if (strcmp(layerName, layerProperties.layerName) == 0)
 					{
 						layerFound = true;
 						break;
 					}
 				}
 
-				if (!layerFound) 
+				if (!layerFound)
 				{
 					throw std::runtime_error("Could not find Vulkan validation layer: " + std::string(layerName));
 				}
@@ -271,18 +275,23 @@ namespace flounder
 		m_instanceLayerList.push_back("VK_LAYER_LUNARG_standard_validation");
 
 		unsigned int glfwExtensionCount = 0;
-		const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+		const char **glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
-		for (uint32_t i = 0; i < glfwExtensionCount; i++) 
+		for (uint32_t i = 0; i < glfwExtensionCount; i++)
 		{
 			m_instanceExtensionList.push_back(glfwExtensions[i]);
 		}
 
 		m_instanceExtensionList.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
 
+		m_deviceExtensionList.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+
 		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = {};
 		debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-		debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT;
+		debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_INFORMATION_BIT_EXT |			VK_DEBUG_REPORT_WARNING_BIT_EXT | 
+			VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT | 
+			VK_DEBUG_REPORT_ERROR_BIT_EXT | 
+			VK_DEBUG_REPORT_DEBUG_BIT_EXT;
 		debugCallBackCreateInfo.pfnCallback = vkCallbackDebug;
 
 		// Sets up the instance.
@@ -298,7 +307,7 @@ namespace flounder
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		instanceCreateInfo.pNext = &debugCallBackCreateInfo;
 		instanceCreateInfo.pApplicationInfo = &applicationInfo;
-		
+
 		if (m_validationLayers)
 		{
 			instanceCreateInfo.enabledLayerCount = m_instanceLayerList.size();
@@ -320,51 +329,152 @@ namespace flounder
 			vkErrorCheck(fvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
 		}
 
+		// Creates the Vulkan-GLFW surface.
+		vkErrorCheck(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
+
 		// Gets the physical GPU device.
-		uint32_t gpuCount = 0;
-		vkEnumeratePhysicalDevices(m_instance, &gpuCount, nullptr);
-		std::vector<VkPhysicalDevice> gpuList(gpuCount);
-		vkEnumeratePhysicalDevices(m_instance, &gpuCount, gpuList.data());
-		m_physicalDevice = gpuList[0];
-		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
+		uint32_t deviceCount = 0;
+		vkEnumeratePhysicalDevices(m_instance, &deviceCount, nullptr);
+		std::vector<VkPhysicalDevice> deviceList(deviceCount);
+		vkEnumeratePhysicalDevices(m_instance, &deviceCount, deviceList.data());
+		std::multimap<int, VkPhysicalDevice> candidates;
 
-		// Gets the families from the GPU,
-		uint32_t familyCount = 0;
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &familyCount, nullptr);
-		std::vector<VkQueueFamilyProperties> familyPropertyList(familyCount);
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &familyCount, familyPropertyList.data());
-
-		bool foundGraphics = false;
-		uint32_t graphicsFamilyIndex = 0;
-
-		for (uint32_t i = 0; i < familyCount; i++)
+		for (uint32_t i = 0; i < deviceCount; i++)
 		{
-			if (familyPropertyList[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
+			VkPhysicalDevice device = deviceList[i];
+
+			VkPhysicalDeviceProperties deviceProperties;
+			VkPhysicalDeviceFeatures deviceFeatures;
+			vkGetPhysicalDeviceProperties(device, &deviceProperties);
+			vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+
+			int score = 0;
+
+			// Discrete GPUs have a significant performance advantage.
+			if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU) 
 			{
-				graphicsFamilyIndex = i;
-				foundGraphics = true;
+				score += 1000;
+			}
+
+			// Maximum possible size of textures affects graphics quality.
+			score += deviceProperties.limits.maxImageDimension2D;
+
+			// Figgures out extensions support.
+			uint32_t extensionCount;
+			vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+
+			std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+			vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+
+			std::set<std::string> requiredExtensions(m_deviceExtensionList.begin(), m_deviceExtensionList.end());
+
+			for (const auto& extension : availableExtensions) {
+				requiredExtensions.erase(extension.extensionName);
+			}
+
+			bool extensionsSupported = requiredExtensions.empty();
+
+			// Figgures out swap chain support.
+			VkSwapChainSupportDetails swapChainSupport = {};
+
+			vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, m_surface, &swapChainSupport.capabilities);
+
+			uint32_t formatCount;
+			vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_surface, &formatCount, nullptr);
+
+			if (formatCount != 0)
+			{
+				swapChainSupport.formats.resize(formatCount);
+				vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_surface, &formatCount, swapChainSupport.formats.data());
+			}
+
+			uint32_t presentModeCount;
+			vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_surface, &presentModeCount, nullptr);
+
+			if (presentModeCount != 0)
+			{
+				swapChainSupport.presentModes.resize(presentModeCount);
+				vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_surface, &presentModeCount, swapChainSupport.presentModes.data());
+			}
+
+			bool swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
+			
+			// Application can't function without geometry shaders, without extensions or adequate swap chains.
+			if (!deviceFeatures.geometryShader || !extensionsSupported || !swapChainAdequate)
+			{
+				score = 0;
+			}
+
+			candidates.insert(std::make_pair(score, device));
+		}
+
+		if (candidates.rbegin()->first > 0) 
+		{
+			m_physicalDevice = candidates.rbegin()->second;
+			vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
+		}
+		else 
+		{
+			throw std::runtime_error("failed to find a suitable GPU!");
+		}
+
+		// Finds the queue families from the devices.
+		uint32_t queueFamilyCount = 0;
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyCount, nullptr);
+
+		std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyCount, queueFamilies.data());
+
+		for (uint32_t i = 0; i < queueFamilyCount; i++)
+		{
+			VkQueueFamilyProperties queueFamily = queueFamilies[i];
+
+			if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) 
+			{
+				m_queueIndices.graphicsFamily = i;
+			}
+
+			VkBool32 presentSupport = false;
+			vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, i, m_surface, &presentSupport);
+
+			if (queueFamily.queueCount > 0 && presentSupport) 
+			{
+				m_queueIndices.presentFamily = i;
+			}
+
+			if (m_queueIndices.isComplete()) 
+			{
+				break;
 			}
 		}
 
-		if (!foundGraphics)
+		if (!m_queueIndices.isComplete())
 		{
 			throw std::runtime_error("Failed to find Vulkan graphics queue bit!");
 		}
 
-		// Gets the GPU family queue.
-		float quePriorities[]{ 1.0f };
-		VkDeviceQueueCreateInfo deviceQueueInfo = {};
-		deviceQueueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		deviceQueueInfo.queueFamilyIndex = graphicsFamilyIndex;
-		deviceQueueInfo.queueCount = 1;
-		deviceQueueInfo.pQueuePriorities = quePriorities;
+		// Gets the GPU family queues.
+		std::set<int> uniqueQueueFamilies = { m_queueIndices.graphicsFamily, m_queueIndices.presentFamily };
+		std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+		float quePriorities[] = { 1.0f };
 
+		for (int queueFamily : uniqueQueueFamilies)
+		{
+			VkDeviceQueueCreateInfo queueCreateInfo = {};
+			queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+			queueCreateInfo.queueFamilyIndex = m_queueIndices.graphicsFamily;
+			queueCreateInfo.queueCount = 1;
+			queueCreateInfo.pQueuePriorities = quePriorities;
+			queueCreateInfos.push_back(queueCreateInfo);
+		}
+
+		// Creates the Vulkan device object.
 		VkPhysicalDeviceFeatures deviceFeatures = {};
 
 		VkDeviceCreateInfo deviceCreateInfo = {};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-		deviceCreateInfo.queueCreateInfoCount = 1;
-		deviceCreateInfo.pQueueCreateInfos = &deviceQueueInfo;
+		deviceCreateInfo.queueCreateInfoCount = queueCreateInfos.size();
+		deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
 
 		if (m_validationLayers)
 		{

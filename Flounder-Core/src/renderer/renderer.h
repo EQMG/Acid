@@ -15,6 +15,8 @@ namespace flounder
 	private:
 		imanagerrender *m_managerRender;
 
+		VkQueue m_graphicsQueue;
+
 		bool m_cullingBackFace;
 		bool m_depthMask;
 		bool m_inWireframe;

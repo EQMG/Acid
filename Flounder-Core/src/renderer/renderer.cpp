@@ -7,6 +7,9 @@ namespace flounder
 	{
 		m_managerRender = nullptr;
 
+		m_graphicsQueue = VK_NULL_HANDLE;
+		vkGetDeviceQueue(display::get()->getVkDevice(), display::get()->getVkQueueIndices().graphicsFamily, 0, &m_graphicsQueue);
+
 		m_cullingBackFace = false;
 		m_depthMask = true;
 		m_inWireframe = false;
