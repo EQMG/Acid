@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cassert>
 #include <string>
+#include <map>
+#include <set>
 #include <vector>
 
 #include <vulkan/vulkan.h>
@@ -20,6 +22,24 @@ namespace flounder
 		public imodule
 	{
 	private:
+		struct VkQueueFamilyIndices
+		{
+			int graphicsFamily = -1;
+			int presentFamily = -1;
+
+			bool isComplete()
+			{
+				return graphicsFamily >= 0 && presentFamily >= 0;
+			}
+		};
+
+		struct VkSwapChainSupportDetails 
+		{
+			VkSurfaceCapabilitiesKHR capabilities;
+			std::vector<VkSurfaceFormatKHR> formats;
+			std::vector<VkPresentModeKHR> presentModes;
+		};
+
 		static const std::vector<const char*> VALIDATION_LAYERS;
 
 		int m_windowWidth;
@@ -45,12 +65,14 @@ namespace flounder
 		bool m_validationLayers;
 
 		VkInstance m_instance;
+		VkSurfaceKHR m_surface;
 		VkPhysicalDevice m_physicalDevice;
 		VkPhysicalDeviceProperties m_physicalDeviceProperties;
 		std::vector<const char*> m_instanceLayerList;
 		std::vector<const char*> m_instanceExtensionList;
 		std::vector<const char*> m_deviceExtensionList;
 		VkDebugReportCallbackEXT m_debugReport;
+		VkQueueFamilyIndices m_queueIndices;
 		VkDevice m_device;
 
 		friend void callbackError(int error, const char *description);
@@ -65,8 +87,14 @@ namespace flounder
 		
 		friend void callbackFrame(GLFWwindow *window, int width, int height);
 		
-		friend VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT messageFlags, VkDebugReportObjectTypeEXT objectType, uint64_t sourceObject,
-			size_t location, int32_t messageCode, const char *layerPrefix, const char *message, void *userdata);
+		friend VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT flags,
+			VkDebugReportObjectTypeEXT objType,
+			uint64_t obj,
+			size_t location,
+			int32_t code,
+			const char *layerPrefix,
+			const char *msg,
+			void *userData);
 
 		VkResult fvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugReportCallbackEXT* pCallback);
 		
@@ -264,6 +292,8 @@ namespace flounder
 		inline VkPhysicalDevice getVkPhysicalDevice() const { return m_physicalDevice; }
 
 		inline VkPhysicalDeviceProperties getVkProperties() const { return m_physicalDeviceProperties; }
+
+		inline VkQueueFamilyIndices getVkQueueIndices() const { return m_queueIndices; }
 
 		/// <summary>
 		/// Gets the current Vulkan device.
