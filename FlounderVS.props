@@ -8,7 +8,7 @@
   </ItemGroup>
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <GLSLVALIDATOREXE>C:/VulkanSDK/1.0.54.0/Bin32/glslangValidator.exe</GLSLVALIDATOREXE>
+    <GLSLVALIDATOREXE>$(SolutionDir)glslangValidator.exe</GLSLVALIDATOREXE>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
@@ -17,8 +17,8 @@
       <Value>$(GLSLVALIDATOREXE)</Value>
     </BuildMacro>
   </ItemGroup>
-  <Target Name="Flounder" Inputs="@(Flounder)" BeforeTargets="ClCompile" Outputs="@(Flounder->'$(IntermediateOutputPath)\%(Filename)%(Extension).timestamp')">
-    <Message Text="$(GLSLVALIDATOREXE) &quot;%(Flounder.FullPath)&quot;" Importance="high" />
-    <Exec Command="$(GLSLVALIDATOREXE) &quot;%(Flounder.FullPath)&quot; &amp;&amp; echo 1 &gt; &quot;$(IntermediateOutputPath)\%(Filename)%(Extension).timestamp&quot;" />
+  <Target Name="Flounder" Inputs="@(Flounder)" BeforeTargets="ClCompile" Outputs="@(Flounder->'$(IntermediateOutputPath)\%(Filename)%(Extension).spv')">
+    <Message Text="$(GLSLVALIDATOREXE) -V &quot;%(Flounder.FullPath)&quot; -o &quot;%(Flounder.FullPath).spv&quot;" Importance="low" />
+    <Exec Command="$(GLSLVALIDATOREXE) -V &quot;%(Flounder.FullPath)&quot; -o &quot;%(Flounder.FullPath).spv&quot;" />
   </Target>
 </Project>
