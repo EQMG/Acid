@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <fstream>
 #include <string>
 #include <map>
 #include <set>
@@ -82,6 +83,18 @@ namespace flounder
 		std::vector<VkImage> m_swapChainImages;
 		VkFormat m_swapChainImageFormat;
 		VkExtent2D m_swapChainExtent;
+		std::vector<VkImageView> m_swapChainImageViews;
+		std::vector<VkFramebuffer> m_swapChainFramebuffers;
+
+		VkRenderPass m_renderPass;
+		VkPipelineLayout m_pipelineLayout;
+		VkPipeline m_graphicsPipeline;
+
+		VkCommandPool m_commandPool;
+		std::vector<VkCommandBuffer> m_commandBuffers;
+
+		VkSemaphore m_imageAvailableSemaphore;
+		VkSemaphore m_renderFinishedSemaphore;
 
 		friend void callbackError(int error, const char *description);
 		
@@ -325,6 +338,26 @@ namespace flounder
 
 		void createSwapChain();
 
+		void createImageViews();
+
+		void createRenderPass();
+
+		void createGraphicsPipeline();
+
+		void createFramebuffers();
+
+		void createCommandPool();
+
+		void createCommandBuffers();
+
+		void createSemaphores();
+
+		void drawFrame();
+
+		void recreateSwapChain();
+
+		void cleanupSwapChain();
+
 		bool isDeviceSuitable(VkPhysicalDevice device);
 
 		VkQueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
@@ -336,5 +369,9 @@ namespace flounder
 		VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes);
 
 		VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
+
+		VkShaderModule createShaderModule(const std::vector<char>& code);
+
+		std::vector<char> readFile(const std::string& filename);
 	};
 }
