@@ -11,7 +11,6 @@ class instance :
 {
 private:
 	ibutton *m_buttonFullscreen;
-	ibutton *m_buttonWireframe;
 	ibutton *m_buttonLockMouse;
 	ibutton *m_buttonExit;
 

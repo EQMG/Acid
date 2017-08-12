@@ -6,7 +6,6 @@ layout(binding = 0) uniform sampler2D samplerTexture;
 
 layout(binding = 1) uniform UBO 
 {
-	bool polygonMode;
 	float alpha;
 	vec3 colourOffset;
 } ubo;
@@ -19,11 +18,6 @@ void main(void)
 {
 	outColour = texture(samplerTexture, textureCoords) + vec4(ubo.colourOffset, 0.0);
 	outColour.a *= ubo.alpha;
-
-	if (ubo.polygonMode) 
-	{
-		outColour = vec4(1.0, 0.0, 0.0, ubo.alpha);
-	}
 
 	if (outColour.a < 0.05)
 	{

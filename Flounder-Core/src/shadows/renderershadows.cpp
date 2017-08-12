@@ -41,7 +41,6 @@ namespace flounder
 		m_shader->start();
 
 		// Sets the GPU for rendering this object.
-		renderer::get()->antialias(false);
 		renderer::get()->enableDepthTesting();
 		renderer::get()->depthMask(true);
 		renderer::get()->cullBackFaces(false);

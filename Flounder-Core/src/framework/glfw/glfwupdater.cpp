@@ -9,10 +9,12 @@ namespace flounder
 
 	glfwupdater::~glfwupdater()
 	{
-		for (std::multimap<float, std::pair<std::string, imodule*>>::iterator it = m_modules->begin(); it != m_modules->end(); ++it)
+		for (std::multimap<float, std::pair<std::string, imodule*>>::iterator it = --m_modules->end(); it != m_modules->begin(); --it)
 		{
-			(*it).second.second->update();
+			delete (*it).second.second;
 		}
+
+		delete m_modules;
 
 		delete m_deltaRender;
 		delete m_deltaUpdate;
