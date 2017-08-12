@@ -39,7 +39,6 @@ namespace flounder
 		m_shader->loadUniform4f("clipPlane", clipPlane);
 
 		// Sets the GPU for rendering this object.
-		renderer::get()->antialias(display::get()->isAntialiasing());
 		renderer::get()->enableDepthTesting();
 		renderer::get()->cullBackFaces(true);
 	}

@@ -24,18 +24,14 @@ namespace flounder
 
 	void rendererdeferred::apply(const int n_args, ...)
 	{
-		bool lastWireframe = renderer::get()->isInWireframe();
-
 		m_fbo->bindFrameBuffer();
 		renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 1.0f);
 		m_shader->start();
 
 		storeValues();
 
-		renderer::get()->antialias(false);
 		renderer::get()->disableDepthTesting();
 		renderer::get()->cullBackFaces(true);
-		renderer::get()->goWireframe(false);
 		renderer::get()->bindVAO(m_model->getVaoID(), 2, 0, 1);
 
 		va_list ap;
@@ -56,7 +52,6 @@ namespace flounder
 #endif
 
 		renderer::get()->unbindVAO(2, 0, 1);
-		renderer::get()->goWireframe(lastWireframe);
 		m_shader->stop();
 		renderer::get()->disableBlending();
 		renderer::get()->enableDepthTesting();

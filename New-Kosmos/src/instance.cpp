@@ -3,7 +3,6 @@
 instance::instance()
 {
 	m_buttonFullscreen = new buttonkeyboard(1, GLFW_KEY_F11);
-	m_buttonWireframe = new buttonkeyboard(1, GLFW_KEY_P);
 	m_buttonLockMouse = new buttonkeyboard(1, GLFW_KEY_M);
 	m_buttonExit = new buttonkeyboard(1, GLFW_KEY_DELETE);
 	
@@ -32,7 +31,6 @@ instance::instance()
 instance::~instance()
 {
 	delete m_buttonFullscreen;
-	delete m_buttonWireframe;
 	delete m_buttonLockMouse;
 	delete m_buttonExit;
 
@@ -45,11 +43,6 @@ void instance::update()
 	if (m_buttonFullscreen->wasDown())
 	{
 		display::get()->setFullscreen(!display::get()->isFullscreen());
-	}
-
-	if (m_buttonWireframe->wasDown())
-	{
-		renderer::get()->goWireframe(!renderer::get()->isInWireframe());
 	}
 
 	if (m_buttonLockMouse->wasDown())

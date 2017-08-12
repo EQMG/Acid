@@ -40,10 +40,8 @@ namespace flounder
 
 		// Loads the uniforms.
 		m_shader->loadUniform1f("aspectRatio", static_cast<float>(display::get()->getAspectRatio()));
-		m_shader->loadUniform1i("polygonMode", renderer::get()->isInWireframe());
 
 		// Sets the GPU for rendering this object.
-		renderer::get()->antialias(false);
 		renderer::get()->disableDepthTesting();
 		renderer::get()->cullBackFaces(true);
 		renderer::get()->enableAlphaBlending();
