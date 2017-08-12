@@ -1,18 +1,15 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------IN------------
-in vec2 pass_textureCoords;
+layout(binding = 0) uniform sampler2D samplerTexture;
 
-//---------UNIFORM------------
-layout(binding = 0) uniform sampler2D originalTexture;
+layout(location = 0) in vec2 textureCoords;
 
-//---------OUT------------
-layout(location = 0) out vec4 out_colour;
+layout(location = 0) out vec4 outColour;
 
-//---------MAIN------------
 void main(void) 
 {
-	vec3 colour = texture(originalTexture, pass_textureCoords).rgb;
-	out_colour = vec4((1.0 - colour), 1.0);
+	vec3 colour = texture(samplerTexture, textureCoords).rgb;
+	outColour = vec4((1.0 - colour), 1.0);
 }

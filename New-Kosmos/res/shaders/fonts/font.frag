@@ -1,43 +1,41 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------INCLUDES------------
-#include "res/shaders/maths.glsl"
+layout(binding = 0) uniform sampler2D samplerTexture;
 
-//---------IN------------
-in vec2 pass_textureCoords;
+layout(binding = 1) uniform UBO 
+{
+	bool polygonMode;
+	vec4 colour;
+	vec4 borderColour;
+	vec2 borderSizes;
+	vec2 edgeData;
+} ubo;
 
-//---------UNIFORM------------
-layout(binding = 0) uniform sampler2D fontTexture;
-uniform bool polygonMode;
-uniform vec4 colour;
-uniform vec4 borderColour;
-uniform vec2 borderSizes;
-uniform vec2 edgeData;
+layout(location = 0) in vec2 textureCoords;
 
-//---------OUT------------
-layout(location = 0) out vec4 out_colour;
+layout(location = 0) out vec4 outColour;
 
-//---------MAIN------------
 void main(void) 
 {
-	float distance = texture(fontTexture, pass_textureCoords).a;
-	float alpha = fsmoothlyStep((1.0 - edgeData.x) - edgeData.y, 1.0 - edgeData.x, distance);
-	float outlineAlpha = fsmoothlyStep((1.0 - borderSizes.x) - borderSizes.y, 1.0 - borderSizes.x, distance);
+	float distance = texture(samplerTexture, textureCoords).a;
+	float alpha = smoothstep((1.0 - ubo.edgeData.x) - ubo.edgeData.y, 1.0 - ubo.edgeData.x, distance);
+	float outlineAlpha = smoothstep((1.0 - ubo.borderSizes.x) - ubo.borderSizes.y, 1.0 - ubo.borderSizes.x, distance);
 	float overallAlpha = alpha + (1.0 - alpha) * outlineAlpha;
-	vec3 overallColour = mix(borderColour.rgb, colour.rgb, alpha / overallAlpha);
+	vec3 overallColour = mix(ubo.borderColour.rgb, ubo.colour.rgb, alpha / overallAlpha);
 
-	out_colour = vec4(overallColour, overallAlpha);
-	out_colour.a *= colour.a;
+	outColour = vec4(overallColour, overallAlpha);
+	outColour.a *= ubo.colour.a;
 
-	if (polygonMode) 
+	if (ubo.polygonMode) 
 	{
-		out_colour = vec4(1.0, 0.0, 0.0, colour.a);
+		outColour = vec4(1.0, 0.0, 0.0, ubo.colour.a);
 	}
 
-	if (out_colour.a < 0.05)
+	if (outColour.a < 0.05)
 	{
-		out_colour = vec4(0.0);
+		outColour = vec4(0.0);
 		discard;
 	}
 }

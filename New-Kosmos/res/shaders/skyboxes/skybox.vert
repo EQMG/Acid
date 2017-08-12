@@ -1,25 +1,31 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------IN------------
-layout(location = 0) in vec3 in_position;
+layout(binding = 1) uniform UBO 
+{
+	mat4 projectionMatrix;
+	mat4 viewMatrix;
+	mat4 modelMatrix;
+	vec4 clipPlane;
+} ubo;
 
-//---------UNIFORM------------
-uniform mat4 projectionMatrix;
-uniform mat4 viewMatrix;
-uniform mat4 modelMatrix;
-uniform vec4 clipPlane;
+layout(location = 0) in vec3 inPosition;
 
-//---------OUT------------
-out vec3 pass_textureCoords;
+layout(location = 0) out vec3 textureCoords;
 
-//---------MAIN------------
+out gl_PerVertex 
+{
+	vec4 gl_Position;
+	float gl_ClipDistance[];
+};
+
 void main(void) 
 {
-	vec4 worldPosition = modelMatrix * vec4(in_position, 1.0);
+	vec4 worldPosition = ubo.modelMatrix * vec4(inPosition, 1.0);
 
-	gl_ClipDistance[0] = dot(worldPosition, clipPlane);
-	gl_Position = projectionMatrix * viewMatrix * worldPosition;
+	gl_ClipDistance[0] = dot(worldPosition, ubo.clipPlane);
+	gl_Position = ubo.projectionMatrix * ubo.viewMatrix * worldPosition;
 
-	pass_textureCoords = in_position;
+	textureCoords = inPosition;
 }

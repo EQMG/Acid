@@ -1,22 +1,26 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-in vec2 pass_textureCoords;
+layout(binding = 0) uniform sampler2D samplerTexture;
 
-layout(binding = 0) uniform sampler2D originalTexture;
-uniform vec3 screenColour;
-uniform float curveAmountX;
-uniform float curveAmountY;
-uniform float scanLineSize;
-uniform float scanIntensity;
+layout(binding = 1) uniform UBO 
+{
+	vec3 screenColour;
+	float curveAmountX;
+	float curveAmountY;
+	float scanLineSize;
+	float scanIntensity;
+	float moveTime;
+} ubo;
 
-uniform float moveTime;
+layout(location = 0) in vec2 textureCoords;
 
-layout(location = 0) out vec4 out_colour;
+layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
-	vec2 tc = vec2(pass_textureCoords.x, pass_textureCoords.y);
+	vec2 tc = vec2(textureCoords.x, textureCoords.y);
 
 	// Distance from the center
 	float dx = abs(0.5 - tc.x);
@@ -27,16 +31,16 @@ void main(void)
 	dy *= dy;
 
 	tc.x -= 0.5;
-	tc.x *= 1.0 + (dy * curveAmountX);
+	tc.x *= 1.0 + (dy * ubo.curveAmountX);
 	tc.x += 0.5;
 
 	tc.y -= 0.5;
-	tc.y *= 1.0 + (dx * curveAmountY);
+	tc.y *= 1.0 + (dx * ubo.curveAmountY);
 	tc.y += 0.5;
 
 	// Get texel, and add in scanline if need be
-	vec4 colour = texture(originalTexture, vec2(tc.x, tc.y));
-	colour.rgb += sin((tc.y + moveTime) * scanLineSize) * scanIntensity;
+	vec4 colour = texture(samplerTexture, tc);
+	colour.rgb += sin((tc.y + ubo.moveTime) * ubo.scanLineSize) * ubo.scanIntensity;
 
 	// Cutoff
 	if (tc.y > 1.0 || tc.x < 0.0 || tc.x > 1.0 || tc.y < 0.0) 
@@ -45,5 +49,5 @@ void main(void)
 	}
 
 	float grey = dot(colour.xyz, vec3(0.299, 0.587, 0.114));
-	out_colour = vec4(screenColour * grey, 1.0);
+	outColour = vec4(ubo.screenColour * grey, 1.0);
 }

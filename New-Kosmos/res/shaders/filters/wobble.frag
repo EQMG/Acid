@@ -1,24 +1,24 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------CONSTANT------------
 const float DI = 1.0 / 64.0;
 
-//---------IN------------
-in vec2 pass_textureCoords;
+layout(binding = 0) uniform sampler2D samplerTexture;
 
-//---------UNIFORM------------
-layout(binding = 0) uniform sampler2D originalTexture;
-uniform float moveIt;
+layout(binding = 1) uniform UBO 
+{
+	float moveIt;
+} ubo;
 
-//---------OUT------------
-layout(location = 0) out vec4 out_colour;
+layout(location = 0) in vec2 textureCoords;
+
+layout(location = 0) out vec4 outColour;
 
 //---------MAIN------------
 void main(void)
 {
-	vec2 t0 = pass_textureCoords;
-	t0.x += cos(2.0 * 3.14 * pass_textureCoords.y * 4.0 + moveIt) * DI;
-	t0.y += sin(2.0 * 3.14 * pass_textureCoords.x * 4.0 + moveIt) * DI;
-	out_colour = texture(originalTexture, t0);
+	vec2 t0 = textureCoords;
+	t0.x += cos(2.0 * 3.14 * textureCoords.y * 4.0 + ubo.moveIt) * DI;
+	t0.y += sin(2.0 * 3.14 * textureCoords.x * 4.0 + ubo.moveIt) * DI;
+	outColour = texture(samplerTexture, t0);
 }

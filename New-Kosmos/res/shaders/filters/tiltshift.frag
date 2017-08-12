@@ -1,29 +1,30 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------IN------------
-in vec2 pass_textureCoords;
+layout(binding = 0) uniform sampler2D samplerTexture;
 
-//---------UNIFORM------------
-layout(binding = 0) uniform sampler2D originalTexture;
-uniform float blurAmount;
-uniform float centre;
-uniform float stepSize;
-uniform float steps;
+layout(binding = 1) uniform UBO 
+{
+	float blurAmount;
+	float centre;
+	float stepSize;
+	float steps;
+} ubo;
 
-//---------OUT------------
-layout(location = 0) out vec4 out_colour;
+layout(location = 0) in vec2 textureCoords;
 
-//---------MAIN------------
+layout(location = 0) out vec4 outColour;
+
 void main(void) 
 {
 	// Work out how much to blur based on the mid point.
-	float amount = pow((pass_textureCoords.y * centre) * 2.0 - 1.0, 2.0) * blurAmount;
-	float offsetMin = (float(steps - 1.0)) / -2.0;
-    float offsetMax = (float(steps - 1.0)) / +2.0;
+	float amount = pow((textureCoords.y * ubo.centre) * 2.0 - 1.0, 2.0) * ubo.blurAmount;
+	float offsetMin = (float(ubo.steps - 1.0)) / -2.0;
+	float offsetMax = (float(ubo.steps - 1.0)) / +2.0;
 		
 	// This is the accumulation of color from the surrounding pixels in the texture.
-	out_colour = vec4(0.0, 0.0, 0.0, 1.0);
+	outColour = vec4(0.0, 0.0, 0.0, 1.0);
 
 	// From minimum offset to maximum offset.
 	for (float offsetX = offsetMin; offsetX <= offsetMax; ++offsetX) 
@@ -31,17 +32,17 @@ void main(void)
 		for (float offsetY = offsetMin; offsetY <= offsetMax; ++offsetY) 
 		{
 			// Copy the coord so we can mess with it.
-			vec2 tempTextureCoords = pass_textureCoords.xy;
+			vec2 tempTextureCoords = textureCoords.xy;
 
 			// Work out which uv we want to sample now.
-			tempTextureCoords.x += offsetX * amount * stepSize;
-			tempTextureCoords.y += offsetY * amount * stepSize;
+			tempTextureCoords.x += offsetX * amount * ubo.stepSize;
+			tempTextureCoords.y += offsetY * amount * ubo.stepSize;
 
 			// Accumulate the sample
-			out_colour += texture(originalTexture, tempTextureCoords);
+			outColour += texture(samplerTexture, tempTextureCoords);
 		}
 	}
 		
 	// Because we are doing an average, we divide by the amount (x AND y, hence steps * steps).
-	out_colour /= float(steps * steps);
+	outColour /= float(ubo.steps * ubo.steps);
 }

@@ -1,38 +1,44 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------IN------------
-layout(location = 0) in vec2 position;
-layout(location = 1) in mat4 modelMatrix;
-layout(location = 5) in vec4 textureOffsets;
-layout(location = 6) in float blendFactor;
-layout(location = 7) in float transparency;
+layout(binding = 1) uniform UBO 
+{
+	mat4 viewMatrix;
+	mat4 projectionMatrix;
+	vec4 clipPlane;
+	float numberOfRows;
+} ubo;
 
-//---------UNIFORM------------
-uniform mat4 viewMatrix;
-uniform mat4 projectionMatrix;
-uniform vec4 clipPlane;
-uniform float numberOfRows;
+layout(location = 0) in vec2 inPosition;
+layout(location = 1) in mat4 inModelMatrix;
+layout(location = 5) in vec4 inTextureOffsets;
+layout(location = 6) in float inBlendFactor;
+layout(location = 7) in float inTransparency;
 
-//---------OUT------------
-out vec2 textureCoords1;
-out vec2 textureCoords2;
-out float textureBlendFactor;
-out float textureTransparency;
+layout(location = 0) out vec2 textureCoords1;
+layout(location = 1) out vec2 textureCoords2;
+layout(location = 2) out float textureBlendFactor;
+layout(location = 3) out float textureTransparency;
 
-//---------MAIN------------
+out gl_PerVertex 
+{
+	vec4 gl_Position;
+	float gl_ClipDistance[];
+};
+
 void main(void) 
 {
-	mat4 modelViewMatrix = viewMatrix * modelMatrix;
-	gl_ClipDistance[0] = dot(modelMatrix * vec4(position, 0.0, 1.0), clipPlane);
-	gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 0.0, 1.0);
+	mat4 modelViewMatrix = ubo.viewMatrix * inModelMatrix;
+	gl_ClipDistance[0] = dot(inModelMatrix * vec4(inPosition, 0.0, 1.0), ubo.clipPlane);
+	gl_Position = ubo.projectionMatrix * modelViewMatrix * vec4(inPosition, 0.0, 1.0);
 
-	vec2 textureCoords = position + vec2(0.5, 0.5);
+	vec2 textureCoords = inPosition + vec2(0.5, 0.5);
 	textureCoords.y = 1.0 - textureCoords.y;
-	textureCoords /= numberOfRows;
+	textureCoords /= ubo.numberOfRows;
 
-	textureCoords1 = textureCoords + textureOffsets.xy;
-	textureCoords2 = textureCoords + textureOffsets.zw;
-	textureBlendFactor = blendFactor;
-	textureTransparency = transparency;
+	textureCoords1 = textureCoords + inTextureOffsets.xy;
+	textureCoords2 = textureCoords + inTextureOffsets.zw;
+	textureBlendFactor = inBlendFactor;
+	textureTransparency = inTransparency;
 }

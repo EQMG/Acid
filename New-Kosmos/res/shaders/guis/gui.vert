@@ -1,34 +1,41 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------IN------------
-layout(location = 0) in vec2 in_position;
+layout(binding = 0) uniform UBO 
+{
+	float aspectRatio;
+	vec2 size;
+	vec4 transform;
+	float rotation;
+	bool flipTexture;
+	float atlasRows;
+	vec2 atlasOffset;
+} ubo;
 
-//---------UNIFORM------------
-uniform float aspectRatio;
-uniform vec2 size;
-uniform vec4 transform;
-uniform float rotation;
-uniform bool flipTexture;
-uniform float atlasRows;
-uniform vec2 atlasOffset;
+layout(location = 0) in vec2 inPosition;
 
-//---------OUT------------
-out vec2 pass_textureCoords;
+layout(location = 0) out vec2 textureCoords;
 
-//---------MAIN------------
-void main(void) 
+out gl_PerVertex 
+{
+	vec4 gl_Position;
+};
+
+void main(void)
 {
 	vec2 screenPosition = vec2(
-		(in_position.x - size.x) * transform.z * cos(rotation) - (in_position.y - size.y) * transform.w * sin(rotation),
-		(in_position.x - size.x) * transform.z * sin(rotation) + (in_position.y - size.y) * transform.w * cos(rotation)
+		(inPosition.x - ubo.size.x) * ubo.transform.z * cos(ubo.rotation) - 
+		(inPosition.y - ubo.size.y) * ubo.transform.w * sin(ubo.rotation),
+		(inPosition.x - ubo.size.x) * ubo.transform.z * sin(ubo.rotation) + 
+		(inPosition.y - ubo.size.y) * ubo.transform.w * cos(ubo.rotation)
 	);
-	screenPosition = screenPosition + transform.xy;
-	screenPosition.x = (screenPosition.x / aspectRatio) * 2.0 - 1.0;
+	screenPosition = screenPosition + ubo.transform.xy;
+	screenPosition.x = (screenPosition.x / ubo.aspectRatio) * 2.0 - 1.0;
 	screenPosition.y = screenPosition.y * -2.0 + 1.0;
 	gl_Position = vec4(screenPosition, 0.0, 1.0);
 
-	pass_textureCoords = in_position;
-	pass_textureCoords = (pass_textureCoords / atlasRows) + atlasOffset;
-	pass_textureCoords.x = mix(pass_textureCoords.x, 1.0 - pass_textureCoords.x, flipTexture);
+	textureCoords = inPosition;
+	textureCoords = (textureCoords / ubo.atlasRows) + ubo.atlasOffset;
+	textureCoords.x = mix(textureCoords.x, 1.0 - textureCoords.x, ubo.flipTexture);
 }

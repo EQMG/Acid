@@ -1,13 +1,19 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(location = 0) in vec3 in_position;
-layout(location = 1) in vec2 in_textureCoords;
+layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec2 inTextureCoords;
 
-out vec2 pass_textureCoords;
+layout(location = 0) out vec2 textureCoords;
+
+out gl_PerVertex 
+{
+	vec4 gl_Position;
+};
 
 void main(void) 
 {
-	pass_textureCoords = vec2(1 - in_textureCoords.x, in_textureCoords.y);
-	gl_Position = vec4(in_position, 1.0);
+	textureCoords = vec2(1 - inTextureCoords.x, inTextureCoords.y);
+	gl_Position = vec4(inPosition, 1.0);
 }
