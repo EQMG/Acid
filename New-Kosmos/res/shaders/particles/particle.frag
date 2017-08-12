@@ -4,10 +4,9 @@
 
 layout(binding = 0) uniform sampler2D samplerTexture;
 
-layout(binding = 1) uniform UBO 
-{
-	bool polygonMode;
-} ubo;
+//layout(binding = 1) uniform UBO 
+//{
+//} ubo;
 
 layout(location = 0) in vec2 textureCoords1;
 layout(location = 1) in vec2 textureCoords2;
@@ -27,11 +26,6 @@ void main(void)
 	outAlbedo = mix(colour1, colour2, textureBlendFactor);
 	outAlbedo.a -= textureTransparency;
 	
-	if (ubo.polygonMode) 
-	{
-		outAlbedo = vec4(1.0, 0.0, 0.0, 1.0);
-	}
-
 	if (outAlbedo.a <= 0.2) 
 	{
 		outAlbedo = vec4(0.0);

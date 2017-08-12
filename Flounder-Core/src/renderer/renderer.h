@@ -15,12 +15,30 @@ namespace flounder
 	private:
 		imanagerrender *m_managerRender;
 
+		VkSwapchainKHR m_swapChain;
+		std::vector<VkImage> m_swapChainImages;
+		VkFormat m_swapChainImageFormat;
+		VkExtent2D m_swapChainExtent;
+		std::vector<VkImageView> m_swapChainImageViews;
+		std::vector<VkFramebuffer> m_swapChainFramebuffers;
+
+		VkRenderPass m_renderPass;
+		VkPipelineLayout m_pipelineLayout;
+		VkPipeline m_graphicsPipeline;
+
+		VkCommandPool m_commandPool;
+		std::vector<VkCommandBuffer> m_commandBuffers;
+
+		VkSemaphore m_imageAvailableSemaphore;
+		VkSemaphore m_renderFinishedSemaphore;
+
+		int lastWidth;
+		int lastHeight;
+
 		bool m_cullingBackFace;
 		bool m_depthMask;
-		bool m_inWireframe;
 		bool m_isAlphaBlending;
 		bool m_additiveBlending;
-		bool m_antialiasing;
 	public:
 		/// <summary>
 		/// Gets this framework instance.
@@ -93,18 +111,6 @@ namespace flounder
 		void depthMask(const bool &depthMask);
 
 		/// <summary>
-		/// Gets if the display currently in wireframe mode.
-		/// </summary>
-		/// <returns> Is the display currently in wireframe mode. </returns>
-		bool isInWireframe();
-
-		/// <summary>
-		/// Toggles the display to / from wireframe mode.
-		/// </summary>
-		/// <param name="goWireframe"> If the display should be in wireframe. </param>
-		void goWireframe(const bool &goWireframe);
-
-		/// <summary>
 		/// Enables alpha blending.
 		/// </summary>
 		void enableAlphaBlending();
@@ -118,12 +124,6 @@ namespace flounder
 		/// Disables alpha and additive blending.
 		/// </summary>
 		void disableBlending();
-
-		/// <summary>
-		/// Toggles antialiasing for the rendered object.
-		/// </summary>
-		/// <param name="enable"> Should antialias be enabled? </param>
-		void antialias(const bool &enable);
 
 		/// <summary>
 		/// Binds the VAO and all attributes.
@@ -200,6 +200,38 @@ namespace flounder
 		/// <param name="glPrimCount"> How many primitives rendered. </param>
 		void renderInstanced(const int &glMode, const int &glLength, const int &glPrimCount);
 	private:
+		void createSwapChain();
+
+		void createImageViews();
+
+		void createRenderPass();
+
 		void createGraphicsPipeline();
+
+		void createFramebuffers();
+
+		void createCommandPool();
+
+		void createCommandBuffers();
+
+		void recreateSwapChain();
+
+		void cleanupSwapChain();
+
+		void createSemaphores();
+
+		void drawFrame();
+
+		VkShaderModule createShaderModule(const std::vector<char>& code);
+
+		std::vector<char> readFile(const std::string& filename);
+
+		VkSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+
+		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+
+		VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes);
+
+		VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
 	};
 }
