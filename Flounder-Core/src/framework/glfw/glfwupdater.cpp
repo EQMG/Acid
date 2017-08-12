@@ -9,27 +9,13 @@ namespace flounder
 
 	glfwupdater::~glfwupdater()
 	{
-		delete m_audio;
-		delete m_camera;
+		for (std::multimap<float, std::pair<std::string, imodule*>>::iterator it = m_modules->begin(); it != m_modules->end(); ++it)
+		{
+			(*it).second.second->update();
+		}
+
 		delete m_deltaRender;
 		delete m_deltaUpdate;
-		delete m_display;
-		delete m_events;
-		delete m_joysticks;
-		delete m_keyboard;
-		delete m_loaders;
-		delete m_mouse;
-		delete m_processing;
-		delete m_renderer;
-		delete m_shadows;
-		delete m_standards;
-		delete m_tasks;
-		delete m_uis;
-		delete m_particles;
-		delete m_skyboxes;
-		delete m_terrains;
-		delete m_waters;
-		delete m_worlds;
 
 		delete m_timerRender;
 		delete m_timerUpdate;
@@ -44,25 +30,27 @@ namespace flounder
 		m_timerUpdate = new timer(1.0f / 62.0f);
 		m_timerRender = new timer(1.0f / -1.0f);
 
-		m_display = new display();
-		m_audio = new audio;
-		m_camera = new camera();
-		m_events = new events();
-		m_joysticks = new joysticks();
-		m_keyboard = new keyboard();
-		m_loaders = new loaders();
-		m_mouse = new mouse;
-		m_processing = new processing();
-		m_renderer = new renderer();
-		m_shadows = new shadows();
-		m_standards = new standards();
-		m_tasks = new tasks();
-		m_uis = new uis();
-		m_worlds = new worlds();
-		m_particles = new particles();
-		m_skyboxes = new skyboxes();
-		m_terrains = new terrains();
-		m_waters = new waters();
+		m_modules = new std::multimap<float, std::pair<std::string, imodule*>>();
+
+		addModule(Render, "display", new display());
+		addModule(UpdatePre, "audio", new audio());
+		addModule(UpdatePre, "mouse", new mouse());
+		addModule(UpdatePre, "keyboard", new keyboard());
+		addModule(UpdatePre, "joysticks", new joysticks());
+		addModule(UpdatePre, "events", new events());
+		addModule(UpdatePre, "tasks", new tasks());
+		addModule(UpdatePre, "processing", new processing());
+		addModule(UpdatePre, "loaders", new loaders());
+		addModule(UpdatePre, "camera", new camera());
+		addModule(Render, "renderer", new renderer());
+		addModule(UpdatePre, "standards", new standards());
+		addModule(UpdatePre, "uis", new uis());
+		addModule(UpdatePre, "shadows", new shadows());
+		addModule(UpdatePre, "worlds", new worlds());
+		addModule(UpdatePre, "particles", new particles());
+		addModule(UpdatePre, "skyboxes", new skyboxes());
+		addModule(UpdatePre, "terrains", new terrains());
+		addModule(UpdatePre, "waters", new waters());
 	}
 
 	void flounder::glfwupdater::update()
@@ -70,6 +58,7 @@ namespace flounder
 		this->m_timerRender->setInterval(1.0f / display::get()->getFpsLimit());
 
 		// Always-Update
+		runUpdate(UpdateAlways);
 
 		if (m_timerUpdate->isPassedTime())
 		{
@@ -80,35 +69,17 @@ namespace flounder
 			m_deltaUpdate->update();
 
 			// Pre-Update
-			m_joysticks->update();
-			m_keyboard->update();
-			m_mouse->update();
-			m_audio->update();
-			m_camera->update();
-
-			m_standards->update();
-
-			m_events->update();
-			m_tasks->update();
-			m_processing->update();
-
-			m_loaders->update();
-			m_uis->update();
+			runUpdate(UpdatePre);
 
 			// Update
-			m_worlds->update();
-			m_particles->update();
-			m_skyboxes->update();
-			m_terrains->update();
-			m_waters->update();
-			m_shadows->update();
+			runUpdate(Update);
 
 			// Post-Update
+			runUpdate(UpdatePost);
 		}
 
 		// Renders when needed.
 		if ((m_timerRender->isPassedTime() || display::get()->getFpsLimit() <= 0.0f || display::get()->getFpsLimit() > 1000.0f) && maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 7.0f))
-		// if (display::get()->getFpsLimit() <= 0.0f || m_timerRender->isPassedTime())
 		{
 			// Resets the timer.
 			m_timerRender->resetStartTime();
@@ -117,90 +88,37 @@ namespace flounder
 			m_deltaRender->update();
 
 			// Render
-			m_renderer->update();
-			m_display->update();
+			runUpdate(Render);
 		}
+	}
+
+	void glfwupdater::addModule(moduleupdate typeUpdate, std::string moduleName, imodule *object)
+	{
+		float offset = typeUpdate + (0.01f * static_cast<float>(m_modules->size()));
+		m_modules->insert(std::make_pair(offset, std::make_pair(moduleName, object)));
 	}
 
 	imodule *flounder::glfwupdater::getInstance(const std::string &name)
 	{
-		if (name == "camera")
+		for (std::multimap<float, std::pair<std::string, imodule*>>::iterator it = m_modules->begin(); it != m_modules->end(); ++it)
 		{
-			return m_camera;
-		}
-		else if (name == "audio")
-		{
-			return m_audio;
-		}
-		else if (name == "display")
-		{
-			return m_display;
-		}
-		else if (name == "joysticks")
-		{
-			return m_joysticks;
-		}
-		else if (name == "keyboard")
-		{
-			return m_keyboard;
-		}
-		else if (name == "mouse")
-		{
-			return m_mouse;
-		}
-		else if (name == "events")
-		{
-			return m_events;
-		}
-		else if (name == "uis")
-		{
-			return m_uis;
-		}
-		else if (name == "loaders")
-		{
-			return m_loaders;
-		}
-		else if (name == "renderer")
-		{
-			return m_renderer;
-		}
-		else if (name == "shadows")
-		{
-			return m_shadows;
-		}
-		else if (name == "standards")
-		{
-			return m_standards;
-		}
-		else if (name == "processing")
-		{
-			return m_processing;
-		}
-		else if (name == "tasks")
-		{
-			return m_tasks;
-		}
-		else if (name == "terrains")
-		{
-			return m_terrains;
-		}
-		else if (name == "particles")
-		{
-			return m_particles;
-		}
-		else if (name == "skyboxes")
-		{
-			return m_skyboxes;
-		}
-		else if (name == "waters")
-		{
-			return m_waters;
-		}
-		else if (name == "worlds")
-		{
-			return m_worlds;
+			if ((*it).second.first == name)
+			{
+				return (*it).second.second;
+			}
 		}
 
 		return nullptr;
+	}
+
+	void glfwupdater::runUpdate(moduleupdate typeUpdate)
+	{
+		for (std::multimap<float, std::pair<std::string, imodule*>>::iterator it = m_modules->begin(); it != m_modules->end(); ++it)
+		{
+			if (static_cast<int>(floor((*it).first)) == typeUpdate)
+			{
+				(*it).second.second->update();
+			}
+		}
 	}
 }

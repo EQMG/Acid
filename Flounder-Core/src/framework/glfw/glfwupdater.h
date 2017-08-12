@@ -26,6 +26,15 @@
 
 namespace flounder
 {
+	enum moduleupdate
+	{
+		UpdateAlways = 0,
+		UpdatePre = 1,
+		Update = 2,
+		UpdatePost = 3,
+		Render = 4
+	};
+
 	/// <summary>
 	/// The default GLFW updater for the framework.
 	/// </summary>
@@ -39,25 +48,7 @@ namespace flounder
 		timer *m_timerUpdate;
 		timer *m_timerRender;
 
-		audio *m_audio;
-		camera *m_camera;
-		display *m_display;
-		events *m_events;
-		joysticks *m_joysticks;
-		keyboard *m_keyboard;
-		loaders *m_loaders;
-		mouse *m_mouse;
-		processing *m_processing;
-		renderer *m_renderer;
-		shadows *m_shadows;
-		standards *m_standards;
-		tasks *m_tasks;
-		uis *m_uis;
-		particles *m_particles;
-		skyboxes *m_skyboxes;
-		terrains *m_terrains;
-		waters *m_waters;
-		worlds *m_worlds;
+		std::multimap<float, std::pair<std::string, imodule*>> *m_modules;
 	public:
 		glfwupdater();
 
@@ -66,6 +57,8 @@ namespace flounder
 		void create() override;
 
 		void update() override;
+
+		void addModule(moduleupdate typeUpdate, std::string moduleName, imodule* object);
 
 		imodule *getInstance(const std::string &name) override;
 
@@ -80,5 +73,7 @@ namespace flounder
 		inline float getTimeSec() override { return (static_cast<float>(glfwGetTime()) - m_startTime) + m_timeOffset; };
 
 		inline float getTimeMs() override { return getTimeSec() * 1000.0f; };
+	private:
+		void runUpdate(moduleupdate typeUpdate);
 	};
 }
