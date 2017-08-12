@@ -1,31 +1,38 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------IN------------
-layout(location = 0) in vec3 in_position;
-layout(location = 2) in vec3 in_normal;
-layout(location = 3) in vec3 in_colour;
+layout(binding = 0) uniform UBO 
+{
+	mat4 projectionMatrix;
+	mat4 viewMatrix;
+	vec4 clipPlane;
+	mat4 modelMatrix;
+} ubo;
 
-//---------UNIFORM------------
-uniform mat4 projectionMatrix;
-uniform mat4 viewMatrix;
-uniform vec4 clipPlane;
-uniform mat4 modelMatrix;
+layout(location = 0) in vec3 inPosition;
+layout(location = 2) in vec3 inNormal;
+layout(location = 3) in vec3 inColour;
 
-//---------OUT------------
-flat out vec3 pass_normal;
-flat out vec3 pass_colour;
+layout(location = 0) flat out vec3 surfaceNormal;
+layout(location = 1) flat out vec3 surfaceColour;
 
-//---------MAIN------------
-void main(void) {
-	vec4 totalLocalPos = vec4(in_position, 1.0);
-	vec4 totalNormal = vec4(in_normal, 0.0);
+out gl_PerVertex 
+{
+	vec4 gl_Position;
+	float gl_ClipDistance[];
+};
 
-	vec4 worldPosition = modelMatrix * totalLocalPos;
+void main(void) 
+{
+	vec4 totalLocalPos = vec4(inPosition, 1.0);
+	vec4 totalNormal = vec4(inNormal, 0.0);
 
-	gl_ClipDistance[0] = dot(worldPosition, clipPlane);
-	gl_Position = projectionMatrix * viewMatrix * worldPosition;
+	vec4 worldPosition = ubo.modelMatrix * totalLocalPos;
 
-	pass_normal = normalize((modelMatrix * totalNormal).xyz);
-	pass_colour = vec3(in_colour);
+	gl_ClipDistance[0] = dot(worldPosition, ubo.clipPlane);
+	gl_Position = ubo.projectionMatrix * ubo.viewMatrix * worldPosition;
+
+	surfaceNormal = normalize((ubo.modelMatrix * totalNormal).xyz);
+	surfaceColour = vec3(inColour);
 }

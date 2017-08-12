@@ -1,23 +1,25 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------IN------------
-in vec3 pass_normal;
-in vec4 pass_clipSpace;
-
-//---------UNIFORM------------
 layout(binding = 0) uniform sampler2D reflectionMap;
-uniform vec4 diffuseColour;
 
-uniform float shineDamper;
-uniform float reflectivity;
+layout(binding = 1) uniform UBO 
+{
+	vec4 diffuseColour;
 
-uniform bool ignoreReflections;
+	float shineDamper;
+	float reflectivity;
 
-//---------OUT------------
-layout(location = 0) out vec4 out_albedo;
-layout(location = 1) out vec4 out_normals;
-layout(location = 2) out vec4 out_extras;
+	bool ignoreReflections;
+} ubo;
+
+layout(location = 0) in vec3 surfaceNormal;
+layout(location = 1) in vec4 clipSpace;
+
+layout(location = 0) out vec4 outAlbedo;
+layout(location = 1) out vec4 outNormals;
+layout(location = 2) out vec4 outExtras;
 
 //---------REFRACTION------------
 vec2 getReflectionTexCoords(vec2 normalizedDeviceCoords)
@@ -31,18 +33,18 @@ vec2 getReflectionTexCoords(vec2 normalizedDeviceCoords)
 //---------MAIN------------
 void main(void) 
 {
-    if (!ignoreReflections) 
+	if (!ubo.ignoreReflections) 
 	{
-        vec2 normalizedDeviceCoords = (pass_clipSpace.xy / pass_clipSpace.w) / 2.0 + 0.5;
-        vec2 reflectionTextureCoords = getReflectionTexCoords(normalizedDeviceCoords);
-        vec3 reflectionColour = texture(reflectionMap, reflectionTextureCoords).rgb;
-        out_albedo = vec4(mix(reflectionColour, diffuseColour.rgb, diffuseColour.a), 1.0);
+		vec2 normalizedDeviceCoords = (clipSpace.xy / clipSpace.w) / 2.0 + 0.5;
+		vec2 reflectionTextureCoords = getReflectionTexCoords(normalizedDeviceCoords);
+		vec3 reflectionColour = texture(reflectionMap, reflectionTextureCoords).rgb;
+		outAlbedo = vec4(mix(reflectionColour, ubo.diffuseColour.rgb, ubo.diffuseColour.a), 1.0);
 	} 
 	else 
 	{
-        out_albedo = vec4(diffuseColour.rgb, 1.0);
+		outAlbedo = vec4(ubo.diffuseColour.rgb, 1.0);
 	}
 
-	out_normals = vec4(pass_normal + 1.0 / 2.0, 1.0);
-	out_extras = vec4(shineDamper, reflectivity, (1.0 / 3.0) * (float(false) + 2.0 * float(false)), 1.0);
+	outNormals = vec4(surfaceNormal + 1.0 / 2.0, 1.0);
+	outExtras = vec4(ubo.shineDamper, ubo.reflectivity, (1.0 / 3.0) * (float(false) + 2.0 * float(false)), 1.0);
 }

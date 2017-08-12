@@ -1,32 +1,33 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------IN------------
-in vec2 pass_textureCoords;
+layout(binding = 0) uniform sampler2D samplerTexture;
 
-//---------UNIFORM------------
-layout(binding = 0) uniform sampler2D guiTexture;
-uniform bool polygonMode;
-uniform float alpha;
-uniform vec3 colourOffset;
+layout(binding = 1) uniform UBO 
+{
+	bool polygonMode;
+	float alpha;
+	vec3 colourOffset;
+} ubo;
 
-//---------OUT------------
-layout(location = 0) out vec4 out_colour;
+layout(location = 0) in vec2 textureCoords;
 
-//---------MAIN------------
+layout(location = 0) out vec4 outColour;
+
 void main(void) 
 {
-	out_colour = texture(guiTexture, pass_textureCoords) + vec4(colourOffset, 0.0);
-	out_colour.a *= alpha;
+	outColour = texture(samplerTexture, textureCoords) + vec4(ubo.colourOffset, 0.0);
+	outColour.a *= ubo.alpha;
 
-	if (polygonMode) 
+	if (ubo.polygonMode) 
 	{
-		out_colour = vec4(1.0, 0.0, 0.0, alpha);
+		outColour = vec4(1.0, 0.0, 0.0, ubo.alpha);
 	}
 
-	if (out_colour.a < 0.05)
+	if (outColour.a < 0.05)
 	{
-		out_colour = vec4(0.0);
+		outColour = vec4(0.0);
 		discard;
 	}
 }

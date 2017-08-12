@@ -1,14 +1,20 @@
 #version 450
+
 #extension GL_ARB_separate_shader_objects : enable
 
-//---------IN------------
-layout(location = 0) in vec3 in_position;
+layout(binding = 1) uniform UBO 
+{
+	mat4 mvpMatrix;
+} ubo;
 
-//---------UNIFORM------------
-uniform mat4 mvpMatrix;
+layout(location = 0) in vec3 inPosition;
 
-//---------MAIN------------
+out gl_PerVertex 
+{
+	vec4 gl_Position;
+};
+
 void main(void) 
 {
-	gl_Position = mvpMatrix * vec4(in_position, 1.0);
+	gl_Position = ubo.mvpMatrix * vec4(inPosition, 1.0);
 }
