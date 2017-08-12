@@ -10,7 +10,8 @@ namespace flounder
 		TESSELLATION_CONTROL,
 		TESSELLATION_EVALUATION,
 		GEOMETRY,
-		FRAGMENT
+		FRAGMENT,
+		COMPUTE
 	};
 
 	/// <summary>

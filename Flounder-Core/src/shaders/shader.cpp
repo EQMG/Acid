@@ -172,9 +172,56 @@ namespace flounder
 
 	void shader::create()
 	{
+		std::vector<VkShaderModule> shaderStagesList(m_shaderTypes->size());
+		std::vector<VkPipelineShaderStageCreateInfo> shaderStageCreateInfoList(m_shaderTypes->size());
+
 		for (shadertype type : *m_shaderTypes)
 		{
 			std::vector<char> shaderCode = readFile(type.m_filePath);
+
+			VkShaderModuleCreateInfo createInfo = {};
+			createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+			createInfo.codeSize = shaderCode.size();
+			createInfo.pCode = reinterpret_cast<const uint32_t*>(shaderCode.data());
+
+			VkShaderModule shaderModule = VK_NULL_HANDLE;
+			display::vkErrorCheck(vkCreateShaderModule(display::get()->getVkDevice(), &createInfo, nullptr, &shaderModule));
+
+			VkPipelineShaderStageCreateInfo shaderStageInfo = {};
+			shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			
+			switch(type.m_shaderType)
+			{
+			case VERTEX:
+				shaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+				break;
+			case TESSELLATION_CONTROL:
+				shaderStageInfo.stage = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
+				break;
+			case TESSELLATION_EVALUATION:
+				shaderStageInfo.stage = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
+				break;
+			case GEOMETRY:
+				shaderStageInfo.stage = VK_SHADER_STAGE_GEOMETRY_BIT;
+				break;
+			case FRAGMENT:
+				shaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+				break;
+			case COMPUTE:
+				shaderStageInfo.stage = VK_SHADER_STAGE_COMPUTE_BIT;
+				break;
+			}
+
+			shaderStageInfo.module = shaderModule;
+			shaderStageInfo.pName = m_name.c_str();
+
+			shaderStagesList.push_back(shaderModule);
+			shaderStageCreateInfoList.push_back(shaderStageInfo);
+		}
+
+		for (VkShaderModule shaderModule : shaderStagesList)
+		{
+			vkDestroyShaderModule(display::get()->getVkDevice(), shaderModule, nullptr);
 		}
 	}
 
