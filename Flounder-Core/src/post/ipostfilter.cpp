@@ -52,8 +52,6 @@ namespace flounder
 
 	void ipostfilter::applyFilter(const int n_args, va_list args)
 	{
-		bool lastWireframe = renderer::get()->isInWireframe();
-
 		if (m_fbo != nullptr)
 		{
 			m_fbo->bindFrameBuffer();
@@ -64,10 +62,8 @@ namespace flounder
 
 		storeValues();
 
-		renderer::get()->antialias(false);
 		renderer::get()->disableDepthTesting();
 		renderer::get()->cullBackFaces(true);
-		renderer::get()->goWireframe(false);
 		renderer::get()->bindVAO(m_model->getVaoID(), 2, 0, 1);
 
 		for (int i = 0; i < n_args; i++)
@@ -82,7 +78,6 @@ namespace flounder
 #endif
 
 		renderer::get()->unbindVAO(2, 0, 1);
-		renderer::get()->goWireframe(lastWireframe);
 		m_shader->stop();
 		renderer::get()->disableBlending();
 		renderer::get()->enableDepthTesting();

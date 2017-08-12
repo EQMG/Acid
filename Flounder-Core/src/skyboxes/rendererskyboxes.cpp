@@ -32,10 +32,8 @@ namespace flounder
 		m_shader->loadUniform4fv("projectionMatrix", *camera.getProjectionMatrix());
 		m_shader->loadUniform4fv("viewMatrix", *camera.getViewMatrix());
 		m_shader->loadUniform4f("clipPlane", clipPlane);
-		m_shader->loadUniform1i("polygonMode", renderer::get()->isInWireframe());
 
 		// Sets the GPU for rendering this object.
-		renderer::get()->antialias(display::get()->isAntialiasing());
 		renderer::get()->enableDepthTesting();
 		renderer::get()->depthMask(false);
 		renderer::get()->cullBackFaces(false);

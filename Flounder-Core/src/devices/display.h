@@ -79,23 +79,6 @@ namespace flounder
 		VkQueue m_graphicsQueue;
 		VkQueue m_presentQueue;
 
-		VkSwapchainKHR m_swapChain;
-		std::vector<VkImage> m_swapChainImages;
-		VkFormat m_swapChainImageFormat;
-		VkExtent2D m_swapChainExtent;
-		std::vector<VkImageView> m_swapChainImageViews;
-		std::vector<VkFramebuffer> m_swapChainFramebuffers;
-
-		VkRenderPass m_renderPass;
-		VkPipelineLayout m_pipelineLayout;
-		VkPipeline m_graphicsPipeline;
-
-		VkCommandPool m_commandPool;
-		std::vector<VkCommandBuffer> m_commandBuffers;
-
-		VkSemaphore m_imageAvailableSemaphore;
-		VkSemaphore m_renderFinishedSemaphore;
-
 		friend void callbackError(int error, const char *description);
 		
 		friend void callbackClose(GLFWwindow *window);
@@ -307,6 +290,12 @@ namespace flounder
 		inline VkInstance getVkInstance() const { return m_instance; }
 
 		/// <summary>
+		/// Gets the current Vulkan surface.
+		/// </summary>
+		/// <returns> The current Vulkan surface. </returns>
+		inline VkSurfaceKHR getVkSurface() const { return m_surface; }
+
+		/// <summary>
 		/// Gets the current Vulkan physical device (gpu).
 		/// </summary>
 		/// <returns> The current Vulkan physical device (gpu). </returns>
@@ -319,6 +308,12 @@ namespace flounder
 		/// </summary>
 		/// <returns> The current Vulkan device. </returns>
 		inline VkDevice getVkDevice() const { return m_device; }
+
+		VkQueue getVkGraphicsQueue() const { return m_graphicsQueue; }
+
+		VkQueue getVkPresentQueue() const { return m_presentQueue; }
+
+		VkQueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 	private:
 		void createWindow();
 
@@ -336,42 +331,6 @@ namespace flounder
 
 		void createLogicalDevice();
 
-		void createSwapChain();
-
-		void createImageViews();
-
-		void createRenderPass();
-
-		void createGraphicsPipeline();
-
-		void createFramebuffers();
-
-		void createCommandPool();
-
-		void createCommandBuffers();
-
-		void createSemaphores();
-
-		void drawFrame();
-
-		void recreateSwapChain();
-
-		void cleanupSwapChain();
-
 		bool isDeviceSuitable(VkPhysicalDevice device);
-
-		VkQueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
-
-		VkSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
-
-		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
-
-		VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes);
-
-		VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
-
-		VkShaderModule createShaderModule(const std::vector<char>& code);
-
-		std::vector<char> readFile(const std::string& filename);
 	};
 }
