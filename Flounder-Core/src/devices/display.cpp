@@ -227,7 +227,7 @@ namespace flounder
 		vkDeviceWaitIdle(m_device);
 		
 		// Destroys Vulkan.
-		cleanupSwapChain();
+		cleanupSwapChain(); 
 
 		vkDestroySemaphore(m_device, m_renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(m_device, m_imageAvailableSemaphore, nullptr);
