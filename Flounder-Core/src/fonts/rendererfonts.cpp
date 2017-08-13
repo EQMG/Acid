@@ -35,6 +35,7 @@ namespace flounder
 
 	void rendererfonts::prepareRendering(const vector4 &clipPlane, const icamera &camera)
 	{
+#if 0
 		// Starts the shader.
 		m_shader->start();
 
@@ -45,10 +46,12 @@ namespace flounder
 		renderer::get()->disableDepthTesting();
 		renderer::get()->cullBackFaces(true);
 		renderer::get()->enableAlphaBlending();
+#endif
 	}
 
 	void rendererfonts::renderText(text *object)
 	{
+#if 0
 		// Binds the layouts.
 		renderer::get()->bindVAO(object->getModel()->getVaoID(), 2, 0, 1);
 		renderer::get()->bindTexture(object->getTexture(), 0);
@@ -76,18 +79,19 @@ namespace flounder
 		m_shader->loadUniform2f("borderSizes", object->getTotalBorderSize(), object->getGlowSize());
 
 		// Tells the GPU to render this object.
-#if 0
 		renderer::get()->renderArrays(GL_TRIANGLES, object->getModel()->getVaoLength());
-#endif
 		renderer::get()->scissorDisable();
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(2, 0, 1);
+#endif
 	}
 
 	void rendererfonts::endRendering()
 	{
+#if 0
 		// Stops the shader.
 		m_shader->stop();
+#endif
 	}
 }

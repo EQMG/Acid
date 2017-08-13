@@ -33,6 +33,7 @@ namespace flounder
 
 	void renderershadows::prepareRendering(const vector4 &clipPlane, const icamera &camera)
 	{
+#if 0
 		m_fbo->setSize(shadows::get()->getShadowSize(), shadows::get()->getShadowSize());
 
 		// Starts the shader.
@@ -44,10 +45,12 @@ namespace flounder
 		renderer::get()->enableDepthTesting();
 		renderer::get()->depthMask(true);
 		renderer::get()->cullBackFaces(false);
+#endif
 	}
 
 	void renderershadows::renderModel(model *object, matrix4x4 *modelMatrix)
 	{
+#if 0
 		// Binds the layouts.
 		renderer::get()->bindVAO(object->getVaoID(), 1, 0);
 
@@ -57,18 +60,19 @@ namespace flounder
 		delete mvp;
 
 		// Tells the GPU to render this object.
-#if 0
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getVaoLength());
-#endif
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);
+#endif
 	}
 
 	void renderershadows::endRendering()
 	{
+#if 0
 		// Stops the shader.
 		m_shader->stop();
 		m_fbo->unbindFrameBuffer();
+#endif
 	}
 }

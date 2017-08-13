@@ -21,10 +21,6 @@
     <ClInclude Include="src\entities\entitytest.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\tests\test.frag" />
-    <None Include="res\shaders\tests\test.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <Flounder Include="res\shaders\bounding\bounding.frag" />
     <Flounder Include="res\shaders\bounding\bounding.vert" />
     <Flounder Include="res\shaders\deferred\deferred.frag" />
@@ -66,5 +62,7 @@
     <Flounder Include="res\shaders\terrains\terrain.vert" />
     <Flounder Include="res\shaders\waters\water.frag" />
     <Flounder Include="res\shaders\waters\water.vert" />
+    <Flounder Include="res\shaders\tests\test.frag" />
+    <Flounder Include="res\shaders\tests\test.vert" />
   </ItemGroup>
 </Project>
