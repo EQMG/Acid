@@ -15,7 +15,9 @@ namespace flounder
 
 	void filtercombine::storeValues()
 	{
+#if 0
 		// TODO: Load and store as seperate floats.
 		m_shader->loadUniform4f("slideSpace", *m_slideSpaceValue);
+#endif
 	}
 }

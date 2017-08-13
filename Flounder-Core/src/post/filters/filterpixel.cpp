@@ -19,7 +19,9 @@ namespace flounder
 
 	void filterpixel::storeValues()
 	{
+#if 0
 		m_shader->loadUniform1f("pixelSize", m_pixelSize);
 		m_shader->loadUniform2f("displaySize", static_cast<float>(display::get()->getWidth()), static_cast<float>(display::get()->getHeight()));
+#endif
 	}
 }

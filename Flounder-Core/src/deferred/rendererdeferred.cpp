@@ -24,6 +24,7 @@ namespace flounder
 
 	void rendererdeferred::apply(const int n_args, ...)
 	{
+#if 0
 		m_fbo->bindFrameBuffer();
 		renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 1.0f);
 		m_shader->start();
@@ -40,26 +41,24 @@ namespace flounder
 		for (int i = 0; i < n_args; i++)
 		{
 			int texture = va_arg(ap, int);
-#if 0
 			renderer::get()->bindTexture(texture, GL_TEXTURE_2D, i);
-#endif
 		}
 
 		va_end(ap);
 
-#if 0
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, m_model->getVaoLength()); // Render post filter.
-#endif
 
 		renderer::get()->unbindVAO(2, 0, 1);
 		m_shader->stop();
 		renderer::get()->disableBlending();
 		renderer::get()->enableDepthTesting();
 		m_fbo->unbindFrameBuffer();
+#endif
 	}
 
 	void rendererdeferred::storeValues()
 	{
+#if 0
 		m_shader->loadUniform4fv("projectionMatrix", *camera::get()->getCamera()->getProjectionMatrix());
 		m_shader->loadUniform4fv("viewMatrix", *camera::get()->getCamera()->getViewMatrix());
 
@@ -120,5 +119,6 @@ namespace flounder
 			m_shader->loadUniform1f("fogDensity", 0.003f);
 			m_shader->loadUniform1f("fogGradient", 2.0f);
 		}
+#endif
 	}
 }

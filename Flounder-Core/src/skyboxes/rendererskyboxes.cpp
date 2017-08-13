@@ -25,6 +25,7 @@ namespace flounder
 
 	void rendererskyboxes::prepareRendering(const vector4 &clipPlane, const icamera &camera)
 	{
+#if 0
 		// Starts the shader.
 		m_shader->start();
 
@@ -38,10 +39,12 @@ namespace flounder
 		renderer::get()->depthMask(false);
 		renderer::get()->cullBackFaces(false);
 		renderer::get()->disableBlending();
+#endif
 	}
 
 	void rendererskyboxes::renderSkybox(skybox *object)
 	{
+#if 0
 		// Binds the layouts.
 		renderer::get()->bindVAO(object->getModel()->getVaoID(), 1, 0);
 		renderer::get()->bindTexture(object->getTexture(), 0);
@@ -52,20 +55,21 @@ namespace flounder
 		m_shader->loadUniform1f("blendFactor", object->getBlend());
 
 		// Tells the GPU to render this object.
-#if 0
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getModel()->getVaoLength());
-#endif
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);
+#endif
 	}
 
 	void rendererskyboxes::endRendering()
 	{
+#if 0
 		// Unbinds the layouts.
 		renderer::get()->depthMask(true);
 
 		// Stops the shader.
 		m_shader->stop();
+#endif
 	}
 }

@@ -61,6 +61,7 @@ namespace flounder
 
 	void rendererparticles::prepareRendering(const vector4 &clipPlane, const icamera &camera)
 	{
+#if 0
 		// Starts the shader.
 		m_shader->start();
 
@@ -74,6 +75,7 @@ namespace flounder
 		// renderer::get()->depthMask(false);
 		renderer::get()->cullBackFaces(true);
 		renderer::get()->enableAlphaBlending();
+#endif
 	}
 
 	void rendererparticles::prepareInstance(particle *particle, const icamera &camera, std::vector<float> *vboData)
@@ -129,6 +131,7 @@ namespace flounder
 
 	void rendererparticles::renderInstances(particletype *particleType, std::vector<float>* vboData)
 	{
+#if 0
 		loaders::get()->updateVBO(m_vboID, INSTANCE_DATA_LENGTH * MAX_INSTANCES, *vboData);
 		renderer::get()->bindVAO(m_vaoID, 8, 0, 1, 2, 3, 4, 5, 6, 7);
 
@@ -138,18 +141,19 @@ namespace flounder
 			renderer::get()->bindTexture(particleType->getTexture(), 0);
 		}
 
-#if 0
 		renderer::get()->renderInstanced(GL_TRIANGLE_STRIP, m_vaoLength, m_rendered);
-#endif
 
 		// renderer::get()->depthMask(true);
 		renderer::get()->disableBlending();
 		renderer::get()->unbindVAO(8, 0, 1, 2, 3, 4, 5, 6, 7);
+#endif
 	}
 
 	void rendererparticles::endRendering()
 	{
+#if 0
 		// Stops the shader.
 		m_shader->stop();
+#endif
 	}
 }

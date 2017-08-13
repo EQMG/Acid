@@ -16,11 +16,12 @@
 namespace flounder
 {
 	/// <summary>
-	/// Class that represents a loaded model.
+	/// Class that represents a OBJ model.
 	/// </summary>
 	class model
 	{
 	private:
+		std::string m_name;
 		std::string m_file;
 
 		std::vector<int> *m_indices;
@@ -70,7 +71,7 @@ namespace flounder
 #endif
 	private:
 		/// <summary>
-		/// Loads the model object from a model file.
+		/// Loads the model object from a OBJ file.
 		/// </summary>
 		void loadFromFile();
 

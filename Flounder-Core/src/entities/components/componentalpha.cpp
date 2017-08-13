@@ -22,7 +22,7 @@ namespace flounder
 		{
 			return;
 		}
-
+#if 0
 		if (!render->m_undoing)
 		{
 			render->m_shader->loadUniform1f("alpha", m_alpha);
@@ -31,5 +31,6 @@ namespace flounder
 		{
 			render->m_shader->loadUniform1f("alpha", 1.0f);
 		}
+#endif
 	}
 }
