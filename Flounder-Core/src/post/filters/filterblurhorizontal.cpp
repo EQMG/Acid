@@ -30,8 +30,9 @@ namespace flounder
 		{
 			m_widthValue = static_cast<int>(display::get()->getWidth() * m_sizeScalar);
 		}
-
+#if 0
 		m_shader->loadUniform1f("width", static_cast<float>(m_widthValue));
 		m_shader->loadUniform1f("scale", m_scaleValue);
+#endif
 	}
 }

@@ -24,13 +24,13 @@ namespace flounder
 		m_imageAvailableSemaphore = VK_NULL_HANDLE;
 		m_renderFinishedSemaphore = VK_NULL_HANDLE;
 
+		m_shaderTest = new shader("main", 2,
+			shadertype{ VERTEX, "res/shaders/tests/test.vert.spv" },
+			shadertype{ FRAGMENT, "res/shaders/tests/test.frag.spv" }
+		);
+
 		lastWidth = display::get()->getWidth();
 		lastHeight = display::get()->getHeight();
-
-		m_cullingBackFace = false;
-		m_depthMask = true;
-		m_isAlphaBlending = false;
-		m_additiveBlending = false;
 
 		createSwapChain();
 		createImageViews();
@@ -44,10 +44,11 @@ namespace flounder
 
 	renderer::~renderer()
 	{
-		delete m_managerRender;
-
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(display::get()->getVkDevice());
+
+		delete m_managerRender;
+		delete m_shaderTest;
 
 		cleanupSwapChain();
 
@@ -75,213 +76,8 @@ namespace flounder
 			recreateSwapChain();
 		}
 
+		updateUniformBuffer();
 		drawFrame();
-	}
-
-	void renderer::prepareNewRenderParse(colour *colour)
-	{
-		prepareNewRenderParse(colour->m_r, colour->m_g, colour->m_b, colour->m_a);
-	}
-
-	void renderer::prepareNewRenderParse(const float &r, const float &g, const float &b, const float &a)
-	{
-#if 0
-		glClearColor(r, g, b, a);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-#endif
-		disableBlending();
-		cullBackFaces(true);
-		enableDepthTesting();
-	}
-
-	void renderer::cullBackFaces(const bool &cull)
-	{
-		if (cull && !m_cullingBackFace)
-		{
-#if 0
-			glEnable(GL_CULL_FACE);
-			glCullFace(GL_BACK);
-#endif
-			m_cullingBackFace = true;
-		}
-		else if (!cull && m_cullingBackFace)
-		{
-#if 0
-			glDisable(GL_CULL_FACE);
-#endif
-			m_cullingBackFace = false;
-		}
-	}
-
-	void renderer::enableDepthTesting()
-	{
-#if 0
-		glEnable(GL_DEPTH_TEST);
-#endif
-	}
-
-	void renderer::disableDepthTesting()
-	{
-#if 0
-		glDisable(GL_DEPTH_TEST);
-#endif
-	}
-
-	void renderer::depthMask(const bool &depthMask)
-	{
-#if 0
-		glDepthMask(depthMask);
-#endif
-		m_depthMask = depthMask;
-	}
-
-	void renderer::enableAlphaBlending()
-	{
-		if (!m_isAlphaBlending)
-		{
-#if 0
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-#endif
-			m_isAlphaBlending = true;
-			m_additiveBlending = false;
-		}
-	}
-
-	void renderer::enableAdditiveBlending()
-	{
-		if (!m_additiveBlending)
-		{
-#if 0
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-#endif
-			m_additiveBlending = true;
-			m_isAlphaBlending = false;
-		}
-	}
-
-	void renderer::disableBlending()
-	{
-		if (m_isAlphaBlending || m_additiveBlending)
-		{
-#if 0
-			glDisable(GL_BLEND);
-#endif
-			m_isAlphaBlending = false;
-			m_additiveBlending = false;
-		}
-	}
-
-	void renderer::bindVAO(const int &vaoID, const int n_args, ...)
-	{
-#if 0
-		glBindVertexArray(vaoID);
-#endif
-
-		va_list ap;
-		va_start(ap, n_args);
-
-		for (int i = 0; i < n_args; i++)
-		{
-			int attribute = va_arg(ap, int);
-#if 0
-			glEnableVertexAttribArray(attribute);
-#endif
-		}
-
-		va_end(ap);
-	}
-
-	void renderer::unbindVAO(const int n_args, ...)
-	{
-		va_list ap;
-		va_start(ap, n_args);
-
-		for (int i = 0; i < n_args; i++)
-		{
-			int attribute = va_arg(ap, int);
-#if 0
-			glDisableVertexAttribArray(attribute);
-#endif
-		}
-
-		va_end(ap);
-
-#if 0
-		glBindVertexArray(0);
-#endif
-	}
-
-	void renderer::scissorEnable(const int &x, const int &y, const int &width, const int &height)
-	{
-#if 0
-		glEnable(GL_SCISSOR_TEST);
-		glScissor(x, y, width, height);
-#endif
-	}
-
-	void renderer::scissorDisable()
-	{
-#if 0
-		glDisable(GL_SCISSOR_TEST);
-#endif
-	}
-
-	void renderer::bindTexture(texture *texture, const int &bankID)
-	{
-#if 0
-		glActiveTexture(GL_TEXTURE0 + bankID);
-
-		switch (texture->getTextureType())
-		{
-		case texture::typeTexture2D:
-			glBindTexture(GL_TEXTURE_2D, texture->getGlTexture().m_textureID);
-			break;
-		case texture::typeTextureCubeMap:
-			glBindTexture(GL_TEXTURE_CUBE_MAP, texture->getGlTexture().m_textureID);
-			break;
-		}
-#endif
-	}
-
-	void renderer::bindTexture(const int &textureID, const int &glTarget, const int &bankID)
-	{
-#if 0
-		glActiveTexture(GL_TEXTURE0 + bankID);
-		glBindTexture(glTarget, textureID);
-#endif
-	}
-
-	void renderer::bindTextureLOD(const int &textureID, const int &lodBias, const int &bankID)
-	{
-#if 0
-		glActiveTexture(GL_TEXTURE0 + bankID);
-		glBindTexture(GL_TEXTURE_2D, textureID);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, lodBias);
-		glActiveTexture(0);
-#endif
-	}
-
-	void renderer::renderArrays(const int &glMode, const int &glLength)
-	{
-#if 0
-		glDrawArrays(glMode, 0, glLength);
-#endif
-	}
-
-	void renderer::renderElements(const int &glMode, const int &glType, const int &glLength)
-	{
-#if 0
-		glDrawElements(glMode, glLength, glType, 0);
-#endif
-	}
-
-	void renderer::renderInstanced(const int &glMode, const int &glLength, const int &glPrimCount)
-	{
-#if 0
-		glDrawArraysInstanced(glMode, 0, glLength, glPrimCount);
-#endif
 	}
 
 	void renderer::createSwapChain()
@@ -397,26 +193,6 @@ namespace flounder
 
 	void renderer::createGraphicsPipeline()
 	{
-		auto vertShaderCode = readFile("res/shaders/tests/test.vert.spv");
-		auto fragShaderCode = readFile("res/shaders/tests/test.frag.spv");
-
-		VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
-		VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);
-
-		VkPipelineShaderStageCreateInfo vertShaderStageInfo = {};
-		vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-		vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
-		vertShaderStageInfo.module = vertShaderModule;
-		vertShaderStageInfo.pName = "main";
-
-		VkPipelineShaderStageCreateInfo fragShaderStageInfo = {};
-		fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-		fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-		fragShaderStageInfo.module = fragShaderModule;
-		fragShaderStageInfo.pName = "main";
-
-		VkPipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo, fragShaderStageInfo };
-
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputInfo.vertexBindingDescriptionCount = 0;
@@ -485,8 +261,8 @@ namespace flounder
 
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-		pipelineInfo.stageCount = 2;
-		pipelineInfo.pStages = shaderStages;
+		pipelineInfo.stageCount = m_shaderTest->getStages()->size();
+		pipelineInfo.pStages = m_shaderTest->getStages()->data();
 		pipelineInfo.pVertexInputState = &vertexInputInfo;
 		pipelineInfo.pInputAssemblyState = &inputAssembly;
 		pipelineInfo.pViewportState = &viewportState;
@@ -499,9 +275,6 @@ namespace flounder
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 
 		display::vkErrorCheck(vkCreateGraphicsPipelines(display::get()->getVkDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_graphicsPipeline));
-
-		vkDestroyShaderModule(display::get()->getVkDevice(), fragShaderModule, nullptr);
-		vkDestroyShaderModule(display::get()->getVkDevice(), vertShaderModule, nullptr);
 	}
 
 	void renderer::createFramebuffers()
@@ -620,6 +393,10 @@ namespace flounder
 
 		display::vkErrorCheck(vkCreateSemaphore(display::get()->getVkDevice(), &semaphoreInfo, nullptr, &m_imageAvailableSemaphore));
 		display::vkErrorCheck(vkCreateSemaphore(display::get()->getVkDevice(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphore));
+	}
+
+	void renderer::updateUniformBuffer()
+	{
 	}
 
 	void renderer::drawFrame()

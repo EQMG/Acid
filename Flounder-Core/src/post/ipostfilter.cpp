@@ -52,6 +52,7 @@ namespace flounder
 
 	void ipostfilter::applyFilter(const int n_args, va_list args)
 	{
+#if 0
 		if (m_fbo != nullptr)
 		{
 			m_fbo->bindFrameBuffer();
@@ -68,14 +69,10 @@ namespace flounder
 
 		for (int i = 0; i < n_args; i++)
 		{
-#if 0
 			renderer::get()->bindTexture(texture, GL_TEXTURE_2D, i);
-#endif
 		}
 
-#if 0
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, m_model->getVaoLength()); // Render post filter.
-#endif
 
 		renderer::get()->unbindVAO(2, 0, 1);
 		m_shader->stop();
@@ -86,5 +83,6 @@ namespace flounder
 		{
 			m_fbo->unbindFrameBuffer();
 		}
+#endif
 	}
 }

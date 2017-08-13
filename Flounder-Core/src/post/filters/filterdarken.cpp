@@ -19,6 +19,8 @@ namespace flounder
 
 	void filterdarken::storeValues()
 	{
+#if 0
 		m_shader->loadUniform1f("factor", m_factorValue);
+#endif
 	}
 }
