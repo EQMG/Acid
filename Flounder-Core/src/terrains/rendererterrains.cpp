@@ -30,6 +30,7 @@ namespace flounder
 
 	void rendererterrains::prepareRendering(const vector4 &clipPlane, const icamera &camera)
 	{
+#if 0
 		// Starts the shader.
 		m_shader->start();
 
@@ -41,10 +42,12 @@ namespace flounder
 		// Sets the GPU for rendering this object.
 		renderer::get()->enableDepthTesting();
 		renderer::get()->cullBackFaces(true);
+#endif
 	}
 
 	void rendererterrains::renderTerrain(terrain *object)
 	{
+#if 0
 		// Binds the layouts.
 		renderer::get()->bindVAO(object->getModel()->getVaoID(), 3, 0, 2, 3);
 
@@ -55,17 +58,18 @@ namespace flounder
 		m_shader->loadUniform1f("reflectivity", 0.0f);
 
 		// Tells the GPU to render this object.
-#if 0
 		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getModel()->getVaoLength());
-#endif
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(3, 0, 2, 3);
+#endif
 	}
 
 	void rendererterrains::endRendering()
 	{
+#if 0
 		// Stops the shader.
 		m_shader->stop();
+#endif
 	}
 }

@@ -31,6 +31,7 @@ namespace flounder
 
 	void rendererwaters::prepareRendering(const vector4 &clipPlane, const icamera &camera)
 	{
+#if 0
 		// Starts the shader.
 		m_shader->start();
 
@@ -47,7 +48,6 @@ namespace flounder
 				m_fboReflection->setSizeScalar(waters::get()->getReflectionQuality());
 			}
 
-#if 0
 			// Binds the reflection FBO.
 			if (m_rendererDeferred != nullptr)
 			{
@@ -57,16 +57,17 @@ namespace flounder
 			{
 				renderer::get()->bindTexture(m_fboReflection->getColourTexture(0), GL_TEXTURE_2D, 0);
 			}
-#endif
 		}
 
 		// Sets the GPU for rendering this object.
 		renderer::get()->enableDepthTesting();
 		renderer::get()->cullBackFaces(true);
+#endif
 	}
 
 	void rendererwaters::renderWater(water *object)
 	{
+#if 0
 		// Binds the layouts.
 		renderer::get()->bindVAO(object->getModel()->getVaoID(), 1, 0);
 
@@ -98,11 +99,14 @@ namespace flounder
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);
+#endif
 	}
 
 	void rendererwaters::endRendering()
 	{
+#if 0
 		// Stops the shader.
 		m_shader->stop();
+#endif
 	}
 }

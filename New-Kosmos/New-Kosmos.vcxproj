@@ -36,14 +36,6 @@
     <ClInclude Include="src\managerrender.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\tests\test.frag">
-      <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </ExcludedFromBuild>
-    </None>
-    <None Include="res\shaders\tests\test.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <Flounder Include="res\shaders\bounding\bounding.frag" />
     <Flounder Include="res\shaders\bounding\bounding.vert" />
     <Flounder Include="res\shaders\deferred\deferred.frag" />
@@ -83,6 +75,8 @@
     <Flounder Include="res\shaders\skyboxes\skybox.vert" />
     <Flounder Include="res\shaders\terrains\terrain.frag" />
     <Flounder Include="res\shaders\terrains\terrain.vert" />
+    <Flounder Include="res\shaders\tests\test.frag" />
+    <Flounder Include="res\shaders\tests\test.vert" />
     <Flounder Include="res\shaders\waters\water.frag" />
     <Flounder Include="res\shaders\waters\water.vert" />
   </ItemGroup>

@@ -97,7 +97,9 @@ void managerrender::renderShadows(icamera *camera)
 
 void managerrender::renderScene(icamera *camera, const vector4 &clipPlane, const bool &waterPass)
 {
+#if 0
 	renderer::get()->prepareNewRenderParse(1.0f, 0.0f, 0.0f, 1.0f);
+#endif
 	m_rendererSkyboxes->render(clipPlane, *camera);
 	m_rendererTerrains->render(clipPlane, *camera);
 
