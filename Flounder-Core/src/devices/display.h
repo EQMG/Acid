@@ -9,11 +9,14 @@
 #include <vector>
 #include <algorithm>
 
+#define GLFW_INCLUDE_VULKAN
 #include <vulkan/vulkan.h>
 #include <glfw/glfw3.h>
 
-#include "../framework/framework.h"
+#define STB_IMAGE_IMPLEMENTATION
 #include "../stb/stb_image.h"
+
+#include "../framework/framework.h"
 
 namespace flounder
 {

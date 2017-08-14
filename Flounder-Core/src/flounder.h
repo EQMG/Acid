@@ -149,7 +149,6 @@
 #include "space/structurebasic.h"
 #include "standards/istandard.h"
 #include "standards/standards.h"
-#include "stb/stb_image.h"
 #include "tasks/tasks.h"
 #include "textures/texture.h"
 #include "visual/driverbounce.h"

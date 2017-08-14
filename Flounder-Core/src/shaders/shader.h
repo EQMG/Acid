@@ -58,7 +58,5 @@ namespace flounder
 		/// Creates the shader.
 		/// </summary>
 		void create();
-
-		std::vector<char> readFile(const std::string& fileName);
 	};
 }
