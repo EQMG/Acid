@@ -37,7 +37,7 @@ namespace flounder
 	{
 		for (shadertype type : *m_types)
 		{
-			std::vector<char> shaderCode = readFile(type.m_filePath);
+			std::vector<char> shaderCode = helperfile::readBinaryFile(type.getFilePath());
 
 			VkShaderModuleCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -49,52 +49,12 @@ namespace flounder
 
 			VkPipelineShaderStageCreateInfo shaderStageInfo = {};
 			shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-			
-			switch(type.m_shaderType)
-			{
-			case VERTEX:
-				shaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
-				break;
-			case TESSELLATION_CONTROL:
-				shaderStageInfo.stage = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
-				break;
-			case TESSELLATION_EVALUATION:
-				shaderStageInfo.stage = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
-				break;
-			case GEOMETRY:
-				shaderStageInfo.stage = VK_SHADER_STAGE_GEOMETRY_BIT;
-				break;
-			case FRAGMENT:
-				shaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-				break;
-			case COMPUTE:
-				shaderStageInfo.stage = VK_SHADER_STAGE_COMPUTE_BIT;
-				break;
-			}
-
+			shaderStageInfo.stage = type.getShaderFlag();
 			shaderStageInfo.module = shaderModule;
-			shaderStageInfo.pName = m_name.c_str();
+			shaderStageInfo.pName = "main";
 
 			m_modules->push_back(shaderModule);
 			m_stages->push_back(shaderStageInfo);
 		}
-	}
-
-	std::vector<char> shader::readFile(const std::string &fileName)
-	{
-		std::ifstream file(fileName, std::ios::ate | std::ios::binary);
-
-		if (!file.is_open()) 
-		{
-			throw std::runtime_error("Failed to open file!");
-		}
-
-		size_t fileSize = (size_t)file.tellg();
-		std::vector<char> buffer(fileSize);
-
-		file.seekg(0);
-		file.read(buffer.data(), fileSize);		file.close();
-
-		return buffer;
 	}
 }
