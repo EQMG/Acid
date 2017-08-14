@@ -9,8 +9,8 @@ namespace flounder
 		m_rendererDeferred = new rendererdeferred();
 
 		m_shader = new shader("waters", 2, 
-			shadertype{ VERTEX, "res/shaders/waters/water.vert.spv" },
-			shadertype{ FRAGMENT, "res/shaders/waters/water.frag.spv" }
+			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/waters/water.vert.spv"),
+			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/waters/water.frag.spv")
 		);
 	}
 
