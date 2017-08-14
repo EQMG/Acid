@@ -59,7 +59,7 @@ namespace flounder
 
 	void model::loadFromFile()
 	{
-		std::string fileLoaded = helperfile::readFile(m_file);
+		std::string fileLoaded = helperfile::readTextFile(m_file);
 		std::vector<std::string> lines = helperstring::split(fileLoaded, "\n");
 
 		std::vector<int> indices = std::vector<int>();

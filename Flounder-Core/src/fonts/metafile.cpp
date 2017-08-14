@@ -20,7 +20,7 @@ namespace flounder
 		m_metadata = new std::map<int, character*>();
 		m_values = new std::map<std::string, std::string>();
 
-		std::string fileLoaded = helperfile::readFile(file);
+		std::string fileLoaded = helperfile::readTextFile(file);
 		std::vector<std::string> lines = helperstring::split(fileLoaded, "\n");
 
 		for (std::string line : lines)

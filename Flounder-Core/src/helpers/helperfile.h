@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include <iostream>
-#include <string>
 #include <fstream>
+#include <string>
+#include <vector>
 
 namespace flounder
 {
@@ -17,13 +18,13 @@ namespace flounder
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		/// <returns> The string containing the read file. </returns>
-		static std::string readFile(const std::string &filepath)
+		static std::string readTextFile(const std::string &filepath)
 		{
 			std::ifstream ifs = std::ifstream(filepath.c_str());
 
 			if (!ifs.is_open())
 			{
-				std::cout << "Could not find file: " << filepath << std::endl;
+				throw std::runtime_error("Could not find file: " + filepath);
 			}
 
 			std::string content(
@@ -31,6 +32,29 @@ namespace flounder
 				std::istreambuf_iterator<char>()
 			);
 			return content;
+		}
+
+		/// <summary>
+		/// Reads a binary file into a char array.
+		/// </summary>
+		/// <param name="filepath"> The filepath. </param>
+		/// <returns> The char array loaded from the file. </returns>
+		static std::vector<char> readBinaryFile(const std::string &filepath)
+		{
+			std::ifstream ifs = std::ifstream(filepath, std::ios::ate | std::ios::binary);
+
+			if (!ifs.is_open())
+			{
+				throw std::runtime_error("Could not find file: "  + filepath);
+			}
+
+			size_t fileSize = (size_t)ifs.tellg();
+			std::vector<char> buffer(fileSize);
+
+			ifs.seekg(0);
+			ifs.read(buffer.data(), fileSize);			ifs.close();
+
+			return buffer;
 		}
 	};
 }

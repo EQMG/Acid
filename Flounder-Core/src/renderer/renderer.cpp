@@ -24,9 +24,9 @@ namespace flounder
 		m_imageAvailableSemaphore = VK_NULL_HANDLE;
 		m_renderFinishedSemaphore = VK_NULL_HANDLE;
 
-		m_shaderTest = new shader("main", 2,
-			shadertype{ VERTEX, "res/shaders/tests/test.vert.spv" },
-			shadertype{ FRAGMENT, "res/shaders/tests/test.frag.spv" }
+		m_shaderTest = new shader("tests", 2,
+			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
+			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		);
 
 		lastWidth = display::get()->getWidth();
@@ -47,10 +47,10 @@ namespace flounder
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(display::get()->getVkDevice());
 
+		cleanupSwapChain();
+
 		delete m_managerRender;
 		delete m_shaderTest;
-
-		cleanupSwapChain();
 
 		vkDestroySemaphore(display::get()->getVkDevice(), m_renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(display::get()->getVkDevice(), m_imageAvailableSemaphore, nullptr);
