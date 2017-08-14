@@ -4,6 +4,10 @@
 // Flounder header file
 //
 
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+#include <Windows.h>
+#endif
+
 #include "camera/camera.h"
 #include "camera/icamera.h"
 #include "camera/iplayer.h"

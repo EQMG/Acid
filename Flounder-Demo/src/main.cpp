@@ -8,9 +8,11 @@
 #include "instance.h"
 #include "managerrender.h"
 
-using namespace flounder;
-
+#if (FLOUNDER_CONFIG_RELEASE && FLOUNDER_PLATFORM_WINDOWS)
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, int cmdShow)
+#else
 int main()
+#endif
 {
 	// Creates the framework object.
 	framework *m_framework = new framework();
@@ -18,8 +20,8 @@ int main()
 
 	// Initializes the framework modules.
 	display::get()->setWindowSize(1080, 720);
-	display::get()->setTitle("New Kosmos");
-	display::get()->setIcon("res/newkosmos.png");
+	display::get()->setTitle("Flounder Demo");
+	display::get()->setIcon("res/flounder.png");
 	display::get()->setFpsLimit(0);
 	display::get()->setVSync(false);
 	display::get()->setAntialiasing(true);

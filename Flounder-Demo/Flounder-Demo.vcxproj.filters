@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\uis\overlaydebug.cpp" />
+    <ClCompile Include="src\instance.cpp" />
+    <ClCompile Include="src\managerrender.cpp" />
+    <ClCompile Include="src\manageruis.cpp" />
+    <ClCompile Include="src\mainplayer.cpp" />
+    <ClCompile Include="src\maincamera.cpp" />
+    <ClCompile Include="src\uis\overlaymanager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\uis\overlaydebug.h" />
+    <ClInclude Include="src\instance.h" />
+    <ClInclude Include="src\managerrender.h" />
+    <ClInclude Include="src\manageruis.h" />
+    <ClInclude Include="src\mainplayer.h" />
+    <ClInclude Include="src\maincamera.h" />
+    <ClInclude Include="src\uis\overlaymanager.h" />
+    <ClInclude Include="src\entities\entitytest.h" />
+  </ItemGroup>
+</Project>

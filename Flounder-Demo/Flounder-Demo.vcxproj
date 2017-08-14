@@ -35,58 +35,13 @@
     <ClInclude Include="src\mainplayer.h" />
     <ClInclude Include="src\managerrender.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Flounder Include="res\shaders\bounding\bounding.frag" />
-    <Flounder Include="res\shaders\bounding\bounding.vert" />
-    <Flounder Include="res\shaders\deferred\deferred.frag" />
-    <Flounder Include="res\shaders\deferred\deferred.vert" />
-    <Flounder Include="res\shaders\entities\entity.frag" />
-    <Flounder Include="res\shaders\entities\entity.vert" />
-    <Flounder Include="res\shaders\filters\bloom1.frag" />
-    <Flounder Include="res\shaders\filters\bloom2.frag" />
-    <Flounder Include="res\shaders\filters\blurhorizontal.frag" />
-    <Flounder Include="res\shaders\filters\blurvertical.frag" />
-    <Flounder Include="res\shaders\filters\combine.frag" />
-    <Flounder Include="res\shaders\filters\crt.frag" />
-    <Flounder Include="res\shaders\filters\darken.frag" />
-    <Flounder Include="res\shaders\filters\default.frag" />
-    <Flounder Include="res\shaders\filters\default.vert" />
-    <Flounder Include="res\shaders\filters\emboss.frag" />
-    <Flounder Include="res\shaders\filters\fxaa.frag" />
-    <Flounder Include="res\shaders\filters\grain.frag" />
-    <Flounder Include="res\shaders\filters\grey.frag" />
-    <Flounder Include="res\shaders\filters\lensflare.frag" />
-    <Flounder Include="res\shaders\filters\motion.frag" />
-    <Flounder Include="res\shaders\filters\negative.frag" />
-    <Flounder Include="res\shaders\filters\pixel.frag" />
-    <Flounder Include="res\shaders\filters\sepia.frag" />
-    <Flounder Include="res\shaders\filters\tiltshift.frag" />
-    <Flounder Include="res\shaders\filters\tone.frag" />
-    <Flounder Include="res\shaders\filters\wobble.frag" />
-    <Flounder Include="res\shaders\fonts\font.frag" />
-    <Flounder Include="res\shaders\fonts\font.vert" />
-    <Flounder Include="res\shaders\guis\gui.frag" />
-    <Flounder Include="res\shaders\guis\gui.vert" />
-    <Flounder Include="res\shaders\particles\particle.frag" />
-    <Flounder Include="res\shaders\particles\particle.vert" />
-    <Flounder Include="res\shaders\shadows\shadow.frag" />
-    <Flounder Include="res\shaders\shadows\shadow.vert" />
-    <Flounder Include="res\shaders\skyboxes\skybox.frag" />
-    <Flounder Include="res\shaders\skyboxes\skybox.vert" />
-    <Flounder Include="res\shaders\terrains\terrain.frag" />
-    <Flounder Include="res\shaders\terrains\terrain.vert" />
-    <Flounder Include="res\shaders\tests\test.frag" />
-    <Flounder Include="res\shaders\tests\test.vert" />
-    <Flounder Include="res\shaders\waters\water.frag" />
-    <Flounder Include="res\shaders\waters\water.vert" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NewKosmos</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
-    <ProjectName>New Kosmos</ProjectName>
+    <ProjectName>Flounder Demo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -158,7 +113,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FLOUNDER_PLATFORM_WINDOWS;FLOUNDER_CONFIG_DEBUG</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)external\includes\;$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
@@ -194,7 +149,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FLOUNDER_PLATFORM_WINDOWS;FLOUNDER_CONFIG_RELEASE</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)external\includes\;$(SolutionDir)Flounder-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -204,8 +159,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>glfw3.lib;vulkan-1.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
