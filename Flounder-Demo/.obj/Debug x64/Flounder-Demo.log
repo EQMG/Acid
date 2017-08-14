@@ -1,0 +1,12 @@
+﻿  overlaymanager.cpp
+  overlaydebug.cpp
+  main.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  C:\Users\mattp\Documents\Flounder\external\includes\glfw/glfw3.h(98): note: see previous definition of 'APIENTRY'
+  maincamera.cpp
+  manageruis.cpp
+  instance.cpp
+  mainplayer.cpp
+  managerrender.cpp
+  Generating Code...
+  Flounder-Demo.vcxproj -> C:\Users\mattp\Documents\Flounder\Flounder-Demo\.bin\Debug x64\Flounder Demo.exe
