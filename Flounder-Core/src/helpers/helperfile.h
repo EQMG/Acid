@@ -45,7 +45,7 @@ namespace flounder
 
 			if (!ifs.is_open())
 			{
-				throw std::runtime_error("Could not find file: "  + filepath);
+				throw std::runtime_error("Could not find file: " + filepath);
 			}
 
 			size_t fileSize = (size_t)ifs.tellg();
