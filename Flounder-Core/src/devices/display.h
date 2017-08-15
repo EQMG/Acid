@@ -9,6 +9,10 @@
 #include <vector>
 #include <algorithm>
 
+#ifdef FLOUNDER_PLATFORM_ANDROID
+#include <android/asset_manager.h>
+#endif
+
 #define GLFW_INCLUDE_VULKAN
 #include <vulkan/vulkan.h>
 #include <glfw/glfw3.h>
@@ -73,6 +77,8 @@ namespace flounder
 		VkSurfaceKHR m_surface;
 		VkPhysicalDevice m_physicalDevice;
 		VkPhysicalDeviceProperties m_physicalDeviceProperties;
+		VkPhysicalDeviceFeatures m_physicalDeviceFeatures;
+		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
 		std::vector<const char*> m_instanceLayerList;
 		std::vector<const char*> m_instanceExtensionList;
 		std::vector<const char*> m_deviceExtensionList;
@@ -107,13 +113,13 @@ namespace flounder
 		
 		void fvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks* pAllocator);
 	public:
-		inline static void vkErrorCheck(VkResult result);
+		static void vkErrorCheck(VkResult result);
 
 		/// <summary>
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static display *get()
+		static inline display *get()
 		{
 			return static_cast<display*>(framework::get()->getInstance("display"));
 		}
@@ -304,7 +310,11 @@ namespace flounder
 		/// <returns> The current Vulkan physical device (gpu). </returns>
 		inline VkPhysicalDevice getVkPhysicalDevice() const { return m_physicalDevice; }
 
-		inline VkPhysicalDeviceProperties getVkProperties() const { return m_physicalDeviceProperties; }
+		inline VkPhysicalDeviceProperties getVkPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
+
+		inline VkPhysicalDeviceFeatures getVkPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
+
+		inline VkPhysicalDeviceMemoryProperties getVkPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
 
 		/// <summary>
 		/// Gets the current Vulkan device.
@@ -312,11 +322,11 @@ namespace flounder
 		/// <returns> The current Vulkan device. </returns>
 		inline VkDevice getVkDevice() const { return m_device; }
 
-		VkQueue getVkGraphicsQueue() const { return m_graphicsQueue; }
+		inline VkQueue getVkGraphicsQueue() const { return m_graphicsQueue; }
 
-		VkQueue getVkPresentQueue() const { return m_presentQueue; }
+		inline VkQueue getVkPresentQueue() const { return m_presentQueue; }
 
-		VkQueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+		inline VkQueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 	private:
 		void createWindow();
 

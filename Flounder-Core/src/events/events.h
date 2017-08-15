@@ -19,7 +19,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static events *get()
+		static inline events *get()
 		{
 			return static_cast<events*>(framework::get()->getInstance("events"));
 		}

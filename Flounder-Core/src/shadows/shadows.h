@@ -37,7 +37,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static shadows *get()
+		static inline shadows *get()
 		{
 			return static_cast<shadows*>(framework::get()->getInstance("shadows"));
 		}

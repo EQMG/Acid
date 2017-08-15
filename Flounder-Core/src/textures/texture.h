@@ -6,6 +6,7 @@
 #include <stdarg.h>
 
 #include "../devices/display.h"
+#include "../renderer/renderer.h"
 #include "../maths/colour.h"
 
 namespace flounder
@@ -22,18 +23,15 @@ namespace flounder
 
 		bool m_hasAlpha;
 		bool m_clampEdges;
-		int32_t m_mipLevels;
+		uint32_t m_mipLevels;
 		bool m_anisotropic;
 		bool m_nearest;
-		int32_t m_numberOfRows;
+		uint32_t m_numberOfRows;
 
-		VkBuffer m_stagingBuffer;
-		VkDeviceMemory m_stagingMemory;
 		VkImage m_image;
 		VkDeviceMemory m_imageMemory;
 		VkImageView m_imageView;
 		VkFormat m_format;
-		VkSampler m_sampler;
 		VkImageType m_imageType;
 
 		int32_t m_components;
@@ -45,10 +43,10 @@ namespace flounder
 		/// <param name="file"> The textures file. </param>
 		texture(std::string file, const bool &hasAlpha = false,
 			const bool &clampEdges = false,
-			const int32_t &mipLevels = 1,
+			const uint32_t &mipLevels = 1,
 			const bool &anisotropic = true,
 			const bool &nearest = false,
-			const int32_t &numberOfRows = 1);
+			const uint32_t &numberOfRows = 1);
 
 		/// <summary>
 		/// A new OpenGL cubemap texture object.
@@ -101,5 +99,7 @@ namespace flounder
 		/// Loads the texture object from a cubemap texture files.
 		/// </summary>
 		void loadFromCubemap();
+
+		stbi_uc *loadPixels(const std::string &filepath, int *width, int *height, int *channels);
 	};
 }
