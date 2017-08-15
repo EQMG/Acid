@@ -47,7 +47,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static audio *get()
+		static inline audio *get()
 		{
 			return static_cast<audio*>(framework::get()->getInstance("audio"));
 		}

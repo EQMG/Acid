@@ -31,6 +31,14 @@ namespace flounder
 		std::vector<float> *m_tangents;
 
 		aabb *m_aabb;
+
+		VkBuffer m_indicesBuffer;
+		VkBuffer m_verticesBuffer;
+		VkBuffer m_texturesBuffer;
+		VkBuffer m_normalsBuffer;
+		VkBuffer m_tangentsBuffer;
+		VkDeviceMemory m_memory;
+		VkDescriptorBufferInfo m_bufferInfo;
 	public:
 		/// <summary>
 		/// Creates a new model.
@@ -52,23 +60,6 @@ namespace flounder
 		/// Deconstructor for the model.
 		/// </summary>
 		~model();
-
-		int getVaoID() const { return 0; }
-
-		int getVaoLength() const { return 0; }
-#if 0
-		/// <summary>
-		/// Gets the OpenGL VAO ID.
-		/// </summary>
-		/// <returns> The VAO ID. </returns>
-		GLuint getVaoID() const { return m_vaoID; }
-
-		/// <summary>
-		/// Gets the OpenGL VAO length.
-		/// </summary>
-		/// <returns> The VAO length. </returns>
-		GLuint getVaoLength() const { return m_vaoLength; }
-#endif
 	private:
 		/// <summary>
 		/// Loads the model object from a OBJ file.
@@ -81,7 +72,11 @@ namespace flounder
 
 		void calculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<vector2> *textures);
 
-		void loadToOpenGL();
+		void loadToVulkan();
+
+		VkBuffer createBuffer(std::vector<float> *data);
+
+		void memoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex);
 
 		void createAABB();
 	};

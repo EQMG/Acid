@@ -33,7 +33,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static joysticks *get()
+		static inline joysticks *get()
 		{
 			return static_cast<joysticks*>(framework::get()->getInstance("joysticks"));
 		}

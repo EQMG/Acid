@@ -21,7 +21,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static camera *get()
+		static inline camera *get()
 		{
 			return static_cast<camera*>(framework::get()->getInstance("camera"));
 		}

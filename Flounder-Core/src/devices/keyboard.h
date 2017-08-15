@@ -22,7 +22,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static keyboard *get()
+		static inline keyboard *get()
 		{
 			return static_cast<keyboard*>(framework::get()->getInstance("keyboard"));
 		}
