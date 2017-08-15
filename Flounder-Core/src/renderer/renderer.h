@@ -46,7 +46,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static renderer *get()
+		static inline renderer *get()
 		{
 			return static_cast<renderer*>(framework::get()->getInstance("renderer"));
 		}
@@ -74,6 +74,11 @@ namespace flounder
 		/// </summary>
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		inline void setManager(imanagerrender *managerRender) { m_managerRender = managerRender; }
+
+		std::vector<VkCommandBuffer> getVkCommandBuffers() const
+		{
+			return m_commandBuffers;
+		}
 	private:
 		void createSwapChain();
 

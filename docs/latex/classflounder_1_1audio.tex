@@ -28,7 +28,16 @@ void \hyperlink{classflounder_1_1audio_aabff6a1996b8571404023b6ac17009b6}{update
 \begin{DoxyCompactItemize}
 \item 
 static \hyperlink{classflounder_1_1audio}{audio} $\ast$ \hyperlink{classflounder_1_1audio_ac827774b8855e8a921ef9141c2515df8}{get} ()
-\begin{DoxyCompactList}\small\item\em Gets this framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Gets this framework instance. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1audio_a44aefffd9251716e6d0ec6d058c2bcdd}\label{classflounder_1_1audio_a44aefffd9251716e6d0ec6d058c2bcdd}} 
+static \hyperlink{structflounder_1_1_sound_source_info}{Sound\+Source\+Info} {\bfseries load\+Wave\+File} (const std\+::string path)
+\item 
+\mbox{\Hypertarget{classflounder_1_1audio_adcf594644890f93b9651b2a60c6cfb26}\label{classflounder_1_1audio_adcf594644890f93b9651b2a60c6cfb26}} 
+static \hyperlink{classflounder_1_1sound}{sound} $\ast$ {\bfseries add} (\hyperlink{classflounder_1_1sound}{sound} $\ast$object)
+\item 
+\mbox{\Hypertarget{classflounder_1_1audio_a6f8a589c9adb8f6ef258d56f624ee0a5}\label{classflounder_1_1audio_a6f8a589c9adb8f6ef258d56f624ee0a5}} 
+static \hyperlink{classflounder_1_1sound}{sound} $\ast$ {\bfseries get} (const std\+::string \&name)
+\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -37,9 +46,18 @@ A\+L\+Cdevice $\ast$ {\bfseries m\+\_\+device}
 \item 
 \mbox{\Hypertarget{classflounder_1_1audio_a361e675d6029769f9a366354a3e1cb61}\label{classflounder_1_1audio_a361e675d6029769f9a366354a3e1cb61}} 
 A\+L\+Ccontext $\ast$ {\bfseries m\+\_\+context}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1audio_a58379153a6620d70633e20b4660502ea}\label{classflounder_1_1audio_a58379153a6620d70633e20b4660502ea}} 
-int $\ast$ {\bfseries buffers}
+\mbox{\Hypertarget{classflounder_1_1audio_a60edae723dfd91b038b076140f7dfc6a}\label{classflounder_1_1audio_a60edae723dfd91b038b076140f7dfc6a}} 
+static std\+::vector$<$ \hyperlink{classflounder_1_1sound}{sound} $\ast$ $>$ {\bfseries m\+\_\+sounds} = std\+::vector$<$\hyperlink{classflounder_1_1sound}{sound}$\ast$$>$()
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1audio_a6508242aa0a45174f94d245f432cecbc}\label{classflounder_1_1audio_a6508242aa0a45174f94d245f432cecbc}} 
+class {\bfseries sound}
 \end{DoxyCompactItemize}
 
 

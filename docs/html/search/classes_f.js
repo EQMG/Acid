@@ -10,6 +10,6 @@ var searchData=
   ['pipelinepaused',['pipelinepaused',['../classflounder_1_1pipelinepaused.html',1,'flounder']]],
   ['png',['png',['../structpng.html',1,'']]],
   ['processing',['processing',['../classflounder_1_1processing.html',1,'flounder']]],
-  ['processoropengl',['processoropengl',['../classflounder_1_1processoropengl.html',1,'flounder']]],
+  ['processorgraphic',['processorgraphic',['../classflounder_1_1processorgraphic.html',1,'flounder']]],
   ['processorresource',['processorresource',['../classflounder_1_1processorresource.html',1,'flounder']]]
 ];

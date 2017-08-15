@@ -77,15 +77,18 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a3e0cf9aeb402172757a2ee2bf22a4c7f"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1helperfile.html#a3e0cf9aeb402172757a2ee2bf22a4c7f">readFile</a> (const std::string &amp;filepath)</td></tr>
-<tr class="memdesc:a3e0cf9aeb402172757a2ee2bf22a4c7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a text file into a string.  <a href="#a3e0cf9aeb402172757a2ee2bf22a4c7f">More...</a><br /></td></tr>
-<tr class="separator:a3e0cf9aeb402172757a2ee2bf22a4c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f9da9404d2e3e7b7f1453ede0c5ab24"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1helperfile.html#a4f9da9404d2e3e7b7f1453ede0c5ab24">readTextFile</a> (const std::string &amp;filepath)</td></tr>
+<tr class="memdesc:a4f9da9404d2e3e7b7f1453ede0c5ab24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a text file into a string.  <a href="#a4f9da9404d2e3e7b7f1453ede0c5ab24">More...</a><br /></td></tr>
+<tr class="separator:a4f9da9404d2e3e7b7f1453ede0c5ab24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed36c69790790f1f867bd39c01194a11"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1helperfile.html#aed36c69790790f1f867bd39c01194a11">readBinaryFile</a> (const std::string &amp;filepath)</td></tr>
+<tr class="memdesc:aed36c69790790f1f867bd39c01194a11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a binary file into a char array.  <a href="#aed36c69790790f1f867bd39c01194a11">More...</a><br /></td></tr>
+<tr class="separator:aed36c69790790f1f867bd39c01194a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A helper for C++ files. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3e0cf9aeb402172757a2ee2bf22a4c7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e0cf9aeb402172757a2ee2bf22a4c7f">&#9670;&nbsp;</a></span>readFile()</h2>
+<a id="aed36c69790790f1f867bd39c01194a11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed36c69790790f1f867bd39c01194a11">&#9670;&nbsp;</a></span>readBinaryFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -94,7 +97,42 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::string flounder::helperfile::readFile </td>
+          <td class="memname">static std::vector&lt;char&gt; flounder::helperfile::readBinaryFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filepath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reads a binary file into a char array. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filepath</td><td>The filepath. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The char array loaded from the file. </dd></dl>
+
+</div>
+</div>
+<a id="a4f9da9404d2e3e7b7f1453ede0c5ab24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f9da9404d2e3e7b7f1453ede0c5ab24">&#9670;&nbsp;</a></span>readTextFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string flounder::helperfile::readTextFile </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>filepath</em></td><td>)</td>

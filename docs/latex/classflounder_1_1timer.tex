@@ -12,7 +12,7 @@ A timer implementation for events.
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classflounder_1_1timer_afbe92e026c43d2cacb8172963e4ab6d9}{timer} (const double \&interval)
+\hyperlink{classflounder_1_1timer_a3769450a798aa0608494ef65378e096c}{timer} (const float \&interval)
 \begin{DoxyCompactList}\small\item\em Creates a new timer. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1timer_a2644c550b3bb6aa1c757287a72ff9179}{$\sim$timer} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the timer. \end{DoxyCompactList}\item 
@@ -20,18 +20,18 @@ bool \hyperlink{classflounder_1_1timer_a35d709d12d0f7f921d1f00b314d69685}{is\+Pa
 \begin{DoxyCompactList}\small\item\em Gets if the interval has been passes for the timer. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1timer_af71405c5ec11d085c91aa26d6a8d994c}{reset\+Start\+Time} ()
 \begin{DoxyCompactList}\small\item\em Adds the intervals value to the start time. \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1timer_a9b12cbab2d78c9525873c32d8d0d5e93}{get\+Interval} () const
+float \hyperlink{classflounder_1_1timer_af5c9dc96a947ba2b00e38292f6c80b06}{get\+Interval} () const
 \begin{DoxyCompactList}\small\item\em Gets what the interval is. (Seconds). \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1timer_a801b9883c757b92eaa957f3222c4791d}{set\+Interval} (const double \&interval)
+void \hyperlink{classflounder_1_1timer_aabfc8f4c63a88f8dc797cdc7a465b982}{set\+Interval} (const float \&interval)
 \begin{DoxyCompactList}\small\item\em Gets the timers interval. (Seconds, Resets timer). \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1timer_a7ef146a638759f7f7737e4f2f2005780}\label{classflounder_1_1timer_a7ef146a638759f7f7737e4f2f2005780}} 
-double {\bfseries m\+\_\+start\+Time}
+\mbox{\Hypertarget{classflounder_1_1timer_ab83bfeb33cb0ae0453211cda77e1c15b}\label{classflounder_1_1timer_ab83bfeb33cb0ae0453211cda77e1c15b}} 
+float {\bfseries m\+\_\+start\+Time}
 \item 
-\mbox{\Hypertarget{classflounder_1_1timer_a02ec188db6ae400abd0a6ecfe5a421fc}\label{classflounder_1_1timer_a02ec188db6ae400abd0a6ecfe5a421fc}} 
-double {\bfseries m\+\_\+interval}
+\mbox{\Hypertarget{classflounder_1_1timer_a09706bd6d4793030a842dfdf473c16b0}\label{classflounder_1_1timer_a09706bd6d4793030a842dfdf473c16b0}} 
+float {\bfseries m\+\_\+interval}
 \end{DoxyCompactItemize}
 
 
@@ -41,11 +41,11 @@ A timer implementation for events.
 
 
 \subsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classflounder_1_1timer_afbe92e026c43d2cacb8172963e4ab6d9}\label{classflounder_1_1timer_afbe92e026c43d2cacb8172963e4ab6d9}} 
+\mbox{\Hypertarget{classflounder_1_1timer_a3769450a798aa0608494ef65378e096c}\label{classflounder_1_1timer_a3769450a798aa0608494ef65378e096c}} 
 \index{flounder\+::timer@{flounder\+::timer}!timer@{timer}}
 \index{timer@{timer}!flounder\+::timer@{flounder\+::timer}}
 \subsubsection{\texorpdfstring{timer()}{timer()}}
-{\footnotesize\ttfamily flounder\+::timer\+::timer (\begin{DoxyParamCaption}\item[{const double \&}]{interval }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily flounder\+::timer\+::timer (\begin{DoxyParamCaption}\item[{const float \&}]{interval }\end{DoxyParamCaption})}
 
 
 
@@ -69,11 +69,11 @@ Deconstructor for the timer.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1timer_a9b12cbab2d78c9525873c32d8d0d5e93}\label{classflounder_1_1timer_a9b12cbab2d78c9525873c32d8d0d5e93}} 
+\mbox{\Hypertarget{classflounder_1_1timer_af5c9dc96a947ba2b00e38292f6c80b06}\label{classflounder_1_1timer_af5c9dc96a947ba2b00e38292f6c80b06}} 
 \index{flounder\+::timer@{flounder\+::timer}!get\+Interval@{get\+Interval}}
 \index{get\+Interval@{get\+Interval}!flounder\+::timer@{flounder\+::timer}}
 \subsubsection{\texorpdfstring{get\+Interval()}{getInterval()}}
-{\footnotesize\ttfamily double flounder\+::timer\+::get\+Interval (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+{\footnotesize\ttfamily float flounder\+::timer\+::get\+Interval (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 
 
@@ -105,11 +105,11 @@ If the interval was exceeded.
 
 Adds the intervals value to the start time. 
 
-\mbox{\Hypertarget{classflounder_1_1timer_a801b9883c757b92eaa957f3222c4791d}\label{classflounder_1_1timer_a801b9883c757b92eaa957f3222c4791d}} 
+\mbox{\Hypertarget{classflounder_1_1timer_aabfc8f4c63a88f8dc797cdc7a465b982}\label{classflounder_1_1timer_aabfc8f4c63a88f8dc797cdc7a465b982}} 
 \index{flounder\+::timer@{flounder\+::timer}!set\+Interval@{set\+Interval}}
 \index{set\+Interval@{set\+Interval}!flounder\+::timer@{flounder\+::timer}}
 \subsubsection{\texorpdfstring{set\+Interval()}{setInterval()}}
-{\footnotesize\ttfamily void flounder\+::timer\+::set\+Interval (\begin{DoxyParamCaption}\item[{const double \&}]{interval }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void flounder\+::timer\+::set\+Interval (\begin{DoxyParamCaption}\item[{const float \&}]{interval }\end{DoxyParamCaption})}
 
 
 

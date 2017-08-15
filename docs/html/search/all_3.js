@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['deferredrenderer',['deferredrenderer',['../classflounder_1_1deferredrenderer.html',1,'flounder::deferredrenderer'],['../classflounder_1_1deferredrenderer.html#a1eb8e53d1705eaee945d28677fb41bcc',1,'flounder::deferredrenderer::deferredrenderer()']]],
-  ['deletetypes',['deleteTypes',['../classflounder_1_1shader.html#a12948c1607867de569f1cd596c923623',1,'flounder::shader']]],
   ['delta',['delta',['../classflounder_1_1delta.html',1,'flounder::delta'],['../classflounder_1_1delta.html#a6996799d2f9423e994e2beb84dc3ba09',1,'flounder::delta::delta()']]],
   ['depthbuffer',['depthbuffer',['../namespaceflounder.html#aed09c736167e783c910ec9e58479b57c',1,'flounder']]],
   ['determinant',['determinant',['../classflounder_1_1matrix2x2.html#aa71186f2af34e6f59a4eb40e5c289ffd',1,'flounder::matrix2x2::determinant(const matrix2x2 &amp;source)'],['../classflounder_1_1matrix2x2.html#aba728cb860075c19d7776b460d20bff7',1,'flounder::matrix2x2::determinant()'],['../classflounder_1_1matrix3x3.html#a617309da3506ce9a683573855a31ce22',1,'flounder::matrix3x3::determinant(const matrix3x3 &amp;source)'],['../classflounder_1_1matrix3x3.html#a6c25560ee28e4d9190fe33b4559dd4e1',1,'flounder::matrix3x3::determinant()'],['../classflounder_1_1matrix4x4.html#aed6f2bda7427d0edac8c8ec6b6a0dc84',1,'flounder::matrix4x4::determinant(const matrix4x4 &amp;source)'],['../classflounder_1_1matrix4x4.html#a84057c3c850597e4c51882f79773a7fd',1,'flounder::matrix4x4::determinant()']]],

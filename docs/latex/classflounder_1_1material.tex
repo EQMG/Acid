@@ -1,0 +1,126 @@
+\hypertarget{classflounder_1_1material}{}\section{flounder\+:\+:material Class Reference}
+\label{classflounder_1_1material}\index{flounder\+::material@{flounder\+::material}}
+
+
+Class that represents a M\+TL material.  
+
+
+
+
+{\ttfamily \#include $<$material.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1material_a92098b1119ad0fa59ca131410cbaf762}{material} (const std\+::string \&file)
+\begin{DoxyCompactList}\small\item\em Creates a new material. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1material_a9091fb3ad0368b98413568ccef5dbdb7}{$\sim$material} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the material. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classflounder_1_1material_ad1a00236b517a42246066c11f6214fb5}\label{classflounder_1_1material_ad1a00236b517a42246066c11f6214fb5}} 
+std\+::string {\bfseries get\+Name} () const
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_a20d6eeae2a75e2543270c7866b8eaf09}\label{classflounder_1_1material_a20d6eeae2a75e2543270c7866b8eaf09}} 
+std\+::string {\bfseries get\+File} () const
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_a7a1b1ba51cd46c2f9c0d766d3ecc8b2b}\label{classflounder_1_1material_a7a1b1ba51cd46c2f9c0d766d3ecc8b2b}} 
+float {\bfseries get\+Specular\+Coefficient} () const
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_afa55b7a69b762d306a20068ef612d59e}\label{classflounder_1_1material_afa55b7a69b762d306a20068ef612d59e}} 
+\hyperlink{classflounder_1_1colour}{colour} $\ast$ {\bfseries get\+Ambient} () const
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_aa0437ef7b814e0b1016cc0b836c5ff3e}\label{classflounder_1_1material_aa0437ef7b814e0b1016cc0b836c5ff3e}} 
+\hyperlink{classflounder_1_1colour}{colour} $\ast$ {\bfseries get\+Diffuse} () const
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_a3801707d870dc20abe2cf8a0ffb31907}\label{classflounder_1_1material_a3801707d870dc20abe2cf8a0ffb31907}} 
+\hyperlink{classflounder_1_1colour}{colour} $\ast$ {\bfseries get\+Specular} () const
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_a4c59c999853e20a0d85dc9650e1f55ca}\label{classflounder_1_1material_a4c59c999853e20a0d85dc9650e1f55ca}} 
+\hyperlink{classflounder_1_1texture}{texture} $\ast$ {\bfseries get\+Albedo} () const
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_aff2dad52e467597b63c41a048f2a2a91}\label{classflounder_1_1material_aff2dad52e467597b63c41a048f2a2a91}} 
+\hyperlink{classflounder_1_1texture}{texture} $\ast$ {\bfseries get\+Normals} () const
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classflounder_1_1material_a8f2af341dd47838604eee5a7f9157c31}{load\+From\+File} ()
+\begin{DoxyCompactList}\small\item\em Loads the material object from a M\+TL file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_a5e59069daead88bf61895c118e393cbe}\label{classflounder_1_1material_a5e59069daead88bf61895c118e393cbe}} 
+std\+::string {\bfseries m\+\_\+name}
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_a31e333d7092514112cf023303642faee}\label{classflounder_1_1material_a31e333d7092514112cf023303642faee}} 
+std\+::string {\bfseries m\+\_\+file}
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_adb0188004c5e4f4530611c9a342ed355}\label{classflounder_1_1material_adb0188004c5e4f4530611c9a342ed355}} 
+float {\bfseries m\+\_\+specular\+Coefficient}
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_aca7142ea9c1e71da9fe457b0ce5b5ab8}\label{classflounder_1_1material_aca7142ea9c1e71da9fe457b0ce5b5ab8}} 
+\hyperlink{classflounder_1_1colour}{colour} $\ast$ {\bfseries m\+\_\+ambient}
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_a3e562b66887afa2f5f0cbe0392d7bdbd}\label{classflounder_1_1material_a3e562b66887afa2f5f0cbe0392d7bdbd}} 
+\hyperlink{classflounder_1_1colour}{colour} $\ast$ {\bfseries m\+\_\+diffuse}
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_a37e9779779935f4da2264384e131b560}\label{classflounder_1_1material_a37e9779779935f4da2264384e131b560}} 
+\hyperlink{classflounder_1_1colour}{colour} $\ast$ {\bfseries m\+\_\+specular}
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_a9052a0f685caf16d2ac374cf556e6441}\label{classflounder_1_1material_a9052a0f685caf16d2ac374cf556e6441}} 
+\hyperlink{classflounder_1_1texture}{texture} $\ast$ {\bfseries m\+\_\+albedo}
+\item 
+\mbox{\Hypertarget{classflounder_1_1material_a80be93273c968b0eac1e867d3c219d43}\label{classflounder_1_1material_a80be93273c968b0eac1e867d3c219d43}} 
+\hyperlink{classflounder_1_1texture}{texture} $\ast$ {\bfseries m\+\_\+normals}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class that represents a M\+TL material. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1material_a92098b1119ad0fa59ca131410cbaf762}\label{classflounder_1_1material_a92098b1119ad0fa59ca131410cbaf762}} 
+\index{flounder\+::material@{flounder\+::material}!material@{material}}
+\index{material@{material}!flounder\+::material@{flounder\+::material}}
+\subsubsection{\texorpdfstring{material()}{material()}}
+{\footnotesize\ttfamily flounder\+::material\+::material (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{file }\end{DoxyParamCaption})}
+
+
+
+Creates a new material. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The file name. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1material_a9091fb3ad0368b98413568ccef5dbdb7}\label{classflounder_1_1material_a9091fb3ad0368b98413568ccef5dbdb7}} 
+\index{flounder\+::material@{flounder\+::material}!````~material@{$\sim$material}}
+\index{````~material@{$\sim$material}!flounder\+::material@{flounder\+::material}}
+\subsubsection{\texorpdfstring{$\sim$material()}{~material()}}
+{\footnotesize\ttfamily flounder\+::material\+::$\sim$material (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the material. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1material_a8f2af341dd47838604eee5a7f9157c31}\label{classflounder_1_1material_a8f2af341dd47838604eee5a7f9157c31}} 
+\index{flounder\+::material@{flounder\+::material}!load\+From\+File@{load\+From\+File}}
+\index{load\+From\+File@{load\+From\+File}!flounder\+::material@{flounder\+::material}}
+\subsubsection{\texorpdfstring{load\+From\+File()}{loadFromFile()}}
+{\footnotesize\ttfamily void flounder\+::material\+::load\+From\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Loads the material object from a M\+TL file. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/materials/material.\+h\item 
+Flounder-\/\+Core/src/materials/material.\+cpp\end{DoxyCompactItemize}

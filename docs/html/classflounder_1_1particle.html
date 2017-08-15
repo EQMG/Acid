@@ -94,9 +94,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a156e09a44b655e9d64d90302852ae144"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1particle.html#a156e09a44b655e9d64d90302852ae144">~particle</a> ()</td></tr>
 <tr class="memdesc:a156e09a44b655e9d64d90302852ae144"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the particle.  <a href="#a156e09a44b655e9d64d90302852ae144">More...</a><br /></td></tr>
 <tr class="separator:a156e09a44b655e9d64d90302852ae144"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6572109ef15a5cd352d1a8ded68123cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classflounder_1_1particle.html">particle</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1particle.html#a6572109ef15a5cd352d1a8ded68123cb">set</a> (<a class="el" href="classflounder_1_1particletype.html">particletype</a> *particleType, const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;position, const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;velocity, const float &amp;lifeLength, const float &amp;rotation, const float &amp;scale, const float &amp;gravityEffect)</td></tr>
-<tr class="memdesc:a6572109ef15a5cd352d1a8ded68123cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets this particle to a new particle object.  <a href="#a6572109ef15a5cd352d1a8ded68123cb">More...</a><br /></td></tr>
-<tr class="separator:a6572109ef15a5cd352d1a8ded68123cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad524600c5aa2c2594896cf8702187e7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1particle.html#ad524600c5aa2c2594896cf8702187e7e">update</a> ()</td></tr>
 <tr class="memdesc:ad524600c5aa2c2594896cf8702187e7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the particle.  <a href="#ad524600c5aa2c2594896cf8702187e7e">More...</a><br /></td></tr>
 <tr class="separator:ad524600c5aa2c2594896cf8702187e7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,6 +145,9 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>getTextureBlendFacto
 <tr class="memitem:a694ec8ec5b6b43dbd2bc1d0fbbd3cf97"><td class="memItemLeft" align="right" valign="top"><a id="a694ec8ec5b6b43dbd2bc1d0fbbd3cf97"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>getDistanceToCamera</b> ()</td></tr>
 <tr class="separator:a694ec8ec5b6b43dbd2bc1d0fbbd3cf97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a658efdf6baaca2c48cb1d294bf50d446"><td class="memItemLeft" align="right" valign="top"><a id="a658efdf6baaca2c48cb1d294bf50d446"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (const <a class="el" href="classflounder_1_1particle.html">particle</a> &amp;other) const</td></tr>
+<tr class="separator:a658efdf6baaca2c48cb1d294bf50d446"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classflounder_1_1ispatialobject"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classflounder_1_1ispatialobject')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classflounder_1_1ispatialobject.html">flounder::ispatialobject</a></td></tr>
 <tr class="memitem:ad0a12c2658487000d8a00ce24df04e77 inherit pub_methods_classflounder_1_1ispatialobject"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1ispatialobject.html#ad0a12c2658487000d8a00ce24df04e77">ispatialobject</a> ()</td></tr>
 <tr class="memdesc:ad0a12c2658487000d8a00ce24df04e77 inherit pub_methods_classflounder_1_1ispatialobject"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new spatial object.  <a href="classflounder_1_1ispatialobject.html#ad0a12c2658487000d8a00ce24df04e77">More...</a><br /></td></tr>
@@ -176,9 +176,6 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a419470d74d3164dfacecb80b3db920fb"><td class="memItemLeft" align="right" valign="top"><a id="a419470d74d3164dfacecb80b3db920fb"></a>
 <a class="el" href="classflounder_1_1vector3.html">vector3</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_change</b></td></tr>
 <tr class="separator:a419470d74d3164dfacecb80b3db920fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3600f9ea12e27d89c2cc7fcdfc77392"><td class="memItemLeft" align="right" valign="top"><a id="ae3600f9ea12e27d89c2cc7fcdfc77392"></a>
-aabb *&#160;</td><td class="memItemRight" valign="bottom"><b>m_aabb</b></td></tr>
-<tr class="separator:ae3600f9ea12e27d89c2cc7fcdfc77392"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a923c723b9e8ce4a34c9ffe57d4836166"><td class="memItemLeft" align="right" valign="top"><a id="a923c723b9e8ce4a34c9ffe57d4836166"></a>
 <a class="el" href="classflounder_1_1vector2.html">vector2</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_textureOffset1</b></td></tr>
 <tr class="separator:a923c723b9e8ce4a34c9ffe57d4836166"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -332,79 +329,6 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_distanceToCamera</
 <dl class="section return"><dt>Returns</dt><dd>Returns a shape fully enclosing the object. </dd></dl>
 
 <p>Implements <a class="el" href="classflounder_1_1ispatialobject.html#af3867cbb5f35b0296a16af77703e6c81">flounder::ispatialobject</a>.</p>
-
-</div>
-</div>
-<a id="a6572109ef15a5cd352d1a8ded68123cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6572109ef15a5cd352d1a8ded68123cb">&#9670;&nbsp;</a></span>set()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classflounder_1_1particle.html">particle</a> * flounder::particle::set </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classflounder_1_1particletype.html">particletype</a> *&#160;</td>
-          <td class="paramname"><em>particleType</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;&#160;</td>
-          <td class="paramname"><em>position</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;&#160;</td>
-          <td class="paramname"><em>velocity</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>lifeLength</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>rotation</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>scale</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>gravityEffect</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets this particle to a new particle object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">particleType</td><td>The particle template to build from. </td></tr>
-    <tr><td class="paramname">position</td><td>The particles initial position. </td></tr>
-    <tr><td class="paramname">velocity</td><td>The particles initial velocity. </td></tr>
-    <tr><td class="paramname">lifeLength</td><td>The particles life length. </td></tr>
-    <tr><td class="paramname">rotation</td><td>The particles rotation. </td></tr>
-    <tr><td class="paramname">scale</td><td>The particles scale. </td></tr>
-    <tr><td class="paramname">gravityEffect</td><td>The particles gravity effect. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>this. </dd></dl>
 
 </div>
 </div>

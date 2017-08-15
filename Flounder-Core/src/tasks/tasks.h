@@ -21,7 +21,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static tasks *get()
+		static inline tasks *get()
 		{
 			return static_cast<tasks*>(framework::get()->getInstance("tasks"));
 		}

@@ -63,58 +63,64 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classflounder_1_1model-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">flounder::model Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class that represents a loaded model.  
+<p>Class that represents a OBJ model.  
  <a href="classflounder_1_1model.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="model_8h_source.html">model.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1model_1_1builder.html">builder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A builder used to set model parameters for loading.  <a href="classflounder_1_1model_1_1builder.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aa91d042d6c08955bb113803933bbfdd6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1model.html#aa91d042d6c08955bb113803933bbfdd6">model</a> (const std::string &amp;file)</td></tr>
+<tr class="memdesc:aa91d042d6c08955bb113803933bbfdd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new model.  <a href="#aa91d042d6c08955bb113803933bbfdd6">More...</a><br /></td></tr>
+<tr class="separator:aa91d042d6c08955bb113803933bbfdd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac66ffb48f0139fbcda4d216ba8c5a7f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1model.html#ac66ffb48f0139fbcda4d216ba8c5a7f3">model</a> (std::vector&lt; int &gt; *indices, std::vector&lt; float &gt; *vertices, std::vector&lt; float &gt; *textures, std::vector&lt; float &gt; *normals, std::vector&lt; float &gt; *tangents)</td></tr>
+<tr class="memdesc:ac66ffb48f0139fbcda4d216ba8c5a7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new model.  <a href="#ac66ffb48f0139fbcda4d216ba8c5a7f3">More...</a><br /></td></tr>
+<tr class="separator:ac66ffb48f0139fbcda4d216ba8c5a7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd864365f858cc9bc0bf260bb6212a76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1model.html#afd864365f858cc9bc0bf260bb6212a76">~model</a> ()</td></tr>
 <tr class="memdesc:afd864365f858cc9bc0bf260bb6212a76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the model.  <a href="#afd864365f858cc9bc0bf260bb6212a76">More...</a><br /></td></tr>
 <tr class="separator:afd864365f858cc9bc0bf260bb6212a76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c228ad9bf9ae4897cc3b4a40be8e65e"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1model.html#a6c228ad9bf9ae4897cc3b4a40be8e65e">getVaoID</a> () const</td></tr>
-<tr class="memdesc:a6c228ad9bf9ae4897cc3b4a40be8e65e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the OpenGL VAO ID.  <a href="#a6c228ad9bf9ae4897cc3b4a40be8e65e">More...</a><br /></td></tr>
-<tr class="separator:a6c228ad9bf9ae4897cc3b4a40be8e65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a224a933a01c0b0c73c7ce2876a519394"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1model.html#a224a933a01c0b0c73c7ce2876a519394">getVaoLength</a> () const</td></tr>
-<tr class="memdesc:a224a933a01c0b0c73c7ce2876a519394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the OpenGL VAO length.  <a href="#a224a933a01c0b0c73c7ce2876a519394">More...</a><br /></td></tr>
-<tr class="separator:a224a933a01c0b0c73c7ce2876a519394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9de8561fde41d5cb14153c247106ae73"><td class="memItemLeft" align="right" valign="top"><a id="a9de8561fde41d5cb14153c247106ae73"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getVaoID</b> () const</td></tr>
+<tr class="separator:a9de8561fde41d5cb14153c247106ae73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6cc4346fc20a62d01ec56dbce86863c"><td class="memItemLeft" align="right" valign="top"><a id="af6cc4346fc20a62d01ec56dbce86863c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getVaoLength</b> () const</td></tr>
+<tr class="separator:af6cc4346fc20a62d01ec56dbce86863c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a55bec80a4092dbe35c319c49d1d50ed8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classflounder_1_1model_1_1builder.html">builder</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1model.html#a55bec80a4092dbe35c319c49d1d50ed8">newModel</a> ()</td></tr>
-<tr class="memdesc:a55bec80a4092dbe35c319c49d1d50ed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new model builder that is used to configure a model.  <a href="#a55bec80a4092dbe35c319c49d1d50ed8">More...</a><br /></td></tr>
-<tr class="separator:a55bec80a4092dbe35c319c49d1d50ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a1a21185a26ebe3645d41aaee86e897de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1model.html#a1a21185a26ebe3645d41aaee86e897de">loadFromFile</a> ()</td></tr>
+<tr class="memdesc:a1a21185a26ebe3645d41aaee86e897de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the model object from a OBJ file.  <a href="#a1a21185a26ebe3645d41aaee86e897de">More...</a><br /></td></tr>
+<tr class="separator:a1a21185a26ebe3645d41aaee86e897de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24e81bf6b3ec2c428975e6419ebf18ca"><td class="memItemLeft" align="right" valign="top"><a id="a24e81bf6b3ec2c428975e6419ebf18ca"></a>
+<a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>processDataVertex</b> (<a class="el" href="classflounder_1_1vector3.html">vector3</a> vertex, std::vector&lt; <a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *&gt; *vertices, std::vector&lt; int &gt; *indices)</td></tr>
+<tr class="separator:a24e81bf6b3ec2c428975e6419ebf18ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a5bafcc900a83c0add5b20d3f6ee0c0"><td class="memItemLeft" align="right" valign="top"><a id="a2a5bafcc900a83c0add5b20d3f6ee0c0"></a>
+<a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>dealWithAlreadyProcessedDataVertex</b> (<a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *previousVertex, const int &amp;newTextureIndex, const int &amp;newNormalIndex, std::vector&lt; int &gt; *indices, std::vector&lt; <a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *&gt; *vertices)</td></tr>
+<tr class="separator:a2a5bafcc900a83c0add5b20d3f6ee0c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8eafa9f1c1afde95f7b4035a7e83f59"><td class="memItemLeft" align="right" valign="top"><a id="ad8eafa9f1c1afde95f7b4035a7e83f59"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>calculateTangents</b> (<a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *v0, <a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *v1, <a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *v2, std::vector&lt; <a class="el" href="classflounder_1_1vector2.html">vector2</a> &gt; *textures)</td></tr>
+<tr class="separator:ad8eafa9f1c1afde95f7b4035a7e83f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf5f1c0df19c406ff98214b376e0d997"><td class="memItemLeft" align="right" valign="top"><a id="acf5f1c0df19c406ff98214b376e0d997"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>loadToOpenGL</b> ()</td></tr>
+<tr class="separator:acf5f1c0df19c406ff98214b376e0d997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc9de7f0f5a067bd1d1a775986bd3578"><td class="memItemLeft" align="right" valign="top"><a id="adc9de7f0f5a067bd1d1a775986bd3578"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>createAABB</b> ()</td></tr>
+<tr class="separator:adc9de7f0f5a067bd1d1a775986bd3578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a6a27604e53fce127b6f6da4fb4d74972"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1model.html#a6a27604e53fce127b6f6da4fb4d74972">model</a> (<a class="el" href="classflounder_1_1model_1_1builder.html">builder</a> *<a class="el" href="classflounder_1_1model_1_1builder.html">builder</a>)</td></tr>
-<tr class="memdesc:a6a27604e53fce127b6f6da4fb4d74972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new model.  <a href="#a6a27604e53fce127b6f6da4fb4d74972">More...</a><br /></td></tr>
-<tr class="separator:a6a27604e53fce127b6f6da4fb4d74972"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a5cfec173aa5b5c45c9a7bfd85af43478"><td class="memItemLeft" align="right" valign="top"><a id="a5cfec173aa5b5c45c9a7bfd85af43478"></a>
-<a class="el" href="classflounder_1_1model_1_1builder.html">builder</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_builder</b></td></tr>
-<tr class="separator:a5cfec173aa5b5c45c9a7bfd85af43478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af15fa0eec11d5791d04c6f569f8dfd2d"><td class="memItemLeft" align="right" valign="top"><a id="af15fa0eec11d5791d04c6f569f8dfd2d"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_name</b></td></tr>
+<tr class="separator:af15fa0eec11d5791d04c6f569f8dfd2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a176fa436cac56744160e1c2c8698a450"><td class="memItemLeft" align="right" valign="top"><a id="a176fa436cac56744160e1c2c8698a450"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_file</b></td></tr>
 <tr class="separator:a176fa436cac56744160e1c2c8698a450"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,65 +142,88 @@ std::vector&lt; float &gt; *&#160;</td><td class="memItemRight" valign="bottom">
 <tr class="memitem:a95212f2754f856a37eb8c27aaa8dbf15"><td class="memItemLeft" align="right" valign="top"><a id="a95212f2754f856a37eb8c27aaa8dbf15"></a>
 aabb *&#160;</td><td class="memItemRight" valign="bottom"><b>m_aabb</b></td></tr>
 <tr class="separator:a95212f2754f856a37eb8c27aaa8dbf15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ba4ffa3a5671c06e6935a96b127d092"><td class="memItemLeft" align="right" valign="top"><a id="a3ba4ffa3a5671c06e6935a96b127d092"></a>
-GLuint&#160;</td><td class="memItemRight" valign="bottom"><b>m_vaoID</b></td></tr>
-<tr class="separator:a3ba4ffa3a5671c06e6935a96b127d092"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40ad8b92e750a578c0ec1072b1778da9"><td class="memItemLeft" align="right" valign="top"><a id="a40ad8b92e750a578c0ec1072b1778da9"></a>
-GLuint&#160;</td><td class="memItemRight" valign="bottom"><b>m_vaoLength</b></td></tr>
-<tr class="separator:a40ad8b92e750a578c0ec1072b1778da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a34c636bee22fcf36fa2a2fcfe0bdadb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1model.html#a34c636bee22fcf36fa2a2fcfe0bdadb3">loadFromFile</a> (const std::string &amp;file)</td></tr>
-<tr class="memdesc:a34c636bee22fcf36fa2a2fcfe0bdadb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the model object from a model file.  <a href="#a34c636bee22fcf36fa2a2fcfe0bdadb3">More...</a><br /></td></tr>
-<tr class="separator:a34c636bee22fcf36fa2a2fcfe0bdadb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24e81bf6b3ec2c428975e6419ebf18ca"><td class="memItemLeft" align="right" valign="top"><a id="a24e81bf6b3ec2c428975e6419ebf18ca"></a>
-<a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>processDataVertex</b> (<a class="el" href="classflounder_1_1vector3.html">vector3</a> vertex, std::vector&lt; <a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *&gt; *vertices, std::vector&lt; int &gt; *indices)</td></tr>
-<tr class="separator:a24e81bf6b3ec2c428975e6419ebf18ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a5bafcc900a83c0add5b20d3f6ee0c0"><td class="memItemLeft" align="right" valign="top"><a id="a2a5bafcc900a83c0add5b20d3f6ee0c0"></a>
-<a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>dealWithAlreadyProcessedDataVertex</b> (<a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *previousVertex, const int &amp;newTextureIndex, const int &amp;newNormalIndex, std::vector&lt; int &gt; *indices, std::vector&lt; <a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *&gt; *vertices)</td></tr>
-<tr class="separator:a2a5bafcc900a83c0add5b20d3f6ee0c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8eafa9f1c1afde95f7b4035a7e83f59"><td class="memItemLeft" align="right" valign="top"><a id="ad8eafa9f1c1afde95f7b4035a7e83f59"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>calculateTangents</b> (<a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *v0, <a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *v1, <a class="el" href="classflounder_1_1vertexdata.html">vertexdata</a> *v2, std::vector&lt; <a class="el" href="classflounder_1_1vector2.html">vector2</a> &gt; *textures)</td></tr>
-<tr class="separator:ad8eafa9f1c1afde95f7b4035a7e83f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf5f1c0df19c406ff98214b376e0d997"><td class="memItemLeft" align="right" valign="top"><a id="acf5f1c0df19c406ff98214b376e0d997"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>loadToOpenGL</b> ()</td></tr>
-<tr class="separator:acf5f1c0df19c406ff98214b376e0d997"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc9de7f0f5a067bd1d1a775986bd3578"><td class="memItemLeft" align="right" valign="top"><a id="adc9de7f0f5a067bd1d1a775986bd3578"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>createAABB</b> ()</td></tr>
-<tr class="separator:adc9de7f0f5a067bd1d1a775986bd3578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class that represents a loaded model. </p>
+<div class="textblock"><p>Class that represents a OBJ model. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6a27604e53fce127b6f6da4fb4d74972"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a27604e53fce127b6f6da4fb4d74972">&#9670;&nbsp;</a></span>model()</h2>
+<a id="aa91d042d6c08955bb113803933bbfdd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa91d042d6c08955bb113803933bbfdd6">&#9670;&nbsp;</a></span>model() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">flounder::model::model </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classflounder_1_1model_1_1builder.html">builder</a> *&#160;</td>
-          <td class="paramname"><em>builder</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Creates a new model. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">builder</td><td>The models builder. </td></tr>
+    <tr><td class="paramname">name</td><td>The file name. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac66ffb48f0139fbcda4d216ba8c5a7f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac66ffb48f0139fbcda4d216ba8c5a7f3">&#9670;&nbsp;</a></span>model() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">flounder::model::model </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; int &gt; *&#160;</td>
+          <td class="paramname"><em>indices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; float &gt; *&#160;</td>
+          <td class="paramname"><em>vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; float &gt; *&#160;</td>
+          <td class="paramname"><em>textures</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; float &gt; *&#160;</td>
+          <td class="paramname"><em>normals</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; float &gt; *&#160;</td>
+          <td class="paramname"><em>tangents</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new model. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">indices</td><td>The model indices. </td></tr>
+    <tr><td class="paramname">vertices</td><td>The model vertices. </td></tr>
+    <tr><td class="paramname">textures</td><td>The model textures. </td></tr>
+    <tr><td class="paramname">normals</td><td>The model normals. </td></tr>
+    <tr><td class="paramname">tangents</td><td>The model tangents. </td></tr>
   </table>
   </dd>
 </dl>
@@ -221,64 +250,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>createAABB</b> ()</td
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6c228ad9bf9ae4897cc3b4a40be8e65e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c228ad9bf9ae4897cc3b4a40be8e65e">&#9670;&nbsp;</a></span>getVaoID()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">GLuint flounder::model::getVaoID </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the OpenGL VAO ID. </p>
-<dl class="section return"><dt>Returns</dt><dd>The VAO ID. </dd></dl>
-
-</div>
-</div>
-<a id="a224a933a01c0b0c73c7ce2876a519394"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a224a933a01c0b0c73c7ce2876a519394">&#9670;&nbsp;</a></span>getVaoLength()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">GLuint flounder::model::getVaoLength </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the OpenGL VAO length. </p>
-<dl class="section return"><dt>Returns</dt><dd>The VAO length. </dd></dl>
-
-</div>
-</div>
-<a id="a34c636bee22fcf36fa2a2fcfe0bdadb3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34c636bee22fcf36fa2a2fcfe0bdadb3">&#9670;&nbsp;</a></span>loadFromFile()</h2>
+<a id="a1a21185a26ebe3645d41aaee86e897de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a21185a26ebe3645d41aaee86e897de">&#9670;&nbsp;</a></span>loadFromFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -289,8 +262,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>createAABB</b> ()</td
         <tr>
           <td class="memname">void flounder::model::loadFromFile </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>file</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -301,41 +273,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>createAABB</b> ()</td
 </table>
 </div><div class="memdoc">
 
-<p>Loads the model object from a model file. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">file</td><td>The file to load from. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a55bec80a4092dbe35c319c49d1d50ed8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55bec80a4092dbe35c319c49d1d50ed8">&#9670;&nbsp;</a></span>newModel()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classflounder_1_1model_1_1builder.html">model::builder</a> * flounder::model::newModel </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a new model builder that is used to configure a model. </p>
-<dl class="section return"><dt>Returns</dt><dd>The model builder. </dd></dl>
+<p>Loads the model object from a OBJ file. </p>
 
 </div>
 </div>

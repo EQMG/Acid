@@ -1,9 +1,12 @@
 var searchData=
 [
   ['tasks',['tasks',['../classflounder_1_1tasks.html',1,'flounder']]],
+  ['terrain',['terrain',['../classflounder_1_1terrain.html',1,'flounder']]],
+  ['terrains',['terrains',['../classflounder_1_1terrains.html',1,'flounder::terrains'],['../classflounder_1_1terrains.html#a9c58f36cb43aa3e10e8135e0ea6a0f6a',1,'flounder::terrains::terrains()']]],
+  ['testubo',['testubo',['../structflounder_1_1renderer_1_1testubo.html',1,'flounder::renderer']]],
   ['text',['text',['../classflounder_1_1text.html',1,'flounder::text'],['../classflounder_1_1text.html#a4b99960617867cc5159778aa42d99a19',1,'flounder::text::text()']]],
-  ['texture',['texture',['../classflounder_1_1texture.html',1,'flounder::texture'],['../classflounder_1_1texture.html#a82dd2e895abe671411ab0fcaaf49b5d1',1,'flounder::texture::texture()']]],
-  ['timer',['timer',['../classflounder_1_1timer.html',1,'flounder::timer'],['../classflounder_1_1timer.html#afbe92e026c43d2cacb8172963e4ab6d9',1,'flounder::timer::timer()']]],
+  ['texture',['texture',['../classflounder_1_1texture.html',1,'flounder::texture'],['../classflounder_1_1texture.html#a62ac74067eac27177bb9b8e4483a7a55',1,'flounder::texture::texture(std::string file, const bool &amp;hasAlpha=false, const bool &amp;clampEdges=false, const int32_t &amp;mipLevels=1, const bool &amp;anisotropic=true, const bool &amp;nearest=false, const int32_t &amp;numberOfRows=1)'],['../classflounder_1_1texture.html#a907f7472caf155686539bd54fb451166',1,'flounder::texture::texture(const int n_args,...)']]],
+  ['timer',['timer',['../classflounder_1_1timer.html',1,'flounder::timer'],['../classflounder_1_1timer.html#a3769450a798aa0608494ef65378e096c',1,'flounder::timer::timer()']]],
   ['toarray',['toArray',['../classflounder_1_1matrix2x2.html#a8da6f8c235a0cd3715b037ac615a6e69',1,'flounder::matrix2x2::toArray()'],['../classflounder_1_1matrix3x3.html#ae8e1750d62bd1061ae0e39e26794b23b',1,'flounder::matrix3x3::toArray()'],['../classflounder_1_1matrix4x4.html#a5eaea900736fe16138c0380b4e9c4786',1,'flounder::matrix4x4::toArray()']]],
   ['tomatrix',['toMatrix',['../classflounder_1_1quaternion.html#a229c673de0638993dae852f4027bb38b',1,'flounder::quaternion']]],
   ['torotationmatrix',['toRotationMatrix',['../classflounder_1_1quaternion.html#a27a4276b67f349b8cd79905bbd0c7ae4',1,'flounder::quaternion']]],

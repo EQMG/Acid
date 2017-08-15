@@ -7,6 +7,7 @@ var searchData=
   ['filtercombine',['filtercombine',['../classflounder_1_1filtercombine.html',1,'flounder']]],
   ['filtercrt',['filtercrt',['../classflounder_1_1filtercrt.html',1,'flounder']]],
   ['filterdarken',['filterdarken',['../classflounder_1_1filterdarken.html',1,'flounder']]],
+  ['filterdefault',['filterdefault',['../classflounder_1_1filterdefault.html',1,'flounder']]],
   ['filteremboss',['filteremboss',['../classflounder_1_1filteremboss.html',1,'flounder']]],
   ['filterfxaa',['filterfxaa',['../classflounder_1_1filterfxaa.html',1,'flounder']]],
   ['filtergrain',['filtergrain',['../classflounder_1_1filtergrain.html',1,'flounder']]],

@@ -22,8 +22,6 @@ Inheritance diagram for flounder\+:\+:particle\+:\begin{figure}[H]
 \begin{DoxyCompactList}\small\item\em Creates a new particle object. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1particle_a156e09a44b655e9d64d90302852ae144}{$\sim$particle} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the particle. \end{DoxyCompactList}\item 
-\hyperlink{classflounder_1_1particle}{particle} $\ast$ \hyperlink{classflounder_1_1particle_a6572109ef15a5cd352d1a8ded68123cb}{set} (\hyperlink{classflounder_1_1particletype}{particletype} $\ast$particle\+Type, const \hyperlink{classflounder_1_1vector3}{vector3} \&position, const \hyperlink{classflounder_1_1vector3}{vector3} \&velocity, const float \&life\+Length, const float \&rotation, const float \&scale, const float \&gravity\+Effect)
-\begin{DoxyCompactList}\small\item\em Sets this particle to a new particle object. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1particle_ad524600c5aa2c2594896cf8702187e7e}{update} ()
 \begin{DoxyCompactList}\small\item\em Updates the particle. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classflounder_1_1particle_accf9e8afa49a6b0406256e09403106f0}\label{classflounder_1_1particle_accf9e8afa49a6b0406256e09403106f0}} 
@@ -72,6 +70,9 @@ float {\bfseries get\+Texture\+Blend\+Factor} ()
 \item 
 \mbox{\Hypertarget{classflounder_1_1particle_a694ec8ec5b6b43dbd2bc1d0fbbd3cf97}\label{classflounder_1_1particle_a694ec8ec5b6b43dbd2bc1d0fbbd3cf97}} 
 float {\bfseries get\+Distance\+To\+Camera} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1particle_a658efdf6baaca2c48cb1d294bf50d446}\label{classflounder_1_1particle_a658efdf6baaca2c48cb1d294bf50d446}} 
+bool {\bfseries operator$<$} (const \hyperlink{classflounder_1_1particle}{particle} \&other) const
 \end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
@@ -93,9 +94,6 @@ float {\bfseries get\+Distance\+To\+Camera} ()
 \item 
 \mbox{\Hypertarget{classflounder_1_1particle_a419470d74d3164dfacecb80b3db920fb}\label{classflounder_1_1particle_a419470d74d3164dfacecb80b3db920fb}} 
 \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+change}
-\item 
-\mbox{\Hypertarget{classflounder_1_1particle_ae3600f9ea12e27d89c2cc7fcdfc77392}\label{classflounder_1_1particle_ae3600f9ea12e27d89c2cc7fcdfc77392}} 
-aabb $\ast$ {\bfseries m\+\_\+aabb}
 \item 
 \mbox{\Hypertarget{classflounder_1_1particle_a923c723b9e8ce4a34c9ffe57d4836166}\label{classflounder_1_1particle_a923c723b9e8ce4a34c9ffe57d4836166}} 
 \hyperlink{classflounder_1_1vector2}{vector2} $\ast$ {\bfseries m\+\_\+texture\+Offset1}
@@ -192,36 +190,6 @@ Returns a shape fully enclosing the object.
 
 Implements \hyperlink{classflounder_1_1ispatialobject_af3867cbb5f35b0296a16af77703e6c81}{flounder\+::ispatialobject}.
 
-\mbox{\Hypertarget{classflounder_1_1particle_a6572109ef15a5cd352d1a8ded68123cb}\label{classflounder_1_1particle_a6572109ef15a5cd352d1a8ded68123cb}} 
-\index{flounder\+::particle@{flounder\+::particle}!set@{set}}
-\index{set@{set}!flounder\+::particle@{flounder\+::particle}}
-\subsubsection{\texorpdfstring{set()}{set()}}
-{\footnotesize\ttfamily \hyperlink{classflounder_1_1particle}{particle} $\ast$ flounder\+::particle\+::set (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1particletype}{particletype} $\ast$}]{particle\+Type,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{position,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{velocity,  }\item[{const float \&}]{life\+Length,  }\item[{const float \&}]{rotation,  }\item[{const float \&}]{scale,  }\item[{const float \&}]{gravity\+Effect }\end{DoxyParamCaption})}
-
-
-
-Sets this particle to a new particle object. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em particle\+Type} & The particle template to build from. \\
-\hline
-{\em position} & The particles initial position. \\
-\hline
-{\em velocity} & The particles initial velocity. \\
-\hline
-{\em life\+Length} & The particles life length. \\
-\hline
-{\em rotation} & The particles rotation. \\
-\hline
-{\em scale} & The particles scale. \\
-\hline
-{\em gravity\+Effect} & The particles gravity effect. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-this. 
-\end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1particle_ad524600c5aa2c2594896cf8702187e7e}\label{classflounder_1_1particle_ad524600c5aa2c2594896cf8702187e7e}} 
 \index{flounder\+::particle@{flounder\+::particle}!update@{update}}
 \index{update@{update}!flounder\+::particle@{flounder\+::particle}}

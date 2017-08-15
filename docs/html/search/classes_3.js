@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['deferredrenderer',['deferredrenderer',['../classflounder_1_1deferredrenderer.html',1,'flounder']]],
   ['delta',['delta',['../classflounder_1_1delta.html',1,'flounder']]],
   ['display',['display',['../classflounder_1_1display.html',1,'flounder']]],
   ['driverbounce',['driverbounce',['../classflounder_1_1driverbounce.html',1,'flounder']]],

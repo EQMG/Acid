@@ -1,0 +1,122 @@
+\hypertarget{classflounder_1_1processorgraphic}{}\section{flounder\+:\+:processorgraphic Class Reference}
+\label{classflounder_1_1processorgraphic}\index{flounder\+::processorgraphic@{flounder\+::processorgraphic}}
+
+
+A extension that is responsible for processing Open\+GL requests.  
+
+
+
+
+{\ttfamily \#include $<$processorgraphic.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:processorgraphic\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1processorgraphic}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1processorgraphic_a2f29e90d39bd5bca3929f61779027c11}{processorgraphic} ()
+\begin{DoxyCompactList}\small\item\em Creates a new opengl processor. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1processorgraphic_a2d5f45c47b356c688adebc93e38b5af8}{$\sim$processorgraphic} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the opengl processor. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1processorgraphic_a09711d00647681305dfd8067310ec257}{update} () override
+\begin{DoxyCompactList}\small\item\em Run when updating the processor. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1processorgraphic_a28c8b84c3f8066ff9b3cf01a18e8c18a}{add\+Request\+To\+Queue} (\hyperlink{classflounder_1_1irequest}{irequest} $\ast$request) override
+\begin{DoxyCompactList}\small\item\em Used to add a request into the processor. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1processorgraphic_a359c0516c7ff2730cf287452b4080fbb}{complete\+All\+Requests} ()
+\begin{DoxyCompactList}\small\item\em Completes all requests left in queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1processorgraphic_a0bb74bd13c7ab32e1bf82a31283efe9c}\label{classflounder_1_1processorgraphic_a0bb74bd13c7ab32e1bf82a31283efe9c}} 
+\hyperlink{classflounder_1_1queue}{queue}$<$ \hyperlink{classflounder_1_1requestgraphic}{requestgraphic} $\ast$ $>$ $\ast$ {\bfseries m\+\_\+queue}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1processorgraphic_a5630d0d6c60e797cf18c20d7181ca723}\label{classflounder_1_1processorgraphic_a5630d0d6c60e797cf18c20d7181ca723}} 
+static const double {\bfseries M\+A\+X\+\_\+\+T\+I\+M\+E\+\_\+\+M\+I\+L\+L\+IS} = 8.\+0f
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A extension that is responsible for processing Open\+GL requests. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1processorgraphic_a2f29e90d39bd5bca3929f61779027c11}\label{classflounder_1_1processorgraphic_a2f29e90d39bd5bca3929f61779027c11}} 
+\index{flounder\+::processorgraphic@{flounder\+::processorgraphic}!processorgraphic@{processorgraphic}}
+\index{processorgraphic@{processorgraphic}!flounder\+::processorgraphic@{flounder\+::processorgraphic}}
+\subsubsection{\texorpdfstring{processorgraphic()}{processorgraphic()}}
+{\footnotesize\ttfamily flounder\+::processorgraphic\+::processorgraphic (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new opengl processor. 
+
+\mbox{\Hypertarget{classflounder_1_1processorgraphic_a2d5f45c47b356c688adebc93e38b5af8}\label{classflounder_1_1processorgraphic_a2d5f45c47b356c688adebc93e38b5af8}} 
+\index{flounder\+::processorgraphic@{flounder\+::processorgraphic}!````~processorgraphic@{$\sim$processorgraphic}}
+\index{````~processorgraphic@{$\sim$processorgraphic}!flounder\+::processorgraphic@{flounder\+::processorgraphic}}
+\subsubsection{\texorpdfstring{$\sim$processorgraphic()}{~processorgraphic()}}
+{\footnotesize\ttfamily flounder\+::processorgraphic\+::$\sim$processorgraphic (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the opengl processor. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1processorgraphic_a28c8b84c3f8066ff9b3cf01a18e8c18a}\label{classflounder_1_1processorgraphic_a28c8b84c3f8066ff9b3cf01a18e8c18a}} 
+\index{flounder\+::processorgraphic@{flounder\+::processorgraphic}!add\+Request\+To\+Queue@{add\+Request\+To\+Queue}}
+\index{add\+Request\+To\+Queue@{add\+Request\+To\+Queue}!flounder\+::processorgraphic@{flounder\+::processorgraphic}}
+\subsubsection{\texorpdfstring{add\+Request\+To\+Queue()}{addRequestToQueue()}}
+{\footnotesize\ttfamily void flounder\+::processorgraphic\+::add\+Request\+To\+Queue (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1irequest}{irequest} $\ast$}]{request }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Used to add a request into the processor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & The request object to add to the que. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classflounder_1_1iprocessor_ad721814a6a2c69f526527c7b2f57a11b}{flounder\+::iprocessor}.
+
+\mbox{\Hypertarget{classflounder_1_1processorgraphic_a359c0516c7ff2730cf287452b4080fbb}\label{classflounder_1_1processorgraphic_a359c0516c7ff2730cf287452b4080fbb}} 
+\index{flounder\+::processorgraphic@{flounder\+::processorgraphic}!complete\+All\+Requests@{complete\+All\+Requests}}
+\index{complete\+All\+Requests@{complete\+All\+Requests}!flounder\+::processorgraphic@{flounder\+::processorgraphic}}
+\subsubsection{\texorpdfstring{complete\+All\+Requests()}{completeAllRequests()}}
+{\footnotesize\ttfamily void flounder\+::processorgraphic\+::complete\+All\+Requests (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Completes all requests left in queue. 
+
+\mbox{\Hypertarget{classflounder_1_1processorgraphic_a09711d00647681305dfd8067310ec257}\label{classflounder_1_1processorgraphic_a09711d00647681305dfd8067310ec257}} 
+\index{flounder\+::processorgraphic@{flounder\+::processorgraphic}!update@{update}}
+\index{update@{update}!flounder\+::processorgraphic@{flounder\+::processorgraphic}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::processorgraphic\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Run when updating the processor. 
+
+
+
+Implements \hyperlink{classflounder_1_1iprocessor_ad2edfece3465ec3dbe0a5feac26bdbc3}{flounder\+::iprocessor}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/processing/graphic/processorgraphic.\+h\item 
+Flounder-\/\+Core/src/processing/graphic/processorgraphic.\+cpp\end{DoxyCompactItemize}

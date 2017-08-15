@@ -20,26 +20,26 @@ Inheritance diagram for flounder\+:\+:loaders\+:\begin{figure}[H]
 \item 
 void \hyperlink{classflounder_1_1loaders_a9becf522a74f35f7e3dc7839577ba736}{update} () override
 \begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
-G\+Luint \hyperlink{classflounder_1_1loaders_a90123e47d1422f5e202a7ac439fee050}{create\+V\+AO} ()
+int \hyperlink{classflounder_1_1loaders_a6788892ee32899599c65722fe1ccfbf3}{create\+V\+AO} ()
 \begin{DoxyCompactList}\small\item\em Creates an empty V\+AO. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classflounder_1_1loaders_ad408dde74d3bcf097ce9dd97c29e7f12}\label{classflounder_1_1loaders_ad408dde74d3bcf097ce9dd97c29e7f12}} 
 void {\bfseries unbind\+V\+AO} ()
 \item 
-G\+Luint \hyperlink{classflounder_1_1loaders_afcc6aaec9391699f25a014a7cd203592}{create\+Indices\+V\+BO} (G\+Luint \&vao\+ID, const std\+::vector$<$ G\+Lint $>$ \&indices)
+int \hyperlink{classflounder_1_1loaders_ada5cb20e8df0224b0bc8e7da407ba254}{create\+Empty\+V\+BO} (const int \&float\+Count)
+\begin{DoxyCompactList}\small\item\em Creates a new V\+BO with no data. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1loaders_ae0a4be86dc15991197f2f98c4a7eaa1f}{update\+V\+BO} (const int \&vbo\+ID, const int \&float\+Count, const std\+::vector$<$ float $>$ \&data)
+\begin{DoxyCompactList}\small\item\em Updates a F\+BO with a new set of data. \end{DoxyCompactList}\item 
+int \hyperlink{classflounder_1_1loaders_af17aa2917eb49dc484908617bb806cd7}{create\+Indices\+V\+BO} (const int \&vao\+ID, const std\+::vector$<$ int $>$ \&indices)
 \begin{DoxyCompactList}\small\item\em Creates an index buffer and binds it to a V\+AO. \end{DoxyCompactList}\item 
-G\+Luint \hyperlink{classflounder_1_1loaders_a035a42c2f558c1f126cc54729388fca3}{store\+Data\+In\+V\+BO} (G\+Luint \&vao\+ID, const std\+::vector$<$ G\+Lfloat $>$ \&data, const int \&attribute\+Number, const int \&coord\+Size)
-\begin{DoxyCompactList}\small\item\em Stores a float array of data into a F\+BO. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int \hyperlink{classflounder_1_1loaders_a3fe87c11a6a2e9f3893c847b556d43c2}{store\+Data\+In\+V\+BO} (const int \&vao\+ID, const std\+::vector$<$ float $>$ \&data, const int \&attribute\+Number, const int \&coord\+Size)
+\begin{DoxyCompactList}\small\item\em Stores a float array of data into a F\+BO. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1loaders_a7cc2f160a14328dc08292d194e9ad478}{add\+Instanced\+Attribute} (const int \&vao\+ID, const int \&vbo\+ID, const int \&attribute, const int \&data\+Size, const int \&instanced\+Data\+Length, const int \&offset)
+\begin{DoxyCompactList}\small\item\em Adds a instances attribute to a V\+BO. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 static \hyperlink{classflounder_1_1loaders}{loaders} $\ast$ \hyperlink{classflounder_1_1loaders_ac57855261d2d43c545cac42e9efe981a}{get} ()
 \begin{DoxyCompactList}\small\item\em Gets this framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Private Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{classflounder_1_1loaders_a5d8c265b922c5e1ea5da3ee3ec90f4ad}\label{classflounder_1_1loaders_a5d8c265b922c5e1ea5da3ee3ec90f4ad}} 
-std\+::map$<$ G\+Luint, std\+::vector$<$ G\+Luint $>$ $\ast$ $>$ $\ast$ {\bfseries m\+\_\+loaded}
-\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -48,11 +48,54 @@ A module used for loading and managing Open\+GL V\+AO\textquotesingle{}s and V\+
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1loaders_afcc6aaec9391699f25a014a7cd203592}\label{classflounder_1_1loaders_afcc6aaec9391699f25a014a7cd203592}} 
+\mbox{\Hypertarget{classflounder_1_1loaders_a7cc2f160a14328dc08292d194e9ad478}\label{classflounder_1_1loaders_a7cc2f160a14328dc08292d194e9ad478}} 
+\index{flounder\+::loaders@{flounder\+::loaders}!add\+Instanced\+Attribute@{add\+Instanced\+Attribute}}
+\index{add\+Instanced\+Attribute@{add\+Instanced\+Attribute}!flounder\+::loaders@{flounder\+::loaders}}
+\subsubsection{\texorpdfstring{add\+Instanced\+Attribute()}{addInstancedAttribute()}}
+{\footnotesize\ttfamily void flounder\+::loaders\+::add\+Instanced\+Attribute (\begin{DoxyParamCaption}\item[{const int \&}]{vao\+ID,  }\item[{const int \&}]{vbo\+ID,  }\item[{const int \&}]{attribute,  }\item[{const int \&}]{data\+Size,  }\item[{const int \&}]{instanced\+Data\+Length,  }\item[{const int \&}]{offset }\end{DoxyParamCaption})}
+
+
+
+Adds a instances attribute to a V\+BO. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vao\+ID} & The V\+BO\textquotesingle{}s V\+AO. \\
+\hline
+{\em vbo\+ID} & The V\+BO. \\
+\hline
+{\em attribute} & The attribute to add data to. \\
+\hline
+{\em data\+Size} & The size of data to add. \\
+\hline
+{\em instanced\+Data\+Length} & The length of data to allocate. \\
+\hline
+{\em offset} & The offset between data. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1loaders_ada5cb20e8df0224b0bc8e7da407ba254}\label{classflounder_1_1loaders_ada5cb20e8df0224b0bc8e7da407ba254}} 
+\index{flounder\+::loaders@{flounder\+::loaders}!create\+Empty\+V\+BO@{create\+Empty\+V\+BO}}
+\index{create\+Empty\+V\+BO@{create\+Empty\+V\+BO}!flounder\+::loaders@{flounder\+::loaders}}
+\subsubsection{\texorpdfstring{create\+Empty\+V\+B\+O()}{createEmptyVBO()}}
+{\footnotesize\ttfamily int flounder\+::loaders\+::create\+Empty\+V\+BO (\begin{DoxyParamCaption}\item[{const int \&}]{float\+Count }\end{DoxyParamCaption})}
+
+
+
+Creates a new V\+BO with no data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em float\+Count} & The number of floats to be allotted. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new buffer objects ID. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1loaders_af17aa2917eb49dc484908617bb806cd7}\label{classflounder_1_1loaders_af17aa2917eb49dc484908617bb806cd7}} 
 \index{flounder\+::loaders@{flounder\+::loaders}!create\+Indices\+V\+BO@{create\+Indices\+V\+BO}}
 \index{create\+Indices\+V\+BO@{create\+Indices\+V\+BO}!flounder\+::loaders@{flounder\+::loaders}}
 \subsubsection{\texorpdfstring{create\+Indices\+V\+B\+O()}{createIndicesVBO()}}
-{\footnotesize\ttfamily G\+Luint flounder\+::loaders\+::create\+Indices\+V\+BO (\begin{DoxyParamCaption}\item[{G\+Luint \&}]{vao\+ID,  }\item[{const std\+::vector$<$ G\+Lint $>$ \&}]{indices }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int flounder\+::loaders\+::create\+Indices\+V\+BO (\begin{DoxyParamCaption}\item[{const int \&}]{vao\+ID,  }\item[{const std\+::vector$<$ int $>$ \&}]{indices }\end{DoxyParamCaption})}
 
 
 
@@ -68,11 +111,11 @@ Creates an index buffer and binds it to a V\+AO.
 \begin{DoxyReturn}{Returns}
 The ID of the index buffer V\+BO. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1loaders_a90123e47d1422f5e202a7ac439fee050}\label{classflounder_1_1loaders_a90123e47d1422f5e202a7ac439fee050}} 
+\mbox{\Hypertarget{classflounder_1_1loaders_a6788892ee32899599c65722fe1ccfbf3}\label{classflounder_1_1loaders_a6788892ee32899599c65722fe1ccfbf3}} 
 \index{flounder\+::loaders@{flounder\+::loaders}!create\+V\+AO@{create\+V\+AO}}
 \index{create\+V\+AO@{create\+V\+AO}!flounder\+::loaders@{flounder\+::loaders}}
 \subsubsection{\texorpdfstring{create\+V\+A\+O()}{createVAO()}}
-{\footnotesize\ttfamily G\+Luint flounder\+::loaders\+::create\+V\+AO (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int flounder\+::loaders\+::create\+V\+AO (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
@@ -94,11 +137,11 @@ Gets this framework instance.
 \begin{DoxyReturn}{Returns}
 The current module instance. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1loaders_a035a42c2f558c1f126cc54729388fca3}\label{classflounder_1_1loaders_a035a42c2f558c1f126cc54729388fca3}} 
+\mbox{\Hypertarget{classflounder_1_1loaders_a3fe87c11a6a2e9f3893c847b556d43c2}\label{classflounder_1_1loaders_a3fe87c11a6a2e9f3893c847b556d43c2}} 
 \index{flounder\+::loaders@{flounder\+::loaders}!store\+Data\+In\+V\+BO@{store\+Data\+In\+V\+BO}}
 \index{store\+Data\+In\+V\+BO@{store\+Data\+In\+V\+BO}!flounder\+::loaders@{flounder\+::loaders}}
 \subsubsection{\texorpdfstring{store\+Data\+In\+V\+B\+O()}{storeDataInVBO()}}
-{\footnotesize\ttfamily G\+Luint flounder\+::loaders\+::store\+Data\+In\+V\+BO (\begin{DoxyParamCaption}\item[{G\+Luint \&}]{vao\+ID,  }\item[{const std\+::vector$<$ G\+Lfloat $>$ \&}]{data,  }\item[{const int \&}]{attribute\+Number,  }\item[{const int \&}]{coord\+Size }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int flounder\+::loaders\+::store\+Data\+In\+V\+BO (\begin{DoxyParamCaption}\item[{const int \&}]{vao\+ID,  }\item[{const std\+::vector$<$ float $>$ \&}]{data,  }\item[{const int \&}]{attribute\+Number,  }\item[{const int \&}]{coord\+Size }\end{DoxyParamCaption})}
 
 
 
@@ -132,6 +175,23 @@ The update function for the module.
 
 Implements \hyperlink{classflounder_1_1imodule_a9a53d48a46b5f6b16a92b2cd8503f74a}{flounder\+::imodule}.
 
+\mbox{\Hypertarget{classflounder_1_1loaders_ae0a4be86dc15991197f2f98c4a7eaa1f}\label{classflounder_1_1loaders_ae0a4be86dc15991197f2f98c4a7eaa1f}} 
+\index{flounder\+::loaders@{flounder\+::loaders}!update\+V\+BO@{update\+V\+BO}}
+\index{update\+V\+BO@{update\+V\+BO}!flounder\+::loaders@{flounder\+::loaders}}
+\subsubsection{\texorpdfstring{update\+V\+B\+O()}{updateVBO()}}
+{\footnotesize\ttfamily void flounder\+::loaders\+::update\+V\+BO (\begin{DoxyParamCaption}\item[{const int \&}]{vbo\+ID,  }\item[{const int \&}]{float\+Count,  }\item[{const std\+::vector$<$ float $>$ \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Updates a F\+BO with a new set of data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vbo\+ID} & The F\+BO to update. \\
+\hline
+{\em data} & The data to add into the F\+BO. \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

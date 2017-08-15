@@ -4,5 +4,7 @@ var searchData=
   ['vector3',['vector3',['../classflounder_1_1vector3.html',1,'flounder::vector3'],['../classflounder_1_1vector3.html#a3b12a90a4b4350ccd42d7430b7c64fb8',1,'flounder::vector3::vector3()'],['../classflounder_1_1vector3.html#a49b89a27fc3ec6d8ab67c786c5a3ca33',1,'flounder::vector3::vector3(const float &amp;x, const float &amp;y, const float &amp;z)'],['../classflounder_1_1vector3.html#afaeef6d77ae989f94054bcafe38ea890',1,'flounder::vector3::vector3(const vector3 &amp;source)'],['../classflounder_1_1vector3.html#a8ae4f086bb354ad64b918cce4eb0896c',1,'flounder::vector3::vector3(const vector4 &amp;source)']]],
   ['vector4',['vector4',['../classflounder_1_1vector4.html',1,'flounder::vector4'],['../classflounder_1_1vector4.html#ab2f9a25788fea44dcf9c748af1302897',1,'flounder::vector4::vector4()'],['../classflounder_1_1vector4.html#aa319f876f373f25cd5ffa25dc92566c8',1,'flounder::vector4::vector4(const float &amp;x, const float &amp;y, const float &amp;z, const float &amp;w)'],['../classflounder_1_1vector4.html#af14114413eaf1ec39718c0045cbb3b6c',1,'flounder::vector4::vector4(const vector4 &amp;source)']]],
   ['vertexdata',['vertexdata',['../classflounder_1_1vertexdata.html',1,'flounder']]],
-  ['viewmatrix',['viewMatrix',['../classflounder_1_1matrix4x4.html#aee10976c10baabe8c69374ab64431cd4',1,'flounder::matrix4x4']]]
+  ['viewmatrix',['viewMatrix',['../classflounder_1_1matrix4x4.html#aee10976c10baabe8c69374ab64431cd4',1,'flounder::matrix4x4']]],
+  ['vkqueuefamilyindices',['VkQueueFamilyIndices',['../structflounder_1_1_vk_queue_family_indices.html',1,'flounder']]],
+  ['vkswapchainsupportdetails',['VkSwapChainSupportDetails',['../structflounder_1_1_vk_swap_chain_support_details.html',1,'flounder']]]
 ];

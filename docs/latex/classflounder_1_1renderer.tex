@@ -1,0 +1,229 @@
+\hypertarget{classflounder_1_1renderer}{}\section{flounder\+:\+:renderer Class Reference}
+\label{classflounder_1_1renderer}\index{flounder\+::renderer@{flounder\+::renderer}}
+Inheritance diagram for flounder\+:\+:renderer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1renderer}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structflounder_1_1renderer_1_1testubo}{testubo}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1renderer_ade56bfb3db7dca6ac41f4bc78c0ab35b}{renderer} ()
+\begin{DoxyCompactList}\small\item\em Creates a new renderer module. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1renderer_ae8ad85deab4750f01112d7f5a84e95e5}{$\sim$renderer} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the renderer module. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1renderer_aae85f1462ba4e9eb7899483536fdb0c5}{update} () override
+\begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1imanagerrender}{imanagerrender} $\ast$ \hyperlink{classflounder_1_1renderer_ad2d55b317665b9b64f91d03984eea226}{get\+Manager} ()
+\begin{DoxyCompactList}\small\item\em Gets the renderer manager. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1renderer_ab4b504ed530f9a6df2327a942ccd9d70}{set\+Manager} (\hyperlink{classflounder_1_1imanagerrender}{imanagerrender} $\ast$manager\+Render)
+\begin{DoxyCompactList}\small\item\em Sets the current renderer manager to a new renderer manager. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classflounder_1_1renderer}{renderer} $\ast$ \hyperlink{classflounder_1_1renderer_a9dce14a77e80b7c631573cc153ac483a}{get} ()
+\begin{DoxyCompactList}\small\item\em Gets this framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a8f00a01ad170f3d09fdf815e1de76b3a}\label{classflounder_1_1renderer_a8f00a01ad170f3d09fdf815e1de76b3a}} 
+void {\bfseries create\+Swap\+Chain} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_ae3fdca69503472bcdf6b9aa87dce5ac2}\label{classflounder_1_1renderer_ae3fdca69503472bcdf6b9aa87dce5ac2}} 
+void {\bfseries create\+Image\+Views} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_aa253ca4d8a07475dbab991e06639d998}\label{classflounder_1_1renderer_aa253ca4d8a07475dbab991e06639d998}} 
+void {\bfseries create\+Render\+Pass} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a2fc353ce509f062df4909117be3d6080}\label{classflounder_1_1renderer_a2fc353ce509f062df4909117be3d6080}} 
+void {\bfseries create\+Graphics\+Pipeline} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_ae4f4e61141e8418a470ac6d1d752c150}\label{classflounder_1_1renderer_ae4f4e61141e8418a470ac6d1d752c150}} 
+void {\bfseries create\+Framebuffers} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a9112ee44b1429d1398a94acb77a1bb67}\label{classflounder_1_1renderer_a9112ee44b1429d1398a94acb77a1bb67}} 
+void {\bfseries create\+Command\+Pool} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a28d74926585909dcea74a87764fc5b56}\label{classflounder_1_1renderer_a28d74926585909dcea74a87764fc5b56}} 
+void {\bfseries create\+Command\+Buffers} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a525327630cb750c85b8da1b8fbc1bdc3}\label{classflounder_1_1renderer_a525327630cb750c85b8da1b8fbc1bdc3}} 
+void {\bfseries recreate\+Swap\+Chain} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_af9b014fe2d885cd1f4eeb0c4ec82d8fa}\label{classflounder_1_1renderer_af9b014fe2d885cd1f4eeb0c4ec82d8fa}} 
+void {\bfseries cleanup\+Swap\+Chain} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a67c3032eb4d138eac103a6802100eb0d}\label{classflounder_1_1renderer_a67c3032eb4d138eac103a6802100eb0d}} 
+void {\bfseries create\+Semaphores} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a4ede98176d377032f2659e05b80e1ed4}\label{classflounder_1_1renderer_a4ede98176d377032f2659e05b80e1ed4}} 
+void {\bfseries update\+Uniform\+Buffer} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a90bf6667243325c734a388d15333c83b}\label{classflounder_1_1renderer_a90bf6667243325c734a388d15333c83b}} 
+void {\bfseries draw\+Frame} ()
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a385496cacff3a8adbbddcb8786d2ab72}\label{classflounder_1_1renderer_a385496cacff3a8adbbddcb8786d2ab72}} 
+Vk\+Shader\+Module {\bfseries create\+Shader\+Module} (const std\+::vector$<$ char $>$ \&code)
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a10bfbb29171c090ff61a2266a572c379}\label{classflounder_1_1renderer_a10bfbb29171c090ff61a2266a572c379}} 
+std\+::vector$<$ char $>$ {\bfseries read\+File} (const std\+::string \&filename)
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a696c3fce14bb89644264edc625b1fb9f}\label{classflounder_1_1renderer_a696c3fce14bb89644264edc625b1fb9f}} 
+\hyperlink{structflounder_1_1_vk_swap_chain_support_details}{Vk\+Swap\+Chain\+Support\+Details} {\bfseries query\+Swap\+Chain\+Support} (Vk\+Physical\+Device device)
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_adf940787d8dfbce3945be4f69c654d19}\label{classflounder_1_1renderer_adf940787d8dfbce3945be4f69c654d19}} 
+Vk\+Surface\+Format\+K\+HR {\bfseries choose\+Swap\+Surface\+Format} (const std\+::vector$<$ Vk\+Surface\+Format\+K\+HR $>$ \&available\+Formats)
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a7184ccbca570a44ea5a44d5ed4cfc31c}\label{classflounder_1_1renderer_a7184ccbca570a44ea5a44d5ed4cfc31c}} 
+Vk\+Present\+Mode\+K\+HR {\bfseries choose\+Swap\+Present\+Mode} (const std\+::vector$<$ Vk\+Present\+Mode\+K\+HR $>$ available\+Present\+Modes)
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a4962361e2b0ba2c2b155a2deaec86b30}\label{classflounder_1_1renderer_a4962361e2b0ba2c2b155a2deaec86b30}} 
+Vk\+Extent2D {\bfseries choose\+Swap\+Extent} (const Vk\+Surface\+Capabilities\+K\+HR \&capabilities)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a17f5e7df9b76e7a19dd66df39dd7ac10}\label{classflounder_1_1renderer_a17f5e7df9b76e7a19dd66df39dd7ac10}} 
+\hyperlink{classflounder_1_1imanagerrender}{imanagerrender} $\ast$ {\bfseries m\+\_\+manager\+Render}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_afe2f684e68953142a4994183cbd5520c}\label{classflounder_1_1renderer_afe2f684e68953142a4994183cbd5520c}} 
+Vk\+Swapchain\+K\+HR {\bfseries m\+\_\+swap\+Chain}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a58fc3f685d0b10fc064621eba8f21e2b}\label{classflounder_1_1renderer_a58fc3f685d0b10fc064621eba8f21e2b}} 
+std\+::vector$<$ Vk\+Image $>$ {\bfseries m\+\_\+swap\+Chain\+Images}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a717ea7edd418929f473e3ca28278fb8b}\label{classflounder_1_1renderer_a717ea7edd418929f473e3ca28278fb8b}} 
+Vk\+Format {\bfseries m\+\_\+swap\+Chain\+Image\+Format}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_aa64e56a5cac82dfac6fda89b42c87e99}\label{classflounder_1_1renderer_aa64e56a5cac82dfac6fda89b42c87e99}} 
+Vk\+Extent2D {\bfseries m\+\_\+swap\+Chain\+Extent}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_afc09b6c8f808da658b1e9e575c530e0c}\label{classflounder_1_1renderer_afc09b6c8f808da658b1e9e575c530e0c}} 
+std\+::vector$<$ Vk\+Image\+View $>$ {\bfseries m\+\_\+swap\+Chain\+Image\+Views}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_afa2f6ecd01e719dce14bb50623c8be43}\label{classflounder_1_1renderer_afa2f6ecd01e719dce14bb50623c8be43}} 
+std\+::vector$<$ Vk\+Framebuffer $>$ {\bfseries m\+\_\+swap\+Chain\+Framebuffers}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a6e9db61b244fcdaed047cab69904bc15}\label{classflounder_1_1renderer_a6e9db61b244fcdaed047cab69904bc15}} 
+Vk\+Render\+Pass {\bfseries m\+\_\+render\+Pass}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_af4aa006ee54572d1b6793f3144a5a09b}\label{classflounder_1_1renderer_af4aa006ee54572d1b6793f3144a5a09b}} 
+Vk\+Pipeline\+Layout {\bfseries m\+\_\+pipeline\+Layout}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a854dc575c2adf3a0f769d1945c7dbde5}\label{classflounder_1_1renderer_a854dc575c2adf3a0f769d1945c7dbde5}} 
+Vk\+Pipeline {\bfseries m\+\_\+graphics\+Pipeline}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_aa7064e58cdca2627dfea4eb807c0a8b8}\label{classflounder_1_1renderer_aa7064e58cdca2627dfea4eb807c0a8b8}} 
+Vk\+Command\+Pool {\bfseries m\+\_\+command\+Pool}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a1b4a42cf9601b7c5085d2f00ac73f4ab}\label{classflounder_1_1renderer_a1b4a42cf9601b7c5085d2f00ac73f4ab}} 
+std\+::vector$<$ Vk\+Command\+Buffer $>$ {\bfseries m\+\_\+command\+Buffers}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_ad3b52f84bf8fe96ec62cd472216028b5}\label{classflounder_1_1renderer_ad3b52f84bf8fe96ec62cd472216028b5}} 
+Vk\+Semaphore {\bfseries m\+\_\+image\+Available\+Semaphore}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a925acf30368726785fa77d88615bdfb7}\label{classflounder_1_1renderer_a925acf30368726785fa77d88615bdfb7}} 
+Vk\+Semaphore {\bfseries m\+\_\+render\+Finished\+Semaphore}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a5a982cf34c6430668c769ee3865d5e54}\label{classflounder_1_1renderer_a5a982cf34c6430668c769ee3865d5e54}} 
+\hyperlink{classflounder_1_1shader}{shader} $\ast$ {\bfseries m\+\_\+shader\+Test}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_a837d3525440f0cd0da1a2478f9fa2475}\label{classflounder_1_1renderer_a837d3525440f0cd0da1a2478f9fa2475}} 
+int {\bfseries last\+Width}
+\item 
+\mbox{\Hypertarget{classflounder_1_1renderer_acdac3ce608a50f7eecd6c78f35c33ba9}\label{classflounder_1_1renderer_acdac3ce608a50f7eecd6c78f35c33ba9}} 
+int {\bfseries last\+Height}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1renderer_ade56bfb3db7dca6ac41f4bc78c0ab35b}\label{classflounder_1_1renderer_ade56bfb3db7dca6ac41f4bc78c0ab35b}} 
+\index{flounder\+::renderer@{flounder\+::renderer}!renderer@{renderer}}
+\index{renderer@{renderer}!flounder\+::renderer@{flounder\+::renderer}}
+\subsubsection{\texorpdfstring{renderer()}{renderer()}}
+{\footnotesize\ttfamily flounder\+::renderer\+::renderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new renderer module. 
+
+\mbox{\Hypertarget{classflounder_1_1renderer_ae8ad85deab4750f01112d7f5a84e95e5}\label{classflounder_1_1renderer_ae8ad85deab4750f01112d7f5a84e95e5}} 
+\index{flounder\+::renderer@{flounder\+::renderer}!````~renderer@{$\sim$renderer}}
+\index{````~renderer@{$\sim$renderer}!flounder\+::renderer@{flounder\+::renderer}}
+\subsubsection{\texorpdfstring{$\sim$renderer()}{~renderer()}}
+{\footnotesize\ttfamily flounder\+::renderer\+::$\sim$renderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the renderer module. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1renderer_a9dce14a77e80b7c631573cc153ac483a}\label{classflounder_1_1renderer_a9dce14a77e80b7c631573cc153ac483a}} 
+\index{flounder\+::renderer@{flounder\+::renderer}!get@{get}}
+\index{get@{get}!flounder\+::renderer@{flounder\+::renderer}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily static \hyperlink{classflounder_1_1renderer}{renderer}$\ast$ flounder\+::renderer\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this framework instance. 
+
+\begin{DoxyReturn}{Returns}
+The current module instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1renderer_ad2d55b317665b9b64f91d03984eea226}\label{classflounder_1_1renderer_ad2d55b317665b9b64f91d03984eea226}} 
+\index{flounder\+::renderer@{flounder\+::renderer}!get\+Manager@{get\+Manager}}
+\index{get\+Manager@{get\+Manager}!flounder\+::renderer@{flounder\+::renderer}}
+\subsubsection{\texorpdfstring{get\+Manager()}{getManager()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1imanagerrender}{imanagerrender}$\ast$ flounder\+::renderer\+::get\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the renderer manager. 
+
+\begin{DoxyReturn}{Returns}
+The renderer manager. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1renderer_ab4b504ed530f9a6df2327a942ccd9d70}\label{classflounder_1_1renderer_ab4b504ed530f9a6df2327a942ccd9d70}} 
+\index{flounder\+::renderer@{flounder\+::renderer}!set\+Manager@{set\+Manager}}
+\index{set\+Manager@{set\+Manager}!flounder\+::renderer@{flounder\+::renderer}}
+\subsubsection{\texorpdfstring{set\+Manager()}{setManager()}}
+{\footnotesize\ttfamily void flounder\+::renderer\+::set\+Manager (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1imanagerrender}{imanagerrender} $\ast$}]{manager\+Render }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the current renderer manager to a new renderer manager. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em renderer\+Master} & The new renderer manager. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1renderer_aae85f1462ba4e9eb7899483536fdb0c5}\label{classflounder_1_1renderer_aae85f1462ba4e9eb7899483536fdb0c5}} 
+\index{flounder\+::renderer@{flounder\+::renderer}!update@{update}}
+\index{update@{update}!flounder\+::renderer@{flounder\+::renderer}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void flounder\+::renderer\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The update function for the module. 
+
+
+
+Implements \hyperlink{classflounder_1_1imodule_a9a53d48a46b5f6b16a92b2cd8503f74a}{flounder\+::imodule}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/renderer/renderer.\+h\item 
+Flounder-\/\+Core/src/renderer/renderer.\+cpp\end{DoxyCompactItemize}

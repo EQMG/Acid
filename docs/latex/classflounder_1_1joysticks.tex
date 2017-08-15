@@ -29,17 +29,17 @@ struct \hyperlink{structflounder_1_1joysticks_1_1joystick}{joystick}
 \begin{DoxyCompactList}\small\item\em Deconstructor for the joysticks module. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1joysticks_a346fc03cae7164d6eb927333d1ae725f}{update} () override
 \begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
-bool \hyperlink{classflounder_1_1joysticks_a5474ad44039f8b1bdcd73a268d09e7f2}{is\+Connected} (const int \&id)
+bool \hyperlink{classflounder_1_1joysticks_a718814524adfee69d7a700831533c1f6}{is\+Connected} (const int \&id) const
 \begin{DoxyCompactList}\small\item\em Determines if the G\+L\+FW joystick is connected \end{DoxyCompactList}\item 
-const char $\ast$ \hyperlink{classflounder_1_1joysticks_ae471533fed9714160b5af9e22b00c427}{get\+Name} (const int \&id)
+const char $\ast$ \hyperlink{classflounder_1_1joysticks_ab42694655232c0cd832c56f6715b5f68}{get\+Name} (const int \&id) const
 \begin{DoxyCompactList}\small\item\em Gets the name of the joystick. \end{DoxyCompactList}\item 
-float \hyperlink{classflounder_1_1joysticks_a67c5fd2f77004c37cf1720c985c9d6f9}{get\+Axis} (const int \&id, const int \&axis)
+float \hyperlink{classflounder_1_1joysticks_a140f205a6e28354a9d95cff5fbdce318}{get\+Axis} (const int \&id, const int \&axis) const
 \begin{DoxyCompactList}\small\item\em Gets the value of a joysticks axis. \end{DoxyCompactList}\item 
-bool \hyperlink{classflounder_1_1joysticks_a908373adb0a8ca4818b7d49b273d4622}{get\+Button} (const int \&id, const int \&button)
+bool \hyperlink{classflounder_1_1joysticks_afc3effcb87566223f35bdb3130c8e4fa}{get\+Button} (const int \&id, const int \&button) const
 \begin{DoxyCompactList}\small\item\em Gets the whether a button on a joystick is pressed. \end{DoxyCompactList}\item 
-int \hyperlink{classflounder_1_1joysticks_abe58d868cb70e9d7f2a10eb0f1b967e1}{get\+Count\+Axes} (const int \&id)
+int \hyperlink{classflounder_1_1joysticks_a6c40b337283dcedf290c7f60d2eebd21}{get\+Count\+Axes} (const int \&id) const
 \begin{DoxyCompactList}\small\item\em Gets the number of axes the joystick offers. \end{DoxyCompactList}\item 
-int \hyperlink{classflounder_1_1joysticks_af502daffac227f63e673ed3f45850380}{get\+Count\+Buttons} (const int \&id)
+int \hyperlink{classflounder_1_1joysticks_a3023745d58680e4efb7650198eebc4ed}{get\+Count\+Buttons} (const int \&id) const
 \begin{DoxyCompactList}\small\item\em Gets the number of buttons the joystick offers. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -96,11 +96,11 @@ Gets this framework instance.
 \begin{DoxyReturn}{Returns}
 The current module instance. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1joysticks_a67c5fd2f77004c37cf1720c985c9d6f9}\label{classflounder_1_1joysticks_a67c5fd2f77004c37cf1720c985c9d6f9}} 
+\mbox{\Hypertarget{classflounder_1_1joysticks_a140f205a6e28354a9d95cff5fbdce318}\label{classflounder_1_1joysticks_a140f205a6e28354a9d95cff5fbdce318}} 
 \index{flounder\+::joysticks@{flounder\+::joysticks}!get\+Axis@{get\+Axis}}
 \index{get\+Axis@{get\+Axis}!flounder\+::joysticks@{flounder\+::joysticks}}
 \subsubsection{\texorpdfstring{get\+Axis()}{getAxis()}}
-{\footnotesize\ttfamily float flounder\+::joysticks\+::get\+Axis (\begin{DoxyParamCaption}\item[{const int \&}]{id,  }\item[{const int \&}]{axis }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily float flounder\+::joysticks\+::get\+Axis (\begin{DoxyParamCaption}\item[{const int \&}]{id,  }\item[{const int \&}]{axis }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -116,11 +116,11 @@ Gets the value of a joysticks axis.
 \begin{DoxyReturn}{Returns}
 The value of the joystick\textquotesingle{}s axis. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1joysticks_a908373adb0a8ca4818b7d49b273d4622}\label{classflounder_1_1joysticks_a908373adb0a8ca4818b7d49b273d4622}} 
+\mbox{\Hypertarget{classflounder_1_1joysticks_afc3effcb87566223f35bdb3130c8e4fa}\label{classflounder_1_1joysticks_afc3effcb87566223f35bdb3130c8e4fa}} 
 \index{flounder\+::joysticks@{flounder\+::joysticks}!get\+Button@{get\+Button}}
 \index{get\+Button@{get\+Button}!flounder\+::joysticks@{flounder\+::joysticks}}
 \subsubsection{\texorpdfstring{get\+Button()}{getButton()}}
-{\footnotesize\ttfamily bool flounder\+::joysticks\+::get\+Button (\begin{DoxyParamCaption}\item[{const int \&}]{id,  }\item[{const int \&}]{button }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool flounder\+::joysticks\+::get\+Button (\begin{DoxyParamCaption}\item[{const int \&}]{id,  }\item[{const int \&}]{button }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -136,11 +136,11 @@ Gets the whether a button on a joystick is pressed.
 \begin{DoxyReturn}{Returns}
 Whether a button on a joystick is pressed. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1joysticks_abe58d868cb70e9d7f2a10eb0f1b967e1}\label{classflounder_1_1joysticks_abe58d868cb70e9d7f2a10eb0f1b967e1}} 
+\mbox{\Hypertarget{classflounder_1_1joysticks_a6c40b337283dcedf290c7f60d2eebd21}\label{classflounder_1_1joysticks_a6c40b337283dcedf290c7f60d2eebd21}} 
 \index{flounder\+::joysticks@{flounder\+::joysticks}!get\+Count\+Axes@{get\+Count\+Axes}}
 \index{get\+Count\+Axes@{get\+Count\+Axes}!flounder\+::joysticks@{flounder\+::joysticks}}
 \subsubsection{\texorpdfstring{get\+Count\+Axes()}{getCountAxes()}}
-{\footnotesize\ttfamily int flounder\+::joysticks\+::get\+Count\+Axes (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int flounder\+::joysticks\+::get\+Count\+Axes (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -154,11 +154,11 @@ Gets the number of axes the joystick offers.
 \begin{DoxyReturn}{Returns}
 The number of axes the joystick offers. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1joysticks_af502daffac227f63e673ed3f45850380}\label{classflounder_1_1joysticks_af502daffac227f63e673ed3f45850380}} 
+\mbox{\Hypertarget{classflounder_1_1joysticks_a3023745d58680e4efb7650198eebc4ed}\label{classflounder_1_1joysticks_a3023745d58680e4efb7650198eebc4ed}} 
 \index{flounder\+::joysticks@{flounder\+::joysticks}!get\+Count\+Buttons@{get\+Count\+Buttons}}
 \index{get\+Count\+Buttons@{get\+Count\+Buttons}!flounder\+::joysticks@{flounder\+::joysticks}}
 \subsubsection{\texorpdfstring{get\+Count\+Buttons()}{getCountButtons()}}
-{\footnotesize\ttfamily int flounder\+::joysticks\+::get\+Count\+Buttons (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int flounder\+::joysticks\+::get\+Count\+Buttons (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -172,11 +172,11 @@ Gets the number of buttons the joystick offers.
 \begin{DoxyReturn}{Returns}
 The number of buttons the joystick offers. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1joysticks_ae471533fed9714160b5af9e22b00c427}\label{classflounder_1_1joysticks_ae471533fed9714160b5af9e22b00c427}} 
+\mbox{\Hypertarget{classflounder_1_1joysticks_ab42694655232c0cd832c56f6715b5f68}\label{classflounder_1_1joysticks_ab42694655232c0cd832c56f6715b5f68}} 
 \index{flounder\+::joysticks@{flounder\+::joysticks}!get\+Name@{get\+Name}}
 \index{get\+Name@{get\+Name}!flounder\+::joysticks@{flounder\+::joysticks}}
 \subsubsection{\texorpdfstring{get\+Name()}{getName()}}
-{\footnotesize\ttfamily const char $\ast$ flounder\+::joysticks\+::get\+Name (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily const char$\ast$ flounder\+::joysticks\+::get\+Name (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -190,11 +190,11 @@ Gets the name of the joystick.
 \begin{DoxyReturn}{Returns}
 The joysticks name. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1joysticks_a5474ad44039f8b1bdcd73a268d09e7f2}\label{classflounder_1_1joysticks_a5474ad44039f8b1bdcd73a268d09e7f2}} 
+\mbox{\Hypertarget{classflounder_1_1joysticks_a718814524adfee69d7a700831533c1f6}\label{classflounder_1_1joysticks_a718814524adfee69d7a700831533c1f6}} 
 \index{flounder\+::joysticks@{flounder\+::joysticks}!is\+Connected@{is\+Connected}}
 \index{is\+Connected@{is\+Connected}!flounder\+::joysticks@{flounder\+::joysticks}}
 \subsubsection{\texorpdfstring{is\+Connected()}{isConnected()}}
-{\footnotesize\ttfamily bool flounder\+::joysticks\+::is\+Connected (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool flounder\+::joysticks\+::is\+Connected (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 

@@ -14,10 +14,12 @@ namespace flounder
 
 		m_aabb = nullptr;
 
-#if 0
-		m_vaoID = 0;
-		m_vaoLength = 0;
-#endif
+		m_verticesBuffer = VK_NULL_HANDLE;
+		m_texturesBuffer = VK_NULL_HANDLE;
+		m_normalsBuffer = VK_NULL_HANDLE;
+		m_tangentsBuffer = VK_NULL_HANDLE;
+		m_memory = VK_NULL_HANDLE;
+		m_bufferInfo = {};
 
 		loadFromFile();
 	}
@@ -34,19 +36,18 @@ namespace flounder
 
 		m_aabb = nullptr;
 
-#if 0
-		m_vaoID = 0;
-		m_vaoLength = 0;
-#endif
-
-		loadToOpenGL();
+		loadToVulkan();
 	}
 
 	model::~model()
 	{
-#if 0
-		glDeleteVertexArrays(1, &m_vaoID);
-#endif
+		vkDeviceWaitIdle(display::get()->getVkDevice());
+		vkFreeMemory(display::get()->getVkDevice(), m_memory, nullptr);
+		vkDestroyBuffer(display::get()->getVkDevice(), m_indicesBuffer, nullptr);
+		vkDestroyBuffer(display::get()->getVkDevice(), m_verticesBuffer, nullptr);
+		vkDestroyBuffer(display::get()->getVkDevice(), m_texturesBuffer, nullptr);
+		vkDestroyBuffer(display::get()->getVkDevice(), m_normalsBuffer, nullptr);
+		vkDestroyBuffer(display::get()->getVkDevice(), m_tangentsBuffer, nullptr);
 
 		/*delete m_vertices;
 		delete m_textures;
@@ -244,47 +245,85 @@ namespace flounder
 		delete deltaUv2;
 	}
 
-	void model::loadToOpenGL()
+	void model::loadToVulkan()
 	{
-#if 0
-		m_vaoID = loaders::get()->createVAO();
-		
 		if (m_indices != nullptr)
 		{
-			loaders::get()->createIndicesVBO(m_vaoID, *m_indices);
+		//	m_indicesBuffer = createIndicesBuffer(m_indices);
 		}
 
 		if (m_vertices != nullptr)
 		{
-			loaders::get()->storeDataInVBO(m_vaoID, *m_vertices, 0, 3);
+			m_verticesBuffer = createBuffer(m_vertices);
 		}
 
 		if (m_textures != nullptr)
 		{
-			loaders::get()->storeDataInVBO(m_vaoID, *m_textures, 1, 2);
+			m_texturesBuffer = createBuffer(m_textures);
 		}
 
 		if (m_normals != nullptr)
 		{
-			loaders::get()->storeDataInVBO(m_vaoID, *m_normals, 2, 3);
+			m_normalsBuffer = createBuffer(m_normals);
 		}
 
 		if (m_tangents != nullptr)
 		{
-			loaders::get()->storeDataInVBO(m_vaoID, *m_tangents, 3, 3);
+			m_tangentsBuffer = createBuffer(m_tangents);
 		}
+	}
 
-		loaders::get()->unbindVAO();
+	VkBuffer model::createBuffer(std::vector<float> *data)
+	{
+		VkBuffer result = VK_NULL_HANDLE;
 
-		if (m_indices != nullptr)
+		VkBufferCreateInfo bufferCreateInfo{};
+		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		bufferCreateInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+		bufferCreateInfo.size = data->size();
+		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		display::vkErrorCheck(vkCreateBuffer(display::get()->getVkDevice(), &bufferCreateInfo, nullptr, &result));
+
+		VkMemoryRequirements memoryRequirements = {};
+		vkGetBufferMemoryRequirements(display::get()->getVkDevice(), result, &memoryRequirements);
+
+		VkMemoryAllocateInfo allocInfo{};
+		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		allocInfo.allocationSize = memoryRequirements.size;
+		memoryTypeFromProperties(memoryRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &allocInfo.memoryTypeIndex);
+
+		display::vkErrorCheck(vkAllocateMemory(display::get()->getVkDevice(), &allocInfo, nullptr, &m_memory));
+
+		m_bufferInfo.range = memoryRequirements.size;
+		m_bufferInfo.offset = 0;
+
+		uint8_t *pData;
+		display::vkErrorCheck(vkMapMemory(display::get()->getVkDevice(), m_memory, 0, memoryRequirements.size, 0, (void**)&pData));
+
+		memcpy(pData, data->data(), data->size());
+
+		vkUnmapMemory(display::get()->getVkDevice(), m_memory);
+
+		display::vkErrorCheck(vkBindBufferMemory(display::get()->getVkDevice(), result, m_memory, 0));
+		
+		return result;
+	}
+
+	void model::memoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t * typeIndex)
+	{
+		for (uint32_t i = 0; i < display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypeCount; i++)
 		{
-			m_vaoLength = m_indices->size();
+			if ((typeBits & 1) == 1)
+			{
+				if ((display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypes[i].propertyFlags & reqMask) == reqMask)
+				{
+					*typeIndex = i;
+					return;
+				}
+			}
+
+			typeBits >>= 1;
 		}
-		else if (m_vertices != nullptr)
-		{
-			m_vaoLength = m_vertices->size() / 3;
-		}
-#endif
 	}
 
 	void model::createAABB()

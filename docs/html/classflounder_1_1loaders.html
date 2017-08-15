@@ -65,7 +65,6 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classflounder_1_1loaders-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">flounder::loaders Class Reference</div>  </div>
@@ -91,18 +90,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9becf522a74f35f7e3dc7839577ba736"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#a9becf522a74f35f7e3dc7839577ba736">update</a> () override</td></tr>
 <tr class="memdesc:a9becf522a74f35f7e3dc7839577ba736"><td class="mdescLeft">&#160;</td><td class="mdescRight">The update function for the module.  <a href="#a9becf522a74f35f7e3dc7839577ba736">More...</a><br /></td></tr>
 <tr class="separator:a9becf522a74f35f7e3dc7839577ba736"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90123e47d1422f5e202a7ac439fee050"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#a90123e47d1422f5e202a7ac439fee050">createVAO</a> ()</td></tr>
-<tr class="memdesc:a90123e47d1422f5e202a7ac439fee050"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty VAO.  <a href="#a90123e47d1422f5e202a7ac439fee050">More...</a><br /></td></tr>
-<tr class="separator:a90123e47d1422f5e202a7ac439fee050"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6788892ee32899599c65722fe1ccfbf3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#a6788892ee32899599c65722fe1ccfbf3">createVAO</a> ()</td></tr>
+<tr class="memdesc:a6788892ee32899599c65722fe1ccfbf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty VAO.  <a href="#a6788892ee32899599c65722fe1ccfbf3">More...</a><br /></td></tr>
+<tr class="separator:a6788892ee32899599c65722fe1ccfbf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad408dde74d3bcf097ce9dd97c29e7f12"><td class="memItemLeft" align="right" valign="top"><a id="ad408dde74d3bcf097ce9dd97c29e7f12"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>unbindVAO</b> ()</td></tr>
 <tr class="separator:ad408dde74d3bcf097ce9dd97c29e7f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcc6aaec9391699f25a014a7cd203592"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#afcc6aaec9391699f25a014a7cd203592">createIndicesVBO</a> (GLuint &amp;vaoID, const std::vector&lt; GLint &gt; &amp;indices)</td></tr>
-<tr class="memdesc:afcc6aaec9391699f25a014a7cd203592"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an index buffer and binds it to a VAO.  <a href="#afcc6aaec9391699f25a014a7cd203592">More...</a><br /></td></tr>
-<tr class="separator:afcc6aaec9391699f25a014a7cd203592"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a035a42c2f558c1f126cc54729388fca3"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#a035a42c2f558c1f126cc54729388fca3">storeDataInVBO</a> (GLuint &amp;vaoID, const std::vector&lt; GLfloat &gt; &amp;data, const int &amp;attributeNumber, const int &amp;coordSize)</td></tr>
-<tr class="memdesc:a035a42c2f558c1f126cc54729388fca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores a float array of data into a FBO.  <a href="#a035a42c2f558c1f126cc54729388fca3">More...</a><br /></td></tr>
-<tr class="separator:a035a42c2f558c1f126cc54729388fca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada5cb20e8df0224b0bc8e7da407ba254"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#ada5cb20e8df0224b0bc8e7da407ba254">createEmptyVBO</a> (const int &amp;floatCount)</td></tr>
+<tr class="memdesc:ada5cb20e8df0224b0bc8e7da407ba254"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new VBO with no data.  <a href="#ada5cb20e8df0224b0bc8e7da407ba254">More...</a><br /></td></tr>
+<tr class="separator:ada5cb20e8df0224b0bc8e7da407ba254"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0a4be86dc15991197f2f98c4a7eaa1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#ae0a4be86dc15991197f2f98c4a7eaa1f">updateVBO</a> (const int &amp;vboID, const int &amp;floatCount, const std::vector&lt; float &gt; &amp;data)</td></tr>
+<tr class="memdesc:ae0a4be86dc15991197f2f98c4a7eaa1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a FBO with a new set of data.  <a href="#ae0a4be86dc15991197f2f98c4a7eaa1f">More...</a><br /></td></tr>
+<tr class="separator:ae0a4be86dc15991197f2f98c4a7eaa1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af17aa2917eb49dc484908617bb806cd7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#af17aa2917eb49dc484908617bb806cd7">createIndicesVBO</a> (const int &amp;vaoID, const std::vector&lt; int &gt; &amp;indices)</td></tr>
+<tr class="memdesc:af17aa2917eb49dc484908617bb806cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an index buffer and binds it to a VAO.  <a href="#af17aa2917eb49dc484908617bb806cd7">More...</a><br /></td></tr>
+<tr class="separator:af17aa2917eb49dc484908617bb806cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fe87c11a6a2e9f3893c847b556d43c2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#a3fe87c11a6a2e9f3893c847b556d43c2">storeDataInVBO</a> (const int &amp;vaoID, const std::vector&lt; float &gt; &amp;data, const int &amp;attributeNumber, const int &amp;coordSize)</td></tr>
+<tr class="memdesc:a3fe87c11a6a2e9f3893c847b556d43c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores a float array of data into a FBO.  <a href="#a3fe87c11a6a2e9f3893c847b556d43c2">More...</a><br /></td></tr>
+<tr class="separator:a3fe87c11a6a2e9f3893c847b556d43c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cc2f160a14328dc08292d194e9ad478"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#a7cc2f160a14328dc08292d194e9ad478">addInstancedAttribute</a> (const int &amp;vaoID, const int &amp;vboID, const int &amp;attribute, const int &amp;dataSize, const int &amp;instancedDataLength, const int &amp;offset)</td></tr>
+<tr class="memdesc:a7cc2f160a14328dc08292d194e9ad478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a instances attribute to a VBO.  <a href="#a7cc2f160a14328dc08292d194e9ad478">More...</a><br /></td></tr>
+<tr class="separator:a7cc2f160a14328dc08292d194e9ad478"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classflounder_1_1imodule"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classflounder_1_1imodule')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classflounder_1_1imodule.html">flounder::imodule</a></td></tr>
 <tr class="memitem:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">imodule</a> ()</td></tr>
 <tr class="memdesc:aa0b5648a6adbcf8c333820d967a37aeb inherit pub_methods_classflounder_1_1imodule"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new module.  <a href="classflounder_1_1imodule.html#aa0b5648a6adbcf8c333820d967a37aeb">More...</a><br /></td></tr>
@@ -116,32 +124,118 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ac57855261d2d43c545cac42e9efe981a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classflounder_1_1loaders.html">loaders</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1loaders.html#ac57855261d2d43c545cac42e9efe981a">get</a> ()</td></tr>
 <tr class="memdesc:ac57855261d2d43c545cac42e9efe981a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets this framework instance.  <a href="#ac57855261d2d43c545cac42e9efe981a">More...</a><br /></td></tr>
 <tr class="separator:ac57855261d2d43c545cac42e9efe981a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
-<tr class="memitem:a5d8c265b922c5e1ea5da3ee3ec90f4ad"><td class="memItemLeft" align="right" valign="top"><a id="a5d8c265b922c5e1ea5da3ee3ec90f4ad"></a>
-std::map&lt; GLuint, std::vector&lt; GLuint &gt; * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_loaded</b></td></tr>
-<tr class="separator:a5d8c265b922c5e1ea5da3ee3ec90f4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A module used for loading and managing OpenGL VAO's and VBO's. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="afcc6aaec9391699f25a014a7cd203592"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afcc6aaec9391699f25a014a7cd203592">&#9670;&nbsp;</a></span>createIndicesVBO()</h2>
+<a id="a7cc2f160a14328dc08292d194e9ad478"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7cc2f160a14328dc08292d194e9ad478">&#9670;&nbsp;</a></span>addInstancedAttribute()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">GLuint flounder::loaders::createIndicesVBO </td>
+          <td class="memname">void flounder::loaders::addInstancedAttribute </td>
           <td>(</td>
-          <td class="paramtype">GLuint &amp;&#160;</td>
+          <td class="paramtype">const int &amp;&#160;</td>
           <td class="paramname"><em>vaoID</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; GLint &gt; &amp;&#160;</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>vboID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>attribute</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>dataSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>instancedDataLength</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a instances attribute to a VBO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vaoID</td><td>The VBO's VAO. </td></tr>
+    <tr><td class="paramname">vboID</td><td>The VBO. </td></tr>
+    <tr><td class="paramname">attribute</td><td>The attribute to add data to. </td></tr>
+    <tr><td class="paramname">dataSize</td><td>The size of data to add. </td></tr>
+    <tr><td class="paramname">instancedDataLength</td><td>The length of data to allocate. </td></tr>
+    <tr><td class="paramname">offset</td><td>The offset between data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ada5cb20e8df0224b0bc8e7da407ba254"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada5cb20e8df0224b0bc8e7da407ba254">&#9670;&nbsp;</a></span>createEmptyVBO()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flounder::loaders::createEmptyVBO </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>floatCount</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new VBO with no data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">floatCount</td><td>The number of floats to be allotted. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The new buffer objects ID. </dd></dl>
+
+</div>
+</div>
+<a id="af17aa2917eb49dc484908617bb806cd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af17aa2917eb49dc484908617bb806cd7">&#9670;&nbsp;</a></span>createIndicesVBO()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flounder::loaders::createIndicesVBO </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>vaoID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; int &gt; &amp;&#160;</td>
           <td class="paramname"><em>indices</em>&#160;</td>
         </tr>
         <tr>
@@ -164,14 +258,14 @@ std::map&lt; GLuint, std::vector&lt; GLuint &gt; * &gt; *&#160;</td><td class="m
 
 </div>
 </div>
-<a id="a90123e47d1422f5e202a7ac439fee050"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90123e47d1422f5e202a7ac439fee050">&#9670;&nbsp;</a></span>createVAO()</h2>
+<a id="a6788892ee32899599c65722fe1ccfbf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6788892ee32899599c65722fe1ccfbf3">&#9670;&nbsp;</a></span>createVAO()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">GLuint flounder::loaders::createVAO </td>
+          <td class="memname">int flounder::loaders::createVAO </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -212,22 +306,22 @@ std::map&lt; GLuint, std::vector&lt; GLuint &gt; * &gt; *&#160;</td><td class="m
 
 </div>
 </div>
-<a id="a035a42c2f558c1f126cc54729388fca3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a035a42c2f558c1f126cc54729388fca3">&#9670;&nbsp;</a></span>storeDataInVBO()</h2>
+<a id="a3fe87c11a6a2e9f3893c847b556d43c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fe87c11a6a2e9f3893c847b556d43c2">&#9670;&nbsp;</a></span>storeDataInVBO()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">GLuint flounder::loaders::storeDataInVBO </td>
+          <td class="memname">int flounder::loaders::storeDataInVBO </td>
           <td>(</td>
-          <td class="paramtype">GLuint &amp;&#160;</td>
+          <td class="paramtype">const int &amp;&#160;</td>
           <td class="paramname"><em>vaoID</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; GLfloat &gt; &amp;&#160;</td>
+          <td class="paramtype">const std::vector&lt; float &gt; &amp;&#160;</td>
           <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
@@ -290,6 +384,49 @@ std::map&lt; GLuint, std::vector&lt; GLuint &gt; * &gt; *&#160;</td><td class="m
 <p>The update function for the module. </p>
 
 <p>Implements <a class="el" href="classflounder_1_1imodule.html#a9a53d48a46b5f6b16a92b2cd8503f74a">flounder::imodule</a>.</p>
+
+</div>
+</div>
+<a id="ae0a4be86dc15991197f2f98c4a7eaa1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0a4be86dc15991197f2f98c4a7eaa1f">&#9670;&nbsp;</a></span>updateVBO()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flounder::loaders::updateVBO </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>vboID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>floatCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; float &gt; &amp;&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates a FBO with a new set of data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vboID</td><td>The FBO to update. </td></tr>
+    <tr><td class="paramname">data</td><td>The data to add into the FBO. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

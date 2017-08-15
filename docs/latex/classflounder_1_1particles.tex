@@ -18,6 +18,10 @@ Inheritance diagram for flounder\+:\+:particles\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classflounder_1_1particles_a252873bd7c1d03da7cfc09a7ff96e178}{particles} ()
+\begin{DoxyCompactList}\small\item\em Creates a new particles module. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1particles_a49776c1089c2291ee8144c0d4ef5ff59}{$\sim$particles} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the particles module. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1particles_a12f1dd9883cc49987f6ff0ca3105bdb6}{update} () override
 \begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1particles_aba5f1d3ae0abf22fbc73463075e4777f}{clear} ()
@@ -26,10 +30,8 @@ void \hyperlink{classflounder_1_1particles_a39a6e05f1323ebf326930ef2e9b72a3e}{ad
 \begin{DoxyCompactList}\small\item\em Adds a particle system to the recalculate\+Ray loop. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1particles_a33af75a6466ece3ab1b661bcdffae201}{remove\+System} (\hyperlink{classflounder_1_1particlesystem}{particlesystem} $\ast$system)
 \begin{DoxyCompactList}\small\item\em Removes a particle system from the recalculate\+Ray loop. \end{DoxyCompactList}\item 
-std\+::vector$<$ \hyperlink{classflounder_1_1structurebasic}{structurebasic}$<$ \hyperlink{classflounder_1_1particle}{particle} $\ast$ $>$ $\ast$ $>$ $\ast$ \hyperlink{classflounder_1_1particles_a73468a12149371a445e01fa178684aa0}{get\+Particles} ()
-\begin{DoxyCompactList}\small\item\em Gets a list of all particles. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classflounder_1_1particles_afa14d05372032644982a5ce2f96bd5e5}{add\+Particle} (\hyperlink{classflounder_1_1particletype}{particletype} $\ast$particle\+Type, const \hyperlink{classflounder_1_1vector3}{vector3} \&position, const \hyperlink{classflounder_1_1vector3}{vector3} \&velocity, const float \&life\+Length, const float \&rotation, const float \&scale, const float \&gravity\+Effect)
-\begin{DoxyCompactList}\small\item\em Adds a particle to the recalculate\+Ray loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+std\+::map$<$ \hyperlink{classflounder_1_1particletype}{particletype} $\ast$, std\+::vector$<$ \hyperlink{classflounder_1_1particle}{particle} $\ast$ $>$ $\ast$ $>$ $\ast$ \hyperlink{classflounder_1_1particles_a6a78873c57f68dd35a464156cea4b05b}{get\+Particles} () const
+\begin{DoxyCompactList}\small\item\em Gets a list of all particles. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -41,11 +43,8 @@ static \hyperlink{classflounder_1_1particles}{particles} $\ast$ \hyperlink{class
 \mbox{\Hypertarget{classflounder_1_1particles_a13fce1ef2c28a33412d11d25914287cc}\label{classflounder_1_1particles_a13fce1ef2c28a33412d11d25914287cc}} 
 std\+::vector$<$ \hyperlink{classflounder_1_1particlesystem}{particlesystem} $\ast$ $>$ $\ast$ {\bfseries m\+\_\+particle\+Systems}
 \item 
-\mbox{\Hypertarget{classflounder_1_1particles_a573b879c3466dc74aa720088d346fa77}\label{classflounder_1_1particles_a573b879c3466dc74aa720088d346fa77}} 
-std\+::vector$<$ \hyperlink{classflounder_1_1structurebasic}{structurebasic}$<$ \hyperlink{classflounder_1_1particle}{particle} $\ast$ $>$ $\ast$ $>$ $\ast$ {\bfseries m\+\_\+particles}
-\item 
-\mbox{\Hypertarget{classflounder_1_1particles_afb60841f65a1b95a89c0afe7a580cd33}\label{classflounder_1_1particles_afb60841f65a1b95a89c0afe7a580cd33}} 
-std\+::vector$<$ \hyperlink{classflounder_1_1particle}{particle} $\ast$ $>$ $\ast$ {\bfseries m\+\_\+dead\+Particles}
+\mbox{\Hypertarget{classflounder_1_1particles_a91a156c7eb548c502a2a6d8c4d4441b3}\label{classflounder_1_1particles_a91a156c7eb548c502a2a6d8c4d4441b3}} 
+std\+::map$<$ \hyperlink{classflounder_1_1particletype}{particletype} $\ast$, std\+::vector$<$ \hyperlink{classflounder_1_1particle}{particle} $\ast$ $>$ $\ast$ $>$ $\ast$ {\bfseries m\+\_\+particles}
 \end{DoxyCompactItemize}
 \subsection*{Static Private Attributes}
 \begin{DoxyCompactItemize}
@@ -60,34 +59,30 @@ A manager that manages particles.
 
 
 
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1particles_a252873bd7c1d03da7cfc09a7ff96e178}\label{classflounder_1_1particles_a252873bd7c1d03da7cfc09a7ff96e178}} 
+\index{flounder\+::particles@{flounder\+::particles}!particles@{particles}}
+\index{particles@{particles}!flounder\+::particles@{flounder\+::particles}}
+\subsubsection{\texorpdfstring{particles()}{particles()}}
+{\footnotesize\ttfamily flounder\+::particles\+::particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new particles module. 
+
+\mbox{\Hypertarget{classflounder_1_1particles_a49776c1089c2291ee8144c0d4ef5ff59}\label{classflounder_1_1particles_a49776c1089c2291ee8144c0d4ef5ff59}} 
+\index{flounder\+::particles@{flounder\+::particles}!````~particles@{$\sim$particles}}
+\index{````~particles@{$\sim$particles}!flounder\+::particles@{flounder\+::particles}}
+\subsubsection{\texorpdfstring{$\sim$particles()}{~particles()}}
+{\footnotesize\ttfamily flounder\+::particles\+::$\sim$particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the particles module. 
+
+
+
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1particles_afa14d05372032644982a5ce2f96bd5e5}\label{classflounder_1_1particles_afa14d05372032644982a5ce2f96bd5e5}} 
-\index{flounder\+::particles@{flounder\+::particles}!add\+Particle@{add\+Particle}}
-\index{add\+Particle@{add\+Particle}!flounder\+::particles@{flounder\+::particles}}
-\subsubsection{\texorpdfstring{add\+Particle()}{addParticle()}}
-{\footnotesize\ttfamily void flounder\+::particles\+::add\+Particle (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1particletype}{particletype} $\ast$}]{particle\+Type,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{position,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{velocity,  }\item[{const float \&}]{life\+Length,  }\item[{const float \&}]{rotation,  }\item[{const float \&}]{scale,  }\item[{const float \&}]{gravity\+Effect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
-
-
-
-Adds a particle to the recalculate\+Ray loop. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em particle\+Type} & The particle template to build from. \\
-\hline
-{\em position} & The particles initial position. \\
-\hline
-{\em velocity} & The particles initial velocity. \\
-\hline
-{\em life\+Length} & The particles life length. \\
-\hline
-{\em rotation} & The particles rotation. \\
-\hline
-{\em scale} & The particles scale. \\
-\hline
-{\em gravity\+Effect} & The particles gravity effect. \\
-\hline
-\end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1particles_a39a6e05f1323ebf326930ef2e9b72a3e}\label{classflounder_1_1particles_a39a6e05f1323ebf326930ef2e9b72a3e}} 
 \index{flounder\+::particles@{flounder\+::particles}!add\+System@{add\+System}}
 \index{add\+System@{add\+System}!flounder\+::particles@{flounder\+::particles}}
@@ -126,11 +121,11 @@ Gets this framework instance.
 \begin{DoxyReturn}{Returns}
 The current module instance. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1particles_a73468a12149371a445e01fa178684aa0}\label{classflounder_1_1particles_a73468a12149371a445e01fa178684aa0}} 
+\mbox{\Hypertarget{classflounder_1_1particles_a6a78873c57f68dd35a464156cea4b05b}\label{classflounder_1_1particles_a6a78873c57f68dd35a464156cea4b05b}} 
 \index{flounder\+::particles@{flounder\+::particles}!get\+Particles@{get\+Particles}}
 \index{get\+Particles@{get\+Particles}!flounder\+::particles@{flounder\+::particles}}
 \subsubsection{\texorpdfstring{get\+Particles()}{getParticles()}}
-{\footnotesize\ttfamily std\+::vector$<$\hyperlink{classflounder_1_1structurebasic}{structurebasic}$<$\hyperlink{classflounder_1_1particle}{particle}$\ast$$>$$\ast$$>$$\ast$ flounder\+::particles\+::get\+Particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily std\+::map$<$\hyperlink{classflounder_1_1particletype}{particletype}$\ast$, std\+::vector$<$\hyperlink{classflounder_1_1particle}{particle}$\ast$$>$$\ast$$>$$\ast$ flounder\+::particles\+::get\+Particles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 

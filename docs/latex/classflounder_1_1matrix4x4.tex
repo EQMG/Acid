@@ -53,6 +53,8 @@ static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{class
 \begin{DoxyCompactList}\small\item\em Multiplies two matrices together and places the result in the destination matrix. \end{DoxyCompactList}\item 
 static \hyperlink{classflounder_1_1vector4}{vector4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_ae377db4fe0e59fd748462fdc2f6a8939}{transform} (const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&left, const \hyperlink{classflounder_1_1vector4}{vector4} \&right, \hyperlink{classflounder_1_1vector4}{vector4} $\ast$destination)
 \begin{DoxyCompactList}\small\item\em Transforms a matrix by a vector and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_ad7f8cccba89862a3f574b601f0744174}{scale} (const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&left, const \hyperlink{classflounder_1_1vector3}{vector3} \&right, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Scales a matrix by a vector and places the result in the destination matrix. \end{DoxyCompactList}\item 
 static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_a5ac6ac7707c5e5c01654303b5b13c3ba}{scale} (const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&left, const \hyperlink{classflounder_1_1vector4}{vector4} \&right, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
 \begin{DoxyCompactList}\small\item\em Scales a matrix by a vector and places the result in the destination matrix. \end{DoxyCompactList}\item 
 static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_a37ca0be43e7f10e09c7c7b4b7e161221}{invert} (const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&source, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
@@ -73,13 +75,13 @@ static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{class
 \begin{DoxyCompactList}\small\item\em Sets the source matrix to 0. \end{DoxyCompactList}\item 
 static \hyperlink{classflounder_1_1vector3}{vector3} $\ast$ \hyperlink{classflounder_1_1matrix4x4_abdc18b84f279431e1c137a7dd42cac2b}{rotate} (const \hyperlink{classflounder_1_1vector3}{vector3} \&source, const \hyperlink{classflounder_1_1vector3}{vector3} \&rotation, \hyperlink{classflounder_1_1vector3}{vector3} $\ast$destination)
 \begin{DoxyCompactList}\small\item\em Rotates a vector and places the result in the destination vector. \end{DoxyCompactList}\item 
-static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_a48a7a03e0cf3618a745cb9265b15575f}{transformation\+Matrix} (const \hyperlink{classflounder_1_1vector2}{vector2} \&translation, const float \&\hyperlink{classflounder_1_1matrix4x4_a5ac6ac7707c5e5c01654303b5b13c3ba}{scale}, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
+static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_a48a7a03e0cf3618a745cb9265b15575f}{transformation\+Matrix} (const \hyperlink{classflounder_1_1vector2}{vector2} \&translation, const float \&\hyperlink{classflounder_1_1matrix4x4_ad7f8cccba89862a3f574b601f0744174}{scale}, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
 \begin{DoxyCompactList}\small\item\em Creates a new transformation matrix for a object in 2d flounder.\+space. \end{DoxyCompactList}\item 
-static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_aee27febd58dbb352bc3c3b21927981b2}{transformation\+Matrix} (const \hyperlink{classflounder_1_1vector2}{vector2} \&translation, const \hyperlink{classflounder_1_1vector3}{vector3} \&\hyperlink{classflounder_1_1matrix4x4_a5ac6ac7707c5e5c01654303b5b13c3ba}{scale}, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
+static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_aee27febd58dbb352bc3c3b21927981b2}{transformation\+Matrix} (const \hyperlink{classflounder_1_1vector2}{vector2} \&translation, const \hyperlink{classflounder_1_1vector3}{vector3} \&\hyperlink{classflounder_1_1matrix4x4_ad7f8cccba89862a3f574b601f0744174}{scale}, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
 \begin{DoxyCompactList}\small\item\em Creates a new transformation matrix for a object in 2d flounder.\+space. \end{DoxyCompactList}\item 
-static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_ad4e44d13daacf0a9d51fdf5b3fcef315}{transformation\+Matrix} (const \hyperlink{classflounder_1_1vector3}{vector3} \&translation, const \hyperlink{classflounder_1_1vector3}{vector3} \&rotation, const float \&\hyperlink{classflounder_1_1matrix4x4_a5ac6ac7707c5e5c01654303b5b13c3ba}{scale}, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
+static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_ad4e44d13daacf0a9d51fdf5b3fcef315}{transformation\+Matrix} (const \hyperlink{classflounder_1_1vector3}{vector3} \&translation, const \hyperlink{classflounder_1_1vector3}{vector3} \&rotation, const float \&\hyperlink{classflounder_1_1matrix4x4_ad7f8cccba89862a3f574b601f0744174}{scale}, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
 \begin{DoxyCompactList}\small\item\em Creates a new transformation matrix for a object in 3d flounder.\+space. \end{DoxyCompactList}\item 
-static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_af068b46bbfe840dda2caa9d53c4a6092}{transformation\+Matrix} (const \hyperlink{classflounder_1_1vector3}{vector3} \&translation, const \hyperlink{classflounder_1_1vector3}{vector3} \&rotation, const \hyperlink{classflounder_1_1vector3}{vector3} \&\hyperlink{classflounder_1_1matrix4x4_a5ac6ac7707c5e5c01654303b5b13c3ba}{scale}, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
+static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_af068b46bbfe840dda2caa9d53c4a6092}{transformation\+Matrix} (const \hyperlink{classflounder_1_1vector3}{vector3} \&translation, const \hyperlink{classflounder_1_1vector3}{vector3} \&rotation, const \hyperlink{classflounder_1_1vector3}{vector3} \&\hyperlink{classflounder_1_1matrix4x4_ad7f8cccba89862a3f574b601f0744174}{scale}, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
 \begin{DoxyCompactList}\small\item\em Creates a new transformation matrix for a object in 3d flounder.\+space. \end{DoxyCompactList}\item 
 static \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ \hyperlink{classflounder_1_1matrix4x4_aaaf16a53ae9936220587eaf454bf9483}{perspective\+Matrix} (const float \&fov, const float \&aspect\+Ratio, const float \&z\+Near, const float \&z\+Far, \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$destination)
 \begin{DoxyCompactList}\small\item\em Creates a new perspective matrix, or updates a existing one. \end{DoxyCompactList}\item 
@@ -225,7 +227,7 @@ Adds two matrices together and places the result in the destination matrix.
 \hline
 {\em right} & The right source matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -278,7 +280,7 @@ Generates a random unit vector from within a cone.
 \hline
 {\em angle} & The cones major angle. \\
 \hline
-{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
+{\em destination} & The destination vector or nullptr if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -298,11 +300,11 @@ Inverts the source matrix and puts the result in the destination matrix.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source matrix to be inverted. \\
 \hline
-{\em destination} & The destination matrix, or N\+U\+LL if a new one is to be created. \\
+{\em destination} & The destination matrix, or nullptr if a new one is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-The inverted matrix, or N\+U\+LL if source can\textquotesingle{}t be reverted. 
+The inverted matrix, or nullptr if source can\textquotesingle{}t be reverted. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1matrix4x4_ad8959f0c459bb67eb884806f7303c468}\label{classflounder_1_1matrix4x4_ad8959f0c459bb67eb884806f7303c468}} 
 \index{flounder\+::matrix4x4@{flounder\+::matrix4x4}!invert@{invert}}
@@ -333,7 +335,7 @@ Multiplies a matrix and a vector together and places the result in the destinati
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
+{\em destination} & The destination vector or nullptr if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -355,7 +357,7 @@ Multiplies two matrices together and places the result in the destination matrix
 \hline
 {\em right} & The right source matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -375,7 +377,7 @@ Negates the source matrix and places the result in the destination matrix.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -418,7 +420,7 @@ Creates a new orthographic matrix, or updates a existing one.
 \hline
 {\em far} & The far plane. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -444,7 +446,7 @@ Creates a new perspective matrix, or updates a existing one.
 \hline
 {\em z\+Far} & The cameras far plane. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -468,7 +470,7 @@ Rotates a matrix around the given axis the specified angle and places the result
 \hline
 {\em angle} & the angle, in radians. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -490,16 +492,38 @@ Rotates a vector and places the result in the destination vector.
 \hline
 {\em rotation} & The rotation amount. \\
 \hline
-{\em destination} & The destination vector or N\+U\+LL if a new vector is to be created. \\
+{\em destination} & The destination vector or nullptr if a new vector is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The destination vector. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1matrix4x4_ad7f8cccba89862a3f574b601f0744174}\label{classflounder_1_1matrix4x4_ad7f8cccba89862a3f574b601f0744174}} 
+\index{flounder\+::matrix4x4@{flounder\+::matrix4x4}!scale@{scale}}
+\index{scale@{scale}!flounder\+::matrix4x4@{flounder\+::matrix4x4}}
+\subsubsection{\texorpdfstring{scale()}{scale()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ flounder\+::matrix4x4\+::scale (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{right,  }\item[{\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Scales a matrix by a vector and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination matrix. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1matrix4x4_a5ac6ac7707c5e5c01654303b5b13c3ba}\label{classflounder_1_1matrix4x4_a5ac6ac7707c5e5c01654303b5b13c3ba}} 
 \index{flounder\+::matrix4x4@{flounder\+::matrix4x4}!scale@{scale}}
 \index{scale@{scale}!flounder\+::matrix4x4@{flounder\+::matrix4x4}}
-\subsubsection{\texorpdfstring{scale()}{scale()}}
+\subsubsection{\texorpdfstring{scale()}{scale()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ flounder\+::matrix4x4\+::scale (\begin{DoxyParamCaption}\item[{const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&}]{left,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{right,  }\item[{\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
@@ -512,7 +536,7 @@ Scales a matrix by a vector and places the result in the destination matrix.
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -632,7 +656,7 @@ Subtracts two matrices together and places the result in the destination matrix.
 \hline
 {\em right} & The right source matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -672,7 +696,7 @@ Transforms a matrix by a vector and places the result in the destination matrix.
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination vector or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination vector or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -694,7 +718,7 @@ Creates a new transformation matrix for a object in 2d flounder.\+space.
 \hline
 {\em scale} & How much to scale the matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -716,7 +740,7 @@ Creates a new transformation matrix for a object in 2d flounder.\+space.
 \hline
 {\em scale} & How much to scale the matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -740,7 +764,7 @@ Creates a new transformation matrix for a object in 3d flounder.\+space.
 \hline
 {\em scale} & How much to scale the matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -764,7 +788,7 @@ Creates a new transformation matrix for a object in 3d flounder.\+space.
 \hline
 {\em scale} & How much to scale the matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -786,7 +810,7 @@ Translates a matrix by a vector and places the result in the destination matrix.
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -808,7 +832,7 @@ Translates a matrix by a vector and places the result in the destination matrix.
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -828,7 +852,7 @@ Transpose the source matrix and places the result in the destination matrix.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}

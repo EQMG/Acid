@@ -63,12 +63,9 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classflounder_1_1shader-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">flounder::shader Class Reference</div>  </div>
@@ -80,160 +77,83 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="shader_8h_source.html">shader.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader_1_1builder.html">builder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A builder used to set shader parameters for loading.  <a href="classflounder_1_1shader_1_1builder.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a0ef1d1ad999d4d36cdcbd01aee19fc40"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a0ef1d1ad999d4d36cdcbd01aee19fc40">shader</a> (const std::string &amp;name, const int n_args,...)</td></tr>
+<tr class="memdesc:a0ef1d1ad999d4d36cdcbd01aee19fc40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new shader.  <a href="#a0ef1d1ad999d4d36cdcbd01aee19fc40">More...</a><br /></td></tr>
+<tr class="separator:a0ef1d1ad999d4d36cdcbd01aee19fc40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd3f0fc712e7e178f18bf275c85e3337"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#abd3f0fc712e7e178f18bf275c85e3337">~shader</a> ()</td></tr>
 <tr class="memdesc:abd3f0fc712e7e178f18bf275c85e3337"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the shader.  <a href="#abd3f0fc712e7e178f18bf275c85e3337">More...</a><br /></td></tr>
 <tr class="separator:abd3f0fc712e7e178f18bf275c85e3337"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5971b780ec6535aeb0ca70fefd41daa9"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a5971b780ec6535aeb0ca70fefd41daa9">getName</a> ()</td></tr>
 <tr class="memdesc:a5971b780ec6535aeb0ca70fefd41daa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the loaded name for the shader.  <a href="#a5971b780ec6535aeb0ca70fefd41daa9">More...</a><br /></td></tr>
 <tr class="separator:a5971b780ec6535aeb0ca70fefd41daa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b1f6770ce28db4f9a4b20e0842d785e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a4b1f6770ce28db4f9a4b20e0842d785e">start</a> ()</td></tr>
-<tr class="memdesc:a4b1f6770ce28db4f9a4b20e0842d785e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the shader program.  <a href="#a4b1f6770ce28db4f9a4b20e0842d785e">More...</a><br /></td></tr>
-<tr class="separator:a4b1f6770ce28db4f9a4b20e0842d785e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2972bda7e96b86de9a12a44e3e285691"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a2972bda7e96b86de9a12a44e3e285691">stop</a> ()</td></tr>
-<tr class="memdesc:a2972bda7e96b86de9a12a44e3e285691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the shader program.  <a href="#a2972bda7e96b86de9a12a44e3e285691">More...</a><br /></td></tr>
-<tr class="separator:a2972bda7e96b86de9a12a44e3e285691"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4d3af8b3ffe94ff901b15376215c2e2"><td class="memItemLeft" align="right" valign="top">GLint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#ab4d3af8b3ffe94ff901b15376215c2e2">getUniform</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:ab4d3af8b3ffe94ff901b15376215c2e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a uniform location from a name.  <a href="#ab4d3af8b3ffe94ff901b15376215c2e2">More...</a><br /></td></tr>
-<tr class="separator:ab4d3af8b3ffe94ff901b15376215c2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1767f4ca2d3b1eb35dc4435e2aa3fd67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a1767f4ca2d3b1eb35dc4435e2aa3fd67">loadUniform</a> (const std::string &amp;name, const bool &amp;value)</td></tr>
-<tr class="memdesc:a1767f4ca2d3b1eb35dc4435e2aa3fd67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a boolean into a uniform.  <a href="#a1767f4ca2d3b1eb35dc4435e2aa3fd67">More...</a><br /></td></tr>
-<tr class="separator:a1767f4ca2d3b1eb35dc4435e2aa3fd67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a597fdaefa4644b107e8ce2776ce69f76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a597fdaefa4644b107e8ce2776ce69f76">loadUniform</a> (const std::string &amp;name, const int &amp;value)</td></tr>
-<tr class="memdesc:a597fdaefa4644b107e8ce2776ce69f76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a int/sampler2D into a uniform.  <a href="#a597fdaefa4644b107e8ce2776ce69f76">More...</a><br /></td></tr>
-<tr class="separator:a597fdaefa4644b107e8ce2776ce69f76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd349b44107fc3389856a124da305d62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#acd349b44107fc3389856a124da305d62">loadUniform</a> (const std::string &amp;name, const float &amp;value)</td></tr>
-<tr class="memdesc:acd349b44107fc3389856a124da305d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a float into a uniform.  <a href="#acd349b44107fc3389856a124da305d62">More...</a><br /></td></tr>
-<tr class="separator:acd349b44107fc3389856a124da305d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c14875fd04a7a824d2af9e737bde626"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a3c14875fd04a7a824d2af9e737bde626">loadUniform</a> (const std::string &amp;name, const float &amp;x, const float &amp;y)</td></tr>
-<tr class="memdesc:a3c14875fd04a7a824d2af9e737bde626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a vector 2 into a uniform.  <a href="#a3c14875fd04a7a824d2af9e737bde626">More...</a><br /></td></tr>
-<tr class="separator:a3c14875fd04a7a824d2af9e737bde626"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd782c5f1e6fb7f1d7f8fcf5d0c8b43c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#abd782c5f1e6fb7f1d7f8fcf5d0c8b43c">loadUniform</a> (const std::string &amp;name, const float &amp;x, const float &amp;y, const float &amp;z)</td></tr>
-<tr class="memdesc:abd782c5f1e6fb7f1d7f8fcf5d0c8b43c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a vector 3 into a uniform.  <a href="#abd782c5f1e6fb7f1d7f8fcf5d0c8b43c">More...</a><br /></td></tr>
-<tr class="separator:abd782c5f1e6fb7f1d7f8fcf5d0c8b43c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54caa7d0462b98679dd902d6256a6e8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a54caa7d0462b98679dd902d6256a6e8b">loadUniform</a> (const std::string &amp;name, const float &amp;x, const float &amp;y, const float &amp;z, const float &amp;w)</td></tr>
-<tr class="memdesc:a54caa7d0462b98679dd902d6256a6e8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a vector 4 into a uniform.  <a href="#a54caa7d0462b98679dd902d6256a6e8b">More...</a><br /></td></tr>
-<tr class="separator:a54caa7d0462b98679dd902d6256a6e8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fed325128b3437f435a4ca327ea416e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a6fed325128b3437f435a4ca327ea416e">loadUniform</a> (const std::string &amp;name, const <a class="el" href="classflounder_1_1colour.html">colour</a> &amp;value)</td></tr>
-<tr class="memdesc:a6fed325128b3437f435a4ca327ea416e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a colour into a uniform.  <a href="#a6fed325128b3437f435a4ca327ea416e">More...</a><br /></td></tr>
-<tr class="separator:a6fed325128b3437f435a4ca327ea416e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a257fff86a8d24c657724fa14ac0ef12e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a257fff86a8d24c657724fa14ac0ef12e">loadUniform</a> (const std::string &amp;name, const <a class="el" href="classflounder_1_1matrix2x2.html">matrix2x2</a> &amp;value)</td></tr>
-<tr class="memdesc:a257fff86a8d24c657724fa14ac0ef12e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a matrix 2x2 into a uniform.  <a href="#a257fff86a8d24c657724fa14ac0ef12e">More...</a><br /></td></tr>
-<tr class="separator:a257fff86a8d24c657724fa14ac0ef12e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9122d8bd4e63275b640e43d04f75fa88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a9122d8bd4e63275b640e43d04f75fa88">loadUniform</a> (const std::string &amp;name, const <a class="el" href="classflounder_1_1matrix3x3.html">matrix3x3</a> &amp;value)</td></tr>
-<tr class="memdesc:a9122d8bd4e63275b640e43d04f75fa88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a matrix 3x3 into a uniform.  <a href="#a9122d8bd4e63275b640e43d04f75fa88">More...</a><br /></td></tr>
-<tr class="separator:a9122d8bd4e63275b640e43d04f75fa88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b7d1b32758e0aaefd20b050aeb2e7fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a2b7d1b32758e0aaefd20b050aeb2e7fe">loadUniform</a> (const std::string &amp;name, const <a class="el" href="classflounder_1_1matrix4x4.html">matrix4x4</a> &amp;value)</td></tr>
-<tr class="memdesc:a2b7d1b32758e0aaefd20b050aeb2e7fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a matrix 4x4 into a uniform.  <a href="#a2b7d1b32758e0aaefd20b050aeb2e7fe">More...</a><br /></td></tr>
-<tr class="separator:a2b7d1b32758e0aaefd20b050aeb2e7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38aea3f31eb3f4b202bb9b519966c073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a38aea3f31eb3f4b202bb9b519966c073">loadUniform</a> (const std::string &amp;name, const <a class="el" href="classflounder_1_1vector2.html">vector2</a> &amp;value)</td></tr>
-<tr class="memdesc:a38aea3f31eb3f4b202bb9b519966c073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a vector 2 into a uniform.  <a href="#a38aea3f31eb3f4b202bb9b519966c073">More...</a><br /></td></tr>
-<tr class="separator:a38aea3f31eb3f4b202bb9b519966c073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a776ea14c9ec0e66b59e25cdc606e5bc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a776ea14c9ec0e66b59e25cdc606e5bc8">loadUniform</a> (const std::string &amp;name, const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;value)</td></tr>
-<tr class="memdesc:a776ea14c9ec0e66b59e25cdc606e5bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a vector 3 into a uniform.  <a href="#a776ea14c9ec0e66b59e25cdc606e5bc8">More...</a><br /></td></tr>
-<tr class="separator:a776ea14c9ec0e66b59e25cdc606e5bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa56085c5c7dc315f165ee3bb9d81d250"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#aa56085c5c7dc315f165ee3bb9d81d250">loadUniform</a> (const std::string &amp;name, const <a class="el" href="classflounder_1_1vector4.html">vector4</a> &amp;value)</td></tr>
-<tr class="memdesc:aa56085c5c7dc315f165ee3bb9d81d250"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a vector 4 into a uniform.  <a href="#aa56085c5c7dc315f165ee3bb9d81d250">More...</a><br /></td></tr>
-<tr class="separator:aa56085c5c7dc315f165ee3bb9d81d250"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a3dbe598a9994e8e4ccbf889ba38b05f7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classflounder_1_1shader_1_1builder.html">builder</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a3dbe598a9994e8e4ccbf889ba38b05f7">newShader</a> ()</td></tr>
-<tr class="memdesc:a3dbe598a9994e8e4ccbf889ba38b05f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new shader builder that is used to configure a shader.  <a href="#a3dbe598a9994e8e4ccbf889ba38b05f7">More...</a><br /></td></tr>
-<tr class="separator:a3dbe598a9994e8e4ccbf889ba38b05f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:ae8c052148333a4c06a4dd31b56b072cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#ae8c052148333a4c06a4dd31b56b072cf">shader</a> (<a class="el" href="classflounder_1_1shader_1_1builder.html">builder</a> *<a class="el" href="classflounder_1_1shader_1_1builder.html">builder</a>)</td></tr>
-<tr class="memdesc:ae8c052148333a4c06a4dd31b56b072cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new shader.  <a href="#ae8c052148333a4c06a4dd31b56b072cf">More...</a><br /></td></tr>
-<tr class="separator:ae8c052148333a4c06a4dd31b56b072cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a47675b1cb14100368f3ed5ef7338458c"><td class="memItemLeft" align="right" valign="top"><a id="a47675b1cb14100368f3ed5ef7338458c"></a>
-<a class="el" href="classflounder_1_1shader_1_1builder.html">builder</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_builder</b></td></tr>
-<tr class="separator:a47675b1cb14100368f3ed5ef7338458c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf406b4f20956f8ae7ca76dc8daad869"><td class="memItemLeft" align="right" valign="top"><a id="aaf406b4f20956f8ae7ca76dc8daad869"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_name</b></td></tr>
-<tr class="separator:aaf406b4f20956f8ae7ca76dc8daad869"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7937368d5fb8efdeb1f7c6134c2a4a00"><td class="memItemLeft" align="right" valign="top"><a id="a7937368d5fb8efdeb1f7c6134c2a4a00"></a>
-std::vector&lt; <a class="el" href="structflounder_1_1shadertype.html">shadertype</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_shaderTypes</b></td></tr>
-<tr class="separator:a7937368d5fb8efdeb1f7c6134c2a4a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae59400c4ad8488e858ee043d0417eb1a"><td class="memItemLeft" align="right" valign="top"><a id="ae59400c4ad8488e858ee043d0417eb1a"></a>
-std::vector&lt; std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_layoutLocations</b></td></tr>
-<tr class="separator:ae59400c4ad8488e858ee043d0417eb1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48e1ade301155186e47e335865fb81cf"><td class="memItemLeft" align="right" valign="top"><a id="a48e1ade301155186e47e335865fb81cf"></a>
-std::vector&lt; std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_layoutBindings</b></td></tr>
-<tr class="separator:a48e1ade301155186e47e335865fb81cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44c9cad46e853ab5991d77e0d0e1fde6"><td class="memItemLeft" align="right" valign="top"><a id="a44c9cad46e853ab5991d77e0d0e1fde6"></a>
-std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_constants</b></td></tr>
-<tr class="separator:a44c9cad46e853ab5991d77e0d0e1fde6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a121ff2a41dd77d13e9c75e6a17f03770"><td class="memItemLeft" align="right" valign="top"><a id="a121ff2a41dd77d13e9c75e6a17f03770"></a>
-std::vector&lt; std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_uniforms</b></td></tr>
-<tr class="separator:a121ff2a41dd77d13e9c75e6a17f03770"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a308e8bf681df24612a43a165948c1a21"><td class="memItemLeft" align="right" valign="top"><a id="a308e8bf681df24612a43a165948c1a21"></a>
-GLuint&#160;</td><td class="memItemRight" valign="bottom"><b>m_programID</b></td></tr>
-<tr class="separator:a308e8bf681df24612a43a165948c1a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b002dd2d880e1b88eeea5c229a72347"><td class="memItemLeft" align="right" valign="top"><a id="a3b002dd2d880e1b88eeea5c229a72347"></a>
+std::vector&lt; VkPipelineShaderStageCreateInfo &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>getStages</b> () const</td></tr>
+<tr class="separator:a3b002dd2d880e1b88eeea5c229a72347"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a6e6e2fb4699edf3e31a2db8cc0537d54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a6e6e2fb4699edf3e31a2db8cc0537d54">loadTypes</a> ()</td></tr>
-<tr class="memdesc:a6e6e2fb4699edf3e31a2db8cc0537d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads all of the types provided.  <a href="#a6e6e2fb4699edf3e31a2db8cc0537d54">More...</a><br /></td></tr>
-<tr class="separator:a6e6e2fb4699edf3e31a2db8cc0537d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b9dd723ad226438a710cac8303841e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a6b9dd723ad226438a710cac8303841e5">loadType</a> (<a class="el" href="structflounder_1_1shadertype.html">shadertype</a> *type)</td></tr>
-<tr class="memdesc:a6b9dd723ad226438a710cac8303841e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the type into memory.  <a href="#a6b9dd723ad226438a710cac8303841e5">More...</a><br /></td></tr>
-<tr class="separator:a6b9dd723ad226438a710cac8303841e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad80001da433e7afbd646fe2d19ac8b4a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#ad80001da433e7afbd646fe2d19ac8b4a">processLine</a> (const std::string &amp;line)</td></tr>
-<tr class="memdesc:ad80001da433e7afbd646fe2d19ac8b4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes the shaders line looking for keywords and optimizing for platforms.  <a href="#ad80001da433e7afbd646fe2d19ac8b4a">More...</a><br /></td></tr>
-<tr class="separator:ad80001da433e7afbd646fe2d19ac8b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01e50af930469630a051f8bcf9a74897"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a01e50af930469630a051f8bcf9a74897">loadLocations</a> ()</td></tr>
-<tr class="memdesc:a01e50af930469630a051f8bcf9a74897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads shader locations to make shader usage more simple.  <a href="#a01e50af930469630a051f8bcf9a74897">More...</a><br /></td></tr>
-<tr class="separator:a01e50af930469630a051f8bcf9a74897"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12948c1607867de569f1cd596c923623"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a12948c1607867de569f1cd596c923623">deleteTypes</a> ()</td></tr>
-<tr class="memdesc:a12948c1607867de569f1cd596c923623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the loaded types from memory as they are not needed after creating the shader.  <a href="#a12948c1607867de569f1cd596c923623">More...</a><br /></td></tr>
-<tr class="separator:a12948c1607867de569f1cd596c923623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ababc32f14fa38c2c3e0337c5537b1dcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#ababc32f14fa38c2c3e0337c5537b1dcd">loadBindings</a> ()</td></tr>
-<tr class="memdesc:ababc32f14fa38c2c3e0337c5537b1dcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads shader binds to make shader usage more simple.  <a href="#ababc32f14fa38c2c3e0337c5537b1dcd">More...</a><br /></td></tr>
-<tr class="separator:ababc32f14fa38c2c3e0337c5537b1dcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a671f6dea2db9272be68f2b9ebd021fbf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1shader.html#a671f6dea2db9272be68f2b9ebd021fbf">create</a> ()</td></tr>
+<tr class="memdesc:a671f6dea2db9272be68f2b9ebd021fbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the shader.  <a href="#a671f6dea2db9272be68f2b9ebd021fbf">More...</a><br /></td></tr>
+<tr class="separator:a671f6dea2db9272be68f2b9ebd021fbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aaf406b4f20956f8ae7ca76dc8daad869"><td class="memItemLeft" align="right" valign="top"><a id="aaf406b4f20956f8ae7ca76dc8daad869"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_name</b></td></tr>
+<tr class="separator:aaf406b4f20956f8ae7ca76dc8daad869"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae330ebe9ffb7c2e434a986d4c3d08abd"><td class="memItemLeft" align="right" valign="top"><a id="ae330ebe9ffb7c2e434a986d4c3d08abd"></a>
+std::vector&lt; <a class="el" href="classflounder_1_1shadertype.html">shadertype</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_types</b></td></tr>
+<tr class="separator:ae330ebe9ffb7c2e434a986d4c3d08abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2eb98572bfcf0504352e0eb207fe967"><td class="memItemLeft" align="right" valign="top"><a id="ac2eb98572bfcf0504352e0eb207fe967"></a>
+std::vector&lt; VkShaderModule &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_modules</b></td></tr>
+<tr class="separator:ac2eb98572bfcf0504352e0eb207fe967"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b7834784409ed0ee582c6fdf23a611a"><td class="memItemLeft" align="right" valign="top"><a id="a7b7834784409ed0ee582c6fdf23a611a"></a>
+std::vector&lt; VkPipelineShaderStageCreateInfo &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>m_stages</b></td></tr>
+<tr class="separator:a7b7834784409ed0ee582c6fdf23a611a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that represents a loaded shader. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae8c052148333a4c06a4dd31b56b072cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8c052148333a4c06a4dd31b56b072cf">&#9670;&nbsp;</a></span>shader()</h2>
+<a id="a0ef1d1ad999d4d36cdcbd01aee19fc40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ef1d1ad999d4d36cdcbd01aee19fc40">&#9670;&nbsp;</a></span>shader()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">flounder::shader::shader </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classflounder_1_1shader_1_1builder.html">builder</a> *&#160;</td>
-          <td class="paramname"><em>builder</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>n_args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Creates a new shader. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">builder</td><td>The shaders builder. </td></tr>
+    <tr><td class="paramname">name</td><td>The shaders name. </td></tr>
+    <tr><td class="paramname">n_args</td><td>The number of shader types. </td></tr>
+    <tr><td class="paramname">...</td><td>The list of shader types. </td></tr>
   </table>
   </dd>
 </dl>
@@ -260,8 +180,8 @@ Private Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a12948c1607867de569f1cd596c923623"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12948c1607867de569f1cd596c923623">&#9670;&nbsp;</a></span>deleteTypes()</h2>
+<a id="a671f6dea2db9272be68f2b9ebd021fbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a671f6dea2db9272be68f2b9ebd021fbf">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,7 +190,7 @@ Private Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void flounder::shader::deleteTypes </td>
+          <td class="memname">void flounder::shader::create </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -283,7 +203,7 @@ Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Clears the loaded types from memory as they are not needed after creating the shader. </p>
+<p>Creates the shader. </p>
 
 </div>
 </div>
@@ -312,772 +232,6 @@ Private Member Functions</h2></td></tr>
 
 <p>Gets the loaded name for the shader. </p>
 <dl class="section return"><dt>Returns</dt><dd>The shaders name. </dd></dl>
-
-</div>
-</div>
-<a id="ab4d3af8b3ffe94ff901b15376215c2e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4d3af8b3ffe94ff901b15376215c2e2">&#9670;&nbsp;</a></span>getUniform()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">GLint flounder::shader::getUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets a uniform location from a name. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The uniform location. </dd></dl>
-
-</div>
-</div>
-<a id="ababc32f14fa38c2c3e0337c5537b1dcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ababc32f14fa38c2c3e0337c5537b1dcd">&#9670;&nbsp;</a></span>loadBindings()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadBindings </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Loads shader binds to make shader usage more simple. </p>
-
-</div>
-</div>
-<a id="a01e50af930469630a051f8bcf9a74897"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01e50af930469630a051f8bcf9a74897">&#9670;&nbsp;</a></span>loadLocations()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadLocations </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Loads shader locations to make shader usage more simple. </p>
-
-</div>
-</div>
-<a id="a6b9dd723ad226438a710cac8303841e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b9dd723ad226438a710cac8303841e5">&#9670;&nbsp;</a></span>loadType()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadType </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structflounder_1_1shadertype.html">shadertype</a> *&#160;</td>
-          <td class="paramname"><em>type</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Loads the type into memory. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">type</td><td>The type. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a6e6e2fb4699edf3e31a2db8cc0537d54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e6e2fb4699edf3e31a2db8cc0537d54">&#9670;&nbsp;</a></span>loadTypes()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadTypes </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Loads all of the types provided. </p>
-
-</div>
-</div>
-<a id="a1767f4ca2d3b1eb35dc4435e2aa3fd67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1767f4ca2d3b1eb35dc4435e2aa3fd67">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[1/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const bool &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a boolean into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">value</td><td>The value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a597fdaefa4644b107e8ce2776ce69f76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a597fdaefa4644b107e8ce2776ce69f76">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[2/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a int/sampler2D into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">value</td><td>The value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="acd349b44107fc3389856a124da305d62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd349b44107fc3389856a124da305d62">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[3/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a float into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">value</td><td>The value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a3c14875fd04a7a824d2af9e737bde626"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c14875fd04a7a824d2af9e737bde626">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[4/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a vector 2 into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">x</td><td>The x value to load into the uniform. </td></tr>
-    <tr><td class="paramname">y</td><td>The y value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="abd782c5f1e6fb7f1d7f8fcf5d0c8b43c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd782c5f1e6fb7f1d7f8fcf5d0c8b43c">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[5/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>z</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a vector 3 into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">x</td><td>The x value to load into the uniform. </td></tr>
-    <tr><td class="paramname">y</td><td>The y value to load into the uniform. </td></tr>
-    <tr><td class="paramname">z</td><td>The z value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a54caa7d0462b98679dd902d6256a6e8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54caa7d0462b98679dd902d6256a6e8b">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[6/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>z</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const float &amp;&#160;</td>
-          <td class="paramname"><em>w</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a vector 4 into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">x</td><td>The x value to load into the uniform. </td></tr>
-    <tr><td class="paramname">y</td><td>The y value to load into the uniform. </td></tr>
-    <tr><td class="paramname">z</td><td>The z value to load into the uniform. </td></tr>
-    <tr><td class="paramname">w</td><td>The w value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a6fed325128b3437f435a4ca327ea416e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fed325128b3437f435a4ca327ea416e">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[7/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classflounder_1_1colour.html">colour</a> &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a colour into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">value</td><td>The value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a257fff86a8d24c657724fa14ac0ef12e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a257fff86a8d24c657724fa14ac0ef12e">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[8/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classflounder_1_1matrix2x2.html">matrix2x2</a> &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a matrix 2x2 into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">value</td><td>The value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a9122d8bd4e63275b640e43d04f75fa88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9122d8bd4e63275b640e43d04f75fa88">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[9/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classflounder_1_1matrix3x3.html">matrix3x3</a> &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a matrix 3x3 into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">value</td><td>The value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a2b7d1b32758e0aaefd20b050aeb2e7fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b7d1b32758e0aaefd20b050aeb2e7fe">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[10/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classflounder_1_1matrix4x4.html">matrix4x4</a> &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a matrix 4x4 into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">value</td><td>The value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a38aea3f31eb3f4b202bb9b519966c073"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38aea3f31eb3f4b202bb9b519966c073">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[11/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classflounder_1_1vector2.html">vector2</a> &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a vector 2 into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">value</td><td>The value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a776ea14c9ec0e66b59e25cdc606e5bc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a776ea14c9ec0e66b59e25cdc606e5bc8">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[12/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classflounder_1_1vector3.html">vector3</a> &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a vector 3 into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">value</td><td>The value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aa56085c5c7dc315f165ee3bb9d81d250"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa56085c5c7dc315f165ee3bb9d81d250">&#9670;&nbsp;</a></span>loadUniform() <span class="overload">[13/13]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::loadUniform </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classflounder_1_1vector4.html">vector4</a> &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Loads a vector 4 into a uniform. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The uniforms name. </td></tr>
-    <tr><td class="paramname">value</td><td>The value to load into the uniform. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a3dbe598a9994e8e4ccbf889ba38b05f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3dbe598a9994e8e4ccbf889ba38b05f7">&#9670;&nbsp;</a></span>newShader()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classflounder_1_1shader_1_1builder.html">shader::builder</a> * flounder::shader::newShader </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a new shader builder that is used to configure a shader. </p>
-<dl class="section return"><dt>Returns</dt><dd>The shader builder. </dd></dl>
-
-</div>
-</div>
-<a id="ad80001da433e7afbd646fe2d19ac8b4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad80001da433e7afbd646fe2d19ac8b4a">&#9670;&nbsp;</a></span>processLine()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string flounder::shader::processLine </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>line</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Processes the shaders line looking for keywords and optimizing for platforms. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">line</td><td>The line to process. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The processed line. </dd></dl>
-
-</div>
-</div>
-<a id="a4b1f6770ce28db4f9a4b20e0842d785e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b1f6770ce28db4f9a4b20e0842d785e">&#9670;&nbsp;</a></span>start()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::start </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Starts the shader program. </p>
-
-</div>
-</div>
-<a id="a2972bda7e96b86de9a12a44e3e285691"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2972bda7e96b86de9a12a44e3e285691">&#9670;&nbsp;</a></span>stop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void flounder::shader::stop </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Stops the shader program. </p>
 
 </div>
 </div>

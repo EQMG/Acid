@@ -66,6 +66,8 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classflounder_1_1audio-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">flounder::audio Class Reference</div>  </div>
@@ -110,6 +112,15 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ac827774b8855e8a921ef9141c2515df8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classflounder_1_1audio.html">audio</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1audio.html#ac827774b8855e8a921ef9141c2515df8">get</a> ()</td></tr>
 <tr class="memdesc:ac827774b8855e8a921ef9141c2515df8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets this framework instance.  <a href="#ac827774b8855e8a921ef9141c2515df8">More...</a><br /></td></tr>
 <tr class="separator:ac827774b8855e8a921ef9141c2515df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44aefffd9251716e6d0ec6d058c2bcdd"><td class="memItemLeft" align="right" valign="top"><a id="a44aefffd9251716e6d0ec6d058c2bcdd"></a>
+static <a class="el" href="structflounder_1_1_sound_source_info.html">SoundSourceInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>loadWaveFile</b> (const std::string path)</td></tr>
+<tr class="separator:a44aefffd9251716e6d0ec6d058c2bcdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcf594644890f93b9651b2a60c6cfb26"><td class="memItemLeft" align="right" valign="top"><a id="adcf594644890f93b9651b2a60c6cfb26"></a>
+static <a class="el" href="classflounder_1_1sound.html">sound</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (<a class="el" href="classflounder_1_1sound.html">sound</a> *object)</td></tr>
+<tr class="separator:adcf594644890f93b9651b2a60c6cfb26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f8a589c9adb8f6ef258d56f624ee0a5"><td class="memItemLeft" align="right" valign="top"><a id="a6f8a589c9adb8f6ef258d56f624ee0a5"></a>
+static <a class="el" href="classflounder_1_1sound.html">sound</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (const std::string &amp;name)</td></tr>
+<tr class="separator:a6f8a589c9adb8f6ef258d56f624ee0a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -119,9 +130,18 @@ ALCdevice *&#160;</td><td class="memItemRight" valign="bottom"><b>m_device</b></
 <tr class="memitem:a361e675d6029769f9a366354a3e1cb61"><td class="memItemLeft" align="right" valign="top"><a id="a361e675d6029769f9a366354a3e1cb61"></a>
 ALCcontext *&#160;</td><td class="memItemRight" valign="bottom"><b>m_context</b></td></tr>
 <tr class="separator:a361e675d6029769f9a366354a3e1cb61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58379153a6620d70633e20b4660502ea"><td class="memItemLeft" align="right" valign="top"><a id="a58379153a6620d70633e20b4660502ea"></a>
-int *&#160;</td><td class="memItemRight" valign="bottom"><b>buffers</b></td></tr>
-<tr class="separator:a58379153a6620d70633e20b4660502ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a60edae723dfd91b038b076140f7dfc6a"><td class="memItemLeft" align="right" valign="top"><a id="a60edae723dfd91b038b076140f7dfc6a"></a>
+static std::vector&lt; <a class="el" href="classflounder_1_1sound.html">sound</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_sounds</b> = std::vector&lt;<a class="el" href="classflounder_1_1sound.html">sound</a>*&gt;()</td></tr>
+<tr class="separator:a60edae723dfd91b038b076140f7dfc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a6508242aa0a45174f94d245f432cecbc"><td class="memItemLeft" align="right" valign="top"><a id="a6508242aa0a45174f94d245f432cecbc"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>sound</b></td></tr>
+<tr class="separator:a6508242aa0a45174f94d245f432cecbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A module used for loading, managing and playing a variety of different sound types. </p>

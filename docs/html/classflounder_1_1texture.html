@@ -63,12 +63,9 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classflounder_1_1texture-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">flounder::texture Class Reference</div>  </div>
@@ -80,145 +77,208 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="texture_8h_source.html">texture.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture_1_1builder.html">builder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A builder used to set texture parameters for loading.  <a href="classflounder_1_1texture_1_1builder.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a62ac74067eac27177bb9b8e4483a7a55"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a62ac74067eac27177bb9b8e4483a7a55">texture</a> (std::string file, const bool &amp;<a class="el" href="classflounder_1_1texture.html#aa74c0c1cb920f5f131832ec6498eba47">hasAlpha</a>=false, const bool &amp;clampEdges=false, const int32_t &amp;mipLevels=1, const bool &amp;anisotropic=true, const bool &amp;nearest=false, const int32_t &amp;numberOfRows=1)</td></tr>
+<tr class="memdesc:a62ac74067eac27177bb9b8e4483a7a55"><td class="mdescLeft">&#160;</td><td class="mdescRight">A new OpenGL texture object.  <a href="#a62ac74067eac27177bb9b8e4483a7a55">More...</a><br /></td></tr>
+<tr class="separator:a62ac74067eac27177bb9b8e4483a7a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a907f7472caf155686539bd54fb451166"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a907f7472caf155686539bd54fb451166">texture</a> (const int n_args,...)</td></tr>
+<tr class="memdesc:a907f7472caf155686539bd54fb451166"><td class="mdescLeft">&#160;</td><td class="mdescRight">A new OpenGL cubemap texture object.  <a href="#a907f7472caf155686539bd54fb451166">More...</a><br /></td></tr>
+<tr class="separator:a907f7472caf155686539bd54fb451166"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8271c7f9860a5a235be9b1207bed2c39"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a8271c7f9860a5a235be9b1207bed2c39">~texture</a> ()</td></tr>
 <tr class="memdesc:a8271c7f9860a5a235be9b1207bed2c39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deconstructor for the texture object.  <a href="#a8271c7f9860a5a235be9b1207bed2c39">More...</a><br /></td></tr>
 <tr class="separator:a8271c7f9860a5a235be9b1207bed2c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4502c9224b20f452b25918dbaaa2d3a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#af4502c9224b20f452b25918dbaaa2d3a">getWidth</a> () const</td></tr>
-<tr class="memdesc:af4502c9224b20f452b25918dbaaa2d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the width of the texture.  <a href="#af4502c9224b20f452b25918dbaaa2d3a">More...</a><br /></td></tr>
-<tr class="separator:af4502c9224b20f452b25918dbaaa2d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88b654180956109a0508c41eb907fa75"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a88b654180956109a0508c41eb907fa75">getHeight</a> () const</td></tr>
-<tr class="memdesc:a88b654180956109a0508c41eb907fa75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the height of the texture.  <a href="#a88b654180956109a0508c41eb907fa75">More...</a><br /></td></tr>
-<tr class="separator:a88b654180956109a0508c41eb907fa75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa74c0c1cb920f5f131832ec6498eba47"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#aa74c0c1cb920f5f131832ec6498eba47">hasAlpha</a> () const</td></tr>
 <tr class="memdesc:aa74c0c1cb920f5f131832ec6498eba47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the texture has alpha.  <a href="#aa74c0c1cb920f5f131832ec6498eba47">More...</a><br /></td></tr>
 <tr class="separator:aa74c0c1cb920f5f131832ec6498eba47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac05209e3a9686903a336575ac71b8f0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#ac05209e3a9686903a336575ac71b8f0e">setHasAlpha</a> (const bool &amp;<a class="el" href="classflounder_1_1texture.html#aa74c0c1cb920f5f131832ec6498eba47">hasAlpha</a>)</td></tr>
 <tr class="memdesc:ac05209e3a9686903a336575ac71b8f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets if the texture has alpha.  <a href="#ac05209e3a9686903a336575ac71b8f0e">More...</a><br /></td></tr>
 <tr class="separator:ac05209e3a9686903a336575ac71b8f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f4e7c0e5a644003fced34d4e4125a36"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a0f4e7c0e5a644003fced34d4e4125a36">getNumberOfRows</a> () const</td></tr>
-<tr class="memdesc:a0f4e7c0e5a644003fced34d4e4125a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of texture rows.  <a href="#a0f4e7c0e5a644003fced34d4e4125a36">More...</a><br /></td></tr>
-<tr class="separator:a0f4e7c0e5a644003fced34d4e4125a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0854bbd1a260380db88f378b408aa18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#ac0854bbd1a260380db88f378b408aa18">setNumberOfRows</a> (const int &amp;numberOfRows)</td></tr>
-<tr class="memdesc:ac0854bbd1a260380db88f378b408aa18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the number of texture rows.  <a href="#ac0854bbd1a260380db88f378b408aa18">More...</a><br /></td></tr>
-<tr class="separator:ac0854bbd1a260380db88f378b408aa18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b4839206c63ab911e4a52d055daeb24"><td class="memItemLeft" align="right" valign="top">GLenum&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a4b4839206c63ab911e4a52d055daeb24">getGlType</a> () const</td></tr>
-<tr class="memdesc:a4b4839206c63ab911e4a52d055daeb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">The OpenGL type of texture loaded.  <a href="#a4b4839206c63ab911e4a52d055daeb24">More...</a><br /></td></tr>
-<tr class="separator:a4b4839206c63ab911e4a52d055daeb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f9a420fd96169046fb3494d4b7dcd90"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a2f9a420fd96169046fb3494d4b7dcd90">getTextureID</a> () const</td></tr>
-<tr class="memdesc:a2f9a420fd96169046fb3494d4b7dcd90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the textures ID.  <a href="#a2f9a420fd96169046fb3494d4b7dcd90">More...</a><br /></td></tr>
-<tr class="separator:a2f9a420fd96169046fb3494d4b7dcd90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a299af5830ad52b5759014e363805e49b"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a299af5830ad52b5759014e363805e49b">getNumberOfRows</a> () const</td></tr>
+<tr class="memdesc:a299af5830ad52b5759014e363805e49b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of texture rows.  <a href="#a299af5830ad52b5759014e363805e49b">More...</a><br /></td></tr>
+<tr class="separator:a299af5830ad52b5759014e363805e49b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3afb09cb387467fcae976fb1bbe5ded7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a3afb09cb387467fcae976fb1bbe5ded7">setNumberOfRows</a> (const int32_t &amp;numberOfRows)</td></tr>
+<tr class="memdesc:a3afb09cb387467fcae976fb1bbe5ded7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the number of texture rows.  <a href="#a3afb09cb387467fcae976fb1bbe5ded7">More...</a><br /></td></tr>
+<tr class="separator:a3afb09cb387467fcae976fb1bbe5ded7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf43aa80310fb81f1ffd559b7c3e2434"><td class="memItemLeft" align="right" valign="top">VkImageType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#acf43aa80310fb81f1ffd559b7c3e2434">getTextureType</a> () const</td></tr>
+<tr class="memdesc:acf43aa80310fb81f1ffd559b7c3e2434"><td class="mdescLeft">&#160;</td><td class="mdescRight">The textures type.  <a href="#acf43aa80310fb81f1ffd559b7c3e2434">More...</a><br /></td></tr>
+<tr class="separator:acf43aa80310fb81f1ffd559b7c3e2434"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af6311afbba328755cd0ff6a7839e9172"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classflounder_1_1texture_1_1builder.html">builder</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#af6311afbba328755cd0ff6a7839e9172">newTexture</a> ()</td></tr>
-<tr class="memdesc:af6311afbba328755cd0ff6a7839e9172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new texture builder that is used to configure a texture.  <a href="#af6311afbba328755cd0ff6a7839e9172">More...</a><br /></td></tr>
-<tr class="separator:af6311afbba328755cd0ff6a7839e9172"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ae16fb1bee340a680060e45dfa527e57d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#ae16fb1bee340a680060e45dfa527e57d">loadFromTexture</a> ()</td></tr>
+<tr class="memdesc:ae16fb1bee340a680060e45dfa527e57d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the texture object from a texture file.  <a href="#ae16fb1bee340a680060e45dfa527e57d">More...</a><br /></td></tr>
+<tr class="separator:ae16fb1bee340a680060e45dfa527e57d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a846a34a57f31c5bae8ad856d589bbd83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a846a34a57f31c5bae8ad856d589bbd83">loadFromCubemap</a> ()</td></tr>
+<tr class="memdesc:a846a34a57f31c5bae8ad856d589bbd83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the texture object from a cubemap texture files.  <a href="#a846a34a57f31c5bae8ad856d589bbd83">More...</a><br /></td></tr>
+<tr class="separator:a846a34a57f31c5bae8ad856d589bbd83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a82dd2e895abe671411ab0fcaaf49b5d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a82dd2e895abe671411ab0fcaaf49b5d1">texture</a> (<a class="el" href="classflounder_1_1texture_1_1builder.html">builder</a> *<a class="el" href="classflounder_1_1texture_1_1builder.html">builder</a>)</td></tr>
-<tr class="memdesc:a82dd2e895abe671411ab0fcaaf49b5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A new OpenGL texture object.  <a href="#a82dd2e895abe671411ab0fcaaf49b5d1">More...</a><br /></td></tr>
-<tr class="separator:a82dd2e895abe671411ab0fcaaf49b5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:aa28f1ede89ed77ec781159dd5950f877"><td class="memItemLeft" align="right" valign="top"><a id="aa28f1ede89ed77ec781159dd5950f877"></a>
-<a class="el" href="classflounder_1_1texture_1_1builder.html">builder</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_builder</b></td></tr>
-<tr class="separator:aa28f1ede89ed77ec781159dd5950f877"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
 <tr class="memitem:ad1f335b51a12f9405681f68eb788bec1"><td class="memItemLeft" align="right" valign="top"><a id="ad1f335b51a12f9405681f68eb788bec1"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_file</b></td></tr>
 <tr class="separator:ad1f335b51a12f9405681f68eb788bec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d5f91971acb060575564d3b1c15bc26"><td class="memItemLeft" align="right" valign="top"><a id="a6d5f91971acb060575564d3b1c15bc26"></a>
-std::string *&#160;</td><td class="memItemRight" valign="bottom"><b>m_cubemap</b></td></tr>
-<tr class="separator:a6d5f91971acb060575564d3b1c15bc26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17d290a0aaefaeb8d023b5df78f833cb"><td class="memItemLeft" align="right" valign="top"><a id="a17d290a0aaefaeb8d023b5df78f833cb"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>m_cubemapCount</b></td></tr>
 <tr class="separator:a17d290a0aaefaeb8d023b5df78f833cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94b3b1c8daa12167b185da0e0ae6ce29"><td class="memItemLeft" align="right" valign="top"><a id="a94b3b1c8daa12167b185da0e0ae6ce29"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>m_width</b></td></tr>
-<tr class="separator:a94b3b1c8daa12167b185da0e0ae6ce29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01223636eb74299faafa4c7ba0c9c518"><td class="memItemLeft" align="right" valign="top"><a id="a01223636eb74299faafa4c7ba0c9c518"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>m_height</b></td></tr>
-<tr class="separator:a01223636eb74299faafa4c7ba0c9c518"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d5f91971acb060575564d3b1c15bc26"><td class="memItemLeft" align="right" valign="top"><a id="a6d5f91971acb060575564d3b1c15bc26"></a>
+std::string *&#160;</td><td class="memItemRight" valign="bottom"><b>m_cubemap</b></td></tr>
+<tr class="separator:a6d5f91971acb060575564d3b1c15bc26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4232b3472cd791fd233fc94eae40a919"><td class="memItemLeft" align="right" valign="top"><a id="a4232b3472cd791fd233fc94eae40a919"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_hasAlpha</b></td></tr>
 <tr class="separator:a4232b3472cd791fd233fc94eae40a919"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a599328fc8c854d95fc783ee9aaace9b2"><td class="memItemLeft" align="right" valign="top"><a id="a599328fc8c854d95fc783ee9aaace9b2"></a>
-<a class="el" href="classflounder_1_1colour.html">colour</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_border</b></td></tr>
-<tr class="separator:a599328fc8c854d95fc783ee9aaace9b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26c8d6fbdf02b87d52acd58e7764fecc"><td class="memItemLeft" align="right" valign="top"><a id="a26c8d6fbdf02b87d52acd58e7764fecc"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_clampToBorder</b></td></tr>
-<tr class="separator:a26c8d6fbdf02b87d52acd58e7764fecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc05e74339b03edbb3c599cc8040dd8e"><td class="memItemLeft" align="right" valign="top"><a id="afc05e74339b03edbb3c599cc8040dd8e"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_clampEdges</b></td></tr>
 <tr class="separator:afc05e74339b03edbb3c599cc8040dd8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54639365a71391cc144fe4ebeaf1e39c"><td class="memItemLeft" align="right" valign="top"><a id="a54639365a71391cc144fe4ebeaf1e39c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_mipmap</b></td></tr>
-<tr class="separator:a54639365a71391cc144fe4ebeaf1e39c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6b3967dfb78755031207f875ac115ca"><td class="memItemLeft" align="right" valign="top"><a id="ad6b3967dfb78755031207f875ac115ca"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_mipLevels</b></td></tr>
+<tr class="separator:ad6b3967dfb78755031207f875ac115ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68c7e5491756ff6d61195dcc0e19da3b"><td class="memItemLeft" align="right" valign="top"><a id="a68c7e5491756ff6d61195dcc0e19da3b"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_anisotropic</b></td></tr>
 <tr class="separator:a68c7e5491756ff6d61195dcc0e19da3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13c3515a014252220abfbf8c302e195b"><td class="memItemLeft" align="right" valign="top"><a id="a13c3515a014252220abfbf8c302e195b"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_nearest</b></td></tr>
 <tr class="separator:a13c3515a014252220abfbf8c302e195b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1e32e208f02390ec44941e989b5fca8"><td class="memItemLeft" align="right" valign="top"><a id="af1e32e208f02390ec44941e989b5fca8"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>m_numberOfRows</b></td></tr>
-<tr class="separator:af1e32e208f02390ec44941e989b5fca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d36cadbf7f7aa9d8e2d8b9ffc2a267c"><td class="memItemLeft" align="right" valign="top"><a id="a3d36cadbf7f7aa9d8e2d8b9ffc2a267c"></a>
-GLenum&#160;</td><td class="memItemRight" valign="bottom"><b>m_glType</b></td></tr>
-<tr class="separator:a3d36cadbf7f7aa9d8e2d8b9ffc2a267c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ad04565d8bacdc63a49076e7e0de5f2"><td class="memItemLeft" align="right" valign="top"><a id="a0ad04565d8bacdc63a49076e7e0de5f2"></a>
-GLuint&#160;</td><td class="memItemRight" valign="bottom"><b>m_textureID</b></td></tr>
-<tr class="separator:a0ad04565d8bacdc63a49076e7e0de5f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a4709b913a032bdcc66e309d39254e923"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#a4709b913a032bdcc66e309d39254e923">loadFromTexture</a> (const std::string &amp;file)</td></tr>
-<tr class="memdesc:a4709b913a032bdcc66e309d39254e923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the texture object from a texture file.  <a href="#a4709b913a032bdcc66e309d39254e923">More...</a><br /></td></tr>
-<tr class="separator:a4709b913a032bdcc66e309d39254e923"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9703d5d5d76227387a0edfd28503238"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classflounder_1_1texture.html#aa9703d5d5d76227387a0edfd28503238">loadFromCubemap</a> (const int count, std::string *cubemap)</td></tr>
-<tr class="memdesc:aa9703d5d5d76227387a0edfd28503238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the texture object from a cubemap texture files.  <a href="#aa9703d5d5d76227387a0edfd28503238">More...</a><br /></td></tr>
-<tr class="separator:aa9703d5d5d76227387a0edfd28503238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9f5413689aeadb20e624d5396000c9f"><td class="memItemLeft" align="right" valign="top"><a id="aa9f5413689aeadb20e624d5396000c9f"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_numberOfRows</b></td></tr>
+<tr class="separator:aa9f5413689aeadb20e624d5396000c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad623edf69b8069a06177fd17f8c17a96"><td class="memItemLeft" align="right" valign="top"><a id="ad623edf69b8069a06177fd17f8c17a96"></a>
+VkBuffer&#160;</td><td class="memItemRight" valign="bottom"><b>m_stagingBuffer</b></td></tr>
+<tr class="separator:ad623edf69b8069a06177fd17f8c17a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6df3445c1015e3d862c8d4cba13ed4a4"><td class="memItemLeft" align="right" valign="top"><a id="a6df3445c1015e3d862c8d4cba13ed4a4"></a>
+VkDeviceMemory&#160;</td><td class="memItemRight" valign="bottom"><b>m_stagingMemory</b></td></tr>
+<tr class="separator:a6df3445c1015e3d862c8d4cba13ed4a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a155ccd6a3b7224e57af94d4bc7e64629"><td class="memItemLeft" align="right" valign="top"><a id="a155ccd6a3b7224e57af94d4bc7e64629"></a>
+VkImage&#160;</td><td class="memItemRight" valign="bottom"><b>m_image</b></td></tr>
+<tr class="separator:a155ccd6a3b7224e57af94d4bc7e64629"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50a63d0d04d6be6f8f605cb7bcedec74"><td class="memItemLeft" align="right" valign="top"><a id="a50a63d0d04d6be6f8f605cb7bcedec74"></a>
+VkDeviceMemory&#160;</td><td class="memItemRight" valign="bottom"><b>m_imageMemory</b></td></tr>
+<tr class="separator:a50a63d0d04d6be6f8f605cb7bcedec74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a471cfd731ceb6cf1495bcf91c91ffc29"><td class="memItemLeft" align="right" valign="top"><a id="a471cfd731ceb6cf1495bcf91c91ffc29"></a>
+VkImageView&#160;</td><td class="memItemRight" valign="bottom"><b>m_imageView</b></td></tr>
+<tr class="separator:a471cfd731ceb6cf1495bcf91c91ffc29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5654ef4b4c6279df7da4e8ad268e030"><td class="memItemLeft" align="right" valign="top"><a id="ae5654ef4b4c6279df7da4e8ad268e030"></a>
+VkFormat&#160;</td><td class="memItemRight" valign="bottom"><b>m_format</b></td></tr>
+<tr class="separator:ae5654ef4b4c6279df7da4e8ad268e030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0c369cafc79979f3d17a6d0be63f120"><td class="memItemLeft" align="right" valign="top"><a id="ac0c369cafc79979f3d17a6d0be63f120"></a>
+VkSampler&#160;</td><td class="memItemRight" valign="bottom"><b>m_sampler</b></td></tr>
+<tr class="separator:ac0c369cafc79979f3d17a6d0be63f120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaacb1f6d37973a81a203170dee1cb9e8"><td class="memItemLeft" align="right" valign="top"><a id="aaacb1f6d37973a81a203170dee1cb9e8"></a>
+VkImageType&#160;</td><td class="memItemRight" valign="bottom"><b>m_imageType</b></td></tr>
+<tr class="separator:aaacb1f6d37973a81a203170dee1cb9e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5075b7605f55dfbad10eca61addfc394"><td class="memItemLeft" align="right" valign="top"><a id="a5075b7605f55dfbad10eca61addfc394"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_components</b></td></tr>
+<tr class="separator:a5075b7605f55dfbad10eca61addfc394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8c80a6e4b35039a30cb82727dca228e"><td class="memItemLeft" align="right" valign="top"><a id="ab8c80a6e4b35039a30cb82727dca228e"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_width</b></td></tr>
+<tr class="separator:ab8c80a6e4b35039a30cb82727dca228e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5967cf202dd055a2e10f0abbf149896a"><td class="memItemLeft" align="right" valign="top"><a id="a5967cf202dd055a2e10f0abbf149896a"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_height</b></td></tr>
+<tr class="separator:a5967cf202dd055a2e10f0abbf149896a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac156bf4f1568e98f467ca32c571979a2"><td class="memItemLeft" align="right" valign="top"><a id="ac156bf4f1568e98f467ca32c571979a2"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_depth</b></td></tr>
+<tr class="separator:ac156bf4f1568e98f467ca32c571979a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that represents a loaded texture. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a82dd2e895abe671411ab0fcaaf49b5d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82dd2e895abe671411ab0fcaaf49b5d1">&#9670;&nbsp;</a></span>texture()</h2>
+<a id="a62ac74067eac27177bb9b8e4483a7a55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62ac74067eac27177bb9b8e4483a7a55">&#9670;&nbsp;</a></span>texture() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">flounder::texture::texture </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classflounder_1_1texture_1_1builder.html">builder</a> *&#160;</td>
-          <td class="paramname"><em>builder</em></td><td>)</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>hasAlpha</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>clampEdges</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t &amp;&#160;</td>
+          <td class="paramname"><em>mipLevels</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>anisotropic</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>nearest</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t &amp;&#160;</td>
+          <td class="paramname"><em>numberOfRows</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>A new OpenGL texture object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">builder</td><td>The texture builder. </td></tr>
+    <tr><td class="paramname">file</td><td>The textures file. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a907f7472caf155686539bd54fb451166"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a907f7472caf155686539bd54fb451166">&#9670;&nbsp;</a></span>texture() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">flounder::texture::texture </td>
+          <td>(</td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>n_args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A new OpenGL cubemap texture object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n_args</td><td>The number of cubemap files. </td></tr>
+    <tr><td class="paramname">...</td><td>The list of cubemap texture paths. </td></tr>
   </table>
   </dd>
 </dl>
@@ -245,8 +305,8 @@ Private Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4b4839206c63ab911e4a52d055daeb24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b4839206c63ab911e4a52d055daeb24">&#9670;&nbsp;</a></span>getGlType()</h2>
+<a id="a299af5830ad52b5759014e363805e49b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a299af5830ad52b5759014e363805e49b">&#9670;&nbsp;</a></span>getNumberOfRows()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -255,63 +315,7 @@ Private Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">GLenum flounder::texture::getGlType </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The OpenGL type of texture loaded. </p>
-<dl class="section return"><dt>Returns</dt><dd>The OpenGL texture type. </dd></dl>
-
-</div>
-</div>
-<a id="a88b654180956109a0508c41eb907fa75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88b654180956109a0508c41eb907fa75">&#9670;&nbsp;</a></span>getHeight()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int flounder::texture::getHeight </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the height of the texture. </p>
-<dl class="section return"><dt>Returns</dt><dd>The textures height. </dd></dl>
-
-</div>
-</div>
-<a id="a0f4e7c0e5a644003fced34d4e4125a36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f4e7c0e5a644003fced34d4e4125a36">&#9670;&nbsp;</a></span>getNumberOfRows()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int flounder::texture::getNumberOfRows </td>
+          <td class="memname">int32_t flounder::texture::getNumberOfRows </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -329,8 +333,8 @@ Private Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2f9a420fd96169046fb3494d4b7dcd90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f9a420fd96169046fb3494d4b7dcd90">&#9670;&nbsp;</a></span>getTextureID()</h2>
+<a id="acf43aa80310fb81f1ffd559b7c3e2434"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf43aa80310fb81f1ffd559b7c3e2434">&#9670;&nbsp;</a></span>getTextureType()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -339,7 +343,7 @@ Private Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">GLuint flounder::texture::getTextureID </td>
+          <td class="memname">VkImageType flounder::texture::getTextureType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -352,36 +356,8 @@ Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets the textures ID. </p>
-<dl class="section return"><dt>Returns</dt><dd>The textures ID. </dd></dl>
-
-</div>
-</div>
-<a id="af4502c9224b20f452b25918dbaaa2d3a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4502c9224b20f452b25918dbaaa2d3a">&#9670;&nbsp;</a></span>getWidth()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int flounder::texture::getWidth </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the width of the texture. </p>
-<dl class="section return"><dt>Returns</dt><dd>The textures width. </dd></dl>
+<p>The textures type. </p>
+<dl class="section return"><dt>Returns</dt><dd>The textures type. </dd></dl>
 
 </div>
 </div>
@@ -413,8 +389,8 @@ Private Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa9703d5d5d76227387a0edfd28503238"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9703d5d5d76227387a0edfd28503238">&#9670;&nbsp;</a></span>loadFromCubemap()</h2>
+<a id="a846a34a57f31c5bae8ad856d589bbd83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a846a34a57f31c5bae8ad856d589bbd83">&#9670;&nbsp;</a></span>loadFromCubemap()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -425,19 +401,8 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void flounder::texture::loadFromCubemap </td>
           <td>(</td>
-          <td class="paramtype">const int&#160;</td>
-          <td class="paramname"><em>count</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">std::string *&#160;</td>
-          <td class="paramname"><em>cubemap</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -448,17 +413,11 @@ Private Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads the texture object from a cubemap texture files. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cubemap</td><td>The cubemap files to load from. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
-<a id="a4709b913a032bdcc66e309d39254e923"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4709b913a032bdcc66e309d39254e923">&#9670;&nbsp;</a></span>loadFromTexture()</h2>
+<a id="ae16fb1bee340a680060e45dfa527e57d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae16fb1bee340a680060e45dfa527e57d">&#9670;&nbsp;</a></span>loadFromTexture()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -469,8 +428,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void flounder::texture::loadFromTexture </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>file</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -482,40 +440,6 @@ Private Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads the texture object from a texture file. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">file</td><td>The file to load from. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="af6311afbba328755cd0ff6a7839e9172"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6311afbba328755cd0ff6a7839e9172">&#9670;&nbsp;</a></span>newTexture()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classflounder_1_1texture_1_1builder.html">texture::builder</a> * flounder::texture::newTexture </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a new texture builder that is used to configure a texture. </p>
-<dl class="section return"><dt>Returns</dt><dd>The texture builder. </dd></dl>
 
 </div>
 </div>
@@ -553,8 +477,8 @@ Private Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac0854bbd1a260380db88f378b408aa18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0854bbd1a260380db88f378b408aa18">&#9670;&nbsp;</a></span>setNumberOfRows()</h2>
+<a id="a3afb09cb387467fcae976fb1bbe5ded7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3afb09cb387467fcae976fb1bbe5ded7">&#9670;&nbsp;</a></span>setNumberOfRows()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -565,7 +489,7 @@ Private Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void flounder::texture::setNumberOfRows </td>
           <td>(</td>
-          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramtype">const int32_t &amp;&#160;</td>
           <td class="paramname"><em>numberOfRows</em></td><td>)</td>
           <td></td>
         </tr>
