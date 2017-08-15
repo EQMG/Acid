@@ -175,6 +175,8 @@ namespace flounder
 		m_surface = VK_NULL_HANDLE;
 		m_physicalDevice = VK_NULL_HANDLE;
 		m_physicalDeviceProperties = {};
+		m_physicalDeviceFeatures = {};
+		m_physicalDeviceMemoryProperties = {};
 		m_instanceLayerList = std::vector<const char*>();
 		m_instanceExtensionList = std::vector<const char*>();
 		m_deviceExtensionList = std::vector<const char*>();
@@ -578,6 +580,8 @@ namespace flounder
 		{
 			m_physicalDevice = candidates.rbegin()->second;
 			vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
+			vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
+			vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
 		}
 		else
 		{

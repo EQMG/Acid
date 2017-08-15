@@ -155,7 +155,7 @@ Adds two matrices together and places the result in the destination matrix.
 \hline
 {\em right} & The right source matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -206,11 +206,11 @@ Inverts the source matrix and puts the result in the destination matrix.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source matrix to be inverted. \\
 \hline
-{\em destination} & The destination matrix, or N\+U\+LL if a new one is to be created. \\
+{\em destination} & The destination matrix, or nullptr if a new one is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-The inverted matrix, or N\+U\+LL if source can\textquotesingle{}t be reverted. 
+The inverted matrix, or nullptr if source can\textquotesingle{}t be reverted. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1matrix2x2_a88dc423971ee40b21df08f8ae5b03d43}\label{classflounder_1_1matrix2x2_a88dc423971ee40b21df08f8ae5b03d43}} 
 \index{flounder\+::matrix2x2@{flounder\+::matrix2x2}!invert@{invert}}
@@ -241,7 +241,7 @@ Multiplies two matrices together and places the result in the destination matrix
 \hline
 {\em right} & The right source matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -261,7 +261,7 @@ Negates the source matrix and places the result in the destination matrix.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -296,7 +296,7 @@ Scales a matrix by a vector and places the result in the destination matrix.
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -416,7 +416,7 @@ Subtracts two matrices together and places the result in the destination matrix.
 \hline
 {\em right} & The right source matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -456,7 +456,7 @@ Transforms a matrix by a vector and places the result in the destination matrix.
 \hline
 {\em right} & The right source vector. \\
 \hline
-{\em destination} & The destination vector or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination vector or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -476,7 +476,7 @@ Transpose the source matrix and places the result in the destination matrix.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source matrix. \\
 \hline
-{\em destination} & The destination matrix or N\+U\+LL if a new matrix is to be created. \\
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}

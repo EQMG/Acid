@@ -25,18 +25,16 @@ Inheritance diagram for flounder\+:\+:text\+:\begin{figure}[H]
 \mbox{\Hypertarget{classflounder_1_1text_a7f17850ab35de4e4797f699c1858e142}\label{classflounder_1_1text_a7f17850ab35de4e4797f699c1858e142}} 
 void {\bfseries update\+Object} () override
 \item 
+std\+::string \hyperlink{classflounder_1_1text_a28cb4cb2a57a28135fececb6a467fd8f}{get\+Text} ()
+\begin{DoxyCompactList}\small\item\em Gets the string of text represented. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1text_a4afc45fc499ba1aef7977aee18e9ef66}{set\+Text} (const std\+::string \&new\+Text)
 \begin{DoxyCompactList}\small\item\em Changed the current string in this text. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1text_ac054e01c7cbe05522d3e778f23e951bd}{set\+Mesh\+Info} (const G\+Luint \&vao, const G\+Luint \&vertices\+Count)
-\begin{DoxyCompactList}\small\item\em Sets the loaded mesh data for the text. \end{DoxyCompactList}\item 
-std\+::string \hyperlink{classflounder_1_1text_a6eb2c9461c6fb9fd78bd97d56846f562}{get\+Text\+String} ()
-\begin{DoxyCompactList}\small\item\em Gets the string of text represented. \end{DoxyCompactList}\item 
 \hyperlink{namespaceflounder_a70f1871d5c05aa8e078dd37501ce10a9}{uialign} \hyperlink{classflounder_1_1text_a494f99a95dde793f20e9d2a46f34b217}{get\+Text\+Align} ()
 \begin{DoxyCompactList}\small\item\em Gets how the text should align. \end{DoxyCompactList}\item 
-int \hyperlink{classflounder_1_1text_a6b1a82e19fcfc8b4608ea02d0a8603d9}{get\+Vao\+ID} ()
-\begin{DoxyCompactList}\small\item\em Gets the ID of the text\textquotesingle{}s V\+AO, which contains all the vertex data for the quads on which the text will be rendered. \end{DoxyCompactList}\item 
-int \hyperlink{classflounder_1_1text_a06b2e74368ca11987c9ad8555ee003ca}{get\+Vao\+Length} ()
-\begin{DoxyCompactList}\small\item\em Gets the total number of vertices of all the text\textquotesingle{}s quads. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1model}{model} $\ast$ \hyperlink{classflounder_1_1text_a38c9b07991dd35da42e571500a8b442a}{get\+Model} ()
+\begin{DoxyCompactList}\small\item\em Gets the text model, which contains all the vertex data for the quads on which the text will be rendered. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1text_afbc27a3e51da717f111d980883afe178}{set\+Model} (\hyperlink{classflounder_1_1model}{model} $\ast$\hyperlink{classflounder_1_1model}{model})
+\begin{DoxyCompactList}\small\item\em Sets the loaded mesh data for the text. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1texture}{texture} $\ast$ \hyperlink{classflounder_1_1text_a9bb772e20f65be7cab18a52ba995af76}{get\+Texture} ()
 \begin{DoxyCompactList}\small\item\em Gets font type texture for this text. \end{DoxyCompactList}\item 
 float \hyperlink{classflounder_1_1text_a4135aa153773c627b6b83a34b1f2ee1f}{get\+Max\+Line\+Size} ()
@@ -82,20 +80,20 @@ static std\+::vector$<$ line $\ast$ $>$ {\bfseries create\+Structure} (\hyperlin
 \mbox{\Hypertarget{classflounder_1_1text_a926f4d1af6eaa7e2f5559a9a650db49d}\label{classflounder_1_1text_a926f4d1af6eaa7e2f5559a9a650db49d}} 
 static void {\bfseries complete\+Structure} (std\+::vector$<$ line $\ast$$>$ \&lines, line $\ast$current\+Line, word $\ast$current\+Word, \hyperlink{classflounder_1_1text}{text} $\ast$object)
 \item 
-\mbox{\Hypertarget{classflounder_1_1text_a05affa53abc477470ca16e9ab85c602c}\label{classflounder_1_1text_a05affa53abc477470ca16e9ab85c602c}} 
-static void {\bfseries create\+Quad\+Vertices} (\hyperlink{classflounder_1_1text}{text} $\ast$object, std\+::vector$<$ line $\ast$$>$ lines, std\+::vector$<$ G\+Lfloat $>$ $\ast$vertices, std\+::vector$<$ G\+Lfloat $>$ $\ast$textures)
+\mbox{\Hypertarget{classflounder_1_1text_aa424226c2bd3404c173543a29a4bf2d0}\label{classflounder_1_1text_aa424226c2bd3404c173543a29a4bf2d0}} 
+static void {\bfseries create\+Quad\+Vertices} (\hyperlink{classflounder_1_1text}{text} $\ast$object, std\+::vector$<$ line $\ast$$>$ lines, std\+::vector$<$ float $>$ $\ast$vertices, std\+::vector$<$ float $>$ $\ast$textures)
 \item 
 \mbox{\Hypertarget{classflounder_1_1text_ab0f58730a8d2d52f73d86cfd85ec3ed9}\label{classflounder_1_1text_ab0f58730a8d2d52f73d86cfd85ec3ed9}} 
 static void {\bfseries add\+Vertices\+For\+Character} (const double \&cursorX, const double \&cursorY, \hyperlink{classflounder_1_1character}{character} $\ast$\hyperlink{classflounder_1_1character}{character}, std\+::vector$<$ float $>$ $\ast$vertices)
 \item 
-\mbox{\Hypertarget{classflounder_1_1text_a22290714a138cf4fad5c1eb723e7e245}\label{classflounder_1_1text_a22290714a138cf4fad5c1eb723e7e245}} 
-static void {\bfseries add\+Vertices} (const double \&x, const double \&y, const double \&maxX, const double \&maxY, std\+::vector$<$ G\+Lfloat $>$ $\ast$vertices)
+\mbox{\Hypertarget{classflounder_1_1text_ab3a32d76f07d67abc5bab55a926d0877}\label{classflounder_1_1text_ab3a32d76f07d67abc5bab55a926d0877}} 
+static void {\bfseries add\+Vertices} (const double \&x, const double \&y, const double \&maxX, const double \&maxY, std\+::vector$<$ float $>$ $\ast$vertices)
 \item 
-\mbox{\Hypertarget{classflounder_1_1text_a95ad7d264af8520a0f169176f2d161a7}\label{classflounder_1_1text_a95ad7d264af8520a0f169176f2d161a7}} 
-static void {\bfseries add\+Textures} (const double \&x, const double \&y, const double \&maxX, const double \&maxY, std\+::vector$<$ G\+Lfloat $>$ $\ast$textures)
+\mbox{\Hypertarget{classflounder_1_1text_abcc508866b5abe3aef2e9a6b6dac1dad}\label{classflounder_1_1text_abcc508866b5abe3aef2e9a6b6dac1dad}} 
+static void {\bfseries add\+Textures} (const double \&x, const double \&y, const double \&maxX, const double \&maxY, std\+::vector$<$ float $>$ $\ast$textures)
 \item 
-\mbox{\Hypertarget{classflounder_1_1text_a3a7915e279d5fcce48f65ac9ad3138c6}\label{classflounder_1_1text_a3a7915e279d5fcce48f65ac9ad3138c6}} 
-static \hyperlink{classflounder_1_1vector2}{vector2} {\bfseries get\+Bounding} (std\+::vector$<$ G\+Lfloat $>$ $\ast$vertices)
+\mbox{\Hypertarget{classflounder_1_1text_abb29d8dfd44687edc330265e447d54af}\label{classflounder_1_1text_abb29d8dfd44687edc330265e447d54af}} 
+static \hyperlink{classflounder_1_1vector2}{vector2} {\bfseries get\+Bounding} (std\+::vector$<$ float $>$ $\ast$vertices)
 \end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
@@ -109,11 +107,8 @@ std\+::string {\bfseries m\+\_\+text\+String}
 \mbox{\Hypertarget{classflounder_1_1text_ad74fb423bda4d4e7d71c0c07d6914ec7}\label{classflounder_1_1text_ad74fb423bda4d4e7d71c0c07d6914ec7}} 
 std\+::string {\bfseries m\+\_\+new\+Text}
 \item 
-\mbox{\Hypertarget{classflounder_1_1text_ac63e5b863d7e182337dfe7d7e030bda6}\label{classflounder_1_1text_ac63e5b863d7e182337dfe7d7e030bda6}} 
-G\+Luint {\bfseries m\+\_\+text\+Mesh\+Vao}
-\item 
-\mbox{\Hypertarget{classflounder_1_1text_a0e6b5e78aa320a5e4a267f62d21c1ca8}\label{classflounder_1_1text_a0e6b5e78aa320a5e4a267f62d21c1ca8}} 
-G\+Luint {\bfseries m\+\_\+vertex\+Count}
+\mbox{\Hypertarget{classflounder_1_1text_a4c15104f1e48822c45e0ddf0a3e4b993}\label{classflounder_1_1text_a4c15104f1e48822c45e0ddf0a3e4b993}} 
+\hyperlink{classflounder_1_1model}{model} $\ast$ {\bfseries m\+\_\+model}
 \item 
 \mbox{\Hypertarget{classflounder_1_1text_ae69d829e3d30608a50334cbd686e3ca0}\label{classflounder_1_1text_ae69d829e3d30608a50334cbd686e3ca0}} 
 float {\bfseries m\+\_\+line\+Max\+Size}
@@ -274,6 +269,19 @@ Gets the maximum length of a line of this text.
 \begin{DoxyReturn}{Returns}
 The maximum length of a line. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1text_a38c9b07991dd35da42e571500a8b442a}\label{classflounder_1_1text_a38c9b07991dd35da42e571500a8b442a}} 
+\index{flounder\+::text@{flounder\+::text}!get\+Model@{get\+Model}}
+\index{get\+Model@{get\+Model}!flounder\+::text@{flounder\+::text}}
+\subsubsection{\texorpdfstring{get\+Model()}{getModel()}}
+{\footnotesize\ttfamily \hyperlink{classflounder_1_1model}{model}$\ast$ flounder\+::text\+::get\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the text model, which contains all the vertex data for the quads on which the text will be rendered. 
+
+\begin{DoxyReturn}{Returns}
+The model of the text. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1text_a19354c6e61de672476d09163291b9346}\label{classflounder_1_1text_a19354c6e61de672476d09163291b9346}} 
 \index{flounder\+::text@{flounder\+::text}!get\+Number\+Of\+Lines@{get\+Number\+Of\+Lines}}
 \index{get\+Number\+Of\+Lines@{get\+Number\+Of\+Lines}!flounder\+::text@{flounder\+::text}}
@@ -286,6 +294,19 @@ Gets the number of lines of text. This is determined when the text is loaded, ba
 
 \begin{DoxyReturn}{Returns}
 The number of lines of text 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1text_a28cb4cb2a57a28135fececb6a467fd8f}\label{classflounder_1_1text_a28cb4cb2a57a28135fececb6a467fd8f}} 
+\index{flounder\+::text@{flounder\+::text}!get\+Text@{get\+Text}}
+\index{get\+Text@{get\+Text}!flounder\+::text@{flounder\+::text}}
+\subsubsection{\texorpdfstring{get\+Text()}{getText()}}
+{\footnotesize\ttfamily std\+::string flounder\+::text\+::get\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the string of text represented. 
+
+\begin{DoxyReturn}{Returns}
+The string of text. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1text_a494f99a95dde793f20e9d2a46f34b217}\label{classflounder_1_1text_a494f99a95dde793f20e9d2a46f34b217}} 
 \index{flounder\+::text@{flounder\+::text}!get\+Text\+Align@{get\+Text\+Align}}
@@ -313,19 +334,6 @@ Gets the colour of the text.
 \begin{DoxyReturn}{Returns}
 The colour of the text. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1text_a6eb2c9461c6fb9fd78bd97d56846f562}\label{classflounder_1_1text_a6eb2c9461c6fb9fd78bd97d56846f562}} 
-\index{flounder\+::text@{flounder\+::text}!get\+Text\+String@{get\+Text\+String}}
-\index{get\+Text\+String@{get\+Text\+String}!flounder\+::text@{flounder\+::text}}
-\subsubsection{\texorpdfstring{get\+Text\+String()}{getTextString()}}
-{\footnotesize\ttfamily std\+::string flounder\+::text\+::get\+Text\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Gets the string of text represented. 
-
-\begin{DoxyReturn}{Returns}
-The string of text. 
-\end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1text_a9bb772e20f65be7cab18a52ba995af76}\label{classflounder_1_1text_a9bb772e20f65be7cab18a52ba995af76}} 
 \index{flounder\+::text@{flounder\+::text}!get\+Texture@{get\+Texture}}
 \index{get\+Texture@{get\+Texture}!flounder\+::text@{flounder\+::text}}
@@ -351,32 +359,6 @@ Gets the calculated border size.
 
 \begin{DoxyReturn}{Returns}
 The border size. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1text_a6b1a82e19fcfc8b4608ea02d0a8603d9}\label{classflounder_1_1text_a6b1a82e19fcfc8b4608ea02d0a8603d9}} 
-\index{flounder\+::text@{flounder\+::text}!get\+Vao\+ID@{get\+Vao\+ID}}
-\index{get\+Vao\+ID@{get\+Vao\+ID}!flounder\+::text@{flounder\+::text}}
-\subsubsection{\texorpdfstring{get\+Vao\+I\+D()}{getVaoID()}}
-{\footnotesize\ttfamily int flounder\+::text\+::get\+Vao\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Gets the ID of the text\textquotesingle{}s V\+AO, which contains all the vertex data for the quads on which the text will be rendered. 
-
-\begin{DoxyReturn}{Returns}
-The ID of the text\textquotesingle{}s V\+AO. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1text_a06b2e74368ca11987c9ad8555ee003ca}\label{classflounder_1_1text_a06b2e74368ca11987c9ad8555ee003ca}} 
-\index{flounder\+::text@{flounder\+::text}!get\+Vao\+Length@{get\+Vao\+Length}}
-\index{get\+Vao\+Length@{get\+Vao\+Length}!flounder\+::text@{flounder\+::text}}
-\subsubsection{\texorpdfstring{get\+Vao\+Length()}{getVaoLength()}}
-{\footnotesize\ttfamily int flounder\+::text\+::get\+Vao\+Length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Gets the total number of vertices of all the text\textquotesingle{}s quads. 
-
-\begin{DoxyReturn}{Returns}
-The vertices count in the text\textquotesingle{}s V\+AO. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1text_adb04bc6937cf7d117c489947bbff7635}\label{classflounder_1_1text_adb04bc6937cf7d117c489947bbff7635}} 
 \index{flounder\+::text@{flounder\+::text}!is\+Loaded@{is\+Loaded}}
@@ -461,11 +443,11 @@ Sets a new glow driver, will disable solid borders.
 {\em driver} & The new glow driver. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1text_ac054e01c7cbe05522d3e778f23e951bd}\label{classflounder_1_1text_ac054e01c7cbe05522d3e778f23e951bd}} 
-\index{flounder\+::text@{flounder\+::text}!set\+Mesh\+Info@{set\+Mesh\+Info}}
-\index{set\+Mesh\+Info@{set\+Mesh\+Info}!flounder\+::text@{flounder\+::text}}
-\subsubsection{\texorpdfstring{set\+Mesh\+Info()}{setMeshInfo()}}
-{\footnotesize\ttfamily void flounder\+::text\+::set\+Mesh\+Info (\begin{DoxyParamCaption}\item[{const G\+Luint \&}]{vao,  }\item[{const G\+Luint \&}]{vertices\+Count }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{classflounder_1_1text_afbc27a3e51da717f111d980883afe178}\label{classflounder_1_1text_afbc27a3e51da717f111d980883afe178}} 
+\index{flounder\+::text@{flounder\+::text}!set\+Model@{set\+Model}}
+\index{set\+Model@{set\+Model}!flounder\+::text@{flounder\+::text}}
+\subsubsection{\texorpdfstring{set\+Model()}{setModel()}}
+{\footnotesize\ttfamily void flounder\+::text\+::set\+Model (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1model}{model} $\ast$}]{model }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -473,9 +455,7 @@ Sets the loaded mesh data for the text.
 
 
 \begin{DoxyParams}{Parameters}
-{\em vao} & The mesh V\+AO id. \\
-\hline
-{\em vertices\+Count} & The mesh vertex count. \\
+{\em model} & The mesh model. \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1text_a5c4722b49473fb68783d921dd50fa329}\label{classflounder_1_1text_a5c4722b49473fb68783d921dd50fa329}} 

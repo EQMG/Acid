@@ -32,17 +32,17 @@ void \hyperlink{classflounder_1_1framework_aa3a73c8e8f5f0c6ccef3e4de89982434}{ru
 \begin{DoxyCompactList}\small\item\em The update function for the updater. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1imodule}{imodule} $\ast$ \hyperlink{classflounder_1_1framework_a84a2314d26174ab02b48bcda8fd5b4e4}{get\+Instance} (const std\+::string \&name)
 \begin{DoxyCompactList}\small\item\em Gets a module instance by name. \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1framework_a611e6fcdc2f2f484ebf8bbbdceacd45b}{get\+Time\+Offset} () const
+float \hyperlink{classflounder_1_1framework_aa85d7cdc20c0f8b47aee5dff06d03ae3}{get\+Time\+Offset} () const
 \begin{DoxyCompactList}\small\item\em Gets the added/removed time for the framework (seconds). \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1framework_aa4d08f34e622916ecd4a5f5f55bbac88}{set\+Time\+Offset} (const double \&time\+Offset) const
+void \hyperlink{classflounder_1_1framework_a572ccf8c4d7c90687b35bc7efc94c0e2}{set\+Time\+Offset} (const float \&time\+Offset) const
 \begin{DoxyCompactList}\small\item\em Sets the time offset for the framework (seconds). \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1framework_a46219c3eae921c9819e7228ec2d8d904}{get\+Delta} () const
+float \hyperlink{classflounder_1_1framework_a180884fa93e39405354e4dcf329169d2}{get\+Delta} () const
 \begin{DoxyCompactList}\small\item\em Gets the delta (seconds) between updates. \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1framework_ae4020c8f9baeda03fe5ef8ceb6f1d286}{get\+Delta\+Render} () const
+float \hyperlink{classflounder_1_1framework_a98b4dd1aa26132eee232c2618ebb1578}{get\+Delta\+Render} () const
 \begin{DoxyCompactList}\small\item\em Gets the delta (seconds) between renders. \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1framework_acac765a2dd8e09267b7d6ce0620b8e55}{get\+Time\+Sec} () const
+float \hyperlink{classflounder_1_1framework_aaf001b25a809bb91642a5c978e610169}{get\+Time\+Sec} () const
 \begin{DoxyCompactList}\small\item\em Gets the current time of the framework instance. \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1framework_a1f60ddf8e191eb9182b3e90007d8f9a1}{get\+Time\+Ms} () const
+float \hyperlink{classflounder_1_1framework_a8d8f401ca64f2b4f7a8389049b83de92}{get\+Time\+Ms} () const
 \begin{DoxyCompactList}\small\item\em Gets the current time of the framework instance. \end{DoxyCompactList}\item 
 bool \hyperlink{classflounder_1_1framework_ad217b91b7e0f46f305105045396dcdf3}{is\+Initialized} () const
 \begin{DoxyCompactList}\small\item\em Gets if the framework has been initialized. \end{DoxyCompactList}\item 
@@ -76,7 +76,7 @@ bool {\bfseries m\+\_\+error}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classflounder_1_1framework_a896bceb89f218cbfc92592b1c24929e9}\label{classflounder_1_1framework_a896bceb89f218cbfc92592b1c24929e9}} 
-static \hyperlink{classflounder_1_1framework}{framework} $\ast$ {\bfseries G\+\_\+\+I\+N\+S\+T\+A\+N\+CE} = N\+U\+LL
+static \hyperlink{classflounder_1_1framework}{framework} $\ast$ {\bfseries G\+\_\+\+I\+N\+S\+T\+A\+N\+CE} = nullptr
 \end{DoxyCompactItemize}
 
 
@@ -132,11 +132,11 @@ Gets this framework instance.
 \begin{DoxyReturn}{Returns}
 The current framework instance. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1framework_a46219c3eae921c9819e7228ec2d8d904}\label{classflounder_1_1framework_a46219c3eae921c9819e7228ec2d8d904}} 
+\mbox{\Hypertarget{classflounder_1_1framework_a180884fa93e39405354e4dcf329169d2}\label{classflounder_1_1framework_a180884fa93e39405354e4dcf329169d2}} 
 \index{flounder\+::framework@{flounder\+::framework}!get\+Delta@{get\+Delta}}
 \index{get\+Delta@{get\+Delta}!flounder\+::framework@{flounder\+::framework}}
 \subsubsection{\texorpdfstring{get\+Delta()}{getDelta()}}
-{\footnotesize\ttfamily double flounder\+::framework\+::get\+Delta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily float flounder\+::framework\+::get\+Delta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -145,11 +145,11 @@ Gets the delta (seconds) between updates.
 \begin{DoxyReturn}{Returns}
 The delta between updates. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1framework_ae4020c8f9baeda03fe5ef8ceb6f1d286}\label{classflounder_1_1framework_ae4020c8f9baeda03fe5ef8ceb6f1d286}} 
+\mbox{\Hypertarget{classflounder_1_1framework_a98b4dd1aa26132eee232c2618ebb1578}\label{classflounder_1_1framework_a98b4dd1aa26132eee232c2618ebb1578}} 
 \index{flounder\+::framework@{flounder\+::framework}!get\+Delta\+Render@{get\+Delta\+Render}}
 \index{get\+Delta\+Render@{get\+Delta\+Render}!flounder\+::framework@{flounder\+::framework}}
 \subsubsection{\texorpdfstring{get\+Delta\+Render()}{getDeltaRender()}}
-{\footnotesize\ttfamily double flounder\+::framework\+::get\+Delta\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily float flounder\+::framework\+::get\+Delta\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -176,11 +176,11 @@ Gets a module instance by name.
 \begin{DoxyReturn}{Returns}
 The found module. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1framework_a1f60ddf8e191eb9182b3e90007d8f9a1}\label{classflounder_1_1framework_a1f60ddf8e191eb9182b3e90007d8f9a1}} 
+\mbox{\Hypertarget{classflounder_1_1framework_a8d8f401ca64f2b4f7a8389049b83de92}\label{classflounder_1_1framework_a8d8f401ca64f2b4f7a8389049b83de92}} 
 \index{flounder\+::framework@{flounder\+::framework}!get\+Time\+Ms@{get\+Time\+Ms}}
 \index{get\+Time\+Ms@{get\+Time\+Ms}!flounder\+::framework@{flounder\+::framework}}
 \subsubsection{\texorpdfstring{get\+Time\+Ms()}{getTimeMs()}}
-{\footnotesize\ttfamily double flounder\+::framework\+::get\+Time\+Ms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily float flounder\+::framework\+::get\+Time\+Ms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -189,11 +189,11 @@ Gets the current time of the framework instance.
 \begin{DoxyReturn}{Returns}
 The current framework time in milliseconds. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1framework_a611e6fcdc2f2f484ebf8bbbdceacd45b}\label{classflounder_1_1framework_a611e6fcdc2f2f484ebf8bbbdceacd45b}} 
+\mbox{\Hypertarget{classflounder_1_1framework_aa85d7cdc20c0f8b47aee5dff06d03ae3}\label{classflounder_1_1framework_aa85d7cdc20c0f8b47aee5dff06d03ae3}} 
 \index{flounder\+::framework@{flounder\+::framework}!get\+Time\+Offset@{get\+Time\+Offset}}
 \index{get\+Time\+Offset@{get\+Time\+Offset}!flounder\+::framework@{flounder\+::framework}}
 \subsubsection{\texorpdfstring{get\+Time\+Offset()}{getTimeOffset()}}
-{\footnotesize\ttfamily double flounder\+::framework\+::get\+Time\+Offset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily float flounder\+::framework\+::get\+Time\+Offset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -202,11 +202,11 @@ Gets the added/removed time for the framework (seconds).
 \begin{DoxyReturn}{Returns}
 The time offset. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1framework_acac765a2dd8e09267b7d6ce0620b8e55}\label{classflounder_1_1framework_acac765a2dd8e09267b7d6ce0620b8e55}} 
+\mbox{\Hypertarget{classflounder_1_1framework_aaf001b25a809bb91642a5c978e610169}\label{classflounder_1_1framework_aaf001b25a809bb91642a5c978e610169}} 
 \index{flounder\+::framework@{flounder\+::framework}!get\+Time\+Sec@{get\+Time\+Sec}}
 \index{get\+Time\+Sec@{get\+Time\+Sec}!flounder\+::framework@{flounder\+::framework}}
 \subsubsection{\texorpdfstring{get\+Time\+Sec()}{getTimeSec()}}
-{\footnotesize\ttfamily double flounder\+::framework\+::get\+Time\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily float flounder\+::framework\+::get\+Time\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -281,11 +281,11 @@ Sets if the framework has been initialized.
 {\em initialized} & If the framework has been initialized. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1framework_aa4d08f34e622916ecd4a5f5f55bbac88}\label{classflounder_1_1framework_aa4d08f34e622916ecd4a5f5f55bbac88}} 
+\mbox{\Hypertarget{classflounder_1_1framework_a572ccf8c4d7c90687b35bc7efc94c0e2}\label{classflounder_1_1framework_a572ccf8c4d7c90687b35bc7efc94c0e2}} 
 \index{flounder\+::framework@{flounder\+::framework}!set\+Time\+Offset@{set\+Time\+Offset}}
 \index{set\+Time\+Offset@{set\+Time\+Offset}!flounder\+::framework@{flounder\+::framework}}
 \subsubsection{\texorpdfstring{set\+Time\+Offset()}{setTimeOffset()}}
-{\footnotesize\ttfamily void flounder\+::framework\+::set\+Time\+Offset (\begin{DoxyParamCaption}\item[{const double \&}]{time\+Offset }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily void flounder\+::framework\+::set\+Time\+Offset (\begin{DoxyParamCaption}\item[{const float \&}]{time\+Offset }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 

@@ -24,28 +24,37 @@ void {\bfseries create} () override
 \mbox{\Hypertarget{classflounder_1_1glfwupdater_a2443d270f702e67ab44c7afb88c71a5e}\label{classflounder_1_1glfwupdater_a2443d270f702e67ab44c7afb88c71a5e}} 
 void {\bfseries update} () override
 \item 
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_a3c550a8e0d269a3fe13bef4d9015477a}\label{classflounder_1_1glfwupdater_a3c550a8e0d269a3fe13bef4d9015477a}} 
+void {\bfseries add\+Module} (moduleupdate type\+Update, std\+::string module\+Name, \hyperlink{classflounder_1_1imodule}{imodule} $\ast$object)
+\item 
 \hyperlink{classflounder_1_1imodule}{imodule} $\ast$ \hyperlink{classflounder_1_1glfwupdater_a284945635b93ffc1bd6164ff20565349}{get\+Instance} (const std\+::string \&name) override
 \begin{DoxyCompactList}\small\item\em Gets a module from the updater. \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1glfwupdater_a6393f60d2b0f84a78ccf14b0c55ae1ee}{get\+Time\+Offset} () override
+float \hyperlink{classflounder_1_1glfwupdater_a7d37c7454419a6756c56b3a6412f6d20}{get\+Time\+Offset} () override
 \begin{DoxyCompactList}\small\item\em Gets the added/removed time for the framework (seconds). \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1glfwupdater_a7dc4371863e39a3a7870e4a2ac539fed}{set\+Time\+Offset} (const double \&time\+Offset) override
+void \hyperlink{classflounder_1_1glfwupdater_a2cffca6ed4a79dd5d8cc658ca20c70ef}{set\+Time\+Offset} (const float \&time\+Offset) override
 \begin{DoxyCompactList}\small\item\em Sets the time offset for the framework (seconds). \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1glfwupdater_a8da4916f3335126413a072203b94a735}{get\+Delta} () override
+float \hyperlink{classflounder_1_1glfwupdater_adfe51aba1c2ac7c79d385eed15c901fc}{get\+Delta} () override
 \begin{DoxyCompactList}\small\item\em Gets the delta (seconds) between updates. \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1glfwupdater_a3f8d8a108c8db0d2ead35088646687c9}{get\+Delta\+Render} () override
+float \hyperlink{classflounder_1_1glfwupdater_aad1dda11a40273c2a18e7974f42f59dc}{get\+Delta\+Render} () override
 \begin{DoxyCompactList}\small\item\em Gets the delta (seconds) between renders. \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1glfwupdater_a6982b83970693347bfa460adc04cf984}{get\+Time\+Sec} () override
+float \hyperlink{classflounder_1_1glfwupdater_a01b583f6e4b5ae90eb9d74f931d80081}{get\+Time\+Sec} () override
 \begin{DoxyCompactList}\small\item\em Gets the current time of the framework instance. \end{DoxyCompactList}\item 
-double \hyperlink{classflounder_1_1glfwupdater_a1c3b884efb6e785143db556d4db9bdc8}{get\+Time\+Ms} () override
+float \hyperlink{classflounder_1_1glfwupdater_ac27f7a962d72e4dff8e13db7d84647ba}{get\+Time\+Ms} () override
 \begin{DoxyCompactList}\small\item\em Gets the current time of the framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_a8a9f6bcd682f3661de18799669c0a4b4}\label{classflounder_1_1glfwupdater_a8a9f6bcd682f3661de18799669c0a4b4}} 
+void {\bfseries run\+Update} (moduleupdate type\+Update)
+\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a7a183f7c8b615547222348cfc727c138}\label{classflounder_1_1glfwupdater_a7a183f7c8b615547222348cfc727c138}} 
-double {\bfseries m\+\_\+start\+Time}
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_a318ba9d32a7b08e4a85c4a26ce461da4}\label{classflounder_1_1glfwupdater_a318ba9d32a7b08e4a85c4a26ce461da4}} 
+float {\bfseries m\+\_\+start\+Time}
 \item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_aecb7f675d1aa26d04f0933768d7b8189}\label{classflounder_1_1glfwupdater_aecb7f675d1aa26d04f0933768d7b8189}} 
-double {\bfseries m\+\_\+time\+Offset}
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_a5ba86d2b6c5a63096a48e922b8af42ae}\label{classflounder_1_1glfwupdater_a5ba86d2b6c5a63096a48e922b8af42ae}} 
+float {\bfseries m\+\_\+time\+Offset}
 \item 
 \mbox{\Hypertarget{classflounder_1_1glfwupdater_ab9cbfc326d5541b950cd1bb2b4e777ee}\label{classflounder_1_1glfwupdater_ab9cbfc326d5541b950cd1bb2b4e777ee}} 
 \hyperlink{classflounder_1_1delta}{delta} $\ast$ {\bfseries m\+\_\+delta\+Update}
@@ -59,50 +68,8 @@ double {\bfseries m\+\_\+time\+Offset}
 \mbox{\Hypertarget{classflounder_1_1glfwupdater_ac3dae6d2a82d58c796a2c095a928e897}\label{classflounder_1_1glfwupdater_ac3dae6d2a82d58c796a2c095a928e897}} 
 \hyperlink{classflounder_1_1timer}{timer} $\ast$ {\bfseries m\+\_\+timer\+Render}
 \item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a41a21fd6ad15b9ccf061a60d81dbd9ee}\label{classflounder_1_1glfwupdater_a41a21fd6ad15b9ccf061a60d81dbd9ee}} 
-\hyperlink{classflounder_1_1audio}{audio} $\ast$ {\bfseries m\+\_\+audio}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_ac315975083fe903f32835f3ec74afc7b}\label{classflounder_1_1glfwupdater_ac315975083fe903f32835f3ec74afc7b}} 
-\hyperlink{classflounder_1_1camera}{camera} $\ast$ {\bfseries m\+\_\+camera}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a91464cfb83ec6cabf02c2ad8831b8496}\label{classflounder_1_1glfwupdater_a91464cfb83ec6cabf02c2ad8831b8496}} 
-\hyperlink{classflounder_1_1display}{display} $\ast$ {\bfseries m\+\_\+display}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a91275f1c4dbdd6035d3199ad0bb9e70f}\label{classflounder_1_1glfwupdater_a91275f1c4dbdd6035d3199ad0bb9e70f}} 
-\hyperlink{classflounder_1_1events}{events} $\ast$ {\bfseries m\+\_\+events}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a1380d5789c482cb0083ab38e4091c338}\label{classflounder_1_1glfwupdater_a1380d5789c482cb0083ab38e4091c338}} 
-\hyperlink{classflounder_1_1joysticks}{joysticks} $\ast$ {\bfseries m\+\_\+joysticks}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_aae51a3d0e5bfc126ef1bb4f4a7d4a6bc}\label{classflounder_1_1glfwupdater_aae51a3d0e5bfc126ef1bb4f4a7d4a6bc}} 
-\hyperlink{classflounder_1_1keyboard}{keyboard} $\ast$ {\bfseries m\+\_\+keyboard}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a64e02877af0738b122d5e6b62fb33444}\label{classflounder_1_1glfwupdater_a64e02877af0738b122d5e6b62fb33444}} 
-\hyperlink{classflounder_1_1loaders}{loaders} $\ast$ {\bfseries m\+\_\+loaders}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a45bb27f3ef7b383920d838c445576596}\label{classflounder_1_1glfwupdater_a45bb27f3ef7b383920d838c445576596}} 
-\hyperlink{classflounder_1_1mouse}{mouse} $\ast$ {\bfseries m\+\_\+mouse}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_af35fd5ffe869d75ceb02a92801cfc0bb}\label{classflounder_1_1glfwupdater_af35fd5ffe869d75ceb02a92801cfc0bb}} 
-\hyperlink{classflounder_1_1particles}{particles} $\ast$ {\bfseries m\+\_\+particles}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_ac8bb3d6684a216d8216505c5798b192d}\label{classflounder_1_1glfwupdater_ac8bb3d6684a216d8216505c5798b192d}} 
-\hyperlink{classflounder_1_1processing}{processing} $\ast$ {\bfseries m\+\_\+processing}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a158be0a69d98920683673fd0b5253a8a}\label{classflounder_1_1glfwupdater_a158be0a69d98920683673fd0b5253a8a}} 
-renderer $\ast$ {\bfseries m\+\_\+renderer}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_ae8119b8c80cffb43e23fe5e828fa7335}\label{classflounder_1_1glfwupdater_ae8119b8c80cffb43e23fe5e828fa7335}} 
-\hyperlink{classflounder_1_1skyboxes}{skyboxes} $\ast$ {\bfseries m\+\_\+skyboxes}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a519e22699793fc11ba9e14862871d1dc}\label{classflounder_1_1glfwupdater_a519e22699793fc11ba9e14862871d1dc}} 
-\hyperlink{classflounder_1_1standards}{standards} $\ast$ {\bfseries m\+\_\+standards}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a02670cabb35d9ad5f800900d05afcdc9}\label{classflounder_1_1glfwupdater_a02670cabb35d9ad5f800900d05afcdc9}} 
-\hyperlink{classflounder_1_1tasks}{tasks} $\ast$ {\bfseries m\+\_\+tasks}
-\item 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a7283ebb987a158363c2cc10d442b6fb6}\label{classflounder_1_1glfwupdater_a7283ebb987a158363c2cc10d442b6fb6}} 
-\hyperlink{classflounder_1_1uis}{uis} $\ast$ {\bfseries m\+\_\+uis}
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_a5c024a8ff10e2dd9ec96e6054e2d7b00}\label{classflounder_1_1glfwupdater_a5c024a8ff10e2dd9ec96e6054e2d7b00}} 
+std\+::multimap$<$ float, std\+::pair$<$ std\+::string, \hyperlink{classflounder_1_1imodule}{imodule} $\ast$ $>$ $>$ $\ast$ {\bfseries m\+\_\+modules}
 \end{DoxyCompactItemize}
 
 
@@ -112,11 +79,11 @@ The default G\+L\+FW updater for the framework.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a8da4916f3335126413a072203b94a735}\label{classflounder_1_1glfwupdater_a8da4916f3335126413a072203b94a735}} 
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_adfe51aba1c2ac7c79d385eed15c901fc}\label{classflounder_1_1glfwupdater_adfe51aba1c2ac7c79d385eed15c901fc}} 
 \index{flounder\+::glfwupdater@{flounder\+::glfwupdater}!get\+Delta@{get\+Delta}}
 \index{get\+Delta@{get\+Delta}!flounder\+::glfwupdater@{flounder\+::glfwupdater}}
 \subsubsection{\texorpdfstring{get\+Delta()}{getDelta()}}
-{\footnotesize\ttfamily double flounder\+::glfwupdater\+::get\+Delta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily float flounder\+::glfwupdater\+::get\+Delta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -127,13 +94,13 @@ The delta between updates.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1iupdater_a1e8d40602f9799fc82d96d5b845cf796}{flounder\+::iupdater}.
+Implements \hyperlink{classflounder_1_1iupdater_a1a3813366f3a4f08cb91e23cd7b63cda}{flounder\+::iupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a3f8d8a108c8db0d2ead35088646687c9}\label{classflounder_1_1glfwupdater_a3f8d8a108c8db0d2ead35088646687c9}} 
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_aad1dda11a40273c2a18e7974f42f59dc}\label{classflounder_1_1glfwupdater_aad1dda11a40273c2a18e7974f42f59dc}} 
 \index{flounder\+::glfwupdater@{flounder\+::glfwupdater}!get\+Delta\+Render@{get\+Delta\+Render}}
 \index{get\+Delta\+Render@{get\+Delta\+Render}!flounder\+::glfwupdater@{flounder\+::glfwupdater}}
 \subsubsection{\texorpdfstring{get\+Delta\+Render()}{getDeltaRender()}}
-{\footnotesize\ttfamily double flounder\+::glfwupdater\+::get\+Delta\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily float flounder\+::glfwupdater\+::get\+Delta\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -144,7 +111,7 @@ The delta between renders.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1iupdater_a00d7cf530cfbd7f83c8903328da14027}{flounder\+::iupdater}.
+Implements \hyperlink{classflounder_1_1iupdater_a242d2c4bef63ac11560ac4f13dd4ad3f}{flounder\+::iupdater}.
 
 \mbox{\Hypertarget{classflounder_1_1glfwupdater_a284945635b93ffc1bd6164ff20565349}\label{classflounder_1_1glfwupdater_a284945635b93ffc1bd6164ff20565349}} 
 \index{flounder\+::glfwupdater@{flounder\+::glfwupdater}!get\+Instance@{get\+Instance}}
@@ -168,11 +135,11 @@ The module object.
 
 Implements \hyperlink{classflounder_1_1iupdater_a391b1788b5c139b199ed48033da1b88d}{flounder\+::iupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a1c3b884efb6e785143db556d4db9bdc8}\label{classflounder_1_1glfwupdater_a1c3b884efb6e785143db556d4db9bdc8}} 
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_ac27f7a962d72e4dff8e13db7d84647ba}\label{classflounder_1_1glfwupdater_ac27f7a962d72e4dff8e13db7d84647ba}} 
 \index{flounder\+::glfwupdater@{flounder\+::glfwupdater}!get\+Time\+Ms@{get\+Time\+Ms}}
 \index{get\+Time\+Ms@{get\+Time\+Ms}!flounder\+::glfwupdater@{flounder\+::glfwupdater}}
 \subsubsection{\texorpdfstring{get\+Time\+Ms()}{getTimeMs()}}
-{\footnotesize\ttfamily double flounder\+::glfwupdater\+::get\+Time\+Ms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily float flounder\+::glfwupdater\+::get\+Time\+Ms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -183,13 +150,13 @@ The current framework time in milliseconds.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1iupdater_a56548faad88ad85e0cb4bc96af0912d6}{flounder\+::iupdater}.
+Implements \hyperlink{classflounder_1_1iupdater_a6f5a67e27507165d4423b32e29ca3446}{flounder\+::iupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a6393f60d2b0f84a78ccf14b0c55ae1ee}\label{classflounder_1_1glfwupdater_a6393f60d2b0f84a78ccf14b0c55ae1ee}} 
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_a7d37c7454419a6756c56b3a6412f6d20}\label{classflounder_1_1glfwupdater_a7d37c7454419a6756c56b3a6412f6d20}} 
 \index{flounder\+::glfwupdater@{flounder\+::glfwupdater}!get\+Time\+Offset@{get\+Time\+Offset}}
 \index{get\+Time\+Offset@{get\+Time\+Offset}!flounder\+::glfwupdater@{flounder\+::glfwupdater}}
 \subsubsection{\texorpdfstring{get\+Time\+Offset()}{getTimeOffset()}}
-{\footnotesize\ttfamily double flounder\+::glfwupdater\+::get\+Time\+Offset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily float flounder\+::glfwupdater\+::get\+Time\+Offset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -200,13 +167,13 @@ The time offset.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1iupdater_abd983cbbeed27f28e9be768a2d3b69f2}{flounder\+::iupdater}.
+Implements \hyperlink{classflounder_1_1iupdater_a4e682002890f952dee48c646fce39824}{flounder\+::iupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a6982b83970693347bfa460adc04cf984}\label{classflounder_1_1glfwupdater_a6982b83970693347bfa460adc04cf984}} 
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_a01b583f6e4b5ae90eb9d74f931d80081}\label{classflounder_1_1glfwupdater_a01b583f6e4b5ae90eb9d74f931d80081}} 
 \index{flounder\+::glfwupdater@{flounder\+::glfwupdater}!get\+Time\+Sec@{get\+Time\+Sec}}
 \index{get\+Time\+Sec@{get\+Time\+Sec}!flounder\+::glfwupdater@{flounder\+::glfwupdater}}
 \subsubsection{\texorpdfstring{get\+Time\+Sec()}{getTimeSec()}}
-{\footnotesize\ttfamily double flounder\+::glfwupdater\+::get\+Time\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily float flounder\+::glfwupdater\+::get\+Time\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -217,13 +184,13 @@ The current framework time in seconds.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1iupdater_a071086b844e1f90d7f3577e80c9c09fe}{flounder\+::iupdater}.
+Implements \hyperlink{classflounder_1_1iupdater_aab92d5e84c55e35d1b8a9a4f5628e3b4}{flounder\+::iupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1glfwupdater_a7dc4371863e39a3a7870e4a2ac539fed}\label{classflounder_1_1glfwupdater_a7dc4371863e39a3a7870e4a2ac539fed}} 
+\mbox{\Hypertarget{classflounder_1_1glfwupdater_a2cffca6ed4a79dd5d8cc658ca20c70ef}\label{classflounder_1_1glfwupdater_a2cffca6ed4a79dd5d8cc658ca20c70ef}} 
 \index{flounder\+::glfwupdater@{flounder\+::glfwupdater}!set\+Time\+Offset@{set\+Time\+Offset}}
 \index{set\+Time\+Offset@{set\+Time\+Offset}!flounder\+::glfwupdater@{flounder\+::glfwupdater}}
 \subsubsection{\texorpdfstring{set\+Time\+Offset()}{setTimeOffset()}}
-{\footnotesize\ttfamily void flounder\+::glfwupdater\+::set\+Time\+Offset (\begin{DoxyParamCaption}\item[{const double \&}]{time\+Offset }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily void flounder\+::glfwupdater\+::set\+Time\+Offset (\begin{DoxyParamCaption}\item[{const float \&}]{time\+Offset }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -236,7 +203,7 @@ Sets the time offset for the framework (seconds).
 \end{DoxyParams}
 
 
-Implements \hyperlink{classflounder_1_1iupdater_aa6aa143e40a5a39bcd53753798438ea1}{flounder\+::iupdater}.
+Implements \hyperlink{classflounder_1_1iupdater_a5ce1862ec2d0e6c4f61b026922379dd2}{flounder\+::iupdater}.
 
 
 

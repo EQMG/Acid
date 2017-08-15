@@ -12,8 +12,10 @@ A helper for C++ files.
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static std\+::string \hyperlink{classflounder_1_1helperfile_a3e0cf9aeb402172757a2ee2bf22a4c7f}{read\+File} (const std\+::string \&filepath)
-\begin{DoxyCompactList}\small\item\em Reads a text file into a string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+static std\+::string \hyperlink{classflounder_1_1helperfile_a4f9da9404d2e3e7b7f1453ede0c5ab24}{read\+Text\+File} (const std\+::string \&filepath)
+\begin{DoxyCompactList}\small\item\em Reads a text file into a string. \end{DoxyCompactList}\item 
+static std\+::vector$<$ char $>$ \hyperlink{classflounder_1_1helperfile_aed36c69790790f1f867bd39c01194a11}{read\+Binary\+File} (const std\+::string \&filepath)
+\begin{DoxyCompactList}\small\item\em Reads a binary file into a char array. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -22,11 +24,29 @@ A helper for C++ files.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1helperfile_a3e0cf9aeb402172757a2ee2bf22a4c7f}\label{classflounder_1_1helperfile_a3e0cf9aeb402172757a2ee2bf22a4c7f}} 
-\index{flounder\+::helperfile@{flounder\+::helperfile}!read\+File@{read\+File}}
-\index{read\+File@{read\+File}!flounder\+::helperfile@{flounder\+::helperfile}}
-\subsubsection{\texorpdfstring{read\+File()}{readFile()}}
-{\footnotesize\ttfamily static std\+::string flounder\+::helperfile\+::read\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filepath }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+\mbox{\Hypertarget{classflounder_1_1helperfile_aed36c69790790f1f867bd39c01194a11}\label{classflounder_1_1helperfile_aed36c69790790f1f867bd39c01194a11}} 
+\index{flounder\+::helperfile@{flounder\+::helperfile}!read\+Binary\+File@{read\+Binary\+File}}
+\index{read\+Binary\+File@{read\+Binary\+File}!flounder\+::helperfile@{flounder\+::helperfile}}
+\subsubsection{\texorpdfstring{read\+Binary\+File()}{readBinaryFile()}}
+{\footnotesize\ttfamily static std\+::vector$<$char$>$ flounder\+::helperfile\+::read\+Binary\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filepath }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Reads a binary file into a char array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & The filepath. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The char array loaded from the file. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classflounder_1_1helperfile_a4f9da9404d2e3e7b7f1453ede0c5ab24}\label{classflounder_1_1helperfile_a4f9da9404d2e3e7b7f1453ede0c5ab24}} 
+\index{flounder\+::helperfile@{flounder\+::helperfile}!read\+Text\+File@{read\+Text\+File}}
+\index{read\+Text\+File@{read\+Text\+File}!flounder\+::helperfile@{flounder\+::helperfile}}
+\subsubsection{\texorpdfstring{read\+Text\+File()}{readTextFile()}}
+{\footnotesize\ttfamily static std\+::string flounder\+::helperfile\+::read\+Text\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filepath }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
 
 

@@ -24,7 +24,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static waters *get()
+		static inline waters *get()
 		{
 			return static_cast<waters*>(framework::get()->getInstance("waters"));
 		}

@@ -22,19 +22,21 @@ Inheritance diagram for flounder\+:\+:structurebasic$<$ t $>$\+:\begin{figure}[H
 \begin{DoxyCompactList}\small\item\em Creates a new basic structure. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1structurebasic_a7ce24fc6a91e6a340d8526cc84b2f8ae}{$\sim$structurebasic} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the basic structure. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1structurebasic_a4e3549d986f547a8789d38cf8a820f18}{add} (t $\ast$object) override
+void \hyperlink{classflounder_1_1structurebasic_a75d3685a3341fcaef9e28deaf1f2dcd2}{add} (t object) override
 \begin{DoxyCompactList}\small\item\em Adds a new object to the spatial structure. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1structurebasic_aad7fb3ea380f8af0bef40f86437db4cb}{remove} (t $\ast$object) override
+void \hyperlink{classflounder_1_1structurebasic_a30ae1add25079e6bed1709b72d1d89e2}{remove} (t object) override
 \begin{DoxyCompactList}\small\item\em Removes an object from the spatial structure. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1structurebasic_a080579359485a5b32489a004c70da095}{clear} () override
 \begin{DoxyCompactList}\small\item\em Removes all objects from the spatial structure.. \end{DoxyCompactList}\item 
 int \hyperlink{classflounder_1_1structurebasic_aaef414a91ef6bd96982b1f7c10ae31b2}{get\+Size} () override
 \begin{DoxyCompactList}\small\item\em Gets the size of this structure. \end{DoxyCompactList}\item 
-std\+::vector$<$ t $\ast$ $>$ \hyperlink{classflounder_1_1structurebasic_a6e3292d86b68b829540f011593dec6eb}{get\+All} (std\+::vector$<$ t $\ast$$>$ $\ast$result) override
+std\+::vector$<$ t $>$ $\ast$ \hyperlink{classflounder_1_1structurebasic_a77aa32807b5d3b901a6184cf6af81073}{get\+All} () override
 \begin{DoxyCompactList}\small\item\em Returns a set of all objects in the spatial structure. \end{DoxyCompactList}\item 
-std\+::vector$<$ t $\ast$ $>$ \hyperlink{classflounder_1_1structurebasic_ae53d9ef72c5dfb9bfee6012e51c32d95}{query\+In\+Frustum} (\hyperlink{classflounder_1_1frustum}{frustum} $\ast$range, std\+::vector$<$ t $\ast$$>$ $\ast$result) override
+std\+::vector$<$ t $>$ $\ast$ \hyperlink{classflounder_1_1structurebasic_a269fcc272481b2182123523f75afb3f5}{get\+All} (std\+::vector$<$ t $>$ $\ast$result) override
+\begin{DoxyCompactList}\small\item\em Returns a set of all objects in the spatial structure. \end{DoxyCompactList}\item 
+std\+::vector$<$ t $>$ $\ast$ \hyperlink{classflounder_1_1structurebasic_a33f0b06e49ff40068e90f18773dff9e8}{query\+In\+Frustum} (\hyperlink{classflounder_1_1frustum}{frustum} $\ast$range, std\+::vector$<$ t $>$ $\ast$result) override
 \begin{DoxyCompactList}\small\item\em Returns a set of all objects in a specific range of the spatial structure. \end{DoxyCompactList}\item 
-std\+::vector$<$ t $\ast$ $>$ \hyperlink{classflounder_1_1structurebasic_a8b185614cd8ee80a3ca14cc4f368e055}{query\+In\+Bounding} (\hyperlink{classflounder_1_1icollider}{icollider} $\ast$range, std\+::vector$<$ t $\ast$$>$ $\ast$result) override
+std\+::vector$<$ t $>$ $\ast$ \hyperlink{classflounder_1_1structurebasic_a977c80f9e4982f40afc5400714620a31}{query\+In\+Bounding} (\hyperlink{classflounder_1_1icollider}{icollider} $\ast$range, std\+::vector$<$ t $>$ $\ast$result) override
 \begin{DoxyCompactList}\small\item\em Returns a set of all objects in a specific range of the spatial structure. \end{DoxyCompactList}\item 
 bool \hyperlink{classflounder_1_1structurebasic_ac9a9bcd40d564056c33c2ade540f4e4c}{contains} (\hyperlink{classflounder_1_1ispatialobject}{ispatialobject} $\ast$object) override
 \begin{DoxyCompactList}\small\item\em If the structure contains the object. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -47,7 +49,7 @@ std\+::vector$<$ t $>$ $\ast$ {\bfseries m\+\_\+objects}
 
 
 \subsection{Detailed Description}
-\subsubsection*{template$<$typename t$>$\newline
+\subsubsection*{template$<$class t$>$\newline
 class flounder\+::structurebasic$<$ t $>$}
 
 A structure of spatial objects for a 3D space. 
@@ -59,7 +61,7 @@ A structure of spatial objects for a 3D space.
 \index{flounder\+::structurebasic@{flounder\+::structurebasic}!structurebasic@{structurebasic}}
 \index{structurebasic@{structurebasic}!flounder\+::structurebasic@{flounder\+::structurebasic}}
 \subsubsection{\texorpdfstring{structurebasic()}{structurebasic()}}
-{\footnotesize\ttfamily template$<$typename t $>$ \\
+{\footnotesize\ttfamily template$<$class t $>$ \\
 \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::\hyperlink{classflounder_1_1structurebasic}{structurebasic} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
@@ -70,7 +72,7 @@ Creates a new basic structure.
 \index{flounder\+::structurebasic@{flounder\+::structurebasic}!````~structurebasic@{$\sim$structurebasic}}
 \index{````~structurebasic@{$\sim$structurebasic}!flounder\+::structurebasic@{flounder\+::structurebasic}}
 \subsubsection{\texorpdfstring{$\sim$structurebasic()}{~structurebasic()}}
-{\footnotesize\ttfamily template$<$typename t $>$ \\
+{\footnotesize\ttfamily template$<$class t $>$ \\
 \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::$\sim$\hyperlink{classflounder_1_1structurebasic}{structurebasic} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
@@ -80,12 +82,12 @@ Deconstructor for the basic structure.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1structurebasic_a4e3549d986f547a8789d38cf8a820f18}\label{classflounder_1_1structurebasic_a4e3549d986f547a8789d38cf8a820f18}} 
+\mbox{\Hypertarget{classflounder_1_1structurebasic_a75d3685a3341fcaef9e28deaf1f2dcd2}\label{classflounder_1_1structurebasic_a75d3685a3341fcaef9e28deaf1f2dcd2}} 
 \index{flounder\+::structurebasic@{flounder\+::structurebasic}!add@{add}}
 \index{add@{add}!flounder\+::structurebasic@{flounder\+::structurebasic}}
 \subsubsection{\texorpdfstring{add()}{add()}}
-{\footnotesize\ttfamily template$<$typename t $>$ \\
-void \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::add (\begin{DoxyParamCaption}\item[{t $\ast$}]{object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily template$<$class t $>$ \\
+void \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::add (\begin{DoxyParamCaption}\item[{t}]{object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -98,13 +100,13 @@ Adds a new object to the spatial structure.
 \end{DoxyParams}
 
 
-Implements \hyperlink{classflounder_1_1ispatialstructure_aaab8169c14104918fa96cca1a6d6700f}{flounder\+::ispatialstructure$<$ t $>$}.
+Implements \hyperlink{classflounder_1_1ispatialstructure_abd7886a29a4c6ec867ec0f611f5a667b}{flounder\+::ispatialstructure$<$ t $>$}.
 
 \mbox{\Hypertarget{classflounder_1_1structurebasic_a080579359485a5b32489a004c70da095}\label{classflounder_1_1structurebasic_a080579359485a5b32489a004c70da095}} 
 \index{flounder\+::structurebasic@{flounder\+::structurebasic}!clear@{clear}}
 \index{clear@{clear}!flounder\+::structurebasic@{flounder\+::structurebasic}}
 \subsubsection{\texorpdfstring{clear()}{clear()}}
-{\footnotesize\ttfamily template$<$typename t $>$ \\
+{\footnotesize\ttfamily template$<$class t $>$ \\
 void \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
@@ -119,7 +121,7 @@ Implements \hyperlink{classflounder_1_1ispatialstructure_a422fac0231ea3095e2f859
 \index{flounder\+::structurebasic@{flounder\+::structurebasic}!contains@{contains}}
 \index{contains@{contains}!flounder\+::structurebasic@{flounder\+::structurebasic}}
 \subsubsection{\texorpdfstring{contains()}{contains()}}
-{\footnotesize\ttfamily template$<$typename t $>$ \\
+{\footnotesize\ttfamily template$<$class t $>$ \\
 bool \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::contains (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1ispatialobject}{ispatialobject} $\ast$}]{object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
@@ -138,12 +140,30 @@ If the structure contains the object.
 
 Implements \hyperlink{classflounder_1_1ispatialstructure_a80e36c5dca0995c27d7222e3c3fc1b90}{flounder\+::ispatialstructure$<$ t $>$}.
 
-\mbox{\Hypertarget{classflounder_1_1structurebasic_a6e3292d86b68b829540f011593dec6eb}\label{classflounder_1_1structurebasic_a6e3292d86b68b829540f011593dec6eb}} 
+\mbox{\Hypertarget{classflounder_1_1structurebasic_a77aa32807b5d3b901a6184cf6af81073}\label{classflounder_1_1structurebasic_a77aa32807b5d3b901a6184cf6af81073}} 
 \index{flounder\+::structurebasic@{flounder\+::structurebasic}!get\+All@{get\+All}}
 \index{get\+All@{get\+All}!flounder\+::structurebasic@{flounder\+::structurebasic}}
-\subsubsection{\texorpdfstring{get\+All()}{getAll()}}
-{\footnotesize\ttfamily template$<$typename t $>$ \\
-std\+::vector$<$ t $\ast$ $>$ \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::get\+All (\begin{DoxyParamCaption}\item[{std\+::vector$<$ t $\ast$$>$ $\ast$}]{result }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+\subsubsection{\texorpdfstring{get\+All()}{getAll()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class t $>$ \\
+std\+::vector$<$ t $>$ $\ast$ \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::get\+All (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns a set of all objects in the spatial structure. 
+
+\begin{DoxyReturn}{Returns}
+The list specified by of all objects. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1ispatialstructure_a481b04135e2ed57ab8f29d09301dce7e}{flounder\+::ispatialstructure$<$ t $>$}.
+
+\mbox{\Hypertarget{classflounder_1_1structurebasic_a269fcc272481b2182123523f75afb3f5}\label{classflounder_1_1structurebasic_a269fcc272481b2182123523f75afb3f5}} 
+\index{flounder\+::structurebasic@{flounder\+::structurebasic}!get\+All@{get\+All}}
+\index{get\+All@{get\+All}!flounder\+::structurebasic@{flounder\+::structurebasic}}
+\subsubsection{\texorpdfstring{get\+All()}{getAll()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class t $>$ \\
+std\+::vector$<$ t $>$ $\ast$ \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::get\+All (\begin{DoxyParamCaption}\item[{std\+::vector$<$ t $>$ $\ast$}]{result }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -159,13 +179,13 @@ The list specified by of all objects.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1ispatialstructure_a34a6ce64313ee41c5c188c9359997798}{flounder\+::ispatialstructure$<$ t $>$}.
+Implements \hyperlink{classflounder_1_1ispatialstructure_adf21d28c4c648b0b97763c23f2051484}{flounder\+::ispatialstructure$<$ t $>$}.
 
 \mbox{\Hypertarget{classflounder_1_1structurebasic_aaef414a91ef6bd96982b1f7c10ae31b2}\label{classflounder_1_1structurebasic_aaef414a91ef6bd96982b1f7c10ae31b2}} 
 \index{flounder\+::structurebasic@{flounder\+::structurebasic}!get\+Size@{get\+Size}}
 \index{get\+Size@{get\+Size}!flounder\+::structurebasic@{flounder\+::structurebasic}}
 \subsubsection{\texorpdfstring{get\+Size()}{getSize()}}
-{\footnotesize\ttfamily template$<$typename t $>$ \\
+{\footnotesize\ttfamily template$<$class t $>$ \\
 int \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
@@ -179,12 +199,12 @@ The structures size.
 
 Implements \hyperlink{classflounder_1_1ispatialstructure_a9daf7778a9bde304e08070eaeffb8fbd}{flounder\+::ispatialstructure$<$ t $>$}.
 
-\mbox{\Hypertarget{classflounder_1_1structurebasic_a8b185614cd8ee80a3ca14cc4f368e055}\label{classflounder_1_1structurebasic_a8b185614cd8ee80a3ca14cc4f368e055}} 
+\mbox{\Hypertarget{classflounder_1_1structurebasic_a977c80f9e4982f40afc5400714620a31}\label{classflounder_1_1structurebasic_a977c80f9e4982f40afc5400714620a31}} 
 \index{flounder\+::structurebasic@{flounder\+::structurebasic}!query\+In\+Bounding@{query\+In\+Bounding}}
 \index{query\+In\+Bounding@{query\+In\+Bounding}!flounder\+::structurebasic@{flounder\+::structurebasic}}
 \subsubsection{\texorpdfstring{query\+In\+Bounding()}{queryInBounding()}}
-{\footnotesize\ttfamily template$<$typename t $>$ \\
-std\+::vector$<$ t $\ast$ $>$ \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::query\+In\+Bounding (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1icollider}{icollider} $\ast$}]{range,  }\item[{std\+::vector$<$ t $\ast$$>$ $\ast$}]{result }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily template$<$class t $>$ \\
+std\+::vector$<$ t $>$ $\ast$ \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::query\+In\+Bounding (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1icollider}{icollider} $\ast$}]{range,  }\item[{std\+::vector$<$ t $>$ $\ast$}]{result }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -202,14 +222,14 @@ The list of all object in range.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1ispatialstructure_af170238d021510abf93e9dabbc5fad10}{flounder\+::ispatialstructure$<$ t $>$}.
+Implements \hyperlink{classflounder_1_1ispatialstructure_abd5dd6c5d3ec13163b4edf70f083eb4c}{flounder\+::ispatialstructure$<$ t $>$}.
 
-\mbox{\Hypertarget{classflounder_1_1structurebasic_ae53d9ef72c5dfb9bfee6012e51c32d95}\label{classflounder_1_1structurebasic_ae53d9ef72c5dfb9bfee6012e51c32d95}} 
+\mbox{\Hypertarget{classflounder_1_1structurebasic_a33f0b06e49ff40068e90f18773dff9e8}\label{classflounder_1_1structurebasic_a33f0b06e49ff40068e90f18773dff9e8}} 
 \index{flounder\+::structurebasic@{flounder\+::structurebasic}!query\+In\+Frustum@{query\+In\+Frustum}}
 \index{query\+In\+Frustum@{query\+In\+Frustum}!flounder\+::structurebasic@{flounder\+::structurebasic}}
 \subsubsection{\texorpdfstring{query\+In\+Frustum()}{queryInFrustum()}}
-{\footnotesize\ttfamily template$<$typename t $>$ \\
-std\+::vector$<$ t $\ast$ $>$ \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::query\+In\+Frustum (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1frustum}{frustum} $\ast$}]{range,  }\item[{std\+::vector$<$ t $\ast$$>$ $\ast$}]{result }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily template$<$class t $>$ \\
+std\+::vector$<$ t $>$ $\ast$ \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::query\+In\+Frustum (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1frustum}{frustum} $\ast$}]{range,  }\item[{std\+::vector$<$ t $>$ $\ast$}]{result }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -227,14 +247,14 @@ The list of all object in range.
 \end{DoxyReturn}
 
 
-Implements \hyperlink{classflounder_1_1ispatialstructure_a05119caef7fd1f1677bff025f782506e}{flounder\+::ispatialstructure$<$ t $>$}.
+Implements \hyperlink{classflounder_1_1ispatialstructure_aa27638201d27f6140a84c0e3c917f405}{flounder\+::ispatialstructure$<$ t $>$}.
 
-\mbox{\Hypertarget{classflounder_1_1structurebasic_aad7fb3ea380f8af0bef40f86437db4cb}\label{classflounder_1_1structurebasic_aad7fb3ea380f8af0bef40f86437db4cb}} 
+\mbox{\Hypertarget{classflounder_1_1structurebasic_a30ae1add25079e6bed1709b72d1d89e2}\label{classflounder_1_1structurebasic_a30ae1add25079e6bed1709b72d1d89e2}} 
 \index{flounder\+::structurebasic@{flounder\+::structurebasic}!remove@{remove}}
 \index{remove@{remove}!flounder\+::structurebasic@{flounder\+::structurebasic}}
 \subsubsection{\texorpdfstring{remove()}{remove()}}
-{\footnotesize\ttfamily template$<$typename t $>$ \\
-void \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::remove (\begin{DoxyParamCaption}\item[{t $\ast$}]{object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily template$<$class t $>$ \\
+void \hyperlink{classflounder_1_1structurebasic}{flounder\+::structurebasic}$<$ t $>$\+::remove (\begin{DoxyParamCaption}\item[{t}]{object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
 
 
 
@@ -247,7 +267,7 @@ Removes an object from the spatial structure.
 \end{DoxyParams}
 
 
-Implements \hyperlink{classflounder_1_1ispatialstructure_a28ec931fce23b42227a8deac1c576ed3}{flounder\+::ispatialstructure$<$ t $>$}.
+Implements \hyperlink{classflounder_1_1ispatialstructure_afca84e244d4bf34d474f0c2456d493b1}{flounder\+::ispatialstructure$<$ t $>$}.
 
 
 

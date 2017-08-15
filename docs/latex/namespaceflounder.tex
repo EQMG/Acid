@@ -10,6 +10,8 @@ The base Flounder folder.
 \item 
 class \hyperlink{classflounder_1_1audio}{audio}
 \begin{DoxyCompactList}\small\item\em A module used for loading, managing and playing a variety of different sound types. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1axisbutton}{axisbutton}
+\begin{DoxyCompactList}\small\item\em Axis composed of two buttons. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1axiscompound}{axiscompound}
 \begin{DoxyCompactList}\small\item\em Axis composed of multiple other axes. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1axisjoystick}{axisjoystick}
@@ -28,10 +30,10 @@ class \hyperlink{classflounder_1_1character}{character}
 \begin{DoxyCompactList}\small\item\em Simple data structure class holding information about a certain glyph in the font texture atlas. All sizes are for a font-\/size of 1. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1colour}{colour}
 \begin{DoxyCompactList}\small\item\em Holds a R\+G\+BA colour. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1componentalpha}{componentalpha}
+\item 
 class \hyperlink{classflounder_1_1containerscreen}{containerscreen}
 \begin{DoxyCompactList}\small\item\em A gui object that has a empty update and delete method. \end{DoxyCompactList}\item 
-class \hyperlink{classflounder_1_1deferredrenderer}{deferredrenderer}
-\begin{DoxyCompactList}\small\item\em A filter-\/like shader/fbo used to process deferred rendering. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1delta}{delta}
 \begin{DoxyCompactList}\small\item\em A class for handing and calculating deltas. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1display}{display}
@@ -49,6 +51,8 @@ class \hyperlink{classflounder_1_1driversinwave}{driversinwave}
 class \hyperlink{classflounder_1_1driverslide}{driverslide}
 \begin{DoxyCompactList}\small\item\em A driver that slides to its destination using cosine interpolation. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1entity}{entity}
+\item 
+struct \hyperlink{structflounder_1_1entityrender}{entityrender}
 \item 
 class \hyperlink{classflounder_1_1eventchange}{eventchange}
 \begin{DoxyCompactList}\small\item\em A class that acts as a basic change listener for a value. \end{DoxyCompactList}\item 
@@ -71,6 +75,8 @@ class \hyperlink{classflounder_1_1filtercombine}{filtercombine}
 class \hyperlink{classflounder_1_1filtercrt}{filtercrt}
 \item 
 class \hyperlink{classflounder_1_1filterdarken}{filterdarken}
+\item 
+class \hyperlink{classflounder_1_1filterdefault}{filterdefault}
 \item 
 class \hyperlink{classflounder_1_1filteremboss}{filteremboss}
 \item 
@@ -111,6 +117,8 @@ class \hyperlink{classflounder_1_1frustum}{frustum}
 \begin{DoxyCompactList}\small\item\em Represents the region of flounder.\+space in the modeled world that may appear on the screen. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1glfwupdater}{glfwupdater}
 \begin{DoxyCompactList}\small\item\em The default G\+L\+FW updater for the framework. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1grabberjoystick}{grabberjoystick}
+\item 
 class \hyperlink{classflounder_1_1grabberkeyboard}{grabberkeyboard}
 \item 
 class \hyperlink{classflounder_1_1grabbermouse}{grabbermouse}
@@ -131,6 +139,8 @@ class \hyperlink{classflounder_1_1icamera}{icamera}
 \begin{DoxyCompactList}\small\item\em This class is used throughout the engine wherever the camera is involved, so that the engine doesn\textquotesingle{}t rely at all on the camera\textquotesingle{}s implementation. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1icollider}{icollider}
 \begin{DoxyCompactList}\small\item\em A simple class that represents a physical shape. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1icomponent}{icomponent}
+\item 
 class \hyperlink{classflounder_1_1idriver}{idriver}
 \begin{DoxyCompactList}\small\item\em Represents a driver that changes over time. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1ievent}{ievent}
@@ -190,6 +200,8 @@ class \hyperlink{classflounder_1_1light}{light}
 \begin{DoxyCompactList}\small\item\em Represents a point light, contains a colour, position and attenuation. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1loaders}{loaders}
 \begin{DoxyCompactList}\small\item\em A module used for loading and managing Open\+GL V\+AO\textquotesingle{}s and V\+BO\textquotesingle{}s. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1material}{material}
+\begin{DoxyCompactList}\small\item\em Class that represents a M\+TL material. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1matrix2x2}{matrix2x2}
 \begin{DoxyCompactList}\small\item\em Holds a 2x2 matrix. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}
@@ -197,15 +209,9 @@ class \hyperlink{classflounder_1_1matrix3x3}{matrix3x3}
 class \hyperlink{classflounder_1_1matrix4x4}{matrix4x4}
 \begin{DoxyCompactList}\small\item\em Holds a 4x4 matrix. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1model}{model}
-\begin{DoxyCompactList}\small\item\em Class that represents a loaded model. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Class that represents a O\+BJ model. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1mouse}{mouse}
 \begin{DoxyCompactList}\small\item\em A module used for the creation, updating and destruction of the mouse. \end{DoxyCompactList}\item 
-class \hyperlink{classflounder_1_1noiseclassic}{noiseclassic}
-\begin{DoxyCompactList}\small\item\em Classic Perlin noise in 3D. \end{DoxyCompactList}\item 
-class \hyperlink{classflounder_1_1noiseperlin}{noiseperlin}
-\begin{DoxyCompactList}\small\item\em Computes Perlin Noise for three dimensions. \end{DoxyCompactList}\item 
-class \hyperlink{classflounder_1_1noisesimplex}{noisesimplex}
-\begin{DoxyCompactList}\small\item\em Simplex noise in 2D, 3D and 4D. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1overlaystartup}{overlaystartup}
 \item 
 class \hyperlink{classflounder_1_1particle}{particle}
@@ -213,7 +219,7 @@ class \hyperlink{classflounder_1_1particle}{particle}
 class \hyperlink{classflounder_1_1particles}{particles}
 \begin{DoxyCompactList}\small\item\em A manager that manages particles. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1particlesystem}{particlesystem}
-\item 
+\begin{DoxyCompactList}\small\item\em A system of particles that are to be spawned. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1particletype}{particletype}
 \begin{DoxyCompactList}\small\item\em A definition for what a particle should act and look like. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1pipelinebloom}{pipelinebloom}
@@ -224,7 +230,7 @@ class \hyperlink{classflounder_1_1pipelinepaused}{pipelinepaused}
 \item 
 class \hyperlink{classflounder_1_1processing}{processing}
 \begin{DoxyCompactList}\small\item\em A module used for processing types of requests. \end{DoxyCompactList}\item 
-class \hyperlink{classflounder_1_1processoropengl}{processoropengl}
+class \hyperlink{classflounder_1_1processorgraphic}{processorgraphic}
 \begin{DoxyCompactList}\small\item\em A extension that is responsible for processing Open\+GL requests. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1processorresource}{processorresource}
 \begin{DoxyCompactList}\small\item\em A extension that is responsible for processing resource requests. \end{DoxyCompactList}\item 
@@ -234,24 +240,44 @@ class \hyperlink{classflounder_1_1queue}{queue}
 \begin{DoxyCompactList}\small\item\em Holds requests in a simple que. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1ray}{ray}
 \begin{DoxyCompactList}\small\item\em Holds a 3 dimensional ray. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1renderer}{renderer}
+\item 
+class \hyperlink{classflounder_1_1rendererdeferred}{rendererdeferred}
+\begin{DoxyCompactList}\small\item\em A filter-\/like shader/fbo used to process deferred rendering. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1rendererfonts}{rendererfonts}
 \item 
 class \hyperlink{classflounder_1_1rendererguis}{rendererguis}
 \item 
-class \hyperlink{classflounder_1_1rendererskybox}{rendererskybox}
+class \hyperlink{classflounder_1_1rendererparticles}{rendererparticles}
 \item 
-class \hyperlink{classflounder_1_1requestopengl}{requestopengl}
+class \hyperlink{classflounder_1_1renderershadows}{renderershadows}
+\item 
+class \hyperlink{classflounder_1_1rendererskyboxes}{rendererskyboxes}
+\item 
+class \hyperlink{classflounder_1_1rendererterrains}{rendererterrains}
+\item 
+class \hyperlink{classflounder_1_1rendererwaters}{rendererwaters}
+\item 
+class \hyperlink{classflounder_1_1requestgraphic}{requestgraphic}
 \begin{DoxyCompactList}\small\item\em Interface for executable Open\+GL requests. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1requestresource}{requestresource}
 \begin{DoxyCompactList}\small\item\em Interface for executable resource requests. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1shader}{shader}
 \begin{DoxyCompactList}\small\item\em Class that represents a loaded shader. \end{DoxyCompactList}\item 
-struct \hyperlink{structflounder_1_1shadertype}{shadertype}
-\begin{DoxyCompactList}\small\item\em A struct that represents a shader type. \end{DoxyCompactList}\item 
-class \hyperlink{classflounder_1_1skyboxes}{skyboxes}
+class \hyperlink{classflounder_1_1shadertype}{shadertype}
+\begin{DoxyCompactList}\small\item\em A class that represents a shader type. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1shadows}{shadows}
+\begin{DoxyCompactList}\small\item\em A module used for managing shadow maps in 3D worlds. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1skybox}{skybox}
 \item 
+class \hyperlink{classflounder_1_1skyboxes}{skyboxes}
+\begin{DoxyCompactList}\small\item\em A module used for managing skyboxes in 3D worlds. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1smoothfloat}{smoothfloat}
 \begin{DoxyCompactList}\small\item\em A class that smoothly increases its value. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1sound}{sound}
+\item 
+struct \hyperlink{structflounder_1_1_sound_source_info}{Sound\+Source\+Info}
+\item 
 class \hyperlink{classflounder_1_1spawncircle}{spawncircle}
 \item 
 class \hyperlink{classflounder_1_1spawnline}{spawnline}
@@ -268,6 +294,10 @@ class \hyperlink{classflounder_1_1structurebasic}{structurebasic}
 \begin{DoxyCompactList}\small\item\em A structure of spatial objects for a 3D space. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1tasks}{tasks}
 \begin{DoxyCompactList}\small\item\em A module used for managing tasks on framework updates. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1terrain}{terrain}
+\item 
+class \hyperlink{classflounder_1_1terrains}{terrains}
+\begin{DoxyCompactList}\small\item\em A module used for managing terrains in 3D worlds. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1text}{text}
 \begin{DoxyCompactList}\small\item\em A object the represents a text in a G\+UI. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1texture}{texture}
@@ -285,7 +315,21 @@ class \hyperlink{classflounder_1_1vector3}{vector3}
 class \hyperlink{classflounder_1_1vector4}{vector4}
 \begin{DoxyCompactList}\small\item\em Holds a 4-\/tuple vector. \end{DoxyCompactList}\item 
 class \hyperlink{classflounder_1_1vertexdata}{vertexdata}
-\begin{DoxyCompactList}\small\item\em A class that represents a single model vertex, used when loading O\+BJ files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A class that represents a single model vertex, used when loading O\+BJ files. \end{DoxyCompactList}\item 
+struct \hyperlink{structflounder_1_1_vk_queue_family_indices}{Vk\+Queue\+Family\+Indices}
+\item 
+struct \hyperlink{structflounder_1_1_vk_swap_chain_support_details}{Vk\+Swap\+Chain\+Support\+Details}
+\item 
+class \hyperlink{classflounder_1_1waters}{waters}
+\begin{DoxyCompactList}\small\item\em A module used for managing water 3D worlds. \end{DoxyCompactList}\item 
+class \hyperlink{classflounder_1_1worlds}{worlds}
+\begin{DoxyCompactList}\small\item\em A module used for managing worlds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespaceflounder_a54659156f77374273d3416d96a44dea6}\label{namespaceflounder_a54659156f77374273d3416d96a44dea6}} 
+typedef struct \hyperlink{structflounder_1_1_sound_source_info}{flounder\+::\+Sound\+Source\+Info} {\bfseries Sound\+Source\+Info}
+\end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
@@ -294,9 +338,36 @@ enum \hyperlink{namespaceflounder_aed09c736167e783c910ec9e58479b57c}{depthbuffer
 {\bfseries N\+O\+NE}
  \}\begin{DoxyCompactList}\small\item\em The types of depth buffers that can be used in a F\+BO. \end{DoxyCompactList}
 \item 
-enum \hyperlink{namespaceflounder_a69b4e6ffcd64f6175546ca0942d18565}{loadtype} \{ {\bfseries F\+I\+LE}, 
-{\bfseries S\+T\+R\+I\+NG}
- \}\begin{DoxyCompactList}\small\item\em A enum that tells the shader how to load the type. \end{DoxyCompactList}
+\mbox{\Hypertarget{namespaceflounder_aa7d78de523d27c4a1995455e0152b067}\label{namespaceflounder_aa7d78de523d27c4a1995455e0152b067}} 
+enum {\bfseries moduleupdate} \{ \newline
+{\bfseries Update\+Always} = 0, 
+{\bfseries Update\+Pre} = 1, 
+{\bfseries Update} = 2, 
+{\bfseries Update\+Post} = 3, 
+\newline
+{\bfseries Render} = 4
+ \}
+\item 
+\mbox{\Hypertarget{namespaceflounder_af42b21ba4c049bb2746becc028e03cc9}\label{namespaceflounder_af42b21ba4c049bb2746becc028e03cc9}} 
+enum {\bfseries biome} \{ \newline
+{\bfseries O\+C\+E\+AN}, 
+{\bfseries B\+A\+RE}, 
+{\bfseries G\+R\+A\+S\+S\+L\+A\+ND}, 
+{\bfseries S\+C\+O\+R\+C\+H\+ED}, 
+\newline
+{\bfseries S\+H\+R\+U\+B\+L\+A\+ND}, 
+{\bfseries S\+N\+OW}, 
+{\bfseries S\+U\+B\+T\+R\+O\+P\+I\+C\+A\+L\+\_\+\+D\+E\+S\+E\+RT}, 
+{\bfseries T\+A\+I\+GA}, 
+\newline
+{\bfseries T\+E\+M\+P\+E\+R\+A\+T\+E\+\_\+\+D\+E\+C\+I\+D\+U\+O\+U\+S\+\_\+\+F\+O\+R\+E\+ST}, 
+{\bfseries T\+E\+M\+P\+E\+R\+A\+T\+E\+\_\+\+D\+E\+S\+E\+RT}, 
+{\bfseries T\+E\+M\+P\+E\+R\+A\+T\+E\+\_\+\+R\+A\+I\+N\+\_\+\+F\+O\+R\+E\+ST}, 
+{\bfseries T\+R\+O\+P\+I\+C\+A\+L\+\_\+\+R\+A\+I\+N\+\_\+\+F\+O\+R\+E\+ST}, 
+\newline
+{\bfseries T\+R\+O\+P\+I\+C\+A\+L\+\_\+\+S\+E\+A\+S\+O\+N\+A\+L\+\_\+\+F\+O\+R\+E\+ST}, 
+{\bfseries T\+U\+N\+D\+RA}
+ \}
 \item 
 enum \hyperlink{namespaceflounder_a70f1871d5c05aa8e078dd37501ce10a9}{uialign} \{ {\bfseries L\+E\+FT}, 
 {\bfseries C\+E\+N\+T\+RE}, 
@@ -323,6 +394,9 @@ void {\bfseries callback\+Size} (G\+L\+F\+Wwindow $\ast$window, int width, int h
 \item 
 \mbox{\Hypertarget{namespaceflounder_a8a1582884f2eb56eff1033920ed90bb8}\label{namespaceflounder_a8a1582884f2eb56eff1033920ed90bb8}} 
 void {\bfseries callback\+Frame} (G\+L\+F\+Wwindow $\ast$window, int width, int height)
+\item 
+\mbox{\Hypertarget{namespaceflounder_a2e4316bcd1a055b9b98187b5c5e2f44e}\label{namespaceflounder_a2e4316bcd1a055b9b98187b5c5e2f44e}} 
+V\+K\+A\+P\+I\+\_\+\+A\+T\+TR Vk\+Bool32 V\+K\+A\+P\+I\+\_\+\+C\+A\+LL {\bfseries vk\+Callback\+Debug} (Vk\+Debug\+Report\+Flags\+E\+XT flags, Vk\+Debug\+Report\+Object\+Type\+E\+XT obj\+Type, uint64\+\_\+t obj, size\+\_\+t location, int32\+\_\+t code, const char $\ast$layer\+Prefix, const char $\ast$msg, void $\ast$user\+Data)
 \item 
 \mbox{\Hypertarget{namespaceflounder_aedc5b150f5c57785e29b1594ceeb9daf}\label{namespaceflounder_aedc5b150f5c57785e29b1594ceeb9daf}} 
 void {\bfseries callback\+Key} (G\+L\+F\+Wwindow $\ast$window, int key, int scancode, int action, int mods)
@@ -359,16 +433,6 @@ The base Flounder folder.
 
 
 The types of depth buffers that can be used in a F\+BO. 
-
-\mbox{\Hypertarget{namespaceflounder_a69b4e6ffcd64f6175546ca0942d18565}\label{namespaceflounder_a69b4e6ffcd64f6175546ca0942d18565}} 
-\index{flounder@{flounder}!loadtype@{loadtype}}
-\index{loadtype@{loadtype}!flounder@{flounder}}
-\subsubsection{\texorpdfstring{loadtype}{loadtype}}
-{\footnotesize\ttfamily enum \hyperlink{namespaceflounder_a69b4e6ffcd64f6175546ca0942d18565}{flounder\+::loadtype}}
-
-
-
-A enum that tells the shader how to load the type. 
 
 \mbox{\Hypertarget{namespaceflounder_a70f1871d5c05aa8e078dd37501ce10a9}\label{namespaceflounder_a70f1871d5c05aa8e078dd37501ce10a9}} 
 \index{flounder@{flounder}!uialign@{uialign}}

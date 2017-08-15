@@ -1,0 +1,96 @@
+\hypertarget{classflounder_1_1axisbutton}{}\section{flounder\+:\+:axisbutton Class Reference}
+\label{classflounder_1_1axisbutton}\index{flounder\+::axisbutton@{flounder\+::axisbutton}}
+
+
+Axis composed of two buttons.  
+
+
+
+
+{\ttfamily \#include $<$axisbutton.\+h$>$}
+
+Inheritance diagram for flounder\+:\+:axisbutton\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classflounder_1_1axisbutton}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classflounder_1_1axisbutton_a0f02ecccceb4155637ff3380335a0c62}{axisbutton} (\hyperlink{classflounder_1_1ibutton}{ibutton} $\ast$negative, \hyperlink{classflounder_1_1ibutton}{ibutton} $\ast$positive)
+\begin{DoxyCompactList}\small\item\em Creates a new axis button. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1axisbutton_a39d7d5faaf65ff5bef2cbded008762a9}{$\sim$axisbutton} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the axis joystick. \end{DoxyCompactList}\item 
+float \hyperlink{classflounder_1_1axisbutton_aa5589f11ec6a9f4e6d01727903581539}{get\+Amount} () const override
+\begin{DoxyCompactList}\small\item\em Gets the current value along the axis. -\/1 is smallest input, 1 is largest input. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1axisbutton_aaee98b4b372e3df4968bf1cdb22a7e76}\label{classflounder_1_1axisbutton_aaee98b4b372e3df4968bf1cdb22a7e76}} 
+\hyperlink{classflounder_1_1ibutton}{ibutton} $\ast$ {\bfseries m\+\_\+negative}
+\item 
+\mbox{\Hypertarget{classflounder_1_1axisbutton_a4aa7adc6938d7ee7753d453a62f7f88e}\label{classflounder_1_1axisbutton_a4aa7adc6938d7ee7753d453a62f7f88e}} 
+\hyperlink{classflounder_1_1ibutton}{ibutton} $\ast$ {\bfseries m\+\_\+positive}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Axis composed of two buttons. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classflounder_1_1axisbutton_a0f02ecccceb4155637ff3380335a0c62}\label{classflounder_1_1axisbutton_a0f02ecccceb4155637ff3380335a0c62}} 
+\index{flounder\+::axisbutton@{flounder\+::axisbutton}!axisbutton@{axisbutton}}
+\index{axisbutton@{axisbutton}!flounder\+::axisbutton@{flounder\+::axisbutton}}
+\subsubsection{\texorpdfstring{axisbutton()}{axisbutton()}}
+{\footnotesize\ttfamily flounder\+::axisbutton\+::axisbutton (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1ibutton}{ibutton} $\ast$}]{negative,  }\item[{\hyperlink{classflounder_1_1ibutton}{ibutton} $\ast$}]{positive }\end{DoxyParamCaption})}
+
+
+
+Creates a new axis button. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em negative} & When this button is down, the axis is negative. \\
+\hline
+{\em positive} & When this button is down, the axis is positive. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1axisbutton_a39d7d5faaf65ff5bef2cbded008762a9}\label{classflounder_1_1axisbutton_a39d7d5faaf65ff5bef2cbded008762a9}} 
+\index{flounder\+::axisbutton@{flounder\+::axisbutton}!````~axisbutton@{$\sim$axisbutton}}
+\index{````~axisbutton@{$\sim$axisbutton}!flounder\+::axisbutton@{flounder\+::axisbutton}}
+\subsubsection{\texorpdfstring{$\sim$axisbutton()}{~axisbutton()}}
+{\footnotesize\ttfamily flounder\+::axisbutton\+::$\sim$axisbutton (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the axis joystick. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classflounder_1_1axisbutton_aa5589f11ec6a9f4e6d01727903581539}\label{classflounder_1_1axisbutton_aa5589f11ec6a9f4e6d01727903581539}} 
+\index{flounder\+::axisbutton@{flounder\+::axisbutton}!get\+Amount@{get\+Amount}}
+\index{get\+Amount@{get\+Amount}!flounder\+::axisbutton@{flounder\+::axisbutton}}
+\subsubsection{\texorpdfstring{get\+Amount()}{getAmount()}}
+{\footnotesize\ttfamily float flounder\+::axisbutton\+::get\+Amount (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets the current value along the axis. -\/1 is smallest input, 1 is largest input. 
+
+\begin{DoxyReturn}{Returns}
+The current value of the axis in the range (-\/1, 1). 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classflounder_1_1iaxis_a990ecb5ffa5ec07b3d5e2e4016b2e4a0}{flounder\+::iaxis}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/inputs/axisbutton.\+h\item 
+Flounder-\/\+Core/src/inputs/axisbutton.\+cpp\end{DoxyCompactItemize}

@@ -21,7 +21,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static terrains *get()
+		static inline terrains *get()
 		{
 			return static_cast<terrains*>(framework::get()->getInstance("terrains"));
 		}

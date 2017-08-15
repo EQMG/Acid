@@ -1,0 +1,984 @@
+\hypertarget{classnoisefast}{}\section{noisefast Class Reference}
+\label{classnoisefast}\index{noisefast@{noisefast}}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classnoisefast_aa0149d7d38d79d4393a9ea8cc57a4753}\label{classnoisefast_aa0149d7d38d79d4393a9ea8cc57a4753}} 
+enum {\bfseries typenoise} \{ \newline
+{\bfseries Value}, 
+{\bfseries Value\+Fractal}, 
+{\bfseries Perlin}, 
+{\bfseries Perlin\+Fractal}, 
+\newline
+{\bfseries Simplex}, 
+{\bfseries Simplex\+Fractal}, 
+{\bfseries Cellular}, 
+{\bfseries White\+Noise}, 
+\newline
+{\bfseries Cubic}, 
+{\bfseries Cubic\+Fractal}
+ \}
+\item 
+\mbox{\Hypertarget{classnoisefast_a3887c99f42d68b10173cf5d2e16b8238}\label{classnoisefast_a3887c99f42d68b10173cf5d2e16b8238}} 
+enum {\bfseries typeinterp} \{ {\bfseries Linear}, 
+{\bfseries Hermite}, 
+{\bfseries Quintic}
+ \}
+\item 
+\mbox{\Hypertarget{classnoisefast_a288b2a110375220b427697cd1b48bb72}\label{classnoisefast_a288b2a110375220b427697cd1b48bb72}} 
+enum {\bfseries typefractal} \{ {\bfseries F\+BM}, 
+{\bfseries Billow}, 
+{\bfseries Rigid\+Multi}
+ \}
+\item 
+\mbox{\Hypertarget{classnoisefast_aa3ff9d6710792be27d55c8a89fce7395}\label{classnoisefast_aa3ff9d6710792be27d55c8a89fce7395}} 
+enum {\bfseries typecellularfunction} \{ {\bfseries Euclidean}, 
+{\bfseries Manhattan}, 
+{\bfseries Natural}
+ \}
+\item 
+\mbox{\Hypertarget{classnoisefast_aa6eba20ed841c0cdd275b12291c1fa0b}\label{classnoisefast_aa6eba20ed841c0cdd275b12291c1fa0b}} 
+enum {\bfseries typecellularreturn} \{ \newline
+{\bfseries Cell\+Value}, 
+{\bfseries Noise\+Lookup}, 
+{\bfseries Distance}, 
+{\bfseries Distance2}, 
+\newline
+{\bfseries Distance2\+Add}, 
+{\bfseries Distance2\+Sub}, 
+{\bfseries Distance2\+Mul}, 
+{\bfseries Distance2\+Div}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classnoisefast_ae2317d107c19a2919527f4e68510a5d8}\label{classnoisefast_ae2317d107c19a2919527f4e68510a5d8}} 
+{\bfseries noisefast} (int seed)
+\item 
+\mbox{\Hypertarget{classnoisefast_a121695c5f6dbc1da8069e49c103807c2}\label{classnoisefast_a121695c5f6dbc1da8069e49c103807c2}} 
+int {\bfseries get\+Seed} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_a730039e347de64607bf1a25c7b29590c}\label{classnoisefast_a730039e347de64607bf1a25c7b29590c}} 
+void {\bfseries set\+Seed} (int seed)
+\item 
+\mbox{\Hypertarget{classnoisefast_af2031252affd7cfbbe6762b021d9d0b8}\label{classnoisefast_af2031252affd7cfbbe6762b021d9d0b8}} 
+float {\bfseries get\+Frequency} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_a5858ab5fe495575080dc17fd81b8bc22}\label{classnoisefast_a5858ab5fe495575080dc17fd81b8bc22}} 
+void {\bfseries set\+Frequency} (float frequency)
+\item 
+\mbox{\Hypertarget{classnoisefast_a2f8cc7184e36b979d41189535592a273}\label{classnoisefast_a2f8cc7184e36b979d41189535592a273}} 
+typeinterp {\bfseries get\+Interp} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_ad80a06f33e63763981686d98373fb9db}\label{classnoisefast_ad80a06f33e63763981686d98373fb9db}} 
+void {\bfseries set\+Interp} (typeinterp interp)
+\item 
+\mbox{\Hypertarget{classnoisefast_a90de006bb0b47a28b80069b0b174389f}\label{classnoisefast_a90de006bb0b47a28b80069b0b174389f}} 
+typenoise {\bfseries get\+Noise\+Type} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_a9c8b2f29f45423c7cc28e1d2e6a5748c}\label{classnoisefast_a9c8b2f29f45423c7cc28e1d2e6a5748c}} 
+void {\bfseries set\+Noise\+Type} (typenoise noise\+Type)
+\item 
+\mbox{\Hypertarget{classnoisefast_a38da6c927beb5091a2590e0d4586b613}\label{classnoisefast_a38da6c927beb5091a2590e0d4586b613}} 
+int {\bfseries get\+Fractal\+Octaves} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_ad302a97e0616117354cd6cc6f394e39a}\label{classnoisefast_ad302a97e0616117354cd6cc6f394e39a}} 
+void {\bfseries set\+Fractal\+Octaves} (int octaves)
+\item 
+\mbox{\Hypertarget{classnoisefast_ab49ba23ad201e41b3211611ba1da70dd}\label{classnoisefast_ab49ba23ad201e41b3211611ba1da70dd}} 
+float {\bfseries get\+Fractal\+Lacunarity} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_a5f023e45dccb4f616b13aec4cf3316b9}\label{classnoisefast_a5f023e45dccb4f616b13aec4cf3316b9}} 
+void {\bfseries set\+Fractal\+Lacunarity} (float lacunarity)
+\item 
+\mbox{\Hypertarget{classnoisefast_ac9cd098602a08f2f80a3279baddeed81}\label{classnoisefast_ac9cd098602a08f2f80a3279baddeed81}} 
+float {\bfseries get\+Fractal\+Gain} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_a99921da2152d620353d63d6812c954dd}\label{classnoisefast_a99921da2152d620353d63d6812c954dd}} 
+void {\bfseries set\+Fractal\+Gain} (float gain)
+\item 
+\mbox{\Hypertarget{classnoisefast_a0b746e46d247f234eec3c706b55a8d56}\label{classnoisefast_a0b746e46d247f234eec3c706b55a8d56}} 
+typefractal {\bfseries get\+Fractal\+Type} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_a8c0158caec6179203d48411927f02798}\label{classnoisefast_a8c0158caec6179203d48411927f02798}} 
+void {\bfseries set\+Fractal\+Type} (typefractal fractal\+Type)
+\item 
+\mbox{\Hypertarget{classnoisefast_af6ca8899e9c9a662516a74457d41e9e0}\label{classnoisefast_af6ca8899e9c9a662516a74457d41e9e0}} 
+typecellularfunction {\bfseries get\+Cellular\+Distance\+Function} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_ad843628169753f63b8b8e8c359911a26}\label{classnoisefast_ad843628169753f63b8b8e8c359911a26}} 
+void {\bfseries set\+Cellular\+Distance\+Function} (typecellularfunction cellular\+Distance\+Function)
+\item 
+\mbox{\Hypertarget{classnoisefast_a555a52115f47b5c4b97a35dc5876e5f5}\label{classnoisefast_a555a52115f47b5c4b97a35dc5876e5f5}} 
+typecellularreturn {\bfseries get\+Cellular\+Return\+Type} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_aa318ec34c111517a68393d897978f62d}\label{classnoisefast_aa318ec34c111517a68393d897978f62d}} 
+void {\bfseries set\+Cellular\+Return\+Type} (typecellularreturn cellular\+Return\+Type)
+\item 
+\mbox{\Hypertarget{classnoisefast_a322ace46e0548fc056ebc4218e86c840}\label{classnoisefast_a322ace46e0548fc056ebc4218e86c840}} 
+\hyperlink{classnoisefast}{noisefast} $\ast$ {\bfseries get\+Cellular\+Noise\+Lookup} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_a627ce25ab9a1100d9844104c0e1971f6}\label{classnoisefast_a627ce25ab9a1100d9844104c0e1971f6}} 
+void {\bfseries set\+Cellular\+Noise\+Lookup} (\hyperlink{classnoisefast}{noisefast} $\ast$noise)
+\item 
+\mbox{\Hypertarget{classnoisefast_a76f40aeed92089a18ff2abbde9664296}\label{classnoisefast_a76f40aeed92089a18ff2abbde9664296}} 
+void {\bfseries get\+Cellular\+Distance2\+Indices} (int \&cellular\+Distance\+Index0, int \&cellular\+Distance\+Index1) const
+\item 
+\mbox{\Hypertarget{classnoisefast_af1958a697a63ea9d918b206eeabe57ce}\label{classnoisefast_af1958a697a63ea9d918b206eeabe57ce}} 
+void {\bfseries set\+Cellular\+Distance2\+Indices} (int cellular\+Distance\+Index0, int cellular\+Distance\+Index1)
+\item 
+\mbox{\Hypertarget{classnoisefast_aa5881e05420c77a5e91a10ad2924f182}\label{classnoisefast_aa5881e05420c77a5e91a10ad2924f182}} 
+float {\bfseries get\+Cellular\+Jitter} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_a4c2373266d3c467d8b1a607c85674601}\label{classnoisefast_a4c2373266d3c467d8b1a607c85674601}} 
+void {\bfseries set\+Cellular\+Jitter} (float cellular\+Jitter)
+\item 
+\mbox{\Hypertarget{classnoisefast_aabec524f089fbb3c71edce150785ef71}\label{classnoisefast_aabec524f089fbb3c71edce150785ef71}} 
+float {\bfseries get\+Gradient\+Perturb\+Amp} () const
+\item 
+\mbox{\Hypertarget{classnoisefast_a01cf73223483e8cf64904efcd0af5c7f}\label{classnoisefast_a01cf73223483e8cf64904efcd0af5c7f}} 
+void {\bfseries set\+Gradient\+Perturb\+Amp} (float gradient\+Perturb\+Amp)
+\item 
+\mbox{\Hypertarget{classnoisefast_a729431bc8e394485981a0bc1408e6a85}\label{classnoisefast_a729431bc8e394485981a0bc1408e6a85}} 
+float {\bfseries get\+Value} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a6a014d92f3dbbfde46023feb00a38367}\label{classnoisefast_a6a014d92f3dbbfde46023feb00a38367}} 
+float {\bfseries get\+Value\+Fractal} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a4dc6597580ada689d8998ccd2d2865eb}\label{classnoisefast_a4dc6597580ada689d8998ccd2d2865eb}} 
+float {\bfseries get\+Perlin} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ad880a61581a8240e62e9ac7c2063dc0c}\label{classnoisefast_ad880a61581a8240e62e9ac7c2063dc0c}} 
+float {\bfseries get\+Perlin\+Fractal} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ae403878a6313556fb51104d54df4b262}\label{classnoisefast_ae403878a6313556fb51104d54df4b262}} 
+float {\bfseries get\+Simplex} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a6eff2a60d57dbe47dd5ba02263eb2875}\label{classnoisefast_a6eff2a60d57dbe47dd5ba02263eb2875}} 
+float {\bfseries get\+Simplex\+Fractal} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_adeac519b6227697c0023e9b897d750c4}\label{classnoisefast_adeac519b6227697c0023e9b897d750c4}} 
+float {\bfseries get\+Cellular} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_afd16112bcf6aa3e534244bce53a5a71e}\label{classnoisefast_afd16112bcf6aa3e534244bce53a5a71e}} 
+float {\bfseries get\+White\+Noise} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a0659c196e46965d6f49ba891f2baf26b}\label{classnoisefast_a0659c196e46965d6f49ba891f2baf26b}} 
+float {\bfseries get\+White\+Noise\+Int} (int x, int y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a9464d9df49d24fa13c443f60e74ae64f}\label{classnoisefast_a9464d9df49d24fa13c443f60e74ae64f}} 
+float {\bfseries get\+Cubic} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_acab97b3b43bb59b188fff18b87c215ff}\label{classnoisefast_acab97b3b43bb59b188fff18b87c215ff}} 
+float {\bfseries get\+Cubic\+Fractal} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a13b899456f0ac1bad2f38f31657ede88}\label{classnoisefast_a13b899456f0ac1bad2f38f31657ede88}} 
+float {\bfseries get\+Noise} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a2809ddb8745a8212707f687310dd6f19}\label{classnoisefast_a2809ddb8745a8212707f687310dd6f19}} 
+void {\bfseries gradient\+Perturb} (float \&x, float \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ad977f2f940daf8a1db7435e046c0f926}\label{classnoisefast_ad977f2f940daf8a1db7435e046c0f926}} 
+void {\bfseries gradient\+Perturb\+Fractal} (float \&x, float \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a6afa7beb716f92013c7339a308a1ac82}\label{classnoisefast_a6afa7beb716f92013c7339a308a1ac82}} 
+float {\bfseries get\+Value} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a74ad2af97fea9f5cf1fdbac57c8d1d79}\label{classnoisefast_a74ad2af97fea9f5cf1fdbac57c8d1d79}} 
+float {\bfseries get\+Value\+Fractal} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a822dc3be43c71419d0b211e7b4a667ac}\label{classnoisefast_a822dc3be43c71419d0b211e7b4a667ac}} 
+float {\bfseries get\+Perlin} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a82980450fd52efb629ae084f651d5e1b}\label{classnoisefast_a82980450fd52efb629ae084f651d5e1b}} 
+float {\bfseries get\+Perlin\+Fractal} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a5c7f2341d8abb1dd11ebd68bf324556a}\label{classnoisefast_a5c7f2341d8abb1dd11ebd68bf324556a}} 
+float {\bfseries get\+Simplex} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ab4dd7ec6e8d788e1fdf817f2419f4d6c}\label{classnoisefast_ab4dd7ec6e8d788e1fdf817f2419f4d6c}} 
+float {\bfseries get\+Simplex\+Fractal} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ab62657c35c61d29a650dac895f560323}\label{classnoisefast_ab62657c35c61d29a650dac895f560323}} 
+float {\bfseries get\+Cellular} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a42a470e7a75d1f6a828bd4e160126af0}\label{classnoisefast_a42a470e7a75d1f6a828bd4e160126af0}} 
+float {\bfseries get\+White\+Noise} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a2bb130b99daaa1e9b0a39848aed3e97e}\label{classnoisefast_a2bb130b99daaa1e9b0a39848aed3e97e}} 
+float {\bfseries get\+White\+Noise\+Int} (int x, int y, int z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_aa27a2d0ffd0d67332170bcff5a27b121}\label{classnoisefast_aa27a2d0ffd0d67332170bcff5a27b121}} 
+float {\bfseries get\+Cubic} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a1ba6df3bba749b3394c88f61e1f08e7a}\label{classnoisefast_a1ba6df3bba749b3394c88f61e1f08e7a}} 
+float {\bfseries get\+Cubic\+Fractal} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a74274922701840ffed996dabf7a96325}\label{classnoisefast_a74274922701840ffed996dabf7a96325}} 
+float {\bfseries get\+Noise} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_afaa268767862837dc232aa4f52c402c5}\label{classnoisefast_afaa268767862837dc232aa4f52c402c5}} 
+void {\bfseries gradient\+Perturb} (float \&x, float \&y, float \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a53ee51c22d3e7e0293ba1130bf71adbd}\label{classnoisefast_a53ee51c22d3e7e0293ba1130bf71adbd}} 
+void {\bfseries gradient\+Perturb\+Fractal} (float \&x, float \&y, float \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a2a7776874064d49a4840d1ed41efa325}\label{classnoisefast_a2a7776874064d49a4840d1ed41efa325}} 
+float {\bfseries get\+Simplex} (float x, float y, float z, float w) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a5600185f3388f0d2eb38c44173d30678}\label{classnoisefast_a5600185f3388f0d2eb38c44173d30678}} 
+float {\bfseries get\+White\+Noise} (float x, float y, float z, float w) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a649c81426e85bd0e3c7ff90fe06c6397}\label{classnoisefast_a649c81426e85bd0e3c7ff90fe06c6397}} 
+float {\bfseries get\+White\+Noise\+Int} (int x, int y, int z, int w) const
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classnoisefast_af1330dbb33d117aa5719b415afc581e8}\label{classnoisefast_af1330dbb33d117aa5719b415afc581e8}} 
+void {\bfseries calculate\+Fractal\+Bounding} ()
+\item 
+\mbox{\Hypertarget{classnoisefast_aaf2d7bf96471b98cffc15f44db9eff5e}\label{classnoisefast_aaf2d7bf96471b98cffc15f44db9eff5e}} 
+unsigned char {\bfseries index2\+D\+\_\+12} (const unsigned char \&offset, const int \&x, const int \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_abc4035c27fb5d019b311e3196b8eb215}\label{classnoisefast_abc4035c27fb5d019b311e3196b8eb215}} 
+unsigned char {\bfseries index3\+D\+\_\+12} (const unsigned char \&offset, const int \&x, const int \&y, const int \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_aca3e4f8d8ed863a56afd4b1b551b6892}\label{classnoisefast_aca3e4f8d8ed863a56afd4b1b551b6892}} 
+unsigned char {\bfseries index4\+D\+\_\+32} (const unsigned char \&offset, const int \&x, const int \&y, const int \&z, const int \&w) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ab6ff486dac29899f4a199f389af98e08}\label{classnoisefast_ab6ff486dac29899f4a199f389af98e08}} 
+unsigned char {\bfseries index2\+D\+\_\+256} (const unsigned char \&offset, const int \&x, const int \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ae4ea285effbe5246343eda7dd8e7584b}\label{classnoisefast_ae4ea285effbe5246343eda7dd8e7584b}} 
+unsigned char {\bfseries index3\+D\+\_\+256} (const unsigned char \&offset, const int \&x, const int \&y, const int \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a4612dc4240ea57deac61df28892ffb01}\label{classnoisefast_a4612dc4240ea57deac61df28892ffb01}} 
+unsigned char {\bfseries index4\+D\+\_\+256} (const unsigned char \&offset, const int \&x, const int \&y, const int \&z, const int \&w) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a62b50acd53b95aa5e981cf18e6409d38}\label{classnoisefast_a62b50acd53b95aa5e981cf18e6409d38}} 
+float {\bfseries val\+Coord2\+D\+Fast} (const unsigned char \&offset, const int \&x, const int \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ac77370eb3465b39c578d7afc44f6df1f}\label{classnoisefast_ac77370eb3465b39c578d7afc44f6df1f}} 
+float {\bfseries val\+Coord3\+D\+Fast} (const unsigned char \&offset, const int \&x, const int \&y, const int \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_aefabe7f3659c8e80f1b1801c3ec561c2}\label{classnoisefast_aefabe7f3659c8e80f1b1801c3ec561c2}} 
+float {\bfseries grad\+Coord2D} (const unsigned char \&offset, const int \&x, const int \&y, const float \&xd, const float \&yd) const
+\item 
+\mbox{\Hypertarget{classnoisefast_aaf7cb412c8cf7cf3b9f80158156ab997}\label{classnoisefast_aaf7cb412c8cf7cf3b9f80158156ab997}} 
+float {\bfseries grad\+Coord3D} (const unsigned char \&offset, const int \&x, const int \&y, const int \&z, const float \&xd, const float \&yd, const float \&zd) const
+\item 
+\mbox{\Hypertarget{classnoisefast_aef713478b223fad6e59c130b9e9c5662}\label{classnoisefast_aef713478b223fad6e59c130b9e9c5662}} 
+float {\bfseries grad\+Coord4D} (const unsigned char \&offset, const int \&x, const int \&y, const int \&z, const int \&w, const float \&xd, const float \&yd, const float \&zd, const float \&wd) const
+\item 
+\mbox{\Hypertarget{classnoisefast_aaccfc541095b571e410a5e5681785919}\label{classnoisefast_aaccfc541095b571e410a5e5681785919}} 
+float {\bfseries single\+Value\+Fractal\+F\+BM} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a2e758e5f1593f43d113d81da7ba5d5f4}\label{classnoisefast_a2e758e5f1593f43d113d81da7ba5d5f4}} 
+float {\bfseries single\+Value\+Fractal\+Billow} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ac2a117935d867d67f78d25d752032c46}\label{classnoisefast_ac2a117935d867d67f78d25d752032c46}} 
+float {\bfseries single\+Value\+Fractal\+Rigid\+Multi} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_af3cf9ddc822a409f24b5bf9d53ae1e41}\label{classnoisefast_af3cf9ddc822a409f24b5bf9d53ae1e41}} 
+float {\bfseries single\+Value} (const unsigned char \&offset, const float \&x, const float \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a1d99eeac7f1cf83a427397594ce82846}\label{classnoisefast_a1d99eeac7f1cf83a427397594ce82846}} 
+float {\bfseries single\+Perlin\+Fractal\+F\+BM} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a4e3258e85b83f2859ce42b0c495c6c6b}\label{classnoisefast_a4e3258e85b83f2859ce42b0c495c6c6b}} 
+float {\bfseries single\+Perlin\+Fractal\+Billow} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a4ccec3d7e2f9def3bb30b88aea097d37}\label{classnoisefast_a4ccec3d7e2f9def3bb30b88aea097d37}} 
+float {\bfseries single\+Perlin\+Fractal\+Rigid\+Multi} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a3d6d0125f36c8073bec97012191c54a1}\label{classnoisefast_a3d6d0125f36c8073bec97012191c54a1}} 
+float {\bfseries single\+Perlin} (const unsigned char \&offset, const float \&x, const float \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a81a061975415d9258c0185ab73462144}\label{classnoisefast_a81a061975415d9258c0185ab73462144}} 
+float {\bfseries single\+Simplex\+Fractal\+F\+BM} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a283ad511f07c5fa332e49de6820c4574}\label{classnoisefast_a283ad511f07c5fa332e49de6820c4574}} 
+float {\bfseries single\+Simplex\+Fractal\+Billow} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a7784a68dd9bf276c543fa68b419571cb}\label{classnoisefast_a7784a68dd9bf276c543fa68b419571cb}} 
+float {\bfseries single\+Simplex\+Fractal\+Rigid\+Multi} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a6c1acc03b9283d02ac0c5e2d89063645}\label{classnoisefast_a6c1acc03b9283d02ac0c5e2d89063645}} 
+float {\bfseries single\+Simplex\+Fractal\+Blend} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a99d5b2354edd5f946c40d5fc1de26634}\label{classnoisefast_a99d5b2354edd5f946c40d5fc1de26634}} 
+float {\bfseries single\+Simplex} (const unsigned char \&offset, const float \&x, const float \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ad53098a5dc63c73e31241d1ec622efdd}\label{classnoisefast_ad53098a5dc63c73e31241d1ec622efdd}} 
+float {\bfseries single\+Cubic\+Fractal\+F\+BM} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a4aab185565f5bfc4dc94408151470e3f}\label{classnoisefast_a4aab185565f5bfc4dc94408151470e3f}} 
+float {\bfseries single\+Cubic\+Fractal\+Billow} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_add88d18c0f24ab14b2dbdbf6cee32c15}\label{classnoisefast_add88d18c0f24ab14b2dbdbf6cee32c15}} 
+float {\bfseries single\+Cubic\+Fractal\+Rigid\+Multi} (float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_afbbb7524b3ad1ed5a73151118eda2a15}\label{classnoisefast_afbbb7524b3ad1ed5a73151118eda2a15}} 
+float {\bfseries single\+Cubic} (const unsigned char \&offset, const float \&x, const float \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a4ed28a5a64f23391bf7fc47a4e5c9406}\label{classnoisefast_a4ed28a5a64f23391bf7fc47a4e5c9406}} 
+float {\bfseries single\+Cellular} (const float \&x, const float \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a880c63b975569479b02e7a55e5c5abe5}\label{classnoisefast_a880c63b975569479b02e7a55e5c5abe5}} 
+float {\bfseries single\+Cellular2\+Edge} (const float \&x, const float \&y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ac940409687731590ca85d2a332ab571f}\label{classnoisefast_ac940409687731590ca85d2a332ab571f}} 
+void {\bfseries single\+Gradient\+Perturb} (const unsigned char \&offset, const float \&warp\+Amp, const float \&frequency, float x, float y) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a88653a808979753ae72ab4ef381f0c38}\label{classnoisefast_a88653a808979753ae72ab4ef381f0c38}} 
+float {\bfseries single\+Value\+Fractal\+F\+BM} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a1285f5ef689b8f554bbbf304e565dad2}\label{classnoisefast_a1285f5ef689b8f554bbbf304e565dad2}} 
+float {\bfseries single\+Value\+Fractal\+Billow} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_af8271af4a3394316c42fc0db3f26ed74}\label{classnoisefast_af8271af4a3394316c42fc0db3f26ed74}} 
+float {\bfseries single\+Value\+Fractal\+Rigid\+Multi} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a14a53e242b826300afd9f682310bd8d4}\label{classnoisefast_a14a53e242b826300afd9f682310bd8d4}} 
+float {\bfseries single\+Value} (const unsigned char \&offset, const float \&x, const float \&y, const float \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a7291bd235574ba6950afbe1d1c2d47dd}\label{classnoisefast_a7291bd235574ba6950afbe1d1c2d47dd}} 
+float {\bfseries single\+Perlin\+Fractal\+F\+BM} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ad77ae9b3b52e9c643aeeaee58542502b}\label{classnoisefast_ad77ae9b3b52e9c643aeeaee58542502b}} 
+float {\bfseries single\+Perlin\+Fractal\+Billow} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a237dab4e4e4f420d745e6d1e937b354e}\label{classnoisefast_a237dab4e4e4f420d745e6d1e937b354e}} 
+float {\bfseries single\+Perlin\+Fractal\+Rigid\+Multi} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a633b5328fcfe57d254ab479f1e1344c7}\label{classnoisefast_a633b5328fcfe57d254ab479f1e1344c7}} 
+float {\bfseries single\+Perlin} (const unsigned char \&offset, const float \&x, const float \&y, const float \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a63f6da3f8c1d363d1350211b9784ca49}\label{classnoisefast_a63f6da3f8c1d363d1350211b9784ca49}} 
+float {\bfseries single\+Simplex\+Fractal\+F\+BM} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_aace6ad2610c2c1ca2b7e52b9d1578e60}\label{classnoisefast_aace6ad2610c2c1ca2b7e52b9d1578e60}} 
+float {\bfseries single\+Simplex\+Fractal\+Billow} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_af546e091de1215c52f8530293663664f}\label{classnoisefast_af546e091de1215c52f8530293663664f}} 
+float {\bfseries single\+Simplex\+Fractal\+Rigid\+Multi} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a6c338f1a78db61532c9e7607b8fa5dcb}\label{classnoisefast_a6c338f1a78db61532c9e7607b8fa5dcb}} 
+float {\bfseries single\+Simplex} (const unsigned char \&offset, const float \&x, const float \&y, const float \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a698f1fc68ba6ebd27c0b039014bbffde}\label{classnoisefast_a698f1fc68ba6ebd27c0b039014bbffde}} 
+float {\bfseries single\+Cubic\+Fractal\+F\+BM} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ae4afc11f82d43a102ab8098c1ee9a4ed}\label{classnoisefast_ae4afc11f82d43a102ab8098c1ee9a4ed}} 
+float {\bfseries single\+Cubic\+Fractal\+Billow} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_a4e7617c5e6bbd513a956a64a3b10bd1e}\label{classnoisefast_a4e7617c5e6bbd513a956a64a3b10bd1e}} 
+float {\bfseries single\+Cubic\+Fractal\+Rigid\+Multi} (float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_af594171951af10f30fd0ad0c3444c656}\label{classnoisefast_af594171951af10f30fd0ad0c3444c656}} 
+float {\bfseries single\+Cubic} (const unsigned char \&offset, const float \&x, const float \&y, const float \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_aa3156e5246eb8add058c3d1bfea9e74a}\label{classnoisefast_aa3156e5246eb8add058c3d1bfea9e74a}} 
+float {\bfseries single\+Cellular} (const float \&x, const float \&y, const float \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_ad18d57d5398f9cd9833fc6add0ff72fe}\label{classnoisefast_ad18d57d5398f9cd9833fc6add0ff72fe}} 
+float {\bfseries single\+Cellular2\+Edge} (const float \&x, const float \&y, const float \&z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_afce68d54c59d6b360a3ee88a0a3c357f}\label{classnoisefast_afce68d54c59d6b360a3ee88a0a3c357f}} 
+void {\bfseries single\+Gradient\+Perturb} (const unsigned char \&offset, const float \&warp\+Amp, const float \&frequency, float x, float y, float z) const
+\item 
+\mbox{\Hypertarget{classnoisefast_add4f12f402d22f16e80ba0bcec97dcc9}\label{classnoisefast_add4f12f402d22f16e80ba0bcec97dcc9}} 
+float {\bfseries single\+Simplex} (const unsigned char \&offset, const float \&x, const float \&y, const float \&z, const float \&w) const
+\end{DoxyCompactItemize}
+\subsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classnoisefast_a0739f6628d80691de07ec99a93140b35}\label{classnoisefast_a0739f6628d80691de07ec99a93140b35}} 
+static int {\bfseries fast\+Floor} (const float \&f)
+\item 
+\mbox{\Hypertarget{classnoisefast_a447687c0bc94876095c282cc44da9e4f}\label{classnoisefast_a447687c0bc94876095c282cc44da9e4f}} 
+static int {\bfseries fast\+Round} (const float \&f)
+\item 
+\mbox{\Hypertarget{classnoisefast_aa179c89a996a558cfc3603b2ab1885e5}\label{classnoisefast_aa179c89a996a558cfc3603b2ab1885e5}} 
+static float {\bfseries lerp} (const float \&a, const float \&b, const float \&t)
+\item 
+\mbox{\Hypertarget{classnoisefast_ac289346ffcbe9b2ec3fc4a801c5a4a91}\label{classnoisefast_ac289346ffcbe9b2ec3fc4a801c5a4a91}} 
+static float {\bfseries interp\+Hermite} (const float \&t)
+\item 
+\mbox{\Hypertarget{classnoisefast_a07378201fdeb4e921640a56c376441b9}\label{classnoisefast_a07378201fdeb4e921640a56c376441b9}} 
+static float {\bfseries interp\+Quintic} (const float \&t)
+\item 
+\mbox{\Hypertarget{classnoisefast_ab7d5e034a1739f0c60e2a663e0616bd7}\label{classnoisefast_ab7d5e034a1739f0c60e2a663e0616bd7}} 
+static float {\bfseries cubic\+Lerp} (const float \&a, const float \&b, const float \&c, const float \&d, const float \&t)
+\item 
+\mbox{\Hypertarget{classnoisefast_aff1b1c684c98751b185059eda692af99}\label{classnoisefast_aff1b1c684c98751b185059eda692af99}} 
+static float {\bfseries val\+Coord2D} (const int \&seed, const int \&x, const int \&y)
+\item 
+\mbox{\Hypertarget{classnoisefast_ab402f456c5f6b7f61def1b80ade74bca}\label{classnoisefast_ab402f456c5f6b7f61def1b80ade74bca}} 
+static float {\bfseries val\+Coord3D} (const int \&seed, const int \&x, const int \&y, const int \&z)
+\item 
+\mbox{\Hypertarget{classnoisefast_abe550a4c6ef485d44705adea60041c39}\label{classnoisefast_abe550a4c6ef485d44705adea60041c39}} 
+static float {\bfseries val\+Coord4D} (const int \&seed, const int \&x, const int \&y, const int \&z, const int \&w)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classnoisefast_a13d4e8329765fba6b69edc6308f80d8d}\label{classnoisefast_a13d4e8329765fba6b69edc6308f80d8d}} 
+int {\bfseries m\+\_\+seed}
+\item 
+\mbox{\Hypertarget{classnoisefast_a5e8b68cc191f299bc3ceb6b8945b505a}\label{classnoisefast_a5e8b68cc191f299bc3ceb6b8945b505a}} 
+unsigned char $\ast$ {\bfseries m\+\_\+perm}
+\item 
+\mbox{\Hypertarget{classnoisefast_ab1a3567ddae225539ab0177ce2eba9d1}\label{classnoisefast_ab1a3567ddae225539ab0177ce2eba9d1}} 
+unsigned char $\ast$ {\bfseries m\+\_\+perm12}
+\item 
+\mbox{\Hypertarget{classnoisefast_acd8bfc3a77dbc2efeba8277018836d0e}\label{classnoisefast_acd8bfc3a77dbc2efeba8277018836d0e}} 
+float {\bfseries m\+\_\+frequency}
+\item 
+\mbox{\Hypertarget{classnoisefast_a244da035faa7fdbc736fd27f204545d4}\label{classnoisefast_a244da035faa7fdbc736fd27f204545d4}} 
+typeinterp {\bfseries m\+\_\+interp}
+\item 
+\mbox{\Hypertarget{classnoisefast_add89192ef5dd6ac1f602ff016cb4adcf}\label{classnoisefast_add89192ef5dd6ac1f602ff016cb4adcf}} 
+typenoise {\bfseries m\+\_\+noise\+Type}
+\item 
+\mbox{\Hypertarget{classnoisefast_a22eaf3b5a43103e9cfe76962639b13a2}\label{classnoisefast_a22eaf3b5a43103e9cfe76962639b13a2}} 
+int {\bfseries m\+\_\+octaves}
+\item 
+\mbox{\Hypertarget{classnoisefast_a42f0beb046f4954a9ad0f322be6b0333}\label{classnoisefast_a42f0beb046f4954a9ad0f322be6b0333}} 
+float {\bfseries m\+\_\+lacunarity}
+\item 
+\mbox{\Hypertarget{classnoisefast_aa8868f17320a9527e32a5888896b97e4}\label{classnoisefast_aa8868f17320a9527e32a5888896b97e4}} 
+float {\bfseries m\+\_\+gain}
+\item 
+\mbox{\Hypertarget{classnoisefast_a692c8edf98b6fed0022963580fdabe99}\label{classnoisefast_a692c8edf98b6fed0022963580fdabe99}} 
+typefractal {\bfseries m\+\_\+fractal\+Type}
+\item 
+\mbox{\Hypertarget{classnoisefast_a9ef9ecad76406f800269e236c8cca12f}\label{classnoisefast_a9ef9ecad76406f800269e236c8cca12f}} 
+float {\bfseries m\+\_\+fractal\+Bounding}
+\item 
+\mbox{\Hypertarget{classnoisefast_a131496549e0ec95deef7c2637b339d41}\label{classnoisefast_a131496549e0ec95deef7c2637b339d41}} 
+typecellularfunction {\bfseries m\+\_\+cellular\+Distance\+Function}
+\item 
+\mbox{\Hypertarget{classnoisefast_a9c5a3186d01c713c4a3f7e64044b4c7a}\label{classnoisefast_a9c5a3186d01c713c4a3f7e64044b4c7a}} 
+typecellularreturn {\bfseries m\+\_\+cellular\+Return\+Type}
+\item 
+\mbox{\Hypertarget{classnoisefast_ab02a8b18762496e1b204be7221cfc8f6}\label{classnoisefast_ab02a8b18762496e1b204be7221cfc8f6}} 
+\hyperlink{classnoisefast}{noisefast} $\ast$ {\bfseries m\+\_\+cellular\+Noise\+Lookup}
+\item 
+\mbox{\Hypertarget{classnoisefast_a84026d4886a27f9f1253afdd2ccb6f01}\label{classnoisefast_a84026d4886a27f9f1253afdd2ccb6f01}} 
+int {\bfseries m\+\_\+cellular\+Distance\+Index0}
+\item 
+\mbox{\Hypertarget{classnoisefast_a4595c3af47f8fbe381f762e00c1aff65}\label{classnoisefast_a4595c3af47f8fbe381f762e00c1aff65}} 
+int {\bfseries m\+\_\+cellular\+Distance\+Index1}
+\item 
+\mbox{\Hypertarget{classnoisefast_a62c20e623cdba0536c48ad631cbba18b}\label{classnoisefast_a62c20e623cdba0536c48ad631cbba18b}} 
+float {\bfseries m\+\_\+cellular\+Jitter}
+\item 
+\mbox{\Hypertarget{classnoisefast_a11d97dd2716ca62ba351d106a8d5f0c4}\label{classnoisefast_a11d97dd2716ca62ba351d106a8d5f0c4}} 
+float {\bfseries m\+\_\+gradient\+Perturb\+Amp}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const float {\bfseries G\+R\+A\+D\+\_\+X} \mbox{[}$\,$\mbox{]}
+\item 
+static const float {\bfseries G\+R\+A\+D\+\_\+Y} \mbox{[}$\,$\mbox{]}
+\item 
+static const float {\bfseries G\+R\+A\+D\+\_\+Z} \mbox{[}$\,$\mbox{]}
+\item 
+static const float {\bfseries G\+R\+A\+D\+\_\+4D} \mbox{[}$\,$\mbox{]}
+\item 
+static const float {\bfseries V\+A\+L\+\_\+\+L\+UT} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\Hypertarget{classnoisefast_a1e19bfd2e3c7c26d35096b35d00ec862}\label{classnoisefast_a1e19bfd2e3c7c26d35096b35d00ec862}} 
+static const float {\bfseries F3} = 1.\+0f / 3.\+0f
+\item 
+\mbox{\Hypertarget{classnoisefast_a62c2e8a320cfdb50d0012672acac288b}\label{classnoisefast_a62c2e8a320cfdb50d0012672acac288b}} 
+static const float {\bfseries G3} = 1.\+0f / 6.\+0f
+\item 
+\mbox{\Hypertarget{classnoisefast_ae90fff6986f84607664f36d8037c35c3}\label{classnoisefast_ae90fff6986f84607664f36d8037c35c3}} 
+static const float {\bfseries F2} = 0.\+5f $\ast$ (sqrt(3.\+0f) -\/ 1.\+0f)
+\item 
+\mbox{\Hypertarget{classnoisefast_afd92d3ecdd480674705b28120b782422}\label{classnoisefast_afd92d3ecdd480674705b28120b782422}} 
+static const float {\bfseries G2} = (3.\+0f -\/ sqrt(3.\+0f)) / 6.\+0f
+\item 
+static const unsigned char {\bfseries S\+I\+M\+P\+L\+E\+X\+\_\+4D} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\Hypertarget{classnoisefast_aa8731e3f91c2afbaeb209f8fedc48673}\label{classnoisefast_aa8731e3f91c2afbaeb209f8fedc48673}} 
+static const float {\bfseries F4} = (sqrt(5.\+0f) -\/ 1.\+0f) / 4.\+0f
+\item 
+\mbox{\Hypertarget{classnoisefast_a61dc4379b1116fc94705894e1d2255be}\label{classnoisefast_a61dc4379b1116fc94705894e1d2255be}} 
+static const float {\bfseries G4} = (5.\+0f -\/ sqrt(5.\+0f)) / 2.\+0f
+\item 
+\mbox{\Hypertarget{classnoisefast_ac068535ebb4d1fc308cb930fada5fe18}\label{classnoisefast_ac068535ebb4d1fc308cb930fada5fe18}} 
+static const float {\bfseries C\+U\+B\+I\+C\+\_\+2\+D\+\_\+\+B\+O\+U\+N\+D\+I\+NG} = 1.\+0f / (1.\+5f $\ast$ 1.\+5f)
+\item 
+\mbox{\Hypertarget{classnoisefast_af8bd9feeebe82d2dd69974a59103a1ac}\label{classnoisefast_af8bd9feeebe82d2dd69974a59103a1ac}} 
+static const float {\bfseries C\+U\+B\+I\+C\+\_\+3\+D\+\_\+\+B\+O\+U\+N\+D\+I\+NG} = 1.\+0f / (1.\+5f $\ast$ 1.\+5f $\ast$ 1.\+5f)
+\item 
+static const float {\bfseries C\+E\+L\+L\+\_\+2\+D\+\_\+X} \mbox{[}$\,$\mbox{]}
+\item 
+static const float {\bfseries C\+E\+L\+L\+\_\+2\+D\+\_\+Y} \mbox{[}$\,$\mbox{]}
+\item 
+static const float {\bfseries C\+E\+L\+L\+\_\+3\+D\+\_\+X} \mbox{[}$\,$\mbox{]}
+\item 
+static const float {\bfseries C\+E\+L\+L\+\_\+3\+D\+\_\+Y} \mbox{[}$\,$\mbox{]}
+\item 
+static const float {\bfseries C\+E\+L\+L\+\_\+3\+D\+\_\+Z} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classnoisefast_a14e235cf568e6ebae2f0de6d2f3ac1e4}\label{classnoisefast_a14e235cf568e6ebae2f0de6d2f3ac1e4}} 
+\index{noisefast@{noisefast}!C\+E\+L\+L\+\_\+2\+D\+\_\+X@{C\+E\+L\+L\+\_\+2\+D\+\_\+X}}
+\index{C\+E\+L\+L\+\_\+2\+D\+\_\+X@{C\+E\+L\+L\+\_\+2\+D\+\_\+X}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{C\+E\+L\+L\+\_\+2\+D\+\_\+X}{CELL\_2D\_X}}
+{\footnotesize\ttfamily const float noisefast\+::\+C\+E\+L\+L\+\_\+2\+D\+\_\+X\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    -0.6440658039f, -0.08028078721f, 0.9983546168f, 0.9869492062f, 0.9284746418f, 0.6051097552f, -0.7941674
+      04f, -0.3488667991f, -0.943136526f, -0.9968171318f, 0.8740961579f, 0.1421139764f, 0.4282553608f, -0.99866658
+      33f, 0.9996760121f, -0.06248383632f,
+    0.7120139305f, 0.8917660409f, 0.1094842955f, -0.8730880804f, 0.2594811489f, -0.6690063346f, -0.99968349
+      72f, -0.8803608671f, -0.8166554937f, 0.8955599676f, -0.9398321388f, 0.07615451399f, -0.7147270565f, 0.870735
+      4457f, -0.9580008579f, 0.4905965632f,
+    0.786775944f, 0.1079711577f, 0.2686638979f, 0.6113487322f, -0.530770584f, -0.7837268286f, -0.8558691039
+      f, -0.5726093896f, -0.9830740914f, 0.7087766359f, 0.6807027153f, -0.08864708788f, 0.6704485923f, -0.13507354
+      82f, -0.9381333003f, 0.9756655376f,
+    0.4231433671f, -0.4959787385f, 0.1005554325f, -0.7645857281f, -0.5859053796f, -0.9751154306f, -0.697225
+      8572f, 0.7907012002f, -0.9109899213f, -0.9584307894f, -0.8269529333f, 0.2608264719f, -0.7773760119f, 0.76064
+      56974f, -0.8961083758f, -0.9838134719f,
+    0.7338893576f, 0.2161226729f, 0.673509891f, -0.5512056873f, 0.6899744332f, 0.868004831f, 0.5897430311f,
+       -0.8950444221f, -0.3595752773f, 0.8209486981f, -0.2912360132f, -0.9965011374f, 0.9766994634f, 0.738790822f,
+       -0.4730947722f, 0.8946479441f,
+    -0.6943628971f, -0.6620468182f, -0.0887255502f, -0.7512250855f, -0.5322986898f, 0.5226295385f, 0.229631
+      8375f, 0.7915307344f, -0.2756485999f, -0.6900234522f, 0.07090588086f, 0.5981278485f, 0.3033429312f, -0.72531
+      42797f, -0.9855874307f, -0.1761843396f,
+    -0.6438468325f, -0.9956136595f, 0.8541580762f, -0.9999807666f, -0.02152416253f, -0.8705983095f, -0.1197
+      138014f, -0.992107781f, -0.9091181546f, 0.788610536f, -0.994636402f, 0.4211256853f, 0.3110430857f, -0.403112
+      7839f, 0.7610684239f, 0.7685674467f,
+    0.152271555f, -0.9364648723f, 0.1681333739f, -0.3567427907f, -0.418445483f, -0.98774778f, 0.8705250765f
+      , -0.8911701067f, -0.7315350966f, 0.6030885658f, -0.4149130821f, 0.7585339481f, 0.6963196535f, 0.8332685012f
+      , -0.8086815232f, 0.7518116724f,
+    -0.3490535894f, 0.6972110903f, -0.8795676928f, -0.6442331882f, 0.6610236811f, -0.9853565782f, -0.590338
+      458f, 0.09843602117f, 0.5646534882f, -0.6023259233f, -0.3539248861f, 0.5132728656f, 0.9380385118f, -0.759927
+      0056f, -0.7425936564f, -0.6679610562f,
+    -0.3018497816f, 0.814478266f, 0.03777430269f, -0.7514235086f, 0.9662556939f, -0.4720194901f, -0.4350541
+      26f, 0.7091901235f, 0.929379209f, 0.9997434357f, 0.8306320299f, -0.9434019629f, -0.133133759f, 0.5048413216f
+      , 0.3711995273f, 0.98552091f,
+    0.7401857005f, -0.9999981398f, -0.2144033253f, 0.4808624681f, -0.413835885f, 0.644229305f, 0.9626648696
+      f, 0.1833665934f, 0.5794129f, 0.01404446873f, 0.4388494993f, 0.5213612322f, -0.5281609948f, -0.9745306846f, 
+      -0.9904373013f, 0.9100232252f,
+    -0.9914057719f, 0.7892627765f, 0.3364421659f, -0.9416099764f, 0.7802732656f, 0.886302871f, 0.6524471291
+      f, 0.5762186726f, -0.08987644664f, -0.2177026782f, -0.9720345052f, -0.05722538858f, 0.8105983127f, 0.3410261
+      032f, 0.6452309645f, -0.7810612152f,
+    0.9989395718f, -0.808247815f, 0.6370177929f, 0.5844658772f, 0.2054070861f, 0.055960522f, -0.995827561f,
+       0.893409165f, -0.931516824f, 0.328969469f, -0.3193837488f, 0.7314755657f, -0.7913517714f, -0.2204109786f, 0
+      .9955900414f, -0.7112353139f,
+    -0.7935008741f, -0.9961918204f, -0.9714163995f, -0.9566188669f, 0.2748495632f, -0.4681743221f, -0.96144
+      49642f, 0.585194072f, 0.4532946061f, -0.9916113176f, 0.942479587f, -0.9813704753f, -0.6538429571f, 0.2923335
+      053f, -0.2246660704f, -0.1800781949f,
+    -0.9581216256f, 0.552215082f, -0.9296791922f, 0.643183699f, 0.9997325981f, -0.4606920354f, -0.214872126
+      5f, 0.3482070809f, 0.3075517813f, 0.6274756393f, 0.8910881765f, -0.6397771309f, -0.4479080125f, -0.524766501
+      1f, -0.8386507094f, 0.3901291416f,
+    0.1458336921f, 0.01624613149f, -0.8273199879f, 0.5611100679f, -0.8380219841f, -0.9856122234f, -0.861398
+      618f, 0.6398413916f, 0.2694510795f, 0.4327334514f, -0.9960265354f, -0.939570655f, -0.8846996446f, 0.76421131
+      89f, -0.7002080528f, 0.664508256f,
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classnoisefast_a3e9a184638b7beb67658ab67e0dfcaae}\label{classnoisefast_a3e9a184638b7beb67658ab67e0dfcaae}} 
+\index{noisefast@{noisefast}!C\+E\+L\+L\+\_\+2\+D\+\_\+Y@{C\+E\+L\+L\+\_\+2\+D\+\_\+Y}}
+\index{C\+E\+L\+L\+\_\+2\+D\+\_\+Y@{C\+E\+L\+L\+\_\+2\+D\+\_\+Y}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{C\+E\+L\+L\+\_\+2\+D\+\_\+Y}{CELL\_2D\_Y}}
+{\footnotesize\ttfamily const float noisefast\+::\+C\+E\+L\+L\+\_\+2\+D\+\_\+Y\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    0.7649700911f, 0.9967722885f, 0.05734160033f, -0.1610318741f, 0.371395799f, -0.7961420628f, 0.607699049
+      2f, -0.9371723195f, 0.3324056156f, 0.07972205329f, -0.4857529277f, -0.9898503007f, 0.9036577593f, 0.05162417
+      479f, -0.02545330525f, -0.998045976f,
+    -0.7021653386f, -0.4524967717f, -0.9939885256f, -0.4875625128f, -0.9657481729f, -0.7432567015f, 0.02515
+      761212f, 0.4743044842f, 0.5771254669f, 0.4449408324f, 0.3416365773f, 0.9970960285f, 0.6994034849f, 0.4917517
+      499f, 0.286765333f, 0.8713868327f,
+    0.6172387009f, 0.9941540269f, 0.9632339851f, -0.7913613129f, 0.847515538f, 0.6211056739f, 0.5171924952f
+      , -0.8198283277f, -0.1832084353f, 0.7054329737f, 0.7325597678f, 0.9960630973f, 0.7419559859f, 0.9908355749f,
+       -0.346274329f, 0.2192641299f,
+    -0.9060627411f, -0.8683346653f, 0.9949314574f, -0.6445220433f, -0.8103794704f, -0.2216977607f, 0.716851
+      5217f, 0.612202264f, -0.412428616f, 0.285325116f, 0.56227115f, -0.9653857009f, -0.6290361962f, 0.6491672535f
+      , 0.443835306f, -0.1791955706f,
+    -0.6792690269f, -0.9763662173f, 0.7391782104f, 0.8343693968f, 0.7238337389f, 0.4965557504f, 0.807590959
+      2f, -0.4459769977f, -0.9331160806f, -0.5710019572f, 0.9566512346f, -0.08357920318f, 0.2146116448f, -0.673934
+      8049f, 0.8810115417f, 0.4467718167f,
+    -0.7196250184f, -0.749462481f, 0.9960561112f, 0.6600461127f, -0.8465566164f, -0.8525598897f, -0.9732775
+      654f, 0.6111293616f, -0.9612584717f, -0.7237870097f, -0.9974830104f, -0.8014006968f, 0.9528814544f, -0.68841
+      78931f, -0.1691668301f, 0.9843571905f,
+    0.7651544003f, -0.09355982605f, -0.5200134429f, -0.006202125807f, -0.9997683284f, 0.4919944954f, -0.992
+      8084436f, -0.1253880012f, -0.4165383308f, -0.6148930171f, -0.1034332049f, -0.9070022917f, -0.9503958117f, 0.
+      9151503065f, -0.6486716073f, 0.6397687707f,
+    -0.9883386937f, 0.3507613761f, 0.9857642561f, -0.9342026446f, -0.9082419159f, 0.1560587169f, 0.49212406
+      07f, -0.453669308f, 0.6818037859f, 0.7976742329f, 0.9098610522f, 0.651633524f, 0.7177318024f, -0.5528685241f
+      , 0.5882467118f, 0.6593778956f,
+    0.9371027648f, -0.7168658839f, -0.4757737632f, 0.7648291307f, 0.7503650398f, 0.1705063456f, -0.80715581
+      21f, -0.9951433815f, -0.8253280792f, -0.7982502628f, 0.9352738503f, 0.8582254747f, -0.3465310238f, 0.6500084
+      2f, -0.6697422351f, 0.7441962291f,
+    -0.9533555f, 0.5801940659f, -0.9992862963f, -0.659820211f, 0.2575848092f, 0.881588113f, -0.9004043022f,
+       -0.7050172826f, 0.369126382f, -0.02265088836f, 0.5568217228f, -0.3316515286f, 0.991098079f, -0.863212164f, 
+      -0.9285531277f, 0.1695539323f,
+    -0.672402505f, -0.001928841934f, 0.9767452145f, -0.8767960349f, 0.9103515037f, -0.7648324016f, 0.270696
+      0452f, -0.9830446035f, 0.8150341657f, -0.9999013716f, -0.8985605806f, 0.8533360801f, 0.8491442537f, -0.22425
+      41966f, -0.1379635899f, -0.4145572694f,
+    0.1308227633f, 0.6140555916f, 0.9417041303f, -0.336705587f, -0.6254387508f, 0.4631060578f, -0.757834245
+      6f, -0.8172955655f, -0.9959529228f, -0.9760151351f, 0.2348380732f, -0.9983612848f, 0.5856025746f, -0.9400538
+      266f, -0.7639875669f, 0.6244544645f,
+    0.04604054566f, 0.5888424828f, 0.7708490978f, -0.8114182882f, 0.9786766212f, -0.9984329822f, 0.09125496
+      582f, -0.4492438803f, -0.3636982357f, 0.9443405575f, -0.9476254645f, -0.6818676535f, -0.6113610831f, 0.97540
+      70948f, -0.0938108173f, -0.7029540015f,
+    -0.6085691109f, -0.08718862881f, -0.237381926f, 0.2913423132f, 0.9614872426f, 0.8836361266f, -0.2749974
+      196f, -0.8108932717f, -0.8913607575f, 0.129255541f, -0.3342637104f, -0.1921249337f, -0.7566302845f, -0.95631
+      64339f, -0.9744358146f, 0.9836522982f,
+    -0.2863615732f, 0.8337016872f, 0.3683701937f, 0.7657119102f, -0.02312427772f, 0.8875600535f, 0.97664219
+      1f, 0.9374176384f, 0.9515313457f, -0.7786361937f, -0.4538302125f, -0.7685604874f, -0.8940796454f, -0.8512462
+      154f, 0.5446696133f, 0.9207601495f,
+    -0.9893091197f, -0.9998680229f, 0.5617309299f, -0.8277411985f, 0.545636467f, 0.1690223212f, -0.50792954
+      33f, 0.7685069899f, -0.9630140787f, 0.9015219132f, 0.08905695279f, -0.3423550559f, -0.4661614943f, -0.644965
+      9371f, 0.7139388509f, 0.7472809229f,
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classnoisefast_ab8cfc5462b1a5ef8a5508517a0223307}\label{classnoisefast_ab8cfc5462b1a5ef8a5508517a0223307}} 
+\index{noisefast@{noisefast}!C\+E\+L\+L\+\_\+3\+D\+\_\+X@{C\+E\+L\+L\+\_\+3\+D\+\_\+X}}
+\index{C\+E\+L\+L\+\_\+3\+D\+\_\+X@{C\+E\+L\+L\+\_\+3\+D\+\_\+X}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{C\+E\+L\+L\+\_\+3\+D\+\_\+X}{CELL\_3D\_X}}
+{\footnotesize\ttfamily const float noisefast\+::\+C\+E\+L\+L\+\_\+3\+D\+\_\+X\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    0.3752498686f, 0.687188096f, 0.2248135212f, 0.6692006647f, -0.4376476931f, 0.6139972552f, 0.9494563929f
+      , 0.8065108882f, -0.2218812853f, 0.8484661167f, 0.5551817596f, 0.2133903499f, 0.5195126593f, -0.6440141975f,
+       -0.5192897331f, -0.3697654077f,
+    -0.07927779647f, 0.4187757321f, -0.750078731f, 0.6579554632f, -0.6859803838f, -0.6878407087f, 0.9490848
+      347f, 0.5795829433f, -0.5325976529f, -0.1363699466f, 0.417665879f, -0.9108236468f, 0.4438605427f, 0.81929488
+      7f, -0.4033873915f, -0.2817317705f,
+    0.3969665622f, 0.5323450134f, -0.6833017297f, 0.3881436661f, -0.7119144767f, -0.2306979838f, -0.9398873
+      022f, 0.1701906676f, -0.4261839496f, -0.003712295499f, -0.734675004f, -0.3195046015f, 0.7345307424f, 0.97662
+      46496f, -0.02003735175f, -0.4824156342f,
+    0.4245892007f, 0.9072427669f, 0.593346808f, -0.8911762541f, -0.7657571834f, -0.5268198896f, -0.88019032
+      79f, -0.6296409617f, -0.09492481344f, -0.4920470525f, 0.7307666154f, -0.2514540636f, -0.3356210347f, -0.3522
+      787894f, 0.87847885f, -0.7424096346f,
+    0.5757585274f, 0.4519299338f, 0.6420368628f, -0.1128478447f, 0.499874883f, 0.5291681739f, -0.5098837195
+      f, 0.5639583502f, -0.8456386526f, -0.9657134875f, -0.576437342f, -0.5666013014f, 0.5667702405f, -0.481316582
+      f, 0.7313389916f, -0.3805628566f,
+    -0.6512675909f, -0.2787156951f, 0.8648059114f, -0.9730216276f, -0.8335820906f, 0.2673159641f, 0.2311501
+      48f, 0.01286214638f, 0.6774953261f, 0.6542885718f, -0.02545450161f, 0.2101238586f, -0.5572105885f, 0.8137056
+      72f, -0.7546026951f, -0.2502500006f,
+    -0.9979289381f, 0.7024037039f, 0.08990874624f, 0.8170812432f, 0.4226980265f, -0.2442153475f, -0.9183326
+      731f, 0.6068222411f, 0.818676691f, -0.7236735282f, -0.5383903295f, -0.6269337242f, -0.0939331121f, 0.9203878
+      539f, -0.7256396824f, 0.6292431149f,
+    0.4234156978f, 0.006685688024f, -0.2598694113f, 0.6408036421f, 0.05899871622f, 0.7090281418f, -0.590522
+      2072f, 0.3128214264f, -0.691925826f, 0.3634019349f, -0.6772511147f, -0.3204583896f, -0.3906740409f, -0.33421
+      90395f, -0.517779592f, -0.6817711267f,
+    0.6422383105f, 0.4388482478f, 0.2968562611f, -0.2019778353f, 0.6014865048f, 0.9519280722f, 0.3398889569
+      f, 0.8179709354f, 0.2365522154f, 0.3262175096f, -0.8060715954f, -0.2068642503f, 0.6208057279f, -0.5274282502
+      f, -0.3722334928f, -0.8923412971f,
+    0.5341834201f, -0.3663701513f, -0.6114600319f, 0.5026307556f, 0.8396151729f, 0.9245042467f, -0.79948439
+      57f, -0.5357200589f, -0.6283359739f, -0.61351886f, -0.875632008f, -0.5278879423f, 0.9087491985f, -0.03500215
+      466f, -0.261365798f, -0.579523541f,
+    -0.3765052689f, -0.74398252f, 0.4257318052f, -0.1214508921f, 0.8561809753f, 0.6802835104f, -0.545213103
+      9f, -0.1997156478f, 0.4562348357f, -0.811704301f, 0.67793962f, -0.9237819106f, 0.6973511259f, -0.5189506f, 0
+      .5517320032f, -0.396710831f,
+    0.5493762815f, -0.2507853002f, 0.4788634005f, 0.387333516f, -0.2176515694f, 0.6749832419f, 0.2148283022
+      f, -0.7521815872f, 0.4697000159f, 0.7890593699f, -0.7606162952f, 0.01083397843f, 0.5254091908f, -0.674802587
+      7f, 0.751091524f, 0.05259056135f,
+    0.01889481232f, -0.6037423727f, -0.6542965129f, 0.08873301081f, -0.6191345671f, 0.4331858488f, -0.38583
+      51946f, -0.1429059747f, 0.4118221036f, -0.6247153214f, -0.611423014f, 0.5542939606f, -0.9432768808f, -0.4567
+      870451f, -0.7349133547f, 0.399304489f,
+    -0.7474927672f, 0.02589419753f, 0.783915821f, 0.6138668752f, 0.4276376047f, -0.4347886353f, 0.029478413
+      02f, -0.833742746f, 0.3817221742f, -0.8743368359f, -0.3823443796f, -0.6829243811f, -0.3681903049f, -0.367626
+      833f, -0.434583373f, 0.235891995f,
+    -0.6874880269f, -0.5115661773f, -0.5534962601f, 0.5632777056f, 0.686191532f, -0.05095871588f, -0.068657
+      85057f, -0.5975288531f, -0.6429790056f, -0.3729361548f, 0.2237917666f, 0.6046773225f, -0.5041542295f, -0.039
+      72191174f, 0.7028828406f, -0.5560856498f,
+    0.5898328456f, -0.9308076766f, 0.4617069864f, 0.3190983137f, 0.9116567753f, -0.45029554f, 0.3346334459f
+      , 0.8525005645f, 0.2528483381f, -0.8306630147f, -0.6880390622f, 0.7448684026f, -0.1963355843f, -0.5900257974
+      f, 0.9097057294f, -0.2509196808f,
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classnoisefast_a3c89edb98c291279310e131f329552c8}\label{classnoisefast_a3c89edb98c291279310e131f329552c8}} 
+\index{noisefast@{noisefast}!C\+E\+L\+L\+\_\+3\+D\+\_\+Y@{C\+E\+L\+L\+\_\+3\+D\+\_\+Y}}
+\index{C\+E\+L\+L\+\_\+3\+D\+\_\+Y@{C\+E\+L\+L\+\_\+3\+D\+\_\+Y}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{C\+E\+L\+L\+\_\+3\+D\+\_\+Y}{CELL\_3D\_Y}}
+{\footnotesize\ttfamily const float noisefast\+::\+C\+E\+L\+L\+\_\+3\+D\+\_\+Y\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    -0.6760585049f, -0.09136176499f, 0.1681325679f, -0.6688468686f, -0.4822753902f, -0.7891068824f, -0.1877
+      509944f, 0.548470914f, -0.463339443f, -0.4050542082f, 0.3218158513f, 0.2546493823f, -0.3753271935f, 0.474538
+      4887f, 0.481254652f, -0.8934416489f,
+    -0.6737085076f, 0.7469917228f, 0.3826230411f, 0.6751013678f, -0.7248119515f, -0.3224276742f, -0.0207619
+      0936f, -0.6404268166f, -0.5292028444f, 0.7151414636f, -0.6144655059f, -0.369912124f, 0.6942067212f, -0.44815
+      58248f, -0.6366894559f, 0.5956568471f,
+    0.564274539f, 0.7145584688f, 0.6871918316f, 0.5657918509f, -0.6275978114f, 0.4146983062f, 0.2638993789f
+      , -0.792633138f, 0.5706133514f, 0.8606546462f, 0.6490900316f, -0.8242699196f, 0.6765819124f, 0.1959534069f, 
+      -0.8426769757f, -0.5917672797f,
+    0.7517364266f, 0.03252559226f, 0.0883617105f, 0.4475064813f, -0.1418643552f, 0.7343428473f, 0.387019254
+      8f, -0.7716703522f, 0.4839898327f, 0.7437439055f, -0.5989573348f, -0.8357068955f, 0.6086049038f, 0.919462725
+      8f, 0.4718297238f, -0.2650335884f,
+    -0.6470352599f, -0.5555181303f, 0.1222351235f, 0.7802044684f, -0.8636947022f, -0.2341352163f, 0.6830308
+      74f, -0.5005858287f, 0.2334616211f, 0.2576877608f, 0.6666816727f, -0.7663996863f, 0.794201982f, 0.6189308788
+      f, 0.6071033261f, -0.4206058253f,
+    -0.3957336915f, -0.8170257484f, -0.1043240417f, 0.0002167596213f, 0.1816339018f, -0.6838094939f, -0.249
+      5341969f, -0.7116756954f, -0.03361673621f, -0.3350836431f, 0.2137186039f, 0.2557996786f, 0.7490117093f, 0.49
+      42936549f, -0.352686853f, -0.3952445435f,
+    -0.0459964767f, -0.7115787471f, 0.08022899756f, 0.5362268157f, -0.8258613686f, 0.1114171723f, 0.3882823
+      051f, -0.7915404457f, 0.3250957662f, 0.6401346464f, -0.2662724517f, -0.6727907114f, -0.994730818f, -0.359635
+      8977f, 0.2344610069f, -0.6645215546f,
+    -0.7107590611f, -0.4646617327f, 0.6717191355f, 0.5101893498f, 0.1185768238f, 0.236005093f, -0.781102406
+      1f, 0.5089325193f, 0.6073187658f, -0.7930732557f, -0.6822767155f, 0.3201532885f, 0.7545302807f, 0.1072664448
+      f, 0.6784033173f, -0.6595924967f,
+    0.7276509498f, 0.5586689436f, -0.6498636788f, 0.6789333174f, 0.7105966551f, -0.2872214155f, 0.496746217
+      f, -0.3880337977f, 0.7324070604f, -0.9326634749f, -0.5867839255f, 0.8003043651f, -0.1631882481f, -0.67963746
+      81f, -0.8066678503f, 0.4238177418f,
+    0.7715863549f, 0.5455367347f, -0.03205115397f, -0.6005545066f, -0.5423640002f, 0.3569205906f, -0.582071
+      752f, 0.6407354361f, 0.7777142984f, -0.09956428618f, 0.1100002681f, 0.8136349123f, 0.2923431904f, 0.97357944
+      25f, 0.8324974864f, -0.6179617717f,
+    -0.9248386523f, -0.6448780771f, -0.5274402761f, -0.7862170565f, 0.2682099744f, -0.5848777694f, -0.63645
+      61467f, -0.7167402514f, -0.8677012494f, 0.4205286707f, -0.7007832749f, 0.243272451f, -0.1899846085f, -0.6146
+      124977f, -0.8093357692f, -0.03545096987f,
+    -0.7191590868f, 0.7478645848f, 0.3623517328f, 0.8436992512f, -0.2445711729f, 0.6897356637f, -0.17080707
+      87f, 0.4639272368f, -0.7917186656f, 0.02980025428f, 0.6334156172f, -0.9815544807f, -0.2307217304f, 0.1080823
+      318f, 0.5167601798f, -0.845120016f,
+    0.441572562f, 0.5876789172f, -0.6365908737f, 0.68350166f, 0.5849723959f, 0.1164114357f, -0.7379813884f,
+       -0.9613237178f, -0.9071943084f, -0.7682111105f, 0.639074459f, -0.619358298f, 0.2807257131f, -0.01800868791f
+      , 0.3776607289f, 0.7207567823f,
+    0.5536661486f, -0.9974053117f, -0.02047200006f, -0.6739453804f, -0.5607471297f, 0.8815553192f, 0.827597
+      7415f, 0.3928902456f, 0.550991396f, 0.4247623676f, -0.3436948871f, -0.3653537677f, 0.3181702902f, -0.6067173
+      171f, -0.8984128477f, 0.4220839766f,
+    0.7238407199f, -0.7766913695f, 0.6460037842f, 0.2544775664f, 0.6488840578f, 0.805016833f, -0.9183807036
+      f, 0.4144046357f, 0.270587208f, -0.8813684494f, 0.6985971877f, -0.7795603017f, -0.8624480731f, 0.5532697017f
+      , 0.711179521f, -0.7798160574f,
+    0.5225859041f, 0.1261859368f, 0.3398033582f, -0.7472173667f, -0.4032647119f, -0.4246578154f, 0.84812123
+      77f, -0.2144838537f, 0.3431714491f, 0.5310188231f, 0.6682978632f, 0.3110433206f, 0.9263293599f, -0.615560056
+      9f, 0.07169784399f, 0.8985888773f,
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classnoisefast_a32e601e4b3d2bbb1498e2edbc305c10f}\label{classnoisefast_a32e601e4b3d2bbb1498e2edbc305c10f}} 
+\index{noisefast@{noisefast}!C\+E\+L\+L\+\_\+3\+D\+\_\+Z@{C\+E\+L\+L\+\_\+3\+D\+\_\+Z}}
+\index{C\+E\+L\+L\+\_\+3\+D\+\_\+Z@{C\+E\+L\+L\+\_\+3\+D\+\_\+Z}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{C\+E\+L\+L\+\_\+3\+D\+\_\+Z}{CELL\_3D\_Z}}
+{\footnotesize\ttfamily const float noisefast\+::\+C\+E\+L\+L\+\_\+3\+D\+\_\+Z\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    -0.6341391283f, -0.7207118346f, 0.9597866014f, 0.3237504235f, -0.7588642466f, -0.01782410481f, 0.251559
+      3809f, 0.2207257205f, -0.8579541106f, 0.3406410681f, 0.7669470462f, -0.9431957648f, 0.7676171537f, -0.600049
+      1115f, -0.7062096948f, 0.2550207115f,
+    0.7347325213f, 0.5163625202f, -0.5394270162f, 0.3336656285f, -0.0638635111f, -0.6503195787f, 0.31433567
+      98f, -0.5039217245f, 0.6605180464f, -0.6855479011f, -0.6693185756f, 0.1832083647f, -0.5666258437f, 0.3576482
+      138f, -0.6571949095f, -0.7522101635f,
+    -0.7238865886f, 0.4538887323f, 0.2467106257f, 0.7274778869f, 0.3151170655f, -0.8802293764f, -0.21672327
+      29f, 0.5854637865f, 0.7019741052f, 0.5091756071f, 0.1973189533f, 0.46743546f, 0.05197599597f, 0.088354718f, 
+      0.5380464843f, -0.6458224544f,
+    -0.5045952393f, 0.419347884f, 0.8000823542f, -0.07445020656f, -0.6272881641f, -0.428020311f, -0.2747382
+      083f, -0.08987283726f, 0.8699098354f, 0.4524761885f, -0.3274603257f, 0.4882262167f, -0.7189983256f, 0.174607
+      9907f, 0.0751772698f, -0.6152927202f,
+    0.4998474673f, -0.6979677227f, 0.7568667263f, -0.6152612058f, 0.06447140991f, -0.8155744872f, -0.522960
+      2449f, 0.6567836838f, -0.4799905631f, 0.03153534591f, 0.4724992466f, -0.3026458097f, -0.2191225827f, -0.6206
+      92287f, 0.3107552588f, 0.8235670294f,
+    0.6474915988f, -0.5047637941f, 0.4911488878f, -0.2307138167f, -0.5216800015f, 0.6789305939f, 0.94037348
+      63f, 0.702390397f, 0.7347584625f, 0.6779567958f, 0.9765635805f, -0.9436177661f, -0.358465925f, -0.3058706624
+      f, 0.5533414464f, -0.8838306897f,
+    0.04496841812f, 0.01687374963f, -0.9927133148f, -0.211752318f, 0.3732015249f, 0.9632990593f, -0.0768241
+      7004f, -0.07232213047f, 0.4733721775f, 0.2579229713f, 0.7995216286f, 0.3928189967f, 0.04107517667f, 0.153454
+      2912f, 0.6468965045f, 0.4030684878f,
+    -0.5617300988f, -0.885463029f, 0.693729985f, -0.5736527866f, -0.9911905409f, -0.66451538f, 0.2028855685
+      f, 0.8019541421f, -0.3903877149f, -0.4888495114f, -0.2753714057f, -0.8915202143f, 0.5273119089f, 0.936371477
+      3f, -0.5212228249f, -0.31642672f,
+    0.2409440761f, -0.703776404f, -0.6996810411f, -0.7058714505f, -0.3650566783f, 0.1064744278f, 0.79857291
+      02f, 0.424680257f, -0.6384535592f, 0.1540161646f, -0.07702731943f, -0.5627789132f, -0.7667919169f, -0.509815
+      999f, 0.4590525092f, 0.1552595611f,
+    0.345402042f, 0.7537656024f, 0.7906259247f, -0.6218493452f, 0.02979350071f, -0.1337893489f, -0.14838186
+      06f, 0.549965562f, 0.01882482408f, -0.7833783002f, 0.4702855809f, 0.2435827372f, 0.2978428332f, 0.2256499906
+      f, 0.4885036897f, 0.5312962584f,
+    0.05401156992f, 0.1749922158f, -0.7352273018f, 0.6058980284f, 0.4416079111f, 0.4417378638f, 0.545587980
+      7f, -0.6681295324f, 0.1973431441f, 0.4053292055f, 0.2220375492f, 0.2957118467f, 0.6910913512f, 0.5940890106f
+      , -0.2014135283f, -0.9172588213f,
+    -0.4254361401f, -0.6146586825f, -0.7996193253f, -0.3716777111f, -0.9448876842f, -0.2620349924f, 0.96159
+      95749f, -0.4679683524f, 0.3905937144f, 0.613593722f, 0.1422937358f, 0.1908754211f, 0.8189704912f, -0.7300408
+      736f, -0.4108776451f, -0.5319834504f,
+    -0.8970265651f, -0.5386359045f, 0.4082255906f, 0.7245356676f, 0.5239080873f, -0.8937552226f, -0.5536376
+      73f, 0.2354455182f, -0.0860293075f, -0.1399373318f, -0.4666323327f, 0.5560157407f, 0.1772619533f, -0.8893937
+      725f, -0.5632714576f, -0.5666264959f,
+    -0.3670263736f, -0.06717242579f, 0.6205295181f, -0.4110536264f, 0.7090054553f, 0.183899597f, -0.5605470
+      555f, 0.3879565548f, 0.7420893903f, -0.2347595118f, -0.8577217497f, 0.6325590203f, -0.8736152276f, 0.7048011
+      129f, -0.06317948268f, 0.8753285574f,
+    -0.05843650473f, -0.3674922622f, -0.5256624401f, 0.7861039337f, 0.3287714416f, 0.5910593099f, -0.389696
+      0134f, 0.6864605361f, 0.7164918431f, -0.290014277f, -0.6796169617f, 0.1632515592f, 0.04485347486f, 0.8320545
+      697f, 0.01339408056f, -0.2874989857f,
+    0.615630723f, 0.3430367014f, 0.8193658136f, -0.5829600957f, 0.07911697781f, 0.7854296063f, -0.410744230
+      6f, 0.4766964066f, -0.9045999527f, -0.1673856787f, 0.2828077348f, -0.5902737632f, -0.321506229f, -0.52245131
+      33f, -0.4090169985f, -0.3599685311f,
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classnoisefast_a939f20b593f2e78f9e9e6df0a07e99d0}\label{classnoisefast_a939f20b593f2e78f9e9e6df0a07e99d0}} 
+\index{noisefast@{noisefast}!G\+R\+A\+D\+\_\+4D@{G\+R\+A\+D\+\_\+4D}}
+\index{G\+R\+A\+D\+\_\+4D@{G\+R\+A\+D\+\_\+4D}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{G\+R\+A\+D\+\_\+4D}{GRAD\_4D}}
+{\footnotesize\ttfamily const float noisefast\+::\+G\+R\+A\+D\+\_\+4D\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f, -1.0f, -1.0f,
+    0.0f, -1.0f, 1.0f, 1.0f, 0.0f, -1.0f, 1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 1.0f, 0.0f, -1.0f, -1.0f, -1.0f,
+    1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 1.0f, 0.0f, -1.0f, -1.0f,
+    -1.0f, 0.0f, 1.0f, 1.0f, -1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 1.0f, -1.0f, 0.0f, -1.0f, -1.0f,
+    1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, -1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 1.0f, -1.0f, 0.0f, -1.0f,
+    -1.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 0.0f, -1.0f,
+    1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 0.0f,
+    -1.0f, 1.0f, 1.0f, 0.0f, -1.0f, 1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 1.0f, 0.0f, -1.0f, -1.0f, -1.0f, 0.0f
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classnoisefast_ab24f6b26709370851954b246aa9bde7b}\label{classnoisefast_ab24f6b26709370851954b246aa9bde7b}} 
+\index{noisefast@{noisefast}!G\+R\+A\+D\+\_\+X@{G\+R\+A\+D\+\_\+X}}
+\index{G\+R\+A\+D\+\_\+X@{G\+R\+A\+D\+\_\+X}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{G\+R\+A\+D\+\_\+X}{GRAD\_X}}
+{\footnotesize\ttfamily const float noisefast\+::\+G\+R\+A\+D\+\_\+X\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    1.0f, -1.0f, 1.0f, -1.0f,
+    1.0f, -1.0f, 1.0f, -1.0f,
+    0.0f, 0.0f, 0.0f, 0.0f
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classnoisefast_a30a7f42cf547b44132e8a9a767d74cac}\label{classnoisefast_a30a7f42cf547b44132e8a9a767d74cac}} 
+\index{noisefast@{noisefast}!G\+R\+A\+D\+\_\+Y@{G\+R\+A\+D\+\_\+Y}}
+\index{G\+R\+A\+D\+\_\+Y@{G\+R\+A\+D\+\_\+Y}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{G\+R\+A\+D\+\_\+Y}{GRAD\_Y}}
+{\footnotesize\ttfamily const float noisefast\+::\+G\+R\+A\+D\+\_\+Y\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    1.0f, 1.0f, -1.0f, -1.0f,
+    0.0f, 0.0f, 0.0f, 0.0f,
+    1.0f, -1.0f, 1.0f, -1.0f
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classnoisefast_a42662d31cdcfc1a00be43b0fe648f225}\label{classnoisefast_a42662d31cdcfc1a00be43b0fe648f225}} 
+\index{noisefast@{noisefast}!G\+R\+A\+D\+\_\+Z@{G\+R\+A\+D\+\_\+Z}}
+\index{G\+R\+A\+D\+\_\+Z@{G\+R\+A\+D\+\_\+Z}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{G\+R\+A\+D\+\_\+Z}{GRAD\_Z}}
+{\footnotesize\ttfamily const float noisefast\+::\+G\+R\+A\+D\+\_\+Z\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    0.0f, 0.0f, 0.0f, 0.0f,
+    1.0f, 1.0f, -1.0f, -1.0f,
+    1.0f, 1.0f, -1.0f, -1.0f
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classnoisefast_a138058eb09f55ef1cde3af03d5f2c9f3}\label{classnoisefast_a138058eb09f55ef1cde3af03d5f2c9f3}} 
+\index{noisefast@{noisefast}!S\+I\+M\+P\+L\+E\+X\+\_\+4D@{S\+I\+M\+P\+L\+E\+X\+\_\+4D}}
+\index{S\+I\+M\+P\+L\+E\+X\+\_\+4D@{S\+I\+M\+P\+L\+E\+X\+\_\+4D}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{S\+I\+M\+P\+L\+E\+X\+\_\+4D}{SIMPLEX\_4D}}
+{\footnotesize\ttfamily const unsigned char noisefast\+::\+S\+I\+M\+P\+L\+E\+X\+\_\+4D\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    0, 1, 2, 3, 0, 1, 3, 2, 0, 0, 0, 0, 0, 2, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 0,
+    0, 2, 1, 3, 0, 0, 0, 0, 0, 3, 1, 2, 0, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 2, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    1, 2, 0, 3, 0, 0, 0, 0, 1, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 1, 2, 3, 1, 0,
+    1, 0, 2, 3, 1, 0, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 3, 1, 0, 0, 0, 0, 2, 1, 3, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    2, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1, 2, 3, 0, 2, 1, 0, 0, 0, 0, 3, 1, 2, 0,
+    2, 1, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 0, 2, 0, 0, 0, 0, 3, 2, 0, 1, 3, 2, 1, 0
+\}
+\end{DoxyCode}
+\mbox{\Hypertarget{classnoisefast_ad7aa689c36153418797dab461c4769f6}\label{classnoisefast_ad7aa689c36153418797dab461c4769f6}} 
+\index{noisefast@{noisefast}!V\+A\+L\+\_\+\+L\+UT@{V\+A\+L\+\_\+\+L\+UT}}
+\index{V\+A\+L\+\_\+\+L\+UT@{V\+A\+L\+\_\+\+L\+UT}!noisefast@{noisefast}}
+\subsubsection{\texorpdfstring{V\+A\+L\+\_\+\+L\+UT}{VAL\_LUT}}
+{\footnotesize\ttfamily const float noisefast\+::\+V\+A\+L\+\_\+\+L\+UT\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+    0.3490196078f, 0.4352941176f, -0.4509803922f, 0.6392156863f, 0.5843137255f, -0.1215686275f, 0.717647058
+      8f, -0.1058823529f, 0.3960784314f, 0.0431372549f, -0.03529411765f, 0.3176470588f, 0.7254901961f, 0.137254902
+      f, 0.8588235294f, -0.8196078431f,
+    -0.7960784314f, -0.3333333333f, -0.6705882353f, -0.3882352941f, 0.262745098f, 0.3254901961f, -0.6470588
+      235f, -0.9215686275f, -0.5294117647f, 0.5294117647f, -0.4666666667f, 0.8117647059f, 0.3803921569f, 0.6627450
+      98f, 0.03529411765f, -0.6156862745f,
+    -0.01960784314f, -0.3568627451f, -0.09019607843f, 0.7490196078f, 0.8352941176f, -0.4039215686f, -0.7490
+      196078f, 0.9529411765f, -0.0431372549f, -0.9294117647f, -0.6549019608f, 0.9215686275f, -0.06666666667f, -0.4
+      431372549f, 0.4117647059f, -0.4196078431f,
+    -0.7176470588f, -0.8117647059f, -0.2549019608f, 0.4901960784f, 0.9137254902f, 0.7882352941f, -1.0f, -0.
+      4745098039f, 0.7960784314f, 0.8509803922f, -0.6784313725f, 0.4588235294f, 1.0f, -0.1843137255f, 0.4509803922
+      f, 0.1450980392f,
+    -0.231372549f, -0.968627451f, -0.8588235294f, 0.4274509804f, 0.003921568627f, -0.003921568627f, 0.21568
+      62745f, 0.5058823529f, 0.7647058824f, 0.2078431373f, -0.5921568627f, 0.5764705882f, -0.1921568627f, -0.93725
+      4902f, 0.08235294118f, -0.08235294118f,
+    0.9058823529f, 0.8274509804f, 0.02745098039f, -0.168627451f, -0.7803921569f, 0.1137254902f, -0.94509803
+      92f, 0.2f, 0.01960784314f, 0.5607843137f, 0.2705882353f, 0.4431372549f, -0.9607843137f, 0.6156862745f, 0.929
+      4117647f, -0.07450980392f,
+    0.3098039216f, 0.9921568627f, -0.9137254902f, -0.2941176471f, -0.3411764706f, -0.6235294118f, -0.764705
+      8824f, -0.8901960784f, 0.05882352941f, 0.2392156863f, 0.7333333333f, 0.6549019608f, 0.2470588235f, 0.2313725
+      49f, -0.3960784314f, -0.05098039216f,
+    -0.2235294118f, -0.3725490196f, 0.6235294118f, 0.7019607843f, -0.8274509804f, 0.4196078431f, 0.07450980
+      392f, 0.8666666667f, -0.537254902f, -0.5058823529f, -0.8039215686f, 0.09019607843f, -0.4823529412f, 0.670588
+      2353f, -0.7882352941f, 0.09803921569f,
+    -0.6078431373f, 0.8039215686f, -0.6f, -0.3254901961f, -0.4117647059f, -0.01176470588f, 0.4823529412f, 0
+      .168627451f, 0.8745098039f, -0.3647058824f, -0.1607843137f, 0.568627451f, -0.9921568627f, 0.9450980392f, 0.5
+      137254902f, 0.01176470588f,
+    -0.1450980392f, -0.5529411765f, -0.5764705882f, -0.1137254902f, 0.5215686275f, 0.1607843137f, 0.3725490
+      196f, -0.2f, -0.7254901961f, 0.631372549f, 0.7098039216f, -0.568627451f, 0.1294117647f, -0.3098039216f, 0.74
+      11764706f, -0.8509803922f,
+    0.2549019608f, -0.6392156863f, -0.5607843137f, -0.3176470588f, 0.937254902f, 0.9843137255f, 0.592156862
+      7f, 0.6941176471f, 0.2862745098f, -0.5215686275f, 0.1764705882f, 0.537254902f, -0.4901960784f, -0.4588235294
+      f, -0.2078431373f, -0.2156862745f,
+    0.7725490196f, 0.3647058824f, -0.2392156863f, 0.2784313725f, -0.8823529412f, 0.8980392157f, 0.121568627
+      5f, 0.1058823529f, -0.8745098039f, -0.9843137255f, -0.7019607843f, 0.9607843137f, 0.2941176471f, 0.341176470
+      6f, 0.1529411765f, 0.06666666667f,
+    -0.9764705882f, 0.3019607843f, 0.6470588235f, -0.5843137255f, 0.05098039216f, -0.5137254902f, -0.137254
+      902f, 0.3882352941f, -0.262745098f, -0.3019607843f, -0.1764705882f, -0.7568627451f, 0.1843137255f, -0.545098
+      0392f, -0.4980392157f, -0.2784313725f,
+    -0.9529411765f, -0.09803921569f, 0.8901960784f, -0.2862745098f, -0.3803921569f, 0.5529411765f, 0.780392
+      1569f, -0.8352941176f, 0.6862745098f, 0.7568627451f, 0.4980392157f, -0.6862745098f, -0.8980392157f, -0.77254
+      90196f, -0.7098039216f, -0.2470588235f,
+    -0.9058823529f, 0.9764705882f, 0.1921568627f, 0.8431372549f, -0.05882352941f, 0.3568627451f, 0.60784313
+      73f, 0.5450980392f, 0.4039215686f, -0.7333333333f, -0.4274509804f, 0.6f, 0.6784313725f, -0.631372549f, -0.02
+      745098039f, -0.1294117647f,
+    0.3333333333f, -0.8431372549f, 0.2235294118f, -0.3490196078f, -0.6941176471f, 0.8823529412f, 0.47450980
+      39f, 0.4666666667f, -0.7411764706f, -0.2705882353f, 0.968627451f, 0.8196078431f, -0.662745098f, -0.435294117
+      6f, -0.8666666667f, -0.1529411765f,
+\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Flounder-\/\+Core/src/noise/noisefast.\+h\item 
+Flounder-\/\+Core/src/noise/noisefast.\+cpp\end{DoxyCompactItemize}

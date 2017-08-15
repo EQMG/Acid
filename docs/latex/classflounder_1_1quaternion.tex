@@ -291,7 +291,7 @@ Sets the value of this quaternion to the quaternion product of quaternions left 
 \hline
 {\em right} & The right source quaternion. \\
 \hline
-{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created.\\
+{\em destination} & The destination quaternion or nullptr if a new quaternion is to be created.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -313,7 +313,7 @@ Multiplies quaternion left by the inverse of quaternion right and places the val
 \hline
 {\em right} & The right source quaternion. \\
 \hline
-{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created. \\
+{\em destination} & The destination quaternion or nullptr if a new quaternion is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -333,7 +333,7 @@ Negates a quaternion and places the result in the destination quaternion.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source quaternion. \\
 \hline
-{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created. \\
+{\em destination} & The destination quaternion or nullptr if a new quaternion is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -366,7 +366,7 @@ Normalizes a quaternion and places the result in the destination quaternion.
 \begin{DoxyParams}{Parameters}
 {\em source} & The source quaternion. \\
 \hline
-{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created.\\
+{\em destination} & The destination quaternion or nullptr if a new quaternion is to be created.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -401,7 +401,7 @@ Scales a quaternion by a scalar and places the result in the destination quatern
 \hline
 {\em scalar} & The scalar value. \\
 \hline
-{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created. \\
+{\em destination} & The destination quaternion or nullptr if a new quaternion is to be created. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -570,7 +570,7 @@ Calculates the slerp between the two quaternions, they must be normalized!
 \hline
 {\em progression} & The progression. \\
 \hline
-{\em destination} & The destination quaternion or N\+U\+LL if a new quaternion is to be created. \begin{DoxyReturn}{Returns}
+{\em destination} & The destination quaternion or nullptr if a new quaternion is to be created. \begin{DoxyReturn}{Returns}
 Left slerp right. 
 \end{DoxyReturn}
 \\

@@ -9,102 +9,38 @@ Class that represents a loaded shader.
 
 {\ttfamily \#include $<$shader.\+h$>$}
 
-\subsection*{Classes}
-\begin{DoxyCompactItemize}
-\item 
-class \hyperlink{classflounder_1_1shader_1_1builder}{builder}
-\begin{DoxyCompactList}\small\item\em A builder used to set shader parameters for loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classflounder_1_1shader_a0ef1d1ad999d4d36cdcbd01aee19fc40}{shader} (const std\+::string \&name, const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Creates a new shader. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1shader_abd3f0fc712e7e178f18bf275c85e3337}{$\sim$shader} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the shader. \end{DoxyCompactList}\item 
 std\+::string \& \hyperlink{classflounder_1_1shader_a5971b780ec6535aeb0ca70fefd41daa9}{get\+Name} ()
 \begin{DoxyCompactList}\small\item\em Gets the loaded name for the shader. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a4b1f6770ce28db4f9a4b20e0842d785e}{start} ()
-\begin{DoxyCompactList}\small\item\em Starts the shader program. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a2972bda7e96b86de9a12a44e3e285691}{stop} ()
-\begin{DoxyCompactList}\small\item\em Stops the shader program. \end{DoxyCompactList}\item 
-G\+Lint \hyperlink{classflounder_1_1shader_ab4d3af8b3ffe94ff901b15376215c2e2}{get\+Uniform} (const std\+::string \&name)
-\begin{DoxyCompactList}\small\item\em Gets a uniform location from a name. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a1767f4ca2d3b1eb35dc4435e2aa3fd67}{load\+Uniform} (const std\+::string \&name, const bool \&value)
-\begin{DoxyCompactList}\small\item\em Loads a boolean into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a597fdaefa4644b107e8ce2776ce69f76}{load\+Uniform} (const std\+::string \&name, const int \&value)
-\begin{DoxyCompactList}\small\item\em Loads a int/sampler2D into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_acd349b44107fc3389856a124da305d62}{load\+Uniform} (const std\+::string \&name, const float \&value)
-\begin{DoxyCompactList}\small\item\em Loads a float into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a3c14875fd04a7a824d2af9e737bde626}{load\+Uniform} (const std\+::string \&name, const float \&x, const float \&y)
-\begin{DoxyCompactList}\small\item\em Loads a vector 2 into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_abd782c5f1e6fb7f1d7f8fcf5d0c8b43c}{load\+Uniform} (const std\+::string \&name, const float \&x, const float \&y, const float \&z)
-\begin{DoxyCompactList}\small\item\em Loads a vector 3 into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a54caa7d0462b98679dd902d6256a6e8b}{load\+Uniform} (const std\+::string \&name, const float \&x, const float \&y, const float \&z, const float \&w)
-\begin{DoxyCompactList}\small\item\em Loads a vector 4 into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a6fed325128b3437f435a4ca327ea416e}{load\+Uniform} (const std\+::string \&name, const \hyperlink{classflounder_1_1colour}{colour} \&value)
-\begin{DoxyCompactList}\small\item\em Loads a colour into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a257fff86a8d24c657724fa14ac0ef12e}{load\+Uniform} (const std\+::string \&name, const \hyperlink{classflounder_1_1matrix2x2}{matrix2x2} \&value)
-\begin{DoxyCompactList}\small\item\em Loads a matrix 2x2 into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a9122d8bd4e63275b640e43d04f75fa88}{load\+Uniform} (const std\+::string \&name, const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&value)
-\begin{DoxyCompactList}\small\item\em Loads a matrix 3x3 into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a2b7d1b32758e0aaefd20b050aeb2e7fe}{load\+Uniform} (const std\+::string \&name, const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&value)
-\begin{DoxyCompactList}\small\item\em Loads a matrix 4x4 into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a38aea3f31eb3f4b202bb9b519966c073}{load\+Uniform} (const std\+::string \&name, const \hyperlink{classflounder_1_1vector2}{vector2} \&value)
-\begin{DoxyCompactList}\small\item\em Loads a vector 2 into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a776ea14c9ec0e66b59e25cdc606e5bc8}{load\+Uniform} (const std\+::string \&name, const \hyperlink{classflounder_1_1vector3}{vector3} \&value)
-\begin{DoxyCompactList}\small\item\em Loads a vector 3 into a uniform. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_aa56085c5c7dc315f165ee3bb9d81d250}{load\+Uniform} (const std\+::string \&name, const \hyperlink{classflounder_1_1vector4}{vector4} \&value)
-\begin{DoxyCompactList}\small\item\em Loads a vector 4 into a uniform. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Static Public Member Functions}
-\begin{DoxyCompactItemize}
-\item 
-static \hyperlink{classflounder_1_1shader_1_1builder}{builder} $\ast$ \hyperlink{classflounder_1_1shader_a3dbe598a9994e8e4ccbf889ba38b05f7}{new\+Shader} ()
-\begin{DoxyCompactList}\small\item\em Creates a new shader builder that is used to configure a shader. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Protected Member Functions}
-\begin{DoxyCompactItemize}
-\item 
-\hyperlink{classflounder_1_1shader_ae8c052148333a4c06a4dd31b56b072cf}{shader} (\hyperlink{classflounder_1_1shader_1_1builder}{builder} $\ast$\hyperlink{classflounder_1_1shader_1_1builder}{builder})
-\begin{DoxyCompactList}\small\item\em Creates a new shader. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Protected Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{classflounder_1_1shader_a47675b1cb14100368f3ed5ef7338458c}\label{classflounder_1_1shader_a47675b1cb14100368f3ed5ef7338458c}} 
-\hyperlink{classflounder_1_1shader_1_1builder}{builder} $\ast$ {\bfseries m\+\_\+builder}
-\item 
-\mbox{\Hypertarget{classflounder_1_1shader_aaf406b4f20956f8ae7ca76dc8daad869}\label{classflounder_1_1shader_aaf406b4f20956f8ae7ca76dc8daad869}} 
-std\+::string {\bfseries m\+\_\+name}
-\item 
-\mbox{\Hypertarget{classflounder_1_1shader_a7937368d5fb8efdeb1f7c6134c2a4a00}\label{classflounder_1_1shader_a7937368d5fb8efdeb1f7c6134c2a4a00}} 
-std\+::vector$<$ \hyperlink{structflounder_1_1shadertype}{shadertype} $>$ $\ast$ {\bfseries m\+\_\+shader\+Types}
-\item 
-\mbox{\Hypertarget{classflounder_1_1shader_ae59400c4ad8488e858ee043d0417eb1a}\label{classflounder_1_1shader_ae59400c4ad8488e858ee043d0417eb1a}} 
-std\+::vector$<$ std\+::string $>$ $\ast$ {\bfseries m\+\_\+layout\+Locations}
-\item 
-\mbox{\Hypertarget{classflounder_1_1shader_a48e1ade301155186e47e335865fb81cf}\label{classflounder_1_1shader_a48e1ade301155186e47e335865fb81cf}} 
-std\+::vector$<$ std\+::string $>$ $\ast$ {\bfseries m\+\_\+layout\+Bindings}
-\item 
-\mbox{\Hypertarget{classflounder_1_1shader_a44c9cad46e853ab5991d77e0d0e1fde6}\label{classflounder_1_1shader_a44c9cad46e853ab5991d77e0d0e1fde6}} 
-std\+::vector$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ $\ast$ {\bfseries m\+\_\+constants}
-\item 
-\mbox{\Hypertarget{classflounder_1_1shader_a121ff2a41dd77d13e9c75e6a17f03770}\label{classflounder_1_1shader_a121ff2a41dd77d13e9c75e6a17f03770}} 
-std\+::vector$<$ std\+::string $>$ $\ast$ {\bfseries m\+\_\+uniforms}
-\item 
-\mbox{\Hypertarget{classflounder_1_1shader_a308e8bf681df24612a43a165948c1a21}\label{classflounder_1_1shader_a308e8bf681df24612a43a165948c1a21}} 
-G\+Luint {\bfseries m\+\_\+program\+ID}
+\mbox{\Hypertarget{classflounder_1_1shader_a3b002dd2d880e1b88eeea5c229a72347}\label{classflounder_1_1shader_a3b002dd2d880e1b88eeea5c229a72347}} 
+std\+::vector$<$ Vk\+Pipeline\+Shader\+Stage\+Create\+Info $>$ $\ast$ {\bfseries get\+Stages} () const
 \end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classflounder_1_1shader_a6e6e2fb4699edf3e31a2db8cc0537d54}{load\+Types} ()
-\begin{DoxyCompactList}\small\item\em Loads all of the types provided. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a6b9dd723ad226438a710cac8303841e5}{load\+Type} (\hyperlink{structflounder_1_1shadertype}{shadertype} $\ast$type)
-\begin{DoxyCompactList}\small\item\em Loads the type into memory. \end{DoxyCompactList}\item 
-std\+::string \hyperlink{classflounder_1_1shader_ad80001da433e7afbd646fe2d19ac8b4a}{process\+Line} (const std\+::string \&line)
-\begin{DoxyCompactList}\small\item\em Processes the shaders line looking for keywords and optimizing for platforms. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a01e50af930469630a051f8bcf9a74897}{load\+Locations} ()
-\begin{DoxyCompactList}\small\item\em Loads shader locations to make shader usage more simple. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_a12948c1607867de569f1cd596c923623}{delete\+Types} ()
-\begin{DoxyCompactList}\small\item\em Clears the loaded types from memory as they are not needed after creating the shader. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1shader_ababc32f14fa38c2c3e0337c5537b1dcd}{load\+Bindings} ()
-\begin{DoxyCompactList}\small\item\em Loads shader binds to make shader usage more simple. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classflounder_1_1shader_a671f6dea2db9272be68f2b9ebd021fbf}{create} ()
+\begin{DoxyCompactList}\small\item\em Creates the shader. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classflounder_1_1shader_aaf406b4f20956f8ae7ca76dc8daad869}\label{classflounder_1_1shader_aaf406b4f20956f8ae7ca76dc8daad869}} 
+std\+::string {\bfseries m\+\_\+name}
+\item 
+\mbox{\Hypertarget{classflounder_1_1shader_ae330ebe9ffb7c2e434a986d4c3d08abd}\label{classflounder_1_1shader_ae330ebe9ffb7c2e434a986d4c3d08abd}} 
+std\+::vector$<$ \hyperlink{classflounder_1_1shadertype}{shadertype} $>$ $\ast$ {\bfseries m\+\_\+types}
+\item 
+\mbox{\Hypertarget{classflounder_1_1shader_ac2eb98572bfcf0504352e0eb207fe967}\label{classflounder_1_1shader_ac2eb98572bfcf0504352e0eb207fe967}} 
+std\+::vector$<$ Vk\+Shader\+Module $>$ $\ast$ {\bfseries m\+\_\+modules}
+\item 
+\mbox{\Hypertarget{classflounder_1_1shader_a7b7834784409ed0ee582c6fdf23a611a}\label{classflounder_1_1shader_a7b7834784409ed0ee582c6fdf23a611a}} 
+std\+::vector$<$ Vk\+Pipeline\+Shader\+Stage\+Create\+Info $>$ $\ast$ {\bfseries m\+\_\+stages}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -113,11 +49,11 @@ Class that represents a loaded shader.
 
 
 \subsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classflounder_1_1shader_ae8c052148333a4c06a4dd31b56b072cf}\label{classflounder_1_1shader_ae8c052148333a4c06a4dd31b56b072cf}} 
+\mbox{\Hypertarget{classflounder_1_1shader_a0ef1d1ad999d4d36cdcbd01aee19fc40}\label{classflounder_1_1shader_a0ef1d1ad999d4d36cdcbd01aee19fc40}} 
 \index{flounder\+::shader@{flounder\+::shader}!shader@{shader}}
 \index{shader@{shader}!flounder\+::shader@{flounder\+::shader}}
 \subsubsection{\texorpdfstring{shader()}{shader()}}
-{\footnotesize\ttfamily flounder\+::shader\+::shader (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1shader_1_1builder}{builder} $\ast$}]{builder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+{\footnotesize\ttfamily flounder\+::shader\+::shader (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
 
 
 
@@ -125,7 +61,11 @@ Creates a new shader.
 
 
 \begin{DoxyParams}{Parameters}
-{\em builder} & The shaders builder. \\
+{\em name} & The shaders name. \\
+\hline
+{\em n\+\_\+args} & The number of shader types. \\
+\hline
+{\em ...} & The list of shader types. \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1shader_abd3f0fc712e7e178f18bf275c85e3337}\label{classflounder_1_1shader_abd3f0fc712e7e178f18bf275c85e3337}} 
@@ -141,15 +81,15 @@ Deconstructor for the shader.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1shader_a12948c1607867de569f1cd596c923623}\label{classflounder_1_1shader_a12948c1607867de569f1cd596c923623}} 
-\index{flounder\+::shader@{flounder\+::shader}!delete\+Types@{delete\+Types}}
-\index{delete\+Types@{delete\+Types}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{delete\+Types()}{deleteTypes()}}
-{\footnotesize\ttfamily void flounder\+::shader\+::delete\+Types (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+\mbox{\Hypertarget{classflounder_1_1shader_a671f6dea2db9272be68f2b9ebd021fbf}\label{classflounder_1_1shader_a671f6dea2db9272be68f2b9ebd021fbf}} 
+\index{flounder\+::shader@{flounder\+::shader}!create@{create}}
+\index{create@{create}!flounder\+::shader@{flounder\+::shader}}
+\subsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily void flounder\+::shader\+::create (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
-Clears the loaded types from memory as they are not needed after creating the shader. 
+Creates the shader. 
 
 \mbox{\Hypertarget{classflounder_1_1shader_a5971b780ec6535aeb0ca70fefd41daa9}\label{classflounder_1_1shader_a5971b780ec6535aeb0ca70fefd41daa9}} 
 \index{flounder\+::shader@{flounder\+::shader}!get\+Name@{get\+Name}}
@@ -164,353 +104,6 @@ Gets the loaded name for the shader.
 \begin{DoxyReturn}{Returns}
 The shaders name. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1shader_ab4d3af8b3ffe94ff901b15376215c2e2}\label{classflounder_1_1shader_ab4d3af8b3ffe94ff901b15376215c2e2}} 
-\index{flounder\+::shader@{flounder\+::shader}!get\+Uniform@{get\+Uniform}}
-\index{get\+Uniform@{get\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{get\+Uniform()}{getUniform()}}
-{\footnotesize\ttfamily G\+Lint flounder\+::shader\+::get\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})}
-
-
-
-Gets a uniform location from a name. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The uniform location. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1shader_ababc32f14fa38c2c3e0337c5537b1dcd}\label{classflounder_1_1shader_ababc32f14fa38c2c3e0337c5537b1dcd}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Bindings@{load\+Bindings}}
-\index{load\+Bindings@{load\+Bindings}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Bindings()}{loadBindings()}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Bindings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
-
-
-
-Loads shader binds to make shader usage more simple. 
-
-\mbox{\Hypertarget{classflounder_1_1shader_a01e50af930469630a051f8bcf9a74897}\label{classflounder_1_1shader_a01e50af930469630a051f8bcf9a74897}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Locations@{load\+Locations}}
-\index{load\+Locations@{load\+Locations}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Locations()}{loadLocations()}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Locations (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
-
-
-
-Loads shader locations to make shader usage more simple. 
-
-\mbox{\Hypertarget{classflounder_1_1shader_a6b9dd723ad226438a710cac8303841e5}\label{classflounder_1_1shader_a6b9dd723ad226438a710cac8303841e5}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Type@{load\+Type}}
-\index{load\+Type@{load\+Type}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Type()}{loadType()}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Type (\begin{DoxyParamCaption}\item[{\hyperlink{structflounder_1_1shadertype}{shadertype} $\ast$}]{type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
-
-
-
-Loads the type into memory. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em type} & The type. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a6e6e2fb4699edf3e31a2db8cc0537d54}\label{classflounder_1_1shader_a6e6e2fb4699edf3e31a2db8cc0537d54}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Types@{load\+Types}}
-\index{load\+Types@{load\+Types}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Types()}{loadTypes()}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Types (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
-
-
-
-Loads all of the types provided. 
-
-\mbox{\Hypertarget{classflounder_1_1shader_a1767f4ca2d3b1eb35dc4435e2aa3fd67}\label{classflounder_1_1shader_a1767f4ca2d3b1eb35dc4435e2aa3fd67}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [1/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const bool \&}]{value }\end{DoxyParamCaption})}
-
-
-
-Loads a boolean into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em value} & The value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a597fdaefa4644b107e8ce2776ce69f76}\label{classflounder_1_1shader_a597fdaefa4644b107e8ce2776ce69f76}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [2/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const int \&}]{value }\end{DoxyParamCaption})}
-
-
-
-Loads a int/sampler2D into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em value} & The value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_acd349b44107fc3389856a124da305d62}\label{classflounder_1_1shader_acd349b44107fc3389856a124da305d62}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [3/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const float \&}]{value }\end{DoxyParamCaption})}
-
-
-
-Loads a float into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em value} & The value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a3c14875fd04a7a824d2af9e737bde626}\label{classflounder_1_1shader_a3c14875fd04a7a824d2af9e737bde626}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [4/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const float \&}]{x,  }\item[{const float \&}]{y }\end{DoxyParamCaption})}
-
-
-
-Loads a vector 2 into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em x} & The x value to load into the uniform. \\
-\hline
-{\em y} & The y value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_abd782c5f1e6fb7f1d7f8fcf5d0c8b43c}\label{classflounder_1_1shader_abd782c5f1e6fb7f1d7f8fcf5d0c8b43c}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [5/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const float \&}]{x,  }\item[{const float \&}]{y,  }\item[{const float \&}]{z }\end{DoxyParamCaption})}
-
-
-
-Loads a vector 3 into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em x} & The x value to load into the uniform. \\
-\hline
-{\em y} & The y value to load into the uniform. \\
-\hline
-{\em z} & The z value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a54caa7d0462b98679dd902d6256a6e8b}\label{classflounder_1_1shader_a54caa7d0462b98679dd902d6256a6e8b}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [6/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const float \&}]{x,  }\item[{const float \&}]{y,  }\item[{const float \&}]{z,  }\item[{const float \&}]{w }\end{DoxyParamCaption})}
-
-
-
-Loads a vector 4 into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em x} & The x value to load into the uniform. \\
-\hline
-{\em y} & The y value to load into the uniform. \\
-\hline
-{\em z} & The z value to load into the uniform. \\
-\hline
-{\em w} & The w value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a6fed325128b3437f435a4ca327ea416e}\label{classflounder_1_1shader_a6fed325128b3437f435a4ca327ea416e}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [7/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \hyperlink{classflounder_1_1colour}{colour} \&}]{value }\end{DoxyParamCaption})}
-
-
-
-Loads a colour into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em value} & The value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a257fff86a8d24c657724fa14ac0ef12e}\label{classflounder_1_1shader_a257fff86a8d24c657724fa14ac0ef12e}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [8/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \hyperlink{classflounder_1_1matrix2x2}{matrix2x2} \&}]{value }\end{DoxyParamCaption})}
-
-
-
-Loads a matrix 2x2 into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em value} & The value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a9122d8bd4e63275b640e43d04f75fa88}\label{classflounder_1_1shader_a9122d8bd4e63275b640e43d04f75fa88}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [9/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \hyperlink{classflounder_1_1matrix3x3}{matrix3x3} \&}]{value }\end{DoxyParamCaption})}
-
-
-
-Loads a matrix 3x3 into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em value} & The value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a2b7d1b32758e0aaefd20b050aeb2e7fe}\label{classflounder_1_1shader_a2b7d1b32758e0aaefd20b050aeb2e7fe}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [10/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \hyperlink{classflounder_1_1matrix4x4}{matrix4x4} \&}]{value }\end{DoxyParamCaption})}
-
-
-
-Loads a matrix 4x4 into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em value} & The value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a38aea3f31eb3f4b202bb9b519966c073}\label{classflounder_1_1shader_a38aea3f31eb3f4b202bb9b519966c073}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [11/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \hyperlink{classflounder_1_1vector2}{vector2} \&}]{value }\end{DoxyParamCaption})}
-
-
-
-Loads a vector 2 into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em value} & The value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a776ea14c9ec0e66b59e25cdc606e5bc8}\label{classflounder_1_1shader_a776ea14c9ec0e66b59e25cdc606e5bc8}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [12/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \hyperlink{classflounder_1_1vector3}{vector3} \&}]{value }\end{DoxyParamCaption})}
-
-
-
-Loads a vector 3 into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em value} & The value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_aa56085c5c7dc315f165ee3bb9d81d250}\label{classflounder_1_1shader_aa56085c5c7dc315f165ee3bb9d81d250}} 
-\index{flounder\+::shader@{flounder\+::shader}!load\+Uniform@{load\+Uniform}}
-\index{load\+Uniform@{load\+Uniform}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{load\+Uniform()}{loadUniform()}\hspace{0.1cm}{\footnotesize\ttfamily [13/13]}}
-{\footnotesize\ttfamily void flounder\+::shader\+::load\+Uniform (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \hyperlink{classflounder_1_1vector4}{vector4} \&}]{value }\end{DoxyParamCaption})}
-
-
-
-Loads a vector 4 into a uniform. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & The uniforms name. \\
-\hline
-{\em value} & The value to load into the uniform. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1shader_a3dbe598a9994e8e4ccbf889ba38b05f7}\label{classflounder_1_1shader_a3dbe598a9994e8e4ccbf889ba38b05f7}} 
-\index{flounder\+::shader@{flounder\+::shader}!new\+Shader@{new\+Shader}}
-\index{new\+Shader@{new\+Shader}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{new\+Shader()}{newShader()}}
-{\footnotesize\ttfamily \hyperlink{classflounder_1_1shader_1_1builder}{shader\+::builder} $\ast$ flounder\+::shader\+::new\+Shader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
-
-
-
-Creates a new shader builder that is used to configure a shader. 
-
-\begin{DoxyReturn}{Returns}
-The shader builder. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1shader_ad80001da433e7afbd646fe2d19ac8b4a}\label{classflounder_1_1shader_ad80001da433e7afbd646fe2d19ac8b4a}} 
-\index{flounder\+::shader@{flounder\+::shader}!process\+Line@{process\+Line}}
-\index{process\+Line@{process\+Line}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{process\+Line()}{processLine()}}
-{\footnotesize\ttfamily std\+::string flounder\+::shader\+::process\+Line (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
-
-
-
-Processes the shaders line looking for keywords and optimizing for platforms. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em line} & The line to process. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The processed line. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1shader_a4b1f6770ce28db4f9a4b20e0842d785e}\label{classflounder_1_1shader_a4b1f6770ce28db4f9a4b20e0842d785e}} 
-\index{flounder\+::shader@{flounder\+::shader}!start@{start}}
-\index{start@{start}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{start()}{start()}}
-{\footnotesize\ttfamily void flounder\+::shader\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
-
-
-
-Starts the shader program. 
-
-\mbox{\Hypertarget{classflounder_1_1shader_a2972bda7e96b86de9a12a44e3e285691}\label{classflounder_1_1shader_a2972bda7e96b86de9a12a44e3e285691}} 
-\index{flounder\+::shader@{flounder\+::shader}!stop@{stop}}
-\index{stop@{stop}!flounder\+::shader@{flounder\+::shader}}
-\subsubsection{\texorpdfstring{stop()}{stop()}}
-{\footnotesize\ttfamily void flounder\+::shader\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
-
-
-
-Stops the shader program. 
-
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

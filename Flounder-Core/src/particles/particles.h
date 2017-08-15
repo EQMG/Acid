@@ -29,7 +29,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static particles *get()
+		static inline particles *get()
 		{
 			return static_cast<particles*>(framework::get()->getInstance("particles"));
 		}

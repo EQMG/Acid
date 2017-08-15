@@ -1,5 +1,14 @@
 \hypertarget{classflounder_1_1skyboxes}{}\section{flounder\+:\+:skyboxes Class Reference}
 \label{classflounder_1_1skyboxes}\index{flounder\+::skyboxes@{flounder\+::skyboxes}}
+
+
+A module used for managing skyboxes in 3D worlds.  
+
+
+
+
+{\ttfamily \#include $<$skyboxes.\+h$>$}
+
 Inheritance diagram for flounder\+:\+:skyboxes\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,49 +18,19 @@ Inheritance diagram for flounder\+:\+:skyboxes\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a5d7c04fdebe5c1ee38fb77c829ec57f2}\label{classflounder_1_1skyboxes_a5d7c04fdebe5c1ee38fb77c829ec57f2}} 
-void {\bfseries load} (\hyperlink{classflounder_1_1texture}{texture} $\ast$\hyperlink{classflounder_1_1texture}{texture}, \hyperlink{classflounder_1_1model}{model} $\ast$\hyperlink{classflounder_1_1model}{model})
-\item 
 void \hyperlink{classflounder_1_1skyboxes_ae94e675bcda78f2af0298a8551b82aa6}{update} () override
 \begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a644efa62434f725bd5de653bdb2e8494}\label{classflounder_1_1skyboxes_a644efa62434f725bd5de653bdb2e8494}} 
-float \& {\bfseries get\+Size} ()
+\mbox{\Hypertarget{classflounder_1_1skyboxes_a9bed77f9abdfc2eaf6b83db9db111bc6}\label{classflounder_1_1skyboxes_a9bed77f9abdfc2eaf6b83db9db111bc6}} 
+\hyperlink{classflounder_1_1skybox}{skybox} $\ast$ {\bfseries get\+Skybox} ()
 \item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_ac3a44d35f512954014dc8d00e0eece36}\label{classflounder_1_1skyboxes_ac3a44d35f512954014dc8d00e0eece36}} 
-void {\bfseries set\+Size} (const float size)
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a520763afde2b4c4003b1ea3cf9e3d680}\label{classflounder_1_1skyboxes_a520763afde2b4c4003b1ea3cf9e3d680}} 
-\hyperlink{classflounder_1_1texture}{texture} $\ast$ {\bfseries get\+Texture} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a4b2e83807c58240c0d1d05d408bf5838}\label{classflounder_1_1skyboxes_a4b2e83807c58240c0d1d05d408bf5838}} 
-void {\bfseries set\+Texture} (\hyperlink{classflounder_1_1texture}{texture} $\ast$\hyperlink{classflounder_1_1texture}{texture})
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a24b61b358a89bb32377c1befc24ae135}\label{classflounder_1_1skyboxes_a24b61b358a89bb32377c1befc24ae135}} 
-\hyperlink{classflounder_1_1model}{model} $\ast$ {\bfseries get\+Model} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a3dd10313510cb060dc8ccce9d85d3af6}\label{classflounder_1_1skyboxes_a3dd10313510cb060dc8ccce9d85d3af6}} 
-void {\bfseries set\+Model} (\hyperlink{classflounder_1_1model}{model} $\ast$\hyperlink{classflounder_1_1model}{model})
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_ae76042e8652f74e970dee8c12e77a502}\label{classflounder_1_1skyboxes_ae76042e8652f74e970dee8c12e77a502}} 
-\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries get\+Rotation} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_ab6bf41c31faab39f9f26e770d8a73ef1}\label{classflounder_1_1skyboxes_ab6bf41c31faab39f9f26e770d8a73ef1}} 
-void {\bfseries set\+Rotation} (\hyperlink{classflounder_1_1vector3}{vector3} $\ast$rotation)
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a3dba8a6d2312137aed273a59bd800f26}\label{classflounder_1_1skyboxes_a3dba8a6d2312137aed273a59bd800f26}} 
-\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ {\bfseries get\+Model\+Matrix} ()
+\mbox{\Hypertarget{classflounder_1_1skyboxes_a4dcbaebbb014415e10d547313c03ac46}\label{classflounder_1_1skyboxes_a4dcbaebbb014415e10d547313c03ac46}} 
+void {\bfseries set\+Skybox} (\hyperlink{classflounder_1_1skybox}{skybox} $\ast$\hyperlink{classflounder_1_1skybox}{skybox})
 \item 
 \mbox{\Hypertarget{classflounder_1_1skyboxes_a7792767f3e4ba57d15c8ef4849e67f1b}\label{classflounder_1_1skyboxes_a7792767f3e4ba57d15c8ef4849e67f1b}} 
 \hyperlink{classflounder_1_1fog}{fog} $\ast$ {\bfseries get\+Fog} ()
 \item 
 \mbox{\Hypertarget{classflounder_1_1skyboxes_a63e345f07ea2429202b0978401610c15}\label{classflounder_1_1skyboxes_a63e345f07ea2429202b0978401610c15}} 
 void {\bfseries set\+Fog} (\hyperlink{classflounder_1_1fog}{fog} $\ast$\hyperlink{classflounder_1_1fog}{fog})
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a53ca1ae5992264a2c7c0a1c707fa53c5}\label{classflounder_1_1skyboxes_a53ca1ae5992264a2c7c0a1c707fa53c5}} 
-float \& {\bfseries get\+Blend} ()
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_ab28cf9f93424755e4d59f79ebe913728}\label{classflounder_1_1skyboxes_ab28cf9f93424755e4d59f79ebe913728}} 
-void {\bfseries set\+Blend} (const float blend)
 \end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -61,27 +40,17 @@ static \hyperlink{classflounder_1_1skyboxes}{skyboxes} $\ast$ \hyperlink{classfl
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a9941db3103034af65f72f88b9d6d7e9e}\label{classflounder_1_1skyboxes_a9941db3103034af65f72f88b9d6d7e9e}} 
-float {\bfseries m\+\_\+size}
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_ab9d00a269507281763fbac8916a979ac}\label{classflounder_1_1skyboxes_ab9d00a269507281763fbac8916a979ac}} 
-\hyperlink{classflounder_1_1texture}{texture} $\ast$ {\bfseries m\+\_\+texture}
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a1090ce15036dc7c5c68b84a3c92a9826}\label{classflounder_1_1skyboxes_a1090ce15036dc7c5c68b84a3c92a9826}} 
-\hyperlink{classflounder_1_1model}{model} $\ast$ {\bfseries m\+\_\+model}
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_ab8f9b27c128d501100981436b906996b}\label{classflounder_1_1skyboxes_ab8f9b27c128d501100981436b906996b}} 
-\hyperlink{classflounder_1_1vector3}{vector3} $\ast$ {\bfseries m\+\_\+rotation}
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a79adf5d78050dfd8cff097da9e0ec3d5}\label{classflounder_1_1skyboxes_a79adf5d78050dfd8cff097da9e0ec3d5}} 
-\hyperlink{classflounder_1_1matrix4x4}{matrix4x4} $\ast$ {\bfseries m\+\_\+model\+Matrix}
+\mbox{\Hypertarget{classflounder_1_1skyboxes_ac1283efff66b16876d01d32f02b3dcfc}\label{classflounder_1_1skyboxes_ac1283efff66b16876d01d32f02b3dcfc}} 
+\hyperlink{classflounder_1_1skybox}{skybox} $\ast$ {\bfseries m\+\_\+skybox}
 \item 
 \mbox{\Hypertarget{classflounder_1_1skyboxes_a52ab1626cd98237d23a2a496a8b0daa8}\label{classflounder_1_1skyboxes_a52ab1626cd98237d23a2a496a8b0daa8}} 
 \hyperlink{classflounder_1_1fog}{fog} $\ast$ {\bfseries m\+\_\+fog}
-\item 
-\mbox{\Hypertarget{classflounder_1_1skyboxes_a1a6a8b9a7b1eff6751ad54df90ba5d36}\label{classflounder_1_1skyboxes_a1a6a8b9a7b1eff6751ad54df90ba5d36}} 
-float {\bfseries m\+\_\+blend}
 \end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A module used for managing skyboxes in 3D worlds. 
+
 
 
 \subsection{Member Function Documentation}

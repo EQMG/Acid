@@ -9,77 +9,52 @@ Class that represents a loaded texture.
 
 {\ttfamily \#include $<$texture.\+h$>$}
 
-\subsection*{Classes}
-\begin{DoxyCompactItemize}
-\item 
-class \hyperlink{classflounder_1_1texture_1_1builder}{builder}
-\begin{DoxyCompactList}\small\item\em A builder used to set texture parameters for loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classflounder_1_1texture_a62ac74067eac27177bb9b8e4483a7a55}{texture} (std\+::string file, const bool \&\hyperlink{classflounder_1_1texture_aa74c0c1cb920f5f131832ec6498eba47}{has\+Alpha}=false, const bool \&clamp\+Edges=false, const int32\+\_\+t \&mip\+Levels=1, const bool \&anisotropic=true, const bool \&nearest=false, const int32\+\_\+t \&number\+Of\+Rows=1)
+\begin{DoxyCompactList}\small\item\em A new Open\+GL texture object. \end{DoxyCompactList}\item 
+\hyperlink{classflounder_1_1texture_a907f7472caf155686539bd54fb451166}{texture} (const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em A new Open\+GL cubemap texture object. \end{DoxyCompactList}\item 
 \hyperlink{classflounder_1_1texture_a8271c7f9860a5a235be9b1207bed2c39}{$\sim$texture} ()
 \begin{DoxyCompactList}\small\item\em Deconstructor for the texture object. \end{DoxyCompactList}\item 
-int \hyperlink{classflounder_1_1texture_af4502c9224b20f452b25918dbaaa2d3a}{get\+Width} () const
-\begin{DoxyCompactList}\small\item\em Gets the width of the texture. \end{DoxyCompactList}\item 
-int \hyperlink{classflounder_1_1texture_a88b654180956109a0508c41eb907fa75}{get\+Height} () const
-\begin{DoxyCompactList}\small\item\em Gets the height of the texture. \end{DoxyCompactList}\item 
 bool \hyperlink{classflounder_1_1texture_aa74c0c1cb920f5f131832ec6498eba47}{has\+Alpha} () const
 \begin{DoxyCompactList}\small\item\em Gets if the texture has alpha. \end{DoxyCompactList}\item 
 void \hyperlink{classflounder_1_1texture_ac05209e3a9686903a336575ac71b8f0e}{set\+Has\+Alpha} (const bool \&\hyperlink{classflounder_1_1texture_aa74c0c1cb920f5f131832ec6498eba47}{has\+Alpha})
 \begin{DoxyCompactList}\small\item\em Sets if the texture has alpha. \end{DoxyCompactList}\item 
-int \hyperlink{classflounder_1_1texture_a0f4e7c0e5a644003fced34d4e4125a36}{get\+Number\+Of\+Rows} () const
+int32\+\_\+t \hyperlink{classflounder_1_1texture_a299af5830ad52b5759014e363805e49b}{get\+Number\+Of\+Rows} () const
 \begin{DoxyCompactList}\small\item\em Gets the number of texture rows. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1texture_ac0854bbd1a260380db88f378b408aa18}{set\+Number\+Of\+Rows} (const int \&number\+Of\+Rows)
+void \hyperlink{classflounder_1_1texture_a3afb09cb387467fcae976fb1bbe5ded7}{set\+Number\+Of\+Rows} (const int32\+\_\+t \&number\+Of\+Rows)
 \begin{DoxyCompactList}\small\item\em Sets the number of texture rows. \end{DoxyCompactList}\item 
-G\+Lenum \hyperlink{classflounder_1_1texture_a4b4839206c63ab911e4a52d055daeb24}{get\+Gl\+Type} () const
-\begin{DoxyCompactList}\small\item\em The Open\+GL type of texture loaded. \end{DoxyCompactList}\item 
-G\+Luint \hyperlink{classflounder_1_1texture_a2f9a420fd96169046fb3494d4b7dcd90}{get\+Texture\+ID} () const
-\begin{DoxyCompactList}\small\item\em Gets the textures ID. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Static Public Member Functions}
+Vk\+Image\+Type \hyperlink{classflounder_1_1texture_acf43aa80310fb81f1ffd559b7c3e2434}{get\+Texture\+Type} () const
+\begin{DoxyCompactList}\small\item\em The textures type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static \hyperlink{classflounder_1_1texture_1_1builder}{builder} $\ast$ \hyperlink{classflounder_1_1texture_af6311afbba328755cd0ff6a7839e9172}{new\+Texture} ()
-\begin{DoxyCompactList}\small\item\em Creates a new texture builder that is used to configure a texture. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Protected Member Functions}
+void \hyperlink{classflounder_1_1texture_ae16fb1bee340a680060e45dfa527e57d}{load\+From\+Texture} ()
+\begin{DoxyCompactList}\small\item\em Loads the texture object from a texture file. \end{DoxyCompactList}\item 
+void \hyperlink{classflounder_1_1texture_a846a34a57f31c5bae8ad856d589bbd83}{load\+From\+Cubemap} ()
+\begin{DoxyCompactList}\small\item\em Loads the texture object from a cubemap texture files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
-\item 
-\hyperlink{classflounder_1_1texture_a82dd2e895abe671411ab0fcaaf49b5d1}{texture} (\hyperlink{classflounder_1_1texture_1_1builder}{builder} $\ast$\hyperlink{classflounder_1_1texture_1_1builder}{builder})
-\begin{DoxyCompactList}\small\item\em A new Open\+GL texture object. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Protected Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\Hypertarget{classflounder_1_1texture_aa28f1ede89ed77ec781159dd5950f877}\label{classflounder_1_1texture_aa28f1ede89ed77ec781159dd5950f877}} 
-\hyperlink{classflounder_1_1texture_1_1builder}{builder} $\ast$ {\bfseries m\+\_\+builder}
 \item 
 \mbox{\Hypertarget{classflounder_1_1texture_ad1f335b51a12f9405681f68eb788bec1}\label{classflounder_1_1texture_ad1f335b51a12f9405681f68eb788bec1}} 
 std\+::string {\bfseries m\+\_\+file}
 \item 
-\mbox{\Hypertarget{classflounder_1_1texture_a6d5f91971acb060575564d3b1c15bc26}\label{classflounder_1_1texture_a6d5f91971acb060575564d3b1c15bc26}} 
-std\+::string $\ast$ {\bfseries m\+\_\+cubemap}
-\item 
 \mbox{\Hypertarget{classflounder_1_1texture_a17d290a0aaefaeb8d023b5df78f833cb}\label{classflounder_1_1texture_a17d290a0aaefaeb8d023b5df78f833cb}} 
 int {\bfseries m\+\_\+cubemap\+Count}
 \item 
-\mbox{\Hypertarget{classflounder_1_1texture_a94b3b1c8daa12167b185da0e0ae6ce29}\label{classflounder_1_1texture_a94b3b1c8daa12167b185da0e0ae6ce29}} 
-int {\bfseries m\+\_\+width}
-\item 
-\mbox{\Hypertarget{classflounder_1_1texture_a01223636eb74299faafa4c7ba0c9c518}\label{classflounder_1_1texture_a01223636eb74299faafa4c7ba0c9c518}} 
-int {\bfseries m\+\_\+height}
+\mbox{\Hypertarget{classflounder_1_1texture_a6d5f91971acb060575564d3b1c15bc26}\label{classflounder_1_1texture_a6d5f91971acb060575564d3b1c15bc26}} 
+std\+::string $\ast$ {\bfseries m\+\_\+cubemap}
 \item 
 \mbox{\Hypertarget{classflounder_1_1texture_a4232b3472cd791fd233fc94eae40a919}\label{classflounder_1_1texture_a4232b3472cd791fd233fc94eae40a919}} 
 bool {\bfseries m\+\_\+has\+Alpha}
 \item 
-\mbox{\Hypertarget{classflounder_1_1texture_a599328fc8c854d95fc783ee9aaace9b2}\label{classflounder_1_1texture_a599328fc8c854d95fc783ee9aaace9b2}} 
-\hyperlink{classflounder_1_1colour}{colour} $\ast$ {\bfseries m\+\_\+border}
-\item 
-\mbox{\Hypertarget{classflounder_1_1texture_a26c8d6fbdf02b87d52acd58e7764fecc}\label{classflounder_1_1texture_a26c8d6fbdf02b87d52acd58e7764fecc}} 
-bool {\bfseries m\+\_\+clamp\+To\+Border}
-\item 
 \mbox{\Hypertarget{classflounder_1_1texture_afc05e74339b03edbb3c599cc8040dd8e}\label{classflounder_1_1texture_afc05e74339b03edbb3c599cc8040dd8e}} 
 bool {\bfseries m\+\_\+clamp\+Edges}
 \item 
-\mbox{\Hypertarget{classflounder_1_1texture_a54639365a71391cc144fe4ebeaf1e39c}\label{classflounder_1_1texture_a54639365a71391cc144fe4ebeaf1e39c}} 
-bool {\bfseries m\+\_\+mipmap}
+\mbox{\Hypertarget{classflounder_1_1texture_ad6b3967dfb78755031207f875ac115ca}\label{classflounder_1_1texture_ad6b3967dfb78755031207f875ac115ca}} 
+int32\+\_\+t {\bfseries m\+\_\+mip\+Levels}
 \item 
 \mbox{\Hypertarget{classflounder_1_1texture_a68c7e5491756ff6d61195dcc0e19da3b}\label{classflounder_1_1texture_a68c7e5491756ff6d61195dcc0e19da3b}} 
 bool {\bfseries m\+\_\+anisotropic}
@@ -87,22 +62,45 @@ bool {\bfseries m\+\_\+anisotropic}
 \mbox{\Hypertarget{classflounder_1_1texture_a13c3515a014252220abfbf8c302e195b}\label{classflounder_1_1texture_a13c3515a014252220abfbf8c302e195b}} 
 bool {\bfseries m\+\_\+nearest}
 \item 
-\mbox{\Hypertarget{classflounder_1_1texture_af1e32e208f02390ec44941e989b5fca8}\label{classflounder_1_1texture_af1e32e208f02390ec44941e989b5fca8}} 
-int {\bfseries m\+\_\+number\+Of\+Rows}
+\mbox{\Hypertarget{classflounder_1_1texture_aa9f5413689aeadb20e624d5396000c9f}\label{classflounder_1_1texture_aa9f5413689aeadb20e624d5396000c9f}} 
+int32\+\_\+t {\bfseries m\+\_\+number\+Of\+Rows}
 \item 
-\mbox{\Hypertarget{classflounder_1_1texture_a3d36cadbf7f7aa9d8e2d8b9ffc2a267c}\label{classflounder_1_1texture_a3d36cadbf7f7aa9d8e2d8b9ffc2a267c}} 
-G\+Lenum {\bfseries m\+\_\+gl\+Type}
+\mbox{\Hypertarget{classflounder_1_1texture_ad623edf69b8069a06177fd17f8c17a96}\label{classflounder_1_1texture_ad623edf69b8069a06177fd17f8c17a96}} 
+Vk\+Buffer {\bfseries m\+\_\+staging\+Buffer}
 \item 
-\mbox{\Hypertarget{classflounder_1_1texture_a0ad04565d8bacdc63a49076e7e0de5f2}\label{classflounder_1_1texture_a0ad04565d8bacdc63a49076e7e0de5f2}} 
-G\+Luint {\bfseries m\+\_\+texture\+ID}
+\mbox{\Hypertarget{classflounder_1_1texture_a6df3445c1015e3d862c8d4cba13ed4a4}\label{classflounder_1_1texture_a6df3445c1015e3d862c8d4cba13ed4a4}} 
+Vk\+Device\+Memory {\bfseries m\+\_\+staging\+Memory}
+\item 
+\mbox{\Hypertarget{classflounder_1_1texture_a155ccd6a3b7224e57af94d4bc7e64629}\label{classflounder_1_1texture_a155ccd6a3b7224e57af94d4bc7e64629}} 
+Vk\+Image {\bfseries m\+\_\+image}
+\item 
+\mbox{\Hypertarget{classflounder_1_1texture_a50a63d0d04d6be6f8f605cb7bcedec74}\label{classflounder_1_1texture_a50a63d0d04d6be6f8f605cb7bcedec74}} 
+Vk\+Device\+Memory {\bfseries m\+\_\+image\+Memory}
+\item 
+\mbox{\Hypertarget{classflounder_1_1texture_a471cfd731ceb6cf1495bcf91c91ffc29}\label{classflounder_1_1texture_a471cfd731ceb6cf1495bcf91c91ffc29}} 
+Vk\+Image\+View {\bfseries m\+\_\+image\+View}
+\item 
+\mbox{\Hypertarget{classflounder_1_1texture_ae5654ef4b4c6279df7da4e8ad268e030}\label{classflounder_1_1texture_ae5654ef4b4c6279df7da4e8ad268e030}} 
+Vk\+Format {\bfseries m\+\_\+format}
+\item 
+\mbox{\Hypertarget{classflounder_1_1texture_ac0c369cafc79979f3d17a6d0be63f120}\label{classflounder_1_1texture_ac0c369cafc79979f3d17a6d0be63f120}} 
+Vk\+Sampler {\bfseries m\+\_\+sampler}
+\item 
+\mbox{\Hypertarget{classflounder_1_1texture_aaacb1f6d37973a81a203170dee1cb9e8}\label{classflounder_1_1texture_aaacb1f6d37973a81a203170dee1cb9e8}} 
+Vk\+Image\+Type {\bfseries m\+\_\+image\+Type}
+\item 
+\mbox{\Hypertarget{classflounder_1_1texture_a5075b7605f55dfbad10eca61addfc394}\label{classflounder_1_1texture_a5075b7605f55dfbad10eca61addfc394}} 
+int32\+\_\+t {\bfseries m\+\_\+components}
+\item 
+\mbox{\Hypertarget{classflounder_1_1texture_ab8c80a6e4b35039a30cb82727dca228e}\label{classflounder_1_1texture_ab8c80a6e4b35039a30cb82727dca228e}} 
+int32\+\_\+t {\bfseries m\+\_\+width}
+\item 
+\mbox{\Hypertarget{classflounder_1_1texture_a5967cf202dd055a2e10f0abbf149896a}\label{classflounder_1_1texture_a5967cf202dd055a2e10f0abbf149896a}} 
+int32\+\_\+t {\bfseries m\+\_\+height}
+\item 
+\mbox{\Hypertarget{classflounder_1_1texture_ac156bf4f1568e98f467ca32c571979a2}\label{classflounder_1_1texture_ac156bf4f1568e98f467ca32c571979a2}} 
+int32\+\_\+t {\bfseries m\+\_\+depth}
 \end{DoxyCompactItemize}
-\subsection*{Private Member Functions}
-\begin{DoxyCompactItemize}
-\item 
-void \hyperlink{classflounder_1_1texture_a4709b913a032bdcc66e309d39254e923}{load\+From\+Texture} (const std\+::string \&file)
-\begin{DoxyCompactList}\small\item\em Loads the texture object from a texture file. \end{DoxyCompactList}\item 
-void \hyperlink{classflounder_1_1texture_aa9703d5d5d76227387a0edfd28503238}{load\+From\+Cubemap} (const int count, std\+::string $\ast$cubemap)
-\begin{DoxyCompactList}\small\item\em Loads the texture object from a cubemap texture files. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -111,11 +109,11 @@ Class that represents a loaded texture.
 
 
 \subsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classflounder_1_1texture_a82dd2e895abe671411ab0fcaaf49b5d1}\label{classflounder_1_1texture_a82dd2e895abe671411ab0fcaaf49b5d1}} 
+\mbox{\Hypertarget{classflounder_1_1texture_a62ac74067eac27177bb9b8e4483a7a55}\label{classflounder_1_1texture_a62ac74067eac27177bb9b8e4483a7a55}} 
 \index{flounder\+::texture@{flounder\+::texture}!texture@{texture}}
 \index{texture@{texture}!flounder\+::texture@{flounder\+::texture}}
-\subsubsection{\texorpdfstring{texture()}{texture()}}
-{\footnotesize\ttfamily flounder\+::texture\+::texture (\begin{DoxyParamCaption}\item[{\hyperlink{classflounder_1_1texture_1_1builder}{builder} $\ast$}]{builder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+\subsubsection{\texorpdfstring{texture()}{texture()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily flounder\+::texture\+::texture (\begin{DoxyParamCaption}\item[{std\+::string}]{file,  }\item[{const bool \&}]{has\+Alpha = {\ttfamily false},  }\item[{const bool \&}]{clamp\+Edges = {\ttfamily false},  }\item[{const int32\+\_\+t \&}]{mip\+Levels = {\ttfamily 1},  }\item[{const bool \&}]{anisotropic = {\ttfamily true},  }\item[{const bool \&}]{nearest = {\ttfamily false},  }\item[{const int32\+\_\+t \&}]{number\+Of\+Rows = {\ttfamily 1} }\end{DoxyParamCaption})}
 
 
 
@@ -123,7 +121,24 @@ A new Open\+GL texture object.
 
 
 \begin{DoxyParams}{Parameters}
-{\em builder} & The texture builder. \\
+{\em file} & The textures file. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classflounder_1_1texture_a907f7472caf155686539bd54fb451166}\label{classflounder_1_1texture_a907f7472caf155686539bd54fb451166}} 
+\index{flounder\+::texture@{flounder\+::texture}!texture@{texture}}
+\index{texture@{texture}!flounder\+::texture@{flounder\+::texture}}
+\subsubsection{\texorpdfstring{texture()}{texture()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily flounder\+::texture\+::texture (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+A new Open\+GL cubemap texture object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number of cubemap files. \\
+\hline
+{\em ...} & The list of cubemap texture paths. \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classflounder_1_1texture_a8271c7f9860a5a235be9b1207bed2c39}\label{classflounder_1_1texture_a8271c7f9860a5a235be9b1207bed2c39}} 
@@ -139,37 +154,11 @@ Deconstructor for the texture object.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1texture_a4b4839206c63ab911e4a52d055daeb24}\label{classflounder_1_1texture_a4b4839206c63ab911e4a52d055daeb24}} 
-\index{flounder\+::texture@{flounder\+::texture}!get\+Gl\+Type@{get\+Gl\+Type}}
-\index{get\+Gl\+Type@{get\+Gl\+Type}!flounder\+::texture@{flounder\+::texture}}
-\subsubsection{\texorpdfstring{get\+Gl\+Type()}{getGlType()}}
-{\footnotesize\ttfamily G\+Lenum flounder\+::texture\+::get\+Gl\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-The Open\+GL type of texture loaded. 
-
-\begin{DoxyReturn}{Returns}
-The Open\+GL texture type. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1texture_a88b654180956109a0508c41eb907fa75}\label{classflounder_1_1texture_a88b654180956109a0508c41eb907fa75}} 
-\index{flounder\+::texture@{flounder\+::texture}!get\+Height@{get\+Height}}
-\index{get\+Height@{get\+Height}!flounder\+::texture@{flounder\+::texture}}
-\subsubsection{\texorpdfstring{get\+Height()}{getHeight()}}
-{\footnotesize\ttfamily int flounder\+::texture\+::get\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Gets the height of the texture. 
-
-\begin{DoxyReturn}{Returns}
-The textures height. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1texture_a0f4e7c0e5a644003fced34d4e4125a36}\label{classflounder_1_1texture_a0f4e7c0e5a644003fced34d4e4125a36}} 
+\mbox{\Hypertarget{classflounder_1_1texture_a299af5830ad52b5759014e363805e49b}\label{classflounder_1_1texture_a299af5830ad52b5759014e363805e49b}} 
 \index{flounder\+::texture@{flounder\+::texture}!get\+Number\+Of\+Rows@{get\+Number\+Of\+Rows}}
 \index{get\+Number\+Of\+Rows@{get\+Number\+Of\+Rows}!flounder\+::texture@{flounder\+::texture}}
 \subsubsection{\texorpdfstring{get\+Number\+Of\+Rows()}{getNumberOfRows()}}
-{\footnotesize\ttfamily int flounder\+::texture\+::get\+Number\+Of\+Rows (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily int32\+\_\+t flounder\+::texture\+::get\+Number\+Of\+Rows (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -178,31 +167,18 @@ Gets the number of texture rows.
 \begin{DoxyReturn}{Returns}
 The number of texture rows. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1texture_a2f9a420fd96169046fb3494d4b7dcd90}\label{classflounder_1_1texture_a2f9a420fd96169046fb3494d4b7dcd90}} 
-\index{flounder\+::texture@{flounder\+::texture}!get\+Texture\+ID@{get\+Texture\+ID}}
-\index{get\+Texture\+ID@{get\+Texture\+ID}!flounder\+::texture@{flounder\+::texture}}
-\subsubsection{\texorpdfstring{get\+Texture\+I\+D()}{getTextureID()}}
-{\footnotesize\ttfamily G\+Luint flounder\+::texture\+::get\+Texture\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+\mbox{\Hypertarget{classflounder_1_1texture_acf43aa80310fb81f1ffd559b7c3e2434}\label{classflounder_1_1texture_acf43aa80310fb81f1ffd559b7c3e2434}} 
+\index{flounder\+::texture@{flounder\+::texture}!get\+Texture\+Type@{get\+Texture\+Type}}
+\index{get\+Texture\+Type@{get\+Texture\+Type}!flounder\+::texture@{flounder\+::texture}}
+\subsubsection{\texorpdfstring{get\+Texture\+Type()}{getTextureType()}}
+{\footnotesize\ttfamily Vk\+Image\+Type flounder\+::texture\+::get\+Texture\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
-Gets the textures ID. 
-
-\begin{DoxyReturn}{Returns}
-The textures ID. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1texture_af4502c9224b20f452b25918dbaaa2d3a}\label{classflounder_1_1texture_af4502c9224b20f452b25918dbaaa2d3a}} 
-\index{flounder\+::texture@{flounder\+::texture}!get\+Width@{get\+Width}}
-\index{get\+Width@{get\+Width}!flounder\+::texture@{flounder\+::texture}}
-\subsubsection{\texorpdfstring{get\+Width()}{getWidth()}}
-{\footnotesize\ttfamily int flounder\+::texture\+::get\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Gets the width of the texture. 
+The textures type. 
 
 \begin{DoxyReturn}{Returns}
-The textures width. 
+The textures type. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1texture_aa74c0c1cb920f5f131832ec6498eba47}\label{classflounder_1_1texture_aa74c0c1cb920f5f131832ec6498eba47}} 
 \index{flounder\+::texture@{flounder\+::texture}!has\+Alpha@{has\+Alpha}}
@@ -217,49 +193,26 @@ Gets if the texture has alpha.
 \begin{DoxyReturn}{Returns}
 If the texture has alpha. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classflounder_1_1texture_aa9703d5d5d76227387a0edfd28503238}\label{classflounder_1_1texture_aa9703d5d5d76227387a0edfd28503238}} 
+\mbox{\Hypertarget{classflounder_1_1texture_a846a34a57f31c5bae8ad856d589bbd83}\label{classflounder_1_1texture_a846a34a57f31c5bae8ad856d589bbd83}} 
 \index{flounder\+::texture@{flounder\+::texture}!load\+From\+Cubemap@{load\+From\+Cubemap}}
 \index{load\+From\+Cubemap@{load\+From\+Cubemap}!flounder\+::texture@{flounder\+::texture}}
 \subsubsection{\texorpdfstring{load\+From\+Cubemap()}{loadFromCubemap()}}
-{\footnotesize\ttfamily void flounder\+::texture\+::load\+From\+Cubemap (\begin{DoxyParamCaption}\item[{const int}]{count,  }\item[{std\+::string $\ast$}]{cubemap }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily void flounder\+::texture\+::load\+From\+Cubemap (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
 Loads the texture object from a cubemap texture files. 
 
-
-\begin{DoxyParams}{Parameters}
-{\em cubemap} & The cubemap files to load from. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1texture_a4709b913a032bdcc66e309d39254e923}\label{classflounder_1_1texture_a4709b913a032bdcc66e309d39254e923}} 
+\mbox{\Hypertarget{classflounder_1_1texture_ae16fb1bee340a680060e45dfa527e57d}\label{classflounder_1_1texture_ae16fb1bee340a680060e45dfa527e57d}} 
 \index{flounder\+::texture@{flounder\+::texture}!load\+From\+Texture@{load\+From\+Texture}}
 \index{load\+From\+Texture@{load\+From\+Texture}!flounder\+::texture@{flounder\+::texture}}
 \subsubsection{\texorpdfstring{load\+From\+Texture()}{loadFromTexture()}}
-{\footnotesize\ttfamily void flounder\+::texture\+::load\+From\+Texture (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily void flounder\+::texture\+::load\+From\+Texture (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
 Loads the texture object from a texture file. 
 
-
-\begin{DoxyParams}{Parameters}
-{\em file} & The file to load from. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1texture_af6311afbba328755cd0ff6a7839e9172}\label{classflounder_1_1texture_af6311afbba328755cd0ff6a7839e9172}} 
-\index{flounder\+::texture@{flounder\+::texture}!new\+Texture@{new\+Texture}}
-\index{new\+Texture@{new\+Texture}!flounder\+::texture@{flounder\+::texture}}
-\subsubsection{\texorpdfstring{new\+Texture()}{newTexture()}}
-{\footnotesize\ttfamily \hyperlink{classflounder_1_1texture_1_1builder}{texture\+::builder} $\ast$ flounder\+::texture\+::new\+Texture (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
-
-
-
-Creates a new texture builder that is used to configure a texture. 
-
-\begin{DoxyReturn}{Returns}
-The texture builder. 
-\end{DoxyReturn}
 \mbox{\Hypertarget{classflounder_1_1texture_ac05209e3a9686903a336575ac71b8f0e}\label{classflounder_1_1texture_ac05209e3a9686903a336575ac71b8f0e}} 
 \index{flounder\+::texture@{flounder\+::texture}!set\+Has\+Alpha@{set\+Has\+Alpha}}
 \index{set\+Has\+Alpha@{set\+Has\+Alpha}!flounder\+::texture@{flounder\+::texture}}
@@ -275,11 +228,11 @@ Sets if the texture has alpha.
 {\em has\+Alpha} & If the texture has alpha. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classflounder_1_1texture_ac0854bbd1a260380db88f378b408aa18}\label{classflounder_1_1texture_ac0854bbd1a260380db88f378b408aa18}} 
+\mbox{\Hypertarget{classflounder_1_1texture_a3afb09cb387467fcae976fb1bbe5ded7}\label{classflounder_1_1texture_a3afb09cb387467fcae976fb1bbe5ded7}} 
 \index{flounder\+::texture@{flounder\+::texture}!set\+Number\+Of\+Rows@{set\+Number\+Of\+Rows}}
 \index{set\+Number\+Of\+Rows@{set\+Number\+Of\+Rows}!flounder\+::texture@{flounder\+::texture}}
 \subsubsection{\texorpdfstring{set\+Number\+Of\+Rows()}{setNumberOfRows()}}
-{\footnotesize\ttfamily void flounder\+::texture\+::set\+Number\+Of\+Rows (\begin{DoxyParamCaption}\item[{const int \&}]{number\+Of\+Rows }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily void flounder\+::texture\+::set\+Number\+Of\+Rows (\begin{DoxyParamCaption}\item[{const int32\+\_\+t \&}]{number\+Of\+Rows }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 

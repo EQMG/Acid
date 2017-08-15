@@ -38,7 +38,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static mouse *get()
+		static inline mouse *get()
 		{
 			return static_cast<mouse*>(framework::get()->getInstance("mouse"));
 		}

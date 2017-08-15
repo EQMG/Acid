@@ -25,7 +25,7 @@ namespace flounder
 		/// Gets this framework instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static loaders *get()
+		static inline loaders *get()
 		{
 			return static_cast<loaders*>(framework::get()->getInstance("loaders"));
 		}

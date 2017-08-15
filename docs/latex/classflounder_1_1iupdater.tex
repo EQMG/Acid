@@ -30,17 +30,17 @@ virtual void {\bfseries update} ()=0
 \item 
 virtual \hyperlink{classflounder_1_1imodule}{imodule} $\ast$ \hyperlink{classflounder_1_1iupdater_a391b1788b5c139b199ed48033da1b88d}{get\+Instance} (const std\+::string \&name)=0
 \begin{DoxyCompactList}\small\item\em Gets a module from the updater. \end{DoxyCompactList}\item 
-virtual double \hyperlink{classflounder_1_1iupdater_abd983cbbeed27f28e9be768a2d3b69f2}{get\+Time\+Offset} ()=0
+virtual float \hyperlink{classflounder_1_1iupdater_a4e682002890f952dee48c646fce39824}{get\+Time\+Offset} ()=0
 \begin{DoxyCompactList}\small\item\em Gets the added/removed time for the framework (seconds). \end{DoxyCompactList}\item 
-virtual void \hyperlink{classflounder_1_1iupdater_aa6aa143e40a5a39bcd53753798438ea1}{set\+Time\+Offset} (const double \&time\+Offset)=0
+virtual void \hyperlink{classflounder_1_1iupdater_a5ce1862ec2d0e6c4f61b026922379dd2}{set\+Time\+Offset} (const float \&time\+Offset)=0
 \begin{DoxyCompactList}\small\item\em Sets the time offset for the framework (seconds). \end{DoxyCompactList}\item 
-virtual double \hyperlink{classflounder_1_1iupdater_a1e8d40602f9799fc82d96d5b845cf796}{get\+Delta} ()=0
+virtual float \hyperlink{classflounder_1_1iupdater_a1a3813366f3a4f08cb91e23cd7b63cda}{get\+Delta} ()=0
 \begin{DoxyCompactList}\small\item\em Gets the delta (seconds) between updates. \end{DoxyCompactList}\item 
-virtual double \hyperlink{classflounder_1_1iupdater_a00d7cf530cfbd7f83c8903328da14027}{get\+Delta\+Render} ()=0
+virtual float \hyperlink{classflounder_1_1iupdater_a242d2c4bef63ac11560ac4f13dd4ad3f}{get\+Delta\+Render} ()=0
 \begin{DoxyCompactList}\small\item\em Gets the delta (seconds) between renders. \end{DoxyCompactList}\item 
-virtual double \hyperlink{classflounder_1_1iupdater_a071086b844e1f90d7f3577e80c9c09fe}{get\+Time\+Sec} ()=0
+virtual float \hyperlink{classflounder_1_1iupdater_aab92d5e84c55e35d1b8a9a4f5628e3b4}{get\+Time\+Sec} ()=0
 \begin{DoxyCompactList}\small\item\em Gets the current time of the framework instance. \end{DoxyCompactList}\item 
-virtual double \hyperlink{classflounder_1_1iupdater_a56548faad88ad85e0cb4bc96af0912d6}{get\+Time\+Ms} ()=0
+virtual float \hyperlink{classflounder_1_1iupdater_a6f5a67e27507165d4423b32e29ca3446}{get\+Time\+Ms} ()=0
 \begin{DoxyCompactList}\small\item\em Gets the current time of the framework instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -73,11 +73,11 @@ Deconstructor for the updater.
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{classflounder_1_1iupdater_a1e8d40602f9799fc82d96d5b845cf796}\label{classflounder_1_1iupdater_a1e8d40602f9799fc82d96d5b845cf796}} 
+\mbox{\Hypertarget{classflounder_1_1iupdater_a1a3813366f3a4f08cb91e23cd7b63cda}\label{classflounder_1_1iupdater_a1a3813366f3a4f08cb91e23cd7b63cda}} 
 \index{flounder\+::iupdater@{flounder\+::iupdater}!get\+Delta@{get\+Delta}}
 \index{get\+Delta@{get\+Delta}!flounder\+::iupdater@{flounder\+::iupdater}}
 \subsubsection{\texorpdfstring{get\+Delta()}{getDelta()}}
-{\footnotesize\ttfamily virtual double flounder\+::iupdater\+::get\+Delta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily virtual float flounder\+::iupdater\+::get\+Delta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -88,13 +88,13 @@ The delta between updates.
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classflounder_1_1glfwupdater_a8da4916f3335126413a072203b94a735}{flounder\+::glfwupdater}.
+Implemented in \hyperlink{classflounder_1_1glfwupdater_adfe51aba1c2ac7c79d385eed15c901fc}{flounder\+::glfwupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1iupdater_a00d7cf530cfbd7f83c8903328da14027}\label{classflounder_1_1iupdater_a00d7cf530cfbd7f83c8903328da14027}} 
+\mbox{\Hypertarget{classflounder_1_1iupdater_a242d2c4bef63ac11560ac4f13dd4ad3f}\label{classflounder_1_1iupdater_a242d2c4bef63ac11560ac4f13dd4ad3f}} 
 \index{flounder\+::iupdater@{flounder\+::iupdater}!get\+Delta\+Render@{get\+Delta\+Render}}
 \index{get\+Delta\+Render@{get\+Delta\+Render}!flounder\+::iupdater@{flounder\+::iupdater}}
 \subsubsection{\texorpdfstring{get\+Delta\+Render()}{getDeltaRender()}}
-{\footnotesize\ttfamily virtual double flounder\+::iupdater\+::get\+Delta\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily virtual float flounder\+::iupdater\+::get\+Delta\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -105,7 +105,7 @@ The delta between renders.
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classflounder_1_1glfwupdater_a3f8d8a108c8db0d2ead35088646687c9}{flounder\+::glfwupdater}.
+Implemented in \hyperlink{classflounder_1_1glfwupdater_aad1dda11a40273c2a18e7974f42f59dc}{flounder\+::glfwupdater}.
 
 \mbox{\Hypertarget{classflounder_1_1iupdater_a391b1788b5c139b199ed48033da1b88d}\label{classflounder_1_1iupdater_a391b1788b5c139b199ed48033da1b88d}} 
 \index{flounder\+::iupdater@{flounder\+::iupdater}!get\+Instance@{get\+Instance}}
@@ -129,11 +129,11 @@ The module object.
 
 Implemented in \hyperlink{classflounder_1_1glfwupdater_a284945635b93ffc1bd6164ff20565349}{flounder\+::glfwupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1iupdater_a56548faad88ad85e0cb4bc96af0912d6}\label{classflounder_1_1iupdater_a56548faad88ad85e0cb4bc96af0912d6}} 
+\mbox{\Hypertarget{classflounder_1_1iupdater_a6f5a67e27507165d4423b32e29ca3446}\label{classflounder_1_1iupdater_a6f5a67e27507165d4423b32e29ca3446}} 
 \index{flounder\+::iupdater@{flounder\+::iupdater}!get\+Time\+Ms@{get\+Time\+Ms}}
 \index{get\+Time\+Ms@{get\+Time\+Ms}!flounder\+::iupdater@{flounder\+::iupdater}}
 \subsubsection{\texorpdfstring{get\+Time\+Ms()}{getTimeMs()}}
-{\footnotesize\ttfamily virtual double flounder\+::iupdater\+::get\+Time\+Ms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily virtual float flounder\+::iupdater\+::get\+Time\+Ms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -144,13 +144,13 @@ The current framework time in milliseconds.
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classflounder_1_1glfwupdater_a1c3b884efb6e785143db556d4db9bdc8}{flounder\+::glfwupdater}.
+Implemented in \hyperlink{classflounder_1_1glfwupdater_ac27f7a962d72e4dff8e13db7d84647ba}{flounder\+::glfwupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1iupdater_abd983cbbeed27f28e9be768a2d3b69f2}\label{classflounder_1_1iupdater_abd983cbbeed27f28e9be768a2d3b69f2}} 
+\mbox{\Hypertarget{classflounder_1_1iupdater_a4e682002890f952dee48c646fce39824}\label{classflounder_1_1iupdater_a4e682002890f952dee48c646fce39824}} 
 \index{flounder\+::iupdater@{flounder\+::iupdater}!get\+Time\+Offset@{get\+Time\+Offset}}
 \index{get\+Time\+Offset@{get\+Time\+Offset}!flounder\+::iupdater@{flounder\+::iupdater}}
 \subsubsection{\texorpdfstring{get\+Time\+Offset()}{getTimeOffset()}}
-{\footnotesize\ttfamily virtual double flounder\+::iupdater\+::get\+Time\+Offset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily virtual float flounder\+::iupdater\+::get\+Time\+Offset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -161,13 +161,13 @@ The time offset.
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classflounder_1_1glfwupdater_a6393f60d2b0f84a78ccf14b0c55ae1ee}{flounder\+::glfwupdater}.
+Implemented in \hyperlink{classflounder_1_1glfwupdater_a7d37c7454419a6756c56b3a6412f6d20}{flounder\+::glfwupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1iupdater_a071086b844e1f90d7f3577e80c9c09fe}\label{classflounder_1_1iupdater_a071086b844e1f90d7f3577e80c9c09fe}} 
+\mbox{\Hypertarget{classflounder_1_1iupdater_aab92d5e84c55e35d1b8a9a4f5628e3b4}\label{classflounder_1_1iupdater_aab92d5e84c55e35d1b8a9a4f5628e3b4}} 
 \index{flounder\+::iupdater@{flounder\+::iupdater}!get\+Time\+Sec@{get\+Time\+Sec}}
 \index{get\+Time\+Sec@{get\+Time\+Sec}!flounder\+::iupdater@{flounder\+::iupdater}}
 \subsubsection{\texorpdfstring{get\+Time\+Sec()}{getTimeSec()}}
-{\footnotesize\ttfamily virtual double flounder\+::iupdater\+::get\+Time\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily virtual float flounder\+::iupdater\+::get\+Time\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -178,13 +178,13 @@ The current framework time in seconds.
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classflounder_1_1glfwupdater_a6982b83970693347bfa460adc04cf984}{flounder\+::glfwupdater}.
+Implemented in \hyperlink{classflounder_1_1glfwupdater_a01b583f6e4b5ae90eb9d74f931d80081}{flounder\+::glfwupdater}.
 
-\mbox{\Hypertarget{classflounder_1_1iupdater_aa6aa143e40a5a39bcd53753798438ea1}\label{classflounder_1_1iupdater_aa6aa143e40a5a39bcd53753798438ea1}} 
+\mbox{\Hypertarget{classflounder_1_1iupdater_a5ce1862ec2d0e6c4f61b026922379dd2}\label{classflounder_1_1iupdater_a5ce1862ec2d0e6c4f61b026922379dd2}} 
 \index{flounder\+::iupdater@{flounder\+::iupdater}!set\+Time\+Offset@{set\+Time\+Offset}}
 \index{set\+Time\+Offset@{set\+Time\+Offset}!flounder\+::iupdater@{flounder\+::iupdater}}
 \subsubsection{\texorpdfstring{set\+Time\+Offset()}{setTimeOffset()}}
-{\footnotesize\ttfamily virtual void flounder\+::iupdater\+::set\+Time\+Offset (\begin{DoxyParamCaption}\item[{const double \&}]{time\+Offset }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+{\footnotesize\ttfamily virtual void flounder\+::iupdater\+::set\+Time\+Offset (\begin{DoxyParamCaption}\item[{const float \&}]{time\+Offset }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
 
 
 
@@ -197,7 +197,7 @@ Sets the time offset for the framework (seconds).
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classflounder_1_1glfwupdater_a7dc4371863e39a3a7870e4a2ac539fed}{flounder\+::glfwupdater}.
+Implemented in \hyperlink{classflounder_1_1glfwupdater_a2cffca6ed4a79dd5d8cc658ca20c70ef}{flounder\+::glfwupdater}.
 
 
 
