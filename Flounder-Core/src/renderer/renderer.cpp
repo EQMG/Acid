@@ -7,13 +7,6 @@ namespace flounder
 	{
 		m_managerRender = nullptr;
 
-		m_swapChain = VK_NULL_HANDLE;
-		m_swapChainImages = std::vector<VkImage>();
-		m_swapChainImageFormat = {};
-		m_swapChainExtent = {};
-		m_swapChainImageViews = std::vector<VkImageView>();
-		m_swapChainFramebuffers = std::vector<VkFramebuffer>();
-
 		m_renderPass = VK_NULL_HANDLE;
 		m_pipelineLayout = VK_NULL_HANDLE;
 		m_graphicsPipeline = VK_NULL_HANDLE;
@@ -24,6 +17,7 @@ namespace flounder
 		m_imageAvailableSemaphore = VK_NULL_HANDLE;
 		m_renderFinishedSemaphore = VK_NULL_HANDLE;
 
+		m_swapChain = new swapchain();
 		m_shaderTest = new shader("tests", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
@@ -32,11 +26,10 @@ namespace flounder
 		lastWidth = display::get()->getWidth();
 		lastHeight = display::get()->getHeight();
 
-		createSwapChain();
-		createImageViews();
+		m_swapChain->create(querySwapChainSupport(display::get()->getVkPhysicalDevice()));
 		createRenderPass();
 		createGraphicsPipeline();
-		createFramebuffers();
+		m_swapChain->createFramebuffers(m_renderPass);
 		createCommandPool();
 		createCommandBuffers();
 		createSemaphores();
@@ -46,8 +39,6 @@ namespace flounder
 	{
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(display::get()->getVkDevice());
-
-		cleanupSwapChain();
 
 		delete m_managerRender;
 		delete m_shaderTest;
@@ -66,7 +57,7 @@ namespace flounder
 		}
 		
 
-		int currentWidth = display::get()->getWidth();
+		/*int currentWidth = display::get()->getWidth();
 		int currentHeight = display::get()->getHeight();
 
 		if (currentWidth != lastWidth || currentHeight != lastHeight)
@@ -74,96 +65,16 @@ namespace flounder
 			lastWidth = currentWidth;
 			lastHeight = currentHeight;
 			recreateSwapChain();
-		}
+		}*/
 
 		updateUniformBuffer();
 		drawFrame();
 	}
 
-	void renderer::createSwapChain()
-	{
-		VkSwapChainSupportDetails swapChainSupport = querySwapChainSupport(display::get()->getVkPhysicalDevice());
-
-		VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
-		VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
-		VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities);
-
-		uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
-
-		if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount) 
-		{
-			imageCount = swapChainSupport.capabilities.maxImageCount;
-		}
-
-		VkSwapchainCreateInfoKHR createInfo = {};
-		createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-		createInfo.surface = display::get()->getVkSurface();
-
-		createInfo.minImageCount = imageCount;
-		createInfo.imageFormat = surfaceFormat.format;
-		createInfo.imageColorSpace = surfaceFormat.colorSpace;
-		createInfo.imageExtent = extent;
-		createInfo.imageArrayLayers = 1;
-		createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-
-		VkQueueFamilyIndices indices = display::get()->findQueueFamilies(display::get()->getVkPhysicalDevice());
-		uint32_t queueFamilyIndices[] = { (uint32_t)indices.graphicsFamily, (uint32_t)indices.presentFamily };
-
-		if (indices.graphicsFamily != indices.presentFamily) 
-		{
-			createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
-			createInfo.queueFamilyIndexCount = 2;
-			createInfo.pQueueFamilyIndices = queueFamilyIndices;
-		}
-		else 
-		{
-			createInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		}
-
-		createInfo.preTransform = swapChainSupport.capabilities.currentTransform;
-		createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-		createInfo.presentMode = presentMode;
-		createInfo.clipped = VK_TRUE;
-
-		display::vkErrorCheck(vkCreateSwapchainKHR(display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChain));
-
-		vkGetSwapchainImagesKHR(display::get()->getVkDevice(), m_swapChain, &imageCount, nullptr);
-		m_swapChainImages.resize(imageCount);
-		vkGetSwapchainImagesKHR(display::get()->getVkDevice(), m_swapChain, &imageCount, m_swapChainImages.data());
-
-		m_swapChainImageFormat = surfaceFormat.format;
-		m_swapChainExtent = extent;
-	}
-
-	void renderer::createImageViews()
-	{
-		m_swapChainImageViews.resize(m_swapChainImages.size());
-
-		for (size_t i = 0; i < m_swapChainImages.size(); i++) 
-		{
-			VkImageViewCreateInfo createInfo = {};
-			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-			createInfo.image = m_swapChainImages[i];
-			createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-			createInfo.format = m_swapChainImageFormat;
-			createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
-			createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
-			createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
-			createInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
-			createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-			createInfo.subresourceRange.baseMipLevel = 0;
-			createInfo.subresourceRange.levelCount = 1;
-			createInfo.subresourceRange.baseArrayLayer = 0;
-			createInfo.subresourceRange.layerCount = 1;
-
-			display::vkErrorCheck(vkCreateImageView(display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChainImageViews[i]));
-		}
-	}
-
 	void renderer::createRenderPass()
 	{
 		VkAttachmentDescription colorAttachment = {};
-		colorAttachment.format = m_swapChainImageFormat;
+		colorAttachment.format = m_swapChain->getImageFormat();
 		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
 		colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 		colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
@@ -206,14 +117,14 @@ namespace flounder
 		VkViewport viewport = {};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
-		viewport.width = (float)m_swapChainExtent.width;
-		viewport.height = (float)m_swapChainExtent.height;
+		viewport.width = (float)m_swapChain->getExtent().width;
+		viewport.height = (float)m_swapChain->getExtent().height;
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
 
 		VkRect2D scissor = {};
 		scissor.offset = { 0, 0 };
-		scissor.extent = m_swapChainExtent;
+		scissor.extent = m_swapChain->getExtent();
 
 		VkPipelineViewportStateCreateInfo viewportState = {};
 		viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -277,29 +188,6 @@ namespace flounder
 		display::vkErrorCheck(vkCreateGraphicsPipelines(display::get()->getVkDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_graphicsPipeline));
 	}
 
-	void renderer::createFramebuffers()
-	{
-		m_swapChainFramebuffers.resize(m_swapChainImageViews.size());
-
-		for (size_t i = 0; i < m_swapChainImageViews.size(); i++)
-		{
-			VkImageView attachments[] = {
-				m_swapChainImageViews[i]
-			};
-
-			VkFramebufferCreateInfo framebufferInfo = {};
-			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-			framebufferInfo.renderPass = m_renderPass;
-			framebufferInfo.attachmentCount = 1;
-			framebufferInfo.pAttachments = attachments;
-			framebufferInfo.width = m_swapChainExtent.width;
-			framebufferInfo.height = m_swapChainExtent.height;
-			framebufferInfo.layers = 1;
-
-			display::vkErrorCheck(vkCreateFramebuffer(display::get()->getVkDevice(), &framebufferInfo, nullptr, &m_swapChainFramebuffers[i]));
-		}
-	}
-
 	void renderer::createCommandPool()
 	{
 		VkQueueFamilyIndices queueFamilyIndices = display::get()->findQueueFamilies(display::get()->getVkPhysicalDevice());
@@ -313,7 +201,7 @@ namespace flounder
 
 	void renderer::createCommandBuffers()
 	{
-		m_commandBuffers.resize(m_swapChainFramebuffers.size());
+		m_commandBuffers.resize(m_swapChain->getFramebufferSize());
 
 		VkCommandBufferAllocateInfo allocInfo = {};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -334,9 +222,9 @@ namespace flounder
 			VkRenderPassBeginInfo renderPassInfo = {};
 			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 			renderPassInfo.renderPass = m_renderPass;
-			renderPassInfo.framebuffer = m_swapChainFramebuffers[i];
+			renderPassInfo.framebuffer = m_swapChain->getFramebuffer(i);
 			renderPassInfo.renderArea.offset = { 0, 0 };
-			renderPassInfo.renderArea.extent = m_swapChainExtent;
+			renderPassInfo.renderArea.extent = m_swapChain->getExtent();
 
 			VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
 			renderPassInfo.clearValueCount = 1;
@@ -352,39 +240,6 @@ namespace flounder
 
 			display::vkErrorCheck(vkEndCommandBuffer(m_commandBuffers[i]));
 		}
-	}
-
-	void renderer::recreateSwapChain()
-	{
-		vkDeviceWaitIdle(display::get()->getVkDevice());
-		cleanupSwapChain();
-		createSwapChain();
-		createImageViews();
-		createRenderPass();
-		createGraphicsPipeline();
-		createFramebuffers();
-		createCommandBuffers();
-	}
-
-	void renderer::cleanupSwapChain()
-	{
-		for (size_t i = 0; i < m_swapChainFramebuffers.size(); i++) 
-		{
-			vkDestroyFramebuffer(display::get()->getVkDevice(), m_swapChainFramebuffers[i], nullptr);
-		}
-
-		vkFreeCommandBuffers(display::get()->getVkDevice(), m_commandPool, static_cast<uint32_t>(m_commandBuffers.size()), m_commandBuffers.data());
-
-		vkDestroyPipeline(display::get()->getVkDevice(), m_graphicsPipeline, nullptr);
-		vkDestroyPipelineLayout(display::get()->getVkDevice(), m_pipelineLayout, nullptr);
-		vkDestroyRenderPass(display::get()->getVkDevice(), m_renderPass, nullptr);
-
-		for (size_t i = 0; i < m_swapChainImageViews.size(); i++) 
-		{
-			vkDestroyImageView(display::get()->getVkDevice(), m_swapChainImageViews[i], nullptr);
-		}
-
-		vkDestroySwapchainKHR(display::get()->getVkDevice(), m_swapChain, nullptr);
 	}
 
 	void renderer::createSemaphores()
@@ -403,60 +258,37 @@ namespace flounder
 	void renderer::drawFrame()
 	{
 		uint32_t imageIndex;
-		VkResult result = vkAcquireNextImageKHR(display::get()->getVkDevice(), m_swapChain, std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
-
-		if (result == VK_ERROR_OUT_OF_DATE_KHR)
-		{
-			recreateSwapChain();
-			return;
-		}
-		else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
-		{
-			throw std::runtime_error("failed to acquire swap chain image!");
-		}
+		vkAcquireNextImageKHR(display::get()->getVkDevice(), m_swapChain->getSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-
 		VkSemaphore waitSemaphores[] = { m_imageAvailableSemaphore };
 		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
 		submitInfo.waitSemaphoreCount = 1;
 		submitInfo.pWaitSemaphores = waitSemaphores;
 		submitInfo.pWaitDstStageMask = waitStages;
-
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &m_commandBuffers[imageIndex];
-
 		VkSemaphore signalSemaphores[] = { m_renderFinishedSemaphore };
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = signalSemaphores;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &m_commandBuffers[imageIndex];
 
-		display::vkErrorCheck(vkQueueSubmit(display::get()->getVkGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE));
+		if (vkQueueSubmit(display::get()->getVkPresentQueue(), 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
+		{
+			throw std::runtime_error("Failed to submit draw command buffer");
+		}
 
 		VkPresentInfoKHR presentInfo = {};
 		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-
 		presentInfo.waitSemaphoreCount = 1;
 		presentInfo.pWaitSemaphores = signalSemaphores;
 
-		VkSwapchainKHR swapChains[] = { m_swapChain };
+		VkSwapchainKHR swapchains[] = { m_swapChain->getSwapchain() };
 		presentInfo.swapchainCount = 1;
-		presentInfo.pSwapchains = swapChains;
-
+		presentInfo.pSwapchains = swapchains;
 		presentInfo.pImageIndices = &imageIndex;
 
-		result = vkQueuePresentKHR(display::get()->getVkPresentQueue(), &presentInfo);
-
-		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) 
-		{
-			recreateSwapChain();
-		}
-		else if (result != VK_SUCCESS)
-		{
-			throw std::runtime_error("failed to present swap chain image!");
-		}
-
-		vkQueueWaitIdle(display::get()->getVkPresentQueue());
+		vkQueuePresentKHR(display::get()->getVkPresentQueue(), &presentInfo);
 	}
 
 	VkShaderModule renderer::createShaderModule(const std::vector<char>& code)
@@ -516,59 +348,5 @@ namespace flounder
 		}
 
 		return details;
-	}
-
-	VkSurfaceFormatKHR renderer::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats)
-	{
-		if (availableFormats.size() == 1 && availableFormats[0].format == VK_FORMAT_UNDEFINED)
-		{
-			return { VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR };
-		}
-
-		for (VkSurfaceFormatKHR availableFormat : availableFormats)
-		{
-			if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
-			{
-				return availableFormat;
-			}
-		}
-
-		return availableFormats[0];
-	}
-
-	VkPresentModeKHR renderer::chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes)
-	{
-		VkPresentModeKHR bestMode = VK_PRESENT_MODE_FIFO_KHR;
-
-		for (VkPresentModeKHR availablePresentMode : availablePresentModes)
-		{
-			if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR)
-			{
-				return availablePresentMode;
-			}
-			else if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR)
-			{
-				bestMode = availablePresentMode;
-			}
-		}
-
-		return bestMode;
-	}
-
-	VkExtent2D renderer::chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities)
-	{
-		if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
-		{
-			return capabilities.currentExtent;
-		}
-		else
-		{
-			VkExtent2D actualExtent = { display::get()->getWidth(), display::get()->getHeight() }; // WIDTH, HEIGHT
-
-			actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
-			actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));
-
-			return actualExtent;
-		}
 	}
 }

@@ -53,5 +53,5 @@ int main()
 
 	// Pauses the console.
 	std::cin.get();
-	return 0;
+	return EXIT_SUCCESS;
 }

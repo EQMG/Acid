@@ -8,6 +8,7 @@ layout(binding = 0) uniform UBO
 	mat4 viewMatrix;
 	vec4 clipPlane;
 	mat4 modelMatrix;
+	vec3 colour;
 } ubo;
 
 layout(location = 0) in vec3 inPosition;

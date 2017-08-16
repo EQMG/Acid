@@ -10,6 +10,11 @@ layout(binding = 1) uniform UBO
 	vec4 borderColour;
 	vec2 borderSizes;
 	vec2 edgeData;
+	
+	float aspectRatio;
+	vec2 size;
+	vec4 transform;
+	float rotation;
 } ubo;
 
 layout(location = 0) in vec2 textureCoords;

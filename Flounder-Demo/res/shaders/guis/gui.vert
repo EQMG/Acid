@@ -11,6 +11,9 @@ layout(binding = 0) uniform UBO
 	bool flipTexture;
 	float atlasRows;
 	vec2 atlasOffset;
+
+	float alpha;
+	vec3 colourOffset;
 } ubo;
 
 layout(location = 0) in vec2 inPosition;

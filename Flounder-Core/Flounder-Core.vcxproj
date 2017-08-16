@@ -65,6 +65,7 @@
     <ClInclude Include="src\skyboxes\skyboxes.h" />
     <ClInclude Include="src\sounds\sound.h" />
     <ClInclude Include="src\stb\stb_image.h" />
+    <ClInclude Include="src\swapchain\swapchain.h" />
     <ClInclude Include="src\terrains\biome.h" />
     <ClInclude Include="src\terrains\rendererterrains.h" />
     <ClInclude Include="src\terrains\terrain.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="src\skyboxes\skyboxes.cpp" />
     <ClCompile Include="src\sounds\sound.cpp" />
     <ClCompile Include="src\stb\stb_image.cpp" />
+    <ClCompile Include="src\swapchain\swapchain.cpp" />
     <ClCompile Include="src\terrains\rendererterrains.cpp" />
     <ClCompile Include="src\terrains\terrain.cpp" />
     <ClCompile Include="src\terrains\terrains.cpp" />
@@ -358,6 +360,7 @@
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <CallingConvention>StdCall</CallingConvention>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)external\libs\</AdditionalLibraryDirectories>
@@ -380,6 +383,7 @@
       <PreprocessToFile>false</PreprocessToFile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <CallingConvention>StdCall</CallingConvention>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
