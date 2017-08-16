@@ -7,7 +7,7 @@ const int MAX_WEIGHTS = 3;
 
 layout(binding = 2) uniform sampler2D samplerSway;
 
-layout(binding = 0) uniform UBO 
+layout(binding = 3) uniform UBO 
 {
 	mat4 projectionMatrix;
 	mat4 viewMatrix;
@@ -23,6 +23,19 @@ layout(binding = 0) uniform UBO
 	bool swaying;
 	float swayHeight;
 	vec2 swayOffset;
+	
+	vec3 colourOffset;
+	vec3 colourAddition;
+
+	float transparency;
+
+	float shineDamper;
+	float reflectivity;
+
+	bool ignoreFog;
+	bool ignoreLighting;
+
+	bool useGlowMap;
 } ubo;
 
 layout(location = 0) in vec3 inPosition;

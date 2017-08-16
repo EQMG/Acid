@@ -2,8 +2,13 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 0) uniform UBO 
+layout(binding = 1) uniform UBO 
 {
+	vec4 colour;
+	vec4 borderColour;
+	vec2 borderSizes;
+	vec2 edgeData;
+	
 	float aspectRatio;
 	vec2 size;
 	vec4 transform;

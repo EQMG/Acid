@@ -2,11 +2,29 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
+const int MAX_JOINTS = 50;
+const int MAX_WEIGHTS = 3;
+
 layout(binding = 0) uniform sampler2D samplerAlbedo;
 layout(binding = 1) uniform sampler2D samplerGlow;
 
-layout(binding = 0) uniform UBO 
+layout(binding = 3) uniform UBO 
 {
+	mat4 projectionMatrix;
+	mat4 viewMatrix;
+	vec4 clipPlane;
+	mat4 modelMatrix;
+
+	float atlasRows;
+	vec2 atlasOffset;
+
+	bool animated;
+	mat4 jointTransforms[MAX_JOINTS];
+
+	bool swaying;
+	float swayHeight;
+	vec2 swayOffset;
+	
 	vec3 colourOffset;
 	vec3 colourAddition;
 

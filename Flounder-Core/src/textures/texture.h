@@ -28,6 +28,9 @@ namespace flounder
 		bool m_nearest;
 		uint32_t m_numberOfRows;
 
+		VkBuffer m_stagingBuffer;
+		VkDeviceMemory m_stagingMemory;
+
 		VkImage m_image;
 		VkDeviceMemory m_imageMemory;
 		VkImageView m_imageView;
@@ -100,6 +103,8 @@ namespace flounder
 		/// </summary>
 		void loadFromCubemap();
 
-		stbi_uc *loadPixels(const std::string &filepath, int *width, int *height, int *channels);
+		float *loadPixels(const std::string &filepath, int *width, int *height, int *components);
+
+		void getMemoryType(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex);
 	};
 }

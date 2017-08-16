@@ -6,6 +6,14 @@ layout(binding = 0) uniform sampler2D samplerTexture;
 
 layout(binding = 1) uniform UBO 
 {
+	float aspectRatio;
+	vec2 size;
+	vec4 transform;
+	float rotation;
+	bool flipTexture;
+	float atlasRows;
+	vec2 atlasOffset;
+
 	float alpha;
 	vec3 colourOffset;
 } ubo;

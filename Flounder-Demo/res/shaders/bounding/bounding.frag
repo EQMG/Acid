@@ -4,12 +4,16 @@
 
 layout(binding = 0) uniform UBO 
 {
+	mat4 projectionMatrix;
+	mat4 viewMatrix;
+	vec4 clipPlane;
+	mat4 modelMatrix;
 	vec3 colour;
 } ubo;
 
-layout (location = 0) out vec4 outAlbedo;
-layout (location = 1) out vec4 outNormals;
-layout (location = 2) out vec4 outExtras;
+layout(location = 0) out vec4 outAlbedo;
+layout(location = 1) out vec4 outNormals;
+layout(location = 2) out vec4 outExtras;
 
 void main(void) 
 {

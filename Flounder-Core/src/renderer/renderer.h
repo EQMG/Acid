@@ -6,6 +6,7 @@
 #include "../textures/texture.h"
 
 #include "imanagerrender.h"
+#include "../swapchain/swapchain.h"
 
 namespace flounder
 {
@@ -20,13 +21,6 @@ namespace flounder
 
 		imanagerrender *m_managerRender;
 
-		VkSwapchainKHR m_swapChain;
-		std::vector<VkImage> m_swapChainImages;
-		VkFormat m_swapChainImageFormat;
-		VkExtent2D m_swapChainExtent;
-		std::vector<VkImageView> m_swapChainImageViews;
-		std::vector<VkFramebuffer> m_swapChainFramebuffers;
-
 		VkRenderPass m_renderPass;
 		VkPipelineLayout m_pipelineLayout;
 		VkPipeline m_graphicsPipeline;
@@ -37,6 +31,7 @@ namespace flounder
 		VkSemaphore m_imageAvailableSemaphore;
 		VkSemaphore m_renderFinishedSemaphore;
 
+		swapchain *m_swapChain;
 		shader *m_shaderTest;
 
 		int lastWidth;
@@ -80,23 +75,13 @@ namespace flounder
 			return m_commandBuffers;
 		}
 	private:
-		void createSwapChain();
-
-		void createImageViews();
-
 		void createRenderPass();
 
 		void createGraphicsPipeline();
 
-		void createFramebuffers();
-
 		void createCommandPool();
 
 		void createCommandBuffers();
-
-		void recreateSwapChain();
-
-		void cleanupSwapChain();
 
 		void createSemaphores();
 
@@ -109,11 +94,5 @@ namespace flounder
 		std::vector<char> readFile(const std::string& filename);
 
 		VkSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
-
-		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
-
-		VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes);
-
-		VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
 	};
 }
