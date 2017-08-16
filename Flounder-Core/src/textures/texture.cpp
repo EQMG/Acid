@@ -20,6 +20,7 @@ namespace flounder
 		m_imageView = VK_NULL_HANDLE;
 		m_format = VK_FORMAT_UNDEFINED;
 		m_imageType = VK_IMAGE_TYPE_2D;
+
 		m_components = 0;
 		m_width = 0;
 		m_height = 0;
@@ -56,6 +57,7 @@ namespace flounder
 		m_imageView = VK_NULL_HANDLE;
 		m_format = VK_FORMAT_UNDEFINED;
 		m_imageType = VK_IMAGE_TYPE_2D;
+
 		m_components = 0;
 		m_width = 0;
 		m_height = 0;
@@ -66,24 +68,23 @@ namespace flounder
 
 	texture::~texture()
 	{
-	//	vkDestroyImageView(display::get()->getVkDevice(), m_imageView, nullptr);
-	//	vkFreeMemory(display::get()->getVkDevice(), m_imageMemory, nullptr);
-	//	vkDestroyImage(display::get()->getVkDevice(), m_image, nullptr);
+		/*vkDestroyBuffer(display::get()->getVkDevice(), m_stagingBuffer, nullptr);
+		vkFreeMemory(display::get()->getVkDevice(), m_stagingMemory, nullptr);
+		vkDestroyImage(display::get()->getVkDevice(), m_image, nullptr);
+		vkFreeMemory(display::get()->getVkDevice(), m_imageMemory, nullptr);
+		vkDestroyImageView(display::get()->getVkDevice(), m_imageView, nullptr);
+
+		m_stagingBuffer = VK_NULL_HANDLE;
+		m_stagingMemory = VK_NULL_HANDLE;
+		m_image = VK_NULL_HANDLE;
+		m_imageMemory = VK_NULL_HANDLE;
+		m_imageView = VK_NULL_HANDLE;*/
 	}
 
 	void texture::loadFromTexture()
 	{
-		stbi_uc *stbidata = loadPixels(m_file, &m_width, &m_height, &m_components);
-
-		float *pixels = new float[m_width * m_height * m_components];
-		
-		for (int i = 0; i < m_width * m_height * m_components; i++)
-		{
-			float f = static_cast<float>(stbidata[i]) / static_cast<float>(static_cast<unsigned char>(-1));
-			pixels[i] = f;
-		}
-
-		stbi_image_free(stbidata);
+		float *pixels = loadPixels(m_file, &m_width, &m_height, &m_components);
+		size_t componentSize = 4;
 
 		switch (m_components) {
 		case 1:
@@ -102,6 +103,92 @@ namespace flounder
 			assert(0 && "Vulkan texture components not between 1-4.");
 		}
 
+		/*VkBufferCreateInfo bufferCreateInfo = {};
+		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		bufferCreateInfo.size = m_width * m_height * m_components * componentSize;
+		bufferCreateInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+		display::vkErrorCheck(vkCreateBuffer(display::get()->getVkDevice(), &bufferCreateInfo, nullptr, &m_stagingBuffer));
+
+		VkMemoryRequirements memReqs = {};
+		vkGetBufferMemoryRequirements(display::get()->getVkDevice(), m_stagingBuffer, &memReqs);
+
+		VkMemoryAllocateInfo memAllocInfo = {};
+		memAllocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		memAllocInfo.pNext = NULL;
+		memAllocInfo.allocationSize = memReqs.size;
+		memAllocInfo.memoryTypeIndex = 0;
+		getMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, &memAllocInfo.memoryTypeIndex);
+
+		display::vkErrorCheck(vkAllocateMemory(display::get()->getVkDevice(), &memAllocInfo, nullptr, &m_stagingMemory));
+
+		display::vkErrorCheck(vkBindBufferMemory(display::get()->getVkDevice(), m_stagingBuffer, m_stagingMemory, 0));
+
+		uint8_t *data;
+		display::vkErrorCheck(vkMapMemory(display::get()->getVkDevice(), m_stagingMemory, 0, memReqs.size, 0, (void**) &data));
+		memcpy(data, pixels, bufferCreateInfo.size);
+		vkUnmapMemory(display::get()->getVkDevice(), m_stagingMemory);
+
+		VkImageCreateInfo imageCreateInfo = {};
+		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+		imageCreateInfo.pNext = NULL;
+		imageCreateInfo.imageType = VK_IMAGE_TYPE_2D;
+		imageCreateInfo.format = m_format;
+		imageCreateInfo.mipLevels = 1; // TODO: USE m_app->engineParams["numGeneratedMips"]
+		imageCreateInfo.arrayLayers = 1;
+		imageCreateInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+		imageCreateInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_PREINITIALIZED;
+		imageCreateInfo.extent.width = m_width;
+		imageCreateInfo.extent.height = m_height;
+		imageCreateInfo.extent.depth = m_depth;
+		imageCreateInfo.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+
+		display::vkErrorCheck(vkCreateImage(display::get()->getVkDevice(), &imageCreateInfo, nullptr, &m_image));
+
+		vkGetImageMemoryRequirements(display::get()->getVkDevice(), m_image, &memReqs);
+
+		memAllocInfo.allocationSize = memReqs.size;
+		getMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, &memAllocInfo.memoryTypeIndex);
+
+		display::vkErrorCheck(vkAllocateMemory(display::get()->getVkDevice(), &memAllocInfo, nullptr, &m_imageMemory));
+
+		display::vkErrorCheck(vkBindImageMemory(display::get()->getVkDevice(), m_image, m_imageMemory, 0));
+
+		VkBufferImageCopy bufferCopyRegion = {};
+		bufferCopyRegion.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		bufferCopyRegion.imageSubresource.mipLevel = 0;
+		bufferCopyRegion.imageSubresource.baseArrayLayer = 0;
+		bufferCopyRegion.imageSubresource.layerCount = 1;
+		bufferCopyRegion.imageExtent.width = m_width;
+		bufferCopyRegion.imageExtent.height = m_height;
+		bufferCopyRegion.imageExtent.depth = m_depth;
+		bufferCopyRegion.bufferOffset = 0;
+
+		// beginCommandBuffer
+		// setImageLayout
+		// vkCmdCopyBufferToImage
+		// setImageLayout
+		// endCommandBuffer
+
+		VkImageViewCreateInfo imageViewCreateInfo = {};
+		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		imageViewCreateInfo.pNext = NULL;
+		imageViewCreateInfo.image = m_image;
+		imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		imageViewCreateInfo.format = m_format;
+		imageViewCreateInfo.components = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
+		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
+		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
+		imageViewCreateInfo.subresourceRange.layerCount = 1;
+		imageViewCreateInfo.subresourceRange.levelCount = 1;
+
+		display::vkErrorCheck(vkCreateImageView(display::get()->getVkDevice(), &imageViewCreateInfo, nullptr, &m_imageView));
+		*/
+
 		delete[] pixels;
 	}
 
@@ -110,9 +197,9 @@ namespace flounder
 
 	}
 
-	stbi_uc *texture::loadPixels(const std::string &filepath, int *width, int *height, int *channels)
+	float *texture::loadPixels(const std::string &filepath, int *width, int *height, int *components)
 	{
-		stbi_uc* pixels = nullptr;
+		stbi_uc* data = nullptr;
 #ifdef FLOUNDER_PLATFORM_ANDROID
 		AAsset* asset = AAssetManager_open((display::get()->getAssetManager(), filepath.c_str(), AASSET_MODE_STREAMING);
 
@@ -132,28 +219,56 @@ namespace flounder
 			return nullptr;
 		}
 
-		unsigned char* data = new unsigned char[size];
+		unsigned char* androidData = new unsigned char[size];
 
-		AAsset_read(asset, reinterpret_cast<char*>(data), size);
+		AAsset_read(asset, reinterpret_cast<char*>(androidData), size);
 		AAsset_close(asset);
 
-		pixels = stbi_load_from_memory(data, size, width, height, channels, STBI_rgb_alpha);
+		data = stbi_load_from_memory(androidData, size, width, height, components, STBI_rgb_alpha);
 
 		delete[] data;
 #else
-		if (stbi_info(filepath.c_str(), &m_width, &m_height, &m_components) == 0)
+		if (stbi_info(filepath.c_str(), width, height, components) == 0)
 		{
 			assert(0 && "Vulkan invalid texture file format.");
 		}
 
-		pixels = stbi_load(filepath.c_str(), width, height, channels, STBI_rgb_alpha);
+		data = stbi_load(filepath.c_str(), width, height, components, STBI_rgb_alpha);
 #endif
 
-		if (pixels == nullptr)
+		if (data == nullptr)
 		{
 			std::cout << "Unable to load texture: " << m_file << std::endl;
 		}
 
+		int pixelsSize = (*width) * (*height) * (*components);
+		float* pixels = new float[pixelsSize];
+		
+		for (int i = 0; i < pixelsSize; i++)
+		{
+			float f = (float)data[i] / (float)(unsigned char)(-1);
+			pixels[i] = f;
+		}
+
+		stbi_image_free(data);
+
 		return pixels;
+	}
+
+	void texture::getMemoryType(uint32_t typeBits, VkFlags reqMask, uint32_t * typeIndex)
+	{
+		for (uint32_t i = 0; i < display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypeCount; i++)
+		{
+			if ((typeBits & 1) == 1)
+			{
+				if ((display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypes[i].propertyFlags & reqMask) == reqMask)
+				{
+					*typeIndex = i;
+					return;
+				}
+			}
+
+			typeBits >>= 1;
+		}
 	}
 }
