@@ -41,13 +41,13 @@ namespace flounder
 
 	model::~model()
 	{
-		vkDeviceWaitIdle(display::get()->getVkDevice());
+		/*vkDeviceWaitIdle(display::get()->getVkDevice());
 		vkFreeMemory(display::get()->getVkDevice(), m_memory, nullptr);
 		vkDestroyBuffer(display::get()->getVkDevice(), m_indicesBuffer, nullptr);
 		vkDestroyBuffer(display::get()->getVkDevice(), m_verticesBuffer, nullptr);
 		vkDestroyBuffer(display::get()->getVkDevice(), m_texturesBuffer, nullptr);
 		vkDestroyBuffer(display::get()->getVkDevice(), m_normalsBuffer, nullptr);
-		vkDestroyBuffer(display::get()->getVkDevice(), m_tangentsBuffer, nullptr);
+		vkDestroyBuffer(display::get()->getVkDevice(), m_tangentsBuffer, nullptr);*/
 
 		/*delete m_vertices;
 		delete m_textures;
@@ -247,7 +247,7 @@ namespace flounder
 
 	void model::loadToVulkan()
 	{
-		if (m_indices != nullptr)
+		/*if (m_indices != nullptr)
 		{
 		//	m_indicesBuffer = createIndicesBuffer(m_indices);
 		}
@@ -270,7 +270,7 @@ namespace flounder
 		if (m_tangents != nullptr)
 		{
 			m_tangentsBuffer = createBuffer(m_tangents);
-		}
+		}*/
 	}
 
 	VkBuffer model::createBuffer(std::vector<float> *data)
