@@ -24,7 +24,7 @@ instance::instance()
 	m_systemTest->setSystemCentre(vector3(0.0f, 0.0f, 0.0f));
 	particles::get()->addSystem(m_systemTest);*/
 	
-	entitytest *test = new entitytest(nullptr, vector3(), vector3());
+	// entitytest *test = new entitytest(nullptr, vector3(), vector3());
 	// componentalpha *meme = test->getComponent<componentalpha*>();
 }
 
@@ -39,7 +39,6 @@ instance::~instance()
 
 void instance::update()
 {
-#ifndef FLOUNDER_API_WEB
 	if (m_buttonFullscreen->wasDown())
 	{
 		display::get()->setFullscreen(!display::get()->isFullscreen());
@@ -54,5 +53,4 @@ void instance::update()
 	{
 		framework::get()->requestClose(false);
 	}
-#endif
 }
