@@ -144,14 +144,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>
     </LinkIncremental>
-    <OutDir>$(LocalDebuggerWorkingDirectory).bin\$(Configuration) $(PlatformTarget)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory).obj\$(Configuration) $(PlatformTarget)\</IntDir>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)obj\$(Configuration) $(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>
     </LinkIncremental>
-    <OutDir>$(LocalDebuggerWorkingDirectory).bin\$(Configuration) $(PlatformTarget)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory).obj\$(Configuration) $(PlatformTarget)\</IntDir>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)obj\$(Configuration) $(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -165,7 +165,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CallingConvention>FastCall</CallingConvention>
+      <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -203,7 +203,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <CallingConvention>FastCall</CallingConvention>
+      <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
