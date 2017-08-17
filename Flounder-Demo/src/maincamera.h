@@ -49,12 +49,14 @@ private:
 	axisjoystick *m_joystickVertical;
 	axisjoystick *m_joystickHorizontal;
 	buttonjoystick *m_joystickZoom;
+
+	bool m_paused;
 public:
 	maincamera();
 
 	~maincamera();
 
-	void update(const iplayer &player) override;
+	void update(iplayer *player) override;
 private:
 	void calculateHorizontalAngle();
 

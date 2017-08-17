@@ -19,31 +19,59 @@ int main()
 	m_framework->setUpdater(new glfwupdater());
 
 	// Initializes the framework modules.
-	display::get()->setWindowSize(1080, 720);
-	display::get()->setTitle("Flounder Demo");
-	display::get()->setIcon("res/flounder.png");
-	display::get()->setFpsLimit(0);
-	display::get()->setVSync(false);
-	display::get()->setAntialiasing(true);
-	display::get()->setSamples(0);
-	display::get()->setFullscreen(false);
+	if (display::get() != nullptr)
+	{
+		display::get()->setWindowSize(1080, 720);
+		display::get()->setTitle("Flounder Demo");
+		display::get()->setIcon("res/flounder.png");
+		display::get()->setFpsLimit(0);
+		display::get()->setVSync(false);
+		display::get()->setAntialiasing(true);
+		display::get()->setSamples(0);
+		display::get()->setFullscreen(false);
+	}
 
-	mouse::get()->setCustomMouse("res/cursor.png");
+	if (mouse::get() != nullptr)
+	{
+		mouse::get()->setCustomMouse("res/cursor.png");
+	}
 
-	camera::get()->setCamera(new maincamera());
-	camera::get()->setPlayer(new mainplayer());
-	renderer::get()->setManager(new managerrender());
-	uis::get()->setMaster(new manageruis());
-	standards::get()->addStandard(new instance());
+	if (camera::get() != nullptr)
+	{
+		camera::get()->setCamera(new maincamera());
+		camera::get()->setPlayer(new mainplayer());
+	}
 
-	skyboxes::get()->setSkybox(new skybox(
-		new texture(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png"),
-		new model("res/skybox/skyboxSphere.obj"),
-		2048.0f
-	));
-	waters::get()->setWater(new water(
-		vector3(), vector3()
-	));
+	if (renderer::get() != nullptr)
+	{
+		renderer::get()->setManager(new managerrender());
+	}
+
+	if (uis::get() != nullptr)
+	{
+		uis::get()->setMaster(new manageruis());
+	}
+
+	if (standards::get() != nullptr)
+	{
+		standards::get()->addStandard(new instance());
+	}
+
+	if (skyboxes::get() != nullptr)
+	{
+		skyboxes::get()->setSkybox(new skybox(
+			new texture(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png"),
+			new model("res/skybox/skyboxSphere.obj"),
+			2048.0f
+		));
+	}
+
+	if (waters::get() != nullptr)
+	{
+		waters::get()->setWater(new water(
+			vector3(), vector3()
+		));
+	}
 
 	// Runs the framework loop.
 	m_framework->run();

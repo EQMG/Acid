@@ -35,6 +35,5 @@ namespace flounder
 		for (std::vector<std::string>::iterator it = lines.begin(); it < lines.end(); it++)
 		{
 		}
-
 	}
 }

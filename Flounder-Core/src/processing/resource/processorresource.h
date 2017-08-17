@@ -12,7 +12,7 @@ namespace flounder
 	/// A extension that is responsible for processing resource requests.
 	/// </summary>
 	class processorresource :
-	public iprocessor
+		public iprocessor
 	{
 	private:
 		static const double MAX_TIME_MILLIS;

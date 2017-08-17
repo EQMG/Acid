@@ -33,7 +33,7 @@ namespace flounder
 
 		// Gets the proper image count. 
 		uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
-		
+
 		if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount)
 		{
 			imageCount = swapChainSupport.capabilities.maxImageCount;
@@ -71,7 +71,7 @@ namespace flounder
 	{
 		m_swapChainImageViews.resize(m_swapChainImages.size());
 
-		for (uint32_t i = 0; i<m_swapChainImages.size(); i++)
+		for (uint32_t i = 0; i < m_swapChainImages.size(); i++)
 		{
 			VkImageViewCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -100,7 +100,7 @@ namespace flounder
 
 		for (size_t i = 0; i < m_swapChainImageViews.size(); i++)
 		{
-			VkImageView attachments[] = { m_swapChainImageViews[i] };
+			VkImageView attachments[] = {m_swapChainImageViews[i]};
 
 			VkFramebufferCreateInfo framebufferInfo = {};
 			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
@@ -145,7 +145,7 @@ namespace flounder
 	{
 		if (availableFormats.size() == 1 && availableFormats[0].format == VK_FORMAT_UNDEFINED)
 		{
-			return { VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR };
+			return {VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR};
 		}
 
 		for (VkSurfaceFormatKHR availableFormat : availableFormats)
@@ -186,7 +186,7 @@ namespace flounder
 		}
 		else
 		{
-			VkExtent2D actualExtent = { display::get()->getWidth(), display::get()->getHeight() }; // WIDTH, HEIGHT
+			VkExtent2D actualExtent = {display::get()->getWidth(), display::get()->getHeight()}; // WIDTH, HEIGHT
 
 			actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
 			actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));

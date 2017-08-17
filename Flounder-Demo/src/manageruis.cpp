@@ -32,7 +32,7 @@ void manageruis::update()
 	{
 		m_overlayStartup->setAlphaDriver(new driverconstant(0.0f));
 		m_overlayDebug->setAlphaDriver(new driverslide(0.0f, 1.0f, SLIDE_TIME));
-	//	m_overlayManager->setAlphaDriver(new driverslide(0.0f, 1.0f, SLIDE_TIME));
+		//	m_overlayManager->setAlphaDriver(new driverslide(0.0f, 1.0f, SLIDE_TIME));
 		m_overlayStartup->setStarting(false);
 	}
 }

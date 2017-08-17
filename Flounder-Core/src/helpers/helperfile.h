@@ -48,11 +48,12 @@ namespace flounder
 				throw std::runtime_error("Could not find file: " + filepath);
 			}
 
-			size_t fileSize = (size_t)ifs.tellg();
+			size_t fileSize = (size_t) ifs.tellg();
 			std::vector<char> buffer(fileSize);
 
 			ifs.seekg(0);
-			ifs.read(buffer.data(), fileSize);			ifs.close();
+			ifs.read(buffer.data(), fileSize);
+			ifs.close();
 
 			return buffer;
 		}

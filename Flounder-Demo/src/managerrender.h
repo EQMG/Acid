@@ -31,13 +31,13 @@ public:
 
 	void render() override;
 private:
-	void renderWater(icamera *camera);
+	void renderWater();
 
-	void renderShadows(icamera *camera);
+	void renderShadows();
 
-	void renderScene(icamera *camera, const vector4 &clipPlane, const bool &waterPass);
+	void renderScene(const vector4 &clipPlane, const bool &waterPass);
 
-	void renderPost(icamera *camera);
+	void renderPost();
 
-	void renderGuis(icamera *camera);
+	void renderGuis();
 };

@@ -5,9 +5,10 @@ instance::instance()
 	m_buttonFullscreen = new buttonkeyboard(1, GLFW_KEY_F11);
 	m_buttonLockMouse = new buttonkeyboard(1, GLFW_KEY_M);
 	m_buttonExit = new buttonkeyboard(1, GLFW_KEY_DELETE);
-	
+
 	/*audio::add(new sound("music", "res/ld39Outpost.wav"));
 	sound *object = audio::get("music");
+	
 	if (object != nullptr)
 	{
 		object->loop();
@@ -23,7 +24,7 @@ instance::instance()
 	m_systemTest = new particlesystem(types, new spawncircle(30.0f, vector3(0.0f, 1.0f, 0.0f)), 1000, 1.0f, -0.1f);
 	m_systemTest->setSystemCentre(vector3(0.0f, 0.0f, 0.0f));
 	particles::get()->addSystem(m_systemTest);*/
-	
+
 	// entitytest *test = new entitytest(nullptr, vector3(), vector3());
 	// componentalpha *meme = test->getComponent<componentalpha*>();
 }

@@ -41,7 +41,7 @@ namespace flounder
 		std::vector<VkSurfaceFormatKHR> formats;
 		std::vector<VkPresentModeKHR> presentModes;
 	};
-	
+
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
@@ -89,17 +89,17 @@ namespace flounder
 		VkQueue m_presentQueue;
 
 		friend void callbackError(int error, const char *description);
-		
+
 		friend void callbackClose(GLFWwindow *window);
-		
+
 		friend void callbackFocus(GLFWwindow *window, int focused);
-		
+
 		friend void callbackPosition(GLFWwindow *window, int xpos, int ypos);
-		
+
 		friend void callbackSize(GLFWwindow *window, int width, int height);
-		
+
 		friend void callbackFrame(GLFWwindow *window, int width, int height);
-		
+
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT flags,
 			VkDebugReportObjectTypeEXT objType,
 			uint64_t obj,
@@ -109,9 +109,9 @@ namespace flounder
 			const char *msg,
 			void *userData);
 
-		VkResult fvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugReportCallbackEXT* pCallback);
-		
-		void fvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks* pAllocator);
+		VkResult fvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback);
+
+		void fvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator);
 	public:
 		static void vkErrorCheck(VkResult result);
 

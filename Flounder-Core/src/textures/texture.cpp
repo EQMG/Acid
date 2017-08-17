@@ -86,7 +86,8 @@ namespace flounder
 		float *pixels = loadPixels(m_file, &m_width, &m_height, &m_components);
 		size_t componentSize = 4;
 
-		switch (m_components) {
+		switch (m_components)
+		{
 		case 1:
 			m_format = VK_FORMAT_R32_SFLOAT;
 			break;
@@ -194,12 +195,11 @@ namespace flounder
 
 	void texture::loadFromCubemap()
 	{
-
 	}
 
 	float *texture::loadPixels(const std::string &filepath, int *width, int *height, int *components)
 	{
-		stbi_uc* data = nullptr;
+		stbi_uc *data = nullptr;
 #ifdef FLOUNDER_PLATFORM_ANDROID
 		AAsset* asset = AAssetManager_open((display::get()->getAssetManager(), filepath.c_str(), AASSET_MODE_STREAMING);
 
@@ -242,11 +242,11 @@ namespace flounder
 		}
 
 		int pixelsSize = (*width) * (*height) * (*components);
-		float* pixels = new float[pixelsSize];
-		
+		float *pixels = new float[pixelsSize];
+
 		for (int i = 0; i < pixelsSize; i++)
 		{
-			float f = (float)data[i] / (float)(unsigned char)(-1);
+			float f = (float) data[i] / (float) (unsigned char) (-1);
 			pixels[i] = f;
 		}
 
@@ -255,7 +255,7 @@ namespace flounder
 		return pixels;
 	}
 
-	void texture::getMemoryType(uint32_t typeBits, VkFlags reqMask, uint32_t * typeIndex)
+	void texture::getMemoryType(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex)
 	{
 		for (uint32_t i = 0; i < display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypeCount; i++)
 		{

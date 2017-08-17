@@ -28,6 +28,11 @@ namespace flounder
 
 	bool buttonjoystick::isDown() const
 	{
+		if (joysticks::get() == nullptr)
+		{
+			return false;
+		}
+
 		if (m_count == 0 || !joysticks::get()->isConnected(m_joystick))
 		{
 			return false;

@@ -42,7 +42,7 @@ namespace flounder
 		/// Gets the current camera object.
 		/// </summary>
 		/// <returns> The current camera. </returns>
-		inline icamera *getCamera() { return m_camera; }
+		inline icamera *getCamera() const { return m_camera; }
 
 		/// <summary>
 		/// Sets the current camera to a new camera.
@@ -54,7 +54,7 @@ namespace flounder
 		/// Gets the current player object.
 		/// </summary>
 		/// <returns> The current player. </returns>
-		inline iplayer *getPlayer() { return m_player; }
+		inline iplayer *getPlayer() const { return m_player; }
 
 		/// <summary>
 		/// Sets the current player to a new player.

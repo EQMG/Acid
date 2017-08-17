@@ -41,23 +41,26 @@ namespace flounder
 		addModule(UpdatePre, "joysticks", new joysticks());
 		addModule(UpdatePre, "events", new events());
 		addModule(UpdatePre, "tasks", new tasks());
-		addModule(UpdatePre, "processing", new processing());
-		addModule(UpdatePre, "loaders", new loaders());
+	//	addModule(UpdatePre, "processing", new processing());
+	//	addModule(UpdatePre, "loaders", new loaders());
 		addModule(UpdatePre, "camera", new camera());
 		addModule(Render, "renderer", new renderer());
 		addModule(UpdatePre, "standards", new standards());
-		addModule(UpdatePre, "uis", new uis());
-		addModule(Render, "shadows", new shadows());
-		addModule(UpdatePre, "worlds", new worlds());
-		addModule(UpdatePre, "particles", new particles());
-		addModule(UpdatePre, "skyboxes", new skyboxes());
-		addModule(UpdatePre, "terrains", new terrains());
-		addModule(UpdatePre, "waters", new waters());
+	//	addModule(UpdatePre, "uis", new uis());
+	//	addModule(Render, "shadows", new shadows());
+	//	addModule(UpdatePre, "worlds", new worlds());
+	//	addModule(UpdatePre, "particles", new particles());
+	//	addModule(UpdatePre, "skyboxes", new skyboxes());
+	//	addModule(UpdatePre, "terrains", new terrains());
+	//	addModule(UpdatePre, "waters", new waters());
 	}
 
-	void flounder::glfwupdater::update()
+	void glfwupdater::update()
 	{
-		this->m_timerRender->setInterval(1.0f / display::get()->getFpsLimit());
+		if (display::get() != nullptr)
+		{
+			m_timerRender->setInterval(1.0f / display::get()->getFpsLimit());
+		}
 
 		// Always-Update
 		runUpdate(UpdateAlways);
@@ -81,8 +84,10 @@ namespace flounder
 		}
 
 		// Renders when needed.
-		if ((m_timerRender->isPassedTime() || display::get()->getFpsLimit() <= 0.0f || display::get()->getFpsLimit() > 1000.0f) && maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 7.0f))
+		if (m_timerRender->isPassedTime() || display::get()->getFpsLimit() <= 0.0f || display::get()->getFpsLimit() > 1000.0f)
 		{
+			// if (maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 7.0f)) {}
+
 			// Resets the timer.
 			m_timerRender->resetStartTime();
 

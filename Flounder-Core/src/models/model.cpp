@@ -49,11 +49,11 @@ namespace flounder
 		vkDestroyBuffer(display::get()->getVkDevice(), m_normalsBuffer, nullptr);
 		vkDestroyBuffer(display::get()->getVkDevice(), m_tangentsBuffer, nullptr);*/
 
-		/*delete m_vertices;
+		delete m_vertices;
 		delete m_textures;
 		delete m_normals;
 		delete m_tangents;
-		delete m_indices;*/
+		delete m_indices;
 
 		delete m_aabb;
 	}
@@ -298,18 +298,18 @@ namespace flounder
 		m_bufferInfo.offset = 0;
 
 		uint8_t *pData;
-		display::vkErrorCheck(vkMapMemory(display::get()->getVkDevice(), m_memory, 0, memoryRequirements.size, 0, (void**)&pData));
+		display::vkErrorCheck(vkMapMemory(display::get()->getVkDevice(), m_memory, 0, memoryRequirements.size, 0, (void**) &pData));
 
 		memcpy(pData, data->data(), data->size());
 
 		vkUnmapMemory(display::get()->getVkDevice(), m_memory);
 
 		display::vkErrorCheck(vkBindBufferMemory(display::get()->getVkDevice(), result, m_memory, 0));
-		
+
 		return result;
 	}
 
-	void model::memoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t * typeIndex)
+	void model::memoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex)
 	{
 		for (uint32_t i = 0; i < display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypeCount; i++)
 		{

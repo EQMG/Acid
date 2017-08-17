@@ -1510,7 +1510,7 @@ static int decode_jpeg_image(jpeg *j)
 // static jfif-centered resampling (across block boundaries)
 
 typedef uint8 *(*resample_row_func)(uint8 *out, uint8 *in0, uint8 *in1,
-                                    int w, int hs);
+	int w, int hs);
 
 #define div4(x) ((uint8) ((x) >> 2))
 
@@ -1757,9 +1757,9 @@ static uint8 *load_jpeg_image(jpeg *z, int *out_x, int *out_y, int *comp, int re
 				stbi_resample *r = &res_comp[k];
 				int y_bot = r->ystep >= (r->vs >> 1);
 				coutput[k] = r->resample(z->img_comp[k].linebuf,
-				                         y_bot ? r->line1 : r->line0,
-				                         y_bot ? r->line0 : r->line1,
-				                         r->w_lores, r->hs);
+					y_bot ? r->line1 : r->line0,
+					y_bot ? r->line0 : r->line1,
+					r->w_lores, r->hs);
 				if (++r->ystep >= r->vs)
 				{
 					r->ystep = 0;
@@ -2526,7 +2526,7 @@ static int create_png_image(png *a, uint8 *raw, uint32 raw_len, int out_n, int i
 			for (j = 0; j < y; ++j)
 				for (i = 0; i < x; ++i)
 					memcpy(final + (j * yspc[p] + yorig[p]) * a->s->img_x * out_n + (i * xspc[p] + xorig[p]) * out_n,
-					       a->out + (j * x + i) * out_n, out_n);
+						a->out + (j * x + i) * out_n, out_n);
 			free(a->out);
 			raw += (x * out_n + 1) * y;
 			raw_len -= (x * out_n + 1) * y;

@@ -51,7 +51,7 @@ namespace flounder
 		/// <param name="builder"> The fbo builder. </param>
 		fbo(const int &width = 0,
 			const int &height = 0,
-			const depthbuffer &depthBufferType = NONE,
+			const depthbuffer &depthBufferType = DepthNone,
 			const bool &useColourBuffer = true,
 			const int &attachments = 1,
 			const bool &linearFiltering = true,
@@ -63,11 +63,11 @@ namespace flounder
 
 		fbo(const bool &fitToScreen = true,
 			const float &sizeScalar = 1.0f,
-			const depthbuffer &depthBufferType = NONE,
+			const depthbuffer &depthBufferType = DepthNone,
 			const bool &useColourBuffer = true,
 			const int &attachments = 1,
 			const bool &linearFiltering = true,
-			const bool &wrapTextures = false ,
+			const bool &wrapTextures = false,
 			const bool &clampEdge = true,
 			const bool &alphaChannel = false,
 			const bool &antialiased = false,
@@ -121,7 +121,7 @@ namespace flounder
 		inline float getSizeScalar() { return m_sizeScalar; }
 
 		void setSizeScalar(const float &sizeScalar);
-		
+
 		void setSize(const int &width, const int &height);
 
 #if 0
