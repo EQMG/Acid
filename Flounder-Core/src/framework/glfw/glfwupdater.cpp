@@ -34,17 +34,17 @@ namespace flounder
 
 		m_modules = new std::multimap<float, std::pair<std::string, imodule*>>();
 
-		addModule(Render, "display", new display());
 		addModule(UpdatePre, "audio", new audio());
-		addModule(UpdatePre, "mouse", new mouse());
-		addModule(UpdatePre, "keyboard", new keyboard());
+		addModule(Render, "display", new display());
 		addModule(UpdatePre, "joysticks", new joysticks());
+		addModule(UpdatePre, "keyboard", new keyboard());
+		addModule(UpdatePre, "mouse", new mouse());
 		addModule(UpdatePre, "events", new events());
 		addModule(UpdatePre, "tasks", new tasks());
 		addModule(UpdatePre, "processing", new processing());
-		addModule(UpdatePre, "camera", new camera());
-		addModule(Render, "renderer", new renderer());
 		addModule(UpdatePre, "standards", new standards());
+		addModule(Render, "renderer", new renderer());
+		addModule(UpdatePre, "camera", new camera());
 		addModule(UpdatePre, "uis", new uis());
 		addModule(UpdatePre, "worlds", new worlds());
 		addModule(Render, "shadows", new shadows());
