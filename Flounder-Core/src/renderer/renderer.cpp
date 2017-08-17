@@ -56,7 +56,6 @@ namespace flounder
 		{
 			m_managerRender->render();
 		}
-		
 
 		/*int currentWidth = display::get()->getWidth();
 		int currentHeight = display::get()->getHeight();
@@ -117,8 +116,8 @@ namespace flounder
 		VkViewport viewport = {};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
-		viewport.width = (float)m_swapChain->getExtent().width;
-		viewport.height = (float)m_swapChain->getExtent().height;
+		viewport.width = (float) m_swapChain->getExtent().width;
+		viewport.height = (float) m_swapChain->getExtent().height;
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
 
@@ -208,7 +207,7 @@ namespace flounder
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		allocInfo.commandPool = m_commandPool;
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandBufferCount = (uint32_t)m_commandBuffers.size();
+		allocInfo.commandBufferCount = (uint32_t) m_commandBuffers.size();
 
 		display::vkErrorCheck(vkAllocateCommandBuffers(display::get()->getVkDevice(), &allocInfo, m_commandBuffers.data()));
 
@@ -224,10 +223,10 @@ namespace flounder
 			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 			renderPassInfo.renderPass = m_renderPass;
 			renderPassInfo.framebuffer = m_swapChain->getFramebuffer(i);
-			renderPassInfo.renderArea.offset = { 0, 0 };
+			renderPassInfo.renderArea.offset = {0, 0};
 			renderPassInfo.renderArea.extent = m_swapChain->getExtent();
 
-			VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+			VkClearValue clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
 			renderPassInfo.clearValueCount = 1;
 			renderPassInfo.pClearValues = &clearColor;
 
@@ -263,12 +262,12 @@ namespace flounder
 
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-		VkSemaphore waitSemaphores[] = { m_imageAvailableSemaphore };
-		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+		VkSemaphore waitSemaphores[] = {m_imageAvailableSemaphore};
+		VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
 		submitInfo.waitSemaphoreCount = 1;
 		submitInfo.pWaitSemaphores = waitSemaphores;
 		submitInfo.pWaitDstStageMask = waitStages;
-		VkSemaphore signalSemaphores[] = { m_renderFinishedSemaphore };
+		VkSemaphore signalSemaphores[] = {m_renderFinishedSemaphore};
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = signalSemaphores;
 		submitInfo.commandBufferCount = 1;
@@ -281,7 +280,7 @@ namespace flounder
 		presentInfo.waitSemaphoreCount = 1;
 		presentInfo.pWaitSemaphores = signalSemaphores;
 
-		VkSwapchainKHR swapchains[] = { m_swapChain->getSwapchain() };
+		VkSwapchainKHR swapchains[] = {m_swapChain->getSwapchain()};
 		presentInfo.swapchainCount = 1;
 		presentInfo.pSwapchains = swapchains;
 		presentInfo.pImageIndices = &imageIndex;

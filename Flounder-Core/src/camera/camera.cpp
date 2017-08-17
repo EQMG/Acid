@@ -24,7 +24,7 @@ namespace flounder
 
 		if (m_camera != nullptr)
 		{
-			m_camera->update(*m_player);
+			m_camera->update(m_player);
 		}
 	}
 }

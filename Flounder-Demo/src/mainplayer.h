@@ -28,6 +28,8 @@ private:
 
 	vector3 *m_amountMove;
 	vector3 *m_amountRotate;
+
+	bool m_paused;
 public:
 	mainplayer();
 

@@ -186,7 +186,6 @@ noisefast::noisefast(int seed)
 	m_fractalType = FBM;
 	m_fractalBounding = 0.0f;
 
-
 	m_cellularDistanceFunction = Euclidean;
 	m_cellularReturnType = CellValue;
 	m_cellularNoiseLookup = nullptr;
@@ -1351,7 +1350,7 @@ float noisefast::singleCellular2Edge(const float &x, const float &y) const
 	int xr = fastRound(x);
 	int yr = fastRound(y);
 
-	float distance[FN_CELLULAR_INDEX_MAX + 1] = { 999999.0f, 999999.0f, 999999.0f, 999999.0f };
+	float distance[FN_CELLULAR_INDEX_MAX + 1] = {999999.0f, 999999.0f, 999999.0f, 999999.0f};
 
 	switch (m_cellularDistanceFunction)
 	{
@@ -1921,7 +1920,7 @@ float noisefast::singleCubicFractalBillow(float x, float y, float z) const
 		x *= m_lacunarity;
 		y *= m_lacunarity;
 		z *= m_lacunarity;
-		
+
 		amp *= m_gain;
 		sum += (fabs(singleCubic(m_perm[i], x, y, z)) * 2.0f - 1.0f) * amp;
 	}
@@ -2115,7 +2114,7 @@ float noisefast::singleCellular2Edge(const float &x, const float &y, const float
 	int yr = fastRound(y);
 	int zr = fastRound(z);
 
-	float distance[FN_CELLULAR_INDEX_MAX + 1] = { 999999.0f, 999999.0f, 999999.0f, 999999.0f };
+	float distance[FN_CELLULAR_INDEX_MAX + 1] = {999999.0f, 999999.0f, 999999.0f, 999999.0f};
 
 	switch (m_cellularDistanceFunction)
 	{

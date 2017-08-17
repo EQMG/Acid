@@ -88,8 +88,8 @@ namespace flounder
 		object->setModel(loaded);
 		object->setMeshSize(meshSize);
 
-		delete vertices;
-		delete textures;
+		//	delete vertices;
+		//	delete textures;
 	}
 
 	std::vector<line*> text::createStructure(text *object)

@@ -58,7 +58,7 @@ namespace flounder
 
 		void update() override;
 
-		void addModule(moduleupdate typeUpdate, std::string moduleName, imodule* object);
+		void addModule(moduleupdate typeUpdate, std::string moduleName, imodule *object);
 
 		imodule *getInstance(const std::string &name) override;
 

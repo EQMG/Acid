@@ -9,7 +9,7 @@ namespace flounder
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/guis/gui.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/guis/gui.frag.spv")
 		);
-		std::vector<float> *vertices = new std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f };
+		std::vector<float> *vertices = new std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f};
 		m_model = new model(nullptr, vertices, nullptr, nullptr, nullptr);
 		delete vertices;
 	}
@@ -17,7 +17,7 @@ namespace flounder
 	rendererguis::~rendererguis()
 	{
 		delete m_shader;
-		
+
 		delete m_model;
 	}
 

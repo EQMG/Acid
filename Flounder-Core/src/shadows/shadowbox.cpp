@@ -5,7 +5,7 @@ namespace flounder
 	shadowbox::shadowbox()
 	{
 		m_lightDirection = new vector3();
-		m_shadowDistance = 0.0f; 
+		m_shadowDistance = 0.0f;
 		m_shadowOffset = 0.0f;
 
 		m_projectionMatrix = new matrix4x4();
@@ -15,9 +15,9 @@ namespace flounder
 		m_offset = createOffset();
 		m_centre = new vector3();
 
-		m_farHeight = 0.0f; 
+		m_farHeight = 0.0f;
 		m_farWidth = 0.0f;
-		m_nearHeight = 0.0f; 
+		m_nearHeight = 0.0f;
 		m_nearWidth = 0.0f;
 
 		m_aabb = new aabb();
@@ -188,7 +188,7 @@ namespace flounder
 		float z = (m_aabb->m_minExtents->m_z + m_aabb->m_maxExtents->m_z) / 2.0f;
 		matrix4x4 *invertedLight = matrix4x4::invert(*m_lightViewMatrix, nullptr);
 		vector4 *centre4 = matrix4x4::transform(*invertedLight, vector4(x, y, z, 1.0f), nullptr);
-		
+
 		m_centre->set(centre4->m_x, centre4->m_y, centre4->m_z);
 
 		delete invertedLight;
@@ -231,12 +231,12 @@ namespace flounder
 	bool shadowbox::isInBox(const vector3 &position, const float &radius)
 	{
 		vector4 *entityPos = matrix4x4::transform(*m_lightViewMatrix, vector4(position.m_x, position.m_y, position.m_z, 1.0f), 0);
-		
+
 		vector3 *closestPoint = new vector3();
 		closestPoint->m_x = maths::clamp(entityPos->m_x, m_aabb->m_minExtents->m_x, m_aabb->m_maxExtents->m_x);
 		closestPoint->m_y = maths::clamp(entityPos->m_y, m_aabb->m_minExtents->m_y, m_aabb->m_maxExtents->m_y);
 		closestPoint->m_z = maths::clamp(entityPos->m_z, m_aabb->m_minExtents->m_z, m_aabb->m_maxExtents->m_z);
-		
+
 		vector3 *centre = new vector3(entityPos->m_x, entityPos->m_y, entityPos->m_z);
 		vector3 *distance = vector3::subtract(*centre, *closestPoint, nullptr);
 		float disSquared = distance->lengthSquared();
