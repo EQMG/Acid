@@ -51,9 +51,9 @@ namespace flounder
 		// TODO
 	}
 
-	VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code,   const char *layerPrefix,  const char *msg, void *userData)
+	VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData)
 	{
-		std::cout << "Validation layer: " << msg << std::endl;
+		std::cout << msg << std::endl;
 		return false;
 	}
 
@@ -160,7 +160,6 @@ namespace flounder
 		m_fpsLimit = -1.0f;
 		m_vsync = false;
 		m_antialiasing = true;
-		m_samples = 0;
 		m_fullscreen = false;
 
 		m_window = nullptr;
@@ -169,9 +168,9 @@ namespace flounder
 		m_windowPosX = 0;
 		m_windowPosY = 0;
 
-#if FLOUNDER_CONFIG_DEBUG
+#if FLOUNDER_VERBOSE
 		m_validationLayers = true;
-#elif FLOUNDER_CONFIG_RELEASE
+#else
 		m_validationLayers = false;
 #endif
 
@@ -198,21 +197,13 @@ namespace flounder
 		createSurface();
 		pickPhysicalDevice();
 		createLogicalDevice();
-		// createSwapChain();
-		//createImageViews();
-		//createRenderPass();
-		//createGraphicsPipeline();
-		//createFramebuffers();
-		//createCommandPool();
-		//createCommandBuffers();
-		//createSemaphores();
 	}
 
 	display::~display()
 	{
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(m_device);
-		
+
 		// Destroys Vulkan.
 		vkDestroyDevice(m_device, nullptr);
 		fvkDestroyDebugReportCallbackEXT(m_instance, m_debugReport, nullptr);
@@ -230,14 +221,8 @@ namespace flounder
 
 	void display::update()
 	{
-		// Swap the colour buffers to the display.
-	//	glfwSwapBuffers(m_window);
-
 		// Polls for window events. The key callback will only be invoked during this call.
 		glfwPollEvents();
-
-	//	glfwSwapInterval(m_vsync ? 1 : 0);
-	//	glfwWindowHint(GLFW_SAMPLES, m_samples);
 
 		// Updates the aspect ratio.
 		m_aspectRatio = static_cast<float>(getWidth()) / static_cast<float>(getHeight());
@@ -435,7 +420,7 @@ namespace flounder
 		{
 			uint32_t layerCount = 0;
 			vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
-			
+
 			std::vector<VkLayerProperties> instanceLayerProperties(layerCount);
 			vkEnumerateInstanceLayerProperties(&layerCount, instanceLayerProperties.data());
 
@@ -514,12 +499,12 @@ namespace flounder
 		// Sets up the debug callbacks.
 		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = {};
 		debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-		debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT;
-		/*debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_INFORMATION_BIT_EXT |
+		// debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT;
+		debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_INFORMATION_BIT_EXT |
 			VK_DEBUG_REPORT_WARNING_BIT_EXT |
 			VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT |
 			VK_DEBUG_REPORT_ERROR_BIT_EXT |
-			VK_DEBUG_REPORT_DEBUG_BIT_EXT;*/
+			VK_DEBUG_REPORT_DEBUG_BIT_EXT;
 		debugCallBackCreateInfo.pfnCallback = vkCallbackDebug;
 
 		// Inits debuging.
@@ -541,7 +526,7 @@ namespace flounder
 		uint32_t deviceCount = 0;
 		vkEnumeratePhysicalDevices(m_instance, &deviceCount, nullptr);
 
-		if (deviceCount == 0) 
+		if (deviceCount == 0)
 		{
 			throw std::runtime_error("Failed to find GPUs with Vulkan support!");
 		}
@@ -598,9 +583,9 @@ namespace flounder
 		// Finds the indice queues.
 		VkQueueFamilyIndices indices = findQueueFamilies(m_physicalDevice);
 
-		std::set<int> uniqueQueueFamilies = { indices.graphicsFamily, indices.presentFamily };
+		std::set<int> uniqueQueueFamilies = {indices.graphicsFamily, indices.presentFamily};
 		std::vector<VkDeviceQueueCreateInfo> queueCreateInfoList;
-		float quePriorities[] = { 1.0f };
+		float quePriorities[] = {1.0f};
 
 		for (int queueFamily : uniqueQueueFamilies)
 		{

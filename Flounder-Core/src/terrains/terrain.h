@@ -46,7 +46,7 @@ namespace flounder
 
 		float getFactorIsland(const float &x, const float &z);
 
-		float getFactorMoisture(const float & x, const float & y, const float & z);
+		float getFactorMoisture(const float &x, const float &y, const float &z);
 	public:
 		float getHeight(const float &x, const float &z);
 

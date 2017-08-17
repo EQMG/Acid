@@ -1,4 +1,5 @@
 #include "timer.h"
+#include <iostream>
 
 namespace flounder
 {

@@ -18,7 +18,8 @@
 
 namespace flounder
 {
-	typedef struct SoundSourceInfo {
+	typedef struct SoundSourceInfo
+	{
 		unsigned int size;
 		unsigned char *data;
 		short formatTag;
@@ -38,8 +39,8 @@ namespace flounder
 	private:
 		friend class sound;
 
-		ALCdevice* m_device;
-		ALCcontext* m_context;
+		ALCdevice *m_device;
+		ALCcontext *m_context;
 
 		static std::vector<sound*> m_sounds;
 	public:

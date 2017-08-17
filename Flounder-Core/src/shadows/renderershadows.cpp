@@ -5,7 +5,7 @@ namespace flounder
 	renderershadows::renderershadows() :
 		irenderer()
 	{
-		m_fbo = new fbo(shadows::get()->getShadowSize(), shadows::get()->getShadowSize(), TEXTURE, false);
+		m_fbo = new fbo(shadows::get()->getShadowSize(), shadows::get()->getShadowSize(), DepthTexture, false);
 
 		m_shader = new shader("shadows", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/shadows/shadow.vert.spv"),

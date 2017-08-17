@@ -7,26 +7,26 @@
 namespace flounder
 {
 	/// <summary>
+	/// A definition for a connected joystick.
+	/// </summary>
+	struct joystick
+	{
+		bool connected;
+		int id;
+		const char *name;
+		const float *axes;
+		const unsigned char *buttons;
+		int axecount;
+		int buttoncount;
+	};
+
+	/// <summary>
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
 	class joysticks :
 		public imodule
 	{
 	private:
-		/// <summary>
-		/// A definition for a connected joystick.
-		/// </summary>
-		struct joystick
-		{
-			bool connected = false;
-			int id;
-			const char *name;
-			const float *axes;
-			int axecount;
-			const unsigned char *buttons;
-			int buttoncount;
-		};
-
 		joystick **m_connected;
 	public:
 		/// <summary>
@@ -70,7 +70,7 @@ namespace flounder
 		/// <param name="id"> The joystick of interest. </param>
 		/// <param name="axis"> The axis of interest. </param>
 		/// <returns> The value of the joystick's axis. </returns>
-		inline float getAxis(const int &id, const int &axis) const { return m_connected[id]->axes[axis]; }
+		float getAxis(const int &id, const int &axis) const;
 
 		/// <summary>
 		/// Gets the whether a button on a joystick is pressed.
@@ -78,7 +78,7 @@ namespace flounder
 		/// <param name="id"> The joystick of interest. </param>
 		/// <param name="button"> The button of interest. </param>
 		/// <returns> Whether a button on a joystick is pressed. </returns>
-		inline bool getButton(const int &id, const int &button) const { return m_connected[id]->buttons[button]; }
+		bool getButton(const int &id, const int &button) const;
 
 		/// <summary>
 		/// Gets the number of axes the joystick offers.

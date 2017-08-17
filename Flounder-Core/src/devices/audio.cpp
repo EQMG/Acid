@@ -81,7 +81,7 @@ namespace flounder
 
 		file.close();
 
-#if 0 
+#if FLOUNDER_VERBOSE
 		std::cout << "-- Loading: " << path << " --" << std::endl;
 		std::cout << "Size: " << result.size << " bytes" << std::endl;
 

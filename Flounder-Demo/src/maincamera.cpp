@@ -43,6 +43,8 @@ maincamera::maincamera()
 	m_joystickVertical = new axisjoystick(0, 1, 3);
 	m_joystickHorizontal = new axisjoystick(0, 1, 2);
 	m_joystickZoom = new buttonjoystick(0, 1, 9);
+
+	m_paused = false;
 }
 
 maincamera::~maincamera()
@@ -64,17 +66,22 @@ maincamera::~maincamera()
 	delete m_joystickZoom;
 }
 
-void maincamera::update(const iplayer &player)
+void maincamera::update(iplayer *player)
 {
 	float delta = __min(1.0f / 60.0f, framework::get()->getDelta());
+
+	if (uis::get() != nullptr && uis::get()->getManager() != nullptr)
+	{
+		m_paused = uis::get()->getManager()->isGamePaused();
+	}
 
 	calculateHorizontalAngle();
 	calculateVerticalAngle();
 
-	if (&player != nullptr)
+	if (player != nullptr)
 	{
-		m_targetPosition->set(*player.getPosition());
-		m_targetRotation->set(*player.getRotation());
+		m_targetPosition->set(*player->getPosition());
+		m_targetRotation->set(*player->getRotation());
 	}
 
 	updateHorizontalAngle(delta);
@@ -92,7 +99,7 @@ void maincamera::calculateHorizontalAngle()
 {
 	float angleChange = 0.0f;
 
-	if (!uis::get()->getManager()->isGamePaused())
+	if (!m_paused)
 	{
 		if (maths::deadband(0.05f, m_joystickHorizontal->getAmount()) != 0.0f && !m_joystickZoom->isDown())
 		{
@@ -132,7 +139,7 @@ void maincamera::calculateVerticalAngle()
 {
 	float angleChange = 0.0f;
 
-	if (!uis::get()->getManager()->isGamePaused())
+	if (!m_paused)
 	{
 		if (maths::deadband(0.05f, m_joystickVertical->getAmount()) != 0.0f && !m_joystickZoom->isDown())
 		{
@@ -172,13 +179,13 @@ void maincamera::updateHorizontalAngle(const float &delta)
 {
 	float offset = m_targetRotationAngle - m_angleAroundPlayer;
 
-	if (fabs(offset) > DEGREES_IN_HALF_CIRCLE) 
+	if (fabs(offset) > DEGREES_IN_HALF_CIRCLE)
 	{
-		if (offset < 0.0f) 
+		if (offset < 0.0f)
 		{
 			offset = m_targetRotationAngle + DEGREES_IN_CIRCLE - m_angleAroundPlayer;
 		}
-		else 
+		else
 		{
 			offset = m_targetRotationAngle - DEGREES_IN_CIRCLE - m_angleAroundPlayer;
 		}
@@ -200,13 +207,13 @@ void maincamera::updatePitchAngle(const float &delta)
 {
 	float offset = m_targetElevation - m_angleOfElevation;
 
-	if (fabs(offset) > DEGREES_IN_HALF_CIRCLE) 
+	if (fabs(offset) > DEGREES_IN_HALF_CIRCLE)
 	{
-		if (offset < 0.0f) 
+		if (offset < 0.0f)
 		{
 			offset = m_targetElevation + DEGREES_IN_CIRCLE - m_angleOfElevation;
 		}
-		else 
+		else
 		{
 			offset = m_targetElevation - DEGREES_IN_CIRCLE - m_angleOfElevation;
 		}

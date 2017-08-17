@@ -66,6 +66,7 @@ public:
 		Distance2Mul,
 		Distance2Div
 	};
+
 private:
 	static const float GRAD_X[];
 	static const float GRAD_Y[];
@@ -308,7 +309,7 @@ private:
 	inline float gradCoord2D(const unsigned char &offset, const int &x, const int &y, const float &xd, const float &yd) const;
 	inline float gradCoord3D(const unsigned char &offset, const int &x, const int &y, const int &z, const float &xd, const float &yd, const float &zd) const;
 	inline float gradCoord4D(const unsigned char &offset, const int &x, const int &y, const int &z, const int &w, const float &xd, const float &yd, const float &zd, const float &wd) const;
-	
+
 	// 2D
 	float singleValueFractalFBM(float x, float y) const;
 	float singleValueFractalBillow(float x, float y) const;

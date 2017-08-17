@@ -235,11 +235,11 @@ namespace flounder
 				}
 			}
 
-			if (m_depthBufferType == RENDER_BUFFER)
+			if (m_depthBufferType == DepthRenderBuffer)
 			{
 				createDepthBufferAttachment();
 			}
-			else if (m_depthBufferType == TEXTURE)
+			else if (m_depthBufferType == DepthTexture)
 			{
 				createDepthTextureAttachment();
 			}

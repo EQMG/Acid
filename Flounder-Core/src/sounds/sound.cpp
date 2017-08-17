@@ -95,7 +95,7 @@ namespace flounder
 
 	void sound::setDirection(const float &x, const float &y, const float &z)
 	{
-		float direction[3] = { x, y, z };
+		float direction[3] = {x, y, z};
 		alSourcefv(m_source, AL_DIRECTION, direction);
 	}
 
