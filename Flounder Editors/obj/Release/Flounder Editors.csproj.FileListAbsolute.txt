@@ -1,0 +1,6 @@
+C:\Users\mattp\Documents\Flounder\Flounder Editors\bin\Release\Flounder Editors.exe.config
+C:\Users\mattp\Documents\Flounder\Flounder Editors\bin\Release\Flounder Editors.exe
+C:\Users\mattp\Documents\Flounder\Flounder Editors\bin\Release\Flounder Editors.pdb
+C:\Users\mattp\Documents\Flounder\Flounder Editors\obj\Release\Flounder Editors.csprojResolveAssemblyReference.cache
+C:\Users\mattp\Documents\Flounder\Flounder Editors\obj\Release\Flounder Editors.exe
+C:\Users\mattp\Documents\Flounder\Flounder Editors\obj\Release\Flounder Editors.pdb

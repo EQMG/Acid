@@ -15,22 +15,25 @@ namespace flounder
 
 	swapchain::~swapchain()
 	{
+		cleanupFramebuffers();
+		cleanup();
 	}
 
 	void swapchain::create(VkSwapChainSupportDetails swapChainSupport)
 	{
-		// use helper functions to get optimal settings
+		// Uses the helper functions to get optimal settings.
 		VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
 		VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
 		VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities);
 
-		// fill in data fro create info
+		// Fills in the data from the create info.
 		VkSwapchainCreateInfoKHR createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		createInfo.surface = display::get()->getVkSurface();
 
-		// get proper image count 
+		// Gets the proper image count. 
 		uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
+		
 		if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount)
 		{
 			imageCount = swapChainSupport.capabilities.maxImageCount;
@@ -49,24 +52,15 @@ namespace flounder
 		createInfo.clipped = VK_TRUE;
 		createInfo.oldSwapchain = VK_NULL_HANDLE;
 
+		// Attempts to create swap chain
+		display::vkErrorCheck(vkCreateSwapchainKHR(display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChain));
 
-
-		//attempt to create swap chain
-		if (vkCreateSwapchainKHR(display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChain) != VK_SUCCESS)
-		{
-			throw std::runtime_error("Failed to create swap chain");
-		}
-		else
-		{
-			std::cout << "Swap chain created successfully" << std::endl;
-		}
-
-		// populate swap chain image vector
+		// Populates the swap chain image vector.
 		vkGetSwapchainImagesKHR(display::get()->getVkDevice(), m_swapChain, &imageCount, nullptr);
 		m_swapChainImages.resize(imageCount);
 		vkGetSwapchainImagesKHR(display::get()->getVkDevice(), m_swapChain, &imageCount, m_swapChainImages.data());
 
-		// stores data for chosen surface format and extent
+		// Stores the data for the chosen surface format and extent.
 		m_swapChainImageFormat = surfaceFormat.format;
 		m_swapChainExtent = extent;
 
@@ -94,10 +88,7 @@ namespace flounder
 			createInfo.subresourceRange.baseArrayLayer = 0;
 			createInfo.subresourceRange.layerCount = 1;
 
-			if (vkCreateImageView(display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChainImageViews[i]) != VK_SUCCESS)
-			{
-				throw std::runtime_error("Failed to create image views");
-			}
+			display::vkErrorCheck(vkCreateImageView(display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChainImageViews[i]));
 		}
 
 		std::cout << "Image views created successfully" << std::endl;
@@ -111,7 +102,6 @@ namespace flounder
 		{
 			VkImageView attachments[] = { m_swapChainImageViews[i] };
 
-
 			VkFramebufferCreateInfo framebufferInfo = {};
 			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 			framebufferInfo.renderPass = renderPass;
@@ -121,10 +111,7 @@ namespace flounder
 			framebufferInfo.height = m_swapChainExtent.height;
 			framebufferInfo.layers = 1;
 
-			if (vkCreateFramebuffer(display::get()->getVkDevice(), &framebufferInfo, nullptr, &m_swapChainFramebuffers[i]) != VK_SUCCESS)
-			{
-				throw std::runtime_error("Failed to create framebuffer");
-			}
+			display::vkErrorCheck(vkCreateFramebuffer(display::get()->getVkDevice(), &framebufferInfo, nullptr, &m_swapChainFramebuffers[i]));
 		}
 
 		std::cout << "Framebuffers created successfully!" << std::endl;
@@ -132,6 +119,9 @@ namespace flounder
 
 	void swapchain::cleanup()
 	{
+		// Waits for the device to finish before destroying.
+		vkDeviceWaitIdle(display::get()->getVkDevice());
+
 		for (size_t i = 0; i < m_swapChainImageViews.size(); i++)
 		{
 			vkDestroyImageView(display::get()->getVkDevice(), m_swapChainImageViews[i], VK_NULL_HANDLE);
@@ -142,6 +132,9 @@ namespace flounder
 
 	void swapchain::cleanupFramebuffers()
 	{
+		// Waits for the device to finish before destroying.
+		vkDeviceWaitIdle(display::get()->getVkDevice());
+
 		for (size_t i = 0; i < m_swapChainFramebuffers.size(); i++)
 		{
 			vkDestroyFramebuffer(display::get()->getVkDevice(), m_swapChainFramebuffers[i], VK_NULL_HANDLE);

@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../devices/display.h"
+#include "../../devices/display.h"
 
 namespace flounder
 {
