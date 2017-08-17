@@ -3,7 +3,6 @@
 #include "../camera/camera.h"
 #include "../maths/vector3.h"
 #include "../maths/matrix4x4.h"
-#include "../loaders/loaders.h"
 #include "../textures/texture.h"
 #include "../physics/aabb.h"
 #include "../models/model.h"

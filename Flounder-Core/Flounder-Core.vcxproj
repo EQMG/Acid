@@ -98,7 +98,6 @@
     <ClInclude Include="src\lights\attenuation.h" />
     <ClInclude Include="src\lights\fog.h" />
     <ClInclude Include="src\lights\light.h" />
-    <ClInclude Include="src\loaders\loaders.h" />
     <ClInclude Include="src\maths\colour.h" />
     <ClInclude Include="src\maths\delta.h" />
     <ClInclude Include="src\maths\maths.h" />
@@ -245,7 +244,6 @@
     <ClCompile Include="src\lights\attenuation.cpp" />
     <ClCompile Include="src\lights\fog.cpp" />
     <ClCompile Include="src\lights\light.cpp" />
-    <ClCompile Include="src\loaders\loaders.cpp" />
     <ClCompile Include="src\maths\colour.cpp" />
     <ClCompile Include="src\maths\delta.cpp" />
     <ClCompile Include="src\maths\matrix2x2.cpp" />

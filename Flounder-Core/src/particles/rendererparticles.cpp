@@ -13,10 +13,10 @@ namespace flounder
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/particles/particle.frag.spv")
 		);
 		std::vector<float> positions = {-0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f};
-		m_vaoID = loaders::get()->createVAO();
+		/*m_vaoID = loaders::get()->createVAO();
 		loaders::get()->storeDataInVBO(m_vaoID, positions, 0, 2);
 		m_vboID = loaders::get()->createEmptyVBO(INSTANCE_DATA_LENGTH * MAX_INSTANCES);
-		m_vaoLength = positions.size();
+		m_vaoLength = (int) positions.size();
 
 		loaders::get()->addInstancedAttribute(m_vaoID, m_vboID, 1, 4, INSTANCE_DATA_LENGTH, 0);
 		loaders::get()->addInstancedAttribute(m_vaoID, m_vboID, 2, 4, INSTANCE_DATA_LENGTH, 4);
@@ -24,7 +24,7 @@ namespace flounder
 		loaders::get()->addInstancedAttribute(m_vaoID, m_vboID, 4, 4, INSTANCE_DATA_LENGTH, 12);
 		loaders::get()->addInstancedAttribute(m_vaoID, m_vboID, 5, 4, INSTANCE_DATA_LENGTH, 16);
 		loaders::get()->addInstancedAttribute(m_vaoID, m_vboID, 6, 1, INSTANCE_DATA_LENGTH, 20);
-		loaders::get()->addInstancedAttribute(m_vaoID, m_vboID, 7, 1, INSTANCE_DATA_LENGTH, 21);
+		loaders::get()->addInstancedAttribute(m_vaoID, m_vboID, 7, 1, INSTANCE_DATA_LENGTH, 21);*/
 
 		m_rendered = 0;
 	}

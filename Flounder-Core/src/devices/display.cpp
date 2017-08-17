@@ -480,7 +480,7 @@ namespace flounder
 
 		if (m_validationLayers)
 		{
-			instanceCreateInfo.enabledLayerCount = m_instanceLayerList.size();
+			instanceCreateInfo.enabledLayerCount = (uint32_t) m_instanceLayerList.size();
 			instanceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
 		}
 		else
@@ -488,7 +488,7 @@ namespace flounder
 			instanceCreateInfo.enabledLayerCount = 0;
 		}
 
-		instanceCreateInfo.enabledExtensionCount = m_instanceExtensionList.size();
+		instanceCreateInfo.enabledExtensionCount = (uint32_t)m_instanceExtensionList.size();
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
 		vkErrorCheck(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
@@ -602,12 +602,12 @@ namespace flounder
 
 		VkDeviceCreateInfo deviceCreateInfo = {};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-		deviceCreateInfo.queueCreateInfoCount = queueCreateInfoList.size();
+		deviceCreateInfo.queueCreateInfoCount = (uint32_t)queueCreateInfoList.size();
 		deviceCreateInfo.pQueueCreateInfos = queueCreateInfoList.data();
 
 		if (m_validationLayers)
 		{
-			deviceCreateInfo.enabledLayerCount = m_instanceLayerList.size();
+			deviceCreateInfo.enabledLayerCount = (uint32_t)m_instanceLayerList.size();
 			deviceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
 		}
 		else
@@ -615,7 +615,7 @@ namespace flounder
 			deviceCreateInfo.enabledLayerCount = 0;
 		}
 
-		deviceCreateInfo.enabledExtensionCount = m_deviceExtensionList.size();
+		deviceCreateInfo.enabledExtensionCount = (uint32_t)m_deviceExtensionList.size();
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 		deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
 

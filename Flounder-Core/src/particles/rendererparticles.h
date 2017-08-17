@@ -2,7 +2,6 @@
 
 #include <vector>
 
-#include "../loaders/loaders.h"
 #include "../renderer/irenderer.h"
 
 #include "particles.h"
@@ -18,9 +17,9 @@ namespace flounder
 
 		shader *m_shader;
 
-		int m_vaoID;
-		int m_vboID;
-		int m_vaoLength;
+		//int m_vaoID;
+		//int m_vboID;
+		//int m_vaoLength;
 
 		int m_rendered;
 	public:

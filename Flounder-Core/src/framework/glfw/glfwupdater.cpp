@@ -41,18 +41,17 @@ namespace flounder
 		addModule(UpdatePre, "joysticks", new joysticks());
 		addModule(UpdatePre, "events", new events());
 		addModule(UpdatePre, "tasks", new tasks());
-	//	addModule(UpdatePre, "processing", new processing());
-	//	addModule(UpdatePre, "loaders", new loaders());
+		addModule(UpdatePre, "processing", new processing());
 		addModule(UpdatePre, "camera", new camera());
 		addModule(Render, "renderer", new renderer());
 		addModule(UpdatePre, "standards", new standards());
-	//	addModule(UpdatePre, "uis", new uis());
-	//	addModule(Render, "shadows", new shadows());
-	//	addModule(UpdatePre, "worlds", new worlds());
-	//	addModule(UpdatePre, "particles", new particles());
-	//	addModule(UpdatePre, "skyboxes", new skyboxes());
-	//	addModule(UpdatePre, "terrains", new terrains());
-	//	addModule(UpdatePre, "waters", new waters());
+		addModule(UpdatePre, "uis", new uis());
+		addModule(UpdatePre, "worlds", new worlds());
+		addModule(Render, "shadows", new shadows());
+		addModule(UpdatePre, "particles", new particles());
+		addModule(UpdatePre, "skyboxes", new skyboxes());
+		addModule(UpdatePre, "terrains", new terrains());
+		addModule(UpdatePre, "waters", new waters());
 	}
 
 	void glfwupdater::update()

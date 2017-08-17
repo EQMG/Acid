@@ -145,7 +145,7 @@ namespace flounder
 
 	void text::createQuadVertices(text *object, std::vector<line*> lines, std::vector<float> *vertices, std::vector<float> *textures)
 	{
-		object->setNumberOfLines(lines.size());
+		object->setNumberOfLines((int) lines.size());
 		double cursorX = 0.0;
 		double cursorY = 0.0;
 

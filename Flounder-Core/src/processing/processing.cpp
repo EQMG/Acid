@@ -15,7 +15,7 @@ namespace flounder
 
 	processing::~processing()
 	{
-		for (auto processor : *m_processors)
+		for (iprocessor *processor : *m_processors)
 		{
 			delete processor;
 		}
@@ -30,7 +30,7 @@ namespace flounder
 
 	void processing::update()
 	{
-		for (auto processor : *m_processors)
+		for (iprocessor *processor : *m_processors)
 		{
 			processor->update();
 		}
