@@ -258,21 +258,24 @@ namespace flounder
 
 	void renderer::drawFrame()
 	{
+		// TODO: Fix memory leaks.
+
 		uint32_t imageIndex;
 		vkAcquireNextImageKHR(display::get()->getVkDevice(), m_swapChain->getSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 
-		VkSubmitInfo submitInfo = {};
-		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		VkSemaphore waitSemaphores[] = {m_imageAvailableSemaphore};
 		VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
+		VkSemaphore signalSemaphores[] = {m_renderFinishedSemaphore};
+
+		VkSubmitInfo submitInfo = {};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		submitInfo.waitSemaphoreCount = 1;
 		submitInfo.pWaitSemaphores = waitSemaphores;
 		submitInfo.pWaitDstStageMask = waitStages;
-		VkSemaphore signalSemaphores[] = {m_renderFinishedSemaphore};
-		submitInfo.signalSemaphoreCount = 1;
-		submitInfo.pSignalSemaphores = signalSemaphores;
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &m_commandBuffers[imageIndex];
+		submitInfo.signalSemaphoreCount = 1;
+		submitInfo.pSignalSemaphores = signalSemaphores;
 
 		display::vkErrorCheck(vkQueueSubmit(display::get()->getVkPresentQueue(), 1, &submitInfo, VK_NULL_HANDLE));
 
@@ -286,6 +289,7 @@ namespace flounder
 		presentInfo.pSwapchains = swapchains;
 		presentInfo.pImageIndices = &imageIndex;
 
+		vkQueueWaitIdle(display::get()->getVkPresentQueue());
 		vkQueuePresentKHR(display::get()->getVkPresentQueue(), &presentInfo);
 	}
 
