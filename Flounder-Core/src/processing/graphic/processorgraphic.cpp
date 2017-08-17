@@ -16,6 +16,11 @@ namespace flounder
 
 	void processorgraphic::update()
 	{
+		if (!m_queue->hasRequests())
+		{
+			return;
+		}
+
 		double remainingTime = MAX_TIME_MILLIS;
 		double start = framework::get()->getTimeMs();
 

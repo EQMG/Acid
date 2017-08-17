@@ -4,12 +4,12 @@
 #include <string>
 #include <vector>
 
+#include "../devices/display.h"
 #include "../helpers/helperfile.h"
 #include "../helpers/helperstring.h"
 #include "../maths/vector2.h"
 #include "../maths/vector3.h"
 #include "../physics/aabb.h"
-#include "../loaders/loaders.h"
 
 #include "vertexdata.h"
 

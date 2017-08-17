@@ -172,7 +172,7 @@ namespace flounder
 
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-		pipelineInfo.stageCount = m_shaderTest->getStages()->size();
+		pipelineInfo.stageCount = (uint32_t)m_shaderTest->getStages()->size();
 		pipelineInfo.pStages = m_shaderTest->getStages()->data();
 		pipelineInfo.pVertexInputState = &vertexInputInfo;
 		pipelineInfo.pInputAssemblyState = &inputAssembly;
@@ -222,8 +222,9 @@ namespace flounder
 			VkRenderPassBeginInfo renderPassInfo = {};
 			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 			renderPassInfo.renderPass = m_renderPass;
-			renderPassInfo.framebuffer = m_swapChain->getFramebuffer(i);
-			renderPassInfo.renderArea.offset = {0, 0};
+			renderPassInfo.framebuffer = m_swapChain->getFramebuffer((uint32_t) i);
+			renderPassInfo.renderArea.offset.x = 0;
+			renderPassInfo.renderArea.offset.y = 0;
 			renderPassInfo.renderArea.extent = m_swapChain->getExtent();
 
 			VkClearValue clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
