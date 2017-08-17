@@ -1,5 +1,7 @@
 .vs/*
-Flounder-Core/.bin/*
-Flounder-Core/.obj/*
-New-Kosmos/.bin/*
-New-Kosmos/.obj/*
+Flounder-Core/bin/*
+Flounder-Core/obj/*
+Flounder-Editors/bin/*
+Flounder-Editors/obj/*
+New-Kosmos/bin/*
+New-Kosmos/obj/*

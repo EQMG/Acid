@@ -33,7 +33,7 @@
 # include <memory>
 # include <vector>
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
-static_assert( VK_HEADER_VERSION ==  54 , "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION ==  57 , "Wrong VK_HEADER_VERSION!" );
 
 // 32-bit vulkan is not typesafe for handles, so don't allow copy constructors on this platform by default.
 // To enable this feature on 32-bit platforms please define VULKAN_HPP_TYPESAFE_CONVERSION
@@ -491,7 +491,7 @@ namespace vk
     }
   }
 
-
+#ifndef VULKAN_HPP_NO_EXCEPTIONS
 #if defined(_MSC_VER) && (_MSC_VER == 1800)
 # define noexcept _NOEXCEPT
 #endif
@@ -760,7 +760,7 @@ namespace vk
     default: throw SystemError( make_error_code( result ) );
     }
   }
-
+#endif
 } // namespace vk
 
 namespace std
@@ -18444,7 +18444,8 @@ namespace vk
     eHdr10HlgEXT = VK_COLOR_SPACE_HDR10_HLG_EXT,
     eAdobergbLinearEXT = VK_COLOR_SPACE_ADOBERGB_LINEAR_EXT,
     eAdobergbNonlinearEXT = VK_COLOR_SPACE_ADOBERGB_NONLINEAR_EXT,
-    ePassThroughEXT = VK_COLOR_SPACE_PASS_THROUGH_EXT
+    ePassThroughEXT = VK_COLOR_SPACE_PASS_THROUGH_EXT,
+    eExtendedSrgbNonlinearEXT = VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT
   };
 
   struct SurfaceFormatKHR
@@ -24118,16 +24119,16 @@ namespace vk
     void executeCommands( ArrayProxy<const CommandBuffer> commandBuffers ) const;
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
-    void debugMarkerBeginEXT( DebugMarkerMarkerInfoEXT* pMarkerInfo ) const;
+    void debugMarkerBeginEXT( const DebugMarkerMarkerInfoEXT* pMarkerInfo ) const;
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-    DebugMarkerMarkerInfoEXT debugMarkerBeginEXT() const;
+    void debugMarkerBeginEXT( const DebugMarkerMarkerInfoEXT & markerInfo ) const;
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
     void debugMarkerEndEXT() const;
 
-    void debugMarkerInsertEXT( DebugMarkerMarkerInfoEXT* pMarkerInfo ) const;
+    void debugMarkerInsertEXT( const DebugMarkerMarkerInfoEXT* pMarkerInfo ) const;
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-    DebugMarkerMarkerInfoEXT debugMarkerInsertEXT() const;
+    void debugMarkerInsertEXT( const DebugMarkerMarkerInfoEXT & markerInfo ) const;
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
     void drawIndirectCountAMD( Buffer buffer, DeviceSize offset, Buffer countBuffer, DeviceSize countBufferOffset, uint32_t maxDrawCount, uint32_t stride ) const;
@@ -24570,16 +24571,14 @@ namespace vk
   }
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
-  VULKAN_HPP_INLINE void CommandBuffer::debugMarkerBeginEXT( DebugMarkerMarkerInfoEXT* pMarkerInfo ) const
+  VULKAN_HPP_INLINE void CommandBuffer::debugMarkerBeginEXT( const DebugMarkerMarkerInfoEXT* pMarkerInfo ) const
   {
-    vkCmdDebugMarkerBeginEXT( m_commandBuffer, reinterpret_cast<VkDebugMarkerMarkerInfoEXT*>( pMarkerInfo ) );
+    vkCmdDebugMarkerBeginEXT( m_commandBuffer, reinterpret_cast<const VkDebugMarkerMarkerInfoEXT*>( pMarkerInfo ) );
   }
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-  VULKAN_HPP_INLINE DebugMarkerMarkerInfoEXT CommandBuffer::debugMarkerBeginEXT() const
+  VULKAN_HPP_INLINE void CommandBuffer::debugMarkerBeginEXT( const DebugMarkerMarkerInfoEXT & markerInfo ) const
   {
-    DebugMarkerMarkerInfoEXT markerInfo;
-    vkCmdDebugMarkerBeginEXT( m_commandBuffer, reinterpret_cast<VkDebugMarkerMarkerInfoEXT*>( &markerInfo ) );
-    return markerInfo;
+    vkCmdDebugMarkerBeginEXT( m_commandBuffer, reinterpret_cast<const VkDebugMarkerMarkerInfoEXT*>( &markerInfo ) );
   }
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
@@ -24588,16 +24587,14 @@ namespace vk
     vkCmdDebugMarkerEndEXT( m_commandBuffer );
   }
 
-  VULKAN_HPP_INLINE void CommandBuffer::debugMarkerInsertEXT( DebugMarkerMarkerInfoEXT* pMarkerInfo ) const
+  VULKAN_HPP_INLINE void CommandBuffer::debugMarkerInsertEXT( const DebugMarkerMarkerInfoEXT* pMarkerInfo ) const
   {
-    vkCmdDebugMarkerInsertEXT( m_commandBuffer, reinterpret_cast<VkDebugMarkerMarkerInfoEXT*>( pMarkerInfo ) );
+    vkCmdDebugMarkerInsertEXT( m_commandBuffer, reinterpret_cast<const VkDebugMarkerMarkerInfoEXT*>( pMarkerInfo ) );
   }
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-  VULKAN_HPP_INLINE DebugMarkerMarkerInfoEXT CommandBuffer::debugMarkerInsertEXT() const
+  VULKAN_HPP_INLINE void CommandBuffer::debugMarkerInsertEXT( const DebugMarkerMarkerInfoEXT & markerInfo ) const
   {
-    DebugMarkerMarkerInfoEXT markerInfo;
-    vkCmdDebugMarkerInsertEXT( m_commandBuffer, reinterpret_cast<VkDebugMarkerMarkerInfoEXT*>( &markerInfo ) );
-    return markerInfo;
+    vkCmdDebugMarkerInsertEXT( m_commandBuffer, reinterpret_cast<const VkDebugMarkerMarkerInfoEXT*>( &markerInfo ) );
   }
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
@@ -25496,14 +25493,14 @@ namespace vk
     ResultValue<uint32_t> acquireNextImageKHR( SwapchainKHR swapchain, uint64_t timeout, Semaphore semaphore, Fence fence ) const;
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
-    Result debugMarkerSetObjectNameEXT( DebugMarkerObjectNameInfoEXT* pNameInfo ) const;
+    Result debugMarkerSetObjectNameEXT( const DebugMarkerObjectNameInfoEXT* pNameInfo ) const;
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-    ResultValueType<DebugMarkerObjectNameInfoEXT>::type debugMarkerSetObjectNameEXT() const;
+    ResultValueType<void>::type debugMarkerSetObjectNameEXT( const DebugMarkerObjectNameInfoEXT & nameInfo ) const;
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
-    Result debugMarkerSetObjectTagEXT( DebugMarkerObjectTagInfoEXT* pTagInfo ) const;
+    Result debugMarkerSetObjectTagEXT( const DebugMarkerObjectTagInfoEXT* pTagInfo ) const;
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-    ResultValueType<DebugMarkerObjectTagInfoEXT>::type debugMarkerSetObjectTagEXT() const;
+    ResultValueType<void>::type debugMarkerSetObjectTagEXT( const DebugMarkerObjectTagInfoEXT & tagInfo ) const;
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
@@ -27403,29 +27400,27 @@ namespace vk
   }
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
-  VULKAN_HPP_INLINE Result Device::debugMarkerSetObjectNameEXT( DebugMarkerObjectNameInfoEXT* pNameInfo ) const
+  VULKAN_HPP_INLINE Result Device::debugMarkerSetObjectNameEXT( const DebugMarkerObjectNameInfoEXT* pNameInfo ) const
   {
-    return static_cast<Result>( vkDebugMarkerSetObjectNameEXT( m_device, reinterpret_cast<VkDebugMarkerObjectNameInfoEXT*>( pNameInfo ) ) );
+    return static_cast<Result>( vkDebugMarkerSetObjectNameEXT( m_device, reinterpret_cast<const VkDebugMarkerObjectNameInfoEXT*>( pNameInfo ) ) );
   }
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-  VULKAN_HPP_INLINE ResultValueType<DebugMarkerObjectNameInfoEXT>::type Device::debugMarkerSetObjectNameEXT() const
+  VULKAN_HPP_INLINE ResultValueType<void>::type Device::debugMarkerSetObjectNameEXT( const DebugMarkerObjectNameInfoEXT & nameInfo ) const
   {
-    DebugMarkerObjectNameInfoEXT nameInfo;
-    Result result = static_cast<Result>( vkDebugMarkerSetObjectNameEXT( m_device, reinterpret_cast<VkDebugMarkerObjectNameInfoEXT*>( &nameInfo ) ) );
-    return createResultValue( result, nameInfo, "vk::Device::debugMarkerSetObjectNameEXT" );
+    Result result = static_cast<Result>( vkDebugMarkerSetObjectNameEXT( m_device, reinterpret_cast<const VkDebugMarkerObjectNameInfoEXT*>( &nameInfo ) ) );
+    return createResultValue( result, "vk::Device::debugMarkerSetObjectNameEXT" );
   }
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
-  VULKAN_HPP_INLINE Result Device::debugMarkerSetObjectTagEXT( DebugMarkerObjectTagInfoEXT* pTagInfo ) const
+  VULKAN_HPP_INLINE Result Device::debugMarkerSetObjectTagEXT( const DebugMarkerObjectTagInfoEXT* pTagInfo ) const
   {
-    return static_cast<Result>( vkDebugMarkerSetObjectTagEXT( m_device, reinterpret_cast<VkDebugMarkerObjectTagInfoEXT*>( pTagInfo ) ) );
+    return static_cast<Result>( vkDebugMarkerSetObjectTagEXT( m_device, reinterpret_cast<const VkDebugMarkerObjectTagInfoEXT*>( pTagInfo ) ) );
   }
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-  VULKAN_HPP_INLINE ResultValueType<DebugMarkerObjectTagInfoEXT>::type Device::debugMarkerSetObjectTagEXT() const
+  VULKAN_HPP_INLINE ResultValueType<void>::type Device::debugMarkerSetObjectTagEXT( const DebugMarkerObjectTagInfoEXT & tagInfo ) const
   {
-    DebugMarkerObjectTagInfoEXT tagInfo;
-    Result result = static_cast<Result>( vkDebugMarkerSetObjectTagEXT( m_device, reinterpret_cast<VkDebugMarkerObjectTagInfoEXT*>( &tagInfo ) ) );
-    return createResultValue( result, tagInfo, "vk::Device::debugMarkerSetObjectTagEXT" );
+    Result result = static_cast<Result>( vkDebugMarkerSetObjectTagEXT( m_device, reinterpret_cast<const VkDebugMarkerObjectTagInfoEXT*>( &tagInfo ) ) );
+    return createResultValue( result, "vk::Device::debugMarkerSetObjectTagEXT" );
   }
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
@@ -32129,6 +32124,7 @@ namespace vk
     case ColorSpaceKHR::eAdobergbLinearEXT: return "AdobergbLinearEXT";
     case ColorSpaceKHR::eAdobergbNonlinearEXT: return "AdobergbNonlinearEXT";
     case ColorSpaceKHR::ePassThroughEXT: return "PassThroughEXT";
+    case ColorSpaceKHR::eExtendedSrgbNonlinearEXT: return "ExtendedSrgbNonlinearEXT";
     default: return "invalid";
     }
   }
