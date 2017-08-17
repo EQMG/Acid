@@ -3,7 +3,6 @@
 #include "../camera/camera.h"
 #include "../fbos/fbo.h"
 #include "../lights/light.h"
-#include "../loaders/loaders.h"
 #include "../maths/vector3.h"
 #include "../models/model.h"
 #include "../renderer/renderer.h"

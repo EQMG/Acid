@@ -186,7 +186,9 @@ namespace flounder
 		}
 		else
 		{
-			VkExtent2D actualExtent = {display::get()->getWidth(), display::get()->getHeight()}; // WIDTH, HEIGHT
+			VkExtent2D actualExtent = {};
+			actualExtent.width = (uint32_t) display::get()->getWidth();
+			actualExtent.height = (uint32_t) display::get()->getHeight();
 
 			actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
 			actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));

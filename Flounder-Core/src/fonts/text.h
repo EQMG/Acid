@@ -3,7 +3,6 @@
 #include <string>
 
 #include "../framework/framework.h"
-#include "../loaders/loaders.h"
 #include "../maths/colour.h"
 #include "../maths/vector2.h"
 #include "../visual/idriver.h"
