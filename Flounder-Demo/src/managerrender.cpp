@@ -4,33 +4,33 @@ managerrender::managerrender()
 {
 	m_infinity = vector4(0.0f, 1.0f, 0.0f, +INFINITY);
 
-	m_rendererShadows = new renderershadows();
-	m_rendererSkyboxes = new rendererskyboxes();
-	m_rendererTerrains = new rendererterrains();
-	m_rendererWaters = new rendererwaters();
-	m_rendererParticles = new rendererparticles();
-	m_rendererGuis = new rendererguis();
-	m_rendererFonts = new rendererfonts();
+	//m_rendererShadows = new renderershadows();
+	//m_rendererSkyboxes = new rendererskyboxes();
+	//m_rendererTerrains = new rendererterrains();
+	//m_rendererWaters = new rendererwaters();
+	//m_rendererParticles = new rendererparticles();
+	//m_rendererGuis = new rendererguis();
+	//m_rendererFonts = new rendererfonts();
 
-	m_fboRenderer = new fbo(true, 1.0f, TEXTURE, false);
-	m_rendererDeferred = new rendererdeferred();
-	m_filterFxaa = new filterfxaa();
-	m_filterLensFlare = new filterlensflare();
+	//m_fboRenderer = new fbo(true, 1.0f, TEXTURE, false);
+	//m_rendererDeferred = new rendererdeferred();
+	//m_filterFxaa = new filterfxaa();
+	//m_filterLensFlare = new filterlensflare();
 }
 
 managerrender::~managerrender()
 {
-	delete m_rendererShadows;
-	delete m_rendererSkyboxes;
-	delete m_rendererTerrains;
-	delete m_rendererWaters;
-	delete m_rendererParticles;
-	delete m_rendererGuis;
-	delete m_rendererFonts;
+	//delete m_rendererShadows;
+	//delete m_rendererSkyboxes;
+	//delete m_rendererTerrains;
+	//delete m_rendererWaters;
+	//delete m_rendererParticles;
+	//delete m_rendererGuis;
+	//delete m_rendererFonts;
 
-	delete m_fboRenderer;
-	delete m_rendererDeferred;
-	delete m_filterFxaa;
+	//delete m_fboRenderer;
+	//delete m_rendererDeferred;
+	//delete m_filterFxaa;
 }
 
 void managerrender::render()
@@ -42,13 +42,13 @@ void managerrender::render()
 	renderShadows(camera::get()->getCamera());
 
 	// Binds the render FBO.
-	m_fboRenderer->bindFrameBuffer();
+	//m_fboRenderer->bindFrameBuffer();
 
 	// Scene rendering
 	renderScene(camera::get()->getCamera(), m_infinity, false);
 
 	// Unbinds the render FBO.
-	m_fboRenderer->unbindFrameBuffer();
+	//m_fboRenderer->unbindFrameBuffer();
 
 	// Post rendering.
 	renderPost(camera::get()->getCamera());
@@ -92,7 +92,7 @@ void managerrender::renderWater(icamera *camera)
 
 void managerrender::renderShadows(icamera *camera)
 {
-	m_rendererShadows->render(m_infinity, *camera);
+	//m_rendererShadows->render(m_infinity, *camera);
 }
 
 void managerrender::renderScene(icamera *camera, const vector4 &clipPlane, const bool &waterPass)
@@ -100,21 +100,21 @@ void managerrender::renderScene(icamera *camera, const vector4 &clipPlane, const
 #if 0
 	renderer::get()->prepareNewRenderParse(1.0f, 0.0f, 0.0f, 1.0f);
 #endif
-	m_rendererSkyboxes->render(clipPlane, *camera);
-	m_rendererTerrains->render(clipPlane, *camera);
+	//m_rendererSkyboxes->render(clipPlane, *camera);
+	//m_rendererTerrains->render(clipPlane, *camera);
 
 	if (!waterPass)
 	{
-		m_rendererWaters->render(clipPlane, *camera);
+	//	m_rendererWaters->render(clipPlane, *camera);
 	}
 
-	m_rendererParticles->render(clipPlane, *camera);
+	//m_rendererParticles->render(clipPlane, *camera);
 }
 
 void managerrender::renderPost(icamera *camera)
 {
 	// Renders the post pipeline.
-	fbo *output = m_fboRenderer;
+	//fbo *output = m_fboRenderer;
 
 #if 0
 	m_rendererDeferred->apply(5,
@@ -130,9 +130,9 @@ void managerrender::renderPost(icamera *camera)
 	output = m_filterFxaa->getFbo();
 #endif
 
-	output->bindFrameBuffer();
+	//output->bindFrameBuffer();
 	renderGuis(camera);
-	output->unbindFrameBuffer();
+	//output->unbindFrameBuffer();
 
 #if 0
 	m_filterLensFlare->setSunPosition(*worlds::get()->getSunPosition());
@@ -142,11 +142,11 @@ void managerrender::renderPost(icamera *camera)
 #endif
 
 	// Displays the image to the screen.
-	output->blitToScreen();
+	//output->blitToScreen();
 }
 
 void managerrender::renderGuis(icamera *camera)
 {
-	m_rendererGuis->render(m_infinity, *camera);
-	m_rendererFonts->render(m_infinity, *camera);
+	//m_rendererGuis->render(m_infinity, *camera);
+	//m_rendererFonts->render(m_infinity, *camera);
 }

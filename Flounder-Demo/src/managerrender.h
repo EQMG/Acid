@@ -12,18 +12,18 @@ class managerrender :
 private:
 	vector4 m_infinity;
 
-	renderershadows *m_rendererShadows;
-	rendererskyboxes *m_rendererSkyboxes;
-	rendererterrains *m_rendererTerrains;
-	rendererwaters *m_rendererWaters;
-	rendererparticles *m_rendererParticles;
-	rendererguis *m_rendererGuis;
-	rendererfonts *m_rendererFonts;
+	//renderershadows *m_rendererShadows;
+	//rendererskyboxes *m_rendererSkyboxes;
+	//rendererterrains *m_rendererTerrains;
+	//rendererwaters *m_rendererWaters;
+	//rendererparticles *m_rendererParticles;
+	//rendererguis *m_rendererGuis;
+	//rendererfonts *m_rendererFonts;
 
-	fbo *m_fboRenderer;
-	rendererdeferred *m_rendererDeferred;
-	filterfxaa *m_filterFxaa;
-	filterlensflare *m_filterLensFlare;
+	//fbo *m_fboRenderer;
+	//rendererdeferred *m_rendererDeferred;
+	//filterfxaa *m_filterFxaa;
+	//filterlensflare *m_filterLensFlare;
 public:
 	managerrender();
 

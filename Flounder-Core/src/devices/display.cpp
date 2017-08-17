@@ -169,7 +169,11 @@ namespace flounder
 		m_windowPosX = 0;
 		m_windowPosY = 0;
 
+#if FLOUNDER_CONFIG_DEBUG
 		m_validationLayers = true;
+#elif FLOUNDER_CONFIG_RELEASE
+		m_validationLayers = false;
+#endif
 
 		m_instance = VK_NULL_HANDLE;
 		m_surface = VK_NULL_HANDLE;

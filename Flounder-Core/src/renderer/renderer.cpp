@@ -42,6 +42,7 @@ namespace flounder
 
 		delete m_managerRender;
 		delete m_shaderTest;
+		delete m_swapChain;
 
 		vkDestroySemaphore(display::get()->getVkDevice(), m_renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(display::get()->getVkDevice(), m_imageAvailableSemaphore, nullptr);
@@ -64,7 +65,6 @@ namespace flounder
 		{
 			lastWidth = currentWidth;
 			lastHeight = currentHeight;
-			recreateSwapChain();
 		}*/
 
 		updateUniformBuffer();
@@ -123,7 +123,8 @@ namespace flounder
 		viewport.maxDepth = 1.0f;
 
 		VkRect2D scissor = {};
-		scissor.offset = { 0, 0 };
+		scissor.offset.x = 0;
+		scissor.offset.y = 0;
 		scissor.extent = m_swapChain->getExtent();
 
 		VkPipelineViewportStateCreateInfo viewportState = {};
@@ -148,20 +149,20 @@ namespace flounder
 		multisampling.sampleShadingEnable = VK_FALSE;
 		multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
 
-		VkPipelineColorBlendAttachmentState colorBlendAttachment = {};
-		colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-		colorBlendAttachment.blendEnable = VK_FALSE;
+		VkPipelineColorBlendAttachmentState colourBlendAttachment = {};
+		colourBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+		colourBlendAttachment.blendEnable = VK_FALSE;
 
-		VkPipelineColorBlendStateCreateInfo colorBlending = {};
-		colorBlending.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
-		colorBlending.logicOpEnable = VK_FALSE;
-		colorBlending.logicOp = VK_LOGIC_OP_COPY;
-		colorBlending.attachmentCount = 1;
-		colorBlending.pAttachments = &colorBlendAttachment;
-		colorBlending.blendConstants[0] = 0.0f;
-		colorBlending.blendConstants[1] = 0.0f;
-		colorBlending.blendConstants[2] = 0.0f;
-		colorBlending.blendConstants[3] = 0.0f;
+		VkPipelineColorBlendStateCreateInfo colourBlending = {};
+		colourBlending.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
+		colourBlending.logicOpEnable = VK_FALSE;
+		colourBlending.logicOp = VK_LOGIC_OP_COPY;
+		colourBlending.attachmentCount = 1;
+		colourBlending.pAttachments = &colourBlendAttachment;
+		colourBlending.blendConstants[0] = 0.0f;
+		colourBlending.blendConstants[1] = 0.0f;
+		colourBlending.blendConstants[2] = 0.0f;
+		colourBlending.blendConstants[3] = 0.0f;
 
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -179,7 +180,7 @@ namespace flounder
 		pipelineInfo.pViewportState = &viewportState;
 		pipelineInfo.pRasterizationState = &rasterizer;
 		pipelineInfo.pMultisampleState = &multisampling;
-		pipelineInfo.pColorBlendState = &colorBlending;
+		pipelineInfo.pColorBlendState = &colourBlending;
 		pipelineInfo.layout = m_pipelineLayout;
 		pipelineInfo.renderPass = m_renderPass;
 		pipelineInfo.subpass = 0;
@@ -273,10 +274,7 @@ namespace flounder
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &m_commandBuffers[imageIndex];
 
-		if (vkQueueSubmit(display::get()->getVkPresentQueue(), 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
-		{
-			throw std::runtime_error("Failed to submit draw command buffer");
-		}
+		display::vkErrorCheck(vkQueueSubmit(display::get()->getVkPresentQueue(), 1, &submitInfo, VK_NULL_HANDLE));
 
 		VkPresentInfoKHR presentInfo = {};
 		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -289,38 +287,6 @@ namespace flounder
 		presentInfo.pImageIndices = &imageIndex;
 
 		vkQueuePresentKHR(display::get()->getVkPresentQueue(), &presentInfo);
-	}
-
-	VkShaderModule renderer::createShaderModule(const std::vector<char>& code)
-	{
-		VkShaderModuleCreateInfo createInfo = {};
-		createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-		createInfo.codeSize = code.size();
-		createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
-
-		VkShaderModule shaderModule;
-		display::vkErrorCheck(vkCreateShaderModule(display::get()->getVkDevice(), &createInfo, nullptr, &shaderModule));
-
-		return shaderModule;
-	}
-
-	std::vector<char> renderer::readFile(const std::string & filename)
-	{
-		std::ifstream file(filename, std::ios::ate | std::ios::binary);
-
-		if (!file.is_open()) {
-			throw std::runtime_error("failed to open file!");
-		}
-
-		size_t fileSize = (size_t)file.tellg();
-		std::vector<char> buffer(fileSize);
-
-		file.seekg(0);
-		file.read(buffer.data(), fileSize);
-
-		file.close();
-
-		return buffer;
 	}
 
 	VkSwapChainSupportDetails renderer::querySwapChainSupport(VkPhysicalDevice device)
