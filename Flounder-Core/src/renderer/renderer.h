@@ -5,8 +5,9 @@
 #include "../shaders/shader.h"
 #include "../textures/texture.h"
 
+#include "swapchain/swapchain.h"
+
 #include "imanagerrender.h"
-#include "../swapchain/swapchain.h"
 
 namespace flounder
 {
@@ -88,10 +89,6 @@ namespace flounder
 		void updateUniformBuffer();
 
 		void drawFrame();
-
-		VkShaderModule createShaderModule(const std::vector<char>& code);
-
-		std::vector<char> readFile(const std::string& filename);
 
 		VkSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
 	};

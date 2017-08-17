@@ -41,13 +41,4 @@
   C:\Users\mattp\Documents\Flounder\Flounder-Demo\res\shaders\tests\test.vert
   C:\Users\mattp\Documents\Flounder\Flounder-Demo\res\shaders\waters\water.frag
   C:\Users\mattp\Documents\Flounder\Flounder-Demo\res\shaders\waters\water.vert
-  instance.cpp
-  main.cpp
-  maincamera.cpp
-  mainplayer.cpp
-  managerrender.cpp
-  manageruis.cpp
-  overlaydebug.cpp
-  overlaymanager.cpp
-  Generating Code...
   Flounder-Demo.vcxproj -> C:\Users\mattp\Documents\Flounder\Flounder-Demo\.bin\Debug x64\Flounder Demo.exe

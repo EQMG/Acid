@@ -1,0 +1,6 @@
+http://hdri.cgtechniques.com/~sponza/files/
+
+Sponza modeled by Marko Dabrovic, with UVs and crack errors fixed by Kenzie Lamar at Vicarious Visions.
+Bump maps painted by Morgan McGuire.
+
+Highly simplified model adapted for CIS 565.

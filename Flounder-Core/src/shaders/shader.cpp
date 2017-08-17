@@ -51,7 +51,7 @@ namespace flounder
 			shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 			shaderStageInfo.stage = type.getShaderFlag();
 			shaderStageInfo.module = shaderModule;
-			shaderStageInfo.pName = "main";
+			shaderStageInfo.pName = "main"; // The shaders entry point.
 
 			m_modules->push_back(shaderModule);
 			m_stages->push_back(shaderStageInfo);
