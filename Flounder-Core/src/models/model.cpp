@@ -86,7 +86,7 @@ namespace flounder
 				if (prefix == "v")
 				{
 					vector3 vertex = vector3(stof(split.at(1)), stof(split.at(2)), stof(split.at(3)));
-					vertexdata *newVertex = new vertexdata(vertices.size(), vertex);
+					vertexdata *newVertex = new vertexdata((int) vertices.size(), vertex);
 					vertices.push_back(newVertex);
 				}
 				else if (prefix == "vt")
@@ -112,9 +112,9 @@ namespace flounder
 					std::vector<std::string> vertex2 = helperstring::split(split.at(2), "/");
 					std::vector<std::string> vertex3 = helperstring::split(split.at(3), "/");
 
-					vertexdata *v0 = processDataVertex(vector3(stoi(vertex1.at(0)), stoi(vertex1.at(1)), stoi(vertex1.at(2))), &vertices, &indices);
-					vertexdata *v1 = processDataVertex(vector3(stoi(vertex2.at(0)), stoi(vertex2.at(1)), stoi(vertex2.at(2))), &vertices, &indices);
-					vertexdata *v2 = processDataVertex(vector3(stoi(vertex3.at(0)), stoi(vertex3.at(1)), stoi(vertex3.at(2))), &vertices, &indices);
+					vertexdata *v0 = processDataVertex(vector3(stof(vertex1.at(0)), stof(vertex1.at(1)), stof(vertex1.at(2))), &vertices, &indices);
+					vertexdata *v1 = processDataVertex(vector3(stof(vertex2.at(0)), stof(vertex2.at(1)), stof(vertex2.at(2))), &vertices, &indices);
+					vertexdata *v2 = processDataVertex(vector3(stof(vertex3.at(0)), stof(vertex3.at(1)), stof(vertex3.at(2))), &vertices, &indices);
 					calculateTangents(v0, v1, v2, &textures);
 				}
 				else
@@ -208,7 +208,7 @@ namespace flounder
 			}
 			else
 			{
-				vertexdata *duplicateVertex = new vertexdata(vertices->size(), previousVertex->getPosition());
+				vertexdata *duplicateVertex = new vertexdata((int) vertices->size(), previousVertex->getPosition());
 				duplicateVertex->setTextureIndex(newTextureIndex);
 				duplicateVertex->setNormalIndex(newNormalIndex);
 				previousVertex->setDuplicateVertex(duplicateVertex);

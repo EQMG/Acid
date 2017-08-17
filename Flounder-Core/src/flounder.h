@@ -91,7 +91,6 @@
 #include "lights/attenuation.h"
 #include "lights/fog.h"
 #include "lights/light.h"
-#include "loaders/loaders.h"
 #include "maths/colour.h"
 #include "maths/delta.h"
 #include "maths/maths.h"

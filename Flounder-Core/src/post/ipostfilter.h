@@ -3,7 +3,6 @@
 #include <stdarg.h>
 
 #include "../fbos/fbo.h"
-#include "../loaders/loaders.h"
 #include "../models/model.h"
 #include "../renderer/renderer.h"
 #include "../shaders/shader.h"
