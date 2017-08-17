@@ -23,11 +23,23 @@ void overlaydebug::updateObject()
 	{
 		m_timerUpdate->resetStartTime();
 
-		vector3 *position = camera::get()->getCamera()->getPosition();
-		float terrainHeight = 0.0f; //  terrains::get()->getTerrain()->getHeight(position->m_x, position->m_z);
-		m_textHeight->setText("HEIGHT: " + std::to_string(maths::roundToPlace(terrainHeight, 2)));
-		m_textTime->setText("TIME: " + std::to_string(static_cast<int>(worlds::get()->getDayFactor() * 100.0f)) + "%");
-		m_textPosition->setText("POSITION: " + std::to_string(static_cast<int>(position->m_x)) + ", " + std::to_string(static_cast<int>(position->m_y)) + ", " + std::to_string(static_cast<int>(position->m_z)));
+		if (terrains::get() != nullptr)
+		{
+			float terrainHeight = 0.0f; //  terrains::get()->getTerrain()->getHeight(position->m_x, position->m_z);
+			m_textHeight->setText("HEIGHT: " + std::to_string(maths::roundToPlace(terrainHeight, 2)));
+		}
+
+		if (worlds::get() != nullptr)
+		{
+			m_textTime->setText("TIME: " + std::to_string(static_cast<int>(worlds::get()->getDayFactor() * 100.0f)) + "%");
+		}
+
+		if (camera::get() != nullptr)
+		{
+			vector3 *position = camera::get()->getCamera()->getPosition();
+			m_textPosition->setText("POSITION: " + std::to_string(static_cast<int>(position->m_x)) + ", " + std::to_string(static_cast<int>(position->m_y)) + ", " + std::to_string(static_cast<int>(position->m_z)));
+		}
+
 		m_textFps->setText("FPS: " + std::to_string(static_cast<int>(1.0 / framework::get()->getDeltaRender())));
 		m_textUps->setText("UPS: " + std::to_string(static_cast<int>(1.0 / framework::get()->getDelta())));
 	}

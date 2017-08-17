@@ -14,7 +14,7 @@
 #endif
 
 #define GLFW_INCLUDE_VULKAN
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <glfw/glfw3.h>
 
 #define STB_IMAGE_IMPLEMENTATION
