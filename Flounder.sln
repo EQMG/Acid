@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder Core", "Flounder-C
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder Demo", "Flounder-Demo\Flounder-Demo.vcxproj", "{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flounder Editors", "Flounder Editors\Flounder Editors.csproj", "{5CA65A8D-5269-4A20-8501-A5F44594DE78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flounder Editors", "Flounder-Editors\Flounder-Editors.csproj", "{5CA65A8D-5269-4A20-8501-A5F44594DE78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
