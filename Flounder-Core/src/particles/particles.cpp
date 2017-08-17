@@ -16,23 +16,26 @@ namespace flounder
 		delete m_particleSystems;
 		delete m_particles;
 	}
-	
+
 	void particles::update()
 	{
-		if (uis::get()->getManager()->isGamePaused())
+		if (uis::get() != nullptr && uis::get()->getManager() != nullptr)
 		{
-			return;
+			if (uis::get()->getManager()->isGamePaused())
+			{
+				return;
+			}
 		}
 
-		// Generate particles.
-		for (particlesystem* system : *m_particleSystems)
+		// Generates particles.
+		for (particlesystem *system : *m_particleSystems)
 		{
 			particle *created = system->generateParticles();
 
 			if (created != nullptr)
 			{
 				std::vector<particle*> *list = m_particles->find(created->getParticleType())->second;
-				
+
 				if (list == nullptr)
 				{
 					list = new std::vector<particle*>();
@@ -47,7 +50,7 @@ namespace flounder
 		}
 
 		// Update and kill particles.
-		for(std::map<particletype*, std::vector<particle*>*>::iterator iter = m_particles->begin(); iter != m_particles->end(); ++iter)
+		for (std::map<particletype*, std::vector<particle*>*>::iterator iter = m_particles->begin(); iter != m_particles->end(); ++iter)
 		{
 			for (std::vector<particle*>::iterator it = iter->second->begin(); it != iter->second->end(); ++it)
 			{

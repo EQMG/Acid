@@ -11,7 +11,7 @@ namespace flounder
 	/// <summary>
 	/// A extension that is responsible for processing OpenGL requests.
 	/// </summary>
-	class processorgraphic : 
+	class processorgraphic :
 		public iprocessor
 	{
 	private:

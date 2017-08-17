@@ -47,12 +47,17 @@ namespace flounder
 	{
 	}
 
-	bool keyboard::getKey(const int &key)
+	bool keyboard::getKey(const int &key) const
 	{
+		if (key < 0 || key > GLFW_KEY_LAST + 1)
+		{
+			return false;
+		}
+
 		return m_keyboardKeys[key] != GLFW_RELEASE;
 	}
 
-	int keyboard::getKeyboardChar()
+	int keyboard::getKeyboardChar() const
 	{
 		return m_keyboardChar;
 	}

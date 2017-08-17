@@ -26,7 +26,7 @@ namespace flounder
 		void createFramebuffers(VkRenderPass renderPass);
 
 		void cleanup();
-		
+
 		void cleanupFramebuffers();
 
 		inline VkSwapchainKHR getSwapchain() const { return m_swapChain; }

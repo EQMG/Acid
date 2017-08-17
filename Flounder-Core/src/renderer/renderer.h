@@ -75,6 +75,7 @@ namespace flounder
 		{
 			return m_commandBuffers;
 		}
+
 	private:
 		void createRenderPass();
 

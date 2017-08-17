@@ -33,31 +33,49 @@ namespace flounder
 	void worlds::update()
 	{
 		float delta = framework::get()->getDelta();
-		skybox *skybox = skyboxes::get()->getSkybox();
-		fog *fog = skyboxes::get()->getFog();
-		vector3 *lightDirection = shadows::get()->getLightDirection();
-		m_factorDay = m_driverDay->update(delta); // 0.25f;
+		m_factorDay = m_driverDay->update(delta);
 
-		skybox->getRotation()->set(360.0f * m_factorDay, 0.0f, 0.0f);
-		matrix4x4::rotate(vector3(0.2f, 0.0f, 0.5f), *skybox->getRotation(), lightDirection);
-		lightDirection->normalize();
+		vector3 skyboxRotation = vector3(360.0f * m_factorDay, 0.0f, 0.0f);
+		vector3 lightDirection = vector3();
+		colour fogColour = colour();
 
-		colour::interpolate(colour(0.9f, 0.3f, 0.3f), colour(0.05f, 0.05f, 0.1f), getSunriseFactor(), fog->m_colour);
-		colour::interpolate(*fog->m_colour, colour(0.0f, 0.3f, 0.7f), getShadowFactor(), fog->m_colour);
-		fog->m_density = 0.006f + ((1.0f - getShadowFactor()) * 0.006f);
-		fog->m_gradient = 2.80f - ((1.0f - getShadowFactor()) * 0.4f);
-		skybox->setBlend(starIntensity());
+		matrix4x4::rotate(vector3(0.2f, 0.0f, 0.5f), skyboxRotation, &lightDirection);
+		lightDirection.normalize();
 
-	//	shadows::get()->setShadowBoxOffset((20.0f * (1.0f - getShadowFactor())) + 10.0f);
-	//	shadows::get()->setShadowBoxDistance(35.0f);
-	//	shadows::get()->setShadowTransition(0.0f);
-	//	shadows::get()->setShadowFactor(getShadowFactor());
+		colour::interpolate(colour(0.9f, 0.3f, 0.3f), colour(0.05f, 0.05f, 0.1f), getSunriseFactor(), &fogColour);
+		colour::interpolate(fogColour, colour(0.0f, 0.3f, 0.7f), getShadowFactor(), &fogColour);
 
-		vector3::multiply(*lightDirection, vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
-		vector3::add(*m_sunPosition, *camera::get()->getCamera()->getPosition(), m_sunPosition);
-		
+		vector3::multiply(lightDirection, vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
+
+		if (camera::get() != nullptr && camera::get()->getCamera() != nullptr)
+		{
+			vector3::add(*m_sunPosition, *camera::get()->getCamera()->getPosition(), m_sunPosition);
+		}
+
 		colour::interpolate(colour(0.9f, 0.3f, 0.3f), colour(0.0f, 0.0f, 0.0f), getSunriseFactor(), m_sunColour);
 		colour::interpolate(*m_sunColour, colour(1.0f, 1.0f, 1.0f), getShadowFactor(), m_sunColour);
+
+		if (skyboxes::get() != nullptr && skyboxes::get()->getSkybox() != nullptr)
+		{
+			skyboxes::get()->getSkybox()->getRotation()->set(skyboxRotation);
+			skyboxes::get()->getSkybox()->setBlend(starIntensity());
+		}
+
+		if (skyboxes::get() != nullptr && skyboxes::get()->getFog() != nullptr)
+		{
+			skyboxes::get()->getFog()->m_density = 0.006f + ((1.0f - getShadowFactor()) * 0.006f);
+			skyboxes::get()->getFog()->m_gradient = 2.80f - ((1.0f - getShadowFactor()) * 0.4f);
+			skyboxes::get()->getFog()->m_colour->set(fogColour);
+		}
+
+		if (shadows::get() != nullptr)
+		{
+			shadows::get()->getLightDirection()->set(lightDirection);
+			shadows::get()->setShadowBoxOffset((20.0f * (1.0f - getShadowFactor())) + 10.0f);
+			shadows::get()->setShadowBoxDistance(35.0f);
+			shadows::get()->setShadowTransition(0.0f);
+			shadows::get()->setShadowFactor(getShadowFactor());
+		}
 	}
 
 	float worlds::getDayFactor()

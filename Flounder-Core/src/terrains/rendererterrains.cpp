@@ -19,7 +19,7 @@ namespace flounder
 	void rendererterrains::render(const vector4 &clipPlane, const icamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
-		
+
 		for (terrain *object : *terrains::get()->getTerrains())
 		{
 			renderTerrain(object);

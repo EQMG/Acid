@@ -7,8 +7,8 @@ namespace flounder
 	/// </summary>
 	enum depthbuffer
 	{
-		RENDER_BUFFER,
-		TEXTURE,
-		NONE
+		DepthRenderBuffer,
+		DepthTexture,
+		DepthNone
 	};
 }

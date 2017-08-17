@@ -79,7 +79,7 @@ namespace flounder
 		/// </summary>
 		/// <param name="button"> The mouse button to test. </param>
 		/// <returns> If the mouse button is currently pressed. </returns>
-		inline bool getButton(const int &button) const { return m_mouseButtons[button] != GLFW_RELEASE; }
+		bool getButton(const int &button) const;
 
 		/// <summary>
 		/// Gets the mouses screen x position.

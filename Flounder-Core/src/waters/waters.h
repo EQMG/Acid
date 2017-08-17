@@ -40,7 +40,7 @@ namespace flounder
 		~waters();
 
 		void update() override;
-		
+
 		inline water *getWater() { return m_water; }
 
 		inline void setWater(water *water) { m_water = water; }

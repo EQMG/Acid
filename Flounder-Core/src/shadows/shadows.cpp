@@ -31,6 +31,9 @@ namespace flounder
 
 	void shadows::update()
 	{
-		m_shadowBox->update(*camera::get()->getCamera(), *m_lightDirection, m_shadowBoxOffset, m_shadowBoxDistance);
+		if (camera::get() != nullptr && camera::get()->getCamera() != nullptr)
+		{
+			m_shadowBox->update(*camera::get()->getCamera(), *m_lightDirection, m_shadowBoxOffset, m_shadowBoxDistance);
+		}
 	}
 }

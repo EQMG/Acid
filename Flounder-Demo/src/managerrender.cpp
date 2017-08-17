@@ -35,40 +35,42 @@ managerrender::~managerrender()
 
 void managerrender::render()
 {
+#if 0
 	// Water rendering.
-	renderWater(camera::get()->getCamera());
+	renderWater();
 
 	// Shadow rendering.
-	renderShadows(camera::get()->getCamera());
+	renderShadows();
 
 	// Binds the render FBO.
-	//m_fboRenderer->bindFrameBuffer();
+	m_fboRenderer->bindFrameBuffer();
 
 	// Scene rendering
-	renderScene(camera::get()->getCamera(), m_infinity, false);
+	renderScene(m_infinity, false);
 
 	// Unbinds the render FBO.
-	//m_fboRenderer->unbindFrameBuffer();
+	m_fboRenderer->unbindFrameBuffer();
 
 	// Post rendering.
-	renderPost(camera::get()->getCamera());
-	/*m_rendererShadows->render(m_infinity, *camera::get()->getCamera());
+	renderPost();
+	m_rendererShadows->render(m_infinity);
 	m_filterFxaa->applyFilter(1, m_rendererShadows->getFbo()->getDepthTexture());
-	m_filterFxaa->getFbo()->blitToScreen();*/
+	m_filterFxaa->getFbo()->blitToScreen();
+#endif
 }
 
-void managerrender::renderWater(icamera *camera)
+void managerrender::renderWater()
 {
+#if 0
 	if (waters::get()->getEnableReflections() && waters::get()->getColourIntensity() != 1.0f && waters::get()->getWater() != nullptr)
 	{
 		camera->reflect(waters::get()->getWater()->getPosition()->m_y);
 
 		if (waters::get()->getReflectionShadows())
 		{
-			renderShadows(camera);
+			renderShadows();
 		}
 
-#if 0
 		glEnable(GL_CLIP_DISTANCE0);
 		{
 			m_rendererWaters->getFboReflection()->bindFrameBuffer();
@@ -84,39 +86,41 @@ void managerrender::renderWater(icamera *camera)
 		 	m_rendererWaters->getFboReflection()->getDepthTexture(),
 			m_rendererShadows->getFbo()->getDepthTexture()
 		); // Shadow Map -  Depth -  Extras -  Normals -  Colours
-#endif
 
 		camera->reflect(waters::get()->getWater()->getPosition()->m_y);
 	}
+#endif
 }
 
-void managerrender::renderShadows(icamera *camera)
+void managerrender::renderShadows()
 {
-	//m_rendererShadows->render(m_infinity, *camera);
+#if 0
+	m_rendererShadows->render(m_infinity, *camera);
+#endif
 }
 
-void managerrender::renderScene(icamera *camera, const vector4 &clipPlane, const bool &waterPass)
+void managerrender::renderScene(const vector4 &clipPlane, const bool &waterPass)
 {
 #if 0
 	renderer::get()->prepareNewRenderParse(1.0f, 0.0f, 0.0f, 1.0f);
-#endif
-	//m_rendererSkyboxes->render(clipPlane, *camera);
-	//m_rendererTerrains->render(clipPlane, *camera);
+	m_rendererSkyboxes->render(clipPlane, *camera);
+	m_rendererTerrains->render(clipPlane, *camera);
 
 	if (!waterPass)
 	{
-	//	m_rendererWaters->render(clipPlane, *camera);
+		m_rendererWaters->render(clipPlane, *camera);
 	}
 
-	//m_rendererParticles->render(clipPlane, *camera);
+	m_rendererParticles->render(clipPlane, *camera);
+#endif
 }
 
-void managerrender::renderPost(icamera *camera)
+void managerrender::renderPost()
 {
-	// Renders the post pipeline.
-	//fbo *output = m_fboRenderer;
-
 #if 0
+	// Renders the post pipeline.
+	fbo *output = m_fboRenderer;
+
 	m_rendererDeferred->apply(5,
 		output->getColourTexture(0),
 		output->getColourTexture(1),
@@ -128,25 +132,25 @@ void managerrender::renderPost(icamera *camera)
 
 	m_filterFxaa->applyFilter(1, output->getColourTexture(0));
 	output = m_filterFxaa->getFbo();
-#endif
 
-	//output->bindFrameBuffer();
+	output->bindFrameBuffer();
 	renderGuis(camera);
-	//output->unbindFrameBuffer();
+	output->unbindFrameBuffer();
 
-#if 0
 	m_filterLensFlare->setSunPosition(*worlds::get()->getSunPosition());
 	m_filterLensFlare->setSunHeight(worlds::get()->getSunHeight());
 	m_filterLensFlare->applyFilter(1, output->getColourTexture(0));
 	output = m_filterLensFlare->getFbo();
-#endif
 
 	// Displays the image to the screen.
-	//output->blitToScreen();
+	output->blitToScreen();
+#endif
 }
 
-void managerrender::renderGuis(icamera *camera)
+void managerrender::renderGuis()
 {
-	//m_rendererGuis->render(m_infinity, *camera);
-	//m_rendererFonts->render(m_infinity, *camera);
+#if 0
+	m_rendererGuis->render(m_infinity, *camera);
+	m_rendererFonts->render(m_infinity, *camera);
+#endif
 }

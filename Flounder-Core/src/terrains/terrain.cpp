@@ -103,10 +103,10 @@ namespace flounder
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
 		m_aabb->update(*m_position, *m_rotation, 1.0f, m_aabb);
 
-		delete vertices;
-		delete normals;
-		delete colours;
-		delete indices;
+		//	delete vertices;
+		//	delete normals;
+		//	delete colours;
+		//	delete indices;
 	}
 
 	void terrain::storeQuad1(std::vector<int> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
@@ -255,33 +255,33 @@ namespace flounder
 
 		float radius1 = worldIslandInside * (worldSize / 2.0f); // The inside radius to the blur.
 		float radius2 = worldIslandOutside * (worldSize / 2.0f); // The outside radius to the blur.
-		
+
 		if (x == 0.0f && z == 0.0f) // The special case where the reading is undefined.
 		{
 			return 1.0f;
-		} 
+		}
 		else if (reading > radius2) // If outside the upper bound there is no factor!
 		{
 			return 0.0f;
-		} 
+		}
 		else if (reading >= radius1) // Something between upper and lower, uses cos interpolation.
 		{
 			float blend = maths::clamp((reading - radius1) / (radius2 - radius1), 0.0f, 1.0f);
 			return maths::clamp(maths::cosInterpolate(1.0f, 0.0f, blend), 0.0f, 1.0f);
-		} 
+		}
 		else // Fully inside of the lower radius, so full factor.
 		{
 			return 1.0f;
 		}
 	}
 
-	float terrain::getFactorMoisture(const float & x, const float & y, const float & z)
+	float terrain::getFactorMoisture(const float &x, const float &y, const float &z)
 	{
 		const float worldNoiseHeight = 40.0f;
 
 		// Calculate the moisture as a inverse of height with added noise.
 		float moisture = y / worldNoiseHeight;
-		
+
 		// Set to 100% moisture in the ocean/lakes/rivers.
 		if ((y / worldNoiseHeight) <= 0.0f)
 		{
@@ -296,14 +296,14 @@ namespace flounder
 		return moisture;
 	}
 
-	float terrain::getHeight(const float & x, const float & z)
+	float terrain::getHeight(const float &x, const float &z)
 	{
 		const float worldNoiseSpread = 1.0f;
 		const float worldNoiseFrequency = 40.0f;
 		const float worldNoiseHeight = 40.0f;
 		const float dayNightCycle = 600.0f;
 		const float dayNightRatio = 0.7f;
-		
+
 		float height = worlds::get()->getNoise()->getNoise(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
 		height *= getFactorIsland(x, z);
 		height *= worldNoiseHeight;

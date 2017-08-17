@@ -17,7 +17,7 @@ namespace flounder
 		m_timePassed = 0.0f;
 		m_paused = false;
 
-	//	particles::get()->addSystem(this);
+		//	particles::get()->addSystem(this);
 	}
 
 	particlesystem::~particlesystem()
@@ -59,7 +59,7 @@ namespace flounder
 		particletype *emitType = m_types->at(static_cast<int>(floor(maths::randomInRange(0, static_cast<int>(m_types->size())))));
 
 		velocity->normalize();
-		velocity->scale(generateValue(m_averageSpeed, m_averageSpeed * maths::randomInRange(1.0f- m_speedError, 1.0f + m_speedError)));
+		velocity->scale(generateValue(m_averageSpeed, m_averageSpeed * maths::randomInRange(1.0f - m_speedError, 1.0f + m_speedError)));
 		vector3::add(*velocity, *m_velocityCentre, velocity);
 		float scale = generateValue(emitType->getScale(), emitType->getScale() * maths::randomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
 		float lifeLength = generateValue(emitType->getLifeLength(), emitType->getLifeLength() * maths::randomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));

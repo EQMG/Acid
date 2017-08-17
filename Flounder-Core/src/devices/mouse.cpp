@@ -129,6 +129,16 @@ namespace flounder
 		m_cursorDisabled = disabled;
 	}
 
+	bool mouse::getButton(const int &button) const
+	{
+		if (button < 0 || button > GLFW_MOUSE_BUTTON_LAST + 1)
+		{
+			return false;
+		}
+
+		return m_mouseButtons[button] != GLFW_RELEASE;
+	}
+
 	void mouse::setPosition(const float &cursorX, const float &cursorY)
 	{
 		glfwSetCursorPos(display::get()->getWindow(), static_cast<double>(cursorX), static_cast<double>(cursorY));

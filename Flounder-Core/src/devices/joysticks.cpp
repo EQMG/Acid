@@ -10,6 +10,7 @@ namespace flounder
 		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
 		{
 			m_connected[i] = new joystick();
+			m_connected[i]->id = i;
 		}
 	}
 
@@ -51,7 +52,32 @@ namespace flounder
 				}
 
 				joy->connected = false;
+				joy->name = "";
+				joy->axes = nullptr;
+				joy->buttons = nullptr;
+				joy->axecount = 0;
+				joy->buttoncount = 0;
 			}
 		}
+	}
+
+	float joysticks::getAxis(const int &id, const int &axis) const
+	{
+		if (axis < 0 || axis > getCountAxes(id))
+		{
+			return false;
+		}
+
+		return m_connected[id]->axes[axis];
+	}
+
+	bool joysticks::getButton(const int &id, const int &button) const
+	{
+		if (button < 0 || button > getCountButtons(id))
+		{
+			return false;
+		}
+
+		return m_connected[id]->buttons[button];
 	}
 }

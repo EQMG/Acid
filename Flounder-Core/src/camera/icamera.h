@@ -33,7 +33,7 @@ namespace flounder
 		/// Checks inputs and carries out smooth camera movement. Should be called every frame.
 		/// </summary>
 		/// <param name="player"> The movement and rotation controller to read from. </param>
-		virtual void update(const iplayer &player) = 0;
+		virtual void update(iplayer *player) = 0;
 
 		/// <summary>
 		/// Prepares the camera for the reflection render pass.

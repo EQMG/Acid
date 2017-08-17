@@ -90,7 +90,7 @@ namespace flounder
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
 		m_aabb->update(*m_position, *m_rotation, 1.0f, m_aabb);
 
-		delete vertices;
+		//	delete vertices;
 	}
 
 	void water::storeQuad1(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)

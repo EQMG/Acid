@@ -8,11 +8,11 @@ namespace flounder
 	rendererparticles::rendererparticles() :
 		irenderer()
 	{
-		m_shader = new shader("particles", 2, 
+		m_shader = new shader("particles", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/particles/particle.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/particles/particle.frag.spv")
 		);
-		std::vector<float> positions = { -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f };
+		std::vector<float> positions = {-0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f};
 		m_vaoID = loaders::get()->createVAO();
 		loaders::get()->storeDataInVBO(m_vaoID, positions, 0, 2);
 		m_vboID = loaders::get()->createEmptyVBO(INSTANCE_DATA_LENGTH * MAX_INSTANCES);
@@ -31,7 +31,7 @@ namespace flounder
 
 	rendererparticles::~rendererparticles()
 	{
-		delete m_shader; 
+		delete m_shader;
 #if 0
 		glDeleteBuffers(1, &m_vboID);
 		glDeleteVertexArrays(1, &m_vaoID);
@@ -129,7 +129,7 @@ namespace flounder
 		m_rendered++;
 	}
 
-	void rendererparticles::renderInstances(particletype *particleType, std::vector<float>* vboData)
+	void rendererparticles::renderInstances(particletype *particleType, std::vector<float> *vboData)
 	{
 #if 0
 		loaders::get()->updateVBO(m_vboID, INSTANCE_DATA_LENGTH * MAX_INSTANCES, *vboData);
