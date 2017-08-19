@@ -158,7 +158,6 @@ namespace flounder
 		m_title = "Flounder C++";
 		m_icon = "";
 		m_fpsLimit = -1.0f;
-		m_vsync = false;
 		m_antialiasing = true;
 		m_fullscreen = false;
 
@@ -342,6 +341,24 @@ namespace flounder
 		return indices;
 	}
 
+	uint32_t display::memoryTypeIndex(uint32_t typeBits, VkFlags properties)
+	{
+		for (uint32_t i = 0; i < m_physicalDeviceMemoryProperties.memoryTypeCount; i++)
+		{
+			if ((typeBits & 1) == 1)
+			{
+				if ((m_physicalDeviceMemoryProperties.memoryTypes[i].propertyFlags & properties) == properties)
+				{
+					return i;
+				}
+			}
+
+			typeBits >>= 1;
+		}
+
+		return 0;
+	}
+
 	void display::createWindow()
 	{
 		// Set the error error callback
@@ -394,12 +411,6 @@ namespace flounder
 		m_windowPosX = (videoMode->width - m_windowWidth) / 2;
 		m_windowPosY = (videoMode->height - m_windowHeight) / 2;
 		glfwSetWindowPos(m_window, m_windowPosX, m_windowPosY);
-
-		// Creates the Vulkan context.
-		//glfwMakeContextCurrent(m_window);
-
-		// Enables VSync if requested.
-		//glfwSwapInterval(m_vsync ? 1 : 0);
 
 		// Shows the Vulkan window.
 		glfwShowWindow(m_window);
@@ -499,12 +510,12 @@ namespace flounder
 		// Sets up the debug callbacks.
 		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = {};
 		debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-		// debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT;
-		debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_INFORMATION_BIT_EXT |
+		debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT;
+		/*debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_INFORMATION_BIT_EXT |
 			VK_DEBUG_REPORT_WARNING_BIT_EXT |
 			VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT |
 			VK_DEBUG_REPORT_ERROR_BIT_EXT |
-			VK_DEBUG_REPORT_DEBUG_BIT_EXT;
+			VK_DEBUG_REPORT_DEBUG_BIT_EXT;*/
 		debugCallBackCreateInfo.pfnCallback = vkCallbackDebug;
 
 		// Inits debuging.

@@ -103,6 +103,7 @@
 #include "maths/vector3.h"
 #include "maths/vector4.h"
 #include "models/model.h"
+#include "models/material.h"
 #include "models/vertexdata.h"
 #include "physics/aabb.h"
 #include "physics/frustum.h"

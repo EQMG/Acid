@@ -27,6 +27,8 @@ instance::instance()
 
 	// entitytest *test = new entitytest(nullptr, vector3(), vector3());
 	// componentalpha *meme = test->getComponent<componentalpha*>();
+
+	model *modelTest = new model("res/test/model.obj");
 }
 
 instance::~instance()
