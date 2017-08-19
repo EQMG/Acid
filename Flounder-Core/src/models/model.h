@@ -11,6 +11,7 @@
 #include "../maths/vector3.h"
 #include "../physics/aabb.h"
 
+#include "material.h"
 #include "vertexdata.h"
 
 namespace flounder
@@ -21,7 +22,6 @@ namespace flounder
 	class model
 	{
 	private:
-		std::string m_name;
 		std::string m_file;
 
 		std::vector<int> *m_indices;
@@ -65,6 +65,8 @@ namespace flounder
 		/// Loads the model object from a OBJ file.
 		/// </summary>
 		void loadFromFile();
+
+		void loadMaterials(const std::string &filepath, std::vector<material> *list);
 
 		vertexdata *processDataVertex(vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices);
 

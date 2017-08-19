@@ -60,13 +60,19 @@ namespace flounder
 
 	void model::loadFromFile()
 	{
-		std::string fileLoaded = helperfile::readTextFile(m_file);
+		std::string fileLoaded = helperfile::readTextFile(std::string(m_file));
 		std::vector<std::string> lines = helperstring::split(fileLoaded, "\n");
 
 		std::vector<int> indices = std::vector<int>();
+		std::vector<material> materials = std::vector<material>();
 		std::vector<vertexdata*> vertices = std::vector<vertexdata*>();
 		std::vector<vector2> textures = std::vector<vector2>();
 		std::vector<vector3> normals = std::vector<vector3>();
+
+		std::vector<std::string> splitFile = helperstring::split(std::string(m_file), "/");
+		std::string fileName = splitFile.at(splitFile.size() - 1);
+
+		material currentMaterial = {};
 
 		for (std::vector<std::string>::iterator it = lines.begin(); it < lines.end(); it++)
 		{
@@ -83,7 +89,23 @@ namespace flounder
 					continue;
 				}
 
-				if (prefix == "v")
+				if (prefix == "mtllib")
+				{
+					std::string pathMtl = helperstring::substring(m_file, 0, (int) (m_file.length() - fileName.length()));
+					pathMtl += split.at(1);
+					loadMaterials(pathMtl, &materials);
+				}
+				else if (prefix == "usemtl")
+				{
+					for (material m : materials) 
+					{
+						if (m.name == split.at(1)) 
+						{
+							currentMaterial = m;
+						}
+					}
+				}
+				else if (prefix == "v")
 				{
 					vector3 vertex = vector3(stof(split.at(1)), stof(split.at(2)), stof(split.at(3)));
 					vertexdata *newVertex = new vertexdata((int) vertices.size(), vertex);
@@ -116,6 +138,13 @@ namespace flounder
 					vertexdata *v1 = processDataVertex(vector3(stof(vertex2.at(0)), stof(vertex2.at(1)), stof(vertex2.at(2))), &vertices, &indices);
 					vertexdata *v2 = processDataVertex(vector3(stof(vertex3.at(0)), stof(vertex3.at(1)), stof(vertex3.at(2))), &vertices, &indices);
 					calculateTangents(v0, v1, v2, &textures);
+				}
+				else if (prefix == "o")
+				{
+				}
+				else if (prefix == "s")
+				{
+					// Smooth faces?
 				}
 				else
 				{
@@ -168,6 +197,62 @@ namespace flounder
 			m_tangents->push_back(tangent.m_z);
 
 			delete currentVertex;
+		}
+	}
+
+	void model::loadMaterials(const std::string &filepath, std::vector<material> *list)
+	{
+		std::string fileLoaded = helperfile::readTextFile(filepath);
+		std::vector<std::string> lines = helperstring::split(fileLoaded, "\n");
+
+		std::string parseMaterialName = "";
+		material parseMaterial = {};
+
+		for (std::vector<std::string>::iterator it = lines.begin(); it < lines.end(); it++)
+		{
+			std::string line = helperstring::trim(*it);
+
+			std::vector<std::string> split = helperstring::split(line, " ");
+
+			if (!split.empty())
+			{
+				std::string prefix = split.at(0);
+
+				if (prefix == "#")
+				{
+					continue;
+				}
+
+				if (prefix == "newmtl")
+				{
+					if (parseMaterialName != "") 
+					{
+						list->push_back(parseMaterial);
+					}
+				}
+				else if (prefix == "Ns")
+				{
+				}
+				else if (prefix == "Ka")
+				{
+				}
+				else if (prefix == "Kd")
+				{
+				}
+				else if (prefix == "Ks")
+				{
+				}
+				else if (prefix == "map_Kd")
+				{
+				}
+				else if (prefix == "map_Bump")
+				{
+				}
+			}
+			else
+			{
+				std::cout << "MTL " << filepath + " unknown line: " << line << std::endl;
+			}
 		}
 	}
 
