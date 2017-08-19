@@ -84,7 +84,7 @@ namespace flounder
 	void texture::loadFromTexture()
 	{
 		float *pixels = loadPixels(m_file, &m_width, &m_height, &m_components);
-		size_t componentSize = 4;
+		/*size_t componentSize = 4;
 
 		switch (m_components)
 		{
@@ -104,7 +104,7 @@ namespace flounder
 			assert(0 && "Vulkan texture components not between 1-4.");
 		}
 
-		/*VkBufferCreateInfo bufferCreateInfo = {};
+		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		bufferCreateInfo.size = m_width * m_height * m_components * componentSize;
 		bufferCreateInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
@@ -112,51 +112,62 @@ namespace flounder
 
 		display::vkErrorCheck(vkCreateBuffer(display::get()->getVkDevice(), &bufferCreateInfo, nullptr, &m_stagingBuffer));
 
-		VkMemoryRequirements memReqs = {};
-		vkGetBufferMemoryRequirements(display::get()->getVkDevice(), m_stagingBuffer, &memReqs);
+		VkMemoryRequirements memoryRequirements = {};
+		vkGetBufferMemoryRequirements(display::get()->getVkDevice(), m_stagingBuffer, &memoryRequirements);
 
-		VkMemoryAllocateInfo memAllocInfo = {};
-		memAllocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		memAllocInfo.pNext = NULL;
-		memAllocInfo.allocationSize = memReqs.size;
-		memAllocInfo.memoryTypeIndex = 0;
-		getMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, &memAllocInfo.memoryTypeIndex);
+		VkMemoryAllocateInfo memoryAllocateInfo = {};
+		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		memoryAllocateInfo.pNext = NULL;
+		memoryAllocateInfo.allocationSize = memoryRequirements.size;
+		memoryAllocateInfo.memoryTypeIndex = display::get()->memoryTypeIndex(memoryRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
-		display::vkErrorCheck(vkAllocateMemory(display::get()->getVkDevice(), &memAllocInfo, nullptr, &m_stagingMemory));
-
+		display::vkErrorCheck(vkAllocateMemory(display::get()->getVkDevice(), &memoryAllocateInfo, nullptr, &m_stagingMemory));
 		display::vkErrorCheck(vkBindBufferMemory(display::get()->getVkDevice(), m_stagingBuffer, m_stagingMemory, 0));
 
 		uint8_t *data;
-		display::vkErrorCheck(vkMapMemory(display::get()->getVkDevice(), m_stagingMemory, 0, memReqs.size, 0, (void**) &data));
+		display::vkErrorCheck(vkMapMemory(display::get()->getVkDevice(), m_stagingMemory, 0, memoryRequirements.size, 0, (void**) &data));
 		memcpy(data, pixels, bufferCreateInfo.size);
 		vkUnmapMemory(display::get()->getVkDevice(), m_stagingMemory);
 
 		VkImageCreateInfo imageCreateInfo = {};
 		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
-		imageCreateInfo.pNext = NULL;
+		imageCreateInfo.pNext = nullptr;
 		imageCreateInfo.imageType = VK_IMAGE_TYPE_2D;
 		imageCreateInfo.format = m_format;
-		imageCreateInfo.mipLevels = 1; // TODO: USE m_app->engineParams["numGeneratedMips"]
-		imageCreateInfo.arrayLayers = 1;
-		imageCreateInfo.samples = VK_SAMPLE_COUNT_1_BIT;
-		imageCreateInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
-		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_PREINITIALIZED;
 		imageCreateInfo.extent.width = m_width;
 		imageCreateInfo.extent.height = m_height;
 		imageCreateInfo.extent.depth = m_depth;
+		imageCreateInfo.mipLevels = 1; // TODO
+		imageCreateInfo.arrayLayers = 1;
+		imageCreateInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+		imageCreateInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
 		imageCreateInfo.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_PREINITIALIZED;
 
 		display::vkErrorCheck(vkCreateImage(display::get()->getVkDevice(), &imageCreateInfo, nullptr, &m_image));
 
-		vkGetImageMemoryRequirements(display::get()->getVkDevice(), m_image, &memReqs);
+		vkGetImageMemoryRequirements(display::get()->getVkDevice(), m_image, &memoryRequirements);
 
-		memAllocInfo.allocationSize = memReqs.size;
-		getMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, &memAllocInfo.memoryTypeIndex);
+		memoryAllocateInfo.allocationSize = memoryRequirements.size;
+		memoryAllocateInfo.memoryTypeIndex = display::get()->memoryTypeIndex(memoryRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
-		display::vkErrorCheck(vkAllocateMemory(display::get()->getVkDevice(), &memAllocInfo, nullptr, &m_imageMemory));
-
+		display::vkErrorCheck(vkAllocateMemory(display::get()->getVkDevice(), &memoryAllocateInfo, nullptr, &m_imageMemory));
 		display::vkErrorCheck(vkBindImageMemory(display::get()->getVkDevice(), m_image, m_imageMemory, 0));
+
+		VkImageSubresourceRange subresourceRange = {};
+		subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		subresourceRange.baseMipLevel = 0;
+		subresourceRange.levelCount = 1; // TODO
+		subresourceRange.layerCount = 1;
+
+		setImageLayout(
+			renderer::get()->getVkCommandBuffers()[0],
+			m_image,
+			VK_IMAGE_LAYOUT_UNDEFINED,
+			VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+			subresourceRange
+		);
 
 		VkBufferImageCopy bufferCopyRegion = {};
 		bufferCopyRegion.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -168,11 +179,22 @@ namespace flounder
 		bufferCopyRegion.imageExtent.depth = m_depth;
 		bufferCopyRegion.bufferOffset = 0;
 
-		// beginCommandBuffer
-		// setImageLayout
-		// vkCmdCopyBufferToImage
-		// setImageLayout
-		// endCommandBuffer
+		vkCmdCopyBufferToImage(
+			renderer::get()->getVkCommandBuffers()[0],
+			m_stagingBuffer,
+			m_image,
+			VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+			1,
+			&bufferCopyRegion
+		);
+
+		setImageLayout(
+			renderer::get()->getVkCommandBuffers()[0],
+			m_image,
+			VK_IMAGE_ASPECT_COLOR_BIT,
+			VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+			VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
+		);
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -187,8 +209,7 @@ namespace flounder
 		imageViewCreateInfo.subresourceRange.layerCount = 1;
 		imageViewCreateInfo.subresourceRange.levelCount = 1;
 
-		display::vkErrorCheck(vkCreateImageView(display::get()->getVkDevice(), &imageViewCreateInfo, nullptr, &m_imageView));
-		*/
+		display::vkErrorCheck(vkCreateImageView(display::get()->getVkDevice(), &imageViewCreateInfo, nullptr, &m_imageView));*/
 
 		delete[] pixels;
 	}
@@ -255,20 +276,80 @@ namespace flounder
 		return pixels;
 	}
 
-	void texture::getMemoryType(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex)
+	void texture::setImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageAspectFlags aspectMask, VkImageLayout oldImageLayout, VkImageLayout newImageLayout)
 	{
-		for (uint32_t i = 0; i < display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypeCount; i++)
+		VkImageSubresourceRange subresourceRange = {};
+		subresourceRange.aspectMask = aspectMask;
+		subresourceRange.baseMipLevel = 0;
+		subresourceRange.levelCount = 1;
+		subresourceRange.layerCount = 1;
+
+		setImageLayout(cmdbuffer, image, oldImageLayout, newImageLayout, subresourceRange);
+	}
+
+	void texture::setImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageLayout oldImageLayout, VkImageLayout newImageLayout, VkImageSubresourceRange subresourceRange)
+	{
+		VkImageMemoryBarrier imageMemoryBarrier = {};
+		imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+		imageMemoryBarrier.pNext = nullptr;
+		imageMemoryBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		imageMemoryBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+		imageMemoryBarrier.oldLayout = oldImageLayout;
+		imageMemoryBarrier.newLayout = newImageLayout;
+		imageMemoryBarrier.image = image;
+		imageMemoryBarrier.subresourceRange = subresourceRange;
+
+		switch (oldImageLayout)
 		{
-			if ((typeBits & 1) == 1)
+		case VK_IMAGE_LAYOUT_UNDEFINED:
+			imageMemoryBarrier.srcAccessMask = 0;
+			break;
+		case VK_IMAGE_LAYOUT_PREINITIALIZED:
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT;
+			break;
+		case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			break;
+		case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+			break;
+		case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+			break;
+		case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+			break;
+		case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
+			break;
+		}
+
+		switch (newImageLayout)
+		{
+		case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
+			imageMemoryBarrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+			break;
+		case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
+			imageMemoryBarrier.srcAccessMask = imageMemoryBarrier.srcAccessMask | VK_ACCESS_TRANSFER_READ_BIT;
+			imageMemoryBarrier.dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+			break;
+		case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+			imageMemoryBarrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			break;
+		case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
+			imageMemoryBarrier.dstAccessMask = imageMemoryBarrier.dstAccessMask | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+			break;
+		case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
+			if (imageMemoryBarrier.srcAccessMask == 0)
 			{
-				if ((display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypes[i].propertyFlags & reqMask) == reqMask)
-				{
-					*typeIndex = i;
-					return;
-				}
+				imageMemoryBarrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT | VK_ACCESS_TRANSFER_WRITE_BIT;
 			}
 
-			typeBits >>= 1;
+			imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+			break;
 		}
+
+		vkCmdPipelineBarrier(cmdbuffer, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
 	}
 }

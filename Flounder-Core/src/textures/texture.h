@@ -105,6 +105,8 @@ namespace flounder
 
 		float *loadPixels(const std::string &filepath, int *width, int *height, int *components);
 
-		void getMemoryType(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex);
+		void setImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageAspectFlags aspectMask, VkImageLayout oldImageLayout, VkImageLayout newImageLayout);
+
+		void setImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageLayout oldImageLayout, VkImageLayout newImageLayout, VkImageSubresourceRange subresourceRange);
 	};
 }

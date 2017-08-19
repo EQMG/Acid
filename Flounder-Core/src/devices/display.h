@@ -60,9 +60,7 @@ namespace flounder
 		std::string m_title;
 		std::string m_icon;
 		float m_fpsLimit;
-		bool m_vsync;
 		bool m_antialiasing;
-		int m_samples;
 		bool m_fullscreen;
 
 		GLFWwindow *m_window;
@@ -215,18 +213,6 @@ namespace flounder
 		inline void setFpsLimit(const float &fpsLimit) { m_fpsLimit = fpsLimit; }
 
 		/// <summary>
-		/// Gets if the display is using vSync.
-		/// </summary>
-		/// <returns> If VSync is enabled. </returns>
-		inline bool isVSync() const { return m_vsync; }
-
-		/// <summary>
-		/// Sets the display to use VSync or not.
-		/// </summary>
-		/// <param name="vsync"> Weather or not to use vSync. </param>
-		inline void setVSync(const bool &vsync) { m_vsync = vsync; }
-
-		/// <summary>
 		/// Gets if the display requests antialiased images.
 		/// </summary>
 		/// <returns> If using antialiased images. </returns>
@@ -237,18 +223,6 @@ namespace flounder
 		/// </summary>
 		/// <param name="antialiasing"> If the display should antialias. </param>
 		inline void setAntialiasing(const bool &antialiasing) { m_antialiasing = antialiasing; }
-
-		/// <summary>
-		/// Gets how many MSAA samples should be done before swapping buffers.
-		/// </summary>
-		/// <returns> Amount of MSAA samples. </returns>
-		inline int getSamples() const { return m_samples; }
-
-		/// <summary>
-		/// Gets how many MSAA samples should be done before swapping buffers. Zero disables multisampling. GLFW_DONT_CARE means no preference.
-		/// </summary>
-		/// <param name="samples"> The amount of MSAA samples. </param>
-		inline void setSamples(const int &samples) { m_samples = samples; }
 
 		/// <summary>
 		/// Gets weather the display is fullscreen or not.
@@ -327,6 +301,8 @@ namespace flounder
 		inline VkQueue getVkPresentQueue() const { return m_presentQueue; }
 
 		inline VkQueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+
+		uint32_t memoryTypeIndex(uint32_t typeBits, VkFlags properties);
 	private:
 		void createWindow();
 

@@ -25,9 +25,7 @@ int main()
 		display::get()->setTitle("Flounder Demo");
 		display::get()->setIcon("res/flounder.png");
 		display::get()->setFpsLimit(0);
-		display::get()->setVSync(false);
 		display::get()->setAntialiasing(true);
-		display::get()->setSamples(0);
 		display::get()->setFullscreen(false);
 	}
 
