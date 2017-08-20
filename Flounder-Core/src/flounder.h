@@ -99,6 +99,7 @@
 #include "maths/matrix4x4.h"
 #include "maths/quaternion.h"
 #include "maths/timer.h"
+#include "maths/transform.h"
 #include "maths/vector2.h"
 #include "maths/vector3.h"
 #include "maths/vector4.h"
