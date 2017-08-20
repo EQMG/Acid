@@ -44,6 +44,7 @@
     <ClInclude Include="src\framework\imodule.h" />
     <ClInclude Include="src\framework\iupdater.h" />
     <ClInclude Include="src\inputs\axisbutton.h" />
+    <ClInclude Include="src\maths\transform.h" />
     <ClInclude Include="src\models\material.h" />
     <ClInclude Include="src\noise\noisefast.h" />
     <ClInclude Include="src\particles\particle.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="src\terrains\rendererterrains.h" />
     <ClInclude Include="src\terrains\terrain.h" />
     <ClInclude Include="src\terrains\terrains.h" />
+    <ClInclude Include="src\test\renderertest.h" />
     <ClInclude Include="src\uis\inputslider.h" />
     <ClInclude Include="src\uis\inputgrabber.h" />
     <ClInclude Include="src\uis\inputtext.h" />
@@ -200,6 +202,7 @@
     <ClCompile Include="src\framework\glfw\glfwupdater.cpp" />
     <ClCompile Include="src\guis\gui.cpp" />
     <ClCompile Include="src\inputs\axisbutton.cpp" />
+    <ClCompile Include="src\maths\transform.cpp" />
     <ClCompile Include="src\noise\noisefast.cpp" />
     <ClCompile Include="src\particles\particle.cpp" />
     <ClCompile Include="src\particles\particles.cpp" />
@@ -223,6 +226,7 @@
     <ClCompile Include="src\terrains\rendererterrains.cpp" />
     <ClCompile Include="src\terrains\terrain.cpp" />
     <ClCompile Include="src\terrains\terrains.cpp" />
+    <ClCompile Include="src\test\renderertest.cpp" />
     <ClCompile Include="src\uis\inputslider.cpp" />
     <ClCompile Include="src\uis\inputgrabber.cpp" />
     <ClCompile Include="src\uis\inputtext.cpp" />
