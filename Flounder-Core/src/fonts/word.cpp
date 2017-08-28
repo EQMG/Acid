@@ -17,7 +17,6 @@ namespace flounder
 	{
 		if (c == nullptr)
 		{
-			std::cout << "Invalid character detected: " << c << std::endl;
 			return false;
 		}
 

@@ -226,7 +226,7 @@ namespace flounder
 
 		if (!asset) 
 		{
-			std::cout << "Unable to load android asset: " << m_file << std::endl;
+			printf("Unable to load android asset: '%s'.\n", m_file.c_str());
 			freePixels(layersPixels);
 			return nullptr;
 		}
@@ -235,7 +235,7 @@ namespace flounder
 
 		if (size <= 0) 
 		{
-			std::cout << "Android asset is empty: " << m_file << std::endl;
+			printf("Android asset is empty: '%s'.\n", m_file.c_str());
 			freePixels(layersPixels);
 			return nullptr;
 		}
@@ -259,7 +259,7 @@ namespace flounder
 
 		if (data == nullptr)
 		{
-			std::cout << "Unable to load texture: " << m_file << std::endl;
+			printf("Unable to load texture: '%s'.\n", m_file.c_str());
 		}
 
 		int pixelsSize = (*width) * (*height) * (*components);

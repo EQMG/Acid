@@ -53,7 +53,7 @@ namespace flounder
 
 	VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData)
 	{
-		std::cout << msg << std::endl;
+		printf("%s/n", msg);
 		return false;
 	}
 
@@ -88,55 +88,55 @@ namespace flounder
 			switch (result)
 			{
 			case VK_ERROR_OUT_OF_HOST_MEMORY:
-				std::cout << "VK_ERROR_OUT_OF_HOST_MEMORY" << std::endl;
+				printf("VK_ERROR_OUT_OF_HOST_MEMORY\n");
 				break;
 			case VK_ERROR_OUT_OF_DEVICE_MEMORY:
-				std::cout << "VK_ERROR_OUT_OF_DEVICE_MEMORY" << std::endl;
+				printf("VK_ERROR_OUT_OF_DEVICE_MEMORY\n");
 				break;
 			case VK_ERROR_INITIALIZATION_FAILED:
-				std::cout << "VK_ERROR_INITIALIZATION_FAILED" << std::endl;
+				printf("VK_ERROR_INITIALIZATION_FAILED\n");
 				break;
 			case VK_ERROR_DEVICE_LOST:
-				std::cout << "VK_ERROR_DEVICE_LOST" << std::endl;
+				printf("VK_ERROR_DEVICE_LOST\n");
 				break;
 			case VK_ERROR_MEMORY_MAP_FAILED:
-				std::cout << "VK_ERROR_MEMORY_MAP_FAILED" << std::endl;
+				printf("VK_ERROR_MEMORY_MAP_FAILED\n");
 				break;
 			case VK_ERROR_LAYER_NOT_PRESENT:
-				std::cout << "VK_ERROR_LAYER_NOT_PRESENT" << std::endl;
+				printf("VK_ERROR_LAYER_NOT_PRESENT\n");
 				break;
 			case VK_ERROR_EXTENSION_NOT_PRESENT:
-				std::cout << "VK_ERROR_EXTENSION_NOT_PRESENT" << std::endl;
+				printf("VK_ERROR_EXTENSION_NOT_PRESENT\n");
 				break;
 			case VK_ERROR_FEATURE_NOT_PRESENT:
-				std::cout << "VK_ERROR_FEATURE_NOT_PRESENT" << std::endl;
+				printf("VK_ERROR_FEATURE_NOT_PRESENT\n");
 				break;
 			case VK_ERROR_INCOMPATIBLE_DRIVER:
-				std::cout << "VK_ERROR_INCOMPATIBLE_DRIVER" << std::endl;
+				printf("VK_ERROR_INCOMPATIBLE_DRIVER\n");
 				break;
 			case VK_ERROR_TOO_MANY_OBJECTS:
-				std::cout << "VK_ERROR_TOO_MANY_OBJECTS" << std::endl;
+				printf("VK_ERROR_TOO_MANY_OBJECTS\n");
 				break;
 			case VK_ERROR_FORMAT_NOT_SUPPORTED:
-				std::cout << "VK_ERROR_FORMAT_NOT_SUPPORTED" << std::endl;
+				printf("VK_ERROR_FORMAT_NOT_SUPPORTED\n");
 				break;
 			case VK_ERROR_SURFACE_LOST_KHR:
-				std::cout << "VK_ERROR_SURFACE_LOST_KHR" << std::endl;
+				printf("VK_ERROR_SURFACE_LOST_KHR\n");
 				break;
 			case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
-				std::cout << "VK_ERROR_NATIVE_WINDOW_IN_USE_KHR" << std::endl;
+				printf("VK_ERROR_NATIVE_WINDOW_IN_USE_KHR\n");
 				break;
 			case VK_SUBOPTIMAL_KHR:
-				std::cout << "VK_SUBOPTIMAL_KHR" << std::endl;
+				printf("VK_SUBOPTIMAL_KHR\n");
 				break;
 			case VK_ERROR_OUT_OF_DATE_KHR:
-				std::cout << "VK_ERROR_OUT_OF_DATE_KHR" << std::endl;
+				printf("VK_ERROR_OUT_OF_DATE_KHR\n");
 				break;
 			case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:
-				std::cout << "VK_ERROR_INCOMPATIBLE_DISPLAY_KHR" << std::endl;
+				printf("VK_ERROR_INCOMPATIBLE_DISPLAY_KHR\n");
 				break;
 			case VK_ERROR_VALIDATION_FAILED_EXT:
-				std::cout << "VK_ERROR_VALIDATION_FAILED_EXT" << std::endl;
+				printf("VK_ERROR_VALIDATION_FAILED_EXT\n");
 				break;
 			default:
 				break;
@@ -260,7 +260,7 @@ namespace flounder
 
 			if (data == nullptr)
 			{
-				std::cout << "Unable to load texture: " << m_icon << std::endl;
+				printf("Unable to load texture: '%s'.\n", m_icon.c_str());
 			}
 			else
 			{
@@ -288,16 +288,16 @@ namespace flounder
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
 
-		std::cout << (fullscreen ? "Display is going fullscreen." : "Display is going windowed.") << std::endl;
-
 		if (fullscreen)
 		{
+			printf("Display is going fullscreen.\n");
 			m_fullscreenWidth = videoMode->width;
 			m_fullscreenHeight = videoMode->height;
 			glfwSetWindowMonitor(m_window, monitor, 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
 		}
 		else
 		{
+			printf("Display is going windowed.\n");
 			m_windowPosX = (videoMode->width - m_windowWidth) / 2;
 			m_windowPosY = (videoMode->height - m_windowHeight) / 2;
 			glfwSetWindowMonitor(m_window, nullptr, m_windowPosX, m_windowPosY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);

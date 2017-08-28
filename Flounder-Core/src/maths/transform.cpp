@@ -9,6 +9,13 @@ namespace flounder
 		m_scaling = new vector3();
 	}
 
+	transform::transform(const transform &source)
+	{
+		m_position = new vector3(*source.m_position);
+		m_rotation = new vector3(*source.m_rotation);
+		m_scaling = new vector3(*source.m_scaling);
+	}
+
 	transform::transform(const vector3 &position)
 	{
 		m_position = new vector3(position);
@@ -52,5 +59,12 @@ namespace flounder
 	matrix4x4 *transform::modelMatrix(matrix4x4 *destination) const
 	{
 		return matrix4x4::transformationMatrix(vector3(), *m_rotation, vector3(), destination);
+	}
+
+	void transform::set(const transform &source)
+	{
+		m_position->set(*source.m_position);
+		m_rotation->set(*source.m_rotation);
+		m_scaling->set(*source.m_scaling);
 	}
 }
