@@ -126,7 +126,7 @@ namespace flounder
 					// The split length of 3 faced + 1 for the f prefix.
 					if (split.size() != 4 || helperstring::contains(line, "//"))
 					{
-						std::cout << "Error reading the OBJ " << m_file << ", it does not appear to be UV mapped! The model will not be loaded." << std::endl;
+						printf("Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", m_file.c_str());
 						//throw ex
 					}
 
@@ -148,7 +148,8 @@ namespace flounder
 				}
 				else
 				{
-					std::cout << "OBJ " << m_file + " unknown line: " << line << std::endl;
+					printf("OBJ '%s' ", m_file.c_str());
+					printf("unknown line: '%s'.\n", line.c_str());
 				}
 			}
 		}
@@ -251,7 +252,8 @@ namespace flounder
 			}
 			else
 			{
-				std::cout << "MTL " << filepath + " unknown line: " << line << std::endl;
+				printf("MTL '%s' ", filepath.c_str());
+				printf("unknown line: '%s'.\n", line.c_str());
 			}
 		}
 	}

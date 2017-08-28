@@ -14,6 +14,8 @@ namespace flounder
 	public:
 		transform();
 
+		transform(const transform &source);
+
 		transform(const vector3 &position);
 
 		transform(const vector3 &position, const vector3 &rotation);
@@ -27,6 +29,8 @@ namespace flounder
 		matrix4x4 *worldMatrix(matrix4x4 *destination) const;
 
 		matrix4x4 *modelMatrix(matrix4x4 *destination) const;
+
+		void set(const transform &source);
 
 		inline vector3 *getPosition() const { return m_position; }
 

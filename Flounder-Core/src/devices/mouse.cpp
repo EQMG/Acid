@@ -100,7 +100,7 @@ namespace flounder
 
 			if (data == nullptr)
 			{
-				std::cout << "Unable to load texture: " << m_customMouse << std::endl;
+				printf("Unable to load texture: '%s'.\n", m_customMouse.c_str());
 			}
 
 			GLFWimage *image = new GLFWimage();
