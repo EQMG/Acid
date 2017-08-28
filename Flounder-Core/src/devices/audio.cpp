@@ -28,7 +28,7 @@ namespace flounder
 	{
 	}
 
-	SoundSourceInfo audio::loadWaveFile(const std::string path)
+	SoundSourceInfo audio::loadWaveFile(const std::string &path)
 	{
 		std::ifstream file(path.c_str(), std::ifstream::binary);
 		SoundSourceInfo result = {};
@@ -82,34 +82,34 @@ namespace flounder
 		file.close();
 
 #if FLOUNDER_VERBOSE
-		std::cout << "-- Loading: " << path << " --" << std::endl;
-		std::cout << "Size: " << result.size << " bytes" << std::endl;
+		printf("-- Loading: '%s' --\n", path.c_str());
+		printf("Size: %i bytes\n", result.size);
 
 		switch (result.formatTag)
 		{
 		case 0x0001:
-			std::cout << "Format: PCM" << std::endl;
+			printf("Format: PCM\n");
 			break;
 		case 0x0003:
-			std::cout << "Format: IEEE Float" << std::endl;
+			printf("Format: IEEE Float\n");
 			break;
 		case 0x0006:
-			std::cout << "Format: 8-bit ITU-T G.711 A-law" << std::endl;
+			printf("Format: 8-bit ITU-T G.711 A-law\n");
 			break;
 		case 0x0007:
-			std::cout << "Format: 8-bit ITU-T G.711 mi-law" << std::endl;
+			printf("Format: 8-bit ITU-T G.711 mi-law\n");
 			break;
 		default:
-			std::cout << "Format: Unknown tag" << std::endl;
+			printf("Format: Unknown tag\n");
 			break;
 		}
 
-		std::cout << "Channels: " << result.channels << std::endl;
-		std::cout << "Samples Per Second: " << result.samplesPerSec << std::endl;
-		std::cout << "Average bytes per second: " << result.averageBytesPerSec << std::endl;
-		std::cout << "Block align: " << result.blockAlign << std::endl;
-		std::cout << "Bit per sample: " << result.bitsPerSample << std::endl;
-		std::cout << "-- Done --" << std::endl << std::endl;
+		printf("Channels: %i\n", result.channels);
+		printf("Samples Per Second: %i\n", result.samplesPerSec);
+		printf("Average bytes per second: %i\n", result.averageBytesPerSec);
+		printf("Block align: %i\n", result.blockAlign);
+		printf("Bit per sample: %i\n", result.bitsPerSample);
+		printf("-- Done --\n");
 #endif
 
 		return result;

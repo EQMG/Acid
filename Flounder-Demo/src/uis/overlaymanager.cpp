@@ -6,7 +6,7 @@ overlaymanager::overlaymanager(uiobject *parent) :
 	m_inputbutton = new inputbutton(this, vector2(0.5f, 0.3f), "Button", CENTRE);
 	m_inputbutton->setActionLeft([&]()
 	{
-		std::cout << "Sample button pressed!" << std::endl;
+		printf("Sample button pressed!");
 	});
 	m_inputbutton->setAlphaDriver(new driverconstant(1.0f));
 

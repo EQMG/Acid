@@ -36,7 +36,7 @@ namespace flounder
 			{
 				if (!joy->connected)
 				{
-					std::cout << "Joystick connected: " << glfwGetJoystickName(i) << std::endl;
+					printf("Joystick connected: '%s'.\n", glfwGetJoystickName(i));
 				}
 
 				joy->connected = true;
@@ -48,7 +48,7 @@ namespace flounder
 			{
 				if (joy->connected)
 				{
-					std::cout << "Joystick disconnected!" << std::endl;
+					printf("Joystick disconnected!\n");
 				}
 
 				joy->connected = false;

@@ -91,7 +91,7 @@ namespace flounder
 			display::vkErrorCheck(vkCreateImageView(display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChainImageViews[i]));
 		}
 
-		std::cout << "Image views created successfully" << std::endl;
+		printf("Image views created successfully.\n");
 	}
 
 	void swapchain::createFramebuffers(VkRenderPass renderPass)
@@ -114,7 +114,7 @@ namespace flounder
 			display::vkErrorCheck(vkCreateFramebuffer(display::get()->getVkDevice(), &framebufferInfo, nullptr, &m_swapChainFramebuffers[i]));
 		}
 
-		std::cout << "Framebuffers created successfully!" << std::endl;
+		printf("Framebuffers created successfully!\n");
 	}
 
 	void swapchain::cleanup()
