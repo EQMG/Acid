@@ -65,7 +65,7 @@ namespace flounder
 
 		void update() override;
 
-		static SoundSourceInfo loadWaveFile(const std::string path);
+		static SoundSourceInfo loadWaveFile(const std::string &path);
 
 		static sound *add(sound *object);
 
