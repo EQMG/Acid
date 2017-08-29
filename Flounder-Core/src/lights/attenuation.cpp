@@ -1,4 +1,4 @@
-#include "attenuation.h"
+#include "attenuation.hpp"
 
 namespace flounder
 {

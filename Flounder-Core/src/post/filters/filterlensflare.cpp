@@ -1,4 +1,4 @@
-#include "filterlensflare.h"
+#include "filterlensflare.hpp"
 
 namespace flounder
 {

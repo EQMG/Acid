@@ -1,4 +1,4 @@
-#include "filterbloom2.h"
+#include "filterbloom2.hpp"
 
 namespace flounder
 {

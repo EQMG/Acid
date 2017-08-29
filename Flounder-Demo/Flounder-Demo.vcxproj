@@ -26,14 +26,14 @@
     <ClCompile Include="src\managerrender.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\entities\entitytest.h" />
-    <ClInclude Include="src\uis\overlaymanager.h" />
-    <ClInclude Include="src\uis\overlaydebug.h" />
-    <ClInclude Include="src\maincamera.h" />
-    <ClInclude Include="src\manageruis.h" />
-    <ClInclude Include="src\instance.h" />
-    <ClInclude Include="src\mainplayer.h" />
-    <ClInclude Include="src\managerrender.h" />
+    <ClInclude Include="src\entities\entitytest.hpp" />
+    <ClInclude Include="src\uis\overlaymanager.hpp" />
+    <ClInclude Include="src\uis\overlaydebug.hpp" />
+    <ClInclude Include="src\maincamera.hpp" />
+    <ClInclude Include="src\manageruis.hpp" />
+    <ClInclude Include="src\instance.hpp" />
+    <ClInclude Include="src\mainplayer.hpp" />
+    <ClInclude Include="src\managerrender.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Flounder Include="res\shaders\bounding\bounding.frag" />
@@ -144,8 +144,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>
     </LinkIncremental>
-    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory)obj\$(Configuration) $(PlatformTarget)\</IntDir>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>

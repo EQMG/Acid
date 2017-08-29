@@ -1,4 +1,4 @@
-#include "fbo.h"
+#include "fbo.hpp"
 
 namespace flounder
 {

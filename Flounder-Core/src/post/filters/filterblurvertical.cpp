@@ -1,4 +1,4 @@
-#include "filterblurvertical.h"
+#include "filterblurvertical.hpp"
 
 namespace flounder
 {

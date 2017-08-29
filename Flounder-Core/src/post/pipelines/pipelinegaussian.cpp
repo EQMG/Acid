@@ -1,4 +1,4 @@
-#include "pipelinegaussian.h"
+#include "pipelinegaussian.hpp"
 
 namespace flounder
 {

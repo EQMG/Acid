@@ -1,4 +1,4 @@
-#include "particles.h"
+#include "particles.hpp"
 
 namespace flounder
 {

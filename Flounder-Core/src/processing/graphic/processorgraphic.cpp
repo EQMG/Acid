@@ -1,4 +1,4 @@
-#include "processorgraphic.h"
+#include "processorgraphic.hpp"
 
 namespace flounder
 {

@@ -1,4 +1,4 @@
-#include "character.h"
+#include "character.hpp"
 
 namespace flounder
 {

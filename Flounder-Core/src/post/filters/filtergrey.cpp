@@ -1,4 +1,4 @@
-#include "filtergrey.h"
+#include "filtergrey.hpp"
 
 namespace flounder
 {

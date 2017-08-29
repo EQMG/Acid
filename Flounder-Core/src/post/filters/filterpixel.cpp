@@ -1,4 +1,4 @@
-#include "filterpixel.h"
+#include "filterpixel.hpp"
 
 namespace flounder
 {

@@ -78,5 +78,8 @@
   <ItemGroup>
     <Folder Include="res\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Flounder Core.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
