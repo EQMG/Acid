@@ -1,4 +1,4 @@
-#include "filtertone.h"
+#include "filtertone.hpp"
 
 namespace flounder
 {

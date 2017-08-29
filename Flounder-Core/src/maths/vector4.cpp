@@ -1,4 +1,4 @@
-#include "vector4.h"
+#include "vector4.hpp"
 
 namespace flounder
 {

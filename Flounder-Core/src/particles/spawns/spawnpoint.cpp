@@ -1,4 +1,4 @@
-﻿#include "spawnpoint.h"
+﻿#include "spawnpoint.hpp"
 
 namespace flounder
 {

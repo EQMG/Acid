@@ -1,4 +1,4 @@
-#include "ipostfilter.h"
+#include "ipostfilter.hpp"
 
 namespace flounder
 {

@@ -1,4 +1,4 @@
-﻿#include "structurebasic.h"
+﻿#include "structurebasic.hpp"
 
 namespace flounder
 {

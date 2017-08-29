@@ -1,4 +1,4 @@
-#include "pipelinepaused.h"
+#include "pipelinepaused.hpp"
 
 namespace flounder
 {

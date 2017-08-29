@@ -1,4 +1,4 @@
-#include "maincamera.h"
+#include "maincamera.hpp"
 
 const float maincamera::NEAR_PLANE = 0.1f;
 const float maincamera::FAR_PLANE = 2048.1f;

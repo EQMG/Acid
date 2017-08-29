@@ -1,4 +1,4 @@
-#include "filternegative.h"
+#include "filternegative.hpp"
 
 namespace flounder
 {

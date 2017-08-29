@@ -1,4 +1,4 @@
-#include "processorresource.h"
+#include "processorresource.hpp"
 
 namespace flounder
 {

@@ -1,4 +1,4 @@
-#include "filtercombine.h"
+#include "filtercombine.hpp"
 
 namespace flounder
 {

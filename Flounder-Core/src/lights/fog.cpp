@@ -1,4 +1,4 @@
-#include "fog.h"
+#include "fog.hpp"
 
 namespace flounder
 {

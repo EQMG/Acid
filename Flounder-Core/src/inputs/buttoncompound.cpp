@@ -1,4 +1,4 @@
-#include "buttoncompound.h"
+#include "buttoncompound.hpp"
 
 namespace flounder
 {
