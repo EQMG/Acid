@@ -1,4 +1,4 @@
-#include "camera.h"
+#include "camera.hpp"
 
 namespace flounder
 {

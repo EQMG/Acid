@@ -1,4 +1,4 @@
-#include "pipelinebloom.h"
+#include "pipelinebloom.hpp"
 
 namespace flounder
 {

@@ -1,4 +1,4 @@
-﻿#include "overlaydebug.h"
+﻿#include "overlaydebug.hpp"
 
 overlaydebug::overlaydebug(uiobject *parent) :
 	uiobject(parent, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f))

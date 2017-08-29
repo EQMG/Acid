@@ -1,4 +1,4 @@
-#include "filterdarken.h"
+#include "filterdarken.hpp"
 
 namespace flounder
 {

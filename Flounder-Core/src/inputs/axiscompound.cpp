@@ -1,4 +1,4 @@
-#include "axiscompound.h"
+#include "axiscompound.hpp"
 
 namespace flounder
 {

@@ -1,4 +1,4 @@
-﻿#include "noisefast.h"
+﻿#include "noisefast.hpp"
 
 const float noisefast::GRAD_X[] =
 {

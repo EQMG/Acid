@@ -1,4 +1,4 @@
-#include "axisjoystick.h"
+#include "axisjoystick.hpp"
 
 namespace flounder
 {

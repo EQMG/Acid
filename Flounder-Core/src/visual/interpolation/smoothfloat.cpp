@@ -1,4 +1,4 @@
-#include "smoothfloat.h"
+#include "smoothfloat.hpp"
 
 namespace flounder
 {

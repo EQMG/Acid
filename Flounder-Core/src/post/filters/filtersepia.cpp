@@ -1,4 +1,4 @@
-#include "filtersepia.h"
+#include "filtersepia.hpp"
 
 namespace flounder
 {

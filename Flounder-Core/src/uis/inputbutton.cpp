@@ -1,4 +1,4 @@
-﻿#include "inputbutton.h"
+﻿#include "inputbutton.hpp"
 
 namespace flounder
 {

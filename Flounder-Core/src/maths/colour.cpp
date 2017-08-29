@@ -1,4 +1,4 @@
-#include "colour.h"
+#include "colour.hpp"
 
 namespace flounder
 {

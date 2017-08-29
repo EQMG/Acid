@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include <flounder.h>
+#include <flounder.hpp>
 
-#include "maincamera.h"
-#include "mainplayer.h"
-#include "manageruis.h"
-#include "instance.h"
-#include "managerrender.h"
+#include "maincamera.hpp"
+#include "mainplayer.hpp"
+#include "manageruis.hpp"
+#include "instance.hpp"
+#include "managerrender.hpp"
 
 #if (FLOUNDER_CONFIG_RELEASE && FLOUNDER_PLATFORM_WINDOWS)
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, int cmdShow)

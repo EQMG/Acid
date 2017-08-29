@@ -1,4 +1,4 @@
-#include "aabb.h"
+#include "aabb.hpp"
 
 namespace flounder
 {

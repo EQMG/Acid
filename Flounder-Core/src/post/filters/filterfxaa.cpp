@@ -1,4 +1,4 @@
-#include "filterfxaa.h"
+#include "filterfxaa.hpp"
 
 namespace flounder
 {

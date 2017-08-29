@@ -1,4 +1,4 @@
-#include "display.h"
+#include "display.hpp"
 
 namespace flounder
 {
