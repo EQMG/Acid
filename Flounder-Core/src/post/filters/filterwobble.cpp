@@ -1,4 +1,4 @@
-#include "filterwobble.h"
+#include "filterwobble.hpp"
 
 namespace flounder
 {

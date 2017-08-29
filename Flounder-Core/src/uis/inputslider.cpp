@@ -1,4 +1,4 @@
-﻿#include "inputslider.h"
+﻿#include "inputslider.hpp"
 
 namespace flounder
 {

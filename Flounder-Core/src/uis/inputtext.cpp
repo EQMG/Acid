@@ -1,4 +1,4 @@
-﻿#include "inputtext.h"
+﻿#include "inputtext.hpp"
 
 namespace flounder
 {

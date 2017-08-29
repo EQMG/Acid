@@ -1,4 +1,4 @@
-﻿#include "shadowbox.h"
+﻿#include "shadowbox.hpp"
 
 namespace flounder
 {

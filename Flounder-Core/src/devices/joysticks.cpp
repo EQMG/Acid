@@ -1,4 +1,4 @@
-#include "joysticks.h"
+#include "joysticks.hpp"
 
 namespace flounder
 {

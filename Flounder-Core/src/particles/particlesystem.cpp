@@ -1,4 +1,4 @@
-﻿#include "particlesystem.h"
+﻿#include "particlesystem.hpp"
 
 namespace flounder
 {

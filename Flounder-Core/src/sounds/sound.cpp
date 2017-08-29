@@ -1,5 +1,5 @@
-﻿#include "sound.h"
-#include "../devices/audio.h"
+﻿#include "sound.hpp"
+#include "../devices/audio.hpp"
 
 namespace flounder
 {

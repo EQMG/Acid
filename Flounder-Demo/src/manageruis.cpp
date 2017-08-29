@@ -1,4 +1,4 @@
-﻿#include "manageruis.h"
+﻿#include "manageruis.hpp"
 
 const float manageruis::SLIDE_TIME = 0.5f;
 

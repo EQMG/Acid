@@ -1,4 +1,4 @@
-﻿#include "componentalpha.h"
+﻿#include "componentalpha.hpp"
 
 namespace flounder
 {

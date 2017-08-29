@@ -1,4 +1,4 @@
-#include "skyboxes.h"
+#include "skyboxes.hpp"
 
 namespace flounder
 {

@@ -1,4 +1,4 @@
-﻿#include "inputgrabber.h"
+﻿#include "inputgrabber.hpp"
 
 namespace flounder
 {

@@ -1,4 +1,4 @@
-#include "filtergrain.h"
+#include "filtergrain.hpp"
 
 namespace flounder
 {

@@ -1,4 +1,4 @@
-#include "matrix3x3.h"
+#include "matrix3x3.hpp"
 
 namespace flounder
 {

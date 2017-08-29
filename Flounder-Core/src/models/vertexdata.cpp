@@ -1,4 +1,4 @@
-#include "vertexdata.h"
+#include "vertexdata.hpp"
 
 namespace flounder
 {

@@ -1,4 +1,4 @@
-#include "filtermotion.h"
+#include "filtermotion.hpp"
 
 namespace flounder
 {

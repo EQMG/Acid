@@ -1,4 +1,4 @@
-#include "terrains.h"
+#include "terrains.hpp"
 
 namespace flounder
 {

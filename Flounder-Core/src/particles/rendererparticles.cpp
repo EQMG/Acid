@@ -1,4 +1,4 @@
-#include "rendererparticles.h"
+#include "rendererparticles.hpp"
 
 namespace flounder
 {

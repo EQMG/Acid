@@ -1,4 +1,4 @@
-#include "frustum.h"
+#include "frustum.hpp"
 
 namespace flounder
 {

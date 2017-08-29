@@ -1,4 +1,4 @@
-#include "glfwupdater.h"
+#include "glfwupdater.hpp"
 
 namespace flounder
 {
