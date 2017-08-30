@@ -5,7 +5,7 @@ namespace flounder
 	const float inputbutton::CHANGE_TIME = 0.1f;
 	const float inputbutton::SCALE_NORMAL = 1.6f;
 	const float inputbutton::SCALE_SELECTED = 1.8f;
-	colour *const inputbutton::COLOUR_NORMAL = new colour(0.0f, 0.0f, 0.0f);
+	colour *const inputbutton::COLOUR_NORMAL = new colour(0.0f, 0.0f, 0.0f, 1.0f);
 
 	inputbutton::inputbutton(uiobject *parent, const vector2 &position, const std::string &string, const uialign &align) :
 		uiobject(parent, position, vector2(0.0f, 0.0f)),
@@ -16,7 +16,7 @@ namespace flounder
 		m_actionRight(nullptr)
 	{
 		m_text->setInScreenCoords(true);
-		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f));
+		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f, 1.0f));
 
 		m_background->setInScreenCoords(true);
 		m_background->setColourOffset(colour());

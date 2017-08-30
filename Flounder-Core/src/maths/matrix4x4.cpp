@@ -2,19 +2,64 @@
 
 namespace flounder
 {
-	matrix4x4::matrix4x4()
+	matrix4x4::matrix4x4() :
+		m_00(1.0f),
+		m_01(0.0f),
+		m_02(0.0f),
+		m_03(0.0f),
+		m_10(0.0f),
+		m_11(1.0f),
+		m_12(0.0f),
+		m_13(0.0f),
+		m_20(0.0f),
+		m_21(0.0f),
+		m_22(1.0f),
+		m_23(0.0f),
+		m_30(0.0f),
+		m_31(0.0f),
+		m_32(0.0f),
+		m_33(1.0f)
 	{
-		setIdentity();
 	}
 
-	matrix4x4::matrix4x4(const matrix4x4 &source)
+	matrix4x4::matrix4x4(const matrix4x4 &source) :
+		m_00(source.m_00),
+		m_01(source.m_01),
+		m_02(source.m_02),
+		m_03(source.m_03),
+		m_10(source.m_10),
+		m_11(source.m_11),
+		m_12(source.m_12),
+		m_13(source.m_13),
+		m_20(source.m_20),
+		m_21(source.m_21),
+		m_22(source.m_22),
+		m_23(source.m_23),
+		m_30(source.m_30),
+		m_31(source.m_31),
+		m_32(source.m_32),
+		m_33(source.m_33)
 	{
-		set(source);
 	}
 
-	matrix4x4::matrix4x4(const float source[16])
+	matrix4x4::matrix4x4(const float source[16]) :
+		m_00(source[0]),
+		m_01(source[1]),
+		m_02(source[2]),
+		m_03(source[3]),
+		m_10(source[4]),
+		m_11(source[5]),
+		m_12(source[6]),
+		m_13(source[7]),
+		m_20(source[8]),
+		m_21(source[9]),
+		m_22(source[10]),
+		m_23(source[11]),
+		m_30(source[12]),
+		m_31(source[13]),
+		m_32(source[14]),
+		m_33(source[15])
 	{
-		set(source);
 	}
 
 	matrix4x4::~matrix4x4()

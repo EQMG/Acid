@@ -1,20 +1,31 @@
 #include "vector2.hpp"
 
+#include "vector3.hpp"
+
 namespace flounder
 {
-	vector2::vector2()
+	vector2::vector2() :
+		m_x(0.0f),
+		m_y(0.0f)
 	{
-		set(0.0f, 0.0f);
 	}
 
-	vector2::vector2(const float &x, const float &y)
+	vector2::vector2(const float &x, const float &y) :
+		m_x(x),
+		m_y(y)
 	{
-		set(x, y);
 	}
 
-	vector2::vector2(const vector2 &source)
+	vector2::vector2(const vector2 &source) :
+		m_x(source.m_x),
+		m_y(source.m_y)
 	{
-		set(source);
+	}
+
+	vector2::vector2(const vector3 &source) :
+		m_x(source.m_x),
+		m_y(source.m_y)
+	{
 	}
 
 	vector2::~vector2()
@@ -29,6 +40,13 @@ namespace flounder
 	}
 
 	vector2 *vector2::set(const vector2 &source)
+	{
+		m_x = source.m_x;
+		m_y = source.m_y;
+		return this;
+	}
+
+	vector2 *vector2::set(const vector3 &source)
 	{
 		m_x = source.m_x;
 		m_y = source.m_y;

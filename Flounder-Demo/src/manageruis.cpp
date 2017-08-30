@@ -4,7 +4,7 @@ const float manageruis::SLIDE_TIME = 0.5f;
 
 manageruis::manageruis() :
 	imanageruis(),
-	m_primaryColour(new colour(0.91f, 0.08f, 0.08f)),
+	m_primaryColour(new colour(0.91f, 0.08f, 0.08f, 1.0f)),
 	m_overlayStartup(new overlaystartup(uis::get()->getContainer())),
 	m_overlayDebug(new overlaydebug(uis::get()->getContainer())),
 	m_overlayManager(new overlaymanager(uis::get()->getContainer()))

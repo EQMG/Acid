@@ -62,7 +62,7 @@ namespace flounder
 
 		matrix4x4 *rotation = matrix4x4::viewMatrix(vector3(), *camera.getPosition(), nullptr);
 		vector4 *forwardVector4 = matrix4x4::transform(*rotation, vector4(0.0f, 0.0f, -1.0f, 0.0f), nullptr);
-		vector3 *forwardVector = new vector3(forwardVector4->m_x, forwardVector4->m_y, forwardVector4->m_z);
+		vector3 *forwardVector = new vector3(*forwardVector4);
 
 		vector3 *toFar = new vector3(*forwardVector);
 		toFar->scale(m_shadowDistance);
@@ -144,7 +144,7 @@ namespace flounder
 	vector4 **shadowbox::calculateFrustumVertices(const matrix4x4 &rotation, const vector3 &forwardVector, const vector3 &centreNear, const vector3 &centreFar)
 	{
 		vector4 *upVector4 = matrix4x4::transform(rotation, vector4(0.0f, 1.0f, 0.0f, 0.0f), nullptr);
-		vector3 *upVector = new vector3(upVector4->m_x, upVector4->m_y, upVector4->m_z);
+		vector3 *upVector = new vector3(*upVector4);
 		vector3 *rightVector = vector3::cross(forwardVector, *upVector, nullptr);
 		vector3 *downVector = new vector3(*upVector);
 		downVector->negate();
@@ -196,8 +196,8 @@ namespace flounder
 
 	vector4 *shadowbox::calculateLightSpaceFrustumCorner(const vector3 &startPoint, const vector3 &direction, const float &width)
 	{
-		vector3 *point = vector3::add(startPoint, vector3(direction.m_x * width, direction.m_y * width, direction.m_z * width), nullptr);
-		vector4 *point4 = new vector4(point->m_x, point->m_y, point->m_z, 1.0f);
+		vector3 *point = vector3::add(startPoint, *vector3(direction).scale(width), nullptr);
+		vector4 *point4 = new vector4(*point);
 		matrix4x4::transform(*m_lightViewMatrix, *point4, point4);
 
 		delete point;
@@ -213,7 +213,7 @@ namespace flounder
 		matrix4x4 *invertedLight = matrix4x4::invert(*m_lightViewMatrix, nullptr);
 		vector4 *centre4 = matrix4x4::transform(*invertedLight, vector4(x, y, z, 1.0f), nullptr);
 
-		m_centre->set(centre4->m_x, centre4->m_y, centre4->m_z);
+		m_centre->set(*centre4);
 
 		delete centre4;
 		delete invertedLight;
@@ -242,7 +242,7 @@ namespace flounder
 			yaw -= 180.0f;
 		}
 
-		matrix4x4::rotate(*m_lightViewMatrix, vector3(0.0f, 1.0f, 0.0f), -(__radians(yaw)), m_lightViewMatrix);
+		matrix4x4::rotate(*m_lightViewMatrix, vector3(0.0f, 1.0f, 0.0f), -__radians(yaw), m_lightViewMatrix);
 		matrix4x4::translate(*m_lightViewMatrix, *m_centre, m_lightViewMatrix);
 
 		m_centre->negate();
@@ -256,14 +256,14 @@ namespace flounder
 
 	bool shadowbox::isInBox(const vector3 &position, const float &radius)
 	{
-		vector4 *entityPos = matrix4x4::transform(*m_lightViewMatrix, vector4(position.m_x, position.m_y, position.m_z, 1.0f), nullptr);
+		vector4 *entityPos = matrix4x4::transform(*m_lightViewMatrix, vector4(position), nullptr);
 
 		vector3 *closestPoint = new vector3();
 		closestPoint->m_x = maths::clamp(entityPos->m_x, m_aabb->m_minExtents->m_x, m_aabb->m_maxExtents->m_x);
 		closestPoint->m_y = maths::clamp(entityPos->m_y, m_aabb->m_minExtents->m_y, m_aabb->m_maxExtents->m_y);
 		closestPoint->m_z = maths::clamp(entityPos->m_z, m_aabb->m_minExtents->m_z, m_aabb->m_maxExtents->m_z);
 
-		vector3 *centre = new vector3(entityPos->m_x, entityPos->m_y, entityPos->m_z);
+		vector3 *centre = new vector3(*entityPos);
 		vector3 *distance = vector3::subtract(*centre, *closestPoint, nullptr);
 		float disSquared = distance->lengthSquared();
 

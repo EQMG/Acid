@@ -2,19 +2,43 @@
 
 namespace flounder
 {
-	matrix3x3::matrix3x3()
+	matrix3x3::matrix3x3() :
+		m_00(1.0f),
+		m_01(0.0f),
+		m_02(0.0f),
+		m_10(0.0f),
+		m_11(1.0f),
+		m_12(0.0f),
+		m_20(0.0f),
+		m_21(0.0f),
+		m_22(1.0f)
 	{
-		setIdentity();
 	}
 
-	matrix3x3::matrix3x3(const matrix3x3 &source)
+	matrix3x3::matrix3x3(const matrix3x3 &source) :
+		m_00(source.m_00),
+		m_01(source.m_01),
+		m_02(source.m_02),
+		m_10(source.m_10),
+		m_11(source.m_11),
+		m_12(source.m_12),
+		m_20(source.m_20),
+		m_21(source.m_21),
+		m_22(source.m_22)
 	{
-		set(source);
 	}
 
-	matrix3x3::matrix3x3(const float source[9])
+	matrix3x3::matrix3x3(const float source[9]) :
+		m_00(source[0]),
+		m_01(source[1]),
+		m_02(source[2]),
+		m_10(source[3]),
+		m_11(source[4]),
+		m_12(source[5]),
+		m_20(source[6]),
+		m_21(source[7]),
+		m_22(source[8])
 	{
-		set(source);
 	}
 
 	matrix3x3::~matrix3x3()

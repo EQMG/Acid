@@ -4,6 +4,8 @@
 
 namespace flounder
 {
+	class vector3;
+
 	/// <summary>
 	/// Holds a 4-tuple vector.
 	/// </summary>
@@ -30,6 +32,12 @@ namespace flounder
 		/// Constructor for vector4.
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing one. </param>
+		vector4(const vector3 &source);
+
+		/// <summary>
+		/// Constructor for vector4.
+		/// </summary>
+		/// <param name="source"> Creates this vector out of a existing one. </param>
 		vector4(const vector4 &source);
 
 		/// <summary>
@@ -46,6 +54,13 @@ namespace flounder
 		/// <param name="w"> The new W value. </param>
 		/// <returns> This. </returns>
 		vector4 *set(const float &x, const float &y, const float &z, const float &w);
+
+		/// <summary>
+		/// Loads from another vector4.
+		/// </summary>
+		/// <param name="source"> The source vector. </param>
+		/// <returns> This. </returns>
+		vector4 *set(const vector3 &source);
 
 		/// <summary>
 		/// Loads from another vector4.

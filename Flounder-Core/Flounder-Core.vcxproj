@@ -44,7 +44,7 @@
     <ClInclude Include="src\framework\imodule.hpp" />
     <ClInclude Include="src\framework\iupdater.hpp" />
     <ClInclude Include="src\inputs\axisbutton.hpp" />
-    <ClInclude Include="src\maths\transform.hpp" />
+    <ClInclude Include="src\maths\Transform.hpp" />
     <ClInclude Include="src\models\material.hpp" />
     <ClInclude Include="src\noise\noisefast.hpp" />
     <ClInclude Include="src\particles\particle.hpp" />
@@ -202,7 +202,7 @@
     <ClCompile Include="src\framework\glfw\glfwupdater.cpp" />
     <ClCompile Include="src\guis\gui.cpp" />
     <ClCompile Include="src\inputs\axisbutton.cpp" />
-    <ClCompile Include="src\maths\transform.cpp" />
+    <ClCompile Include="src\maths\Transform.cpp" />
     <ClCompile Include="src\noise\noisefast.cpp" />
     <ClCompile Include="src\particles\particle.cpp" />
     <ClCompile Include="src\particles\particles.cpp" />
