@@ -40,8 +40,8 @@ namespace flounder
 		matrix4x4::rotate(vector3(0.2f, 0.0f, 0.5f), skyboxRotation, &lightDirection);
 		lightDirection.normalize();
 
-		colour::interpolate(colour(0.9f, 0.3f, 0.3f), colour(0.05f, 0.05f, 0.1f), getSunriseFactor(), &fogColour);
-		colour::interpolate(fogColour, colour(0.0f, 0.3f, 0.7f), getShadowFactor(), &fogColour);
+		colour::interpolate(colour(0.9f, 0.3f, 0.3f, 1.0f), colour(0.05f, 0.05f, 0.1f, 1.0f), getSunriseFactor(), &fogColour);
+		colour::interpolate(fogColour, colour(0.0f, 0.3f, 0.7f, 1.0f), getShadowFactor(), &fogColour);
 
 		vector3::multiply(lightDirection, vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
 
@@ -50,8 +50,8 @@ namespace flounder
 			vector3::add(*m_sunPosition, *camera::get()->getCamera()->getPosition(), m_sunPosition);
 		}
 
-		colour::interpolate(colour(0.9f, 0.3f, 0.3f), colour(0.0f, 0.0f, 0.0f), getSunriseFactor(), m_sunColour);
-		colour::interpolate(*m_sunColour, colour(1.0f, 1.0f, 1.0f), getShadowFactor(), m_sunColour);
+		colour::interpolate(colour(0.9f, 0.3f, 0.3f, 1.0f), colour(0.0f, 0.0f, 0.0f, 1.0f), getSunriseFactor(), m_sunColour);
+		colour::interpolate(*m_sunColour, colour(1.0f, 1.0f, 1.0f, 1.0f), getShadowFactor(), m_sunColour);
 
 		if (skyboxes::get() != nullptr && skyboxes::get()->getSkybox() != nullptr)
 		{

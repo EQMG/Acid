@@ -11,8 +11,10 @@ namespace flounder
 	class matrix2x2
 	{
 	public:
-		float m_00, m_01;
-		float m_10, m_11;
+		float m_00;
+		float m_01;
+		float m_10;
+		float m_11;
 
 		/// <summary>
 		/// Constructor for matrix2x2. The matrix is initialised to the identity.
@@ -150,7 +152,7 @@ namespace flounder
 		/// <summary>
 		/// Sets this matrix to be the identity matrix.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix2x2 *setIdentity();
 
 		/// <summary>
@@ -162,25 +164,25 @@ namespace flounder
 		/// <summary>
 		/// Inverts this matrix.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix2x2 *invert();
 
 		/// <summary>
 		/// Negates this matrix.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix2x2 *negate();
 
 		/// <summary>
 		/// Transposes this matrix
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix2x2 *transpose();
 
 		/// <summary>
 		/// Sets this matrix to 0.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix2x2 *setZero();
 	};
 }

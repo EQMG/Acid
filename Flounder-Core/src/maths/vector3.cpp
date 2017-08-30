@@ -1,52 +1,78 @@
 #include "vector3.hpp"
 
+#include "vector2.hpp"
+#include "vector4.hpp"
+
 namespace flounder
 {
-	vector3::vector3()
+	vector3::vector3() :
+		m_x(0.0f),
+		m_y(0.0f),
+		m_z(0.0f)
 	{
-		this->set(0.0f, 0.0f, 0.0f);
 	}
 
-	vector3::vector3(const float &x, const float &y, const float &z)
+	vector3::vector3(const vector2 &source) :
+		m_x(source.m_x),
+		m_y(source.m_y),
+		m_z(0.0f)
 	{
-		this->set(x, y, z);
 	}
 
-	vector3::vector3(const vector3 &source)
+	vector3::vector3(const vector3 &source) :
+		m_x(source.m_x),
+		m_y(source.m_y),
+		m_z(source.m_z)
 	{
-		this->set(source);
 	}
 
-	vector3::vector3(const vector4 &source)
+	vector3::vector3(const vector4 &source) :
+		m_x(source.m_x),
+		m_y(source.m_y),
+		m_z(source.m_z)
 	{
-		this->set(source);
+	}
+
+	vector3::vector3(const float &x, const float &y, const float &z) :
+		m_x(x),
+		m_y(y),
+		m_z(z)
+	{
 	}
 
 	vector3::~vector3()
 	{
 	}
 
-	vector3 *vector3::set(const float &x, const float &y, const float &z)
+	vector3 *vector3::set(const vector2 &source)
 	{
-		this->m_x = x;
-		this->m_y = y;
-		this->m_z = z;
+		m_x = source.m_x;
+		m_y = source.m_y;
+		m_z = 0.0f;
 		return this;
 	}
 
 	vector3 *vector3::set(const vector3 &source)
 	{
-		this->m_x = source.m_x;
-		this->m_y = source.m_y;
-		this->m_z = source.m_z;
+		m_x = source.m_x;
+		m_y = source.m_y;
+		m_z = source.m_z;
 		return this;
 	}
 
 	vector3 *vector3::set(const vector4 &source)
 	{
-		this->m_x = source.m_x;
-		this->m_y = source.m_y;
-		this->m_z = source.m_z;
+		m_x = source.m_x;
+		m_y = source.m_y;
+		m_z = source.m_z;
+		return this;
+	}
+
+	vector3 *vector3::set(const float &x, const float &y, const float &z)
+	{
+		m_x = x;
+		m_y = y;
+		m_z = z;
 		return this;
 	}
 
@@ -288,9 +314,9 @@ namespace flounder
 
 	vector3 *vector3::translate(const float &x, const float &y, const float &z)
 	{
-		this->m_x += x;
-		this->m_y += y;
-		this->m_z += z;
+		m_x += x;
+		m_y += y;
+		m_z += z;
 		return this;
 	}
 

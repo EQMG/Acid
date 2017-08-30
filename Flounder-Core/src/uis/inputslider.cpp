@@ -5,7 +5,7 @@ namespace flounder
 	const float inputslider::CHANGE_TIME = 0.1f;
 	const float inputslider::SCALE_NORMAL = 1.6f;
 	const float inputslider::SCALE_SELECTED = 1.8f;
-	colour *const inputslider::COLOUR_NORMAL = new colour(0.0f, 0.0f, 0.0f);
+	colour *const inputslider::COLOUR_NORMAL = new colour(0.0f, 0.0f, 0.0f, 1.0f);
 
 	inputslider::inputslider(uiobject *parent, const vector2 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const uialign &align) :
 		uiobject(parent, position, vector2(0.0f, 0.0f)),
@@ -21,7 +21,7 @@ namespace flounder
 		m_actionChange(nullptr)
 	{
 		m_text->setInScreenCoords(true);
-		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f));
+		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f, 1.0f));
 
 		m_background->setInScreenCoords(true);
 		m_background->setColourOffset(colour());
@@ -93,7 +93,7 @@ namespace flounder
 		// Update the background colour.
 		colour *primary = uis::get()->getManager()->getPrimaryColour();
 		colour::interpolate(*COLOUR_NORMAL, *primary, (m_text->getScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->getColourOffset());
-		m_slider->getColourOffset()->set(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b);
+		m_slider->getColourOffset()->set(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f);
 
 		// Update background size.
 		m_background->getDimensions()->set(*m_text->getMeshSize());

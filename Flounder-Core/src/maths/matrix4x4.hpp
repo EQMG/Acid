@@ -13,10 +13,22 @@ namespace flounder
 	class matrix4x4
 	{
 	public:
-		float m_00, m_01, m_02, m_03;
-		float m_10, m_11, m_12, m_13;
-		float m_20, m_21, m_22, m_23;
-		float m_30, m_31, m_32, m_33;
+		float m_00;
+		float m_01;
+		float m_02;
+		float m_03;
+		float m_10;
+		float m_11;
+		float m_12;
+		float m_13;
+		float m_20;
+		float m_21;
+		float m_22;
+		float m_23;
+		float m_30;
+		float m_31;
+		float m_32;
+		float m_33;
 
 		/// <summary>
 		/// Constructor for matrix4x4. The matrix is initialised to the identity.
@@ -298,7 +310,7 @@ namespace flounder
 		/// <summary>
 		/// Sets this matrix to be the identity matrix.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix4x4 *setIdentity();
 
 		/// <summary>
@@ -310,25 +322,25 @@ namespace flounder
 		/// <summary>
 		/// Inverts this matrix.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix4x4 *invert();
 
 		/// <summary>
 		/// Negates this matrix.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix4x4 *negate();
 
 		/// <summary>
 		/// Transposes this matrix
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix4x4 *transpose();
 
 		/// <summary>
 		/// Sets this matrix to 0.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix4x4 *setZero();
 	private:
 		static float determinant3x3(const float &t00, const float &t01, const float &t02, const float &t10, const float &t11, const float &t12, const float &t20, const float &t21, const float &t22);

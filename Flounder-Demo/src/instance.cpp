@@ -29,8 +29,12 @@ instance::instance()
 	// componentalpha *meme = test->getComponent<componentalpha*>();
 
 	model *modelTest = new model("res/test/model.obj");
-	transform *transformTest = new transform(vector3(100.892f, -10.0f, -256.0f), vector3(0.0f, 90.0f, 0.0f), 1.0f);
-	matrix4x4 *matrixWorld = transformTest->worldMatrix(nullptr);
+	Transform *transformTest = new Transform(vector3(100.892f, -10.0f, -256.0f), vector3(0.0f, 90.0f, 0.0f), vector3(1.0f, 1.0f, 1.0f));
+	matrix4x4 *matrixWorld = transformTest->GetWorldMatrix(nullptr);
+
+	colour colourHex("#cc6600", 1.0f);
+	std::cout << colourHex.m_r << ", " << colourHex.m_g << ", " << colourHex.m_b << std::endl;
+	std::cout << colourHex.getHex() << std::endl;
 	
 	delete matrixWorld;
 	delete transformTest;

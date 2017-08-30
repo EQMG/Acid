@@ -2,13 +2,12 @@
 
 namespace flounder
 {
-	delta::delta()
+	delta::delta() :
+		m_currentFrameTime(0.0f),
+		m_lastFrameTime(0.0f),
+		m_change(0.0f),
+		m_time(0.0f)
 	{
-		m_currentFrameTime = 0.0f;
-		m_lastFrameTime = 0.0f;
-
-		m_change = 0.0f;
-		m_time = 0.0f;
 	}
 
 	delta::~delta()

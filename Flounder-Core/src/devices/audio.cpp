@@ -43,7 +43,7 @@ namespace flounder
 
 			// Read header.
 			file.read(chunkId, 4);
-			file.read((char*) &result.size, 4);
+			file.read(reinterpret_cast<char*>(&result.size), 4);
 
 			chunkId[4] = '\0';
 			file.read(chunkId, 4);
@@ -52,31 +52,31 @@ namespace flounder
 
 			// Read first chunk header.
 			file.read(chunkId, 4);
-			file.read((char*) &result.size, 4);
+			file.read(reinterpret_cast<char*>(&result.size), 4);
 
 			chunkId[4] = '\0';
 
 			// Read first chunk content.
-			file.read((char*) &result.formatTag, 2);
-			file.read((char*) &result.channels, 2);
-			file.read((char*) &result.samplesPerSec, 4);
-			file.read((char*) &result.averageBytesPerSec, 4);
-			file.read((char*) &result.blockAlign, 2);
-			file.read((char*) &result.bitsPerSample, 2);
+			file.read(reinterpret_cast<char*>(&result.formatTag), 2);
+			file.read(reinterpret_cast<char*>(&result.channels), 2);
+			file.read(reinterpret_cast<char*>(&result.samplesPerSec), 4);
+			file.read(reinterpret_cast<char*>(&result.averageBytesPerSec), 4);
+			file.read(reinterpret_cast<char*>(&result.blockAlign), 2);
+			file.read(reinterpret_cast<char*>(&result.bitsPerSample), 2);
 
 			if (result.size > 16)
 			{
-				file.seekg((int) file.tellg() + (result.size - 16));
+				file.seekg(static_cast<int>(file.tellg()) + (result.size - 16));
 			}
 
 			// Read data chunk header.
 			file.read(chunkId, 4);
-			file.read((char*) &result.size, 4);
+			file.read(reinterpret_cast<char*>(&result.size), 4);
 
 			chunkId[4] = '\0';
 
 			result.data = new unsigned char[result.size];
-			file.read((char*) result.data, result.size);
+			file.read(reinterpret_cast<char*>(result.data), result.size);
 		}
 
 		file.close();
