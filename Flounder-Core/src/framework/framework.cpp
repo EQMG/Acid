@@ -4,16 +4,13 @@ namespace flounder
 {
 	framework *framework::G_INSTANCE = nullptr;
 
-	framework::framework()
+	framework::framework() :
+		m_initialized(false),
+		m_running(true),
+		m_error(false),
+		m_updater(nullptr)
 	{
-		// Sets the static object to this new one.
-		framework::G_INSTANCE = this;
-
-		m_updater = nullptr;
-
-		m_initialized = false;
-		m_running = true;
-		m_error = false;
+		G_INSTANCE = this;
 	}
 
 	framework::~framework()

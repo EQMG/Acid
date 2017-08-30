@@ -14,7 +14,6 @@ namespace flounder
 	template<class t>
 	class ispatialstructure
 	{
-	private:
 	public:
 		/// <summary>
 		/// Creates a new spatial structure.

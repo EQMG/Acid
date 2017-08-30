@@ -1,21 +1,19 @@
 #include "managerrender.hpp"
 
-managerrender::managerrender()
+managerrender::managerrender() :
+	m_infinity(vector4(0.0f, 1.0f, 0.0f, +INFINITY))
+	//m_rendererShadows(new renderershadows()),
+	//m_rendererSkyboxes(new rendererskyboxes()),
+	//m_rendererTerrains(new rendererterrains()),
+	//m_rendererWaters(new rendererwaters()),
+	//m_rendererParticles(new rendererparticles()),
+	//m_rendererGuis(new rendererguis()),
+	//m_rendererFonts(new rendererfonts()),
+	//m_fboRenderer(new fbo(true, 1.0f, TEXTURE, false)),
+	//m_rendererDeferred(new rendererdeferred()),
+	//m_filterFxaa(new filterfxaa()),
+	//m_filterLensFlare(new filterlensflare())
 {
-	m_infinity = vector4(0.0f, 1.0f, 0.0f, +INFINITY);
-
-	//m_rendererShadows = new renderershadows();
-	//m_rendererSkyboxes = new rendererskyboxes();
-	//m_rendererTerrains = new rendererterrains();
-	//m_rendererWaters = new rendererwaters();
-	//m_rendererParticles = new rendererparticles();
-	//m_rendererGuis = new rendererguis();
-	//m_rendererFonts = new rendererfonts();
-
-	//m_fboRenderer = new fbo(true, 1.0f, TEXTURE, false);
-	//m_rendererDeferred = new rendererdeferred();
-	//m_filterFxaa = new filterfxaa();
-	//m_filterLensFlare = new filterlensflare();
 }
 
 managerrender::~managerrender()

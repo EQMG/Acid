@@ -3,12 +3,12 @@
 namespace flounder
 {
 	rendererterrains::rendererterrains() :
-		irenderer()
-	{
-		m_shader = new shader("terrains", 2,
+		irenderer(),
+		m_shader(new shader("terrains", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/terrains/terrain.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/terrains/terrain.frag.spv")
-		);
+		))
+	{
 	}
 
 	rendererterrains::~rendererterrains()
@@ -20,7 +20,7 @@ namespace flounder
 	{
 		prepareRendering(clipPlane, camera);
 
-		for (terrain *object : *terrains::get()->getTerrains())
+		for (auto object : *terrains::get()->getTerrains())
 		{
 			renderTerrain(object);
 		}

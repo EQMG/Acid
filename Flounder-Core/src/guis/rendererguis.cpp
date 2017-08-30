@@ -3,15 +3,13 @@
 namespace flounder
 {
 	rendererguis::rendererguis() :
-		irenderer()
-	{
-		m_shader = new shader("guis", 2,
+		irenderer(),
+		m_shader(new shader("guis", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/guis/gui.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/guis/gui.frag.spv")
-		);
-		std::vector<float> *vertices = new std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f};
-		m_model = new model(nullptr, vertices, nullptr, nullptr, nullptr);
-		delete vertices;
+		)),
+		m_model(new model(nullptr, &std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f}, nullptr, nullptr, nullptr))
+	{
 	}
 
 	rendererguis::~rendererguis()
@@ -25,7 +23,7 @@ namespace flounder
 	{
 		prepareRendering(clipPlane, camera);
 
-		for (uiobject *screenobject : *uis::get()->getObjects())
+		for (auto screenobject : *uis::get()->getObjects())
 		{
 			gui *object = dynamic_cast<gui*>(screenobject);
 

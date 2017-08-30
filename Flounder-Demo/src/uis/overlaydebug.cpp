@@ -47,7 +47,7 @@ void overlaydebug::updateObject()
 
 text *overlaydebug::createStatus(const std::string &content, const float &positionX, const float &positionY, const uialign &align)
 {
-	text *result = new text(this, vector2(positionX, positionY), content, 1.0f, uis::get()->candara, 1.0f, align);
+	text *result = new text(this, vector2(positionX, positionY), content, 1.0f, uis::get()->m_candara, 1.0f, align);
 	result->setInScreenCoords(true);
 	result->setTextColour(colour(1.0f, 1.0f, 1.0f));
 	result->setBorderColour(colour(0.15f, 0.15f, 0.15f));

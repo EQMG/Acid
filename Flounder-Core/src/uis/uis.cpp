@@ -3,18 +3,17 @@
 namespace flounder
 {
 	uis::uis() :
-		imodule()
+		imodule(),
+		m_managerUis(nullptr),
+		m_selector(new uiselector()),
+		m_container(new containerscreen(nullptr, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), false)),
+		m_objects(new std::vector<uiobject*>()),
+		m_arial(new fonttype("res/fonts/arial.png", "res/fonts/arial.fnt")),
+		m_berlinSans (new fonttype("res/fonts/berlinSans.png", "res/fonts/berlinSans.fnt")),
+		m_cafeFrancoise(new fonttype("res/fonts/cafefrancoise.png", "res/fonts/cafefrancoise.fnt")),
+		m_candara(new fonttype("res/fonts/candara.png", "res/fonts/candara.fnt")),
+		m_segoe(new fonttype("res/fonts/segoe.png", "res/fonts/segoe.fnt"))
 	{
-		m_managerUis = nullptr;
-		m_selector = new uiselector();
-		m_container = new containerscreen(nullptr, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), false);
-		m_objects = new std::vector<uiobject*>();
-
-		arial = new fonttype("res/fonts/arial.png", "res/fonts/arial.fnt");
-		berlinSans = new fonttype("res/fonts/berlinSans.png", "res/fonts/berlinSans.fnt");
-		cafeFrancoise = new fonttype("res/fonts/cafefrancoise.png", "res/fonts/cafefrancoise.fnt");
-		candara = new fonttype("res/fonts/candara.png", "res/fonts/candara.fnt");
-		segoe = new fonttype("res/fonts/segoe.png", "res/fonts/segoe.fnt");
 	}
 
 	uis::~uis()
@@ -24,11 +23,11 @@ namespace flounder
 		delete m_container;
 		delete m_objects;
 
-		delete arial;
-		delete berlinSans;
-		delete cafeFrancoise;
-		delete candara;
-		delete segoe;
+		delete m_arial;
+		delete m_berlinSans;
+		delete m_cafeFrancoise;
+		delete m_candara;
+		delete m_segoe;
 	}
 
 	void uis::update()

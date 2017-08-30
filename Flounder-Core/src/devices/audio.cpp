@@ -123,7 +123,7 @@ namespace flounder
 
 	sound *audio::get(const std::string &name)
 	{
-		for (sound *object : m_sounds)
+		for (auto object : m_sounds)
 		{
 			if (object->getName() == name)
 			{

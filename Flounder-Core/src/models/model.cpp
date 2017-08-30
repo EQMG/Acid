@@ -2,25 +2,21 @@
 
 namespace flounder
 {
-	model::model(const std::string &file)
+	model::model(const std::string &file) :
+		m_file(file),
+		m_indices(nullptr),
+		m_vertices(nullptr),
+		m_textures(nullptr),
+		m_normals(nullptr),
+		m_tangents(nullptr),
+		m_aabb(nullptr),
+		m_verticesBuffer(VK_NULL_HANDLE),
+		m_texturesBuffer(VK_NULL_HANDLE),
+		m_normalsBuffer(VK_NULL_HANDLE),
+		m_tangentsBuffer(VK_NULL_HANDLE),
+		m_memory(VK_NULL_HANDLE),
+		m_bufferInfo({})
 	{
-		m_file = file;
-
-		m_indices = nullptr;
-		m_vertices = nullptr;
-		m_textures = nullptr;
-		m_normals = nullptr;
-		m_tangents = nullptr;
-
-		m_aabb = nullptr;
-
-		m_verticesBuffer = VK_NULL_HANDLE;
-		m_texturesBuffer = VK_NULL_HANDLE;
-		m_normalsBuffer = VK_NULL_HANDLE;
-		m_tangentsBuffer = VK_NULL_HANDLE;
-		m_memory = VK_NULL_HANDLE;
-		m_bufferInfo = {};
-
 		loadFromFile();
 	}
 
@@ -74,7 +70,7 @@ namespace flounder
 
 		material currentMaterial = {};
 
-		for (std::vector<std::string>::iterator it = lines.begin(); it < lines.end(); it++)
+		for (auto it = lines.begin(); it < lines.end(); it++)
 		{
 			std::string line = helperstring::trim(*it);
 
@@ -97,7 +93,7 @@ namespace flounder
 				}
 				else if (prefix == "usemtl")
 				{
-					for (material m : materials) 
+					for (auto m : materials)
 					{
 						if (m.name == split.at(1)) 
 						{
@@ -155,7 +151,7 @@ namespace flounder
 		}
 
 		// Averages out vertex tangents, and disabled non set vertices,
-		for (vertexdata *vertex : vertices)
+		for (auto vertex : vertices)
 		{
 			vertex->averageTangents();
 
@@ -175,7 +171,7 @@ namespace flounder
 
 		m_indices->swap(indices);
 
-		for (vertexdata *currentVertex : vertices)
+		for (auto currentVertex : vertices)
 		{
 			vector3 position = currentVertex->getPosition();
 			vector2 textureCoord = textures.at(currentVertex->getTextureIndex());
@@ -209,7 +205,7 @@ namespace flounder
 		std::string parseMaterialName = "";
 		material parseMaterial = {};
 
-		for (std::vector<std::string>::iterator it = lines.begin(); it < lines.end(); it++)
+		for (auto it = lines.begin(); it < lines.end(); it++)
 		{
 			std::string line = helperstring::trim(*it);
 

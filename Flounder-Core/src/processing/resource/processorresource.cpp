@@ -4,9 +4,9 @@ namespace flounder
 {
 	const double processorresource::MAX_TIME_MILLIS = 8.0f;
 
-	processorresource::processorresource()
+	processorresource::processorresource() :
+		m_queue(new queue<requestresource*>())
 	{
-		m_queue = new queue<requestresource*>();
 	}
 
 	processorresource::~processorresource()

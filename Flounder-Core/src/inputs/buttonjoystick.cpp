@@ -3,13 +3,12 @@
 namespace flounder
 {
 	buttonjoystick::buttonjoystick(const int &joystick, const int n_args, ...) :
-		ibutton()
+		ibutton(),
+		m_joystick(joystick),
+		m_count(n_args),
+		m_buttons(new int[n_args]),
+		m_wasDown(false)
 	{
-		m_joystick = joystick;
-		m_count = n_args;
-		m_buttons = new int[n_args];
-		m_wasDown = false;
-
 		va_list ap;
 		va_start(ap, n_args);
 

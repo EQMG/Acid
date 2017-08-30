@@ -118,7 +118,7 @@ private:
 
 	float m_gradientPerturbAmp;
 public:
-	noisefast(int seed);
+	noisefast(const int &seed);
 
 	~noisefast();
 
@@ -127,14 +127,14 @@ public:
 
 	// Sets seed used for all noise types
 	// Default: 1337
-	void setSeed(int seed);
+	void setSeed(const int &seed);
 
 	// Returns frequency used for all noise types
 	float getFrequency() const { return m_frequency; }
 
 	// Sets frequency for all noise types
 	// Default: 0.01
-	void setFrequency(float frequency) { m_frequency = frequency; }
+	void setFrequency(const float &frequency) { m_frequency = frequency; }
 
 	// Returns interpolation method used for supported noise types
 	typeinterp getInterp() const { return m_interp; }
@@ -146,14 +146,14 @@ public:
 	// - Quintic
 	// Used in Value, Perlin Noise and Position Warping
 	// Default: Quintic
-	void setInterp(typeinterp interp) { m_interp = interp; }
+	void setInterp(const typeinterp &interp) { m_interp = interp; }
 
 	// Returns the noise type used by GetNoise
 	typenoise getNoiseType() const { return m_noiseType; }
 
 	// Sets noise return type of GetNoise(...)
 	// Default: Simplex
-	void setNoiseType(typenoise noiseType) { m_noiseType = noiseType; }
+	void setNoiseType(const typenoise &noiseType) { m_noiseType = noiseType; }
 
 	// Returns octave count for all fractal noise types
 	int getFractalOctaves() const { return m_octaves; }
@@ -167,28 +167,28 @@ public:
 
 	// Sets octave lacunarity for all fractal noise types
 	// Default: 2.0
-	void setFractalLacunarity(float lacunarity) { m_lacunarity = lacunarity; }
+	void setFractalLacunarity(const float &lacunarity) { m_lacunarity = lacunarity; }
 
 	// Returns octave gain for all fractal noise types
 	float getFractalGain() const { return m_gain; }
 
 	// Sets octave gain for all fractal noise types
 	// Default: 0.5
-	void setFractalGain(float gain);
+	void setFractalGain(const float &gain);
 
 	// Returns method for combining octaves in all fractal noise types
 	typefractal getFractalType() const { return m_fractalType; }
 
 	// Sets method for combining octaves in all fractal noise types
 	// Default: FBM
-	void setFractalType(typefractal fractalType) { m_fractalType = fractalType; }
+	void setFractalType(const typefractal &fractalType) { m_fractalType = fractalType; }
 
 	// Returns the distance function used in cellular noise calculations
 	typecellularfunction getCellularDistanceFunction() const { return m_cellularDistanceFunction; }
 
 	// Sets distance function used in cellular noise calculations
 	// Default: Euclidean
-	void setCellularDistanceFunction(typecellularfunction cellularDistanceFunction) { m_cellularDistanceFunction = cellularDistanceFunction; }
+	void setCellularDistanceFunction(const typecellularfunction &cellularDistanceFunction) { m_cellularDistanceFunction = cellularDistanceFunction; }
 
 	// Returns the return type from cellular noise calculations
 	typecellularreturn getCellularReturnType() const { return m_cellularReturnType; }
@@ -196,7 +196,7 @@ public:
 	// Sets return type from cellular noise calculations
 	// Note: NoiseLookup requires another FastNoise object be set with SetCellularNoiseLookup() to function
 	// Default: CellValue
-	void setCellularReturnType(typecellularreturn cellularReturnType) { m_cellularReturnType = cellularReturnType; }
+	void setCellularReturnType(const typecellularreturn &cellularReturnType) { m_cellularReturnType = cellularReturnType; }
 
 	// Returns the noise used to calculate a cell value if the cellular return type is NoiseLookup
 	noisefast *getCellularNoiseLookup() const { return m_cellularNoiseLookup; }
@@ -212,7 +212,7 @@ public:
 	// Default: 0, 1
 	// Note: index0 should be lower than index1
 	// Both indices must be >= 0, index1 must be < 4
-	void setCellularDistance2Indices(int cellularDistanceIndex0, int cellularDistanceIndex1);
+	void setCellularDistance2Indices(const int &cellularDistanceIndex0, const int &cellularDistanceIndex1);
 
 	// Returns the maximum distance a cellular point can move from its grid position
 	float getCellularJitter() const { return m_cellularJitter; }
@@ -220,14 +220,14 @@ public:
 	// Sets the maximum distance a cellular point can move from its grid position
 	// Setting this high will make artifacts more common
 	// Default: 0.45
-	void setCellularJitter(float cellularJitter) { m_cellularJitter = cellularJitter; }
+	void setCellularJitter(const float &cellularJitter) { m_cellularJitter = cellularJitter; }
 
 	// Returns the maximum warp distance from original location when using GradientPerturb{Fractal}(...)
 	float getGradientPerturbAmp() const { return m_gradientPerturbAmp; }
 
 	// Sets the maximum warp distance from original location when using GradientPerturb{Fractal}(...)
 	// Default: 1.0
-	void setGradientPerturbAmp(float gradientPerturbAmp) { m_gradientPerturbAmp = gradientPerturbAmp; }
+	void setGradientPerturbAmp(const float &gradientPerturbAmp) { m_gradientPerturbAmp = gradientPerturbAmp; }
 
 	//2D
 	float getValue(float x, float y) const;

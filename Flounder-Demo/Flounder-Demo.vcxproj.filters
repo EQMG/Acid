@@ -11,14 +11,14 @@
     <ClCompile Include="src\uis\overlaymanager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\uis\overlaydebug.h" />
-    <ClInclude Include="src\instance.h" />
-    <ClInclude Include="src\managerrender.h" />
-    <ClInclude Include="src\manageruis.h" />
-    <ClInclude Include="src\mainplayer.h" />
-    <ClInclude Include="src\maincamera.h" />
-    <ClInclude Include="src\uis\overlaymanager.h" />
-    <ClInclude Include="src\entities\entitytest.h" />
+    <ClInclude Include="src\entities\entitytest.hpp" />
+    <ClInclude Include="src\uis\overlaymanager.hpp" />
+    <ClInclude Include="src\uis\overlaydebug.hpp" />
+    <ClInclude Include="src\maincamera.hpp" />
+    <ClInclude Include="src\manageruis.hpp" />
+    <ClInclude Include="src\instance.hpp" />
+    <ClInclude Include="src\mainplayer.hpp" />
+    <ClInclude Include="src\managerrender.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Flounder Include="res\shaders\bounding\bounding.frag" />

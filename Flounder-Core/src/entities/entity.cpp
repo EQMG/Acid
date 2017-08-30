@@ -2,17 +2,13 @@
 
 namespace flounder
 {
-	entity::entity(ispatialstructure<entity*> *structure, const vector3 &position, const vector3 &rotation)
+	entity::entity(ispatialstructure<entity*> *structure, const vector3 &position, const vector3 &rotation) :
+		m_structure(structure),
+		m_components(new std::vector<icomponent*>()),
+		m_position(new vector3(position)),
+		m_rotation(new vector3(rotation)),
+		m_removed(false)
 	{
-		m_structure = structure;
-
-		m_components = new std::vector<icomponent*>();
-
-		m_position = new vector3(position);
-		m_rotation = new vector3(rotation);
-
-		m_removed = false;
-
 		if (m_structure != nullptr)
 		{
 			m_structure->add(this);
@@ -23,7 +19,7 @@ namespace flounder
 	{
 		remove();
 
-		for (icomponent *c : *m_components)
+		for (auto c : *m_components)
 		{
 			delete c;
 		}
@@ -36,7 +32,7 @@ namespace flounder
 
 	void entity::update()
 	{
-		for (icomponent *c : *m_components)
+		for (auto c : *m_components)
 		{
 			c->update();
 		}
@@ -57,7 +53,7 @@ namespace flounder
 
 	void entity::removeComponent(icomponent *component)
 	{
-		for (std::vector<icomponent*>::iterator it = m_components->begin(); it != m_components->end(); ++it)
+		for (auto it = m_components->begin(); it != m_components->end(); ++it)
 		{
 			if (*it == component)
 			{
@@ -72,7 +68,7 @@ namespace flounder
 	template<class t>
 	t entity::getComponent()
 	{
-		for (icomponent *c : *m_components)
+		for (auto c : *m_components)
 		{
 			t casted = dynamic_cast<t>(c);
 

@@ -2,12 +2,12 @@
 
 namespace flounder
 {
-	driverbounce::driverbounce(const float &start, const float &end, const float &length)
-		: idriver(length)
+	driverbounce::driverbounce(const float &start, const float &end, const float &length) : 
+		idriver(length),
+		m_start(start),
+		m_amplitude(end - start),
+		m_length(length)
 	{
-		m_start = start;
-		m_amplitude = end - start;
-		m_length = length;
 	}
 
 	driverbounce::~driverbounce()

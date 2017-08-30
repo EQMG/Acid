@@ -3,12 +3,11 @@
 namespace flounder
 {
 	buttoncompound::buttoncompound(const int n_args, ...) :
-		ibutton()
+		ibutton(),
+		m_count(n_args),
+		m_buttons(new ibutton*[n_args]),
+		m_wasDown(false)
 	{
-		m_count = n_args;
-		m_buttons = new ibutton*[n_args];
-		m_wasDown = false;
-
 		va_list ap;
 		va_start(ap, n_args);
 

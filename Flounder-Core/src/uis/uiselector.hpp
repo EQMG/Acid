@@ -14,18 +14,23 @@ namespace flounder
 	class uiselector
 	{
 	private:
-		float m_cursorX, m_cursorY;
-		bool m_leftClick, m_rightClick;
-		bool m_leftWasClick, m_rightWasClick;
+		float m_cursorX;
+		float m_cursorY;
+
+		bool m_leftClick;
+		bool m_rightClick;
+		bool m_leftWasClick;
+		bool m_rightWasClick;
 
 		buttonmouse *m_mouseLeft;
 		buttonmouse *m_mouseRight;
+
+		bool m_joysticksInitialized;
 		int m_selectedJoystick;
 		axisjoystick *m_joystickAxisX;
 		axisjoystick *m_joystickAxisY;
 		buttonjoystick *m_joystickLeft;
 		buttonjoystick *m_joystickRight;
-		bool m_joysticksInitialized;
 	public:
 		uiselector();
 

@@ -8,30 +8,28 @@ namespace flounder
 	colour *const inputslider::COLOUR_NORMAL = new colour(0.0f, 0.0f, 0.0f);
 
 	inputslider::inputslider(uiobject *parent, const vector2 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const uialign &align) :
-		uiobject(parent, position, vector2(0.0f, 0.0f))
+		uiobject(parent, position, vector2(0.0f, 0.0f)),
+		m_text(new text(this, position, string, SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
+		m_background(new gui(this, position, vector2(), new texture("res/guis/buttonText.png"), 1)),
+		m_slider(new gui(this, position, vector2(), new texture("res/guis/buttonText.png"), 1)),
+		m_updating(false),
+		m_progressMin(progressMin),
+		m_progressMax(progressMax),
+		m_mouseOver(false),
+		m_hasChange(false),
+		m_timerChange(new timer(0.2f)),
+		m_actionChange(nullptr)
 	{
-		m_text = new text(this, position, string, SCALE_NORMAL, uis::get()->candara, 0.36f, align);
 		m_text->setInScreenCoords(true);
 		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f));
 
-		m_background = new gui(this, position, vector2(), new texture("res/guis/buttonText.png"), 1);
 		m_background->setInScreenCoords(true);
 		m_background->setColourOffset(colour());
 
-		m_slider = new gui(this, position, vector2(), new texture("res/guis/buttonText.png"), 1);
 		m_slider->setInScreenCoords(true);
 		m_slider->setColourOffset(colour());
 
-		m_updating = false;
-		m_progressMin = progressMin;
-		m_progressMax = progressMax;
 		setValue(value);
-
-		m_mouseOver = false;
-
-		m_hasChange = false;
-		m_timerChange = new timer(0.2f);
-		m_actionChange = nullptr;
 	}
 
 	inputslider::~inputslider()

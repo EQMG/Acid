@@ -139,7 +139,7 @@ namespace flounder
 
 	void particlesystem::removeParticleType(particletype *type)
 	{
-		for (std::vector<particletype*>::iterator it = m_types->begin(); it != m_types->end(); ++it)
+		for (auto it = m_types->begin(); it != m_types->end(); ++it)
 		{
 			if (*it == type)
 			{

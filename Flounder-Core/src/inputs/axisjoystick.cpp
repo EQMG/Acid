@@ -3,12 +3,11 @@
 namespace flounder
 {
 	axisjoystick::axisjoystick(const int &joystick, const int n_args, ...) :
-		iaxis()
+		iaxis(),
+		m_joystick(joystick),
+		m_count(n_args),
+		m_axes(new int[n_args])
 	{
-		m_joystick = joystick;
-		m_count = n_args;
-		m_axes = new int[n_args];
-
 		va_list ap;
 		va_start(ap, n_args);
 

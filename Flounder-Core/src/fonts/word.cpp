@@ -2,10 +2,10 @@
 
 namespace flounder
 {
-	word::word()
+	word::word() :
+		m_characters(new std::vector<character*>()),
+		m_width(0.0)
 	{
-		m_characters = new std::vector<character*>();
-		m_width = 0.0;
 	}
 
 	word::~word()

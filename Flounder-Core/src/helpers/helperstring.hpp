@@ -88,7 +88,7 @@ namespace flounder
 		/// <returns> The char index. </returns>
 		static int findCharPos(const std::string &str, const char &c)
 		{
-			for (unsigned int i = 0; i < str.length(); i++)
+			for (int i = 0; i < str.length(); i++)
 			{
 				if (str.at(i) == c)
 				{

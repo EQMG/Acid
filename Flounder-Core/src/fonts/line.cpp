@@ -2,13 +2,12 @@
 
 namespace flounder
 {
-	line::line(const double &spaceWidth, const double &maxLength)
+	line::line(const double &spaceWidth, const double &maxLength) :
+		m_maxLength(maxLength),
+		m_spaceSize(spaceWidth),
+		m_words(new std::vector<word*>()),
+		m_currentLineLength(0.0)
 	{
-		m_maxLength = maxLength;
-		m_spaceSize = spaceWidth;
-
-		m_words = new std::vector<word*>();
-		m_currentLineLength = 0.0;
 	}
 
 	line::~line()
