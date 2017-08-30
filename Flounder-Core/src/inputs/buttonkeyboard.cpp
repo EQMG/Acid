@@ -3,12 +3,11 @@
 namespace flounder
 {
 	buttonkeyboard::buttonkeyboard(const int n_args, ...) :
-		ibutton()
+		ibutton(),
+		m_count(n_args),
+		m_keys(new int[n_args]),
+		m_wasDown(false)
 	{
-		m_count = n_args;
-		m_keys = new int[n_args];
-		m_wasDown = false;
-
 		va_list ap;
 		va_start(ap, n_args);
 

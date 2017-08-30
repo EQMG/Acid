@@ -2,13 +2,13 @@
 
 namespace flounder
 {
-	driverslide::driverslide(const float &start, const float &end, const float &length)
-		: idriver(length)
+	driverslide::driverslide(const float &start, const float &end, const float &length) :
+		idriver(length),
+		m_start(start),
+		m_end(end),
+		m_max(0.0f),
+		m_reachedTarget(false)
 	{
-		m_start = start;
-		m_end = end;
-		m_max = 0.0f;
-		m_reachedTarget = false;
 	}
 
 	driverslide::~driverslide()

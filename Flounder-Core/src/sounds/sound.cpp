@@ -5,19 +5,16 @@ namespace flounder
 {
 	// TODO: https://github.com/AndySmile/SimpleAudioLibrary
 
-	sound::sound(const std::string &name, const std::string &filename)
+	sound::sound(const std::string &name, const std::string &filename) :
+		m_name(name),
+		m_filename(filename),
+		m_count(0),
+		m_buffer(0),
+		m_source(0),
+		m_playing(false),
+		m_pitch(1.0f),
+		m_gain(1.0f)
 	{
-		m_name = name;
-		m_filename = filename;
-		m_count = 0;
-
-		m_buffer = 0;
-		m_source = 0;
-
-		m_playing = false;
-		m_pitch = 1.0f;
-		m_gain = 1.0f;
-
 		SoundSourceInfo sourceInfo = audio::loadWaveFile(filename);
 
 		alGenBuffers(1, &m_buffer);

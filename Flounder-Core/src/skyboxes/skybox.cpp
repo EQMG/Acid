@@ -2,16 +2,14 @@
 
 namespace flounder
 {
-	skybox::skybox(texture *texture, model *model, const float &size)
+	skybox::skybox(texture *texture, model *model, const float &size) :
+		m_texture(texture),
+		m_model(model),
+		m_size(size),
+		m_blend(1.0f),
+		m_rotation(new vector3()),
+		m_modelMatrix(new matrix4x4())
 	{
-		m_texture = texture;
-		m_model = model;
-
-		m_size = size;
-		m_blend = 1.0f;
-
-		m_rotation = new vector3();
-		m_modelMatrix = new matrix4x4();
 	}
 
 	skybox::~skybox()

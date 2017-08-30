@@ -6,17 +6,14 @@ namespace flounder
 	const int terrain::VERTEX_COUNT = 176;
 	const float terrain::SIDE_LENGTH = 0.5f * SQUARE_SIZE * static_cast<float>(VERTEX_COUNT - 1);
 
-	terrain::terrain(const vector3 &position, const vector3 &rotation, const int &seed)
+	terrain::terrain(const vector3 &position, const vector3 &rotation, const int &seed) :
+		m_model(nullptr),
+		m_position(new vector3(position)),
+		m_rotation(new vector3(rotation)),
+		m_moved(true),
+		m_modelMatrix(new matrix4x4()),
+		m_aabb(new aabb())
 	{
-		m_model = nullptr;
-
-		m_position = new vector3(position);
-		m_rotation = new vector3(rotation);
-		m_moved = true;
-
-		m_modelMatrix = new matrix4x4();
-		m_aabb = new aabb();
-
 		generateMesh();
 	}
 

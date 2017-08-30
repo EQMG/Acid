@@ -15,15 +15,22 @@ namespace flounder
 	const int metafile::NEWLINE_ASCII = 10;
 	const int metafile::SPACE_ASCII = 32;
 
-	metafile::metafile(const std::string &file)
+	metafile::metafile(const std::string &file) :
+		m_metadata(new std::map<int, character*>()),
+		m_values(new std::map<std::string, std::string>()),
+		m_verticalPerPixelSize(0.0),
+		m_horizontalPerPixelSize(0.0),
+		m_imageWidth(0),
+		m_spaceWidth(0.0),
+		m_padding(new std::vector<int>()),
+		m_paddingWidth(0),
+		m_paddingHeight(0),
+		m_maxSizeY(0.0)
 	{
-		m_metadata = new std::map<int, character*>();
-		m_values = new std::map<std::string, std::string>();
-
 		std::string fileLoaded = helperfile::readTextFile(file);
 		std::vector<std::string> lines = helperstring::split(fileLoaded, "\n");
 
-		for (std::string line : lines)
+		for (auto line : lines)
 		{
 			processNextLine(line);
 
@@ -46,6 +53,8 @@ namespace flounder
 	{
 		delete m_metadata;
 		delete m_values;
+
+		delete m_padding;
 	}
 
 	void metafile::processNextLine(const std::string &line)
@@ -53,7 +62,7 @@ namespace flounder
 		m_values->clear();
 		std::vector<std::string> parts = helperstring::split(line, SPLITTER);
 
-		for (std::string part : parts)
+		for (auto part : parts)
 		{
 			std::vector<std::string> pairs = helperstring::split(part, "=");
 
@@ -66,9 +75,13 @@ namespace flounder
 
 	void metafile::loadPaddingData()
 	{
-		m_padding = getValuesOfVariable("padding");
-		m_paddingWidth = m_padding.at(PAD_LEFT) + m_padding.at(PAD_RIGHT);
-		m_paddingHeight = m_padding.at(PAD_TOP) + m_padding.at(PAD_BOTTOM);
+		for (auto padding : getValuesOfVariable("padding"))
+		{
+			m_padding->push_back(padding);
+		}
+
+		m_paddingWidth = m_padding->at(PAD_LEFT) + m_padding->at(PAD_RIGHT);
+		m_paddingHeight = m_padding->at(PAD_TOP) + m_padding->at(PAD_BOTTOM);
 	}
 
 	void metafile::loadLineSizes()
@@ -99,16 +112,16 @@ namespace flounder
 			return nullptr;
 		}
 
-		double xTextureCoord = (static_cast<double>(getValueOfVariable("x")) + (m_padding.at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
-		double yTextureCoord = (static_cast<double>(getValueOfVariable("y")) + (m_padding.at(PAD_TOP) - DESIRED_PADDING)) / m_imageWidth;
+		double xTextureCoord = (static_cast<double>(getValueOfVariable("x")) + (m_padding->at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
+		double yTextureCoord = (static_cast<double>(getValueOfVariable("y")) + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) / m_imageWidth;
 		int width = getValueOfVariable("width") - (m_paddingWidth - (2 * DESIRED_PADDING));
 		int height = getValueOfVariable("height") - ((m_paddingHeight) - (2 * DESIRED_PADDING));
 		double quadWidth = width * m_horizontalPerPixelSize;
 		double quadHeight = height * m_verticalPerPixelSize;
 		double xTexSize = static_cast<double>(width) / m_imageWidth;
 		double yTexSize = static_cast<double>(height) / m_imageWidth;
-		double xOffset = (getValueOfVariable("xoffset") + m_padding.at(PAD_LEFT) - DESIRED_PADDING) * m_horizontalPerPixelSize;
-		double yOffset = (getValueOfVariable("yoffset") + (m_padding.at(PAD_TOP) - DESIRED_PADDING)) * m_verticalPerPixelSize;
+		double xOffset = (getValueOfVariable("xoffset") + m_padding->at(PAD_LEFT) - DESIRED_PADDING) * m_horizontalPerPixelSize;
+		double yOffset = (getValueOfVariable("yoffset") + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) * m_verticalPerPixelSize;
 		double xAdvance = (getValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
 
 		if (quadHeight > m_maxSizeY)
@@ -131,7 +144,7 @@ namespace flounder
 
 		int i = 0;
 
-		for (std::string number : numbers)
+		for (auto number : numbers)
 		{
 			result.push_back(std::stoi(number.c_str()));
 			i++;

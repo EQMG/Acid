@@ -53,7 +53,7 @@ namespace flounder
 
 	VKAPI_ATTR VkBool32 VKAPI_CALL vkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData)
 	{
-		printf("%s/n", msg);
+		printf("%s\n", msg);
 		return false;
 	}
 
@@ -435,11 +435,11 @@ namespace flounder
 			std::vector<VkLayerProperties> instanceLayerProperties(layerCount);
 			vkEnumerateInstanceLayerProperties(&layerCount, instanceLayerProperties.data());
 
-			for (const char *layerName : VALIDATION_LAYERS)
+			for (auto layerName : VALIDATION_LAYERS)
 			{
 				bool layerFound = false;
 
-				for (const auto &layerProperties : instanceLayerProperties)
+				for (auto layerProperties : instanceLayerProperties)
 				{
 					if (strcmp(layerName, layerProperties.layerName) == 0)
 					{
@@ -598,7 +598,7 @@ namespace flounder
 		std::vector<VkDeviceQueueCreateInfo> queueCreateInfoList;
 		float quePriorities[] = {1.0f};
 
-		for (int queueFamily : uniqueQueueFamilies)
+		for (auto queueFamily : uniqueQueueFamilies)
 		{
 			VkDeviceQueueCreateInfo queueCreateInfo = {};
 			queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
@@ -650,7 +650,7 @@ namespace flounder
 
 		std::set<std::string> requiredExtensions(m_deviceExtensionList.begin(), m_deviceExtensionList.end());
 
-		for (VkExtensionProperties extension : availableExtensions)
+		for (auto extension : availableExtensions)
 		{
 			requiredExtensions.erase(extension.extensionName);
 		}

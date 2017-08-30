@@ -2,12 +2,12 @@
 
 namespace flounder
 {
-	driverfade::driverfade(const float &start, const float &end, const float &peak, const float &length)
-		: idriver(length)
+	driverfade::driverfade(const float &start, const float &end, const float &peak, const float &length) : 
+		idriver(length),
+		m_start(start),
+		m_end(end),
+		m_peak(peak)
 	{
-		m_start = start;
-		m_end = end;
-		m_peak = peak;
 	}
 
 	driverfade::~driverfade()
