@@ -2,25 +2,22 @@
 
 namespace flounder
 {
-	shadowbox::shadowbox()
+	shadowbox::shadowbox() :
+		m_lightDirection(new vector3()),
+		m_shadowOffset(0.0f),
+		m_shadowDistance(0.0f),
+		m_projectionMatrix(new matrix4x4()),
+		m_lightViewMatrix(new matrix4x4()),
+		m_projectionViewMatrix(new matrix4x4()),
+		m_shadowMapSpaceMatrix(new matrix4x4()),
+		m_offset(createOffset()),
+		m_centre(new vector3()),
+		m_farHeight(0.0f),
+		m_farWidth(0.0f),
+		m_nearHeight(0.0f),
+		m_nearWidth(0.0f),
+		m_aabb(new aabb())
 	{
-		m_lightDirection = new vector3();
-		m_shadowDistance = 0.0f;
-		m_shadowOffset = 0.0f;
-
-		m_projectionMatrix = new matrix4x4();
-		m_lightViewMatrix = new matrix4x4();
-		m_projectionViewMatrix = new matrix4x4();
-		m_shadowMapSpaceMatrix = new matrix4x4();
-		m_offset = createOffset();
-		m_centre = new vector3();
-
-		m_farHeight = 0.0f;
-		m_farWidth = 0.0f;
-		m_nearHeight = 0.0f;
-		m_nearWidth = 0.0f;
-
-		m_aabb = new aabb();
 	}
 
 	shadowbox::~shadowbox()

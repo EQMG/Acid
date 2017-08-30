@@ -3,12 +3,12 @@
 namespace flounder
 {
 	rendererfonts::rendererfonts() :
-		irenderer()
-	{
-		m_shader = new shader("fonts", 2,
+		irenderer(),
+		m_shader(new shader("fonts", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/fonts/font.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/fonts/font.frag.spv")
-		);
+		))
+	{
 	}
 
 	rendererfonts::~rendererfonts()
@@ -20,7 +20,7 @@ namespace flounder
 	{
 		prepareRendering(clipPlane, camera);
 
-		for (uiobject *screenobject : *uis::get()->getObjects())
+		for (auto screenobject : *uis::get()->getObjects())
 		{
 			text *object = dynamic_cast<text*>(screenobject);
 

@@ -2,11 +2,11 @@
 
 namespace flounder
 {
-	smoothfloat::smoothfloat(const float &initialValue, const float &agility)
+	smoothfloat::smoothfloat(const float &initialValue, const float &agility) :
+		m_agility(agility),
+		m_target(initialValue),
+		m_actual(initialValue)
 	{
-		m_target = initialValue;
-		m_actual = initialValue;
-		m_agility = agility;
 	}
 
 	smoothfloat::~smoothfloat()

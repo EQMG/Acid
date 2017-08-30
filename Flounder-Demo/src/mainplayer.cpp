@@ -7,32 +7,21 @@ const float mainplayer::JUMP_POWER = 8.0f;
 const float mainplayer::FLY_SPEED = 10.0f;
 
 mainplayer::mainplayer() :
-	iplayer()
+	iplayer(),
+	m_position(new vector3()),
+	m_rotation(new vector3()),
+	m_currentSpeed(0.0f),
+	m_currentStrafeSpeed(0.0f),
+	m_currentUpwardSpeed(0.0f),
+	m_inputForward(new axiscompound(2, new axisbutton(new buttonkeyboard(2, GLFW_KEY_S, GLFW_KEY_DOWN), new buttonkeyboard(2, GLFW_KEY_W, GLFW_KEY_UP)), new axisjoystick(0, 1))),
+	m_inputStrafe(new axiscompound(2, new axisbutton(new buttonkeyboard(2, GLFW_KEY_A, GLFW_KEY_LEFT), new buttonkeyboard(2, GLFW_KEY_D, GLFW_KEY_RIGHT)), new axisjoystick(0, 0))),
+	m_inputNoclip(new axiscompound(2, new axisbutton(new buttonkeyboard(2, GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL), new buttonkeyboard(1, GLFW_KEY_SPACE)), new axisjoystick(0, 0))),
+	m_inputBoost(new buttoncompound(2, new buttonkeyboard(2, GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT), new buttonjoystick(0, 1))),
+	m_inputJump(new buttoncompound(2, new buttonkeyboard(1, GLFW_KEY_SPACE), new buttonjoystick(0, 0))),
+	m_amountMove(new vector3()),
+	m_amountRotate(new vector3()),
+	m_paused(false)
 {
-	m_position = new vector3();
-	m_rotation = new vector3();
-
-	ibutton *leftKeyButtons = new buttonkeyboard(2, GLFW_KEY_A, GLFW_KEY_LEFT);
-	ibutton *rightKeyButtons = new buttonkeyboard(2, GLFW_KEY_D, GLFW_KEY_RIGHT);
-	ibutton *upKeyButtons = new buttonkeyboard(2, GLFW_KEY_W, GLFW_KEY_UP);
-	ibutton *downKeyButtons = new buttonkeyboard(2, GLFW_KEY_S, GLFW_KEY_DOWN);
-	ibutton *boostButtons = new buttonkeyboard(2, GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT);
-	ibutton *crouchButtons = new buttonkeyboard(2, GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL);
-	ibutton *jumpButtons = new buttonkeyboard(1, GLFW_KEY_SPACE);
-
-	m_currentSpeed = 0.0f;
-	m_currentStrafeSpeed = 0.0f;
-	m_currentUpwardSpeed = 0.0f;
-	m_inputForward = new axiscompound(2, new axisbutton(downKeyButtons, upKeyButtons), new axisjoystick(0, 1));
-	m_inputStrafe = new axiscompound(2, new axisbutton(leftKeyButtons, rightKeyButtons), new axisjoystick(0, 0));
-	m_inputNoclip = new axiscompound(2, new axisbutton(crouchButtons, jumpButtons), new axisjoystick(0, 0));
-	m_inputBoost = new buttoncompound(2, boostButtons, new buttonjoystick(0, 1));
-	m_inputJump = new buttoncompound(2, jumpButtons, new buttonjoystick(0, 0));
-
-	m_amountMove = new vector3();
-	m_amountRotate = new vector3();
-
-	m_paused = false;
 }
 
 mainplayer::~mainplayer()

@@ -2,30 +2,26 @@
 
 namespace flounder
 {
-	texture::texture(std::string file, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows)
+	texture::texture(std::string file, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
+		m_file(file),
+		m_cubemapCount(0),
+		m_cubemap(nullptr),
+		m_hasAlpha(hasAlpha),
+		m_clampEdges(clampEdges),
+		m_mipLevels(mipLevels),
+		m_anisotropic(anisotropic),
+		m_nearest(nearest),
+		m_numberOfRows(numberOfRows),
+		m_image(VK_NULL_HANDLE),
+		m_imageMemory(VK_NULL_HANDLE),
+		m_imageView(VK_NULL_HANDLE),
+		m_format(VK_FORMAT_UNDEFINED),
+		m_imageType(VK_IMAGE_TYPE_2D),
+		m_components(0),
+		m_width(0),
+		m_height(0),
+		m_depth(1)
 	{
-		m_file = file;
-		m_cubemapCount = 0;
-		m_cubemap = nullptr;
-
-		m_hasAlpha = hasAlpha;
-		m_clampEdges = clampEdges;
-		m_mipLevels = mipLevels;
-		m_anisotropic = anisotropic;
-		m_nearest = nearest;
-		m_numberOfRows = numberOfRows;
-
-		m_image = VK_NULL_HANDLE;
-		m_imageMemory = VK_NULL_HANDLE;
-		m_imageView = VK_NULL_HANDLE;
-		m_format = VK_FORMAT_UNDEFINED;
-		m_imageType = VK_IMAGE_TYPE_2D;
-
-		m_components = 0;
-		m_width = 0;
-		m_height = 0;
-		m_depth = 1;
-
 		loadFromTexture();
 	}
 

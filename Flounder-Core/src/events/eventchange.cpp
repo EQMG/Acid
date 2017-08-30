@@ -4,10 +4,10 @@ namespace flounder
 {
 	template<typename t>
 	eventchange<t>::eventchange(t *reference, const std::function<void()> &onEvent) :
-		ievent()
+		ievent(),
+		m_reference(reference),
+		m_onEvent(onEvent)
 	{
-		m_reference = reference;
-		m_onEvent = onEvent;
 	}
 
 	template<typename t>

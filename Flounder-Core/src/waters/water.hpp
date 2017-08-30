@@ -36,17 +36,12 @@ namespace flounder
 		static const float SHINE_DAMPER;
 		static const float REFLECTIVITY;
 
-		water(const vector3 &position, const vector3 &rotation);
+		water(const vector3 &position = vector3(), const vector3 &rotation = vector3());
 
 		~water();
 
 		void update();
 	private:
-		/// <summary>
-		/// Generates the water mesh and loads it to a VAO.
-		/// Generates the {@code float[]} of vertex data which will be loaded to the water's VAO.
-		/// The array contains the vertex x and z positions as well as an encoded indication of which corner of its triangle each vertex lies in.
-		/// </summary>
 		void generateMesh();
 
 		void storeQuad1(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
@@ -55,15 +50,6 @@ namespace flounder
 
 		void storeVertex(std::vector<float> *vertices, const int &index, const vector2 &otherPoint1, const vector2 &otherPoint2);
 
-		/// <summary>
-		/// Encodes the position of 2 vertices in a triangle (relative to the other vertex) into a single float.
-		/// </summary>
-		/// <param name="x"> Relative x position of first other vertex. </param>
-		/// <param name="z"> Relative z position of first other vertex. </param>
-		/// <param name="x2"> Relative x position of second other vertex. </param>
-		/// <param name="z2"> Relative z position of second other vertex.
-		/// </param>
-		/// <returns> The encoded float. </returns>
 		float encode(const float &x, const float &z, const float &x2, const float &z2);
 	public:
 		float getHeight(const float &x, const float &z);

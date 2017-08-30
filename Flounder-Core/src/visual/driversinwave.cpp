@@ -2,11 +2,11 @@
 
 namespace flounder
 {
-	driversinwave::driversinwave(const float &min, const float &max, const float &length)
-		: idriver(length)
+	driversinwave::driversinwave(const float &min, const float &max, const float &length) : 
+		idriver(length),
+		m_min(min),
+		m_amplitude(max - min)
 	{
-		m_min = min;
-		m_amplitude = max - min;
 	}
 
 	driversinwave::~driversinwave()

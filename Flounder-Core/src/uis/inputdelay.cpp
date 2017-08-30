@@ -2,11 +2,11 @@
 
 namespace flounder
 {
-	inputdelay::inputdelay()
+	inputdelay::inputdelay() :
+		m_timerDelay(new timer(0.4f)),
+		m_timerRepeat(new timer(0.1f)),
+		m_delayOver(false)
 	{
-		m_timerDelay = new timer(0.4f);
-		m_timerRepeat = new timer(0.1f);
-		m_delayOver = false;
 	}
 
 	inputdelay::~inputdelay()

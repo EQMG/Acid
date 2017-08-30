@@ -2,41 +2,34 @@
 
 namespace flounder
 {
-	uiobject::uiobject(uiobject *parent, const vector2 &position, const vector2 &dimensions)
+	uiobject::uiobject(uiobject *parent, const vector2 &position, const vector2 &dimensions) :
+		m_parent(parent),
+		m_children(new std::vector<uiobject*>()),
+		m_visible(true),
+		m_position(new vector2(position)),
+		m_dimensions(new vector2(dimensions)),
+		m_meshSize(new vector2()),
+		m_scissor(new vector4(-1.0f, -1.0f, -1.0f, -1.0f)),
+		m_inScreenCoords(true),
+		m_screenPosition(new vector2()),
+		m_screenDimensions(new vector2()),
+		m_positionOffsets(new vector2()),
+		m_rotationDriver(new driverconstant(0.0f)),
+		m_rotation(0.0f),
+		m_alphaDriver(new driverconstant(1.0f)),
+		m_alpha(1.0f),
+		m_scaleDriver(new driverconstant(1.0f)),
+		m_scale(1.0f)
 	{
 		if (parent != nullptr)
 		{
 			parent->m_children->push_back(this);
 		}
-
-		m_visible = true;
-		m_parent = parent;
-		m_children = new std::vector<uiobject*>();
-
-		m_position = new vector2(position);
-		m_dimensions = new vector2(dimensions);
-		m_meshSize = new vector2();
-		m_scissor = new vector4(-1.0f, -1.0f, -1.0f, -1.0f);
-
-		m_inScreenCoords = true;
-
-		m_screenPosition = new vector2();
-		m_screenDimensions = new vector2();
-		m_positionOffsets = new vector2();
-
-		m_rotationDriver = new driverconstant(0.0f);
-		m_rotation = 0.0f;
-
-		m_alphaDriver = new driverconstant(1.0f);
-		m_alpha = 1.0f;
-
-		m_scaleDriver = new driverconstant(1.0f);
-		m_scale = 1.0f;
 	}
 
 	uiobject::~uiobject()
 	{
-		//	for (screenobject *child : *m_children)
+		//	for (auto child : *m_children)
 		//	{
 		//		delete child;
 		//	}
@@ -64,7 +57,7 @@ namespace flounder
 
 	void uiobject::update()
 	{
-		for (uiobject *child : *m_children)
+		for (auto child : *m_children)
 		{
 			child->update();
 		}
@@ -88,7 +81,7 @@ namespace flounder
 
 	void uiobject::removeChild(uiobject *child)
 	{
-		for (std::vector<uiobject*>::iterator it = m_children->begin(); it != m_children->end(); ++it)
+		for (auto it = m_children->begin(); it != m_children->end(); ++it)
 		{
 			if (*it == child)
 			{
@@ -104,7 +97,7 @@ namespace flounder
 		{
 			list->push_back(this);
 
-			for (uiobject *child : *m_children)
+			for (auto child : *m_children)
 			{
 				child->getAll(list);
 			}

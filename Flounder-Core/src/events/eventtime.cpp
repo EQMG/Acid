@@ -3,11 +3,11 @@
 namespace flounder
 {
 	eventtime::eventtime(const float &interval, const bool &repeat, const std::function<void()> &onEvent) :
-		ievent()
+		ievent(),
+		m_timer(new timer(interval)),
+		m_repeat(repeat),
+		m_onEvent(onEvent)
 	{
-		m_timer = new timer(interval);
-		m_repeat = repeat;
-		m_onEvent = onEvent;
 	}
 
 	eventtime::~eventtime()

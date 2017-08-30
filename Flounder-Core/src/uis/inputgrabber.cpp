@@ -8,9 +8,9 @@ namespace flounder
 	colour *const inputgrabber::COLOUR_NORMAL = new colour(0.0f, 0.0f, 0.0f);
 
 	grabberjoystick::grabberjoystick(const int &joystick) :
-		igrabber()
+		igrabber(),
+		m_joystick(joystick)
 	{
-		m_joystick = joystick;
 	}
 
 	int grabberjoystick::getCurrent(text *object)
@@ -94,28 +94,23 @@ namespace flounder
 	}
 
 	inputgrabber::inputgrabber(uiobject *parent, const vector2 &position, const std::string &prefix, const int &value, igrabber *grabber, const uialign &align) :
-		uiobject(parent, position, vector2(0.0f, 0.0f))
+		uiobject(parent, position, vector2(0.0f, 0.0f)),
+		m_text(new text(this, position, prefix + grabber->getValue(value), SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
+		m_background(new gui(this, position, vector2(), new texture("res/guis/buttonText.png"), 1)),
+		m_grabber(grabber),
+		m_prefix(prefix),
+		m_value(value),
+		m_inputDelay(new inputdelay()),
+		m_lastKey(0),
+		m_selected(false),
+		m_mouseOver(false),
+		m_actionChange(nullptr)
 	{
-		m_text = new text(this, position, prefix + grabber->getValue(value), SCALE_NORMAL, uis::get()->candara, 0.36f, align);
 		m_text->setInScreenCoords(true);
 		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f));
 
-		m_background = new gui(this, position, vector2(), new texture("res/guis/buttonText.png"), 1);
 		m_background->setInScreenCoords(true);
 		m_background->setColourOffset(colour());
-
-		m_grabber = grabber;
-
-		m_prefix = prefix;
-		m_value = value;
-
-		m_inputDelay = new inputdelay();
-		m_lastKey = 0;
-
-		m_selected = false;
-		m_mouseOver = false;
-
-		m_actionChange = nullptr;
 	}
 
 	inputgrabber::~inputgrabber()

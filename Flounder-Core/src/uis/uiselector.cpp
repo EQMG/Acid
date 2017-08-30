@@ -2,17 +2,22 @@
 
 namespace flounder
 {
-	uiselector::uiselector()
+	uiselector::uiselector() :
+		m_cursorX(0.0f),
+		m_cursorY(0.0f),
+		m_leftClick(false),
+		m_rightClick(false),
+		m_leftWasClick(false),
+		m_rightWasClick(false),
+		m_mouseLeft(new buttonmouse(1, GLFW_MOUSE_BUTTON_LEFT)),
+		m_mouseRight(new buttonmouse(1, GLFW_MOUSE_BUTTON_RIGHT)),
+		m_joysticksInitialized(false),
+		m_selectedJoystick(0),
+		m_joystickAxisX(nullptr),
+		m_joystickAxisY(nullptr),
+		m_joystickLeft(nullptr),
+		m_joystickRight(nullptr)
 	{
-		m_cursorX = 0.0f;
-		m_cursorY = 0.0f;
-		m_leftClick = false;
-		m_rightClick = false;
-
-		m_mouseLeft = new buttonmouse(1, GLFW_MOUSE_BUTTON_LEFT);
-		m_mouseRight = new buttonmouse(1, GLFW_MOUSE_BUTTON_RIGHT);
-
-		m_joysticksInitialized = false;
 	}
 
 	uiselector::~uiselector()

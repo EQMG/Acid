@@ -42,12 +42,12 @@ namespace flounder
 	{
 		prepareRendering(clipPlane, camera);
 
-		for (std::map<particletype*, std::vector<particle*>*>::iterator iter = particles::get()->getParticles()->begin(); iter != particles::get()->getParticles()->end(); ++iter)
+		for (auto iter = particles::get()->getParticles()->begin(); iter != particles::get()->getParticles()->end(); ++iter)
 		{
 			std::vector<float> *vboData = new std::vector<float>();
 			m_rendered = 0;
 
-			for (std::vector<particle*>::iterator it = iter->second->begin(); it != iter->second->end(); ++it)
+			for (auto it = iter->second->begin(); it != iter->second->end(); ++it)
 			{
 				prepareInstance(*it, camera, vboData);
 			}

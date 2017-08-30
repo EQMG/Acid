@@ -170,31 +170,26 @@ const float noisefast::CELL_3D_Z[] =
 	0.615630723f, 0.3430367014f, 0.8193658136f, -0.5829600957f, 0.07911697781f, 0.7854296063f, -0.4107442306f, 0.4766964066f, -0.9045999527f, -0.1673856787f, 0.2828077348f, -0.5902737632f, -0.321506229f, -0.5224513133f, -0.4090169985f, -0.3599685311f,
 };
 
-noisefast::noisefast(int seed)
+noisefast::noisefast(const int &seed) :
+	m_seed(seed),
+	m_perm(new unsigned char[512]),
+	m_perm12(new unsigned char[512]),
+	m_frequency(0.01f),
+	m_interp(Quintic),
+	m_noiseType(Simplex),
+	m_octaves(3),
+	m_lacunarity(2.0f),
+	m_gain(0.5f),
+	m_fractalType(FBM),
+	m_fractalBounding(0.0f),
+	m_cellularDistanceFunction(Euclidean),
+	m_cellularReturnType(CellValue),
+	m_cellularNoiseLookup(nullptr),
+	m_cellularDistanceIndex0(0),
+	m_cellularDistanceIndex1(1),
+	m_cellularJitter(0.45f),
+	m_gradientPerturbAmp(1.0f)
 {
-	m_seed = seed;
-	m_perm = new unsigned char[512];
-	m_perm12 = new unsigned char[512];
-
-	m_frequency = 0.01f;
-	m_interp = Quintic;
-	m_noiseType = Simplex;
-
-	m_octaves = 3;
-	m_lacunarity = 2.0f;
-	m_gain = 0.5f;
-	m_fractalType = FBM;
-	m_fractalBounding = 0.0f;
-
-	m_cellularDistanceFunction = Euclidean;
-	m_cellularReturnType = CellValue;
-	m_cellularNoiseLookup = nullptr;
-	m_cellularDistanceIndex0 = 0;
-	m_cellularDistanceIndex1 = 1;
-	m_cellularJitter = 0.45f;
-
-	m_gradientPerturbAmp = 1.0f;
-
 	setSeed(seed);
 	calculateFractalBounding();
 }
@@ -207,7 +202,7 @@ noisefast::~noisefast()
 	delete m_cellularNoiseLookup;
 }
 
-void noisefast::setSeed(int seed)
+void noisefast::setSeed(const int &seed)
 {
 	m_seed = seed;
 
@@ -235,7 +230,7 @@ void noisefast::setFractalOctaves(int octaves)
 	calculateFractalBounding();
 }
 
-void noisefast::setFractalGain(float gain)
+void noisefast::setFractalGain(const float &gain)
 {
 	m_gain = gain;
 	calculateFractalBounding();
@@ -247,7 +242,7 @@ void noisefast::getCellularDistance2Indices(int &cellularDistanceIndex0, int &ce
 	cellularDistanceIndex1 = m_cellularDistanceIndex1;
 }
 
-void noisefast::setCellularDistance2Indices(int cellularDistanceIndex0, int cellularDistanceIndex1)
+void noisefast::setCellularDistance2Indices(const int &cellularDistanceIndex0, const int &cellularDistanceIndex1)
 {
 	m_cellularDistanceIndex0 = __min(cellularDistanceIndex0, cellularDistanceIndex1);
 	m_cellularDistanceIndex1 = __max(cellularDistanceIndex0, cellularDistanceIndex1);

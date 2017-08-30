@@ -8,26 +8,22 @@ namespace flounder
 	colour *const inputtext::COLOUR_NORMAL = new colour(0.0f, 0.0f, 0.0f);
 
 	inputtext::inputtext(uiobject *parent, const vector2 &position, const std::string &prefix, const std::string &value, const uialign &align) :
-		uiobject(parent, position, vector2(0.0f, 0.0f))
+		uiobject(parent, position, vector2(0.0f, 0.0f)),
+		m_text(new text(this, position, prefix + value, SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
+		m_background(new gui(this, position, vector2(), new texture("res/guis/buttonText.png"), 1)),
+		m_prefix(prefix),
+		m_value(value),
+		m_inputDelay(new inputdelay()),
+		m_lastKey(0),
+		m_selected(false),
+		m_mouseOver(false),
+		m_actionChange(nullptr)
 	{
-		m_text = new text(this, position, prefix + value, SCALE_NORMAL, uis::get()->candara, 0.36f, align);
 		m_text->setInScreenCoords(true);
 		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f));
 
-		m_background = new gui(this, position, vector2(), new texture("res/guis/buttonText.png"), 1);
 		m_background->setInScreenCoords(true);
 		m_background->setColourOffset(colour());
-
-		m_prefix = prefix;
-		m_value = value;
-
-		m_inputDelay = new inputdelay();
-		m_lastKey = 0;
-
-		m_selected = false;
-		m_mouseOver = false;
-
-		m_actionChange = nullptr;
 	}
 
 	inputtext::~inputtext()

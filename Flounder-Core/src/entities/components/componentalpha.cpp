@@ -3,9 +3,9 @@
 namespace flounder
 {
 	componentalpha::componentalpha(const float &alpha) :
-		icomponent()
+		icomponent(),
+		m_alpha(alpha)
 	{
-		m_alpha = alpha;
 	}
 
 	componentalpha::~componentalpha()

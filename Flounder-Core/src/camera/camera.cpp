@@ -3,10 +3,10 @@
 namespace flounder
 {
 	camera::camera() :
-		imodule()
+		imodule(),
+		m_camera(nullptr),
+		m_player(nullptr)
 	{
-		m_camera = nullptr;
-		m_player = nullptr;
 	}
 
 	camera::~camera()
