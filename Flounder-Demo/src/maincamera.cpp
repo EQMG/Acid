@@ -19,32 +19,26 @@ const float maincamera::MAX_VERTICAL_CHANGE = 30.0f;
 const float maincamera::MAX_ANGLE_OF_ELEVATION = 85.0f;
 const float maincamera::MIN_ANGLE_OF_ELEVATION = -85.0f;
 
-maincamera::maincamera()
+maincamera::maincamera() :
+	m_position(new vector3()),
+	m_rotation(new vector3()),
+	m_viewMatrix(new matrix4x4()),
+	m_projectionMatrix(new matrix4x4()),
+	m_viewFrustum(new frustum()),
+	m_viewRay(new ray(false, new vector2(0.5f, 0.5f))),
+	m_angleOfElevation(25.0f),
+	m_angleAroundPlayer(0.0f),
+	m_targetPosition(new vector3()),
+	m_targetRotation(new vector3()),
+	m_targetElevation(m_angleOfElevation),
+	m_targetRotationAngle(m_angleAroundPlayer),
+	m_sensitivity(0.9f),
+	m_reangleButton(GLFW_MOUSE_BUTTON_LEFT),
+	m_joystickVertical(new axisjoystick(0, 1, 3)),
+	m_joystickHorizontal(new axisjoystick(0, 1, 2)),
+	m_joystickZoom(new buttonjoystick(0, 1, 9)),
+	m_paused(false)
 {
-	m_position = new vector3();
-	m_rotation = new vector3();
-
-	m_viewMatrix = new matrix4x4();
-	m_projectionMatrix = new matrix4x4();
-
-	m_viewFrustum = new frustum();
-	m_viewRay = new ray(false, new vector2(0.5f, 0.5f));
-
-	m_angleOfElevation = 25.0f;
-	m_angleAroundPlayer = 0.0f;
-
-	m_targetPosition = new vector3();
-	m_targetRotation = new vector3();
-	m_targetElevation = m_angleOfElevation;
-	m_targetRotationAngle = m_angleAroundPlayer;
-
-	m_sensitivity = 0.9f;
-	m_reangleButton = GLFW_MOUSE_BUTTON_LEFT;
-	m_joystickVertical = new axisjoystick(0, 1, 3);
-	m_joystickHorizontal = new axisjoystick(0, 1, 2);
-	m_joystickZoom = new buttonjoystick(0, 1, 9);
-
-	m_paused = false;
 }
 
 maincamera::~maincamera()

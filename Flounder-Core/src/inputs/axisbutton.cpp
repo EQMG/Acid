@@ -3,10 +3,10 @@
 namespace flounder
 {
 	axisbutton::axisbutton(ibutton *negative, ibutton *positive) :
-		iaxis()
+		iaxis(),
+		m_negative(negative),
+		m_positive(positive)
 	{
-		m_negative = negative;
-		m_positive = positive;
 	}
 
 	axisbutton::~axisbutton()

@@ -3,16 +3,14 @@
 namespace flounder
 {
 	gui::gui(uiobject *parent, const vector2 &position, const vector2 &dimensions, texture *texture, const int &selectedRow) :
-		uiobject(parent, position, dimensions)
+		uiobject(parent, position, dimensions),
+		m_texture(texture),
+		m_flipTexture(false),
+		m_selectedRow(selectedRow),
+		m_textureOffset(new vector2()),
+		m_colourOffset(new colour())
 	{
 		setMeshSize(vector2(0.5f, 0.5f));
-
-		m_texture = texture;
-		m_flipTexture = false;
-		m_selectedRow = selectedRow;
-
-		m_textureOffset = new vector2();
-		m_colourOffset = new colour();
 	}
 
 	gui::~gui()

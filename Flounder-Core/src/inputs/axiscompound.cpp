@@ -3,11 +3,10 @@
 namespace flounder
 {
 	axiscompound::axiscompound(const int n_args, ...) :
-		iaxis()
+		iaxis(),
+		m_count(n_args),
+		m_axes(new iaxis*[n_args])
 	{
-		m_count = n_args;
-		m_axes = new iaxis*[n_args];
-
 		va_list ap;
 		va_start(ap, n_args);
 

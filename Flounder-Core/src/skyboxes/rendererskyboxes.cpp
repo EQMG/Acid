@@ -3,12 +3,12 @@
 namespace flounder
 {
 	rendererskyboxes::rendererskyboxes() :
-		irenderer()
-	{
-		m_shader = new shader("skyboxes", 2,
+		irenderer(),
+		m_shader(new shader("skyboxes", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/skyboxes/skybox.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/skyboxes/skybox.frag.spv")
-		);
+		))
+	{
 	}
 
 	rendererskyboxes::~rendererskyboxes()

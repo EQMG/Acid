@@ -37,7 +37,7 @@ namespace flounder
 		double m_horizontalPerPixelSize;
 		int m_imageWidth;
 		double m_spaceWidth;
-		std::vector<int> m_padding;
+		std::vector<int> *m_padding;
 		int m_paddingWidth;
 		int m_paddingHeight;
 		double m_maxSizeY;

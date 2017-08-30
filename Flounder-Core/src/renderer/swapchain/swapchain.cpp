@@ -2,15 +2,14 @@
 
 namespace flounder
 {
-	swapchain::swapchain()
+	swapchain::swapchain() :
+		m_swapChain(VK_NULL_HANDLE),
+		m_swapChainImages(std::vector<VkImage>()),
+		m_swapChainImageViews(std::vector<VkImageView>()),
+		m_swapChainFramebuffers(std::vector<VkFramebuffer>()),
+		m_swapChainImageFormat({}),
+		m_swapChainExtent({})
 	{
-		m_swapChain = VK_NULL_HANDLE;
-		m_swapChainImages = std::vector<VkImage>();
-		m_swapChainImageViews = std::vector<VkImageView>();
-		m_swapChainFramebuffers = std::vector<VkFramebuffer>();
-
-		m_swapChainImageFormat = {};
-		m_swapChainExtent = {};
 	}
 
 	swapchain::~swapchain()
@@ -148,7 +147,7 @@ namespace flounder
 			return {VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR};
 		}
 
-		for (VkSurfaceFormatKHR availableFormat : availableFormats)
+		for (auto availableFormat : availableFormats)
 		{
 			if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 			{
@@ -163,7 +162,7 @@ namespace flounder
 	{
 		VkPresentModeKHR bestMode = VK_PRESENT_MODE_FIFO_KHR;
 
-		for (VkPresentModeKHR availablePresentMode : availablePresentModes)
+		for (auto availablePresentMode : availablePresentModes)
 		{
 			if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR)
 			{

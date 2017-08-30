@@ -14,20 +14,16 @@ namespace flounder
 	const float water::SHINE_DAMPER = 1.0f;
 	const float water::REFLECTIVITY = 0.0f;
 
-	water::water(const vector3 &position, const vector3 &rotation)
+	water::water(const vector3 &position, const vector3 &rotation) :
+		m_model(nullptr),
+		m_colour(new colour(WATER_COLOUR)),
+		m_position(new vector3(position)),
+		m_rotation(new vector3(rotation)),
+		m_offset(new vector3()),
+		m_moved(true),
+		m_modelMatrix(new matrix4x4()),
+		m_aabb(new aabb())
 	{
-		m_model = 0;
-
-		m_colour = new colour(WATER_COLOUR);
-
-		m_position = new vector3(position);
-		m_rotation = new vector3(rotation);
-		m_offset = new vector3();
-		m_moved = true;
-
-		m_modelMatrix = new matrix4x4();
-		m_aabb = new aabb();
-
 		generateMesh();
 	}
 

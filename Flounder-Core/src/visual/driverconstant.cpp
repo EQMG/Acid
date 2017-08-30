@@ -2,10 +2,10 @@
 
 namespace flounder
 {
-	driverconstant::driverconstant(const float &constant)
-		: idriver(1.0f)
+	driverconstant::driverconstant(const float &constant) : 
+		idriver(1.0f),
+		m_value(constant)
 	{
-		m_value = constant;
 	}
 
 	driverconstant::~driverconstant()

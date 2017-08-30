@@ -4,9 +4,9 @@ namespace flounder
 {
 	const double processorgraphic::MAX_TIME_MILLIS = 8.0f;
 
-	processorgraphic::processorgraphic()
+	processorgraphic::processorgraphic() :
+		m_queue(new queue<requestgraphic*>())
 	{
-		m_queue = new queue<requestgraphic*>();
 	}
 
 	processorgraphic::~processorgraphic()

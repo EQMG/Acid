@@ -4,9 +4,9 @@ namespace flounder
 {
 	template<class t>
 	structurebasic<t>::structurebasic() :
-		ispatialstructure<t>()
+		ispatialstructure<t>(),
+		m_objects(new std::vector<t>())
 	{
-		m_objects = new std::vector<t>();
 	}
 
 	template<class t>
@@ -24,7 +24,7 @@ namespace flounder
 	template<class t>
 	void structurebasic<t>::remove(t object)
 	{
-		for (std::vector<t>::iterator it = m_objects->begin(); it != m_objects->end(); ++it)
+		for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
 		{
 			if (*it == object)
 			{
@@ -55,7 +55,7 @@ namespace flounder
 	template<class t>
 	std::vector<t> *structurebasic<t>::getAll(std::vector<t> *result)
 	{
-		for (t value : m_objects)
+		for (auto value : m_objects)
 		{
 			result->push_back(value);
 		}
@@ -64,7 +64,7 @@ namespace flounder
 	template<class t>
 	std::vector<t> *structurebasic<t>::queryInFrustum(frustum *range, std::vector<t> *result)
 	{
-		for (t value : m_objects)
+		for (auto value : m_objects)
 		{
 			ispatialobject *object = static_cast<ispatialobject*>(value);
 
@@ -78,7 +78,7 @@ namespace flounder
 	template<class t>
 	std::vector<t> *structurebasic<t>::queryInBounding(icollider *range, std::vector<t> *result)
 	{
-		for (t value : m_objects)
+		for (auto value : m_objects)
 		{
 			ispatialobject *object = static_cast<ispatialobject*>(value);
 

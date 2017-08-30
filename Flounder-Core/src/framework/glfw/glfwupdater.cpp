@@ -3,13 +3,20 @@
 namespace flounder
 {
 	glfwupdater::glfwupdater() :
-		iupdater()
+		iupdater(),
+		m_startTime(0.0f),
+		m_timeOffset(0.0f),
+		m_deltaUpdate(nullptr),
+		m_deltaRender(nullptr),
+		m_timerUpdate(nullptr),
+		m_timerRender(nullptr),
+		m_modules(new std::multimap<float, std::pair<std::string, imodule*>>())
 	{
 	}
 
 	glfwupdater::~glfwupdater()
 	{
-		for (std::multimap<float, std::pair<std::string, imodule*>>::iterator it = --m_modules->end(); it != m_modules->begin(); --it)
+		for (auto it = --m_modules->end(); it != m_modules->begin(); --it)
 		{
 			delete (*it).second.second;
 		}
@@ -31,8 +38,6 @@ namespace flounder
 		m_deltaRender = new delta();
 		m_timerUpdate = new timer(1.0f / 62.0f);
 		m_timerRender = new timer(1.0f / -1.0f);
-
-		m_modules = new std::multimap<float, std::pair<std::string, imodule*>>();
 
 		addModule(UpdatePre, "audio", new audio());
 		addModule(Render, "display", new display());
@@ -106,7 +111,7 @@ namespace flounder
 
 	imodule *flounder::glfwupdater::getInstance(const std::string &name)
 	{
-		for (std::multimap<float, std::pair<std::string, imodule*>>::iterator it = m_modules->begin(); it != m_modules->end(); ++it)
+		for (auto it = m_modules->begin(); it != m_modules->end(); ++it)
 		{
 			if ((*it).second.first == name)
 			{
@@ -119,7 +124,7 @@ namespace flounder
 
 	void glfwupdater::runUpdate(moduleupdate typeUpdate)
 	{
-		for (std::multimap<float, std::pair<std::string, imodule*>>::iterator it = m_modules->begin(); it != m_modules->end(); ++it)
+		for (auto it = m_modules->begin(); it != m_modules->end(); ++it)
 		{
 			if (static_cast<int>(floor((*it).first)) == typeUpdate)
 			{

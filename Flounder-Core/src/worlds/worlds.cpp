@@ -3,21 +3,19 @@
 namespace flounder
 {
 	worlds::worlds() :
-		imodule()
+		imodule(),
+		m_noise(new noisefast(420)),
+		m_driverDay(new driverlinear(0.0f, 1.0f, 100.0f)),
+		m_factorDay(0.0f),
+		m_sunPosition(new vector3()),
+		m_sunColour(new colour())
 	{
-		m_noise = new noisefast(420);
 		m_noise->setNoiseType(noisefast::SimplexFractal);
 		m_noise->setInterp(noisefast::Quintic);
 		m_noise->setFrequency(0.005f);
 		m_noise->setFractalOctaves(9);
 		m_noise->setFractalLacunarity(1.5f);
 		m_noise->setFractalGain(0.7f);
-
-		m_driverDay = new driverlinear(0.0f, 1.0f, 100.0f);
-		m_factorDay = 0.0f;
-
-		m_sunPosition = new vector3();
-		m_sunColour = new colour();
 	}
 
 	worlds::~worlds()

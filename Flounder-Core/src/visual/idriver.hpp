@@ -18,11 +18,11 @@ namespace flounder
 		/// Creates a new driver with a length.
 		/// </summary>
 		/// <param name="length"> The drivers length. </param>
-		idriver(const float &length)
+		idriver(const float &length) :
+			m_length(length),
+			m_actualTime(0.0f),
+			m_currentTime(0.0f)
 		{
-			m_length = length;
-			m_actualTime = 0.0f;
-			m_currentTime = 0.0f;
 		}
 
 		/// <summary>

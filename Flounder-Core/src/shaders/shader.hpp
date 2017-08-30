@@ -57,6 +57,6 @@ namespace flounder
 		/// <summary>
 		/// Creates the shader.
 		/// </summary>
-		void create();
+		void loadShader();
 	};
 }

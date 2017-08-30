@@ -3,14 +3,14 @@
 namespace flounder
 {
 	standards::standards() :
-		imodule()
+		imodule(),
+		m_standards(new std::vector<istandard*>())
 	{
-		m_standards = new std::vector<istandard*>();
 	}
 
 	standards::~standards()
 	{
-		for (std::vector<istandard*>::iterator it = m_standards->begin(); it < m_standards->end(); it++)
+		for (auto it = m_standards->begin(); it < m_standards->end(); it++)
 		{
 			delete *it;
 		}
@@ -25,7 +25,7 @@ namespace flounder
 
 	void standards::update()
 	{
-		for (std::vector<istandard*>::iterator it = m_standards->begin(); it < m_standards->end(); it++)
+		for (auto it = m_standards->begin(); it < m_standards->end(); it++)
 		{
 			(*it)->update();
 		}

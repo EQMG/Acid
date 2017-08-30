@@ -3,9 +3,9 @@
 namespace flounder
 {
 	terrains::terrains() :
-		imodule()
+		imodule(),
+		m_terrains(new std::vector<terrain*>())
 	{
-		m_terrains = new std::vector<terrain*>();
 		m_terrains->push_back(new terrain(
 			vector3(), vector3(), 420
 		));

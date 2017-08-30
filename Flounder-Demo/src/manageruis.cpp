@@ -3,27 +3,25 @@
 const float manageruis::SLIDE_TIME = 0.5f;
 
 manageruis::manageruis() :
-	imanageruis()
+	imanageruis(),
+	m_primaryColour(new colour(0.91f, 0.08f, 0.08f)),
+	m_overlayStartup(new overlaystartup(uis::get()->getContainer())),
+	m_overlayDebug(new overlaydebug(uis::get()->getContainer())),
+	m_overlayManager(new overlaymanager(uis::get()->getContainer()))
 {
-	m_primaryColour = new colour(0.90196078431f, 0.08235294117f, 0.08235294117f);
-
-	m_overlayStartup = new overlaystartup(uis::get()->getContainer());
-	m_overlayManager = new overlaymanager(uis::get()->getContainer());
-	m_overlayDebug = new overlaydebug(uis::get()->getContainer());
+	uis::get()->getSelector()->load(0, 0, 1, 0, 1);
 
 	m_overlayStartup->setAlphaDriver(new driverconstant(1.0f));
-	m_overlayManager->setAlphaDriver(new driverconstant(0.0f));
 	m_overlayDebug->setAlphaDriver(new driverconstant(0.0f));
-
-	uis::get()->getSelector()->load(0, 0, 1, 0, 1);
+	m_overlayManager->setAlphaDriver(new driverconstant(0.0f));
 }
 
 manageruis::~manageruis()
 {
 	delete m_primaryColour;
 	delete m_overlayStartup;
-	delete m_overlayManager;
 	delete m_overlayDebug;
+	delete m_overlayManager;
 }
 
 void manageruis::update()

@@ -28,7 +28,7 @@ namespace flounder
 		}
 
 		// Generates particles.
-		for (particlesystem *system : *m_particleSystems)
+		for (auto system : *m_particleSystems)
 		{
 			particle *created = system->generateParticles();
 
@@ -50,9 +50,9 @@ namespace flounder
 		}
 
 		// Update and kill particles.
-		for (std::map<particletype*, std::vector<particle*>*>::iterator iter = m_particles->begin(); iter != m_particles->end(); ++iter)
+		for (auto iter = m_particles->begin(); iter != m_particles->end(); ++iter)
 		{
-			for (std::vector<particle*>::iterator it = iter->second->begin(); it != iter->second->end(); ++it)
+			for (auto it = iter->second->begin(); it != iter->second->end(); ++it)
 			{
 				(*it)->update();
 
@@ -77,7 +77,7 @@ namespace flounder
 
 	void particles::removeSystem(particlesystem *system)
 	{
-		for (std::vector<particlesystem*>::iterator it = m_particleSystems->begin(); it != m_particleSystems->end(); ++it)
+		for (auto it = m_particleSystems->begin(); it != m_particleSystems->end(); ++it)
 		{
 			if (*it == system)
 			{

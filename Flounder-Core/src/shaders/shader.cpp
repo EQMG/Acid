@@ -2,13 +2,12 @@
 
 namespace flounder
 {
-	shader::shader(const std::string &name, const int n_args, ...)
+	shader::shader(const std::string &name, const int n_args, ...) :
+		m_name(name),
+		m_types(new std::vector<shadertype>()),
+		m_modules(new std::vector<VkShaderModule>()),
+		m_stages(new std::vector<VkPipelineShaderStageCreateInfo>())
 	{
-		m_name = name;
-		m_types = new std::vector<shadertype>();
-		m_modules = new std::vector<VkShaderModule>();
-		m_stages = new std::vector<VkPipelineShaderStageCreateInfo>();
-
 		va_list ap;
 		va_start(ap, n_args);
 
@@ -19,12 +18,12 @@ namespace flounder
 
 		va_end(ap);
 
-		create();
+		loadShader();
 	}
 
 	shader::~shader()
 	{
-		for (VkShaderModule shaderModule : *m_modules)
+		for (auto shaderModule : *m_modules)
 		{
 			vkDestroyShaderModule(display::get()->getVkDevice(), shaderModule, nullptr);
 		}
@@ -33,7 +32,7 @@ namespace flounder
 		delete m_stages;
 	}
 
-	void shader::create()
+	void shader::loadShader()
 	{
 		for (shadertype type : *m_types)
 		{

@@ -3,35 +3,25 @@
 namespace flounder
 {
 	text::text(uiobject *parent, const vector2 &position, const std::string &text, const float &fontSize, fonttype *fonttype, const float &maxLineLength, const uialign &align) :
-		uiobject(parent, position, vector2(1.0f, 1.0f))
+		uiobject(parent, position, vector2(1.0f, 1.0f)),
+		m_textString(text),
+		m_textAlign(align),
+		m_newText(""),
+		m_model(nullptr),
+		m_lineMaxSize(maxLineLength),
+		m_numberOfLines(-1),
+		m_fonttype(fonttype),
+		m_textColour(new colour(0.0f, 0.0f, 0.0f, 1.0f)),
+		m_borderColour(new colour(1.0f, 1.0f, 1.0f, 1.0f)),
+		m_solidBorder(false),
+		m_glowBorder(false),
+		m_glowDriver(new driverconstant(0.0f)),
+		m_glowSize(0.0f),
+		m_borderDriver(new driverconstant(0.0f)),
+		m_borderSize(0.0f)
 	{
 		setMeshSize(vector2(0.0f, 0.0f));
 		setScaleDriver(new driverconstant(fontSize));
-
-		m_textString = text;
-		m_textAlign = align;
-
-		m_newText = "";
-
-		m_model = nullptr;
-
-		m_lineMaxSize = maxLineLength;
-		m_numberOfLines = -1;
-
-		m_fonttype = fonttype;
-
-		m_textColour = new colour(0.0f, 0.0f, 0.0f, 1.0f);
-		m_borderColour = new colour(1.0f, 1.0f, 1.0f, 1.0f);
-
-		m_solidBorder = false;
-		m_glowBorder = false;
-
-		m_glowDriver = new driverconstant(0.0f);
-		m_glowSize = 0.0f;
-
-		m_borderDriver = new driverconstant(0.0f);
-		m_borderSize = 0.0f;
-
 		loadText(this);
 	}
 
@@ -98,7 +88,7 @@ namespace flounder
 		line *currentLine = new line(object->getFontType()->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
 		word *currentWord = new word();
 
-		for (char &c : object->getText())
+		for (auto c : object->getText())
 		{
 			int ascii = static_cast<int>(c);
 
@@ -149,7 +139,7 @@ namespace flounder
 		double cursorX = 0.0;
 		double cursorY = 0.0;
 
-		for (line *line : lines)
+		for (auto line : lines)
 		{
 			switch (object->getTextAlign())
 			{
@@ -167,9 +157,9 @@ namespace flounder
 				break;
 			}
 
-			for (word *word : *line->getWords())
+			for (auto word : *line->getWords())
 			{
-				for (character *letter : *word->getCharacters())
+				for (auto letter : *word->getCharacters())
 				{
 					addVerticesForCharacter(cursorX, cursorY, letter, vertices);
 					addTextures(letter->getTextureCoordX(), letter->getTextureCoordY(), letter->getMaxTextureCoordX(), letter->getMaxTextureCoordY(), textures);
@@ -239,7 +229,7 @@ namespace flounder
 		float maxY = -INFINITY;
 		int i = 0;
 
-		for (float v : *vertices)
+		for (auto v : *vertices)
 		{
 			if (i == 0)
 			{

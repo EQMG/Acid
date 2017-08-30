@@ -3,14 +3,14 @@
 namespace flounder
 {
 	events::events() :
-		imodule()
+		imodule(),
+		m_events(new std::vector<ievent*>())
 	{
-		m_events = new std::vector<ievent*>();
 	}
 
 	events::~events()
 	{
-		for (std::vector<ievent*>::iterator it = m_events->begin(); it != m_events->end(); ++it)
+		for (auto it = m_events->begin(); it != m_events->end(); ++it)
 		{
 			delete *it;
 		}
@@ -20,7 +20,7 @@ namespace flounder
 
 	void events::update()
 	{
-		for (std::vector<ievent*>::iterator it = m_events->begin(); it < m_events->end(); it++)
+		for (auto it = m_events->begin(); it < m_events->end(); it++)
 		{
 			if ((*it)->eventTriggered())
 			{
@@ -43,7 +43,7 @@ namespace flounder
 
 	void events::removeEvent(ievent *event)
 	{
-		for (std::vector<ievent*>::iterator it = m_events->begin(); it != m_events->end(); ++it)
+		for (auto it = m_events->begin(); it != m_events->end(); ++it)
 		{
 			if (*it == event)
 			{
