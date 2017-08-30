@@ -11,9 +11,15 @@ namespace flounder
 	class matrix3x3
 	{
 	public:
-		float m_00, m_01, m_02;
-		float m_10, m_11, m_12;
-		float m_20, m_21, m_22;
+		float m_00;
+		float m_01;
+		float m_02;
+		float m_10;
+		float m_11;
+		float m_12;
+		float m_20;
+		float m_21;
+		float m_22;
 
 		/// <summary>
 		/// Constructor for matrix3x3. The matrix is initialised to the identity.
@@ -151,7 +157,7 @@ namespace flounder
 		/// <summary>
 		/// Sets this matrix to be the identity matrix.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix3x3 *setIdentity();
 
 		/// <summary>
@@ -163,25 +169,25 @@ namespace flounder
 		/// <summary>
 		/// Inverts this matrix.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix3x3 *invert();
 
 		/// <summary>
 		/// Negates this matrix.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix3x3 *negate();
 
 		/// <summary>
 		/// Transposes this matrix
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix3x3 *transpose();
 
 		/// <summary>
 		/// Sets this matrix to 0.
 		/// </summary>
-		/// <returns> this-> </returns>
+		/// <returns> This. </returns>
 		matrix3x3 *setZero();
 	};
 }

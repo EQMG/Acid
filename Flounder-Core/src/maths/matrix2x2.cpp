@@ -2,19 +2,28 @@
 
 namespace flounder
 {
-	matrix2x2::matrix2x2()
+	matrix2x2::matrix2x2() :
+		m_00(1.0f),
+		m_01(0.0f),
+		m_10(0.0f),
+		m_11(1.0f)
 	{
-		setIdentity();
 	}
 
-	matrix2x2::matrix2x2(const matrix2x2 &source)
+	matrix2x2::matrix2x2(const matrix2x2 &source) :
+		m_00(source.m_00),
+		m_01(source.m_01),
+		m_10(source.m_10),
+		m_11(source.m_11)
 	{
-		set(source);
 	}
 
-	matrix2x2::matrix2x2(const float source[4])
+	matrix2x2::matrix2x2(const float source[4]) :
+		m_00(source[0]),
+		m_01(source[1]),
+		m_10(source[2]),
+		m_11(source[3])
 	{
-		set(source);
 	}
 
 	matrix2x2::~matrix2x2()

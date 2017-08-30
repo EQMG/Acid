@@ -7,8 +7,8 @@ namespace flounder
 		m_swapChainImages(std::vector<VkImage>()),
 		m_swapChainImageViews(std::vector<VkImageView>()),
 		m_swapChainFramebuffers(std::vector<VkFramebuffer>()),
-		m_swapChainImageFormat({}),
-		m_swapChainExtent({})
+		m_swapChainImageFormat(VkFormat()),
+		m_swapChainExtent(VkExtent2D())
 	{
 	}
 

@@ -3,6 +3,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <cmath>
+#include <string>
+#include <sstream>
 
 #define PI 3.14159265358979323846f
 #define DEGREES_IN_CIRCLE 360.0f

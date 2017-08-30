@@ -1,20 +1,39 @@
 #include "vector4.hpp"
 
+#include "vector3.hpp"
+
 namespace flounder
 {
-	vector4::vector4()
+	vector4::vector4() :
+		m_x(0.0f),
+		m_y(0.0f),
+		m_z(0.0f),
+		m_w(0.0f)
 	{
-		this->set(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 
-	vector4::vector4(const float &x, const float &y, const float &z, const float &w)
+	vector4::vector4(const float &x, const float &y, const float &z, const float &w) :
+		m_x(x),
+		m_y(y),
+		m_z(z),
+		m_w(z)
 	{
-		this->set(x, y, z, w);
 	}
 
-	vector4::vector4(const vector4 &source)
+	vector4::vector4(const vector3 &source) :
+		m_x(source.m_x),
+		m_y(source.m_y),
+		m_z(source.m_z),
+		m_w(1.0f)
 	{
-		this->set(source);
+	}
+
+	vector4::vector4(const vector4 &source) :
+		m_x(source.m_x),
+		m_y(source.m_y),
+		m_z(source.m_z),
+		m_w(source.m_w)
+	{
 	}
 
 	vector4::~vector4()
@@ -23,19 +42,28 @@ namespace flounder
 
 	vector4 *vector4::set(const float &x, const float &y, const float &z, const float &w)
 	{
-		this->m_x = x;
-		this->m_y = y;
-		this->m_z = z;
-		this->m_w = w;
+		m_x = x;
+		m_y = y;
+		m_z = z;
+		m_w = w;
+		return this;
+	}
+
+	vector4 *vector4::set(const vector3 &source)
+	{
+		m_x = source.m_x;
+		m_y = source.m_y;
+		m_z = source.m_z;
+		m_w = 0.0f;
 		return this;
 	}
 
 	vector4 *vector4::set(const vector4 &source)
 	{
-		this->m_x = source.m_x;
-		this->m_y = source.m_y;
-		this->m_z = source.m_z;
-		this->m_w = source.m_w;
+		m_x = source.m_x;
+		m_y = source.m_y;
+		m_z = source.m_z;
+		m_w = source.m_w;
 		return this;
 	}
 
@@ -205,19 +233,19 @@ namespace flounder
 
 	vector4 *vector4::translate(const float &x, const float &y, const float &z, const float &w)
 	{
-		this->m_x += x;
-		this->m_y += y;
-		this->m_z += z;
-		this->m_w += w;
+		m_x += x;
+		m_y += y;
+		m_z += z;
+		m_w += w;
 		return this;
 	}
 
 	vector4 *vector4::negate()
 	{
-		this->m_x = -m_x;
-		this->m_y = -m_y;
-		this->m_z = -m_z;
-		this->m_w = -m_w;
+		m_x = -m_x;
+		m_y = -m_y;
+		m_z = -m_z;
+		m_w = -m_w;
 		return this;
 	}
 
