@@ -2,25 +2,22 @@
 
 namespace flounder
 {
-	particle::particle(particletype *particleType, const vector3 &position, const vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect)
+	particle::particle(particletype *particleType, const vector3 &position, const vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
+		m_particleType(particleType),
+		m_position(new vector3(position)),
+		m_velocity(new vector3(velocity)),
+		m_change(new vector3()),
+		m_textureOffset1(new vector2()),
+		m_textureOffset2(new vector2()),
+		m_lifeLength(lifeLength),
+		m_rotation(rotation),
+		m_scale(scale),
+		m_gravityEffect(gravityEffect),
+		m_elapsedTime(0.0f),
+		m_transparency(0.0f),
+		m_textureBlendFactor(0.0f),
+		m_distanceToCamera(0.0f)
 	{
-		m_particleType = particleType;
-		m_position = new vector3(position);
-		m_velocity = new vector3(velocity);
-		m_change = new vector3();
-
-		m_textureOffset1 = new vector2();
-		m_textureOffset2 = new vector2();
-
-		m_lifeLength = lifeLength;
-		m_rotation = rotation;
-		m_scale = scale;
-		m_gravityEffect = gravityEffect;
-
-		m_elapsedTime = 0.0f;
-		m_transparency = 0.0f;
-		m_textureBlendFactor = 0.0f;
-		m_distanceToCamera = 0.0f;
 	}
 
 	particle::~particle()

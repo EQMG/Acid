@@ -3,10 +3,9 @@
 namespace flounder
 {
 	joysticks::joysticks() :
-		imodule()
+		imodule(),
+		m_connected(new joystick*[GLFW_JOYSTICK_LAST])
 	{
-		m_connected = new joystick*[GLFW_JOYSTICK_LAST];
-
 		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
 		{
 			m_connected[i] = new joystick();

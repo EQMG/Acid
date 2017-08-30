@@ -24,23 +24,20 @@ namespace flounder
 	}
 
 	mouse::mouse() :
-		imodule()
+		imodule(),
+		m_customMouse(""),
+		m_mouseButtons(new int[GLFW_MOUSE_BUTTON_LAST]),
+		m_lastMousePositionX(0.5f),
+		m_lastMousePositionY(0.5f),
+		m_mousePositionX(0.5f),
+		m_mousePositionY(0.5f),
+		m_mouseDeltaX(0.0f),
+		m_mouseDeltaY(0.0f),
+		m_mouseDeltaWheel(0.0f),
+		m_displaySelected(true),
+		m_cursorDisabled(false),
+		m_lastCursorDisabled(false)
 	{
-		m_customMouse = "";
-
-		m_mouseButtons = new int[GLFW_MOUSE_BUTTON_LAST];
-		m_lastMousePositionX = 0.5f;
-		m_lastMousePositionY = 0.5f;
-		m_mousePositionX = 0.5f;
-		m_mousePositionY = 0.5f;
-		m_mouseDeltaX = 0.0f;
-		m_mouseDeltaY = 0.0f;
-		m_mouseDeltaWheel = 0.0f;
-		m_displaySelected = true;
-
-		m_cursorDisabled = false;
-		m_lastCursorDisabled = false;
-
 		// Sets the default state of the buttons to released.
 		for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST + 1; i++)
 		{

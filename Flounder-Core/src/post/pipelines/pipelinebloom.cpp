@@ -26,7 +26,7 @@ namespace flounder
 #endif
 	}
 
-	fbo *pipelinebloom::getOutput()
+	Fbo *pipelinebloom::getOutput()
 	{
 		return m_filterBloom2->getFbo();
 	}

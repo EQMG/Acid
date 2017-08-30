@@ -5,10 +5,10 @@ namespace flounder
 	const float particles::MAX_ELAPSED_TIME = 5.0f;
 
 	particles::particles() :
-		imodule()
+		imodule(),
+		m_particleSystems(new std::vector<particlesystem*>()),
+		m_particles(new std::map<particletype*, std::vector<particle*>*>())
 	{
-		m_particleSystems = new std::vector<particlesystem*>();
-		m_particles = new std::map<particletype*, std::vector<particle*>*>();
 	}
 
 	particles::~particles()

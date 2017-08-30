@@ -30,7 +30,7 @@ namespace flounder
 #endif
 	}
 
-	fbo *pipelinegaussian::getOutput()
+	Fbo *pipelinegaussian::getOutput()
 	{
 		return m_filterBlurVertical->getFbo();
 	}

@@ -25,7 +25,7 @@ maincamera::maincamera() :
 	m_viewMatrix(new matrix4x4()),
 	m_projectionMatrix(new matrix4x4()),
 	m_viewFrustum(new frustum()),
-	m_viewRay(new ray(false, new vector2(0.5f, 0.5f))),
+	m_viewRay(new ray(false, vector2(0.5f, 0.5f))),
 	m_angleOfElevation(25.0f),
 	m_angleAroundPlayer(0.0f),
 	m_targetPosition(new vector3()),

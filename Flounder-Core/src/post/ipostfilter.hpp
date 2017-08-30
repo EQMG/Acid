@@ -2,7 +2,7 @@
 
 #include <stdarg.h>
 
-#include "../fbos/fbo.hpp"
+#include "../fbos/Fbo.hpp"
 #include "../models/model.hpp"
 #include "../renderer/renderer.hpp"
 #include "../shaders/shader.hpp"
@@ -16,7 +16,7 @@ namespace flounder
 	{
 	protected:
 		shader *m_shader;
-		fbo *m_fbo;
+		Fbo *m_fbo;
 		model *m_model;
 	public:
 		/// <summary>
@@ -25,21 +25,14 @@ namespace flounder
 		/// <param name="filterName"> The name for the filter. </param>
 		/// <param name="fragmentShader"> The fragment shader file. </param>
 		/// <param name="fbo"> The fbo to render into. </param>
-		ipostfilter(const std::string &filterName, const std::string &fragmentShader, fbo *fbo);
-
-		/// <summary>
-		/// Creates a new post effect filter
-		/// </summary>
-		/// <param name="filterName"> The name for the filter. </param>
-		/// <param name="fragmentShader"> The fragment shader file. </param>
-		ipostfilter(const std::string &filterName, const std::string &fragmentShader);
+		ipostfilter(const std::string &filterName, const std::string &fragmentShader, Fbo *fbo = new Fbo(true, 1.0f));
 
 		/// <summary>
 		/// Creates a new post effect filter
 		/// </summary>
 		/// <param name="shader"> The shader for the filter. </param>
 		/// <param name="fbo"> The fbo to render into. </param>
-		ipostfilter(shader *shader, fbo *fbo);
+		ipostfilter(shader *shader, Fbo *fbo);
 
 		/// <summary>
 		/// Creates a new post effect filter
@@ -75,6 +68,6 @@ namespace flounder
 		/// Gets the fbo the filter rendered into.
 		/// </summary>
 		/// <returns> The fbo. </returns>
-		inline fbo *getFbo() const { return m_fbo; }
+		inline Fbo *getFbo() const { return m_fbo; }
 	};
 }

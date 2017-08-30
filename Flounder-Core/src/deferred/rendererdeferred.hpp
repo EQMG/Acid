@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../camera/camera.hpp"
-#include "../fbos/fbo.hpp"
+#include "../fbos/Fbo.hpp"
 #include "../lights/light.hpp"
 #include "../maths/vector3.hpp"
 #include "../models/model.hpp"
@@ -22,10 +22,10 @@ namespace flounder
 		static const int LIGHTS = 64;
 
 		shader *m_shader;
-		fbo *m_fbo;
+		Fbo *m_fbo;
 		model *m_model;
 	public:
-		rendererdeferred(fbo *fbo);
+		rendererdeferred(Fbo *fbo);
 
 		/// <summary>
 		/// Creates a new deferred renderer.
@@ -48,7 +48,7 @@ namespace flounder
 		/// Gets the fbo the filter rendered into.
 		/// </summary>
 		/// <returns> The fbo. </returns>
-		fbo *getFbo() const { return m_fbo; }
+		Fbo *getFbo() const { return m_fbo; }
 	private:
 		/// <summary>
 		/// Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started.

@@ -37,7 +37,7 @@ namespace flounder
 #endif
 	}
 
-	fbo *pipelinepaused::getOutput()
+	Fbo *pipelinepaused::getOutput()
 	{
 		return m_filterCombine->getFbo();
 	}

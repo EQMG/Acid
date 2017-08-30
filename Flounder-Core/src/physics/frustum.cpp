@@ -14,9 +14,9 @@ namespace flounder
 	const int frustum::C = 2;
 	const int frustum::D = 3;
 
-	frustum::frustum()
+	frustum::frustum() :
+		m_frustum(helperarray::recFloatArray(6, 4))
 	{
-		m_frustum = helperarray::recFloatArray(6, 4);
 	}
 
 	frustum::~frustum()

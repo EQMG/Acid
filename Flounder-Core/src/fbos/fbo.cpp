@@ -1,8 +1,8 @@
-#include "fbo.hpp"
+#include "Fbo.hpp"
 
 namespace flounder
 {
-	fbo::fbo(const int &width, const int &height, const depthbuffer &depthBufferType, const bool &useColourBuffer, const int &attachments, const bool &linearFiltering, const bool &wrapTextures, const bool &clampEdge, const bool &alphaChannel, const bool &antialiased, const int &samples)
+	Fbo::Fbo(const int &width, const int &height, const depthbuffer &depthBufferType, const bool &useColourBuffer, const int &attachments, const bool &linearFiltering, const bool &wrapTextures, const bool &clampEdge, const bool &alphaChannel, const bool &antialiased, const int &samples)
 	{
 		m_width = width;
 		m_height = height;
@@ -32,7 +32,7 @@ namespace flounder
 		initialize();
 	}
 
-	fbo::fbo(const bool &fitToScreen, const float &sizeScalar, const depthbuffer &depthBufferType, const bool &useColourBuffer, const int &attachments, const bool &linearFiltering, const bool &wrapTextures, const bool &clampEdge, const bool &alphaChannel, const bool &antialiased, const int &samples)
+	Fbo::Fbo(const bool &fitToScreen, const float &sizeScalar, const depthbuffer &depthBufferType, const bool &useColourBuffer, const int &attachments, const bool &linearFiltering, const bool &wrapTextures, const bool &clampEdge, const bool &alphaChannel, const bool &antialiased, const int &samples)
 	{
 		m_width = static_cast<int>(display::get()->getWidth() * sizeScalar);
 		m_height = static_cast<int>(display::get()->getHeight() * sizeScalar);
@@ -62,7 +62,7 @@ namespace flounder
 		initialize();
 	}
 
-	fbo::~fbo()
+	Fbo::~Fbo()
 	{
 		clear();
 
@@ -72,7 +72,7 @@ namespace flounder
 #endif
 	}
 
-	void fbo::bindFrameBuffer()
+	void Fbo::bindFrameBuffer()
 	{
 		updateSize();
 #if 0
@@ -82,7 +82,7 @@ namespace flounder
 #endif
 	}
 
-	void fbo::unbindFrameBuffer()
+	void Fbo::unbindFrameBuffer()
 	{
 #if 0
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -90,7 +90,7 @@ namespace flounder
 #endif
 	}
 
-	void fbo::updateSize()
+	void Fbo::updateSize()
 	{
 		if (m_fitToScreen)
 		{
@@ -123,7 +123,7 @@ namespace flounder
 		}
 	}
 
-	void fbo::blitToScreen()
+	void Fbo::blitToScreen()
 	{
 #if 0
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
@@ -134,7 +134,7 @@ namespace flounder
 #endif
 	}
 
-	void fbo::setSamples(const int samples)
+	void Fbo::setSamples(const int samples)
 	{
 		if (m_samples != samples)
 		{
@@ -146,7 +146,7 @@ namespace flounder
 		m_samples = samples;
 	}
 
-	void fbo::setSizeScalar(const float &sizeScalar)
+	void Fbo::setSizeScalar(const float &sizeScalar)
 	{
 		if (m_fitToScreen && m_sizeScalar == sizeScalar)
 		{
@@ -158,7 +158,7 @@ namespace flounder
 		updateSize();
 	}
 
-	void fbo::setSize(const int &width, const int &height)
+	void Fbo::setSize(const int &width, const int &height)
 	{
 		if (!m_fitToScreen && m_width == width && m_height == height)
 		{
@@ -171,7 +171,7 @@ namespace flounder
 		updateSize();
 	}
 
-	void fbo::resolveFBO(fbo *source, fbo *output)
+	void Fbo::resolveFBO(Fbo *source, Fbo *output)
 	{
 		if (source->m_attachments != output->m_attachments && output->m_hasGivenResolveError != output->m_hasGivenResolveError)
 		{
@@ -186,7 +186,7 @@ namespace flounder
 		}
 	}
 
-	void fbo::resolveFBO(fbo *source, const int readBuffer, const int drawBuffer, fbo *output)
+	void Fbo::resolveFBO(Fbo *source, const int readBuffer, const int drawBuffer, Fbo *output)
 	{
 		output->updateSize();
 
@@ -202,7 +202,7 @@ namespace flounder
 		output->unbindFrameBuffer();
 	}
 
-	void fbo::initialize()
+	void Fbo::initialize()
 	{
 #if 0
 		glGenFramebuffers(1, &m_frameBuffer);
@@ -259,14 +259,14 @@ namespace flounder
 		unbindFrameBuffer();
 	}
 
-	void fbo::determineDrawBuffers()
+	void Fbo::determineDrawBuffers()
 	{
 #if 0
 		glDrawBuffers(m_attachments, m_drawBuffers);
 #endif
 	}
 
-	void fbo::limitFBOSize()
+	void Fbo::limitFBOSize()
 	{
 		int maxSize = 0;
 
@@ -278,7 +278,7 @@ namespace flounder
 		m_height = __min(maxSize, m_height);
 	}
 
-	void fbo::createTextureAttachment(const int attachment)
+	void Fbo::createTextureAttachment(const int attachment)
 	{
 #if 0
 		glGenTextures(1, &m_colourTexture[attachment - GL_COLOR_ATTACHMENT0]);
@@ -297,7 +297,7 @@ namespace flounder
 #endif
 	}
 
-	void fbo::createDepthBufferAttachment()
+	void Fbo::createDepthBufferAttachment()
 	{
 #if 0
 		glGenRenderbuffers(1, &m_depthBuffer);
@@ -316,7 +316,7 @@ namespace flounder
 #endif
 	}
 
-	void fbo::createDepthTextureAttachment()
+	void Fbo::createDepthTextureAttachment()
 	{
 #if 0
 		glGenTextures(1, &m_depthTexture);
@@ -328,7 +328,7 @@ namespace flounder
 #endif
 	}
 
-	void fbo::attachMultisampleColourBuffer(const int attachment)
+	void Fbo::attachMultisampleColourBuffer(const int attachment)
 	{
 #if 0
 		glGenRenderbuffers(1, &m_colourBuffer[attachment - GL_COLOR_ATTACHMENT0]);
@@ -338,7 +338,7 @@ namespace flounder
 #endif
 	}
 
-	void fbo::clear()
+	void Fbo::clear()
 	{
 #if 0
 		glDeleteFramebuffers(1, &m_frameBuffer);
