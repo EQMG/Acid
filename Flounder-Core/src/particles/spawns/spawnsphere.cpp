@@ -3,10 +3,10 @@
 namespace flounder
 {
 	spawnsphere::spawnsphere(const float &radius, const vector3 &heading) :
-		ispawnparticle()
+		ispawnparticle(),
+		m_radius(radius),
+		m_spawnPosition(new vector3())
 	{
-		m_radius = radius;
-		m_spawnPosition = new vector3();
 	}
 
 	spawnsphere::~spawnsphere()

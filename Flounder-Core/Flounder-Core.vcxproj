@@ -30,7 +30,7 @@
     <ClInclude Include="src\events\eventtime.hpp" />
     <ClInclude Include="src\events\ievent.hpp" />
     <ClInclude Include="src\fbos\depthbuffer.hpp" />
-    <ClInclude Include="src\fbos\fbo.hpp" />
+    <ClInclude Include="src\fbos\Fbo.hpp" />
     <ClInclude Include="src\flounder.hpp" />
     <ClInclude Include="src\fonts\character.hpp" />
     <ClInclude Include="src\fonts\line.hpp" />
@@ -190,7 +190,7 @@
     <ClCompile Include="src\events\events.cpp" />
     <ClCompile Include="src\events\eventstandard.cpp" />
     <ClCompile Include="src\events\eventtime.cpp" />
-    <ClCompile Include="src\fbos\fbo.cpp" />
+    <ClCompile Include="src\fbos\Fbo.cpp" />
     <ClCompile Include="src\fonts\character.cpp" />
     <ClCompile Include="src\fonts\line.cpp" />
     <ClCompile Include="src\fonts\metafile.cpp" />

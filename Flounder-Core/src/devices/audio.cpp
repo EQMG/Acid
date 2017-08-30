@@ -5,7 +5,9 @@ namespace flounder
 	std::vector<sound*> audio::m_sounds = std::vector<sound*>();
 
 	audio::audio() :
-		imodule()
+		imodule(),
+		m_device(nullptr),
+		m_context(nullptr)
 	{
 		m_device = alcOpenDevice(NULL);
 		m_context = alcCreateContext(m_device, NULL);

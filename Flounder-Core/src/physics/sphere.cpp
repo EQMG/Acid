@@ -3,31 +3,24 @@
 namespace flounder
 {
 	sphere::sphere() :
-		icollider()
+		icollider(),
+		m_radius(1.0f),
+		m_position(new vector3())
 	{
-		m_radius = 1.0f;
-		m_position = new vector3();
 	}
 
-	sphere::sphere(const float &radius) :
-		icollider()
+	sphere::sphere(const float &radius, const vector3 &position) :
+		icollider(),
+		m_radius(radius),
+		m_position(new vector3(position))
 	{
-		m_radius = radius;
-		m_position = new vector3();
-	}
-
-	sphere::sphere(const float &radius, vector3 *position) :
-		icollider()
-	{
-		m_radius = radius;
-		m_position = position;
 	}
 
 	sphere::sphere(const sphere &source) :
-		icollider()
+		icollider(),
+		m_radius(source.m_radius),
+		m_position(new vector3(*source.m_position))
 	{
-		m_radius = source.m_radius;
-		m_position = new vector3(*source.m_position);
 	}
 
 	sphere::~sphere()

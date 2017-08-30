@@ -3,12 +3,12 @@
 namespace flounder
 {
 	spawncircle::spawncircle(const float &radius, const vector3 &heading) :
-		ispawnparticle()
+		ispawnparticle(),
+		m_radius(radius),
+		m_heading(new vector3(heading)),
+		m_spawnPosition(new vector3())
 	{
-		m_radius = radius;
-		m_heading = new vector3(heading);
 		m_heading->normalize();
-		m_spawnPosition = new vector3();
 	}
 
 	spawncircle::~spawncircle()

@@ -2,24 +2,20 @@
 
 namespace flounder
 {
-	ray::ray(const bool &useMouse, vector2 *screenStart)
+	ray::ray(const bool &useMouse, const vector2 &screenStart) :
+		m_useMouse(useMouse),
+		m_screenStart(new vector2(screenStart)),
+		m_viewMatrix(new matrix4x4()),
+		m_projectionMatrix(new matrix4x4()),
+		m_normalizedCoords(new vector2()),
+		m_clipCoords(new vector4()),
+		m_eyeCoords(new vector4()),
+		m_invertedProjection(new matrix4x4()),
+		m_invertedView(new matrix4x4()),
+		m_rayWorld(new vector4()),
+		m_origin(new vector3()),
+		m_currentRay(new vector3())
 	{
-		m_useMouse = useMouse;
-		m_screenStart = screenStart;
-
-		m_viewMatrix = new matrix4x4();
-		m_projectionMatrix = new matrix4x4();
-
-		m_origin = new vector3();
-		m_currentRay = new vector3();
-
-		m_normalizedCoords = new vector2();
-		m_clipCoords = new vector4();
-		m_eyeCoords = new vector4();
-
-		m_invertedProjection = new matrix4x4();
-		m_invertedView = new matrix4x4();
-		m_rayWorld = new vector4();
 	}
 
 	ray::~ray()
@@ -85,7 +81,7 @@ namespace flounder
 			destination = new vector3();
 		}
 
-		vector4 *coords = new vector4(position.m_x, position.m_y, position.m_z, 1.0f);
+		vector4 *coords = new vector4(position);
 		matrix4x4::transform(*m_viewMatrix, *coords, coords);
 		matrix4x4::transform(*m_projectionMatrix, *coords, coords);
 
@@ -115,6 +111,6 @@ namespace flounder
 	{
 		matrix4x4::invert(*m_viewMatrix, m_invertedView);
 		matrix4x4::transform(*m_invertedView, *m_eyeCoords, m_rayWorld);
-		m_currentRay->set(m_rayWorld->m_x, m_rayWorld->m_y, m_rayWorld->m_z);
+		m_currentRay->set(*m_rayWorld);
 	}
 }

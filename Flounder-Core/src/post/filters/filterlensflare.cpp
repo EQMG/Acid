@@ -3,10 +3,10 @@
 namespace flounder
 {
 	filterlensflare::filterlensflare() :
-		ipostfilter("filterLensflare", "res/shaders/filters/lensflare.frag.spv")
+		ipostfilter("filterLensflare", "res/shaders/filters/lensflare.frag.spv"),
+		m_sunPosition(new vector3()),
+		m_sunHeight(0.0f)
 	{
-		m_sunPosition = new vector3();
-		m_sunHeight = 0.0f;
 	}
 
 	filterlensflare::~filterlensflare()

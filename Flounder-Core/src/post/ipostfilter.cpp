@@ -2,38 +2,28 @@
 
 namespace flounder
 {
-	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader, fbo *fbo)
-	{
-		m_shader = new shader(filterName, 2,
+	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader, Fbo *fbo) :
+		m_shader(new shader(filterName, 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/filters/default.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShader)
-		);
-		m_fbo = fbo;
-		m_model = new model("res/models/filter.obj");
+		)),
+		m_fbo(fbo),
+		m_model(new model("res/models/filter.obj"))
+	{
 	}
 
-	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader)
+	ipostfilter::ipostfilter(shader *shader, Fbo *fbo) :
+		m_shader(shader),
+		m_fbo(fbo),
+		m_model(new model("res/models/filter.obj"))
 	{
-		m_shader = new shader(filterName, 2,
-			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/filters/default.vert.spv"),
-			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShader)
-		);
-		m_fbo = new fbo(true, 1.0f);
-		m_model = new model("res/models/filter.obj");
 	}
 
-	ipostfilter::ipostfilter(shader *shader, fbo *fbo)
+	ipostfilter::ipostfilter(shader *shader) :
+		m_shader(shader),
+		m_fbo(new Fbo(true, 1.0f)),
+		m_model(new model("res/models/filter.obj"))
 	{
-		m_shader = shader;
-		m_fbo = fbo;
-		m_model = new model("res/models/filter.obj");
-	}
-
-	ipostfilter::ipostfilter(shader *shader)
-	{
-		m_shader = shader;
-		m_fbo = new fbo(true, 1.0f);
-		m_model = new model("res/models/filter.obj");
 	}
 
 	ipostfilter::~ipostfilter()

@@ -12,7 +12,7 @@ namespace flounder
 		public irenderer
 	{
 	private:
-		fbo *m_fboReflection;
+		Fbo *m_fboReflection;
 		rendererdeferred *m_rendererDeferred;
 
 		shader *m_shader;
@@ -29,7 +29,7 @@ namespace flounder
 
 		void endRendering();
 	public:
-		fbo *getFboReflection() const { return m_fboReflection; }
+		Fbo *getFboReflection() const { return m_fboReflection; }
 
 		rendererdeferred *getRendererDeferred() const { return m_rendererDeferred; }
 	};
