@@ -5,51 +5,45 @@
 
 namespace flounder
 {
-	class transform
+	class Transform
 	{
 	private:
 		vector3 *m_position;
 		vector3 *m_rotation;
 		vector3 *m_scaling;
 	public:
-		transform();
+		Transform();
 
-		transform(const transform &source);
+		Transform(const Transform &source);
 
-		transform(const vector3 &position);
+		Transform(const vector3 &position, const vector3 &rotation = vector3(), const vector3 &scaling = vector3(1.0f, 1.0f, 1.0f));
 
-		transform(const vector3 &position, const vector3 &rotation);
+		~Transform();
 
-		transform(const vector3 &position, const vector3 &rotation, const vector3 &scaling);
+		matrix4x4 *GetWorldMatrix(matrix4x4 *destination) const;
 
-		transform(const vector3 &position, const vector3 &rotation, const float &scale);
+		matrix4x4 *GetModelMatrix(matrix4x4 *destination) const;
 
-		~transform();
+		void Set(const Transform &source) const;
 
-		matrix4x4 *worldMatrix(matrix4x4 *destination) const;
+		inline vector3 *GetPosition() const { return m_position; }
 
-		matrix4x4 *modelMatrix(matrix4x4 *destination) const;
+		inline void SetPosition(const vector3 &position) const { m_position->set(position); }
 
-		void set(const transform &source);
+		inline void SetPosition(const float &x, const float &y, const float &z) const { m_position->set(x, y, z); }
 
-		inline vector3 *getPosition() const { return m_position; }
+		inline vector3 *GetRotation() const { return m_rotation; }
 
-		inline void setPosition(const vector3 &position) const { m_position->set(position); }
+		inline void SetRotation(const vector3 &rotation) const { m_rotation->set(rotation); }
 
-		inline void setPosition(const float &x, const float &y, const float &z) const { m_position->set(x, y, z); }
+		inline void SetRotation(const float &x, const float &y, const float &z) const { m_rotation->set(x, y, z); }
 
-		inline vector3 *getRotation() const { return m_rotation; }
+		inline vector3 *GetScaling() const { return m_scaling; }
 
-		inline void setRotation(const vector3 &rotation) const { m_rotation->set(rotation); }
+		inline void SetScaling(const vector3 &scaling) const { m_scaling->set(scaling); }
 
-		inline void setRotation(const float &x, const float &y, const float &z) const { m_rotation->set(x, y, z); }
+		inline void SetScaling(const float &x, const float &y, const float &z) const { m_scaling->set(x, y, z); }
 
-		inline vector3 *getScaling() const { return m_scaling; }
-
-		inline void setScaling(const vector3 &scaling) const { m_scaling->set(scaling); }
-
-		inline void setScaling(const float &x, const float &y, const float &z) const { m_scaling->set(x, y, z); }
-
-		inline void setScaling(const float &scale) const { m_scaling->set(scale, scale, scale); }
+		inline void SetScaling(const float &scale) const { m_scaling->set(scale, scale, scale); }
 	};
 }

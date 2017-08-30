@@ -4,6 +4,8 @@
 
 namespace flounder
 {
+	class vector3;
+
 	/// <summary>
 	/// Holds a 2-tuple vector.
 	/// </summary>
@@ -31,6 +33,12 @@ namespace flounder
 		vector2(const vector2 &source);
 
 		/// <summary>
+		/// Constructor for vector2.
+		/// </summary>
+		/// <param name="source"> Creates this vector out of a existing one. </param>
+		vector2(const vector3 &source);
+
+		/// <summary>
 		/// Deconstructor for vector2.
 		/// </summary>
 		~vector2();
@@ -49,6 +57,13 @@ namespace flounder
 		/// <param name="source"> The source vector. </param>
 		/// <returns> This. </returns>
 		vector2 *set(const vector2 &source);
+
+		/// <summary>
+		/// Loads from another vector2.
+		/// </summary>
+		/// <param name="source"> The source vector. </param>
+		/// <returns> This. </returns>
+		vector2 *set(const vector3 &source);
 
 		/// <summary>
 		/// Adds two vectors together and places the result in the destination vector.

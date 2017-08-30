@@ -2,11 +2,11 @@
 
 #include "maths.hpp"
 
-#include "vector2.hpp"
-#include "vector4.hpp"
-
 namespace flounder
 {
+	class vector2;
+	class vector4;
+
 	/// <summary>
 	/// Holds a 3-tuple vector.
 	/// </summary>
@@ -23,10 +23,8 @@ namespace flounder
 		/// <summary>
 		/// Constructor for vector3.
 		/// </summary>
-		/// <param name="x"> Start x. </param>
-		/// <param name="y"> Start y. </param>
-		/// <param name="z"> Start z. </param>
-		vector3(const float &x, const float &y, const float &z);
+		/// <param name="source"> Creates this vector out of a existing one. </param>
+		vector3(const vector2 &source);
 
 		/// <summary>
 		/// Constructor for vector3.
@@ -41,18 +39,24 @@ namespace flounder
 		vector3(const vector4 &source);
 
 		/// <summary>
+		/// Constructor for vector3.
+		/// </summary>
+		/// <param name="x"> Start x. </param>
+		/// <param name="y"> Start y. </param>
+		/// <param name="z"> Start z. </param>
+		vector3(const float &x, const float &y, const float &z);
+
+		/// <summary>
 		/// Deconstructor for vector3.
 		/// </summary>
 		~vector3();
 
 		/// <summary>
-		/// Sets values in the vector.
+		/// Loads from another vector3.
 		/// </summary>
-		/// <param name="x"> The new X value. </param>
-		/// <param name="y"> The new Y value. </param>
-		/// <param name="z"> The new Z value. </param>
+		/// <param name="source"> The source vector. </param>
 		/// <returns> This. </returns>
-		vector3 *set(const float &x, const float &y, const float &z);
+		vector3 *set(const vector2 &source);
 
 		/// <summary>
 		/// Loads from another vector3.
@@ -67,6 +71,15 @@ namespace flounder
 		/// <param name="source"> The source vector. </param>
 		/// <returns> This. </returns>
 		vector3 *set(const vector4 &source);
+
+		/// <summary>
+		/// Sets values in the vector.
+		/// </summary>
+		/// <param name="x"> The new X value. </param>
+		/// <param name="y"> The new Y value. </param>
+		/// <param name="z"> The new Z value. </param>
+		/// <returns> This. </returns>
+		vector3 *set(const float &x, const float &y, const float &z);
 
 		/// <summary>
 		/// Adds two vectors together and places the result in the destination vector.

@@ -41,7 +41,7 @@
 #include "framework/imodule.hpp"
 #include "framework/iupdater.hpp"
 #include "inputs/axisbutton.hpp"
-#include "maths/transform.hpp"
+#include "maths/Transform.hpp"
 #include "models/material.hpp"
 #include "noise/noisefast.hpp"
 #include "particles/particle.hpp"

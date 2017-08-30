@@ -9,7 +9,7 @@ namespace flounder
 	const float water::SQUARE_SIZE = 2.598f;
 	const int water::VERTEX_COUNT = 176;
 
-	const colour water::WATER_COLOUR = colour(0.21f, 0.41f, 0.59f);
+	const colour water::WATER_COLOUR = colour(0.21f, 0.41f, 0.59f, 1.0f);
 
 	const float water::SHINE_DAMPER = 1.0f;
 	const float water::REFLECTIVITY = 0.0f;

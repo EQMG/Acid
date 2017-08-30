@@ -5,7 +5,7 @@ namespace flounder
 	const float inputgrabber::CHANGE_TIME = 0.1f;
 	const float inputgrabber::SCALE_NORMAL = 1.6f;
 	const float inputgrabber::SCALE_SELECTED = 1.8f;
-	colour *const inputgrabber::COLOUR_NORMAL = new colour(0.0f, 0.0f, 0.0f);
+	colour *const inputgrabber::COLOUR_NORMAL = new colour(0.0f, 0.0f, 0.0f, 1.0f);
 
 	grabberjoystick::grabberjoystick(const int &joystick) :
 		igrabber(),
@@ -107,7 +107,7 @@ namespace flounder
 		m_actionChange(nullptr)
 	{
 		m_text->setInScreenCoords(true);
-		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f));
+		m_text->setTextColour(colour(1.0f, 1.0f, 1.0f, 1.0f));
 
 		m_background->setInScreenCoords(true);
 		m_background->setColourOffset(colour());

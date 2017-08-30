@@ -1,67 +1,46 @@
-﻿#include "transform.hpp"
+﻿#include "Transform.hpp"
 
 namespace flounder
 {
-	transform::transform()
+	Transform::Transform() :
+		m_position(new vector3()),
+		m_rotation(new vector3()),
+		m_scaling(new vector3())
 	{
-		m_position = new vector3();
-		m_rotation = new vector3();
-		m_scaling = new vector3();
 	}
 
-	transform::transform(const transform &source)
+	Transform::Transform(const Transform &source) :
+		m_position(new vector3(*source.m_position)),
+		m_rotation(new vector3(*source.m_rotation)),
+		m_scaling(new vector3(*source.m_scaling))
 	{
-		m_position = new vector3(*source.m_position);
-		m_rotation = new vector3(*source.m_rotation);
-		m_scaling = new vector3(*source.m_scaling);
 	}
 
-	transform::transform(const vector3 &position)
+	Transform::Transform(const vector3 &position, const vector3 &rotation, const vector3 &scaling) :
+		m_position(new vector3(position)),
+		m_rotation(new vector3(rotation)),
+		m_scaling(new vector3(scaling))
 	{
-		m_position = new vector3(position);
-		m_rotation = new vector3();
-		m_scaling = new vector3();
 	}
 
-	transform::transform(const vector3 &position, const vector3 &rotation)
-	{
-		m_position = new vector3(position);
-		m_rotation = new vector3(rotation);
-		m_scaling = new vector3();
-	}
-
-	transform::transform(const vector3 &position, const vector3 &rotation, const vector3 &scaling)
-	{
-		m_position = new vector3(position);
-		m_rotation = new vector3(rotation);
-		m_scaling = new vector3(scaling);
-	}
-
-	transform::transform(const vector3 & position, const vector3 & rotation, const float &scale)
-	{
-		m_position = new vector3(position);
-		m_rotation = new vector3(rotation);
-		m_scaling = new vector3(scale, scale, scale);
-	}
-
-	transform::~transform()
+	Transform::~Transform()
 	{
 		delete m_position;
 		delete m_rotation;
 		delete m_scaling;
 	}
 
-	matrix4x4 *transform::worldMatrix(matrix4x4 *destination) const
+	matrix4x4 *Transform::GetWorldMatrix(matrix4x4 *destination) const
 	{
 		return matrix4x4::transformationMatrix(*m_position, *m_rotation, *m_scaling, destination);
 	}
 
-	matrix4x4 *transform::modelMatrix(matrix4x4 *destination) const
+	matrix4x4 *Transform::GetModelMatrix(matrix4x4 *destination) const
 	{
 		return matrix4x4::transformationMatrix(vector3(), *m_rotation, vector3(), destination);
 	}
 
-	void transform::set(const transform &source)
+	void Transform::Set(const Transform &source) const
 	{
 		m_position->set(*source.m_position);
 		m_rotation->set(*source.m_rotation);
