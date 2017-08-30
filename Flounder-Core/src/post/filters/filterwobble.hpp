@@ -13,9 +13,7 @@ namespace flounder
 		float m_wobbleSpeed;
 		float m_wobbleAmount;
 	public:
-		filterwobble(const float &wobbleSpeed);
-
-		filterwobble();
+		filterwobble(const float &wobbleSpeed = 2.0f);
 
 		~filterwobble();
 

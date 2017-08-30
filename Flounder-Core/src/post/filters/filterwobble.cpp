@@ -3,13 +3,8 @@
 namespace flounder
 {
 	filterwobble::filterwobble(const float &wobbleSpeed) :
-		ipostfilter("filterWobble", "res/shaders/filters/wobble.frag.spv")
-	{
-		m_wobbleSpeed = wobbleSpeed;
-	}
-
-	filterwobble::filterwobble() :
-		filterwobble(2.0f)
+		ipostfilter("filterWobble", "res/shaders/filters/wobble.frag.spv"),
+		m_wobbleSpeed(wobbleSpeed)
 	{
 	}
 

@@ -40,6 +40,6 @@ namespace flounder
 		/// Gets the fbo containing the pipeline output.
 		/// </summary>
 		/// <returns> The output fbo. </returns>
-		virtual fbo *getOutput() = 0;
+		virtual Fbo *getOutput() = 0;
 	};
 }

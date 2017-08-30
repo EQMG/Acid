@@ -147,47 +147,41 @@ namespace flounder
 	}
 
 	display::display() :
-		imodule()
-	{
-		m_windowWidth = 1080;
-		m_windowHeight = 720;
-		m_fullscreenWidth = 0;
-		m_fullscreenHeight = 0;
-		m_aspectRatio = 1.5f;
-
-		m_title = "Flounder C++";
-		m_icon = "";
-		m_fpsLimit = -1.0f;
-		m_antialiasing = true;
-		m_fullscreen = false;
-
-		m_window = nullptr;
-		m_closed = false;
-		m_focused = true;
-		m_windowPosX = 0;
-		m_windowPosY = 0;
-
+		imodule(),
+		m_windowWidth(1080),
+		m_windowHeight(720),
+		m_fullscreenWidth(0),
+		m_fullscreenHeight(0),
+		m_aspectRatio(1.5f),
+		m_title("Flounder C++"),
+		m_icon(""),
+		m_fpsLimit(-1.0f),
+		m_antialiasing(true),
+		m_fullscreen(false),
+		m_window(nullptr),
+		m_closed(false),
+		m_focused(true),
+		m_windowPosX(0),
+		m_windowPosY(0),
 #if FLOUNDER_VERBOSE
-		m_validationLayers = true;
+		m_validationLayers(true),
 #else
-		m_validationLayers = false;
+		m_validationLayers(false),
 #endif
-
-		m_instance = VK_NULL_HANDLE;
-		m_surface = VK_NULL_HANDLE;
-		m_physicalDevice = VK_NULL_HANDLE;
-		m_physicalDeviceProperties = {};
-		m_physicalDeviceFeatures = {};
-		m_physicalDeviceMemoryProperties = {};
-		m_instanceLayerList = std::vector<const char*>();
-		m_instanceExtensionList = std::vector<const char*>();
-		m_deviceExtensionList = std::vector<const char*>();
-		m_debugReport = VK_NULL_HANDLE;
-		m_device = VK_NULL_HANDLE;
-
-		m_graphicsQueue = VK_NULL_HANDLE;
-		m_presentQueue = VK_NULL_HANDLE;
-
+		m_instance(VK_NULL_HANDLE),
+		m_surface(VK_NULL_HANDLE),
+		m_physicalDevice(VK_NULL_HANDLE),
+		m_physicalDeviceProperties(VkPhysicalDeviceProperties()),
+		m_physicalDeviceFeatures(VkPhysicalDeviceFeatures()),
+		m_physicalDeviceMemoryProperties(VkPhysicalDeviceMemoryProperties()),
+		m_instanceLayerList(std::vector<const char*>()),
+		m_instanceExtensionList(std::vector<const char*>()),
+		m_deviceExtensionList(std::vector<const char*>()),
+		m_debugReport(VK_NULL_HANDLE),
+		m_device(VK_NULL_HANDLE),
+		m_graphicsQueue(VK_NULL_HANDLE),
+		m_presentQueue(VK_NULL_HANDLE)
+	{
 		createWindow();
 		setupLayers();
 		setupExtensions();

@@ -27,7 +27,7 @@
 #include "events/eventtime.hpp"
 #include "events/ievent.hpp"
 #include "fbos/depthbuffer.hpp"
-#include "fbos/fbo.hpp"
+#include "fbos/Fbo.hpp"
 #include "flounder.hpp"
 #include "fonts/character.hpp"
 #include "fonts/line.hpp"

@@ -22,11 +22,10 @@ namespace flounder
 	}
 
 	keyboard::keyboard() :
-		imodule()
+		imodule(),
+		m_keyboardKeys(new int[GLFW_KEY_LAST + 1]),
+		m_keyboardChar(0)
 	{
-		m_keyboardKeys = new int[GLFW_KEY_LAST + 1];
-		m_keyboardChar = 0;
-
 		// Sets the default state of the keys to released.
 		for (unsigned int i = 0; i < GLFW_KEY_LAST + 1; i++)
 		{

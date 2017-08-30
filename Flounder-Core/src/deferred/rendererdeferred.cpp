@@ -2,7 +2,7 @@
 
 namespace flounder
 {
-	rendererdeferred::rendererdeferred(fbo *fbo) :
+	rendererdeferred::rendererdeferred(Fbo *fbo) :
 		m_shader(new shader("deferred", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/deferred/deferred.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/deferred/deferred.frag.spv")
@@ -12,7 +12,7 @@ namespace flounder
 	}
 
 	rendererdeferred::rendererdeferred() :
-		rendererdeferred(new fbo(true, 1.0f))
+		rendererdeferred(new Fbo(true, 1.0f))
 	{
 	}
 

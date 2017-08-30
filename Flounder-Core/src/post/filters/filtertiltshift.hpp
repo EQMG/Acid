@@ -14,9 +14,7 @@ namespace flounder
 		float m_stepSize;
 		float m_steps;
 	public:
-		filtertiltshift(const float &blurAmount, const float &centre, const float &stepSize, const float &steps);
-
-		filtertiltshift();
+		filtertiltshift(const float &blurAmount = 1.0f, const float &centre = 1.1f, const float &stepSize = 0.004f, const float &steps = 3.0f);
 
 		~filtertiltshift();
 

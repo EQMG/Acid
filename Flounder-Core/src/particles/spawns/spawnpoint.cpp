@@ -3,9 +3,9 @@
 namespace flounder
 {
 	spawnpoint::spawnpoint() :
-		ispawnparticle()
+		ispawnparticle(),
+		m_point(new vector3())
 	{
-		m_point = new vector3();
 	}
 
 	spawnpoint::~spawnpoint()

@@ -3,13 +3,8 @@
 namespace flounder
 {
 	filterpixel::filterpixel(const float &pixelSize) :
-		ipostfilter("filterGrain", "res/shaders/filters/grain.frag.spv")
-	{
-		m_pixelSize = pixelSize;
-	}
-
-	filterpixel::filterpixel() :
-		filterpixel(2.0f)
+		ipostfilter("filterGrain", "res/shaders/filters/grain.frag.spv"),
+		m_pixelSize(pixelSize)
 	{
 	}
 

@@ -8,7 +8,7 @@ namespace flounder
 		m_x(0.0f),
 		m_y(0.0f),
 		m_z(0.0f),
-		m_w(0.0f)
+		m_w(1.0f)
 	{
 	}
 
@@ -54,7 +54,7 @@ namespace flounder
 		m_x = source.m_x;
 		m_y = source.m_y;
 		m_z = source.m_z;
-		m_w = 0.0f;
+		m_w = 1.0f;
 		return this;
 	}
 

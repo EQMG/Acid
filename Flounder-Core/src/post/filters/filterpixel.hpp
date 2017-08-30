@@ -11,9 +11,7 @@ namespace flounder
 	private:
 		float m_pixelSize;
 	public:
-		filterpixel(const float &pixelSize);
-
-		filterpixel();
+		filterpixel(const float &pixelSize = 2.0f);
 
 		~filterpixel();
 

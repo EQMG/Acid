@@ -35,7 +35,7 @@ namespace flounder
 		/// </summary>
 		/// <param name="useMouse"> If the ray will use the mouse coords or to start from screenStart. </param>
 		/// <param name="screenStart"> If useMouse is false then this will be used as the rays start. </param>
-		ray(const bool &useMouse, vector2 *screenStart);
+		ray(const bool &useMouse, const vector2 &screenStart);
 
 		/// <summary>
 		/// Deconstructor for the ray.

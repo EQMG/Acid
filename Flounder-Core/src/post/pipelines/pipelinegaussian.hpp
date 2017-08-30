@@ -21,7 +21,7 @@ namespace flounder
 
 		void renderPipeline(const int n_args, va_list args) override;
 
-		fbo *getOutput() override;
+		Fbo *getOutput() override;
 
 		void setScaleValue(const float &scaleValue);
 	};

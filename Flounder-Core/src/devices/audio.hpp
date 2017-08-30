@@ -39,10 +39,10 @@ namespace flounder
 	private:
 		friend class sound;
 
+		static std::vector<sound*> m_sounds;
+
 		ALCdevice *m_device;
 		ALCcontext *m_context;
-
-		static std::vector<sound*> m_sounds;
 	public:
 		/// <summary>
 		/// Gets this framework instance.

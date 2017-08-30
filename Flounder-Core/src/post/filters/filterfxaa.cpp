@@ -3,9 +3,9 @@
 namespace flounder
 {
 	filterfxaa::filterfxaa(const float &spanMax) :
-		ipostfilter("filterFxaa", "res/shaders/filters/fxaa.frag.spv")
+		ipostfilter("filterFxaa", "res/shaders/filters/fxaa.frag.spv"),
+		m_spanMax(spanMax)
 	{
-		m_spanMax = spanMax;
 	}
 
 	filterfxaa::~filterfxaa()
