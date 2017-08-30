@@ -23,14 +23,8 @@ namespace flounder
 		/// Creates a new sphere
 		/// </summary>
 		/// <param name="radius"> The spheres radius. </param>
-		sphere(const float &radius);
-
-		/// <summary>
-		/// Creates a new sphere
-		/// </summary>
-		/// <param name="radius"> The spheres radius. </param>
 		/// <param name="position"> The spheres initial position. </param>
-		sphere(const float &radius, vector3 *position);
+		sphere(const float &radius, const vector3 &position = vector3());
 
 		/// <summary>
 		/// Creates a new sphere from another sphere source.
@@ -56,5 +50,13 @@ namespace flounder
 		bool contains(const icollider &other) override;
 
 		bool contains(const vector3 &point) override;
+
+		inline float getRadius() const { return m_radius; }
+
+		inline void setRadius(const float &radius) { m_radius = radius; }
+
+		inline vector3 *getPosition() const { return m_position; }
+
+		inline void setPosition(const vector3 &position) const { m_position->set(position); }
 	};
 }

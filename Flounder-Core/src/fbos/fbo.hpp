@@ -12,9 +12,9 @@
 namespace flounder
 {
 	/// <summary>
-	/// A class that represents a OpenGL Frame Buffer object.
+	/// A class that represents a Frame Buffer object.
 	/// </summary>
-	class fbo
+	class Fbo
 	{
 	private:
 		int m_width;
@@ -46,10 +46,10 @@ namespace flounder
 
 	public:
 		/// <summary>
-		/// A new OpenGL fbo object.
+		/// A new fbo object.
 		/// </summary>
 		/// <param name="builder"> The fbo builder. </param>
-		fbo(const int &width = 0,
+		Fbo(const int &width = 0,
 			const int &height = 0,
 			const depthbuffer &depthBufferType = DepthNone,
 			const bool &useColourBuffer = true,
@@ -61,7 +61,7 @@ namespace flounder
 			const bool &antialiased = false,
 			const int &samples = 0);
 
-		fbo(const bool &fitToScreen = true,
+		Fbo(const bool &fitToScreen = true,
 			const float &sizeScalar = 1.0f,
 			const depthbuffer &depthBufferType = DepthNone,
 			const bool &useColourBuffer = true,
@@ -76,7 +76,7 @@ namespace flounder
 		/// <summary>
 		/// Deconstructor for the fbo.
 		/// </summary>
-		~fbo();
+		~Fbo();
 
 		/// <summary>
 		/// Binds the FBO so it can be rendered too.
@@ -147,7 +147,7 @@ namespace flounder
 		/// </summary>
 		/// <param name="source"> The source fbo </param>
 		/// <param name="output"> The other FBO to blit to. </param>
-		static void resolveFBO(fbo *source, fbo *output);
+		static void resolveFBO(Fbo *source, Fbo *output);
 
 		/// <summary>
 		/// Blits this FBO attachment to another FBO attachment.
@@ -156,7 +156,7 @@ namespace flounder
 		/// <param name="readBuffer"> The colour attachment to be read from. </param>
 		/// <param name="drawBuffer"> The colour draw buffer to be written to. </param>
 		/// <param name="output"> The other FBO to blit to. </param>
-		static void resolveFBO(fbo *source, const int readBuffer, const int drawBuffer, fbo *output);
+		static void resolveFBO(Fbo *source, const int readBuffer, const int drawBuffer, Fbo *output);
 	private:
 		/// <summary>
 		/// Initializes the FBO.

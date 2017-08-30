@@ -3,9 +3,9 @@
 namespace flounder
 {
 	filtermotion::filtermotion() :
-		ipostfilter("filterMotion", "res/shaders/filters/motion.frag.spv")
+		ipostfilter("filterMotion", "res/shaders/filters/motion.frag.spv"),
+		m_lastViewMatrix(new matrix4x4())
 	{
-		m_lastViewMatrix = new matrix4x4();
 	}
 
 	filtermotion::~filtermotion()

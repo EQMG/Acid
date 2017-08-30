@@ -3,24 +3,24 @@
 namespace flounder
 {
 	aabb::aabb() :
-		icollider()
+		icollider(),
+		m_minExtents(new vector3()),
+		m_maxExtents(new vector3())
 	{
-		m_minExtents = new vector3();
-		m_maxExtents = new vector3();
 	}
 
 	aabb::aabb(vector3 *minExtents, vector3 *maxExtents) :
-		icollider()
+		icollider(),
+		m_minExtents(minExtents),
+		m_maxExtents(maxExtents)
 	{
-		m_minExtents = minExtents;
-		m_maxExtents = maxExtents;;
 	}
 
 	aabb::aabb(const aabb &source) :
-		icollider()
+		icollider(),
+		m_minExtents(new vector3(*source.m_minExtents)),
+		m_maxExtents(new vector3(*source.m_maxExtents))
 	{
-		m_minExtents = new vector3(*source.m_minExtents);
-		m_maxExtents = new vector3(*source.m_maxExtents);
 	}
 
 	aabb::~aabb()

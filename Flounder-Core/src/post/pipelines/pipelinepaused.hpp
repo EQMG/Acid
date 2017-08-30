@@ -23,7 +23,7 @@ namespace flounder
 
 		void renderPipeline(const int n_args, va_list args) override;
 
-		fbo *getOutput() override;
+		Fbo *getOutput() override;
 
 		inline void setBlurFactor(const float &blurFactor) { m_blurFactor = blurFactor; }
 	};

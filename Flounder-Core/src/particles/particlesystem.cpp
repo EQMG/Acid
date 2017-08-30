@@ -2,21 +2,18 @@
 
 namespace flounder
 {
-	particlesystem::particlesystem(std::vector<particletype *> *types, ispawnparticle *spawn, const float &pps, const float &speed, const float &gravityEffect)
+	particlesystem::particlesystem(std::vector<particletype *> *types, ispawnparticle *spawn, const float &pps, const float &speed, const float &gravityEffect) :
+		m_types(types),
+		m_spawn(spawn),
+		m_pps(pps),
+		m_averageSpeed(speed),
+		m_gravityEffect(gravityEffect),
+		m_randomRotation(false),
+		m_systemCentre(new vector3()),
+		m_velocityCentre(new vector3()),
+		m_timePassed(0.0f),
+		m_paused(false)
 	{
-		m_types = types;
-		m_spawn = spawn;
-		m_pps = pps;
-		m_averageSpeed = speed;
-		m_gravityEffect = gravityEffect;
-		m_randomRotation = false;
-
-		m_systemCentre = new vector3();
-		m_velocityCentre = new vector3();
-
-		m_timePassed = 0.0f;
-		m_paused = false;
-
 		//	particles::get()->addSystem(this);
 	}
 
