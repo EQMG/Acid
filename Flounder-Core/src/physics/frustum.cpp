@@ -1,6 +1,6 @@
 #include "frustum.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const int frustum::RIGHT = 0;
 	const int frustum::LEFT = 1;

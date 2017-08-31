@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A extension used with standards to define a standards.
@@ -25,6 +25,6 @@ namespace flounder
 		/// <summary>
 		/// Run when updating the standards.
 		/// </summary>
-		virtual void update() = 0;
+		virtual void Update() = 0;
 	};
 }

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Holds requests in a simple que.

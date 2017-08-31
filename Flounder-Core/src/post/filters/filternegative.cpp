@@ -1,6 +1,6 @@
 #include "filternegative.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filternegative::filternegative() :
 		ipostfilter("filterNegative", "res/shaders/filters/negative.frag.spv")

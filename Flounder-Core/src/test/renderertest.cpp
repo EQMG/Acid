@@ -1,6 +1,6 @@
 ﻿#include "renderertest.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	renderertest::renderertest()
 	{
@@ -10,7 +10,7 @@ namespace flounder
 	{
 	}
 
-	void renderertest::render(const vector4 &clipPlane, const icamera &camera)
+	void renderertest::render(const vector4 &clipPlane, const ICamera &camera)
 	{
 	}
 }

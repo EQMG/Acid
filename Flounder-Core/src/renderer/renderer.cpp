@@ -1,9 +1,9 @@
 #include "renderer.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	renderer::renderer() :
-		imodule()
+		IModule()
 	{
 		m_managerRender = nullptr;
 
@@ -50,7 +50,7 @@ namespace flounder
 		vkDestroyCommandPool(display::get()->getVkDevice(), m_commandPool, nullptr);
 	}
 
-	void renderer::update()
+	void renderer::Update()
 	{
 		if (m_managerRender != nullptr)
 		{

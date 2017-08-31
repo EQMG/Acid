@@ -1,6 +1,6 @@
 ﻿#include "inputdelay.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	inputdelay::inputdelay() :
 		m_timerDelay(new timer(0.4f)),

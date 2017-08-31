@@ -1,6 +1,6 @@
 #include "axisjoystick.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	axisjoystick::axisjoystick(const int &joystick, const int n_args, ...) :
 		iaxis(),

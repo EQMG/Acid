@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../devices/display.hpp"
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../shaders/shader.hpp"
 #include "../textures/texture.hpp"
 
@@ -9,10 +9,10 @@
 
 #include "imanagerrender.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class renderer :
-		public imodule
+		public IModule
 	{
 	private:
 		struct testubo
@@ -39,12 +39,12 @@ namespace flounder
 		int lastHeight;
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline renderer *get()
 		{
-			return static_cast<renderer*>(framework::get()->getInstance("renderer"));
+			return static_cast<renderer*>(Engine::Get()->GetModule("renderer"));
 		}
 
 		/// <summary>
@@ -57,7 +57,7 @@ namespace flounder
 		/// </summary>
 		~renderer();
 
-		void update() override;
+		void Update() override;
 
 		/// <summary>
 		/// Gets the renderer manager.

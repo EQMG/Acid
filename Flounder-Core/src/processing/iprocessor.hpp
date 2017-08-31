@@ -2,7 +2,7 @@
 
 #include "irequest.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A extension used with the processing class to define a processor.

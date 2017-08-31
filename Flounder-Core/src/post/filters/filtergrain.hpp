@@ -2,7 +2,7 @@
 
 #include "../ipostfilter.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class filtergrain :
 		public ipostfilter

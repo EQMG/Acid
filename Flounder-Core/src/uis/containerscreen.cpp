@@ -1,6 +1,6 @@
 ﻿#include "containerscreen.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	containerscreen::containerscreen(uiobject *parent, const vector2 &position, const vector2 &dimensions, const bool &inScreenCoords) :
 		uiobject(parent, position, dimensions)

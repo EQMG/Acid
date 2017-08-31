@@ -9,7 +9,7 @@
 
 #include "character.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Provides functionality for getting the values from a font file.

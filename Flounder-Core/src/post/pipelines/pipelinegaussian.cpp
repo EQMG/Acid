@@ -1,6 +1,6 @@
 #include "pipelinegaussian.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	pipelinegaussian::pipelinegaussian(const int &width, const int &height) :
 		ipostpipeline()

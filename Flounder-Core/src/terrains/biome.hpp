@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder
+namespace Flounder
 {
 	enum biome
 	{

@@ -3,7 +3,7 @@
 #include "../shaders/shader.hpp"
 #include "../models/model.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	struct entityrender
 	{

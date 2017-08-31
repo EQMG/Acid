@@ -2,7 +2,7 @@
 
 #include "icollider.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A axis-aligned bounding box.

@@ -1,6 +1,6 @@
 #include "filtercombine.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filtercombine::filtercombine() :
 		ipostfilter("filterCombine", "res/shaders/filters/combine.frag.spv"),

@@ -1,6 +1,6 @@
 #include "driverconstant.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	driverconstant::driverconstant(const float &constant) : 
 		idriver(1.0f),

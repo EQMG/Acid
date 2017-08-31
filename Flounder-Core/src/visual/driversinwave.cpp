@@ -1,6 +1,6 @@
 #include "driversinwave.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	driversinwave::driversinwave(const float &min, const float &max, const float &length) : 
 		idriver(length),

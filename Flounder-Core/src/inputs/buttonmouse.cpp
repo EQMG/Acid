@@ -1,6 +1,6 @@
 #include "buttonmouse.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	buttonmouse::buttonmouse(const int n_args, ...) :
 		ibutton(),

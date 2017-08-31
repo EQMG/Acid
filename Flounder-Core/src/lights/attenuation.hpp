@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Attenuation is used in calculating the range of lights.

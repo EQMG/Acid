@@ -1,6 +1,6 @@
 #include "filtertiltshift.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filtertiltshift::filtertiltshift(const float &blurAmount, const float &centre, const float &stepSize, const float &steps) :
 		ipostfilter("filterTiltshift", "res/shaders/filters/tiltshift.frag.spv"),

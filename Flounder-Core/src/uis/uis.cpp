@@ -1,9 +1,9 @@
 #include "uis.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	uis::uis() :
-		imodule(),
+		IModule(),
 		m_managerUis(nullptr),
 		m_selector(new uiselector()),
 		m_container(new containerscreen(nullptr, vector2(0.5f, 0.5f), vector2(1.0f, 1.0f), false)),
@@ -30,7 +30,7 @@ namespace flounder
 		delete m_segoe;
 	}
 
-	void uis::update()
+	void uis::Update()
 	{
 		if (m_managerUis != nullptr)
 		{

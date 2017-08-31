@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../maths/vector3.hpp"
 #include "../maths/vector4.hpp"
 #include "../maths/matrix4x4.hpp"
@@ -11,7 +11,7 @@
 #include "particletype.hpp"
 #include "particle.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A system of particles that are to be spawned.

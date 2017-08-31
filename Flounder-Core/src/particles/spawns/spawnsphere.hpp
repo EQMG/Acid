@@ -2,7 +2,7 @@
 
 #include "ispawnparticle.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class spawnsphere :
 		public ispawnparticle

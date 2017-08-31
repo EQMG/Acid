@@ -1,6 +1,6 @@
 #include "filtersepia.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filtersepia::filtersepia() :
 		ipostfilter("filterSepia", "res/shaders/filters/sepia.frag.spv")

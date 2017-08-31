@@ -5,11 +5,11 @@
 #include "../devices/display.hpp"
 #include "../maths/vector2.hpp"
 #include "../maths/vector4.hpp"
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../visual/idriver.hpp"
 #include "../visual/driverconstant.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A representation of a object this is rendered to a screen. This object is contained in a parent and has children.

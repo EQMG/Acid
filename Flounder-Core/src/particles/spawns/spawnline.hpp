@@ -3,7 +3,7 @@
 #include "../../maths/maths.hpp"
 #include "ispawnparticle.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class spawnline :
 		public ispawnparticle

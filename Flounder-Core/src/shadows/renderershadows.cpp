@@ -1,6 +1,6 @@
 #include "renderershadows.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	renderershadows::renderershadows() :
 		irenderer(),
@@ -18,7 +18,7 @@ namespace flounder
 		delete m_shader;
 	}
 
-	void renderershadows::render(const vector4 &clipPlane, const icamera &camera)
+	void renderershadows::render(const vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 
@@ -30,7 +30,7 @@ namespace flounder
 		endRendering();
 	}
 
-	void renderershadows::prepareRendering(const vector4 &clipPlane, const icamera &camera)
+	void renderershadows::prepareRendering(const vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		m_fbo->setSize(shadows::get()->getShadowSize(), shadows::get()->getShadowSize());

@@ -6,7 +6,7 @@
 
 #include "terrains.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class rendererterrains :
 		public irenderer
@@ -18,9 +18,9 @@ namespace flounder
 
 		~rendererterrains();
 
-		void render(const vector4 &clipPlane, const icamera &camera) override;
+		void render(const vector4 &clipPlane, const ICamera &camera) override;
 	private:
-		void prepareRendering(const vector4 &clipPlane, const icamera &camera);
+		void prepareRendering(const vector4 &clipPlane, const ICamera &camera);
 
 		void renderTerrain(terrain *object);
 

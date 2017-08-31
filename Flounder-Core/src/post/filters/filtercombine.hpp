@@ -4,7 +4,7 @@
 #include "../../maths/vector4.hpp"
 #include "../ipostfilter.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class filtercombine :
 		public ipostfilter

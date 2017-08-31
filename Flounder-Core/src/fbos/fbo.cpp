@@ -1,6 +1,6 @@
 #include "Fbo.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	Fbo::Fbo(const int &width, const int &height, const depthbuffer &depthBufferType, const bool &useColourBuffer, const int &attachments, const bool &linearFiltering, const bool &wrapTextures, const bool &clampEdge, const bool &alphaChannel, const bool &antialiased, const int &samples)
 	{

@@ -5,7 +5,7 @@
 
 #include "character.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// During the loading of a text this represents one word in the text.

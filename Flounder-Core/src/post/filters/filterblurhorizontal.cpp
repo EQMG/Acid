@@ -1,6 +1,6 @@
 #include "filterblurhorizontal.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filterblurhorizontal::filterblurhorizontal(const float &sizeScalar) :
 		ipostfilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontal.frag.spv", new Fbo(true, sizeScalar)),

@@ -1,6 +1,6 @@
 ﻿#include "particle.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	particle::particle(particletype *particleType, const vector3 &position, const vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
 		m_particleType(particleType),
@@ -32,24 +32,24 @@ namespace flounder
 
 	void particle::update()
 	{
-		m_velocity->m_y += -10.0f * m_gravityEffect * framework::get()->getDelta();
+		m_velocity->m_y += -10.0f * m_gravityEffect * Engine::Get()->GetDelta();
 		m_change->set(*m_velocity);
-		m_change->scale(framework::get()->getDelta());
+		m_change->scale(Engine::Get()->GetDelta());
 
 		vector3::add(*m_change, *m_position, m_position);
-		m_elapsedTime += framework::get()->getDelta();
+		m_elapsedTime += Engine::Get()->GetDelta();
 
 		if (m_elapsedTime > m_lifeLength)
 		{
-			m_transparency += 1.0f * framework::get()->getDelta();
+			m_transparency += 1.0f * Engine::Get()->GetDelta();
 		}
 
-		if (!isAlive() || camera::get()->getCamera() == nullptr)
+		if (!isAlive() || Camera::Get()->GetCamera() == nullptr)
 		{
 			return;
 		}
 
-		vector3 *cameraToParticle = vector3::subtract(*camera::get()->getCamera()->getPosition(), *m_position, nullptr);
+		vector3 *cameraToParticle = vector3::subtract(*Camera::Get()->GetCamera()->GetPosition(), *m_position, nullptr);
 		m_distanceToCamera = cameraToParticle->lengthSquared();
 		delete cameraToParticle;
 

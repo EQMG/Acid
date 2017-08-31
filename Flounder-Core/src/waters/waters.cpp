@@ -1,9 +1,9 @@
 #include "waters.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	waters::waters() :
-		imodule(),
+		IModule(),
 		m_water(nullptr),
 		m_colourIntensity(0.7f),
 		m_enableReflections(false),
@@ -17,7 +17,7 @@ namespace flounder
 		delete m_water;
 	}
 
-	void waters::update()
+	void waters::Update()
 	{
 		if (m_water != nullptr)
 		{

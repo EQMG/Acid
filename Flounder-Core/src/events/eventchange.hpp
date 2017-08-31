@@ -4,7 +4,7 @@
 
 #include "ievent.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A class that acts as a basic change listener for a value.

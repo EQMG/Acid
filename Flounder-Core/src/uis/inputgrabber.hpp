@@ -10,7 +10,7 @@
 #include "uialign.hpp"
 #include "inputdelay.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class igrabber
 	{

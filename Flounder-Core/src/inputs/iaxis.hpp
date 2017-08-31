@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Interface for an axis based input device.

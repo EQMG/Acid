@@ -1,7 +1,7 @@
 ﻿#include "sound.hpp"
 #include "../devices/audio.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	// TODO: https://github.com/AndySmile/SimpleAudioLibrary
 

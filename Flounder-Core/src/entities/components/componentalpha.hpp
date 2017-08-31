@@ -3,7 +3,7 @@
 #include "../entity.hpp"
 #include "../icomponent.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class componentalpha :
 		public icomponent

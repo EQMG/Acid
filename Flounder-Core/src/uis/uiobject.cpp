@@ -1,6 +1,6 @@
 ﻿#include "uiobject.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	uiobject::uiobject(uiobject *parent, const vector2 &position, const vector2 &dimensions) :
 		m_parent(parent),
@@ -62,9 +62,9 @@ namespace flounder
 			child->update();
 		}
 
-		m_rotation = m_rotationDriver->update(framework::get()->getDelta());
-		m_alpha = m_alphaDriver->update(framework::get()->getDelta());
-		m_scale = m_scaleDriver->update(framework::get()->getDelta());
+		m_rotation = m_rotationDriver->update(Engine::Get()->GetDelta());
+		m_alpha = m_alphaDriver->update(Engine::Get()->GetDelta());
+		m_scale = m_scaleDriver->update(Engine::Get()->GetDelta());
 
 		if (isVisible() && getAlpha() != 0.0f)
 		{

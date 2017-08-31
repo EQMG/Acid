@@ -1,6 +1,6 @@
 ﻿#include "particlesystem.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	particlesystem::particlesystem(std::vector<particletype *> *types, ispawnparticle *spawn, const float &pps, const float &speed, const float &gravityEffect) :
 		m_types(types),
@@ -29,7 +29,7 @@ namespace flounder
 			return nullptr;
 		}
 
-		m_timePassed += framework::get()->getDelta();
+		m_timePassed += Engine::Get()->GetDelta();
 
 		if (m_timePassed > (1.0f / m_pps))
 		{

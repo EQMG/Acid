@@ -1,6 +1,6 @@
 #include "filtertone.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filtertone::filtertone() :
 		ipostfilter("filterTone", "res/shaders/filters/tone.frag.spv")

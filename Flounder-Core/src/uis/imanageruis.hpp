@@ -2,7 +2,7 @@
 
 #include "../maths/colour.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A interface used to manage a main UI system.

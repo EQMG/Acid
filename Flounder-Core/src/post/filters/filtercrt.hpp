@@ -3,7 +3,7 @@
 #include "../../maths/colour.hpp"
 #include "../ipostfilter.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class filtercrt :
 		public ipostfilter

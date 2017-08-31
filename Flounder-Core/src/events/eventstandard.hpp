@@ -4,7 +4,7 @@
 
 #include "ievent.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A class that is the most basic implementation of the event interface.

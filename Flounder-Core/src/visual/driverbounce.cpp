@@ -1,6 +1,6 @@
 #include "driverbounce.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	driverbounce::driverbounce(const float &start, const float &end, const float &length) : 
 		idriver(length),

@@ -1,6 +1,6 @@
 ﻿#include "inputslider.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const float inputslider::CHANGE_TIME = 0.1f;
 	const float inputslider::SCALE_NORMAL = 1.6f;
