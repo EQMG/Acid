@@ -4,7 +4,7 @@
 #include <string>
 #include <cmath>
 
-#include "../devices/display.hpp"
+#include "../devices/Display.hpp"
 #include "../maths/maths.hpp"
 
 #include "depthbuffer.hpp"

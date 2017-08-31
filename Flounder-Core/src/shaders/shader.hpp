@@ -5,7 +5,7 @@
 #include <map>
 #include <stdarg.h>
 
-#include "../devices/display.hpp"
+#include "../devices/Display.hpp"
 #include "../helpers/helperfile.hpp"
 #include "../helpers/helperstring.hpp"
 #include "../maths/colour.hpp"

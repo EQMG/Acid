@@ -1,11 +1,11 @@
 #include "glfwupdater.hpp"
 
 #include "../../camera/camera.hpp"
-#include "../../devices/audio.hpp"
-#include "../../devices/display.hpp"
-#include "../../devices/joysticks.hpp"
-#include "../../devices/keyboard.hpp"
-#include "../../devices/mouse.hpp"
+#include "../../devices/Audio.hpp"
+#include "../../devices/Display.hpp"
+#include "../../devices/Joysticks.hpp"
+#include "../../devices/Keyboard.hpp"
+#include "../../devices/Mouse.hpp"
 #include "../../renderer/renderer.hpp"
 
 #include "../../events/events.hpp"
@@ -59,11 +59,11 @@ namespace Flounder
 		m_timerUpdate = new timer(1.0f / 62.0f);
 		m_timerRender = new timer(1.0f / -1.0f);
 
-		AddModule(UpdatePre, "audio", new audio());
-		AddModule(UpdateRender, "display", new display());
-		AddModule(UpdatePre, "joysticks", new joysticks());
-		AddModule(UpdatePre, "keyboard", new keyboard());
-		AddModule(UpdatePre, "mouse", new mouse());
+		AddModule(UpdatePre, "audio", new Audio());
+		AddModule(UpdateRender, "display", new Display());
+		AddModule(UpdatePre, "joysticks", new Joysticks());
+		AddModule(UpdatePre, "keyboard", new Keyboard());
+		AddModule(UpdatePre, "mouse", new Mouse());
 		AddModule(UpdateRender, "renderer", new renderer());
 
 		AddModule(UpdatePre, "events", new events());
@@ -82,9 +82,9 @@ namespace Flounder
 
 	void GlfwUpdater::Update()
 	{
-		if (display::get() != nullptr)
+		if (Display::get() != nullptr)
 		{
-			m_timerRender->setInterval(1.0f / display::get()->getFpsLimit());
+			m_timerRender->setInterval(1.0f / Display::get()->getFpsLimit());
 		}
 
 		// Always-Update
@@ -109,7 +109,7 @@ namespace Flounder
 		}
 
 		// Renders when needed.
-		if (m_timerRender->isPassedTime() || display::get()->getFpsLimit() <= 0.0f || display::get()->getFpsLimit() > 1000.0f)
+		if (m_timerRender->isPassedTime() || Display::get()->getFpsLimit() <= 0.0f || Display::get()->getFpsLimit() > 1000.0f)
 		{
 			// if (maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 7.0f)) {}
 

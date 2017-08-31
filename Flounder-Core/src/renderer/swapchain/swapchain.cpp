@@ -28,7 +28,7 @@ namespace Flounder
 		// Fills in the data from the create info.
 		VkSwapchainCreateInfoKHR createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-		createInfo.surface = display::get()->getVkSurface();
+		createInfo.surface = Display::get()->getVkSurface();
 
 		// Gets the proper image count. 
 		uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
@@ -52,12 +52,12 @@ namespace Flounder
 		createInfo.oldSwapchain = VK_NULL_HANDLE;
 
 		// Attempts to create swap chain
-		display::vkErrorCheck(vkCreateSwapchainKHR(display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChain));
+		Display::vkErrorCheck(vkCreateSwapchainKHR(Display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChain));
 
 		// Populates the swap chain image vector.
-		vkGetSwapchainImagesKHR(display::get()->getVkDevice(), m_swapChain, &imageCount, nullptr);
+		vkGetSwapchainImagesKHR(Display::get()->getVkDevice(), m_swapChain, &imageCount, nullptr);
 		m_swapChainImages.resize(imageCount);
-		vkGetSwapchainImagesKHR(display::get()->getVkDevice(), m_swapChain, &imageCount, m_swapChainImages.data());
+		vkGetSwapchainImagesKHR(Display::get()->getVkDevice(), m_swapChain, &imageCount, m_swapChainImages.data());
 
 		// Stores the data for the chosen surface format and extent.
 		m_swapChainImageFormat = surfaceFormat.format;
@@ -87,7 +87,7 @@ namespace Flounder
 			createInfo.subresourceRange.baseArrayLayer = 0;
 			createInfo.subresourceRange.layerCount = 1;
 
-			display::vkErrorCheck(vkCreateImageView(display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChainImageViews[i]));
+			Display::vkErrorCheck(vkCreateImageView(Display::get()->getVkDevice(), &createInfo, nullptr, &m_swapChainImageViews[i]));
 		}
 
 		printf("Image views created successfully.\n");
@@ -110,7 +110,7 @@ namespace Flounder
 			framebufferInfo.height = m_swapChainExtent.height;
 			framebufferInfo.layers = 1;
 
-			display::vkErrorCheck(vkCreateFramebuffer(display::get()->getVkDevice(), &framebufferInfo, nullptr, &m_swapChainFramebuffers[i]));
+			Display::vkErrorCheck(vkCreateFramebuffer(Display::get()->getVkDevice(), &framebufferInfo, nullptr, &m_swapChainFramebuffers[i]));
 		}
 
 		printf("Framebuffers created successfully!\n");
@@ -119,24 +119,24 @@ namespace Flounder
 	void swapchain::cleanup()
 	{
 		// Waits for the device to finish before destroying.
-		vkDeviceWaitIdle(display::get()->getVkDevice());
+		vkDeviceWaitIdle(Display::get()->getVkDevice());
 
 		for (size_t i = 0; i < m_swapChainImageViews.size(); i++)
 		{
-			vkDestroyImageView(display::get()->getVkDevice(), m_swapChainImageViews[i], VK_NULL_HANDLE);
+			vkDestroyImageView(Display::get()->getVkDevice(), m_swapChainImageViews[i], VK_NULL_HANDLE);
 		}
 
-		vkDestroySwapchainKHR(display::get()->getVkDevice(), m_swapChain, VK_NULL_HANDLE);
+		vkDestroySwapchainKHR(Display::get()->getVkDevice(), m_swapChain, VK_NULL_HANDLE);
 	}
 
 	void swapchain::cleanupFramebuffers()
 	{
 		// Waits for the device to finish before destroying.
-		vkDeviceWaitIdle(display::get()->getVkDevice());
+		vkDeviceWaitIdle(Display::get()->getVkDevice());
 
 		for (size_t i = 0; i < m_swapChainFramebuffers.size(); i++)
 		{
-			vkDestroyFramebuffer(display::get()->getVkDevice(), m_swapChainFramebuffers[i], VK_NULL_HANDLE);
+			vkDestroyFramebuffer(Display::get()->getVkDevice(), m_swapChainFramebuffers[i], VK_NULL_HANDLE);
 		}
 	}
 
@@ -186,8 +186,8 @@ namespace Flounder
 		else
 		{
 			VkExtent2D actualExtent = {};
-			actualExtent.width = (uint32_t) display::get()->getWidth();
-			actualExtent.height = (uint32_t) display::get()->getHeight();
+			actualExtent.width = (uint32_t) Display::get()->getWidth();
+			actualExtent.height = (uint32_t) Display::get()->getHeight();
 
 			actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
 			actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));

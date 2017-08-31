@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "../camera/icamera.hpp"
-#include "../devices/display.hpp"
+#include "../devices/Display.hpp"
 #include "../maths/vector4.hpp"
 #include "../maths/matrix4x4.hpp"
 #include "../physics/aabb.hpp"

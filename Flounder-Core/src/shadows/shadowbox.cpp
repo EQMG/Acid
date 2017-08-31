@@ -137,8 +137,8 @@ namespace Flounder
 	{
 		m_farWidth = m_shadowDistance * tan(__radians(camera.GetFov()));
 		m_nearWidth = camera.GetNearPlane() * tan(__radians(camera.GetFov()));
-		m_farHeight = m_farWidth / static_cast<float>(display::get()->getAspectRatio());
-		m_nearHeight = m_nearWidth / static_cast<float>(display::get()->getAspectRatio());
+		m_farHeight = m_farWidth / static_cast<float>(Display::get()->getAspectRatio());
+		m_nearHeight = m_nearWidth / static_cast<float>(Display::get()->getAspectRatio());
 	}
 
 	vector4 **shadowbox::calculateFrustumVertices(const matrix4x4 &rotation, const vector3 &forwardVector, const vector3 &centreNear, const vector3 &centreFar)

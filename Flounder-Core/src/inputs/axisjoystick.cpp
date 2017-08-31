@@ -26,7 +26,7 @@ namespace Flounder
 
 	float axisjoystick::getAmount() const
 	{
-		if (joysticks::get() == nullptr || !joysticks::get()->isConnected(m_joystick))
+		if (Joysticks::get() == nullptr || !Joysticks::get()->isConnected(m_joystick))
 		{
 			return 0.0f;
 		}
@@ -35,7 +35,7 @@ namespace Flounder
 
 		for (int i = 0; i < m_count; i++)
 		{
-			result += joysticks::get()->getAxis(m_joystick, m_axes[i]);
+			result += Joysticks::get()->getAxis(m_joystick, m_axes[i]);
 		}
 
 		return maths::clamp(result, -1.0f, 1.0f);

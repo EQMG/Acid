@@ -83,10 +83,10 @@ void maincamera::Update(IPlayer *player)
 	updatePosition();
 
 	matrix4x4::viewMatrix(*m_position, *m_rotation, m_viewMatrix);
-	matrix4x4::perspectiveMatrix(GetFov(), static_cast<float>(display::get()->getAspectRatio()), GetNearPlane(), GetFarPlane(), m_projectionMatrix);
+	matrix4x4::perspectiveMatrix(GetFov(), static_cast<float>(Display::get()->getAspectRatio()), GetNearPlane(), GetFarPlane(), m_projectionMatrix);
 
 	m_viewFrustum->update(*m_projectionMatrix, *m_viewMatrix);
-	m_viewRay->update(*m_position, vector2(static_cast<float>(mouse::get()->getPositionX()), static_cast<float>(mouse::get()->getPositionY())), *m_viewMatrix, *m_projectionMatrix);
+	m_viewRay->update(*m_position, vector2(static_cast<float>(Mouse::Get()->getPositionX()), static_cast<float>(Mouse::Get()->getPositionY())), *m_viewMatrix, *m_projectionMatrix);
 }
 
 void maincamera::calculateHorizontalAngle()
@@ -101,9 +101,9 @@ void maincamera::calculateHorizontalAngle()
 		}
 		else
 		{
-			if (mouse::get()->isCursorDisabled() || mouse::get()->getButton(m_reangleButton))
+			if (Mouse::Get()->isCursorDisabled() || Mouse::Get()->getButton(m_reangleButton))
 			{
-				angleChange = -mouse::get()->getDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
+				angleChange = -Mouse::Get()->getDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
 			}
 		}
 	}
@@ -141,9 +141,9 @@ void maincamera::calculateVerticalAngle()
 		}
 		else
 		{
-			if (mouse::get()->isCursorDisabled() || mouse::get()->getButton(m_reangleButton))
+			if (Mouse::Get()->isCursorDisabled() || Mouse::Get()->getButton(m_reangleButton))
 			{
-				angleChange = mouse::get()->getDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
+				angleChange = Mouse::Get()->getDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
 			}
 		}
 	}

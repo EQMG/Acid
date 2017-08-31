@@ -16,7 +16,7 @@ namespace Flounder
 	/// <summary>
 	/// A filter-like shader/fbo used to process deferred rendering.
 	/// </summary>
-	class rendererdeferred
+	class RendererDeferred
 	{
 	private:
 		static const int LIGHTS = 64;
@@ -25,34 +25,34 @@ namespace Flounder
 		Fbo *m_fbo;
 		model *m_model;
 	public:
-		rendererdeferred(Fbo *fbo);
+		RendererDeferred(Fbo *fbo);
 
 		/// <summary>
 		/// Creates a new deferred renderer.
 		/// </summary>
-		rendererdeferred();
+		RendererDeferred();
 
 		/// <summary>
 		/// Deconstructor for the deferred renderer.
 		/// </summary>
-		~rendererdeferred();
+		~RendererDeferred();
 
 		/// <summary>
 		/// Processes the textures provided into the deferred renderer.
 		/// </summary>
 		/// <param name="n_args"> The number textures being bound to the shader. </param>
 		/// <param name="..."> The textures being bound to the shader. Colours, normals, extras, depth, shadows. </param>
-		void apply(const int n_args, ...);
+		void Apply(const int n_args, ...);
 
 		/// <summary>
 		/// Gets the fbo the filter rendered into.
 		/// </summary>
 		/// <returns> The fbo. </returns>
-		Fbo *getFbo() const { return m_fbo; }
+		Fbo *GetFbo() const { return m_fbo; }
 	private:
 		/// <summary>
 		/// Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started.
 		/// </summary>
-		void storeValues();
+		void StoreValues();
 	};
 }

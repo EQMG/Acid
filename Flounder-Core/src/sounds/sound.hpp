@@ -7,14 +7,13 @@
 #include <al/al.h>
 #include <al/alc.h>
 
-#include "../devices/display.hpp"
+#include "../devices/Display.hpp"
 #include "../helpers/helperstring.hpp"
+#include "../maths/vector3.hpp"
 
 namespace Flounder
 {
-	class vector3;
-
-	class sound
+	class Sound
 	{
 	private:
 		std::string m_name;
@@ -28,44 +27,38 @@ namespace Flounder
 		float m_pitch;
 		float m_gain;
 	public:
-		sound(const std::string &name, const std::string &filename);
+		Sound(const std::string &name, const std::string &filename);
 
-		~sound();
+		~Sound();
 
-		void play();
+		void Play();
 
-		void loop();
+		void Loop();
 
-		void pause();
+		void Pause();
 
-		void resume();
+		void Resume();
 
-		void stop();
+		void Stop();
 
-		void setPosition(const float &x, const float &y, const float &z);
+		void SetPosition(const vector3 &position);
 
-		void setPosition(const vector3 &position);
+		void SetDirection(const vector3 &direction);
 
-		void setDirection(const float &x, const float &y, const float &z);
+		void SetVelocity(const vector3 &velocity);
 
-		void setDirection(const vector3 &direction);
+		void SetPitch(float pitch);
 
-		void setVelocity(const float &x, const float &y, const float &z);;
+		void SetGain(float gain);
 
-		void setVelocity(const vector3 &velocity);
+		inline std::string GetName() const { return m_name; }
 
-		void setPitch(float pitch);
+		inline std::string GetFileName() const { return m_filename; }
 
-		void setGain(float gain);
+		inline bool IsPlaying() const { return m_playing; }
 
-		inline std::string getName() const { return m_name; }
+		inline float GetPitch() const { return m_pitch; }
 
-		inline std::string getFileName() const { return m_filename; }
-
-		inline bool isPlaying() const { return m_playing; }
-
-		inline float getPitch() const { return m_pitch; }
-
-		inline float getGain() const { return m_gain; }
+		inline float GetGain() const { return m_gain; }
 	};
 }
