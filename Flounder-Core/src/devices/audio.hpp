@@ -12,9 +12,9 @@
 #include "../camera/camera.hpp"
 #include "../engine/Engine.hpp"
 #include "../maths/vector3.hpp"
-#include "../sounds/sound.hpp"
+#include "../sounds/Sound.hpp"
 
-#include "display.hpp"
+#include "Display.hpp"
 
 namespace Flounder
 {
@@ -33,42 +33,42 @@ namespace Flounder
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.
 	/// </summary>
-	class audio :
+	class Audio :
 		public IModule
 	{
 	private:
-		friend class sound;
+		friend class Sound;
 
-		static std::vector<sound*> m_sounds;
+		static std::vector<Sound*> m_sounds;
 
-		ALCdevice *m_device;
-		ALCcontext *m_context;
+		ALCdevice *m_alDevice;
+		ALCcontext *m_alContext;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline audio *get()
+		static inline Audio *Get()
 		{
-			return static_cast<audio*>(Engine::Get()->GetModule("audio"));
+			return static_cast<Audio*>(Engine::Get()->GetModule("audio"));
 		}
 
 		/// <summary>
 		/// Creates a new audio module.
 		/// </summary>
-		audio();
+		Audio();
 
 		/// <summary>
 		/// Deconstructor for the audio module.
 		/// </summary>
-		~audio();
+		~Audio();
 
 		void Update() override;
 
-		static SoundSourceInfo loadWaveFile(const std::string &path);
+		static SoundSourceInfo LoadFileWav(const std::string &path);
 
-		static sound *add(sound *object);
+		static Sound *AddSound(Sound *object);
 
-		static sound *get(const std::string &name);
+		static Sound *GetSound(const std::string &name);
 	};
 }

@@ -26,14 +26,14 @@ namespace Flounder
 
 	bool buttonkeyboard::isDown() const
 	{
-		if (keyboard::get() == nullptr)
+		if (Keyboard::get() == nullptr)
 		{
 			return false;
 		}
 
 		for (int i = 0; i < m_count; i++)
 		{
-			if (keyboard::get()->getKey(m_keys[i]))
+			if (Keyboard::get()->getKey(m_keys[i]))
 			{
 				return true;
 			}

@@ -1,8 +1,8 @@
-#include "display.hpp"
+#include "Display.hpp"
 
 namespace Flounder
 {
-	const std::vector<const char*> display::VALIDATION_LAYERS = {"VK_LAYER_LUNARG_standard_validation"};
+	const std::vector<const char*> Display::VALIDATION_LAYERS = {"VK_LAYER_LUNARG_standard_validation"};
 
 	void callbackError(int error, const char *description)
 	{
@@ -11,43 +11,43 @@ namespace Flounder
 
 	void callbackClose(GLFWwindow *window)
 	{
-		display::get()->m_closed = false;
+		Display::get()->m_closed = false;
 		Engine::Get()->RequestClose(false);
 	}
 
 	void callbackFocus(GLFWwindow *window, int focused)
 	{
-		display::get()->m_focused = focused;
+		Display::get()->m_focused = focused;
 	}
 
 	void callbackPosition(GLFWwindow *window, int xpos, int ypos)
 	{
-		if (!display::get()->m_fullscreen)
+		if (!Display::get()->m_fullscreen)
 		{
-			display::get()->m_windowPosX = xpos;
-			display::get()->m_windowPosY = ypos;
+			Display::get()->m_windowPosX = xpos;
+			Display::get()->m_windowPosY = ypos;
 		}
 	}
 
 	void callbackSize(GLFWwindow *window, int width, int height)
 	{
-		display::get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		Display::get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
-		if (display::get()->m_fullscreen)
+		if (Display::get()->m_fullscreen)
 		{
-			display::get()->m_fullscreenWidth = width;
-			display::get()->m_fullscreenHeight = height;
+			Display::get()->m_fullscreenWidth = width;
+			Display::get()->m_fullscreenHeight = height;
 		}
 		else
 		{
-			display::get()->m_windowWidth = width;
-			display::get()->m_windowHeight = height;
+			Display::get()->m_windowWidth = width;
+			Display::get()->m_windowHeight = height;
 		}
 	}
 
 	void callbackFrame(GLFWwindow *window, int width, int height)
 	{
-		display::get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		Display::get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 		// TODO
 	}
 
@@ -57,7 +57,7 @@ namespace Flounder
 		return false;
 	}
 
-	VkResult display::fvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback)
+	VkResult Display::fvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback)
 	{
 		auto func = reinterpret_cast<PFN_vkCreateDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
 
@@ -71,7 +71,7 @@ namespace Flounder
 		}
 	}
 
-	void display::fvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator)
+	void Display::fvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator)
 	{
 		auto func = reinterpret_cast<PFN_vkDestroyDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));
 
@@ -81,7 +81,7 @@ namespace Flounder
 		}
 	}
 
-	void display::vkErrorCheck(VkResult result)
+	void Display::vkErrorCheck(VkResult result)
 	{
 		if (result < 0)
 		{
@@ -146,7 +146,7 @@ namespace Flounder
 		}
 	}
 
-	display::display() :
+	Display::Display() :
 		IModule(),
 		m_windowWidth(1080),
 		m_windowHeight(720),
@@ -192,7 +192,7 @@ namespace Flounder
 		createLogicalDevice();
 	}
 
-	display::~display()
+	Display::~Display()
 	{
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(m_device);
@@ -212,7 +212,7 @@ namespace Flounder
 		m_closed = false;
 	}
 
-	void display::Update()
+	void Display::Update()
 	{
 		// Polls for window events. The key callback will only be invoked during this call.
 		glfwPollEvents();
@@ -221,12 +221,12 @@ namespace Flounder
 		m_aspectRatio = static_cast<float>(getWidth()) / static_cast<float>(getHeight());
 	}
 
-	void display::screenshot()
+	void Display::screenshot()
 	{
 		// TODO
 	}
 
-	void display::setWindowSize(const int &width, const int &height)
+	void Display::setWindowSize(const int &width, const int &height)
 	{
 		m_windowWidth = width;
 		m_windowHeight = height;
@@ -234,13 +234,13 @@ namespace Flounder
 		glfwSetWindowSize(m_window, width, height);
 	}
 
-	void display::setTitle(const std::string &title)
+	void Display::setTitle(const std::string &title)
 	{
 		m_title = title;
 		glfwSetWindowTitle(m_window, m_title.c_str());
 	}
 
-	void display::setIcon(const std::string &icon)
+	void Display::setIcon(const std::string &icon)
 	{
 		// Creates a window icon for this GLFW display.
 		m_icon = icon;
@@ -270,7 +270,7 @@ namespace Flounder
 		}
 	}
 
-	void display::setFullscreen(const bool &fullscreen)
+	void Display::setFullscreen(const bool &fullscreen)
 	{
 		if (m_fullscreen == fullscreen)
 		{
@@ -298,7 +298,7 @@ namespace Flounder
 		}
 	}
 
-	VkQueueFamilyIndices display::findQueueFamilies(VkPhysicalDevice device)
+	VkQueueFamilyIndices Display::findQueueFamilies(VkPhysicalDevice device)
 	{
 		VkQueueFamilyIndices indices;
 
@@ -335,7 +335,7 @@ namespace Flounder
 		return indices;
 	}
 
-	uint32_t display::memoryTypeIndex(uint32_t typeBits, VkFlags properties)
+	uint32_t Display::memoryTypeIndex(uint32_t typeBits, VkFlags properties)
 	{
 		for (uint32_t i = 0; i < m_physicalDeviceMemoryProperties.memoryTypeCount; i++)
 		{
@@ -353,7 +353,7 @@ namespace Flounder
 		return 0;
 	}
 
-	void display::createWindow()
+	void Display::createWindow()
 	{
 		// Set the error error callback
 		glfwSetErrorCallback(callbackError);
@@ -418,7 +418,7 @@ namespace Flounder
 		glfwSetFramebufferSizeCallback(m_window, callbackFrame);
 	}
 
-	void display::setupLayers()
+	void Display::setupLayers()
 	{
 		// Sets up the layers.
 		if (m_validationLayers)
@@ -452,7 +452,7 @@ namespace Flounder
 		m_instanceLayerList.push_back("VK_LAYER_LUNARG_standard_validation");
 	}
 
-	void display::setupExtensions()
+	void Display::setupExtensions()
 	{
 		// Sets up the extensions.
 		unsigned int glfwExtensionCount = 0;
@@ -468,7 +468,7 @@ namespace Flounder
 		m_deviceExtensionList.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 	}
 
-	void display::createInstance()
+	void Display::createInstance()
 	{
 		// Sets up the instance.
 		VkApplicationInfo applicationInfo = {};
@@ -499,7 +499,7 @@ namespace Flounder
 		vkErrorCheck(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 	}
 
-	void display::setupDebugCallback()
+	void Display::setupDebugCallback()
 	{
 		// Sets up the debug callbacks.
 		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = {};
@@ -519,13 +519,13 @@ namespace Flounder
 		}
 	}
 
-	void display::createSurface()
+	void Display::createSurface()
 	{
 		// Creates the Vulkan-GLFW surface.
 		vkErrorCheck(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
 	}
 
-	void display::pickPhysicalDevice()
+	void Display::pickPhysicalDevice()
 	{
 		// Gets the physical GPU device.
 		uint32_t deviceCount = 0;
@@ -583,7 +583,7 @@ namespace Flounder
 		}
 	}
 
-	void display::createLogicalDevice()
+	void Display::createLogicalDevice()
 	{
 		// Finds the indice queues.
 		VkQueueFamilyIndices indices = findQueueFamilies(m_physicalDevice);
@@ -630,7 +630,7 @@ namespace Flounder
 		vkGetDeviceQueue(m_device, indices.presentFamily, 0, &m_presentQueue);
 	}
 
-	bool display::isDeviceSuitable(VkPhysicalDevice device)
+	bool Display::isDeviceSuitable(VkPhysicalDevice device)
 	{
 		// Finds the devices indicie queues.
 		VkQueueFamilyIndices indices = findQueueFamilies(device);

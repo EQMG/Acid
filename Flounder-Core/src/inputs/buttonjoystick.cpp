@@ -27,19 +27,19 @@ namespace Flounder
 
 	bool buttonjoystick::isDown() const
 	{
-		if (joysticks::get() == nullptr)
+		if (Joysticks::get() == nullptr)
 		{
 			return false;
 		}
 
-		if (m_count == 0 || !joysticks::get()->isConnected(m_joystick))
+		if (m_count == 0 || !Joysticks::get()->isConnected(m_joystick))
 		{
 			return false;
 		}
 
 		for (int i = 0; i < m_count; i++)
 		{
-			if (joysticks::get()->getButton(m_joystick, m_buttons[i]))
+			if (Joysticks::get()->getButton(m_joystick, m_buttons[i]))
 			{
 				return true;
 			}

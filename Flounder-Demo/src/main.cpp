@@ -19,19 +19,19 @@ int main()
 	m_engine->SetUpdater(new GlfwUpdater());
 
 	// Initializes the engine modules.
-	if (display::get() != nullptr)
+	if (Display::get() != nullptr)
 	{
-		display::get()->setWindowSize(1080, 720);
-		display::get()->setTitle("Flounder Demo");
-		display::get()->setIcon("res/flounder.png");
-		display::get()->setFpsLimit(0);
-		display::get()->setAntialiasing(true);
-		display::get()->setFullscreen(false);
+		Display::get()->setWindowSize(1080, 720);
+		Display::get()->setTitle("Flounder Demo");
+		Display::get()->setIcon("res/flounder.png");
+		Display::get()->setFpsLimit(0);
+		Display::get()->setAntialiasing(true);
+		Display::get()->setFullscreen(false);
 	}
 
-	if (mouse::get() != nullptr)
+	if (Mouse::Get() != nullptr)
 	{
-		mouse::get()->setCustomMouse("res/cursor.png");
+		Mouse::Get()->setCustomMouse("res/cursor.png");
 	}
 
 	if (Camera::Get() != nullptr)

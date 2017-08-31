@@ -1,19 +1,19 @@
-#include "joysticks.hpp"
+#include "Joysticks.hpp"
 
 namespace Flounder
 {
-	joysticks::joysticks() :
+	Joysticks::Joysticks() :
 		IModule(),
-		m_connected(new joystick*[GLFW_JOYSTICK_LAST])
+		m_connected(new Joystick*[GLFW_JOYSTICK_LAST])
 	{
 		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
 		{
-			m_connected[i] = new joystick();
+			m_connected[i] = new Joystick();
 			m_connected[i]->id = i;
 		}
 	}
 
-	joysticks::~joysticks()
+	Joysticks::~Joysticks()
 	{
 		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
 		{
@@ -23,12 +23,12 @@ namespace Flounder
 		delete m_connected;
 	}
 
-	void joysticks::Update()
+	void Joysticks::Update()
 	{
 		// For each joystick check if connected and update.
 		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
 		{
-			joystick *joy = m_connected[i];
+			Joystick *joy = m_connected[i];
 			joy->id = i;
 
 			if (glfwJoystickPresent(i))
@@ -40,8 +40,8 @@ namespace Flounder
 
 				joy->connected = true;
 				joy->name = glfwGetJoystickName(i);
-				joy->axes = glfwGetJoystickAxes(i, &joy->axecount);
-				joy->buttons = glfwGetJoystickButtons(i, &joy->buttoncount);
+				joy->axes = glfwGetJoystickAxes(i, &joy->axeCount);
+				joy->buttons = glfwGetJoystickButtons(i, &joy->buttonCount);
 			}
 			else
 			{
@@ -54,13 +54,13 @@ namespace Flounder
 				joy->name = "";
 				joy->axes = nullptr;
 				joy->buttons = nullptr;
-				joy->axecount = 0;
-				joy->buttoncount = 0;
+				joy->axeCount = 0;
+				joy->buttonCount = 0;
 			}
 		}
 	}
 
-	float joysticks::getAxis(const int &id, const int &axis) const
+	float Joysticks::getAxis(const int &id, const int &axis) const
 	{
 		if (axis < 0 || axis > getCountAxes(id))
 		{
@@ -70,7 +70,7 @@ namespace Flounder
 		return m_connected[id]->axes[axis];
 	}
 
-	bool joysticks::getButton(const int &id, const int &button) const
+	bool Joysticks::getButton(const int &id, const int &button) const
 	{
 		if (button < 0 || button > getCountButtons(id))
 		{

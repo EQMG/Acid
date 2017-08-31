@@ -30,7 +30,7 @@ namespace Flounder
 
 	void overlaystartup::updateObject()
 	{
-		m_guiBackground->getDimensions()->m_x = display::get()->getAspectRatio();
+		m_guiBackground->getDimensions()->m_x = Display::get()->getAspectRatio();
 		m_guiBackground->setVisible(true);
 		m_guiLogo->setVisible(true);
 	}

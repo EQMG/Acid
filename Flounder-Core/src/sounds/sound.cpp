@@ -1,11 +1,12 @@
-﻿#include "sound.hpp"
-#include "../devices/audio.hpp"
+﻿#include "Sound.hpp"
+
+#include "../devices/Audio.hpp"
 
 namespace Flounder
 {
 	// TODO: https://github.com/AndySmile/SimpleAudioLibrary
 
-	sound::sound(const std::string &name, const std::string &filename) :
+	Sound::Sound(const std::string &name, const std::string &filename) :
 		m_name(name),
 		m_filename(filename),
 		m_count(0),
@@ -15,7 +16,7 @@ namespace Flounder
 		m_pitch(1.0f),
 		m_gain(1.0f)
 	{
-		SoundSourceInfo sourceInfo = audio::loadWaveFile(filename);
+		SoundSourceInfo sourceInfo = Audio::LoadFileWav(filename);
 
 		alGenBuffers(1, &m_buffer);
 		alBufferData(m_buffer, (sourceInfo.channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sourceInfo.data, sourceInfo.size, sourceInfo.samplesPerSec);
@@ -26,27 +27,27 @@ namespace Flounder
 		delete[] sourceInfo.data;
 	}
 
-	sound::~sound()
+	Sound::~Sound()
 	{
 		alDeleteSources(1, &m_source);
 		alDeleteBuffers(1, &m_buffer);
 	}
 
-	void sound::play()
+	void Sound::Play()
 	{
 		alSourcei(m_source, AL_LOOPING, false);
 		alSourcePlay(m_source);
 		m_playing = true;
 	}
 
-	void sound::loop()
+	void Sound::Loop()
 	{
 		alSourcei(m_source, AL_LOOPING, true);
 		alSourcePlay(m_source);
 		m_playing = true;
 	}
 
-	void sound::pause()
+	void Sound::Pause()
 	{
 		if (!m_playing)
 		{
@@ -57,7 +58,7 @@ namespace Flounder
 		m_playing = false;
 	}
 
-	void sound::resume()
+	void Sound::Resume()
 	{
 		if (m_playing)
 		{
@@ -69,7 +70,7 @@ namespace Flounder
 		m_playing = true;
 	}
 
-	void sound::stop()
+	void Sound::Stop()
 	{
 		if (!m_playing)
 		{
@@ -80,44 +81,30 @@ namespace Flounder
 		m_playing = false;
 	}
 
-	void sound::setPosition(const float &x, const float &y, const float &z)
+	void Sound::SetPosition(const vector3 &position)
 	{
-		alSource3f(m_source, AL_POSITION, x, y, z);
+		alSource3f(m_source, AL_POSITION, position.m_x, position.m_y, position.m_z);
 	}
 
-	void sound::setPosition(const vector3 &position)
+	void Sound::SetDirection(const vector3 &direction)
 	{
-		setPosition(position.m_x, position.m_y, position.m_z);
+		float data[3] = { direction.m_x, direction.m_y, direction.m_z };
+		alSourcefv(m_source, AL_DIRECTION, data);
+		delete[] data; // 
 	}
 
-	void sound::setDirection(const float &x, const float &y, const float &z)
+	void Sound::SetVelocity(const vector3 &velocity)
 	{
-		float direction[3] = {x, y, z};
-		alSourcefv(m_source, AL_DIRECTION, direction);
+		alSource3f(m_source, AL_VELOCITY, velocity.m_x, velocity.m_y, velocity.m_z);
 	}
 
-	void sound::setDirection(const vector3 &direction)
-	{
-		setDirection(direction.m_x, direction.m_y, direction.m_z);
-	}
-
-	void sound::setVelocity(const float &x, const float &y, const float &z)
-	{
-		alSource3f(m_source, AL_VELOCITY, x, y, z);
-	}
-
-	void sound::setVelocity(const vector3 &velocity)
-	{
-		setVelocity(velocity.m_x, velocity.m_y, velocity.m_z);
-	}
-
-	void sound::setPitch(float pitch)
+	void Sound::SetPitch(float pitch)
 	{
 		alSourcef(m_source, AL_PITCH, pitch);
 		m_pitch = pitch;
 	}
 
-	void sound::setGain(float gain)
+	void Sound::SetGain(float gain)
 	{
 		alSourcef(m_source, AL_GAIN, gain);
 		m_gain = gain;

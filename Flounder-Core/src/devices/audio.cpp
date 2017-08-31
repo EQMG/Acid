@@ -1,20 +1,20 @@
-#include "audio.hpp"
+#include "Audio.hpp"
 
 namespace Flounder
 {
-	std::vector<sound*> audio::m_sounds = std::vector<sound*>();
+	std::vector<Sound*> Audio::m_sounds = std::vector<Sound*>();
 
-	audio::audio() :
+	Audio::Audio() :
 		IModule(),
-		m_device(nullptr),
-		m_context(nullptr)
+		m_alDevice(nullptr),
+		m_alContext(nullptr)
 	{
-		m_device = alcOpenDevice(NULL);
-		m_context = alcCreateContext(m_device, NULL);
-		alcMakeContextCurrent(m_context);
+		m_alDevice = alcOpenDevice(NULL);
+		m_alContext = alcCreateContext(m_alDevice, NULL);
+		alcMakeContextCurrent(m_alContext);
 	}
 
-	audio::~audio()
+	Audio::~Audio()
 	{
 		for (int i = 0; i < m_sounds.size(); i++)
 		{
@@ -22,15 +22,15 @@ namespace Flounder
 		}
 
 		alcMakeContextCurrent(NULL);
-		alcDestroyContext(m_context);
-		alcCloseDevice(m_device);
+		alcDestroyContext(m_alContext);
+		alcCloseDevice(m_alDevice);
 	}
 
-	void audio::Update()
+	void Audio::Update()
 	{
 	}
 
-	SoundSourceInfo audio::loadWaveFile(const std::string &path)
+	SoundSourceInfo Audio::LoadFileWav(const std::string &path)
 	{
 		std::ifstream file(path.c_str(), std::ifstream::binary);
 		SoundSourceInfo result = {};
@@ -117,17 +117,17 @@ namespace Flounder
 		return result;
 	}
 
-	sound *audio::add(sound *object)
+	Sound *Audio::AddSound(Sound *object)
 	{
 		m_sounds.push_back(object);
 		return object;
 	}
 
-	sound *audio::get(const std::string &name)
+	Sound *Audio::GetSound(const std::string &name)
 	{
 		for (auto object : m_sounds)
 		{
-			if (object->getName() == name)
+			if (object->GetName() == name)
 			{
 				return object;
 			}

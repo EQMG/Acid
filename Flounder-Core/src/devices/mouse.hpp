@@ -3,14 +3,14 @@
 #include "../engine/Engine.hpp"
 #include "../maths/maths.hpp"
 
-#include "display.hpp"
+#include "Display.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
-	class mouse :
+	class Mouse :
 		public IModule
 	{
 	private:
@@ -38,20 +38,20 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline mouse *get()
+		static inline Mouse *Get()
 		{
-			return static_cast<mouse*>(Engine::Get()->GetModule("mouse"));
+			return static_cast<Mouse*>(Engine::Get()->GetModule("mouse"));
 		}
 
 		/// <summary>
 		/// Creates a new mouse module.
 		/// </summary>
-		mouse();
+		Mouse();
 
 		/// <summary>
 		/// Deconstructor for the mouse module.
 		/// </summary>
-		~mouse();
+		~Mouse();
 
 		void Update() override;
 

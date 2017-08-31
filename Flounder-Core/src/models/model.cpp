@@ -365,40 +365,40 @@ namespace Flounder
 		bufferCreateInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
 		bufferCreateInfo.size = data->size();
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		display::vkErrorCheck(vkCreateBuffer(display::get()->getVkDevice(), &bufferCreateInfo, nullptr, &result));
+		Display::vkErrorCheck(vkCreateBuffer(Display::get()->getVkDevice(), &bufferCreateInfo, nullptr, &result));
 
 		VkMemoryRequirements memoryRequirements = {};
-		vkGetBufferMemoryRequirements(display::get()->getVkDevice(), result, &memoryRequirements);
+		vkGetBufferMemoryRequirements(Display::get()->getVkDevice(), result, &memoryRequirements);
 
 		VkMemoryAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		allocInfo.allocationSize = memoryRequirements.size;
 		memoryTypeFromProperties(memoryRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &allocInfo.memoryTypeIndex);
 
-		display::vkErrorCheck(vkAllocateMemory(display::get()->getVkDevice(), &allocInfo, nullptr, &m_memory));
+		Display::vkErrorCheck(vkAllocateMemory(Display::get()->getVkDevice(), &allocInfo, nullptr, &m_memory));
 
 		m_bufferInfo.range = memoryRequirements.size;
 		m_bufferInfo.offset = 0;
 
 		uint8_t *pData;
-		display::vkErrorCheck(vkMapMemory(display::get()->getVkDevice(), m_memory, 0, memoryRequirements.size, 0, (void**) &pData));
+		Display::vkErrorCheck(vkMapMemory(Display::get()->getVkDevice(), m_memory, 0, memoryRequirements.size, 0, (void**) &pData));
 
 		memcpy(pData, data->data(), data->size());
 
-		vkUnmapMemory(display::get()->getVkDevice(), m_memory);
+		vkUnmapMemory(Display::get()->getVkDevice(), m_memory);
 
-		display::vkErrorCheck(vkBindBufferMemory(display::get()->getVkDevice(), result, m_memory, 0));
+		Display::vkErrorCheck(vkBindBufferMemory(Display::get()->getVkDevice(), result, m_memory, 0));
 
 		return result;
 	}
 
 	void model::memoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex)
 	{
-		for (uint32_t i = 0; i < display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypeCount; i++)
+		for (uint32_t i = 0; i < Display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypeCount; i++)
 		{
 			if ((typeBits & 1) == 1)
 			{
-				if ((display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypes[i].propertyFlags & reqMask) == reqMask)
+				if ((Display::get()->getVkPhysicalDeviceMemoryProperties().memoryTypes[i].propertyFlags & reqMask) == reqMask)
 				{
 					*typeIndex = i;
 					return;

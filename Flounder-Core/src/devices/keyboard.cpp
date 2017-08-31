@@ -1,4 +1,4 @@
-#include "keyboard.hpp"
+#include "Keyboard.hpp"
 
 namespace Flounder
 {
@@ -12,16 +12,16 @@ namespace Flounder
 		}
 		else
 		{
-			keyboard::get()->m_keyboardKeys[key] = action;
+			Keyboard::get()->m_keyboardKeys[key] = action;
 		}
 	}
 
 	void callbackChar(GLFWwindow *window, unsigned int codepoint)
 	{
-		keyboard::get()->m_keyboardChar = codepoint;
+		Keyboard::get()->m_keyboardChar = codepoint;
 	}
 
-	keyboard::keyboard() :
+	Keyboard::Keyboard() :
 		IModule(),
 		m_keyboardKeys(new int[GLFW_KEY_LAST + 1]),
 		m_keyboardChar(0)
@@ -33,20 +33,20 @@ namespace Flounder
 		}
 
 		// Sets the keyboards callbacks.
-		glfwSetKeyCallback(display::get()->getWindow(), callbackKey);
-		glfwSetCharCallback(display::get()->getWindow(), callbackChar);
+		glfwSetKeyCallback(Display::get()->getWindow(), callbackKey);
+		glfwSetCharCallback(Display::get()->getWindow(), callbackChar);
 	}
 
-	keyboard::~keyboard()
+	Keyboard::~Keyboard()
 	{
 		delete m_keyboardKeys;
 	}
 
-	void keyboard::Update()
+	void Keyboard::Update()
 	{
 	}
 
-	bool keyboard::getKey(const int &key) const
+	bool Keyboard::getKey(const int &key) const
 	{
 		if (key < 0 || key > GLFW_KEY_LAST + 1)
 		{
@@ -56,7 +56,7 @@ namespace Flounder
 		return m_keyboardKeys[key] != GLFW_RELEASE;
 	}
 
-	int keyboard::getKeyboardChar() const
+	int Keyboard::getKeyboardChar() const
 	{
 		return m_keyboardChar;
 	}

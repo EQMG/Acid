@@ -5,7 +5,7 @@
 #include <vector>
 #include <stdarg.h>
 
-#include "../devices/display.hpp"
+#include "../devices/Display.hpp"
 #include "../renderer/renderer.hpp"
 #include "../maths/colour.hpp"
 

@@ -26,14 +26,14 @@ namespace Flounder
 
 	bool buttonmouse::isDown() const
 	{
-		if (mouse::get() == nullptr)
+		if (Mouse::Get() == nullptr)
 		{
 			return false;
 		}
 
 		for (int i = 0; i < m_count; i++)
 		{
-			if (mouse::get()->getButton(m_buttons[i]))
+			if (Mouse::Get()->getButton(m_buttons[i]))
 			{
 				return true;
 			}

@@ -1,29 +1,29 @@
-#include "mouse.hpp"
+#include "Mouse.hpp"
 
 namespace Flounder
 {
 	void callbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 	{
-		mouse::get()->m_mouseDeltaWheel = static_cast<float>(yoffset);
+		Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(yoffset);
 	}
 
 	void callbackMouseButton(GLFWwindow *window, int button, int action, int mods)
 	{
-		mouse::get()->m_mouseButtons[button] = action;
+		Mouse::Get()->m_mouseButtons[button] = action;
 	}
 
 	void callbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 	{
-		mouse::get()->m_mousePositionX = static_cast<float>(xpos) / static_cast<float>(display::get()->getWidth());
-		mouse::get()->m_mousePositionY = static_cast<float>(ypos) / static_cast<float>(display::get()->getHeight());
+		Mouse::Get()->m_mousePositionX = static_cast<float>(xpos) / static_cast<float>(Display::get()->getWidth());
+		Mouse::Get()->m_mousePositionY = static_cast<float>(ypos) / static_cast<float>(Display::get()->getHeight());
 	}
 
 	void callbackCursorEnter(GLFWwindow *window, int entered)
 	{
-		mouse::get()->m_displaySelected = entered;
+		Mouse::Get()->m_displaySelected = entered;
 	}
 
-	mouse::mouse() :
+	Mouse::Mouse() :
 		IModule(),
 		m_customMouse(""),
 		m_mouseButtons(new int[GLFW_MOUSE_BUTTON_LAST]),
@@ -45,18 +45,18 @@ namespace Flounder
 		}
 
 		// Sets the mouses callbacks.
-		glfwSetScrollCallback(display::get()->getWindow(), callbackScroll);
-		glfwSetMouseButtonCallback(display::get()->getWindow(), callbackMouseButton);
-		glfwSetCursorPosCallback(display::get()->getWindow(), callbackCursorPos);
-		glfwSetCursorEnterCallback(display::get()->getWindow(), callbackCursorEnter);
+		glfwSetScrollCallback(Display::get()->getWindow(), callbackScroll);
+		glfwSetMouseButtonCallback(Display::get()->getWindow(), callbackMouseButton);
+		glfwSetCursorPosCallback(Display::get()->getWindow(), callbackCursorPos);
+		glfwSetCursorEnterCallback(Display::get()->getWindow(), callbackCursorEnter);
 	}
 
-	mouse::~mouse()
+	Mouse::~Mouse()
 	{
 		delete m_mouseButtons;
 	}
 
-	void mouse::Update()
+	void Mouse::Update()
 	{
 		// Updates the mouses delta.
 		m_mouseDeltaX = Engine::Get()->GetDelta() * (m_lastMousePositionX - m_mousePositionX);
@@ -83,7 +83,7 @@ namespace Flounder
 		}
 	}
 
-	void mouse::setCustomMouse(const std::string &customMouse)
+	void Mouse::setCustomMouse(const std::string &customMouse)
 	{
 		// Loads a custom cursor.
 		m_customMouse = customMouse;
@@ -106,27 +106,27 @@ namespace Flounder
 			image->height = height;
 
 			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
-			glfwSetCursor(display::get()->getWindow(), cursor);
+			glfwSetCursor(Display::get()->getWindow(), cursor);
 			stbi_image_free(data);
 		}
 	}
 
-	void mouse::setCursorHidden(const bool &disabled)
+	void Mouse::setCursorHidden(const bool &disabled)
 	{
 		if (m_cursorDisabled != disabled)
 		{
-			glfwSetInputMode(display::get()->getWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
+			glfwSetInputMode(Display::get()->getWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
 
 			if (!disabled && m_cursorDisabled)
 			{
-				glfwSetCursorPos(display::get()->getWindow(), m_mousePositionX * display::get()->getWidth(), m_mousePositionY * display::get()->getHeight());
+				glfwSetCursorPos(Display::get()->getWindow(), m_mousePositionX * Display::get()->getWidth(), m_mousePositionY * Display::get()->getHeight());
 			}
 		}
 
 		m_cursorDisabled = disabled;
 	}
 
-	bool mouse::getButton(const int &button) const
+	bool Mouse::getButton(const int &button) const
 	{
 		if (button < 0 || button > GLFW_MOUSE_BUTTON_LAST + 1)
 		{
@@ -136,8 +136,8 @@ namespace Flounder
 		return m_mouseButtons[button] != GLFW_RELEASE;
 	}
 
-	void mouse::setPosition(const float &cursorX, const float &cursorY)
+	void Mouse::setPosition(const float &cursorX, const float &cursorY)
 	{
-		glfwSetCursorPos(display::get()->getWindow(), static_cast<double>(cursorX), static_cast<double>(cursorY));
+		glfwSetCursorPos(Display::get()->getWindow(), static_cast<double>(cursorX), static_cast<double>(cursorY));
 	}
 }
