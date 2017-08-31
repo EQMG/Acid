@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder Core", "Flounder-Core\Flounder-Core.vcxproj", "{E58316B5-4D6C-4EE6-898E-DE7BD1069A08}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder Core", "Flounder.Core\Flounder.Core.vcxproj", "{E58316B5-4D6C-4EE6-898E-DE7BD1069A08}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder Demo", "Flounder-Demo\Flounder-Demo.vcxproj", "{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder Demo", "Flounder.Demo\Flounder.Demo.vcxproj", "{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flounder Editors", "Flounder-Editors\Flounder-Editors.csproj", "{5CA65A8D-5269-4A20-8501-A5F44594DE78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flounder.Editors", "Flounder.Editors\Flounder.Editors.csproj", "{5CA65A8D-5269-4A20-8501-A5F44594DE78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
