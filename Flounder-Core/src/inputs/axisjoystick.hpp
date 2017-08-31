@@ -7,7 +7,7 @@
 
 #include "iaxis.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Axis from a joystick.

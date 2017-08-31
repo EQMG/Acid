@@ -1,6 +1,6 @@
 ﻿#include "Transform.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	Transform::Transform() :
 		m_position(new vector3()),

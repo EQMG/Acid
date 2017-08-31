@@ -2,7 +2,7 @@
 
 #include "icollider.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Represents a sphere in a 3d space.

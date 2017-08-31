@@ -1,6 +1,6 @@
 ﻿#include "text.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	text::text(uiobject *parent, const vector2 &position, const std::string &text, const float &fontSize, fonttype *fonttype, const float &maxLineLength, const uialign &align) :
 		uiobject(parent, position, vector2(1.0f, 1.0f)),
@@ -60,8 +60,8 @@ namespace flounder
 			break;
 		}
 
-		m_glowSize = m_glowDriver->update(framework::get()->getDelta());
-		m_borderSize = m_borderDriver->update(framework::get()->getDelta());
+		m_glowSize = m_glowDriver->update(Engine::Get()->GetDelta());
+		m_borderSize = m_borderDriver->update(Engine::Get()->GetDelta());
 	}
 
 	void text::loadText(text *object)

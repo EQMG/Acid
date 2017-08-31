@@ -1,9 +1,9 @@
 #include "tasks.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	tasks::tasks() :
-		imodule(),
+		IModule(),
 		m_tasks(new std::vector<std::function<void()>>())
 	{
 	}
@@ -13,7 +13,7 @@ namespace flounder
 		delete m_tasks;
 	}
 
-	void tasks::update()
+	void tasks::Update()
 	{
 		for (auto it = m_tasks->begin(); it != m_tasks->end(); ++it)
 		{

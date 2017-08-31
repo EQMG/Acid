@@ -1,6 +1,6 @@
 #include "model.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	model::model(const std::string &file) :
 		m_file(file),

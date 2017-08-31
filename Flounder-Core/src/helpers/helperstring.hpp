@@ -6,7 +6,7 @@
 #include <cctype>
 #include <locale>
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A helper for C++ strings.

@@ -3,7 +3,7 @@
 #include <vector>
 #include "../maths/vector3.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A class that represents a single model vertex, used when loading OBJ files.

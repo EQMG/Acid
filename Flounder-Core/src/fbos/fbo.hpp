@@ -9,7 +9,7 @@
 
 #include "depthbuffer.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A class that represents a Frame Buffer object.

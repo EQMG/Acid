@@ -7,7 +7,7 @@
 #include "../physics/aabb.hpp"
 #include "../models/model.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class water
 	{

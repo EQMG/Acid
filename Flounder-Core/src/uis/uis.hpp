@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../fonts/text.hpp"
 #include "../guis/gui.hpp"
 
@@ -8,13 +8,13 @@
 #include "uiselector.hpp"
 #include "containerscreen.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A module used for that manages gui textures in a container.
 	/// </summary>
 	class uis :
-		public imodule
+		public IModule
 	{
 	private:
 		imanageruis *m_managerUis;
@@ -29,12 +29,12 @@ namespace flounder
 		fonttype *m_segoe;
 
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static uis *get()
 		{
-			return static_cast<uis*>(framework::get()->getInstance("uis"));
+			return static_cast<uis*>(Engine::Get()->GetModule("uis"));
 		}
 
 		/// <summary>
@@ -47,7 +47,7 @@ namespace flounder
 		/// </summary>
 		~uis();
 
-		void update() override;
+		void Update() override;
 
 		/// <summary>
 		/// Gets the uis manager.

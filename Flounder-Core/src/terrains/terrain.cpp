@@ -1,6 +1,6 @@
 ﻿#include "terrain.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const float terrain::SQUARE_SIZE = 2.598f;
 	const int terrain::VERTEX_COUNT = 176;

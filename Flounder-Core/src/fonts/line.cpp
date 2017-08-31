@@ -1,6 +1,6 @@
 ﻿#include "line.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	line::line(const double &spaceWidth, const double &maxLength) :
 		m_maxLength(maxLength),

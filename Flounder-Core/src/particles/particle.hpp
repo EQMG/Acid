@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "../camera/camera.hpp"
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../maths/vector2.hpp"
 #include "../maths/vector3.hpp"
 #include "../physics/aabb.hpp"
@@ -9,7 +9,7 @@
 
 #include "particletype.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A instance of a particle type.

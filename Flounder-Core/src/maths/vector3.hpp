@@ -2,7 +2,7 @@
 
 #include "maths.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class vector2;
 	class vector4;

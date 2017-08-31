@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../maths/colour.hpp"
 #include "../maths/vector2.hpp"
 #include "../visual/idriver.hpp"
@@ -14,7 +14,7 @@
 #include "line.hpp"
 #include "../models/model.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A object the represents a text in a GUI.

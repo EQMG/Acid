@@ -1,6 +1,6 @@
 ﻿#include "inputtext.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const float inputtext::CHANGE_TIME = 0.1f;
 	const float inputtext::SCALE_NORMAL = 1.6f;

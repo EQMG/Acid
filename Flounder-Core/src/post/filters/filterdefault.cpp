@@ -1,6 +1,6 @@
 #include "filterdefault.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filterdefault::filterdefault() :
 		ipostfilter("filterDefault", "res/shaders/filters/default.frag.spv", nullptr)

@@ -1,6 +1,6 @@
 #include "mouse.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	void callbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 	{
@@ -24,7 +24,7 @@ namespace flounder
 	}
 
 	mouse::mouse() :
-		imodule(),
+		IModule(),
 		m_customMouse(""),
 		m_mouseButtons(new int[GLFW_MOUSE_BUTTON_LAST]),
 		m_lastMousePositionX(0.5f),
@@ -56,11 +56,11 @@ namespace flounder
 		delete m_mouseButtons;
 	}
 
-	void mouse::update()
+	void mouse::Update()
 	{
 		// Updates the mouses delta.
-		m_mouseDeltaX = framework::get()->getDelta() * (m_lastMousePositionX - m_mousePositionX);
-		m_mouseDeltaY = framework::get()->getDelta() * (m_lastMousePositionY - m_mousePositionY);
+		m_mouseDeltaX = Engine::Get()->GetDelta() * (m_lastMousePositionX - m_mousePositionX);
+		m_mouseDeltaY = Engine::Get()->GetDelta() * (m_lastMousePositionY - m_mousePositionY);
 
 		// Sets the last position of the current.
 		m_lastMousePositionX = m_mousePositionX;
@@ -78,7 +78,7 @@ namespace flounder
 		// Updates the mouse wheel using a smooth scroll technique.
 		if (m_mouseDeltaWheel != 0.0)
 		{
-			m_mouseDeltaWheel -= framework::get()->getDelta() * ((m_mouseDeltaWheel < 0.0f) ? -1.0f : 1.0f);
+			m_mouseDeltaWheel -= Engine::Get()->GetDelta() * ((m_mouseDeltaWheel < 0.0f) ? -1.0f : 1.0f);
 			m_mouseDeltaWheel = maths::deadband(0.1f, m_mouseDeltaWheel);
 		}
 	}

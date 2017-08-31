@@ -1,6 +1,6 @@
 #include "filterfxaa.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filterfxaa::filterfxaa(const float &spanMax) :
 		ipostfilter("filterFxaa", "res/shaders/filters/fxaa.frag.spv"),

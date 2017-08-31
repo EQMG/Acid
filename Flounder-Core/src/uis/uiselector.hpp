@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../inputs/buttonmouse.hpp"
 #include "../inputs/buttonjoystick.hpp"
 #include "../inputs/axisjoystick.hpp"
 #include "../uis/uiobject.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Represents a virtual cursor that will be used to determine if a ui action was preformed by a device.

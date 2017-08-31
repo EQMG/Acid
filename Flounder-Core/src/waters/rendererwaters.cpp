@@ -1,6 +1,6 @@
 #include "rendererwaters.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	rendererwaters::rendererwaters() : 
 		irenderer(),
@@ -21,14 +21,14 @@ namespace flounder
 		delete m_shader;
 	}
 
-	void rendererwaters::render(const vector4 &clipPlane, const icamera &camera)
+	void rendererwaters::render(const vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 		renderWater(waters::get()->getWater());
 		endRendering();
 	}
 
-	void rendererwaters::prepareRendering(const vector4 &clipPlane, const icamera &camera)
+	void rendererwaters::prepareRendering(const vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.
@@ -80,7 +80,7 @@ namespace flounder
 			 waters::get()->getEnableReflections() ? waters::get()->getColourIntensity() : 1.0f
 		 );
 
-		m_shader->loadUniform1f("waveTime", framework::get()->getTimeSec() / water::WAVE_SPEED);
+		m_shader->loadUniform1f("waveTime", Engine::Get()->getTimeSec() / water::WAVE_SPEED);
 		m_shader->loadUniform1f("waveLength", water::WAVE_LENGTH);
 		m_shader->loadUniform1f("amplitude", water::AMPLITUDE);
 		m_shader->loadUniform1f("squareSize", static_cast<float>(water::SQUARE_SIZE));

@@ -1,15 +1,15 @@
 #include "timer.hpp"
 #include <iostream>
 
-namespace flounder
+namespace Flounder
 {
 	timer::timer(const float &interval) :
 		m_startTime(0.0f),
 		m_interval(interval * 1000.0f)
 	{
-		if (framework::get() != nullptr)
+		if (Engine::Get() != nullptr)
 		{
-			m_startTime = framework::get()->getTimeMs();
+			m_startTime = Engine::Get()->GetTimeMs();
 		}
 	}
 
@@ -19,12 +19,12 @@ namespace flounder
 
 	bool timer::isPassedTime() const
 	{
-		return framework::get()->getTimeMs() - m_startTime >= m_interval;
+		return Engine::Get()->GetTimeMs() - m_startTime >= m_interval;
 	}
 
 	void timer::resetStartTime()
 	{
-		m_startTime = framework::get()->getTimeMs();
+		m_startTime = Engine::Get()->GetTimeMs();
 	}
 
 	float timer::getInterval() const
@@ -40,6 +40,6 @@ namespace flounder
 		}
 
 		m_interval = interval * 1000.0f;
-		m_startTime = framework::get()->getTimeMs();
+		m_startTime = Engine::Get()->GetTimeMs();
 	}
 }

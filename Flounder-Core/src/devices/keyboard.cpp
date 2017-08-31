@@ -1,6 +1,6 @@
 #include "keyboard.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	void callbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
@@ -22,7 +22,7 @@ namespace flounder
 	}
 
 	keyboard::keyboard() :
-		imodule(),
+		IModule(),
 		m_keyboardKeys(new int[GLFW_KEY_LAST + 1]),
 		m_keyboardChar(0)
 	{
@@ -42,7 +42,7 @@ namespace flounder
 		delete m_keyboardKeys;
 	}
 
-	void keyboard::update()
+	void keyboard::Update()
 	{
 	}
 

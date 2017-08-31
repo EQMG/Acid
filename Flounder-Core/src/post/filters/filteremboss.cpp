@@ -1,6 +1,6 @@
 #include "filteremboss.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filteremboss::filteremboss() :
 		ipostfilter("filterEmboss", "res/shaders/filters/emboss.frag.spv")

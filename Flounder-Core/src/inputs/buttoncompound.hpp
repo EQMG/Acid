@@ -4,7 +4,7 @@
 
 #include "ibutton.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Handles multiple buttons at once.

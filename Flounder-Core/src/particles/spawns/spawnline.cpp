@@ -1,6 +1,6 @@
 ﻿#include "spawnline.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	spawnline::spawnline(const float &length, const vector3 &axis) :
 		ispawnparticle(),

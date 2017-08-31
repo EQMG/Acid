@@ -2,10 +2,10 @@
 
 #include <flounder.hpp>
 
-using namespace flounder;
+using namespace Flounder;
 
 class maincamera :
-	public icamera
+	public ICamera
 {
 private:
 	static const float NEAR_PLANE;
@@ -56,7 +56,7 @@ public:
 
 	~maincamera();
 
-	void update(iplayer *player) override;
+	void Update(IPlayer *player) override;
 private:
 	void calculateHorizontalAngle();
 
@@ -68,23 +68,23 @@ private:
 
 	void updatePosition();
 public:
-	void reflect(const float &waterHeight) override;
+	void ReflectView(const float &waterHeight) override;
 
-	float getNearPlane() const override { return NEAR_PLANE; }
+	float GetNearPlane() const override { return NEAR_PLANE; }
 
-	float getFarPlane() const override { return FAR_PLANE; }
+	float GetFarPlane() const override { return FAR_PLANE; }
 
-	float getFOV() const override { return FIELD_OF_VIEW; }
+	float GetFov() const override { return FIELD_OF_VIEW; }
 
-	inline frustum *getViewFrustum() const override { return m_viewFrustum; }
+	inline frustum *GetViewFrustum() const override { return m_viewFrustum; }
 
-	inline ray *getViewRay() const override { return m_viewRay; }
+	inline ray *GetViewRay() const override { return m_viewRay; }
 
-	inline matrix4x4 *getViewMatrix() const override { return m_viewMatrix; }
+	inline matrix4x4 *GetViewMatrix() const override { return m_viewMatrix; }
 
-	inline matrix4x4 *getProjectionMatrix() const override { return m_projectionMatrix; }
+	inline matrix4x4 *GetProjectionMatrix() const override { return m_projectionMatrix; }
 
-	inline vector3 *getPosition() const override { return m_position; }
+	inline vector3 *GetPosition() const override { return m_position; }
 
-	inline vector3 *getRotation() const override { return m_rotation; }
+	inline vector3 *GetRotation() const override { return m_rotation; }
 };

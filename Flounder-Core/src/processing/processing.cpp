@@ -1,9 +1,9 @@
 #include "processing.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	processing::processing() :
-		imodule(),
+		IModule(),
 		m_processors(new std::vector<iprocessor*>())
 	{
 		// Manually adds the two base processors, these will be added into the modules loop, but are needed now.
@@ -27,7 +27,7 @@ namespace flounder
 		m_processors->push_back(processor);
 	}
 
-	void processing::update()
+	void processing::Update()
 	{
 		for (auto processor : *m_processors)
 		{

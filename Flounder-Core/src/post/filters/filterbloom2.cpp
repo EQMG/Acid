@@ -1,6 +1,6 @@
 #include "filterbloom2.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filterbloom2::filterbloom2() :
 		ipostfilter("filterBloom2", "res/shaders/filters/bloom2.frag.spv")

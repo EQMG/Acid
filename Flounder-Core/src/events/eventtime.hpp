@@ -6,7 +6,7 @@
 
 #include "ievent.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A class that runs a event after a time has passed.

@@ -6,7 +6,7 @@
 
 #include "ispatialobject.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A data structure that stores objects with a notion of flounder.space.

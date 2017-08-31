@@ -1,6 +1,6 @@
 ﻿#include "componentalpha.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	componentalpha::componentalpha(const float &alpha) :
 		icomponent(),

@@ -3,7 +3,7 @@
 #include "../../devices/display.hpp"
 #include "../ipostfilter.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class filtertiltshift :
 		public ipostfilter

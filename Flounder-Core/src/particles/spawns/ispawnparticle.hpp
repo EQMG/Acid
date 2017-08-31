@@ -4,7 +4,7 @@
 #include "../../maths/vector3.hpp"
 #include "../../maths/vector4.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A interface that defines a particle spawn type.

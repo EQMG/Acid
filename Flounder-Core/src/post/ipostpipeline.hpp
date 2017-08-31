@@ -4,7 +4,7 @@
 
 #include "../fbos/fbo.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Represents a system of post effects.

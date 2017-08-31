@@ -1,6 +1,6 @@
 #include "shader.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	shader::shader(const std::string &name, const int n_args, ...) :
 		m_name(name),

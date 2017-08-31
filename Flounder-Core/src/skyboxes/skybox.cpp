@@ -1,6 +1,6 @@
 ﻿#include "skybox.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	skybox::skybox(texture *texture, model *model, const float &size) :
 		m_texture(texture),
@@ -23,6 +23,6 @@ namespace flounder
 
 	void skybox::update()
 	{
-		matrix4x4::transformationMatrix(*camera::get()->getCamera()->getPosition(), *m_rotation, m_size, m_modelMatrix);
+		matrix4x4::transformationMatrix(*Camera::Get()->GetCamera()->GetPosition(), *m_rotation, m_size, m_modelMatrix);
 	}
 }

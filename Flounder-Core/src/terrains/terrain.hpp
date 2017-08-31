@@ -10,7 +10,7 @@
 
 #include "biome.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class terrain
 	{

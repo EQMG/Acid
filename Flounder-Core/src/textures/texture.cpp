@@ -1,6 +1,6 @@
 #include "texture.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	texture::texture(std::string file, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
 		m_file(file),

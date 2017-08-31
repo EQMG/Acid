@@ -5,7 +5,7 @@
 #include "../textures/texture.hpp"
 #include "../uis/uiobject.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A object the represents a texture in a GUI.

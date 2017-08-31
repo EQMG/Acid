@@ -1,6 +1,6 @@
 #include "delta.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	delta::delta() :
 		m_currentFrameTime(0.0f),
@@ -16,7 +16,7 @@ namespace flounder
 
 	void delta::update()
 	{
-		m_currentFrameTime = framework::get()->getTimeSec();
+		m_currentFrameTime = Engine::Get()->GetTime();
 		m_change = m_currentFrameTime - m_lastFrameTime;
 		m_lastFrameTime = m_currentFrameTime;
 		m_time += m_change;

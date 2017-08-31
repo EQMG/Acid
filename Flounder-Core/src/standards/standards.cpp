@@ -1,9 +1,9 @@
 #include "standards.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	standards::standards() :
-		imodule(),
+		IModule(),
 		m_standards(new std::vector<istandard*>())
 	{
 	}
@@ -23,11 +23,11 @@ namespace flounder
 		m_standards->push_back(standard);
 	}
 
-	void standards::update()
+	void standards::Update()
 	{
 		for (auto it = m_standards->begin(); it < m_standards->end(); it++)
 		{
-			(*it)->update();
+			(*it)->Update();
 		}
 	}
 }

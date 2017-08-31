@@ -5,7 +5,7 @@
 #include "../../maths/vector3.hpp"
 #include "../ipostfilter.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class filterlensflare :
 		public ipostfilter

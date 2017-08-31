@@ -6,7 +6,7 @@
 
 #include "particles.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class rendererparticles :
 		public irenderer
@@ -27,11 +27,11 @@ namespace flounder
 
 		~rendererparticles();
 
-		void render(const vector4 &clipPlane, const icamera &camera) override;
+		void render(const vector4 &clipPlane, const ICamera &camera) override;
 	private:
-		void prepareRendering(const vector4 &clipPlane, const icamera &camera);
+		void prepareRendering(const vector4 &clipPlane, const ICamera &camera);
 
-		void prepareInstance(particle *particle, const icamera &camera, std::vector<float> *vboData);
+		void prepareInstance(particle *particle, const ICamera &camera, std::vector<float> *vboData);
 
 		void renderInstances(particletype *particleType, std::vector<float> *vboData);
 

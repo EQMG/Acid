@@ -9,7 +9,7 @@
 #include "uiobject.hpp"
 #include "uialign.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class inputslider :
 		public uiobject

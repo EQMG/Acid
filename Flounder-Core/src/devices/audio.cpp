@@ -1,11 +1,11 @@
 #include "audio.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	std::vector<sound*> audio::m_sounds = std::vector<sound*>();
 
 	audio::audio() :
-		imodule(),
+		IModule(),
 		m_device(nullptr),
 		m_context(nullptr)
 	{
@@ -26,7 +26,7 @@ namespace flounder
 		alcCloseDevice(m_device);
 	}
 
-	void audio::update()
+	void audio::Update()
 	{
 	}
 

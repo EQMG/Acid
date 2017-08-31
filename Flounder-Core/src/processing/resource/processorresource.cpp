@@ -1,6 +1,6 @@
 #include "processorresource.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const double processorresource::MAX_TIME_MILLIS = 8.0f;
 
@@ -22,13 +22,13 @@ namespace flounder
 		}
 
 		double remainingTime = MAX_TIME_MILLIS;
-		double start = framework::get()->getTimeMs();
+		double start = Engine::Get()->GetTimeMs();
 
 		while (m_queue->hasRequests())
 		{
 			requestresource *request = m_queue->acceptNextRequest();
 			request->executeRequestResource();
-			double end = framework::get()->getTimeMs();
+			double end = Engine::Get()->GetTimeMs();
 			double timeTaken = end - start;
 			remainingTime -= timeTaken;
 			start = end;

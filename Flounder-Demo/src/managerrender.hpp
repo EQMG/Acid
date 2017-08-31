@@ -4,7 +4,7 @@
 #include "particles/rendererparticles.hpp"
 #include "skyboxes/rendererskyboxes.hpp"
 
-using namespace flounder;
+using namespace Flounder;
 
 class managerrender :
 	public imanagerrender

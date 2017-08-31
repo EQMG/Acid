@@ -1,6 +1,6 @@
 #include "matrix4x4.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	matrix4x4::matrix4x4() :
 		m_00(1.0f),

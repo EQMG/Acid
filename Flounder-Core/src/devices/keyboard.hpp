@@ -1,15 +1,15 @@
 #pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 
 #include "display.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the keyboard keys.
 	/// </summary>
-	class keyboard : public imodule
+	class keyboard : public IModule
 	{
 	private:
 		int *m_keyboardKeys;
@@ -19,12 +19,12 @@ namespace flounder
 		friend void callbackChar(GLFWwindow *window, unsigned int codepoint);
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline keyboard *get()
 		{
-			return static_cast<keyboard*>(framework::get()->getInstance("keyboard"));
+			return static_cast<keyboard*>(Engine::Get()->GetModule("keyboard"));
 		}
 
 		/// <summary>
@@ -37,7 +37,7 @@ namespace flounder
 		/// </summary>
 		~keyboard() override;
 
-		void update() override;
+		void Update() override;
 
 		/// <summary>
 		/// Gets whether or not a particular key is currently pressed.

@@ -2,10 +2,10 @@
 
 #include <flounder.hpp>
 
-using namespace flounder;
+using namespace Flounder;
 
 class mainplayer :
-	public iplayer
+	public IPlayer
 {
 private:
 	static const float RUN_SPEED;
@@ -35,9 +35,9 @@ public:
 
 	~mainplayer();
 
-	void update() override;
+	void Update() override;
 
-	inline vector3 *getPosition() const override { return m_position; }
+	inline vector3 *GetPosition() const override { return m_position; }
 
-	inline vector3 *getRotation() const override { return m_rotation; }
+	inline vector3 *GetRotation() const override { return m_rotation; }
 };

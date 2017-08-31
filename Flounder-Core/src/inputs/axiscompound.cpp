@@ -1,6 +1,6 @@
 #include "axiscompound.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	axiscompound::axiscompound(const int n_args, ...) :
 		iaxis(),

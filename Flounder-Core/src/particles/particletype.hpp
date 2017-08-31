@@ -4,7 +4,7 @@
 
 #include "../textures/texture.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A definition for what a particle should act and look like.

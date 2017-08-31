@@ -1,65 +1,65 @@
 #pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 
-#include "icamera.hpp"
-#include "iplayer.hpp"
+#include "ICamera.hpp"
+#include "IPlayer.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A module used for managing cameras in 2D and 3D worlds.
 	/// </summary>
-	class camera :
-		public imodule
+	class Camera :
+		public IModule
 	{
 	private:
-		icamera *m_camera;
-		iplayer *m_player;
+		ICamera *m_camera;
+		IPlayer *m_player;
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline camera *get()
+		static inline Camera *Get()
 		{
-			return static_cast<camera*>(framework::get()->getInstance("camera"));
+			return static_cast<Camera*>(Engine::Get()->GetModule("camera"));
 		}
 
 		/// <summary>
 		/// Creates a new camera module.
 		/// </summary>
-		camera();
+		Camera();
 
 		/// <summary>
 		/// Deconstructor for the camera module.
 		/// </summary>
-		~camera();
+		~Camera();
 
-		void update() override;
+		void Update() override;
 
 		/// <summary>
 		/// Gets the current camera object.
 		/// </summary>
 		/// <returns> The current camera. </returns>
-		inline icamera *getCamera() const { return m_camera; }
+		inline ICamera *GetCamera() const { return m_camera; }
 
 		/// <summary>
 		/// Sets the current camera to a new camera.
 		/// </summary>
 		/// <param name="camera"> The new camera. </param>
-		inline void setCamera(icamera *camera) { m_camera = camera; }
+		inline void SetCamera(ICamera *camera) { m_camera = camera; }
 
 		/// <summary>
 		/// Gets the current player object.
 		/// </summary>
 		/// <returns> The current player. </returns>
-		inline iplayer *getPlayer() const { return m_player; }
+		inline IPlayer *GetPlayer() const { return m_player; }
 
 		/// <summary>
 		/// Sets the current player to a new player.
 		/// </summary>
 		/// <param name="player"> The new player. </param>
-		inline void setPlayer(iplayer *player) { m_player = player; }
+		inline void SetPlayer(IPlayer *player) { m_player = player; }
 	};
 }
