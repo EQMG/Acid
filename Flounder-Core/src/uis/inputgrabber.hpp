@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "../devices/keyboard.hpp"
+#include "../devices/Keyboard.hpp"
 #include "../visual/driverslide.hpp"
 
 #include "uis.hpp"

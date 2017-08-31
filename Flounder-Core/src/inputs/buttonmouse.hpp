@@ -2,7 +2,7 @@
 
 #include <stdarg.h>
 
-#include "../devices/mouse.hpp"
+#include "../devices/Mouse.hpp"
 
 #include "ibutton.hpp"
 

@@ -38,10 +38,10 @@ namespace Flounder
 	{
 		if (m_selected)
 		{
-			int key = keyboard::get()->getKeyboardChar();
+			int key = Keyboard::get()->getKeyboardChar();
 
 			// TODO: Fix inputs that are not GLFW defined.
-			if (key != 0 && keyboard::get()->getKey(toupper(key)))
+			if (key != 0 && Keyboard::get()->getKey(toupper(key)))
 			{
 				m_inputDelay->update(true);
 
@@ -58,7 +58,7 @@ namespace Flounder
 					m_lastKey = key;
 				}
 			}
-			else if (keyboard::get()->getKey(GLFW_KEY_BACKSPACE))
+			else if (Keyboard::get()->getKey(GLFW_KEY_BACKSPACE))
 			{
 				m_inputDelay->update(true);
 
@@ -75,7 +75,7 @@ namespace Flounder
 					m_lastKey = 8;
 				}
 			}
-			else if (keyboard::get()->getKey(GLFW_KEY_ENTER) && m_lastKey != 13)
+			else if (Keyboard::get()->getKey(GLFW_KEY_ENTER) && m_lastKey != 13)
 			{
 				m_inputDelay->update(true);
 

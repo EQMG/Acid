@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../camera/camera.hpp"
-#include "../../devices/display.hpp"
+#include "../../devices/Display.hpp"
 #include "../../maths/matrix4x4.hpp"
 #include "../ipostfilter.hpp"
 

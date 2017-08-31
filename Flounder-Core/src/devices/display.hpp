@@ -42,7 +42,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class display :
+	class Display :
 		public IModule
 	{
 	private:
@@ -114,20 +114,20 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline display *get()
+		static inline Display *get()
 		{
-			return static_cast<display*>(Engine::Get()->GetModule("display"));
+			return static_cast<Display*>(Engine::Get()->GetModule("display"));
 		}
 
 		/// <summary>
 		/// Creates a new display module.
 		/// </summary>
-		display();
+		Display();
 
 		/// <summary>
 		/// Deconstructor for the display module.
 		/// </summary>
-		~display();
+		~Display();
 
 		void Update() override;
 

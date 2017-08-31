@@ -72,7 +72,7 @@ namespace Flounder
 		}
 
 		m_screenPosition->set(
-			m_position->m_x * (m_inScreenCoords ? static_cast<float>(display::get()->getAspectRatio()) : 1.0f) + m_positionOffsets->m_x,
+			m_position->m_x * (m_inScreenCoords ? static_cast<float>(Display::get()->getAspectRatio()) : 1.0f) + m_positionOffsets->m_x,
 			m_position->m_y + m_positionOffsets->m_y
 		);
 		m_screenDimensions->set(m_dimensions->m_x, m_dimensions->m_y);

@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../devices/display.hpp"
+#include "../devices/Display.hpp"
 #include "../helpers/helperfile.hpp"
 #include "../helpers/helperstring.hpp"
 #include "../maths/vector2.hpp"

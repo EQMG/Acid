@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../devices/display.hpp"
+#include "../../devices/Display.hpp"
 #include "../../engine/Engine.hpp"
 #include "../ipostfilter.hpp"
 

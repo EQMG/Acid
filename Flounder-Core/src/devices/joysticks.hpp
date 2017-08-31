@@ -2,51 +2,51 @@
 
 #include "../engine/Engine.hpp"
 
-#include "display.hpp"
+#include "Display.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A definition for a connected joystick.
 	/// </summary>
-	struct joystick
+	struct Joystick
 	{
 		bool connected;
 		int id;
 		const char *name;
 		const float *axes;
 		const unsigned char *buttons;
-		int axecount;
-		int buttoncount;
+		int axeCount;
+		int buttonCount;
 	};
 
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
-	class joysticks :
+	class Joysticks :
 		public IModule
 	{
 	private:
-		joystick **m_connected;
+		Joystick **m_connected;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline joysticks *get()
+		static inline Joysticks *get()
 		{
-			return static_cast<joysticks*>(Engine::Get()->GetModule("joysticks"));
+			return static_cast<Joysticks*>(Engine::Get()->GetModule("joysticks"));
 		}
 
 		/// <summary>
 		/// Creates a new joysticks module.
 		/// </summary>
-		joysticks();
+		Joysticks();
 
 		/// <summary>
 		/// Deconstructor for the joysticks module.
 		/// </summary>
-		~joysticks();
+		~Joysticks();
 
 		void Update() override;
 
@@ -85,13 +85,13 @@ namespace Flounder
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		inline int getCountAxes(const int &id) const { return m_connected[id]->axecount; }
+		inline int getCountAxes(const int &id) const { return m_connected[id]->axeCount; }
 
 		/// <summary>
 		/// Gets the number of buttons the joystick offers.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		inline int getCountButtons(const int &id) const { return m_connected[id]->buttoncount; }
+		inline int getCountButtons(const int &id) const { return m_connected[id]->buttonCount; }
 	};
 }

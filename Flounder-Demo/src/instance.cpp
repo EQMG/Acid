@@ -54,12 +54,12 @@ void Instance::Update()
 {
 	if (m_buttonFullscreen->wasDown())
 	{
-		display::get()->setFullscreen(!display::get()->isFullscreen());
+		Display::get()->setFullscreen(!Display::get()->isFullscreen());
 	}
 
 	if (m_buttonLockMouse->wasDown())
 	{
-		mouse::get()->setCursorHidden(!mouse::get()->isCursorDisabled());
+		Mouse::Get()->setCursorHidden(!Mouse::Get()->isCursorDisabled());
 	}
 
 	if (m_buttonExit->wasDown())

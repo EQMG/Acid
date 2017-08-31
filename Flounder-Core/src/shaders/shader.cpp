@@ -25,7 +25,7 @@ namespace Flounder
 	{
 		for (auto shaderModule : *m_modules)
 		{
-			vkDestroyShaderModule(display::get()->getVkDevice(), shaderModule, nullptr);
+			vkDestroyShaderModule(Display::get()->getVkDevice(), shaderModule, nullptr);
 		}
 
 		delete m_types;
@@ -44,7 +44,7 @@ namespace Flounder
 			createInfo.pCode = reinterpret_cast<const uint32_t*>(shaderCode.data());
 
 			VkShaderModule shaderModule = VK_NULL_HANDLE;
-			display::vkErrorCheck(vkCreateShaderModule(display::get()->getVkDevice(), &createInfo, nullptr, &shaderModule));
+			Display::vkErrorCheck(vkCreateShaderModule(Display::get()->getVkDevice(), &createInfo, nullptr, &shaderModule));
 
 			VkPipelineShaderStageCreateInfo shaderStageInfo = {};
 			shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;

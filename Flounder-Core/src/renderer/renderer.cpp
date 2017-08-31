@@ -23,10 +23,10 @@ namespace Flounder
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		);
 
-		lastWidth = display::get()->getWidth();
-		lastHeight = display::get()->getHeight();
+		lastWidth = Display::get()->getWidth();
+		lastHeight = Display::get()->getHeight();
 
-		m_swapChain->create(querySwapChainSupport(display::get()->getVkPhysicalDevice()));
+		m_swapChain->create(querySwapChainSupport(Display::get()->getVkPhysicalDevice()));
 		createRenderPass();
 		createGraphicsPipeline();
 		m_swapChain->createFramebuffers(m_renderPass);
@@ -38,16 +38,16 @@ namespace Flounder
 	renderer::~renderer()
 	{
 		// Waits for the device to finish before destroying.
-		vkDeviceWaitIdle(display::get()->getVkDevice());
+		vkDeviceWaitIdle(Display::get()->getVkDevice());
 
 		delete m_managerRender;
 		delete m_shaderTest;
 		delete m_swapChain;
 
-		vkDestroySemaphore(display::get()->getVkDevice(), m_renderFinishedSemaphore, nullptr);
-		vkDestroySemaphore(display::get()->getVkDevice(), m_imageAvailableSemaphore, nullptr);
+		vkDestroySemaphore(Display::get()->getVkDevice(), m_renderFinishedSemaphore, nullptr);
+		vkDestroySemaphore(Display::get()->getVkDevice(), m_imageAvailableSemaphore, nullptr);
 
-		vkDestroyCommandPool(display::get()->getVkDevice(), m_commandPool, nullptr);
+		vkDestroyCommandPool(Display::get()->getVkDevice(), m_commandPool, nullptr);
 	}
 
 	void renderer::Update()
@@ -98,7 +98,7 @@ namespace Flounder
 		renderPassInfo.subpassCount = 1;
 		renderPassInfo.pSubpasses = &subpass;
 
-		display::vkErrorCheck(vkCreateRenderPass(display::get()->getVkDevice(), &renderPassInfo, nullptr, &m_renderPass));
+		Display::vkErrorCheck(vkCreateRenderPass(Display::get()->getVkDevice(), &renderPassInfo, nullptr, &m_renderPass));
 	}
 
 	void renderer::createGraphicsPipeline()
@@ -168,7 +168,7 @@ namespace Flounder
 		pipelineLayoutInfo.setLayoutCount = 0;
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
 
-		display::vkErrorCheck(vkCreatePipelineLayout(display::get()->getVkDevice(), &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
+		Display::vkErrorCheck(vkCreatePipelineLayout(Display::get()->getVkDevice(), &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
 
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -185,18 +185,18 @@ namespace Flounder
 		pipelineInfo.subpass = 0;
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 
-		display::vkErrorCheck(vkCreateGraphicsPipelines(display::get()->getVkDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_graphicsPipeline));
+		Display::vkErrorCheck(vkCreateGraphicsPipelines(Display::get()->getVkDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_graphicsPipeline));
 	}
 
 	void renderer::createCommandPool()
 	{
-		VkQueueFamilyIndices queueFamilyIndices = display::get()->findQueueFamilies(display::get()->getVkPhysicalDevice());
+		VkQueueFamilyIndices queueFamilyIndices = Display::get()->findQueueFamilies(Display::get()->getVkPhysicalDevice());
 
 		VkCommandPoolCreateInfo poolInfo = {};
 		poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily;
 
-		display::vkErrorCheck(vkCreateCommandPool(display::get()->getVkDevice(), &poolInfo, nullptr, &m_commandPool));
+		Display::vkErrorCheck(vkCreateCommandPool(Display::get()->getVkDevice(), &poolInfo, nullptr, &m_commandPool));
 	}
 
 	void renderer::createCommandBuffers()
@@ -209,7 +209,7 @@ namespace Flounder
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 		allocInfo.commandBufferCount = (uint32_t) m_commandBuffers.size();
 
-		display::vkErrorCheck(vkAllocateCommandBuffers(display::get()->getVkDevice(), &allocInfo, m_commandBuffers.data()));
+		Display::vkErrorCheck(vkAllocateCommandBuffers(Display::get()->getVkDevice(), &allocInfo, m_commandBuffers.data()));
 
 		for (size_t i = 0; i < m_commandBuffers.size(); i++)
 		{
@@ -239,7 +239,7 @@ namespace Flounder
 
 			vkCmdEndRenderPass(m_commandBuffers[i]);
 
-			display::vkErrorCheck(vkEndCommandBuffer(m_commandBuffers[i]));
+			Display::vkErrorCheck(vkEndCommandBuffer(m_commandBuffers[i]));
 		}
 	}
 
@@ -248,8 +248,8 @@ namespace Flounder
 		VkSemaphoreCreateInfo semaphoreInfo = {};
 		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		display::vkErrorCheck(vkCreateSemaphore(display::get()->getVkDevice(), &semaphoreInfo, nullptr, &m_imageAvailableSemaphore));
-		display::vkErrorCheck(vkCreateSemaphore(display::get()->getVkDevice(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphore));
+		Display::vkErrorCheck(vkCreateSemaphore(Display::get()->getVkDevice(), &semaphoreInfo, nullptr, &m_imageAvailableSemaphore));
+		Display::vkErrorCheck(vkCreateSemaphore(Display::get()->getVkDevice(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphore));
 	}
 
 	void renderer::updateUniformBuffer()
@@ -261,7 +261,7 @@ namespace Flounder
 		// TODO: Fix memory leaks.
 
 		uint32_t imageIndex;
-		vkAcquireNextImageKHR(display::get()->getVkDevice(), m_swapChain->getSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
+		vkAcquireNextImageKHR(Display::get()->getVkDevice(), m_swapChain->getSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 
 		VkSemaphore waitSemaphores[] = {m_imageAvailableSemaphore};
 		VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
@@ -277,7 +277,7 @@ namespace Flounder
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = signalSemaphores;
 
-		display::vkErrorCheck(vkQueueSubmit(display::get()->getVkPresentQueue(), 1, &submitInfo, VK_NULL_HANDLE));
+		Display::vkErrorCheck(vkQueueSubmit(Display::get()->getVkPresentQueue(), 1, &submitInfo, VK_NULL_HANDLE));
 
 		VkPresentInfoKHR presentInfo = {};
 		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -289,32 +289,32 @@ namespace Flounder
 		presentInfo.pSwapchains = swapchains;
 		presentInfo.pImageIndices = &imageIndex;
 
-		vkQueueWaitIdle(display::get()->getVkPresentQueue());
-		vkQueuePresentKHR(display::get()->getVkPresentQueue(), &presentInfo);
+		vkQueueWaitIdle(Display::get()->getVkPresentQueue());
+		vkQueuePresentKHR(Display::get()->getVkPresentQueue(), &presentInfo);
 	}
 
 	VkSwapChainSupportDetails renderer::querySwapChainSupport(VkPhysicalDevice device)
 	{
 		VkSwapChainSupportDetails details;
 
-		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, display::get()->getVkSurface(), &details.capabilities);
+		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, Display::get()->getVkSurface(), &details.capabilities);
 
 		uint32_t formatCount;
-		vkGetPhysicalDeviceSurfaceFormatsKHR(device, display::get()->getVkSurface(), &formatCount, nullptr);
+		vkGetPhysicalDeviceSurfaceFormatsKHR(device, Display::get()->getVkSurface(), &formatCount, nullptr);
 
 		if (formatCount != 0)
 		{
 			details.formats.resize(formatCount);
-			vkGetPhysicalDeviceSurfaceFormatsKHR(device, display::get()->getVkSurface(), &formatCount, details.formats.data());
+			vkGetPhysicalDeviceSurfaceFormatsKHR(device, Display::get()->getVkSurface(), &formatCount, details.formats.data());
 		}
 
 		uint32_t presentModeCount;
-		vkGetPhysicalDeviceSurfacePresentModesKHR(device, display::get()->getVkSurface(), &presentModeCount, nullptr);
+		vkGetPhysicalDeviceSurfacePresentModesKHR(device, Display::get()->getVkSurface(), &presentModeCount, nullptr);
 
 		if (presentModeCount != 0)
 		{
 			details.presentModes.resize(presentModeCount);
-			vkGetPhysicalDeviceSurfacePresentModesKHR(device, display::get()->getVkSurface(), &presentModeCount, details.presentModes.data());
+			vkGetPhysicalDeviceSurfacePresentModesKHR(device, Display::get()->getVkSurface(), &presentModeCount, details.presentModes.data());
 		}
 
 		return details;

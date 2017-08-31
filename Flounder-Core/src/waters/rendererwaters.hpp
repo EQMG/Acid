@@ -13,7 +13,7 @@ namespace Flounder
 	{
 	private:
 		Fbo *m_fboReflection;
-		rendererdeferred *m_rendererDeferred;
+		RendererDeferred *m_rendererDeferred;
 
 		shader *m_shader;
 	public:
@@ -31,6 +31,6 @@ namespace Flounder
 	public:
 		Fbo *getFboReflection() const { return m_fboReflection; }
 
-		rendererdeferred *getRendererDeferred() const { return m_rendererDeferred; }
+		RendererDeferred *getRendererDeferred() const { return m_rendererDeferred; }
 	};
 }
