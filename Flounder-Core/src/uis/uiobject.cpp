@@ -119,10 +119,7 @@ namespace Flounder
 		{
 			return m_visible && m_parent->isVisible();
 		}
-		else
-		{
-			return m_visible;
-		}
+		return m_visible;
 	}
 
 	void uiobject::setRotationDriver(idriver *rotationDriver)
@@ -143,10 +140,7 @@ namespace Flounder
 		{
 			return m_alpha * m_parent->getAlpha();
 		}
-		else
-		{
-			return m_alpha;
-		}
+		return m_alpha;
 	}
 
 	void uiobject::setScaleDriver(idriver *scaleDriver)

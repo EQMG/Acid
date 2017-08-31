@@ -156,12 +156,12 @@ namespace Flounder
 		/// <returns> The depth of this aabb. </returns>
 		float getDepth();
 
-		inline vector3 *getMinExtents() const { return m_minExtents; }
+		vector3 *getMinExtents() const { return m_minExtents; }
 
-		inline void setMinExtents(const vector3 &minExtents) const { m_minExtents->set(minExtents); }
+		void setMinExtents(const vector3 &minExtents) const { m_minExtents->set(minExtents); }
 
-		inline vector3 *getMaxExtents() const { return m_maxExtents; }
+		vector3 *getMaxExtents() const { return m_maxExtents; }
 
-		inline void setMaxExtents(const vector3 &maxExtents) const { m_maxExtents->set(maxExtents); }
+		void setMaxExtents(const vector3 &maxExtents) const { m_maxExtents->set(maxExtents); }
 	};
 }

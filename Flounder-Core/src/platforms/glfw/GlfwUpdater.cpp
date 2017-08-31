@@ -127,7 +127,7 @@ namespace Flounder
 	void GlfwUpdater::AddModule(ModuleUpdate typeUpdate, std::string moduleName, IModule *module)
 	{
 		float offset = typeUpdate + (0.01f * static_cast<float>(m_modules->size()));
-		m_modules->insert(std::make_pair(offset, std::make_pair(moduleName, module)));
+		m_modules->insert(make_pair(offset, make_pair(moduleName, module)));
 	}
 
 	IModule *GlfwUpdater::GetModule(const std::string &name)

@@ -21,7 +21,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline Camera *Get()
+		static Camera *Get()
 		{
 			return static_cast<Camera*>(Engine::Get()->GetModule("camera"));
 		}
@@ -42,24 +42,24 @@ namespace Flounder
 		/// Gets the current camera object.
 		/// </summary>
 		/// <returns> The current camera. </returns>
-		inline ICamera *GetCamera() const { return m_camera; }
+		ICamera *GetCamera() const { return m_camera; }
 
 		/// <summary>
 		/// Sets the current camera to a new camera.
 		/// </summary>
 		/// <param name="camera"> The new camera. </param>
-		inline void SetCamera(ICamera *camera) { m_camera = camera; }
+		void SetCamera(ICamera *camera) { m_camera = camera; }
 
 		/// <summary>
 		/// Gets the current player object.
 		/// </summary>
 		/// <returns> The current player. </returns>
-		inline IPlayer *GetPlayer() const { return m_player; }
+		IPlayer *GetPlayer() const { return m_player; }
 
 		/// <summary>
 		/// Sets the current player to a new player.
 		/// </summary>
 		/// <param name="player"> The new player. </param>
-		inline void SetPlayer(IPlayer *player) { m_player = player; }
+		void SetPlayer(IPlayer *player) { m_player = player; }
 	};
 }

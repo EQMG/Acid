@@ -65,10 +65,7 @@ namespace Flounder
 		{
 			return func(instance, pCreateInfo, pAllocator, pCallback);
 		}
-		else
-		{
-			return VK_ERROR_EXTENSION_NOT_PRESENT;
-		}
+		return VK_ERROR_EXTENSION_NOT_PRESENT;
 	}
 
 	void Display::fvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator)
@@ -142,7 +139,7 @@ namespace Flounder
 				break;
 			}
 
-			assert(0 && "Vulkan runtime error.");
+			assert(false && "Vulkan runtime error.");
 		}
 	}
 
@@ -493,7 +490,7 @@ namespace Flounder
 			instanceCreateInfo.enabledLayerCount = 0;
 		}
 
-		instanceCreateInfo.enabledExtensionCount = (uint32_t)m_instanceExtensionList.size();
+		instanceCreateInfo.enabledExtensionCount = (uint32_t) m_instanceExtensionList.size();
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
 		vkErrorCheck(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
@@ -607,12 +604,12 @@ namespace Flounder
 
 		VkDeviceCreateInfo deviceCreateInfo = {};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-		deviceCreateInfo.queueCreateInfoCount = (uint32_t)queueCreateInfoList.size();
+		deviceCreateInfo.queueCreateInfoCount = (uint32_t) queueCreateInfoList.size();
 		deviceCreateInfo.pQueueCreateInfos = queueCreateInfoList.data();
 
 		if (m_validationLayers)
 		{
-			deviceCreateInfo.enabledLayerCount = (uint32_t)m_instanceLayerList.size();
+			deviceCreateInfo.enabledLayerCount = (uint32_t) m_instanceLayerList.size();
 			deviceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
 		}
 		else
@@ -620,7 +617,7 @@ namespace Flounder
 			deviceCreateInfo.enabledLayerCount = 0;
 		}
 
-		deviceCreateInfo.enabledExtensionCount = (uint32_t)m_deviceExtensionList.size();
+		deviceCreateInfo.enabledExtensionCount = (uint32_t) m_deviceExtensionList.size();
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 		deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
 

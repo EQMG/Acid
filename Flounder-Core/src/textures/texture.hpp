@@ -67,31 +67,31 @@ namespace Flounder
 		/// Gets if the texture has alpha.
 		/// </summary>
 		/// <returns> If the texture has alpha. </returns>
-		inline bool hasAlpha() const { return m_hasAlpha; }
+		bool hasAlpha() const { return m_hasAlpha; }
 
 		/// <summary>
 		/// Sets if the texture has alpha.
 		/// </summary>
 		/// <param name="hasAlpha"> If the texture has alpha. </param>
-		inline void setHasAlpha(const bool &hasAlpha) { m_hasAlpha = hasAlpha; }
+		void setHasAlpha(const bool &hasAlpha) { m_hasAlpha = hasAlpha; }
 
 		/// <summary>
 		/// Gets the number of texture rows.
 		/// </summary>
 		/// <returns> The number of texture rows. </returns>
-		inline int32_t getNumberOfRows() const { return m_numberOfRows; }
+		int32_t getNumberOfRows() const { return m_numberOfRows; }
 
 		/// <summary>
 		/// Sets the number of texture rows.
 		/// </summary>
 		/// <param name="numberOfRows"> The number of texture rows. </param>
-		inline void setNumberOfRows(const int32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
+		void setNumberOfRows(const int32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
 
 		/// <summary>
 		/// The textures type.
 		/// </summary>
 		/// <returns> The textures type. </returns>
-		inline VkImageType getTextureType() const { return m_imageType; }
+		VkImageType getTextureType() const { return m_imageType; }
 	private:
 		/// <summary>
 		/// Loads the texture object from a texture file.

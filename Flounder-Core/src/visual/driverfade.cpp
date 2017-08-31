@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	driverfade::driverfade(const float &start, const float &end, const float &peak, const float &length) : 
+	driverfade::driverfade(const float &start, const float &end, const float &peak, const float &length) :
 		idriver(length),
 		m_start(start),
 		m_end(end),
@@ -20,13 +20,10 @@ namespace Flounder
 		{
 			return time / m_start * m_peak;
 		}
-		else if (time > m_end)
+		if (time > m_end)
 		{
 			return (1.0f - (time - m_end) / (1.0f - m_end)) * m_peak;
 		}
-		else
-		{
-			return m_peak;
-		}
+		return m_peak;
 	}
 }

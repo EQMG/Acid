@@ -29,7 +29,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline particles *get()
+		static particles *get()
 		{
 			return static_cast<particles*>(Engine::Get()->GetModule("particles"));
 		}
@@ -67,6 +67,6 @@ namespace Flounder
 		/// Gets a list of all particles.
 		/// </summary>
 		/// <returns> All particles. </returns>
-		inline std::map<particletype*, std::vector<particle*>*> *getParticles() const { return m_particles; }
+		std::map<particletype*, std::vector<particle*>*> *getParticles() const { return m_particles; }
 	};
 }

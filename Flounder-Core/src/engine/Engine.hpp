@@ -59,61 +59,61 @@ namespace Flounder
 		/// </summary>
 		/// <param name="name"> The module name to find. </param>
 		/// <returns> The found module. </returns>
-		inline IModule *GetModule(const std::string &name) const { return m_updater->GetModule(name); }
+		IModule *GetModule(const std::string &name) const { return m_updater->GetModule(name); }
 
 		/// <summary>
 		/// Gets the added/removed time for the engine (seconds).
 		/// </summary>
 		/// <returns> The time offset. </returns>
-		inline float GetTimeOffset() const { return m_updater->GetTimeOffset(); }
+		float GetTimeOffset() const { return m_updater->GetTimeOffset(); }
 
 		/// <summary>
 		/// Sets the time offset for the engine (seconds).
 		/// </summary>
 		/// <param name="timeOffset"> The new time offset. </param>
-		inline void SetTimeOffset(const float &timeOffset) const { m_updater->SetTimeOffset(timeOffset); }
+		void SetTimeOffset(const float &timeOffset) const { m_updater->SetTimeOffset(timeOffset); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		inline float GetDelta() const { return m_updater->GetDelta(); }
+		float GetDelta() const { return m_updater->GetDelta(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		inline float GetDeltaRender() const { return m_updater->GetDeltaRender(); }
+		float GetDeltaRender() const { return m_updater->GetDeltaRender(); }
 
 		/// <summary>
 		/// Gets the current time of the engine instance.
 		/// </summary>
 		/// <returns> The current engine time in seconds. </returns>
-		inline float GetTime() const { return m_updater->GetTime(); }
+		float GetTime() const { return m_updater->GetTime(); }
 
 		/// <summary>
 		/// Gets the current time of the engine instance.
 		/// </summary>
 		/// <returns> The current engine time in milliseconds. </returns>
-		inline float GetTimeMs() const { return m_updater->GetTimeMs(); }
+		float GetTimeMs() const { return m_updater->GetTimeMs(); }
 
 		/// <summary>
 		/// Gets if the engine has been initialized.
 		/// </summary>
 		/// <returns> If the engine has been initialized. </returns>
-		inline bool IsInitialized() const { return m_initialized; }
+		bool IsInitialized() const { return m_initialized; }
 
 		/// <summary>
 		/// Sets if the engine has been initialized.
 		/// </summary>
 		/// <param name="initialized"> If the engine has been initialized. </param>
-		inline void SetInitialized(const bool &initialized) { m_initialized = initialized; }
+		void SetInitialized(const bool &initialized) { m_initialized = initialized; }
 
 		/// <summary>
 		/// Gets if the engine is running.
 		/// </summary>
 		/// <returns> If the engine is running. </returns>
-		inline bool IsRunning() const { return m_running; }
+		bool IsRunning() const { return m_running; }
 
 		/// <summary>
 		/// Requests the engine to delete and stop the gameloop.

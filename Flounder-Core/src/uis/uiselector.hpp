@@ -58,16 +58,16 @@ namespace Flounder
 
 		void cancelWasEvent();
 
-		inline float getCursorX() { return m_cursorX; }
+		float getCursorX() { return m_cursorX; }
 
-		inline float getCursorY() { return m_cursorY; }
+		float getCursorY() { return m_cursorY; }
 
-		inline bool getLeftClick() { return m_leftClick; }
+		bool getLeftClick() { return m_leftClick; }
 
-		inline bool getRightClick() { return m_rightClick; }
+		bool getRightClick() { return m_rightClick; }
 
-		inline bool wasLeftClick() { return m_leftWasClick; }
+		bool wasLeftClick() { return m_leftWasClick; }
 
-		inline bool wasRightClick() { return m_rightWasClick; }
+		bool wasRightClick() { return m_rightWasClick; }
 	};
 }

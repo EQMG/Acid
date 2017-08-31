@@ -255,10 +255,7 @@ namespace Flounder
 		{
 			return destination->set(source.m_x / l, source.m_y / l, source.m_z / l, source.m_w / l);
 		}
-		else
-		{
-			throw std::invalid_argument("Zero length quaternion");
-		}
+		throw std::invalid_argument("Zero length quaternion");
 	}
 
 	float quaternion::length(const quaternion &source)

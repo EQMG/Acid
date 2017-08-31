@@ -51,12 +51,12 @@ namespace Flounder
 
 		bool contains(const vector3 &point) override;
 
-		inline float getRadius() const { return m_radius; }
+		float getRadius() const { return m_radius; }
 
-		inline void setRadius(const float &radius) { m_radius = radius; }
+		void setRadius(const float &radius) { m_radius = radius; }
 
-		inline vector3 *getPosition() const { return m_position; }
+		vector3 *getPosition() const { return m_position; }
 
-		inline void setPosition(const vector3 &position) const { m_position->set(position); }
+		void setPosition(const vector3 &position) const { m_position->set(position); }
 	};
 }

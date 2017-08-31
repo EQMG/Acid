@@ -247,7 +247,7 @@ namespace Flounder
 #else
 		if (stbi_info(filepath.c_str(), width, height, components) == 0)
 		{
-			assert(0 && "Vulkan invalid texture file format.");
+			assert(false && "Vulkan invalid texture file format.");
 		}
 
 		data = stbi_load(filepath.c_str(), width, height, components, STBI_rgb_alpha);

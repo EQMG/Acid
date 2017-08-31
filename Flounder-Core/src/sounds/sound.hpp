@@ -51,14 +51,14 @@ namespace Flounder
 
 		void SetGain(float gain);
 
-		inline std::string GetName() const { return m_name; }
+		std::string GetName() const { return m_name; }
 
-		inline std::string GetFileName() const { return m_filename; }
+		std::string GetFileName() const { return m_filename; }
 
-		inline bool IsPlaying() const { return m_playing; }
+		bool IsPlaying() const { return m_playing; }
 
-		inline float GetPitch() const { return m_pitch; }
+		float GetPitch() const { return m_pitch; }
 
-		inline float GetGain() const { return m_gain; }
+		float GetGain() const { return m_gain; }
 	};
 }

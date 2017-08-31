@@ -37,7 +37,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline shadows *get()
+		static shadows *get()
 		{
 			return static_cast<shadows*>(Engine::Get()->GetModule("shadows"));
 		}
@@ -69,45 +69,45 @@ namespace Flounder
 		/// <param name="position"> The center of the shadow box. </param>
 		void updateLightViewMatrix(vector3 *direction, vector3 *position);
 	public:
-		inline vector3 *getLightDirection() const { return m_lightDirection; }
+		vector3 *getLightDirection() const { return m_lightDirection; }
 
-		inline void setLightDirection(const vector3 &lightDirection) const { m_lightDirection->set(lightDirection); }
+		void setLightDirection(const vector3 &lightDirection) const { m_lightDirection->set(lightDirection); }
 
-		inline float getBrightnessBoost() const { return m_brightnessBoost; }
+		float getBrightnessBoost() const { return m_brightnessBoost; }
 
-		inline void setBrightnessBoost(const float &brightnessBoost) { m_brightnessBoost = brightnessBoost; }
+		void setBrightnessBoost(const float &brightnessBoost) { m_brightnessBoost = brightnessBoost; }
 
-		inline int getShadowSize() const { return m_shadowSize; }
+		int getShadowSize() const { return m_shadowSize; }
 
-		inline void setShadowSize(const int &shadowSize) { m_shadowSize = shadowSize; }
+		void setShadowSize(const int &shadowSize) { m_shadowSize = shadowSize; }
 
-		inline int getShadowPCF() const { return m_shadowPCF; }
+		int getShadowPCF() const { return m_shadowPCF; }
 
-		inline void setShadowPCF(const int &shadowPCF) { m_shadowPCF = shadowPCF; }
+		void setShadowPCF(const int &shadowPCF) { m_shadowPCF = shadowPCF; }
 
-		inline float getShadowBias() const { return m_shadowBias; }
+		float getShadowBias() const { return m_shadowBias; }
 
-		inline void setShadowBias(const float &shadowBias) { m_shadowBias = shadowBias; }
+		void setShadowBias(const float &shadowBias) { m_shadowBias = shadowBias; }
 
-		inline float getShadowDarkness() const { return m_shadowDarkness; }
+		float getShadowDarkness() const { return m_shadowDarkness; }
 
-		inline void setShadowDarkness(const float &shadowDarkness) { m_shadowDarkness = shadowDarkness; }
+		void setShadowDarkness(const float &shadowDarkness) { m_shadowDarkness = shadowDarkness; }
 
-		inline float getShadowTransition() const { return m_shadowTransition; }
+		float getShadowTransition() const { return m_shadowTransition; }
 
-		inline void setShadowTransition(const float &shadowTransition) { m_shadowTransition = shadowTransition; }
+		void setShadowTransition(const float &shadowTransition) { m_shadowTransition = shadowTransition; }
 
-		inline float getShadowFactor() const { return m_shadowFactor; }
+		float getShadowFactor() const { return m_shadowFactor; }
 
-		inline void setShadowFactor(const float &shadowFactor) { m_shadowFactor = shadowFactor; }
+		void setShadowFactor(const float &shadowFactor) { m_shadowFactor = shadowFactor; }
 
-		inline float getShadowBoxOffset() const { return m_shadowBoxOffset; }
+		float getShadowBoxOffset() const { return m_shadowBoxOffset; }
 
-		inline void setShadowBoxOffset(const float &shadowBoxOffset) { m_shadowBoxOffset = shadowBoxOffset; }
+		void setShadowBoxOffset(const float &shadowBoxOffset) { m_shadowBoxOffset = shadowBoxOffset; }
 
-		inline float getShadowBoxDistance() const { return m_shadowBoxDistance; }
+		float getShadowBoxDistance() const { return m_shadowBoxDistance; }
 
-		inline void setShadowBoxDistance(const float &shadowBoxDistance) { m_shadowBoxDistance = shadowBoxDistance; }
+		void setShadowBoxDistance(const float &shadowBoxDistance) { m_shadowBoxDistance = shadowBoxDistance; }
 
 		/// <returns> The shadow box, so that it can be used by other class to test if engine.entities are inside the box. </returns>
 		shadowbox *getShadowBox() const { return m_shadowBox; }

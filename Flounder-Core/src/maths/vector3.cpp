@@ -185,10 +185,7 @@ namespace Flounder
 		{
 			return destination->set(source.m_x / l, source.m_y / l, source.m_z / l);
 		}
-		else
-		{
-			throw std::invalid_argument("Zero length vector");
-		}
+		throw std::invalid_argument("Zero length vector");
 	}
 
 	float vector3::length(const vector3 &source)
@@ -279,7 +276,7 @@ namespace Flounder
 		do
 		{
 			vector3 *randomVector = generateRandomUnitVector(nullptr);
-			vector3::cross(*randomVector, normal, destination);
+			cross(*randomVector, normal, destination);
 			delete randomVector;
 		}
 		while (length(*destination) == 0.0f);

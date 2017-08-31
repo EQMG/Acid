@@ -18,7 +18,7 @@ namespace Flounder
 
 		void storeValues() override;
 
-		inline void setSlideSpaceValue(const vector4 &slideSpaceValue) const { m_slideSpaceValue->set(slideSpaceValue); }
+		void setSlideSpaceValue(const vector4 &slideSpaceValue) const { m_slideSpaceValue->set(slideSpaceValue); }
 
 		void setSlideSpace(const float &x, const float &y, const float &z, const float &w) const { m_slideSpaceValue->set(x, y, z, w); }
 	};

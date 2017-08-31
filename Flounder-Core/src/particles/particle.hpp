@@ -59,7 +59,7 @@ namespace Flounder
 		/// </summary>
 		void update();
 
-		inline bool isAlive() { return m_transparency < 1.0f; }
+		bool isAlive() { return m_transparency < 1.0f; }
 
 		icollider *getCollider() override { return nullptr; }
 

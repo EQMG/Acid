@@ -24,7 +24,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline waters *get()
+		static waters *get()
 		{
 			return static_cast<waters*>(Engine::Get()->GetModule("waters"));
 		}
@@ -41,24 +41,24 @@ namespace Flounder
 
 		void Update() override;
 
-		inline water *getWater() { return m_water; }
+		water *getWater() { return m_water; }
 
-		inline void setWater(water *water) { m_water = water; }
+		void setWater(water *water) { m_water = water; }
 
-		inline float getColourIntensity() const { return m_colourIntensity; }
+		float getColourIntensity() const { return m_colourIntensity; }
 
-		inline void setColourIntensity(const float &colourIntensity) { m_colourIntensity = colourIntensity; }
+		void setColourIntensity(const float &colourIntensity) { m_colourIntensity = colourIntensity; }
 
-		inline bool getEnableReflections() const { return m_enableReflections; }
+		bool getEnableReflections() const { return m_enableReflections; }
 
-		inline void setEnableReflections(const bool &enableReflections) { m_enableReflections = enableReflections; }
+		void setEnableReflections(const bool &enableReflections) { m_enableReflections = enableReflections; }
 
-		inline float getReflectionQuality() const { return m_reflectionQuality; }
+		float getReflectionQuality() const { return m_reflectionQuality; }
 
-		inline void setReflectionQuality(const float &reflectionQuality) { m_reflectionQuality = reflectionQuality; }
+		void setReflectionQuality(const float &reflectionQuality) { m_reflectionQuality = reflectionQuality; }
 
-		inline bool getReflectionShadows() const { return m_reflectionShadows; }
+		bool getReflectionShadows() const { return m_reflectionShadows; }
 
-		inline void setReflectionShadows(const bool &reflectionShadows) { m_reflectionShadows = reflectionShadows; }
+		void setReflectionShadows(const bool &reflectionShadows) { m_reflectionShadows = reflectionShadows; }
 	};
 }

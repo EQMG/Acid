@@ -34,24 +34,24 @@ namespace Flounder
 		/// Sets the target for the smooth float.
 		/// </summary>
 		/// <param name="target"> The new target. </param>
-		inline void setTarget(const float &target) { m_target = target; }
+		void setTarget(const float &target) { m_target = target; }
 
 		/// <summary>
 		/// Gets the smooth floats current target.
 		/// </summary>
 		/// <returns> The target. </returns>
-		inline float getTarget() { return m_target; }
+		float getTarget() { return m_target; }
 
 		/// <summary>
 		/// Increases the smooth floats target.
 		/// </summary>
 		/// <param name="increase"> How much to increase the target by. </param>
-		inline void increaseTarget(const float &increase) { m_target += increase; }
+		void increaseTarget(const float &increase) { m_target += increase; }
 
 		/// <summary>
 		/// Gets the currently calculated value.
 		/// </summary>
 		/// <returns> The calculated value. </returns>
-		inline float get() { return m_actual; }
+		float get() { return m_actual; }
 	};
 }

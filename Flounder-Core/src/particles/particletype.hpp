@@ -31,20 +31,20 @@ namespace Flounder
 		/// </summary>
 		~particletype();
 
-		inline std::string getName() { return m_name; }
+		std::string getName() { return m_name; }
 
-		inline void setName(const std::string &name) { m_name = std::move(name); }
+		void setName(const std::string &name) { m_name = move(name); }
 
-		inline texture *getTexture() { return m_texture; }
+		texture *getTexture() { return m_texture; }
 
-		inline void setTexture(texture *texture) { m_texture = texture; }
+		void setTexture(texture *texture) { m_texture = texture; }
 
-		inline float getLifeLength() { return m_lifeLength; }
+		float getLifeLength() { return m_lifeLength; }
 
-		inline void setLifeLength(const float &lifeLength) { m_lifeLength = lifeLength; }
+		void setLifeLength(const float &lifeLength) { m_lifeLength = lifeLength; }
 
-		inline float getScale() { return m_scale; }
+		float getScale() { return m_scale; }
 
-		inline void setScale(const float &scale) { m_scale = scale; }
+		void setScale(const float &scale) { m_scale = scale; }
 	};
 }
