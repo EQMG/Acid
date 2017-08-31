@@ -29,15 +29,15 @@ namespace Flounder
 
 		void cleanupFramebuffers();
 
-		inline VkSwapchainKHR getSwapchain() const { return m_swapChain; }
+		VkSwapchainKHR getSwapchain() const { return m_swapChain; }
 
-		inline size_t getFramebufferSize() const { return m_swapChainFramebuffers.size(); }
+		size_t getFramebufferSize() const { return m_swapChainFramebuffers.size(); }
 
-		inline VkFramebuffer getFramebuffer(uint32_t index) const { return m_swapChainFramebuffers[index]; }
+		VkFramebuffer getFramebuffer(uint32_t index) const { return m_swapChainFramebuffers[index]; }
 
-		inline VkFormat getImageFormat() const { return m_swapChainImageFormat; }
+		VkFormat getImageFormat() const { return m_swapChainImageFormat; }
 
-		inline VkExtent2D getExtent() const { return m_swapChainExtent; }
+		VkExtent2D getExtent() const { return m_swapChainExtent; }
 	private:
 		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
 

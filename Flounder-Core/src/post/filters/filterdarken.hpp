@@ -19,6 +19,6 @@ namespace Flounder
 
 		void storeValues() override;
 
-		inline void setFactorValue(const float &factorValue) { m_factorValue = factorValue; }
+		void setFactorValue(const float &factorValue) { m_factorValue = factorValue; }
 	};
 }

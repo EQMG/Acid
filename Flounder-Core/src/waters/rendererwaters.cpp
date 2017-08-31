@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	rendererwaters::rendererwaters() : 
+	rendererwaters::rendererwaters() :
 		irenderer(),
 		m_fboReflection(new Fbo(true, waters::get()->getReflectionQuality(), DepthTexture, true, 3)),
 		m_rendererDeferred(new RendererDeferred()),

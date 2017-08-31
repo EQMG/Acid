@@ -53,30 +53,30 @@ namespace Flounder
 		/// Gets the uis manager.
 		/// </summary>
 		/// <returns> The uis manager. </returns>
-		inline imanageruis *getManager() { return m_managerUis; };
+		imanageruis *getManager() { return m_managerUis; };
 
 		/// <summary>
 		/// Sets the current uis manager to a new uis manager.
 		/// </summary>
 		/// <param name="managerUis"> The new uis manager. </param>
-		inline void setMaster(imanageruis *managerUis) { m_managerUis = managerUis; }
+		void setMaster(imanageruis *managerUis) { m_managerUis = managerUis; }
 
 		/// <summary>
 		/// Gets the screen container.
 		/// </summary>
 		/// <returns> The screen container. </returns>
-		inline uiobject *getContainer() { return m_container; }
+		uiobject *getContainer() { return m_container; }
 
 		/// <summary>
 		/// Gets the main GUI selector.
 		/// </summary>
 		/// <returns> The GUI selector. </returns>
-		inline uiselector *getSelector() { return m_selector; }
+		uiselector *getSelector() { return m_selector; }
 
 		/// <summary>
 		/// The rendering objects from the container. Updated each update.
 		/// </summary>
 		/// <returns> The objects. </returns>
-		inline std::vector<uiobject*> *getObjects() { return m_objects; };
+		std::vector<uiobject*> *getObjects() { return m_objects; };
 	};
 }

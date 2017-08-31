@@ -365,10 +365,7 @@ namespace Flounder
 			destination->m_23 = t32 * determinant_inv;
 			return destination;
 		}
-		else
-		{
-			return nullptr;
-		}
+		return nullptr;
 	}
 
 	matrix4x4 *matrix4x4::negate(const matrix4x4 &source, matrix4x4 *destination)
@@ -568,9 +565,9 @@ namespace Flounder
 			destination = new vector3();
 		}
 
-		matrix4x4 *matrix = matrix4x4::transformationMatrix(vector3(0.0f, 0.0f, 0.0f), rotation, vector3(1.0f, 1.0f, 1.0f), nullptr);
+		matrix4x4 *matrix = transformationMatrix(vector3(0.0f, 0.0f, 0.0f), rotation, vector3(1.0f, 1.0f, 1.0f), nullptr);
 		vector4 direction4 = vector4(source.m_x, source.m_y, source.m_z, 1.0f);
-		matrix4x4::transform(*matrix, direction4, &direction4);
+		transform(*matrix, direction4, &direction4);
 		delete matrix;
 		return destination->set(direction4.m_x, direction4.m_y, direction4.m_z);
 	}
@@ -601,14 +598,14 @@ namespace Flounder
 
 		if (vector3::lengthSquared(translation) != 0.0f)
 		{
-			matrix4x4::translate(*destination, translation, destination);
+			translate(*destination, translation, destination);
 		}
 
 		if (vector3::lengthSquared(rotation) != 0.0f)
 		{
-			matrix4x4::rotate(*destination, vector3(1.0f, 0.0f, 0.0f), __radians(rotation.m_x), destination); // Rotate the X component.
-			matrix4x4::rotate(*destination, vector3(0.0f, 1.0f, 0.0f), __radians(rotation.m_y), destination); // Rotate the Y component.
-			matrix4x4::rotate(*destination, vector3(0.0f, 0.0f, 1.0f), __radians(rotation.m_z), destination); // Rotate the Z component.
+			rotate(*destination, vector3(1.0f, 0.0f, 0.0f), __radians(rotation.m_x), destination); // Rotate the X component.
+			rotate(*destination, vector3(0.0f, 1.0f, 0.0f), __radians(rotation.m_y), destination); // Rotate the Y component.
+			rotate(*destination, vector3(0.0f, 0.0f, 1.0f), __radians(rotation.m_z), destination); // Rotate the Z component.
 		}
 
 		// Only scales if there is a scale.
@@ -678,14 +675,14 @@ namespace Flounder
 
 		if (!rotation.isZero())
 		{
-			matrix4x4::rotate(*destination, vector3(1.0f, 0.0f, 0.0f), __radians(rotation.m_x), destination);
-			matrix4x4::rotate(*destination, vector3(0.0f, 1.0f, 0.0f), __radians(-rotation.m_y), destination);
-			matrix4x4::rotate(*destination, vector3(0.0f, 0.0f, 1.0f), __radians(rotation.m_z), destination);
+			rotate(*destination, vector3(1.0f, 0.0f, 0.0f), __radians(rotation.m_x), destination);
+			rotate(*destination, vector3(0.0f, 1.0f, 0.0f), __radians(-rotation.m_y), destination);
+			rotate(*destination, vector3(0.0f, 0.0f, 1.0f), __radians(rotation.m_z), destination);
 		}
 
 		if (!position.isZero())
 		{
-			matrix4x4::translate(*destination, *vector3(position).negate(), destination);
+			translate(*destination, *vector3(position).negate(), destination);
 		}
 
 		return destination;
@@ -699,8 +696,8 @@ namespace Flounder
 		}
 
 		vector4 point4 = vector4(worldSpace.m_x, worldSpace.m_y, worldSpace.m_z, 1.0f);
-		matrix4x4::transform(viewMatrix, point4, &point4);
-		matrix4x4::transform(projectionMatrix, point4, &point4);
+		transform(viewMatrix, point4, &point4);
+		transform(projectionMatrix, point4, &point4);
 		vector3 point = vector3(point4);
 
 		point.m_x /= point.m_z;
@@ -731,8 +728,8 @@ namespace Flounder
 			float rotateAngle = acos(vector3::dot(coneDirection, vector3(0.0f, 0.0f, 1.0f)));
 			matrix4x4 rotationMatrix = matrix4x4();
 			rotationMatrix.setIdentity();
-			matrix4x4::rotate(rotationMatrix, *rotateAxis, -rotateAngle, &rotationMatrix);
-			matrix4x4::transform(rotationMatrix, direction, &direction);
+			rotate(rotationMatrix, *rotateAxis, -rotateAngle, &rotationMatrix);
+			transform(rotationMatrix, direction, &direction);
 			delete rotateAxis;
 		}
 		else if (coneDirection.m_z == -1.0f)

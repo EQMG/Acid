@@ -15,9 +15,9 @@ namespace Flounder
 
 		~spawnsphere();
 
-		inline float getRadius() { return m_radius; }
+		float getRadius() { return m_radius; }
 
-		inline void setRadius(const float &radius) { m_radius = radius; }
+		void setRadius(const float &radius) { m_radius = radius; }
 
 		vector3 *getBaseSpawnPosition() override;
 	};

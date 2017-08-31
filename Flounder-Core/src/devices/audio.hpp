@@ -48,7 +48,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline Audio *Get()
+		static Audio *Get()
 		{
 			return static_cast<Audio*>(Engine::Get()->GetModule("audio"));
 		}

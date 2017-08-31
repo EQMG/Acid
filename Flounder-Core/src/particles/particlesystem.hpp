@@ -69,52 +69,52 @@ namespace Flounder
 
 		void removeParticleType(particletype *type);
 
-		inline ispawnparticle *getSpawn() const { return m_spawn; }
+		ispawnparticle *getSpawn() const { return m_spawn; }
 
 		inline void setSpawn(ispawnparticle *spawn);
 
-		inline float getPps() const { return m_pps; }
+		float getPps() const { return m_pps; }
 
-		inline void setPps(const float &pps) { m_pps = pps; }
+		void setPps(const float &pps) { m_pps = pps; }
 
-		inline float getAverageSpeed() const { return m_averageSpeed; }
+		float getAverageSpeed() const { return m_averageSpeed; }
 
-		inline void setAverageSpeed(const float &averageSpeed) { m_averageSpeed = averageSpeed; }
+		void setAverageSpeed(const float &averageSpeed) { m_averageSpeed = averageSpeed; }
 
-		inline float getGravityEffect() const { return m_gravityEffect; }
+		float getGravityEffect() const { return m_gravityEffect; }
 
-		inline void setGravityEffect(const float &gravityEffect) { m_gravityEffect = gravityEffect; }
+		void setGravityEffect(const float &gravityEffect) { m_gravityEffect = gravityEffect; }
 
-		inline bool getRandomRotation() const { return m_randomRotation; }
+		bool getRandomRotation() const { return m_randomRotation; }
 
-		inline void setRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
+		void setRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
 
-		inline vector3 *getSystemCentre() const { return m_systemCentre; }
+		vector3 *getSystemCentre() const { return m_systemCentre; }
 
-		inline void setSystemCentre(const vector3 &systemCentre) const { m_systemCentre->set(systemCentre); }
+		void setSystemCentre(const vector3 &systemCentre) const { m_systemCentre->set(systemCentre); }
 
-		inline vector3 *getVelocityCentre() const { return m_velocityCentre; }
+		vector3 *getVelocityCentre() const { return m_velocityCentre; }
 
-		inline void setVelocityCentre(const vector3 &velocityCentre) const { m_velocityCentre->set(velocityCentre); }
+		void setVelocityCentre(const vector3 &velocityCentre) const { m_velocityCentre->set(velocityCentre); }
 
-		inline vector3 *getDirection() const { return m_direction; }
+		vector3 *getDirection() const { return m_direction; }
 
 		void setDirection(const vector3 &direction, const float &deviation);
 
-		inline float getSpeedError() const { return m_speedError; }
+		float getSpeedError() const { return m_speedError; }
 
-		inline void setSpeedError(const float &speedError) { m_speedError = speedError; }
+		void setSpeedError(const float &speedError) { m_speedError = speedError; }
 
-		inline float getLifeError() const { return m_lifeError; }
+		float getLifeError() const { return m_lifeError; }
 
-		inline void setLifeError(const float &lifeError) { m_lifeError = lifeError; }
+		void setLifeError(const float &lifeError) { m_lifeError = lifeError; }
 
-		inline float getScaleError() const { return m_scaleError; }
+		float getScaleError() const { return m_scaleError; }
 
-		inline void setScaleError(const float &scaleError) { m_scaleError = scaleError; }
+		void setScaleError(const float &scaleError) { m_scaleError = scaleError; }
 
-		inline bool getPaused() const { return m_paused; }
+		bool getPaused() const { return m_paused; }
 
-		inline void setPaused(const bool &paused) { m_paused = paused; }
+		void setPaused(const bool &paused) { m_paused = paused; }
 	};
 }

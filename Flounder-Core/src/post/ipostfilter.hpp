@@ -68,6 +68,6 @@ namespace Flounder
 		/// Gets the fbo the filter rendered into.
 		/// </summary>
 		/// <returns> The fbo. </returns>
-		inline Fbo *getFbo() const { return m_fbo; }
+		Fbo *getFbo() const { return m_fbo; }
 	};
 }

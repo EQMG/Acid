@@ -56,7 +56,7 @@ namespace Flounder
 			{
 				return angle - static_cast<t>(360.0);
 			}
-			else if (angle < static_cast<t>(0.0))
+			if (angle < static_cast<t>(0.0))
 			{
 				return angle + static_cast<t>(360.0);
 			}
@@ -182,7 +182,7 @@ namespace Flounder
 			double logLower = log(lowerLimit);
 			double logUpper = log(upperLimit);
 
-			double raw = maths::randomInRange(0.0f, 1.0f);
+			double raw = randomInRange(0.0f, 1.0f);
 			double result = exp(raw * (logUpper - logLower) + logLower);
 
 			if (result < lowerLimit)
@@ -207,8 +207,8 @@ namespace Flounder
 		static float normallyDistributedSingle(const float &standardDeviation, const float &mean)
 		{
 			// Intentionally duplicated to avoid IEnumerable overhead.
-			double u1 = maths::randomInRange(0.0f, 1.0f);
-			double u2 = maths::randomInRange(0.0f, 1.0f);
+			double u1 = randomInRange(0.0f, 1.0f);
+			double u2 = randomInRange(0.0f, 1.0f);
 
 			double x1 = sqrt(-2.0 * log(u1));
 			double x2 = 2.0 * PI * u2;

@@ -16,6 +16,6 @@ namespace Flounder
 
 		void storeValues() override;
 
-		inline void setSpanMax(const float &spanMax) { m_spanMax = spanMax; }
+		void setSpanMax(const float &spanMax) { m_spanMax = spanMax; }
 	};
 }

@@ -32,12 +32,12 @@ namespace Flounder
 
 		void Update() override;
 
-		inline skybox *getSkybox() { return m_skybox; }
+		skybox *getSkybox() { return m_skybox; }
 
-		inline void setSkybox(skybox *skybox) { m_skybox = skybox; }
+		void setSkybox(skybox *skybox) { m_skybox = skybox; }
 
-		inline fog *getFog() { return m_fog; }
+		fog *getFog() { return m_fog; }
 
-		inline void setFog(fog *fog) { m_fog = fog; }
+		void setFog(fog *fog) { m_fog = fog; }
 	};
 }

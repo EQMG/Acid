@@ -33,37 +33,37 @@ namespace Flounder
 		/// Gets the start time.
 		/// </summary>
 		/// <returns> The start time. </returns>
-		inline float &getStart() { return m_start; }
+		float &getStart() { return m_start; }
 
 		/// <summary>
 		/// Sets the start time.
 		/// </summary>
 		/// <param name="start"> The new start time. </param>
-		inline void setStart(const float &start) { m_start = start; }
+		void setStart(const float &start) { m_start = start; }
 
 		/// <summary>
 		/// Gets the end time.
 		/// </summary>
 		/// <returns> The ebd time. </returns>
-		inline float &getEnd() { return m_end; }
+		float &getEnd() { return m_end; }
 
 		/// <summary>
 		/// Sets the end time.
 		/// </summary>
 		/// <param name="end"> The new end time. </param>
-		inline void setEnd(const float &end) { m_end = end; }
+		void setEnd(const float &end) { m_end = end; }
 
 		/// <summary>
 		/// Gets the peak value.
 		/// </summary>
 		/// <returns> The peak value. </returns>
-		inline float &getPeak() { return m_peak; }
+		float &getPeak() { return m_peak; }
 
 		/// <summary>
 		/// Sets the peak value.
 		/// </summary>
 		/// <param name="peak"> The new peak value. </param>
-		inline void setPeak(const float &peak) { m_peak = peak; }
+		void setPeak(const float &peak) { m_peak = peak; }
 	protected:
 		float calculate(const float &time) override;
 	};

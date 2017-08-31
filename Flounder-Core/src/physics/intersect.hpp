@@ -33,12 +33,12 @@ namespace Flounder
 		/// Gets if there is a intersection.
 		/// </summary>
 		/// <returns> If there is a intersection. </returns>
-		inline bool isIntersection() { return m_intersects; };
+		bool isIntersection() { return m_intersects; };
 
 		/// <summary>
 		/// Gets the distance that intersection is at.
 		/// </summary>
 		/// <returns> The distance that intersection is at. </returns>
-		inline float getDistance() { return m_distance; };
+		float getDistance() { return m_distance; };
 	};
 }

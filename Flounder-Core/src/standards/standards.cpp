@@ -10,7 +10,7 @@ namespace Flounder
 
 	standards::~standards()
 	{
-		for (auto it = m_standards->begin(); it < m_standards->end(); it++)
+		for (auto it = m_standards->begin(); it < m_standards->end(); ++it)
 		{
 			delete *it;
 		}
@@ -25,7 +25,7 @@ namespace Flounder
 
 	void standards::Update()
 	{
-		for (auto it = m_standards->begin(); it < m_standards->end(); it++)
+		for (auto it = m_standards->begin(); it < m_standards->end(); ++it)
 		{
 			(*it)->Update();
 		}

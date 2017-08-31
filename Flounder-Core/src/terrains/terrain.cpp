@@ -148,24 +148,24 @@ namespace Flounder
 			// Ocean.
 			return colour(0.0824f, 0.3960f, 0.7530f, 1.0f);
 		}
-		else if (height <= 0.25f)
+		if (height <= 0.25f)
 		{
 			if (moisture <= 0.16f)
 			{
 				// Subtropical Desert.
 				return colour(0.914f, 0.8275f, 0.7804f, 1.0f);
 			}
-			else if (moisture <= 0.33f)
+			if (moisture <= 0.33f)
 			{
 				// Grassland.
 				return colour(0.7686f, 0.8314f, 0.6666f, 1.0f);
 			}
-			else if (moisture <= 0.66f)
+			if (moisture <= 0.66f)
 			{
 				// Tropical Seasonal Forest.
 				return colour(0.6627f, 0.8000f, 0.6431f, 1.0f);
 			}
-			else if (moisture <= 1.0f)
+			if (moisture <= 1.0f)
 			{
 				// Tropical Rain Forest.
 				return colour(0.6431f, 0.7686f, 0.6588f, 1.0f);
@@ -178,17 +178,17 @@ namespace Flounder
 				// Temperate Desert.
 				return colour(0.8941f, 0.9098f, 0.7922f, 1.0f);
 			}
-			else if (moisture <= 0.5f)
+			if (moisture <= 0.5f)
 			{
 				// Grassland.
 				return colour(0.7686f, 0.8314f, 0.6666f, 1.0f);
 			}
-			else if (moisture <= 0.83f)
+			if (moisture <= 0.83f)
 			{
 				// Temperate Deciduous Forest.
 				return colour(0.7059f, 0.7882f, 0.6627f, 1.0f);
 			}
-			else if (moisture <= 1.0f)
+			if (moisture <= 1.0f)
 			{
 				// Temperate Rain Forest.
 				return colour(0.6431f, 0.7686f, 0.6588f, 1.0f);
@@ -201,12 +201,12 @@ namespace Flounder
 				// Temperate Desert.
 				return colour(0.8941f, 0.9098f, 0.7922f, 1.0f);
 			}
-			else if (moisture <= 0.66f)
+			if (moisture <= 0.66f)
 			{
 				// Shrubland.
 				return colour(0.7686f, 0.8000f, 0.7333f, 1.0f);
 			}
-			else if (moisture <= 1.0f)
+			if (moisture <= 1.0f)
 			{
 				// Taiga.
 				return colour(0.8000f, 0.8314f, 0.7333f, 1.0f);
@@ -219,17 +219,17 @@ namespace Flounder
 				// Scorched.
 				return colour(0.6000f, 0.6000f, 0.6000f, 1.0f);
 			}
-			else if (moisture <= 0.33f)
+			if (moisture <= 0.33f)
 			{
 				// Bare.
 				return colour(0.7333f, 0.7333f, 0.7333f, 1.0f);
 			}
-			else if (moisture <= 0.5f)
+			if (moisture <= 0.5f)
 			{
 				// Tundra.
 				return colour(0.8666f, 0.8666f, 0.7333f, 1.0f);
 			}
-			else if (moisture <= 1.0f)
+			if (moisture <= 1.0f)
 			{
 				// Snow.
 				return colour(1.0000f, 1.0000f, 1.0000f, 1.0f);
@@ -257,19 +257,17 @@ namespace Flounder
 		{
 			return 1.0f;
 		}
-		else if (reading > radius2) // If outside the upper bound there is no factor!
+		if (reading > radius2) // If outside the upper bound there is no factor!
 		{
 			return 0.0f;
 		}
-		else if (reading >= radius1) // Something between upper and lower, uses cos interpolation.
+		if (reading >= radius1) // Something between upper and lower, uses cos interpolation.
 		{
 			float blend = maths::clamp((reading - radius1) / (radius2 - radius1), 0.0f, 1.0f);
 			return maths::clamp(maths::cosInterpolate(1.0f, 0.0f, blend), 0.0f, 1.0f);
 		}
-		else // Fully inside of the lower radius, so full factor.
-		{
-			return 1.0f;
-		}
+		// Fully inside of the lower radius, so full factor.
+		return 1.0f;
 	}
 
 	float terrain::getFactorMoisture(const float &x, const float &y, const float &z)

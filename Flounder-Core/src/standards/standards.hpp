@@ -21,7 +21,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline standards *get()
+		static standards *get()
 		{
 			return static_cast<standards*>(Engine::Get()->GetModule("standards"));
 		}

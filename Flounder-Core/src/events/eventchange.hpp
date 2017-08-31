@@ -30,6 +30,6 @@ namespace Flounder
 
 		void onEvent() override;
 
-		inline bool removeAfterEvent() override { return false; }
+		bool removeAfterEvent() override { return false; }
 	};
 }

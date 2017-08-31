@@ -23,8 +23,8 @@ namespace Flounder
 
 		void updateObject() override;
 
-		inline bool isStarting() const { return m_starting; }
+		bool isStarting() const { return m_starting; }
 
-		inline void setStarting(const bool &starting) { m_starting = starting; }
+		void setStarting(const bool &starting) { m_starting = starting; }
 	};
 }

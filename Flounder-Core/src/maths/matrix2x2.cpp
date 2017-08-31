@@ -159,10 +159,7 @@ namespace Flounder
 			destination->m_11 = t11;
 			return destination;
 		}
-		else
-		{
-			return nullptr;
-		}
+		return nullptr;
 	}
 
 	matrix2x2 *matrix2x2::negate(const matrix2x2 &source, matrix2x2 *destination)

@@ -230,10 +230,7 @@ namespace Flounder
 			destination->m_21 = t12 * determinant_inv;
 			return destination;
 		}
-		else
-		{
-			return nullptr;
-		}
+		return nullptr;
 	}
 
 	matrix3x3 *matrix3x3::negate(const matrix3x3 &source, matrix3x3 *destination)

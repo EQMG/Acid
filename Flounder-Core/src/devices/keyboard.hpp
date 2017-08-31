@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the keyboard keys.
 	/// </summary>
-	class Keyboard : 
+	class Keyboard :
 		public IModule
 	{
 	private:
@@ -23,7 +23,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline Keyboard *get()
+		static Keyboard *get()
 		{
 			return static_cast<Keyboard*>(Engine::Get()->GetModule("keyboard"));
 		}

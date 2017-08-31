@@ -30,29 +30,29 @@ namespace Flounder
 
 		~vertexdata();
 
-		inline vector3 getPosition() const { return m_position; }
+		vector3 getPosition() const { return m_position; }
 
-		inline int getTextureIndex() const { return m_textureIndex; }
+		int getTextureIndex() const { return m_textureIndex; }
 
-		inline void setTextureIndex(int textureIndex) { m_textureIndex = textureIndex; }
+		void setTextureIndex(int textureIndex) { m_textureIndex = textureIndex; }
 
-		inline int getNormalIndex() const { return m_normalIndex; }
+		int getNormalIndex() const { return m_normalIndex; }
 
-		inline void setNormalIndex(const int normalIndex) { m_normalIndex = normalIndex; }
+		void setNormalIndex(const int normalIndex) { m_normalIndex = normalIndex; }
 
-		inline vertexdata *getDuplicateVertex() const { return m_duplicateVertex; }
+		vertexdata *getDuplicateVertex() const { return m_duplicateVertex; }
 
-		inline void setDuplicateVertex(vertexdata *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
+		void setDuplicateVertex(vertexdata *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
-		inline int getIndex() const { return m_index; }
+		int getIndex() const { return m_index; }
 
-		inline float getLength() const { return m_length; }
+		float getLength() const { return m_length; }
 
 		void addTangent(vector3 *tangent);
 
 		void averageTangents();
 
-		inline vector3 getAverageTangent() const { return m_averagedTangent; }
+		vector3 getAverageTangent() const { return m_averagedTangent; }
 
 		bool isSet();
 

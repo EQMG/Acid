@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	driverlinear::driverlinear(const float &startValue, const float &endValue, const float &length) : 
+	driverlinear::driverlinear(const float &startValue, const float &endValue, const float &length) :
 		idriver(length),
 		m_startValue(startValue),
 		m_difference(endValue - startValue)

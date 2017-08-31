@@ -50,9 +50,9 @@ namespace Flounder
 		}
 
 		m_offset->set(
-			2.0f * water::SQUARE_SIZE * round(Camera::Get()->GetCamera()->GetPosition()->m_x / (2.0f * water::SQUARE_SIZE)),
+			2.0f * SQUARE_SIZE * round(Camera::Get()->GetCamera()->GetPosition()->m_x / (2.0f * SQUARE_SIZE)),
 			0.0f,
-			2.0f * water::SQUARE_SIZE * round(Camera::Get()->GetCamera()->GetPosition()->m_z / (2.0f * water::SQUARE_SIZE))
+			2.0f * SQUARE_SIZE * round(Camera::Get()->GetCamera()->GetPosition()->m_z / (2.0f * SQUARE_SIZE))
 		);
 	}
 
