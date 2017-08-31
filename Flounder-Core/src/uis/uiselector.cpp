@@ -1,6 +1,6 @@
 ﻿#include "uiselector.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	uiselector::uiselector() :
 		m_cursorX(0.0f),
@@ -55,8 +55,8 @@ namespace flounder
 		{
 			if (fabs(maths::deadband(0.1f, m_joystickAxisX->getAmount())) > 0.0 || fabs(maths::deadband(0.1f, m_joystickAxisY->getAmount())) > 0.0)
 			{
-				m_cursorX += m_joystickAxisX->getAmount() * 0.75f * framework::get()->getDelta();
-				m_cursorY += -m_joystickAxisY->getAmount() * 0.75f * framework::get()->getDelta();
+				m_cursorX += m_joystickAxisX->getAmount() * 0.75f * Engine::Get()->GetDelta();
+				m_cursorY += -m_joystickAxisY->getAmount() * 0.75f * Engine::Get()->GetDelta();
 				m_cursorX = maths::clamp(m_cursorX, 0.0f, 1.0f);
 				m_cursorY = maths::clamp(m_cursorY, 0.0f, 1.0f);
 				mouse::get()->setPosition(m_cursorX * display::get()->getWidth(), m_cursorY * display::get()->getHeight());

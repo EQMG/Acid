@@ -2,7 +2,7 @@
 
 #include "../irequest.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Interface for executable resource requests.

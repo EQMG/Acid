@@ -1,6 +1,6 @@
 #include "matrix3x3.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	matrix3x3::matrix3x3() :
 		m_00(1.0f),

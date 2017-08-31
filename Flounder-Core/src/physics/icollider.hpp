@@ -9,7 +9,7 @@
 #include "intersect.hpp"
 #include "ray.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A simple class that represents a physical shape.

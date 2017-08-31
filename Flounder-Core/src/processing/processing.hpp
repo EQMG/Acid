@@ -1,30 +1,30 @@
 #pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 
 #include "resource/processorresource.hpp"
 #include "graphic/processorgraphic.hpp"
 #include "iprocessor.hpp"
 #include "irequest.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A module used for processing types of requests.
 	/// </summary>
 	class processing :
-		public imodule
+		public IModule
 	{
 	private:
 		std::vector<iprocessor*> *m_processors;
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline processing *get()
 		{
-			return static_cast<processing*>(framework::get()->getInstance("processing"));
+			return static_cast<processing*>(Engine::Get()->GetModule("processing"));
 		}
 
 		/// <summary>
@@ -37,7 +37,7 @@ namespace flounder
 		/// </summary>
 		~processing();
 
-		void update() override;
+		void Update() override;
 
 		/// <summary>
 		/// Adds a processor type to the list of processors.

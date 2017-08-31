@@ -2,7 +2,7 @@
 
 #include "../ipostfilter.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class filtersepia :
 		public ipostfilter

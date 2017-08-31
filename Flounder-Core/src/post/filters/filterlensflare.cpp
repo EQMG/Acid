@@ -1,6 +1,6 @@
 #include "filterlensflare.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filterlensflare::filterlensflare() :
 		ipostfilter("filterLensflare", "res/shaders/filters/lensflare.frag.spv"),
@@ -25,7 +25,7 @@ namespace flounder
 
 	void filterlensflare::setSunPosition(const vector3 &sunPosition)
 	{
-		icamera *camera = camera::get()->getCamera();
-		matrix4x4::worldToScreenSpace(sunPosition, *camera->getViewMatrix(), *camera->getProjectionMatrix(), m_sunPosition);
+		ICamera *camera = Camera::Get()->GetCamera();
+		matrix4x4::worldToScreenSpace(sunPosition, *camera->GetViewMatrix(), *camera->GetProjectionMatrix(), m_sunPosition);
 	}
 }

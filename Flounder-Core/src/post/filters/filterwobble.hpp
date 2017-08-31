@@ -1,10 +1,10 @@
 #pragma once
 
 #include "../../devices/display.hpp"
-#include "../../framework/framework.hpp"
+#include "../../engine/Engine.hpp"
 #include "../ipostfilter.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class filterwobble :
 		public ipostfilter

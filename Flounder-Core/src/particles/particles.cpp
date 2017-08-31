@@ -1,11 +1,11 @@
 #include "particles.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const float particles::MAX_ELAPSED_TIME = 5.0f;
 
 	particles::particles() :
-		imodule(),
+		IModule(),
 		m_particleSystems(new std::vector<particlesystem*>()),
 		m_particles(new std::map<particletype*, std::vector<particle*>*>())
 	{
@@ -17,7 +17,7 @@ namespace flounder
 		delete m_particles;
 	}
 
-	void particles::update()
+	void particles::Update()
 	{
 		if (uis::get() != nullptr && uis::get()->getManager() != nullptr)
 		{

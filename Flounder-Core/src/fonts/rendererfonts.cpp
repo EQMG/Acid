@@ -1,6 +1,6 @@
 #include "rendererfonts.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	rendererfonts::rendererfonts() :
 		irenderer(),
@@ -16,7 +16,7 @@ namespace flounder
 		delete m_shader;
 	}
 
-	void rendererfonts::render(const vector4 &clipPlane, const icamera &camera)
+	void rendererfonts::render(const vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 
@@ -33,7 +33,7 @@ namespace flounder
 		endRendering();
 	}
 
-	void rendererfonts::prepareRendering(const vector4 &clipPlane, const icamera &camera)
+	void rendererfonts::prepareRendering(const vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.

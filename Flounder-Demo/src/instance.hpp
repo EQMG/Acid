@@ -4,9 +4,9 @@
 
 #include "entities/entitytest.hpp"
 
-using namespace flounder;
+using namespace Flounder;
 
-class instance :
+class Instance :
 	public istandard
 {
 private:
@@ -16,9 +16,9 @@ private:
 
 	particlesystem *m_systemTest;
 public:
-	instance();
+	Instance();
 
-	~instance();
+	~Instance();
 
-	void update() override;
+	void Update() override;
 };

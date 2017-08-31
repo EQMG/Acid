@@ -7,7 +7,7 @@
 
 #include "renderer.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Represents a sub renderer in the engine.
@@ -34,6 +34,6 @@ namespace flounder
 		/// </summary>
 		/// <param name="clipPlane"> The current clip plane. </param>
 		/// <param name="camera"> The camera to be used when rendering. </param>
-		virtual void render(const vector4 &clipPlane, const icamera &camera) = 0;
+		virtual void render(const vector4 &clipPlane, const ICamera &camera) = 0;
 	};
 }

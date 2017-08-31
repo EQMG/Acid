@@ -1,6 +1,6 @@
 #include "filtergrey.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filtergrey::filtergrey() :
 		ipostfilter("filterGrey", "res/shaders/filters/grey.frag.spv")

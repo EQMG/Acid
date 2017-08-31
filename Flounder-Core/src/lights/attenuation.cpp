@@ -1,6 +1,6 @@
 #include "attenuation.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	attenuation::attenuation(const float &constant, const float &linear, const float &exponent)
 	{

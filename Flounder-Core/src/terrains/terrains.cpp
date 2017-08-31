@@ -1,9 +1,9 @@
 #include "terrains.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	terrains::terrains() :
-		imodule(),
+		IModule(),
 		m_terrains(new std::vector<terrain*>())
 	{
 		m_terrains->push_back(new terrain(
@@ -29,7 +29,7 @@ namespace flounder
 		delete m_terrains;
 	}
 
-	void terrains::update()
+	void terrains::Update()
 	{
 		for (terrain *object : *m_terrains)
 		{

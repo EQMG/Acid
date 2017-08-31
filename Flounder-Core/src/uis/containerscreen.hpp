@@ -2,7 +2,7 @@
 
 #include "uiobject.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A gui object that has a empty update and delete method.

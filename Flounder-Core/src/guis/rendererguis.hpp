@@ -6,7 +6,7 @@
 #include "gui.hpp"
 #include "../models/model.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class rendererguis :
 		public irenderer
@@ -20,9 +20,9 @@ namespace flounder
 
 		~rendererguis();
 
-		void render(const vector4 &clipPlane, const icamera &camera) override;
+		void render(const vector4 &clipPlane, const ICamera &camera) override;
 	private:
-		void prepareRendering(const vector4 &clipPlane, const icamera &camera);
+		void prepareRendering(const vector4 &clipPlane, const ICamera &camera);
 
 		void renderGui(gui *object);
 

@@ -6,7 +6,7 @@
 
 #include "metafile.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A loader capable of loading font data into a instance of a text mesh.

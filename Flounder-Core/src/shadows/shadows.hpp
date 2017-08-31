@@ -3,18 +3,18 @@
 #include "../camera/camera.hpp"
 #include "../maths/vector3.hpp"
 #include "../maths/matrix4x4.hpp"
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../physics/aabb.hpp"
 
 #include "shadowbox.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A module used for managing shadow maps in 3D worlds.
 	/// </summary>
 	class shadows :
-		public imodule
+		public IModule
 	{
 	private:
 		vector3 *m_lightDirection;
@@ -34,12 +34,12 @@ namespace flounder
 		shadowbox *m_shadowBox;
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline shadows *get()
 		{
-			return static_cast<shadows*>(framework::get()->getInstance("shadows"));
+			return static_cast<shadows*>(Engine::Get()->GetModule("shadows"));
 		}
 
 		/// <summary>
@@ -52,7 +52,7 @@ namespace flounder
 		/// </summary>
 		~shadows();
 
-		void update() override;
+		void Update() override;
 	private:
 		/// <summary>
 		/// Creates the orthographic projection matrix.

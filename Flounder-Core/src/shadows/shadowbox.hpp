@@ -6,7 +6,7 @@
 #include "../maths/matrix4x4.hpp"
 #include "../physics/aabb.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Represents the 3D area of the world in which engine.shadows will be cast (basically represents the orthographic projection area for the shadow render pass).
@@ -48,7 +48,7 @@ namespace flounder
 		/// <param name="lightPosition"> The lights position. </param>
 		/// <param name="shadowOffset"> The shadows offset. </param>
 		/// <param name="shadowDistance"> The shadows distance. </param>
-		void update(const icamera &camera, const vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance);
+		void update(const ICamera &camera, const vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance);
 	private:
 		/// <summary>
 		/// Create the offset for part of the conversion to shadow map space.
@@ -56,13 +56,13 @@ namespace flounder
 		/// <returns> The offset as a matrix. </returns>
 		static matrix4x4 *createOffset();
 
-		void updateShadowBox(const icamera &camera);
+		void updateShadowBox(const ICamera &camera);
 
 		/// <summary>
 		/// Updates the widths and heights of the box panes.
 		/// </summary>
 		/// <param name="camera"> The camera object. </param>
-		void updateWidthsAndHeights(const icamera &camera);
+		void updateWidthsAndHeights(const ICamera &camera);
 
 		/// <summary>
 		/// Calculates the vertex of each corner of the view frustum in light space.

@@ -1,6 +1,6 @@
 #include "filterdarken.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filterdarken::filterdarken(const float &factorValue) :
 		ipostfilter("filterDarken", "res/shaders/filters/darken.frag.spv"),

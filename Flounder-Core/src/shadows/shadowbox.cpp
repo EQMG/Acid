@@ -1,6 +1,6 @@
 ﻿#include "shadowbox.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	shadowbox::shadowbox() :
 		m_lightDirection(new vector3()),
@@ -34,7 +34,7 @@ namespace flounder
 		delete m_aabb;
 	}
 
-	void shadowbox::update(const icamera &camera, const vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance)
+	void shadowbox::update(const ICamera &camera, const vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance)
 	{
 		m_lightDirection->set(lightPosition);
 		m_lightDirection->normalize();
@@ -56,20 +56,20 @@ namespace flounder
 		return offset;
 	}
 
-	void shadowbox::updateShadowBox(const icamera &camera)
+	void shadowbox::updateShadowBox(const ICamera &camera)
 	{
 		updateWidthsAndHeights(camera);
 
-		matrix4x4 *rotation = matrix4x4::viewMatrix(vector3(), *camera.getPosition(), nullptr);
+		matrix4x4 *rotation = matrix4x4::viewMatrix(vector3(), *camera.GetPosition(), nullptr);
 		vector4 *forwardVector4 = matrix4x4::transform(*rotation, vector4(0.0f, 0.0f, -1.0f, 0.0f), nullptr);
 		vector3 *forwardVector = new vector3(*forwardVector4);
 
 		vector3 *toFar = new vector3(*forwardVector);
 		toFar->scale(m_shadowDistance);
 		vector3 *toNear = new vector3(*forwardVector);
-		toNear->scale(camera.getNearPlane());
-		vector3 *centreNear = vector3::add(*toNear, *camera.getPosition(), nullptr);
-		vector3 *centreFar = vector3::add(*toFar, *camera.getPosition(), nullptr);
+		toNear->scale(camera.GetNearPlane());
+		vector3 *centreNear = vector3::add(*toNear, *camera.GetPosition(), nullptr);
+		vector3 *centreFar = vector3::add(*toFar, *camera.GetPosition(), nullptr);
 
 		vector4 **points = calculateFrustumVertices(*rotation, *forwardVector, *centreNear, *centreFar);
 
@@ -133,10 +133,10 @@ namespace flounder
 		delete forwardVector4;
 	}
 
-	void shadowbox::updateWidthsAndHeights(const icamera &camera)
+	void shadowbox::updateWidthsAndHeights(const ICamera &camera)
 	{
-		m_farWidth = m_shadowDistance * tan(__radians(camera.getFOV()));
-		m_nearWidth = camera.getNearPlane() * tan(__radians(camera.getFOV()));
+		m_farWidth = m_shadowDistance * tan(__radians(camera.GetFov()));
+		m_nearWidth = camera.GetNearPlane() * tan(__radians(camera.GetFov()));
 		m_farHeight = m_farWidth / static_cast<float>(display::get()->getAspectRatio());
 		m_nearHeight = m_nearWidth / static_cast<float>(display::get()->getAspectRatio());
 	}

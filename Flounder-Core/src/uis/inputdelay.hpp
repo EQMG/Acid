@@ -2,7 +2,7 @@
 
 #include "../maths/timer.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class inputdelay
 	{

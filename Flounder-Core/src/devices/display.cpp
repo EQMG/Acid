@@ -1,6 +1,6 @@
 #include "display.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const std::vector<const char*> display::VALIDATION_LAYERS = {"VK_LAYER_LUNARG_standard_validation"};
 
@@ -12,7 +12,7 @@ namespace flounder
 	void callbackClose(GLFWwindow *window)
 	{
 		display::get()->m_closed = false;
-		framework::get()->requestClose(false);
+		Engine::Get()->RequestClose(false);
 	}
 
 	void callbackFocus(GLFWwindow *window, int focused)
@@ -147,7 +147,7 @@ namespace flounder
 	}
 
 	display::display() :
-		imodule(),
+		IModule(),
 		m_windowWidth(1080),
 		m_windowHeight(720),
 		m_fullscreenWidth(0),
@@ -212,7 +212,7 @@ namespace flounder
 		m_closed = false;
 	}
 
-	void display::update()
+	void display::Update()
 	{
 		// Polls for window events. The key callback will only be invoked during this call.
 		glfwPollEvents();

@@ -3,7 +3,7 @@
 #include "vector3.hpp"
 #include "matrix4x4.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class Transform
 	{

@@ -1,6 +1,6 @@
 #include "quaternion.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	quaternion::quaternion()
 	{

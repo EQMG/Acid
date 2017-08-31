@@ -1,6 +1,6 @@
 #include "ipostfilter.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader, Fbo *fbo) :
 		m_shader(new shader(filterName, 2,

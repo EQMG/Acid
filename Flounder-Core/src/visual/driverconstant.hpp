@@ -2,7 +2,7 @@
 
 #include "idriver.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A driver that has a constant value.

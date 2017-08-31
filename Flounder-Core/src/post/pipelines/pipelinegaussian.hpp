@@ -4,7 +4,7 @@
 #include "../filters/filterblurvertical.hpp"
 #include "../ipostpipeline.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class pipelinegaussian :
 		public ipostpipeline

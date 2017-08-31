@@ -1,6 +1,6 @@
 #include "eventstandard.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	eventstandard::eventstandard(const bool &repeat, const std::function<bool()> &triggered, const std::function<void()> &onEvent) :
 		ievent(),

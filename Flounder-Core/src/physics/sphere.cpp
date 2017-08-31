@@ -1,6 +1,6 @@
 #include "sphere.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	sphere::sphere() :
 		icollider(),

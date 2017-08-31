@@ -14,11 +14,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine
 int main()
 #endif
 {
-	// Creates the framework object.
-	framework *m_framework = new framework();
-	m_framework->setUpdater(new glfwupdater());
+	// Creates the engine object.
+	Engine *m_engine = new Engine();
+	m_engine->SetUpdater(new GlfwUpdater());
 
-	// Initializes the framework modules.
+	// Initializes the engine modules.
 	if (display::get() != nullptr)
 	{
 		display::get()->setWindowSize(1080, 720);
@@ -34,10 +34,10 @@ int main()
 		mouse::get()->setCustomMouse("res/cursor.png");
 	}
 
-	if (camera::get() != nullptr)
+	if (Camera::Get() != nullptr)
 	{
-		camera::get()->setCamera(new maincamera());
-		camera::get()->setPlayer(new mainplayer());
+		Camera::Get()->SetCamera(new maincamera());
+		Camera::Get()->SetPlayer(new mainplayer());
 	}
 
 	if (renderer::get() != nullptr)
@@ -52,7 +52,7 @@ int main()
 
 	if (standards::get() != nullptr)
 	{
-		standards::get()->addStandard(new instance());
+		standards::get()->addStandard(new Instance());
 	}
 
 	if (skyboxes::get() != nullptr)
@@ -71,11 +71,11 @@ int main()
 		));
 	}
 
-	// Runs the framework loop.
-	m_framework->run();
+	// Runs the engine loop.
+	m_engine->Run();
 
-	// Deletes the framework.
-	delete m_framework;
+	// Deletes the engine.
+	delete m_engine;
 
 	// Pauses the console.
 	std::cin.get();

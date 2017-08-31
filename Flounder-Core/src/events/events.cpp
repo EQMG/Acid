@@ -1,9 +1,9 @@
 #include "events.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	events::events() :
-		imodule(),
+		IModule(),
 		m_events(new std::vector<ievent*>())
 	{
 	}
@@ -18,7 +18,7 @@ namespace flounder
 		delete m_events;
 	}
 
-	void events::update()
+	void events::Update()
 	{
 		for (auto it = m_events->begin(); it < m_events->end(); it++)
 		{

@@ -7,7 +7,7 @@
 #include "uis/overlaydebug.hpp"
 #include "uis/overlaymanager.hpp"
 
-using namespace flounder;
+using namespace Flounder;
 
 class manageruis :
 	public imanageruis

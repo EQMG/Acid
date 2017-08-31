@@ -1,6 +1,6 @@
-#include "instance.hpp"
+#include "Instance.hpp"
 
-instance::instance()
+Instance::Instance()
 {
 	m_buttonFullscreen = new buttonkeyboard(1, GLFW_KEY_F11);
 	m_buttonLockMouse = new buttonkeyboard(1, GLFW_KEY_M);
@@ -41,7 +41,7 @@ instance::instance()
 	delete modelTest;
 }
 
-instance::~instance()
+Instance::~Instance()
 {
 	delete m_buttonFullscreen;
 	delete m_buttonLockMouse;
@@ -50,7 +50,7 @@ instance::~instance()
 	delete m_systemTest;
 }
 
-void instance::update()
+void Instance::Update()
 {
 	if (m_buttonFullscreen->wasDown())
 	{
@@ -64,6 +64,6 @@ void instance::update()
 
 	if (m_buttonExit->wasDown())
 	{
-		framework::get()->requestClose(false);
+		Engine::Get()->RequestClose(false);
 	}
 }

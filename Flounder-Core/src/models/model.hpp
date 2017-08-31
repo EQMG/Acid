@@ -14,7 +14,7 @@
 #include "material.hpp"
 #include "vertexdata.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Class that represents a OBJ model.

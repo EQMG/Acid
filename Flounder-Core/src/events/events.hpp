@@ -1,27 +1,27 @@
 #pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../tasks/tasks.hpp"
 
 #include "ievent.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
-	/// A module used for managing events on framework updates.
+	/// A module used for managing events on engine updates.
 	/// </summary>
-	class events : public imodule
+	class events : public IModule
 	{
 	private:
 		std::vector<ievent*> *m_events;
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline events *get()
 		{
-			return static_cast<events*>(framework::get()->getInstance("events"));
+			return static_cast<events*>(Engine::Get()->GetModule("events"));
 		}
 
 		/// <summary>
@@ -34,7 +34,7 @@ namespace flounder
 		/// </summary>
 		~events();
 
-		void update() override;
+		void Update() override;
 
 		/// <summary>
 		/// Adds an event to the listening list.

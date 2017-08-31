@@ -1,6 +1,6 @@
 #include "pipelinebloom.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	pipelinebloom::pipelinebloom() :
 		ipostpipeline()

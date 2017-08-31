@@ -1,6 +1,6 @@
 #include "pipelinepaused.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	pipelinepaused::pipelinepaused() :
 		ipostpipeline()

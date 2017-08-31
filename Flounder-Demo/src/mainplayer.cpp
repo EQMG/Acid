@@ -7,7 +7,7 @@ const float mainplayer::JUMP_POWER = 8.0f;
 const float mainplayer::FLY_SPEED = 10.0f;
 
 mainplayer::mainplayer() :
-	iplayer(),
+	IPlayer(),
 	m_position(new vector3()),
 	m_rotation(new vector3()),
 	m_currentSpeed(0.0f),
@@ -39,10 +39,10 @@ mainplayer::~mainplayer()
 	delete m_amountRotate;
 }
 
-void mainplayer::update()
+void mainplayer::Update()
 {
 	// Gets the delta and limits the lowest UPS to 20 (any less and the game is unplayable).
-	float delta = __min(framework::get()->getDelta(), 1.0f / 20.0f);
+	float delta = __min(Engine::Get()->GetDelta(), 1.0f / 20.0f);
 
 	if (uis::get() != nullptr && uis::get()->getManager() != nullptr)
 	{
@@ -80,7 +80,7 @@ void mainplayer::update()
 	}
 
 	// Calculates the deltas to the moved distance, and rotations.
-	float theta = __radians(camera::get()->getCamera()->getRotation()->m_y);
+	float theta = __radians(Camera::Get()->GetCamera()->GetRotation()->m_y);
 	float dx = -(m_currentSpeed * sin(theta) + m_currentStrafeSpeed * cos(theta)) * delta;
 	float dy = m_currentUpwardSpeed * delta;
 	float dz = -(m_currentSpeed * cos(theta) - m_currentStrafeSpeed * sin(theta)) * delta;

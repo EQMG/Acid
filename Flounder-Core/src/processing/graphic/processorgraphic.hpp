@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../../framework/framework.hpp"
+#include "../../engine/Engine.hpp"
 
 #include "requestgraphic.hpp"
 #include "../iprocessor.hpp"
 #include "../queue.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A extension that is responsible for processing OpenGL requests.

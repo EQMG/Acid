@@ -1,6 +1,6 @@
 ﻿#include "particletype.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	particletype::particletype(const std::string &name, texture *texture, const float &lifeLength, const float &scale) :
 		m_name(name),

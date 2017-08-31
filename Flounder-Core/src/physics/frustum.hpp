@@ -3,7 +3,7 @@
 #include "../helpers/helperarray.hpp"
 #include "../maths/matrix4x4.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Represents the region of flounder.space in the modeled world that may appear on the screen.

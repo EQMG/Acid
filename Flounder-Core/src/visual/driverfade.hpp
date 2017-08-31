@@ -2,7 +2,7 @@
 
 #include "idriver.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A driver that fades from start to end.

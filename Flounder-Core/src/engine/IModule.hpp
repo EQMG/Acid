@@ -1,30 +1,30 @@
 #pragma once
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
-	/// A simple interface used for defining framework modules.
+	/// A simple interface used for defining engine modules.
 	/// </summary>
-	class imodule
+	class IModule
 	{
 	public:
 		/// <summary>
 		/// Creates a new module.
 		/// </summary>
-		imodule()
+		IModule()
 		{
 		}
 
 		/// <summary>
 		/// Deconstructor for the module.
 		/// </summary>
-		virtual ~imodule()
+		virtual ~IModule()
 		{
 		}
 
 		/// <summary>
 		/// The update function for the module.
 		/// </summary>
-		virtual void update() = 0;
+		virtual void Update() = 0;
 	};
 }

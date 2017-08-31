@@ -1,6 +1,6 @@
 #include "axisbutton.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	axisbutton::axisbutton(ibutton *negative, ibutton *positive) :
 		iaxis(),

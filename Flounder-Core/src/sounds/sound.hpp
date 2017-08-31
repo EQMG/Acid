@@ -10,7 +10,7 @@
 #include "../devices/display.hpp"
 #include "../helpers/helperstring.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class vector3;
 

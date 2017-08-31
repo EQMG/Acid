@@ -18,7 +18,7 @@
 
 #include "shadertype.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class texture;
 

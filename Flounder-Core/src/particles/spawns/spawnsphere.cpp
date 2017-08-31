@@ -1,6 +1,6 @@
 ﻿#include "spawnsphere.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	spawnsphere::spawnsphere(const float &radius, const vector3 &heading) :
 		ispawnparticle(),

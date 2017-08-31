@@ -10,13 +10,13 @@
 #include <al/alc.h>
 
 #include "../camera/camera.hpp"
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../maths/vector3.hpp"
 #include "../sounds/sound.hpp"
 
 #include "display.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	typedef struct SoundSourceInfo
 	{
@@ -34,7 +34,7 @@ namespace flounder
 	/// A module used for loading, managing and playing a variety of different sound types.
 	/// </summary>
 	class audio :
-		public imodule
+		public IModule
 	{
 	private:
 		friend class sound;
@@ -45,12 +45,12 @@ namespace flounder
 		ALCcontext *m_context;
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline audio *get()
 		{
-			return static_cast<audio*>(framework::get()->getInstance("audio"));
+			return static_cast<audio*>(Engine::Get()->GetModule("audio"));
 		}
 
 		/// <summary>
@@ -63,7 +63,7 @@ namespace flounder
 		/// </summary>
 		~audio();
 
-		void update() override;
+		void Update() override;
 
 		static SoundSourceInfo loadWaveFile(const std::string &path);
 

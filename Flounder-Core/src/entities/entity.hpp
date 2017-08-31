@@ -4,7 +4,7 @@
 
 #include "icomponent.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class entity :
 		public ispatialobject

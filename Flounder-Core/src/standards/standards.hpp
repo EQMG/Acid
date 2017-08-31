@@ -2,28 +2,28 @@
 
 #include <vector>
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 
 #include "istandard.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A module used for managing simple update injection standards.
 	/// </summary>
 	class standards :
-		public imodule
+		public IModule
 	{
 	private:
 		std::vector<istandard*> *m_standards;
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline standards *get()
 		{
-			return static_cast<standards*>(framework::get()->getInstance("standards"));
+			return static_cast<standards*>(Engine::Get()->GetModule("standards"));
 		}
 
 		standards();
@@ -32,6 +32,6 @@ namespace flounder
 
 		void addStandard(istandard *standard);
 
-		void update() override;
+		void Update() override;
 	};
 }

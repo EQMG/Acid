@@ -1,6 +1,6 @@
 #include "vertexdata.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const int vertexdata::NO_INDEX = -1;
 

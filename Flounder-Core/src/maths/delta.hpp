@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 
 #include "maths.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A class for handing and calculating deltas.

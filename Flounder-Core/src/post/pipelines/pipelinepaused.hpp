@@ -5,7 +5,7 @@
 #include "../ipostpipeline.hpp"
 #include "pipelinegaussian.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class pipelinepaused :
 		public ipostpipeline
