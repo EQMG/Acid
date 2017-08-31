@@ -53,7 +53,7 @@ namespace Flounder
 
 			m_hasChange = true;
 
-			float width = 2.0f * m_background->getMeshSize()->m_x * m_background->getScreenDimensions()->m_x / static_cast<float>(display::get()->getAspectRatio());
+			float width = 2.0f * m_background->getMeshSize()->m_x * m_background->getScreenDimensions()->m_x / static_cast<float>(Display::get()->getAspectRatio());
 			float positionX = m_background->getPosition()->m_x;
 			float cursorX = uis::get()->getSelector()->getCursorX() - positionX;
 			m_value = 2.0f * cursorX / width;

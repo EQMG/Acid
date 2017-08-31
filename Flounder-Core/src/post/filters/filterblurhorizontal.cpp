@@ -4,7 +4,7 @@ namespace Flounder
 {
 	filterblurhorizontal::filterblurhorizontal(const float &sizeScalar) :
 		ipostfilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontal.frag.spv", new Fbo(true, sizeScalar)),
-		m_widthValue(static_cast<int>(display::get()->getWidth() * sizeScalar)),
+		m_widthValue(static_cast<int>(Display::get()->getWidth() * sizeScalar)),
 		m_scaleValue(2.0f),
 		m_fitToDisplay(true),
 		m_sizeScalar(sizeScalar)
@@ -28,7 +28,7 @@ namespace Flounder
 	{
 		if (m_fitToDisplay)
 		{
-			m_widthValue = static_cast<int>(display::get()->getWidth() * m_sizeScalar);
+			m_widthValue = static_cast<int>(Display::get()->getWidth() * m_sizeScalar);
 		}
 #if 0
 		m_shader->loadUniform1f("width", static_cast<float>(m_widthValue));

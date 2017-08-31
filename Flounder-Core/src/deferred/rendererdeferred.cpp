@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	rendererdeferred::rendererdeferred(Fbo *fbo) :
+	RendererDeferred::RendererDeferred(Fbo *fbo) :
 		m_shader(new shader("deferred", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/deferred/deferred.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/deferred/deferred.frag.spv")
@@ -11,18 +11,18 @@ namespace Flounder
 	{
 	}
 
-	rendererdeferred::rendererdeferred() :
-		rendererdeferred(new Fbo(true, 1.0f))
+	RendererDeferred::RendererDeferred() :
+		RendererDeferred(new Fbo(true, 1.0f))
 	{
 	}
 
-	rendererdeferred::~rendererdeferred()
+	RendererDeferred::~RendererDeferred()
 	{
 		delete m_shader;
 		delete m_fbo;
 	}
 
-	void rendererdeferred::apply(const int n_args, ...)
+	void RendererDeferred::Apply(const int n_args, ...)
 	{
 #if 0
 		m_fbo->bindFrameBuffer();
@@ -56,7 +56,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererdeferred::storeValues()
+	void RendererDeferred::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform4fv("projectionMatrix", *camera::get()->getCamera()->getProjectionMatrix());

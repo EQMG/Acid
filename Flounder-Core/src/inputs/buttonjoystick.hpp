@@ -2,7 +2,7 @@
 
 #include <stdarg.h>
 
-#include "../devices/joysticks.hpp"
+#include "../devices/Joysticks.hpp"
 
 #include "ibutton.hpp"
 

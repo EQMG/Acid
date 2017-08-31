@@ -2,14 +2,15 @@
 
 #include "../engine/Engine.hpp"
 
-#include "display.hpp"
+#include "Display.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the keyboard keys.
 	/// </summary>
-	class keyboard : public IModule
+	class Keyboard : 
+		public IModule
 	{
 	private:
 		int *m_keyboardKeys;
@@ -22,20 +23,20 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline keyboard *get()
+		static inline Keyboard *get()
 		{
-			return static_cast<keyboard*>(Engine::Get()->GetModule("keyboard"));
+			return static_cast<Keyboard*>(Engine::Get()->GetModule("keyboard"));
 		}
 
 		/// <summary>
 		/// Creates a new keyboard module.
 		/// </summary>
-		keyboard();
+		Keyboard();
 
 		/// <summary>
 		/// Deconstructor for the keyboard module.
 		/// </summary>
-		~keyboard() override;
+		~Keyboard() override;
 
 		void Update() override;
 

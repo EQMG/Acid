@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../devices/display.hpp"
+#include "../devices/Display.hpp"
 #include "../maths/vector2.hpp"
 #include "../maths/vector4.hpp"
 #include "../engine/Engine.hpp"

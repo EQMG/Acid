@@ -17,11 +17,11 @@ namespace Flounder
 	{
 		int key = -1;
 
-		if (joysticks::get()->isConnected(m_joystick))
+		if (Joysticks::get()->isConnected(m_joystick))
 		{
-			for (int i = 0; i < joysticks::get()->getCountButtons(m_joystick); i++)
+			for (int i = 0; i < Joysticks::get()->getCountButtons(m_joystick); i++)
 			{
-				if (joysticks::get()->getButton(m_joystick, i))
+				if (Joysticks::get()->getButton(m_joystick, i))
 				{
 					if (i == 0)
 					{
@@ -48,9 +48,9 @@ namespace Flounder
 
 	int grabberkeyboard::getCurrent(text *object)
 	{
-		int key = keyboard::get()->getKeyboardChar();
+		int key = Keyboard::get()->getKeyboardChar();
 
-		if (key == 0 || !keyboard::get()->getKey(toupper(key)))
+		if (key == 0 || !Keyboard::get()->getKey(toupper(key)))
 		{
 			key = -1;
 		}
@@ -69,7 +69,7 @@ namespace Flounder
 
 		for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST; i++)
 		{
-			if (mouse::get()->getButton(i))
+			if (Mouse::Get()->getButton(i))
 			{
 				if (i == 0)
 				{
