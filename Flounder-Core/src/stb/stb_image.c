@@ -537,8 +537,7 @@ static int getn(stbi *s, stbi_uc *buffer, int n)
 		s->img_buffer += n;
 		return 1;
 	}
-	else
-		return 0;
+	return 0;
 }
 
 static int get16(stbi *s)
@@ -926,8 +925,7 @@ stbi_inline static int extend_receive(jpeg *j, int n)
 	// maybe it's compiling as a conditional move?
 	if (k < m)
 		return (-1 << n) + k + 1;
-	else
-		return k;
+	return k;
 }
 
 // given a value that's at position X in the zigzag stream,
@@ -1490,7 +1488,7 @@ static int decode_jpeg_image(jpeg *j)
 						j->marker = get8u(j->s);
 						break;
 					}
-					else if (x != 0)
+					if (x != 0)
 					{
 						return 0;
 					}
@@ -2243,11 +2241,8 @@ char *stbi_zlib_decode_malloc_guesssize(const char *buffer, int len, int initial
 		if (outlen) *outlen = (int) (a.zout - a.zout_start);
 		return a.zout_start;
 	}
-	else
-	{
-		free(a.zout_start);
-		return NULL;
-	}
+	free(a.zout_start);
+	return NULL;
 }
 
 char *stbi_zlib_decode_malloc(char const *buffer, int len, int *outlen)
@@ -2267,11 +2262,8 @@ char *stbi_zlib_decode_malloc_guesssize_headerflag(const char *buffer, int len, 
 		if (outlen) *outlen = (int) (a.zout - a.zout_start);
 		return a.zout_start;
 	}
-	else
-	{
-		free(a.zout_start);
-		return NULL;
-	}
+	free(a.zout_start);
+	return NULL;
 }
 
 int stbi_zlib_decode_buffer(char *obuffer, int olen, char const *ibuffer, int ilen)
@@ -2281,8 +2273,7 @@ int stbi_zlib_decode_buffer(char *obuffer, int olen, char const *ibuffer, int il
 	a.zbuffer_end = (uint8 *) ibuffer + ilen;
 	if (do_zlib(&a, obuffer, olen, 0, 1))
 		return (int) (a.zout - a.zout_start);
-	else
-		return -1;
+	return -1;
 }
 
 char *stbi_zlib_decode_noheader_malloc(char const *buffer, int len, int *outlen)
@@ -2297,11 +2288,8 @@ char *stbi_zlib_decode_noheader_malloc(char const *buffer, int len, int *outlen)
 		if (outlen) *outlen = (int) (a.zout - a.zout_start);
 		return a.zout_start;
 	}
-	else
-	{
-		free(a.zout_start);
-		return NULL;
-	}
+	free(a.zout_start);
+	return NULL;
 }
 
 int stbi_zlib_decode_noheader_buffer(char *obuffer, int olen, const char *ibuffer, int ilen)
@@ -2311,8 +2299,7 @@ int stbi_zlib_decode_noheader_buffer(char *obuffer, int olen, const char *ibuffe
 	a.zbuffer_end = (uint8 *) ibuffer + ilen;
 	if (do_zlib(&a, obuffer, olen, 0, 0))
 		return (int) (a.zout - a.zout_start);
-	else
-		return -1;
+	return -1;
 }
 
 // public domain "baseline" PNG decoder   v0.10  Sean Barrett 2006-11-18
@@ -3567,7 +3554,7 @@ static stbi_uc *stbi_tga_load(stbi *s, int *x, int *y, int *comp, int req_comp)
 static int psd_test(stbi *s)
 {
 	if (get32(s) != 0x38425053) return 0; // "8BPS"
-	else return 1;
+	return 1;
 }
 
 static int stbi_psd_test(stbi *s)

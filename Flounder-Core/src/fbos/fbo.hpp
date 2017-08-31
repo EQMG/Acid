@@ -98,19 +98,19 @@ namespace Flounder
 		/// </summary>
 		void blitToScreen();
 
-		inline depthbuffer getDepthBufferType() { return m_depthBufferType; }
+		depthbuffer getDepthBufferType() { return m_depthBufferType; }
 
 		/// <summary>
 		/// Gets the number of attachments in this FBO.
 		/// </summary>
 		/// <returns> The number of attachments in this FBO. </returns>
-		inline int getAttachments() { return m_attachments; }
+		int getAttachments() { return m_attachments; }
 
 		/// <summary>
 		/// Gets the number of antialiasing samples.
 		/// </summary>
 		/// <returns> The number of antialiasing samples. </returns>
-		inline int getSamples() { return m_samples; }
+		int getSamples() { return m_samples; }
 
 		/// <summary>
 		/// Sets the number antialiasing samples, and recreates the FBO.
@@ -118,7 +118,7 @@ namespace Flounder
 		/// <param name="samples"> The number of antialiasing samples. </param>
 		virtual void setSamples(const int samples);
 
-		inline float getSizeScalar() { return m_sizeScalar; }
+		float getSizeScalar() { return m_sizeScalar; }
 
 		void setSizeScalar(const float &sizeScalar);
 

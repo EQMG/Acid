@@ -16,13 +16,13 @@ namespace Flounder
 
 		~spawncircle();
 
-		inline float getRadius() { return m_radius; }
+		float getRadius() { return m_radius; }
 
-		inline void setRadius(const float &radius) { m_radius = radius; }
+		void setRadius(const float &radius) { m_radius = radius; }
 
-		inline vector3 *getHeading() { return m_heading; }
+		vector3 *getHeading() { return m_heading; }
 
-		inline void setHeading(const vector3 &heading) { m_heading->set(heading); }
+		void setHeading(const vector3 &heading) { m_heading->set(heading); }
 
 		vector3 *getBaseSpawnPosition() override;
 	};

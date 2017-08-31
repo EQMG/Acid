@@ -16,6 +16,6 @@ namespace Flounder
 
 		void storeValues() override;
 
-		inline void setStrength(const float &strength) { m_strength = strength; }
+		void setStrength(const float &strength) { m_strength = strength; }
 	};
 }

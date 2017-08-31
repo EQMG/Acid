@@ -45,7 +45,7 @@ namespace Flounder
 		void update(const matrix4x4 &viewMatrix, const matrix4x4 &projectionMatrix);
 
 		/// <returns> The planes*value array used to represent the frustum. </returns>
-		inline float **getFrustum() const { return m_frustum; };
+		float **getFrustum() const { return m_frustum; };
 
 		/// <summary>
 		/// Is the point contained in the frustum?

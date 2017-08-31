@@ -22,6 +22,6 @@ namespace Flounder
 
 		void storeValues() override;
 
-		inline void setScaleValue(const float &scaleValue) { m_scaleValue = scaleValue; }
+		void setScaleValue(const float &scaleValue) { m_scaleValue = scaleValue; }
 	};
 }

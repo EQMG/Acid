@@ -70,7 +70,7 @@ namespace Flounder
 
 		material currentMaterial = {};
 
-		for (auto it = lines.begin(); it < lines.end(); it++)
+		for (auto it = lines.begin(); it < lines.end(); ++it)
 		{
 			std::string line = helperstring::trim(*it);
 
@@ -95,7 +95,7 @@ namespace Flounder
 				{
 					for (auto m : materials)
 					{
-						if (m.name == split.at(1)) 
+						if (m.name == split.at(1))
 						{
 							currentMaterial = m;
 						}
@@ -205,7 +205,7 @@ namespace Flounder
 		std::string parseMaterialName = "";
 		material parseMaterial = {};
 
-		for (auto it = lines.begin(); it < lines.end(); it++)
+		for (auto it = lines.begin(); it < lines.end(); ++it)
 		{
 			std::string line = helperstring::trim(*it);
 
@@ -222,7 +222,7 @@ namespace Flounder
 
 				if (prefix == "newmtl")
 				{
-					if (parseMaterialName != "") 
+					if (parseMaterialName != "")
 					{
 						list->push_back(parseMaterial);
 					}
@@ -268,10 +268,7 @@ namespace Flounder
 			indices->push_back(index);
 			return currentVertex;
 		}
-		else
-		{
-			return dealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
-		}
+		return dealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
 	}
 
 	vertexdata *model::dealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices)
@@ -281,25 +278,19 @@ namespace Flounder
 			indices->push_back(previousVertex->getIndex());
 			return previousVertex;
 		}
-		else
-		{
-			vertexdata *anotherVertex = previousVertex->getDuplicateVertex();
+		vertexdata *anotherVertex = previousVertex->getDuplicateVertex();
 
-			if (anotherVertex != nullptr)
-			{
-				return dealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
-			}
-			else
-			{
-				vertexdata *duplicateVertex = new vertexdata((int) vertices->size(), previousVertex->getPosition());
-				duplicateVertex->setTextureIndex(newTextureIndex);
-				duplicateVertex->setNormalIndex(newNormalIndex);
-				previousVertex->setDuplicateVertex(duplicateVertex);
-				vertices->push_back(duplicateVertex);
-				indices->push_back(duplicateVertex->getIndex());
-				return duplicateVertex;
-			}
+		if (anotherVertex != nullptr)
+		{
+			return dealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
 		}
+		vertexdata *duplicateVertex = new vertexdata((int) vertices->size(), previousVertex->getPosition());
+		duplicateVertex->setTextureIndex(newTextureIndex);
+		duplicateVertex->setNormalIndex(newNormalIndex);
+		previousVertex->setDuplicateVertex(duplicateVertex);
+		vertices->push_back(duplicateVertex);
+		indices->push_back(duplicateVertex->getIndex());
+		return duplicateVertex;
 	}
 
 	void model::calculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<vector2> *textures)

@@ -21,14 +21,14 @@ namespace Flounder
 
 		void storeValues() override;
 
-		inline void setScreenColour(const colour &screenColour) { m_screenColour->set(screenColour); }
+		void setScreenColour(const colour &screenColour) { m_screenColour->set(screenColour); }
 
-		inline void setCurveAmountX(const float &curveAmountX) { m_curveAmountX = curveAmountX; }
+		void setCurveAmountX(const float &curveAmountX) { m_curveAmountX = curveAmountX; }
 
-		inline void setCurveAmountY(const float &curveAmountY) { m_curveAmountY = curveAmountY; }
+		void setCurveAmountY(const float &curveAmountY) { m_curveAmountY = curveAmountY; }
 
-		inline void setScanLineSize(const float &scanLineSize) { m_scanLineSize = scanLineSize; }
+		void setScanLineSize(const float &scanLineSize) { m_scanLineSize = scanLineSize; }
 
-		inline void setScanIntensity(const float &scanIntensity) { m_scanIntensity = scanIntensity; }
+		void setScanIntensity(const float &scanIntensity) { m_scanIntensity = scanIntensity; }
 	};
 }

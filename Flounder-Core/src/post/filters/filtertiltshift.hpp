@@ -20,12 +20,12 @@ namespace Flounder
 
 		void storeValues() override;
 
-		inline void setBlurAmount(const float &blurAmount) { m_blurAmount = blurAmount; }
+		void setBlurAmount(const float &blurAmount) { m_blurAmount = blurAmount; }
 
-		inline void setCentre(const float &centre) { m_centre = centre; }
+		void setCentre(const float &centre) { m_centre = centre; }
 
-		inline void setStepSize(const float &stepSize) { m_stepSize = stepSize; }
+		void setStepSize(const float &stepSize) { m_stepSize = stepSize; }
 
-		inline void setSteps(const float &steps) { m_steps = steps; }
+		void setSteps(const float &steps) { m_steps = steps; }
 	};
 }

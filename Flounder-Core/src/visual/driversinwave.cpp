@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	driversinwave::driversinwave(const float &min, const float &max, const float &length) : 
+	driversinwave::driversinwave(const float &min, const float &max, const float &length) :
 		idriver(length),
 		m_min(min),
 		m_amplitude(max - min)

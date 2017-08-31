@@ -33,7 +33,7 @@ namespace Flounder
 			return;
 		}
 
-		for (auto it = m_tangents.begin(); it < m_tangents.end(); it++)
+		for (auto it = m_tangents.begin(); it < m_tangents.end(); ++it)
 		{
 			vector3::add(m_averagedTangent, **it, &m_averagedTangent);
 		}

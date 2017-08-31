@@ -14,7 +14,7 @@ namespace Flounder
 	/// <summary>
 	/// The default GLFW updater for the engine.
 	/// </summary>
-	class GlfwUpdater : 
+	class GlfwUpdater :
 		public IUpdater
 	{
 	private:
@@ -39,17 +39,17 @@ namespace Flounder
 
 		IModule *GetModule(const std::string &name) override;
 
-		inline float GetTimeOffset() override { return m_timeOffset; };
+		float GetTimeOffset() override { return m_timeOffset; };
 
-		inline void SetTimeOffset(const float &timeOffset) override { m_timeOffset = timeOffset; };
+		void SetTimeOffset(const float &timeOffset) override { m_timeOffset = timeOffset; };
 
-		inline float GetDelta() override { return m_deltaUpdate->getChange(); };
+		float GetDelta() override { return m_deltaUpdate->getChange(); };
 
-		inline float GetDeltaRender() override { return m_deltaRender->getChange(); };
+		float GetDeltaRender() override { return m_deltaRender->getChange(); };
 
-		inline float GetTime() override { return (static_cast<float>(glfwGetTime()) - m_startTime) + m_timeOffset; };
+		float GetTime() override { return (static_cast<float>(glfwGetTime()) - m_startTime) + m_timeOffset; };
 
-		inline float GetTimeMs() override { return GetTime() * 1000.0f; };
+		float GetTimeMs() override { return GetTime() * 1000.0f; };
 	private:
 		void RunUpdate(ModuleUpdate typeUpdate);
 	};

@@ -50,7 +50,7 @@ namespace Flounder
 		/// Gets the loaded name for the shader.
 		/// </summary>
 		/// <returns> The shaders name. </returns>
-		inline std::string &getName() { return m_name; }
+		std::string &getName() { return m_name; }
 
 		std::vector<VkPipelineShaderStageCreateInfo> *getStages() const { return m_stages; }
 	private:

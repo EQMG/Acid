@@ -169,10 +169,7 @@ namespace Flounder
 		{
 			return destination->set(source.m_x / l, source.m_y / l);
 		}
-		else
-		{
-			throw std::invalid_argument("Zero length vector");
-		}
+		throw std::invalid_argument("Zero length vector");
 	}
 
 	float vector2::length(const vector2 &source)

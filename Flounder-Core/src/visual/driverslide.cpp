@@ -22,10 +22,7 @@ namespace Flounder
 			m_max = time;
 			return maths::cosInterpolate(m_start, m_end, time);
 		}
-		else
-		{
-			m_reachedTarget = true;
-			return m_start + (m_end - m_start);
-		}
+		m_reachedTarget = true;
+		return m_start + (m_end - m_start);
 	}
 }

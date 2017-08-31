@@ -20,7 +20,7 @@ namespace Flounder
 
 	void events::Update()
 	{
-		for (auto it = m_events->begin(); it < m_events->end(); it++)
+		for (auto it = m_events->begin(); it < m_events->end(); ++it)
 		{
 			if ((*it)->eventTriggered())
 			{
