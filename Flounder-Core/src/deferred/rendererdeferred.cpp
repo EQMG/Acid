@@ -1,6 +1,6 @@
 #include "rendererdeferred.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	rendererdeferred::rendererdeferred(Fbo *fbo) :
 		m_shader(new shader("deferred", 2,

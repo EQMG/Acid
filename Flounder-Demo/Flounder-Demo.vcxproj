@@ -18,10 +18,10 @@
   <ItemGroup>
     <ClCompile Include="src\uis\overlaymanager.cpp" />
     <ClCompile Include="src\uis\overlaydebug.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\maincamera.cpp" />
     <ClCompile Include="src\manageruis.cpp" />
-    <ClCompile Include="src\instance.cpp" />
+    <ClCompile Include="src\Instance.cpp" />
     <ClCompile Include="src\mainplayer.cpp" />
     <ClCompile Include="src\managerrender.cpp" />
   </ItemGroup>
@@ -31,7 +31,7 @@
     <ClInclude Include="src\uis\overlaydebug.hpp" />
     <ClInclude Include="src\maincamera.hpp" />
     <ClInclude Include="src\manageruis.hpp" />
-    <ClInclude Include="src\instance.hpp" />
+    <ClInclude Include="src\Instance.hpp" />
     <ClInclude Include="src\mainplayer.hpp" />
     <ClInclude Include="src\managerrender.hpp" />
   </ItemGroup>

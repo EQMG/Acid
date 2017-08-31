@@ -24,7 +24,7 @@
 #define __max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A class that holds many various math functions.

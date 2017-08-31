@@ -2,7 +2,7 @@
 
 #include "word.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Represents a line of text during the loading of a text.

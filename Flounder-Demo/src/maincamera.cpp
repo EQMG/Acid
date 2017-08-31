@@ -60,9 +60,9 @@ maincamera::~maincamera()
 	delete m_joystickZoom;
 }
 
-void maincamera::update(iplayer *player)
+void maincamera::Update(IPlayer *player)
 {
-	float delta = __min(1.0f / 60.0f, framework::get()->getDelta());
+	float delta = __min(1.0f / 60.0f, Engine::Get()->GetDelta());
 
 	if (uis::get() != nullptr && uis::get()->getManager() != nullptr)
 	{
@@ -74,8 +74,8 @@ void maincamera::update(iplayer *player)
 
 	if (player != nullptr)
 	{
-		m_targetPosition->set(*player->getPosition());
-		m_targetRotation->set(*player->getRotation());
+		m_targetPosition->set(*player->GetPosition());
+		m_targetRotation->set(*player->GetRotation());
 	}
 
 	updateHorizontalAngle(delta);
@@ -83,7 +83,7 @@ void maincamera::update(iplayer *player)
 	updatePosition();
 
 	matrix4x4::viewMatrix(*m_position, *m_rotation, m_viewMatrix);
-	matrix4x4::perspectiveMatrix(getFOV(), static_cast<float>(display::get()->getAspectRatio()), getNearPlane(), getFarPlane(), m_projectionMatrix);
+	matrix4x4::perspectiveMatrix(GetFov(), static_cast<float>(display::get()->getAspectRatio()), GetNearPlane(), GetFarPlane(), m_projectionMatrix);
 
 	m_viewFrustum->update(*m_projectionMatrix, *m_viewMatrix);
 	m_viewRay->update(*m_position, vector2(static_cast<float>(mouse::get()->getPositionX()), static_cast<float>(mouse::get()->getPositionY())), *m_viewMatrix, *m_projectionMatrix);
@@ -236,7 +236,7 @@ void maincamera::updatePosition()
 	m_rotation->m_z = 0.0f;
 }
 
-void maincamera::reflect(const float &waterHeight)
+void maincamera::ReflectView(const float &waterHeight)
 {
 	m_position->m_y -= 2.0f * (m_position->m_y - waterHeight);
 	m_rotation->m_x = -m_rotation->m_x;

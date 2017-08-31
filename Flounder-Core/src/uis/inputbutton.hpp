@@ -8,7 +8,7 @@
 #include "uiobject.hpp"
 #include "uialign.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class inputbutton :
 		public uiobject

@@ -1,6 +1,6 @@
 ﻿#include "swapchain.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	swapchain::swapchain() :
 		m_swapChain(VK_NULL_HANDLE),

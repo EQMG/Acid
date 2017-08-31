@@ -3,7 +3,7 @@
 #include "maths.hpp"
 #include "vector3.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Holds a 2x2 matrix.

@@ -1,6 +1,6 @@
 ﻿#include "entity.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	entity::entity(ispatialstructure<entity*> *structure, const vector3 &position, const vector3 &rotation) :
 		m_structure(structure),

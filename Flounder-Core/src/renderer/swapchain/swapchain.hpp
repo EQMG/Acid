@@ -2,7 +2,7 @@
 
 #include "../../devices/display.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class swapchain
 	{

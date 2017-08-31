@@ -1,30 +1,30 @@
-#include "camera.hpp"
+#include "Camera.hpp"
 
-namespace flounder
+namespace Flounder
 {
-	camera::camera() :
-		imodule(),
+	Camera::Camera() :
+		IModule(),
 		m_camera(nullptr),
 		m_player(nullptr)
 	{
 	}
 
-	camera::~camera()
+	Camera::~Camera()
 	{
 		delete m_camera;
 		delete m_player;
 	}
 
-	void camera::update()
+	void Camera::Update()
 	{
 		if (m_player != nullptr)
 		{
-			m_player->update();
+			m_player->Update();
 		}
 
 		if (m_camera != nullptr)
 		{
-			m_camera->update(m_player);
+			m_camera->Update(m_player);
 		}
 	}
 }

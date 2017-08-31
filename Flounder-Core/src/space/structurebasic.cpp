@@ -1,6 +1,6 @@
 ﻿#include "structurebasic.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	template<class t>
 	structurebasic<t>::structurebasic() :

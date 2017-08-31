@@ -1,6 +1,6 @@
 #include "character.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	character::character(const int &id, const double &textureCoordX, const double &textureCoordY, const double &texureSizeX, const double &texureSizeY, const double &offsetX, const double &offsetY, const double &sizeX, const double &sizeY, const double &advanceX) :
 		m_id(id),

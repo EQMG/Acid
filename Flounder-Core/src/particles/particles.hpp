@@ -4,20 +4,20 @@
 #include <map>
 #include <algorithm>
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../uis/uis.hpp"
 #include "../space/structurebasic.hpp"
 
 #include "particle.hpp"
 #include "particlesystem.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A manager that manages particles.
 	/// </summary>
 	class particles :
-		public imodule
+		public IModule
 	{
 	private:
 		static const float MAX_ELAPSED_TIME;
@@ -26,12 +26,12 @@ namespace flounder
 		std::map<particletype*, std::vector<particle*>*> *m_particles;
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline particles *get()
 		{
-			return static_cast<particles*>(framework::get()->getInstance("particles"));
+			return static_cast<particles*>(Engine::Get()->GetModule("particles"));
 		}
 
 		/// <summary>
@@ -44,7 +44,7 @@ namespace flounder
 		/// </summary>
 		~particles();
 
-		void update() override;
+		void Update() override;
 
 		/// <summary>
 		/// Clears all particles from the scene.

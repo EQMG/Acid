@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A helper for C++ files.

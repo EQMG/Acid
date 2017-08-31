@@ -1,6 +1,6 @@
 #include "filterpixel.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filterpixel::filterpixel(const float &pixelSize) :
 		ipostfilter("filterGrain", "res/shaders/filters/grain.frag.spv"),

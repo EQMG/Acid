@@ -1,9 +1,9 @@
 #include "joysticks.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	joysticks::joysticks() :
-		imodule(),
+		IModule(),
 		m_connected(new joystick*[GLFW_JOYSTICK_LAST])
 	{
 		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
@@ -23,7 +23,7 @@ namespace flounder
 		delete m_connected;
 	}
 
-	void joysticks::update()
+	void joysticks::Update()
 	{
 		// For each joystick check if connected and update.
 		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)

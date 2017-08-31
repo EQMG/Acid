@@ -2,7 +2,7 @@
 
 #include "vector3.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	vector2::vector2() :
 		m_x(0.0f),

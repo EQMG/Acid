@@ -1,6 +1,6 @@
 #include "light.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	light::light(colour *colour, vector3 *position)
 	{

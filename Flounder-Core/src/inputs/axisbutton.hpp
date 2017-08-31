@@ -8,7 +8,7 @@
 #include "iaxis.hpp"
 #include "ibutton.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Axis composed of two buttons.

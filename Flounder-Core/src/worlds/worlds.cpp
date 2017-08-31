@@ -1,9 +1,9 @@
 #include "worlds.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	worlds::worlds() :
-		imodule(),
+		IModule(),
 		m_noise(new noisefast(420)),
 		m_driverDay(new driverlinear(0.0f, 1.0f, 100.0f)),
 		m_factorDay(0.0f),
@@ -28,9 +28,9 @@ namespace flounder
 		delete m_sunColour;
 	}
 
-	void worlds::update()
+	void worlds::Update()
 	{
-		float delta = framework::get()->getDelta();
+		float delta = Engine::Get()->GetDelta();
 		m_factorDay = m_driverDay->update(delta);
 
 		vector3 skyboxRotation = vector3(360.0f * m_factorDay, 0.0f, 0.0f);
@@ -45,9 +45,9 @@ namespace flounder
 
 		vector3::multiply(lightDirection, vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
 
-		if (camera::get() != nullptr && camera::get()->getCamera() != nullptr)
+		if (Camera::Get() != nullptr && Camera::Get()->GetCamera() != nullptr)
 		{
-			vector3::add(*m_sunPosition, *camera::get()->getCamera()->getPosition(), m_sunPosition);
+			vector3::add(*m_sunPosition, *Camera::Get()->GetCamera()->GetPosition(), m_sunPosition);
 		}
 
 		colour::interpolate(colour(0.9f, 0.3f, 0.3f, 1.0f), colour(0.0f, 0.0f, 0.0f, 1.0f), getSunriseFactor(), m_sunColour);

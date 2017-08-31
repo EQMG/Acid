@@ -1,6 +1,6 @@
 #include "buttonkeyboard.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	buttonkeyboard::buttonkeyboard(const int n_args, ...) :
 		ibutton(),

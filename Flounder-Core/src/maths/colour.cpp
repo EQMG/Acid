@@ -3,7 +3,7 @@
 #include "vector3.hpp"
 #include "vector4.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	colour::colour() :
 		m_r(0.0f),

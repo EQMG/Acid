@@ -5,7 +5,7 @@
 #include "../../maths/matrix4x4.hpp"
 #include "../ipostfilter.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class filtermotion :
 		public ipostfilter

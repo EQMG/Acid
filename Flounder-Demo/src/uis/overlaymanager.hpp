@@ -2,7 +2,7 @@
 
 #include <flounder.hpp>
 
-using namespace flounder;
+using namespace Flounder;
 
 class overlaymanager :
 	public uiobject

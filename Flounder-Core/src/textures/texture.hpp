@@ -9,7 +9,7 @@
 #include "../renderer/renderer.hpp"
 #include "../maths/colour.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Class that represents a loaded texture.

@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 
 #include "water.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A module used for managing water 3D worlds.
 	/// </summary>
 	class waters :
-		public imodule
+		public IModule
 	{
 	private:
 		water *m_water;
@@ -21,12 +21,12 @@ namespace flounder
 		bool m_reflectionShadows;
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline waters *get()
 		{
-			return static_cast<waters*>(framework::get()->getInstance("waters"));
+			return static_cast<waters*>(Engine::Get()->GetModule("waters"));
 		}
 
 		/// <summary>
@@ -39,7 +39,7 @@ namespace flounder
 		/// </summary>
 		~waters();
 
-		void update() override;
+		void Update() override;
 
 		inline water *getWater() { return m_water; }
 

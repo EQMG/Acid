@@ -1,9 +1,9 @@
 #include "skyboxes.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	skyboxes::skyboxes() :
-		imodule(),
+		IModule(),
 		m_skybox(nullptr),
 		m_fog(new fog(new colour(), 0.001f, 2.0f, -1.28f, 51.2f))
 	{
@@ -15,7 +15,7 @@ namespace flounder
 		delete m_fog;
 	}
 
-	void skyboxes::update()
+	void skyboxes::Update()
 	{
 		if (m_skybox != nullptr)
 		{

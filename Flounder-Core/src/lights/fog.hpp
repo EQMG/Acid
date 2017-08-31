@@ -2,7 +2,7 @@
 
 #include "../maths/colour.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Represents a fog in the world.

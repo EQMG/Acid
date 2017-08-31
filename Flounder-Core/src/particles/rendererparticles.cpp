@@ -1,6 +1,6 @@
 #include "rendererparticles.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const int rendererparticles::MAX_INSTANCES = 27500;
 	const int rendererparticles::INSTANCE_DATA_LENGTH = 22;
@@ -37,7 +37,7 @@ namespace flounder
 #endif
 	}
 
-	void rendererparticles::render(const vector4 &clipPlane, const icamera &camera)
+	void rendererparticles::render(const vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 
@@ -58,7 +58,7 @@ namespace flounder
 		endRendering();
 	}
 
-	void rendererparticles::prepareRendering(const vector4 &clipPlane, const icamera &camera)
+	void rendererparticles::prepareRendering(const vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.
@@ -77,7 +77,7 @@ namespace flounder
 #endif
 	}
 
-	void rendererparticles::prepareInstance(particle *particle, const icamera &camera, std::vector<float> *vboData)
+	void rendererparticles::prepareInstance(particle *particle, const ICamera &camera, std::vector<float> *vboData)
 	{
 		if (m_rendered >= MAX_INSTANCES)
 		{
@@ -85,7 +85,7 @@ namespace flounder
 			return;
 		}
 
-		matrix4x4 *viewMatrix = camera.getViewMatrix();
+		matrix4x4 *viewMatrix = camera.GetViewMatrix();
 		matrix4x4 *modelMatrix = new matrix4x4();
 		matrix4x4::translate(*modelMatrix, *particle->getPosition(), modelMatrix);
 		modelMatrix->m_00 = viewMatrix->m_00;

@@ -1,6 +1,6 @@
 ﻿#include "inputgrabber.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const float inputgrabber::CHANGE_TIME = 0.1f;
 	const float inputgrabber::SCALE_NORMAL = 1.6f;

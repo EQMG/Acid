@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 
 #include "display.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A definition for a connected joystick.
@@ -24,18 +24,18 @@ namespace flounder
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
 	class joysticks :
-		public imodule
+		public IModule
 	{
 	private:
 		joystick **m_connected;
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline joysticks *get()
 		{
-			return static_cast<joysticks*>(framework::get()->getInstance("joysticks"));
+			return static_cast<joysticks*>(Engine::Get()->GetModule("joysticks"));
 		}
 
 		/// <summary>
@@ -48,7 +48,7 @@ namespace flounder
 		/// </summary>
 		~joysticks();
 
-		void update() override;
+		void Update() override;
 
 		/// <summary>
 		/// Determines if the GLFW joystick is connected

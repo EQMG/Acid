@@ -1,6 +1,6 @@
 ﻿#include "inputbutton.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const float inputbutton::CHANGE_TIME = 0.1f;
 	const float inputbutton::SCALE_NORMAL = 1.6f;

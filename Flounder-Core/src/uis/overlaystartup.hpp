@@ -6,7 +6,7 @@
 
 #include "uis.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class overlaystartup :
 		public uiobject

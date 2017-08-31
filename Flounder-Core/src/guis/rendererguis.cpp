@@ -1,6 +1,6 @@
 #include "rendererguis.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	rendererguis::rendererguis() :
 		irenderer(),
@@ -19,7 +19,7 @@ namespace flounder
 		delete m_model;
 	}
 
-	void rendererguis::render(const vector4 &clipPlane, const icamera &camera)
+	void rendererguis::render(const vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 
@@ -36,7 +36,7 @@ namespace flounder
 		endRendering();
 	}
 
-	void rendererguis::prepareRendering(const vector4 &clipPlane, const icamera &camera)
+	void rendererguis::prepareRendering(const vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.

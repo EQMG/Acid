@@ -1,6 +1,6 @@
 #include "eventtime.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	eventtime::eventtime(const float &interval, const bool &repeat, const std::function<void()> &onEvent) :
 		ievent(),

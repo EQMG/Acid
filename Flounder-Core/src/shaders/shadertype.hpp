@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A class that represents a shader type.

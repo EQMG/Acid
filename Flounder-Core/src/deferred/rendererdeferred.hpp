@@ -11,7 +11,7 @@
 #include "../shadows/shadows.hpp"
 #include "../worlds/worlds.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A filter-like shader/fbo used to process deferred rendering.

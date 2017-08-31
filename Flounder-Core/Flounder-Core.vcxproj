@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\camera\camera.hpp" />
-    <ClInclude Include="src\camera\icamera.hpp" />
-    <ClInclude Include="src\camera\iplayer.hpp" />
+    <ClInclude Include="src\camera\Camera.hpp" />
+    <ClInclude Include="src\camera\ICamera.hpp" />
+    <ClInclude Include="src\camera\IPlayer.hpp" />
     <ClInclude Include="src\deferred\rendererdeferred.hpp" />
     <ClInclude Include="src\devices\audio.hpp" />
     <ClInclude Include="src\devices\display.hpp" />
@@ -39,10 +39,11 @@
     <ClInclude Include="src\fonts\text.hpp" />
     <ClInclude Include="src\fonts\fonttype.hpp" />
     <ClInclude Include="src\fonts\word.hpp" />
-    <ClInclude Include="src\framework\framework.hpp" />
-    <ClInclude Include="src\framework\glfw\glfwupdater.hpp" />
-    <ClInclude Include="src\framework\imodule.hpp" />
-    <ClInclude Include="src\framework\iupdater.hpp" />
+    <ClInclude Include="src\engine\Engine.hpp" />
+    <ClInclude Include="src\platforms\glfw\GlfwUpdater.hpp" />
+    <ClInclude Include="src\engine\IModule.hpp" />
+    <ClInclude Include="src\engine\IUpdater.hpp" />
+    <ClInclude Include="src\engine\ModuleUpdate.hpp" />
     <ClInclude Include="src\inputs\axisbutton.hpp" />
     <ClInclude Include="src\maths\Transform.hpp" />
     <ClInclude Include="src\models\material.hpp" />
@@ -177,7 +178,7 @@
     <ClInclude Include="src\worlds\worlds.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\camera\camera.cpp" />
+    <ClCompile Include="src\camera\Camera.cpp" />
     <ClCompile Include="src\deferred\rendererdeferred.cpp" />
     <ClCompile Include="src\devices\audio.cpp" />
     <ClCompile Include="src\devices\display.cpp" />
@@ -198,8 +199,8 @@
     <ClCompile Include="src\fonts\text.cpp" />
     <ClCompile Include="src\fonts\fonttype.cpp" />
     <ClCompile Include="src\fonts\word.cpp" />
-    <ClCompile Include="src\framework\framework.cpp" />
-    <ClCompile Include="src\framework\glfw\glfwupdater.cpp" />
+    <ClCompile Include="src\engine\Engine.cpp" />
+    <ClCompile Include="src\platforms\glfw\GlfwUpdater.cpp" />
     <ClCompile Include="src\guis\gui.cpp" />
     <ClCompile Include="src\inputs\axisbutton.cpp" />
     <ClCompile Include="src\maths\Transform.cpp" />

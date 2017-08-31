@@ -1,6 +1,6 @@
 ﻿#include "water.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const float water::WAVE_SPEED = 15.0f;
 	const float water::WAVE_LENGTH = 30.0f;
@@ -50,9 +50,9 @@ namespace flounder
 		}
 
 		m_offset->set(
-			2.0f * water::SQUARE_SIZE * round(camera::get()->getCamera()->getPosition()->m_x / (2.0f * water::SQUARE_SIZE)),
+			2.0f * water::SQUARE_SIZE * round(Camera::Get()->GetCamera()->GetPosition()->m_x / (2.0f * water::SQUARE_SIZE)),
 			0.0f,
-			2.0f * water::SQUARE_SIZE * round(camera::get()->getCamera()->getPosition()->m_z / (2.0f * water::SQUARE_SIZE))
+			2.0f * water::SQUARE_SIZE * round(Camera::Get()->GetCamera()->GetPosition()->m_z / (2.0f * water::SQUARE_SIZE))
 		);
 	}
 
@@ -184,7 +184,7 @@ namespace flounder
 
 	float water::getHeight(const float &x, const float &z)
 	{
-		float waveTime = framework::get()->getTimeSec() / WAVE_SPEED;
+		float waveTime = Engine::Get()->GetTime() / WAVE_SPEED;
 
 		const double val1 = 0.1;
 		const double val2 = 0.3;

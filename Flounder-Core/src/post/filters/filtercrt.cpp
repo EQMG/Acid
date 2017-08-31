@@ -1,6 +1,6 @@
 #include "filtercrt.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	filtercrt::filtercrt(const colour &screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
 		ipostfilter("filterCrt", "res/shaders/filters/crt.frag.spv"),
@@ -26,7 +26,7 @@ namespace flounder
 		m_shader->loadUniform1f("scanLineSize", m_scanLineSize);
 		m_shader->loadUniform1f("scanIntensity", m_scanIntensity);
 
-		m_shader->loadUniform1f("moveTime", static_cast<float>(framework::get()->getTimeSec()) / 100.0f);
+		m_shader->loadUniform1f("moveTime", static_cast<float>(Engine::Get()->getTimeSec()) / 100.0f);
 #endif
 	}
 }

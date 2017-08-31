@@ -1,6 +1,6 @@
 ﻿#include "metafile.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	const int metafile::PAD_TOP = 0;
 	const int metafile::PAD_LEFT = 1;

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A timer implementation for events.

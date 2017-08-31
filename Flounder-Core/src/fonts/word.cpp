@@ -1,6 +1,6 @@
 ﻿#include "word.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	word::word() :
 		m_characters(new std::vector<character*>()),

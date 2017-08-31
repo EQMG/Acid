@@ -20,9 +20,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../stb/stb_image.h"
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	struct VkQueueFamilyIndices
 	{
@@ -43,7 +43,7 @@ namespace flounder
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
 	class display :
-		public imodule
+		public IModule
 	{
 	private:
 		static const std::vector<const char*> VALIDATION_LAYERS;
@@ -111,12 +111,12 @@ namespace flounder
 		static void vkErrorCheck(VkResult result);
 
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline display *get()
 		{
-			return static_cast<display*>(framework::get()->getInstance("display"));
+			return static_cast<display*>(Engine::Get()->GetModule("display"));
 		}
 
 		/// <summary>
@@ -129,7 +129,7 @@ namespace flounder
 		/// </summary>
 		~display();
 
-		void update() override;
+		void Update() override;
 
 		/// <summary>
 		/// Takes a screenshot of the current image of the display and saves it into the screenshots folder a png image.

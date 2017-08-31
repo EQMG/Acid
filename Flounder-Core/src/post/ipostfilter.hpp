@@ -7,7 +7,7 @@
 #include "../renderer/renderer.hpp"
 #include "../shaders/shader.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Represents a post effect shader and on application saves the result into a fbo.

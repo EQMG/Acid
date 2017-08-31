@@ -1,9 +1,9 @@
 #include "shadows.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	shadows::shadows() :
-		imodule(),
+		IModule(),
 		m_lightDirection(new vector3(0.5f, 0.0f, 0.5f)),
 		m_brightnessBoost(0.1f),
 		m_shadowSize(8192),
@@ -25,9 +25,9 @@ namespace flounder
 		delete m_shadowBox;
 	}
 
-	void shadows::update()
+	void shadows::Update()
 	{
-		if (camera::get() != nullptr && camera::get()->getCamera() != nullptr)
+		if (Camera::Get() != nullptr && Camera::Get()->GetCamera() != nullptr)
 		{
 	//		m_shadowBox->update(*camera::get()->getCamera(), *m_lightDirection, m_shadowBoxOffset, m_shadowBoxDistance);
 		}

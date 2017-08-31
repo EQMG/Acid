@@ -1,17 +1,17 @@
 #pragma once
 
-#include "../framework/framework.hpp"
+#include "../engine/Engine.hpp"
 #include "../maths/maths.hpp"
 
 #include "display.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
 	class mouse :
-		public imodule
+		public IModule
 	{
 	private:
 		std::string m_customMouse;
@@ -35,12 +35,12 @@ namespace flounder
 		friend void callbackCursorEnter(GLFWwindow *window, int entered);
 	public:
 		/// <summary>
-		/// Gets this framework instance.
+		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static inline mouse *get()
 		{
-			return static_cast<mouse*>(framework::get()->getInstance("mouse"));
+			return static_cast<mouse*>(Engine::Get()->GetModule("mouse"));
 		}
 
 		/// <summary>
@@ -53,7 +53,7 @@ namespace flounder
 		/// </summary>
 		~mouse();
 
-		void update() override;
+		void Update() override;
 
 		/// <summary>
 		/// Gets the mouses custom mouse file.

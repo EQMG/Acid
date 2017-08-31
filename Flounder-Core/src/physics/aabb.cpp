@@ -1,6 +1,6 @@
 #include "aabb.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	aabb::aabb() :
 		icollider(),

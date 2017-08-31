@@ -1,6 +1,6 @@
 #include "matrix2x2.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	matrix2x2::matrix2x2() :
 		m_00(1.0f),

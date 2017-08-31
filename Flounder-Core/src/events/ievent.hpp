@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A simple event listener and runner.

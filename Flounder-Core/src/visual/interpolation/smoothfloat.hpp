@@ -1,6 +1,6 @@
 #pragma once
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A class that smoothly increases its value.

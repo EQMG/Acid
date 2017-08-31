@@ -5,7 +5,7 @@
 #include "../maths/colour.hpp"
 #include "../textures/texture.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A struct that represents a MTL material.

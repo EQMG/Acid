@@ -2,7 +2,7 @@
 
 #include "ispatialstructure.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// A structure of spatial objects for a 3D space.

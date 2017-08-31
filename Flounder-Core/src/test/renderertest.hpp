@@ -2,7 +2,7 @@
 
 #include "../renderer/irenderer.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class renderertest :
 		public irenderer
@@ -14,6 +14,6 @@ namespace flounder
 
 		~renderertest();
 
-		void render(const vector4 &clipPlane, const icamera &camera) override;
+		void render(const vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

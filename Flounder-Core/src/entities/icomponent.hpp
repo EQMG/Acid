@@ -2,7 +2,7 @@
 
 #include "entityrender.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class entity;
 

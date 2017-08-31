@@ -1,6 +1,6 @@
 #include "fog.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	fog::fog(colour *colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit) :
 		m_colour(colour),

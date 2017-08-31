@@ -1,6 +1,6 @@
 #include "buttonjoystick.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	buttonjoystick::buttonjoystick(const int &joystick, const int n_args, ...) :
 		ibutton(),

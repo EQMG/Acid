@@ -2,7 +2,7 @@
 
 #include "../physics/icollider.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	/// <summary>
 	/// Represents an object that has some notion of space, and can be stored in a <seealso cref="ispatialstructure"/>.

@@ -1,6 +1,6 @@
 #include "rendererterrains.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	rendererterrains::rendererterrains() :
 		irenderer(),
@@ -16,7 +16,7 @@ namespace flounder
 		delete m_shader;
 	}
 
-	void rendererterrains::render(const vector4 &clipPlane, const icamera &camera)
+	void rendererterrains::render(const vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 
@@ -28,7 +28,7 @@ namespace flounder
 		endRendering();
 	}
 
-	void rendererterrains::prepareRendering(const vector4 &clipPlane, const icamera &camera)
+	void rendererterrains::prepareRendering(const vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.

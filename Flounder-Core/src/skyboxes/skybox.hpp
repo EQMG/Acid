@@ -6,7 +6,7 @@
 #include "../models/model.hpp"
 #include "../textures/texture.hpp"
 
-namespace flounder
+namespace Flounder
 {
 	class skybox
 	{
