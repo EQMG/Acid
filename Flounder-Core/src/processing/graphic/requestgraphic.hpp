@@ -16,6 +16,6 @@ namespace Flounder
 		/// </summary>
 		virtual void executeRequestGraphic() = 0;
 
-		inline int getRequestId() override { return 2; };
+		int getRequestId() override { return 2; };
 	};
 }

@@ -22,7 +22,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline processing *get()
+		static processing *get()
 		{
 			return static_cast<processing*>(Engine::Get()->GetModule("processing"));
 		}

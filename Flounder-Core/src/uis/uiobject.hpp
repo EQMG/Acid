@@ -84,19 +84,19 @@ namespace Flounder
 		/// Gets the positions relative in screen space.
 		/// </summary>
 		/// <returns> The screen positions. </returns>
-		inline vector2 *getScreenPosition() const { return m_screenPosition; }
+		vector2 *getScreenPosition() const { return m_screenPosition; }
 
 		/// <summary>
 		/// Gets the dimensions relative in screen space.
 		/// </summary>
 		/// <returns> The screen dimensions. </returns>
-		inline vector2 *getScreenDimensions() const { return m_screenDimensions; }
+		vector2 *getScreenDimensions() const { return m_screenDimensions; }
 
 		/// <summary>
 		/// Gets the parent object.
 		/// </summary>
 		/// <returns> The parent object. </returns>
-		inline uiobject *getParent() const { return m_parent; }
+		uiobject *getParent() const { return m_parent; }
 
 		/// <summary>
 		/// Removes this object from the previous parent and attaches it to another parent.
@@ -104,39 +104,39 @@ namespace Flounder
 		/// <param name="parent"> The new parent object. </param>
 		void setParent(uiobject *parent);
 
-		inline std::vector<uiobject*> *getChildren() const { return m_children; }
+		std::vector<uiobject*> *getChildren() const { return m_children; }
 
 		bool isVisible();
 
-		inline void setVisible(const bool &visible) { m_visible = visible; }
+		void setVisible(const bool &visible) { m_visible = visible; }
 
-		inline vector2 *getPosition() const { return m_position; }
+		vector2 *getPosition() const { return m_position; }
 
-		inline void setPosition(const vector2 &position) const { m_position->set(position); }
+		void setPosition(const vector2 &position) const { m_position->set(position); }
 
-		inline vector2 *getDimensions() const { return m_dimensions; }
+		vector2 *getDimensions() const { return m_dimensions; }
 
-		inline void setDimensions(const vector2 &dimensions) const { m_dimensions->set(dimensions); }
+		void setDimensions(const vector2 &dimensions) const { m_dimensions->set(dimensions); }
 
-		inline vector2 *getMeshSize() const { return m_meshSize; }
+		vector2 *getMeshSize() const { return m_meshSize; }
 
-		inline void setMeshSize(const vector2 &meshSize) const { m_meshSize->set(meshSize); }
+		void setMeshSize(const vector2 &meshSize) const { m_meshSize->set(meshSize); }
 
-		inline vector4 *getScissor() const { return m_scissor; }
+		vector4 *getScissor() const { return m_scissor; }
 
-		inline void setScissor(const vector4 &scissor) const { m_scissor->set(scissor); }
+		void setScissor(const vector4 &scissor) const { m_scissor->set(scissor); }
 
-		inline bool getInScreenCoords() const { return m_inScreenCoords; }
+		bool getInScreenCoords() const { return m_inScreenCoords; }
 
-		inline void setInScreenCoords(const bool &inScreenCoords) { m_inScreenCoords = inScreenCoords; }
+		void setInScreenCoords(const bool &inScreenCoords) { m_inScreenCoords = inScreenCoords; }
 
-		inline vector2 *getPositionOffsets() const { return m_positionOffsets; }
+		vector2 *getPositionOffsets() const { return m_positionOffsets; }
 
-		inline void setPositionOffsets(const vector2 &positionOffsets) const { m_positionOffsets->set(positionOffsets); }
+		void setPositionOffsets(const vector2 &positionOffsets) const { m_positionOffsets->set(positionOffsets); }
 
 		void setRotationDriver(idriver *rotationDriver);
 
-		inline float getRotation() const { return m_rotation; }
+		float getRotation() const { return m_rotation; }
 
 		void setAlphaDriver(idriver *alphaDriver);
 
@@ -144,6 +144,6 @@ namespace Flounder
 
 		void setScaleDriver(idriver *scaleDriver);
 
-		inline float getScale() const { return m_scale; }
+		float getScale() const { return m_scale; }
 	};
 }

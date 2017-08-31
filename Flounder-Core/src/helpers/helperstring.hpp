@@ -145,7 +145,7 @@ namespace Flounder
 		static std::string removeAll(const std::string &str, const char &token)
 		{
 			std::string result = str;
-			result.erase(std::remove(result.begin(), result.end(), token), result.end());
+			result.erase(remove(result.begin(), result.end(), token), result.end());
 			return result;
 		}
 

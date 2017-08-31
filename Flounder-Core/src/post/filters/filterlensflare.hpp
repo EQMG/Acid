@@ -22,6 +22,6 @@ namespace Flounder
 
 		void setSunPosition(const vector3 &sunPosition);
 
-		inline void setSunHeight(const float &sunHeight) { m_sunHeight = sunHeight; }
+		void setSunHeight(const float &sunHeight) { m_sunHeight = sunHeight; }
 	};
 }

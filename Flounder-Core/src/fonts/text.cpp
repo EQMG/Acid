@@ -106,7 +106,7 @@ namespace Flounder
 				currentWord = new word();
 				continue;
 			}
-			else if (ascii == metafile::NEWLINE_ASCII)
+			if (ascii == metafile::NEWLINE_ASCII)
 			{
 				continue;
 			}
@@ -304,19 +304,13 @@ namespace Flounder
 			{
 				return 0.0f;
 			}
-			else
-			{
-				return calculateEdgeStart() + m_borderSize;
-			}
+			return calculateEdgeStart() + m_borderSize;
 		}
-		else if (m_glowBorder)
+		if (m_glowBorder)
 		{
 			return calculateEdgeStart();
 		}
-		else
-		{
-			return 0.0f;
-		}
+		return 0.0f;
 	}
 
 	float text::getGlowSize()
@@ -325,14 +319,11 @@ namespace Flounder
 		{
 			return calculateAntialiasSize();
 		}
-		else if (m_glowBorder)
+		if (m_glowBorder)
 		{
 			return m_glowSize;
 		}
-		else
-		{
-			return 0.0f;
-		}
+		return 0.0f;
 	}
 
 	float text::calculateEdgeStart()

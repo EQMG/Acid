@@ -33,7 +33,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline Joysticks *get()
+		static Joysticks *get()
 		{
 			return static_cast<Joysticks*>(Engine::Get()->GetModule("joysticks"));
 		}
@@ -55,14 +55,14 @@ namespace Flounder
 		/// </summary>
 		/// <param name="id"> The joystick to check connection with. </param>
 		/// <returns> If the joystick is connected. </returns>
-		inline bool isConnected(const int &id) const { return m_connected[id]->connected; }
+		bool isConnected(const int &id) const { return m_connected[id]->connected; }
 
 		/// <summary>
 		/// Gets the name of the joystick.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The joysticks name. </returns>
-		inline const char *getName(const int &id) const { return m_connected[id]->name; }
+		const char *getName(const int &id) const { return m_connected[id]->name; }
 
 		/// <summary>
 		/// Gets the value of a joysticks axis.
@@ -85,13 +85,13 @@ namespace Flounder
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		inline int getCountAxes(const int &id) const { return m_connected[id]->axeCount; }
+		int getCountAxes(const int &id) const { return m_connected[id]->axeCount; }
 
 		/// <summary>
 		/// Gets the number of buttons the joystick offers.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		inline int getCountButtons(const int &id) const { return m_connected[id]->buttonCount; }
+		int getCountButtons(const int &id) const { return m_connected[id]->buttonCount; }
 	};
 }

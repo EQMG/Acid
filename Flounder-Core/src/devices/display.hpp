@@ -29,7 +29,7 @@ namespace Flounder
 		int graphicsFamily = -1;
 		int presentFamily = -1;
 
-		inline bool isComplete() const { return graphicsFamily >= 0 && presentFamily >= 0; }
+		bool isComplete() const { return graphicsFamily >= 0 && presentFamily >= 0; }
 	};
 
 	struct VkSwapChainSupportDetails
@@ -114,7 +114,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline Display *get()
+		static Display *get()
 		{
 			return static_cast<Display*>(Engine::Get()->GetModule("display"));
 		}
@@ -140,31 +140,31 @@ namespace Flounder
 		/// Gets the width of the display in pixels.
 		/// </summary>
 		/// <returns> The width of the display. </returns>
-		inline int getWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
+		int getWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
 
 		/// <summary>
 		/// Gets the non-fullscreen width of the display in pixels.
 		/// </summary>
 		/// <returns> The width of the display. </returns>
-		inline int getWindowWidth() const { return m_windowWidth; }
+		int getWindowWidth() const { return m_windowWidth; }
 
 		/// <summary>
 		/// Gets the height of the display in pixels.
 		/// </summary>
 		/// <returns> The height of the display. </returns>
-		inline int getHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
+		int getHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
 
 		/// <summary>
 		/// Gets the non-fullscreen height of the display in pixels.
 		/// </summary>
 		/// <returns> The height of the display. </returns>
-		inline int getWindowHeight() const { return m_windowHeight; }
+		int getWindowHeight() const { return m_windowHeight; }
 
 		/// <summary>
 		/// Gets the aspect ratio between the displays width and height.
 		/// </summary>
 		/// <returns> The aspect ratio. </returns>
-		inline float getAspectRatio() const { return m_aspectRatio; }
+		float getAspectRatio() const { return m_aspectRatio; }
 
 		/// <summary>
 		/// Sets window size to a new size.
@@ -177,7 +177,7 @@ namespace Flounder
 		/// Gets the window's title.
 		/// </summary>
 		/// <returns> The window's title. </returns>
-		inline std::string getTitle() const { return m_title; }
+		std::string getTitle() const { return m_title; }
 
 		/// <summary>
 		/// Sets window title
@@ -189,7 +189,7 @@ namespace Flounder
 		/// Gets the window's icon file.
 		/// </summary>
 		/// <returns> The window's icon file. </returns>
-		inline std::string getIcon() const { return m_icon; }
+		std::string getIcon() const { return m_icon; }
 
 		/// <summary>
 		/// Sets window icon image.
@@ -201,31 +201,31 @@ namespace Flounder
 		/// Gets the fps limit.
 		/// </summary>
 		/// <returns> The fps limit. </returns>
-		inline float getFpsLimit() const { return m_fpsLimit; }
+		float getFpsLimit() const { return m_fpsLimit; }
 
 		/// <summary>
 		/// Sets the fps limit. -1 disables limits.
 		/// </summary>
 		/// <param name="fpsLimit"> The new fps limit. </param>
-		inline void setFpsLimit(const float &fpsLimit) { m_fpsLimit = fpsLimit; }
+		void setFpsLimit(const float &fpsLimit) { m_fpsLimit = fpsLimit; }
 
 		/// <summary>
 		/// Gets if the display requests antialiased images.
 		/// </summary>
 		/// <returns> If using antialiased images. </returns>
-		inline bool isAntialiasing() const { return m_antialiasing; }
+		bool isAntialiasing() const { return m_antialiasing; }
 
 		/// <summary>
 		/// Requests the display to antialias.
 		/// </summary>
 		/// <param name="antialiasing"> If the display should antialias. </param>
-		inline void setAntialiasing(const bool &antialiasing) { m_antialiasing = antialiasing; }
+		void setAntialiasing(const bool &antialiasing) { m_antialiasing = antialiasing; }
 
 		/// <summary>
 		/// Gets weather the display is fullscreen or not.
 		/// </summary>
 		/// <returns> Fullscreen or windowed. </returns>
-		inline bool isFullscreen() const { return m_fullscreen; }
+		bool isFullscreen() const { return m_fullscreen; }
 
 		/// <summary>
 		/// Sets the display to be fullscreen or windowed.
@@ -237,65 +237,65 @@ namespace Flounder
 		/// Gets the current GLFW window.
 		/// </summary>
 		/// <returns> The current GLFW window. </returns>
-		inline GLFWwindow *getWindow() const { return m_window; }
+		GLFWwindow *getWindow() const { return m_window; }
 
 		/// <summary>
 		/// Gets if the GLFW display is closed.
 		/// </summary>
 		/// <returns> If the GLFW display is closed. </returns>
-		inline bool isClosed() const { return m_closed; }
+		bool isClosed() const { return m_closed; }
 
 		/// <summary>
 		/// Gets if the GLFW display is selected.
 		/// </summary>
 		/// <returns> If the GLFW display is selected. </returns>
-		inline bool isFocused() const { return m_focused; }
+		bool isFocused() const { return m_focused; }
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows x position. </returns>
-		inline int getWindowXPos() const { return m_windowPosX; }
+		int getWindowXPos() const { return m_windowPosX; }
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows Y position. </returns>
-		inline int getWindowYPos() const { return m_windowPosY; }
+		int getWindowYPos() const { return m_windowPosY; }
 
 		/// <summary>
 		/// Gets the current Vulkan instance.
 		/// </summary>
 		/// <returns> The current Vulkan instance. </returns>
-		inline VkInstance getVkInstance() const { return m_instance; }
+		VkInstance getVkInstance() const { return m_instance; }
 
 		/// <summary>
 		/// Gets the current Vulkan surface.
 		/// </summary>
 		/// <returns> The current Vulkan surface. </returns>
-		inline VkSurfaceKHR getVkSurface() const { return m_surface; }
+		VkSurfaceKHR getVkSurface() const { return m_surface; }
 
 		/// <summary>
 		/// Gets the current Vulkan physical device (gpu).
 		/// </summary>
 		/// <returns> The current Vulkan physical device (gpu). </returns>
-		inline VkPhysicalDevice getVkPhysicalDevice() const { return m_physicalDevice; }
+		VkPhysicalDevice getVkPhysicalDevice() const { return m_physicalDevice; }
 
-		inline VkPhysicalDeviceProperties getVkPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
+		VkPhysicalDeviceProperties getVkPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
 
-		inline VkPhysicalDeviceFeatures getVkPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
+		VkPhysicalDeviceFeatures getVkPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
 
-		inline VkPhysicalDeviceMemoryProperties getVkPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
+		VkPhysicalDeviceMemoryProperties getVkPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
 
 		/// <summary>
 		/// Gets the current Vulkan device.
 		/// </summary>
 		/// <returns> The current Vulkan device. </returns>
-		inline VkDevice getVkDevice() const { return m_device; }
+		VkDevice getVkDevice() const { return m_device; }
 
-		inline VkQueue getVkGraphicsQueue() const { return m_graphicsQueue; }
+		VkQueue getVkGraphicsQueue() const { return m_graphicsQueue; }
 
-		inline VkQueue getVkPresentQueue() const { return m_presentQueue; }
+		VkQueue getVkPresentQueue() const { return m_presentQueue; }
 
 		inline VkQueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 

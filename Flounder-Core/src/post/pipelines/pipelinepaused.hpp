@@ -25,6 +25,6 @@ namespace Flounder
 
 		Fbo *getOutput() override;
 
-		inline void setBlurFactor(const float &blurFactor) { m_blurFactor = blurFactor; }
+		void setBlurFactor(const float &blurFactor) { m_blurFactor = blurFactor; }
 	};
 }

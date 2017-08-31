@@ -29,7 +29,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline worlds *get()
+		static worlds *get()
 		{
 			return static_cast<worlds*>(Engine::Get()->GetModule("worlds"));
 		}

@@ -42,7 +42,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline renderer *get()
+		static renderer *get()
 		{
 			return static_cast<renderer*>(Engine::Get()->GetModule("renderer"));
 		}
@@ -63,13 +63,13 @@ namespace Flounder
 		/// Gets the renderer manager.
 		/// </summary>
 		/// <returns> The renderer manager. </returns>
-		inline imanagerrender *getManager() { return m_managerRender; }
+		imanagerrender *getManager() { return m_managerRender; }
 
 		/// <summary>
 		/// Sets the current renderer manager to a new renderer manager.
 		/// </summary>
 		/// <param name="rendererMaster"> The new renderer manager. </param>
-		inline void setManager(imanagerrender *managerRender) { m_managerRender = managerRender; }
+		void setManager(imanagerrender *managerRender) { m_managerRender = managerRender; }
 
 		std::vector<VkCommandBuffer> getVkCommandBuffers() const
 		{

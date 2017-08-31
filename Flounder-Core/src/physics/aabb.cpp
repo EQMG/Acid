@@ -426,23 +426,23 @@ namespace Flounder
 		{
 			return false;
 		}
-		else if (point.m_x < m_minExtents->m_x)
+		if (point.m_x < m_minExtents->m_x)
 		{
 			return false;
 		}
-		else if (point.m_y > m_maxExtents->m_y)
+		if (point.m_y > m_maxExtents->m_y)
 		{
 			return false;
 		}
-		else if (point.m_y < m_minExtents->m_y)
+		if (point.m_y < m_minExtents->m_y)
 		{
 			return false;
 		}
-		else if (point.m_z > m_maxExtents->m_z)
+		if (point.m_z > m_maxExtents->m_z)
 		{
 			return false;
 		}
-		else if (point.m_z < m_minExtents->m_z)
+		if (point.m_z < m_minExtents->m_z)
 		{
 			return false;
 		}

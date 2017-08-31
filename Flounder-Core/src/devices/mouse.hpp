@@ -38,7 +38,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static inline Mouse *Get()
+		static Mouse *Get()
 		{
 			return static_cast<Mouse*>(Engine::Get()->GetModule("mouse"));
 		}
@@ -85,13 +85,13 @@ namespace Flounder
 		/// Gets the mouses screen x position.
 		/// </summary>
 		/// <returns> The mouses x position. </returns>
-		inline float getPositionX() const { return m_mousePositionX; }
+		float getPositionX() const { return m_mousePositionX; }
 
 		/// <summary>
 		/// Gets the mouses screen y position.
 		/// </summary>
 		/// <returns> The mouses y position. </returns>
-		inline float getPositionY() const { return m_mousePositionY; }
+		float getPositionY() const { return m_mousePositionY; }
 
 		/// <summary>
 		/// Sets the mouse position by calling glfwSetCursorPos.
@@ -104,30 +104,30 @@ namespace Flounder
 		/// Gets the mouses delta x.
 		/// </summary>
 		/// <returns> The mouses delta x. </returns>
-		inline float getDeltaX() const { return m_mouseDeltaX; }
+		float getDeltaX() const { return m_mouseDeltaX; }
 
 		/// <summary>
 		/// Gets the mouses delta y.
 		/// </summary>
 		/// <returns> The mouses delta y. </returns>
-		inline float getDeltaY() const { return m_mouseDeltaY; }
+		float getDeltaY() const { return m_mouseDeltaY; }
 
 		/// <summary>
 		/// Gets the mouses wheel delta.
 		/// </summary>
 		/// <returns> The mouses wheel delta. </returns>
-		inline float getDeltaWheel() const { return m_mouseDeltaWheel; }
+		float getDeltaWheel() const { return m_mouseDeltaWheel; }
 
 		/// <summary>
 		/// Gets if the display is selected.
 		/// </summary>
 		/// <returns> If the display is selected. </returns>
-		inline bool isDisplaySelected() const { return m_displaySelected; }
+		bool isDisplaySelected() const { return m_displaySelected; }
 
 		/// <summary>
 		/// If the cursor is hidden, the mouse is the display locked if true.
 		/// </summary>
 		/// <returns> If the cursor is hidden. </returns>
-		inline bool isCursorDisabled() const { return m_cursorDisabled; }
+		bool isCursorDisabled() const { return m_cursorDisabled; }
 	};
 }

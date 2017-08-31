@@ -26,7 +26,7 @@ namespace Flounder
 	}
 
 	template<typename t>
-	inline void eventchange<t>::onEvent()
+	void eventchange<t>::onEvent()
 	{
 		m_onEvent();
 	}

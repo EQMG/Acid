@@ -26,26 +26,26 @@ namespace Flounder
 
 		void update();
 
-		inline texture *getTexture() const { return m_texture; }
+		texture *getTexture() const { return m_texture; }
 
-		inline void setTexture(texture *texture) { m_texture = texture; }
+		void setTexture(texture *texture) { m_texture = texture; }
 
-		inline model *getModel() const { return m_model; }
+		model *getModel() const { return m_model; }
 
-		inline void setModel(model *model) { m_model = model; }
+		void setModel(model *model) { m_model = model; }
 
-		inline float getSize() const { return m_size; }
+		float getSize() const { return m_size; }
 
-		inline void setSize(const float size) { m_size = size; }
+		void setSize(const float size) { m_size = size; }
 
-		inline float getBlend() const { return m_blend; }
+		float getBlend() const { return m_blend; }
 
-		inline void setBlend(const float blend) { m_blend = blend; }
+		void setBlend(const float blend) { m_blend = blend; }
 
-		inline vector3 *getRotation() const { return m_rotation; }
+		vector3 *getRotation() const { return m_rotation; }
 
-		inline void setRotation(vector3 *rotation) { m_rotation = rotation; }
+		void setRotation(vector3 *rotation) { m_rotation = rotation; }
 
-		inline matrix4x4 *getModelMatrix() const { return m_modelMatrix; }
+		matrix4x4 *getModelMatrix() const { return m_modelMatrix; }
 	};
 }

@@ -20,7 +20,6 @@ namespace Flounder
 	{
 		if (render->m_shadowRun)
 		{
-			return;
 		}
 #if 0
 		if (!render->m_undoing)

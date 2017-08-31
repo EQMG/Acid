@@ -55,6 +55,6 @@ namespace Flounder
 		/// <returns> The calculated value. </returns>
 		virtual float calculate(const float &time) = 0;
 
-		inline float getActualTime() { return m_actualTime; }
+		float getActualTime() { return m_actualTime; }
 	};
 }

@@ -26,24 +26,24 @@ namespace Flounder
 
 		void Set(const Transform &source) const;
 
-		inline vector3 *GetPosition() const { return m_position; }
+		vector3 *GetPosition() const { return m_position; }
 
-		inline void SetPosition(const vector3 &position) const { m_position->set(position); }
+		void SetPosition(const vector3 &position) const { m_position->set(position); }
 
-		inline void SetPosition(const float &x, const float &y, const float &z) const { m_position->set(x, y, z); }
+		void SetPosition(const float &x, const float &y, const float &z) const { m_position->set(x, y, z); }
 
-		inline vector3 *GetRotation() const { return m_rotation; }
+		vector3 *GetRotation() const { return m_rotation; }
 
-		inline void SetRotation(const vector3 &rotation) const { m_rotation->set(rotation); }
+		void SetRotation(const vector3 &rotation) const { m_rotation->set(rotation); }
 
-		inline void SetRotation(const float &x, const float &y, const float &z) const { m_rotation->set(x, y, z); }
+		void SetRotation(const float &x, const float &y, const float &z) const { m_rotation->set(x, y, z); }
 
-		inline vector3 *GetScaling() const { return m_scaling; }
+		vector3 *GetScaling() const { return m_scaling; }
 
-		inline void SetScaling(const vector3 &scaling) const { m_scaling->set(scaling); }
+		void SetScaling(const vector3 &scaling) const { m_scaling->set(scaling); }
 
-		inline void SetScaling(const float &x, const float &y, const float &z) const { m_scaling->set(x, y, z); }
+		void SetScaling(const float &x, const float &y, const float &z) const { m_scaling->set(x, y, z); }
 
-		inline void SetScaling(const float &scale) const { m_scaling->set(scale, scale, scale); }
+		void SetScaling(const float &scale) const { m_scaling->set(scale, scale, scale); }
 	};
 }

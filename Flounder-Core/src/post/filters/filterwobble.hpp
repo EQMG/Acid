@@ -19,6 +19,6 @@ namespace Flounder
 
 		void storeValues() override;
 
-		inline void setWobbleSpeed(const float &wobbleSpeed) { m_wobbleSpeed = wobbleSpeed; }
+		void setWobbleSpeed(const float &wobbleSpeed) { m_wobbleSpeed = wobbleSpeed; }
 	};
 }

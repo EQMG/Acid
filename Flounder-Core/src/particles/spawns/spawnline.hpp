@@ -19,16 +19,16 @@ namespace Flounder
 
 		vector3 *getBaseSpawnPosition() override;
 
-		inline float getLength() const { return m_length; }
+		float getLength() const { return m_length; }
 
-		inline void setLength(const float &length) { m_length = length; }
+		void setLength(const float &length) { m_length = length; }
 
-		inline vector3 *getAxis() const { return m_axis; }
+		vector3 *getAxis() const { return m_axis; }
 
-		inline void setAxis(const vector3 &axis) { m_axis->set(axis); }
+		void setAxis(const vector3 &axis) { m_axis->set(axis); }
 
-		inline vector3 *getSpawnPosition() const { return m_spawnPosition; }
+		vector3 *getSpawnPosition() const { return m_spawnPosition; }
 
-		inline void setSpawnPosition(const vector3 &spawnPosition) { m_spawnPosition->set(spawnPosition); }
+		void setSpawnPosition(const vector3 &spawnPosition) { m_spawnPosition->set(spawnPosition); }
 	};
 }
