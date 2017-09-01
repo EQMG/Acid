@@ -2,8 +2,8 @@
 
 namespace Flounder
 {
-	rendererfonts::rendererfonts() :
-		irenderer(),
+	RendererFonts::RendererFonts() :
+		IRenderer(),
 		m_shader(new shader("fonts", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/fonts/font.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/fonts/font.frag.spv")
@@ -11,29 +11,29 @@ namespace Flounder
 	{
 	}
 
-	rendererfonts::~rendererfonts()
+	RendererFonts::~RendererFonts()
 	{
 		delete m_shader;
 	}
 
-	void rendererfonts::render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererFonts::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
-		prepareRendering(clipPlane, camera);
+		PrepareRendering(clipPlane, camera);
 
 		for (auto screenobject : *uis::get()->getObjects())
 		{
-			text *object = dynamic_cast<text*>(screenobject);
+			Text *object = dynamic_cast<Text*>(screenobject);
 
 			if (object != nullptr)
 			{
-				renderText(object);
+				RenderText(object);
 			}
 		}
 
-		endRendering();
+		EndRendering();
 	}
 
-	void rendererfonts::prepareRendering(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererFonts::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.
@@ -49,7 +49,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererfonts::renderText(text *object)
+	void RendererFonts::RenderText(Text *object)
 	{
 #if 0
 		// Binds the layouts.
@@ -87,7 +87,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererfonts::endRendering()
+	void RendererFonts::EndRendering()
 	{
 #if 0
 		// Stops the shader.

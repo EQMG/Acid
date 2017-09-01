@@ -17,7 +17,7 @@ namespace Flounder
 	public:
 		virtual ~igrabber() = default;
 
-		virtual int getCurrent(text *object) = 0;
+		virtual int getCurrent(Text *object) = 0;
 
 		virtual std::string getValue(const int &value) = 0;
 	};
@@ -30,7 +30,7 @@ namespace Flounder
 	public:
 		grabberjoystick(const int &joystick);
 
-		int getCurrent(text *object) override;
+		int getCurrent(Text *object) override;
 
 		std::string getValue(const int &value) override;
 	};
@@ -39,7 +39,7 @@ namespace Flounder
 		public igrabber
 	{
 	public:
-		int getCurrent(text *object) override;
+		int getCurrent(Text *object) override;
 
 		std::string getValue(const int &value) override;
 	};
@@ -48,7 +48,7 @@ namespace Flounder
 		public igrabber
 	{
 	public:
-		int getCurrent(text *object) override;
+		int getCurrent(Text *object) override;
 
 		std::string getValue(const int &value) override;
 	};
@@ -62,8 +62,8 @@ namespace Flounder
 		static const float SCALE_SELECTED;
 		static Colour *const COLOUR_NORMAL;
 
-		text *m_text;
-		gui *m_background;
+		Text *m_text;
+		Gui *m_background;
 
 		igrabber *m_grabber;
 

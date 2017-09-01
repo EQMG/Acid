@@ -5,7 +5,7 @@ namespace Flounder
 	/// <summary>
 	/// A helper for C++ arrays.
 	/// </summary>
-	class helperarray
+	class HelperArray
 	{
 	public:
 		/// <summary>
@@ -14,7 +14,7 @@ namespace Flounder
 		/// <param name="size1"> The first size. </param>
 		/// <param name="size2"> The seconds size. </param>
 		/// <returns> The new rectangular float array. </returns>
-		static float **recFloatArray(const int &size1, const int &size2)
+		static float **FloatArray(const int &size1, const int &size2)
 		{
 			float **array = new float*[size1];
 

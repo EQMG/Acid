@@ -45,12 +45,12 @@ void OverlayDebug::UpdateObject()
 	}
 }
 
-text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const uialign &align)
+Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const uialign &align)
 {
-	text *result = new text(this, Vector2(positionX, positionY), content, 1.0f, uis::get()->m_candara, 1.0f, align);
+	Text *result = new Text(this, Vector2(positionX, positionY), content, 1.0f, uis::get()->m_candara, 1.0f, align);
 	result->SetInScreenCoords(true);
 	result->setTextColour(Colour(1.0f, 1.0f, 1.0f, 1.0f));
-	result->setBorderColour(Colour(0.15f, 0.15f, 0.15f, 1.0f));
-	result->setBorder(new driverconstant(0.04f));
+	result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f, 1.0f));
+	result->SetBorder(new driverconstant(0.04f));
 	return result;
 }

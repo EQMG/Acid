@@ -1,8 +1,8 @@
-#include "model.hpp"
+#include "Model.hpp"
 
 namespace Flounder
 {
-	model::model(const std::string &file) :
+	Model::Model(const std::string &file) :
 		m_file(file),
 		m_indices(nullptr),
 		m_vertices(nullptr),
@@ -17,25 +17,25 @@ namespace Flounder
 		m_memory(VK_NULL_HANDLE),
 		m_bufferInfo({})
 	{
-		loadFromFile();
+		LoadFromFile();
 	}
 
-	model::model(std::vector<int> *indices, std::vector<float> *vertices, std::vector<float> *textures, std::vector<float> *normals, std::vector<float> *tangents)
+	Model::Model(const std::vector<int> &indices, const std::vector<float> &vertices, const std::vector<float> &textures, const std::vector<float> &normals, const std::vector<float> &tangents)
 	{
 		m_file = "";
 
-		m_indices = indices;
-		m_vertices = vertices;
-		m_textures = textures;
-		m_normals = normals;
-		m_tangents = tangents;
+		m_indices = new std::vector<int>(indices);
+		m_vertices = new std::vector<float>(vertices);
+		m_textures = new std::vector<float>(textures);
+		m_normals = new std::vector<float>(normals);
+		m_tangents = new std::vector<float>(tangents);
 
 		m_aabb = nullptr;
 
-		loadToVulkan();
+		LoadToVulkan();
 	}
 
-	model::~model()
+	Model::~Model()
 	{
 		/*vkDeviceWaitIdle(Display::Get()->getVkDevice());
 		vkFreeMemory(Display::Get()->getVkDevice(), m_memory, nullptr);
@@ -54,10 +54,10 @@ namespace Flounder
 		delete m_aabb;
 	}
 
-	void model::loadFromFile()
+	void Model::LoadFromFile()
 	{
-		std::string fileLoaded = helperfile::readTextFile(std::string(m_file));
-		std::vector<std::string> lines = helperstring::split(fileLoaded, "\n");
+		std::string fileLoaded = HelperFile::ReadTextFile(std::string(m_file));
+		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
 
 		std::vector<int> indices = std::vector<int>();
 		std::vector<material> materials = std::vector<material>();
@@ -65,16 +65,16 @@ namespace Flounder
 		std::vector<Vector2> textures = std::vector<Vector2>();
 		std::vector<Vector3> normals = std::vector<Vector3>();
 
-		std::vector<std::string> splitFile = helperstring::split(std::string(m_file), "/");
+		std::vector<std::string> splitFile = HelperString::Split(std::string(m_file), "/");
 		std::string fileName = splitFile.at(splitFile.size() - 1);
 
 		material currentMaterial = {};
 
 		for (auto it = lines.begin(); it < lines.end(); ++it)
 		{
-			std::string line = helperstring::trim(*it);
+			std::string line = HelperString::Trim(*it);
 
-			std::vector<std::string> split = helperstring::split(line, " ");
+			std::vector<std::string> split = HelperString::Split(line, " ");
 
 			if (!split.empty())
 			{
@@ -87,9 +87,9 @@ namespace Flounder
 
 				if (prefix == "mtllib")
 				{
-					std::string pathMtl = helperstring::substring(m_file, 0, (int) (m_file.length() - fileName.length()));
+					std::string pathMtl = HelperString::Substring(m_file, 0, (int) (m_file.length() - fileName.length()));
 					pathMtl += split.at(1);
-					loadMaterials(pathMtl, &materials);
+					LoadMaterials(pathMtl, &materials);
 				}
 				else if (prefix == "usemtl")
 				{
@@ -120,20 +120,20 @@ namespace Flounder
 				else if (prefix == "f")
 				{
 					// The split length of 3 faced + 1 for the f prefix.
-					if (split.size() != 4 || helperstring::contains(line, "//"))
+					if (split.size() != 4 || HelperString::Contains(line, "//"))
 					{
 						printf("Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", m_file.c_str());
 						//throw ex
 					}
 
-					std::vector<std::string> vertex1 = helperstring::split(split.at(1), "/");
-					std::vector<std::string> vertex2 = helperstring::split(split.at(2), "/");
-					std::vector<std::string> vertex3 = helperstring::split(split.at(3), "/");
+					std::vector<std::string> vertex1 = HelperString::Split(split.at(1), "/");
+					std::vector<std::string> vertex2 = HelperString::Split(split.at(2), "/");
+					std::vector<std::string> vertex3 = HelperString::Split(split.at(3), "/");
 
-					vertexdata *v0 = processDataVertex(Vector3(stof(vertex1.at(0)), stof(vertex1.at(1)), stof(vertex1.at(2))), &vertices, &indices);
-					vertexdata *v1 = processDataVertex(Vector3(stof(vertex2.at(0)), stof(vertex2.at(1)), stof(vertex2.at(2))), &vertices, &indices);
-					vertexdata *v2 = processDataVertex(Vector3(stof(vertex3.at(0)), stof(vertex3.at(1)), stof(vertex3.at(2))), &vertices, &indices);
-					calculateTangents(v0, v1, v2, &textures);
+					vertexdata *v0 = ProcessDataVertex(Vector3(stof(vertex1.at(0)), stof(vertex1.at(1)), stof(vertex1.at(2))), &vertices, &indices);
+					vertexdata *v1 = ProcessDataVertex(Vector3(stof(vertex2.at(0)), stof(vertex2.at(1)), stof(vertex2.at(2))), &vertices, &indices);
+					vertexdata *v2 = ProcessDataVertex(Vector3(stof(vertex3.at(0)), stof(vertex3.at(1)), stof(vertex3.at(2))), &vertices, &indices);
+					CalculateTangents(v0, v1, v2, &textures);
 				}
 				else if (prefix == "o")
 				{
@@ -197,19 +197,19 @@ namespace Flounder
 		}
 	}
 
-	void model::loadMaterials(const std::string &filepath, std::vector<material> *list)
+	void Model::LoadMaterials(const std::string &filepath, std::vector<material> *list)
 	{
-		std::string fileLoaded = helperfile::readTextFile(filepath);
-		std::vector<std::string> lines = helperstring::split(fileLoaded, "\n");
+		std::string fileLoaded = HelperFile::ReadTextFile(filepath);
+		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
 
 		std::string parseMaterialName = "";
 		material parseMaterial = {};
 
 		for (auto it = lines.begin(); it < lines.end(); ++it)
 		{
-			std::string line = helperstring::trim(*it);
+			std::string line = HelperString::Trim(*it);
 
-			std::vector<std::string> split = helperstring::split(line, " ");
+			std::vector<std::string> split = HelperString::Split(line, " ");
 
 			if (!split.empty())
 			{
@@ -254,7 +254,7 @@ namespace Flounder
 		}
 	}
 
-	vertexdata *model::processDataVertex(Vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices)
+	vertexdata *Model::ProcessDataVertex(Vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices)
 	{
 		int index = static_cast<int>(vertex.m_x) - 1;
 		vertexdata *currentVertex = vertices->at(index);
@@ -268,10 +268,10 @@ namespace Flounder
 			indices->push_back(index);
 			return currentVertex;
 		}
-		return dealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
+		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
 	}
 
-	vertexdata *model::dealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices)
+	vertexdata *Model::DealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices)
 	{
 		if (previousVertex->hasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{
@@ -282,7 +282,7 @@ namespace Flounder
 
 		if (anotherVertex != nullptr)
 		{
-			return dealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
+			return DealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
 		}
 		vertexdata *duplicateVertex = new vertexdata((int) vertices->size(), previousVertex->getPosition());
 		duplicateVertex->setTextureIndex(newTextureIndex);
@@ -293,7 +293,7 @@ namespace Flounder
 		return duplicateVertex;
 	}
 
-	void model::calculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<Vector2> *textures)
+	void Model::CalculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<Vector2> *textures)
 	{
 		Vector3 *deltaPos1 = Vector3::subtract(v1->getPosition(), v0->getPosition(), nullptr);
 		Vector3 *deltaPos2 = Vector3::subtract(v2->getPosition(), v0->getPosition(), nullptr);
@@ -319,35 +319,35 @@ namespace Flounder
 		delete deltaUv2;
 	}
 
-	void model::loadToVulkan()
+	void Model::LoadToVulkan()
 	{
-		/*if (m_indices != nullptr)
+		/*if (m_indices != nullptr && !m_indices->empty())
 		{
 		//	m_indicesBuffer = createIndicesBuffer(m_indices);
 		}
 
-		if (m_vertices != nullptr)
+		if (m_vertices != nullptr && !m_vertices->empty())
 		{
 			m_verticesBuffer = createBuffer(m_vertices);
 		}
 
-		if (m_textures != nullptr)
+		if (m_textures != nullptr && !m_textures->empty())
 		{
 			m_texturesBuffer = createBuffer(m_textures);
 		}
 
-		if (m_normals != nullptr)
+		if (m_normals != nullptr && !m_normals->empty())
 		{
 			m_normalsBuffer = createBuffer(m_normals);
 		}
 
-		if (m_tangents != nullptr)
+		if (m_tangents != nullptr && !m_tangents->empty())
 		{
 			m_tangentsBuffer = createBuffer(m_tangents);
 		}*/
 	}
 
-	VkBuffer model::createBuffer(std::vector<float> *data)
+	VkBuffer Model::CreateBuffer(std::vector<float> *data)
 	{
 		VkBuffer result = VK_NULL_HANDLE;
 
@@ -364,7 +364,7 @@ namespace Flounder
 		VkMemoryAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		allocInfo.allocationSize = memoryRequirements.size;
-		memoryTypeFromProperties(memoryRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &allocInfo.memoryTypeIndex);
+		MemoryTypeFromProperties(memoryRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &allocInfo.memoryTypeIndex);
 
 		Display::vkErrorCheck(vkAllocateMemory(Display::Get()->GetVkDevice(), &allocInfo, nullptr, &m_memory));
 
@@ -383,7 +383,7 @@ namespace Flounder
 		return result;
 	}
 
-	void model::memoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex)
+	void Model::MemoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex)
 	{
 		for (uint32_t i = 0; i < Display::Get()->GetVkPhysicalDeviceMemoryProperties().memoryTypeCount; i++)
 		{
@@ -400,7 +400,7 @@ namespace Flounder
 		}
 	}
 
-	void model::createAABB()
+	void Model::CreateAabb()
 	{
 		if (m_aabb == nullptr)
 		{

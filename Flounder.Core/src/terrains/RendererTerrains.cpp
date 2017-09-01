@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	rendererterrains::rendererterrains() :
-		irenderer(),
+		IRenderer(),
 		m_shader(new shader("terrains", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/terrains/terrain.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/terrains/terrain.frag.spv")
@@ -16,7 +16,7 @@ namespace Flounder
 		delete m_shader;
 	}
 
-	void rendererterrains::render(const Vector4 &clipPlane, const ICamera &camera)
+	void rendererterrains::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 

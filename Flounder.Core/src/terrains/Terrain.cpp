@@ -40,10 +40,11 @@ namespace Flounder
 	void terrain::generateMesh()
 	{
 		int count = VERTEX_COUNT * VERTEX_COUNT;
-		std::vector<float> *vertices = new std::vector<float>();
-		std::vector<float> *normals = new std::vector<float>();
-		std::vector<float> *colours = new std::vector<float>();
-		std::vector<int> *indices = new std::vector<int>();
+		std::vector<float> vertices = std::vector<float>();
+		std::vector<float> textures = std::vector<float>();
+		std::vector<float> normals = std::vector<float>();
+		std::vector<float> colours = std::vector<float>();
+		std::vector<int> indices = std::vector<int>();
 
 		Colour tint = Colour(Maths::RandomInRange(0.0f, 1.0f), Maths::RandomInRange(0.0f, 1.0f), 0.0f, 1.0f); // colour(0.0f, 0.8314f, 0.0f);
 
@@ -57,17 +58,20 @@ namespace Flounder
 				Vector3 normal = calculateNormal(vertex.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
 				// colour tint = getBiomeColour(vertex.m_x + m_position->m_x, vertex.m_z + m_position->m_z);
 
-				vertices->push_back(vertex.m_x);
-				vertices->push_back(vertex.m_y);
-				vertices->push_back(vertex.m_z);
+				vertices.push_back(vertex.m_x);
+				vertices.push_back(vertex.m_y);
+				vertices.push_back(vertex.m_z);
 
-				normals->push_back(normal.m_x);
-				normals->push_back(normal.m_y);
-				normals->push_back(normal.m_z);
+				textures.push_back(0.0f);
+				textures.push_back(0.0f);
 
-				colours->push_back(tint.m_r);
-				colours->push_back(tint.m_g);
-				colours->push_back(tint.m_b);
+				normals.push_back(normal.m_x);
+				normals.push_back(normal.m_y);
+				normals.push_back(normal.m_z);
+
+				colours.push_back(tint.m_r);
+				colours.push_back(tint.m_g);
+				colours.push_back(tint.m_b);
 			}
 		}
 
@@ -92,7 +96,7 @@ namespace Flounder
 			}
 		}
 
-		m_model = new model(indices, vertices, nullptr, normals, colours);
+		m_model = new Model(indices, vertices, textures, normals, colours);
 
 		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
 		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;
@@ -106,24 +110,24 @@ namespace Flounder
 		//	delete indices;
 	}
 
-	void terrain::storeQuad1(std::vector<int> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void terrain::storeQuad1(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
-		indices->push_back(topLeft);
-		indices->push_back(bottomLeft);
-		indices->push_back(mixed ? topRight : bottomRight);
-		indices->push_back(bottomRight);
-		indices->push_back(topRight);
-		indices->push_back(mixed ? bottomLeft : topLeft);
+		indices.push_back(topLeft);
+		indices.push_back(bottomLeft);
+		indices.push_back(mixed ? topRight : bottomRight);
+		indices.push_back(bottomRight);
+		indices.push_back(topRight);
+		indices.push_back(mixed ? bottomLeft : topLeft);
 	}
 
-	void terrain::storeQuad2(std::vector<int> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void terrain::storeQuad2(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
-		indices->push_back(topRight);
-		indices->push_back(topLeft);
-		indices->push_back(mixed ? bottomRight : bottomLeft);
-		indices->push_back(bottomLeft);
-		indices->push_back(bottomRight);
-		indices->push_back(mixed ? topLeft : topRight);
+		indices.push_back(topRight);
+		indices.push_back(topLeft);
+		indices.push_back(mixed ? bottomRight : bottomLeft);
+		indices.push_back(bottomLeft);
+		indices.push_back(bottomRight);
+		indices.push_back(mixed ? topLeft : topRight);
 	}
 
 	Vector3 terrain::calculateNormal(const float &x, const float &z)

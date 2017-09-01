@@ -17,7 +17,7 @@ namespace Flounder
 	protected:
 		shader *m_shader;
 		Fbo *m_fbo;
-		model *m_model;
+		Model *m_model;
 	public:
 		/// <summary>
 		/// Creates a new post effect filter

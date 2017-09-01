@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	skybox::skybox(texture *texture, model *model, const float &size) :
+	skybox::skybox(texture *texture, Model *model, const float &size) :
 		m_texture(texture),
 		m_model(model),
 		m_size(size),

@@ -22,11 +22,11 @@ namespace Flounder
 		UiObject *m_container;
 		std::vector<UiObject*> *m_objects;
 	public:
-		fonttype *m_arial;
-		fonttype *m_berlinSans;
-		fonttype *m_cafeFrancoise;
-		fonttype *m_candara;
-		fonttype *m_segoe;
+		FontType *m_arial;
+		FontType *m_berlinSans;
+		FontType *m_cafeFrancoise;
+		FontType *m_candara;
+		FontType *m_segoe;
 
 		/// <summary>
 		/// Gets this engine instance.

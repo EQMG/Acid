@@ -9,7 +9,7 @@
 namespace Flounder
 {
 	class rendererterrains :
-		public irenderer
+		public IRenderer
 	{
 	private:
 		shader *m_shader;
@@ -18,7 +18,7 @@ namespace Flounder
 
 		~rendererterrains();
 
-		void render(const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
 		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 

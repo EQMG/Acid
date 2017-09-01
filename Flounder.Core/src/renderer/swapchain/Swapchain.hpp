@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class swapchain
+	class Swapchain
 	{
 	private:
 		VkSwapchainKHR m_swapChain;
@@ -15,34 +15,34 @@ namespace Flounder
 		VkFormat m_swapChainImageFormat;
 		VkExtent2D m_swapChainExtent;
 	public:
-		swapchain();
+		Swapchain();
 
-		~swapchain();
+		~Swapchain();
 
-		void create(VkSwapChainSupportDetails swapChainSupport);
+		void Create(VkSwapChainSupportDetails swapChainSupport);
 
-		void createImageViews();
+		void CreateImageViews();
 
-		void createFramebuffers(VkRenderPass renderPass);
+		void CreateFramebuffers(VkRenderPass renderPass);
 
-		void cleanup();
+		void Cleanup();
 
-		void cleanupFramebuffers();
+		void CleanupFramebuffers();
 
-		VkSwapchainKHR getSwapchain() const { return m_swapChain; }
+		VkSwapchainKHR GetSwapchain() const { return m_swapChain; }
 
-		size_t getFramebufferSize() const { return m_swapChainFramebuffers.size(); }
+		size_t GetFramebufferSize() const { return m_swapChainFramebuffers.size(); }
 
-		VkFramebuffer getFramebuffer(uint32_t index) const { return m_swapChainFramebuffers[index]; }
+		VkFramebuffer GetFramebuffer(const uint32_t &index) const { return m_swapChainFramebuffers[index]; }
 
-		VkFormat getImageFormat() const { return m_swapChainImageFormat; }
+		VkFormat GetImageFormat() const { return m_swapChainImageFormat; }
 
-		VkExtent2D getExtent() const { return m_swapChainExtent; }
+		VkExtent2D GetExtent() const { return m_swapChainExtent; }
 	private:
-		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+		VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
 
-		VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes);
+		VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes);
 
-		VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
+		VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
 	};
 }

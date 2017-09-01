@@ -9,8 +9,8 @@ namespace Flounder
 
 	inputtext::inputtext(UiObject *parent, const Vector2 &position, const std::string &prefix, const std::string &value, const uialign &align) :
 		UiObject(parent, position, Vector2(0.0f, 0.0f)),
-		m_text(new text(this, position, prefix + value, SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
-		m_background(new gui(this, position, Vector2(), new texture("res/guis/buttonText.png"), 1)),
+		m_text(new Text(this, position, prefix + value, SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
+		m_background(new Gui(this, position, Vector2(), new texture("res/guis/buttonText.png"), 1)),
 		m_prefix(prefix),
 		m_value(value),
 		m_inputDelay(new inputdelay()),
@@ -23,7 +23,7 @@ namespace Flounder
 		m_text->setTextColour(Colour(1.0f, 1.0f, 1.0f, 1.0f));
 
 		m_background->SetInScreenCoords(true);
-		m_background->setColourOffset(Colour());
+		m_background->SetColourOffset(Colour());
 	}
 
 	inputtext::~inputtext()
@@ -116,11 +116,11 @@ namespace Flounder
 		}
 
 		// Update the background colour.
-		Colour::Interpolate(*COLOUR_NORMAL, *uis::get()->getManager()->GetPrimaryColour(), (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->getColourOffset());
+		Colour::Interpolate(*COLOUR_NORMAL, *uis::get()->getManager()->GetPrimaryColour(), (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.
 		m_background->GetDimensions()->set(*m_text->GetMeshSize());
-		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->getFontType()->getMetadata()->getMaxSizeY());
+		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
 		Vector2::multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
 		m_background->GetDimensions()->scale(2.0f * m_text->GetScale());
 		m_background->GetPositionOffsets()->set(*m_text->GetPositionOffsets());

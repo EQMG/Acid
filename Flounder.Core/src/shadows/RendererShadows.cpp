@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	renderershadows::renderershadows() :
-		irenderer(),
+		IRenderer(),
 		m_fbo(new Fbo(shadows::get()->getShadowSize(), shadows::get()->getShadowSize(), DepthTexture, false)),
 		m_shader(new shader("shadows", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/shadows/shadow.vert.spv"),
@@ -18,7 +18,7 @@ namespace Flounder
 		delete m_shader;
 	}
 
-	void renderershadows::render(const Vector4 &clipPlane, const ICamera &camera)
+	void renderershadows::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 
@@ -47,7 +47,7 @@ namespace Flounder
 #endif
 	}
 
-	void renderershadows::renderModel(model *object, Matrix4 *modelMatrix)
+	void renderershadows::renderModel(Model *object, Matrix4 *modelMatrix)
 	{
 #if 0
 		// Binds the layouts.
