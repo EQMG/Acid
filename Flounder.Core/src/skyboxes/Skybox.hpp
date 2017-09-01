@@ -12,7 +12,7 @@ namespace Flounder
 	{
 	private:
 		texture *m_texture;
-		model *m_model;
+		Model *m_model;
 
 		float m_size;
 		float m_blend;
@@ -20,7 +20,7 @@ namespace Flounder
 		Vector3 *m_rotation;
 		Matrix4 *m_modelMatrix;
 	public:
-		skybox(texture *texture, model *model, const float &size);
+		skybox(texture *texture, Model *model, const float &size);
 
 		~skybox();
 
@@ -30,9 +30,9 @@ namespace Flounder
 
 		void setTexture(texture *texture) { m_texture = texture; }
 
-		model *getModel() const { return m_model; }
+		Model *getModel() const { return m_model; }
 
-		void setModel(model *model) { m_model = model; }
+		void setModel(Model *model) { m_model = model; }
 
 		float getSize() const { return m_size; }
 

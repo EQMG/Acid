@@ -1,42 +1,42 @@
-#include "rendererguis.hpp"
+#include "RendererGuis.hpp"
 
 namespace Flounder
 {
-	rendererguis::rendererguis() :
-		irenderer(),
+	RendererGuis::RendererGuis() :
+		IRenderer(),
 		m_shader(new shader("guis", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/guis/gui.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/guis/gui.frag.spv")
 		)),
-		m_model(new model(nullptr, &std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f}, nullptr, nullptr, nullptr))
+		m_model(new Model(std::vector<int>(), std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f}))
 	{
 	}
 
-	rendererguis::~rendererguis()
+	RendererGuis::~RendererGuis()
 	{
 		delete m_shader;
 
 		delete m_model;
 	}
 
-	void rendererguis::render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererGuis::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
-		prepareRendering(clipPlane, camera);
+		PrepareRendering(clipPlane, camera);
 
 		for (auto screenobject : *uis::get()->getObjects())
 		{
-			gui *object = dynamic_cast<gui*>(screenobject);
+			Gui *object = dynamic_cast<Gui*>(screenobject);
 
 			if (object != nullptr)
 			{
-				renderGui(object);
+				RenderGui(object);
 			}
 		}
 
-		endRendering();
+		EndRendering();
 	}
 
-	void rendererguis::prepareRendering(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererGuis::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.
@@ -55,7 +55,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererguis::renderGui(gui *object)
+	void RendererGuis::RenderGui(Gui *object)
 	{
 #if 0
 		// Binds the layouts.
@@ -89,7 +89,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererguis::endRendering()
+	void RendererGuis::EndRendering()
 	{
 #if 0
 		// Unbinds the layouts.

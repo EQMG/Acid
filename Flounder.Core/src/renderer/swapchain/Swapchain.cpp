@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	swapchain::swapchain() :
+	Swapchain::Swapchain() :
 		m_swapChain(VK_NULL_HANDLE),
 		m_swapChainImages(std::vector<VkImage>()),
 		m_swapChainImageViews(std::vector<VkImageView>()),
@@ -12,18 +12,18 @@ namespace Flounder
 	{
 	}
 
-	swapchain::~swapchain()
+	Swapchain::~Swapchain()
 	{
-		cleanupFramebuffers();
-		cleanup();
+		CleanupFramebuffers();
+		Cleanup();
 	}
 
-	void swapchain::create(VkSwapChainSupportDetails swapChainSupport)
+	void Swapchain::Create(VkSwapChainSupportDetails swapChainSupport)
 	{
 		// Uses the helper functions to get optimal settings.
-		VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
-		VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
-		VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities);
+		VkSurfaceFormatKHR surfaceFormat = ChooseSwapSurfaceFormat(swapChainSupport.formats);
+		VkPresentModeKHR presentMode = ChooseSwapPresentMode(swapChainSupport.presentModes);
+		VkExtent2D extent = ChooseSwapExtent(swapChainSupport.capabilities);
 
 		// Fills in the data from the create info.
 		VkSwapchainCreateInfoKHR createInfo = {};
@@ -63,10 +63,10 @@ namespace Flounder
 		m_swapChainImageFormat = surfaceFormat.format;
 		m_swapChainExtent = extent;
 
-		createImageViews();
+		CreateImageViews();
 	}
 
-	void swapchain::createImageViews()
+	void Swapchain::CreateImageViews()
 	{
 		m_swapChainImageViews.resize(m_swapChainImages.size());
 
@@ -93,7 +93,7 @@ namespace Flounder
 		printf("Image views created successfully.\n");
 	}
 
-	void swapchain::createFramebuffers(VkRenderPass renderPass)
+	void Swapchain::CreateFramebuffers(VkRenderPass renderPass)
 	{
 		m_swapChainFramebuffers.resize(m_swapChainImageViews.size());
 
@@ -116,7 +116,7 @@ namespace Flounder
 		printf("Framebuffers created successfully!\n");
 	}
 
-	void swapchain::cleanup()
+	void Swapchain::Cleanup()
 	{
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
@@ -129,7 +129,7 @@ namespace Flounder
 		vkDestroySwapchainKHR(Display::Get()->GetVkDevice(), m_swapChain, VK_NULL_HANDLE);
 	}
 
-	void swapchain::cleanupFramebuffers()
+	void Swapchain::CleanupFramebuffers()
 	{
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
@@ -140,7 +140,7 @@ namespace Flounder
 		}
 	}
 
-	VkSurfaceFormatKHR swapchain::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats)
+	VkSurfaceFormatKHR Swapchain::ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats)
 	{
 		if (availableFormats.size() == 1 && availableFormats[0].format == VK_FORMAT_UNDEFINED)
 		{
@@ -158,7 +158,7 @@ namespace Flounder
 		return availableFormats[0];
 	}
 
-	VkPresentModeKHR swapchain::chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes)
+	VkPresentModeKHR Swapchain::ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes)
 	{
 		VkPresentModeKHR bestMode = VK_PRESENT_MODE_FIFO_KHR;
 
@@ -177,7 +177,7 @@ namespace Flounder
 		return bestMode;
 	}
 
-	VkExtent2D swapchain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities)
+	VkExtent2D Swapchain::ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities)
 	{
 		if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
 		{

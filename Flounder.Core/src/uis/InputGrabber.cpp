@@ -13,7 +13,7 @@ namespace Flounder
 	{
 	}
 
-	int grabberjoystick::getCurrent(text *object)
+	int grabberjoystick::getCurrent(Text *object)
 	{
 		int key = -1;
 
@@ -46,7 +46,7 @@ namespace Flounder
 		return std::to_string(value);
 	}
 
-	int grabberkeyboard::getCurrent(text *object)
+	int grabberkeyboard::getCurrent(Text *object)
 	{
 		int key = Keyboard::Get()->GetChar();
 
@@ -63,7 +63,7 @@ namespace Flounder
 		return std::string(1, static_cast<char>(value));
 	}
 
-	int grabbermouse::getCurrent(text *object)
+	int grabbermouse::getCurrent(Text *object)
 	{
 		int key = -1;
 
@@ -95,8 +95,8 @@ namespace Flounder
 
 	inputgrabber::inputgrabber(UiObject *parent, const Vector2 &position, const std::string &prefix, const int &value, igrabber *grabber, const uialign &align) :
 		UiObject(parent, position, Vector2(0.0f, 0.0f)),
-		m_text(new text(this, position, prefix + grabber->getValue(value), SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
-		m_background(new gui(this, position, Vector2(), new texture("res/guis/buttonText.png"), 1)),
+		m_text(new Text(this, position, prefix + grabber->getValue(value), SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
+		m_background(new Gui(this, position, Vector2(), new texture("res/guis/buttonText.png"), 1)),
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),
@@ -110,7 +110,7 @@ namespace Flounder
 		m_text->setTextColour(Colour(1.0f, 1.0f, 1.0f, 1.0f));
 
 		m_background->SetInScreenCoords(true);
-		m_background->setColourOffset(Colour());
+		m_background->SetColourOffset(Colour());
 	}
 
 	inputgrabber::~inputgrabber()
@@ -173,11 +173,11 @@ namespace Flounder
 
 		// Update the background colour.
 		Colour *primary = uis::get()->getManager()->GetPrimaryColour();
-		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->getColourOffset());
+		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.
 		m_background->GetDimensions()->set(*m_text->GetMeshSize());
-		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->getFontType()->getMetadata()->getMaxSizeY());
+		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
 		Vector2::multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
 		m_background->GetDimensions()->scale(2.0f * m_text->GetScale());
 		m_background->GetPositionOffsets()->set(*m_text->GetPositionOffsets());

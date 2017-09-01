@@ -40,9 +40,9 @@ int main()
 		Camera::Get()->SetPlayer(new FpsPlayer());
 	}
 
-	if (renderer::get() != nullptr)
+	if (Renderer::Get() != nullptr)
 	{
-		renderer::get()->setManager(new ManagerRender());
+		Renderer::Get()->SetManager(new ManagerRender());
 	}
 
 	if (uis::get() != nullptr)
@@ -59,7 +59,7 @@ int main()
 	{
 		skyboxes::get()->setSkybox(new skybox(
 			new texture(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png"),
-			new model("res/skybox/skyboxSphere.obj"),
+			new Model("res/skybox/skyboxSphere.obj"),
 			2048.0f
 		));
 	}

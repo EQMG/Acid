@@ -9,9 +9,9 @@ namespace Flounder
 
 	inputslider::inputslider(UiObject *parent, const Vector2 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const uialign &align) :
 		UiObject(parent, position, Vector2(0.0f, 0.0f)),
-		m_text(new text(this, position, string, SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
-		m_background(new gui(this, position, Vector2(), new texture("res/guis/buttonText.png"), 1)),
-		m_slider(new gui(this, position, Vector2(), new texture("res/guis/buttonText.png"), 1)),
+		m_text(new Text(this, position, string, SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
+		m_background(new Gui(this, position, Vector2(), new texture("res/guis/buttonText.png"), 1)),
+		m_slider(new Gui(this, position, Vector2(), new texture("res/guis/buttonText.png"), 1)),
 		m_updating(false),
 		m_progressMin(progressMin),
 		m_progressMax(progressMax),
@@ -24,10 +24,10 @@ namespace Flounder
 		m_text->setTextColour(Colour(1.0f, 1.0f, 1.0f, 1.0f));
 
 		m_background->SetInScreenCoords(true);
-		m_background->setColourOffset(Colour());
+		m_background->SetColourOffset(Colour());
 
 		m_slider->SetInScreenCoords(true);
-		m_slider->setColourOffset(Colour());
+		m_slider->SetColourOffset(Colour());
 
 		setValue(value);
 	}
@@ -92,12 +92,12 @@ namespace Flounder
 
 		// Update the background colour.
 		Colour *primary = uis::get()->getManager()->GetPrimaryColour();
-		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->getColourOffset());
-		m_slider->getColourOffset()->Set(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f);
+		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
+		m_slider->GetColourOffset()->Set(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f);
 
 		// Update background size.
 		m_background->GetDimensions()->set(*m_text->GetMeshSize());
-		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->getFontType()->getMetadata()->getMaxSizeY());
+		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
 		Vector2::multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
 		m_background->GetDimensions()->scale(2.0f * m_text->GetScale());
 		m_background->GetPositionOffsets()->set(*m_text->GetPositionOffsets());
@@ -105,7 +105,7 @@ namespace Flounder
 
 		// Update slider size. (This is about the worst looking GUI code, but works well.)
 		m_slider->GetDimensions()->set(*m_text->GetMeshSize());
-		m_slider->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->getFontType()->getMetadata()->getMaxSizeY());
+		m_slider->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
 		Vector2::multiply(*m_text->GetDimensions(), *m_slider->GetDimensions(), m_slider->GetDimensions());
 		m_slider->GetDimensions()->scale(2.0f * m_text->GetScale());
 		m_slider->GetPositionOffsets()->set(*m_text->GetPositionOffsets());

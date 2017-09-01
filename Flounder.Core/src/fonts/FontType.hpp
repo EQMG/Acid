@@ -2,35 +2,35 @@
 
 #include <vector>
 
-#include "../textures/texture.hpp"
+#include "../textures/Texture.hpp"
 
-#include "metafile.hpp"
+#include "Metafile.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A loader capable of loading font data into a instance of a text mesh.
 	/// </summary>
-	class fonttype
+	class FontType
 	{
 	private:
 		texture *m_texture;
-		metafile *m_metadata;
+		Metafile *m_metadata;
 	public:
 		/// <summary>
 		/// Creates a new text loader.
 		/// </summary>
 		/// <param name="textureFile"> The file for the font atlas texture. </param>
 		/// <param name="fontFile"> The font file containing information about each character in the texture atlas. </param>
-		fonttype(const std::string &textureFile, const std::string &fontFile);
+		FontType(const std::string &textureFile, const std::string &fontFile);
 
 		/// <summary>
 		/// Deconstructor for the font type.
 		/// </summary>
-		~fonttype();
+		~FontType();
 
-		texture *getTexture() const { return m_texture; }
+		texture *GetTexture() const { return m_texture; }
 
-		metafile *getMetadata() const { return m_metadata; }
+		Metafile *GetMetadata() const { return m_metadata; }
 	};
 }

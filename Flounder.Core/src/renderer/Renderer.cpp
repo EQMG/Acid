@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	renderer::renderer() :
+	Renderer::Renderer() :
 		IModule()
 	{
 		m_managerRender = nullptr;
@@ -17,7 +17,7 @@ namespace Flounder
 		m_imageAvailableSemaphore = VK_NULL_HANDLE;
 		m_renderFinishedSemaphore = VK_NULL_HANDLE;
 
-		m_swapChain = new swapchain();
+		m_swapChain = new Swapchain();
 		m_shaderTest = new shader("tests", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
@@ -26,16 +26,16 @@ namespace Flounder
 		lastWidth = Display::Get()->GetWidth();
 		lastHeight = Display::Get()->GetHeight();
 
-		m_swapChain->create(querySwapChainSupport(Display::Get()->GetVkPhysicalDevice()));
-		createRenderPass();
-		createGraphicsPipeline();
-		m_swapChain->createFramebuffers(m_renderPass);
-		createCommandPool();
-		createCommandBuffers();
-		createSemaphores();
+		m_swapChain->Create(QuerySwapChainSupport(Display::Get()->GetVkPhysicalDevice()));
+		CreateRenderPass();
+		CreateGraphicsPipeline();
+		m_swapChain->CreateFramebuffers(m_renderPass);
+		CreateCommandPool();
+		CreateCommandBuffers();
+		CreateSemaphores();
 	}
 
-	renderer::~renderer()
+	Renderer::~Renderer()
 	{
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
@@ -50,11 +50,11 @@ namespace Flounder
 		vkDestroyCommandPool(Display::Get()->GetVkDevice(), m_commandPool, nullptr);
 	}
 
-	void renderer::Update()
+	void Renderer::Update()
 	{
 		if (m_managerRender != nullptr)
 		{
-			m_managerRender->render();
+			m_managerRender->Render();
 		}
 
 		/*int currentWidth = Display::Get()->getWidth();
@@ -66,14 +66,14 @@ namespace Flounder
 			lastHeight = currentHeight;
 		}*/
 
-		updateUniformBuffer();
-		drawFrame();
+		UpdateUniformBuffer();
+		DrawFrame();
 	}
 
-	void renderer::createRenderPass()
+	void Renderer::CreateRenderPass()
 	{
 		VkAttachmentDescription colorAttachment = {};
-		colorAttachment.format = m_swapChain->getImageFormat();
+		colorAttachment.format = m_swapChain->GetImageFormat();
 		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
 		colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 		colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
@@ -101,7 +101,7 @@ namespace Flounder
 		Display::vkErrorCheck(vkCreateRenderPass(Display::Get()->GetVkDevice(), &renderPassInfo, nullptr, &m_renderPass));
 	}
 
-	void renderer::createGraphicsPipeline()
+	void Renderer::CreateGraphicsPipeline()
 	{
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -116,15 +116,15 @@ namespace Flounder
 		VkViewport viewport = {};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
-		viewport.width = (float) m_swapChain->getExtent().width;
-		viewport.height = (float) m_swapChain->getExtent().height;
+		viewport.width = (float) m_swapChain->GetExtent().width;
+		viewport.height = (float) m_swapChain->GetExtent().height;
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
 
 		VkRect2D scissor = {};
 		scissor.offset.x = 0;
 		scissor.offset.y = 0;
-		scissor.extent = m_swapChain->getExtent();
+		scissor.extent = m_swapChain->GetExtent();
 
 		VkPipelineViewportStateCreateInfo viewportState = {};
 		viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -188,7 +188,7 @@ namespace Flounder
 		Display::vkErrorCheck(vkCreateGraphicsPipelines(Display::Get()->GetVkDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_graphicsPipeline));
 	}
 
-	void renderer::createCommandPool()
+	void Renderer::CreateCommandPool()
 	{
 		VkQueueFamilyIndices queueFamilyIndices = Display::Get()->FindQueueFamilies(Display::Get()->GetVkPhysicalDevice());
 
@@ -199,9 +199,9 @@ namespace Flounder
 		Display::vkErrorCheck(vkCreateCommandPool(Display::Get()->GetVkDevice(), &poolInfo, nullptr, &m_commandPool));
 	}
 
-	void renderer::createCommandBuffers()
+	void Renderer::CreateCommandBuffers()
 	{
-		m_commandBuffers.resize(m_swapChain->getFramebufferSize());
+		m_commandBuffers.resize(m_swapChain->GetFramebufferSize());
 
 		VkCommandBufferAllocateInfo allocInfo = {};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -222,10 +222,10 @@ namespace Flounder
 			VkRenderPassBeginInfo renderPassInfo = {};
 			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 			renderPassInfo.renderPass = m_renderPass;
-			renderPassInfo.framebuffer = m_swapChain->getFramebuffer((uint32_t) i);
+			renderPassInfo.framebuffer = m_swapChain->GetFramebuffer((uint32_t) i);
 			renderPassInfo.renderArea.offset.x = 0;
 			renderPassInfo.renderArea.offset.y = 0;
-			renderPassInfo.renderArea.extent = m_swapChain->getExtent();
+			renderPassInfo.renderArea.extent = m_swapChain->GetExtent();
 
 			VkClearValue clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
 			renderPassInfo.clearValueCount = 1;
@@ -243,7 +243,7 @@ namespace Flounder
 		}
 	}
 
-	void renderer::createSemaphores()
+	void Renderer::CreateSemaphores()
 	{
 		VkSemaphoreCreateInfo semaphoreInfo = {};
 		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
@@ -252,16 +252,16 @@ namespace Flounder
 		Display::vkErrorCheck(vkCreateSemaphore(Display::Get()->GetVkDevice(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphore));
 	}
 
-	void renderer::updateUniformBuffer()
+	void Renderer::UpdateUniformBuffer()
 	{
 	}
 
-	void renderer::drawFrame()
+	void Renderer::DrawFrame()
 	{
 		// TODO: Fix memory leaks.
 
 		uint32_t imageIndex;
-		vkAcquireNextImageKHR(Display::Get()->GetVkDevice(), m_swapChain->getSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
+		vkAcquireNextImageKHR(Display::Get()->GetVkDevice(), m_swapChain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 
 		VkSemaphore waitSemaphores[] = {m_imageAvailableSemaphore};
 		VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
@@ -284,7 +284,7 @@ namespace Flounder
 		presentInfo.waitSemaphoreCount = 1;
 		presentInfo.pWaitSemaphores = signalSemaphores;
 
-		VkSwapchainKHR swapchains[] = {m_swapChain->getSwapchain()};
+		VkSwapchainKHR swapchains[] = {m_swapChain->GetSwapchain()};
 		presentInfo.swapchainCount = 1;
 		presentInfo.pSwapchains = swapchains;
 		presentInfo.pImageIndices = &imageIndex;
@@ -293,7 +293,7 @@ namespace Flounder
 		vkQueuePresentKHR(Display::Get()->GetVkPresentQueue(), &presentInfo);
 	}
 
-	VkSwapChainSupportDetails renderer::querySwapChainSupport(VkPhysicalDevice device)
+	VkSwapChainSupportDetails Renderer::QuerySwapChainSupport(VkPhysicalDevice device)
 	{
 		VkSwapChainSupportDetails details;
 

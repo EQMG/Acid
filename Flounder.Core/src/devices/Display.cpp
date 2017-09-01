@@ -468,7 +468,7 @@ namespace Flounder
 	void Display::CreateInstance()
 	{
 		// Sets up the instance.
-		VkApplicationInfo applicationInfo = {};
+		VkApplicationInfo applicationInfo = VkApplicationInfo();
 		applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 		applicationInfo.pApplicationName = m_title.c_str();
 		applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
@@ -476,13 +476,13 @@ namespace Flounder
 		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 1, 0);
 		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 0);
 
-		VkInstanceCreateInfo instanceCreateInfo = {};
+		VkInstanceCreateInfo instanceCreateInfo = VkInstanceCreateInfo();
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		instanceCreateInfo.pApplicationInfo = &applicationInfo;
 
 		if (m_validationLayers)
 		{
-			instanceCreateInfo.enabledLayerCount = (uint32_t) m_instanceLayerList.size();
+			instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
 			instanceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
 		}
 		else
@@ -490,7 +490,7 @@ namespace Flounder
 			instanceCreateInfo.enabledLayerCount = 0;
 		}
 
-		instanceCreateInfo.enabledExtensionCount = (uint32_t) m_instanceExtensionList.size();
+		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
 		vkErrorCheck(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
@@ -499,7 +499,7 @@ namespace Flounder
 	void Display::SetupDebugCallback()
 	{
 		// Sets up the debug callbacks.
-		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = {};
+		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = VkDebugReportCallbackCreateInfoEXT();
 		debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
 		debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT;
 		/*debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_INFORMATION_BIT_EXT |
@@ -533,7 +533,7 @@ namespace Flounder
 			throw std::runtime_error("Failed to find GPUs with Vulkan support!");
 		}
 
-		std::vector<VkPhysicalDevice> deviceList(deviceCount);
+		std::vector<VkPhysicalDevice> deviceList = std::vector<VkPhysicalDevice>(deviceCount);
 		vkEnumeratePhysicalDevices(m_instance, &deviceCount, deviceList.data());
 
 		std::multimap<int, VkPhysicalDevice> candidates;

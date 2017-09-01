@@ -9,7 +9,7 @@
 namespace Flounder
 {
 	class rendererwaters :
-		public irenderer
+		public IRenderer
 	{
 	private:
 		Fbo *m_fboReflection;
@@ -21,7 +21,7 @@ namespace Flounder
 
 		~rendererwaters();
 
-		void render(const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
 		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 

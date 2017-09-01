@@ -3,23 +3,23 @@
 #include <string>
 
 #include "../engine/Engine.hpp"
-#include "../maths/colour.hpp"
+#include "../maths/Colour.hpp"
 #include "../maths/Vector2.hpp"
-#include "../visual/idriver.hpp"
-#include "../uis/uialign.hpp"
-#include "../uis/uiobject.hpp"
-#include "../visual/driverconstant.hpp"
+#include "../visual/IDriver.hpp"
+#include "../uis/UiAlign.hpp"
+#include "../uis/UiObject.hpp"
+#include "../visual/DriverConstant.hpp"
 
-#include "fonttype.hpp"
-#include "line.hpp"
-#include "../models/model.hpp"
+#include "FontType.hpp"
+#include "Line.hpp"
+#include "../models/Model.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A object the represents a text in a GUI.
 	/// </summary>
-	class text :
+	class Text :
 		public UiObject
 	{
 	private:
@@ -28,12 +28,12 @@ namespace Flounder
 
 		std::string m_newText;
 
-		model *m_model;
+		Model *m_model;
 
 		float m_lineMaxSize;
 		int m_numberOfLines;
 
-		fonttype *m_fonttype;
+		FontType *m_fonttype;
 
 		Colour *m_textColour;
 		Colour *m_borderColour;
@@ -57,12 +57,12 @@ namespace Flounder
 		/// <param name="font"> The font type to be used in this text. </param>
 		/// <param name="maxLineLength"> The longest line length before the text is wrapped, 1.0 being 100% of the screen width when font size = 1. </param>
 		/// <param name="align"> How the text will align if wrapped. </param>
-		text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, fonttype *fonttype, const float &maxLineLength, const uialign &align);
+		Text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const uialign &align);
 
 		/// <summary>
 		/// Deconstructor for the text.
 		/// </summary>
-		~text();
+		~Text();
 
 		void UpdateObject() override;
 	private:
@@ -72,27 +72,27 @@ namespace Flounder
 		/// Then takes the information about the vertices of all the quads and stores it in OpenGL.
 		/// </summary>
 		/// <param name="text"> The unloaded text. </param>
-		static void loadText(text *object);
+		static void LoadText(Text *object);
 
-		static std::vector<line*> createStructure(text *object);
+		static std::vector<Line> CreateStructure(Text *object);
 
-		static void completeStructure(std::vector<line*> &lines, line *currentLine, word *currentWord, text *object);
+		static void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, Text *object);
 
-		static void createQuadVertices(text *object, std::vector<line*> lines, std::vector<float> *vertices, std::vector<float> *textures);
+		static void CreateQuadVertices(Text *object, std::vector<Line> lines, std::vector<float> &vertices, std::vector<float> &textures);
 
-		static void addVerticesForCharacter(const double &cursorX, const double &cursorY, character *character, std::vector<float> *vertices);
+		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<float> &vertices);
 
-		static void addVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> *vertices);
+		static void AddVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &vertices);
 
-		static void addTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> *textures);
+		static void AddTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &textures);
 
-		static Vector2 getBounding(std::vector<float> *vertices);
+		static Vector2 GetBounding(std::vector<float> &vertices);
 	public:
 		/// <summary>
 		/// Gets the string of text represented.
 		/// </summary>
 		/// <returns> The string of text. </returns>
-		std::string getText() { return m_textString; }
+		std::string GetText() const { return m_textString; }
 
 		/// <summary>
 		/// Changed the current string in this text.
@@ -104,119 +104,119 @@ namespace Flounder
 		/// Gets how the text should align.
 		/// </summary>
 		/// <returns> How the text should align. </returns>
-		uialign getTextAlign() { return m_textAlign; }
+		uialign GetTextAlign() const { return m_textAlign; }
 
 		/// <summary>
 		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
 		/// </summary>
 		/// <returns> The model of the text. </returns>
-		model *getModel() { return m_model; }
+		Model *GetModel() const { return m_model; }
 
 		/// <summary>
 		/// Sets the loaded mesh data for the text.
 		/// </summary>
 		/// <param name="model"> The mesh model. </param>
-		void setModel(model *model) { m_model = model; }
+		void SetModel(Model *model) { m_model = model; }
 
 		/// <summary>
 		/// Gets font type texture for this text.
 		/// </summary>
 		/// <returns> The texts texture. </returns>
-		texture *getTexture() { return m_fonttype->getTexture(); }
+		texture *GetTexture() const { return m_fonttype->GetTexture(); }
 
 		/// <summary>
 		/// Gets the maximum length of a line of this text.
 		/// </summary>
 		/// <returns> The maximum length of a line. </returns>
-		float getMaxLineSize() { return m_lineMaxSize; }
+		float GetMaxLineSize() const { return m_lineMaxSize; }
 
 		/// <summary>
 		/// Gets the number of lines of text. This is determined when the text is  loaded, based on the length of the text and the max line length that is set.
 		/// </summary>
 		/// <returns> The number of lines of text </returns>
-		int getNumberOfLines() { return m_numberOfLines; }
+		int GetNumberOfLines() const { return m_numberOfLines; }
 
 		/// <summary>
 		/// Sets the number of lines that this text covers (method used only in loading).
 		/// </summary>
 		/// <param name="number"> The new number of lines. </param>
-		void setNumberOfLines(const int &number) { m_numberOfLines = number; }
+		void SetNumberOfLines(const int &number) { m_numberOfLines = number; }
 
 		/// <summary>
 		/// Gets the font used by this text.
 		/// </summary>
 		/// <returns> The font used by this text. </returns>
-		fonttype *getFontType() { return m_fonttype; }
+		FontType *GetFontType() const { return m_fonttype; }
 
 		/// <summary>
 		/// Gets the colour of the text.
 		/// </summary>
 		/// <returns> The colour of the text. </returns>
-		Colour *getTextColour() { return m_textColour; }
+		Colour *GetTextColour() const { return m_textColour; }
 
 		/// <summary>
 		/// Sets the colour of the text.
 		/// </summary>
 		/// <param name="textColour"> The new colour of the text. </param>
-		void setTextColour(const Colour &textColour) { m_textColour->Set(textColour); }
+		void setTextColour(const Colour &textColour) const { m_textColour->Set(textColour); }
 
 		/// <summary>
 		/// Gets the border colour of the text. This is used with border and glow drivers.
 		/// </summary>
 		/// <returns> The border colour of the text. </returns>
-		Colour *getBorderColour() { return m_borderColour; }
+		Colour *GetBorderColour() const { return m_borderColour; }
 
 		/// <summary>
 		/// Sets the border colour of the text. This is used with border and glow drivers.
 		/// </summary>
 		/// <param name="borderColour"> The new border colour of the text. </param>
-		void setBorderColour(const Colour &borderColour) { m_borderColour->Set(borderColour); }
+		void SetBorderColour(const Colour &borderColour) const { m_borderColour->Set(borderColour); }
 
 		/// <summary>
 		/// Sets a new border driver, will disable glowing.
 		/// </summary>
 		/// <param name="driver"> The new border driver. </param>
-		void setBorder(idriver *driver);
+		void SetBorder(idriver *driver);
 
 		/// <summary>
 		/// Sets a new glow driver, will disable solid borders.
 		/// </summary>
 		/// <param name="driver"> The new glow driver. </param>
-		void setGlowing(idriver *driver);
+		void SetGlowing(idriver *driver);
 
 		/// <summary>
 		/// Disables both solid borders and glow borders.
 		/// </summary>
-		void removeBorder();
+		void RemoveBorder();
 
 		/// <summary>
 		/// Gets the calculated border size.
 		/// </summary>
 		/// <returns> The border size. </returns>
-		float getTotalBorderSize();
+		float GetTotalBorderSize();
 
 		/// <summary>
 		/// Gets the size of the glow.
 		/// </summary>
 		/// <returns> The glow size. </returns>
-		float getGlowSize();
+		float GetGlowSize();
 
 		/// <summary>
 		/// Gets the distance field edge before antialias.
 		/// </summary>
 		/// <returns> The distance field edge. </returns>
-		float calculateEdgeStart();
+		float CalculateEdgeStart();
 
 		/// <summary>
 		/// Gets the distance field antialias distance.
 		/// </summary>
 		/// <returns> The distance field antialias distance. </returns>
-		float calculateAntialiasSize();
+		float CalculateAntialiasSize();
 
 		/// <summary>
 		/// Gets if the text has been loaded to OpenGL.
 		/// </summary>
 		/// <returns> If the text has been loaded to OpenGL. </returns>
-		bool isLoaded();
+		bool IsLoaded();
 	};
 }

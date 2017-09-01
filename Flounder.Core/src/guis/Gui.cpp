@@ -1,8 +1,8 @@
-﻿#include "gui.hpp"
+﻿#include "Gui.hpp"
 
 namespace Flounder
 {
-	gui::gui(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, texture *texture, const int &selectedRow) :
+	Gui::Gui(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, texture *texture, const int &selectedRow) :
 		UiObject(parent, position, dimensions),
 		m_texture(texture),
 		m_flipTexture(false),
@@ -13,13 +13,13 @@ namespace Flounder
 		SetMeshSize(Vector2(0.5f, 0.5f));
 	}
 
-	gui::~gui()
+	Gui::~Gui()
 	{
 		delete m_textureOffset;
 		delete m_colourOffset;
 	}
 
-	void gui::UpdateObject()
+	void Gui::UpdateObject()
 	{
 		int numberOfRows = m_texture != nullptr ? m_texture->getNumberOfRows() : 1;
 		int column = m_selectedRow % numberOfRows;

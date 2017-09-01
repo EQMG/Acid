@@ -28,7 +28,7 @@ Instance::Instance()
 	// EntityTest *test = new EntityTest(nullptr, Vector3(), Vector3());
 	// componentalpha *meme = test->getComponent<componentalpha*>();
 
-	model *modelTest = new model("res/test/model.obj");
+	Model *modelTest = new Model("res/test/model.obj");
 	Transform *transformTest = new Transform(Vector3(100.892f, -10.0f, -256.0f), Vector3(0.0f, 90.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f));
 	Matrix4 *matrixWorld = transformTest->GetWorldMatrix(nullptr);
 

@@ -10,7 +10,7 @@ namespace Flounder
 	{
 	}
 
-	void renderertest::render(const Vector4 &clipPlane, const ICamera &camera)
+	void renderertest::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
 	}
 }

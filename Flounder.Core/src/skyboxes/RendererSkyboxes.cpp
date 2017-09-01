@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	rendererskyboxes::rendererskyboxes() :
-		irenderer(),
+		IRenderer(),
 		m_shader(new shader("skyboxes", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/skyboxes/skybox.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/skyboxes/skybox.frag.spv")
@@ -16,7 +16,7 @@ namespace Flounder
 		delete m_shader;
 	}
 
-	void rendererskyboxes::render(const Vector4 &clipPlane, const ICamera &camera)
+	void rendererskyboxes::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 		renderSkybox(skyboxes::get()->getSkybox());

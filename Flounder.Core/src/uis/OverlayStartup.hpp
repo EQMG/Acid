@@ -12,9 +12,9 @@ namespace Flounder
 		public UiObject
 	{
 	private:
-		gui *m_guiBackground;
-		gui *m_guiLogo;
-		text *m_textCopyright;
+		Gui *m_guiBackground;
+		Gui *m_guiLogo;
+		Text *m_textCopyright;
 		bool m_starting;
 	public:
 		overlaystartup(UiObject *parent);
