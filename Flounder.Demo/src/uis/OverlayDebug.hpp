@@ -8,11 +8,11 @@ class OverlayDebug :
 	public UiObject
 {
 private:
-	text *m_textHeight;
-	text *m_textTime;
-	text *m_textPosition;
-	text *m_textFps;
-	text *m_textUps;
+	Text *m_textHeight;
+	Text *m_textTime;
+	Text *m_textPosition;
+	Text *m_textFps;
+	Text *m_textUps;
 	Timer *m_timerUpdate;
 public:
 	OverlayDebug(UiObject *parent);
@@ -21,5 +21,5 @@ public:
 
 	virtual void UpdateObject() override;
 private:
-	text *CreateStatus(const std::string &content, const float &positionX, const float &positionY, const uialign &align);
+	Text *CreateStatus(const std::string &content, const float &positionX, const float &positionY, const uialign &align);
 };

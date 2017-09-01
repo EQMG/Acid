@@ -31,7 +31,7 @@ ManagerRender::~ManagerRender()
 	//delete m_filterFxaa;
 }
 
-void ManagerRender::render()
+void ManagerRender::Render()
 {
 #if 0
 	// Water rendering.

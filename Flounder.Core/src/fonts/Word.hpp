@@ -3,38 +3,38 @@
 #include <iostream>
 #include <vector>
 
-#include "character.hpp"
+#include "Character.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// During the loading of a text this represents one word in the text.
 	/// </summary>
-	class word
+	class Word
 	{
 	private:
-		std::vector<character*> *m_characters;
+		std::vector<Character> m_characters;
 		double m_width;
 	public:
 		/// <summary>
 		/// Creates a new word.
 		/// </summary>
-		word();
+		Word();
 
 		/// <summary>
 		/// Deconstructor for the word.
 		/// </summary>
-		~word();
+		~Word();
 
 		/// <summary>
 		/// Adds a character to the end of the current word and increases the screen-space width of the word.
 		/// </summary>
 		/// <param name="c"> The character to be added. </param>
 		/// <returns> {@code true} if the character has successfully been added to the word. </returns>
-		bool addCharacter(character *cc);
+		bool AddCharacter(Character c);
 
-		std::vector<character*> *getCharacters() const { return m_characters; }
+		std::vector<Character> GetCharacters() const { return m_characters; }
 
-		double getWidth() const { return m_width; }
+		double GetWidth() const { return m_width; }
 	};
 }

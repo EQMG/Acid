@@ -5,21 +5,21 @@
 #include <vector>
 
 #include "../devices/Display.hpp"
-#include "../helpers/helperfile.hpp"
-#include "../helpers/helperstring.hpp"
+#include "../helpers/HelperFile.hpp"
+#include "../helpers/HelperString.hpp"
 #include "../maths/Vector2.hpp"
 #include "../maths/Vector3.hpp"
-#include "../physics/aabb.hpp"
+#include "../physics/Aabb.hpp"
 
-#include "material.hpp"
-#include "vertexdata.hpp"
+#include "Material.hpp"
+#include "VertexData.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// Class that represents a OBJ model.
 	/// </summary>
-	class model
+	class Model
 	{
 	private:
 		std::string m_file;
@@ -44,7 +44,7 @@ namespace Flounder
 		/// Creates a new model.
 		/// </summary>
 		/// <param name="name"> The file name. </param>
-		model(const std::string &file);
+		Model(const std::string &file);
 
 		/// <summary>
 		/// Creates a new model.
@@ -54,32 +54,32 @@ namespace Flounder
 		/// <param name="textures"> The model textures. </param>
 		/// <param name="normals"> The model normals. </param>
 		/// <param name="tangents"> The model tangents. </param>
-		model(std::vector<int> *indices, std::vector<float> *vertices, std::vector<float> *textures, std::vector<float> *normals, std::vector<float> *tangents);
+		Model(const std::vector<int> &indices = std::vector<int>(), const std::vector<float> &vertices = std::vector<float>(), const std::vector<float> &textures = std::vector<float>(), const std::vector<float> &normals = std::vector<float>(), const std::vector<float> &tangents = std::vector<float>());
 
 		/// <summary>
 		/// Deconstructor for the model.
 		/// </summary>
-		~model();
+		~Model();
 	private:
 		/// <summary>
 		/// Loads the model object from a OBJ file.
 		/// </summary>
-		void loadFromFile();
+		void LoadFromFile();
 
-		void loadMaterials(const std::string &filepath, std::vector<material> *list);
+		void LoadMaterials(const std::string &filepath, std::vector<material> *list);
 
-		vertexdata *processDataVertex(Vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices);
+		vertexdata *ProcessDataVertex(Vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices);
 
-		vertexdata *dealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices);
+		vertexdata *DealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices);
 
-		void calculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<Vector2> *textures);
+		void CalculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<Vector2> *textures);
 
-		void loadToVulkan();
+		void LoadToVulkan();
 
-		VkBuffer createBuffer(std::vector<float> *data);
+		VkBuffer CreateBuffer(std::vector<float> *data);
 
-		void memoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex);
+		void MemoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex);
 
-		void createAABB();
+		void CreateAabb();
 	};
 }

@@ -9,7 +9,7 @@
 namespace Flounder
 {
 	class rendererparticles :
-		public irenderer
+		public IRenderer
 	{
 	private:
 		static const int MAX_INSTANCES;
@@ -27,7 +27,7 @@ namespace Flounder
 
 		~rendererparticles();
 
-		void render(const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
 		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 

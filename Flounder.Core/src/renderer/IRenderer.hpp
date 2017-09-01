@@ -12,20 +12,20 @@ namespace Flounder
 	/// <summary>
 	/// Represents a sub renderer in the engine.
 	/// </summary>
-	class irenderer
+	class IRenderer
 	{
 	public:
 		/// <summary>
 		/// Creates a new renderer.
 		/// </summary>
-		irenderer()
+		IRenderer()
 		{
 		}
 
 		/// <summary>
 		/// Deconstructor for the renderer.
 		/// </summary>
-		virtual ~irenderer()
+		virtual ~IRenderer()
 		{
 		}
 
@@ -34,6 +34,6 @@ namespace Flounder
 		/// </summary>
 		/// <param name="clipPlane"> The current clip plane. </param>
 		/// <param name="camera"> The camera to be used when rendering. </param>
-		virtual void render(const Vector4 &clipPlane, const ICamera &camera) = 0;
+		virtual void Render(const Vector4 &clipPlane, const ICamera &camera) = 0;
 	};
 }

@@ -6,7 +6,7 @@ namespace Flounder
 	const int rendererparticles::INSTANCE_DATA_LENGTH = 22;
 
 	rendererparticles::rendererparticles() :
-		irenderer(),
+		IRenderer(),
 		m_shader(new shader("particles", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/particles/particle.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/particles/particle.frag.spv")
@@ -37,7 +37,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererparticles::render(const Vector4 &clipPlane, const ICamera &camera)
+	void rendererparticles::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 

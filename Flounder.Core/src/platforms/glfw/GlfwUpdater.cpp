@@ -64,7 +64,7 @@ namespace Flounder
 		AddModule(UpdatePre, "joysticks", new Joysticks());
 		AddModule(UpdatePre, "keyboard", new Keyboard());
 		AddModule(UpdatePre, "mouse", new Mouse());
-		AddModule(UpdateRender, "renderer", new renderer());
+		AddModule(UpdateRender, "renderer", new Renderer());
 
 		AddModule(UpdatePre, "events", new Events());
 		AddModule(UpdatePre, "tasks", new tasks());

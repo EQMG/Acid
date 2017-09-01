@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	rendererwaters::rendererwaters() :
-		irenderer(),
+		IRenderer(),
 		m_fboReflection(new Fbo(true, Waters::Get()->GetReflectionQuality(), DepthTexture, true, 3)),
 		m_rendererDeferred(new RendererDeferred()),
 		m_shader(new shader("waters", 2,
@@ -21,7 +21,7 @@ namespace Flounder
 		delete m_shader;
 	}
 
-	void rendererwaters::render(const Vector4 &clipPlane, const ICamera &camera)
+	void rendererwaters::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
 		prepareRendering(clipPlane, camera);
 		renderWater(Waters::Get()->GetWater());

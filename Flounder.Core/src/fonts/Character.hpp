@@ -5,7 +5,7 @@ namespace Flounder
 	/// <summary>
 	/// Simple data structure class holding information about a certain glyph in the font texture atlas. All sizes are for a font-size of 1.
 	/// </summary>
-	class character
+	class Character
 	{
 	private:
 		int m_id;
@@ -32,31 +32,31 @@ namespace Flounder
 		/// <param name="sizeX"> The width of the character's quad in screen space. </param>
 		/// <param name="sizeY"> The height of the character's quad in screen space. </param>
 		/// <param name="advanceX"> How far in pixels the cursor should advance after adding this character. </param>
-		character(const int &id, const double &textureCoordX, const double &textureCoordY, const double &texureSizeX, const double &texureSizeY, const double &offsetX, const double &offsetY, const double &sizeX, const double &sizeY, const double &advanceX);
+		Character(const int &id, const double &textureCoordX, const double &textureCoordY, const double &texureSizeX, const double &texureSizeY, const double &offsetX, const double &offsetY, const double &sizeX, const double &sizeY, const double &advanceX);
 
 		/// <summary>
 		/// Deconstructor for the character.
 		/// </summary>
-		~character();
+		~Character();
 
-		int getId() const { return m_id; }
+		int GetId() const { return m_id; }
 
-		double getTextureCoordX() const { return m_textureCoordX; }
+		double GetTextureCoordX() const { return m_textureCoordX; }
 
-		double getTextureCoordY() const { return m_textureCoordY; }
+		double GetTextureCoordY() const { return m_textureCoordY; }
 
-		double getMaxTextureCoordX() const { return m_maxTextureCoordX; }
+		double GetMaxTextureCoordX() const { return m_maxTextureCoordX; }
 
-		double getMaxTextureCoordY() const { return m_maxTextureCoordY; }
+		double GetMaxTextureCoordY() const { return m_maxTextureCoordY; }
 
-		double getOffsetX() const { return m_offsetX; }
+		double GetOffsetX() const { return m_offsetX; }
 
-		double getOffsetY() const { return m_offsetY; }
+		double GetOffsetY() const { return m_offsetY; }
 
-		double getSizeX() const { return m_sizeX; }
+		double GetSizeX() const { return m_sizeX; }
 
-		double getSizeY() const { return m_sizeY; }
+		double GetSizeY() const { return m_sizeY; }
 
-		double getAdvanceX() const { return m_advanceX; }
+		double GetAdvanceX() const { return m_advanceX; }
 	};
 }

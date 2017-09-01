@@ -14,6 +14,12 @@ This is a set of guidelines for Flounder C++17, .NET 4.6.2, and GLSL 450. Our gu
 
 namespace Examples
 {
+	enum FlExample
+	{
+		FL_EXAMPLE_ON = 0,
+		FL_EXAMPLE_OFF = 1,
+	}
+
 	/// <summary>
 	/// A example class.
 	/// </summary>
@@ -34,9 +40,11 @@ namespace Examples
 		/// <returns> If there was a error (result does not equal 0). </returns>
 		int DoStuff(const bool &doThing);
 
-		inline int GetX() const { return m_x; }
+		int GetX() const { return m_x; }
 	
-		inline void SetX(const int &x) { m_x = x; }
+		void SetX(const int &x) { m_x = x; }
+
+		bool IsEmpty() const { return m_list->Size() == 0; }
 	}
 }
 ```

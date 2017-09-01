@@ -2,21 +2,21 @@
 
 namespace Flounder
 {
-	const int metafile::PAD_TOP = 0;
-	const int metafile::PAD_LEFT = 1;
-	const int metafile::PAD_BOTTOM = 2;
-	const int metafile::PAD_RIGHT = 3;
-	const int metafile::DESIRED_PADDING = 8;
+	const int Metafile::PAD_TOP = 0;
+	const int Metafile::PAD_LEFT = 1;
+	const int Metafile::PAD_BOTTOM = 2;
+	const int Metafile::PAD_RIGHT = 3;
+	const int Metafile::DESIRED_PADDING = 8;
 
-	const std::string metafile::SPLITTER = " ";
-	const std::string metafile::NUMBER_SEPARATOR = ",";
+	const std::string Metafile::SPLITTER = " ";
+	const std::string Metafile::NUMBER_SEPARATOR = ",";
 
-	const double metafile::LINE_HEIGHT = 0.03f;
-	const int metafile::NEWLINE_ASCII = 10;
-	const int metafile::SPACE_ASCII = 32;
+	const double Metafile::LINE_HEIGHT = 0.03f;
+	const int Metafile::NEWLINE_ASCII = 10;
+	const int Metafile::SPACE_ASCII = 32;
 
-	metafile::metafile(const std::string &file) :
-		m_metadata(new std::map<int, character*>()),
+	Metafile::Metafile(const std::string &file) :
+		m_metadata(new std::map<int, Character*>()),
 		m_values(new std::map<std::string, std::string>()),
 		m_verticalPerPixelSize(0.0),
 		m_horizontalPerPixelSize(0.0),
@@ -27,29 +27,29 @@ namespace Flounder
 		m_paddingHeight(0),
 		m_maxSizeY(0.0)
 	{
-		std::string fileLoaded = helperfile::readTextFile(file);
-		std::vector<std::string> lines = helperstring::split(fileLoaded, "\n");
+		std::string fileLoaded = HelperFile::ReadTextFile(file);
+		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
 
 		for (auto line : lines)
 		{
-			processNextLine(line);
+			ProcessNextLine(line);
 
-			if (helperstring::contains(line, "info"))
+			if (HelperString::Contains(line, "info"))
 			{
-				loadPaddingData();
+				LoadPaddingData();
 			}
-			else if (helperstring::contains(line, "common"))
+			else if (HelperString::Contains(line, "common"))
 			{
-				loadLineSizes();
+				LoadLineSizes();
 			}
-			else if (helperstring::contains(line, "char") && !helperstring::contains(line, "chars"))
+			else if (HelperString::Contains(line, "char") && !HelperString::Contains(line, "chars"))
 			{
-				loadCharacterData();
+				LoadCharacterData();
 			}
 		}
 	}
 
-	metafile::~metafile()
+	Metafile::~Metafile()
 	{
 		delete m_metadata;
 		delete m_values;
@@ -57,14 +57,14 @@ namespace Flounder
 		delete m_padding;
 	}
 
-	void metafile::processNextLine(const std::string &line)
+	void Metafile::ProcessNextLine(const std::string &line)
 	{
 		m_values->clear();
-		std::vector<std::string> parts = helperstring::split(line, SPLITTER);
+		std::vector<std::string> parts = HelperString::Split(line, SPLITTER);
 
 		for (auto part : parts)
 		{
-			std::vector<std::string> pairs = helperstring::split(part, "=");
+			std::vector<std::string> pairs = HelperString::Split(part, "=");
 
 			if (pairs.size() == 2)
 			{
@@ -73,9 +73,9 @@ namespace Flounder
 		}
 	}
 
-	void metafile::loadPaddingData()
+	void Metafile::LoadPaddingData()
 	{
-		for (auto padding : getValuesOfVariable("padding"))
+		for (auto padding : GetValuesOfVariable("padding"))
 		{
 			m_padding->push_back(padding);
 		}
@@ -84,62 +84,62 @@ namespace Flounder
 		m_paddingHeight = m_padding->at(PAD_TOP) + m_padding->at(PAD_BOTTOM);
 	}
 
-	void metafile::loadLineSizes()
+	void Metafile::LoadLineSizes()
 	{
-		int lineHeightPixels = getValueOfVariable("lineHeight") - m_paddingHeight;
+		int lineHeightPixels = GetValueOfVariable("lineHeight") - m_paddingHeight;
 		m_verticalPerPixelSize = LINE_HEIGHT / static_cast<double>(lineHeightPixels);
 		m_horizontalPerPixelSize = m_verticalPerPixelSize;
-		m_imageWidth = getValueOfVariable("scaleW");
+		m_imageWidth = GetValueOfVariable("scaleW");
 	}
 
-	void metafile::loadCharacterData()
+	void Metafile::LoadCharacterData()
 	{
-		character *c = loadCharacter();
+		Character *c = LoadCharacter();
 
 		if (c != nullptr)
 		{
-			m_metadata->insert(std::pair<int, character*>(c->getId(), c));
+			m_metadata->insert(std::pair<int, Character*>(c->GetId(), c));
 		}
 	}
 
-	character *metafile::loadCharacter()
+	Character *Metafile::LoadCharacter()
 	{
-		int id = getValueOfVariable("id");
+		int id = GetValueOfVariable("id");
 
 		if (id == SPACE_ASCII)
 		{
-			m_spaceWidth = (getValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
+			m_spaceWidth = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
 			return nullptr;
 		}
 
-		double xTextureCoord = (static_cast<double>(getValueOfVariable("x")) + (m_padding->at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
-		double yTextureCoord = (static_cast<double>(getValueOfVariable("y")) + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) / m_imageWidth;
-		int width = getValueOfVariable("width") - (m_paddingWidth - (2 * DESIRED_PADDING));
-		int height = getValueOfVariable("height") - ((m_paddingHeight) - (2 * DESIRED_PADDING));
+		double xTextureCoord = (static_cast<double>(GetValueOfVariable("x")) + (m_padding->at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
+		double yTextureCoord = (static_cast<double>(GetValueOfVariable("y")) + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) / m_imageWidth;
+		int width = GetValueOfVariable("width") - (m_paddingWidth - (2 * DESIRED_PADDING));
+		int height = GetValueOfVariable("height") - ((m_paddingHeight) - (2 * DESIRED_PADDING));
 		double quadWidth = width * m_horizontalPerPixelSize;
 		double quadHeight = height * m_verticalPerPixelSize;
 		double xTexSize = static_cast<double>(width) / m_imageWidth;
 		double yTexSize = static_cast<double>(height) / m_imageWidth;
-		double xOffset = (getValueOfVariable("xoffset") + m_padding->at(PAD_LEFT) - DESIRED_PADDING) * m_horizontalPerPixelSize;
-		double yOffset = (getValueOfVariable("yoffset") + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) * m_verticalPerPixelSize;
-		double xAdvance = (getValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
+		double xOffset = (GetValueOfVariable("xoffset") + m_padding->at(PAD_LEFT) - DESIRED_PADDING) * m_horizontalPerPixelSize;
+		double yOffset = (GetValueOfVariable("yoffset") + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) * m_verticalPerPixelSize;
+		double xAdvance = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
 
 		if (quadHeight > m_maxSizeY)
 		{
 			m_maxSizeY = quadHeight;
 		}
 
-		return new character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
+		return new Character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
 	}
 
-	int metafile::getValueOfVariable(const std::string &variable)
+	int Metafile::GetValueOfVariable(const std::string &variable)
 	{
 		return std::stoi(m_values->at(variable).c_str());
 	}
 
-	std::vector<int> metafile::getValuesOfVariable(const std::string &variable)
+	std::vector<int> Metafile::GetValuesOfVariable(const std::string &variable)
 	{
-		std::vector<std::string> numbers = helperstring::split(m_values->at(variable), NUMBER_SEPARATOR);
+		std::vector<std::string> numbers = HelperString::Split(m_values->at(variable), NUMBER_SEPARATOR);
 		std::vector<int> result = std::vector<int>();
 
 		int i = 0;
@@ -153,9 +153,9 @@ namespace Flounder
 		return result;
 	}
 
-	character *metafile::getCharacter(const int &ascii)
+	Character *Metafile::GetCharacter(const int &ascii)
 	{
-		std::map<int, character*>::iterator it = m_metadata->find(ascii);
+		std::map<int, Character*>::iterator it = m_metadata->find(ascii);
 
 		if (it != m_metadata->end())
 		{

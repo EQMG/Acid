@@ -22,7 +22,7 @@ namespace Flounder
 		bool m_fitToScreen;
 		float m_sizeScalar;
 
-		depthbuffer m_depthBufferType;
+		DepthBuffer m_depthBufferType;
 		bool m_useColourBuffer;
 		int m_attachments;
 		bool m_linearFiltering;
@@ -51,7 +51,7 @@ namespace Flounder
 		/// <param name="builder"> The fbo builder. </param>
 		Fbo(const int &width = 0,
 			const int &height = 0,
-			const depthbuffer &depthBufferType = DepthNone,
+			const DepthBuffer &depthBufferType = DepthNone,
 			const bool &useColourBuffer = true,
 			const int &attachments = 1,
 			const bool &linearFiltering = true,
@@ -63,7 +63,7 @@ namespace Flounder
 
 		Fbo(const bool &fitToScreen = true,
 			const float &sizeScalar = 1.0f,
-			const depthbuffer &depthBufferType = DepthNone,
+			const DepthBuffer &depthBufferType = DepthNone,
 			const bool &useColourBuffer = true,
 			const int &attachments = 1,
 			const bool &linearFiltering = true,
@@ -81,65 +81,65 @@ namespace Flounder
 		/// <summary>
 		/// Binds the FBO so it can be rendered too.
 		/// </summary>
-		void bindFrameBuffer();
+		void BindFrameBuffer();
 
 		/// <summary>
 		/// Unbinds the FBO so that other rendering objects can be used.
 		/// </summary>
-		void unbindFrameBuffer();
+		void UnbindFrameBuffer();
 
 		/// <summary>
 		/// Updates the FBO size if {@code fitToScreen}.
 		/// </summary>
-		void updateSize();
+		void UpdateSize();
 
 		/// <summary>
 		/// Renders the colour buffer to the display.
 		/// </summary>
-		void blitToScreen();
+		void BlitToScreen();
 
-		depthbuffer getDepthBufferType() { return m_depthBufferType; }
+		DepthBuffer GetDepthBufferType() const { return m_depthBufferType; }
 
 		/// <summary>
 		/// Gets the number of attachments in this FBO.
 		/// </summary>
 		/// <returns> The number of attachments in this FBO. </returns>
-		int getAttachments() { return m_attachments; }
+		int GetAttachments() const { return m_attachments; }
 
 		/// <summary>
 		/// Gets the number of antialiasing samples.
 		/// </summary>
 		/// <returns> The number of antialiasing samples. </returns>
-		int getSamples() { return m_samples; }
+		int GetSamples() const { return m_samples; }
 
 		/// <summary>
 		/// Sets the number antialiasing samples, and recreates the FBO.
 		/// </summary>
 		/// <param name="samples"> The number of antialiasing samples. </param>
-		virtual void setSamples(const int samples);
+		void SetSamples(const int samples);
 
-		float getSizeScalar() { return m_sizeScalar; }
+		float GetSizeScalar() const { return m_sizeScalar; }
 
-		void setSizeScalar(const float &sizeScalar);
+		void SetSizeScalar(const float &sizeScalar);
 
-		void setSize(const int &width, const int &height);
+		void SetSize(const int &width, const int &height);
 
 #if 0
-		inline GLuint getFrameBuffer() { return m_frameBuffer; }
+		GLuint GetFrameBuffer() const { return m_frameBuffer; }
 
-		inline GLuint getColourTexture(int readBuffer) { return m_colourTexture[readBuffer]; }
+		GLuint GetColourTexture(const int &readBuffer) { return m_colourTexture[readBuffer]; }
 
 		/// <summary>
 		/// Gets the depth texture.
 		/// </summary>
 		/// <returns> The OpenGL depth texture id. </returns>
-		inline GLuint getDepthTexture() { return m_depthTexture; }
+		GLuint GetDepthTexture() const { return m_depthTexture; }
 
-		inline GLuint setDepthTexture(int depthTexture) { m_depthTexture = depthTexture; }
+		GLuint SetDepthTexture(const int &depthTexture) { m_depthTexture = depthTexture; }
 
-		inline GLuint getDepthBuffer() { return m_depthBuffer; }
+		GLuint GetDepthBuffer() const { return m_depthBuffer; }
 
-		inline GLuint *getColourBuffer() { return m_colourBuffer; }
+		GLuint *GetColourBuffer() const { return m_colourBuffer; }
 #endif
 
 		/// <summary>
@@ -147,7 +147,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="source"> The source fbo </param>
 		/// <param name="output"> The other FBO to blit to. </param>
-		static void resolveFBO(Fbo *source, Fbo *output);
+		static void ResolveFBO(Fbo *source, Fbo *output);
 
 		/// <summary>
 		/// Blits this FBO attachment to another FBO attachment.
@@ -156,25 +156,25 @@ namespace Flounder
 		/// <param name="readBuffer"> The colour attachment to be read from. </param>
 		/// <param name="drawBuffer"> The colour draw buffer to be written to. </param>
 		/// <param name="output"> The other FBO to blit to. </param>
-		static void resolveFBO(Fbo *source, const int readBuffer, const int drawBuffer, Fbo *output);
+		static void ResolveFBO(Fbo *source, const int readBuffer, const int drawBuffer, Fbo *output);
 	private:
 		/// <summary>
 		/// Initializes the FBO.
 		/// </summary>
-		void initialize();
+		void Initialize();
 
-		void determineDrawBuffers();
+		void DetermineDrawBuffers();
 
-		void limitFBOSize();
+		void LimitFBOSize();
 
-		void createTextureAttachment(const int attachment);
+		void CreateTextureAttachment(const int attachment);
 
-		void createDepthBufferAttachment();
+		void CreateDepthBufferAttachment();
 
-		void createDepthTextureAttachment();
+		void CreateDepthTextureAttachment();
 
-		void attachMultisampleColourBuffer(const int attachment);
+		void AttachMultisampleColourBuffer(const int attachment);
 
-		void clear();
+		void Clear();
 	};
 }

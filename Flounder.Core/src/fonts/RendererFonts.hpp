@@ -1,28 +1,28 @@
 #pragma once
 
-#include "../renderer/irenderer.hpp"
-#include "../uis/uis.hpp"
+#include "../renderer/IRenderer.hpp"
+#include "../uis/Uis.hpp"
 
-#include "text.hpp"
+#include "Text.hpp"
 
 namespace Flounder
 {
-	class rendererfonts :
-		public irenderer
+	class RendererFonts :
+		public IRenderer
 	{
 	private:
 		shader *m_shader;
 	public:
-		rendererfonts();
+		RendererFonts();
 
-		~rendererfonts();
+		~RendererFonts();
 
-		void render(const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
-		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
+		void PrepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 
-		void renderText(text *object);
+		void RenderText(Text *object);
 
-		void endRendering();
+		void EndRendering();
 	};
 }

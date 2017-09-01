@@ -4,17 +4,17 @@
 #include <vector>
 #include <map>
 
-#include "../helpers/helperfile.hpp"
-#include "../helpers/helperstring.hpp"
+#include "../helpers/HelperFile.hpp"
+#include "../helpers/HelperString.hpp"
 
-#include "character.hpp"
+#include "Character.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// Provides functionality for getting the values from a font file.
 	/// </summary>
-	class metafile
+	class Metafile
 	{
 	public:
 		static const int PAD_TOP;
@@ -30,7 +30,7 @@ namespace Flounder
 		static const int NEWLINE_ASCII;
 		static const int SPACE_ASCII;
 	private:
-		std::map<int, character*> *m_metadata;
+		std::map<int, Character*> *m_metadata;
 		std::map<std::string, std::string> *m_values;
 
 		double m_verticalPerPixelSize;
@@ -46,34 +46,34 @@ namespace Flounder
 		/// Creates a new meta file.
 		/// </summary>
 		/// <param name="filepath"> The font file to load from. </param>
-		metafile(const std::string &file);
+		Metafile(const std::string &file);
 
 		/// <summary>
 		/// Deconstructor for the meta file.
 		/// </summary>
-		~metafile();
+		~Metafile();
 	private:
 		/// <summary>
 		/// Read in the next line and store the variable values.
 		/// </summary>
 		/// <param name="line"> The line to process. </param>
-		void processNextLine(const std::string &line);
+		void ProcessNextLine(const std::string &line);
 
 		/// <summary>
 		/// Loads the data about how much padding is used around each character in the texture atlas.
 		/// </summary>
-		void loadPaddingData();
+		void LoadPaddingData();
 
 		/// <summary>
 		/// Loads information about the line height for this font in pixels,
 		/// and uses this as a way to find the conversion rate between pixels in the texture atlas and screen-space.
 		/// </summary>
-		void loadLineSizes();
+		void LoadLineSizes();
 
 		/// <summary>
 		/// Loads in data about each character and stores the data in the <seealso cref="Character"/> class.
 		/// </summary>
-		void loadCharacterData();
+		void LoadCharacterData();
 
 		/// <summary>
 		/// Loads all the data about one character in the texture atlas and converts it all from 'pixels' to 'screen-space' before storing.
@@ -81,7 +81,7 @@ namespace Flounder
 		/// </summary>
 		/// </param>
 		/// <returns> The data about the character. </returns>
-		character *loadCharacter();
+		Character *LoadCharacter();
 
 		/// <summary>
 		/// Gets the {@code int} value of the variable with a certain name on the current line.
@@ -89,7 +89,7 @@ namespace Flounder
 		/// <param name="variable"> The name of the variable.
 		/// </param>
 		/// <returns> The value of the variable. </returns>
-		int getValueOfVariable(const std::string &variable);
+		int GetValueOfVariable(const std::string &variable);
 
 		/// <summary>
 		/// Gets the array of ints associated with a variable on the current line.
@@ -97,12 +97,12 @@ namespace Flounder
 		/// <param name="variable"> The name of the variable.
 		/// </param>
 		/// <returns> The int array of values associated with the variable. </returns>
-		std::vector<int> getValuesOfVariable(const std::string &variable);
+		std::vector<int> GetValuesOfVariable(const std::string &variable);
 	public:
-		character *getCharacter(const int &ascii);
+		Character *GetCharacter(const int &ascii);
 
-		double getSpaceWidth() const { return m_spaceWidth; }
+		double GetSpaceWidth() const { return m_spaceWidth; }
 
-		double getMaxSizeY() const { return m_maxSizeY; }
+		double GetMaxSizeY() const { return m_maxSizeY; }
 	};
 }

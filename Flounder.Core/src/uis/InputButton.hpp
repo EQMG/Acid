@@ -19,8 +19,8 @@ namespace Flounder
 		static const float SCALE_SELECTED;
 		static Colour *const COLOUR_NORMAL;
 
-		text *m_text;
-		gui *m_background;
+		Text *m_text;
+		Gui *m_background;
 
 		bool m_mouseOver;
 
@@ -33,7 +33,7 @@ namespace Flounder
 
 		void UpdateObject() override;
 
-		std::string getText() const { return m_text->getText(); }
+		std::string getText() const { return m_text->GetText(); }
 
 		void setText(const std::string &string) const { m_text->setText(string); }
 

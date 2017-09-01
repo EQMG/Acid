@@ -58,7 +58,7 @@ namespace Flounder
 
 	void water::generateMesh()
 	{
-		std::vector<float> *vertices = new std::vector<float>();
+		std::vector<float> vertices = std::vector<float>();
 
 		for (int col = 0; col < VERTEX_COUNT - 1; col++)
 		{
@@ -80,7 +80,7 @@ namespace Flounder
 			}
 		}
 
-		m_model = new model(nullptr, vertices, nullptr, nullptr, nullptr);
+		m_model = new Model(std::vector<int>(), vertices);
 
 		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
@@ -89,7 +89,7 @@ namespace Flounder
 		//	delete vertices;
 	}
 
-	void water::storeQuad1(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void water::storeQuad1(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
 		storeVertex(vertices, topLeft, Vector2(0.0f, 1.0f), mixed ? Vector2(1.0f, 0.0f) : Vector2(1.0f, 1.0f));
 		storeVertex(vertices, bottomLeft, mixed ? Vector2(1.0f, -1.0f) : Vector2(1.0f, 0.0f), Vector2(0.0f, -1.0f));
@@ -116,7 +116,7 @@ namespace Flounder
 		}
 	}
 
-	void water::storeQuad2(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void water::storeQuad2(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
 		storeVertex(vertices, topRight, Vector2(-1.0f, 0.0f), mixed ? Vector2(0.0f, 1.0f) : Vector2(-1.0f, 1.0f));
 		storeVertex(vertices, topLeft, mixed ? Vector2(1.0f, 1.0f) : Vector2(0.0f, 1.0f), Vector2(1.0f, 0.0f));
@@ -143,7 +143,7 @@ namespace Flounder
 		}
 	}
 
-	void water::storeVertex(std::vector<float> *vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2)
+	void water::storeVertex(std::vector<float> &vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2)
 	{
 		int gridX = index % VERTEX_COUNT;
 		int gridZ = index / VERTEX_COUNT;
@@ -168,9 +168,9 @@ namespace Flounder
 			m_aabb->m_minExtents->m_z = static_cast<float>(z);
 		}
 
-		vertices->push_back(static_cast<float>(x));
-		vertices->push_back(static_cast<float>(z));
-		vertices->push_back(encode(otherPoint1.m_x, otherPoint1.m_y, otherPoint2.m_x, otherPoint2.m_y));
+		vertices.push_back(static_cast<float>(x));
+		vertices.push_back(static_cast<float>(z));
+		vertices.push_back(encode(otherPoint1.m_x, otherPoint1.m_y, otherPoint2.m_x, otherPoint2.m_y));
 	}
 
 	float water::encode(const float &x, const float &z, const float &x2, const float &z2)

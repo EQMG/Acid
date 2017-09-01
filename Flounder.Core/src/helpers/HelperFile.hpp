@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <vector>
 
 namespace Flounder
@@ -10,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A helper for C++ files.
 	/// </summary>
-	class helperfile
+	class HelperFile
 	{
 	public:
 		/// <summary>
@@ -18,7 +17,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		/// <returns> The string containing the read file. </returns>
-		static std::string readTextFile(const std::string &filepath)
+		static std::string ReadTextFile(const std::string &filepath)
 		{
 			FILE *file = fopen(filepath.c_str(), "rt");
 
@@ -45,7 +44,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		/// <returns> The char array loaded from the file. </returns>
-		static std::vector<char> readBinaryFile(const std::string &filepath) // TODO: Move from ifsteam to normal C binary file loading.
+		static std::vector<char> ReadBinaryFile(const std::string &filepath) // TODO: Move from ifsteam to normal C binary file loading.
 		{
 			std::ifstream ifs = std::ifstream(filepath, std::ios::ate | std::ios::binary);
 
@@ -54,7 +53,7 @@ namespace Flounder
 				throw std::runtime_error("Could not find file: " + filepath);
 			}
 
-			size_t fileSize = (size_t) ifs.tellg();
+			size_t fileSize = static_cast<size_t>(ifs.tellg());
 			std::vector<char> buffer(fileSize);
 
 			ifs.seekg(0);

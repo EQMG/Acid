@@ -1,31 +1,31 @@
 #pragma once
 
-#include "../renderer/irenderer.hpp"
-#include "../uis/uis.hpp"
+#include "../renderer/IRenderer.hpp"
+#include "../uis/Uis.hpp"
 
-#include "gui.hpp"
-#include "../models/model.hpp"
+#include "Gui.hpp"
+#include "../models/Model.hpp"
 
 namespace Flounder
 {
-	class rendererguis :
-		public irenderer
+	class RendererGuis :
+		public IRenderer
 	{
 	private:
 		shader *m_shader;
 
-		model *m_model;
+		Model *m_model;
 	public:
-		rendererguis();
+		RendererGuis();
 
-		~rendererguis();
+		~RendererGuis();
 
-		void render(const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
-		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
+		void PrepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 
-		void renderGui(gui *object);
+		void RenderGui(Gui *object);
 
-		void endRendering();
+		void EndRendering();
 	};
 }

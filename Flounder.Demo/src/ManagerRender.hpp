@@ -7,7 +7,7 @@
 using namespace Flounder;
 
 class ManagerRender :
-	public imanagerrender
+	public IManagerRender
 {
 private:
 	Vector4 m_infinity;
@@ -29,7 +29,7 @@ public:
 
 	~ManagerRender();
 
-	void render() override;
+	void Render() override;
 private:
 	void renderWater();
 

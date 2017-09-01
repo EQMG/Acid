@@ -1,19 +1,19 @@
 ﻿#pragma once
 
-#include "word.hpp"
+#include "Word.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// Represents a line of text during the loading of a text.
 	/// </summary>
-	class line
+	class Line
 	{
 	private:
 		double m_maxLength;
 		double m_spaceSize;
 
-		std::vector<word*> *m_words;
+		std::vector<Word> m_words;
 		double m_currentLineLength;
 	public:
 		/// <summary>
@@ -21,12 +21,12 @@ namespace Flounder
 		/// </summary>
 		/// <param name="spaceWidth"> The screen-space width of a space character. </param>
 		/// <param name="maxLength"> The screen-space maximum length of a line. </param>
-		line(const double &spaceWidth, const double &maxLength);
+		Line(const double &spaceWidth, const double &maxLength);
 
 		/// <summary>
 		/// Deconstructor for the line.
 		/// </summary>
-		~line();
+		~Line();
 
 		/// <summary>
 		/// Attempt to add a word to the line. If the line can fit the word in without reaching the maximum line length then the word is added and the line length increased.
@@ -34,14 +34,14 @@ namespace Flounder
 		/// <param name="word"> The word to try to add.
 		/// </param>
 		/// <returns> {@code true} if the word has successfully been added to the line. </returns>
-		bool addWord(word *word);
+		bool AddWord(Word word);
 
-		double getMaxLength() const { return m_maxLength; }
+		double GetMaxLength() const { return m_maxLength; }
 
-		double getSpaceSize() const { return m_spaceSize; }
+		double GetSpaceSize() const { return m_spaceSize; }
 
-		std::vector<word*> *getWords() const { return m_words; }
+		std::vector<Word> GetWords() const { return m_words; }
 
-		double getCurrentLineLength() const { return m_currentLineLength; }
+		double GetCurrentLineLength() const { return m_currentLineLength; }
 	};
 }

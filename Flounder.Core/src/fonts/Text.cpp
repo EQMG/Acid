@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	text::text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, fonttype *fonttype, const float &maxLineLength, const uialign &align) :
+	Text::Text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const uialign &align) :
 		UiObject(parent, position, Vector2(1.0f, 1.0f)),
 		m_textString(text),
 		m_textAlign(align),
@@ -22,10 +22,10 @@ namespace Flounder
 	{
 		SetMeshSize(Vector2(0.0f, 0.0f));
 		SetScaleDriver(new driverconstant(fontSize));
-		loadText(this);
+		LoadText(this);
 	}
 
-	text::~text()
+	Text::~Text()
 	{
 		delete m_model;
 
@@ -36,14 +36,14 @@ namespace Flounder
 		delete m_borderDriver;
 	}
 
-	void text::UpdateObject()
+	void Text::UpdateObject()
 	{
-		if (isLoaded() && m_newText != "")
+		if (IsLoaded() && m_newText != "")
 		{
 			delete m_model;
 
 			m_textString = m_newText;
-			loadText(this);
+			LoadText(this);
 			m_newText = "";
 		}
 
@@ -64,164 +64,165 @@ namespace Flounder
 		m_borderSize = m_borderDriver->update(Engine::Get()->GetDelta());
 	}
 
-	void text::loadText(text *object)
+	void Text::LoadText(Text *object)
 	{
 		// Create mesh data.
-		std::vector<line*> lines = createStructure(object);
-		std::vector<float> *vertices = new std::vector<float>();
-		std::vector<float> *textures = new std::vector<float>();
-		createQuadVertices(object, lines, vertices, textures);
-		Vector2 meshSize = getBounding(vertices);
+		std::vector<Line> lines = CreateStructure(object);
+		std::vector<float> vertices = std::vector<float>();
+		std::vector<float> textures = std::vector<float>();
+		CreateQuadVertices(object, lines, vertices, textures);
+		Vector2 meshSize = GetBounding(vertices);
 
 		// Load mesh data to OpenGL.
-		model *loaded = new model(nullptr, vertices, textures, nullptr, nullptr);
-		object->setModel(loaded);
+		Model *loaded = new Model(std::vector<int>(), vertices, textures);
+		object->SetModel(loaded);
 		object->SetMeshSize(meshSize);
-
-		//	delete vertices;
-		//	delete textures;
 	}
 
-	std::vector<line*> text::createStructure(text *object)
+	std::vector<Line> Text::CreateStructure(Text *object)
 	{
-		std::vector<line*> lines = std::vector<line*>();
-		line *currentLine = new line(object->getFontType()->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
-		word *currentWord = new word();
+		std::vector<Line> lines = std::vector<Line>();
+		Line currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->GetMaxLineSize());
+		Word currentWord = Word();
 
-		for (auto c : object->getText())
+		for (auto c : object->GetText())
 		{
 			int ascii = static_cast<int>(c);
 
-			if (ascii == metafile::SPACE_ASCII)
+			if (ascii == Metafile::SPACE_ASCII)
 			{
-				bool added = currentLine->addWord(currentWord);
+				bool added = currentLine.AddWord(currentWord);
 
 				if (!added)
 				{
 					lines.push_back(currentLine);
-					currentLine = new line(object->getFontType()->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
-					currentLine->addWord(currentWord);
+					currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->GetMaxLineSize());
+					currentLine.AddWord(currentWord);
 				}
 
-				currentWord = new word();
+				currentWord = Word();
 				continue;
 			}
-			if (ascii == metafile::NEWLINE_ASCII)
+			if (ascii == Metafile::NEWLINE_ASCII)
 			{
 				continue;
 			}
 
-			character *character = object->getFontType()->getMetadata()->getCharacter(ascii);
-			currentWord->addCharacter(character);
+			Character *character = object->GetFontType()->GetMetadata()->GetCharacter(ascii);
+
+			if (character != nullptr)
+			{
+				currentWord.AddCharacter(*character);
+			}
 		}
 
-		completeStructure(lines, currentLine, currentWord, object);
+		CompleteStructure(lines, currentLine, currentWord, object);
 		return lines;
 	}
 
-	void text::completeStructure(std::vector<line*> &lines, line *currentLine, word *currentWord, text *object)
+	void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, Text *object)
 	{
-		bool added = currentLine->addWord(currentWord);
+		bool added = currentLine.AddWord(currentWord);
 
 		if (!added)
 		{
 			lines.push_back(currentLine);
-			currentLine = new line(object->getFontType()->getMetadata()->getSpaceWidth(), object->getMaxLineSize());
-			currentLine->addWord(currentWord);
+			currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->GetMaxLineSize());
+			currentLine.AddWord(currentWord);
 		}
 
 		lines.push_back(currentLine);
 	}
 
-	void text::createQuadVertices(text *object, std::vector<line*> lines, std::vector<float> *vertices, std::vector<float> *textures)
+	void Text::CreateQuadVertices(Text *object, std::vector<Line> lines, std::vector<float> &vertices, std::vector<float> &textures)
 	{
-		object->setNumberOfLines((int) lines.size());
+		object->SetNumberOfLines(static_cast<int>(lines.size()));
 		double cursorX = 0.0;
 		double cursorY = 0.0;
 
 		for (auto line : lines)
 		{
-			switch (object->getTextAlign())
+			switch (object->GetTextAlign())
 			{
 			case LEFT:
 				cursorX = 0.0;
 				break;
 			case CENTRE:
-				cursorX = (line->getMaxLength() - line->getCurrentLineLength()) / 2.0;
+				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0;
 				break;
 			case RIGHT:
-				cursorX = line->getMaxLength() - line->getCurrentLineLength();
+				cursorX = line.GetMaxLength() - line.GetCurrentLineLength();
 				break;
 			default:
 				cursorX = 0.0;
 				break;
 			}
 
-			for (auto word : *line->getWords())
+			for (auto word : line.GetWords())
 			{
-				for (auto letter : *word->getCharacters())
+				for (auto letter : word.GetCharacters())
 				{
-					addVerticesForCharacter(cursorX, cursorY, letter, vertices);
-					addTextures(letter->getTextureCoordX(), letter->getTextureCoordY(), letter->getMaxTextureCoordX(), letter->getMaxTextureCoordY(), textures);
-					cursorX += letter->getAdvanceX();
+					AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
+					AddTextures(letter.GetTextureCoordX(), letter.GetTextureCoordY(), letter.GetMaxTextureCoordX(), letter.GetMaxTextureCoordY(), textures);
+					cursorX += letter.GetAdvanceX();
 				}
 
-				cursorX += object->getFontType()->getMetadata()->getSpaceWidth();
+				cursorX += object->GetFontType()->GetMetadata()->GetSpaceWidth();
 			}
 
 			cursorX = 0.0;
-			cursorY += metafile::LINE_HEIGHT;
+			cursorY += Metafile::LINE_HEIGHT;
 		}
 	}
 
-	void text::addVerticesForCharacter(const double &cursorX, const double &cursorY, character *character, std::vector<float> *vertices)
+	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<float> &vertices)
 	{
-		double x = cursorX + character->getOffsetX();
-		double y = cursorY + character->getOffsetY();
-		double maxX = x + character->getSizeX();
-		double maxY = y + character->getSizeY();
-		addVertices(x, y, maxX, maxY, vertices);
+		double x = cursorX + character.GetOffsetX();
+		double y = cursorY + character.GetOffsetY();
+		double maxX = x + character.GetSizeX();
+		double maxY = y + character.GetSizeY();
+		AddVertices(x, y, maxX, maxY, vertices);
 	}
 
-	void text::addVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> *vertices)
+	void Text::AddVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &vertices)
 	{
-		vertices->push_back(static_cast<float>(x));
-		vertices->push_back(static_cast<float>(y));
-		vertices->push_back(0.0f);
-		vertices->push_back(static_cast<float>(x));
-		vertices->push_back(static_cast<float>(maxY));
-		vertices->push_back(0.0f);
-		vertices->push_back(static_cast<float>(maxX));
-		vertices->push_back(static_cast<float>(maxY));
-		vertices->push_back(0.0f);
-		vertices->push_back(static_cast<float>(maxX));
-		vertices->push_back(static_cast<float>(maxY));
-		vertices->push_back(0.0f);
-		vertices->push_back(static_cast<float>(maxX));
-		vertices->push_back(static_cast<float>(y));
-		vertices->push_back(0.0f);
-		vertices->push_back(static_cast<float>(x));
-		vertices->push_back(static_cast<float>(y));
-		vertices->push_back(0.0f);
+		vertices.push_back(static_cast<float>(x));
+		vertices.push_back(static_cast<float>(y));
+		vertices.push_back(0.0f);
+		vertices.push_back(static_cast<float>(x));
+		vertices.push_back(static_cast<float>(maxY));
+		vertices.push_back(0.0f);
+		vertices.push_back(static_cast<float>(maxX));
+		vertices.push_back(static_cast<float>(maxY));
+		vertices.push_back(0.0f);
+		vertices.push_back(static_cast<float>(maxX));
+		vertices.push_back(static_cast<float>(maxY));
+		vertices.push_back(0.0f);
+		vertices.push_back(static_cast<float>(maxX));
+		vertices.push_back(static_cast<float>(y));
+		vertices.push_back(0.0f);
+		vertices.push_back(static_cast<float>(x));
+		vertices.push_back(static_cast<float>(y));
+		vertices.push_back(0.0f);
 	}
 
-	void text::addTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> *textures)
+	void Text::AddTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &textures)
 	{
-		textures->push_back(static_cast<float>(x));
-		textures->push_back(static_cast<float>(y));
-		textures->push_back(static_cast<float>(x));
-		textures->push_back(static_cast<float>(maxY));
-		textures->push_back(static_cast<float>(maxX));
-		textures->push_back(static_cast<float>(maxY));
-		textures->push_back(static_cast<float>(maxX));
-		textures->push_back(static_cast<float>(maxY));
-		textures->push_back(static_cast<float>(maxX));
-		textures->push_back(static_cast<float>(y));
-		textures->push_back(static_cast<float>(x));
-		textures->push_back(static_cast<float>(y));
+		textures.push_back(static_cast<float>(x));
+		textures.push_back(static_cast<float>(y));
+		textures.push_back(static_cast<float>(x));
+		textures.push_back(static_cast<float>(maxY));
+		textures.push_back(static_cast<float>(maxX));
+		textures.push_back(static_cast<float>(maxY));
+		textures.push_back(static_cast<float>(maxX));
+		textures.push_back(static_cast<float>(maxY));
+		textures.push_back(static_cast<float>(maxX));
+		textures.push_back(static_cast<float>(y));
+		textures.push_back(static_cast<float>(x));
+		textures.push_back(static_cast<float>(y));
 	}
 
-	Vector2 text::getBounding(std::vector<float> *vertices)
+	Vector2 Text::GetBounding(std::vector<float> &vertices)
 	{
 		float minX = +INFINITY;
 		float minY = +INFINITY;
@@ -229,7 +230,7 @@ namespace Flounder
 		float maxY = -INFINITY;
 		int i = 0;
 
-		for (auto v : *vertices)
+		for (auto v : vertices)
 		{
 			if (i == 0)
 			{
@@ -266,7 +267,7 @@ namespace Flounder
 		return Vector2((minX + maxX) / 2.0f, (minY + maxY) / 2.0f);
 	}
 
-	void text::setText(const std::string &newText)
+	void Text::setText(const std::string &newText)
 	{
 		if (m_textString != newText)
 		{
@@ -274,7 +275,7 @@ namespace Flounder
 		}
 	}
 
-	void text::setBorder(idriver *driver)
+	void Text::SetBorder(idriver *driver)
 	{
 		delete m_borderDriver;
 		m_borderDriver = driver;
@@ -282,7 +283,7 @@ namespace Flounder
 		m_glowBorder = false;
 	}
 
-	void text::setGlowing(idriver *driver)
+	void Text::SetGlowing(idriver *driver)
 	{
 		delete m_glowDriver;
 		m_glowDriver = driver;
@@ -290,13 +291,13 @@ namespace Flounder
 		m_glowBorder = true;
 	}
 
-	void text::removeBorder()
+	void Text::RemoveBorder()
 	{
 		m_solidBorder = false;
 		m_glowBorder = false;
 	}
 
-	float text::getTotalBorderSize()
+	float Text::GetTotalBorderSize()
 	{
 		if (m_solidBorder)
 		{
@@ -304,20 +305,20 @@ namespace Flounder
 			{
 				return 0.0f;
 			}
-			return calculateEdgeStart() + m_borderSize;
+			return CalculateEdgeStart() + m_borderSize;
 		}
 		if (m_glowBorder)
 		{
-			return calculateEdgeStart();
+			return CalculateEdgeStart();
 		}
 		return 0.0f;
 	}
 
-	float text::getGlowSize()
+	float Text::GetGlowSize()
 	{
 		if (m_solidBorder)
 		{
-			return calculateAntialiasSize();
+			return CalculateAntialiasSize();
 		}
 		if (m_glowBorder)
 		{
@@ -326,20 +327,20 @@ namespace Flounder
 		return 0.0f;
 	}
 
-	float text::calculateEdgeStart()
+	float Text::CalculateEdgeStart()
 	{
 		float size = GetScale();
 		return 1.0f / 300.0f * size + 137.0f / 300.0f;
 	}
 
-	float text::calculateAntialiasSize()
+	float Text::CalculateAntialiasSize()
 	{
 		float size = GetScale();
 		size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 		return 0.1f / size;
 	}
 
-	bool text::isLoaded()
+	bool Text::IsLoaded()
 	{
 		return !m_textString.empty() && m_model != nullptr;
 	}

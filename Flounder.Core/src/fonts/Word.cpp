@@ -2,26 +2,20 @@
 
 namespace Flounder
 {
-	word::word() :
-		m_characters(new std::vector<character*>()),
+	Word::Word() :
+		m_characters(std::vector<Character>()),
 		m_width(0.0)
 	{
 	}
 
-	word::~word()
+	Word::~Word()
 	{
-		delete m_characters;
 	}
 
-	bool word::addCharacter(character *c)
+	bool Word::AddCharacter(Character c)
 	{
-		if (c == nullptr)
-		{
-			return false;
-		}
-
-		m_characters->push_back(c);
-		m_width += c->getAdvanceX();
+		m_characters.push_back(c);
+		m_width += c.GetAdvanceX();
 		return true;
 	}
 }

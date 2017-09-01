@@ -7,7 +7,7 @@ namespace Flounder
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/deferred/deferred.vert.spv"),
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/deferred/deferred.frag.spv")
 		)),
-		m_model(new model("res/models/filter.obj"))
+		m_model(new Model("res/models/filter.obj"))
 	{
 	}
 
