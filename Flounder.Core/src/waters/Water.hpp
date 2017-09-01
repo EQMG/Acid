@@ -12,7 +12,7 @@ namespace Flounder
 	class water
 	{
 	private:
-		model *m_model;
+		Model *m_model;
 
 		Colour *m_colour;
 
@@ -44,17 +44,17 @@ namespace Flounder
 	private:
 		void generateMesh();
 
-		void storeQuad1(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void storeQuad1(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		void storeQuad2(std::vector<float> *vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void storeQuad2(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		void storeVertex(std::vector<float> *vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2);
+		void storeVertex(std::vector<float> &vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2);
 
 		float encode(const float &x, const float &z, const float &x2, const float &z2);
 	public:
 		float getHeight(const float &x, const float &z);
 
-		model *getModel() const { return m_model; }
+		Model *getModel() const { return m_model; }
 
 		Colour *getColour() const { return m_colour; }
 

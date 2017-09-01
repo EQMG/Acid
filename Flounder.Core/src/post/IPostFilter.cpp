@@ -8,21 +8,21 @@ namespace Flounder
 			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShader)
 		)),
 		m_fbo(fbo),
-		m_model(new model("res/models/filter.obj"))
+		m_model(new Model("res/models/filter.obj"))
 	{
 	}
 
 	ipostfilter::ipostfilter(shader *shader, Fbo *fbo) :
 		m_shader(shader),
 		m_fbo(fbo),
-		m_model(new model("res/models/filter.obj"))
+		m_model(new Model("res/models/filter.obj"))
 	{
 	}
 
 	ipostfilter::ipostfilter(shader *shader) :
 		m_shader(shader),
 		m_fbo(new Fbo(true, 1.0f)),
-		m_model(new model("res/models/filter.obj"))
+		m_model(new Model("res/models/filter.obj"))
 	{
 	}
 

@@ -15,7 +15,7 @@ namespace Flounder
 	class terrain
 	{
 	private:
-		model *m_model;
+		Model *m_model;
 
 		Vector3 *m_position;
 		Vector3 *m_rotation;
@@ -36,9 +36,9 @@ namespace Flounder
 	private:
 		void generateMesh();
 
-		void storeQuad1(std::vector<int> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void storeQuad1(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		void storeQuad2(std::vector<int> *indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void storeQuad2(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
 		Vector3 calculateNormal(const float &x, const float &z);
 
@@ -50,7 +50,7 @@ namespace Flounder
 	public:
 		float getHeight(const float &x, const float &z);
 
-		model *getModel() const { return m_model; }
+		Model *getModel() const { return m_model; }
 
 		Vector3 *getPosition() const { return m_position; }
 

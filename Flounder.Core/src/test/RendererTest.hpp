@@ -5,7 +5,7 @@
 namespace Flounder
 {
 	class renderertest :
-		public irenderer
+		public IRenderer
 	{
 	private:
 		shader *m_shader;
@@ -14,6 +14,6 @@ namespace Flounder
 
 		~renderertest();
 
-		void render(const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

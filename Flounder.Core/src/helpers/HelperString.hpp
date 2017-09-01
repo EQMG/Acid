@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include <vector>
 #include <algorithm>
 #include <cctype>
@@ -11,7 +10,7 @@ namespace Flounder
 	/// <summary>
 	/// A helper for C++ strings.
 	/// </summary>
-	class helperstring
+	class HelperString
 	{
 	public:
 		/// <summary>
@@ -20,7 +19,7 @@ namespace Flounder
 		/// <param name="str"> The string. </param>
 		/// <param name="sep"> The seperator. </param>
 		/// <returns> The split string vector. </returns>
-		static std::vector<std::string> split(const std::string &str, const std::string &sep)
+		static std::vector<std::string> Split(const std::string &str, const std::string &sep)
 		{
 			char *cstr = const_cast<char*>(str.c_str());
 			std::vector<std::string> arr;
@@ -41,7 +40,7 @@ namespace Flounder
 		/// <param name="str"> The string. </param>
 		/// <param name="token"> The token. </param>
 		/// <returns> If a string starts with the token. </returns>
-		static bool startsWith(const std::string &str, const std::string &token)
+		static bool StartsWith(const std::string &str, const std::string &token)
 		{
 			if (str.length() < token.length())
 			{
@@ -57,7 +56,7 @@ namespace Flounder
 		/// <param name="str"> The string. </param>
 		/// <param name="token"> The token. </param>
 		/// <returns> If a string contains the token. </returns>
-		static bool contains(const std::string &str, const std::string &token)
+		static bool Contains(const std::string &str, const std::string &token)
 		{
 			return str.find(token) != std::string::npos;
 		}
@@ -67,7 +66,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="str"> The string. </param>
 		/// <returns> If a string is a integer. </returns>
-		static bool isInteger(const std::string &str)
+		static bool IsInteger(const std::string &str)
 		{
 			if (str.empty() || ((!isdigit(str[0])) && (str[0] != '-') && (str[0] != '+')))
 			{
@@ -86,7 +85,7 @@ namespace Flounder
 		/// <param name="str"> The string. </param>
 		/// <param name="c"> The char to look for. </param>
 		/// <returns> The char index. </returns>
-		static int findCharPos(const std::string &str, const char &c)
+		static int FindCharPos(const std::string &str, const char &c)
 		{
 			for (int i = 0; i < str.length(); i++)
 			{
@@ -105,7 +104,7 @@ namespace Flounder
 		/// <param name="str"> The string. </param>
 		/// <param name="whitespace"> The whitespace type. </param>
 		/// <returns> The trimmed string. </returns>
-		static std::string trim(const std::string &str, const std::string &whitespace = " \t")
+		static std::string Trim(const std::string &str, const std::string &whitespace = " \t")
 		{
 			const auto strBegin = str.find_first_not_of(whitespace);
 
@@ -129,7 +128,7 @@ namespace Flounder
 		/// <param name="start"> The left bound. </param>
 		/// <param name="end"> The right bound. </param>
 		/// <returns> The substring of the string. </returns>
-		static std::string substring(const std::string &str, const int &start, const int &end)
+		static std::string Substring(const std::string &str, const int &start, const int &end)
 		{
 			std::string result = str;
 			result = result.substr(start, end - start);
@@ -142,7 +141,7 @@ namespace Flounder
 		/// <param name="str"> The string. </param>
 		/// <param name="token"> The token. </param>
 		/// <returns> The string with the tokens removed. </returns>
-		static std::string removeAll(const std::string &str, const char &token)
+		static std::string RemoveAll(const std::string &str, const char &token)
 		{
 			std::string result = str;
 			result.erase(remove(result.begin(), result.end(), token), result.end());
@@ -156,7 +155,7 @@ namespace Flounder
 		/// <param name="token"> The token. </param>
 		/// <param name="to"> The string to replace the tokens with. </param>
 		/// <returns> The string with the tokens replaced. </returns>
-		static std::string replace(const std::string &str, const std::string &token, const std::string &to)
+		static std::string Replace(const std::string &str, const std::string &token, const std::string &to)
 		{
 			std::string result = str;
 			size_t start_pos = result.find(token);

@@ -2,15 +2,15 @@
 
 #include "../maths/colour.hpp"
 #include "../maths/Vector2.hpp"
-#include "../textures/texture.hpp"
-#include "../uis/uiobject.hpp"
+#include "../textures/Texture.hpp"
+#include "../uis/UiObject.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A object the represents a texture in a GUI.
 	/// </summary>
-	class gui :
+	class Gui :
 		public UiObject
 	{
 	private:
@@ -29,31 +29,31 @@ namespace Flounder
 		/// <param name="dimensions"> The objects dimensions. </param>
 		/// <param name="texture"> The objects texture. </param>
 		/// <param name="selectedRow"> The default row of the texture to render from. </param>
-		gui(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, texture *texture, const int &selectedRow);
+		Gui(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, texture *texture, const int &selectedRow);
 
 		/// <summary>
 		/// Deconstructor for the gui object.
 		/// </summary>
-		~gui();
+		~Gui();
 
 		void UpdateObject() override;
 
-		texture *getTexture() { return m_texture; }
+		texture *GetTexture() const { return m_texture; }
 
-		void setTexture(texture *texture) { m_texture = texture; }
+		void SetTexture(texture *texture) { m_texture = texture; }
 
-		bool getFlipTexture() { return m_flipTexture; }
+		bool IsFlipTexture() const { return m_flipTexture; }
 
-		void setFlipTexture(const bool &flipTexture) { m_flipTexture = flipTexture; }
+		void SetFlipTexture(const bool &flipTexture) { m_flipTexture = flipTexture; }
 
-		int getSelectedRow() { return m_selectedRow; }
+		int GetSelectedRow() const { return m_selectedRow; }
 
-		void setSelectedRow(const int &selectedRow) { m_selectedRow = selectedRow; }
+		void SetSelectedRow(const int &selectedRow) { m_selectedRow = selectedRow; }
 
-		Vector2 *getTextureOffset() { return m_textureOffset; }
+		Vector2 *GetTextureOffset() const { return m_textureOffset; }
 
-		Colour *getColourOffset() { return m_colourOffset; }
+		Colour *GetColourOffset() const { return m_colourOffset; }
 
-		void setColourOffset(const Colour &colourOffset) { m_colourOffset->Set(colourOffset); }
+		void SetColourOffset(const Colour &colourOffset) const { m_colourOffset->Set(colourOffset); }
 	};
 }

@@ -10,7 +10,7 @@
 namespace Flounder
 {
 	class renderershadows :
-		public irenderer
+		public IRenderer
 	{
 	private:
 		Fbo *m_fbo;
@@ -20,11 +20,11 @@ namespace Flounder
 
 		~renderershadows();
 
-		void render(const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
 		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 
-		void renderModel(model *object, Matrix4 *modelMatrix);
+		void renderModel(Model *object, Matrix4 *modelMatrix);
 
 		void endRendering();
 	public:

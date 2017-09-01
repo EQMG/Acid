@@ -21,8 +21,8 @@ namespace Flounder
 		static const float SCALE_SELECTED;
 		static Colour *const COLOUR_NORMAL;
 
-		text *m_text;
-		gui *m_background;
+		Text *m_text;
+		Gui *m_background;
 
 		std::string m_prefix;
 		std::string m_value;

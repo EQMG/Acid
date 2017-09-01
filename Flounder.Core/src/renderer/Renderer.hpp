@@ -11,16 +11,16 @@
 
 namespace Flounder
 {
-	class renderer :
+	class Renderer :
 		public IModule
 	{
 	private:
-		struct testubo
+		struct TestUbo
 		{
 			Colour colour;
 		};
 
-		imanagerrender *m_managerRender;
+		IManagerRender *m_managerRender;
 
 		VkRenderPass m_renderPass;
 		VkPipelineLayout m_pipelineLayout;
@@ -32,7 +32,7 @@ namespace Flounder
 		VkSemaphore m_imageAvailableSemaphore;
 		VkSemaphore m_renderFinishedSemaphore;
 
-		swapchain *m_swapChain;
+		Swapchain *m_swapChain;
 		shader *m_shaderTest;
 
 		int lastWidth;
@@ -42,20 +42,20 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static renderer *get()
+		static Renderer *Get()
 		{
-			return static_cast<renderer*>(Engine::Get()->GetModule("renderer"));
+			return static_cast<Renderer*>(Engine::Get()->GetModule("renderer"));
 		}
 
 		/// <summary>
 		/// Creates a new renderer module.
 		/// </summary>
-		renderer();
+		Renderer();
 
 		/// <summary>
 		/// Deconstructor for the renderer module.
 		/// </summary>
-		~renderer();
+		~Renderer();
 
 		void Update() override;
 
@@ -63,34 +63,30 @@ namespace Flounder
 		/// Gets the renderer manager.
 		/// </summary>
 		/// <returns> The renderer manager. </returns>
-		imanagerrender *getManager() { return m_managerRender; }
+		IManagerRender *GetManager() const { return m_managerRender; }
 
 		/// <summary>
 		/// Sets the current renderer manager to a new renderer manager.
 		/// </summary>
 		/// <param name="rendererMaster"> The new renderer manager. </param>
-		void setManager(imanagerrender *managerRender) { m_managerRender = managerRender; }
+		void SetManager(IManagerRender *managerRender) { m_managerRender = managerRender; }
 
-		std::vector<VkCommandBuffer> getVkCommandBuffers() const
-		{
-			return m_commandBuffers;
-		}
-
+		std::vector<VkCommandBuffer> GetVkCommandBuffers() const { return m_commandBuffers; }
 	private:
-		void createRenderPass();
+		void CreateRenderPass();
 
-		void createGraphicsPipeline();
+		void CreateGraphicsPipeline();
 
-		void createCommandPool();
+		void CreateCommandPool();
 
-		void createCommandBuffers();
+		void CreateCommandBuffers();
 
-		void createSemaphores();
+		void CreateSemaphores();
 
-		void updateUniformBuffer();
+		void UpdateUniformBuffer();
 
-		void drawFrame();
+		void DrawFrame();
 
-		VkSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+		VkSwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device);
 	};
 }

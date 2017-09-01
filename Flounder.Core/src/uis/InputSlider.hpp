@@ -20,9 +20,9 @@ namespace Flounder
 		static const float SCALE_SELECTED;
 		static Colour *const COLOUR_NORMAL;
 
-		text *m_text;
-		gui *m_background;
-		gui *m_slider;
+		Text *m_text;
+		Gui *m_background;
+		Gui *m_slider;
 
 		bool m_updating;
 		float m_progressMin;
@@ -41,7 +41,7 @@ namespace Flounder
 
 		void UpdateObject() override;
 
-		std::string getText() const { return m_text->getText(); }
+		std::string getText() const { return m_text->GetText(); }
 
 		void setText(const std::string &string) const { m_text->setText(string); }
 

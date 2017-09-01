@@ -23,7 +23,7 @@ namespace Flounder
 
 		shader *m_shader;
 		Fbo *m_fbo;
-		model *m_model;
+		Model *m_model;
 	public:
 		RendererDeferred(Fbo *fbo);
 
