@@ -36,9 +36,9 @@ namespace Flounder
 
 		std::vector<t> *QueryAll(std::vector<t> *result) override;
 
-		std::vector<t> *QueryFrustum(frustum *range, std::vector<t> *result) override;
+		std::vector<t> *QueryFrustum(Frustum *range, std::vector<t> *result) override;
 
-		std::vector<t> *QueryBounding(icollider *range, std::vector<t> *result) override;
+		std::vector<t> *QueryBounding(ICollider *range, std::vector<t> *result) override;
 
 		bool Contains(ISpatialObject *object) override;
 	};

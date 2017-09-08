@@ -62,13 +62,13 @@ namespace Flounder
 	}
 
 	template<class t>
-	std::vector<t> *StructureBasic<t>::QueryFrustum(frustum *range, std::vector<t> *result)
+	std::vector<t> *StructureBasic<t>::QueryFrustum(Frustum *range, std::vector<t> *result)
 	{
 		for (auto value : m_objects)
 		{
 			ISpatialObject *object = static_cast<ISpatialObject*>(value);
 
-			if (object->GetCollider() == nullptr || object->GetCollider()->inFrustum(*range))
+			if (object->GetCollider() == nullptr || object->GetCollider()->InFrustum(*range))
 			{
 				result->push_back(value);
 			}
@@ -76,13 +76,13 @@ namespace Flounder
 	}
 
 	template<class t>
-	std::vector<t> *StructureBasic<t>::QueryBounding(icollider *range, std::vector<t> *result)
+	std::vector<t> *StructureBasic<t>::QueryBounding(ICollider *range, std::vector<t> *result)
 	{
 		for (auto value : m_objects)
 		{
 			ISpatialObject *object = static_cast<ISpatialObject*>(value);
 
-			if (object->GetCollider() == nullptr || range->intersects(*object->GetCollider()) || range->contains(*object->GetCollider()))
+			if (object->GetCollider() == nullptr || range->Intersects(*object->GetCollider()) || range->Contains(*object->GetCollider()))
 			{
 				result->push_back(value);
 			}

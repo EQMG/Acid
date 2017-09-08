@@ -18,7 +18,7 @@ namespace Flounder
 		public ISpatialObject
 	{
 	private:
-		particletype *m_particleType;
+		ParticleType *m_particleType;
 
 		Vector3 *m_position;
 		Vector3 *m_velocity;
@@ -47,7 +47,7 @@ namespace Flounder
 		/// <param name="rotation"> The particles rotation. </param>
 		/// <param name="scale"> The particles scale. </param>
 		/// <param name="gravityEffect"> The particles gravity effect. </param>
-		Particle(particletype *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect);
+		Particle(ParticleType *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect);
 
 		/// <summary>
 		/// Deconstructor for the particle.
@@ -61,9 +61,9 @@ namespace Flounder
 
 		bool isAlive() const { return m_transparency < 1.0f; }
 
-		icollider *GetCollider() override { return nullptr; }
+		ICollider *GetCollider() override { return nullptr; }
 
-		particletype *GetParticleType() const { return m_particleType; }
+		ParticleType *GetParticleType() const { return m_particleType; }
 
 		Vector3 *GetPosition() const { return m_position; }
 

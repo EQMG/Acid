@@ -2,13 +2,13 @@
 
 #include <vector>
 
-#include "../renderer/irenderer.hpp"
+#include "../renderer/IRenderer.hpp"
 
-#include "particles.hpp"
+#include "Particles.hpp"
 
 namespace Flounder
 {
-	class rendererparticles :
+	class RendererParticles :
 		public IRenderer
 	{
 	private:
@@ -23,18 +23,18 @@ namespace Flounder
 
 		int m_rendered;
 	public:
-		rendererparticles();
+		RendererParticles();
 
-		~rendererparticles();
+		~RendererParticles();
 
 		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
-		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
+		void PrepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 
-		void prepareInstance(Particle *particle, const ICamera &camera, std::vector<float> *vboData);
+		void PrepareInstance(Particle *particle, const ICamera &camera, std::vector<float> *vboData);
 
-		void renderInstances(particletype *particleType, std::vector<float> *vboData);
+		void RenderInstances(ParticleType *particleType, std::vector<float> *vboData);
 
-		void endRendering();
+		void EndRendering();
 	};
 }

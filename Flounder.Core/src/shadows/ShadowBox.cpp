@@ -16,7 +16,7 @@ namespace Flounder
 		m_farWidth(0.0f),
 		m_nearHeight(0.0f),
 		m_nearWidth(0.0f),
-		m_aabb(new aabb())
+		m_aabb(new Aabb())
 	{
 	}
 
@@ -222,9 +222,9 @@ namespace Flounder
 	void shadowbox::updateOrthoProjectionMatrix()
 	{
 		m_projectionMatrix->SetIdentity();
-		m_projectionMatrix->m_00 = 2.0f / m_aabb->getWidth();
-		m_projectionMatrix->m_11 = 2.0f / m_aabb->getHeight();
-		m_projectionMatrix->m_22 = -2.0f / m_aabb->getDepth();
+		m_projectionMatrix->m_00 = 2.0f / m_aabb->GetWidth();
+		m_projectionMatrix->m_11 = 2.0f / m_aabb->GetHeight();
+		m_projectionMatrix->m_22 = -2.0f / m_aabb->GetDepth();
 		m_projectionMatrix->m_33 = 1.0f;
 	}
 

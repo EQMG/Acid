@@ -19,7 +19,7 @@ namespace Flounder
 	class ParticleSystem
 	{
 	private:
-		std::vector<particletype*> *m_types;
+		std::vector<ParticleType*> *m_types;
 		ISpawnParticle *m_spawn;
 		float m_pps;
 		float m_averageSpeed;
@@ -46,7 +46,7 @@ namespace Flounder
 		/// <param name="pps"> Particles per second. </param>
 		/// <param name="speed"> The particle speed. </param>
 		/// <param name="gravityEffect"> How much gravity will effect the particle. </param>
-		ParticleSystem(std::vector<particletype*> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect);
+		ParticleSystem(std::vector<ParticleType*> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect);
 
 		/// <summary>
 		/// Deconstructor for the particle system.
@@ -57,15 +57,15 @@ namespace Flounder
 	private:
 		Particle *EmitParticle();
 
-		float GenerateValue(const float &average, const float &errorMargin);
+		float GenerateValue(const float &average, const float &errorMargin) const;
 
-		float GenerateRotation();
+		float GenerateRotation() const;
 
-		Vector3 *GenerateRandomUnitVector();
+		Vector3 *GenerateRandomUnitVector() const;
 	public:
-		void AddParticleType(particletype *type);
+		void AddParticleType(ParticleType *type) const;
 
-		void RemoveParticleType(particletype *type);
+		void RemoveParticleType(ParticleType *type) const;
 
 		ISpawnParticle *GetSpawn() const { return m_spawn; }
 
@@ -77,42 +77,42 @@ namespace Flounder
 
 		float GetAverageSpeed() const { return m_averageSpeed; }
 
-		void setAverageSpeed(const float &averageSpeed) { m_averageSpeed = averageSpeed; }
+		void SetAverageSpeed(const float &averageSpeed) { m_averageSpeed = averageSpeed; }
 
-		float getGravityEffect() const { return m_gravityEffect; }
+		float GetGravityEffect() const { return m_gravityEffect; }
 
-		void setGravityEffect(const float &gravityEffect) { m_gravityEffect = gravityEffect; }
+		void SetGravityEffect(const float &gravityEffect) { m_gravityEffect = gravityEffect; }
 
-		bool getRandomRotation() const { return m_randomRotation; }
+		bool GetRandomRotation() const { return m_randomRotation; }
 
-		void setRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
+		void SetRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
 
-		Vector3 *getSystemCentre() const { return m_systemCentre; }
+		Vector3 *GetSystemCentre() const { return m_systemCentre; }
 
-		void setSystemCentre(const Vector3 &systemCentre) const { m_systemCentre->Set(systemCentre); }
+		void SetSystemCentre(const Vector3 &systemCentre) const { m_systemCentre->Set(systemCentre); }
 
-		Vector3 *getVelocityCentre() const { return m_velocityCentre; }
+		Vector3 *GetVelocityCentre() const { return m_velocityCentre; }
 
-		void setVelocityCentre(const Vector3 &velocityCentre) const { m_velocityCentre->Set(velocityCentre); }
+		void SetVelocityCentre(const Vector3 &velocityCentre) const { m_velocityCentre->Set(velocityCentre); }
 
-		Vector3 *getDirection() const { return m_direction; }
+		Vector3 *GetDirection() const { return m_direction; }
 
-		void setDirection(const Vector3 &direction, const float &deviation);
+		void SetDirection(const Vector3 &direction, const float &deviation);
 
-		float getSpeedError() const { return m_speedError; }
+		float GetSpeedError() const { return m_speedError; }
 
-		void setSpeedError(const float &speedError) { m_speedError = speedError; }
+		void SetSpeedError(const float &speedError) { m_speedError = speedError; }
 
-		float getLifeError() const { return m_lifeError; }
+		float GetLifeError() const { return m_lifeError; }
 
-		void setLifeError(const float &lifeError) { m_lifeError = lifeError; }
+		void SetLifeError(const float &lifeError) { m_lifeError = lifeError; }
 
-		float getScaleError() const { return m_scaleError; }
+		float GetScaleError() const { return m_scaleError; }
 
-		void setScaleError(const float &scaleError) { m_scaleError = scaleError; }
+		void SetScaleError(const float &scaleError) { m_scaleError = scaleError; }
 
-		bool getPaused() const { return m_paused; }
+		bool GetPaused() const { return m_paused; }
 
-		void setPaused(const bool &paused) { m_paused = paused; }
+		void SetPaused(const bool &paused) { m_paused = paused; }
 	};
 }

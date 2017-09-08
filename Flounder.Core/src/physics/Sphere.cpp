@@ -1,41 +1,41 @@
-#include "sphere.hpp"
+#include "Sphere.hpp"
 
 namespace Flounder
 {
-	sphere::sphere() :
-		icollider(),
+	Sphere::Sphere() :
+		ICollider(),
 		m_radius(1.0f),
 		m_position(new Vector3())
 	{
 	}
 
-	sphere::sphere(const float &radius, const Vector3 &position) :
-		icollider(),
+	Sphere::Sphere(const float &radius, const Vector3 &position) :
+		ICollider(),
 		m_radius(radius),
 		m_position(new Vector3(position))
 	{
 	}
 
-	sphere::sphere(const sphere &source) :
-		icollider(),
+	Sphere::Sphere(const Sphere &source) :
+		ICollider(),
 		m_radius(source.m_radius),
 		m_position(new Vector3(*source.m_position))
 	{
 	}
 
-	sphere::~sphere()
+	Sphere::~Sphere()
 	{
 		delete m_position;
 	}
 
-	icollider *sphere::update(const Vector3 &position, const Vector3 &rotation, const float &scale, icollider *destination)
+	ICollider *Sphere::Update(const Vector3 &position, const Vector3 &rotation, const float &scale, ICollider *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new sphere();
+			destination = new Sphere();
 		}
 
-		sphere *source = dynamic_cast<sphere*>(destination);
+		Sphere *source = dynamic_cast<Sphere*>(destination);
 
 		source->m_radius = m_radius * scale;
 		source->m_position->Set(position);
@@ -43,14 +43,14 @@ namespace Flounder
 		return source;
 	}
 
-	Vector3 *sphere::resolveCollision(const icollider &other, const Vector3 &positionDelta, Vector3 *destination)
+	Vector3 *Sphere::ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination)
 	{
 		if (destination == nullptr)
 		{
 			destination = new Vector3();
 		}
 
-		const sphere &sphere2 = dynamic_cast<const sphere&>(other);
+		const Sphere &sphere2 = dynamic_cast<const Sphere&>(other);
 		float d = sphere2.m_radius + m_radius;
 
 		float xDif = m_position->m_x - sphere2.m_position->m_x;
@@ -61,7 +61,7 @@ namespace Flounder
 		return destination;
 	}
 
-	intersect *sphere::intersects(const icollider &other)
+	Intersect *Sphere::Intersects(const ICollider &other)
 	{
 		/*if (dynamic_cast<aabb*>(other) != 0)
 		{
@@ -99,7 +99,7 @@ namespace Flounder
 			return new intersect(distanceSquared > 0.0f, dynamic_cast<float>(sqrt(distanceSquared)));
 		}
 		else */
-		const sphere &sphere2 = dynamic_cast<const sphere&>(other);
+		const Sphere &sphere2 = dynamic_cast<const Sphere&>(other);
 
 		float d = sphere2.m_radius + m_radius;
 
@@ -109,10 +109,10 @@ namespace Flounder
 		float distance = xDif * xDif + yDif * yDif + zDif * zDif;
 
 		bool intersects = d * d > distance;
-		return new intersect(intersects, (d * d) - distance);
+		return new Intersect(intersects, (d * d) - distance);
 	}
 
-	intersect *sphere::intersects(const ray &ray)
+	Intersect *Sphere::Intersects(const Ray &ray)
 	{
 		Vector3 *L = Vector3::Subtract(*ray.m_origin, *m_position, nullptr);
 
@@ -126,7 +126,7 @@ namespace Flounder
 
 		if (disc < 0.0f)
 		{
-			return new intersect(false, -1.0f);
+			return new Intersect(false, -1.0f);
 		}
 
 		float distSqrt = sqrt(disc);
@@ -153,7 +153,7 @@ namespace Flounder
 
 		if (t1 < 0.0f)
 		{
-			return new intersect(false, -1.0f);
+			return new Intersect(false, -1.0f);
 		}
 
 		float t;
@@ -167,17 +167,17 @@ namespace Flounder
 			t = t0;
 		}
 
-		return new intersect(true, t);
+		return new Intersect(true, t);
 	}
 
-	bool sphere::inFrustum(const frustum &frustum)
+	bool Sphere::InFrustum(const Frustum &frustum)
 	{
-		return frustum.sphereInFrustum(m_position->m_x, m_position->m_y, m_position->m_z, m_radius);
+		return frustum.SphereInFrustum(m_position->m_x, m_position->m_y, m_position->m_z, m_radius);
 	}
 
-	bool sphere::contains(const icollider &other)
+	bool Sphere::Contains(const ICollider &other)
 	{
-		const sphere &sphere2 = dynamic_cast<const sphere&>(other);
+		const Sphere &sphere2 = dynamic_cast<const Sphere&>(other);
 
 		return
 			sphere2.m_position->m_x + sphere2.m_radius - 1.0f <= m_position->m_x + m_radius - 1.0f &&
@@ -188,7 +188,7 @@ namespace Flounder
 			sphere2.m_position->m_z - sphere2.m_radius + 1.0f >= m_position->m_z - m_radius + 1.0f;
 	}
 
-	bool sphere::contains(const Vector3 &point)
+	bool Sphere::Contains(const Vector3 &point)
 	{
 		return Vector3::GetDistanceSquared(*m_position, point) <= m_radius * m_radius;
 	}

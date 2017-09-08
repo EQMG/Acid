@@ -1,11 +1,11 @@
-#include "rendererparticles.hpp"
+#include "RendererParticles.hpp"
 
 namespace Flounder
 {
-	const int rendererparticles::MAX_INSTANCES = 27500;
-	const int rendererparticles::INSTANCE_DATA_LENGTH = 22;
+	const int RendererParticles::MAX_INSTANCES = 27500;
+	const int RendererParticles::INSTANCE_DATA_LENGTH = 22;
 
-	rendererparticles::rendererparticles() :
+	RendererParticles::RendererParticles() :
 		IRenderer(),
 		m_shader(new shader("particles", 2,
 			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/particles/particle.vert.spv"),
@@ -28,7 +28,7 @@ namespace Flounder
 		loaders::get()->addInstancedAttribute(m_vaoID, m_vboID, 7, 1, INSTANCE_DATA_LENGTH, 21);*/
 	}
 
-	rendererparticles::~rendererparticles()
+	RendererParticles::~RendererParticles()
 	{
 		delete m_shader;
 #if 0
@@ -37,9 +37,9 @@ namespace Flounder
 #endif
 	}
 
-	void rendererparticles::Render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererParticles::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
-		prepareRendering(clipPlane, camera);
+		PrepareRendering(clipPlane, camera);
 
 		for (auto iter = Particles::Get()->GetParticles()->begin(); iter != Particles::Get()->GetParticles()->end(); ++iter)
 		{
@@ -48,17 +48,17 @@ namespace Flounder
 
 			for (auto it = iter->second->begin(); it != iter->second->end(); ++it)
 			{
-				prepareInstance(*it, camera, vboData);
+				PrepareInstance(*it, camera, vboData);
 			}
 
-			renderInstances((*iter).first, vboData);
+			RenderInstances((*iter).first, vboData);
 			delete vboData;
 		}
 
-		endRendering();
+		EndRendering();
 	}
 
-	void rendererparticles::prepareRendering(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererParticles::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.
@@ -77,7 +77,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererparticles::prepareInstance(Particle *particle, const ICamera &camera, std::vector<float> *vboData)
+	void RendererParticles::PrepareInstance(Particle *particle, const ICamera &camera, std::vector<float> *vboData)
 	{
 		if (m_rendered >= MAX_INSTANCES)
 		{
@@ -128,7 +128,7 @@ namespace Flounder
 		m_rendered++;
 	}
 
-	void rendererparticles::renderInstances(particletype *particleType, std::vector<float> *vboData)
+	void RendererParticles::RenderInstances(ParticleType *particleType, std::vector<float> *vboData)
 	{
 #if 0
 		loaders::get()->updateVBO(m_vboID, INSTANCE_DATA_LENGTH * MAX_INSTANCES, *vboData);
@@ -148,7 +148,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererparticles::endRendering()
+	void RendererParticles::EndRendering()
 	{
 #if 0
 		// Stops the shader.

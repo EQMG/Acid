@@ -50,6 +50,6 @@ namespace Flounder
 
 		void Remove();
 
-		icollider *GetCollider() override;
+		ICollider *GetCollider() override;
 	};
 }

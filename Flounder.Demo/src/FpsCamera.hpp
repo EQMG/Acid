@@ -33,8 +33,8 @@ private:
 	Matrix4 *m_viewMatrix;
 	Matrix4 *m_projectionMatrix;
 
-	frustum *m_viewFrustum;
-	ray *m_viewRay;
+	Frustum *m_viewFrustum;
+	Ray *m_viewRay;
 
 	float m_angleOfElevation;
 	float m_angleAroundPlayer;
@@ -76,9 +76,9 @@ public:
 
 	float GetFov() const override { return FIELD_OF_VIEW; }
 
-	inline frustum *GetViewFrustum() const override { return m_viewFrustum; }
+	inline Frustum *GetViewFrustum() const override { return m_viewFrustum; }
 
-	inline ray *GetViewRay() const override { return m_viewRay; }
+	inline Ray *GetViewRay() const override { return m_viewRay; }
 
 	inline Matrix4 *GetViewMatrix() const override { return m_viewMatrix; }
 

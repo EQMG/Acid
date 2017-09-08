@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 #include "../engine/Engine.hpp"
-#include "../inputs/buttonmouse.hpp"
-#include "../inputs/buttonjoystick.hpp"
-#include "../inputs/axisjoystick.hpp"
-#include "../uis/uiobject.hpp"
+#include "../inputs/ButtonMouse.hpp"
+#include "../inputs/ButtonJoystick.hpp"
+#include "../inputs/AxisJoystick.hpp"
+#include "../uis/UiObject.hpp"
 
 namespace Flounder
 {
@@ -22,8 +22,8 @@ namespace Flounder
 		bool m_leftWasClick;
 		bool m_rightWasClick;
 
-		buttonmouse *m_mouseLeft;
-		buttonmouse *m_mouseRight;
+		ButtonMouse *m_mouseLeft;
+		ButtonMouse *m_mouseRight;
 
 		bool m_joysticksInitialized;
 		int m_selectedJoystick;
