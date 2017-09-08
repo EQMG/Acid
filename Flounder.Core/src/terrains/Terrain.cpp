@@ -12,7 +12,7 @@ namespace Flounder
 		m_rotation(new Vector3(rotation)),
 		m_moved(true),
 		m_modelMatrix(new Matrix4()),
-		m_aabb(new aabb())
+		m_aabb(new Aabb())
 	{
 		generateMesh();
 	}
@@ -102,7 +102,7 @@ namespace Flounder
 		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;
 		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
-		m_aabb->update(*m_position, *m_rotation, 1.0f, m_aabb);
+		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
 
 		//	delete vertices;
 		//	delete normals;

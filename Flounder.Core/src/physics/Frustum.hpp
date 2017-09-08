@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../helpers/helperarray.hpp"
+#include "../helpers/HelperArray.hpp"
 #include "../maths/Matrix4.hpp"
 
 namespace Flounder
@@ -8,44 +8,48 @@ namespace Flounder
 	/// <summary>
 	/// Represents the region of flounder.space in the modeled world that may appear on the screen.
 	/// </summary>
-	class frustum
+	class Frustum
 	{
 	private:
-		// Each frustum planes.
-		static const int RIGHT;
-		static const int LEFT;
-		static const int BOTTOM;
-		static const int TOP;
-		static const int BACK;
-		static const int FRONT;
+		enum FrustumPlanes
+		{
+			FrustumRight = 0,
+			FrustumLeft = 1,
+			FrustumBottom = 2,
+			FrustumTop = 3,
+			FrustumBack = 4,
+			FrustumFront = 5
+		};
 
-		// The values stored in the planes.
-		static const int A;
-		static const int B;
-		static const int C;
-		static const int D;
+		enum FrustumFace
+		{
+			FrustumA = 0,
+			FrustumB = 1,
+			FrustumC = 2,
+			FrustumD = 3
+		};
 
 		float **m_frustum;
 	public:
 		/// <summary>
 		/// Creates a new frustum.
 		/// </summary>
-		frustum();
+		Frustum();
 
 		/// <summary>
 		/// Deconstructor for frustum.
 		/// </summary>
-		~frustum();
+		~Frustum();
 
 		/// <summary>
 		/// Updates a frustum from the view and projection matrix.
 		/// </summary>
 		/// <param name="viewMatrix"> The view matrix. </param>
 		/// <param name="projectionMatrix"> The projection matrix. </param>
-		void update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
+		void Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
 
 		/// <returns> The planes*value array used to represent the frustum. </returns>
-		float **getFrustum() const { return m_frustum; };
+		float **GetFrustum() const { return m_frustum; };
 
 		/// <summary>
 		/// Is the point contained in the frustum?
@@ -54,7 +58,7 @@ namespace Flounder
 		/// <param name="y"> The points Y coord. </param>
 		/// <param name="z"> The points Z coord. </param>
 		/// <returns> True if contained, false if outside. </returns>
-		bool pointInFrustum(const float &x, const float &y, const float &z) const;
+		bool PointInFrustum(const float &x, const float &y, const float &z) const;
 
 		/// <summary>
 		/// Is the sphere contained in the frustum?
@@ -64,7 +68,7 @@ namespace Flounder
 		/// <param name="z"> The sphere Z coord. </param>
 		/// <param name="radius"> The spheres radius. </param>
 		/// <returns> True if contained, false if outside. </returns>
-		bool sphereInFrustum(const float &x, const float &y, const float &z, const float &radius) const;
+		bool SphereInFrustum(const float &x, const float &y, const float &z, const float &radius) const;
 
 		/// <summary>
 		/// Is the cube contained partially in the frustum?
@@ -76,8 +80,8 @@ namespace Flounder
 		/// <param name="y2"> The point 2's Y coord. </param>
 		/// <param name="z2"> The point 2's Z coord. </param>
 		/// <returns> True if partially contained, false if outside. </returns>
-		bool cubeInFrustum(const float &x1, const float &y1, const float &z1, const float &x2, const float &y2, const float &z2) const;
+		bool CubeInFrustum(const float &x1, const float &y1, const float &z1, const float &x2, const float &y2, const float &z2) const;
 	private:
-		void normalizePlane(float **frustum, const int &side);
+		void NormalizePlane(float **frustum, const int &side) const;
 	};
 }

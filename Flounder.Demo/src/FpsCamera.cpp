@@ -24,8 +24,8 @@ FpsCamera::FpsCamera() :
 	m_rotation(new Vector3()),
 	m_viewMatrix(new Matrix4()),
 	m_projectionMatrix(new Matrix4()),
-	m_viewFrustum(new frustum()),
-	m_viewRay(new ray(false, Vector2(0.5f, 0.5f))),
+	m_viewFrustum(new Frustum()),
+	m_viewRay(new Ray(false, Vector2(0.5f, 0.5f))),
 	m_angleOfElevation(25.0f),
 	m_angleAroundPlayer(0.0f),
 	m_targetPosition(new Vector3()),
@@ -85,8 +85,8 @@ void FpsCamera::Update(IPlayer *player)
 	Matrix4::ViewMatrix(*m_position, *m_rotation, m_viewMatrix);
 	Matrix4::PerspectiveMatrix(GetFov(), static_cast<float>(Display::Get()->GetAspectRatio()), GetNearPlane(), GetFarPlane(), m_projectionMatrix);
 
-	m_viewFrustum->update(*m_projectionMatrix, *m_viewMatrix);
-	m_viewRay->update(*m_position, Vector2(static_cast<float>(Mouse::Get()->GetPositionX()), static_cast<float>(Mouse::Get()->GetPositionY())), *m_viewMatrix, *m_projectionMatrix);
+	m_viewFrustum->Update(*m_projectionMatrix, *m_viewMatrix);
+	m_viewRay->Update(*m_position, Vector2(static_cast<float>(Mouse::Get()->GetPositionX()), static_cast<float>(Mouse::Get()->GetPositionY())), *m_viewMatrix, *m_projectionMatrix);
 }
 
 void FpsCamera::CalculateHorizontalAngle()

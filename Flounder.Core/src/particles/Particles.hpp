@@ -23,7 +23,7 @@ namespace Flounder
 		static const float MAX_ELAPSED_TIME;
 
 		std::vector<ParticleSystem*> *m_particleSystems;
-		std::map<particletype*, std::vector<Particle*>*> *m_particles;
+		std::map<ParticleType*, std::vector<Particle*>*> *m_particles;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -67,6 +67,6 @@ namespace Flounder
 		/// Gets a list of all particles.
 		/// </summary>
 		/// <returns> All particles. </returns>
-		std::map<particletype*, std::vector<Particle*>*> *GetParticles() const { return m_particles; }
+		std::map<ParticleType*, std::vector<Particle*>*> *GetParticles() const { return m_particles; }
 	};
 }
