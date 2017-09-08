@@ -407,7 +407,7 @@ namespace Flounder
 	{
 		if (m_aabb == nullptr)
 		{
-			m_aabb = new aabb();
+			m_aabb = new Aabb();
 		}
 
 		float minX = +INFINITY;

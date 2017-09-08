@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	Particle::Particle(particletype *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
+	Particle::Particle(ParticleType *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
 		m_particleType(particleType),
 		m_position(new Vector3(position)),
 		m_velocity(new Vector3(velocity)),
@@ -55,12 +55,12 @@ namespace Flounder
 
 		float lifeFactor = m_elapsedTime / m_lifeLength;
 
-		if (m_particleType->getTexture() == nullptr)
+		if (m_particleType->GetTexture() == nullptr)
 		{
 			return;
 		}
 
-		int stageCount = static_cast<int>(pow(m_particleType->getTexture()->getNumberOfRows(), 2));
+		int stageCount = static_cast<int>(pow(m_particleType->GetTexture()->getNumberOfRows(), 2));
 		float atlasProgression = lifeFactor * stageCount;
 		int index1 = static_cast<int>(floor(atlasProgression));
 		int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
@@ -78,10 +78,10 @@ namespace Flounder
 	Vector2 *Particle::UpdateTextureOffset(Vector2 *offset, const int &index) const
 	{
 		offset->Set(0.0f, 0.0f);
-		int column = index % m_particleType->getTexture()->getNumberOfRows();
-		int row = index / m_particleType->getTexture()->getNumberOfRows();
-		offset->m_x = static_cast<float>(column) / m_particleType->getTexture()->getNumberOfRows();
-		offset->m_y = static_cast<float>(row) / m_particleType->getTexture()->getNumberOfRows();
+		int column = index % m_particleType->GetTexture()->getNumberOfRows();
+		int row = index / m_particleType->GetTexture()->getNumberOfRows();
+		offset->m_x = static_cast<float>(column) / m_particleType->GetTexture()->getNumberOfRows();
+		offset->m_y = static_cast<float>(row) / m_particleType->GetTexture()->getNumberOfRows();
 		return offset;
 	}
 }

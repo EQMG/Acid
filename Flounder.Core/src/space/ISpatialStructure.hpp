@@ -74,7 +74,7 @@ namespace Flounder
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<t> *QueryFrustum(frustum *range, std::vector<t> *result) = 0;
+		virtual std::vector<t> *QueryFrustum(Frustum *range, std::vector<t> *result) = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in a specific range of the spatial structure.
@@ -83,7 +83,7 @@ namespace Flounder
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<t> *QueryBounding(icollider *range, std::vector<t> *result) = 0;
+		virtual std::vector<t> *QueryBounding(ICollider *range, std::vector<t> *result) = 0;
 
 		/// <summary>
 		/// If the structure contains the object.

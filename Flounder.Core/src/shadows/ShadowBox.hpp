@@ -30,7 +30,7 @@ namespace Flounder
 		float m_farHeight, m_farWidth;
 		float m_nearHeight, m_nearWidth;
 
-		aabb *m_aabb;
+		Aabb *m_aabb;
 	public:
 		/// <summary>
 		/// Creates a new shadow box and calculates some initial values relating to the camera's view frustum.
@@ -119,6 +119,6 @@ namespace Flounder
 		/// <returns> The light's "view" matrix. </returns>
 		Matrix4 *getLightSpaceTransform() const { return m_lightViewMatrix; }
 
-		aabb *getAabb() const { return m_aabb; }
+		Aabb *getAabb() const { return m_aabb; }
 	};
 }

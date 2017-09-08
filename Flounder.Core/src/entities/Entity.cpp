@@ -81,7 +81,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	icollider *Entity::GetCollider()
+	ICollider *Entity::GetCollider()
 	{
 		return nullptr;
 	}

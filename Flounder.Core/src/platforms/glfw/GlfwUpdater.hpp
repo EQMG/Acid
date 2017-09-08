@@ -4,8 +4,8 @@
 
 #include "../../devices/Display.hpp"
 
-#include "../../maths/delta.hpp"
-#include "../../maths/timer.hpp"
+#include "../../maths/Delta.hpp"
+#include "../../maths/Timer.hpp"
 
 #include "../../engine/IUpdater.hpp"
 
@@ -51,6 +51,6 @@ namespace Flounder
 
 		float GetTimeMs() override { return GetTime() * 1000.0f; };
 	private:
-		void RunUpdate(ModuleUpdate typeUpdate);
+		void RunUpdate(ModuleUpdate typeUpdate) const;
 	};
 }

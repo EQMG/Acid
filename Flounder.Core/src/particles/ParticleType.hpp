@@ -2,14 +2,14 @@
 
 #include <string>
 
-#include "../textures/texture.hpp"
+#include "../textures/Texture.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A definition for what a particle should act and look like.
 	/// </summary>
-	class particletype
+	class ParticleType
 	{
 	private:
 		std::string m_name;
@@ -24,27 +24,27 @@ namespace Flounder
 		/// <param name="texture"> The particles texture. </param>
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		particletype(const std::string &name, texture *texture, const float &lifeLength, const float &scale);
+		ParticleType(const std::string &name, texture *texture, const float &lifeLength, const float &scale);
 
 		/// <summary>
 		/// Deconstructor for the particle type.
 		/// </summary>
-		~particletype();
+		~ParticleType();
 
-		std::string getName() const { return m_name; }
+		std::string GetName() const { return m_name; }
 
-		void setName(const std::string &name) { m_name = move(name); }
+		void SetName(const std::string &name) { m_name = move(name); }
 
-		texture *getTexture() const { return m_texture; }
+		texture *GetTexture() const { return m_texture; }
 
-		void setTexture(texture *texture) { m_texture = texture; }
+		void SetTexture(texture *texture) { m_texture = texture; }
 
-		float getLifeLength() const { return m_lifeLength; }
+		float GetLifeLength() const { return m_lifeLength; }
 
-		void setLifeLength(const float &lifeLength) { m_lifeLength = lifeLength; }
+		void SetLifeLength(const float &lifeLength) { m_lifeLength = lifeLength; }
 
-		float getScale() const { return m_scale; }
+		float GetScale() const { return m_scale; }
 
-		void setScale(const float &scale) { m_scale = scale; }
+		void SetScale(const float &scale) { m_scale = scale; }
 	};
 }
