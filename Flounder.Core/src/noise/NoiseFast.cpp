@@ -1,4 +1,4 @@
-﻿#include "noisefast.hpp"
+﻿#include "NoiseFast.hpp"
 
 namespace Flounder
 {

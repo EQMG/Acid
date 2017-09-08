@@ -12,8 +12,8 @@ namespace Flounder
 	/// <summary>
 	/// Axis from a joystick.
 	/// </summary>
-	class axisjoystick :
-		public iaxis
+	class AxisJoystick :
+		public IAxis
 	{
 	private:
 		int m_joystick;
@@ -26,13 +26,13 @@ namespace Flounder
 		/// <param name="joystick"> The joystick. Should be one of the GLFW.JOYSTICK values. </param>
 		/// <param name="n_args"> The number axes of joystick axes being checked. </param>
 		/// <param name="..."> The axes on the joystick being checked. </param>
-		axisjoystick(const int &joystick, const int n_args, ...);
+		AxisJoystick(const int &joystick, const int n_args, ...);
 
 		/// <summary>
 		/// Deconstructor for the axis joystick.
 		/// </summary>
-		~axisjoystick();
+		~AxisJoystick();
 
-		float getAmount() const override;
+		float GetAmount() const override;
 	};
 }

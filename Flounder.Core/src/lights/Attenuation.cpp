@@ -2,21 +2,21 @@
 
 namespace Flounder
 {
-	attenuation::attenuation(const float &constant, const float &linear, const float &exponent)
+	Attenuation::Attenuation(const float &constant, const float &linear, const float &exponent)
 	{
-		set(constant, linear, exponent);
+		Set(constant, linear, exponent);
 	}
 
-	attenuation::attenuation(attenuation *source)
+	Attenuation::Attenuation(Attenuation *source)
 	{
-		set(source);
+		Set(source);
 	}
 
-	attenuation::~attenuation()
+	Attenuation::~Attenuation()
 	{
 	}
 
-	attenuation attenuation::set(const float &constant, const float &linear, const float &exponent)
+	Attenuation Attenuation::Set(const float &constant, const float &linear, const float &exponent)
 	{
 		m_constant = constant;
 		m_linear = linear;
@@ -24,7 +24,7 @@ namespace Flounder
 		return this;
 	}
 
-	attenuation attenuation::set(attenuation *source)
+	Attenuation Attenuation::Set(Attenuation *source)
 	{
 		m_constant = source->m_constant;
 		m_linear = source->m_linear;

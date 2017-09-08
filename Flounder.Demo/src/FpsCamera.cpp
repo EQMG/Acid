@@ -34,9 +34,9 @@ FpsCamera::FpsCamera() :
 	m_targetRotationAngle(m_angleAroundPlayer),
 	m_sensitivity(0.9f),
 	m_reangleButton(GLFW_MOUSE_BUTTON_LEFT),
-	m_joystickVertical(new axisjoystick(0, 1, 3)),
-	m_joystickHorizontal(new axisjoystick(0, 1, 2)),
-	m_joystickZoom(new buttonjoystick(0, 1, 9)),
+	m_joystickVertical(new AxisJoystick(0, 1, 3)),
+	m_joystickHorizontal(new AxisJoystick(0, 1, 2)),
+	m_joystickZoom(new ButtonJoystick(0, 1, 9)),
 	m_paused(false)
 {
 }
@@ -74,16 +74,16 @@ void FpsCamera::Update(IPlayer *player)
 
 	if (player != nullptr)
 	{
-		m_targetPosition->set(*player->GetPosition());
-		m_targetRotation->set(*player->GetRotation());
+		m_targetPosition->Set(*player->GetPosition());
+		m_targetRotation->Set(*player->GetRotation());
 	}
 
 	UpdateHorizontalAngle(delta);
 	UpdatePitchAngle(delta);
 	UpdatePosition();
 
-	Matrix4::viewMatrix(*m_position, *m_rotation, m_viewMatrix);
-	Matrix4::perspectiveMatrix(GetFov(), static_cast<float>(Display::Get()->GetAspectRatio()), GetNearPlane(), GetFarPlane(), m_projectionMatrix);
+	Matrix4::ViewMatrix(*m_position, *m_rotation, m_viewMatrix);
+	Matrix4::PerspectiveMatrix(GetFov(), static_cast<float>(Display::Get()->GetAspectRatio()), GetNearPlane(), GetFarPlane(), m_projectionMatrix);
 
 	m_viewFrustum->update(*m_projectionMatrix, *m_viewMatrix);
 	m_viewRay->update(*m_position, Vector2(static_cast<float>(Mouse::Get()->GetPositionX()), static_cast<float>(Mouse::Get()->GetPositionY())), *m_viewMatrix, *m_projectionMatrix);
@@ -95,9 +95,9 @@ void FpsCamera::CalculateHorizontalAngle()
 
 	if (!m_paused)
 	{
-		if (Maths::Deadband(0.05f, m_joystickHorizontal->getAmount()) != 0.0f && !m_joystickZoom->isDown())
+		if (Maths::Deadband(0.05f, m_joystickHorizontal->GetAmount()) != 0.0f && !m_joystickZoom->IsDown())
 		{
-			angleChange = m_joystickHorizontal->getAmount() * INFLUENCE_OF_JOYSTICK_DX * m_sensitivity;
+			angleChange = m_joystickHorizontal->GetAmount() * INFLUENCE_OF_JOYSTICK_DX * m_sensitivity;
 		}
 		else
 		{
@@ -135,9 +135,9 @@ void FpsCamera::CalculateVerticalAngle()
 
 	if (!m_paused)
 	{
-		if (Maths::Deadband(0.05f, m_joystickVertical->getAmount()) != 0.0f && !m_joystickZoom->isDown())
+		if (Maths::Deadband(0.05f, m_joystickVertical->GetAmount()) != 0.0f && !m_joystickZoom->IsDown())
 		{
-			angleChange = m_joystickVertical->getAmount() * INFLUENCE_OF_JOYSTICK_DY * m_sensitivity;
+			angleChange = m_joystickVertical->GetAmount() * INFLUENCE_OF_JOYSTICK_DY * m_sensitivity;
 		}
 		else
 		{
@@ -240,5 +240,5 @@ void FpsCamera::ReflectView(const float &waterHeight)
 {
 	m_position->m_y -= 2.0f * (m_position->m_y - waterHeight);
 	m_rotation->m_x = -m_rotation->m_x;
-	Matrix4::viewMatrix(*m_position, *m_rotation, m_viewMatrix);
+	Matrix4::ViewMatrix(*m_position, *m_rotation, m_viewMatrix);
 }

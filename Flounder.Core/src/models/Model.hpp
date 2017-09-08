@@ -66,13 +66,13 @@ namespace Flounder
 		/// </summary>
 		void LoadFromFile();
 
-		void LoadMaterials(const std::string &filepath, std::vector<material> *list);
+		void LoadMaterials(const std::string &filepath, std::vector<Material> *list);
 
-		vertexdata *ProcessDataVertex(Vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices);
+		VertexData *ProcessDataVertex(Vector3 vertex, std::vector<VertexData*> *vertices, std::vector<int> *indices);
 
-		vertexdata *DealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices);
+		VertexData *DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<VertexData*> *vertices);
 
-		void CalculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<Vector2> *textures);
+		void CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *textures);
 
 		void LoadToVulkan();
 

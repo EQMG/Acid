@@ -1,29 +1,29 @@
 ﻿#pragma once
 
-#include "ispawnparticle.hpp"
+#include "ISpawnParticle.hpp"
 
 namespace Flounder
 {
-	class spawncircle :
-		public ispawnparticle
+	class SpawnCircle :
+		public ISpawnParticle
 	{
 	private:
 		float m_radius;
 		Vector3 *m_heading;
 		Vector3 *m_spawnPosition;
 	public:
-		spawncircle(const float &radius, const Vector3 &heading);
+		SpawnCircle(const float &radius, const Vector3 &heading);
 
-		~spawncircle();
+		~SpawnCircle();
 
-		float getRadius() { return m_radius; }
+		Vector3 *GetBaseSpawnPosition() override;
 
-		void setRadius(const float &radius) { m_radius = radius; }
+		float GetRadius() const { return m_radius; }
 
-		Vector3 *getHeading() { return m_heading; }
+		void SetRadius(const float &radius) { m_radius = radius; }
 
-		void setHeading(const Vector3 &heading) { m_heading->set(heading); }
+		Vector3 *GetHeading() const { return m_heading; }
 
-		Vector3 *getBaseSpawnPosition() override;
+		void SetHeading(const Vector3 &heading) const { m_heading->Set(heading); }
 	};
 }

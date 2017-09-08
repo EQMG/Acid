@@ -36,8 +36,8 @@ namespace Flounder
 			destination = new aabb();
 		}
 
-		destination->m_minExtents->set(source.m_minExtents->m_x * scale.m_x, source.m_minExtents->m_y * scale.m_y, source.m_minExtents->m_z * scale.m_z);
-		destination->m_maxExtents->set(source.m_maxExtents->m_x * scale.m_x, source.m_maxExtents->m_y * scale.m_y, source.m_maxExtents->m_z * scale.m_z);
+		destination->m_minExtents->Set(source.m_minExtents->m_x * scale.m_x, source.m_minExtents->m_y * scale.m_y, source.m_minExtents->m_z * scale.m_z);
+		destination->m_maxExtents->Set(source.m_maxExtents->m_x * scale.m_x, source.m_maxExtents->m_y * scale.m_y, source.m_maxExtents->m_z * scale.m_z);
 
 		return destination;
 	}
@@ -54,8 +54,8 @@ namespace Flounder
 			destination = new aabb();
 		}
 
-		destination->m_minExtents->set(source.m_minExtents->m_x - expand.m_x, source.m_minExtents->m_y - expand.m_y, source.m_minExtents->m_z - expand.m_z);
-		destination->m_maxExtents->set(source.m_maxExtents->m_x + expand.m_x, source.m_maxExtents->m_y + expand.m_y, source.m_maxExtents->m_z + expand.m_z);
+		destination->m_minExtents->Set(source.m_minExtents->m_x - expand.m_x, source.m_minExtents->m_y - expand.m_y, source.m_minExtents->m_z - expand.m_z);
+		destination->m_maxExtents->Set(source.m_maxExtents->m_x + expand.m_x, source.m_maxExtents->m_y + expand.m_y, source.m_maxExtents->m_z + expand.m_z);
 
 		return destination;
 	}
@@ -79,8 +79,8 @@ namespace Flounder
 		float newMaxY = Maths::Max(left.m_maxExtents->m_y, right.m_maxExtents->m_y);
 		float newMaxZ = Maths::Max(left.m_maxExtents->m_z, right.m_maxExtents->m_z);
 
-		destination->m_minExtents->set(newMinX, newMinY, newMinZ);
-		destination->m_maxExtents->set(newMaxX, newMaxY, newMaxZ);
+		destination->m_minExtents->Set(newMinX, newMinY, newMinZ);
+		destination->m_maxExtents->Set(newMaxX, newMaxY, newMaxZ);
 
 		return destination;
 	}
@@ -127,8 +127,8 @@ namespace Flounder
 			newMaxZ = source.m_maxExtents->m_z + stretch.m_z;
 		}
 
-		destination->m_minExtents->set(newMinX, newMinY, newMinZ);
-		destination->m_maxExtents->set(newMaxX, newMaxY, newMaxZ);
+		destination->m_minExtents->Set(newMinX, newMinY, newMinZ);
+		destination->m_maxExtents->Set(newMaxX, newMaxY, newMaxZ);
 
 		return destination;
 	}
@@ -148,60 +148,60 @@ namespace Flounder
 		aabb *aabb2 = dynamic_cast<aabb*>(destination);
 
 		// Sets the destinations values to the sources.
-		aabb2->m_minExtents->set(*m_minExtents);
-		aabb2->m_maxExtents->set(*m_maxExtents);
+		aabb2->m_minExtents->Set(*m_minExtents);
+		aabb2->m_maxExtents->Set(*m_maxExtents);
 
 		// Scales the dimensions for the aabb.
 		if (scale != 1.0f)
 		{
-			aabb2->m_minExtents->set(aabb2->m_minExtents->m_x * scale, aabb2->m_minExtents->m_y * scale, aabb2->m_minExtents->m_z * scale);
-			aabb2->m_maxExtents->set(aabb2->m_maxExtents->m_x * scale, aabb2->m_maxExtents->m_y * scale, aabb2->m_maxExtents->m_z * scale);
+			aabb2->m_minExtents->Set(aabb2->m_minExtents->m_x * scale, aabb2->m_minExtents->m_y * scale, aabb2->m_minExtents->m_z * scale);
+			aabb2->m_maxExtents->Set(aabb2->m_maxExtents->m_x * scale, aabb2->m_maxExtents->m_y * scale, aabb2->m_maxExtents->m_z * scale);
 		}
 
 		// Creates the 8 aabb corners and rotates them.
-		if (!rotation.isZero())
+		if (!rotation.IsZero())
 		{
 			Vector3 *fll = new Vector3(aabb2->m_minExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_minExtents->m_z);
-			Matrix4::rotate(*fll, rotation, fll);
+			Matrix4::Rotate(*fll, rotation, fll);
 
 			Vector3 *flr = new Vector3(aabb2->m_maxExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_minExtents->m_z);
-			Matrix4::rotate(*flr, rotation, flr);
+			Matrix4::Rotate(*flr, rotation, flr);
 
 			Vector3 *ful = new Vector3(aabb2->m_minExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_minExtents->m_z);
-			Matrix4::rotate(*ful, rotation, ful);
+			Matrix4::Rotate(*ful, rotation, ful);
 
 			Vector3 *fur = new Vector3(aabb2->m_maxExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_minExtents->m_z);
-			Matrix4::rotate(*fur, rotation, fur);
+			Matrix4::Rotate(*fur, rotation, fur);
 
 			Vector3 *bur = new Vector3(aabb2->m_maxExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_maxExtents->m_z);
-			Matrix4::rotate(*bur, rotation, bur);
+			Matrix4::Rotate(*bur, rotation, bur);
 
 			Vector3 *bul = new Vector3(aabb2->m_minExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_maxExtents->m_z);
-			Matrix4::rotate(*bul, rotation, bul);
+			Matrix4::Rotate(*bul, rotation, bul);
 
 			Vector3 *blr = new Vector3(aabb2->m_maxExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_maxExtents->m_z);
-			Matrix4::rotate(*blr, rotation, blr);
+			Matrix4::Rotate(*blr, rotation, blr);
 
 			Vector3 *bll = new Vector3(aabb2->m_minExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_maxExtents->m_z);
-			Matrix4::rotate(*bll, rotation, bll);
+			Matrix4::Rotate(*bll, rotation, bll);
 
 			//aabb2->m_minExtents = min(fll, min(flr, min(ful, min(fur, min(bur, min(bul, min(blr, bll)))))));
-			Vector3::minVector(*fll, *flr, aabb2->m_minExtents);
-			Vector3::minVector(*aabb2->m_minExtents, *ful, aabb2->m_minExtents);
-			Vector3::minVector(*aabb2->m_minExtents, *fur, aabb2->m_minExtents);
-			Vector3::minVector(*aabb2->m_minExtents, *bur, aabb2->m_minExtents);
-			Vector3::minVector(*aabb2->m_minExtents, *bul, aabb2->m_minExtents);
-			Vector3::minVector(*aabb2->m_minExtents, *blr, aabb2->m_minExtents);
-			Vector3::minVector(*aabb2->m_minExtents, *bll, aabb2->m_minExtents);
+			Vector3::MinVector(*fll, *flr, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, *ful, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, *fur, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, *bur, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, *bul, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, *blr, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, *bll, aabb2->m_minExtents);
 
 			//aabb2->m_maxExtents = max(fll, max(flr, max(ful, max(fur, max(bur, max(bul, max(blr, bll)))))));
-			Vector3::maxVector(*fll, *flr, aabb2->m_maxExtents);
-			Vector3::maxVector(*aabb2->m_maxExtents, *ful, aabb2->m_maxExtents);
-			Vector3::maxVector(*aabb2->m_maxExtents, *fur, aabb2->m_maxExtents);
-			Vector3::maxVector(*aabb2->m_maxExtents, *bur, aabb2->m_maxExtents);
-			Vector3::maxVector(*aabb2->m_maxExtents, *bul, aabb2->m_maxExtents);
-			Vector3::maxVector(*aabb2->m_maxExtents, *blr, aabb2->m_maxExtents);
-			Vector3::maxVector(*aabb2->m_maxExtents, *bll, aabb2->m_maxExtents);
+			Vector3::MaxVector(*fll, *flr, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, *ful, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, *fur, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, *bur, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, *bul, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, *blr, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, *bll, aabb2->m_maxExtents);
 
 			delete fll;
 			delete flr;
@@ -214,8 +214,8 @@ namespace Flounder
 		}
 
 		// Transforms the aabb.
-		Vector3::add(*aabb2->m_minExtents, position, aabb2->m_minExtents);
-		Vector3::add(*aabb2->m_maxExtents, position, aabb2->m_maxExtents);
+		Vector3::Add(*aabb2->m_minExtents, position, aabb2->m_minExtents);
+		Vector3::Add(*aabb2->m_maxExtents, position, aabb2->m_maxExtents);
 
 		// Returns the final aabb.
 		return aabb2;
@@ -300,10 +300,10 @@ namespace Flounder
 	{
 		const aabb &aabb2 = dynamic_cast<const aabb&>(other);
 
-		Vector3 *distance1 = Vector3::subtract(*m_minExtents, *aabb2.m_maxExtents, nullptr);
-		Vector3 *distance2 = Vector3::subtract(*aabb2.m_minExtents, *m_maxExtents, nullptr);
-		Vector3 *maxDistance = Vector3::maxVector(*distance1, *distance2, nullptr);
-		float maxDist = Vector3::maxComponent(*maxDistance);
+		Vector3 *distance1 = Vector3::Subtract(*m_minExtents, *aabb2.m_maxExtents, nullptr);
+		Vector3 *distance2 = Vector3::Subtract(*aabb2.m_minExtents, *m_maxExtents, nullptr);
+		Vector3 *maxDistance = Vector3::MaxVector(*distance1, *distance2, nullptr);
+		float maxDist = Vector3::MaxComponent(*maxDistance);
 
 		delete distance1;
 		delete distance2;

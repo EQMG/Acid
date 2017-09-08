@@ -31,19 +31,19 @@ namespace Flounder
 		/// </summary>
 		~particletype();
 
-		std::string getName() { return m_name; }
+		std::string getName() const { return m_name; }
 
 		void setName(const std::string &name) { m_name = move(name); }
 
-		texture *getTexture() { return m_texture; }
+		texture *getTexture() const { return m_texture; }
 
 		void setTexture(texture *texture) { m_texture = texture; }
 
-		float getLifeLength() { return m_lifeLength; }
+		float getLifeLength() const { return m_lifeLength; }
 
 		void setLifeLength(const float &lifeLength) { m_lifeLength = lifeLength; }
 
-		float getScale() { return m_scale; }
+		float getScale() const { return m_scale; }
 
 		void setScale(const float &scale) { m_scale = scale; }
 	};

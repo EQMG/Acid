@@ -46,9 +46,9 @@ private:
 
 	float m_sensitivity;
 	int m_reangleButton;
-	axisjoystick *m_joystickVertical;
-	axisjoystick *m_joystickHorizontal;
-	buttonjoystick *m_joystickZoom;
+	AxisJoystick *m_joystickVertical;
+	AxisJoystick *m_joystickHorizontal;
+	ButtonJoystick *m_joystickZoom;
 
 	bool m_paused;
 public:

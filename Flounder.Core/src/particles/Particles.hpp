@@ -5,68 +5,68 @@
 #include <algorithm>
 
 #include "../engine/Engine.hpp"
-#include "../uis/uis.hpp"
+#include "../uis/Uis.hpp"
 #include "../space/StructureBasic.hpp"
 
-#include "particle.hpp"
-#include "particlesystem.hpp"
+#include "Particle.hpp"
+#include "ParticleSystem.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A manager that manages particles.
 	/// </summary>
-	class particles :
+	class Particles :
 		public IModule
 	{
 	private:
 		static const float MAX_ELAPSED_TIME;
 
-		std::vector<particlesystem*> *m_particleSystems;
-		std::map<particletype*, std::vector<particle*>*> *m_particles;
+		std::vector<ParticleSystem*> *m_particleSystems;
+		std::map<particletype*, std::vector<Particle*>*> *m_particles;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static particles *get()
+		static Particles *Get()
 		{
-			return static_cast<particles*>(Engine::Get()->GetModule("particles"));
+			return static_cast<Particles*>(Engine::Get()->GetModule("particles"));
 		}
 
 		/// <summary>
 		/// Creates a new particles module.
 		/// </summary>
-		particles();
+		Particles();
 
 		/// <summary>
 		/// Deconstructor for the particles module.
 		/// </summary>
-		~particles();
+		~Particles();
 
 		void Update() override;
 
 		/// <summary>
 		/// Clears all particles from the scene.
 		/// </summary>
-		void clear();
+		void Clear();
 
 		/// <summary>
 		/// Adds a particle system to the recalculateRay loop.
 		/// </summary>
 		/// <param name="system"> The new system to add. </param>
-		void addSystem(particlesystem *system);
+		void AddSystem(ParticleSystem *system);
 
 		/// <summary>
 		/// Removes a particle system from the recalculateRay loop.
 		/// </summary>
 		/// <param name="system"> The system to remove. </param>
-		void removeSystem(particlesystem *system);
+		void RemoveSystem(ParticleSystem *system);
 
 		/// <summary>
 		/// Gets a list of all particles.
 		/// </summary>
 		/// <returns> All particles. </returns>
-		std::map<particletype*, std::vector<particle*>*> *getParticles() const { return m_particles; }
+		std::map<particletype*, std::vector<Particle*>*> *GetParticles() const { return m_particles; }
 	};
 }

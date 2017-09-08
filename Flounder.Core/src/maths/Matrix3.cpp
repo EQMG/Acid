@@ -45,7 +45,7 @@ namespace Flounder
 	{
 	}
 
-	Matrix3 *Matrix3::set(const Matrix3 &source)
+	Matrix3 *Matrix3::Set(const Matrix3 &source)
 	{
 		m_00 = source.m_00;
 		m_01 = source.m_01;
@@ -59,7 +59,7 @@ namespace Flounder
 		return this;
 	}
 
-	Matrix3 *Matrix3::set(const float source[9])
+	Matrix3 *Matrix3::Set(const float source[9])
 	{
 		m_00 = source[0];
 		m_01 = source[1];
@@ -73,7 +73,7 @@ namespace Flounder
 		return this;
 	}
 
-	Matrix3 *Matrix3::setIdentity(Matrix3 *source)
+	Matrix3 *Matrix3::SetIdentity(Matrix3 *source)
 	{
 		source->m_00 = 1.0f;
 		source->m_01 = 0.0f;
@@ -87,12 +87,12 @@ namespace Flounder
 		return source;
 	}
 
-	float Matrix3::determinant(const Matrix3 &source)
+	float Matrix3::Determinant(const Matrix3 &source)
 	{
 		return source.m_00 * (source.m_11 * source.m_22 - source.m_12 * source.m_21) + source.m_01 * (source.m_12 * source.m_20 - source.m_10 * source.m_22) + source.m_02 * (source.m_10 * source.m_21 - source.m_11 * source.m_20);
 	}
 
-	Matrix3 *Matrix3::add(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination)
+	Matrix3 *Matrix3::Add(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -111,7 +111,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix3 *Matrix3::subtract(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination)
+	Matrix3 *Matrix3::Subtract(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -130,7 +130,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix3 *Matrix3::multiply(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination)
+	Matrix3 *Matrix3::Multiply(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -159,7 +159,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Vector3 *Matrix3::transform(const Matrix3 &left, const Vector3 &right, Vector3 *destination)
+	Vector3 *Matrix3::Transform(const Matrix3 &left, const Vector3 &right, Vector3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -170,10 +170,10 @@ namespace Flounder
 		float y = left.m_01 * right.m_x + left.m_11 * right.m_y + left.m_21 * right.m_z;
 		float z = left.m_02 * right.m_x + left.m_12 * right.m_y + left.m_22 * right.m_z;
 
-		return destination->set(x, y, z);
+		return destination->Set(x, y, z);
 	}
 
-	Matrix3 *Matrix3::scale(const Matrix3 &left, const Vector3 &right, Matrix3 *destination)
+	Matrix3 *Matrix3::Scale(const Matrix3 &left, const Vector3 &right, Matrix3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -192,9 +192,9 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix3 *Matrix3::invert(const Matrix3 &source, Matrix3 *destination)
+	Matrix3 *Matrix3::Invert(const Matrix3 &source, Matrix3 *destination)
 	{
-		float d = determinant(source);
+		float d = Determinant(source);
 
 		if (d != 0.0f)
 		{
@@ -233,7 +233,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	Matrix3 *Matrix3::negate(const Matrix3 &source, Matrix3 *destination)
+	Matrix3 *Matrix3::Negate(const Matrix3 &source, Matrix3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -252,7 +252,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix3 *Matrix3::transpose(const Matrix3 &source, Matrix3 *destination)
+	Matrix3 *Matrix3::Transpose(const Matrix3 &source, Matrix3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -281,7 +281,7 @@ namespace Flounder
 		return destination;
 	}
 
-	float *Matrix3::toArray(const Matrix3 &matrix)
+	float *Matrix3::ToArray(const Matrix3 &matrix)
 	{
 		float *result = new float[9];
 		result[0] = matrix.m_00;
@@ -296,7 +296,7 @@ namespace Flounder
 		return result;
 	}
 
-	Matrix3 *Matrix3::setZero(Matrix3 *source)
+	Matrix3 *Matrix3::SetZero(Matrix3 *source)
 	{
 		source->m_00 = 0.0f;
 		source->m_01 = 0.0f;
@@ -310,33 +310,33 @@ namespace Flounder
 		return source;
 	}
 
-	Matrix3 *Matrix3::setIdentity()
+	Matrix3 *Matrix3::SetIdentity()
 	{
-		return setIdentity(this);
+		return SetIdentity(this);
 	}
 
-	float Matrix3::determinant()
+	float Matrix3::Determinant()
 	{
-		return determinant(*this);
+		return Determinant(*this);
 	}
 
-	Matrix3 *Matrix3::invert()
+	Matrix3 *Matrix3::Invert()
 	{
-		return invert(*this, this);
+		return Invert(*this, this);
 	}
 
-	Matrix3 *Matrix3::negate()
+	Matrix3 *Matrix3::Negate()
 	{
-		return negate(*this, this);
+		return Negate(*this, this);
 	}
 
-	Matrix3 *Matrix3::transpose()
+	Matrix3 *Matrix3::Transpose()
 	{
-		return transpose(*this, this);
+		return Transpose(*this, this);
 	}
 
-	Matrix3 *Matrix3::setZero()
+	Matrix3 *Matrix3::SetZero()
 	{
-		return setZero(this);
+		return SetZero(this);
 	}
 }

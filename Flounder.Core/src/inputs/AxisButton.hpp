@@ -13,25 +13,25 @@ namespace Flounder
 	/// <summary>
 	/// Axis composed of two buttons.
 	/// </summary>
-	class axisbutton :
-		public iaxis
+	class AxisButton :
+		public IAxis
 	{
 	private:
-		ibutton *m_negative;
-		ibutton *m_positive;
+		IButton *m_negative;
+		IButton *m_positive;
 	public:
 		/// <summary>
 		/// Creates a new axis button.
 		/// </summary>
 		/// <param name="negative"> When this button is down, the axis is negative. </param>
 		/// <param name="positive"> When this button is down, the axis is positive. </param>
-		axisbutton(ibutton *negative, ibutton *positive);
+		AxisButton(IButton *negative, IButton *positive);
 
 		/// <summary>
 		/// Deconstructor for the axis joystick.
 		/// </summary>
-		~axisbutton();
+		~AxisButton();
 
-		float getAmount() const override;
+		float GetAmount() const override;
 	};
 }

@@ -28,22 +28,22 @@ namespace Flounder
 
 		Vector3 *GetPosition() const { return m_position; }
 
-		void SetPosition(const Vector3 &position) const { m_position->set(position); }
+		void SetPosition(const Vector3 &position) const { m_position->Set(position); }
 
-		void SetPosition(const float &x, const float &y, const float &z) const { m_position->set(x, y, z); }
+		void SetPosition(const float &x, const float &y, const float &z) const { m_position->Set(x, y, z); }
 
 		Vector3 *GetRotation() const { return m_rotation; }
 
-		void SetRotation(const Vector3 &rotation) const { m_rotation->set(rotation); }
+		void SetRotation(const Vector3 &rotation) const { m_rotation->Set(rotation); }
 
-		void SetRotation(const float &x, const float &y, const float &z) const { m_rotation->set(x, y, z); }
+		void SetRotation(const float &x, const float &y, const float &z) const { m_rotation->Set(x, y, z); }
 
 		Vector3 *GetScaling() const { return m_scaling; }
 
-		void SetScaling(const Vector3 &scaling) const { m_scaling->set(scaling); }
+		void SetScaling(const Vector3 &scaling) const { m_scaling->Set(scaling); }
 
-		void SetScaling(const float &x, const float &y, const float &z) const { m_scaling->set(x, y, z); }
+		void SetScaling(const float &x, const float &y, const float &z) const { m_scaling->Set(x, y, z); }
 
-		void SetScaling(const float &scale) const { m_scaling->set(scale, scale, scale); }
+		void SetScaling(const float &scale) const { m_scaling->Set(scale, scale, scale); }
 	};
 }

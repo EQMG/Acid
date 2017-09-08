@@ -1,6 +1,0 @@
-C:\Users\mattp\Documents\Flounder\Flounder.Editors\bin\Debug\Flounder.Editors.exe.config
-C:\Users\mattp\Documents\Flounder\Flounder.Editors\bin\Debug\Flounder.Editors.exe
-C:\Users\mattp\Documents\Flounder\Flounder.Editors\bin\Debug\Flounder.Editors.pdb
-C:\Users\mattp\Documents\Flounder\Flounder.Editors\obj\Debug\Flounder.Editors.csprojResolveAssemblyReference.cache
-C:\Users\mattp\Documents\Flounder\Flounder.Editors\obj\Debug\Flounder.Editors.exe
-C:\Users\mattp\Documents\Flounder\Flounder.Editors\obj\Debug\Flounder.Editors.pdb

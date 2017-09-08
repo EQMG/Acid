@@ -32,18 +32,18 @@ namespace Flounder
 
 	Matrix4 *Transform::GetWorldMatrix(Matrix4 *destination) const
 	{
-		return Matrix4::transformationMatrix(*m_position, *m_rotation, *m_scaling, destination);
+		return Matrix4::TransformationMatrix(*m_position, *m_rotation, *m_scaling, destination);
 	}
 
 	Matrix4 *Transform::GetModelMatrix(Matrix4 *destination) const
 	{
-		return Matrix4::transformationMatrix(Vector3(), *m_rotation, Vector3(), destination);
+		return Matrix4::TransformationMatrix(Vector3(), *m_rotation, Vector3(), destination);
 	}
 
 	void Transform::Set(const Transform &source) const
 	{
-		m_position->set(*source.m_position);
-		m_rotation->set(*source.m_rotation);
-		m_scaling->set(*source.m_scaling);
+		m_position->Set(*source.m_position);
+		m_rotation->Set(*source.m_rotation);
+		m_scaling->Set(*source.m_scaling);
 	}
 }

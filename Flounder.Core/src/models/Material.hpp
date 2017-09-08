@@ -3,14 +3,14 @@
 #include <string>
 
 #include "../maths/Colour.hpp"
-#include "../textures/texture.hpp"
+#include "../textures/Texture.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A struct that represents a MTL material.
 	/// </summary>
-	struct material
+	struct Material
 	{
 		std::string name;
 

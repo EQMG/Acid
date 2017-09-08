@@ -27,10 +27,10 @@ namespace Flounder
 
 		bool m_joysticksInitialized;
 		int m_selectedJoystick;
-		axisjoystick *m_joystickAxisX;
-		axisjoystick *m_joystickAxisY;
-		buttonjoystick *m_joystickLeft;
-		buttonjoystick *m_joystickRight;
+		AxisJoystick *m_joystickAxisX;
+		AxisJoystick *m_joystickAxisY;
+		ButtonJoystick *m_joystickLeft;
+		ButtonJoystick *m_joystickRight;
 	public:
 		uiselector();
 
