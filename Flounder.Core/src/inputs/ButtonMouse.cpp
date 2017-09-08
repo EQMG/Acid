@@ -2,8 +2,8 @@
 
 namespace Flounder
 {
-	buttonmouse::buttonmouse(const int n_args, ...) :
-		ibutton(),
+	ButtonMouse::ButtonMouse(const int n_args, ...) :
+		IButton(),
 		m_count(n_args),
 		m_buttons(new int[n_args]),
 		m_wasDown(false)
@@ -19,12 +19,12 @@ namespace Flounder
 		va_end(ap);
 	}
 
-	buttonmouse::~buttonmouse()
+	ButtonMouse::~ButtonMouse()
 	{
 		delete m_buttons;
 	}
 
-	bool buttonmouse::isDown() const
+	bool ButtonMouse::IsDown() const
 	{
 		if (Mouse::Get() == nullptr)
 		{
@@ -42,10 +42,10 @@ namespace Flounder
 		return false;
 	}
 
-	bool buttonmouse::wasDown()
+	bool ButtonMouse::WasDown()
 	{
-		bool stillDown = m_wasDown && isDown();
-		m_wasDown = isDown();
+		bool stillDown = m_wasDown && IsDown();
+		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}
 }

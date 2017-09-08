@@ -71,12 +71,12 @@ namespace Flounder
 			UpdateObject();
 		}
 
-		m_screenPosition->set(
+		m_screenPosition->Set(
 			m_position->m_x * (m_inScreenCoords ? static_cast<float>(Display::Get()->GetAspectRatio()) : 1.0f) + m_positionOffsets->m_x,
 			m_position->m_y + m_positionOffsets->m_y
 		);
-		m_screenDimensions->set(m_dimensions->m_x, m_dimensions->m_y);
-		m_screenDimensions->scale(m_scale);
+		m_screenDimensions->Set(m_dimensions->m_x, m_dimensions->m_y);
+		m_screenDimensions->Scale(m_scale);
 	}
 
 	void UiObject::RemoveChild(UiObject *child)

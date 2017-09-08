@@ -2,8 +2,8 @@
 
 namespace Flounder
 {
-	buttonkeyboard::buttonkeyboard(const int n_args, ...) :
-		ibutton(),
+	ButtonKeyboard::ButtonKeyboard(const int n_args, ...) :
+		IButton(),
 		m_count(n_args),
 		m_keys(new int[n_args]),
 		m_wasDown(false)
@@ -19,12 +19,12 @@ namespace Flounder
 		va_end(ap);
 	}
 
-	buttonkeyboard::~buttonkeyboard()
+	ButtonKeyboard::~ButtonKeyboard()
 	{
 		delete m_keys;
 	}
 
-	bool buttonkeyboard::isDown() const
+	bool ButtonKeyboard::IsDown() const
 	{
 		if (Keyboard::Get() == nullptr)
 		{
@@ -42,10 +42,10 @@ namespace Flounder
 		return false;
 	}
 
-	bool buttonkeyboard::wasDown()
+	bool ButtonKeyboard::WasDown()
 	{
-		bool stillDown = m_wasDown && isDown();
-		m_wasDown = isDown();
+		bool stillDown = m_wasDown && IsDown();
+		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}
 }

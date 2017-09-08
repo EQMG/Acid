@@ -20,11 +20,11 @@ private:
 	float m_currentSpeed;
 	float m_currentStrafeSpeed;
 	float m_currentUpwardSpeed;
-	iaxis *m_inputForward;
-	iaxis *m_inputStrafe;
-	iaxis *m_inputNoclip;
-	ibutton *m_inputBoost;
-	ibutton *m_inputJump;
+	IAxis *m_inputForward;
+	IAxis *m_inputStrafe;
+	IAxis *m_inputNoclip;
+	IButton *m_inputBoost;
+	IButton *m_inputJump;
 
 	Vector3 *m_amountMove;
 	Vector3 *m_amountRotate;

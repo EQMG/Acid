@@ -71,7 +71,7 @@ namespace Flounder
 	public:
 		Vector3 *getLightDirection() const { return m_lightDirection; }
 
-		void setLightDirection(const Vector3 &lightDirection) const { m_lightDirection->set(lightDirection); }
+		void setLightDirection(const Vector3 &lightDirection) const { m_lightDirection->Set(lightDirection); }
 
 		float getBrightnessBoost() const { return m_brightnessBoost; }
 

@@ -158,10 +158,10 @@ namespace Flounder
 
 		Vector3 *getMinExtents() const { return m_minExtents; }
 
-		void setMinExtents(const Vector3 &minExtents) const { m_minExtents->set(minExtents); }
+		void setMinExtents(const Vector3 &minExtents) const { m_minExtents->Set(minExtents); }
 
 		Vector3 *getMaxExtents() const { return m_maxExtents; }
 
-		void setMaxExtents(const Vector3 &maxExtents) const { m_maxExtents->set(maxExtents); }
+		void setMaxExtents(const Vector3 &maxExtents) const { m_maxExtents->Set(maxExtents); }
 	};
 }

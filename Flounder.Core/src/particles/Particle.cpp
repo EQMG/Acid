@@ -1,8 +1,8 @@
-﻿#include "particle.hpp"
+﻿#include "Particle.hpp"
 
 namespace Flounder
 {
-	particle::particle(particletype *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
+	Particle::Particle(particletype *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
 		m_particleType(particleType),
 		m_position(new Vector3(position)),
 		m_velocity(new Vector3(velocity)),
@@ -20,7 +20,7 @@ namespace Flounder
 	{
 	}
 
-	particle::~particle()
+	Particle::~Particle()
 	{
 		delete m_position;
 		delete m_velocity;
@@ -30,13 +30,13 @@ namespace Flounder
 		delete m_textureOffset2;
 	}
 
-	void particle::update()
+	void Particle::update()
 	{
 		m_velocity->m_y += -10.0f * m_gravityEffect * Engine::Get()->GetDelta();
-		m_change->set(*m_velocity);
-		m_change->scale(Engine::Get()->GetDelta());
+		m_change->Set(*m_velocity);
+		m_change->Scale(Engine::Get()->GetDelta());
 
-		Vector3::add(*m_change, *m_position, m_position);
+		Vector3::Add(*m_change, *m_position, m_position);
 		m_elapsedTime += Engine::Get()->GetDelta();
 
 		if (m_elapsedTime > m_lifeLength)
@@ -49,8 +49,8 @@ namespace Flounder
 			return;
 		}
 
-		Vector3 *cameraToParticle = Vector3::subtract(*Camera::Get()->GetCamera()->GetPosition(), *m_position, nullptr);
-		m_distanceToCamera = cameraToParticle->lengthSquared();
+		Vector3 *cameraToParticle = Vector3::Subtract(*Camera::Get()->GetCamera()->GetPosition(), *m_position, nullptr);
+		m_distanceToCamera = cameraToParticle->LengthSquared();
 		delete cameraToParticle;
 
 		float lifeFactor = m_elapsedTime / m_lifeLength;
@@ -66,18 +66,18 @@ namespace Flounder
 		int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
 
 		m_textureBlendFactor = fmod(atlasProgression, 1.0f);
-		updateTextureOffset(m_textureOffset1, index1);
-		updateTextureOffset(m_textureOffset2, index2);
+		UpdateTextureOffset(m_textureOffset1, index1);
+		UpdateTextureOffset(m_textureOffset2, index2);
 	}
 
-	bool particle::operator<(const particle &other) const
+	bool Particle::operator<(const Particle &other) const
 	{
 		return m_distanceToCamera > other.m_distanceToCamera;
 	}
 
-	Vector2 *particle::updateTextureOffset(Vector2 *offset, const int &index)
+	Vector2 *Particle::UpdateTextureOffset(Vector2 *offset, const int &index) const
 	{
-		offset->set(0.0f, 0.0f);
+		offset->Set(0.0f, 0.0f);
 		int column = index % m_particleType->getTexture()->getNumberOfRows();
 		int row = index / m_particleType->getTexture()->getNumberOfRows();
 		offset->m_x = static_cast<float>(column) / m_particleType->getTexture()->getNumberOfRows();

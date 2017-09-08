@@ -23,6 +23,6 @@ namespace Flounder
 
 	void skybox::update()
 	{
-		Matrix4::transformationMatrix(*Camera::Get()->GetCamera()->GetPosition(), *m_rotation, m_size, m_modelMatrix);
+		Matrix4::TransformationMatrix(*Camera::Get()->GetCamera()->GetPosition(), *m_rotation, m_size, m_modelMatrix);
 	}
 }

@@ -41,7 +41,7 @@ namespace Flounder
 	{
 		prepareRendering(clipPlane, camera);
 
-		for (auto iter = particles::get()->getParticles()->begin(); iter != particles::get()->getParticles()->end(); ++iter)
+		for (auto iter = Particles::Get()->GetParticles()->begin(); iter != Particles::Get()->GetParticles()->end(); ++iter)
 		{
 			std::vector<float> *vboData = new std::vector<float>();
 			m_rendered = 0;
@@ -77,7 +77,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererparticles::prepareInstance(particle *particle, const ICamera &camera, std::vector<float> *vboData)
+	void rendererparticles::prepareInstance(Particle *particle, const ICamera &camera, std::vector<float> *vboData)
 	{
 		if (m_rendered >= MAX_INSTANCES)
 		{
@@ -87,7 +87,7 @@ namespace Flounder
 
 		Matrix4 *viewMatrix = camera.GetViewMatrix();
 		Matrix4 *modelMatrix = new Matrix4();
-		Matrix4::translate(*modelMatrix, *particle->getPosition(), modelMatrix);
+		Matrix4::Translate(*modelMatrix, *particle->GetPosition(), modelMatrix);
 		modelMatrix->m_00 = viewMatrix->m_00;
 		modelMatrix->m_01 = viewMatrix->m_10;
 		modelMatrix->m_02 = viewMatrix->m_20;
@@ -97,8 +97,8 @@ namespace Flounder
 		modelMatrix->m_20 = viewMatrix->m_02;
 		modelMatrix->m_21 = viewMatrix->m_12;
 		modelMatrix->m_22 = viewMatrix->m_22;
-		Matrix4::rotate(*modelMatrix, Vector3(0.0f, 0.0f, 1.0f), Maths::Radians(particle->getRotation()), modelMatrix);
-		Matrix4::scale(*modelMatrix, Vector3(particle->getScale(), particle->getScale(), particle->getScale()), modelMatrix);
+		Matrix4::Rotate(*modelMatrix, Vector3(0.0f, 0.0f, 1.0f), Maths::Radians(particle->GetRotation()), modelMatrix);
+		Matrix4::Scale(*modelMatrix, Vector3(particle->GetScale(), particle->GetScale(), particle->GetScale()), modelMatrix);
 
 		vboData->push_back(modelMatrix->m_00);
 		vboData->push_back(modelMatrix->m_01);
@@ -116,12 +116,12 @@ namespace Flounder
 		vboData->push_back(modelMatrix->m_31);
 		vboData->push_back(modelMatrix->m_32);
 		vboData->push_back(modelMatrix->m_33);
-		vboData->push_back(particle->getTextureOffset1()->m_x);
-		vboData->push_back(particle->getTextureOffset1()->m_y);
-		vboData->push_back(particle->getTextureOffset2()->m_x);
-		vboData->push_back(particle->getTextureOffset2()->m_y);
-		vboData->push_back(particle->getTextureBlendFactor());
-		vboData->push_back(particle->getTransparency());
+		vboData->push_back(particle->GetTextureOffset1()->m_x);
+		vboData->push_back(particle->GetTextureOffset1()->m_y);
+		vboData->push_back(particle->GetTextureOffset2()->m_x);
+		vboData->push_back(particle->GetTextureOffset2()->m_y);
+		vboData->push_back(particle->GetTextureBlendFactor());
+		vboData->push_back(particle->GetTransparency());
 
 		delete modelMatrix;
 

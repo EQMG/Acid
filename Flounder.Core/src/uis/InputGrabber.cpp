@@ -176,12 +176,12 @@ namespace Flounder
 		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.
-		m_background->GetDimensions()->set(*m_text->GetMeshSize());
+		m_background->GetDimensions()->Set(*m_text->GetMeshSize());
 		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		Vector2::multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
-		m_background->GetDimensions()->scale(2.0f * m_text->GetScale());
-		m_background->GetPositionOffsets()->set(*m_text->GetPositionOffsets());
-		m_background->GetPosition()->set(*m_text->GetPosition());
+		Vector2::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
+		m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
+		m_background->GetPositionOffsets()->Set(*m_text->GetPositionOffsets());
+		m_background->GetPosition()->Set(*m_text->GetPosition());
 	}
 
 	void inputgrabber::setPrefix(const std::string &prefix)

@@ -11,8 +11,8 @@ namespace Flounder
 	/// <summary>
 	/// Keys from a keyboard.
 	/// </summary>
-	class buttonkeyboard :
-		public ibutton
+	class ButtonKeyboard :
+		public IButton
 	{
 	private:
 		int m_count;
@@ -24,15 +24,15 @@ namespace Flounder
 		/// </summary>
 		/// <param name="n_args"> The number keys of keyboard buttons being checked. </param>
 		/// <param name="..."> The keys on the keyboard being checked. </param>
-		buttonkeyboard(const int n_args, ...);
+		ButtonKeyboard(const int n_args, ...);
 
 		/// <summary>
 		/// Deconstructor for the button keyboard.
 		/// </summary>
-		~buttonkeyboard();
+		~ButtonKeyboard();
 
-		bool isDown() const override;
+		bool IsDown() const override;
 
-		bool wasDown() override;
+		bool WasDown() override;
 	};
 }
