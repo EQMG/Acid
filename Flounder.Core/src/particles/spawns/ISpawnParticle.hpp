@@ -9,20 +9,20 @@ namespace Flounder
 	/// <summary>
 	/// A interface that defines a particle spawn type.
 	/// </summary>
-	class ispawnparticle
+	class ISpawnParticle
 	{
 	public:
 		/// <summary>
 		/// Creates a new particle spawn.
 		/// </summary>
-		ispawnparticle()
+		ISpawnParticle()
 		{
 		}
 
 		/// <summary>
 		/// Deconstructor for the particle spawn.
 		/// </summary>
-		virtual ~ispawnparticle()
+		virtual ~ISpawnParticle()
 		{
 		}
 
@@ -30,6 +30,6 @@ namespace Flounder
 		/// Gets the base spawn position.
 		/// </summary>
 		/// <returns> The base spawn position. </returns>
-		virtual Vector3 *getBaseSpawnPosition() = 0;
+		virtual Vector3 *GetBaseSpawnPosition() = 0;
 	};
 }

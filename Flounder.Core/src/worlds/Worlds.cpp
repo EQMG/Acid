@@ -37,17 +37,17 @@ namespace Flounder
 		Vector3 lightDirection = Vector3();
 		Colour fogColour = Colour();
 
-		Matrix4::rotate(Vector3(0.2f, 0.0f, 0.5f), skyboxRotation, &lightDirection);
-		lightDirection.normalize();
+		Matrix4::Rotate(Vector3(0.2f, 0.0f, 0.5f), skyboxRotation, &lightDirection);
+		lightDirection.Normalize();
 
 		Colour::Interpolate(Colour(0.9f, 0.3f, 0.3f, 1.0f), Colour(0.05f, 0.05f, 0.1f, 1.0f), GetSunriseFactor(), &fogColour);
 		Colour::Interpolate(fogColour, Colour(0.0f, 0.3f, 0.7f, 1.0f), GetShadowFactor(), &fogColour);
 
-		Vector3::multiply(lightDirection, Vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
+		Vector3::Multiply(lightDirection, Vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
 
 		if (Camera::Get() != nullptr && Camera::Get()->GetCamera() != nullptr)
 		{
-			Vector3::add(*m_sunPosition, *Camera::Get()->GetCamera()->GetPosition(), m_sunPosition);
+			Vector3::Add(*m_sunPosition, *Camera::Get()->GetCamera()->GetPosition(), m_sunPosition);
 		}
 
 		Colour::Interpolate(Colour(0.9f, 0.3f, 0.3f, 1.0f), Colour(0.0f, 0.0f, 0.0f, 1.0f), GetSunriseFactor(), m_sunColour);
@@ -55,7 +55,7 @@ namespace Flounder
 
 		if (skyboxes::get() != nullptr && skyboxes::get()->getSkybox() != nullptr)
 		{
-			skyboxes::get()->getSkybox()->getRotation()->set(skyboxRotation);
+			skyboxes::get()->getSkybox()->getRotation()->Set(skyboxRotation);
 			skyboxes::get()->getSkybox()->setBlend(GetStarIntensity());
 		}
 
@@ -68,7 +68,7 @@ namespace Flounder
 
 		if (shadows::get() != nullptr)
 		{
-			shadows::get()->getLightDirection()->set(lightDirection);
+			shadows::get()->getLightDirection()->Set(lightDirection);
 			shadows::get()->setShadowBoxOffset((20.0f * (1.0f - GetShadowFactor())) + 10.0f);
 			shadows::get()->setShadowBoxDistance(35.0f);
 			shadows::get()->setShadowTransition(0.0f);

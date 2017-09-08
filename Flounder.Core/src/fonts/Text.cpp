@@ -50,13 +50,13 @@ namespace Flounder
 		switch (m_textAlign)
 		{
 		case LEFT:
-			GetPositionOffsets()->set(GetMeshSize()->m_x * GetScreenDimensions()->m_x, 0.0f);
+			GetPositionOffsets()->Set(GetMeshSize()->m_x * GetScreenDimensions()->m_x, 0.0f);
 			break;
 		case CENTRE:
-			GetPositionOffsets()->set(0.0f, 0.0f);
+			GetPositionOffsets()->Set(0.0f, 0.0f);
 			break;
 		case RIGHT:
-			GetPositionOffsets()->set(-GetMeshSize()->m_x * GetScreenDimensions()->m_x, 0.0f);
+			GetPositionOffsets()->Set(-GetMeshSize()->m_x * GetScreenDimensions()->m_x, 0.0f);
 			break;
 		}
 

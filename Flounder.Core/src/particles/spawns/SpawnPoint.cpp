@@ -1,19 +1,19 @@
-﻿#include "spawnpoint.hpp"
+﻿#include "SpawnPoint.hpp"
 
 namespace Flounder
 {
-	spawnpoint::spawnpoint() :
-		ispawnparticle(),
+	SpawnPoint::SpawnPoint() :
+		ISpawnParticle(),
 		m_point(new Vector3())
 	{
 	}
 
-	spawnpoint::~spawnpoint()
+	SpawnPoint::~SpawnPoint()
 	{
 		delete m_point;
 	}
 
-	Vector3 *spawnpoint::getBaseSpawnPosition()
+	Vector3 *SpawnPoint::GetBaseSpawnPosition()
 	{
 		return m_point;
 	}

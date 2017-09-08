@@ -32,7 +32,7 @@ namespace Flounder
 	{
 		if (m_moved)
 		{
-			Matrix4::transformationMatrix(*m_position, *m_rotation, 1.0f, m_modelMatrix);
+			Matrix4::TransformationMatrix(*m_position, *m_rotation, 1.0f, m_modelMatrix);
 			m_moved = false;
 		}
 	}
@@ -138,7 +138,7 @@ namespace Flounder
 		float heightU = getHeight(x, z + SQUARE_SIZE);
 
 		Vector3 normal = Vector3(heightL - heightR, 2.0f, heightD - heightU);
-		normal.normalize();
+		normal.Normalize();
 		return normal;
 	}
 
@@ -311,13 +311,13 @@ namespace Flounder
 
 	void terrain::setPosition(const Vector3 &position)
 	{
-		m_position->set(position);
+		m_position->Set(position);
 		m_moved = true;
 	}
 
 	void terrain::setRotation(const Vector3 &rotation)
 	{
-		m_rotation->set(rotation);
+		m_rotation->Set(rotation);
 		m_moved = true;
 	}
 }

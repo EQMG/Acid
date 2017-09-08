@@ -2,31 +2,31 @@
 
 namespace Flounder
 {
-	light::light(Colour *colour, Vector3 *position)
+	Light::Light(Colour *colour, Vector3 *position)
 	{
-		set(colour, position, new attenuation(1.0f, 0.0f, 0.0f));
+		Set(colour, position, new Attenuation(1.0f, 0.0f, 0.0f));
 	}
 
-	light::light(Colour *colour, Vector3 *position, attenuation *attenuation)
+	Light::Light(Colour *colour, Vector3 *position, Attenuation *attenuation)
 	{
-		set(colour, position, attenuation);
+		Set(colour, position, attenuation);
 	}
 
-	light::~light()
+	Light::~Light()
 	{
 		delete m_colour;
 		delete m_position;
 		delete m_attenuation;
 	}
 
-	light *light::set(Colour *colour, Vector3 *position)
+	Light *Light::Set(Colour *colour, Vector3 *position)
 	{
 		m_colour = colour;
 		m_position = position;
 		return this;
 	}
 
-	light *light::set(Colour *colour, Vector3 *position, attenuation *attenuation)
+	Light *Light::Set(Colour *colour, Vector3 *position, Attenuation *attenuation)
 	{
 		m_colour = colour;
 		m_position = position;

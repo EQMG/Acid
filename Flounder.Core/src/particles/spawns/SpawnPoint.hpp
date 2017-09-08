@@ -1,19 +1,23 @@
 ﻿#pragma once
 
-#include "ispawnparticle.hpp"
+#include "ISpawnParticle.hpp"
 
 namespace Flounder
 {
-	class spawnpoint :
-		public ispawnparticle
+	class SpawnPoint :
+		public ISpawnParticle
 	{
 	private:
 		Vector3 *m_point;
 	public:
-		spawnpoint();
+		SpawnPoint();
 
-		~spawnpoint();
+		~SpawnPoint();
 
-		Vector3 *getBaseSpawnPosition() override;
+		Vector3 *GetBaseSpawnPosition() override;
+
+		Vector3 *getPoint() const { return m_point; }
+
+		void setPoint(const Vector3 &point) const { m_point->Set(point); }
 	};
 }

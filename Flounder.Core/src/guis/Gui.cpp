@@ -24,6 +24,6 @@ namespace Flounder
 		int numberOfRows = m_texture != nullptr ? m_texture->getNumberOfRows() : 1;
 		int column = m_selectedRow % numberOfRows;
 		int row = m_selectedRow / numberOfRows;
-		m_textureOffset->set(static_cast<float>(column / numberOfRows), static_cast<float>(row / numberOfRows));
+		m_textureOffset->Set(static_cast<float>(column / numberOfRows), static_cast<float>(row / numberOfRows));
 	}
 }

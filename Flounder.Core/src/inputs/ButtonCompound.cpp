@@ -2,10 +2,10 @@
 
 namespace Flounder
 {
-	buttoncompound::buttoncompound(const int n_args, ...) :
-		ibutton(),
+	ButtonCompound::ButtonCompound(const int n_args, ...) :
+		IButton(),
 		m_count(n_args),
-		m_buttons(new ibutton*[n_args]),
+		m_buttons(new IButton*[n_args]),
 		m_wasDown(false)
 	{
 		va_list ap;
@@ -13,22 +13,22 @@ namespace Flounder
 
 		for (int i = 0; i < n_args; i++)
 		{
-			m_buttons[i] = va_arg(ap, ibutton*);
+			m_buttons[i] = va_arg(ap, IButton*);
 		}
 
 		va_end(ap);
 	}
 
-	buttoncompound::~buttoncompound()
+	ButtonCompound::~ButtonCompound()
 	{
 		delete m_buttons;
 	}
 
-	bool buttoncompound::isDown() const
+	bool ButtonCompound::IsDown() const
 	{
 		for (int i = 0; i < m_count; i++)
 		{
-			if (m_buttons[i]->isDown())
+			if (m_buttons[i]->IsDown())
 			{
 				return true;
 			}
@@ -37,10 +37,10 @@ namespace Flounder
 		return false;
 	}
 
-	bool buttoncompound::wasDown()
+	bool ButtonCompound::WasDown()
 	{
-		bool stillDown = m_wasDown && isDown();
-		m_wasDown = isDown();
+		bool stillDown = m_wasDown && IsDown();
+		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}
 }

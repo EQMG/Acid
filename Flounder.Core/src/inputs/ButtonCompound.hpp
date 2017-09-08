@@ -9,12 +9,12 @@ namespace Flounder
 	/// <summary>
 	/// Handles multiple buttons at once.
 	/// </summary>
-	class buttoncompound :
-		public ibutton
+	class ButtonCompound :
+		public IButton
 	{
 	private:
 		int m_count;
-		ibutton **m_buttons;
+		IButton **m_buttons;
 		bool m_wasDown;
 	public:
 		/// <summary>
@@ -22,15 +22,15 @@ namespace Flounder
 		/// </summary>
 		/// <param name="n_args"> The number buttons being added. </param>
 		/// <param name="..."> The buttons on the being added. </param>
-		buttoncompound(const int n_args, ...);
+		ButtonCompound(const int n_args, ...);
 
 		/// <summary>
 		/// Deconstructor for the compound button.
 		/// </summary>
-		~buttoncompound();
+		~ButtonCompound();
 
-		bool isDown() const override;
+		bool IsDown() const override;
 
-		bool wasDown() override;
+		bool WasDown() override;
 	};
 }

@@ -74,7 +74,7 @@ namespace Flounder
 		AddModule(UpdatePre, "uis", new uis());
 		AddModule(UpdatePre, "worlds", new Worlds());
 		AddModule(UpdateRender, "shadows", new shadows());
-		AddModule(UpdatePre, "particles", new particles());
+		AddModule(UpdatePre, "particles", new Particles());
 		AddModule(UpdatePre, "skyboxes", new skyboxes());
 		AddModule(UpdatePre, "terrains", new terrains());
 		AddModule(UpdatePre, "waters", new Waters());

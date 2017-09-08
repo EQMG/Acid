@@ -2,8 +2,8 @@
 
 namespace Flounder
 {
-	axisjoystick::axisjoystick(const int &joystick, const int n_args, ...) :
-		iaxis(),
+	AxisJoystick::AxisJoystick(const int &joystick, const int n_args, ...) :
+		IAxis(),
 		m_joystick(joystick),
 		m_count(n_args),
 		m_axes(new int[n_args])
@@ -19,12 +19,12 @@ namespace Flounder
 		va_end(ap);
 	}
 
-	axisjoystick::~axisjoystick()
+	AxisJoystick::~AxisJoystick()
 	{
 		delete m_axes;
 	}
 
-	float axisjoystick::getAmount() const
+	float AxisJoystick::GetAmount() const
 	{
 		if (Joysticks::Get() == nullptr || !Joysticks::Get()->IsConnected(m_joystick))
 		{

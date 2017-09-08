@@ -2,8 +2,8 @@
 
 namespace Flounder
 {
-	buttonjoystick::buttonjoystick(const int &joystick, const int n_args, ...) :
-		ibutton(),
+	ButtonJoystick::ButtonJoystick(const int &joystick, const int n_args, ...) :
+		IButton(),
 		m_joystick(joystick),
 		m_count(n_args),
 		m_buttons(new int[n_args]),
@@ -20,12 +20,12 @@ namespace Flounder
 		va_end(ap);
 	}
 
-	buttonjoystick::~buttonjoystick()
+	ButtonJoystick::~ButtonJoystick()
 	{
 		delete m_buttons;
 	}
 
-	bool buttonjoystick::isDown() const
+	bool ButtonJoystick::IsDown() const
 	{
 		if (Joysticks::Get() == nullptr)
 		{
@@ -48,10 +48,10 @@ namespace Flounder
 		return false;
 	}
 
-	bool buttonjoystick::wasDown()
+	bool ButtonJoystick::WasDown()
 	{
-		bool stillDown = m_wasDown && isDown();
-		m_wasDown = isDown();
+		bool stillDown = m_wasDown && IsDown();
+		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}
 }

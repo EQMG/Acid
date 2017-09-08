@@ -203,7 +203,7 @@ namespace Flounder
 		return pow(source.m_r, 2) + pow(source.m_g, 2) + pow(source.m_b, 2) + pow(source.m_a, 2);
 	}
 
-	Colour *Colour::Scale(const float scalar)
+	Colour *Colour::Scale(const float &scalar)
 	{
 		m_r *= scalar;
 		m_g *= scalar;

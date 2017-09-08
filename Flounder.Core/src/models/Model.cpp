@@ -60,15 +60,15 @@ namespace Flounder
 		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
 
 		std::vector<int> indices = std::vector<int>();
-		std::vector<material> materials = std::vector<material>();
-		std::vector<vertexdata*> vertices = std::vector<vertexdata*>();
+		std::vector<Material> materials = std::vector<Material>();
+		std::vector<VertexData*> vertices = std::vector<VertexData*>();
 		std::vector<Vector2> textures = std::vector<Vector2>();
 		std::vector<Vector3> normals = std::vector<Vector3>();
 
 		std::vector<std::string> splitFile = HelperString::Split(std::string(m_file), "/");
 		std::string fileName = splitFile.at(splitFile.size() - 1);
 
-		material currentMaterial = {};
+		Material currentMaterial = {};
 
 		for (auto it = lines.begin(); it < lines.end(); ++it)
 		{
@@ -87,7 +87,7 @@ namespace Flounder
 
 				if (prefix == "mtllib")
 				{
-					std::string pathMtl = HelperString::Substring(m_file, 0, (int) (m_file.length() - fileName.length()));
+					std::string pathMtl = HelperString::Substring(m_file, 0, static_cast<int>(m_file.length() - fileName.length()));
 					pathMtl += split.at(1);
 					LoadMaterials(pathMtl, &materials);
 				}
@@ -104,7 +104,7 @@ namespace Flounder
 				else if (prefix == "v")
 				{
 					Vector3 vertex = Vector3(stof(split.at(1)), stof(split.at(2)), stof(split.at(3)));
-					vertexdata *newVertex = new vertexdata((int) vertices.size(), vertex);
+					VertexData *newVertex = new VertexData(static_cast<int>(vertices.size()), vertex);
 					vertices.push_back(newVertex);
 				}
 				else if (prefix == "vt")
@@ -130,9 +130,9 @@ namespace Flounder
 					std::vector<std::string> vertex2 = HelperString::Split(split.at(2), "/");
 					std::vector<std::string> vertex3 = HelperString::Split(split.at(3), "/");
 
-					vertexdata *v0 = ProcessDataVertex(Vector3(stof(vertex1.at(0)), stof(vertex1.at(1)), stof(vertex1.at(2))), &vertices, &indices);
-					vertexdata *v1 = ProcessDataVertex(Vector3(stof(vertex2.at(0)), stof(vertex2.at(1)), stof(vertex2.at(2))), &vertices, &indices);
-					vertexdata *v2 = ProcessDataVertex(Vector3(stof(vertex3.at(0)), stof(vertex3.at(1)), stof(vertex3.at(2))), &vertices, &indices);
+					VertexData *v0 = ProcessDataVertex(Vector3(stof(vertex1.at(0)), stof(vertex1.at(1)), stof(vertex1.at(2))), &vertices, &indices);
+					VertexData *v1 = ProcessDataVertex(Vector3(stof(vertex2.at(0)), stof(vertex2.at(1)), stof(vertex2.at(2))), &vertices, &indices);
+					VertexData *v2 = ProcessDataVertex(Vector3(stof(vertex3.at(0)), stof(vertex3.at(1)), stof(vertex3.at(2))), &vertices, &indices);
 					CalculateTangents(v0, v1, v2, &textures);
 				}
 				else if (prefix == "o")
@@ -153,12 +153,12 @@ namespace Flounder
 		// Averages out vertex tangents, and disabled non set vertices,
 		for (auto vertex : vertices)
 		{
-			vertex->averageTangents();
+			vertex->AverageTangents();
 
-			if (!vertex->isSet())
+			if (!vertex->IsSet())
 			{
-				vertex->setTextureIndex(0);
-				vertex->setNormalIndex(0);
+				vertex->SetTextureIndex(0);
+				vertex->SetNormalIndex(0);
 			}
 		}
 
@@ -173,10 +173,10 @@ namespace Flounder
 
 		for (auto currentVertex : vertices)
 		{
-			Vector3 position = currentVertex->getPosition();
-			Vector2 textureCoord = textures.at(currentVertex->getTextureIndex());
-			Vector3 normalVector = normals.at(currentVertex->getNormalIndex());
-			Vector3 tangent = currentVertex->getAverageTangent();
+			Vector3 position = currentVertex->GetPosition();
+			Vector2 textureCoord = textures.at(currentVertex->GetTextureIndex());
+			Vector3 normalVector = normals.at(currentVertex->GetNormalIndex());
+			Vector3 tangent = currentVertex->GetAverageTangent();
 
 			m_vertices->push_back(position.m_x);
 			m_vertices->push_back(position.m_y);
@@ -197,13 +197,13 @@ namespace Flounder
 		}
 	}
 
-	void Model::LoadMaterials(const std::string &filepath, std::vector<material> *list)
+	void Model::LoadMaterials(const std::string &filepath, std::vector<Material> *list)
 	{
 		std::string fileLoaded = HelperFile::ReadTextFile(filepath);
 		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
 
 		std::string parseMaterialName = "";
-		material parseMaterial = {};
+		Material parseMaterial = {};
 
 		for (auto it = lines.begin(); it < lines.end(); ++it)
 		{
@@ -254,64 +254,67 @@ namespace Flounder
 		}
 	}
 
-	vertexdata *Model::ProcessDataVertex(Vector3 vertex, std::vector<vertexdata*> *vertices, std::vector<int> *indices)
+	VertexData *Model::ProcessDataVertex(Vector3 vertex, std::vector<VertexData*> *vertices, std::vector<int> *indices)
 	{
 		int index = static_cast<int>(vertex.m_x) - 1;
-		vertexdata *currentVertex = vertices->at(index);
+		VertexData *currentVertex = vertices->at(index);
 		int textureIndex = static_cast<int>(vertex.m_y) - 1;
 		int normalIndex = static_cast<int>(vertex.m_z) - 1;
 
-		if (!currentVertex->isSet())
+		if (!currentVertex->IsSet())
 		{
-			currentVertex->setTextureIndex(textureIndex);
-			currentVertex->setNormalIndex(normalIndex);
+			currentVertex->SetTextureIndex(textureIndex);
+			currentVertex->SetNormalIndex(normalIndex);
 			indices->push_back(index);
 			return currentVertex;
 		}
+
 		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
 	}
 
-	vertexdata *Model::DealWithAlreadyProcessedDataVertex(vertexdata *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<vertexdata*> *vertices)
+	VertexData *Model::DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<VertexData*> *vertices)
 	{
-		if (previousVertex->hasSameTextureAndNormal(newTextureIndex, newNormalIndex))
+		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{
-			indices->push_back(previousVertex->getIndex());
+			indices->push_back(previousVertex->GetIndex());
 			return previousVertex;
 		}
-		vertexdata *anotherVertex = previousVertex->getDuplicateVertex();
+
+		VertexData *anotherVertex = previousVertex->GetDuplicateVertex();
 
 		if (anotherVertex != nullptr)
 		{
 			return DealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
 		}
-		vertexdata *duplicateVertex = new vertexdata((int) vertices->size(), previousVertex->getPosition());
-		duplicateVertex->setTextureIndex(newTextureIndex);
-		duplicateVertex->setNormalIndex(newNormalIndex);
-		previousVertex->setDuplicateVertex(duplicateVertex);
+
+		VertexData *duplicateVertex = new VertexData((int) vertices->size(), previousVertex->GetPosition());
+		duplicateVertex->SetTextureIndex(newTextureIndex);
+		duplicateVertex->SetNormalIndex(newNormalIndex);
+		previousVertex->SetDuplicateVertex(duplicateVertex);
 		vertices->push_back(duplicateVertex);
-		indices->push_back(duplicateVertex->getIndex());
+		indices->push_back(duplicateVertex->GetIndex());
 		return duplicateVertex;
 	}
 
-	void Model::CalculateTangents(vertexdata *v0, vertexdata *v1, vertexdata *v2, std::vector<Vector2> *textures)
+	void Model::CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *textures)
 	{
-		Vector3 *deltaPos1 = Vector3::subtract(v1->getPosition(), v0->getPosition(), nullptr);
-		Vector3 *deltaPos2 = Vector3::subtract(v2->getPosition(), v0->getPosition(), nullptr);
-		Vector2 uv0 = textures->at(v0->getTextureIndex());
-		Vector2 uv1 = textures->at(v1->getTextureIndex());
-		Vector2 uv2 = textures->at(v2->getTextureIndex());
-		Vector2 *deltaUv1 = Vector2::subtract(uv1, uv0, nullptr);
-		Vector2 *deltaUv2 = Vector2::subtract(uv2, uv0, nullptr);
+		Vector3 *deltaPos1 = Vector3::Subtract(v1->GetPosition(), v0->GetPosition(), nullptr);
+		Vector3 *deltaPos2 = Vector3::Subtract(v2->GetPosition(), v0->GetPosition(), nullptr);
+		Vector2 uv0 = textures->at(v0->GetTextureIndex());
+		Vector2 uv1 = textures->at(v1->GetTextureIndex());
+		Vector2 uv2 = textures->at(v2->GetTextureIndex());
+		Vector2 *deltaUv1 = Vector2::Subtract(uv1, uv0, nullptr);
+		Vector2 *deltaUv2 = Vector2::Subtract(uv2, uv0, nullptr);
 
 		float r = 1.0f / (deltaUv1->m_x * deltaUv2->m_y - deltaUv1->m_y * deltaUv2->m_x);
-		deltaPos1->scale(deltaUv2->m_y);
-		deltaPos2->scale(deltaUv1->m_y);
+		deltaPos1->Scale(deltaUv2->m_y);
+		deltaPos2->Scale(deltaUv1->m_y);
 
-		Vector3 *tangent = Vector3::subtract(*deltaPos1, *deltaPos2, nullptr);
-		tangent->scale(r);
-		v0->addTangent(tangent);
-		v1->addTangent(tangent);
-		v2->addTangent(tangent);
+		Vector3 *tangent = Vector3::Subtract(*deltaPos1, *deltaPos2, nullptr);
+		tangent->Scale(r);
+		v0->AddTangent(tangent);
+		v1->AddTangent(tangent);
+		v2->AddTangent(tangent);
 
 		delete deltaPos1;
 		delete deltaPos2;

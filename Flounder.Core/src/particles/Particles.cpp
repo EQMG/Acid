@@ -1,23 +1,23 @@
-#include "particles.hpp"
+#include "Particles.hpp"
 
 namespace Flounder
 {
-	const float particles::MAX_ELAPSED_TIME = 5.0f;
+	const float Particles::MAX_ELAPSED_TIME = 5.0f;
 
-	particles::particles() :
+	Particles::Particles() :
 		IModule(),
-		m_particleSystems(new std::vector<particlesystem*>()),
-		m_particles(new std::map<particletype*, std::vector<particle*>*>())
+		m_particleSystems(new std::vector<ParticleSystem*>()),
+		m_particles(new std::map<particletype*, std::vector<Particle*>*>())
 	{
 	}
 
-	particles::~particles()
+	Particles::~Particles()
 	{
 		delete m_particleSystems;
 		delete m_particles;
 	}
 
-	void particles::Update()
+	void Particles::Update()
 	{
 		if (uis::get() != nullptr && uis::get()->getManager() != nullptr)
 		{
@@ -30,16 +30,16 @@ namespace Flounder
 		// Generates particles.
 		for (auto system : *m_particleSystems)
 		{
-			particle *created = system->generateParticles();
+			Particle *created = system->GenerateParticles();
 
 			if (created != nullptr)
 			{
-				std::vector<particle*> *list = m_particles->find(created->getParticleType())->second;
+				std::vector<Particle*> *list = m_particles->find(created->GetParticleType())->second;
 
 				if (list == nullptr)
 				{
-					list = new std::vector<particle*>();
-					m_particles->insert(std::pair<particletype*, std::vector<particle*>*>(created->getParticleType(), list));
+					list = new std::vector<Particle*>();
+					m_particles->insert(std::pair<particletype*, std::vector<Particle*>*>(created->GetParticleType(), list));
 				}
 
 				if (list != nullptr)
@@ -65,17 +65,17 @@ namespace Flounder
 		}
 	}
 
-	void particles::clear()
+	void Particles::Clear()
 	{
 		m_particles->clear();
 	}
 
-	void particles::addSystem(particlesystem *system)
+	void Particles::AddSystem(ParticleSystem *system)
 	{
 		m_particleSystems->push_back(system);
 	}
 
-	void particles::removeSystem(particlesystem *system)
+	void Particles::RemoveSystem(ParticleSystem *system)
 	{
 		for (auto it = m_particleSystems->begin(); it != m_particleSystems->end(); ++it)
 		{

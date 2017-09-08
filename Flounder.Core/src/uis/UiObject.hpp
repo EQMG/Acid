@@ -112,19 +112,19 @@ namespace Flounder
 
 		Vector2 *GetPosition() const { return m_position; }
 
-		void SetPosition(const Vector2 &position) const { m_position->set(position); }
+		void SetPosition(const Vector2 &position) const { m_position->Set(position); }
 
 		Vector2 *GetDimensions() const { return m_dimensions; }
 
-		void SetDimensions(const Vector2 &dimensions) const { m_dimensions->set(dimensions); }
+		void SetDimensions(const Vector2 &dimensions) const { m_dimensions->Set(dimensions); }
 
 		Vector2 *GetMeshSize() const { return m_meshSize; }
 
-		void SetMeshSize(const Vector2 &meshSize) const { m_meshSize->set(meshSize); }
+		void SetMeshSize(const Vector2 &meshSize) const { m_meshSize->Set(meshSize); }
 
 		Vector4 *GetScissor() const { return m_scissor; }
 
-		void SetScissor(const Vector4 &scissor) const { m_scissor->set(scissor); }
+		void SetScissor(const Vector4 &scissor) const { m_scissor->Set(scissor); }
 
 		bool GetInScreenCoords() const { return m_inScreenCoords; }
 
@@ -132,7 +132,7 @@ namespace Flounder
 
 		Vector2 *GetPositionOffsets() const { return m_positionOffsets; }
 
-		void SetPositionOffsets(const Vector2 &positionOffsets) const { m_positionOffsets->set(positionOffsets); }
+		void SetPositionOffsets(const Vector2 &positionOffsets) const { m_positionOffsets->Set(positionOffsets); }
 
 		void SetRotationDriver(idriver *rotationDriver);
 

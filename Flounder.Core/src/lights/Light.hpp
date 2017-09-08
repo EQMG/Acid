@@ -10,19 +10,19 @@ namespace Flounder
 	/// <summary>
 	/// Represents a point light, contains a colour, position and attenuation.
 	/// </summary>
-	class light
+	class Light
 	{
 	public:
 		Colour *m_colour;
 		Vector3 *m_position;
-		attenuation *m_attenuation;
+		Attenuation *m_attenuation;
 
 		/// <summary>
 		/// Creates a new point light with unlimited range.
 		/// </summary>
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="position"> The world position of the light. </param>
-		light(Colour *colour, Vector3 *position);
+		Light(Colour *colour, Vector3 *position);
 
 		/// <summary>
 		/// Creates a new point light.
@@ -30,12 +30,12 @@ namespace Flounder
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="position"> The world position of the light. </param>
 		/// <param name="attenuation"> How much the intensity of the light is lost over a distance. </param>
-		light(Colour *colour, Vector3 *position, attenuation *attenuation);
+		Light(Colour *colour, Vector3 *position, Attenuation *attenuation);
 
 		/// <summary>
 		/// Deconstructor for light.
 		/// </summary>
-		~light();
+		~Light();
 
 		/// <summary>
 		/// Sets values in the light.
@@ -43,7 +43,7 @@ namespace Flounder
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="position"> The world position of the light. </param>
 		/// <returns> This. </returns>
-		light *set(Colour *colour, Vector3 *position);
+		Light *Set(Colour *colour, Vector3 *position);
 
 		/// <summary>
 		/// Sets values in the light.
@@ -52,6 +52,6 @@ namespace Flounder
 		/// <param name="position"> The world position of the light. </param>
 		/// <param name="attenuation"> How much the intensity of the light is lost over a distance. </param>
 		/// <returns> This. </returns>
-		light *set(Colour *colour, Vector3 *position, attenuation *attenuation);
+		Light *Set(Colour *colour, Vector3 *position, Attenuation *attenuation);
 	};
 }

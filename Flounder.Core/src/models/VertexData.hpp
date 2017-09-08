@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// A class that represents a single model vertex, used when loading OBJ files.
 	/// </summary>
-	class vertexdata
+	class VertexData
 	{
 	private:
 		static const int NO_INDEX;
@@ -17,7 +17,7 @@ namespace Flounder
 
 		int m_textureIndex;
 		int m_normalIndex;
-		vertexdata *m_duplicateVertex;
+		VertexData *m_duplicateVertex;
 
 		int m_index;
 		float m_length;
@@ -26,36 +26,36 @@ namespace Flounder
 		Vector3 m_averagedTangent;
 
 	public:
-		vertexdata(const int index, Vector3 position);
+		VertexData(const int index, Vector3 position);
 
-		~vertexdata();
+		~VertexData();
 
-		Vector3 getPosition() const { return m_position; }
+		Vector3 GetPosition() const { return m_position; }
 
-		int getTextureIndex() const { return m_textureIndex; }
+		int GetTextureIndex() const { return m_textureIndex; }
 
-		void setTextureIndex(int textureIndex) { m_textureIndex = textureIndex; }
+		void SetTextureIndex(const int &textureIndex) { m_textureIndex = textureIndex; }
 
-		int getNormalIndex() const { return m_normalIndex; }
+		int GetNormalIndex() const { return m_normalIndex; }
 
-		void setNormalIndex(const int normalIndex) { m_normalIndex = normalIndex; }
+		void SetNormalIndex(const int &normalIndex) { m_normalIndex = normalIndex; }
 
-		vertexdata *getDuplicateVertex() const { return m_duplicateVertex; }
+		VertexData *GetDuplicateVertex() const { return m_duplicateVertex; }
 
-		void setDuplicateVertex(vertexdata *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
+		void SetDuplicateVertex(VertexData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
-		int getIndex() const { return m_index; }
+		int GetIndex() const { return m_index; }
 
-		float getLength() const { return m_length; }
+		float GetLength() const { return m_length; }
 
-		void addTangent(Vector3 *tangent);
+		void AddTangent(Vector3 *tangent);
 
-		void averageTangents();
+		void AverageTangents();
 
-		Vector3 getAverageTangent() const { return m_averagedTangent; }
+		Vector3 GetAverageTangent() const { return m_averagedTangent; }
 
-		bool isSet();
+		bool IsSet() const;
 
-		bool hasSameTextureAndNormal(const int textureIndexOther, const int normalIndexOther);
+		bool HasSameTextureAndNormal(const int &textureIndexOther, const int &normalIndexOther) const;
 	};
 }

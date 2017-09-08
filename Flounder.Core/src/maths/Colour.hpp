@@ -178,7 +178,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="scalar"> The scaling value. </param>
 		/// <returns> this. </returns>
-		Colour *Scale(const float scalar);
+		Colour *Scale(const float &scalar);
 
 		/// <summary>
 		/// Gets the length of the colour.

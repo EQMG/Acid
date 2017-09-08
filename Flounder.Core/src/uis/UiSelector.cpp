@@ -9,8 +9,8 @@ namespace Flounder
 		m_rightClick(false),
 		m_leftWasClick(false),
 		m_rightWasClick(false),
-		m_mouseLeft(new buttonmouse(1, GLFW_MOUSE_BUTTON_LEFT)),
-		m_mouseRight(new buttonmouse(1, GLFW_MOUSE_BUTTON_RIGHT)),
+		m_mouseLeft(new ButtonMouse(1, GLFW_MOUSE_BUTTON_LEFT)),
+		m_mouseRight(new ButtonMouse(1, GLFW_MOUSE_BUTTON_RIGHT)),
 		m_joysticksInitialized(false),
 		m_selectedJoystick(0),
 		m_joystickAxisX(nullptr),
@@ -34,38 +34,38 @@ namespace Flounder
 	void uiselector::load(const int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
 	{
 		m_selectedJoystick = joystick;
-		m_joystickAxisX = new axisjoystick(joystick, 1, joystickAxisX);
-		m_joystickAxisY = new axisjoystick(joystick, 1, joystickAxisY);
-		m_joystickLeft = new buttonjoystick(joystick, 1, joystickLeftClick);
-		m_joystickRight = new buttonjoystick(joystick, 1, joystickRightClick);
+		m_joystickAxisX = new AxisJoystick(joystick, 1, joystickAxisX);
+		m_joystickAxisY = new AxisJoystick(joystick, 1, joystickAxisY);
+		m_joystickLeft = new ButtonJoystick(joystick, 1, joystickLeftClick);
+		m_joystickRight = new ButtonJoystick(joystick, 1, joystickRightClick);
 		m_joysticksInitialized = true;
 	}
 
 	void uiselector::update(const bool &paused)
 	{
-		m_leftClick = m_mouseLeft->isDown();
-		m_rightClick = m_mouseRight->isDown();
-		m_leftWasClick = m_mouseLeft->wasDown();
-		m_rightWasClick = m_mouseRight->wasDown();
+		m_leftClick = m_mouseLeft->IsDown();
+		m_rightClick = m_mouseRight->IsDown();
+		m_leftWasClick = m_mouseLeft->WasDown();
+		m_rightWasClick = m_mouseRight->WasDown();
 
 		m_cursorX = Mouse::Get()->GetPositionX();
 		m_cursorY = Mouse::Get()->GetPositionY();
 
 		if (m_joysticksInitialized && Joysticks::Get()->IsConnected(m_selectedJoystick) && paused)
 		{
-			if (fabs(Maths::Deadband(0.1f, m_joystickAxisX->getAmount())) > 0.0 || fabs(Maths::Deadband(0.1f, m_joystickAxisY->getAmount())) > 0.0)
+			if (fabs(Maths::Deadband(0.1f, m_joystickAxisX->GetAmount())) > 0.0 || fabs(Maths::Deadband(0.1f, m_joystickAxisY->GetAmount())) > 0.0)
 			{
-				m_cursorX += m_joystickAxisX->getAmount() * 0.75f * Engine::Get()->GetDelta();
-				m_cursorY += -m_joystickAxisY->getAmount() * 0.75f * Engine::Get()->GetDelta();
+				m_cursorX += m_joystickAxisX->GetAmount() * 0.75f * Engine::Get()->GetDelta();
+				m_cursorY += -m_joystickAxisY->GetAmount() * 0.75f * Engine::Get()->GetDelta();
 				m_cursorX = Maths::Clamp(m_cursorX, 0.0f, 1.0f);
 				m_cursorY = Maths::Clamp(m_cursorY, 0.0f, 1.0f);
 				Mouse::Get()->SetPosition(m_cursorX * Display::Get()->GetWidth(), m_cursorY * Display::Get()->GetHeight());
 			}
 
-			m_leftClick = m_leftClick || m_joystickLeft->isDown();
-			m_rightClick = m_rightClick || m_joystickRight->isDown();
-			m_leftWasClick = m_leftWasClick || m_joystickLeft->wasDown();
-			m_rightWasClick = m_rightWasClick || m_joystickRight->wasDown();
+			m_leftClick = m_leftClick || m_joystickLeft->IsDown();
+			m_rightClick = m_rightClick || m_joystickRight->IsDown();
+			m_leftWasClick = m_leftWasClick || m_joystickLeft->WasDown();
+			m_rightWasClick = m_rightWasClick || m_joystickRight->WasDown();
 		}
 	}
 

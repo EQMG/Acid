@@ -66,7 +66,7 @@ namespace Flounder
 	{
 	}
 
-	Matrix4 *Matrix4::set(const Matrix4 &source)
+	Matrix4 *Matrix4::Set(const Matrix4 &source)
 	{
 		m_00 = source.m_00;
 		m_01 = source.m_01;
@@ -87,7 +87,7 @@ namespace Flounder
 		return this;
 	}
 
-	Matrix4 *Matrix4::set(const float source[16])
+	Matrix4 *Matrix4::Set(const float source[16])
 	{
 		m_00 = source[0];
 		m_01 = source[1];
@@ -108,7 +108,7 @@ namespace Flounder
 		return this;
 	}
 
-	Matrix4 *Matrix4::setIdentity(Matrix4 *source)
+	Matrix4 *Matrix4::SetIdentity(Matrix4 *source)
 	{
 		source->m_00 = 1.0f;
 		source->m_01 = 0.0f;
@@ -129,7 +129,7 @@ namespace Flounder
 		return source;
 	}
 
-	float Matrix4::determinant(const Matrix4 &source)
+	float Matrix4::Determinant(const Matrix4 &source)
 	{
 		return (source.m_00 * (source.m_11 * source.m_22 * source.m_33 + source.m_12 * source.m_23 * source.m_31 + source.m_13 * source.m_21 * source.m_32 - source.m_13 * source.m_22 * source.m_31 - source.m_11 * source.m_23 * source.m_32 - source.m_12 * source.m_21 * source.m_33))
 			- (source.m_01 * (source.m_10 * source.m_22 * source.m_33 + source.m_12 * source.m_23 * source.m_30 + source.m_13 * source.m_20 * source.m_32 - source.m_13 * source.m_22 * source.m_30 - source.m_10 * source.m_23 * source.m_32 - source.m_12 * source.m_20 * source.m_33))
@@ -137,7 +137,7 @@ namespace Flounder
 			- (source.m_03 * (source.m_10 * source.m_21 * source.m_32 + source.m_11 * source.m_22 * source.m_30 + source.m_12 * source.m_20 * source.m_31 - source.m_12 * source.m_21 * source.m_30 - source.m_10 * source.m_22 * source.m_31 - source.m_11 * source.m_20 * source.m_32));
 	}
 
-	Matrix4 *Matrix4::add(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination)
+	Matrix4 *Matrix4::Add(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -163,7 +163,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix4 *Matrix4::subtract(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination)
+	Matrix4 *Matrix4::Subtract(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -189,7 +189,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Vector4 *Matrix4::multiply(const Matrix4 &left, const Vector4 &right, Vector4 *destination)
+	Vector4 *Matrix4::Multiply(const Matrix4 &left, const Vector4 &right, Vector4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -200,10 +200,10 @@ namespace Flounder
 		float y = left.m_01 * right.m_x + left.m_11 * right.m_y + left.m_21 * right.m_z + left.m_31 * right.m_w;
 		float z = left.m_02 * right.m_x + left.m_12 * right.m_y + left.m_22 * right.m_z + left.m_32 * right.m_w;
 		float w = left.m_03 * right.m_x + left.m_13 * right.m_y + left.m_23 * right.m_z + left.m_33 * right.m_w;
-		return destination->set(x, y, z, w);
+		return destination->Set(x, y, z, w);
 	}
 
-	Matrix4 *Matrix4::multiply(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination)
+	Matrix4 *Matrix4::Multiply(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -246,7 +246,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Vector4 *Matrix4::transform(const Matrix4 &left, const Vector4 &right, Vector4 *destination)
+	Vector4 *Matrix4::Transform(const Matrix4 &left, const Vector4 &right, Vector4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -258,10 +258,10 @@ namespace Flounder
 		float z = left.m_02 * right.m_x + left.m_12 * right.m_y + left.m_22 * right.m_z + left.m_32 * right.m_w;
 		float w = left.m_03 * right.m_x + left.m_13 * right.m_y + left.m_23 * right.m_z + left.m_33 * right.m_w;
 
-		return destination->set(x, y, z, w);
+		return destination->Set(x, y, z, w);
 	}
 
-	Matrix4 *Matrix4::scale(const Matrix4 &left, const Vector3 &right, Matrix4 *destination)
+	Matrix4 *Matrix4::Scale(const Matrix4 &left, const Vector3 &right, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -283,7 +283,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix4 *Matrix4::scale(const Matrix4 &left, const Vector4 &right, Matrix4 *destination)
+	Matrix4 *Matrix4::Scale(const Matrix4 &left, const Vector4 &right, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -309,9 +309,9 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix4 *Matrix4::invert(const Matrix4 &source, Matrix4 *destination)
+	Matrix4 *Matrix4::Invert(const Matrix4 &source, Matrix4 *destination)
 	{
-		float d = determinant(source);
+		float d = Determinant(source);
 
 		if (d != 0.0f)
 		{
@@ -323,28 +323,28 @@ namespace Flounder
 			float determinant_inv = 1.0f / d;
 
 			// First row.
-			float t00 = determinant3x3(source.m_11, source.m_12, source.m_13, source.m_21, source.m_22, source.m_23, source.m_31, source.m_32, source.m_33);
-			float t01 = -determinant3x3(source.m_10, source.m_12, source.m_13, source.m_20, source.m_22, source.m_23, source.m_30, source.m_32, source.m_33);
-			float t02 = determinant3x3(source.m_10, source.m_11, source.m_13, source.m_20, source.m_21, source.m_23, source.m_30, source.m_31, source.m_33);
-			float t03 = -determinant3x3(source.m_10, source.m_11, source.m_12, source.m_20, source.m_21, source.m_22, source.m_30, source.m_31, source.m_32);
+			float t00 = Determinant3x3(source.m_11, source.m_12, source.m_13, source.m_21, source.m_22, source.m_23, source.m_31, source.m_32, source.m_33);
+			float t01 = -Determinant3x3(source.m_10, source.m_12, source.m_13, source.m_20, source.m_22, source.m_23, source.m_30, source.m_32, source.m_33);
+			float t02 = Determinant3x3(source.m_10, source.m_11, source.m_13, source.m_20, source.m_21, source.m_23, source.m_30, source.m_31, source.m_33);
+			float t03 = -Determinant3x3(source.m_10, source.m_11, source.m_12, source.m_20, source.m_21, source.m_22, source.m_30, source.m_31, source.m_32);
 
 			// Second row.
-			float t10 = -determinant3x3(source.m_01, source.m_02, source.m_03, source.m_21, source.m_22, source.m_23, source.m_31, source.m_32, source.m_33);
-			float t11 = determinant3x3(source.m_00, source.m_02, source.m_03, source.m_20, source.m_22, source.m_23, source.m_30, source.m_32, source.m_33);
-			float t12 = -determinant3x3(source.m_00, source.m_01, source.m_03, source.m_20, source.m_21, source.m_23, source.m_30, source.m_31, source.m_33);
-			float t13 = determinant3x3(source.m_00, source.m_01, source.m_02, source.m_20, source.m_21, source.m_22, source.m_30, source.m_31, source.m_32);
+			float t10 = -Determinant3x3(source.m_01, source.m_02, source.m_03, source.m_21, source.m_22, source.m_23, source.m_31, source.m_32, source.m_33);
+			float t11 = Determinant3x3(source.m_00, source.m_02, source.m_03, source.m_20, source.m_22, source.m_23, source.m_30, source.m_32, source.m_33);
+			float t12 = -Determinant3x3(source.m_00, source.m_01, source.m_03, source.m_20, source.m_21, source.m_23, source.m_30, source.m_31, source.m_33);
+			float t13 = Determinant3x3(source.m_00, source.m_01, source.m_02, source.m_20, source.m_21, source.m_22, source.m_30, source.m_31, source.m_32);
 
 			// Third row.
-			float t20 = determinant3x3(source.m_01, source.m_02, source.m_03, source.m_11, source.m_12, source.m_13, source.m_31, source.m_32, source.m_33);
-			float t21 = -determinant3x3(source.m_00, source.m_02, source.m_03, source.m_10, source.m_12, source.m_13, source.m_30, source.m_32, source.m_33);
-			float t22 = determinant3x3(source.m_00, source.m_01, source.m_03, source.m_10, source.m_11, source.m_13, source.m_30, source.m_31, source.m_33);
-			float t23 = -determinant3x3(source.m_00, source.m_01, source.m_02, source.m_10, source.m_11, source.m_12, source.m_30, source.m_31, source.m_32);
+			float t20 = Determinant3x3(source.m_01, source.m_02, source.m_03, source.m_11, source.m_12, source.m_13, source.m_31, source.m_32, source.m_33);
+			float t21 = -Determinant3x3(source.m_00, source.m_02, source.m_03, source.m_10, source.m_12, source.m_13, source.m_30, source.m_32, source.m_33);
+			float t22 = Determinant3x3(source.m_00, source.m_01, source.m_03, source.m_10, source.m_11, source.m_13, source.m_30, source.m_31, source.m_33);
+			float t23 = -Determinant3x3(source.m_00, source.m_01, source.m_02, source.m_10, source.m_11, source.m_12, source.m_30, source.m_31, source.m_32);
 
 			// Fourth row.
-			float t30 = -determinant3x3(source.m_01, source.m_02, source.m_03, source.m_11, source.m_12, source.m_13, source.m_21, source.m_22, source.m_23);
-			float t31 = determinant3x3(source.m_00, source.m_02, source.m_03, source.m_10, source.m_12, source.m_13, source.m_20, source.m_22, source.m_23);
-			float t32 = -determinant3x3(source.m_00, source.m_01, source.m_03, source.m_10, source.m_11, source.m_13, source.m_20, source.m_21, source.m_23);
-			float t33 = determinant3x3(source.m_00, source.m_01, source.m_02, source.m_10, source.m_11, source.m_12, source.m_20, source.m_21, source.m_22);
+			float t30 = -Determinant3x3(source.m_01, source.m_02, source.m_03, source.m_11, source.m_12, source.m_13, source.m_21, source.m_22, source.m_23);
+			float t31 = Determinant3x3(source.m_00, source.m_02, source.m_03, source.m_10, source.m_12, source.m_13, source.m_20, source.m_22, source.m_23);
+			float t32 = -Determinant3x3(source.m_00, source.m_01, source.m_03, source.m_10, source.m_11, source.m_13, source.m_20, source.m_21, source.m_23);
+			float t33 = Determinant3x3(source.m_00, source.m_01, source.m_02, source.m_10, source.m_11, source.m_12, source.m_20, source.m_21, source.m_22);
 
 			// Transpose and divide by the determinant.
 			destination->m_00 = t00 * determinant_inv;
@@ -368,7 +368,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	Matrix4 *Matrix4::negate(const Matrix4 &source, Matrix4 *destination)
+	Matrix4 *Matrix4::Negate(const Matrix4 &source, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -394,7 +394,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix4 *Matrix4::transpose(const Matrix4 &source, Matrix4 *destination)
+	Matrix4 *Matrix4::Transpose(const Matrix4 &source, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -437,7 +437,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix4 *Matrix4::translate(const Matrix4 &left, const Vector2 &right, Matrix4 *destination)
+	Matrix4 *Matrix4::Translate(const Matrix4 &left, const Vector2 &right, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -451,7 +451,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix4 *Matrix4::translate(const Matrix4 &left, const Vector3 &right, Matrix4 *destination)
+	Matrix4 *Matrix4::Translate(const Matrix4 &left, const Vector3 &right, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -465,7 +465,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix4 *Matrix4::rotate(const Matrix4 &source, const Vector3 &axis, const float &angle, Matrix4 *destination)
+	Matrix4 *Matrix4::Rotate(const Matrix4 &source, const Vector3 &axis, const float &angle, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -515,7 +515,7 @@ namespace Flounder
 		return destination;
 	}
 
-	float *Matrix4::toArray(const Matrix4 &matrix)
+	float *Matrix4::ToArray(const Matrix4 &matrix)
 	{
 		float *result = new float[16];
 		result[0] = matrix.m_00;
@@ -537,7 +537,7 @@ namespace Flounder
 		return result;
 	}
 
-	Matrix4 *Matrix4::setZero(Matrix4 *source)
+	Matrix4 *Matrix4::SetZero(Matrix4 *source)
 	{
 		source->m_00 = 0.0f;
 		source->m_01 = 0.0f;
@@ -558,73 +558,73 @@ namespace Flounder
 		return source;
 	}
 
-	Vector3 *Matrix4::rotate(const Vector3 &source, const Vector3 &rotation, Vector3 *destination)
+	Vector3 *Matrix4::Rotate(const Vector3 &source, const Vector3 &rotation, Vector3 *destination)
 	{
 		if (destination == nullptr)
 		{
 			destination = new Vector3();
 		}
 
-		Matrix4 *matrix = transformationMatrix(Vector3(0.0f, 0.0f, 0.0f), rotation, Vector3(1.0f, 1.0f, 1.0f), nullptr);
+		Matrix4 *matrix = TransformationMatrix(Vector3(0.0f, 0.0f, 0.0f), rotation, Vector3(1.0f, 1.0f, 1.0f), nullptr);
 		Vector4 direction4 = Vector4(source.m_x, source.m_y, source.m_z, 1.0f);
-		transform(*matrix, direction4, &direction4);
+		Transform(*matrix, direction4, &direction4);
 		delete matrix;
-		return destination->set(direction4.m_x, direction4.m_y, direction4.m_z);
+		return destination->Set(direction4.m_x, direction4.m_y, direction4.m_z);
 	}
 
-	Matrix4 *Matrix4::transformationMatrix(const Vector2 &translation, const float &scale, Matrix4 *destination)
+	Matrix4 *Matrix4::TransformationMatrix(const Vector2 &translation, const float &scale, Matrix4 *destination)
 	{
-		return transformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(scale, scale, scale), destination);
+		return TransformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(scale, scale, scale), destination);
 	}
 
-	Matrix4 *Matrix4::transformationMatrix(const Vector2 &translation, const Vector3 &scale, Matrix4 *destination)
+	Matrix4 *Matrix4::TransformationMatrix(const Vector2 &translation, const Vector3 &scale, Matrix4 *destination)
 	{
-		return transformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3(0.0f, 0.0f, 0.0f), scale, destination);
+		return TransformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3(0.0f, 0.0f, 0.0f), scale, destination);
 	}
 
-	Matrix4 *Matrix4::transformationMatrix(const Vector3 &translation, const Vector3 &rotation, const float &scale, Matrix4 *destination)
+	Matrix4 *Matrix4::TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const float &scale, Matrix4 *destination)
 	{
-		return transformationMatrix(translation, rotation, Vector3(scale, scale, scale), destination);
+		return TransformationMatrix(translation, rotation, Vector3(scale, scale, scale), destination);
 	}
 
-	Matrix4 *Matrix4::transformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale, Matrix4 *destination)
+	Matrix4 *Matrix4::TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
 			destination = new Matrix4();
 		}
 
-		destination->setIdentity();
+		destination->SetIdentity();
 
-		if (Vector3::lengthSquared(translation) != 0.0f)
+		if (Vector3::LengthSquared(translation) != 0.0f)
 		{
-			translate(*destination, translation, destination);
+			Translate(*destination, translation, destination);
 		}
 
-		if (Vector3::lengthSquared(rotation) != 0.0f)
+		if (Vector3::LengthSquared(rotation) != 0.0f)
 		{
-			rotate(*destination, Vector3(1.0f, 0.0f, 0.0f), Maths::Radians(rotation.m_x), destination); // Rotate the X component.
-			rotate(*destination, Vector3(0.0f, 1.0f, 0.0f), Maths::Radians(rotation.m_y), destination); // Rotate the Y component.
-			rotate(*destination, Vector3(0.0f, 0.0f, 1.0f), Maths::Radians(rotation.m_z), destination); // Rotate the Z component.
+			Rotate(*destination, Vector3(1.0f, 0.0f, 0.0f), Maths::Radians(rotation.m_x), destination); // Rotate the X component.
+			Rotate(*destination, Vector3(0.0f, 1.0f, 0.0f), Maths::Radians(rotation.m_y), destination); // Rotate the Y component.
+			Rotate(*destination, Vector3(0.0f, 0.0f, 1.0f), Maths::Radians(rotation.m_z), destination); // Rotate the Z component.
 		}
 
 		// Only scales if there is a scale.
 		if (scale.m_x != 1.0f && scale.m_y != 1.0f && scale.m_z != 1.0f)
 		{
-			Matrix4::scale(*destination, Vector4(scale.m_x, scale.m_y, scale.m_z, 1.0f), destination);
+			Matrix4::Scale(*destination, Vector4(scale.m_x, scale.m_y, scale.m_z, 1.0f), destination);
 		}
 
 		return destination;
 	}
 
-	Matrix4 *Matrix4::perspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar, Matrix4 *destination)
+	Matrix4 *Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
 			destination = new Matrix4();
 		}
 
-		destination->setIdentity();
+		destination->SetIdentity();
 		float yScale = 1.0f / tan(Maths::Radians(fov / 2.0f));
 		float xScale = yScale / aspectRatio;
 		float length = zFar - zNear;
@@ -638,7 +638,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix4 *Matrix4::orthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &near, const float &far, Matrix4 *destination)
+	Matrix4 *Matrix4::OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &near, const float &far, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -653,7 +653,7 @@ namespace Flounder
 		float ty = -(top + bottom) / (top - bottom);
 		float tz = -(far + near) / (far - near);
 
-		destination->setIdentity();
+		destination->SetIdentity();
 		destination->m_00 = ox;
 		destination->m_11 = oy;
 		destination->m_22 = oz;
@@ -664,31 +664,31 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix4 *Matrix4::viewMatrix(const Vector3 &position, const Vector3 &rotation, Matrix4 *destination)
+	Matrix4 *Matrix4::ViewMatrix(const Vector3 &position, const Vector3 &rotation, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
 			destination = new Matrix4();
 		}
 
-		destination->setIdentity();
+		destination->SetIdentity();
 
-		if (!rotation.isZero())
+		if (!rotation.IsZero())
 		{
-			rotate(*destination, Vector3(1.0f, 0.0f, 0.0f), Maths::Radians(rotation.m_x), destination);
-			rotate(*destination, Vector3(0.0f, 1.0f, 0.0f), Maths::Radians(-rotation.m_y), destination);
-			rotate(*destination, Vector3(0.0f, 0.0f, 1.0f), Maths::Radians(rotation.m_z), destination);
+			Rotate(*destination, Vector3(1.0f, 0.0f, 0.0f), Maths::Radians(rotation.m_x), destination);
+			Rotate(*destination, Vector3(0.0f, 1.0f, 0.0f), Maths::Radians(-rotation.m_y), destination);
+			Rotate(*destination, Vector3(0.0f, 0.0f, 1.0f), Maths::Radians(rotation.m_z), destination);
 		}
 
-		if (!position.isZero())
+		if (!position.IsZero())
 		{
-			translate(*destination, *Vector3(position).negate(), destination);
+			Translate(*destination, *Vector3(position).Negate(), destination);
 		}
 
 		return destination;
 	}
 
-	Vector3 *Matrix4::worldToScreenSpace(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix, Vector3 *destination)
+	Vector3 *Matrix4::WorldToScreenSpace(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix, Vector3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -696,16 +696,16 @@ namespace Flounder
 		}
 
 		Vector4 point4 = Vector4(worldSpace.m_x, worldSpace.m_y, worldSpace.m_z, 1.0f);
-		transform(viewMatrix, point4, &point4);
-		transform(projectionMatrix, point4, &point4);
+		Transform(viewMatrix, point4, &point4);
+		Transform(projectionMatrix, point4, &point4);
 		Vector3 point = Vector3(point4);
 
 		point.m_x /= point.m_z;
 		point.m_y /= point.m_z;
-		return destination->set(point.m_x, point.m_y, point.m_z);
+		return destination->Set(point.m_x, point.m_y, point.m_z);
 	}
 
-	Vector3 *Matrix4::generateRandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle, Vector3 *destination)
+	Vector3 *Matrix4::RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle, Vector3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -723,13 +723,13 @@ namespace Flounder
 
 		if ((coneDirection.m_x != 0.0F) || (coneDirection.m_y != 0.0F) || ((coneDirection.m_z != 1.0f) && (coneDirection.m_z != -1.0f)))
 		{
-			Vector3 *rotateAxis = Vector3::cross(coneDirection, Vector3(0.0f, 0.0f, 1.0f), nullptr);
-			rotateAxis->normalize();
-			float rotateAngle = acos(Vector3::dot(coneDirection, Vector3(0.0f, 0.0f, 1.0f)));
+			Vector3 *rotateAxis = Vector3::Cross(coneDirection, Vector3(0.0f, 0.0f, 1.0f), nullptr);
+			rotateAxis->Normalize();
+			float rotateAngle = acos(Vector3::Dot(coneDirection, Vector3(0.0f, 0.0f, 1.0f)));
 			Matrix4 rotationMatrix = Matrix4();
-			rotationMatrix.setIdentity();
-			rotate(rotationMatrix, *rotateAxis, -rotateAngle, &rotationMatrix);
-			transform(rotationMatrix, direction, &direction);
+			rotationMatrix.SetIdentity();
+			Rotate(rotationMatrix, *rotateAxis, -rotateAngle, &rotationMatrix);
+			Transform(rotationMatrix, direction, &direction);
 			delete rotateAxis;
 		}
 		else if (coneDirection.m_z == -1.0f)
@@ -737,40 +737,40 @@ namespace Flounder
 			direction.m_z *= -1.0f;
 		}
 
-		return destination->set(direction);
+		return destination->Set(direction);
 	}
 
-	Matrix4 *Matrix4::setIdentity()
+	Matrix4 *Matrix4::SetIdentity()
 	{
-		return setIdentity(this);
+		return SetIdentity(this);
 	}
 
-	float Matrix4::determinant()
+	float Matrix4::Determinant()
 	{
-		return determinant(*this);
+		return Determinant(*this);
 	}
 
-	Matrix4 *Matrix4::invert()
+	Matrix4 *Matrix4::Invert()
 	{
-		return invert(*this, this);
+		return Invert(*this, this);
 	}
 
-	Matrix4 *Matrix4::negate()
+	Matrix4 *Matrix4::Negate()
 	{
-		return negate(*this, this);
+		return Negate(*this, this);
 	}
 
-	Matrix4 *Matrix4::transpose()
+	Matrix4 *Matrix4::Transpose()
 	{
-		return transpose(*this, this);
+		return Transpose(*this, this);
 	}
 
-	Matrix4 *Matrix4::setZero()
+	Matrix4 *Matrix4::SetZero()
 	{
-		return setZero(this);
+		return SetZero(this);
 	}
 
-	float Matrix4::determinant3x3(const float &t00, const float &t01, const float &t02, const float &t10, const float &t11, const float &t12, const float &t20, const float &t21, const float &t22)
+	float Matrix4::Determinant3x3(const float &t00, const float &t01, const float &t02, const float &t10, const float &t11, const float &t12, const float &t20, const float &t21, const float &t22)
 	{
 		return t00 * (t11 * t22 - t12 * t21) + t01 * (t12 * t20 - t10 * t22) + t02 * (t10 * t21 - t11 * t20);
 	}

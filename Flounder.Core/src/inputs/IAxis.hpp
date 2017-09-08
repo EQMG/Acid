@@ -5,20 +5,20 @@ namespace Flounder
 	/// <summary>
 	/// Interface for an axis based input device.
 	/// </summary>
-	class iaxis
+	class IAxis
 	{
 	public:
 		/// <summary>
 		/// Creates a new axis.
 		/// </summary>
-		iaxis()
+		IAxis()
 		{
 		}
 
 		/// <summary>
 		/// Deconstructor for the axis.
 		/// </summary>
-		virtual ~iaxis()
+		virtual ~IAxis()
 		{
 		}
 
@@ -26,6 +26,6 @@ namespace Flounder
 		/// Gets the current value along the axis. -1 is smallest input, 1 is largest input.
 		/// </summary>
 		/// <returns> The current value of the axis in the range (-1, 1). </returns>
-		virtual float getAmount() const = 0;
+		virtual float GetAmount() const = 0;
 	};
 }

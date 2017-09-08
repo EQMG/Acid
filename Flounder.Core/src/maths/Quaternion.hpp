@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
 	/// </summary>
-	class quaternion
+	class Quaternion
 	{
 	public:
 		float m_x, m_y, m_z, m_w;
@@ -17,7 +17,7 @@ namespace Flounder
 		/// <summary>
 		/// Constructor for quaternion.
 		/// </summary>
-		quaternion();
+		Quaternion();
 
 		/// <summary>
 		/// Constructor for quaternion.
@@ -26,24 +26,24 @@ namespace Flounder
 		/// <param name="y"> Start y. </param>
 		/// <param name="z"> Start z. </param>
 		/// <param name="w"> Start w. </param>
-		quaternion(const float &x, const float &y, const float &z, const float &w);
+		Quaternion(const float &x, const float &y, const float &z, const float &w);
 
 		/// <summary>
 		/// Constructor for quaternion.
 		/// </summary>
 		/// <param name="source"> Creates this quaternion out of a existing one. </param>
-		quaternion(const quaternion &source);
+		Quaternion(const Quaternion &source);
 
 		/// <summary>
 		/// Constructor for quaternion.
 		/// </summary>
 		/// <param name="source"> Creates this quaternion out of a matrix one. </param>
-		quaternion(const Matrix4 &source);
+		Quaternion(const Matrix4 &source);
 
 		/// <summary>
 		/// Deconstructor for quaternion.
 		/// </summary>
-		~quaternion();
+		~Quaternion();
 
 		/// <summary>
 		/// Sets values in the quaternion.
@@ -53,42 +53,42 @@ namespace Flounder
 		/// <param name="z"> The new Z value. </param>
 		/// <param name="w"> The new W value. </param>
 		/// <returns> This. </returns>
-		quaternion *set(const float &x, const float &y, const float &z, const float &w);
+		Quaternion *Set(const float &x, const float &y, const float &z, const float &w);
 
 		/// <summary>
 		/// Loads from another quaternion.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
 		/// <returns> This. </returns>
-		quaternion *set(const quaternion &source);
+		Quaternion *Set(const Quaternion &source);
 
 		/// <summary>
 		/// Loads from a equivalent rotation of the axis-angle argument.
 		/// </summary>
 		/// <param name="source"> The source axis-angle: (x,y,z) is the axis and w is the angle. </param>
 		/// <returns> This. </returns>
-		quaternion *set(const Vector4 &source);
+		Quaternion *Set(const Vector4 &source);
 
 		/// <summary>
 		/// Loads from a Matrix4.
 		/// </summary>
 		/// <param name="source"> The source matrix. </param>
 		/// <returns> This. </returns>
-		quaternion *set(const Matrix4 &source);
+		Quaternion *Set(const Matrix4 &source);
 
 		/// <summary>
 		/// Loads from a Matrix3.
 		/// </summary>
 		/// <param name="source"> The source matrix. </param>
 		/// <returns> This. </returns>
-		quaternion *set(const Matrix3 &source);
+		Quaternion *Set(const Matrix3 &source);
 
 		/// <summary>
 		/// Set the given quaternion to the multiplication identity.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
 		/// <returns> The source quaternion. </returns>
-		static quaternion *setIdentity(quaternion *source);
+		static Quaternion *SetIdentity(Quaternion *source);
 
 		/// <summary>
 		/// Sets the value of this quaternion to the quaternion product of quaternions left and right (this = left * right). Note that this is safe for aliasing (e.g. this can be left or right).
@@ -97,7 +97,7 @@ namespace Flounder
 		/// <param name="right"> The right source quaternion. </param>
 		/// <param name="destination"> The destination quaternion or nullptr if a new quaternion is to be created.</param>
 		/// <returns> The destination quaternion. </returns>
-		static quaternion *multiply(const quaternion &left, const quaternion &right, quaternion *destination);
+		static Quaternion *Multiply(const Quaternion &left, const Quaternion &right, Quaternion *destination);
 
 		/// <summary>
 		/// Multiplies quaternion left by the inverse of quaternion right and places the value into this quaternion. The value of both argument quaternions is persevered (this = left * right^-1).
@@ -106,7 +106,7 @@ namespace Flounder
 		/// <param name="right"> The right source quaternion. </param>
 		/// <param name="destination"> The destination quaternion or nullptr if a new quaternion is to be created. </param>
 		/// <returns> The destination quaternion. </returns>
-		static quaternion *multiplyInverse(const quaternion &left, const quaternion &right, quaternion *destination);
+		static Quaternion *MultiplyInverse(const Quaternion &left, const Quaternion &right, Quaternion *destination);
 
 		/// <summary>
 		/// Calculates the dot product of the two quaternions.
@@ -114,7 +114,7 @@ namespace Flounder
 		/// <param name="left"> The left source quaternion. </param>
 		/// <param name="right"> The right source quaternion. </param>
 		/// <returns> Left dot right. </returns>
-		static float dot(const quaternion &left, const quaternion &right);
+		static float Dot(const Quaternion &left, const Quaternion &right);
 
 		/// <summary>
 		/// Calculates the slerp between the two quaternions, they must be normalized!
@@ -124,7 +124,7 @@ namespace Flounder
 		/// <param name="progression"> The progression. </param>
 		/// <param name="destination"> The destination quaternion or nullptr if a new quaternion is to be created.
 		/// <returns> Left slerp right. </returns>
-		static quaternion *slerp(const quaternion &left, const quaternion &right, const float &progression, quaternion *destination);
+		static Quaternion *Slerp(const Quaternion &left, const Quaternion &right, const float &progression, Quaternion *destination);
 
 		/// <summary>
 		/// Scales a quaternion by a scalar and places the result in the destination quaternion.
@@ -133,7 +133,7 @@ namespace Flounder
 		/// <param name="scalar"> The scalar value. </param>
 		/// <param name="destination"> The destination quaternion or nullptr if a new quaternion is to be created. </param>
 		/// <returns> The destination quaternion. </returns>
-		static quaternion *scale(const quaternion &source, const float &scalar, quaternion *destination);
+		static Quaternion *Scale(const Quaternion &source, const float &scalar, Quaternion *destination);
 
 		/// <summary>
 		/// Negates a quaternion and places the result in the destination quaternion.
@@ -141,7 +141,7 @@ namespace Flounder
 		/// <param name="source"> The source quaternion. </param>
 		/// <param name="destination"> The destination quaternion or nullptr if a new quaternion is to be created. </param>
 		/// <returns> The destination quaternion. </returns>
-		static quaternion *negate(const quaternion &source, quaternion *destination);
+		static Quaternion *Negate(const Quaternion &source, Quaternion *destination);
 
 		/// <summary>
 		/// Normalizes a quaternion and places the result in the destination quaternion.
@@ -149,21 +149,21 @@ namespace Flounder
 		/// <param name="source"> The source quaternion. </param>
 		/// <param name="destination"> The destination quaternion or nullptr if a new quaternion is to be created.</param>
 		/// <returns> The destination quaternion. </returns>
-		static quaternion *normalize(const quaternion &source, quaternion *destination);
+		static Quaternion *Normalize(const Quaternion &source, Quaternion *destination);
 
 		/// <summary>
 		/// Gets the length of the quaternion.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
 		/// <returns> The length of the quaternion. </returns>
-		static float length(const quaternion &source);
+		static float Length(const Quaternion &source);
 
 		/// <summary>
 		/// Gets the length of the quaternion.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
 		/// <returns> The length squared of the quaternion. </returns>
-		static float lengthSquared(const quaternion &source);
+		static float LengthSquared(const Quaternion &source);
 
 		/// <summary>
 		/// Converts the quaternion to a 4x4 matrix.
@@ -171,7 +171,7 @@ namespace Flounder
 		/// <param name="source"> The source quaternion. </param>
 		/// <param name="destination"> The destination matrix.</param>
 		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
-		static Matrix4 *toMatrix(const quaternion &source, Matrix4 *destination);
+		static Matrix4 *ToMatrix(const Quaternion &source, Matrix4 *destination);
 
 		/// <summary>
 		/// Converts the quaternion to a 4x4 matrix representing the exact same
@@ -182,51 +182,51 @@ namespace Flounder
 		/// <param name="source"> The source quaternion. </param>
 		/// <param name="destination"> The destination matrix.</param>
 		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
-		static Matrix4 *toRotationMatrix(const quaternion &source, Matrix4 *destination);
+		static Matrix4 *ToRotationMatrix(const Quaternion &source, Matrix4 *destination);
 
 		/// <summary>
 		/// Set this quaternion to the multiplication identity.
 		/// </summary>
 		/// <returns> This </returns>
-		quaternion *setIdentity();
+		Quaternion *SetIdentity();
 
 		/// <summary>
 		/// Negates this quaternion.
 		/// </summary>
 		/// <returns> This. </returns>
-		quaternion *negate();
+		Quaternion *Negate();
 
 		/// <summary>
 		/// Normalizes this quaternion.
 		/// </summary>
 		/// <returns> This. </returns>
-		quaternion *normalize();
+		Quaternion *Normalize();
 
 		/// <summary>
 		/// Scales this quaternion.
 		/// </summary>
 		/// <param name="scalar"> The scale factor. </param>
 		/// <returns> This. </returns>
-		quaternion *scale(const float &scalar);
+		Quaternion *Scale(const float &scalar);
 
 		/// <summary>
 		/// Gets if all the components to the quaternion are zero.
 		/// </summary>
 		/// <returns> If the quaternion is zero. </returns>
-		bool isZero() const;
+		bool IsZero() const;
 
 		/// <summary>
 		/// Gets the length of the quaternion.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
 		/// <returns> The length of the quaternion. </returns>
-		float length() const;
+		float Length() const;
 
 		/// <summary>
 		/// Gets the length squared of the quaternion.
 		/// </summary>
 		/// <param name="source"> The source quaternion. </param>
 		/// <returns> The length squared of the quaternion. </returns>
-		float lengthSquared() const;
+		float LengthSquared() const;
 	};
 }

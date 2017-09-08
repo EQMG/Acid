@@ -38,7 +38,7 @@ namespace Flounder
 		sphere *source = dynamic_cast<sphere*>(destination);
 
 		source->m_radius = m_radius * scale;
-		source->m_position->set(position);
+		source->m_position->Set(position);
 
 		return source;
 	}
@@ -114,11 +114,11 @@ namespace Flounder
 
 	intersect *sphere::intersects(const ray &ray)
 	{
-		Vector3 *L = Vector3::subtract(*ray.m_origin, *m_position, nullptr);
+		Vector3 *L = Vector3::Subtract(*ray.m_origin, *m_position, nullptr);
 
-		float a = Vector3::dot(*ray.m_currentRay, *ray.m_currentRay);
-		float b = 2.0f * (Vector3::dot(*ray.m_currentRay, *L));
-		float c = (Vector3::dot(*L, *L)) - (m_radius * m_radius);
+		float a = Vector3::Dot(*ray.m_currentRay, *ray.m_currentRay);
+		float b = 2.0f * (Vector3::Dot(*ray.m_currentRay, *L));
+		float c = (Vector3::Dot(*L, *L)) - (m_radius * m_radius);
 
 		float disc = b * b - 4.0f * a * c;
 
@@ -190,6 +190,6 @@ namespace Flounder
 
 	bool sphere::contains(const Vector3 &point)
 	{
-		return Vector3::getDistanceSquared(*m_position, point) <= m_radius * m_radius;
+		return Vector3::GetDistanceSquared(*m_position, point) <= m_radius * m_radius;
 	}
 }
