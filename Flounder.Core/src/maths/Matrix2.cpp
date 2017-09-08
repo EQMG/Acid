@@ -30,7 +30,7 @@ namespace Flounder
 	{
 	}
 
-	Matrix2 *Matrix2::set(const Matrix2 &source)
+	Matrix2 *Matrix2::Set(const Matrix2 &source)
 	{
 		m_00 = source.m_00;
 		m_01 = source.m_01;
@@ -39,7 +39,7 @@ namespace Flounder
 		return this;
 	}
 
-	Matrix2 *Matrix2::set(const float source[4])
+	Matrix2 *Matrix2::Set(const float source[4])
 	{
 		m_00 = source[0];
 		m_01 = source[1];
@@ -48,7 +48,7 @@ namespace Flounder
 		return this;
 	}
 
-	Matrix2 *Matrix2::setIdentity(Matrix2 *source)
+	Matrix2 *Matrix2::SetIdentity(Matrix2 *source)
 	{
 		source->m_00 = 1.0f;
 		source->m_01 = 0.0f;
@@ -57,12 +57,12 @@ namespace Flounder
 		return source;
 	}
 
-	float Matrix2::determinant(const Matrix2 &source)
+	float Matrix2::Determinant(const Matrix2 &source)
 	{
 		return source.m_00 * source.m_11 - source.m_01 * source.m_10;
 	}
 
-	Matrix2 *Matrix2::add(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination)
+	Matrix2 *Matrix2::Add(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -76,7 +76,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix2 *Matrix2::subtract(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination)
+	Matrix2 *Matrix2::Subtract(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -90,7 +90,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix2 *Matrix2::multiply(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination)
+	Matrix2 *Matrix2::Multiply(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -109,7 +109,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Vector2 *Matrix2::transform(const Matrix2 &left, const Vector2 &right, Vector2 *destination)
+	Vector2 *Matrix2::Transform(const Matrix2 &left, const Vector2 &right, Vector2 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -119,10 +119,10 @@ namespace Flounder
 		float x = left.m_00 * right.m_x + left.m_10 * right.m_y;
 		float y = left.m_01 * right.m_x + left.m_11 * right.m_y;
 
-		return destination->set(x, y);
+		return destination->Set(x, y);
 	}
 
-	Matrix2 *Matrix2::scale(const Matrix2 &left, const Vector2 &right, Matrix2 *destination)
+	Matrix2 *Matrix2::Scale(const Matrix2 &left, const Vector2 &right, Matrix2 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -136,9 +136,9 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix2 *Matrix2::invert(const Matrix2 &source, Matrix2 *destination)
+	Matrix2 *Matrix2::Invert(const Matrix2 &source, Matrix2 *destination)
 	{
-		float d = determinant(source);
+		float d = Determinant(source);
 
 		if (d != 0.0f)
 		{
@@ -162,7 +162,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	Matrix2 *Matrix2::negate(const Matrix2 &source, Matrix2 *destination)
+	Matrix2 *Matrix2::Negate(const Matrix2 &source, Matrix2 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -176,7 +176,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix2 *Matrix2::transpose(const Matrix2 &source, Matrix2 *destination)
+	Matrix2 *Matrix2::Transpose(const Matrix2 &source, Matrix2 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -191,7 +191,7 @@ namespace Flounder
 		return destination;
 	}
 
-	float *Matrix2::toArray(const Matrix2 &matrix)
+	float *Matrix2::ToArray(const Matrix2 &matrix)
 	{
 		float *result = new float[4];
 		result[0] = matrix.m_00;
@@ -201,7 +201,7 @@ namespace Flounder
 		return result;
 	}
 
-	Matrix2 *Matrix2::setZero(Matrix2 *source)
+	Matrix2 *Matrix2::SetZero(Matrix2 *source)
 	{
 		source->m_00 = 0.0f;
 		source->m_01 = 0.0f;
@@ -210,33 +210,33 @@ namespace Flounder
 		return source;
 	}
 
-	Matrix2 *Matrix2::setIdentity()
+	Matrix2 *Matrix2::SetIdentity()
 	{
-		return setIdentity(this);
+		return SetIdentity(this);
 	}
 
-	float Matrix2::determinant()
+	float Matrix2::Determinant()
 	{
-		return determinant(*this);
+		return Determinant(*this);
 	}
 
-	Matrix2 *Matrix2::invert()
+	Matrix2 *Matrix2::Invert()
 	{
-		return invert(*this, this);
+		return Invert(*this, this);
 	}
 
-	Matrix2 *Matrix2::negate()
+	Matrix2 *Matrix2::Negate()
 	{
-		return negate(*this, this);
+		return Negate(*this, this);
 	}
 
-	Matrix2 *Matrix2::transpose()
+	Matrix2 *Matrix2::Transpose()
 	{
-		return transpose(*this, this);
+		return Transpose(*this, this);
 	}
 
-	Matrix2 *Matrix2::setZero()
+	Matrix2 *Matrix2::SetZero()
 	{
-		return setZero(this);
+		return SetZero(this);
 	}
 }

@@ -39,7 +39,7 @@ namespace Flounder
 
 	void ray::update(const Vector3 &currentPosition, const Vector2 &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 	{
-		m_origin->set(currentPosition);
+		m_origin->Set(currentPosition);
 
 		if (m_useMouse)
 		{
@@ -49,17 +49,17 @@ namespace Flounder
 		{
 			if (m_screenStart != nullptr)
 			{
-				m_normalizedCoords->set(*m_screenStart);
+				m_normalizedCoords->Set(*m_screenStart);
 			}
 			else
 			{
-				m_normalizedCoords->set(0.0f, 0.0f);
+				m_normalizedCoords->Set(0.0f, 0.0f);
 			}
 		}
 
-		m_viewMatrix->set(viewMatrix);
-		m_projectionMatrix->set(projectionMatrix);
-		m_clipCoords->set(m_normalizedCoords->m_x, m_normalizedCoords->m_y, -1.0f, 1.0f);
+		m_viewMatrix->Set(viewMatrix);
+		m_projectionMatrix->Set(projectionMatrix);
+		m_clipCoords->Set(m_normalizedCoords->m_x, m_normalizedCoords->m_y, -1.0f, 1.0f);
 		updateEyeCoords(m_clipCoords);
 		updateWorldCoords(m_eyeCoords);
 	}
@@ -71,7 +71,7 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		return Vector3::add(*m_origin, *destination->set(*m_currentRay)->scale(distance), destination);
+		return Vector3::Add(*m_origin, *destination->Set(*m_currentRay)->Scale(distance), destination);
 	}
 
 	Vector3 *ray::convertToScreenSpace(const Vector3 &position, Vector3 *destination) const
@@ -82,35 +82,35 @@ namespace Flounder
 		}
 
 		Vector4 *coords = new Vector4(position);
-		Matrix4::transform(*m_viewMatrix, *coords, coords);
-		Matrix4::transform(*m_projectionMatrix, *coords, coords);
+		Matrix4::Transform(*m_viewMatrix, *coords, coords);
+		Matrix4::Transform(*m_projectionMatrix, *coords, coords);
 
 		if (coords->m_w < 0.0f)
 		{
 			return nullptr;
 		}
 
-		return destination->set((coords->m_x / coords->m_w + 1.0f) / 2.0f, 1.0f - (coords->m_y / coords->m_w + 1.0f) / 2.0f, coords->m_z);
+		return destination->Set((coords->m_x / coords->m_w + 1.0f) / 2.0f, 1.0f - (coords->m_y / coords->m_w + 1.0f) / 2.0f, coords->m_z);
 	}
 
 	void ray::updateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY)
 	{
 		float x = (2.0f * mouseX) - 1.0f;
 		float y = (2.0f * mouseY) - 1.0f;
-		m_normalizedCoords->set(x, -y);
+		m_normalizedCoords->Set(x, -y);
 	}
 
 	void ray::updateEyeCoords(Vector4 *clipCoords)
 	{
-		m_invertedProjection = Matrix4::invert(*m_projectionMatrix, m_invertedProjection);
-		Matrix4::transform(*m_invertedProjection, *m_clipCoords, m_eyeCoords);
-		m_eyeCoords->set(m_eyeCoords->m_x, m_eyeCoords->m_y, -1.0f, 0.0f);
+		m_invertedProjection = Matrix4::Invert(*m_projectionMatrix, m_invertedProjection);
+		Matrix4::Transform(*m_invertedProjection, *m_clipCoords, m_eyeCoords);
+		m_eyeCoords->Set(m_eyeCoords->m_x, m_eyeCoords->m_y, -1.0f, 0.0f);
 	}
 
 	void ray::updateWorldCoords(Vector4 *eyeCoords)
 	{
-		Matrix4::invert(*m_viewMatrix, m_invertedView);
-		Matrix4::transform(*m_invertedView, *m_eyeCoords, m_rayWorld);
-		m_currentRay->set(*m_rayWorld);
+		Matrix4::Invert(*m_viewMatrix, m_invertedView);
+		Matrix4::Transform(*m_invertedView, *m_eyeCoords, m_rayWorld);
+		m_currentRay->Set(*m_rayWorld);
 	}
 }

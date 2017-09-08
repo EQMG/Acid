@@ -1,8 +1,0 @@
-﻿  RendererDeferred.cpp
-  GlfwUpdater.cpp
-  FilterFxaa.cpp
-  RendererWaters.cpp
-  Water.cpp
-  Waters.cpp
-  Generating Code...
-  Flounder.Core.vcxproj -> C:\Users\mattp\Documents\Flounder\Flounder.Core\bin\Debug\Flounder.Core.lib

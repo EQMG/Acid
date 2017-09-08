@@ -1,24 +1,24 @@
-﻿#include "spawncircle.hpp"
+﻿#include "SpawnCircle.hpp"
 
 namespace Flounder
 {
-	spawncircle::spawncircle(const float &radius, const Vector3 &heading) :
-		ispawnparticle(),
+	SpawnCircle::SpawnCircle(const float &radius, const Vector3 &heading) :
+		ISpawnParticle(),
 		m_radius(radius),
 		m_heading(new Vector3(heading)),
 		m_spawnPosition(new Vector3())
 	{
-		m_heading->normalize();
+		m_heading->Normalize();
 	}
 
-	spawncircle::~spawncircle()
+	SpawnCircle::~SpawnCircle()
 	{
 		delete m_heading;
 		delete m_spawnPosition;
 	}
 
-	Vector3 *spawncircle::getBaseSpawnPosition()
+	Vector3 *SpawnCircle::GetBaseSpawnPosition()
 	{
-		return Vector3::randomPointOnCircle(*m_heading, m_radius, m_spawnPosition);
+		return Vector3::RandomPointOnCircle(*m_heading, m_radius, m_spawnPosition);
 	}
 }

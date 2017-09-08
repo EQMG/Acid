@@ -2,9 +2,9 @@
 
 Instance::Instance()
 {
-	m_buttonFullscreen = new buttonkeyboard(1, GLFW_KEY_F11);
-	m_buttonLockMouse = new buttonkeyboard(1, GLFW_KEY_M);
-	m_buttonExit = new buttonkeyboard(1, GLFW_KEY_DELETE);
+	m_buttonFullscreen = new ButtonKeyboard(1, GLFW_KEY_F11);
+	m_buttonLockMouse = new ButtonKeyboard(1, GLFW_KEY_M);
+	m_buttonExit = new ButtonKeyboard(1, GLFW_KEY_DELETE);
 
 	/*audio::add(new sound("music", "res/ld39Outpost.wav"));
 	sound *object = audio::get("music");
@@ -52,17 +52,17 @@ Instance::~Instance()
 
 void Instance::Update()
 {
-	if (m_buttonFullscreen->wasDown())
+	if (m_buttonFullscreen->WasDown())
 	{
 		Display::Get()->SetFullscreen(!Display::Get()->IsFullscreen());
 	}
 
-	if (m_buttonLockMouse->wasDown())
+	if (m_buttonLockMouse->WasDown())
 	{
 		Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorDisabled());
 	}
 
-	if (m_buttonExit->wasDown())
+	if (m_buttonExit->WasDown())
 	{
 		Engine::Get()->RequestClose(false);
 	}

@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	quaternion::quaternion() :
+	Quaternion::Quaternion() :
 		m_x(0.0f),
 		m_y(0.0f),
 		m_z(0.0f),
@@ -10,7 +10,7 @@ namespace Flounder
 	{
 	}
 
-	quaternion::quaternion(const float &x, const float &y, const float &z, const float &w) :
+	Quaternion::Quaternion(const float &x, const float &y, const float &z, const float &w) :
 		m_x(x),
 		m_y(y),
 		m_z(z),
@@ -18,29 +18,29 @@ namespace Flounder
 	{
 	}
 
-	quaternion::quaternion(const quaternion &source) :
+	Quaternion::Quaternion(const Quaternion &source) :
 		m_x(0.0f),
 		m_y(0.0f),
 		m_z(0.0f),
 		m_w(0.0f)
 	{
-		set(source);
+		Set(source);
 	}
 
-	quaternion::quaternion(const Matrix4 &source) :
+	Quaternion::Quaternion(const Matrix4 &source) :
 		m_x(0.0f),
 		m_y(0.0f),
 		m_z(0.0f),
 		m_w(0.0f)
 	{
-		set(source);
+		Set(source);
 	}
 
-	quaternion::~quaternion()
+	Quaternion::~Quaternion()
 	{
 	}
 
-	quaternion *quaternion::set(const float &x, const float &y, const float &z, const float &w)
+	Quaternion *Quaternion::Set(const float &x, const float &y, const float &z, const float &w)
 	{
 		m_x = x;
 		m_y = y;
@@ -49,7 +49,7 @@ namespace Flounder
 		return this;
 	}
 
-	quaternion *quaternion::set(const quaternion &source)
+	Quaternion *Quaternion::Set(const Quaternion &source)
 	{
 		m_x = source.m_x;
 		m_y = source.m_y;
@@ -58,7 +58,7 @@ namespace Flounder
 		return this;
 	}
 
-	quaternion *quaternion::set(const Vector4 &source)
+	Quaternion *Quaternion::Set(const Vector4 &source)
 	{
 		float n = sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
 		float s = sin(0.5f * source.m_w) / n;
@@ -69,7 +69,7 @@ namespace Flounder
 		return this;
 	}
 
-	quaternion *quaternion::set(const Matrix4 &source)
+	Quaternion *Quaternion::Set(const Matrix4 &source)
 	{
 		m_x = 0.0f;
 		m_y = 0.0f;
@@ -114,7 +114,7 @@ namespace Flounder
 		return this;
 	}
 
-	quaternion *quaternion::set(const Matrix3 &source)
+	Quaternion *Quaternion::Set(const Matrix3 &source)
 	{
 		m_x = 0.0f;
 		m_y = 0.0f;
@@ -168,7 +168,7 @@ namespace Flounder
 		return this;
 	}
 
-	quaternion *quaternion::setIdentity(quaternion *source)
+	Quaternion *Quaternion::SetIdentity(Quaternion *source)
 	{
 		source->m_x = 0.0f;
 		source->m_y = 0.0f;
@@ -177,38 +177,38 @@ namespace Flounder
 		return source;
 	}
 
-	quaternion *quaternion::multiply(const quaternion &left, const quaternion &right, quaternion *destination)
+	Quaternion *Quaternion::Multiply(const Quaternion &left, const Quaternion &right, Quaternion *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new quaternion();
+			destination = new Quaternion();
 		}
 
-		return destination->set(left.m_x * right.m_w + left.m_w * right.m_x + left.m_y * right.m_z - left.m_z * right.m_y, left.m_y * right.m_w + left.m_w * right.m_y + left.m_z * right.m_x - left.m_x * right.m_z, left.m_z * right.m_w + left.m_w * right.m_z + left.m_x * right.m_y - left.m_y * right.m_x, left.m_w * right.m_w - left.m_x * right.m_x - left.m_y * right.m_y - left.m_z * right.m_z);
+		return destination->Set(left.m_x * right.m_w + left.m_w * right.m_x + left.m_y * right.m_z - left.m_z * right.m_y, left.m_y * right.m_w + left.m_w * right.m_y + left.m_z * right.m_x - left.m_x * right.m_z, left.m_z * right.m_w + left.m_w * right.m_z + left.m_x * right.m_y - left.m_y * right.m_x, left.m_w * right.m_w - left.m_x * right.m_x - left.m_y * right.m_y - left.m_z * right.m_z);
 	}
 
-	quaternion *quaternion::multiplyInverse(const quaternion &left, const quaternion &right, quaternion *destination)
+	Quaternion *Quaternion::MultiplyInverse(const Quaternion &left, const Quaternion &right, Quaternion *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new quaternion();
+			destination = new Quaternion();
 		}
 
-		float n = lengthSquared(right);
+		float n = LengthSquared(right);
 		n = (n == 0.0f ? n : 1.0f / n);
-		return destination->set((left.m_x * right.m_w - left.m_w * right.m_x - left.m_y * right.m_z + left.m_z * right.m_y) * n, (left.m_y * right.m_w - left.m_w * right.m_y - left.m_z * right.m_x + left.m_x * right.m_z) * n, (left.m_z * right.m_w - left.m_w * right.m_z - left.m_x * right.m_y + left.m_y * right.m_x) * n, (left.m_w * right.m_w + left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z) * n);
+		return destination->Set((left.m_x * right.m_w - left.m_w * right.m_x - left.m_y * right.m_z + left.m_z * right.m_y) * n, (left.m_y * right.m_w - left.m_w * right.m_y - left.m_z * right.m_x + left.m_x * right.m_z) * n, (left.m_z * right.m_w - left.m_w * right.m_z - left.m_x * right.m_y + left.m_y * right.m_x) * n, (left.m_w * right.m_w + left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z) * n);
 	}
 
-	float quaternion::dot(const quaternion &left, const quaternion &right)
+	float Quaternion::Dot(const Quaternion &left, const Quaternion &right)
 	{
 		return left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z + left.m_w * right.m_w;
 	}
 
-	quaternion *quaternion::slerp(const quaternion &left, const quaternion &right, const float &progression, quaternion *destination)
+	Quaternion *Quaternion::Slerp(const Quaternion &left, const Quaternion &right, const float &progression, Quaternion *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new quaternion();
+			destination = new Quaternion();
 		}
 
 		const float &d = left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z + left.m_w * right.m_w;
@@ -233,56 +233,56 @@ namespace Flounder
 		float newY = (scale0 * left.m_y) + (scale1 * right.m_y);
 		float newZ = (scale0 * left.m_z) + (scale1 * right.m_z);
 		float newW = (scale0 * left.m_w) + (scale1 * right.m_w);
-		return destination->set(newX, newY, newZ, newW);
+		return destination->Set(newX, newY, newZ, newW);
 	}
 
-	quaternion *quaternion::scale(const quaternion &source, const float &scalar, quaternion *destination)
+	Quaternion *Quaternion::Scale(const Quaternion &source, const float &scalar, Quaternion *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new quaternion();
+			destination = new Quaternion();
 		}
 
-		return destination->set(source.m_x * scalar, source.m_y * scalar, source.m_z * scalar, source.m_w * scalar);
+		return destination->Set(source.m_x * scalar, source.m_y * scalar, source.m_z * scalar, source.m_w * scalar);
 	}
 
-	quaternion *quaternion::negate(const quaternion &source, quaternion *destination)
+	Quaternion *Quaternion::Negate(const Quaternion &source, Quaternion *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new quaternion();
+			destination = new Quaternion();
 		}
 
-		return destination->set(-source.m_x, -source.m_y, -source.m_z, -source.m_w);
+		return destination->Set(-source.m_x, -source.m_y, -source.m_z, -source.m_w);
 	}
 
-	quaternion *quaternion::normalize(const quaternion &source, quaternion *destination)
+	Quaternion *Quaternion::Normalize(const Quaternion &source, Quaternion *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new quaternion();
+			destination = new Quaternion();
 		}
 
-		float l = length(source);
+		float l = Length(source);
 
 		if (l != 0.0f)
 		{
-			return destination->set(source.m_x / l, source.m_y / l, source.m_z / l, source.m_w / l);
+			return destination->Set(source.m_x / l, source.m_y / l, source.m_z / l, source.m_w / l);
 		}
 		throw std::invalid_argument("Zero length quaternion");
 	}
 
-	float quaternion::length(const quaternion &source)
+	float Quaternion::Length(const Quaternion &source)
 	{
-		return sqrt(lengthSquared(source));
+		return sqrt(LengthSquared(source));
 	}
 
-	float quaternion::lengthSquared(const quaternion &source)
+	float Quaternion::LengthSquared(const Quaternion &source)
 	{
 		return source.m_x * source.m_x + source.m_y * source.m_y + source.m_z * source.m_z + source.m_w * source.m_w;
 	}
 
-	Matrix4 *quaternion::toMatrix(const quaternion &source, Matrix4 *destination)
+	Matrix4 *Quaternion::ToMatrix(const Quaternion &source, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -319,7 +319,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Matrix4 *quaternion::toRotationMatrix(const quaternion &source, Matrix4 *destination)
+	Matrix4 *Quaternion::ToRotationMatrix(const Quaternion &source, Matrix4 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -355,38 +355,38 @@ namespace Flounder
 		return destination;
 	}
 
-	quaternion *quaternion::setIdentity()
+	Quaternion *Quaternion::SetIdentity()
 	{
-		return setIdentity(this);
+		return SetIdentity(this);
 	}
 
-	quaternion *quaternion::negate()
+	Quaternion *Quaternion::Negate()
 	{
-		return negate(*this, this);
+		return Negate(*this, this);
 	}
 
-	quaternion *quaternion::normalize()
+	Quaternion *Quaternion::Normalize()
 	{
-		return normalize(*this, this);
+		return Normalize(*this, this);
 	}
 
-	quaternion *quaternion::scale(const float &scalar)
+	Quaternion *Quaternion::Scale(const float &scalar)
 	{
-		return scale(*this, scalar, this);
+		return Scale(*this, scalar, this);
 	}
 
-	bool quaternion::isZero() const
+	bool Quaternion::IsZero() const
 	{
 		return m_x == 0.0f && m_y == 0.0f && m_z == 0.0f && m_w == 0.0f;
 	}
 
-	float quaternion::length() const
+	float Quaternion::Length() const
 	{
-		return length(*this);
+		return Length(*this);
 	}
 
-	float quaternion::lengthSquared() const
+	float Quaternion::LengthSquared() const
 	{
-		return lengthSquared(*this);
+		return LengthSquared(*this);
 	}
 }

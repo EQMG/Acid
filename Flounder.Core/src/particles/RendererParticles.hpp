@@ -31,7 +31,7 @@ namespace Flounder
 	private:
 		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 
-		void prepareInstance(particle *particle, const ICamera &camera, std::vector<float> *vboData);
+		void prepareInstance(Particle *particle, const ICamera &camera, std::vector<float> *vboData);
 
 		void renderInstances(particletype *particleType, std::vector<float> *vboData);
 

@@ -96,20 +96,20 @@ namespace Flounder
 		m_slider->GetColourOffset()->Set(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f);
 
 		// Update background size.
-		m_background->GetDimensions()->set(*m_text->GetMeshSize());
+		m_background->GetDimensions()->Set(*m_text->GetMeshSize());
 		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		Vector2::multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
-		m_background->GetDimensions()->scale(2.0f * m_text->GetScale());
-		m_background->GetPositionOffsets()->set(*m_text->GetPositionOffsets());
-		m_background->GetPosition()->set(*m_text->GetPosition());
+		Vector2::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
+		m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
+		m_background->GetPositionOffsets()->Set(*m_text->GetPositionOffsets());
+		m_background->GetPosition()->Set(*m_text->GetPosition());
 
 		// Update slider size. (This is about the worst looking GUI code, but works well.)
-		m_slider->GetDimensions()->set(*m_text->GetMeshSize());
+		m_slider->GetDimensions()->Set(*m_text->GetMeshSize());
 		m_slider->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		Vector2::multiply(*m_text->GetDimensions(), *m_slider->GetDimensions(), m_slider->GetDimensions());
-		m_slider->GetDimensions()->scale(2.0f * m_text->GetScale());
-		m_slider->GetPositionOffsets()->set(*m_text->GetPositionOffsets());
-		m_slider->GetPosition()->set(*m_text->GetPosition());
+		Vector2::Multiply(*m_text->GetDimensions(), *m_slider->GetDimensions(), m_slider->GetDimensions());
+		m_slider->GetDimensions()->Scale(2.0f * m_text->GetScale());
+		m_slider->GetPositionOffsets()->Set(*m_text->GetPositionOffsets());
+		m_slider->GetPosition()->Set(*m_text->GetPosition());
 		m_slider->GetPositionOffsets()->m_x -= (m_slider->GetDimensions()->m_x / 2.0f);
 		m_slider->GetDimensions()->m_x *= m_value;
 		m_slider->GetPositionOffsets()->m_x += (m_slider->GetDimensions()->m_x / 2.0f);

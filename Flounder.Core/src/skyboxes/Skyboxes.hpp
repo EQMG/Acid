@@ -15,7 +15,7 @@ namespace Flounder
 	{
 	private:
 		skybox *m_skybox;
-		fog *m_fog;
+		Fog *m_fog;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -36,8 +36,8 @@ namespace Flounder
 
 		void setSkybox(skybox *skybox) { m_skybox = skybox; }
 
-		fog *getFog() { return m_fog; }
+		Fog *getFog() { return m_fog; }
 
-		void setFog(fog *fog) { m_fog = fog; }
+		void setFog(Fog *fog) { m_fog = fog; }
 	};
 }

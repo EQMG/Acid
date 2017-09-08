@@ -43,28 +43,28 @@ namespace Flounder
 		/// </summary>
 		/// <param name="source"> The source matrix. </param>
 		/// <returns> This. </returns>
-		Matrix2 *set(const Matrix2 &source);
+		Matrix2 *Set(const Matrix2 &source);
 
 		/// <summary>
 		/// Loads from a 4 element array.
 		/// </summary>
 		/// <param name="source"> The source array. </param>
 		/// <returns> This. </returns>
-		Matrix2 *set(const float source[4]);
+		Matrix2 *Set(const float source[4]);
 
 		/// <summary>
 		/// Set the source matrix to be the identity matrix.
 		/// </summary>
 		/// <param name="source"> The matrix to set to the identity. </param>
 		/// <returns> The source matrix. </returns>
-		static Matrix2 *setIdentity(Matrix2 *source);
+		static Matrix2 *SetIdentity(Matrix2 *source);
 
 		/// <summary>
 		/// Gets the determinant of this matrix.
 		/// </summary>
 		/// <param name="source"> The matrix to set to the identity.
 		/// <returns> The determinant of the matrix. </returns>
-		static float determinant(const Matrix2 &source);
+		static float Determinant(const Matrix2 &source);
 
 		/// <summary>
 		/// Adds two matrices together and places the result in the destination matrix.
@@ -73,7 +73,7 @@ namespace Flounder
 		/// <param name="right"> The right source matrix. </param>
 		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
-		static Matrix2 *add(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination);
+		static Matrix2 *Add(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination);
 
 		/// <summary>
 		/// Subtracts two matrices together and places the result in the destination matrix.
@@ -82,7 +82,7 @@ namespace Flounder
 		/// <param name="right"> The right source matrix. </param>
 		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
-		static Matrix2 *subtract(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination);
+		static Matrix2 *Subtract(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination);
 
 		/// <summary>
 		/// Multiplies two matrices together and places the result in the destination matrix.
@@ -91,7 +91,7 @@ namespace Flounder
 		/// <param name="right"> The right source matrix. </param>
 		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
-		static Matrix2 *multiply(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination);
+		static Matrix2 *Multiply(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination);
 
 		/// <summary>
 		/// Transforms a matrix by a vector and places the result in the destination matrix.
@@ -100,7 +100,7 @@ namespace Flounder
 		/// <param name="right"> The right source vector. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new matrix is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *transform(const Matrix2 &left, const Vector2 &right, Vector2 *destination);
+		static Vector2 *Transform(const Matrix2 &left, const Vector2 &right, Vector2 *destination);
 
 		/// <summary>
 		/// Scales a matrix by a vector and places the result in the destination matrix.
@@ -109,7 +109,7 @@ namespace Flounder
 		/// <param name="right"> The right source vector. </param>
 		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
-		static Matrix2 *scale(const Matrix2 &left, const Vector2 &right, Matrix2 *destination);
+		static Matrix2 *Scale(const Matrix2 &left, const Vector2 &right, Matrix2 *destination);
 
 		/// <summary>
 		/// Inverts the source matrix and puts the result in the destination matrix.
@@ -117,7 +117,7 @@ namespace Flounder
 		/// <param name="source"> The source matrix to be inverted. </param>
 		/// <param name="destination"> The destination matrix, or nullptr if a new one is to be created. </param>
 		/// <returns> The inverted matrix, or nullptr if source can't be reverted. </returns>
-		static Matrix2 *invert(const Matrix2 &source, Matrix2 *destination);
+		static Matrix2 *Invert(const Matrix2 &source, Matrix2 *destination);
 
 		/// <summary>
 		/// Negates the source matrix and places the result in the destination matrix.
@@ -125,7 +125,7 @@ namespace Flounder
 		/// <param name="source"> The source matrix. </param>
 		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> The negated matrix. </returns>
-		static Matrix2 *negate(const Matrix2 &source, Matrix2 *destination);
+		static Matrix2 *Negate(const Matrix2 &source, Matrix2 *destination);
 
 		/// <summary>
 		/// Transpose the source matrix and places the result in the destination matrix.
@@ -133,56 +133,56 @@ namespace Flounder
 		/// <param name="source"> The source matrix. </param>
 		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> The transposed matrix. </returns>
-		static Matrix2 *transpose(const Matrix2 &source, Matrix2 *destination);
+		static Matrix2 *Transpose(const Matrix2 &source, Matrix2 *destination);
 
 		/// <summary>
 		/// Turns a 2x2 matrix into an array.
 		/// </summary>
 		/// <param name="matrix"> The matrix to turn into an array. </param>
 		/// <returns> A 4 float array. </returns>
-		static float *toArray(const Matrix2 &matrix);
+		static float *ToArray(const Matrix2 &matrix);
 
 		/// <summary>
 		/// Sets the source matrix to 0.
 		/// </summary>
 		/// <param name="source"> The matrix to be set to 0. </param>
 		/// <returns> The matrix set to zero. </returns>
-		static Matrix2 *setZero(Matrix2 *source);
+		static Matrix2 *SetZero(Matrix2 *source);
 
 		/// <summary>
 		/// Sets this matrix to be the identity matrix.
 		/// </summary>
 		/// <returns> This. </returns>
-		Matrix2 *setIdentity();
+		Matrix2 *SetIdentity();
 
 		/// <summary>
 		/// Gets the determinant of this matrix.
 		/// </summary>
 		/// <returns> The determinant of the matrix. </returns>
-		float determinant();
+		float Determinant();
 
 		/// <summary>
 		/// Inverts this matrix.
 		/// </summary>
 		/// <returns> This. </returns>
-		Matrix2 *invert();
+		Matrix2 *Invert();
 
 		/// <summary>
 		/// Negates this matrix.
 		/// </summary>
 		/// <returns> This. </returns>
-		Matrix2 *negate();
+		Matrix2 *Negate();
 
 		/// <summary>
 		/// Transposes this matrix
 		/// </summary>
 		/// <returns> This. </returns>
-		Matrix2 *transpose();
+		Matrix2 *Transpose();
 
 		/// <summary>
 		/// Sets this matrix to 0.
 		/// </summary>
 		/// <returns> This. </returns>
-		Matrix2 *setZero();
+		Matrix2 *SetZero();
 	};
 }

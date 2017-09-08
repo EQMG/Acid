@@ -45,11 +45,11 @@ namespace Flounder
 	{
 		if (m_moved)
 		{
-			Matrix4::transformationMatrix(*m_position, *m_rotation, 1.0f, m_modelMatrix);
+			Matrix4::TransformationMatrix(*m_position, *m_rotation, 1.0f, m_modelMatrix);
 			m_moved = false;
 		}
 
-		m_offset->set(
+		m_offset->Set(
 			2.0f * SQUARE_SIZE * round(Camera::Get()->GetCamera()->GetPosition()->m_x / (2.0f * SQUARE_SIZE)),
 			0.0f,
 			2.0f * SQUARE_SIZE * round(Camera::Get()->GetCamera()->GetPosition()->m_z / (2.0f * SQUARE_SIZE))
@@ -196,13 +196,13 @@ namespace Flounder
 
 	void water::setPosition(const Vector3 &position)
 	{
-		m_position->set(position);
+		m_position->Set(position);
 		m_moved = true;
 	}
 
 	void water::setRotation(const Vector3 &rotation)
 	{
-		m_rotation->set(rotation);
+		m_rotation->Set(rotation);
 		m_moved = true;
 	}
 }

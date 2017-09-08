@@ -7,20 +7,20 @@
 #include "../maths/Vector4.hpp"
 #include "../maths/Matrix4.hpp"
 
-#include "spawns/ispawnparticle.hpp"
-#include "particletype.hpp"
-#include "particle.hpp"
+#include "spawns/ISpawnParticle.hpp"
+#include "Particle.hpp"
+#include "ParticleType.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A system of particles that are to be spawned.
 	/// </summary>
-	class particlesystem
+	class ParticleSystem
 	{
 	private:
 		std::vector<particletype*> *m_types;
-		ispawnparticle *m_spawn;
+		ISpawnParticle *m_spawn;
 		float m_pps;
 		float m_averageSpeed;
 		float m_gravityEffect;
@@ -46,38 +46,36 @@ namespace Flounder
 		/// <param name="pps"> Particles per second. </param>
 		/// <param name="speed"> The particle speed. </param>
 		/// <param name="gravityEffect"> How much gravity will effect the particle. </param>
-		particlesystem(std::vector<particletype*> *types, ispawnparticle *spawn, const float &pps, const float &speed, const float &gravityEffect);
+		ParticleSystem(std::vector<particletype*> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect);
 
 		/// <summary>
 		/// Deconstructor for the particle system.
 		/// </summary>
-		~particlesystem();
+		~ParticleSystem();
 
-		particle *generateParticles();
+		Particle *GenerateParticles();
 	private:
-		particle *emitParticle();
+		Particle *EmitParticle();
 
-		float generateValue(const float &average, const float &errorMargin);
+		float GenerateValue(const float &average, const float &errorMargin);
 
-		float generateRotation();
+		float GenerateRotation();
 
-		static Vector3 *generateRandomUnitVectorWithinCone(Vector3 *coneDirection, const float &angle);
-
-		Vector3 *generateRandomUnitVector();
+		Vector3 *GenerateRandomUnitVector();
 	public:
-		void addParticleType(particletype *type);
+		void AddParticleType(particletype *type);
 
-		void removeParticleType(particletype *type);
+		void RemoveParticleType(particletype *type);
 
-		ispawnparticle *getSpawn() const { return m_spawn; }
+		ISpawnParticle *GetSpawn() const { return m_spawn; }
 
-		inline void setSpawn(ispawnparticle *spawn);
+		void SetSpawn(ISpawnParticle *spawn);
 
-		float getPps() const { return m_pps; }
+		float GetPps() const { return m_pps; }
 
-		void setPps(const float &pps) { m_pps = pps; }
+		void SetPps(const float &pps) { m_pps = pps; }
 
-		float getAverageSpeed() const { return m_averageSpeed; }
+		float GetAverageSpeed() const { return m_averageSpeed; }
 
 		void setAverageSpeed(const float &averageSpeed) { m_averageSpeed = averageSpeed; }
 
@@ -91,11 +89,11 @@ namespace Flounder
 
 		Vector3 *getSystemCentre() const { return m_systemCentre; }
 
-		void setSystemCentre(const Vector3 &systemCentre) const { m_systemCentre->set(systemCentre); }
+		void setSystemCentre(const Vector3 &systemCentre) const { m_systemCentre->Set(systemCentre); }
 
 		Vector3 *getVelocityCentre() const { return m_velocityCentre; }
 
-		void setVelocityCentre(const Vector3 &velocityCentre) const { m_velocityCentre->set(velocityCentre); }
+		void setVelocityCentre(const Vector3 &velocityCentre) const { m_velocityCentre->Set(velocityCentre); }
 
 		Vector3 *getDirection() const { return m_direction; }
 

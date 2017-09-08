@@ -2,29 +2,29 @@
 
 namespace Flounder
 {
-	axisbutton::axisbutton(ibutton *negative, ibutton *positive) :
-		iaxis(),
+	AxisButton::AxisButton(IButton *negative, IButton *positive) :
+		IAxis(),
 		m_negative(negative),
 		m_positive(positive)
 	{
 	}
 
-	axisbutton::~axisbutton()
+	AxisButton::~AxisButton()
 	{
 		delete m_negative;
 		delete m_positive;
 	}
 
-	float axisbutton::getAmount() const
+	float AxisButton::GetAmount() const
 	{
 		float result = 0.0f;
 
-		if (m_positive->isDown())
+		if (m_positive->IsDown())
 		{
 			result += 1.0f;
 		}
 
-		if (m_negative->isDown())
+		if (m_negative->IsDown())
 		{
 			result -= 1.0f;
 		}

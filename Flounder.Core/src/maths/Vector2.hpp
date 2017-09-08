@@ -15,31 +15,31 @@ namespace Flounder
 		float m_x, m_y;
 
 		/// <summary>
-		/// Constructor for Vector2.
+		/// Constructor for vector2.
 		/// </summary>
 		Vector2();
 
 		/// <summary>
-		/// Constructor for Vector2.
+		/// Constructor for vector2.
 		/// </summary>
 		/// <param name="x"> Start x. </param>
 		/// <param name="y"> Start y. </param>
 		Vector2(const float &x, const float &y);
 
 		/// <summary>
-		/// Constructor for Vector2.
+		/// Constructor for vector2.
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing one. </param>
 		Vector2(const Vector2 &source);
 
 		/// <summary>
-		/// Constructor for Vector2.
+		/// Constructor for vector2.
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing one. </param>
 		Vector2(const Vector3 &source);
 
 		/// <summary>
-		/// Deconstructor for Vector2.
+		/// Deconstructor for vector2.
 		/// </summary>
 		~Vector2();
 
@@ -49,21 +49,21 @@ namespace Flounder
 		/// <param name="x"> The new X value. </param>
 		/// <param name="y"> The new Y value. </param>
 		/// <returns> This. </returns>
-		Vector2 *set(const float &x, const float &y);
+		Vector2 *Set(const float &x, const float &y);
 
 		/// <summary>
-		/// Loads from another Vector2.
+		/// Loads from another vector2.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <returns> This. </returns>
-		Vector2 *set(const Vector2 &source);
+		Vector2 *Set(const Vector2 &source);
 
 		/// <summary>
-		/// Loads from another Vector2.
+		/// Loads from another vector2.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <returns> This. </returns>
-		Vector2 *set(const Vector3 &source);
+		Vector2 *Set(const Vector3 &source);
 
 		/// <summary>
 		/// Adds two vectors together and places the result in the destination vector.
@@ -72,7 +72,7 @@ namespace Flounder
 		/// <param name="right"> The right source vector. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *add(const Vector2 &left, const Vector2 &right, Vector2 *destination);
+		static Vector2 *Add(const Vector2 &left, const Vector2 &right, Vector2 *destination);
 
 		/// <summary>
 		/// Subtracts two vectors from each other and places the result in the destination vector.
@@ -81,7 +81,7 @@ namespace Flounder
 		/// <param name="right"> The right source vector. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *subtract(const Vector2 &left, const Vector2 &right, Vector2 *destination);
+		static Vector2 *Subtract(const Vector2 &left, const Vector2 &right, Vector2 *destination);
 
 		/// <summary>
 		/// Multiplies two vectors from each other and places the result in the destination vector.
@@ -90,7 +90,7 @@ namespace Flounder
 		/// <param name="right"> The right source vector. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *multiply(const Vector2 &left, const Vector2 &right, Vector2 *destination);
+		static Vector2 *Multiply(const Vector2 &left, const Vector2 &right, Vector2 *destination);
 
 		/// <summary>
 		/// Divides two vectors from each other and places the result in the destination vector.
@@ -99,7 +99,7 @@ namespace Flounder
 		/// <param name="right"> The right source vector. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *divide(const Vector2 &left, const Vector2 &right, Vector2 *destination);
+		static Vector2 *Divide(const Vector2 &left, const Vector2 &right, Vector2 *destination);
 
 		/// <summary>
 		/// Calculates the angle between two vectors.
@@ -107,7 +107,7 @@ namespace Flounder
 		/// <param name="left"> The left source vector. </param>
 		/// <param name="right"> The right source vector. </param>
 		/// <returns> The angle between the two vectors, in radians. </returns>
-		static float angle(const Vector2 &left, const Vector2 &right);
+		static float Angle(const Vector2 &left, const Vector2 &right);
 
 		/// <summary>
 		/// Calculates the dot product of the two vectors.
@@ -115,7 +115,7 @@ namespace Flounder
 		/// <param name="left"> The left source vector. </param>
 		/// <param name="right"> The right source vector. </param>
 		/// <returns> Left dot right. </returns>
-		static float dot(const Vector2 &left, const Vector2 &right);
+		static float Dot(const Vector2 &left, const Vector2 &right);
 
 		/// <summary>
 		/// Scales a vector by a scalar and places the result in the destination vector.
@@ -124,7 +124,7 @@ namespace Flounder
 		/// <param name="scalar"> The scalar value. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *scale(const Vector2 &source, const float &scalar, Vector2 *destination);
+		static Vector2 *Scale(const Vector2 &source, const float &scalar, Vector2 *destination);
 
 		/// <summary>
 		/// Rotates a vector and places the result in the destination vector.
@@ -133,7 +133,7 @@ namespace Flounder
 		/// <param name="angle"> The angle to rotate by <b>in degrees</b>. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *rotate(const Vector2 &source, const float &angle, Vector2 *destination);
+		static Vector2 *Rotate(const Vector2 &source, const float &angle, Vector2 *destination);
 
 		/// <summary>
 		/// Rotates a vector around a point and places the result in the destination vector.
@@ -143,7 +143,7 @@ namespace Flounder
 		/// <param name="rotationAxis"> The point to rotate the vector around. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *rotate(const Vector2 &source, const float &angle, const Vector2 &rotationAxis, Vector2 *destination);
+		static Vector2 *Rotate(const Vector2 &source, const float &angle, const Vector2 &rotationAxis, Vector2 *destination);
 
 		/// <summary>
 		/// Negates a vector and places the result in the destination vector.
@@ -151,7 +151,7 @@ namespace Flounder
 		/// <param name="source"> The source vector. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *negate(const Vector2 &source, Vector2 *destination);
+		static Vector2 *Negate(const Vector2 &source, Vector2 *destination);
 
 		/// <summary>
 		/// Normalizes a vector and places the result in the destination vector.
@@ -159,21 +159,21 @@ namespace Flounder
 		/// <param name="source"> The source vector. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *normalize(const Vector2 &source, Vector2 *destination);
+		static Vector2 *Normalize(const Vector2 &source, Vector2 *destination);
 
 		/// <summary>
 		/// Gets the length of the vector.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <returns> The length of the vector. </returns>
-		static float length(const Vector2 &source);
+		static float Length(const Vector2 &source);
 
 		/// <summary>
 		/// Gets the length of the vector.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <returns> The length squared of the vector. </returns>
-		static float lengthSquared(const Vector2 &source);
+		static float LengthSquared(const Vector2 &source);
 
 		/// <summary>
 		/// Gets the maximum vector size.
@@ -182,7 +182,7 @@ namespace Flounder
 		/// <param name="b"> The second vector to get values from. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *maxVector(const Vector2 &a, const Vector2 &b, Vector2 *destination);
+		static Vector2 *MaxVector(const Vector2 &a, const Vector2 &b, Vector2 *destination);
 
 		/// <summary>
 		/// Gets the lowest vector size.
@@ -191,21 +191,21 @@ namespace Flounder
 		/// <param name="b"> The second vector to get values from. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The destination vector. </returns>
-		static Vector2 *minVector(const Vector2 &a, const Vector2 &b, Vector2 *destination);
+		static Vector2 *MinVector(const Vector2 &a, const Vector2 &b, Vector2 *destination);
 
 		/// <summary>
 		/// Gets the maximum value in a vector.
 		/// </summary>
 		/// <param name="vector"> The value to get the maximum value from. </param>
 		/// <returns> The maximum value. </returns>
-		static float maxComponent(const Vector2 &vector);
+		static float MaxComponent(const Vector2 &vector);
 
 		/// <summary>
 		/// Gets the lowest value in a vector.
 		/// </summary>
 		/// <param name="vector"> The value to get the lowest value from. </param>
 		/// <returns> The lowest value. </returns>
-		static float minComponent(const Vector2 &vector);
+		static float MinComponent(const Vector2 &vector);
 
 		/// <summary>
 		/// Gets the distance between two points squared.
@@ -213,7 +213,7 @@ namespace Flounder
 		/// <param name="point1"> The first point. </param>
 		/// <param name="point2"> The second point. </param>
 		/// <returns> The squared distance between the two points. </returns>
-		static float getDistanceSquared(const Vector2 &point1, const Vector2 &point2);
+		static float GetDistanceSquared(const Vector2 &point1, const Vector2 &point2);
 
 		/// <summary>
 		/// Gets the total distance between 2 vectors.
@@ -221,7 +221,7 @@ namespace Flounder
 		/// <param name="point1"> The first point. </param>
 		/// <param name="point2"> The second point. </param>
 		/// <returns> The total distance between the points. </returns>
-		static float getDistance(const Vector2 &point1, const Vector2 &point2);
+		static float GetDistance(const Vector2 &point1, const Vector2 &point2);
 
 		/// <summary>
 		/// Gets the vector distance between 2 vectors.
@@ -230,7 +230,7 @@ namespace Flounder
 		/// <param name="point2"> The second point. </param>
 		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
 		/// <returns> The vector distance between the points. </returns>
-		static Vector2 *getVectorDistance(const Vector2 &point1, const Vector2 &point2, Vector2 *destination);
+		static Vector2 *GetVectorDistance(const Vector2 &point1, const Vector2 &point2, Vector2 *destination);
 
 		/// <summary>
 		/// Gets if the pt (point) is in a triangle.
@@ -240,7 +240,7 @@ namespace Flounder
 		/// <param name="v2"> The second triangle vertex. </param>
 		/// <param name="v3"> The third triangle vertex. </param>
 		/// <returns> If the point is in a triangle. </returns>
-		static bool pointInTriangle(const Vector2 &point, const Vector2 &v1, const Vector2 &v2, const Vector2 &v3);
+		static bool PointInTriangle(const Vector2 &point, const Vector2 &v1, const Vector2 &v2, const Vector2 &v3);
 
 		/// <summary>
 		/// Translates this vector.
@@ -248,45 +248,45 @@ namespace Flounder
 		/// <param name="x"> The translation in x. </param>
 		/// <param name="y"> the translation in y. </param>
 		/// <returns> This. </returns>
-		Vector2 *translate(const float &x, const float &y);
+		Vector2 *Translate(const float &x, const float &y);
 
 		/// <summary>
 		/// Negates this vector.
 		/// </summary>
 		/// <returns> This. </returns>
-		Vector2 *negate();
+		Vector2 *Negate();
 
 		/// <summary>
 		/// Normalizes this vector.
 		/// </summary>
 		/// <returns> This. </returns>
-		Vector2 *normalize();
+		Vector2 *Normalize();
 
 		/// <summary>
 		/// Scales this vector.
 		/// </summary>
 		/// <param name="scalar"> The scale factor. </param>
 		/// <returns> This. </returns>
-		Vector2 *scale(const float &scalar);
+		Vector2 *Scale(const float &scalar);
 
 		/// <summary>
 		/// Gets if all the components to the vector are zero.
 		/// </summary>
 		/// <returns> If the vector is zero. </returns>
-		bool isZero() const;
+		bool IsZero() const;
 
 		/// <summary>
 		/// Gets the length of the vector.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <returns> The length of the vector. </returns>
-		float length() const;
+		float Length() const;
 
 		/// <summary>
 		/// Gets the length squared of the vector.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
 		/// <returns> The length squared of the vector. </returns>
-		float lengthSquared() const;
+		float LengthSquared() const;
 	};
 }

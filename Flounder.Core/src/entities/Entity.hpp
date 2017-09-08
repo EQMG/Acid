@@ -40,11 +40,11 @@ namespace Flounder
 
 		Vector3 *GetPosition() const { return m_position; }
 
-		void SetPosition(const Vector3 &position) const { m_position->set(position); }
+		void SetPosition(const Vector3 &position) const { m_position->Set(position); }
 
 		Vector3 *GetRotation() const { return m_rotation; }
 
-		void SetRotation(const Vector3 &rotation) const { m_rotation->set(rotation); }
+		void SetRotation(const Vector3 &rotation) const { m_rotation->Set(rotation); }
 
 		bool GetRemoved() const { return m_removed; }
 

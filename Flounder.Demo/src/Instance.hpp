@@ -10,11 +10,11 @@ class Instance :
 	public IStandard
 {
 private:
-	ibutton *m_buttonFullscreen;
-	ibutton *m_buttonLockMouse;
-	ibutton *m_buttonExit;
+	IButton *m_buttonFullscreen;
+	IButton *m_buttonLockMouse;
+	IButton *m_buttonExit;
 
-	particlesystem *m_systemTest;
+	ParticleSystem *m_systemTest;
 public:
 	Instance();
 
