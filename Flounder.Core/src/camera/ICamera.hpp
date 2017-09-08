@@ -63,13 +63,13 @@ namespace Flounder
 		/// Gets the view frustum created by the current camera position and rotation.
 		/// </summary>
 		/// <returns> The view frustum created by the current camera position and rotation. </returns>
-		virtual frustum *GetViewFrustum() const = 0;
+		virtual Frustum *GetViewFrustum() const = 0;
 
 		/// <summary>
 		/// Gets the ray that extends from the cameras position though the screen.
 		/// </summary>
 		/// <returns> The cameras ray. </returns>
-		virtual ray *GetViewRay() const = 0;
+		virtual Ray *GetViewRay() const = 0;
 
 		/// <summary>
 		/// Gets the view matrix created by the current camera position and rotation.

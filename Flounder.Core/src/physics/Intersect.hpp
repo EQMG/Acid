@@ -5,7 +5,7 @@ namespace Flounder
 	/// <summary>
 	/// A class that represents bounding intersect data.
 	/// </summary>
-	class intersect
+	class Intersect
 	{
 	private:
 		bool m_intersects;
@@ -16,16 +16,16 @@ namespace Flounder
 		/// </summary>
 		/// <param name="intersects"> If there is a collision. </param>
 		/// <param name="distance"> What distance that collision is at. </param>
-		intersect(bool intersects, float distance)
+		Intersect(const bool &intersects, const float &distance) :
+			m_intersects(intersects),
+			m_distance(distance)
 		{
-			m_intersects = intersects;
-			m_distance = distance;
 		}
 
 		/// <summary>
 		/// Deconstructor for the intersect.
 		/// </summary>
-		~intersect()
+		~Intersect()
 		{
 		}
 
@@ -33,12 +33,12 @@ namespace Flounder
 		/// Gets if there is a intersection.
 		/// </summary>
 		/// <returns> If there is a intersection. </returns>
-		bool isIntersection() { return m_intersects; };
+		bool IsIntersection() const { return m_intersects; };
 
 		/// <summary>
 		/// Gets the distance that intersection is at.
 		/// </summary>
 		/// <returns> The distance that intersection is at. </returns>
-		float getDistance() { return m_distance; };
+		float GetDistance() const { return m_distance; };
 	};
 }

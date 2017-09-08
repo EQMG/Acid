@@ -29,6 +29,6 @@ namespace Flounder
 		/// Gets the shape that fully encloses the object.
 		/// </summary>
 		/// <returns> Returns a shape fully enclosing the object. </returns>
-		virtual icollider *GetCollider() = 0;
+		virtual ICollider *GetCollider() = 0;
 	};
 }

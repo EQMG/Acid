@@ -30,7 +30,7 @@ namespace Flounder
 		std::vector<float> *m_normals;
 		std::vector<float> *m_tangents;
 
-		aabb *m_aabb;
+		Aabb *m_aabb;
 
 		VkBuffer m_indicesBuffer;
 		VkBuffer m_verticesBuffer;

@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	ParticleSystem::ParticleSystem(std::vector<particletype *> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect) :
+	ParticleSystem::ParticleSystem(std::vector<ParticleType*> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect) :
 		m_types(types),
 		m_spawn(spawn),
 		m_pps(pps),
@@ -10,7 +10,12 @@ namespace Flounder
 		m_gravityEffect(gravityEffect),
 		m_randomRotation(false),
 		m_systemCentre(new Vector3()),
-		m_velocityCentre(new Vector3()),
+		m_velocityCentre(new Vector3()), 
+		m_direction(nullptr), 
+		m_directionDeviation(0.0f), 
+		m_speedError(0.0f),
+		m_lifeError(0.0f),
+		m_scaleError(0.0f),
 		m_timePassed(0.0f),
 		m_paused(false)
 	{
@@ -53,13 +58,13 @@ namespace Flounder
 			velocity = GenerateRandomUnitVector();
 		}
 
-		particletype *emitType = m_types->at(static_cast<int>(floor(Maths::RandomInRange(0, static_cast<int>(m_types->size())))));
+		ParticleType *emitType = m_types->at(static_cast<int>(floor(Maths::RandomInRange(0, static_cast<int>(m_types->size())))));
 
 		velocity->Normalize();
 		velocity->Scale(GenerateValue(m_averageSpeed, m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError)));
 		Vector3::Add(*velocity, *m_velocityCentre, velocity);
-		float scale = GenerateValue(emitType->getScale(), emitType->getScale() * Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
-		float lifeLength = GenerateValue(emitType->getLifeLength(), emitType->getLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
+		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
+		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
 		Vector3 *spawnPos = Vector3::Add(*m_systemCentre, *m_spawn->GetBaseSpawnPosition(), nullptr);
 
 		Particle *result = new Particle(emitType, *spawnPos, *velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
@@ -70,13 +75,12 @@ namespace Flounder
 		return result;
 	}
 
-	float ParticleSystem::GenerateValue(const float &average, const float &errorMargin)
+	float ParticleSystem::GenerateValue(const float &average, const float &errorMargin) const
 	{
-		float offset = (Maths::RandomInRange(0.0f, 1.0f) - 0.5f) * 2.0f * errorMargin;
-		return average + offset;
+		return average + ((Maths::RandomInRange(0.0f, 1.0f) - 0.5f) * 2.0f * errorMargin);
 	}
 
-	float ParticleSystem::GenerateRotation()
+	float ParticleSystem::GenerateRotation() const
 	{
 		if (m_randomRotation)
 		{
@@ -86,7 +90,7 @@ namespace Flounder
 		return 0.0f;
 	}
 
-	Vector3 *ParticleSystem::GenerateRandomUnitVector()
+	Vector3 *ParticleSystem::GenerateRandomUnitVector() const
 	{
 		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
 		float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
@@ -96,12 +100,12 @@ namespace Flounder
 		return new Vector3(x, y, z);
 	}
 
-	void ParticleSystem::AddParticleType(particletype *type)
+	void ParticleSystem::AddParticleType(ParticleType *type) const
 	{
 		m_types->push_back(type);
 	}
 
-	void ParticleSystem::RemoveParticleType(particletype *type)
+	void ParticleSystem::RemoveParticleType(ParticleType *type) const
 	{
 		for (auto it = m_types->begin(); it != m_types->end(); ++it)
 		{
@@ -119,7 +123,7 @@ namespace Flounder
 		m_spawn = spawn;
 	}
 
-	void ParticleSystem::setDirection(const Vector3 &direction, const float &deviation)
+	void ParticleSystem::SetDirection(const Vector3 &direction, const float &deviation)
 	{
 		m_direction->Set(direction);
 		m_directionDeviation = static_cast<float>(deviation * PI);

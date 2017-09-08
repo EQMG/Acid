@@ -1,4 +1,4 @@
-#include "glfwupdater.hpp"
+#include "GlfwUpdater.hpp"
 
 #include "../../camera/camera.hpp"
 #include "../../devices/Audio.hpp"
@@ -6,18 +6,18 @@
 #include "../../devices/Joysticks.hpp"
 #include "../../devices/Keyboard.hpp"
 #include "../../devices/Mouse.hpp"
-#include "../../renderer/renderer.hpp"
+#include "../../renderer/Renderer.hpp"
 
-#include "../../events/events.hpp"
-#include "../../processing/processing.hpp"
-#include "../../shadows/shadows.hpp"
-#include "../../standards/standards.hpp"
-#include "../../tasks/tasks.hpp"
-#include "../../terrains/terrains.hpp"
-#include "../../uis/uis.hpp"
-#include "../../particles/particles.hpp"
-#include "../../skyboxes/skyboxes.hpp"
-#include "../../waters/waters.hpp"
+#include "../../events/Events.hpp"
+#include "../../processing/Processing.hpp"
+#include "../../shadows/Shadows.hpp"
+#include "../../standards/Standards.hpp"
+#include "../../tasks/Tasks.hpp"
+#include "../../terrains/Terrains.hpp"
+#include "../../uis/Uis.hpp"
+#include "../../particles/Particles.hpp"
+#include "../../skyboxes/Skyboxes.hpp"
+#include "../../waters/Waters.hpp"
 #include "../../worlds/Worlds.hpp"
 
 namespace Flounder
@@ -143,7 +143,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	void GlfwUpdater::RunUpdate(ModuleUpdate typeUpdate)
+	void GlfwUpdater::RunUpdate(ModuleUpdate typeUpdate) const
 	{
 		for (auto it = m_modules->begin(); it != m_modules->end(); ++it)
 		{

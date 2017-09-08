@@ -22,7 +22,7 @@ namespace Flounder
 		bool m_moved;
 
 		Matrix4 *m_modelMatrix;
-		aabb *m_aabb;
+		Aabb *m_aabb;
 	public:
 		static const float WAVE_SPEED;
 		static const float WAVE_LENGTH;
@@ -72,6 +72,6 @@ namespace Flounder
 
 		Matrix4 *getModelMatrix() const { return m_modelMatrix; }
 
-		aabb *getAabb() const { return m_aabb; }
+		Aabb *getAabb() const { return m_aabb; }
 	};
 }
