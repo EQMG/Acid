@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filtersepia::filtersepia() :
-		ipostfilter("filterSepia", "res/shaders/filters/sepia.frag.spv")
+		IPostFilter("filterSepia", "res/shaders/filters/sepia.frag.spv")
 	{
 	}
 
@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void filtersepia::storeValues()
+	void filtersepia::StoreValues()
 	{
 	}
 }

@@ -1,8 +1,8 @@
-﻿#include "shadowbox.hpp"
+﻿#include "ShadowBox.hpp"
 
 namespace Flounder
 {
-	shadowbox::shadowbox() :
+	ShadowBox::ShadowBox() :
 		m_lightDirection(new Vector3()),
 		m_shadowOffset(0.0f),
 		m_shadowDistance(0.0f),
@@ -10,7 +10,7 @@ namespace Flounder
 		m_lightViewMatrix(new Matrix4()),
 		m_projectionViewMatrix(new Matrix4()),
 		m_shadowMapSpaceMatrix(new Matrix4()),
-		m_offset(createOffset()),
+		m_offset(CreateOffset()),
 		m_centre(new Vector3()),
 		m_farHeight(0.0f),
 		m_farWidth(0.0f),
@@ -20,7 +20,7 @@ namespace Flounder
 	{
 	}
 
-	shadowbox::~shadowbox()
+	ShadowBox::~ShadowBox()
 	{
 		delete m_lightDirection;
 
@@ -34,21 +34,21 @@ namespace Flounder
 		delete m_aabb;
 	}
 
-	void shadowbox::update(const ICamera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance)
+	void ShadowBox::Update(const ICamera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance)
 	{
 		m_lightDirection->Set(lightPosition);
 		m_lightDirection->Normalize();
 		m_shadowOffset = shadowOffset;
 		m_shadowDistance = shadowDistance;
 
-		updateShadowBox(camera);
-		updateOrthoProjectionMatrix();
-		updateCenter();
-		updateLightViewMatrix();
-		updateViewShadowMatrix();
+		UpdateShadowBox(camera);
+		UpdateOrthoProjectionMatrix();
+		UpdateCenter();
+		UpdateLightViewMatrix();
+		UpdateViewShadowMatrix();
 	}
 
-	Matrix4 *shadowbox::createOffset()
+	Matrix4 *ShadowBox::CreateOffset()
 	{
 		Matrix4 *offset = new Matrix4();
 		Matrix4::Translate(*offset, Vector3(0.5f, 0.5f, 0.5f), offset);
@@ -56,9 +56,9 @@ namespace Flounder
 		return offset;
 	}
 
-	void shadowbox::updateShadowBox(const ICamera &camera)
+	void ShadowBox::UpdateShadowBox(const ICamera &camera)
 	{
-		updateWidthsAndHeights(camera);
+		UpdateSizes(camera);
 
 		Matrix4 *rotation = Matrix4::ViewMatrix(Vector3(), *camera.GetPosition(), nullptr);
 		Vector4 *forwardVector4 = Matrix4::Transform(*rotation, Vector4(0.0f, 0.0f, -1.0f, 0.0f), nullptr);
@@ -71,7 +71,7 @@ namespace Flounder
 		Vector3 *centreNear = Vector3::Add(*toNear, *camera.GetPosition(), nullptr);
 		Vector3 *centreFar = Vector3::Add(*toFar, *camera.GetPosition(), nullptr);
 
-		Vector4 **points = calculateFrustumVertices(*rotation, *forwardVector, *centreNear, *centreFar);
+		Vector4 **points = CalculateFrustumVertices(*rotation, *forwardVector, *centreNear, *centreFar);
 
 		for (int i = 0; i < 8; i++)
 		{
@@ -133,7 +133,7 @@ namespace Flounder
 		delete forwardVector4;
 	}
 
-	void shadowbox::updateWidthsAndHeights(const ICamera &camera)
+	void ShadowBox::UpdateSizes(const ICamera &camera)
 	{
 		m_farWidth = m_shadowDistance * tan(Maths::Radians(camera.GetFov()));
 		m_nearWidth = camera.GetNearPlane() * tan(Maths::Radians(camera.GetFov()));
@@ -141,7 +141,7 @@ namespace Flounder
 		m_nearHeight = m_nearWidth / static_cast<float>(Display::Get()->GetAspectRatio());
 	}
 
-	Vector4 **shadowbox::calculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar)
+	Vector4 **ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar) const
 	{
 		Vector4 *upVector4 = Matrix4::Transform(rotation, Vector4(0.0f, 1.0f, 0.0f, 0.0f), nullptr);
 		Vector3 *upVector = new Vector3(*upVector4);
@@ -166,14 +166,14 @@ namespace Flounder
 		Vector3 *nearBottom = Vector3::Add(centreNear, *nearDownVector, nullptr);
 
 		Vector4 **points = new Vector4*[8];
-		points[0] = calculateLightSpaceFrustumCorner(*farTop, *rightVector, m_farWidth);
-		points[1] = calculateLightSpaceFrustumCorner(*farTop, *leftVector, m_farWidth);
-		points[2] = calculateLightSpaceFrustumCorner(*farBottom, *rightVector, m_farWidth);
-		points[3] = calculateLightSpaceFrustumCorner(*farBottom, *leftVector, m_farWidth);
-		points[4] = calculateLightSpaceFrustumCorner(*nearTop, *rightVector, m_nearWidth);
-		points[5] = calculateLightSpaceFrustumCorner(*nearTop, *leftVector, m_nearWidth);
-		points[6] = calculateLightSpaceFrustumCorner(*nearBottom, *rightVector, m_nearWidth);
-		points[7] = calculateLightSpaceFrustumCorner(*nearBottom, *leftVector, m_nearWidth);
+		points[0] = CalculateLightSpaceFrustumCorner(*farTop, *rightVector, m_farWidth);
+		points[1] = CalculateLightSpaceFrustumCorner(*farTop, *leftVector, m_farWidth);
+		points[2] = CalculateLightSpaceFrustumCorner(*farBottom, *rightVector, m_farWidth);
+		points[3] = CalculateLightSpaceFrustumCorner(*farBottom, *leftVector, m_farWidth);
+		points[4] = CalculateLightSpaceFrustumCorner(*nearTop, *rightVector, m_nearWidth);
+		points[5] = CalculateLightSpaceFrustumCorner(*nearTop, *leftVector, m_nearWidth);
+		points[6] = CalculateLightSpaceFrustumCorner(*nearBottom, *rightVector, m_nearWidth);
+		points[7] = CalculateLightSpaceFrustumCorner(*nearBottom, *leftVector, m_nearWidth);
 
 		delete nearBottom;
 		delete nearTop;
@@ -194,7 +194,7 @@ namespace Flounder
 		return points;
 	}
 
-	Vector4 *shadowbox::calculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width)
+	Vector4 *ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width) const
 	{
 		Vector3 *point = Vector3::Add(startPoint, *Vector3(direction).Scale(width), nullptr);
 		Vector4 *point4 = new Vector4(*point);
@@ -205,7 +205,7 @@ namespace Flounder
 		return point4;
 	}
 
-	void shadowbox::updateCenter()
+	void ShadowBox::UpdateCenter() const
 	{
 		float x = (m_aabb->m_minExtents->m_x + m_aabb->m_maxExtents->m_x) / 2.0f;
 		float y = (m_aabb->m_minExtents->m_y + m_aabb->m_maxExtents->m_y) / 2.0f;
@@ -219,7 +219,7 @@ namespace Flounder
 		delete invertedLight;
 	}
 
-	void shadowbox::updateOrthoProjectionMatrix()
+	void ShadowBox::UpdateOrthoProjectionMatrix() const
 	{
 		m_projectionMatrix->SetIdentity();
 		m_projectionMatrix->m_00 = 2.0f / m_aabb->GetWidth();
@@ -228,7 +228,7 @@ namespace Flounder
 		m_projectionMatrix->m_33 = 1.0f;
 	}
 
-	void shadowbox::updateLightViewMatrix()
+	void ShadowBox::UpdateLightViewMatrix() const
 	{
 		m_centre->Negate();
 
@@ -248,13 +248,13 @@ namespace Flounder
 		m_centre->Negate();
 	}
 
-	void shadowbox::updateViewShadowMatrix()
+	void ShadowBox::UpdateViewShadowMatrix() const
 	{
 		Matrix4::Multiply(*m_projectionMatrix, *m_lightViewMatrix, m_projectionViewMatrix);
 		Matrix4::Multiply(*m_offset, *m_projectionViewMatrix, m_shadowMapSpaceMatrix);
 	}
 
-	bool shadowbox::isInBox(const Vector3 &position, const float &radius)
+	bool ShadowBox::IsInBox(const Vector3 &position, const float &radius) const
 	{
 		Vector4 *entityPos = Matrix4::Transform(*m_lightViewMatrix, Vector4(position), nullptr);
 

@@ -1,21 +1,21 @@
-﻿#include "inputdelay.hpp"
+﻿#include "InputDelay.hpp"
 
 namespace Flounder
 {
-	inputdelay::inputdelay() :
+	InputDelay::InputDelay() :
 		m_timerDelay(new Timer(0.4f)),
 		m_timerRepeat(new Timer(0.1f)),
 		m_delayOver(false)
 	{
 	}
 
-	inputdelay::~inputdelay()
+	InputDelay::~InputDelay()
 	{
 		delete m_timerDelay;
 		delete m_timerRepeat;
 	}
 
-	void inputdelay::update(const bool &keyIsDown)
+	void InputDelay::Update(const bool &keyIsDown)
 	{
 		if (keyIsDown)
 		{
@@ -29,7 +29,7 @@ namespace Flounder
 		}
 	}
 
-	bool inputdelay::canInput()
+	bool InputDelay::CanInput() const
 	{
 		if (m_delayOver && m_timerRepeat->IsPassedTime())
 		{

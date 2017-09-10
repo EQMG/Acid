@@ -5,7 +5,7 @@ namespace Flounder
 	Worlds::Worlds() :
 		IModule(),
 		m_noise(new NoiseFast(420)),
-		m_driverDay(new driverlinear(0.0f, 1.0f, 100.0f)),
+		m_driverDay(new DriverLinear(0.0f, 1.0f, 100.0f)),
 		m_factorDay(0.0f),
 		m_sunPosition(new Vector3()),
 		m_sunColour(new Colour())
@@ -31,7 +31,7 @@ namespace Flounder
 	void Worlds::Update()
 	{
 		float delta = Engine::Get()->GetDelta();
-		m_factorDay = m_driverDay->update(delta);
+		m_factorDay = m_driverDay->Update(delta);
 
 		Vector3 skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
 		Vector3 lightDirection = Vector3();
@@ -53,26 +53,26 @@ namespace Flounder
 		Colour::Interpolate(Colour(0.9f, 0.3f, 0.3f, 1.0f), Colour(0.0f, 0.0f, 0.0f, 1.0f), GetSunriseFactor(), m_sunColour);
 		Colour::Interpolate(*m_sunColour, Colour(1.0f, 1.0f, 1.0f, 1.0f), GetShadowFactor(), m_sunColour);
 
-		if (skyboxes::get() != nullptr && skyboxes::get()->getSkybox() != nullptr)
+		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetSkybox() != nullptr)
 		{
-			skyboxes::get()->getSkybox()->getRotation()->Set(skyboxRotation);
-			skyboxes::get()->getSkybox()->setBlend(GetStarIntensity());
+			Skyboxes::Get()->GetSkybox()->GetRotation()->Set(skyboxRotation);
+			Skyboxes::Get()->GetSkybox()->SetBlend(GetStarIntensity());
 		}
 
-		if (skyboxes::get() != nullptr && skyboxes::get()->getFog() != nullptr)
+		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetFog() != nullptr)
 		{
-			skyboxes::get()->getFog()->m_density = 0.006f + ((1.0f - GetShadowFactor()) * 0.006f);
-			skyboxes::get()->getFog()->m_gradient = 2.80f - ((1.0f - GetShadowFactor()) * 0.4f);
-			skyboxes::get()->getFog()->m_colour->Set(fogColour);
+			Skyboxes::Get()->GetFog()->m_density = 0.006f + ((1.0f - GetShadowFactor()) * 0.006f);
+			Skyboxes::Get()->GetFog()->m_gradient = 2.80f - ((1.0f - GetShadowFactor()) * 0.4f);
+			Skyboxes::Get()->GetFog()->m_colour->Set(fogColour);
 		}
 
-		if (shadows::get() != nullptr)
+		if (Shadows::Get() != nullptr)
 		{
-			shadows::get()->getLightDirection()->Set(lightDirection);
-			shadows::get()->setShadowBoxOffset((20.0f * (1.0f - GetShadowFactor())) + 10.0f);
-			shadows::get()->setShadowBoxDistance(35.0f);
-			shadows::get()->setShadowTransition(0.0f);
-			shadows::get()->setShadowFactor(GetShadowFactor());
+			Shadows::Get()->GetLightDirection()->Set(lightDirection);
+			Shadows::Get()->SetShadowBoxOffset((20.0f * (1.0f - GetShadowFactor())) + 10.0f);
+			Shadows::Get()->SetShadowBoxDistance(35.0f);
+			Shadows::Get()->SetShadowTransition(0.0f);
+			Shadows::Get()->SetShadowFactor(GetShadowFactor());
 		}
 	}
 

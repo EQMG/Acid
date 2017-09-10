@@ -11,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing simple update injection standards.
 	/// </summary>
-	class standards :
+	class Standards :
 		public IModule
 	{
 	private:
@@ -21,16 +21,16 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static standards *get()
+		static Standards *get()
 		{
-			return static_cast<standards*>(Engine::Get()->GetModule("standards"));
+			return static_cast<Standards*>(Engine::Get()->GetModule("standards"));
 		}
 
-		standards();
+		Standards();
 
-		~standards();
+		~Standards();
 
-		void addStandard(IStandard *standard);
+		void AddStandard(IStandard *standard) const;
 
 		void Update() override;
 	};

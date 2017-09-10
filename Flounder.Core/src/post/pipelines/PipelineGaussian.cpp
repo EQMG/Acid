@@ -1,41 +1,41 @@
-#include "pipelinegaussian.hpp"
+#include "PipelineGaussian.hpp"
 
 namespace Flounder
 {
-	pipelinegaussian::pipelinegaussian(const int &width, const int &height) :
-		ipostpipeline()
+	PipelineGaussian::PipelineGaussian(const int &width, const int &height) :
+		IPostPipeline()
 	{
 		m_filterBlurHorizontal = new filterblurhorizontal(width, height);
 		m_filterBlurVertical = new filterblurvertical(width, height);
 	}
 
-	pipelinegaussian::pipelinegaussian(const float &sizeScalar) :
-		ipostpipeline()
+	PipelineGaussian::PipelineGaussian(const float &sizeScalar) :
+		IPostPipeline()
 	{
 		m_filterBlurHorizontal = new filterblurhorizontal(sizeScalar);
 		m_filterBlurVertical = new filterblurvertical(sizeScalar);
 	}
 
-	pipelinegaussian::~pipelinegaussian()
+	PipelineGaussian::~PipelineGaussian()
 	{
 		delete m_filterBlurHorizontal;
 		delete m_filterBlurVertical;
 	}
 
-	void pipelinegaussian::renderPipeline(const int n_args, va_list args)
+	void PipelineGaussian::RenderPipeline(const int n_args, va_list args)
 	{
 #if 0
-		m_filterBlurHorizontal->applyFilter(1, args[0]);
-		m_filterBlurVertical->applyFilter(1, m_filterBlurHorizontal->getFbo()->getColourTexture(0));
+		m_filterBlurHorizontal->ApplyFilter(1, args[0]);
+		m_filterBlurVertical->ApplyFilter(1, m_filterBlurHorizontal->GetFbo()->GetColourTexture(0));
 #endif
 	}
 
-	Fbo *pipelinegaussian::getOutput()
+	Fbo *PipelineGaussian::GetOutput()
 	{
-		return m_filterBlurVertical->getFbo();
+		return m_filterBlurVertical->GetFbo();
 	}
 
-	void pipelinegaussian::setScaleValue(const float &scaleValue)
+	void PipelineGaussian::SetScaleValue(const float &scaleValue) const
 	{
 		m_filterBlurHorizontal->setScaleValue(scaleValue);
 		m_filterBlurVertical->setScaleValue(scaleValue);

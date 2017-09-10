@@ -1,33 +1,33 @@
-#include "pipelinebloom.hpp"
+#include "PipelineBloom.hpp"
 
 namespace Flounder
 {
-	pipelinebloom::pipelinebloom() :
-		ipostpipeline()
+	PipelineBloom::PipelineBloom() :
+		IPostPipeline()
 	{
 		m_filterBloom1 = new filterbloom1();
-		m_pipelineGaussian = new pipelinegaussian(0.5f);
+		m_pipelineGaussian = new PipelineGaussian(0.5f);
 		m_filterBloom2 = new filterbloom2();
 	}
 
-	pipelinebloom::~pipelinebloom()
+	PipelineBloom::~PipelineBloom()
 	{
 		delete m_filterBloom1;
 		delete m_pipelineGaussian;
 		delete m_filterBloom2;
 	}
 
-	void pipelinebloom::renderPipeline(const int n_args, va_list args)
+	void PipelineBloom::RenderPipeline(const int n_args, va_list args)
 	{
-		m_filterBloom1->applyFilter(n_args, args);
+		m_filterBloom1->ApplyFilter(n_args, args);
 #if 0
-		m_pipelineGaussian->renderPipelineV(1, m_filterBloom1->getFbo()->getColourTexture(0));
-		m_filterBloom2->applyFilter(2, args[0], m_pipelineGaussian->getOutput()->getColourTexture(0)); // Blurred - Colour
+		m_pipelineGaussian->RenderPipeline(1, m_filterBloom1->GetFbo()->GetColourTexture(0));
+		m_filterBloom2->ApplyFilter(2, args[0], m_pipelineGaussian->GetOutput()->GetColourTexture(0)); // Blurred - Colour
 #endif
 	}
 
-	Fbo *pipelinebloom::getOutput()
+	Fbo *PipelineBloom::GetOutput()
 	{
-		return m_filterBloom2->getFbo();
+		return m_filterBloom2->GetFbo();
 	}
 }

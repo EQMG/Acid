@@ -2,40 +2,40 @@
 
 #include "../engine/Engine.hpp"
 
-#include "resource/processorresource.hpp"
-#include "graphic/processorgraphic.hpp"
-#include "iprocessor.hpp"
-#include "irequest.hpp"
+#include "resource/ProcessorResource.hpp"
+#include "graphic/ProcessorGraphic.hpp"
+#include "IProcessor.hpp"
+#include "IRequest.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A module used for processing types of requests.
 	/// </summary>
-	class processing :
+	class Processing :
 		public IModule
 	{
 	private:
-		std::vector<iprocessor*> *m_processors;
+		std::vector<IProcessor*> *m_processors;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static processing *get()
+		static Processing *Get()
 		{
-			return static_cast<processing*>(Engine::Get()->GetModule("processing"));
+			return static_cast<Processing*>(Engine::Get()->GetModule("processing"));
 		}
 
 		/// <summary>
 		/// Creates a new processing module.
 		/// </summary>
-		processing();
+		Processing();
 
 		/// <summary>
 		/// Deconstructor for the processing module.
 		/// </summary>
-		~processing();
+		~Processing();
 
 		void Update() override;
 
@@ -43,12 +43,12 @@ namespace Flounder
 		/// Adds a processor type to the list of processors.
 		/// </summary>
 		/// <param name="processor"> The processor to add. </param>
-		void addProcessor(iprocessor *processor);
+		void AddProcessor(IProcessor *processor) const;
 
 		/// <summary>
 		/// Sends a new resource request to be added to a que.
 		/// </summary>
 		/// <param name="request"> The resource request to add. </param>
-		void sendRequest(irequest *request);
+		void SendRequest(IRequest *request) const;
 	};
 }

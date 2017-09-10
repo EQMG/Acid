@@ -7,7 +7,7 @@
 namespace Flounder
 {
 	class filterwobble :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		float m_wobbleSpeed;
@@ -17,7 +17,7 @@ namespace Flounder
 
 		~filterwobble();
 
-		void storeValues() override;
+		void StoreValues() override;
 
 		void setWobbleSpeed(const float &wobbleSpeed) { m_wobbleSpeed = wobbleSpeed; }
 	};

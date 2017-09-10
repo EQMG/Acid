@@ -1,36 +1,36 @@
 #pragma once
 
-#include "../deferred/rendererdeferred.hpp"
-#include "../fbos/fbo.hpp"
-#include "../renderer/irenderer.hpp"
+#include "../deferred/RendererDeferred.hpp"
+#include "../fbos/Fbo.hpp"
+#include "../renderer/IRenderer.hpp"
 
-#include "waters.hpp"
+#include "Waters.hpp"
 
 namespace Flounder
 {
-	class rendererwaters :
+	class RendererWaters :
 		public IRenderer
 	{
 	private:
 		Fbo *m_fboReflection;
 		RendererDeferred *m_rendererDeferred;
 
-		shader *m_shader;
+		Shader *m_shader;
 	public:
-		rendererwaters();
+		RendererWaters();
 
-		~rendererwaters();
+		~RendererWaters();
 
 		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
-		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
+		void PrepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 
-		void renderWater(water *object);
+		void RenderWater(Water *object);
 
-		void endRendering();
+		void EndRendering();
 	public:
-		Fbo *getFboReflection() const { return m_fboReflection; }
+		Fbo *GetFboReflection() const { return m_fboReflection; }
 
-		RendererDeferred *getRendererDeferred() const { return m_rendererDeferred; }
+		RendererDeferred *GetRendererDeferred() const { return m_rendererDeferred; }
 	};
 }

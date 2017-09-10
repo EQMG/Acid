@@ -4,40 +4,40 @@
 
 #include "../engine/Engine.hpp"
 
-#include "terrain.hpp"
+#include "Terrain.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A module used for managing terrains in 3D worlds.
 	/// </summary>
-	class terrains :
+	class Terrains :
 		public IModule
 	{
 	private:
-		std::vector<terrain*> *m_terrains;
+		std::vector<Terrain*> *m_terrains;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static terrains *get()
+		static Terrains *get()
 		{
-			return static_cast<terrains*>(Engine::Get()->GetModule("terrains"));
+			return static_cast<Terrains*>(Engine::Get()->GetModule("terrains"));
 		}
 
 		/// <summary>
 		/// Creates a new terrains module.
 		/// </summary>
-		terrains();
+		Terrains();
 
 		/// <summary>
 		/// Deconstructor for the terrains module.
 		/// </summary>
-		~terrains();
+		~Terrains();
 
 		void Update() override;
 
-		std::vector<terrain*> *getTerrains() const { return m_terrains; }
+		std::vector<Terrain*> *GetTerrains() const { return m_terrains; }
 	};
 }

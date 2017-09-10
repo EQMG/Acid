@@ -1,36 +1,36 @@
-#include "renderershadows.hpp"
+#include "RendererShadows.hpp"
 
 namespace Flounder
 {
-	renderershadows::renderershadows() :
+	RendererShadows::RendererShadows() :
 		IRenderer(),
-		m_fbo(new Fbo(shadows::get()->getShadowSize(), shadows::get()->getShadowSize(), DepthTexture, false)),
-		m_shader(new shader("shadows", 2,
-			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/shadows/shadow.vert.spv"),
-			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/shadows/shadow.frag.spv")
+		m_fbo(new Fbo(Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize(), DepthTexture, false)),
+		m_shader(new Shader("shadows", 2,
+			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/shadows/shadow.vert.spv"),
+			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/shadows/shadow.frag.spv")
 		))
 	{
 	}
 
-	renderershadows::~renderershadows()
+	RendererShadows::~RendererShadows()
 	{
 		delete m_fbo;
 		delete m_shader;
 	}
 
-	void renderershadows::Render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererShadows::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
-		prepareRendering(clipPlane, camera);
+		PrepareRendering(clipPlane, camera);
 
-		for (auto object : *terrains::get()->getTerrains())
+		for (auto object : *Terrains::get()->GetTerrains())
 		{
-			renderModel(object->getModel(), object->getModelMatrix());
+			RenderModel(object->GetModel(), object->GetModelMatrix());
 		}
 
-		endRendering();
+		EndRendering();
 	}
 
-	void renderershadows::prepareRendering(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererShadows::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		m_fbo->setSize(shadows::get()->getShadowSize(), shadows::get()->getShadowSize());
@@ -47,7 +47,7 @@ namespace Flounder
 #endif
 	}
 
-	void renderershadows::renderModel(Model *object, Matrix4 *modelMatrix)
+	void RendererShadows::RenderModel(Model *object, Matrix4 *modelMatrix)
 	{
 #if 0
 		// Binds the layouts.
@@ -66,7 +66,7 @@ namespace Flounder
 #endif
 	}
 
-	void renderershadows::endRendering()
+	void RendererShadows::EndRendering()
 	{
 #if 0
 		// Stops the shader.

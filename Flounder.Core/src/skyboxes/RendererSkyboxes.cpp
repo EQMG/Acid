@@ -1,29 +1,29 @@
-#include "rendererskyboxes.hpp"
+#include "RendererSkyboxes.hpp"
 
 namespace Flounder
 {
-	rendererskyboxes::rendererskyboxes() :
+	RendererSkyboxes::RendererSkyboxes() :
 		IRenderer(),
-		m_shader(new shader("skyboxes", 2,
-			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/skyboxes/skybox.vert.spv"),
-			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/skyboxes/skybox.frag.spv")
+		m_shader(new Shader("skyboxes", 2,
+			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/skyboxes/skybox.vert.spv"),
+			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/skyboxes/skybox.frag.spv")
 		))
 	{
 	}
 
-	rendererskyboxes::~rendererskyboxes()
+	RendererSkyboxes::~RendererSkyboxes()
 	{
 		delete m_shader;
 	}
 
-	void rendererskyboxes::Render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererSkyboxes::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
-		prepareRendering(clipPlane, camera);
-		renderSkybox(skyboxes::get()->getSkybox());
-		endRendering();
+		PrepareRendering(clipPlane, camera);
+		RenderSkybox(Skyboxes::Get()->GetSkybox());
+		EndRendering();
 	}
 
-	void rendererskyboxes::prepareRendering(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererSkyboxes::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.
@@ -42,7 +42,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererskyboxes::renderSkybox(skybox *object)
+	void RendererSkyboxes::RenderSkybox(Skybox *object)
 	{
 #if 0
 		// Binds the layouts.
@@ -62,7 +62,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererskyboxes::endRendering()
+	void RendererSkyboxes::EndRendering()
 	{
 #if 0
 		// Unbinds the layouts.

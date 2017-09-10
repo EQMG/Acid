@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filterpixel::filterpixel(const float &pixelSize) :
-		ipostfilter("filterGrain", "res/shaders/filters/grain.frag.spv"),
+		IPostFilter("filterGrain", "res/shaders/filters/grain.frag.spv"),
 		m_pixelSize(pixelSize)
 	{
 	}
@@ -12,7 +12,7 @@ namespace Flounder
 	{
 	}
 
-	void filterpixel::storeValues()
+	void filterpixel::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform1f("pixelSize", m_pixelSize);

@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filterdarken::filterdarken(const float &factorValue) :
-		ipostfilter("filterDarken", "res/shaders/filters/darken.frag.spv"),
+		IPostFilter("filterDarken", "res/shaders/filters/darken.frag.spv"),
 		m_factorValue(factorValue)
 	{
 	}
@@ -17,7 +17,7 @@ namespace Flounder
 	{
 	}
 
-	void filterdarken::storeValues()
+	void filterdarken::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform1f("factor", m_factorValue);

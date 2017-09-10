@@ -6,7 +6,7 @@
 namespace Flounder
 {
 	class filterdarken :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		float m_factorValue;
@@ -17,7 +17,7 @@ namespace Flounder
 
 		~filterdarken();
 
-		void storeValues() override;
+		void StoreValues() override;
 
 		void setFactorValue(const float &factorValue) { m_factorValue = factorValue; }
 	};

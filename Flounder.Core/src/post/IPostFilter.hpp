@@ -3,19 +3,19 @@
 #include <stdarg.h>
 
 #include "../fbos/Fbo.hpp"
-#include "../models/model.hpp"
-#include "../renderer/renderer.hpp"
-#include "../shaders/shader.hpp"
+#include "../models/Model.hpp"
+#include "../renderer/Renderer.hpp"
+#include "../shaders/Shader.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// Represents a post effect shader and on application saves the result into a fbo.
 	/// </summary>
-	class ipostfilter
+	class IPostFilter
 	{
 	protected:
-		shader *m_shader;
+		Shader *m_shader;
 		Fbo *m_fbo;
 		Model *m_model;
 	public:
@@ -25,49 +25,49 @@ namespace Flounder
 		/// <param name="filterName"> The name for the filter. </param>
 		/// <param name="fragmentShader"> The fragment shader file. </param>
 		/// <param name="fbo"> The fbo to render into. </param>
-		ipostfilter(const std::string &filterName, const std::string &fragmentShader, Fbo *fbo = new Fbo(true, 1.0f));
+		IPostFilter(const std::string &filterName, const std::string &fragmentShader, Fbo *fbo = new Fbo(true, 1.0f));
 
 		/// <summary>
 		/// Creates a new post effect filter
 		/// </summary>
 		/// <param name="shader"> The shader for the filter. </param>
 		/// <param name="fbo"> The fbo to render into. </param>
-		ipostfilter(shader *shader, Fbo *fbo);
+		IPostFilter(Shader *shader, Fbo *fbo);
 
 		/// <summary>
 		/// Creates a new post effect filter
 		/// </summary>
 		/// <param name="shader"> The shader for the filter. </param>
-		ipostfilter(shader *shader);
+		IPostFilter(Shader *shader);
 
 		/// <summary>
 		/// Deconstructor for the post filter.
 		/// </summary>
-		virtual ~ipostfilter();
+		virtual ~IPostFilter();
 
 		/// <summary>
 		/// Renders the filter to its fbo.
 		/// </summary>
 		/// <param name="n_args"> The number textures being bound to the shader. </param>
 		/// <param name="..."> The textures being bound to the shader. </param>
-		void applyFilter(const int n_args, ...);
+		void ApplyFilter(const int n_args, ...);
 
 		/// <summary>
 		/// Renders the filter to its fbo.
 		/// </summary>
 		/// <param name="n_args"> The number textures being bound to the shader. </param>
 		/// <param name="..."> The textures being bound to the shader. </param>
-		void applyFilter(const int n_args, va_list args);
+		void ApplyFilter(const int n_args, va_list args);
 
 		/// <summary>
 		/// Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started.
 		/// </summary>
-		virtual void storeValues() = 0;
+		virtual void StoreValues() = 0;
 
 		/// <summary>
 		/// Gets the fbo the filter rendered into.
 		/// </summary>
 		/// <returns> The fbo. </returns>
-		Fbo *getFbo() const { return m_fbo; }
+		Fbo *GetFbo() const { return m_fbo; }
 	};
 }

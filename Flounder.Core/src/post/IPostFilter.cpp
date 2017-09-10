@@ -1,46 +1,46 @@
-#include "ipostfilter.hpp"
+#include "IPostFilter.hpp"
 
 namespace Flounder
 {
-	ipostfilter::ipostfilter(const std::string &filterName, const std::string &fragmentShader, Fbo *fbo) :
-		m_shader(new shader(filterName, 2,
-			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/filters/default.vert.spv"),
-			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShader)
+	IPostFilter::IPostFilter(const std::string &filterName, const std::string &fragmentShader, Fbo *fbo) :
+		m_shader(new Shader(filterName, 2,
+			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/filters/default.vert.spv"),
+			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShader)
 		)),
 		m_fbo(fbo),
 		m_model(new Model("res/models/filter.obj"))
 	{
 	}
 
-	ipostfilter::ipostfilter(shader *shader, Fbo *fbo) :
+	IPostFilter::IPostFilter(Shader *shader, Fbo *fbo) :
 		m_shader(shader),
 		m_fbo(fbo),
 		m_model(new Model("res/models/filter.obj"))
 	{
 	}
 
-	ipostfilter::ipostfilter(shader *shader) :
+	IPostFilter::IPostFilter(Shader *shader) :
 		m_shader(shader),
 		m_fbo(new Fbo(true, 1.0f)),
 		m_model(new Model("res/models/filter.obj"))
 	{
 	}
 
-	ipostfilter::~ipostfilter()
+	IPostFilter::~IPostFilter()
 	{
 		delete m_shader;
 		delete m_fbo;
 	}
 
-	void ipostfilter::applyFilter(const int n_args, ...)
+	void IPostFilter::ApplyFilter(const int n_args, ...)
 	{
 		va_list args;
 		va_start(args, n_args);
-		applyFilter(n_args, args);
+		ApplyFilter(n_args, args);
 		va_end(args);
 	}
 
-	void ipostfilter::applyFilter(const int n_args, va_list args)
+	void IPostFilter::ApplyFilter(const int n_args, va_list args)
 	{
 #if 0
 		if (m_fbo != nullptr)

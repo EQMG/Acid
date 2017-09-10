@@ -3,9 +3,9 @@
 namespace Flounder
 {
 	RendererDeferred::RendererDeferred(Fbo *fbo) :
-		m_shader(new shader("deferred", 2,
-			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/deferred/deferred.vert.spv"),
-			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/deferred/deferred.frag.spv")
+		m_shader(new Shader("deferred", 2,
+			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/deferred/deferred.vert.spv"),
+			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/deferred/deferred.frag.spv")
 		)),
 		m_model(new Model("res/models/filter.obj"))
 	{

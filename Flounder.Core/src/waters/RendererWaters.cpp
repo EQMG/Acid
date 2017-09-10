@@ -1,19 +1,19 @@
-#include "rendererwaters.hpp"
+#include "RendererWaters.hpp"
 
 namespace Flounder
 {
-	rendererwaters::rendererwaters() :
+	RendererWaters::RendererWaters() :
 		IRenderer(),
 		m_fboReflection(new Fbo(true, Waters::Get()->GetReflectionQuality(), DepthTexture, true, 3)),
 		m_rendererDeferred(new RendererDeferred()),
-		m_shader(new shader("waters", 2,
-			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/waters/water.vert.spv"),
-			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/waters/water.frag.spv")
+		m_shader(new Shader("waters", 2,
+			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/waters/water.vert.spv"),
+			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/waters/water.frag.spv")
 		))
 	{
 	}
 
-	rendererwaters::~rendererwaters()
+	RendererWaters::~RendererWaters()
 	{
 		delete m_fboReflection;
 		delete m_rendererDeferred;
@@ -21,14 +21,14 @@ namespace Flounder
 		delete m_shader;
 	}
 
-	void rendererwaters::Render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererWaters::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
-		prepareRendering(clipPlane, camera);
-		renderWater(Waters::Get()->GetWater());
-		endRendering();
+		PrepareRendering(clipPlane, camera);
+		RenderWater(Waters::Get()->GetWater());
+		EndRendering();
 	}
 
-	void rendererwaters::prepareRendering(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererWaters::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.
@@ -64,7 +64,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererwaters::renderWater(water *object)
+	void RendererWaters::RenderWater(Water *object)
 	{
 #if 0
 		// Binds the layouts.
@@ -101,7 +101,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererwaters::endRendering()
+	void RendererWaters::EndRendering()
 	{
 #if 0
 		// Stops the shader.

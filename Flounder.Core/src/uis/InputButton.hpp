@@ -2,15 +2,15 @@
 
 #include <functional>
 
-#include "../visual/driverslide.hpp"
+#include "../visual/DriverSlide.hpp"
 
-#include "uis.hpp"
-#include "uiobject.hpp"
-#include "uialign.hpp"
+#include "Uis.hpp"
+#include "UiObject.hpp"
+#include "UiAlign.hpp"
 
 namespace Flounder
 {
-	class inputbutton :
+	class InputButton :
 		public UiObject
 	{
 	private:
@@ -27,18 +27,18 @@ namespace Flounder
 		std::function<void()> m_actionLeft;
 		std::function<void()> m_actionRight;
 	public:
-		inputbutton(UiObject *parent, const Vector2 &position, const std::string &string, const uialign &align);
+		InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const UiAlign &align);
 
-		~inputbutton();
+		~InputButton();
 
 		void UpdateObject() override;
 
-		std::string getText() const { return m_text->GetText(); }
+		std::string GetText() const { return m_text->GetText(); }
 
-		void setText(const std::string &string) const { m_text->setText(string); }
+		void SetText(const std::string &string) const { m_text->setText(string); }
 
-		void setActionLeft(std::function<void()> action) { m_actionLeft = action; }
+		void SetActionLeft(std::function<void()> action) { m_actionLeft = action; }
 
-		void setActionRight(std::function<void()> action) { m_actionRight = action; }
+		void SetActionRight(std::function<void()> action) { m_actionRight = action; }
 	};
 }

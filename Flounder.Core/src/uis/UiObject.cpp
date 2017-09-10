@@ -14,11 +14,11 @@ namespace Flounder
 		m_screenPosition(new Vector2()),
 		m_screenDimensions(new Vector2()),
 		m_positionOffsets(new Vector2()),
-		m_rotationDriver(new driverconstant(0.0f)),
+		m_rotationDriver(new DriverConstant(0.0f)),
 		m_rotation(0.0f),
-		m_alphaDriver(new driverconstant(1.0f)),
+		m_alphaDriver(new DriverConstant(1.0f)),
 		m_alpha(1.0f),
-		m_scaleDriver(new driverconstant(1.0f)),
+		m_scaleDriver(new DriverConstant(1.0f)),
 		m_scale(1.0f)
 	{
 		if (parent != nullptr)
@@ -62,9 +62,9 @@ namespace Flounder
 			child->Update();
 		}
 
-		m_rotation = m_rotationDriver->update(Engine::Get()->GetDelta());
-		m_alpha = m_alphaDriver->update(Engine::Get()->GetDelta());
-		m_scale = m_scaleDriver->update(Engine::Get()->GetDelta());
+		m_rotation = m_rotationDriver->Update(Engine::Get()->GetDelta());
+		m_alpha = m_alphaDriver->Update(Engine::Get()->GetDelta());
+		m_scale = m_scaleDriver->Update(Engine::Get()->GetDelta());
 
 		if (IsVisible() && GetAlpha() != 0.0f)
 		{
@@ -123,13 +123,13 @@ namespace Flounder
 		return m_visible;
 	}
 
-	void UiObject::SetRotationDriver(idriver *rotationDriver)
+	void UiObject::SetRotationDriver(IDriver *rotationDriver)
 	{
 		delete m_rotationDriver;
 		m_rotationDriver = rotationDriver;
 	}
 
-	void UiObject::SetAlphaDriver(idriver *alphaDriver)
+	void UiObject::SetAlphaDriver(IDriver *alphaDriver)
 	{
 		delete m_alphaDriver;
 		m_alphaDriver = alphaDriver;
@@ -145,7 +145,7 @@ namespace Flounder
 		return m_alpha;
 	}
 
-	void UiObject::SetScaleDriver(idriver *scaleDriver)
+	void UiObject::SetScaleDriver(IDriver *scaleDriver)
 	{
 		delete m_scaleDriver;
 		m_scaleDriver = scaleDriver;

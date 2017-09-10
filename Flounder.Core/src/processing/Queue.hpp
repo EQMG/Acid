@@ -7,24 +7,24 @@ namespace Flounder
 	/// <summary>
 	/// Holds requests in a simple que.
 	/// </summary>
-	template<typename t>
-	class queue
+	template<typename T>
+	class Queue
 	{
 	private:
-		std::vector<t> *m_queue;
+		std::vector<T> *m_queue;
 	public:
 		/// <summary>
 		/// Creates a new queue.
 		/// </summary>
-		queue()
+		Queue()
 		{
-			m_queue = new std::vector<t>();
+			m_queue = new std::vector<T>();
 		}
 
 		/// <summary>
 		/// Deconstructor for the queue.
 		/// </summary>
-		~queue()
+		~Queue()
 		{
 			delete m_queue;
 		}
@@ -33,7 +33,7 @@ namespace Flounder
 		/// Adds a new object to queue.
 		/// </summary>
 		/// <param name="request"> The object to add. </param>
-		void addRequest(t request)
+		void AddRequest(T request)
 		{
 			m_queue->push_back(request);
 		}
@@ -42,9 +42,9 @@ namespace Flounder
 		/// Gets the next item in queue and then removes it from this list.
 		/// </summary>
 		/// <returns> The next item in queue and then removes it from this list. </returns>
-		t acceptNextRequest()
+		T AcceptNextRequest()
 		{
-			t request = m_queue->front();
+			T request = m_queue->front();
 			m_queue->erase(m_queue->begin());
 			return request;
 		}
@@ -53,7 +53,7 @@ namespace Flounder
 		/// Gets if there are any items left in queue.
 		/// </summary>
 		/// <returns> Returns true if there are any items left in queue. </returns>
-		bool hasRequests()
+		bool HasRequests()
 		{
 			return !m_queue->empty();
 		}
@@ -62,7 +62,7 @@ namespace Flounder
 		/// Gets the number of objects in queue.
 		/// </summary>
 		/// <returns> The number of objects in queue. </returns>
-		int count()
+		int Count()
 		{
 			return m_queue->size();
 		}
@@ -70,7 +70,7 @@ namespace Flounder
 		/// <summary>
 		/// Clears the request queue.
 		/// </summary>
-		void clear()
+		void Clear()
 		{
 			m_queue->Clear();
 		}

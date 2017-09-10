@@ -6,7 +6,7 @@
 namespace Flounder
 {
 	class filterblurhorizontal :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		int m_widthValue;
@@ -20,7 +20,7 @@ namespace Flounder
 
 		~filterblurhorizontal();
 
-		void storeValues() override;
+		void StoreValues() override;
 
 		void setScaleValue(const float &scaleValue) { m_scaleValue = scaleValue; }
 	};

@@ -14,7 +14,7 @@ namespace Flounder
 		public UiObject
 	{
 	private:
-		texture *m_texture;
+		Texture *m_texture;
 		bool m_flipTexture;
 		int m_selectedRow;
 
@@ -29,7 +29,7 @@ namespace Flounder
 		/// <param name="dimensions"> The objects dimensions. </param>
 		/// <param name="texture"> The objects texture. </param>
 		/// <param name="selectedRow"> The default row of the texture to render from. </param>
-		Gui(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, texture *texture, const int &selectedRow);
+		Gui(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, Texture *texture, const int &selectedRow);
 
 		/// <summary>
 		/// Deconstructor for the gui object.
@@ -38,9 +38,9 @@ namespace Flounder
 
 		void UpdateObject() override;
 
-		texture *GetTexture() const { return m_texture; }
+		Texture *GetTexture() const { return m_texture; }
 
-		void SetTexture(texture *texture) { m_texture = texture; }
+		void SetTexture(Texture *texture) { m_texture = texture; }
 
 		bool IsFlipTexture() const { return m_flipTexture; }
 

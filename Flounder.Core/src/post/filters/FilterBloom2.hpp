@@ -5,13 +5,13 @@
 namespace Flounder
 {
 	class filterbloom2 :
-		public ipostfilter
+		public IPostFilter
 	{
 	public:
 		filterbloom2();
 
 		~filterbloom2();
 
-		void storeValues() override;
+		void StoreValues() override;
 	};
 }

@@ -1,14 +1,14 @@
 #pragma once
 
-#include "idriver.hpp"
+#include "IDriver.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A driver that slides to its destination using cosine interpolation.
 	/// </summary>
-	class driverslide :
-		public idriver
+	class DriverSlide :
+		public IDriver
 	{
 	private:
 		float m_start;
@@ -22,13 +22,13 @@ namespace Flounder
 		/// <param name="start"> The start value. </param>
 		/// <param name="end"> The end value. </param>
 		/// <param name="length"> The time to get to the end value. </param>
-		driverslide(const float &start, const float &end, const float &length);
+		DriverSlide(const float &start, const float &end, const float &length);
 
 		/// <summary>
 		/// Deconstructor for slide driver.
 		/// </summary>
-		~driverslide();
+		~DriverSlide();
 	protected:
-		float calculate(const float &time) override;
+		float Calculate(const float &time) override;
 	};
 }

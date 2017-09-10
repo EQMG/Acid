@@ -1,19 +1,19 @@
-#include "tasks.hpp"
+#include "Tasks.hpp"
 
 namespace Flounder
 {
-	tasks::tasks() :
+	Tasks::Tasks() :
 		IModule(),
 		m_tasks(new std::vector<std::function<void()>>())
 	{
 	}
 
-	tasks::~tasks()
+	Tasks::~Tasks()
 	{
 		delete m_tasks;
 	}
 
-	void tasks::Update()
+	void Tasks::Update()
 	{
 		for (auto it = m_tasks->begin(); it != m_tasks->end(); ++it)
 		{
@@ -23,7 +23,7 @@ namespace Flounder
 		m_tasks->clear();
 	}
 
-	void tasks::addTask(std::function<void()> task)
+	void Tasks::AddTask(std::function<void()> task) const
 	{
 		m_tasks->push_back(task);
 	}

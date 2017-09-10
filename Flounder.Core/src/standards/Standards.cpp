@@ -1,14 +1,14 @@
-#include "standards.hpp"
+#include "Standards.hpp"
 
 namespace Flounder
 {
-	standards::standards() :
+	Standards::Standards() :
 		IModule(),
 		m_standards(new std::vector<IStandard*>())
 	{
 	}
 
-	standards::~standards()
+	Standards::~Standards()
 	{
 		for (auto it = m_standards->begin(); it < m_standards->end(); ++it)
 		{
@@ -18,12 +18,12 @@ namespace Flounder
 		delete m_standards;
 	}
 
-	void standards::addStandard(IStandard *standard)
+	void Standards::AddStandard(IStandard *standard) const
 	{
 		m_standards->push_back(standard);
 	}
 
-	void standards::Update()
+	void Standards::Update()
 	{
 		for (auto it = m_standards->begin(); it < m_standards->end(); ++it)
 		{

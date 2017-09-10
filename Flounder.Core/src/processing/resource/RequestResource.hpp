@@ -1,21 +1,21 @@
 #pragma once
 
-#include "../irequest.hpp"
+#include "../IRequest.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// Interface for executable resource requests.
 	/// </summary>
-	class requestresource :
-		public irequest
+	class RequestResource :
+		public IRequest
 	{
 	public:
 		/// <summary>
 		/// Executed when the request is being processed.
 		/// </summary>
-		virtual void executeRequestResource() = 0;
+		virtual void ExecuteRequestResource() = 0;
 
-		int getRequestId() override { return 1; };
+		int GetRequestId() override { return 1; };
 	};
 }

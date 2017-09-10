@@ -14,7 +14,7 @@ namespace Flounder
 	class FontType
 	{
 	private:
-		texture *m_texture;
+		Texture *m_texture;
 		Metafile *m_metadata;
 	public:
 		/// <summary>
@@ -29,7 +29,7 @@ namespace Flounder
 		/// </summary>
 		~FontType();
 
-		texture *GetTexture() const { return m_texture; }
+		Texture *GetTexture() const { return m_texture; }
 
 		Metafile *GetMetadata() const { return m_metadata; }
 	};

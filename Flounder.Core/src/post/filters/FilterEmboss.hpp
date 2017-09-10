@@ -5,13 +5,13 @@
 namespace Flounder
 {
 	class filteremboss :
-		public ipostfilter
+		public IPostFilter
 	{
 	public:
 		filteremboss();
 
 		~filteremboss();
 
-		void storeValues() override;
+		void StoreValues() override;
 	};
 }

@@ -21,7 +21,7 @@ namespace Flounder
 	{
 		if (m_water != nullptr)
 		{
-			m_water->update();
+			m_water->Update();
 		}
 	}
 }
