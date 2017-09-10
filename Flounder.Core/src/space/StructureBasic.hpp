@@ -7,12 +7,12 @@ namespace Flounder
 	/// <summary>
 	/// A structure of spatial objects for a 3D space.
 	/// </summary>
-	template<class t>
+	template<class T>
 	class StructureBasic :
-		public ISpatialStructure<t>
+		public ISpatialStructure<T>
 	{
 	private:
-		std::vector<t> *m_objects;
+		std::vector<T> *m_objects;
 	public:
 		/// <summary>
 		/// Creates a new basic structure.
@@ -24,21 +24,21 @@ namespace Flounder
 		/// </summary>
 		~StructureBasic();
 
-		void Add(t object) override;
+		void Add(T object) override;
 
-		void Remove(t object) override;
+		void Remove(T object) override;
 
 		void Clear() override;
 
 		int GetSize() override;
 
-		std::vector<t> *GetAll() override;
+		std::vector<T> *GetAll() override;
 
-		std::vector<t> *QueryAll(std::vector<t> *result) override;
+		std::vector<T> *QueryAll(std::vector<T> *result) override;
 
-		std::vector<t> *QueryFrustum(Frustum *range, std::vector<t> *result) override;
+		std::vector<T> *QueryFrustum(Frustum *range, std::vector<T> *result) override;
 
-		std::vector<t> *QueryBounding(ICollider *range, std::vector<t> *result) override;
+		std::vector<T> *QueryBounding(ICollider *range, std::vector<T> *result) override;
 
 		bool Contains(ISpatialObject *object) override;
 	};

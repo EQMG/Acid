@@ -1,19 +1,19 @@
-#include "driverlinear.hpp"
+#include "DriverLinear.hpp"
 
 namespace Flounder
 {
-	driverlinear::driverlinear(const float &startValue, const float &endValue, const float &length) :
-		idriver(length),
+	DriverLinear::DriverLinear(const float &startValue, const float &endValue, const float &length) :
+		IDriver(length),
 		m_startValue(startValue),
 		m_difference(endValue - startValue)
 	{
 	}
 
-	driverlinear::~driverlinear()
+	DriverLinear::~DriverLinear()
 	{
 	}
 
-	float driverlinear::calculate(const float &time)
+	float DriverLinear::Calculate(const float &time)
 	{
 		return m_startValue + time * m_difference;
 	}

@@ -1,4 +1,4 @@
-﻿#include "swapchain.hpp"
+﻿#include "Swapchain.hpp"
 
 namespace Flounder
 {
@@ -184,8 +184,8 @@ namespace Flounder
 			return capabilities.currentExtent;
 		}
 		VkExtent2D actualExtent = {};
-		actualExtent.width = (uint32_t) Display::Get()->GetWidth();
-		actualExtent.height = (uint32_t) Display::Get()->GetHeight();
+		actualExtent.width = static_cast<uint32_t>(Display::Get()->GetWidth());
+		actualExtent.height = static_cast<uint32_t>(Display::Get()->GetHeight());
 
 		actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
 		actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));

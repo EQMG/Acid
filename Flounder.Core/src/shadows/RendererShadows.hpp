@@ -1,33 +1,33 @@
 #pragma once
 
-#include "../deferred/rendererdeferred.hpp"
-#include "../fbos/fbo.hpp"
-#include "../renderer/irenderer.hpp"
-#include "../terrains/terrains.hpp"
+#include "../deferred/RendererDeferred.hpp"
+#include "../fbos/Fbo.hpp"
+#include "../renderer/IRenderer.hpp"
+#include "../terrains/Terrains.hpp"
 
-#include "shadows.hpp"
+#include "Shadows.hpp"
 
 namespace Flounder
 {
-	class renderershadows :
+	class RendererShadows :
 		public IRenderer
 	{
 	private:
 		Fbo *m_fbo;
-		shader *m_shader;
+		Shader *m_shader;
 	public:
-		renderershadows();
+		RendererShadows();
 
-		~renderershadows();
+		~RendererShadows();
 
 		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
-		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
+		void PrepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 
-		void renderModel(Model *object, Matrix4 *modelMatrix);
+		void RenderModel(Model *object, Matrix4 *modelMatrix);
 
-		void endRendering();
+		void EndRendering();
 	public:
-		Fbo *getFbo() const { return m_fbo; }
+		Fbo *GetFbo() const { return m_fbo; }
 	};
 }

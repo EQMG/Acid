@@ -1,8 +1,8 @@
-﻿#include "skybox.hpp"
+﻿#include "Skybox.hpp"
 
 namespace Flounder
 {
-	skybox::skybox(texture *texture, Model *model, const float &size) :
+	Skybox::Skybox(Texture *texture, Model *model, const float &size) :
 		m_texture(texture),
 		m_model(model),
 		m_size(size),
@@ -12,7 +12,7 @@ namespace Flounder
 	{
 	}
 
-	skybox::~skybox()
+	Skybox::~Skybox()
 	{
 		delete m_texture;
 		delete m_model;
@@ -21,7 +21,7 @@ namespace Flounder
 		delete m_modelMatrix;
 	}
 
-	void skybox::update()
+	void Skybox::Update()
 	{
 		Matrix4::TransformationMatrix(*Camera::Get()->GetCamera()->GetPosition(), *m_rotation, m_size, m_modelMatrix);
 	}

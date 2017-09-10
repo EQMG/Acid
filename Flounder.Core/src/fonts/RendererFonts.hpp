@@ -11,7 +11,7 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		shader *m_shader;
+		Shader *m_shader;
 	public:
 		RendererFonts();
 

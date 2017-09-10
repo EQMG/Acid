@@ -1,9 +1,9 @@
-#include "driverslide.hpp"
+#include "DriverSlide.hpp"
 
 namespace Flounder
 {
-	driverslide::driverslide(const float &start, const float &end, const float &length) :
-		idriver(length),
+	DriverSlide::DriverSlide(const float &start, const float &end, const float &length) :
+		IDriver(length),
 		m_start(start),
 		m_end(end),
 		m_max(0.0f),
@@ -11,17 +11,18 @@ namespace Flounder
 	{
 	}
 
-	driverslide::~driverslide()
+	DriverSlide::~DriverSlide()
 	{
 	}
 
-	float driverslide::calculate(const float &time)
+	float DriverSlide::Calculate(const float &time)
 	{
 		if (!m_reachedTarget && time >= m_max)
 		{
 			m_max = time;
 			return Maths::CosInterpolate(m_start, m_end, time);
 		}
+
 		m_reachedTarget = true;
 		return m_start + (m_end - m_start);
 	}

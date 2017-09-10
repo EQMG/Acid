@@ -2,16 +2,16 @@
 
 #include <functional>
 
-#include "../maths/timer.hpp"
-#include "../visual/driverslide.hpp"
+#include "../maths/Timer.hpp"
+#include "../visual/DriverSlide.hpp"
 
-#include "uis.hpp"
-#include "uiobject.hpp"
-#include "uialign.hpp"
+#include "Uis.hpp"
+#include "UiObject.hpp"
+#include "UiAlign.hpp"
 
 namespace Flounder
 {
-	class inputslider :
+	class InputSlider :
 		public UiObject
 	{
 	private:
@@ -35,28 +35,28 @@ namespace Flounder
 		Timer *m_timerChange;
 		std::function<void()> m_actionChange;
 	public:
-		inputslider(UiObject *parent, const Vector2 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const uialign &align);
+		InputSlider(UiObject *parent, const Vector2 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const UiAlign &align);
 
-		~inputslider();
+		~InputSlider();
 
 		void UpdateObject() override;
 
-		std::string getText() const { return m_text->GetText(); }
+		std::string GetText() const { return m_text->GetText(); }
 
-		void setText(const std::string &string) const { m_text->setText(string); }
+		void SetText(const std::string &string) const { m_text->setText(string); }
 
-		float getProgressMin() const { return m_progressMin; }
+		float GetProgressMin() const { return m_progressMin; }
 
-		void setProgressMin(const float &progressMin) { m_progressMin = progressMin; }
+		void SetProgressMin(const float &progressMin) { m_progressMin = progressMin; }
 
-		float getProgressMax() const { return m_progressMax; }
+		float GetProgressMax() const { return m_progressMax; }
 
-		void setProgressMax(const float &progressMax) { m_progressMax = progressMax; }
+		void SetProgressMax(const float &progressMax) { m_progressMax = progressMax; }
 
-		float getValue() const { return m_value; }
+		float GetValue() const { return m_value; }
 
-		void setValue(const float &value) { m_value = (value - m_progressMin) / (m_progressMax - m_progressMin); }
+		void SetValue(const float &value) { m_value = (value - m_progressMin) / (m_progressMax - m_progressMin); }
 
-		void setActionChange(std::function<void()> action) { m_actionChange = action; }
+		void SetActionChange(std::function<void()> action) { m_actionChange = action; }
 	};
 }

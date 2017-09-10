@@ -8,7 +8,7 @@
 namespace Flounder
 {
 	class filtermotion :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		Matrix4 *m_lastViewMatrix;
@@ -17,6 +17,6 @@ namespace Flounder
 
 		~filtermotion();
 
-		void storeValues() override;
+		void StoreValues() override;
 	};
 }

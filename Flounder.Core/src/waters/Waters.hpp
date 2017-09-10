@@ -2,7 +2,7 @@
 
 #include "../engine/Engine.hpp"
 
-#include "water.hpp"
+#include "Water.hpp"
 
 namespace Flounder
 {
@@ -13,7 +13,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		water *m_water;
+		Water *m_water;
 
 		float m_colourIntensity; // 0 being 100% reflective, 1 disables reflections.
 		bool m_enableReflections;
@@ -41,9 +41,9 @@ namespace Flounder
 
 		void Update() override;
 
-		water *GetWater() { return m_water; }
+		Water *GetWater() const { return m_water; }
 
-		void SetWater(water *water) { m_water = water; }
+		void SetWater(Water *water) { m_water = water; }
 
 		float GetColourIntensity() const { return m_colourIntensity; }
 

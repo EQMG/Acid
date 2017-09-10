@@ -6,13 +6,13 @@
 namespace Flounder
 {
 	class filterdefault :
-		public ipostfilter
+		public IPostFilter
 	{
 	public:
 		filterdefault();
 
 		~filterdefault();
 
-		void storeValues() override;
+		void StoreValues() override;
 	};
 }

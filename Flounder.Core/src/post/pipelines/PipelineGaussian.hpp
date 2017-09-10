@@ -1,28 +1,28 @@
 #pragma once
 
-#include "../filters/filterblurhorizontal.hpp"
-#include "../filters/filterblurvertical.hpp"
-#include "../ipostpipeline.hpp"
+#include "../filters/FilterBlurHorizontal.hpp"
+#include "../filters/FilterBlurVertical.hpp"
+#include "../IPostPipeline.hpp"
 
 namespace Flounder
 {
-	class pipelinegaussian :
-		public ipostpipeline
+	class PipelineGaussian :
+		public IPostPipeline
 	{
 	private:
 		filterblurhorizontal *m_filterBlurHorizontal;
 		filterblurvertical *m_filterBlurVertical;
 	public:
-		pipelinegaussian(const int &width, const int &height);
+		PipelineGaussian(const int &width, const int &height);
 
-		pipelinegaussian(const float &sizeScalar);
+		PipelineGaussian(const float &sizeScalar);
 
-		~pipelinegaussian();
+		~PipelineGaussian();
 
-		void renderPipeline(const int n_args, va_list args) override;
+		void RenderPipeline(const int n_args, va_list args) override;
 
-		Fbo *getOutput() override;
+		Fbo *GetOutput() override;
 
-		void setScaleValue(const float &scaleValue);
+		void SetScaleValue(const float &scaleValue) const;
 	};
 }

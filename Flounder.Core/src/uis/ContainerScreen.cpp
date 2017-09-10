@@ -1,18 +1,18 @@
-﻿#include "containerscreen.hpp"
+﻿#include "ContainerScreen.hpp"
 
 namespace Flounder
 {
-	containerscreen::containerscreen(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, const bool &inScreenCoords) :
+	ContainerScreen::ContainerScreen(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, const bool &inScreenCoords) :
 		UiObject(parent, position, dimensions)
 	{
 		SetInScreenCoords(inScreenCoords);
 	}
 
-	containerscreen::~containerscreen()
+	ContainerScreen::~ContainerScreen()
 	{
 	}
 
-	void containerscreen::UpdateObject()
+	void ContainerScreen::UpdateObject()
 	{
 	}
 }

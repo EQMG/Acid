@@ -1,43 +1,43 @@
 #pragma once
 
 #include "../engine/Engine.hpp"
-#include "../lights/fog.hpp"
+#include "../lights/Fog.hpp"
 
-#include "skybox.hpp"
+#include "Skybox.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A module used for managing skyboxes in 3D worlds.
 	/// </summary>
-	class skyboxes :
+	class Skyboxes :
 		public IModule
 	{
 	private:
-		skybox *m_skybox;
+		Skybox *m_skybox;
 		Fog *m_fog;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static skyboxes *get()
+		static Skyboxes *Get()
 		{
-			return static_cast<skyboxes*>(Engine::Get()->GetModule("skyboxes"));
+			return static_cast<Skyboxes*>(Engine::Get()->GetModule("skyboxes"));
 		}
 
-		skyboxes();
+		Skyboxes();
 
-		~skyboxes();
+		~Skyboxes();
 
 		void Update() override;
 
-		skybox *getSkybox() { return m_skybox; }
+		Skybox *GetSkybox() const { return m_skybox; }
 
-		void setSkybox(skybox *skybox) { m_skybox = skybox; }
+		void SetSkybox(Skybox *skybox) { m_skybox = skybox; }
 
-		Fog *getFog() { return m_fog; }
+		Fog *GetFog() const { return m_fog; }
 
-		void setFog(Fog *fog) { m_fog = fog; }
+		void SetFog(Fog *fog) { m_fog = fog; }
 	};
 }

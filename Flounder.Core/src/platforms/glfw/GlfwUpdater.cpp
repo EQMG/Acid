@@ -67,16 +67,16 @@ namespace Flounder
 		AddModule(UpdateRender, "renderer", new Renderer());
 
 		AddModule(UpdatePre, "events", new Events());
-		AddModule(UpdatePre, "tasks", new tasks());
-		AddModule(UpdatePre, "processing", new processing());
-		AddModule(UpdatePre, "standards", new standards());
+		AddModule(UpdatePre, "tasks", new Tasks());
+		AddModule(UpdatePre, "processing", new Processing());
+		AddModule(UpdatePre, "standards", new Standards());
 		AddModule(UpdatePre, "camera", new Camera());
-		AddModule(UpdatePre, "uis", new uis());
+		AddModule(UpdatePre, "uis", new Uis());
 		AddModule(UpdatePre, "worlds", new Worlds());
-		AddModule(UpdateRender, "shadows", new shadows());
+		AddModule(UpdateRender, "shadows", new Shadows());
 		AddModule(UpdatePre, "particles", new Particles());
-		AddModule(UpdatePre, "skyboxes", new skyboxes());
-		AddModule(UpdatePre, "terrains", new terrains());
+		AddModule(UpdatePre, "skyboxes", new Skyboxes());
+		AddModule(UpdatePre, "terrains", new Terrains());
 		AddModule(UpdatePre, "waters", new Waters());
 	}
 

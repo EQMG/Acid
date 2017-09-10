@@ -1,26 +1,26 @@
 #pragma once
 
-#include "../filters/filterbloom1.hpp"
-#include "../filters/filterbloom2.hpp"
-#include "../ipostpipeline.hpp"
-#include "pipelinegaussian.hpp"
+#include "../filters/FilterBloom1.hpp"
+#include "../filters/FilterBloom2.hpp"
+#include "../IPostPipeline.hpp"
+#include "PipelineGaussian.hpp"
 
 namespace Flounder
 {
-	class pipelinebloom :
-		public ipostpipeline
+	class PipelineBloom :
+		public IPostPipeline
 	{
 	private:
 		filterbloom1 *m_filterBloom1;
-		pipelinegaussian *m_pipelineGaussian;
+		PipelineGaussian *m_pipelineGaussian;
 		filterbloom2 *m_filterBloom2;
 	public:
-		pipelinebloom();
+		PipelineBloom();
 
-		~pipelinebloom();
+		~PipelineBloom();
 
-		void renderPipeline(const int n_args, va_list args) override;
+		void RenderPipeline(const int n_args, va_list args) override;
 
-		Fbo *getOutput() override;
+		Fbo *GetOutput() override;
 	};
 }

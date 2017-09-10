@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filtergrain::filtergrain(const float &strength) :
-		ipostfilter("filterGrain", "res/shaders/filters/grain.frag.spv"),
+		IPostFilter("filterGrain", "res/shaders/filters/grain.frag.spv"),
 		m_strength(strength)
 	{
 	}
@@ -12,7 +12,7 @@ namespace Flounder
 	{
 	}
 
-	void filtergrain::storeValues()
+	void filtergrain::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform1f("strength", m_strength);

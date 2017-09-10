@@ -24,7 +24,7 @@ namespace Flounder
 	{
 	private:
 		std::string m_textString;
-		uialign m_textAlign;
+		UiAlign m_textAlign;
 
 		std::string m_newText;
 
@@ -41,10 +41,10 @@ namespace Flounder
 		bool m_solidBorder;
 		bool m_glowBorder;
 
-		idriver *m_glowDriver;
+		IDriver *m_glowDriver;
 		float m_glowSize;
 
-		idriver *m_borderDriver;
+		IDriver *m_borderDriver;
 		float m_borderSize;
 	public:
 		/// <summary>
@@ -57,7 +57,7 @@ namespace Flounder
 		/// <param name="font"> The font type to be used in this text. </param>
 		/// <param name="maxLineLength"> The longest line length before the text is wrapped, 1.0 being 100% of the screen width when font size = 1. </param>
 		/// <param name="align"> How the text will align if wrapped. </param>
-		Text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const uialign &align);
+		Text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const UiAlign &align);
 
 		/// <summary>
 		/// Deconstructor for the text.
@@ -104,7 +104,7 @@ namespace Flounder
 		/// Gets how the text should align.
 		/// </summary>
 		/// <returns> How the text should align. </returns>
-		uialign GetTextAlign() const { return m_textAlign; }
+		UiAlign GetTextAlign() const { return m_textAlign; }
 
 		/// <summary>
 		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
@@ -122,7 +122,7 @@ namespace Flounder
 		/// Gets font type texture for this text.
 		/// </summary>
 		/// <returns> The texts texture. </returns>
-		texture *GetTexture() const { return m_fonttype->GetTexture(); }
+		Texture *GetTexture() const { return m_fonttype->GetTexture(); }
 
 		/// <summary>
 		/// Gets the maximum length of a line of this text.
@@ -176,13 +176,13 @@ namespace Flounder
 		/// Sets a new border driver, will disable glowing.
 		/// </summary>
 		/// <param name="driver"> The new border driver. </param>
-		void SetBorder(idriver *driver);
+		void SetBorder(IDriver *driver);
 
 		/// <summary>
 		/// Sets a new glow driver, will disable solid borders.
 		/// </summary>
 		/// <param name="driver"> The new glow driver. </param>
-		void SetGlowing(idriver *driver);
+		void SetGlowing(IDriver *driver);
 
 		/// <summary>
 		/// Disables both solid borders and glow borders.

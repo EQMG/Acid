@@ -5,7 +5,7 @@
 namespace Flounder
 {
 	class filtergrain :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		float m_strength;
@@ -14,7 +14,7 @@ namespace Flounder
 
 		~filtergrain();
 
-		void storeValues() override;
+		void StoreValues() override;
 
 		void setStrength(const float &strength) { m_strength = strength; }
 	};

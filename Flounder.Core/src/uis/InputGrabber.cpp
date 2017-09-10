@@ -1,19 +1,19 @@
-﻿#include "inputgrabber.hpp"
+﻿#include "InputGrabber.hpp"
 
 namespace Flounder
 {
-	const float inputgrabber::CHANGE_TIME = 0.1f;
-	const float inputgrabber::SCALE_NORMAL = 1.6f;
-	const float inputgrabber::SCALE_SELECTED = 1.8f;
-	Colour *const inputgrabber::COLOUR_NORMAL = new Colour(0.0f, 0.0f, 0.0f, 1.0f);
+	const float InputGrabber::CHANGE_TIME = 0.1f;
+	const float InputGrabber::SCALE_NORMAL = 1.6f;
+	const float InputGrabber::SCALE_SELECTED = 1.8f;
+	Colour *const InputGrabber::COLOUR_NORMAL = new Colour(0.0f, 0.0f, 0.0f, 1.0f);
 
-	grabberjoystick::grabberjoystick(const int &joystick) :
-		igrabber(),
+	GrabberJoystick::GrabberJoystick(const int &joystick) :
+		IGrabber(),
 		m_joystick(joystick)
 	{
 	}
 
-	int grabberjoystick::getCurrent(Text *object)
+	int GrabberJoystick::GetCurrent(Text *object)
 	{
 		int key = -1;
 
@@ -25,7 +25,7 @@ namespace Flounder
 				{
 					if (i == 0)
 					{
-						if (uis::get()->getSelector()->wasLeftClick() && uis::get()->getSelector()->isSelected(*object))
+						if (Uis::get()->GetSelector()->wasLeftClick() && Uis::get()->GetSelector()->IsSelected(*object))
 						{
 							key = i;
 						}
@@ -41,12 +41,12 @@ namespace Flounder
 		return key;
 	}
 
-	std::string grabberjoystick::getValue(const int &value)
+	std::string GrabberJoystick::GetValue(const int &value)
 	{
 		return std::to_string(value);
 	}
 
-	int grabberkeyboard::getCurrent(Text *object)
+	int GrabberKeyboard::GetCurrent(Text *object)
 	{
 		int key = Keyboard::Get()->GetChar();
 
@@ -58,12 +58,12 @@ namespace Flounder
 		return key;
 	}
 
-	std::string grabberkeyboard::getValue(const int &value)
+	std::string GrabberKeyboard::GetValue(const int &value)
 	{
 		return std::string(1, static_cast<char>(value));
 	}
 
-	int grabbermouse::getCurrent(Text *object)
+	int GrabberMouse::GetCurrent(Text *object)
 	{
 		int key = -1;
 
@@ -73,7 +73,7 @@ namespace Flounder
 			{
 				if (i == 0)
 				{
-					if (uis::get()->getSelector()->wasLeftClick() && uis::get()->getSelector()->isSelected(*object))
+					if (Uis::get()->GetSelector()->wasLeftClick() && Uis::get()->GetSelector()->IsSelected(*object))
 					{
 						key = i;
 					}
@@ -88,19 +88,19 @@ namespace Flounder
 		return key;
 	}
 
-	std::string grabbermouse::getValue(const int &value)
+	std::string GrabberMouse::GetValue(const int &value)
 	{
 		return std::to_string(value);
 	}
 
-	inputgrabber::inputgrabber(UiObject *parent, const Vector2 &position, const std::string &prefix, const int &value, igrabber *grabber, const uialign &align) :
+	InputGrabber::InputGrabber(UiObject *parent, const Vector2 &position, const std::string &prefix, const int &value, IGrabber *grabber, const UiAlign &align) :
 		UiObject(parent, position, Vector2(0.0f, 0.0f)),
-		m_text(new Text(this, position, prefix + grabber->getValue(value), SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
-		m_background(new Gui(this, position, Vector2(), new texture("res/guis/buttonText.png"), 1)),
+		m_text(new Text(this, position, prefix + grabber->GetValue(value), SCALE_NORMAL, Uis::get()->m_candara, 0.36f, align)),
+		m_background(new Gui(this, position, Vector2(), new Texture("res/guis/buttonText.png"), 1)),
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),
-		m_inputDelay(new inputdelay()),
+		m_inputDelay(new InputDelay()),
 		m_lastKey(0),
 		m_selected(false),
 		m_mouseOver(false),
@@ -113,7 +113,7 @@ namespace Flounder
 		m_background->SetColourOffset(Colour());
 	}
 
-	inputgrabber::~inputgrabber()
+	InputGrabber::~InputGrabber()
 	{
 		delete m_text;
 		delete m_background;
@@ -123,16 +123,16 @@ namespace Flounder
 		delete m_inputDelay;
 	}
 
-	void inputgrabber::UpdateObject()
+	void InputGrabber::UpdateObject()
 	{
 		if (m_selected)
 		{
-			int key = m_grabber->getCurrent(m_text);
+			int key = m_grabber->GetCurrent(m_text);
 
 			if (key != -1)
 			{
 				m_value = key;
-				m_text->setText(m_prefix + m_grabber->getValue(m_value));
+				m_text->setText(m_prefix + m_grabber->GetValue(m_value));
 
 				if (m_actionChange != 0)
 				{
@@ -140,39 +140,39 @@ namespace Flounder
 				}
 
 				m_selected = false;
-				m_text->SetScaleDriver(new driverslide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
-				uis::get()->getSelector()->cancelWasEvent();
+				m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
+				Uis::get()->GetSelector()->CancelWasEvent();
 			}
 		}
 
 		// Click updates.
-		if (uis::get()->getSelector()->isSelected(*m_text) && GetAlpha() == 1.0f && uis::get()->getSelector()->wasLeftClick())
+		if (Uis::get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::get()->GetSelector()->wasLeftClick())
 		{
-			m_text->SetScaleDriver(new driverslide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
+			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
 			m_selected = true;
 
-			uis::get()->getSelector()->cancelWasEvent();
+			Uis::get()->GetSelector()->CancelWasEvent();
 		}
-		else if (uis::get()->getSelector()->wasLeftClick() && m_selected)
+		else if (Uis::get()->GetSelector()->wasLeftClick() && m_selected)
 		{
-			m_text->SetScaleDriver(new driverslide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
+			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
 			m_selected = false;
 		}
 
 		// Mouse over updates.
-		if (uis::get()->getSelector()->isSelected(*m_text) && !m_mouseOver && !m_selected)
+		if (Uis::get()->GetSelector()->IsSelected(*m_text) && !m_mouseOver && !m_selected)
 		{
-			m_text->SetScaleDriver(new driverslide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
+			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
 			m_mouseOver = true;
 		}
-		else if (!uis::get()->getSelector()->isSelected(*m_text) && m_mouseOver && !m_selected)
+		else if (!Uis::get()->GetSelector()->IsSelected(*m_text) && m_mouseOver && !m_selected)
 		{
-			m_text->SetScaleDriver(new driverslide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
+			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
 			m_mouseOver = false;
 		}
 
 		// Update the background colour.
-		Colour *primary = uis::get()->getManager()->GetPrimaryColour();
+		Colour *primary = Uis::get()->GetManager()->GetPrimaryColour();
 		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.
@@ -184,15 +184,15 @@ namespace Flounder
 		m_background->GetPosition()->Set(*m_text->GetPosition());
 	}
 
-	void inputgrabber::setPrefix(const std::string &prefix)
+	void InputGrabber::SetPrefix(const std::string &prefix)
 	{
 		m_prefix = prefix;
-		m_text->setText(prefix + m_grabber->getValue(m_value));
+		m_text->setText(prefix + m_grabber->GetValue(m_value));
 	}
 
-	void inputgrabber::setValue(const int &value)
+	void InputGrabber::SetValue(const int &value)
 	{
 		m_value = value;
-		m_text->setText(m_prefix + m_grabber->getValue(value));
+		m_text->setText(m_prefix + m_grabber->GetValue(value));
 	}
 }

@@ -1,8 +1,8 @@
-#include "texture.hpp"
+#include "Texture.hpp"
 
 namespace Flounder
 {
-	texture::texture(std::string file, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
+	Texture::Texture(std::string file, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
 		m_file(file),
 		m_cubemapCount(0),
 		m_cubemap(nullptr),
@@ -22,10 +22,10 @@ namespace Flounder
 		m_height(0),
 		m_depth(1)
 	{
-		loadFromTexture();
+		LoadFromTexture();
 	}
 
-	texture::texture(const int n_args, ...)
+	Texture::Texture(const int n_args, ...)
 	{
 		m_file = "";
 		m_cubemapCount = n_args;
@@ -59,10 +59,10 @@ namespace Flounder
 		m_height = 0;
 		m_depth = 1;
 
-		loadFromCubemap();
+		LoadFromCubemap();
 	}
 
-	texture::~texture()
+	Texture::~Texture()
 	{
 		/*vkDestroyBuffer(Display::Get()->getVkDevice(), m_stagingBuffer, nullptr);
 		vkFreeMemory(Display::Get()->getVkDevice(), m_stagingMemory, nullptr);
@@ -77,9 +77,9 @@ namespace Flounder
 		m_imageView = VK_NULL_HANDLE;*/
 	}
 
-	void texture::loadFromTexture()
+	void Texture::LoadFromTexture()
 	{
-		float *pixels = loadPixels(m_file, &m_width, &m_height, &m_components);
+		float *pixels = LoadPixels(m_file, &m_width, &m_height, &m_components);
 		/*size_t componentSize = 4;
 
 		switch (m_components)
@@ -210,11 +210,11 @@ namespace Flounder
 		delete[] pixels;
 	}
 
-	void texture::loadFromCubemap()
+	void Texture::LoadFromCubemap()
 	{
 	}
 
-	float *texture::loadPixels(const std::string &filepath, int *width, int *height, int *components)
+	float *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
 	{
 		stbi_uc *data = nullptr;
 #ifdef FLOUNDER_PLATFORM_ANDROID
@@ -272,7 +272,7 @@ namespace Flounder
 		return pixels;
 	}
 
-	void texture::setImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageAspectFlags aspectMask, VkImageLayout oldImageLayout, VkImageLayout newImageLayout)
+	void Texture::SetImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageAspectFlags aspectMask, VkImageLayout oldImageLayout, VkImageLayout newImageLayout)
 	{
 		VkImageSubresourceRange subresourceRange = {};
 		subresourceRange.aspectMask = aspectMask;
@@ -280,10 +280,10 @@ namespace Flounder
 		subresourceRange.levelCount = 1;
 		subresourceRange.layerCount = 1;
 
-		setImageLayout(cmdbuffer, image, oldImageLayout, newImageLayout, subresourceRange);
+		SetImageLayout(cmdbuffer, image, oldImageLayout, newImageLayout, subresourceRange);
 	}
 
-	void texture::setImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageLayout oldImageLayout, VkImageLayout newImageLayout, VkImageSubresourceRange subresourceRange)
+	void Texture::SetImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageLayout oldImageLayout, VkImageLayout newImageLayout, VkImageSubresourceRange subresourceRange)
 	{
 		VkImageMemoryBarrier imageMemoryBarrier = {};
 		imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;

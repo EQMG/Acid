@@ -15,7 +15,7 @@ public:
 private:
 	Colour *m_primaryColour;
 
-	overlaystartup *m_overlayStartup;
+	OverlayStartup *m_overlayStartup;
 	OverlayDebug *m_overlayDebug;
 	OverlayManager *m_overlayManager;
 public:

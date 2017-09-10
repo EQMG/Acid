@@ -1,14 +1,14 @@
 #pragma once
 
-#include "idriver.hpp"
+#include "IDriver.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A driver that uses a sine wave.
 	/// </summary>
-	class driversinwave :
-		public idriver
+	class DriverSinwave :
+		public IDriver
 	{
 	private:
 		float m_min;
@@ -20,13 +20,13 @@ namespace Flounder
 		/// <param name="min"> The min value. </param>
 		/// <param name="max"> The max value. </param>
 		/// <param name="length"> The length between two waves. </param>
-		driversinwave(const float &min, const float &max, const float &length);
+		DriverSinwave(const float &min, const float &max, const float &length);
 
 		/// <summary>
 		/// Deconstructor for sin wave driver.
 		/// </summary>
-		~driversinwave();
+		~DriverSinwave();
 	protected:
-		float calculate(const float &time) override;
+		float Calculate(const float &time) override;
 	};
 }

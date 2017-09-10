@@ -1,27 +1,27 @@
 #pragma once
 
-#include "../renderer/irenderer.hpp"
+#include "../renderer/IRenderer.hpp"
 
-#include "skyboxes.hpp"
+#include "Skyboxes.hpp"
 
 namespace Flounder
 {
-	class rendererskyboxes :
+	class RendererSkyboxes :
 		public IRenderer
 	{
 	private:
-		shader *m_shader;
+		Shader *m_shader;
 	public:
-		rendererskyboxes();
+		RendererSkyboxes();
 
-		~rendererskyboxes();
+		~RendererSkyboxes();
 
 		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
-		void prepareRendering(const Vector4 &clipPlane, const ICamera &camera);
+		void PrepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 
-		void renderSkybox(skybox *object);
+		void RenderSkybox(Skybox *object);
 
-		void endRendering();
+		void EndRendering();
 	};
 }

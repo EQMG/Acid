@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	ParticleType::ParticleType(const std::string &name, texture *texture, const float &lifeLength, const float &scale) :
+	ParticleType::ParticleType(const std::string &name, Texture *texture, const float &lifeLength, const float &scale) :
 		m_name(name),
 		m_texture(texture),
 		m_lifeLength(lifeLength),

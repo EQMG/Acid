@@ -2,40 +2,40 @@
 
 #include "../../engine/Engine.hpp"
 
-#include "requestresource.hpp"
-#include "../iprocessor.hpp"
-#include "../queue.hpp"
+#include "RequestResource.hpp"
+#include "../IProcessor.hpp"
+#include "../Queue.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A extension that is responsible for processing resource requests.
 	/// </summary>
-	class processorresource :
-		public iprocessor
+	class ProcessorResource :
+		public IProcessor
 	{
 	private:
 		static const double MAX_TIME_MILLIS;
 
-		queue<requestresource*> *m_queue;
+		Queue<RequestResource*> *m_queue;
 	public:
 		/// <summary>
 		/// Creates a new resource processor.
 		/// </summary>
-		processorresource();
+		ProcessorResource();
 
 		/// <summary>
 		/// Deconstructor for the resource processor.
 		/// </summary>
-		~processorresource();
+		~ProcessorResource();
 
-		void update() override;
+		void Update() override;
 
-		void addRequestToQueue(irequest *request) override;
+		void AddRequestToQueue(IRequest *request) override;
 
 		/// <summary>
 		/// Completes all requests left in queue.
 		/// </summary>
-		void completeAllRequests();
+		void CompleteAllRequests() const;
 	};
 }

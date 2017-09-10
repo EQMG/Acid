@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filterdefault::filterdefault() :
-		ipostfilter("filterDefault", "res/shaders/filters/default.frag.spv", nullptr)
+		IPostFilter("filterDefault", "res/shaders/filters/default.frag.spv", nullptr)
 	{
 	}
 
@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void filterdefault::storeValues()
+	void filterdefault::StoreValues()
 	{
 	}
 }

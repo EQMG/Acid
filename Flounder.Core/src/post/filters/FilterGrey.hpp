@@ -5,13 +5,13 @@
 namespace Flounder
 {
 	class filtergrey :
-		public ipostfilter
+		public IPostFilter
 	{
 	public:
 		filtergrey();
 
 		~filtergrey();
 
-		void storeValues() override;
+		void StoreValues() override;
 	};
 }

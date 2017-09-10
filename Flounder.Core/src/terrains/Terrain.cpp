@@ -1,12 +1,12 @@
-﻿#include "terrain.hpp"
+﻿#include "Terrain.hpp"
 
 namespace Flounder
 {
-	const float terrain::SQUARE_SIZE = 2.598f;
-	const int terrain::VERTEX_COUNT = 176;
-	const float terrain::SIDE_LENGTH = 0.5f * SQUARE_SIZE * static_cast<float>(VERTEX_COUNT - 1);
+	const float Terrain::SQUARE_SIZE = 2.598f;
+	const int Terrain::VERTEX_COUNT = 176;
+	const float Terrain::SIDE_LENGTH = 0.5f * SQUARE_SIZE * static_cast<float>(VERTEX_COUNT - 1);
 
-	terrain::terrain(const Vector3 &position, const Vector3 &rotation, const int &seed) :
+	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation, const int &seed) :
 		m_model(nullptr),
 		m_position(new Vector3(position)),
 		m_rotation(new Vector3(rotation)),
@@ -14,10 +14,10 @@ namespace Flounder
 		m_modelMatrix(new Matrix4()),
 		m_aabb(new Aabb())
 	{
-		generateMesh();
+		GenerateMesh();
 	}
 
-	terrain::~terrain()
+	Terrain::~Terrain()
 	{
 		delete m_model;
 
@@ -28,7 +28,7 @@ namespace Flounder
 		delete m_aabb;
 	}
 
-	void terrain::update()
+	void Terrain::Update()
 	{
 		if (m_moved)
 		{
@@ -37,7 +37,7 @@ namespace Flounder
 		}
 	}
 
-	void terrain::generateMesh()
+	void Terrain::GenerateMesh()
 	{
 		int count = VERTEX_COUNT * VERTEX_COUNT;
 		std::vector<float> vertices = std::vector<float>();
@@ -53,9 +53,9 @@ namespace Flounder
 			for (int row = 0; row < VERTEX_COUNT; row++)
 			{
 				Vector3 vertex = Vector3((row * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f), 0.0f, (col * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f));
-				vertex.m_y = getHeight(vertex.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
+				vertex.m_y = GetHeight(vertex.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
 
-				Vector3 normal = calculateNormal(vertex.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
+				Vector3 normal = CalculateNormal(vertex.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
 				// colour tint = getBiomeColour(vertex.m_x + m_position->m_x, vertex.m_z + m_position->m_z);
 
 				vertices.push_back(vertex.m_x);
@@ -87,11 +87,11 @@ namespace Flounder
 
 				if (row % 2 == 0)
 				{
-					storeQuad1(indices, topLeft, topRight, bottomLeft, bottomRight, mixed);
+					StoreQuad1(indices, topLeft, topRight, bottomLeft, bottomRight, mixed);
 				}
 				else
 				{
-					storeQuad2(indices, topLeft, topRight, bottomLeft, bottomRight, mixed);
+					StoreQuad2(indices, topLeft, topRight, bottomLeft, bottomRight, mixed);
 				}
 			}
 		}
@@ -110,7 +110,7 @@ namespace Flounder
 		//	delete indices;
 	}
 
-	void terrain::storeQuad1(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void Terrain::StoreQuad1(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
 		indices.push_back(topLeft);
 		indices.push_back(bottomLeft);
@@ -120,7 +120,7 @@ namespace Flounder
 		indices.push_back(mixed ? bottomLeft : topLeft);
 	}
 
-	void terrain::storeQuad2(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void Terrain::StoreQuad2(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
 	{
 		indices.push_back(topRight);
 		indices.push_back(topLeft);
@@ -130,22 +130,22 @@ namespace Flounder
 		indices.push_back(mixed ? topLeft : topRight);
 	}
 
-	Vector3 terrain::calculateNormal(const float &x, const float &z)
+	Vector3 Terrain::CalculateNormal(const float &x, const float &z)
 	{
-		float heightL = getHeight(x - SQUARE_SIZE, z);
-		float heightR = getHeight(x + SQUARE_SIZE, z);
-		float heightD = getHeight(x, z - SQUARE_SIZE);
-		float heightU = getHeight(x, z + SQUARE_SIZE);
+		float heightL = GetHeight(x - SQUARE_SIZE, z);
+		float heightR = GetHeight(x + SQUARE_SIZE, z);
+		float heightD = GetHeight(x, z - SQUARE_SIZE);
+		float heightU = GetHeight(x, z + SQUARE_SIZE);
 
 		Vector3 normal = Vector3(heightL - heightR, 2.0f, heightD - heightU);
 		normal.Normalize();
 		return normal;
 	}
 
-	Colour terrain::getBiomeColour(const float &x, const float &z)
+	Colour Terrain::GetBiomeColour(const float &x, const float &z)
 	{
-		float height = getHeight(x, z);
-		float moisture = getFactorMoisture(x, height, z);
+		float height = GetHeight(x, z);
+		float moisture = GetFactorMoisture(x, height, z);
 
 		if (height <= 0.125f)
 		{
@@ -243,7 +243,7 @@ namespace Flounder
 		return Colour(0.0824f, 0.3960f, 0.7530f, 1.0f);
 	}
 
-	float terrain::getFactorIsland(const float &x, const float &z)
+	float Terrain::GetFactorIsland(const float &x, const float &z)
 	{
 		const float worldSize = SIDE_LENGTH * 6;
 		const float worldIslandInside = 0.8f;
@@ -274,7 +274,7 @@ namespace Flounder
 		return 1.0f;
 	}
 
-	float terrain::getFactorMoisture(const float &x, const float &y, const float &z)
+	float Terrain::GetFactorMoisture(const float &x, const float &y, const float &z)
 	{
 		const float worldNoiseHeight = 40.0f;
 
@@ -295,7 +295,7 @@ namespace Flounder
 		return moisture;
 	}
 
-	float terrain::getHeight(const float &x, const float &z)
+	float Terrain::GetHeight(const float &x, const float &z)
 	{
 		const float worldNoiseSpread = 1.0f;
 		const float worldNoiseFrequency = 40.0f;
@@ -304,18 +304,18 @@ namespace Flounder
 		const float dayNightRatio = 0.7f;
 
 		float height = Worlds::Get()->GetNoise()->GetNoise(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
-		height *= getFactorIsland(x, z);
+		height *= GetFactorIsland(x, z);
 		height *= worldNoiseHeight;
 		return height;
 	}
 
-	void terrain::setPosition(const Vector3 &position)
+	void Terrain::SetPosition(const Vector3 &position)
 	{
 		m_position->Set(position);
 		m_moved = true;
 	}
 
-	void terrain::setRotation(const Vector3 &rotation)
+	void Terrain::SetRotation(const Vector3 &rotation)
 	{
 		m_rotation->Set(rotation);
 		m_moved = true;

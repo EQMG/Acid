@@ -1,14 +1,14 @@
 ﻿#pragma once
 
-#include "../events/events.hpp"
-#include "../events/eventtime.hpp"
-#include "../visual/driverslide.hpp"
+#include "../events/Events.hpp"
+#include "../events/EventTime.hpp"
+#include "../visual/DriverSlide.hpp"
 
-#include "uis.hpp"
+#include "Uis.hpp"
 
 namespace Flounder
 {
-	class overlaystartup :
+	class OverlayStartup :
 		public UiObject
 	{
 	private:
@@ -17,14 +17,14 @@ namespace Flounder
 		Text *m_textCopyright;
 		bool m_starting;
 	public:
-		overlaystartup(UiObject *parent);
+		OverlayStartup(UiObject *parent);
 
-		~overlaystartup();
+		~OverlayStartup();
 
 		void UpdateObject() override;
 
-		bool isStarting() const { return m_starting; }
+		bool IsStarting() const { return m_starting; }
 
-		void setStarting(const bool &starting) { m_starting = starting; }
+		void SetStarting(const bool &starting) { m_starting = starting; }
 	};
 }

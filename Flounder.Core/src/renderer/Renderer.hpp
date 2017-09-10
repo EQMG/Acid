@@ -2,12 +2,12 @@
 
 #include "../devices/Display.hpp"
 #include "../engine/Engine.hpp"
-#include "../shaders/shader.hpp"
-#include "../textures/texture.hpp"
+#include "../shaders/Shader.hpp"
+#include "../textures/Texture.hpp"
 
-#include "swapchain/swapchain.hpp"
+#include "swapchain/Swapchain.hpp"
 
-#include "imanagerrender.hpp"
+#include "IManagerRender.hpp"
 
 namespace Flounder
 {
@@ -33,7 +33,7 @@ namespace Flounder
 		VkSemaphore m_renderFinishedSemaphore;
 
 		Swapchain *m_swapChain;
-		shader *m_shaderTest;
+		Shader *m_shaderTest;
 
 		int lastWidth;
 		int lastHeight;

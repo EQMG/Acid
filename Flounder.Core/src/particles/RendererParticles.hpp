@@ -15,7 +15,7 @@ namespace Flounder
 		static const int MAX_INSTANCES;
 		static const int INSTANCE_DATA_LENGTH;
 
-		shader *m_shader;
+		Shader *m_shader;
 
 		//int m_vaoID;
 		//int m_vboID;

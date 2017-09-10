@@ -1,14 +1,14 @@
 #pragma once
 
-#include "idriver.hpp"
+#include "IDriver.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A driver that linearly increases its value.
 	/// </summary>
-	class driverlinear :
-		public idriver
+	class DriverLinear :
+		public IDriver
 	{
 	private:
 		float m_startValue;
@@ -20,13 +20,13 @@ namespace Flounder
 		/// <param name="startValue"> The start value. </param>
 		/// <param name="endValue"> The end value. </param>
 		/// <param name="length"> The time to go between values. </param>
-		driverlinear(const float &startValue, const float &endValue, const float &length);
+		DriverLinear(const float &startValue, const float &endValue, const float &length);
 
 		/// <summary>
 		/// Deconstructor for linear driver.
 		/// </summary>
-		~driverlinear();
+		~DriverLinear();
 	protected:
-		float calculate(const float &time) override;
+		float Calculate(const float &time) override;
 	};
 }

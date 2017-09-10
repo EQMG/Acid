@@ -1,19 +1,19 @@
-#include "smoothfloat.hpp"
+#include "SmoothFloat.hpp"
 
 namespace Flounder
 {
-	smoothfloat::smoothfloat(const float &initialValue, const float &agility) :
+	SmoothFloat::SmoothFloat(const float &initialValue, const float &agility) :
 		m_agility(agility),
 		m_target(initialValue),
 		m_actual(initialValue)
 	{
 	}
 
-	smoothfloat::~smoothfloat()
+	SmoothFloat::~SmoothFloat()
 	{
 	}
 
-	void smoothfloat::update(const float &delta)
+	void SmoothFloat::Update(const float &delta)
 	{
 		float offset = m_target - m_actual;
 		float change = offset * delta * m_agility;

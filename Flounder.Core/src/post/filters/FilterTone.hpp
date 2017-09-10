@@ -5,13 +5,13 @@
 namespace Flounder
 {
 	class filtertone :
-		public ipostfilter
+		public IPostFilter
 	{
 	public:
 		filtertone();
 
 		~filtertone();
 
-		void storeValues() override;
+		void StoreValues() override;
 	};
 }

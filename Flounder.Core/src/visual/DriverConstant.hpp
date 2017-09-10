@@ -1,14 +1,14 @@
 #pragma once
 
-#include "idriver.hpp"
+#include "IDriver.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A driver that has a constant value.
 	/// </summary>
-	class driverconstant :
-		public idriver
+	class DriverConstant :
+		public IDriver
 	{
 	private:
 		float m_value;
@@ -17,13 +17,13 @@ namespace Flounder
 		/// Creates a new constant driver.
 		/// </summary>
 		/// <param name="constant"> The constant value. </param>
-		driverconstant(const float &constant);
+		DriverConstant(const float &constant);
 
 		/// <summary>
 		/// Deconstructor for constant driver.
 		/// </summary>
-		~driverconstant();
+		~DriverConstant();
 	protected:
-		float calculate(const float &time) override;
+		float Calculate(const float &time) override;
 	};
 }

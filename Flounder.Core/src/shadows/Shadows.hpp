@@ -1,19 +1,19 @@
 #pragma once
 
-#include "../camera/camera.hpp"
+#include "../camera/Camera.hpp"
 #include "../maths/Vector3.hpp"
 #include "../maths/Matrix4.hpp"
 #include "../engine/Engine.hpp"
-#include "../physics/aabb.hpp"
+#include "../physics/Aabb.hpp"
 
-#include "shadowbox.hpp"
+#include "ShadowBox.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A module used for managing shadow maps in 3D worlds.
 	/// </summary>
-	class shadows :
+	class Shadows :
 		public IModule
 	{
 	private:
@@ -21,7 +21,7 @@ namespace Flounder
 		float m_brightnessBoost;
 
 		int m_shadowSize;
-		int m_shadowPCF;
+		int m_shadowPcf;
 		float m_shadowBias;
 		float m_shadowDarkness;
 		float m_shadowTransition;
@@ -31,26 +31,26 @@ namespace Flounder
 
 		float m_shadowFactor;
 
-		shadowbox *m_shadowBox;
+		ShadowBox *m_shadowBox;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static shadows *get()
+		static Shadows *Get()
 		{
-			return static_cast<shadows*>(Engine::Get()->GetModule("shadows"));
+			return static_cast<Shadows*>(Engine::Get()->GetModule("shadows"));
 		}
 
 		/// <summary>
 		/// Creates a new shadows module.
 		/// </summary>
-		shadows();
+		Shadows();
 
 		/// <summary>
 		/// Deconstructor for the shadows module.
 		/// </summary>
-		~shadows();
+		~Shadows();
 
 		void Update() override;
 	private:
@@ -60,56 +60,57 @@ namespace Flounder
 		/// <param name="width"> Shadow box width. </param>
 		/// <param name="height"> Shadow box height. </param>
 		/// <param name="length"> Shadow box length. </param>
-		void updateOrthographicProjectionMatrix(const float &width, const float &height, const float &length);
+		void UpdateOrthographicProjectionMatrix(const float &width, const float &height, const float &length);
 
 		/// <summary>
 		/// Updates the "view" matrix of the light. The light itself has no position, so the "view" matrix is centered at the center of the shadow box.
 		/// </summary>
 		/// <param name="direction"> The light direct. </param>
 		/// <param name="position"> The center of the shadow box. </param>
-		void updateLightViewMatrix(Vector3 *direction, Vector3 *position);
+		void UpdateLightViewMatrix(Vector3 *direction, Vector3 *position);
 	public:
-		Vector3 *getLightDirection() const { return m_lightDirection; }
+		Vector3 *GetLightDirection() const { return m_lightDirection; }
 
-		void setLightDirection(const Vector3 &lightDirection) const { m_lightDirection->Set(lightDirection); }
+		void SetLightDirection(const Vector3 &lightDirection) const { m_lightDirection->Set(lightDirection); }
 
-		float getBrightnessBoost() const { return m_brightnessBoost; }
+		float GetBrightnessBoost() const { return m_brightnessBoost; }
 
-		void setBrightnessBoost(const float &brightnessBoost) { m_brightnessBoost = brightnessBoost; }
+		void SetBrightnessBoost(const float &brightnessBoost) { m_brightnessBoost = brightnessBoost; }
 
-		int getShadowSize() const { return m_shadowSize; }
+		int GetShadowSize() const { return m_shadowSize; }
 
-		void setShadowSize(const int &shadowSize) { m_shadowSize = shadowSize; }
+		void SetShadowSize(const int &shadowSize) { m_shadowSize = shadowSize; }
 
-		int getShadowPCF() const { return m_shadowPCF; }
+		int GetShadowPcf() const { return m_shadowPcf; }
 
-		void setShadowPCF(const int &shadowPCF) { m_shadowPCF = shadowPCF; }
+		void SetShadowPcf(const int &shadowPCF) { m_shadowPcf = shadowPCF; }
 
-		float getShadowBias() const { return m_shadowBias; }
+		float GetShadowBias() const { return m_shadowBias; }
 
-		void setShadowBias(const float &shadowBias) { m_shadowBias = shadowBias; }
+		void SetShadowBias(const float &shadowBias) { m_shadowBias = shadowBias; }
 
-		float getShadowDarkness() const { return m_shadowDarkness; }
+		float GetShadowDarkness() const { return m_shadowDarkness; }
 
-		void setShadowDarkness(const float &shadowDarkness) { m_shadowDarkness = shadowDarkness; }
+		void SetShadowDarkness(const float &shadowDarkness) { m_shadowDarkness = shadowDarkness; }
 
-		float getShadowTransition() const { return m_shadowTransition; }
+		float GetShadowTransition() const { return m_shadowTransition; }
 
-		void setShadowTransition(const float &shadowTransition) { m_shadowTransition = shadowTransition; }
+		void SetShadowTransition(const float &shadowTransition) { m_shadowTransition = shadowTransition; }
 
-		float getShadowFactor() const { return m_shadowFactor; }
+		float GetShadowFactor() const { return m_shadowFactor; }
 
-		void setShadowFactor(const float &shadowFactor) { m_shadowFactor = shadowFactor; }
+		void SetShadowFactor(const float &shadowFactor) { m_shadowFactor = shadowFactor; }
 
-		float getShadowBoxOffset() const { return m_shadowBoxOffset; }
+		float GetShadowBoxOffset() const { return m_shadowBoxOffset; }
 
-		void setShadowBoxOffset(const float &shadowBoxOffset) { m_shadowBoxOffset = shadowBoxOffset; }
+		void SetShadowBoxOffset(const float &shadowBoxOffset) { m_shadowBoxOffset = shadowBoxOffset; }
 
-		float getShadowBoxDistance() const { return m_shadowBoxDistance; }
+		float GetShadowBoxDistance() const { return m_shadowBoxDistance; }
 
-		void setShadowBoxDistance(const float &shadowBoxDistance) { m_shadowBoxDistance = shadowBoxDistance; }
+		void SetShadowBoxDistance(const float &shadowBoxDistance) { m_shadowBoxDistance = shadowBoxDistance; }
 
-		/// <returns> The shadow box, so that it can be used by other class to test if engine.entities are inside the box. </returns>
-		shadowbox *getShadowBox() const { return m_shadowBox; }
+		/// <summary> Get the shadow box, so that it can be used by other class to test if engine.entities are inside the box. </summary>
+		/// <returns> The shadow box. </returns>
+		ShadowBox *GetShadowBox() const { return m_shadowBox; }
 	};
 }

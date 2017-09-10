@@ -1,22 +1,22 @@
 ﻿#pragma once
 
-#include "../maths/timer.hpp"
+#include "../maths/Timer.hpp"
 
 namespace Flounder
 {
-	class inputdelay
+	class InputDelay
 	{
 	private:
 		Timer *m_timerDelay;
 		Timer *m_timerRepeat;
 		bool m_delayOver;
 	public:
-		inputdelay();
+		InputDelay();
 
-		~inputdelay();
+		~InputDelay();
 
-		void update(const bool &keyIsDown);
+		void Update(const bool &keyIsDown);
 
-		bool canInput();
+		bool CanInput() const;
 	};
 }
