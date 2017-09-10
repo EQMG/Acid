@@ -11,10 +11,10 @@ namespace Flounder
 		public IPostPipeline
 	{
 	private:
-		filterdarken *m_filterDarken;
+		FilterDarken *m_filterDarken;
 		PipelineGaussian *m_pipelineGaussian1;
 		PipelineGaussian *m_pipelineGaussian2;
-		filtercombine *m_filterCombine;
+		FilterCombine *m_filterCombine;
 		float m_blurFactor;
 	public:
 		PipelinePaused();

@@ -1,17 +1,17 @@
-#include "filtergrey.hpp"
+#include "FilterGrey.hpp"
 
 namespace Flounder
 {
-	filtergrey::filtergrey() :
+	FilterGrey::FilterGrey() :
 		IPostFilter("filterGrey", "res/shaders/filters/grey.frag.spv")
 	{
 	}
 
-	filtergrey::~filtergrey()
+	FilterGrey::~FilterGrey()
 	{
 	}
 
-	void filtergrey::StoreValues()
+	void FilterGrey::StoreValues()
 	{
 	}
 }

@@ -1,17 +1,17 @@
-#include "filterdefault.hpp"
+#include "FilterDefault.hpp"
 
 namespace Flounder
 {
-	filterdefault::filterdefault() :
+	FilterDefault::FilterDefault() :
 		IPostFilter("filterDefault", "res/shaders/filters/default.frag.spv", nullptr)
 	{
 	}
 
-	filterdefault::~filterdefault()
+	FilterDefault::~FilterDefault()
 	{
 	}
 
-	void filterdefault::StoreValues()
+	void FilterDefault::StoreValues()
 	{
 	}
 }

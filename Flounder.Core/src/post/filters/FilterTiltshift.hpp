@@ -1,11 +1,11 @@
 #pragma once
 
 #include "../../devices/Display.hpp"
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filtertiltshift :
+	class FilterTiltshift :
 		public IPostFilter
 	{
 	private:
@@ -14,18 +14,26 @@ namespace Flounder
 		float m_stepSize;
 		float m_steps;
 	public:
-		filtertiltshift(const float &blurAmount = 1.0f, const float &centre = 1.1f, const float &stepSize = 0.004f, const float &steps = 3.0f);
+		FilterTiltshift(const float &blurAmount = 1.0f, const float &centre = 1.1f, const float &stepSize = 0.004f, const float &steps = 3.0f);
 
-		~filtertiltshift();
+		~FilterTiltshift();
 
 		void StoreValues() override;
 
-		void setBlurAmount(const float &blurAmount) { m_blurAmount = blurAmount; }
+		float GetBlurAmount() const { return m_blurAmount; }
 
-		void setCentre(const float &centre) { m_centre = centre; }
+		void SetBlurAmount(const float &blurAmount) { m_blurAmount = blurAmount; }
 
-		void setStepSize(const float &stepSize) { m_stepSize = stepSize; }
+		float GetCentre() const { return m_centre; }
 
-		void setSteps(const float &steps) { m_steps = steps; }
+		void SetCentre(const float &centre) { m_centre = centre; }
+
+		float GetStepSize() const { return m_stepSize; }
+
+		void SetStepSize(const float &stepSize) { m_stepSize = stepSize; }
+
+		float GetSteps() const { return m_steps; }
+
+		void SetSteps(const float &steps) { m_steps = steps; }
 	};
 }

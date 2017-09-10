@@ -1,6 +1,6 @@
 #pragma once
 
-#include "maths.hpp"
+#include "Maths.hpp"
 #include "Vector3.hpp"
 
 namespace Flounder

@@ -1,8 +1,8 @@
-#include "filtercrt.hpp"
+#include "FilterCrt.hpp"
 
 namespace Flounder
 {
-	filtercrt::filtercrt(const Colour &screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
+	FilterCrt::FilterCrt(const Colour &screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
 		IPostFilter("filterCrt", "res/shaders/filters/crt.frag.spv"),
 		m_screenColour(new Colour(screenColour)),
 		m_curveAmountX(curveAmountX),
@@ -12,12 +12,12 @@ namespace Flounder
 	{
 	}
 
-	filtercrt::~filtercrt()
+	FilterCrt::~FilterCrt()
 	{
 		delete m_screenColour;
 	}
 
-	void filtercrt::StoreValues()
+	void FilterCrt::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform3f("screenColour", *m_screenColour);

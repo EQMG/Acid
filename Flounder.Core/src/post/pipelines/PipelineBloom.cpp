@@ -5,9 +5,9 @@ namespace Flounder
 	PipelineBloom::PipelineBloom() :
 		IPostPipeline()
 	{
-		m_filterBloom1 = new filterbloom1();
+		m_filterBloom1 = new FilterBloom1();
 		m_pipelineGaussian = new PipelineGaussian(0.5f);
-		m_filterBloom2 = new filterbloom2();
+		m_filterBloom2 = new FilterBloom2();
 	}
 
 	PipelineBloom::~PipelineBloom()

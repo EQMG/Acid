@@ -1,21 +1,23 @@
 #pragma once
 
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filtergrain :
+	class FilterGrain :
 		public IPostFilter
 	{
 	private:
 		float m_strength;
 	public:
-		filtergrain(const float &strength = 2.3f);
+		FilterGrain(const float &strength = 2.3f);
 
-		~filtergrain();
+		~FilterGrain();
 
 		void StoreValues() override;
 
-		void setStrength(const float &strength) { m_strength = strength; }
+		float GetStrength() const { return m_strength; }
+
+		void SetStrength(const float &strength) { m_strength = strength; }
 	};
 }

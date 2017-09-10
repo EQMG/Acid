@@ -1,20 +1,20 @@
-#include "filterlensflare.hpp"
+#include "FilterLensflare.hpp"
 
 namespace Flounder
 {
-	filterlensflare::filterlensflare() :
+	FilterLensflare::FilterLensflare() :
 		IPostFilter("filterLensflare", "res/shaders/filters/lensflare.frag.spv"),
 		m_sunPosition(new Vector3()),
 		m_sunHeight(0.0f)
 	{
 	}
 
-	filterlensflare::~filterlensflare()
+	FilterLensflare::~FilterLensflare()
 	{
 		delete m_sunPosition;
 	}
 
-	void filterlensflare::StoreValues()
+	void FilterLensflare::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform3f("sunPosition", *m_sunPosition);
@@ -23,7 +23,7 @@ namespace Flounder
 #endif
 	}
 
-	void filterlensflare::setSunPosition(const Vector3 &sunPosition)
+	void FilterLensflare::SetSunPosition(const Vector3 &sunPosition) const
 	{
 		ICamera *camera = Camera::Get()->GetCamera();
 		Matrix4::WorldToScreenSpace(sunPosition, *camera->GetViewMatrix(), *camera->GetProjectionMatrix(), m_sunPosition);

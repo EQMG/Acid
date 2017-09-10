@@ -1,17 +1,17 @@
-#include "filteremboss.hpp"
+#include "FilterEmboss.hpp"
 
 namespace Flounder
 {
-	filteremboss::filteremboss() :
+	FilterEmboss::FilterEmboss() :
 		IPostFilter("filterEmboss", "res/shaders/filters/emboss.frag.spv")
 	{
 	}
 
-	filteremboss::~filteremboss()
+	FilterEmboss::~FilterEmboss()
 	{
 	}
 
-	void filteremboss::StoreValues()
+	void FilterEmboss::StoreValues()
 	{
 	}
 }

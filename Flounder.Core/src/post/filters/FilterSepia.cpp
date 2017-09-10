@@ -1,17 +1,17 @@
-#include "filtersepia.hpp"
+#include "FilterSepia.hpp"
 
 namespace Flounder
 {
-	filtersepia::filtersepia() :
+	FilterSepia::FilterSepia() :
 		IPostFilter("filterSepia", "res/shaders/filters/sepia.frag.spv")
 	{
 	}
 
-	filtersepia::~filtersepia()
+	FilterSepia::~FilterSepia()
 	{
 	}
 
-	void filtersepia::StoreValues()
+	void FilterSepia::StoreValues()
 	{
 	}
 }

@@ -1,8 +1,8 @@
-#include "filterblurvertical.hpp"
+#include "FilterBlurVertical.hpp"
 
 namespace Flounder
 {
-	filterblurvertical::filterblurvertical(const float &sizeScalar) :
+	FilterBlurVertical::FilterBlurVertical(const float &sizeScalar) :
 		IPostFilter("filterBlurVertical", "res/shaders/filters/blurvertical.frag.spv", new Fbo(true, sizeScalar)),
 		m_heightValue(static_cast<int>(Display::Get()->GetHeight() * sizeScalar)),
 		m_scaleValue(2.0f),
@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	filterblurvertical::filterblurvertical(const int &width, const int &height) :
+	FilterBlurVertical::FilterBlurVertical(const int &width, const int &height) :
 		IPostFilter("filterBlurVertical", "res/shaders/filters/blurvertical.frag.spv", new Fbo(width, height)),
 		m_heightValue(height),
 		m_scaleValue(2.0f),
@@ -20,11 +20,11 @@ namespace Flounder
 	{
 	}
 
-	filterblurvertical::~filterblurvertical()
+	FilterBlurVertical::~FilterBlurVertical()
 	{
 	}
 
-	void filterblurvertical::StoreValues()
+	void FilterBlurVertical::StoreValues()
 	{
 		if (m_fitToDisplay)
 		{

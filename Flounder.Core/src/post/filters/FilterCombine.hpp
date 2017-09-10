@@ -2,24 +2,26 @@
 
 #include "../../devices/Display.hpp"
 #include "../../maths/Vector4.hpp"
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filtercombine :
+	class FilterCombine :
 		public IPostFilter
 	{
 	private:
 		Vector4 *m_slideSpaceValue;
 	public:
-		filtercombine();
+		FilterCombine();
 
-		~filtercombine();
+		~FilterCombine();
 
 		void StoreValues() override;
 
-		void setSlideSpaceValue(const Vector4 &slideSpaceValue) const { m_slideSpaceValue->Set(slideSpaceValue); }
+		Vector4 *GetSlideSpaceValue() const { return m_slideSpaceValue; }
 
-		void setSlideSpace(const float &x, const float &y, const float &z, const float &w) const { m_slideSpaceValue->Set(x, y, z, w); }
+		void SetSlideSpaceValue(const Vector4 &slideSpaceValue) const { m_slideSpaceValue->Set(slideSpaceValue); }
+
+		void SetSlideSpace(const float &x, const float &y, const float &z, const float &w) const { m_slideSpaceValue->Set(x, y, z, w); }
 	};
 }
