@@ -1,0 +1,101 @@
+\hypertarget{class_flounder_1_1_axis_joystick}{}\section{Flounder\+:\+:Axis\+Joystick Class Reference}
+\label{class_flounder_1_1_axis_joystick}\index{Flounder\+::\+Axis\+Joystick@{Flounder\+::\+Axis\+Joystick}}
+
+
+Axis from a joystick.  
+
+
+
+
+{\ttfamily \#include $<$Axis\+Joystick.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Axis\+Joystick\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_axis_joystick}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_axis_joystick_af9bb9c79c8f37c42aaec9e3f52094e46}{Axis\+Joystick} (const int \&joystick, const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Creates a new axis joystick. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_axis_joystick_af9ca5ae80fbcf3702db33380bc7d439e}{$\sim$\+Axis\+Joystick} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the axis joystick. \end{DoxyCompactList}\item 
+float \hyperlink{class_flounder_1_1_axis_joystick_a0464d3a7f1749bd27260d7fe3a8078f6}{Get\+Amount} () const override
+\begin{DoxyCompactList}\small\item\em Gets the current value along the axis. -\/1 is smallest input, 1 is largest input. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_axis_joystick_a8c4605e04a9d0a7865bf4cb4c4d8e8dd}\label{class_flounder_1_1_axis_joystick_a8c4605e04a9d0a7865bf4cb4c4d8e8dd}} 
+int {\bfseries m\+\_\+joystick}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_axis_joystick_a2b9465dc1e1dcbbe9231bbdc4ad0e818}\label{class_flounder_1_1_axis_joystick_a2b9465dc1e1dcbbe9231bbdc4ad0e818}} 
+int {\bfseries m\+\_\+count}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_axis_joystick_af23d01d54cf8ed268263e7fac970b848}\label{class_flounder_1_1_axis_joystick_af23d01d54cf8ed268263e7fac970b848}} 
+int $\ast$ {\bfseries m\+\_\+axes}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Axis from a joystick. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_axis_joystick_af9bb9c79c8f37c42aaec9e3f52094e46}\label{class_flounder_1_1_axis_joystick_af9bb9c79c8f37c42aaec9e3f52094e46}} 
+\index{Flounder\+::\+Axis\+Joystick@{Flounder\+::\+Axis\+Joystick}!Axis\+Joystick@{Axis\+Joystick}}
+\index{Axis\+Joystick@{Axis\+Joystick}!Flounder\+::\+Axis\+Joystick@{Flounder\+::\+Axis\+Joystick}}
+\subsubsection{\texorpdfstring{Axis\+Joystick()}{AxisJoystick()}}
+{\footnotesize\ttfamily Flounder\+::\+Axis\+Joystick\+::\+Axis\+Joystick (\begin{DoxyParamCaption}\item[{const int \&}]{joystick,  }\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Creates a new axis joystick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick} & The joystick. Should be one of the G\+L\+F\+W.\+J\+O\+Y\+S\+T\+I\+CK values. \\
+\hline
+{\em n\+\_\+args} & The number axes of joystick axes being checked. \\
+\hline
+{\em ...} & The axes on the joystick being checked. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_axis_joystick_af9ca5ae80fbcf3702db33380bc7d439e}\label{class_flounder_1_1_axis_joystick_af9ca5ae80fbcf3702db33380bc7d439e}} 
+\index{Flounder\+::\+Axis\+Joystick@{Flounder\+::\+Axis\+Joystick}!````~Axis\+Joystick@{$\sim$\+Axis\+Joystick}}
+\index{````~Axis\+Joystick@{$\sim$\+Axis\+Joystick}!Flounder\+::\+Axis\+Joystick@{Flounder\+::\+Axis\+Joystick}}
+\subsubsection{\texorpdfstring{$\sim$\+Axis\+Joystick()}{~AxisJoystick()}}
+{\footnotesize\ttfamily Flounder\+::\+Axis\+Joystick\+::$\sim$\+Axis\+Joystick (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the axis joystick. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_axis_joystick_a0464d3a7f1749bd27260d7fe3a8078f6}\label{class_flounder_1_1_axis_joystick_a0464d3a7f1749bd27260d7fe3a8078f6}} 
+\index{Flounder\+::\+Axis\+Joystick@{Flounder\+::\+Axis\+Joystick}!Get\+Amount@{Get\+Amount}}
+\index{Get\+Amount@{Get\+Amount}!Flounder\+::\+Axis\+Joystick@{Flounder\+::\+Axis\+Joystick}}
+\subsubsection{\texorpdfstring{Get\+Amount()}{GetAmount()}}
+{\footnotesize\ttfamily float Flounder\+::\+Axis\+Joystick\+::\+Get\+Amount (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets the current value along the axis. -\/1 is smallest input, 1 is largest input. 
+
+\begin{DoxyReturn}{Returns}
+The current value of the axis in the range (-\/1, 1). 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_axis_a5107db92879be3e2ea56841baea993b3}{Flounder\+::\+I\+Axis}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/inputs/Axis\+Joystick.\+hpp\item 
+src/inputs/Axis\+Joystick.\+cpp\end{DoxyCompactItemize}

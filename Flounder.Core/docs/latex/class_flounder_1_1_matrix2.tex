@@ -1,0 +1,503 @@
+\hypertarget{class_flounder_1_1_matrix2}{}\section{Flounder\+:\+:Matrix2 Class Reference}
+\label{class_flounder_1_1_matrix2}\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+
+
+Holds a 2x2 matrix.  
+
+
+
+
+{\ttfamily \#include $<$Matrix2.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_matrix2_af851e255718e0cb7ed8ecb49f2b1a814}{Matrix2} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{class_flounder_1_1_matrix2}{Matrix2}. The matrix is initialised to the identity. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_matrix2_a17d61a8514344b7e29c1090275a6b3aa}{Matrix2} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&source)
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{class_flounder_1_1_matrix2}{Matrix2}. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_matrix2_ad764a7be2a09d30280b1cc2355e0a379}{Matrix2} (const float source\mbox{[}4\mbox{]})
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{class_flounder_1_1_matrix2}{Matrix2}. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_matrix2_af71b245f5ee40ac4d848be11b70fbeea}{$\sim$\+Matrix2} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for \hyperlink{class_flounder_1_1_matrix2}{Matrix2}. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_ad1fdb2342794a345fe262fff7b8165c4}{Set} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&source)
+\begin{DoxyCompactList}\small\item\em Loads from another \hyperlink{class_flounder_1_1_matrix2}{Matrix2}. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_ab7eb0b3da02f9522314d39927091c05a}{Set} (const float source\mbox{[}4\mbox{]})
+\begin{DoxyCompactList}\small\item\em Loads from a 4 element array. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a394f10b0955184bf77cbf42561679ddb}{Set\+Identity} ()
+\begin{DoxyCompactList}\small\item\em Sets this matrix to be the identity matrix. \end{DoxyCompactList}\item 
+float \hyperlink{class_flounder_1_1_matrix2_a99984cf5d73893ee9e5e5f52b53f7e77}{Determinant} ()
+\begin{DoxyCompactList}\small\item\em Gets the determinant of this matrix. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a246d883584ea3193e2db6018a39046cc}{Invert} ()
+\begin{DoxyCompactList}\small\item\em Inverts this matrix. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_ac20924a7be1bee4a40f22044041c22b3}{Negate} ()
+\begin{DoxyCompactList}\small\item\em Negates this matrix. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a3167f5dd9e522e9c7aaf9a0cdce42794}{Transpose} ()
+\begin{DoxyCompactList}\small\item\em Transposes this matrix \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a9eb1eb1c5cd7d7830f9be4e273deafeb}{Set\+Zero} ()
+\begin{DoxyCompactList}\small\item\em Sets this matrix to 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a4033d2130af3941798f2d3c1a17fd26c}{Set\+Identity} (\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$source)
+\begin{DoxyCompactList}\small\item\em Set the source matrix to be the identity matrix. \end{DoxyCompactList}\item 
+static float \hyperlink{class_flounder_1_1_matrix2_a947cd864cfd4fd94dcfefcad3781838e}{Determinant} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&source)
+\begin{DoxyCompactList}\small\item\em Gets the determinant of this matrix. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a319825e3bda48c3e843be127f2ce9b50}{Add} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&left, const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&right, \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Adds two matrices together and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a1467f657660a194b10f6af6f76df35ff}{Subtract} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&left, const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&right, \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Subtracts two matrices together and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a6084cf89e1f8f64041ca5a852e9888ce}{Multiply} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&left, const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&right, \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Multiplies two matrices together and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_vector2}{Vector2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a729372a06729c04b3e95d3452130cfeb}{Transform} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&left, const \hyperlink{class_flounder_1_1_vector2}{Vector2} \&right, \hyperlink{class_flounder_1_1_vector2}{Vector2} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Transforms a matrix by a vector and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_abea3011359ab89c1bec339d046a8f60b}{Scale} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&left, const \hyperlink{class_flounder_1_1_vector2}{Vector2} \&right, \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Scales a matrix by a vector and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a23c8ed84d77811f8d1e2875a6aa55175}{Invert} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&source, \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Inverts the source matrix and puts the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a6b497f0562f3df1b37fd780566df33a7}{Negate} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&source, \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Negates the source matrix and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_adbab6eda564db723a8c6f27079a92abb}{Transpose} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&source, \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Transpose the source matrix and places the result in the destination matrix. \end{DoxyCompactList}\item 
+static float $\ast$ \hyperlink{class_flounder_1_1_matrix2_a526a6ff091147588749fe124b871a353}{To\+Array} (const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&matrix)
+\begin{DoxyCompactList}\small\item\em Turns a 2x2 matrix into an array. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ \hyperlink{class_flounder_1_1_matrix2_a0f5b40d999508bb6466de9fd689d252a}{Set\+Zero} (\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$source)
+\begin{DoxyCompactList}\small\item\em Sets the source matrix to 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_af1ed8f4d2cebb6e99660c0e0833387c2}\label{class_flounder_1_1_matrix2_af1ed8f4d2cebb6e99660c0e0833387c2}} 
+float {\bfseries m\+\_\+00}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_af6fd323ff9b58df310274bbbc3f17dcb}\label{class_flounder_1_1_matrix2_af6fd323ff9b58df310274bbbc3f17dcb}} 
+float {\bfseries m\+\_\+01}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a4de9030be5f02c289d95b7c0d5b4900e}\label{class_flounder_1_1_matrix2_a4de9030be5f02c289d95b7c0d5b4900e}} 
+float {\bfseries m\+\_\+10}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a57af1fcafe4bf777b7b526428bda7466}\label{class_flounder_1_1_matrix2_a57af1fcafe4bf777b7b526428bda7466}} 
+float {\bfseries m\+\_\+11}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Holds a 2x2 matrix. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_af851e255718e0cb7ed8ecb49f2b1a814}\label{class_flounder_1_1_matrix2_af851e255718e0cb7ed8ecb49f2b1a814}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Matrix2@{Matrix2}}
+\index{Matrix2@{Matrix2}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Matrix2()}{Matrix2()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Flounder\+::\+Matrix2\+::\+Matrix2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for \hyperlink{class_flounder_1_1_matrix2}{Matrix2}. The matrix is initialised to the identity. 
+
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a17d61a8514344b7e29c1090275a6b3aa}\label{class_flounder_1_1_matrix2_a17d61a8514344b7e29c1090275a6b3aa}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Matrix2@{Matrix2}}
+\index{Matrix2@{Matrix2}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Matrix2()}{Matrix2()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Flounder\+::\+Matrix2\+::\+Matrix2 (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Constructor for \hyperlink{class_flounder_1_1_matrix2}{Matrix2}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Creates this matrix out of a existing one. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_ad764a7be2a09d30280b1cc2355e0a379}\label{class_flounder_1_1_matrix2_ad764a7be2a09d30280b1cc2355e0a379}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Matrix2@{Matrix2}}
+\index{Matrix2@{Matrix2}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Matrix2()}{Matrix2()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Flounder\+::\+Matrix2\+::\+Matrix2 (\begin{DoxyParamCaption}\item[{const float}]{source\mbox{[}4\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Constructor for \hyperlink{class_flounder_1_1_matrix2}{Matrix2}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Creates this matrix out of a 4 element array. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_af71b245f5ee40ac4d848be11b70fbeea}\label{class_flounder_1_1_matrix2_af71b245f5ee40ac4d848be11b70fbeea}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!````~Matrix2@{$\sim$\+Matrix2}}
+\index{````~Matrix2@{$\sim$\+Matrix2}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{$\sim$\+Matrix2()}{~Matrix2()}}
+{\footnotesize\ttfamily Flounder\+::\+Matrix2\+::$\sim$\+Matrix2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for \hyperlink{class_flounder_1_1_matrix2}{Matrix2}. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a319825e3bda48c3e843be127f2ce9b50}\label{class_flounder_1_1_matrix2_a319825e3bda48c3e843be127f2ce9b50}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Add@{Add}}
+\index{Add@{Add}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Add()}{Add()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Add (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{left,  }\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{right,  }\item[{\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Adds two matrices together and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source matrix. \\
+\hline
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a947cd864cfd4fd94dcfefcad3781838e}\label{class_flounder_1_1_matrix2_a947cd864cfd4fd94dcfefcad3781838e}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Determinant@{Determinant}}
+\index{Determinant@{Determinant}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Determinant()}{Determinant()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float Flounder\+::\+Matrix2\+::\+Determinant (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the determinant of this matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The matrix to set to the identity. \begin{DoxyReturn}{Returns}
+The determinant of the matrix. 
+\end{DoxyReturn}
+\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a99984cf5d73893ee9e5e5f52b53f7e77}\label{class_flounder_1_1_matrix2_a99984cf5d73893ee9e5e5f52b53f7e77}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Determinant@{Determinant}}
+\index{Determinant@{Determinant}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Determinant()}{Determinant()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float Flounder\+::\+Matrix2\+::\+Determinant (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the determinant of this matrix. 
+
+\begin{DoxyReturn}{Returns}
+The determinant of the matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a23c8ed84d77811f8d1e2875a6aa55175}\label{class_flounder_1_1_matrix2_a23c8ed84d77811f8d1e2875a6aa55175}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Invert@{Invert}}
+\index{Invert@{Invert}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Invert()}{Invert()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Invert (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{source,  }\item[{\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Inverts the source matrix and puts the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source matrix to be inverted. \\
+\hline
+{\em destination} & The destination matrix, or nullptr if a new one is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The inverted matrix, or nullptr if source can\textquotesingle{}t be reverted. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a246d883584ea3193e2db6018a39046cc}\label{class_flounder_1_1_matrix2_a246d883584ea3193e2db6018a39046cc}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Invert@{Invert}}
+\index{Invert@{Invert}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Invert()}{Invert()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Invert (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Inverts this matrix. 
+
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a6084cf89e1f8f64041ca5a852e9888ce}\label{class_flounder_1_1_matrix2_a6084cf89e1f8f64041ca5a852e9888ce}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Multiply@{Multiply}}
+\index{Multiply@{Multiply}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Multiply()}{Multiply()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Multiply (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{left,  }\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{right,  }\item[{\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Multiplies two matrices together and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source matrix. \\
+\hline
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a6b497f0562f3df1b37fd780566df33a7}\label{class_flounder_1_1_matrix2_a6b497f0562f3df1b37fd780566df33a7}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Negate@{Negate}}
+\index{Negate@{Negate}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Negate()}{Negate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Negate (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{source,  }\item[{\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Negates the source matrix and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source matrix. \\
+\hline
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The negated matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_ac20924a7be1bee4a40f22044041c22b3}\label{class_flounder_1_1_matrix2_ac20924a7be1bee4a40f22044041c22b3}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Negate@{Negate}}
+\index{Negate@{Negate}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Negate()}{Negate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Negate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Negates this matrix. 
+
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_abea3011359ab89c1bec339d046a8f60b}\label{class_flounder_1_1_matrix2_abea3011359ab89c1bec339d046a8f60b}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Scale@{Scale}}
+\index{Scale@{Scale}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Scale()}{Scale()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Scale (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{left,  }\item[{const \hyperlink{class_flounder_1_1_vector2}{Vector2} \&}]{right,  }\item[{\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Scales a matrix by a vector and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_ad1fdb2342794a345fe262fff7b8165c4}\label{class_flounder_1_1_matrix2_ad1fdb2342794a345fe262fff7b8165c4}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Set@{Set}}
+\index{Set@{Set}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Set (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Loads from another \hyperlink{class_flounder_1_1_matrix2}{Matrix2}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source matrix. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_ab7eb0b3da02f9522314d39927091c05a}\label{class_flounder_1_1_matrix2_ab7eb0b3da02f9522314d39927091c05a}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Set@{Set}}
+\index{Set@{Set}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Set (\begin{DoxyParamCaption}\item[{const float}]{source\mbox{[}4\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Loads from a 4 element array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a4033d2130af3941798f2d3c1a17fd26c}\label{class_flounder_1_1_matrix2_a4033d2130af3941798f2d3c1a17fd26c}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Set\+Identity@{Set\+Identity}}
+\index{Set\+Identity@{Set\+Identity}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Set\+Identity()}{SetIdentity()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Set\+Identity (\begin{DoxyParamCaption}\item[{\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Set the source matrix to be the identity matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The matrix to set to the identity. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The source matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a394f10b0955184bf77cbf42561679ddb}\label{class_flounder_1_1_matrix2_a394f10b0955184bf77cbf42561679ddb}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Set\+Identity@{Set\+Identity}}
+\index{Set\+Identity@{Set\+Identity}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Set\+Identity()}{SetIdentity()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Set\+Identity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets this matrix to be the identity matrix. 
+
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a0f5b40d999508bb6466de9fd689d252a}\label{class_flounder_1_1_matrix2_a0f5b40d999508bb6466de9fd689d252a}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Set\+Zero@{Set\+Zero}}
+\index{Set\+Zero@{Set\+Zero}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Set\+Zero()}{SetZero()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Set\+Zero (\begin{DoxyParamCaption}\item[{\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Sets the source matrix to 0. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The matrix to be set to 0. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The matrix set to zero. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a9eb1eb1c5cd7d7830f9be4e273deafeb}\label{class_flounder_1_1_matrix2_a9eb1eb1c5cd7d7830f9be4e273deafeb}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Set\+Zero@{Set\+Zero}}
+\index{Set\+Zero@{Set\+Zero}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Set\+Zero()}{SetZero()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Set\+Zero (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets this matrix to 0. 
+
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a1467f657660a194b10f6af6f76df35ff}\label{class_flounder_1_1_matrix2_a1467f657660a194b10f6af6f76df35ff}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Subtract@{Subtract}}
+\index{Subtract@{Subtract}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Subtract()}{Subtract()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Subtract (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{left,  }\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{right,  }\item[{\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Subtracts two matrices together and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source matrix. \\
+\hline
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a526a6ff091147588749fe124b871a353}\label{class_flounder_1_1_matrix2_a526a6ff091147588749fe124b871a353}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!To\+Array@{To\+Array}}
+\index{To\+Array@{To\+Array}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{To\+Array()}{ToArray()}}
+{\footnotesize\ttfamily float $\ast$ Flounder\+::\+Matrix2\+::\+To\+Array (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{matrix }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Turns a 2x2 matrix into an array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em matrix} & The matrix to turn into an array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A 4 float array. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a729372a06729c04b3e95d3452130cfeb}\label{class_flounder_1_1_matrix2_a729372a06729c04b3e95d3452130cfeb}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Transform@{Transform}}
+\index{Transform@{Transform}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Transform()}{Transform()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_vector2}{Vector2} $\ast$ Flounder\+::\+Matrix2\+::\+Transform (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{left,  }\item[{const \hyperlink{class_flounder_1_1_vector2}{Vector2} \&}]{right,  }\item[{\hyperlink{class_flounder_1_1_vector2}{Vector2} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Transforms a matrix by a vector and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source matrix. \\
+\hline
+{\em right} & The right source vector. \\
+\hline
+{\em destination} & The destination vector or nullptr if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_adbab6eda564db723a8c6f27079a92abb}\label{class_flounder_1_1_matrix2_adbab6eda564db723a8c6f27079a92abb}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Transpose@{Transpose}}
+\index{Transpose@{Transpose}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Transpose()}{Transpose()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Transpose (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_matrix2}{Matrix2} \&}]{source,  }\item[{\hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Transpose the source matrix and places the result in the destination matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source matrix. \\
+\hline
+{\em destination} & The destination matrix or nullptr if a new matrix is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The transposed matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_matrix2_a3167f5dd9e522e9c7aaf9a0cdce42794}\label{class_flounder_1_1_matrix2_a3167f5dd9e522e9c7aaf9a0cdce42794}} 
+\index{Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}!Transpose@{Transpose}}
+\index{Transpose@{Transpose}!Flounder\+::\+Matrix2@{Flounder\+::\+Matrix2}}
+\subsubsection{\texorpdfstring{Transpose()}{Transpose()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_matrix2}{Matrix2} $\ast$ Flounder\+::\+Matrix2\+::\+Transpose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Transposes this matrix 
+
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/maths/Matrix2.\+hpp\item 
+src/maths/Matrix2.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,122 @@
+\hypertarget{class_flounder_1_1_i_post_pipeline}{}\section{Flounder\+:\+:I\+Post\+Pipeline Class Reference}
+\label{class_flounder_1_1_i_post_pipeline}\index{Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}}
+
+
+Represents a system of post effects.  
+
+
+
+
+{\ttfamily \#include $<$I\+Post\+Pipeline.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:I\+Post\+Pipeline\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_i_post_pipeline}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_i_post_pipeline_ac202f7f32a75002597502b192f557b2f}{I\+Post\+Pipeline} ()
+\begin{DoxyCompactList}\small\item\em Creates a new post pipeline. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_flounder_1_1_i_post_pipeline_ad244c35f51f5f355ee7f8be9a3801ca0}{$\sim$\+I\+Post\+Pipeline} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the post pipeline. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_i_post_pipeline_a6a36137fbabb88ee24c274d1a523a24b}{Render\+Pipeline} (const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Renders the post pipeline. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_flounder_1_1_i_post_pipeline_ad5388fe41486385c55896bdd9439bf60}{Render\+Pipeline} (const int n\+\_\+args, va\+\_\+list args)=0
+\begin{DoxyCompactList}\small\item\em Renders the post pipeline. \end{DoxyCompactList}\item 
+virtual Fbo $\ast$ \hyperlink{class_flounder_1_1_i_post_pipeline_a3953881189f3c7876ce4bb5e88f1796c}{Get\+Output} ()=0
+\begin{DoxyCompactList}\small\item\em Gets the fbo containing the pipeline output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a system of post effects. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_pipeline_ac202f7f32a75002597502b192f557b2f}\label{class_flounder_1_1_i_post_pipeline_ac202f7f32a75002597502b192f557b2f}} 
+\index{Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}!I\+Post\+Pipeline@{I\+Post\+Pipeline}}
+\index{I\+Post\+Pipeline@{I\+Post\+Pipeline}!Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}}
+\subsubsection{\texorpdfstring{I\+Post\+Pipeline()}{IPostPipeline()}}
+{\footnotesize\ttfamily Flounder\+::\+I\+Post\+Pipeline\+::\+I\+Post\+Pipeline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new post pipeline. 
+
+\mbox{\Hypertarget{class_flounder_1_1_i_post_pipeline_ad244c35f51f5f355ee7f8be9a3801ca0}\label{class_flounder_1_1_i_post_pipeline_ad244c35f51f5f355ee7f8be9a3801ca0}} 
+\index{Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}!````~I\+Post\+Pipeline@{$\sim$\+I\+Post\+Pipeline}}
+\index{````~I\+Post\+Pipeline@{$\sim$\+I\+Post\+Pipeline}!Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}}
+\subsubsection{\texorpdfstring{$\sim$\+I\+Post\+Pipeline()}{~IPostPipeline()}}
+{\footnotesize\ttfamily Flounder\+::\+I\+Post\+Pipeline\+::$\sim$\+I\+Post\+Pipeline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Deconstructor for the post pipeline. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_pipeline_a3953881189f3c7876ce4bb5e88f1796c}\label{class_flounder_1_1_i_post_pipeline_a3953881189f3c7876ce4bb5e88f1796c}} 
+\index{Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}!Get\+Output@{Get\+Output}}
+\index{Get\+Output@{Get\+Output}!Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}}
+\subsubsection{\texorpdfstring{Get\+Output()}{GetOutput()}}
+{\footnotesize\ttfamily virtual Fbo$\ast$ Flounder\+::\+I\+Post\+Pipeline\+::\+Get\+Output (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the fbo containing the pipeline output. 
+
+\begin{DoxyReturn}{Returns}
+The output fbo. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_flounder_1_1_pipeline_paused_aec5ab7753183681ed2d97d9f6b4781ef}{Flounder\+::\+Pipeline\+Paused}, \hyperlink{class_flounder_1_1_pipeline_bloom_af1ee24a22c9c28e3f9a66df542a943ee}{Flounder\+::\+Pipeline\+Bloom}, and \hyperlink{class_flounder_1_1_pipeline_gaussian_aafe2b02eac20f2d16dede6df39c21864}{Flounder\+::\+Pipeline\+Gaussian}.
+
+\mbox{\Hypertarget{class_flounder_1_1_i_post_pipeline_a6a36137fbabb88ee24c274d1a523a24b}\label{class_flounder_1_1_i_post_pipeline_a6a36137fbabb88ee24c274d1a523a24b}} 
+\index{Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}!Render\+Pipeline@{Render\+Pipeline}}
+\index{Render\+Pipeline@{Render\+Pipeline}!Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}}
+\subsubsection{\texorpdfstring{Render\+Pipeline()}{RenderPipeline()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Flounder\+::\+I\+Post\+Pipeline\+::\+Render\+Pipeline (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Renders the post pipeline. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being sent to the pipeline. \\
+\hline
+{\em ...} & A list of textures in indexed order to be bound for the shader program. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_pipeline_ad5388fe41486385c55896bdd9439bf60}\label{class_flounder_1_1_i_post_pipeline_ad5388fe41486385c55896bdd9439bf60}} 
+\index{Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}!Render\+Pipeline@{Render\+Pipeline}}
+\index{Render\+Pipeline@{Render\+Pipeline}!Flounder\+::\+I\+Post\+Pipeline@{Flounder\+::\+I\+Post\+Pipeline}}
+\subsubsection{\texorpdfstring{Render\+Pipeline()}{RenderPipeline()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual void Flounder\+::\+I\+Post\+Pipeline\+::\+Render\+Pipeline (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{va\+\_\+list}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Renders the post pipeline. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being sent to the pipeline. \\
+\hline
+{\em args} & A list of textures in indexed order to be bound for the shader program. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_flounder_1_1_pipeline_paused_a7cb1dcc1e1321e725e4292d305bfacc3}{Flounder\+::\+Pipeline\+Paused}, \hyperlink{class_flounder_1_1_pipeline_bloom_a2bff537e219a74540c1bda4c31fb4354}{Flounder\+::\+Pipeline\+Bloom}, and \hyperlink{class_flounder_1_1_pipeline_gaussian_a5187cbc15a4a56cef0ca227628a0f83f}{Flounder\+::\+Pipeline\+Gaussian}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/post/I\+Post\+Pipeline.\+hpp\item 
+src/post/I\+Post\+Pipeline.\+cpp\end{DoxyCompactItemize}

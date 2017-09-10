@@ -12,6 +12,8 @@ namespace Flounder
 	/// </summary>
 	struct Material
 	{
+		// TODO: https://github.com/Equilibrium-Games/Flounder-Java-Engine/blob/ab989a6ded24a9feeb45b3adf6a8afdec9a62e5b/src/flounder/materials/Material.java
+
 		std::string name;
 
 		float specularCoefficient;

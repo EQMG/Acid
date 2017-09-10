@@ -1,0 +1,528 @@
+\hypertarget{class_flounder_1_1_colour}{}\section{Flounder\+:\+:Colour Class Reference}
+\label{class_flounder_1_1_colour}\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+
+
+Holds a R\+G\+BA colour.  
+
+
+
+
+{\ttfamily \#include $<$Colour.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_colour_a2cfe1397d03186a379eaa91c32713bc0}{Colour} ()
+\begin{DoxyCompactList}\small\item\em Constructor for colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour_a8334d8cc6c7b68b4520848ce1a6e5fd2}{Colour} (const float \&r, const float \&g, const float \&b, const float \&a)
+\begin{DoxyCompactList}\small\item\em Constructor for colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour_a81a69b320666743b9d959f2c7e6881cf}{Colour} (const std\+::string \&hex, const float \&a)
+\begin{DoxyCompactList}\small\item\em Constructor for colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour_a8f0b80aadc1a8c5b916e361e98969821}{Colour} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&source)
+\begin{DoxyCompactList}\small\item\em Constructor for colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour_a1127b00a5afed1b311117a8f5d13224d}{Colour} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&source)
+\begin{DoxyCompactList}\small\item\em Constructor for colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour_a82555ece314688c6aa52328ed41933eb}{Colour} (const \hyperlink{class_flounder_1_1_vector4}{Vector4} \&source)
+\begin{DoxyCompactList}\small\item\em Constructor for colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour_a8d3e28d448e13a736421120454c4a7bb}{$\sim$\+Colour} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_a468af4678d790c13f6446b6c22d2cf6d}{Set} (const float \&r, const float \&g, const float \&b, const float \&a)
+\begin{DoxyCompactList}\small\item\em Sets values in the colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_ab0d881f8ed0eb9f6f680988dfdf756e0}{Set} (const std\+::string \&hex, const float \&a)
+\begin{DoxyCompactList}\small\item\em Sets values in the colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_a79666b8c2792951d96a244bb81917fb2}{Set} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&source)
+\begin{DoxyCompactList}\small\item\em Sets values in the colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_a94933bab6cb6128f207472ec0554aeeb}{Set} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&source)
+\begin{DoxyCompactList}\small\item\em Sets values in the colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_abfe987ab057d8c17cd9d18613fcee303}{Set} (const \hyperlink{class_flounder_1_1_vector4}{Vector4} \&source)
+\begin{DoxyCompactList}\small\item\em Sets values in the colour. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_a8747c13978f052dfcab3ded7dd26c26b}{Scale} (const float \&scalar)
+\begin{DoxyCompactList}\small\item\em Scales the colour by a scalar. \end{DoxyCompactList}\item 
+float \hyperlink{class_flounder_1_1_colour_a42c4eb61e3eb6b9ae29fde11e4428f9d}{Length} ()
+\begin{DoxyCompactList}\small\item\em Gets the length of the colour. \end{DoxyCompactList}\item 
+float \hyperlink{class_flounder_1_1_colour_a4bc77aaec8c0018d8fd210558bc5728a}{Length\+Squared} ()
+\begin{DoxyCompactList}\small\item\em Gets the length squared of the colour. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_a3794da84380a1e65b8a8c6d02c273cd4}{Add} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&left, const \hyperlink{class_flounder_1_1_colour}{Colour} \&right, \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Adds two colours together and places the result in the destination colour. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_adac2e9bb9d28cc0bff1cd9de3ac6180a}{Subtract} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&left, const \hyperlink{class_flounder_1_1_colour}{Colour} \&right, \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Subtracts two colours together and places the result in the destination colour. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_ad07bbfc4a5c56a37adaf99947c88c71b}{Multiply} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&left, const \hyperlink{class_flounder_1_1_colour}{Colour} \&right, \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Multiplies two colours together and places the result in the destination colour. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_aa576ba31fa4dda753b17b0fe1d052eb7}{Divide} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&left, const \hyperlink{class_flounder_1_1_colour}{Colour} \&right, \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Divides two colours together and places the result in the destination colour. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_ab239c66801a06621595745c63e1c64a2}{Interpolate} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&left, const \hyperlink{class_flounder_1_1_colour}{Colour} \&right, float blend, \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Interpolates between two colours and places the result in the destination colour. \end{DoxyCompactList}\item 
+static \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ \hyperlink{class_flounder_1_1_colour_a3c2caae7bfb88e90349f1147e3e2b924}{Get\+Unit} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&source, \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$destination)
+\begin{DoxyCompactList}\small\item\em Gets a colour representing the unit value of this colour. \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{class_flounder_1_1_colour_ad4578de486d8c375a949ef62a165d043}{Get\+Hex} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&source)
+\begin{DoxyCompactList}\small\item\em Gets the hex code from the colour. \end{DoxyCompactList}\item 
+static float \hyperlink{class_flounder_1_1_colour_a374401ca82651a558dd5786ebffc2512}{Length} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&source)
+\begin{DoxyCompactList}\small\item\em Gets the length of the colour. \end{DoxyCompactList}\item 
+static float \hyperlink{class_flounder_1_1_colour_a5f016f570b13c76c3ac6f4b0ccc901d2}{Length\+Squared} (const \hyperlink{class_flounder_1_1_colour}{Colour} \&source)
+\begin{DoxyCompactList}\small\item\em Gets the length squared of the colour. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_colour_aa8c4badf5c9164200e7df260510b330b}\label{class_flounder_1_1_colour_aa8c4badf5c9164200e7df260510b330b}} 
+float {\bfseries m\+\_\+r}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_colour_aab4b26a96fc92ea5916348b1a7312464}\label{class_flounder_1_1_colour_aab4b26a96fc92ea5916348b1a7312464}} 
+float {\bfseries m\+\_\+g}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_colour_aaaf91c2bcf6dc76d828159d117371e0f}\label{class_flounder_1_1_colour_aaaf91c2bcf6dc76d828159d117371e0f}} 
+float {\bfseries m\+\_\+b}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_colour_aae7e00300a925a8282dd85b72cfaad19}\label{class_flounder_1_1_colour_aae7e00300a925a8282dd85b72cfaad19}} 
+float {\bfseries m\+\_\+a}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Holds a R\+G\+BA colour. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a2cfe1397d03186a379eaa91c32713bc0}\label{class_flounder_1_1_colour_a2cfe1397d03186a379eaa91c32713bc0}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Colour@{Colour}}
+\index{Colour@{Colour}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Colour()}{Colour()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily Flounder\+::\+Colour\+::\+Colour (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for colour. 
+
+\mbox{\Hypertarget{class_flounder_1_1_colour_a8334d8cc6c7b68b4520848ce1a6e5fd2}\label{class_flounder_1_1_colour_a8334d8cc6c7b68b4520848ce1a6e5fd2}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Colour@{Colour}}
+\index{Colour@{Colour}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Colour()}{Colour()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily Flounder\+::\+Colour\+::\+Colour (\begin{DoxyParamCaption}\item[{const float \&}]{r,  }\item[{const float \&}]{g,  }\item[{const float \&}]{b,  }\item[{const float \&}]{a }\end{DoxyParamCaption})}
+
+
+
+Constructor for colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The new R value. \\
+\hline
+{\em g} & The new G value. \\
+\hline
+{\em b} & The new B value. \\
+\hline
+{\em a} & The new A value. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a81a69b320666743b9d959f2c7e6881cf}\label{class_flounder_1_1_colour_a81a69b320666743b9d959f2c7e6881cf}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Colour@{Colour}}
+\index{Colour@{Colour}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Colour()}{Colour()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily Flounder\+::\+Colour\+::\+Colour (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{hex,  }\item[{const float \&}]{a }\end{DoxyParamCaption})}
+
+
+
+Constructor for colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hex} & The new values from H\+EX. \\
+\hline
+{\em a} & The new A value. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a8f0b80aadc1a8c5b916e361e98969821}\label{class_flounder_1_1_colour_a8f0b80aadc1a8c5b916e361e98969821}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Colour@{Colour}}
+\index{Colour@{Colour}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Colour()}{Colour()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily Flounder\+::\+Colour\+::\+Colour (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Constructor for colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Creates this colour out of a existing one. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a1127b00a5afed1b311117a8f5d13224d}\label{class_flounder_1_1_colour_a1127b00a5afed1b311117a8f5d13224d}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Colour@{Colour}}
+\index{Colour@{Colour}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Colour()}{Colour()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily Flounder\+::\+Colour\+::\+Colour (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Constructor for colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Creates this colour out of a existing vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a82555ece314688c6aa52328ed41933eb}\label{class_flounder_1_1_colour_a82555ece314688c6aa52328ed41933eb}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Colour@{Colour}}
+\index{Colour@{Colour}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Colour()}{Colour()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily Flounder\+::\+Colour\+::\+Colour (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_vector4}{Vector4} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Constructor for colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Creates this colour out of a existing vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a8d3e28d448e13a736421120454c4a7bb}\label{class_flounder_1_1_colour_a8d3e28d448e13a736421120454c4a7bb}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!````~Colour@{$\sim$\+Colour}}
+\index{````~Colour@{$\sim$\+Colour}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{$\sim$\+Colour()}{~Colour()}}
+{\footnotesize\ttfamily Flounder\+::\+Colour\+::$\sim$\+Colour (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for colour. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a3794da84380a1e65b8a8c6d02c273cd4}\label{class_flounder_1_1_colour_a3794da84380a1e65b8a8c6d02c273cd4}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Add@{Add}}
+\index{Add@{Add}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Add()}{Add()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Add (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{left,  }\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{right,  }\item[{\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Adds two colours together and places the result in the destination colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source colour. \\
+\hline
+{\em right} & The right source colour. \\
+\hline
+{\em destination} & The destination colour or nullptr if a new colour is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_aa576ba31fa4dda753b17b0fe1d052eb7}\label{class_flounder_1_1_colour_aa576ba31fa4dda753b17b0fe1d052eb7}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Divide@{Divide}}
+\index{Divide@{Divide}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Divide()}{Divide()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Divide (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{left,  }\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{right,  }\item[{\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Divides two colours together and places the result in the destination colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source colour. \\
+\hline
+{\em right} & The right source colour. \\
+\hline
+{\em destination} & The destination colour or nullptr if a new colour is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_ad4578de486d8c375a949ef62a165d043}\label{class_flounder_1_1_colour_ad4578de486d8c375a949ef62a165d043}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Get\+Hex@{Get\+Hex}}
+\index{Get\+Hex@{Get\+Hex}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Get\+Hex()}{GetHex()}}
+{\footnotesize\ttfamily std\+::string Flounder\+::\+Colour\+::\+Get\+Hex (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the hex code from the colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source colour. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The hex code from the colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a3c2caae7bfb88e90349f1147e3e2b924}\label{class_flounder_1_1_colour_a3c2caae7bfb88e90349f1147e3e2b924}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Get\+Unit@{Get\+Unit}}
+\index{Get\+Unit@{Get\+Unit}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Get\+Unit()}{GetUnit()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Get\+Unit (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{source,  }\item[{\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets a colour representing the unit value of this colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source colour. \\
+\hline
+{\em destination} & The destination colour or nullptr if a new colour is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_ab239c66801a06621595745c63e1c64a2}\label{class_flounder_1_1_colour_ab239c66801a06621595745c63e1c64a2}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Interpolate@{Interpolate}}
+\index{Interpolate@{Interpolate}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Interpolate()}{Interpolate()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Interpolate (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{left,  }\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{right,  }\item[{float}]{blend,  }\item[{\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Interpolates between two colours and places the result in the destination colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source colour. \\
+\hline
+{\em right} & The right source colour. \\
+\hline
+{\em blend} & The blend factor. \\
+\hline
+{\em destination} & The destination colour or nullptr if a new colour is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a374401ca82651a558dd5786ebffc2512}\label{class_flounder_1_1_colour_a374401ca82651a558dd5786ebffc2512}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Length@{Length}}
+\index{Length@{Length}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Length()}{Length()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float Flounder\+::\+Colour\+::\+Length (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the length of the colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source colour. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The length of the colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a42c4eb61e3eb6b9ae29fde11e4428f9d}\label{class_flounder_1_1_colour_a42c4eb61e3eb6b9ae29fde11e4428f9d}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Length@{Length}}
+\index{Length@{Length}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Length()}{Length()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float Flounder\+::\+Colour\+::\+Length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the length of the colour. 
+
+\begin{DoxyReturn}{Returns}
+The length of the colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a5f016f570b13c76c3ac6f4b0ccc901d2}\label{class_flounder_1_1_colour_a5f016f570b13c76c3ac6f4b0ccc901d2}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Length\+Squared@{Length\+Squared}}
+\index{Length\+Squared@{Length\+Squared}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Length\+Squared()}{LengthSquared()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float Flounder\+::\+Colour\+::\+Length\+Squared (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the length squared of the colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source colour. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The length squared of the colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a4bc77aaec8c0018d8fd210558bc5728a}\label{class_flounder_1_1_colour_a4bc77aaec8c0018d8fd210558bc5728a}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Length\+Squared@{Length\+Squared}}
+\index{Length\+Squared@{Length\+Squared}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Length\+Squared()}{LengthSquared()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float Flounder\+::\+Colour\+::\+Length\+Squared (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the length squared of the colour. 
+
+\begin{DoxyReturn}{Returns}
+The length squared of the colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_ad07bbfc4a5c56a37adaf99947c88c71b}\label{class_flounder_1_1_colour_ad07bbfc4a5c56a37adaf99947c88c71b}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Multiply@{Multiply}}
+\index{Multiply@{Multiply}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Multiply()}{Multiply()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Multiply (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{left,  }\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{right,  }\item[{\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Multiplies two colours together and places the result in the destination colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source colour. \\
+\hline
+{\em right} & The right source colour. \\
+\hline
+{\em destination} & The destination colour or nullptr if a new colour is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination colour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a8747c13978f052dfcab3ded7dd26c26b}\label{class_flounder_1_1_colour_a8747c13978f052dfcab3ded7dd26c26b}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Scale@{Scale}}
+\index{Scale@{Scale}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Scale()}{Scale()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Scale (\begin{DoxyParamCaption}\item[{const float \&}]{scalar }\end{DoxyParamCaption})}
+
+
+
+Scales the colour by a scalar. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scalar} & The scaling value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a468af4678d790c13f6446b6c22d2cf6d}\label{class_flounder_1_1_colour_a468af4678d790c13f6446b6c22d2cf6d}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Set@{Set}}
+\index{Set@{Set}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Set (\begin{DoxyParamCaption}\item[{const float \&}]{r,  }\item[{const float \&}]{g,  }\item[{const float \&}]{b,  }\item[{const float \&}]{a }\end{DoxyParamCaption})}
+
+
+
+Sets values in the colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The new R value. \\
+\hline
+{\em g} & The new G value. \\
+\hline
+{\em b} & The new B value. \\
+\hline
+{\em a} & The new A value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_ab0d881f8ed0eb9f6f680988dfdf756e0}\label{class_flounder_1_1_colour_ab0d881f8ed0eb9f6f680988dfdf756e0}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Set@{Set}}
+\index{Set@{Set}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Set (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{hex,  }\item[{const float \&}]{a }\end{DoxyParamCaption})}
+
+
+
+Sets values in the colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hex} & The new values from H\+EX. \\
+\hline
+{\em a} & The new A value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a79666b8c2792951d96a244bb81917fb2}\label{class_flounder_1_1_colour_a79666b8c2792951d96a244bb81917fb2}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Set@{Set}}
+\index{Set@{Set}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Set (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Sets values in the colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source colour. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_a94933bab6cb6128f207472ec0554aeeb}\label{class_flounder_1_1_colour_a94933bab6cb6128f207472ec0554aeeb}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Set@{Set}}
+\index{Set@{Set}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Set (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Sets values in the colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_abfe987ab057d8c17cd9d18613fcee303}\label{class_flounder_1_1_colour_abfe987ab057d8c17cd9d18613fcee303}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Set@{Set}}
+\index{Set@{Set}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Set (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_vector4}{Vector4} \&}]{source }\end{DoxyParamCaption})}
+
+
+
+Sets values in the colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & The source vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_colour_adac2e9bb9d28cc0bff1cd9de3ac6180a}\label{class_flounder_1_1_colour_adac2e9bb9d28cc0bff1cd9de3ac6180a}} 
+\index{Flounder\+::\+Colour@{Flounder\+::\+Colour}!Subtract@{Subtract}}
+\index{Subtract@{Subtract}!Flounder\+::\+Colour@{Flounder\+::\+Colour}}
+\subsubsection{\texorpdfstring{Subtract()}{Subtract()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ Flounder\+::\+Colour\+::\+Subtract (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{left,  }\item[{const \hyperlink{class_flounder_1_1_colour}{Colour} \&}]{right,  }\item[{\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Subtracts two colours together and places the result in the destination colour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left} & The left source colour. \\
+\hline
+{\em right} & The right source colour. \\
+\hline
+{\em destination} & The destination colour or nullptr if a new colour is to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination colour. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/maths/Colour.\+hpp\item 
+src/maths/Colour.\+cpp\end{DoxyCompactItemize}

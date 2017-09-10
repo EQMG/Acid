@@ -1,0 +1,74 @@
+\hypertarget{class_flounder_1_1_swapchain}{}\section{Flounder\+:\+:Swapchain Class Reference}
+\label{class_flounder_1_1_swapchain}\index{Flounder\+::\+Swapchain@{Flounder\+::\+Swapchain}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a7ebb20e7ba7e0d17bf3c988e3e11545f}\label{class_flounder_1_1_swapchain_a7ebb20e7ba7e0d17bf3c988e3e11545f}} 
+void {\bfseries Create} (\hyperlink{struct_flounder_1_1_vk_swap_chain_support_details}{Vk\+Swap\+Chain\+Support\+Details} swap\+Chain\+Support)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a5dd4b3f5ca9eaa03890888ecf5785215}\label{class_flounder_1_1_swapchain_a5dd4b3f5ca9eaa03890888ecf5785215}} 
+void {\bfseries Create\+Image\+Views} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_ab19e494cbc6df5c2b75a6f9f6cd59dd8}\label{class_flounder_1_1_swapchain_ab19e494cbc6df5c2b75a6f9f6cd59dd8}} 
+void {\bfseries Create\+Framebuffers} (Vk\+Render\+Pass render\+Pass)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_ae0d35a2a5797c1a076e69ea28042fa04}\label{class_flounder_1_1_swapchain_ae0d35a2a5797c1a076e69ea28042fa04}} 
+void {\bfseries Cleanup} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_aef172042a098f3a23f2a329b11f4b427}\label{class_flounder_1_1_swapchain_aef172042a098f3a23f2a329b11f4b427}} 
+void {\bfseries Cleanup\+Framebuffers} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a96bcf17bff0de2841334f52ae56e4331}\label{class_flounder_1_1_swapchain_a96bcf17bff0de2841334f52ae56e4331}} 
+Vk\+Swapchain\+K\+HR {\bfseries Get\+Swapchain} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_ae8fb7c4acc35a89317cf181b47f18f3e}\label{class_flounder_1_1_swapchain_ae8fb7c4acc35a89317cf181b47f18f3e}} 
+size\+\_\+t {\bfseries Get\+Framebuffer\+Size} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_aef2d25fa0e4a581e653727ab3a976251}\label{class_flounder_1_1_swapchain_aef2d25fa0e4a581e653727ab3a976251}} 
+Vk\+Framebuffer {\bfseries Get\+Framebuffer} (const uint32\+\_\+t \&index) const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a7641986d11abd8a489503eb48125c81c}\label{class_flounder_1_1_swapchain_a7641986d11abd8a489503eb48125c81c}} 
+Vk\+Format {\bfseries Get\+Image\+Format} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a04b1cc37592759cde7586b8eee2d8ae6}\label{class_flounder_1_1_swapchain_a04b1cc37592759cde7586b8eee2d8ae6}} 
+Vk\+Extent2D {\bfseries Get\+Extent} () const
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a03ec5af3842787e42f8ca63cf0d46650}\label{class_flounder_1_1_swapchain_a03ec5af3842787e42f8ca63cf0d46650}} 
+Vk\+Surface\+Format\+K\+HR {\bfseries Choose\+Swap\+Surface\+Format} (const std\+::vector$<$ Vk\+Surface\+Format\+K\+HR $>$ \&available\+Formats)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a21ddec3e6644fa1eb1e139c6844c4315}\label{class_flounder_1_1_swapchain_a21ddec3e6644fa1eb1e139c6844c4315}} 
+Vk\+Present\+Mode\+K\+HR {\bfseries Choose\+Swap\+Present\+Mode} (const std\+::vector$<$ Vk\+Present\+Mode\+K\+HR $>$ available\+Present\+Modes)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a31610e19a8032281180f34409b794929}\label{class_flounder_1_1_swapchain_a31610e19a8032281180f34409b794929}} 
+Vk\+Extent2D {\bfseries Choose\+Swap\+Extent} (const Vk\+Surface\+Capabilities\+K\+HR \&capabilities)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a9db8e5429e8219e251ceed97ad035154}\label{class_flounder_1_1_swapchain_a9db8e5429e8219e251ceed97ad035154}} 
+Vk\+Swapchain\+K\+HR {\bfseries m\+\_\+swap\+Chain}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a19a98b44a56d330912932602b881d960}\label{class_flounder_1_1_swapchain_a19a98b44a56d330912932602b881d960}} 
+std\+::vector$<$ Vk\+Image $>$ {\bfseries m\+\_\+swap\+Chain\+Images}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_aa5cbbac9ff271922bc1f269f0e7aec8c}\label{class_flounder_1_1_swapchain_aa5cbbac9ff271922bc1f269f0e7aec8c}} 
+std\+::vector$<$ Vk\+Image\+View $>$ {\bfseries m\+\_\+swap\+Chain\+Image\+Views}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a4be15b4ec7cdb4d6df8440521660ae2b}\label{class_flounder_1_1_swapchain_a4be15b4ec7cdb4d6df8440521660ae2b}} 
+std\+::vector$<$ Vk\+Framebuffer $>$ {\bfseries m\+\_\+swap\+Chain\+Framebuffers}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a1ad056b9049893acfb3b2ba1ce1fce5e}\label{class_flounder_1_1_swapchain_a1ad056b9049893acfb3b2ba1ce1fce5e}} 
+Vk\+Format {\bfseries m\+\_\+swap\+Chain\+Image\+Format}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_swapchain_a37ce718aa6dc3c8cf0aca772b6d45497}\label{class_flounder_1_1_swapchain_a37ce718aa6dc3c8cf0aca772b6d45497}} 
+Vk\+Extent2D {\bfseries m\+\_\+swap\+Chain\+Extent}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/renderer/swapchain/Swapchain.\+hpp\item 
+src/renderer/swapchain/Swapchain.\+cpp\end{DoxyCompactItemize}

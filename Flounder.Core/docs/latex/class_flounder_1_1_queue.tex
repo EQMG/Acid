@@ -1,0 +1,144 @@
+\hypertarget{class_flounder_1_1_queue}{}\section{Flounder\+:\+:Queue$<$ T $>$ Class Template Reference}
+\label{class_flounder_1_1_queue}\index{Flounder\+::\+Queue$<$ T $>$@{Flounder\+::\+Queue$<$ T $>$}}
+
+
+Holds requests in a simple que.  
+
+
+
+
+{\ttfamily \#include $<$Queue.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_queue_a4680872cb4584545750a058db5fdba01}{Queue} ()
+\begin{DoxyCompactList}\small\item\em Creates a new queue. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_queue_a99c55f9408aec360fd57ce69182f4f5e}{$\sim$\+Queue} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the queue. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_queue_afbfef3392c917799a7fb36e355319e62}{Add\+Request} (T request)
+\begin{DoxyCompactList}\small\item\em Adds a new object to queue. \end{DoxyCompactList}\item 
+T \hyperlink{class_flounder_1_1_queue_a7bf75416f7fee75190cc05b7fa82599e}{Accept\+Next\+Request} ()
+\begin{DoxyCompactList}\small\item\em Gets the next item in queue and then removes it from this list. \end{DoxyCompactList}\item 
+bool \hyperlink{class_flounder_1_1_queue_a2c6e4d8630275ee76355685a5fe0d150}{Has\+Requests} ()
+\begin{DoxyCompactList}\small\item\em Gets if there are any items left in queue. \end{DoxyCompactList}\item 
+int \hyperlink{class_flounder_1_1_queue_a6e69f20bb86b6f1b941225005901e3ea}{Count} ()
+\begin{DoxyCompactList}\small\item\em Gets the number of objects in queue. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_queue_afbaa486e15b7f7b6c08dd568e75024a6}{Clear} ()
+\begin{DoxyCompactList}\small\item\em Clears the request queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_queue_af39616ab97d3f50612900b5ea565ca4c}\label{class_flounder_1_1_queue_af39616ab97d3f50612900b5ea565ca4c}} 
+std\+::vector$<$ T $>$ $\ast$ {\bfseries m\+\_\+queue}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Flounder\+::\+Queue$<$ T $>$}
+
+Holds requests in a simple que. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_queue_a4680872cb4584545750a058db5fdba01}\label{class_flounder_1_1_queue_a4680872cb4584545750a058db5fdba01}} 
+\index{Flounder\+::\+Queue@{Flounder\+::\+Queue}!Queue@{Queue}}
+\index{Queue@{Queue}!Flounder\+::\+Queue@{Flounder\+::\+Queue}}
+\subsubsection{\texorpdfstring{Queue()}{Queue()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+\hyperlink{class_flounder_1_1_queue}{Flounder\+::\+Queue}$<$ T $>$\+::\hyperlink{class_flounder_1_1_queue}{Queue} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new queue. 
+
+\mbox{\Hypertarget{class_flounder_1_1_queue_a99c55f9408aec360fd57ce69182f4f5e}\label{class_flounder_1_1_queue_a99c55f9408aec360fd57ce69182f4f5e}} 
+\index{Flounder\+::\+Queue@{Flounder\+::\+Queue}!````~Queue@{$\sim$\+Queue}}
+\index{````~Queue@{$\sim$\+Queue}!Flounder\+::\+Queue@{Flounder\+::\+Queue}}
+\subsubsection{\texorpdfstring{$\sim$\+Queue()}{~Queue()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+\hyperlink{class_flounder_1_1_queue}{Flounder\+::\+Queue}$<$ T $>$\+::$\sim$\hyperlink{class_flounder_1_1_queue}{Queue} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Deconstructor for the queue. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_queue_a7bf75416f7fee75190cc05b7fa82599e}\label{class_flounder_1_1_queue_a7bf75416f7fee75190cc05b7fa82599e}} 
+\index{Flounder\+::\+Queue@{Flounder\+::\+Queue}!Accept\+Next\+Request@{Accept\+Next\+Request}}
+\index{Accept\+Next\+Request@{Accept\+Next\+Request}!Flounder\+::\+Queue@{Flounder\+::\+Queue}}
+\subsubsection{\texorpdfstring{Accept\+Next\+Request()}{AcceptNextRequest()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+T \hyperlink{class_flounder_1_1_queue}{Flounder\+::\+Queue}$<$ T $>$\+::Accept\+Next\+Request (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the next item in queue and then removes it from this list. 
+
+\begin{DoxyReturn}{Returns}
+The next item in queue and then removes it from this list. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_queue_afbfef3392c917799a7fb36e355319e62}\label{class_flounder_1_1_queue_afbfef3392c917799a7fb36e355319e62}} 
+\index{Flounder\+::\+Queue@{Flounder\+::\+Queue}!Add\+Request@{Add\+Request}}
+\index{Add\+Request@{Add\+Request}!Flounder\+::\+Queue@{Flounder\+::\+Queue}}
+\subsubsection{\texorpdfstring{Add\+Request()}{AddRequest()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+void \hyperlink{class_flounder_1_1_queue}{Flounder\+::\+Queue}$<$ T $>$\+::Add\+Request (\begin{DoxyParamCaption}\item[{T}]{request }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a new object to queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & The object to add. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_queue_afbaa486e15b7f7b6c08dd568e75024a6}\label{class_flounder_1_1_queue_afbaa486e15b7f7b6c08dd568e75024a6}} 
+\index{Flounder\+::\+Queue@{Flounder\+::\+Queue}!Clear@{Clear}}
+\index{Clear@{Clear}!Flounder\+::\+Queue@{Flounder\+::\+Queue}}
+\subsubsection{\texorpdfstring{Clear()}{Clear()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+void \hyperlink{class_flounder_1_1_queue}{Flounder\+::\+Queue}$<$ T $>$\+::Clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Clears the request queue. 
+
+\mbox{\Hypertarget{class_flounder_1_1_queue_a6e69f20bb86b6f1b941225005901e3ea}\label{class_flounder_1_1_queue_a6e69f20bb86b6f1b941225005901e3ea}} 
+\index{Flounder\+::\+Queue@{Flounder\+::\+Queue}!Count@{Count}}
+\index{Count@{Count}!Flounder\+::\+Queue@{Flounder\+::\+Queue}}
+\subsubsection{\texorpdfstring{Count()}{Count()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+int \hyperlink{class_flounder_1_1_queue}{Flounder\+::\+Queue}$<$ T $>$\+::Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the number of objects in queue. 
+
+\begin{DoxyReturn}{Returns}
+The number of objects in queue. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_queue_a2c6e4d8630275ee76355685a5fe0d150}\label{class_flounder_1_1_queue_a2c6e4d8630275ee76355685a5fe0d150}} 
+\index{Flounder\+::\+Queue@{Flounder\+::\+Queue}!Has\+Requests@{Has\+Requests}}
+\index{Has\+Requests@{Has\+Requests}!Flounder\+::\+Queue@{Flounder\+::\+Queue}}
+\subsubsection{\texorpdfstring{Has\+Requests()}{HasRequests()}}
+{\footnotesize\ttfamily template$<$typename T$>$ \\
+bool \hyperlink{class_flounder_1_1_queue}{Flounder\+::\+Queue}$<$ T $>$\+::Has\+Requests (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets if there are any items left in queue. 
+
+\begin{DoxyReturn}{Returns}
+Returns true if there are any items left in queue. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/processing/Queue.\+hpp\end{DoxyCompactItemize}

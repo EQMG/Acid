@@ -1,0 +1,112 @@
+\hypertarget{class_flounder_1_1_driver_slide}{}\section{Flounder\+:\+:Driver\+Slide Class Reference}
+\label{class_flounder_1_1_driver_slide}\index{Flounder\+::\+Driver\+Slide@{Flounder\+::\+Driver\+Slide}}
+
+
+A driver that slides to its destination using cosine interpolation.  
+
+
+
+
+{\ttfamily \#include $<$Driver\+Slide.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Driver\+Slide\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_driver_slide}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_driver_slide_ab0da83a97d2f15f50900afa16c0ec965}{Driver\+Slide} (const float \&start, const float \&end, const float \&length)
+\begin{DoxyCompactList}\small\item\em Creates a new slide driver. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_driver_slide_a6c3c2e6298eea6606497a63f90729118}{$\sim$\+Driver\+Slide} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for slide driver. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{class_flounder_1_1_driver_slide_a32dcca0cbd41ff1c4e5e4eb494f4cf07}{Calculate} (const float \&time) override
+\begin{DoxyCompactList}\small\item\em Calculates the new value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_driver_slide_a0f64cafffebe7852d3567ac0e89403d2}\label{class_flounder_1_1_driver_slide_a0f64cafffebe7852d3567ac0e89403d2}} 
+float {\bfseries m\+\_\+start}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_driver_slide_a4bbaac98e49f66d8e5a3cdc741fbb512}\label{class_flounder_1_1_driver_slide_a4bbaac98e49f66d8e5a3cdc741fbb512}} 
+float {\bfseries m\+\_\+end}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_driver_slide_ad7f4f0b16588995124f38f4bfe41649e}\label{class_flounder_1_1_driver_slide_ad7f4f0b16588995124f38f4bfe41649e}} 
+float {\bfseries m\+\_\+max}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_driver_slide_a172621882fdf2827a66e9101eb67588e}\label{class_flounder_1_1_driver_slide_a172621882fdf2827a66e9101eb67588e}} 
+bool {\bfseries m\+\_\+reached\+Target}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A driver that slides to its destination using cosine interpolation. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_driver_slide_ab0da83a97d2f15f50900afa16c0ec965}\label{class_flounder_1_1_driver_slide_ab0da83a97d2f15f50900afa16c0ec965}} 
+\index{Flounder\+::\+Driver\+Slide@{Flounder\+::\+Driver\+Slide}!Driver\+Slide@{Driver\+Slide}}
+\index{Driver\+Slide@{Driver\+Slide}!Flounder\+::\+Driver\+Slide@{Flounder\+::\+Driver\+Slide}}
+\subsubsection{\texorpdfstring{Driver\+Slide()}{DriverSlide()}}
+{\footnotesize\ttfamily Flounder\+::\+Driver\+Slide\+::\+Driver\+Slide (\begin{DoxyParamCaption}\item[{const float \&}]{start,  }\item[{const float \&}]{end,  }\item[{const float \&}]{length }\end{DoxyParamCaption})}
+
+
+
+Creates a new slide driver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & The start value. \\
+\hline
+{\em end} & The end value. \\
+\hline
+{\em length} & The time to get to the end value. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_driver_slide_a6c3c2e6298eea6606497a63f90729118}\label{class_flounder_1_1_driver_slide_a6c3c2e6298eea6606497a63f90729118}} 
+\index{Flounder\+::\+Driver\+Slide@{Flounder\+::\+Driver\+Slide}!````~Driver\+Slide@{$\sim$\+Driver\+Slide}}
+\index{````~Driver\+Slide@{$\sim$\+Driver\+Slide}!Flounder\+::\+Driver\+Slide@{Flounder\+::\+Driver\+Slide}}
+\subsubsection{\texorpdfstring{$\sim$\+Driver\+Slide()}{~DriverSlide()}}
+{\footnotesize\ttfamily Flounder\+::\+Driver\+Slide\+::$\sim$\+Driver\+Slide (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for slide driver. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_driver_slide_a32dcca0cbd41ff1c4e5e4eb494f4cf07}\label{class_flounder_1_1_driver_slide_a32dcca0cbd41ff1c4e5e4eb494f4cf07}} 
+\index{Flounder\+::\+Driver\+Slide@{Flounder\+::\+Driver\+Slide}!Calculate@{Calculate}}
+\index{Calculate@{Calculate}!Flounder\+::\+Driver\+Slide@{Flounder\+::\+Driver\+Slide}}
+\subsubsection{\texorpdfstring{Calculate()}{Calculate()}}
+{\footnotesize\ttfamily float Flounder\+::\+Driver\+Slide\+::\+Calculate (\begin{DoxyParamCaption}\item[{const float \&}]{time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Calculates the new value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & The time into the drivers life. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The calculated value. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_driver_a969f0c8da089f9d17129ee12b40c354a}{Flounder\+::\+I\+Driver}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/visual/Driver\+Slide.\+hpp\item 
+src/visual/Driver\+Slide.\+cpp\end{DoxyCompactItemize}

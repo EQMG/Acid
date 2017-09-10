@@ -1,0 +1,118 @@
+\hypertarget{class_flounder_1_1_button_mouse}{}\section{Flounder\+:\+:Button\+Mouse Class Reference}
+\label{class_flounder_1_1_button_mouse}\index{Flounder\+::\+Button\+Mouse@{Flounder\+::\+Button\+Mouse}}
+
+
+Button from a mouse.  
+
+
+
+
+{\ttfamily \#include $<$Button\+Mouse.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Button\+Mouse\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_button_mouse}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_button_mouse_a88a82b1feb4c10ea48349ddb4eeb3f7b}{Button\+Mouse} (const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Creates a new button mouse. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_button_mouse_a0097f606ff098d235026d85d013cbb29}{$\sim$\+Button\+Mouse} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the button mouse. \end{DoxyCompactList}\item 
+bool \hyperlink{class_flounder_1_1_button_mouse_aae2c553f4d3dabf948a5c6b6dd3b3c28}{Is\+Down} () const override
+\begin{DoxyCompactList}\small\item\em Returns whether this button is currently pressed. \end{DoxyCompactList}\item 
+bool \hyperlink{class_flounder_1_1_button_mouse_ae64500e920907de796d8e57a07c9fef0}{Was\+Down} () override
+\begin{DoxyCompactList}\small\item\em Gets if the key is down and was not down before. Key press recognized as one click. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_button_mouse_a115960fb31300a9f63ca8d904c8667a3}\label{class_flounder_1_1_button_mouse_a115960fb31300a9f63ca8d904c8667a3}} 
+int {\bfseries m\+\_\+count}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_button_mouse_a86470f423153f42c0c6dd2032ee41dbe}\label{class_flounder_1_1_button_mouse_a86470f423153f42c0c6dd2032ee41dbe}} 
+int $\ast$ {\bfseries m\+\_\+buttons}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_button_mouse_adef425aef45c115347f705f385ddf7e3}\label{class_flounder_1_1_button_mouse_adef425aef45c115347f705f385ddf7e3}} 
+bool {\bfseries m\+\_\+was\+Down}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Button from a mouse. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_button_mouse_a88a82b1feb4c10ea48349ddb4eeb3f7b}\label{class_flounder_1_1_button_mouse_a88a82b1feb4c10ea48349ddb4eeb3f7b}} 
+\index{Flounder\+::\+Button\+Mouse@{Flounder\+::\+Button\+Mouse}!Button\+Mouse@{Button\+Mouse}}
+\index{Button\+Mouse@{Button\+Mouse}!Flounder\+::\+Button\+Mouse@{Flounder\+::\+Button\+Mouse}}
+\subsubsection{\texorpdfstring{Button\+Mouse()}{ButtonMouse()}}
+{\footnotesize\ttfamily Flounder\+::\+Button\+Mouse\+::\+Button\+Mouse (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Creates a new button mouse. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number buttons of mouse buttons being checked. \\
+\hline
+{\em ...} & The buttons on the mouse being checked. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_button_mouse_a0097f606ff098d235026d85d013cbb29}\label{class_flounder_1_1_button_mouse_a0097f606ff098d235026d85d013cbb29}} 
+\index{Flounder\+::\+Button\+Mouse@{Flounder\+::\+Button\+Mouse}!````~Button\+Mouse@{$\sim$\+Button\+Mouse}}
+\index{````~Button\+Mouse@{$\sim$\+Button\+Mouse}!Flounder\+::\+Button\+Mouse@{Flounder\+::\+Button\+Mouse}}
+\subsubsection{\texorpdfstring{$\sim$\+Button\+Mouse()}{~ButtonMouse()}}
+{\footnotesize\ttfamily Flounder\+::\+Button\+Mouse\+::$\sim$\+Button\+Mouse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the button mouse. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_button_mouse_aae2c553f4d3dabf948a5c6b6dd3b3c28}\label{class_flounder_1_1_button_mouse_aae2c553f4d3dabf948a5c6b6dd3b3c28}} 
+\index{Flounder\+::\+Button\+Mouse@{Flounder\+::\+Button\+Mouse}!Is\+Down@{Is\+Down}}
+\index{Is\+Down@{Is\+Down}!Flounder\+::\+Button\+Mouse@{Flounder\+::\+Button\+Mouse}}
+\subsubsection{\texorpdfstring{Is\+Down()}{IsDown()}}
+{\footnotesize\ttfamily bool Flounder\+::\+Button\+Mouse\+::\+Is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns whether this button is currently pressed. 
+
+\begin{DoxyReturn}{Returns}
+True if the button is pressed, false otherwise. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_button_a264519250d835422748bcc1af9be38e3}{Flounder\+::\+I\+Button}.
+
+\mbox{\Hypertarget{class_flounder_1_1_button_mouse_ae64500e920907de796d8e57a07c9fef0}\label{class_flounder_1_1_button_mouse_ae64500e920907de796d8e57a07c9fef0}} 
+\index{Flounder\+::\+Button\+Mouse@{Flounder\+::\+Button\+Mouse}!Was\+Down@{Was\+Down}}
+\index{Was\+Down@{Was\+Down}!Flounder\+::\+Button\+Mouse@{Flounder\+::\+Button\+Mouse}}
+\subsubsection{\texorpdfstring{Was\+Down()}{WasDown()}}
+{\footnotesize\ttfamily bool Flounder\+::\+Button\+Mouse\+::\+Was\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets if the key is down and was not down before. Key press recognized as one click. 
+
+\begin{DoxyReturn}{Returns}
+Is the key down and was not down before? 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_button_af31c7669349991fe6a57beb8bd42c5b2}{Flounder\+::\+I\+Button}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/inputs/Button\+Mouse.\+hpp\item 
+src/inputs/Button\+Mouse.\+cpp\end{DoxyCompactItemize}

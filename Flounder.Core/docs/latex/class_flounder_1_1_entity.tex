@@ -1,0 +1,99 @@
+\hypertarget{class_flounder_1_1_entity}{}\section{Flounder\+:\+:Entity Class Reference}
+\label{class_flounder_1_1_entity}\index{Flounder\+::\+Entity@{Flounder\+::\+Entity}}
+Inheritance diagram for Flounder\+:\+:Entity\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_entity}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a121e5a73dbdbb864d77cd1c4fb62a8ff}\label{class_flounder_1_1_entity_a121e5a73dbdbb864d77cd1c4fb62a8ff}} 
+{\bfseries Entity} (\hyperlink{class_flounder_1_1_i_spatial_structure}{I\+Spatial\+Structure}$<$ \hyperlink{class_flounder_1_1_entity}{Entity} $\ast$$>$ $\ast$structure, const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&position, const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&rotation)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a4870c9e8e72483706e6528222654bf10}\label{class_flounder_1_1_entity_a4870c9e8e72483706e6528222654bf10}} 
+void {\bfseries Update} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_af64e70f38f002a34681dd8947f0b039b}\label{class_flounder_1_1_entity_af64e70f38f002a34681dd8947f0b039b}} 
+\hyperlink{class_flounder_1_1_i_spatial_structure}{I\+Spatial\+Structure}$<$ \hyperlink{class_flounder_1_1_entity}{Entity} $\ast$ $>$ $\ast$ {\bfseries Get\+Structure} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a4e81badaec3c506c1709b259b23f280d}\label{class_flounder_1_1_entity_a4e81badaec3c506c1709b259b23f280d}} 
+void {\bfseries Move\+Structure} (\hyperlink{class_flounder_1_1_i_spatial_structure}{I\+Spatial\+Structure}$<$ \hyperlink{class_flounder_1_1_entity}{Entity} $\ast$$>$ $\ast$structure)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a6ed0a90370d4cd5b98109a8620b50531}\label{class_flounder_1_1_entity_a6ed0a90370d4cd5b98109a8620b50531}} 
+std\+::vector$<$ \hyperlink{class_flounder_1_1_i_component}{I\+Component} $\ast$ $>$ $\ast$ {\bfseries Get\+Components} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_aab59b8c5442df860dd9a47acd0360381}\label{class_flounder_1_1_entity_aab59b8c5442df860dd9a47acd0360381}} 
+void {\bfseries Add\+Component} (\hyperlink{class_flounder_1_1_i_component}{I\+Component} $\ast$component)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a13fe0fd68438ec1030ea3242669616d9}\label{class_flounder_1_1_entity_a13fe0fd68438ec1030ea3242669616d9}} 
+void {\bfseries Remove\+Component} (\hyperlink{class_flounder_1_1_i_component}{I\+Component} $\ast$component)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a1703808379fe5f74d9af280a1669bdc2}\label{class_flounder_1_1_entity_a1703808379fe5f74d9af280a1669bdc2}} 
+{\footnotesize template$<$class t $>$ }\\t {\bfseries Get\+Component} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_ac515a778b382189a2e46de7613c82e3c}\label{class_flounder_1_1_entity_ac515a778b382189a2e46de7613c82e3c}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries Get\+Position} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_ad8b3c3b3aa8a6263b5d08d0948d0d46b}\label{class_flounder_1_1_entity_ad8b3c3b3aa8a6263b5d08d0948d0d46b}} 
+void {\bfseries Set\+Position} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&position) const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a57cd2fa3934c35ef09c4f5a54ca7b030}\label{class_flounder_1_1_entity_a57cd2fa3934c35ef09c4f5a54ca7b030}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries Get\+Rotation} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a309ede132c8c9e984840488cf91dd0ac}\label{class_flounder_1_1_entity_a309ede132c8c9e984840488cf91dd0ac}} 
+void {\bfseries Set\+Rotation} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&rotation) const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_aaafa65500ae260523967d94d990ce4f4}\label{class_flounder_1_1_entity_aaafa65500ae260523967d94d990ce4f4}} 
+bool {\bfseries Get\+Removed} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_af5dac562011b0939fcbdf7a277d8b794}\label{class_flounder_1_1_entity_af5dac562011b0939fcbdf7a277d8b794}} 
+void {\bfseries Remove} ()
+\item 
+\hyperlink{class_flounder_1_1_i_collider}{I\+Collider} $\ast$ \hyperlink{class_flounder_1_1_entity_ae56c103b9af5861733701dca4f30cee9}{Get\+Collider} () override
+\begin{DoxyCompactList}\small\item\em Gets the shape that fully encloses the object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a9c80de90d69553e4956a05d473c3091b}\label{class_flounder_1_1_entity_a9c80de90d69553e4956a05d473c3091b}} 
+\hyperlink{class_flounder_1_1_i_spatial_structure}{I\+Spatial\+Structure}$<$ \hyperlink{class_flounder_1_1_entity}{Entity} $\ast$ $>$ $\ast$ {\bfseries m\+\_\+structure}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a4c608af981d396f93b02283a54e73707}\label{class_flounder_1_1_entity_a4c608af981d396f93b02283a54e73707}} 
+std\+::vector$<$ \hyperlink{class_flounder_1_1_i_component}{I\+Component} $\ast$ $>$ $\ast$ {\bfseries m\+\_\+components}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a9508453a40dab4bbd010e1509a68085c}\label{class_flounder_1_1_entity_a9508453a40dab4bbd010e1509a68085c}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries m\+\_\+position}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_a0bbb2634a0945fb72c4592768766a867}\label{class_flounder_1_1_entity_a0bbb2634a0945fb72c4592768766a867}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries m\+\_\+rotation}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_entity_aa142c969240c448b714edcc9c7caded3}\label{class_flounder_1_1_entity_aa142c969240c448b714edcc9c7caded3}} 
+bool {\bfseries m\+\_\+removed}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_entity_ae56c103b9af5861733701dca4f30cee9}\label{class_flounder_1_1_entity_ae56c103b9af5861733701dca4f30cee9}} 
+\index{Flounder\+::\+Entity@{Flounder\+::\+Entity}!Get\+Collider@{Get\+Collider}}
+\index{Get\+Collider@{Get\+Collider}!Flounder\+::\+Entity@{Flounder\+::\+Entity}}
+\subsubsection{\texorpdfstring{Get\+Collider()}{GetCollider()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_i_collider}{I\+Collider} $\ast$ Flounder\+::\+Entity\+::\+Get\+Collider (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets the shape that fully encloses the object. 
+
+\begin{DoxyReturn}{Returns}
+Returns a shape fully enclosing the object. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_spatial_object_ae1e28211dc94c4229baf284ea10ff556}{Flounder\+::\+I\+Spatial\+Object}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/entities/Entity.\+hpp\item 
+src/entities/Entity.\+cpp\end{DoxyCompactItemize}

@@ -41,8 +41,8 @@ Preprocessor Definitions:
  * FLOUNDER_VERBOSE: Enables verbose logging.
  * FLOUNDER_CONFIG_DEBUG or FLOUNDER_CONFIG_RELEASE: Compiling in release or debug mode.
 
-[Read the autogen docs](https://equilibrium-games.github.io/Flounder/html/namespaceflounder.html)
+[Read the autogen docs](https://equilibrium-games.github.io/Flounder/Flounder.Core/docs/html/namespace_flounder.html)
 
-[Code metrics](https://equilibrium-games.github.io/Flounder/loc/LocMetrics.html)
+[Code metrics](https://equilibrium-games.github.io/Flounder/Flounder.Core/docs/loc/LocMetrics.html)
 
 [Read more on our website](https://equilibrium.games)

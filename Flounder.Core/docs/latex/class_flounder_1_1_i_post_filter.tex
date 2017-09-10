@@ -1,0 +1,187 @@
+\hypertarget{class_flounder_1_1_i_post_filter}{}\section{Flounder\+:\+:I\+Post\+Filter Class Reference}
+\label{class_flounder_1_1_i_post_filter}\index{Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}}
+
+
+Represents a post effect shader and on application saves the result into a fbo.  
+
+
+
+
+{\ttfamily \#include $<$I\+Post\+Filter.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:I\+Post\+Filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{class_flounder_1_1_i_post_filter}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_i_post_filter_a5a145e57372c65d47af3c8c6f45feb76}{I\+Post\+Filter} (const std\+::string \&filter\+Name, const std\+::string \&fragment\+Shader, Fbo $\ast$fbo=new Fbo(true, 1.\+0f))
+\begin{DoxyCompactList}\small\item\em Creates a new post effect filter \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_i_post_filter_ab65fc745b64181b76e30f0b5f1f959f1}{I\+Post\+Filter} (\hyperlink{class_flounder_1_1_shader}{Shader} $\ast$shader, Fbo $\ast$fbo)
+\begin{DoxyCompactList}\small\item\em Creates a new post effect filter \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_i_post_filter_af153499061464fdc9e19814f1fd755c4}{I\+Post\+Filter} (\hyperlink{class_flounder_1_1_shader}{Shader} $\ast$shader)
+\begin{DoxyCompactList}\small\item\em Creates a new post effect filter \end{DoxyCompactList}\item 
+virtual \hyperlink{class_flounder_1_1_i_post_filter_a2aed88c344d7357253b85e107f92bd59}{$\sim$\+I\+Post\+Filter} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the post filter. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_i_post_filter_a81ba69d6b7e70d120db82b9e8ed6a22a}{Apply\+Filter} (const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Renders the filter to its fbo. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_i_post_filter_a634481cffc144c76c4e422c89c1f331a}{Apply\+Filter} (const int n\+\_\+args, va\+\_\+list args)
+\begin{DoxyCompactList}\small\item\em Renders the filter to its fbo. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_flounder_1_1_i_post_filter_a20420ec0a9bac67437740552bea9ab74}{Store\+Values} ()=0
+\begin{DoxyCompactList}\small\item\em Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started. \end{DoxyCompactList}\item 
+Fbo $\ast$ \hyperlink{class_flounder_1_1_i_post_filter_a9b48c22748de5b609615aa8f4a6ee8ab}{Get\+Fbo} () const
+\begin{DoxyCompactList}\small\item\em Gets the fbo the filter rendered into. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_ac3984987ec5a563a52de5f1da402d93d}\label{class_flounder_1_1_i_post_filter_ac3984987ec5a563a52de5f1da402d93d}} 
+\hyperlink{class_flounder_1_1_shader}{Shader} $\ast$ {\bfseries m\+\_\+shader}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_a5eed66e608ca135f4ebf8a7b9179575b}\label{class_flounder_1_1_i_post_filter_a5eed66e608ca135f4ebf8a7b9179575b}} 
+Fbo $\ast$ {\bfseries m\+\_\+fbo}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_a282f7f9169a179e5385192e4dd553fef}\label{class_flounder_1_1_i_post_filter_a282f7f9169a179e5385192e4dd553fef}} 
+\hyperlink{class_flounder_1_1_model}{Model} $\ast$ {\bfseries m\+\_\+model}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a post effect shader and on application saves the result into a fbo. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_a5a145e57372c65d47af3c8c6f45feb76}\label{class_flounder_1_1_i_post_filter_a5a145e57372c65d47af3c8c6f45feb76}} 
+\index{Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}!I\+Post\+Filter@{I\+Post\+Filter}}
+\index{I\+Post\+Filter@{I\+Post\+Filter}!Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}}
+\subsubsection{\texorpdfstring{I\+Post\+Filter()}{IPostFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Flounder\+::\+I\+Post\+Filter\+::\+I\+Post\+Filter (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filter\+Name,  }\item[{const std\+::string \&}]{fragment\+Shader,  }\item[{Fbo $\ast$}]{fbo = {\ttfamily new~Fbo(true,~1.0f)} }\end{DoxyParamCaption})}
+
+
+
+Creates a new post effect filter 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filter\+Name} & The name for the filter. \\
+\hline
+{\em fragment\+Shader} & The fragment shader file. \\
+\hline
+{\em fbo} & The fbo to render into. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_ab65fc745b64181b76e30f0b5f1f959f1}\label{class_flounder_1_1_i_post_filter_ab65fc745b64181b76e30f0b5f1f959f1}} 
+\index{Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}!I\+Post\+Filter@{I\+Post\+Filter}}
+\index{I\+Post\+Filter@{I\+Post\+Filter}!Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}}
+\subsubsection{\texorpdfstring{I\+Post\+Filter()}{IPostFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Flounder\+::\+I\+Post\+Filter\+::\+I\+Post\+Filter (\begin{DoxyParamCaption}\item[{\hyperlink{class_flounder_1_1_shader}{Shader} $\ast$}]{shader,  }\item[{Fbo $\ast$}]{fbo }\end{DoxyParamCaption})}
+
+
+
+Creates a new post effect filter 
+
+
+\begin{DoxyParams}{Parameters}
+{\em shader} & The shader for the filter. \\
+\hline
+{\em fbo} & The fbo to render into. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_af153499061464fdc9e19814f1fd755c4}\label{class_flounder_1_1_i_post_filter_af153499061464fdc9e19814f1fd755c4}} 
+\index{Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}!I\+Post\+Filter@{I\+Post\+Filter}}
+\index{I\+Post\+Filter@{I\+Post\+Filter}!Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}}
+\subsubsection{\texorpdfstring{I\+Post\+Filter()}{IPostFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Flounder\+::\+I\+Post\+Filter\+::\+I\+Post\+Filter (\begin{DoxyParamCaption}\item[{\hyperlink{class_flounder_1_1_shader}{Shader} $\ast$}]{shader }\end{DoxyParamCaption})}
+
+
+
+Creates a new post effect filter 
+
+
+\begin{DoxyParams}{Parameters}
+{\em shader} & The shader for the filter. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_a2aed88c344d7357253b85e107f92bd59}\label{class_flounder_1_1_i_post_filter_a2aed88c344d7357253b85e107f92bd59}} 
+\index{Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}!````~I\+Post\+Filter@{$\sim$\+I\+Post\+Filter}}
+\index{````~I\+Post\+Filter@{$\sim$\+I\+Post\+Filter}!Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}}
+\subsubsection{\texorpdfstring{$\sim$\+I\+Post\+Filter()}{~IPostFilter()}}
+{\footnotesize\ttfamily Flounder\+::\+I\+Post\+Filter\+::$\sim$\+I\+Post\+Filter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Deconstructor for the post filter. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_a81ba69d6b7e70d120db82b9e8ed6a22a}\label{class_flounder_1_1_i_post_filter_a81ba69d6b7e70d120db82b9e8ed6a22a}} 
+\index{Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}!Apply\+Filter@{Apply\+Filter}}
+\index{Apply\+Filter@{Apply\+Filter}!Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}}
+\subsubsection{\texorpdfstring{Apply\+Filter()}{ApplyFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Flounder\+::\+I\+Post\+Filter\+::\+Apply\+Filter (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Renders the filter to its fbo. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being bound to the shader. \\
+\hline
+{\em ...} & The textures being bound to the shader. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_a634481cffc144c76c4e422c89c1f331a}\label{class_flounder_1_1_i_post_filter_a634481cffc144c76c4e422c89c1f331a}} 
+\index{Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}!Apply\+Filter@{Apply\+Filter}}
+\index{Apply\+Filter@{Apply\+Filter}!Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}}
+\subsubsection{\texorpdfstring{Apply\+Filter()}{ApplyFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Flounder\+::\+I\+Post\+Filter\+::\+Apply\+Filter (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{va\+\_\+list}]{args }\end{DoxyParamCaption})}
+
+
+
+Renders the filter to its fbo. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being bound to the shader. \\
+\hline
+{\em ...} & The textures being bound to the shader. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_a9b48c22748de5b609615aa8f4a6ee8ab}\label{class_flounder_1_1_i_post_filter_a9b48c22748de5b609615aa8f4a6ee8ab}} 
+\index{Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}!Get\+Fbo@{Get\+Fbo}}
+\index{Get\+Fbo@{Get\+Fbo}!Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}}
+\subsubsection{\texorpdfstring{Get\+Fbo()}{GetFbo()}}
+{\footnotesize\ttfamily Fbo$\ast$ Flounder\+::\+I\+Post\+Filter\+::\+Get\+Fbo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the fbo the filter rendered into. 
+
+\begin{DoxyReturn}{Returns}
+The fbo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_i_post_filter_a20420ec0a9bac67437740552bea9ab74}\label{class_flounder_1_1_i_post_filter_a20420ec0a9bac67437740552bea9ab74}} 
+\index{Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}!Store\+Values@{Store\+Values}}
+\index{Store\+Values@{Store\+Values}!Flounder\+::\+I\+Post\+Filter@{Flounder\+::\+I\+Post\+Filter}}
+\subsubsection{\texorpdfstring{Store\+Values()}{StoreValues()}}
+{\footnotesize\ttfamily virtual void Flounder\+::\+I\+Post\+Filter\+::\+Store\+Values (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started. 
+
+
+
+Implemented in \hyperlink{class_flounder_1_1_filter_blur_horizontal_ad08698d066532bee9660cd80c42cac60}{Flounder\+::\+Filter\+Blur\+Horizontal}, \hyperlink{class_flounder_1_1_filter_blur_vertical_af3c9f462370e127b58636b8de79c341e}{Flounder\+::\+Filter\+Blur\+Vertical}, \hyperlink{class_flounder_1_1_filter_crt_a79cb3ff1010f5292f0548c0d10ba1772}{Flounder\+::\+Filter\+Crt}, \hyperlink{class_flounder_1_1_filter_lensflare_ae597fe90e24f1f2df20c0dec51ea423c}{Flounder\+::\+Filter\+Lensflare}, \hyperlink{class_flounder_1_1_filter_tiltshift_a0131c0901e648cff5ee3e3239f04e8e5}{Flounder\+::\+Filter\+Tiltshift}, \hyperlink{class_flounder_1_1_filter_darken_a6c9ef0c04873788ddbd4b4a458598377}{Flounder\+::\+Filter\+Darken}, \hyperlink{class_flounder_1_1_filter_motion_ab3260386a2a7ffc8a3aaa61ab910df82}{Flounder\+::\+Filter\+Motion}, \hyperlink{class_flounder_1_1_filter_wobble_a678972a9832e8c750b7bd09979f342fa}{Flounder\+::\+Filter\+Wobble}, \hyperlink{class_flounder_1_1_filter_combine_af35e32eed5f1f9146e2189e6ca6c33c9}{Flounder\+::\+Filter\+Combine}, \hyperlink{class_flounder_1_1_filter_pixel_a284c86691c5919ac56452580e9047658}{Flounder\+::\+Filter\+Pixel}, \hyperlink{class_flounder_1_1_filter_fxaa_a42f51b22b3a521ecdbf7dc9a2eb3ed36}{Flounder\+::\+Filter\+Fxaa}, \hyperlink{class_flounder_1_1_filter_grain_a5cf7471f57b7a64c47bfe8a8b8f6dd01}{Flounder\+::\+Filter\+Grain}, \hyperlink{class_flounder_1_1_filter_default_a60d41f425dcd5ee4666d99254da49062}{Flounder\+::\+Filter\+Default}, \hyperlink{class_flounder_1_1_filter_bloom1_a4fcb30bf2d44114a4c555705d6325bee}{Flounder\+::\+Filter\+Bloom1}, \hyperlink{class_flounder_1_1_filter_bloom2_ac7f5afadcf4a20e888a8cb5c1399fbeb}{Flounder\+::\+Filter\+Bloom2}, \hyperlink{class_flounder_1_1_filter_emboss_a9c4275819e1a997423c808669bede6a9}{Flounder\+::\+Filter\+Emboss}, \hyperlink{class_flounder_1_1_filter_grey_a4ba89cfb0b79ffd5bc94248234613520}{Flounder\+::\+Filter\+Grey}, \hyperlink{class_flounder_1_1_filter_negative_a3e2fd36c8f1eaf14fa1f3bd0f2f0fca7}{Flounder\+::\+Filter\+Negative}, \hyperlink{class_flounder_1_1_filter_sepia_a8c0aaa5c7835787c8418b51def1f5bda}{Flounder\+::\+Filter\+Sepia}, and \hyperlink{class_flounder_1_1_filter_tone_a384b8c2fd7605bc0cc04be7be9d3eb68}{Flounder\+::\+Filter\+Tone}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/post/I\+Post\+Filter.\+hpp\item 
+src/post/I\+Post\+Filter.\+cpp\end{DoxyCompactItemize}
