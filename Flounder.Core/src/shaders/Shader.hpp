@@ -6,9 +6,9 @@
 #include <stdarg.h>
 
 #include "../devices/Display.hpp"
-#include "../helpers/helperfile.hpp"
-#include "../helpers/helperstring.hpp"
-#include "../maths/colour.hpp"
+#include "../helpers/HelperFile.hpp"
+#include "../helpers/HelperString.hpp"
+#include "../maths/Colour.hpp"
 #include "../maths/Matrix2.hpp"
 #include "../maths/Matrix3.hpp"
 #include "../maths/Matrix4.hpp"
@@ -16,20 +16,20 @@
 #include "../maths/Vector3.hpp"
 #include "../maths/Vector4.hpp"
 
-#include "shadertype.hpp"
+#include "ShaderType.hpp"
 
 namespace Flounder
 {
-	class texture;
+	class Texture;
 
 	/// <summary>
 	/// Class that represents a loaded shader.
 	/// </summary>
-	class shader
+	class Shader
 	{
 	private:
 		std::string m_name;
-		std::vector<shadertype> *m_types;
+		std::vector<ShaderType> *m_types;
 		std::vector<VkShaderModule> *m_modules;
 		std::vector<VkPipelineShaderStageCreateInfo> *m_stages;
 	public:
@@ -39,24 +39,24 @@ namespace Flounder
 		/// <param name="name"> The shaders name. </param>
 		/// <param name="n_args"> The number of shader types. </param>
 		/// <param name="..."> The list of shader types. </param>
-		shader(const std::string &name, const int n_args, ...);
+		Shader(const std::string &name, const int n_args, ...);
 
 		/// <summary>
 		/// Deconstructor for the shader.
 		/// </summary>
-		~shader();
+		~Shader();
 
 		/// <summary>
 		/// Gets the loaded name for the shader.
 		/// </summary>
 		/// <returns> The shaders name. </returns>
-		std::string &getName() { return m_name; }
+		std::string GetName() const { return m_name; }
 
-		std::vector<VkPipelineShaderStageCreateInfo> *getStages() const { return m_stages; }
+		std::vector<VkPipelineShaderStageCreateInfo> *GetStages() const { return m_stages; }
 	private:
 		/// <summary>
 		/// Creates the shader.
 		/// </summary>
-		void loadShader();
+		void LoadShader() const;
 	};
 }

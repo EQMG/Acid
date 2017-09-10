@@ -11,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a virtual cursor that will be used to determine if a ui action was preformed by a device.
 	/// </summary>
-	class uiselector
+	class UiSelector
 	{
 	private:
 		float m_cursorX;
@@ -32,9 +32,9 @@ namespace Flounder
 		ButtonJoystick *m_joystickLeft;
 		ButtonJoystick *m_joystickRight;
 	public:
-		uiselector();
+		UiSelector();
 
-		~uiselector();
+		~UiSelector();
 
 		/// <summary>
 		/// Sets up the joystick settings to be used for controlling the virtual cursor.
@@ -44,9 +44,9 @@ namespace Flounder
 		/// <param name="joystickRightClick"> The joystick key to be used as the right click. </param>
 		/// <param name="joystickAxisX"> The joystick axis to be used for moving the x axis. </param>
 		/// <param name="joystickAxisY"> The joystick axis to be used for moving the y axis. </param>
-		void load(const int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY);
+		void Load(const int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY);
 
-		void update(const bool &paused);
+		void Update(const bool &paused);
 
 		/// <summary>
 		/// Gets if the object provided has the cursor hovered above it.
@@ -54,20 +54,20 @@ namespace Flounder
 		/// <param name="object"> The object to check with.
 		/// </param>
 		/// <returns> If the object has the cursor inside of its box. </returns>
-		bool isSelected(const UiObject &object);
+		bool IsSelected(const UiObject &object) const;
 
-		void cancelWasEvent();
+		void CancelWasEvent();
 
-		float getCursorX() { return m_cursorX; }
+		float GetCursorX() const { return m_cursorX; }
 
-		float getCursorY() { return m_cursorY; }
+		float GetCursorY() const { return m_cursorY; }
 
-		bool getLeftClick() { return m_leftClick; }
+		bool GetLeftClick() const { return m_leftClick; }
 
-		bool getRightClick() { return m_rightClick; }
+		bool GetRightClick() const { return m_rightClick; }
 
-		bool wasLeftClick() { return m_leftWasClick; }
+		bool wasLeftClick() const { return m_leftWasClick; }
 
-		bool wasRightClick() { return m_rightWasClick; }
+		bool wasRightClick() const { return m_rightWasClick; }
 	};
 }

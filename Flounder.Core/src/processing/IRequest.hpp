@@ -5,20 +5,20 @@ namespace Flounder
 	/// <summary>
 	/// Interface for executable requests.
 	/// </summary>
-	class irequest
+	class IRequest
 	{
 	public:
 		/// <summary>
 		/// Creates a new request.
 		/// </summary>
-		irequest()
+		IRequest()
 		{
 		}
 
 		/// <summary>
 		/// Deconstructor for the request.
 		/// </summary>
-		virtual ~irequest()
+		virtual ~IRequest()
 		{
 		}
 
@@ -26,6 +26,6 @@ namespace Flounder
 		/// Gets the request id.
 		/// </summary>
 		/// <returns> The request id used. </returns>
-		virtual int getRequestId() = 0;
+		virtual int GetRequestId() = 0;
 	};
 }

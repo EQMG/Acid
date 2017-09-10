@@ -1,30 +1,30 @@
 #pragma once
 
-#include "../filters/filtercombine.hpp"
-#include "../filters/filterdarken.hpp"
-#include "../ipostpipeline.hpp"
-#include "pipelinegaussian.hpp"
+#include "../filters/FilterCombine.hpp"
+#include "../filters/FilterDarken.hpp"
+#include "../IPostPipeline.hpp"
+#include "PipelineGaussian.hpp"
 
 namespace Flounder
 {
-	class pipelinepaused :
-		public ipostpipeline
+	class PipelinePaused :
+		public IPostPipeline
 	{
 	private:
 		filterdarken *m_filterDarken;
-		pipelinegaussian *m_pipelineGaussian1;
-		pipelinegaussian *m_pipelineGaussian2;
+		PipelineGaussian *m_pipelineGaussian1;
+		PipelineGaussian *m_pipelineGaussian2;
 		filtercombine *m_filterCombine;
 		float m_blurFactor;
 	public:
-		pipelinepaused();
+		PipelinePaused();
 
-		~pipelinepaused();
+		~PipelinePaused();
 
-		void renderPipeline(const int n_args, va_list args) override;
+		void RenderPipeline(const int n_args, va_list args) override;
 
-		Fbo *getOutput() override;
+		Fbo *GetOutput() override;
 
-		void setBlurFactor(const float &blurFactor) { m_blurFactor = blurFactor; }
+		void SetBlurFactor(const float &blurFactor) { m_blurFactor = blurFactor; }
 	};
 }

@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filtermotion::filtermotion() :
-		ipostfilter("filterMotion", "res/shaders/filters/motion.frag.spv"),
+		IPostFilter("filterMotion", "res/shaders/filters/motion.frag.spv"),
 		m_lastViewMatrix(new Matrix4())
 	{
 	}
@@ -13,7 +13,7 @@ namespace Flounder
 		delete m_lastViewMatrix;
 	}
 
-	void filtermotion::storeValues()
+	void filtermotion::StoreValues()
 	{
 #if 0
 		icamera *camera = camera::get()->getCamera();

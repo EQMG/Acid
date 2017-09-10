@@ -1,10 +1,10 @@
-#include "shader.hpp"
+#include "Shader.hpp"
 
 namespace Flounder
 {
-	shader::shader(const std::string &name, const int n_args, ...) :
+	Shader::Shader(const std::string &name, const int n_args, ...) :
 		m_name(name),
-		m_types(new std::vector<shadertype>()),
+		m_types(new std::vector<ShaderType>()),
 		m_modules(new std::vector<VkShaderModule>()),
 		m_stages(new std::vector<VkPipelineShaderStageCreateInfo>())
 	{
@@ -13,15 +13,15 @@ namespace Flounder
 
 		for (int i = 0; i < n_args; i++)
 		{
-			m_types->push_back(va_arg(ap, shadertype));
+			m_types->push_back(va_arg(ap, ShaderType));
 		}
 
 		va_end(ap);
 
-		loadShader();
+		LoadShader();
 	}
 
-	shader::~shader()
+	Shader::~Shader()
 	{
 		for (auto shaderModule : *m_modules)
 		{
@@ -32,11 +32,11 @@ namespace Flounder
 		delete m_stages;
 	}
 
-	void shader::loadShader()
+	void Shader::LoadShader() const
 	{
-		for (shadertype type : *m_types)
+		for (ShaderType type : *m_types)
 		{
-			std::vector<char> shaderCode = HelperFile::ReadBinaryFile(type.getFilePath());
+			std::vector<char> shaderCode = HelperFile::ReadBinaryFile(type.GetFilePath());
 
 			VkShaderModuleCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -48,7 +48,7 @@ namespace Flounder
 
 			VkPipelineShaderStageCreateInfo shaderStageInfo = {};
 			shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-			shaderStageInfo.stage = type.getShaderFlag();
+			shaderStageInfo.stage = type.GetShaderFlag();
 			shaderStageInfo.module = shaderModule;
 			shaderStageInfo.pName = "main"; // The shaders entry point.
 

@@ -5,13 +5,13 @@
 namespace Flounder
 {
 	class filternegative :
-		public ipostfilter
+		public IPostFilter
 	{
 	public:
 		filternegative();
 
 		~filternegative();
 
-		void storeValues() override;
+		void StoreValues() override;
 	};
 }

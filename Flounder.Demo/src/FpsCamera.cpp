@@ -64,9 +64,9 @@ void FpsCamera::Update(IPlayer *player)
 {
 	float delta = Maths::Min(1.0f / 60.0f, Engine::Get()->GetDelta());
 
-	if (uis::get() != nullptr && uis::get()->getManager() != nullptr)
+	if (Uis::get() != nullptr && Uis::get()->GetManager() != nullptr)
 	{
-		m_paused = uis::get()->getManager()->IsGamePaused();
+		m_paused = Uis::get()->GetManager()->IsGamePaused();
 	}
 
 	CalculateHorizontalAngle();

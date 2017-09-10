@@ -8,12 +8,12 @@ class OverlayManager :
 	public UiObject
 {
 private:
-	inputbutton *m_inputbutton;
-	inputslider *m_inputslider;
-	inputtext *m_inputtext;
-	inputgrabber *m_inputjoystick;
-	inputgrabber *m_inputkeyboard;
-	inputgrabber *m_inputmouse;
+	InputButton *m_inputbutton;
+	InputSlider *m_inputslider;
+	InputText *m_inputtext;
+	InputGrabber *m_inputjoystick;
+	InputGrabber *m_inputkeyboard;
+	InputGrabber *m_inputmouse;
 public:
 	OverlayManager(UiObject *parent);
 

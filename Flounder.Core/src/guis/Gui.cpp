@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	Gui::Gui(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, texture *texture, const int &selectedRow) :
+	Gui::Gui(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, Texture *texture, const int &selectedRow) :
 		UiObject(parent, position, dimensions),
 		m_texture(texture),
 		m_flipTexture(false),
@@ -21,7 +21,7 @@ namespace Flounder
 
 	void Gui::UpdateObject()
 	{
-		int numberOfRows = m_texture != nullptr ? m_texture->getNumberOfRows() : 1;
+		int numberOfRows = m_texture != nullptr ? m_texture->GetNumberOfRows() : 1;
 		int column = m_selectedRow % numberOfRows;
 		int row = m_selectedRow / numberOfRows;
 		m_textureOffset->Set(static_cast<float>(column / numberOfRows), static_cast<float>(row / numberOfRows));

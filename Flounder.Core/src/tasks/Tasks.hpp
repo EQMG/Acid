@@ -11,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing tasks on engine updates.
 	/// </summary>
-	class tasks :
+	class Tasks :
 		public IModule
 	{
 	private:
@@ -21,14 +21,14 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static tasks *get()
+		static Tasks *Get()
 		{
-			return static_cast<tasks*>(Engine::Get()->GetModule("tasks"));
+			return static_cast<Tasks*>(Engine::Get()->GetModule("tasks"));
 		}
 
-		tasks();
+		Tasks();
 
-		~tasks();
+		~Tasks();
 
 		void Update() override;
 
@@ -36,6 +36,6 @@ namespace Flounder
 		/// Adds an task to the que.
 		/// </summary>
 		/// <param name="task"> The task to add. </param>
-		void addTask(std::function<void()> task);
+		void AddTask(std::function<void()> task) const;
 	};
 }

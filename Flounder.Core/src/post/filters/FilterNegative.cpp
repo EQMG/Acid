@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filternegative::filternegative() :
-		ipostfilter("filterNegative", "res/shaders/filters/negative.frag.spv")
+		IPostFilter("filterNegative", "res/shaders/filters/negative.frag.spv")
 	{
 	}
 
@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void filternegative::storeValues()
+	void filternegative::StoreValues()
 	{
 	}
 }

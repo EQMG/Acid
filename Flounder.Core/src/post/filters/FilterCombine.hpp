@@ -7,7 +7,7 @@
 namespace Flounder
 {
 	class filtercombine :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		Vector4 *m_slideSpaceValue;
@@ -16,7 +16,7 @@ namespace Flounder
 
 		~filtercombine();
 
-		void storeValues() override;
+		void StoreValues() override;
 
 		void setSlideSpaceValue(const Vector4 &slideSpaceValue) const { m_slideSpaceValue->Set(slideSpaceValue); }
 

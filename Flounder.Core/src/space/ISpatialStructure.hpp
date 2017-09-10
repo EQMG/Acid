@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../physics/frustum.hpp"
+#include "../physics/Frustum.hpp"
 
 #include "ISpatialObject.hpp"
 
@@ -11,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// A data structure that stores objects with a notion of flounder.space.
 	/// </summary>
-	template<class t>
+	template<class T>
 	class ISpatialStructure
 	{
 	public:
@@ -33,13 +33,13 @@ namespace Flounder
 		/// Adds a new object to the spatial structure.
 		/// </summary>
 		/// <param name="object"> The object to add. </param>
-		virtual void Add(t object) = 0;
+		virtual void Add(T object) = 0;
 
 		/// <summary>
 		/// Removes an object from the spatial structure.
 		/// </summary>
 		/// <param name="object"> The object to remove. </param>
-		virtual void Remove(t object) = 0;
+		virtual void Remove(T object) = 0;
 
 		/// <summary>
 		/// Removes all objects from the spatial structure..
@@ -57,7 +57,7 @@ namespace Flounder
 		/// </summary>
 		/// </param>
 		/// <returns> The list specified by of all objects. </returns>
-		virtual std::vector<t> *GetAll() = 0;
+		virtual std::vector<T> *GetAll() = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in the spatial structure.
@@ -65,7 +65,7 @@ namespace Flounder
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list specified by of all objects. </returns>
-		virtual std::vector<t> *QueryAll(std::vector<t> *result) = 0;
+		virtual std::vector<T> *QueryAll(std::vector<T> *result) = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in a specific range of the spatial structure.
@@ -74,7 +74,7 @@ namespace Flounder
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<t> *QueryFrustum(Frustum *range, std::vector<t> *result) = 0;
+		virtual std::vector<T> *QueryFrustum(Frustum *range, std::vector<T> *result) = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in a specific range of the spatial structure.
@@ -83,7 +83,7 @@ namespace Flounder
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<t> *QueryBounding(ICollider *range, std::vector<t> *result) = 0;
+		virtual std::vector<T> *QueryBounding(ICollider *range, std::vector<T> *result) = 0;
 
 		/// <summary>
 		/// If the structure contains the object.

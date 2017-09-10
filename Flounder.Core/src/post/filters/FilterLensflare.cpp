@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filterlensflare::filterlensflare() :
-		ipostfilter("filterLensflare", "res/shaders/filters/lensflare.frag.spv"),
+		IPostFilter("filterLensflare", "res/shaders/filters/lensflare.frag.spv"),
 		m_sunPosition(new Vector3()),
 		m_sunHeight(0.0f)
 	{
@@ -14,7 +14,7 @@ namespace Flounder
 		delete m_sunPosition;
 	}
 
-	void filterlensflare::storeValues()
+	void filterlensflare::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform3f("sunPosition", *m_sunPosition);

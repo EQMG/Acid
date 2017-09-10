@@ -1,20 +1,20 @@
-﻿#include "water.hpp"
+﻿#include "Water.hpp"
 
 namespace Flounder
 {
-	const float water::WAVE_SPEED = 15.0f;
-	const float water::WAVE_LENGTH = 30.0f;
-	const float water::AMPLITUDE = 0.7f;
+	const float Water::WAVE_SPEED = 15.0f;
+	const float Water::WAVE_LENGTH = 30.0f;
+	const float Water::AMPLITUDE = 0.7f;
 
-	const float water::SQUARE_SIZE = 2.598f;
-	const int water::VERTEX_COUNT = 176;
+	const float Water::SQUARE_SIZE = 2.598f;
+	const int Water::VERTEX_COUNT = 176;
 
-	const Colour water::WATER_COLOUR = Colour(0.21f, 0.41f, 0.59f, 1.0f);
+	const Colour Water::WATER_COLOUR = Colour(0.21f, 0.41f, 0.59f, 1.0f);
 
-	const float water::SHINE_DAMPER = 1.0f;
-	const float water::REFLECTIVITY = 0.0f;
+	const float Water::SHINE_DAMPER = 1.0f;
+	const float Water::REFLECTIVITY = 0.0f;
 
-	water::water(const Vector3 &position, const Vector3 &rotation) :
+	Water::Water(const Vector3 &position, const Vector3 &rotation) :
 		m_model(nullptr),
 		m_colour(new Colour(WATER_COLOUR)),
 		m_position(new Vector3(position)),
@@ -24,10 +24,10 @@ namespace Flounder
 		m_modelMatrix(new Matrix4()),
 		m_aabb(new Aabb())
 	{
-		generateMesh();
+		GenerateMesh();
 	}
 
-	water::~water()
+	Water::~Water()
 	{
 		delete m_model;
 
@@ -41,7 +41,7 @@ namespace Flounder
 		delete m_aabb;
 	}
 
-	void water::update()
+	void Water::Update()
 	{
 		if (m_moved)
 		{
@@ -56,7 +56,7 @@ namespace Flounder
 		);
 	}
 
-	void water::generateMesh()
+	void Water::GenerateMesh()
 	{
 		std::vector<float> vertices = std::vector<float>();
 
@@ -71,11 +71,11 @@ namespace Flounder
 
 				if (row % 2 == 0)
 				{
-					storeQuad1(vertices, topLeft, topRight, bottomLeft, bottomRight, col % 2 == 0);
+					StoreQuad1(vertices, topLeft, topRight, bottomLeft, bottomRight, col % 2 == 0);
 				}
 				else
 				{
-					storeQuad2(vertices, topLeft, topRight, bottomLeft, bottomRight, col % 2 == 0);
+					StoreQuad2(vertices, topLeft, topRight, bottomLeft, bottomRight, col % 2 == 0);
 				}
 			}
 		}
@@ -89,61 +89,61 @@ namespace Flounder
 		//	delete vertices;
 	}
 
-	void water::storeQuad1(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void Water::StoreQuad1(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed) const
 	{
-		storeVertex(vertices, topLeft, Vector2(0.0f, 1.0f), mixed ? Vector2(1.0f, 0.0f) : Vector2(1.0f, 1.0f));
-		storeVertex(vertices, bottomLeft, mixed ? Vector2(1.0f, -1.0f) : Vector2(1.0f, 0.0f), Vector2(0.0f, -1.0f));
+		StoreVertex(vertices, topLeft, Vector2(0.0f, 1.0f), mixed ? Vector2(1.0f, 0.0f) : Vector2(1.0f, 1.0f));
+		StoreVertex(vertices, bottomLeft, mixed ? Vector2(1.0f, -1.0f) : Vector2(1.0f, 0.0f), Vector2(0.0f, -1.0f));
 
 		if (mixed)
 		{
-			storeVertex(vertices, topRight, Vector2(-1.0f, 0.0f), Vector2(-1.0f, 1.0f));
+			StoreVertex(vertices, topRight, Vector2(-1.0f, 0.0f), Vector2(-1.0f, 1.0f));
 		}
 		else
 		{
-			storeVertex(vertices, bottomRight, Vector2(-1.0f, -1.0f), Vector2(-1.0f, 0.0f));
+			StoreVertex(vertices, bottomRight, Vector2(-1.0f, -1.0f), Vector2(-1.0f, 0.0f));
 		}
 
-		storeVertex(vertices, bottomRight, Vector2(0.0f, -1.0f), mixed ? Vector2(-1.0f, 0.0f) : Vector2(-1.0f, -1.0f));
-		storeVertex(vertices, topRight, mixed ? Vector2(-1.0f, 1.0f) : Vector2(-1.0f, 0.0f), Vector2(0.0f, 1.0f));
+		StoreVertex(vertices, bottomRight, Vector2(0.0f, -1.0f), mixed ? Vector2(-1.0f, 0.0f) : Vector2(-1.0f, -1.0f));
+		StoreVertex(vertices, topRight, mixed ? Vector2(-1.0f, 1.0f) : Vector2(-1.0f, 0.0f), Vector2(0.0f, 1.0f));
 
 		if (mixed)
 		{
-			storeVertex(vertices, bottomLeft, Vector2(1.0f, 0.0f), Vector2(1.0f, -1.0f));
+			StoreVertex(vertices, bottomLeft, Vector2(1.0f, 0.0f), Vector2(1.0f, -1.0f));
 		}
 		else
 		{
-			storeVertex(vertices, topLeft, Vector2(1.0f, 1.0f), Vector2(1.0f, 0.0f));
+			StoreVertex(vertices, topLeft, Vector2(1.0f, 1.0f), Vector2(1.0f, 0.0f));
 		}
 	}
 
-	void water::storeQuad2(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void Water::StoreQuad2(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed) const
 	{
-		storeVertex(vertices, topRight, Vector2(-1.0f, 0.0f), mixed ? Vector2(0.0f, 1.0f) : Vector2(-1.0f, 1.0f));
-		storeVertex(vertices, topLeft, mixed ? Vector2(1.0f, 1.0f) : Vector2(0.0f, 1.0f), Vector2(1.0f, 0.0f));
+		StoreVertex(vertices, topRight, Vector2(-1.0f, 0.0f), mixed ? Vector2(0.0f, 1.0f) : Vector2(-1.0f, 1.0f));
+		StoreVertex(vertices, topLeft, mixed ? Vector2(1.0f, 1.0f) : Vector2(0.0f, 1.0f), Vector2(1.0f, 0.0f));
 
 		if (mixed)
 		{
-			storeVertex(vertices, bottomRight, Vector2(0.0f, -1.0f), Vector2(-1.0f, -1.0f));
+			StoreVertex(vertices, bottomRight, Vector2(0.0f, -1.0f), Vector2(-1.0f, -1.0f));
 		}
 		else
 		{
-			storeVertex(vertices, bottomLeft, Vector2(1.0f, -1.0f), Vector2(0.0f, -1.0f));
+			StoreVertex(vertices, bottomLeft, Vector2(1.0f, -1.0f), Vector2(0.0f, -1.0f));
 		}
 
-		storeVertex(vertices, bottomLeft, Vector2(1.0f, 0.0f), mixed ? Vector2(0.0f, -1.0f) : Vector2(1.0f, -1.0f));
-		storeVertex(vertices, bottomRight, mixed ? Vector2(-1.0f, -1.0f) : Vector2(0.0f, -1.0f), Vector2(-1.0f, 0.0f));
+		StoreVertex(vertices, bottomLeft, Vector2(1.0f, 0.0f), mixed ? Vector2(0.0f, -1.0f) : Vector2(1.0f, -1.0f));
+		StoreVertex(vertices, bottomRight, mixed ? Vector2(-1.0f, -1.0f) : Vector2(0.0f, -1.0f), Vector2(-1.0f, 0.0f));
 
 		if (mixed)
 		{
-			storeVertex(vertices, topLeft, Vector2(0.0f, 1.0f), Vector2(1.0f, 1.0f));
+			StoreVertex(vertices, topLeft, Vector2(0.0f, 1.0f), Vector2(1.0f, 1.0f));
 		}
 		else
 		{
-			storeVertex(vertices, topRight, Vector2(-1.0f, 1.0f), Vector2(0.0f, 1.0f));
+			StoreVertex(vertices, topRight, Vector2(-1.0f, 1.0f), Vector2(0.0f, 1.0f));
 		}
 	}
 
-	void water::storeVertex(std::vector<float> &vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2)
+	void Water::StoreVertex(std::vector<float> &vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2) const
 	{
 		int gridX = index % VERTEX_COUNT;
 		int gridZ = index / VERTEX_COUNT;
@@ -170,10 +170,10 @@ namespace Flounder
 
 		vertices.push_back(static_cast<float>(x));
 		vertices.push_back(static_cast<float>(z));
-		vertices.push_back(encode(otherPoint1.m_x, otherPoint1.m_y, otherPoint2.m_x, otherPoint2.m_y));
+		vertices.push_back(Encode(otherPoint1.m_x, otherPoint1.m_y, otherPoint2.m_x, otherPoint2.m_y));
 	}
 
-	float water::encode(const float &x, const float &z, const float &x2, const float &z2)
+	float Water::Encode(const float &x, const float &z, const float &x2, const float &z2) const
 	{
 		float p3 = (x + 1.0f) * 27.0f;
 		float p2 = (z + 1.0f) * 9.0f;
@@ -182,7 +182,7 @@ namespace Flounder
 		return p0 + p1 + p2 + p3;
 	}
 
-	float water::getHeight(const float &x, const float &z)
+	float Water::GetHeight(const float &x, const float &z) const
 	{
 		float waveTime = Engine::Get()->GetTime() / WAVE_SPEED;
 
@@ -194,13 +194,13 @@ namespace Flounder
 		return static_cast<float>(m_position->m_y + result);
 	}
 
-	void water::setPosition(const Vector3 &position)
+	void Water::SetPosition(const Vector3 &position)
 	{
 		m_position->Set(position);
 		m_moved = true;
 	}
 
-	void water::setRotation(const Vector3 &rotation)
+	void Water::SetRotation(const Vector3 &rotation)
 	{
 		m_rotation->Set(rotation);
 		m_moved = true;

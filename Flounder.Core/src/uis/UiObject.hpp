@@ -6,8 +6,8 @@
 #include "../maths/Vector2.hpp"
 #include "../maths/Vector4.hpp"
 #include "../engine/Engine.hpp"
-#include "../visual/idriver.hpp"
-#include "../visual/driverconstant.hpp"
+#include "../visual/IDriver.hpp"
+#include "../visual/DriverConstant.hpp"
 
 namespace Flounder
 {
@@ -34,13 +34,13 @@ namespace Flounder
 		Vector2 *m_screenDimensions;
 		Vector2 *m_positionOffsets;
 
-		idriver *m_rotationDriver;
+		IDriver *m_rotationDriver;
 		float m_rotation;
 
-		idriver *m_alphaDriver;
+		IDriver *m_alphaDriver;
 		float m_alpha;
 
-		idriver *m_scaleDriver;
+		IDriver *m_scaleDriver;
 		float m_scale;
 	public:
 		/// <summary>
@@ -134,15 +134,15 @@ namespace Flounder
 
 		void SetPositionOffsets(const Vector2 &positionOffsets) const { m_positionOffsets->Set(positionOffsets); }
 
-		void SetRotationDriver(idriver *rotationDriver);
+		void SetRotationDriver(IDriver *rotationDriver);
 
 		float GetRotation() const { return m_rotation; }
 
-		void SetAlphaDriver(idriver *alphaDriver);
+		void SetAlphaDriver(IDriver *alphaDriver);
 
 		float GetAlpha() const;
 
-		void SetScaleDriver(idriver *scaleDriver);
+		void SetScaleDriver(IDriver *scaleDriver);
 
 		float GetScale() const { return m_scale; }
 	};

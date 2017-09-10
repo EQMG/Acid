@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filtergrey::filtergrey() :
-		ipostfilter("filterGrey", "res/shaders/filters/grey.frag.spv")
+		IPostFilter("filterGrey", "res/shaders/filters/grey.frag.spv")
 	{
 	}
 
@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void filtergrey::storeValues()
+	void filtergrey::StoreValues()
 	{
 	}
 }

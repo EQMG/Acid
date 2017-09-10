@@ -1,10 +1,10 @@
 ﻿#pragma once
 
-#include "../camera/icamera.hpp"
+#include "../camera/ICamera.hpp"
 #include "../devices/Display.hpp"
 #include "../maths/Vector4.hpp"
 #include "../maths/Matrix4.hpp"
-#include "../physics/aabb.hpp"
+#include "../physics/Aabb.hpp"
 
 namespace Flounder
 {
@@ -13,7 +13,7 @@ namespace Flounder
 	/// It can be updated each frame to optimise the area, making it as small as possible (to allow for optimal shadow map resolution) while not being too small to avoid objects not having shadows when they should.
 	/// This class also provides functionality to test whether an object is inside this shadow box. Everything inside the box will be rendered to the shadow map in the shadow render pass.
 	/// </summary>
-	class shadowbox
+	class ShadowBox
 	{
 	private:
 		Vector3 *m_lightDirection;
@@ -35,9 +35,9 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new shadow box and calculates some initial values relating to the camera's view frustum.
 		/// </summary>
-		shadowbox();
+		ShadowBox();
 
-		~shadowbox();
+		~ShadowBox();
 
 		/// <summary>
 		/// Updates the bounds of the shadow box based on the light direction and the camera's view frustum.
@@ -48,21 +48,21 @@ namespace Flounder
 		/// <param name="lightPosition"> The lights position. </param>
 		/// <param name="shadowOffset"> The shadows offset. </param>
 		/// <param name="shadowDistance"> The shadows distance. </param>
-		void update(const ICamera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance);
+		void Update(const ICamera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance);
 	private:
 		/// <summary>
 		/// Create the offset for part of the conversion to shadow map space.
 		/// </summary>
 		/// <returns> The offset as a matrix. </returns>
-		static Matrix4 *createOffset();
+		static Matrix4 *CreateOffset();
 
-		void updateShadowBox(const ICamera &camera);
+		void UpdateShadowBox(const ICamera &camera);
 
 		/// <summary>
 		/// Updates the widths and heights of the box panes.
 		/// </summary>
 		/// <param name="camera"> The camera object. </param>
-		void updateWidthsAndHeights(const ICamera &camera);
+		void UpdateSizes(const ICamera &camera);
 
 		/// <summary>
 		/// Calculates the vertex of each corner of the view frustum in light space.
@@ -73,7 +73,7 @@ namespace Flounder
 		/// <param name="centreFar"> - the centre point of the frustum's far plane.
 		/// </param>
 		/// <returns> The vertices of the frustum in light space. </returns>
-		Vector4 **calculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar);
+		Vector4 **CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar) const;
 
 		/// <summary>
 		/// Calculates one of the corner vertices of the view frustum in world space and converts it to light space.
@@ -83,18 +83,18 @@ namespace Flounder
 		/// <param name="width"> The distance of the corner from the start point.
 		/// </param>
 		/// <returns> The relevant corner vertex of the view frustum in light space. </returns>
-		Vector4 *calculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width);
+		Vector4 *CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width) const;
 
 		/// <summary>
 		/// Updates the centre of the shadow box (orthographic projection area).
 		/// </summary>
-		void updateCenter();
+		void UpdateCenter() const;
 
-		void updateOrthoProjectionMatrix();
+		void UpdateOrthoProjectionMatrix() const;
 
-		void updateLightViewMatrix();
+		void UpdateLightViewMatrix() const;
 
-		void updateViewShadowMatrix();
+		void UpdateViewShadowMatrix() const;
 	public:
 		/// <summary>
 		/// Test if a bounding sphere intersects the shadow box. Can be used to decide which engine.entities should be rendered in the shadow render pass.
@@ -103,22 +103,22 @@ namespace Flounder
 		/// <param name="radius"> The radius of the bounding sphere.
 		/// </param>
 		/// <returns> {@code true} if the sphere intersects the box. </returns>
-		bool isInBox(const Vector3 &position, const float &radius);
+		bool IsInBox(const Vector3 &position, const float &radius) const;
 
-		Matrix4 *getProjectionViewMatrix() const { return m_projectionViewMatrix; }
+		Matrix4 *GetProjectionViewMatrix() const { return m_projectionViewMatrix; }
 
 		/// <summary>
 		/// This biased projection-view matrix is used to convert fragments into "shadow map space" when rendering the main render pass.
 		/// </summary>
 		/// <returns> The to-shadow-map-space matrix. </returns>
-		Matrix4 *getToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
+		Matrix4 *GetToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
 
 		/// <summary>
 		/// Gets the light's "view" matrix
 		/// </summary>
 		/// <returns> The light's "view" matrix. </returns>
-		Matrix4 *getLightSpaceTransform() const { return m_lightViewMatrix; }
+		Matrix4 *GetLightSpaceTransform() const { return m_lightViewMatrix; }
 
-		Aabb *getAabb() const { return m_aabb; }
+		Aabb *GetAabb() const { return m_aabb; }
 	};
 }

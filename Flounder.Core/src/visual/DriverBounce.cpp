@@ -1,24 +1,24 @@
-#include "driverbounce.hpp"
+#include "DriverBounce.hpp"
 
 namespace Flounder
 {
-	driverbounce::driverbounce(const float &start, const float &end, const float &length) :
-		idriver(length),
+	DriverBounce::DriverBounce(const float &start, const float &end, const float &length) :
+		IDriver(length),
 		m_start(start),
 		m_amplitude(end - start),
 		m_length(length)
 	{
 	}
 
-	driverbounce::~driverbounce()
+	DriverBounce::~DriverBounce()
 	{
 	}
 
-	float driverbounce::calculate(const float &time)
+	float DriverBounce::Calculate(const float &time)
 	{
-		float value = 0.5f + (float) sin(PI * 2.0 * time) * 0.5f;
+		float value = 0.5f + sin(PI * 2.0f * time) * 0.5f;
 
-		if (getActualTime() > m_length / 2.0f)
+		if (GetActualTime() > m_length / 2.0f)
 		{
 			value = 0.0f;
 		}

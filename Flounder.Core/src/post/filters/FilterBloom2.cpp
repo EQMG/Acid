@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filterbloom2::filterbloom2() :
-		ipostfilter("filterBloom2", "res/shaders/filters/bloom2.frag.spv")
+		IPostFilter("filterBloom2", "res/shaders/filters/bloom2.frag.spv")
 	{
 	}
 
@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void filterbloom2::storeValues()
+	void filterbloom2::StoreValues()
 	{
 	}
 }

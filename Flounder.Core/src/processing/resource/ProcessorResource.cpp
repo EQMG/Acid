@@ -1,22 +1,22 @@
-#include "processorresource.hpp"
+#include "ProcessorResource.hpp"
 
 namespace Flounder
 {
-	const double processorresource::MAX_TIME_MILLIS = 8.0f;
+	const double ProcessorResource::MAX_TIME_MILLIS = 8.0f;
 
-	processorresource::processorresource() :
-		m_queue(new queue<requestresource*>())
+	ProcessorResource::ProcessorResource() :
+		m_queue(new Queue<RequestResource*>())
 	{
 	}
 
-	processorresource::~processorresource()
+	ProcessorResource::~ProcessorResource()
 	{
 		delete m_queue;
 	}
 
-	void processorresource::update()
+	void ProcessorResource::Update()
 	{
-		if (!m_queue->hasRequests())
+		if (!m_queue->HasRequests())
 		{
 			return;
 		}
@@ -24,10 +24,10 @@ namespace Flounder
 		double remainingTime = MAX_TIME_MILLIS;
 		double start = Engine::Get()->GetTimeMs();
 
-		while (m_queue->hasRequests())
+		while (m_queue->HasRequests())
 		{
-			requestresource *request = m_queue->acceptNextRequest();
-			request->executeRequestResource();
+			RequestResource *request = m_queue->AcceptNextRequest();
+			request->ExecuteRequestResource();
 			double end = Engine::Get()->GetTimeMs();
 			double timeTaken = end - start;
 			remainingTime -= timeTaken;
@@ -41,21 +41,21 @@ namespace Flounder
 		}
 	}
 
-	void processorresource::addRequestToQueue(irequest *request)
+	void ProcessorResource::AddRequestToQueue(IRequest *request)
 	{
-		if (dynamic_cast<requestresource*>(request) == nullptr)
+		if (dynamic_cast<RequestResource*>(request) == nullptr)
 		{
 			return;
 		}
 
-		m_queue->addRequest((requestresource*) request);
+		m_queue->AddRequest(static_cast<RequestResource*>(request));
 	}
 
-	void processorresource::completeAllRequests()
+	void ProcessorResource::CompleteAllRequests() const
 	{
-		while (m_queue->hasRequests())
+		while (m_queue->HasRequests())
 		{
-			m_queue->acceptNextRequest()->executeRequestResource();
+			m_queue->AcceptNextRequest()->ExecuteRequestResource();
 		}
 	}
 }

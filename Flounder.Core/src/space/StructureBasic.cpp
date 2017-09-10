@@ -2,27 +2,27 @@
 
 namespace Flounder
 {
-	template<class t>
-	StructureBasic<t>::StructureBasic() :
-		ISpatialStructure<t>(),
-		m_objects(new std::vector<t>())
+	template<class T>
+	StructureBasic<T>::StructureBasic() :
+		ISpatialStructure<T>(),
+		m_objects(new std::vector<T>())
 	{
 	}
 
-	template<class t>
-	StructureBasic<t>::~StructureBasic()
+	template<class T>
+	StructureBasic<T>::~StructureBasic()
 	{
 		delete m_objects;
 	}
 
-	template<class t>
-	void StructureBasic<t>::Add(t object)
+	template<class T>
+	void StructureBasic<T>::Add(T object)
 	{
 		m_objects->push_back(object);
 	}
 
-	template<class t>
-	void StructureBasic<t>::Remove(t object)
+	template<class T>
+	void StructureBasic<T>::Remove(T object)
 	{
 		for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
 		{
@@ -34,35 +34,37 @@ namespace Flounder
 		}
 	}
 
-	template<class t>
-	void StructureBasic<t>::Clear()
+	template<class T>
+	void StructureBasic<T>::Clear()
 	{
 		m_objects->Clear();
 	}
 
-	template<class t>
-	int StructureBasic<t>::GetSize()
+	template<class T>
+	int StructureBasic<T>::GetSize()
 	{
 		return m_objects->size();
 	}
 
-	template<class t>
-	std::vector<t> *StructureBasic<t>::GetAll()
+	template<class T>
+	std::vector<T> *StructureBasic<T>::GetAll()
 	{
 		return m_objects;
 	}
 
-	template<class t>
-	std::vector<t> *StructureBasic<t>::QueryAll(std::vector<t> *result)
+	template<class T>
+	std::vector<T> *StructureBasic<T>::QueryAll(std::vector<T> *result)
 	{
 		for (auto value : m_objects)
 		{
 			result->push_back(value);
 		}
+
+		return result;
 	}
 
-	template<class t>
-	std::vector<t> *StructureBasic<t>::QueryFrustum(Frustum *range, std::vector<t> *result)
+	template<class T>
+	std::vector<T> *StructureBasic<T>::QueryFrustum(Frustum *range, std::vector<T> *result)
 	{
 		for (auto value : m_objects)
 		{
@@ -73,10 +75,12 @@ namespace Flounder
 				result->push_back(value);
 			}
 		}
+
+		return result;
 	}
 
-	template<class t>
-	std::vector<t> *StructureBasic<t>::QueryBounding(ICollider *range, std::vector<t> *result)
+	template<class T>
+	std::vector<T> *StructureBasic<T>::QueryBounding(ICollider *range, std::vector<T> *result)
 	{
 		for (auto value : m_objects)
 		{
@@ -87,10 +91,12 @@ namespace Flounder
 				result->push_back(value);
 			}
 		}
+
+		return result;
 	}
 
-	template<class t>
-	bool StructureBasic<t>::Contains(ISpatialObject *object)
+	template<class T>
+	bool StructureBasic<T>::Contains(ISpatialObject *object)
 	{
 		return std::find(m_objects->begin(), m_objects->end(), object) != m_objects->end();
 	}

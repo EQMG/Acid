@@ -8,7 +8,7 @@
 namespace Flounder
 {
 	class filterlensflare :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		Vector3 *m_sunPosition;
@@ -18,7 +18,7 @@ namespace Flounder
 
 		~filterlensflare();
 
-		void storeValues() override;
+		void StoreValues() override;
 
 		void setSunPosition(const Vector3 &sunPosition);
 

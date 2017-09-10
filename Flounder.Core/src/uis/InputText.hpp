@@ -3,16 +3,16 @@
 #include <functional>
 
 #include "../devices/Keyboard.hpp"
-#include "../visual/driverslide.hpp"
+#include "../visual/DriverSlide.hpp"
 
-#include "uis.hpp"
-#include "uiobject.hpp"
-#include "uialign.hpp"
-#include "inputdelay.hpp"
+#include "Uis.hpp"
+#include "UiObject.hpp"
+#include "UiAlign.hpp"
+#include "InputDelay.hpp"
 
 namespace Flounder
 {
-	class inputtext :
+	class InputText :
 		public UiObject
 	{
 	private:
@@ -27,7 +27,7 @@ namespace Flounder
 		std::string m_prefix;
 		std::string m_value;
 
-		inputdelay *m_inputDelay;
+		InputDelay *m_inputDelay;
 		int m_lastKey;
 
 		bool m_selected;
@@ -35,20 +35,20 @@ namespace Flounder
 
 		std::function<void()> m_actionChange;
 	public:
-		inputtext(UiObject *parent, const Vector2 &position, const std::string &prefix, const std::string &value, const uialign &align);
+		InputText(UiObject *parent, const Vector2 &position, const std::string &prefix, const std::string &value, const UiAlign &align);
 
-		~inputtext();
+		~InputText();
 
 		void UpdateObject() override;
 
-		std::string getPrefix() const { return m_prefix; }
+		std::string GetPrefix() const { return m_prefix; }
 
-		void setPrefix(const std::string &prefix);
+		void SetPrefix(const std::string &prefix);
 
-		std::string getValue() const { return m_value; }
+		std::string GetValue() const { return m_value; }
 
-		void setValue(const std::string &value);
+		void SetValue(const std::string &value);
 
-		void setActionChange(std::function<void()> action) { m_actionChange = action; }
+		void SetActionChange(std::function<void()> action) { m_actionChange = action; }
 	};
 }

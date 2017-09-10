@@ -60,7 +60,7 @@ namespace Flounder
 			return;
 		}
 
-		int stageCount = static_cast<int>(pow(m_particleType->GetTexture()->getNumberOfRows(), 2));
+		int stageCount = static_cast<int>(pow(m_particleType->GetTexture()->GetNumberOfRows(), 2));
 		float atlasProgression = lifeFactor * stageCount;
 		int index1 = static_cast<int>(floor(atlasProgression));
 		int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
@@ -78,10 +78,10 @@ namespace Flounder
 	Vector2 *Particle::UpdateTextureOffset(Vector2 *offset, const int &index) const
 	{
 		offset->Set(0.0f, 0.0f);
-		int column = index % m_particleType->GetTexture()->getNumberOfRows();
-		int row = index / m_particleType->GetTexture()->getNumberOfRows();
-		offset->m_x = static_cast<float>(column) / m_particleType->GetTexture()->getNumberOfRows();
-		offset->m_y = static_cast<float>(row) / m_particleType->GetTexture()->getNumberOfRows();
+		int column = index % m_particleType->GetTexture()->GetNumberOfRows();
+		int row = index / m_particleType->GetTexture()->GetNumberOfRows();
+		offset->m_x = static_cast<float>(column) / m_particleType->GetTexture()->GetNumberOfRows();
+		offset->m_y = static_cast<float>(row) / m_particleType->GetTexture()->GetNumberOfRows();
 		return offset;
 	}
 }

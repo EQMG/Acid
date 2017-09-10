@@ -2,40 +2,40 @@
 
 #include "../../engine/Engine.hpp"
 
-#include "requestgraphic.hpp"
-#include "../iprocessor.hpp"
-#include "../queue.hpp"
+#include "RequestGraphic.hpp"
+#include "../IProcessor.hpp"
+#include "../Queue.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A extension that is responsible for processing OpenGL requests.
 	/// </summary>
-	class processorgraphic :
-		public iprocessor
+	class ProcessorGraphic :
+		public IProcessor
 	{
 	private:
 		static const double MAX_TIME_MILLIS;
 
-		queue<requestgraphic*> *m_queue;
+		Queue<RequestGraphic*> *m_queue;
 	public:
 		/// <summary>
 		/// Creates a new opengl processor.
 		/// </summary>
-		processorgraphic();
+		ProcessorGraphic();
 
 		/// <summary>
 		/// Deconstructor for the opengl processor.
 		/// </summary>
-		~processorgraphic();
+		~ProcessorGraphic();
 
-		void update() override;
+		void Update() override;
 
-		void addRequestToQueue(irequest *request) override;
+		void AddRequestToQueue(IRequest *request) override;
 
 		/// <summary>
 		/// Completes all requests left in queue.
 		/// </summary>
-		void completeAllRequests();
+		void CompleteAllRequests() const;
 	};
 }

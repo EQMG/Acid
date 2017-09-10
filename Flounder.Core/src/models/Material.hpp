@@ -19,7 +19,7 @@ namespace Flounder
 		Colour *diffuse;
 		Colour *specular;
 
-		texture *albedo;
-		texture *normals;
+		Texture *albedo;
+		Texture *normals;
 	};
 }

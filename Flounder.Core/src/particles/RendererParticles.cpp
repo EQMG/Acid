@@ -7,9 +7,9 @@ namespace Flounder
 
 	RendererParticles::RendererParticles() :
 		IRenderer(),
-		m_shader(new shader("particles", 2,
-			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/particles/particle.vert.spv"),
-			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/particles/particle.frag.spv")
+		m_shader(new Shader("particles", 2,
+			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/particles/particle.vert.spv"),
+			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/particles/particle.frag.spv")
 		)),
 		m_rendered(0)
 	{
