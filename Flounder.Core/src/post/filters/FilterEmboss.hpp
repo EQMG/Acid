@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filteremboss :
+	class FilterEmboss :
 		public IPostFilter
 	{
 	public:
-		filteremboss();
+		FilterEmboss();
 
-		~filteremboss();
+		~FilterEmboss();
 
 		void StoreValues() override;
 	};

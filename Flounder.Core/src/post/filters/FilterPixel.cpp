@@ -1,18 +1,18 @@
-#include "filterpixel.hpp"
+#include "FilterPixel.hpp"
 
 namespace Flounder
 {
-	filterpixel::filterpixel(const float &pixelSize) :
+	FilterPixel::FilterPixel(const float &pixelSize) :
 		IPostFilter("filterGrain", "res/shaders/filters/grain.frag.spv"),
 		m_pixelSize(pixelSize)
 	{
 	}
 
-	filterpixel::~filterpixel()
+	FilterPixel::~FilterPixel()
 	{
 	}
 
-	void filterpixel::StoreValues()
+	void FilterPixel::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform1f("pixelSize", m_pixelSize);

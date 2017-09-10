@@ -1,8 +1,8 @@
-#include "filtertiltshift.hpp"
+#include "FilterTiltshift.hpp"
 
 namespace Flounder
 {
-	filtertiltshift::filtertiltshift(const float &blurAmount, const float &centre, const float &stepSize, const float &steps) :
+	FilterTiltshift::FilterTiltshift(const float &blurAmount, const float &centre, const float &stepSize, const float &steps) :
 		IPostFilter("filterTiltshift", "res/shaders/filters/tiltshift.frag.spv"),
 		m_blurAmount(blurAmount),
 		m_centre(centre),
@@ -11,11 +11,11 @@ namespace Flounder
 	{
 	}
 
-	filtertiltshift::~filtertiltshift()
+	FilterTiltshift::~FilterTiltshift()
 	{
 	}
 
-	void filtertiltshift::StoreValues()
+	void FilterTiltshift::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform1f("blurAmount", m_blurAmount);

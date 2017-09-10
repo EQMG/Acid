@@ -1,21 +1,23 @@
 #pragma once
 
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filterfxaa :
+	class FilterFxaa :
 		public IPostFilter
 	{
 	private:
 		float m_spanMax;
 	public:
-		filterfxaa(const float &spanMax = 8.0f);
+		FilterFxaa(const float &spanMax = 8.0f);
 
-		~filterfxaa();
+		~FilterFxaa();
 
 		void StoreValues() override;
 
-		void setSpanMax(const float &spanMax) { m_spanMax = spanMax; }
+		float GetSpanMax() const { return m_spanMax; }
+
+		void SetSpanMax(const float &spanMax) { m_spanMax = spanMax; }
 	};
 }

@@ -1,22 +1,24 @@
 #pragma once
 
 #include "../../devices/Display.hpp"
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filterpixel :
+	class FilterPixel :
 		public IPostFilter
 	{
 	private:
 		float m_pixelSize;
 	public:
-		filterpixel(const float &pixelSize = 2.0f);
+		FilterPixel(const float &pixelSize = 2.0f);
 
-		~filterpixel();
+		~FilterPixel();
 
 		void StoreValues() override;
 
-		void setPixelSize(const float &pixelSize) { m_pixelSize = pixelSize; }
+		float GetPixelSize() const { return m_pixelSize; }
+
+		void SetPixelSize(const float &pixelSize) { m_pixelSize = pixelSize; }
 	};
 }

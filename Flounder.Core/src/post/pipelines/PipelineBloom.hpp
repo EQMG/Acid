@@ -11,9 +11,9 @@ namespace Flounder
 		public IPostPipeline
 	{
 	private:
-		filterbloom1 *m_filterBloom1;
+		FilterBloom1 *m_filterBloom1;
 		PipelineGaussian *m_pipelineGaussian;
-		filterbloom2 *m_filterBloom2;
+		FilterBloom2 *m_filterBloom2;
 	public:
 		PipelineBloom();
 

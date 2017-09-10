@@ -1,17 +1,17 @@
-#include "filtertone.hpp"
+#include "FilterTone.hpp"
 
 namespace Flounder
 {
-	filtertone::filtertone() :
+	FilterTone::FilterTone() :
 		IPostFilter("filterTone", "res/shaders/filters/tone.frag.spv")
 	{
 	}
 
-	filtertone::~filtertone()
+	FilterTone::~FilterTone()
 	{
 	}
 
-	void filtertone::StoreValues()
+	void FilterTone::StoreValues()
 	{
 	}
 }

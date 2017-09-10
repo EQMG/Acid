@@ -1,17 +1,17 @@
 #pragma once
 
 #include "../../devices/Display.hpp"
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filterdefault :
+	class FilterDefault :
 		public IPostFilter
 	{
 	public:
-		filterdefault();
+		FilterDefault();
 
-		~filterdefault();
+		~FilterDefault();
 
 		void StoreValues() override;
 	};

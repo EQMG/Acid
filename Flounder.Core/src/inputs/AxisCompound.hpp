@@ -2,7 +2,7 @@
 
 #include <stdarg.h>
 
-#include "../maths/maths.hpp"
+#include "../maths/Maths.hpp"
 
 #include "iaxis.hpp"
 

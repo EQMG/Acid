@@ -1,23 +1,23 @@
-#include "filterdarken.hpp"
+#include "FilterDarken.hpp"
 
 namespace Flounder
 {
-	filterdarken::filterdarken(const float &factorValue) :
+	FilterDarken::FilterDarken(const float &factorValue) :
 		IPostFilter("filterDarken", "res/shaders/filters/darken.frag.spv"),
 		m_factorValue(factorValue)
 	{
 	}
 
-	filterdarken::filterdarken() :
-		filterdarken(0.45f)
+	FilterDarken::FilterDarken() :
+		FilterDarken(0.45f)
 	{
 	}
 
-	filterdarken::~filterdarken()
+	FilterDarken::~FilterDarken()
 	{
 	}
 
-	void filterdarken::StoreValues()
+	void FilterDarken::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform1f("factor", m_factorValue);

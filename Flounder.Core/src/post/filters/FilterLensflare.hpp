@@ -1,27 +1,31 @@
 #pragma once
 
-#include "../../camera/camera.hpp"
+#include "../../camera/Camera.hpp"
 #include "../../devices/Display.hpp"
 #include "../../maths/Vector3.hpp"
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filterlensflare :
+	class FilterLensflare :
 		public IPostFilter
 	{
 	private:
 		Vector3 *m_sunPosition;
 		float m_sunHeight;
 	public:
-		filterlensflare();
+		FilterLensflare();
 
-		~filterlensflare();
+		~FilterLensflare();
 
 		void StoreValues() override;
 
-		void setSunPosition(const Vector3 &sunPosition);
+		void SetSunPosition(const Vector3 &sunPosition) const;
 
-		void setSunHeight(const float &sunHeight) { m_sunHeight = sunHeight; }
+		Vector3 *GetSunPosition() const { return m_sunPosition; }
+
+		float GetSunHeight() const { return m_sunHeight; }
+
+		void SetSunHeight(const float &sunHeight) { m_sunHeight = sunHeight; }
 	};
 }
