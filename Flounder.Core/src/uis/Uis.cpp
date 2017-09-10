@@ -1,12 +1,12 @@
-#include "uis.hpp"
+#include "Uis.hpp"
 
 namespace Flounder
 {
-	uis::uis() :
+	Uis::Uis() :
 		IModule(),
 		m_managerUis(nullptr),
-		m_selector(new uiselector()),
-		m_container(new containerscreen(nullptr, Vector2(0.5f, 0.5f), Vector2(1.0f, 1.0f), false)),
+		m_selector(new UiSelector()),
+		m_container(new ContainerScreen(nullptr, Vector2(0.5f, 0.5f), Vector2(1.0f, 1.0f), false)),
 		m_objects(new std::vector<UiObject*>()),
 		m_arial(new FontType("res/fonts/arial.png", "res/fonts/arial.fnt")),
 		m_berlinSans(new FontType("res/fonts/berlinSans.png", "res/fonts/berlinSans.fnt")),
@@ -16,7 +16,7 @@ namespace Flounder
 	{
 	}
 
-	uis::~uis()
+	Uis::~Uis()
 	{
 		delete m_managerUis;
 		delete m_selector;
@@ -30,11 +30,11 @@ namespace Flounder
 		delete m_segoe;
 	}
 
-	void uis::Update()
+	void Uis::Update()
 	{
 		if (m_managerUis != nullptr)
 		{
-			m_selector->update(m_managerUis->IsGamePaused());
+			m_selector->Update(m_managerUis->IsGamePaused());
 			m_managerUis->Update();
 		}
 

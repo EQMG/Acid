@@ -3,15 +3,15 @@
 #include "../camera/camera.hpp"
 #include "../maths/Matrix4.hpp"
 #include "../maths/Vector3.hpp"
-#include "../models/model.hpp"
-#include "../textures/texture.hpp"
+#include "../models/Model.hpp"
+#include "../textures/Texture.hpp"
 
 namespace Flounder
 {
-	class skybox
+	class Skybox
 	{
 	private:
-		texture *m_texture;
+		Texture *m_texture;
 		Model *m_model;
 
 		float m_size;
@@ -20,32 +20,32 @@ namespace Flounder
 		Vector3 *m_rotation;
 		Matrix4 *m_modelMatrix;
 	public:
-		skybox(texture *texture, Model *model, const float &size);
+		Skybox(Texture *texture, Model *model, const float &size);
 
-		~skybox();
+		~Skybox();
 
-		void update();
+		void Update();
 
-		texture *getTexture() const { return m_texture; }
+		Texture *GetTexture() const { return m_texture; }
 
-		void setTexture(texture *texture) { m_texture = texture; }
+		void SetTexture(Texture *texture) { m_texture = texture; }
 
-		Model *getModel() const { return m_model; }
+		Model *GetModel() const { return m_model; }
 
-		void setModel(Model *model) { m_model = model; }
+		void SetModel(Model *model) { m_model = model; }
 
-		float getSize() const { return m_size; }
+		float GetSize() const { return m_size; }
 
-		void setSize(const float size) { m_size = size; }
+		void SetSize(const float size) { m_size = size; }
 
-		float getBlend() const { return m_blend; }
+		float GetBlend() const { return m_blend; }
 
-		void setBlend(const float blend) { m_blend = blend; }
+		void SetBlend(const float blend) { m_blend = blend; }
 
-		Vector3 *getRotation() const { return m_rotation; }
+		Vector3 *GetRotation() const { return m_rotation; }
 
-		void setRotation(Vector3 *rotation) { m_rotation = rotation; }
+		void SetRotation(Vector3 *rotation) { m_rotation = rotation; }
 
-		Matrix4 *getModelMatrix() const { return m_modelMatrix; }
+		Matrix4 *GetModelMatrix() const { return m_modelMatrix; }
 	};
 }

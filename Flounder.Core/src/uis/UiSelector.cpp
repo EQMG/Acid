@@ -1,8 +1,8 @@
-﻿#include "uiselector.hpp"
+﻿#include "UiSelector.hpp"
 
 namespace Flounder
 {
-	uiselector::uiselector() :
+	UiSelector::UiSelector() :
 		m_cursorX(0.0f),
 		m_cursorY(0.0f),
 		m_leftClick(false),
@@ -20,7 +20,7 @@ namespace Flounder
 	{
 	}
 
-	uiselector::~uiselector()
+	UiSelector::~UiSelector()
 	{
 		delete m_mouseLeft;
 		delete m_mouseRight;
@@ -31,7 +31,7 @@ namespace Flounder
 		delete m_joystickRight;
 	}
 
-	void uiselector::load(const int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
+	void UiSelector::Load(const int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
 	{
 		m_selectedJoystick = joystick;
 		m_joystickAxisX = new AxisJoystick(joystick, 1, joystickAxisX);
@@ -41,7 +41,7 @@ namespace Flounder
 		m_joysticksInitialized = true;
 	}
 
-	void uiselector::update(const bool &paused)
+	void UiSelector::Update(const bool &paused)
 	{
 		m_leftClick = m_mouseLeft->IsDown();
 		m_rightClick = m_mouseRight->IsDown();
@@ -69,7 +69,7 @@ namespace Flounder
 		}
 	}
 
-	bool uiselector::isSelected(const UiObject &object)
+	bool UiSelector::IsSelected(const UiObject &object) const
 	{
 		// TODO: Account for rotations.
 		float positionX = object.GetPosition()->m_x;
@@ -92,7 +92,7 @@ namespace Flounder
 		return false;
 	}
 
-	void uiselector::cancelWasEvent()
+	void UiSelector::CancelWasEvent()
 	{
 		m_leftWasClick = false;
 		m_rightWasClick = false;

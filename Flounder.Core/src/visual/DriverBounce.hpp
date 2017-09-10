@@ -7,8 +7,8 @@ namespace Flounder
 	/// <summary>
 	/// A bounce driver that uses a sine wave.
 	/// </summary>
-	class driverbounce :
-		public idriver
+	class DriverBounce :
+		public IDriver
 	{
 	private:
 		float m_start;
@@ -21,13 +21,13 @@ namespace Flounder
 		/// <param name="start"> The start value. </param>
 		/// <param name="end"> The end value. </param>
 		/// <param name="length"> The length between two waves. </param>
-		driverbounce(const float &start, const float &end, const float &length);
+		DriverBounce(const float &start, const float &end, const float &length);
 
 		/// <summary>
 		/// Deconstructor for bounce driver.
 		/// </summary>
-		~driverbounce();
+		~DriverBounce();
 	protected:
-		float calculate(const float &time) override;
+		float Calculate(const float &time) override;
 	};
 }

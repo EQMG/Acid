@@ -21,7 +21,7 @@ namespace Flounder
 	private:
 		static const int LIGHTS = 64;
 
-		shader *m_shader;
+		Shader *m_shader;
 		Fbo *m_fbo;
 		Model *m_model;
 	public:

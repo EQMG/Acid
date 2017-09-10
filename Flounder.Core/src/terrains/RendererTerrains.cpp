@@ -1,34 +1,34 @@
-#include "rendererterrains.hpp"
+#include "RendererTerrains.hpp"
 
 namespace Flounder
 {
-	rendererterrains::rendererterrains() :
+	RendererTerrains::RendererTerrains() :
 		IRenderer(),
-		m_shader(new shader("terrains", 2,
-			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/terrains/terrain.vert.spv"),
-			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/terrains/terrain.frag.spv")
+		m_shader(new Shader("terrains", 2,
+			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/terrains/terrain.vert.spv"),
+			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/terrains/terrain.frag.spv")
 		))
 	{
 	}
 
-	rendererterrains::~rendererterrains()
+	RendererTerrains::~RendererTerrains()
 	{
 		delete m_shader;
 	}
 
-	void rendererterrains::Render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererTerrains::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
-		prepareRendering(clipPlane, camera);
+		PrepareRendering(clipPlane, camera);
 
-		for (auto object : *terrains::get()->getTerrains())
+		for (auto object : *Terrains::get()->GetTerrains())
 		{
-			renderTerrain(object);
+			RenderTerrain(object);
 		}
 
-		endRendering();
+		EndRendering();
 	}
 
-	void rendererterrains::prepareRendering(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererTerrains::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
 	{
 #if 0
 		// Starts the shader.
@@ -45,7 +45,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererterrains::renderTerrain(terrain *object)
+	void RendererTerrains::RenderTerrain(Terrain *object)
 	{
 #if 0
 		// Binds the layouts.
@@ -65,7 +65,7 @@ namespace Flounder
 #endif
 	}
 
-	void rendererterrains::endRendering()
+	void RendererTerrains::EndRendering()
 	{
 #if 0
 		// Stops the shader.

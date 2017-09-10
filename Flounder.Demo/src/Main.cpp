@@ -45,20 +45,20 @@ int main()
 		Renderer::Get()->SetManager(new ManagerRender());
 	}
 
-	if (uis::get() != nullptr)
+	if (Uis::get() != nullptr)
 	{
-		uis::get()->setMaster(new ManagerUis());
+		Uis::get()->SetManager(new ManagerUis());
 	}
 
-	if (standards::get() != nullptr)
+	if (Standards::get() != nullptr)
 	{
-		standards::get()->addStandard(new Instance());
+		Standards::get()->AddStandard(new Instance());
 	}
 
-	if (skyboxes::get() != nullptr)
+	if (Skyboxes::Get() != nullptr)
 	{
-		skyboxes::get()->setSkybox(new skybox(
-			new texture(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png"),
+		Skyboxes::Get()->SetSkybox(new Skybox(
+			new Texture(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png"),
 			new Model("res/skybox/skyboxSphere.obj"),
 			2048.0f
 		));
@@ -66,7 +66,7 @@ int main()
 
 	if (Waters::Get() != nullptr)
 	{
-		Waters::Get()->SetWater(new water(
+		Waters::Get()->SetWater(new Water(
 			Vector3(), Vector3()
 		));
 	}

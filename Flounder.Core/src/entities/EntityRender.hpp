@@ -7,12 +7,12 @@ namespace Flounder
 {
 	struct EntityRender
 	{
-		shader *m_shader;
+		Shader *m_shader;
 		Model *m_model;
 		bool m_shadowRun;
 		bool m_undoing;
 
-		EntityRender(shader *shader, Model *model, const bool &shadowRun)
+		EntityRender(Shader *shader, Model *model, const bool &shadowRun)
 		{
 			m_shader = shader;
 			m_model = model;

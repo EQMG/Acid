@@ -4,9 +4,9 @@ namespace Flounder
 {
 	RendererGuis::RendererGuis() :
 		IRenderer(),
-		m_shader(new shader("guis", 2,
-			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/guis/gui.vert.spv"),
-			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/guis/gui.frag.spv")
+		m_shader(new Shader("guis", 2,
+			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/guis/gui.vert.spv"),
+			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/guis/gui.frag.spv")
 		)),
 		m_model(new Model(std::vector<int>(), std::vector<float>{0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f}))
 	{
@@ -23,7 +23,7 @@ namespace Flounder
 	{
 		PrepareRendering(clipPlane, camera);
 
-		for (auto screenobject : *uis::get()->getObjects())
+		for (auto screenobject : *Uis::get()->GetObjects())
 		{
 			Gui *object = dynamic_cast<Gui*>(screenobject);
 

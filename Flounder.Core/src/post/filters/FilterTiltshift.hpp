@@ -6,7 +6,7 @@
 namespace Flounder
 {
 	class filtertiltshift :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		float m_blurAmount;
@@ -18,7 +18,7 @@ namespace Flounder
 
 		~filtertiltshift();
 
-		void storeValues() override;
+		void StoreValues() override;
 
 		void setBlurAmount(const float &blurAmount) { m_blurAmount = blurAmount; }
 

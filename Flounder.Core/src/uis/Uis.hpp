@@ -1,24 +1,24 @@
 #pragma once
 
 #include "../engine/Engine.hpp"
-#include "../fonts/text.hpp"
-#include "../guis/gui.hpp"
+#include "../fonts/Text.hpp"
+#include "../guis/Gui.hpp"
 
-#include "imanageruis.hpp"
-#include "uiselector.hpp"
-#include "containerscreen.hpp"
+#include "IManagerUis.hpp"
+#include "UiSelector.hpp"
+#include "ContainerScreen.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A module used for that manages gui textures in a container.
 	/// </summary>
-	class uis :
+	class Uis :
 		public IModule
 	{
 	private:
 		IManagerUis *m_managerUis;
-		uiselector *m_selector;
+		UiSelector *m_selector;
 		UiObject *m_container;
 		std::vector<UiObject*> *m_objects;
 	public:
@@ -32,20 +32,20 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static uis *get()
+		static Uis *get()
 		{
-			return static_cast<uis*>(Engine::Get()->GetModule("uis"));
+			return static_cast<Uis*>(Engine::Get()->GetModule("uis"));
 		}
 
 		/// <summary>
 		/// Creates a new uis module.
 		/// </summary>
-		uis();
+		Uis();
 
 		/// <summary>
 		/// Deconstructor for the uis module.
 		/// </summary>
-		~uis();
+		~Uis();
 
 		void Update() override;
 
@@ -53,30 +53,30 @@ namespace Flounder
 		/// Gets the uis manager.
 		/// </summary>
 		/// <returns> The uis manager. </returns>
-		IManagerUis *getManager() { return m_managerUis; };
+		IManagerUis *GetManager() const { return m_managerUis; };
 
 		/// <summary>
 		/// Sets the current uis manager to a new uis manager.
 		/// </summary>
 		/// <param name="managerUis"> The new uis manager. </param>
-		void setMaster(IManagerUis *managerUis) { m_managerUis = managerUis; }
+		void SetManager(IManagerUis *managerUis) { m_managerUis = managerUis; }
 
 		/// <summary>
 		/// Gets the screen container.
 		/// </summary>
 		/// <returns> The screen container. </returns>
-		UiObject *getContainer() { return m_container; }
+		UiObject *GetContainer() const { return m_container; }
 
 		/// <summary>
 		/// Gets the main GUI selector.
 		/// </summary>
 		/// <returns> The GUI selector. </returns>
-		uiselector *getSelector() { return m_selector; }
+		UiSelector *GetSelector() const { return m_selector; }
 
 		/// <summary>
 		/// The rendering objects from the container. Updated each update.
 		/// </summary>
 		/// <returns> The objects. </returns>
-		std::vector<UiObject*> *getObjects() { return m_objects; };
+		std::vector<UiObject*> *GetObjects() const { return m_objects; };
 	};
 }

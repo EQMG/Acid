@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filtertone::filtertone() :
-		ipostfilter("filterTone", "res/shaders/filters/tone.frag.spv")
+		IPostFilter("filterTone", "res/shaders/filters/tone.frag.spv")
 	{
 	}
 
@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void filtertone::storeValues()
+	void filtertone::StoreValues()
 	{
 	}
 }

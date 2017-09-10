@@ -1,4 +1,4 @@
-#include "renderer.hpp"
+#include "Renderer.hpp"
 
 namespace Flounder
 {
@@ -18,9 +18,9 @@ namespace Flounder
 		m_renderFinishedSemaphore = VK_NULL_HANDLE;
 
 		m_swapChain = new Swapchain();
-		m_shaderTest = new shader("tests", 2,
-			shadertype(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
-			shadertype(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
+		m_shaderTest = new Shader("tests", 2,
+			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
+			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		);
 
 		lastWidth = Display::Get()->GetWidth();
@@ -172,8 +172,8 @@ namespace Flounder
 
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-		pipelineInfo.stageCount = (uint32_t) m_shaderTest->getStages()->size();
-		pipelineInfo.pStages = m_shaderTest->getStages()->data();
+		pipelineInfo.stageCount = (uint32_t) m_shaderTest->GetStages()->size();
+		pipelineInfo.pStages = m_shaderTest->GetStages()->data();
 		pipelineInfo.pVertexInputState = &vertexInputInfo;
 		pipelineInfo.pInputAssemblyState = &inputAssembly;
 		pipelineInfo.pViewportState = &viewportState;

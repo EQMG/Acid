@@ -5,13 +5,13 @@
 namespace Flounder
 {
 	class filtersepia :
-		public ipostfilter
+		public IPostFilter
 	{
 	public:
 		filtersepia();
 
 		~filtersepia();
 
-		void storeValues() override;
+		void StoreValues() override;
 	};
 }

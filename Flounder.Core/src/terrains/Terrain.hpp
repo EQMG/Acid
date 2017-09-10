@@ -4,15 +4,15 @@
 
 #include "../maths/Vector3.hpp"
 #include "../maths/Matrix4.hpp"
-#include "../physics/aabb.hpp"
-#include "../models/model.hpp"
+#include "../physics/Aabb.hpp"
+#include "../models/Model.hpp"
 #include "../worlds/Worlds.hpp"
 
-#include "biome.hpp"
+#include "Biome.hpp"
 
 namespace Flounder
 {
-	class terrain
+	class Terrain
 	{
 	private:
 		Model *m_model;
@@ -28,40 +28,40 @@ namespace Flounder
 		static const int VERTEX_COUNT;
 		static const float SIDE_LENGTH;
 
-		terrain(const Vector3 &position, const Vector3 &rotation, const int &seed);
+		Terrain(const Vector3 &position, const Vector3 &rotation, const int &seed);
 
-		~terrain();
+		~Terrain();
 
-		void update();
+		void Update();
 	private:
-		void generateMesh();
+		void GenerateMesh();
 
-		void storeQuad1(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		static void StoreQuad1(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		void storeQuad2(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		static void StoreQuad2(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		Vector3 calculateNormal(const float &x, const float &z);
+		Vector3 CalculateNormal(const float &x, const float &z);
 
-		Colour getBiomeColour(const float &x, const float &z);
+		Colour GetBiomeColour(const float &x, const float &z);
 
-		float getFactorIsland(const float &x, const float &z);
+		float GetFactorIsland(const float &x, const float &z);
 
-		float getFactorMoisture(const float &x, const float &y, const float &z);
+		float GetFactorMoisture(const float &x, const float &y, const float &z);
 	public:
-		float getHeight(const float &x, const float &z);
+		float GetHeight(const float &x, const float &z);
 
-		Model *getModel() const { return m_model; }
+		Model *GetModel() const { return m_model; }
 
-		Vector3 *getPosition() const { return m_position; }
+		Vector3 *GetPosition() const { return m_position; }
 
-		void setPosition(const Vector3 &position);
+		void SetPosition(const Vector3 &position);
 
-		Vector3 *getRotation() const { return m_rotation; }
+		Vector3 *GetRotation() const { return m_rotation; }
 
-		void setRotation(const Vector3 &rotation);
+		void SetRotation(const Vector3 &rotation);
 
-		Matrix4 *getModelMatrix() const { return m_modelMatrix; }
+		Matrix4 *GetModelMatrix() const { return m_modelMatrix; }
 
-		Aabb *getAabb() const { return m_aabb; }
+		Aabb *GetAabb() const { return m_aabb; }
 	};
 }

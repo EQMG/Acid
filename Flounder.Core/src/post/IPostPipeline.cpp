@@ -1,20 +1,20 @@
-#include "ipostpipeline.hpp"
+#include "IPostPipeline.hpp"
 
 namespace Flounder
 {
-	ipostpipeline::ipostpipeline()
+	IPostPipeline::IPostPipeline()
 	{
 	}
 
-	ipostpipeline::~ipostpipeline()
+	IPostPipeline::~IPostPipeline()
 	{
 	}
 
-	void ipostpipeline::renderPipelineV(const int n_args, ...)
+	void IPostPipeline::RenderPipeline(const int n_args, ...)
 	{
 		va_list args;
 		va_start(args, n_args);
-		renderPipeline(n_args, args);
+		RenderPipeline(n_args, args);
 		va_end(args);
 	}
 }

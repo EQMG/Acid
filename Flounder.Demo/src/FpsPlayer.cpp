@@ -44,9 +44,9 @@ void FpsPlayer::Update()
 	// Gets the delta and limits the lowest UPS to 20 (any less and the game is unplayable).
 	float delta = Maths::Min(Engine::Get()->GetDelta(), 1.0f / 20.0f);
 
-	if (uis::get() != nullptr && uis::get()->getManager() != nullptr)
+	if (Uis::get() != nullptr && Uis::get()->GetManager() != nullptr)
 	{
-		m_paused = uis::get()->getManager()->IsGamePaused();
+		m_paused = Uis::get()->GetManager()->IsGamePaused();
 	}
 
 	if (!m_paused)

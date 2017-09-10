@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filterwobble::filterwobble(const float &wobbleSpeed) :
-		ipostfilter("filterWobble", "res/shaders/filters/wobble.frag.spv"),
+		IPostFilter("filterWobble", "res/shaders/filters/wobble.frag.spv"),
 		m_wobbleSpeed(wobbleSpeed)
 	{
 	}
@@ -12,7 +12,7 @@ namespace Flounder
 	{
 	}
 
-	void filterwobble::storeValues()
+	void filterwobble::StoreValues()
 	{
 #if 0
 		m_wobbleAmount += m_wobbleSpeed * Engine::Get()->getDeltaRender();

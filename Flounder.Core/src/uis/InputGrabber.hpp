@@ -3,57 +3,57 @@
 #include <functional>
 
 #include "../devices/Keyboard.hpp"
-#include "../visual/driverslide.hpp"
+#include "../visual/DriverSlide.hpp"
 
-#include "uis.hpp"
-#include "uiobject.hpp"
-#include "uialign.hpp"
-#include "inputdelay.hpp"
+#include "Uis.hpp"
+#include "UiObject.hpp"
+#include "UiAlign.hpp"
+#include "InputDelay.hpp"
 
 namespace Flounder
 {
-	class igrabber
+	class IGrabber
 	{
 	public:
-		virtual ~igrabber() = default;
+		virtual ~IGrabber() = default;
 
-		virtual int getCurrent(Text *object) = 0;
+		virtual int GetCurrent(Text *object) = 0;
 
-		virtual std::string getValue(const int &value) = 0;
+		virtual std::string GetValue(const int &value) = 0;
 	};
 
-	class grabberjoystick :
-		public igrabber
+	class GrabberJoystick :
+		public IGrabber
 	{
 	private:
 		int m_joystick;
 	public:
-		grabberjoystick(const int &joystick);
+		GrabberJoystick(const int &joystick);
 
-		int getCurrent(Text *object) override;
+		int GetCurrent(Text *object) override;
 
-		std::string getValue(const int &value) override;
+		std::string GetValue(const int &value) override;
 	};
 
-	class grabberkeyboard :
-		public igrabber
+	class GrabberKeyboard :
+		public IGrabber
 	{
 	public:
-		int getCurrent(Text *object) override;
+		int GetCurrent(Text *object) override;
 
-		std::string getValue(const int &value) override;
+		std::string GetValue(const int &value) override;
 	};
 
-	class grabbermouse :
-		public igrabber
+	class GrabberMouse :
+		public IGrabber
 	{
 	public:
-		int getCurrent(Text *object) override;
+		int GetCurrent(Text *object) override;
 
-		std::string getValue(const int &value) override;
+		std::string GetValue(const int &value) override;
 	};
 
-	class inputgrabber :
+	class InputGrabber :
 		public UiObject
 	{
 	private:
@@ -65,12 +65,12 @@ namespace Flounder
 		Text *m_text;
 		Gui *m_background;
 
-		igrabber *m_grabber;
+		IGrabber *m_grabber;
 
 		std::string m_prefix;
 		int m_value;
 
-		inputdelay *m_inputDelay;
+		InputDelay *m_inputDelay;
 		int m_lastKey;
 
 		bool m_selected;
@@ -78,20 +78,20 @@ namespace Flounder
 
 		std::function<void()> m_actionChange;
 	public:
-		inputgrabber(UiObject *parent, const Vector2 &position, const std::string &prefix, const int &value, igrabber *grabber, const uialign &align);
+		InputGrabber(UiObject *parent, const Vector2 &position, const std::string &prefix, const int &value, IGrabber *grabber, const UiAlign &align);
 
-		~inputgrabber();
+		~InputGrabber();
 
 		void UpdateObject() override;
 
-		std::string getPrefix() const { return m_prefix; }
+		std::string GetPrefix() const { return m_prefix; }
 
-		void setPrefix(const std::string &prefix);
+		void SetPrefix(const std::string &prefix);
 
-		int getValue() const { return m_value; }
+		int GetValue() const { return m_value; }
 
-		void setValue(const int &value);
+		void SetValue(const int &value);
 
-		void setActionChange(std::function<void()> action) { m_actionChange = action; }
+		void SetActionChange(std::function<void()> action) { m_actionChange = action; }
 	};
 }

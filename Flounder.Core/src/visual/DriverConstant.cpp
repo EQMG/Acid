@@ -1,18 +1,18 @@
-#include "driverconstant.hpp"
+#include "DriverConstant.hpp"
 
 namespace Flounder
 {
-	driverconstant::driverconstant(const float &constant) :
-		idriver(1.0f),
+	DriverConstant::DriverConstant(const float &constant) :
+		IDriver(1.0f),
 		m_value(constant)
 	{
 	}
 
-	driverconstant::~driverconstant()
+	DriverConstant::~DriverConstant()
 	{
 	}
 
-	float driverconstant::calculate(const float &time)
+	float DriverConstant::Calculate(const float &time)
 	{
 		return m_value;
 	}

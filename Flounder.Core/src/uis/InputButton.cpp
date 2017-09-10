@@ -1,16 +1,16 @@
-﻿#include "inputbutton.hpp"
+﻿#include "InputButton.hpp"
 
 namespace Flounder
 {
-	const float inputbutton::CHANGE_TIME = 0.1f;
-	const float inputbutton::SCALE_NORMAL = 1.6f;
-	const float inputbutton::SCALE_SELECTED = 1.8f;
-	Colour *const inputbutton::COLOUR_NORMAL = new Colour(0.0f, 0.0f, 0.0f, 1.0f);
+	const float InputButton::CHANGE_TIME = 0.1f;
+	const float InputButton::SCALE_NORMAL = 1.6f;
+	const float InputButton::SCALE_SELECTED = 1.8f;
+	Colour *const InputButton::COLOUR_NORMAL = new Colour(0.0f, 0.0f, 0.0f, 1.0f);
 
-	inputbutton::inputbutton(UiObject *parent, const Vector2 &position, const std::string &string, const uialign &align) :
+	InputButton::InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const UiAlign &align) :
 		UiObject(parent, position, Vector2(0.0f, 0.0f)),
-		m_text(new Text(this, position, string, SCALE_NORMAL, uis::get()->m_candara, 0.36f, align)),
-		m_background(new Gui(this, position, Vector2(), new texture("res/guis/buttonText.png"), 1)),
+		m_text(new Text(this, position, string, SCALE_NORMAL, Uis::get()->m_candara, 0.36f, align)),
+		m_background(new Gui(this, position, Vector2(), new Texture("res/guis/buttonText.png"), 1)),
 		m_mouseOver(false),
 		m_actionLeft(nullptr),
 		m_actionRight(nullptr)
@@ -22,48 +22,48 @@ namespace Flounder
 		m_background->SetColourOffset(Colour());
 	}
 
-	inputbutton::~inputbutton()
+	InputButton::~InputButton()
 	{
 		delete m_text;
 		delete m_background;
 	}
 
-	void inputbutton::UpdateObject()
+	void InputButton::UpdateObject()
 	{
 		// Click updates.
-		if (uis::get()->getSelector()->isSelected(*m_text) && GetAlpha() == 1.0f && uis::get()->getSelector()->wasLeftClick())
+		if (Uis::get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::get()->GetSelector()->wasLeftClick())
 		{
 			if (m_actionLeft != 0)
 			{
 				m_actionLeft();
 			}
 
-			uis::get()->getSelector()->cancelWasEvent();
+			Uis::get()->GetSelector()->CancelWasEvent();
 		}
-		else if (uis::get()->getSelector()->isSelected(*m_text) && GetAlpha() == 1.0f && uis::get()->getSelector()->wasRightClick())
+		else if (Uis::get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::get()->GetSelector()->wasRightClick())
 		{
 			if (m_actionRight != 0)
 			{
 				m_actionRight();
 			}
 
-			uis::get()->getSelector()->cancelWasEvent();
+			Uis::get()->GetSelector()->CancelWasEvent();
 		}
 
 		// Mouse over updates.
-		if (uis::get()->getSelector()->isSelected(*m_text) && !m_mouseOver)
+		if (Uis::get()->GetSelector()->IsSelected(*m_text) && !m_mouseOver)
 		{
-			m_text->SetScaleDriver(new driverslide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
+			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
 			m_mouseOver = true;
 		}
-		else if (!uis::get()->getSelector()->isSelected(*m_text) && m_mouseOver)
+		else if (!Uis::get()->GetSelector()->IsSelected(*m_text) && m_mouseOver)
 		{
-			m_text->SetScaleDriver(new driverslide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
+			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
 			m_mouseOver = false;
 		}
 
 		// Update the background colour.
-		Colour *primary = uis::get()->getManager()->GetPrimaryColour();
+		Colour *primary = Uis::get()->GetManager()->GetPrimaryColour();
 		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.

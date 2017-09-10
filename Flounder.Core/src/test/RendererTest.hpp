@@ -1,18 +1,18 @@
 ﻿#pragma once
 
-#include "../renderer/irenderer.hpp"
+#include "../renderer/IRenderer.hpp"
 
 namespace Flounder
 {
-	class renderertest :
+	class RendererTest :
 		public IRenderer
 	{
 	private:
-		shader *m_shader;
+		Shader *m_shader;
 	public:
-		renderertest();
+		RendererTest();
 
-		~renderertest();
+		~RendererTest();
 
 		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
 	};

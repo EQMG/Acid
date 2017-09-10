@@ -9,7 +9,7 @@
 
 namespace Flounder
 {
-	class water
+	class Water
 	{
 	private:
 		Model *m_model;
@@ -36,42 +36,42 @@ namespace Flounder
 		static const float SHINE_DAMPER;
 		static const float REFLECTIVITY;
 
-		water(const Vector3 &position = Vector3(), const Vector3 &rotation = Vector3());
+		Water(const Vector3 &position = Vector3(), const Vector3 &rotation = Vector3());
 
-		~water();
+		~Water();
 
-		void update();
+		void Update();
 	private:
-		void generateMesh();
+		void GenerateMesh();
 
-		void storeQuad1(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void StoreQuad1(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed) const;
 
-		void storeQuad2(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void StoreQuad2(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed) const;
 
-		void storeVertex(std::vector<float> &vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2);
+		void StoreVertex(std::vector<float> &vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2) const;
 
-		float encode(const float &x, const float &z, const float &x2, const float &z2);
+		float Encode(const float &x, const float &z, const float &x2, const float &z2) const;
 	public:
-		float getHeight(const float &x, const float &z);
+		float GetHeight(const float &x, const float &z) const;
 
-		Model *getModel() const { return m_model; }
+		Model *GetModel() const { return m_model; }
 
-		Colour *getColour() const { return m_colour; }
+		Colour *GetColour() const { return m_colour; }
 
-		void setColour(const Colour &colour) const { m_colour->Set(colour); }
+		void SetColour(const Colour &colour) const { m_colour->Set(colour); }
 
-		Vector3 *getPosition() const { return m_position; }
+		Vector3 *GetPosition() const { return m_position; }
 
-		void setPosition(const Vector3 &position);
+		void SetPosition(const Vector3 &position);
 
-		Vector3 *getRotation() const { return m_rotation; }
+		Vector3 *GetRotation() const { return m_rotation; }
 
-		void setRotation(const Vector3 &rotation);
+		void SetRotation(const Vector3 &rotation);
 
-		Vector3 *getOffset() const { return m_offset; }
+		Vector3 *GetOffset() const { return m_offset; }
 
-		Matrix4 *getModelMatrix() const { return m_modelMatrix; }
+		Matrix4 *GetModelMatrix() const { return m_modelMatrix; }
 
-		Aabb *getAabb() const { return m_aabb; }
+		Aabb *GetAabb() const { return m_aabb; }
 	};
 }

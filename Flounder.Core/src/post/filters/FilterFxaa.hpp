@@ -5,7 +5,7 @@
 namespace Flounder
 {
 	class filterfxaa :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		float m_spanMax;
@@ -14,7 +14,7 @@ namespace Flounder
 
 		~filterfxaa();
 
-		void storeValues() override;
+		void StoreValues() override;
 
 		void setSpanMax(const float &spanMax) { m_spanMax = spanMax; }
 	};

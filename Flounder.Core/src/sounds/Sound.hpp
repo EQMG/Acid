@@ -8,7 +8,7 @@
 #include <al/alc.h>
 
 #include "../devices/Display.hpp"
-#include "../helpers/helperstring.hpp"
+#include "../helpers/HelperString.hpp"
 #include "../maths/Vector3.hpp"
 
 namespace Flounder

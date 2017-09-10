@@ -1,16 +1,16 @@
-﻿#include "renderertest.hpp"
+﻿#include "RendererTest.hpp"
 
 namespace Flounder
 {
-	renderertest::renderertest()
+	RendererTest::RendererTest()
 	{
 	}
 
-	renderertest::~renderertest()
+	RendererTest::~RendererTest()
 	{
 	}
 
-	void renderertest::Render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererTest::Render(const Vector4 &clipPlane, const ICamera &camera)
 	{
 	}
 }

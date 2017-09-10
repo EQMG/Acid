@@ -2,11 +2,11 @@
 
 namespace Flounder
 {
-	terrains::terrains() :
+	Terrains::Terrains() :
 		IModule(),
-		m_terrains(new std::vector<terrain*>())
+		m_terrains(new std::vector<Terrain*>())
 	{
-		m_terrains->push_back(new terrain(
+		m_terrains->push_back(new Terrain(
 			Vector3(), Vector3(), 420
 		));
 
@@ -16,28 +16,28 @@ namespace Flounder
 			{
 				if (!(j == 0 && w == 0))
 				{
-					m_terrains->push_back(new terrain(
-						Vector3(2.0f * static_cast<float>(j) * terrain::SIDE_LENGTH, 0.0f, 2.0f * static_cast<float>(w) * terrain::SIDE_LENGTH), Vector3(), 420
+					m_terrains->push_back(new Terrain(
+						Vector3(2.0f * static_cast<float>(j) * Terrain::SIDE_LENGTH, 0.0f, 2.0f * static_cast<float>(w) * Terrain::SIDE_LENGTH), Vector3(), 420
 					));
 				}
 			}
 		}
 	}
 
-	terrains::~terrains()
+	Terrains::~Terrains()
 	{
 		delete m_terrains;
 	}
 
-	void terrains::Update()
+	void Terrains::Update()
 	{
-		for (terrain *object : *m_terrains)
+		for (Terrain *object : *m_terrains)
 		{
 			bool inRange = true;
 			bool current = true;
 			// if !inRange ? delete
 			// if current && !wasCurrent ? addChildren
-			object->update();
+			object->Update();
 		}
 	}
 }

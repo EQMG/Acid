@@ -19,7 +19,7 @@ namespace Flounder
 	private:
 		NoiseFast *m_noise;
 
-		driverlinear *m_driverDay;
+		DriverLinear *m_driverDay;
 		float m_factorDay;
 
 		Vector3 *m_sunPosition;

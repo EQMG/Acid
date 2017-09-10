@@ -1,18 +1,18 @@
-#include "processing.hpp"
+#include "Processing.hpp"
 
 namespace Flounder
 {
-	processing::processing() :
+	Processing::Processing() :
 		IModule(),
-		m_processors(new std::vector<iprocessor*>())
+		m_processors(new std::vector<IProcessor*>())
 	{
 		// Manually adds the two base processors, these will be added into the modules loop, but are needed now.
 		// If these are not added in the init loop, nothing will be able to be initially processed!
-		m_processors->push_back(new processorresource());
-		m_processors->push_back(new processorgraphic());
+		m_processors->push_back(new ProcessorResource());
+		m_processors->push_back(new ProcessorGraphic());
 	}
 
-	processing::~processing()
+	Processing::~Processing()
 	{
 		for (auto processor : *m_processors)
 		{
@@ -22,24 +22,24 @@ namespace Flounder
 		delete m_processors;
 	}
 
-	void processing::addProcessor(iprocessor *processor)
+	void Processing::Update()
+	{
+		for (auto processor : *m_processors)
+		{
+			processor->Update();
+		}
+	}
+
+	void Processing::AddProcessor(IProcessor *processor) const
 	{
 		m_processors->push_back(processor);
 	}
 
-	void processing::Update()
+	void Processing::SendRequest(IRequest *request) const
 	{
 		for (auto processor : *m_processors)
 		{
-			processor->update();
-		}
-	}
-
-	void processing::sendRequest(irequest *request)
-	{
-		for (auto processor : *m_processors)
-		{
-			processor->addRequestToQueue(request);
+			processor->AddRequestToQueue(request);
 		}
 	}
 }

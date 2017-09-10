@@ -1,22 +1,22 @@
-#include "processorgraphic.hpp"
+#include "ProcessorGraphic.hpp"
 
 namespace Flounder
 {
-	const double processorgraphic::MAX_TIME_MILLIS = 8.0f;
+	const double ProcessorGraphic::MAX_TIME_MILLIS = 8.0f;
 
-	processorgraphic::processorgraphic() :
-		m_queue(new queue<requestgraphic*>())
+	ProcessorGraphic::ProcessorGraphic() :
+		m_queue(new Queue<RequestGraphic*>())
 	{
 	}
 
-	processorgraphic::~processorgraphic()
+	ProcessorGraphic::~ProcessorGraphic()
 	{
 		delete m_queue;
 	}
 
-	void processorgraphic::update()
+	void ProcessorGraphic::Update()
 	{
-		if (!m_queue->hasRequests())
+		if (!m_queue->HasRequests())
 		{
 			return;
 		}
@@ -24,10 +24,10 @@ namespace Flounder
 		double remainingTime = MAX_TIME_MILLIS;
 		double start = Engine::Get()->GetTimeMs();
 
-		while (m_queue->hasRequests())
+		while (m_queue->HasRequests())
 		{
-			requestgraphic *request = m_queue->acceptNextRequest();
-			request->executeRequestGraphic();
+			RequestGraphic *request = m_queue->AcceptNextRequest();
+			request->ExecuteRequestGraphic();
 			double end = Engine::Get()->GetTimeMs();
 			double timeTaken = end - start;
 			remainingTime -= timeTaken;
@@ -41,21 +41,21 @@ namespace Flounder
 		}
 	}
 
-	void processorgraphic::addRequestToQueue(irequest *request)
+	void ProcessorGraphic::AddRequestToQueue(IRequest *request)
 	{
-		if (dynamic_cast<requestgraphic*>(request) == nullptr)
+		if (dynamic_cast<RequestGraphic*>(request) == nullptr)
 		{
 			return;
 		}
 
-		m_queue->addRequest((requestgraphic*) request);
+		m_queue->AddRequest(static_cast<RequestGraphic*>(request));
 	}
 
-	void processorgraphic::completeAllRequests()
+	void ProcessorGraphic::CompleteAllRequests() const
 	{
-		while (m_queue->hasRequests())
+		while (m_queue->HasRequests())
 		{
-			m_queue->acceptNextRequest()->executeRequestGraphic();
+			m_queue->AcceptNextRequest()->ExecuteRequestGraphic();
 		}
 	}
 }

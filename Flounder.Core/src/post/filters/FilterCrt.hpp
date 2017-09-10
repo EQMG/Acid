@@ -6,7 +6,7 @@
 namespace Flounder
 {
 	class filtercrt :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		Colour *m_screenColour;
@@ -19,7 +19,7 @@ namespace Flounder
 
 		~filtercrt();
 
-		void storeValues() override;
+		void StoreValues() override;
 
 		void setScreenColour(const Colour &screenColour) { m_screenColour->Set(screenColour); }
 

@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	filteremboss::filteremboss() :
-		ipostfilter("filterEmboss", "res/shaders/filters/emboss.frag.spv")
+		IPostFilter("filterEmboss", "res/shaders/filters/emboss.frag.spv")
 	{
 	}
 
@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void filteremboss::storeValues()
+	void filteremboss::StoreValues()
 	{
 	}
 }

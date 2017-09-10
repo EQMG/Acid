@@ -6,7 +6,7 @@
 namespace Flounder
 {
 	class filterpixel :
-		public ipostfilter
+		public IPostFilter
 	{
 	private:
 		float m_pixelSize;
@@ -15,7 +15,7 @@ namespace Flounder
 
 		~filterpixel();
 
-		void storeValues() override;
+		void StoreValues() override;
 
 		void setPixelSize(const float &pixelSize) { m_pixelSize = pixelSize; }
 	};

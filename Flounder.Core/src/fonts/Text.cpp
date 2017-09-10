@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	Text::Text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const uialign &align) :
+	Text::Text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const UiAlign &align) :
 		UiObject(parent, position, Vector2(1.0f, 1.0f)),
 		m_textString(text),
 		m_textAlign(align),
@@ -15,13 +15,13 @@ namespace Flounder
 		m_borderColour(new Colour(1.0f, 1.0f, 1.0f, 1.0f)),
 		m_solidBorder(false),
 		m_glowBorder(false),
-		m_glowDriver(new driverconstant(0.0f)),
+		m_glowDriver(new DriverConstant(0.0f)),
 		m_glowSize(0.0f),
-		m_borderDriver(new driverconstant(0.0f)),
+		m_borderDriver(new DriverConstant(0.0f)),
 		m_borderSize(0.0f)
 	{
 		SetMeshSize(Vector2(0.0f, 0.0f));
-		SetScaleDriver(new driverconstant(fontSize));
+		SetScaleDriver(new DriverConstant(fontSize));
 		LoadText(this);
 	}
 
@@ -49,19 +49,19 @@ namespace Flounder
 
 		switch (m_textAlign)
 		{
-		case LEFT:
+		case AlignLeft:
 			GetPositionOffsets()->Set(GetMeshSize()->m_x * GetScreenDimensions()->m_x, 0.0f);
 			break;
-		case CENTRE:
+		case AlightCentre:
 			GetPositionOffsets()->Set(0.0f, 0.0f);
 			break;
-		case RIGHT:
+		case CentreRight:
 			GetPositionOffsets()->Set(-GetMeshSize()->m_x * GetScreenDimensions()->m_x, 0.0f);
 			break;
 		}
 
-		m_glowSize = m_glowDriver->update(Engine::Get()->GetDelta());
-		m_borderSize = m_borderDriver->update(Engine::Get()->GetDelta());
+		m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
+		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
 	}
 
 	void Text::LoadText(Text *object)
@@ -144,13 +144,13 @@ namespace Flounder
 		{
 			switch (object->GetTextAlign())
 			{
-			case LEFT:
+			case AlignLeft:
 				cursorX = 0.0;
 				break;
-			case CENTRE:
+			case AlightCentre:
 				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0;
 				break;
-			case RIGHT:
+			case CentreRight:
 				cursorX = line.GetMaxLength() - line.GetCurrentLineLength();
 				break;
 			default:
@@ -275,7 +275,7 @@ namespace Flounder
 		}
 	}
 
-	void Text::SetBorder(idriver *driver)
+	void Text::SetBorder(IDriver *driver)
 	{
 		delete m_borderDriver;
 		m_borderDriver = driver;
@@ -283,7 +283,7 @@ namespace Flounder
 		m_glowBorder = false;
 	}
 
-	void Text::SetGlowing(idriver *driver)
+	void Text::SetGlowing(IDriver *driver)
 	{
 		delete m_glowDriver;
 		m_glowDriver = driver;
