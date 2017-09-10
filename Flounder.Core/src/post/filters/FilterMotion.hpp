@@ -1,21 +1,21 @@
 #pragma once
 
-#include "../../camera/camera.hpp"
+#include "../../camera/Camera.hpp"
 #include "../../devices/Display.hpp"
 #include "../../maths/Matrix4.hpp"
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filtermotion :
+	class FilterMotion :
 		public IPostFilter
 	{
 	private:
 		Matrix4 *m_lastViewMatrix;
 	public:
-		filtermotion();
+		FilterMotion();
 
-		~filtermotion();
+		~FilterMotion();
 
 		void StoreValues() override;
 	};

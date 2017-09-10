@@ -5,15 +5,15 @@ namespace Flounder
 	PipelineGaussian::PipelineGaussian(const int &width, const int &height) :
 		IPostPipeline()
 	{
-		m_filterBlurHorizontal = new filterblurhorizontal(width, height);
-		m_filterBlurVertical = new filterblurvertical(width, height);
+		m_filterBlurHorizontal = new FilterBlurHorizontal(width, height);
+		m_filterBlurVertical = new FilterBlurVertical(width, height);
 	}
 
 	PipelineGaussian::PipelineGaussian(const float &sizeScalar) :
 		IPostPipeline()
 	{
-		m_filterBlurHorizontal = new filterblurhorizontal(sizeScalar);
-		m_filterBlurVertical = new filterblurvertical(sizeScalar);
+		m_filterBlurHorizontal = new FilterBlurHorizontal(sizeScalar);
+		m_filterBlurVertical = new FilterBlurVertical(sizeScalar);
 	}
 
 	PipelineGaussian::~PipelineGaussian()
@@ -37,7 +37,7 @@ namespace Flounder
 
 	void PipelineGaussian::SetScaleValue(const float &scaleValue) const
 	{
-		m_filterBlurHorizontal->setScaleValue(scaleValue);
-		m_filterBlurVertical->setScaleValue(scaleValue);
+		m_filterBlurHorizontal->SetScaleValue(scaleValue);
+		m_filterBlurVertical->SetScaleValue(scaleValue);
 	}
 }

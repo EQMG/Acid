@@ -1,19 +1,19 @@
-#include "filtercombine.hpp"
+#include "FilterCombine.hpp"
 
 namespace Flounder
 {
-	filtercombine::filtercombine() :
+	FilterCombine::FilterCombine() :
 		IPostFilter("filterCombine", "res/shaders/filters/combine.frag.spv"),
 		m_slideSpaceValue(new Vector4(0.0f, 1.0f, 0.0f, 1.0f))
 	{
 	}
 
-	filtercombine::~filtercombine()
+	FilterCombine::~FilterCombine()
 	{
 		delete m_slideSpaceValue;
 	}
 
-	void filtercombine::StoreValues()
+	void FilterCombine::StoreValues()
 	{
 #if 0
 		// TODO: Load and store as seperate floats.

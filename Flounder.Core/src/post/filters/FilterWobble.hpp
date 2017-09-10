@@ -2,23 +2,25 @@
 
 #include "../../devices/Display.hpp"
 #include "../../engine/Engine.hpp"
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filterwobble :
+	class FilterWobble :
 		public IPostFilter
 	{
 	private:
 		float m_wobbleSpeed;
 		float m_wobbleAmount;
 	public:
-		filterwobble(const float &wobbleSpeed = 2.0f);
+		FilterWobble(const float &wobbleSpeed = 2.0f);
 
-		~filterwobble();
+		~FilterWobble();
 
 		void StoreValues() override;
 
-		void setWobbleSpeed(const float &wobbleSpeed) { m_wobbleSpeed = wobbleSpeed; }
+		float GetWobbleSpeed() const { return m_wobbleSpeed; }
+
+		void SetWobbleSpeed(const float &wobbleSpeed) { m_wobbleSpeed = wobbleSpeed; }
 	};
 }

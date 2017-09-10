@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filternegative :
+	class FilterNegative :
 		public IPostFilter
 	{
 	public:
-		filternegative();
+		FilterNegative();
 
-		~filternegative();
+		~FilterNegative();
 
 		void StoreValues() override;
 	};

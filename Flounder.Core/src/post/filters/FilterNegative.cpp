@@ -1,17 +1,17 @@
-#include "filternegative.hpp"
+#include "FilterNegative.hpp"
 
 namespace Flounder
 {
-	filternegative::filternegative() :
+	FilterNegative::FilterNegative() :
 		IPostFilter("filterNegative", "res/shaders/filters/negative.frag.spv")
 	{
 	}
 
-	filternegative::~filternegative()
+	FilterNegative::~FilterNegative()
 	{
 	}
 
-	void filternegative::StoreValues()
+	void FilterNegative::StoreValues()
 	{
 	}
 }

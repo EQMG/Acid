@@ -1,17 +1,17 @@
-#include "filterbloom2.hpp"
+#include "FilterBloom2.hpp"
 
 namespace Flounder
 {
-	filterbloom2::filterbloom2() :
+	FilterBloom2::FilterBloom2() :
 		IPostFilter("filterBloom2", "res/shaders/filters/bloom2.frag.spv")
 	{
 	}
 
-	filterbloom2::~filterbloom2()
+	FilterBloom2::~FilterBloom2()
 	{
 	}
 
-	void filterbloom2::StoreValues()
+	void FilterBloom2::StoreValues()
 	{
 	}
 }

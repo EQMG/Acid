@@ -3,7 +3,7 @@
 #include <stdarg.h>
 
 #include "../devices/Joysticks.hpp"
-#include "../maths/maths.hpp"
+#include "../maths/Maths.hpp"
 
 #include "iaxis.hpp"
 #include "ibutton.hpp"

@@ -1,18 +1,19 @@
-#include "filterwobble.hpp"
+#include "FilterWobble.hpp"
 
 namespace Flounder
 {
-	filterwobble::filterwobble(const float &wobbleSpeed) :
+	FilterWobble::FilterWobble(const float &wobbleSpeed) :
 		IPostFilter("filterWobble", "res/shaders/filters/wobble.frag.spv"),
-		m_wobbleSpeed(wobbleSpeed)
+		m_wobbleSpeed(wobbleSpeed),
+		m_wobbleAmount(0.0f)
 	{
 	}
 
-	filterwobble::~filterwobble()
+	FilterWobble::~FilterWobble()
 	{
 	}
 
-	void filterwobble::StoreValues()
+	void FilterWobble::StoreValues()
 	{
 #if 0
 		m_wobbleAmount += m_wobbleSpeed * Engine::Get()->getDeltaRender();

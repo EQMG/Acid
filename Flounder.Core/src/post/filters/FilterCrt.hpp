@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../maths/colour.hpp"
-#include "../ipostfilter.hpp"
+#include "../../maths/Colour.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filtercrt :
+	class FilterCrt :
 		public IPostFilter
 	{
 	private:
@@ -15,20 +15,30 @@ namespace Flounder
 		float m_scanLineSize;
 		float m_scanIntensity;
 	public:
-		filtercrt(const Colour &screenColour = Colour(0.5f, 1.0f, 0.5f, 1.0f), const float &curveAmountX = 0.1f, const float &curveAmountY = 0.1f, const float &scanLineSize = 1000.0f, const float &scanIntensity = 0.1f);
+		FilterCrt(const Colour &screenColour = Colour(0.5f, 1.0f, 0.5f, 1.0f), const float &curveAmountX = 0.1f, const float &curveAmountY = 0.1f, const float &scanLineSize = 1000.0f, const float &scanIntensity = 0.1f);
 
-		~filtercrt();
+		~FilterCrt();
 
 		void StoreValues() override;
 
-		void setScreenColour(const Colour &screenColour) { m_screenColour->Set(screenColour); }
+		Colour *GetScreenColour() const { return m_screenColour; }
 
-		void setCurveAmountX(const float &curveAmountX) { m_curveAmountX = curveAmountX; }
+		void SetScreenColour(const Colour &screenColour) const { m_screenColour->Set(screenColour); }
 
-		void setCurveAmountY(const float &curveAmountY) { m_curveAmountY = curveAmountY; }
+		float GetCurveAmountX() const { return m_curveAmountX; }
 
-		void setScanLineSize(const float &scanLineSize) { m_scanLineSize = scanLineSize; }
+		void SetCurveAmountX(const float &curveAmountX) { m_curveAmountX = curveAmountX; }
 
-		void setScanIntensity(const float &scanIntensity) { m_scanIntensity = scanIntensity; }
+		float GetCurveAmountY() const { return m_curveAmountY; }
+
+		void SetCurveAmountY(const float &curveAmountY) { m_curveAmountY = curveAmountY; }
+
+		float GetScanLineSize() const { return m_scanLineSize; }
+
+		void SetScanLineSize(const float &scanLineSize) { m_scanLineSize = scanLineSize; }
+
+		float GetScanIntensity() const { return m_scanIntensity; }
+
+		void SetScanIntensity(const float &scanIntensity) { m_scanIntensity = scanIntensity; }
 	};
 }
