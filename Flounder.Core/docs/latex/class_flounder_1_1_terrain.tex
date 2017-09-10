@@ -1,0 +1,101 @@
+\hypertarget{class_flounder_1_1_terrain}{}\section{Flounder\+:\+:Terrain Class Reference}
+\label{class_flounder_1_1_terrain}\index{Flounder\+::\+Terrain@{Flounder\+::\+Terrain}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a405edfab541441c1bf251a40dfec51b1}\label{class_flounder_1_1_terrain_a405edfab541441c1bf251a40dfec51b1}} 
+{\bfseries Terrain} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&position, const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&rotation, const int \&seed)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_af029251976b47bae359340bd2c346972}\label{class_flounder_1_1_terrain_af029251976b47bae359340bd2c346972}} 
+void {\bfseries Update} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a6794d5c10fde1bf02156689950011696}\label{class_flounder_1_1_terrain_a6794d5c10fde1bf02156689950011696}} 
+float {\bfseries Get\+Height} (const float \&x, const float \&z)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a1b10f753ff00cc0514d05aea48e29da7}\label{class_flounder_1_1_terrain_a1b10f753ff00cc0514d05aea48e29da7}} 
+\hyperlink{class_flounder_1_1_model}{Model} $\ast$ {\bfseries Get\+Model} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_ab76d756f929449632254430d1a8a79de}\label{class_flounder_1_1_terrain_ab76d756f929449632254430d1a8a79de}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries Get\+Position} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_acb894cdc3fe5acfbd95d51c04bd5b556}\label{class_flounder_1_1_terrain_acb894cdc3fe5acfbd95d51c04bd5b556}} 
+void {\bfseries Set\+Position} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&position)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_ad3cd48bd7a62131641326550fd5bc9f0}\label{class_flounder_1_1_terrain_ad3cd48bd7a62131641326550fd5bc9f0}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries Get\+Rotation} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a21709d10d197ace7aa66f9f5265f424c}\label{class_flounder_1_1_terrain_a21709d10d197ace7aa66f9f5265f424c}} 
+void {\bfseries Set\+Rotation} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&rotation)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_aebbfc129787ec8e236d950e6f3ab0b62}\label{class_flounder_1_1_terrain_aebbfc129787ec8e236d950e6f3ab0b62}} 
+\hyperlink{class_flounder_1_1_matrix4}{Matrix4} $\ast$ {\bfseries Get\+Model\+Matrix} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a663269b8f23cdb0893aaaca574c779ce}\label{class_flounder_1_1_terrain_a663269b8f23cdb0893aaaca574c779ce}} 
+Aabb $\ast$ {\bfseries Get\+Aabb} () const
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a2b10867b590870cc56cdb1456119a276}\label{class_flounder_1_1_terrain_a2b10867b590870cc56cdb1456119a276}} 
+static const float {\bfseries S\+Q\+U\+A\+R\+E\+\_\+\+S\+I\+ZE} = 2.\+598f
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_ab51c536e76da7afe4485872b693f27ec}\label{class_flounder_1_1_terrain_ab51c536e76da7afe4485872b693f27ec}} 
+static const int {\bfseries V\+E\+R\+T\+E\+X\+\_\+\+C\+O\+U\+NT} = 176
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a31ddb0c666d2687fcc18a41334436adc}\label{class_flounder_1_1_terrain_a31ddb0c666d2687fcc18a41334436adc}} 
+static const float {\bfseries S\+I\+D\+E\+\_\+\+L\+E\+N\+G\+TH} = 0.\+5f $\ast$ S\+Q\+U\+A\+R\+E\+\_\+\+S\+I\+Z\+E $\ast$ static\+\_\+cast$<$float$>$(\+V\+E\+R\+T\+E\+X\+\_\+\+C\+O\+U\+N\+T -\/ 1)
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a77a4c4c5143ca824ad7b737860be84a0}\label{class_flounder_1_1_terrain_a77a4c4c5143ca824ad7b737860be84a0}} 
+void {\bfseries Generate\+Mesh} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_aa951bcbb95e46fb9e4028267115cc9e2}\label{class_flounder_1_1_terrain_aa951bcbb95e46fb9e4028267115cc9e2}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} {\bfseries Calculate\+Normal} (const float \&x, const float \&z)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_acd676f20c58bae8f45aad8614b037ab7}\label{class_flounder_1_1_terrain_acd676f20c58bae8f45aad8614b037ab7}} 
+\hyperlink{class_flounder_1_1_colour}{Colour} {\bfseries Get\+Biome\+Colour} (const float \&x, const float \&z)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a9572a1ae3021b1c5793154cf1edd5c90}\label{class_flounder_1_1_terrain_a9572a1ae3021b1c5793154cf1edd5c90}} 
+float {\bfseries Get\+Factor\+Island} (const float \&x, const float \&z)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_afbbac5fe21e5602fb18e2c338f139235}\label{class_flounder_1_1_terrain_afbbac5fe21e5602fb18e2c338f139235}} 
+float {\bfseries Get\+Factor\+Moisture} (const float \&x, const float \&y, const float \&z)
+\end{DoxyCompactItemize}
+\subsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_aa1cc74a8a86d3a78da50d26eb2e49b69}\label{class_flounder_1_1_terrain_aa1cc74a8a86d3a78da50d26eb2e49b69}} 
+static void {\bfseries Store\+Quad1} (std\+::vector$<$ int $>$ \&indices, const int \&top\+Left, const int \&top\+Right, const int \&bottom\+Left, const int \&bottom\+Right, const bool \&mixed)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a9099c3f601dfa739393550af6798c81f}\label{class_flounder_1_1_terrain_a9099c3f601dfa739393550af6798c81f}} 
+static void {\bfseries Store\+Quad2} (std\+::vector$<$ int $>$ \&indices, const int \&top\+Left, const int \&top\+Right, const int \&bottom\+Left, const int \&bottom\+Right, const bool \&mixed)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a7e7a88a1f1a697c487fca40a1bd1ad0b}\label{class_flounder_1_1_terrain_a7e7a88a1f1a697c487fca40a1bd1ad0b}} 
+\hyperlink{class_flounder_1_1_model}{Model} $\ast$ {\bfseries m\+\_\+model}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a94ba19382ba520c165b9e11f782094df}\label{class_flounder_1_1_terrain_a94ba19382ba520c165b9e11f782094df}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries m\+\_\+position}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a33122f8ea8f7a25fd64701a228404be5}\label{class_flounder_1_1_terrain_a33122f8ea8f7a25fd64701a228404be5}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries m\+\_\+rotation}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a02efb14fbf52ca298803fa8d7a46f497}\label{class_flounder_1_1_terrain_a02efb14fbf52ca298803fa8d7a46f497}} 
+bool {\bfseries m\+\_\+moved}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_a79c11c4c51eb7f7e72c4ae68bc022346}\label{class_flounder_1_1_terrain_a79c11c4c51eb7f7e72c4ae68bc022346}} 
+\hyperlink{class_flounder_1_1_matrix4}{Matrix4} $\ast$ {\bfseries m\+\_\+model\+Matrix}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_terrain_ab2a3427b5aa72b905c37d700494f29c0}\label{class_flounder_1_1_terrain_ab2a3427b5aa72b905c37d700494f29c0}} 
+Aabb $\ast$ {\bfseries m\+\_\+aabb}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/terrains/Terrain.\+hpp\item 
+src/terrains/Terrain.\+cpp\end{DoxyCompactItemize}

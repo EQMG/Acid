@@ -1,0 +1,97 @@
+\hypertarget{class_flounder_1_1_i_processor}{}\section{Flounder\+:\+:I\+Processor Class Reference}
+\label{class_flounder_1_1_i_processor}\index{Flounder\+::\+I\+Processor@{Flounder\+::\+I\+Processor}}
+
+
+A extension used with the processing class to define a processor.  
+
+
+
+
+{\ttfamily \#include $<$I\+Processor.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:I\+Processor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_i_processor}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_i_processor_a188f027950354063be0f78b5298729e9}{I\+Processor} ()
+\begin{DoxyCompactList}\small\item\em Creates a new processor. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_flounder_1_1_i_processor_ad5e6323fe51d4dfe32b5c2249511ff0b}{$\sim$\+I\+Processor} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the processor. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_flounder_1_1_i_processor_ade1b8614d9e1b62ad66887426701a5d4}{Update} ()=0
+\begin{DoxyCompactList}\small\item\em Run when updating the processor. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_flounder_1_1_i_processor_a147a68665ac362d33f5de7740279d224}{Add\+Request\+To\+Queue} (\hyperlink{class_flounder_1_1_i_request}{I\+Request} $\ast$request)=0
+\begin{DoxyCompactList}\small\item\em Used to add a request into the processor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A extension used with the processing class to define a processor. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_processor_a188f027950354063be0f78b5298729e9}\label{class_flounder_1_1_i_processor_a188f027950354063be0f78b5298729e9}} 
+\index{Flounder\+::\+I\+Processor@{Flounder\+::\+I\+Processor}!I\+Processor@{I\+Processor}}
+\index{I\+Processor@{I\+Processor}!Flounder\+::\+I\+Processor@{Flounder\+::\+I\+Processor}}
+\subsubsection{\texorpdfstring{I\+Processor()}{IProcessor()}}
+{\footnotesize\ttfamily Flounder\+::\+I\+Processor\+::\+I\+Processor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new processor. 
+
+\mbox{\Hypertarget{class_flounder_1_1_i_processor_ad5e6323fe51d4dfe32b5c2249511ff0b}\label{class_flounder_1_1_i_processor_ad5e6323fe51d4dfe32b5c2249511ff0b}} 
+\index{Flounder\+::\+I\+Processor@{Flounder\+::\+I\+Processor}!````~I\+Processor@{$\sim$\+I\+Processor}}
+\index{````~I\+Processor@{$\sim$\+I\+Processor}!Flounder\+::\+I\+Processor@{Flounder\+::\+I\+Processor}}
+\subsubsection{\texorpdfstring{$\sim$\+I\+Processor()}{~IProcessor()}}
+{\footnotesize\ttfamily virtual Flounder\+::\+I\+Processor\+::$\sim$\+I\+Processor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the processor. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_processor_a147a68665ac362d33f5de7740279d224}\label{class_flounder_1_1_i_processor_a147a68665ac362d33f5de7740279d224}} 
+\index{Flounder\+::\+I\+Processor@{Flounder\+::\+I\+Processor}!Add\+Request\+To\+Queue@{Add\+Request\+To\+Queue}}
+\index{Add\+Request\+To\+Queue@{Add\+Request\+To\+Queue}!Flounder\+::\+I\+Processor@{Flounder\+::\+I\+Processor}}
+\subsubsection{\texorpdfstring{Add\+Request\+To\+Queue()}{AddRequestToQueue()}}
+{\footnotesize\ttfamily virtual void Flounder\+::\+I\+Processor\+::\+Add\+Request\+To\+Queue (\begin{DoxyParamCaption}\item[{\hyperlink{class_flounder_1_1_i_request}{I\+Request} $\ast$}]{request }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Used to add a request into the processor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & The request object to add to the que. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_flounder_1_1_processor_graphic_a238770973388faedded17e5da1347f2b}{Flounder\+::\+Processor\+Graphic}, and \hyperlink{class_flounder_1_1_processor_resource_afcf217b354213aba94e6288583e88d49}{Flounder\+::\+Processor\+Resource}.
+
+\mbox{\Hypertarget{class_flounder_1_1_i_processor_ade1b8614d9e1b62ad66887426701a5d4}\label{class_flounder_1_1_i_processor_ade1b8614d9e1b62ad66887426701a5d4}} 
+\index{Flounder\+::\+I\+Processor@{Flounder\+::\+I\+Processor}!Update@{Update}}
+\index{Update@{Update}!Flounder\+::\+I\+Processor@{Flounder\+::\+I\+Processor}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily virtual void Flounder\+::\+I\+Processor\+::\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Run when updating the processor. 
+
+
+
+Implemented in \hyperlink{class_flounder_1_1_processor_graphic_a54cb1365a43270193275ce3794b03b2e}{Flounder\+::\+Processor\+Graphic}, and \hyperlink{class_flounder_1_1_processor_resource_a1167c01d0a317a054211972ea32e09cd}{Flounder\+::\+Processor\+Resource}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/processing/I\+Processor.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,137 @@
+\hypertarget{class_flounder_1_1_worlds}{}\section{Flounder\+:\+:Worlds Class Reference}
+\label{class_flounder_1_1_worlds}\index{Flounder\+::\+Worlds@{Flounder\+::\+Worlds}}
+
+
+A module used for managing worlds.  
+
+
+
+
+{\ttfamily \#include $<$Worlds.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Worlds\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_worlds}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_worlds_a3cd4af77cc7845c4cc33090a247a5a11}{Worlds} ()
+\begin{DoxyCompactList}\small\item\em Creates a new worlds module. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_worlds_a9d4dc057202a37e2d49e2a839687dcfd}{$\sim$\+Worlds} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the worlds module. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_worlds_a94f6f6c9d363ba368e835307f6b3938c}{Update} () override
+\begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_afd3a710d578441c84885bfd76ac3c421}\label{class_flounder_1_1_worlds_afd3a710d578441c84885bfd76ac3c421}} 
+\hyperlink{class_flounder_1_1_noise_fast}{Noise\+Fast} $\ast$ {\bfseries Get\+Noise} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a18294f9be4dffc232df21a6cd952b0b1}\label{class_flounder_1_1_worlds_a18294f9be4dffc232df21a6cd952b0b1}} 
+float {\bfseries Get\+Day\+Factor} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a144afecfa1f638118d480a8d40fae79b}\label{class_flounder_1_1_worlds_a144afecfa1f638118d480a8d40fae79b}} 
+float {\bfseries Get\+Sunrise\+Factor} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_ac4d66506dd5042467e29c559ad1e306b}\label{class_flounder_1_1_worlds_ac4d66506dd5042467e29c559ad1e306b}} 
+float {\bfseries Get\+Shadow\+Factor} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_ac5b5adec21a443945e94eb3b318aa275}\label{class_flounder_1_1_worlds_ac5b5adec21a443945e94eb3b318aa275}} 
+float {\bfseries Get\+Sun\+Height} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_aee3810486865a836a846bb0b650d6ff0}\label{class_flounder_1_1_worlds_aee3810486865a836a846bb0b650d6ff0}} 
+float {\bfseries Get\+Star\+Intensity} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_af369bc99fea8528711f07f705e6dcb8b}\label{class_flounder_1_1_worlds_af369bc99fea8528711f07f705e6dcb8b}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries Get\+Sun\+Position} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_af200ae64e9a62dd7d534eff19f345e05}\label{class_flounder_1_1_worlds_af200ae64e9a62dd7d534eff19f345e05}} 
+\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ {\bfseries Get\+Sun\+Colour} () const
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_flounder_1_1_worlds}{Worlds} $\ast$ \hyperlink{class_flounder_1_1_worlds_a389722b93c5d636192a335dccbb8f4b3}{Get} ()
+\begin{DoxyCompactList}\small\item\em Gets this engine instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a6c1bdf8c4680f113f09f6eed765951d1}\label{class_flounder_1_1_worlds_a6c1bdf8c4680f113f09f6eed765951d1}} 
+\hyperlink{class_flounder_1_1_noise_fast}{Noise\+Fast} $\ast$ {\bfseries m\+\_\+noise}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a24651cd0ef804660a3051b9c2a984592}\label{class_flounder_1_1_worlds_a24651cd0ef804660a3051b9c2a984592}} 
+\hyperlink{class_flounder_1_1_driver_linear}{Driver\+Linear} $\ast$ {\bfseries m\+\_\+driver\+Day}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a08574cadf75cf55af0b4893f6c64958b}\label{class_flounder_1_1_worlds_a08574cadf75cf55af0b4893f6c64958b}} 
+float {\bfseries m\+\_\+factor\+Day}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a8dacc7435e2ef4b5e6c3cf9e1cb4133d}\label{class_flounder_1_1_worlds_a8dacc7435e2ef4b5e6c3cf9e1cb4133d}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries m\+\_\+sun\+Position}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a5aca6c149f2811410fdf07d9e3500b55}\label{class_flounder_1_1_worlds_a5aca6c149f2811410fdf07d9e3500b55}} 
+\hyperlink{class_flounder_1_1_colour}{Colour} $\ast$ {\bfseries m\+\_\+sun\+Colour}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A module used for managing worlds. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a3cd4af77cc7845c4cc33090a247a5a11}\label{class_flounder_1_1_worlds_a3cd4af77cc7845c4cc33090a247a5a11}} 
+\index{Flounder\+::\+Worlds@{Flounder\+::\+Worlds}!Worlds@{Worlds}}
+\index{Worlds@{Worlds}!Flounder\+::\+Worlds@{Flounder\+::\+Worlds}}
+\subsubsection{\texorpdfstring{Worlds()}{Worlds()}}
+{\footnotesize\ttfamily Flounder\+::\+Worlds\+::\+Worlds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new worlds module. 
+
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a9d4dc057202a37e2d49e2a839687dcfd}\label{class_flounder_1_1_worlds_a9d4dc057202a37e2d49e2a839687dcfd}} 
+\index{Flounder\+::\+Worlds@{Flounder\+::\+Worlds}!````~Worlds@{$\sim$\+Worlds}}
+\index{````~Worlds@{$\sim$\+Worlds}!Flounder\+::\+Worlds@{Flounder\+::\+Worlds}}
+\subsubsection{\texorpdfstring{$\sim$\+Worlds()}{~Worlds()}}
+{\footnotesize\ttfamily Flounder\+::\+Worlds\+::$\sim$\+Worlds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the worlds module. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a389722b93c5d636192a335dccbb8f4b3}\label{class_flounder_1_1_worlds_a389722b93c5d636192a335dccbb8f4b3}} 
+\index{Flounder\+::\+Worlds@{Flounder\+::\+Worlds}!Get@{Get}}
+\index{Get@{Get}!Flounder\+::\+Worlds@{Flounder\+::\+Worlds}}
+\subsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily static \hyperlink{class_flounder_1_1_worlds}{Worlds}$\ast$ Flounder\+::\+Worlds\+::\+Get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this engine instance. 
+
+\begin{DoxyReturn}{Returns}
+The current module instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_worlds_a94f6f6c9d363ba368e835307f6b3938c}\label{class_flounder_1_1_worlds_a94f6f6c9d363ba368e835307f6b3938c}} 
+\index{Flounder\+::\+Worlds@{Flounder\+::\+Worlds}!Update@{Update}}
+\index{Update@{Update}!Flounder\+::\+Worlds@{Flounder\+::\+Worlds}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void Flounder\+::\+Worlds\+::\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The update function for the module. 
+
+
+
+Implements \hyperlink{class_flounder_1_1_i_module_a1812bb03a6990e4698a10c043fa25fde}{Flounder\+::\+I\+Module}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/worlds/Worlds.\+hpp\item 
+src/worlds/Worlds.\+cpp\end{DoxyCompactItemize}

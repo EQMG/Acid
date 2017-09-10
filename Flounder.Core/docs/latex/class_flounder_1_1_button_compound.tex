@@ -1,0 +1,118 @@
+\hypertarget{class_flounder_1_1_button_compound}{}\section{Flounder\+:\+:Button\+Compound Class Reference}
+\label{class_flounder_1_1_button_compound}\index{Flounder\+::\+Button\+Compound@{Flounder\+::\+Button\+Compound}}
+
+
+Handles multiple buttons at once.  
+
+
+
+
+{\ttfamily \#include $<$Button\+Compound.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Button\+Compound\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_button_compound}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_button_compound_ae08de283f9875ae9b84c25742cb3af64}{Button\+Compound} (const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Creates a new compound button. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_button_compound_a5331cca1659eea63029b6522bfde408b}{$\sim$\+Button\+Compound} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the compound button. \end{DoxyCompactList}\item 
+bool \hyperlink{class_flounder_1_1_button_compound_a168866bc6410f111f9c8a98b1ec83dd6}{Is\+Down} () const override
+\begin{DoxyCompactList}\small\item\em Returns whether this button is currently pressed. \end{DoxyCompactList}\item 
+bool \hyperlink{class_flounder_1_1_button_compound_a89f7e5a22a14d10a02974955f3fac8d1}{Was\+Down} () override
+\begin{DoxyCompactList}\small\item\em Gets if the key is down and was not down before. Key press recognized as one click. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_button_compound_ae55d1299a757028308ae302c9d47f376}\label{class_flounder_1_1_button_compound_ae55d1299a757028308ae302c9d47f376}} 
+int {\bfseries m\+\_\+count}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_button_compound_a68d28a3a93446421ea9b697dafd41bf2}\label{class_flounder_1_1_button_compound_a68d28a3a93446421ea9b697dafd41bf2}} 
+\hyperlink{class_flounder_1_1_i_button}{I\+Button} $\ast$$\ast$ {\bfseries m\+\_\+buttons}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_button_compound_a238b401d46df41edd85f5219cd3f012c}\label{class_flounder_1_1_button_compound_a238b401d46df41edd85f5219cd3f012c}} 
+bool {\bfseries m\+\_\+was\+Down}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles multiple buttons at once. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_button_compound_ae08de283f9875ae9b84c25742cb3af64}\label{class_flounder_1_1_button_compound_ae08de283f9875ae9b84c25742cb3af64}} 
+\index{Flounder\+::\+Button\+Compound@{Flounder\+::\+Button\+Compound}!Button\+Compound@{Button\+Compound}}
+\index{Button\+Compound@{Button\+Compound}!Flounder\+::\+Button\+Compound@{Flounder\+::\+Button\+Compound}}
+\subsubsection{\texorpdfstring{Button\+Compound()}{ButtonCompound()}}
+{\footnotesize\ttfamily Flounder\+::\+Button\+Compound\+::\+Button\+Compound (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Creates a new compound button. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number buttons being added. \\
+\hline
+{\em ...} & The buttons on the being added. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_button_compound_a5331cca1659eea63029b6522bfde408b}\label{class_flounder_1_1_button_compound_a5331cca1659eea63029b6522bfde408b}} 
+\index{Flounder\+::\+Button\+Compound@{Flounder\+::\+Button\+Compound}!````~Button\+Compound@{$\sim$\+Button\+Compound}}
+\index{````~Button\+Compound@{$\sim$\+Button\+Compound}!Flounder\+::\+Button\+Compound@{Flounder\+::\+Button\+Compound}}
+\subsubsection{\texorpdfstring{$\sim$\+Button\+Compound()}{~ButtonCompound()}}
+{\footnotesize\ttfamily Flounder\+::\+Button\+Compound\+::$\sim$\+Button\+Compound (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the compound button. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_button_compound_a168866bc6410f111f9c8a98b1ec83dd6}\label{class_flounder_1_1_button_compound_a168866bc6410f111f9c8a98b1ec83dd6}} 
+\index{Flounder\+::\+Button\+Compound@{Flounder\+::\+Button\+Compound}!Is\+Down@{Is\+Down}}
+\index{Is\+Down@{Is\+Down}!Flounder\+::\+Button\+Compound@{Flounder\+::\+Button\+Compound}}
+\subsubsection{\texorpdfstring{Is\+Down()}{IsDown()}}
+{\footnotesize\ttfamily bool Flounder\+::\+Button\+Compound\+::\+Is\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns whether this button is currently pressed. 
+
+\begin{DoxyReturn}{Returns}
+True if the button is pressed, false otherwise. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_button_a264519250d835422748bcc1af9be38e3}{Flounder\+::\+I\+Button}.
+
+\mbox{\Hypertarget{class_flounder_1_1_button_compound_a89f7e5a22a14d10a02974955f3fac8d1}\label{class_flounder_1_1_button_compound_a89f7e5a22a14d10a02974955f3fac8d1}} 
+\index{Flounder\+::\+Button\+Compound@{Flounder\+::\+Button\+Compound}!Was\+Down@{Was\+Down}}
+\index{Was\+Down@{Was\+Down}!Flounder\+::\+Button\+Compound@{Flounder\+::\+Button\+Compound}}
+\subsubsection{\texorpdfstring{Was\+Down()}{WasDown()}}
+{\footnotesize\ttfamily bool Flounder\+::\+Button\+Compound\+::\+Was\+Down (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets if the key is down and was not down before. Key press recognized as one click. 
+
+\begin{DoxyReturn}{Returns}
+Is the key down and was not down before? 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_button_af31c7669349991fe6a57beb8bd42c5b2}{Flounder\+::\+I\+Button}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/inputs/Button\+Compound.\+hpp\item 
+src/inputs/Button\+Compound.\+cpp\end{DoxyCompactItemize}

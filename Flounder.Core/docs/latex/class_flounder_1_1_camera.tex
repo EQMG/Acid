@@ -1,0 +1,168 @@
+\hypertarget{class_flounder_1_1_camera}{}\section{Flounder\+:\+:Camera Class Reference}
+\label{class_flounder_1_1_camera}\index{Flounder\+::\+Camera@{Flounder\+::\+Camera}}
+
+
+A module used for managing cameras in 2D and 3D worlds.  
+
+
+
+
+{\ttfamily \#include $<$Camera.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Camera\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_camera}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_camera_ae1b692ec2be6286b102f4fd0ca2db02c}{Camera} ()
+\begin{DoxyCompactList}\small\item\em Creates a new camera module. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_camera_aa79089a994c41771463daaf2c88807f0}{$\sim$\+Camera} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the camera module. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_camera_a2469c44c33c89cb8f85be0e2441eccbf}{Update} () override
+\begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_i_camera}{I\+Camera} $\ast$ \hyperlink{class_flounder_1_1_camera_a17176aafe2b546633e326e24c953a061}{Get\+Camera} () const
+\begin{DoxyCompactList}\small\item\em Gets the current camera object. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_camera_a232b98e6afdab6749cfa9ac3625f2c49}{Set\+Camera} (\hyperlink{class_flounder_1_1_i_camera}{I\+Camera} $\ast$camera)
+\begin{DoxyCompactList}\small\item\em Sets the current camera to a new camera. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_i_player}{I\+Player} $\ast$ \hyperlink{class_flounder_1_1_camera_a7eef198b45ea2a46f72840a4140de8b5}{Get\+Player} () const
+\begin{DoxyCompactList}\small\item\em Gets the current player object. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_camera_a56d731269ad10b8c69f395f841b4e63f}{Set\+Player} (\hyperlink{class_flounder_1_1_i_player}{I\+Player} $\ast$player)
+\begin{DoxyCompactList}\small\item\em Sets the current player to a new player. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_flounder_1_1_camera}{Camera} $\ast$ \hyperlink{class_flounder_1_1_camera_ab7e180abb10b8b0e4dd1009565174a53}{Get} ()
+\begin{DoxyCompactList}\small\item\em Gets this engine instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_camera_aab713eeb693198fab9df85c67aa3bb4d}\label{class_flounder_1_1_camera_aab713eeb693198fab9df85c67aa3bb4d}} 
+\hyperlink{class_flounder_1_1_i_camera}{I\+Camera} $\ast$ {\bfseries m\+\_\+camera}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_camera_a6a4125084bb47c0ada668286060f354f}\label{class_flounder_1_1_camera_a6a4125084bb47c0ada668286060f354f}} 
+\hyperlink{class_flounder_1_1_i_player}{I\+Player} $\ast$ {\bfseries m\+\_\+player}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A module used for managing cameras in 2D and 3D worlds. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_camera_ae1b692ec2be6286b102f4fd0ca2db02c}\label{class_flounder_1_1_camera_ae1b692ec2be6286b102f4fd0ca2db02c}} 
+\index{Flounder\+::\+Camera@{Flounder\+::\+Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Flounder\+::\+Camera@{Flounder\+::\+Camera}}
+\subsubsection{\texorpdfstring{Camera()}{Camera()}}
+{\footnotesize\ttfamily Flounder\+::\+Camera\+::\+Camera (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new camera module. 
+
+\mbox{\Hypertarget{class_flounder_1_1_camera_aa79089a994c41771463daaf2c88807f0}\label{class_flounder_1_1_camera_aa79089a994c41771463daaf2c88807f0}} 
+\index{Flounder\+::\+Camera@{Flounder\+::\+Camera}!````~Camera@{$\sim$\+Camera}}
+\index{````~Camera@{$\sim$\+Camera}!Flounder\+::\+Camera@{Flounder\+::\+Camera}}
+\subsubsection{\texorpdfstring{$\sim$\+Camera()}{~Camera()}}
+{\footnotesize\ttfamily Flounder\+::\+Camera\+::$\sim$\+Camera (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the camera module. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_camera_ab7e180abb10b8b0e4dd1009565174a53}\label{class_flounder_1_1_camera_ab7e180abb10b8b0e4dd1009565174a53}} 
+\index{Flounder\+::\+Camera@{Flounder\+::\+Camera}!Get@{Get}}
+\index{Get@{Get}!Flounder\+::\+Camera@{Flounder\+::\+Camera}}
+\subsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily static \hyperlink{class_flounder_1_1_camera}{Camera}$\ast$ Flounder\+::\+Camera\+::\+Get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this engine instance. 
+
+\begin{DoxyReturn}{Returns}
+The current module instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_camera_a17176aafe2b546633e326e24c953a061}\label{class_flounder_1_1_camera_a17176aafe2b546633e326e24c953a061}} 
+\index{Flounder\+::\+Camera@{Flounder\+::\+Camera}!Get\+Camera@{Get\+Camera}}
+\index{Get\+Camera@{Get\+Camera}!Flounder\+::\+Camera@{Flounder\+::\+Camera}}
+\subsubsection{\texorpdfstring{Get\+Camera()}{GetCamera()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_i_camera}{I\+Camera}$\ast$ Flounder\+::\+Camera\+::\+Get\+Camera (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the current camera object. 
+
+\begin{DoxyReturn}{Returns}
+The current camera. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_camera_a7eef198b45ea2a46f72840a4140de8b5}\label{class_flounder_1_1_camera_a7eef198b45ea2a46f72840a4140de8b5}} 
+\index{Flounder\+::\+Camera@{Flounder\+::\+Camera}!Get\+Player@{Get\+Player}}
+\index{Get\+Player@{Get\+Player}!Flounder\+::\+Camera@{Flounder\+::\+Camera}}
+\subsubsection{\texorpdfstring{Get\+Player()}{GetPlayer()}}
+{\footnotesize\ttfamily \hyperlink{class_flounder_1_1_i_player}{I\+Player}$\ast$ Flounder\+::\+Camera\+::\+Get\+Player (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the current player object. 
+
+\begin{DoxyReturn}{Returns}
+The current player. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_camera_a232b98e6afdab6749cfa9ac3625f2c49}\label{class_flounder_1_1_camera_a232b98e6afdab6749cfa9ac3625f2c49}} 
+\index{Flounder\+::\+Camera@{Flounder\+::\+Camera}!Set\+Camera@{Set\+Camera}}
+\index{Set\+Camera@{Set\+Camera}!Flounder\+::\+Camera@{Flounder\+::\+Camera}}
+\subsubsection{\texorpdfstring{Set\+Camera()}{SetCamera()}}
+{\footnotesize\ttfamily void Flounder\+::\+Camera\+::\+Set\+Camera (\begin{DoxyParamCaption}\item[{\hyperlink{class_flounder_1_1_i_camera}{I\+Camera} $\ast$}]{camera }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the current camera to a new camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em camera} & The new camera. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_camera_a56d731269ad10b8c69f395f841b4e63f}\label{class_flounder_1_1_camera_a56d731269ad10b8c69f395f841b4e63f}} 
+\index{Flounder\+::\+Camera@{Flounder\+::\+Camera}!Set\+Player@{Set\+Player}}
+\index{Set\+Player@{Set\+Player}!Flounder\+::\+Camera@{Flounder\+::\+Camera}}
+\subsubsection{\texorpdfstring{Set\+Player()}{SetPlayer()}}
+{\footnotesize\ttfamily void Flounder\+::\+Camera\+::\+Set\+Player (\begin{DoxyParamCaption}\item[{\hyperlink{class_flounder_1_1_i_player}{I\+Player} $\ast$}]{player }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the current player to a new player. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em player} & The new player. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_camera_a2469c44c33c89cb8f85be0e2441eccbf}\label{class_flounder_1_1_camera_a2469c44c33c89cb8f85be0e2441eccbf}} 
+\index{Flounder\+::\+Camera@{Flounder\+::\+Camera}!Update@{Update}}
+\index{Update@{Update}!Flounder\+::\+Camera@{Flounder\+::\+Camera}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void Flounder\+::\+Camera\+::\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The update function for the module. 
+
+
+
+Implements \hyperlink{class_flounder_1_1_i_module_a1812bb03a6990e4698a10c043fa25fde}{Flounder\+::\+I\+Module}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/camera/Camera.\+hpp\item 
+src/camera/Camera.\+cpp\end{DoxyCompactItemize}

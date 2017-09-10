@@ -1,0 +1,227 @@
+\hypertarget{class_flounder_1_1_helper_string}{}\section{Flounder\+:\+:Helper\+String Class Reference}
+\label{class_flounder_1_1_helper_string}\index{Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}}
+
+
+A helper for C++ strings.  
+
+
+
+
+{\ttfamily \#include $<$Helper\+String.\+hpp$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::vector$<$ std\+::string $>$ \hyperlink{class_flounder_1_1_helper_string_a0108f5aee363ac9a51f92d83ca5e7de8}{Split} (const std\+::string \&str, const std\+::string \&sep)
+\begin{DoxyCompactList}\small\item\em Splits a string by a seperator. \end{DoxyCompactList}\item 
+static bool \hyperlink{class_flounder_1_1_helper_string_ae6da1f6e0bd955a0b9b6fd82dd2e2fbc}{Starts\+With} (const std\+::string \&str, const std\+::string \&token)
+\begin{DoxyCompactList}\small\item\em Gets if a string starts with a token. \end{DoxyCompactList}\item 
+static bool \hyperlink{class_flounder_1_1_helper_string_a064412f1f60e9de697f24104226ad1f8}{Contains} (const std\+::string \&str, const std\+::string \&token)
+\begin{DoxyCompactList}\small\item\em Gets if a string contains a token. \end{DoxyCompactList}\item 
+static bool \hyperlink{class_flounder_1_1_helper_string_ac99aa8b0be04276616d93c53bbba3eca}{Is\+Integer} (const std\+::string \&str)
+\begin{DoxyCompactList}\small\item\em Gets if a string is a integer. \end{DoxyCompactList}\item 
+static int \hyperlink{class_flounder_1_1_helper_string_aac5512766392af54303eb3c2d5ce306b}{Find\+Char\+Pos} (const std\+::string \&str, const char \&c)
+\begin{DoxyCompactList}\small\item\em Gets the first char index in the string. \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{class_flounder_1_1_helper_string_af2587d16d5d63f591f16a72260df082e}{Trim} (const std\+::string \&str, const std\+::string \&whitespace=\char`\"{} \textbackslash{})
+\begin{DoxyCompactList}\small\item\em Trims the left and right side of a string of whitespace. \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{class_flounder_1_1_helper_string_a3de4b301d88832e0a0123a1aa197d9cd}{Substring} (const std\+::string \&str, const int \&start, const int \&end)
+\begin{DoxyCompactList}\small\item\em Takes a substring of a string between two bounds. \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{class_flounder_1_1_helper_string_a961f2fe767f03aac01d5792ee20302e4}{Remove\+All} (const std\+::string \&str, const char \&token)
+\begin{DoxyCompactList}\small\item\em Removes all tokens from a string. \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{class_flounder_1_1_helper_string_a05131aa25732ee98338ab6715fa0cd77}{Replace} (const std\+::string \&str, const std\+::string \&token, const std\+::string \&to)
+\begin{DoxyCompactList}\small\item\em Replaces all tokens from a string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A helper for C++ strings. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_helper_string_a064412f1f60e9de697f24104226ad1f8}\label{class_flounder_1_1_helper_string_a064412f1f60e9de697f24104226ad1f8}} 
+\index{Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}!Contains@{Contains}}
+\index{Contains@{Contains}!Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}}
+\subsubsection{\texorpdfstring{Contains()}{Contains()}}
+{\footnotesize\ttfamily static bool Flounder\+::\+Helper\+String\+::\+Contains (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{const std\+::string \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets if a string contains a token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string. \\
+\hline
+{\em token} & The token. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If a string contains the token. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_helper_string_aac5512766392af54303eb3c2d5ce306b}\label{class_flounder_1_1_helper_string_aac5512766392af54303eb3c2d5ce306b}} 
+\index{Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}!Find\+Char\+Pos@{Find\+Char\+Pos}}
+\index{Find\+Char\+Pos@{Find\+Char\+Pos}!Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}}
+\subsubsection{\texorpdfstring{Find\+Char\+Pos()}{FindCharPos()}}
+{\footnotesize\ttfamily static int Flounder\+::\+Helper\+String\+::\+Find\+Char\+Pos (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{const char \&}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets the first char index in the string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string. \\
+\hline
+{\em c} & The char to look for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The char index. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_helper_string_ac99aa8b0be04276616d93c53bbba3eca}\label{class_flounder_1_1_helper_string_ac99aa8b0be04276616d93c53bbba3eca}} 
+\index{Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}!Is\+Integer@{Is\+Integer}}
+\index{Is\+Integer@{Is\+Integer}!Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}}
+\subsubsection{\texorpdfstring{Is\+Integer()}{IsInteger()}}
+{\footnotesize\ttfamily static bool Flounder\+::\+Helper\+String\+::\+Is\+Integer (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets if a string is a integer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If a string is a integer. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_helper_string_a961f2fe767f03aac01d5792ee20302e4}\label{class_flounder_1_1_helper_string_a961f2fe767f03aac01d5792ee20302e4}} 
+\index{Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}!Remove\+All@{Remove\+All}}
+\index{Remove\+All@{Remove\+All}!Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}}
+\subsubsection{\texorpdfstring{Remove\+All()}{RemoveAll()}}
+{\footnotesize\ttfamily static std\+::string Flounder\+::\+Helper\+String\+::\+Remove\+All (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{const char \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Removes all tokens from a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string. \\
+\hline
+{\em token} & The token. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The string with the tokens removed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_helper_string_a05131aa25732ee98338ab6715fa0cd77}\label{class_flounder_1_1_helper_string_a05131aa25732ee98338ab6715fa0cd77}} 
+\index{Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}!Replace@{Replace}}
+\index{Replace@{Replace}!Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}}
+\subsubsection{\texorpdfstring{Replace()}{Replace()}}
+{\footnotesize\ttfamily static std\+::string Flounder\+::\+Helper\+String\+::\+Replace (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{const std\+::string \&}]{token,  }\item[{const std\+::string \&}]{to }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Replaces all tokens from a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string. \\
+\hline
+{\em token} & The token. \\
+\hline
+{\em to} & The string to replace the tokens with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The string with the tokens replaced. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_helper_string_a0108f5aee363ac9a51f92d83ca5e7de8}\label{class_flounder_1_1_helper_string_a0108f5aee363ac9a51f92d83ca5e7de8}} 
+\index{Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}!Split@{Split}}
+\index{Split@{Split}!Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}}
+\subsubsection{\texorpdfstring{Split()}{Split()}}
+{\footnotesize\ttfamily static std\+::vector$<$std\+::string$>$ Flounder\+::\+Helper\+String\+::\+Split (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{const std\+::string \&}]{sep }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Splits a string by a seperator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string. \\
+\hline
+{\em sep} & The seperator. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The split string vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_helper_string_ae6da1f6e0bd955a0b9b6fd82dd2e2fbc}\label{class_flounder_1_1_helper_string_ae6da1f6e0bd955a0b9b6fd82dd2e2fbc}} 
+\index{Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}!Starts\+With@{Starts\+With}}
+\index{Starts\+With@{Starts\+With}!Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}}
+\subsubsection{\texorpdfstring{Starts\+With()}{StartsWith()}}
+{\footnotesize\ttfamily static bool Flounder\+::\+Helper\+String\+::\+Starts\+With (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{const std\+::string \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets if a string starts with a token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string. \\
+\hline
+{\em token} & The token. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If a string starts with the token. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_helper_string_a3de4b301d88832e0a0123a1aa197d9cd}\label{class_flounder_1_1_helper_string_a3de4b301d88832e0a0123a1aa197d9cd}} 
+\index{Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}!Substring@{Substring}}
+\index{Substring@{Substring}!Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}}
+\subsubsection{\texorpdfstring{Substring()}{Substring()}}
+{\footnotesize\ttfamily static std\+::string Flounder\+::\+Helper\+String\+::\+Substring (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{const int \&}]{start,  }\item[{const int \&}]{end }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Takes a substring of a string between two bounds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string. \\
+\hline
+{\em start} & The left bound. \\
+\hline
+{\em end} & The right bound. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The substring of the string. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_helper_string_af2587d16d5d63f591f16a72260df082e}\label{class_flounder_1_1_helper_string_af2587d16d5d63f591f16a72260df082e}} 
+\index{Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}!Trim@{Trim}}
+\index{Trim@{Trim}!Flounder\+::\+Helper\+String@{Flounder\+::\+Helper\+String}}
+\subsubsection{\texorpdfstring{Trim()}{Trim()}}
+{\footnotesize\ttfamily static std\+::string Flounder\+::\+Helper\+String\+::\+Trim (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{const std\+::string \&}]{whitespace = {\ttfamily \char`\"{}~\textbackslash{}t\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Trims the left and right side of a string of whitespace. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string. \\
+\hline
+{\em whitespace} & The whitespace type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The trimmed string. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/helpers/Helper\+String.\+hpp\end{DoxyCompactItemize}

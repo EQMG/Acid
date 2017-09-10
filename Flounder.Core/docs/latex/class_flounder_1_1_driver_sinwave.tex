@@ -1,0 +1,106 @@
+\hypertarget{class_flounder_1_1_driver_sinwave}{}\section{Flounder\+:\+:Driver\+Sinwave Class Reference}
+\label{class_flounder_1_1_driver_sinwave}\index{Flounder\+::\+Driver\+Sinwave@{Flounder\+::\+Driver\+Sinwave}}
+
+
+A driver that uses a sine wave.  
+
+
+
+
+{\ttfamily \#include $<$Driver\+Sinwave.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Driver\+Sinwave\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_driver_sinwave}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_driver_sinwave_a191493a90d30cf7d04d0ea3dc38e24e7}{Driver\+Sinwave} (const float \&min, const float \&max, const float \&length)
+\begin{DoxyCompactList}\small\item\em Creates a new sine wave driver. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_driver_sinwave_a8067ff41164e9b4b579b772d7adb7a02}{$\sim$\+Driver\+Sinwave} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for sin wave driver. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{class_flounder_1_1_driver_sinwave_acb475a9bad5c9ae3d67ff3e74ce8bbb9}{Calculate} (const float \&time) override
+\begin{DoxyCompactList}\small\item\em Calculates the new value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_driver_sinwave_aab98b9fe36ce8ff379eca3f113da379c}\label{class_flounder_1_1_driver_sinwave_aab98b9fe36ce8ff379eca3f113da379c}} 
+float {\bfseries m\+\_\+min}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_driver_sinwave_aff598bc31e49aed4575ba453f3c45e5d}\label{class_flounder_1_1_driver_sinwave_aff598bc31e49aed4575ba453f3c45e5d}} 
+float {\bfseries m\+\_\+amplitude}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A driver that uses a sine wave. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_driver_sinwave_a191493a90d30cf7d04d0ea3dc38e24e7}\label{class_flounder_1_1_driver_sinwave_a191493a90d30cf7d04d0ea3dc38e24e7}} 
+\index{Flounder\+::\+Driver\+Sinwave@{Flounder\+::\+Driver\+Sinwave}!Driver\+Sinwave@{Driver\+Sinwave}}
+\index{Driver\+Sinwave@{Driver\+Sinwave}!Flounder\+::\+Driver\+Sinwave@{Flounder\+::\+Driver\+Sinwave}}
+\subsubsection{\texorpdfstring{Driver\+Sinwave()}{DriverSinwave()}}
+{\footnotesize\ttfamily Flounder\+::\+Driver\+Sinwave\+::\+Driver\+Sinwave (\begin{DoxyParamCaption}\item[{const float \&}]{min,  }\item[{const float \&}]{max,  }\item[{const float \&}]{length }\end{DoxyParamCaption})}
+
+
+
+Creates a new sine wave driver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min} & The min value. \\
+\hline
+{\em max} & The max value. \\
+\hline
+{\em length} & The length between two waves. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_driver_sinwave_a8067ff41164e9b4b579b772d7adb7a02}\label{class_flounder_1_1_driver_sinwave_a8067ff41164e9b4b579b772d7adb7a02}} 
+\index{Flounder\+::\+Driver\+Sinwave@{Flounder\+::\+Driver\+Sinwave}!````~Driver\+Sinwave@{$\sim$\+Driver\+Sinwave}}
+\index{````~Driver\+Sinwave@{$\sim$\+Driver\+Sinwave}!Flounder\+::\+Driver\+Sinwave@{Flounder\+::\+Driver\+Sinwave}}
+\subsubsection{\texorpdfstring{$\sim$\+Driver\+Sinwave()}{~DriverSinwave()}}
+{\footnotesize\ttfamily Flounder\+::\+Driver\+Sinwave\+::$\sim$\+Driver\+Sinwave (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for sin wave driver. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_driver_sinwave_acb475a9bad5c9ae3d67ff3e74ce8bbb9}\label{class_flounder_1_1_driver_sinwave_acb475a9bad5c9ae3d67ff3e74ce8bbb9}} 
+\index{Flounder\+::\+Driver\+Sinwave@{Flounder\+::\+Driver\+Sinwave}!Calculate@{Calculate}}
+\index{Calculate@{Calculate}!Flounder\+::\+Driver\+Sinwave@{Flounder\+::\+Driver\+Sinwave}}
+\subsubsection{\texorpdfstring{Calculate()}{Calculate()}}
+{\footnotesize\ttfamily float Flounder\+::\+Driver\+Sinwave\+::\+Calculate (\begin{DoxyParamCaption}\item[{const float \&}]{time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Calculates the new value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & The time into the drivers life. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The calculated value. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_driver_a969f0c8da089f9d17129ee12b40c354a}{Flounder\+::\+I\+Driver}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/visual/Driver\+Sinwave.\+hpp\item 
+src/visual/Driver\+Sinwave.\+cpp\end{DoxyCompactItemize}

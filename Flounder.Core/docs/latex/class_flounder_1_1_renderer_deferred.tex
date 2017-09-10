@@ -1,0 +1,125 @@
+\hypertarget{class_flounder_1_1_renderer_deferred}{}\section{Flounder\+:\+:Renderer\+Deferred Class Reference}
+\label{class_flounder_1_1_renderer_deferred}\index{Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}}
+
+
+A filter-\/like shader/fbo used to process deferred rendering.  
+
+
+
+
+{\ttfamily \#include $<$Renderer\+Deferred.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_renderer_deferred_af459e36a8fdfc38345497a0f1a886832}\label{class_flounder_1_1_renderer_deferred_af459e36a8fdfc38345497a0f1a886832}} 
+{\bfseries Renderer\+Deferred} (Fbo $\ast$fbo)
+\item 
+\hyperlink{class_flounder_1_1_renderer_deferred_a8a8b1c4aa439f19825481b1a94778a13}{Renderer\+Deferred} ()
+\begin{DoxyCompactList}\small\item\em Creates a new deferred renderer. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_renderer_deferred_a355578e18eae962d24a73261e4529daf}{$\sim$\+Renderer\+Deferred} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the deferred renderer. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_renderer_deferred_a1597b1d0f702dcfa0f3d20a7510fce24}{Apply} (const int n\+\_\+args,...)
+\begin{DoxyCompactList}\small\item\em Processes the textures provided into the deferred renderer. \end{DoxyCompactList}\item 
+Fbo $\ast$ \hyperlink{class_flounder_1_1_renderer_deferred_a842c246532630c2d90e064d13c18dd30}{Get\+Fbo} () const
+\begin{DoxyCompactList}\small\item\em Gets the fbo the filter rendered into. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_flounder_1_1_renderer_deferred_a617c5f432093bb0ea4c00fcee4146b37}{Store\+Values} ()
+\begin{DoxyCompactList}\small\item\em Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_renderer_deferred_a67abca0340d6791ff4e0010bc415cc61}\label{class_flounder_1_1_renderer_deferred_a67abca0340d6791ff4e0010bc415cc61}} 
+\hyperlink{class_flounder_1_1_shader}{Shader} $\ast$ {\bfseries m\+\_\+shader}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_renderer_deferred_a76dac7542d966df72e34dca1b05ed9d5}\label{class_flounder_1_1_renderer_deferred_a76dac7542d966df72e34dca1b05ed9d5}} 
+Fbo $\ast$ {\bfseries m\+\_\+fbo}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_renderer_deferred_a47cd07c2eb1a65661c3b2100d9da5286}\label{class_flounder_1_1_renderer_deferred_a47cd07c2eb1a65661c3b2100d9da5286}} 
+\hyperlink{class_flounder_1_1_model}{Model} $\ast$ {\bfseries m\+\_\+model}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_renderer_deferred_a7eb7cc8114625fa73a0586f0231bdcab}\label{class_flounder_1_1_renderer_deferred_a7eb7cc8114625fa73a0586f0231bdcab}} 
+static const int {\bfseries L\+I\+G\+H\+TS} = 64
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A filter-\/like shader/fbo used to process deferred rendering. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_renderer_deferred_a8a8b1c4aa439f19825481b1a94778a13}\label{class_flounder_1_1_renderer_deferred_a8a8b1c4aa439f19825481b1a94778a13}} 
+\index{Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}!Renderer\+Deferred@{Renderer\+Deferred}}
+\index{Renderer\+Deferred@{Renderer\+Deferred}!Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}}
+\subsubsection{\texorpdfstring{Renderer\+Deferred()}{RendererDeferred()}}
+{\footnotesize\ttfamily Flounder\+::\+Renderer\+Deferred\+::\+Renderer\+Deferred (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new deferred renderer. 
+
+\mbox{\Hypertarget{class_flounder_1_1_renderer_deferred_a355578e18eae962d24a73261e4529daf}\label{class_flounder_1_1_renderer_deferred_a355578e18eae962d24a73261e4529daf}} 
+\index{Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}!````~Renderer\+Deferred@{$\sim$\+Renderer\+Deferred}}
+\index{````~Renderer\+Deferred@{$\sim$\+Renderer\+Deferred}!Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}}
+\subsubsection{\texorpdfstring{$\sim$\+Renderer\+Deferred()}{~RendererDeferred()}}
+{\footnotesize\ttfamily Flounder\+::\+Renderer\+Deferred\+::$\sim$\+Renderer\+Deferred (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the deferred renderer. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_renderer_deferred_a1597b1d0f702dcfa0f3d20a7510fce24}\label{class_flounder_1_1_renderer_deferred_a1597b1d0f702dcfa0f3d20a7510fce24}} 
+\index{Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}!Apply@{Apply}}
+\index{Apply@{Apply}!Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}}
+\subsubsection{\texorpdfstring{Apply()}{Apply()}}
+{\footnotesize\ttfamily void Flounder\+::\+Renderer\+Deferred\+::\+Apply (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+args,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Processes the textures provided into the deferred renderer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+args} & The number textures being bound to the shader. \\
+\hline
+{\em ...} & The textures being bound to the shader. Colours, normals, extras, depth, shadows. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_renderer_deferred_a842c246532630c2d90e064d13c18dd30}\label{class_flounder_1_1_renderer_deferred_a842c246532630c2d90e064d13c18dd30}} 
+\index{Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}!Get\+Fbo@{Get\+Fbo}}
+\index{Get\+Fbo@{Get\+Fbo}!Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}}
+\subsubsection{\texorpdfstring{Get\+Fbo()}{GetFbo()}}
+{\footnotesize\ttfamily Fbo$\ast$ Flounder\+::\+Renderer\+Deferred\+::\+Get\+Fbo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the fbo the filter rendered into. 
+
+\begin{DoxyReturn}{Returns}
+The fbo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_renderer_deferred_a617c5f432093bb0ea4c00fcee4146b37}\label{class_flounder_1_1_renderer_deferred_a617c5f432093bb0ea4c00fcee4146b37}} 
+\index{Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}!Store\+Values@{Store\+Values}}
+\index{Store\+Values@{Store\+Values}!Flounder\+::\+Renderer\+Deferred@{Flounder\+::\+Renderer\+Deferred}}
+\subsubsection{\texorpdfstring{Store\+Values()}{StoreValues()}}
+{\footnotesize\ttfamily void Flounder\+::\+Renderer\+Deferred\+::\+Store\+Values (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Can be used to store values into the shader, this is called when the filter is applied and the shader has been already started. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/deferred/Renderer\+Deferred.\+hpp\item 
+src/deferred/Renderer\+Deferred.\+cpp\end{DoxyCompactItemize}
