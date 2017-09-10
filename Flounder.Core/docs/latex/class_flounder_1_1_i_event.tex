@@ -1,0 +1,114 @@
+\hypertarget{class_flounder_1_1_i_event}{}\section{Flounder\+:\+:I\+Event Class Reference}
+\label{class_flounder_1_1_i_event}\index{Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}}
+
+
+A simple event listener and runner.  
+
+
+
+
+{\ttfamily \#include $<$I\+Event.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:I\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_i_event}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_i_event_a51f15ac8bde2966b1976eb3dd76e53a8}{I\+Event} ()
+\begin{DoxyCompactList}\small\item\em Creates a new event. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_flounder_1_1_i_event_a9fa069674872c969f3e921dd0c3d864b}{$\sim$\+I\+Event} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the event. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_flounder_1_1_i_event_a86004d7cbef85aa2f80e6def5dc107b3}{Event\+Triggered} ()=0
+\begin{DoxyCompactList}\small\item\em Gets if the event has occurred. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_flounder_1_1_i_event_a67f7265c6decfdf4d29b94a088f45501}{On\+Event} ()=0
+\begin{DoxyCompactList}\small\item\em Run when a event has occurred. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_flounder_1_1_i_event_a69893f543c31d93243833a4df1afa041}{Remove\+After\+Event} ()=0
+\begin{DoxyCompactList}\small\item\em Gets if the event is removed after it has run once. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A simple event listener and runner. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_event_a51f15ac8bde2966b1976eb3dd76e53a8}\label{class_flounder_1_1_i_event_a51f15ac8bde2966b1976eb3dd76e53a8}} 
+\index{Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}!I\+Event@{I\+Event}}
+\index{I\+Event@{I\+Event}!Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}}
+\subsubsection{\texorpdfstring{I\+Event()}{IEvent()}}
+{\footnotesize\ttfamily Flounder\+::\+I\+Event\+::\+I\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new event. 
+
+\mbox{\Hypertarget{class_flounder_1_1_i_event_a9fa069674872c969f3e921dd0c3d864b}\label{class_flounder_1_1_i_event_a9fa069674872c969f3e921dd0c3d864b}} 
+\index{Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}!````~I\+Event@{$\sim$\+I\+Event}}
+\index{````~I\+Event@{$\sim$\+I\+Event}!Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}}
+\subsubsection{\texorpdfstring{$\sim$\+I\+Event()}{~IEvent()}}
+{\footnotesize\ttfamily virtual Flounder\+::\+I\+Event\+::$\sim$\+I\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the event. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_event_a86004d7cbef85aa2f80e6def5dc107b3}\label{class_flounder_1_1_i_event_a86004d7cbef85aa2f80e6def5dc107b3}} 
+\index{Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}!Event\+Triggered@{Event\+Triggered}}
+\index{Event\+Triggered@{Event\+Triggered}!Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}}
+\subsubsection{\texorpdfstring{Event\+Triggered()}{EventTriggered()}}
+{\footnotesize\ttfamily virtual bool Flounder\+::\+I\+Event\+::\+Event\+Triggered (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets if the event has occurred. 
+
+\begin{DoxyReturn}{Returns}
+The event has occurred. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_flounder_1_1_event_standard_a796cd5eb9098a0d2773b32581b9a0899}{Flounder\+::\+Event\+Standard}, \hyperlink{class_flounder_1_1_event_time_a4651610c70a6a869c0f6c223d8f7eb52}{Flounder\+::\+Event\+Time}, and \hyperlink{class_flounder_1_1_event_change_a1c6e0cafceb20ee7e6197e570abf17d8}{Flounder\+::\+Event\+Change$<$ t $>$}.
+
+\mbox{\Hypertarget{class_flounder_1_1_i_event_a67f7265c6decfdf4d29b94a088f45501}\label{class_flounder_1_1_i_event_a67f7265c6decfdf4d29b94a088f45501}} 
+\index{Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}!On\+Event@{On\+Event}}
+\index{On\+Event@{On\+Event}!Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}}
+\subsubsection{\texorpdfstring{On\+Event()}{OnEvent()}}
+{\footnotesize\ttfamily virtual void Flounder\+::\+I\+Event\+::\+On\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Run when a event has occurred. 
+
+
+
+Implemented in \hyperlink{class_flounder_1_1_event_standard_a3981a5be6ab41ce624b9752d5f7bdf36}{Flounder\+::\+Event\+Standard}, \hyperlink{class_flounder_1_1_event_time_abeafc8779ee5be6e8b4ec701029fb15e}{Flounder\+::\+Event\+Time}, and \hyperlink{class_flounder_1_1_event_change_a07f5769fc3e4c401e1f3929978f759fc}{Flounder\+::\+Event\+Change$<$ t $>$}.
+
+\mbox{\Hypertarget{class_flounder_1_1_i_event_a69893f543c31d93243833a4df1afa041}\label{class_flounder_1_1_i_event_a69893f543c31d93243833a4df1afa041}} 
+\index{Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}!Remove\+After\+Event@{Remove\+After\+Event}}
+\index{Remove\+After\+Event@{Remove\+After\+Event}!Flounder\+::\+I\+Event@{Flounder\+::\+I\+Event}}
+\subsubsection{\texorpdfstring{Remove\+After\+Event()}{RemoveAfterEvent()}}
+{\footnotesize\ttfamily virtual bool Flounder\+::\+I\+Event\+::\+Remove\+After\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets if the event is removed after it has run once. 
+
+\begin{DoxyReturn}{Returns}
+If the even will run. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_flounder_1_1_event_standard_aa566585df82dfec06f60279112175321}{Flounder\+::\+Event\+Standard}, \hyperlink{class_flounder_1_1_event_time_a58f3a1e64668b27e3395d95a7432181a}{Flounder\+::\+Event\+Time}, and \hyperlink{class_flounder_1_1_event_change_ad13467a09f7a46260b52fae6bba11973}{Flounder\+::\+Event\+Change$<$ t $>$}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/events/I\+Event.\+hpp\end{DoxyCompactItemize}

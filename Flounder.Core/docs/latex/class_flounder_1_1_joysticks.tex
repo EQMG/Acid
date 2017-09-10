@@ -1,0 +1,225 @@
+\hypertarget{class_flounder_1_1_joysticks}{}\section{Flounder\+:\+:Joysticks Class Reference}
+\label{class_flounder_1_1_joysticks}\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+
+
+A module used for the creation, updating and destruction of the joysticks.  
+
+
+
+
+{\ttfamily \#include $<$Joysticks.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Joysticks\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_joysticks}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_joysticks_a4465b7247fd550ea28974cf0d26a6ffa}{Joysticks} ()
+\begin{DoxyCompactList}\small\item\em Creates a new joysticks module. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_joysticks_a819718520fdb729b58f1db3bd698016a}{$\sim$\+Joysticks} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the joysticks module. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_joysticks_ae36e2d9f8c8736fc6c22dde0e58f2d4d}{Update} () override
+\begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
+bool \hyperlink{class_flounder_1_1_joysticks_abd63db24c4dcdc3440cf35a52b866d8e}{Is\+Connected} (const int \&id) const
+\begin{DoxyCompactList}\small\item\em Determines if the G\+L\+FW joystick is connected \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{class_flounder_1_1_joysticks_a06c2c2521ce46921a679c78b9d170072}{Get\+Name} (const int \&id) const
+\begin{DoxyCompactList}\small\item\em Gets the name of the joystick. \end{DoxyCompactList}\item 
+float \hyperlink{class_flounder_1_1_joysticks_a2bd889734e023551f79125c138830236}{Get\+Axis} (const int \&id, const int \&axis) const
+\begin{DoxyCompactList}\small\item\em Gets the value of a joysticks axis. \end{DoxyCompactList}\item 
+bool \hyperlink{class_flounder_1_1_joysticks_a22824221cb88733feec994c875c09a30}{Get\+Button} (const int \&id, const int \&button) const
+\begin{DoxyCompactList}\small\item\em Gets the whether a button on a joystick is pressed. \end{DoxyCompactList}\item 
+int \hyperlink{class_flounder_1_1_joysticks_a52bbd93ad4cd39e07f163b0f87eaadf6}{Get\+Count\+Axes} (const int \&id) const
+\begin{DoxyCompactList}\small\item\em Gets the number of axes the joystick offers. \end{DoxyCompactList}\item 
+int \hyperlink{class_flounder_1_1_joysticks_a25cca50c5d9d1081880ed4f4c0ee38e8}{Get\+Count\+Buttons} (const int \&id) const
+\begin{DoxyCompactList}\small\item\em Gets the number of buttons the joystick offers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_flounder_1_1_joysticks}{Joysticks} $\ast$ \hyperlink{class_flounder_1_1_joysticks_ad64ff5ab393e75d14ba3af58e7aa3ef6}{Get} ()
+\begin{DoxyCompactList}\small\item\em Gets this engine instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_a49427f66ff5a71c2fe297967436f1b1d}\label{class_flounder_1_1_joysticks_a49427f66ff5a71c2fe297967436f1b1d}} 
+\hyperlink{struct_flounder_1_1_joystick}{Joystick} $\ast$$\ast$ {\bfseries m\+\_\+connected}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A module used for the creation, updating and destruction of the joysticks. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_a4465b7247fd550ea28974cf0d26a6ffa}\label{class_flounder_1_1_joysticks_a4465b7247fd550ea28974cf0d26a6ffa}} 
+\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}!Joysticks@{Joysticks}}
+\index{Joysticks@{Joysticks}!Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+\subsubsection{\texorpdfstring{Joysticks()}{Joysticks()}}
+{\footnotesize\ttfamily Flounder\+::\+Joysticks\+::\+Joysticks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new joysticks module. 
+
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_a819718520fdb729b58f1db3bd698016a}\label{class_flounder_1_1_joysticks_a819718520fdb729b58f1db3bd698016a}} 
+\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}!````~Joysticks@{$\sim$\+Joysticks}}
+\index{````~Joysticks@{$\sim$\+Joysticks}!Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+\subsubsection{\texorpdfstring{$\sim$\+Joysticks()}{~Joysticks()}}
+{\footnotesize\ttfamily Flounder\+::\+Joysticks\+::$\sim$\+Joysticks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the joysticks module. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_ad64ff5ab393e75d14ba3af58e7aa3ef6}\label{class_flounder_1_1_joysticks_ad64ff5ab393e75d14ba3af58e7aa3ef6}} 
+\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}!Get@{Get}}
+\index{Get@{Get}!Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+\subsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily static \hyperlink{class_flounder_1_1_joysticks}{Joysticks}$\ast$ Flounder\+::\+Joysticks\+::\+Get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this engine instance. 
+
+\begin{DoxyReturn}{Returns}
+The current module instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_a2bd889734e023551f79125c138830236}\label{class_flounder_1_1_joysticks_a2bd889734e023551f79125c138830236}} 
+\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}!Get\+Axis@{Get\+Axis}}
+\index{Get\+Axis@{Get\+Axis}!Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+\subsubsection{\texorpdfstring{Get\+Axis()}{GetAxis()}}
+{\footnotesize\ttfamily float Flounder\+::\+Joysticks\+::\+Get\+Axis (\begin{DoxyParamCaption}\item[{const int \&}]{id,  }\item[{const int \&}]{axis }\end{DoxyParamCaption}) const}
+
+
+
+Gets the value of a joysticks axis. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The joystick of interest. \\
+\hline
+{\em axis} & The axis of interest. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the joystick\textquotesingle{}s axis. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_a22824221cb88733feec994c875c09a30}\label{class_flounder_1_1_joysticks_a22824221cb88733feec994c875c09a30}} 
+\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}!Get\+Button@{Get\+Button}}
+\index{Get\+Button@{Get\+Button}!Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+\subsubsection{\texorpdfstring{Get\+Button()}{GetButton()}}
+{\footnotesize\ttfamily bool Flounder\+::\+Joysticks\+::\+Get\+Button (\begin{DoxyParamCaption}\item[{const int \&}]{id,  }\item[{const int \&}]{button }\end{DoxyParamCaption}) const}
+
+
+
+Gets the whether a button on a joystick is pressed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The joystick of interest. \\
+\hline
+{\em button} & The button of interest. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether a button on a joystick is pressed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_a52bbd93ad4cd39e07f163b0f87eaadf6}\label{class_flounder_1_1_joysticks_a52bbd93ad4cd39e07f163b0f87eaadf6}} 
+\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}!Get\+Count\+Axes@{Get\+Count\+Axes}}
+\index{Get\+Count\+Axes@{Get\+Count\+Axes}!Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+\subsubsection{\texorpdfstring{Get\+Count\+Axes()}{GetCountAxes()}}
+{\footnotesize\ttfamily int Flounder\+::\+Joysticks\+::\+Get\+Count\+Axes (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the number of axes the joystick offers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The joystick of interest. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of axes the joystick offers. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_a25cca50c5d9d1081880ed4f4c0ee38e8}\label{class_flounder_1_1_joysticks_a25cca50c5d9d1081880ed4f4c0ee38e8}} 
+\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}!Get\+Count\+Buttons@{Get\+Count\+Buttons}}
+\index{Get\+Count\+Buttons@{Get\+Count\+Buttons}!Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+\subsubsection{\texorpdfstring{Get\+Count\+Buttons()}{GetCountButtons()}}
+{\footnotesize\ttfamily int Flounder\+::\+Joysticks\+::\+Get\+Count\+Buttons (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the number of buttons the joystick offers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The joystick of interest. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of buttons the joystick offers. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_a06c2c2521ce46921a679c78b9d170072}\label{class_flounder_1_1_joysticks_a06c2c2521ce46921a679c78b9d170072}} 
+\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}!Get\+Name@{Get\+Name}}
+\index{Get\+Name@{Get\+Name}!Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+\subsubsection{\texorpdfstring{Get\+Name()}{GetName()}}
+{\footnotesize\ttfamily const char$\ast$ Flounder\+::\+Joysticks\+::\+Get\+Name (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the name of the joystick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The joystick of interest. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The joysticks name. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_abd63db24c4dcdc3440cf35a52b866d8e}\label{class_flounder_1_1_joysticks_abd63db24c4dcdc3440cf35a52b866d8e}} 
+\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}!Is\+Connected@{Is\+Connected}}
+\index{Is\+Connected@{Is\+Connected}!Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+\subsubsection{\texorpdfstring{Is\+Connected()}{IsConnected()}}
+{\footnotesize\ttfamily bool Flounder\+::\+Joysticks\+::\+Is\+Connected (\begin{DoxyParamCaption}\item[{const int \&}]{id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Determines if the G\+L\+FW joystick is connected 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The joystick to check connection with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If the joystick is connected. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_joysticks_ae36e2d9f8c8736fc6c22dde0e58f2d4d}\label{class_flounder_1_1_joysticks_ae36e2d9f8c8736fc6c22dde0e58f2d4d}} 
+\index{Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}!Update@{Update}}
+\index{Update@{Update}!Flounder\+::\+Joysticks@{Flounder\+::\+Joysticks}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void Flounder\+::\+Joysticks\+::\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The update function for the module. 
+
+
+
+Implements \hyperlink{class_flounder_1_1_i_module_a1812bb03a6990e4698a10c043fa25fde}{Flounder\+::\+I\+Module}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/devices/Joysticks.\+hpp\item 
+src/devices/Joysticks.\+cpp\end{DoxyCompactItemize}

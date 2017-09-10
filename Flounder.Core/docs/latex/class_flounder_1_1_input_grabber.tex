@@ -1,0 +1,86 @@
+\hypertarget{class_flounder_1_1_input_grabber}{}\section{Flounder\+:\+:Input\+Grabber Class Reference}
+\label{class_flounder_1_1_input_grabber}\index{Flounder\+::\+Input\+Grabber@{Flounder\+::\+Input\+Grabber}}
+Inheritance diagram for Flounder\+:\+:Input\+Grabber\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_input_grabber}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_ac9cf10c907dcaf603ec7a8d2e989ee7a}\label{class_flounder_1_1_input_grabber_ac9cf10c907dcaf603ec7a8d2e989ee7a}} 
+{\bfseries Input\+Grabber} (Ui\+Object $\ast$parent, const \hyperlink{class_flounder_1_1_vector2}{Vector2} \&position, const std\+::string \&prefix, const int \&value, \hyperlink{class_flounder_1_1_i_grabber}{I\+Grabber} $\ast$grabber, const \hyperlink{namespace_flounder_a561db2012ae4152be62bcd882407d361}{Ui\+Align} \&align)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_ae00771d83b297c4cfd65f99e9d8c3235}\label{class_flounder_1_1_input_grabber_ae00771d83b297c4cfd65f99e9d8c3235}} 
+void {\bfseries Update\+Object} () override
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_aa0cf83e7db7f3516b8b4b2f2fbf32917}\label{class_flounder_1_1_input_grabber_aa0cf83e7db7f3516b8b4b2f2fbf32917}} 
+std\+::string {\bfseries Get\+Prefix} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_ad186a6eeaa9de1e641809c3824bbd9de}\label{class_flounder_1_1_input_grabber_ad186a6eeaa9de1e641809c3824bbd9de}} 
+void {\bfseries Set\+Prefix} (const std\+::string \&prefix)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_a6f8356a5475cc5f0b65aa38e0f9319ac}\label{class_flounder_1_1_input_grabber_a6f8356a5475cc5f0b65aa38e0f9319ac}} 
+int {\bfseries Get\+Value} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_ac069cf08500f0ec42b158437a9016c4b}\label{class_flounder_1_1_input_grabber_ac069cf08500f0ec42b158437a9016c4b}} 
+void {\bfseries Set\+Value} (const int \&value)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_ac410495951544ff384f096058f689f7d}\label{class_flounder_1_1_input_grabber_ac410495951544ff384f096058f689f7d}} 
+void {\bfseries Set\+Action\+Change} (std\+::function$<$ void()$>$ action)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_ac8832ba51fe9e2a75cff44c8500dbd4b}\label{class_flounder_1_1_input_grabber_ac8832ba51fe9e2a75cff44c8500dbd4b}} 
+\hyperlink{class_flounder_1_1_text}{Text} $\ast$ {\bfseries m\+\_\+text}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_aa77840790073de9ec86c0df6ed08c2dc}\label{class_flounder_1_1_input_grabber_aa77840790073de9ec86c0df6ed08c2dc}} 
+\hyperlink{class_flounder_1_1_gui}{Gui} $\ast$ {\bfseries m\+\_\+background}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_a60a124fb3bd8ac9ddc3d6def929e2ca5}\label{class_flounder_1_1_input_grabber_a60a124fb3bd8ac9ddc3d6def929e2ca5}} 
+\hyperlink{class_flounder_1_1_i_grabber}{I\+Grabber} $\ast$ {\bfseries m\+\_\+grabber}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_ae262c6a1a3e9c4f5f72f67790007fae7}\label{class_flounder_1_1_input_grabber_ae262c6a1a3e9c4f5f72f67790007fae7}} 
+std\+::string {\bfseries m\+\_\+prefix}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_a84cfa77f4d8e3bb0376b7593ba417bb5}\label{class_flounder_1_1_input_grabber_a84cfa77f4d8e3bb0376b7593ba417bb5}} 
+int {\bfseries m\+\_\+value}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_a0fe836298a752b949dabe223cfa04024}\label{class_flounder_1_1_input_grabber_a0fe836298a752b949dabe223cfa04024}} 
+\hyperlink{class_flounder_1_1_input_delay}{Input\+Delay} $\ast$ {\bfseries m\+\_\+input\+Delay}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_a11566e1db2cf415af25d84b6c7b57785}\label{class_flounder_1_1_input_grabber_a11566e1db2cf415af25d84b6c7b57785}} 
+int {\bfseries m\+\_\+last\+Key}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_a28af1b2b931ea43dc5c496675d483707}\label{class_flounder_1_1_input_grabber_a28af1b2b931ea43dc5c496675d483707}} 
+bool {\bfseries m\+\_\+selected}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_a03c57bcc2ec79ffd478e1ef2caca1454}\label{class_flounder_1_1_input_grabber_a03c57bcc2ec79ffd478e1ef2caca1454}} 
+bool {\bfseries m\+\_\+mouse\+Over}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_abbb5f1a88de70eafb250947469ec003a}\label{class_flounder_1_1_input_grabber_abbb5f1a88de70eafb250947469ec003a}} 
+std\+::function$<$ void()$>$ {\bfseries m\+\_\+action\+Change}
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_aef4dd7e1950374a409154ea1577219c5}\label{class_flounder_1_1_input_grabber_aef4dd7e1950374a409154ea1577219c5}} 
+static const float {\bfseries C\+H\+A\+N\+G\+E\+\_\+\+T\+I\+ME} = 0.\+1f
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_a91c75aa9917311fd29c8be38fe5a4c5d}\label{class_flounder_1_1_input_grabber_a91c75aa9917311fd29c8be38fe5a4c5d}} 
+static const float {\bfseries S\+C\+A\+L\+E\+\_\+\+N\+O\+R\+M\+AL} = 1.\+6f
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_ac1c7770533f4acc2630ba1a53da41751}\label{class_flounder_1_1_input_grabber_ac1c7770533f4acc2630ba1a53da41751}} 
+static const float {\bfseries S\+C\+A\+L\+E\+\_\+\+S\+E\+L\+E\+C\+T\+ED} = 1.\+8f
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_input_grabber_ac7c3d48a032459b179955ebaeabcefee}\label{class_flounder_1_1_input_grabber_ac7c3d48a032459b179955ebaeabcefee}} 
+static \hyperlink{class_flounder_1_1_colour}{Colour} $\ast$const {\bfseries C\+O\+L\+O\+U\+R\+\_\+\+N\+O\+R\+M\+AL} = new \hyperlink{class_flounder_1_1_colour}{Colour}(0.\+0f, 0.\+0f, 0.\+0f, 1.\+0f)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/uis/Input\+Grabber.\+hpp\item 
+src/uis/Input\+Grabber.\+cpp\end{DoxyCompactItemize}

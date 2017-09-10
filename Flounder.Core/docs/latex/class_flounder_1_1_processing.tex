@@ -1,0 +1,135 @@
+\hypertarget{class_flounder_1_1_processing}{}\section{Flounder\+:\+:Processing Class Reference}
+\label{class_flounder_1_1_processing}\index{Flounder\+::\+Processing@{Flounder\+::\+Processing}}
+
+
+A module used for processing types of requests.  
+
+
+
+
+{\ttfamily \#include $<$Processing.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Processing\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_processing}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_processing_a3c38ca4fb85af3bf5b0b639a2705fb4d}{Processing} ()
+\begin{DoxyCompactList}\small\item\em Creates a new processing module. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_processing_a1abc720f74c9c06e5396bfcd66528f79}{$\sim$\+Processing} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the processing module. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_processing_a0527f549eb7ac350eb91b6851403784a}{Update} () override
+\begin{DoxyCompactList}\small\item\em The update function for the module. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_processing_a9eef3faedd110d7bbbd125addce19430}{Add\+Processor} (\hyperlink{class_flounder_1_1_i_processor}{I\+Processor} $\ast$processor) const
+\begin{DoxyCompactList}\small\item\em Adds a processor type to the list of processors. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_processing_a4c348c809e825456358f0eb22415396a}{Send\+Request} (\hyperlink{class_flounder_1_1_i_request}{I\+Request} $\ast$request) const
+\begin{DoxyCompactList}\small\item\em Sends a new resource request to be added to a que. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_flounder_1_1_processing}{Processing} $\ast$ \hyperlink{class_flounder_1_1_processing_a14b3117c1ff8cb8436f2ddb8e7097e51}{Get} ()
+\begin{DoxyCompactList}\small\item\em Gets this engine instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_processing_aabf75ea7889093b9b9b650a2221c4ad7}\label{class_flounder_1_1_processing_aabf75ea7889093b9b9b650a2221c4ad7}} 
+std\+::vector$<$ \hyperlink{class_flounder_1_1_i_processor}{I\+Processor} $\ast$ $>$ $\ast$ {\bfseries m\+\_\+processors}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A module used for processing types of requests. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_processing_a3c38ca4fb85af3bf5b0b639a2705fb4d}\label{class_flounder_1_1_processing_a3c38ca4fb85af3bf5b0b639a2705fb4d}} 
+\index{Flounder\+::\+Processing@{Flounder\+::\+Processing}!Processing@{Processing}}
+\index{Processing@{Processing}!Flounder\+::\+Processing@{Flounder\+::\+Processing}}
+\subsubsection{\texorpdfstring{Processing()}{Processing()}}
+{\footnotesize\ttfamily Flounder\+::\+Processing\+::\+Processing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Creates a new processing module. 
+
+\mbox{\Hypertarget{class_flounder_1_1_processing_a1abc720f74c9c06e5396bfcd66528f79}\label{class_flounder_1_1_processing_a1abc720f74c9c06e5396bfcd66528f79}} 
+\index{Flounder\+::\+Processing@{Flounder\+::\+Processing}!````~Processing@{$\sim$\+Processing}}
+\index{````~Processing@{$\sim$\+Processing}!Flounder\+::\+Processing@{Flounder\+::\+Processing}}
+\subsubsection{\texorpdfstring{$\sim$\+Processing()}{~Processing()}}
+{\footnotesize\ttfamily Flounder\+::\+Processing\+::$\sim$\+Processing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the processing module. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_processing_a9eef3faedd110d7bbbd125addce19430}\label{class_flounder_1_1_processing_a9eef3faedd110d7bbbd125addce19430}} 
+\index{Flounder\+::\+Processing@{Flounder\+::\+Processing}!Add\+Processor@{Add\+Processor}}
+\index{Add\+Processor@{Add\+Processor}!Flounder\+::\+Processing@{Flounder\+::\+Processing}}
+\subsubsection{\texorpdfstring{Add\+Processor()}{AddProcessor()}}
+{\footnotesize\ttfamily void Flounder\+::\+Processing\+::\+Add\+Processor (\begin{DoxyParamCaption}\item[{\hyperlink{class_flounder_1_1_i_processor}{I\+Processor} $\ast$}]{processor }\end{DoxyParamCaption}) const}
+
+
+
+Adds a processor type to the list of processors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em processor} & The processor to add. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_processing_a14b3117c1ff8cb8436f2ddb8e7097e51}\label{class_flounder_1_1_processing_a14b3117c1ff8cb8436f2ddb8e7097e51}} 
+\index{Flounder\+::\+Processing@{Flounder\+::\+Processing}!Get@{Get}}
+\index{Get@{Get}!Flounder\+::\+Processing@{Flounder\+::\+Processing}}
+\subsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily static \hyperlink{class_flounder_1_1_processing}{Processing}$\ast$ Flounder\+::\+Processing\+::\+Get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets this engine instance. 
+
+\begin{DoxyReturn}{Returns}
+The current module instance. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_processing_a4c348c809e825456358f0eb22415396a}\label{class_flounder_1_1_processing_a4c348c809e825456358f0eb22415396a}} 
+\index{Flounder\+::\+Processing@{Flounder\+::\+Processing}!Send\+Request@{Send\+Request}}
+\index{Send\+Request@{Send\+Request}!Flounder\+::\+Processing@{Flounder\+::\+Processing}}
+\subsubsection{\texorpdfstring{Send\+Request()}{SendRequest()}}
+{\footnotesize\ttfamily void Flounder\+::\+Processing\+::\+Send\+Request (\begin{DoxyParamCaption}\item[{\hyperlink{class_flounder_1_1_i_request}{I\+Request} $\ast$}]{request }\end{DoxyParamCaption}) const}
+
+
+
+Sends a new resource request to be added to a que. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & The resource request to add. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_processing_a0527f549eb7ac350eb91b6851403784a}\label{class_flounder_1_1_processing_a0527f549eb7ac350eb91b6851403784a}} 
+\index{Flounder\+::\+Processing@{Flounder\+::\+Processing}!Update@{Update}}
+\index{Update@{Update}!Flounder\+::\+Processing@{Flounder\+::\+Processing}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void Flounder\+::\+Processing\+::\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The update function for the module. 
+
+
+
+Implements \hyperlink{class_flounder_1_1_i_module_a1812bb03a6990e4698a10c043fa25fde}{Flounder\+::\+I\+Module}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/processing/Processing.\+hpp\item 
+src/processing/Processing.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,143 @@
+\hypertarget{class_flounder_1_1_event_standard}{}\section{Flounder\+:\+:Event\+Standard Class Reference}
+\label{class_flounder_1_1_event_standard}\index{Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}}
+
+
+A class that is the most basic implementation of the event interface.  
+
+
+
+
+{\ttfamily \#include $<$Event\+Standard.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Event\+Standard\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_event_standard}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_event_standard_a1e03e7d6c820244aa01315592fbb56cb}{Event\+Standard} (const bool \&repeat, const std\+::function$<$ bool()$>$ \&triggered, const std\+::function$<$ void()$>$ \&on\+Event)
+\begin{DoxyCompactList}\small\item\em Creates a new standard event. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_event_standard_a5d71c0a68d71d6913539386074998e1f}{Event\+Standard} (const std\+::function$<$ bool()$>$ \&triggered, const std\+::function$<$ void()$>$ \&on\+Event)
+\begin{DoxyCompactList}\small\item\em Creates a new standard event that repeats. \end{DoxyCompactList}\item 
+bool \hyperlink{class_flounder_1_1_event_standard_a796cd5eb9098a0d2773b32581b9a0899}{Event\+Triggered} () override
+\begin{DoxyCompactList}\small\item\em Gets if the event has occurred. \end{DoxyCompactList}\item 
+void \hyperlink{class_flounder_1_1_event_standard_a3981a5be6ab41ce624b9752d5f7bdf36}{On\+Event} () override
+\begin{DoxyCompactList}\small\item\em Run when a event has occurred. \end{DoxyCompactList}\item 
+bool \hyperlink{class_flounder_1_1_event_standard_aa566585df82dfec06f60279112175321}{Remove\+After\+Event} () override
+\begin{DoxyCompactList}\small\item\em Gets if the event is removed after it has run once. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_event_standard_a1cdaba2288fef644bdb68427c595e8d7}\label{class_flounder_1_1_event_standard_a1cdaba2288fef644bdb68427c595e8d7}} 
+bool {\bfseries m\+\_\+repeat}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_event_standard_a31809e724d2dd6eb605df5a95262275f}\label{class_flounder_1_1_event_standard_a31809e724d2dd6eb605df5a95262275f}} 
+std\+::function$<$ bool()$>$ {\bfseries m\+\_\+triggered}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_event_standard_a4f238a5ec6adbfc61ba952a3dda8182d}\label{class_flounder_1_1_event_standard_a4f238a5ec6adbfc61ba952a3dda8182d}} 
+std\+::function$<$ void()$>$ {\bfseries m\+\_\+on\+Event}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A class that is the most basic implementation of the event interface. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_event_standard_a1e03e7d6c820244aa01315592fbb56cb}\label{class_flounder_1_1_event_standard_a1e03e7d6c820244aa01315592fbb56cb}} 
+\index{Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}!Event\+Standard@{Event\+Standard}}
+\index{Event\+Standard@{Event\+Standard}!Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}}
+\subsubsection{\texorpdfstring{Event\+Standard()}{EventStandard()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Flounder\+::\+Event\+Standard\+::\+Event\+Standard (\begin{DoxyParamCaption}\item[{const bool \&}]{repeat,  }\item[{const std\+::function$<$ bool()$>$ \&}]{triggered,  }\item[{const std\+::function$<$ void()$>$ \&}]{on\+Event }\end{DoxyParamCaption})}
+
+
+
+Creates a new standard event. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em repeat} & If the event will repeat after the first run. \\
+\hline
+{\em triggered} & A function called to check if the event was triggered. \\
+\hline
+{\em on\+Event} & A function called when the event is triggered. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_event_standard_a5d71c0a68d71d6913539386074998e1f}\label{class_flounder_1_1_event_standard_a5d71c0a68d71d6913539386074998e1f}} 
+\index{Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}!Event\+Standard@{Event\+Standard}}
+\index{Event\+Standard@{Event\+Standard}!Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}}
+\subsubsection{\texorpdfstring{Event\+Standard()}{EventStandard()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Flounder\+::\+Event\+Standard\+::\+Event\+Standard (\begin{DoxyParamCaption}\item[{const std\+::function$<$ bool()$>$ \&}]{triggered,  }\item[{const std\+::function$<$ void()$>$ \&}]{on\+Event }\end{DoxyParamCaption})}
+
+
+
+Creates a new standard event that repeats. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em triggered} & A function called to check if the event was triggered. \\
+\hline
+{\em on\+Event} & A function called when the event is triggered. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_event_standard_a796cd5eb9098a0d2773b32581b9a0899}\label{class_flounder_1_1_event_standard_a796cd5eb9098a0d2773b32581b9a0899}} 
+\index{Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}!Event\+Triggered@{Event\+Triggered}}
+\index{Event\+Triggered@{Event\+Triggered}!Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}}
+\subsubsection{\texorpdfstring{Event\+Triggered()}{EventTriggered()}}
+{\footnotesize\ttfamily bool Flounder\+::\+Event\+Standard\+::\+Event\+Triggered (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets if the event has occurred. 
+
+\begin{DoxyReturn}{Returns}
+The event has occurred. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_event_a86004d7cbef85aa2f80e6def5dc107b3}{Flounder\+::\+I\+Event}.
+
+\mbox{\Hypertarget{class_flounder_1_1_event_standard_a3981a5be6ab41ce624b9752d5f7bdf36}\label{class_flounder_1_1_event_standard_a3981a5be6ab41ce624b9752d5f7bdf36}} 
+\index{Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}!On\+Event@{On\+Event}}
+\index{On\+Event@{On\+Event}!Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}}
+\subsubsection{\texorpdfstring{On\+Event()}{OnEvent()}}
+{\footnotesize\ttfamily void Flounder\+::\+Event\+Standard\+::\+On\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Run when a event has occurred. 
+
+
+
+Implements \hyperlink{class_flounder_1_1_i_event_a67f7265c6decfdf4d29b94a088f45501}{Flounder\+::\+I\+Event}.
+
+\mbox{\Hypertarget{class_flounder_1_1_event_standard_aa566585df82dfec06f60279112175321}\label{class_flounder_1_1_event_standard_aa566585df82dfec06f60279112175321}} 
+\index{Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}!Remove\+After\+Event@{Remove\+After\+Event}}
+\index{Remove\+After\+Event@{Remove\+After\+Event}!Flounder\+::\+Event\+Standard@{Flounder\+::\+Event\+Standard}}
+\subsubsection{\texorpdfstring{Remove\+After\+Event()}{RemoveAfterEvent()}}
+{\footnotesize\ttfamily bool Flounder\+::\+Event\+Standard\+::\+Remove\+After\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Gets if the event is removed after it has run once. 
+
+\begin{DoxyReturn}{Returns}
+If the even will run. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_event_a69893f543c31d93243833a4df1afa041}{Flounder\+::\+I\+Event}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/events/Event\+Standard.\+hpp\item 
+src/events/Event\+Standard.\+cpp\end{DoxyCompactItemize}
