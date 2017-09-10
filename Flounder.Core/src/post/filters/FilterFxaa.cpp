@@ -1,18 +1,18 @@
-#include "filterfxaa.hpp"
+#include "FilterFxaa.hpp"
 
 namespace Flounder
 {
-	filterfxaa::filterfxaa(const float &spanMax) :
+	FilterFxaa::FilterFxaa(const float &spanMax) :
 		IPostFilter("filterFxaa", "res/shaders/filters/fxaa.frag.spv"),
 		m_spanMax(spanMax)
 	{
 	}
 
-	filterfxaa::~filterfxaa()
+	FilterFxaa::~FilterFxaa()
 	{
 	}
 
-	void filterfxaa::StoreValues()
+	void FilterFxaa::StoreValues()
 	{
 #if 0
 		m_shader->loadUniform1f("spanMax", m_spanMax);

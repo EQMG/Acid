@@ -1,11 +1,11 @@
 #pragma once
 
 #include "../../devices/Display.hpp"
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filterblurvertical :
+	class FilterBlurVertical :
 		public IPostFilter
 	{
 	private:
@@ -14,14 +14,16 @@ namespace Flounder
 		bool m_fitToDisplay;
 		float m_sizeScalar;
 	public:
-		filterblurvertical(const float &sizeScalar);
+		FilterBlurVertical(const float &sizeScalar);
 
-		filterblurvertical(const int &width, const int &height);
+		FilterBlurVertical(const int &width, const int &height);
 
-		~filterblurvertical();
+		~FilterBlurVertical();
 
 		void StoreValues() override;
 
-		void setScaleValue(const float &scaleValue) { m_scaleValue = scaleValue; }
+		float GetScaleValue() const { return m_scaleValue; }
+
+		void SetScaleValue(const float &scaleValue) { m_scaleValue = scaleValue; }
 	};
 }

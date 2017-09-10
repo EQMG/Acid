@@ -1,4 +1,4 @@
-#include "colour.hpp"
+#include "Colour.hpp"
 
 #include "Vector3.hpp"
 #include "Vector4.hpp"

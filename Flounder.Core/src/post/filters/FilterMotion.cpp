@@ -1,19 +1,19 @@
-#include "filtermotion.hpp"
+#include "FilterMotion.hpp"
 
 namespace Flounder
 {
-	filtermotion::filtermotion() :
+	FilterMotion::FilterMotion() :
 		IPostFilter("filterMotion", "res/shaders/filters/motion.frag.spv"),
 		m_lastViewMatrix(new Matrix4())
 	{
 	}
 
-	filtermotion::~filtermotion()
+	FilterMotion::~FilterMotion()
 	{
 		delete m_lastViewMatrix;
 	}
 
-	void filtermotion::StoreValues()
+	void FilterMotion::StoreValues()
 	{
 #if 0
 		icamera *camera = camera::get()->getCamera();

@@ -5,10 +5,10 @@ namespace Flounder
 	PipelinePaused::PipelinePaused() :
 		IPostPipeline()
 	{
-		m_filterDarken = new filterdarken();
+		m_filterDarken = new FilterDarken();
 		m_pipelineGaussian1 = new PipelineGaussian(1.0f / 10.0f);
 		m_pipelineGaussian2 = new PipelineGaussian(1.0f / 7.0f);
-		m_filterCombine = new filtercombine();
+		m_filterCombine = new FilterCombine();
 
 		m_blurFactor = 0.0f;
 	}

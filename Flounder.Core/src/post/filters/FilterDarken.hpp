@@ -1,24 +1,26 @@
 #pragma once
 
 #include "../../devices/Display.hpp"
-#include "../ipostfilter.hpp"
+#include "../IPostFilter.hpp"
 
 namespace Flounder
 {
-	class filterdarken :
+	class FilterDarken :
 		public IPostFilter
 	{
 	private:
 		float m_factorValue;
 	public:
-		filterdarken(const float &factorValue);
+		FilterDarken(const float &factorValue);
 
-		filterdarken();
+		FilterDarken();
 
-		~filterdarken();
+		~FilterDarken();
 
 		void StoreValues() override;
 
-		void setFactorValue(const float &factorValue) { m_factorValue = factorValue; }
+		float GetFactorValue() const { return m_factorValue; }
+
+		void SetFactorValue(const float &factorValue) { m_factorValue = factorValue; }
 	};
 }

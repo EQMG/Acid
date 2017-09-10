@@ -10,8 +10,8 @@ namespace Flounder
 		public IPostPipeline
 	{
 	private:
-		filterblurhorizontal *m_filterBlurHorizontal;
-		filterblurvertical *m_filterBlurVertical;
+		FilterBlurHorizontal *m_filterBlurHorizontal;
+		FilterBlurVertical *m_filterBlurVertical;
 	public:
 		PipelineGaussian(const int &width, const int &height);
 
