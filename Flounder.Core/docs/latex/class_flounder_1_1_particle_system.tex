@@ -1,0 +1,209 @@
+\hypertarget{class_flounder_1_1_particle_system}{}\section{Flounder\+:\+:Particle\+System Class Reference}
+\label{class_flounder_1_1_particle_system}\index{Flounder\+::\+Particle\+System@{Flounder\+::\+Particle\+System}}
+
+
+A system of particles that are to be spawned.  
+
+
+
+
+{\ttfamily \#include $<$Particle\+System.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_particle_system_ac22167bc60b6a566fc5ff35bb960e099}{Particle\+System} (std\+::vector$<$ \hyperlink{class_flounder_1_1_particle_type}{Particle\+Type} $\ast$$>$ $\ast$types, \hyperlink{class_flounder_1_1_i_spawn_particle}{I\+Spawn\+Particle} $\ast$spawn, const float \&pps, const float \&speed, const float \&gravity\+Effect)
+\begin{DoxyCompactList}\small\item\em Creates a new particle system. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_particle_system_a4b821954c0508cd661f1fb48ebac96df}{$\sim$\+Particle\+System} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the particle system. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a4f6367e6b1967bb85578315431e2ed8a}\label{class_flounder_1_1_particle_system_a4f6367e6b1967bb85578315431e2ed8a}} 
+\hyperlink{class_flounder_1_1_particle}{Particle} $\ast$ {\bfseries Generate\+Particles} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a68b41d79d611368ed1d1a9c7af7bb501}\label{class_flounder_1_1_particle_system_a68b41d79d611368ed1d1a9c7af7bb501}} 
+void {\bfseries Add\+Particle\+Type} (\hyperlink{class_flounder_1_1_particle_type}{Particle\+Type} $\ast$type) const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_ac434a1d53403be7c10bd32a588bc5cda}\label{class_flounder_1_1_particle_system_ac434a1d53403be7c10bd32a588bc5cda}} 
+void {\bfseries Remove\+Particle\+Type} (\hyperlink{class_flounder_1_1_particle_type}{Particle\+Type} $\ast$type) const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a3f02830cad4080ba0bafb67983bcdcba}\label{class_flounder_1_1_particle_system_a3f02830cad4080ba0bafb67983bcdcba}} 
+\hyperlink{class_flounder_1_1_i_spawn_particle}{I\+Spawn\+Particle} $\ast$ {\bfseries Get\+Spawn} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a270465e3585c402c67efe58ca9d4db42}\label{class_flounder_1_1_particle_system_a270465e3585c402c67efe58ca9d4db42}} 
+void {\bfseries Set\+Spawn} (\hyperlink{class_flounder_1_1_i_spawn_particle}{I\+Spawn\+Particle} $\ast$spawn)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_afeb4277b0f6bef00aabdb9986d29605e}\label{class_flounder_1_1_particle_system_afeb4277b0f6bef00aabdb9986d29605e}} 
+float {\bfseries Get\+Pps} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a4b26197766b4d6a58fbf6a277a07ce45}\label{class_flounder_1_1_particle_system_a4b26197766b4d6a58fbf6a277a07ce45}} 
+void {\bfseries Set\+Pps} (const float \&pps)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a551ab9bdcd4c73204ec541f8a3d4aaa8}\label{class_flounder_1_1_particle_system_a551ab9bdcd4c73204ec541f8a3d4aaa8}} 
+float {\bfseries Get\+Average\+Speed} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a3e40470d761f9ac5d69fb607ad098e2e}\label{class_flounder_1_1_particle_system_a3e40470d761f9ac5d69fb607ad098e2e}} 
+void {\bfseries Set\+Average\+Speed} (const float \&average\+Speed)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_ad261f7105f62aeced5ac0b4f964d172c}\label{class_flounder_1_1_particle_system_ad261f7105f62aeced5ac0b4f964d172c}} 
+float {\bfseries Get\+Gravity\+Effect} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a861f3457d814835fb8405c82804cab95}\label{class_flounder_1_1_particle_system_a861f3457d814835fb8405c82804cab95}} 
+void {\bfseries Set\+Gravity\+Effect} (const float \&gravity\+Effect)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_af8c0f4fff4da5f6dd5ae1a2190becee7}\label{class_flounder_1_1_particle_system_af8c0f4fff4da5f6dd5ae1a2190becee7}} 
+bool {\bfseries Get\+Random\+Rotation} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a47104a2955a2f8d1e55a60c334e218b2}\label{class_flounder_1_1_particle_system_a47104a2955a2f8d1e55a60c334e218b2}} 
+void {\bfseries Set\+Random\+Rotation} (const bool \&random\+Rotation)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a72ddfa905142f7abaac100d137728df8}\label{class_flounder_1_1_particle_system_a72ddfa905142f7abaac100d137728df8}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries Get\+System\+Centre} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_ac1767b37dace77064c0e25f996b52183}\label{class_flounder_1_1_particle_system_ac1767b37dace77064c0e25f996b52183}} 
+void {\bfseries Set\+System\+Centre} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&system\+Centre) const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_ab7b14ebeab661fb6eb82efcf28408a3b}\label{class_flounder_1_1_particle_system_ab7b14ebeab661fb6eb82efcf28408a3b}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries Get\+Velocity\+Centre} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a1637e039349e7f73781dffe2fe9971f9}\label{class_flounder_1_1_particle_system_a1637e039349e7f73781dffe2fe9971f9}} 
+void {\bfseries Set\+Velocity\+Centre} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&velocity\+Centre) const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a80381f05f4a40a52e6dd8ea409ba9762}\label{class_flounder_1_1_particle_system_a80381f05f4a40a52e6dd8ea409ba9762}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries Get\+Direction} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a29052630c444e74ff641771c986143f9}\label{class_flounder_1_1_particle_system_a29052630c444e74ff641771c986143f9}} 
+void {\bfseries Set\+Direction} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&direction, const float \&deviation)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a5027fb78f889d41950363d805c5aa53d}\label{class_flounder_1_1_particle_system_a5027fb78f889d41950363d805c5aa53d}} 
+float {\bfseries Get\+Speed\+Error} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a0727bece834607765d5f1910a418e212}\label{class_flounder_1_1_particle_system_a0727bece834607765d5f1910a418e212}} 
+void {\bfseries Set\+Speed\+Error} (const float \&speed\+Error)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a5014389e753bb102158c1aa05df6b56e}\label{class_flounder_1_1_particle_system_a5014389e753bb102158c1aa05df6b56e}} 
+float {\bfseries Get\+Life\+Error} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a9a1a7fe74ee563071d7fda0357a8ff06}\label{class_flounder_1_1_particle_system_a9a1a7fe74ee563071d7fda0357a8ff06}} 
+void {\bfseries Set\+Life\+Error} (const float \&life\+Error)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a8143736aacffa5e9149c4e5d794fe428}\label{class_flounder_1_1_particle_system_a8143736aacffa5e9149c4e5d794fe428}} 
+float {\bfseries Get\+Scale\+Error} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a7ec77e14c608da1e84e2e1090e790b7c}\label{class_flounder_1_1_particle_system_a7ec77e14c608da1e84e2e1090e790b7c}} 
+void {\bfseries Set\+Scale\+Error} (const float \&scale\+Error)
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a4c22fcb251d425d5737994f7b2faed6e}\label{class_flounder_1_1_particle_system_a4c22fcb251d425d5737994f7b2faed6e}} 
+bool {\bfseries Get\+Paused} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a7db2b570029010d8b1f1416e2d5ebef0}\label{class_flounder_1_1_particle_system_a7db2b570029010d8b1f1416e2d5ebef0}} 
+void {\bfseries Set\+Paused} (const bool \&paused)
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_aa97704f76381113836645f0eebb0c3fc}\label{class_flounder_1_1_particle_system_aa97704f76381113836645f0eebb0c3fc}} 
+\hyperlink{class_flounder_1_1_particle}{Particle} $\ast$ {\bfseries Emit\+Particle} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a92bc2b17e0145a762dbeb37bc16d1df7}\label{class_flounder_1_1_particle_system_a92bc2b17e0145a762dbeb37bc16d1df7}} 
+float {\bfseries Generate\+Value} (const float \&average, const float \&error\+Margin) const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a1e1c9c99d7f05f59f141fa8c2f2490ea}\label{class_flounder_1_1_particle_system_a1e1c9c99d7f05f59f141fa8c2f2490ea}} 
+float {\bfseries Generate\+Rotation} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a2b2be87a015cd72c963e3b87e6bf130b}\label{class_flounder_1_1_particle_system_a2b2be87a015cd72c963e3b87e6bf130b}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries Generate\+Random\+Unit\+Vector} () const
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_ad4da91f1d6d56f4161615c8e5d672a9a}\label{class_flounder_1_1_particle_system_ad4da91f1d6d56f4161615c8e5d672a9a}} 
+std\+::vector$<$ \hyperlink{class_flounder_1_1_particle_type}{Particle\+Type} $\ast$ $>$ $\ast$ {\bfseries m\+\_\+types}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a9916e0fe4e172621b2f79046323aa8ea}\label{class_flounder_1_1_particle_system_a9916e0fe4e172621b2f79046323aa8ea}} 
+\hyperlink{class_flounder_1_1_i_spawn_particle}{I\+Spawn\+Particle} $\ast$ {\bfseries m\+\_\+spawn}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_ad3d444902688fb5fbd375b8a7242650a}\label{class_flounder_1_1_particle_system_ad3d444902688fb5fbd375b8a7242650a}} 
+float {\bfseries m\+\_\+pps}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a1098a921d0e1c532f51d9cba652d2dc7}\label{class_flounder_1_1_particle_system_a1098a921d0e1c532f51d9cba652d2dc7}} 
+float {\bfseries m\+\_\+average\+Speed}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a338afa88347745312554a0f8518b31c3}\label{class_flounder_1_1_particle_system_a338afa88347745312554a0f8518b31c3}} 
+float {\bfseries m\+\_\+gravity\+Effect}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a93c9b3252aee40a72d7e3fb2da321db9}\label{class_flounder_1_1_particle_system_a93c9b3252aee40a72d7e3fb2da321db9}} 
+bool {\bfseries m\+\_\+random\+Rotation}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a274d614aa842a8e2f89232c6c5fe0d5d}\label{class_flounder_1_1_particle_system_a274d614aa842a8e2f89232c6c5fe0d5d}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries m\+\_\+system\+Centre}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a18b9e96a7958da380c521032f7f30d3e}\label{class_flounder_1_1_particle_system_a18b9e96a7958da380c521032f7f30d3e}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries m\+\_\+velocity\+Centre}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a21679b75d2cb0154d927dc9c9f4e8e2d}\label{class_flounder_1_1_particle_system_a21679b75d2cb0154d927dc9c9f4e8e2d}} 
+\hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ {\bfseries m\+\_\+direction}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_abaa547c477c8773f0126dcc370ea71aa}\label{class_flounder_1_1_particle_system_abaa547c477c8773f0126dcc370ea71aa}} 
+float {\bfseries m\+\_\+direction\+Deviation}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a2b40db2d21e1c3988e0f02408223e59a}\label{class_flounder_1_1_particle_system_a2b40db2d21e1c3988e0f02408223e59a}} 
+float {\bfseries m\+\_\+speed\+Error}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_ac1ddbdde66cca3c54df8d5a479249e23}\label{class_flounder_1_1_particle_system_ac1ddbdde66cca3c54df8d5a479249e23}} 
+float {\bfseries m\+\_\+life\+Error}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_aee419680de2d11e61ca7949a74975b16}\label{class_flounder_1_1_particle_system_aee419680de2d11e61ca7949a74975b16}} 
+float {\bfseries m\+\_\+scale\+Error}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a24e1ba3b9590e4798c91b4767caa5a08}\label{class_flounder_1_1_particle_system_a24e1ba3b9590e4798c91b4767caa5a08}} 
+float {\bfseries m\+\_\+time\+Passed}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a4b46b0b409f5a84cecfcbb746c78e740}\label{class_flounder_1_1_particle_system_a4b46b0b409f5a84cecfcbb746c78e740}} 
+bool {\bfseries m\+\_\+paused}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A system of particles that are to be spawned. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_ac22167bc60b6a566fc5ff35bb960e099}\label{class_flounder_1_1_particle_system_ac22167bc60b6a566fc5ff35bb960e099}} 
+\index{Flounder\+::\+Particle\+System@{Flounder\+::\+Particle\+System}!Particle\+System@{Particle\+System}}
+\index{Particle\+System@{Particle\+System}!Flounder\+::\+Particle\+System@{Flounder\+::\+Particle\+System}}
+\subsubsection{\texorpdfstring{Particle\+System()}{ParticleSystem()}}
+{\footnotesize\ttfamily Flounder\+::\+Particle\+System\+::\+Particle\+System (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \hyperlink{class_flounder_1_1_particle_type}{Particle\+Type} $\ast$$>$ $\ast$}]{types,  }\item[{\hyperlink{class_flounder_1_1_i_spawn_particle}{I\+Spawn\+Particle} $\ast$}]{spawn,  }\item[{const float \&}]{pps,  }\item[{const float \&}]{speed,  }\item[{const float \&}]{gravity\+Effect }\end{DoxyParamCaption})}
+
+
+
+Creates a new particle system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em types} & The types of particles to spawn. \\
+\hline
+{\em spawn} & The particle spawn types. \\
+\hline
+{\em pps} & \hyperlink{class_flounder_1_1_particles}{Particles} per second. \\
+\hline
+{\em speed} & The particle speed. \\
+\hline
+{\em gravity\+Effect} & How much gravity will effect the particle. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_particle_system_a4b821954c0508cd661f1fb48ebac96df}\label{class_flounder_1_1_particle_system_a4b821954c0508cd661f1fb48ebac96df}} 
+\index{Flounder\+::\+Particle\+System@{Flounder\+::\+Particle\+System}!````~Particle\+System@{$\sim$\+Particle\+System}}
+\index{````~Particle\+System@{$\sim$\+Particle\+System}!Flounder\+::\+Particle\+System@{Flounder\+::\+Particle\+System}}
+\subsubsection{\texorpdfstring{$\sim$\+Particle\+System()}{~ParticleSystem()}}
+{\footnotesize\ttfamily Flounder\+::\+Particle\+System\+::$\sim$\+Particle\+System (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for the particle system. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/particles/Particle\+System.\+hpp\item 
+src/particles/Particle\+System.\+cpp\end{DoxyCompactItemize}

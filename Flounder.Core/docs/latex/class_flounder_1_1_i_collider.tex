@@ -1,0 +1,90 @@
+\hypertarget{class_flounder_1_1_i_collider}{}\section{Flounder\+:\+:I\+Collider Class Reference}
+\label{class_flounder_1_1_i_collider}\index{Flounder\+::\+I\+Collider@{Flounder\+::\+I\+Collider}}
+
+
+A simple class that represents a physical shape.  
+
+
+
+
+{\ttfamily \#include $<$I\+Collider.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:I\+Collider\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_i_collider}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_i_collider_a59d35edf3457f1f0bfd87fe858a07fd8}{I\+Collider} ()
+\begin{DoxyCompactList}\small\item\em Creates a new collider. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_flounder_1_1_i_collider_a4f2b3bd9e22b1b74391068daa0b3a038}{$\sim$\+I\+Collider} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the collider. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_flounder_1_1_i_collider}{I\+Collider} $\ast$ \hyperlink{class_flounder_1_1_i_collider_aee68579a002a36bd19417b78c5c29871}{Update} (const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&position, const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&rotation, const float \&scale, \hyperlink{class_flounder_1_1_i_collider}{I\+Collider} $\ast$destination)=0
+\begin{DoxyCompactList}\small\item\em Clones this collder into the destination and updates it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A simple class that represents a physical shape. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_collider_a59d35edf3457f1f0bfd87fe858a07fd8}\label{class_flounder_1_1_i_collider_a59d35edf3457f1f0bfd87fe858a07fd8}} 
+\index{Flounder\+::\+I\+Collider@{Flounder\+::\+I\+Collider}!I\+Collider@{I\+Collider}}
+\index{I\+Collider@{I\+Collider}!Flounder\+::\+I\+Collider@{Flounder\+::\+I\+Collider}}
+\subsubsection{\texorpdfstring{I\+Collider()}{ICollider()}}
+{\footnotesize\ttfamily Flounder\+::\+I\+Collider\+::\+I\+Collider (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new collider. 
+
+\mbox{\Hypertarget{class_flounder_1_1_i_collider_a4f2b3bd9e22b1b74391068daa0b3a038}\label{class_flounder_1_1_i_collider_a4f2b3bd9e22b1b74391068daa0b3a038}} 
+\index{Flounder\+::\+I\+Collider@{Flounder\+::\+I\+Collider}!````~I\+Collider@{$\sim$\+I\+Collider}}
+\index{````~I\+Collider@{$\sim$\+I\+Collider}!Flounder\+::\+I\+Collider@{Flounder\+::\+I\+Collider}}
+\subsubsection{\texorpdfstring{$\sim$\+I\+Collider()}{~ICollider()}}
+{\footnotesize\ttfamily virtual Flounder\+::\+I\+Collider\+::$\sim$\+I\+Collider (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the collider. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_collider_aee68579a002a36bd19417b78c5c29871}\label{class_flounder_1_1_i_collider_aee68579a002a36bd19417b78c5c29871}} 
+\index{Flounder\+::\+I\+Collider@{Flounder\+::\+I\+Collider}!Update@{Update}}
+\index{Update@{Update}!Flounder\+::\+I\+Collider@{Flounder\+::\+I\+Collider}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily virtual \hyperlink{class_flounder_1_1_i_collider}{I\+Collider}$\ast$ Flounder\+::\+I\+Collider\+::\+Update (\begin{DoxyParamCaption}\item[{const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&}]{position,  }\item[{const \hyperlink{class_flounder_1_1_vector3}{Vector3} \&}]{rotation,  }\item[{const float \&}]{scale,  }\item[{\hyperlink{class_flounder_1_1_i_collider}{I\+Collider} $\ast$}]{destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Clones this collder into the destination and updates it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & The amount to move. \\
+\hline
+{\em rotation} & The amount to rotate. \\
+\hline
+{\em scale} & The amount to scale the object. \\
+\hline
+{\em destination} & The collider to store the new data in. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The destination. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_flounder_1_1_sphere_a32cbe19edf8aa494179071a7c0291811}{Flounder\+::\+Sphere}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/physics/I\+Collider.\+hpp\end{DoxyCompactItemize}

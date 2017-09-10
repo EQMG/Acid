@@ -1,0 +1,142 @@
+\hypertarget{class_flounder_1_1_ui_selector}{}\section{Flounder\+:\+:Ui\+Selector Class Reference}
+\label{class_flounder_1_1_ui_selector}\index{Flounder\+::\+Ui\+Selector@{Flounder\+::\+Ui\+Selector}}
+
+
+Represents a virtual cursor that will be used to determine if a ui action was preformed by a device.  
+
+
+
+
+{\ttfamily \#include $<$Ui\+Selector.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_flounder_1_1_ui_selector_a1564745e82c98c75c16dac5813639177}{Load} (const int \&joystick, const int \&joystick\+Left\+Click, const int \&joystick\+Right\+Click, const int \&joystick\+AxisX, const int \&joystick\+AxisY)
+\begin{DoxyCompactList}\small\item\em Sets up the joystick settings to be used for controlling the virtual cursor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_ae370dd173db25c1f6287cec4c92cd347}\label{class_flounder_1_1_ui_selector_ae370dd173db25c1f6287cec4c92cd347}} 
+void {\bfseries Update} (const bool \&paused)
+\item 
+bool \hyperlink{class_flounder_1_1_ui_selector_a67bbc0090d8ac728e7697dab7044a356}{Is\+Selected} (const Ui\+Object \&object) const
+\begin{DoxyCompactList}\small\item\em Gets if the object provided has the cursor hovered above it. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a7895e1ea40144313bee291411d33717a}\label{class_flounder_1_1_ui_selector_a7895e1ea40144313bee291411d33717a}} 
+void {\bfseries Cancel\+Was\+Event} ()
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_af80b4fabc0df787005c7377e2db5c86c}\label{class_flounder_1_1_ui_selector_af80b4fabc0df787005c7377e2db5c86c}} 
+float {\bfseries Get\+CursorX} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a995bd2996be23643f44ca696758ba575}\label{class_flounder_1_1_ui_selector_a995bd2996be23643f44ca696758ba575}} 
+float {\bfseries Get\+CursorY} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_aaee7aa0999d2499869958d99a51a688d}\label{class_flounder_1_1_ui_selector_aaee7aa0999d2499869958d99a51a688d}} 
+bool {\bfseries Get\+Left\+Click} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a34dee0ebd56922c65a15548cdbc0e2a6}\label{class_flounder_1_1_ui_selector_a34dee0ebd56922c65a15548cdbc0e2a6}} 
+bool {\bfseries Get\+Right\+Click} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a0dd2a1cb43d6065adabfa338a794bfe6}\label{class_flounder_1_1_ui_selector_a0dd2a1cb43d6065adabfa338a794bfe6}} 
+bool {\bfseries was\+Left\+Click} () const
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a5807b3f5d59b21703b64f129c83e0d22}\label{class_flounder_1_1_ui_selector_a5807b3f5d59b21703b64f129c83e0d22}} 
+bool {\bfseries was\+Right\+Click} () const
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_addc44d98f7892349d61eb46557e79d45}\label{class_flounder_1_1_ui_selector_addc44d98f7892349d61eb46557e79d45}} 
+float {\bfseries m\+\_\+cursorX}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a4196588f9b127135a4c28e4808342b7a}\label{class_flounder_1_1_ui_selector_a4196588f9b127135a4c28e4808342b7a}} 
+float {\bfseries m\+\_\+cursorY}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a7678aad235f56155a2b8750c108d73f5}\label{class_flounder_1_1_ui_selector_a7678aad235f56155a2b8750c108d73f5}} 
+bool {\bfseries m\+\_\+left\+Click}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a5774243c1c60256f7325dd43b65e062a}\label{class_flounder_1_1_ui_selector_a5774243c1c60256f7325dd43b65e062a}} 
+bool {\bfseries m\+\_\+right\+Click}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_aec754d68b6f907820531ea4e16dc4f31}\label{class_flounder_1_1_ui_selector_aec754d68b6f907820531ea4e16dc4f31}} 
+bool {\bfseries m\+\_\+left\+Was\+Click}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a0df2579585574ef4ec5e216c1595bb60}\label{class_flounder_1_1_ui_selector_a0df2579585574ef4ec5e216c1595bb60}} 
+bool {\bfseries m\+\_\+right\+Was\+Click}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a244b8e99a3fd6a57188be17414385e62}\label{class_flounder_1_1_ui_selector_a244b8e99a3fd6a57188be17414385e62}} 
+\hyperlink{class_flounder_1_1_button_mouse}{Button\+Mouse} $\ast$ {\bfseries m\+\_\+mouse\+Left}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_adaca62511dd3f2ce3e965c73a99d2bca}\label{class_flounder_1_1_ui_selector_adaca62511dd3f2ce3e965c73a99d2bca}} 
+\hyperlink{class_flounder_1_1_button_mouse}{Button\+Mouse} $\ast$ {\bfseries m\+\_\+mouse\+Right}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a9dc91334d26dc6f2871a2fe5e3b08ec8}\label{class_flounder_1_1_ui_selector_a9dc91334d26dc6f2871a2fe5e3b08ec8}} 
+bool {\bfseries m\+\_\+joysticks\+Initialized}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a6a34b197b5baf704b57601ca00324978}\label{class_flounder_1_1_ui_selector_a6a34b197b5baf704b57601ca00324978}} 
+int {\bfseries m\+\_\+selected\+Joystick}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a50d0d76e7b963dc485970c4dff869369}\label{class_flounder_1_1_ui_selector_a50d0d76e7b963dc485970c4dff869369}} 
+\hyperlink{class_flounder_1_1_axis_joystick}{Axis\+Joystick} $\ast$ {\bfseries m\+\_\+joystick\+AxisX}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_ae564d8361f4e2ef412ba3e44771823f2}\label{class_flounder_1_1_ui_selector_ae564d8361f4e2ef412ba3e44771823f2}} 
+\hyperlink{class_flounder_1_1_axis_joystick}{Axis\+Joystick} $\ast$ {\bfseries m\+\_\+joystick\+AxisY}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_aeeaad3faab382d2de6f05addffb9c730}\label{class_flounder_1_1_ui_selector_aeeaad3faab382d2de6f05addffb9c730}} 
+\hyperlink{class_flounder_1_1_button_joystick}{Button\+Joystick} $\ast$ {\bfseries m\+\_\+joystick\+Left}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a120d61c495216abccbe868d361dd7463}\label{class_flounder_1_1_ui_selector_a120d61c495216abccbe868d361dd7463}} 
+\hyperlink{class_flounder_1_1_button_joystick}{Button\+Joystick} $\ast$ {\bfseries m\+\_\+joystick\+Right}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a virtual cursor that will be used to determine if a ui action was preformed by a device. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a67bbc0090d8ac728e7697dab7044a356}\label{class_flounder_1_1_ui_selector_a67bbc0090d8ac728e7697dab7044a356}} 
+\index{Flounder\+::\+Ui\+Selector@{Flounder\+::\+Ui\+Selector}!Is\+Selected@{Is\+Selected}}
+\index{Is\+Selected@{Is\+Selected}!Flounder\+::\+Ui\+Selector@{Flounder\+::\+Ui\+Selector}}
+\subsubsection{\texorpdfstring{Is\+Selected()}{IsSelected()}}
+{\footnotesize\ttfamily bool Flounder\+::\+Ui\+Selector\+::\+Is\+Selected (\begin{DoxyParamCaption}\item[{const Ui\+Object \&}]{object }\end{DoxyParamCaption}) const}
+
+
+
+Gets if the object provided has the cursor hovered above it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em object} & The object to check with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If the object has the cursor inside of its box. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_ui_selector_a1564745e82c98c75c16dac5813639177}\label{class_flounder_1_1_ui_selector_a1564745e82c98c75c16dac5813639177}} 
+\index{Flounder\+::\+Ui\+Selector@{Flounder\+::\+Ui\+Selector}!Load@{Load}}
+\index{Load@{Load}!Flounder\+::\+Ui\+Selector@{Flounder\+::\+Ui\+Selector}}
+\subsubsection{\texorpdfstring{Load()}{Load()}}
+{\footnotesize\ttfamily void Flounder\+::\+Ui\+Selector\+::\+Load (\begin{DoxyParamCaption}\item[{const int \&}]{joystick,  }\item[{const int \&}]{joystick\+Left\+Click,  }\item[{const int \&}]{joystick\+Right\+Click,  }\item[{const int \&}]{joystick\+AxisX,  }\item[{const int \&}]{joystick\+AxisY }\end{DoxyParamCaption})}
+
+
+
+Sets up the joystick settings to be used for controlling the virtual cursor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick} & The joystick ID to attach though. \\
+\hline
+{\em joystick\+Left\+Click} & The joystick key to be used as the left click. \\
+\hline
+{\em joystick\+Right\+Click} & The joystick key to be used as the right click. \\
+\hline
+{\em joystick\+AxisX} & The joystick axis to be used for moving the x axis. \\
+\hline
+{\em joystick\+AxisY} & The joystick axis to be used for moving the y axis. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/uis/Ui\+Selector.\+hpp\item 
+src/uis/Ui\+Selector.\+cpp\end{DoxyCompactItemize}

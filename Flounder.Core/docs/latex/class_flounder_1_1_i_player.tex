@@ -1,0 +1,96 @@
+\hypertarget{class_flounder_1_1_i_player}{}\section{Flounder\+:\+:I\+Player Class Reference}
+\label{class_flounder_1_1_i_player}\index{Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}}
+
+
+This interface is used to move and add extra rotation to a camera.  
+
+
+
+
+{\ttfamily \#include $<$I\+Player.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_i_player_aa2ebd0f75bd762c074f11b4ad85379b6}{I\+Player} ()
+\begin{DoxyCompactList}\small\item\em Creates a new player. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_flounder_1_1_i_player_a254b93f0348cc309fc0a2340999acc21}{$\sim$\+I\+Player} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for the player. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_flounder_1_1_i_player_aa1f0636f26824c08409370769d63d570}{Update} ()=0
+\begin{DoxyCompactList}\small\item\em Checks inputs and carries out player movement. Should be called every frame. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ \hyperlink{class_flounder_1_1_i_player_ac1e883eba1ff62e24b05b4f82964dffe}{Get\+Position} () const =0
+\begin{DoxyCompactList}\small\item\em Gets the players 3D position in the world. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_flounder_1_1_vector3}{Vector3} $\ast$ \hyperlink{class_flounder_1_1_i_player_afbc9c1d2a367f1a9407554f5614775b6}{Get\+Rotation} () const =0
+\begin{DoxyCompactList}\small\item\em Gets the players 3D rotation in the world, where x=pitch, y=yaw, z=roll. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This interface is used to move and add extra rotation to a camera. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_player_aa2ebd0f75bd762c074f11b4ad85379b6}\label{class_flounder_1_1_i_player_aa2ebd0f75bd762c074f11b4ad85379b6}} 
+\index{Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}!I\+Player@{I\+Player}}
+\index{I\+Player@{I\+Player}!Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}}
+\subsubsection{\texorpdfstring{I\+Player()}{IPlayer()}}
+{\footnotesize\ttfamily Flounder\+::\+I\+Player\+::\+I\+Player (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new player. 
+
+\mbox{\Hypertarget{class_flounder_1_1_i_player_a254b93f0348cc309fc0a2340999acc21}\label{class_flounder_1_1_i_player_a254b93f0348cc309fc0a2340999acc21}} 
+\index{Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}!````~I\+Player@{$\sim$\+I\+Player}}
+\index{````~I\+Player@{$\sim$\+I\+Player}!Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}}
+\subsubsection{\texorpdfstring{$\sim$\+I\+Player()}{~IPlayer()}}
+{\footnotesize\ttfamily virtual Flounder\+::\+I\+Player\+::$\sim$\+I\+Player (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Deconstructor for the player. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_i_player_ac1e883eba1ff62e24b05b4f82964dffe}\label{class_flounder_1_1_i_player_ac1e883eba1ff62e24b05b4f82964dffe}} 
+\index{Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}!Get\+Position@{Get\+Position}}
+\index{Get\+Position@{Get\+Position}!Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}}
+\subsubsection{\texorpdfstring{Get\+Position()}{GetPosition()}}
+{\footnotesize\ttfamily virtual \hyperlink{class_flounder_1_1_vector3}{Vector3}$\ast$ Flounder\+::\+I\+Player\+::\+Get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the players 3D position in the world. 
+
+\begin{DoxyReturn}{Returns}
+The players 3D position in the world. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_i_player_afbc9c1d2a367f1a9407554f5614775b6}\label{class_flounder_1_1_i_player_afbc9c1d2a367f1a9407554f5614775b6}} 
+\index{Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}!Get\+Rotation@{Get\+Rotation}}
+\index{Get\+Rotation@{Get\+Rotation}!Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}}
+\subsubsection{\texorpdfstring{Get\+Rotation()}{GetRotation()}}
+{\footnotesize\ttfamily virtual \hyperlink{class_flounder_1_1_vector3}{Vector3}$\ast$ Flounder\+::\+I\+Player\+::\+Get\+Rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Gets the players 3D rotation in the world, where x=pitch, y=yaw, z=roll. 
+
+\begin{DoxyReturn}{Returns}
+The players 3D rotation in the world, where x=pitch, y=yaw, z=roll. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_flounder_1_1_i_player_aa1f0636f26824c08409370769d63d570}\label{class_flounder_1_1_i_player_aa1f0636f26824c08409370769d63d570}} 
+\index{Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}!Update@{Update}}
+\index{Update@{Update}!Flounder\+::\+I\+Player@{Flounder\+::\+I\+Player}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily virtual void Flounder\+::\+I\+Player\+::\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Checks inputs and carries out player movement. Should be called every frame. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/camera/I\+Player.\+hpp\end{DoxyCompactItemize}

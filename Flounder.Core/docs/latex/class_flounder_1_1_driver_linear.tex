@@ -1,0 +1,106 @@
+\hypertarget{class_flounder_1_1_driver_linear}{}\section{Flounder\+:\+:Driver\+Linear Class Reference}
+\label{class_flounder_1_1_driver_linear}\index{Flounder\+::\+Driver\+Linear@{Flounder\+::\+Driver\+Linear}}
+
+
+A driver that linearly increases its value.  
+
+
+
+
+{\ttfamily \#include $<$Driver\+Linear.\+hpp$>$}
+
+Inheritance diagram for Flounder\+:\+:Driver\+Linear\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_flounder_1_1_driver_linear}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_flounder_1_1_driver_linear_a54d17ab52c0e85294f40046bc1a2993f}{Driver\+Linear} (const float \&start\+Value, const float \&end\+Value, const float \&length)
+\begin{DoxyCompactList}\small\item\em Creates a new linear driver. \end{DoxyCompactList}\item 
+\hyperlink{class_flounder_1_1_driver_linear_a9cdb78bcb4207311c693c60d6aee63e0}{$\sim$\+Driver\+Linear} ()
+\begin{DoxyCompactList}\small\item\em Deconstructor for linear driver. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{class_flounder_1_1_driver_linear_adbe67b982e8b7a819ec613a83617d83b}{Calculate} (const float \&time) override
+\begin{DoxyCompactList}\small\item\em Calculates the new value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_driver_linear_a3d6f557f6dbd1ccb69400d45b607f947}\label{class_flounder_1_1_driver_linear_a3d6f557f6dbd1ccb69400d45b607f947}} 
+float {\bfseries m\+\_\+start\+Value}
+\item 
+\mbox{\Hypertarget{class_flounder_1_1_driver_linear_a5d95168943a2a25f1ca35994d48900c9}\label{class_flounder_1_1_driver_linear_a5d95168943a2a25f1ca35994d48900c9}} 
+float {\bfseries m\+\_\+difference}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A driver that linearly increases its value. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_driver_linear_a54d17ab52c0e85294f40046bc1a2993f}\label{class_flounder_1_1_driver_linear_a54d17ab52c0e85294f40046bc1a2993f}} 
+\index{Flounder\+::\+Driver\+Linear@{Flounder\+::\+Driver\+Linear}!Driver\+Linear@{Driver\+Linear}}
+\index{Driver\+Linear@{Driver\+Linear}!Flounder\+::\+Driver\+Linear@{Flounder\+::\+Driver\+Linear}}
+\subsubsection{\texorpdfstring{Driver\+Linear()}{DriverLinear()}}
+{\footnotesize\ttfamily Flounder\+::\+Driver\+Linear\+::\+Driver\+Linear (\begin{DoxyParamCaption}\item[{const float \&}]{start\+Value,  }\item[{const float \&}]{end\+Value,  }\item[{const float \&}]{length }\end{DoxyParamCaption})}
+
+
+
+Creates a new linear driver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+Value} & The start value. \\
+\hline
+{\em end\+Value} & The end value. \\
+\hline
+{\em length} & The time to go between values. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_flounder_1_1_driver_linear_a9cdb78bcb4207311c693c60d6aee63e0}\label{class_flounder_1_1_driver_linear_a9cdb78bcb4207311c693c60d6aee63e0}} 
+\index{Flounder\+::\+Driver\+Linear@{Flounder\+::\+Driver\+Linear}!````~Driver\+Linear@{$\sim$\+Driver\+Linear}}
+\index{````~Driver\+Linear@{$\sim$\+Driver\+Linear}!Flounder\+::\+Driver\+Linear@{Flounder\+::\+Driver\+Linear}}
+\subsubsection{\texorpdfstring{$\sim$\+Driver\+Linear()}{~DriverLinear()}}
+{\footnotesize\ttfamily Flounder\+::\+Driver\+Linear\+::$\sim$\+Driver\+Linear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Deconstructor for linear driver. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flounder_1_1_driver_linear_adbe67b982e8b7a819ec613a83617d83b}\label{class_flounder_1_1_driver_linear_adbe67b982e8b7a819ec613a83617d83b}} 
+\index{Flounder\+::\+Driver\+Linear@{Flounder\+::\+Driver\+Linear}!Calculate@{Calculate}}
+\index{Calculate@{Calculate}!Flounder\+::\+Driver\+Linear@{Flounder\+::\+Driver\+Linear}}
+\subsubsection{\texorpdfstring{Calculate()}{Calculate()}}
+{\footnotesize\ttfamily float Flounder\+::\+Driver\+Linear\+::\+Calculate (\begin{DoxyParamCaption}\item[{const float \&}]{time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Calculates the new value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & The time into the drivers life. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The calculated value. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_flounder_1_1_i_driver_a969f0c8da089f9d17129ee12b40c354a}{Flounder\+::\+I\+Driver}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/visual/Driver\+Linear.\+hpp\item 
+src/visual/Driver\+Linear.\+cpp\end{DoxyCompactItemize}
