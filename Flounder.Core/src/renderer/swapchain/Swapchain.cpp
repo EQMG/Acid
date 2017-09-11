@@ -140,7 +140,7 @@ namespace Flounder
 		}
 	}
 
-	VkSurfaceFormatKHR Swapchain::ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats)
+	VkSurfaceFormatKHR Swapchain::ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats) const
 	{
 		if (availableFormats.size() == 1 && availableFormats[0].format == VK_FORMAT_UNDEFINED)
 		{
@@ -158,7 +158,7 @@ namespace Flounder
 		return availableFormats[0];
 	}
 
-	VkPresentModeKHR Swapchain::ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes)
+	VkPresentModeKHR Swapchain::ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes) const
 	{
 		VkPresentModeKHR bestMode = VK_PRESENT_MODE_FIFO_KHR;
 
@@ -168,6 +168,7 @@ namespace Flounder
 			{
 				return availablePresentMode;
 			}
+
 			if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR)
 			{
 				bestMode = availablePresentMode;
@@ -177,18 +178,19 @@ namespace Flounder
 		return bestMode;
 	}
 
-	VkExtent2D Swapchain::ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities)
+	VkExtent2D Swapchain::ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities) const
 	{
 		if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
 		{
 			return capabilities.currentExtent;
 		}
-		VkExtent2D actualExtent = {};
-		actualExtent.width = static_cast<uint32_t>(Display::Get()->GetWidth());
-		actualExtent.height = static_cast<uint32_t>(Display::Get()->GetHeight());
 
-		actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
-		actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));
+		uint32_t displayWidth = static_cast<uint32_t>(Display::Get()->GetWidth());
+		uint32_t displayHeight = static_cast<uint32_t>(Display::Get()->GetHeight());
+
+		VkExtent2D actualExtent = {};
+		actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, displayWidth));
+		actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, displayHeight));
 
 		return actualExtent;
 	}

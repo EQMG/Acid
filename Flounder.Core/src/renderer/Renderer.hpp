@@ -5,6 +5,8 @@
 #include "../shaders/Shader.hpp"
 #include "../textures/Texture.hpp"
 
+#include "../test/VertexBuffer.hpp"
+
 #include "swapchain/Swapchain.hpp"
 
 #include "IManagerRender.hpp"
@@ -34,6 +36,7 @@ namespace Flounder
 
 		Swapchain *m_swapChain;
 		Shader *m_shaderTest;
+		VertexBuffer *m_vertexBuffer;
 
 		int lastWidth;
 		int lastHeight;
