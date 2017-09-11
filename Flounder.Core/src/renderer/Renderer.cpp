@@ -193,7 +193,7 @@ namespace Flounder
 
 	void Renderer::CreateCommandPool()
 	{
-		VkQueueFamilyIndices queueFamilyIndices = Display::Get()->FindQueueFamilies(Display::Get()->GetVkPhysicalDevice());
+		QueueFamilyIndices queueFamilyIndices = FindQueueFamilies(physicalDevice, surface);
 
 		VkCommandPoolCreateInfo poolInfo = {};
 		poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;

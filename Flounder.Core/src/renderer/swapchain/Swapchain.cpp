@@ -2,23 +2,14 @@
 
 namespace Flounder
 {
-	Swapchain::Swapchain() :
+	Swapchain::Swapchain(const VkDevice *logicalDevice, VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, const GLFWwindow &window) :
+		m_logicalDevice(logicalDevice),
 		m_swapChain(VK_NULL_HANDLE),
 		m_swapChainImages(std::vector<VkImage>()),
 		m_swapChainImageViews(std::vector<VkImageView>()),
 		m_swapChainFramebuffers(std::vector<VkFramebuffer>()),
 		m_swapChainImageFormat(VkFormat()),
 		m_swapChainExtent(VkExtent2D())
-	{
-	}
-
-	Swapchain::~Swapchain()
-	{
-		CleanupFramebuffers();
-		Cleanup();
-	}
-
-	void Swapchain::Create(VkSwapChainSupportDetails swapChainSupport)
 	{
 		// Uses the helper functions to get optimal settings.
 		VkSurfaceFormatKHR surfaceFormat = ChooseSwapSurfaceFormat(swapChainSupport.formats);
@@ -64,6 +55,12 @@ namespace Flounder
 		m_swapChainExtent = extent;
 
 		CreateImageViews();
+	}
+
+	Swapchain::~Swapchain()
+	{
+		CleanupFramebuffers();
+		Cleanup();
 	}
 
 	void Swapchain::CreateImageViews()
