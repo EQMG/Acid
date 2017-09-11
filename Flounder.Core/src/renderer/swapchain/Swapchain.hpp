@@ -39,10 +39,10 @@ namespace Flounder
 
 		VkExtent2D GetExtent() const { return m_swapChainExtent; }
 	private:
-		VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+		VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats) const;
 
-		VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes);
+		VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes) const;
 
-		VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
+		VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities) const;
 	};
 }
