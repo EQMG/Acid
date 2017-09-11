@@ -151,6 +151,8 @@
     <ClInclude Include="src\terrains\Terrain.hpp" />
     <ClInclude Include="src\terrains\Terrains.hpp" />
     <ClInclude Include="src\test\RendererTest.hpp" />
+    <ClInclude Include="src\test\Vertex.hpp" />
+    <ClInclude Include="src\test\VertexBuffer.hpp" />
     <ClInclude Include="src\textures\Texture.hpp" />
     <ClInclude Include="src\uis\ContainerScreen.hpp" />
     <ClInclude Include="src\uis\IManagerUis.hpp" />
@@ -286,6 +288,7 @@
     <ClCompile Include="src\terrains\Terrain.cpp" />
     <ClCompile Include="src\terrains\Terrains.cpp" />
     <ClCompile Include="src\test\RendererTest.cpp" />
+    <ClCompile Include="src\test\VertexBuffer.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\uis\ContainerScreen.cpp" />
     <ClCompile Include="src\uis\InputButton.cpp" />

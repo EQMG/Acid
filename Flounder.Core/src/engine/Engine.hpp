@@ -52,7 +52,8 @@ namespace Flounder
 		/// <summary>
 		/// The update function for the updater.
 		/// </summary>
-		void Run() const;
+		/// <returns> EXIT_SUCCESS/EXIT_FAILURE. </returns>
+		int Run() const;
 
 		/// <summary>
 		/// Gets a module instance by name.

@@ -24,11 +24,22 @@ namespace Flounder
 		m_updater->Create();
 	}
 
-	void Engine::Run() const
+	int Engine::Run() const
 	{
-		while (m_running)
+		try
 		{
-			m_updater->Update();
+			while (m_running)
+			{
+				m_updater->Update();
+			}
+
+			return EXIT_SUCCESS;
+		}
+		catch (const std::runtime_error& e)
+		{
+			printf(e.what());
+			printf("\n");
+			return EXIT_FAILURE;
 		}
 	}
 

@@ -11,7 +11,7 @@
 #if (FLOUNDER_CONFIG_RELEASE && FLOUNDER_PLATFORM_WINDOWS)
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, int cmdShow)
 #else
-int main()
+int main(int argc, char** argv)
 #endif
 {
 	// Creates the engine object.
@@ -72,12 +72,12 @@ int main()
 	}
 
 	// Runs the engine loop.
-	m_engine->Run();
+	int exitCode = m_engine->Run();
 
 	// Deletes the engine.
 	delete m_engine;
 
 	// Pauses the console.
 	std::cin.get();
-	return EXIT_SUCCESS;
+	return exitCode;
 }
