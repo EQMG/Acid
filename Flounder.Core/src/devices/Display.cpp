@@ -295,43 +295,6 @@ namespace Flounder
 		}
 	}
 
-	VkQueueFamilyIndices Display::FindQueueFamilies(VkPhysicalDevice device)
-	{
-		VkQueueFamilyIndices indices;
-
-		// Finds the queue families from the devices.
-		uint32_t queueFamilyCount = 0;
-		vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
-
-		std::vector<VkQueueFamilyProperties> queueFamilyPropertieses(queueFamilyCount);
-		vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilyPropertieses.data());
-
-		for (uint32_t i = 0; i < queueFamilyCount; i++)
-		{
-			VkQueueFamilyProperties queueFamily = queueFamilyPropertieses[i];
-
-			if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-			{
-				indices.graphicsFamily = i;
-			}
-
-			VkBool32 presentSupport = false;
-			vkGetPhysicalDeviceSurfaceSupportKHR(device, i, m_surface, &presentSupport);
-
-			if (queueFamily.queueCount > 0 && presentSupport)
-			{
-				indices.presentFamily = i;
-			}
-
-			if (indices.isComplete())
-			{
-				break;
-			}
-		}
-
-		return indices;
-	}
-
 	uint32_t Display::MemoryTypeIndex(uint32_t typeBits, VkFlags properties)
 	{
 		for (uint32_t i = 0; i < m_physicalDeviceMemoryProperties.memoryTypeCount; i++)
@@ -583,9 +546,9 @@ namespace Flounder
 	void Display::CreateLogicalDevice()
 	{
 		// Finds the indice queues.
-		VkQueueFamilyIndices indices = FindQueueFamilies(m_physicalDevice);
+		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(&m_physicalDevice, &m_surface);
 
-		std::set<int> uniqueQueueFamilies = {indices.graphicsFamily, indices.presentFamily};
+		std::set<int> uniqueQueueFamilies = { indices.graphicsFamily, indices.transferFamily };
 		std::vector<VkDeviceQueueCreateInfo> queueCreateInfoList;
 		float quePriorities[] = {1.0f};
 
@@ -624,13 +587,13 @@ namespace Flounder
 		vkErrorCheck(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_device));
 
 		vkGetDeviceQueue(m_device, indices.graphicsFamily, 0, &m_graphicsQueue);
-		vkGetDeviceQueue(m_device, indices.presentFamily, 0, &m_presentQueue);
+		vkGetDeviceQueue(m_device, indices.transferFamily, 0, &m_presentQueue);
 	}
 
 	bool Display::IsDeviceSuitable(VkPhysicalDevice device)
 	{
 		// Finds the devices indicie queues.
-		VkQueueFamilyIndices indices = FindQueueFamilies(device);
+		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(&device, &m_surface);
 
 		// Figgures out extensions support.
 		uint32_t extensionCount;
@@ -673,6 +636,6 @@ namespace Flounder
 
 		bool swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
 
-		return indices.isComplete() && extensionsSupported && swapChainAdequate;
+		return indices.IsComplete() && extensionsSupported && swapChainAdequate;
 	}
 }

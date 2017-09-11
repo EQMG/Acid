@@ -1,12 +1,26 @@
 ﻿#pragma once
 
-#include "../../devices/Display.hpp"
+#include <vector>
+
+#include "../../platforms/glfw/GlfwVulkan.h"
 
 namespace Flounder
 {
+	/// <summary>
+	/// Used to store data for the swap chain.
+	/// </summary>
+	struct SwapChainSupportDetails
+	{
+		VkSurfaceCapabilitiesKHR capabilities;
+		std::vector<VkSurfaceFormatKHR> formats;
+		std::vector<VkPresentModeKHR> presentModes;
+	};
+
 	class Swapchain
 	{
 	private:
+		const VkDevice* m_logicalDevice;
+
 		VkSwapchainKHR m_swapChain;
 		std::vector<VkImage> m_swapChainImages;
 		std::vector<VkImageView> m_swapChainImageViews;
@@ -15,11 +29,9 @@ namespace Flounder
 		VkFormat m_swapChainImageFormat;
 		VkExtent2D m_swapChainExtent;
 	public:
-		Swapchain();
+		Swapchain(const VkDevice *logicalDevice, VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, const GLFWwindow &window);
 
 		~Swapchain();
-
-		void Create(VkSwapChainSupportDetails swapChainSupport);
 
 		void CreateImageViews();
 
@@ -28,6 +40,8 @@ namespace Flounder
 		void Cleanup();
 
 		void CleanupFramebuffers();
+
+		SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface);
 
 		VkSwapchainKHR GetSwapchain() const { return m_swapChain; }
 

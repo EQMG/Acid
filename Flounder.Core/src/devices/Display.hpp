@@ -9,29 +9,12 @@
 #include <vector>
 #include <algorithm>
 
-#ifdef FLOUNDER_PLATFORM_ANDROID
-#include <android/asset_manager.h>
-#endif
-
-#define GLFW_INCLUDE_VULKAN
-#include <vulkan/vulkan.hpp>
-#include <glfw/glfw3.h>
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "../stb/stb_image.h"
-
+#include "../platforms/glfw/GlfwVulkan.h"
 #include "../engine/Engine.hpp"
+#include "../renderer/queue/QueueFamily.hpp"
 
 namespace Flounder
 {
-	struct VkQueueFamilyIndices
-	{
-		int graphicsFamily = -1;
-		int presentFamily = -1;
-
-		bool isComplete() const { return graphicsFamily >= 0 && presentFamily >= 0; }
-	};
-
 	struct VkSwapChainSupportDetails
 	{
 		VkSurfaceCapabilitiesKHR capabilities;
@@ -296,8 +279,6 @@ namespace Flounder
 		VkQueue GetVkGraphicsQueue() const { return m_graphicsQueue; }
 
 		VkQueue GetVkPresentQueue() const { return m_presentQueue; }
-
-		inline VkQueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
 
 		uint32_t MemoryTypeIndex(uint32_t typeBits, VkFlags properties);
 	private:
