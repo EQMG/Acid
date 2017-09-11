@@ -22,6 +22,7 @@ namespace Flounder
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		);
+		m_vertexBuffer = new VertexBuffer();
 
 		lastWidth = Display::Get()->GetWidth();
 		lastHeight = Display::Get()->GetHeight();
@@ -31,6 +32,7 @@ namespace Flounder
 		CreateGraphicsPipeline();
 		m_swapChain->CreateFramebuffers(m_renderPass);
 		CreateCommandPool();
+		m_vertexBuffer->Create();
 		CreateCommandBuffers();
 		CreateSemaphores();
 	}
@@ -43,6 +45,7 @@ namespace Flounder
 		delete m_managerRender;
 		delete m_shaderTest;
 		delete m_swapChain;
+		delete m_vertexBuffer;
 
 		vkDestroySemaphore(Display::Get()->GetVkDevice(), m_renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(Display::Get()->GetVkDevice(), m_imageAvailableSemaphore, nullptr);
@@ -235,7 +238,11 @@ namespace Flounder
 
 			vkCmdBindPipeline(m_commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_graphicsPipeline);
 
-			vkCmdDraw(m_commandBuffers[i], 3, 1, 0, 0);
+			VkBuffer vertexBuffers[] = { m_vertexBuffer->GetVertexBuffer() };
+			VkDeviceSize offsets[] = { 0 };
+			vkCmdBindVertexBuffers(m_commandBuffers[i], 0, 1, vertexBuffers, offsets);
+
+			vkCmdDraw(m_commandBuffers[i], m_vertexBuffer->GetVerticesSize(), 1, 0, 0);
 
 			vkCmdEndRenderPass(m_commandBuffers[i]);
 
