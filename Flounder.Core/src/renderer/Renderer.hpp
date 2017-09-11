@@ -5,8 +5,7 @@
 #include "../shaders/Shader.hpp"
 #include "../textures/Texture.hpp"
 
-#include "../test/VertexBuffer.hpp"
-
+#include "buffers/VertexBuffer.hpp"
 #include "swapchain/Swapchain.hpp"
 
 #include "IManagerRender.hpp"
