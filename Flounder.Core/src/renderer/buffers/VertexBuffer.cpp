@@ -2,22 +2,32 @@
 
 namespace Flounder
 {
-	VertexBuffer::VertexBuffer(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkCommandPool *transferCommandPool, const VkQueue *transferQueue) :
-		m_bufferVertex(nullptr)
+	VertexBuffer::VertexBuffer() :
+		m_bufferVertex(Buffer())
 	{
-		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
-		Buffer *bufferStaging = new Buffer(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		CopyVerticesToBuffer(logicalDevice, bufferSize, *bufferStaging);
-
-		m_bufferVertex = new Buffer(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		CopyBuffer(logicalDevice, transferCommandPool, bufferStaging->GetBuffer(), m_bufferVertex->GetBuffer(), bufferSize, transferQueue);
-
-		delete bufferStaging;
 	}
 
 	VertexBuffer::~VertexBuffer()
 	{
-		delete m_bufferVertex;
+		Cleanup();
+	}
+
+	void VertexBuffer::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkCommandPool *transferCommandPool, const VkQueue *transferQueue)
+	{
+		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
+		Buffer bufferStaging = Buffer();
+		bufferStaging.Create(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		CopyVerticesToBuffer(logicalDevice, bufferSize, bufferStaging);
+
+		m_bufferVertex.Create(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		CopyBuffer(logicalDevice, transferCommandPool, bufferStaging.GetBuffer(), m_bufferVertex.GetBuffer(), bufferSize, transferQueue);
+
+		bufferStaging.Cleanup();
+	}
+
+	void VertexBuffer::Cleanup()
+	{
+		m_bufferVertex.Cleanup();
 	}
 
 	void VertexBuffer::CopyVerticesToBuffer(const VkDevice *logicalDevice, const VkDeviceSize &bufferSize, const Buffer &bufferStaging) const

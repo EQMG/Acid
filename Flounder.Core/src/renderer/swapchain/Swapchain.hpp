@@ -29,19 +29,17 @@ namespace Flounder
 		VkFormat m_swapChainImageFormat;
 		VkExtent2D m_swapChainExtent;
 	public:
-		Swapchain(const VkDevice *logicalDevice, VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, const GLFWwindow &window);
+		Swapchain();
 
 		~Swapchain();
 
-		void CreateImageViews();
+		void Create(const VkDevice *logicalDevice, VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, GLFWwindow *window);
 
-		void CreateFramebuffers(VkRenderPass renderPass);
+		void CreateFramebuffers(const VkDevice* logicalDevice, const VkRenderPass* renderPass);
 
 		void Cleanup();
 
-		void CleanupFramebuffers();
-
-		SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface);
+		void CleanupFrameBuffers();
 
 		VkSwapchainKHR GetSwapchain() const { return m_swapChain; }
 
@@ -53,10 +51,14 @@ namespace Flounder
 
 		VkExtent2D GetExtent() const { return m_swapChainExtent; }
 	private:
+		void CreateImageViews(const VkDevice* logicalDevice);
+
+		SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface);
+
 		VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats) const;
 
 		VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes) const;
 
-		VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities) const;
+		VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, GLFWwindow *window) const;
 	};
 }
