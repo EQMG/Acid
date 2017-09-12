@@ -1,9 +1,10 @@
 ﻿#include "Swapchain.hpp"
+#include "../../devices/Display.hpp"
 
 namespace Flounder
 {
-	Swapchain::Swapchain(const VkDevice *logicalDevice, VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, const GLFWwindow &window) :
-		m_logicalDevice(logicalDevice),
+	Swapchain::Swapchain() :
+		m_logicalDevice(VK_NULL_HANDLE),
 		m_swapChain(VK_NULL_HANDLE),
 		m_swapChainImages(std::vector<VkImage>()),
 		m_swapChainImageViews(std::vector<VkImageView>()),
@@ -11,15 +12,30 @@ namespace Flounder
 		m_swapChainImageFormat(VkFormat()),
 		m_swapChainExtent(VkExtent2D())
 	{
+	}
+
+	Swapchain::~Swapchain()
+	{
+		CleanupFrameBuffers();
+		Cleanup();
+	}
+
+	void Swapchain::Create(const VkDevice *logicalDevice, VkPhysicalDevice*physicalDevice, const VkSurfaceKHR *surface, GLFWwindow *window)
+	{
+		m_logicalDevice = logicalDevice;
+
+		// Get support details for the swap chain to pass to helper functions
+		SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(*physicalDevice, *surface);
+
 		// Uses the helper functions to get optimal settings.
 		VkSurfaceFormatKHR surfaceFormat = ChooseSwapSurfaceFormat(swapChainSupport.formats);
 		VkPresentModeKHR presentMode = ChooseSwapPresentMode(swapChainSupport.presentModes);
-		VkExtent2D extent = ChooseSwapExtent(swapChainSupport.capabilities);
+		VkExtent2D extent = ChooseSwapExtent(swapChainSupport.capabilities, window);
 
 		// Fills in the data from the create info.
 		VkSwapchainCreateInfoKHR createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-		createInfo.surface = Display::Get()->GetVkSurface();
+		createInfo.surface = *surface;
 
 		// Gets the proper image count. 
 		uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
@@ -43,27 +59,70 @@ namespace Flounder
 		createInfo.oldSwapchain = VK_NULL_HANDLE;
 
 		// Attempts to create swap chain
-		Display::vkErrorCheck(vkCreateSwapchainKHR(Display::Get()->GetVkDevice(), &createInfo, nullptr, &m_swapChain));
+		GlfwVulkan::ErrorCheck(vkCreateSwapchainKHR(*logicalDevice, &createInfo, nullptr, &m_swapChain));
 
 		// Populates the swap chain image vector.
-		vkGetSwapchainImagesKHR(Display::Get()->GetVkDevice(), m_swapChain, &imageCount, nullptr);
+		vkGetSwapchainImagesKHR(*logicalDevice, m_swapChain, &imageCount, nullptr);
 		m_swapChainImages.resize(imageCount);
-		vkGetSwapchainImagesKHR(Display::Get()->GetVkDevice(), m_swapChain, &imageCount, m_swapChainImages.data());
+		vkGetSwapchainImagesKHR(*logicalDevice, m_swapChain, &imageCount, m_swapChainImages.data());
 
 		// Stores the data for the chosen surface format and extent.
 		m_swapChainImageFormat = surfaceFormat.format;
 		m_swapChainExtent = extent;
 
-		CreateImageViews();
+		CreateImageViews(logicalDevice);
+
+		printf("Swapchain created successfully.\n");
 	}
 
-	Swapchain::~Swapchain()
+	void Swapchain::CreateFramebuffers(const VkDevice *logicalDevice, const VkRenderPass *renderPass)
 	{
-		CleanupFramebuffers();
-		Cleanup();
+		m_swapChainFramebuffers.resize(m_swapChainImageViews.size());
+
+		for (size_t i = 0; i < m_swapChainImageViews.size(); i++)
+		{
+			VkImageView attachments[] = { m_swapChainImageViews[i] };
+
+			VkFramebufferCreateInfo framebufferInfo = {};
+			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			framebufferInfo.renderPass = *renderPass;
+			framebufferInfo.attachmentCount = 1;
+			framebufferInfo.pAttachments = attachments;
+			framebufferInfo.width = m_swapChainExtent.width;
+			framebufferInfo.height = m_swapChainExtent.height;
+			framebufferInfo.layers = 1;
+
+			GlfwVulkan::ErrorCheck(vkCreateFramebuffer(*logicalDevice, &framebufferInfo, nullptr, &m_swapChainFramebuffers[i]));
+		}
+
+		printf("Framebuffers created successfully!\n");
 	}
 
-	void Swapchain::CreateImageViews()
+	void Swapchain::Cleanup()
+	{
+		// Waits for the device to finish before destroying.
+		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
+
+		for (size_t i = 0; i < m_swapChainImageViews.size(); i++)
+		{
+			vkDestroyImageView(Display::Get()->GetVkDevice(), m_swapChainImageViews[i], VK_NULL_HANDLE);
+		}
+
+		vkDestroySwapchainKHR(Display::Get()->GetVkDevice(), m_swapChain, VK_NULL_HANDLE);
+	}
+
+	void Swapchain::CleanupFrameBuffers()
+	{
+		// Waits for the device to finish before destroying.
+		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
+
+		for (size_t i = 0; i < m_swapChainFramebuffers.size(); i++)
+		{
+			vkDestroyFramebuffer(Display::Get()->GetVkDevice(), m_swapChainFramebuffers[i], VK_NULL_HANDLE);
+		}
+	}
+
+	void Swapchain::CreateImageViews(const VkDevice* logicalDevice)
 	{
 		m_swapChainImageViews.resize(m_swapChainImages.size());
 
@@ -84,57 +143,40 @@ namespace Flounder
 			createInfo.subresourceRange.baseArrayLayer = 0;
 			createInfo.subresourceRange.layerCount = 1;
 
-			Display::vkErrorCheck(vkCreateImageView(Display::Get()->GetVkDevice(), &createInfo, nullptr, &m_swapChainImageViews[i]));
+			GlfwVulkan::ErrorCheck(vkCreateImageView(*logicalDevice, &createInfo, nullptr, &m_swapChainImageViews[i]));
 		}
 
 		printf("Image views created successfully.\n");
 	}
 
-	void Swapchain::CreateFramebuffers(VkRenderPass renderPass)
+	SwapChainSupportDetails Swapchain::QuerySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface)
 	{
-		m_swapChainFramebuffers.resize(m_swapChainImageViews.size());
+		SwapChainSupportDetails details;
 
-		for (size_t i = 0; i < m_swapChainImageViews.size(); i++)
+		// Sets capabilities variable on struct.
+		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &details.capabilities);
+		
+		// Sets formats vector on struct.
+		uint32_t formatCount;
+		vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, nullptr);
+		
+		if (formatCount != 0)
 		{
-			VkImageView attachments[] = {m_swapChainImageViews[i]};
-
-			VkFramebufferCreateInfo framebufferInfo = {};
-			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-			framebufferInfo.renderPass = renderPass;
-			framebufferInfo.attachmentCount = 1;
-			framebufferInfo.pAttachments = attachments;
-			framebufferInfo.width = m_swapChainExtent.width;
-			framebufferInfo.height = m_swapChainExtent.height;
-			framebufferInfo.layers = 1;
-
-			Display::vkErrorCheck(vkCreateFramebuffer(Display::Get()->GetVkDevice(), &framebufferInfo, nullptr, &m_swapChainFramebuffers[i]));
+			details.formats.resize(formatCount);
+			vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, details.formats.data());
 		}
 
-		printf("Framebuffers created successfully!\n");
-	}
-
-	void Swapchain::Cleanup()
-	{
-		// Waits for the device to finish before destroying.
-		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
-
-		for (size_t i = 0; i < m_swapChainImageViews.size(); i++)
+		// Sets presentModes vector on struct.
+		uint32_t presentModeCount;
+		vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentModeCount, nullptr);
+		
+		if (presentModeCount != 0)
 		{
-			vkDestroyImageView(Display::Get()->GetVkDevice(), m_swapChainImageViews[i], VK_NULL_HANDLE);
+			details.presentModes.resize(presentModeCount);
+			vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentModeCount, details.presentModes.data());
 		}
 
-		vkDestroySwapchainKHR(Display::Get()->GetVkDevice(), m_swapChain, VK_NULL_HANDLE);
-	}
-
-	void Swapchain::CleanupFramebuffers()
-	{
-		// Waits for the device to finish before destroying.
-		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
-
-		for (size_t i = 0; i < m_swapChainFramebuffers.size(); i++)
-		{
-			vkDestroyFramebuffer(Display::Get()->GetVkDevice(), m_swapChainFramebuffers[i], VK_NULL_HANDLE);
-		}
+		return details;
 	}
 
 	VkSurfaceFormatKHR Swapchain::ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats) const
@@ -175,19 +217,19 @@ namespace Flounder
 		return bestMode;
 	}
 
-	VkExtent2D Swapchain::ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities) const
+	VkExtent2D Swapchain::ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, GLFWwindow *window) const
 	{
 		if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
 		{
 			return capabilities.currentExtent;
 		}
 
-		uint32_t displayWidth = static_cast<uint32_t>(Display::Get()->GetWidth());
-		uint32_t displayHeight = static_cast<uint32_t>(Display::Get()->GetHeight());
+		int width, height;
+		glfwGetWindowSize(window, &width, &height);
 
 		VkExtent2D actualExtent = {};
-		actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, displayWidth));
-		actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, displayHeight));
+		actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, static_cast<uint32_t>(width)));
+		actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, static_cast<uint32_t>(height)));
 
 		return actualExtent;
 	}

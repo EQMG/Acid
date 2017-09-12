@@ -10,7 +10,7 @@ namespace Flounder
 	class VertexBuffer
 	{
 	private:
-		Buffer *m_bufferVertex;
+		Buffer m_bufferVertex;
 
 		const std::vector<Vertex> vertices =
 		{
@@ -19,11 +19,15 @@ namespace Flounder
 			{ { -0.5f, 0.5f },{ 0.0f, 0.0f, 1.0f } }
 		};
 	public:
-		VertexBuffer(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkCommandPool *transferCommandPool, const VkQueue *transferQueue);
+		VertexBuffer();
 
 		~VertexBuffer();
 
-		Buffer *GetVertexBuffer() const { return m_bufferVertex; }
+		void Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkCommandPool *transferCommandPool, const VkQueue *transferQueue);
+
+		void Cleanup();
+
+		Buffer *GetVertexBuffer() { return &m_bufferVertex; }
 
 		uint32_t GetVerticesSize() const { return vertices.size(); }
 	private:

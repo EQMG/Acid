@@ -3,11 +3,24 @@
 
 namespace Flounder
 {
-	Buffer::Buffer(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties) :
-		m_logicalDevice(logicalDevice),
-		m_buffer(VkBuffer()),
-		m_bufferMemory(VkDeviceMemory())
+	Buffer::Buffer() :
+		m_logicalDevice(VK_NULL_HANDLE),
+		m_buffer(VK_NULL_HANDLE),
+		m_bufferMemory(VK_NULL_HANDLE)
 	{
+	}
+
+	Buffer::~Buffer()
+	{
+		Cleanup();
+	}
+
+	void Buffer::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties)
+	{
+		m_logicalDevice = logicalDevice;
+		m_buffer = VkBuffer();
+		m_bufferMemory = VkDeviceMemory();
+
 		VkBufferCreateInfo bufferInfo = {};
 		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		bufferInfo.size = size;
@@ -49,9 +62,10 @@ namespace Flounder
 		vkBindBufferMemory(*logicalDevice, m_buffer, m_bufferMemory, 0);
 	}
 
-	Buffer::~Buffer()
+	void Buffer::Cleanup()
 	{
 		vkDestroyBuffer(*m_logicalDevice, m_buffer, nullptr);
+		// Free up buffer memory once buffer is destroyed.
 		vkFreeMemory(*m_logicalDevice, m_bufferMemory, nullptr);
 	}
 

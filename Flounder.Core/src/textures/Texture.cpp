@@ -106,7 +106,7 @@ namespace Flounder
 		bufferCreateInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-		display::vkErrorCheck(vkCreateBuffer(Display::Get()->getVkDevice(), &bufferCreateInfo, nullptr, &m_stagingBuffer));
+		display::GlfwVulkan::ErrorCheck(vkCreateBuffer(Display::Get()->getVkDevice(), &bufferCreateInfo, nullptr, &m_stagingBuffer));
 
 		VkMemoryRequirements memoryRequirements = {};
 		vkGetBufferMemoryRequirements(Display::Get()->getVkDevice(), m_stagingBuffer, &memoryRequirements);
@@ -117,11 +117,11 @@ namespace Flounder
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = Display::Get()->memoryTypeIndex(memoryRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
-		display::vkErrorCheck(vkAllocateMemory(Display::Get()->getVkDevice(), &memoryAllocateInfo, nullptr, &m_stagingMemory));
-		display::vkErrorCheck(vkBindBufferMemory(Display::Get()->getVkDevice(), m_stagingBuffer, m_stagingMemory, 0));
+		display::GlfwVulkan::ErrorCheck(vkAllocateMemory(Display::Get()->getVkDevice(), &memoryAllocateInfo, nullptr, &m_stagingMemory));
+		display::GlfwVulkan::ErrorCheck(vkBindBufferMemory(Display::Get()->getVkDevice(), m_stagingBuffer, m_stagingMemory, 0));
 
 		uint8_t *data;
-		display::vkErrorCheck(vkMapMemory(Display::Get()->getVkDevice(), m_stagingMemory, 0, memoryRequirements.size, 0, (void**) &data));
+		display::GlfwVulkan::ErrorCheck(vkMapMemory(Display::Get()->getVkDevice(), m_stagingMemory, 0, memoryRequirements.size, 0, (void**) &data));
 		memcpy(data, pixels, bufferCreateInfo.size);
 		vkUnmapMemory(Display::Get()->getVkDevice(), m_stagingMemory);
 
@@ -141,15 +141,15 @@ namespace Flounder
 		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_PREINITIALIZED;
 
-		display::vkErrorCheck(vkCreateImage(Display::Get()->getVkDevice(), &imageCreateInfo, nullptr, &m_image));
+		display::GlfwVulkan::ErrorCheck(vkCreateImage(Display::Get()->getVkDevice(), &imageCreateInfo, nullptr, &m_image));
 
 		vkGetImageMemoryRequirements(Display::Get()->getVkDevice(), m_image, &memoryRequirements);
 
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = Display::Get()->memoryTypeIndex(memoryRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
-		display::vkErrorCheck(vkAllocateMemory(Display::Get()->getVkDevice(), &memoryAllocateInfo, nullptr, &m_imageMemory));
-		display::vkErrorCheck(vkBindImageMemory(Display::Get()->getVkDevice(), m_image, m_imageMemory, 0));
+		display::GlfwVulkan::ErrorCheck(vkAllocateMemory(Display::Get()->getVkDevice(), &memoryAllocateInfo, nullptr, &m_imageMemory));
+		display::GlfwVulkan::ErrorCheck(vkBindImageMemory(Display::Get()->getVkDevice(), m_image, m_imageMemory, 0));
 
 		VkImageSubresourceRange subresourceRange = {};
 		subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -205,7 +205,7 @@ namespace Flounder
 		imageViewCreateInfo.subresourceRange.layerCount = 1;
 		imageViewCreateInfo.subresourceRange.levelCount = 1;
 
-		display::vkErrorCheck(vkCreateImageView(Display::Get()->getVkDevice(), &imageViewCreateInfo, nullptr, &m_imageView));*/
+		display::GlfwVulkan::ErrorCheck(vkCreateImageView(Display::Get()->getVkDevice(), &imageViewCreateInfo, nullptr, &m_imageView));*/
 
 		delete[] pixels;
 	}

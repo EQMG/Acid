@@ -44,7 +44,7 @@ namespace Flounder
 			createInfo.pCode = reinterpret_cast<const uint32_t*>(shaderCode.data());
 
 			VkShaderModule shaderModule = VK_NULL_HANDLE;
-			Display::vkErrorCheck(vkCreateShaderModule(Display::Get()->GetVkDevice(), &createInfo, nullptr, &shaderModule));
+			GlfwVulkan::ErrorCheck(vkCreateShaderModule(Display::Get()->GetVkDevice(), &createInfo, nullptr, &shaderModule));
 
 			VkPipelineShaderStageCreateInfo shaderStageInfo = {};
 			shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
