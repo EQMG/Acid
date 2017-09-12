@@ -11,13 +11,16 @@ namespace Flounder
 		m_pipelineLayout = VK_NULL_HANDLE;
 		m_graphicsPipeline = VK_NULL_HANDLE;
 
-		m_commandPool = VK_NULL_HANDLE;
+		m_swapchain = new Swapchain();
+
+		m_commandPool = new CommandPool();
+		m_commandPoolTransfer = new CommandPool();
+
 		m_commandBuffers = std::vector<VkCommandBuffer>();
 
 		m_imageAvailableSemaphore = VK_NULL_HANDLE;
 		m_renderFinishedSemaphore = VK_NULL_HANDLE;
 
-		m_swapChain = new Swapchain();
 		m_shaderTest = new Shader("tests", 2,
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
@@ -27,12 +30,20 @@ namespace Flounder
 		lastWidth = Display::Get()->GetWidth();
 		lastHeight = Display::Get()->GetHeight();
 
-		m_swapChain->Create(QuerySwapChainSupport(Display::Get()->GetVkPhysicalDevice()));
+		VkDevice logicalDevice = Display::Get()->GetVkDevice();
+		VkPhysicalDevice physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		VkSurfaceKHR surface = Display::Get()->GetVkSurface();
+		VkQueue transferQueue = Display::Get()->GetVkTransferQueue();
+		GLFWwindow *window = Display::Get()->GetGlfwWindow();
+
+		m_swapchain->Create(&logicalDevice, &physicalDevice, &surface, window);
 		CreateRenderPass();
 		CreateGraphicsPipeline();
-		m_swapChain->CreateFramebuffers(m_renderPass);
-		CreateCommandPool();
-		m_vertexBuffer->Create();
+		m_swapchain->CreateFramebuffers(&logicalDevice, &m_renderPass);
+		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(&physicalDevice, &surface);
+		m_commandPool->Create(&logicalDevice, &physicalDevice, &surface, indices.graphicsFamily);
+		m_commandPoolTransfer->Create(&logicalDevice, &physicalDevice, &surface, indices.transferFamily, VK_COMMAND_POOL_CREATE_TRANSIENT_BIT);
+		m_vertexBuffer->Create(&logicalDevice, &physicalDevice, &surface, m_commandPoolTransfer->GetCommandPool(), &transferQueue);
 		CreateCommandBuffers();
 		CreateSemaphores();
 	}
@@ -44,13 +55,14 @@ namespace Flounder
 
 		delete m_managerRender;
 		delete m_shaderTest;
-		delete m_swapChain;
+		delete m_swapchain;
 		delete m_vertexBuffer;
 
 		vkDestroySemaphore(Display::Get()->GetVkDevice(), m_renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(Display::Get()->GetVkDevice(), m_imageAvailableSemaphore, nullptr);
 
-		vkDestroyCommandPool(Display::Get()->GetVkDevice(), m_commandPool, nullptr);
+	//	vkDestroyCommandPool(Display::Get()->GetVkDevice(), m_commandPool, nullptr);
+		m_commandPool->Cleanup();
 	}
 
 	void Renderer::Update()
@@ -76,7 +88,7 @@ namespace Flounder
 	void Renderer::CreateRenderPass()
 	{
 		VkAttachmentDescription colorAttachment = {};
-		colorAttachment.format = m_swapChain->GetImageFormat();
+		colorAttachment.format = m_swapchain->GetImageFormat();
 		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
 		colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 		colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
@@ -101,7 +113,7 @@ namespace Flounder
 		renderPassInfo.subpassCount = 1;
 		renderPassInfo.pSubpasses = &subpass;
 
-		Display::vkErrorCheck(vkCreateRenderPass(Display::Get()->GetVkDevice(), &renderPassInfo, nullptr, &m_renderPass));
+		GlfwVulkan::ErrorCheck(vkCreateRenderPass(Display::Get()->GetVkDevice(), &renderPassInfo, nullptr, &m_renderPass));
 	}
 
 	void Renderer::CreateGraphicsPipeline()
@@ -119,15 +131,15 @@ namespace Flounder
 		VkViewport viewport = {};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
-		viewport.width = (float) m_swapChain->GetExtent().width;
-		viewport.height = (float) m_swapChain->GetExtent().height;
+		viewport.width = static_cast<float>(m_swapchain->GetExtent().width);
+		viewport.height = static_cast<float>(m_swapchain->GetExtent().height);
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
 
 		VkRect2D scissor = {};
 		scissor.offset.x = 0;
 		scissor.offset.y = 0;
-		scissor.extent = m_swapChain->GetExtent();
+		scissor.extent = m_swapchain->GetExtent();
 
 		VkPipelineViewportStateCreateInfo viewportState = {};
 		viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -171,7 +183,7 @@ namespace Flounder
 		pipelineLayoutInfo.setLayoutCount = 0;
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
 
-		Display::vkErrorCheck(vkCreatePipelineLayout(Display::Get()->GetVkDevice(), &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
+		GlfwVulkan::ErrorCheck(vkCreatePipelineLayout(Display::Get()->GetVkDevice(), &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
 
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -188,31 +200,20 @@ namespace Flounder
 		pipelineInfo.subpass = 0;
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 
-		Display::vkErrorCheck(vkCreateGraphicsPipelines(Display::Get()->GetVkDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_graphicsPipeline));
-	}
-
-	void Renderer::CreateCommandPool()
-	{
-		QueueFamilyIndices queueFamilyIndices = FindQueueFamilies(physicalDevice, surface);
-
-		VkCommandPoolCreateInfo poolInfo = {};
-		poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-		poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily;
-
-		Display::vkErrorCheck(vkCreateCommandPool(Display::Get()->GetVkDevice(), &poolInfo, nullptr, &m_commandPool));
+		GlfwVulkan::ErrorCheck(vkCreateGraphicsPipelines(Display::Get()->GetVkDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_graphicsPipeline));
 	}
 
 	void Renderer::CreateCommandBuffers()
 	{
-		m_commandBuffers.resize(m_swapChain->GetFramebufferSize());
+		m_commandBuffers.resize(m_swapchain->GetFramebufferSize());
 
 		VkCommandBufferAllocateInfo allocInfo = {};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		allocInfo.commandPool = m_commandPool;
+		allocInfo.commandPool = *m_commandPool->GetCommandPool();
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandBufferCount = (uint32_t) m_commandBuffers.size();
+		allocInfo.commandBufferCount = static_cast<uint32_t>(m_commandBuffers.size());
 
-		Display::vkErrorCheck(vkAllocateCommandBuffers(Display::Get()->GetVkDevice(), &allocInfo, m_commandBuffers.data()));
+		GlfwVulkan::ErrorCheck(vkAllocateCommandBuffers(Display::Get()->GetVkDevice(), &allocInfo, m_commandBuffers.data()));
 
 		for (size_t i = 0; i < m_commandBuffers.size(); i++)
 		{
@@ -225,10 +226,10 @@ namespace Flounder
 			VkRenderPassBeginInfo renderPassInfo = {};
 			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 			renderPassInfo.renderPass = m_renderPass;
-			renderPassInfo.framebuffer = m_swapChain->GetFramebuffer((uint32_t) i);
+			renderPassInfo.framebuffer = m_swapchain->GetFramebuffer(static_cast<uint32_t>(i));
 			renderPassInfo.renderArea.offset.x = 0;
 			renderPassInfo.renderArea.offset.y = 0;
-			renderPassInfo.renderArea.extent = m_swapChain->GetExtent();
+			renderPassInfo.renderArea.extent = m_swapchain->GetExtent();
 
 			VkClearValue clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
 			renderPassInfo.clearValueCount = 1;
@@ -238,7 +239,7 @@ namespace Flounder
 
 			vkCmdBindPipeline(m_commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_graphicsPipeline);
 
-			VkBuffer vertexBuffers[] = { m_vertexBuffer->GetVertexBuffer() };
+			VkBuffer vertexBuffers[] = { m_vertexBuffer->GetVertexBuffer()->GetBuffer() };
 			VkDeviceSize offsets[] = { 0 };
 			vkCmdBindVertexBuffers(m_commandBuffers[i], 0, 1, vertexBuffers, offsets);
 
@@ -246,7 +247,7 @@ namespace Flounder
 
 			vkCmdEndRenderPass(m_commandBuffers[i]);
 
-			Display::vkErrorCheck(vkEndCommandBuffer(m_commandBuffers[i]));
+			GlfwVulkan::ErrorCheck(vkEndCommandBuffer(m_commandBuffers[i]));
 		}
 	}
 
@@ -255,8 +256,8 @@ namespace Flounder
 		VkSemaphoreCreateInfo semaphoreInfo = {};
 		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		Display::vkErrorCheck(vkCreateSemaphore(Display::Get()->GetVkDevice(), &semaphoreInfo, nullptr, &m_imageAvailableSemaphore));
-		Display::vkErrorCheck(vkCreateSemaphore(Display::Get()->GetVkDevice(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphore));
+		GlfwVulkan::ErrorCheck(vkCreateSemaphore(Display::Get()->GetVkDevice(), &semaphoreInfo, nullptr, &m_imageAvailableSemaphore));
+		GlfwVulkan::ErrorCheck(vkCreateSemaphore(Display::Get()->GetVkDevice(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphore));
 	}
 
 	void Renderer::UpdateUniformBuffer()
@@ -265,10 +266,8 @@ namespace Flounder
 
 	void Renderer::DrawFrame()
 	{
-		// TODO: Fix memory leaks.
-
 		uint32_t imageIndex;
-		vkAcquireNextImageKHR(Display::Get()->GetVkDevice(), m_swapChain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
+		VkResult result = vkAcquireNextImageKHR(Display::Get()->GetVkDevice(), m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 
 		VkSemaphore waitSemaphores[] = {m_imageAvailableSemaphore};
 		VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
@@ -284,20 +283,20 @@ namespace Flounder
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = signalSemaphores;
 
-		Display::vkErrorCheck(vkQueueSubmit(Display::Get()->GetVkPresentQueue(), 1, &submitInfo, VK_NULL_HANDLE));
+		GlfwVulkan::ErrorCheck(vkQueueSubmit(Display::Get()->GetVkTransferQueue(), 1, &submitInfo, VK_NULL_HANDLE));
 
 		VkPresentInfoKHR presentInfo = {};
 		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 		presentInfo.waitSemaphoreCount = 1;
 		presentInfo.pWaitSemaphores = signalSemaphores;
 
-		VkSwapchainKHR swapchains[] = {m_swapChain->GetSwapchain()};
+		VkSwapchainKHR swapchains[] = { m_swapchain->GetSwapchain()};
 		presentInfo.swapchainCount = 1;
 		presentInfo.pSwapchains = swapchains;
 		presentInfo.pImageIndices = &imageIndex;
 
-		vkQueueWaitIdle(Display::Get()->GetVkPresentQueue());
-		vkQueuePresentKHR(Display::Get()->GetVkPresentQueue(), &presentInfo);
+		vkQueueWaitIdle(Display::Get()->GetVkTransferQueue());
+		vkQueuePresentKHR(Display::Get()->GetVkTransferQueue(), &presentInfo);
 	}
 
 	VkSwapChainSupportDetails Renderer::QuerySwapChainSupport(VkPhysicalDevice device)

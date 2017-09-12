@@ -78,71 +78,6 @@ namespace Flounder
 		}
 	}
 
-	void Display::vkErrorCheck(VkResult result)
-	{
-		if (result < 0)
-		{
-			switch (result)
-			{
-			case VK_ERROR_OUT_OF_HOST_MEMORY:
-				printf("VK_ERROR_OUT_OF_HOST_MEMORY\n");
-				break;
-			case VK_ERROR_OUT_OF_DEVICE_MEMORY:
-				printf("VK_ERROR_OUT_OF_DEVICE_MEMORY\n");
-				break;
-			case VK_ERROR_INITIALIZATION_FAILED:
-				printf("VK_ERROR_INITIALIZATION_FAILED\n");
-				break;
-			case VK_ERROR_DEVICE_LOST:
-				printf("VK_ERROR_DEVICE_LOST\n");
-				break;
-			case VK_ERROR_MEMORY_MAP_FAILED:
-				printf("VK_ERROR_MEMORY_MAP_FAILED\n");
-				break;
-			case VK_ERROR_LAYER_NOT_PRESENT:
-				printf("VK_ERROR_LAYER_NOT_PRESENT\n");
-				break;
-			case VK_ERROR_EXTENSION_NOT_PRESENT:
-				printf("VK_ERROR_EXTENSION_NOT_PRESENT\n");
-				break;
-			case VK_ERROR_FEATURE_NOT_PRESENT:
-				printf("VK_ERROR_FEATURE_NOT_PRESENT\n");
-				break;
-			case VK_ERROR_INCOMPATIBLE_DRIVER:
-				printf("VK_ERROR_INCOMPATIBLE_DRIVER\n");
-				break;
-			case VK_ERROR_TOO_MANY_OBJECTS:
-				printf("VK_ERROR_TOO_MANY_OBJECTS\n");
-				break;
-			case VK_ERROR_FORMAT_NOT_SUPPORTED:
-				printf("VK_ERROR_FORMAT_NOT_SUPPORTED\n");
-				break;
-			case VK_ERROR_SURFACE_LOST_KHR:
-				printf("VK_ERROR_SURFACE_LOST_KHR\n");
-				break;
-			case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
-				printf("VK_ERROR_NATIVE_WINDOW_IN_USE_KHR\n");
-				break;
-			case VK_SUBOPTIMAL_KHR:
-				printf("VK_SUBOPTIMAL_KHR\n");
-				break;
-			case VK_ERROR_OUT_OF_DATE_KHR:
-				printf("VK_ERROR_OUT_OF_DATE_KHR\n");
-				break;
-			case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:
-				printf("VK_ERROR_INCOMPATIBLE_DISPLAY_KHR\n");
-				break;
-			case VK_ERROR_VALIDATION_FAILED_EXT:
-				printf("VK_ERROR_VALIDATION_FAILED_EXT\n");
-				break;
-			default:
-				break;
-			}
-
-			assert(false && "Vulkan runtime error.");
-		}
-	}
-
 	Display::Display() :
 		IModule(),
 		m_windowWidth(1080),
@@ -177,7 +112,7 @@ namespace Flounder
 		m_debugReport(VK_NULL_HANDLE),
 		m_device(VK_NULL_HANDLE),
 		m_graphicsQueue(VK_NULL_HANDLE),
-		m_presentQueue(VK_NULL_HANDLE)
+		m_transferQueue(VK_NULL_HANDLE)
 	{
 		CreateGlfwWindow();
 		SetupLayers();
@@ -456,7 +391,7 @@ namespace Flounder
 		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
-		vkErrorCheck(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
+		GlfwVulkan::ErrorCheck(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 	}
 
 	void Display::SetupDebugCallback()
@@ -475,14 +410,14 @@ namespace Flounder
 		// Inits debuging.
 		if (m_validationLayers)
 		{
-			vkErrorCheck(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
+			GlfwVulkan::ErrorCheck(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
 		}
 	}
 
 	void Display::CreateSurface()
 	{
 		// Creates the Vulkan-GLFW surface.
-		vkErrorCheck(glfwCreateWindowSurface(m_instance, m_glfwWindow, nullptr, &m_surface));
+		GlfwVulkan::ErrorCheck(glfwCreateWindowSurface(m_instance, m_glfwWindow, nullptr, &m_surface));
 	}
 
 	void Display::PickPhysicalDevice()
@@ -584,10 +519,10 @@ namespace Flounder
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 		deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
 
-		vkErrorCheck(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_device));
+		GlfwVulkan::ErrorCheck(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_device));
 
 		vkGetDeviceQueue(m_device, indices.graphicsFamily, 0, &m_graphicsQueue);
-		vkGetDeviceQueue(m_device, indices.transferFamily, 0, &m_presentQueue);
+		vkGetDeviceQueue(m_device, indices.transferFamily, 0, &m_transferQueue);
 	}
 
 	bool Display::IsDeviceSuitable(VkPhysicalDevice device)

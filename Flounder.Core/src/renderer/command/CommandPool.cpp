@@ -3,9 +3,20 @@
 
 namespace Flounder
 {
-	CommandPool::CommandPool(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, uint32_t queueFamilyIndex, VkCommandPoolCreateFlags flags) :
-		m_logicalDevice(logicalDevice)
+	CommandPool::CommandPool() :
+		m_logicalDevice(nullptr)
 	{
+	}
+
+	CommandPool::~CommandPool()
+	{
+		Cleanup();
+	}
+
+	void CommandPool::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, uint32_t queueFamilyIndex, VkCommandPoolCreateFlags flags)
+	{
+		m_logicalDevice = logicalDevice;
+
 		QueueFamilyIndices queueFamilyIndices = QueueFamily::FindQueueFamilies(physicalDevice, surface);
 
 		VkCommandPoolCreateInfo poolInfo = {};
@@ -23,7 +34,7 @@ namespace Flounder
 		}
 	}
 
-	CommandPool::~CommandPool()
+	void CommandPool::Cleanup()
 	{
 		vkDestroyCommandPool(*m_logicalDevice, m_commandPool, nullptr);
 	}

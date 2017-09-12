@@ -11,9 +11,13 @@ namespace Flounder
 		VkBuffer m_buffer;
 		VkDeviceMemory m_bufferMemory;
 	public:
-		Buffer(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties);
+		Buffer();
 
 		~Buffer();
+
+		void Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties);
+
+		void Cleanup();
 
 		VkBuffer GetBuffer() const { return m_buffer; }
 

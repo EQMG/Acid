@@ -276,6 +276,7 @@
     <ClInclude Include="src\renderer\queue\QueueFamily.hpp" />
     <ClInclude Include="src\renderer\Renderer.hpp" />
     <ClInclude Include="src\renderer\swapchain\Swapchain.hpp" />
+    <ClInclude Include="src\platforms\glfw\GlfwVulkan.h" />
     <ClInclude Include="src\shaders\Shader.hpp" />
     <ClInclude Include="src\shaders\ShaderType.hpp" />
     <ClInclude Include="src\shadows\RendererShadows.hpp" />
