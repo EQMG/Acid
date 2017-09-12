@@ -1,8 +1,10 @@
 #include "Display.hpp"
+#include "../renderer/swapchain/Swapchain.hpp"
 
 namespace Flounder
 {
-	const std::vector<const char*> Display::VALIDATION_LAYERS = {"VK_LAYER_LUNARG_standard_validation"};
+	const std::vector<const char*> Display::VALIDATION_LAYERS = {"VK_LAYER_LUNARG_standard_validation"}; 
+	const std::vector<const char*> Display::DEVICE_EXTENSIONS = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 
 	void CallbackError(int error, const char *description)
 	{
@@ -43,6 +45,8 @@ namespace Flounder
 			Display::Get()->m_windowWidth = width;
 			Display::Get()->m_windowHeight = height;
 		}
+
+	//	Renderer::Get()->RecreateSwapChain();
 	}
 
 	void CallbackFrame(GLFWwindow *window, int width, int height)
@@ -111,10 +115,10 @@ namespace Flounder
 		m_deviceExtensionList(std::vector<const char*>()),
 		m_debugReport(VK_NULL_HANDLE),
 		m_device(VK_NULL_HANDLE),
-		m_graphicsQueue(VK_NULL_HANDLE),
+		m_displayQueue(VK_NULL_HANDLE),
 		m_transferQueue(VK_NULL_HANDLE)
 	{
-		CreateGlfwWindow();
+		CreateGlfw();
 		SetupLayers();
 		SetupExtensions();
 		CreateInstance();
@@ -230,25 +234,7 @@ namespace Flounder
 		}
 	}
 
-	uint32_t Display::MemoryTypeIndex(uint32_t typeBits, VkFlags properties)
-	{
-		for (uint32_t i = 0; i < m_physicalDeviceMemoryProperties.memoryTypeCount; i++)
-		{
-			if ((typeBits & 1) == 1)
-			{
-				if ((m_physicalDeviceMemoryProperties.memoryTypes[i].propertyFlags & properties) == properties)
-				{
-					return i;
-				}
-			}
-
-			typeBits >>= 1;
-		}
-
-		return 0;
-	}
-
-	void Display::CreateGlfwWindow()
+	void Display::CreateGlfw()
 	{
 		// Set the error error callback
 		glfwSetErrorCallback(CallbackError);
@@ -422,60 +408,115 @@ namespace Flounder
 
 	void Display::PickPhysicalDevice()
 	{
-		// Gets the physical GPU device.
-		uint32_t deviceCount = 0;
-		vkEnumeratePhysicalDevices(m_instance, &deviceCount, nullptr);
+		uint32_t physicalDeviceCount = 0;
+		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, nullptr);
 
-		if (deviceCount == 0)
+		if (physicalDeviceCount == 0)
 		{
-			throw std::runtime_error("Failed to find GPUs with Vulkan support!");
+			throw std::runtime_error("No devices with Vulkan support found");
 		}
 
-		std::vector<VkPhysicalDevice> deviceList = std::vector<VkPhysicalDevice>(deviceCount);
-		vkEnumeratePhysicalDevices(m_instance, &deviceCount, deviceList.data());
+		std::vector<VkPhysicalDevice> foundPhysicalDevices(physicalDeviceCount);
+		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, foundPhysicalDevices.data());
 
-		std::multimap<int, VkPhysicalDevice> candidates;
-
-		for (uint32_t i = 0; i < deviceCount; i++)
+		// map to hold devices and sort by rank
+		std::multimap<int, VkPhysicalDevice> rankedDevices;
+		// iterate through all devices and rate their suitability
+		for (const auto& currentDevice : foundPhysicalDevices)
 		{
-			VkPhysicalDevice device = deviceList[i];
-
-			VkPhysicalDeviceProperties deviceProperties;
-			VkPhysicalDeviceFeatures deviceFeatures;
-			vkGetPhysicalDeviceProperties(device, &deviceProperties);
-			vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
-
-			int score = 0;
-
-			// Discrete GPUs have a significant performance advantage.
-			if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
-			{
-				score += 1000;
-			}
-
-			// Maximum possible size of textures affects graphics quality.
-			score += deviceProperties.limits.maxImageDimension2D;
-
-			// Application can't function without geometry shaders, without extensions or adequate swap chains.
-			if (!IsDeviceSuitable(device) || !deviceFeatures.geometryShader)
-			{
-				score = 0;
-			}
-
-			candidates.insert(std::make_pair(score, device));
+			int score = RateDeviceSuitability(currentDevice);
+			rankedDevices.insert(std::make_pair(score, currentDevice));
 		}
-
-		if (candidates.rbegin()->first > 0)
+		// check to make sure the best candidate scored higher than 0
+		// rbegin points to last element of ranked devices(highest rated), first is its rating 
+		if (rankedDevices.rbegin()->first > 0)
 		{
-			m_physicalDevice = candidates.rbegin()->second;
-			vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
-			vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
-			vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
+			// return the second value of the highest rated device (its VkPhysicalDevice component)
+			m_physicalDevice = rankedDevices.rbegin()->second;
+			std::cout << "Physical device selected" << std::endl;
 		}
 		else
 		{
-			throw std::runtime_error("failed to find a suitable GPU!");
+			throw std::runtime_error("No physical devices meet necessary criteria");
 		}
+	}
+
+	int Display::RateDeviceSuitability(VkPhysicalDevice deviceToRate)
+	{
+		int score = 0;
+
+		/// adjust score based on queue families 
+		//find an index of a queue family which contiains the necessary commands
+		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(&deviceToRate, &m_surface);
+		//check if the requested extensions are supported
+		bool extensionsSupported = CheckDeviceExtensionSupport(deviceToRate);
+		//return a 0 score if this device has no suitable family
+		if (!indices.IsComplete() || !extensionsSupported)
+		{
+			return 0;
+		}
+
+		/// check if this device has an adequate swap chain
+		bool swapChainAdequate = false;
+		SwapChainSupportDetails swapChainSupport = Swapchain::QuerySwapChainSupport(deviceToRate, m_surface);
+		swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
+		if (!swapChainAdequate)
+		{
+			return 0;
+		}
+
+		// obtain the device features and properties of the current device being rated		
+		VkPhysicalDeviceProperties deviceProperties;
+		VkPhysicalDeviceFeatures deviceFeatures;
+		vkGetPhysicalDeviceProperties(deviceToRate, &deviceProperties);
+		vkGetPhysicalDeviceFeatures(deviceToRate, &deviceFeatures);
+
+		///adjust score based on properties
+		// add a large score boost for discrete GPUs (dedicated graphics cards)
+		if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+		{
+			score += 1000;
+		}
+
+		// give a higher score to devices with a higher maximum texture size
+		score += deviceProperties.limits.maxImageDimension2D;
+
+		///adjust score based on features
+		//only allow a device if it supports geometry shaders
+		if (!deviceFeatures.geometryShader)
+		{
+			return 0;
+		}
+		return score;
+	}
+
+	bool Display::CheckDeviceExtensionSupport(VkPhysicalDevice device)
+	{
+		uint32_t extensionCount;
+		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+
+		std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+
+		//iterate through all extensions requested
+		for (const char* currentExtension : DEVICE_EXTENSIONS)
+		{
+			bool extensionFound = false;
+			//check if the extension is in the available extensions
+			for (const auto& extension : availableExtensions)
+			{
+				if (strcmp(currentExtension, extension.extensionName) == 0)
+				{
+					extensionFound = true;
+					break;
+				}
+			}
+			if (!extensionFound)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	void Display::CreateLogicalDevice()
@@ -521,56 +562,7 @@ namespace Flounder
 
 		GlfwVulkan::ErrorCheck(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_device));
 
-		vkGetDeviceQueue(m_device, indices.graphicsFamily, 0, &m_graphicsQueue);
+		vkGetDeviceQueue(m_device, indices.graphicsFamily, 0, &m_displayQueue);
 		vkGetDeviceQueue(m_device, indices.transferFamily, 0, &m_transferQueue);
-	}
-
-	bool Display::IsDeviceSuitable(VkPhysicalDevice device)
-	{
-		// Finds the devices indicie queues.
-		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(&device, &m_surface);
-
-		// Figgures out extensions support.
-		uint32_t extensionCount;
-		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
-
-		std::vector<VkExtensionProperties> availableExtensions(extensionCount);
-		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
-
-		std::set<std::string> requiredExtensions(m_deviceExtensionList.begin(), m_deviceExtensionList.end());
-
-		for (auto extension : availableExtensions)
-		{
-			requiredExtensions.erase(extension.extensionName);
-		}
-
-		bool extensionsSupported = requiredExtensions.empty();
-
-		// Figgures out swap chain support.
-		VkSwapChainSupportDetails swapChainSupport = {};
-
-		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, m_surface, &swapChainSupport.capabilities);
-
-		uint32_t formatCount;
-		vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_surface, &formatCount, nullptr);
-
-		if (formatCount != 0)
-		{
-			swapChainSupport.formats.resize(formatCount);
-			vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_surface, &formatCount, swapChainSupport.formats.data());
-		}
-
-		uint32_t presentModeCount;
-		vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_surface, &presentModeCount, nullptr);
-
-		if (presentModeCount != 0)
-		{
-			swapChainSupport.presentModes.resize(presentModeCount);
-			vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_surface, &presentModeCount, swapChainSupport.presentModes.data());
-		}
-
-		bool swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
-
-		return indices.IsComplete() && extensionsSupported && swapChainAdequate;
 	}
 }

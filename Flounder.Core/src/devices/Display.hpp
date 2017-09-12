@@ -12,16 +12,10 @@
 #include "../platforms/glfw/GlfwVulkan.h"
 #include "../engine/Engine.hpp"
 #include "../renderer/queue/QueueFamily.hpp"
+#include "../renderer/swapchain/Swapchain.hpp"
 
 namespace Flounder
 {
-	struct VkSwapChainSupportDetails
-	{
-		VkSurfaceCapabilitiesKHR capabilities;
-		std::vector<VkSurfaceFormatKHR> formats;
-		std::vector<VkPresentModeKHR> presentModes;
-	};
-
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
@@ -30,6 +24,7 @@ namespace Flounder
 	{
 	private:
 		static const std::vector<const char*> VALIDATION_LAYERS;
+		static const std::vector<const char*> DEVICE_EXTENSIONS;
 
 		int m_windowWidth;
 		int m_windowHeight;
@@ -63,7 +58,7 @@ namespace Flounder
 		VkDebugReportCallbackEXT m_debugReport;
 		VkDevice m_device;
 
-		VkQueue m_graphicsQueue;
+		VkQueue m_displayQueue;
 		VkQueue m_transferQueue;
 
 		friend void CallbackError(int error, const char *description);
@@ -274,13 +269,11 @@ namespace Flounder
 		/// <returns> The current Vulkan device. </returns>
 		VkDevice GetVkDevice() const { return m_device; }
 
-		VkQueue GetVkGraphicsQueue() const { return m_graphicsQueue; }
+		VkQueue GetVkDisplayQueue() const { return m_displayQueue; }
 
 		VkQueue GetVkTransferQueue() const { return m_transferQueue; }
-
-		uint32_t MemoryTypeIndex(uint32_t typeBits, VkFlags properties);
 	private:
-		void CreateGlfwWindow();
+		void CreateGlfw();
 
 		void SetupLayers();
 
@@ -294,8 +287,10 @@ namespace Flounder
 
 		void PickPhysicalDevice();
 
-		void CreateLogicalDevice();
+		int RateDeviceSuitability(VkPhysicalDevice deviceToRate);
 
-		bool IsDeviceSuitable(VkPhysicalDevice device);
+		bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
+
+		void CreateLogicalDevice();
 	};
 }

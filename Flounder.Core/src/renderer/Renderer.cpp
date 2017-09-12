@@ -72,21 +72,21 @@ namespace Flounder
 			m_managerRender->Render();
 		}
 
-		/*int currentWidth = Display::Get()->getWidth();
-		int currentHeight = Display::Get()->getHeight();
+		int currentWidth = Display::Get()->GetWidth();
+		int currentHeight = Display::Get()->GetHeight();
 
 		if (currentWidth != lastWidth || currentHeight != lastHeight)
 		{
 			lastWidth = currentWidth;
 			lastHeight = currentHeight;
-		}*/
+		}
 
-		UpdateUniformBuffer();
 		DrawFrame();
 	}
 
 	void Renderer::CreateRenderPass()
 	{
+		// Colour attachment.
 		VkAttachmentDescription colorAttachment = {};
 		colorAttachment.format = m_swapchain->GetImageFormat();
 		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
@@ -97,37 +97,53 @@ namespace Flounder
 		colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 		colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 
+		// Reference to color attachment for subpass.
 		VkAttachmentReference colorAttachmentRef = {};
 		colorAttachmentRef.attachment = 0;
 		colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-		VkSubpassDescription subpass = {};
-		subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-		subpass.colorAttachmentCount = 1;
-		subpass.pColorAttachments = &colorAttachmentRef;
+		// Subpass struct.
+		VkSubpassDescription subpassDescription = {};
+		subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+		subpassDescription.colorAttachmentCount = 1;
+		subpassDescription.pColorAttachments = &colorAttachmentRef;
+
+		// Subpass dependancy.
+		VkSubpassDependency subpassDependency = {};
+		subpassDependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+		subpassDependency.dstSubpass = 0;
+		subpassDependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+		subpassDependency.srcAccessMask = 0;
+		subpassDependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+		subpassDependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 
 		VkRenderPassCreateInfo renderPassInfo = {};
 		renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
 		renderPassInfo.attachmentCount = 1;
 		renderPassInfo.pAttachments = &colorAttachment;
 		renderPassInfo.subpassCount = 1;
-		renderPassInfo.pSubpasses = &subpass;
+		renderPassInfo.pSubpasses = &subpassDescription;
+		renderPassInfo.dependencyCount = 1;
+		renderPassInfo.pDependencies = &subpassDependency;
 
 		GlfwVulkan::ErrorCheck(vkCreateRenderPass(Display::Get()->GetVkDevice(), &renderPassInfo, nullptr, &m_renderPass));
 	}
 
 	void Renderer::CreateGraphicsPipeline()
 	{
+		// Vertex input struct.
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputInfo.vertexBindingDescriptionCount = 0;
 		vertexInputInfo.vertexAttributeDescriptionCount = 0;
 
+		// Input assembly struct.
 		VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
 		inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 		inputAssembly.primitiveRestartEnable = VK_FALSE;
 
+		// Viewport struct.
 		VkViewport viewport = {};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
@@ -136,11 +152,13 @@ namespace Flounder
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
 
+		// Scissor rect struct.
 		VkRect2D scissor = {};
 		scissor.offset.x = 0;
 		scissor.offset.y = 0;
 		scissor.extent = m_swapchain->GetExtent();
 
+		// Viewport state struct.
 		VkPipelineViewportStateCreateInfo viewportState = {};
 		viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
 		viewportState.viewportCount = 1;
@@ -148,6 +166,7 @@ namespace Flounder
 		viewportState.scissorCount = 1;
 		viewportState.pScissors = &scissor;
 
+		// Rasterizer.
 		VkPipelineRasterizationStateCreateInfo rasterizer = {};
 		rasterizer.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		rasterizer.depthClampEnable = VK_FALSE;
@@ -158,15 +177,18 @@ namespace Flounder
 		rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
 		rasterizer.depthBiasEnable = VK_FALSE;
 
+		// Multisampling struct.
 		VkPipelineMultisampleStateCreateInfo multisampling = {};
 		multisampling.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		multisampling.sampleShadingEnable = VK_FALSE;
 		multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
 
+		// Colour blending attachment struct.
 		VkPipelineColorBlendAttachmentState colourBlendAttachment = {};
 		colourBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
 		colourBlendAttachment.blendEnable = VK_FALSE;
 
+		// Colour blend struct.
 		VkPipelineColorBlendStateCreateInfo colourBlending = {};
 		colourBlending.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 		colourBlending.logicOpEnable = VK_FALSE;
@@ -178,16 +200,26 @@ namespace Flounder
 		colourBlending.blendConstants[2] = 0.0f;
 		colourBlending.blendConstants[3] = 0.0f;
 
+		// Dynamic states struct.
+		VkDynamicState dynamicStates[] = { VK_DYNAMIC_STATE_VIEWPORT,VK_DYNAMIC_STATE_LINE_WIDTH };
+		VkPipelineDynamicStateCreateInfo dynamicState = {};
+		dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+		dynamicState.dynamicStateCount = 2;
+		dynamicState.pDynamicStates = dynamicStates;
+
+		// Pipeline layout struct.
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutInfo.setLayoutCount = 0;
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
 
+		// Creates the graphics pipeline layout.
 		GlfwVulkan::ErrorCheck(vkCreatePipelineLayout(Display::Get()->GetVkDevice(), &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
 
+		// Pipeline info struct.
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-		pipelineInfo.stageCount = (uint32_t) m_shaderTest->GetStages()->size();
+		pipelineInfo.stageCount = static_cast<uint32_t>(m_shaderTest->GetStages()->size());
 		pipelineInfo.pStages = m_shaderTest->GetStages()->data();
 		pipelineInfo.pVertexInputState = &vertexInputInfo;
 		pipelineInfo.pInputAssemblyState = &inputAssembly;
@@ -200,55 +232,65 @@ namespace Flounder
 		pipelineInfo.subpass = 0;
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 
+		// Create the graphics pipeline.
 		GlfwVulkan::ErrorCheck(vkCreateGraphicsPipelines(Display::Get()->GetVkDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_graphicsPipeline));
 	}
 
 	void Renderer::CreateCommandBuffers()
 	{
-		m_commandBuffers.resize(m_swapchain->GetFramebufferSize());
+
+		m_commandBuffers.resize(m_swapchain->GetFramebufferSize());//swapChainFramebuffers.size());
 
 		VkCommandBufferAllocateInfo allocInfo = {};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		allocInfo.commandPool = *m_commandPool->GetCommandPool();
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandBufferCount = static_cast<uint32_t>(m_commandBuffers.size());
+		allocInfo.commandBufferCount = (uint32_t)m_commandBuffers.size();
 
-		GlfwVulkan::ErrorCheck(vkAllocateCommandBuffers(Display::Get()->GetVkDevice(), &allocInfo, m_commandBuffers.data()));
+		if (vkAllocateCommandBuffers(Display::Get()->GetVkDevice(), &allocInfo, m_commandBuffers.data()) != VK_SUCCESS)
+		{
+			throw std::runtime_error("failed to allocate command buffers!");
+		}
+		else
+		{
+			std::cout << "Command buffers allocated successfully" << std::endl;
+		}
 
 		for (size_t i = 0; i < m_commandBuffers.size(); i++)
 		{
 			VkCommandBufferBeginInfo beginInfo = {};
 			beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 			beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
-
 			vkBeginCommandBuffer(m_commandBuffers[i], &beginInfo);
 
 			VkRenderPassBeginInfo renderPassInfo = {};
 			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 			renderPassInfo.renderPass = m_renderPass;
-			renderPassInfo.framebuffer = m_swapchain->GetFramebuffer(static_cast<uint32_t>(i));
-			renderPassInfo.renderArea.offset.x = 0;
-			renderPassInfo.renderArea.offset.y = 0;
-			renderPassInfo.renderArea.extent = m_swapchain->GetExtent();
-
-			VkClearValue clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
+			renderPassInfo.framebuffer = m_swapchain->GetFramebuffer(i);//swapChainFramebuffers[i];
+			renderPassInfo.renderArea.offset = { 0, 0 };
+			renderPassInfo.renderArea.extent = m_swapchain->GetExtent();//swapChainExtent;
+			VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
 			renderPassInfo.clearValueCount = 1;
 			renderPassInfo.pClearValues = &clearColor;
 
 			vkCmdBeginRenderPass(m_commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 			vkCmdBindPipeline(m_commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_graphicsPipeline);
-
-			VkBuffer vertexBuffers[] = { m_vertexBuffer->GetVertexBuffer()->GetBuffer() };
+			VkBuffer vertexBuffers[] = { m_vertexBuffer->GetBuffer() };
 			VkDeviceSize offsets[] = { 0 };
 			vkCmdBindVertexBuffers(m_commandBuffers[i], 0, 1, vertexBuffers, offsets);
 
-			vkCmdDraw(m_commandBuffers[i], m_vertexBuffer->GetVerticesSize(), 1, 0, 0);
+			vkCmdDraw(m_commandBuffers[i], static_cast<uint32_t>(m_vertexBuffer->GetVerticesSize()), 1, 0, 0);
 
 			vkCmdEndRenderPass(m_commandBuffers[i]);
 
-			GlfwVulkan::ErrorCheck(vkEndCommandBuffer(m_commandBuffers[i]));
+			if (vkEndCommandBuffer(m_commandBuffers[i]) != VK_SUCCESS)
+			{
+				throw std::runtime_error("failed to record command buffer!");
+			}
 		}
+
+		std::cout << "Command buffers recorded successfully" << std::endl;
 	}
 
 	void Renderer::CreateSemaphores()
@@ -260,69 +302,98 @@ namespace Flounder
 		GlfwVulkan::ErrorCheck(vkCreateSemaphore(Display::Get()->GetVkDevice(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphore));
 	}
 
-	void Renderer::UpdateUniformBuffer()
-	{
-	}
-
 	void Renderer::DrawFrame()
 	{
 		uint32_t imageIndex;
 		VkResult result = vkAcquireNextImageKHR(Display::Get()->GetVkDevice(), m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
+		if (result == VK_ERROR_OUT_OF_DATE_KHR)
+		{
+			RecreateSwapChain();
+			return;
+		}
+		else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
+		{
+			throw std::runtime_error("Failed to acquire swap chain image!");
+		}
 
-		VkSemaphore waitSemaphores[] = {m_imageAvailableSemaphore};
-		VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
-		VkSemaphore signalSemaphores[] = {m_renderFinishedSemaphore};
 
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+
+		VkSemaphore waitSemaphores[] = { m_imageAvailableSemaphore };
+		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
 		submitInfo.waitSemaphoreCount = 1;
 		submitInfo.pWaitSemaphores = waitSemaphores;
 		submitInfo.pWaitDstStageMask = waitStages;
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &m_commandBuffers[imageIndex];
+		VkSemaphore signalSemaphores[] = { m_renderFinishedSemaphore };
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = signalSemaphores;
 
-		GlfwVulkan::ErrorCheck(vkQueueSubmit(Display::Get()->GetVkTransferQueue(), 1, &submitInfo, VK_NULL_HANDLE));
+		if (vkQueueSubmit(Display::Get()->GetVkDisplayQueue(), 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
+		{
+			throw std::runtime_error("failed to submit draw command buffer!");
+		}
+
+		//if you have a success output here, it fills up the output log
 
 		VkPresentInfoKHR presentInfo = {};
 		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+
 		presentInfo.waitSemaphoreCount = 1;
 		presentInfo.pWaitSemaphores = signalSemaphores;
 
-		VkSwapchainKHR swapchains[] = { m_swapchain->GetSwapchain()};
+		VkSwapchainKHR swapChains[] = { m_swapchain->GetSwapchain() };
 		presentInfo.swapchainCount = 1;
-		presentInfo.pSwapchains = swapchains;
+		presentInfo.pSwapchains = swapChains;
 		presentInfo.pImageIndices = &imageIndex;
 
-		vkQueueWaitIdle(Display::Get()->GetVkTransferQueue());
-		vkQueuePresentKHR(Display::Get()->GetVkTransferQueue(), &presentInfo);
+		vkQueueWaitIdle(Display::Get()->GetVkDisplayQueue());
+		result = vkQueuePresentKHR(Display::Get()->GetVkDisplayQueue(), &presentInfo);
+		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR)
+		{
+			RecreateSwapChain();
+		}
+		else if (result != VK_SUCCESS)
+		{
+			throw std::runtime_error("failed to present swap chain image!");
+		}
 	}
 
-	VkSwapChainSupportDetails Renderer::QuerySwapChainSupport(VkPhysicalDevice device)
+	void Renderer::RecreateSwapChain()
 	{
-		VkSwapChainSupportDetails details;
+		VkDevice logicalDevice = Display::Get()->GetVkDevice();
+		VkPhysicalDevice physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		VkSurfaceKHR surface = Display::Get()->GetVkSurface();
+		GLFWwindow *window = Display::Get()->GetGlfwWindow();
 
-		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, Display::Get()->GetVkSurface(), &details.capabilities);
+		vkDeviceWaitIdle(logicalDevice);
 
-		uint32_t formatCount;
-		vkGetPhysicalDeviceSurfaceFormatsKHR(device, Display::Get()->GetVkSurface(), &formatCount, nullptr);
+		CleanupSwapChain();
 
-		if (formatCount != 0)
-		{
-			details.formats.resize(formatCount);
-			vkGetPhysicalDeviceSurfaceFormatsKHR(device, Display::Get()->GetVkSurface(), &formatCount, details.formats.data());
-		}
+		m_swapchain->Create(&logicalDevice, &physicalDevice, &surface, window);
+		CreateRenderPass();
+		CreateGraphicsPipeline();
+		m_swapchain->CreateFramebuffers(&logicalDevice, &m_renderPass);
+		CreateCommandBuffers();
+	}
 
-		uint32_t presentModeCount;
-		vkGetPhysicalDeviceSurfacePresentModesKHR(device, Display::Get()->GetVkSurface(), &presentModeCount, nullptr);
+	void Renderer::CleanupSwapChain()
+	{
+		VkDevice logicalDevice = Display::Get()->GetVkDevice();
+		VkPhysicalDevice physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		VkSurfaceKHR surface = Display::Get()->GetVkSurface();
+		GLFWwindow *window = Display::Get()->GetGlfwWindow();
 
-		if (presentModeCount != 0)
-		{
-			details.presentModes.resize(presentModeCount);
-			vkGetPhysicalDeviceSurfacePresentModesKHR(device, Display::Get()->GetVkSurface(), &presentModeCount, details.presentModes.data());
-		}
+		m_swapchain->CleanupFrameBuffers();
 
-		return details;
+		vkFreeCommandBuffers(logicalDevice, *m_commandPool->GetCommandPool(), static_cast<uint32_t>(m_commandBuffers.size()), m_commandBuffers.data());
+
+		vkDestroyPipeline(logicalDevice, m_graphicsPipeline, nullptr);
+		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
+		vkDestroyRenderPass(logicalDevice, m_renderPass, nullptr);
+
+		m_swapchain->Cleanup();
 	}
 }

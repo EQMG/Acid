@@ -41,6 +41,8 @@ namespace Flounder
 
 		void CleanupFrameBuffers();
 
+		static SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface);
+
 		VkSwapchainKHR GetSwapchain() const { return m_swapChain; }
 
 		size_t GetFramebufferSize() const { return m_swapChainFramebuffers.size(); }
@@ -52,8 +54,6 @@ namespace Flounder
 		VkExtent2D GetExtent() const { return m_swapChainExtent; }
 	private:
 		void CreateImageViews(const VkDevice* logicalDevice);
-
-		SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface);
 
 		VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats) const;
 
