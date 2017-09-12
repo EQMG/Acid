@@ -64,7 +64,7 @@ namespace Flounder
 		VkDevice m_device;
 
 		VkQueue m_graphicsQueue;
-		VkQueue m_presentQueue;
+		VkQueue m_transferQueue;
 
 		friend void CallbackError(int error, const char *description);
 
@@ -91,8 +91,6 @@ namespace Flounder
 
 		void FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator);
 	public:
-		static void vkErrorCheck(VkResult result);
-
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
@@ -278,7 +276,7 @@ namespace Flounder
 
 		VkQueue GetVkGraphicsQueue() const { return m_graphicsQueue; }
 
-		VkQueue GetVkPresentQueue() const { return m_presentQueue; }
+		VkQueue GetVkTransferQueue() const { return m_transferQueue; }
 
 		uint32_t MemoryTypeIndex(uint32_t typeBits, VkFlags properties);
 	private:

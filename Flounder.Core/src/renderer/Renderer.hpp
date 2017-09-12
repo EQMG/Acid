@@ -5,7 +5,11 @@
 #include "../shaders/Shader.hpp"
 #include "../textures/Texture.hpp"
 
+#include "buffers/Buffer.hpp"
+#include "buffers/Vertex.hpp"
 #include "buffers/VertexBuffer.hpp"
+#include "command/CommandPool.hpp"
+#include "queue/QueueFamily.hpp"
 #include "swapchain/Swapchain.hpp"
 
 #include "IManagerRender.hpp"
@@ -27,13 +31,16 @@ namespace Flounder
 		VkPipelineLayout m_pipelineLayout;
 		VkPipeline m_graphicsPipeline;
 
-		VkCommandPool m_commandPool;
+		Swapchain *m_swapchain;
+
+		CommandPool *m_commandPool;
+		CommandPool *m_commandPoolTransfer;
+
 		std::vector<VkCommandBuffer> m_commandBuffers;
 
 		VkSemaphore m_imageAvailableSemaphore;
 		VkSemaphore m_renderFinishedSemaphore;
 
-		Swapchain *m_swapChain;
 		Shader *m_shaderTest;
 		VertexBuffer *m_vertexBuffer;
 
@@ -78,8 +85,6 @@ namespace Flounder
 		void CreateRenderPass();
 
 		void CreateGraphicsPipeline();
-
-		void CreateCommandPool();
 
 		void CreateCommandBuffers();
 

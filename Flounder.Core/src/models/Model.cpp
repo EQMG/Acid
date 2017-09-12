@@ -359,7 +359,7 @@ namespace Flounder
 		bufferCreateInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
 		bufferCreateInfo.size = data->size();
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		Display::vkErrorCheck(vkCreateBuffer(Display::Get()->GetVkDevice(), &bufferCreateInfo, nullptr, &result));
+		GlfwVulkan::ErrorCheck(vkCreateBuffer(Display::Get()->GetVkDevice(), &bufferCreateInfo, nullptr, &result));
 
 		VkMemoryRequirements memoryRequirements = {};
 		vkGetBufferMemoryRequirements(Display::Get()->GetVkDevice(), result, &memoryRequirements);
@@ -369,19 +369,19 @@ namespace Flounder
 		allocInfo.allocationSize = memoryRequirements.size;
 		MemoryTypeFromProperties(memoryRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &allocInfo.memoryTypeIndex);
 
-		Display::vkErrorCheck(vkAllocateMemory(Display::Get()->GetVkDevice(), &allocInfo, nullptr, &m_memory));
+		GlfwVulkan::ErrorCheck(vkAllocateMemory(Display::Get()->GetVkDevice(), &allocInfo, nullptr, &m_memory));
 
 		m_bufferInfo.range = memoryRequirements.size;
 		m_bufferInfo.offset = 0;
 
 		uint8_t *pData;
-		Display::vkErrorCheck(vkMapMemory(Display::Get()->GetVkDevice(), m_memory, 0, memoryRequirements.size, 0, (void**) &pData));
+		GlfwVulkan::ErrorCheck(vkMapMemory(Display::Get()->GetVkDevice(), m_memory, 0, memoryRequirements.size, 0, (void**) &pData));
 
 		memcpy(pData, data->data(), data->size());
 
 		vkUnmapMemory(Display::Get()->GetVkDevice(), m_memory);
 
-		Display::vkErrorCheck(vkBindBufferMemory(Display::Get()->GetVkDevice(), result, m_memory, 0));
+		GlfwVulkan::ErrorCheck(vkBindBufferMemory(Display::Get()->GetVkDevice(), result, m_memory, 0));
 
 		return result;
 	}
