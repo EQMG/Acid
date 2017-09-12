@@ -7,7 +7,6 @@ namespace Flounder
 	class Buffer
 	{
 	protected:
-		const VkDevice *m_logicalDevice;
 		VkBuffer m_buffer;
 		VkDeviceMemory m_bufferMemory;
 	public:
@@ -17,7 +16,7 @@ namespace Flounder
 
 		void Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties);
 
-		void Cleanup();
+		void Cleanup(const VkDevice *logicalDevice);
 
 		VkBuffer GetBuffer() const { return m_buffer; }
 

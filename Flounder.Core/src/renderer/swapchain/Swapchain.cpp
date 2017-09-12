@@ -16,8 +16,6 @@ namespace Flounder
 
 	Swapchain::~Swapchain()
 	{
-		CleanupFrameBuffers();
-		Cleanup();
 	}
 
 	void Swapchain::Create(const VkDevice *logicalDevice, VkPhysicalDevice*physicalDevice, const VkSurfaceKHR *surface, GLFWwindow *window)
@@ -101,24 +99,24 @@ namespace Flounder
 	void Swapchain::Cleanup()
 	{
 		// Waits for the device to finish before destroying.
-		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
+		vkDeviceWaitIdle(*m_logicalDevice);
 
 		for (size_t i = 0; i < m_swapChainImageViews.size(); i++)
 		{
-			vkDestroyImageView(Display::Get()->GetVkDevice(), m_swapChainImageViews[i], VK_NULL_HANDLE);
+			vkDestroyImageView(*m_logicalDevice, m_swapChainImageViews[i], VK_NULL_HANDLE);
 		}
 
-		vkDestroySwapchainKHR(Display::Get()->GetVkDevice(), m_swapChain, VK_NULL_HANDLE);
+		vkDestroySwapchainKHR(*m_logicalDevice, m_swapChain, VK_NULL_HANDLE);
 	}
 
 	void Swapchain::CleanupFrameBuffers()
 	{
 		// Waits for the device to finish before destroying.
-		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
+		vkDeviceWaitIdle(*m_logicalDevice);
 
 		for (size_t i = 0; i < m_swapChainFramebuffers.size(); i++)
 		{
-			vkDestroyFramebuffer(Display::Get()->GetVkDevice(), m_swapChainFramebuffers[i], VK_NULL_HANDLE);
+			vkDestroyFramebuffer(*m_logicalDevice, m_swapChainFramebuffers[i], VK_NULL_HANDLE);
 		}
 	}
 
@@ -181,19 +179,24 @@ namespace Flounder
 
 	VkSurfaceFormatKHR Swapchain::ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats) const
 	{
+		// Needs to set format and color space for VkSurfaceFormatKHR.
+
+		// If the surface has no preferred format it returns a single VkSurfaceFormatKHR entry and format == VK_FORMAT_UNDEFINED.
 		if (availableFormats.size() == 1 && availableFormats[0].format == VK_FORMAT_UNDEFINED)
 		{
 			return {VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR};
 		}
 
-		for (auto availableFormat : availableFormats)
+		// If we cant choose any format, look through the list to see if the options we want are available.
+		for (auto currentFormat : availableFormats)
 		{
-			if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
+			if (currentFormat.format == VK_FORMAT_B8G8R8A8_UNORM && currentFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 			{
-				return availableFormat;
+				return currentFormat;
 			}
 		}
 
+		// If both of these fail, just choose the first one available.
 		return availableFormats[0];
 	}
 
