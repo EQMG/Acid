@@ -68,6 +68,8 @@ namespace Flounder
 
 		void Update() override;
 
+		void RecreateSwapChain();
+
 		/// <summary>
 		/// Gets the renderer manager.
 		/// </summary>
@@ -90,10 +92,8 @@ namespace Flounder
 
 		void CreateSemaphores();
 
-		void UpdateUniformBuffer();
-
 		void DrawFrame();
 
-		VkSwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device);
+		void CleanupSwapChain();
 	};
 }

@@ -4,7 +4,6 @@
 namespace Flounder
 {
 	Buffer::Buffer() :
-		m_logicalDevice(VK_NULL_HANDLE),
 		m_buffer(VK_NULL_HANDLE),
 		m_bufferMemory(VK_NULL_HANDLE)
 	{
@@ -12,12 +11,10 @@ namespace Flounder
 
 	Buffer::~Buffer()
 	{
-		Cleanup();
 	}
 
 	void Buffer::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties)
 	{
-		m_logicalDevice = logicalDevice;
 		m_buffer = VkBuffer();
 		m_bufferMemory = VkDeviceMemory();
 
@@ -32,14 +29,7 @@ namespace Flounder
 		bufferInfo.pQueueFamilyIndices = indicesArray;
 		bufferInfo.queueFamilyIndexCount = 2;
 
-		if (vkCreateBuffer(*logicalDevice, &bufferInfo, nullptr, &m_buffer) != VK_SUCCESS)
-		{
-			throw std::runtime_error("Failed to create buffer");
-		}
-		else
-		{
-			printf("Buffer created successfully.\n");
-		}
+		GlfwVulkan::ErrorCheck(vkCreateBuffer(*logicalDevice, &bufferInfo, nullptr, &m_buffer));
 
 		// Allocate buffer memory.
 		VkMemoryRequirements memRequirements;
@@ -50,23 +40,19 @@ namespace Flounder
 		allocateInfo.allocationSize = memRequirements.size;
 		allocateInfo.memoryTypeIndex = FindMemoryType(*physicalDevice, memRequirements.memoryTypeBits, properties);
 
-		if (vkAllocateMemory(*logicalDevice, &allocateInfo, nullptr, &m_bufferMemory) != VK_SUCCESS)
-		{
-			throw std::runtime_error("Failed to allocate memory for buffer");
-		}
-		else
-		{
-			printf("Memory allocated for buffer successfully.\n");
-		}
+		GlfwVulkan::ErrorCheck(vkAllocateMemory(*logicalDevice, &allocateInfo, nullptr, &m_bufferMemory));
 
 		vkBindBufferMemory(*logicalDevice, m_buffer, m_bufferMemory, 0);
+
+		printf("Buffer created successfully.\n");
 	}
 
-	void Buffer::Cleanup()
+	void Buffer::Cleanup(const VkDevice *logicalDevice)
 	{
-		vkDestroyBuffer(*m_logicalDevice, m_buffer, nullptr);
-		// Free up buffer memory once buffer is destroyed.
-		vkFreeMemory(*m_logicalDevice, m_bufferMemory, nullptr);
+		vkDestroyBuffer(*logicalDevice, m_buffer, nullptr);
+
+		// Free up buffer memory once the buffer is destroyed.
+		vkFreeMemory(*logicalDevice, m_bufferMemory, nullptr);
 	}
 
 	uint32_t Buffer::FindMemoryType(VkPhysicalDevice physicalDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) const
