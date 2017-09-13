@@ -16,6 +16,8 @@
 
 namespace Flounder
 {
+	class RendererTest;
+
 	class Renderer :
 		public IModule
 	{
@@ -36,8 +38,7 @@ namespace Flounder
 		VkSemaphore m_imageAvailableSemaphore;
 		VkSemaphore m_renderFinishedSemaphore;
 
-		Shader *m_shaderTest;
-		VertexBuffer *m_vertexBuffer;
+		RendererTest *m_rendererTest;
 
 		int lastWidth;
 		int lastHeight;
