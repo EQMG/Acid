@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "../../platforms/glfw/GlfwVulkan.hpp"
+
 #include "Vertex.hpp"
 
 namespace Flounder
@@ -18,10 +20,10 @@ namespace Flounder
 
 		void Cleanup(const VkDevice *logicalDevice);
 
-		uint32_t FindMemoryType(VkPhysicalDevice physicalDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties);
-
 		VkBuffer *GetBuffer() { return &m_buffer; }
 
 		VkDeviceMemory *GetBufferMemory() { return &m_bufferMemory; }
+	protected:
+		uint32_t FindMemoryType(VkPhysicalDevice physicalDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties);
 	};
 }

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../../platforms/glfw/GlfwVulkan.h"
+#include "../../platforms/glfw/GlfwVulkan.hpp"
 
 namespace Flounder
 {

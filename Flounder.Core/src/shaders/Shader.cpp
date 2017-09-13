@@ -17,22 +17,13 @@ namespace Flounder
 		}
 
 		va_end(ap);
-
-		LoadShader();
 	}
 
 	Shader::~Shader()
 	{
-		for (auto shaderModule : *m_modules)
-		{
-			vkDestroyShaderModule(Display::Get()->GetVkDevice(), shaderModule, nullptr);
-		}
-
-		delete m_types;
-		delete m_stages;
 	}
 
-	void Shader::LoadShader() const
+	void Shader::Create(const VkDevice *logicalDevice)
 	{
 		for (ShaderType type : *m_types)
 		{
@@ -44,7 +35,7 @@ namespace Flounder
 			createInfo.pCode = reinterpret_cast<const uint32_t*>(shaderCode.data());
 
 			VkShaderModule shaderModule = VK_NULL_HANDLE;
-			GlfwVulkan::ErrorCheck(vkCreateShaderModule(Display::Get()->GetVkDevice(), &createInfo, nullptr, &shaderModule));
+			GlfwVulkan::ErrorCheck(vkCreateShaderModule(*logicalDevice, &createInfo, nullptr, &shaderModule));
 
 			VkPipelineShaderStageCreateInfo shaderStageInfo = {};
 			shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -55,5 +46,16 @@ namespace Flounder
 			m_modules->push_back(shaderModule);
 			m_stages->push_back(shaderStageInfo);
 		}
+	}
+
+	void Shader::Cleanup(const VkDevice *logicalDevice)
+	{
+		for (auto shaderModule : *m_modules)
+		{
+			vkDestroyShaderModule(*logicalDevice, shaderModule, nullptr);
+		}
+
+		delete m_types;
+		delete m_stages;
 	}
 }
