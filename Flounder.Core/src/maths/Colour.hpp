@@ -27,14 +27,14 @@ namespace Flounder
 		/// <param name="g"> The new G value. </param>
 		/// <param name="b"> The new B value. </param>
 		/// <param name="a"> The new A value. </param>
-		Colour(const float &r, const float &g, const float &b, const float &a);
+		Colour(const float &r, const float &g, const float &b, const float &a = 1.0f);
 
 		/// <summary>
 		/// Constructor for colour.
 		/// </summary>
 		/// <param name="hex"> The new values from HEX. </param>
 		/// <param name="a"> The new A value. </param>
-		Colour(const std::string &hex, const float &a);
+		Colour(const std::string &hex, const float &a = 1.0f);
 
 		/// <summary>
 		/// Constructor for colour.
@@ -67,7 +67,7 @@ namespace Flounder
 		/// <param name="b"> The new B value. </param>
 		/// <param name="a"> The new A value. </param>
 		/// <returns> This. </returns>
-		Colour *Set(const float &r, const float &g, const float &b, const float &a);
+		Colour *Set(const float &r, const float &g, const float &b, const float &a = 1.0f);
 
 		/// <summary>
 		/// Sets values in the colour.
@@ -75,7 +75,7 @@ namespace Flounder
 		/// <param name="hex"> The new values from HEX. </param>
 		/// <param name="a"> The new A value. </param>
 		/// <returns> This. </returns>
-		Colour *Set(const std::string &hex, const float &a);
+		Colour *Set(const std::string &hex, const float &a = 1.0f);
 
 		/// <summary>
 		/// Sets values in the colour.

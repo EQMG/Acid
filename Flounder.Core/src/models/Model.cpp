@@ -10,12 +10,7 @@ namespace Flounder
 		m_normals(nullptr),
 		m_tangents(nullptr),
 		m_aabb(nullptr),
-		m_verticesBuffer(VK_NULL_HANDLE),
-		m_texturesBuffer(VK_NULL_HANDLE),
-		m_normalsBuffer(VK_NULL_HANDLE),
-		m_tangentsBuffer(VK_NULL_HANDLE),
-		m_memory(VK_NULL_HANDLE),
-		m_bufferInfo({})
+		m_vertexBuffer(new VertexBuffer())
 	{
 		LoadFromFile();
 	}
@@ -37,13 +32,10 @@ namespace Flounder
 
 	Model::~Model()
 	{
-		/*vkDeviceWaitIdle(Display::Get()->getVkDevice());
-		vkFreeMemory(Display::Get()->getVkDevice(), m_memory, nullptr);
-		vkDestroyBuffer(Display::Get()->getVkDevice(), m_indicesBuffer, nullptr);
-		vkDestroyBuffer(Display::Get()->getVkDevice(), m_verticesBuffer, nullptr);
-		vkDestroyBuffer(Display::Get()->getVkDevice(), m_texturesBuffer, nullptr);
-		vkDestroyBuffer(Display::Get()->getVkDevice(), m_normalsBuffer, nullptr);
-		vkDestroyBuffer(Display::Get()->getVkDevice(), m_tangentsBuffer, nullptr);*/
+		VkDevice logicalDevice = Display::Get()->GetVkDevice();
+
+		//m_vertexBuffer->Cleanup(&logicalDevice);
+		delete m_vertexBuffer;
 
 		delete m_vertices;
 		delete m_textures;
@@ -324,6 +316,8 @@ namespace Flounder
 
 	void Model::LoadToVulkan()
 	{
+		std::vector<Vertex> vertices = std::vector<Vertex>();
+
 		/*if (m_indices != nullptr && !m_indices->empty())
 		{
 		//	m_indicesBuffer = createIndicesBuffer(m_indices);
@@ -348,59 +342,13 @@ namespace Flounder
 		{
 			m_tangentsBuffer = createBuffer(m_tangents);
 		}*/
-	}
 
-	VkBuffer Model::CreateBuffer(std::vector<float> *data)
-	{
-		VkBuffer result = VK_NULL_HANDLE;
-
-		VkBufferCreateInfo bufferCreateInfo{};
-		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		bufferCreateInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
-		bufferCreateInfo.size = data->size();
-		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		GlfwVulkan::ErrorCheck(vkCreateBuffer(Display::Get()->GetVkDevice(), &bufferCreateInfo, nullptr, &result));
-
-		VkMemoryRequirements memoryRequirements = {};
-		vkGetBufferMemoryRequirements(Display::Get()->GetVkDevice(), result, &memoryRequirements);
-
-		VkMemoryAllocateInfo allocInfo{};
-		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		allocInfo.allocationSize = memoryRequirements.size;
-		MemoryTypeFromProperties(memoryRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &allocInfo.memoryTypeIndex);
-
-		GlfwVulkan::ErrorCheck(vkAllocateMemory(Display::Get()->GetVkDevice(), &allocInfo, nullptr, &m_memory));
-
-		m_bufferInfo.range = memoryRequirements.size;
-		m_bufferInfo.offset = 0;
-
-		uint8_t *pData;
-		GlfwVulkan::ErrorCheck(vkMapMemory(Display::Get()->GetVkDevice(), m_memory, 0, memoryRequirements.size, 0, (void**) &pData));
-
-		memcpy(pData, data->data(), data->size());
-
-		vkUnmapMemory(Display::Get()->GetVkDevice(), m_memory);
-
-		GlfwVulkan::ErrorCheck(vkBindBufferMemory(Display::Get()->GetVkDevice(), result, m_memory, 0));
-
-		return result;
-	}
-
-	void Model::MemoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex)
-	{
-		for (uint32_t i = 0; i < Display::Get()->GetVkPhysicalDeviceMemoryProperties().memoryTypeCount; i++)
-		{
-			if ((typeBits & 1) == 1)
-			{
-				if ((Display::Get()->GetVkPhysicalDeviceMemoryProperties().memoryTypes[i].propertyFlags & reqMask) == reqMask)
-				{
-					*typeIndex = i;
-					return;
-				}
-			}
-
-			typeBits >>= 1;
-		}
+		/*VkDevice logicalDevice = Display::Get()->GetVkDevice();
+		VkPhysicalDevice physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		VkSurfaceKHR surface = Display::Get()->GetVkSurface();
+		VkQueue transferQueue = Display::Get()->GetVkTransferQueue();
+		m_vertexBuffer->SetVerticies(vertices);
+		m_vertexBuffer->Create(&logicalDevice, &physicalDevice, &surface, Renderer::Get()->GetCommandPoolTransfer()->GetCommandPool(), &transferQueue);*/
 	}
 
 	void Model::CreateAabb()

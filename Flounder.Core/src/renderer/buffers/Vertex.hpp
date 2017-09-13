@@ -2,21 +2,21 @@
 
 #include <array>
 
-#include "../../platforms/glfw/GlfwVulkan.h"
+#include "../../platforms/glfw/GlfwVulkan.hpp"
 
-//#include "../Maths/Colour.hpp"
-//#include "../Maths/Vector2.hpp"
-//#include "../Maths/Vector3.hpp"
-#include "../../glm/glm.hpp"
+//#include "../../glm/glm.hpp"
+#include "../../maths/Colour.hpp"
+#include "../../maths/Vector2.hpp"
+#include "../../maths/Vector3.hpp"
 
 namespace Flounder
 {
 	struct Vertex
 	{
-		glm::vec3 position;
-		glm::vec3 colour;
-	//	Vector2 position;
-	//	Colour colour;
+	//	glm::vec3 position;
+	//	glm::vec3 colour;
+		Vector3 position;
+		Colour colour;
 
 		static VkVertexInputBindingDescription getBindingDescription()
 		{
@@ -35,13 +35,13 @@ namespace Flounder
 			// Position attributes.
 			attributeDescriptions[0].binding = 0;
 			attributeDescriptions[0].location = 0;
-			attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+			attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
 			attributeDescriptions[0].offset = offsetof(Vertex, position);
 
 			// Colour attributes.
 			attributeDescriptions[1].binding = 0;
 			attributeDescriptions[1].location = 1;
-			attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+			attributeDescriptions[1].format = VK_FORMAT_R32G32B32A32_SFLOAT;
 			attributeDescriptions[1].offset = offsetof(Vertex, colour);
 
 			return attributeDescriptions;

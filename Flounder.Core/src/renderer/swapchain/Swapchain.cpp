@@ -3,7 +3,11 @@
 
 namespace Flounder
 {
-	Swapchain::Swapchain()
+	Swapchain::Swapchain() :
+		m_swapchain(VK_NULL_HANDLE),
+		m_swapchainImages(std::vector<VkImage>()),
+		m_swapchainImageViews(std::vector<VkImageView>()),
+		m_swapchainFramebuffers(std::vector<VkFramebuffer>())
 	{
 	}
 
@@ -13,23 +17,22 @@ namespace Flounder
 
 	void Swapchain::Create(const VkDevice *logicalDevice, VkPhysicalDevice*physicalDevice, const VkSurfaceKHR *surface, GLFWwindow *window)
 	{
-		m_device = logicalDevice;
-		// get support details for the swap chain to pass to helper functions
+		// Gets support details for the swap chain to pass to helper functions.
 		SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(*physicalDevice, *surface);
 
-		/// use helper functions to retrieve optimal settings for swap chain
+		// Uses helper functions to retrieve optimal settings for swap chain.
 		VkSurfaceFormatKHR surfaceFormat = ChooseSwapSurfaceFormat(swapChainSupport.formats);
 		VkPresentModeKHR presentMode = ChooseSwapPresentMode(swapChainSupport.presentModes);
 		VkExtent2D extent = ChooseSwapExtent(swapChainSupport.capabilities, window);
 
-		/// Initialize a create info struct for the swap chain
+		// Initialize and create info struct for the swap chain.
 		VkSwapchainCreateInfoKHR createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		createInfo.surface = *surface;
 
 		uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
-		if (swapChainSupport.capabilities.maxImageCount > 0 &&
-			imageCount > swapChainSupport.capabilities.maxImageCount)
+
+		if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount)
 		{
 			imageCount = swapChainSupport.capabilities.maxImageCount;
 		}
@@ -47,28 +50,19 @@ namespace Flounder
 		createInfo.clipped = VK_TRUE;
 		createInfo.oldSwapchain = VK_NULL_HANDLE;
 
-		// attempt to create swap chain
-		if (vkCreateSwapchainKHR(*logicalDevice, &createInfo, nullptr, &m_swapchain) != VK_SUCCESS)
-		{
-			throw std::runtime_error("Failed to create swap chain");
-		}
-		else
-		{
-			std::cout << "Swap chain created successfully" << std::endl;
-		}
+		// Attempts to create a swap chain.
+		GlfwVulkan::ErrorCheck(vkCreateSwapchainKHR(*logicalDevice, &createInfo, nullptr, &m_swapchain));
 
-		/// populate swap chain image vector
+		// Populates the swap chain image vector.
 		vkGetSwapchainImagesKHR(*logicalDevice, m_swapchain, &imageCount, nullptr);
 		m_swapchainImages.resize(imageCount);
 		vkGetSwapchainImagesKHR(*logicalDevice, m_swapchain, &imageCount, m_swapchainImages.data());
 
-		/// store data for chosen surface format and extent
+		// Store data for the chosen surface format and extent.
 		m_swapchainImageFormat = surfaceFormat.format;
 		m_swapchainExtent = extent;
 
 		CreateImageViews(logicalDevice);
-
-		printf("Swapchain created successfully.\n");
 	}
 
 	void Swapchain::CreateFramebuffers(const VkDevice *logicalDevice, const VkRenderPass *renderPass)
@@ -88,41 +82,37 @@ namespace Flounder
 			framebufferInfo.height = m_swapchainExtent.height;
 			framebufferInfo.layers = 1;
 
-			if (vkCreateFramebuffer(*logicalDevice, &framebufferInfo, nullptr, &m_swapchainFramebuffers[i]) != VK_SUCCESS)
-			{
-				throw std::runtime_error("Failed to create framebuffer!");
-			}
+			GlfwVulkan::ErrorCheck(vkCreateFramebuffer(*logicalDevice, &framebufferInfo, nullptr, &m_swapchainFramebuffers[i]));
 		}
-
-		printf("Framebuffers created successfully!\n");
 	}
 
-	void Swapchain::Cleanup()
+	void Swapchain::Cleanup(const VkDevice *logicalDevice)
 	{
 		for (size_t i = 0; i < m_swapchainImageViews.size(); i++)
 		{
-			vkDestroyImageView(*m_device, m_swapchainImageViews[i], VK_NULL_HANDLE);
+			vkDestroyImageView(*logicalDevice, m_swapchainImageViews[i], VK_NULL_HANDLE);
 		}
 
-		vkDestroySwapchainKHR(*m_device, m_swapchain, VK_NULL_HANDLE);
+		vkDestroySwapchainKHR(*logicalDevice, m_swapchain, VK_NULL_HANDLE);
 	}
 
-	void Swapchain::CleanupFrameBuffers()
+	void Swapchain::CleanupFrameBuffers(const VkDevice *logicalDevice)
 	{
 		for (size_t i = 0; i < m_swapchainFramebuffers.size(); i++)
 		{
-			vkDestroyFramebuffer(*m_device, m_swapchainFramebuffers[i], VK_NULL_HANDLE);
+			vkDestroyFramebuffer(*logicalDevice, m_swapchainFramebuffers[i], VK_NULL_HANDLE);
 		}
 	}
 
 	void Swapchain::CreateImageViews(const VkDevice* logicalDevice)
 	{
-		// resize vector to the size of the images vector, define the deleter function for each
+		// Resizes the vector to the size of the images vector, define the deleter function for each.
 		m_swapchainImageViews.resize(m_swapchainImages.size());
-		// iterate through each image and create an image view for each
+
+		// Iterates through each image and create an image view for each.
 		for (uint32_t i = 0; i < m_swapchainImages.size(); i++)
 		{
-			// define a create info struct for this image view
+			// Defines a create info struct for this image view.
 			VkImageViewCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 			createInfo.image = m_swapchainImages[i];
@@ -138,14 +128,9 @@ namespace Flounder
 			createInfo.subresourceRange.baseArrayLayer = 0;
 			createInfo.subresourceRange.layerCount = 1;
 
-			// attempt to create the image view
-			if (vkCreateImageView(*logicalDevice, &createInfo, nullptr, &m_swapchainImageViews[i]) != VK_SUCCESS)
-			{
-				throw std::runtime_error("Failed to create image views");
-			}
+			// Attempts to create the image view
+			GlfwVulkan::ErrorCheck(vkCreateImageView(*logicalDevice, &createInfo, nullptr, &m_swapchainImageViews[i]));
 		}
-
-		printf("Image views created successfully.\n");
 	}
 
 	SwapChainSupportDetails Swapchain::QuerySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface)

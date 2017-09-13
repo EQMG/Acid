@@ -49,8 +49,8 @@ Text *OverlayDebug::CreateStatus(const std::string &content, const float &positi
 {
 	Text *result = new Text(this, Vector2(positionX, positionY), content, 1.0f, Uis::get()->m_candara, 1.0f, align);
 	result->SetInScreenCoords(true);
-	result->setTextColour(Colour(1.0f, 1.0f, 1.0f, 1.0f));
-	result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f, 1.0f));
+	result->setTextColour(Colour(1.0f, 1.0f, 1.0f));
+	result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f));
 	result->SetBorder(new DriverConstant(0.04f));
 	return result;
 }

@@ -150,29 +150,29 @@ namespace Flounder
 		if (height <= 0.125f)
 		{
 			// Ocean.
-			return Colour(0.0824f, 0.3960f, 0.7530f, 1.0f);
+			return Colour(0.0824f, 0.3960f, 0.7530f);
 		}
 		if (height <= 0.25f)
 		{
 			if (moisture <= 0.16f)
 			{
 				// Subtropical Desert.
-				return Colour(0.914f, 0.8275f, 0.7804f, 1.0f);
+				return Colour(0.914f, 0.8275f, 0.7804f);
 			}
 			if (moisture <= 0.33f)
 			{
 				// Grassland.
-				return Colour(0.7686f, 0.8314f, 0.6666f, 1.0f);
+				return Colour(0.7686f, 0.8314f, 0.6666f);
 			}
 			if (moisture <= 0.66f)
 			{
 				// Tropical Seasonal Forest.
-				return Colour(0.6627f, 0.8000f, 0.6431f, 1.0f);
+				return Colour(0.6627f, 0.8000f, 0.6431f);
 			}
 			if (moisture <= 1.0f)
 			{
 				// Tropical Rain Forest.
-				return Colour(0.6431f, 0.7686f, 0.6588f, 1.0f);
+				return Colour(0.6431f, 0.7686f, 0.6588f);
 			}
 		}
 		else if (height <= 0.5f)
@@ -180,22 +180,22 @@ namespace Flounder
 			if (moisture <= 0.16f)
 			{
 				// Temperate Desert.
-				return Colour(0.8941f, 0.9098f, 0.7922f, 1.0f);
+				return Colour(0.8941f, 0.9098f, 0.7922f);
 			}
 			if (moisture <= 0.5f)
 			{
 				// Grassland.
-				return Colour(0.7686f, 0.8314f, 0.6666f, 1.0f);
+				return Colour(0.7686f, 0.8314f, 0.6666f);
 			}
 			if (moisture <= 0.83f)
 			{
 				// Temperate Deciduous Forest.
-				return Colour(0.7059f, 0.7882f, 0.6627f, 1.0f);
+				return Colour(0.7059f, 0.7882f, 0.6627f);
 			}
 			if (moisture <= 1.0f)
 			{
 				// Temperate Rain Forest.
-				return Colour(0.6431f, 0.7686f, 0.6588f, 1.0f);
+				return Colour(0.6431f, 0.7686f, 0.6588f);
 			}
 		}
 		else if (height <= 0.75f)
@@ -203,17 +203,17 @@ namespace Flounder
 			if (moisture <= 0.33f)
 			{
 				// Temperate Desert.
-				return Colour(0.8941f, 0.9098f, 0.7922f, 1.0f);
+				return Colour(0.8941f, 0.9098f, 0.7922f);
 			}
 			if (moisture <= 0.66f)
 			{
 				// Shrubland.
-				return Colour(0.7686f, 0.8000f, 0.7333f, 1.0f);
+				return Colour(0.7686f, 0.8000f, 0.7333f);
 			}
 			if (moisture <= 1.0f)
 			{
 				// Taiga.
-				return Colour(0.8000f, 0.8314f, 0.7333f, 1.0f);
+				return Colour(0.8000f, 0.8314f, 0.7333f);
 			}
 		}
 		else if (height <= 1.0f)
@@ -221,26 +221,26 @@ namespace Flounder
 			if (moisture <= 0.16f)
 			{
 				// Scorched.
-				return Colour(0.6000f, 0.6000f, 0.6000f, 1.0f);
+				return Colour(0.6000f, 0.6000f, 0.6000f);
 			}
 			if (moisture <= 0.33f)
 			{
 				// Bare.
-				return Colour(0.7333f, 0.7333f, 0.7333f, 1.0f);
+				return Colour(0.7333f, 0.7333f, 0.7333f);
 			}
 			if (moisture <= 0.5f)
 			{
 				// Tundra.
-				return Colour(0.8666f, 0.8666f, 0.7333f, 1.0f);
+				return Colour(0.8666f, 0.8666f, 0.7333f);
 			}
 			if (moisture <= 1.0f)
 			{
 				// Snow.
-				return Colour(1.0000f, 1.0000f, 1.0000f, 1.0f);
+				return Colour(1.0000f, 1.0000f, 1.0000f);
 			}
 		}
 
-		return Colour(0.0824f, 0.3960f, 0.7530f, 1.0f);
+		return Colour(0.0824f, 0.3960f, 0.7530f);
 	}
 
 	float Terrain::GetFactorIsland(const float &x, const float &z)

@@ -26,14 +26,7 @@ namespace Flounder
 		bufferInfo.pQueueFamilyIndices = indicesArray;
 		bufferInfo.queueFamilyIndexCount = 2;
 
-		if (vkCreateBuffer(*logicalDevice, &bufferInfo, nullptr, &m_buffer) != VK_SUCCESS)
-		{
-			throw std::runtime_error("Failed to create buffer");
-		}
-		else
-		{
-			printf("Buffer created successfully!\n");
-		}
+		GlfwVulkan::ErrorCheck(vkCreateBuffer(*logicalDevice, &bufferInfo, nullptr, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memRequirements;
@@ -44,14 +37,7 @@ namespace Flounder
 		allocateInfo.allocationSize = memRequirements.size;
 		allocateInfo.memoryTypeIndex = FindMemoryType(*physicalDevice, memRequirements.memoryTypeBits, properties);
 
-		if (vkAllocateMemory(*logicalDevice, &allocateInfo, nullptr, &m_bufferMemory) != VK_SUCCESS)
-		{
-			throw std::runtime_error("Failed to allocate memory for buffer");
-		}
-		else
-		{
-			printf("Memory allocated for buffer successfully!\n");
-		}
+		GlfwVulkan::ErrorCheck(vkAllocateMemory(*logicalDevice, &allocateInfo, nullptr, &m_bufferMemory));
 
 		vkBindBufferMemory(*logicalDevice, m_buffer, m_bufferMemory, 0);
 	}
@@ -74,11 +60,10 @@ namespace Flounder
 			// If typefilter has a bit set to 1 and it contains the properties we indicated.
 			if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties)
 			{
-				printf("Valid memory type found for buffer!\n");
 				return i;
 			}
 		}
 
-		throw std::runtime_error("Failed to find a valid memory type for buffer");
+		throw std::runtime_error("Failed to find a valid memory type for buffer!");
 	}
 }

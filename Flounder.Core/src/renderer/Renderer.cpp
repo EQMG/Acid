@@ -27,9 +27,9 @@ namespace Flounder
 		);
 		const std::vector<Vertex> verticesTriangle =
 		{
-			{ { 0.0f, -0.5f, 0.0f },{ 1.0f, 0.0f, 0.0f } },
-			{ { 0.5f, 0.5f, 0.0f },{ 0.0f, 1.0f, 0.0f } },
-			{ { -0.5f, 0.5f, 0.0f },{ 0.0f, 0.0f, 1.0f } }
+			{ Vector3(0.0f, -0.5f, 0.0f), Colour(1.0f, 0.0f, 0.0f) },
+			{ Vector3(0.5f, 0.5f, 0.0f), Colour(0.0f, 1.0f, 0.0f) },
+			{ Vector3(-0.5f, 0.5f, 0.0f), Colour(0.0f, 0.0f, 1.0f) }
 		};
 		m_vertexBuffer = new VertexBuffer(verticesTriangle);
 
@@ -44,6 +44,7 @@ namespace Flounder
 
 		m_swapchain->Create(&logicalDevice, &physicalDevice, &surface, window);
 		CreateRenderPass();
+		m_shaderTest->Create(&logicalDevice);
 		CreateGraphicsPipeline();
 		m_swapchain->CreateFramebuffers(&logicalDevice, &m_renderPass);
 		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(&physicalDevice, &surface);
@@ -56,19 +57,25 @@ namespace Flounder
 
 	Renderer::~Renderer()
 	{
+		VkDevice logicalDevice = Display::Get()->GetVkDevice();
+
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
 
 		delete m_managerRender;
+		m_shaderTest->Cleanup(&logicalDevice);
 		delete m_shaderTest;
+		m_swapchain->CleanupFrameBuffers(&logicalDevice);
+		m_swapchain->Cleanup(&logicalDevice);
 		delete m_swapchain;
+		m_vertexBuffer->Cleanup(&logicalDevice);
 		delete m_vertexBuffer;
 
 		vkDestroySemaphore(Display::Get()->GetVkDevice(), m_renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(Display::Get()->GetVkDevice(), m_imageAvailableSemaphore, nullptr);
 
-	//	vkDestroyCommandPool(Display::Get()->GetVkDevice(), m_commandPool, nullptr);
-	//	m_commandPool->Cleanup(Display::Get()->GetVkDevice());
+		m_commandPool->Cleanup(&logicalDevice);
+		delete m_commandPool;
 	}
 
 	void Renderer::Update()
@@ -276,7 +283,7 @@ namespace Flounder
 			VkRenderPassBeginInfo renderPassInfo = {};
 			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 			renderPassInfo.renderPass = m_renderPass;
-			renderPassInfo.framebuffer = m_swapchain->GetFramebuffer(i);//swapChainFramebuffers[i];
+			renderPassInfo.framebuffer = m_swapchain->GetFramebuffer(static_cast<uint32_t>(i));//swapChainFramebuffers[i];
 			renderPassInfo.renderArea.offset = { 0, 0 };
 			renderPassInfo.renderArea.extent = m_swapchain->GetExtent();//swapChainExtent;
 			VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -396,7 +403,7 @@ namespace Flounder
 		VkSurfaceKHR surface = Display::Get()->GetVkSurface();
 		GLFWwindow *window = Display::Get()->GetGlfwWindow();
 
-		m_swapchain->CleanupFrameBuffers();
+		m_swapchain->CleanupFrameBuffers(&logicalDevice);
 
 		vkFreeCommandBuffers(logicalDevice, *m_commandPool->GetCommandPool(), static_cast<uint32_t>(m_commandBuffers.size()), m_commandBuffers.data());
 
@@ -404,6 +411,6 @@ namespace Flounder
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 		vkDestroyRenderPass(logicalDevice, m_renderPass, nullptr);
 
-		m_swapchain->Cleanup();
+		m_swapchain->Cleanup(&logicalDevice);
 	}
 }
