@@ -10,6 +10,7 @@
 #include "../maths/Vector2.hpp"
 #include "../maths/Vector3.hpp"
 #include "../physics/Aabb.hpp"
+#include "../renderer/buffers/VertexBuffer.hpp"
 
 #include "Material.hpp"
 #include "VertexData.hpp"
@@ -32,13 +33,7 @@ namespace Flounder
 
 		Aabb *m_aabb;
 
-		VkBuffer m_indicesBuffer;
-		VkBuffer m_verticesBuffer;
-		VkBuffer m_texturesBuffer;
-		VkBuffer m_normalsBuffer;
-		VkBuffer m_tangentsBuffer;
-		VkDeviceMemory m_memory;
-		VkDescriptorBufferInfo m_bufferInfo;
+		VertexBuffer *m_vertexBuffer;
 	public:
 		/// <summary>
 		/// Creates a new model.
@@ -60,6 +55,10 @@ namespace Flounder
 		/// Deconstructor for the model.
 		/// </summary>
 		~Model();
+
+		Aabb *GetAabb() const { return m_aabb; }
+
+		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer; }
 	private:
 		/// <summary>
 		/// Loads the model object from a OBJ file.
@@ -75,10 +74,6 @@ namespace Flounder
 		void CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *textures);
 
 		void LoadToVulkan();
-
-		VkBuffer CreateBuffer(std::vector<float> *data);
-
-		void MemoryTypeFromProperties(uint32_t typeBits, VkFlags reqMask, uint32_t *typeIndex);
 
 		void CreateAabb();
 	};

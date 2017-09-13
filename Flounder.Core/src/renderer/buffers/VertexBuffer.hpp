@@ -10,6 +10,8 @@ namespace Flounder
 	private:
 		std::vector<Vertex> m_vertices;
 	public:
+		VertexBuffer();
+
 		VertexBuffer(const std::vector<Vertex> &vertices);
 
 		~VertexBuffer();
@@ -17,6 +19,8 @@ namespace Flounder
 		void Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkCommandPool *transferCommandPool, const VkQueue *transferQueue);
 
 		void Cleanup(const VkDevice *logicalDevice);
+
+		void SetVerticies(std::vector<Vertex> vertices);
 
 		uint32_t GetVerticesSize() const { return static_cast<uint32_t>(m_vertices.size()); }
 	private:

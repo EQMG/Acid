@@ -20,11 +20,6 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		struct TestUbo
-		{
-			Colour colour;
-		};
-
 		IManagerRender *m_managerRender;
 
 		VkRenderPass m_renderPass;
@@ -83,6 +78,9 @@ namespace Flounder
 		void SetManager(IManagerRender *managerRender) { m_managerRender = managerRender; }
 
 		std::vector<VkCommandBuffer> GetVkCommandBuffers() const { return m_commandBuffers; }
+
+		CommandPool *GetCommandPoolTransfer() const { return m_commandPoolTransfer; }
+
 	private:
 		void CreateRenderPass();
 

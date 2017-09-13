@@ -9,7 +9,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "../platforms/glfw/GlfwVulkan.h"
+#include "../platforms/glfw/GlfwVulkan.hpp"
 #include "../engine/Engine.hpp"
 #include "../renderer/queue/QueueFamily.hpp"
 #include "../renderer/swapchain/Swapchain.hpp"

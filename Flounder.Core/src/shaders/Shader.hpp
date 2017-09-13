@@ -5,16 +5,8 @@
 #include <map>
 #include <stdarg.h>
 
-#include "../devices/Display.hpp"
 #include "../helpers/HelperFile.hpp"
-#include "../helpers/HelperString.hpp"
-#include "../maths/Colour.hpp"
-#include "../maths/Matrix2.hpp"
-#include "../maths/Matrix3.hpp"
-#include "../maths/Matrix4.hpp"
-#include "../maths/Vector2.hpp"
-#include "../maths/Vector3.hpp"
-#include "../maths/Vector4.hpp"
+#include "../platforms/glfw/GlfwVulkan.hpp"
 
 #include "ShaderType.hpp"
 
@@ -47,16 +39,21 @@ namespace Flounder
 		~Shader();
 
 		/// <summary>
+		/// Creates the shader.
+		/// </summary>
+		void Create(const VkDevice *logicalDevice);
+
+		/// <summary>
+		/// Cleans up the shader.
+		/// </summary>
+		void Cleanup(const VkDevice *logicalDevice);
+
+		/// <summary>
 		/// Gets the loaded name for the shader.
 		/// </summary>
 		/// <returns> The shaders name. </returns>
 		std::string GetName() const { return m_name; }
 
 		std::vector<VkPipelineShaderStageCreateInfo> *GetStages() const { return m_stages; }
-	private:
-		/// <summary>
-		/// Creates the shader.
-		/// </summary>
-		void LoadShader() const;
 	};
 }
