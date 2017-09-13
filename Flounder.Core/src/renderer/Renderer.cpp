@@ -1,4 +1,5 @@
 #include "Renderer.hpp"
+#include "../test/RendererTest.hpp"
 
 namespace Flounder
 {
@@ -21,36 +22,22 @@ namespace Flounder
 		m_imageAvailableSemaphore = VK_NULL_HANDLE;
 		m_renderFinishedSemaphore = VK_NULL_HANDLE;
 
-		m_shaderTest = new Shader("tests", 2,
-			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
-			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
-		);
-		const std::vector<Vertex> verticesTriangle =
-		{
-			{ Vector3(0.0f, -0.5f, 0.0f), Colour(1.0f, 0.0f, 0.0f) },
-			{ Vector3(0.5f, 0.5f, 0.0f), Colour(0.0f, 1.0f, 0.0f) },
-			{ Vector3(-0.5f, 0.5f, 0.0f), Colour(0.0f, 0.0f, 1.0f) }
-		};
-		m_vertexBuffer = new VertexBuffer(verticesTriangle);
-
 		lastWidth = Display::Get()->GetWidth();
 		lastHeight = Display::Get()->GetHeight();
 
 		VkDevice logicalDevice = Display::Get()->GetVkDevice();
 		VkPhysicalDevice physicalDevice = Display::Get()->GetVkPhysicalDevice();
 		VkSurfaceKHR surface = Display::Get()->GetVkSurface();
-		VkQueue transferQueue = Display::Get()->GetVkTransferQueue();
 		GLFWwindow *window = Display::Get()->GetGlfwWindow();
 
 		m_swapchain->Create(&logicalDevice, &physicalDevice, &surface, window);
 		CreateRenderPass();
-		m_shaderTest->Create(&logicalDevice);
-		CreateGraphicsPipeline();
 		m_swapchain->CreateFramebuffers(&logicalDevice, &m_renderPass);
 		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(&physicalDevice, &surface);
 		m_commandPool->Create(&logicalDevice, &physicalDevice, &surface, indices.graphicsFamily);
 		m_commandPoolTransfer->Create(&logicalDevice, &physicalDevice, &surface, indices.transferFamily, VK_COMMAND_POOL_CREATE_TRANSIENT_BIT);
-		m_vertexBuffer->Create(&logicalDevice, &physicalDevice, &surface, m_commandPoolTransfer->GetCommandPool(), &transferQueue);
+		m_rendererTest = new RendererTest(m_commandPoolTransfer);
+		CreateGraphicsPipeline();
 		CreateCommandBuffers();
 		CreateSemaphores();
 	}
@@ -63,13 +50,9 @@ namespace Flounder
 		vkDeviceWaitIdle(Display::Get()->GetVkDevice());
 
 		delete m_managerRender;
-		m_shaderTest->Cleanup(&logicalDevice);
-		delete m_shaderTest;
 		m_swapchain->CleanupFrameBuffers(&logicalDevice);
 		m_swapchain->Cleanup(&logicalDevice);
 		delete m_swapchain;
-		m_vertexBuffer->Cleanup(&logicalDevice);
-		delete m_vertexBuffer;
 
 		vkDestroySemaphore(Display::Get()->GetVkDevice(), m_renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(Display::Get()->GetVkDevice(), m_imageAvailableSemaphore, nullptr);
@@ -233,11 +216,14 @@ namespace Flounder
 		// Creates the graphics pipeline layout.
 		GlfwVulkan::ErrorCheck(vkCreatePipelineLayout(Display::Get()->GetVkDevice(), &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
 
+		std::vector<VkPipelineShaderStageCreateInfo> shaderInfo = std::vector<VkPipelineShaderStageCreateInfo>();
+		m_rendererTest->CreatePipeline(&shaderInfo);
+
 		// Pipeline info struct.
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-		pipelineInfo.stageCount = static_cast<uint32_t>(m_shaderTest->GetStages()->size());
-		pipelineInfo.pStages = m_shaderTest->GetStages()->data();
+		pipelineInfo.stageCount = static_cast<uint32_t>(shaderInfo.size());
+		pipelineInfo.pStages = shaderInfo.data();
 		pipelineInfo.pVertexInputState = &vertexInputInfo;
 		pipelineInfo.pInputAssemblyState = &inputAssembly;
 		pipelineInfo.pViewportState = &viewportState;
@@ -292,12 +278,7 @@ namespace Flounder
 
 			vkCmdBeginRenderPass(m_commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-			vkCmdBindPipeline(m_commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_graphicsPipeline);
-			VkBuffer vertexBuffers[] = { *m_vertexBuffer->GetBuffer() };
-			VkDeviceSize offsets[] = { 0 };
-			vkCmdBindVertexBuffers(m_commandBuffers[i], 0, 1, vertexBuffers, offsets);
-
-			vkCmdDraw(m_commandBuffers[i], static_cast<uint32_t>(m_vertexBuffer->GetVerticesSize()), 1, 0, 0);
+			m_rendererTest->CreateCommands(i, m_commandBuffers, m_graphicsPipeline);
 
 			vkCmdEndRenderPass(m_commandBuffers[i]);
 
