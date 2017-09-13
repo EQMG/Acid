@@ -25,7 +25,7 @@ namespace Flounder
 
 	void Shader::Create(const VkDevice *logicalDevice)
 	{
-		for (ShaderType type : *m_types)
+		for (auto type : *m_types)
 		{
 			std::vector<char> shaderCode = HelperFile::ReadBinaryFile(type.GetFilePath());
 
