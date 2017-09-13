@@ -2,6 +2,11 @@
 
 namespace Flounder
 {
+	VertexBuffer::VertexBuffer() :
+		m_vertices(std::vector<Vertex>())
+	{
+	}
+
 	VertexBuffer::VertexBuffer(const std::vector<Vertex> &vertices) :
 		m_vertices(std::vector<Vertex>(vertices))
 	{
@@ -22,12 +27,17 @@ namespace Flounder
 		CopyBuffer(logicalDevice, transferCommandPool, *bufferStaging.GetBuffer(), *GetBuffer(), bufferSize, transferQueue);
 
 		bufferStaging.Cleanup(logicalDevice);
-		printf("Vertex buffer created successfully\n");
 	}
 
 	void VertexBuffer::Cleanup(const VkDevice *logicalDevice)
 	{
 		Buffer::Cleanup(logicalDevice);
+	}
+
+	void VertexBuffer::SetVerticies(std::vector<Vertex> vertices)
+	{
+		m_vertices.clear();
+		m_vertices.swap(vertices);
 	}
 
 	void VertexBuffer::CopyVerticesToBuffer(const VkDevice *logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const

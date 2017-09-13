@@ -23,18 +23,12 @@ namespace Flounder
 		poolInfo.queueFamilyIndex = queueFamilyIndex;
 		poolInfo.flags = flags;
 
-		if (vkCreateCommandPool(*logicalDevice, &poolInfo, nullptr, &m_commandPool) != VK_SUCCESS)
-		{
-			throw std::runtime_error("failed to create command pool!");
-		}
-		else
-		{
-			printf("Command pool created successfully\n");
-		}
+		GlfwVulkan::ErrorCheck(vkCreateCommandPool(*logicalDevice, &poolInfo, nullptr, &m_commandPool));
 	}
 
 	void CommandPool::Cleanup(const VkDevice *logicalDevice)
 	{
 		vkDestroyCommandPool(*logicalDevice, m_commandPool, nullptr);
+		m_commandPool = VK_NULL_HANDLE;
 	}
 }

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../../platforms/glfw/GlfwVulkan.h"
+#include "../../platforms/glfw/GlfwVulkan.hpp"
 
 namespace Flounder
 {
@@ -32,8 +32,6 @@ namespace Flounder
 		VkFormat m_swapchainImageFormat;
 		// Stores the chosen image extent.
 		VkExtent2D m_swapchainExtent;
-
-		const VkDevice *m_device;
 	public:
 		Swapchain();
 
@@ -43,9 +41,9 @@ namespace Flounder
 
 		void CreateFramebuffers(const VkDevice* logicalDevice, const VkRenderPass* renderPass);
 
-		void Cleanup();
+		void Cleanup(const VkDevice *logicalDevice);
 
-		void CleanupFrameBuffers();
+		void CleanupFrameBuffers(const VkDevice *logicalDevice);
 
 		static SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface);
 		
