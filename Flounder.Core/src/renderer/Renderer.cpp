@@ -25,7 +25,13 @@ namespace Flounder
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		);
-		m_vertexBuffer = new VertexBuffer();
+		const std::vector<Vertex> verticesTriangle =
+		{
+			{ { 0.0f, -0.5f, 0.0f },{ 1.0f, 0.0f, 0.0f } },
+			{ { 0.5f, 0.5f, 0.0f },{ 0.0f, 1.0f, 0.0f } },
+			{ { -0.5f, 0.5f, 0.0f },{ 0.0f, 0.0f, 1.0f } }
+		};
+		m_vertexBuffer = new VertexBuffer(verticesTriangle);
 
 		lastWidth = Display::Get()->GetWidth();
 		lastHeight = Display::Get()->GetHeight();
@@ -62,7 +68,7 @@ namespace Flounder
 		vkDestroySemaphore(Display::Get()->GetVkDevice(), m_imageAvailableSemaphore, nullptr);
 
 	//	vkDestroyCommandPool(Display::Get()->GetVkDevice(), m_commandPool, nullptr);
-		m_commandPool->Cleanup();
+	//	m_commandPool->Cleanup(Display::Get()->GetVkDevice());
 	}
 
 	void Renderer::Update()
@@ -134,8 +140,12 @@ namespace Flounder
 		// Vertex input struct.
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputInfo.vertexBindingDescriptionCount = 0;
-		vertexInputInfo.vertexAttributeDescriptionCount = 0;
+		auto bindingDescription = Vertex::getBindingDescription();
+		auto attributeDescriptions = Vertex::getAttributeDescriptions();
+		vertexInputInfo.vertexBindingDescriptionCount = 1;
+		vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+		vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
+		vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
 		// Input assembly struct.
 		VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
@@ -276,7 +286,7 @@ namespace Flounder
 			vkCmdBeginRenderPass(m_commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 			vkCmdBindPipeline(m_commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_graphicsPipeline);
-			VkBuffer vertexBuffers[] = { m_vertexBuffer->GetBuffer() };
+			VkBuffer vertexBuffers[] = { *m_vertexBuffer->GetBuffer() };
 			VkDeviceSize offsets[] = { 0 };
 			vkCmdBindVertexBuffers(m_commandBuffers[i], 0, 1, vertexBuffers, offsets);
 
