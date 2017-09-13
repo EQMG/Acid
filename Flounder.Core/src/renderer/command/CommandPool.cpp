@@ -4,18 +4,17 @@
 namespace Flounder
 {
 	CommandPool::CommandPool() :
-		m_logicalDevice(nullptr)
+		m_commandPool(VK_NULL_HANDLE)
 	{
 	}
 
 	CommandPool::~CommandPool()
 	{
-		Cleanup();
 	}
 
 	void CommandPool::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, uint32_t queueFamilyIndex, VkCommandPoolCreateFlags flags)
 	{
-		m_logicalDevice = logicalDevice;
+		m_commandPool = VkCommandPool();
 
 		QueueFamilyIndices queueFamilyIndices = QueueFamily::FindQueueFamilies(physicalDevice, surface);
 
@@ -24,12 +23,18 @@ namespace Flounder
 		poolInfo.queueFamilyIndex = queueFamilyIndex;
 		poolInfo.flags = flags;
 
-		GlfwVulkan::ErrorCheck(vkCreateCommandPool(*logicalDevice, &poolInfo, nullptr, &m_commandPool));
-		printf("Command pool created successfully\n");
+		if (vkCreateCommandPool(*logicalDevice, &poolInfo, nullptr, &m_commandPool) != VK_SUCCESS)
+		{
+			throw std::runtime_error("failed to create command pool!");
+		}
+		else
+		{
+			printf("Command pool created successfully\n");
+		}
 	}
 
-	void CommandPool::Cleanup()
+	void CommandPool::Cleanup(const VkDevice *logicalDevice)
 	{
-		vkDestroyCommandPool(*m_logicalDevice, m_commandPool, nullptr);
+		vkDestroyCommandPool(*logicalDevice, m_commandPool, nullptr);
 	}
 }

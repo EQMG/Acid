@@ -19,15 +19,21 @@ namespace Flounder
 	class Swapchain
 	{
 	private:
-		const VkDevice* m_logicalDevice;
+		// The swapchain handler.
+		VkSwapchainKHR m_swapchain;
+		// Vector of swap chain images.
+		std::vector<VkImage> m_swapchainImages;
+		// Handles to all image views associated with swapChainImages.
+		std::vector<VkImageView> m_swapchainImageViews;
+		// Vector of handles to framebuffers.
+		std::vector<VkFramebuffer> m_swapchainFramebuffers;
 
-		VkSwapchainKHR m_swapChain;
-		std::vector<VkImage> m_swapChainImages;
-		std::vector<VkImageView> m_swapChainImageViews;
-		std::vector<VkFramebuffer> m_swapChainFramebuffers;
+		// Stores the chosen image format.
+		VkFormat m_swapchainImageFormat;
+		// Stores the chosen image extent.
+		VkExtent2D m_swapchainExtent;
 
-		VkFormat m_swapChainImageFormat;
-		VkExtent2D m_swapChainExtent;
+		const VkDevice *m_device;
 	public:
 		Swapchain();
 
@@ -42,16 +48,16 @@ namespace Flounder
 		void CleanupFrameBuffers();
 
 		static SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface);
+		
+		VkSwapchainKHR GetSwapchain() const { return m_swapchain; }
 
-		VkSwapchainKHR GetSwapchain() const { return m_swapChain; }
+		size_t GetFramebufferSize() const { return m_swapchainFramebuffers.size(); }
 
-		size_t GetFramebufferSize() const { return m_swapChainFramebuffers.size(); }
+		VkFramebuffer GetFramebuffer(const uint32_t &index) const { return m_swapchainFramebuffers[index]; }
 
-		VkFramebuffer GetFramebuffer(const uint32_t &index) const { return m_swapChainFramebuffers[index]; }
+		VkFormat GetImageFormat() const { return m_swapchainImageFormat; }
 
-		VkFormat GetImageFormat() const { return m_swapChainImageFormat; }
-
-		VkExtent2D GetExtent() const { return m_swapChainExtent; }
+		VkExtent2D GetExtent() const { return m_swapchainExtent; }
 	private:
 		void CreateImageViews(const VkDevice* logicalDevice);
 

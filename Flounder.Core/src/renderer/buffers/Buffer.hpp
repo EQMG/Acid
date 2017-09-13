@@ -18,10 +18,10 @@ namespace Flounder
 
 		void Cleanup(const VkDevice *logicalDevice);
 
-		VkBuffer GetBuffer() const { return m_buffer; }
+		uint32_t FindMemoryType(VkPhysicalDevice physicalDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties);
 
-		VkDeviceMemory GetBufferMemory() const { return m_bufferMemory; }
-	protected:
-		uint32_t FindMemoryType(VkPhysicalDevice physicalDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) const;
+		VkBuffer *GetBuffer() { return &m_buffer; }
+
+		VkDeviceMemory *GetBufferMemory() { return &m_bufferMemory; }
 	};
 }

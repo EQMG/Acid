@@ -2,8 +2,8 @@
 
 namespace Flounder
 {
-	VertexBuffer::VertexBuffer() :
-		Buffer()
+	VertexBuffer::VertexBuffer(const std::vector<Vertex> &vertices) :
+		m_vertices(std::vector<Vertex>(vertices))
 	{
 	}
 
@@ -13,13 +13,13 @@ namespace Flounder
 
 	void VertexBuffer::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkCommandPool *transferCommandPool, const VkQueue *transferQueue)
 	{
-		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
+		VkDeviceSize bufferSize = sizeof(m_vertices[0]) * m_vertices.size();
 		Buffer bufferStaging = Buffer();
 		bufferStaging.Create(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 		CopyVerticesToBuffer(logicalDevice, bufferSize, bufferStaging);
 
 		Buffer::Create(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		CopyBuffer(logicalDevice, transferCommandPool, bufferStaging.GetBuffer(), GetBuffer(), bufferSize, transferQueue);
+		CopyBuffer(logicalDevice, transferCommandPool, *bufferStaging.GetBuffer(), *GetBuffer(), bufferSize, transferQueue);
 
 		bufferStaging.Cleanup(logicalDevice);
 		printf("Vertex buffer created successfully\n");
@@ -30,16 +30,16 @@ namespace Flounder
 		Buffer::Cleanup(logicalDevice);
 	}
 
-	void VertexBuffer::CopyVerticesToBuffer(const VkDevice *logicalDevice, const VkDeviceSize &bufferSize, const Buffer &bufferStaging) const
+	void VertexBuffer::CopyVerticesToBuffer(const VkDevice *logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const
 	{
-		// Copy vertex data to buffer.
-		void* data;
-		vkMapMemory(*logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferSize, 0, &data);
-		memcpy(data, vertices.data(), static_cast<size_t>(bufferSize));
-		vkUnmapMemory(*logicalDevice, bufferStaging.GetBufferMemory());
+		// Copies the vertex data to the buffer.
+		void *data;
+		vkMapMemory(*logicalDevice, *bufferStaging.GetBufferMemory(), 0, bufferSize, 0, &data);
+		memcpy(data, m_vertices.data(), static_cast<size_t>(bufferSize));
+		vkUnmapMemory(*logicalDevice, *bufferStaging.GetBufferMemory());
 	}
 
-	void VertexBuffer::CopyBuffer(const VkDevice *logicalDevice, const VkCommandPool *transferCommandPool, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, const VkQueue *transferQueue) const
+	void VertexBuffer::CopyBuffer(const VkDevice *logicalDevice, const VkCommandPool *transferCommandPool, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, const VkQueue *transferQueue)
 	{
 		// Makes a temporary command buffer for the memory transfer operation.
 		VkCommandBufferAllocateInfo allocInfo = {};

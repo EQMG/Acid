@@ -243,35 +243,35 @@ namespace Flounder
 		/// Gets the current Vulkan instance.
 		/// </summary>
 		/// <returns> The current Vulkan instance. </returns>
-		VkInstance GetVkInstance() const { return m_instance; }
+		VkInstance GetVkInstance() { return m_instance; }
 
 		/// <summary>
 		/// Gets the current Vulkan surface.
 		/// </summary>
 		/// <returns> The current Vulkan surface. </returns>
-		VkSurfaceKHR GetVkSurface() const { return m_surface; }
+		VkSurfaceKHR GetVkSurface() { return m_surface; }
 
 		/// <summary>
 		/// Gets the current Vulkan physical device (gpu).
 		/// </summary>
 		/// <returns> The current Vulkan physical device (gpu). </returns>
-		VkPhysicalDevice GetVkPhysicalDevice() const { return m_physicalDevice; }
+		VkPhysicalDevice GetVkPhysicalDevice() { return m_physicalDevice; }
 
-		VkPhysicalDeviceProperties GetVkPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
+		VkPhysicalDeviceProperties GetVkPhysicalDeviceProperties() { return m_physicalDeviceProperties; }
 
-		VkPhysicalDeviceFeatures GetVkPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
+		VkPhysicalDeviceFeatures GetVkPhysicalDeviceFeatures() { return m_physicalDeviceFeatures; }
 
-		VkPhysicalDeviceMemoryProperties GetVkPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
+		VkPhysicalDeviceMemoryProperties GetVkPhysicalDeviceMemoryProperties() { return m_physicalDeviceMemoryProperties; }
 
 		/// <summary>
 		/// Gets the current Vulkan device.
 		/// </summary>
 		/// <returns> The current Vulkan device. </returns>
-		VkDevice GetVkDevice() const { return m_device; }
+		VkDevice GetVkDevice() { return m_device; }
 
-		VkQueue GetVkDisplayQueue() const { return m_displayQueue; }
+		VkQueue GetVkDisplayQueue() { return m_displayQueue; }
 
-		VkQueue GetVkTransferQueue() const { return m_transferQueue; }
+		VkQueue GetVkTransferQueue() { return m_transferQueue; }
 	private:
 		void CreateGlfw();
 
