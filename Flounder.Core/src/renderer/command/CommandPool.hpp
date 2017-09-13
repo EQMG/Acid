@@ -1,15 +1,13 @@
 ﻿#pragma once
 
-#include <stdexcept>
-
-#include "../../platforms/glfw/GlfwVulkan.h"
+#include <vulkan/vulkan.h>
+#include <iostream>
 
 namespace Flounder
 {
 	class CommandPool
 	{
 	private:
-		const VkDevice *m_logicalDevice;
 		VkCommandPool m_commandPool;
 	public:
 		CommandPool();
@@ -18,7 +16,7 @@ namespace Flounder
 
 		void Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, uint32_t queueFamilyIndex, VkCommandPoolCreateFlags flags = 0);
 
-		void Cleanup();
+		void Cleanup(const VkDevice *logicalDevice);
 
 		VkCommandPool *GetCommandPool() { return &m_commandPool; }
 	};

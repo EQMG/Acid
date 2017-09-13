@@ -1,8 +1,5 @@
 ﻿#pragma once
 
-#include <iostream>
-#include <vector>
-
 #include "Buffer.hpp"
 
 namespace Flounder
@@ -11,14 +8,9 @@ namespace Flounder
 		public Buffer
 	{
 	private:
-		const std::vector<Vertex> vertices =
-		{
-			{ { 0.0f, -0.5f },{ 1.0f, 0.0f, 0.0f } },
-			{ { 0.5f, 0.5f },{ 0.0f, 1.0f, 0.0f } },
-			{ { -0.5f, 0.5f },{ 0.0f, 0.0f, 1.0f } }
-		};
+		std::vector<Vertex> m_vertices;
 	public:
-		VertexBuffer();
+		VertexBuffer(const std::vector<Vertex> &vertices);
 
 		~VertexBuffer();
 
@@ -26,11 +18,10 @@ namespace Flounder
 
 		void Cleanup(const VkDevice *logicalDevice);
 
-		uint32_t GetVerticesSize() const { return static_cast<uint32_t>(vertices.size()); }
+		uint32_t GetVerticesSize() const { return static_cast<uint32_t>(m_vertices.size()); }
 	private:
-		void CopyVerticesToBuffer(const VkDevice *logicalDevice, const VkDeviceSize &bufferSize, const Buffer &bufferStaging) const;
+		void CopyVerticesToBuffer(const VkDevice *logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const;
 
-		void CopyBuffer(const VkDevice *logicalDevice, const VkCommandPool *transferCommandPool,
-			VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, const VkQueue* transferQueue) const;
+		void CopyBuffer(const VkDevice *logicalDevice, const VkCommandPool *transferCommandPool, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, const VkQueue *transferQueue);
 	};
 }

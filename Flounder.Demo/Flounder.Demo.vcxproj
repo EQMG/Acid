@@ -14,9 +14,6 @@
     <ProjectReference Include="..\Flounder.Core\Flounder.Core.vcxproj">
       <Project>{e58316b5-4d6c-4ee6-898e-de7bd1069a08}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Flounder.Core\Flounder.Core.vcxproj">
-      <Project>{e58316b5-4d6c-4ee6-898e-de7bd1069a08}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\uis\OverlayManager.cpp" />
