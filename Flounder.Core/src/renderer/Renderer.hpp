@@ -5,8 +5,7 @@
 #include "../shaders/Shader.hpp"
 #include "../textures/Texture.hpp"
 
-#include "buffers/Buffer.hpp"
-#include "buffers/Vertex.hpp"
+#include "buffers/IndexBuffer.hpp"
 #include "buffers/VertexBuffer.hpp"
 #include "command/CommandPool.hpp"
 #include "queue/QueueFamily.hpp"
