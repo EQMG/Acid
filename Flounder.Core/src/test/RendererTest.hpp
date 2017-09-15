@@ -8,9 +8,15 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
+		struct UBO
+		{
+			bool memes;
+			Matrix4 projection;
+		};
+
 		Shader *m_shader;
 		VertexBuffer *m_vertexBuffer;
-		VertexBuffer *m_vertexBuffer1;
+		IndexBuffer *m_indexBuffer;
 	public:
 		RendererTest(CommandPool *commandPoolTransfer);
 
