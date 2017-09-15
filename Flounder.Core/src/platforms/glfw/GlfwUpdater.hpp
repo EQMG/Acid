@@ -24,6 +24,7 @@ namespace Flounder
 		Delta *m_deltaRender;
 		Timer *m_timerUpdate;
 		Timer *m_timerRender;
+		Timer *m_timerLog;
 
 		std::multimap<float, std::pair<std::string, IModule*>> *m_modules;
 	public:

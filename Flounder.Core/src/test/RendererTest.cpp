@@ -8,21 +8,18 @@ namespace Flounder
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		);
-		const std::vector<Vertex> verticesTriangle =
+		const std::vector<Vertex> triangleVertices =
 		{
-			{ Vector3(0.0f, -0.5f, 0.0f), Colour(1.0f, 0.0f, 0.0f) },
-			{ Vector3(0.5f, 0.5f, 0.0f), Colour(0.0f, 1.0f, 0.0f) },
-			{ Vector3(-0.5f, 0.5f, 0.0f), Colour(0.0f, 0.0f, 1.0f) }
-		};
-		m_vertexBuffer = new VertexBuffer(verticesTriangle);
-
-		const std::vector<Vertex> verticesTriangle1 =
-		{
+			{ Vector3(-0.5f, -0.5f, 0.0f), Colour(1.0f, 0.0f, 0.0f) },
 			{ Vector3(0.5f, -0.5f, 0.0f), Colour(0.0f, 1.0f, 0.0f) },
-			{ Vector3(1.0f, 0.5f, 0.0f), Colour(0.0f, 0.0f, 1.0f) },
-			{ Vector3(0.0f, 0.5f, 0.0f), Colour(1.0f, 0.0f, 0.0f) }
+			{ Vector3(0.5f, 0.5f, 0.0f), Colour(0.0f, 0.0f, 1.0f) },
+			{ Vector3(-0.5f, 0.5f, 0.0f), Colour(1.0f, 1.0f, 1.0f) }
 		};
-		m_vertexBuffer1 = new VertexBuffer(verticesTriangle1);
+		const std::vector<uint16_t> triangleIndices = {
+			0, 1, 2, 2, 3, 0
+		};
+		m_vertexBuffer = new VertexBuffer(triangleVertices);
+		m_indexBuffer = new IndexBuffer(triangleIndices);
 
 		VkDevice logicalDevice = Display::Get()->GetVkDevice();
 		VkPhysicalDevice physicalDevice = Display::Get()->GetVkPhysicalDevice();
@@ -32,7 +29,7 @@ namespace Flounder
 
 		m_shader->Create(&logicalDevice);
 		m_vertexBuffer->Create(&logicalDevice, &physicalDevice, &surface, commandPoolTransfer->GetCommandPool(), &transferQueue);
-		m_vertexBuffer1->Create(&logicalDevice, &physicalDevice, &surface, commandPoolTransfer->GetCommandPool(), &transferQueue);
+		m_indexBuffer->Create(&logicalDevice, &physicalDevice, &surface, commandPoolTransfer->GetCommandPool(), &transferQueue);
 	}
 
 	RendererTest::~RendererTest()
@@ -45,8 +42,8 @@ namespace Flounder
 		m_vertexBuffer->Cleanup(&logicalDevice);
 		delete m_vertexBuffer;
 
-		m_vertexBuffer1->Cleanup(&logicalDevice);
-		delete m_vertexBuffer1;
+		m_indexBuffer->Cleanup(&logicalDevice);
+		delete m_indexBuffer;
 	}
 
 	void RendererTest::CreatePipeline(std::vector<VkPipelineShaderStageCreateInfo> *shaderStages)
@@ -61,15 +58,11 @@ namespace Flounder
 	{
 		vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 		VkBuffer vertexBuffers[] = { *m_vertexBuffer->GetBuffer() };
+		VkBuffer indexBuffers[] = { *m_indexBuffer->GetBuffer() };
 		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
-		vkCmdDraw(commandBuffers[i], static_cast<uint32_t>(m_vertexBuffer->GetVerticesSize()), 1, 0, 0);
-
-		vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
-		VkBuffer vertexBuffers1[] = { *m_vertexBuffer1->GetBuffer() };
-		VkDeviceSize offsets1[] = { 0 };
-		vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers1, offsets1);
-		vkCmdDraw(commandBuffers[i], static_cast<uint32_t>(m_vertexBuffer1->GetVerticesSize()), 1, 0, 0);
+		vkCmdBindIndexBuffer(commandBuffers[i], indexBuffers[0], 0, VK_INDEX_TYPE_UINT16);
+		vkCmdDrawIndexed(commandBuffers[i], static_cast<uint32_t>(m_indexBuffer->GetIndicesSize()), 1, 0, 0, 0);
 	}
 
 	void RendererTest::Render(const Vector4 &clipPlane, const ICamera &camera)
