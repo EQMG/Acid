@@ -1,12 +1,12 @@
 ﻿#include "Swapchain.hpp"
-#include "../../devices/Display.hpp"
 
 namespace Flounder
 {
 	Swapchain::Swapchain() :
 		m_swapchain(VK_NULL_HANDLE),
-		m_swapchainImages(std::vector<VkImage>()),
-		m_swapchainImageViews(std::vector<VkImageView>())
+		m_images(std::vector<VkImage>()),
+		m_imageViews(std::vector<VkImageView>()),
+		m_framebuffers(std::vector<VkFramebuffer>())
 	{
 	}
 
@@ -54,40 +54,69 @@ namespace Flounder
 
 		// Populates the swap chain image vector.
 		vkGetSwapchainImagesKHR(*logicalDevice, m_swapchain, &imageCount, nullptr);
-		m_swapchainImages.resize(imageCount);
-		vkGetSwapchainImagesKHR(*logicalDevice, m_swapchain, &imageCount, m_swapchainImages.data());
+		m_images.resize(imageCount);
+		vkGetSwapchainImagesKHR(*logicalDevice, m_swapchain, &imageCount, m_images.data());
 
 		// Store data for the chosen surface format and extent.
-		m_swapchainImageFormat = surfaceFormat.format;
-		m_swapchainExtent = extent;
+		m_imageFormat = surfaceFormat.format;
+		m_extent = extent;
 
 		CreateImageViews(logicalDevice);
 	}
 
+	void Swapchain::CreateFramebuffers(const VkDevice *logicalDevice, const VkRenderPass &renderPass)
+	{
+		m_framebuffers.resize(m_imageViews.size());
+
+		for (size_t i = 0; i < m_imageViews.size(); i++)
+		{
+			VkImageView attachments[] = { m_imageViews[i] };
+
+			VkFramebufferCreateInfo framebufferInfo = {};
+			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			framebufferInfo.renderPass = renderPass;
+			framebufferInfo.attachmentCount = 1;
+			framebufferInfo.pAttachments = attachments;
+			framebufferInfo.width = m_extent.width;
+			framebufferInfo.height = m_extent.height;
+			framebufferInfo.layers = 1;
+
+			GlfwVulkan::ErrorCheck(vkCreateFramebuffer(*logicalDevice, &framebufferInfo, nullptr, &m_framebuffers[i]));
+		}
+	}
+
 	void Swapchain::Cleanup(const VkDevice *logicalDevice)
 	{
-		for (size_t i = 0; i < m_swapchainImageViews.size(); i++)
+		for (size_t i = 0; i < m_imageViews.size(); i++)
 		{
-			vkDestroyImageView(*logicalDevice, m_swapchainImageViews[i], VK_NULL_HANDLE);
+			vkDestroyImageView(*logicalDevice, m_imageViews[i], VK_NULL_HANDLE);
 		}
 
 		vkDestroySwapchainKHR(*logicalDevice, m_swapchain, VK_NULL_HANDLE);
 	}
 
+	void Swapchain::CleanupFramebuffers(const VkDevice *logicalDevice)
+	{
+		for (size_t i = 0; i < m_framebuffers.size(); i++)
+		{
+			vkDestroyFramebuffer(*logicalDevice, m_framebuffers[i], VK_NULL_HANDLE);
+		}
+	}
+
 	void Swapchain::CreateImageViews(const VkDevice* logicalDevice)
 	{
 		// Resizes the vector to the size of the images vector, define the deleter function for each.
-		m_swapchainImageViews.resize(m_swapchainImages.size());
+		m_imageViews.resize(m_images.size());
 
 		// Iterates through each image and create an image view for each.
-		for (uint32_t i = 0; i < m_swapchainImages.size(); i++)
+		for (uint32_t i = 0; i < m_images.size(); i++)
 		{
 			// Defines a create info struct for this image view.
 			VkImageViewCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-			createInfo.image = m_swapchainImages[i];
+			createInfo.image = m_images[i];
 			createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-			createInfo.format = m_swapchainImageFormat;
+			createInfo.format = m_imageFormat;
 			createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
 			createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
 			createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
@@ -99,7 +128,7 @@ namespace Flounder
 			createInfo.subresourceRange.layerCount = 1;
 
 			// Attempts to create the image view
-			GlfwVulkan::ErrorCheck(vkCreateImageView(*logicalDevice, &createInfo, nullptr, &m_swapchainImageViews[i]));
+			GlfwVulkan::ErrorCheck(vkCreateImageView(*logicalDevice, &createInfo, nullptr, &m_imageViews[i]));
 		}
 	}
 

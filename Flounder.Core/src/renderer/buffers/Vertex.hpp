@@ -4,7 +4,6 @@
 
 #include "../../platforms/glfw/GlfwVulkan.hpp"
 
-//#include "../../glm/glm.hpp"
 #include "../../maths/Colour.hpp"
 #include "../../maths/Vector2.hpp"
 #include "../../maths/Vector3.hpp"
@@ -13,8 +12,6 @@ namespace Flounder
 {
 	struct Vertex
 	{
-	//	glm::vec3 position;
-	//	glm::vec3 colour;
 		Vector3 position;
 		Colour colour;
 
