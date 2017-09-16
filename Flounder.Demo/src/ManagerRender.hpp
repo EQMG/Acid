@@ -12,32 +12,13 @@ class ManagerRender :
 private:
 	Vector4 m_infinity;
 
-	//renderershadows *m_rendererShadows;
-	//rendererskyboxes *m_rendererSkyboxes;
-	//rendererterrains *m_rendererTerrains;
-	//rendererwaters *m_rendererWaters;
-	//rendererparticles *m_rendererParticles;
-	//rendererguis *m_rendererGuis;
-	//rendererfonts *m_rendererFonts;
-
-	//fbo *m_fboRenderer;
-	//rendererdeferred *m_rendererDeferred;
-	//filterfxaa *m_filterFxaa;
-	//filterlensflare *m_filterLensFlare;
+	RendererTest *m_rendererTest;
 public:
 	ManagerRender();
 
 	~ManagerRender();
 
+	void CreateCommands(size_t i, std::vector<VkCommandBuffer> commandBuffers) override;
+
 	void Render() override;
-private:
-	void renderWater();
-
-	void renderShadows();
-
-	void renderScene(const Vector4 &clipPlane, const bool &waterPass);
-
-	void renderPost();
-
-	void renderGuis();
 };

@@ -31,7 +31,7 @@ namespace Flounder
 
 		virtual void CreatePipeline(std::vector<VkPipelineShaderStageCreateInfo> *shaderStages) = 0;
 
-		virtual void CreateCommands(size_t i, std::vector<VkCommandBuffer> commandBuffers, VkPipeline graphicsPipeline) = 0;
+		virtual void CreateCommands(size_t i, std::vector<VkCommandBuffer> commandBuffers) = 0;
 
 		/// <summary>
 		/// Called when the renderer is needed to be rendered.
