@@ -18,8 +18,6 @@ void ManagerRender::CreateCommands(size_t i, std::vector<VkCommandBuffer> comman
 
 void ManagerRender::Render()
 {
-	Renderer::Get()->PreRendering();
-
 	Renderer::Get()->BeginReindering();
 	{
 		ICamera *camera = Camera::Get()->GetCamera();
@@ -28,6 +26,4 @@ void ManagerRender::Render()
 		Renderer::Get()->NextSubpass();
 	}
 	Renderer::Get()->EndRendering();
-
-	Renderer::Get()->PostRendering();
 }

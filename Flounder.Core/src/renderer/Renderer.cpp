@@ -103,11 +103,11 @@ namespace Flounder
 	{
 		if (m_managerRender != nullptr)
 		{
-		//	m_managerRender->Render();
+	//		m_managerRender->Render();
 		}
 	}
 
-	void Renderer::PreRendering()
+	void Renderer::BeginReindering()
 	{
 		uint32_t imageIndex;
 		GlfwVulkan::ErrorCheck(vkAcquireNextImageKHR(Display::Get()->GetVkDevice(), m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex));
@@ -120,13 +120,7 @@ namespace Flounder
 			GlfwVulkan::ErrorCheck(vkResetFences(logicalDevice, 1, &m_commandBufferFences[i]));
 
 			GlfwVulkan::ErrorCheck(vkAcquireNextImageKHR(logicalDevice, m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex));
-		}
-	}
 
-	void Renderer::BeginReindering()
-	{
-		for (size_t i = 0; i < m_commandBuffers.size(); i++)
-		{
 			int width = Display::Get()->GetWidth();
 			int height = Display::Get()->GetHeight();
 
@@ -171,19 +165,12 @@ namespace Flounder
 
 	void Renderer::EndRendering()
 	{
-		for (size_t i = 0; i < m_commandBuffers.size(); i++)
-		{
-			vkCmdEndRenderPass(m_commandBuffers[i]);
-		}
-	}
-
-	void Renderer::PostRendering()
-	{
 		uint32_t imageIndex;
 		GlfwVulkan::ErrorCheck(vkAcquireNextImageKHR(Display::Get()->GetVkDevice(), m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), m_imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex));
 
 		for (size_t i = 0; i < m_commandBuffers.size(); i++)
 		{
+			vkCmdEndRenderPass(m_commandBuffers[i]);
 			GlfwVulkan::ErrorCheck(vkEndCommandBuffer(m_commandBuffers[i]));
 
 			VkPipelineStageFlags waitDstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
