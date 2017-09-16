@@ -1,5 +1,4 @@
 #include "Renderer.hpp"
-#include "../test/RendererTest.hpp"
 
 namespace Flounder
 {
@@ -10,7 +9,6 @@ namespace Flounder
 
 		m_renderPass = new RenderPass();
 		m_swapchain = new Swapchain();
-		m_frameBuffers = new FrameBuffers();
 
 		m_commandPool = new CommandPool();
 		m_commandPoolTransfer = new CommandPool();
@@ -28,7 +26,7 @@ namespace Flounder
 
 		m_swapchain->Create(&logicalDevice, &physicalDevice, &surface, window);
 		m_renderPass->Create(&logicalDevice, m_swapchain->GetImageFormat());
-		m_frameBuffers->Create(&logicalDevice, m_renderPass->GetRenderPass(), m_swapchain->GetExtent(), m_swapchain->GetImageViews());
+		m_swapchain->CreateFramebuffers(&logicalDevice, m_renderPass->GetRenderPass());
 		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(&physicalDevice, &surface);
 		m_commandPool->Create(&logicalDevice, &physicalDevice, &surface, indices.graphicsFamily);
 		m_commandPoolTransfer->Create(&logicalDevice, &physicalDevice, &surface, indices.transferFamily, VK_COMMAND_POOL_CREATE_TRANSIENT_BIT);
@@ -44,6 +42,7 @@ namespace Flounder
 		vkDeviceWaitIdle(logicalDevice);
 
 		delete m_managerRender;
+		m_swapchain->CleanupFramebuffers(&logicalDevice);
 		m_swapchain->Cleanup(&logicalDevice);
 		delete m_swapchain;
 
@@ -54,6 +53,8 @@ namespace Flounder
 
 		m_commandPool->Cleanup(&logicalDevice);
 		delete m_commandPool;
+		m_commandPoolTransfer->Cleanup(&logicalDevice);
+		delete m_commandPoolTransfer;
 
 		vkDestroySemaphore(logicalDevice, m_renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(logicalDevice, m_imageAvailableSemaphore, nullptr);
@@ -67,8 +68,8 @@ namespace Flounder
 
 	void Renderer::CreateCommandBuffers()
 	{
-		m_commandBuffers.resize(m_frameBuffers->GetFramebufferSize());
-		m_commandBufferFences.resize(m_frameBuffers->GetFramebufferSize());
+		m_commandBuffers.resize(m_swapchain->GetFramebufferSize());
+		m_commandBufferFences.resize(m_swapchain->GetFramebufferSize());
 
 		VkCommandBufferAllocateInfo allocInfo = {};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -102,7 +103,7 @@ namespace Flounder
 	{
 		if (m_managerRender != nullptr)
 		{
-			m_managerRender->Render();
+		//	m_managerRender->Render();
 		}
 	}
 
@@ -141,7 +142,7 @@ namespace Flounder
 			renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 			renderPassBeginInfo.renderArea = renderArea;
 			renderPassBeginInfo.renderPass = m_renderPass->GetRenderPass();
-			renderPassBeginInfo.framebuffer = m_frameBuffers->GetFramebuffer(static_cast<uint32_t>(i));
+			renderPassBeginInfo.framebuffer = m_swapchain->GetFramebuffer(static_cast<uint32_t>(i));
 			renderPassBeginInfo.clearValueCount = 1;
 			renderPassBeginInfo.pClearValues = &clearColour;
 
