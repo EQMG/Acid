@@ -130,8 +130,11 @@
     <ClInclude Include="src\renderer\buffers\IndexBuffer.hpp" />
     <ClInclude Include="src\renderer\IManagerRender.hpp" />
     <ClInclude Include="src\renderer\IRenderer.hpp" />
+    <ClInclude Include="src\renderer\pass\RenderPass.hpp" />
+    <ClInclude Include="src\renderer\pipelines\Pipeline.hpp" />
     <ClInclude Include="src\renderer\queue\QueueFamily.hpp" />
     <ClInclude Include="src\renderer\Renderer.hpp" />
+    <ClInclude Include="src\renderer\swapchain\FrameBuffers.hpp" />
     <ClInclude Include="src\renderer\swapchain\Swapchain.hpp" />
     <ClInclude Include="src\platforms\glfw\GlfwVulkan.hpp" />
     <ClInclude Include="src\shaders\Shader.hpp" />
@@ -277,8 +280,11 @@
     <ClCompile Include="src\processing\resource\ProcessorResource.cpp" />
     <ClCompile Include="src\renderer\command\CommandPool.cpp" />
     <ClCompile Include="src\renderer\buffers\IndexBuffer.cpp" />
+    <ClCompile Include="src\renderer\pass\RenderPass.cpp" />
+    <ClCompile Include="src\renderer\pipelines\Pipeline.cpp" />
     <ClCompile Include="src\renderer\queue\QueueFamily.cpp" />
     <ClCompile Include="src\renderer\Renderer.cpp" />
+    <ClCompile Include="src\renderer\swapchain\FrameBuffers.cpp" />
     <ClCompile Include="src\renderer\swapchain\Swapchain.cpp" />
     <ClCompile Include="src\shaders\Shader.cpp" />
     <ClCompile Include="src\shadows\RendererShadows.cpp" />
