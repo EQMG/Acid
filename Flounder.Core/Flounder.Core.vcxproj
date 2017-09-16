@@ -365,8 +365,8 @@
     <IntDir>$(LocalDebuggerWorkingDirectory)obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration) $(PlatformTarget)\</OutDir>
-    <IntDir>$(LocalDebuggerWorkingDirectory)obj\$(Configuration) $(PlatformTarget)\</IntDir>
+    <OutDir>$(LocalDebuggerWorkingDirectory)bin\$(Configuration)\</OutDir>
+    <IntDir>$(LocalDebuggerWorkingDirectory)obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

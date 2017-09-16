@@ -60,15 +60,11 @@ namespace Flounder
 	public:
 		void Update() override;
 
-		void PreRendering();
-
 		void BeginReindering();
 
 		void NextSubpass();
 
 		void EndRendering();
-
-		void PostRendering();
 
 		/// <summary>
 		/// Gets the renderer manager.
