@@ -6,8 +6,7 @@ namespace Flounder
 	Swapchain::Swapchain() :
 		m_swapchain(VK_NULL_HANDLE),
 		m_swapchainImages(std::vector<VkImage>()),
-		m_swapchainImageViews(std::vector<VkImageView>()),
-		m_swapchainFramebuffers(std::vector<VkFramebuffer>())
+		m_swapchainImageViews(std::vector<VkImageView>())
 	{
 	}
 
@@ -15,7 +14,7 @@ namespace Flounder
 	{
 	}
 
-	void Swapchain::Create(const VkDevice *logicalDevice, VkPhysicalDevice*physicalDevice, const VkSurfaceKHR *surface, GLFWwindow *window)
+	void Swapchain::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, GLFWwindow *window)
 	{
 		// Gets support details for the swap chain to pass to helper functions.
 		SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(*physicalDevice, *surface);
@@ -65,27 +64,6 @@ namespace Flounder
 		CreateImageViews(logicalDevice);
 	}
 
-	void Swapchain::CreateFramebuffers(const VkDevice *logicalDevice, const VkRenderPass *renderPass)
-	{
-		m_swapchainFramebuffers.resize(m_swapchainImageViews.size());
-
-		for (size_t i = 0; i < m_swapchainImageViews.size(); i++)
-		{
-			VkImageView attachments[] = { m_swapchainImageViews[i] };
-
-			VkFramebufferCreateInfo framebufferInfo = {};
-			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-			framebufferInfo.renderPass = *renderPass;
-			framebufferInfo.attachmentCount = 1;
-			framebufferInfo.pAttachments = attachments;
-			framebufferInfo.width = m_swapchainExtent.width;
-			framebufferInfo.height = m_swapchainExtent.height;
-			framebufferInfo.layers = 1;
-
-			GlfwVulkan::ErrorCheck(vkCreateFramebuffer(*logicalDevice, &framebufferInfo, nullptr, &m_swapchainFramebuffers[i]));
-		}
-	}
-
 	void Swapchain::Cleanup(const VkDevice *logicalDevice)
 	{
 		for (size_t i = 0; i < m_swapchainImageViews.size(); i++)
@@ -94,14 +72,6 @@ namespace Flounder
 		}
 
 		vkDestroySwapchainKHR(*logicalDevice, m_swapchain, VK_NULL_HANDLE);
-	}
-
-	void Swapchain::CleanupFrameBuffers(const VkDevice *logicalDevice)
-	{
-		for (size_t i = 0; i < m_swapchainFramebuffers.size(); i++)
-		{
-			vkDestroyFramebuffer(*logicalDevice, m_swapchainFramebuffers[i], VK_NULL_HANDLE);
-		}
 	}
 
 	void Swapchain::CreateImageViews(const VkDevice* logicalDevice)
@@ -186,7 +156,7 @@ namespace Flounder
 		return availableFormats[0];
 	}
 
-	VkPresentModeKHR Swapchain::ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes) const
+	VkPresentModeKHR Swapchain::ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes) const
 	{
 		VkPresentModeKHR bestMode = VK_PRESENT_MODE_FIFO_KHR;
 

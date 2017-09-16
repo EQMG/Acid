@@ -55,7 +55,12 @@ namespace Flounder
 			vkDestroyShaderModule(*logicalDevice, shaderModule, nullptr);
 		}
 
-		delete m_types;
-		delete m_stages;
+	//	delete m_types;
+	//	delete m_stages;
+	}
+
+	uint8_t *Shader::AllocateUniform(int size, AllocatedUniform *allocatedUniform)
+	{
+		return 0;
 	}
 }

@@ -29,6 +29,5 @@ namespace Flounder
 	void CommandPool::Cleanup(const VkDevice *logicalDevice)
 	{
 		vkDestroyCommandPool(*logicalDevice, m_commandPool, nullptr);
-		m_commandPool = VK_NULL_HANDLE;
 	}
 }

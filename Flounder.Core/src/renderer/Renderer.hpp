@@ -8,7 +8,10 @@
 #include "buffers/IndexBuffer.hpp"
 #include "buffers/VertexBuffer.hpp"
 #include "command/CommandPool.hpp"
+#include "pass/RenderPass.hpp"
+#include "pipelines/Pipeline.hpp"
 #include "queue/QueueFamily.hpp"
+#include "swapchain/FrameBuffers.hpp"
 #include "swapchain/Swapchain.hpp"
 
 #include "IManagerRender.hpp"
@@ -23,24 +26,18 @@ namespace Flounder
 	private:
 		IManagerRender *m_managerRender;
 
-		VkRenderPass m_renderPass;
-		VkPipelineLayout m_pipelineLayout;
-		VkPipeline m_graphicsPipeline;
-
+		RenderPass *m_renderPass;
 		Swapchain *m_swapchain;
+		FrameBuffers *m_frameBuffers;
 
 		CommandPool *m_commandPool;
 		CommandPool *m_commandPoolTransfer;
 
 		std::vector<VkCommandBuffer> m_commandBuffers;
+		std::vector<VkFence > m_commandBufferFences;
 
 		VkSemaphore m_imageAvailableSemaphore;
 		VkSemaphore m_renderFinishedSemaphore;
-
-		RendererTest *m_rendererTest;
-
-		int lastWidth;
-		int lastHeight;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -60,10 +57,22 @@ namespace Flounder
 		/// Deconstructor for the renderer module.
 		/// </summary>
 		~Renderer();
+	private:
+		void CreateCommandBuffers();
 
+		void CreateSemaphores();
+	public:
 		void Update() override;
 
-		void RecreateSwapChain();
+		void PreRendering();
+
+		void BeginReindering();
+
+		void NextSubpass();
+
+		void EndRendering();
+
+		void PostRendering();
 
 		/// <summary>
 		/// Gets the renderer manager.
@@ -81,17 +90,6 @@ namespace Flounder
 
 		CommandPool *GetCommandPoolTransfer() const { return m_commandPoolTransfer; }
 
-	private:
-		void CreateRenderPass();
-
-		void CreateGraphicsPipeline();
-
-		void CreateCommandBuffers();
-
-		void CreateSemaphores();
-
-		void DrawFrame();
-
-		void CleanupSwapChain();
+		VkRenderPass GetRenderPass() const { return m_renderPass->GetRenderPass(); }
 	};
 }

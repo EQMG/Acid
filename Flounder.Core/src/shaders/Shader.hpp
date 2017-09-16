@@ -12,7 +12,11 @@
 
 namespace Flounder
 {
-	class Texture;
+	struct AllocatedUniform
+	{
+		uint32_t bufferOffset;
+		VkDescriptorSet descriptorSet;
+	};
 
 	/// <summary>
 	/// Class that represents a loaded shader.
@@ -47,6 +51,8 @@ namespace Flounder
 		/// Cleans up the shader.
 		/// </summary>
 		void Cleanup(const VkDevice *logicalDevice);
+
+		uint8_t *AllocateUniform(int size, AllocatedUniform *allocatedUniform);
 
 		/// <summary>
 		/// Gets the loaded name for the shader.
