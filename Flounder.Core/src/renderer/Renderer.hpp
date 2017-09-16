@@ -11,15 +11,12 @@
 #include "pass/RenderPass.hpp"
 #include "pipelines/Pipeline.hpp"
 #include "queue/QueueFamily.hpp"
-#include "swapchain/FrameBuffers.hpp"
 #include "swapchain/Swapchain.hpp"
 
 #include "IManagerRender.hpp"
 
 namespace Flounder
 {
-	class RendererTest;
-
 	class Renderer :
 		public IModule
 	{
@@ -28,13 +25,12 @@ namespace Flounder
 
 		RenderPass *m_renderPass;
 		Swapchain *m_swapchain;
-		FrameBuffers *m_frameBuffers;
 
 		CommandPool *m_commandPool;
 		CommandPool *m_commandPoolTransfer;
 
 		std::vector<VkCommandBuffer> m_commandBuffers;
-		std::vector<VkFence > m_commandBufferFences;
+		std::vector<VkFence> m_commandBufferFences;
 
 		VkSemaphore m_imageAvailableSemaphore;
 		VkSemaphore m_renderFinishedSemaphore;
