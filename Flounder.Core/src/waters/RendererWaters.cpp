@@ -21,7 +21,7 @@ namespace Flounder
 		delete m_shader;
 	}
 
-	void RendererWaters::Render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererWaters::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		PrepareRendering(clipPlane, camera);
 		RenderWater(Waters::Get()->GetWater());

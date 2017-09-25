@@ -23,7 +23,7 @@ namespace Flounder
 		poolInfo.queueFamilyIndex = queueFamilyIndex;
 		poolInfo.flags = flags;
 
-		GlfwVulkan::ErrorCheck(vkCreateCommandPool(*logicalDevice, &poolInfo, nullptr, &m_commandPool));
+		GlfwVulkan::ErrorVk(vkCreateCommandPool(*logicalDevice, &poolInfo, nullptr, &m_commandPool));
 	}
 
 	void CommandPool::Cleanup(const VkDevice *logicalDevice)

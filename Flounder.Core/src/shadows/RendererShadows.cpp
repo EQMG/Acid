@@ -18,7 +18,7 @@ namespace Flounder
 		delete m_shader;
 	}
 
-	void RendererShadows::Render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererShadows::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		PrepareRendering(clipPlane, camera);
 

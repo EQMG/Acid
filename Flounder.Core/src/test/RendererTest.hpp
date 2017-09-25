@@ -23,10 +23,6 @@ namespace Flounder
 
 		~RendererTest();
 
-		void CreatePipeline(std::vector<VkPipelineShaderStageCreateInfo> *shaderStages) override;
-
-		void CreateCommands(size_t i, std::vector<VkCommandBuffer> commandBuffers) override;
-
-		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

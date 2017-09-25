@@ -1,18 +1,13 @@
 #pragma once
 
-#include <iostream>
 #include <cassert>
-#include <fstream>
 #include <string>
-#include <map>
-#include <set>
 #include <vector>
-#include <algorithm>
 
 #include "../platforms/glfw/GlfwVulkan.hpp"
 #include "../engine/Engine.hpp"
-#include "../renderer/queue/QueueFamily.hpp"
-#include "../renderer/swapchain/Swapchain.hpp"
+
+#define VK_STANDARD_VALIDATION_LAYER_NAME "VK_LAYER_LUNARG_standard_validation"
 
 namespace Flounder
 {
@@ -23,9 +18,6 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		static const std::vector<const char*> VALIDATION_LAYERS;
-		static const std::vector<const char*> DEVICE_EXTENSIONS;
-
 		int m_windowWidth;
 		int m_windowHeight;
 		int m_fullscreenWidth;
@@ -38,7 +30,7 @@ namespace Flounder
 		bool m_antialiasing;
 		bool m_fullscreen;
 
-		GLFWwindow *m_glfwWindow;
+		GLFWwindow *m_window;
 		bool m_closed;
 		bool m_focused;
 		int m_windowPosX;
@@ -46,20 +38,23 @@ namespace Flounder
 
 		bool m_validationLayers;
 
-		VkInstance m_instance;
-		VkSurfaceKHR m_surface;
-		VkPhysicalDevice m_physicalDevice;
-		VkPhysicalDeviceProperties m_physicalDeviceProperties;
-		VkPhysicalDeviceFeatures m_physicalDeviceFeatures;
-		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
 		std::vector<const char*> m_instanceLayerList;
 		std::vector<const char*> m_instanceExtensionList;
 		std::vector<const char*> m_deviceExtensionList;
 		VkDebugReportCallbackEXT m_debugReport;
-		VkDevice m_device;
 
-		VkQueue m_displayQueue;
-		VkQueue m_transferQueue;
+		VkInstance m_instance;
+		VkSurfaceKHR m_surface;
+		VkSurfaceCapabilitiesKHR m_surfaceCapabilities;
+		VkSurfaceFormatKHR m_surfaceFormat;
+		VkDevice m_device;
+		VkQueue m_queue;
+
+		VkPhysicalDevice m_physicalDevice;
+		VkPhysicalDeviceProperties m_physicalDeviceProperties;
+		VkPhysicalDeviceFeatures m_physicalDeviceFeatures;
+		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
+		uint32_t m_graphicsFamilyIndex;
 
 		friend void CallbackError(int error, const char *description);
 
@@ -213,7 +208,7 @@ namespace Flounder
 		/// Gets the current GLFW window.
 		/// </summary>
 		/// <returns> The current GLFW window. </returns>
-		GLFWwindow *GetGlfwWindow() const { return m_glfwWindow; }
+		GLFWwindow *GetWindow() const { return m_window; }
 
 		/// <summary>
 		/// Gets if the GLFW display is closed.
@@ -239,41 +234,32 @@ namespace Flounder
 		/// <returns> The windows Y position. </returns>
 		int GetWindowYPos() const { return m_windowPosY; }
 
-		/// <summary>
-		/// Gets the current Vulkan instance.
-		/// </summary>
-		/// <returns> The current Vulkan instance. </returns>
-		VkInstance GetVkInstance() { return m_instance; }
 
-		/// <summary>
-		/// Gets the current Vulkan surface.
-		/// </summary>
-		/// <returns> The current Vulkan surface. </returns>
-		VkSurfaceKHR GetVkSurface() { return m_surface; }
+		VkInstance GetInstance() const { return m_instance; }
 
-		/// <summary>
-		/// Gets the current Vulkan physical device (gpu).
-		/// </summary>
-		/// <returns> The current Vulkan physical device (gpu). </returns>
-		VkPhysicalDevice GetVkPhysicalDevice() { return m_physicalDevice; }
+		VkSurfaceKHR GetSurface() const { return m_surface; }
 
-		VkPhysicalDeviceProperties GetVkPhysicalDeviceProperties() { return m_physicalDeviceProperties; }
+		VkSurfaceCapabilitiesKHR GetSurfaceCapabilities() const { return m_surfaceCapabilities; }
 
-		VkPhysicalDeviceFeatures GetVkPhysicalDeviceFeatures() { return m_physicalDeviceFeatures; }
+		VkSurfaceFormatKHR GetSurfaceFormat() const { return m_surfaceFormat; }
 
-		VkPhysicalDeviceMemoryProperties GetVkPhysicalDeviceMemoryProperties() { return m_physicalDeviceMemoryProperties; }
+		VkDevice GetDevice() const { return m_device; }
 
-		/// <summary>
-		/// Gets the current Vulkan device.
-		/// </summary>
-		/// <returns> The current Vulkan device. </returns>
-		VkDevice GetVkDevice() { return m_device; }
+		VkQueue GetQueue() const { return m_queue; }
 
-		VkQueue GetVkDisplayQueue() { return m_displayQueue; }
+		VkPhysicalDevice GetPhysicalDevice() const { return m_physicalDevice; }
 
-		VkQueue GetVkTransferQueue() { return m_transferQueue; }
+		VkPhysicalDeviceProperties GetPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
+
+		VkPhysicalDeviceFeatures GetPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
+
+		VkPhysicalDeviceMemoryProperties GetPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
+
+		uint32_t GetGraphicsFamilyIndex() const { return m_graphicsFamilyIndex; }
 	private:
 		void CreateGlfw();
+
+		void CreateVulkan();
 
 		void SetupLayers();
 
@@ -281,16 +267,16 @@ namespace Flounder
 
 		void CreateInstance();
 
-		void SetupDebugCallback();
+		void CreateDebugCallback();
+
+		void CreatePhysicalDevice();
+
+		void CreateLogicalDevice();
 
 		void CreateSurface();
 
-		void PickPhysicalDevice();
+		void LogVulkanDevice(VkPhysicalDeviceProperties physicalDeviceProperties, VkPhysicalDeviceFeatures physicalDeviceFeatures, VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties);
 
-		int RateDeviceSuitability(VkPhysicalDevice deviceToRate);
-
-		bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
-
-		void CreateLogicalDevice();
+		void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription);
 	};
 }

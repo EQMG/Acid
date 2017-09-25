@@ -32,9 +32,9 @@ namespace Flounder
 
 	Model::~Model()
 	{
-		VkDevice logicalDevice = Display::Get()->GetVkDevice();
+		//const auto device = Display::Get()->GetDevice();
 
-		//m_vertexBuffer->Cleanup(&logicalDevice);
+		//m_vertexBuffer->Cleanup(&device);
 		delete m_vertexBuffer;
 
 		delete m_vertices;
