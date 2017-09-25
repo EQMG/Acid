@@ -26,7 +26,7 @@ namespace Flounder
 		bufferInfo.pQueueFamilyIndices = indicesArray;
 		bufferInfo.queueFamilyIndexCount = 2;
 
-		GlfwVulkan::ErrorCheck(vkCreateBuffer(*logicalDevice, &bufferInfo, nullptr, &m_buffer));
+		GlfwVulkan::ErrorVk(vkCreateBuffer(*logicalDevice, &bufferInfo, nullptr, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memRequirements;
@@ -37,7 +37,7 @@ namespace Flounder
 		allocateInfo.allocationSize = memRequirements.size;
 		allocateInfo.memoryTypeIndex = FindMemoryType(*physicalDevice, memRequirements.memoryTypeBits, properties);
 
-		GlfwVulkan::ErrorCheck(vkAllocateMemory(*logicalDevice, &allocateInfo, nullptr, &m_bufferMemory));
+		GlfwVulkan::ErrorVk(vkAllocateMemory(*logicalDevice, &allocateInfo, nullptr, &m_bufferMemory));
 
 		vkBindBufferMemory(*logicalDevice, m_buffer, m_bufferMemory, 0);
 	}

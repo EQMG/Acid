@@ -45,10 +45,10 @@ namespace Flounder
 		}
 
 		// Sets the mouses callbacks.
-		glfwSetScrollCallback(Display::Get()->GetGlfwWindow(), CallbackScroll);
-		glfwSetMouseButtonCallback(Display::Get()->GetGlfwWindow(), CallbackMouseButton);
-		glfwSetCursorPosCallback(Display::Get()->GetGlfwWindow(), CallbackCursorPos);
-		glfwSetCursorEnterCallback(Display::Get()->GetGlfwWindow(), CallbackCursorEnter);
+		glfwSetScrollCallback(Display::Get()->GetWindow(), CallbackScroll);
+		glfwSetMouseButtonCallback(Display::Get()->GetWindow(), CallbackMouseButton);
+		glfwSetCursorPosCallback(Display::Get()->GetWindow(), CallbackCursorPos);
+		glfwSetCursorEnterCallback(Display::Get()->GetWindow(), CallbackCursorEnter);
 	}
 
 	Mouse::~Mouse()
@@ -106,7 +106,7 @@ namespace Flounder
 			image->height = height;
 
 			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
-			glfwSetCursor(Display::Get()->GetGlfwWindow(), cursor);
+			glfwSetCursor(Display::Get()->GetWindow(), cursor);
 			stbi_image_free(data);
 		}
 	}
@@ -115,11 +115,11 @@ namespace Flounder
 	{
 		if (m_cursorDisabled != disabled)
 		{
-			glfwSetInputMode(Display::Get()->GetGlfwWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
+			glfwSetInputMode(Display::Get()->GetWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
 
 			if (!disabled && m_cursorDisabled)
 			{
-				glfwSetCursorPos(Display::Get()->GetGlfwWindow(), m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
+				glfwSetCursorPos(Display::Get()->GetWindow(), m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
 			}
 		}
 
@@ -138,6 +138,6 @@ namespace Flounder
 
 	void Mouse::SetPosition(const float &cursorX, const float &cursorY)
 	{
-		glfwSetCursorPos(Display::Get()->GetGlfwWindow(), static_cast<double>(cursorX), static_cast<double>(cursorY));
+		glfwSetCursorPos(Display::Get()->GetWindow(), static_cast<double>(cursorX), static_cast<double>(cursorY));
 	}
 }

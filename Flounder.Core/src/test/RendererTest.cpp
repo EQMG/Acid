@@ -31,21 +31,21 @@ namespace Flounder
 		m_vertexBuffer = new VertexBuffer(triangleVertices);
 		m_indexBuffer = new IndexBuffer(triangleIndices);
 
-		VkDevice logicalDevice = Display::Get()->GetVkDevice();
-		VkPhysicalDevice physicalDevice = Display::Get()->GetVkPhysicalDevice();
-		VkSurfaceKHR surface = Display::Get()->GetVkSurface();
-		VkQueue transferQueue = Display::Get()->GetVkTransferQueue();
+		VkDevice logicalDevice = Display::Get()->GetDevice();
+		VkPhysicalDevice physicalDevice = Display::Get()->GetPhysicalDevice();
+		VkSurfaceKHR surface = Display::Get()->GetSurface();
+		VkQueue queue = Display::Get()->GetQueue();
 		VkCommandPool *commandPool = commandPoolTransfer->GetCommandPool();
 
 		m_shader->Create(&logicalDevice);
 		m_pipeline->Create(&logicalDevice, renderPass);
-		m_vertexBuffer->Create(&logicalDevice, &physicalDevice, &surface, commandPool, &transferQueue);
-		m_indexBuffer->Create(&logicalDevice, &physicalDevice, &surface, commandPool, &transferQueue);
+		m_vertexBuffer->Create(&logicalDevice, &physicalDevice, &surface, commandPool, &queue);
+		m_indexBuffer->Create(&logicalDevice, &physicalDevice, &surface, commandPool, &queue);
 	}
 
 	RendererTest::~RendererTest()
 	{
-		VkDevice logicalDevice = Display::Get()->GetVkDevice();
+		VkDevice logicalDevice = Display::Get()->GetDevice();
 
 		m_shader->Cleanup(&logicalDevice);
 		delete m_shader;
@@ -60,25 +60,14 @@ namespace Flounder
 		delete m_indexBuffer;
 	}
 
-	void RendererTest::CreatePipeline(std::vector<VkPipelineShaderStageCreateInfo> *shaderStages)
+	void RendererTest::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		for (auto stage : *m_shader->GetStages())
-		{
-			shaderStages->push_back(stage);
-		}
-	}
-
-	void RendererTest::CreateCommands(size_t i, std::vector<VkCommandBuffer> commandBuffers)
-	{
-		vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 		VkDeviceSize offsets[] = { 0 };
-		vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, m_vertexBuffer->GetBuffer(), offsets);
-		vkCmdBindIndexBuffer(commandBuffers[i], *m_indexBuffer->GetBuffer(), 0, VK_INDEX_TYPE_UINT16);
-		vkCmdDrawIndexed(commandBuffers[i], m_indexBuffer->GetIndicesSize(), 1, 0, 0, 0);
-	}
+		vkCmdBindVertexBuffers(*commandBuffer, 0, 1, m_vertexBuffer->GetBuffer(), offsets);
+		vkCmdBindIndexBuffer(*commandBuffer, *m_indexBuffer->GetBuffer(), 0, VK_INDEX_TYPE_UINT16);
+		vkCmdDrawIndexed(*commandBuffer, m_indexBuffer->GetIndicesSize(), 1, 0, 0, 0);
 
-	void RendererTest::Render(const Vector4 &clipPlane, const ICamera &camera)
-	{
 	/*	AllocatedUniform uboAllocated;
 		UboTest *ubo = reinterpret_cast<UboTest*>(m_shader->AllocateUniform(sizeof(UboTest), &uboAllocated));
 		ubo->memes = true;

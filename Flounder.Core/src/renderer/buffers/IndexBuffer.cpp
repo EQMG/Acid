@@ -16,7 +16,7 @@ namespace Flounder
 	{
 	}
 
-	void IndexBuffer::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkCommandPool *transferCommandPool, const VkQueue *transferQueue)
+	void IndexBuffer::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkCommandPool *transferCommandPool, const VkQueue *queue)
 	{
 		VkDeviceSize bufferSize = sizeof(m_indices[0]) * m_indices.size();
 		Buffer bufferStaging = Buffer();
@@ -24,7 +24,7 @@ namespace Flounder
 		CopyVerticesToBuffer(logicalDevice, bufferSize, bufferStaging);
 
 		Buffer::Create(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		CopyBuffer(logicalDevice, transferCommandPool, *bufferStaging.GetBuffer(), *GetBuffer(), bufferSize, transferQueue);
+		CopyBuffer(logicalDevice, transferCommandPool, *bufferStaging.GetBuffer(), *GetBuffer(), bufferSize, queue);
 
 		bufferStaging.Cleanup(logicalDevice);
 	}
@@ -49,7 +49,7 @@ namespace Flounder
 		vkUnmapMemory(*logicalDevice, *bufferStaging.GetBufferMemory());
 	}
 
-	void IndexBuffer::CopyBuffer(const VkDevice *logicalDevice, const VkCommandPool *transferCommandPool, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, const VkQueue *transferQueue)
+	void IndexBuffer::CopyBuffer(const VkDevice *logicalDevice, const VkCommandPool *transferCommandPool, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, const VkQueue *queue)
 	{
 		// Makes a temporary command buffer for the memory transfer operation.
 		VkCommandBufferAllocateInfo allocInfo = {};
@@ -77,8 +77,8 @@ namespace Flounder
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &commandBuffer;
 
-		vkQueueSubmit(*transferQueue, 1, &submitInfo, VK_NULL_HANDLE);
-		vkQueueWaitIdle(*transferQueue);
+		vkQueueSubmit(*queue, 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(*queue);
 
 		vkFreeCommandBuffers(*logicalDevice, *transferCommandPool, 1, &commandBuffer);
 	}

@@ -1,11 +1,7 @@
 #include "Display.hpp"
-#include "../renderer/swapchain/Swapchain.hpp"
 
 namespace Flounder
 {
-	const std::vector<const char*> Display::VALIDATION_LAYERS = {"VK_LAYER_LUNARG_standard_validation"}; 
-	const std::vector<const char*> Display::DEVICE_EXTENSIONS = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
-
 	void CallbackError(int error, const char *description)
 	{
 		fprintf(stderr, "GLFW Error: %s\n", description);
@@ -94,7 +90,7 @@ namespace Flounder
 		m_fpsLimit(-1.0f),
 		m_antialiasing(true),
 		m_fullscreen(false),
-		m_glfwWindow(nullptr),
+		m_window(nullptr),
 		m_closed(false),
 		m_focused(true),
 		m_windowPosX(0),
@@ -103,29 +99,26 @@ namespace Flounder
 		m_validationLayers(true),
 #else
 		m_validationLayers(false),
-#endif
-		m_instance(VK_NULL_HANDLE),
-		m_surface(VK_NULL_HANDLE),
-		m_physicalDevice(VK_NULL_HANDLE),
-		m_physicalDeviceProperties(VkPhysicalDeviceProperties()),
-		m_physicalDeviceFeatures(VkPhysicalDeviceFeatures()),
-		m_physicalDeviceMemoryProperties(VkPhysicalDeviceMemoryProperties()),
-		m_instanceLayerList(std::vector<const char*>()),
+#endif	m_instanceLayerList(std::vector<const char*>()),
 		m_instanceExtensionList(std::vector<const char*>()),
 		m_deviceExtensionList(std::vector<const char*>()),
 		m_debugReport(VK_NULL_HANDLE),
+
+		m_instance(VK_NULL_HANDLE),
+		m_surface(VK_NULL_HANDLE),
+		m_surfaceCapabilities({}),
+		m_surfaceFormat({}),
 		m_device(VK_NULL_HANDLE),
-		m_displayQueue(VK_NULL_HANDLE),
-		m_transferQueue(VK_NULL_HANDLE)
+		m_queue(VK_NULL_HANDLE),
+
+		m_physicalDevice(VK_NULL_HANDLE),
+		m_physicalDeviceProperties({}),
+		m_physicalDeviceFeatures({}),
+		m_physicalDeviceMemoryProperties({}),
+		m_graphicsFamilyIndex(0)
 	{
 		CreateGlfw();
-		SetupLayers();
-		SetupExtensions();
-		CreateInstance();
-		SetupDebugCallback();
-		CreateSurface();
-		PickPhysicalDevice();
-		CreateLogicalDevice();
+		CreateVulkan();
 	}
 
 	Display::~Display()
@@ -140,7 +133,7 @@ namespace Flounder
 		vkDestroyInstance(m_instance, nullptr);
 
 		// Free the window callbacks and destroy the window.
-		glfwDestroyWindow(m_glfwWindow);
+		glfwDestroyWindow(m_window);
 
 		// Terminate GLFW.
 		glfwTerminate();
@@ -167,13 +160,13 @@ namespace Flounder
 		m_windowWidth = width;
 		m_windowHeight = height;
 		m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-		glfwSetWindowSize(m_glfwWindow, width, height);
+		glfwSetWindowSize(m_window, width, height);
 	}
 
 	void Display::SetTitle(const std::string &title)
 	{
 		m_title = title;
-		glfwSetWindowTitle(m_glfwWindow, m_title.c_str());
+		glfwSetWindowTitle(m_window, m_title.c_str());
 	}
 
 	void Display::SetIcon(const std::string &icon)
@@ -199,7 +192,7 @@ namespace Flounder
 				icons[0].width = width;
 				icons[0].height = height;
 
-				glfwSetWindowIcon(m_glfwWindow, 1, icons);
+				glfwSetWindowIcon(m_window, 1, icons);
 			}
 
 			stbi_image_free(data);
@@ -223,14 +216,14 @@ namespace Flounder
 			printf("Display is going fullscreen.\n");
 			m_fullscreenWidth = videoMode->width;
 			m_fullscreenHeight = videoMode->height;
-			glfwSetWindowMonitor(m_glfwWindow, monitor, 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
+			glfwSetWindowMonitor(m_window, monitor, 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
 		}
 		else
 		{
 			printf("Display is going windowed.\n");
 			m_windowPosX = (videoMode->width - m_windowWidth) / 2;
 			m_windowPosY = (videoMode->height - m_windowHeight) / 2;
-			glfwSetWindowMonitor(m_glfwWindow, nullptr, m_windowPosX, m_windowPosY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
+			glfwSetWindowMonitor(m_window, nullptr, m_windowPosX, m_windowPosY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
 		}
 	}
 
@@ -240,16 +233,10 @@ namespace Flounder
 		glfwSetErrorCallback(CallbackError);
 
 		// Initialize the GLFW library.
-		if (!glfwInit())
-		{
-			throw std::runtime_error("Failed to init GLFW!");
-		}
+		GlfwVulkan::ErrorGlfw(glfwInit());
 
 		// Checks Vulkan support on GLFW.
-		if (!glfwVulkanSupported())
-		{
-			throw std::runtime_error("GLFW does not support Vulkan compute!");
-		}
+		GlfwVulkan::ErrorGlfw(glfwVulkanSupported());
 
 		// Configures the window.
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
@@ -273,10 +260,10 @@ namespace Flounder
 		}
 
 		// Create a windowed mode window and its OpenGL context.
-		m_glfwWindow = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
+		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
 
 		// Gets any window errors.
-		if (m_glfwWindow == nullptr)
+		if (m_window == nullptr)
 		{
 			glfwTerminate();
 			throw std::runtime_error("Filed to create the GLFW window!");
@@ -285,18 +272,30 @@ namespace Flounder
 		// Centre the window position.
 		m_windowPosX = (videoMode->width - m_windowWidth) / 2;
 		m_windowPosY = (videoMode->height - m_windowHeight) / 2;
-		glfwSetWindowPos(m_glfwWindow, m_windowPosX, m_windowPosY);
+		glfwSetWindowPos(m_window, m_windowPosX, m_windowPosY);
 
 		// Shows the Vulkan window.
-		glfwShowWindow(m_glfwWindow);
+		glfwShowWindow(m_window);
 
 		// Sets the displays callbacks.
-		glfwSetWindowUserPointer(m_glfwWindow, this);
-		glfwSetWindowCloseCallback(m_glfwWindow, CallbackClose);
-		glfwSetWindowFocusCallback(m_glfwWindow, CallbackFocus);
-		glfwSetWindowPosCallback(m_glfwWindow, CallbackPosition);
-		glfwSetWindowSizeCallback(m_glfwWindow, CallbackSize);
-		glfwSetFramebufferSizeCallback(m_glfwWindow, CallbackFrame);
+		glfwSetWindowUserPointer(m_window, this);
+		glfwSetWindowCloseCallback(m_window, CallbackClose);
+		glfwSetWindowFocusCallback(m_window, CallbackFocus);
+		glfwSetWindowPosCallback(m_window, CallbackPosition);
+		glfwSetWindowSizeCallback(m_window, CallbackSize);
+		glfwSetFramebufferSizeCallback(m_window, CallbackFrame);
+	}
+
+	void Display::CreateVulkan()
+	{
+		// Creates Vulkan.
+		SetupLayers();
+		SetupExtensions();
+		CreateInstance();
+		CreateDebugCallback();
+		CreatePhysicalDevice();
+		CreateLogicalDevice();
+		CreateSurface();
 	}
 
 	void Display::SetupLayers()
@@ -304,33 +303,14 @@ namespace Flounder
 		// Sets up the layers.
 		if (m_validationLayers)
 		{
-			uint32_t layerCount = 0;
-			vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
-
-			std::vector<VkLayerProperties> instanceLayerProperties(layerCount);
-			vkEnumerateInstanceLayerProperties(&layerCount, instanceLayerProperties.data());
-
-			for (auto layerName : VALIDATION_LAYERS)
-			{
-				bool layerFound = false;
-
-				for (auto layerProperties : instanceLayerProperties)
-				{
-					if (strcmp(layerName, layerProperties.layerName) == 0)
-					{
-						layerFound = true;
-						break;
-					}
-				}
-
-				if (!layerFound)
-				{
-					throw std::runtime_error("Could not find Vulkan validation layer: " + std::string(layerName));
-				}
-			}
+			uint32_t instanceLayerPropertyCount;
+			vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, nullptr);
+			std::vector<VkLayerProperties> instanceLayerProperties(instanceLayerPropertyCount);
+			vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, instanceLayerProperties.data());
+			LogVulkanLayers(instanceLayerProperties, "Instance", false);
 		}
 
-		m_instanceLayerList.push_back("VK_LAYER_LUNARG_standard_validation");
+		m_instanceLayerList.push_back(VK_STANDARD_VALIDATION_LAYER_NAME);
 	}
 
 	void Display::SetupExtensions()
@@ -345,224 +325,156 @@ namespace Flounder
 		}
 
 		m_instanceExtensionList.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
-
 		m_deviceExtensionList.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 	}
 
 	void Display::CreateInstance()
 	{
-		// Sets up the instance.
-		VkApplicationInfo applicationInfo = VkApplicationInfo();
+		VkApplicationInfo applicationInfo = {};
 		applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 		applicationInfo.pApplicationName = m_title.c_str();
 		applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
 		applicationInfo.pEngineName = "Flounder";
-		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 1, 0);
-		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 0);
+		applicationInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 50);
 
-		VkInstanceCreateInfo instanceCreateInfo = VkInstanceCreateInfo();
+		VkInstanceCreateInfo instanceCreateInfo = {};
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		instanceCreateInfo.pApplicationInfo = &applicationInfo;
-
-		if (m_validationLayers)
-		{
-			instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
-			instanceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
-		}
-		else
-		{
-			instanceCreateInfo.enabledLayerCount = 0;
-		}
-
+		instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
+		instanceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
 		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
-		GlfwVulkan::ErrorCheck(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
+		GlfwVulkan::ErrorVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 	}
 
-	void Display::SetupDebugCallback()
+	void Display::CreateDebugCallback()
 	{
-		// Sets up the debug callbacks.
 		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = VkDebugReportCallbackCreateInfoEXT();
 		debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
 		debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT;
-		/*debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_INFORMATION_BIT_EXT |
-			VK_DEBUG_REPORT_WARNING_BIT_EXT |
-			VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT |
-			VK_DEBUG_REPORT_ERROR_BIT_EXT |
-			VK_DEBUG_REPORT_DEBUG_BIT_EXT;*/
 		debugCallBackCreateInfo.pfnCallback = VkCallbackDebug;
 
-		// Inits debuging.
-		if (m_validationLayers)
+		GlfwVulkan::ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
+	}
+
+	void Display::CreatePhysicalDevice()
+	{
+		uint32_t physicalDeviceCount;
+		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, nullptr);
+		std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
+		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, physicalDevices.data());
+
+		m_physicalDevice = physicalDevices[0]; // TODO: Find the best GPU.
+
+		assert(m_physicalDevice && "Vulkan runtime error, failed to find a suitable gpu!");
+
+		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
+		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
+		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
+
+		LogVulkanDevice(m_physicalDeviceProperties, m_physicalDeviceFeatures, m_physicalDeviceMemoryProperties);
+
+		uint32_t deviceQueueFamilyPropertyCount;
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
+		std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount,
+			deviceQueueFamilyProperties.data());
+
+		bool foundQueueFamily = false;
+
+		for (uint32_t i = 0; i < deviceQueueFamilyPropertyCount; i++)
 		{
-			GlfwVulkan::ErrorCheck(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
+			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
+			{
+				m_graphicsFamilyIndex = i;
+			}
 		}
+
+		assert(!foundQueueFamily && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+	}
+
+	void Display::CreateLogicalDevice()
+	{
+		float queuePriorities[] = { 1.0f };
+		VkDeviceQueueCreateInfo deviceQueueCreateInfo = {};
+		deviceQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		deviceQueueCreateInfo.queueFamilyIndex = m_graphicsFamilyIndex;
+		deviceQueueCreateInfo.queueCount = 1;
+		deviceQueueCreateInfo.pQueuePriorities = queuePriorities;
+
+		VkDeviceCreateInfo deviceCreateInfo = {};
+		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+		deviceCreateInfo.queueCreateInfoCount = 1;
+		deviceCreateInfo.pQueueCreateInfos = &deviceQueueCreateInfo;
+		deviceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
+		deviceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
+		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size());
+		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
+
+		GlfwVulkan::ErrorVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_device));
+
+		vkGetDeviceQueue(m_device, m_graphicsFamilyIndex, 0, &m_queue);
 	}
 
 	void Display::CreateSurface()
 	{
 		// Creates the Vulkan-GLFW surface.
-		GlfwVulkan::ErrorCheck(glfwCreateWindowSurface(m_instance, m_glfwWindow, nullptr, &m_surface));
-	}
+		GlfwVulkan::ErrorVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
 
-	void Display::PickPhysicalDevice()
-	{
-		uint32_t physicalDeviceCount = 0;
-		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, nullptr);
+		GlfwVulkan::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
 
-		if (physicalDeviceCount == 0)
-		{
-			throw std::runtime_error("No devices with Vulkan support found");
-		}
+		VkBool32 presentSupport = false;
+		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_graphicsFamilyIndex, m_surface, &presentSupport);
+		assert(presentSupport && "Vulkan runtime error, failed to find a physical surface!");
 
-		std::vector<VkPhysicalDevice> foundPhysicalDevices(physicalDeviceCount);
-		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, foundPhysicalDevices.data());
+		uint32_t physicalDeviceFormatCount = 0;
+		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, nullptr);
+		std::vector<VkSurfaceFormatKHR> physicalDeviceFormats(physicalDeviceFormatCount);
+		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount,
+			physicalDeviceFormats.data());
 
-		// map to hold devices and sort by rank
-		std::multimap<int, VkPhysicalDevice> rankedDevices;
-		// iterate through all devices and rate their suitability
-		for (const auto& currentDevice : foundPhysicalDevices)
+		m_surfaceFormat.format = VK_FORMAT_B8G8R8A8_UNORM;
+		m_surfaceFormat.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
+
+		if (physicalDeviceFormats[0].format != VK_FORMAT_UNDEFINED)
 		{
-			int score = RateDeviceSuitability(currentDevice);
-			rankedDevices.insert(std::make_pair(score, currentDevice));
-		}
-		// check to make sure the best candidate scored higher than 0
-		// rbegin points to last element of ranked devices(highest rated), first is its rating 
-		if (rankedDevices.rbegin()->first > 0)
-		{
-			// return the second value of the highest rated device (its VkPhysicalDevice component)
-			m_physicalDevice = rankedDevices.rbegin()->second;
-			std::cout << "Physical device selected" << std::endl;
-		}
-		else
-		{
-			throw std::runtime_error("No physical devices meet necessary criteria");
+			m_surfaceFormat = physicalDeviceFormats[0];
 		}
 	}
 
-	int Display::RateDeviceSuitability(VkPhysicalDevice deviceToRate)
+	void Display::LogVulkanDevice(VkPhysicalDeviceProperties physicalDeviceProperties,
+		VkPhysicalDeviceFeatures physicalDeviceFeatures, VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties)
 	{
-		int score = 0;
+		printf("Device Name: %s\n", physicalDeviceProperties.deviceName);
+		printf("Device Type: %i\n", physicalDeviceProperties.deviceType);
 
-		/// adjust score based on queue families 
-		//find an index of a queue family which contiains the necessary commands
-		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(&deviceToRate, &m_surface);
-		//check if the requested extensions are supported
-		bool extensionsSupported = CheckDeviceExtensionSupport(deviceToRate);
-		//return a 0 score if this device has no suitable family
-		if (!indices.IsComplete() || !extensionsSupported)
-		{
-			return 0;
-		}
-
-		/// check if this device has an adequate swap chain
-		bool swapChainAdequate = false;
-		SwapChainSupportDetails swapChainSupport = Swapchain::QuerySwapChainSupport(deviceToRate, m_surface);
-		swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
-		if (!swapChainAdequate)
-		{
-			return 0;
-		}
-
-		// obtain the device features and properties of the current device being rated		
-		VkPhysicalDeviceProperties deviceProperties;
-		VkPhysicalDeviceFeatures deviceFeatures;
-		vkGetPhysicalDeviceProperties(deviceToRate, &deviceProperties);
-		vkGetPhysicalDeviceFeatures(deviceToRate, &deviceFeatures);
-
-		///adjust score based on properties
-		// add a large score boost for discrete GPUs (dedicated graphics cards)
-		if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
-		{
-			score += 1000;
-		}
-
-		// give a higher score to devices with a higher maximum texture size
-		score += deviceProperties.limits.maxImageDimension2D;
-
-		///adjust score based on features
-		//only allow a device if it supports geometry shaders
-		if (!deviceFeatures.geometryShader)
-		{
-			return 0;
-		}
-		return score;
+		uint32_t supportedVersion[] = {
+			VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion),
+			VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
+			VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)
+		};
+		printf("Device Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
 	}
 
-	bool Display::CheckDeviceExtensionSupport(VkPhysicalDevice device)
+	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type,
+		const bool &showDescription)
 	{
-		uint32_t extensionCount;
-		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+		printf("Supported %s Layers: ", type.c_str());
 
-		std::vector<VkExtensionProperties> availableExtensions(extensionCount);
-		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
-
-		//iterate through all extensions requested
-		for (const char* currentExtension : DEVICE_EXTENSIONS)
+		for (auto layer : layerProperties)
 		{
-			bool extensionFound = false;
-			//check if the extension is in the available extensions
-			for (const auto& extension : availableExtensions)
+			if (showDescription)
 			{
-				if (strcmp(currentExtension, extension.extensionName) == 0)
-				{
-					extensionFound = true;
-					break;
-				}
+				printf("\n    %s   | %s, ", layer.layerName, layer.description);
 			}
-			if (!extensionFound)
+			else
 			{
-				return false;
+				printf("%s, ", layer.layerName);
 			}
 		}
-		return true;
-	}
 
-	void Display::CreateLogicalDevice()
-	{
-		// Finds the indice queues.
-		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(&m_physicalDevice, &m_surface);
-
-		std::set<int> uniqueQueueFamilies = { indices.graphicsFamily, indices.transferFamily };
-		std::vector<VkDeviceQueueCreateInfo> queueCreateInfoList;
-		float quePriorities[] = {1.0f};
-
-		for (auto queueFamily : uniqueQueueFamilies)
-		{
-			VkDeviceQueueCreateInfo queueCreateInfo = {};
-			queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-			queueCreateInfo.queueFamilyIndex = indices.graphicsFamily;
-			queueCreateInfo.queueCount = 1;
-			queueCreateInfo.pQueuePriorities = quePriorities;
-			queueCreateInfoList.push_back(queueCreateInfo);
-		}
-
-		// Creates the Vulkan device object.
-		VkPhysicalDeviceFeatures deviceFeatures = {};
-
-		VkDeviceCreateInfo deviceCreateInfo = {};
-		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-		deviceCreateInfo.queueCreateInfoCount = (uint32_t) queueCreateInfoList.size();
-		deviceCreateInfo.pQueueCreateInfos = queueCreateInfoList.data();
-
-		if (m_validationLayers)
-		{
-			deviceCreateInfo.enabledLayerCount = (uint32_t) m_instanceLayerList.size();
-			deviceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
-		}
-		else
-		{
-			deviceCreateInfo.enabledLayerCount = 0;
-		}
-
-		deviceCreateInfo.enabledExtensionCount = (uint32_t) m_deviceExtensionList.size();
-		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
-		deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
-
-		GlfwVulkan::ErrorCheck(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_device));
-
-		vkGetDeviceQueue(m_device, indices.graphicsFamily, 0, &m_displayQueue);
-		vkGetDeviceQueue(m_device, indices.transferFamily, 0, &m_transferQueue);
+		printf("\n");
 	}
 }
