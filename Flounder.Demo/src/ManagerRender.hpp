@@ -18,7 +18,5 @@ public:
 
 	~ManagerRender();
 
-	void CreateCommands(size_t i, std::vector<VkCommandBuffer> commandBuffers) override;
-
-	void Render() override;
+	void Render(const VkCommandBuffer *commandBuffer) override;
 };

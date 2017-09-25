@@ -29,15 +29,11 @@ namespace Flounder
 		{
 		}
 
-		virtual void CreatePipeline(std::vector<VkPipelineShaderStageCreateInfo> *shaderStages) = 0;
-
-		virtual void CreateCommands(size_t i, std::vector<VkCommandBuffer> commandBuffers) = 0;
-
 		/// <summary>
 		/// Called when the renderer is needed to be rendered.
 		/// </summary>
 		/// <param name="clipPlane"> The current clip plane. </param>
 		/// <param name="camera"> The camera to be used when rendering. </param>
-		virtual void Render(const Vector4 &clipPlane, const ICamera &camera) = 0;
+		virtual void Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera) = 0;
 	};
 }

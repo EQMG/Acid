@@ -33,8 +33,8 @@ namespace Flounder
 		}
 
 		// Sets the keyboards callbacks.
-		glfwSetKeyCallback(Display::Get()->GetGlfwWindow(), CallbackKey);
-		glfwSetCharCallback(Display::Get()->GetGlfwWindow(), CallbackChar);
+		glfwSetKeyCallback(Display::Get()->GetWindow(), CallbackKey);
+		glfwSetCharCallback(Display::Get()->GetWindow(), CallbackChar);
 	}
 
 	Keyboard::~Keyboard()

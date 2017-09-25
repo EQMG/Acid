@@ -19,7 +19,7 @@ namespace Flounder
 		delete m_model;
 	}
 
-	void RendererGuis::Render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererGuis::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		PrepareRendering(clipPlane, camera);
 

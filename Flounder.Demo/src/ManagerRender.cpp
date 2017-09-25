@@ -11,19 +11,17 @@ ManagerRender::~ManagerRender()
 	delete m_rendererTest;
 }
 
-void ManagerRender::CreateCommands(size_t i, std::vector<VkCommandBuffer> commandBuffers)
+void ManagerRender::Render(const VkCommandBuffer *commandBuffer)
 {
-	m_rendererTest->CreateCommands(i, commandBuffers);
-}
+	ICamera *camera = Camera::Get()->GetCamera();
 
-void ManagerRender::Render()
-{
 	Renderer::Get()->BeginReindering();
 	{
-		ICamera *camera = Camera::Get()->GetCamera();
-
-		m_rendererTest->Render(m_infinity, *camera);
-		Renderer::Get()->NextSubpass();
+		if (m_rendererTest != nullptr)
+		{
+			m_rendererTest->Render(commandBuffer, m_infinity, *camera);
+		}
+	//	Renderer::Get()->NextSubpass();
 	}
 	Renderer::Get()->EndRendering();
 }

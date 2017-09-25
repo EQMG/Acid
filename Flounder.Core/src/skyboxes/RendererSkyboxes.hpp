@@ -16,7 +16,7 @@ namespace Flounder
 
 		~RendererSkyboxes();
 
-		void Render(const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
 		void PrepareRendering(const Vector4 &clipPlane, const ICamera &camera);
 

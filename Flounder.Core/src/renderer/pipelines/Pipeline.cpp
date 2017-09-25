@@ -115,7 +115,7 @@ namespace Flounder
 		m_dynamicState = {};
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		m_dynamicState.pDynamicStates = DYNAMIC_STATES.data();
-		m_dynamicState.dynamicStateCount = DYNAMIC_STATES.size();
+		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(DYNAMIC_STATES.size());
 	}
 
 	void Pipeline::CreatePipelineLayout(const VkDevice *logicalDevice)
@@ -127,7 +127,7 @@ namespace Flounder
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
 
 		// Creates the graphics pipeline layout.
-		GlfwVulkan::ErrorCheck(vkCreatePipelineLayout(*logicalDevice, &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
+		GlfwVulkan::ErrorVk(vkCreatePipelineLayout(*logicalDevice, &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
 	}
 
 	void Pipeline::CreatePolygonPipeline(const VkDevice *logicalDevice, VkRenderPass renderPass)
@@ -157,7 +157,7 @@ namespace Flounder
 		pipelineCreateInfo.pStages = m_shader->GetStages()->data();
 
 		// Create the graphics pipeline.
-		GlfwVulkan::ErrorCheck(vkCreateGraphicsPipelines(*logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+		GlfwVulkan::ErrorVk(vkCreateGraphicsPipelines(*logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
 	void Pipeline::CreateNoDepthTestPipeline(const VkDevice *logicalDevice, VkRenderPass renderPass)

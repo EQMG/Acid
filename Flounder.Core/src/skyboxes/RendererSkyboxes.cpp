@@ -16,7 +16,7 @@ namespace Flounder
 		delete m_shader;
 	}
 
-	void RendererSkyboxes::Render(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererSkyboxes::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		PrepareRendering(clipPlane, camera);
 		RenderSkybox(Skyboxes::Get()->GetSkybox());

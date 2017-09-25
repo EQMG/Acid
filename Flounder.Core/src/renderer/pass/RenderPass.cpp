@@ -53,7 +53,7 @@ namespace Flounder
 		renderPassInfo.dependencyCount = 1;
 		renderPassInfo.pDependencies = &subpassDependency;
 
-		GlfwVulkan::ErrorCheck(vkCreateRenderPass(*logicalDevice, &renderPassInfo, nullptr, &m_renderPass));
+		GlfwVulkan::ErrorVk(vkCreateRenderPass(*logicalDevice, &renderPassInfo, nullptr, &m_renderPass));
 	}
 
 	void RenderPass::Cleanup(const VkDevice *logicalDevice)

@@ -1,70 +1,41 @@
 ﻿#pragma once
 
+#include <array>
 #include <vector>
 
 #include "../../platforms/glfw/GlfwVulkan.hpp"
 
 namespace Flounder
 {
-	/// <summary>
-	/// Used to store data for the swap chain.
-	/// </summary>
-	struct SwapChainSupportDetails
-	{
-		VkSurfaceCapabilitiesKHR capabilities;
-		std::vector<VkSurfaceFormatKHR> formats;
-		std::vector<VkPresentModeKHR> presentModes;
-	};
-
 	class Swapchain
 	{
 	private:
-		// The swapchain handler.
+		VkPresentModeKHR m_presentMode;
 		VkSwapchainKHR m_swapchain;
-		// Vector of swap chain images.
-		std::vector<VkImage> m_images;
-		// Handles to all image views associated with swapChainImages.
-		std::vector<VkImageView> m_imageViews;
-		// Vector of handles to framebuffers.
-		std::vector<VkFramebuffer> m_framebuffers;
+		uint32_t m_swapchainImageCount;
+		std::vector<VkImage> m_swapchinImages;
+		std::vector<VkImageView> m_swapchinImageViews;
 
-		// Stores the chosen image format.
-		VkFormat m_imageFormat;
-		// Stores the chosen image extent.
-		VkExtent2D m_extent;
+		std::vector<VkFramebuffer> m_framebuffers;
 	public:
 		Swapchain();
 
 		~Swapchain();
 
-		void Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, GLFWwindow *window);
+		void Create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkSurfaceCapabilitiesKHR &surfaceCapabilities, const VkSurfaceFormatKHR &surfaceFormat, const VkExtent2D &extent);
 
-		void CreateFramebuffers(const VkDevice *logicalDevice, const VkRenderPass &renderPass);
+		void CreateFrameBuffers(const VkDevice &device, const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent);
 
-		void Cleanup(const VkDevice *logicalDevice);
+		void Cleanup(const VkDevice &device);
 
-		void CleanupFramebuffers(const VkDevice *logicalDevice);
+		void CleanupFrameBuffers(const VkDevice &device);
 
-		static SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface);
-		
-		VkSwapchainKHR GetSwapchain() const { return m_swapchain; }
+		VkSwapchainKHR *GetSwapchin() { return &m_swapchain; }
 
-		VkFormat GetImageFormat() const { return m_imageFormat; }
+		uint32_t GetImageCount() { return m_swapchainImageCount; }
 
-		size_t GetFramebufferSize() const { return m_framebuffers.size(); }
+		std::vector<VkImageView> GetImageViews() { return m_swapchinImageViews; }
 
-		VkFramebuffer GetFramebuffer(const uint32_t &index) const { return m_framebuffers[index]; }
-
-		std::vector<VkImageView> GetImageViews() const { return m_imageViews; }
-
-		VkExtent2D GetExtent() const { return m_extent; }
-	private:
-		void CreateImageViews(const VkDevice* logicalDevice);
-
-		VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats) const;
-
-		VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes) const;
-
-		VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities, GLFWwindow *window) const;
+		std::vector<VkFramebuffer> GetFramebuffers() const { return m_framebuffers; }
 	};
 }
