@@ -22,11 +22,9 @@ namespace Flounder
 		{
 		}
 
-		virtual void CreateCommands(size_t i, std::vector<VkCommandBuffer> commandBuffers) = 0;
-
 		/// <summary>
 		/// Run when rendering the master renderer.
 		/// </summary>
-		virtual void Render() = 0;
+		virtual void Render(const VkCommandBuffer *commandBuffer) = 0;
 	};
 }

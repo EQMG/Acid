@@ -39,6 +39,7 @@ namespace Flounder
 		{
 			throw std::runtime_error("Load wave file failure: file couldn't be opened!");
 		}
+
 		char chunkId[5] = "\0";
 
 		// Read header.
@@ -108,6 +109,29 @@ namespace Flounder
 		printf("Average bytes per second: %i\n", result.averageBytesPerSec);
 		printf("Block align: %i\n", result.blockAlign);
 		printf("Bit per sample: %i\n", result.bitsPerSample);
+		printf("-- Done --\n");
+#endif
+
+		return result;
+	}
+
+	SoundSourceInfo Audio::LoadFileOgg(const std::string &path)
+	{
+		std::ifstream file(path.c_str(), std::ifstream::binary);
+		SoundSourceInfo result = {};
+
+		if (!file.is_open())
+		{
+			throw std::runtime_error("Load wave file failure: file couldn't be opened!");
+		}
+
+		// TODO
+
+		file.close();
+
+#if FLOUNDER_VERBOSE
+		printf("-- Loading: '%s' --\n", path.c_str());
+
 		printf("-- Done --\n");
 #endif
 

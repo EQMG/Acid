@@ -67,6 +67,8 @@ namespace Flounder
 
 		static SoundSourceInfo LoadFileWav(const std::string &path);
 
+		static SoundSourceInfo LoadFileOgg(const std::string &path);
+
 		static Sound *AddSound(Sound *object);
 
 		static Sound *GetSound(const std::string &name);
