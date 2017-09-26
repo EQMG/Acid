@@ -17,7 +17,7 @@ namespace Flounder
 	{
 	}
 
-	void Swapchain::Create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkSurfaceCapabilitiesKHR &surfaceCapabilities, const VkSurfaceFormatKHR &surfaceFormat, const VkExtent2D &extent)
+	void Swapchain::Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkSurfaceCapabilitiesKHR &surfaceCapabilities, const VkSurfaceFormatKHR &surfaceFormat, const VkExtent2D &extent)
 	{
 		uint32_t physicalPresentModeCount = 0;
 		vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &physicalPresentModeCount, nullptr);
@@ -64,14 +64,14 @@ namespace Flounder
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
-		GlfwVulkan::ErrorVk(vkCreateSwapchainKHR(device, &swapchainCreateInfo, nullptr, &m_swapchain));
+		GlfwVulkan::ErrorVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
 
-		GlfwVulkan::ErrorVk(vkGetSwapchainImagesKHR(device, m_swapchain, &m_swapchainImageCount, nullptr));
+		GlfwVulkan::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
 
 		m_swapchinImages.resize(m_swapchainImageCount);
 		m_swapchinImageViews.resize(m_swapchainImageCount);
 
-		GlfwVulkan::ErrorVk(vkGetSwapchainImagesKHR(device, m_swapchain, &m_swapchainImageCount, m_swapchinImages.data()));
+		GlfwVulkan::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchinImages.data()));
 
 		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
 		{
@@ -90,11 +90,11 @@ namespace Flounder
 			imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 			imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-			GlfwVulkan::ErrorVk(vkCreateImageView(device, &imageViewCreateInfo, nullptr, &m_swapchinImageViews[i]));
+			GlfwVulkan::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews[i]));
 		}
 	}
 
-	void Swapchain::CreateFrameBuffers(const VkDevice &device, const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent)
+	void Swapchain::CreateFrameBuffers(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent)
 	{
 		m_framebuffers.resize(m_swapchainImageCount);
 
@@ -113,25 +113,25 @@ namespace Flounder
 			framebufferCreateInfo.height = extent.height;
 			framebufferCreateInfo.layers = 1;
 
-			GlfwVulkan::ErrorVk(vkCreateFramebuffer(device, &framebufferCreateInfo, nullptr, &m_framebuffers[i]));
+			GlfwVulkan::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers[i]));
 		}
 	}
 
-	void Swapchain::Cleanup(const VkDevice &device)
+	void Swapchain::Cleanup(const VkDevice &logicalDevice)
 	{
 		for (auto imageView : m_swapchinImageViews)
 		{
-			vkDestroyImageView(device, imageView, nullptr);
+			vkDestroyImageView(logicalDevice, imageView, nullptr);
 		}
 
-		vkDestroySwapchainKHR(device, m_swapchain, nullptr);
+		vkDestroySwapchainKHR(logicalDevice, m_swapchain, nullptr);
 	}
 
-	void Swapchain::CleanupFrameBuffers(const VkDevice &device)
+	void Swapchain::CleanupFrameBuffers(const VkDevice &logicalDevice)
 	{
 		for (auto framebuffer : m_framebuffers)
 		{
-			vkDestroyFramebuffer(device, framebuffer, nullptr);
+			vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);
 		}
 	}
 }

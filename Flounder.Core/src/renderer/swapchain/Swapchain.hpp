@@ -25,11 +25,11 @@ namespace Flounder
 
 		~Swapchain();
 
-		void Create(const VkDevice &device, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkSurfaceCapabilitiesKHR &surfaceCapabilities, const VkSurfaceFormatKHR &surfaceFormat, const VkExtent2D &extent);
+		void Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkSurfaceCapabilitiesKHR &surfaceCapabilities, const VkSurfaceFormatKHR &surfaceFormat, const VkExtent2D &extent);
 
-		void CreateFrameBuffers(const VkDevice &device, const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent);
+		void CreateFrameBuffers(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent);
 
-		void Cleanup(const VkDevice &device);
+		void Cleanup(const VkDevice &logicalDevice);
 
 		void CleanupFrameBuffers(const VkDevice &device);
 

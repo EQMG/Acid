@@ -16,14 +16,14 @@ namespace Flounder
 
 		~Buffer();
 
-		void Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties);
+		void Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties);
 
-		void Cleanup(const VkDevice *logicalDevice);
+		void Cleanup(const VkDevice &logicalDevice);
 
-		VkBuffer *GetBuffer() { return &m_buffer; }
+		VkBuffer GetBuffer() { return m_buffer; }
 
-		VkDeviceMemory *GetBufferMemory() { return &m_bufferMemory; }
-	protected:
-		uint32_t FindMemoryType(VkPhysicalDevice physicalDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties);
+		VkDeviceMemory GetBufferMemory() { return m_bufferMemory; }
+
+		static uint32_t FindMemoryType(const VkPhysicalDevice &physicalDevice, const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties);
 	};
 }

@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void RenderPass::Create(const VkDevice &device, const VkFormat &depthFormat, const VkFormat &surfaceFormat)
+	void RenderPass::Create(const VkDevice &logicalDevice, const VkFormat &depthFormat, const VkFormat &surfaceFormat)
 	{
 		std::array<VkAttachmentDescription, 2> attachments = {};
 		attachments[0].flags = 0;
@@ -53,11 +53,11 @@ namespace Flounder
 		renderPassCreateInfo.subpassCount = static_cast<uint32_t>(subpasses.size());
 		renderPassCreateInfo.pSubpasses = subpasses.data();
 
-		GlfwVulkan::ErrorVk(vkCreateRenderPass(device, &renderPassCreateInfo, nullptr, &m_renderPass));
+		GlfwVulkan::ErrorVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &m_renderPass));
 	}
 
-	void RenderPass::Cleanup(const VkDevice &device)
+	void RenderPass::Cleanup(const VkDevice &logicalDevice)
 	{
-		vkDestroyRenderPass(device, m_renderPass, nullptr);
+		vkDestroyRenderPass(logicalDevice, m_renderPass, nullptr);
 	}
 }

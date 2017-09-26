@@ -13,7 +13,7 @@ namespace Flounder
 	{
 	}
 
-	void Buffer::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties)
+	void Buffer::Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties)
 	{
 		VkBufferCreateInfo bufferInfo = {};
 		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -26,31 +26,32 @@ namespace Flounder
 		bufferInfo.pQueueFamilyIndices = indicesArray;
 		bufferInfo.queueFamilyIndexCount = 2;
 
-		GlfwVulkan::ErrorVk(vkCreateBuffer(*logicalDevice, &bufferInfo, nullptr, &m_buffer));
+		GlfwVulkan::ErrorVk(vkCreateBuffer(logicalDevice, &bufferInfo, nullptr, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memRequirements;
-		vkGetBufferMemoryRequirements(*logicalDevice, m_buffer, &memRequirements);
+		vkGetBufferMemoryRequirements(logicalDevice, m_buffer, &memRequirements);
 
 		VkMemoryAllocateInfo allocateInfo = {};
 		allocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		allocateInfo.allocationSize = memRequirements.size;
-		allocateInfo.memoryTypeIndex = FindMemoryType(*physicalDevice, memRequirements.memoryTypeBits, properties);
+		allocateInfo.memoryTypeIndex = FindMemoryType(physicalDevice, memRequirements.memoryTypeBits, properties);
 
-		GlfwVulkan::ErrorVk(vkAllocateMemory(*logicalDevice, &allocateInfo, nullptr, &m_bufferMemory));
+		GlfwVulkan::ErrorVk(vkAllocateMemory(logicalDevice, &allocateInfo, nullptr, &m_bufferMemory));
 
-		vkBindBufferMemory(*logicalDevice, m_buffer, m_bufferMemory, 0);
+		vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0);
 	}
 
-	void Buffer::Cleanup(const VkDevice *logicalDevice)
+	void Buffer::Cleanup(const VkDevice &logicalDevice)
 	{
-		vkDestroyBuffer(*logicalDevice, m_buffer, nullptr);
-		vkFreeMemory(*logicalDevice, m_bufferMemory, nullptr);
+		vkDestroyBuffer(logicalDevice, m_buffer, nullptr);
+		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
+
 		m_buffer = VK_NULL_HANDLE;
 		m_bufferMemory = VK_NULL_HANDLE;
 	}
 
-	uint32_t Buffer::FindMemoryType(VkPhysicalDevice physicalDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties)
+	uint32_t Buffer::FindMemoryType(const VkPhysicalDevice &physicalDevice, const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties)
 	{
 		VkPhysicalDeviceMemoryProperties memProperties;
 		vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);

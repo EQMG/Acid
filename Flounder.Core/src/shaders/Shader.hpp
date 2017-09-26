@@ -45,14 +45,14 @@ namespace Flounder
 		/// <summary>
 		/// Creates the shader.
 		/// </summary>
-		void Create(const VkDevice *logicalDevice);
+		void Create(const VkDevice &logicalDevice);
 
 		/// <summary>
 		/// Cleans up the shader.
 		/// </summary>
-		void Cleanup(const VkDevice *logicalDevice);
+		void Cleanup(const VkDevice &logicalDevice);
 
-		uint8_t *AllocateUniform(int size, AllocatedUniform *allocatedUniform);
+		uint8_t *AllocateUniform(const int &size, AllocatedUniform *allocatedUniform);
 
 		/// <summary>
 		/// Gets the loaded name for the shader.
