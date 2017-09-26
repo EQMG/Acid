@@ -2,14 +2,14 @@
 
 namespace Flounder
 {
-	QueueFamilyIndices QueueFamily::FindQueueFamilies(const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface)
+	QueueFamilyIndices QueueFamily::FindQueueFamilies(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface)
 	{
 		QueueFamilyIndices indices;
 		uint32_t queueFamilyCount = 0;
-		vkGetPhysicalDeviceQueueFamilyProperties(*physicalDevice, &queueFamilyCount, nullptr);
+		vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, nullptr);
 
 		std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-		vkGetPhysicalDeviceQueueFamilyProperties(*physicalDevice, &queueFamilyCount, queueFamilies.data());
+		vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, queueFamilies.data());
 		
 		// Iterate through queue families to find one that supports VK_QUEUE_GRAPHICS_BIT.
 		int i = 0;
@@ -20,7 +20,7 @@ namespace Flounder
 			if (queueFamily.queueCount > 0 && queueFamily.queueFlags && VK_QUEUE_GRAPHICS_BIT)
 			{
 				VkBool32 presentSupport = false;
-				vkGetPhysicalDeviceSurfaceSupportKHR(*physicalDevice, i, *surface, &presentSupport);
+				vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, i, surface, &presentSupport);
 				
 				if (presentSupport)
 				{

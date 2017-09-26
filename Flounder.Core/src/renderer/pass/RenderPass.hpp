@@ -15,9 +15,9 @@ namespace Flounder
 
 		~RenderPass();
 
-		void Create(const VkDevice &device, const VkFormat &depthFormat, const VkFormat &surfaceFormat);
+		void Create(const VkDevice &logicalDevice, const VkFormat &depthFormat, const VkFormat &surfaceFormat);
 
-		void Cleanup(const VkDevice &device);
+		void Cleanup(const VkDevice &logicalDevice);
 
 		VkRenderPass GetRenderPass() const { return m_renderPass; }
 	};
