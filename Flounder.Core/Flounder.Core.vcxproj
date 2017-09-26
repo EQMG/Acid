@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\renderer\stencils\DepthStencil.cpp" />
     <ClCompile Include="src\camera\Camera.cpp" />
     <ClCompile Include="src\deferred\RendererDeferred.cpp" />
     <ClCompile Include="src\devices\Audio.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="src\worlds\Worlds.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\renderer\stencils\DepthStencil.hpp" />
     <ClInclude Include="src\camera\Camera.hpp" />
     <ClInclude Include="src\camera\ICamera.hpp" />
     <ClInclude Include="src\camera\IPlayer.hpp" />

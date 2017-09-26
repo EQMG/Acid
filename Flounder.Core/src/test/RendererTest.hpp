@@ -14,12 +14,12 @@ namespace Flounder
 			Matrix4 projection;
 		};
 
-		Shader *m_shader;
-		Pipeline *m_pipeline;
-		VertexBuffer *m_vertexBuffer;
-		IndexBuffer *m_indexBuffer;
+		Shader m_shader;
+		Pipeline m_pipeline;
+		VertexBuffer m_vertexBuffer;
+		IndexBuffer m_indexBuffer;
 	public:
-		RendererTest(VkRenderPass renderPass, CommandPool *commandPoolTransfer);
+		RendererTest();
 
 		~RendererTest();
 

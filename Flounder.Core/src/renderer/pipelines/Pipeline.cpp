@@ -66,7 +66,7 @@ namespace Flounder
 
 		m_rasterizationState = {};
 		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
-		m_rasterizationState.depthClampEnable = VK_TRUE;
+		m_rasterizationState.depthClampEnable = VK_FALSE;
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
 		m_rasterizationState.polygonMode = VK_POLYGON_MODE_FILL;
 		m_rasterizationState.cullMode = VK_CULL_MODE_BACK_BIT;
