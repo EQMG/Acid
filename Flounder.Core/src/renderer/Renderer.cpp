@@ -89,19 +89,19 @@ namespace Flounder
 			if (m_managerRender != nullptr)
 			{
 				VkViewport viewport = {};
-				viewport.maxDepth = 1.0f;
-				viewport.minDepth = 0.0f;
-				viewport.width = static_cast<float>(Display::Get()->GetWidth());
-				viewport.height = static_cast<float>(Display::Get()->GetHeight());
 				viewport.x = 0.0f;
 				viewport.y = 0.0f;
+				viewport.width = static_cast<float>(Display::Get()->GetWidth());
+				viewport.height = static_cast<float>(Display::Get()->GetHeight());
+				viewport.minDepth = 0.0f;
+				viewport.maxDepth = 1.0f;
 				vkCmdSetViewport(m_commandBuffer, 0, 1, &viewport);
 
 				VkRect2D scissor = {};
-				scissor.extent.width = Display::Get()->GetWidth();
-				scissor.extent.height = Display::Get()->GetHeight();
 				scissor.offset.x = 0;
 				scissor.offset.y = 0;
+				scissor.extent.width = Display::Get()->GetWidth();
+				scissor.extent.height = Display::Get()->GetHeight();
 				vkCmdSetScissor(m_commandBuffer, 0, 1, &scissor);
 
 				m_managerRender->Render(&m_commandBuffer);
