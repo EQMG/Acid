@@ -11,7 +11,7 @@ namespace Flounder
 	};
 	const std::vector<uint16_t> triangleIndices =
 	{
-		0, 1, 2, 2, 3, 0
+		0, 1, 2, 2, 1, 3
 	};
 
 	RendererTest::RendererTest() :
@@ -35,8 +35,8 @@ namespace Flounder
 		auto attributeDescriptions = Vertex::GetAttributeDescriptions();
 		VertexInputState vertexInputState = {};
 		vertexInputState.bindingDescriptionCount = 1;
-		vertexInputState.attributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 		vertexInputState.pVertexBindingDescriptions = &bindingDescription;
+		vertexInputState.attributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 		vertexInputState.pVertexAttributeDescriptions = attributeDescriptions.data();
 		
 		m_shader.Create(logicalDevice);
