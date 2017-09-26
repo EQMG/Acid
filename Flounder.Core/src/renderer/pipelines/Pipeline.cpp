@@ -4,10 +4,9 @@ namespace Flounder
 {
 	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
-	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, const VertexInputState &vertexInputState, Shader *shader) :
+	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, const Shader &shader) :
 		m_name(name),
 		m_pipelineType(pipelineType),
-		m_vertexInputState(vertexInputState),
 		m_shader(shader),
 		m_pipeline(VK_NULL_HANDLE),
 		m_pipelineLayout(VK_NULL_HANDLE),
@@ -26,8 +25,9 @@ namespace Flounder
 	{
 	}
 
-	void Pipeline::Create(const VkDevice *logicalDevice, VkRenderPass renderPass)
+	void Pipeline::Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState)
 	{
+		m_vertexInputState = vertexInputState;
 		CreateAttributes();
 		CreatePipelineLayout(logicalDevice);
 
@@ -51,10 +51,10 @@ namespace Flounder
 		}
 	}
 
-	void Pipeline::Cleanup(const VkDevice *logicalDevice)
+	void Pipeline::Cleanup(const VkDevice &logicalDevice)
 	{
-		vkDestroyPipeline(*logicalDevice, m_pipeline, nullptr);
-		vkDestroyPipelineLayout(*logicalDevice, m_pipelineLayout, nullptr);
+		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
+		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
 
 	void Pipeline::CreateAttributes()
@@ -72,7 +72,7 @@ namespace Flounder
 		m_rasterizationState.cullMode = VK_CULL_MODE_BACK_BIT;
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
-		m_rasterizationState.depthBiasConstantFactor = 0.000;
+		m_rasterizationState.depthBiasConstantFactor = 0.0f;
 		m_rasterizationState.depthBiasClamp = 0.0f;
 		m_rasterizationState.depthBiasSlopeFactor = 0.0f;
 		m_rasterizationState.lineWidth = 1.0f;
@@ -118,7 +118,7 @@ namespace Flounder
 		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(DYNAMIC_STATES.size());
 	}
 
-	void Pipeline::CreatePipelineLayout(const VkDevice *logicalDevice)
+	void Pipeline::CreatePipelineLayout(const VkDevice &logicalDevice)
 	{
 		// Pipeline layout struct.
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
@@ -127,10 +127,10 @@ namespace Flounder
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
 
 		// Creates the graphics pipeline layout.
-		GlfwVulkan::ErrorVk(vkCreatePipelineLayout(*logicalDevice, &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
+		GlfwVulkan::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
 	}
 
-	void Pipeline::CreatePolygonPipeline(const VkDevice *logicalDevice, VkRenderPass renderPass)
+	void Pipeline::CreatePolygonPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass)
 	{
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -153,22 +153,22 @@ namespace Flounder
 		pipelineCreateInfo.pDynamicState = &m_dynamicState;
 
 		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
-		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_shader->GetStages()->size());
-		pipelineCreateInfo.pStages = m_shader->GetStages()->data();
+		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_shader.GetStages()->size());
+		pipelineCreateInfo.pStages = m_shader.GetStages()->data();
 
 		// Create the graphics pipeline.
-		GlfwVulkan::ErrorVk(vkCreateGraphicsPipelines(*logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+		GlfwVulkan::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
-	void Pipeline::CreateNoDepthTestPipeline(const VkDevice *logicalDevice, VkRenderPass renderPass)
+	void Pipeline::CreateNoDepthTestPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass)
 	{
 	}
 
-	void Pipeline::CreateMrtPipeline(const VkDevice *logicalDevice, VkRenderPass renderPass)
+	void Pipeline::CreateMrtPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass)
 	{
 	}
 
-	void Pipeline::CreateMultiTexturePipeline(const VkDevice *logicalDevice, VkRenderPass renderPass)
+	void Pipeline::CreateMultiTexturePipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass)
 	{
 	}
 }

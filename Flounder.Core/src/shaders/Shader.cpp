@@ -23,7 +23,7 @@ namespace Flounder
 	{
 	}
 
-	void Shader::Create(const VkDevice *logicalDevice)
+	void Shader::Create(const VkDevice &logicalDevice)
 	{
 		for (auto type : *m_types)
 		{
@@ -35,7 +35,7 @@ namespace Flounder
 			createInfo.pCode = reinterpret_cast<const uint32_t*>(shaderCode.data());
 
 			VkShaderModule shaderModule = VK_NULL_HANDLE;
-			GlfwVulkan::ErrorVk(vkCreateShaderModule(*logicalDevice, &createInfo, nullptr, &shaderModule));
+			GlfwVulkan::ErrorVk(vkCreateShaderModule(logicalDevice, &createInfo, nullptr, &shaderModule));
 
 			VkPipelineShaderStageCreateInfo shaderStageInfo = {};
 			shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -48,18 +48,18 @@ namespace Flounder
 		}
 	}
 
-	void Shader::Cleanup(const VkDevice *logicalDevice)
+	void Shader::Cleanup(const VkDevice &logicalDevice)
 	{
 		for (auto shaderModule : *m_modules)
 		{
-			vkDestroyShaderModule(*logicalDevice, shaderModule, nullptr);
+			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
 		}
 
 	//	delete m_types;
 	//	delete m_stages;
 	}
 
-	uint8_t *Shader::AllocateUniform(int size, AllocatedUniform *allocatedUniform)
+	uint8_t *Shader::AllocateUniform(const int &size, AllocatedUniform *allocatedUniform)
 	{
 		const int align_mod = size % 256;
 		const int aligned_size = ((size % 256) == 0) ? size : (size + 256 - align_mod);

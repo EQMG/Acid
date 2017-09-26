@@ -34,7 +34,7 @@ namespace Flounder
 		std::string m_name;
 		PipelineType m_pipelineType;
 		VertexInputState m_vertexInputState;
-		Shader *m_shader;
+		Shader m_shader;
 
 		VkPipeline m_pipeline;
 		VkPipelineLayout m_pipelineLayout;
@@ -52,7 +52,7 @@ namespace Flounder
 		/// Creates a new pipeline.
 		/// </summary>
 		/// <param name="name"> The pipelines name. </param>
-		Pipeline(const std::string &name, const PipelineType &pipelineType, const VertexInputState &vertexInputState, Shader *shader);
+		Pipeline(const std::string &name, const PipelineType &pipelineType, const Shader &shader);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
@@ -62,25 +62,13 @@ namespace Flounder
 		/// <summary>
 		/// Creates the pipeline.
 		/// </summary>
-		void Create(const VkDevice *logicalDevice, VkRenderPass renderPass);
+		void Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState);
 
 		/// <summary>
 		/// Cleans up the shapipelineder.
 		/// </summary>
-		void Cleanup(const VkDevice *logicalDevice);
-	private:
-		void CreateAttributes();
+		void Cleanup(const VkDevice &logicalDevice);
 
-		void CreatePipelineLayout(const VkDevice *logicalDevice);
-
-		void CreatePolygonPipeline(const VkDevice *logicalDevice, VkRenderPass renderPass);
-
-		void CreateNoDepthTestPipeline(const VkDevice *logicalDevice, VkRenderPass renderPass);
-
-		void CreateMrtPipeline(const VkDevice *logicalDevice, VkRenderPass renderPass);
-
-		void CreateMultiTexturePipeline(const VkDevice *logicalDevice, VkRenderPass renderPass);
-	public:
 		/// <summary>
 		/// Gets the loaded name for the pipeline.
 		/// </summary>
@@ -90,5 +78,17 @@ namespace Flounder
 		VkPipeline GetPipeline() const { return m_pipeline; }
 
 		VkPipelineLayout GetPipelineLayout() const { return m_pipelineLayout; }
+	private:
+		void CreateAttributes();
+
+		void CreatePipelineLayout(const VkDevice &logicalDevice);
+
+		void CreatePolygonPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass);
+
+		void CreateNoDepthTestPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass);
+
+		void CreateMrtPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass);
+
+		void CreateMultiTexturePipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass);
 	};
 }
