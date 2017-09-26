@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <array>
+
 #include "../../platforms/glfw/GlfwVulkan.hpp"
 
 namespace Flounder
@@ -13,9 +15,9 @@ namespace Flounder
 
 		~RenderPass();
 
-		void Create(const VkDevice *logicalDevice, const VkFormat &format);
+		void Create(const VkDevice &device, const VkFormat &depthFormat, const VkFormat &surfaceFormat);
 
-		void Cleanup(const VkDevice *logicalDevice);
+		void Cleanup(const VkDevice &device);
 
 		VkRenderPass GetRenderPass() const { return m_renderPass; }
 	};

@@ -11,6 +11,7 @@
 #include "pass/RenderPass.hpp"
 #include "pipelines/Pipeline.hpp"
 #include "queue/QueueFamily.hpp"
+#include "stencils/DepthStencil.hpp"
 #include "swapchain/Swapchain.hpp"
 
 #include "IManagerRender.hpp"
@@ -23,17 +24,15 @@ namespace Flounder
 	private:
 		IManagerRender *m_managerRender;
 
-		RenderPass *m_renderPass;
-		Swapchain *m_swapchain;
+		Swapchain m_swapchain;
+		DepthStencil m_depthStencil;
+		RenderPass m_renderPass;
+		VkFence m_fenceSwapchainImage;
+		uint32_t m_activeSwapchinImage;
 
-		CommandPool *m_commandPool;
-		CommandPool *m_commandPoolTransfer;
-
-		std::vector<VkCommandBuffer> m_commandBuffers;
-		std::vector<VkFence> m_commandBufferFences;
-
-		VkSemaphore m_imageAvailableSemaphore;
-		VkSemaphore m_renderFinishedSemaphore;
+		VkSemaphore m_semaphore;
+		VkCommandPool m_commandPool;
+		VkCommandBuffer m_commandBuffer;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -53,10 +52,6 @@ namespace Flounder
 		/// Deconstructor for the renderer module.
 		/// </summary>
 		~Renderer();
-	private:
-		void CreateCommandBuffers();
-
-		void CreateSemaphores();
 	public:
 		void Update() override;
 
@@ -64,7 +59,7 @@ namespace Flounder
 
 		void NextSubpass();
 
-		void EndRendering();
+		void EndRendering(std::vector<VkSemaphore> waitSemaphores);
 
 		/// <summary>
 		/// Gets the renderer manager.
@@ -78,10 +73,14 @@ namespace Flounder
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(IManagerRender *managerRender) { m_managerRender = managerRender; }
 
-		std::vector<VkCommandBuffer> GetVkCommandBuffers() const { return m_commandBuffers; }
+		VkRenderPass GetRenderPass() { return m_renderPass.GetRenderPass(); }
 
-		CommandPool *GetCommandPoolTransfer() const { return m_commandPoolTransfer; }
+		VkCommandPool *GetCommandPool() { return &m_commandPool; }
+	private:
+		VkFramebuffer GetActiveFramebuffer() const { return m_swapchain.GetFramebuffers()[m_activeSwapchinImage]; }
 
-		VkRenderPass GetRenderPass() const { return m_renderPass->GetRenderPass(); }
+		void CreateFences();
+
+		void CreateCommandPool();
 	};
 }
