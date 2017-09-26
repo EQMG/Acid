@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
+	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR }; 
 
 	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, const Shader &shader) :
 		m_name(name),
@@ -12,7 +12,7 @@ namespace Flounder
 		m_pipelineLayout(VK_NULL_HANDLE),
 		m_inputAssemblyState({}),
 		m_rasterizationState({}),
-		m_blendAttachmentState({}),
+		m_blendAttachmentStates({}),
 		m_colourBlendState({}),
 		m_depthStencilState({}),
 		m_viewportState({}),
@@ -77,30 +77,47 @@ namespace Flounder
 		m_rasterizationState.depthBiasSlopeFactor = 0.0f;
 		m_rasterizationState.lineWidth = 1.0f;
 
-		m_blendAttachmentState = {};
-		m_blendAttachmentState.blendEnable = VK_TRUE;
-		m_blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-		m_blendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-		m_blendAttachmentState.colorBlendOp = VK_BLEND_OP_ADD;
-		m_blendAttachmentState.srcAlphaBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-		m_blendAttachmentState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-		m_blendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;
-		m_blendAttachmentState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+		m_blendAttachmentStates = {};
+		m_blendAttachmentStates[0].blendEnable = VK_TRUE;
+		m_blendAttachmentStates[0].srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+		m_blendAttachmentStates[0].dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+		m_blendAttachmentStates[0].colorBlendOp = VK_BLEND_OP_ADD;
+		m_blendAttachmentStates[0].srcAlphaBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+		m_blendAttachmentStates[0].dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+		m_blendAttachmentStates[0].alphaBlendOp = VK_BLEND_OP_ADD;
+		m_blendAttachmentStates[0].colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
 
 		m_colourBlendState = {};
 		m_colourBlendState.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 		m_colourBlendState.logicOpEnable = VK_FALSE;
 		m_colourBlendState.logicOp = VK_LOGIC_OP_COPY;
-		m_colourBlendState.attachmentCount = 1;
-		m_colourBlendState.pAttachments = &m_blendAttachmentState;
+		m_colourBlendState.attachmentCount = static_cast<uint32_t>(m_blendAttachmentStates.size());
+		m_colourBlendState.pAttachments = m_blendAttachmentStates.data();
+		m_colourBlendState.blendConstants[0] = 1.0f;
+		m_colourBlendState.blendConstants[1] = 1.0f;
+		m_colourBlendState.blendConstants[2] = 1.0f;
+		m_colourBlendState.blendConstants[3] = 1.0f;
+
+		VkStencilOpState stencilOpState{};
+		stencilOpState.failOp = VK_STENCIL_OP_KEEP;
+		stencilOpState.passOp = VK_STENCIL_OP_KEEP;
+		stencilOpState.depthFailOp = VK_STENCIL_OP_KEEP;
+		stencilOpState.compareOp = VK_COMPARE_OP_ALWAYS;
+		stencilOpState.compareMask = 0b00000000;
+		stencilOpState.writeMask = 0b11111111;
+		stencilOpState.reference = 0b00000000;
 
 		m_depthStencilState = {};
 		m_depthStencilState.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
 		m_depthStencilState.depthTestEnable = VK_TRUE;
 		m_depthStencilState.depthWriteEnable = VK_TRUE;
-		m_depthStencilState.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
-		m_depthStencilState.front = m_depthStencilState.back;
-		m_depthStencilState.back.compareOp = VK_COMPARE_OP_ALWAYS;
+		m_depthStencilState.depthCompareOp = VK_COMPARE_OP_LESS;
+		m_depthStencilState.depthBoundsTestEnable = VK_FALSE;
+		m_depthStencilState.stencilTestEnable = VK_FALSE;
+		m_depthStencilState.front = stencilOpState;
+		m_depthStencilState.back = stencilOpState;
+		m_depthStencilState.minDepthBounds = 0.0f;
+		m_depthStencilState.maxDepthBounds = 1.0f;
 
 		m_viewportState = {};
 		m_viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -132,17 +149,20 @@ namespace Flounder
 
 	void Pipeline::CreatePolygonPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass)
 	{
-		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
-		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.renderPass = renderPass;
-
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputStateCreateInfo.vertexBindingDescriptionCount = m_vertexInputState.bindingDescriptionCount;
 		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = m_vertexInputState.attributeDescriptionCount;
 		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_vertexInputState.pVertexBindingDescriptions;
 		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_vertexInputState.pVertexAttributeDescriptions;
+
+		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
+		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+		pipelineCreateInfo.layout = m_pipelineLayout;
+		pipelineCreateInfo.renderPass = renderPass;
+		pipelineCreateInfo.subpass = 0;
+		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+		pipelineCreateInfo.basePipelineIndex = -1;
 
 		pipelineCreateInfo.pInputAssemblyState = &m_inputAssemblyState;
 		pipelineCreateInfo.pRasterizationState = &m_rasterizationState;

@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <array>
 #include <string>
 
 #include "../../platforms/glfw/GlfwVulkan.hpp"
@@ -41,7 +42,7 @@ namespace Flounder
 
 		VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState;
 		VkPipelineRasterizationStateCreateInfo m_rasterizationState;
-		VkPipelineColorBlendAttachmentState m_blendAttachmentState;
+		std::array<VkPipelineColorBlendAttachmentState, 1> m_blendAttachmentStates;
 		VkPipelineColorBlendStateCreateInfo m_colourBlendState;
 		VkPipelineDepthStencilStateCreateInfo m_depthStencilState;
 		VkPipelineViewportStateCreateInfo m_viewportState;
