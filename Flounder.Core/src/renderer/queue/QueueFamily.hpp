@@ -35,6 +35,6 @@ namespace Flounder
 		/// </summary>
 		/// <param name="physicalDevice"> The physical device. </param>
 		/// <param name="surface"> The surface. </param>
-		static QueueFamilyIndices FindQueueFamilies(const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface);
+		static QueueFamilyIndices FindQueueFamilies(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface);
 	};
 }

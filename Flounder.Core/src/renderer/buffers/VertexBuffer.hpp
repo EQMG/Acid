@@ -18,16 +18,16 @@ namespace Flounder
 
 		~VertexBuffer();
 
-		void Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkCommandPool *transferCommandPool, const VkQueue *queue);
+		void Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkQueue &queue, const VkCommandPool &transferCommandPool);
 
-		void Cleanup(const VkDevice *logicalDevice);
+		void Cleanup(const VkDevice &logicalDevice);
 
-		void SetVerticies(std::vector<Vertex> vertices);
+		void SetVerticies(std::vector<Vertex> &vertices);
 
 		uint32_t GetVerticesSize() const { return static_cast<uint32_t>(m_vertices.size()); }
 	private:
-		void CopyVerticesToBuffer(const VkDevice *logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const;
+		void CopyVerticesToBuffer(const VkDevice &logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const;
 
-		void CopyBuffer(const VkDevice *logicalDevice, const VkCommandPool *transferCommandPool, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, const VkQueue *queue);
+		void CopyBuffer(const VkDevice &logicalDevice, const VkQueue &queue, const VkCommandPool &transferCommandPool, const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size);
 	};
 }

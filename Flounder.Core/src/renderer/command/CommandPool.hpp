@@ -13,10 +13,10 @@ namespace Flounder
 
 		~CommandPool();
 
-		void Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, uint32_t queueFamilyIndex, VkCommandPoolCreateFlags flags = 0);
+		void Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const uint32_t &queueFamilyIndex, const VkCommandPoolCreateFlags &flags = 0);
 
-		void Cleanup(const VkDevice *logicalDevice);
+		void Cleanup(const VkDevice &logicalDevice);
 
-		VkCommandPool *GetCommandPool() { return &m_commandPool; }
+		VkCommandPool GetCommandPool() { return m_commandPool; }
 	};
 }

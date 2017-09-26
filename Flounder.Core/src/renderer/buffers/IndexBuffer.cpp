@@ -16,7 +16,7 @@ namespace Flounder
 	{
 	}
 
-	void IndexBuffer::Create(const VkDevice *logicalDevice, const VkPhysicalDevice *physicalDevice, const VkSurfaceKHR *surface, VkCommandPool *transferCommandPool, const VkQueue *queue)
+	void IndexBuffer::Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkQueue &queue, const VkCommandPool &transferCommandPool)
 	{
 		VkDeviceSize bufferSize = sizeof(m_indices[0]) * m_indices.size();
 		Buffer bufferStaging = Buffer();
@@ -24,12 +24,12 @@ namespace Flounder
 		CopyVerticesToBuffer(logicalDevice, bufferSize, bufferStaging);
 
 		Buffer::Create(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		CopyBuffer(logicalDevice, transferCommandPool, *bufferStaging.GetBuffer(), *GetBuffer(), bufferSize, queue);
+		CopyBuffer(logicalDevice, queue, transferCommandPool, bufferStaging.GetBuffer(), GetBuffer(), bufferSize);
 
 		bufferStaging.Cleanup(logicalDevice);
 	}
 
-	void IndexBuffer::Cleanup(const VkDevice *logicalDevice)
+	void IndexBuffer::Cleanup(const VkDevice &logicalDevice)
 	{
 		Buffer::Cleanup(logicalDevice);
 	}
@@ -40,26 +40,26 @@ namespace Flounder
 		m_indices.swap(indices);
 	}
 
-	void IndexBuffer::CopyVerticesToBuffer(const VkDevice *logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const
+	void IndexBuffer::CopyVerticesToBuffer(const VkDevice &logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const
 	{
 		// Copies the vertex data to the buffer.
 		void *data;
-		vkMapMemory(*logicalDevice, *bufferStaging.GetBufferMemory(), 0, bufferSize, 0, &data);
+		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferSize, 0, &data);
 		memcpy(data, m_indices.data(), static_cast<size_t>(bufferSize));
-		vkUnmapMemory(*logicalDevice, *bufferStaging.GetBufferMemory());
+		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 	}
 
-	void IndexBuffer::CopyBuffer(const VkDevice *logicalDevice, const VkCommandPool *transferCommandPool, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, const VkQueue *queue)
+	void IndexBuffer::CopyBuffer(const VkDevice &logicalDevice, const VkQueue &queue, const VkCommandPool &transferCommandPool, const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
 	{
 		// Makes a temporary command buffer for the memory transfer operation.
 		VkCommandBufferAllocateInfo allocInfo = {};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandPool = *transferCommandPool;
+		allocInfo.commandPool = transferCommandPool;
 		allocInfo.commandBufferCount = 1;
 
 		VkCommandBuffer commandBuffer;
-		vkAllocateCommandBuffers(*logicalDevice, &allocInfo, &commandBuffer);
+		vkAllocateCommandBuffers(logicalDevice, &allocInfo, &commandBuffer);
 
 		VkCommandBufferBeginInfo beginInfo = {};
 		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -77,9 +77,9 @@ namespace Flounder
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &commandBuffer;
 
-		vkQueueSubmit(*queue, 1, &submitInfo, VK_NULL_HANDLE);
-		vkQueueWaitIdle(*queue);
+		vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(queue);
 
-		vkFreeCommandBuffers(*logicalDevice, *transferCommandPool, 1, &commandBuffer);
+		vkFreeCommandBuffers(logicalDevice, transferCommandPool, 1, &commandBuffer);
 	}
 }
