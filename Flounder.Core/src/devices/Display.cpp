@@ -341,8 +341,13 @@ namespace Flounder
 		VkInstanceCreateInfo instanceCreateInfo = {};
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		instanceCreateInfo.pApplicationInfo = &applicationInfo;
-		instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
-		instanceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
+		
+		if (m_validationLayers)
+		{
+			instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
+			instanceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
+		}
+
 		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
@@ -351,12 +356,15 @@ namespace Flounder
 
 	void Display::CreateDebugCallback()
 	{
-		VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = VkDebugReportCallbackCreateInfoEXT();
-		debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-		debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT;
-		debugCallBackCreateInfo.pfnCallback = VkCallbackDebug;
+		if (m_validationLayers)
+		{
+			VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = VkDebugReportCallbackCreateInfoEXT();
+			debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
+			debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT;
+			debugCallBackCreateInfo.pfnCallback = VkCallbackDebug;
 
-		GlfwVulkan::ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
+			GlfwVulkan::ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
+		}
 	}
 
 	void Display::CreatePhysicalDevice()
@@ -408,8 +416,13 @@ namespace Flounder
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 		deviceCreateInfo.queueCreateInfoCount = 1;
 		deviceCreateInfo.pQueueCreateInfos = &deviceQueueCreateInfo;
-		deviceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
-		deviceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
+
+		if (m_validationLayers)
+		{
+			deviceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
+			deviceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
+		}
+
 		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size());
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 
