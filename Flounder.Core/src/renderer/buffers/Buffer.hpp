@@ -25,5 +25,7 @@ namespace Flounder
 		VkDeviceMemory GetBufferMemory() { return m_bufferMemory; }
 
 		static uint32_t FindMemoryType(const VkPhysicalDevice &physicalDevice, const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties);
+
+		static void CopyBuffer(const VkDevice &logicalDevice, const VkQueue &queue, const VkCommandPool &transferCommandPool, const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size);
 	};
 }

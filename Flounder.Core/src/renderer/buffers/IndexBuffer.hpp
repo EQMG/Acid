@@ -27,7 +27,5 @@ namespace Flounder
 		uint32_t GetIndicesSize() const { return static_cast<uint32_t>(m_indices.size()); }
 	private:
 		void CopyVerticesToBuffer(const VkDevice &logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const;
-
-		void CopyBuffer(const VkDevice &logicalDevice, const VkQueue &queue, const VkCommandPool &transferCommandPool, const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size);
 	};
 }
