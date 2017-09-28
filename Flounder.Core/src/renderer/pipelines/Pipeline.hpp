@@ -63,7 +63,7 @@ namespace Flounder
 		/// <summary>
 		/// Creates the pipeline.
 		/// </summary>
-		void Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState);
+		void Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState, const std::vector<VkDescriptorSetLayout> &descriptorSetLayouts);
 
 		/// <summary>
 		/// Cleans up the shapipelineder.

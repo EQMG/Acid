@@ -5,6 +5,20 @@
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec4 vertexColour;
 
+layout(set = 0, binding = 0) uniform UniformCamera
+{
+	mat4 projection;
+	mat4 view;
+	vec4 clip;
+} uniformCamera;
+
+layout(set = 0, binding = 1) uniform UniformObject
+{
+	bool memes;
+	vec4 colour;
+	mat4 model;
+} uniformObject;
+
 layout(location = 0) out vec3 fragmentColour;
 
 out gl_PerVertex 
@@ -15,5 +29,11 @@ out gl_PerVertex
 void main() 
 {
     gl_Position = vec4(vertexPosition, 1.0);
+//	gl_Position *= uniformCamera.projection * uniformCamera.view * uniformObject.model;
     fragmentColour = vertexColour.rgb;
+
+	if (uniformObject.memes)
+	{
+		fragmentColour = uniformObject.colour.rgb;
+	}
 }
