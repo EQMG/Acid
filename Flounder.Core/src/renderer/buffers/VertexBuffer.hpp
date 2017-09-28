@@ -22,9 +22,9 @@ namespace Flounder
 
 		void Cleanup(const VkDevice &logicalDevice);
 
-		void SetVerticies(std::vector<Vertex> &vertices);
-
 		uint32_t GetVerticesSize() const { return static_cast<uint32_t>(m_vertices.size()); }
+
+		void SetVerticies(std::vector<Vertex> &vertices);
 	private:
 		void CopyVerticesToBuffer(const VkDevice &logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const;
 	};

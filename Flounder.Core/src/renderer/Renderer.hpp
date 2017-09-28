@@ -7,6 +7,7 @@
 
 #include "buffers/IndexBuffer.hpp"
 #include "buffers/VertexBuffer.hpp"
+#include "buffers/UniformBuffer.hpp"
 #include "command/CommandPool.hpp"
 #include "pass/RenderPass.hpp"
 #include "pipelines/Pipeline.hpp"
