@@ -25,8 +25,8 @@ namespace Flounder
 
 	RendererTest::RendererTest() :
 		IRenderer(),
-		m_cameraUniformBuffer(UniformBuffer(sizeof(UniformCamera), 0)),
-		m_objectUniformBuffer(UniformBuffer(sizeof(UniformObject), 1)),
+	//	m_cameraUniformBuffer(UniformBuffer(sizeof(UniformCamera), 0)),
+		m_objectUniformBuffer(UniformBuffer(sizeof(UniformObject), 0)),
 
 		m_shader(Shader("tests", 2,
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
@@ -51,11 +51,11 @@ namespace Flounder
 		vertexInputState.attributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 		vertexInputState.pVertexAttributeDescriptions = attributeDescriptions.data();
 
-		m_cameraUniformBuffer.Create(logicalDevice, physicalDevice, surface);
+	//	m_cameraUniformBuffer.Create(logicalDevice, physicalDevice, surface);
 		m_objectUniformBuffer.Create(logicalDevice, physicalDevice, surface);
 
 		m_shader.Create(logicalDevice);
-		m_pipeline.Create(logicalDevice, renderPass, vertexInputState, { m_cameraUniformBuffer.GetDescriptorSetLayout(), m_objectUniformBuffer.GetDescriptorSetLayout() });
+		m_pipeline.Create(logicalDevice, renderPass, vertexInputState, { m_objectUniformBuffer.GetDescriptorSetLayout()  }); // m_cameraUniformBuffer.GetDescriptorSetLayout(), m_objectUniformBuffer.GetDescriptorSetLayout()
 		m_vertexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
 		m_indexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
 	}
@@ -70,7 +70,7 @@ namespace Flounder
 		m_indexBuffer.Cleanup(logicalDevice);
 
 		m_objectUniformBuffer.Cleanup(logicalDevice);
-		m_cameraUniformBuffer.Cleanup(logicalDevice);
+	//	m_cameraUniformBuffer.Cleanup(logicalDevice);
 	}
 
 	void RendererTest::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
@@ -79,28 +79,28 @@ namespace Flounder
 
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipeline());
 
-		{
-			UniformCamera *data = nullptr;
-			vkMapMemory(logicalDevice, m_objectUniformBuffer.GetBufferMemory(), 0, m_objectUniformBuffer.GetSize(), 0, reinterpret_cast<void**>(&data));
-			data->projection = *camera.GetProjectionMatrix();
-			data->view = *camera.GetViewMatrix();
-			vkUnmapMemory(logicalDevice, m_objectUniformBuffer.GetBufferMemory());
+		/*{
+			UniformCamera data = {};
+			data.projection = *camera.GetProjectionMatrix();
+			data.view = *camera.GetViewMatrix();
+			m_cameraUniformBuffer.Update(logicalDevice, &data);
 
-		//	VkDescriptorSet descriptors[] = { m_cameraUniformBuffer.GetDescriptorSet() };
-		//	vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-		}
-		
+			VkDescriptorSet descriptors[] = { m_cameraUniformBuffer.GetDescriptorSet() };
+			vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
+		}*/
 		{
-			UniformObject *data = nullptr;
-			vkMapMemory(logicalDevice, m_objectUniformBuffer.GetBufferMemory(), 0, m_objectUniformBuffer.GetSize(), 0, reinterpret_cast<void**>(&data));
-			data->memes = std::sin(Engine::Get()->GetTime()) > 0.0f;
-			data->colour = Colour(1.0f, fabs(std::sin(Engine::Get()->GetTime())), 0.3f, 0.4f);
-			data->model = Matrix4();
-			Matrix4::TransformationMatrix(Vector3(0.2f, 0.1f, 0.1f), Vector3(0.0f, 10.0f, 0.0f), 0.9f, &data->model);
-			vkUnmapMemory(logicalDevice, m_objectUniformBuffer.GetBufferMemory());
+			UniformObject data = {};
+			data.memes = std::sin(Engine::Get()->GetTime()) > 0.0f;
+		//	data.r = 0.4f;
+		//	data.g = 0.6f;
+		//	data.b = 0.1f;
+			data.colour = Colour("#ff66cc");
+		//	data.model = Matrix4();
+		//	Matrix4::TransformationMatrix(Vector3(0.2f, 0.1f, 0.1f), Vector3(0.0f, 10.0f, 0.0f), 0.9f, &data.model);
+			m_objectUniformBuffer.Update(logicalDevice, &data);
 
-		//	VkDescriptorSet descriptors[] = { m_objectUniformBuffer.GetDescriptorSet() };
-		//	vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipelineLayout(), 1, 1, descriptors, 0, nullptr);
+			VkDescriptorSet descriptors[] = { m_objectUniformBuffer.GetDescriptorSet() };
+			vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 		}
 
 
