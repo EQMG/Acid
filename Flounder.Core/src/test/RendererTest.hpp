@@ -18,11 +18,14 @@ namespace Flounder
 		struct UniformObject // uint32, vec4 of float32, mat4 of vec4 of float32
 		{
 			bool memes;
+		//	float r;
+		//	float g;
+		//	float b;
 			Colour colour;
-			Matrix4 model;
+			//	Matrix4 model;
 		};
 
-		UniformBuffer m_cameraUniformBuffer;
+		//UniformBuffer m_cameraUniformBuffer;
 		UniformBuffer m_objectUniformBuffer;
 
 		Shader m_shader;

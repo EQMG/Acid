@@ -5,18 +5,21 @@
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec4 vertexColour;
 
-layout(set = 0, binding = 0) uniform UniformCamera
+/*layout(set = 0, binding = 0) uniform UniformCamera
 {
 	mat4 projection;
 	mat4 view;
 	vec4 clip;
-} uniformCamera;
+} uniformCamera;*/
 
-layout(set = 0, binding = 1) uniform UniformObject
+layout(set = 0, binding = 0) uniform UniformObject
 {
 	bool memes;
-	vec4 colour;
-	mat4 model;
+	float r;
+	float g;
+	float b;
+//	vec4 colour;
+//	mat4 model;
 } uniformObject;
 
 layout(location = 0) out vec3 fragmentColour;
@@ -34,6 +37,6 @@ void main()
 
 	if (uniformObject.memes)
 	{
-		fragmentColour = uniformObject.colour.rgb;
+		fragmentColour = vec3(uniformObject.r, uniformObject.g, uniformObject.b);//uniformObject.colour.rgb;
 	}
 }

@@ -27,6 +27,8 @@ namespace Flounder
 
 		void Cleanup(const VkDevice &logicalDevice);
 
+		void Update(const VkDevice &logicalDevice, void *newData);
+
 		VkDeviceSize GetSize() const { return m_size; }
 
 		void SetSize(const VkDeviceSize &size) { m_size = size; };
