@@ -82,7 +82,7 @@ namespace Flounder
 	private:
 		void CreateAttributes();
 
-		void CreatePipelineLayout(const VkDevice &logicalDevice);
+		void CreatePipelineLayout(const VkDevice &logicalDevice, const std::vector<VkDescriptorSetLayout> &descriptorSetLayouts);
 
 		void CreatePolygonPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass);
 

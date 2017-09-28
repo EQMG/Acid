@@ -34,10 +34,11 @@ namespace Flounder
 			uboLayoutBinding.descriptorCount = 1;
 			uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 			uboLayoutBinding.pImmutableSamplers = nullptr;
-			uboLayoutBinding.stageFlags = VK_SHADER_STAGE_ALL;
+			uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
 
 			VkDescriptorSetLayoutCreateInfo layoutInfo = {};
 			layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+			layoutInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 			layoutInfo.bindingCount = 1;
 			layoutInfo.pBindings = &uboLayoutBinding;
 
@@ -60,6 +61,7 @@ namespace Flounder
 			VkDescriptorSetLayout layouts[] = { m_descriptorSetLayout };
 			VkDescriptorSetAllocateInfo allocInfo = {};
 			allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+			allocInfo.pNext = nullptr;
 			allocInfo.descriptorPool = m_descriptorPool;
 			allocInfo.descriptorSetCount = 1;
 			allocInfo.pSetLayouts = layouts;
@@ -90,5 +92,18 @@ namespace Flounder
 		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
 		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
 		Buffer::Cleanup(logicalDevice);
+	}
+
+	void UniformBuffer::Update(const VkDevice &logicalDevice, void *newData)
+	{
+		void *data;
+		vkMapMemory(logicalDevice, m_bufferMemory, 0, m_size, 0, &data);
+		memcpy(data, newData, m_size);
+		/*for (int i = 0; i < m_size; i++)
+		{
+			printf("%f, ", ((float*)data)[i]);
+		}
+		printf("\n\n");*/
+		vkUnmapMemory(logicalDevice, m_bufferMemory);
 	}
 }
