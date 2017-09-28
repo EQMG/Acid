@@ -22,9 +22,9 @@ namespace Flounder
 
 		void Cleanup(const VkDevice &logicalDevice);
 
-		void SetIndices(std::vector<uint16_t> indices);
-
 		uint32_t GetIndicesSize() const { return static_cast<uint32_t>(m_indices.size()); }
+
+		void SetIndices(std::vector<uint16_t> indices);
 	private:
 		void CopyVerticesToBuffer(const VkDevice &logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const;
 	};

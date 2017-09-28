@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\renderer\buffers\Vertex.cpp" />
+    <ClCompile Include="src\renderer\buffers\UniformBuffer.cpp" />
     <ClCompile Include="src\renderer\stencils\DepthStencil.cpp" />
     <ClCompile Include="src\camera\Camera.cpp" />
     <ClCompile Include="src\deferred\RendererDeferred.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="src\worlds\Worlds.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\renderer\buffers\UniformBuffer.hpp" />
     <ClInclude Include="src\renderer\stencils\DepthStencil.hpp" />
     <ClInclude Include="src\camera\Camera.hpp" />
     <ClInclude Include="src\camera\ICamera.hpp" />
