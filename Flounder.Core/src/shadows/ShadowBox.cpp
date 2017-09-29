@@ -265,13 +265,13 @@ namespace Flounder
 
 		Vector3 *centre = new Vector3(*entityPos);
 		Vector3 *distance = Vector3::Subtract(*centre, *closestPoint, nullptr);
-		float disSquared = distance->LengthSquared();
+		float distanceSquared = distance->LengthSquared();
 
 		delete distance;
 		delete centre;
 		delete closestPoint;
 		delete entityPos;
 
-		return disSquared < radius * radius;
+		return distanceSquared < radius * radius;
 	}
 }
