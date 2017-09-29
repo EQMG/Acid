@@ -32,7 +32,7 @@ Instance::Instance()
 	Transform *transformTest = new Transform(Vector3(100.892f, -10.0f, -256.0f), Vector3(0.0f, 90.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f));
 	Matrix4 *matrixWorld = transformTest->GetWorldMatrix(nullptr);
 
-	Colour colourHex("#cc6600", 1.0f);
+	Colour colourHex("#cc6600");
 	std::cout << colourHex.m_r << ", " << colourHex.m_g << ", " << colourHex.m_b << std::endl;
 	std::cout << Colour::GetHex(colourHex) << std::endl;
 	

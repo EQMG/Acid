@@ -13,7 +13,14 @@ namespace Flounder
 	class Colour
 	{
 	public:
-		float m_r, m_g, m_b, m_a;
+		union
+		{
+			struct
+			{
+				float m_r, m_g, m_b, m_a;
+			};
+		//	struct { float m_x, m_y, m_z, m_w; };
+		};
 
 		/// <summary>
 		/// Constructor for colour.

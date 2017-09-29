@@ -19,7 +19,7 @@ namespace Flounder
 		{
 			bool memes;
 			Colour colour;
-			//	Matrix4 model;
+			//Matrix4 model;
 		};
 
 		//UniformBuffer m_cameraUniformBuffer;

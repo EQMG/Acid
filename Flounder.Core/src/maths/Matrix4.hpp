@@ -13,22 +13,38 @@ namespace Flounder
 	class Matrix4
 	{
 	public:
-		float m_00;
-		float m_01;
-		float m_02;
-		float m_03;
-		float m_10;
-		float m_11;
-		float m_12;
-		float m_13;
-		float m_20;
-		float m_21;
-		float m_22;
-		float m_23;
-		float m_30;
-		float m_31;
-		float m_32;
-		float m_33;
+		union
+		{
+			struct
+			{
+				float m_elements[4 * 4];
+			};
+
+			struct
+			{
+				float m_00, m_01, m_02, m_03;
+				float m_10;
+				float m_11;
+				float m_12;
+				float m_13;
+				float m_20;
+				float m_21;
+				float m_22;
+				float m_23;
+				float m_30;
+				float m_31;
+				float m_32;
+				float m_33;
+			};
+
+			struct
+			{
+				Vector4 m_column0;
+				Vector4 m_column1;
+				Vector4 m_column2;
+				Vector4 m_column3;
+			};
+		};
 
 		/// <summary>
 		/// Constructor for Matrix4. The matrix is initialised to the identity.
