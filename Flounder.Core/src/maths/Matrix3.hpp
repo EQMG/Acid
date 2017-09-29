@@ -11,15 +11,27 @@ namespace Flounder
 	class Matrix3
 	{
 	public:
-		float m_00;
-		float m_01;
-		float m_02;
-		float m_10;
-		float m_11;
-		float m_12;
-		float m_20;
-		float m_21;
-		float m_22;
+		union
+		{
+			struct
+			{
+				float m_elements[3][3];
+			};
+
+			struct
+			{
+				float m_00, m_01, m_02;
+				float m_10, m_11, m_12;
+				float m_20, m_21, m_22;
+			};
+
+			struct
+			{
+				Vector3 m_0;
+				Vector3 m_1;
+				Vector3 m_2;
+			};
+		};
 
 		/// <summary>
 		/// Constructor for Matrix3. The matrix is initialised to the identity.

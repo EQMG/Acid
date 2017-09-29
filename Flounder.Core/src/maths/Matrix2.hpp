@@ -15,7 +15,7 @@ namespace Flounder
 		{
 			struct
 			{
-				float m_elements[2 * 2];
+				float m_elements[2][2];
 			};
 
 			struct
@@ -26,8 +26,8 @@ namespace Flounder
 
 			struct
 			{
-				Vector2 m_column0;
-				Vector2 m_column1;
+				Vector2 m_0;
+				Vector2 m_1;
 			};
 		};
 

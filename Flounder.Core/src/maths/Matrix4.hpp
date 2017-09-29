@@ -17,32 +17,23 @@ namespace Flounder
 		{
 			struct
 			{
-				float m_elements[4 * 4];
+				float m_elements[4][4];
 			};
 
 			struct
 			{
 				float m_00, m_01, m_02, m_03;
-				float m_10;
-				float m_11;
-				float m_12;
-				float m_13;
-				float m_20;
-				float m_21;
-				float m_22;
-				float m_23;
-				float m_30;
-				float m_31;
-				float m_32;
-				float m_33;
+				float m_10, m_11, m_12, m_13;
+				float m_20, m_21, m_22, m_23;
+				float m_30, m_31, m_32, m_33;
 			};
 
 			struct
 			{
-				Vector4 m_column0;
-				Vector4 m_column1;
-				Vector4 m_column2;
-				Vector4 m_column3;
+				Vector4 m_0;
+				Vector4 m_1;
+				Vector4 m_2;
+				Vector4 m_3;
 			};
 		};
 
