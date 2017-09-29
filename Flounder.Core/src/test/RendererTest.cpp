@@ -91,7 +91,8 @@ namespace Flounder
 		{
 			UniformObject data = {};
 			data.memes = std::sin(Engine::Get()->GetTime()) > 0.0f;
-			data.colour = Colour("#ff66cc");
+		//	data.colour = Colour("#ff66cc");
+			data.colour = { 0.2f, 0.4f, 0.5f, 1.0f };
 		//	data.model = Matrix4();
 		//	Matrix4::TransformationMatrix(Vector3(0.2f, 0.1f, 0.1f), Vector3(0.0f, 10.0f, 0.0f), 0.9f, &data.model);
 			m_objectUniformBuffer.Update(logicalDevice, &data);
