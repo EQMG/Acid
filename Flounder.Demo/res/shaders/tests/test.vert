@@ -1,5 +1,4 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
 layout(location = 0) in vec3 vertexPosition;
@@ -12,12 +11,10 @@ layout(location = 1) in vec4 vertexColour;
 	vec4 clip;
 } uniformCamera;*/
 
-layout(set = 0, binding = 0) uniform UniformObject
+layout(binding = 0) uniform UniformBufferObject
 {
 	bool memes;
-	float r;
-	float g;
-	float b;
+	float r, g, b, a;
 //	vec4 colour;
 //	mat4 model;
 } uniformObject;
@@ -37,6 +34,7 @@ void main()
 
 	if (uniformObject.memes)
 	{
-		fragmentColour = vec3(uniformObject.r, uniformObject.g, uniformObject.b);//uniformObject.colour.rgb;
+		fragmentColour = vec3(uniformObject.r, uniformObject.g, uniformObject.b);
+	//	fragmentColour = uniformObject.colour.rgb;
 	}
 }
