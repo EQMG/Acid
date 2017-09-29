@@ -91,9 +91,6 @@ namespace Flounder
 		{
 			UniformObject data = {};
 			data.memes = std::sin(Engine::Get()->GetTime()) > 0.0f;
-		//	data.r = 0.4f;
-		//	data.g = 0.6f;
-		//	data.b = 0.1f;
 			data.colour = Colour("#ff66cc");
 		//	data.model = Matrix4();
 		//	Matrix4::TransformationMatrix(Vector3(0.2f, 0.1f, 0.1f), Vector3(0.0f, 10.0f, 0.0f), 0.9f, &data.model);
