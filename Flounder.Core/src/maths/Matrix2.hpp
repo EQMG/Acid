@@ -11,10 +11,25 @@ namespace Flounder
 	class Matrix2
 	{
 	public:
-		float m_00;
-		float m_01;
-		float m_10;
-		float m_11;
+		union
+		{
+			struct
+			{
+				float m_elements[2 * 2];
+			};
+
+			struct
+			{
+				float m_00, m_01;
+				float m_10, m_11;
+			};
+
+			struct
+			{
+				Vector2 m_column0;
+				Vector2 m_column1;
+			};
+		};
 
 		/// <summary>
 		/// Constructor for Matrix2. The matrix is initialised to the identity.
