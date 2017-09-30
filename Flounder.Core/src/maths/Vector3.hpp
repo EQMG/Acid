@@ -13,7 +13,18 @@ namespace Flounder
 	class Vector3
 	{
 	public:
-		float m_x, m_y, m_z;
+		union
+		{
+			struct
+			{
+				float m_x, m_y, m_z;
+			};
+
+			struct
+			{
+				float m_elements[3];
+			};
+		};
 
 		/// <summary>
 		/// Constructor for Vector3.

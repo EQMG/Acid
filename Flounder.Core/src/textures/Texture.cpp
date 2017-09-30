@@ -258,12 +258,12 @@ namespace Flounder
 			printf("Unable to load texture: '%s'.\n", m_file.c_str());
 		}
 
-		int pixelsSize = (*width) * (*height) * (*components);
+		const int pixelsSize = (*width) * (*height) * (*components);
 		float *pixels = new float[pixelsSize];
 
 		for (int i = 0; i < pixelsSize; i++)
 		{
-			float f = (float) data[i] / (float) (unsigned char) (-1);
+			const float f = static_cast<float>(data[i]) / static_cast<float>(static_cast<unsigned char>(-1));
 			pixels[i] = f;
 		}
 

@@ -1,4 +1,4 @@
-#include "axisbutton.hpp"
+#include "AxisButton.hpp"
 
 namespace Flounder
 {

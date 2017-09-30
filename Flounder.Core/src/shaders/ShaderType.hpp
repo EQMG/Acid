@@ -13,7 +13,7 @@ namespace Flounder
 		VkShaderStageFlagBits m_shaderFlag;
 		std::string m_filePath;
 	public:
-		ShaderType(VkShaderStageFlagBits shaderFlag, const std::string &filePath)
+		ShaderType(const VkShaderStageFlagBits &shaderFlag, const std::string &filePath)
 		{
 			m_shaderFlag = shaderFlag;
 			m_filePath = filePath;

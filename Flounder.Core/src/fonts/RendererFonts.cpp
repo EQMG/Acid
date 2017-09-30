@@ -4,10 +4,10 @@ namespace Flounder
 {
 	RendererFonts::RendererFonts() :
 		IRenderer(),
-		m_shader(new Shader("fonts", 2,
+		m_shader(new Shader("fonts", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/fonts/font.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/fonts/font.frag.spv")
-		))
+		}))
 	{
 	}
 

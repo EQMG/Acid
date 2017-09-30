@@ -4,16 +4,15 @@
 #include <stdexcept>
 #include <cmath>
 #include <string>
-#include <sstream>
 
-namespace Flounder
-{
 #define PI 3.14159265358979323846f
 #define DEGREES_IN_CIRCLE 360.0f
 #define DEGREES_IN_HALF_CIRCLE 180.0f
 #define ANG2RAD PI / DEGREES_IN_HALF_CIRCLE
 #define LOG_HALF log(0.5f)
 
+namespace Flounder
+{
 	/// <summary>
 	/// A class that holds many various math functions.
 	/// </summary>
@@ -180,8 +179,8 @@ namespace Flounder
 		template<typename T>
 		static T CosInterpolate(const T &a, const T &b, const T &blend)
 		{
-			float ft = static_cast<T>(blend) * PI;
-			float f = 1.0f - cos(ft) * 0.5f;
+			const float ft = static_cast<T>(blend) * PI;
+			const float f = 1.0f - cos(ft) * 0.5f;
 			return a * static_cast<T>(1.0f - f) + b * f;
 		}
 
@@ -222,10 +221,10 @@ namespace Flounder
 		/// <returns> The final random number. </returns>
 		static double LogRandom(const double &lowerLimit, const double &upperLimit)
 		{
-			double logLower = log(lowerLimit);
-			double logUpper = log(upperLimit);
+			const double logLower = log(lowerLimit);
+			const double logUpper = log(upperLimit);
+			const double raw = RandomInRange(0.0f, 1.0f);
 
-			double raw = RandomInRange(0.0f, 1.0f);
 			double result = exp(raw * (logUpper - logLower) + logLower);
 
 			if (result < lowerLimit)
@@ -250,12 +249,12 @@ namespace Flounder
 		static float NormallyDistributedSingle(const float &standardDeviation, const float &mean)
 		{
 			// Intentionally duplicated to avoid IEnumerable overhead.
-			double u1 = RandomInRange(0.0, 1.0);
-			double u2 = RandomInRange(0.0, 1.0);
+			const double u1 = RandomInRange(0.0, 1.0);
+			const double u2 = RandomInRange(0.0, 1.0);
 
-			double x1 = sqrt(-2.0 * log(u1));
-			double x2 = 2.0 * PI * u2;
-			double z1 = x1 * sin(x2); // Random normal(0,1)
+			const double x1 = sqrt(-2.0 * log(u1));
+			const double x2 = 2.0 * PI * u2;
+			const double z1 = x1 * sin(x2); // Random normal(0,1)
 			return static_cast<float>(z1) * standardDeviation + mean;
 		}
 	};

@@ -1,10 +1,8 @@
 #pragma once
 
-#include <stdarg.h>
+#include <vector>
 
-#include "../devices/Mouse.hpp"
-
-#include "ibutton.hpp"
+#include "IButton.hpp"
 
 namespace Flounder
 {
@@ -15,16 +13,14 @@ namespace Flounder
 		public IButton
 	{
 	private:
-		int m_count;
-		int *m_buttons;
+		std::vector<int> m_buttons;
 		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new button mouse.
 		/// </summary>
-		/// <param name="n_args"> The number buttons of mouse buttons being checked. </param>
-		/// <param name="..."> The buttons on the mouse being checked. </param>
-		ButtonMouse(const int n_args, ...);
+		/// <param name="buttons"> The buttons on the mouse being checked. </param>
+		ButtonMouse(const std::vector<int> &buttons);
 
 		/// <summary>
 		/// Deconstructor for the button mouse.

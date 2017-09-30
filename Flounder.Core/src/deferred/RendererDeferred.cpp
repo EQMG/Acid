@@ -1,12 +1,20 @@
 #include "RendererDeferred.hpp"
 
+#include "../camera/Camera.hpp"
+#include "../lights/Light.hpp"
+#include "../maths/Vector3.hpp"
+#include "../renderer/Renderer.hpp"
+#include "../skyboxes/Skyboxes.hpp"
+#include "../shadows/Shadows.hpp"
+#include "../worlds/Worlds.hpp"
+
 namespace Flounder
 {
 	RendererDeferred::RendererDeferred(Fbo *fbo) :
-		m_shader(new Shader("deferred", 2,
+		m_shader(new Shader("deferred", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/deferred/deferred.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/deferred/deferred.frag.spv")
-		)),
+		})),
 		m_model(new Model("res/models/filter.obj"))
 	{
 	}

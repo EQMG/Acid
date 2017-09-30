@@ -2,21 +2,12 @@
 
 namespace Flounder
 {
-	Shader::Shader(const std::string &name, const int n_args, ...) :
+	Shader::Shader(const std::string &name, const std::vector<ShaderType> &types) :
 		m_name(name),
-		m_types(new std::vector<ShaderType>()),
+		m_types(new std::vector<ShaderType>(types)),
 		m_modules(new std::vector<VkShaderModule>()),
 		m_stages(new std::vector<VkPipelineShaderStageCreateInfo>())
 	{
-		va_list ap;
-		va_start(ap, n_args);
-
-		for (int i = 0; i < n_args; i++)
-		{
-			m_types->push_back(va_arg(ap, ShaderType));
-		}
-
-		va_end(ap);
 	}
 
 	Shader::~Shader()

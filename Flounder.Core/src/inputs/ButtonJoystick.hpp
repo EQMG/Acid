@@ -1,10 +1,8 @@
 #pragma once
 
-#include <stdarg.h>
+#include <vector>
 
-#include "../devices/Joysticks.hpp"
-
-#include "ibutton.hpp"
+#include "IButton.hpp"
 
 namespace Flounder
 {
@@ -16,17 +14,15 @@ namespace Flounder
 	{
 	private:
 		int m_joystick;
-		int m_count;
-		int *m_buttons;
+		std::vector<int> m_buttons;
 		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new button joystick.
 		/// </summary>
 		/// <param name="joystick"> The joystick. Should be one of the GLFW.JOYSTICK values. </param>
-		/// <param name="n_args"> The number buttons of joystick buttons being checked. </param>
-		/// <param name="..."> The buttons on the joystick being checked. </param>
-		ButtonJoystick(const int &joystick, const int n_args, ...);
+		/// <param name="buttons"> The buttons on the joystick being checked. </param>
+		ButtonJoystick(const int &joystick, const std::vector<int> &buttons);
 
 		/// <summary>
 		/// Deconstructor for the button joystick.

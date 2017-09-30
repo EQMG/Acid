@@ -11,6 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\helpers\HelperArray.cpp" />
+    <ClCompile Include="src\helpers\HelperFile.cpp" />
+    <ClCompile Include="src\helpers\HelperString.cpp" />
+    <ClCompile Include="src\maths\Maths.cpp" />
     <ClCompile Include="src\renderer\buffers\Vertex.cpp" />
     <ClCompile Include="src\renderer\buffers\UniformBuffer.cpp" />
     <ClCompile Include="src\renderer\stencils\DepthStencil.cpp" />

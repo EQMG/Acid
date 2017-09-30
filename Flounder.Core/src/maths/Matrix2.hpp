@@ -15,11 +15,6 @@ namespace Flounder
 		{
 			struct
 			{
-				float m_elements[2][2];
-			};
-
-			struct
-			{
 				float m_00, m_01;
 				float m_10, m_11;
 			};
@@ -28,6 +23,11 @@ namespace Flounder
 			{
 				Vector2 m_0;
 				Vector2 m_1;
+			};
+
+			struct
+			{
+				float m_elements[2][2];
 			};
 		};
 
