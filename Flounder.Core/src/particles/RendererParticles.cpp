@@ -7,10 +7,10 @@ namespace Flounder
 
 	RendererParticles::RendererParticles() :
 		IRenderer(),
-		m_shader(new Shader("particles", 2,
+		m_shader(new Shader("particles", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/particles/particle.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/particles/particle.frag.spv")
-		)),
+		})),
 		m_rendered(0)
 	{
 		/*std::vector<float> positions = {-0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f};

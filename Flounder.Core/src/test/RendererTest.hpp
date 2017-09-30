@@ -24,6 +24,7 @@ namespace Flounder
 
 		//UniformBuffer m_cameraUniformBuffer;
 		UniformBuffer m_objectUniformBuffer;
+		Texture m_texture;
 
 		Shader m_shader;
 		Pipeline m_pipeline;

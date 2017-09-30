@@ -4,10 +4,10 @@ namespace Flounder
 {
 	RendererSkyboxes::RendererSkyboxes() :
 		IRenderer(),
-		m_shader(new Shader("skyboxes", 2,
+		m_shader(new Shader("skyboxes", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/skyboxes/skybox.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/skyboxes/skybox.frag.spv")
-		))
+		}))
 	{
 	}
 

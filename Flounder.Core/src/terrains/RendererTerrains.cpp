@@ -4,10 +4,10 @@ namespace Flounder
 {
 	RendererTerrains::RendererTerrains() :
 		IRenderer(),
-		m_shader(new Shader("terrains", 2,
+		m_shader(new Shader("terrains", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/terrains/terrain.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/terrains/terrain.frag.spv")
-		))
+		}))
 	{
 	}
 
