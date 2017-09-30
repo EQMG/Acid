@@ -5,10 +5,10 @@ namespace Flounder
 	RendererShadows::RendererShadows() :
 		IRenderer(),
 		m_fbo(new Fbo(Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize(), DepthTexture, false)),
-		m_shader(new Shader("shadows", 2,
+		m_shader(new Shader("shadows", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/shadows/shadow.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/shadows/shadow.frag.spv")
-		))
+		}))
 	{
 	}
 

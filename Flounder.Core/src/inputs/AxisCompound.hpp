@@ -1,10 +1,8 @@
 #pragma once
 
-#include <stdarg.h>
+#include <vector>
 
-#include "../maths/Maths.hpp"
-
-#include "iaxis.hpp"
+#include "IAxis.hpp"
 
 namespace Flounder
 {
@@ -15,15 +13,13 @@ namespace Flounder
 		public IAxis
 	{
 	private:
-		int m_count;
-		IAxis **m_axes;
+		std::vector<IAxis*> m_axes;
 	public:
 		/// <summary>
 		/// Creates a new compound axis.
 		/// </summary>
-		/// <param name="n_args"> The number of axes being added. </param>
-		/// <param name="..."> The axes on the being added. </param>
-		AxisCompound(const int n_args, ...);
+		/// <param name="axes"> The axes on the being added. </param>
+		AxisCompound(const std::vector<IAxis*> &axes);
 
 		/// <summary>
 		/// Deconstructor for the compound axis.

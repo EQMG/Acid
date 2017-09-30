@@ -33,9 +33,8 @@ namespace Flounder
 		/// Creates a new shader.
 		/// </summary>
 		/// <param name="name"> The shaders name. </param>
-		/// <param name="n_args"> The number of shader types. </param>
-		/// <param name="..."> The list of shader types. </param>
-		Shader(const std::string &name, const int n_args, ...);
+		/// <param name="types"> The list of shader types. </param>
+		Shader(const std::string &name, const std::vector<ShaderType> &types);
 
 		/// <summary>
 		/// Deconstructor for the shader.

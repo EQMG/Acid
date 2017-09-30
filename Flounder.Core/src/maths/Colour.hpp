@@ -19,7 +19,11 @@ namespace Flounder
 			{
 				float m_r, m_g, m_b, m_a;
 			};
-		//	struct { float m_x, m_y, m_z, m_w; };
+
+			struct
+			{
+				float m_elements[4];
+			};
 		};
 
 		/// <summary>

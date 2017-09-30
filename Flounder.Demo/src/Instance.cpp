@@ -2,9 +2,9 @@
 
 Instance::Instance()
 {
-	m_buttonFullscreen = new ButtonKeyboard(1, GLFW_KEY_F11);
-	m_buttonLockMouse = new ButtonKeyboard(1, GLFW_KEY_M);
-	m_buttonExit = new ButtonKeyboard(1, GLFW_KEY_DELETE);
+	m_buttonFullscreen = new ButtonKeyboard({ GLFW_KEY_F11 });
+	m_buttonLockMouse = new ButtonKeyboard({ GLFW_KEY_M });
+	m_buttonExit = new ButtonKeyboard({ GLFW_KEY_DELETE });
 
 	/*audio::add(new sound("music", "res/ld39Outpost.wav"));
 	sound *object = audio::get("music");
@@ -35,7 +35,9 @@ Instance::Instance()
 	Colour colourHex("#cc6600");
 	std::cout << colourHex.m_r << ", " << colourHex.m_g << ", " << colourHex.m_b << std::endl;
 	std::cout << Colour::GetHex(colourHex) << std::endl;
-	
+
+	// float degrees = Maths::Degrees(2.0f * PI);
+
 	delete matrixWorld;
 	delete transformTest;
 	delete modelTest;

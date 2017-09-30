@@ -1,10 +1,8 @@
 #pragma once
 
-#include <stdarg.h>
+#include <vector>
 
-#include "../devices/Keyboard.hpp"
-
-#include "ibutton.hpp"
+#include "IButton.hpp"
 
 namespace Flounder
 {
@@ -15,16 +13,14 @@ namespace Flounder
 		public IButton
 	{
 	private:
-		int m_count;
-		int *m_keys;
+		std::vector<int> m_keys;
 		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new button keyboard.
 		/// </summary>
-		/// <param name="n_args"> The number keys of keyboard buttons being checked. </param>
-		/// <param name="..."> The keys on the keyboard being checked. </param>
-		ButtonKeyboard(const int n_args, ...);
+		/// <param name="keys"> The keys on the keyboard being checked. </param>
+		ButtonKeyboard(const std::vector<int> &keys);
 
 		/// <summary>
 		/// Deconstructor for the button keyboard.

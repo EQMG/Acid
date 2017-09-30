@@ -1,45 +1,31 @@
-#include "buttonjoystick.hpp"
+#include "ButtonJoystick.hpp"
+
+#include "../devices/Joysticks.hpp"
 
 namespace Flounder
 {
-	ButtonJoystick::ButtonJoystick(const int &joystick, const int n_args, ...) :
+	ButtonJoystick::ButtonJoystick(const int &joystick, const std::vector<int> &buttons) :
 		IButton(),
 		m_joystick(joystick),
-		m_count(n_args),
-		m_buttons(new int[n_args]),
+		m_buttons(std::vector<int>(buttons)),
 		m_wasDown(false)
 	{
-		va_list ap;
-		va_start(ap, n_args);
-
-		for (int i = 0; i < n_args; i++)
-		{
-			m_buttons[i] = va_arg(ap, int);
-		}
-
-		va_end(ap);
 	}
 
 	ButtonJoystick::~ButtonJoystick()
 	{
-		delete m_buttons;
 	}
 
 	bool ButtonJoystick::IsDown() const
 	{
-		if (Joysticks::Get() == nullptr)
+		if (Joysticks::Get() == nullptr || !Joysticks::Get()->IsConnected(m_joystick))
 		{
 			return false;
 		}
 
-		if (m_count == 0 || !Joysticks::Get()->IsConnected(m_joystick))
+		for (auto button : m_buttons)
 		{
-			return false;
-		}
-
-		for (int i = 0; i < m_count; i++)
-		{
-			if (Joysticks::Get()->GetButton(m_joystick, m_buttons[i]))
+			if (Joysticks::Get()->GetButton(m_joystick, button))
 			{
 				return true;
 			}
@@ -50,7 +36,7 @@ namespace Flounder
 
 	bool ButtonJoystick::WasDown()
 	{
-		bool stillDown = m_wasDown && IsDown();
+		const bool stillDown = m_wasDown && IsDown();
 		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}

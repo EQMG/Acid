@@ -12,7 +12,18 @@ namespace Flounder
 	class Vector4
 	{
 	public:
-		float m_x, m_y, m_z, m_w;
+		union
+		{
+			struct
+			{
+				float m_x, m_y, m_z, m_w;
+			};
+
+			struct
+			{
+				float m_elements[4];
+			};
+		};
 
 		/// <summary>
 		/// Constructor for Vector4.
