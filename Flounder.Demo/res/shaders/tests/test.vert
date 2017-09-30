@@ -14,8 +14,8 @@ layout(location = 1) in vec4 vertexColour;
 layout(binding = 0) uniform UniformBufferObject
 {
 	bool memes;
-//	float r, g, b, a;
-	vec4 colour;
+	float r, g, b, a;
+//	vec4 colour;
 //	mat4 model;
 } uniformObject;
 
@@ -34,7 +34,7 @@ void main()
 
 	if (uniformObject.memes)
 	{
-	//	fragmentColour = vec3(uniformObject.r, uniformObject.g, uniformObject.b);
-		fragmentColour = uniformObject.colour.rgb;
+		fragmentColour = vec3(uniformObject.r, uniformObject.g, uniformObject.b);
+	//	fragmentColour = uniformObject.colour.rgb;
 	}
 }

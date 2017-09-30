@@ -1,27 +1,18 @@
-#include "buttonmouse.hpp"
+#include "ButtonMouse.hpp"
+
+#include "../devices/Mouse.hpp"
 
 namespace Flounder
 {
-	ButtonMouse::ButtonMouse(const int n_args, ...) :
+	ButtonMouse::ButtonMouse(const std::vector<int> &buttons) :
 		IButton(),
-		m_count(n_args),
-		m_buttons(new int[n_args]),
+		m_buttons(std::vector<int>(buttons)),
 		m_wasDown(false)
 	{
-		va_list ap;
-		va_start(ap, n_args);
-
-		for (int i = 0; i < n_args; i++)
-		{
-			m_buttons[i] = va_arg(ap, int);
-		}
-
-		va_end(ap);
 	}
 
 	ButtonMouse::~ButtonMouse()
 	{
-		delete m_buttons;
 	}
 
 	bool ButtonMouse::IsDown() const
@@ -31,9 +22,9 @@ namespace Flounder
 			return false;
 		}
 
-		for (int i = 0; i < m_count; i++)
+		for (auto button : m_buttons)
 		{
-			if (Mouse::Get()->GetButton(m_buttons[i]))
+			if (Mouse::Get()->GetButton(button))
 			{
 				return true;
 			}
@@ -44,7 +35,7 @@ namespace Flounder
 
 	bool ButtonMouse::WasDown()
 	{
-		bool stillDown = m_wasDown && IsDown();
+		const bool stillDown = m_wasDown && IsDown();
 		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}

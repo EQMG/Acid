@@ -1,15 +1,8 @@
 #pragma once
 
-#include "../camera/Camera.hpp"
 #include "../fbos/Fbo.hpp"
-#include "../lights/Light.hpp"
-#include "../maths/Vector3.hpp"
 #include "../models/Model.hpp"
-#include "../renderer/Renderer.hpp"
 #include "../shaders/Shader.hpp"
-#include "../skyboxes/Skyboxes.hpp"
-#include "../shadows/Shadows.hpp"
-#include "../worlds/Worlds.hpp"
 
 namespace Flounder
 {

@@ -12,7 +12,18 @@ namespace Flounder
 	class Vector2
 	{
 	public:
-		float m_x, m_y;
+		union
+		{
+			struct
+			{
+				float m_x, m_y;
+			};
+
+			struct
+			{
+				float m_elements[2];
+			};
+		};
 
 		/// <summary>
 		/// Constructor for vector2.

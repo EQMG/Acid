@@ -1,5 +1,8 @@
 ﻿#include "UiSelector.hpp"
 
+#include "../devices/Mouse.hpp"
+#include "../devices/Joysticks.hpp"
+
 namespace Flounder
 {
 	UiSelector::UiSelector() :
@@ -9,8 +12,8 @@ namespace Flounder
 		m_rightClick(false),
 		m_leftWasClick(false),
 		m_rightWasClick(false),
-		m_mouseLeft(new ButtonMouse(1, GLFW_MOUSE_BUTTON_LEFT)),
-		m_mouseRight(new ButtonMouse(1, GLFW_MOUSE_BUTTON_RIGHT)),
+		m_mouseLeft(new ButtonMouse({ GLFW_MOUSE_BUTTON_LEFT })),
+		m_mouseRight(new ButtonMouse({ GLFW_MOUSE_BUTTON_RIGHT })),
 		m_joysticksInitialized(false),
 		m_selectedJoystick(0),
 		m_joystickAxisX(nullptr),
@@ -34,10 +37,10 @@ namespace Flounder
 	void UiSelector::Load(const int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
 	{
 		m_selectedJoystick = joystick;
-		m_joystickAxisX = new AxisJoystick(joystick, 1, joystickAxisX);
-		m_joystickAxisY = new AxisJoystick(joystick, 1, joystickAxisY);
-		m_joystickLeft = new ButtonJoystick(joystick, 1, joystickLeftClick);
-		m_joystickRight = new ButtonJoystick(joystick, 1, joystickRightClick);
+		m_joystickAxisX = new AxisJoystick(joystick, { joystickAxisX });
+		m_joystickAxisY = new AxisJoystick(joystick, { joystickAxisY });
+		m_joystickLeft = new ButtonJoystick(joystick, { joystickLeftClick });
+		m_joystickRight = new ButtonJoystick(joystick, { joystickRightClick });
 		m_joysticksInitialized = true;
 	}
 

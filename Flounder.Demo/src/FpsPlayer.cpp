@@ -13,11 +13,35 @@ FpsPlayer::FpsPlayer() :
 	m_currentSpeed(0.0f),
 	m_currentStrafeSpeed(0.0f),
 	m_currentUpwardSpeed(0.0f),
-	m_inputForward(new AxisCompound(2, new AxisButton(new ButtonKeyboard(2, GLFW_KEY_S, GLFW_KEY_DOWN), new ButtonKeyboard(2, GLFW_KEY_W, GLFW_KEY_UP)), new AxisJoystick(0, 1))),
-	m_inputStrafe(new AxisCompound(2, new AxisButton(new ButtonKeyboard(2, GLFW_KEY_A, GLFW_KEY_LEFT), new ButtonKeyboard(2, GLFW_KEY_D, GLFW_KEY_RIGHT)), new AxisJoystick(0, 0))),
-	m_inputNoclip(new AxisCompound(2, new AxisButton(new ButtonKeyboard(2, GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL), new ButtonKeyboard(1, GLFW_KEY_SPACE)), new AxisJoystick(0, 0))),
-	m_inputBoost(new ButtonCompound(2, new ButtonKeyboard(2, GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT), new ButtonJoystick(0, 1))),
-	m_inputJump(new ButtonCompound(2, new ButtonKeyboard(1, GLFW_KEY_SPACE), new ButtonJoystick(0, 0))),
+	m_inputForward(new AxisCompound({
+		new AxisButton(
+			new ButtonKeyboard({GLFW_KEY_S, GLFW_KEY_DOWN}), 
+			new ButtonKeyboard({GLFW_KEY_W, GLFW_KEY_UP})
+		),
+		new AxisJoystick(0, {1})
+	})),
+	m_inputStrafe(new AxisCompound({
+		new AxisButton(
+			new ButtonKeyboard({GLFW_KEY_A, GLFW_KEY_LEFT}), 
+			new ButtonKeyboard({GLFW_KEY_D, GLFW_KEY_RIGHT})
+		),
+		new AxisJoystick(0, {0})
+	})),
+	m_inputNoclip(new AxisCompound({
+		new AxisButton(
+			new ButtonKeyboard({GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL}),
+		    new ButtonKeyboard({GLFW_KEY_SPACE})
+		),
+		new AxisJoystick(0, {0})
+	})),
+	m_inputBoost(new ButtonCompound({
+		new ButtonKeyboard({GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT}), 
+		new ButtonJoystick(0, {1})
+	})),
+	m_inputJump(new ButtonCompound({
+		new ButtonKeyboard({GLFW_KEY_SPACE}), 
+		new ButtonJoystick(0, {0})
+	})),
 	m_amountMove(new Vector3()),
 	m_amountRotate(new Vector3()),
 	m_paused(false)

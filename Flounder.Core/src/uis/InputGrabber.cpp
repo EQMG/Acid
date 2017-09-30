@@ -1,5 +1,8 @@
 ﻿#include "InputGrabber.hpp"
 
+#include "../devices/Mouse.hpp"
+#include "../devices/Joysticks.hpp"
+
 namespace Flounder
 {
 	const float InputGrabber::CHANGE_TIME = 0.1f;

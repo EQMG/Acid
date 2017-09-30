@@ -3,10 +3,10 @@
 namespace Flounder
 {
 	IPostFilter::IPostFilter(const std::string &filterName, const std::string &fragmentShader, Fbo *fbo) :
-		m_shader(new Shader(filterName, 2,
+		m_shader(new Shader(filterName, {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/filters/default.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShader)
-		)),
+		})),
 		m_fbo(fbo),
 		m_model(new Model("res/models/filter.obj"))
 	{

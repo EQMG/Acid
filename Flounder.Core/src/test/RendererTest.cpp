@@ -27,11 +27,12 @@ namespace Flounder
 		IRenderer(),
 	//	m_cameraUniformBuffer(UniformBuffer(sizeof(UniformCamera), 0)),
 		m_objectUniformBuffer(UniformBuffer(sizeof(UniformObject), 0)),
+		m_texture("res/undefined.png"),
 
-		m_shader(Shader("tests", 2,
+		m_shader(Shader("tests", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
-		)),
+		})),
 		m_pipeline(Pipeline("tests", PipelinePolygon, m_shader)),
 		m_vertexBuffer(VertexBuffer(triangleVertices)),
 		m_indexBuffer(IndexBuffer(triangleIndices))
@@ -63,6 +64,8 @@ namespace Flounder
 	RendererTest::~RendererTest()
 	{
 		const auto logicalDevice = Display::Get()->GetDevice();
+		
+		// delete m_texture;
 
 		m_shader.Cleanup(logicalDevice);
 		m_pipeline.Cleanup(logicalDevice);
@@ -91,8 +94,7 @@ namespace Flounder
 		{
 			UniformObject data = {};
 			data.memes = std::sin(Engine::Get()->GetTime()) > 0.0f;
-		//	data.colour = Colour("#ff66cc");
-			data.colour = { 0.2f, 0.4f, 0.5f, 1.0f };
+			data.colour = Colour("#ff66cc");
 		//	data.model = Matrix4();
 		//	Matrix4::TransformationMatrix(Vector3(0.2f, 0.1f, 0.1f), Vector3(0.0f, 10.0f, 0.0f), 0.9f, &data.model);
 			m_objectUniformBuffer.Update(logicalDevice, &data);

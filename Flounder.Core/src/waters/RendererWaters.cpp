@@ -6,10 +6,10 @@ namespace Flounder
 		IRenderer(),
 		m_fboReflection(new Fbo(true, Waters::Get()->GetReflectionQuality(), DepthTexture, true, 3)),
 		m_rendererDeferred(new RendererDeferred()),
-		m_shader(new Shader("waters", 2,
+		m_shader(new Shader("waters", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/waters/water.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/waters/water.frag.spv")
-		))
+		}))
 	{
 	}
 

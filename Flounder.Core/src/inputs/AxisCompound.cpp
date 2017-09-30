@@ -1,35 +1,26 @@
-#include "axiscompound.hpp"
+#include "AxisCompound.hpp"
+
+#include "../maths/Maths.hpp"
 
 namespace Flounder
 {
-	AxisCompound::AxisCompound(const int n_args, ...) :
+	AxisCompound::AxisCompound(const std::vector<IAxis*> &axes) :
 		IAxis(),
-		m_count(n_args),
-		m_axes(new IAxis*[n_args])
+		m_axes(std::vector<IAxis*>(axes))
 	{
-		va_list ap;
-		va_start(ap, n_args);
-
-		for (int i = 0; i < n_args; i++)
-		{
-			m_axes[i] = va_arg(ap, IAxis*);
-		}
-
-		va_end(ap);
 	}
 
 	AxisCompound::~AxisCompound()
 	{
-		delete m_axes;
 	}
 
 	float AxisCompound::GetAmount() const
 	{
 		float result = 0.0f;
 
-		for (int i = 0; i < m_count; i++)
+		for (auto axis : m_axes)
 		{
-			result += m_axes[i]->GetAmount();
+			result += axis->GetAmount();
 		}
 
 		return Maths::Clamp(result, -1.0f, 1.0f);
