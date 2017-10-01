@@ -17,6 +17,9 @@ namespace Flounder
 		public IModule
 	{
 	private:
+		static const std::vector<const char*> VALIDATION_LAYERS;
+		static const std::vector<const char*> DEVICE_EXTENSIONS;
+
 		int m_windowWidth;
 		int m_windowHeight;
 		int m_fullscreenWidth;
@@ -262,12 +265,17 @@ namespace Flounder
 
 		void CreatePhysicalDevice();
 
+		VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
+
+		int ScorePhysicalDevice(const VkPhysicalDevice &device);
+
 		void CreateLogicalDevice();
 
 		void CreateSurface();
 
-		void LogVulkanDevice(VkPhysicalDeviceProperties physicalDeviceProperties, VkPhysicalDeviceFeatures physicalDeviceFeatures, VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties);
+		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties,
+			const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties);
 
-		void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription);
+		static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription);
 	};
 }

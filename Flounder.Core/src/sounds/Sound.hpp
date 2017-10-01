@@ -41,9 +41,9 @@ namespace Flounder
 
 		void SetVelocity(const Vector3 &velocity);
 
-		void SetPitch(float pitch);
+		void SetPitch(const float &pitch);
 
-		void SetGain(float gain);
+		void SetGain(const float &gain);
 
 		std::string GetName() const { return m_name; }
 
