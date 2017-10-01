@@ -1,10 +1,9 @@
 #pragma once
 
 #include "../renderer/IRenderer.hpp"
-#include "../uis/Uis.hpp"
+#include "../models/Model.hpp"
 
 #include "Gui.hpp"
-#include "../models/Model.hpp"
 
 namespace Flounder
 {

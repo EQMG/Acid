@@ -1,5 +1,9 @@
 ﻿#include "ParticleSystem.hpp"
 
+#include "../engine/Engine.hpp"
+#include "../maths/Maths.hpp"
+#include "../maths/Matrix4.hpp"
+
 namespace Flounder
 {
 	ParticleSystem::ParticleSystem(std::vector<ParticleType*> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect) :

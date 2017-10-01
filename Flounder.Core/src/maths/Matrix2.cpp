@@ -1,5 +1,7 @@
 #include "Matrix2.hpp"
 
+#include "Maths.hpp"
+
 namespace Flounder
 {
 	Matrix2::Matrix2() :

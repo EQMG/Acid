@@ -1,5 +1,7 @@
 ﻿#include "Sound.hpp"
 
+#include <al/al.h>
+#include "../devices/Display.hpp"
 #include "../devices/Audio.hpp"
 
 namespace Flounder

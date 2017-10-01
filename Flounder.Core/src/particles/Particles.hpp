@@ -2,11 +2,8 @@
 
 #include <vector>
 #include <map>
-#include <algorithm>
 
 #include "../engine/Engine.hpp"
-#include "../uis/Uis.hpp"
-#include "../space/StructureBasic.hpp"
 
 #include "Particle.hpp"
 #include "ParticleSystem.hpp"

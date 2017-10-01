@@ -1,5 +1,8 @@
 #include "Shader.hpp"
 
+#include <map>
+#include "../helpers/HelperFile.hpp"
+
 namespace Flounder
 {
 	Shader::Shader(const std::string &name, const std::vector<ShaderType> &types) :

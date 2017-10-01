@@ -1,6 +1,11 @@
 ﻿#pragma once
 
 #include "../renderer/IRenderer.hpp"
+#include "../renderer/buffers/IndexBuffer.hpp"
+#include "../renderer/buffers/VertexBuffer.hpp"
+#include "../renderer/buffers/UniformBuffer.hpp"
+#include "../shaders/Shader.hpp"
+#include "../textures/Texture.hpp"
 
 namespace Flounder
 {

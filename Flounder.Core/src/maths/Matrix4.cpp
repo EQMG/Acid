@@ -1,5 +1,7 @@
 #include "Matrix4.hpp"
 
+#include "Maths.hpp"
+
 namespace Flounder
 {
 	Matrix4::Matrix4() :

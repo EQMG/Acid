@@ -1,5 +1,8 @@
 #include "Processing.hpp"
 
+#include "resource/ProcessorResource.hpp"
+#include "graphic/ProcessorGraphic.hpp"
+
 namespace Flounder
 {
 	Processing::Processing() :

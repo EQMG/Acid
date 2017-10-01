@@ -1,14 +1,8 @@
 ﻿#pragma once
 
-#include <iostream>
 #include <string>
 #include <vector>
 
-#include <al/al.h>
-#include <al/alc.h>
-
-#include "../devices/Display.hpp"
-#include "../helpers/HelperString.hpp"
 #include "../maths/Vector3.hpp"
 
 namespace Flounder

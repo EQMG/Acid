@@ -1,10 +1,8 @@
 #pragma once
 
 #include "../maths/Vector3.hpp"
-#include "../maths/Matrix4.hpp"
 #include "../engine/Engine.hpp"
 #include "../skyboxes/Skyboxes.hpp"
-#include "../shadows/Shadows.hpp"
 #include "../visual/DriverLinear.hpp"
 #include "../noise/NoiseFast.hpp"
 

@@ -39,7 +39,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>NewKosmos</RootNamespace>
+    <RootNamespace>Flounder.Demo</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <ProjectName>Flounder.Demo</ProjectName>
   </PropertyGroup>

@@ -1,9 +1,9 @@
 #pragma once
 
+#include <vector>
+
 #include "../engine/Engine.hpp"
 
-#include "resource/ProcessorResource.hpp"
-#include "graphic/ProcessorGraphic.hpp"
 #include "IProcessor.hpp"
 #include "IRequest.hpp"
 

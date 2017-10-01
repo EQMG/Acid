@@ -1,5 +1,7 @@
 ﻿#include "InputButton.hpp"
 
+#include "../visual/DriverSlide.hpp"
+
 namespace Flounder
 {
 	const float InputButton::CHANGE_TIME = 0.1f;

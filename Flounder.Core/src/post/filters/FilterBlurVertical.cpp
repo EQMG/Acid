@@ -1,5 +1,7 @@
 #include "FilterBlurVertical.hpp"
 
+#include "../../devices/Display.hpp"
+
 namespace Flounder
 {
 	FilterBlurVertical::FilterBlurVertical(const float &sizeScalar) :

@@ -1,7 +1,9 @@
 ﻿#include "InputGrabber.hpp"
 
 #include "../devices/Mouse.hpp"
+#include "../devices/Keyboard.hpp"
 #include "../devices/Joysticks.hpp"
+#include "../visual/DriverSlide.hpp"
 
 namespace Flounder
 {

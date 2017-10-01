@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Buffer.hpp"
+#include "Vertex.hpp"
 
 namespace Flounder
 {

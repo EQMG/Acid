@@ -1,5 +1,7 @@
 #include "Particles.hpp"
 
+#include "../uis/Uis.hpp"
+
 namespace Flounder
 {
 	const float Particles::MAX_ELAPSED_TIME = 5.0f;

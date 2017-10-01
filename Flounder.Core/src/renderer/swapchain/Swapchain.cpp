@@ -1,5 +1,7 @@
 ﻿#include "Swapchain.hpp"
 
+#include <array>
+
 namespace Flounder
 {
 	Swapchain::Swapchain() :

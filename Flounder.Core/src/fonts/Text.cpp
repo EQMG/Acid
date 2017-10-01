@@ -1,4 +1,6 @@
-﻿#include "text.hpp"
+﻿#include "Text.hpp"
+
+#include "../visual/DriverConstant.hpp"
 
 namespace Flounder
 {

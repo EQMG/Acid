@@ -1,5 +1,7 @@
 ﻿#include "RenderPass.hpp"
 
+#include <array>
+
 namespace Flounder
 {
 	RenderPass::RenderPass() :

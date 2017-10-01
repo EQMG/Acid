@@ -2,17 +2,15 @@
 
 #include <string>
 
-#include "../engine/Engine.hpp"
 #include "../maths/Colour.hpp"
 #include "../maths/Vector2.hpp"
 #include "../visual/IDriver.hpp"
 #include "../uis/UiAlign.hpp"
 #include "../uis/UiObject.hpp"
-#include "../visual/DriverConstant.hpp"
+#include "../models/Model.hpp"
 
 #include "FontType.hpp"
 #include "Line.hpp"
-#include "../models/Model.hpp"
 
 namespace Flounder
 {

@@ -1,17 +1,10 @@
 #pragma once
 
-#include <iostream>
-#include <fstream>
-#include <stdlib.h>
 #include <vector>
-#include <map>
 
-#include <al/al.h>
 #include <al/alc.h>
 
-#include "../camera/Camera.hpp"
 #include "../engine/Engine.hpp"
-#include "../maths/Vector3.hpp"
 #include "../sounds/Sound.hpp"
 
 #include "Display.hpp"

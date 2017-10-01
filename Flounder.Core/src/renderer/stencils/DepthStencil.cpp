@@ -1,4 +1,7 @@
 #include "DepthStencil.hpp"
+
+#include <vector>
+#include <cassert>
 #include "../buffers/Buffer.hpp"
 
 namespace Flounder

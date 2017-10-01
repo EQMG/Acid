@@ -4,7 +4,7 @@
 
 #include "../maths/timer.hpp"
 
-#include "ievent.hpp"
+#include "IEvent.hpp"
 
 namespace Flounder
 {
