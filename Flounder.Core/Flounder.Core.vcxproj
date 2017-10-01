@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\fbos\Fbo.cpp" />
     <ClCompile Include="src\helpers\HelperArray.cpp" />
     <ClCompile Include="src\helpers\HelperFile.cpp" />
     <ClCompile Include="src\helpers\HelperString.cpp" />
@@ -31,7 +32,6 @@
     <ClCompile Include="src\events\Events.cpp" />
     <ClCompile Include="src\events\EventStandard.cpp" />
     <ClCompile Include="src\events\EventTime.cpp" />
-    <ClCompile Include="src\fbos\Fbo.cpp" />
     <ClCompile Include="src\fonts\Character.cpp" />
     <ClCompile Include="src\fonts\FontType.cpp" />
     <ClCompile Include="src\fonts\Line.cpp" />
@@ -156,6 +156,8 @@
     <ClCompile Include="src\worlds\Worlds.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\fbos\DepthBuffer.hpp" />
+    <ClInclude Include="src\fbos\Fbo.hpp" />
     <ClInclude Include="src\renderer\buffers\UniformBuffer.hpp" />
     <ClInclude Include="src\renderer\stencils\DepthStencil.hpp" />
     <ClInclude Include="src\camera\Camera.hpp" />
@@ -180,8 +182,6 @@
     <ClInclude Include="src\events\EventStandard.hpp" />
     <ClInclude Include="src\events\EventTime.hpp" />
     <ClInclude Include="src\events\IEvent.hpp" />
-    <ClInclude Include="src\fbos\DepthBuffer.hpp" />
-    <ClInclude Include="src\fbos\Fbo.hpp" />
     <ClInclude Include="src\Flounder.hpp" />
     <ClInclude Include="src\fonts\Character.hpp" />
     <ClInclude Include="src\fonts\FontType.hpp" />

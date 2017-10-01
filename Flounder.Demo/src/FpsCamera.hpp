@@ -28,6 +28,7 @@ private:
 	static const float MIN_ANGLE_OF_ELEVATION;
 
 	Vector3 *m_position;
+	Vector3 *m_velocity;
 	Vector3 *m_rotation;
 
 	Matrix4 *m_viewMatrix;
@@ -85,6 +86,8 @@ public:
 	inline Matrix4 *GetProjectionMatrix() const override { return m_projectionMatrix; }
 
 	inline Vector3 *GetPosition() const override { return m_position; }
+
+	inline Vector3 *GetVelocity() const override { return m_velocity; }
 
 	inline Vector3 *GetRotation() const override { return m_rotation; }
 };

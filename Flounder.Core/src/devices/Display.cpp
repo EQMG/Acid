@@ -1,9 +1,13 @@
 #include "Display.hpp"
 
 #include <cassert>
+#include <map>
 
 namespace Flounder
 {
+	const std::vector<const char*> Display::VALIDATION_LAYERS = { "VK_LAYER_LUNARG_standard_validation" };
+	const std::vector<const char*> Display::DEVICE_EXTENSIONS = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+
 	void CallbackError(int error, const char *description)
 	{
 		fprintf(stderr, "GLFW Error: %s\n", description);
@@ -310,6 +314,22 @@ namespace Flounder
 			std::vector<VkLayerProperties> instanceLayerProperties(instanceLayerPropertyCount);
 			vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, instanceLayerProperties.data());
 			LogVulkanLayers(instanceLayerProperties, "Instance", false);
+
+			for (auto layerName : VALIDATION_LAYERS)
+			{
+				bool layerFound = false;
+
+				for (auto layerProperties : instanceLayerProperties)
+				{
+					if (strcmp(layerName, layerProperties.layerName) == 0)
+					{
+						layerFound = true;
+						break;
+					}
+				}
+
+				assert(layerFound && "Could not find a Vulkan validation layer!");
+			}
 		}
 
 		m_instanceLayerList.push_back(VK_STANDARD_VALIDATION_LAYER_NAME);
@@ -376,8 +396,7 @@ namespace Flounder
 		std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
 		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, physicalDevices.data());
 
-		m_physicalDevice = physicalDevices[0]; // TODO: Find the best GPU.
-
+		m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
 		assert(m_physicalDevice && "Vulkan runtime error, failed to find a suitable gpu!");
 
 		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
@@ -403,6 +422,104 @@ namespace Flounder
 		}
 
 		assert(!foundQueueFamily && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+	}
+
+	VkPhysicalDevice Display::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices)
+	{
+		// Maps to hold devices and sort by rank.
+		std::multimap<int, VkPhysicalDevice> rankedDevices;
+
+		// Iterates through all devices and rate their suitability.
+		for (auto device : devices)
+		{
+			int score = ScorePhysicalDevice(device);
+			rankedDevices.insert(std::make_pair(score, device));
+		}
+
+		// Checks to make sure the best candidate scored higher than 0  rbegin points to last element of ranked devices(highest rated), first is its rating.
+		if (rankedDevices.rbegin()->first > 0)
+		{
+			// Returns the second value of the highest rated device (its VkPhysicalDevice component).
+			return rankedDevices.rbegin()->second;
+		}
+
+		return nullptr;
+	}
+
+	int Display::ScorePhysicalDevice(const VkPhysicalDevice & device)
+	{
+		int score = 0;
+
+		/// Adjusts score based on queue families:
+		// Finds an index of a queue family which contiains the necessary commands.
+		/*QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(device, m_surface);
+
+		// Returns a score of 0 if this device has no suitable family.
+		if (!indices.IsComplete())
+		{
+			return 0;
+		}*/
+
+		// Checks if the requested extensions are supported.
+		uint32_t extensionPropertyCount;
+		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionPropertyCount, nullptr);
+		std::vector<VkExtensionProperties> extensionProperties(extensionPropertyCount);
+		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionPropertyCount, extensionProperties.data());
+
+		// Iterates through all extensions requested.
+		for (const char* currentExtension : DEVICE_EXTENSIONS)
+		{
+			bool extensionFound = false;
+
+			// Checks if the extension is in the available extensions.
+			for (const auto& extension : extensionProperties)
+			{
+				if (strcmp(currentExtension, extension.extensionName) == 0)
+				{
+					extensionFound = true;
+					break;
+				}
+			}
+
+			// Returns a score of 0 if this device is missing a required extension.
+			if (!extensionFound)
+			{
+				return 0;
+			}
+		}
+		
+		/// check if this device has an adequate swap chain
+		/*bool swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
+
+		if (!swapChainAdequate)
+		{
+			return 0;
+		}*/
+
+		// Obtain the device features and properties of the current device being rateds.
+		VkPhysicalDeviceProperties deviceProperties;
+		VkPhysicalDeviceFeatures deviceFeatures;
+		vkGetPhysicalDeviceProperties(device, &deviceProperties);
+		vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+
+		/// Adjusts score based on properties:
+		// Adds a large score boost for discrete GPUs (dedicated graphics cards).
+		if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+		{
+			score += 1000;
+		}
+
+		// Gives a higher score to devices with a higher maximum texture size.
+		score += deviceProperties.limits.maxImageDimension2D;
+
+		/// Adjust score based on features:
+		// Only allow a device if it supports geometry shaders.
+		if (!deviceFeatures.geometryShader)
+		{
+			return 0;
+		}
+
+		return score;
 	}
 
 	void Display::CreateLogicalDevice()
@@ -459,24 +576,28 @@ namespace Flounder
 		}
 	}
 
-	void Display::LogVulkanDevice(VkPhysicalDeviceProperties physicalDeviceProperties,
-		VkPhysicalDeviceFeatures physicalDeviceFeatures, VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties)
+	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties,
+		const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)
 	{
-		printf("Device Name: %s\n", physicalDeviceProperties.deviceName);
-		printf("Device Type: %i\n", physicalDeviceProperties.deviceType);
+#if FLOUNDER_VERBOSE
+		printf("-- Selected Device: '%s' --\n", physicalDeviceProperties.deviceName);
+		printf("Type: %i\n", physicalDeviceProperties.deviceType);
 
 		uint32_t supportedVersion[] = {
 			VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion),
 			VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
 			VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)
 		};
-		printf("Device Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
+		printf("Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
+		printf("-- Done --\n");
+#endif
 	}
 
 	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type,
 		const bool &showDescription)
 	{
-		printf("Supported %s Layers: ", type.c_str());
+#if FLOUNDER_VERBOSE
+		printf("-- Avalable '%s' Layers --\n", type.c_str());
 
 		for (auto layer : layerProperties)
 		{
@@ -490,6 +611,7 @@ namespace Flounder
 			}
 		}
 
-		printf("\n");
+		printf("\n-- Done --\n");
+#endif
 	}
 }

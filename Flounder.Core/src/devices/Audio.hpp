@@ -30,10 +30,6 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		friend class Sound;
-
-		static std::vector<Sound*> m_sounds;
-
 		ALCdevice *m_alDevice;
 		ALCcontext *m_alContext;
 	public:
@@ -65,5 +61,7 @@ namespace Flounder
 		static Sound *AddSound(Sound *object);
 
 		static Sound *GetSound(const std::string &name);
+	private:
+		static void LogOpenALSound(const std::string &path, const SoundSourceInfo &sourceInfo);
 	};
 }

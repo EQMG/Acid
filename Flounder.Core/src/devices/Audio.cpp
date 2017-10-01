@@ -1,11 +1,11 @@
 #include "Audio.hpp"
 
 #include <fstream>
+#include <al/al.h>
+#include "../camera/Camera.hpp"
 
 namespace Flounder
 {
-	std::vector<Sound*> Audio::m_sounds = std::vector<Sound*>();
-
 	Audio::Audio() :
 		IModule(),
 		m_alDevice(nullptr),
@@ -18,11 +18,6 @@ namespace Flounder
 
 	Audio::~Audio()
 	{
-		for (int i = 0; i < m_sounds.size(); i++)
-		{
-			delete m_sounds[i];
-		}
-
 		alcMakeContextCurrent(NULL);
 		alcDestroyContext(m_alContext);
 		alcCloseDevice(m_alDevice);
@@ -30,6 +25,25 @@ namespace Flounder
 
 	void Audio::Update()
 	{
+		if (Camera::Get() == nullptr)
+		{
+			return;
+		}
+
+		ICamera *camera = Camera::Get()->GetCamera();
+
+		if (camera != nullptr)
+		{
+			// Listener position.
+			alListener3f(AL_POSITION, camera->GetPosition()->m_x, camera->GetPosition()->m_y, camera->GetPosition()->m_z);
+
+			// Listener velocity.
+			alListener3f(AL_VELOCITY, camera->GetVelocity()->m_x, camera->GetVelocity()->m_y, camera->GetVelocity()->m_z);
+
+			// Listener orientation.
+			float orientation[6] = { 0.0f, 0.0f, 1.0f,  0.0f, 1.0f, 0.0f };// { atX, atY, atZ, upX, upY, upZ };
+			alListenerfv(AL_ORIENTATION, orientation);
+		}
 	}
 
 	SoundSourceInfo Audio::LoadFileWav(const std::string &path)
@@ -82,12 +96,34 @@ namespace Flounder
 		file.read(reinterpret_cast<char*>(result.data), result.size);
 
 		file.close();
+		LogOpenALSound(path, result);
+		return result;
+	}
 
+	SoundSourceInfo Audio::LoadFileOgg(const std::string &path)
+	{
+		std::ifstream file(path.c_str(), std::ifstream::binary);
+		SoundSourceInfo result = {};
+
+		if (!file.is_open())
+		{
+			throw std::runtime_error("Load wave file failure: file couldn't be opened!");
+		}
+
+		// TODO
+
+		file.close();
+		LogOpenALSound(path, result);
+		return result;
+	}
+
+	void Audio::LogOpenALSound(const std::string &path, const SoundSourceInfo &sourceInfo)
+	{
 #if FLOUNDER_VERBOSE
-		printf("-- Loading: '%s' --\n", path.c_str());
-		printf("Size: %i bytes\n", result.size);
+		printf("-- Loading Audio: '%s' --\n", path.c_str());
+		printf("Size: %i bytes\n", sourceInfo.size);
 
-		switch (result.formatTag)
+		switch (sourceInfo.formatTag)
 		{
 		case 0x0001:
 			printf("Format: PCM\n");
@@ -106,56 +142,12 @@ namespace Flounder
 			break;
 		}
 
-		printf("Channels: %i\n", result.channels);
-		printf("Samples Per Second: %i\n", result.samplesPerSec);
-		printf("Average bytes per second: %i\n", result.averageBytesPerSec);
-		printf("Block align: %i\n", result.blockAlign);
-		printf("Bit per sample: %i\n", result.bitsPerSample);
+		printf("Channels: %i\n", sourceInfo.channels);
+		printf("Samples Per Second: %i\n", sourceInfo.samplesPerSec);
+		printf("Average bytes per second: %i\n", sourceInfo.averageBytesPerSec);
+		printf("Block align: %i\n", sourceInfo.blockAlign);
+		printf("Bit per sample: %i\n", sourceInfo.bitsPerSample);
 		printf("-- Done --\n");
 #endif
-
-		return result;
-	}
-
-	SoundSourceInfo Audio::LoadFileOgg(const std::string &path)
-	{
-		std::ifstream file(path.c_str(), std::ifstream::binary);
-		SoundSourceInfo result = {};
-
-		if (!file.is_open())
-		{
-			throw std::runtime_error("Load wave file failure: file couldn't be opened!");
-		}
-
-		// TODO
-
-		file.close();
-
-#if FLOUNDER_VERBOSE
-		printf("-- Loading: '%s' --\n", path.c_str());
-
-		printf("-- Done --\n");
-#endif
-
-		return result;
-	}
-
-	Sound *Audio::AddSound(Sound *object)
-	{
-		m_sounds.push_back(object);
-		return object;
-	}
-
-	Sound *Audio::GetSound(const std::string &name)
-	{
-		for (auto object : m_sounds)
-		{
-			if (object->GetName() == name)
-			{
-				return object;
-			}
-		}
-
-		return nullptr;
 	}
 }
