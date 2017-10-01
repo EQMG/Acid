@@ -55,6 +55,11 @@ namespace Flounder
 
 	void Renderer::Update()
 	{
+		if (m_swapchain.GetExtent().width != Display::Get()->GetWidth() || m_swapchain.GetExtent().height != Display::Get()->GetHeight())
+		{
+			RecreateSwapchain();
+		}
+
 		BeginReindering();
 
 		const auto queue = Display::Get()->GetQueue();
@@ -191,5 +196,31 @@ namespace Flounder
 		commandBufferAllocateInfo.commandBufferCount = 1;
 		commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 		vkAllocateCommandBuffers(device, &commandBufferAllocateInfo, &m_commandBuffer);
+	}
+
+	void Renderer::RecreateSwapchain()
+	{
+		VkExtent2D extent2d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()) };
+		VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
+
+			const auto device = Display::Get()->GetDevice();
+			const auto physicalDevice = Display::Get()->GetPhysicalDevice();
+			const auto surface = Display::Get()->GetSurface();
+			const auto queue = Display::Get()->GetQueue();
+
+#if FLOUNDER_VERBOSE
+			printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain.GetExtent().width, m_swapchain.GetExtent().height, extent2d.width, extent2d.height);
+#endif
+			vkQueueWaitIdle(queue);
+
+			m_swapchain.CleanupFrameBuffers(device);
+			//	m_renderPass.Cleanup(device);
+			m_depthStencil.Cleanup(device);
+			m_swapchain.Cleanup(device);
+
+			m_swapchain.Create(device, physicalDevice, surface, Display::Get()->GetSurfaceCapabilities(), Display::Get()->GetSurfaceFormat(), extent2d);
+			m_depthStencil.Create(device, physicalDevice, Display::Get()->GetPhysicalDeviceMemoryProperties(), extent3d);
+			//	m_renderPass.Create(device, m_depthStencil.GetFormat(), Display::Get()->GetSurfaceFormat().format);
+			m_swapchain.CreateFrameBuffers(device, m_renderPass.GetRenderPass(), m_depthStencil.GetImageView(), extent2d);
 	}
 }
