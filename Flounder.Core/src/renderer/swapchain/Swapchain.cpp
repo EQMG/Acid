@@ -10,6 +10,8 @@ namespace Flounder
 		m_swapchainImageCount(0),
 		m_swapchinImages(std::vector<VkImage>()),
 		m_swapchinImageViews(std::vector<VkImageView>()),
+	//	m_imageFormat({}),
+		m_extent({}),
 
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
@@ -21,6 +23,8 @@ namespace Flounder
 
 	void Swapchain::Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkSurfaceCapabilitiesKHR &surfaceCapabilities, const VkSurfaceFormatKHR &surfaceFormat, const VkExtent2D &extent)
 	{
+		m_extent = extent;
+
 		uint32_t physicalPresentModeCount = 0;
 		vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &physicalPresentModeCount, nullptr);
 		std::vector<VkPresentModeKHR> physicalPresentModes(physicalPresentModeCount);
