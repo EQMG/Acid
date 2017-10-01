@@ -1,5 +1,7 @@
 #include "RendererGuis.hpp"
 
+#include "../uis/Uis.hpp"
+
 namespace Flounder
 {
 	RendererGuis::RendererGuis() :

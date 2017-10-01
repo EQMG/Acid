@@ -1,9 +1,6 @@
 #pragma once
 
-#include "../maths/Maths.hpp"
-#include "../maths/Colour.hpp"
 #include "../maths/Vector3.hpp"
-#include "../maths/Matrix4.hpp"
 
 #include "frustum.hpp"
 #include "Intersect.hpp"

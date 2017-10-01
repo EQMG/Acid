@@ -2,10 +2,7 @@
 
 #include <vector>
 
-#include "../engine/Engine.hpp"
 #include "../maths/Vector3.hpp"
-#include "../maths/Vector4.hpp"
-#include "../maths/Matrix4.hpp"
 
 #include "spawns/ISpawnParticle.hpp"
 #include "Particle.hpp"

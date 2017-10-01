@@ -1,5 +1,7 @@
 #include "Sphere.hpp"
 
+#include <cmath>
+
 namespace Flounder
 {
 	Sphere::Sphere() :

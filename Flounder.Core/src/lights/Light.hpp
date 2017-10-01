@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../maths/colour.hpp"
+#include "../maths/Colour.hpp"
 #include "../maths/Vector3.hpp"
 
-#include "attenuation.hpp"
+#include "Attenuation.hpp"
 
 namespace Flounder
 {
@@ -18,11 +18,16 @@ namespace Flounder
 		Attenuation *m_attenuation;
 
 		/// <summary>
+		/// Creates a new infinate white point light with unlimited range.
+		/// </summary>
+		Light();
+
+		/// <summary>
 		/// Creates a new point light with unlimited range.
 		/// </summary>
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="position"> The world position of the light. </param>
-		Light(Colour *colour, Vector3 *position);
+		Light(const Colour &colour, const Vector3 &position);
 
 		/// <summary>
 		/// Creates a new point light.
@@ -30,7 +35,13 @@ namespace Flounder
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="position"> The world position of the light. </param>
 		/// <param name="attenuation"> How much the intensity of the light is lost over a distance. </param>
-		Light(Colour *colour, Vector3 *position, Attenuation *attenuation);
+		Light(const Colour &colour, const Vector3 &position, const Attenuation &attenuation);
+
+		/// <summary>
+		/// Creates a new point light from a source object.
+		/// </summary>
+		/// <param name="source"> The source light object. </param>
+		Light(const Light &source);
 
 		/// <summary>
 		/// Deconstructor for light.
@@ -43,7 +54,7 @@ namespace Flounder
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="position"> The world position of the light. </param>
 		/// <returns> This. </returns>
-		Light *Set(Colour *colour, Vector3 *position);
+		Light *Set(const Colour &colour, const Vector3 &position);
 
 		/// <summary>
 		/// Sets values in the light.
@@ -52,6 +63,13 @@ namespace Flounder
 		/// <param name="position"> The world position of the light. </param>
 		/// <param name="attenuation"> How much the intensity of the light is lost over a distance. </param>
 		/// <returns> This. </returns>
-		Light *Set(Colour *colour, Vector3 *position, Attenuation *attenuation);
+		Light *Set(const Colour &colour, const Vector3 &position, const Attenuation &attenuation);
+		
+		/// <summary>
+		/// Sets values in the light.
+		/// </summary>
+		/// <param name="source"> The source light object. </param>
+		/// <returns> This. </returns>
+		Light *Set(const Light &source);
 	};
 }

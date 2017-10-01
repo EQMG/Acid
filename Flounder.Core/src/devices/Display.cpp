@@ -1,5 +1,7 @@
 #include "Display.hpp"
 
+#include <cassert>
+
 namespace Flounder
 {
 	void CallbackError(int error, const char *description)

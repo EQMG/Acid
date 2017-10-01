@@ -2,12 +2,9 @@
 
 #include <vector>
 
-#include "../devices/Display.hpp"
 #include "../maths/Vector2.hpp"
 #include "../maths/Vector4.hpp"
-#include "../engine/Engine.hpp"
 #include "../visual/IDriver.hpp"
-#include "../visual/DriverConstant.hpp"
 
 namespace Flounder
 {

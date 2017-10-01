@@ -1,5 +1,7 @@
 ﻿#include "Skybox.hpp"
 
+#include "../camera/Camera.hpp"
+
 namespace Flounder
 {
 	Skybox::Skybox(Texture *texture, Model *model, const float &size) :

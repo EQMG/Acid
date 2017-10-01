@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stdarg.h>
-
 #include "../fbos/Fbo.hpp"
 
 namespace Flounder

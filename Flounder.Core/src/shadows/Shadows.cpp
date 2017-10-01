@@ -1,5 +1,7 @@
 #include "Shadows.hpp"
 
+#include "../camera/Camera.hpp"
+
 namespace Flounder
 {
 	Shadows::Shadows() :

@@ -1,5 +1,9 @@
 #include "Worlds.hpp"
 
+#include "../camera/Camera.hpp"
+#include "../maths/Matrix4.hpp"
+#include "../shadows/Shadows.hpp"
+
 namespace Flounder
 {
 	Worlds::Worlds() :

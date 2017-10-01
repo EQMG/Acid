@@ -1,5 +1,8 @@
 ﻿#include "InputText.hpp"
 
+#include "../devices/Keyboard.hpp"
+#include "../visual/DriverSlide.hpp"
+
 namespace Flounder
 {
 	const float InputText::CHANGE_TIME = 0.1f;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../engine/Engine.hpp"
-#include "../maths/Maths.hpp"
 
 #include "Display.hpp"
 

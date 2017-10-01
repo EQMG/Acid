@@ -1,9 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <stdexcept>
 #include <cmath>
-#include <string>
 
 #define PI 3.14159265358979323846f
 #define DEGREES_IN_CIRCLE 360.0f
@@ -20,12 +17,66 @@ namespace Flounder
 	{
 	public:
 		/// <summary>
+		/// Gets a random number.
+		/// </summary>
+		/// <returns> The random number. </returns>
+		static float Random()
+		{
+			return static_cast<float>(rand()) / RAND_MAX;
+		}
+
+		/// <summary>
+		/// Creates a number between two numbers, logarithmic.
+		/// </summary>
+		/// <param name="lowerLimit"> The lower number. </param>
+		/// <param name="upperLimit"> The upper number. </param>
+		/// <returns> The final random number. </returns>
+		static double LogRandom(const double &lowerLimit, const double &upperLimit)
+		{
+			const double logLower = log(lowerLimit);
+			const double logUpper = log(upperLimit);
+			const double raw = RandomInRange(0.0f, 1.0f);
+
+			double result = exp(raw * (logUpper - logLower) + logLower);
+
+			if (result < lowerLimit)
+			{
+				result = lowerLimit;
+			}
+			else if (result > upperLimit)
+			{
+				result = upperLimit;
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Generates a single value from a normal distribution, using Box-Muller.
+		/// https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
+		/// </summary>
+		/// <param name="standardDeviation"> The standards deviation of the distribution. </param>
+		/// <param name="mean"> The mean of the distribution. </param>
+		/// <returns> A normally distributed value. </returns>
+		static float NormallyDistributedSingle(const float &standardDeviation, const float &mean)
+		{
+			// Intentionally duplicated to avoid IEnumerable overhead.
+			const double u1 = RandomInRange(0.0, 1.0);
+			const double u2 = RandomInRange(0.0, 1.0);
+
+			const double x1 = sqrt(-2.0 * log(u1));
+			const double x2 = 2.0 * PI * u2;
+			const double z1 = x1 * sin(x2); // Random normal(0,1)
+			return static_cast<float>(z1) * standardDeviation + mean;
+		}
+
+		/// <summary>
 		/// Converts degrees to radians.
 		/// </summary>
 		/// <param name="degrees"> The degrees value. </param>
 		/// <returns> The radians value. </returns>
 		template<typename T>
-		static T Radians(T degrees)
+		static T Radians(const T &degrees)
 		{
 			return degrees / DEGREES_IN_HALF_CIRCLE * PI;
 		}
@@ -36,7 +87,7 @@ namespace Flounder
 		/// <param name="radians"> The radians value. </param>
 		/// <returns> The degrees value. </returns>
 		template<typename T>
-		static T Degrees(T radians)
+		static T Degrees(const T &radians)
 		{
 			return radians * DEGREES_IN_HALF_CIRCLE / PI;
 		}
@@ -48,7 +99,7 @@ namespace Flounder
 		/// <param name="b"> The second value. </param>
 		/// <returns> The smallest value. </returns>
 		template<typename T>
-		static T Min(T a, T b)
+		static T Min(const T &a, const T &b)
 		{
 			return (a < b) ? a : b;
 		}
@@ -60,18 +111,9 @@ namespace Flounder
 		/// <param name="b"> The second value. </param>
 		/// <returns> The largest value. </returns>
 		template<typename T>
-		static T Max(T a, T b)
+		static T Max(const T &a, const T &b)
 		{
 			return (a > b) ? a : b;
-		}
-
-		/// <summary>
-		/// Gets a random number.
-		/// </summary>
-		/// <returns> The random number. </returns>
-		static float Random()
-		{
-			return static_cast<float>(rand()) / RAND_MAX;
 		}
 
 		/// <summary>
@@ -98,6 +140,7 @@ namespace Flounder
 			{
 				return angle - static_cast<T>(360.0);
 			}
+
 			if (angle < static_cast<T>(0.0))
 			{
 				return angle + static_cast<T>(360.0);
@@ -211,51 +254,6 @@ namespace Flounder
 			float scaled = Random();
 			scaled *= static_cast<float>(range);
 			return static_cast<T>(scaled) + min; // == (rand.nextDouble() * (max-min)) + min;
-		}
-
-		/// <summary>
-		/// Creates a number between two numbers, logarithmic.
-		/// </summary>
-		/// <param name="lowerLimit"> The lower number. </param>
-		/// <param name="upperLimit"> The upper number. </param>
-		/// <returns> The final random number. </returns>
-		static double LogRandom(const double &lowerLimit, const double &upperLimit)
-		{
-			const double logLower = log(lowerLimit);
-			const double logUpper = log(upperLimit);
-			const double raw = RandomInRange(0.0f, 1.0f);
-
-			double result = exp(raw * (logUpper - logLower) + logLower);
-
-			if (result < lowerLimit)
-			{
-				result = lowerLimit;
-			}
-			else if (result > upperLimit)
-			{
-				result = upperLimit;
-			}
-
-			return result;
-		}
-
-		/// <summary>
-		/// Generates a single value from a normal distribution, using Box-Muller.
-		/// https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
-		/// </summary>
-		/// <param name="standardDeviation"> The standards deviation of the distribution. </param>
-		/// <param name="mean"> The mean of the distribution. </param>
-		/// <returns> A normally distributed value. </returns>
-		static float NormallyDistributedSingle(const float &standardDeviation, const float &mean)
-		{
-			// Intentionally duplicated to avoid IEnumerable overhead.
-			const double u1 = RandomInRange(0.0, 1.0);
-			const double u2 = RandomInRange(0.0, 1.0);
-
-			const double x1 = sqrt(-2.0 * log(u1));
-			const double x2 = 2.0 * PI * u2;
-			const double z1 = x1 * sin(x2); // Random normal(0,1)
-			return static_cast<float>(z1) * standardDeviation + mean;
 		}
 	};
 }

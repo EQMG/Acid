@@ -1,17 +1,9 @@
 #pragma once
 
-#include "../devices/Display.hpp"
 #include "../engine/Engine.hpp"
-#include "../shaders/Shader.hpp"
-#include "../textures/Texture.hpp"
 
-#include "buffers/IndexBuffer.hpp"
-#include "buffers/VertexBuffer.hpp"
-#include "buffers/UniformBuffer.hpp"
-#include "command/CommandPool.hpp"
 #include "pass/RenderPass.hpp"
 #include "pipelines/Pipeline.hpp"
-#include "queue/QueueFamily.hpp"
 #include "stencils/DepthStencil.hpp"
 #include "swapchain/Swapchain.hpp"
 

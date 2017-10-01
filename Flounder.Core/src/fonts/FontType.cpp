@@ -1,4 +1,4 @@
-﻿#include "fonttype.hpp"
+﻿#include "FontType.hpp"
 
 namespace Flounder
 {

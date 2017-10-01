@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+
 #include "../maths/Vector3.hpp"
 
 namespace Flounder
@@ -24,7 +25,6 @@ namespace Flounder
 
 		std::vector<Vector3*> m_tangents;
 		Vector3 m_averagedTangent;
-
 	public:
 		VertexData(const int index, Vector3 position);
 

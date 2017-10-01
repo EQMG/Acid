@@ -1,10 +1,7 @@
 ﻿#pragma once
 
-#include "../camera/camera.hpp"
-#include "../engine/Engine.hpp"
 #include "../maths/Vector2.hpp"
 #include "../maths/Vector3.hpp"
-#include "../physics/Aabb.hpp"
 #include "../space/ISpatialObject.hpp"
 
 #include "ParticleType.hpp"

@@ -1,5 +1,7 @@
 ﻿#include "QueueFamily.hpp"
 
+#include <vector>
+
 namespace Flounder
 {
 	QueueFamilyIndices QueueFamily::FindQueueFamilies(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface)

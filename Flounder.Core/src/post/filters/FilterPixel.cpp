@@ -1,5 +1,7 @@
 #include "FilterPixel.hpp"
 
+#include "../../devices/Display.hpp"
+
 namespace Flounder
 {
 	FilterPixel::FilterPixel(const float &pixelSize) :

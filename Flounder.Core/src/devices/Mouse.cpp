@@ -1,5 +1,7 @@
 #include "Mouse.hpp"
 
+#include "../maths/Maths.hpp"
+
 namespace Flounder
 {
 	void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)

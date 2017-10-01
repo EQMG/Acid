@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <vector>
-
 #include "../textures/Texture.hpp"
 
 #include "Metafile.hpp"

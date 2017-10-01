@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Maths.hpp"
 #include "Matrix3.hpp"
 #include "Matrix4.hpp"
 

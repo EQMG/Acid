@@ -1,5 +1,7 @@
 #include "FilterTiltshift.hpp"
 
+#include "../../devices/Display.hpp"
+
 namespace Flounder
 {
 	FilterTiltshift::FilterTiltshift(const float &blurAmount, const float &centre, const float &stepSize, const float &steps) :

@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "ievent.hpp"
+#include "IEvent.hpp"
 
 namespace Flounder
 {

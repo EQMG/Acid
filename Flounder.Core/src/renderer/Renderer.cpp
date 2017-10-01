@@ -1,5 +1,7 @@
 #include "Renderer.hpp"
 
+#include "../devices/Display.hpp"
+
 namespace Flounder
 {
 	Renderer::Renderer() :

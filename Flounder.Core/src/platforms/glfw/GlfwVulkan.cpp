@@ -1,5 +1,8 @@
 #include "GlfwVulkan.hpp"
 
+#include <string>
+#include <cassert>
+
 namespace Flounder
 {
 	void GlfwVulkan::ErrorVk(const VkResult &result)

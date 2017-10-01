@@ -1,9 +1,7 @@
 ﻿#pragma once
 
-#include "../camera/Camera.hpp"
 #include "../maths/Vector3.hpp"
 #include "../maths/Matrix4.hpp"
-#include "../textures/Texture.hpp"
 #include "../physics/Aabb.hpp"
 #include "../models/Model.hpp"
 

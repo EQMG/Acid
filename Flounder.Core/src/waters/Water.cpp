@@ -1,5 +1,9 @@
 ﻿#include "Water.hpp"
 
+#include "../camera/Camera.hpp"
+#include "../maths/Maths.hpp"
+#include "../textures/Texture.hpp"
+
 namespace Flounder
 {
 	const float Water::WAVE_SPEED = 15.0f;

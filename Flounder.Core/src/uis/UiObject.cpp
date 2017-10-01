@@ -1,5 +1,9 @@
 ﻿#include "UiObject.hpp"
 
+#include "../devices/Display.hpp"
+#include "../engine/Engine.hpp"
+#include "../visual/DriverConstant.hpp"
+
 namespace Flounder
 {
 	UiObject::UiObject(UiObject *parent, const Vector2 &position, const Vector2 &dimensions) :
