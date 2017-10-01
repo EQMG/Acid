@@ -75,5 +75,7 @@ namespace Flounder
 		void CreateFences();
 
 		void CreateCommandPool();
+
+		void RecreateSwapchain();
 	};
 }
