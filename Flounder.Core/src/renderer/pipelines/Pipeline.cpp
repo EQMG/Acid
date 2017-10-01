@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR }; 
+	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
 	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, const Shader &shader) :
 		m_name(name),
@@ -34,23 +34,23 @@ namespace Flounder
 		CreateAttributes();
 		CreatePipelineLayout(logicalDevice, descriptorSetLayouts);
 
-		switch(m_pipelineType)
+		switch (m_pipelineType)
 		{
-			case PipelinePolygon:
-				CreatePolygonPipeline(logicalDevice, renderPass);
-				break;
-			case PipelineNoDepthTest:
-				CreateNoDepthTestPipeline(logicalDevice, renderPass);
-				break;
-			case PipelineMrt:
-				CreateMrtPipeline(logicalDevice, renderPass);
-				break;
-			case PipelineMultiTexture:
-				CreateMultiTexturePipeline(logicalDevice, renderPass);
-				break;
-			default:
-				assert(false);
-				break;
+		case PipelinePolygon:
+			CreatePolygonPipeline(logicalDevice, renderPass);
+			break;
+		case PipelineNoDepthTest:
+			CreateNoDepthTestPipeline(logicalDevice, renderPass);
+			break;
+		case PipelineMrt:
+			CreateMrtPipeline(logicalDevice, renderPass);
+			break;
+		case PipelineMultiTexture:
+			CreateMultiTexturePipeline(logicalDevice, renderPass);
+			break;
+		default:
+			assert(false);
+			break;
 		}
 	}
 
@@ -74,10 +74,10 @@ namespace Flounder
 		m_rasterizationState.polygonMode = VK_POLYGON_MODE_FILL;
 		m_rasterizationState.cullMode = VK_CULL_MODE_BACK_BIT;
 		m_rasterizationState.frontFace = VK_FRONT_FACE_CLOCKWISE; // VK_FRONT_FACE_COUNTER_CLOCKWISE
-	//	m_rasterizationState.depthBiasEnable = VK_FALSE;
-	//	m_rasterizationState.depthBiasConstantFactor = 0.0f;
-	//	m_rasterizationState.depthBiasClamp = 0.0f;
-	//	m_rasterizationState.depthBiasSlopeFactor = 0.0f;
+		//	m_rasterizationState.depthBiasEnable = VK_FALSE;
+		//	m_rasterizationState.depthBiasConstantFactor = 0.0f;
+		//	m_rasterizationState.depthBiasClamp = 0.0f;
+		//	m_rasterizationState.depthBiasSlopeFactor = 0.0f;
 		m_rasterizationState.lineWidth = 1.0f;
 
 		m_blendAttachmentStates = {};
@@ -117,10 +117,10 @@ namespace Flounder
 		m_depthStencilState.depthCompareOp = VK_COMPARE_OP_LESS;
 		m_depthStencilState.depthBoundsTestEnable = VK_FALSE;
 		m_depthStencilState.stencilTestEnable = VK_FALSE;
-	//	m_depthStencilState.front = stencilOpState;
-	//	m_depthStencilState.back = stencilOpState;
-	//	m_depthStencilState.minDepthBounds = 0.0f;
-	//	m_depthStencilState.maxDepthBounds = 1.0f;
+		//	m_depthStencilState.front = stencilOpState;
+		//	m_depthStencilState.back = stencilOpState;
+		//	m_depthStencilState.minDepthBounds = 0.0f;
+		//	m_depthStencilState.maxDepthBounds = 1.0f;
 
 		m_viewportState = {};
 		m_viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -131,7 +131,7 @@ namespace Flounder
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		m_multisampleState.sampleShadingEnable = VK_FALSE;
 		m_multisampleState.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
-	//	m_multisampleState.minSampleShading = 0.0f;
+		//	m_multisampleState.minSampleShading = 0.0f;
 
 		m_dynamicState = {};
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;

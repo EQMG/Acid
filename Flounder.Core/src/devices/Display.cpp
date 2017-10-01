@@ -44,7 +44,7 @@ namespace Flounder
 			Display::Get()->m_windowHeight = height;
 		}
 
-	//	Renderer::Get()->RecreateSwapChain();
+		//	Renderer::Get()->RecreateSwapChain();
 	}
 
 	void CallbackFrame(GLFWwindow *window, int width, int height)
@@ -343,7 +343,7 @@ namespace Flounder
 		VkInstanceCreateInfo instanceCreateInfo = {};
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		instanceCreateInfo.pApplicationInfo = &applicationInfo;
-		
+
 		if (m_validationLayers)
 		{
 			instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());

@@ -17,16 +17,16 @@ namespace Flounder
 
 	void Buffer::Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties)
 	{
-	//	QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(physicalDevice, surface);
-	//	uint32_t indicesArray[] = { static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily) };
+		//	QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(physicalDevice, surface);
+		//	uint32_t indicesArray[] = { static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily) };
 
 		VkBufferCreateInfo bufferInfo = {};
 		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		bufferInfo.size = size;
 		bufferInfo.usage = usage;
 		bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE; // VK_SHARING_MODE_CONCURRENT
-	//	bufferInfo.queueFamilyIndexCount = 2;
-	//	bufferInfo.pQueueFamilyIndices = indicesArray;
+		//	bufferInfo.queueFamilyIndexCount = 2;
+		//	bufferInfo.pQueueFamilyIndices = indicesArray;
 
 		GlfwVulkan::ErrorVk(vkCreateBuffer(logicalDevice, &bufferInfo, nullptr, &m_buffer));
 

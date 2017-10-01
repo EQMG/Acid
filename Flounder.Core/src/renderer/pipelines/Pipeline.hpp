@@ -20,8 +20,8 @@ namespace Flounder
 	{
 		uint32_t bindingDescriptionCount;
 		uint32_t attributeDescriptionCount;
-		VkVertexInputBindingDescription* pVertexBindingDescriptions;
-		VkVertexInputAttributeDescription* pVertexAttributeDescriptions;
+		VkVertexInputBindingDescription *pVertexBindingDescriptions;
+		VkVertexInputAttributeDescription *pVertexAttributeDescriptions;
 	};
 
 	/// <summary>
