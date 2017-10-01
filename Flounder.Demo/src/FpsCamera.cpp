@@ -21,6 +21,7 @@ const float FpsCamera::MIN_ANGLE_OF_ELEVATION = -85.0f;
 
 FpsCamera::FpsCamera() :
 	m_position(new Vector3()),
+	m_velocity(new Vector3()),
 	m_rotation(new Vector3()),
 	m_viewMatrix(new Matrix4()),
 	m_projectionMatrix(new Matrix4()),
@@ -44,6 +45,7 @@ FpsCamera::FpsCamera() :
 FpsCamera::~FpsCamera()
 {
 	delete m_position;
+	delete m_velocity;
 	delete m_rotation;
 
 	delete m_viewMatrix;
@@ -74,6 +76,8 @@ void FpsCamera::Update(IPlayer *player)
 
 	if (player != nullptr)
 	{
+		Vector3::Subtract(*player->GetPosition(), *m_targetPosition, m_velocity); // TODO: Improve!
+
 		m_targetPosition->Set(*player->GetPosition());
 		m_targetRotation->Set(*player->GetRotation());
 	}

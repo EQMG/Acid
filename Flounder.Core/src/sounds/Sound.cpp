@@ -99,13 +99,13 @@ namespace Flounder
 		alSource3f(m_source, AL_VELOCITY, velocity.m_x, velocity.m_y, velocity.m_z);
 	}
 
-	void Sound::SetPitch(float pitch)
+	void Sound::SetPitch(const float &pitch)
 	{
 		alSourcef(m_source, AL_PITCH, pitch);
 		m_pitch = pitch;
 	}
 
-	void Sound::SetGain(float gain)
+	void Sound::SetGain(const float &gain)
 	{
 		alSourcef(m_source, AL_GAIN, gain);
 		m_gain = gain;

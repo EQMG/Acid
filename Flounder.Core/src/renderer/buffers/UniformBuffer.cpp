@@ -99,11 +99,6 @@ namespace Flounder
 		void *data;
 		vkMapMemory(logicalDevice, m_bufferMemory, 0, m_size, 0, &data);
 		memcpy(data, newData, m_size);
-		/*for (int i = 0; i < m_size; i++)
-		{
-			printf("%f, ", ((float*)data)[i]);
-		}
-		printf("\n\n");*/
 		vkUnmapMemory(logicalDevice, m_bufferMemory);
 	}
 }
