@@ -226,7 +226,6 @@ namespace Flounder
 		/// <returns> The windows Y position. </returns>
 		int GetWindowYPos() const { return m_windowPosY; }
 
-
 		VkInstance GetInstance() const { return m_instance; }
 
 		VkSurfaceKHR GetSurface() const { return m_surface; }

@@ -68,7 +68,7 @@ namespace Flounder
 		if (strBegin == std::string::npos)
 		{
 			// No content.
-			return ""; 
+			return "";
 		}
 
 		const auto strEnd = str.find_last_not_of(whitespace);

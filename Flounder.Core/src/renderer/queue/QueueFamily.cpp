@@ -12,10 +12,10 @@ namespace Flounder
 
 		std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
 		vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, queueFamilies.data());
-		
+
 		// Iterate through queue families to find one that supports VK_QUEUE_GRAPHICS_BIT.
 		int i = 0;
-		
+
 		for (const auto &queueFamily : queueFamilies)
 		{
 			// Check for graphics and presentation support.
@@ -23,7 +23,7 @@ namespace Flounder
 			{
 				VkBool32 presentSupport = false;
 				vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, i, surface, &presentSupport);
-				
+
 				if (presentSupport)
 				{
 					indices.graphicsFamily = i;
