@@ -8,14 +8,16 @@ Instance::Instance()
 	m_buttonLockMouse = new ButtonKeyboard({ GLFW_KEY_M });
 	m_buttonExit = new ButtonKeyboard({ GLFW_KEY_DELETE });
 
-	/*audio::add(new sound("music", "res/ld39Outpost.wav"));
-	sound *object = audio::get("music");
+	Sound *music1 = new Sound("music", "res/ld39Outpost.wav");
 	
-	if (object != nullptr)
+	if (music1 != nullptr)
 	{
-		object->loop();
-		object->setGain(0.1f);
-	}*/
+		music1->SetPosition(Vector3(0.0f, 0.0f, 4.0f));
+		//music1->Play();
+
+		music1->Loop();
+		music1->SetGain(0.9f);
+	}
 
 	/*std::vector<particletype*> *types = new std::vector<particletype*>();
 	types->push_back(new particletype("blue", texture::newTexture()->setFile("res/particles/blueParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));

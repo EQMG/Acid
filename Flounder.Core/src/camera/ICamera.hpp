@@ -90,6 +90,12 @@ namespace Flounder
 		virtual Vector3 *GetPosition() const = 0;
 
 		/// <summary>
+		/// Gets the cameras 3D velocity in the world.
+		/// </summary>
+		/// <returns> The cameras 3D velocity in the world. </returns>
+		virtual Vector3 *GetVelocity() const = 0;
+
+		/// <summary>
 		/// Gets the cameras 3D rotation in the world, where x=pitch, y=yaw, z=roll.
 		/// </summary>
 		/// <returns> The cameras 3D rotation in the world, where x=pitch, y=yaw, z=roll. </returns>
