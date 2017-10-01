@@ -49,16 +49,16 @@ namespace Flounder
 			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
 		}
 
-	//	delete m_types;
-	//	delete m_stages;
+		//	delete m_types;
+		//	delete m_stages;
 	}
 
 	uint8_t *Shader::AllocateUniform(const int &size, AllocatedUniform *allocatedUniform)
 	{
 		const int align_mod = size % 256;
 		const int aligned_size = ((size % 256) == 0) ? size : (size + 256 - align_mod);
-	//	allocatedUniform->bufferOffset = current_offset;
-	//	allocatedUniform->descriptorSet = descriptor_set;
+		//	allocatedUniform->bufferOffset = current_offset;
+		//	allocatedUniform->descriptorSet = descriptor_set;
 		return 0;
 	}
 }

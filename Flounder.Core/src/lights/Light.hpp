@@ -64,7 +64,7 @@ namespace Flounder
 		/// <param name="attenuation"> How much the intensity of the light is lost over a distance. </param>
 		/// <returns> This. </returns>
 		Light *Set(const Colour &colour, const Vector3 &position, const Attenuation &attenuation);
-		
+
 		/// <summary>
 		/// Sets values in the light.
 		/// </summary>

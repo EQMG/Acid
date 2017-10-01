@@ -90,7 +90,7 @@ namespace Flounder
 
 	void Sound::SetDirection(const Vector3 &direction)
 	{
-		float data[3] = {direction.m_x, direction.m_y, direction.m_z};
+		float data[3] = { direction.m_x, direction.m_y, direction.m_z };
 		alSourcefv(m_source, AL_DIRECTION, data);
 	}
 
