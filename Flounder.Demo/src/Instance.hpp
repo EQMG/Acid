@@ -2,8 +2,6 @@
 
 #include <Flounder.hpp>
 
-#include "entities/EntityTest.hpp"
-
 using namespace Flounder;
 
 class Instance :

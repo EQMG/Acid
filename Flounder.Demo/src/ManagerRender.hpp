@@ -1,8 +1,6 @@
 #pragma once
 
 #include <Flounder.hpp>
-#include "particles/rendererparticles.hpp"
-#include "skyboxes/rendererskyboxes.hpp"
 
 using namespace Flounder;
 

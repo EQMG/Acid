@@ -1,5 +1,8 @@
 ﻿#include "SpawnSphere.hpp"
 
+#include "../../maths/Maths.hpp"
+#include "../../maths/Vector2.hpp"
+
 namespace Flounder
 {
 	SpawnSphere::SpawnSphere(const float &radius, const Vector3 &heading) :
@@ -24,14 +27,14 @@ namespace Flounder
 
 		if (a > b)
 		{
-			float temp = a;
+			const float temp = a;
 			a = b;
 			b = temp;
 		}
 
-		float randX = b * cos(2.0f * PI * (a / b));
-		float randY = b * sin(2.0f * PI * (a / b));
-		float distance = Vector2(randX, randY).Length();
+		const float randX = b * cos(2.0f * PI * (a / b));
+		const float randY = b * sin(2.0f * PI * (a / b));
+		const float distance = Vector2(randX, randY).Length();
 		m_spawnPosition->Scale(distance);
 		return m_spawnPosition;
 	}

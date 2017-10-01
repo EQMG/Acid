@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../engine/Engine.hpp"
-#include "../tasks/tasks.hpp"
+#include "../tasks/Tasks.hpp"
 
-#include "ievent.hpp"
+#include "IEvent.hpp"
 
 namespace Flounder
 {

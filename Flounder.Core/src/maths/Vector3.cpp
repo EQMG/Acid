@@ -1,5 +1,7 @@
 #include "Vector3.hpp"
 
+#include <assert.h>
+#include "Maths.hpp"
 #include "Vector2.hpp"
 #include "Vector4.hpp"
 
@@ -159,7 +161,8 @@ namespace Flounder
 
 	Vector3 *Vector3::Rotate(const Vector3 &source, const Vector3 &rotation, Vector3 *destination)
 	{
-		throw std::logic_error("Instead of calling Vector3::rotate, call Matrix4::rotate!");
+		assert(false && "Instead of calling Vector3::Rotate, call Matrix4::Rotate!");
+		return nullptr;
 	}
 
 	Vector3 *Vector3::Negate(const Vector3 &source, Vector3 *destination)
@@ -179,13 +182,9 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		float l = Length(source);
-
-		if (l != 0.0f)
-		{
-			return destination->Set(source.m_x / l, source.m_y / l, source.m_z / l);
-		}
-		throw std::invalid_argument("Zero length vector");
+		const float l = Length(source);
+		assert(l != 0.0f && "Zero length vector!");
+		return destination->Set(source.m_x / l, source.m_y / l, source.m_z / l);
 	}
 
 	float Vector3::Length(const Vector3 &source)

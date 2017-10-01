@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../devices/Display.hpp"
 #include "../../maths/Vector4.hpp"
 #include "../IPostFilter.hpp"
 

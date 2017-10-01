@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../../camera/Camera.hpp"
-#include "../../devices/Display.hpp"
 #include "../../maths/Vector3.hpp"
 #include "../IPostFilter.hpp"
 

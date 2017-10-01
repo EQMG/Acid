@@ -1,9 +1,5 @@
 #pragma once
 
-#include "../engine/Engine.hpp"
-
-#include "Maths.hpp"
-
 namespace Flounder
 {
 	/// <summary>

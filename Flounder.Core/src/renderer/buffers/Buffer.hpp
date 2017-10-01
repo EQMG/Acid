@@ -2,8 +2,6 @@
 
 #include "../../platforms/glfw/GlfwVulkan.hpp"
 
-#include "Vertex.hpp"
-
 namespace Flounder
 {
 	class Buffer

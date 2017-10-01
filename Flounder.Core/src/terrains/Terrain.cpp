@@ -1,5 +1,7 @@
 ﻿#include "Terrain.hpp"
 
+#include "../worlds/Worlds.hpp"
+
 namespace Flounder
 {
 	const float Terrain::SQUARE_SIZE = 2.598f;

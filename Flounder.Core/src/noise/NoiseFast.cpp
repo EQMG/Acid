@@ -1,5 +1,10 @@
 ﻿#include "NoiseFast.hpp"
 
+#include <assert.h>
+#include <random>
+
+#include "../maths/Maths.hpp"
+
 namespace Flounder
 {
 	const float NoiseFast::GRAD_X[] =
@@ -1347,7 +1352,7 @@ namespace Flounder
 		int xr = FastRound(x);
 		int yr = FastRound(y);
 
-		float distance[FN_CELLULAR_INDEX_MAX + 1] = {999999.0f, 999999.0f, 999999.0f, 999999.0f};
+		float distance[FN_CELLULAR_INDEX_MAX + 1] = { 999999.0f, 999999.0f, 999999.0f, 999999.0f };
 
 		switch (m_cellularDistanceFunction)
 		{
@@ -2111,7 +2116,7 @@ namespace Flounder
 		int yr = FastRound(y);
 		int zr = FastRound(z);
 
-		float distance[FN_CELLULAR_INDEX_MAX + 1] = {999999.0f, 999999.0f, 999999.0f, 999999.0f};
+		float distance[FN_CELLULAR_INDEX_MAX + 1] = { 999999.0f, 999999.0f, 999999.0f, 999999.0f };
 
 		switch (m_cellularDistanceFunction)
 		{

@@ -1,13 +1,9 @@
 #pragma once
 
-#include <iostream>
 #include <string>
 #include <vector>
-#include <stdarg.h>
 
-#include "../devices/Display.hpp"
 #include "../renderer/Renderer.hpp"
-#include "../maths/Colour.hpp"
 
 namespace Flounder
 {
@@ -44,7 +40,7 @@ namespace Flounder
 		/// A new OpenGL texture object.
 		/// </summary>
 		/// <param name="file"> The textures file. </param>
-		Texture(std::string file, const bool &hasAlpha = false,
+		Texture(const std::string &file, const bool &hasAlpha = false,
 			const bool &clampEdges = false,
 			const uint32_t &mipLevels = 1,
 			const bool &anisotropic = true,

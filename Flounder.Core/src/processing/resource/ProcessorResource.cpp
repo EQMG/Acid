@@ -1,5 +1,7 @@
 #include "ProcessorResource.hpp"
 
+#include "../../engine/Engine.hpp"
+
 namespace Flounder
 {
 	const double ProcessorResource::MAX_TIME_MILLIS = 8.0f;

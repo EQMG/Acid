@@ -1,24 +1,16 @@
 ﻿#pragma once
 
-#include <math.h>
-#include <assert.h>
-
-#include <algorithm>
-#include <random>
-
-#include "../maths/Maths.hpp"
-
-namespace Flounder
-{
-	// Hashing
+// Hashing
 #define X_PRIME 1619
 #define Y_PRIME 31337
 #define Z_PRIME 6971
 #define W_PRIME 1013
 
-	// Cellular
+// Cellular
 #define FN_CELLULAR_INDEX_MAX 3
 
+namespace Flounder
+{
 	class NoiseFast
 	{
 	public:

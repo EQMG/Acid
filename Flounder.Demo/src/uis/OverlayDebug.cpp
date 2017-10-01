@@ -23,7 +23,7 @@ void OverlayDebug::UpdateObject()
 	{
 		m_timerUpdate->ResetStartTime();
 
-		if (Terrains::get() != nullptr)
+		if (Terrains::Get() != nullptr)
 		{
 			float terrainHeight = 0.0f; //  terrains::get()->getTerrain()->getHeight(position->m_x, position->m_z);
 			m_textHeight->setText("HEIGHT: " + std::to_string(Maths::RoundToPlace(terrainHeight, 2)));

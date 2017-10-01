@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Maths.hpp"
-
 namespace Flounder
 {
 	class Vector2;

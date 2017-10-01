@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include "../camera/camera.hpp"
 #include "../maths/Matrix4.hpp"
 #include "../maths/Vector3.hpp"
 #include "../models/Model.hpp"

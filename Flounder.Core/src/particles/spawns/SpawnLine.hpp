@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include "../../maths/Maths.hpp"
 #include "ISpawnParticle.hpp"
 
 namespace Flounder

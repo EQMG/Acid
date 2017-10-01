@@ -1,22 +1,34 @@
-#include "attenuation.hpp"
+#include "Attenuation.hpp"
 
 namespace Flounder
 {
-	Attenuation::Attenuation(const float &constant, const float &linear, const float &exponent)
+	Attenuation::Attenuation() :
+		m_constant(1.0f),
+		m_linear(0.0f),
+		m_exponent(0.0f)
+	{
+	}
+
+	Attenuation::Attenuation(const float &constant, const float &linear, const float &exponent) :
+		m_constant(constant),
+		m_linear(linear),
+		m_exponent(exponent)
 	{
 		Set(constant, linear, exponent);
 	}
 
-	Attenuation::Attenuation(Attenuation *source)
+	Attenuation::Attenuation(const Attenuation &source) :
+		m_constant(source.m_constant),
+		m_linear(source.m_linear),
+		m_exponent(source.m_exponent)
 	{
-		Set(source);
 	}
 
 	Attenuation::~Attenuation()
 	{
 	}
 
-	Attenuation Attenuation::Set(const float &constant, const float &linear, const float &exponent)
+	Attenuation *Attenuation::Set(const float &constant, const float &linear, const float &exponent)
 	{
 		m_constant = constant;
 		m_linear = linear;
@@ -24,11 +36,11 @@ namespace Flounder
 		return this;
 	}
 
-	Attenuation Attenuation::Set(Attenuation *source)
+	Attenuation *Attenuation::Set(const Attenuation &source)
 	{
-		m_constant = source->m_constant;
-		m_linear = source->m_linear;
-		m_exponent = source->m_exponent;
+		m_constant = source.m_constant;
+		m_linear = source.m_linear;
+		m_exponent = source.m_exponent;
 		return this;
 	}
 }

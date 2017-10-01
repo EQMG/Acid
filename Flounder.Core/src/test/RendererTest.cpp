@@ -1,5 +1,7 @@
 ﻿#include "RendererTest.hpp"
 
+#include "../devices/Display.hpp"
+
 namespace Flounder
 {
 	const std::vector<Vertex> triangleVertices = 

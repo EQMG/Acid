@@ -1,5 +1,9 @@
 ﻿#include "OverlayStartup.hpp"
 
+#include "../events/Events.hpp"
+#include "../events/EventTime.hpp"
+#include "../visual/DriverSlide.hpp"
+
 namespace Flounder
 {
 	OverlayStartup::OverlayStartup(UiObject *parent) :

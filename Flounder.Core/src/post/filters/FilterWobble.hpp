@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../../devices/Display.hpp"
-#include "../../engine/Engine.hpp"
 #include "../IPostFilter.hpp"
 
 namespace Flounder

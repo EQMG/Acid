@@ -1,5 +1,7 @@
 #include "RendererParticles.hpp"
 
+#include "../maths/Maths.hpp"
+
 namespace Flounder
 {
 	const int RendererParticles::MAX_INSTANCES = 27500;
@@ -81,7 +83,7 @@ namespace Flounder
 	{
 		if (m_rendered >= MAX_INSTANCES)
 		{
-			std::cerr << "Particles overflow: " << m_rendered << std::endl;
+			printf("Particles overflow: %i\n", m_rendered);
 			return;
 		}
 

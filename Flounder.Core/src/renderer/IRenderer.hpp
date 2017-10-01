@@ -1,11 +1,7 @@
 #pragma once
 
 #include "../camera/ICamera.hpp"
-#include "../maths/Vector4.hpp"
-#include "../shaders/Shader.hpp"
-#include "../textures/Texture.hpp"
-
-#include "Renderer.hpp"
+#include "../platforms/glfw/GlfwVulkan.hpp"
 
 namespace Flounder
 {
