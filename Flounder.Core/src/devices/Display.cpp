@@ -49,6 +49,7 @@ namespace Flounder
 		}
 
 		//	Renderer::Get()->RecreateSwapChain();
+		GlfwVulkan::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
 	}
 
 	void CallbackFrame(GLFWwindow *window, int width, int height)
@@ -597,7 +598,7 @@ namespace Flounder
 		const bool &showDescription)
 	{
 #if FLOUNDER_VERBOSE
-		printf("-- Avalable '%s' Layers --\n", type.c_str());
+		printf("-- Avalable Layers For: '%s' --\n", type.c_str());
 
 		for (auto layer : layerProperties)
 		{

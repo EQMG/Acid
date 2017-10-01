@@ -1,7 +1,6 @@
 ﻿#include "Pipeline.hpp"
 
 #include <cassert>
-#include "../../devices/Display.hpp"
 
 namespace Flounder
 {
