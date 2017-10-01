@@ -11,7 +11,7 @@
 #if (FLOUNDER_CONFIG_RELEASE && FLOUNDER_PLATFORM_WINDOWS)
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, int cmdShow)
 #else
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 #endif
 {
 	// Creates the engine object.

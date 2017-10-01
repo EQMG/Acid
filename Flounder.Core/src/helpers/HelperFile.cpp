@@ -27,7 +27,7 @@ namespace Flounder
 		return result;
 	}
 
-	std::vector<char> HelperFile::ReadBinaryFile(const std::string &filepath) 
+	std::vector<char> HelperFile::ReadBinaryFile(const std::string &filepath)
 	{
 		// TODO: Move from ifsteam to normal C binary file loading.
 		std::ifstream ifs = std::ifstream(filepath, std::ios::ate | std::ios::binary);
