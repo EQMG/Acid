@@ -22,7 +22,7 @@ namespace Flounder
 	{
 		PrepareRendering(clipPlane, camera);
 
-		for (auto object : *Terrains::get()->GetTerrains())
+		for (auto object : *Terrains::Get()->GetTerrains())
 		{
 			RenderModel(object->GetModel(), object->GetModelMatrix());
 		}

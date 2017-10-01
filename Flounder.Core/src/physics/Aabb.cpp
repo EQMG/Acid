@@ -1,5 +1,7 @@
 #include "Aabb.hpp"
 
+#include "../maths/Maths.hpp"
+
 namespace Flounder
 {
 	Aabb::Aabb() :

@@ -1,5 +1,7 @@
 ﻿#include "SpawnLine.hpp"
 
+#include "../../maths/Maths.hpp"
+
 namespace Flounder
 {
 	SpawnLine::SpawnLine(const float &length, const Vector3 &axis) :

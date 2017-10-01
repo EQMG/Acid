@@ -1,5 +1,7 @@
 #include "ProcessorGraphic.hpp"
 
+#include "../../engine/Engine.hpp"
+
 namespace Flounder
 {
 	const double ProcessorGraphic::MAX_TIME_MILLIS = 8.0f;

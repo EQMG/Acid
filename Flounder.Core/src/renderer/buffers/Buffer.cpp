@@ -1,4 +1,6 @@
 ﻿#include "Buffer.hpp"
+
+#include <cassert>
 #include "../queue/QueueFamily.hpp"
 
 namespace Flounder
@@ -62,7 +64,8 @@ namespace Flounder
 			}
 		}
 
-		throw std::runtime_error("Failed to find a valid memory type for buffer!");
+		assert(false && "Failed to find a valid memory type for buffer!");
+		return 0;
 	}
 
 	void Buffer::CopyBuffer(const VkDevice &logicalDevice, const VkQueue &queue, const VkCommandPool &transferCommandPool, const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)

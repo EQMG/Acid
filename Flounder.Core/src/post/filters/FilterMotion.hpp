@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../../camera/Camera.hpp"
-#include "../../devices/Display.hpp"
 #include "../../maths/Matrix4.hpp"
 #include "../IPostFilter.hpp"
 

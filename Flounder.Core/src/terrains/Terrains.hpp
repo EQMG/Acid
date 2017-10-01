@@ -21,7 +21,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Terrains *get()
+		static Terrains *Get()
 		{
 			return static_cast<Terrains*>(Engine::Get()->GetModule("terrains"));
 		}

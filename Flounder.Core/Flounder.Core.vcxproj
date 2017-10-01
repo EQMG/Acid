@@ -14,7 +14,6 @@
     <ClCompile Include="src\helpers\HelperArray.cpp" />
     <ClCompile Include="src\helpers\HelperFile.cpp" />
     <ClCompile Include="src\helpers\HelperString.cpp" />
-    <ClCompile Include="src\maths\Maths.cpp" />
     <ClCompile Include="src\renderer\buffers\Vertex.cpp" />
     <ClCompile Include="src\renderer\buffers\UniformBuffer.cpp" />
     <ClCompile Include="src\renderer\stencils\DepthStencil.cpp" />
@@ -112,7 +111,6 @@
     <ClCompile Include="src\renderer\buffers\Buffer.cpp" />
     <ClCompile Include="src\renderer\buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\renderer\buffers\VertexBuffer.cpp" />
-    <ClCompile Include="src\renderer\command\CommandPool.cpp" />
     <ClCompile Include="src\renderer\pass\RenderPass.cpp" />
     <ClCompile Include="src\renderer\pipelines\Pipeline.cpp" />
     <ClCompile Include="src\renderer\queue\QueueFamily.cpp" />
@@ -280,7 +278,6 @@
     <ClInclude Include="src\renderer\buffers\IndexBuffer.hpp" />
     <ClInclude Include="src\renderer\buffers\Vertex.hpp" />
     <ClInclude Include="src\renderer\buffers\VertexBuffer.hpp" />
-    <ClInclude Include="src\renderer\command\CommandPool.hpp" />
     <ClInclude Include="src\renderer\IManagerRender.hpp" />
     <ClInclude Include="src\renderer\IRenderer.hpp" />
     <ClInclude Include="src\renderer\pass\RenderPass.hpp" />

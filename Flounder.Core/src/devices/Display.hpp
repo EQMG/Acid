@@ -1,11 +1,10 @@
 #pragma once
 
-#include <cassert>
 #include <string>
 #include <vector>
 
-#include "../platforms/glfw/GlfwVulkan.hpp"
 #include "../engine/Engine.hpp"
+#include "../platforms/glfw/GlfwVulkan.hpp"
 
 #define VK_STANDARD_VALIDATION_LAYER_NAME "VK_LAYER_LUNARG_standard_validation"
 
@@ -68,14 +67,7 @@ namespace Flounder
 
 		friend void CallbackFrame(GLFWwindow *window, int width, int height);
 
-		friend VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags,
-			VkDebugReportObjectTypeEXT objType,
-			uint64_t obj,
-			size_t location,
-			int32_t code,
-			const char *layerPrefix,
-			const char *msg,
-			void *userData);
+		friend VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData);
 
 		VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback);
 

@@ -1,5 +1,8 @@
 ﻿#include "Particle.hpp"
 
+#include "../camera/camera.hpp"
+#include "../engine/Engine.hpp"
+
 namespace Flounder
 {
 	Particle::Particle(ParticleType *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
@@ -53,17 +56,17 @@ namespace Flounder
 		m_distanceToCamera = cameraToParticle->LengthSquared();
 		delete cameraToParticle;
 
-		float lifeFactor = m_elapsedTime / m_lifeLength;
+		const float lifeFactor = m_elapsedTime / m_lifeLength;
 
 		if (m_particleType->GetTexture() == nullptr)
 		{
 			return;
 		}
 
-		int stageCount = static_cast<int>(pow(m_particleType->GetTexture()->GetNumberOfRows(), 2));
-		float atlasProgression = lifeFactor * stageCount;
-		int index1 = static_cast<int>(floor(atlasProgression));
-		int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
+		const int stageCount = static_cast<int>(pow(m_particleType->GetTexture()->GetNumberOfRows(), 2));
+		const float atlasProgression = lifeFactor * stageCount;
+		const int index1 = static_cast<int>(floor(atlasProgression));
+		const int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
 
 		m_textureBlendFactor = fmod(atlasProgression, 1.0f);
 		UpdateTextureOffset(m_textureOffset1, index1);
@@ -78,8 +81,8 @@ namespace Flounder
 	Vector2 *Particle::UpdateTextureOffset(Vector2 *offset, const int &index) const
 	{
 		offset->Set(0.0f, 0.0f);
-		int column = index % m_particleType->GetTexture()->GetNumberOfRows();
-		int row = index / m_particleType->GetTexture()->GetNumberOfRows();
+		const int column = index % m_particleType->GetTexture()->GetNumberOfRows();
+		const int row = index / m_particleType->GetTexture()->GetNumberOfRows();
 		offset->m_x = static_cast<float>(column) / m_particleType->GetTexture()->GetNumberOfRows();
 		offset->m_y = static_cast<float>(row) / m_particleType->GetTexture()->GetNumberOfRows();
 		return offset;

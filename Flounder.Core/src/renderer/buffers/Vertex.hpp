@@ -5,7 +5,6 @@
 #include "../../platforms/glfw/GlfwVulkan.hpp"
 
 #include "../../maths/Colour.hpp"
-#include "../../maths/Vector2.hpp"
 #include "../../maths/Vector3.hpp"
 
 namespace Flounder

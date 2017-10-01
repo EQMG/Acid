@@ -1,5 +1,7 @@
 #include "Instance.hpp"
 
+#include "entities/EntityTest.hpp"
+
 Instance::Instance()
 {
 	m_buttonFullscreen = new ButtonKeyboard({ GLFW_KEY_F11 });

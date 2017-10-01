@@ -1,4 +1,7 @@
-#include "quaternion.hpp"
+#include "Quaternion.hpp"
+
+#include <assert.h>
+#include "Maths.hpp"
 
 namespace Flounder
 {
@@ -263,13 +266,9 @@ namespace Flounder
 			destination = new Quaternion();
 		}
 
-		float l = Length(source);
-
-		if (l != 0.0f)
-		{
-			return destination->Set(source.m_x / l, source.m_y / l, source.m_z / l, source.m_w / l);
-		}
-		throw std::invalid_argument("Zero length quaternion");
+		const float l = Length(source);
+		assert(l != 0.0f && "Zero length vector!");
+		return destination->Set(source.m_x / l, source.m_y / l, source.m_z / l, source.m_w / l);
 	}
 
 	float Quaternion::Length(const Quaternion &source)

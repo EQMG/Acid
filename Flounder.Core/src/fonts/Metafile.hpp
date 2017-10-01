@@ -4,9 +4,6 @@
 #include <vector>
 #include <map>
 
-#include "../helpers/HelperFile.hpp"
-#include "../helpers/HelperString.hpp"
-
 #include "Character.hpp"
 
 namespace Flounder

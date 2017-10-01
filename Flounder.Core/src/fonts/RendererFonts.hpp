@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../renderer/IRenderer.hpp"
-#include "../uis/Uis.hpp"
 
 #include "Text.hpp"
 

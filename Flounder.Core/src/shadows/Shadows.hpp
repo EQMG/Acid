@@ -1,10 +1,7 @@
 #pragma once
 
-#include "../camera/Camera.hpp"
-#include "../maths/Vector3.hpp"
-#include "../maths/Matrix4.hpp"
 #include "../engine/Engine.hpp"
-#include "../physics/Aabb.hpp"
+#include "../maths/Vector3.hpp"
 
 #include "ShadowBox.hpp"
 

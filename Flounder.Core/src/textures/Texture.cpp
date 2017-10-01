@@ -1,8 +1,13 @@
 #include "Texture.hpp"
 
+#include <cassert>
+#include <iostream>
+#include <stdarg.h>
+#include "../devices/Display.hpp"
+
 namespace Flounder
 {
-	Texture::Texture(std::string file, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
+	Texture::Texture(const std::string &file, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
 		m_file(file),
 		m_cubemapCount(0),
 		m_cubemap(nullptr),

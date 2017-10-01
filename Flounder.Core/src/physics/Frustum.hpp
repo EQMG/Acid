@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../helpers/HelperArray.hpp"
 #include "../maths/Matrix4.hpp"
 
 namespace Flounder

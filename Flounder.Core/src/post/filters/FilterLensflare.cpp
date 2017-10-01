@@ -1,5 +1,8 @@
 #include "FilterLensflare.hpp"
 
+#include "../../camera/Camera.hpp"
+#include "../../devices/Display.hpp"
+
 namespace Flounder
 {
 	FilterLensflare::FilterLensflare() :

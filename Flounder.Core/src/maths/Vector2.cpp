@@ -1,5 +1,7 @@
 #include "Vector2.hpp"
 
+#include <assert.h>
+#include "Maths.hpp"
 #include "Vector3.hpp"
 
 namespace Flounder
@@ -163,13 +165,9 @@ namespace Flounder
 			destination = new Vector2();
 		}
 
-		float l = Length(source);
-
-		if (l != 0.0f)
-		{
-			return destination->Set(source.m_x / l, source.m_y / l);
-		}
-		throw std::invalid_argument("Zero length vector");
+		const float l = Length(source);
+		assert(l != 0.0f && "Zero length vector!");
+		return destination->Set(source.m_x / l, source.m_y / l);
 	}
 
 	float Vector2::Length(const Vector2 &source)

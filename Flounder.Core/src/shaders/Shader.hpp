@@ -2,10 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <map>
-#include <stdarg.h>
 
-#include "../helpers/HelperFile.hpp"
 #include "../platforms/glfw/GlfwVulkan.hpp"
 
 #include "ShaderType.hpp"

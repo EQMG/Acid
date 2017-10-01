@@ -1,5 +1,8 @@
 ﻿#include "ShadowBox.hpp"
 
+#include "../devices/Display.hpp"
+#include "../maths/Maths.hpp"
+
 namespace Flounder
 {
 	ShadowBox::ShadowBox() :

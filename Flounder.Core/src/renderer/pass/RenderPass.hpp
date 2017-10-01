@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <array>
-
 #include "../../platforms/glfw/GlfwVulkan.hpp"
 
 namespace Flounder

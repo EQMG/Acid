@@ -13,6 +13,11 @@ namespace Flounder
 		float m_exponent;
 
 		/// <summary>
+		/// Creates a attenuation object used in lights, the default constructor creates a non diminishing attenuation.
+		/// </summary>
+		Attenuation();
+
+		/// <summary>
 		/// Creates a attenuation object used in lights. The calculation used is as follows:<br>
 		/// {@code factor = constant + (linear * cameraDistance) + (exponent * (cameraDistance * cameraDistance))}
 		/// </summary>
@@ -22,10 +27,10 @@ namespace Flounder
 		Attenuation(const float &constant, const float &linear, const float &exponent);
 
 		/// <summary>
-		/// Creates a Attenuation object used in lights from a source object.
+		/// Creates a attenuation object used in lights from a source object.
 		/// </summary>
-		/// <param name="source"> The source attenuation value. </param>
-		Attenuation(Attenuation *source);
+		/// <param name="source"> The source attenuation object. </param>
+		Attenuation(const Attenuation &source);
 
 		/// <summary>
 		/// Deconstructor for attenuation.
@@ -39,13 +44,13 @@ namespace Flounder
 		/// <param name="linear"> The new linear value. </param>
 		/// <param name="exponent"> The new exponent value. </param>
 		/// <returns> This. </returns>
-		Attenuation Set(const float &constant, const float &linear, const float &exponent);
+		Attenuation *Set(const float &constant, const float &linear, const float &exponent);
 
 		/// <summary>
 		/// Sets values in the attenuation.
 		/// </summary>
-		/// <param name="source"> Creates this attenuation out of a existing one. </param>
+		/// <param name="source"> The source attenuation object. </param>
 		/// <returns> This. </returns>
-		Attenuation Set(Attenuation *source);
+		Attenuation *Set(const Attenuation &source);
 	};
 }

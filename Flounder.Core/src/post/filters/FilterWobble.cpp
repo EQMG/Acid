@@ -1,5 +1,8 @@
 #include "FilterWobble.hpp"
 
+#include "../../devices/Display.hpp"
+#include "../../engine/Engine.hpp"
+
 namespace Flounder
 {
 	FilterWobble::FilterWobble(const float &wobbleSpeed) :

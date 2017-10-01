@@ -1,5 +1,7 @@
 ﻿#include "inputslider.hpp"
 
+#include "../visual/DriverSlide.hpp"
+
 namespace Flounder
 {
 	const float InputSlider::CHANGE_TIME = 0.1f;

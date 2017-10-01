@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../maths/colour.hpp"
+#include "../maths/Colour.hpp"
 #include "../maths/Vector2.hpp"
 #include "../textures/Texture.hpp"
 #include "../uis/UiObject.hpp"
