@@ -1,16 +1,18 @@
 #include "Model.hpp"
 
+#include <iostream>
+#include "../devices/Display.hpp"
+#include "../helpers/HelperFile.hpp"
+#include "../helpers/HelperString.hpp"
+
 namespace Flounder
 {
 	Model::Model(const std::string &file) :
 		m_file(file),
-		m_indices(nullptr),
-		m_vertices(nullptr),
-		m_textures(nullptr),
-		m_normals(nullptr),
-		m_tangents(nullptr),
-		m_aabb(nullptr),
-		m_vertexBuffer(new VertexBuffer())
+		m_vertices(std::vector<Vertex>()),
+		m_indices(std::vector<int>()),
+		m_aabb(Aabb()),
+		m_vertexBuffer(VertexBuffer())
 	{
 		LoadFromFile();
 	}

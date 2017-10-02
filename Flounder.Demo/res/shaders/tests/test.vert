@@ -4,6 +4,7 @@
 
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec4 vertexColour;
+layout(location = 2) in vec3 vertexNormal;
 
 layout(set = 0, binding = 0) uniform UBO
 {
@@ -14,6 +15,8 @@ layout(set = 0, binding = 0) uniform UBO
 } ubo;
 
 layout(location = 0) out vec3 fragmentColour;
+
+const vec2 lightBias = vec2(0.7, 0.6); // Just indicates the balance between diffuse and ambient lighting.
 
 out gl_PerVertex 
 {
