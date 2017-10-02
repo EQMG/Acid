@@ -5,6 +5,7 @@
 
 #include "../../platforms/glfw/GlfwVulkan.hpp"
 #include "../../shaders/Shader.hpp"
+#include "../buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
@@ -35,7 +36,11 @@ namespace Flounder
 		std::string m_name;
 		PipelineType m_pipelineType;
 		VertexInputState m_vertexInputState;
-		Shader m_shader;
+
+		Shader *m_shader;
+		std::vector<UniformBuffer*> m_uniformBuffers;
+		VkDescriptorPool m_descriptorPool;
+		VkDescriptorSet m_descriptorSet;
 
 		VkPipeline m_pipeline;
 		VkPipelineLayout m_pipelineLayout;
@@ -53,7 +58,7 @@ namespace Flounder
 		/// Creates a new pipeline.
 		/// </summary>
 		/// <param name="name"> The pipelines name. </param>
-		Pipeline(const std::string &name, const PipelineType &pipelineType, const Shader &shader);
+		Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const std::vector<UniformBuffer*> &uniformBuffers);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
@@ -63,7 +68,7 @@ namespace Flounder
 		/// <summary>
 		/// Creates the pipeline.
 		/// </summary>
-		void Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState, const std::vector<VkDescriptorSetLayout> &descriptorSetLayouts);
+		void Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState);
 
 		/// <summary>
 		/// Cleans up the shapipelineder.
@@ -76,13 +81,21 @@ namespace Flounder
 		/// <returns> The pipelines name. </returns>
 		std::string GetName() const { return m_name; }
 
+		VkDescriptorPool GetDescriptorPool() { return m_descriptorPool; }
+
+		VkDescriptorSet GetDescriptorSet() { return m_descriptorSet; }
+
 		VkPipeline GetPipeline() const { return m_pipeline; }
 
 		VkPipelineLayout GetPipelineLayout() const { return m_pipelineLayout; }
 	private:
 		void CreateAttributes();
 
-		void CreatePipelineLayout(const VkDevice &logicalDevice, const std::vector<VkDescriptorSetLayout> &descriptorSetLayouts);
+		void CreateDescriptorPool(const VkDevice &logicalDevice);
+
+		void CreateDescriptorSet(const VkDevice &logicalDevice);
+
+		void CreatePipelineLayout(const VkDevice &logicalDevice);
 
 		void CreatePolygonPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass);
 

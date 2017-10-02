@@ -20,26 +20,26 @@ namespace Flounder
 		//	QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(physicalDevice, surface);
 		//	uint32_t indicesArray[] = { static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily) };
 
-		VkBufferCreateInfo bufferInfo = {};
-		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		bufferInfo.size = size;
-		bufferInfo.usage = usage;
-		bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE; // VK_SHARING_MODE_CONCURRENT
+		VkBufferCreateInfo bufferCreateInfo = {};
+		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		bufferCreateInfo.size = size;
+		bufferCreateInfo.usage = usage;
+		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE; // VK_SHARING_MODE_CONCURRENT
 		//	bufferInfo.queueFamilyIndexCount = 2;
 		//	bufferInfo.pQueueFamilyIndices = indicesArray;
 
-		GlfwVulkan::ErrorVk(vkCreateBuffer(logicalDevice, &bufferInfo, nullptr, &m_buffer));
+		GlfwVulkan::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memoryRequirements;
 		vkGetBufferMemoryRequirements(logicalDevice, m_buffer, &memoryRequirements);
 
-		VkMemoryAllocateInfo allocateInfo = {};
-		allocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		allocateInfo.allocationSize = memoryRequirements.size;
-		allocateInfo.memoryTypeIndex = FindMemoryType(physicalDevice, memoryRequirements.memoryTypeBits, properties);
-
-		GlfwVulkan::ErrorVk(vkAllocateMemory(logicalDevice, &allocateInfo, nullptr, &m_bufferMemory));
+		VkMemoryAllocateInfo memoryAllocateInfo = {};
+		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		memoryAllocateInfo.allocationSize = memoryRequirements.size;
+		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(physicalDevice, memoryRequirements.memoryTypeBits, properties);
+		
+		GlfwVulkan::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
 		vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0);
 	}
@@ -71,20 +71,20 @@ namespace Flounder
 	void Buffer::CopyBuffer(const VkDevice &logicalDevice, const VkQueue &queue, const VkCommandPool &transferCommandPool, const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
 	{
 		// Makes a temporary command buffer for the memory transfer operation.
-		VkCommandBufferAllocateInfo allocInfo = {};
-		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandPool = transferCommandPool;
-		allocInfo.commandBufferCount = 1;
+		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
+		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+		commandBufferAllocateInfo.commandPool = transferCommandPool;
+		commandBufferAllocateInfo.commandBufferCount = 1;
 
 		VkCommandBuffer commandBuffer;
-		vkAllocateCommandBuffers(logicalDevice, &allocInfo, &commandBuffer);
+		vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &commandBuffer);
 
-		VkCommandBufferBeginInfo beginInfo = {};
-		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+		VkCommandBufferBeginInfo commandBufferBeginInfo = {};
+		commandBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		commandBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
-		vkBeginCommandBuffer(commandBuffer, &beginInfo);
+		vkBeginCommandBuffer(commandBuffer, &commandBufferBeginInfo);
 
 		VkBufferCopy copyRegion = {};
 		copyRegion.size = size;
