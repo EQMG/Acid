@@ -6,14 +6,14 @@ namespace Flounder
 {
 	const std::vector<Vertex> triangleVertices =
 	{
-		{ Vector3(-0.5f, -0.5f, 0.5f), Colour(0.0f, 0.0f, 1.0f) },
-		{ Vector3(-0.5f, 0.5f, 0.5f), Colour(1.0f, 0.0f, 0.0f) },
-		{ Vector3(0.5f, 0.5f, 0.5f), Colour(0.0f, 1.0f, 0.0f) },
-		{ Vector3(0.5f, -0.5f, 0.5f), Colour(1.0f, 1.0f, 0.0f) },
-		{ Vector3(-0.5f, -0.5f, -0.5f), Colour(1.0f, 1.0f, 1.0f) },
-		{ Vector3(-0.5f, 0.5f, -0.5f), Colour(1.0f, 0.0f, 0.0f) },
-		{ Vector3(0.5f, 0.5f, -0.5f), Colour(1.0f, 0.0f, 1.0f) },
-		{ Vector3(0.5f, -0.5f, -0.5f), Colour(0.0f, 0.0f, 1.0f) }
+		{ Vector3(-0.5f, -0.5f, 0.5f), Colour(0.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f) },
+		{ Vector3(-0.5f, 0.5f, 0.5f), Colour(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f) },
+		{ Vector3(0.5f, 0.5f, 0.5f), Colour(0.0f, 1.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f) },
+		{ Vector3(0.5f, -0.5f, 0.5f), Colour(1.0f, 1.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f) },
+		{ Vector3(-0.5f, -0.5f, -0.5f), Colour(1.0f, 1.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f) },
+		{ Vector3(-0.5f, 0.5f, -0.5f), Colour(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f) },
+		{ Vector3(0.5f, 0.5f, -0.5f), Colour(1.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f) },
+		{ Vector3(0.5f, -0.5f, -0.5f), Colour(0.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f) }
 	};
 	const std::vector<uint16_t> triangleIndices =
 	{
@@ -29,6 +29,7 @@ namespace Flounder
 		IRenderer(),
 		m_uniformBuffer(UniformBuffer(sizeof(UBO), 0)),
 		m_texture("res/undefined.png"),
+		m_model("res/models/cube.obj"),
 
 		m_shader(Shader("tests", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),

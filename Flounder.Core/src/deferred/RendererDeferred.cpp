@@ -15,7 +15,7 @@ namespace Flounder
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/deferred/deferred.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/deferred/deferred.frag.spv")
 		})),
-		m_model(new Model("res/models/filter.obj"))
+		m_model(new Model("res/models/rectangle_flat.obj"))
 	{
 	}
 
