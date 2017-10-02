@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	const std::vector<Vertex> triangleVertices =
+	/*const std::vector<Vertex> triangleVertices =
 	{
 		{ Vector3(-0.5f, -0.5f, 0.5f), Colour(0.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f) },
 		{ Vector3(-0.5f, 0.5f, 0.5f), Colour(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f) },
@@ -23,7 +23,7 @@ namespace Flounder
 		3, 6, 2, 3, 7, 6,
 		1, 6, 5, 1, 2, 6,
 		7, 5, 6, 7, 4, 5
-	};
+	};*/
 
 	RendererTest::RendererTest() :
 		IRenderer(),
@@ -35,9 +35,9 @@ namespace Flounder
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		})),
-		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader, { &m_uniformBuffer })),
-		m_vertexBuffer(VertexBuffer(triangleVertices)),
-		m_indexBuffer(IndexBuffer(triangleIndices))
+		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader, { &m_uniformBuffer }))
+	//	m_vertexBuffer(VertexBuffer(triangleVertices)),
+	//	m_indexBuffer(IndexBuffer(triangleIndices))
 	{
 		const auto logicalDevice = Display::Get()->GetDevice();
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
@@ -58,8 +58,8 @@ namespace Flounder
 
 		m_shader.Create(logicalDevice);
 		m_pipeline.Create(logicalDevice, renderPass, vertexInputState);
-		m_vertexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
-		m_indexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
+	//	m_vertexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
+	//	m_indexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
 	}
 
 	RendererTest::~RendererTest()
@@ -68,10 +68,12 @@ namespace Flounder
 
 		// delete m_texture;
 
+		// delete m_model;
+
 		m_shader.Cleanup(logicalDevice);
 		m_pipeline.Cleanup(logicalDevice);
-		m_vertexBuffer.Cleanup(logicalDevice);
-		m_indexBuffer.Cleanup(logicalDevice);
+	//	m_vertexBuffer.Cleanup(logicalDevice);
+	//	m_indexBuffer.Cleanup(logicalDevice);
 
 		m_uniformBuffer.Cleanup(logicalDevice);
 	}
@@ -88,13 +90,13 @@ namespace Flounder
 		Matrix4::TransformationMatrix(Vector3(0.0f, 0.0f, 4.0f), Vector3(), 0.9f, &ubo.model);
 		m_uniformBuffer.Update(logicalDevice, &ubo);
 
-		VkBuffer vertexBuffers[] = { m_vertexBuffer.GetBuffer() };
+		VkBuffer vertexBuffers[] = { m_model.GetVertexBuffer().GetBuffer() };
 		VkDeviceSize offsets[] = { 0 };
 		VkDescriptorSet descriptors[] = { m_pipeline.GetDescriptorSet() };
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipeline());
 		vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 		vkCmdBindVertexBuffers(*commandBuffer, 0, 1, vertexBuffers, offsets);
-		vkCmdBindIndexBuffer(*commandBuffer, m_indexBuffer.GetBuffer(), 0, VK_INDEX_TYPE_UINT16);
-		vkCmdDrawIndexed(*commandBuffer, m_indexBuffer.GetIndicesSize(), 1, 0, 0, 0);
+		vkCmdBindIndexBuffer(*commandBuffer, m_model.GetIndexBuffer().GetBuffer(), 0, VK_INDEX_TYPE_UINT16);
+		vkCmdDrawIndexed(*commandBuffer, m_model.GetIndexBuffer().GetIndicesSize(), 1, 0, 0, 0);
 	}
 }
