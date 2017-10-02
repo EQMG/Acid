@@ -13,9 +13,10 @@ namespace Flounder
 	{
 		Vector3 position;
 		Colour colour;
+		Vector3 normal;
 
 		static VkVertexInputBindingDescription GetBindingDescription();
 
-		static std::array<VkVertexInputAttributeDescription, 2> GetAttributeDescriptions();
+		static std::array<VkVertexInputAttributeDescription, 3> GetAttributeDescriptions();
 	};
 }

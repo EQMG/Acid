@@ -6,6 +6,7 @@
 #include "../renderer/buffers/UniformBuffer.hpp"
 #include "../shaders/Shader.hpp"
 #include "../textures/Texture.hpp"
+#include "../models/Model.hpp"
 
 namespace Flounder
 {
@@ -22,6 +23,7 @@ namespace Flounder
 		};
 
 		UniformBuffer m_uniformBuffer;
+		Model m_model;
 		Texture m_texture;
 
 		Shader m_shader;
