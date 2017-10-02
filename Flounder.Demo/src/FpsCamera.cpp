@@ -10,7 +10,7 @@ const float FpsCamera::PITCH_AGILITY = 20.0f;
 const float FpsCamera::INFLUENCE_OF_JOYSTICK_DY = 4.5f;
 const float FpsCamera::INFLUENCE_OF_JOYSTICK_DX = 4.5f;
 
-const float FpsCamera::INFLUENCE_OF_MOUSE_DY = 10000.0f;
+const float FpsCamera::INFLUENCE_OF_MOUSE_DY = -10000.0f;
 const float FpsCamera::INFLUENCE_OF_MOUSE_DX = 10000.0f;
 
 const float FpsCamera::MAX_HORIZONTAL_CHANGE = 30.0f;

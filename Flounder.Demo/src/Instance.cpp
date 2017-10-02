@@ -15,8 +15,8 @@ Instance::Instance()
 	{
 		music1->SetPosition(Vector3(0.0f, 0.0f, 4.0f));
 		music1->SetGain(0.9f);
-		music1->Play();
-	//	music1->Loop();
+	//	music1->Play();
+		music1->Loop();
 	}
 #endif
 

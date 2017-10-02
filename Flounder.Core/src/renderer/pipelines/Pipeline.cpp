@@ -6,12 +6,18 @@ namespace Flounder
 {
 	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
-	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, const Shader &shader) :
+	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const std::vector<UniformBuffer*> &uniformBuffers) :
 		m_name(name),
 		m_pipelineType(pipelineType),
+
 		m_shader(shader),
+		m_uniformBuffers(std::vector<UniformBuffer*>(uniformBuffers)),
+		m_descriptorPool(VK_NULL_HANDLE),
+		m_descriptorSet(VK_NULL_HANDLE),
+
 		m_pipeline(VK_NULL_HANDLE),
 		m_pipelineLayout(VK_NULL_HANDLE),
+
 		m_inputAssemblyState({}),
 		m_rasterizationState({}),
 		m_blendAttachmentStates({}),
@@ -27,11 +33,13 @@ namespace Flounder
 	{
 	}
 
-	void Pipeline::Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState, const std::vector<VkDescriptorSetLayout> &descriptorSetLayouts)
+	void Pipeline::Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState)
 	{
 		m_vertexInputState = vertexInputState;
 		CreateAttributes();
-		CreatePipelineLayout(logicalDevice, descriptorSetLayouts);
+		CreateDescriptorPool(logicalDevice);
+		CreateDescriptorSet(logicalDevice);
+		CreatePipelineLayout(logicalDevice);
 
 		switch (m_pipelineType)
 		{
@@ -55,6 +63,7 @@ namespace Flounder
 
 	void Pipeline::Cleanup(const VkDevice &logicalDevice)
 	{
+		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
 		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
@@ -138,17 +147,100 @@ namespace Flounder
 		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(DYNAMIC_STATES.size());
 	}
 
-	void Pipeline::CreatePipelineLayout(const VkDevice &logicalDevice, const std::vector<VkDescriptorSetLayout> &descriptorSetLayouts)
+	void Pipeline::CreateDescriptorPool(const VkDevice &logicalDevice)
 	{
+		VkDescriptorPoolSize descriptorPoolSize = {};
+		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		descriptorPoolSize.descriptorCount = static_cast<uint32_t>(m_uniformBuffers.size());
+
+		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
+		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+		descriptorPoolCreateInfo.poolSizeCount = 1;
+		descriptorPoolCreateInfo.pPoolSizes = &descriptorPoolSize;
+		descriptorPoolCreateInfo.maxSets = 50;
+
+		GlfwVulkan::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
+	}
+
+	void Pipeline::CreateDescriptorSet(const VkDevice & logicalDevice)
+	{
+		std::vector<VkDescriptorSetLayout> descriptorSetLayouts = std::vector<VkDescriptorSetLayout>();
+
+		for (auto uniformBuffer : m_uniformBuffers)
+		{
+			descriptorSetLayouts.push_back(uniformBuffer->GetDescriptorSetLayout());
+		}
+
+		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
+		descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+		descriptorSetAllocateInfo.pNext = nullptr;
+		descriptorSetAllocateInfo.descriptorPool = m_descriptorPool;
+		descriptorSetAllocateInfo.descriptorSetCount = static_cast<uint32_t>(descriptorSetLayouts.size());
+		descriptorSetAllocateInfo.pSetLayouts = descriptorSetLayouts.data();
+
+		GlfwVulkan::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
+
+
+		/*std::vector<VkDescriptorBufferInfo> descriptorBufferInfos = std::vector<VkDescriptorBufferInfo>();
+
+		for (auto uniformBuffer : m_uniformBuffers)
+		{
+			VkDescriptorBufferInfo descriptorBufferInfo = {};
+			descriptorBufferInfo.buffer = uniformBuffer->GetBuffer();
+			descriptorBufferInfo.offset = 0;
+			descriptorBufferInfo.range = uniformBuffer->GetSize();
+			descriptorBufferInfos.push_back(descriptorBufferInfo);
+		}
+
+		VkWriteDescriptorSet writeDescriptorSet = {};
+		writeDescriptorSet.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		writeDescriptorSet.dstSet = m_descriptorSet;
+		writeDescriptorSet.dstBinding = 0; // uniformBuffer->GetBinding()
+		writeDescriptorSet.dstArrayElement = 0;
+		writeDescriptorSet.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		writeDescriptorSet.descriptorCount = static_cast<uint32_t>(descriptorBufferInfos.size());
+		writeDescriptorSet.pBufferInfo = descriptorBufferInfos.data();
+
+		vkUpdateDescriptorSets(logicalDevice, 1, &writeDescriptorSet, 0, nullptr);*/
+
+		for (auto uniformBuffer : m_uniformBuffers)
+		{
+			VkDescriptorBufferInfo bufferInfo = {};
+			bufferInfo.buffer = uniformBuffer->GetBuffer();
+			bufferInfo.offset = 0;
+			bufferInfo.range = uniformBuffer->GetSize();
+
+			VkWriteDescriptorSet descriptorWrite = {};
+			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite.dstSet = m_descriptorSet;
+			descriptorWrite.dstBinding = 0; // uniformBuffer->GetBinding()
+			descriptorWrite.dstArrayElement = 0;
+			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			descriptorWrite.descriptorCount = descriptorSetLayouts.size();
+			descriptorWrite.pBufferInfo = &bufferInfo;
+
+			vkUpdateDescriptorSets(logicalDevice, 1, &descriptorWrite, 0, nullptr);
+		}
+	}
+
+	void Pipeline::CreatePipelineLayout(const VkDevice &logicalDevice)
+	{
+		// Gets all UBO descriptor sets.
+		std::vector<VkDescriptorSetLayout> descriptorSetLayouts = std::vector<VkDescriptorSetLayout>();
+
+		for (auto uniformBuffer : m_uniformBuffers)
+		{
+			descriptorSetLayouts.push_back(uniformBuffer->GetDescriptorSetLayout());
+		}
+
 		// Pipeline layout struct.
-		VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
-		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.pushConstantRangeCount = 0;
-		pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
-		pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
+		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
+		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+		pipelineLayoutCreateInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
+		pipelineLayoutCreateInfo.pSetLayouts = descriptorSetLayouts.data();
 
 		// Creates the graphics pipeline layout.
-		GlfwVulkan::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutInfo, nullptr, &m_pipelineLayout));
+		GlfwVulkan::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
 	void Pipeline::CreatePolygonPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass)
@@ -177,8 +269,8 @@ namespace Flounder
 		pipelineCreateInfo.pDynamicState = &m_dynamicState;
 
 		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
-		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_shader.GetStages()->size());
-		pipelineCreateInfo.pStages = m_shader.GetStages()->data();
+		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_shader->GetStages()->size());
+		pipelineCreateInfo.pStages = m_shader->GetStages()->data();
 
 		// Create the graphics pipeline.
 		GlfwVulkan::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));

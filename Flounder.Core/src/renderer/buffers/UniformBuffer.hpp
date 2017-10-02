@@ -12,8 +12,6 @@ namespace Flounder
 		uint32_t m_binding;
 
 		VkDescriptorSetLayout m_descriptorSetLayout;
-		VkDescriptorPool m_descriptorPool;
-		VkDescriptorSet m_descriptorSet;
 	public:
 		UniformBuffer();
 
@@ -36,9 +34,5 @@ namespace Flounder
 		void SetBinding(const uint32_t &binding) { m_binding = binding; }
 
 		VkDescriptorSetLayout GetDescriptorSetLayout() { return m_descriptorSetLayout; }
-
-		VkDescriptorPool GetDescriptorPool() { return m_descriptorPool; }
-
-		VkDescriptorSet GetDescriptorSet() { return m_descriptorSet; }
 	};
 }

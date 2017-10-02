@@ -13,22 +13,15 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		struct UniformCamera // mat4 of vec4 of float32, mat4 of vec4 of float32, mat4 of vec4 of float32
+		struct UBO
 		{
 			Matrix4 projection;
 			Matrix4 view;
 			Vector4 clip;
+			Matrix4 model;
 		};
 
-		struct UniformObject // uint32, vec4 of float32, mat4 of vec4 of float32
-		{
-			bool memes;
-			Colour colour;
-			//Matrix4 model;
-		};
-
-		//UniformBuffer m_cameraUniformBuffer;
-		UniformBuffer m_objectUniformBuffer;
+		UniformBuffer m_uniformBuffer;
 		Texture m_texture;
 
 		Shader m_shader;
