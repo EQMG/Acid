@@ -1,16 +1,13 @@
 #pragma once
 
-#include <iostream>
 #include <string>
 #include <vector>
 
-#include "../devices/Display.hpp"
-#include "../helpers/HelperFile.hpp"
-#include "../helpers/HelperString.hpp"
 #include "../maths/Vector2.hpp"
 #include "../maths/Vector3.hpp"
 #include "../physics/Aabb.hpp"
 #include "../renderer/buffers/VertexBuffer.hpp"
+#include "../renderer/buffers/IndexBuffer.hpp"
 
 #include "Material.hpp"
 #include "VertexData.hpp"
@@ -25,15 +22,13 @@ namespace Flounder
 	private:
 		std::string m_file;
 
-		std::vector<int> *m_indices;
-		std::vector<float> *m_vertices;
-		std::vector<float> *m_textures;
-		std::vector<float> *m_normals;
-		std::vector<float> *m_tangents;
+		std::vector<Vertex> m_vertices;
+		std::vector<int> m_indices;
 
-		Aabb *m_aabb;
+		Aabb m_aabb;
 
-		VertexBuffer *m_vertexBuffer;
+		VertexBuffer m_vertexBuffer;
+		IndexBuffer m_indexBuffer;
 	public:
 		/// <summary>
 		/// Creates a new model.
@@ -56,9 +51,11 @@ namespace Flounder
 		/// </summary>
 		~Model();
 
-		Aabb *GetAabb() const { return m_aabb; }
+		Aabb GetAabb() const { return m_aabb; }
 
-		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer; }
+		VertexBuffer GetVertexBuffer() const { return m_vertexBuffer; }
+
+		IndexBuffer GetIndexBuffer() const { return m_indexBuffer; }
 	private:
 		/// <summary>
 		/// Loads the model object from a OBJ file.
