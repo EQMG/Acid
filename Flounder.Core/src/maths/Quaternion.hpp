@@ -11,7 +11,18 @@ namespace Flounder
 	class Quaternion
 	{
 	public:
-		float m_x, m_y, m_z, m_w;
+		union
+		{
+			struct
+			{
+				float m_elements[4];
+			};
+
+			struct
+			{
+				float m_x, m_y, m_z, m_w;
+			};
+		};
 
 		/// <summary>
 		/// Constructor for quaternion.

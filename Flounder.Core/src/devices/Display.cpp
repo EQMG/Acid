@@ -35,6 +35,11 @@ namespace Flounder
 
 	void CallbackSize(GLFWwindow *window, int width, int height)
 	{
+		if (width <= 0 || height <= 0)
+		{
+			return;
+		}
+
 		Display::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
 		if (Display::Get()->m_fullscreen)
@@ -48,7 +53,6 @@ namespace Flounder
 			Display::Get()->m_windowHeight = height;
 		}
 
-		//	Renderer::Get()->RecreateSwapChain();
 		GlfwVulkan::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
 	}
 
@@ -314,6 +318,7 @@ namespace Flounder
 			vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, nullptr);
 			std::vector<VkLayerProperties> instanceLayerProperties(instanceLayerPropertyCount);
 			vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, instanceLayerProperties.data());
+
 			LogVulkanLayers(instanceLayerProperties, "Instance", false);
 
 			for (auto layerName : VALIDATION_LAYERS)
@@ -498,24 +503,24 @@ namespace Flounder
 		}*/
 
 		// Obtain the device features and properties of the current device being rateds.
-		VkPhysicalDeviceProperties deviceProperties;
-		VkPhysicalDeviceFeatures deviceFeatures;
-		vkGetPhysicalDeviceProperties(device, &deviceProperties);
-		vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+		VkPhysicalDeviceProperties physicalDeviceProperties;
+		VkPhysicalDeviceFeatures physicalDeviceFeatures;
+		vkGetPhysicalDeviceProperties(device, &physicalDeviceProperties);
+		vkGetPhysicalDeviceFeatures(device, &physicalDeviceFeatures);
 
 		/// Adjusts score based on properties:
 		// Adds a large score boost for discrete GPUs (dedicated graphics cards).
-		if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+		if (physicalDeviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
 		{
 			score += 1000;
 		}
 
 		// Gives a higher score to devices with a higher maximum texture size.
-		score += deviceProperties.limits.maxImageDimension2D;
+		score += physicalDeviceProperties.limits.maxImageDimension2D;
 
 		/// Adjust score based on features:
 		// Only allow a device if it supports geometry shaders.
-		if (!deviceFeatures.geometryShader)
+		if (!physicalDeviceFeatures.geometryShader)
 		{
 			return 0;
 		}
@@ -547,7 +552,7 @@ namespace Flounder
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 
 		GlfwVulkan::ErrorVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_device));
-
+		
 		vkGetDeviceQueue(m_device, m_graphicsFamilyIndex, 0, &m_queue);
 	}
 
@@ -558,9 +563,9 @@ namespace Flounder
 
 		GlfwVulkan::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
 
-		VkBool32 presentSupport = false;
-		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_graphicsFamilyIndex, m_surface, &presentSupport);
-		assert(presentSupport && "Vulkan runtime error, failed to find a physical surface!");
+		VkBool32 physicalDeviceSurfaceSupport = false;
+		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_graphicsFamilyIndex, m_surface, &physicalDeviceSurfaceSupport);
+		assert(physicalDeviceSurfaceSupport && "Vulkan runtime error, failed to find a physical surface!");
 
 		uint32_t physicalDeviceFormatCount = 0;
 		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, nullptr);
