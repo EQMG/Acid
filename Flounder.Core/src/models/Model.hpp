@@ -23,7 +23,7 @@ namespace Flounder
 		std::string m_file;
 
 		std::vector<Vertex> m_vertices;
-		std::vector<int> m_indices;
+		std::vector<uint16_t> m_indices;
 
 		Aabb m_aabb;
 
@@ -39,12 +39,9 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new model.
 		/// </summary>
-		/// <param name="indices"> The model indices. </param>
 		/// <param name="vertices"> The model vertices. </param>
-		/// <param name="textures"> The model textures. </param>
-		/// <param name="normals"> The model normals. </param>
-		/// <param name="tangents"> The model tangents. </param>
-		Model(const std::vector<int> &indices = std::vector<int>(), const std::vector<float> &vertices = std::vector<float>(), const std::vector<float> &textures = std::vector<float>(), const std::vector<float> &normals = std::vector<float>(), const std::vector<float> &tangents = std::vector<float>());
+		/// <param name="indices"> The model indices. </param>
+		Model(const std::vector<Vertex> &vertices, const std::vector<uint16_t> &indices);
 
 		/// <summary>
 		/// Deconstructor for the model.

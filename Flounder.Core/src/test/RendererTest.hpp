@@ -28,8 +28,8 @@ namespace Flounder
 
 		Shader m_shader;
 		Pipeline m_pipeline;
-		VertexBuffer m_vertexBuffer;
-		IndexBuffer m_indexBuffer;
+	//	VertexBuffer m_vertexBuffer;
+	//	IndexBuffer m_indexBuffer;
 	public:
 		RendererTest();
 
