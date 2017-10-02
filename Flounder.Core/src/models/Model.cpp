@@ -4,56 +4,48 @@
 #include "../devices/Display.hpp"
 #include "../helpers/HelperFile.hpp"
 #include "../helpers/HelperString.hpp"
+#include <queue>
 
 namespace Flounder
 {
 	Model::Model(const std::string &file) :
 		m_file(file),
 		m_vertices(std::vector<Vertex>()),
-		m_indices(std::vector<int>()),
+		m_indices(std::vector<uint16_t>()),
 		m_aabb(Aabb()),
-		m_vertexBuffer(VertexBuffer())
+		m_vertexBuffer(VertexBuffer()),
+		m_indexBuffer(IndexBuffer())
 	{
 		LoadFromFile();
 	}
 
-	Model::Model(const std::vector<int> &indices, const std::vector<float> &vertices, const std::vector<float> &textures, const std::vector<float> &normals, const std::vector<float> &tangents)
+	Model::Model(const std::vector<Vertex> &vertices, const std::vector<uint16_t> &indices) :
+		m_file(""),
+		m_vertices(std::vector<Vertex>(vertices)),
+		m_indices(std::vector<uint16_t>(indices)),
+		m_aabb(Aabb()),
+		m_vertexBuffer(VertexBuffer()),
+		m_indexBuffer(IndexBuffer())
 	{
-		m_file = "";
-
-		m_indices = new std::vector<int>(indices);
-		m_vertices = new std::vector<float>(vertices);
-		m_textures = new std::vector<float>(textures);
-		m_normals = new std::vector<float>(normals);
-		m_tangents = new std::vector<float>(tangents);
-
-		m_aabb = nullptr;
-
 		LoadToVulkan();
 	}
 
 	Model::~Model()
 	{
-		//const auto device = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetDevice();
 
 		//m_vertexBuffer->Cleanup(&device);
-		delete m_vertexBuffer;
+		m_indexBuffer.Cleanup(logicalDevice);
+		m_vertexBuffer.Cleanup(logicalDevice);
 
-		delete m_vertices;
-		delete m_textures;
-		delete m_normals;
-		delete m_tangents;
-		delete m_indices;
-
-		delete m_aabb;
+		// delete m_aabb;
 	}
 
 	void Model::LoadFromFile()
 	{
-		std::string fileLoaded = HelperFile::ReadTextFile(std::string(m_file));
+		/*std::string fileLoaded = HelperFile::ReadTextFile(std::string(m_file));
 		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
 
-		std::vector<int> indices = std::vector<int>();
 		std::vector<Material> materials = std::vector<Material>();
 		std::vector<VertexData*> vertices = std::vector<VertexData*>();
 		std::vector<Vector2> textures = std::vector<Vector2>();
@@ -157,14 +149,6 @@ namespace Flounder
 		}
 
 		// Turns the loaded OBJ data into a formal that can be used by OpenGL.
-		m_indices = new std::vector<int>();
-		m_vertices = new std::vector<float>();
-		m_textures = new std::vector<float>();
-		m_normals = new std::vector<float>();
-		m_tangents = new std::vector<float>();
-
-		m_indices->swap(indices);
-
 		for (auto currentVertex : vertices)
 		{
 			Vector3 position = currentVertex->GetPosition();
@@ -188,7 +172,7 @@ namespace Flounder
 			m_tangents->push_back(tangent.m_z);
 
 			delete currentVertex;
-		}
+		}*/
 	}
 
 	void Model::LoadMaterials(const std::string &filepath, std::vector<Material> *list)
@@ -318,48 +302,20 @@ namespace Flounder
 
 	void Model::LoadToVulkan()
 	{
-		std::vector<Vertex> vertices = std::vector<Vertex>();
+		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
+		const auto surface = Display::Get()->GetSurface();
+		const auto queue = Display::Get()->GetQueue();
+		const auto commandPool = Renderer::Get()->GetCommandPool();
 
-		/*if (m_indices != nullptr && !m_indices->empty())
-		{
-		//	m_indicesBuffer = createIndicesBuffer(m_indices);
-		}
+		m_vertexBuffer.SetVerticies(m_vertices);
+		m_vertexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
 
-		if (m_vertices != nullptr && !m_vertices->empty())
-		{
-			m_verticesBuffer = createBuffer(m_vertices);
-		}
-
-		if (m_textures != nullptr && !m_textures->empty())
-		{
-			m_texturesBuffer = createBuffer(m_textures);
-		}
-
-		if (m_normals != nullptr && !m_normals->empty())
-		{
-			m_normalsBuffer = createBuffer(m_normals);
-		}
-
-		if (m_tangents != nullptr && !m_tangents->empty())
-		{
-			m_tangentsBuffer = createBuffer(m_tangents);
-		}*/
-
-		/*VkDevice logicalDevice = Display::Get()->GetVkDevice();
-		VkPhysicalDevice physicalDevice = Display::Get()->GetVkPhysicalDevice();
-		VkSurfaceKHR surface = Display::Get()->GetVkSurface();
-		VkQueue transferQueue = Display::Get()->GetVkTransferQueue();
-		m_vertexBuffer->SetVerticies(vertices);
-		m_vertexBuffer->Create(&logicalDevice, &physicalDevice, &surface, Renderer::Get()->GetCommandPoolTransfer()->GetCommandPool(), &transferQueue);*/
+		m_indexBuffer.SetIndices(m_indices);
 	}
 
 	void Model::CreateAabb()
 	{
-		if (m_aabb == nullptr)
-		{
-			m_aabb = new Aabb();
-		}
-
 		float minX = +INFINITY;
 		float minY = +INFINITY;
 		float minZ = +INFINITY;
@@ -367,39 +323,37 @@ namespace Flounder
 		float maxY = -INFINITY;
 		float maxZ = -INFINITY;
 
-		if (m_vertices->size() > 1)
+		if (m_vertices.size() > 1)
 		{
-			for (int i = 0; i < m_vertices->size(); i += 3)
+			for (int i = 0; i < m_vertices.size(); i += 3)
 			{
-				float x = m_vertices->at(i);
-				float y = m_vertices->at(i + 1);
-				float z = m_vertices->at(i + 2);
+				const Vector3 position = m_vertices.at(i).position;
 
-				if (x < minX)
+				if (position.m_x < minX)
 				{
-					minX = x;
+					minX = position.m_x;
 				}
-				else if (x > maxX)
+				else if (position.m_x > maxX)
 				{
-					maxX = x;
+					maxX = position.m_x;
 				}
 
-				if (y < minY)
+				if (position.m_y < minY)
 				{
-					minY = y;
+					minY = position.m_y;
 				}
-				else if (y > maxY)
+				else if (position.m_y > maxY)
 				{
-					maxY = y;
+					maxY = position.m_y;
 				}
 
-				if (z < minZ)
+				if (position.m_z < minZ)
 				{
-					minZ = z;
+					minZ = position.m_z;
 				}
-				else if (z > maxZ)
+				else if (position.m_z > maxZ)
 				{
-					maxZ = z;
+					maxZ = position.m_z;
 				}
 			}
 		}
