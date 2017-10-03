@@ -1,6 +1,7 @@
-﻿#include "inputslider.hpp"
+﻿#include "InputSlider.hpp"
 
 #include "../visual/DriverSlide.hpp"
+#include "../devices/Display.hpp"
 
 namespace Flounder
 {

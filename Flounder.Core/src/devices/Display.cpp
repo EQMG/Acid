@@ -537,8 +537,13 @@ namespace Flounder
 		deviceQueueCreateInfo.queueCount = 1;
 		deviceQueueCreateInfo.pQueuePriorities = queuePriorities;
 
+		VkPhysicalDeviceFeatures physicalDeviceFeatures = {};
+		physicalDeviceFeatures.samplerAnisotropy = VK_TRUE;
+		physicalDeviceFeatures.shaderClipDistance = VK_TRUE;
+
 		VkDeviceCreateInfo deviceCreateInfo = {};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+		deviceCreateInfo.pEnabledFeatures = &physicalDeviceFeatures;
 		deviceCreateInfo.queueCreateInfoCount = 1;
 		deviceCreateInfo.pQueueCreateInfos = &deviceQueueCreateInfo;
 

@@ -1,10 +1,10 @@
 #include "Model.hpp"
 
-#include <iostream>
+#include <cassert>
 #include "../devices/Display.hpp"
 #include "../helpers/HelperFile.hpp"
 #include "../helpers/HelperString.hpp"
-#include <queue>
+#include "../renderer/Renderer.hpp"
 
 namespace Flounder
 {
@@ -27,34 +27,48 @@ namespace Flounder
 		m_vertexBuffer(VertexBuffer()),
 		m_indexBuffer(IndexBuffer())
 	{
-		LoadToVulkan();
 	}
 
 	Model::~Model()
 	{
+		// delete m_aabb;
+	}
+
+	void Model::Create()
+	{
+		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
+		const auto surface = Display::Get()->GetSurface();
+		const auto queue = Display::Get()->GetQueue();
+		const auto commandPool = Renderer::Get()->GetCommandPool();
+
+		m_vertexBuffer.SetVerticies(m_vertices);
+		m_vertexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
+
+		m_indexBuffer.SetIndices(m_indices);
+		m_indexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
+	}
+
+	void Model::Cleanup()
+	{
 		const auto logicalDevice = Display::Get()->GetDevice();
 
-		//m_vertexBuffer->Cleanup(&device);
 		m_indexBuffer.Cleanup(logicalDevice);
 		m_vertexBuffer.Cleanup(logicalDevice);
-
-		// delete m_aabb;
 	}
 
 	void Model::LoadFromFile()
 	{
-		/*std::string fileLoaded = HelperFile::ReadTextFile(std::string(m_file));
+		std::string fileLoaded = HelperFile::ReadTextFile(std::string(m_file));
 		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
 
-		std::vector<Material> materials = std::vector<Material>();
+		std::vector<uint16_t> indices = std::vector<uint16_t>();
 		std::vector<VertexData*> vertices = std::vector<VertexData*>();
 		std::vector<Vector2> textures = std::vector<Vector2>();
 		std::vector<Vector3> normals = std::vector<Vector3>();
 
 		std::vector<std::string> splitFile = HelperString::Split(std::string(m_file), "/");
 		std::string fileName = splitFile.at(splitFile.size() - 1);
-
-		Material currentMaterial = {};
 
 		for (auto it = lines.begin(); it < lines.end(); ++it)
 		{
@@ -69,23 +83,6 @@ namespace Flounder
 				if (prefix == "#")
 				{
 					continue;
-				}
-
-				if (prefix == "mtllib")
-				{
-					std::string pathMtl = HelperString::Substring(m_file, 0, static_cast<int>(m_file.length() - fileName.length()));
-					pathMtl += split.at(1);
-					LoadMaterials(pathMtl, &materials);
-				}
-				else if (prefix == "usemtl")
-				{
-					for (auto m : materials)
-					{
-						if (m.name == split.at(1))
-						{
-							currentMaterial = m;
-						}
-					}
 				}
 				else if (prefix == "v")
 				{
@@ -109,7 +106,7 @@ namespace Flounder
 					if (split.size() != 4 || HelperString::Contains(line, "//"))
 					{
 						printf("Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", m_file.c_str());
-						//throw ex
+						assert(false);
 					}
 
 					std::vector<std::string> vertex1 = HelperString::Split(split.at(1), "/");
@@ -137,102 +134,41 @@ namespace Flounder
 		}
 
 		// Averages out vertex tangents, and disabled non set vertices,
-		for (auto vertex : vertices)
+		for (auto current : vertices)
 		{
-			vertex->AverageTangents();
+			current->AverageTangents();
 
-			if (!vertex->IsSet())
+			if (!current->IsSet())
 			{
-				vertex->SetTextureIndex(0);
-				vertex->SetNormalIndex(0);
+				current->SetTextureIndex(0);
+				current->SetNormalIndex(0);
 			}
 		}
+
+		m_indices.swap(indices);
 
 		// Turns the loaded OBJ data into a formal that can be used by OpenGL.
-		for (auto currentVertex : vertices)
+		for (auto current : vertices)
 		{
-			Vector3 position = currentVertex->GetPosition();
-			Vector2 textureCoord = textures.at(currentVertex->GetTextureIndex());
-			Vector3 normalVector = normals.at(currentVertex->GetNormalIndex());
-			Vector3 tangent = currentVertex->GetAverageTangent();
+			const Vector3 position = current->GetPosition();
+			const Vector2 textureCoord = textures.at(current->GetTextureIndex());
+			const Vector3 normal = normals.at(current->GetNormalIndex());
+			const Vector3 tangent = current->GetAverageTangent();
 
-			m_vertices->push_back(position.m_x);
-			m_vertices->push_back(position.m_y);
-			m_vertices->push_back(position.m_z);
+			Vertex vertex = {};
+			vertex.position = Vector3(position);
+			vertex.textures = Vector2(textureCoord);
+		//	vertex.textures.m_y = 1.0f - vertex.textures.m_y;
+			vertex.normal = Vector3(normal);
+			vertex.tangent = Vector3(tangent);
 
-			m_textures->push_back(textureCoord.m_x);
-			m_textures->push_back(1.0f - textureCoord.m_y);
+			m_vertices.push_back(vertex);
 
-			m_normals->push_back(normalVector.m_x);
-			m_normals->push_back(normalVector.m_y);
-			m_normals->push_back(normalVector.m_z);
-
-			m_tangents->push_back(tangent.m_x);
-			m_tangents->push_back(tangent.m_y);
-			m_tangents->push_back(tangent.m_z);
-
-			delete currentVertex;
-		}*/
-	}
-
-	void Model::LoadMaterials(const std::string &filepath, std::vector<Material> *list)
-	{
-		std::string fileLoaded = HelperFile::ReadTextFile(filepath);
-		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
-
-		std::string parseMaterialName = "";
-		Material parseMaterial = {};
-
-		for (auto it = lines.begin(); it < lines.end(); ++it)
-		{
-			std::string line = HelperString::Trim(*it);
-
-			std::vector<std::string> split = HelperString::Split(line, " ");
-
-			if (!split.empty())
-			{
-				std::string prefix = split.at(0);
-
-				if (prefix == "#")
-				{
-					continue;
-				}
-
-				if (prefix == "newmtl")
-				{
-					if (parseMaterialName != "")
-					{
-						list->push_back(parseMaterial);
-					}
-				}
-				else if (prefix == "Ns")
-				{
-				}
-				else if (prefix == "Ka")
-				{
-				}
-				else if (prefix == "Kd")
-				{
-				}
-				else if (prefix == "Ks")
-				{
-				}
-				else if (prefix == "map_Kd")
-				{
-				}
-				else if (prefix == "map_Bump")
-				{
-				}
-			}
-			else
-			{
-				printf("MTL '%s' ", filepath.c_str());
-				printf("unknown line: '%s'.\n", line.c_str());
-			}
+			delete current;
 		}
 	}
 
-	VertexData *Model::ProcessDataVertex(Vector3 vertex, std::vector<VertexData*> *vertices, std::vector<int> *indices)
+	VertexData *Model::ProcessDataVertex(Vector3 vertex, std::vector<VertexData*> *vertices, std::vector<uint16_t> *indices)
 	{
 		int index = static_cast<int>(vertex.m_x) - 1;
 		VertexData *currentVertex = vertices->at(index);
@@ -250,7 +186,7 @@ namespace Flounder
 		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
 	}
 
-	VertexData *Model::DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<int> *indices, std::vector<VertexData*> *vertices)
+	VertexData *Model::DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint16_t> *indices, std::vector<VertexData*> *vertices)
 	{
 		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{
@@ -298,20 +234,6 @@ namespace Flounder
 		delete deltaPos2;
 		delete deltaUv1;
 		delete deltaUv2;
-	}
-
-	void Model::LoadToVulkan()
-	{
-		const auto logicalDevice = Display::Get()->GetDevice();
-		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
-		const auto surface = Display::Get()->GetSurface();
-		const auto queue = Display::Get()->GetQueue();
-		const auto commandPool = Renderer::Get()->GetCommandPool();
-
-		m_vertexBuffer.SetVerticies(m_vertices);
-		m_vertexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
-
-		m_indexBuffer.SetIndices(m_indices);
 	}
 
 	void Model::CreateAabb()

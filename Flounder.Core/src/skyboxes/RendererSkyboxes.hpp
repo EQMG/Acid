@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../renderer/IRenderer.hpp"
+#include "../shaders/Shader.hpp"
 
 #include "Skyboxes.hpp"
 

@@ -1,9 +1,8 @@
 ﻿#pragma once
 
 #include "../renderer/IRenderer.hpp"
-#include "../renderer/buffers/IndexBuffer.hpp"
-#include "../renderer/buffers/VertexBuffer.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
+#include "../renderer/pipelines/Pipeline.hpp"
 #include "../shaders/Shader.hpp"
 #include "../textures/Texture.hpp"
 #include "../models/Model.hpp"
@@ -28,8 +27,6 @@ namespace Flounder
 
 		Shader m_shader;
 		Pipeline m_pipeline;
-	//	VertexBuffer m_vertexBuffer;
-	//	IndexBuffer m_indexBuffer;
 	public:
 		RendererTest();
 

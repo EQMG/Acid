@@ -84,7 +84,7 @@ namespace Flounder
 			}
 		}
 
-		m_model = new Model(std::vector<int>(), vertices);
+//		m_model = new Model(std::vector<int>(), vertices);
 
 		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;

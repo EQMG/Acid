@@ -6,6 +6,7 @@
 #include "../../platforms/glfw/GlfwVulkan.hpp"
 #include "../../shaders/Shader.hpp"
 #include "../buffers/UniformBuffer.hpp"
+#include "../../textures/Texture.hpp"
 
 namespace Flounder
 {
@@ -32,6 +33,8 @@ namespace Flounder
 	{
 	private:
 		static const std::vector<VkDynamicState> DYNAMIC_STATES;
+
+		Texture m_texture;
 
 		std::string m_name;
 		PipelineType m_pipelineType;

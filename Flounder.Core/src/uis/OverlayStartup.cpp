@@ -1,5 +1,6 @@
 ﻿#include "OverlayStartup.hpp"
 
+#include "../devices/Display.hpp"
 #include "../events/Events.hpp"
 #include "../events/EventTime.hpp"
 #include "../visual/DriverSlide.hpp"
