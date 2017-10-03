@@ -1,13 +1,8 @@
 #pragma once
 
-#include <vector>
-
-#include <al/alc.h>
-
+#include "../platforms/glfw/Platform.hpp"
 #include "../engine/Engine.hpp"
 #include "../sounds/Sound.hpp"
-
-#include "Display.hpp"
 
 namespace Flounder
 {

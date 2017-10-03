@@ -76,7 +76,7 @@ namespace Flounder
 
 	void Texture::Cleanup()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		Buffer::Cleanup();
 
@@ -87,7 +87,7 @@ namespace Flounder
 
 	void Texture::CreateImage2D()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
 		const auto surface = Display::Get()->GetSurface();
 		const auto queue = Display::Get()->GetQueue();
@@ -144,7 +144,7 @@ namespace Flounder
 			viewInfo.subresourceRange.baseArrayLayer = 0;
 			viewInfo.subresourceRange.layerCount = 1;
 
-			GlfwVulkan::ErrorVk(vkCreateImageView(logicalDevice, &viewInfo, nullptr, &m_imageView));
+			Platform::ErrorVk(vkCreateImageView(logicalDevice, &viewInfo, nullptr, &m_imageView));
 		}
 		{
 			VkSamplerCreateInfo samplerInfo = {};
@@ -162,7 +162,7 @@ namespace Flounder
 			samplerInfo.compareOp = VK_COMPARE_OP_ALWAYS;
 			samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
 
-			GlfwVulkan::ErrorVk(vkCreateSampler(logicalDevice, &samplerInfo, nullptr, &m_sampler));
+			Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerInfo, nullptr, &m_sampler));
 		}
 
 		Buffer::Create(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
@@ -198,7 +198,7 @@ namespace Flounder
 
 	void Texture::CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage & image, VkDeviceMemory & imageMemory)
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
 		VkImageCreateInfo imageInfo = {};
@@ -216,7 +216,7 @@ namespace Flounder
 		imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
 		imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-		GlfwVulkan::ErrorVk(vkCreateImage(logicalDevice, &imageInfo, nullptr, &image));
+		Platform::ErrorVk(vkCreateImage(logicalDevice, &imageInfo, nullptr, &image));
 
 		VkMemoryRequirements memRequirements;
 		vkGetImageMemoryRequirements(logicalDevice, image, &memRequirements);
@@ -226,7 +226,7 @@ namespace Flounder
 		allocInfo.allocationSize = memRequirements.size;
 		allocInfo.memoryTypeIndex = Buffer::FindMemoryType(memRequirements.memoryTypeBits, properties);;
 
-		GlfwVulkan::ErrorVk(vkAllocateMemory(logicalDevice, &allocInfo, nullptr, &imageMemory));
+		Platform::ErrorVk(vkAllocateMemory(logicalDevice, &allocInfo, nullptr, &imageMemory));
 
 		vkBindImageMemory(logicalDevice, image, imageMemory, 0);
 	}
@@ -307,7 +307,7 @@ namespace Flounder
 
 	VkCommandBuffer Texture::BeginSingleTimeCommands()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto commandPool = Renderer::Get()->GetCommandPool();
 
 		VkCommandBufferAllocateInfo allocInfo = {};
@@ -330,7 +330,7 @@ namespace Flounder
 
 	void Texture::EndSingleTimeCommands(VkCommandBuffer commandBuffer)
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto queue = Display::Get()->GetQueue();
 		const auto commandPool = Renderer::Get()->GetCommandPool();
 

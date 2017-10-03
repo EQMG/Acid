@@ -1,6 +1,8 @@
 ﻿#include "Swapchain.hpp"
 
 #include <array>
+#include "../../devices/Display.hpp"
+#include "../Renderer.hpp"
 
 namespace Flounder
 {
@@ -21,8 +23,14 @@ namespace Flounder
 	{
 	}
 
-	void Swapchain::Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkSurfaceCapabilitiesKHR &surfaceCapabilities, const VkSurfaceFormatKHR &surfaceFormat, const VkExtent2D &extent)
+	void Swapchain::Create(const VkExtent2D &extent)
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
+		const auto surface = Display::Get()->GetSurface();
+		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
+		const auto surfaceCapabilities = Display::Get()->GetSurfaceCapabilities();
+
 		m_extent = extent;
 
 		uint32_t physicalPresentModeCount = 0;
@@ -70,14 +78,14 @@ namespace Flounder
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
-		GlfwVulkan::ErrorVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
+		Platform::ErrorVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
 
-		GlfwVulkan::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
+		Platform::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
 
 		m_swapchinImages.resize(m_swapchainImageCount);
 		m_swapchinImageViews.resize(m_swapchainImageCount);
 
-		GlfwVulkan::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchinImages.data()));
+		Platform::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchinImages.data()));
 
 		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
 		{
@@ -96,12 +104,15 @@ namespace Flounder
 			imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 			imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-			GlfwVulkan::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews[i]));
+			Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews[i]));
 		}
 	}
 
-	void Swapchain::CreateFrameBuffers(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent)
+	void Swapchain::CreateFrameBuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent)
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		// TODO: Remove RenderPass paramater.
+
 		m_framebuffers.resize(m_swapchainImageCount);
 
 		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
@@ -119,12 +130,14 @@ namespace Flounder
 			framebufferCreateInfo.height = extent.height;
 			framebufferCreateInfo.layers = 1;
 
-			GlfwVulkan::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers[i]));
+			Platform::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers[i]));
 		}
 	}
 
-	void Swapchain::Cleanup(const VkDevice &logicalDevice)
+	void Swapchain::Cleanup()
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
 		for (auto imageView : m_swapchinImageViews)
 		{
 			vkDestroyImageView(logicalDevice, imageView, nullptr);
@@ -133,8 +146,10 @@ namespace Flounder
 		vkDestroySwapchainKHR(logicalDevice, m_swapchain, nullptr);
 	}
 
-	void Swapchain::CleanupFrameBuffers(const VkDevice &logicalDevice)
+	void Swapchain::CleanupFrameBuffers()
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
 		for (auto framebuffer : m_framebuffers)
 		{
 			vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);

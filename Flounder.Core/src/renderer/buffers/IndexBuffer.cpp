@@ -17,7 +17,7 @@ namespace Flounder
 
 	void IndexBuffer::Create(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, void *newData)
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		// Calculates the buffers size.
 		m_indexType = indexType;

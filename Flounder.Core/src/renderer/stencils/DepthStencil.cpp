@@ -21,7 +21,7 @@ namespace Flounder
 
 	void DepthStencil::Create(const VkExtent3D &extent)
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
 		std::vector<VkFormat> tryFormats{
@@ -74,7 +74,7 @@ namespace Flounder
 		imageCreateInfo.pQueueFamilyIndices = nullptr;
 		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
-		GlfwVulkan::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &m_depthStencilImage));
+		Platform::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &m_depthStencilImage));
 
 		VkMemoryRequirements imageMemoryRequirements = {};
 		vkGetImageMemoryRequirements(logicalDevice, m_depthStencilImage, &imageMemoryRequirements);
@@ -86,9 +86,9 @@ namespace Flounder
 		memoryAllocateInfo.allocationSize = imageMemoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = memoryTypeIndex;
 
-		GlfwVulkan::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_depthStencilImageMemory));
+		Platform::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_depthStencilImageMemory));
 
-		GlfwVulkan::ErrorVk(vkBindImageMemory(logicalDevice, m_depthStencilImage, m_depthStencilImageMemory, 0));
+		Platform::ErrorVk(vkBindImageMemory(logicalDevice, m_depthStencilImage, m_depthStencilImageMemory, 0));
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -106,12 +106,12 @@ namespace Flounder
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 		imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-		GlfwVulkan::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_depthStencilImageView));
+		Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_depthStencilImageView));
 	}
 
 	void DepthStencil::Cleanup()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		vkDestroyImageView(logicalDevice, m_depthStencilImageView, nullptr);
 		vkFreeMemory(logicalDevice, m_depthStencilImageMemory, nullptr);

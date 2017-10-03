@@ -18,20 +18,20 @@ namespace Flounder
 
 	void Buffer::Create(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties)
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		//	QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(physicalDevice, surface);
-		//	uint32_t indicesArray[] = { static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily) };
+		// QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(physicalDevice, surface);
+		// uint32_t indicesArray[] = { static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily) };
 
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		bufferCreateInfo.size = size;
 		bufferCreateInfo.usage = usage;
-		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE; // VK_SHARING_MODE_CONCURRENT
-		//	bufferInfo.queueFamilyIndexCount = 2;
-		//	bufferInfo.pQueueFamilyIndices = indicesArray;
+		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		// bufferInfo.queueFamilyIndexCount = 2;
+		// bufferInfo.pQueueFamilyIndices = indicesArray;
 
-		GlfwVulkan::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
+		Platform::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memoryRequirements;
@@ -42,14 +42,14 @@ namespace Flounder
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
 		
-		GlfwVulkan::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
+		Platform::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
 		vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0);
 	}
 
 	void Buffer::Cleanup()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		vkDestroyBuffer(logicalDevice, m_buffer, nullptr);
 		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
 	}
@@ -76,7 +76,7 @@ namespace Flounder
 
 	void Buffer::CopyBuffer(const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto queue = Display::Get()->GetQueue();
 		const auto commandPool = Renderer::Get()->GetCommandPool();
 

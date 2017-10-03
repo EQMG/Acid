@@ -21,7 +21,7 @@ namespace Flounder
 
 	void UniformBuffer::Create()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		Buffer::Create(m_size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 
@@ -45,12 +45,12 @@ namespace Flounder
 		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(bindings.size());
 		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
 
-		GlfwVulkan::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
+		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
 	void UniformBuffer::Cleanup()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
 		Buffer::Cleanup();
@@ -58,7 +58,7 @@ namespace Flounder
 
 	void UniformBuffer::Update(void *newData)
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		void *data;
 		vkMapMemory(logicalDevice, m_bufferMemory, 0, m_size, 0, &data);

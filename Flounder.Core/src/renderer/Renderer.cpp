@@ -18,17 +18,13 @@ namespace Flounder
 		m_commandPool(VK_NULL_HANDLE),
 		m_commandBuffer(VK_NULL_HANDLE)
 	{
-		const auto device = Display::Get()->GetDevice();
-		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
-		const auto surface = Display::Get()->GetSurface();
+		const VkExtent2D extent2d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()) };
+		const VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
 
-		VkExtent2D extent2d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()) };
-		VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
-
-		m_swapchain.Create(device, physicalDevice, surface, Display::Get()->GetSurfaceCapabilities(), Display::Get()->GetSurfaceFormat(), extent2d);
+		m_swapchain.Create(extent2d);
 		m_depthStencil.Create(extent3d);
 		m_renderPass.Create(m_depthStencil.GetFormat(), Display::Get()->GetSurfaceFormat().format);
-		m_swapchain.CreateFrameBuffers(device, m_renderPass.GetRenderPass(), m_depthStencil.GetImageView(), extent2d);
+		m_swapchain.CreateFrameBuffers(m_renderPass.GetRenderPass(), m_depthStencil.GetImageView(), extent2d);
 
 		CreateFences();
 		CreateCommandPool();
@@ -36,7 +32,7 @@ namespace Flounder
 
 	Renderer::~Renderer()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto queue = Display::Get()->GetQueue();
 
 		vkQueueWaitIdle(queue);
@@ -47,10 +43,10 @@ namespace Flounder
 		vkDestroySemaphore(logicalDevice, m_semaphore, nullptr);
 		vkDestroyCommandPool(logicalDevice, m_commandPool, nullptr);
 
-		m_swapchain.CleanupFrameBuffers(logicalDevice);
+		m_swapchain.CleanupFrameBuffers();
 		m_renderPass.Cleanup();
 		m_depthStencil.Cleanup();
-		m_swapchain.Cleanup(logicalDevice);
+		m_swapchain.Cleanup();
 	}
 
 	void Renderer::Update()
@@ -133,13 +129,13 @@ namespace Flounder
 
 	void Renderer::BeginReindering()
 	{
-		const auto device = Display::Get()->GetDevice();
+		const auto device = Display::Get()->GetLogicalDevice();
 		const auto queue = Display::Get()->GetQueue();
 
-		GlfwVulkan::ErrorVk(vkQueueWaitIdle(queue));
-		GlfwVulkan::ErrorVk(vkAcquireNextImageKHR(device, *m_swapchain.GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage));
-		GlfwVulkan::ErrorVk(vkWaitForFences(device, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
-		GlfwVulkan::ErrorVk(vkResetFences(device, 1, &m_fenceSwapchainImage));
+		Platform::ErrorVk(vkQueueWaitIdle(queue));
+		Platform::ErrorVk(vkAcquireNextImageKHR(device, *m_swapchain.GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage));
+		Platform::ErrorVk(vkWaitForFences(device, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
+		Platform::ErrorVk(vkResetFences(device, 1, &m_fenceSwapchainImage));
 	}
 
 	void Renderer::NextSubpass()
@@ -162,14 +158,14 @@ namespace Flounder
 		presentInfo.pImageIndices = &m_activeSwapchinImage;
 		presentInfo.pResults = &result;
 
-		GlfwVulkan::ErrorVk(vkQueuePresentKHR(queue, &presentInfo));
+		Platform::ErrorVk(vkQueuePresentKHR(queue, &presentInfo));
 
-		GlfwVulkan::ErrorVk(result);
+		Platform::ErrorVk(result);
 	}
 
 	void Renderer::CreateFences()
 	{
-		const auto device = Display::Get()->GetDevice();
+		const auto device = Display::Get()->GetLogicalDevice();
 
 		VkFenceCreateInfo fenceCreateInfo = {};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
@@ -178,7 +174,7 @@ namespace Flounder
 
 	void Renderer::CreateCommandPool()
 	{
-		const auto device = Display::Get()->GetDevice();
+		const auto device = Display::Get()->GetLogicalDevice();
 
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
@@ -188,7 +184,7 @@ namespace Flounder
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetGraphicsFamilyIndex();
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-		GlfwVulkan::ErrorVk(vkCreateCommandPool(device, &commandPoolCreateInfo, nullptr, &m_commandPool));
+		Platform::ErrorVk(vkCreateCommandPool(device, &commandPoolCreateInfo, nullptr, &m_commandPool));
 
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
 		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -200,12 +196,9 @@ namespace Flounder
 
 	void Renderer::RecreateSwapchain()
 	{
-		VkExtent2D extent2d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()) };
-		VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
+		const VkExtent2D extent2d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()) };
+		const VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
 
-		const auto device = Display::Get()->GetDevice();
-		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
-		const auto surface = Display::Get()->GetSurface();
 		const auto queue = Display::Get()->GetQueue();
 
 #if FLOUNDER_VERBOSE
@@ -213,14 +206,14 @@ namespace Flounder
 #endif
 		vkQueueWaitIdle(queue);
 
-		m_swapchain.CleanupFrameBuffers(device);
+		m_swapchain.CleanupFrameBuffers();
 		//	m_renderPass.Cleanup(device);
 		m_depthStencil.Cleanup();
-		m_swapchain.Cleanup(device);
+		m_swapchain.Cleanup();
 
-		m_swapchain.Create(device, physicalDevice, surface, Display::Get()->GetSurfaceCapabilities(), Display::Get()->GetSurfaceFormat(), extent2d);
+		m_swapchain.Create(extent2d);
 		m_depthStencil.Create(extent3d);
 		//	m_renderPass.Create(device, m_depthStencil.GetFormat(), Display::Get()->GetSurfaceFormat().format);
-		m_swapchain.CreateFrameBuffers(device, m_renderPass.GetRenderPass(), m_depthStencil.GetImageView(), extent2d);
+		m_swapchain.CreateFrameBuffers(m_renderPass.GetRenderPass(), m_depthStencil.GetImageView(), extent2d);
 	}
 }

@@ -20,7 +20,7 @@ namespace Flounder
 
 	void Shader::Create()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		for (auto type : *m_types)
 		{
@@ -32,7 +32,7 @@ namespace Flounder
 			createInfo.pCode = reinterpret_cast<const uint32_t*>(shaderCode.data());
 
 			VkShaderModule shaderModule = VK_NULL_HANDLE;
-			GlfwVulkan::ErrorVk(vkCreateShaderModule(logicalDevice, &createInfo, nullptr, &shaderModule));
+			Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &createInfo, nullptr, &shaderModule));
 
 			VkPipelineShaderStageCreateInfo shaderStageInfo = {};
 			shaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -47,7 +47,7 @@ namespace Flounder
 
 	void Shader::Cleanup()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		for (auto shaderModule : *m_modules)
 		{

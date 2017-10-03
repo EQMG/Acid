@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../../platforms/glfw/GlfwVulkan.hpp"
+#include "../../platforms/glfw/Platform.hpp"
 
 namespace Flounder
 {
