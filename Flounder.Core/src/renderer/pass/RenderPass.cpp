@@ -1,6 +1,7 @@
 ﻿#include "RenderPass.hpp"
 
 #include <array>
+#include "../../devices/Display.hpp"
 
 namespace Flounder
 {
@@ -13,8 +14,10 @@ namespace Flounder
 	{
 	}
 
-	void RenderPass::Create(const VkDevice &logicalDevice, const VkFormat &depthFormat, const VkFormat &surfaceFormat)
+	void RenderPass::Create(const VkFormat &depthFormat, const VkFormat &surfaceFormat)
 	{
+		const auto logicalDevice = Display::Get()->GetDevice();
+
 		std::array<VkAttachmentDescription, 2> attachments = {};
 		attachments[0].flags = 0;
 		attachments[0].format = depthFormat;
@@ -58,8 +61,10 @@ namespace Flounder
 		GlfwVulkan::ErrorVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &m_renderPass));
 	}
 
-	void RenderPass::Cleanup(const VkDevice &logicalDevice)
+	void RenderPass::Cleanup()
 	{
+		const auto logicalDevice = Display::Get()->GetDevice();
+
 		vkDestroyRenderPass(logicalDevice, m_renderPass, nullptr);
 	}
 }

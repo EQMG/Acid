@@ -14,16 +14,16 @@ namespace Flounder
 
 		~Buffer();
 
-		void Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties);
+		void Create(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties);
 
-		void Cleanup(const VkDevice &logicalDevice);
+		void Cleanup();
 
 		VkBuffer GetBuffer() { return m_buffer; }
 
 		VkDeviceMemory GetBufferMemory() { return m_bufferMemory; }
 
-		static uint32_t FindMemoryType(const VkPhysicalDevice &physicalDevice, const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties);
+		static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties);
 
-		static void CopyBuffer(const VkDevice &logicalDevice, const VkQueue &queue, const VkCommandPool &transferCommandPool, const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size);
+		static void CopyBuffer(const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size);
 	};
 }
