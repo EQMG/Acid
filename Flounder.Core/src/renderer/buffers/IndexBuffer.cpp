@@ -1,14 +1,13 @@
 ﻿#include "IndexBuffer.hpp"
 
+#include "../../devices/Display.hpp"
+
 namespace Flounder
 {
 	IndexBuffer::IndexBuffer() :
-		m_indices(std::vector<uint16_t>())
-	{
-	}
-
-	IndexBuffer::IndexBuffer(const std::vector<uint16_t> &indices) :
-		m_indices(std::vector<uint16_t>(indices))
+		Buffer(),
+		m_indexType(VK_INDEX_TYPE_UINT16),
+		m_indexCount(0)
 	{
 	}
 
@@ -16,37 +15,27 @@ namespace Flounder
 	{
 	}
 
-	void IndexBuffer::Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkQueue &queue, const VkCommandPool &transferCommandPool)
+	void IndexBuffer::Create(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, void *newData)
 	{
-		const VkDeviceSize bufferSize = sizeof(m_indices[0]) * m_indices.size();
+		const auto logicalDevice = Display::Get()->GetDevice();
 
-		Buffer bufferStaging = Buffer();
-		bufferStaging.Create(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		CopyVerticesToBuffer(logicalDevice, bufferSize, bufferStaging);
+		// Calculates the buffers size.
+		m_indexType = indexType;
+		m_indexCount = static_cast<uint32_t>(indexCount);
+		const VkDeviceSize bufferSize = elementSize * m_indexCount;
 
-		Buffer::Create(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		Buffer::CopyBuffer(logicalDevice, queue, transferCommandPool, bufferStaging.GetBuffer(), GetBuffer(), bufferSize);
+		// Creates the buffer.
+		Buffer::Create(bufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 
-		bufferStaging.Cleanup(logicalDevice);
-	}
-
-	void IndexBuffer::Cleanup(const VkDevice &logicalDevice)
-	{
-		Buffer::Cleanup(logicalDevice);
-	}
-
-	void IndexBuffer::SetIndices(std::vector<uint16_t> indices)
-	{
-		m_indices.clear();
-		m_indices.swap(indices);
-	}
-
-	void IndexBuffer::CopyVerticesToBuffer(const VkDevice &logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const
-	{
-		// Copies the vertex data to the buffer.
+		// Copies the index data to the buffer.
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferSize, 0, &data);
-		memcpy(data, m_indices.data(), static_cast<size_t>(bufferSize));
-		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
+		vkMapMemory(logicalDevice, m_bufferMemory, 0, bufferSize, 0, &data);
+		memcpy(data, newData, static_cast<size_t>(bufferSize));
+		vkUnmapMemory(logicalDevice, m_bufferMemory);
+	}
+
+	void IndexBuffer::Cleanup()
+	{
+		Buffer::Cleanup();
 	}
 }

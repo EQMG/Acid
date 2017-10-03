@@ -26,8 +26,8 @@ namespace Flounder
 		VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
 
 		m_swapchain.Create(device, physicalDevice, surface, Display::Get()->GetSurfaceCapabilities(), Display::Get()->GetSurfaceFormat(), extent2d);
-		m_depthStencil.Create(device, physicalDevice, Display::Get()->GetPhysicalDeviceMemoryProperties(), extent3d);
-		m_renderPass.Create(device, m_depthStencil.GetFormat(), Display::Get()->GetSurfaceFormat().format);
+		m_depthStencil.Create(extent3d);
+		m_renderPass.Create(m_depthStencil.GetFormat(), Display::Get()->GetSurfaceFormat().format);
 		m_swapchain.CreateFrameBuffers(device, m_renderPass.GetRenderPass(), m_depthStencil.GetImageView(), extent2d);
 
 		CreateFences();
@@ -36,21 +36,21 @@ namespace Flounder
 
 	Renderer::~Renderer()
 	{
-		const auto device = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetDevice();
 		const auto queue = Display::Get()->GetQueue();
 
 		vkQueueWaitIdle(queue);
 
 		delete m_managerRender;
 
-		vkDestroyFence(device, m_fenceSwapchainImage, nullptr);
-		vkDestroySemaphore(device, m_semaphore, nullptr);
-		vkDestroyCommandPool(device, m_commandPool, nullptr);
+		vkDestroyFence(logicalDevice, m_fenceSwapchainImage, nullptr);
+		vkDestroySemaphore(logicalDevice, m_semaphore, nullptr);
+		vkDestroyCommandPool(logicalDevice, m_commandPool, nullptr);
 
-		m_swapchain.CleanupFrameBuffers(device);
-		m_renderPass.Cleanup(device);
-		m_depthStencil.Cleanup(device);
-		m_swapchain.Cleanup(device);
+		m_swapchain.CleanupFrameBuffers(logicalDevice);
+		m_renderPass.Cleanup();
+		m_depthStencil.Cleanup();
+		m_swapchain.Cleanup(logicalDevice);
 	}
 
 	void Renderer::Update()
@@ -215,11 +215,11 @@ namespace Flounder
 
 		m_swapchain.CleanupFrameBuffers(device);
 		//	m_renderPass.Cleanup(device);
-		m_depthStencil.Cleanup(device);
+		m_depthStencil.Cleanup();
 		m_swapchain.Cleanup(device);
 
 		m_swapchain.Create(device, physicalDevice, surface, Display::Get()->GetSurfaceCapabilities(), Display::Get()->GetSurfaceFormat(), extent2d);
-		m_depthStencil.Create(device, physicalDevice, Display::Get()->GetPhysicalDeviceMemoryProperties(), extent3d);
+		m_depthStencil.Create(extent3d);
 		//	m_renderPass.Create(device, m_depthStencil.GetFormat(), Display::Get()->GetSurfaceFormat().format);
 		m_swapchain.CreateFrameBuffers(device, m_renderPass.GetRenderPass(), m_depthStencil.GetImageView(), extent2d);
 	}

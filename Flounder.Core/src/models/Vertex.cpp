@@ -2,8 +2,7 @@
 
 namespace Flounder
 {
-	Vertex::Vertex() :
-		BaseVertex()
+	Vertex::Vertex()
 	{
 	}
 

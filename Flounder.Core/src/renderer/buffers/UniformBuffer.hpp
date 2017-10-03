@@ -14,29 +14,21 @@ namespace Flounder
 
 		VkDescriptorSetLayout m_descriptorSetLayout;
 	public:
-		UniformBuffer();
-
 		UniformBuffer(const VkDeviceSize &size, const uint32_t &binding, const VkShaderStageFlags &stage);
 
 		~UniformBuffer();
 
-		void Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface);
+		void Create();
 
-		void Cleanup(const VkDevice &logicalDevice);
+		void Cleanup();
 
-		void Update(const VkDevice &logicalDevice, void *newData);
+		void Update(void *newData);
 
 		VkDeviceSize GetSize() const { return m_size; }
 
-		void SetSize(const VkDeviceSize &size) { m_size = size; };
-
 		uint32_t GetBinding() const { return m_binding; }
 
-		void SetBinding(const uint32_t &binding) { m_binding = binding; }
-
 		VkShaderStageFlags GetStage() const { return m_stage; }
-
-		void SetStage(const VkShaderStageFlags &stage) { m_stage = stage; }
 
 		VkDescriptorSetLayout GetDescriptorSetLayout() const { return m_descriptorSetLayout; }
 	};

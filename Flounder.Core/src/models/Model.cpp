@@ -36,25 +36,14 @@ namespace Flounder
 
 	void Model::Create()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
-		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
-		const auto surface = Display::Get()->GetSurface();
-		const auto queue = Display::Get()->GetQueue();
-		const auto commandPool = Renderer::Get()->GetCommandPool();
-
-		m_vertexBuffer.SetVerticies(m_vertices);
-		m_vertexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
-
-		m_indexBuffer.SetIndices(m_indices);
-		m_indexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
+		m_vertexBuffer.Create(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data());
+		m_indexBuffer.Create(VK_INDEX_TYPE_UINT16, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
 	}
 
 	void Model::Cleanup()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
-
-		m_indexBuffer.Cleanup(logicalDevice);
-		m_vertexBuffer.Cleanup(logicalDevice);
+		m_indexBuffer.Cleanup();
+		m_vertexBuffer.Cleanup();
 	}
 
 	void Model::LoadFromFile()
@@ -92,7 +81,7 @@ namespace Flounder
 				}
 				else if (prefix == "vt")
 				{
-					Vector2 texture = Vector2(stof(split.at(1)), stof(split.at(2)));
+					Vector2 texture = Vector2(stof(split.at(1)), 1.0f - stof(split.at(2)));
 					textures.push_back(texture);
 				}
 				else if (prefix == "vn")
@@ -155,12 +144,11 @@ namespace Flounder
 			const Vector3 normal = normals.at(current->GetNormalIndex());
 			const Vector3 tangent = current->GetAverageTangent();
 
-			Vertex vertex = {};
-			vertex.position = Vector3(position);
-			vertex.textures = Vector2(textureCoord);
-			vertex.textures.m_y = 1.0f - vertex.textures.m_y;
-			vertex.normal = Vector3(normal);
-			vertex.tangent = Vector3(tangent);
+			Vertex vertex = Vertex();
+			vertex.position.Set(position);
+			vertex.textures.Set(textureCoord);
+			vertex.normal.Set(normal);
+			vertex.tangent.Set(tangent);
 
 			m_vertices.push_back(vertex);
 
