@@ -7,6 +7,8 @@ namespace Flounder
 	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
 	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const std::vector<UniformBuffer*> &uniformBuffers) :
+		m_texture("res/treeBirchSmall/diffuse.png"),
+
 		m_name(name),
 		m_pipelineType(pipelineType),
 
@@ -36,6 +38,7 @@ namespace Flounder
 	void Pipeline::Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState)
 	{
 		m_vertexInputState = vertexInputState;
+		m_texture.Create();
 		CreateAttributes();
 		CreateDescriptorPool(logicalDevice);
 		CreateDescriptorSet(logicalDevice);
@@ -63,6 +66,8 @@ namespace Flounder
 
 	void Pipeline::Cleanup(const VkDevice &logicalDevice)
 	{
+		m_texture.Cleanup();
+
 		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
 		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
@@ -81,7 +86,7 @@ namespace Flounder
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
 		m_rasterizationState.polygonMode = VK_POLYGON_MODE_FILL;
 		m_rasterizationState.cullMode = VK_CULL_MODE_BACK_BIT;
-		m_rasterizationState.frontFace = VK_FRONT_FACE_CLOCKWISE; // VK_FRONT_FACE_COUNTER_CLOCKWISE
+		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
 		m_rasterizationState.depthBiasConstantFactor = 0.0f;
 		m_rasterizationState.depthBiasClamp = 0.0f;
@@ -149,14 +154,16 @@ namespace Flounder
 
 	void Pipeline::CreateDescriptorPool(const VkDevice &logicalDevice)
 	{
-		VkDescriptorPoolSize descriptorPoolSize = {};
-		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		descriptorPoolSize.descriptorCount = static_cast<uint32_t>(m_uniformBuffers.size());
+		std::array<VkDescriptorPoolSize, 2> descriptorPoolSizes = {};
+		descriptorPoolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		descriptorPoolSizes[0].descriptorCount = 1;
+		descriptorPoolSizes[1].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorPoolSizes[1].descriptorCount = 1;
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		descriptorPoolCreateInfo.poolSizeCount = 1;
-		descriptorPoolCreateInfo.pPoolSizes = &descriptorPoolSize;
+		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(descriptorPoolSizes.size());
+		descriptorPoolCreateInfo.pPoolSizes = descriptorPoolSizes.data();
 		descriptorPoolCreateInfo.maxSets = 50;
 
 		GlfwVulkan::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
@@ -181,46 +188,47 @@ namespace Flounder
 		GlfwVulkan::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
 
 
-		/*std::vector<VkDescriptorBufferInfo> descriptorBufferInfos = std::vector<VkDescriptorBufferInfo>();
+
+		std::vector<VkWriteDescriptorSet> descriptorWrites = {};
 
 		for (auto uniformBuffer : m_uniformBuffers)
 		{
-			VkDescriptorBufferInfo descriptorBufferInfo = {};
-			descriptorBufferInfo.buffer = uniformBuffer->GetBuffer();
-			descriptorBufferInfo.offset = 0;
-			descriptorBufferInfo.range = uniformBuffer->GetSize();
-			descriptorBufferInfos.push_back(descriptorBufferInfo);
-		}
-
-		VkWriteDescriptorSet writeDescriptorSet = {};
-		writeDescriptorSet.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		writeDescriptorSet.dstSet = m_descriptorSet;
-		writeDescriptorSet.dstBinding = 0; // uniformBuffer->GetBinding()
-		writeDescriptorSet.dstArrayElement = 0;
-		writeDescriptorSet.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		writeDescriptorSet.descriptorCount = static_cast<uint32_t>(descriptorBufferInfos.size());
-		writeDescriptorSet.pBufferInfo = descriptorBufferInfos.data();
-
-		vkUpdateDescriptorSets(logicalDevice, 1, &writeDescriptorSet, 0, nullptr);*/
-
-		for (auto uniformBuffer : m_uniformBuffers)
-		{
-			VkDescriptorBufferInfo bufferInfo = {};
-			bufferInfo.buffer = uniformBuffer->GetBuffer();
-			bufferInfo.offset = 0;
-			bufferInfo.range = uniformBuffer->GetSize();
+			VkDescriptorBufferInfo descriptorInfo = {};
+			descriptorInfo.buffer = uniformBuffer->GetBuffer();
+			descriptorInfo.offset = 0;
+			descriptorInfo.range = uniformBuffer->GetSize();
 
 			VkWriteDescriptorSet descriptorWrite = {};
 			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			descriptorWrite.dstSet = m_descriptorSet;
-			descriptorWrite.dstBinding = 0; // uniformBuffer->GetBinding()
+			descriptorWrite.dstBinding = 0; //  uniformBuffer->GetBinding();
 			descriptorWrite.dstArrayElement = 0;
 			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-			descriptorWrite.descriptorCount = descriptorSetLayouts.size();
-			descriptorWrite.pBufferInfo = &bufferInfo;
+			descriptorWrite.descriptorCount = 1; // descriptorSetLayouts.size();
+			descriptorWrite.pBufferInfo = &descriptorInfo;
 
-			vkUpdateDescriptorSets(logicalDevice, 1, &descriptorWrite, 0, nullptr);
+			descriptorWrites.push_back(descriptorWrite);
 		}
+
+		{
+			VkDescriptorImageInfo descriptorInfo = {};
+			descriptorInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+			descriptorInfo.imageView = m_texture.GetImageView();
+			descriptorInfo.sampler = m_texture.GetSampler();
+
+			VkWriteDescriptorSet descriptorWrite = {};
+			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite.dstSet = m_descriptorSet;
+			descriptorWrite.dstBinding = 1;
+			descriptorWrite.dstArrayElement = 0;
+			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			descriptorWrite.descriptorCount = 1;
+			descriptorWrite.pImageInfo = &descriptorInfo;
+
+			descriptorWrites.push_back(descriptorWrite);
+		}
+
+		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}
 
 	void Pipeline::CreatePipelineLayout(const VkDevice &logicalDevice)

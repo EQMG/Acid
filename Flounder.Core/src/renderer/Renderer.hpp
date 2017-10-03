@@ -69,6 +69,8 @@ namespace Flounder
 		VkRenderPass GetRenderPass() { return m_renderPass.GetRenderPass(); }
 
 		VkCommandPool GetCommandPool() { return m_commandPool; }
+
+		VkCommandBuffer GetCommandBuffer() { return m_commandBuffer; }
 	private:
 		VkFramebuffer GetActiveFramebuffer() const { return m_swapchain.GetFramebuffers()[m_activeSwapchinImage]; }
 

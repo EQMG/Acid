@@ -1,43 +1,21 @@
 ﻿#include "RendererTest.hpp"
 
 #include "../devices/Display.hpp"
+#include "../renderer/Renderer.hpp"
 
 namespace Flounder
 {
-	/*const std::vector<Vertex> triangleVertices =
-	{
-		{ Vector3(-0.5f, -0.5f, 0.5f), Colour(0.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f) },
-		{ Vector3(-0.5f, 0.5f, 0.5f), Colour(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f) },
-		{ Vector3(0.5f, 0.5f, 0.5f), Colour(0.0f, 1.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f) },
-		{ Vector3(0.5f, -0.5f, 0.5f), Colour(1.0f, 1.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f) },
-		{ Vector3(-0.5f, -0.5f, -0.5f), Colour(1.0f, 1.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f) },
-		{ Vector3(-0.5f, 0.5f, -0.5f), Colour(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f) },
-		{ Vector3(0.5f, 0.5f, -0.5f), Colour(1.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f) },
-		{ Vector3(0.5f, -0.5f, -0.5f), Colour(0.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f) }
-	};
-	const std::vector<uint16_t> triangleIndices =
-	{
-		0, 2, 1, 0, 3, 2,
-		4, 3, 0, 4, 7, 3,
-		4, 1, 5, 4, 0, 1,
-		3, 6, 2, 3, 7, 6,
-		1, 6, 5, 1, 2, 6,
-		7, 5, 6, 7, 4, 5
-	};*/
-
 	RendererTest::RendererTest() :
 		IRenderer(),
-		m_uniformBuffer(UniformBuffer(sizeof(UBO), 0)),
-		m_texture("res/undefined.png"),
-		m_model("res/models/cube.obj"),
+		m_uniformBuffer(UniformBuffer(sizeof(UBO), 0, VK_SHADER_STAGE_VERTEX_BIT)),
+		m_model("res/treeBirchSmall/model.obj"),
+		m_texture("res/treeBirchSmall/diffuse.png"),
 
 		m_shader(Shader("tests", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		})),
 		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader, { &m_uniformBuffer }))
-	//	m_vertexBuffer(VertexBuffer(triangleVertices)),
-	//	m_indexBuffer(IndexBuffer(triangleIndices))
 	{
 		const auto logicalDevice = Display::Get()->GetDevice();
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
@@ -55,26 +33,20 @@ namespace Flounder
 		vertexInputState.pVertexAttributeDescriptions = attributeDescriptions.data();
 
 		m_uniformBuffer.Create(logicalDevice, physicalDevice, surface);
+		m_model.Create();
 
 		m_shader.Create(logicalDevice);
 		m_pipeline.Create(logicalDevice, renderPass, vertexInputState);
-	//	m_vertexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
-	//	m_indexBuffer.Create(logicalDevice, physicalDevice, surface, queue, commandPool);
 	}
 
 	RendererTest::~RendererTest()
 	{
 		const auto logicalDevice = Display::Get()->GetDevice();
 
-		// delete m_texture;
-
-		// delete m_model;
-
 		m_shader.Cleanup(logicalDevice);
 		m_pipeline.Cleanup(logicalDevice);
-	//	m_vertexBuffer.Cleanup(logicalDevice);
-	//	m_indexBuffer.Cleanup(logicalDevice);
 
+		m_model.Cleanup();
 		m_uniformBuffer.Cleanup(logicalDevice);
 	}
 
@@ -85,9 +57,8 @@ namespace Flounder
 		UBO ubo = {};
 		ubo.projection = *camera.GetProjectionMatrix();
 		ubo.view = *camera.GetViewMatrix();
-		ubo.clip = clipPlane;
 		ubo.model = Matrix4();
-		Matrix4::TransformationMatrix(Vector3(0.0f, 0.0f, 4.0f), Vector3(), 0.9f, &ubo.model);
+		Matrix4::TransformationMatrix(Vector3(0.0f, -2.3f, 3.0f), Vector3(), 1.0f, &ubo.model);
 		m_uniformBuffer.Update(logicalDevice, &ubo);
 
 		VkBuffer vertexBuffers[] = { m_model.GetVertexBuffer().GetBuffer() };

@@ -3,19 +3,21 @@
 #include <string>
 #include <vector>
 
-#include "../renderer/Renderer.hpp"
+#include "../platforms/glfw/GlfwVulkan.hpp"
+
+#include "../renderer/buffers/Buffer.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// Class that represents a loaded texture.
 	/// </summary>
-	class Texture
+	class Texture :
+		public Buffer
 	{
 	private:
 		std::string m_file;
-		int m_cubemapCount;
-		std::string *m_cubemap;
+		std::vector<std::string> m_cubemap;
 
 		bool m_hasAlpha;
 		bool m_clampEdges;
@@ -24,17 +26,14 @@ namespace Flounder
 		bool m_nearest;
 		uint32_t m_numberOfRows;
 
-		VkBuffer m_stagingBuffer;
-		VkDeviceMemory m_stagingMemory;
-
-		VkImage m_image;
-		VkDeviceMemory m_imageMemory;
-		VkImageView m_imageView;
-		VkFormat m_format;
-		VkImageType m_imageType;
-
 		int32_t m_components;
 		int32_t m_width, m_height, m_depth;
+
+		VkImage m_image;
+		VkImageView m_imageView;
+		VkSampler m_sampler;
+		VkFormat m_format;
+		VkImageType m_imageType;
 	public:
 		/// <summary>
 		/// A new OpenGL texture object.
@@ -50,14 +49,17 @@ namespace Flounder
 		/// <summary>
 		/// A new OpenGL cubemap texture object.
 		/// </summary>
-		/// <param name="n_args"> The number of cubemap files. </param>
-		/// <param name="..."> The list of cubemap texture paths. </param>
-		Texture(const int n_args, ...);
+		/// <param name="cubemap"> The list of cubemap texture paths. </param>
+		Texture(const std::vector<std::string> &cubemap);
 
 		/// <summary>
 		/// Deconstructor for the texture object.
 		/// </summary>
 		~Texture();
+
+		void Create();
+
+		void Cleanup();
 
 		/// <summary>
 		/// Gets if the texture has alpha.
@@ -88,21 +90,33 @@ namespace Flounder
 		/// </summary>
 		/// <returns> The textures type. </returns>
 		VkImageType GetTextureType() const { return m_imageType; }
+
+		VkImage GetImage() const { return m_image; }
+
+		VkImageView GetImageView() const { return m_imageView; }
+
+		VkSampler GetSampler() const { return m_sampler; }
 	private:
 		/// <summary>
 		/// Loads the texture object from a texture file.
 		/// </summary>
-		void LoadFromTexture();
+		void CreateImage2D();
 
 		/// <summary>
 		/// Loads the texture object from a cubemap texture files.
 		/// </summary>
-		void LoadFromCubemap();
+		void CreateImage3D();
 
 		float *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 
-		void SetImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageAspectFlags aspectMask, VkImageLayout oldImageLayout, VkImageLayout newImageLayout);
+		void CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
 
-		void SetImageLayout(VkCommandBuffer cmdbuffer, VkImage image, VkImageLayout oldImageLayout, VkImageLayout newImageLayout, VkImageSubresourceRange subresourceRange);
+		void TransitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
+
+		void CopyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
+
+		VkCommandBuffer BeginSingleTimeCommands();
+
+		void EndSingleTimeCommands(VkCommandBuffer commandBuffer);
 	};
 }

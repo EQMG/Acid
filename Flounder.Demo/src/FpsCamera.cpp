@@ -10,7 +10,7 @@ const float FpsCamera::PITCH_AGILITY = 20.0f;
 const float FpsCamera::INFLUENCE_OF_JOYSTICK_DY = 4.5f;
 const float FpsCamera::INFLUENCE_OF_JOYSTICK_DX = 4.5f;
 
-const float FpsCamera::INFLUENCE_OF_MOUSE_DY = -10000.0f;
+const float FpsCamera::INFLUENCE_OF_MOUSE_DY = 10000.0f;
 const float FpsCamera::INFLUENCE_OF_MOUSE_DX = 10000.0f;
 
 const float FpsCamera::MAX_HORIZONTAL_CHANGE = 30.0f;
@@ -91,6 +91,8 @@ void FpsCamera::Update(IPlayer *player)
 
 	m_viewFrustum->Update(*m_projectionMatrix, *m_viewMatrix);
 	m_viewRay->Update(*m_position, Vector2(static_cast<float>(Mouse::Get()->GetPositionX()), static_cast<float>(Mouse::Get()->GetPositionY())), *m_viewMatrix, *m_projectionMatrix);
+
+	// printf("Position: (%f, %f, %f). Rotation: (%f, %f, %f)\n", m_position->m_x, m_position->m_y, m_position->m_z, m_rotation->m_x, m_rotation->m_y, m_rotation->m_z);
 }
 
 void FpsCamera::CalculateHorizontalAngle()
