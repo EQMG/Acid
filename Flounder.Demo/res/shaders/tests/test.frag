@@ -9,8 +9,8 @@ layout(binding = 1) uniform sampler2D samplerTexture;
 
 layout(location = 0) out vec4 outColour;
 
-const vec2 lightBias = vec2(0.7, 0.6);
-const vec3 lightDirection = vec3(0.2, -0.3, -0.8);
+const vec2 lightBias = vec2(0.7, 0.1);
+const vec3 lightDirection = vec3(0.2, -0.3, 0.8);
 
 void main() 
 {

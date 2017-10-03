@@ -3,7 +3,7 @@
 #include <array>
 #include <string>
 
-#include "../../platforms/glfw/GlfwVulkan.hpp"
+#include "../../platforms/glfw/Platform.hpp"
 #include "../../shaders/Shader.hpp"
 #include "../buffers/UniformBuffer.hpp"
 #include "../../textures/Texture.hpp"
@@ -71,12 +71,12 @@ namespace Flounder
 		/// <summary>
 		/// Creates the pipeline.
 		/// </summary>
-		void Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState);
+		void Create(const VertexInputState &vertexInputState);
 
 		/// <summary>
 		/// Cleans up the shapipelineder.
 		/// </summary>
-		void Cleanup(const VkDevice &logicalDevice);
+		void Cleanup();
 
 		/// <summary>
 		/// Gets the loaded name for the pipeline.
@@ -94,18 +94,18 @@ namespace Flounder
 	private:
 		void CreateAttributes();
 
-		void CreateDescriptorPool(const VkDevice &logicalDevice);
+		void CreateDescriptorPool();
 
-		void CreateDescriptorSet(const VkDevice &logicalDevice);
+		void CreateDescriptorSet();
 
-		void CreatePipelineLayout(const VkDevice &logicalDevice);
+		void CreatePipelineLayout();
 
-		void CreatePolygonPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass);
+		void CreatePolygonPipeline();
 
-		void CreateNoDepthTestPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass);
+		void CreateNoDepthTestPipeline();
 
-		void CreateMrtPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass);
+		void CreateMrtPipeline();
 
-		void CreateMultiTexturePipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass);
+		void CreateMultiTexturePipeline();
 	};
 }
