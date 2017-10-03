@@ -9,10 +9,6 @@
 #include <Windows.h>
 #endif
 
-#ifdef FLOUNDER_PLATFORM_ANDROID
-#include <android/asset_manager.h>
-#endif
-
 #define GLFW_INCLUDE_VULKAN
 #include <glfw/glfw3.h>
 

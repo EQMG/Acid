@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "../maths/Colour.hpp"
 #include "../maths/Vector3.hpp"
 #include "../maths/Matrix4.hpp"
 #include "../physics/Aabb.hpp"

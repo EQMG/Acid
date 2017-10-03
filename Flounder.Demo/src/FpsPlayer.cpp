@@ -29,8 +29,8 @@ FpsPlayer::FpsPlayer() :
 	})),
 	m_inputNoclip(new AxisCompound({
 		new AxisButton(
-			new ButtonKeyboard({ GLFW_KEY_SPACE }),
-			new ButtonKeyboard({ GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL })
+			new ButtonKeyboard({ GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL }),
+			new ButtonKeyboard({ GLFW_KEY_SPACE })
 		),
 		new AxisJoystick(0, { 0 })
 	})),

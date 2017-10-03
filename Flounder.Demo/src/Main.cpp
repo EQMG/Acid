@@ -29,10 +29,10 @@ int main(int argc, char **argv)
 		Display::Get()->SetFullscreen(false);
 	}
 
-	if (Mouse::Get() != nullptr)
-	{
-		Mouse::Get()->SetCustomMouse("res/cursor.png");
-	}
+	//if (Mouse::Get() != nullptr)
+	//{
+	//	Mouse::Get()->SetCustomMouse("res/cursor.png");
+	//}
 
 	if (Camera::Get() != nullptr)
 	{
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 		Standards::get()->AddStandard(new Instance());
 	}
 
-	if (Skyboxes::Get() != nullptr)
+	/*if (Skyboxes::Get() != nullptr)
 	{
 		Skyboxes::Get()->SetSkybox(new Skybox(
 			new Texture(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png"),
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 		Waters::Get()->SetWater(new Water(
 			Vector3(), Vector3()
 		));
-	}
+	}*/
 
 	// Runs the engine loop.
 	int exitCode = m_engine->Run();

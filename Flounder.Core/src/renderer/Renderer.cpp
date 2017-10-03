@@ -80,9 +80,9 @@ namespace Flounder
 			std::array<VkClearValue, 2> clearValues = {};
 			clearValues[0].depthStencil.depth = 1.0f;
 			clearValues[0].depthStencil.stencil = 0;
-			clearValues[1].color.float32[0] = 0.1f; // R.
-			clearValues[1].color.float32[1] = 0.1f; // G.
-			clearValues[1].color.float32[2] = 0.1f; // B.
+			clearValues[1].color.float32[0] = 0.0f; // R.
+			clearValues[1].color.float32[1] = 0.0f; // G.
+			clearValues[1].color.float32[2] = 0.0f; // B.
 			clearValues[1].color.float32[3] = 1.0f; // A.
 
 			VkRenderPassBeginInfo renderPassBeginInfo = {};

@@ -13,7 +13,7 @@ Instance::Instance()
 	
 	if (music1 != nullptr)
 	{
-		music1->SetPosition(Vector3(0.0f, 0.0f, 4.0f));
+		music1->SetPosition(Vector3(0.0f, -2.3f, 3.0f));
 		music1->SetGain(0.9f);
 	//	music1->Play();
 		music1->Loop();
