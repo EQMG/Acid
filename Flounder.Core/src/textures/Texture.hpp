@@ -107,7 +107,7 @@ namespace Flounder
 		/// </summary>
 		void CreateImage3D();
 
-		float *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
+		stbi_uc *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 
 		void CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
 

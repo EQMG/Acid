@@ -95,7 +95,7 @@ namespace Flounder
 		const auto commandPool = Renderer::Get()->GetCommandPool();
 	//	const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
 
-		float *pixels = LoadPixels(m_file, &m_width, &m_height, &m_components);
+		stbi_uc *pixels = LoadPixels(m_file, &m_width, &m_height, &m_components);
 
 		/*switch (m_components)
 		{
@@ -177,7 +177,7 @@ namespace Flounder
 	{
 	}
 
-	float *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
+	stbi_uc *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
 	{
 		stbi_uc *data = nullptr;
 
@@ -193,18 +193,7 @@ namespace Flounder
 			printf("Unable to load texture: '%s'.\n", m_file.c_str());
 		}
 
-		const int pixelsSize = (*width) * (*height) * (*components);
-		float *pixels = new float[pixelsSize];
-
-		for (int i = 0; i < pixelsSize; i++)
-		{
-			const float f = static_cast<float>(data[i]) / static_cast<float>(static_cast<unsigned char>(-1));
-			pixels[i] = f;
-		}
-
-		stbi_image_free(data);
-
-		return pixels;
+		return data;
 	}
 
 	void Texture::CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage & image, VkDeviceMemory & imageMemory)
