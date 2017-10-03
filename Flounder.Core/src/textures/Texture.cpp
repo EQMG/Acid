@@ -78,7 +78,7 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetDevice();
 
-		Buffer::Cleanup(logicalDevice);
+		Buffer::Cleanup();
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImage(logicalDevice, m_image, nullptr);
@@ -119,7 +119,7 @@ namespace Flounder
 		const VkDeviceSize bufferSize = m_width * m_height * 4;
 
 		Buffer bufferStaging = Buffer();
-		bufferStaging.Create(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		bufferStaging.Create(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void* data;
 		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferSize, 0, &data);
@@ -165,10 +165,10 @@ namespace Flounder
 			GlfwVulkan::ErrorVk(vkCreateSampler(logicalDevice, &samplerInfo, nullptr, &m_sampler));
 		}
 
-		Buffer::Create(logicalDevice, physicalDevice, surface, bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		Buffer::CopyBuffer(logicalDevice, queue, commandPool, bufferStaging.GetBuffer(), GetBuffer(), bufferSize);
+		Buffer::Create(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		Buffer::CopyBuffer(bufferStaging.GetBuffer(), GetBuffer(), bufferSize);
 
-		bufferStaging.Cleanup(logicalDevice);
+		bufferStaging.Cleanup();
 
 		delete[] pixels;
 	}
@@ -224,7 +224,7 @@ namespace Flounder
 		VkMemoryAllocateInfo allocInfo = {};
 		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		allocInfo.allocationSize = memRequirements.size;
-		allocInfo.memoryTypeIndex = Buffer::FindMemoryType(physicalDevice, memRequirements.memoryTypeBits, properties);;
+		allocInfo.memoryTypeIndex = Buffer::FindMemoryType(memRequirements.memoryTypeBits, properties);;
 
 		GlfwVulkan::ErrorVk(vkAllocateMemory(logicalDevice, &allocInfo, nullptr, &imageMemory));
 

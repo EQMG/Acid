@@ -16,9 +16,9 @@ namespace Flounder
 
 		~DepthStencil();
 
-		void Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties, const VkExtent3D &extent);
+		void Create(const VkExtent3D &extent);
 
-		void Cleanup(const VkDevice &logicalDevice);
+		void Cleanup();
 
 		VkImage GetImage() const { return m_depthStencilImage; }
 

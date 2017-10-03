@@ -1,7 +1,8 @@
 ﻿#include "Buffer.hpp"
 
 #include <cassert>
-#include "../queue/QueueFamily.hpp"
+#include "../../devices/Display.hpp"
+#include "../Renderer.hpp"
 
 namespace Flounder
 {
@@ -15,8 +16,10 @@ namespace Flounder
 	{
 	}
 
-	void Buffer::Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties)
+	void Buffer::Create(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties)
 	{
+		const auto logicalDevice = Display::Get()->GetDevice();
+
 		//	QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(physicalDevice, surface);
 		//	uint32_t indicesArray[] = { static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily) };
 
@@ -37,21 +40,24 @@ namespace Flounder
 		VkMemoryAllocateInfo memoryAllocateInfo = {};
 		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
-		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(physicalDevice, memoryRequirements.memoryTypeBits, properties);
+		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
 		
 		GlfwVulkan::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
 		vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0);
 	}
 
-	void Buffer::Cleanup(const VkDevice &logicalDevice)
+	void Buffer::Cleanup()
 	{
+		const auto logicalDevice = Display::Get()->GetDevice();
 		vkDestroyBuffer(logicalDevice, m_buffer, nullptr);
 		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
 	}
 
-	uint32_t Buffer::FindMemoryType(const VkPhysicalDevice &physicalDevice, const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties)
+	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties)
 	{
+		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
+
 		VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
 		vkGetPhysicalDeviceMemoryProperties(physicalDevice, &physicalDeviceMemoryProperties);
 
@@ -68,13 +74,17 @@ namespace Flounder
 		return 0;
 	}
 
-	void Buffer::CopyBuffer(const VkDevice &logicalDevice, const VkQueue &queue, const VkCommandPool &transferCommandPool, const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
+	void Buffer::CopyBuffer(const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
 	{
+		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto queue = Display::Get()->GetQueue();
+		const auto commandPool = Renderer::Get()->GetCommandPool();
+
 		// Makes a temporary command buffer for the memory transfer operation.
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
 		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		commandBufferAllocateInfo.commandPool = transferCommandPool;
+		commandBufferAllocateInfo.commandPool = commandPool;
 		commandBufferAllocateInfo.commandBufferCount = 1;
 
 		VkCommandBuffer commandBuffer;
@@ -100,6 +110,6 @@ namespace Flounder
 		vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
 		vkQueueWaitIdle(queue);
 
-		vkFreeCommandBuffers(logicalDevice, transferCommandPool, 1, &commandBuffer);
+		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &commandBuffer);
 	}
 }

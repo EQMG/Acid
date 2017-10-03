@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <cassert>
+#include "../../devices/Display.hpp"
 #include "../buffers/Buffer.hpp"
 
 namespace Flounder
@@ -18,8 +19,11 @@ namespace Flounder
 	{
 	}
 
-	void DepthStencil::Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties, const VkExtent3D &extent)
+	void DepthStencil::Create(const VkExtent3D &extent)
 	{
+		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
+
 		std::vector<VkFormat> tryFormats{
 			VK_FORMAT_D32_SFLOAT_S8_UINT,
 			VK_FORMAT_D24_UNORM_S8_UINT,
@@ -75,7 +79,7 @@ namespace Flounder
 		VkMemoryRequirements imageMemoryRequirements = {};
 		vkGetImageMemoryRequirements(logicalDevice, m_depthStencilImage, &imageMemoryRequirements);
 
-		const uint32_t memoryTypeIndex = Buffer::FindMemoryType(physicalDevice, imageMemoryRequirements.memoryTypeBits,
+		const uint32_t memoryTypeIndex = Buffer::FindMemoryType(imageMemoryRequirements.memoryTypeBits,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 		VkMemoryAllocateInfo memoryAllocateInfo = {};
 		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
@@ -105,10 +109,12 @@ namespace Flounder
 		GlfwVulkan::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_depthStencilImageView));
 	}
 
-	void DepthStencil::Cleanup(const VkDevice &device)
+	void DepthStencil::Cleanup()
 	{
-		vkDestroyImageView(device, m_depthStencilImageView, nullptr);
-		vkFreeMemory(device, m_depthStencilImageMemory, nullptr);
-		vkDestroyImage(device, m_depthStencilImage, nullptr);
+		const auto logicalDevice = Display::Get()->GetDevice();
+
+		vkDestroyImageView(logicalDevice, m_depthStencilImageView, nullptr);
+		vkFreeMemory(logicalDevice, m_depthStencilImageMemory, nullptr);
+		vkDestroyImage(logicalDevice, m_depthStencilImage, nullptr);
 	}
 }
