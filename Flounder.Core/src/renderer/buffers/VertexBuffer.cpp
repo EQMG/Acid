@@ -3,12 +3,12 @@
 namespace Flounder
 {
 	VertexBuffer::VertexBuffer() :
-		m_vertices(std::vector<Vertex>())
+		m_vertices(std::vector<BaseVertex>())
 	{
 	}
 
-	VertexBuffer::VertexBuffer(const std::vector<Vertex> &vertices) :
-		m_vertices(std::vector<Vertex>(vertices))
+	VertexBuffer::VertexBuffer(const std::vector<BaseVertex> &vertices) :
+		m_vertices(std::vector<BaseVertex>(vertices))
 	{
 	}
 
@@ -35,7 +35,7 @@ namespace Flounder
 		Buffer::Cleanup(logicalDevice);
 	}
 
-	void VertexBuffer::SetVerticies(std::vector<Vertex> &vertices)
+	void VertexBuffer::SetVerticies(std::vector<BaseVertex> &vertices)
 	{
 		m_vertices.clear();
 		m_vertices.swap(vertices);
