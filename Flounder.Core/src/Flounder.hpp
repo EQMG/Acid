@@ -101,7 +101,7 @@
 #include "physics/Sphere.hpp"
 
 #include "platforms/glfw/GlfwUpdater.hpp"
-#include "platforms/glfw/GlfwVulkan.hpp"
+#include "platforms/glfw/Platform.hpp"
 
 #include "post/filters/FilterBloom1.hpp"
 #include "post/filters/FilterBloom2.hpp"

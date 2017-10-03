@@ -1,13 +1,9 @@
 ﻿#include "Sound.hpp"
 
-#include <al/al.h>
-#include "../devices/Display.hpp"
 #include "../devices/Audio.hpp"
 
 namespace Flounder
 {
-	// TODO: https://github.com/AndySmile/SimpleAudioLibrary
-
 	Sound::Sound(const std::string &name, const std::string &filename) :
 		m_name(name),
 		m_filename(filename),
@@ -27,12 +23,15 @@ namespace Flounder
 		alSourcei(m_source, AL_BUFFER, m_buffer);
 
 		delete[] sourceInfo.data;
+
+		Platform::ErrorAl(alGetError());
 	}
 
 	Sound::~Sound()
 	{
 		alDeleteSources(1, &m_source);
 		alDeleteBuffers(1, &m_buffer);
+		Platform::ErrorAl(alGetError());
 	}
 
 	void Sound::Play()
@@ -40,6 +39,7 @@ namespace Flounder
 		alSourcei(m_source, AL_LOOPING, false);
 		alSourcePlay(m_source);
 		m_playing = true;
+		Platform::ErrorAl(alGetError());
 	}
 
 	void Sound::Loop()
@@ -47,6 +47,7 @@ namespace Flounder
 		alSourcei(m_source, AL_LOOPING, true);
 		alSourcePlay(m_source);
 		m_playing = true;
+		Platform::ErrorAl(alGetError());
 	}
 
 	void Sound::Pause()
@@ -58,6 +59,7 @@ namespace Flounder
 
 		alSourcePause(m_source);
 		m_playing = false;
+		Platform::ErrorAl(alGetError());
 	}
 
 	void Sound::Resume()
@@ -70,6 +72,7 @@ namespace Flounder
 		alSourcei(m_source, AL_LOOPING, false);
 		alSourcePlay(m_source);
 		m_playing = true;
+		Platform::ErrorAl(alGetError());
 	}
 
 	void Sound::Stop()
@@ -81,22 +84,26 @@ namespace Flounder
 
 		alSourceStop(m_source);
 		m_playing = false;
+		Platform::ErrorAl(alGetError());
 	}
 
 	void Sound::SetPosition(const Vector3 &position)
 	{
 		alSource3f(m_source, AL_POSITION, position.m_x, position.m_y, position.m_z);
+		Platform::ErrorAl(alGetError());
 	}
 
 	void Sound::SetDirection(const Vector3 &direction)
 	{
 		float data[3] = { direction.m_x, direction.m_y, direction.m_z };
 		alSourcefv(m_source, AL_DIRECTION, data);
+		Platform::ErrorAl(alGetError());
 	}
 
 	void Sound::SetVelocity(const Vector3 &velocity)
 	{
 		alSource3f(m_source, AL_VELOCITY, velocity.m_x, velocity.m_y, velocity.m_z);
+		Platform::ErrorAl(alGetError());
 	}
 
 	void Sound::SetPitch(const float &pitch)
@@ -109,5 +116,6 @@ namespace Flounder
 	{
 		alSourcef(m_source, AL_GAIN, gain);
 		m_gain = gain;
+		Platform::ErrorAl(alGetError());
 	}
 }

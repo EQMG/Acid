@@ -1,11 +1,11 @@
-#include "GlfwVulkan.hpp"
+#include "Platform.hpp"
 
 #include <string>
 #include <cassert>
 
 namespace Flounder
 {
-	void GlfwVulkan::ErrorVk(const VkResult &result)
+	void Platform::ErrorVk(const VkResult &result)
 	{
 		if (result < 0)
 		{
@@ -76,7 +76,7 @@ namespace Flounder
 		}
 	}
 
-	void GlfwVulkan::ErrorGlfw(const int &result)
+	void Platform::ErrorGlfw(const int &result)
 	{
 		if (result == GLFW_FALSE)
 		{
@@ -84,7 +84,20 @@ namespace Flounder
 		}
 	}
 
-	uint32_t GlfwVulkan::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
+	void Platform::ErrorAl(const ALenum &result)
+	{
+		if (result == AL_NO_ERROR)
+		{
+			return;
+		}
+
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0); // TODO: Specific messages like Vulkan.
+#endif
+		assert(false && "OpenAL runtime error.");
+	}
+
+	uint32_t Platform::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
 	{
 		for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i)
 		{

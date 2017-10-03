@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../camera/ICamera.hpp"
-#include "../platforms/glfw/GlfwVulkan.hpp"
+#include "../platforms/glfw/Platform.hpp"
 
 namespace Flounder
 {

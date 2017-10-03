@@ -16,7 +16,7 @@ namespace Flounder
 
 	void VertexBuffer::Create(const uint64_t &elementSize, const size_t &vertexCount, void *newData)
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		// Calculates the buffers size.
 		m_vertexCount = static_cast<uint32_t>(vertexCount);

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../../platforms/glfw/GlfwVulkan.hpp"
+#include "../../platforms/glfw/Platform.hpp"
 
 namespace Flounder
 {
@@ -24,13 +24,13 @@ namespace Flounder
 
 		~Swapchain();
 
-		void Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkSurfaceCapabilitiesKHR &surfaceCapabilities, const VkSurfaceFormatKHR &surfaceFormat, const VkExtent2D &extent);
+		void Create(const VkExtent2D &extent);
 
-		void CreateFrameBuffers(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent);
+		void CreateFrameBuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent);
 
-		void Cleanup(const VkDevice &logicalDevice);
+		void Cleanup();
 
-		void CleanupFrameBuffers(const VkDevice &device);
+		void CleanupFrameBuffers();
 
 		VkSwapchainKHR *GetSwapchain() { return &m_swapchain; }
 
