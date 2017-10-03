@@ -158,7 +158,7 @@ namespace Flounder
 			Vertex vertex = {};
 			vertex.position = Vector3(position);
 			vertex.textures = Vector2(textureCoord);
-		//	vertex.textures.m_y = 1.0f - vertex.textures.m_y;
+			vertex.textures.m_y = 1.0f - vertex.textures.m_y;
 			vertex.normal = Vector3(normal);
 			vertex.tangent = Vector3(tangent);
 
