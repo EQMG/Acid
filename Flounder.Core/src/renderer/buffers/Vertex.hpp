@@ -4,7 +4,7 @@
 
 #include "../../platforms/glfw/GlfwVulkan.hpp"
 
-#include "../../maths/Colour.hpp"
+#include "../../maths/Vector2.hpp"
 #include "../../maths/Vector3.hpp"
 
 namespace Flounder
@@ -12,11 +12,12 @@ namespace Flounder
 	struct Vertex
 	{
 		Vector3 position;
-		Colour colour;
+		Vector2 textures;
 		Vector3 normal;
+		Vector3 tangent;
 
 		static VkVertexInputBindingDescription GetBindingDescription();
 
-		static std::array<VkVertexInputAttributeDescription, 3> GetAttributeDescriptions();
+		static std::array<VkVertexInputAttributeDescription, 4> GetAttributeDescriptions();
 	};
 }

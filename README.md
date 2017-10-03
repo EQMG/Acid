@@ -37,7 +37,7 @@ Plans:
  
 Preprocessor Definitions:
  * _CRT_SECURE_NO_WARNINGS: Used to ignore 'unsafe' function calls.
- * FLOUNDER_PLATFORM_x: Where x is the platform [WINDOWS, LINUX, MACOS, ANDROID, ...].
+ * FLOUNDER_PLATFORM_x: Where x is the platform [WINDOWS, LINUX, MACOS, ...].
  * FLOUNDER_VERBOSE: Enables verbose logging.
  * FLOUNDER_CONFIG_DEBUG or FLOUNDER_CONFIG_RELEASE: Compiling in release or debug mode.
 

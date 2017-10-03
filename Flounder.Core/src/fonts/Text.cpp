@@ -1,5 +1,6 @@
 ﻿#include "Text.hpp"
 
+#include "../engine/Engine.hpp"
 #include "../visual/DriverConstant.hpp"
 
 namespace Flounder
@@ -75,10 +76,10 @@ namespace Flounder
 		CreateQuadVertices(object, lines, vertices, textures);
 		Vector2 meshSize = GetBounding(vertices);
 
-		// Load mesh data to OpenGL.
-		Model *loaded = new Model(std::vector<int>(), vertices, textures);
-		object->SetModel(loaded);
-		object->SetMeshSize(meshSize);
+		// Load mesh data to OpenGL. TODO
+	//	Model *loaded = new Model(std::vector<int>(), vertices, textures);
+	//	object->SetModel(loaded);
+	//	object->SetMeshSize(meshSize);
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)

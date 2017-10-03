@@ -6,6 +6,7 @@
 #include "../maths/Matrix4.hpp"
 #include "../physics/Aabb.hpp"
 #include "../models/Model.hpp"
+#include "../maths/Colour.hpp"
 
 namespace Flounder
 {

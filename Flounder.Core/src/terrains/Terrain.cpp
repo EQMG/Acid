@@ -98,7 +98,7 @@ namespace Flounder
 			}
 		}
 
-		m_model = new Model(indices, vertices, textures, normals, colours);
+	//	m_model = new Model(indices, vertices, textures, normals, colours);
 
 		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
 		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;

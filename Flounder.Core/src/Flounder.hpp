@@ -77,7 +77,6 @@
 #include "maths/Vector3.hpp"
 #include "maths/Vector4.hpp"
 
-#include "models/Material.hpp"
 #include "models/Model.hpp"
 #include "models/VertexData.hpp"
 

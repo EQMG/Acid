@@ -219,7 +219,6 @@
     <ClInclude Include="src\maths\Vector2.hpp" />
     <ClInclude Include="src\maths\Vector3.hpp" />
     <ClInclude Include="src\maths\Vector4.hpp" />
-    <ClInclude Include="src\models\Material.hpp" />
     <ClInclude Include="src\models\Model.hpp" />
     <ClInclude Include="src\models\VertexData.hpp" />
     <ClInclude Include="src\noise\NoiseFast.hpp" />
