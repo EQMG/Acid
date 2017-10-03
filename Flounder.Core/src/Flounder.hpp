@@ -141,7 +141,6 @@
 #include "renderer/buffers/Buffer.hpp"
 #include "renderer/buffers/IndexBuffer.hpp"
 #include "renderer/buffers/UniformBuffer.hpp"
-#include "renderer/buffers/Vertex.hpp"
 #include "renderer/buffers/VertexBuffer.hpp"
 #include "renderer/IManagerRender.hpp"
 #include "renderer/IRenderer.hpp"

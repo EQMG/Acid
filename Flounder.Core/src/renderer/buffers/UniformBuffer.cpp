@@ -2,17 +2,12 @@
 
 #include <array>
 #include <vector>
+#include "../../devices/Display.hpp"
 
 namespace Flounder
 {
-	UniformBuffer::UniformBuffer() :
-		m_size(0),
-		m_binding(0),
-		m_descriptorSetLayout(VK_NULL_HANDLE)
-	{
-	}
-
 	UniformBuffer::UniformBuffer(const VkDeviceSize &size, const uint32_t &binding, const VkShaderStageFlags &stage) :
+		Buffer(),
 		m_size(size),
 		m_binding(binding),
 		m_stage(stage),
@@ -24,9 +19,11 @@ namespace Flounder
 	{
 	}
 
-	void UniformBuffer::Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface)
+	void UniformBuffer::Create()
 	{
-		Buffer::Create(logicalDevice, physicalDevice, surface, m_size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+		const auto logicalDevice = Display::Get()->GetDevice();
+
+		Buffer::Create(m_size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 		descriptorSetLayoutBinding.binding = m_binding;
@@ -51,14 +48,18 @@ namespace Flounder
 		GlfwVulkan::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
-	void UniformBuffer::Cleanup(const VkDevice &logicalDevice)
+	void UniformBuffer::Cleanup()
 	{
+		const auto logicalDevice = Display::Get()->GetDevice();
+
 		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
-		Buffer::Cleanup(logicalDevice);
+		Buffer::Cleanup();
 	}
 
-	void UniformBuffer::Update(const VkDevice &logicalDevice, void *newData)
+	void UniformBuffer::Update(void *newData)
 	{
+		const auto logicalDevice = Display::Get()->GetDevice();
+
 		void *data;
 		vkMapMemory(logicalDevice, m_bufferMemory, 0, m_size, 0, &data);
 		memcpy(data, newData, m_size);

@@ -18,11 +18,7 @@ namespace Flounder
 		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader, { &m_uniformBuffer }))
 	{
 		const auto logicalDevice = Display::Get()->GetDevice();
-		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
-		const auto surface = Display::Get()->GetSurface();
-		const auto queue = Display::Get()->GetQueue();
 		const auto renderPass = Renderer::Get()->GetRenderPass();
-		const auto commandPool = Renderer::Get()->GetCommandPool();
 
 		auto bindingDescription = Vertex::GetBindingDescription();
 		auto attributeDescriptions = Vertex::GetAttributeDescriptions();
@@ -32,10 +28,10 @@ namespace Flounder
 		vertexInputState.attributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 		vertexInputState.pVertexAttributeDescriptions = attributeDescriptions.data();
 
-		m_uniformBuffer.Create(logicalDevice, physicalDevice, surface);
+		m_uniformBuffer.Create();
 		m_model.Create();
 
-		m_shader.Create(logicalDevice);
+		m_shader.Create();
 		m_pipeline.Create(logicalDevice, renderPass, vertexInputState);
 	}
 
@@ -43,23 +39,21 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetDevice();
 
-		m_shader.Cleanup(logicalDevice);
+		m_shader.Cleanup();
 		m_pipeline.Cleanup(logicalDevice);
 
 		m_model.Cleanup();
-		m_uniformBuffer.Cleanup(logicalDevice);
+		m_uniformBuffer.Cleanup();
 	}
 
 	void RendererTest::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
-
 		UBO ubo = {};
 		ubo.projection = *camera.GetProjectionMatrix();
 		ubo.view = *camera.GetViewMatrix();
 		ubo.model = Matrix4();
 		Matrix4::TransformationMatrix(Vector3(0.0f, -2.3f, 3.0f), Vector3(), 1.0f, &ubo.model);
-		m_uniformBuffer.Update(logicalDevice, &ubo);
+		m_uniformBuffer.Update(&ubo);
 
 		VkBuffer vertexBuffers[] = { m_model.GetVertexBuffer().GetBuffer() };
 		VkDeviceSize offsets[] = { 0 };
@@ -67,7 +61,7 @@ namespace Flounder
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipeline());
 		vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 		vkCmdBindVertexBuffers(*commandBuffer, 0, 1, vertexBuffers, offsets);
-		vkCmdBindIndexBuffer(*commandBuffer, m_model.GetIndexBuffer().GetBuffer(), 0, VK_INDEX_TYPE_UINT16);
-		vkCmdDrawIndexed(*commandBuffer, m_model.GetIndexBuffer().GetIndicesSize(), 1, 0, 0, 0);
+		vkCmdBindIndexBuffer(*commandBuffer, m_model.GetIndexBuffer().GetBuffer(), 0, m_model.GetIndexBuffer().GetIndexType());
+		vkCmdDrawIndexed(*commandBuffer, m_model.GetIndexBuffer().GetIndexCount(), 1, 0, 0, 0);
 	}
 }

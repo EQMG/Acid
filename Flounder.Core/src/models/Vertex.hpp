@@ -1,17 +1,15 @@
 #pragma once
 
-#include <array>
+#include <vector>
 
 #include "../platforms/glfw/GlfwVulkan.hpp"
 
 #include "../maths/Vector2.hpp"
 #include "../maths/Vector3.hpp"
-#include "../renderer/buffers/BaseVertex.hpp"
 
 namespace Flounder
 {
-	class Vertex :
-		public BaseVertex
+	struct Vertex 
 	{
 	public:
 		Vector3 position;
@@ -23,8 +21,8 @@ namespace Flounder
 
 		~Vertex();
 
-		VkVertexInputBindingDescription GetBindingDescription() override;
+		static VkVertexInputBindingDescription GetBindingDescription();
 
-		std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions() override;
+		static std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions();
 	};
 }

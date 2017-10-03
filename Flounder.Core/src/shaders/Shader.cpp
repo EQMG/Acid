@@ -1,6 +1,7 @@
 #include "Shader.hpp"
 
 #include <map>
+#include "../devices/Display.hpp"
 #include "../helpers/HelperFile.hpp"
 
 namespace Flounder
@@ -17,8 +18,10 @@ namespace Flounder
 	{
 	}
 
-	void Shader::Create(const VkDevice &logicalDevice)
+	void Shader::Create()
 	{
+		const auto logicalDevice = Display::Get()->GetDevice();
+
 		for (auto type : *m_types)
 		{
 			std::vector<char> shaderCode = HelperFile::ReadBinaryFile(type.GetFilePath());
@@ -42,8 +45,10 @@ namespace Flounder
 		}
 	}
 
-	void Shader::Cleanup(const VkDevice &logicalDevice)
+	void Shader::Cleanup()
 	{
+		const auto logicalDevice = Display::Get()->GetDevice();
+
 		for (auto shaderModule : *m_modules)
 		{
 			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);

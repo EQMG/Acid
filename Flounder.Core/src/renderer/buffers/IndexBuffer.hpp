@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <vector>
-
 #include "Buffer.hpp"
 
 namespace Flounder
@@ -10,22 +8,19 @@ namespace Flounder
 		public Buffer
 	{
 	private:
-		std::vector<uint16_t> m_indices;
+		VkIndexType m_indexType;
+		uint32_t m_indexCount;
 	public:
 		IndexBuffer();
 
-		IndexBuffer(const std::vector<uint16_t> &vertices);
-
 		~IndexBuffer();
 
-		void Create(const VkDevice &logicalDevice, const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface, const VkQueue &queue, const VkCommandPool &transferCommandPool);
+		void Create(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, void *newData);
 
-		void Cleanup(const VkDevice &logicalDevice);
+		void Cleanup();
 
-		uint32_t GetIndicesSize() const { return static_cast<uint32_t>(m_indices.size()); }
+		VkIndexType GetIndexType() const { return m_indexType; }
 
-		void SetIndices(std::vector<uint16_t> indices);
-	private:
-		void CopyVerticesToBuffer(const VkDevice &logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const;
+		uint32_t GetIndexCount() const { return m_indexCount; }
 	};
 }
