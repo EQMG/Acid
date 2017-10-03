@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "Buffer.hpp"
-#include "Vertex.hpp"
+#include "BaseVertex.hpp"
 
 namespace Flounder
 {
@@ -11,11 +11,11 @@ namespace Flounder
 		public Buffer
 	{
 	private:
-		std::vector<Vertex> m_vertices;
+		std::vector<BaseVertex> m_vertices;
 	public:
 		VertexBuffer();
 
-		VertexBuffer(const std::vector<Vertex> &vertices);
+		VertexBuffer(const std::vector<BaseVertex> &vertices);
 
 		~VertexBuffer();
 
@@ -25,7 +25,7 @@ namespace Flounder
 
 		uint32_t GetVerticesSize() const { return static_cast<uint32_t>(m_vertices.size()); }
 
-		void SetVerticies(std::vector<Vertex> &vertices);
+		void SetVerticies(std::vector<BaseVertex> &vertices);
 	private:
 		void CopyVerticesToBuffer(const VkDevice &logicalDevice, const VkDeviceSize &bufferSize, Buffer &bufferStaging) const;
 	};

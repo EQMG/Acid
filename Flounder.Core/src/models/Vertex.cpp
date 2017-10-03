@@ -2,6 +2,15 @@
 
 namespace Flounder
 {
+	Vertex::Vertex() :
+		BaseVertex()
+	{
+	}
+
+	Vertex::~Vertex()
+	{
+	}
+
 	VkVertexInputBindingDescription Vertex::GetBindingDescription()
 	{
 		VkVertexInputBindingDescription bindingDescription = {};
@@ -12,9 +21,9 @@ namespace Flounder
 		return bindingDescription;
 	}
 
-	std::array<VkVertexInputAttributeDescription, 4> Vertex::GetAttributeDescriptions()
+	std::vector<VkVertexInputAttributeDescription> Vertex::GetAttributeDescriptions()
 	{
-		std::array<VkVertexInputAttributeDescription, 4> attributeDescriptions = {};
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(4);
 
 		// Position attributes.
 		attributeDescriptions[0].binding = 0;
