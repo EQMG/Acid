@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "../platforms/glfw/GlfwVulkan.hpp"
+#include "../platforms/glfw/Platform.hpp"
 
 #include "../renderer/buffers/Buffer.hpp"
 

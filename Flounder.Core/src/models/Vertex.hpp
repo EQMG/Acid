@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../platforms/glfw/GlfwVulkan.hpp"
+#include "../platforms/glfw/Platform.hpp"
 
 #include "../maths/Vector2.hpp"
 #include "../maths/Vector3.hpp"

@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../../platforms/glfw/GlfwVulkan.hpp"
+#include "../../platforms/glfw/Platform.hpp"
 
 namespace Flounder
 {
@@ -31,8 +31,7 @@ namespace Flounder
 		/// <summary>
 		/// Finds a queue families of a physical device.
 		/// </summary>
-		/// <param name="physicalDevice"> The physical device. </param>
 		/// <param name="surface"> The surface. </param>
-		static QueueFamilyIndices FindQueueFamilies(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface);
+		static QueueFamilyIndices FindQueueFamilies(const VkSurfaceKHR &surface);
 	};
 }

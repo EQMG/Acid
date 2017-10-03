@@ -79,7 +79,7 @@
     <ClCompile Include="src\physics\Ray.cpp" />
     <ClCompile Include="src\physics\Sphere.cpp" />
     <ClCompile Include="src\platforms\glfw\GlfwUpdater.cpp" />
-    <ClCompile Include="src\platforms\glfw\GlfwVulkan.cpp" />
+    <ClCompile Include="src\platforms\glfw\Platform.cpp" />
     <ClCompile Include="src\post\filters\FilterBloom1.cpp" />
     <ClCompile Include="src\post\filters\FilterBloom2.cpp" />
     <ClCompile Include="src\post\filters\FilterBlurHorizontal.cpp" />
@@ -239,7 +239,7 @@
     <ClInclude Include="src\physics\Ray.hpp" />
     <ClInclude Include="src\physics\Sphere.hpp" />
     <ClInclude Include="src\platforms\glfw\GlfwUpdater.hpp" />
-    <ClInclude Include="src\platforms\glfw\GlfwVulkan.hpp" />
+    <ClInclude Include="src\platforms\glfw\Platform.hpp" />
     <ClInclude Include="src\post\filters\FilterBloom1.hpp" />
     <ClInclude Include="src\post\filters\FilterBloom2.hpp" />
     <ClInclude Include="src\post\filters\FilterBlurHorizontal.hpp" />

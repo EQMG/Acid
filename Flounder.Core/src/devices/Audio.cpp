@@ -1,7 +1,6 @@
 #include "Audio.hpp"
 
 #include <fstream>
-#include <al/al.h>
 #include "../camera/Camera.hpp"
 
 namespace Flounder
@@ -47,8 +46,10 @@ namespace Flounder
 			Matrix4::Transform(inverseCamera, at, &at);
 			Vector4 up = Vector4(0.0f, 1.0f, 0.0f, 0.0f);
 			Matrix4::Transform(inverseCamera, up, &up);
-			float orientation[6] = { at.m_x, at.m_y, at.m_z, up.m_x, up.m_y, up.m_z };
+			float orientation[6] = { at.m_x, at.m_y, at.m_z, 0.0f, 0.0f, 1.0f }; // up.m_x, up.m_y, up.m_z
 			alListenerfv(AL_ORIENTATION, orientation);
+
+			Platform::ErrorAl(alGetError());
 		}
 	}
 

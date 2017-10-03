@@ -1,11 +1,14 @@
 ﻿#include "QueueFamily.hpp"
 
 #include <vector>
+#include "../../devices/Display.hpp"
 
 namespace Flounder
 {
-	QueueFamilyIndices QueueFamily::FindQueueFamilies(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface)
+	QueueFamilyIndices QueueFamily::FindQueueFamilies(const VkSurfaceKHR &surface)
 	{
+		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
+
 		QueueFamilyIndices indices;
 		uint32_t queueFamilyCount = 0;
 		vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, nullptr);

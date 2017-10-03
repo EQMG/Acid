@@ -53,7 +53,7 @@ namespace Flounder
 			Display::Get()->m_windowHeight = height;
 		}
 
-		GlfwVulkan::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
+		Platform::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
 	}
 
 	void CallbackFrame(GLFWwindow *window, int width, int height)
@@ -119,7 +119,7 @@ namespace Flounder
 		m_surface(VK_NULL_HANDLE),
 		m_surfaceCapabilities({}),
 		m_surfaceFormat({}),
-		m_device(VK_NULL_HANDLE),
+		m_logicalDevice(VK_NULL_HANDLE),
 		m_queue(VK_NULL_HANDLE),
 
 		m_physicalDevice(VK_NULL_HANDLE),
@@ -135,10 +135,10 @@ namespace Flounder
 	Display::~Display()
 	{
 		// Waits for the device to finish before destroying.
-		vkDeviceWaitIdle(m_device);
+		vkDeviceWaitIdle(m_logicalDevice);
 
 		// Destroys Vulkan.
-		vkDestroyDevice(m_device, nullptr);
+		vkDestroyDevice(m_logicalDevice, nullptr);
 		FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReport, nullptr);
 		vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
 		vkDestroyInstance(m_instance, nullptr);
@@ -244,10 +244,10 @@ namespace Flounder
 		glfwSetErrorCallback(CallbackError);
 
 		// Initialize the GLFW library.
-		GlfwVulkan::ErrorGlfw(glfwInit());
+		Platform::ErrorGlfw(glfwInit());
 
 		// Checks Vulkan support on GLFW.
-		GlfwVulkan::ErrorGlfw(glfwVulkanSupported());
+		Platform::ErrorGlfw(glfwVulkanSupported());
 
 		// Configures the window.
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
@@ -379,7 +379,7 @@ namespace Flounder
 		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
-		GlfwVulkan::ErrorVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
+		Platform::ErrorVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 	}
 
 	void Display::CreateDebugCallback()
@@ -391,7 +391,7 @@ namespace Flounder
 			debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT;
 			debugCallBackCreateInfo.pfnCallback = VkCallbackDebug;
 
-			GlfwVulkan::ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
+			Platform::ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
 		}
 	}
 
@@ -556,17 +556,17 @@ namespace Flounder
 		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size());
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 
-		GlfwVulkan::ErrorVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_device));
+		Platform::ErrorVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
 		
-		vkGetDeviceQueue(m_device, m_graphicsFamilyIndex, 0, &m_queue);
+		vkGetDeviceQueue(m_logicalDevice, m_graphicsFamilyIndex, 0, &m_queue);
 	}
 
 	void Display::CreateSurface()
 	{
 		// Creates the Vulkan-GLFW surface.
-		GlfwVulkan::ErrorVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
+		Platform::ErrorVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
 
-		GlfwVulkan::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
+		Platform::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
 
 		VkBool32 physicalDeviceSurfaceSupport = false;
 		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_graphicsFamilyIndex, m_surface, &physicalDeviceSurfaceSupport);

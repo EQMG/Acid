@@ -1,6 +1,8 @@
 ﻿#include "Pipeline.hpp"
 
 #include <cassert>
+#include "../../devices/Display.hpp"
+#include "../Renderer.hpp"
 
 namespace Flounder
 {
@@ -35,28 +37,28 @@ namespace Flounder
 	{
 	}
 
-	void Pipeline::Create(const VkDevice &logicalDevice, const VkRenderPass &renderPass, const VertexInputState &vertexInputState)
+	void Pipeline::Create(const VertexInputState &vertexInputState)
 	{
 		m_vertexInputState = vertexInputState;
 		m_texture.Create();
 		CreateAttributes();
-		CreateDescriptorPool(logicalDevice);
-		CreateDescriptorSet(logicalDevice);
-		CreatePipelineLayout(logicalDevice);
+		CreateDescriptorPool();
+		CreateDescriptorSet();
+		CreatePipelineLayout();
 
 		switch (m_pipelineType)
 		{
 		case PipelinePolygon:
-			CreatePolygonPipeline(logicalDevice, renderPass);
+			CreatePolygonPipeline();
 			break;
 		case PipelineNoDepthTest:
-			CreateNoDepthTestPipeline(logicalDevice, renderPass);
+			CreateNoDepthTestPipeline();
 			break;
 		case PipelineMrt:
-			CreateMrtPipeline(logicalDevice, renderPass);
+			CreateMrtPipeline();
 			break;
 		case PipelineMultiTexture:
-			CreateMultiTexturePipeline(logicalDevice, renderPass);
+			CreateMultiTexturePipeline();
 			break;
 		default:
 			assert(false);
@@ -64,8 +66,10 @@ namespace Flounder
 		}
 	}
 
-	void Pipeline::Cleanup(const VkDevice &logicalDevice)
+	void Pipeline::Cleanup()
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
 		m_texture.Cleanup();
 
 		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
@@ -152,8 +156,10 @@ namespace Flounder
 		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(DYNAMIC_STATES.size());
 	}
 
-	void Pipeline::CreateDescriptorPool(const VkDevice &logicalDevice)
+	void Pipeline::CreateDescriptorPool()
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
 		std::array<VkDescriptorPoolSize, 2> descriptorPoolSizes = {};
 		descriptorPoolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 		descriptorPoolSizes[0].descriptorCount = 1;
@@ -166,11 +172,13 @@ namespace Flounder
 		descriptorPoolCreateInfo.pPoolSizes = descriptorPoolSizes.data();
 		descriptorPoolCreateInfo.maxSets = 50;
 
-		GlfwVulkan::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
+		Platform::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
-	void Pipeline::CreateDescriptorSet(const VkDevice & logicalDevice)
+	void Pipeline::CreateDescriptorSet()
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
 		std::vector<VkDescriptorSetLayout> descriptorSetLayouts = std::vector<VkDescriptorSetLayout>();
 
 		for (auto uniformBuffer : m_uniformBuffers)
@@ -185,7 +193,7 @@ namespace Flounder
 		descriptorSetAllocateInfo.descriptorSetCount = static_cast<uint32_t>(descriptorSetLayouts.size());
 		descriptorSetAllocateInfo.pSetLayouts = descriptorSetLayouts.data();
 
-		GlfwVulkan::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
+		Platform::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
 
 
 
@@ -231,8 +239,10 @@ namespace Flounder
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}
 
-	void Pipeline::CreatePipelineLayout(const VkDevice &logicalDevice)
+	void Pipeline::CreatePipelineLayout()
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
 		// Gets all UBO descriptor sets.
 		std::vector<VkDescriptorSetLayout> descriptorSetLayouts = std::vector<VkDescriptorSetLayout>();
 
@@ -248,11 +258,14 @@ namespace Flounder
 		pipelineLayoutCreateInfo.pSetLayouts = descriptorSetLayouts.data();
 
 		// Creates the graphics pipeline layout.
-		GlfwVulkan::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
+		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
-	void Pipeline::CreatePolygonPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass)
+	void Pipeline::CreatePolygonPipeline()
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto renderPass = Renderer::Get()->GetRenderPass();
+
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputStateCreateInfo.vertexBindingDescriptionCount = m_vertexInputState.bindingDescriptionCount;
@@ -281,18 +294,18 @@ namespace Flounder
 		pipelineCreateInfo.pStages = m_shader->GetStages()->data();
 
 		// Create the graphics pipeline.
-		GlfwVulkan::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
-	void Pipeline::CreateNoDepthTestPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass)
+	void Pipeline::CreateNoDepthTestPipeline()
 	{
 	}
 
-	void Pipeline::CreateMrtPipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass)
+	void Pipeline::CreateMrtPipeline()
 	{
 	}
 
-	void Pipeline::CreateMultiTexturePipeline(const VkDevice &logicalDevice, const VkRenderPass &renderPass)
+	void Pipeline::CreateMultiTexturePipeline()
 	{
 	}
 }

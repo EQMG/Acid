@@ -17,9 +17,6 @@ namespace Flounder
 		})),
 		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader, { &m_uniformBuffer }))
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
-		const auto renderPass = Renderer::Get()->GetRenderPass();
-
 		auto bindingDescription = Vertex::GetBindingDescription();
 		auto attributeDescriptions = Vertex::GetAttributeDescriptions();
 		VertexInputState vertexInputState = {};
@@ -32,15 +29,13 @@ namespace Flounder
 		m_model.Create();
 
 		m_shader.Create();
-		m_pipeline.Create(logicalDevice, renderPass, vertexInputState);
+		m_pipeline.Create(vertexInputState);
 	}
 
 	RendererTest::~RendererTest()
 	{
-		const auto logicalDevice = Display::Get()->GetDevice();
-
 		m_shader.Cleanup();
-		m_pipeline.Cleanup(logicalDevice);
+		m_pipeline.Cleanup();
 
 		m_model.Cleanup();
 		m_uniformBuffer.Cleanup();

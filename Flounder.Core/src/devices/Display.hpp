@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../engine/Engine.hpp"
-#include "../platforms/glfw/GlfwVulkan.hpp"
+#include "../platforms/glfw/Platform.hpp"
 
 #define VK_STANDARD_VALIDATION_LAYER_NAME "VK_LAYER_LUNARG_standard_validation"
 
@@ -49,7 +49,7 @@ namespace Flounder
 		VkSurfaceKHR m_surface;
 		VkSurfaceCapabilitiesKHR m_surfaceCapabilities;
 		VkSurfaceFormatKHR m_surfaceFormat;
-		VkDevice m_device;
+		VkDevice m_logicalDevice;
 		VkQueue m_queue;
 
 		VkPhysicalDevice m_physicalDevice;
@@ -237,7 +237,7 @@ namespace Flounder
 
 		VkSurfaceFormatKHR GetSurfaceFormat() const { return m_surfaceFormat; }
 
-		VkDevice GetDevice() const { return m_device; }
+		VkDevice GetLogicalDevice() const { return m_logicalDevice; }
 
 		VkQueue GetQueue() const { return m_queue; }
 
