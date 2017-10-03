@@ -9,6 +9,7 @@
 #include "../renderer/buffers/VertexBuffer.hpp"
 #include "../renderer/buffers/IndexBuffer.hpp"
 
+#include "Vertex.hpp"
 #include "VertexData.hpp"
 
 namespace Flounder

@@ -15,7 +15,7 @@
     <ClCompile Include="src\helpers\HelperArray.cpp" />
     <ClCompile Include="src\helpers\HelperFile.cpp" />
     <ClCompile Include="src\helpers\HelperString.cpp" />
-    <ClCompile Include="src\renderer\buffers\Vertex.cpp" />
+    <ClCompile Include="src\models\Vertex.cpp" />
     <ClCompile Include="src\renderer\buffers\UniformBuffer.cpp" />
     <ClCompile Include="src\renderer\stencils\DepthStencil.cpp" />
     <ClCompile Include="src\camera\Camera.cpp" />
@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="src\fbos\DepthBuffer.hpp" />
     <ClInclude Include="src\fbos\Fbo.hpp" />
+    <ClInclude Include="src\renderer\buffers\BaseVertex.hpp" />
     <ClInclude Include="src\renderer\buffers\UniformBuffer.hpp" />
     <ClInclude Include="src\renderer\stencils\DepthStencil.hpp" />
     <ClInclude Include="src\camera\Camera.hpp" />
@@ -275,7 +276,7 @@
     <ClInclude Include="src\processing\resource\RequestResource.hpp" />
     <ClInclude Include="src\renderer\buffers\Buffer.hpp" />
     <ClInclude Include="src\renderer\buffers\IndexBuffer.hpp" />
-    <ClInclude Include="src\renderer\buffers\Vertex.hpp" />
+    <ClInclude Include="src\models\Vertex.hpp" />
     <ClInclude Include="src\renderer\buffers\VertexBuffer.hpp" />
     <ClInclude Include="src\renderer\IManagerRender.hpp" />
     <ClInclude Include="src\renderer\IRenderer.hpp" />
