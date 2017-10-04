@@ -11,8 +11,6 @@ namespace Flounder
 		VkDeviceSize m_size;
 		uint32_t m_binding;
 		VkShaderStageFlags m_stage;
-
-		VkDescriptorSetLayout m_descriptorSetLayout;
 	public:
 		UniformBuffer(const VkDeviceSize &size, const uint32_t &binding, const VkShaderStageFlags &stage);
 
@@ -29,7 +27,5 @@ namespace Flounder
 		uint32_t GetBinding() const { return m_binding; }
 
 		VkShaderStageFlags GetStage() const { return m_stage; }
-
-		VkDescriptorSetLayout GetDescriptorSetLayout() const { return m_descriptorSetLayout; }
 	};
 }
