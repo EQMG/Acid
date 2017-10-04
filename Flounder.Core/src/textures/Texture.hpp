@@ -4,9 +4,7 @@
 #include <vector>
 
 #include "../platforms/glfw/Platform.hpp"
-
 #include "../renderer/buffers/Buffer.hpp"
-#include "../renderer/pipelines/Descriptor.hpp"
 
 namespace Flounder
 {
@@ -14,8 +12,7 @@ namespace Flounder
 	/// Class that represents a loaded texture.
 	/// </summary>
 	class Texture :
-		public Buffer,
-		public Descriptor
+		public Buffer
 	{
 	private:
 		std::string m_file;
@@ -64,11 +61,11 @@ namespace Flounder
 
 		void Cleanup();
 
-		VkDescriptorSetLayoutBinding GetDescriptorLayout(const uint32_t &binding) override;
+		VkDescriptorSetLayoutBinding GetDescriptorLayout(const uint32_t &binding);
 
-		VkDescriptorPoolSize GetDescriptorPool(const uint32_t &binding) override;
+		VkDescriptorPoolSize GetDescriptorPool(const uint32_t &binding);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) override;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet);
 
 		/// <summary>
 		/// Gets if the texture has alpha.
