@@ -7,15 +7,15 @@ namespace Flounder
 {
 	RendererTest::RendererTest() :
 		IRenderer(),
-		m_uniformBuffer(UniformBuffer(sizeof(UBO), 0, VK_SHADER_STAGE_VERTEX_BIT)),
-		m_model("res/treeBirchSmall/model.obj"),
-		m_texture("res/treeBirchSmall/diffuse.png"),
+		m_uniformBuffer(UniformBuffer(sizeof(UBO), VK_SHADER_STAGE_VERTEX_BIT)),
+		m_model(Model("res/treeBirchSmall/model.obj")),
+		m_texture(Texture("res/treeBirchSmall/diffuse.png")),
 
 		m_shader(Shader("tests", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		})),
-		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader, { &m_uniformBuffer }))
+		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader, { &m_uniformBuffer, &m_texture }))
 	{
 		auto bindingDescription = Vertex::GetBindingDescription();
 		auto attributeDescriptions = Vertex::GetAttributeDescriptions();
@@ -27,6 +27,7 @@ namespace Flounder
 
 		m_uniformBuffer.Create();
 		m_model.Create();
+		m_texture.Create();
 
 		m_shader.Create();
 		m_pipeline.Create(vertexInputState);
@@ -37,6 +38,7 @@ namespace Flounder
 		m_shader.Cleanup();
 		m_pipeline.Cleanup();
 
+		m_texture.Cleanup();
 		m_model.Cleanup();
 		m_uniformBuffer.Cleanup();
 	}

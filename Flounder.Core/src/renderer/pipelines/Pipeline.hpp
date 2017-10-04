@@ -5,8 +5,8 @@
 
 #include "../../platforms/glfw/Platform.hpp"
 #include "../../shaders/Shader.hpp"
-#include "../buffers/UniformBuffer.hpp"
-#include "../../textures/Texture.hpp"
+
+#include "Descriptor.hpp"
 
 namespace Flounder
 {
@@ -34,14 +34,13 @@ namespace Flounder
 	private:
 		static const std::vector<VkDynamicState> DYNAMIC_STATES;
 
-		Texture m_texture;
-
 		std::string m_name;
 		PipelineType m_pipelineType;
 		VertexInputState m_vertexInputState;
 
 		Shader *m_shader;
-		std::vector<UniformBuffer*> m_uniformBuffers;
+
+		std::vector<Descriptor*> m_descriptors;
 		VkDescriptorSetLayout m_descriptorSetLayout;
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
@@ -62,7 +61,7 @@ namespace Flounder
 		/// Creates a new pipeline.
 		/// </summary>
 		/// <param name="name"> The pipelines name. </param>
-		Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const std::vector<UniformBuffer*> &uniformBuffers);
+		Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const std::vector<Descriptor*> &descriptors);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.

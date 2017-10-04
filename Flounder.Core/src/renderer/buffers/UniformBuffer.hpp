@@ -2,17 +2,19 @@
 
 #include "Buffer.hpp"
 
+#include "../pipelines/Descriptor.hpp"
+
 namespace Flounder
 {
 	class UniformBuffer :
-		public Buffer
+		public Buffer, 
+		public Descriptor
 	{
 	private:
 		VkDeviceSize m_size;
-		uint32_t m_binding;
 		VkShaderStageFlags m_stage;
 	public:
-		UniformBuffer(const VkDeviceSize &size, const uint32_t &binding, const VkShaderStageFlags &stage);
+		UniformBuffer(const VkDeviceSize &size, const VkShaderStageFlags &stage);
 
 		~UniformBuffer();
 
@@ -22,9 +24,13 @@ namespace Flounder
 
 		void Update(void *newData);
 
-		VkDeviceSize GetSize() const { return m_size; }
+		VkDescriptorSetLayoutBinding GetDescriptorLayout(const uint32_t &binding) override;
 
-		uint32_t GetBinding() const { return m_binding; }
+		VkDescriptorPoolSize GetDescriptorPool(const uint32_t &binding) override;
+
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) override;
+
+		VkDeviceSize GetSize() const { return m_size; }
 
 		VkShaderStageFlags GetStage() const { return m_stage; }
 	};

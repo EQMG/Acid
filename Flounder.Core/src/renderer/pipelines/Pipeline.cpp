@@ -8,14 +8,13 @@ namespace Flounder
 {
 	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
-	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const std::vector<UniformBuffer*> &uniformBuffers) :
-		m_texture("res/treeBirchSmall/diffuse.png"),
-
+	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const std::vector<Descriptor*> &descriptors) :
 		m_name(name),
 		m_pipelineType(pipelineType),
 
 		m_shader(shader),
-		m_uniformBuffers(std::vector<UniformBuffer*>(uniformBuffers)),
+
+		m_descriptors(std::vector<Descriptor*>(descriptors)),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_descriptorSet(VK_NULL_HANDLE),
@@ -41,7 +40,6 @@ namespace Flounder
 	void Pipeline::Create(const VertexInputState &vertexInputState)
 	{
 		m_vertexInputState = vertexInputState;
-		m_texture.Create();
 		CreateAttributes();
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
@@ -71,8 +69,6 @@ namespace Flounder
 	void Pipeline::Cleanup()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		m_texture.Cleanup();
 
 		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
 		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
@@ -163,35 +159,18 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
+		std::vector<VkDescriptorSetLayoutBinding> descriptorBindings = std::vector<VkDescriptorSetLayoutBinding>();
 
-		for (auto uniformBuffer : m_uniformBuffers)
+		for (uint32_t i = 0 ; i < m_descriptors.size(); i++)
 		{
-			VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
-			descriptorSetLayoutBinding.binding = uniformBuffer->GetBinding();
-			descriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-			descriptorSetLayoutBinding.descriptorCount = 1;
-			descriptorSetLayoutBinding.stageFlags = uniformBuffer->GetStage();
-			descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
-
-			bindings.push_back(descriptorSetLayoutBinding);
-		}
-
-		{
-			VkDescriptorSetLayoutBinding samplerLayoutBinding = {};
-			samplerLayoutBinding.binding = 1;
-			samplerLayoutBinding.descriptorCount = 1;
-			samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-			samplerLayoutBinding.pImmutableSamplers = nullptr;
-			samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-
-			bindings.push_back(samplerLayoutBinding);
+			Descriptor *descriptor = m_descriptors[i];
+			descriptorBindings.push_back(descriptor->GetDescriptorLayout(i));
 		}
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(bindings.size());
-		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
+		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorBindings.size());
+		descriptorSetLayoutCreateInfo.pBindings = descriptorBindings.data();
 
 		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
@@ -202,21 +181,10 @@ namespace Flounder
 
 		std::vector<VkDescriptorPoolSize> descriptorPoolSizes = std::vector<VkDescriptorPoolSize>();
 
-		for (auto uniformBuffer : m_uniformBuffers)
+		for (uint32_t i = 0; i < m_descriptors.size(); i++)
 		{
-			VkDescriptorPoolSize descriptorPoolSize = {};
-			descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-			descriptorPoolSize.descriptorCount = 1;
-
-			descriptorPoolSizes.push_back(descriptorPoolSize);
-		}
-
-		{
-			VkDescriptorPoolSize descriptorPoolSize = {};
-			descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-			descriptorPoolSize.descriptorCount = 1;
-
-			descriptorPoolSizes.push_back(descriptorPoolSize);
+			Descriptor *descriptor = m_descriptors[i];
+			descriptorPoolSizes.push_back(descriptor->GetDescriptorPool(i));
 		}
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
@@ -243,43 +211,12 @@ namespace Flounder
 
 
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = {};
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>();
 
-		for (auto uniformBuffer : m_uniformBuffers)
+		for (uint32_t i = 0; i < m_descriptors.size(); i++)
 		{
-			VkDescriptorBufferInfo descriptorInfo = {};
-			descriptorInfo.buffer = uniformBuffer->GetBuffer();
-			descriptorInfo.offset = 0;
-			descriptorInfo.range = uniformBuffer->GetSize();
-
-			VkWriteDescriptorSet descriptorWrite = {};
-			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-			descriptorWrite.dstSet = m_descriptorSet;
-			descriptorWrite.dstBinding = uniformBuffer->GetBinding();
-			descriptorWrite.dstArrayElement = 0;
-			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-			descriptorWrite.descriptorCount = 1;
-			descriptorWrite.pBufferInfo = &descriptorInfo;
-
-			descriptorWrites.push_back(descriptorWrite);
-		}
-
-		{
-			VkDescriptorImageInfo descriptorInfo = {};
-			descriptorInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-			descriptorInfo.imageView = m_texture.GetImageView();
-			descriptorInfo.sampler = m_texture.GetSampler();
-
-			VkWriteDescriptorSet descriptorWrite = {};
-			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-			descriptorWrite.dstSet = m_descriptorSet;
-			descriptorWrite.dstBinding = 1;
-			descriptorWrite.dstArrayElement = 0;
-			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-			descriptorWrite.descriptorCount = 1;
-			descriptorWrite.pImageInfo = &descriptorInfo;
-
-			descriptorWrites.push_back(descriptorWrite);
+			Descriptor *descriptor = m_descriptors[i];
+			descriptorWrites.push_back(descriptor->GetWriteDescriptor(i, m_descriptorSet));
 		}
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
@@ -328,8 +265,8 @@ namespace Flounder
 		pipelineCreateInfo.pDynamicState = &m_dynamicState;
 
 		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
-		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_shader->GetStages()->size());
-		pipelineCreateInfo.pStages = m_shader->GetStages()->data();
+		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_shader->GetStages().size());
+		pipelineCreateInfo.pStages = m_shader->GetStages().data();
 
 		// Create the graphics pipeline.
 		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
