@@ -4,8 +4,8 @@
 #include "../renderer/buffers/UniformBuffer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
 #include "../shaders/Shader.hpp"
-#include "../textures/Texture.hpp"
-#include "../models/Model.hpp"
+
+#include "TestEntity.hpp"
 
 namespace Flounder
 {
@@ -13,26 +13,9 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		struct UboScene
-		{
-			Matrix4 projection;
-			Matrix4 view;
-			Vector4 clip;
-		};
-
-		struct UboObject
-		{
-			Matrix4 model;
-			float swaying;
-			Vector2 swayOffset;
-		};
-
 		UniformBuffer m_uniformScene;
 
-		UniformBuffer m_uniformObject;
-		Model m_model;
-		Texture m_diffuse;
-		Texture m_swapMap;
+		TestEntity m_testEntity;
 
 		Shader m_shader;
 		Pipeline m_pipeline;
