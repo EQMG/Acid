@@ -6,6 +6,7 @@
 #include "../platforms/glfw/Platform.hpp"
 
 #include "../renderer/buffers/Buffer.hpp"
+#include "../renderer/pipelines/Descriptor.hpp"
 
 namespace Flounder
 {
@@ -13,11 +14,13 @@ namespace Flounder
 	/// Class that represents a loaded texture.
 	/// </summary>
 	class Texture :
-		public Buffer
+		public Buffer,
+		public Descriptor
 	{
 	private:
 		std::string m_file;
 		std::vector<std::string> m_cubemap;
+		VkShaderStageFlags m_stage;
 
 		bool m_hasAlpha;
 		bool m_clampEdges;
@@ -39,7 +42,7 @@ namespace Flounder
 		/// A new OpenGL texture object.
 		/// </summary>
 		/// <param name="file"> The textures file. </param>
-		Texture(const std::string &file, const bool &hasAlpha = false,
+		Texture(const std::string &file, const VkShaderStageFlags &stage = VK_SHADER_STAGE_FRAGMENT_BIT, const bool &hasAlpha = false,
 			const bool &clampEdges = false,
 			const uint32_t &mipLevels = 1,
 			const bool &anisotropic = true,
@@ -50,7 +53,7 @@ namespace Flounder
 		/// A new OpenGL cubemap texture object.
 		/// </summary>
 		/// <param name="cubemap"> The list of cubemap texture paths. </param>
-		Texture(const std::vector<std::string> &cubemap);
+		Texture(const std::vector<std::string> &cubemap, const VkShaderStageFlags &stage = VK_SHADER_STAGE_FRAGMENT_BIT);
 
 		/// <summary>
 		/// Deconstructor for the texture object.
@@ -60,6 +63,12 @@ namespace Flounder
 		void Create();
 
 		void Cleanup();
+
+		VkDescriptorSetLayoutBinding GetDescriptorLayout(const uint32_t &binding) override;
+
+		VkDescriptorPoolSize GetDescriptorPool(const uint32_t &binding) override;
+
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) override;
 
 		/// <summary>
 		/// Gets if the texture has alpha.
