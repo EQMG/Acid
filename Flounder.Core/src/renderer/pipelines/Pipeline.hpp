@@ -7,6 +7,7 @@
 #include "../../shaders/Shader.hpp"
 
 #include "Descriptor.hpp"
+#include "InputState.hpp"
 
 namespace Flounder
 {
@@ -16,14 +17,6 @@ namespace Flounder
 		PipelineNoDepthTest,
 		PipelineMrt,
 		PipelineMultiTexture
-	};
-
-	struct VertexInputState
-	{
-		uint32_t bindingDescriptionCount;
-		uint32_t attributeDescriptionCount;
-		VkVertexInputBindingDescription *pVertexBindingDescriptions;
-		VkVertexInputAttributeDescription *pVertexAttributeDescriptions;
 	};
 
 	/// <summary>
@@ -36,11 +29,11 @@ namespace Flounder
 
 		std::string m_name;
 		PipelineType m_pipelineType;
-		VertexInputState m_vertexInputState;
+		InputState m_inputState;
 
 		Shader *m_shader;
 
-		std::vector<Descriptor*> m_descriptors;
+		Descriptor m_descriptor;
 		VkDescriptorSetLayout m_descriptorSetLayout;
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
@@ -61,7 +54,7 @@ namespace Flounder
 		/// Creates a new pipeline.
 		/// </summary>
 		/// <param name="name"> The pipelines name. </param>
-		Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const std::vector<Descriptor*> &descriptors);
+		Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
@@ -71,7 +64,7 @@ namespace Flounder
 		/// <summary>
 		/// Creates the pipeline.
 		/// </summary>
-		void Create(const VertexInputState &vertexInputState);
+		void Create(const InputState &inputState, const Descriptor &descriptor);
 
 		/// <summary>
 		/// Cleans up the shapipelineder.

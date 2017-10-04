@@ -161,6 +161,7 @@
     <ClInclude Include="src\fbos\Fbo.hpp" />
     <ClInclude Include="src\renderer\buffers\UniformBuffer.hpp" />
     <ClInclude Include="src\renderer\pipelines\Descriptor.hpp" />
+    <ClInclude Include="src\renderer\pipelines\InputState.hpp" />
     <ClInclude Include="src\renderer\stencils\DepthStencil.hpp" />
     <ClInclude Include="src\camera\Camera.hpp" />
     <ClInclude Include="src\camera\ICamera.hpp" />

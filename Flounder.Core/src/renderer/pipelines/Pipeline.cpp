@@ -8,13 +8,14 @@ namespace Flounder
 {
 	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
-	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const std::vector<Descriptor*> &descriptors) :
+	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader) :
 		m_name(name),
 		m_pipelineType(pipelineType),
+		m_inputState({}),
 
 		m_shader(shader),
 
-		m_descriptors(std::vector<Descriptor*>(descriptors)),
+		m_descriptor({}),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_descriptorSet(VK_NULL_HANDLE),
@@ -37,9 +38,10 @@ namespace Flounder
 	{
 	}
 
-	void Pipeline::Create(const VertexInputState &vertexInputState)
+	void Pipeline::Create(const InputState &inputState, const Descriptor &descriptor)
 	{
-		m_vertexInputState = vertexInputState;
+		m_inputState = inputState;
+		m_descriptor = descriptor;
 		CreateAttributes();
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
@@ -159,18 +161,10 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::vector<VkDescriptorSetLayoutBinding> descriptorBindings = std::vector<VkDescriptorSetLayoutBinding>();
-
-		for (uint32_t i = 0 ; i < m_descriptors.size(); i++)
-		{
-			Descriptor *descriptor = m_descriptors[i];
-			descriptorBindings.push_back(descriptor->GetDescriptorLayout(i));
-		}
-
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorBindings.size());
-		descriptorSetLayoutCreateInfo.pBindings = descriptorBindings.data();
+		descriptorSetLayoutCreateInfo.bindingCount = m_descriptor.bindingCount;
+		descriptorSetLayoutCreateInfo.pBindings = m_descriptor.pBindings;
 
 		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
@@ -179,18 +173,10 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::vector<VkDescriptorPoolSize> descriptorPoolSizes = std::vector<VkDescriptorPoolSize>();
-
-		for (uint32_t i = 0; i < m_descriptors.size(); i++)
-		{
-			Descriptor *descriptor = m_descriptors[i];
-			descriptorPoolSizes.push_back(descriptor->GetDescriptorPool(i));
-		}
-
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(descriptorPoolSizes.size());
-		descriptorPoolCreateInfo.pPoolSizes = descriptorPoolSizes.data();
+		descriptorPoolCreateInfo.poolSizeCount = m_descriptor.poolSizeCount;
+		descriptorPoolCreateInfo.pPoolSizes = m_descriptor.pPoolSizes;
 		descriptorPoolCreateInfo.maxSets = 50;
 
 		Platform::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
@@ -209,17 +195,7 @@ namespace Flounder
 
 		Platform::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
 
-
-
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>();
-
-		for (uint32_t i = 0; i < m_descriptors.size(); i++)
-		{
-			Descriptor *descriptor = m_descriptors[i];
-			descriptorWrites.push_back(descriptor->GetWriteDescriptor(i, m_descriptorSet));
-		}
-
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+	//	vkUpdateDescriptorSets(logicalDevice, m_descriptor.descriptorWriteCount, m_descriptor.pDescriptorWrites, 0, nullptr);
 	}
 
 	void Pipeline::CreatePipelineLayout()
@@ -243,10 +219,10 @@ namespace Flounder
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = m_vertexInputState.bindingDescriptionCount;
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = m_vertexInputState.attributeDescriptionCount;
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_vertexInputState.pVertexBindingDescriptions;
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_vertexInputState.pVertexAttributeDescriptions;
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = m_inputState.vertexBindingDescriptionCount;
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_inputState.pVertexBindingDescriptions;
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = m_inputState.vertexAttributeDescriptionCount;
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_inputState.pVertexAttributeDescriptions;
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
