@@ -7,15 +7,18 @@ namespace Flounder
 {
 	RendererTest::RendererTest() :
 		IRenderer(),
-		m_uniformBuffer(UniformBuffer(sizeof(UBO), VK_SHADER_STAGE_VERTEX_BIT)),
+		m_uniformScene(UniformBuffer(sizeof(UboScene), VK_SHADER_STAGE_VERTEX_BIT)),
+
+		m_uniformObject(UniformBuffer(sizeof(UboObject), VK_SHADER_STAGE_VERTEX_BIT)),
 		m_model(Model("res/treeBirchSmall/model.obj")),
-		m_texture(Texture("res/treeBirchSmall/diffuse.png")),
+		m_diffuse(Texture("res/treeBirchSmall/diffuse.png", VK_SHADER_STAGE_FRAGMENT_BIT)),
+		m_swapMap(Texture("res/treeBirchSmall/sway.png", VK_SHADER_STAGE_VERTEX_BIT)),
 
 		m_shader(Shader("tests", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		})),
-		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader, { &m_uniformBuffer, &m_texture }))
+		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader, { &m_uniformScene, &m_uniformObject, &m_diffuse, &m_swapMap }))
 	{
 		auto bindingDescription = Vertex::GetBindingDescription();
 		auto attributeDescriptions = Vertex::GetAttributeDescriptions();
@@ -25,9 +28,14 @@ namespace Flounder
 		vertexInputState.attributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 		vertexInputState.pVertexAttributeDescriptions = attributeDescriptions.data();
 
-		m_uniformBuffer.Create();
+		m_uniformScene.Create();
+		m_uniformObject.Create();
 		m_model.Create();
-		m_texture.Create();
+		m_diffuse.Create();
+		m_swapMap.Create();
+
+		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
+		vkQueueWaitIdle(Display::Get()->GetQueue());
 
 		m_shader.Create();
 		m_pipeline.Create(vertexInputState);
@@ -38,19 +46,29 @@ namespace Flounder
 		m_shader.Cleanup();
 		m_pipeline.Cleanup();
 
-		m_texture.Cleanup();
+		m_swapMap.Cleanup();
+		m_diffuse.Cleanup();
 		m_model.Cleanup();
-		m_uniformBuffer.Cleanup();
+		m_uniformObject.Cleanup();
+		m_uniformScene.Cleanup();
 	}
 
 	void RendererTest::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		UBO ubo = {};
-		ubo.projection = *camera.GetProjectionMatrix();
-		ubo.view = *camera.GetViewMatrix();
-		ubo.model = Matrix4();
-		Matrix4::TransformationMatrix(Vector3(0.0f, -2.3f, 3.0f), Vector3(), 1.0f, &ubo.model);
-		m_uniformBuffer.Update(&ubo);
+		UboScene uboScene = {};
+		uboScene.projection = *camera.GetProjectionMatrix();
+		uboScene.view = *camera.GetViewMatrix();
+		m_uniformScene.Update(&uboScene);
+
+		UboObject uboObject = {};
+		uboObject.model = Matrix4();
+		uboObject.swaying = 1.0f;
+		const float systemTime = Engine::Get()->GetTime();
+		const float swayX = 0.24f * (sin(0.25f * systemTime) - sin(1.2f * systemTime) + cos(0.5f * systemTime));
+		const float swayY = 0.24f * (cos(0.25f * systemTime) - cos(1.2f * systemTime) + sin(0.5f * systemTime));
+		uboObject.swayOffset = Vector2(swayX, swayY);
+		Matrix4::TransformationMatrix(Vector3(0.0f, -2.3f, 3.0f), Vector3(), 1.0f, &uboObject.model);
+		m_uniformObject.Update(&uboObject);
 
 		VkBuffer vertexBuffers[] = { m_model.GetVertexBuffer().GetBuffer() };
 		VkDeviceSize offsets[] = { 0 };

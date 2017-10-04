@@ -40,15 +40,9 @@ namespace Flounder
 			alListener3f(AL_VELOCITY, camera->GetVelocity()->m_x, camera->GetVelocity()->m_y, camera->GetVelocity()->m_z);
 
 			// Listener orientation.
-		//	Matrix4 inverseCamera = Matrix4(*camera->GetViewMatrix());
-		//	Matrix4::Invert(inverseCamera, &inverseCamera);
-		//	Vector4 at = Vector4(0.0f, 0.0f, -1.0f, 0.0f);
-		//	Matrix4::Transform(inverseCamera, at, &at);
-		//	Vector4 up = Vector4(0.0f, 1.0f, 0.0f, 0.0f);
-		//	Matrix4::Transform(inverseCamera, up, &up);
-		//	float orientation[6] = { at.m_x, at.m_y, at.m_z, up.m_x, up.m_y, up.m_z };
 			Vector3 *currentRay = camera->GetViewRay()->m_currentRay;
 			float orientation[6] = { currentRay->m_x, currentRay->m_y, currentRay->m_z, 0.0f, 1.0f, 0.0f };
+
 			alListenerfv(AL_ORIENTATION, orientation);
 
 			Platform::ErrorAl(alGetError());

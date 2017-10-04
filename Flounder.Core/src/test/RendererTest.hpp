@@ -13,17 +13,26 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		struct UBO
+		struct UboScene
 		{
 			Matrix4 projection;
 			Matrix4 view;
 			Vector4 clip;
-			Matrix4 model;
 		};
 
-		UniformBuffer m_uniformBuffer;
+		struct UboObject
+		{
+			Matrix4 model;
+			float swaying;
+			Vector2 swayOffset;
+		};
+
+		UniformBuffer m_uniformScene;
+
+		UniformBuffer m_uniformObject;
 		Model m_model;
-		Texture m_texture;
+		Texture m_diffuse;
+		Texture m_swapMap;
 
 		Shader m_shader;
 		Pipeline m_pipeline;
