@@ -6,10 +6,11 @@
 
 namespace Flounder
 {
-	Texture::Texture(const std::string &file, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
+	Texture::Texture(const std::string &file, const VkShaderStageFlags &stage, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
 		Buffer(),
 		m_file(file),
 		m_cubemap(std::vector<std::string>()),
+		m_stage(stage),
 
 		m_hasAlpha(hasAlpha),
 		m_clampEdges(clampEdges),
@@ -30,10 +31,11 @@ namespace Flounder
 	{
 	}
 
-	Texture::Texture(const std::vector<std::string> &cubemap) :
+	Texture::Texture(const std::vector<std::string> &cubemap, const VkShaderStageFlags &stage) :
 		Buffer(),
 		m_file(""),
 		m_cubemap(std::vector<std::string>(cubemap)),
+		m_stage(stage),
 
 		m_hasAlpha(false),
 		m_clampEdges(false),
@@ -85,15 +87,50 @@ namespace Flounder
 		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
 	}
 
+	VkDescriptorSetLayoutBinding Texture::GetDescriptorLayout(const uint32_t &binding)
+	{
+		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+		descriptorSetLayoutBinding.binding = binding;
+		descriptorSetLayoutBinding.descriptorCount = 1;
+		descriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+		descriptorSetLayoutBinding.stageFlags = m_stage;
+
+		return descriptorSetLayoutBinding;
+	}
+
+	VkDescriptorPoolSize Texture::GetDescriptorPool(const uint32_t &binding)
+	{
+		VkDescriptorPoolSize descriptorPoolSize = {};
+		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorPoolSize.descriptorCount = 1;
+
+		return descriptorPoolSize;
+	}
+
+	VkWriteDescriptorSet Texture::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet)
+	{
+		// TODO: Don't create a descriptor like this!
+		VkDescriptorImageInfo *descriptorInfo = new VkDescriptorImageInfo();
+		descriptorInfo->imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		descriptorInfo->imageView = m_imageView;
+		descriptorInfo->sampler = m_sampler;
+
+		VkWriteDescriptorSet descriptorWrite = {};
+		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		descriptorWrite.dstSet = descriptorSet;
+		descriptorWrite.dstBinding = binding;
+		descriptorWrite.dstArrayElement = 0;
+		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorWrite.descriptorCount = 1;
+		descriptorWrite.pImageInfo = descriptorInfo;
+
+		return descriptorWrite;
+	}
+
 	void Texture::CreateImage2D()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
-		const auto surface = Display::Get()->GetSurface();
-		const auto queue = Display::Get()->GetQueue();
-		const auto renderPass = Renderer::Get()->GetRenderPass();
-		const auto commandPool = Renderer::Get()->GetCommandPool();
-	//	const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
 
 		stbi_uc *pixels = LoadPixels(m_file, &m_width, &m_height, &m_components);
 
@@ -233,7 +270,7 @@ namespace Flounder
 
 	void Texture::TransitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout)
 	{
-		VkCommandBuffer commandBuffer = BeginSingleTimeCommands();
+		const auto commandBuffer = BeginSingleTimeCommands();
 
 		VkImageMemoryBarrier barrier = {};
 		barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -283,7 +320,7 @@ namespace Flounder
 
 	void Texture::CopyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height)
 	{
-		VkCommandBuffer commandBuffer = BeginSingleTimeCommands();
+		const auto commandBuffer = BeginSingleTimeCommands();
 
 		VkBufferImageCopy region = {};
 		region.bufferOffset = 0;

@@ -9,12 +9,6 @@
 
 namespace Flounder
 {
-	struct AllocatedUniform
-	{
-		uint32_t bufferOffset;
-		VkDescriptorSet descriptorSet;
-	};
-
 	/// <summary>
 	/// Class that represents a loaded shader.
 	/// </summary>
@@ -22,9 +16,9 @@ namespace Flounder
 	{
 	private:
 		std::string m_name;
-		std::vector<ShaderType> *m_types;
-		std::vector<VkShaderModule> *m_modules;
-		std::vector<VkPipelineShaderStageCreateInfo> *m_stages;
+		std::vector<ShaderType> m_types;
+		std::vector<VkShaderModule> m_modules;
+		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
 	public:
 		/// <summary>
 		/// Creates a new shader.
@@ -48,14 +42,12 @@ namespace Flounder
 		/// </summary>
 		void Cleanup();
 
-		uint8_t *AllocateUniform(const int &size, AllocatedUniform *allocatedUniform);
-
 		/// <summary>
 		/// Gets the loaded name for the shader.
 		/// </summary>
 		/// <returns> The shaders name. </returns>
 		std::string GetName() const { return m_name; }
 
-		std::vector<VkPipelineShaderStageCreateInfo> *GetStages() const { return m_stages; }
+		std::vector<VkPipelineShaderStageCreateInfo> GetStages() const { return m_stages; }
 	};
 }
