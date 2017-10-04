@@ -2,13 +2,10 @@
 
 #include "Buffer.hpp"
 
-#include "../pipelines/Descriptor.hpp"
-
 namespace Flounder
 {
 	class UniformBuffer :
-		public Buffer, 
-		public Descriptor
+		public Buffer
 	{
 	private:
 		VkDeviceSize m_size;
@@ -24,11 +21,11 @@ namespace Flounder
 
 		void Update(void *newData);
 
-		VkDescriptorSetLayoutBinding GetDescriptorLayout(const uint32_t &binding) override;
+		VkDescriptorSetLayoutBinding GetDescriptorLayout(const uint32_t &binding);
 
-		VkDescriptorPoolSize GetDescriptorPool(const uint32_t &binding) override;
+		VkDescriptorPoolSize GetDescriptorPool(const uint32_t &binding);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) override;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet);
 
 		VkDeviceSize GetSize() const { return m_size; }
 
