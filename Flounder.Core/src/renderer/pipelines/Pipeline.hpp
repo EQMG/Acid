@@ -42,6 +42,7 @@ namespace Flounder
 
 		Shader *m_shader;
 		std::vector<UniformBuffer*> m_uniformBuffers;
+		VkDescriptorSetLayout m_descriptorSetLayout;
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
 
@@ -84,6 +85,8 @@ namespace Flounder
 		/// <returns> The pipelines name. </returns>
 		std::string GetName() const { return m_name; }
 
+		VkDescriptorSetLayout GetDescriptorSetLayout() { return m_descriptorSetLayout; }
+
 		VkDescriptorPool GetDescriptorPool() { return m_descriptorPool; }
 
 		VkDescriptorSet GetDescriptorSet() { return m_descriptorSet; }
@@ -93,6 +96,8 @@ namespace Flounder
 		VkPipelineLayout GetPipelineLayout() const { return m_pipelineLayout; }
 	private:
 		void CreateAttributes();
+
+		void CreateDescriptorLayout();
 
 		void CreateDescriptorPool();
 

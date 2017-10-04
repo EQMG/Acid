@@ -16,6 +16,7 @@ namespace Flounder
 
 		m_shader(shader),
 		m_uniformBuffers(std::vector<UniformBuffer*>(uniformBuffers)),
+		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_descriptorSet(VK_NULL_HANDLE),
 
@@ -42,6 +43,7 @@ namespace Flounder
 		m_vertexInputState = vertexInputState;
 		m_texture.Create();
 		CreateAttributes();
+		CreateDescriptorLayout();
 		CreateDescriptorPool();
 		CreateDescriptorSet();
 		CreatePipelineLayout();
@@ -72,6 +74,7 @@ namespace Flounder
 
 		m_texture.Cleanup();
 
+		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
 		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
 		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
@@ -156,15 +159,65 @@ namespace Flounder
 		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(DYNAMIC_STATES.size());
 	}
 
+	void Pipeline::CreateDescriptorLayout()
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
+
+		for (auto uniformBuffer : m_uniformBuffers)
+		{
+			VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+			descriptorSetLayoutBinding.binding = uniformBuffer->GetBinding();
+			descriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			descriptorSetLayoutBinding.descriptorCount = 1;
+			descriptorSetLayoutBinding.stageFlags = uniformBuffer->GetStage();
+			descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+
+			bindings.push_back(descriptorSetLayoutBinding);
+		}
+
+		{
+			VkDescriptorSetLayoutBinding samplerLayoutBinding = {};
+			samplerLayoutBinding.binding = 1;
+			samplerLayoutBinding.descriptorCount = 1;
+			samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			samplerLayoutBinding.pImmutableSamplers = nullptr;
+			samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+
+			bindings.push_back(samplerLayoutBinding);
+		}
+
+		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
+		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(bindings.size());
+		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
+
+		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
+	}
+
 	void Pipeline::CreateDescriptorPool()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::array<VkDescriptorPoolSize, 2> descriptorPoolSizes = {};
-		descriptorPoolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		descriptorPoolSizes[0].descriptorCount = 1;
-		descriptorPoolSizes[1].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		descriptorPoolSizes[1].descriptorCount = 1;
+		std::vector<VkDescriptorPoolSize> descriptorPoolSizes = std::vector<VkDescriptorPoolSize>();
+
+		for (auto uniformBuffer : m_uniformBuffers)
+		{
+			VkDescriptorPoolSize descriptorPoolSize = {};
+			descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			descriptorPoolSize.descriptorCount = 1;
+
+			descriptorPoolSizes.push_back(descriptorPoolSize);
+		}
+
+		{
+			VkDescriptorPoolSize descriptorPoolSize = {};
+			descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			descriptorPoolSize.descriptorCount = 1;
+
+			descriptorPoolSizes.push_back(descriptorPoolSize);
+		}
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
@@ -179,19 +232,12 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::vector<VkDescriptorSetLayout> descriptorSetLayouts = std::vector<VkDescriptorSetLayout>();
-
-		for (auto uniformBuffer : m_uniformBuffers)
-		{
-			descriptorSetLayouts.push_back(uniformBuffer->GetDescriptorSetLayout());
-		}
-
 		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
 		descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
 		descriptorSetAllocateInfo.pNext = nullptr;
 		descriptorSetAllocateInfo.descriptorPool = m_descriptorPool;
-		descriptorSetAllocateInfo.descriptorSetCount = static_cast<uint32_t>(descriptorSetLayouts.size());
-		descriptorSetAllocateInfo.pSetLayouts = descriptorSetLayouts.data();
+		descriptorSetAllocateInfo.descriptorSetCount = 1;
+		descriptorSetAllocateInfo.pSetLayouts = &m_descriptorSetLayout;
 
 		Platform::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
 
@@ -209,10 +255,10 @@ namespace Flounder
 			VkWriteDescriptorSet descriptorWrite = {};
 			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 			descriptorWrite.dstSet = m_descriptorSet;
-			descriptorWrite.dstBinding = 0; //  uniformBuffer->GetBinding();
+			descriptorWrite.dstBinding = uniformBuffer->GetBinding();
 			descriptorWrite.dstArrayElement = 0;
 			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-			descriptorWrite.descriptorCount = 1; // descriptorSetLayouts.size();
+			descriptorWrite.descriptorCount = 1;
 			descriptorWrite.pBufferInfo = &descriptorInfo;
 
 			descriptorWrites.push_back(descriptorWrite);
@@ -243,19 +289,11 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		// Gets all UBO descriptor sets.
-		std::vector<VkDescriptorSetLayout> descriptorSetLayouts = std::vector<VkDescriptorSetLayout>();
-
-		for (auto uniformBuffer : m_uniformBuffers)
-		{
-			descriptorSetLayouts.push_back(uniformBuffer->GetDescriptorSetLayout());
-		}
-
 		// Pipeline layout struct.
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutCreateInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
-		pipelineLayoutCreateInfo.pSetLayouts = descriptorSetLayouts.data();
+		pipelineLayoutCreateInfo.setLayoutCount = 1;
+		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 
 		// Creates the graphics pipeline layout.
 		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
