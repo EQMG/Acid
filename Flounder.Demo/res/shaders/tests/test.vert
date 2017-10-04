@@ -7,7 +7,7 @@ layout(location = 1) in vec2 vertexTextures;
 layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
 
-layout(set = 0, binding = 0) uniform UBO
+layout(binding = 0) uniform UBO
 {
 	mat4 projection;
 	mat4 view;
