@@ -84,11 +84,11 @@ namespace Flounder
 		/// <returns> The pipelines name. </returns>
 		std::string GetName() const { return m_name; }
 
-		VkDescriptorSetLayout GetDescriptorSetLayout() { return m_descriptorSetLayout; }
+		VkDescriptorSetLayout GetDescriptorSetLayout() const { return m_descriptorSetLayout; }
 
-		VkDescriptorPool GetDescriptorPool() { return m_descriptorPool; }
+		VkDescriptorPool GetDescriptorPool() const { return m_descriptorPool; }
 
-		VkDescriptorSet GetDescriptorSet() { return m_descriptorSet; }
+		VkDescriptorSet GetDescriptorSet() const { return m_descriptorSet; }
 
 		VkPipeline GetPipeline() const { return m_pipeline; }
 
