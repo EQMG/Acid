@@ -6,7 +6,6 @@
 #include "../shaders/Shader.hpp"
 #include "../textures/Texture.hpp"
 #include "../models/Model.hpp"
-#include "../maths/Colour.hpp"
 
 namespace Flounder
 {
