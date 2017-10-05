@@ -57,10 +57,6 @@ namespace Flounder
 		/// </summary>
 		~Texture();
 
-		void Create();
-
-		void Cleanup();
-
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet);
@@ -122,5 +118,7 @@ namespace Flounder
 		VkCommandBuffer BeginSingleTimeCommands();
 
 		void EndSingleTimeCommands(VkCommandBuffer commandBuffer);
+
+		static VkDeviceSize SomeShittyFunctionThatGetsATexturesSize(const std::string &file);
 	};
 }

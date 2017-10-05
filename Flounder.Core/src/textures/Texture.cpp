@@ -7,7 +7,7 @@
 namespace Flounder
 {
 	Texture::Texture(const std::string &file, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
-		Buffer(),
+		Buffer(SomeShittyFunctionThatGetsATexturesSize(file), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_file(file),
 		m_cubemap(std::vector<std::string>()),
 
@@ -28,10 +28,11 @@ namespace Flounder
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageType(VK_IMAGE_TYPE_2D)
 	{
+		CreateImage2D();
 	}
 
 	Texture::Texture(const std::vector<std::string> &cubemap) :
-		Buffer(),
+		Buffer(2048 * 2048 * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_file(""),
 		m_cubemap(std::vector<std::string>(cubemap)),
 
@@ -52,33 +53,12 @@ namespace Flounder
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageType(VK_IMAGE_TYPE_3D)
 	{
+	//	CreateImage3D();
 	}
 
 	Texture::~Texture()
 	{
-	}
-
-	void Texture::Create()
-	{
-		switch (m_imageType)
-		{
-		case VK_IMAGE_TYPE_2D:
-			CreateImage2D();
-			break;
-		case VK_IMAGE_TYPE_3D:
-			CreateImage3D();
-			break;
-		default:
-			assert(false && "Vulkan image type is not avalable for creation!");
-			break;
-		}
-	}
-
-	void Texture::Cleanup()
-	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		Buffer::Cleanup();
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImage(logicalDevice, m_image, nullptr);
@@ -146,20 +126,17 @@ namespace Flounder
 		}*/
 		m_format = VK_FORMAT_R8G8B8A8_UNORM;
 
-		const VkDeviceSize bufferSize = m_width * m_height * 4;
-
-		Buffer bufferStaging = Buffer();
-		bufferStaging.Create(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void* data;
-		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferSize, 0, &data);
-		memcpy(data, pixels, static_cast<size_t>(bufferSize));
-		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
+		vkMapMemory(logicalDevice, bufferStaging->GetBufferMemory(), 0, m_size, 0, &data);
+		memcpy(data, pixels, static_cast<size_t>(m_size));
+		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
 		VkDeviceMemory imageMemory = GetBufferMemory();
 		CreateImage(m_width, m_height, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, imageMemory);
 		TransitionImageLayout(m_image, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
-		CopyBufferToImage(bufferStaging.GetBuffer(), m_image, static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height));
+		CopyBufferToImage(bufferStaging->GetBuffer(), m_image, static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height));
 		TransitionImageLayout(m_image, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
 		{
@@ -195,11 +172,9 @@ namespace Flounder
 			Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerInfo, nullptr, &m_sampler));
 		}
 
-		Buffer::Create(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		Buffer::CopyBuffer(bufferStaging.GetBuffer(), GetBuffer(), bufferSize);
+		Buffer::CopyBuffer(bufferStaging->GetBuffer(), GetBuffer(), m_size);
 
-		bufferStaging.Cleanup();
-
+		delete bufferStaging;
 		delete[] pixels;
 	}
 
@@ -375,5 +350,18 @@ namespace Flounder
 		vkQueueWaitIdle(queue);
 
 		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &commandBuffer);
+	}
+	VkDeviceSize Texture::SomeShittyFunctionThatGetsATexturesSize(const std::string &file)
+	{
+		int width;
+		int height;
+		int components;
+
+		if (stbi_info(file.c_str(), &width, &height, &components) == 0)
+		{
+			assert(false && "Vulkan invalid texture file format.");
+		}
+
+		return width * height * 4;
 	}
 }

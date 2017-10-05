@@ -11,14 +11,6 @@ namespace Flounder
 		m_modules(std::vector<VkShaderModule>()),
 		m_stages(std::vector<VkPipelineShaderStageCreateInfo>())
 	{
-	}
-
-	Shader::~Shader()
-	{
-	}
-
-	void Shader::Create()
-	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		for (auto type : m_types)
@@ -44,7 +36,7 @@ namespace Flounder
 		}
 	}
 
-	void Shader::Cleanup()
+	Shader::~Shader()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 

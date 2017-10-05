@@ -6,17 +6,10 @@
 
 namespace Flounder
 {
-	Buffer::Buffer() :
+	Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties) :
+		m_size(size),
 		m_buffer(VK_NULL_HANDLE),
 		m_bufferMemory(VK_NULL_HANDLE)
-	{
-	}
-
-	Buffer::~Buffer()
-	{
-	}
-
-	void Buffer::Create(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -41,13 +34,13 @@ namespace Flounder
 		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
-		
+
 		Platform::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
 		vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0);
 	}
 
-	void Buffer::Cleanup()
+	Buffer::~Buffer()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		vkDestroyBuffer(logicalDevice, m_buffer, nullptr);
