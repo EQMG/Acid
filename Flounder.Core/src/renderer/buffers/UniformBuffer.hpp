@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Buffer.hpp"
+#include "../pipelines/Descriptor.hpp"
 
 namespace Flounder
 {
@@ -9,9 +10,8 @@ namespace Flounder
 	{
 	private:
 		VkDeviceSize m_size;
-		VkShaderStageFlags m_stage;
 	public:
-		UniformBuffer(const VkDeviceSize &size, const VkShaderStageFlags &stage);
+		UniformBuffer(const VkDeviceSize &size);
 
 		~UniformBuffer();
 
@@ -21,14 +21,10 @@ namespace Flounder
 
 		void Update(void *newData);
 
-		VkDescriptorSetLayoutBinding GetDescriptorLayout(const uint32_t &binding);
-
-		VkDescriptorPoolSize GetDescriptorPool(const uint32_t &binding);
+		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet);
 
 		VkDeviceSize GetSize() const { return m_size; }
-
-		VkShaderStageFlags GetStage() const { return m_stage; }
 	};
 }

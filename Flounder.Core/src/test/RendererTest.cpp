@@ -2,15 +2,16 @@
 
 #include "../devices/Display.hpp"
 #include "../renderer/Renderer.hpp"
-#include "TestUbos.hpp"
+#include "TestShader.hpp"
 
 namespace Flounder
 {
 	RendererTest::RendererTest() :
 		IRenderer(),
-		m_uniformScene(UniformBuffer(sizeof(UboScene), VK_SHADER_STAGE_VERTEX_BIT)),
+		m_uniformScene(UniformBuffer(sizeof(TestShader::UboScene))),
 
-		m_testEntity(TestEntity()),
+		m_testEntity1(TestEntity(Vector3(0.0f, -2.3f, 3.0f), Vector3())),
+		m_testEntity2(TestEntity(Vector3(2.0f, -2.3f, 2.0f), Vector3())),
 
 		m_shader(Shader("tests", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
@@ -18,30 +19,15 @@ namespace Flounder
 		})),
 		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader))
 	{
-		auto bindingDescription = Vertex::GetBindingDescription();
-		auto attributeDescriptions = Vertex::GetAttributeDescriptions();
-		InputState inputState = {};
-		inputState.vertexBindingDescriptionCount = 1;
-		inputState.pVertexBindingDescriptions = &bindingDescription;
-		inputState.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
-		inputState.pVertexAttributeDescriptions = attributeDescriptions.data();
-		
-		Descriptor descriptor = {};
-		descriptor.bindingCount = 4;
-		descriptor.pBindings = std::array<VkDescriptorSetLayoutBinding, 4>{ m_uniformScene.GetDescriptorLayout(0), m_testEntity.m_uniformObject.GetDescriptorLayout(1), m_testEntity.m_diffuse.GetDescriptorLayout(2), m_testEntity.m_swapMap.GetDescriptorLayout(3) }.data();
-		descriptor.poolSizeCount = 4;
-		descriptor.pPoolSizes = std::array<VkDescriptorPoolSize, 4>{ m_uniformScene.GetDescriptorPool(0), m_testEntity.m_uniformObject.GetDescriptorPool(1), m_testEntity.m_diffuse.GetDescriptorPool(2), m_testEntity.m_swapMap.GetDescriptorPool(3) }.data();
-	//	descriptor.descriptorWriteCount = 0;// 4;
-	//	descriptor.pDescriptorWrites = nullptr; //  std::array<VkWriteDescriptorSet, 4>{ m_uniformScene.GetWriteDescriptor(0), m_testEntity.m_uniformObject.GetWriteDescriptor(1), m_testEntity.m_diffuse.GetWriteDescriptor(2), m_testEntity.m_swapMap.GetWriteDescriptor(3) }.data();
-
 		m_uniformScene.Create();
-		m_testEntity.Create();
+		m_testEntity1.Create();
+		m_testEntity2.Create();
 
 		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
 		vkQueueWaitIdle(Display::Get()->GetQueue());
 
 		m_shader.Create();
-		m_pipeline.Create(inputState, descriptor);
+		m_pipeline.Create(TestShader::inputState, TestShader::descriptor);
 	}
 
 	RendererTest::~RendererTest()
@@ -49,24 +35,32 @@ namespace Flounder
 		m_shader.Cleanup();
 		m_pipeline.Cleanup();
 
-		m_testEntity.Cleanup();
+		m_testEntity2.Cleanup();
+		m_testEntity1.Cleanup();
 		m_uniformScene.Cleanup();
 	}
 
 	void RendererTest::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto descriptorSet = m_pipeline.GetDescriptorSet();
 
-		VkDescriptorSet descriptorSet = m_pipeline.GetDescriptorSet();
-		uint32_t descriptorWriteCount = 4;
-		VkWriteDescriptorSet *pDescriptorWrites = std::array<VkWriteDescriptorSet, 4>{ m_uniformScene.GetWriteDescriptor(0, descriptorSet), m_testEntity.m_uniformObject.GetWriteDescriptor(1, descriptorSet), m_testEntity.m_diffuse.GetWriteDescriptor(2, descriptorSet), m_testEntity.m_swapMap.GetWriteDescriptor(3, descriptorSet) }.data();
-		vkUpdateDescriptorSets(logicalDevice, descriptorWriteCount, pDescriptorWrites, 0, nullptr);
-
-		UboScene uboScene = {};
+		TestShader::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene.Update(&uboScene);
 
-		m_testEntity.CmdRender(*commandBuffer, m_pipeline);
+		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipeline());
+
+		{
+			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformScene.GetWriteDescriptor(0, descriptorSet), m_testEntity1.m_uniformObject.GetWriteDescriptor(1, descriptorSet), m_testEntity1.m_diffuse.GetWriteDescriptor(2, descriptorSet), m_testEntity1.m_swapMap.GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
+			vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+			m_testEntity1.CmdRender(*commandBuffer, m_pipeline);
+		}
+		{
+			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformScene.GetWriteDescriptor(0, descriptorSet), m_testEntity2.m_uniformObject.GetWriteDescriptor(1, descriptorSet), m_testEntity2.m_diffuse.GetWriteDescriptor(2, descriptorSet), m_testEntity2.m_swapMap.GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
+			vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+			m_testEntity2.CmdRender(*commandBuffer, m_pipeline);
+		}
 	}
 }

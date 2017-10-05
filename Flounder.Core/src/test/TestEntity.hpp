@@ -15,7 +15,10 @@ namespace Flounder
 		Texture m_diffuse;
 		Texture m_swapMap;
 
-		TestEntity();
+		Vector3 m_position;
+		Vector3 m_rotation;
+
+		TestEntity(const Vector3 &position, const Vector3 &rotation);
 
 		~TestEntity();
 
