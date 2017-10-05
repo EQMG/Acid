@@ -21,7 +21,7 @@ namespace Flounder
 
 		~Vertex();
 
-		static VkVertexInputBindingDescription GetBindingDescription();
+		static std::vector<VkVertexInputBindingDescription> GetBindingDescriptions();
 
 		static std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions();
 	};
