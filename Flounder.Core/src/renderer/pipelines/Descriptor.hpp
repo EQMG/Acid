@@ -1,37 +1,46 @@
 #pragma once
 
+#include <vector>
 #include "../../platforms/glfw/Platform.hpp"
 
 namespace Flounder
 {
+	class DescriptorType
+	{
+	public:
+		uint32_t binding;
+		VkShaderStageFlags stage;
+
+		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding;
+		VkDescriptorPoolSize descriptorPoolSize;
+
+		DescriptorType(const uint32_t &binding, const VkShaderStageFlags &stage, const VkDescriptorSetLayoutBinding &descriptorSetLayoutBinding, const VkDescriptorPoolSize &descriptorPoolSize) :
+			binding(binding),
+			stage(stage),
+			descriptorSetLayoutBinding(descriptorSetLayoutBinding),
+			descriptorPoolSize(descriptorPoolSize)
+		{
+		}
+	};
+
 	struct Descriptor
 	{
-		uint32_t bindingCount;
-		const VkDescriptorSetLayoutBinding *pBindings;
+		std::vector<VkDescriptorSetLayoutBinding> bindings;
+		std::vector<VkDescriptorPoolSize> poolSizes;
 
-		uint32_t poolSizeCount;
-		VkDescriptorPoolSize *pPoolSizes;
-
-	//	uint32_t descriptorWriteCount;
-	//	VkWriteDescriptorSet *pDescriptorWrites;
-
-		static Descriptor GenerateDescriptor(const std::vector<int> &descriptors)
+		static Descriptor Create(const std::vector<DescriptorType> &types)
 		{
-			std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
-			std::vector<VkDescriptorPoolSize> pools = std::vector<VkDescriptorPoolSize>();
+			Descriptor descriptor = {};
+			descriptor.bindings = std::vector<VkDescriptorSetLayoutBinding>();
+			descriptor.poolSizes = std::vector<VkDescriptorPoolSize>();
 
-			for (auto type : descriptors)
+			for (auto type : types)
 			{
-				switch (type)
-				{
-				case 0:
-					break;
-				case 1:
-					break;
-				}
+				descriptor.bindings.push_back(type.descriptorSetLayoutBinding);
+				descriptor.poolSizes.push_back(type.descriptorPoolSize);
 			}
 
-			return { bindings.size(), bindings.data(), pools.size(), pools.data() };
+			return descriptor;
 		}
 	};
 }

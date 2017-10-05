@@ -163,8 +163,8 @@ namespace Flounder
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCreateInfo.bindingCount = m_descriptor.bindingCount;
-		descriptorSetLayoutCreateInfo.pBindings = m_descriptor.pBindings;
+		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(m_descriptor.bindings.size());
+		descriptorSetLayoutCreateInfo.pBindings = m_descriptor.bindings.data();
 
 		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
@@ -175,8 +175,8 @@ namespace Flounder
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		descriptorPoolCreateInfo.poolSizeCount = m_descriptor.poolSizeCount;
-		descriptorPoolCreateInfo.pPoolSizes = m_descriptor.pPoolSizes;
+		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(m_descriptor.poolSizes.size());
+		descriptorPoolCreateInfo.pPoolSizes = m_descriptor.poolSizes.data();
 		descriptorPoolCreateInfo.maxSets = 50;
 
 		Platform::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
@@ -219,10 +219,10 @@ namespace Flounder
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = m_inputState.vertexBindingDescriptionCount;
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_inputState.pVertexBindingDescriptions;
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = m_inputState.vertexAttributeDescriptionCount;
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_inputState.pVertexAttributeDescriptions;
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_inputState.vertexBindingDescriptions.size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_inputState.vertexBindingDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_inputState.vertexAttributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_inputState.vertexAttributeDescriptions.data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;

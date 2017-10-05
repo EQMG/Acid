@@ -4,10 +4,9 @@
 
 namespace Flounder
 {
-	UniformBuffer::UniformBuffer(const VkDeviceSize &size, const VkShaderStageFlags &stage) :
+	UniformBuffer::UniformBuffer(const VkDeviceSize &size) :
 		Buffer(),
-		m_size(size),
-		m_stage(stage)
+		m_size(size)
 	{
 	}
 
@@ -37,25 +36,20 @@ namespace Flounder
 		vkUnmapMemory(logicalDevice, m_bufferMemory);
 	}
 
-	VkDescriptorSetLayoutBinding UniformBuffer::GetDescriptorLayout(const uint32_t &binding)
+	DescriptorType UniformBuffer::CreateDescriptor(const uint32_t & binding, const VkShaderStageFlags & stage)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 		descriptorSetLayoutBinding.binding = binding;
 		descriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 		descriptorSetLayoutBinding.descriptorCount = 1;
-		descriptorSetLayoutBinding.stageFlags = m_stage;
+		descriptorSetLayoutBinding.stageFlags = stage;
 		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
 
-		return descriptorSetLayoutBinding;
-	}
-
-	VkDescriptorPoolSize UniformBuffer::GetDescriptorPool(const uint32_t &binding)
-	{
 		VkDescriptorPoolSize descriptorPoolSize = {};
 		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 		descriptorPoolSize.descriptorCount = 1;
 
-		return descriptorPoolSize;
+		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
 	VkWriteDescriptorSet UniformBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet)

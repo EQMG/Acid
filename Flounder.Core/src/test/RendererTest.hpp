@@ -15,7 +15,8 @@ namespace Flounder
 	private:
 		UniformBuffer m_uniformScene;
 
-		TestEntity m_testEntity;
+		TestEntity m_testEntity1;
+		TestEntity m_testEntity2;
 
 		Shader m_shader;
 		Pipeline m_pipeline;

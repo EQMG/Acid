@@ -1,15 +1,18 @@
 ﻿#include "TestEntity.hpp"
 
-#include "TestUbos.hpp"
 #include "../engine/Engine.hpp"
+#include "TestShader.hpp"
 
 namespace Flounder
 {
-	TestEntity::TestEntity() :
-		m_uniformObject(UniformBuffer(sizeof(UboObject), VK_SHADER_STAGE_VERTEX_BIT)),
+	TestEntity::TestEntity(const Vector3 &position, const Vector3 &rotation) :
+		m_uniformObject(UniformBuffer(sizeof(TestShader::UboObject))),
 		m_model(Model("res/treeBirchSmall/model.obj")),
 		m_diffuse(Texture("res/treeBirchSmall/diffuse.png", VK_SHADER_STAGE_FRAGMENT_BIT)),
-		m_swapMap(Texture("res/treeBirchSmall/sway.png", VK_SHADER_STAGE_VERTEX_BIT))
+		m_swapMap(Texture("res/treeBirchSmall/sway.png", VK_SHADER_STAGE_VERTEX_BIT)),
+
+		m_position(position),
+		m_rotation(rotation)
 	{
 	}
 
@@ -35,20 +38,23 @@ namespace Flounder
 
 	void TestEntity::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)
 	{
-		UboObject uboObject = {};
+		TestShader::UboObject uboObject = {};
 		uboObject.model = Matrix4();
 		uboObject.swaying = 1.0f;
-		const float systemTime = Engine::Get()->GetTime();
-		const float swayX = 0.24f * (sin(0.25f * systemTime) - sin(1.2f * systemTime) + cos(0.5f * systemTime));
-		const float swayY = 0.24f * (cos(0.25f * systemTime) - cos(1.2f * systemTime) + sin(0.5f * systemTime));
+		const float swayPower = 0.15f;
+		const float wx = sin(m_position.m_x * 0.6f);
+		const float wz = sin(m_position.m_z * 0.5f);
+		const float sx = fabs(wx) + fabs(wz);
+		const float st = Engine::Get()->GetTime() * sx;
+		const float swayX = swayPower * (sin(0.25f * st) - sin(1.2f * st) + cos(0.5f * st));
+		const float swayY = swayPower * (cos(0.25f * st) - cos(1.2f * st) + sin(0.5f * st));
 		uboObject.swayOffset = Vector2(swayX, swayY);
-		Matrix4::TransformationMatrix(Vector3(0.0f, -2.3f, 3.0f), Vector3(), 1.0f, &uboObject.model);
+		Matrix4::TransformationMatrix(m_position, m_rotation, 1.0f, &uboObject.model);
 		m_uniformObject.Update(&uboObject);
 
 		VkBuffer vertexBuffers[] = { m_model.GetVertexBuffer().GetBuffer() };
 		VkDeviceSize offsets[] = { 0 };
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
-		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipeline());
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 		vkCmdBindIndexBuffer(commandBuffer, m_model.GetIndexBuffer().GetBuffer(), 0, m_model.GetIndexBuffer().GetIndexType());

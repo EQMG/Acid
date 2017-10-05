@@ -10,14 +10,16 @@ namespace Flounder
 	{
 	}
 
-	VkVertexInputBindingDescription Vertex::GetBindingDescription()
+	std::vector<VkVertexInputBindingDescription> Vertex::GetBindingDescriptions()
 	{
-		VkVertexInputBindingDescription bindingDescription = {};
-		bindingDescription.binding = 0;
-		bindingDescription.stride = sizeof(Vertex);
-		bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
 
-		return bindingDescription;
+		// The vertex input description.
+		bindingDescriptions[0].binding = 0;
+		bindingDescriptions[0].stride = sizeof(Vertex);
+		bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+		return bindingDescriptions;
 	}
 
 	std::vector<VkVertexInputAttributeDescription> Vertex::GetAttributeDescriptions()
