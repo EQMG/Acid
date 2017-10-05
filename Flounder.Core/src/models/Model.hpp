@@ -25,10 +25,10 @@ namespace Flounder
 		std::vector<Vertex> m_vertices;
 		std::vector<uint16_t> m_indices;
 
-		Aabb m_aabb;
+		Aabb *m_aabb;
 
-		VertexBuffer m_vertexBuffer;
-		IndexBuffer m_indexBuffer;
+		VertexBuffer *m_vertexBuffer;
+		IndexBuffer *m_indexBuffer;
 	public:
 		/// <summary>
 		/// Creates a new model.
@@ -48,15 +48,11 @@ namespace Flounder
 		/// </summary>
 		~Model();
 
-		void Create();
+		Aabb *GetAabb() const { return m_aabb; }
 
-		void Cleanup();
+		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer; }
 
-		Aabb GetAabb() const { return m_aabb; }
-
-		VertexBuffer GetVertexBuffer() const { return m_vertexBuffer; }
-
-		IndexBuffer GetIndexBuffer() const { return m_indexBuffer; }
+		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer; }
 	private:
 		/// <summary>
 		/// Loads the model object from a OBJ file.

@@ -7,16 +7,15 @@ namespace Flounder
 	class Buffer
 	{
 	protected:
+		VkDeviceSize m_size;
 		VkBuffer m_buffer;
 		VkDeviceMemory m_bufferMemory;
 	public:
-		Buffer();
+		Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties);
 
 		~Buffer();
 
-		void Create(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties);
-
-		void Cleanup();
+		VkDeviceSize GetSize() { return m_size; }
 
 		VkBuffer GetBuffer() { return m_buffer; }
 

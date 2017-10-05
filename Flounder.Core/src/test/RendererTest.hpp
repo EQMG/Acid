@@ -13,16 +13,16 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		UniformBuffer m_uniformScene;
+		UniformBuffer *m_uniformScene;
 
-		TestEntity m_testEntity1;
-		TestEntity m_testEntity2;
+		TestEntity *m_testEntity1;
+		TestEntity *m_testEntity2;
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites1;
 		std::vector<VkWriteDescriptorSet> descriptorWrites2;
 
-		Shader m_shader;
-		Pipeline m_pipeline;
+		Shader *m_shader;
+		Pipeline *m_pipeline;
 	public:
 		RendererTest();
 
