@@ -6,10 +6,15 @@ namespace Flounder
 {
 	struct InputState
 	{
-		uint32_t vertexBindingDescriptionCount;
-		VkVertexInputBindingDescription *pVertexBindingDescriptions;
+		std::vector<VkVertexInputBindingDescription> vertexBindingDescriptions;
+		std::vector<VkVertexInputAttributeDescription> vertexAttributeDescriptions;
 
-		uint32_t vertexAttributeDescriptionCount;
-		VkVertexInputAttributeDescription *pVertexAttributeDescriptions;
+		static InputState Create(const std::vector<VkVertexInputBindingDescription> &bindingDescription, const std::vector<VkVertexInputAttributeDescription> &attributeDescriptions)
+		{
+			InputState inputState = {};
+			inputState.vertexBindingDescriptions = std::vector<VkVertexInputBindingDescription>(bindingDescription);
+			inputState.vertexAttributeDescriptions = std::vector<VkVertexInputAttributeDescription>(attributeDescriptions);
+			return inputState;
+		}
 	};
 }

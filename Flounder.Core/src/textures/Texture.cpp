@@ -6,11 +6,10 @@
 
 namespace Flounder
 {
-	Texture::Texture(const std::string &file, const VkShaderStageFlags &stage, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
+	Texture::Texture(const std::string &file, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
 		Buffer(),
 		m_file(file),
 		m_cubemap(std::vector<std::string>()),
-		m_stage(stage),
 
 		m_hasAlpha(hasAlpha),
 		m_clampEdges(clampEdges),
@@ -31,11 +30,10 @@ namespace Flounder
 	{
 	}
 
-	Texture::Texture(const std::vector<std::string> &cubemap, const VkShaderStageFlags &stage) :
+	Texture::Texture(const std::vector<std::string> &cubemap) :
 		Buffer(),
 		m_file(""),
 		m_cubemap(std::vector<std::string>(cubemap)),
-		m_stage(stage),
 
 		m_hasAlpha(false),
 		m_clampEdges(false),
@@ -87,25 +85,20 @@ namespace Flounder
 		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
 	}
 
-	VkDescriptorSetLayoutBinding Texture::GetDescriptorLayout(const uint32_t &binding)
+	DescriptorType Texture::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 		descriptorSetLayoutBinding.binding = binding;
 		descriptorSetLayoutBinding.descriptorCount = 1;
 		descriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
-		descriptorSetLayoutBinding.stageFlags = m_stage;
+		descriptorSetLayoutBinding.stageFlags = stage;
 
-		return descriptorSetLayoutBinding;
-	}
-
-	VkDescriptorPoolSize Texture::GetDescriptorPool(const uint32_t &binding)
-	{
 		VkDescriptorPoolSize descriptorPoolSize = {};
 		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 		descriptorPoolSize.descriptorCount = 1;
 
-		return descriptorPoolSize;
+		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
 	VkWriteDescriptorSet Texture::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet)
