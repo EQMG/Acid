@@ -8,40 +8,33 @@ namespace Flounder
 {
 	RendererTest::RendererTest() :
 		IRenderer(),
-		m_uniformScene(UniformBuffer(sizeof(TestShader::UboScene))),
+		m_uniformScene(new UniformBuffer(sizeof(TestShader::UboScene))),
 
-		m_testEntity1(TestEntity(Vector3(0.0f, -2.3f, 3.0f), Vector3())),
-		m_testEntity2(TestEntity(Vector3(2.0f, -2.3f, 2.0f), Vector3())),
+		m_testEntity1(new TestEntity(Vector3(0.0f, -2.3f, 3.0f), Vector3())),
+		m_testEntity2(new TestEntity(Vector3(2.0f, -2.3f, 2.0f), Vector3())),
 
-		m_shader(Shader("tests", {
+		m_shader(new Shader("tests", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		})),
-		m_pipeline(Pipeline("tests", PipelinePolygon, &m_shader))
+		m_pipeline(new Pipeline("tests", PipelinePolygon, m_shader, TestShader::inputState, TestShader::descriptor))
 	{
-		m_uniformScene.Create();
-		m_testEntity1.Create();
-		m_testEntity2.Create();
-
 		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
 		vkQueueWaitIdle(Display::Get()->GetQueue());
 
-		m_shader.Create();
-		m_pipeline.Create(TestShader::inputState, TestShader::descriptor);
-
-		const auto descriptorSet = m_pipeline.GetDescriptorSet();
-		descriptorWrites1 = std::vector<VkWriteDescriptorSet>{ m_uniformScene.GetWriteDescriptor(0, descriptorSet), m_testEntity1.m_uniformObject.GetWriteDescriptor(1, descriptorSet), m_testEntity1.m_diffuse.GetWriteDescriptor(2, descriptorSet), m_testEntity1.m_swapMap.GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
-		descriptorWrites2 = std::vector<VkWriteDescriptorSet>{ m_uniformScene.GetWriteDescriptor(0, descriptorSet), m_testEntity2.m_uniformObject.GetWriteDescriptor(1, descriptorSet), m_testEntity2.m_diffuse.GetWriteDescriptor(2, descriptorSet), m_testEntity2.m_swapMap.GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
+		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+		descriptorWrites1 = std::vector<VkWriteDescriptorSet>{ m_uniformScene->GetWriteDescriptor(0, descriptorSet), m_testEntity1->m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_testEntity1->m_diffuse->GetWriteDescriptor(2, descriptorSet), m_testEntity1->m_swapMap->GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
+		descriptorWrites2 = std::vector<VkWriteDescriptorSet>{ m_uniformScene->GetWriteDescriptor(0, descriptorSet), m_testEntity2->m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_testEntity2->m_diffuse->GetWriteDescriptor(2, descriptorSet), m_testEntity2->m_swapMap->GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
 	}
 
 	RendererTest::~RendererTest()
 	{
-		m_shader.Cleanup();
-		m_pipeline.Cleanup();
+		delete m_uniformScene;
+		delete m_testEntity2;
+		delete m_testEntity1;
 
-		m_testEntity2.Cleanup();
-		m_testEntity1.Cleanup();
-		m_uniformScene.Cleanup();
+		delete m_shader;
+		delete m_pipeline;
 	}
 
 	void RendererTest::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
@@ -51,14 +44,14 @@ namespace Flounder
 		TestShader::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
 		uboScene.view = *camera.GetViewMatrix();
-		m_uniformScene.Update(&uboScene);
+		m_uniformScene->Update(&uboScene);
 
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline.GetPipeline());
+		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites1.size()), descriptorWrites1.data(), 0, nullptr);
-		m_testEntity1.CmdRender(*commandBuffer, m_pipeline);
+		m_testEntity1->CmdRender(*commandBuffer, *m_pipeline);
 
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites2.size()), descriptorWrites2.data(), 0, nullptr);
-		m_testEntity2.CmdRender(*commandBuffer, m_pipeline);
+	//	vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites2.size()), descriptorWrites2.data(), 0, nullptr);
+	//	m_testEntity2->CmdRender(*commandBuffer, m_pipeline);
 	}
 }

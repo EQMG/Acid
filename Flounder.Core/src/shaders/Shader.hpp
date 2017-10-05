@@ -33,16 +33,6 @@ namespace Flounder
 		~Shader();
 
 		/// <summary>
-		/// Creates the shader.
-		/// </summary>
-		void Create();
-
-		/// <summary>
-		/// Cleans up the shader.
-		/// </summary>
-		void Cleanup();
-
-		/// <summary>
 		/// Gets the loaded name for the shader.
 		/// </summary>
 		/// <returns> The shaders name. </returns>

@@ -8,14 +8,15 @@ namespace Flounder
 {
 	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
-	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader) :
+	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const InputState &inputState, const Descriptor &descriptor) :
 		m_name(name),
 		m_pipelineType(pipelineType),
-		m_inputState({}),
 
 		m_shader(shader),
 
-		m_descriptor({}),
+		m_inputState(inputState),
+		m_descriptor(descriptor),
+
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_descriptorSet(VK_NULL_HANDLE),
@@ -32,16 +33,6 @@ namespace Flounder
 		m_multisampleState({}),
 		m_dynamicState({})
 	{
-	}
-
-	Pipeline::~Pipeline()
-	{
-	}
-
-	void Pipeline::Create(const InputState &inputState, const Descriptor &descriptor)
-	{
-		m_inputState = inputState;
-		m_descriptor = descriptor;
 		CreateAttributes();
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
@@ -68,7 +59,7 @@ namespace Flounder
 		}
 	}
 
-	void Pipeline::Cleanup()
+	Pipeline::~Pipeline()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -194,21 +185,17 @@ namespace Flounder
 		descriptorSetAllocateInfo.pSetLayouts = &m_descriptorSetLayout;
 
 		Platform::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
-
-	//	vkUpdateDescriptorSets(logicalDevice, m_descriptor.descriptorWriteCount, m_descriptor.pDescriptorWrites, 0, nullptr);
 	}
 
 	void Pipeline::CreatePipelineLayout()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		// Pipeline layout struct.
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutCreateInfo.setLayoutCount = 1;
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 
-		// Creates the graphics pipeline layout.
 		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
