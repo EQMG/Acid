@@ -18,6 +18,9 @@ namespace Flounder
 		TestEntity m_testEntity1;
 		TestEntity m_testEntity2;
 
+		std::vector<VkWriteDescriptorSet> descriptorWrites1;
+		std::vector<VkWriteDescriptorSet> descriptorWrites2;
+
 		Shader m_shader;
 		Pipeline m_pipeline;
 	public:
