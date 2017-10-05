@@ -29,11 +29,12 @@ namespace Flounder
 
 		std::string m_name;
 		PipelineType m_pipelineType;
-		InputState m_inputState;
 
 		Shader *m_shader;
 
+		InputState m_inputState;
 		Descriptor m_descriptor;
+
 		VkDescriptorSetLayout m_descriptorSetLayout;
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
@@ -54,22 +55,12 @@ namespace Flounder
 		/// Creates a new pipeline.
 		/// </summary>
 		/// <param name="name"> The pipelines name. </param>
-		Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader);
+		Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const InputState &inputState, const Descriptor &descriptor);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
 		/// </summary>
 		~Pipeline();
-
-		/// <summary>
-		/// Creates the pipeline.
-		/// </summary>
-		void Create(const InputState &inputState, const Descriptor &descriptor);
-
-		/// <summary>
-		/// Cleans up the shapipelineder.
-		/// </summary>
-		void Cleanup();
 
 		/// <summary>
 		/// Gets the loaded name for the pipeline.

@@ -24,15 +24,15 @@ int main(int argc, char **argv)
 		Display::Get()->SetWindowSize(1080, 720);
 		Display::Get()->SetTitle("Flounder Demo");
 		Display::Get()->SetIcon("res/flounder.png");
-		Display::Get()->SetFpsLimit(0); // 61
+		Display::Get()->SetFpsLimit(61.0f);
 		Display::Get()->SetAntialiasing(true);
 		Display::Get()->SetFullscreen(false);
 	}
 
-	//if (Mouse::Get() != nullptr)
-	//{
-	//	Mouse::Get()->SetCustomMouse("res/cursor.png");
-	//}
+	if (Mouse::Get() != nullptr)
+	{
+		Mouse::Get()->SetCustomMouse("res/cursor.png");
+	}
 
 	if (Camera::Get() != nullptr)
 	{
@@ -55,10 +55,10 @@ int main(int argc, char **argv)
 		Standards::get()->AddStandard(new Instance());
 	}
 
-	/*if (Skyboxes::Get() != nullptr)
+	if (Skyboxes::Get() != nullptr)
 	{
 		Skyboxes::Get()->SetSkybox(new Skybox(
-			new Texture(6, "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png"),
+			new Texture({ "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png" }),
 			new Model("res/skybox/skyboxSphere.obj"),
 			2048.0f
 		));
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 		Waters::Get()->SetWater(new Water(
 			Vector3(), Vector3()
 		));
-	}*/
+	}
 
 	// Runs the engine loop.
 	int exitCode = m_engine->Run();

@@ -21,7 +21,7 @@ namespace Flounder
 		const VkExtent2D extent2d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()) };
 		const VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
 
-		m_swapchain.Create(extent2d);
+		m_swapchain.Create(extent2d); // TODO: Meme this up.
 		m_depthStencil.Create(extent3d);
 		m_renderPass.Create(m_depthStencil.GetFormat(), Display::Get()->GetSurfaceFormat().format);
 		m_swapchain.CreateFrameBuffers(m_renderPass.GetRenderPass(), m_depthStencil.GetImageView(), extent2d);

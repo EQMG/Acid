@@ -12,38 +12,30 @@ namespace Flounder
 		m_file(file),
 		m_vertices(std::vector<Vertex>()),
 		m_indices(std::vector<uint16_t>()),
-		m_aabb(Aabb()),
-		m_vertexBuffer(VertexBuffer()),
-		m_indexBuffer(IndexBuffer())
+		m_aabb(new Aabb()),
+		m_vertexBuffer(nullptr),
+		m_indexBuffer(nullptr)
 	{
 		LoadFromFile();
+		m_vertexBuffer = new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data());
+		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT16, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
 	}
 
 	Model::Model(const std::vector<Vertex> &vertices, const std::vector<uint16_t> &indices) :
 		m_file(""),
 		m_vertices(std::vector<Vertex>(vertices)),
 		m_indices(std::vector<uint16_t>(indices)),
-		m_aabb(Aabb()),
-		m_vertexBuffer(VertexBuffer()),
-		m_indexBuffer(IndexBuffer())
+		m_aabb(new Aabb()),
+		m_vertexBuffer(new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data())),
+		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT16, sizeof(m_indices[0]), m_indices.size(), m_indices.data()))
 	{
 	}
 
 	Model::~Model()
 	{
-		// delete m_aabb;
-	}
-
-	void Model::Create()
-	{
-		m_vertexBuffer.Create(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data());
-		m_indexBuffer.Create(VK_INDEX_TYPE_UINT16, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
-	}
-
-	void Model::Cleanup()
-	{
-		m_indexBuffer.Cleanup();
-		m_vertexBuffer.Cleanup();
+		delete m_indexBuffer;
+		delete m_vertexBuffer;
+		delete m_aabb;
 	}
 
 	void Model::LoadFromFile()
