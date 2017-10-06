@@ -18,10 +18,10 @@ namespace Flounder
 		Vector3 m_position;
 		Vector3 m_rotation;
 
-		TestEntity(const Vector3 &position, const Vector3 &rotation);
+		TestEntity(const Vector3 &position, const Vector3 &rotation, const std::string &texture);
 
 		~TestEntity();
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline);
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const std::vector<VkWriteDescriptorSet> &descriptorWrites);
 	};
 }
