@@ -123,6 +123,7 @@
     <ClCompile Include="src\skyboxes\RendererSkyboxes.cpp" />
     <ClCompile Include="src\skyboxes\Skybox.cpp" />
     <ClCompile Include="src\skyboxes\Skyboxes.cpp" />
+    <ClCompile Include="src\skyboxes\SkyboxesShader.cpp" />
     <ClCompile Include="src\sounds\Sound.cpp" />
     <ClCompile Include="src\space\StructureBasic.cpp" />
     <ClCompile Include="src\standards\Standards.cpp" />
@@ -296,6 +297,7 @@
     <ClInclude Include="src\skyboxes\RendererSkyboxes.hpp" />
     <ClInclude Include="src\skyboxes\Skybox.hpp" />
     <ClInclude Include="src\skyboxes\Skyboxes.hpp" />
+    <ClInclude Include="src\skyboxes\SkyboxesShader.hpp" />
     <ClInclude Include="src\sounds\Sound.hpp" />
     <ClInclude Include="src\space\ISpatialObject.hpp" />
     <ClInclude Include="src\space\ISpatialStructure.hpp" />

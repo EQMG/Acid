@@ -19,9 +19,6 @@ namespace Flounder
 		})),
 		m_pipeline(new Pipeline("tests", PipelinePolygon, m_shader, TestShader::inputState, TestShader::descriptor))
 	{
-		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
-		vkQueueWaitIdle(Display::Get()->GetQueue());
-
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		descriptorWrites1 = std::vector<VkWriteDescriptorSet>{ m_uniformScene->GetWriteDescriptor(0, descriptorSet), m_testEntity1->m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_testEntity1->m_diffuse->GetWriteDescriptor(2, descriptorSet), m_testEntity1->m_swapMap->GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
 		descriptorWrites2 = std::vector<VkWriteDescriptorSet>{ m_uniformScene->GetWriteDescriptor(0, descriptorSet), m_testEntity2->m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_testEntity2->m_diffuse->GetWriteDescriptor(2, descriptorSet), m_testEntity2->m_swapMap->GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
@@ -47,6 +44,6 @@ namespace Flounder
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
 		m_testEntity1->CmdRender(*commandBuffer, *m_pipeline, descriptorWrites1);
-		m_testEntity2->CmdRender(*commandBuffer, *m_pipeline, descriptorWrites2);
+	//	m_testEntity2->CmdRender(*commandBuffer, *m_pipeline, descriptorWrites2);
 	}
 }
