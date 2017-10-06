@@ -1,6 +1,7 @@
 ﻿#include "UniformBuffer.hpp"
 
 #include "../../devices/Display.hpp"
+#include "../Renderer.hpp"
 
 namespace Flounder
 {
@@ -16,6 +17,9 @@ namespace Flounder
 	void UniformBuffer::Update(void *newData)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+	//	const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+	//	vkCmdUpdateBuffer(commandBuffer, m_buffer, 0, m_size, newData);
 
 		// Copies the data to the buffer.
 		void *data;
