@@ -81,7 +81,7 @@ namespace Flounder
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
-	VkWriteDescriptorSet Texture::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet)
+	VkWriteDescriptorSet Texture::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const
 	{
 		// TODO: Don't create a descriptor like this!
 		VkDescriptorImageInfo *descriptorInfo = new VkDescriptorImageInfo();

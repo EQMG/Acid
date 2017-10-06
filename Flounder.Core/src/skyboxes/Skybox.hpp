@@ -3,6 +3,8 @@
 #include "../maths/Matrix4.hpp"
 #include "../maths/Vector3.hpp"
 #include "../models/Model.hpp"
+#include "../renderer/buffers/UniformBuffer.hpp"
+#include "../renderer/pipelines/Pipeline.hpp"
 #include "../textures/Texture.hpp"
 
 namespace Flounder
@@ -10,6 +12,8 @@ namespace Flounder
 	class Skybox
 	{
 	private:
+		UniformBuffer *m_uniformObject;
+
 		Texture *m_texture;
 		Model *m_model;
 
@@ -24,6 +28,8 @@ namespace Flounder
 		~Skybox();
 
 		void Update();
+
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
 		Texture *GetTexture() const { return m_texture; }
 

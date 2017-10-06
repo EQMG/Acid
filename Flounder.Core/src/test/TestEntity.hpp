@@ -11,6 +11,7 @@ namespace Flounder
 	{
 	public:
 		UniformBuffer *m_uniformObject;
+
 		Model *m_model;
 		Texture *m_diffuse;
 		Texture *m_swapMap;

@@ -1,14 +1,13 @@
 #pragma once
 
-#include "../maths/Vector2.hpp"
 #include "../maths/Matrix4.hpp"
-
+#include "../maths/Colour.hpp"
 #include "../renderer/pipelines/Descriptor.hpp"
 #include "../renderer/pipelines/InputState.hpp"
 
 namespace Flounder
 {
-	class TestShader
+	class SkyboxesShader
 	{
 	public:
 		struct UboScene
@@ -21,14 +20,13 @@ namespace Flounder
 		struct UboObject
 		{
 			Matrix4 transform;
-			float swaying;
-			Vector2 swayOffset;
+			Colour skyColour;
+			float blendFactor;
 		};
 
 		static DescriptorType typeUboScene;
 		static DescriptorType typeUboObject;
-		static DescriptorType typeSamplerDiffuse;
-		static DescriptorType typeSamplerSway;
+	//	static DescriptorType typeSamplerCubemap;
 		static Descriptor descriptor;
 
 		static InputState inputState;

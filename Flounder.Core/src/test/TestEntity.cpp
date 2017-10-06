@@ -8,6 +8,7 @@ namespace Flounder
 {
 	TestEntity::TestEntity(const Vector3 &position, const Vector3 &rotation, const std::string &texture) :
 		m_uniformObject(new UniformBuffer(sizeof(TestShader::UboObject))),
+
 		m_model(new Model("res/treeBirchSmall/model.obj")),
 		m_diffuse(new Texture(texture)),
 		m_swapMap(new Texture("res/treeBirchSmall/sway.png")),
@@ -29,8 +30,8 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		TestShader::UboObject uboObject= {};
-		uboObject.model = Matrix4();
+		TestShader::UboObject uboObject = {};
+		uboObject.transform = Matrix4();
 		uboObject.swaying = 1.0f;
 		const float swayPower = 0.15f;
 		const float wx = sin(m_position.m_x * 0.6f);
@@ -40,7 +41,7 @@ namespace Flounder
 		const float swayX = swayPower * (sin(0.25f * st) - sin(1.2f * st) + cos(0.5f * st));
 		const float swayY = swayPower * (cos(0.25f * st) - cos(1.2f * st) + sin(0.5f * st));
 		uboObject.swayOffset = Vector2(swayX, swayY);
-		Matrix4::TransformationMatrix(m_position, m_rotation, 1.0f, &uboObject.model);
+		Matrix4::TransformationMatrix(m_position, m_rotation, 1.0f, &uboObject.transform);
 		m_uniformObject->Update(&uboObject);
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);

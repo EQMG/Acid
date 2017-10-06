@@ -2,17 +2,23 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 1) uniform UBO 
+layout(binding = 0) uniform UboScene 
 {
-	mat4 projectionMatrix;
-	mat4 viewMatrix;
-	mat4 modelMatrix;
-	vec4 clipPlane;
-} ubo;
+	mat4 projection;
+	mat4 view;
+	vec4 clip;
+} scene;
 
-layout(location = 0) in vec3 inPosition;
+layout(binding = 1) uniform UboObject 
+{
+	mat4 transform;
+	vec3 skyColour;
+	float blendFactor;
+} object;
 
-layout(location = 0) out vec3 textureCoords;
+layout(location = 0) in vec3 vertexPosition;
+
+layout(location = 0) out vec3 fragmentTextures;
 
 out gl_PerVertex 
 {
@@ -22,10 +28,10 @@ out gl_PerVertex
 
 void main(void) 
 {
-	vec4 worldPosition = ubo.modelMatrix * vec4(inPosition, 1.0);
+	vec4 worldPosition = object.transform * vec4(vertexPosition, 1.0);
+	
+    gl_Position = scene.projection * scene.view * worldPosition;
+	gl_ClipDistance[0] = dot(worldPosition, scene.clip);
 
-	gl_ClipDistance[0] = dot(worldPosition, ubo.clipPlane);
-	gl_Position = ubo.projectionMatrix * ubo.viewMatrix * worldPosition;
-
-	textureCoords = inPosition;
+	fragmentTextures = vertexPosition;
 }
