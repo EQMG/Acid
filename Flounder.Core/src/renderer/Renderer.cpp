@@ -28,6 +28,9 @@ namespace Flounder
 
 		CreateFences();
 		CreateCommandPool();
+
+		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
+		vkQueueWaitIdle(Display::Get()->GetQueue());
 	}
 
 	Renderer::~Renderer()
@@ -136,11 +139,6 @@ namespace Flounder
 		Platform::ErrorVk(vkAcquireNextImageKHR(device, *m_swapchain.GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage));
 		Platform::ErrorVk(vkWaitForFences(device, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
 		Platform::ErrorVk(vkResetFences(device, 1, &m_fenceSwapchainImage));
-	}
-
-	void Renderer::NextSubpass()
-	{
-		vkCmdNextSubpass(m_commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 	}
 
 	void Renderer::EndRendering(std::vector<VkSemaphore> waitSemaphores)

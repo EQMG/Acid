@@ -10,6 +10,7 @@ class ManagerRender :
 private:
 	Vector4 m_infinity;
 
+	RendererSkyboxes *m_rendererSkyboxes;
 	RendererTest *m_rendererTest;
 public:
 	ManagerRender();
