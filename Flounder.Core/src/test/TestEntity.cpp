@@ -1,14 +1,15 @@
 ﻿#include "TestEntity.hpp"
 
+#include "../devices/Display.hpp"
 #include "../engine/Engine.hpp"
 #include "TestShader.hpp"
 
 namespace Flounder
 {
-	TestEntity::TestEntity(const Vector3 &position, const Vector3 &rotation) :
+	TestEntity::TestEntity(const Vector3 &position, const Vector3 &rotation, const std::string &texture) :
 		m_uniformObject(new UniformBuffer(sizeof(TestShader::UboObject))),
 		m_model(new Model("res/treeBirchSmall/model.obj")),
-		m_diffuse(new Texture("res/treeBirchSmall/diffuse.png")),
+		m_diffuse(new Texture(texture)),
 		m_swapMap(new Texture("res/treeBirchSmall/sway.png")),
 
 		m_position(position),
@@ -24,8 +25,10 @@ namespace Flounder
 		delete m_uniformObject;
 	}
 
-	void TestEntity::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)
+	void TestEntity::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const std::vector<VkWriteDescriptorSet> &descriptorWrites)
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
 		TestShader::UboObject uboObject= {};
 		uboObject.model = Matrix4();
 		uboObject.swaying = 1.0f;
@@ -39,6 +42,8 @@ namespace Flounder
 		uboObject.swayOffset = Vector2(swayX, swayY);
 		Matrix4::TransformationMatrix(m_position, m_rotation, 1.0f, &uboObject.model);
 		m_uniformObject->Update(&uboObject);
+
+		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
 		VkBuffer vertexBuffers[] = { m_model->GetVertexBuffer()->GetBuffer() };
 		VkDeviceSize offsets[] = { 0 };
