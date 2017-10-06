@@ -10,8 +10,8 @@ namespace Flounder
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(TestShader::UboScene))),
 
-		m_testEntity1(new TestEntity(Vector3(0.0f, -2.3f, 3.0f), Vector3())),
-		m_testEntity2(new TestEntity(Vector3(2.0f, -2.3f, 2.0f), Vector3())),
+		m_testEntity1(new TestEntity(Vector3(0.0f, -2.3f, 3.0f), Vector3(0.0f, 0.0f, 0.0f), "res/treeBirchSmall/diffuse.png")),
+		m_testEntity2(new TestEntity(Vector3(2.0f, -2.3f, 2.0f), Vector3(0.0f, 90.0f, 0.0f), "res/undefined.png")),
 
 		m_shader(new Shader("tests", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
@@ -39,8 +39,6 @@ namespace Flounder
 
 	void RendererTest::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
 		TestShader::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
 		uboScene.view = *camera.GetViewMatrix();
@@ -48,10 +46,7 @@ namespace Flounder
 
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites1.size()), descriptorWrites1.data(), 0, nullptr);
-		m_testEntity1->CmdRender(*commandBuffer, *m_pipeline);
-
-	//	vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites2.size()), descriptorWrites2.data(), 0, nullptr);
-	//	m_testEntity2->CmdRender(*commandBuffer, m_pipeline);
+		m_testEntity1->CmdRender(*commandBuffer, *m_pipeline, descriptorWrites1);
+		m_testEntity2->CmdRender(*commandBuffer, *m_pipeline, descriptorWrites2);
 	}
 }
