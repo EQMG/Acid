@@ -44,7 +44,7 @@ namespace Flounder
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
-	VkWriteDescriptorSet UniformBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet)
+	VkWriteDescriptorSet UniformBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const
 	{
 		// TODO: Don't create a descriptor like this!
 		VkDescriptorBufferInfo *descriptorInfo = new VkDescriptorBufferInfo();

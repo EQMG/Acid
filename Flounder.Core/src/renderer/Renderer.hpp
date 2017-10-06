@@ -50,8 +50,6 @@ namespace Flounder
 
 		void BeginReindering();
 
-		void NextSubpass();
-
 		void EndRendering(std::vector<VkSemaphore> waitSemaphores);
 
 		/// <summary>

@@ -1,75 +1,38 @@
 #include "RendererSkyboxes.hpp"
 
+#include "SkyboxesShader.hpp"
+
 namespace Flounder
 {
 	RendererSkyboxes::RendererSkyboxes() :
 		IRenderer(),
+		m_uniformScene(new UniformBuffer(sizeof(SkyboxesShader::UboScene))),
+
 		m_shader(new Shader("skyboxes", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/skyboxes/skybox.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/skyboxes/skybox.frag.spv")
-		}))
+		})),
+		m_pipeline(new Pipeline("skyboxes", PipelinePolygon, m_shader, SkyboxesShader::inputState, SkyboxesShader::descriptor))
 	{
 	}
 
 	RendererSkyboxes::~RendererSkyboxes()
 	{
+		delete m_uniformScene;
+
 		delete m_shader;
+		delete m_pipeline;
 	}
 
 	void RendererSkyboxes::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		PrepareRendering(clipPlane, camera);
-		RenderSkybox(Skyboxes::Get()->GetSkybox());
-		EndRendering();
-	}
+		SkyboxesShader::UboScene uboScene = {};
+		uboScene.projection = *camera.GetProjectionMatrix();
+		uboScene.view = *camera.GetViewMatrix();
+		m_uniformScene->Update(&uboScene);
 
-	void RendererSkyboxes::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
-	{
-#if 0
-		// Starts the shader.
-		m_shader->start();
+		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-		// Loads the uniforms.
-		m_shader->loadUniform4fv("projectionMatrix", *camera.getProjectionMatrix());
-		m_shader->loadUniform4fv("viewMatrix", *camera.getViewMatrix());
-		m_shader->loadUniform4f("clipPlane", clipPlane);
-
-		// Sets the GPU for rendering this object.
-		renderer::get()->enableDepthTesting();
-		renderer::get()->depthMask(false);
-		renderer::get()->cullBackFaces(false);
-		renderer::get()->disableBlending();
-#endif
-	}
-
-	void RendererSkyboxes::RenderSkybox(Skybox *object)
-	{
-#if 0
-		// Binds the layouts.
-		renderer::get()->bindVAO(object->getModel()->getVaoID(), 1, 0);
-		renderer::get()->bindTexture(object->getTexture(), 0);
-
-		// Loads the uniforms.
-		m_shader->loadUniform4fv("modelMatrix", *object->getModelMatrix());
-		m_shader->loadUniform3f("skyColour", *skyboxes::get()->getFog()->m_colour);
-		m_shader->loadUniform1f("blendFactor", object->getBlend());
-
-		// Tells the GPU to render this object.
-		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getModel()->getVaoLength());
-
-		// Unbinds the layouts.
-		renderer::get()->unbindVAO(1, 0);
-#endif
-	}
-
-	void RendererSkyboxes::EndRendering()
-	{
-#if 0
-		// Unbinds the layouts.
-		renderer::get()->depthMask(true);
-
-		// Stops the shader.
-		m_shader->stop();
-#endif
+		Skyboxes::Get()->GetSkybox()->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
 	}
 }
