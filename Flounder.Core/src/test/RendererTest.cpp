@@ -17,7 +17,7 @@ namespace Flounder
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		})),
-		m_pipeline(new Pipeline("tests", PipelinePolygon, m_shader, TestShader::inputState, TestShader::descriptor))
+		m_pipeline(new Pipeline("tests", m_shader, TestShader::pipelineCreateInfo, TestShader::inputState, TestShader::descriptor))
 	{
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		descriptorWrites1 = std::vector<VkWriteDescriptorSet>{ m_uniformScene->GetWriteDescriptor(0, descriptorSet), m_testEntity1->m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_testEntity1->m_diffuse->GetWriteDescriptor(2, descriptorSet), m_testEntity1->m_swapMap->GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
