@@ -43,7 +43,7 @@ namespace Flounder
 
 		SkyboxesShader::UboObject uboObject = {};
 		uboObject.transform = Matrix4(*m_modelMatrix);
-		uboObject.skyColour = Colour(0.4f, 0.2f, 0.1f);
+		uboObject.skyColour = Colour(0.3f, 0.1f, 0.8f);
 		uboObject.blendFactor = m_blend;
 		m_uniformObject->Update(&uboObject);
 

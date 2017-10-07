@@ -64,11 +64,15 @@ namespace Flounder
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(IManagerRender *managerRender) { m_managerRender = managerRender; }
 
-		VkRenderPass GetRenderPass() { return m_renderPass.GetRenderPass(); }
+		VkRenderPass GetRenderPass() const { return m_renderPass.GetRenderPass(); }
 
-		VkCommandPool GetCommandPool() { return m_commandPool; }
+		VkCommandPool GetCommandPool() const { return m_commandPool; }
 
-		VkCommandBuffer GetCommandBuffer() { return m_commandBuffer; }
+		VkCommandBuffer GetCommandBuffer() const { return m_commandBuffer; }
+
+		static VkCommandBuffer BeginSingleTimeCommands();
+
+		static void EndSingleTimeCommands(const VkCommandBuffer &commandBuffer);
 	private:
 		VkFramebuffer GetActiveFramebuffer() const { return m_swapchain.GetFramebuffers()[m_activeSwapchinImage]; }
 

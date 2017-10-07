@@ -4,6 +4,7 @@
 #include "../maths/Colour.hpp"
 #include "../renderer/pipelines/Descriptor.hpp"
 #include "../renderer/pipelines/InputState.hpp"
+#include "../renderer/pipelines/PipelineCreate.hpp"
 
 namespace Flounder
 {
@@ -28,7 +29,8 @@ namespace Flounder
 		static DescriptorType typeUboObject;
 	//	static DescriptorType typeSamplerCubemap;
 		static Descriptor descriptor;
-
 		static InputState inputState;
+
+		static PipelineCreateInfo pipelineCreateInfo;
 	};
 }

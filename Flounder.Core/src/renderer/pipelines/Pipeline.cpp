@@ -8,12 +8,12 @@ namespace Flounder
 {
 	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
-	Pipeline::Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const InputState &inputState, const Descriptor &descriptor) :
+	Pipeline::Pipeline(const std::string &name, Shader *shader, const PipelineCreateInfo &pipelineCreateInfo, const InputState &inputState, const Descriptor &descriptor) :
 		m_name(name),
-		m_pipelineType(pipelineType),
 
 		m_shader(shader),
 
+		m_pipelineCreateInfo(pipelineCreateInfo),
 		m_inputState(inputState),
 		m_descriptor(descriptor),
 
@@ -39,19 +39,19 @@ namespace Flounder
 		CreateDescriptorSet();
 		CreatePipelineLayout();
 
-		switch (m_pipelineType)
+		switch (pipelineCreateInfo.pipelineModeFlags)
 		{
-		case PipelinePolygon:
-			CreatePolygonPipeline();
+		case PIPELINE_POLYGON:
+			CreatePipelinePolygon();
 			break;
-		case PipelineNoDepthTest:
-			CreateNoDepthTestPipeline();
+		case PIPELINE_NO_DEPTH:
+			CreatePipelineNoDepth();
 			break;
-		case PipelineMrt:
-			CreateMrtPipeline();
+		case PIPELINE_MRT:
+			CreatePipelineMrt();
 			break;
-		case PipelineMultiTexture:
-			CreateMultiTexturePipeline();
+		case PIPELINE_MULTI_TEXTURE:
+			CreatePipelineMultiTexture();
 			break;
 		default:
 			assert(false);
@@ -80,8 +80,8 @@ namespace Flounder
 		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		m_rasterizationState.depthClampEnable = VK_FALSE;
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
-		m_rasterizationState.polygonMode = VK_POLYGON_MODE_FILL;
-		m_rasterizationState.cullMode = VK_CULL_MODE_BACK_BIT;
+		m_rasterizationState.polygonMode = m_pipelineCreateInfo.polygonMode;
+		m_rasterizationState.cullMode = m_pipelineCreateInfo.cullModeFlags;
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
 		m_rasterizationState.depthBiasConstantFactor = 0.0f;
@@ -199,7 +199,7 @@ namespace Flounder
 		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
-	void Pipeline::CreatePolygonPipeline()
+	void Pipeline::CreatePipelinePolygon()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto renderPass = Renderer::Get()->GetRenderPass();
@@ -235,15 +235,50 @@ namespace Flounder
 		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
-	void Pipeline::CreateNoDepthTestPipeline()
+	void Pipeline::CreatePipelineNoDepth()
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto renderPass = Renderer::Get()->GetRenderPass();
+
+		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
+		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_inputState.vertexBindingDescriptions.size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_inputState.vertexBindingDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_inputState.vertexAttributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_inputState.vertexAttributeDescriptions.data();
+
+		m_depthStencilState.depthTestEnable = VK_FALSE;
+		m_depthStencilState.depthWriteEnable = VK_FALSE;
+
+		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
+		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+		pipelineCreateInfo.layout = m_pipelineLayout;
+		pipelineCreateInfo.renderPass = renderPass;
+		pipelineCreateInfo.subpass = 0;
+		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+		pipelineCreateInfo.basePipelineIndex = -1;
+
+		pipelineCreateInfo.pInputAssemblyState = &m_inputAssemblyState;
+		pipelineCreateInfo.pRasterizationState = &m_rasterizationState;
+		pipelineCreateInfo.pColorBlendState = &m_colourBlendState;
+		pipelineCreateInfo.pMultisampleState = &m_multisampleState;
+		pipelineCreateInfo.pViewportState = &m_viewportState;
+		pipelineCreateInfo.pDepthStencilState = &m_depthStencilState;
+		pipelineCreateInfo.pDynamicState = &m_dynamicState;
+
+		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
+		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_shader->GetStages().size());
+		pipelineCreateInfo.pStages = m_shader->GetStages().data();
+
+		// Create the graphics pipeline.
+		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+	}
+
+	void Pipeline::CreatePipelineMrt()
 	{
 	}
 
-	void Pipeline::CreateMrtPipeline()
-	{
-	}
-
-	void Pipeline::CreateMultiTexturePipeline()
+	void Pipeline::CreatePipelineMultiTexture()
 	{
 	}
 }

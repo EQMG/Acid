@@ -10,6 +10,12 @@ namespace Flounder
 	DescriptorType SkyboxesShader::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL);
 //	DescriptorType SkyboxesShader::typeSamplerCubemap = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	Descriptor SkyboxesShader::descriptor = Descriptor::Create({ typeUboScene, typeUboObject }); // , typeSamplerCubemap
-
 	InputState SkyboxesShader::inputState = InputState::Create(Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions());
+
+	PipelineCreateInfo SkyboxesShader::pipelineCreateInfo =
+	{
+		PIPELINE_NO_DEPTH, // pipelineModeFlags
+		VK_POLYGON_MODE_FILL, // polygonMode
+		VK_CULL_MODE_FRONT_BIT // cullModeFlags
+	};
 }

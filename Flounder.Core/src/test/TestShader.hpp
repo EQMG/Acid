@@ -5,6 +5,7 @@
 
 #include "../renderer/pipelines/Descriptor.hpp"
 #include "../renderer/pipelines/InputState.hpp"
+#include "../renderer/pipelines/PipelineCreate.hpp"
 
 namespace Flounder
 {
@@ -30,7 +31,8 @@ namespace Flounder
 		static DescriptorType typeSamplerDiffuse;
 		static DescriptorType typeSamplerSway;
 		static Descriptor descriptor;
-
 		static InputState inputState;
+
+		static PipelineCreateInfo pipelineCreateInfo;
 	};
 }
