@@ -12,7 +12,7 @@ namespace Flounder
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/skyboxes/skybox.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/skyboxes/skybox.frag.spv")
 		})),
-		m_pipeline(new Pipeline("skyboxes", PipelinePolygon, m_shader, SkyboxesShader::inputState, SkyboxesShader::descriptor))
+		m_pipeline(new Pipeline("skyboxes", m_shader, SkyboxesShader::pipelineCreateInfo, SkyboxesShader::inputState, SkyboxesShader::descriptor))
 	{
 	}
 
