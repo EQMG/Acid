@@ -8,17 +8,10 @@
 
 #include "Descriptor.hpp"
 #include "InputState.hpp"
+#include "PipelineCreate.hpp"
 
 namespace Flounder
 {
-	enum PipelineType
-	{
-		PipelinePolygon,
-		PipelineNoDepthTest,
-		PipelineMrt,
-		PipelineMultiTexture
-	};
-
 	/// <summary>
 	/// Class that represents a Vulkan pipeline.
 	/// </summary>
@@ -28,10 +21,10 @@ namespace Flounder
 		static const std::vector<VkDynamicState> DYNAMIC_STATES;
 
 		std::string m_name;
-		PipelineType m_pipelineType;
 
 		Shader *m_shader;
 
+		PipelineCreateInfo m_pipelineCreateInfo;
 		InputState m_inputState;
 		Descriptor m_descriptor;
 
@@ -55,7 +48,7 @@ namespace Flounder
 		/// Creates a new pipeline.
 		/// </summary>
 		/// <param name="name"> The pipelines name. </param>
-		Pipeline(const std::string &name, const PipelineType &pipelineType, Shader *shader, const InputState &inputState, const Descriptor &descriptor);
+		Pipeline(const std::string &name, Shader *shader, const PipelineCreateInfo &pipelineCreateInfo, const InputState &inputState, const Descriptor &descriptor);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
@@ -88,12 +81,12 @@ namespace Flounder
 
 		void CreatePipelineLayout();
 
-		void CreatePolygonPipeline();
+		void CreatePipelinePolygon();
 
-		void CreateNoDepthTestPipeline();
+		void CreatePipelineNoDepth();
 
-		void CreateMrtPipeline();
+		void CreatePipelineMrt();
 
-		void CreateMultiTexturePipeline();
+		void CreatePipelineMultiTexture();
 	};
 }

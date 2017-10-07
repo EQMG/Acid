@@ -109,15 +109,11 @@ namespace Flounder
 
 		stbi_uc *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 
-		void CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
+		void CreateImage(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory);
 
-		void TransitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
+		void TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout);
 
-		void CopyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
-
-		VkCommandBuffer BeginSingleTimeCommands();
-
-		void EndSingleTimeCommands(VkCommandBuffer commandBuffer);
+		void CopyBufferToImage(const uint32_t &width, const uint32_t &height, const VkBuffer &buffer, const VkImage &image);
 
 		static VkDeviceSize SomeShittyFunctionThatGetsATexturesSize(const std::string &file);
 	};

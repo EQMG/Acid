@@ -11,6 +11,12 @@ namespace Flounder
 	DescriptorType TestShader::typeSamplerDiffuse = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	DescriptorType TestShader::typeSamplerSway = Texture::CreateDescriptor(3, VK_SHADER_STAGE_VERTEX_BIT);
 	Descriptor TestShader::descriptor = Descriptor::Create({ typeUboScene, typeUboObject, typeSamplerDiffuse, typeSamplerSway });
-
 	InputState TestShader::inputState = InputState::Create(Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions());
+
+	PipelineCreateInfo TestShader::pipelineCreateInfo =
+	{
+		PIPELINE_POLYGON, // pipelineModeFlags
+		VK_POLYGON_MODE_FILL, // polygonMode
+		VK_CULL_MODE_BACK_BIT // cullModeFlags
+	};
 }
