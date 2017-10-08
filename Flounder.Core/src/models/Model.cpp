@@ -31,6 +31,16 @@ namespace Flounder
 	{
 	}
 
+	Model::Model(const std::vector<Vertex> &vertices) :
+		m_file(""),
+		m_vertices(std::vector<Vertex>(vertices)),
+		m_indices(std::vector<uint16_t>()),
+		m_aabb(new Aabb()),
+		m_vertexBuffer(new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data())),
+		m_indexBuffer(nullptr)
+	{
+	}
+
 	Model::~Model()
 	{
 		delete m_indexBuffer;

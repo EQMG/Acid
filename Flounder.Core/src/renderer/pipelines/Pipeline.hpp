@@ -71,8 +71,6 @@ namespace Flounder
 
 		VkPipelineLayout GetPipelineLayout() const { return m_pipelineLayout; }
 	private:
-		void CreateAttributes();
-
 		void CreateDescriptorLayout();
 
 		void CreateDescriptorPool();
@@ -80,6 +78,8 @@ namespace Flounder
 		void CreateDescriptorSet();
 
 		void CreatePipelineLayout();
+
+		void CreateAttributes();
 
 		void CreatePipelinePolygon();
 

@@ -1,111 +1,35 @@
 #include "RendererWaters.hpp"
 
+#include "ShaderWaters.hpp"
+
 namespace Flounder
 {
 	RendererWaters::RendererWaters() :
 		IRenderer(),
-		m_fboReflection(new Fbo(true, Waters::Get()->GetReflectionQuality(), DepthTexture, true, 3)),
-		m_rendererDeferred(new RendererDeferred()),
+		m_uniformScene(new UniformBuffer(sizeof(ShaderWaters::UboScene))),
+
 		m_shader(new Shader("waters", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/waters/water.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/waters/water.frag.spv")
-		}))
+		})),
+		m_pipeline(new Pipeline("waters", m_shader, ShaderWaters::pipelineCreateInfo, ShaderWaters::inputState, ShaderWaters::descriptor))
 	{
 	}
 
 	RendererWaters::~RendererWaters()
 	{
-		delete m_fboReflection;
-		delete m_rendererDeferred;
-
 		delete m_shader;
 	}
 
 	void RendererWaters::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		PrepareRendering(clipPlane, camera);
-		RenderWater(Waters::Get()->GetWater());
-		EndRendering();
-	}
+		ShaderWaters::UboScene uboScene = {};
+		uboScene.projection = *camera.GetProjectionMatrix();
+		uboScene.view = *camera.GetViewMatrix();
+		m_uniformScene->Update(&uboScene);
 
-	void RendererWaters::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
-	{
-#if 0
-		// Starts the shader.
-		m_shader->start();
+		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-		// Loads the uniforms.
-		m_shader->loadUniform4fv("projectionMatrix", *camera.getProjectionMatrix());
-		m_shader->loadUniform4fv("viewMatrix", *camera.getViewMatrix());
-		m_shader->loadUniform4f("clipPlane", clipPlane);
-
-		if (waters::get()->getEnableReflections() && waters::get()->getColourIntensity() != 1.0f)
-		{
-		// Update the quality scalar.
-			if (m_fboReflection->getSizeScalar() != waters::get()->getReflectionQuality())
-			{
-				m_fboReflection->setSizeScalar(waters::get()->getReflectionQuality());
-			}
-
-		// Binds the reflection FBO.
-			if (m_rendererDeferred != nullptr)
-			{
-				renderer::get()->bindTexture(m_rendererDeferred->getFbo()->getColourTexture(0), GL_TEXTURE_2D, 0);
-			}
-			else
-			{
-				renderer::get()->bindTexture(m_fboReflection->getColourTexture(0), GL_TEXTURE_2D, 0);
-			}
-		}
-
-		// Sets the GPU for rendering this object.
-		renderer::get()->enableDepthTesting();
-		renderer::get()->cullBackFaces(true);
-#endif
-	}
-
-	void RendererWaters::RenderWater(Water *object)
-	{
-#if 0
-		// Binds the layouts.
-		renderer::get()->bindVAO(object->getModel()->getVaoID(), 1, 0);
-
-		// Loads the uniforms.
-		m_shader->loadUniform4fv("modelMatrix", *object->getModelMatrix());
-
-		m_shader->loadUniform3f("waterOffset", *object->getOffset());
-
-		 m_shader->loadUniform4f("diffuseColour", 
-			 object->getColour()->m_r, object->getColour()->m_g, object->getColour()->m_b, 
-			 waters::get()->getEnableReflections() ? waters::get()->getColourIntensity() : 1.0f
-		 );
-
-		m_shader->loadUniform1f("waveTime", Engine::Get()->getTimeSec() / water::WAVE_SPEED);
-		m_shader->loadUniform1f("waveLength", water::WAVE_LENGTH);
-		m_shader->loadUniform1f("amplitude", water::AMPLITUDE);
-		m_shader->loadUniform1f("squareSize", static_cast<float>(water::SQUARE_SIZE));
-		m_shader->loadUniform1f("waterHeight", object->getPosition()->m_y);
-
-		m_shader->loadUniform1f("shineDamper", water::SHINE_DAMPER);
-		m_shader->loadUniform1f("reflectivity", water::REFLECTIVITY);
-
-		m_shader->loadUniform1i("ignoreReflections", !waters::get()->getEnableReflections());
-
-		// Tells the GPU to render this object.
-#if 0
-		renderer::get()->renderArrays(GL_TRIANGLES, object->getModel()->getVaoLength());
-#endif
-
-		// Unbinds the layouts.
-		renderer::get()->unbindVAO(1, 0);
-#endif
-	}
-
-	void RendererWaters::EndRendering()
-	{
-#if 0
-		// Stops the shader.
-		m_shader->stop();
-#endif
+		Waters::Get()->GetWater()->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
 	}
 }
