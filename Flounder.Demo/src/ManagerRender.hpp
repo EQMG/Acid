@@ -11,6 +11,7 @@ private:
 	Vector4 m_infinity;
 
 	RendererSkyboxes *m_rendererSkyboxes;
+	RendererWaters *m_rendererWaters;
 	RendererTest *m_rendererTest;
 public:
 	ManagerRender();

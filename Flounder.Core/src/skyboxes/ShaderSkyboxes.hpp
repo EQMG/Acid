@@ -1,14 +1,15 @@
 #pragma once
 
-#include "../maths/Matrix4.hpp"
 #include "../maths/Colour.hpp"
+#include "../maths/Matrix4.hpp"
+
 #include "../renderer/pipelines/Descriptor.hpp"
 #include "../renderer/pipelines/InputState.hpp"
 #include "../renderer/pipelines/PipelineCreate.hpp"
 
 namespace Flounder
 {
-	class SkyboxesShader
+	class ShaderSkyboxes
 	{
 	public:
 		struct UboScene

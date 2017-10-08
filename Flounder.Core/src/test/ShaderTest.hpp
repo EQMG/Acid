@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../maths/Vector2.hpp"
 #include "../maths/Matrix4.hpp"
+#include "../maths/Vector2.hpp"
 
 #include "../renderer/pipelines/Descriptor.hpp"
 #include "../renderer/pipelines/InputState.hpp"
@@ -9,7 +9,7 @@
 
 namespace Flounder
 {
-	class TestShader
+	class ShaderTest
 	{
 	public:
 		struct UboScene

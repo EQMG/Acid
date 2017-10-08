@@ -2,19 +2,16 @@
 
 #include "../camera/Camera.hpp"
 #include "../devices/Display.hpp"
-#include "SkyboxesShader.hpp"
+#include "ShaderSkyboxes.hpp"
 
 namespace Flounder
 {
 	Skybox::Skybox(Texture *texture, Model *model, const float &size) :
-		m_uniformObject(new UniformBuffer(sizeof(SkyboxesShader::UboObject))),
-
+		m_uniformObject(new UniformBuffer(sizeof(ShaderSkyboxes::UboObject))),
 		m_texture(texture),
 		m_model(model),
-
 		m_size(size),
 		m_blend(1.0f),
-
 		m_rotation(new Vector3()),
 		m_modelMatrix(new Matrix4())
 	{
@@ -41,7 +38,7 @@ namespace Flounder
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this! , m_texture->GetWriteDescriptor(2, descriptorSet)
 
-		SkyboxesShader::UboObject uboObject = {};
+		ShaderSkyboxes::UboObject uboObject = {};
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		uboObject.skyColour = Colour("#366996");
 		uboObject.blendFactor = m_blend;

@@ -2,12 +2,12 @@
 
 #include "../devices/Display.hpp"
 #include "../engine/Engine.hpp"
-#include "TestShader.hpp"
+#include "ShaderTest.hpp"
 
 namespace Flounder
 {
 	TestEntity::TestEntity(const Vector3 &position, const Vector3 &rotation, const std::string &texture) :
-		m_uniformObject(new UniformBuffer(sizeof(TestShader::UboObject))),
+		m_uniformObject(new UniformBuffer(sizeof(ShaderTest::UboObject))),
 
 		m_model(new Model("res/treeBirchSmall/model.obj")),
 		m_diffuse(new Texture(texture)),
@@ -30,7 +30,7 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		TestShader::UboObject uboObject = {};
+		ShaderTest::UboObject uboObject = {};
 		uboObject.transform = Matrix4();
 		uboObject.swaying = 1.0f;
 		const float swayPower = 0.15f;
