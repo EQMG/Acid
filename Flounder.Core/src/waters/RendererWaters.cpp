@@ -7,7 +7,6 @@ namespace Flounder
 	RendererWaters::RendererWaters() :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(ShaderWaters::UboScene))),
-
 		m_shader(new Shader("waters", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/waters/water.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/waters/water.frag.spv")
@@ -18,7 +17,9 @@ namespace Flounder
 
 	RendererWaters::~RendererWaters()
 	{
+		delete m_uniformScene;
 		delete m_shader;
+		delete m_pipeline;
 	}
 
 	void RendererWaters::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)

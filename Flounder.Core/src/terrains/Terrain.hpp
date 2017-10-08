@@ -6,13 +6,17 @@
 #include "../maths/Matrix4.hpp"
 #include "../physics/Aabb.hpp"
 #include "../models/Model.hpp"
-#include "../maths/Colour.hpp"
+#include "../renderer/buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
+	class Pipeline;
+
 	class Terrain
 	{
 	private:
+		UniformBuffer *m_uniformObject;
+
 		Model *m_model;
 
 		Vector3 *m_position;
@@ -31,20 +35,16 @@ namespace Flounder
 		~Terrain();
 
 		void Update();
+
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 	private:
 		void GenerateMesh();
 
-		static void StoreQuad1(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		static void StoreQuad1(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
-		static void StoreQuad2(std::vector<int> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		static void StoreQuad2(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
 
 		Vector3 CalculateNormal(const float &x, const float &z);
-
-		Colour GetBiomeColour(const float &x, const float &z);
-
-		float GetFactorIsland(const float &x, const float &z);
-
-		float GetFactorMoisture(const float &x, const float &y, const float &z);
 	public:
 		float GetHeight(const float &x, const float &z);
 
