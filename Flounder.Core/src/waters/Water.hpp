@@ -27,12 +27,9 @@ namespace Flounder
 		Matrix4 *m_modelMatrix;
 		Aabb *m_aabb;
 	public:
-		static const float WAVE_SPEED;
-		static const float WAVE_LENGTH;
-		static const float AMPLITUDE;
-
 		static const float SQUARE_SIZE;
 		static const int VERTEX_COUNT;
+		static const float SIDE_LENGTH;
 
 		static const Colour WATER_COLOUR;
 
@@ -49,16 +46,8 @@ namespace Flounder
 	private:
 		void GenerateMesh();
 
-		void StoreQuad1(std::vector<Vertex> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed) const;
-
-		void StoreQuad2(std::vector<Vertex> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed) const;
-
-		void StoreVertex(std::vector<Vertex> &vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2) const;
-
-		float Encode(const float &x, const float &z, const float &x2, const float &z2) const;
+		void StoreQuad(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight);
 	public:
-		float GetHeight(const float &x, const float &z) const;
-
 		Model *GetModel() const { return m_model; }
 
 		Colour *GetColour() const { return m_colour; }

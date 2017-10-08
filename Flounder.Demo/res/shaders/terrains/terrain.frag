@@ -16,8 +16,8 @@ layout(location = 0) out vec4 outColour;
 //layout(location = 1) out vec4 outNormals;
 //layout(location = 2) out vec4 outExtras;
 
-const vec2 lightBias = vec2(0.7, 0.1);
-const vec3 lightDirection = vec3(0.2, -0.3, 0.8);
+const vec2 lightBias = vec2(0.8, 0.2);
+const vec3 lightDirection = vec3(0.2, -0.3, 0.2);
 
 void main(void) 
 {
