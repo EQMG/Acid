@@ -23,12 +23,6 @@ namespace Flounder
 		struct UboObject
 		{
 			Matrix4 transform;
-			Vector3 waterOffset;
-
-			float waveTime;
-			float waveLength;
-			float amplitude;
-			float squareSize;
 
 			Colour diffuseColour;
 
