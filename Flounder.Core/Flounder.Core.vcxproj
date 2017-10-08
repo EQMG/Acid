@@ -115,6 +115,7 @@
     <ClCompile Include="src\renderer\pipelines\Pipeline.cpp" />
     <ClCompile Include="src\renderer\queue\QueueFamily.cpp" />
     <ClCompile Include="src\renderer\Renderer.cpp" />
+    <ClCompile Include="src\renderer\swapchain\Framebuffers.cpp" />
     <ClCompile Include="src\renderer\swapchain\Swapchain.cpp" />
     <ClCompile Include="src\shaders\Shader.cpp" />
     <ClCompile Include="src\shadows\RendererShadows.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="src\renderer\pipelines\Pipeline.hpp" />
     <ClInclude Include="src\renderer\queue\QueueFamily.hpp" />
     <ClInclude Include="src\renderer\Renderer.hpp" />
+    <ClInclude Include="src\renderer\swapchain\Framebuffers.hpp" />
     <ClInclude Include="src\renderer\swapchain\Swapchain.hpp" />
     <ClInclude Include="src\shaders\Shader.hpp" />
     <ClInclude Include="src\shaders\ShaderType.hpp" />
@@ -365,14 +367,6 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\FlounderVS.props" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\FlounderVS.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

@@ -1,6 +1,6 @@
 #include "FpsCamera.hpp"
 
-const float FpsCamera::NEAR_PLANE = 0.1f;
+const float FpsCamera::NEAR_PLANE = 0.01f;
 const float FpsCamera::FAR_PLANE = 2048.1f;
 const float FpsCamera::FIELD_OF_VIEW = 45.0f;
 
