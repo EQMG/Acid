@@ -9,13 +9,9 @@ namespace Flounder
 	private:
 		VkRenderPass m_renderPass;
 	public:
-		RenderPass();
+		RenderPass(const VkFormat &depthFormat, const VkFormat &surfaceFormat);
 
 		~RenderPass();
-
-		void Create(const VkFormat &depthFormat, const VkFormat &surfaceFormat);
-
-		void Cleanup();
 
 		VkRenderPass GetRenderPass() const { return m_renderPass; }
 	};

@@ -1,29 +1,16 @@
 ﻿#include "Swapchain.hpp"
 
-#include <array>
 #include "../../devices/Display.hpp"
-#include "../Renderer.hpp"
 
 namespace Flounder
 {
-	Swapchain::Swapchain() :
+	Swapchain::Swapchain(const VkExtent2D &extent) :
 		m_presentMode(VK_PRESENT_MODE_FIFO_KHR),
 		m_swapchain(VK_NULL_HANDLE),
 		m_swapchainImageCount(0),
 		m_swapchinImages(std::vector<VkImage>()),
 		m_swapchinImageViews(std::vector<VkImageView>()),
-	//	m_imageFormat({}),
-		m_extent({}),
-
-		m_framebuffers(std::vector<VkFramebuffer>())
-	{
-	}
-
-	Swapchain::~Swapchain()
-	{
-	}
-
-	void Swapchain::Create(const VkExtent2D &extent)
+		m_extent({})
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
@@ -108,33 +95,7 @@ namespace Flounder
 		}
 	}
 
-	void Swapchain::CreateFrameBuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent)
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		// TODO: Remove RenderPass paramater.
-
-		m_framebuffers.resize(m_swapchainImageCount);
-
-		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
-		{
-			std::array<VkImageView, 2> attachments{};
-			attachments[0] = depthImageView;
-			attachments[1] = m_swapchinImageViews[i];
-
-			VkFramebufferCreateInfo framebufferCreateInfo = {};
-			framebufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-			framebufferCreateInfo.renderPass = renderPass;
-			framebufferCreateInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
-			framebufferCreateInfo.pAttachments = attachments.data();
-			framebufferCreateInfo.width = extent.width;
-			framebufferCreateInfo.height = extent.height;
-			framebufferCreateInfo.layers = 1;
-
-			Platform::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers[i]));
-		}
-	}
-
-	void Swapchain::Cleanup()
+	Swapchain::~Swapchain()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -144,15 +105,5 @@ namespace Flounder
 		}
 
 		vkDestroySwapchainKHR(logicalDevice, m_swapchain, nullptr);
-	}
-
-	void Swapchain::CleanupFrameBuffers()
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		for (auto framebuffer : m_framebuffers)
-		{
-			vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);
-		}
 	}
 }

@@ -5,16 +5,8 @@
 
 namespace Flounder
 {
-	RenderPass::RenderPass() :
+	RenderPass::RenderPass(const VkFormat &depthFormat, const VkFormat &surfaceFormat) :
 		m_renderPass(VK_NULL_HANDLE)
-	{
-	}
-
-	RenderPass::~RenderPass()
-	{
-	}
-
-	void RenderPass::Create(const VkFormat &depthFormat, const VkFormat &surfaceFormat)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -61,7 +53,7 @@ namespace Flounder
 		Platform::ErrorVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &m_renderPass));
 	}
 
-	void RenderPass::Cleanup()
+	RenderPass::~RenderPass()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 

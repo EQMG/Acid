@@ -19,9 +19,9 @@ layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
-	vec3 cubemapColour = vec3(0.3f, 0.1f, 0.8f); // texture(samplerCubemap, fragmentTextures).rgb;
+	vec3 cubemapColour = vec3(object.skyColour); // texture(samplerCubemap, fragmentTextures).rgb;
 
-	outColour = vec4(object.skyColour + mix(vec3(0.0), cubemapColour, object.blendFactor), 1.0);
+	outColour = vec4(cubemapColour, 1.0); // object.skyColour + mix(vec3(0.0), cubemapColour, object.blendFactor)
 //	outNormals = vec4(vec3(0.0, 1.0, 0.0) + 1.0 / 2.0, 0.0);
 //	outExtras = vec4(1.0, 0.0, 1.0, 1.0); // Ignores lighting.
 }

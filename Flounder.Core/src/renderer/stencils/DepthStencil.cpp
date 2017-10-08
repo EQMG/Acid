@@ -7,19 +7,11 @@
 
 namespace Flounder
 {
-	DepthStencil::DepthStencil() :
+	DepthStencil::DepthStencil(const VkExtent3D &extent) :
 		m_depthStencilImage(VK_NULL_HANDLE),
 		m_depthStencilImageMemory(VK_NULL_HANDLE),
 		m_depthStencilImageView(VK_NULL_HANDLE),
 		m_depthStencilFormat(VK_FORMAT_UNDEFINED)
-	{
-	}
-
-	DepthStencil::~DepthStencil()
-	{
-	}
-
-	void DepthStencil::Create(const VkExtent3D &extent)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
@@ -109,7 +101,7 @@ namespace Flounder
 		Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_depthStencilImageView));
 	}
 
-	void DepthStencil::Cleanup()
+	DepthStencil::~DepthStencil()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
