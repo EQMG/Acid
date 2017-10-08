@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 		Skyboxes::Get()->SetSkybox(new Skybox(
 			new Texture({ "res/skybox/starsRight.png", "res/skybox/starsLeft.png", "res/skybox/starsTop.png", "res/skybox/starsBottom.png", "res/skybox/starsBack.png", "res/skybox/starsFront.png" }),
 			new Model("res/skybox/skyboxSphere.obj"),
-			1024.0f
+			2048.0f
 		));
 	}
 

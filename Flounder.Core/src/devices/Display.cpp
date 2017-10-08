@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	const std::vector<const char*> Display::VALIDATION_LAYERS = { "VK_LAYER_LUNARG_standard_validation" };
+	const std::vector<const char*> Display::VALIDATION_LAYERS = { }; // "VK_LAYER_LUNARG_standard_validation" "VK_LAYER_LUNARG_api_dump"
 	const std::vector<const char*> Display::DEVICE_EXTENSIONS = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 
 	void CallbackError(int error, const char *description)
@@ -59,7 +59,6 @@ namespace Flounder
 	void CallbackFrame(GLFWwindow *window, int width, int height)
 	{
 		Display::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-		// TODO
 	}
 
 	VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData)
@@ -110,7 +109,8 @@ namespace Flounder
 		m_validationLayers(true),
 #else
 		m_validationLayers(false),
-#endif	m_instanceLayerList(std::vector<const char*>()),
+#endif	
+		m_instanceLayerList(std::vector<const char*>()),
 		m_instanceExtensionList(std::vector<const char*>()),
 		m_deviceExtensionList(std::vector<const char*>()),
 		m_debugReport(VK_NULL_HANDLE),
@@ -224,14 +224,18 @@ namespace Flounder
 
 		if (fullscreen)
 		{
+#if FLOUNDER_VERBOSE
 			printf("Display is going fullscreen.\n");
+#endif
 			m_fullscreenWidth = videoMode->width;
 			m_fullscreenHeight = videoMode->height;
 			glfwSetWindowMonitor(m_window, monitor, 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
 		}
 		else
 		{
+#if FLOUNDER_VERBOSE
 			printf("Display is going windowed.\n");
+#endif
 			m_windowPosX = (videoMode->width - m_windowWidth) / 2;
 			m_windowPosY = (videoMode->height - m_windowHeight) / 2;
 			glfwSetWindowMonitor(m_window, nullptr, m_windowPosX, m_windowPosY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
@@ -335,10 +339,9 @@ namespace Flounder
 				}
 
 				assert(layerFound && "Could not find a Vulkan validation layer!");
+				m_instanceLayerList.push_back(layerName);
 			}
 		}
-
-		m_instanceLayerList.push_back(VK_STANDARD_VALIDATION_LAYER_NAME);
 	}
 
 	void Display::SetupExtensions()
@@ -352,8 +355,11 @@ namespace Flounder
 			m_instanceExtensionList.push_back(glfwExtensions[i]);
 		}
 
-		m_instanceExtensionList.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
-		m_deviceExtensionList.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+		if (m_validationLayers)
+		{
+			m_instanceExtensionList.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
+			m_deviceExtensionList.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+		}
 	}
 
 	void Display::CreateInstance()
@@ -540,6 +546,8 @@ namespace Flounder
 		VkPhysicalDeviceFeatures physicalDeviceFeatures = {};
 		physicalDeviceFeatures.samplerAnisotropy = VK_TRUE;
 		physicalDeviceFeatures.shaderClipDistance = VK_TRUE;
+		physicalDeviceFeatures.shaderCullDistance = VK_TRUE;
+		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
 
 		VkDeviceCreateInfo deviceCreateInfo = {};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;

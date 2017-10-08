@@ -10,20 +10,15 @@ namespace Flounder
 
 	Pipeline::Pipeline(const std::string &name, Shader *shader, const PipelineCreateInfo &pipelineCreateInfo, const InputState &inputState, const Descriptor &descriptor) :
 		m_name(name),
-
 		m_shader(shader),
-
 		m_pipelineCreateInfo(pipelineCreateInfo),
 		m_inputState(inputState),
 		m_descriptor(descriptor),
-
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_descriptorSet(VK_NULL_HANDLE),
-
 		m_pipeline(VK_NULL_HANDLE),
 		m_pipelineLayout(VK_NULL_HANDLE),
-
 		m_inputAssemblyState({}),
 		m_rasterizationState({}),
 		m_blendAttachmentStates({}),
@@ -203,6 +198,7 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto renderPass = Renderer::Get()->GetRenderPass();
+		const auto pipelineCache = Renderer::Get()->GetPipelineCache();
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -232,13 +228,14 @@ namespace Flounder
 		pipelineCreateInfo.pStages = m_shader->GetStages().data();
 
 		// Create the graphics pipeline.
-		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
 	void Pipeline::CreatePipelineNoDepth()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto renderPass = Renderer::Get()->GetRenderPass();
+		const auto pipelineCache = Renderer::Get()->GetPipelineCache();
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -271,7 +268,7 @@ namespace Flounder
 		pipelineCreateInfo.pStages = m_shader->GetStages().data();
 
 		// Create the graphics pipeline.
-		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
 	void Pipeline::CreatePipelineMrt()
