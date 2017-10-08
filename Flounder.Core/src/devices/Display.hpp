@@ -6,8 +6,6 @@
 #include "../engine/Engine.hpp"
 #include "../platforms/glfw/Platform.hpp"
 
-#define VK_STANDARD_VALIDATION_LAYER_NAME "VK_LAYER_LUNARG_standard_validation"
-
 namespace Flounder
 {
 	/// <summary>

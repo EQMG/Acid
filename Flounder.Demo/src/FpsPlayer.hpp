@@ -10,9 +10,9 @@ class FpsPlayer :
 private:
 	static const float RUN_SPEED;
 	static const float STRAFE_SPEED;
-	static const float BOOST_MUL;
-	static const float JUMP_POWER;
-	static const float FLY_SPEED;
+	static const float VERTICAL_SPEED;
+	static const float BOOST_SCALE;
+	static const float SLOW_SCALE;
 
 	Vector3 *m_position;
 	Vector3 *m_rotation;
@@ -22,9 +22,9 @@ private:
 	float m_currentUpwardSpeed;
 	IAxis *m_inputForward;
 	IAxis *m_inputStrafe;
-	IAxis *m_inputNoclip;
+	IAxis *m_inputVertical;
 	IButton *m_inputBoost;
-	IButton *m_inputJump;
+	IButton *m_inputSlow;
 
 	Vector3 *m_amountMove;
 	Vector3 *m_amountRotate;

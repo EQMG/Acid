@@ -6,6 +6,7 @@
 #include "pipelines/Pipeline.hpp"
 #include "stencils/DepthStencil.hpp"
 #include "swapchain/Swapchain.hpp"
+#include "swapchain/Framebuffers.hpp"
 
 #include "IManagerRender.hpp"
 
@@ -17,11 +18,14 @@ namespace Flounder
 	private:
 		IManagerRender *m_managerRender;
 
-		Swapchain m_swapchain;
-		DepthStencil m_depthStencil;
-		RenderPass m_renderPass;
+		Swapchain *m_swapchain;
+		DepthStencil *m_depthStencil;
+		RenderPass *m_renderPass;
+		Framebuffers *m_framebuffers;
 		VkFence m_fenceSwapchainImage;
 		uint32_t m_activeSwapchinImage;
+
+		VkPipelineCache m_pipelineCache;
 
 		VkSemaphore m_semaphore;
 		VkCommandPool m_commandPool;
@@ -64,21 +68,25 @@ namespace Flounder
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(IManagerRender *managerRender) { m_managerRender = managerRender; }
 
-		VkRenderPass GetRenderPass() const { return m_renderPass.GetRenderPass(); }
+		VkRenderPass GetRenderPass() const { return m_renderPass->GetRenderPass(); }
 
 		VkCommandPool GetCommandPool() const { return m_commandPool; }
 
 		VkCommandBuffer GetCommandBuffer() const { return m_commandBuffer; }
 
+		VkPipelineCache GetPipelineCache() const { return m_pipelineCache; }
+
 		static VkCommandBuffer BeginSingleTimeCommands();
 
 		static void EndSingleTimeCommands(const VkCommandBuffer &commandBuffer);
 	private:
-		VkFramebuffer GetActiveFramebuffer() const { return m_swapchain.GetFramebuffers()[m_activeSwapchinImage]; }
+		VkFramebuffer GetActiveFramebuffer() const { return m_framebuffers->GetFramebuffers()[m_activeSwapchinImage]; }
 
 		void CreateFences();
 
 		void CreateCommandPool();
+
+		void CreatePipelineCache();
 
 		void RecreateSwapchain();
 	};

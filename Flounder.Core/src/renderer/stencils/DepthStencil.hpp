@@ -12,13 +12,9 @@ namespace Flounder
 		VkImageView m_depthStencilImageView;
 		VkFormat m_depthStencilFormat;
 	public:
-		DepthStencil();
+		DepthStencil(const VkExtent3D &extent);
 
 		~DepthStencil();
-
-		void Create(const VkExtent3D &extent);
-
-		void Cleanup();
 
 		VkImage GetImage() const { return m_depthStencilImage; }
 
