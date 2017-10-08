@@ -28,11 +28,12 @@ namespace Flounder
 		m_multisampleState({}),
 		m_dynamicState({})
 	{
-		CreateAttributes();
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
 		CreateDescriptorSet();
 		CreatePipelineLayout();
+
+		CreateAttributes();
 
 		switch (pipelineCreateInfo.pipelineModeFlags)
 		{
@@ -62,6 +63,61 @@ namespace Flounder
 		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
 		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
+	}
+
+	void Pipeline::CreateDescriptorLayout()
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
+		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(m_descriptor.bindings.size());
+		descriptorSetLayoutCreateInfo.pBindings = m_descriptor.bindings.data();
+
+		vkDeviceWaitIdle(logicalDevice);
+		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
+	}
+
+	void Pipeline::CreateDescriptorPool()
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
+		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(m_descriptor.poolSizes.size());
+		descriptorPoolCreateInfo.pPoolSizes = m_descriptor.poolSizes.data();
+		descriptorPoolCreateInfo.maxSets = 50;
+
+		vkDeviceWaitIdle(logicalDevice);
+		Platform::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
+	}
+
+	void Pipeline::CreateDescriptorSet()
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
+		descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+		descriptorSetAllocateInfo.pNext = nullptr;
+		descriptorSetAllocateInfo.descriptorPool = m_descriptorPool;
+		descriptorSetAllocateInfo.descriptorSetCount = 1;
+		descriptorSetAllocateInfo.pSetLayouts = &m_descriptorSetLayout;
+
+		vkDeviceWaitIdle(logicalDevice);
+		Platform::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
+	}
+
+	void Pipeline::CreatePipelineLayout()
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
+		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+		pipelineLayoutCreateInfo.setLayoutCount = 1;
+		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
+
+		vkDeviceWaitIdle(logicalDevice);
+		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
 	void Pipeline::CreateAttributes()
@@ -143,57 +199,6 @@ namespace Flounder
 		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(DYNAMIC_STATES.size());
 	}
 
-	void Pipeline::CreateDescriptorLayout()
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
-		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(m_descriptor.bindings.size());
-		descriptorSetLayoutCreateInfo.pBindings = m_descriptor.bindings.data();
-
-		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
-	}
-
-	void Pipeline::CreateDescriptorPool()
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
-		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(m_descriptor.poolSizes.size());
-		descriptorPoolCreateInfo.pPoolSizes = m_descriptor.poolSizes.data();
-		descriptorPoolCreateInfo.maxSets = 50;
-
-		Platform::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
-	}
-
-	void Pipeline::CreateDescriptorSet()
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
-		descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-		descriptorSetAllocateInfo.pNext = nullptr;
-		descriptorSetAllocateInfo.descriptorPool = m_descriptorPool;
-		descriptorSetAllocateInfo.descriptorSetCount = 1;
-		descriptorSetAllocateInfo.pSetLayouts = &m_descriptorSetLayout;
-
-		Platform::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
-	}
-
-	void Pipeline::CreatePipelineLayout()
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
-		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutCreateInfo.setLayoutCount = 1;
-		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
-
-		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
-	}
-
 	void Pipeline::CreatePipelinePolygon()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -228,6 +233,7 @@ namespace Flounder
 		pipelineCreateInfo.pStages = m_shader->GetStages().data();
 
 		// Create the graphics pipeline.
+		vkDeviceWaitIdle(logicalDevice);
 		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
@@ -268,6 +274,7 @@ namespace Flounder
 		pipelineCreateInfo.pStages = m_shader->GetStages().data();
 
 		// Create the graphics pipeline.
+		vkDeviceWaitIdle(logicalDevice);
 		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 

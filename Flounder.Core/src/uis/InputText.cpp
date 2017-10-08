@@ -8,7 +8,7 @@ namespace Flounder
 	const float InputText::CHANGE_TIME = 0.1f;
 	const float InputText::SCALE_NORMAL = 1.6f;
 	const float InputText::SCALE_SELECTED = 1.8f;
-	Colour *const InputText::COLOUR_NORMAL = new Colour(0.0f, 0.0f, 0.0f);
+	Colour *const InputText::COLOUR_NORMAL = new Colour("#000000");
 
 	InputText::InputText(UiObject *parent, const Vector2 &position, const std::string &prefix, const std::string &value, const UiAlign &align) :
 		UiObject(parent, position, Vector2(0.0f, 0.0f)),
@@ -23,7 +23,7 @@ namespace Flounder
 		m_actionChange(nullptr)
 	{
 		m_text->SetInScreenCoords(true);
-		m_text->setTextColour(Colour(1.0f, 1.0f, 1.0f));
+		m_text->setTextColour(Colour("#ffffff"));
 
 		m_background->SetInScreenCoords(true);
 		m_background->SetColourOffset(Colour());
