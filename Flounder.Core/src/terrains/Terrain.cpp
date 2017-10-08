@@ -8,7 +8,7 @@
 
 namespace Flounder
 {
-	const float Terrain::SQUARE_SIZE = 2.598f;
+	const float Terrain::SQUARE_SIZE = 1.2f;
 	const int Terrain::VERTEX_COUNT = 176;
 	const float Terrain::SIDE_LENGTH = 0.5f * SQUARE_SIZE * static_cast<float>(VERTEX_COUNT - 1);
 
@@ -70,11 +70,12 @@ namespace Flounder
 
 	void Terrain::GenerateMesh()
 	{
-		int count = VERTEX_COUNT * VERTEX_COUNT;
 		std::vector<Vertex> vertices = std::vector<Vertex>();
 		std::vector<uint16_t> indices = std::vector<uint16_t>();
 
-		const Colour tint = Colour("#51ad5a");
+		const Colour tintGrass = Colour("#51ad5a");
+		const Colour tintRock = Colour("#A18A5A");
+		const Colour tintSand = Colour("#F7D8AC");
 
 		for (int col = 0; col < VERTEX_COUNT; col++)
 		{
@@ -85,7 +86,14 @@ namespace Flounder
 				vertex.position.m_y = GetHeight(vertex.position.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.position.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
 				vertex.textures = Vector2();
 				vertex.normal = CalculateNormal(vertex.position.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.position.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
-				vertex.tangent = Vector3(tint.m_r, tint.m_g, tint.m_b);
+				Colour *tint = Colour::Interpolate(tintRock, tintGrass, fabs(Vector3(vertex.normal).Normalize()->m_y), nullptr);
+				float sandFactor = vertex.position.m_y + 10.0f;
+				if (sandFactor <= 0.0f)
+				{
+					Colour::Interpolate(*tint, tintSand, Maths::Clamp(fabs(vertex.position.m_y), 0.0f, 1.0f), tint);
+				}
+				vertex.tangent = Vector3(tint->m_r, tint->m_g, tint->m_b);
+				delete tint;
 
 				vertices.push_back(vertex);
 			}
@@ -99,16 +107,7 @@ namespace Flounder
 				int topRight = topLeft + 1;
 				int bottomLeft = ((row + 1) * VERTEX_COUNT) + col;
 				int bottomRight = bottomLeft + 1;
-				bool mixed = col % 2 == 0;
-
-				if (row % 2 == 0)
-				{
-					StoreQuad1(indices, topLeft, topRight, bottomLeft, bottomRight, mixed);
-				}
-				else
-				{
-					StoreQuad2(indices, topLeft, topRight, bottomLeft, bottomRight, mixed);
-				}
+				StoreQuad(indices, topLeft, topRight, bottomLeft, bottomRight);
 			}
 		}
 
@@ -119,29 +118,16 @@ namespace Flounder
 		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
 		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
-
-		//	delete vertices;
-		//	delete indices;
 	}
 
-	void Terrain::StoreQuad1(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
+	void Terrain::StoreQuad(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight)
 	{
 		indices.push_back(topLeft);
 		indices.push_back(bottomLeft);
-		indices.push_back(mixed ? topRight : bottomRight);
 		indices.push_back(bottomRight);
-		indices.push_back(topRight);
-		indices.push_back(mixed ? bottomLeft : topLeft);
-	}
-
-	void Terrain::StoreQuad2(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed)
-	{
-		indices.push_back(topRight);
 		indices.push_back(topLeft);
-		indices.push_back(mixed ? bottomRight : bottomLeft);
-		indices.push_back(bottomLeft);
 		indices.push_back(bottomRight);
-		indices.push_back(mixed ? topLeft : topRight);
+		indices.push_back(topRight);
 	}
 
 	Vector3 Terrain::CalculateNormal(const float &x, const float &z)
@@ -158,12 +144,14 @@ namespace Flounder
 
 	float Terrain::GetHeight(const float &x, const float &z)
 	{
-		const float worldNoiseSpread = 1.0f;
-		const float worldNoiseFrequency = 40.0f;
-		const float worldNoiseHeight = 40.0f;
+		const float worldNoiseSpread = 1.2f;
+		const float worldNoiseFrequency = 10.0f;
+		const float worldNoiseHeight = 35.0f;
+		const float worldNoiseOffset = 0.0f;
 
 		float height = Worlds::Get()->GetNoise()->GetNoise(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
 		height *= worldNoiseHeight;
+		height += worldNoiseOffset;
 		return height;
 	}
 
