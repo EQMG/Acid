@@ -176,7 +176,6 @@
 
 #include "test/RendererTest.hpp"
 
-#include "terrains/Biome.hpp"
 #include "terrains/RendererTerrains.hpp"
 #include "terrains/Terrain.hpp"
 #include "terrains/Terrains.hpp"

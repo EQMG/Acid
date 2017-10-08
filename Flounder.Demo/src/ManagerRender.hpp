@@ -12,6 +12,7 @@ private:
 
 	RendererSkyboxes *m_rendererSkyboxes;
 	RendererWaters *m_rendererWaters;
+	RendererTerrains *m_rendererTerrains;
 	RendererTest *m_rendererTest;
 public:
 	ManagerRender();

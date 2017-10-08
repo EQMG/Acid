@@ -2,20 +2,26 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 0) uniform UBO 
+layout(binding = 0) uniform UboScene
 {
-	mat4 projectionMatrix;
-	mat4 viewMatrix;
-	vec4 clipPlane;
-	mat4 modelMatrix;
-} ubo;
+	mat4 projection;
+	mat4 view;
+	vec4 clip;
+} scene;
 
-layout(location = 0) in vec3 inPosition;
-layout(location = 2) in vec3 inNormal;
-layout(location = 3) in vec3 inColour;
+layout(binding = 1) uniform UboObject
+{
+	mat4 transform;
+	float shineDamper;
+	float reflectivity;
+} object;
 
-layout(location = 0) flat out vec3 surfaceNormal;
-layout(location = 1) flat out vec3 surfaceColour;
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 2) in vec3 vertexNormal;
+layout(location = 3) in vec3 vertexColour;
+
+layout(location = 0) out vec3 fragmentNormal;
+layout(location = 1) out vec3 fragmentColour;
 
 out gl_PerVertex 
 {
@@ -25,14 +31,14 @@ out gl_PerVertex
 
 void main(void) 
 {
-	vec4 totalLocalPos = vec4(inPosition, 1.0);
-	vec4 totalNormal = vec4(inNormal, 0.0);
+	vec4 totalLocalPos = vec4(vertexPosition, 1.0);
+	vec4 totalNormal = vec4(vertexNormal, 0.0);
 
-	vec4 worldPosition = ubo.modelMatrix * totalLocalPos;
+	vec4 worldPosition = object.transform * totalLocalPos;
 
-	gl_ClipDistance[0] = dot(worldPosition, ubo.clipPlane);
-	gl_Position = ubo.projectionMatrix * ubo.viewMatrix * worldPosition;
+	gl_ClipDistance[0] = dot(worldPosition, scene.clip);
+	gl_Position = scene.projection * scene.view * worldPosition;
 
-	surfaceNormal = normalize((ubo.modelMatrix * totalNormal).xyz);
-	surfaceColour = vec3(inColour);
+	fragmentNormal = normalize((object.transform * totalNormal).xyz);
+	fragmentColour = vec3(vertexColour);
 }

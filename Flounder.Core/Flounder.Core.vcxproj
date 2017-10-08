@@ -131,6 +131,7 @@
     <ClCompile Include="src\stb\stb_image.c" />
     <ClCompile Include="src\tasks\Tasks.cpp" />
     <ClCompile Include="src\terrains\RendererTerrains.cpp" />
+    <ClCompile Include="src\terrains\ShaderTerrains.cpp" />
     <ClCompile Include="src\terrains\Terrain.cpp" />
     <ClCompile Include="src\terrains\Terrains.cpp" />
     <ClCompile Include="src\test\RendererTest.cpp" />
@@ -310,8 +311,8 @@
     <ClInclude Include="src\standards\Standards.hpp" />
     <ClInclude Include="src\stb\stb_image.h" />
     <ClInclude Include="src\tasks\Tasks.hpp" />
-    <ClInclude Include="src\terrains\Biome.hpp" />
     <ClInclude Include="src\terrains\RendererTerrains.hpp" />
+    <ClInclude Include="src\terrains\ShaderTerrains.hpp" />
     <ClInclude Include="src\terrains\Terrain.hpp" />
     <ClInclude Include="src\terrains\Terrains.hpp" />
     <ClInclude Include="src\test\RendererTest.hpp" />

@@ -1,13 +1,18 @@
 #include "RendererTerrains.hpp"
 
+#include "ShaderTerrains.hpp"
+#include "Terrains.hpp"
+
 namespace Flounder
 {
 	RendererTerrains::RendererTerrains() :
 		IRenderer(),
+		m_uniformScene(new UniformBuffer(sizeof(ShaderTerrains::UboScene))),
 		m_shader(new Shader("terrains", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/terrains/terrain.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/terrains/terrain.frag.spv")
-		}))
+		})),
+		m_pipeline(new Pipeline("waters", m_shader, ShaderTerrains::pipelineCreateInfo, ShaderTerrains::inputState, ShaderTerrains::descriptor))
 	{
 	}
 
@@ -18,58 +23,16 @@ namespace Flounder
 
 	void RendererTerrains::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		PrepareRendering(clipPlane, camera);
+		ShaderTerrains::UboScene uboScene = {};
+		uboScene.projection = *camera.GetProjectionMatrix();
+		uboScene.view = *camera.GetViewMatrix();
+		m_uniformScene->Update(&uboScene);
+
+		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
 		for (auto object : *Terrains::Get()->GetTerrains())
 		{
-			RenderTerrain(object);
+			object->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
 		}
-
-		EndRendering();
-	}
-
-	void RendererTerrains::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
-	{
-#if 0
-		// Starts the shader.
-		m_shader->start();
-
-		// Loads the uniforms.
-		m_shader->loadUniform4fv("projectionMatrix", *camera.getProjectionMatrix());
-		m_shader->loadUniform4fv("viewMatrix", *camera.getViewMatrix());
-		m_shader->loadUniform4f("clipPlane", clipPlane);
-
-		// Sets the GPU for rendering this object.
-		renderer::get()->enableDepthTesting();
-		renderer::get()->cullBackFaces(true);
-#endif
-	}
-
-	void RendererTerrains::RenderTerrain(Terrain *object)
-	{
-#if 0
-		// Binds the layouts.
-		renderer::get()->bindVAO(object->getModel()->getVaoID(), 3, 0, 2, 3);
-
-		// Loads the uniforms.
-		m_shader->loadUniform4fv("modelMatrix", *object->getModelMatrix());
-
-		m_shader->loadUniform1f("shineDamper", 1.0f);
-		m_shader->loadUniform1f("reflectivity", 0.0f);
-
-		// Tells the GPU to render this object.
-		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getModel()->getVaoLength());
-
-		// Unbinds the layouts.
-		renderer::get()->unbindVAO(3, 0, 2, 3);
-#endif
-	}
-
-	void RendererTerrains::EndRendering()
-	{
-#if 0
-		// Stops the shader.
-		m_shader->stop();
-#endif
 	}
 }
