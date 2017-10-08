@@ -7,13 +7,7 @@
 layout(binding = 1) uniform UboObject
 {
 	mat4 transform;
-	vec3 waterOffset;
 
-	float waveTime;
-	float waveLength;
-	float amplitude;
-	float squareSize;
-	
 	vec4 diffuseColour;
 
 	float shineDamper;
@@ -23,25 +17,14 @@ layout(binding = 1) uniform UboObject
 } object;
 
 layout(location = 0) in vec3 fragmentNormal;
-layout(location = 1) in vec4 fragmentClipSpace;
 
 layout(location = 0) out vec4 outColour;
 //layout(location = 1) out vec4 outNormals;
 //layout(location = 2) out vec4 outExtras;
 
-const vec2 lightBias = vec2(0.7, 0.1);
-const vec3 lightDirection = vec3(0.2, -0.3, 0.8);
+const vec2 lightBias = vec2(0.8, 0.2);
+const vec3 lightDirection = vec3(0.2, -0.3, 0.2);
 
-//---------REFRACTION------------
-vec2 getReflectionTexCoords(vec2 normalizedDeviceCoords)
-{
-	vec2 reflectionTextureCoords = vec2(normalizedDeviceCoords.x, -normalizedDeviceCoords.y);
-	reflectionTextureCoords.x = clamp(reflectionTextureCoords.x, 0.001, 0.999);
-	reflectionTextureCoords.y = clamp(reflectionTextureCoords.y, -0.999, -0.001);
-	return reflectionTextureCoords;
-}
-
-//---------MAIN------------
 void main(void) 
 {
 	vec3 unitNormal = normalize(fragmentNormal);

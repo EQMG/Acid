@@ -40,9 +40,7 @@ namespace Flounder
 	private:
 		void GenerateMesh();
 
-		static void StoreQuad1(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
-
-		static void StoreQuad2(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed);
+		void StoreQuad(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight);
 
 		Vector3 CalculateNormal(const float &x, const float &z);
 	public:

@@ -2,7 +2,7 @@
 
 const float FpsCamera::NEAR_PLANE = 0.01f;
 const float FpsCamera::FAR_PLANE = 2048.1f;
-const float FpsCamera::FIELD_OF_VIEW = 45.0f;
+const float FpsCamera::FIELD_OF_VIEW = 70.0f;
 
 const float FpsCamera::ROTATE_AGILITY = 20.0f;
 const float FpsCamera::PITCH_AGILITY = 20.0f;
