@@ -124,7 +124,7 @@
     <ClCompile Include="src\skyboxes\RendererSkyboxes.cpp" />
     <ClCompile Include="src\skyboxes\Skybox.cpp" />
     <ClCompile Include="src\skyboxes\Skyboxes.cpp" />
-    <ClCompile Include="src\skyboxes\SkyboxesShader.cpp" />
+    <ClCompile Include="src\skyboxes\ShaderSkyboxes.cpp" />
     <ClCompile Include="src\sounds\Sound.cpp" />
     <ClCompile Include="src\space\StructureBasic.cpp" />
     <ClCompile Include="src\standards\Standards.cpp" />
@@ -135,7 +135,7 @@
     <ClCompile Include="src\terrains\Terrains.cpp" />
     <ClCompile Include="src\test\RendererTest.cpp" />
     <ClCompile Include="src\test\TestEntity.cpp" />
-    <ClCompile Include="src\test\TestShader.cpp" />
+    <ClCompile Include="src\test\ShaderTest.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\uis\ContainerScreen.cpp" />
     <ClCompile Include="src\uis\InputButton.cpp" />
@@ -155,6 +155,7 @@
     <ClCompile Include="src\visual\DriverSlide.cpp" />
     <ClCompile Include="src\visual\interpolation\SmoothFloat.cpp" />
     <ClCompile Include="src\waters\RendererWaters.cpp" />
+    <ClCompile Include="src\waters\ShaderWaters.cpp" />
     <ClCompile Include="src\waters\Water.cpp" />
     <ClCompile Include="src\waters\Waters.cpp" />
     <ClCompile Include="src\worlds\Worlds.cpp" />
@@ -300,7 +301,7 @@
     <ClInclude Include="src\skyboxes\RendererSkyboxes.hpp" />
     <ClInclude Include="src\skyboxes\Skybox.hpp" />
     <ClInclude Include="src\skyboxes\Skyboxes.hpp" />
-    <ClInclude Include="src\skyboxes\SkyboxesShader.hpp" />
+    <ClInclude Include="src\skyboxes\ShaderSkyboxes.hpp" />
     <ClInclude Include="src\sounds\Sound.hpp" />
     <ClInclude Include="src\space\ISpatialObject.hpp" />
     <ClInclude Include="src\space\ISpatialStructure.hpp" />
@@ -315,7 +316,7 @@
     <ClInclude Include="src\terrains\Terrains.hpp" />
     <ClInclude Include="src\test\RendererTest.hpp" />
     <ClInclude Include="src\test\TestEntity.hpp" />
-    <ClInclude Include="src\test\TestShader.hpp" />
+    <ClInclude Include="src\test\ShaderTest.hpp" />
     <ClInclude Include="src\textures\Texture.hpp" />
     <ClInclude Include="src\uis\ContainerScreen.hpp" />
     <ClInclude Include="src\uis\IManagerUis.hpp" />
@@ -338,6 +339,7 @@
     <ClInclude Include="src\visual\IDriver.hpp" />
     <ClInclude Include="src\visual\interpolation\SmoothFloat.hpp" />
     <ClInclude Include="src\waters\RendererWaters.hpp" />
+    <ClInclude Include="src\waters\ShaderWaters.hpp" />
     <ClInclude Include="src\waters\Water.hpp" />
     <ClInclude Include="src\waters\Waters.hpp" />
     <ClInclude Include="src\worlds\Worlds.hpp" />

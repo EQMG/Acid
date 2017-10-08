@@ -5,12 +5,16 @@
 #include "../maths/Matrix4.hpp"
 #include "../physics/Aabb.hpp"
 #include "../models/Model.hpp"
+#include "../renderer/buffers/UniformBuffer.hpp"
+#include "../renderer/pipelines/Pipeline.hpp"
 
 namespace Flounder
 {
 	class Water
 	{
 	private:
+		UniformBuffer *m_uniformObject;
+
 		Model *m_model;
 
 		Colour *m_colour;
@@ -40,14 +44,16 @@ namespace Flounder
 		~Water();
 
 		void Update();
+
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 	private:
 		void GenerateMesh();
 
-		void StoreQuad1(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed) const;
+		void StoreQuad1(std::vector<Vertex> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed) const;
 
-		void StoreQuad2(std::vector<float> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed) const;
+		void StoreQuad2(std::vector<Vertex> &vertices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight, const bool &mixed) const;
 
-		void StoreVertex(std::vector<float> &vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2) const;
+		void StoreVertex(std::vector<Vertex> &vertices, const int &index, const Vector2 &otherPoint1, const Vector2 &otherPoint2) const;
 
 		float Encode(const float &x, const float &z, const float &x2, const float &z2) const;
 	public:

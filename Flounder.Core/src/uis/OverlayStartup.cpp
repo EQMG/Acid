@@ -18,7 +18,7 @@ namespace Flounder
 
 		m_guiBackground->SetInScreenCoords(true);
 		m_guiLogo->SetInScreenCoords(true);
-		m_textCopyright->setTextColour(Colour(1.0f, 1.0f, 1.0f));
+		m_textCopyright->setTextColour(Colour("#ffffff"));
 
 		Events::Get()->AddEvent(new EventTime(1.649f, false, [&]()
 		{

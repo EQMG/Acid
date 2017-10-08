@@ -44,6 +44,12 @@ namespace Flounder
 		Model(const std::vector<Vertex> &vertices, const std::vector<uint16_t> &indices);
 
 		/// <summary>
+		/// Creates a new model without indices.
+		/// </summary>
+		/// <param name="vertices"> The model vertices. </param>
+		Model(const std::vector<Vertex> &vertices);
+
+		/// <summary>
 		/// Deconstructor for the model.
 		/// </summary>
 		~Model();
