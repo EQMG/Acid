@@ -18,7 +18,7 @@ namespace Flounder
 		})),
 		m_pipeline(new Pipeline("tests", m_shader, ShaderTest::pipelineCreateInfo, ShaderTest::inputState, ShaderTest::descriptor))
 	{
-		Model *model = new Model("res/treeBirchSmall/model.obj");
+		/*Model *model = new Model("res/treeBirchSmall/model.obj");
 		Texture *diffuse = new Texture("res/treeBirchSmall/diffuse.png"); // "res/undefined.png"
 		Texture *swapMap = new Texture("res/treeBirchSmall/sway.png");
 
@@ -30,7 +30,7 @@ namespace Flounder
 				const float yv = Maths::RandomInRange(-10.0f, 10.0f);
 				m_testEntities.push_back(new TestEntity(Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv), Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), model, diffuse, swapMap));
 			}
-		}
+		}*/
 	}
 
 	RendererTest::~RendererTest()
