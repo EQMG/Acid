@@ -17,8 +17,9 @@ layout(binding = 1) uniform UboObject
 } object;
 
 layout(location = 0) in vec3 vertexPosition;
+layout(location = 1) in vec2 vertexTextures;
 layout(location = 2) in vec3 vertexNormal;
-layout(location = 3) in vec3 vertexColour;
+layout(location = 3) in vec3 vertexTangent;
 
 layout(location = 0) out vec3 fragmentNormal;
 layout(location = 1) out vec3 fragmentColour;
@@ -40,5 +41,5 @@ void main(void)
 	gl_Position = scene.projection * scene.view * worldPosition;
 
 	fragmentNormal = normalize((object.transform * totalNormal).xyz);
-	fragmentColour = vec3(vertexColour);
+	fragmentColour = vec3(vertexTangent);
 }

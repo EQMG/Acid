@@ -8,11 +8,7 @@ namespace Flounder
 		IModule(),
 		m_terrains(new std::vector<Terrain*>())
 	{
-		m_terrains->push_back(new Terrain(
-			Vector3(), Vector3(), 420
-		));
-
-		for (int j = -1; j <= 1; j++)
+		/*for (int j = -1; j <= 1; j++)
 		{
 			for (int w = -1; w <= 1; w++)
 			{
@@ -23,7 +19,9 @@ namespace Flounder
 					));
 				}
 			}
-		}
+		}*/
+
+		m_terrains->push_back(new Terrain(Vector3(), Vector3(), 420));
 	}
 
 	Terrains::~Terrains()
@@ -45,8 +43,8 @@ namespace Flounder
 
 	float Terrains::GetHeight(const float &x, const float &z)
 	{
-		const float worldNoiseSpread = 1.2f;
-		const float worldNoiseFrequency = 10.0f;
+		const float worldNoiseSpread = 1.5f;
+		const float worldNoiseFrequency = 8.0f;
 		const float worldNoiseHeight = 35.0f;
 		const float worldNoiseOffset = 0.0f;
 

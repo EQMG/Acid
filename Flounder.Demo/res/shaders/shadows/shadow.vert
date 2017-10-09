@@ -2,10 +2,10 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 1) uniform UBO 
+layout(binding = 0) uniform UboObject 
 {
-	mat4 mvpMatrix;
-} ubo;
+	mat4 mvp;
+} object;
 
 layout(location = 0) in vec3 inPosition;
 
@@ -16,5 +16,5 @@ out gl_PerVertex
 
 void main(void) 
 {
-	gl_Position = ubo.mvpMatrix * vec4(inPosition, 1.0);
+	gl_Position = object.mvp * vec4(inPosition, 1.0);
 }
