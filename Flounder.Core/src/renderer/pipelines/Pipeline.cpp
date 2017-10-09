@@ -122,12 +122,10 @@ namespace Flounder
 
 	void Pipeline::CreateAttributes()
 	{
-		m_inputAssemblyState = {};
 		m_inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		m_inputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 		m_inputAssemblyState.primitiveRestartEnable = VK_FALSE;
 
-		m_rasterizationState = {};
 		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		m_rasterizationState.depthClampEnable = VK_FALSE;
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
@@ -140,7 +138,6 @@ namespace Flounder
 		m_rasterizationState.depthBiasSlopeFactor = 0.0f;
 		m_rasterizationState.lineWidth = 1.0f;
 
-		m_blendAttachmentStates = {};
 		m_blendAttachmentStates[0].blendEnable = VK_TRUE;
 		m_blendAttachmentStates[0].srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
 		m_blendAttachmentStates[0].dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
@@ -150,7 +147,6 @@ namespace Flounder
 		m_blendAttachmentStates[0].alphaBlendOp = VK_BLEND_OP_ADD;
 		m_blendAttachmentStates[0].colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
 
-		m_colourBlendState = {};
 		m_colourBlendState.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 		m_colourBlendState.logicOpEnable = VK_FALSE;
 		m_colourBlendState.logicOp = VK_LOGIC_OP_COPY;
@@ -170,7 +166,6 @@ namespace Flounder
 		stencilOpState.writeMask = 0b11111111;
 		stencilOpState.reference = 0b00000000;
 
-		m_depthStencilState = {};
 		m_depthStencilState.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
 		m_depthStencilState.depthTestEnable = VK_TRUE;
 		m_depthStencilState.depthWriteEnable = VK_TRUE;
@@ -182,18 +177,15 @@ namespace Flounder
 		m_depthStencilState.minDepthBounds = 0.0f;
 		m_depthStencilState.maxDepthBounds = 1.0f;
 
-		m_viewportState = {};
 		m_viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
 		m_viewportState.viewportCount = 1;
 		m_viewportState.scissorCount = 1;
 
-		m_multisampleState = {};
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		m_multisampleState.sampleShadingEnable = VK_FALSE;
 		m_multisampleState.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
 		m_multisampleState.minSampleShading = 0.0f;
 
-		m_dynamicState = {};
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		m_dynamicState.pDynamicStates = DYNAMIC_STATES.data();
 		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(DYNAMIC_STATES.size());

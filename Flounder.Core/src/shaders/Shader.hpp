@@ -2,9 +2,7 @@
 
 #include <string>
 #include <vector>
-
-#include "../platforms/glfw/Platform.hpp"
-
+#include "../platforms/Platform.hpp"
 #include "ShaderType.hpp"
 
 namespace Flounder

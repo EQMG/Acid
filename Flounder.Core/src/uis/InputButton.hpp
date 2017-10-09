@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <functional>
-
 #include "Uis.hpp"
 #include "UiObject.hpp"
 #include "UiAlign.hpp"
@@ -33,7 +32,7 @@ namespace Flounder
 
 		std::string GetText() const { return m_text->GetText(); }
 
-		void SetText(const std::string &string) const { m_text->setText(string); }
+		void SetText(const std::string &string) const { m_text->SetText(string); }
 
 		void SetActionLeft(std::function<void()> action) { m_actionLeft = action; }
 

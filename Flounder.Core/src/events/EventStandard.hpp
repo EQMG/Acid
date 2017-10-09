@@ -1,7 +1,6 @@
 #pragma once
 
 #include <functional>
-
 #include "IEvent.hpp"
 
 namespace Flounder

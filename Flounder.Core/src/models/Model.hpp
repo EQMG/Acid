@@ -2,13 +2,10 @@
 
 #include <string>
 #include <vector>
-
 #include "../maths/Vector2.hpp"
-#include "../maths/Vector3.hpp"
 #include "../physics/Aabb.hpp"
 #include "../renderer/buffers/VertexBuffer.hpp"
 #include "../renderer/buffers/IndexBuffer.hpp"
-
 #include "Vertex.hpp"
 #include "VertexData.hpp"
 
@@ -54,6 +51,8 @@ namespace Flounder
 		/// </summary>
 		~Model();
 
+		void CmdRender(const VkCommandBuffer &commandBuffer);
+
 		Aabb *GetAabb() const { return m_aabb; }
 
 		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer; }
@@ -65,7 +64,7 @@ namespace Flounder
 		/// </summary>
 		void LoadFromFile();
 
-		VertexData *ProcessDataVertex(Vector3 vertex, std::vector<VertexData*> *vertices, std::vector<uint16_t> *indices);
+		VertexData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData*> *vertices, std::vector<uint16_t> *indices);
 
 		VertexData *DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint16_t> *indices, std::vector<VertexData*> *vertices);
 

@@ -2,31 +2,31 @@
 
 namespace Flounder
 {
-	template<typename t>
-	EventChange<t>::EventChange(t *reference, const std::function<void()> &onEvent) :
+	template<typename T>
+	EventChange<T>::EventChange(T *reference, const std::function<void()> &onEvent) :
 		IEvent(),
 		m_reference(reference),
 		m_onEvent(onEvent)
 	{
 	}
 
-	template<typename t>
-	bool EventChange<t>::EventTriggered()
+	template<typename T>
+	bool EventChange<T>::EventTriggered()
 	{
-		t newValue = &m_reference;
+		T newValue = &m_reference;
 
 		if (newValue == nullptr)
 		{
 			return false;
 		}
 
-		bool triggered = newValue != m_current;
+		const bool triggered = newValue != m_current;
 		m_current = newValue;
 		return triggered;
 	}
 
-	template<typename t>
-	void EventChange<t>::OnEvent()
+	template<typename T>
+	void EventChange<T>::OnEvent()
 	{
 		m_onEvent();
 	}

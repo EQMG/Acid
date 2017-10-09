@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "../../platforms/glfw/Platform.hpp"
+#include "../../platforms/Platform.hpp"
 
 namespace Flounder
 {

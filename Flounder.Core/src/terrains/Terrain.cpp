@@ -1,14 +1,14 @@
 ﻿#include "Terrain.hpp"
 
-#include "../maths/Colour.hpp"
-#include "../worlds/Worlds.hpp"
 #include "../devices/Display.hpp"
 #include "../skyboxes/ShaderSkyboxes.hpp"
+#include "../worlds/Worlds.hpp"
 #include "ShaderTerrains.hpp"
+#include "Terrains.hpp"
 
 namespace Flounder
 {
-	const float Terrain::SQUARE_SIZE = 1.2f;
+	const float Terrain::SQUARE_SIZE = 1.0f;
 	const int Terrain::VERTEX_COUNT = 176;
 	const float Terrain::SIDE_LENGTH = 0.5f * SQUARE_SIZE * static_cast<float>(VERTEX_COUNT - 1);
 
@@ -44,7 +44,7 @@ namespace Flounder
 		}
 	}
 
-	void Terrain::CmdRender(const VkCommandBuffer & commandBuffer, const Pipeline & pipeline, const UniformBuffer & uniformScene)
+	void Terrain::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();
@@ -57,15 +57,10 @@ namespace Flounder
 		uboObject.reflectivity = 0.0f;
 		m_uniformObject->Update(&uboObject);
 
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
-
-		VkBuffer vertexBuffers[] = { m_model->GetVertexBuffer()->GetBuffer() };
-		VkDeviceSize offsets[] = { 0 };
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
+		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-		vkCmdBindIndexBuffer(commandBuffer, m_model->GetIndexBuffer()->GetBuffer(), 0, m_model->GetIndexBuffer()->GetIndexType());
-		vkCmdDrawIndexed(commandBuffer, m_model->GetIndexBuffer()->GetIndexCount(), 1, 0, 0, 0);
+		m_model->CmdRender(commandBuffer);
 	}
 
 	void Terrain::GenerateMesh()
@@ -73,29 +68,17 @@ namespace Flounder
 		std::vector<Vertex> vertices = std::vector<Vertex>();
 		std::vector<uint16_t> indices = std::vector<uint16_t>();
 
-		const Colour tintGrass = Colour("#51ad5a");
-		const Colour tintRock = Colour("#A18A5A");
-		const Colour tintSand = Colour("#F7D8AC");
-
 		for (int col = 0; col < VERTEX_COUNT; col++)
 		{
 			for (int row = 0; row < VERTEX_COUNT; row++)
 			{
-				Vertex vertex = {};
-				vertex.position = Vector3((row * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f), 0.0f, (col * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f));
-				vertex.position.m_y = GetHeight(vertex.position.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.position.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
-				vertex.textures = Vector2();
-				vertex.normal = CalculateNormal(vertex.position.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), vertex.position.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
-				Colour *tint = Colour::Interpolate(tintRock, tintGrass, fabs(Vector3(vertex.normal).Normalize()->m_y), nullptr);
-				float sandFactor = vertex.position.m_y + 10.0f;
-				if (sandFactor <= 0.0f)
-				{
-					Colour::Interpolate(*tint, tintSand, Maths::Clamp(fabs(vertex.position.m_y), 0.0f, 1.0f), tint);
-				}
-				vertex.tangent = Vector3(tint->m_r, tint->m_g, tint->m_b);
-				delete tint;
+				Vector3 position = Vector3((row * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f), 0.0f, (col * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f));
+				position.m_y = Terrains::Get()->GetHeight(position.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), position.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f)); // TODO: Simplify!
+				const Vector2 textures = Vector2();
+				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), position.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
+				const Vector3 tangent = Vector3(CalculateColour(position, normal));
 
-				vertices.push_back(vertex);
+				vertices.push_back(Vertex(position, textures, normal, tangent));
 			}
 		}
 
@@ -107,6 +90,7 @@ namespace Flounder
 				int topRight = topLeft + 1;
 				int bottomLeft = ((row + 1) * VERTEX_COUNT) + col;
 				int bottomRight = bottomLeft + 1;
+
 				StoreQuad(indices, topLeft, topRight, bottomLeft, bottomRight);
 			}
 		}
@@ -124,35 +108,40 @@ namespace Flounder
 	{
 		indices.push_back(topLeft);
 		indices.push_back(bottomLeft);
-		indices.push_back(bottomRight);
-		indices.push_back(topLeft);
-		indices.push_back(bottomRight);
 		indices.push_back(topRight);
+		indices.push_back(topRight);
+		indices.push_back(bottomLeft);
+		indices.push_back(bottomRight);
 	}
 
 	Vector3 Terrain::CalculateNormal(const float &x, const float &z)
 	{
-		float heightL = GetHeight(x - SQUARE_SIZE, z);
-		float heightR = GetHeight(x + SQUARE_SIZE, z);
-		float heightD = GetHeight(x, z - SQUARE_SIZE);
-		float heightU = GetHeight(x, z + SQUARE_SIZE);
+		float heightL = Terrains::Get()->GetHeight(x - SQUARE_SIZE, z);
+		float heightR = Terrains::Get()->GetHeight(x + SQUARE_SIZE, z);
+		float heightD = Terrains::Get()->GetHeight(x, z - SQUARE_SIZE);
+		float heightU = Terrains::Get()->GetHeight(x, z + SQUARE_SIZE);
 
 		Vector3 normal = Vector3(heightL - heightR, 2.0f, heightD - heightU);
 		normal.Normalize();
 		return normal;
 	}
 
-	float Terrain::GetHeight(const float &x, const float &z)
+	Colour Terrain::CalculateColour(const Vector3 &position, const Vector3 &normal)
 	{
-		const float worldNoiseSpread = 1.2f;
-		const float worldNoiseFrequency = 10.0f;
-		const float worldNoiseHeight = 35.0f;
-		const float worldNoiseOffset = 0.0f;
+		const Colour tintGrass = Colour("#51ad5a");
+		const Colour tintRock = Colour("#A18A5A");
+		const Colour tintSand = Colour("#F7D8AC");
 
-		float height = Worlds::Get()->GetNoise()->GetNoise(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
-		height *= worldNoiseHeight;
-		height += worldNoiseOffset;
-		return height;
+		Colour tint = Colour();
+		Colour::Interpolate(tintRock, tintGrass, fabs(Vector3(normal).Normalize()->m_y), &tint);
+		const float sandFactor = position.m_y + 10.0f;
+
+		if (sandFactor <= 0.0f)
+		{
+			Colour::Interpolate(tint, tintSand, Maths::Clamp(fabs(position.m_y), 0.0f, 1.0f), &tint);
+		}
+
+		return tint;
 	}
 
 	void Terrain::SetPosition(const Vector3 &position)

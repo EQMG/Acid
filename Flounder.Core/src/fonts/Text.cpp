@@ -67,6 +67,84 @@ namespace Flounder
 		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
 	}
 
+	void Text::SetText(const std::string &newText)
+	{
+		if (m_textString != newText)
+		{
+			m_newText = newText;
+		}
+	}
+
+	void Text::SetBorder(IDriver *driver)
+	{
+		delete m_borderDriver;
+		m_borderDriver = driver;
+		m_solidBorder = true;
+		m_glowBorder = false;
+	}
+
+	void Text::SetGlowing(IDriver *driver)
+	{
+		delete m_glowDriver;
+		m_glowDriver = driver;
+		m_solidBorder = false;
+		m_glowBorder = true;
+	}
+
+	void Text::RemoveBorder()
+	{
+		m_solidBorder = false;
+		m_glowBorder = false;
+	}
+
+	float Text::GetTotalBorderSize()
+	{
+		if (m_solidBorder)
+		{
+			if (m_borderSize == 0.0f)
+			{
+				return 0.0f;
+			}
+			return CalculateEdgeStart() + m_borderSize;
+		}
+		if (m_glowBorder)
+		{
+			return CalculateEdgeStart();
+		}
+		return 0.0f;
+	}
+
+	float Text::GetGlowSize()
+	{
+		if (m_solidBorder)
+		{
+			return CalculateAntialiasSize();
+		}
+		if (m_glowBorder)
+		{
+			return m_glowSize;
+		}
+		return 0.0f;
+	}
+
+	float Text::CalculateEdgeStart()
+	{
+		float size = GetScale();
+		return 1.0f / 300.0f * size + 137.0f / 300.0f;
+	}
+
+	float Text::CalculateAntialiasSize()
+	{
+		float size = GetScale();
+		size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
+		return 0.1f / size;
+	}
+
+	bool Text::IsLoaded()
+	{
+		return !m_textString.empty() && m_model != nullptr;
+	}
+
 	void Text::LoadText(Text *object)
 	{
 		// Create mesh data.
@@ -77,9 +155,9 @@ namespace Flounder
 		Vector2 meshSize = GetBounding(vertices);
 
 		// Load mesh data to OpenGL. TODO
-	//	Model *loaded = new Model(std::vector<int>(), vertices, textures);
-	//	object->SetModel(loaded);
-	//	object->SetMeshSize(meshSize);
+		//	Model *loaded = new Model(std::vector<int>(), vertices, textures);
+		//	object->SetModel(loaded);
+		//	object->SetMeshSize(meshSize);
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)
@@ -268,83 +346,5 @@ namespace Flounder
 		}
 
 		return Vector2((minX + maxX) / 2.0f, (minY + maxY) / 2.0f);
-	}
-
-	void Text::setText(const std::string &newText)
-	{
-		if (m_textString != newText)
-		{
-			m_newText = newText;
-		}
-	}
-
-	void Text::SetBorder(IDriver *driver)
-	{
-		delete m_borderDriver;
-		m_borderDriver = driver;
-		m_solidBorder = true;
-		m_glowBorder = false;
-	}
-
-	void Text::SetGlowing(IDriver *driver)
-	{
-		delete m_glowDriver;
-		m_glowDriver = driver;
-		m_solidBorder = false;
-		m_glowBorder = true;
-	}
-
-	void Text::RemoveBorder()
-	{
-		m_solidBorder = false;
-		m_glowBorder = false;
-	}
-
-	float Text::GetTotalBorderSize()
-	{
-		if (m_solidBorder)
-		{
-			if (m_borderSize == 0.0f)
-			{
-				return 0.0f;
-			}
-			return CalculateEdgeStart() + m_borderSize;
-		}
-		if (m_glowBorder)
-		{
-			return CalculateEdgeStart();
-		}
-		return 0.0f;
-	}
-
-	float Text::GetGlowSize()
-	{
-		if (m_solidBorder)
-		{
-			return CalculateAntialiasSize();
-		}
-		if (m_glowBorder)
-		{
-			return m_glowSize;
-		}
-		return 0.0f;
-	}
-
-	float Text::CalculateEdgeStart()
-	{
-		float size = GetScale();
-		return 1.0f / 300.0f * size + 137.0f / 300.0f;
-	}
-
-	float Text::CalculateAntialiasSize()
-	{
-		float size = GetScale();
-		size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
-		return 0.1f / size;
-	}
-
-	bool Text::IsLoaded()
-	{
-		return !m_textString.empty() && m_model != nullptr;
 	}
 }

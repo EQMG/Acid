@@ -4,20 +4,23 @@
 
 using namespace Flounder;
 
-class ManagerRender :
-	public IManagerRender
+namespace Demo
 {
-private:
-	Vector4 m_infinity;
+	class ManagerRender :
+		public IManagerRender
+	{
+	private:
+		Vector4 m_infinity;
 
-	RendererSkyboxes *m_rendererSkyboxes;
-	RendererWaters *m_rendererWaters;
-	RendererTerrains *m_rendererTerrains;
-	RendererTest *m_rendererTest;
-public:
-	ManagerRender();
+		RendererSkyboxes *m_rendererSkyboxes;
+		RendererWaters *m_rendererWaters;
+		RendererTerrains *m_rendererTerrains;
+		RendererTest *m_rendererTest;
+	public:
+		ManagerRender();
 
-	~ManagerRender();
+		~ManagerRender();
 
-	void Render(const VkCommandBuffer *commandBuffer) override;
-};
+		void Render(const VkCommandBuffer *commandBuffer) override;
+	};
+}

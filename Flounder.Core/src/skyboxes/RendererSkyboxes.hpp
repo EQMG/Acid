@@ -1,11 +1,10 @@
 #pragma once
 
 #include "../renderer/IRenderer.hpp"
+#include "../renderer/buffers/UniformBuffer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
 #include "../shaders/Shader.hpp"
-
 #include "Skyboxes.hpp"
-#include "../renderer/buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {

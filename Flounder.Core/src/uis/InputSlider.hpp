@@ -1,9 +1,7 @@
 ﻿#pragma once
 
 #include <functional>
-
 #include "../maths/Timer.hpp"
-
 #include "Uis.hpp"
 #include "UiObject.hpp"
 #include "UiAlign.hpp"
@@ -42,7 +40,7 @@ namespace Flounder
 
 		std::string GetText() const { return m_text->GetText(); }
 
-		void SetText(const std::string &string) const { m_text->setText(string); }
+		void SetText(const std::string &string) const { m_text->SetText(string); }
 
 		float GetProgressMin() const { return m_progressMin; }
 

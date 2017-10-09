@@ -1,9 +1,7 @@
 #pragma once
 
 #include <vector>
-
 #include "../physics/Frustum.hpp"
-
 #include "ISpatialObject.hpp"
 
 namespace Flounder
