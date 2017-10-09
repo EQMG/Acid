@@ -23,7 +23,7 @@ namespace Flounder
 		m_actionChange(nullptr)
 	{
 		m_text->SetInScreenCoords(true);
-		m_text->setTextColour(Colour("#ffffff"));
+		m_text->SetTextColour(Colour("#ffffff"));
 
 		m_background->SetInScreenCoords(true);
 		m_background->SetColourOffset(Colour());
@@ -51,7 +51,7 @@ namespace Flounder
 				if (m_lastKey != key || m_inputDelay->CanInput())
 				{
 					m_value += static_cast<char>(key);
-					m_text->setText(m_prefix + m_value);
+					m_text->SetText(m_prefix + m_value);
 
 					if (m_actionChange != 0)
 					{
@@ -68,7 +68,7 @@ namespace Flounder
 				if (m_lastKey != 8 || m_inputDelay->CanInput())
 				{
 					m_value = m_value.substr(0, m_value.length() - 1);
-					m_text->setText(m_prefix + m_value);
+					m_text->SetText(m_prefix + m_value);
 
 					if (m_actionChange != 0)
 					{
@@ -133,12 +133,12 @@ namespace Flounder
 	void InputText::SetPrefix(const std::string &prefix)
 	{
 		m_prefix = prefix;
-		m_text->setText(prefix + m_value);
+		m_text->SetText(prefix + m_value);
 	}
 
 	void InputText::SetValue(const std::string &value)
 	{
 		m_value = value;
-		m_text->setText(m_prefix + value);
+		m_text->SetText(m_prefix + value);
 	}
 }

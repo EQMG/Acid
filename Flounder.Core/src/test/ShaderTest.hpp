@@ -2,7 +2,6 @@
 
 #include "../maths/Matrix4.hpp"
 #include "../maths/Vector2.hpp"
-
 #include "../renderer/pipelines/Descriptor.hpp"
 #include "../renderer/pipelines/InputState.hpp"
 #include "../renderer/pipelines/PipelineCreate.hpp"

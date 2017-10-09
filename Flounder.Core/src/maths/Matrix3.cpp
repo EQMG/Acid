@@ -139,15 +139,15 @@ namespace Flounder
 			destination = new Matrix3();
 		}
 
-		float m00 = left.m_00 * right.m_00 + left.m_10 * right.m_01 + left.m_20 * right.m_02;
-		float m01 = left.m_01 * right.m_00 + left.m_11 * right.m_01 + left.m_21 * right.m_02;
-		float m02 = left.m_02 * right.m_00 + left.m_12 * right.m_01 + left.m_22 * right.m_02;
-		float m10 = left.m_00 * right.m_10 + left.m_10 * right.m_11 + left.m_20 * right.m_12;
-		float m11 = left.m_01 * right.m_10 + left.m_11 * right.m_11 + left.m_21 * right.m_12;
-		float m12 = left.m_02 * right.m_10 + left.m_12 * right.m_11 + left.m_22 * right.m_12;
-		float m20 = left.m_00 * right.m_20 + left.m_10 * right.m_21 + left.m_20 * right.m_22;
-		float m21 = left.m_01 * right.m_20 + left.m_11 * right.m_21 + left.m_21 * right.m_22;
-		float m22 = left.m_02 * right.m_20 + left.m_12 * right.m_21 + left.m_22 * right.m_22;
+		const float m00 = left.m_00 * right.m_00 + left.m_10 * right.m_01 + left.m_20 * right.m_02;
+		const float m01 = left.m_01 * right.m_00 + left.m_11 * right.m_01 + left.m_21 * right.m_02;
+		const float m02 = left.m_02 * right.m_00 + left.m_12 * right.m_01 + left.m_22 * right.m_02;
+		const float m10 = left.m_00 * right.m_10 + left.m_10 * right.m_11 + left.m_20 * right.m_12;
+		const float m11 = left.m_01 * right.m_10 + left.m_11 * right.m_11 + left.m_21 * right.m_12;
+		const float m12 = left.m_02 * right.m_10 + left.m_12 * right.m_11 + left.m_22 * right.m_12;
+		const float m20 = left.m_00 * right.m_20 + left.m_10 * right.m_21 + left.m_20 * right.m_22;
+		const float m21 = left.m_01 * right.m_20 + left.m_11 * right.m_21 + left.m_21 * right.m_22;
+		const float m22 = left.m_02 * right.m_20 + left.m_12 * right.m_21 + left.m_22 * right.m_22;
 
 		destination->m_00 = m00;
 		destination->m_01 = m01;
@@ -168,9 +168,9 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		float x = left.m_00 * right.m_x + left.m_10 * right.m_y + left.m_20 * right.m_z;
-		float y = left.m_01 * right.m_x + left.m_11 * right.m_y + left.m_21 * right.m_z;
-		float z = left.m_02 * right.m_x + left.m_12 * right.m_y + left.m_22 * right.m_z;
+		const float x = left.m_00 * right.m_x + left.m_10 * right.m_y + left.m_20 * right.m_z;
+		const float y = left.m_01 * right.m_x + left.m_11 * right.m_y + left.m_21 * right.m_z;
+		const float z = left.m_02 * right.m_x + left.m_12 * right.m_y + left.m_22 * right.m_z;
 
 		return destination->Set(x, y, z);
 	}
@@ -196,7 +196,7 @@ namespace Flounder
 
 	Matrix3 *Matrix3::Invert(const Matrix3 &source, Matrix3 *destination)
 	{
-		float d = Determinant(source);
+		const float d = Determinant(source);
 
 		if (d != 0.0f)
 		{
@@ -208,28 +208,28 @@ namespace Flounder
 			/*
 			* Does it the ordinary way. inv(A) = 1/det(A) * adj(T), where adj(T) = transpose(Conjugate Matrix) m_00 m_01 m_02 m_10 m_11 m_12 m_20 m_21 m_22
 			*/
-			float determinant_inv = 1.0f / d;
+			const float determinantInv = 1.0f / d;
 
 			// Get the conjugate matrix.
-			float t00 = source.m_11 * source.m_22 - source.m_12 * source.m_21;
-			float t01 = -source.m_10 * source.m_22 + source.m_12 * source.m_20;
-			float t02 = source.m_10 * source.m_21 - source.m_11 * source.m_20;
-			float t10 = -source.m_01 * source.m_22 + source.m_02 * source.m_21;
-			float t11 = source.m_00 * source.m_22 - source.m_02 * source.m_20;
-			float t12 = -source.m_00 * source.m_21 + source.m_01 * source.m_20;
-			float t20 = source.m_01 * source.m_12 - source.m_02 * source.m_11;
-			float t21 = -source.m_00 * source.m_12 + source.m_02 * source.m_10;
-			float t22 = source.m_00 * source.m_11 - source.m_01 * source.m_10;
+			const float t00 = source.m_11 * source.m_22 - source.m_12 * source.m_21;
+			const float t01 = -source.m_10 * source.m_22 + source.m_12 * source.m_20;
+			const float t02 = source.m_10 * source.m_21 - source.m_11 * source.m_20;
+			const float t10 = -source.m_01 * source.m_22 + source.m_02 * source.m_21;
+			const float t11 = source.m_00 * source.m_22 - source.m_02 * source.m_20;
+			const float t12 = -source.m_00 * source.m_21 + source.m_01 * source.m_20;
+			const float t20 = source.m_01 * source.m_12 - source.m_02 * source.m_11;
+			const float t21 = -source.m_00 * source.m_12 + source.m_02 * source.m_10;
+			const float t22 = source.m_00 * source.m_11 - source.m_01 * source.m_10;
 
-			destination->m_00 = t00 * determinant_inv;
-			destination->m_11 = t11 * determinant_inv;
-			destination->m_22 = t22 * determinant_inv;
-			destination->m_01 = t10 * determinant_inv;
-			destination->m_10 = t01 * determinant_inv;
-			destination->m_20 = t02 * determinant_inv;
-			destination->m_02 = t20 * determinant_inv;
-			destination->m_12 = t21 * determinant_inv;
-			destination->m_21 = t12 * determinant_inv;
+			destination->m_00 = t00 * determinantInv;
+			destination->m_11 = t11 * determinantInv;
+			destination->m_22 = t22 * determinantInv;
+			destination->m_01 = t10 * determinantInv;
+			destination->m_10 = t01 * determinantInv;
+			destination->m_20 = t02 * determinantInv;
+			destination->m_02 = t20 * determinantInv;
+			destination->m_12 = t21 * determinantInv;
+			destination->m_21 = t12 * determinantInv;
 			return destination;
 		}
 		return nullptr;
@@ -261,15 +261,15 @@ namespace Flounder
 			destination = new Matrix3();
 		}
 
-		float m00 = source.m_00;
-		float m01 = source.m_10;
-		float m02 = source.m_20;
-		float m10 = source.m_01;
-		float m11 = source.m_11;
-		float m12 = source.m_21;
-		float m20 = source.m_02;
-		float m21 = source.m_12;
-		float m22 = source.m_22;
+		const float m00 = source.m_00;
+		const float m01 = source.m_10;
+		const float m02 = source.m_20;
+		const float m10 = source.m_01;
+		const float m11 = source.m_11;
+		const float m12 = source.m_21;
+		const float m20 = source.m_02;
+		const float m21 = source.m_12;
+		const float m22 = source.m_22;
 
 		destination->m_00 = m00;
 		destination->m_01 = m01;

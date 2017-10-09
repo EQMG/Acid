@@ -22,7 +22,7 @@ namespace Flounder
 			{
 				float m_elements[2][2];
 			};
-			
+
 			struct
 			{
 				float m_00, m_01;

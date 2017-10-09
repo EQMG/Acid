@@ -1,6 +1,7 @@
 #include "Vector3.hpp"
 
 #include <assert.h>
+#include "Colour.hpp"
 #include "Maths.hpp"
 #include "Vector2.hpp"
 #include "Vector4.hpp"
@@ -32,6 +33,13 @@ namespace Flounder
 		m_x(source.m_x),
 		m_y(source.m_y),
 		m_z(source.m_z)
+	{
+	}
+
+	Vector3::Vector3(const Colour &source) :
+		m_x(source.m_r),
+		m_y(source.m_g),
+		m_z(source.m_b)
 	{
 	}
 
@@ -229,9 +237,9 @@ namespace Flounder
 
 	float Vector3::GetDistanceSquared(const Vector3 &point1, const Vector3 &point2)
 	{
-		float dx = point1.m_x - point2.m_x;
-		float dy = point1.m_y - point2.m_y;
-		float dz = point1.m_z - point2.m_z;
+		const float dx = point1.m_x - point2.m_x;
+		const float dy = point1.m_y - point2.m_y;
+		const float dz = point1.m_z - point2.m_z;
 		return dx * dx + dy * dy + dz * dz;
 	}
 
@@ -257,11 +265,11 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
-		float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
-		float rootOneMinusZSquared = sqrt(1.0f - z * z);
-		float x = rootOneMinusZSquared * cos(theta);
-		float y = rootOneMinusZSquared * sin(theta);
+		const float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
+		const float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
+		const float rootOneMinusZSquared = sqrt(1.0f - z * z);
+		const float x = rootOneMinusZSquared * cos(theta);
+		const float y = rootOneMinusZSquared * sin(theta);
 		return destination->Set(x, y, z);
 	}
 
@@ -287,24 +295,24 @@ namespace Flounder
 
 		if (a > b)
 		{
-			float temp = a;
+			const float temp = a;
 			a = b;
 			b = temp;
 		}
 
-		float randX = b * cos(2.0f * PI * (a / b));
-		float randY = b * sin(2.0f * PI * (a / b));
-		float distance = Vector3(randX, randY, 0.0f).Length();
+		const float randX = b * cos(2.0f * PI * (a / b));
+		const float randY = b * sin(2.0f * PI * (a / b));
+		const float distance = Vector3(randX, randY, 0.0f).Length();
 		destination->Scale(distance);
 		return destination;
 	}
 
 	float Vector3::BaryCentric(const Vector3 &p1, const Vector3 &p2, const Vector3 &p3, const Vector3 &pos)
 	{
-		float det = (p2.m_z - p3.m_z) * (p1.m_x - p3.m_x) + (p3.m_x - p2.m_x) * (p1.m_z - p3.m_z);
-		float l1 = ((p2.m_z - p3.m_z) * (pos.m_x - p3.m_x) + (p3.m_x - p2.m_x) * (pos.m_y - p3.m_z)) / det;
-		float l2 = ((p3.m_z - p1.m_z) * (pos.m_x - p3.m_x) + (p1.m_x - p3.m_x) * (pos.m_y - p3.m_z)) / det;
-		float l3 = 1.0f - l1 - l2;
+		const float det = (p2.m_z - p3.m_z) * (p1.m_x - p3.m_x) + (p3.m_x - p2.m_x) * (p1.m_z - p3.m_z);
+		const float l1 = ((p2.m_z - p3.m_z) * (pos.m_x - p3.m_x) + (p3.m_x - p2.m_x) * (pos.m_y - p3.m_z)) / det;
+		const float l2 = ((p3.m_z - p1.m_z) * (pos.m_x - p3.m_x) + (p1.m_x - p3.m_x) * (pos.m_y - p3.m_z)) / det;
+		const float l3 = 1.0f - l1 - l2;
 		return l1 * p1.m_y + l2 * p2.m_y + l3 * p3.m_y;
 	}
 

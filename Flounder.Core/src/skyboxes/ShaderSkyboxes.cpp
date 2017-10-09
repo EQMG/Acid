@@ -8,7 +8,7 @@ namespace Flounder
 {
 	DescriptorType ShaderSkyboxes::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
 	DescriptorType ShaderSkyboxes::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL);
-//	DescriptorType ShaderSkyboxes::typeSamplerCubemap = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
+	//	DescriptorType ShaderSkyboxes::typeSamplerCubemap = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	Descriptor ShaderSkyboxes::descriptor = Descriptor::Create({ typeUboScene, typeUboObject }); // , typeSamplerCubemap
 	InputState ShaderSkyboxes::inputState = InputState::Create(Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions());
 

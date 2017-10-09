@@ -198,10 +198,10 @@ namespace Flounder
 			destination = new Vector4();
 		}
 
-		float x = left.m_00 * right.m_x + left.m_10 * right.m_y + left.m_20 * right.m_z + left.m_30 * right.m_w;
-		float y = left.m_01 * right.m_x + left.m_11 * right.m_y + left.m_21 * right.m_z + left.m_31 * right.m_w;
-		float z = left.m_02 * right.m_x + left.m_12 * right.m_y + left.m_22 * right.m_z + left.m_32 * right.m_w;
-		float w = left.m_03 * right.m_x + left.m_13 * right.m_y + left.m_23 * right.m_z + left.m_33 * right.m_w;
+		const float x = left.m_00 * right.m_x + left.m_10 * right.m_y + left.m_20 * right.m_z + left.m_30 * right.m_w;
+		const float y = left.m_01 * right.m_x + left.m_11 * right.m_y + left.m_21 * right.m_z + left.m_31 * right.m_w;
+		const float z = left.m_02 * right.m_x + left.m_12 * right.m_y + left.m_22 * right.m_z + left.m_32 * right.m_w;
+		const float w = left.m_03 * right.m_x + left.m_13 * right.m_y + left.m_23 * right.m_z + left.m_33 * right.m_w;
 		return destination->Set(x, y, z, w);
 	}
 
@@ -212,22 +212,22 @@ namespace Flounder
 			destination = new Matrix4();
 		}
 
-		float m00 = left.m_00 * right.m_00 + left.m_10 * right.m_01 + left.m_20 * right.m_02 + left.m_30 * right.m_03;
-		float m01 = left.m_01 * right.m_00 + left.m_11 * right.m_01 + left.m_21 * right.m_02 + left.m_31 * right.m_03;
-		float m02 = left.m_02 * right.m_00 + left.m_12 * right.m_01 + left.m_22 * right.m_02 + left.m_32 * right.m_03;
-		float m03 = left.m_03 * right.m_00 + left.m_13 * right.m_01 + left.m_23 * right.m_02 + left.m_33 * right.m_03;
-		float m10 = left.m_00 * right.m_10 + left.m_10 * right.m_11 + left.m_20 * right.m_12 + left.m_30 * right.m_13;
-		float m11 = left.m_01 * right.m_10 + left.m_11 * right.m_11 + left.m_21 * right.m_12 + left.m_31 * right.m_13;
-		float m12 = left.m_02 * right.m_10 + left.m_12 * right.m_11 + left.m_22 * right.m_12 + left.m_32 * right.m_13;
-		float m13 = left.m_03 * right.m_10 + left.m_13 * right.m_11 + left.m_23 * right.m_12 + left.m_33 * right.m_13;
-		float m20 = left.m_00 * right.m_20 + left.m_10 * right.m_21 + left.m_20 * right.m_22 + left.m_30 * right.m_23;
-		float m21 = left.m_01 * right.m_20 + left.m_11 * right.m_21 + left.m_21 * right.m_22 + left.m_31 * right.m_23;
-		float m22 = left.m_02 * right.m_20 + left.m_12 * right.m_21 + left.m_22 * right.m_22 + left.m_32 * right.m_23;
-		float m23 = left.m_03 * right.m_20 + left.m_13 * right.m_21 + left.m_23 * right.m_22 + left.m_33 * right.m_23;
-		float m30 = left.m_00 * right.m_30 + left.m_10 * right.m_31 + left.m_20 * right.m_32 + left.m_30 * right.m_33;
-		float m31 = left.m_01 * right.m_30 + left.m_11 * right.m_31 + left.m_21 * right.m_32 + left.m_31 * right.m_33;
-		float m32 = left.m_02 * right.m_30 + left.m_12 * right.m_31 + left.m_22 * right.m_32 + left.m_32 * right.m_33;
-		float m33 = left.m_03 * right.m_30 + left.m_13 * right.m_31 + left.m_23 * right.m_32 + left.m_33 * right.m_33;
+		const float m00 = left.m_00 * right.m_00 + left.m_10 * right.m_01 + left.m_20 * right.m_02 + left.m_30 * right.m_03;
+		const float m01 = left.m_01 * right.m_00 + left.m_11 * right.m_01 + left.m_21 * right.m_02 + left.m_31 * right.m_03;
+		const float m02 = left.m_02 * right.m_00 + left.m_12 * right.m_01 + left.m_22 * right.m_02 + left.m_32 * right.m_03;
+		const float m03 = left.m_03 * right.m_00 + left.m_13 * right.m_01 + left.m_23 * right.m_02 + left.m_33 * right.m_03;
+		const float m10 = left.m_00 * right.m_10 + left.m_10 * right.m_11 + left.m_20 * right.m_12 + left.m_30 * right.m_13;
+		const float m11 = left.m_01 * right.m_10 + left.m_11 * right.m_11 + left.m_21 * right.m_12 + left.m_31 * right.m_13;
+		const float m12 = left.m_02 * right.m_10 + left.m_12 * right.m_11 + left.m_22 * right.m_12 + left.m_32 * right.m_13;
+		const float m13 = left.m_03 * right.m_10 + left.m_13 * right.m_11 + left.m_23 * right.m_12 + left.m_33 * right.m_13;
+		const float m20 = left.m_00 * right.m_20 + left.m_10 * right.m_21 + left.m_20 * right.m_22 + left.m_30 * right.m_23;
+		const float m21 = left.m_01 * right.m_20 + left.m_11 * right.m_21 + left.m_21 * right.m_22 + left.m_31 * right.m_23;
+		const float m22 = left.m_02 * right.m_20 + left.m_12 * right.m_21 + left.m_22 * right.m_22 + left.m_32 * right.m_23;
+		const float m23 = left.m_03 * right.m_20 + left.m_13 * right.m_21 + left.m_23 * right.m_22 + left.m_33 * right.m_23;
+		const float m30 = left.m_00 * right.m_30 + left.m_10 * right.m_31 + left.m_20 * right.m_32 + left.m_30 * right.m_33;
+		const float m31 = left.m_01 * right.m_30 + left.m_11 * right.m_31 + left.m_21 * right.m_32 + left.m_31 * right.m_33;
+		const float m32 = left.m_02 * right.m_30 + left.m_12 * right.m_31 + left.m_22 * right.m_32 + left.m_32 * right.m_33;
+		const float m33 = left.m_03 * right.m_30 + left.m_13 * right.m_31 + left.m_23 * right.m_32 + left.m_33 * right.m_33;
 
 		destination->m_00 = m00;
 		destination->m_01 = m01;
@@ -255,10 +255,10 @@ namespace Flounder
 			destination = new Vector4();
 		}
 
-		float x = left.m_00 * right.m_x + left.m_10 * right.m_y + left.m_20 * right.m_z + left.m_30 * right.m_w;
-		float y = left.m_01 * right.m_x + left.m_11 * right.m_y + left.m_21 * right.m_z + left.m_31 * right.m_w;
-		float z = left.m_02 * right.m_x + left.m_12 * right.m_y + left.m_22 * right.m_z + left.m_32 * right.m_w;
-		float w = left.m_03 * right.m_x + left.m_13 * right.m_y + left.m_23 * right.m_z + left.m_33 * right.m_w;
+		const float x = left.m_00 * right.m_x + left.m_10 * right.m_y + left.m_20 * right.m_z + left.m_30 * right.m_w;
+		const float y = left.m_01 * right.m_x + left.m_11 * right.m_y + left.m_21 * right.m_z + left.m_31 * right.m_w;
+		const float z = left.m_02 * right.m_x + left.m_12 * right.m_y + left.m_22 * right.m_z + left.m_32 * right.m_w;
+		const float w = left.m_03 * right.m_x + left.m_13 * right.m_y + left.m_23 * right.m_z + left.m_33 * right.m_w;
 
 		return destination->Set(x, y, z, w);
 	}
@@ -313,7 +313,7 @@ namespace Flounder
 
 	Matrix4 *Matrix4::Invert(const Matrix4 &source, Matrix4 *destination)
 	{
-		float d = Determinant(source);
+		const float d = Determinant(source);
 
 		if (d != 0.0f)
 		{
@@ -322,51 +322,52 @@ namespace Flounder
 				destination = new Matrix4();
 			}
 
-			float determinant_inv = 1.0f / d;
+			const float determinantInv = 1.0f / d;
 
 			// First row.
-			float t00 = Determinant3x3(source.m_11, source.m_12, source.m_13, source.m_21, source.m_22, source.m_23, source.m_31, source.m_32, source.m_33);
-			float t01 = -Determinant3x3(source.m_10, source.m_12, source.m_13, source.m_20, source.m_22, source.m_23, source.m_30, source.m_32, source.m_33);
-			float t02 = Determinant3x3(source.m_10, source.m_11, source.m_13, source.m_20, source.m_21, source.m_23, source.m_30, source.m_31, source.m_33);
-			float t03 = -Determinant3x3(source.m_10, source.m_11, source.m_12, source.m_20, source.m_21, source.m_22, source.m_30, source.m_31, source.m_32);
+			const float t00 = Determinant3x3(source.m_11, source.m_12, source.m_13, source.m_21, source.m_22, source.m_23, source.m_31, source.m_32, source.m_33);
+			const float t01 = -Determinant3x3(source.m_10, source.m_12, source.m_13, source.m_20, source.m_22, source.m_23, source.m_30, source.m_32, source.m_33);
+			const float t02 = Determinant3x3(source.m_10, source.m_11, source.m_13, source.m_20, source.m_21, source.m_23, source.m_30, source.m_31, source.m_33);
+			const float t03 = -Determinant3x3(source.m_10, source.m_11, source.m_12, source.m_20, source.m_21, source.m_22, source.m_30, source.m_31, source.m_32);
 
 			// Second row.
-			float t10 = -Determinant3x3(source.m_01, source.m_02, source.m_03, source.m_21, source.m_22, source.m_23, source.m_31, source.m_32, source.m_33);
-			float t11 = Determinant3x3(source.m_00, source.m_02, source.m_03, source.m_20, source.m_22, source.m_23, source.m_30, source.m_32, source.m_33);
-			float t12 = -Determinant3x3(source.m_00, source.m_01, source.m_03, source.m_20, source.m_21, source.m_23, source.m_30, source.m_31, source.m_33);
-			float t13 = Determinant3x3(source.m_00, source.m_01, source.m_02, source.m_20, source.m_21, source.m_22, source.m_30, source.m_31, source.m_32);
+			const float t10 = -Determinant3x3(source.m_01, source.m_02, source.m_03, source.m_21, source.m_22, source.m_23, source.m_31, source.m_32, source.m_33);
+			const float t11 = Determinant3x3(source.m_00, source.m_02, source.m_03, source.m_20, source.m_22, source.m_23, source.m_30, source.m_32, source.m_33);
+			const float t12 = -Determinant3x3(source.m_00, source.m_01, source.m_03, source.m_20, source.m_21, source.m_23, source.m_30, source.m_31, source.m_33);
+			const float t13 = Determinant3x3(source.m_00, source.m_01, source.m_02, source.m_20, source.m_21, source.m_22, source.m_30, source.m_31, source.m_32);
 
 			// Third row.
-			float t20 = Determinant3x3(source.m_01, source.m_02, source.m_03, source.m_11, source.m_12, source.m_13, source.m_31, source.m_32, source.m_33);
-			float t21 = -Determinant3x3(source.m_00, source.m_02, source.m_03, source.m_10, source.m_12, source.m_13, source.m_30, source.m_32, source.m_33);
-			float t22 = Determinant3x3(source.m_00, source.m_01, source.m_03, source.m_10, source.m_11, source.m_13, source.m_30, source.m_31, source.m_33);
-			float t23 = -Determinant3x3(source.m_00, source.m_01, source.m_02, source.m_10, source.m_11, source.m_12, source.m_30, source.m_31, source.m_32);
+			const float t20 = Determinant3x3(source.m_01, source.m_02, source.m_03, source.m_11, source.m_12, source.m_13, source.m_31, source.m_32, source.m_33);
+			const float t21 = -Determinant3x3(source.m_00, source.m_02, source.m_03, source.m_10, source.m_12, source.m_13, source.m_30, source.m_32, source.m_33);
+			const float t22 = Determinant3x3(source.m_00, source.m_01, source.m_03, source.m_10, source.m_11, source.m_13, source.m_30, source.m_31, source.m_33);
+			const float t23 = -Determinant3x3(source.m_00, source.m_01, source.m_02, source.m_10, source.m_11, source.m_12, source.m_30, source.m_31, source.m_32);
 
 			// Fourth row.
-			float t30 = -Determinant3x3(source.m_01, source.m_02, source.m_03, source.m_11, source.m_12, source.m_13, source.m_21, source.m_22, source.m_23);
-			float t31 = Determinant3x3(source.m_00, source.m_02, source.m_03, source.m_10, source.m_12, source.m_13, source.m_20, source.m_22, source.m_23);
-			float t32 = -Determinant3x3(source.m_00, source.m_01, source.m_03, source.m_10, source.m_11, source.m_13, source.m_20, source.m_21, source.m_23);
-			float t33 = Determinant3x3(source.m_00, source.m_01, source.m_02, source.m_10, source.m_11, source.m_12, source.m_20, source.m_21, source.m_22);
+			const float t30 = -Determinant3x3(source.m_01, source.m_02, source.m_03, source.m_11, source.m_12, source.m_13, source.m_21, source.m_22, source.m_23);
+			const float t31 = Determinant3x3(source.m_00, source.m_02, source.m_03, source.m_10, source.m_12, source.m_13, source.m_20, source.m_22, source.m_23);
+			const float t32 = -Determinant3x3(source.m_00, source.m_01, source.m_03, source.m_10, source.m_11, source.m_13, source.m_20, source.m_21, source.m_23);
+			const float t33 = Determinant3x3(source.m_00, source.m_01, source.m_02, source.m_10, source.m_11, source.m_12, source.m_20, source.m_21, source.m_22);
 
 			// Transpose and divide by the determinant.
-			destination->m_00 = t00 * determinant_inv;
-			destination->m_11 = t11 * determinant_inv;
-			destination->m_22 = t22 * determinant_inv;
-			destination->m_33 = t33 * determinant_inv;
-			destination->m_01 = t10 * determinant_inv;
-			destination->m_10 = t01 * determinant_inv;
-			destination->m_20 = t02 * determinant_inv;
-			destination->m_02 = t20 * determinant_inv;
-			destination->m_12 = t21 * determinant_inv;
-			destination->m_21 = t12 * determinant_inv;
-			destination->m_03 = t30 * determinant_inv;
-			destination->m_30 = t03 * determinant_inv;
-			destination->m_13 = t31 * determinant_inv;
-			destination->m_31 = t13 * determinant_inv;
-			destination->m_32 = t23 * determinant_inv;
-			destination->m_23 = t32 * determinant_inv;
+			destination->m_00 = t00 * determinantInv;
+			destination->m_11 = t11 * determinantInv;
+			destination->m_22 = t22 * determinantInv;
+			destination->m_33 = t33 * determinantInv;
+			destination->m_01 = t10 * determinantInv;
+			destination->m_10 = t01 * determinantInv;
+			destination->m_20 = t02 * determinantInv;
+			destination->m_02 = t20 * determinantInv;
+			destination->m_12 = t21 * determinantInv;
+			destination->m_21 = t12 * determinantInv;
+			destination->m_03 = t30 * determinantInv;
+			destination->m_30 = t03 * determinantInv;
+			destination->m_13 = t31 * determinantInv;
+			destination->m_31 = t13 * determinantInv;
+			destination->m_32 = t23 * determinantInv;
+			destination->m_23 = t32 * determinantInv;
 			return destination;
 		}
+
 		return nullptr;
 	}
 
@@ -403,22 +404,22 @@ namespace Flounder
 			destination = new Matrix4();
 		}
 
-		float m00 = source.m_00;
-		float m01 = source.m_10;
-		float m02 = source.m_20;
-		float m03 = source.m_30;
-		float m10 = source.m_01;
-		float m11 = source.m_11;
-		float m12 = source.m_21;
-		float m13 = source.m_31;
-		float m20 = source.m_02;
-		float m21 = source.m_12;
-		float m22 = source.m_22;
-		float m23 = source.m_32;
-		float m30 = source.m_03;
-		float m31 = source.m_13;
-		float m32 = source.m_23;
-		float m33 = source.m_33;
+		const float m00 = source.m_00;
+		const float m01 = source.m_10;
+		const float m02 = source.m_20;
+		const float m03 = source.m_30;
+		const float m10 = source.m_01;
+		const float m11 = source.m_11;
+		const float m12 = source.m_21;
+		const float m13 = source.m_31;
+		const float m20 = source.m_02;
+		const float m21 = source.m_12;
+		const float m22 = source.m_22;
+		const float m23 = source.m_32;
+		const float m30 = source.m_03;
+		const float m31 = source.m_13;
+		const float m32 = source.m_23;
+		const float m33 = source.m_33;
 
 		destination->m_00 = m00;
 		destination->m_01 = m01;
@@ -474,34 +475,35 @@ namespace Flounder
 			destination = new Matrix4();
 		}
 
-		float c = cos(angle);
-		float s = sin(angle);
-		float o = 1.0f - c;
-		float xy = axis.m_x * axis.m_y;
-		float yz = axis.m_y * axis.m_z;
-		float xz = axis.m_x * axis.m_z;
-		float xs = axis.m_x * s;
-		float ys = axis.m_y * s;
-		float zs = axis.m_z * s;
+		const float c = cos(angle);
+		const float s = sin(angle);
+		const float o = 1.0f - c;
+		const float xy = axis.m_x * axis.m_y;
+		const float yz = axis.m_y * axis.m_z;
+		const float xz = axis.m_x * axis.m_z;
+		const float xs = axis.m_x * s;
+		const float ys = axis.m_y * s;
+		const float zs = axis.m_z * s;
 
-		float f00 = axis.m_x * axis.m_x * o + c;
-		float f01 = xy * o + zs;
-		float f02 = xz * o - ys;
-		float f10 = xy * o - zs;
-		float f11 = axis.m_y * axis.m_y * o + c;
-		float f12 = yz * o + xs;
-		float f20 = xz * o + ys;
-		float f21 = yz * o - xs;
-		float f22 = axis.m_z * axis.m_z * o + c;
+		const float f00 = axis.m_x * axis.m_x * o + c;
+		const float f01 = xy * o + zs;
+		const float f02 = xz * o - ys;
+		const float f10 = xy * o - zs;
+		const float f11 = axis.m_y * axis.m_y * o + c;
+		const float f12 = yz * o + xs;
+		const float f20 = xz * o + ys;
+		const float f21 = yz * o - xs;
+		const float f22 = axis.m_z * axis.m_z * o + c;
 
-		float t00 = source.m_00 * f00 + source.m_10 * f01 + source.m_20 * f02;
-		float t01 = source.m_01 * f00 + source.m_11 * f01 + source.m_21 * f02;
-		float t02 = source.m_02 * f00 + source.m_12 * f01 + source.m_22 * f02;
-		float t03 = source.m_03 * f00 + source.m_13 * f01 + source.m_23 * f02;
-		float t10 = source.m_00 * f10 + source.m_10 * f11 + source.m_20 * f12;
-		float t11 = source.m_01 * f10 + source.m_11 * f11 + source.m_21 * f12;
-		float t12 = source.m_02 * f10 + source.m_12 * f11 + source.m_22 * f12;
-		float t13 = source.m_03 * f10 + source.m_13 * f11 + source.m_23 * f12;
+		const float t00 = source.m_00 * f00 + source.m_10 * f01 + source.m_20 * f02;
+		const float t01 = source.m_01 * f00 + source.m_11 * f01 + source.m_21 * f02;
+		const float t02 = source.m_02 * f00 + source.m_12 * f01 + source.m_22 * f02;
+		const float t03 = source.m_03 * f00 + source.m_13 * f01 + source.m_23 * f02;
+		const float t10 = source.m_00 * f10 + source.m_10 * f11 + source.m_20 * f12;
+		const float t11 = source.m_01 * f10 + source.m_11 * f11 + source.m_21 * f12;
+		const float t12 = source.m_02 * f10 + source.m_12 * f11 + source.m_22 * f12;
+		const float t13 = source.m_03 * f10 + source.m_13 * f11 + source.m_23 * f12;
+
 		destination->m_20 = source.m_00 * f20 + source.m_10 * f21 + source.m_20 * f22;
 		destination->m_21 = source.m_01 * f20 + source.m_11 * f21 + source.m_21 * f22;
 		destination->m_22 = source.m_02 * f20 + source.m_12 * f21 + source.m_22 * f22;
@@ -627,9 +629,9 @@ namespace Flounder
 		}
 
 		destination->SetIdentity();
-		float yScale = 1.0f / tan(Maths::Radians(fov / 2.0f));
-		float xScale = yScale / aspectRatio;
-		float length = zFar - zNear;
+		const float yScale = 1.0f / tan(Maths::Radians(fov / 2.0f));
+		const float xScale = yScale / aspectRatio;
+		const float length = zFar - zNear;
 
 		destination->m_00 = xScale;
 		destination->m_11 = -yScale;
@@ -638,11 +640,11 @@ namespace Flounder
 		destination->m_32 = -((2.0f * zNear * zFar) / length);
 		destination->m_33 = 0.0f;
 
-	//	destination->m_10 = -destination->m_10;
-	//	destination->m_11 = -destination->m_11;
-	//	destination->m_12 = -destination->m_12;
-	//	destination->m_13 = -destination->m_13;
-//
+		//	destination->m_10 = -destination->m_10;
+		//	destination->m_11 = -destination->m_11;
+		//	destination->m_12 = -destination->m_12;
+		//	destination->m_13 = -destination->m_13;
+		//
 		return destination;
 	}
 
@@ -653,13 +655,13 @@ namespace Flounder
 			destination = new Matrix4();
 		}
 
-		float ox = 2.0f / (right - left);
-		float oy = 2.0f / (top - bottom);
-		float oz = -2.0f / (far - near);
+		const float ox = 2.0f / (right - left);
+		const float oy = 2.0f / (top - bottom);
+		const float oz = -2.0f / (far - near);
 
-		float tx = -(right + left) / (right - left);
-		float ty = -(top + bottom) / (top - bottom);
-		float tz = -(far + near) / (far - near);
+		const float tx = -(right + left) / (right - left);
+		const float ty = -(top + bottom) / (top - bottom);
+		const float tz = -(far + near) / (far - near);
 
 		destination->SetIdentity();
 		destination->m_00 = ox;
@@ -720,12 +722,12 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		float cosAngle = cos(angle);
-		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
-		float z = (cosAngle + Maths::RandomInRange(0.0f, 1.0f)) * (1.0f - cosAngle);
-		float rootOneMinusZSquared = sqrt(1.0f - z * z);
-		float x = rootOneMinusZSquared * cos(theta);
-		float y = rootOneMinusZSquared * sin(theta);
+		const float cosAngle = cos(angle);
+		const float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
+		const float z = (cosAngle + Maths::RandomInRange(0.0f, 1.0f)) * (1.0f - cosAngle);
+		const float rootOneMinusZSquared = sqrt(1.0f - z * z);
+		const float x = rootOneMinusZSquared * cos(theta);
+		const float y = rootOneMinusZSquared * sin(theta);
 
 		Vector4 direction = Vector4(x, y, z, 1.0f);
 
@@ -733,7 +735,7 @@ namespace Flounder
 		{
 			Vector3 *rotateAxis = Vector3::Cross(coneDirection, Vector3(0.0f, 0.0f, 1.0f), nullptr);
 			rotateAxis->Normalize();
-			float rotateAngle = acos(Vector3::Dot(coneDirection, Vector3(0.0f, 0.0f, 1.0f)));
+			const float rotateAngle = acos(Vector3::Dot(coneDirection, Vector3(0.0f, 0.0f, 1.0f)));
 			Matrix4 rotationMatrix = Matrix4();
 			rotationMatrix.SetIdentity();
 			Rotate(rotationMatrix, *rotateAxis, -rotateAngle, &rotationMatrix);

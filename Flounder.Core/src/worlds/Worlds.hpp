@@ -2,9 +2,9 @@
 
 #include "../maths/Vector3.hpp"
 #include "../engine/Engine.hpp"
+#include "../noise/NoiseFast.hpp"
 #include "../skyboxes/Skyboxes.hpp"
 #include "../visual/DriverLinear.hpp"
-#include "../noise/NoiseFast.hpp"
 
 namespace Flounder
 {

@@ -1,10 +1,8 @@
 #pragma once
 
 #include <vector>
-
 #include "../renderer/IRenderer.hpp"
 #include "../shaders/Shader.hpp"
-
 #include "Particles.hpp"
 
 namespace Flounder

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-
 #include "IModule.hpp"
 #include "ModuleUpdate.hpp"
 

@@ -8,7 +8,7 @@ namespace Flounder
 {
 	DescriptorType ShaderWaters::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
 	DescriptorType ShaderWaters::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL);
-//	DescriptorType ShaderWaters::samplerReflections = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
+	//	DescriptorType ShaderWaters::samplerReflections = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	Descriptor ShaderWaters::descriptor = Descriptor::Create({ typeUboScene, typeUboObject });
 	InputState ShaderWaters::inputState = InputState::Create(Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions());
 

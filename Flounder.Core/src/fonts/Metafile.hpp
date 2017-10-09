@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <map>
-
 #include "Character.hpp"
 
 namespace Flounder
@@ -13,19 +12,6 @@ namespace Flounder
 	/// </summary>
 	class Metafile
 	{
-	public:
-		static const int PAD_TOP;
-		static const int PAD_LEFT;
-		static const int PAD_BOTTOM;
-		static const int PAD_RIGHT;
-		static const int DESIRED_PADDING;
-
-		static const std::string SPLITTER;
-		static const std::string NUMBER_SEPARATOR;
-
-		static const double LINE_HEIGHT;
-		static const int NEWLINE_ASCII;
-		static const int SPACE_ASCII;
 	private:
 		std::map<int, Character*> *m_metadata;
 		std::map<std::string, std::string> *m_values;
@@ -39,6 +25,19 @@ namespace Flounder
 		int m_paddingHeight;
 		double m_maxSizeY;
 	public:
+		static const int PAD_TOP;
+		static const int PAD_LEFT;
+		static const int PAD_BOTTOM;
+		static const int PAD_RIGHT;
+		static const int DESIRED_PADDING;
+
+		static const std::string SPLITTER;
+		static const std::string NUMBER_SEPARATOR;
+
+		static const double LINE_HEIGHT;
+		static const int NEWLINE_ASCII;
+		static const int SPACE_ASCII;
+
 		/// <summary>
 		/// Creates a new meta file.
 		/// </summary>
@@ -49,6 +48,12 @@ namespace Flounder
 		/// Deconstructor for the meta file.
 		/// </summary>
 		~Metafile();
+
+		Character *GetCharacter(const int &ascii);
+
+		double GetSpaceWidth() const { return m_spaceWidth; }
+
+		double GetMaxSizeY() const { return m_maxSizeY; }
 	private:
 		/// <summary>
 		/// Read in the next line and store the variable values.
@@ -95,11 +100,5 @@ namespace Flounder
 		/// </param>
 		/// <returns> The int array of values associated with the variable. </returns>
 		std::vector<int> GetValuesOfVariable(const std::string &variable);
-	public:
-		Character *GetCharacter(const int &ascii);
-
-		double GetSpaceWidth() const { return m_spaceWidth; }
-
-		double GetMaxSizeY() const { return m_maxSizeY; }
 	};
 }

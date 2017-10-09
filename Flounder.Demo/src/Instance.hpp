@@ -4,19 +4,22 @@
 
 using namespace Flounder;
 
-class Instance :
-	public IStandard
+namespace Demo
 {
-private:
-	IButton *m_buttonFullscreen;
-	IButton *m_buttonLockMouse;
-	IButton *m_buttonExit;
+	class Instance :
+		public IStandard
+	{
+	private:
+		IButton *m_buttonFullscreen;
+		IButton *m_buttonLockMouse;
+		IButton *m_buttonExit;
 
-	ParticleSystem *m_systemTest;
-public:
-	Instance();
+		ParticleSystem *m_systemTest;
+	public:
+		Instance();
 
-	~Instance();
+		~Instance();
 
-	void Update() override;
-};
+		void Update() override;
+	};
+}

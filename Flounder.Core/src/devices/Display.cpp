@@ -105,11 +105,11 @@ namespace Flounder
 		m_focused(true),
 		m_windowPosX(0),
 		m_windowPosY(0),
-//#if FLOUNDER_VERBOSE
-//		m_validationLayers(true),
-//#else
+		//#if FLOUNDER_VERBOSE
+		//		m_validationLayers(true),
+		//#else
 		m_validationLayers(false),
-//#endif	
+		//#endif	
 		m_instanceLayerList(std::vector<const char*>()),
 		m_instanceExtensionList(std::vector<const char*>()),
 		m_deviceExtensionList(std::vector<const char*>()),
@@ -458,7 +458,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	int Display::ScorePhysicalDevice(const VkPhysicalDevice & device)
+	int Display::ScorePhysicalDevice(const VkPhysicalDevice &device)
 	{
 		int score = 0;
 
@@ -479,12 +479,12 @@ namespace Flounder
 		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionPropertyCount, extensionProperties.data());
 
 		// Iterates through all extensions requested.
-		for (const char* currentExtension : DEVICE_EXTENSIONS)
+		for (const char *currentExtension : DEVICE_EXTENSIONS)
 		{
 			bool extensionFound = false;
 
 			// Checks if the extension is in the available extensions.
-			for (const auto& extension : extensionProperties)
+			for (const auto &extension : extensionProperties)
 			{
 				if (strcmp(currentExtension, extension.extensionName) == 0)
 				{
@@ -499,7 +499,7 @@ namespace Flounder
 				return 0;
 			}
 		}
-		
+
 		/// check if this device has an adequate swap chain
 		/*bool swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
 
@@ -565,7 +565,7 @@ namespace Flounder
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 
 		Platform::ErrorVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
-		
+
 		vkGetDeviceQueue(m_logicalDevice, m_graphicsFamilyIndex, 0, &m_queue);
 	}
 

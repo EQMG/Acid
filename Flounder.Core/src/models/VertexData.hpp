@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-
 #include "../maths/Vector3.hpp"
 
 namespace Flounder
@@ -12,7 +11,7 @@ namespace Flounder
 	class VertexData
 	{
 	private:
-		static const int NO_INDEX;
+		static const uint16_t NO_INDEX;
 
 		Vector3 m_position;
 
@@ -20,13 +19,13 @@ namespace Flounder
 		int m_normalIndex;
 		VertexData *m_duplicateVertex;
 
-		int m_index;
+		uint16_t m_index;
 		float m_length;
 
 		std::vector<Vector3*> m_tangents;
 		Vector3 m_averagedTangent;
 	public:
-		VertexData(const int index, Vector3 position);
+		VertexData(const uint16_t &index, const Vector3 &position);
 
 		~VertexData();
 
@@ -44,7 +43,7 @@ namespace Flounder
 
 		void SetDuplicateVertex(VertexData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
-		int GetIndex() const { return m_index; }
+		uint16_t GetIndex() const { return m_index; }
 
 		float GetLength() const { return m_length; }
 

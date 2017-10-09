@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "../space/ISpatialStructure.hpp"
-
 #include "IComponent.hpp"
 
 namespace Flounder

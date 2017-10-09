@@ -34,7 +34,7 @@ namespace Flounder
 
 		static DescriptorType typeUboScene;
 		static DescriptorType typeUboObject;
-	//	static DescriptorType samplerReflections;
+		//	static DescriptorType samplerReflections;
 		static Descriptor descriptor;
 		static InputState inputState;
 

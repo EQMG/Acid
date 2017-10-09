@@ -31,7 +31,7 @@ namespace Flounder
 		Matrix4::TransformationMatrix(*Camera::Get()->GetCamera()->GetPosition(), *m_rotation, m_size, m_modelMatrix);
 	}
 
-	void Skybox::CmdRender(const VkCommandBuffer & commandBuffer, const Pipeline & pipeline, const UniformBuffer &uniformScene)
+	void Skybox::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();

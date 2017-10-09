@@ -11,15 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\fbos\Fbo.cpp" />
     <ClCompile Include="src\helpers\HelperArray.cpp" />
     <ClCompile Include="src\helpers\HelperFile.cpp" />
     <ClCompile Include="src\helpers\HelperString.cpp" />
+    <ClCompile Include="src\maths\Colour.cpp" />
     <ClCompile Include="src\models\Vertex.cpp" />
     <ClCompile Include="src\renderer\buffers\UniformBuffer.cpp" />
     <ClCompile Include="src\renderer\stencils\DepthStencil.cpp" />
     <ClCompile Include="src\camera\Camera.cpp" />
-    <ClCompile Include="src\deferred\RendererDeferred.cpp" />
     <ClCompile Include="src\devices\Audio.cpp" />
     <ClCompile Include="src\devices\Display.cpp" />
     <ClCompile Include="src\devices\Joysticks.cpp" />
@@ -51,7 +50,6 @@
     <ClCompile Include="src\lights\Attenuation.cpp" />
     <ClCompile Include="src\lights\Fog.cpp" />
     <ClCompile Include="src\lights\Light.cpp" />
-    <ClCompile Include="src\maths\Colour.cpp" />
     <ClCompile Include="src\maths\Delta.cpp" />
     <ClCompile Include="src\maths\Matrix2.cpp" />
     <ClCompile Include="src\maths\Matrix3.cpp" />
@@ -78,8 +76,8 @@
     <ClCompile Include="src\physics\Frustum.cpp" />
     <ClCompile Include="src\physics\Ray.cpp" />
     <ClCompile Include="src\physics\Sphere.cpp" />
-    <ClCompile Include="src\platforms\glfw\GlfwUpdater.cpp" />
-    <ClCompile Include="src\platforms\glfw\Platform.cpp" />
+    <ClCompile Include="src\platforms\PlatformUpdater.cpp" />
+    <ClCompile Include="src\platforms\Platform.cpp" />
     <ClCompile Include="src\post\filters\FilterBloom1.cpp" />
     <ClCompile Include="src\post\filters\FilterBloom2.cpp" />
     <ClCompile Include="src\post\filters\FilterBlurHorizontal.cpp" />
@@ -162,8 +160,6 @@
     <ClCompile Include="src\worlds\Worlds.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\fbos\DepthBuffer.hpp" />
-    <ClInclude Include="src\fbos\Fbo.hpp" />
     <ClInclude Include="src\renderer\buffers\UniformBuffer.hpp" />
     <ClInclude Include="src\renderer\pipelines\Descriptor.hpp" />
     <ClInclude Include="src\renderer\pipelines\InputState.hpp" />
@@ -172,7 +168,6 @@
     <ClInclude Include="src\camera\Camera.hpp" />
     <ClInclude Include="src\camera\ICamera.hpp" />
     <ClInclude Include="src\camera\IPlayer.hpp" />
-    <ClInclude Include="src\deferred\RendererDeferred.hpp" />
     <ClInclude Include="src\devices\Audio.hpp" />
     <ClInclude Include="src\devices\Display.hpp" />
     <ClInclude Include="src\devices\Joysticks.hpp" />
@@ -247,8 +242,8 @@
     <ClInclude Include="src\physics\Intersect.hpp" />
     <ClInclude Include="src\physics\Ray.hpp" />
     <ClInclude Include="src\physics\Sphere.hpp" />
-    <ClInclude Include="src\platforms\glfw\GlfwUpdater.hpp" />
-    <ClInclude Include="src\platforms\glfw\Platform.hpp" />
+    <ClInclude Include="src\platforms\PlatformUpdater.hpp" />
+    <ClInclude Include="src\platforms\Platform.hpp" />
     <ClInclude Include="src\post\filters\FilterBloom1.hpp" />
     <ClInclude Include="src\post\filters\FilterBloom2.hpp" />
     <ClInclude Include="src\post\filters\FilterBlurHorizontal.hpp" />

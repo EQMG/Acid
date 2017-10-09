@@ -2,7 +2,6 @@
 
 #include <functional>
 #include <vector>
-
 #include "../engine/Engine.hpp"
 
 namespace Flounder

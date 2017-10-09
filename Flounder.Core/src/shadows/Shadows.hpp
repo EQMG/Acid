@@ -2,7 +2,6 @@
 
 #include "../engine/Engine.hpp"
 #include "../maths/Vector3.hpp"
-
 #include "ShadowBox.hpp"
 
 namespace Flounder

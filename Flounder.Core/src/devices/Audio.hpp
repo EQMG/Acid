@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../platforms/glfw/Platform.hpp"
 #include "../engine/Engine.hpp"
+#include "../platforms/Platform.hpp"
 #include "../sounds/Sound.hpp"
 
 namespace Flounder
@@ -52,11 +52,7 @@ namespace Flounder
 		static SoundSourceInfo LoadFileWav(const std::string &path);
 
 		static SoundSourceInfo LoadFileOgg(const std::string &path);
-
-		static Sound *AddSound(Sound *object);
-
-		static Sound *GetSound(const std::string &name);
 	private:
-		static void LogOpenALSound(const std::string &path, const SoundSourceInfo &sourceInfo);
+		static void LogOpenAlSound(const std::string &path, const SoundSourceInfo &sourceInfo);
 	};
 }

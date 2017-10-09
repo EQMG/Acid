@@ -2,7 +2,6 @@
 
 #include "../maths/Colour.hpp"
 #include "../maths/Matrix4.hpp"
-
 #include "../renderer/pipelines/Descriptor.hpp"
 #include "../renderer/pipelines/InputState.hpp"
 #include "../renderer/pipelines/PipelineCreate.hpp"
@@ -28,7 +27,7 @@ namespace Flounder
 
 		static DescriptorType typeUboScene;
 		static DescriptorType typeUboObject;
-	//	static DescriptorType typeSamplerCubemap;
+		//	static DescriptorType typeSamplerCubemap;
 		static Descriptor descriptor;
 		static InputState inputState;
 

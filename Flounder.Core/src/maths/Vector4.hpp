@@ -2,6 +2,7 @@
 
 namespace Flounder
 {
+	class Colour;
 	class Vector3;
 
 	/// <summary>
@@ -24,12 +25,12 @@ namespace Flounder
 		};
 
 		/// <summary>
-		/// Constructor for Vector4.
+		/// Constructor for vector4.
 		/// </summary>
 		Vector4();
 
 		/// <summary>
-		/// Constructor for Vector4.
+		/// Constructor for vector4.
 		/// </summary>
 		/// <param name="x"> Start x. </param>
 		/// <param name="y"> Start y. </param>
@@ -38,19 +39,25 @@ namespace Flounder
 		Vector4(const float &x, const float &y, const float &z, const float &w);
 
 		/// <summary>
-		/// Constructor for Vector4.
+		/// Constructor for vector4.
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing one. </param>
 		Vector4(const Vector3 &source);
 
 		/// <summary>
-		/// Constructor for Vector4.
+		/// Constructor for vector4.
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing one. </param>
 		Vector4(const Vector4 &source);
 
 		/// <summary>
-		/// Deconstructor for Vector4.
+		/// Constructor for vector4.
+		/// </summary>
+		/// <param name="source"> Creates this vector out of a existing colour. </param>
+		Vector4(const Colour &source);
+
+		/// <summary>
+		/// Deconstructor for vector4.
 		/// </summary>
 		~Vector4();
 
