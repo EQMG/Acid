@@ -43,12 +43,10 @@ namespace Flounder
 
 	float Terrains::GetHeight(const float &x, const float &z)
 	{
-		const float worldNoiseSpread = 1.5f;
-		const float worldNoiseFrequency = 8.0f;
 		const float worldNoiseHeight = 35.0f;
 		const float worldNoiseOffset = 0.0f;
 
-		float height = Worlds::Get()->GetNoise()->GetNoise(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
+		float height = Worlds::Get()->GetNoise()->GetNoise(x, z);
 		height *= worldNoiseHeight;
 		height += worldNoiseOffset;
 		return height;
