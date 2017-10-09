@@ -15,11 +15,10 @@ namespace Flounder
 		m_sunColour(new Colour())
 	{
 		m_noise->SetNoiseType(NoiseFast::SimplexFractal);
-		m_noise->SetInterp(NoiseFast::Quintic);
-		m_noise->SetFrequency(0.005f);
-		m_noise->SetFractalOctaves(9);
-		m_noise->SetFractalLacunarity(1.5f);
-		m_noise->SetFractalGain(0.7f);
+	//	m_noise->SetInterp(NoiseFast::Quintic);
+		m_noise->SetFractalOctaves(3);
+		m_noise->SetFractalLacunarity(2.0f);
+		m_noise->SetFractalGain(0.45f);
 	}
 
 	Worlds::~Worlds()
