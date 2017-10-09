@@ -9,9 +9,9 @@
 
 namespace Flounder
 {
-	const float Water::SQUARE_SIZE = 1024.0f;
-	const int Water::VERTEX_COUNT = 4;
-	const float Water::SIDE_LENGTH = 0.5f * SQUARE_SIZE * static_cast<float>(VERTEX_COUNT - 1);
+	const float Water::SIDE_LENGTH = 1024.0f;
+	const float Water::SQUARE_SIZE = 512.0f;
+	const int Water::VERTEX_COUNT = static_cast<int>((2.0 * SIDE_LENGTH) / SQUARE_SIZE) + 1;
 
 	const Colour Water::WATER_COLOUR = Colour("#366996");
 
