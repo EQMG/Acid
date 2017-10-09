@@ -27,9 +27,9 @@ namespace Flounder
 		Matrix4 *m_modelMatrix;
 		Aabb *m_aabb;
 	public:
+		static const float SIDE_LENGTH;
 		static const float SQUARE_SIZE;
 		static const int VERTEX_COUNT;
-		static const float SIDE_LENGTH;
 
 		static const Colour WATER_COLOUR;
 

@@ -22,7 +22,8 @@ layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
 
 layout(location = 0) out vec3 fragmentNormal;
-layout(location = 1) out vec3 fragmentColour;
+layout(location = 1) out vec2 fragmentTextures;
+layout(location = 2) out vec3 fragmentColour;
 
 out gl_PerVertex 
 {
@@ -41,5 +42,6 @@ void main(void)
 	gl_Position = scene.projection * scene.view * worldPosition;
 
 	fragmentNormal = normalize((object.transform * totalNormal).xyz);
+	fragmentTextures = vertexTextures;
 	fragmentColour = vec3(vertexTangent);
 }
