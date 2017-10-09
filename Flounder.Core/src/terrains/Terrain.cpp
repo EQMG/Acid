@@ -8,8 +8,8 @@
 
 namespace Flounder
 {
-	const float Terrain::SQUARE_SIZE = 1.0f;
-	const int Terrain::VERTEX_COUNT = 176;
+	const float Terrain::SQUARE_SIZE = 2.0f;
+	const int Terrain::VERTEX_COUNT = 256;
 	const float Terrain::SIDE_LENGTH = 0.5f * SQUARE_SIZE * static_cast<float>(VERTEX_COUNT - 1);
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation, const int &seed) :
@@ -49,17 +49,17 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this! , m_texture->GetWriteDescriptor(2, descriptorSet)
-
 		ShaderTerrains::UboObject uboObject = {};
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		uboObject.shineDamper = 1.0f;
 		uboObject.reflectivity = 0.0f;
 		m_uniformObject->Update(&uboObject);
 
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this!
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
+		
 		m_model->CmdRender(commandBuffer);
 	}
 
@@ -131,16 +131,25 @@ namespace Flounder
 		const Colour tintGrass = Colour("#51ad5a");
 		const Colour tintRock = Colour("#A18A5A");
 		const Colour tintSand = Colour("#F7D8AC");
+		const Colour tintSnow = Colour("#ffffff");
+		const float heightFactor = position.m_y;
 
-		Colour tint = Colour();
-		Colour::Interpolate(tintRock, tintGrass, fabs(Vector3(normal).Normalize()->m_y), &tint);
-		const float sandFactor = position.m_y + 10.0f;
+		Colour tint;
 
-		if (sandFactor <= 0.0f)
+		if (heightFactor <= -6.5f)
 		{
-			Colour::Interpolate(tint, tintSand, Maths::Clamp(fabs(position.m_y), 0.0f, 1.0f), &tint);
+			tint = tintSand;
+		}
+		else if (heightFactor >= 10.0f)
+		{
+			tint = tintSnow;
+		}
+		else
+		{
+			tint = tintGrass;
 		}
 
+		Colour::Interpolate(tintRock, tint, Maths::Clamp(fabs(Vector3(normal).Normalize()->m_y), 0.0f, 1.0f), &tint);
 		return tint;
 	}
 
