@@ -10,7 +10,8 @@ layout(binding = 1) uniform UboObject
 } object;
 
 layout(location = 0) in vec3 fragmentNormal;
-layout(location = 1) in vec3 fragmentColour;
+layout(location = 1) in vec2 fragmentTextures;
+layout(location = 2) in vec3 fragmentColour;
 
 layout(location = 0) out vec4 outColour;
 //layout(location = 1) out vec4 outNormals;
