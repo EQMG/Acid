@@ -75,6 +75,7 @@ namespace Flounder
 		{
 			return func(instance, pCreateInfo, pAllocator, pCallback);
 		}
+
 		return VK_ERROR_EXTENSION_NOT_PRESENT;
 	}
 
@@ -105,11 +106,11 @@ namespace Flounder
 		m_focused(true),
 		m_windowPosX(0),
 		m_windowPosY(0),
-		//#if FLOUNDER_VERBOSE
-		//		m_validationLayers(true),
-		//#else
+#if FLOUNDER_VERBOSE
+		m_validationLayers(true),
+#else
 		m_validationLayers(false),
-		//#endif	
+#endif	
 		m_instanceLayerList(std::vector<const char*>()),
 		m_instanceExtensionList(std::vector<const char*>()),
 		m_deviceExtensionList(std::vector<const char*>()),
@@ -341,6 +342,11 @@ namespace Flounder
 				assert(layerFound && "Could not find a Vulkan validation layer!");
 				m_instanceLayerList.push_back(layerName);
 			}
+
+			for (auto layerName : DEVICE_EXTENSIONS)
+			{
+				m_deviceExtensionList.push_back(layerName);
+			}
 		}
 	}
 
@@ -358,7 +364,6 @@ namespace Flounder
 		if (m_validationLayers)
 		{
 			m_instanceExtensionList.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
-			m_deviceExtensionList.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 		}
 	}
 
@@ -369,8 +374,8 @@ namespace Flounder
 		applicationInfo.pApplicationName = m_title.c_str();
 		applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
 		applicationInfo.pEngineName = "Flounder";
-		applicationInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 50);
+		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 2, 0);
+		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 49);
 
 		VkInstanceCreateInfo instanceCreateInfo = {};
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
@@ -392,10 +397,10 @@ namespace Flounder
 	{
 		if (m_validationLayers)
 		{
-			VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = VkDebugReportCallbackCreateInfoEXT();
+			VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = {};
 			debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-			debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT;
-			debugCallBackCreateInfo.pfnCallback = VkCallbackDebug;
+			debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
+			debugCallBackCreateInfo.pfnCallback = static_cast<PFN_vkDebugReportCallbackEXT>(VkCallbackDebug);
 
 			Platform::ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
 		}
@@ -409,7 +414,7 @@ namespace Flounder
 		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, physicalDevices.data());
 
 		m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
-		assert(m_physicalDevice && "Vulkan runtime error, failed to find a suitable gpu!");
+		assert(m_physicalDevice != nullptr && "Vulkan runtime error, failed to find a suitable gpu!");
 
 		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
 		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
@@ -600,7 +605,39 @@ namespace Flounder
 	{
 #if FLOUNDER_VERBOSE
 		printf("-- Selected Device: '%s' --\n", physicalDeviceProperties.deviceName);
-		printf("Type: %i\n", physicalDeviceProperties.deviceType);
+
+		switch (physicalDeviceProperties.deviceType)
+		{
+		case 1:
+			printf("Type: Integrated\n");
+			break;
+		case 2:
+			printf("Type: Discrete\n");
+			break;
+		case 3:
+			printf("Type: Virtual\n");
+			break;
+		case 4:
+			printf("Type: CPU\n");
+			break;
+		default:
+			printf("Type: Other (%x)\n", physicalDeviceProperties.vendorID);
+		}
+
+		switch (physicalDeviceProperties.vendorID)
+		{
+		case 0x8086:
+			printf("Vendor: Intel\n");
+			break;
+		case 0x10DE:
+			printf("Vendor: NVIDIA\n");
+			break;
+		case 0x1002:
+			printf("Vendor: AMD\n");
+			break;
+		default:
+			printf("Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
+		}
 
 		uint32_t supportedVersion[] = {
 			VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion),

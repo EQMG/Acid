@@ -34,6 +34,10 @@ namespace Flounder
 			m_modules.push_back(shaderModule);
 			m_stages.push_back(pipelineShaderStageCreateInfo);
 		}
+
+#if FLOUNDER_VERBOSE
+		printf("Loading Shader: '%s'\n", name.c_str());
+#endif
 	}
 
 	Shader::~Shader()

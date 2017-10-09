@@ -220,12 +220,13 @@ namespace Flounder
 		pipelineCreateInfo.pDepthStencilState = &m_depthStencilState;
 		pipelineCreateInfo.pDynamicState = &m_dynamicState;
 
+		std::vector<VkPipelineShaderStageCreateInfo> shaderStages = std::vector<VkPipelineShaderStageCreateInfo>(m_shader->GetStages());
+
 		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
-		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_shader->GetStages().size());
-		pipelineCreateInfo.pStages = m_shader->GetStages().data();
+		pipelineCreateInfo.stageCount = static_cast<uint32_t>(shaderStages.size());
+		pipelineCreateInfo.pStages = shaderStages.data();
 
 		// Create the graphics pipeline.
-		vkDeviceWaitIdle(logicalDevice);
 		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
@@ -261,12 +262,13 @@ namespace Flounder
 		pipelineCreateInfo.pDepthStencilState = &m_depthStencilState;
 		pipelineCreateInfo.pDynamicState = &m_dynamicState;
 
+		std::vector<VkPipelineShaderStageCreateInfo> shaderStages = std::vector<VkPipelineShaderStageCreateInfo>(m_shader->GetStages());
+
 		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
-		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_shader->GetStages().size());
-		pipelineCreateInfo.pStages = m_shader->GetStages().data();
+		pipelineCreateInfo.stageCount = static_cast<uint32_t>(shaderStages.size());
+		pipelineCreateInfo.pStages = shaderStages.data();
 
 		// Create the graphics pipeline.
-		vkDeviceWaitIdle(logicalDevice);
 		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
