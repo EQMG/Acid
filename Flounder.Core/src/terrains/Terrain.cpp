@@ -8,9 +8,9 @@
 
 namespace Flounder
 {
-	const float Terrain::SQUARE_SIZE = 2.0f;
-	const int Terrain::VERTEX_COUNT = 256;
-	const float Terrain::SIDE_LENGTH = 0.5f * SQUARE_SIZE * static_cast<float>(VERTEX_COUNT - 1);
+	const float Terrain::SIDE_LENGTH = 120.0f;
+	const float Terrain::SQUARE_SIZE = 2.333f;
+	const int Terrain::VERTEX_COUNT = static_cast<int>((2.0 * SIDE_LENGTH) / SQUARE_SIZE) + 1;
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation, const int &seed) :
 		m_uniformObject(new UniformBuffer(sizeof(ShaderTerrains::UboObject))),
