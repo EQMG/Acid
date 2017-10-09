@@ -1,7 +1,6 @@
 #include "Frustum.hpp"
 
 #include <cmath>
-
 #include "../helpers/HelperArray.hpp"
 
 namespace Flounder

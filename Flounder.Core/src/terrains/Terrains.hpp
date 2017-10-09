@@ -1,9 +1,7 @@
 #pragma once
 
 #include <vector>
-
 #include "../engine/Engine.hpp"
-
 #include "Terrain.hpp"
 
 namespace Flounder
@@ -37,6 +35,10 @@ namespace Flounder
 		~Terrains();
 
 		void Update() override;
+
+		float GetHeight(const float &x, const float &z);
+
+		Vector3 GetPosition(const float &x, const float &z);
 
 		std::vector<Terrain*> *GetTerrains() const { return m_terrains; }
 	};

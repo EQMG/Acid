@@ -99,10 +99,10 @@ namespace Flounder
 			destination = new Matrix2();
 		}
 
-		float m00 = left.m_00 * right.m_00 + left.m_10 * right.m_01;
-		float m01 = left.m_01 * right.m_00 + left.m_11 * right.m_01;
-		float m10 = left.m_00 * right.m_10 + left.m_10 * right.m_11;
-		float m11 = left.m_01 * right.m_10 + left.m_11 * right.m_11;
+		const float m00 = left.m_00 * right.m_00 + left.m_10 * right.m_01;
+		const float m01 = left.m_01 * right.m_00 + left.m_11 * right.m_01;
+		const float m10 = left.m_00 * right.m_10 + left.m_10 * right.m_11;
+		const float m11 = left.m_01 * right.m_10 + left.m_11 * right.m_11;
 
 		destination->m_00 = m00;
 		destination->m_01 = m01;
@@ -118,8 +118,8 @@ namespace Flounder
 			destination = new Vector2();
 		}
 
-		float x = left.m_00 * right.m_x + left.m_10 * right.m_y;
-		float y = left.m_01 * right.m_x + left.m_11 * right.m_y;
+		const float x = left.m_00 * right.m_x + left.m_10 * right.m_y;
+		const float y = left.m_01 * right.m_x + left.m_11 * right.m_y;
 
 		return destination->Set(x, y);
 	}
@@ -140,7 +140,7 @@ namespace Flounder
 
 	Matrix2 *Matrix2::Invert(const Matrix2 &source, Matrix2 *destination)
 	{
-		float d = Determinant(source);
+		const float d = Determinant(source);
 
 		if (d != 0.0f)
 		{
@@ -149,11 +149,11 @@ namespace Flounder
 				destination = new Matrix2();
 			}
 
-			float determinant_inv = 1.0f / d;
-			float t00 = source.m_11 * determinant_inv;
-			float t01 = -source.m_01 * determinant_inv;
-			float t11 = source.m_00 * determinant_inv;
-			float t10 = -source.m_10 * determinant_inv;
+			const float determinantInv = 1.0f / d;
+			const float t00 = source.m_11 * determinantInv;
+			const float t01 = -source.m_01 * determinantInv;
+			const float t11 = source.m_00 * determinantInv;
+			const float t10 = -source.m_10 * determinantInv;
 
 			destination->m_00 = t00;
 			destination->m_01 = t01;
@@ -185,8 +185,8 @@ namespace Flounder
 			destination = new Matrix2();
 		}
 
-		float m01 = source.m_10;
-		float m10 = source.m_01;
+		const float m01 = source.m_10;
+		const float m10 = source.m_01;
 
 		destination->m_01 = m01;
 		destination->m_10 = m10;

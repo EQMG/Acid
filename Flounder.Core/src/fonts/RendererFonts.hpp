@@ -2,7 +2,6 @@
 
 #include "../renderer/IRenderer.hpp"
 #include "../shaders/Shader.hpp"
-
 #include "Text.hpp"
 
 namespace Flounder
@@ -18,11 +17,5 @@ namespace Flounder
 		~RendererFonts();
 
 		void Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
-	private:
-		void PrepareRendering(const Vector4 &clipPlane, const ICamera &camera);
-
-		void RenderText(Text *object);
-
-		void EndRendering();
 	};
 }

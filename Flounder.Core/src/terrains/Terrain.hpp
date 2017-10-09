@@ -1,17 +1,16 @@
 ﻿#pragma once
 
 #include <vector>
-
-#include "../maths/Vector3.hpp"
+#include "../maths/Colour.hpp"
 #include "../maths/Matrix4.hpp"
+#include "../maths/Vector3.hpp"
 #include "../physics/Aabb.hpp"
 #include "../models/Model.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
+#include "../renderer/pipelines/Pipeline.hpp"
 
 namespace Flounder
 {
-	class Pipeline;
-
 	class Terrain
 	{
 	private:
@@ -43,9 +42,9 @@ namespace Flounder
 		void StoreQuad(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight);
 
 		Vector3 CalculateNormal(const float &x, const float &z);
-	public:
-		float GetHeight(const float &x, const float &z);
 
+		Colour CalculateColour(const Vector3 &position, const Vector3 &normal);
+	public:
 		Model *GetModel() const { return m_model; }
 
 		Vector3 *GetPosition() const { return m_position; }

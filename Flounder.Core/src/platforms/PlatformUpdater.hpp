@@ -1,20 +1,17 @@
 #pragma once
 
 #include <map>
-
-#include "../../devices/Display.hpp"
-
-#include "../../maths/Delta.hpp"
-#include "../../maths/Timer.hpp"
-
-#include "../../engine/IUpdater.hpp"
+#include "../devices/Display.hpp"
+#include "../engine/IUpdater.hpp"
+#include "../maths/Delta.hpp"
+#include "../maths/Timer.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// The default GLFW updater for the engine.
 	/// </summary>
-	class GlfwUpdater :
+	class PlatformUpdater :
 		public IUpdater
 	{
 	private:
@@ -28,9 +25,9 @@ namespace Flounder
 
 		std::multimap<float, std::pair<std::string, IModule*>> *m_modules;
 	public:
-		GlfwUpdater();
+		PlatformUpdater();
 
-		~GlfwUpdater();
+		~PlatformUpdater();
 
 		void Create() override;
 

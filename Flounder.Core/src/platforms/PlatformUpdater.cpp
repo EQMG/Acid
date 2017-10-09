@@ -1,28 +1,27 @@
-#include "GlfwUpdater.hpp"
+#include "PlatformUpdater.hpp"
 
-#include "../../camera/camera.hpp"
-#include "../../devices/Audio.hpp"
-#include "../../devices/Display.hpp"
-#include "../../devices/Joysticks.hpp"
-#include "../../devices/Keyboard.hpp"
-#include "../../devices/Mouse.hpp"
-#include "../../renderer/Renderer.hpp"
-
-#include "../../events/Events.hpp"
-#include "../../processing/Processing.hpp"
-#include "../../shadows/Shadows.hpp"
-#include "../../standards/Standards.hpp"
-#include "../../tasks/Tasks.hpp"
-#include "../../terrains/Terrains.hpp"
-#include "../../uis/Uis.hpp"
-#include "../../particles/Particles.hpp"
-#include "../../skyboxes/Skyboxes.hpp"
-#include "../../waters/Waters.hpp"
-#include "../../worlds/Worlds.hpp"
+#include "../camera/camera.hpp"
+#include "../devices/Audio.hpp"
+#include "../devices/Display.hpp"
+#include "../devices/Joysticks.hpp"
+#include "../devices/Keyboard.hpp"
+#include "../devices/Mouse.hpp"
+#include "../events/Events.hpp"
+#include "../particles/Particles.hpp"
+#include "../processing/Processing.hpp"
+#include "../renderer/Renderer.hpp"
+#include "../shadows/Shadows.hpp"
+#include "../skyboxes/Skyboxes.hpp"
+#include "../standards/Standards.hpp"
+#include "../tasks/Tasks.hpp"
+#include "../terrains/Terrains.hpp"
+#include "../uis/Uis.hpp"
+#include "../waters/Waters.hpp"
+#include "../worlds/Worlds.hpp"
 
 namespace Flounder
 {
-	GlfwUpdater::GlfwUpdater() :
+	PlatformUpdater::PlatformUpdater() :
 		IUpdater(),
 		m_startTime(0.0f),
 		m_timeOffset(0.0f),
@@ -35,7 +34,7 @@ namespace Flounder
 	{
 	}
 
-	GlfwUpdater::~GlfwUpdater()
+	PlatformUpdater::~PlatformUpdater()
 	{
 		//for (auto it = --m_modules->end(); it != m_modules->begin(); --it)
 		//{
@@ -52,7 +51,7 @@ namespace Flounder
 		delete m_timerLog;
 	}
 
-	void GlfwUpdater::Create()
+	void PlatformUpdater::Create()
 	{
 		m_startTime = static_cast<float>(glfwGetTime());
 		m_timeOffset = 0.0f;
@@ -83,7 +82,7 @@ namespace Flounder
 		AddModule(UpdatePre, "waters", new Waters());
 	}
 
-	void GlfwUpdater::Update()
+	void PlatformUpdater::Update()
 	{
 		if (Display::Get() != nullptr)
 		{
@@ -136,13 +135,13 @@ namespace Flounder
 		}
 	}
 
-	void GlfwUpdater::AddModule(ModuleUpdate typeUpdate, std::string moduleName, IModule *module)
+	void PlatformUpdater::AddModule(ModuleUpdate typeUpdate, std::string moduleName, IModule *module)
 	{
 		float offset = typeUpdate + (0.01f * static_cast<float>(m_modules->size()));
 		m_modules->insert(make_pair(offset, make_pair(moduleName, module)));
 	}
 
-	IModule *GlfwUpdater::GetModule(const std::string &name)
+	IModule *PlatformUpdater::GetModule(const std::string &name)
 	{
 		for (auto it = m_modules->begin(); it != m_modules->end(); ++it)
 		{
@@ -155,7 +154,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	void GlfwUpdater::RunUpdate(ModuleUpdate typeUpdate) const
+	void PlatformUpdater::RunUpdate(ModuleUpdate typeUpdate) const
 	{
 		for (auto it = m_modules->begin(); it != m_modules->end(); ++it)
 		{

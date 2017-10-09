@@ -112,7 +112,7 @@ namespace Flounder
 		m_actionChange(nullptr)
 	{
 		m_text->SetInScreenCoords(true);
-		m_text->setTextColour(Colour("#ffffff"));
+		m_text->SetTextColour(Colour("#ffffff"));
 
 		m_background->SetInScreenCoords(true);
 		m_background->SetColourOffset(Colour());
@@ -137,7 +137,7 @@ namespace Flounder
 			if (key != -1)
 			{
 				m_value = key;
-				m_text->setText(m_prefix + m_grabber->GetValue(m_value));
+				m_text->SetText(m_prefix + m_grabber->GetValue(m_value));
 
 				if (m_actionChange != 0)
 				{
@@ -192,12 +192,12 @@ namespace Flounder
 	void InputGrabber::SetPrefix(const std::string &prefix)
 	{
 		m_prefix = prefix;
-		m_text->setText(prefix + m_grabber->GetValue(m_value));
+		m_text->SetText(prefix + m_grabber->GetValue(m_value));
 	}
 
 	void InputGrabber::SetValue(const int &value)
 	{
 		m_value = value;
-		m_text->setText(m_prefix + m_grabber->GetValue(value));
+		m_text->SetText(m_prefix + m_grabber->GetValue(value));
 	}
 }

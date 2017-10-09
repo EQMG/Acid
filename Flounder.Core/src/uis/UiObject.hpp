@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <vector>
-
 #include "../maths/Vector2.hpp"
 #include "../maths/Vector4.hpp"
 #include "../visual/IDriver.hpp"

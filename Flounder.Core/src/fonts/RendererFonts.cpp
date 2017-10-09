@@ -20,6 +20,7 @@ namespace Flounder
 
 	void RendererFonts::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
+#if 0
 		PrepareRendering(clipPlane, camera);
 
 		for (auto screenobject : *Uis::get()->GetObjects())
@@ -33,11 +34,12 @@ namespace Flounder
 		}
 
 		EndRendering();
+#endif
 	}
 
+#if 0
 	void RendererFonts::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
 	{
-#if 0
 		// Starts the shader.
 		m_shader->start();
 
@@ -48,12 +50,10 @@ namespace Flounder
 		renderer::get()->disableDepthTesting();
 		renderer::get()->cullBackFaces(true);
 		renderer::get()->enableAlphaBlending();
-#endif
 	}
 
 	void RendererFonts::RenderText(Text *object)
 	{
-#if 0
 		// Binds the layouts.
 		renderer::get()->bindVAO(object->getModel()->getVaoID(), 2, 0, 1);
 		renderer::get()->bindTexture(object->getTexture(), 0);
@@ -86,14 +86,12 @@ namespace Flounder
 
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(2, 0, 1);
-#endif
 	}
 
 	void RendererFonts::EndRendering()
 	{
-#if 0
 		// Stops the shader.
 		m_shader->stop();
-#endif
 	}
+#endif
 }

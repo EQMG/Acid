@@ -1,14 +1,12 @@
 ﻿#pragma once
 
 #include <string>
-
 #include "../maths/Colour.hpp"
 #include "../maths/Vector2.hpp"
-#include "../visual/IDriver.hpp"
+#include "../models/Model.hpp"
 #include "../uis/UiAlign.hpp"
 #include "../uis/UiObject.hpp"
-#include "../models/Model.hpp"
-
+#include "../visual/IDriver.hpp"
 #include "FontType.hpp"
 #include "Line.hpp"
 
@@ -63,29 +61,7 @@ namespace Flounder
 		~Text();
 
 		void UpdateObject() override;
-	private:
-		/// <summary>
-		/// Takes in an unloaded text and calculate all of the vertices for the quads on which this text will be rendered.
-		/// The vertex positions and texture coords and calculated based on the information from the font file.
-		/// Then takes the information about the vertices of all the quads and stores it in OpenGL.
-		/// </summary>
-		/// <param name="text"> The unloaded text. </param>
-		static void LoadText(Text *object);
 
-		static std::vector<Line> CreateStructure(Text *object);
-
-		static void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, Text *object);
-
-		static void CreateQuadVertices(Text *object, std::vector<Line> lines, std::vector<float> &vertices, std::vector<float> &textures);
-
-		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<float> &vertices);
-
-		static void AddVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &vertices);
-
-		static void AddTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &textures);
-
-		static Vector2 GetBounding(std::vector<float> &vertices);
-	public:
 		/// <summary>
 		/// Gets the string of text represented.
 		/// </summary>
@@ -96,7 +72,7 @@ namespace Flounder
 		/// Changed the current string in this text.
 		/// </summary>
 		/// <param name="newText"> The new text, </param>
-		void setText(const std::string &newText);
+		void SetText(const std::string &newText);
 
 		/// <summary>
 		/// Gets how the text should align.
@@ -156,7 +132,7 @@ namespace Flounder
 		/// Sets the colour of the text.
 		/// </summary>
 		/// <param name="textColour"> The new colour of the text. </param>
-		void setTextColour(const Colour &textColour) const { m_textColour->Set(textColour); }
+		void SetTextColour(const Colour &textColour) const { m_textColour->Set(textColour); }
 
 		/// <summary>
 		/// Gets the border colour of the text. This is used with border and glow drivers.
@@ -216,5 +192,27 @@ namespace Flounder
 		/// </summary>
 		/// <returns> If the text has been loaded to OpenGL. </returns>
 		bool IsLoaded();
+	private:
+		/// <summary>
+		/// Takes in an unloaded text and calculate all of the vertices for the quads on which this text will be rendered.
+		/// The vertex positions and texture coords and calculated based on the information from the font file.
+		/// Then takes the information about the vertices of all the quads and stores it in OpenGL.
+		/// </summary>
+		/// <param name="text"> The unloaded text. </param>
+		static void LoadText(Text *object);
+
+		static std::vector<Line> CreateStructure(Text *object);
+
+		static void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, Text *object);
+
+		static void CreateQuadVertices(Text *object, std::vector<Line> lines, std::vector<float> &vertices, std::vector<float> &textures);
+
+		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<float> &vertices);
+
+		static void AddVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &vertices);
+
+		static void AddTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &textures);
+
+		static Vector2 GetBounding(std::vector<float> &vertices);
 	};
 }

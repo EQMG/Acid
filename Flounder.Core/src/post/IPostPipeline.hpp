@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../fbos/Fbo.hpp"
+#include "IPostFilter.hpp"
 
 namespace Flounder
 {

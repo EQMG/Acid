@@ -1,10 +1,7 @@
 #pragma once
 
-#include "../deferred/RendererDeferred.hpp"
-#include "../fbos/Fbo.hpp"
 #include "../renderer/IRenderer.hpp"
 #include "../terrains/Terrains.hpp"
-
 #include "Shadows.hpp"
 
 namespace Flounder
@@ -13,7 +10,7 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		Fbo *m_fbo;
+	//	Fbo *m_fbo;
 		Shader *m_shader;
 	public:
 		RendererShadows();
@@ -28,6 +25,6 @@ namespace Flounder
 
 		void EndRendering();
 	public:
-		Fbo *GetFbo() const { return m_fbo; }
+	//	Fbo *GetFbo() const { return m_fbo; }
 	};
 }

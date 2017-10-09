@@ -2,10 +2,8 @@
 
 #include <array>
 #include <string>
-
-#include "../../platforms/glfw/Platform.hpp"
+#include "../../platforms/Platform.hpp"
 #include "../../shaders/Shader.hpp"
-
 #include "Descriptor.hpp"
 #include "InputState.hpp"
 #include "PipelineCreate.hpp"

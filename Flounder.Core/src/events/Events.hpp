@@ -2,7 +2,6 @@
 
 #include "../engine/Engine.hpp"
 #include "../tasks/Tasks.hpp"
-
 #include "IEvent.hpp"
 
 namespace Flounder

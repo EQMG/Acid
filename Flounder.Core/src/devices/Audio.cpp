@@ -99,7 +99,7 @@ namespace Flounder
 		file.read(reinterpret_cast<char*>(result.data), result.size);
 
 		file.close();
-		LogOpenALSound(path, result);
+		LogOpenAlSound(path, result);
 		return result;
 	}
 
@@ -116,11 +116,11 @@ namespace Flounder
 		// TODO
 
 		file.close();
-		LogOpenALSound(path, result);
+		LogOpenAlSound(path, result);
 		return result;
 	}
 
-	void Audio::LogOpenALSound(const std::string &path, const SoundSourceInfo &sourceInfo)
+	void Audio::LogOpenAlSound(const std::string &path, const SoundSourceInfo &sourceInfo)
 	{
 #if FLOUNDER_VERBOSE
 		printf("-- Loading Audio: '%s' --\n", path.c_str());

@@ -2,7 +2,6 @@
 
 #include <string>
 #include <vector>
-
 #include "../maths/Vector3.hpp"
 
 namespace Flounder

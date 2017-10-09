@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <vector>
-
 #include "Character.hpp"
 
 namespace Flounder

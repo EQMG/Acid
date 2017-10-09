@@ -1,13 +1,11 @@
 #pragma once
 
 #include "../engine/Engine.hpp"
-
 #include "pass/RenderPass.hpp"
 #include "pipelines/Pipeline.hpp"
 #include "stencils/DepthStencil.hpp"
 #include "swapchain/Swapchain.hpp"
 #include "swapchain/Framebuffers.hpp"
-
 #include "IManagerRender.hpp"
 
 namespace Flounder

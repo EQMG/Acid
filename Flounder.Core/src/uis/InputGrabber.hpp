@@ -1,11 +1,10 @@
 ﻿#pragma once
 
 #include <functional>
-
+#include "InputDelay.hpp"
 #include "Uis.hpp"
 #include "UiObject.hpp"
 #include "UiAlign.hpp"
-#include "InputDelay.hpp"
 
 namespace Flounder
 {

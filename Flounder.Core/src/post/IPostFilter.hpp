@@ -1,12 +1,19 @@
 #pragma once
 
-#include "../fbos/Fbo.hpp"
 #include "../models/Model.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../shaders/Shader.hpp"
 
 namespace Flounder
 {
+	class Fbo
+	{
+	public:
+		// MEME
+		Fbo(bool b, float f);
+		Fbo(int w, int h);
+	};
+
 	/// <summary>
 	/// Represents a post effect shader and on application saves the result into a fbo.
 	/// </summary>

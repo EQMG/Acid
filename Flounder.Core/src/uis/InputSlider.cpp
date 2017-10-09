@@ -1,7 +1,7 @@
 ﻿#include "InputSlider.hpp"
 
-#include "../visual/DriverSlide.hpp"
 #include "../devices/Display.hpp"
+#include "../visual/DriverSlide.hpp"
 
 namespace Flounder
 {
@@ -24,7 +24,7 @@ namespace Flounder
 		m_actionChange(nullptr)
 	{
 		m_text->SetInScreenCoords(true);
-		m_text->setTextColour(Colour("#ffffff"));
+		m_text->SetTextColour(Colour("#ffffff"));
 
 		m_background->SetInScreenCoords(true);
 		m_background->SetColourOffset(Colour());

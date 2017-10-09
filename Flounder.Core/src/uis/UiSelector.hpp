@@ -1,8 +1,8 @@
 ﻿#pragma once
 
+#include "../inputs/AxisJoystick.hpp"
 #include "../inputs/ButtonMouse.hpp"
 #include "../inputs/ButtonJoystick.hpp"
-#include "../inputs/AxisJoystick.hpp"
 #include "../uis/UiObject.hpp"
 
 namespace Flounder

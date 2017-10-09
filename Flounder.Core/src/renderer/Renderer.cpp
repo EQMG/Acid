@@ -96,7 +96,7 @@ namespace Flounder
 		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 		renderPassBeginInfo.pClearValues = clearValues.data();
 		vkCmdBeginRenderPass(m_commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-		
+
 		if (m_managerRender != nullptr)
 		{
 			VkViewport viewport = {};

@@ -4,9 +4,11 @@
 
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
-#include "ManagerUis.hpp"
 #include "Instance.hpp"
 #include "ManagerRender.hpp"
+#include "ManagerUis.hpp"
+
+using namespace Demo;
 
 #if (FLOUNDER_CONFIG_RELEASE && FLOUNDER_PLATFORM_WINDOWS)
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, int cmdShow)
@@ -16,7 +18,7 @@ int main(int argc, char **argv)
 {
 	// Creates the engine object.
 	Engine *m_engine = new Engine();
-	m_engine->SetUpdater(new GlfwUpdater());
+	m_engine->SetUpdater(new PlatformUpdater());
 
 	// Initializes the engine modules.
 	if (Display::Get() != nullptr)
