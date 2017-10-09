@@ -63,8 +63,8 @@ namespace Flounder
 
 	Quaternion *Quaternion::Set(const Vector4 &source)
 	{
-		float n = sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
-		float s = sin(0.5f * source.m_w) / n;
+		const float n = sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+		const float s = sin(0.5f * source.m_w) / n;
 		m_x = source.m_x * s;
 		m_y = source.m_y * s;
 		m_z = source.m_z * s;
@@ -79,11 +79,11 @@ namespace Flounder
 		m_z = 0.0f;
 		m_w = 0.0f;
 
-		float diagonal = source.m_00 + source.m_11 + source.m_22;
+		const float diagonal = source.m_00 + source.m_11 + source.m_22;
 
 		if (diagonal > 0.0f)
 		{
-			float w4 = sqrt(diagonal + 1.0f) * 2.0f;
+			const float w4 = sqrt(diagonal + 1.0f) * 2.0f;
 			m_w = w4 / 4.0f;
 			m_x = (source.m_21 - source.m_12) / w4;
 			m_y = (source.m_02 - source.m_20) / w4;
@@ -91,7 +91,7 @@ namespace Flounder
 		}
 		else if ((source.m_00 > source.m_11) && (source.m_00 > source.m_22))
 		{
-			float x4 = sqrt(1.0f + source.m_00 - source.m_11 - source.m_22) * 2.0f;
+			const float x4 = sqrt(1.0f + source.m_00 - source.m_11 - source.m_22) * 2.0f;
 			m_w = (source.m_21 - source.m_12) / x4;
 			m_x = x4 / 4.0f;
 			m_y = (source.m_01 + source.m_10) / x4;
@@ -99,7 +99,7 @@ namespace Flounder
 		}
 		else if (source.m_11 > source.m_22)
 		{
-			float y4 = sqrt(1.0f + source.m_11 - source.m_00 - source.m_22 * 2.0f);
+			const float y4 = sqrt(1.0f + source.m_11 - source.m_00 - source.m_22 * 2.0f);
 			m_w = (source.m_02 - source.m_20) / y4;
 			m_x = (source.m_01 + source.m_10) / y4;
 			m_y = y4 / 4.0f;
@@ -107,7 +107,7 @@ namespace Flounder
 		}
 		else
 		{
-			float z4 = sqrt(1.0f + source.m_22 - source.m_00 - source.m_11) * 2.0f;
+			const float z4 = sqrt(1.0f + source.m_22 - source.m_00 - source.m_11) * 2.0f;
 			m_w = (source.m_10 - source.m_01) / z4;
 			m_x = (source.m_02 + source.m_20) / z4;
 			m_y = (source.m_12 + source.m_21) / z4;
@@ -124,7 +124,7 @@ namespace Flounder
 		m_z = 0.0f;
 		m_w = 0.0f;
 
-		float tr = source.m_00 + source.m_11 + source.m_22;
+		const float tr = source.m_00 + source.m_11 + source.m_22;
 
 		if (tr >= 0.0)
 		{
@@ -137,7 +137,7 @@ namespace Flounder
 		}
 		else
 		{
-			float max = Maths::Max(Maths::Max(source.m_00, source.m_11), source.m_22);
+			const float max = Maths::Max(Maths::Max(source.m_00, source.m_11), source.m_22);
 
 			if (max == source.m_00)
 			{
@@ -215,7 +215,7 @@ namespace Flounder
 		}
 
 		const float &d = left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z + left.m_w * right.m_w;
-		float absDot = d < 0.0f ? -d : d;
+		const float absDot = d < 0.0f ? -d : d;
 		float scale0 = 1.0f - progression;
 		float scale1 = progression;
 
@@ -232,10 +232,10 @@ namespace Flounder
 			scale1 = -scale1;
 		}
 
-		float newX = (scale0 * left.m_x) + (scale1 * right.m_x);
-		float newY = (scale0 * left.m_y) + (scale1 * right.m_y);
-		float newZ = (scale0 * left.m_z) + (scale1 * right.m_z);
-		float newW = (scale0 * left.m_w) + (scale1 * right.m_w);
+		const float newX = (scale0 * left.m_x) + (scale1 * right.m_x);
+		const float newY = (scale0 * left.m_y) + (scale1 * right.m_y);
+		const float newZ = (scale0 * left.m_z) + (scale1 * right.m_z);
+		const float newW = (scale0 * left.m_w) + (scale1 * right.m_w);
 		return destination->Set(newX, newY, newZ, newW);
 	}
 
@@ -288,16 +288,16 @@ namespace Flounder
 			destination = new Matrix4();
 		}
 
-		float xSquared = source.m_x * source.m_x;
-		float twoXY = 2.0f * source.m_x * source.m_y;
-		float twoXZ = 2.0f * source.m_x * source.m_z;
-		float twoXW = 2.0f * source.m_x * source.m_w;
-		float ySquared = source.m_y * source.m_y;
-		float twoYZ = 2.0f * source.m_y * source.m_z;
-		float twoYW = 2.0f * source.m_y * source.m_w;
-		float twoZW = 2.0f * source.m_z * source.m_w;
-		float zSquared = source.m_z * source.m_z;
-		float wSquared = source.m_w * source.m_w;
+		const float xSquared = source.m_x * source.m_x;
+		const float twoXY = 2.0f * source.m_x * source.m_y;
+		const float twoXZ = 2.0f * source.m_x * source.m_z;
+		const float twoXW = 2.0f * source.m_x * source.m_w;
+		const float ySquared = source.m_y * source.m_y;
+		const float twoYZ = 2.0f * source.m_y * source.m_z;
+		const float twoYW = 2.0f * source.m_y * source.m_w;
+		const float twoZW = 2.0f * source.m_z * source.m_w;
+		const float zSquared = source.m_z * source.m_z;
+		const float wSquared = source.m_w * source.m_w;
 
 		destination->m_00 = wSquared + xSquared - ySquared - zSquared;
 		destination->m_01 = twoXY - twoZW;
@@ -325,15 +325,15 @@ namespace Flounder
 			destination = new Matrix4();
 		}
 
-		float xy = source.m_x * source.m_y;
-		float xz = source.m_x * source.m_z;
-		float xw = source.m_x * source.m_w;
-		float yz = source.m_y * source.m_z;
-		float yw = source.m_y * source.m_w;
-		float zw = source.m_z * source.m_w;
-		float xSquared = source.m_x * source.m_x;
-		float ySquared = source.m_y * source.m_y;
-		float zSquared = source.m_z * source.m_z;
+		const float xy = source.m_x * source.m_y;
+		const float xz = source.m_x * source.m_z;
+		const float xw = source.m_x * source.m_w;
+		const float yz = source.m_y * source.m_z;
+		const float yw = source.m_y * source.m_w;
+		const float zw = source.m_z * source.m_w;
+		const float xSquared = source.m_x * source.m_x;
+		const float ySquared = source.m_y * source.m_y;
+		const float zSquared = source.m_z * source.m_z;
 
 		destination->m_00 = 1.0f - 2.0f * (ySquared + zSquared);
 		destination->m_01 = 2.0f * (xy - zw);

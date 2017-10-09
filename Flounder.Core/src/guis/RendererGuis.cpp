@@ -4,13 +4,20 @@
 
 namespace Flounder
 {
+	const std::vector<Vertex> VERTICES = {
+		Vertex(Vector3(0.0f, 0.0f, 0.0f)),
+		Vertex(Vector3(0.0f, 1.0f, 0.0f)),
+		Vertex(Vector3(1.0f, 0.0f, 0.0f)),
+		Vertex(Vector3(1.0f, 1.0f, 0.0f))
+	};
+
 	RendererGuis::RendererGuis() :
 		IRenderer(),
 		m_shader(new Shader("guis", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/guis/gui.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/guis/gui.frag.spv")
-		}))
-	//	m_model(new Model(std::vector<int>(), std::vector<float>{ 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f }))
+		})),
+		m_model(new Model(VERTICES))
 	{
 	}
 
@@ -23,6 +30,7 @@ namespace Flounder
 
 	void RendererGuis::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
+#if 0
 		PrepareRendering(clipPlane, camera);
 
 		for (auto screenobject : *Uis::get()->GetObjects())
@@ -36,11 +44,12 @@ namespace Flounder
 		}
 
 		EndRendering();
+#endif
 	}
 
+#if 0
 	void RendererGuis::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
 	{
-#if 0
 		// Starts the shader.
 		m_shader->start();
 
@@ -54,12 +63,10 @@ namespace Flounder
 		renderer::get()->disableDepthTesting();
 		renderer::get()->cullBackFaces(true);
 		renderer::get()->enableAlphaBlending();
-#endif
 	}
 
 	void RendererGuis::RenderGui(Gui *object)
 	{
-#if 0
 		// Binds the layouts.
 		renderer::get()->bindTexture(object->getTexture(), 0);
 
@@ -88,17 +95,15 @@ namespace Flounder
 		// Tells the GPU to render this object.
 		renderer::get()->renderArrays(GL_TRIANGLE_STRIP, m_model->getVaoLength());
 		renderer::get()->scissorDisable();
-#endif
 	}
 
 	void RendererGuis::EndRendering()
 	{
-#if 0
 		// Unbinds the layouts.
 		renderer::get()->unbindVAO(1, 0);
 
 		// Stops the shader.
 		m_shader->stop();
-#endif
 	}
+#endif
 }

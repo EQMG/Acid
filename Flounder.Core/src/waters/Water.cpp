@@ -61,7 +61,7 @@ namespace Flounder
 		);
 	}
 
-	void Water::CmdRender(const VkCommandBuffer & commandBuffer, const Pipeline & pipeline, const UniformBuffer & uniformScene)
+	void Water::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();
@@ -77,15 +77,10 @@ namespace Flounder
 		uboObject.ignoreReflections = !Waters::Get()->GetEnableReflections();
 		m_uniformObject->Update(&uboObject);
 
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
-
-		VkBuffer vertexBuffers[] = { m_model->GetVertexBuffer()->GetBuffer() };
-		VkDeviceSize offsets[] = { 0 };
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
+		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-		vkCmdBindIndexBuffer(commandBuffer, m_model->GetIndexBuffer()->GetBuffer(), 0, m_model->GetIndexBuffer()->GetIndexType());
-		vkCmdDrawIndexed(commandBuffer, m_model->GetIndexBuffer()->GetIndexCount(), 1, 0, 0, 0);
+		m_model->CmdRender(commandBuffer);
 	}
 
 	void Water::GenerateMesh()
@@ -97,13 +92,12 @@ namespace Flounder
 		{
 			for (int row = 0; row < VERTEX_COUNT; row++)
 			{
-				Vertex vertex = {};
-				vertex.position = Vector3((row * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f), 0.0f, (col * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f));
-				vertex.textures = Vector2();
-				vertex.normal = Vector3(0.0f, 1.0f, 0.0f);
-				vertex.tangent = Vector3();
+				const Vector3 position = Vector3((row * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f), 0.0f, (col * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f));
+				const Vector2 textures = Vector2();
+				const Vector3 normal = Vector3(0.0f, 2.0f, 0.0f);
+				const Vector3 tangent = Vector3();
 
-				vertices.push_back(vertex);
+				vertices.push_back(Vertex(position, textures, normal, tangent));
 			}
 		}
 
@@ -129,14 +123,14 @@ namespace Flounder
 		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
 	}
 
-	void Water::StoreQuad(std::vector<uint16_t>& indices, const int & topLeft, const int & topRight, const int & bottomLeft, const int & bottomRight)
+	void Water::StoreQuad(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight)
 	{
 		indices.push_back(topLeft);
 		indices.push_back(bottomLeft);
-		indices.push_back(bottomRight);
-		indices.push_back(topLeft);
-		indices.push_back(bottomRight);
 		indices.push_back(topRight);
+		indices.push_back(topRight);
+		indices.push_back(bottomLeft);
+		indices.push_back(bottomRight);
 	}
 
 	void Water::SetPosition(const Vector3 &position)

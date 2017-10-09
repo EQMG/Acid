@@ -1,6 +1,7 @@
 #include "Vector4.hpp"
 
 #include <assert.h>
+#include "Colour.hpp"
 #include "Maths.hpp"
 #include "Vector3.hpp"
 
@@ -35,6 +36,14 @@ namespace Flounder
 		m_y(source.m_y),
 		m_z(source.m_z),
 		m_w(source.m_w)
+	{
+	}
+
+	Vector4::Vector4(const Colour &source) :
+		m_x(source.m_r),
+		m_y(source.m_g),
+		m_z(source.m_b),
+		m_w(source.m_a)
 	{
 	}
 
@@ -204,10 +213,10 @@ namespace Flounder
 
 	float Vector4::GetDistanceSquared(const Vector4 &point1, const Vector4 &point2)
 	{
-		float dx = point1.m_x - point2.m_x;
-		float dy = point1.m_y - point2.m_y;
-		float dz = point1.m_z - point2.m_z;
-		float dw = point1.m_w - point2.m_w;
+		const float dx = point1.m_x - point2.m_x;
+		const float dy = point1.m_y - point2.m_y;
+		const float dz = point1.m_z - point2.m_z;
+		const float dw = point1.m_w - point2.m_w;
 		return dx * dx + dy * dy + dz * dz + dw * dw;
 	}
 

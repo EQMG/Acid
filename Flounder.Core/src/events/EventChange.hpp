@@ -1,7 +1,6 @@
 #pragma once
 
 #include <functional>
-
 #include "IEvent.hpp"
 
 namespace Flounder
@@ -10,13 +9,13 @@ namespace Flounder
 	/// A class that acts as a basic change listener for a value.
 	/// </summary>
 	/// @param <T> The type of value to find change with. </param>
-	template<typename t>
+	template<typename T>
 	class EventChange :
 		public IEvent
 	{
 	private:
-		t *m_reference;
-		t m_current;
+		T *m_reference;
+		T m_current;
 		std::function<void()> m_onEvent;
 	public:
 		/// <summary>
@@ -24,7 +23,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="reference"> The reference to listen to. </param>
 		/// <param name="onEvent"> A function called when the event is triggered. </param>
-		EventChange(t *reference, const std::function<void()> &onEvent);
+		EventChange(T *reference, const std::function<void()> &onEvent);
 
 		bool EventTriggered() override;
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-
 #include "IButton.hpp"
 
 namespace Flounder

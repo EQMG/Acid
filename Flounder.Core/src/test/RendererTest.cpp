@@ -1,7 +1,9 @@
 ﻿#include "RendererTest.hpp"
 
 #include "../devices/Display.hpp"
+#include "../maths/Maths.hpp"
 #include "../renderer/Renderer.hpp"
+#include "../terrains/Terrains.hpp"
 #include "ShaderTest.hpp"
 
 namespace Flounder
@@ -9,26 +11,36 @@ namespace Flounder
 	RendererTest::RendererTest() :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(ShaderTest::UboScene))),
-
-		m_testEntity1(new TestEntity(Vector3(0.0f, -2.3f, 3.0f), Vector3(0.0f, 0.0f, 0.0f), "res/treeBirchSmall/diffuse.png")),
-		m_testEntity2(new TestEntity(Vector3(2.0f, -2.3f, 2.0f), Vector3(0.0f, 90.0f, 0.0f), "res/undefined.png")),
-
+		m_testEntities(std::vector<TestEntity*>()),
 		m_shader(new Shader("tests", {
 			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
 			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
 		})),
 		m_pipeline(new Pipeline("tests", m_shader, ShaderTest::pipelineCreateInfo, ShaderTest::inputState, ShaderTest::descriptor))
 	{
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
-		descriptorWrites1 = std::vector<VkWriteDescriptorSet>{ m_uniformScene->GetWriteDescriptor(0, descriptorSet), m_testEntity1->m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_testEntity1->m_diffuse->GetWriteDescriptor(2, descriptorSet), m_testEntity1->m_swapMap->GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
-		descriptorWrites2 = std::vector<VkWriteDescriptorSet>{ m_uniformScene->GetWriteDescriptor(0, descriptorSet), m_testEntity2->m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_testEntity2->m_diffuse->GetWriteDescriptor(2, descriptorSet), m_testEntity2->m_swapMap->GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
+		Model *model = new Model("res/treeBirchSmall/model.obj");
+		Texture *diffuse = new Texture("res/treeBirchSmall/diffuse.png"); // "res/undefined.png"
+		Texture *swapMap = new Texture("res/treeBirchSmall/sway.png");
+
+		for (int i = -5; i <= 5; i++)
+		{
+			for (int j = -5; j <= 5; j++)
+			{
+				const float xv = Maths::RandomInRange(-10.0f, 10.0f);
+				const float yv = Maths::RandomInRange(-10.0f, 10.0f);
+				m_testEntities.push_back(new TestEntity(Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv), Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), model, diffuse, swapMap));
+			}
+		}
 	}
 
 	RendererTest::~RendererTest()
 	{
 		delete m_uniformScene;
-		delete m_testEntity2;
-		delete m_testEntity1;
+
+		for (auto entity : m_testEntities)
+		{
+			delete entity;
+		}
 
 		delete m_shader;
 		delete m_pipeline;
@@ -43,7 +55,9 @@ namespace Flounder
 
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-		m_testEntity1->CmdRender(*commandBuffer, *m_pipeline, descriptorWrites1);
-	//	m_testEntity2->CmdRender(*commandBuffer, *m_pipeline, descriptorWrites2);
+		for (auto entity : m_testEntities)
+		{
+			entity->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
+		}
 	}
 }

@@ -4,7 +4,6 @@
 #include "../maths/Matrix4.hpp"
 #include "../physics/Frustum.hpp"
 #include "../physics/Ray.hpp"
-
 #include "IPlayer.hpp"
 
 namespace Flounder

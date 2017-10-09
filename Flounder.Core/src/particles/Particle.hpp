@@ -3,7 +3,6 @@
 #include "../maths/Vector2.hpp"
 #include "../maths/Vector3.hpp"
 #include "../space/ISpatialObject.hpp"
-
 #include "ParticleType.hpp"
 
 namespace Flounder

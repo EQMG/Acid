@@ -18,8 +18,8 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-	//	const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-	//	vkCmdUpdateBuffer(commandBuffer, m_buffer, 0, m_size, newData);
+		//	const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+		//	vkCmdUpdateBuffer(commandBuffer, m_buffer, 0, m_size, newData);
 
 		// Copies the data to the buffer.
 		void *data;
@@ -28,7 +28,7 @@ namespace Flounder
 		vkUnmapMemory(logicalDevice, m_bufferMemory);
 	}
 
-	DescriptorType UniformBuffer::CreateDescriptor(const uint32_t & binding, const VkShaderStageFlags & stage)
+	DescriptorType UniformBuffer::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 		descriptorSetLayoutBinding.binding = binding;

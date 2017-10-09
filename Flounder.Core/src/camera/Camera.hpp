@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../engine/Engine.hpp"
-
 #include "ICamera.hpp"
 #include "IPlayer.hpp"
 

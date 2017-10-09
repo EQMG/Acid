@@ -2,7 +2,6 @@
 
 #include "../maths/Colour.hpp"
 #include "../maths/Vector3.hpp"
-
 #include "Attenuation.hpp"
 
 namespace Flounder

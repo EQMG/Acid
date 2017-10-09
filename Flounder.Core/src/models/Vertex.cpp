@@ -2,7 +2,11 @@
 
 namespace Flounder
 {
-	Vertex::Vertex()
+	Vertex::Vertex(const Vector3 &position, const Vector2 &textures, const Vector3 &normal, const Vector3 &tangent) :
+		m_position(position),
+		m_textures(textures),
+		m_normal(normal),
+		m_tangent(tangent)
 	{
 	}
 
@@ -30,25 +34,25 @@ namespace Flounder
 		attributeDescriptions[0].binding = 0;
 		attributeDescriptions[0].location = 0;
 		attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[0].offset = offsetof(Vertex, position);
+		attributeDescriptions[0].offset = offsetof(Vertex, m_position);
 
 		// Colour attributes.
 		attributeDescriptions[1].binding = 0;
 		attributeDescriptions[1].location = 1;
 		attributeDescriptions[1].format = VK_FORMAT_R32G32_SFLOAT;
-		attributeDescriptions[1].offset = offsetof(Vertex, textures);
+		attributeDescriptions[1].offset = offsetof(Vertex, m_textures);
 
 		// Normal attributes.
 		attributeDescriptions[2].binding = 0;
 		attributeDescriptions[2].location = 2;
 		attributeDescriptions[2].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[2].offset = offsetof(Vertex, normal);
+		attributeDescriptions[2].offset = offsetof(Vertex, m_normal);
 
 		// Tangent attributes.
 		attributeDescriptions[3].binding = 0;
 		attributeDescriptions[3].location = 3;
 		attributeDescriptions[3].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[3].offset = offsetof(Vertex, tangent);
+		attributeDescriptions[3].offset = offsetof(Vertex, m_tangent);
 
 		return attributeDescriptions;
 	}

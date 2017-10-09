@@ -1,5 +1,7 @@
 #include "terrains.hpp"
 
+#include "../worlds/Worlds.hpp"
+
 namespace Flounder
 {
 	Terrains::Terrains() :
@@ -39,5 +41,23 @@ namespace Flounder
 			// if current && !wasCurrent ? addChildren
 			object->Update();
 		}
+	}
+
+	float Terrains::GetHeight(const float &x, const float &z)
+	{
+		const float worldNoiseSpread = 1.2f;
+		const float worldNoiseFrequency = 10.0f;
+		const float worldNoiseHeight = 35.0f;
+		const float worldNoiseOffset = 0.0f;
+
+		float height = Worlds::Get()->GetNoise()->GetNoise(x / worldNoiseSpread, z / worldNoiseSpread, worldNoiseFrequency);
+		height *= worldNoiseHeight;
+		height += worldNoiseOffset;
+		return height;
+	}
+
+	Vector3 Terrains::GetPosition(const float &x, const float &z)
+	{
+		return Vector3(x, GetHeight(x, z), z);
 	}
 }

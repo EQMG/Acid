@@ -133,7 +133,7 @@ namespace Flounder
 			destination = new Vector2();
 		}
 
-		float theta = Maths::Radians(angle);
+		const float theta = Maths::Radians(angle);
 		return destination->Set(source.m_x * cos(theta) - source.m_y * sin(theta), source.m_x * sin(theta) + source.m_y * cos(theta));
 	}
 
@@ -144,7 +144,7 @@ namespace Flounder
 			destination = new Vector2();
 		}
 
-		float theta = Maths::Radians(angle);
+		const float theta = Maths::Radians(angle);
 		return destination->Set(((source.m_x - rotationAxis.m_x) * cos(theta)) - ((source.m_y - rotationAxis.m_y) * sin(theta) + rotationAxis.m_x), ((source.m_x - rotationAxis.m_x) * sin(theta)) + ((source.m_y - rotationAxis.m_y) * cos(theta) + rotationAxis.m_y));
 	}
 
@@ -212,8 +212,8 @@ namespace Flounder
 
 	float Vector2::GetDistanceSquared(const Vector2 &point1, const Vector2 &point2)
 	{
-		float dx = point1.m_x - point2.m_x;
-		float dy = point1.m_y - point2.m_y;
+		const float dx = point1.m_x - point2.m_x;
+		const float dy = point1.m_y - point2.m_y;
 		return dx * dx + dy * dy;
 	}
 
@@ -234,9 +234,9 @@ namespace Flounder
 
 	bool Vector2::PointInTriangle(const Vector2 &point, const Vector2 &v1, const Vector2 &v2, const Vector2 &v3)
 	{
-		bool b1 = (point.m_x - v2.m_x) * (v1.m_y - v2.m_y) - (v1.m_x - v2.m_x) * (point.m_y - v2.m_y);
-		bool b2 = (point.m_x - v3.m_x) * (v2.m_y - v3.m_y) - (v2.m_x - v3.m_x) * (point.m_y - v3.m_y);
-		bool b3 = (point.m_x - v1.m_x) * (v3.m_y - v1.m_y) - (v3.m_x - v1.m_x) * (point.m_y - v1.m_y);
+		const bool b1 = (point.m_x - v2.m_x) * (v1.m_y - v2.m_y) - (v1.m_x - v2.m_x) * (point.m_y - v2.m_y);
+		const bool b2 = (point.m_x - v3.m_x) * (v2.m_y - v3.m_y) - (v2.m_x - v3.m_x) * (point.m_y - v3.m_y);
+		const bool b3 = (point.m_x - v1.m_x) * (v3.m_y - v1.m_y) - (v3.m_x - v1.m_x) * (point.m_y - v1.m_y);
 		return ((b1 == b2) & (b2 == b3));
 	}
 

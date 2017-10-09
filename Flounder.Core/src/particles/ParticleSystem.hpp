@@ -1,9 +1,7 @@
 ﻿#pragma once
 
 #include <vector>
-
 #include "../maths/Vector3.hpp"
-
 #include "spawns/ISpawnParticle.hpp"
 #include "Particle.hpp"
 #include "ParticleType.hpp"

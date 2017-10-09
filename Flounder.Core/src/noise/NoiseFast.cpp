@@ -2,7 +2,6 @@
 
 #include <assert.h>
 #include <random>
-
 #include "../maths/Maths.hpp"
 
 namespace Flounder

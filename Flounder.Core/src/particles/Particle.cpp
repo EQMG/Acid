@@ -1,6 +1,6 @@
 ﻿#include "Particle.hpp"
 
-#include "../camera/camera.hpp"
+#include "../camera/Camera.hpp"
 #include "../engine/Engine.hpp"
 
 namespace Flounder

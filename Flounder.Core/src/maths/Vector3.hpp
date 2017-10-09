@@ -2,6 +2,7 @@
 
 namespace Flounder
 {
+	class Colour;
 	class Vector2;
 	class Vector4;
 
@@ -46,6 +47,12 @@ namespace Flounder
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing one. </param>
 		Vector3(const Vector4 &source);
+
+		/// <summary>
+		/// Constructor for Vector3.
+		/// </summary>
+		/// <param name="source"> Creates this vector out of a existing colour. </param>
+		Vector3(const Colour &source);
 
 		/// <summary>
 		/// Constructor for Vector3.

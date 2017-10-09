@@ -3,7 +3,7 @@
 //#define STB_IMAGE_IMPLEMENTATION
 //#include <stb/stb_image.h>
 #define STB_IMAGE_IMPLEMENTATION
-#include "../../stb/stb_image.h"
+#include "../stb/stb_image.h"
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 #include <Windows.h>
