@@ -43,6 +43,7 @@ namespace Flounder
 	Buffer::~Buffer()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
 		vkDestroyBuffer(logicalDevice, m_buffer, nullptr);
 		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
 	}

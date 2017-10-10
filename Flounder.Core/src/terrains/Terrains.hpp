@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "../engine/Engine.hpp"
+#include "../noise/NoiseFast.hpp"
 #include "Terrain.hpp"
 
 namespace Flounder
@@ -14,6 +15,8 @@ namespace Flounder
 	{
 	private:
 		std::vector<Terrain*> *m_terrains;
+		NoiseFast m_noiseTerrain;
+		NoiseFast m_noiseRivers;
 	public:
 		/// <summary>
 		/// Gets this engine instance.

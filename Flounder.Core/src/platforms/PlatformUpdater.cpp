@@ -36,10 +36,10 @@ namespace Flounder
 
 	PlatformUpdater::~PlatformUpdater()
 	{
-		//for (auto it = --m_modules->end(); it != m_modules->begin(); --it)
-		//{
-		//	delete (*it).second.second;
-		//}
+		for (auto it = --m_modules->end(); it != m_modules->begin(); --it)
+		{
+			delete (*it).second.second;
+		}
 
 		delete m_modules;
 

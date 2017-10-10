@@ -11,7 +11,7 @@ namespace Flounder
 	class VertexData
 	{
 	private:
-		static const uint16_t NO_INDEX;
+		static const uint32_t NO_INDEX;
 
 		Vector3 m_position;
 
@@ -19,13 +19,13 @@ namespace Flounder
 		int m_normalIndex;
 		VertexData *m_duplicateVertex;
 
-		uint16_t m_index;
+		uint32_t m_index;
 		float m_length;
 
 		std::vector<Vector3*> m_tangents;
 		Vector3 m_averagedTangent;
 	public:
-		VertexData(const uint16_t &index, const Vector3 &position);
+		VertexData(const uint32_t &index, const Vector3 &position);
 
 		~VertexData();
 
@@ -43,7 +43,7 @@ namespace Flounder
 
 		void SetDuplicateVertex(VertexData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
-		uint16_t GetIndex() const { return m_index; }
+		uint32_t GetIndex() const { return m_index; }
 
 		float GetLength() const { return m_length; }
 

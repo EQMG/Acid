@@ -27,7 +27,7 @@ namespace Flounder
 
 		static DescriptorType typeUboScene;
 		static DescriptorType typeUboObject;
-		//	static DescriptorType typeSamplerCubemap;
+		static DescriptorType typeSamplerCubemap;
 		static Descriptor descriptor;
 		static InputState inputState;
 
