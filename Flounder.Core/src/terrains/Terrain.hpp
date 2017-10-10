@@ -29,7 +29,7 @@ namespace Flounder
 		static const float SQUARE_SIZE;
 		static const int VERTEX_COUNT;
 
-		Terrain(const Vector3 &position, const Vector3 &rotation, const int &seed);
+		Terrain(const Vector3 &position, const Vector3 &rotation);
 
 		~Terrain();
 
@@ -39,7 +39,7 @@ namespace Flounder
 	private:
 		void GenerateMesh();
 
-		void StoreQuad(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight);
+		void StoreQuad(std::vector<uint32_t> &indices, const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight);
 
 		Vector3 CalculateNormal(const float &x, const float &z);
 

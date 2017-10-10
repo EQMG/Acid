@@ -8,23 +8,15 @@ namespace Flounder
 {
 	Worlds::Worlds() :
 		IModule(),
-		m_noise(new NoiseFast(420)),
 		m_driverDay(new DriverLinear(0.0f, 1.0f, 100.0f)),
 		m_factorDay(0.0f),
 		m_sunPosition(new Vector3()),
 		m_sunColour(new Colour())
 	{
-		m_noise->SetNoiseType(NoiseFast::SimplexFractal);
-	//	m_noise->SetInterp(NoiseFast::Quintic);
-		m_noise->SetFractalOctaves(3);
-		m_noise->SetFractalLacunarity(2.0f);
-		m_noise->SetFractalGain(0.45f);
 	}
 
 	Worlds::~Worlds()
 	{
-		delete m_noise;
-
 		delete m_driverDay;
 
 		delete m_sunPosition;

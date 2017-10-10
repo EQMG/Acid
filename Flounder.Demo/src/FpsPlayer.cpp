@@ -109,5 +109,12 @@ namespace Demo
 
 		Vector3::Add(*m_position, *m_amountMove->Set(dx, dy, dz), m_position);
 		Vector3::Add(*m_rotation, *m_amountRotate->Set(0.0f, 0.0f, 0.0f), m_rotation);
+
+		const float terrainHeight = Terrains::Get()->GetHeight(m_position->m_x, m_position->m_z) + 1.0f;
+
+		if (m_position->m_y < terrainHeight)
+		{
+			m_position->m_y = terrainHeight;
+		}
 	}
 }

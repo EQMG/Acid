@@ -46,7 +46,7 @@ namespace Flounder
 	private:
 		void GenerateMesh();
 
-		void StoreQuad(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight);
+		void StoreQuad(std::vector<uint32_t> &indices, const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight);
 	public:
 		Model *GetModel() const { return m_model; }
 

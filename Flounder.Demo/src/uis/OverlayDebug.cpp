@@ -1,4 +1,4 @@
-﻿#include "overlaydebug.hpp"
+﻿#include "OverlayDebug.hpp"
 
 namespace Demo
 {

@@ -32,7 +32,7 @@ namespace Flounder
 	}
 
 	Texture::Texture(const std::vector<std::string> &cubemap) :
-		Buffer(2048 * 2048 * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
+		Buffer(1024 * 1024 * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_file(""),
 		m_cubemap(std::vector<std::string>(cubemap)),
 
@@ -53,7 +53,7 @@ namespace Flounder
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageType(VK_IMAGE_TYPE_3D)
 	{
-		//	CreateImage3D();
+		CreateImage3D();
 	}
 
 	Texture::~Texture()
@@ -180,6 +180,8 @@ namespace Flounder
 
 	void Texture::CreateImage3D()
 	{
+		m_file = m_cubemap[0];
+		CreateImage2D();
 	}
 
 	stbi_uc *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
