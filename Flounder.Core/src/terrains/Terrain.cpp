@@ -8,25 +8,37 @@
 
 namespace Flounder
 {
-	const float Terrain::SIDE_LENGTH = 512.0f;
-	const float Terrain::SQUARE_SIZE = 2.0f;
-	const int Terrain::VERTEX_COUNT = static_cast<int>((2.0 * SIDE_LENGTH) / SQUARE_SIZE) + 1;
+	const float Terrain::SIDE_LENGTH = 100.0f;
+	const std::vector<float> Terrain::SQUARE_SIZES = { 0.8f, 3.0f };
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(ShaderTerrains::UboObject))),
-		m_model(nullptr),
+		m_modelLods(std::vector<Model*>()),
 		m_position(new Vector3(position)),
 		m_rotation(new Vector3(rotation)),
 		m_moved(true),
 		m_modelMatrix(new Matrix4()),
 		m_aabb(new Aabb())
 	{
-		GenerateMesh();
+		for (int i = 0; i < SQUARE_SIZES.size(); i++)
+		{
+			Model *model = GenerateMesh(i);
+			m_modelLods.push_back(model);
+		}
+
+		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
+		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;
+		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
+		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
+		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
 	}
 
 	Terrain::~Terrain()
 	{
-		delete m_model;
+		for (auto model : m_modelLods)
+		{
+			delete model;
+		}
 
 		delete m_position;
 		delete m_rotation;
@@ -60,48 +72,61 @@ namespace Flounder
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 		
-		m_model->CmdRender(commandBuffer);
+		Model *model;
+
+		if (m_position->IsZero())
+		{
+			model = m_modelLods[0];
+		}
+		else
+		{
+			model = m_modelLods[1];
+		}
+
+		model->CmdRender(commandBuffer);
 	}
 
-	void Terrain::GenerateMesh()
+	int Terrain::CalculateVertexCount(const float &terrainLength, const float &squareSize)
 	{
+		return static_cast<int>((2.0 * terrainLength) / squareSize) + 1;
+	}
+
+	Model *Terrain::GenerateMesh(const int & lod)
+	{
+		const float squareSize = SQUARE_SIZES[lod];
+		const int vertexCount = CalculateVertexCount(SIDE_LENGTH, squareSize);
+
 		std::vector<Vertex> vertices = std::vector<Vertex>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
-		for (int col = 0; col < VERTEX_COUNT; col++)
+		for (int col = 0; col < vertexCount; col++)
 		{
-			for (int row = 0; row < VERTEX_COUNT; row++)
+			for (int row = 0; row < vertexCount; row++)
 			{
-				Vector3 position = Vector3((row * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f), 0.0f, (col * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f));
+				Vector3 position = Vector3((row * squareSize) - (SIDE_LENGTH / 2.0f), 0.0f, (col * squareSize) - (SIDE_LENGTH / 2.0f));
 				position.m_y = Terrains::Get()->GetHeight(position.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), position.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f)); // TODO: Simplify!
 				const Vector2 textures = Vector2();
-				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), position.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f));
+				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x - (SIDE_LENGTH / 2.0f), position.m_z + m_position->m_z - (SIDE_LENGTH / 2.0f), squareSize);
 				const Vector3 tangent = Vector3(CalculateColour(position, normal));
 
 				vertices.push_back(Vertex(position, textures, normal, tangent));
 			}
 		}
 
-		for (int col = 0; col < VERTEX_COUNT - 1; col++)
+		for (int col = 0; col < vertexCount - 1; col++)
 		{
-			for (int row = 0; row < VERTEX_COUNT - 1; row++)
+			for (int row = 0; row < vertexCount - 1; row++)
 			{
-				const uint32_t topLeft = (row * VERTEX_COUNT) + col;
+				const uint32_t topLeft = (row * vertexCount) + col;
 				const uint32_t topRight = topLeft + 1;
-				const uint32_t bottomLeft = ((row + 1) * VERTEX_COUNT) + col;
+				const uint32_t bottomLeft = ((row + 1) * vertexCount) + col;
 				const uint32_t bottomRight = bottomLeft + 1;
 
 				StoreQuad(indices, topLeft, topRight, bottomLeft, bottomRight);
 			}
 		}
 
-		m_model = new Model(vertices, indices);
-
-		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
-		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;
-		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
-		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
-		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
+		return new Model(vertices, indices);
 	}
 
 	void Terrain::StoreQuad(std::vector<uint32_t> &indices, const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight)
@@ -114,12 +139,12 @@ namespace Flounder
 		indices.push_back(bottomRight);
 	}
 
-	Vector3 Terrain::CalculateNormal(const float &x, const float &z)
+	Vector3 Terrain::CalculateNormal(const float &x, const float &z, const float &squareSize)
 	{
-		const float heightL = Terrains::Get()->GetHeight(x - SQUARE_SIZE, z);
-		const float heightR = Terrains::Get()->GetHeight(x + SQUARE_SIZE, z);
-		const float heightD = Terrains::Get()->GetHeight(x, z - SQUARE_SIZE);
-		const float heightU = Terrains::Get()->GetHeight(x, z + SQUARE_SIZE);
+		const float heightL = Terrains::Get()->GetHeight(x - squareSize, z);
+		const float heightR = Terrains::Get()->GetHeight(x + squareSize, z);
+		const float heightD = Terrains::Get()->GetHeight(x, z - squareSize);
+		const float heightU = Terrains::Get()->GetHeight(x, z + squareSize);
 
 		Vector3 normal = Vector3(heightL - heightR, 2.0f, heightD - heightU);
 		normal.Normalize();
