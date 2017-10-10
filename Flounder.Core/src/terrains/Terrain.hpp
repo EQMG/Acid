@@ -16,7 +16,7 @@ namespace Flounder
 	private:
 		UniformBuffer *m_uniformObject;
 
-		Model *m_model;
+		std::vector<Model*> m_modelLods;
 
 		Vector3 *m_position;
 		Vector3 *m_rotation;
@@ -26,8 +26,7 @@ namespace Flounder
 		Aabb *m_aabb;
 	public:
 		static const float SIDE_LENGTH;
-		static const float SQUARE_SIZE;
-		static const int VERTEX_COUNT;
+		static const std::vector<float> SQUARE_SIZES;
 
 		Terrain(const Vector3 &position, const Vector3 &rotation);
 
@@ -36,16 +35,20 @@ namespace Flounder
 		void Update();
 
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
+
+		static int CalculateVertexCount(const float &terrainLength, const float &squareSize);
 	private:
-		void GenerateMesh();
+		Model *GenerateMesh(const int &lod);
 
 		void StoreQuad(std::vector<uint32_t> &indices, const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight);
 
-		Vector3 CalculateNormal(const float &x, const float &z);
+		Vector3 CalculateNormal(const float &x, const float &z, const float &squareSize);
 
 		Colour CalculateColour(const Vector3 &position, const Vector3 &normal);
 	public:
-		Model *GetModel() const { return m_model; }
+		std::vector<Model*> GetModelLods() const { return m_modelLods; }
+
+		Model *GetModel(const int &lod) const { return m_modelLods[lod]; }
 
 		Vector3 *GetPosition() const { return m_position; }
 
