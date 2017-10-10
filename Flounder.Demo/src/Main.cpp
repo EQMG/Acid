@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 		Display::Get()->SetWindowSize(1080, 720);
 		Display::Get()->SetTitle("Flounder Demo");
 		Display::Get()->SetIcon("res/flounder.png");
-		Display::Get()->SetFpsLimit(61.0f);
+		Display::Get()->SetFpsLimit(0.0f);
 		Display::Get()->SetAntialiasing(true);
 		Display::Get()->SetFullscreen(false);
 	}
@@ -66,15 +66,33 @@ int main(int argc, char **argv)
 		));
 	}
 
+	if (Terrains::Get() != nullptr)
+	{
+		/*for (int j = -1; j <= 1; j++)
+		{
+		for (int w = -1; w <= 1; w++)
+		{
+		if (!(j == 0 && w == 0))
+		{
+		Terrains::Get()->GetTerrains()->push_back(new Terrain(
+		Vector3(2.0f * static_cast<float>(j) * Terrain::SIDE_LENGTH, 0.0f, 2.0f * static_cast<float>(w) * Terrain::SIDE_LENGTH), Vector3()
+		));
+		}
+		}
+		}*/
+
+		Terrains::Get()->GetTerrains()->push_back(new Terrain(Vector3(), Vector3()));
+	}
+
 	if (Waters::Get() != nullptr)
 	{
 		Waters::Get()->SetWater(new Water(
-			Vector3(0.0f, -7.0f, 0.0f), Vector3()
+			Vector3(0.0f, 0.0f, 0.0f), Vector3()
 		));
 	}
 
 	// Runs the engine loop.
-	int exitCode = m_engine->Run();
+	const int exitCode = m_engine->Run();
 
 	// Deletes the engine.
 	delete m_engine;

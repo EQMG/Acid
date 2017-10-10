@@ -10,7 +10,7 @@
 namespace Flounder
 {
 	const float Water::SIDE_LENGTH = 1024.0f;
-	const float Water::SQUARE_SIZE = 512.0f;
+	const float Water::SQUARE_SIZE = 256.0f;
 	const int Water::VERTEX_COUNT = static_cast<int>((2.0 * SIDE_LENGTH) / SQUARE_SIZE) + 1;
 
 	const Colour Water::WATER_COLOUR = Colour("#366996");
@@ -86,7 +86,7 @@ namespace Flounder
 	void Water::GenerateMesh()
 	{
 		std::vector<Vertex> vertices = std::vector<Vertex>();
-		std::vector<uint16_t> indices = std::vector<uint16_t>();
+		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		for (int col = 0; col < VERTEX_COUNT; col++)
 		{
@@ -105,10 +105,10 @@ namespace Flounder
 		{
 			for (int row = 0; row < VERTEX_COUNT - 1; row++)
 			{
-				int topLeft = (row * VERTEX_COUNT) + col;
-				int topRight = topLeft + 1;
-				int bottomLeft = ((row + 1) * VERTEX_COUNT) + col;
-				int bottomRight = bottomLeft + 1;
+				const uint32_t topLeft = (row * VERTEX_COUNT) + col;
+				const uint32_t topRight = topLeft + 1;
+				const uint32_t bottomLeft = ((row + 1) * VERTEX_COUNT) + col;
+				const uint32_t bottomRight = bottomLeft + 1;
 
 				StoreQuad(indices, topLeft, topRight, bottomLeft, bottomRight);
 			}
@@ -123,7 +123,7 @@ namespace Flounder
 		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
 	}
 
-	void Water::StoreQuad(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight)
+	void Water::StoreQuad(std::vector<uint32_t> &indices, const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight)
 	{
 		indices.push_back(topLeft);
 		indices.push_back(bottomLeft);
