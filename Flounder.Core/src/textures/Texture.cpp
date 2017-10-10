@@ -180,8 +180,16 @@ namespace Flounder
 
 	void Texture::CreateImage3D()
 	{
-		m_file = m_cubemap[0];
-		CreateImage2D();
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		std::vector<stbi_uc*> sidePixels = std::vector<stbi_uc*>();
+
+		for (auto side : m_cubemap)
+		{
+			stbi_uc *pixels = LoadPixels(side, &m_width, &m_height, &m_components);
+			sidePixels.push_back(pixels);
+		}
+
 	}
 
 	stbi_uc *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)

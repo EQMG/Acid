@@ -24,7 +24,7 @@ namespace Flounder
 
 		for (auto object : *Terrains::Get()->GetTerrains())
 		{
-			RenderModel(object->GetModel(), object->GetModelMatrix());
+			RenderModel(object->GetModel(0), object->GetModelMatrix());
 		}
 
 		EndRendering();
