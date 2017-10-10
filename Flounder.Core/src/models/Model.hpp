@@ -20,7 +20,7 @@ namespace Flounder
 		std::string m_file;
 
 		std::vector<Vertex> m_vertices;
-		std::vector<uint16_t> m_indices;
+		std::vector<uint32_t> m_indices;
 
 		Aabb *m_aabb;
 
@@ -38,7 +38,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="vertices"> The model vertices. </param>
 		/// <param name="indices"> The model indices. </param>
-		Model(const std::vector<Vertex> &vertices, const std::vector<uint16_t> &indices);
+		Model(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices);
 
 		/// <summary>
 		/// Creates a new model without indices.
@@ -64,9 +64,9 @@ namespace Flounder
 		/// </summary>
 		void LoadFromFile();
 
-		VertexData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData*> *vertices, std::vector<uint16_t> *indices);
+		VertexData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData*> *vertices, std::vector<uint32_t> *indices);
 
-		VertexData *DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint16_t> *indices, std::vector<VertexData*> *vertices);
+		VertexData *DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexData*> *vertices);
 
 		void CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *textures);
 

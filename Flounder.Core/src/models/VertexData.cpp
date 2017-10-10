@@ -2,9 +2,9 @@
 
 namespace Flounder
 {
-	const uint16_t VertexData::NO_INDEX = -1;
+	const uint32_t VertexData::NO_INDEX = -1;
 
-	VertexData::VertexData(const uint16_t &index, const Vector3 &position) :
+	VertexData::VertexData(const uint32_t &index, const Vector3 &position) :
 		m_position(position),
 		m_textureIndex(NO_INDEX),
 		m_normalIndex(NO_INDEX),

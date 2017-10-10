@@ -2,7 +2,6 @@
 
 #include "../maths/Vector3.hpp"
 #include "../engine/Engine.hpp"
-#include "../noise/NoiseFast.hpp"
 #include "../skyboxes/Skyboxes.hpp"
 #include "../visual/DriverLinear.hpp"
 
@@ -15,8 +14,6 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		NoiseFast *m_noise;
-
 		DriverLinear *m_driverDay;
 		float m_factorDay;
 
@@ -43,8 +40,6 @@ namespace Flounder
 		~Worlds();
 
 		void Update() override;
-
-		NoiseFast *GetNoise() const { return m_noise; }
 
 		float GetDayFactor();
 

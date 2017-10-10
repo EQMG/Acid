@@ -8,11 +8,11 @@
 
 namespace Flounder
 {
-	const float Terrain::SIDE_LENGTH = 120.0f;
-	const float Terrain::SQUARE_SIZE = 2.333f;
+	const float Terrain::SIDE_LENGTH = 512.0f;
+	const float Terrain::SQUARE_SIZE = 2.0f;
 	const int Terrain::VERTEX_COUNT = static_cast<int>((2.0 * SIDE_LENGTH) / SQUARE_SIZE) + 1;
 
-	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation, const int &seed) :
+	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(ShaderTerrains::UboObject))),
 		m_model(nullptr),
 		m_position(new Vector3(position)),
@@ -66,7 +66,7 @@ namespace Flounder
 	void Terrain::GenerateMesh()
 	{
 		std::vector<Vertex> vertices = std::vector<Vertex>();
-		std::vector<uint16_t> indices = std::vector<uint16_t>();
+		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		for (int col = 0; col < VERTEX_COUNT; col++)
 		{
@@ -86,10 +86,10 @@ namespace Flounder
 		{
 			for (int row = 0; row < VERTEX_COUNT - 1; row++)
 			{
-				int topLeft = (row * VERTEX_COUNT) + col;
-				int topRight = topLeft + 1;
-				int bottomLeft = ((row + 1) * VERTEX_COUNT) + col;
-				int bottomRight = bottomLeft + 1;
+				const uint32_t topLeft = (row * VERTEX_COUNT) + col;
+				const uint32_t topRight = topLeft + 1;
+				const uint32_t bottomLeft = ((row + 1) * VERTEX_COUNT) + col;
+				const uint32_t bottomRight = bottomLeft + 1;
 
 				StoreQuad(indices, topLeft, topRight, bottomLeft, bottomRight);
 			}
@@ -104,7 +104,7 @@ namespace Flounder
 		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
 	}
 
-	void Terrain::StoreQuad(std::vector<uint16_t> &indices, const int &topLeft, const int &topRight, const int &bottomLeft, const int &bottomRight)
+	void Terrain::StoreQuad(std::vector<uint32_t> &indices, const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight)
 	{
 		indices.push_back(topLeft);
 		indices.push_back(bottomLeft);
@@ -116,10 +116,10 @@ namespace Flounder
 
 	Vector3 Terrain::CalculateNormal(const float &x, const float &z)
 	{
-		float heightL = Terrains::Get()->GetHeight(x - SQUARE_SIZE, z);
-		float heightR = Terrains::Get()->GetHeight(x + SQUARE_SIZE, z);
-		float heightD = Terrains::Get()->GetHeight(x, z - SQUARE_SIZE);
-		float heightU = Terrains::Get()->GetHeight(x, z + SQUARE_SIZE);
+		const float heightL = Terrains::Get()->GetHeight(x - SQUARE_SIZE, z);
+		const float heightR = Terrains::Get()->GetHeight(x + SQUARE_SIZE, z);
+		const float heightD = Terrains::Get()->GetHeight(x, z - SQUARE_SIZE);
+		const float heightU = Terrains::Get()->GetHeight(x, z + SQUARE_SIZE);
 
 		Vector3 normal = Vector3(heightL - heightR, 2.0f, heightD - heightU);
 		normal.Normalize();
@@ -129,18 +129,18 @@ namespace Flounder
 	Colour Terrain::CalculateColour(const Vector3 &position, const Vector3 &normal)
 	{
 		const Colour tintGrass = Colour("#51ad5a");
-		const Colour tintRock = Colour("#A18A5A");
+		const Colour tintRock = Colour("#6D695E");
 		const Colour tintSand = Colour("#F7D8AC");
 		const Colour tintSnow = Colour("#ffffff");
 		const float heightFactor = position.m_y;
 
 		Colour tint;
 
-		if (heightFactor <= -6.5f)
+		if (heightFactor <= 0.5f)
 		{
 			tint = tintSand;
 		}
-		else if (heightFactor >= 10.0f)
+		else if (heightFactor >= 23.0f)
 		{
 			tint = tintSnow;
 		}
@@ -149,7 +149,7 @@ namespace Flounder
 			tint = tintGrass;
 		}
 
-		Colour::Interpolate(tintRock, tint, Maths::Clamp(fabs(Vector3(normal).Normalize()->m_y), 0.0f, 1.0f), &tint);
+		Colour::Interpolate(tintRock, tint, Maths::Clamp(fabs(normal.m_y), 0.0f, 1.0f), &tint);
 		return tint;
 	}
 

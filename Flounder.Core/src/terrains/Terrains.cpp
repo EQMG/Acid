@@ -6,22 +6,23 @@ namespace Flounder
 {
 	Terrains::Terrains() :
 		IModule(),
-		m_terrains(new std::vector<Terrain*>())
+		m_terrains(new std::vector<Terrain*>()),
+		m_noiseTerrain(NoiseFast(876759995)),
+		m_noiseRivers(NoiseFast(1045211682))
 	{
-		/*for (int j = -1; j <= 1; j++)
-		{
-			for (int w = -1; w <= 1; w++)
-			{
-				if (!(j == 0 && w == 0))
-				{
-					m_terrains->push_back(new Terrain(
-						Vector3(2.0f * static_cast<float>(j) * Terrain::SIDE_LENGTH, 0.0f, 2.0f * static_cast<float>(w) * Terrain::SIDE_LENGTH), Vector3(), 420
-					));
-				}
-			}
-		}*/
+		m_noiseTerrain.SetNoiseType(NoiseFast::SimplexFractal);
+		m_noiseTerrain.SetFrequency(0.007f);
+		m_noiseTerrain.SetFractalType(NoiseFast::Fbm);
+		m_noiseTerrain.SetFractalOctaves(4);
+		m_noiseTerrain.SetFractalLacunarity(2.0f);
+		m_noiseTerrain.SetFractalGain(0.4f);
 
-		m_terrains->push_back(new Terrain(Vector3(), Vector3(), 420));
+		m_noiseRivers.SetNoiseType(NoiseFast::SimplexFractal);
+		m_noiseRivers.SetFrequency(0.01f);
+		m_noiseRivers.SetFractalType(NoiseFast::Billow);
+		m_noiseRivers.SetFractalOctaves(1);
+		m_noiseRivers.SetFractalLacunarity(2.0f);
+		m_noiseRivers.SetFractalGain(0.5f);
 	}
 
 	Terrains::~Terrains()
@@ -44,9 +45,13 @@ namespace Flounder
 	float Terrains::GetHeight(const float &x, const float &z)
 	{
 		const float worldNoiseHeight = 35.0f;
-		const float worldNoiseOffset = 0.0f;
+		const float worldNoiseOffset = 7.0f;
 
-		float height = Worlds::Get()->GetNoise()->GetNoise(x, z);
+	//	float river = m_noiseRivers.GetNoise(x, z);
+	//	river = (river <= 0.0f) ? river : 1.0f;
+		float height = m_noiseTerrain.GetNoise(x, z);
+		height = (height < 0.0f ? -1.0f : 1.0f) * pow(height, 2.0f);
+	//	height *= river;
 		height *= worldNoiseHeight;
 		height += worldNoiseOffset;
 		return height;

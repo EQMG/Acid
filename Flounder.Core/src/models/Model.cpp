@@ -11,30 +11,30 @@ namespace Flounder
 	Model::Model(const std::string &file) :
 		m_file(file),
 		m_vertices(std::vector<Vertex>()),
-		m_indices(std::vector<uint16_t>()),
+		m_indices(std::vector<uint32_t>()),
 		m_aabb(new Aabb()),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr)
 	{
 		LoadFromFile();
 		m_vertexBuffer = new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data());
-		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT16, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
+		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
 	}
 
-	Model::Model(const std::vector<Vertex> &vertices, const std::vector<uint16_t> &indices) :
+	Model::Model(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices) :
 		m_file(""),
 		m_vertices(std::vector<Vertex>(vertices)),
-		m_indices(std::vector<uint16_t>(indices)),
+		m_indices(std::vector<uint32_t>(indices)),
 		m_aabb(new Aabb()),
 		m_vertexBuffer(new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data())),
-		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT16, sizeof(m_indices[0]), m_indices.size(), m_indices.data()))
+		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(m_indices[0]), m_indices.size(), m_indices.data()))
 	{
 	}
 
 	Model::Model(const std::vector<Vertex> &vertices) :
 		m_file(""),
 		m_vertices(std::vector<Vertex>(vertices)),
-		m_indices(std::vector<uint16_t>()),
+		m_indices(std::vector<uint32_t>()),
 		m_aabb(new Aabb()),
 		m_vertexBuffer(new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data())),
 		m_indexBuffer(nullptr)
@@ -76,7 +76,7 @@ namespace Flounder
 		const std::string fileLoaded = HelperFile::ReadTextFile(std::string(m_file));
 		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
 
-		std::vector<uint16_t> indicesList = std::vector<uint16_t>();
+		std::vector<uint32_t> indicesList = std::vector<uint32_t>();
 		std::vector<VertexData*> verticesList = std::vector<VertexData*>();
 		std::vector<Vector2> texturesList = std::vector<Vector2>();
 		std::vector<Vector3> normalsList = std::vector<Vector3>();
@@ -177,7 +177,7 @@ namespace Flounder
 		}
 	}
 
-	VertexData *Model::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData*> *vertices, std::vector<uint16_t> *indices)
+	VertexData *Model::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData*> *vertices, std::vector<uint32_t> *indices)
 	{
 		const int index = static_cast<int>(vertex.m_x) - 1;
 		const int textureIndex = static_cast<int>(vertex.m_y) - 1;
@@ -195,7 +195,7 @@ namespace Flounder
 		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
 	}
 
-	VertexData *Model::DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint16_t> *indices, std::vector<VertexData*> *vertices)
+	VertexData *Model::DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexData*> *vertices)
 	{
 		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{
@@ -210,7 +210,7 @@ namespace Flounder
 			return DealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
 		}
 
-		VertexData *duplicateVertex = new VertexData(static_cast<uint16_t>(vertices->size()), previousVertex->GetPosition());
+		VertexData *duplicateVertex = new VertexData(static_cast<uint32_t>(vertices->size()), previousVertex->GetPosition());
 		duplicateVertex->SetTextureIndex(newTextureIndex);
 		duplicateVertex->SetNormalIndex(newNormalIndex);
 		previousVertex->SetDuplicateVertex(duplicateVertex);
