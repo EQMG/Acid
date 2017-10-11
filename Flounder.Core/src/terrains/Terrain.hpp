@@ -40,8 +40,6 @@ namespace Flounder
 	private:
 		Model *GenerateMesh(const int &lod);
 
-		void StoreQuad(std::vector<uint32_t> &indices, const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight);
-
 		Vector3 CalculateNormal(const float &x, const float &z, const float &squareSize);
 
 		Colour CalculateColour(const Vector3 &position, const Vector3 &normal);
