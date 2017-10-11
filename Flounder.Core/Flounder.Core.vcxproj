@@ -135,6 +135,7 @@
     <ClCompile Include="src\test\RendererTest.cpp" />
     <ClCompile Include="src\test\TestEntity.cpp" />
     <ClCompile Include="src\test\ShaderTest.cpp" />
+    <ClCompile Include="src\textures\Cubemap.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\uis\ContainerScreen.cpp" />
     <ClCompile Include="src\uis\InputButton.cpp" />
@@ -313,6 +314,7 @@
     <ClInclude Include="src\test\RendererTest.hpp" />
     <ClInclude Include="src\test\TestEntity.hpp" />
     <ClInclude Include="src\test\ShaderTest.hpp" />
+    <ClInclude Include="src\textures\Cubemap.hpp" />
     <ClInclude Include="src\textures\Texture.hpp" />
     <ClInclude Include="src\uis\ContainerScreen.hpp" />
     <ClInclude Include="src\uis\IManagerUis.hpp" />

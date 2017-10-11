@@ -10,7 +10,7 @@
 namespace Flounder
 {
 	const float Terrain::SIDE_LENGTH = 50.0f;
-	const std::vector<float> Terrain::SQUARE_SIZES = { 0.5f, 2.0f, 5.0f, 10.0f, 25.0f, 50.0f };
+	const std::vector<float> Terrain::SQUARE_SIZES = { 0.5f, 1.0f, 2.0f, 5.0f, 10.0f };
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(ShaderTerrains::UboObject))),
@@ -91,21 +91,17 @@ namespace Flounder
 		{
 			lod = 1;
 		}
-		else if (distance < 300.0f)
+		else if (distance < 400.0f)
 		{
 			lod = 2;
 		}
-		else if (distance < 400.0f)
+		else if (distance < 600.0f)
 		{
 			lod = 3;
 		}
-		else if (distance < 500.0f)
-		{
-			lod = 4;
-		}
 		else
 		{
-			lod = 5;
+			lod = 4;
 		}
 
 		if (m_modelLods[lod] == nullptr)
