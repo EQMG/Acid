@@ -9,8 +9,8 @@
 
 namespace Flounder
 {
-	const float Terrain::SIDE_LENGTH = 50.0f;
-	const std::vector<float> Terrain::SQUARE_SIZES = { 0.5f, 1.0f, 2.0f, 5.0f, 10.0f };
+	const float Terrain::SIDE_LENGTH = 64.0f;
+	const std::vector<float> Terrain::SQUARE_SIZES = { 1.0f, 2.0f, 8.0f, 16.0f };
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(ShaderTerrains::UboObject))),
@@ -75,7 +75,7 @@ namespace Flounder
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
-		Vector3 chunkPosition = Vector3(*m_position);
+		Vector3 chunkPosition = Vector3(m_aabb->GetCentreX(), m_aabb->GetCentreY(), m_aabb->GetCentreZ());
 		chunkPosition.m_y = 0.0f;
 		Vector3 cameraPosition = Vector3(*Camera::Get()->GetCamera()->GetPosition());
 		cameraPosition.m_y = 0.0f;
@@ -95,13 +95,9 @@ namespace Flounder
 		{
 			lod = 2;
 		}
-		else if (distance < 600.0f)
-		{
-			lod = 3;
-		}
 		else
 		{
-			lod = 4;
+			lod = 3;
 		}
 
 		if (m_modelLods[lod] == nullptr)
@@ -129,40 +125,34 @@ namespace Flounder
 		{
 			for (int row = 0; row < vertexCount; row++)
 			{
+				// Creates and stores verticies.
 				Vector3 position = Vector3((row * squareSize) - (SIDE_LENGTH / 2.0f), 0.0f, (col * squareSize) - (SIDE_LENGTH / 2.0f));
 				position.m_y = Terrains::Get()->GetHeight(position.m_x + m_position->m_x, position.m_z + m_position->m_z); // TODO: Simplify!
 				const Vector2 textures = Vector2();
 				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x, position.m_z + m_position->m_z, 1.42f); // squareSize = constant to make normals uniform.
 				const Vector3 tangent = Vector3(CalculateColour(position, normal));
-
+				
 				vertices.push_back(Vertex(position, textures, normal, tangent));
-			}
-		}
 
-		for (int col = 0; col < vertexCount - 1; col++)
-		{
-			for (int row = 0; row < vertexCount - 1; row++)
-			{
-				const uint32_t topLeft = (row * vertexCount) + col;
-				const uint32_t topRight = topLeft + 1;
-				const uint32_t bottomLeft = ((row + 1) * vertexCount) + col;
-				const uint32_t bottomRight = bottomLeft + 1;
+				// Creates and stores indicies.
+				if (col < vertexCount - 1 && row < vertexCount - 1)
+				{
+					const uint32_t topLeft = (row * vertexCount) + col;
+					const uint32_t topRight = topLeft + 1;
+					const uint32_t bottomLeft = ((row + 1) * vertexCount) + col;
+					const uint32_t bottomRight = bottomLeft + 1;
 
-				StoreQuad(indices, topLeft, topRight, bottomLeft, bottomRight);
+					indices.push_back(topLeft);
+					indices.push_back(bottomLeft);
+					indices.push_back(topRight);
+					indices.push_back(topRight);
+					indices.push_back(bottomLeft);
+					indices.push_back(bottomRight);
+				}
 			}
 		}
 
 		return new Model(vertices, indices);
-	}
-
-	void Terrain::StoreQuad(std::vector<uint32_t> &indices, const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight)
-	{
-		indices.push_back(topLeft);
-		indices.push_back(bottomLeft);
-		indices.push_back(topRight);
-		indices.push_back(topRight);
-		indices.push_back(bottomLeft);
-		indices.push_back(bottomRight);
 	}
 
 	Vector3 Terrain::CalculateNormal(const float &x, const float &z, const float &squareSize)
