@@ -11,16 +11,16 @@ namespace Flounder
 	{
 	private:
 		VkShaderStageFlagBits m_shaderFlag;
-		std::string m_filePath;
+		std::string m_filename;
 	public:
-		ShaderType(const VkShaderStageFlagBits &shaderFlag, const std::string &filePath)
+		ShaderType(const VkShaderStageFlagBits &shaderFlag, const std::string &filename)
 		{
 			m_shaderFlag = shaderFlag;
-			m_filePath = filePath;
+			m_filename = filename;
 		}
 
 		VkShaderStageFlagBits GetShaderFlag() const { return m_shaderFlag; }
 
-		std::string GetFilePath() const { return m_filePath; }
+		std::string GetFilename() const { return m_filename; }
 	};
 }

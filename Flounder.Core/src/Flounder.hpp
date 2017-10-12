@@ -157,6 +157,7 @@
 #include "test/RendererTest.hpp"
 #include "test/ShaderTest.hpp"
 #include "test/TestEntity.hpp"
+#include "textures/Cubemap.hpp"
 #include "textures/Texture.hpp"
 #include "uis/ContainerScreen.hpp"
 #include "uis/IManagerUis.hpp"

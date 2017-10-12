@@ -5,7 +5,7 @@
 #include "../models/Model.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
-#include "../textures/Texture.hpp"
+#include "../textures/Cubemap.hpp"
 
 namespace Flounder
 {
@@ -14,7 +14,7 @@ namespace Flounder
 	private:
 		UniformBuffer *m_uniformObject;
 
-		Texture *m_texture;
+		Cubemap *m_cubemap;
 		Model *m_model;
 
 		float m_size;
@@ -23,7 +23,7 @@ namespace Flounder
 		Vector3 *m_rotation;
 		Matrix4 *m_modelMatrix;
 	public:
-		Skybox(Texture *texture, Model *model, const float &size);
+		Skybox(Cubemap *cubemap, Model *model, const float &size);
 
 		~Skybox();
 
@@ -31,9 +31,9 @@ namespace Flounder
 
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
-		Texture *GetTexture() const { return m_texture; }
+		Cubemap *GetCubemap() const { return m_cubemap; }
 
-		void SetTexture(Texture *texture) { m_texture = texture; }
+		void SetCubemap(Cubemap *cubemap) { m_cubemap = cubemap; }
 
 		Model *GetModel() const { return m_model; }
 
