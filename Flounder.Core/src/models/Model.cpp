@@ -8,8 +8,8 @@
 
 namespace Flounder
 {
-	Model::Model(const std::string &file) :
-		m_file(file),
+	Model::Model(const std::string &filename) :
+		m_filename(filename),
 		m_vertices(std::vector<Vertex>()),
 		m_indices(std::vector<uint32_t>()),
 		m_aabb(new Aabb()),
@@ -22,7 +22,7 @@ namespace Flounder
 	}
 
 	Model::Model(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices) :
-		m_file(""),
+		m_filename(""),
 		m_vertices(std::vector<Vertex>(vertices)),
 		m_indices(std::vector<uint32_t>(indices)),
 		m_aabb(new Aabb()),
@@ -32,7 +32,7 @@ namespace Flounder
 	}
 
 	Model::Model(const std::vector<Vertex> &vertices) :
-		m_file(""),
+		m_filename(""),
 		m_vertices(std::vector<Vertex>(vertices)),
 		m_indices(std::vector<uint32_t>()),
 		m_aabb(new Aabb()),
@@ -73,7 +73,7 @@ namespace Flounder
 
 	void Model::LoadFromFile()
 	{
-		const std::string fileLoaded = HelperFile::ReadTextFile(std::string(m_file));
+		const std::string fileLoaded = HelperFile::ReadTextFile(std::string(m_filename));
 		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
 
 		std::vector<uint32_t> indicesList = std::vector<uint32_t>();
@@ -81,7 +81,7 @@ namespace Flounder
 		std::vector<Vector2> texturesList = std::vector<Vector2>();
 		std::vector<Vector3> normalsList = std::vector<Vector3>();
 
-		std::vector<std::string> splitFile = HelperString::Split(std::string(m_file), "/");
+		std::vector<std::string> splitFile = HelperString::Split(std::string(m_filename), "/");
 		std::string fileName = splitFile.at(splitFile.size() - 1);
 
 		for (auto it = lines.begin(); it < lines.end(); ++it)
@@ -119,7 +119,7 @@ namespace Flounder
 					// The split length of 3 faced + 1 for the f prefix.
 					if (split.size() != 4 || HelperString::Contains(line, "//"))
 					{
-						printf("Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", m_file.c_str());
+						printf("Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", m_filename.c_str());
 						assert(false);
 					}
 
@@ -141,7 +141,7 @@ namespace Flounder
 				}
 				else
 				{
-					printf("OBJ '%s' ", m_file.c_str());
+					printf("OBJ '%s' ", m_filename.c_str());
 					printf("unknown line: '%s'.\n", line.c_str());
 				}
 			}
