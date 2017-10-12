@@ -17,7 +17,7 @@ namespace Flounder
 	class Model
 	{
 	private:
-		std::string m_file;
+		std::string m_filename;
 
 		std::vector<Vertex> m_vertices;
 		std::vector<uint32_t> m_indices;
@@ -31,7 +31,7 @@ namespace Flounder
 		/// Creates a new model.
 		/// </summary>
 		/// <param name="name"> The file name. </param>
-		Model(const std::string &file);
+		Model(const std::string &filename);
 
 		/// <summary>
 		/// Creates a new model.

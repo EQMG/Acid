@@ -2,62 +2,68 @@
 
 namespace Flounder
 {
+	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXS = { "Front", "Back", "Left", "Right", "Top", "Bottom" };
+
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt) :
-		m_front(new Texture(filename + "Front" + fileExt)),
-		m_back(new Texture(filename + "Back" + fileExt)),
-		m_left(new Texture(filename + "Left" + fileExt)),
-		m_right(new Texture(filename + "Right" + fileExt)),
-		m_top(new Texture(filename + "Top" + fileExt)),
-		m_bottom(new Texture(filename + "Bottom" + fileExt)),
-
-		m_width(1024),
-		m_height(1024),
-		m_layerCount(1),
-		m_imageSize((1024 * 1024 * 4) * 6)
+		m_components(0),
+		m_width(0),
+		m_height(0),
+		m_imageSize(Texture::LoadSize(filename + SIDE_FILE_SUFFIXS[0] + fileExt) * 6),
+		m_image(VK_NULL_HANDLE),
+		m_imageView(VK_NULL_HANDLE),
+		m_format(VK_FORMAT_UNDEFINED)
 	{
-		stbi_uc* pix = (stbi_uc*)malloc(m_imageSize);
-		stbi_uc* offset = pix;
-		int width, height, components;
+		stbi_uc* pixels = static_cast<stbi_uc*>(malloc(static_cast<size_t>(m_imageSize)));
+		stbi_uc* offset = pixels;
 
-		stbi_uc *pixelsFront = Texture::LoadPixels(filename + "Front" + fileExt, &width, &height, &components);
-		offset += m_front->GetSize();
-		std::memcpy(offset, pixelsFront, m_front->GetSize());
+		/*for (const auto suffix : SIDE_FILE_SUFFIXS)
+		{
+			stbi_uc *pixelsSide = Texture::LoadPixels(filename + suffix + fileExt, &m_width, &m_height, &m_components);
+			offset += m_imageSize / 6;
+			memcpy(offset, pixelsSide, m_imageSize / 6);
+			delete pixelsSide;
+		}*/
 
-		stbi_uc *pixelsBack = Texture::LoadPixels(filename + "Back" + fileExt, &width, &height, &components);
-		offset += m_front->GetSize();
-		std::memcpy(offset, pixelsBack, m_front->GetSize());
-
-		stbi_uc *pixelsLeft = Texture::LoadPixels(filename + "Left" + fileExt, &width, &height, &components);
-		offset += m_front->GetSize();
-		std::memcpy(offset, pixelsLeft, m_front->GetSize());
-
-		stbi_uc *pixelsRight = Texture::LoadPixels(filename + "Right" + fileExt, &width, &height, &components);
-		offset += m_front->GetSize();
-		std::memcpy(offset, pixelsRight, m_front->GetSize());
-
-		stbi_uc *pixelsTop = Texture::LoadPixels(filename + "Top" + fileExt, &width, &height, &components);
-		offset += m_front->GetSize();
-		std::memcpy(offset, pixelsTop, m_front->GetSize());
-
-		stbi_uc *pixelsBottom = Texture::LoadPixels(filename + "Bottom" + fileExt, &width, &height, &components);
-		offset += m_front->GetSize();
-		std::memcpy(offset, pixelsBottom, m_front->GetSize());
-
-		delete pixelsFront;
-		delete pixelsBack;
-		delete pixelsLeft;
-		delete pixelsRight;
-		delete pixelsTop;
-		delete pixelsBottom;
+		// delete pixels;
 	}
 
 	Cubemap::~Cubemap()
 	{
-		delete m_front;
-		delete m_back;
-		delete m_left;
-		delete m_right;
-		delete m_top;
-		delete m_bottom;
+	}
+
+	DescriptorType Cubemap::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
+	{
+		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+		descriptorSetLayoutBinding.binding = binding;
+		descriptorSetLayoutBinding.descriptorCount = 1;
+		descriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+		descriptorSetLayoutBinding.stageFlags = stage;
+
+		VkDescriptorPoolSize descriptorPoolSize = {};
+		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorPoolSize.descriptorCount = 1;
+
+		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
+	}
+
+	VkWriteDescriptorSet Cubemap::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const
+	{
+		// TODO: Don't create a descriptor like this!
+		VkDescriptorImageInfo *descriptorInfo = new VkDescriptorImageInfo();
+		descriptorInfo->imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		descriptorInfo->imageView = m_imageView;
+		descriptorInfo->sampler = m_sampler;
+
+		VkWriteDescriptorSet descriptorWrite = {};
+		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		descriptorWrite.dstSet = descriptorSet;
+		descriptorWrite.dstBinding = binding;
+		descriptorWrite.dstArrayElement = 0;
+		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorWrite.descriptorCount = 1;
+		descriptorWrite.pImageInfo = descriptorInfo;
+
+		return descriptorWrite;
 	}
 }

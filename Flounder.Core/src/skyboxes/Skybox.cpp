@@ -6,9 +6,9 @@
 
 namespace Flounder
 {
-	Skybox::Skybox(Texture *texture, Model *model, const float &size) :
+	Skybox::Skybox(Cubemap *cubemap, Model *model, const float &size) :
 		m_uniformObject(new UniformBuffer(sizeof(ShaderSkyboxes::UboObject))),
-		m_texture(texture),
+		m_cubemap(cubemap),
 		m_model(model),
 		m_size(size),
 		m_blend(1.0f),
@@ -19,7 +19,7 @@ namespace Flounder
 
 	Skybox::~Skybox()
 	{
-		delete m_texture;
+		delete m_cubemap;
 		delete m_model;
 
 		delete m_rotation;
@@ -42,7 +42,7 @@ namespace Flounder
 		uboObject.blendFactor = m_blend;
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_texture->GetWriteDescriptor(2, descriptorSet) }; // TODO: Modulaize this!
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_cubemap->GetWriteDescriptor(2, descriptorSet) }; // TODO: Modulaize this!
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
