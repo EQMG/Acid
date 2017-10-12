@@ -101,6 +101,25 @@ namespace Flounder
 		return descriptorWrite;
 	}
 
+	stbi_uc *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
+	{
+		stbi_uc *data = nullptr;
+
+		if (stbi_info(filepath.c_str(), width, height, components) == 0)
+		{
+			assert(false && "Vulkan invalid texture file format.");
+		}
+
+		data = stbi_load(filepath.c_str(), width, height, components, STBI_rgb_alpha);
+
+		if (data == nullptr)
+		{
+			printf("Unable to load texture: '%s'.\n", filepath.c_str());
+		}
+
+		return data;
+	}
+
 	void Texture::CreateImage2D()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -190,25 +209,6 @@ namespace Flounder
 			sidePixels.push_back(pixels);
 		}
 
-	}
-
-	stbi_uc *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
-	{
-		stbi_uc *data = nullptr;
-
-		if (stbi_info(filepath.c_str(), width, height, components) == 0)
-		{
-			assert(false && "Vulkan invalid texture file format.");
-		}
-
-		data = stbi_load(filepath.c_str(), width, height, components, STBI_rgb_alpha);
-
-		if (data == nullptr)
-		{
-			printf("Unable to load texture: '%s'.\n", m_file.c_str());
-		}
-
-		return data;
 	}
 
 	void Texture::CreateImage(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory)

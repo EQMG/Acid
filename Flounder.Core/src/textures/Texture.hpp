@@ -95,6 +95,8 @@ namespace Flounder
 		VkImageView GetImageView() const { return m_imageView; }
 
 		VkSampler GetSampler() const { return m_sampler; }
+
+		static stbi_uc *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 	private:
 		/// <summary>
 		/// Loads the texture object from a texture file.
@@ -105,8 +107,6 @@ namespace Flounder
 		/// Loads the texture object from a cubemap texture files.
 		/// </summary>
 		void CreateImage3D();
-
-		stbi_uc *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 
 		void CreateImage(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory);
 
