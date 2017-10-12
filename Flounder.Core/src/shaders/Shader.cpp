@@ -15,7 +15,7 @@ namespace Flounder
 
 		for (auto type : m_types)
 		{
-			std::vector<char> shaderCode = HelperFile::ReadBinaryFile(type.GetFilePath());
+			std::vector<char> shaderCode = HelperFile::ReadBinaryFile(type.GetFilename());
 
 			VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 			shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
