@@ -178,7 +178,6 @@ namespace Flounder
 	void Texture::CreateImage(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
 		VkImageCreateInfo imageInfo = {};
 		imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
