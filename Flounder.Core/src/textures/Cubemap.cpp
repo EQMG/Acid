@@ -8,23 +8,33 @@ namespace Flounder
 		m_components(0),
 		m_width(0),
 		m_height(0),
-		m_imageSize(Texture::LoadSize(filename + SIDE_FILE_SUFFIXS[0] + fileExt) * 6),
+		m_imageSize(0),
 		m_image(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_UNDEFINED)
 	{
-		stbi_uc* pixels = static_cast<stbi_uc*>(malloc(static_cast<size_t>(m_imageSize)));
+		for (const auto suffix : SIDE_FILE_SUFFIXS)
+		{
+			const std::string filepathSide = filename + suffix + fileExt;
+			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
+			m_imageSize += sizeSide;
+		}
+
+		stbi_uc* pixels = (stbi_uc*)malloc(m_imageSize);
 		stbi_uc* offset = pixels;
 
 		/*for (const auto suffix : SIDE_FILE_SUFFIXS)
 		{
-			stbi_uc *pixelsSide = Texture::LoadPixels(filename + suffix + fileExt, &m_width, &m_height, &m_components);
-			offset += m_imageSize / 6;
-			memcpy(offset, pixelsSide, m_imageSize / 6);
-			delete pixelsSide;
+			const std::string filepathSide = filename + suffix + fileExt;
+			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
+			const stbi_uc *pixelsSide = Texture::LoadPixels(filepathSide, &m_width, &m_height, &m_components);
+			
+			offset += sizeSide;
+			memcpy(offset, pixelsSide, sizeSide);
+		//	delete pixelsSide;
 		}*/
 
-		// delete pixels;
+		//delete pixels;
 	}
 
 	Cubemap::~Cubemap()
