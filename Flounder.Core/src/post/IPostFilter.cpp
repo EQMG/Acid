@@ -4,8 +4,8 @@ namespace Flounder
 {
 	IPostFilter::IPostFilter(const std::string &filterName, const std::string &fragmentShader, Fbo *fbo) :
 		m_shader(new Shader(filterName, {
-			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/filters/default.vert.spv"),
-			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, fragmentShader)
+			ShaderStage("res/shaders/filters/default.vert.spv", VK_SHADER_STAGE_VERTEX_BIT),
+			ShaderStage(fragmentShader, VK_SHADER_STAGE_FRAGMENT_BIT)
 		})),
 		m_fbo(fbo),
 		m_model(new Model("res/models/rectangle_flat.obj"))

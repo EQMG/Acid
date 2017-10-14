@@ -16,6 +16,7 @@ namespace Demo
 		RendererWaters *m_rendererWaters;
 		RendererTerrains *m_rendererTerrains;
 		RendererTest *m_rendererTest;
+		RendererGuis *m_rendererGuis;
 	public:
 		ManagerRender();
 

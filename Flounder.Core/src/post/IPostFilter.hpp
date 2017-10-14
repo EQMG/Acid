@@ -2,7 +2,6 @@
 
 #include "../models/Model.hpp"
 #include "../renderer/Renderer.hpp"
-#include "../shaders/Shader.hpp"
 
 namespace Flounder
 {
@@ -12,6 +11,13 @@ namespace Flounder
 		// MEME
 		Fbo(bool b, float f);
 		Fbo(int w, int h);
+	};
+
+	class Shader
+	{
+	public:
+		// DANK
+		Shader(const std::string &name, const std::vector<ShaderStage> &stages);
 	};
 
 	/// <summary>

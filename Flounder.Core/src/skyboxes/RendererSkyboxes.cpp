@@ -1,32 +1,38 @@
 #include "RendererSkyboxes.hpp"
 
-#include "ShaderSkyboxes.hpp"
+#include "UbosSkyboxes.hpp"
 
 namespace Flounder
 {
+	const DescriptorType RendererSkyboxes::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
+	const DescriptorType RendererSkyboxes::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL);
+	const DescriptorType RendererSkyboxes::typeSamplerCubemap = Cubemap::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const PipelineCreateInfo RendererSkyboxes::pipelineCreateInfo =
+	{
+		PIPELINE_NO_DEPTH, // pipelineModeFlags
+		VK_POLYGON_MODE_FILL, // polygonMode
+		VK_CULL_MODE_FRONT_BIT, // cullModeFlags
+		InputState::Create(Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions()), // inputState
+		Descriptor::Create({ typeUboScene, typeUboObject, typeSamplerCubemap }), // descriptor
+		ShaderStages::Create({ ShaderStage("res/shaders/skyboxes/skybox.vert.spv", VK_SHADER_STAGE_VERTEX_BIT), ShaderStage("res/shaders/skyboxes/skybox.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT) }) // shaderStages
+	};
+
 	RendererSkyboxes::RendererSkyboxes() :
 		IRenderer(),
-		m_uniformScene(new UniformBuffer(sizeof(ShaderSkyboxes::UboScene))),
-
-		m_shader(new Shader("skyboxes", {
-			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/skyboxes/skybox.vert.spv"),
-			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/skyboxes/skybox.frag.spv")
-		})),
-		m_pipeline(new Pipeline("skyboxes", m_shader, ShaderSkyboxes::pipelineCreateInfo, ShaderSkyboxes::inputState, ShaderSkyboxes::descriptor))
+		m_uniformScene(new UniformBuffer(sizeof(UbosSkyboxes::UboScene))),
+		m_pipeline(new Pipeline("skyboxes", pipelineCreateInfo))
 	{
 	}
 
 	RendererSkyboxes::~RendererSkyboxes()
 	{
 		delete m_uniformScene;
-
-		delete m_shader;
 		delete m_pipeline;
 	}
 
 	void RendererSkyboxes::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		ShaderSkyboxes::UboScene uboScene = {};
+		UbosSkyboxes::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);

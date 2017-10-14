@@ -4,19 +4,29 @@
 #include "../maths/Maths.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../terrains/Terrains.hpp"
-#include "ShaderTest.hpp"
+#include "UbosTest.hpp"
 
 namespace Flounder
 {
+	const DescriptorType RendererTest::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
+	const DescriptorType RendererTest::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_VERTEX_BIT);
+	const DescriptorType RendererTest::typeSamplerDiffuse = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererTest::typeSamplerSway = Texture::CreateDescriptor(3, VK_SHADER_STAGE_VERTEX_BIT);
+	const PipelineCreateInfo RendererTest::pipelineCreateInfo =
+	{
+		PIPELINE_POLYGON, // pipelineModeFlags
+		VK_POLYGON_MODE_FILL, // polygonMode
+		VK_CULL_MODE_BACK_BIT, // cullModeFlags
+		InputState::Create(Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions()), // inputState
+		Descriptor::Create({ typeUboScene, typeUboObject, typeSamplerDiffuse, typeSamplerSway }), // descriptor
+		ShaderStages::Create({ ShaderStage("res/shaders/tests/test.vert.spv", VK_SHADER_STAGE_VERTEX_BIT), ShaderStage("res/shaders/tests/test.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT) }) // shaderStages
+	};
+
 	RendererTest::RendererTest() :
 		IRenderer(),
-		m_uniformScene(new UniformBuffer(sizeof(ShaderTest::UboScene))),
-		m_testEntities(std::vector<TestEntity*>()),
-		m_shader(new Shader("tests", {
-			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/tests/test.vert.spv"),
-			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/tests/test.frag.spv")
-		})),
-		m_pipeline(new Pipeline("tests", m_shader, ShaderTest::pipelineCreateInfo, ShaderTest::inputState, ShaderTest::descriptor))
+		m_uniformScene(new UniformBuffer(sizeof(UbosTest::UboScene))),
+		m_pipeline(new Pipeline("tests", pipelineCreateInfo)),
+		m_testEntities(std::vector<TestEntity*>())
 	{
 		/*Model *model = new Model("res/treeBirchSmall/model.obj");
 		Texture *diffuse = new Texture("res/treeBirchSmall/diffuse.png"); // "res/undefined.png"
@@ -36,19 +46,17 @@ namespace Flounder
 	RendererTest::~RendererTest()
 	{
 		delete m_uniformScene;
+		delete m_pipeline;
 
 		for (auto entity : m_testEntities)
 		{
 			delete entity;
 		}
-
-		delete m_shader;
-		delete m_pipeline;
 	}
 
 	void RendererTest::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		ShaderTest::UboScene uboScene = {};
+		UbosTest::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);

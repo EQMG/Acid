@@ -224,7 +224,7 @@ namespace Flounder
 		const Vector2 uv0 = textures->at(v0->GetTextureIndex());
 		const Vector2 uv1 = textures->at(v1->GetTextureIndex());
 		const Vector2 uv2 = textures->at(v2->GetTextureIndex());
-		
+
 		Vector2 *deltaUv1 = Vector2::Subtract(uv1, uv0, nullptr);
 		Vector2 *deltaUv2 = Vector2::Subtract(uv2, uv0, nullptr);
 		const float r = 1.0f / (deltaUv1->m_x * deltaUv2->m_y - deltaUv1->m_y * deltaUv2->m_x);

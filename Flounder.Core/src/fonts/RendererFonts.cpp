@@ -5,17 +5,16 @@
 namespace Flounder
 {
 	RendererFonts::RendererFonts() :
-		IRenderer(),
-		m_shader(new Shader("fonts", {
-			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/fonts/font.vert.spv"),
-			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/fonts/font.frag.spv")
-		}))
+		IRenderer()
+	//	m_shader(new Shader("fonts", {
+	//		ShaderStage(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/fonts/font.vert.spv"),
+	//		ShaderStage(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/fonts/font.frag.spv")
+	//	}))
 	{
 	}
 
 	RendererFonts::~RendererFonts()
 	{
-		delete m_shader;
 	}
 
 	void RendererFonts::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)

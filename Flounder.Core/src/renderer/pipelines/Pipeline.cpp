@@ -2,21 +2,21 @@
 
 #include <cassert>
 #include "../../devices/Display.hpp"
+#include "../../helpers/HelperFile.hpp"
 #include "../Renderer.hpp"
 
 namespace Flounder
 {
 	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
-	Pipeline::Pipeline(const std::string &name, Shader *shader, const PipelineCreateInfo &pipelineCreateInfo, const InputState &inputState, const Descriptor &descriptor) :
+	Pipeline::Pipeline(const std::string &name, const PipelineCreateInfo &pipelineCreateInfo) :
 		m_name(name),
-		m_shader(shader),
 		m_pipelineCreateInfo(pipelineCreateInfo),
-		m_inputState(inputState),
-		m_descriptor(descriptor),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_descriptorSet(VK_NULL_HANDLE),
+		m_modules(std::vector<VkShaderModule>()),
+		m_stages(std::vector<VkPipelineShaderStageCreateInfo>()),
 		m_pipeline(VK_NULL_HANDLE),
 		m_pipelineLayout(VK_NULL_HANDLE),
 		m_inputAssemblyState({}),
@@ -28,11 +28,14 @@ namespace Flounder
 		m_multisampleState({}),
 		m_dynamicState({})
 	{
+#if FLOUNDER_VERBOSE
+		printf("Loading Pipeline: '%s'\n", name.c_str());
+#endif
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
 		CreateDescriptorSet();
 		CreatePipelineLayout();
-
+		CreateShaderStages();
 		CreateAttributes();
 
 		switch (pipelineCreateInfo.pipelineModeFlags)
@@ -59,6 +62,11 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
+		for (auto shaderModule : m_modules)
+		{
+			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
+		}
+
 		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
 		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
 		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
@@ -71,8 +79,8 @@ namespace Flounder
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(m_descriptor.bindings.size());
-		descriptorSetLayoutCreateInfo.pBindings = m_descriptor.bindings.data();
+		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(m_pipelineCreateInfo.descriptor.bindings.size());
+		descriptorSetLayoutCreateInfo.pBindings = m_pipelineCreateInfo.descriptor.bindings.data();
 
 		vkDeviceWaitIdle(logicalDevice);
 		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
@@ -84,8 +92,8 @@ namespace Flounder
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(m_descriptor.poolSizes.size());
-		descriptorPoolCreateInfo.pPoolSizes = m_descriptor.poolSizes.data();
+		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(m_pipelineCreateInfo.descriptor.poolSizes.size());
+		descriptorPoolCreateInfo.pPoolSizes = m_pipelineCreateInfo.descriptor.poolSizes.data();
 		descriptorPoolCreateInfo.maxSets = 50;
 
 		vkDeviceWaitIdle(logicalDevice);
@@ -118,6 +126,33 @@ namespace Flounder
 
 		vkDeviceWaitIdle(logicalDevice);
 		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
+	}
+
+	void Pipeline::CreateShaderStages()
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		for (auto type : m_pipelineCreateInfo.shaderStages.stages)
+		{
+			std::vector<char> shaderCode = HelperFile::ReadBinaryFile(type.GetFilepath());
+
+			VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
+			shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+			shaderModuleCreateInfo.codeSize = shaderCode.size();
+			shaderModuleCreateInfo.pCode = reinterpret_cast<const uint32_t*>(shaderCode.data());
+
+			VkShaderModule shaderModule = VK_NULL_HANDLE;
+			Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
+
+			VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
+			pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			pipelineShaderStageCreateInfo.stage = type.GetShaderFlag();
+			pipelineShaderStageCreateInfo.module = shaderModule;
+			pipelineShaderStageCreateInfo.pName = "main"; // The shaders entry point.
+
+			m_modules.push_back(shaderModule);
+			m_stages.push_back(pipelineShaderStageCreateInfo);
+		}
 	}
 
 	void Pipeline::CreateAttributes()
@@ -199,10 +234,10 @@ namespace Flounder
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_inputState.vertexBindingDescriptions.size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_inputState.vertexBindingDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_inputState.vertexAttributeDescriptions.size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_inputState.vertexAttributeDescriptions.data();
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.inputState.vertexBindingDescriptions.size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.inputState.vertexBindingDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.inputState.vertexAttributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.inputState.vertexAttributeDescriptions.data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -220,7 +255,7 @@ namespace Flounder
 		pipelineCreateInfo.pDepthStencilState = &m_depthStencilState;
 		pipelineCreateInfo.pDynamicState = &m_dynamicState;
 
-		std::vector<VkPipelineShaderStageCreateInfo> shaderStages = std::vector<VkPipelineShaderStageCreateInfo>(m_shader->GetStages());
+		std::vector<VkPipelineShaderStageCreateInfo> shaderStages = std::vector<VkPipelineShaderStageCreateInfo>(m_stages);
 
 		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
 		pipelineCreateInfo.stageCount = static_cast<uint32_t>(shaderStages.size());
@@ -238,10 +273,10 @@ namespace Flounder
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_inputState.vertexBindingDescriptions.size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_inputState.vertexBindingDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_inputState.vertexAttributeDescriptions.size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_inputState.vertexAttributeDescriptions.data();
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.inputState.vertexBindingDescriptions.size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.inputState.vertexBindingDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.inputState.vertexAttributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.inputState.vertexAttributeDescriptions.data();
 
 		m_depthStencilState.depthTestEnable = VK_FALSE;
 		m_depthStencilState.depthWriteEnable = VK_FALSE;
@@ -262,7 +297,7 @@ namespace Flounder
 		pipelineCreateInfo.pDepthStencilState = &m_depthStencilState;
 		pipelineCreateInfo.pDynamicState = &m_dynamicState;
 
-		std::vector<VkPipelineShaderStageCreateInfo> shaderStages = std::vector<VkPipelineShaderStageCreateInfo>(m_shader->GetStages());
+		std::vector<VkPipelineShaderStageCreateInfo> shaderStages = std::vector<VkPipelineShaderStageCreateInfo>(m_stages);
 
 		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
 		pipelineCreateInfo.stageCount = static_cast<uint32_t>(shaderStages.size());

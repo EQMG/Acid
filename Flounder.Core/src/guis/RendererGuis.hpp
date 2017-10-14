@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../renderer/IRenderer.hpp"
-#include "../shaders/Shader.hpp"
-#include "../models/Model.hpp"
+#include "../renderer/buffers/UniformBuffer.hpp"
+#include "../renderer/pipelines/Pipeline.hpp"
 
 namespace Flounder
 {
@@ -10,9 +10,13 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		Shader *m_shader;
+		static const DescriptorType typeUboScene;
+		static const DescriptorType typeUboObject;
+		static const DescriptorType typeSamplerTexture;
+		static const PipelineCreateInfo pipelineCreateInfo;
 
-		Model *m_model;
+		UniformBuffer *m_uniformScene;
+		Pipeline *m_pipeline;
 	public:
 		RendererGuis();
 

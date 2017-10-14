@@ -10,9 +10,11 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		UniformBuffer *m_uniformScene;
+		static const DescriptorType typeUboScene;
+		static const DescriptorType typeUboObject;
+		static const PipelineCreateInfo pipelineCreateInfo;
 
-		Shader *m_shader;
+		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
 	public:
 		RendererTerrains();

@@ -30,7 +30,7 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Uis *get()
+		static Uis *Get()
 		{
 			return static_cast<Uis*>(Engine::Get()->GetModule("uis"));
 		}

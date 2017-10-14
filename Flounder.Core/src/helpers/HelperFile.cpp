@@ -1,5 +1,6 @@
 #include "HelperFile.hpp"
 
+#include <cassert>
 #include <iostream>
 #include <fstream>
 
@@ -9,10 +10,7 @@ namespace Flounder
 	{
 		FILE *file = fopen(filepath.c_str(), "rt");
 
-		if (file == nullptr)
-		{
-			throw std::runtime_error("Could not find file: " + filepath);
-		}
+		assert(file != nullptr && "Could not find file!");
 
 		fseek(file, 0, SEEK_END);
 		unsigned long length = ftell(file);
@@ -32,10 +30,7 @@ namespace Flounder
 		// TODO: Move from ifsteam to normal C binary file loading.
 		std::ifstream ifs = std::ifstream(filepath, std::ios::ate | std::ios::binary);
 
-		if (!ifs.is_open())
-		{
-			throw std::runtime_error("Could not find file: " + filepath);
-		}
+		assert(ifs.is_open() && "Could not find file!");
 
 		size_t fileSize = static_cast<size_t>(ifs.tellg());
 		std::vector<char> buffer(fileSize);
