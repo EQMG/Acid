@@ -1,9 +1,7 @@
 #pragma once
 
+#include <vector>
 #include "../../platforms/Platform.hpp"
-#include "InputState.hpp"
-#include "Descriptor.hpp"
-#include "ShaderStages.hpp"
 
 namespace Flounder
 {
@@ -15,13 +13,36 @@ namespace Flounder
 		PIPELINE_MULTI_TEXTURE
 	};
 
-	struct PipelineCreateInfo
+	class DescriptorType
 	{
+	public:
+		uint32_t binding;
+		VkShaderStageFlags stage;
+
+		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding;
+		VkDescriptorPoolSize descriptorPoolSize;
+
+		DescriptorType(const uint32_t &binding, const VkShaderStageFlags &stage, const VkDescriptorSetLayoutBinding &descriptorSetLayoutBinding, const VkDescriptorPoolSize &descriptorPoolSize) :
+			binding(binding),
+			stage(stage),
+			descriptorSetLayoutBinding(descriptorSetLayoutBinding),
+			descriptorPoolSize(descriptorPoolSize)
+		{
+		}
+	};
+
+	class PipelineCreateInfo
+	{
+	public:
 		PipelineModeFlags pipelineModeFlags = PIPELINE_POLYGON;
 		VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL;
 		VkCullModeFlags cullModeFlags = VK_CULL_MODE_BACK_BIT;
-		InputState inputState = InputState();
-		Descriptor descriptor = Descriptor();
-		ShaderStages shaderStages = ShaderStages();
+
+		std::vector<VkVertexInputBindingDescription> vertexBindingDescriptions;
+		std::vector<VkVertexInputAttributeDescription> vertexAttributeDescriptions;
+
+		std::vector<DescriptorType> descriptors = std::vector<DescriptorType>();
+
+		std::vector<std::string> shaderStages = std::vector<std::string>();
 	};
 }

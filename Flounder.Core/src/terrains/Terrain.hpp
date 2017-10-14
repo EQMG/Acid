@@ -8,6 +8,7 @@
 #include "../models/Model.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
+#include "../textures/Texture.hpp"
 
 namespace Flounder
 {
@@ -18,6 +19,11 @@ namespace Flounder
 
 		std::vector<Model*> m_modelLods;
 
+		Texture *m_textureGrass;
+		Texture *m_textureSnow;
+		Texture *m_samplerSand;
+		Texture *m_samplerRock;
+
 		Vector3 *m_position;
 		Vector3 *m_rotation;
 		bool m_moved;
@@ -27,6 +33,7 @@ namespace Flounder
 	public:
 		static const float SIDE_LENGTH;
 		static const std::vector<float> SQUARE_SIZES;
+		static const float TEXTURE_SCALE;
 
 		Terrain(const Vector3 &position, const Vector3 &rotation);
 
@@ -41,8 +48,6 @@ namespace Flounder
 		Model *GenerateMesh(const int &lod);
 
 		Vector3 CalculateNormal(const float &x, const float &z, const float &squareSize);
-
-		Colour CalculateColour(const Vector3 &position, const Vector3 &normal);
 	public:
 		std::vector<Model*> GetModelLods() const { return m_modelLods; }
 

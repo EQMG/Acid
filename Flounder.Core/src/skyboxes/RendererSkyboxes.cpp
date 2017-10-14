@@ -12,9 +12,13 @@ namespace Flounder
 		PIPELINE_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_FRONT_BIT, // cullModeFlags
-		InputState::Create(Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions()), // inputState
-		Descriptor::Create({ typeUboScene, typeUboObject, typeSamplerCubemap }), // descriptor
-		ShaderStages::Create({ ShaderStage("res/shaders/skyboxes/skybox.vert.spv", VK_SHADER_STAGE_VERTEX_BIT), ShaderStage("res/shaders/skyboxes/skybox.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT) }) // shaderStages
+
+		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+		{ typeUboScene, typeUboObject, typeSamplerCubemap }, // descriptors
+
+		{ "res/shaders/skyboxes/skybox.vert.spv", "res/shaders/skyboxes/skybox.frag.spv" } // shaderStages
 	};
 
 	RendererSkyboxes::RendererSkyboxes() :
