@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../renderer/IRenderer.hpp"
-#include "../shaders/Shader.hpp"
 #include "Text.hpp"
 
 namespace Flounder
@@ -10,7 +9,6 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		Shader *m_shader;
 	public:
 		RendererFonts();
 

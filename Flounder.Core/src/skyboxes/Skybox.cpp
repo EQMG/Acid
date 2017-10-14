@@ -2,12 +2,12 @@
 
 #include "../camera/Camera.hpp"
 #include "../devices/Display.hpp"
-#include "ShaderSkyboxes.hpp"
+#include "UbosSkyboxes.hpp"
 
 namespace Flounder
 {
 	Skybox::Skybox(Cubemap *cubemap, Model *model, const float &size) :
-		m_uniformObject(new UniformBuffer(sizeof(ShaderSkyboxes::UboObject))),
+		m_uniformObject(new UniformBuffer(sizeof(UbosSkyboxes::UboObject))),
 		m_cubemap(cubemap),
 		m_model(model),
 		m_size(size),
@@ -36,7 +36,7 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
-		ShaderSkyboxes::UboObject uboObject = {};
+		UbosSkyboxes::UboObject uboObject = {};
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		uboObject.skyColour = Colour("#366996");
 		uboObject.blendFactor = m_blend;

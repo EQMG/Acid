@@ -7,11 +7,11 @@ namespace Demo
 	ManagerUis::ManagerUis() :
 		IManagerUis(),
 		m_primaryColour(new Colour("#553982")),
-		m_overlayStartup(new OverlayStartup(Uis::get()->GetContainer())),
-		m_overlayDebug(new OverlayDebug(Uis::get()->GetContainer())),
-		m_overlayManager(new OverlayManager(Uis::get()->GetContainer()))
+		m_overlayStartup(new OverlayStartup(Uis::Get()->GetContainer())),
+		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer())),
+		m_overlayManager(new OverlayManager(Uis::Get()->GetContainer()))
 	{
-		Uis::get()->GetSelector()->Load(0, 0, 1, 0, 1);
+		Uis::Get()->GetSelector()->Load(0, 0, 1, 0, 1);
 
 		m_overlayStartup->SetAlphaDriver(new DriverConstant(1.0f));
 		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f));

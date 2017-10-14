@@ -12,7 +12,7 @@ namespace Flounder
 
 	InputText::InputText(UiObject *parent, const Vector2 &position, const std::string &prefix, const std::string &value, const UiAlign &align) :
 		UiObject(parent, position, Vector2(0.0f, 0.0f)),
-		m_text(new Text(this, position, prefix + value, SCALE_NORMAL, Uis::get()->m_candara, 0.36f, align)),
+		m_text(new Text(this, position, prefix + value, SCALE_NORMAL, Uis::Get()->m_candara, 0.36f, align)),
 		m_background(new Gui(this, position, Vector2(), new Texture("res/guis/buttonText.png"), 1)),
 		m_prefix(prefix),
 		m_value(value),
@@ -93,33 +93,33 @@ namespace Flounder
 		}
 
 		// Click updates.
-		if (Uis::get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::get()->GetSelector()->wasLeftClick())
+		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->wasLeftClick())
 		{
 			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
 			m_selected = true;
 
-			Uis::get()->GetSelector()->CancelWasEvent();
+			Uis::Get()->GetSelector()->CancelWasEvent();
 		}
-		else if (Uis::get()->GetSelector()->wasLeftClick() && m_selected)
+		else if (Uis::Get()->GetSelector()->wasLeftClick() && m_selected)
 		{
 			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
 			m_selected = false;
 		}
 
 		// Mouse over updates.
-		if (Uis::get()->GetSelector()->IsSelected(*m_text) && !m_mouseOver && !m_selected)
+		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && !m_mouseOver && !m_selected)
 		{
 			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
 			m_mouseOver = true;
 		}
-		else if (!Uis::get()->GetSelector()->IsSelected(*m_text) && m_mouseOver && !m_selected)
+		else if (!Uis::Get()->GetSelector()->IsSelected(*m_text) && m_mouseOver && !m_selected)
 		{
 			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
 			m_mouseOver = false;
 		}
 
 		// Update the background colour.
-		Colour::Interpolate(*COLOUR_NORMAL, *Uis::get()->GetManager()->GetPrimaryColour(), (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
+		Colour::Interpolate(*COLOUR_NORMAL, *Uis::Get()->GetManager()->GetPrimaryColour(), (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.
 		m_background->GetDimensions()->Set(*m_text->GetMeshSize());

@@ -2,10 +2,8 @@
 
 #include <array>
 #include <string>
+#include <vector>
 #include "../../platforms/Platform.hpp"
-#include "../../shaders/Shader.hpp"
-#include "Descriptor.hpp"
-#include "InputState.hpp"
 #include "PipelineCreate.hpp"
 
 namespace Flounder
@@ -20,15 +18,14 @@ namespace Flounder
 
 		std::string m_name;
 
-		Shader *m_shader;
-
 		PipelineCreateInfo m_pipelineCreateInfo;
-		InputState m_inputState;
-		Descriptor m_descriptor;
 
 		VkDescriptorSetLayout m_descriptorSetLayout;
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
+
+		std::vector<VkShaderModule> m_modules;
+		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
 
 		VkPipeline m_pipeline;
 		VkPipelineLayout m_pipelineLayout;
@@ -46,7 +43,8 @@ namespace Flounder
 		/// Creates a new pipeline.
 		/// </summary>
 		/// <param name="name"> The pipelines name. </param>
-		Pipeline(const std::string &name, Shader *shader, const PipelineCreateInfo &pipelineCreateInfo, const InputState &inputState, const Descriptor &descriptor);
+		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
+		Pipeline(const std::string &name, const PipelineCreateInfo &pipelineCreateInfo);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
@@ -76,6 +74,8 @@ namespace Flounder
 		void CreateDescriptorSet();
 
 		void CreatePipelineLayout();
+
+		void CreateShaderStages();
 
 		void CreateAttributes();
 

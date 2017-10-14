@@ -1,6 +1,9 @@
 #pragma once
 
 #include "../../platforms/Platform.hpp"
+#include "InputState.hpp"
+#include "Descriptor.hpp"
+#include "ShaderStages.hpp"
 
 namespace Flounder
 {
@@ -17,5 +20,8 @@ namespace Flounder
 		PipelineModeFlags pipelineModeFlags = PIPELINE_POLYGON;
 		VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL;
 		VkCullModeFlags cullModeFlags = VK_CULL_MODE_BACK_BIT;
+		InputState inputState = InputState();
+		Descriptor descriptor = Descriptor();
+		ShaderStages shaderStages = ShaderStages();
 	};
 }

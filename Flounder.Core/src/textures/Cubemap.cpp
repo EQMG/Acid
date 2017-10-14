@@ -20,8 +20,8 @@ namespace Flounder
 			m_imageSize += sizeSide;
 		}
 
-		stbi_uc* pixels = (stbi_uc*)malloc(m_imageSize);
-		stbi_uc* offset = pixels;
+		stbi_uc *pixels = (stbi_uc*) malloc(m_imageSize);
+		stbi_uc *offset = pixels;
 
 		/*for (const auto suffix : SIDE_FILE_SUFFIXS)
 		{
