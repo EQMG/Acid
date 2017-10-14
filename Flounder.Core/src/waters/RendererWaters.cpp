@@ -12,9 +12,13 @@ namespace Flounder
 		PIPELINE_POLYGON, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_BACK_BIT, // cullModeFlags
-		InputState::Create(Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions()), // inputState
-		Descriptor::Create({ typeUboScene, typeUboObject }), // descriptor
-		ShaderStages::Create({ ShaderStage("res/shaders/waters/water.vert.spv", VK_SHADER_STAGE_VERTEX_BIT), ShaderStage("res/shaders/waters/water.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT) }) // shaderStages
+		
+		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+		{ typeUboScene, typeUboObject }, // descriptors
+
+		{ "res/shaders/waters/water.vert.spv", "res/shaders/waters/water.frag.spv" } // shaderStages
 	};
 
 	RendererWaters::RendererWaters() :

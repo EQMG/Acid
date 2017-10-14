@@ -10,10 +10,15 @@ namespace Flounder
 {
 	const float Terrain::SIDE_LENGTH = 64.0f;
 	const std::vector<float> Terrain::SQUARE_SIZES = { 1.0f, 2.0f, 8.0f, 16.0f };
+	const float Terrain::TEXTURE_SCALE = 2.0f;
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
 		m_modelLods(std::vector<Model*>()),
+		m_textureGrass(new Texture("res/terrains/grass.png")),
+		m_textureSnow(new Texture("res/terrains/snow.png")),
+		m_samplerSand(new Texture("res/terrains/sand.png")),
+		m_samplerRock(new Texture("res/terrains/rock.png")),
 		m_position(new Vector3(position)),
 		m_rotation(new Vector3(rotation)),
 		m_moved(true),
@@ -42,6 +47,11 @@ namespace Flounder
 			delete model;
 		}
 
+		delete m_textureGrass;
+		delete m_textureSnow;
+		delete m_samplerSand;
+		delete m_samplerRock;
+
 		delete m_position;
 		delete m_rotation;
 
@@ -60,6 +70,11 @@ namespace Flounder
 
 	void Terrain::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
+		//if (!m_aabb->InFrustum(*Camera::Get()->GetCamera()->GetViewFrustum()))
+		//{
+		//	return;
+		//}
+
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
@@ -69,7 +84,7 @@ namespace Flounder
 		uboObject.reflectivity = 0.0f;
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this!
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_textureGrass->GetWriteDescriptor(2, descriptorSet), m_textureSnow->GetWriteDescriptor(3, descriptorSet), m_samplerSand->GetWriteDescriptor(4, descriptorSet), m_samplerRock->GetWriteDescriptor(5, descriptorSet) }; // TODO: Modulaize this!
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
@@ -80,24 +95,9 @@ namespace Flounder
 		cameraPosition.m_y = 0.0f;
 		const float distance = Vector3::GetDistance(chunkPosition, cameraPosition);
 
-		int lod;
-
-		if (distance < 100.0f)
-		{
-			lod = 0;
-		}
-		else if (distance < 200.0f)
-		{
-			lod = 1;
-		}
-		else if (distance < 400.0f)
-		{
-			lod = 2;
-		}
-		else
-		{
-			lod = 3;
-		}
+		// lnreg{ (90.5, 0), (181, 1), (362, 2) } = int(-6.500 + 1.443 * log(x) / log(2.718)) + 1
+		float lod = floor(-6.5f + 1.443f * log(distance) / log(2.718f)) + 1.0f;
+		lod = Maths::Clamp(lod, 0.0f, static_cast<float>(SQUARE_SIZES.size() - 1));
 
 		if (m_modelLods[lod] == nullptr)
 		{
@@ -127,9 +127,9 @@ namespace Flounder
 				// Creates and stores verticies.
 				Vector3 position = Vector3((row * squareSize) - (SIDE_LENGTH / 2.0f), 0.0f, (col * squareSize) - (SIDE_LENGTH / 2.0f));
 				position.m_y = Terrains::Get()->GetHeight(position.m_x + m_position->m_x, position.m_z + m_position->m_z); // TODO: Simplify!
-				const Vector2 textures = Vector2();
+				const Vector2 textures = Vector2((TEXTURE_SCALE/(0.2f*(float)lod+1.0f)) * (float)col/ (float)vertexCount, (TEXTURE_SCALE / (0.2f*(float)lod + 1.0f)) * (float)row/ (float)vertexCount);
 				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x, position.m_z + m_position->m_z, 1.42f); // squareSize = constant to make normals uniform.
-				const Vector3 tangent = Vector3(CalculateColour(position, normal));
+				const Vector3 tangent = Vector3();
 
 				vertices.push_back(Vertex(position, textures, normal, tangent));
 
@@ -164,33 +164,6 @@ namespace Flounder
 		Vector3 normal = Vector3(heightL - heightR, 2.0f, heightD - heightU);
 		normal.Normalize();
 		return normal;
-	}
-
-	Colour Terrain::CalculateColour(const Vector3 &position, const Vector3 &normal)
-	{
-		const Colour tintGrass = Colour("#51ad5a");
-		const Colour tintRock = Colour("#6D695E");
-		const Colour tintSand = Colour("#F7D8AC");
-		const Colour tintSnow = Colour("#ffffff");
-		const float heightFactor = position.m_y;
-
-		Colour tint;
-
-		if (heightFactor <= 0.5f)
-		{
-			tint = tintSand;
-		}
-		else if (heightFactor >= 23.0f)
-		{
-			tint = tintSnow;
-		}
-		else
-		{
-			tint = tintGrass;
-		}
-
-		Colour::Interpolate(tintRock, tint, Maths::Clamp(fabs(normal.m_y), 0.0f, 1.0f), &tint);
-		return tint;
 	}
 
 	void Terrain::SetPosition(const Vector3 &position)

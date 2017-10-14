@@ -124,8 +124,6 @@
 #include "renderer/IManagerRender.hpp"
 #include "renderer/IRenderer.hpp"
 #include "renderer/pass/RenderPass.hpp"
-#include "renderer/pipelines/Descriptor.hpp"
-#include "renderer/pipelines/InputState.hpp"
 #include "renderer/pipelines/Pipeline.hpp"
 #include "renderer/pipelines/PipelineCreate.hpp"
 #include "renderer/queue/QueueFamily.hpp"
