@@ -15,9 +15,13 @@ namespace Flounder
 		// VK_TRUE, // alphaBlending
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_NONE, // cullModeFlags
-		InputState::Create(Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions()), // inputState
-		Descriptor::Create({ typeUboScene, typeUboObject, typeSamplerTexture }), // descriptor
-		ShaderStages::Create({ ShaderStage("res/shaders/guis/gui.vert.spv", VK_SHADER_STAGE_VERTEX_BIT), ShaderStage("res/shaders/guis/gui.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT) }) // shaderStages
+
+		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+		{ typeUboScene, typeUboObject, typeSamplerTexture }, // descriptors
+
+		{ "res/shaders/guis/gui.vert.spv", "res/shaders/guis/gui.frag.spv" } // shaderStages
 	};
 
 	RendererGuis::RendererGuis() :
