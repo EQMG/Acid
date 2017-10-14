@@ -1,11 +1,10 @@
 ﻿#include "Terrain.hpp"
 
-#include "../devices/Display.hpp"
-#include "../skyboxes/ShaderSkyboxes.hpp"
-#include "../worlds/Worlds.hpp"
-#include "ShaderTerrains.hpp"
-#include "Terrains.hpp"
 #include "../camera/Camera.hpp"
+#include "../devices/Display.hpp"
+#include "../worlds/Worlds.hpp"
+#include "Terrains.hpp"
+#include "UbosTerrains.hpp"
 
 namespace Flounder
 {
@@ -13,7 +12,7 @@ namespace Flounder
 	const std::vector<float> Terrain::SQUARE_SIZES = { 1.0f, 2.0f, 8.0f, 16.0f };
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
-		m_uniformObject(new UniformBuffer(sizeof(ShaderTerrains::UboObject))),
+		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
 		m_modelLods(std::vector<Model*>()),
 		m_position(new Vector3(position)),
 		m_rotation(new Vector3(rotation)),
@@ -64,7 +63,7 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
-		ShaderTerrains::UboObject uboObject = {};
+		UbosTerrains::UboObject uboObject = {};
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		uboObject.shineDamper = 1.0f;
 		uboObject.reflectivity = 0.0f;
@@ -131,7 +130,7 @@ namespace Flounder
 				const Vector2 textures = Vector2();
 				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x, position.m_z + m_position->m_z, 1.42f); // squareSize = constant to make normals uniform.
 				const Vector3 tangent = Vector3(CalculateColour(position, normal));
-				
+
 				vertices.push_back(Vertex(position, textures, normal, tangent));
 
 				// Creates and stores indicies.

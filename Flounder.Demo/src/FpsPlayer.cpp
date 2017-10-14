@@ -21,29 +21,29 @@ namespace Demo
 				new ButtonKeyboard({ GLFW_KEY_W, GLFW_KEY_UP })
 			),
 			new AxisJoystick(0, { 1 })
-	})),
+		})),
 		m_inputStrafe(new AxisCompound({
 			new AxisButton(
 				new ButtonKeyboard({ GLFW_KEY_D, GLFW_KEY_RIGHT }),
 				new ButtonKeyboard({ GLFW_KEY_A, GLFW_KEY_LEFT })
 			),
 			new AxisJoystick(0, { 0 })
-	})),
+		})),
 		m_inputVertical(new AxisCompound({
 			new AxisButton(
 				new ButtonKeyboard({ GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL }),
 				new ButtonKeyboard({ GLFW_KEY_SPACE })
 			),
 			new AxisJoystick(0, { 0 })
-	})),
+		})),
 		m_inputBoost(new ButtonCompound({
 			new ButtonKeyboard({ GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT }),
 			new ButtonJoystick(0, { 1 })
-	})),
+		})),
 		m_inputSlow(new ButtonCompound({
 			new ButtonKeyboard({ GLFW_KEY_LEFT_ALT, GLFW_KEY_RIGHT_ALT }),
 			new ButtonJoystick(0, { 1 })
-	})),
+		})),
 		m_amountMove(new Vector3()),
 		m_amountRotate(new Vector3()),
 		m_paused(false)
@@ -70,9 +70,9 @@ namespace Demo
 		// Gets the delta and limits the lowest UPS to 20 (any less and the game is unplayable).
 		const float delta = Maths::Min(Engine::Get()->GetDelta(), 1.0f / 20.0f);
 
-		if (Uis::get() != nullptr && Uis::get()->GetManager() != nullptr)
+		if (Uis::Get() != nullptr && Uis::Get()->GetManager() != nullptr)
 		{
-			m_paused = Uis::get()->GetManager()->IsGamePaused();
+			m_paused = Uis::Get()->GetManager()->IsGamePaused();
 		}
 
 		if (!m_paused)

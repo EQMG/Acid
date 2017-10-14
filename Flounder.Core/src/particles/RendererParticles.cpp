@@ -9,10 +9,10 @@ namespace Flounder
 
 	RendererParticles::RendererParticles() :
 		IRenderer(),
-		m_shader(new Shader("particles", {
-			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/particles/particle.vert.spv"),
-			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/particles/particle.frag.spv")
-		})),
+		//	m_shader(new Shader("particles", {
+		//		ShaderStage(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/particles/particle.vert.spv"),
+		//	ShaderStage(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/particles/particle.frag.spv")
+		//	})),
 		m_rendered(0)
 	{
 		/*std::vector<float> positions = {-0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f};
@@ -32,7 +32,6 @@ namespace Flounder
 
 	RendererParticles::~RendererParticles()
 	{
-		delete m_shader;
 #if 0
 		glDeleteBuffers(1, &m_vboID);
 		glDeleteVertexArrays(1, &m_vaoID);

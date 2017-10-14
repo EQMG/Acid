@@ -3,7 +3,6 @@
 #include "../renderer/IRenderer.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
-#include "../shaders/Shader.hpp"
 #include "TestEntity.hpp"
 
 namespace Flounder
@@ -12,12 +11,15 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
+		static const DescriptorType typeUboScene;
+		static const DescriptorType typeUboObject;
+		static const DescriptorType typeSamplerDiffuse;
+		static const DescriptorType typeSamplerSway;
+		static const PipelineCreateInfo pipelineCreateInfo;
+
 		UniformBuffer *m_uniformScene;
-
-		std::vector<TestEntity*> m_testEntities;
-
-		Shader *m_shader;
 		Pipeline *m_pipeline;
+		std::vector<TestEntity*> m_testEntities;
 	public:
 		RendererTest();
 

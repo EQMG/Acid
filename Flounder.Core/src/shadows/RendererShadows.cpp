@@ -3,19 +3,17 @@
 namespace Flounder
 {
 	RendererShadows::RendererShadows() :
-		IRenderer(),
+		IRenderer()
 	//	m_fbo(new Fbo(Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize(), DepthTexture, false)),
-		m_shader(new Shader("shadows", {
-			ShaderType(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/shadows/shadow.vert.spv"),
-			ShaderType(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/shadows/shadow.frag.spv")
-		}))
+	//	m_shader(new Shader("shadows", {
+	//		ShaderStage(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/shadows/shadow.vert.spv"),
+	//		ShaderStage(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/shadows/shadow.frag.spv")
+	//	}))
 	{
 	}
 
 	RendererShadows::~RendererShadows()
 	{
-	//	delete m_fbo;
-		delete m_shader;
 	}
 
 	void RendererShadows::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)

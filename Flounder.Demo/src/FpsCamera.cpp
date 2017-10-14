@@ -68,9 +68,9 @@ namespace Demo
 	{
 		float delta = Maths::Min(1.0f / 60.0f, Engine::Get()->GetDelta());
 
-		if (Uis::get() != nullptr && Uis::get()->GetManager() != nullptr)
+		if (Uis::Get() != nullptr && Uis::Get()->GetManager() != nullptr)
 		{
-			m_paused = Uis::get()->GetManager()->IsGamePaused();
+			m_paused = Uis::Get()->GetManager()->IsGamePaused();
 		}
 
 		CalculateHorizontalAngle();

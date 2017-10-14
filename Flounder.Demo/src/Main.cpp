@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 		Display::Get()->SetWindowSize(1080, 720);
 		Display::Get()->SetTitle("Flounder Demo");
 		Display::Get()->SetIcon("res/flounder.png");
-		Display::Get()->SetFpsLimit(61.0f);
+		Display::Get()->SetFpsLimit(0.0f);
 		Display::Get()->SetAntialiasing(true);
 		Display::Get()->SetFullscreen(false);
 	}
@@ -47,9 +47,9 @@ int main(int argc, char **argv)
 		Renderer::Get()->SetManager(new ManagerRender());
 	}
 
-	if (Uis::get() != nullptr)
+	if (Uis::Get() != nullptr)
 	{
-		Uis::get()->SetManager(new ManagerUis());
+		Uis::Get()->SetManager(new ManagerUis());
 	}
 
 	if (Standards::get() != nullptr)
@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 			}
 		}
 
-		//Terrains::Get()->GetTerrains()->push_back(new Terrain(Vector3(), Vector3()));
+		// Terrains::Get()->GetTerrains()->push_back(new Terrain(Vector3(), Vector3()));
 	}
 
 	if (Waters::Get() != nullptr)
