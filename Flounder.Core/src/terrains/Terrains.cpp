@@ -47,11 +47,11 @@ namespace Flounder
 		const float worldNoiseHeight = 35.0f;
 		const float worldNoiseOffset = 7.0f;
 
-	//	float river = m_noiseRivers.GetNoise(x, z);
-	//	river = (river <= 0.0f) ? river : 1.0f;
+		//	float river = m_noiseRivers.GetNoise(x, z);
+		//	river = (river <= 0.0f) ? river : 1.0f;
 		float height = m_noiseTerrain.GetNoise(x, z);
 		height = (height < 0.0f ? -1.0f : 1.0f) * pow(height, 2.0f);
-	//	height *= river;
+		//	height *= river;
 		height *= worldNoiseHeight;
 		height += worldNoiseOffset;
 		return height;

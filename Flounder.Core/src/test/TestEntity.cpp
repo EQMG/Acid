@@ -2,12 +2,12 @@
 
 #include "../devices/Display.hpp"
 #include "../engine/Engine.hpp"
-#include "ShaderTest.hpp"
+#include "UbosTest.hpp"
 
 namespace Flounder
 {
 	TestEntity::TestEntity(const Vector3 &position, const Vector3 &rotation, Model *model, Texture *diffuse, Texture *swapMap) :
-		m_uniformObject(new UniformBuffer(sizeof(ShaderTest::UboObject))),
+		m_uniformObject(new UniformBuffer(sizeof(UbosTest::UboObject))),
 		m_model(model),
 		m_diffuse(diffuse),
 		m_swapMap(swapMap),
@@ -29,7 +29,7 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
-		ShaderTest::UboObject uboObject = {};
+		UbosTest::UboObject uboObject = {};
 		uboObject.transform = Matrix4();
 		uboObject.swaying = 1.0f;
 		const float swayPower = 0.15f;
@@ -47,7 +47,7 @@ namespace Flounder
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-		
+
 		m_model->CmdRender(commandBuffer);
 	}
 }

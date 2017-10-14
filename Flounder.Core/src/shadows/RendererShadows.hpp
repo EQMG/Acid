@@ -10,8 +10,7 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-	//	Fbo *m_fbo;
-		Shader *m_shader;
+		//	Fbo *m_fbo;
 	public:
 		RendererShadows();
 
@@ -25,6 +24,6 @@ namespace Flounder
 
 		void EndRendering();
 	public:
-	//	Fbo *GetFbo() const { return m_fbo; }
+		//	Fbo *GetFbo() const { return m_fbo; }
 	};
 }

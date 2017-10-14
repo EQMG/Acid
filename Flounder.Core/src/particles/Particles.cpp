@@ -21,9 +21,9 @@ namespace Flounder
 
 	void Particles::Update()
 	{
-		if (Uis::get() != nullptr && Uis::get()->GetManager() != nullptr)
+		if (Uis::Get() != nullptr && Uis::Get()->GetManager() != nullptr)
 		{
-			if (Uis::get()->GetManager()->IsGamePaused())
+			if (Uis::Get()->GetManager()->IsGamePaused())
 			{
 				return;
 			}

@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "../renderer/IRenderer.hpp"
-#include "../shaders/Shader.hpp"
 #include "Particles.hpp"
 
 namespace Flounder
@@ -13,8 +12,6 @@ namespace Flounder
 	private:
 		static const int MAX_INSTANCES;
 		static const int INSTANCE_DATA_LENGTH;
-
-		Shader *m_shader;
 
 		//int m_vaoID;
 		//int m_vboID;

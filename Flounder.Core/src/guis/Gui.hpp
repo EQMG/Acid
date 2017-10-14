@@ -2,8 +2,11 @@
 
 #include "../maths/Colour.hpp"
 #include "../maths/Vector2.hpp"
+#include "../models/Model.hpp"
 #include "../textures/Texture.hpp"
 #include "../uis/UiObject.hpp"
+#include "../renderer/buffers/UniformBuffer.hpp"
+#include "../renderer/pipelines/Pipeline.hpp"
 
 namespace Flounder
 {
@@ -14,6 +17,9 @@ namespace Flounder
 		public UiObject
 	{
 	private:
+		UniformBuffer *m_uniformObject;
+
+		Model *m_model;
 		Texture *m_texture;
 		bool m_flipTexture;
 		int m_selectedRow;
@@ -37,6 +43,8 @@ namespace Flounder
 		~Gui();
 
 		void UpdateObject() override;
+
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
 		Texture *GetTexture() const { return m_texture; }
 

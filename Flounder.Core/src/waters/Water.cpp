@@ -3,9 +3,8 @@
 #include "../camera/Camera.hpp"
 #include "../devices/Display.hpp"
 #include "../maths/Maths.hpp"
-#include "../textures/Texture.hpp"
 #include "Waters.hpp"
-#include "ShaderWaters.hpp"
+#include "UbosWaters.hpp"
 
 namespace Flounder
 {
@@ -19,7 +18,7 @@ namespace Flounder
 	const float Water::REFLECTIVITY = 0.0f;
 
 	Water::Water(const Vector3 &position, const Vector3 &rotation) :
-		m_uniformObject(new UniformBuffer(sizeof(ShaderWaters::UboObject))),
+		m_uniformObject(new UniformBuffer(sizeof(UbosWaters::UboObject))),
 		m_model(nullptr),
 		m_colour(new Colour(WATER_COLOUR)),
 		m_position(new Vector3(position)),
@@ -66,7 +65,7 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
-		ShaderWaters::UboObject uboObject = {};
+		UbosWaters::UboObject uboObject = {};
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		uboObject.diffuseColour = Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b,
 			Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity() : 1.0f);
@@ -79,7 +78,7 @@ namespace Flounder
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-		
+
 		m_model->CmdRender(commandBuffer);
 	}
 

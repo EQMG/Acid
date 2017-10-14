@@ -2,23 +2,29 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 1) uniform UBO 
+layout(binding = 0) uniform UboScene
 {
+	float aspectRatio;
+} scene;
+
+layout(binding = 1) uniform UboObject
+{
+	vec4 scissor;
+	vec2 size;
+	vec4 transform;
+	float rotation;
 	vec4 colour;
 	vec4 borderColour;
 	vec2 borderSizes;
 	vec2 edgeData;
-	
-	float aspectRatio;
-	vec2 size;
-	vec4 transform;
-	float rotation;
-} ubo;
+} object;
 
-layout(location = 0) in vec2 inPosition;
-layout(location = 1) in vec2 inTextureCoords;
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 1) in vec2 vertexTextures;
+layout(location = 2) in vec3 vertexNormal;
+layout(location = 3) in vec3 vertexTangent;
 
-layout(location = 0) out vec2 textureCoords;
+layout(location = 0) out vec2 fragmentTextures;
 
 out gl_PerVertex 
 {
@@ -28,16 +34,16 @@ out gl_PerVertex
 void main(void) 
 {
 	vec2 screenPosition = vec2(
-		(inPosition.x - ubo.size.x) * ubo.transform.z * cos(ubo.rotation) - 
-		(inPosition.y - ubo.size.y) * ubo.transform.w * sin(ubo.rotation),
-		(inPosition.x - ubo.size.x) * ubo.transform.z * sin(ubo.rotation) + 
-		(inPosition.y - ubo.size.y) * ubo.transform.w * cos(ubo.rotation)
+		(vertexPosition.x - object.size.x) * object.transform.z * cos(object.rotation) - 
+		(vertexPosition.y - object.size.y) * object.transform.w * sin(object.rotation),
+		(vertexPosition.x - object.size.x) * object.transform.z * sin(object.rotation) + 
+		(vertexPosition.y - object.size.y) * object.transform.w * cos(object.rotation)
 	);
 
-	screenPosition = screenPosition + ubo.transform.xy;
-	screenPosition.x = (screenPosition.x / ubo.aspectRatio) * 2.0 - 1.0;
+	screenPosition = screenPosition + object.transform.xy;
+	screenPosition.x = (screenPosition.x / scene.aspectRatio) * 2.0 - 1.0;
 	screenPosition.y = screenPosition.y * -2.0 + 1.0;
 	gl_Position = vec4(screenPosition, 0.0, 1.0);
 
-	textureCoords = inTextureCoords;
+	fragmentTextures = vertexTextures;
 }

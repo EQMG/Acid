@@ -3,7 +3,6 @@
 #include "../renderer/IRenderer.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
-#include "../shaders/Shader.hpp"
 #include "Skyboxes.hpp"
 
 namespace Flounder
@@ -12,9 +11,12 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		UniformBuffer *m_uniformScene;
+		static const DescriptorType typeUboScene;
+		static const DescriptorType typeUboObject;
+		static const DescriptorType typeSamplerCubemap;
+		static const PipelineCreateInfo pipelineCreateInfo;
 
-		Shader *m_shader;
+		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
 	public:
 		RendererSkyboxes();

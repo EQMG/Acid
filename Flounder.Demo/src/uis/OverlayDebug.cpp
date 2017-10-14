@@ -49,7 +49,7 @@ namespace Demo
 
 	Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const UiAlign &align)
 	{
-		Text *result = new Text(this, Vector2(positionX, positionY), content, 1.0f, Uis::get()->m_candara, 1.0f, align);
+		Text *result = new Text(this, Vector2(positionX, positionY), content, 1.0f, Uis::Get()->m_candara, 1.0f, align);
 		result->SetInScreenCoords(true);
 		result->SetTextColour(Colour(1.0f, 1.0f, 1.0f));
 		result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f));
