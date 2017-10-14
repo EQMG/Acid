@@ -4,6 +4,7 @@
 #include "../../devices/Display.hpp"
 #include "../../helpers/HelperFile.hpp"
 #include "../Renderer.hpp"
+#include "../../helpers/HelperString.hpp"
 
 namespace Flounder
 {
@@ -77,10 +78,17 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
+		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
+
+		for (auto type : m_pipelineCreateInfo.descriptors)
+		{
+			bindings.push_back(type.descriptorSetLayoutBinding);
+		}
+
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(m_pipelineCreateInfo.descriptor.bindings.size());
-		descriptorSetLayoutCreateInfo.pBindings = m_pipelineCreateInfo.descriptor.bindings.data();
+		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(bindings.size());
+		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
 
 		vkDeviceWaitIdle(logicalDevice);
 		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
@@ -90,10 +98,17 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
+		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
+
+		for (auto type : m_pipelineCreateInfo.descriptors)
+		{
+			poolSizes.push_back(type.descriptorPoolSize);
+		}
+
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(m_pipelineCreateInfo.descriptor.poolSizes.size());
-		descriptorPoolCreateInfo.pPoolSizes = m_pipelineCreateInfo.descriptor.poolSizes.data();
+		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
+		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
 		descriptorPoolCreateInfo.maxSets = 50;
 
 		vkDeviceWaitIdle(logicalDevice);
@@ -132,9 +147,31 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		for (auto type : m_pipelineCreateInfo.shaderStages.stages)
+		for (auto type : m_pipelineCreateInfo.shaderStages)
 		{
-			std::vector<char> shaderCode = HelperFile::ReadBinaryFile(type.GetFilepath());
+			std::vector<char> shaderCode = HelperFile::ReadBinaryFile(type);
+			VkShaderStageFlagBits stageFlag = VK_SHADER_STAGE_ALL;
+
+			if (HelperString::Contains(type, "vert.spv"))
+			{
+				stageFlag = VK_SHADER_STAGE_VERTEX_BIT;
+			}
+			else if (HelperString::Contains(type, "tesc.spv"))
+			{
+				stageFlag = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
+			}
+			else if (HelperString::Contains(type, "tese.spv"))
+			{
+				stageFlag = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
+			}
+			else if (HelperString::Contains(type, "geom.spv"))
+			{
+				stageFlag = VK_SHADER_STAGE_GEOMETRY_BIT;
+			}
+			else if (HelperString::Contains(type, "frag.spv"))
+			{
+				stageFlag = VK_SHADER_STAGE_FRAGMENT_BIT;
+			}
 
 			VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 			shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -146,7 +183,7 @@ namespace Flounder
 
 			VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
 			pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-			pipelineShaderStageCreateInfo.stage = type.GetShaderFlag();
+			pipelineShaderStageCreateInfo.stage = stageFlag;
 			pipelineShaderStageCreateInfo.module = shaderModule;
 			pipelineShaderStageCreateInfo.pName = "main"; // The shaders entry point.
 
@@ -234,10 +271,10 @@ namespace Flounder
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.inputState.vertexBindingDescriptions.size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.inputState.vertexBindingDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.inputState.vertexAttributeDescriptions.size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.inputState.vertexAttributeDescriptions.data();
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.vertexBindingDescriptions.size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.vertexBindingDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.vertexAttributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.vertexAttributeDescriptions.data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -255,11 +292,9 @@ namespace Flounder
 		pipelineCreateInfo.pDepthStencilState = &m_depthStencilState;
 		pipelineCreateInfo.pDynamicState = &m_dynamicState;
 
-		std::vector<VkPipelineShaderStageCreateInfo> shaderStages = std::vector<VkPipelineShaderStageCreateInfo>(m_stages);
-
 		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
-		pipelineCreateInfo.stageCount = static_cast<uint32_t>(shaderStages.size());
-		pipelineCreateInfo.pStages = shaderStages.data();
+		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_stages.size());
+		pipelineCreateInfo.pStages = m_stages.data();
 
 		// Create the graphics pipeline.
 		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
@@ -273,10 +308,10 @@ namespace Flounder
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.inputState.vertexBindingDescriptions.size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.inputState.vertexBindingDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.inputState.vertexAttributeDescriptions.size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.inputState.vertexAttributeDescriptions.data();
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.vertexBindingDescriptions.size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.vertexBindingDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.vertexAttributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.vertexAttributeDescriptions.data();
 
 		m_depthStencilState.depthTestEnable = VK_FALSE;
 		m_depthStencilState.depthWriteEnable = VK_FALSE;
@@ -297,11 +332,9 @@ namespace Flounder
 		pipelineCreateInfo.pDepthStencilState = &m_depthStencilState;
 		pipelineCreateInfo.pDynamicState = &m_dynamicState;
 
-		std::vector<VkPipelineShaderStageCreateInfo> shaderStages = std::vector<VkPipelineShaderStageCreateInfo>(m_stages);
-
 		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
-		pipelineCreateInfo.stageCount = static_cast<uint32_t>(shaderStages.size());
-		pipelineCreateInfo.pStages = shaderStages.data();
+		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_stages.size());
+		pipelineCreateInfo.pStages = m_stages.data();
 
 		// Create the graphics pipeline.
 		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));

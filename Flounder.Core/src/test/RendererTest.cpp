@@ -17,9 +17,13 @@ namespace Flounder
 		PIPELINE_POLYGON, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_BACK_BIT, // cullModeFlags
-		InputState::Create(Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions()), // inputState
-		Descriptor::Create({ typeUboScene, typeUboObject, typeSamplerDiffuse, typeSamplerSway }), // descriptor
-		ShaderStages::Create({ ShaderStage("res/shaders/tests/test.vert.spv", VK_SHADER_STAGE_VERTEX_BIT), ShaderStage("res/shaders/tests/test.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT) }) // shaderStages
+
+		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+		{ typeUboScene, typeUboObject, typeSamplerDiffuse, typeSamplerSway }, // descriptors
+
+		{ "res/shaders/tests/test.vert.spv", "res/shaders/tests/test.frag.spv" } // shaderStages
 	};
 
 	RendererTest::RendererTest() :

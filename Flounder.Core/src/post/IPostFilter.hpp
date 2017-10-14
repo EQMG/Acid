@@ -13,6 +13,13 @@ namespace Flounder
 		Fbo(int w, int h);
 	};
 
+	class ShaderStage
+	{
+	public:
+		// PEPE
+		ShaderStage(const std::string &filepath, VkShaderStageFlags flags);
+	};
+
 	class Shader
 	{
 	public:
