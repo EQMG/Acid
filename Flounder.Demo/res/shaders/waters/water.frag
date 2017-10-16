@@ -16,7 +16,10 @@ layout(binding = 1) uniform UboObject
 	float ignoreReflections;
 } object;
 
+layout(binding = 2) uniform sampler2D samplerTexture;
+
 layout(location = 0) in vec3 fragmentNormal;
+layout(location = 1) in vec2 fragmentTextures;
 
 layout(location = 0) out vec4 outColour;
 //layout(location = 1) out vec4 outNormals;
@@ -39,7 +42,8 @@ void main(void)
 	//} 
 	//else 
 	//{
-		outColour = vec4(object.diffuseColour.rgb * diffuseLight, 1.0);
+	const vec3 tintWater = texture(samplerTexture, fragmentTextures).rgb;
+		outColour = vec4(tintWater * diffuseLight, 1.0); // object.diffuseColour.rgb
 	//}
 	
 //	outNormals = vec4(fragmentNormal + 1.0 / 2.0, 1.0);

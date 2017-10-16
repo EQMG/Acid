@@ -11,7 +11,7 @@ namespace Flounder
 	private:
 		static const DescriptorType RendererWaters::typeUboScene;
 		static const DescriptorType RendererWaters::typeUboObject;
-		//	static const DescriptorType RendererWaters::samplerReflections;
+		static const DescriptorType RendererWaters::samplerTexture;
 		static const PipelineCreateInfo RendererWaters::pipelineCreateInfo;
 
 		UniformBuffer *m_uniformScene;

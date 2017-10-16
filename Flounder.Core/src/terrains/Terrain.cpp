@@ -96,15 +96,16 @@ namespace Flounder
 		const float distance = Vector3::GetDistance(chunkPosition, cameraPosition);
 
 		// lnreg{ (90.5, 0), (181, 1), (362, 2) } = int(-6.500 + 1.443 * log(x) / log(2.718)) + 1
-		float lod = floor(-6.5f + 1.443f * log(distance) / log(2.718f)) + 1.0f;
-		lod = Maths::Clamp(lod, 0.0f, static_cast<float>(SQUARE_SIZES.size() - 1));
+		float lodf = floor(-6.5f + 1.443f * log(distance) / log(2.718f)) + 1.0f;
+		lodf = Maths::Clamp(lodf, 0.0f, static_cast<float>(SQUARE_SIZES.size() - 1));
+		int lodi = static_cast<int>(lodf);
 
-		if (m_modelLods[lod] == nullptr)
+		if (m_modelLods[lodi] == nullptr)
 		{
-			m_modelLods[lod] = GenerateMesh(lod);
+			m_modelLods[lodi] = GenerateMesh(lodi);
 		}
 
-		m_modelLods[lod]->CmdRender(commandBuffer);
+		m_modelLods[lodi]->CmdRender(commandBuffer);
 	}
 
 	int Terrain::CalculateVertexCount(const float &terrainLength, const float &squareSize)
@@ -127,8 +128,11 @@ namespace Flounder
 				// Creates and stores verticies.
 				Vector3 position = Vector3((row * squareSize) - (SIDE_LENGTH / 2.0f), 0.0f, (col * squareSize) - (SIDE_LENGTH / 2.0f));
 				position.m_y = Terrains::Get()->GetHeight(position.m_x + m_position->m_x, position.m_z + m_position->m_z); // TODO: Simplify!
-				const Vector2 textures = Vector2((TEXTURE_SCALE/(0.2f*(float)lod+1.0f)) * (float)col/ (float)vertexCount, (TEXTURE_SCALE / (0.2f*(float)lod + 1.0f)) * (float)row/ (float)vertexCount);
-				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x, position.m_z + m_position->m_z, 1.42f); // squareSize = constant to make normals uniform.
+				const Vector2 textures = Vector2(
+					(TEXTURE_SCALE / (0.2f * static_cast<float>(lod) + 1.0f)) * static_cast<float>(col) / static_cast<float>(vertexCount),
+					(TEXTURE_SCALE / (0.2f * static_cast<float>(lod) + 1.0f)) * static_cast<float>(row) / static_cast<float>(vertexCount)
+				);
+				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x, position.m_z + m_position->m_z, 1.5f); // squareSize = constant to make normals uniform.
 				const Vector3 tangent = Vector3();
 
 				vertices.push_back(Vertex(position, textures, normal, tangent));

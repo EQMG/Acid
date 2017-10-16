@@ -1,12 +1,13 @@
 #include "RendererWaters.hpp"
 
 #include "UbosWaters.hpp"
+#include "../textures/Texture.hpp"
 
 namespace Flounder
 {
 	const DescriptorType RendererWaters::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
 	const DescriptorType RendererWaters::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL);
-	//	const DescriptorType RendererWaters::samplerReflections = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererWaters::samplerTexture = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererWaters::pipelineCreateInfo =
 	{
 		PIPELINE_POLYGON, // pipelineModeFlags
@@ -16,7 +17,7 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboScene, typeUboObject }, // descriptors
+		{ typeUboScene, typeUboObject, samplerTexture }, // descriptors
 
 		{ "res/shaders/waters/water.vert.spv", "res/shaders/waters/water.frag.spv" } // shaderStages
 	};
