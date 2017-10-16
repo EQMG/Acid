@@ -7,6 +7,7 @@
 #include "../physics/Aabb.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
+#include "../textures/Texture.hpp"
 
 namespace Flounder
 {
@@ -18,6 +19,7 @@ namespace Flounder
 		Model *m_model;
 
 		Colour *m_colour;
+		Texture *m_textureWater;
 
 		Vector3 *m_position;
 		Vector3 *m_rotation;
@@ -30,6 +32,7 @@ namespace Flounder
 		static const float SIDE_LENGTH;
 		static const float SQUARE_SIZE;
 		static const int VERTEX_COUNT;
+		static const float TEXTURE_SCALE;
 
 		static const Colour WATER_COLOUR;
 
