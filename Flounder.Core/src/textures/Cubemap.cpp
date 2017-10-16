@@ -21,18 +21,17 @@ namespace Flounder
 		}
 
 		stbi_uc *pixels = (stbi_uc*) malloc(m_imageSize);
-		stbi_uc *offset = pixels;
 
-		/*for (const auto suffix : SIDE_FILE_SUFFIXS)
+		for (const auto suffix : SIDE_FILE_SUFFIXS)
 		{
 			const std::string filepathSide = filename + suffix + fileExt;
 			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
 			const stbi_uc *pixelsSide = Texture::LoadPixels(filepathSide, &m_width, &m_height, &m_components);
 			
-			offset += sizeSide;
-			memcpy(offset, pixelsSide, sizeSide);
+		//	pixels += sizeSide;
+			memcpy(pixels, pixelsSide, sizeSide);
 		//	delete pixelsSide;
-		}*/
+		}
 
 		//delete pixels;
 	}

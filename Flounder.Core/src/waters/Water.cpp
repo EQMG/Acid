@@ -11,6 +11,7 @@ namespace Flounder
 	const float Water::SIDE_LENGTH = 1024.0f;
 	const float Water::SQUARE_SIZE = 256.0f;
 	const int Water::VERTEX_COUNT = static_cast<int>((2.0 * SIDE_LENGTH) / SQUARE_SIZE) + 1;
+	const float Water::TEXTURE_SCALE = 1.33f;
 
 	const Colour Water::WATER_COLOUR = Colour("#366996");
 
@@ -21,6 +22,7 @@ namespace Flounder
 		m_uniformObject(new UniformBuffer(sizeof(UbosWaters::UboObject))),
 		m_model(nullptr),
 		m_colour(new Colour(WATER_COLOUR)),
+		m_textureWater(new Texture("res/waters/water.png")),
 		m_position(new Vector3(position)),
 		m_rotation(new Vector3(rotation)),
 		m_offset(new Vector3()),
@@ -74,7 +76,7 @@ namespace Flounder
 		uboObject.ignoreReflections = !Waters::Get()->GetEnableReflections();
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this!
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_textureWater->GetWriteDescriptor(2, descriptorSet),}; // TODO: Modulaize this!
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
@@ -92,7 +94,10 @@ namespace Flounder
 			for (int row = 0; row < VERTEX_COUNT; row++)
 			{
 				const Vector3 position = Vector3((row * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f), 0.0f, (col * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f));
-				const Vector2 textures = Vector2();
+				const Vector2 textures = Vector2(
+					TEXTURE_SCALE * static_cast<float>(col) / static_cast<float>(VERTEX_COUNT),
+					TEXTURE_SCALE * static_cast<float>(row) / static_cast<float>(VERTEX_COUNT)
+				);
 				const Vector3 normal = Vector3(0.0f, 2.0f, 0.0f);
 				const Vector3 tangent = Vector3();
 
