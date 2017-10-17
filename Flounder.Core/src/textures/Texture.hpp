@@ -31,6 +31,8 @@ namespace Flounder
 		VkImageView m_imageView;
 		VkSampler m_sampler;
 		VkFormat m_format;
+
+		VkDescriptorImageInfo m_imageInfo;
 	public:
 		/// <summary>
 		/// A new texture object.
