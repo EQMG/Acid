@@ -10,7 +10,7 @@ namespace Flounder
 		static const std::vector<std::string> SIDE_FILE_SUFFIXS;
 
 		int32_t m_components;
-		int32_t m_width, m_height;
+		int32_t m_width, m_height, m_depth;
 		VkDeviceSize m_imageSize;
 
 		Buffer *m_buffer;
@@ -33,10 +33,10 @@ namespace Flounder
 
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const;
 	private:
-		void CreateImage(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory);
+		void CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory);
 
 		void TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout);
 
-		void CopyBufferToImage(const uint32_t &width, const uint32_t &height, const VkBuffer &buffer, const VkImage &image);
+		void CopyBufferToImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkBuffer &buffer, const VkImage &image);
 	};
 }
