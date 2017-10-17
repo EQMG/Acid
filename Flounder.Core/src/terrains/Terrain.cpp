@@ -10,7 +10,7 @@ namespace Flounder
 {
 	const float Terrain::SIDE_LENGTH = 64.0f;
 	const std::vector<float> Terrain::SQUARE_SIZES = { 1.0f, 2.0f, 8.0f, 16.0f };
-	const float Terrain::TEXTURE_SCALE = 2.0f;
+	const float Terrain::TEXTURE_SCALE = 4.0f;
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),

@@ -8,6 +8,8 @@ namespace Flounder
 	class UniformBuffer :
 		public Buffer
 	{
+	private:
+		VkDescriptorBufferInfo m_bufferInfo;
 	public:
 		UniformBuffer(const VkDeviceSize &size);
 

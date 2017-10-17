@@ -32,9 +32,9 @@ namespace Flounder
 		m_pipeline(new Pipeline("tests", pipelineCreateInfo)),
 		m_testEntities(std::vector<TestEntity*>())
 	{
-		/*Model *model = new Model("res/treeBirchSmall/model.obj");
-		Texture *diffuse = new Texture("res/treeBirchSmall/diffuse.png"); // "res/undefined.png"
-		Texture *swapMap = new Texture("res/treeBirchSmall/sway.png");
+		/*Model *model = new Model("res/entities/treeBirchSmall/model.obj");
+		Texture *diffuse = new Texture("res/entities/treeBirchSmall/diffuse.png"); // "res/undefined.png"
+		Texture *swapMap = new Texture("res/entities/treeBirchSmall/sway.png");
 
 		for (int i = -5; i <= 5; i++)
 		{

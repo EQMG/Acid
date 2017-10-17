@@ -6,8 +6,12 @@
 namespace Flounder
 {
 	UniformBuffer::UniformBuffer(const VkDeviceSize &size) :
-		Buffer(size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)
+		Buffer(size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),
+		m_bufferInfo({})
 	{
+		m_bufferInfo.buffer = m_buffer;
+		m_bufferInfo.offset = 0;
+		m_bufferInfo.range = m_size;
 	}
 
 	UniformBuffer::~UniformBuffer()
@@ -46,12 +50,6 @@ namespace Flounder
 
 	VkWriteDescriptorSet UniformBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const
 	{
-		// TODO: Don't create a descriptor like this!
-		VkDescriptorBufferInfo *descriptorInfo = new VkDescriptorBufferInfo();
-		descriptorInfo->buffer = m_buffer;
-		descriptorInfo->offset = 0;
-		descriptorInfo->range = m_size;
-
 		VkWriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		descriptorWrite.dstSet = descriptorSet;
@@ -59,7 +57,7 @@ namespace Flounder
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 		descriptorWrite.descriptorCount = 1;
-		descriptorWrite.pBufferInfo = descriptorInfo;
+		descriptorWrite.pBufferInfo = &m_bufferInfo;
 
 		return descriptorWrite;
 	}
