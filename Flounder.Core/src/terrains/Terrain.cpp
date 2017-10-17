@@ -129,8 +129,8 @@ namespace Flounder
 				Vector3 position = Vector3((row * squareSize) - (SIDE_LENGTH / 2.0f), 0.0f, (col * squareSize) - (SIDE_LENGTH / 2.0f));
 				position.m_y = Terrains::Get()->GetHeight(position.m_x + m_position->m_x, position.m_z + m_position->m_z); // TODO: Simplify!
 				const Vector2 textures = Vector2(
-					(TEXTURE_SCALE / (0.2f * static_cast<float>(lod) + 1.0f)) * static_cast<float>(col) / static_cast<float>(vertexCount),
-					(TEXTURE_SCALE / (0.2f * static_cast<float>(lod) + 1.0f)) * static_cast<float>(row) / static_cast<float>(vertexCount)
+					(TEXTURE_SCALE) * static_cast<float>(col) / static_cast<float>(vertexCount),
+					(TEXTURE_SCALE) * static_cast<float>(row) / static_cast<float>(vertexCount)
 				);
 				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x, position.m_z + m_position->m_z, 1.5f); // squareSize = constant to make normals uniform.
 				const Vector3 tangent = Vector3();

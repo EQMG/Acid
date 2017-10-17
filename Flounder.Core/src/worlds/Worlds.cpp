@@ -25,7 +25,7 @@ namespace Flounder
 
 	void Worlds::Update()
 	{
-		float delta = Engine::Get()->GetDelta();
+		/*float delta = Engine::Get()->GetDelta();
 		m_factorDay = m_driverDay->Update(delta);
 
 		Vector3 skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
@@ -68,7 +68,7 @@ namespace Flounder
 			Shadows::Get()->SetShadowBoxDistance(35.0f);
 			Shadows::Get()->SetShadowTransition(0.0f);
 			Shadows::Get()->SetShadowFactor(GetShadowFactor());
-		}
+		}*/
 	}
 
 	float Worlds::GetDayFactor()
