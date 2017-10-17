@@ -5,12 +5,13 @@
 
 namespace Flounder
 {
-	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXS = { "Front", "Back", "Left", "Right", "Top", "Bottom" };
+	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXS = { "Right", "Left", "Top", "Bottom", "Back", "Front" };
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt) :
 		m_components(0),
 		m_width(0),
 		m_height(0),
+		m_depth(0),
 		m_imageSize(0),
 		m_buffer(nullptr),
 		m_image(VK_NULL_HANDLE),
@@ -36,6 +37,7 @@ namespace Flounder
 			const std::string filepathSide = filename + suffix + fileExt;
 			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
 			const stbi_uc *pixelsSide = Texture::LoadPixels(filepathSide, &m_width, &m_height, &m_components);
+			m_depth = m_width; // TODO
 			
 			memcpy(offset, pixelsSide, sizeSide);
 			offset += sizeSide;
@@ -51,9 +53,9 @@ namespace Flounder
 		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
 		VkDeviceMemory imageMemory = m_buffer->GetBufferMemory();
-		CreateImage(m_width, m_height, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, imageMemory);
+		CreateImage(m_width, m_height, m_depth, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, imageMemory);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
-		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), bufferStaging->GetBuffer(), m_image);
+		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), static_cast<uint32_t>(m_depth), bufferStaging->GetBuffer(), m_image);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
 		{
@@ -142,7 +144,7 @@ namespace Flounder
 		return descriptorWrite;
 	}
 
-	void Cubemap::CreateImage(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory)
+	void Cubemap::CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -223,7 +225,7 @@ namespace Flounder
 		Renderer::EndSingleTimeCommands(commandBuffer);
 	}
 
-	void Cubemap::CopyBufferToImage(const uint32_t &width, const uint32_t &height, const VkBuffer &buffer, const VkImage &image)
+	void Cubemap::CopyBufferToImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkBuffer &buffer, const VkImage &image)
 	{
 		const auto commandBuffer = Renderer::BeginSingleTimeCommands();
 
@@ -234,7 +236,7 @@ namespace Flounder
 		region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 		region.imageSubresource.mipLevel = 0;
 		region.imageSubresource.baseArrayLayer = 0;
-		region.imageSubresource.layerCount = 1;
+		region.imageSubresource.layerCount = 6;
 		region.imageOffset = { 0, 0, 0 };
 		region.imageExtent = { width, height, 1 };
 
