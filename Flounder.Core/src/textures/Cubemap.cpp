@@ -16,7 +16,8 @@ namespace Flounder
 		m_buffer(nullptr),
 		m_image(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
-		m_format(VK_FORMAT_UNDEFINED)
+		m_format(VK_FORMAT_UNDEFINED),
+		m_imageInfo({})
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -93,6 +94,10 @@ namespace Flounder
 
 		Buffer::CopyBuffer(bufferStaging->GetBuffer(), m_buffer->GetBuffer(), m_imageSize);
 
+		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		m_imageInfo.imageView = m_imageView;
+		m_imageInfo.sampler = m_sampler;
+
 		delete bufferStaging;
 		//delete pixels;
 	}
@@ -126,12 +131,6 @@ namespace Flounder
 
 	VkWriteDescriptorSet Cubemap::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const
 	{
-		// TODO: Don't create a descriptor like this!
-		VkDescriptorImageInfo *descriptorInfo = new VkDescriptorImageInfo();
-		descriptorInfo->imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-		descriptorInfo->imageView = m_imageView;
-		descriptorInfo->sampler = m_sampler;
-
 		VkWriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		descriptorWrite.dstSet = descriptorSet;
@@ -139,7 +138,7 @@ namespace Flounder
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 		descriptorWrite.descriptorCount = 1;
-		descriptorWrite.pImageInfo = descriptorInfo;
+		descriptorWrite.pImageInfo = &m_imageInfo;
 
 		return descriptorWrite;
 	}
