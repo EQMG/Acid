@@ -13,6 +13,7 @@ namespace Flounder
 		int32_t m_width, m_height;
 		VkDeviceSize m_imageSize;
 
+		Buffer *m_buffer;
 		VkImage m_image;
 		VkImageView m_imageView;
 		VkSampler m_sampler;
@@ -31,5 +32,11 @@ namespace Flounder
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const;
+	private:
+		void CreateImage(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory);
+
+		void TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout);
+
+		void CopyBufferToImage(const uint32_t &width, const uint32_t &height, const VkBuffer &buffer, const VkImage &image);
 	};
 }
