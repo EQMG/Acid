@@ -34,11 +34,11 @@ void main(void)
 
 	vec3 tint = tintGrass;
 	
-	if (fragmentHeight <= 0.5f)
+	if (fragmentHeight <= 1.5f)
 	{
 		tint = tintSand;
 	}
-	else if (fragmentHeight >= 23.0f)
+	else if (fragmentHeight >= 26.0f)
 	{
 		tint = tintSnow;
 	}
