@@ -32,9 +32,9 @@ namespace Flounder
 		m_pipeline(new Pipeline("tests", pipelineCreateInfo)),
 		m_testEntities(std::vector<TestEntity*>())
 	{
-		/*Model *model = new Model("res/entities/treeBirchSmall/model.obj");
-		Texture *diffuse = new Texture("res/entities/treeBirchSmall/diffuse.png"); // "res/undefined.png"
-		Texture *swapMap = new Texture("res/entities/treeBirchSmall/sway.png");
+		Model *model = new Model("res/entities/windmill/model.obj");
+		Texture *diffuse = new Texture("res/entities/windmill/diffuse.png"); // "res/undefined.png"
+		Texture *swapMap = new Texture("res/entities/windmill/sway.png");
 
 		for (int i = -5; i <= 5; i++)
 		{
@@ -42,9 +42,16 @@ namespace Flounder
 			{
 				const float xv = Maths::RandomInRange(-10.0f, 10.0f);
 				const float yv = Maths::RandomInRange(-10.0f, 10.0f);
-				m_testEntities.push_back(new TestEntity(Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv), Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), model, diffuse, swapMap));
+				
+				Vector3 position = Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv);
+				position.m_y -= 1.0f;
+				
+				if (position.m_y > 0.0f)
+				{
+					m_testEntities.push_back(new TestEntity(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), model, diffuse, swapMap));
+				}
 			}
-		}*/
+		}
 	}
 
 	RendererTest::~RendererTest()
