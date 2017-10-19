@@ -205,14 +205,12 @@ namespace Flounder
 
 		static void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, Text *object);
 
-		static void CreateQuadVertices(Text *object, std::vector<Line> lines, std::vector<float> &vertices, std::vector<float> &textures);
+		static void CreateQuadVertices(Text *object, std::vector<Line> lines, std::vector<Vertex> &vertices);
 
-		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<float> &vertices);
+		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<Vertex> &vertices);
 
-		static void AddVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &vertices);
+		static void AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<Vertex> &vertices);
 
-		static void AddTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &textures);
-
-		static Vector2 GetBounding(std::vector<float> &vertices);
+		static Vector2 GetBounding(std::vector<Vertex> &vertices);
 	};
 }

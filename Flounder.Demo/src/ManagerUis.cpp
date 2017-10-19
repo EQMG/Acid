@@ -32,7 +32,7 @@ namespace Demo
 		{
 			m_overlayStartup->SetAlphaDriver(new DriverConstant(0.0f));
 			m_overlayDebug->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
-			//	m_overlayManager->setAlphaDriver(new driverslide(0.0f, 1.0f, SLIDE_TIME));
+			m_overlayManager->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME)); // For testing.
 			m_overlayStartup->SetStarting(false);
 		}
 	}

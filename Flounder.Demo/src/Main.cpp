@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 		Display::Get()->SetWindowSize(1080, 720);
 		Display::Get()->SetTitle("Flounder Demo");
 		Display::Get()->SetIcon("res/flounder.png");
-		Display::Get()->SetFpsLimit(0.0f);
+		Display::Get()->SetFpsLimit(61.0f);
 		Display::Get()->SetAntialiasing(true);
 		Display::Get()->SetFullscreen(false);
 	}
@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 
 	if (Terrains::Get() != nullptr)
 	{
-		const int n = 2;
+		const int n = 1;
 
 		for (int j = -n; j <= n; j++)
 		{
