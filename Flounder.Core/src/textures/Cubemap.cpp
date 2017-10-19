@@ -99,7 +99,7 @@ namespace Flounder
 		m_imageInfo.sampler = m_sampler;
 
 		delete bufferStaging;
-		//delete pixels;
+		free(pixels);
 	}
 
 	Cubemap::~Cubemap()
