@@ -30,6 +30,6 @@ namespace Demo
 		m_rendererWaters->Render(commandBuffer, m_infinity, *camera);
 		m_rendererTest->Render(commandBuffer, m_infinity, *camera);
 
-		//m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
+		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 	}
 }

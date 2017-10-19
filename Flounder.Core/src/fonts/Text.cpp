@@ -147,17 +147,16 @@ namespace Flounder
 
 	void Text::LoadText(Text *object)
 	{
-		// Create mesh data.
+		// Creates mesh data.
 		std::vector<Line> lines = CreateStructure(object);
-		std::vector<float> vertices = std::vector<float>();
-		std::vector<float> textures = std::vector<float>();
-		CreateQuadVertices(object, lines, vertices, textures);
+		std::vector<Vertex> vertices = std::vector<Vertex>();
+		CreateQuadVertices(object, lines, vertices);
 		Vector2 meshSize = GetBounding(vertices);
 
-		// Load mesh data to OpenGL. TODO
-		//	Model *loaded = new Model(std::vector<int>(), vertices, textures);
-		//	object->SetModel(loaded);
-		//	object->SetMeshSize(meshSize);
+		// Loads mesh data to Vulkan.
+		Model *loaded = new Model(vertices);
+		object->SetModel(loaded);
+		object->SetMeshSize(meshSize);
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)
@@ -215,7 +214,7 @@ namespace Flounder
 		lines.push_back(currentLine);
 	}
 
-	void Text::CreateQuadVertices(Text *object, std::vector<Line> lines, std::vector<float> &vertices, std::vector<float> &textures)
+	void Text::CreateQuadVertices(Text *object, std::vector<Line> lines, std::vector<Vertex> &vertices)
 	{
 		object->SetNumberOfLines(static_cast<int>(lines.size()));
 		double cursorX = 0.0;
@@ -244,7 +243,6 @@ namespace Flounder
 				for (auto letter : word.GetCharacters())
 				{
 					AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
-					AddTextures(letter.GetTextureCoordX(), letter.GetTextureCoordY(), letter.GetMaxTextureCoordX(), letter.GetMaxTextureCoordY(), textures);
 					cursorX += letter.GetAdvanceX();
 				}
 
@@ -256,54 +254,33 @@ namespace Flounder
 		}
 	}
 
-	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<float> &vertices)
+	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<Vertex> &vertices)
 	{
-		double x = cursorX + character.GetOffsetX();
-		double y = cursorY + character.GetOffsetY();
-		double maxX = x + character.GetSizeX();
-		double maxY = y + character.GetSizeY();
-		AddVertices(x, y, maxX, maxY, vertices);
+		const double vertexX = cursorX + character.GetOffsetX();
+		const double vertexY = cursorY + character.GetOffsetY();
+		const double vertexMaxX = vertexX + character.GetSizeX();
+		const double vertexMaxY = vertexY + character.GetSizeY();
+
+		const double textureX = character.GetTextureCoordX();
+		const double textureY = character.GetTextureCoordX();
+		const double textureMaxX = character.GetMaxTextureCoordX();
+		const double textureMaxY = character.GetMaxTextureCoordY();
+
+		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
+		AddVertex(vertexX, vertexMaxY, textureX, textureMaxY, vertices);
+		AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
+		AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
+		AddVertex(vertexMaxX, vertexY, textureMaxX, textureY, vertices);
+		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 	}
 
-	void Text::AddVertices(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &vertices)
+	void Text::AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<Vertex> &vertices)
 	{
-		vertices.push_back(static_cast<float>(x));
-		vertices.push_back(static_cast<float>(y));
-		vertices.push_back(0.0f);
-		vertices.push_back(static_cast<float>(x));
-		vertices.push_back(static_cast<float>(maxY));
-		vertices.push_back(0.0f);
-		vertices.push_back(static_cast<float>(maxX));
-		vertices.push_back(static_cast<float>(maxY));
-		vertices.push_back(0.0f);
-		vertices.push_back(static_cast<float>(maxX));
-		vertices.push_back(static_cast<float>(maxY));
-		vertices.push_back(0.0f);
-		vertices.push_back(static_cast<float>(maxX));
-		vertices.push_back(static_cast<float>(y));
-		vertices.push_back(0.0f);
-		vertices.push_back(static_cast<float>(x));
-		vertices.push_back(static_cast<float>(y));
-		vertices.push_back(0.0f);
+		const Vertex vertex = Vertex(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
+		vertices.push_back(vertex);
 	}
 
-	void Text::AddTextures(const double &x, const double &y, const double &maxX, const double &maxY, std::vector<float> &textures)
-	{
-		textures.push_back(static_cast<float>(x));
-		textures.push_back(static_cast<float>(y));
-		textures.push_back(static_cast<float>(x));
-		textures.push_back(static_cast<float>(maxY));
-		textures.push_back(static_cast<float>(maxX));
-		textures.push_back(static_cast<float>(maxY));
-		textures.push_back(static_cast<float>(maxX));
-		textures.push_back(static_cast<float>(maxY));
-		textures.push_back(static_cast<float>(maxX));
-		textures.push_back(static_cast<float>(y));
-		textures.push_back(static_cast<float>(x));
-		textures.push_back(static_cast<float>(y));
-	}
-
-	Vector2 Text::GetBounding(std::vector<float> &vertices)
+	Vector2 Text::GetBounding(std::vector<Vertex> &vertices)
 	{
 		float minX = +INFINITY;
 		float minY = +INFINITY;
@@ -311,37 +288,24 @@ namespace Flounder
 		float maxY = -INFINITY;
 		int i = 0;
 
-		for (auto v : vertices)
+		for (const auto v : vertices)
 		{
-			if (i == 0)
+			if (v.m_position.m_x < minX)
 			{
-				if (v < minX)
-				{
-					minX = v;
-				}
-				else if (v > maxX)
-				{
-					maxX = v;
-				}
-
-				i++;
+				minX = v.m_position.m_x;
 			}
-			else if (i == 1)
+			else if (v.m_position.m_x > minX)
 			{
-				if (v < minY)
-				{
-					minY = v;
-				}
-				else if (v > maxY)
-				{
-					maxY = v;
-				}
-
-				i++;
+				maxX = v.m_position.m_x;
 			}
-			else if (i == 2)
+
+			if (v.m_position.m_y < minY)
 			{
-				i = 0;
+				minY = v.m_position.m_y;
+			}
+			else if (v.m_position.m_y > minY)
+			{
+				maxY = v.m_position.m_y;
 			}
 		}
 
