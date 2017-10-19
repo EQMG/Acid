@@ -8,7 +8,7 @@
 
 namespace Flounder
 {
-	const float Water::SIDE_LENGTH = 1024.0f;
+	const float Water::SIDE_LENGTH = 2048.0f;
 	const float Water::SQUARE_SIZE = 256.0f;
 	const int Water::VERTEX_COUNT = static_cast<int>((2.0 * SIDE_LENGTH) / SQUARE_SIZE) + 1;
 	const float Water::TEXTURE_SCALE = 10.0f;
