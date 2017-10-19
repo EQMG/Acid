@@ -25,28 +25,37 @@ layout(location = 0) out vec4 outColour;
 const vec2 lightBias = vec2(0.8, 0.2);
 const vec3 lightDirection = vec3(0.2, -0.3, 0.2);
 
+vec3 blend(vec3 left, vec3 right, float blend)
+{
+	vec3 result = vec3(0.0, 0.0, 0.0);
+	result.r = ((1.0f - blend) * left.r) + (blend * right.r);
+	result.g = ((1.0f - blend) * left.g) + (blend * right.g);
+	result.b = ((1.0f - blend) * left.b) + (blend * right.b);
+	return result;
+}
+
 void main(void) 
 {
 	const vec3 tintGrass = texture(samplerGrass, fragmentTextures).rgb;
-	const vec3 tintSnow = texture(samplerSnow, fragmentTextures).rgb;
-	const vec3 tintSand = texture(samplerSand, fragmentTextures).rgb;
-	const vec3 tintRock = texture(samplerSand, fragmentTextures).rgb;
 
 	vec3 tint = tintGrass;
 	
-	if (fragmentHeight <= 1.5f)
+	if (fragmentHeight <= 3.0f)
 	{
-		tint = tintSand;
+		const vec3 tintSand = texture(samplerSand, fragmentTextures).rgb;
+		float blendSand = clamp(fragmentHeight - 1.0f, 0.0f, 1.0f);
+		tint = blend(tintSand, tint, blendSand);
 	}
-	else if (fragmentHeight >= 26.0f)
+	/*else if (fragmentHeight >= 24.0f)
 	{
-		tint = tintSnow;
-	}
+		const vec3 tintSnow = texture(samplerSnow, fragmentTextures).rgb;
+		float blendSnow = clamp(fragmentHeight - 24.0f, 0.0f, 1.0f);
+		tint = blend(tint, tintSnow, blendSnow);
+	}*/
 
-	float blend = clamp(abs(fragmentNormal.y), 0.0f, 1.0f);
-	tint.r = ((1.0f - blend) * tintRock.r) + (blend * tint.r);
-	tint.g = ((1.0f - blend) * tintRock.g) + (blend * tint.g);
-	tint.b = ((1.0f - blend) * tintRock.b) + (blend * tint.b);
+	const vec3 tintRock = texture(samplerSand, fragmentTextures).rgb;
+	float blendRock = clamp(abs(fragmentNormal.y), 0.0f, 1.0f);
+	tint = blend(tintRock, tint, blendRock);
 
 	vec3 unitNormal = normalize(fragmentNormal);
 	float diffuseLight = max(dot(-lightDirection, unitNormal), 0.0) * lightBias.x + lightBias.y;

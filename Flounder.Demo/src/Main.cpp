@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 	if (Skyboxes::Get() != nullptr)
 	{
 		Skyboxes::Get()->SetSkybox(new Skybox(
-			new Cubemap("res/skybox/clouds", ".png"),
+			new Cubemap("res/skybox/clouds/clouds", ".png"),
 			new Model("res/skybox/skyboxCube.obj"),
 			2048.0f
 		));
@@ -68,9 +68,11 @@ int main(int argc, char **argv)
 
 	if (Terrains::Get() != nullptr)
 	{
-		for (int j = -3; j <= 3; j++)
+		const int n = 2;
+
+		for (int j = -n; j <= n; j++)
 		{
-			for (int w = -3; w <= 3; w++)
+			for (int w = -n; w <= n; w++)
 			{
 				Terrains::Get()->GetTerrains()->push_back(new Terrain(
 					Vector3(2.0f * static_cast<float>(j) * Terrain::SIDE_LENGTH, 0.0f, 2.0f * static_cast<float>(w) * Terrain::SIDE_LENGTH), Vector3()
