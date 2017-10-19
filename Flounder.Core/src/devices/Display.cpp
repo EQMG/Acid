@@ -96,7 +96,7 @@ namespace Flounder
 		m_fullscreenWidth(0),
 		m_fullscreenHeight(0),
 		m_aspectRatio(1.5f),
-		m_title("Flounder C++"),
+		m_title("Flounder Loading..."),
 		m_icon(""),
 		m_fpsLimit(-1.0f),
 		m_antialiasing(true),
