@@ -6,16 +6,19 @@
 namespace Flounder
 {
 	const std::vector<Vertex> VERTICES = {
-		Vertex(Vector3(0.0f, 0.0f, 0.0f)),
-		Vertex(Vector3(0.0f, 1.0f, 0.0f)),
-		Vertex(Vector3(1.0f, 0.0f, 0.0f)),
-		Vertex(Vector3(1.0f, 1.0f, 0.0f))
+		Vertex(Vector3(0.0f, 0.0f, 0.0f), Vector2(0.0f, 0.0f)),
+		Vertex(Vector3(1.0f, 0.0f, 0.0f), Vector2(1.0f, 0.0f)),
+		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
+		Vertex(Vector3(0.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
+	};
+	const std::vector<uint32_t> INDICES = {
+		0, 1, 2, 2, 3, 0
 	};
 
 	Gui::Gui(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, Texture *texture, const int &selectedRow) :
 		UiObject(parent, position, dimensions),
 		m_uniformObject(new UniformBuffer(sizeof(UbosGuis::UboObject))),
-		m_model(new Model(VERTICES)),
+		m_model(new Model(VERTICES, INDICES)),
 		m_texture(texture),
 		m_flipTexture(false),
 		m_selectedRow(selectedRow),
@@ -43,6 +46,11 @@ namespace Flounder
 
 	void Gui::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
+		if (!IsVisible() || GetAlpha() == 0.0f)
+		{
+			return;
+		}
+
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
