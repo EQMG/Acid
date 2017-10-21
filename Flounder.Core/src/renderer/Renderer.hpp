@@ -50,7 +50,7 @@ namespace Flounder
 	public:
 		void Update() override;
 
-		void BeginReindering();
+		VkResult BeginReindering();
 
 		void EndRendering(std::vector<VkSemaphore> waitSemaphores);
 

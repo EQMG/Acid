@@ -39,7 +39,7 @@ namespace Demo
 
 	bool ManagerUis::IsGamePaused()
 	{
-		return m_overlayStartup->IsStarting();
+		return false; //  m_overlayStartup->IsStarting();
 	}
 
 	float ManagerUis::GetBlurFactor()
