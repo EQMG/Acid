@@ -32,7 +32,7 @@ namespace Flounder
 		m_pipeline(new Pipeline("tests", pipelineCreateInfo)),
 		m_testEntities(std::vector<TestEntity*>())
 	{
-		Model *model = new Model("res/entities/windmill/model.obj");
+		/*Model *model = new Model("res/entities/windmill/model.obj");
 		Texture *diffuse = new Texture("res/entities/windmill/diffuse.png"); // "res/undefined.png"
 		Texture *swapMap = new Texture("res/entities/windmill/sway.png");
 
@@ -51,7 +51,7 @@ namespace Flounder
 					m_testEntities.push_back(new TestEntity(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), model, diffuse, swapMap));
 				}
 			}
-		}
+		}*/
 	}
 
 	RendererTest::~RendererTest()

@@ -3,6 +3,7 @@
 #include "../camera/Camera.hpp"
 #include "../devices/Display.hpp"
 #include "UbosSkyboxes.hpp"
+#include "Skyboxes.hpp"
 
 namespace Flounder
 {
@@ -38,7 +39,7 @@ namespace Flounder
 
 		UbosSkyboxes::UboObject uboObject = {};
 		uboObject.transform = Matrix4(*m_modelMatrix);
-		uboObject.skyColour = Colour("#366996");
+		uboObject.skyColour = Colour(*Skyboxes::Get()->GetFog()->m_colour);
 		uboObject.blendFactor = m_blend;
 		m_uniformObject->Update(&uboObject);
 
