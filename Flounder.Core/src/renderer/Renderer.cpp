@@ -1,5 +1,6 @@
 #include "Renderer.hpp"
 
+#include <cassert>
 #include "../devices/Display.hpp"
 
 namespace Flounder
@@ -61,9 +62,15 @@ namespace Flounder
 		if (m_swapchain->GetExtent().width != Display::Get()->GetWidth() || m_swapchain->GetExtent().height != Display::Get()->GetHeight())
 		{
 			RecreateSwapchain();
+			return;
 		}
 
-		BeginReindering();
+		const VkResult beganResult = BeginReindering();
+
+		if (beganResult != VK_SUCCESS)
+		{
+			return;
+		}
 
 		const auto queue = Display::Get()->GetQueue();
 		const auto renderPass = m_renderPass->GetRenderPass();
@@ -130,20 +137,34 @@ namespace Flounder
 		submitInfo.pCommandBuffers = &m_commandBuffer;
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = &m_semaphore;
-		vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
+
+		const VkResult queueResult = vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
+
+		assert(queueResult == VK_SUCCESS && "Failed to acquire swapchain image!");
 
 		EndRendering({ m_semaphore });
 	}
 
-	void Renderer::BeginReindering()
+	VkResult Renderer::BeginReindering()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto queue = Display::Get()->GetQueue();
 
 		Platform::ErrorVk(vkQueueWaitIdle(queue));
-		Platform::ErrorVk(vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage));
+		const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage);
+
+		if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
+		{
+			RecreateSwapchain();
+			return VK_ERROR_OUT_OF_DATE_KHR;
+		}
+
+		assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) && "Failed to acquire swapchain image!");
+
 		Platform::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
 		Platform::ErrorVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
+
+		return VK_SUCCESS;
 	}
 
 	void Renderer::EndRendering(std::vector<VkSemaphore> waitSemaphores)
@@ -161,7 +182,15 @@ namespace Flounder
 		presentInfo.pImageIndices = &m_activeSwapchinImage;
 		presentInfo.pResults = &result;
 
-		Platform::ErrorVk(vkQueuePresentKHR(queue, &presentInfo));
+		const VkResult queueResult = vkQueuePresentKHR(queue, &presentInfo);
+
+		if (queueResult == VK_ERROR_OUT_OF_DATE_KHR || queueResult == VK_SUBOPTIMAL_KHR) 
+		{
+			RecreateSwapchain();
+			return;
+		}
+
+		assert(result == VK_SUCCESS && "Failed to present swapchain image!");
 
 		Platform::ErrorVk(result);
 	}

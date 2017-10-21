@@ -12,7 +12,7 @@ layout(binding = 0) uniform UboScene
 layout(binding = 1) uniform UboObject 
 {
 	mat4 transform;
-	vec3 skyColour;
+	vec4 skyColour;
 	float blendFactor;
 } object;
 

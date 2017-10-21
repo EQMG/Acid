@@ -41,15 +41,15 @@ namespace Flounder
 
 		void Update() override;
 
-		float GetDayFactor();
+		float GetDayFactor() const;
 
-		float GetSunriseFactor();
+		float GetSunriseFactor() const;
 
-		float GetShadowFactor();
+		float GetShadowFactor() const;
 
-		float GetSunHeight();
+		float GetSunHeight() const;
 
-		float GetStarIntensity();
+		float GetStarIntensity() const;
 
 		Vector3 *GetSunPosition() const { return m_sunPosition; }
 

@@ -7,7 +7,7 @@ layout(binding = 2) uniform samplerCube samplerCubemap;
 layout(binding = 1) uniform UboObject 
 {
 	mat4 transform;
-	vec3 skyColour;
+	vec4 skyColour;
 	float blendFactor;
 } object;
 
@@ -19,9 +19,15 @@ layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
-	vec3 cubemapColour = texture(samplerCubemap, fragmentTextures).rgb; // vec3(object.skyColour);
+	vec3 cubemapColour = vec3(0.0);
+	
+	if (object.blendFactor >= 0.03)
+	{
+		vec3 cubemapNight = texture(samplerCubemap, fragmentTextures).rgb;
+		cubemapColour = mix(vec3(0.0), cubemapNight, object.blendFactor);
+	}
 
-	outColour = vec4(cubemapColour, 1.0); // cubemapColour // object.skyColour + mix(vec3(0.0), cubemapColour, object.blendFactor)
+	outColour = vec4(object.skyColour.rgb + cubemapColour, 1.0);
 //	outNormals = vec4(vec3(0.0, 1.0, 0.0) + 1.0 / 2.0, 0.0);
 //	outExtras = vec4(1.0, 0.0, 1.0, 1.0); // Ignores lighting.
 }
