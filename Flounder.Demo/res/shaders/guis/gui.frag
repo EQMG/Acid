@@ -31,4 +31,5 @@ void main(void)
 		outColour = vec4(0.0);
 		discard;
 	}
+	//outColour = vec4(1.0, 0.0, 0.0, 1.0);
 }
