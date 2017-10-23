@@ -37,7 +37,7 @@ namespace Flounder
 		}
 
 		// The first LOD is created now for future speed.
-		m_modelLods[0] = GenerateMesh(0);
+		// m_modelLods[0] = GenerateMesh(0);
 	}
 
 	Terrain::~Terrain()
@@ -125,6 +125,9 @@ namespace Flounder
 
 	Model *Terrain::GenerateMesh(const int &lod)
 	{
+#if FLOUNDER_VERBOSE
+		auto debugStart = Engine::Get()->GetTimeMs();
+#endif
 		const float squareSize = SQUARE_SIZES[lod];
 		const int vertexCount = CalculateVertexCount(SIDE_LENGTH, squareSize);
 
@@ -165,7 +168,14 @@ namespace Flounder
 			}
 		}
 
-		return new Model(vertices, indices);
+		Model *result = new Model(vertices, indices);
+
+#if FLOUNDER_VERBOSE
+		auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Terrain LOD %i took %fms to build!\n", lod, debugEnd - debugStart);
+#endif
+
+		return result;
 	}
 
 	Vector3 Terrain::CalculateNormal(const float &x, const float &z, const float &squareSize)

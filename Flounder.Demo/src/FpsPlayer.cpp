@@ -132,7 +132,7 @@ namespace Demo
 		}
 
 		const float terrainHeight = Terrains::Get()->GetHeight(m_position->m_x, m_position->m_z) + 1.74f;
-		const float terrainSlope = Terrains::Get()->GetSlope(m_position->m_x, m_position->m_z);
+		// const float terrainSlope = Terrains::Get()->GetSlope(m_position->m_x, m_position->m_z);
 
 		/*if (terrainSlope - 0.3 > 0)
 		{
@@ -147,8 +147,6 @@ namespace Demo
 
 		Vector3::Add(*m_position, *m_amountMove->Set(dx, dy, dz), m_position);
 		Vector3::Add(*m_rotation, *m_amountRotate->Set(0.0f, 0.0f, 0.0f), m_rotation);
-
-		// printf("%f\n", terrainSlope);
 
 		if (!m_noclipEnabled)
 		{
