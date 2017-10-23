@@ -5,6 +5,7 @@
 #include "../renderer/Renderer.hpp"
 #include "../terrains/Terrains.hpp"
 #include "UbosTest.hpp"
+#include "../camera/Camera.hpp"
 
 namespace Flounder
 {
@@ -32,26 +33,26 @@ namespace Flounder
 		m_pipeline(new Pipeline("tests", pipelineCreateInfo)),
 		m_testEntities(std::vector<TestEntity*>())
 	{
-		/*Model *model = new Model("res/entities/windmill/model.obj");
-		Texture *diffuse = new Texture("res/entities/windmill/diffuse.png"); // "res/undefined.png"
-		Texture *swapMap = new Texture("res/entities/windmill/sway.png");
+		Model *model = new Model("res/entities/cuboid/model.obj");
+		Texture *diffuse = new Texture("res/entities/cuboid/diffuse.png"); // "res/undefined.png"
+		Texture *swapMap = new Texture("res/entities/cuboid/sway.png");
 
-		for (int i = -5; i <= 5; i++)
+		for (int i = -1; i <= 1; i++)
 		{
-			for (int j = -5; j <= 5; j++)
+			for (int j = -1; j <= 1; j++)
 			{
-				const float xv = Maths::RandomInRange(-10.0f, 10.0f);
-				const float yv = Maths::RandomInRange(-10.0f, 10.0f);
+				const float xv = 0.0f; // Maths::RandomInRange(-10.0f, 10.0f);
+				const float yv = 0.0f; // Maths::RandomInRange(-10.0f, 10.0f);
 				
 				Vector3 position = Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv);
-				position.m_y -= 1.0f;
+				position.m_y += 1.0f;
 				
 				if (position.m_y > 0.0f)
 				{
 					m_testEntities.push_back(new TestEntity(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), model, diffuse, swapMap));
 				}
 			}
-		}*/
+		}
 	}
 
 	RendererTest::~RendererTest()
