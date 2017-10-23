@@ -12,7 +12,7 @@ namespace Flounder
 	{
 		PIPELINE_POLYGON, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
-		VK_CULL_MODE_BACK_BIT, // cullModeFlags
+		VK_CULL_MODE_NONE, // cullModeFlags
 		
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
