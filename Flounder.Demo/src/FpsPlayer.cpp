@@ -2,11 +2,11 @@
 
 namespace Demo
 {
-	const float FpsPlayer::RUN_SPEED = 5.0f;
-	const float FpsPlayer::STRAFE_SPEED = 5.0f;
-	const float FpsPlayer::VERTICAL_SPEED = 5.0f;
-	const float FpsPlayer::BOOST_SCALE = 5.0f;
-	const float FpsPlayer::SLOW_SCALE = 0.2f;
+	const float FpsPlayer::WALK_SPEED = 3.5f;
+	const float FpsPlayer::RUN_SPEED = 8.0f;
+	const float FpsPlayer::CROUCH_SPEED = 0.8f;
+	const float FpsPlayer::JUMP_SPEED = 8.5f;
+	const float FpsPlayer::NOCLIP_SPEED = 8.0f;
 
 	FpsPlayer::FpsPlayer() :
 		IPlayer(),
@@ -15,6 +15,8 @@ namespace Demo
 		m_currentSpeed(0.0f),
 		m_currentStrafeSpeed(0.0f),
 		m_currentUpwardSpeed(0.0f),
+		m_jumping(false),
+		m_noclipEnabled(false),
 		m_inputForward(new AxisCompound({
 			new AxisButton(
 				new ButtonKeyboard({ GLFW_KEY_S, GLFW_KEY_DOWN }),
@@ -29,20 +31,20 @@ namespace Demo
 			),
 			new AxisJoystick(0, { 0 })
 		})),
-		m_inputVertical(new AxisCompound({
-			new AxisButton(
-				new ButtonKeyboard({ GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL }),
-				new ButtonKeyboard({ GLFW_KEY_SPACE })
-			),
-			new AxisJoystick(0, { 0 })
-		})),
-		m_inputBoost(new ButtonCompound({
+		m_inputSprint(new ButtonCompound({
 			new ButtonKeyboard({ GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT }),
 			new ButtonJoystick(0, { 1 })
 		})),
-		m_inputSlow(new ButtonCompound({
-			new ButtonKeyboard({ GLFW_KEY_LEFT_ALT, GLFW_KEY_RIGHT_ALT }),
-			new ButtonJoystick(0, { 1 })
+		m_inputCrouch(new ButtonCompound({
+			new ButtonKeyboard({ GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL }),
+			new ButtonJoystick(0,{ 1 })
+		})),
+		m_inputJump(new ButtonCompound({
+			new ButtonKeyboard({ GLFW_KEY_SPACE }),
+			new ButtonJoystick(0,{ 1 })
+		})),
+		m_toggleNoclip(new ButtonCompound({
+			new ButtonKeyboard({ GLFW_KEY_N }),
 		})),
 		m_amountMove(new Vector3()),
 		m_amountRotate(new Vector3()),
@@ -57,9 +59,11 @@ namespace Demo
 
 		delete m_inputForward;
 		delete m_inputStrafe;
-		delete m_inputVertical;
-		delete m_inputBoost;
-		delete m_inputSlow;
+
+		delete m_inputSprint;
+		delete m_inputCrouch;
+		delete m_inputJump;
+		delete m_toggleNoclip;
 
 		delete m_amountMove;
 		delete m_amountRotate;
@@ -77,29 +81,63 @@ namespace Demo
 
 		if (!m_paused)
 		{
-			m_currentSpeed = RUN_SPEED * m_inputForward->GetAmount();
-			m_currentStrafeSpeed = STRAFE_SPEED * m_inputStrafe->GetAmount();
-			m_currentUpwardSpeed = VERTICAL_SPEED * m_inputVertical->GetAmount();
+			const bool sprintDown = m_inputSprint->IsDown();
+			const bool crouchDown = m_inputCrouch->IsDown();
+			m_currentSpeed = (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputForward->GetAmount();
+			m_currentStrafeSpeed = (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputStrafe->GetAmount();
 
-			if (m_inputBoost->IsDown())
+			if (m_noclipEnabled)
 			{
-				m_currentSpeed *= BOOST_SCALE;
-				m_currentStrafeSpeed *= BOOST_SCALE;
-				m_currentUpwardSpeed *= BOOST_SCALE;
+				if (m_inputJump->IsDown())
+				{
+					m_currentUpwardSpeed = sprintDown ? RUN_SPEED : WALK_SPEED;
+				}
+				else if (m_inputCrouch->IsDown())
+				{
+					m_currentUpwardSpeed = sprintDown ? -RUN_SPEED : -WALK_SPEED;
+				}
+				else
+				{
+					m_currentUpwardSpeed = 0.0f;
+				}
+
+				m_currentSpeed *= NOCLIP_SPEED;
+				m_currentStrafeSpeed *= NOCLIP_SPEED;
+				m_currentUpwardSpeed *= NOCLIP_SPEED;
 			}
-			else if (m_inputSlow->IsDown())
+			else
 			{
-				m_currentSpeed *= SLOW_SCALE;
-				m_currentStrafeSpeed *= SLOW_SCALE;
-				m_currentUpwardSpeed *= SLOW_SCALE;
+				if (m_inputJump->WasDown() && !m_jumping)
+				{
+					m_currentUpwardSpeed = crouchDown ? 3.0f : JUMP_SPEED;
+					m_jumping = true;
+				}
+			}
+
+			if (m_toggleNoclip->WasDown())
+			{
+				m_currentSpeed = 0.0f;
+				m_currentStrafeSpeed = 0.0f;
+				m_currentUpwardSpeed = 0.0f;
+				m_jumping = false;
+				m_noclipEnabled = !m_noclipEnabled;
+				printf("Player Noclip: %s\n", m_toggleNoclip ? "true" : "false");
 			}
 		}
 		else
 		{
 			m_currentSpeed = 0.0f;
 			m_currentStrafeSpeed = 0.0f;
-			m_currentUpwardSpeed = 0.0f;
+		//	m_currentUpwardSpeed = 0.0f;
 		}
+
+		const float terrainHeight = Terrains::Get()->GetHeight(m_position->m_x, m_position->m_z) + 1.74f;
+		const float terrainSlope = Terrains::Get()->GetSlope(m_position->m_x, m_position->m_z);
+
+		/*if (terrainSlope - 0.3 > 0)
+		{
+			m_currentSpeed *= terrainSlope - 0.5;
+		}*/
 
 		// Calculates the deltas to the moved distance, and rotations.
 		const float theta = Maths::Radians(Camera::Get()->GetCamera()->GetRotation()->m_y);
@@ -110,11 +148,18 @@ namespace Demo
 		Vector3::Add(*m_position, *m_amountMove->Set(dx, dy, dz), m_position);
 		Vector3::Add(*m_rotation, *m_amountRotate->Set(0.0f, 0.0f, 0.0f), m_rotation);
 
-		const float terrainHeight = Terrains::Get()->GetHeight(m_position->m_x, m_position->m_z) + 1.0f;
+		// printf("%f\n", terrainSlope);
 
-		if (m_position->m_y < terrainHeight)
+		if (!m_noclipEnabled)
 		{
-			m_position->m_y = terrainHeight;
+			m_currentUpwardSpeed -= 24.06f * delta;
+
+			if (m_position->m_y < terrainHeight)
+			{
+				m_position->m_y = terrainHeight;
+				m_currentUpwardSpeed = 0.0f;
+				m_jumping = false;
+			}
 		}
 	}
 }
