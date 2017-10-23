@@ -16,7 +16,6 @@ namespace Flounder
 	private:
 		std::vector<Terrain*> *m_terrains;
 		NoiseFast m_noiseTerrain;
-		NoiseFast m_noiseRivers;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -40,6 +39,8 @@ namespace Flounder
 		void Update() override;
 
 		float GetHeight(const float &x, const float &z);
+
+		float GetSlope(const float &x, const float &z);
 
 		Vector3 GetPosition(const float &x, const float &z);
 
