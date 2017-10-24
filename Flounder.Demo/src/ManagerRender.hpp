@@ -17,6 +17,7 @@ namespace Demo
 		RendererTerrains *m_rendererTerrains;
 		RendererTest *m_rendererTest;
 		RendererGuis *m_rendererGuis;
+		RendererFonts *m_rendererFonts;
 	public:
 		ManagerRender();
 

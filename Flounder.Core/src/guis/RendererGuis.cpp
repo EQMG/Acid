@@ -12,7 +12,6 @@ namespace Flounder
 	const PipelineCreateInfo RendererGuis::pipelineCreateInfo =
 	{
 		PIPELINE_NO_DEPTH, // pipelineModeFlags
-		// VK_TRUE, // alphaBlending
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_NONE, // cullModeFlags
 

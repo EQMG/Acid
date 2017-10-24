@@ -2,11 +2,14 @@
 
 #include "../engine/Engine.hpp"
 #include "../visual/DriverConstant.hpp"
+#include "UbosFonts.hpp"
+#include "../devices/Display.hpp"
 
 namespace Flounder
 {
 	Text::Text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const UiAlign &align) :
 		UiObject(parent, position, Vector2(1.0f, 1.0f)),
+		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
 		m_textString(text),
 		m_textAlign(align),
 		m_newText(""),
@@ -30,6 +33,8 @@ namespace Flounder
 
 	Text::~Text()
 	{
+		delete m_uniformObject;
+
 		delete m_model;
 
 		delete m_textColour;
@@ -65,6 +70,36 @@ namespace Flounder
 
 		m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
 		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
+	}
+
+	void Text::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
+	{
+		if (!IsVisible() || GetAlpha() == 0.0f)
+		{
+			return;
+		}
+
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto descriptorSet = pipeline.GetDescriptorSet();
+
+		UbosFonts::UboObject uboObject = {};
+		uboObject.scissor = Vector4(*GetScissor());
+		uboObject.size = Vector2(*GetMeshSize());
+		uboObject.transform = Vector4(GetScreenPosition()->m_x, GetScreenPosition()->m_y,
+			GetScreenDimensions()->m_x, GetScreenDimensions()->m_y);
+		uboObject.rotation = static_cast<float>(Maths::Radians(GetRotation()));
+		uboObject.colour = Colour(GetTextColour()->m_r, GetTextColour()->m_g, GetTextColour()->m_b, GetAlpha());
+		uboObject.borderColour = Vector4(*GetBorderColour());
+		uboObject.borderSizes = Vector2(GetTotalBorderSize(), GetGlowSize());
+		uboObject.edgeData = Vector2(CalculateEdgeStart(), CalculateAntialiasSize());
+		m_uniformObject->Update(&uboObject);
+
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_fonttype->GetTexture()->GetWriteDescriptor(2, descriptorSet) }; // TODO: Modulaize this!
+		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
+		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
+
+		m_model->CmdRender(commandBuffer);
 	}
 
 	void Text::SetText(const std::string &newText)
