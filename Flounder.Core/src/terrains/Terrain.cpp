@@ -9,8 +9,8 @@
 namespace Flounder
 {
 	const float Terrain::SIDE_LENGTH = 100.0f;
-	const std::vector<float> Terrain::SQUARE_SIZES = { 1.0f, 2.0f, 5.0f, 10.0f, 20.0f };
-	const float Terrain::TEXTURE_SCALE = 4.0f;
+	const std::vector<float> Terrain::SQUARE_SIZES = { 2.0f, 5.0f, 10.0f, 20.0f }; // 1.0f, 
+	const float Terrain::TEXTURE_SCALE = 5.0f;
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
@@ -37,7 +37,7 @@ namespace Flounder
 		}
 
 		// The first LOD is created now for future speed.
-		// m_modelLods[0] = GenerateMesh(0);
+		// CreateLod(0);
 	}
 
 	Terrain::~Terrain()
@@ -97,15 +97,12 @@ namespace Flounder
 
 		// lnreg{ (90.5, 0), (181, 1), (362, 2) } = int(-6.500 + 1.443 * log(x) / log(2.718)) + 1
 		//float lodf = floor(-6.5f + 1.443f * log(distance) / log(2.718f)) + 1.0f;
-
 		float lodf = floor(0.0090595f * distance - 1.22865f) + 1.0f;
 		lodf = Maths::Clamp(lodf, 0.0f, static_cast<float>(SQUARE_SIZES.size() - 1));
 		int lodi = static_cast<int>(lodf);
 
 		if (m_modelLods[lodi] == nullptr)
 		{
-			m_modelLods[lodi] = GenerateMesh(lodi);
-
 			/*for (int i = 0; i < m_modelLods.size(); i++)
 			{
 				if (m_modelLods[i] != nullptr && abs(i - lodi) > SQUARE_SIZES.size() / 2)
@@ -113,6 +110,8 @@ namespace Flounder
 					delete m_modelLods[i];
 				}
 			}*/
+
+			CreateLod(lodi);
 		}
 
 		m_modelLods[lodi]->CmdRender(commandBuffer);
@@ -123,8 +122,13 @@ namespace Flounder
 		return static_cast<int>((2.0 * terrainLength) / squareSize) + 2;
 	}
 
-	Model *Terrain::GenerateMesh(const int &lod)
+	void Terrain::CreateLod(const int &lod)
 	{
+		if (m_modelLods[lod] != nullptr)
+		{
+			return;
+		}
+
 #if FLOUNDER_VERBOSE
 		auto debugStart = Engine::Get()->GetTimeMs();
 #endif
@@ -175,7 +179,7 @@ namespace Flounder
 		printf("Terrain LOD %i took %fms to build!\n", lod, debugEnd - debugStart);
 #endif
 
-		return result;
+		m_modelLods[lod] = result;
 	}
 
 	Vector3 Terrain::CalculateNormal(const float &x, const float &z, const float &squareSize)
