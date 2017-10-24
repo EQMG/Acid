@@ -4,6 +4,8 @@
 #include "../maths/Colour.hpp"
 #include "../maths/Vector2.hpp"
 #include "../models/Model.hpp"
+#include "../renderer/buffers/UniformBuffer.hpp"
+#include "../renderer/pipelines/Pipeline.hpp"
 #include "../uis/UiAlign.hpp"
 #include "../uis/UiObject.hpp"
 #include "../visual/IDriver.hpp"
@@ -19,6 +21,8 @@ namespace Flounder
 		public UiObject
 	{
 	private:
+		UniformBuffer *m_uniformObject;
+
 		std::string m_textString;
 		UiAlign m_textAlign;
 
@@ -61,6 +65,8 @@ namespace Flounder
 		~Text();
 
 		void UpdateObject() override;
+
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
 		/// <summary>
 		/// Gets the string of text represented.

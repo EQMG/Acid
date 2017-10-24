@@ -45,7 +45,7 @@ namespace Flounder
 
 		static int CalculateVertexCount(const float &terrainLength, const float &squareSize);
 	private:
-		Model *GenerateMesh(const int &lod);
+		void CreateLod(const int &lod);
 
 		Vector3 CalculateNormal(const float &x, const float &z, const float &squareSize);
 	public:
