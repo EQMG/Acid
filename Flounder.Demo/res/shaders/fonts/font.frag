@@ -28,12 +28,13 @@ void main(void)
 	float overallAlpha = alpha + (1.0 - alpha) * outlineAlpha;
 	vec3 overallColour = mix(object.borderColour.rgb, object.colour.rgb, alpha / overallAlpha);
 
-	outColour = vec4(overallColour, overallAlpha);
+	/*outColour = vec4(overallColour, overallAlpha);
 	outColour.a *= object.colour.a;
 
 	if (outColour.a < 0.05)
 	{
 		outColour = vec4(0.0);
 		discard;
-	}
+	}*/
+	outColour = vec4(distance * object.colour.rgb, 1);
 }

@@ -1,96 +1,57 @@
 #include "RendererFonts.hpp"
 
+#include "../devices/Display.hpp"
 #include "../uis/Uis.hpp"
+#include "UbosFonts.hpp"
 
 namespace Flounder
 {
+	const DescriptorType RendererFonts::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
+	const DescriptorType RendererFonts::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL);
+	const DescriptorType RendererFonts::typeSamplerTexture = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const PipelineCreateInfo RendererFonts::pipelineCreateInfo =
+	{
+		PIPELINE_NO_DEPTH, // pipelineModeFlags
+		VK_POLYGON_MODE_FILL, // polygonMode
+		VK_CULL_MODE_NONE, // cullModeFlags
+
+		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+		{ typeUboScene, typeUboObject, typeSamplerTexture }, // descriptors
+
+		{ "res/shaders/fonts/font.vert.spv", "res/shaders/fonts/font.frag.spv" } // shaderStages
+	};
+
 	RendererFonts::RendererFonts() :
-		IRenderer()
-	//	m_shader(new Shader("fonts", {
-	//		ShaderStage(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/fonts/font.vert.spv"),
-	//		ShaderStage(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/fonts/font.frag.spv")
-	//	}))
+		IRenderer(),
+		m_uniformScene(new UniformBuffer(sizeof(UbosFonts::UboScene))),
+		m_pipeline(new Pipeline("fonts", pipelineCreateInfo))
 	{
 	}
 
 	RendererFonts::~RendererFonts()
 	{
+		delete m_uniformScene;
+		delete m_pipeline;
 	}
 
 	void RendererFonts::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-#if 0
-		PrepareRendering(clipPlane, camera);
+		UbosFonts::UboScene uboScene = {};
+		uboScene.aspectRatio = static_cast<float>(Display::Get()->GetAspectRatio());
+		m_uniformScene->Update(&uboScene);
 
-		for (auto screenobject : *Uis::get()->GetObjects())
+		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+
+		for (auto screenobject : *Uis::Get()->GetObjects())
 		{
 			Text *object = dynamic_cast<Text*>(screenobject);
 
 			if (object != nullptr)
 			{
-				RenderText(object);
+				object->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
 			}
 		}
-
-		EndRendering();
-#endif
 	}
-
-#if 0
-	void RendererFonts::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
-	{
-		// Starts the shader.
-		m_shader->start();
-
-		// Loads the uniforms.
-		m_shader->loadUniform1f("aspectRatio", static_cast<float>(Display::Get()->getAspectRatio()));
-
-		// Sets the GPU for rendering this object.
-		renderer::get()->disableDepthTesting();
-		renderer::get()->cullBackFaces(true);
-		renderer::get()->enableAlphaBlending();
-	}
-
-	void RendererFonts::RenderText(Text *object)
-	{
-		// Binds the layouts.
-		renderer::get()->bindVAO(object->getModel()->getVaoID(), 2, 0, 1);
-		renderer::get()->bindTexture(object->getTexture(), 0);
-
-		// Applies the GL scissor test.
-		Vector4 *scissor = object->getScissor();
-
-		if (scissor->m_z != -1.0f && scissor->m_w != -1.0f)
-		{
-			renderer::get()->scissorEnable(static_cast<int>(scissor->m_x), static_cast<int>(scissor->m_y), static_cast<int>(scissor->m_z), static_cast<int>(scissor->m_w));
-		}
-
-		// Loads the uniforms.
-		m_shader->loadUniform2f("size", *object->getMeshSize());
-		m_shader->loadUniform4f("transform",
-		                      object->getScreenPosition()->m_x, object->getScreenPosition()->m_y,
-		                      object->getScreenDimensions()->m_x, object->getScreenDimensions()->m_y
-		);
-		m_shader->loadUniform1f("rotation", static_cast<float>(Maths::Radians(object->getRotation())));
-
-		m_shader->loadUniform1f("alpha", object->getAlpha()); 
-		m_shader->loadUniform4f("colour", object->getTextColour()->m_r, object->getTextColour()->m_g, object->getTextColour()->m_b, object->getAlpha());
-		m_shader->loadUniform3f("borderColour", *object->getBorderColour());
-		m_shader->loadUniform2f("edgeData", object->calculateEdgeStart(), object->calculateAntialiasSize());
-		m_shader->loadUniform2f("borderSizes", object->getTotalBorderSize(), object->getGlowSize());
-
-		// Tells the GPU to render this object.
-		renderer::get()->renderArrays(GL_TRIANGLES, object->getModel()->getVaoLength());
-		renderer::get()->scissorDisable();
-
-		// Unbinds the layouts.
-		renderer::get()->unbindVAO(2, 0, 1);
-	}
-
-	void RendererFonts::EndRendering()
-	{
-		// Stops the shader.
-		m_shader->stop();
-	}
-#endif
 }

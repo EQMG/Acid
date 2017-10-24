@@ -2,14 +2,14 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 2) uniform samplerCube samplerCubemap;
-
 layout(binding = 1) uniform UboObject 
 {
 	mat4 transform;
 	vec4 skyColour;
 	float blendFactor;
 } object;
+
+layout(binding = 2) uniform samplerCube samplerCubemap;
 
 layout(location = 0) in vec3 fragmentTextures;
 

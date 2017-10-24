@@ -33,14 +33,15 @@ out gl_PerVertex
 
 void main(void) 
 {
-	vec2 screenPosition = vec2(
+	/*vec2 screenPosition = vec2(
 		(vertexPosition.x - object.size.x) * object.transform.z * cos(object.rotation) - 
 		(vertexPosition.y - object.size.y) * object.transform.w * sin(object.rotation),
 		(vertexPosition.x - object.size.x) * object.transform.z * sin(object.rotation) + 
 		(vertexPosition.y - object.size.y) * object.transform.w * cos(object.rotation)
-	);
+	);*/
+	vec2 screenPosition = vec2(vertexPosition.x, vertexPosition.y);
 
-	screenPosition = screenPosition + object.transform.xy;
+	//screenPosition = screenPosition + object.transform.xy;
 	screenPosition.x = (screenPosition.x / scene.aspectRatio) * 2.0 - 1.0;
 	screenPosition.y = screenPosition.y * -2.0 + 1.0;
 	gl_Position = vec4(screenPosition, 0.0, 1.0);
