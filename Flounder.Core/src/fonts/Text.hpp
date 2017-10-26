@@ -66,7 +66,7 @@ namespace Flounder
 
 		void UpdateObject() override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline);
 
 		/// <summary>
 		/// Gets the string of text represented.

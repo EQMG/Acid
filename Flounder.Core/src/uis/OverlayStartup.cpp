@@ -22,7 +22,7 @@ namespace Flounder
 
 		Events::Get()->AddEvent(new EventTime(1.649f, false, [&]()
 		{
-		//	SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 1.0f));
+			SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 1.0f));
 		}));
 	}
 

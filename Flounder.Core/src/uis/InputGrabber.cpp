@@ -181,7 +181,7 @@ namespace Flounder
 		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.
-		m_background->GetDimensions()->Set(*m_text->GetMeshSize());
+		m_background->GetDimensions()->Set(*m_text->GetDimensions());
 		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
 		Vector2::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
 		m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());

@@ -19,19 +19,15 @@ namespace Flounder
 		std::vector<UiObject*> *m_children;
 
 		bool m_visible;
+		Vector4 *m_scissor;
 		Vector2 *m_position;
 		Vector2 *m_dimensions;
-		Vector2 *m_meshSize;
-		Vector4 *m_scissor;
 
 		bool m_inScreenCoords;
 
 		Vector2 *m_screenPosition;
 		Vector2 *m_screenDimensions;
 		Vector2 *m_positionOffsets;
-
-		IDriver *m_rotationDriver;
-		float m_rotation;
 
 		IDriver *m_alphaDriver;
 		float m_alpha;
@@ -106,6 +102,10 @@ namespace Flounder
 
 		void SetVisible(const bool &visible) { m_visible = visible; }
 
+		Vector4 *GetScissor() const { return m_scissor; }
+
+		void SetScissor(const Vector4 &scissor) const { m_scissor->Set(scissor); }
+
 		Vector2 *GetPosition() const { return m_position; }
 
 		void SetPosition(const Vector2 &position) const { m_position->Set(position); }
@@ -114,14 +114,6 @@ namespace Flounder
 
 		void SetDimensions(const Vector2 &dimensions) const { m_dimensions->Set(dimensions); }
 
-		Vector2 *GetMeshSize() const { return m_meshSize; }
-
-		void SetMeshSize(const Vector2 &meshSize) const { m_meshSize->Set(meshSize); }
-
-		Vector4 *GetScissor() const { return m_scissor; }
-
-		void SetScissor(const Vector4 &scissor) const { m_scissor->Set(scissor); }
-
 		bool GetInScreenCoords() const { return m_inScreenCoords; }
 
 		void SetInScreenCoords(const bool &inScreenCoords) { m_inScreenCoords = inScreenCoords; }
@@ -129,10 +121,6 @@ namespace Flounder
 		Vector2 *GetPositionOffsets() const { return m_positionOffsets; }
 
 		void SetPositionOffsets(const Vector2 &positionOffsets) const { m_positionOffsets->Set(positionOffsets); }
-
-		void SetRotationDriver(IDriver *rotationDriver);
-
-		float GetRotation() const { return m_rotation; }
 
 		void SetAlphaDriver(IDriver *alphaDriver);
 

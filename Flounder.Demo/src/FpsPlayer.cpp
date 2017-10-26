@@ -2,11 +2,11 @@
 
 namespace Demo
 {
-	const float FpsPlayer::WALK_SPEED = 3.5f;
-	const float FpsPlayer::RUN_SPEED = 8.0f;
-	const float FpsPlayer::CROUCH_SPEED = 0.8f;
-	const float FpsPlayer::JUMP_SPEED = 8.5f;
-	const float FpsPlayer::NOCLIP_SPEED = 8.0f;
+	const float FpsPlayer::WALK_SPEED = 3.1f;
+	const float FpsPlayer::RUN_SPEED = 5.7f; // 5.38 m/s Minecraft
+	const float FpsPlayer::CROUCH_SPEED = 1.2f;
+	const float FpsPlayer::JUMP_SPEED = 6.5f;
+	const float FpsPlayer::NOCLIP_SPEED = 15.0f;
 
 	FpsPlayer::FpsPlayer() :
 		IPlayer(),
