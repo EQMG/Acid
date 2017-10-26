@@ -21,7 +21,6 @@ namespace Flounder
 
 		Model *m_model;
 		Texture *m_texture;
-		bool m_flipTexture;
 		int m_selectedRow;
 
 		Vector2 *m_textureOffset;
@@ -44,15 +43,11 @@ namespace Flounder
 
 		void UpdateObject() override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline);
 
 		Texture *GetTexture() const { return m_texture; }
 
 		void SetTexture(Texture *texture) { m_texture = texture; }
-
-		bool IsFlipTexture() const { return m_flipTexture; }
-
-		void SetFlipTexture(const bool &flipTexture) { m_flipTexture = flipTexture; }
 
 		int GetSelectedRow() const { return m_selectedRow; }
 

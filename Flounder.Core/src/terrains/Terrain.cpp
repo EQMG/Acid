@@ -15,6 +15,7 @@ namespace Flounder
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
 		m_modelLods(std::vector<Model*>()),
+		m_currentLod(0),
 		m_textureGrass(new Texture("res/terrains/grass.png")),
 		m_textureSnow(new Texture("res/terrains/snow.png")),
 		m_samplerSand(new Texture("res/terrains/sand.png")),
@@ -35,9 +36,6 @@ namespace Flounder
 		{
 			m_modelLods.push_back(nullptr);
 		}
-
-		// The first LOD is created now for future speed.
-		// CreateLod(0);
 	}
 
 	Terrain::~Terrain()
@@ -61,6 +59,31 @@ namespace Flounder
 
 	void Terrain::Update()
 	{
+		Vector3 chunkPosition = Vector3(m_aabb->GetCentreX(), m_aabb->GetCentreY(), m_aabb->GetCentreZ());
+		chunkPosition.m_y = 0.0f;
+		Vector3 cameraPosition = Vector3(*Camera::Get()->GetCamera()->GetPosition());
+		cameraPosition.m_y = 0.0f;
+		const float distance = Vector3::GetDistance(chunkPosition, cameraPosition);
+
+		// lnreg{ (90.5, 0), (181, 1), (362, 2) } = int(-6.500 + 1.443 * log(x) / log(2.718)) + 1
+		// float lodf = floor(-6.5f + 1.443f * log(distance) / log(2.718f)) + 1.0f;
+		float lod = floor(0.0090595f * distance - 1.22865f) + 1.0f;
+		lod = Maths::Clamp(lod, 0.0f, static_cast<float>(SQUARE_SIZES.size() - 1));
+		m_currentLod = static_cast<int>(lod);
+
+		if (m_modelLods[m_currentLod] == nullptr)
+		{
+			/*for (int i = 0; i < m_modelLods.size(); i++)
+			{
+			if (m_modelLods[i] != nullptr && abs(i - lodi) > SQUARE_SIZES.size() / 2)
+			{
+			delete m_modelLods[i];
+			}
+			}*/
+
+			CreateLod(m_currentLod);
+		}
+
 		if (m_moved)
 		{
 			Matrix4::TransformationMatrix(*m_position, *m_rotation, 1.0f, m_modelMatrix);
@@ -74,6 +97,11 @@ namespace Flounder
 		//{
 		//	return;
 		//}
+
+		if (m_modelLods[m_currentLod] == nullptr)
+		{
+			return;
+		}
 
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = pipeline.GetDescriptorSet();
@@ -89,32 +117,7 @@ namespace Flounder
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
-		Vector3 chunkPosition = Vector3(m_aabb->GetCentreX(), m_aabb->GetCentreY(), m_aabb->GetCentreZ());
-		chunkPosition.m_y = 0.0f;
-		Vector3 cameraPosition = Vector3(*Camera::Get()->GetCamera()->GetPosition());
-		cameraPosition.m_y = 0.0f;
-		const float distance = Vector3::GetDistance(chunkPosition, cameraPosition);
-
-		// lnreg{ (90.5, 0), (181, 1), (362, 2) } = int(-6.500 + 1.443 * log(x) / log(2.718)) + 1
-		//float lodf = floor(-6.5f + 1.443f * log(distance) / log(2.718f)) + 1.0f;
-		float lodf = floor(0.0090595f * distance - 1.22865f) + 1.0f;
-		lodf = Maths::Clamp(lodf, 0.0f, static_cast<float>(SQUARE_SIZES.size() - 1));
-		int lodi = static_cast<int>(lodf);
-
-		if (m_modelLods[lodi] == nullptr)
-		{
-			/*for (int i = 0; i < m_modelLods.size(); i++)
-			{
-				if (m_modelLods[i] != nullptr && abs(i - lodi) > SQUARE_SIZES.size() / 2)
-				{
-					delete m_modelLods[i];
-				}
-			}*/
-
-			CreateLod(lodi);
-		}
-
-		m_modelLods[lodi]->CmdRender(commandBuffer);
+		m_modelLods[m_currentLod]->CmdRender(commandBuffer);
 	}
 
 	int Terrain::CalculateVertexCount(const float &terrainLength, const float &squareSize)

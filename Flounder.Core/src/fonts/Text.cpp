@@ -26,7 +26,6 @@ namespace Flounder
 		m_borderDriver(new DriverConstant(0.0f)),
 		m_borderSize(0.0f)
 	{
-		SetMeshSize(Vector2(0.0f, 0.0f));
 		SetScaleDriver(new DriverConstant(fontSize));
 		LoadText(this);
 	}
@@ -58,13 +57,13 @@ namespace Flounder
 		switch (m_textAlign)
 		{
 		case AlignLeft:
-			GetPositionOffsets()->Set(GetMeshSize()->m_x * GetScreenDimensions()->m_x, 0.0f);
+			GetPositionOffsets()->Set(GetDimensions()->m_x * GetScreenDimensions()->m_x, 0.0f);
 			break;
 		case AlightCentre:
 			GetPositionOffsets()->Set(0.0f, 0.0f);
 			break;
 		case CentreRight:
-			GetPositionOffsets()->Set(-GetMeshSize()->m_x * GetScreenDimensions()->m_x, 0.0f);
+			GetPositionOffsets()->Set(-GetDimensions()->m_x * GetScreenDimensions()->m_x, 0.0f);
 			break;
 		}
 
@@ -72,7 +71,7 @@ namespace Flounder
 		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
 	}
 
-	void Text::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
+	void Text::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)
 	{
 		if (!IsVisible() || GetAlpha() == 0.0f)
 		{
@@ -84,17 +83,18 @@ namespace Flounder
 
 		UbosFonts::UboObject uboObject = {};
 		uboObject.scissor = Vector4(*GetScissor());
-		uboObject.size = Vector2(*GetMeshSize());
-		uboObject.transform = Vector4(GetScreenPosition()->m_x, GetScreenPosition()->m_y,
-			GetScreenDimensions()->m_x, GetScreenDimensions()->m_y);
-		uboObject.rotation = static_cast<float>(Maths::Radians(GetRotation()));
-		uboObject.colour = Colour(GetTextColour()->m_r, GetTextColour()->m_g, GetTextColour()->m_b, GetAlpha());
-		uboObject.borderColour = Vector4(*GetBorderColour());
+		uboObject.transform = Vector4(
+			GetScreenPosition()->m_x, GetScreenPosition()->m_y,
+			GetScreenDimensions()->m_x, GetScreenDimensions()->m_y
+		);
+		uboObject.colour = Colour(*m_textColour);
+		uboObject.alpha = GetAlpha();
+		uboObject.borderColour = Vector4(*m_borderColour);
 		uboObject.borderSizes = Vector2(GetTotalBorderSize(), GetGlowSize());
 		uboObject.edgeData = Vector2(CalculateEdgeStart(), CalculateAntialiasSize());
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_fonttype->GetTexture()->GetWriteDescriptor(2, descriptorSet) }; // TODO: Modulaize this!
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformObject->GetWriteDescriptor(0, descriptorSet), m_fonttype->GetTexture()->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this!
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
@@ -186,12 +186,12 @@ namespace Flounder
 		std::vector<Line> lines = CreateStructure(object);
 		std::vector<Vertex> vertices = std::vector<Vertex>();
 		CreateQuadVertices(object, lines, vertices);
-		Vector2 meshSize = GetBounding(vertices);
+		Vector2 dimensions = GetBounding(vertices);
 
 		// Loads mesh data to Vulkan.
 		Model *loaded = new Model(vertices);
 		object->SetModel(loaded);
-		object->SetMeshSize(meshSize);
+		object->SetDimensions(dimensions);
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)
