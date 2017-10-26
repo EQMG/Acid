@@ -9,18 +9,12 @@ namespace Flounder
 	class UbosFonts
 	{
 	public:
-		struct UboScene
-		{
-			float aspectRatio;
-		};
-
 		struct UboObject
 		{
 			Vector4 scissor;
-			Vector2 size;
 			Vector4 transform;
-			float rotation;
 			Colour colour;
+			float alpha;
 			Vector4 borderColour;
 			Vector2 borderSizes;
 			Vector2 edgeData;

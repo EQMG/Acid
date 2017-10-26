@@ -10,16 +10,13 @@ namespace Flounder
 		m_parent(parent),
 		m_children(new std::vector<UiObject*>()),
 		m_visible(true),
+		m_scissor(new Vector4(-1.0f, -1.0f, -1.0f, -1.0f)),
 		m_position(new Vector2(position)),
 		m_dimensions(new Vector2(dimensions)),
-		m_meshSize(new Vector2()),
-		m_scissor(new Vector4(-1.0f, -1.0f, -1.0f, -1.0f)),
 		m_inScreenCoords(true),
 		m_screenPosition(new Vector2()),
 		m_screenDimensions(new Vector2()),
 		m_positionOffsets(new Vector2()),
-		m_rotationDriver(new DriverConstant(0.0f)),
-		m_rotation(0.0f),
 		m_alphaDriver(new DriverConstant(1.0f)),
 		m_alpha(1.0f),
 		m_scaleDriver(new DriverConstant(1.0f)),
@@ -47,14 +44,12 @@ namespace Flounder
 
 		delete m_position;
 		delete m_dimensions;
-		delete m_meshSize;
 		delete m_scissor;
 
 		delete m_screenPosition;
 		delete m_screenDimensions;
 		delete m_positionOffsets;
 
-		delete m_rotationDriver;
 		delete m_alphaDriver;
 		delete m_scaleDriver;
 	}
@@ -66,7 +61,6 @@ namespace Flounder
 			child->Update();
 		}
 
-		m_rotation = m_rotationDriver->Update(Engine::Get()->GetDelta());
 		m_alpha = m_alphaDriver->Update(Engine::Get()->GetDelta());
 		m_scale = m_scaleDriver->Update(Engine::Get()->GetDelta());
 
@@ -75,12 +69,15 @@ namespace Flounder
 			UpdateObject();
 		}
 
+		const float aspect = m_inScreenCoords ? static_cast<float>(Display::Get()->GetAspectRatio()) : 1.0f;
 		m_screenPosition->Set(
-			m_position->m_x * (m_inScreenCoords ? static_cast<float>(Display::Get()->GetAspectRatio()) : 1.0f) + m_positionOffsets->m_x,
-			m_position->m_y + m_positionOffsets->m_y
+			((m_position->m_x - m_dimensions->m_x) / aspect) + (m_positionOffsets->m_x),
+			(m_position->m_y) - (m_dimensions->m_y) + (m_positionOffsets->m_y)
 		);
-		m_screenDimensions->Set(m_dimensions->m_x, m_dimensions->m_y);
-		m_screenDimensions->Scale(m_scale);
+		m_screenDimensions->Set(
+			2.0f * m_dimensions->m_x * m_scale / aspect,
+			2.0f * m_dimensions->m_y * m_scale
+		);
 	}
 
 	void UiObject::RemoveChild(UiObject *child)
@@ -125,12 +122,6 @@ namespace Flounder
 		}
 
 		return m_visible;
-	}
-
-	void UiObject::SetRotationDriver(IDriver *rotationDriver)
-	{
-		delete m_rotationDriver;
-		m_rotationDriver = rotationDriver;
 	}
 
 	void UiObject::SetAlphaDriver(IDriver *alphaDriver)

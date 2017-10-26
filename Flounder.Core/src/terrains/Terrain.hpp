@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <vector>
-#include "../maths/Colour.hpp"
 #include "../maths/Matrix4.hpp"
 #include "../maths/Vector3.hpp"
 #include "../physics/Aabb.hpp"
@@ -18,6 +17,7 @@ namespace Flounder
 		UniformBuffer *m_uniformObject;
 
 		std::vector<Model*> m_modelLods;
+		int m_currentLod;
 
 		Texture *m_textureGrass;
 		Texture *m_textureSnow;

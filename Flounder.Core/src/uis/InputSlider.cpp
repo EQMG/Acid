@@ -56,7 +56,7 @@ namespace Flounder
 
 			m_hasChange = true;
 
-			float width = 2.0f * m_background->GetMeshSize()->m_x * m_background->GetScreenDimensions()->m_x / static_cast<float>(Display::Get()->GetAspectRatio());
+			float width = 2.0f * m_background->GetDimensions()->m_x * m_background->GetScreenDimensions()->m_x / static_cast<float>(Display::Get()->GetAspectRatio());
 			float positionX = m_background->GetPosition()->m_x;
 			float cursorX = Uis::Get()->GetSelector()->GetCursorX() - positionX;
 			m_value = 2.0f * cursorX / width;
@@ -99,7 +99,7 @@ namespace Flounder
 		m_slider->GetColourOffset()->Set(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f);
 
 		// Update background size.
-		m_background->GetDimensions()->Set(*m_text->GetMeshSize());
+		m_background->GetDimensions()->Set(*m_text->GetDimensions());
 		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
 		Vector2::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
 		m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
@@ -107,7 +107,7 @@ namespace Flounder
 		m_background->GetPosition()->Set(*m_text->GetPosition());
 
 		// Update slider size. (This is about the worst looking GUI code, but works well.)
-		m_slider->GetDimensions()->Set(*m_text->GetMeshSize());
+		m_slider->GetDimensions()->Set(*m_text->GetDimensions());
 		m_slider->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
 		Vector2::Multiply(*m_text->GetDimensions(), *m_slider->GetDimensions(), m_slider->GetDimensions());
 		m_slider->GetDimensions()->Scale(2.0f * m_text->GetScale());
