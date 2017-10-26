@@ -2,19 +2,18 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 1) uniform UboObject
+layout(binding = 0) uniform UboObject
 {
 	vec4 scissor;
-	vec2 size;
 	vec4 transform;
-	float rotation;
 	vec4 colour;
+	float alpha;
 	vec4 borderColour;
 	vec2 borderSizes;
 	vec2 edgeData;
 } object;
 
-layout(binding = 2) uniform sampler2D samplerTexture;
+layout(binding = 1) uniform sampler2D samplerTexture;
 
 layout(location = 0) in vec2 fragmentTextures;
 
@@ -29,7 +28,7 @@ void main(void)
 	vec3 overallColour = mix(object.borderColour.rgb, object.colour.rgb, alpha / overallAlpha);
 
 	/*outColour = vec4(overallColour, overallAlpha);
-	outColour.a *= object.colour.a;
+	outColour.a *= alpha;
 
 	if (outColour.a < 0.05)
 	{

@@ -14,8 +14,8 @@ namespace Demo
 		Uis::Get()->GetSelector()->Load(0, 0, 1, 0, 1);
 
 		m_overlayStartup->SetAlphaDriver(new DriverConstant(1.0f));
-		m_overlayDebug->SetAlphaDriver(new DriverConstant(1.0f)); // 0.0f
-		m_overlayManager->SetAlphaDriver(new DriverConstant(1.0f)); // 0.0f
+		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f)); 
+		m_overlayManager->SetAlphaDriver(new DriverConstant(0.0f));
 	}
 
 	ManagerUis::~ManagerUis()
@@ -28,18 +28,18 @@ namespace Demo
 
 	void ManagerUis::Update()
 	{
-		/*if (m_overlayStartup->GetAlpha() == 0.0f && m_overlayStartup->IsStarting())
+		if (m_overlayStartup->GetAlpha() == 0.0f && m_overlayStartup->IsStarting())
 		{
 			m_overlayStartup->SetAlphaDriver(new DriverConstant(0.0f));
 			m_overlayDebug->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
-			m_overlayManager->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME)); // For testing.
+		//	m_overlayManager->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
 			m_overlayStartup->SetStarting(false);
-		}*/
+		}
 	}
 
 	bool ManagerUis::IsGamePaused()
 	{
-		return false; //  m_overlayStartup->IsStarting();
+		return m_overlayStartup->IsStarting();
 	}
 
 	float ManagerUis::GetBlurFactor()
