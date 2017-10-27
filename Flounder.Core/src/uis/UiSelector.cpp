@@ -78,8 +78,8 @@ namespace Flounder
 		float positionX = object.GetPosition()->m_x;
 		float positionY = object.GetPosition()->m_y;
 
-		float width = 2.0f * object.GetDimensions()->m_x * object.GetScreenDimensions()->m_x / static_cast<float>(Display::Get()->GetAspectRatio());
-		float height = 2.0f * object.GetDimensions()->m_y * object.GetScreenDimensions()->m_y;
+		float width = 2.0f * object.GetDimensions()->m_x * object.GetScreenTransform()->m_z / static_cast<float>(Display::Get()->GetAspectRatio());
+		float height = 2.0f * object.GetDimensions()->m_y * object.GetScreenTransform()->m_w;
 
 		if (Mouse::Get()->IsDisplaySelected() && Display::Get()->IsFocused())
 		{

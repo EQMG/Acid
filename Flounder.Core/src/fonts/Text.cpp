@@ -7,8 +7,8 @@
 
 namespace Flounder
 {
-	Text::Text(UiObject *parent, const Vector2 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const Justify &justify) :
-		UiObject(parent, position, Vector2(1.0f, 1.0f), pivot, true),
+	Text::Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const Justify &justify) :
+		UiObject(parent, position, Vector3(1.0f, 1.0f, true), pivot),
 		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
 		m_textString(text),
 		m_textJustify(justify),
@@ -86,10 +86,7 @@ namespace Flounder
 
 		UbosFonts::UboObject uboObject = {};
 		uboObject.scissor = Vector4(*GetScissor());
-		uboObject.transform = Vector4(
-			GetScreenPosition()->m_x, GetScreenPosition()->m_y,
-			GetScreenDimensions()->m_x, GetScreenDimensions()->m_y
-		);
+		uboObject.transform = Vector4(*GetScreenTransform());
 		uboObject.colour = Colour(*m_textColour);
 		uboObject.alpha = GetAlpha();
 		uboObject.borderColour = Vector4(*m_borderColour);

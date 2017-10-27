@@ -32,7 +32,7 @@ namespace Flounder
 		Timer *m_timerChange;
 		std::function<void()> m_actionChange;
 	public:
-		InputSlider(UiObject *parent, const Vector2 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const Justify &justify);
+		InputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const Justify &justify);
 
 		~InputSlider();
 

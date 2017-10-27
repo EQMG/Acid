@@ -133,7 +133,6 @@
     <ClCompile Include="src\test\TestEntity.cpp" />
     <ClCompile Include="src\textures\Cubemap.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
-    <ClCompile Include="src\uis\ContainerScreen.cpp" />
     <ClCompile Include="src\uis\InputButton.cpp" />
     <ClCompile Include="src\uis\InputDelay.cpp" />
     <ClCompile Include="src\uis\InputGrabber.cpp" />
@@ -309,7 +308,6 @@
     <ClInclude Include="src\test\UbosTest.hpp" />
     <ClInclude Include="src\textures\Cubemap.hpp" />
     <ClInclude Include="src\textures\Texture.hpp" />
-    <ClInclude Include="src\uis\ContainerScreen.hpp" />
     <ClInclude Include="src\uis\IManagerUis.hpp" />
     <ClInclude Include="src\uis\InputButton.hpp" />
     <ClInclude Include="src\uis\InputDelay.hpp" />
