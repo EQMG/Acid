@@ -6,10 +6,10 @@
 #include "../models/Model.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
-#include "../uis/UiAlign.hpp"
 #include "../uis/UiObject.hpp"
 #include "../visual/IDriver.hpp"
 #include "FontType.hpp"
+#include "Justify.hpp"
 #include "Line.hpp"
 
 namespace Flounder
@@ -24,7 +24,7 @@ namespace Flounder
 		UniformBuffer *m_uniformObject;
 
 		std::string m_textString;
-		UiAlign m_textAlign;
+		Justify m_textJustify;
 
 		std::string m_newText;
 
@@ -50,14 +50,12 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new text object.
 		/// </summary>
-		/// <param name="parent"> The objects parent. </param>
-		/// <param name="position"> The objects position relative to the parents. </param>
 		/// <param name="fonttype"> The text that will be set to this object. </param>
 		/// <param name="fontSize"> The initial size of the font (1 is the default). </param>
 		/// <param name="font"> The font type to be used in this text. </param>
 		/// <param name="maxLineLength"> The longest line length before the text is wrapped, 1.0 being 100% of the screen width when font size = 1. </param>
 		/// <param name="align"> How the text will align if wrapped. </param>
-		Text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const UiAlign &align);
+		Text(UiObject *parent, const Vector2 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const Justify &justify);
 
 		/// <summary>
 		/// Deconstructor for the text.
@@ -81,10 +79,10 @@ namespace Flounder
 		void SetText(const std::string &newText);
 
 		/// <summary>
-		/// Gets how the text should align.
+		/// Gets how the text should justify.
 		/// </summary>
-		/// <returns> How the text should align. </returns>
-		UiAlign GetTextAlign() const { return m_textAlign; }
+		/// <returns> How the text should justify. </returns>
+		Justify GetTextJustify() const { return m_textJustify; }
 
 		/// <summary>
 		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.

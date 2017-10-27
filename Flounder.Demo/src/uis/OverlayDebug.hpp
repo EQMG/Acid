@@ -24,6 +24,6 @@ namespace Demo
 
 		virtual void UpdateObject() override;
 	private:
-		Text *CreateStatus(const std::string &content, const float &positionX, const float &positionY, const UiAlign &align);
+		Text *CreateStatus(const std::string &content, const float &positionX, const float &positionY, const Justify &justify);
 	};
 }

@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 #include <functional>
+#include "../fonts/Justify.hpp"
 #include "InputDelay.hpp"
 #include "Uis.hpp"
 #include "UiObject.hpp"
-#include "UiAlign.hpp"
 
 namespace Flounder
 {
@@ -74,7 +74,7 @@ namespace Flounder
 
 		std::function<void()> m_actionChange;
 	public:
-		InputGrabber(UiObject *parent, const Vector2 &position, const std::string &prefix, const int &value, IGrabber *grabber, const UiAlign &align);
+		InputGrabber(UiObject *parent, const Vector2 &position, const std::string &prefix, const int &value, IGrabber *grabber, const Justify &justify);
 
 		~InputGrabber();
 

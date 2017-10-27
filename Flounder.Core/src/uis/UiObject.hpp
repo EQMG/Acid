@@ -22,12 +22,12 @@ namespace Flounder
 		Vector4 *m_scissor;
 		Vector2 *m_position;
 		Vector2 *m_dimensions;
+		Vector2 *m_pivot;
 
 		bool m_inScreenCoords;
 
 		Vector2 *m_screenPosition;
 		Vector2 *m_screenDimensions;
-		Vector2 *m_positionOffsets;
 
 		IDriver *m_alphaDriver;
 		float m_alpha;
@@ -41,7 +41,9 @@ namespace Flounder
 		/// <param name="parent"> The parent screen object. </param>
 		/// <param name="position"> The position in relative space (can be changed to screen space be changing {@code #inScreenCoords} to true.) </param>
 		/// <param name="dimensions"> The dimensions of the object, its width is scaled with the aspect ratio so it remains in proportion to the original values. </param>
-		UiObject(UiObject *parent, const Vector2 &position, const Vector2 &dimensions);
+		/// <param name="pivot"> The pivot vector, this is the bound where the object will be rotated around. Left-Top: (0.0, 0.0), Centre: (0.5, 0.5), Right-Bottom: (1.0, 1.0). </param>
+		/// <param name="inScreenCoords"> If all X dimensions and scales will be taken in tems of the screens aspect ratio. </param>
+		UiObject(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, const Vector2 &pivot, const bool &inScreenCoords);
 
 		/// <summary>
 		/// Deconstructor for the screen object.
@@ -114,13 +116,13 @@ namespace Flounder
 
 		void SetDimensions(const Vector2 &dimensions) const { m_dimensions->Set(dimensions); }
 
+		Vector2 *GetPivot() const { return m_pivot; }
+
+		void SetPivot(const Vector2 &pivot) const { m_pivot->Set(pivot); }
+
 		bool GetInScreenCoords() const { return m_inScreenCoords; }
 
 		void SetInScreenCoords(const bool &inScreenCoords) { m_inScreenCoords = inScreenCoords; }
-
-		Vector2 *GetPositionOffsets() const { return m_positionOffsets; }
-
-		void SetPositionOffsets(const Vector2 &positionOffsets) const { m_positionOffsets->Set(positionOffsets); }
 
 		void SetAlphaDriver(IDriver *alphaDriver);
 

@@ -9,19 +9,15 @@ namespace Flounder
 	const float InputButton::SCALE_SELECTED = 1.8f;
 	Colour *const InputButton::COLOUR_NORMAL = new Colour("#000000");
 
-	InputButton::InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const UiAlign &align) :
-		UiObject(parent, position, Vector2(0.0f, 0.0f)),
-		m_text(new Text(this, position, string, SCALE_NORMAL, Uis::Get()->m_candara, 0.36f, align)),
-		m_background(new Gui(this, position, Vector2(), new Texture("res/guis/buttonText.png"), 1)),
+	InputButton::InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const Justify &justify) :
+		UiObject(parent, position, Vector2(0.0f, 0.0f), Vector2(0.5f, 0.5f), true),
+		m_text(new Text(this, position, Vector2(0.5f, 0.5f), string, SCALE_NORMAL, Uis::Get()->m_candara, 0.36f, justify)),
+		m_background(new Gui(this, position, Vector2(1.0f, 1.0f), Vector2(0.5f, 0.5f), true, new Texture("res/guis/buttonText.png"), 1)),
 		m_mouseOver(false),
 		m_actionLeft(nullptr),
 		m_actionRight(nullptr)
 	{
-		m_text->SetInScreenCoords(true);
 		m_text->SetTextColour(Colour("#ffffff"));
-
-		m_background->SetInScreenCoords(true);
-		m_background->SetColourOffset(Colour());
 	}
 
 	InputButton::~InputButton()
@@ -73,7 +69,6 @@ namespace Flounder
 		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
 		Vector2::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
 		m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
-		m_background->GetPositionOffsets()->Set(*m_text->GetPositionOffsets());
 		m_background->GetPosition()->Set(*m_text->GetPosition());
 	}
 }
