@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 #include <functional>
+#include "../fonts/Justify.hpp"
 #include "InputDelay.hpp"
 #include "Uis.hpp"
 #include "UiObject.hpp"
-#include "UiAlign.hpp"
 
 namespace Flounder
 {
@@ -31,7 +31,7 @@ namespace Flounder
 
 		std::function<void()> m_actionChange;
 	public:
-		InputText(UiObject *parent, const Vector2 &position, const std::string &prefix, const std::string &value, const UiAlign &align);
+		InputText(UiObject *parent, const Vector2 &position, const std::string &prefix, const std::string &value, const Justify &justify);
 
 		~InputText();
 

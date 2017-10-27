@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 #include <functional>
+#include "../fonts/Justify.hpp"
 #include "Uis.hpp"
 #include "UiObject.hpp"
-#include "UiAlign.hpp"
 
 namespace Flounder
 {
@@ -24,7 +24,7 @@ namespace Flounder
 		std::function<void()> m_actionLeft;
 		std::function<void()> m_actionRight;
 	public:
-		InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const UiAlign &align);
+		InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const Justify &justify);
 
 		~InputButton();
 

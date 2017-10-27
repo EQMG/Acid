@@ -160,7 +160,6 @@
 #include "uis/InputSlider.hpp"
 #include "uis/InputText.hpp"
 #include "uis/OverlayStartup.hpp"
-#include "uis/UiAlign.hpp"
 #include "uis/UiObject.hpp"
 #include "uis/Uis.hpp"
 #include "uis/UiSelector.hpp"

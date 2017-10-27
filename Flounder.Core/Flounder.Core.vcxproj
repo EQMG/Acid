@@ -317,7 +317,7 @@
     <ClInclude Include="src\uis\InputSlider.hpp" />
     <ClInclude Include="src\uis\InputText.hpp" />
     <ClInclude Include="src\uis\OverlayStartup.hpp" />
-    <ClInclude Include="src\uis\UiAlign.hpp" />
+    <ClInclude Include="src\fonts\Justify.hpp" />
     <ClInclude Include="src\uis\UiObject.hpp" />
     <ClInclude Include="src\uis\Uis.hpp" />
     <ClInclude Include="src\uis\UiSelector.hpp" />

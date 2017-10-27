@@ -3,16 +3,15 @@
 namespace Demo
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :
-		UiObject(parent, Vector2(0.5f, 0.5f), Vector2(1.0f, 1.0f)),
+		UiObject(parent, Vector2(0.5f, 0.5f), Vector2(1.0f, 1.0f), Vector2(0.5f, 0.5f), true),
 		//	m_textHeight(CreateStatus("HEIGHT: 0.0", 0.005f, 0.86f, AlignLeft)),
 		//	m_textTime(CreateStatus("TIME: 0.0", 0.005f, 0.89f, AlignLeft)),
 		//	m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.005f, 0.92f, AlignLeft)),
 		//  m_textFps(CreateStatus("FPS: 0", 0.005f, 0.95f, AlignLeft)),
 		//  m_textUps(CreateStatus("UPS: 0", 0.005f, 0.98f, AlignLeft)),
-		m_guiExample(new Gui(this, Vector2(0.5f, 0.5f), Vector2(0.9f, 0.9f), new Texture("res/undefined.png"), 1)),
+		m_guiExample(new Gui(this, Vector2(0.5f, 0.5f), Vector2(0.75f, 0.75f), Vector2(0.5f, 0.5f), true, new Texture("res/undefined.png"), 1)),
 		m_timerUpdate(new Timer(0.333f))
 	{
-		m_guiExample->SetInScreenCoords(true);
 		m_guiExample->SetVisible(false);
 	}
 
@@ -54,9 +53,9 @@ namespace Demo
 		}
 	}
 
-	Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const UiAlign &align)
+	Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const Justify &justify)
 	{
-		Text *result = new Text(this, Vector2(positionX, positionY), content, 1.0f, Uis::Get()->m_candara, 1.0f, align);
+		Text *result = new Text(this, Vector2(positionX, positionY), Vector2(0.5f, 0.5f), content, 1.0f, Uis::Get()->m_candara, 1.0f, justify);
 		result->SetInScreenCoords(true);
 		result->SetTextColour(Colour(1.0f, 1.0f, 1.0f));
 		result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f));
