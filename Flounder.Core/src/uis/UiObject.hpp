@@ -20,14 +20,14 @@ namespace Flounder
 
 		bool m_visible;
 		Vector4 *m_scissor;
-		Vector2 *m_position;
 		Vector2 *m_dimensions;
+		Vector2 *m_position;
 		Vector2 *m_pivot;
 
 		bool m_inScreenCoords;
 
-		Vector2 *m_screenPosition;
 		Vector2 *m_screenDimensions;
+		Vector2 *m_screenPosition;
 
 		IDriver *m_alphaDriver;
 		float m_alpha;
@@ -43,7 +43,7 @@ namespace Flounder
 		/// <param name="dimensions"> The dimensions of the object, its width is scaled with the aspect ratio so it remains in proportion to the original values. </param>
 		/// <param name="pivot"> The pivot vector, this is the bound where the object will be rotated around. Left-Top: (0.0, 0.0), Centre: (0.5, 0.5), Right-Bottom: (1.0, 1.0). </param>
 		/// <param name="inScreenCoords"> If all X dimensions and scales will be taken in tems of the screens aspect ratio. </param>
-		UiObject(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, const Vector2 &pivot, const bool &inScreenCoords);
+		UiObject(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, const Vector2 &pivot, const bool &inScreenCoords); // TODO: Swap dimensions and position.
 
 		/// <summary>
 		/// Deconstructor for the screen object.
@@ -75,16 +75,16 @@ namespace Flounder
 		std::vector<UiObject*> *GetAll(std::vector<UiObject*> *list);
 
 		/// <summary>
-		/// Gets the positions relative in screen space.
-		/// </summary>
-		/// <returns> The screen positions. </returns>
-		Vector2 *GetScreenPosition() const { return m_screenPosition; }
-
-		/// <summary>
 		/// Gets the dimensions relative in screen space.
 		/// </summary>
 		/// <returns> The screen dimensions. </returns>
 		Vector2 *GetScreenDimensions() const { return m_screenDimensions; }
+
+		/// <summary>
+		/// Gets the positions relative in screen space.
+		/// </summary>
+		/// <returns> The screen positions. </returns>
+		Vector2 *GetScreenPosition() const { return m_screenPosition; }
 
 		/// <summary>
 		/// Gets the parent object.
