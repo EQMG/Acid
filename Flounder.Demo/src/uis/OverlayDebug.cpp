@@ -9,12 +9,15 @@ namespace Demo
 		//	m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.005f, 0.92f, AlignLeft)),
 		//  m_textFps(CreateStatus("FPS: 0", 0.005f, 0.95f, AlignLeft)),
 		//  m_textUps(CreateStatus("UPS: 0", 0.005f, 0.98f, AlignLeft)),
-		m_guiExample(new Gui(this, Vector3(0.5f, 0.5f, true), Vector3(0.75f, 0.75f, true), Vector2(-0.5f, -0.5f), new Texture("res/undefined.png"), 1)),
+		m_guiExample(new Gui(this, Vector3(0.5f, 1.0f, true), Vector3(1.0f, 1.0f, -1.0f), Vector2(0.5f, 0.0f), new Texture("res/guis/geometry-grain.jpg"), 1)), // 0.625f
 		m_timerUpdate(new Timer(0.333f))
 	{
 #ifdef FLOUNDER_CONFIG_RELEASE
 		m_guiExample->SetVisible(false);
 #endif
+		m_guiExample->SetScissor(Vector4(0.0f, 0.869f, 1.0f, 1.0f));
+	//	m_guiExample->SetScissor(Vector4(0.0f, 0.869f, 1.0f, 0.131f));
+		m_guiExample->SetColourOffset(Colour("#553982"));
 	}
 
 	OverlayDebug::~OverlayDebug()
