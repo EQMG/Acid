@@ -55,7 +55,7 @@ namespace Flounder
 		/// <param name="font"> The font type to be used in this text. </param>
 		/// <param name="maxLineLength"> The longest line length before the text is wrapped, 1.0 being 100% of the screen width when font size = 1. </param>
 		/// <param name="align"> How the text will align if wrapped. </param>
-		Text(UiObject *parent, const Vector2 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const Justify &justify);
+		Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const Justify &justify);
 
 		/// <summary>
 		/// Deconstructor for the text.

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "../maths/Vector2.hpp"
+#include "../maths/Vector3.hpp"
 #include "../maths/Vector4.hpp"
 #include "../visual/IDriver.hpp"
 
@@ -19,15 +20,13 @@ namespace Flounder
 		std::vector<UiObject*> *m_children;
 
 		bool m_visible;
-		Vector4 *m_scissor;
-		Vector2 *m_dimensions;
-		Vector2 *m_position;
+		Vector3 *m_dimensions;
+		Vector3 *m_position;
 		Vector2 *m_pivot;
 
-		bool m_inScreenCoords;
+		Vector4 *m_screenTransform;
 
-		Vector2 *m_screenDimensions;
-		Vector2 *m_screenPosition;
+		Vector4 *m_scissor;
 
 		IDriver *m_alphaDriver;
 		float m_alpha;
@@ -39,11 +38,11 @@ namespace Flounder
 		/// Creates a new screen object.
 		/// </summary>
 		/// <param name="parent"> The parent screen object. </param>
-		/// <param name="position"> The position in relative space (can be changed to screen space be changing {@code #inScreenCoords} to true.) </param>
-		/// <param name="dimensions"> The dimensions of the object, its width is scaled with the aspect ratio so it remains in proportion to the original values. </param>
+		/// <param name="position"> The position in relative space (if Z is 1 the position will be in screen space, -1 disables screen space). </param>
+		/// <param name="dimensions"> The dimensions of the object (if Z is 1 the width will be in screen space, -1 disables screen space). </param>
 		/// <param name="pivot"> The pivot vector, this is the bound where the object will be rotated around. Left-Top: (0.0, 0.0), Centre: (0.5, 0.5), Right-Bottom: (1.0, 1.0). </param>
 		/// <param name="inScreenCoords"> If all X dimensions and scales will be taken in tems of the screens aspect ratio. </param>
-		UiObject(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, const Vector2 &pivot, const bool &inScreenCoords); // TODO: Swap dimensions and position.
+		UiObject(UiObject *parent, const Vector3 &position, const Vector3 &dimensions, const Vector2 &pivot); 
 
 		/// <summary>
 		/// Deconstructor for the screen object.
@@ -58,7 +57,7 @@ namespace Flounder
 		/// <summary>
 		/// Updates the implementation.
 		/// </summary>
-		virtual void UpdateObject() = 0;
+		virtual void UpdateObject();
 
 		/// <summary>
 		/// Disowns a child from this screen objects children list.
@@ -75,16 +74,10 @@ namespace Flounder
 		std::vector<UiObject*> *GetAll(std::vector<UiObject*> *list);
 
 		/// <summary>
-		/// Gets the dimensions relative in screen space.
+		/// Gets the ui object screen space transform.
 		/// </summary>
-		/// <returns> The screen dimensions. </returns>
-		Vector2 *GetScreenDimensions() const { return m_screenDimensions; }
-
-		/// <summary>
-		/// Gets the positions relative in screen space.
-		/// </summary>
-		/// <returns> The screen positions. </returns>
-		Vector2 *GetScreenPosition() const { return m_screenPosition; }
+		/// <returns> The screen transform. </returns>
+		Vector4 *GetScreenTransform() const { return m_screenTransform; }
 
 		/// <summary>
 		/// Gets the parent object.
@@ -108,21 +101,17 @@ namespace Flounder
 
 		void SetScissor(const Vector4 &scissor) const { m_scissor->Set(scissor); }
 
-		Vector2 *GetPosition() const { return m_position; }
+		Vector3 *GetPosition() const { return m_position; }
 
 		void SetPosition(const Vector2 &position) const { m_position->Set(position); }
 
-		Vector2 *GetDimensions() const { return m_dimensions; }
+		Vector3 *GetDimensions() const { return m_dimensions; }
 
 		void SetDimensions(const Vector2 &dimensions) const { m_dimensions->Set(dimensions); }
 
 		Vector2 *GetPivot() const { return m_pivot; }
 
 		void SetPivot(const Vector2 &pivot) const { m_pivot->Set(pivot); }
-
-		bool GetInScreenCoords() const { return m_inScreenCoords; }
-
-		void SetInScreenCoords(const bool &inScreenCoords) { m_inScreenCoords = inScreenCoords; }
 
 		void SetAlphaDriver(IDriver *alphaDriver);
 

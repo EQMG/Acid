@@ -74,7 +74,7 @@ namespace Flounder
 
 		std::function<void()> m_actionChange;
 	public:
-		InputGrabber(UiObject *parent, const Vector2 &position, const std::string &prefix, const int &value, IGrabber *grabber, const Justify &justify);
+		InputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IGrabber *grabber, const Justify &justify);
 
 		~InputGrabber();
 

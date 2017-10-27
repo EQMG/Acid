@@ -6,17 +6,17 @@
 namespace Flounder
 {
 	const std::vector<Vertex> VERTICES = {
-		Vertex(Vector3(-0.5f, -0.5f, 0.0f), Vector2(0.0f, 0.0f)),
-		Vertex(Vector3(0.5f, -0.5f, 0.0f), Vector2(1.0f, 0.0f)),
-		Vertex(Vector3(0.5f, 0.5f, 0.0f), Vector2(1.0f, 1.0f)),
-		Vertex(Vector3(-0.5f, 0.5f, 0.0f), Vector2(0.0f, 1.0f))
+		Vertex(Vector3(-1.0f, -1.0f, 0.0f), Vector2(0.0f, 0.0f)),
+		Vertex(Vector3(1.0f, -1.0f, 0.0f), Vector2(1.0f, 0.0f)),
+		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
+		Vertex(Vector3(-1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
 	};
 	const std::vector<uint32_t> INDICES = {
 		0, 1, 2, 2, 3, 0
 	};
 
-	Gui::Gui(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, const Vector2 &pivot, const bool &inScreenCoords, Texture *texture, const int &selectedRow) :
-		UiObject(parent, position, dimensions, pivot, inScreenCoords),
+	Gui::Gui(UiObject *parent, const Vector3 &position, const Vector3 &dimensions, const Vector2 &pivot, Texture *texture, const int &selectedRow) :
+		UiObject(parent, position, dimensions, pivot),
 		m_uniformObject(new UniformBuffer(sizeof(UbosGuis::UboObject))),
 		m_model(new Model(VERTICES, INDICES)),
 		m_texture(texture),
@@ -54,10 +54,7 @@ namespace Flounder
 
 		UbosGuis::UboObject uboObject = {};
 		uboObject.scissor = Vector4(*GetScissor());
-		uboObject.transform = Vector4(
-			GetScreenPosition()->m_x, GetScreenPosition()->m_y,
-			GetScreenDimensions()->m_x, GetScreenDimensions()->m_y
-		);
+		uboObject.transform = Vector4(*GetScreenTransform());
 		uboObject.atlasRows = static_cast<float>(m_texture->GetNumberOfRows());
 		uboObject.atlasOffset = Vector2(*m_textureOffset);
 		uboObject.colourOffset = Colour(*m_colourOffset);
