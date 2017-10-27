@@ -13,8 +13,9 @@ namespace Flounder
 		m_dimensions(new Vector3(dimensions)),
 		m_position(new Vector3(position)),
 		m_pivot(new Vector2(pivot)),
+		m_scissor(new Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
+		m_positionOffset(new Vector2()),
 		m_screenTransform(new Vector4()),
-		m_scissor(new Vector4(-1.0f, -1.0f, -1.0f, -1.0f)),
 		m_alphaDriver(new DriverConstant(1.0f)),
 		m_alpha(1.0f),
 		m_scaleDriver(new DriverConstant(1.0f)),
@@ -45,6 +46,7 @@ namespace Flounder
 		delete m_dimensions;
 		delete m_pivot;
 
+		delete m_positionOffset;
 		delete m_screenTransform;
 
 		delete m_alphaDriver;
@@ -59,6 +61,7 @@ namespace Flounder
 		}
 
 		m_alpha = m_alphaDriver->Update(Engine::Get()->GetDelta());
+		m_alpha = Maths::Clamp(m_alpha, 0.0f, 1.0f);
 		m_scale = m_scaleDriver->Update(Engine::Get()->GetDelta());
 
 		if (IsVisible() && GetAlpha() != 0.0f)
@@ -66,16 +69,15 @@ namespace Flounder
 			UpdateObject();
 		}
 
-		const float sa = m_dimensions->m_z == -1.0f ? 1.0f : Display::Get()->GetAspectRatio();
-		const float sx = (m_dimensions->m_x / sa) * m_scale;
-		const float sy = m_dimensions->m_y * m_scale;
+		const float da = m_dimensions->m_z != -1.0f ? Display::Get()->GetAspectRatio() : 1.0f;
+		const float dw = (m_dimensions->m_x / da) * m_scale;
+		const float dh = m_dimensions->m_y * m_scale;
 
-		const float pa = m_position->m_z == -1.0f ? 1.0f : Display::Get()->GetAspectRatio();
-		const float px = m_position->m_x + (m_pivot->m_x * sx * pa / 2.0f); //  + (sx / 2.0f) - (m_pivot->m_x * aspect),
-		const float py = m_position->m_y + (m_pivot->m_y * sy / 2.0f); //  + (sy / 2.0f) * (m_pivot->m_y)
+		const float pa = m_position->m_z != -1.0f ? 1.0f : Display::Get()->GetAspectRatio();
+		const float px = (m_position->m_x / pa) - (dw * m_pivot->m_x) + m_positionOffset->m_x;
+		const float py = m_position->m_y - (dh * -m_pivot->m_y) + m_positionOffset->m_y;
 
-		m_screenTransform->Set(sx, sy, px, py);
-		// m_screenTransform->Set(1.0f / sa, 1.0f, -0.5f * pa, 0.0f);
+		m_screenTransform->Set(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
 	}
 
 	void UiObject::UpdateObject()

@@ -11,7 +11,6 @@ namespace Flounder
 	public:
 		struct UboObject
 		{
-			Vector4 scissor;
 			Vector4 transform;
 			Colour colour;
 			float alpha;

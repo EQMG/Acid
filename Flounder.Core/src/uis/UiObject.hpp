@@ -23,10 +23,10 @@ namespace Flounder
 		Vector3 *m_dimensions;
 		Vector3 *m_position;
 		Vector2 *m_pivot;
-
-		Vector4 *m_screenTransform;
-
 		Vector4 *m_scissor;
+
+		Vector2 *m_positionOffset;
+		Vector4 *m_screenTransform;
 
 		IDriver *m_alphaDriver;
 		float m_alpha;
@@ -38,8 +38,8 @@ namespace Flounder
 		/// Creates a new screen object.
 		/// </summary>
 		/// <param name="parent"> The parent screen object. </param>
-		/// <param name="position"> The position in relative space (if Z is 1 the position will be in screen space, -1 disables screen space). </param>
-		/// <param name="dimensions"> The dimensions of the object (if Z is 1 the width will be in screen space, -1 disables screen space). </param>
+		/// <param name="position"> The position in relative space (if Z is not -1 the position will be in screen space, -1 disables screen space). </param>
+		/// <param name="dimensions"> The dimensions of the object (if Z is not -1 the width will be in screen space, -1 disables screen space). </param>
 		/// <param name="pivot"> The pivot vector, this is the bound where the object will be rotated around. Left-Top: (0.0, 0.0), Centre: (0.5, 0.5), Right-Bottom: (1.0, 1.0). </param>
 		/// <param name="inScreenCoords"> If all X dimensions and scales will be taken in tems of the screens aspect ratio. </param>
 		UiObject(UiObject *parent, const Vector3 &position, const Vector3 &dimensions, const Vector2 &pivot); 
@@ -74,12 +74,6 @@ namespace Flounder
 		std::vector<UiObject*> *GetAll(std::vector<UiObject*> *list);
 
 		/// <summary>
-		/// Gets the ui object screen space transform.
-		/// </summary>
-		/// <returns> The screen transform. </returns>
-		Vector4 *GetScreenTransform() const { return m_screenTransform; }
-
-		/// <summary>
 		/// Gets the parent object.
 		/// </summary>
 		/// <returns> The parent object. </returns>
@@ -97,10 +91,6 @@ namespace Flounder
 
 		void SetVisible(const bool &visible) { m_visible = visible; }
 
-		Vector4 *GetScissor() const { return m_scissor; }
-
-		void SetScissor(const Vector4 &scissor) const { m_scissor->Set(scissor); }
-
 		Vector3 *GetPosition() const { return m_position; }
 
 		void SetPosition(const Vector2 &position) const { m_position->Set(position); }
@@ -112,6 +102,20 @@ namespace Flounder
 		Vector2 *GetPivot() const { return m_pivot; }
 
 		void SetPivot(const Vector2 &pivot) const { m_pivot->Set(pivot); }
+
+		Vector4 *GetScissor() const { return m_scissor; }
+
+		void SetScissor(const Vector4 &scissor) const { m_scissor->Set(scissor); }
+
+		Vector2 *GetPositionOffset() const { return m_positionOffset; }
+
+		void SetPositionOffset(const Vector2 &positionOffset) const { m_positionOffset->Set(positionOffset); }
+
+		/// <summary>
+		/// Gets the ui object screen space transform.
+		/// </summary>
+		/// <returns> The screen transform. </returns>
+		Vector4 *GetScreenTransform() const { return m_screenTransform; }
 
 		void SetAlphaDriver(IDriver *alphaDriver);
 
