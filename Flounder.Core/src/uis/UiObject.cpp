@@ -6,17 +6,15 @@
 
 namespace Flounder
 {
-	UiObject::UiObject(UiObject *parent, const Vector2 &position, const Vector2 &dimensions, const Vector2 &pivot, const bool &inScreenCoords) :
+	UiObject::UiObject(UiObject *parent, const Vector3 &position, const Vector3 &dimensions, const Vector2 &pivot) :
 		m_parent(parent),
 		m_children(new std::vector<UiObject*>()),
 		m_visible(true),
-		m_scissor(new Vector4(-1.0f, -1.0f, -1.0f, -1.0f)),
-		m_dimensions(new Vector2(dimensions)),
-		m_position(new Vector2(position)),
+		m_dimensions(new Vector3(dimensions)),
+		m_position(new Vector3(position)),
 		m_pivot(new Vector2(pivot)),
-		m_inScreenCoords(inScreenCoords),
-		m_screenDimensions(new Vector2()),
-		m_screenPosition(new Vector2()),
+		m_screenTransform(new Vector4()),
+		m_scissor(new Vector4(-1.0f, -1.0f, -1.0f, -1.0f)),
 		m_alphaDriver(new DriverConstant(1.0f)),
 		m_alpha(1.0f),
 		m_scaleDriver(new DriverConstant(1.0f)),
@@ -47,8 +45,7 @@ namespace Flounder
 		delete m_dimensions;
 		delete m_pivot;
 
-		delete m_screenPosition;
-		delete m_screenDimensions;
+		delete m_screenTransform;
 
 		delete m_alphaDriver;
 		delete m_scaleDriver;
@@ -69,15 +66,21 @@ namespace Flounder
 			UpdateObject();
 		}
 
-		const float aspect = m_inScreenCoords ? static_cast<float>(Display::Get()->GetAspectRatio()) : 1.0f;
-		m_screenDimensions->Set(
-			m_dimensions->m_x * m_scale * aspect,
-			m_dimensions->m_y * m_scale
-		);
-		m_screenPosition->Set(
-			m_position->m_x + (m_screenDimensions->m_x / 2.0f), // - (m_pivot->m_x * aspect),
-			m_position->m_y + (m_screenDimensions->m_y / 2.0f)  // - (m_pivot->m_y)
-		);
+		const float sa = m_dimensions->m_z == -1.0f ? 1.0f : Display::Get()->GetAspectRatio();
+		const float sx = (m_dimensions->m_x / sa) * m_scale;
+		const float sy = m_dimensions->m_y * m_scale;
+
+		const float pa = m_position->m_z == -1.0f ? 1.0f : Display::Get()->GetAspectRatio();
+		const float px = m_position->m_x + (m_pivot->m_x * sx * pa / 2.0f); //  + (sx / 2.0f) - (m_pivot->m_x * aspect),
+		const float py = m_position->m_y + (m_pivot->m_y * sy / 2.0f); //  + (sy / 2.0f) * (m_pivot->m_y)
+
+		m_screenTransform->Set(sx, sy, px, py);
+		// m_screenTransform->Set(1.0f / sa, 1.0f, -0.5f * pa, 0.0f);
+	}
+
+	void UiObject::UpdateObject()
+	{
+		// Pure virtual function.
 	}
 
 	void UiObject::RemoveChild(UiObject *child)

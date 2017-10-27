@@ -31,7 +31,7 @@ namespace Flounder
 
 		std::function<void()> m_actionChange;
 	public:
-		InputText(UiObject *parent, const Vector2 &position, const std::string &prefix, const std::string &value, const Justify &justify);
+		InputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const Justify &justify);
 
 		~InputText();
 
