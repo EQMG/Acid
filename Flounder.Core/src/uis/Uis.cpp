@@ -1,14 +1,12 @@
 #include "Uis.hpp"
 
-#include "ContainerScreen.hpp"
-
 namespace Flounder
 {
 	Uis::Uis() :
 		IModule(),
 		m_managerUis(nullptr),
 		m_selector(new UiSelector()),
-		m_container(new ContainerScreen(nullptr, Vector2(0.5f, 0.5f), Vector2(1.0f, 1.0f), false)),
+		m_container(new UiObject(nullptr, Vector3(0.5f, 0.5f, true), Vector3(0.5f, 0.5f, true), Vector2(0.5f, 0.5f))),
 		m_objects(new std::vector<UiObject*>()),
 		m_arial(new FontType("res/fonts/arial.png", "res/fonts/arial.fnt")),
 		m_berlinSans(new FontType("res/fonts/berlinSans.png", "res/fonts/berlinSans.fnt")),

@@ -24,7 +24,7 @@ namespace Flounder
 		std::function<void()> m_actionLeft;
 		std::function<void()> m_actionRight;
 	public:
-		InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const Justify &justify);
+		InputButton(UiObject *parent, const Vector3 &position, const std::string &string, const Justify &justify);
 
 		~InputButton();
 

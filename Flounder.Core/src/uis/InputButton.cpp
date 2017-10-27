@@ -9,10 +9,10 @@ namespace Flounder
 	const float InputButton::SCALE_SELECTED = 1.8f;
 	Colour *const InputButton::COLOUR_NORMAL = new Colour("#000000");
 
-	InputButton::InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const Justify &justify) :
-		UiObject(parent, position, Vector2(0.0f, 0.0f), Vector2(0.5f, 0.5f), true),
-		m_text(new Text(this, position, Vector2(0.5f, 0.5f), string, SCALE_NORMAL, Uis::Get()->m_candara, 0.36f, justify)),
-		m_background(new Gui(this, position, Vector2(1.0f, 1.0f), Vector2(0.5f, 0.5f), true, new Texture("res/guis/buttonText.png"), 1)),
+	InputButton::InputButton(UiObject *parent, const Vector3 &position, const std::string &string, const Justify &justify) :
+		UiObject(parent, position, Vector3(0.0f, 0.0f, true), Vector2(0.5f, 0.5f)),
+		m_text(new Text(this, position, Vector3(0.5f, 0.5f, true), string, SCALE_NORMAL, Uis::Get()->m_candara, 0.36f, justify)),
+		m_background(new Gui(this, position, Vector3(1.0f, 1.0f, true), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
 		m_mouseOver(false),
 		m_actionLeft(nullptr),
 		m_actionRight(nullptr)
@@ -67,7 +67,7 @@ namespace Flounder
 		// Update background size.
 		m_background->GetDimensions()->Set(*m_text->GetDimensions());
 		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		Vector2::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
+		Vector3::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
 		m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
 		m_background->GetPosition()->Set(*m_text->GetPosition());
 	}
