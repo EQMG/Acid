@@ -7,11 +7,11 @@
 
 namespace Flounder
 {
-	Text::Text(UiObject *parent, const Vector2 &position, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const UiAlign &align) :
-		UiObject(parent, position, Vector2(1.0f, 1.0f)),
+	Text::Text(UiObject *parent, const Vector2 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const Justify &justify) :
+		UiObject(parent, position, Vector2(1.0f, 1.0f), pivot, true),
 		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
 		m_textString(text),
-		m_textAlign(align),
+		m_textJustify(justify),
 		m_newText(""),
 		m_model(nullptr),
 		m_lineMaxSize(maxLineLength),
@@ -54,16 +54,19 @@ namespace Flounder
 			m_newText = "";
 		}
 
-		switch (m_textAlign)
+		switch (m_textJustify)
 		{
-		case AlignLeft:
-			GetPositionOffsets()->Set(GetDimensions()->m_x * GetScreenDimensions()->m_x, 0.0f);
+		case JustifyLeft:
+		//	GetPositionOffsets()->Set(GetDimensions()->m_x * GetScreenDimensions()->m_x, 0.0f);
 			break;
-		case AlightCentre:
-			GetPositionOffsets()->Set(0.0f, 0.0f);
+		case JustifyCentre:
+		//	GetPositionOffsets()->Set(0.0f, 0.0f);
 			break;
-		case CentreRight:
-			GetPositionOffsets()->Set(-GetDimensions()->m_x * GetScreenDimensions()->m_x, 0.0f);
+		case JustifyRight:
+		//	GetPositionOffsets()->Set(-GetDimensions()->m_x * GetScreenDimensions()->m_x, 0.0f);
+			break;
+		case JustifyFully:
+		//	GetPositionOffsets()->Set(0.0f, 0.0f);
 			break;
 		}
 
@@ -257,16 +260,19 @@ namespace Flounder
 
 		for (auto line : lines)
 		{
-			switch (object->GetTextAlign())
+			switch (object->GetTextJustify())
 			{
-			case AlignLeft:
+			case JustifyLeft:
 				cursorX = 0.0;
 				break;
-			case AlightCentre:
+			case JustifyCentre:
 				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0;
 				break;
-			case CentreRight:
+			case JustifyRight:
 				cursorX = line.GetMaxLength() - line.GetCurrentLineLength();
+				break;
+			case JustifyFully:
+				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0;
 				break;
 			default:
 				cursorX = 0.0;
