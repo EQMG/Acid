@@ -6,10 +6,10 @@
 namespace Flounder
 {
 	const std::vector<Vertex> VERTICES = {
-		Vertex(Vector3(-1.0f, -1.0f, 0.0f), Vector2(0.0f, 0.0f)),
-		Vertex(Vector3(1.0f, -1.0f, 0.0f), Vector2(1.0f, 0.0f)),
+		Vertex(Vector3(0.0f, 0.0f, 0.0f), Vector2(0.0f, 0.0f)),
+		Vertex(Vector3(1.0f, 0.0f, 0.0f), Vector2(1.0f, 0.0f)),
 		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
-		Vertex(Vector3(-1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
+		Vertex(Vector3(0.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
 	};
 	const std::vector<uint32_t> INDICES = {
 		0, 1, 2, 2, 3, 0
@@ -22,7 +22,7 @@ namespace Flounder
 		m_texture(texture),
 		m_selectedRow(selectedRow),
 		m_textureOffset(new Vector2()),
-		m_colourOffset(new Colour())
+		m_colourOffset(new Colour(1.0f, 1.0f, 1.0f, 1.0f))
 	{
 	}
 
@@ -53,13 +53,19 @@ namespace Flounder
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
 		UbosGuis::UboObject uboObject = {};
-		uboObject.scissor = Vector4(*GetScissor());
 		uboObject.transform = Vector4(*GetScreenTransform());
 		uboObject.atlasRows = static_cast<float>(m_texture->GetNumberOfRows());
 		uboObject.atlasOffset = Vector2(*m_textureOffset);
 		uboObject.colourOffset = Colour(*m_colourOffset);
 		uboObject.alpha = GetAlpha();
 		m_uniformObject->Update(&uboObject);
+
+		VkRect2D scissorRect = {};
+		scissorRect.offset.x = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_x);
+		scissorRect.offset.y = static_cast<uint32_t>(Display::Get()->GetHeight() * -GetScissor()->m_y);
+		scissorRect.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_z);
+		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_w);
+		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformObject->GetWriteDescriptor(0, descriptorSet), m_texture->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this!
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };

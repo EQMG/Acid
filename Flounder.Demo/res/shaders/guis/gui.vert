@@ -4,7 +4,6 @@
 
 layout(binding = 0) uniform UboObject
 {
-	vec4 scissor;
 	vec4 transform;
 	float atlasRows;
 	vec2 atlasOffset;

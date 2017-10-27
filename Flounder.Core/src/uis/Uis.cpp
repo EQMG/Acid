@@ -6,7 +6,7 @@ namespace Flounder
 		IModule(),
 		m_managerUis(nullptr),
 		m_selector(new UiSelector()),
-		m_container(new UiObject(nullptr, Vector3(0.5f, 0.5f, true), Vector3(0.5f, 0.5f, true), Vector2(0.5f, 0.5f))),
+		m_container(new UiObject(nullptr, Vector3(0.5f, 0.5f, true), Vector3(1.0f, 1.0f, true), Vector2(0.5f, 0.5f))),
 		m_objects(new std::vector<UiObject*>()),
 		m_arial(new FontType("res/fonts/arial.png", "res/fonts/arial.fnt")),
 		m_berlinSans(new FontType("res/fonts/berlinSans.png", "res/fonts/berlinSans.fnt")),

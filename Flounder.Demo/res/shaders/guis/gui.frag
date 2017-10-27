@@ -4,7 +4,6 @@
 
 layout(binding = 0) uniform UboObject
 {
-	vec4 scissor;
 	vec4 transform;
 	float atlasRows;
 	vec2 atlasOffset;
@@ -20,7 +19,7 @@ layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
-	outColour = texture(samplerTexture, fragmentTextures); //  + vec4(object.colourOffset.rgb, 0.0);
+	outColour = texture(samplerTexture, fragmentTextures) * vec4(object.colourOffset.rgb, 1.0);
 	/*outColour.a *= object.alpha;
 
 	if (outColour.a < 0.05)
