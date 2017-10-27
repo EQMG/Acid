@@ -57,16 +57,16 @@ namespace Flounder
 		switch (m_textJustify)
 		{
 		case JustifyLeft:
-		//	GetPositionOffsets()->Set(GetDimensions()->m_x * GetScreenDimensions()->m_x, 0.0f);
+			GetPositionOffset()->Set(GetDimensions()->m_x * GetScreenTransform()->m_z, 0.0f);
 			break;
 		case JustifyCentre:
-		//	GetPositionOffsets()->Set(0.0f, 0.0f);
+			GetPositionOffset()->Set(0.0f, 0.0f);
 			break;
 		case JustifyRight:
-		//	GetPositionOffsets()->Set(-GetDimensions()->m_x * GetScreenDimensions()->m_x, 0.0f);
+			GetPositionOffset()->Set(-GetDimensions()->m_x * GetScreenTransform()->m_z, 0.0f);
 			break;
 		case JustifyFully:
-		//	GetPositionOffsets()->Set(0.0f, 0.0f);
+			GetPositionOffset()->Set(0.0f, 0.0f);
 			break;
 		}
 
@@ -85,7 +85,6 @@ namespace Flounder
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
 		UbosFonts::UboObject uboObject = {};
-		uboObject.scissor = Vector4(*GetScissor());
 		uboObject.transform = Vector4(*GetScreenTransform());
 		uboObject.colour = Colour(*m_textColour);
 		uboObject.alpha = GetAlpha();
@@ -93,6 +92,13 @@ namespace Flounder
 		uboObject.borderSizes = Vector2(GetTotalBorderSize(), GetGlowSize());
 		uboObject.edgeData = Vector2(CalculateEdgeStart(), CalculateAntialiasSize());
 		m_uniformObject->Update(&uboObject);
+
+		VkRect2D scissorRect = {};
+		scissorRect.offset.x = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_x);
+		scissorRect.offset.y = static_cast<uint32_t>(Display::Get()->GetHeight() * -GetScissor()->m_y);
+		scissorRect.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_z);
+		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_w);
+		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformObject->GetWriteDescriptor(0, descriptorSet), m_fonttype->GetTexture()->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this!
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
@@ -140,12 +146,15 @@ namespace Flounder
 			{
 				return 0.0f;
 			}
+
 			return CalculateEdgeStart() + m_borderSize;
 		}
+
 		if (m_glowBorder)
 		{
 			return CalculateEdgeStart();
 		}
+
 		return 0.0f;
 	}
 
@@ -155,10 +164,12 @@ namespace Flounder
 		{
 			return CalculateAntialiasSize();
 		}
+
 		if (m_glowBorder)
 		{
 			return m_glowSize;
 		}
+
 		return 0.0f;
 	}
 
