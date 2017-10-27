@@ -20,7 +20,7 @@ layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
-	outColour = texture(samplerTexture, fragmentTextures) + vec4(object.colourOffset.rgb, 0.0);
+	outColour = texture(samplerTexture, fragmentTextures); //  + vec4(object.colourOffset.rgb, 0.0);
 	/*outColour.a *= object.alpha;
 
 	if (outColour.a < 0.05)
@@ -28,5 +28,5 @@ void main(void)
 		outColour = vec4(0.0);
 		discard;
 	}*/
-	outColour = vec4(1, 0, 0, 1);
+	// outColour = vec4(1, 0, 0, 1);
 }

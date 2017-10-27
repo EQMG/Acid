@@ -11,12 +11,12 @@ namespace Flounder
 		m_children(new std::vector<UiObject*>()),
 		m_visible(true),
 		m_scissor(new Vector4(-1.0f, -1.0f, -1.0f, -1.0f)),
-		m_position(new Vector2(position)),
 		m_dimensions(new Vector2(dimensions)),
+		m_position(new Vector2(position)),
 		m_pivot(new Vector2(pivot)),
 		m_inScreenCoords(inScreenCoords),
-		m_screenPosition(new Vector2()),
 		m_screenDimensions(new Vector2()),
+		m_screenPosition(new Vector2()),
 		m_alphaDriver(new DriverConstant(1.0f)),
 		m_alpha(1.0f),
 		m_scaleDriver(new DriverConstant(1.0f)),
@@ -70,13 +70,13 @@ namespace Flounder
 		}
 
 		const float aspect = m_inScreenCoords ? static_cast<float>(Display::Get()->GetAspectRatio()) : 1.0f;
-		m_screenPosition->Set(
-			((m_position->m_x - (m_dimensions->m_x / 2.0f)) / aspect),
-			(m_position->m_y) - (m_dimensions->m_y / 2.0f)
-		);
 		m_screenDimensions->Set(
-			2.0f * m_dimensions->m_x * m_scale / aspect,
-			2.0f * m_dimensions->m_y * m_scale
+			m_dimensions->m_x * m_scale * aspect,
+			m_dimensions->m_y * m_scale
+		);
+		m_screenPosition->Set(
+			m_position->m_x + (m_screenDimensions->m_x / 2.0f), // - (m_pivot->m_x * aspect),
+			m_position->m_y + (m_screenDimensions->m_y / 2.0f)  // - (m_pivot->m_y)
 		);
 	}
 
