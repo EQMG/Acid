@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 #include <functional>
+#include "../fonts/Justify.hpp"
 #include "../maths/Timer.hpp"
 #include "Uis.hpp"
 #include "UiObject.hpp"
-#include "UiAlign.hpp"
 
 namespace Flounder
 {
@@ -32,7 +32,7 @@ namespace Flounder
 		Timer *m_timerChange;
 		std::function<void()> m_actionChange;
 	public:
-		InputSlider(UiObject *parent, const Vector2 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const UiAlign &align);
+		InputSlider(UiObject *parent, const Vector2 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const Justify &justify);
 
 		~InputSlider();
 
