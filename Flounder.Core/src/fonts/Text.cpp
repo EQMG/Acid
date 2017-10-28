@@ -7,18 +7,19 @@
 
 namespace Flounder
 {
-	Text::Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const Justify &justify) :
+	Text::Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const Justify &justify) :
 		UiObject(parent, position, Vector3(1.0f, 1.0f, RelativeScreen), pivot),
 		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
-		m_textString(text),
-		m_textJustify(justify),
-		m_newText(""),
 		m_model(nullptr),
-		m_lineMaxSize(maxLineLength),
-		m_numberOfLines(-1),
+		m_string(text),
+		m_newString(""),
+		m_justify(justify),
 		m_fonttype(fonttype),
 		m_textColour(new Colour("#ffffff")),
 		m_borderColour(new Colour("#000000")),
+		m_kerning(0.0f),
+		m_leading(0.0f),
+		m_maxWidth(1.0f),
 		m_solidBorder(false),
 		m_glowBorder(false),
 		m_glowDriver(new DriverConstant(0.0f)),
@@ -27,13 +28,12 @@ namespace Flounder
 		m_borderSize(0.0f)
 	{
 		SetScaleDriver(new DriverConstant(fontSize));
-		LoadText(this);
+	//	LoadText(this);
 	}
 
 	Text::~Text()
 	{
 		delete m_uniformObject;
-
 		delete m_model;
 
 		delete m_textColour;
@@ -45,13 +45,9 @@ namespace Flounder
 
 	void Text::UpdateObject()
 	{
-		if (IsLoaded() && m_newText != "")
+		if (!IsLoaded() || IsLoaded() && m_newString != "")
 		{
-			delete m_model;
-
-			m_textString = m_newText;
-			LoadText(this);
-			m_newText = "";
+			RecreateMesh();
 		}
 
 		m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
@@ -60,7 +56,7 @@ namespace Flounder
 
 	void Text::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)
 	{
-		if (!IsVisible() || GetAlpha() == 0.0f)
+		if (m_model == nullptr || !IsVisible() || GetAlpha() == 0.0f)
 		{
 			return;
 		}
@@ -92,11 +88,24 @@ namespace Flounder
 		m_model->CmdRender(commandBuffer);
 	}
 
+	void Text::RecreateMesh()
+	{
+		delete m_model;
+		
+		if (m_newString != "")
+		{
+			m_string = m_newString;
+		}
+
+		LoadText(this);
+		m_newString = "";
+	}
+
 	void Text::SetText(const std::string &newText)
 	{
-		if (m_textString != newText)
+		if (m_string != newText)
 		{
-			m_newText = newText;
+			m_newString = newText;
 		}
 	}
 
@@ -172,7 +181,7 @@ namespace Flounder
 
 	bool Text::IsLoaded()
 	{
-		return !m_textString.empty() && m_model != nullptr;
+		return !m_string.empty() && m_model != nullptr;
 	}
 
 	void Text::LoadText(Text *object)
@@ -188,14 +197,14 @@ namespace Flounder
 		// Loads mesh data to Vulkan.
 		Model *model = new Model(vertices);
 		Aabb *aabb = model->GetAabb();
-		object->SetModel(model);
+		object->m_model = model;
 		object->SetDimensions(Vector3(bounding.m_x, 1.0f, RelativeScreen));
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)
 	{
 		std::vector<Line> lines = std::vector<Line>();
-		Line currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->GetMaxLineSize());
+		Line currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
 		Word currentWord = Word();
 
 		for (auto c : object->GetText())
@@ -209,7 +218,7 @@ namespace Flounder
 				if (!added)
 				{
 					lines.push_back(currentLine);
-					currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->GetMaxLineSize());
+					currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
 					currentLine.AddWord(currentWord);
 				}
 
@@ -226,7 +235,7 @@ namespace Flounder
 
 			if (character != nullptr)
 			{
-				currentWord.AddCharacter(*character);
+				currentWord.AddCharacter(*character, object->m_kerning);
 			}
 		}
 
@@ -242,7 +251,7 @@ namespace Flounder
 		if (!added)
 		{
 			lines.push_back(currentLine);
-			currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->GetMaxLineSize());
+			currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
 			currentLine.AddWord(currentWord);
 		}
 
@@ -252,7 +261,7 @@ namespace Flounder
 	std::vector<Vertex> Text::CreateQuad(Text *object, std::vector<Line> lines)
 	{
 		std::vector<Vertex> vertices = std::vector<Vertex>();
-		object->SetNumberOfLines(static_cast<int>(lines.size()));
+	//	object->m_numberLines = static_cast<int>(lines.size());
 		double cursorX = 0.0;
 		double cursorY = 0.0;
 
@@ -279,7 +288,7 @@ namespace Flounder
 				for (auto letter : word.GetCharacters())
 				{
 					AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
-					cursorX += letter.GetAdvanceX();
+					cursorX += object->m_kerning + letter.GetAdvanceX();
 				}
 
 				if (object->GetTextJustify() == JustifyFully)
@@ -293,7 +302,7 @@ namespace Flounder
 			}
 
 			cursorX = 0.0;
-			cursorY += Metafile::LINE_HEIGHT;
+			cursorY += object->m_leading + Metafile::LINE_HEIGHT;
 		}
 
 		return vertices;

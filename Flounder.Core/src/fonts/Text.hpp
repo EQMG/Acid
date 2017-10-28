@@ -22,21 +22,19 @@ namespace Flounder
 	{
 	private:
 		UniformBuffer *m_uniformObject;
-
-		std::string m_textString;
-		Justify m_textJustify;
-
-		std::string m_newText;
-
 		Model *m_model;
 
-		float m_lineMaxSize;
-		int m_numberOfLines;
+		std::string m_string;
+		std::string m_newString;
+		Justify m_justify;
 
 		FontType *m_fonttype;
-
 		Colour *m_textColour;
 		Colour *m_borderColour;
+
+		float m_kerning;
+		float m_leading;
+		float m_maxWidth;
 
 		bool m_solidBorder;
 		bool m_glowBorder;
@@ -53,9 +51,8 @@ namespace Flounder
 		/// <param name="fonttype"> The text that will be set to this object. </param>
 		/// <param name="fontSize"> The initial size of the font (1 is the default). </param>
 		/// <param name="font"> The font type to be used in this text. </param>
-		/// <param name="maxLineLength"> The longest line length before the text is wrapped, 1.0 being 100% of the screen width when font size = 1. </param>
 		/// <param name="align"> How the text will align if wrapped. </param>
-		Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const Justify &justify);
+		Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const Justify &justify);
 
 		/// <summary>
 		/// Deconstructor for the text.
@@ -66,11 +63,19 @@ namespace Flounder
 
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline);
 
+		void RecreateMesh();
+
+		/// <summary>
+		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
+		/// </summary>
+		/// <returns> The model of the text. </returns>
+		Model *GetModel() const { return m_model; }
+
 		/// <summary>
 		/// Gets the string of text represented.
 		/// </summary>
 		/// <returns> The string of text. </returns>
-		std::string GetText() const { return m_textString; }
+		std::string GetText() const { return m_string; }
 
 		/// <summary>
 		/// Changed the current string in this text.
@@ -82,49 +87,55 @@ namespace Flounder
 		/// Gets how the text should justify.
 		/// </summary>
 		/// <returns> How the text should justify. </returns>
-		Justify GetTextJustify() const { return m_textJustify; }
+		Justify GetTextJustify() const { return m_justify; }
 
 		/// <summary>
-		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
+		/// Gets the kerning (type character spacing multiplier) of this text.
 		/// </summary>
-		/// <returns> The model of the text. </returns>
-		Model *GetModel() const { return m_model; }
+		/// <returns> The type kerning. </returns>
+		float GetKerning() const { return m_kerning; }
 
 		/// <summary>
-		/// Sets the loaded mesh data for the text.
+		/// Sets the kerning (type character spacing multiplier) of this text.
 		/// </summary>
-		/// <param name="model"> The mesh model. </param>
-		void SetModel(Model *model) { m_model = model; }
+		/// <param name="leading"> The new kerning. </param>
+		void SetKerning(const float &kerning) { m_kerning = kerning; }
 
 		/// <summary>
-		/// Gets font type texture for this text.
+		/// Gets the leading (vertical line spacing multiplier) of this text.
 		/// </summary>
-		/// <returns> The texts texture. </returns>
-		Texture *GetTexture() const { return m_fonttype->GetTexture(); }
+		/// <returns> The line leading. </returns>
+		float GetLeading() const { return m_leading; }
+
+		/// <summary>
+		/// Sets the leading (vertical line spacing multiplier) of this text.
+		/// </summary>
+		/// <param name="leading"> The new leading. </param>
+		void SetLeading(const float &leading) { m_leading = leading; }
 
 		/// <summary>
 		/// Gets the maximum length of a line of this text.
 		/// </summary>
 		/// <returns> The maximum length of a line. </returns>
-		float GetMaxLineSize() const { return m_lineMaxSize; }
+		float GetMaxWidth() const { return m_maxWidth; }
 
 		/// <summary>
-		/// Gets the number of lines of text. This is determined when the text is  loaded, based on the length of the text and the max line length that is set.
+		/// Sets the maximum length of a line of this text.
 		/// </summary>
-		/// <returns> The number of lines of text </returns>
-		int GetNumberOfLines() const { return m_numberOfLines; }
-
-		/// <summary>
-		/// Sets the number of lines that this text covers (method used only in loading).
-		/// </summary>
-		/// <param name="number"> The new number of lines. </param>
-		void SetNumberOfLines(const int &number) { m_numberOfLines = number; }
+		/// <param name="maxWidth"> The new maximum length. </param>
+		void SetMaxWidth(const float &maxWidth) { m_maxWidth = maxWidth; }
 
 		/// <summary>
 		/// Gets the font used by this text.
 		/// </summary>
 		/// <returns> The font used by this text. </returns>
 		FontType *GetFontType() const { return m_fonttype; }
+
+		/// <summary>
+		/// Gets font type texture for this text.
+		/// </summary>
+		/// <returns> The texts texture. </returns>
+		Texture *GetTexture() const { return m_fonttype->GetTexture(); }
 
 		/// <summary>
 		/// Gets the colour of the text.

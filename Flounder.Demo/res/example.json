@@ -11,7 +11,9 @@
 	},
 	"max-width": 0.8,
 	"font": "proximanova-regular",
-	"font-size": 16.0,
-	"font-padding": 0.0,
+	"size": 16.0,
+	"kerning": 0.00332,
+	"leading": 0.01,
+	"maxWidth": 0.75,
 	"colour": "#553982"
 },
