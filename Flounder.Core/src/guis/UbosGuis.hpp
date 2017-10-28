@@ -12,9 +12,9 @@ namespace Flounder
 		struct UboObject
 		{
 			Vector4 transform;
-			float atlasRows;
-			Vector2 atlasOffset;
 			Colour colourOffset;
+			Vector2 atlasOffset;
+			float atlasRows;
 			float alpha;
 		};
 	};

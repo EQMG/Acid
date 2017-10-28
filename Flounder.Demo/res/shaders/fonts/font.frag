@@ -6,10 +6,10 @@ layout(binding = 0) uniform UboObject
 {
 	vec4 transform;
 	vec4 colour;
-	float alpha;
 	vec4 borderColour;
 	vec2 borderSizes;
 	vec2 edgeData;
+	float alpha;
 } object;
 
 layout(binding = 1) uniform sampler2D samplerTexture;
@@ -26,13 +26,12 @@ void main(void)
 	float overallAlpha = alpha + (1.0 - alpha) * outlineAlpha;
 	vec3 overallColour = mix(object.borderColour.rgb, object.colour.rgb, alpha / overallAlpha);
 
-	/*outColour = vec4(overallColour, overallAlpha);
-	outColour.a *= alpha;
+	outColour = vec4(overallColour, overallAlpha);
+	outColour.a *= object.alpha; // alpha
 
 	if (outColour.a < 0.05)
 	{
 		outColour = vec4(0.0);
 		discard;
-	}*/
-	outColour = vec4(distance * object.colour.rgb, 1);
+	}
 }

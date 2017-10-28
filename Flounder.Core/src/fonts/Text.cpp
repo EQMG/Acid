@@ -54,22 +54,6 @@ namespace Flounder
 			m_newText = "";
 		}
 
-		switch (m_textJustify)
-		{
-		case JustifyLeft:
-			GetPositionOffset()->Set(GetDimensions()->m_x * GetScreenTransform()->m_z, 0.0f);
-			break;
-		case JustifyCentre:
-			GetPositionOffset()->Set(0.0f, 0.0f);
-			break;
-		case JustifyRight:
-			GetPositionOffset()->Set(-GetDimensions()->m_x * GetScreenTransform()->m_z, 0.0f);
-			break;
-		case JustifyFully:
-			GetPositionOffset()->Set(0.0f, 0.0f);
-			break;
-		}
-
 		m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
 		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
 	}
@@ -87,10 +71,10 @@ namespace Flounder
 		UbosFonts::UboObject uboObject = {};
 		uboObject.transform = Vector4(*GetScreenTransform());
 		uboObject.colour = Colour(*m_textColour);
-		uboObject.alpha = GetAlpha();
-		uboObject.borderColour = Vector4(*m_borderColour);
+		uboObject.borderColour = Colour(*m_borderColour);
 		uboObject.borderSizes = Vector2(GetTotalBorderSize(), GetGlowSize());
 		uboObject.edgeData = Vector2(CalculateEdgeStart(), CalculateAntialiasSize());
+		uboObject.alpha = GetAlpha();
 		m_uniformObject->Update(&uboObject);
 
 		VkRect2D scissorRect = {};
@@ -197,12 +181,11 @@ namespace Flounder
 		std::vector<Line> lines = CreateStructure(object);
 		std::vector<Vertex> vertices = std::vector<Vertex>();
 		CreateQuadVertices(object, lines, vertices);
-		Vector2 dimensions = GetBounding(vertices);
 
 		// Loads mesh data to Vulkan.
 		Model *loaded = new Model(vertices);
 		object->SetModel(loaded);
-		object->SetDimensions(dimensions);
+		//object->SetDimensions(dimensions);
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)
@@ -229,6 +212,7 @@ namespace Flounder
 				currentWord = Word();
 				continue;
 			}
+
 			if (ascii == Metafile::NEWLINE_ASCII)
 			{
 				continue;
@@ -243,6 +227,7 @@ namespace Flounder
 		}
 
 		CompleteStructure(lines, currentLine, currentWord, object);
+
 		return lines;
 	}
 
@@ -280,10 +265,7 @@ namespace Flounder
 				cursorX = line.GetMaxLength() - line.GetCurrentLineLength();
 				break;
 			case JustifyFully:
-				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0;
-				break;
-			default:
-				cursorX = 0.0;
+				cursorX = 0.0; // TODO: Add full justification.
 				break;
 			}
 
@@ -311,7 +293,7 @@ namespace Flounder
 		const double vertexMaxY = vertexY + character.GetSizeY();
 
 		const double textureX = character.GetTextureCoordX();
-		const double textureY = character.GetTextureCoordX();
+		const double textureY = character.GetTextureCoordY();
 		const double textureMaxX = character.GetMaxTextureCoordX();
 		const double textureMaxY = character.GetMaxTextureCoordY();
 
@@ -327,37 +309,5 @@ namespace Flounder
 	{
 		const Vertex vertex = Vertex(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
 		vertices.push_back(vertex);
-	}
-
-	Vector2 Text::GetBounding(std::vector<Vertex> &vertices)
-	{
-		float minX = +INFINITY;
-		float minY = +INFINITY;
-		float maxX = -INFINITY;
-		float maxY = -INFINITY;
-		int i = 0;
-
-		for (const auto v : vertices)
-		{
-			if (v.m_position.m_x < minX)
-			{
-				minX = v.m_position.m_x;
-			}
-			else if (v.m_position.m_x > minX)
-			{
-				maxX = v.m_position.m_x;
-			}
-
-			if (v.m_position.m_y < minY)
-			{
-				minY = v.m_position.m_y;
-			}
-			else if (v.m_position.m_y > minY)
-			{
-				maxY = v.m_position.m_y;
-			}
-		}
-
-		return Vector2((minX + maxX) / 2.0f, (minY + maxY) / 2.0f);
 	}
 }

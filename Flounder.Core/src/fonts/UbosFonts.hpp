@@ -13,10 +13,10 @@ namespace Flounder
 		{
 			Vector4 transform;
 			Colour colour;
-			float alpha;
-			Vector4 borderColour;
+			Colour borderColour;
 			Vector2 borderSizes;
 			Vector2 edgeData;
+			float alpha;
 		};
 	};
 }

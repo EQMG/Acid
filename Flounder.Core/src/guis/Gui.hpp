@@ -23,7 +23,7 @@ namespace Flounder
 		Texture *m_texture;
 		int m_selectedRow;
 
-		Vector2 *m_textureOffset;
+		Vector2 *m_atlasOffset;
 		Colour *m_colourOffset;
 	public:
 		/// <summary>
@@ -50,7 +50,7 @@ namespace Flounder
 
 		void SetSelectedRow(const int &selectedRow) { m_selectedRow = selectedRow; }
 
-		Vector2 *GetTextureOffset() const { return m_textureOffset; }
+		Vector2 *GetAtlasOffset() const { return m_atlasOffset; }
 
 		Colour *GetColourOffset() const { return m_colourOffset; }
 
