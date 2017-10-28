@@ -1,7 +1,8 @@
 ﻿#pragma once
 
 #include <functional>
-#include "../fonts/Justify.hpp"
+#include "../guis/Gui.hpp"
+#include "../fonts/Text.hpp"
 #include "../maths/Timer.hpp"
 #include "Uis.hpp"
 #include "UiObject.hpp"

@@ -1,6 +1,8 @@
 ﻿#include "InputSlider.hpp"
 
 #include "../devices/Display.hpp"
+#include "../guis/Gui.hpp"
+#include "../fonts/Text.hpp"
 #include "../visual/DriverSlide.hpp"
 
 namespace Flounder
@@ -12,7 +14,7 @@ namespace Flounder
 
 	InputSlider::InputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const Justify &justify) :
 		UiObject(parent, position, Vector3(0.0f, 0.0f, true), Vector2(0.5f, 0.5f)),
-		m_text(new Text(this, position, Vector2(0.5f, 0.5f), string, SCALE_NORMAL, Uis::Get()->m_candara, 0.36f, justify)),
+		m_text(new Text(this, position, Vector2(0.5f, 0.5f), string, SCALE_NORMAL, Uis::Get()->m_candara->GetRegular(), 0.36f, justify)),
 		m_background(new Gui(this, position, Vector2(1.0f, 1.0f), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
 		m_slider(new Gui(this, position, Vector2(1.0f, 1.0f), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
 		m_updating(false),
