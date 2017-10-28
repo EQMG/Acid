@@ -6,6 +6,7 @@ namespace Flounder
 		m_maxLength(maxLength),
 		m_spaceSize(spaceWidth),
 		m_words(std::vector<Word>()),
+		m_currentWordsLength(0.0),
 		m_currentLineLength(0.0)
 	{
 	}
@@ -14,7 +15,7 @@ namespace Flounder
 	{
 	}
 
-	bool Line::AddWord(Word word)
+	bool Line::AddWord(const Word &word)
 	{
 		double additionalLength = word.GetWidth();
 		additionalLength += !m_words.empty() ? m_spaceSize : 0.0;
@@ -22,6 +23,7 @@ namespace Flounder
 		if (m_currentLineLength + additionalLength <= m_maxLength)
 		{
 			m_words.push_back(word);
+			m_currentWordsLength += word.GetWidth();
 			m_currentLineLength += additionalLength;
 			return true;
 		}
