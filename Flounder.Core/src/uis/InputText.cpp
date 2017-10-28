@@ -1,7 +1,10 @@
 ﻿#include "InputText.hpp"
 
 #include "../devices/Keyboard.hpp"
+#include "../guis/Gui.hpp"
+#include "../fonts/Text.hpp"
 #include "../visual/DriverSlide.hpp"
+#include "Uis.hpp"
 
 namespace Flounder
 {
@@ -12,7 +15,7 @@ namespace Flounder
 
 	InputText::InputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const Justify &justify) :
 		UiObject(parent, position, Vector3(0.0f, 0.0f, true), Vector2(0.5f, 0.5f)),
-		m_text(new Text(this, position, Vector2(0.5f, 0.5f), prefix + value, SCALE_NORMAL, Uis::Get()->m_candara, 0.36f, justify)),
+		m_text(new Text(this, position, Vector2(0.5f, 0.5f), prefix + value, SCALE_NORMAL, Uis::Get()->m_candara->GetRegular(), 0.36f, justify)),
 		m_background(new Gui(this, position, Vector2(1.0f, 1.0f), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
 		m_prefix(prefix),
 		m_value(value),
