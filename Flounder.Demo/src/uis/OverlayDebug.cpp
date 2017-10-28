@@ -7,17 +7,37 @@ namespace Demo
 		//	m_textHeight(CreateStatus("HEIGHT: 0.0", 0.005f, 0.86f, AlignLeft)),
 		//	m_textTime(CreateStatus("TIME: 0.0", 0.005f, 0.89f, AlignLeft)),
 		//	m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.005f, 0.92f, AlignLeft)),
-		//  m_textFps(CreateStatus("FPS: 0", 0.005f, 0.95f, AlignLeft)),
-		//  m_textUps(CreateStatus("UPS: 0", 0.005f, 0.98f, AlignLeft)),
-		m_guiExample(new Gui(this, Vector3(0.5f, 1.0f, true), Vector3(1.0f, 1.0f, -1.0f), Vector2(0.5f, 0.0f), new Texture("res/guis/geometry-grain.jpg"), 1)), // 0.625f
+		m_textFps(CreateStatus("FPS: 0", 0.005f, 0.95f, JustifyLeft)),
+		m_textUps(CreateStatus("UPS: 0", 0.005f, 0.98f, JustifyLeft)),
+		m_textExample(new Text(this, Vector3(0.015f, 0.98f, false), Vector2(0.0f, 0.0f), "Kosmos", 1.25f, Uis::Get()->m_segoe, 0.7f, JustifyLeft)),
+		m_guiExample(new Gui(this, Vector3(0.5f, 1.0f, true), Vector3(1.0f, 1.0f, false), Vector2(0.5f, 0.0f), new Texture("res/guis/geometry-grain.jpg"), 1)), // 0.625f
 		m_timerUpdate(new Timer(0.333f))
 	{
-#ifdef FLOUNDER_CONFIG_RELEASE
+#ifndef FLOUNDER_CONFIG_RELEASE
+		m_textExample->SetTextColour(Colour("#ffffff"));
+
+		Texture *textureInv = new Texture("res/guis/geometry-grain.jpg");
+
+		for (int i = 0; i < 6; i++)
+		{
+			for (int j = 0; j < 6; j++)
+			{
+				const float size = 0.1f;
+				float x = i * (size + 0.025f);
+				float y = j * (size + 0.025f);
+				//Gui *gui = new Gui(this, Vector3(0.05f + x, 0.175f + y, false), Vector3(size, size, true), Vector2(0.0f, 0.0f), textureInv, 1);
+				Gui *gui = new Gui(this, Vector3(0.5f, 0.5f, true), Vector3(1.0f, 1.0f, false), Vector2(0.5f, 0.5f), textureInv, 1);
+				gui->SetScissor(Vector4(x + 0.05f, y - 0.825f, size, size));
+				gui->SetColourOffset(Colour("#D14841"));
+			}
+		}
+
+		m_guiExample->SetScissor(Vector4(0.0f, 0.875f, 1.0f, 1.0f));
+		m_guiExample->SetColourOffset(Colour("#553982"));
+#else
+		m_textExample->SetVisible(false);
 		m_guiExample->SetVisible(false);
 #endif
-		m_guiExample->SetScissor(Vector4(0.0f, 0.869f, 1.0f, 1.0f));
-	//	m_guiExample->SetScissor(Vector4(0.0f, 0.869f, 1.0f, 0.131f));
-		m_guiExample->SetColourOffset(Colour("#553982"));
 	}
 
 	OverlayDebug::~OverlayDebug()
@@ -25,8 +45,9 @@ namespace Demo
 		//	delete m_textHeight;
 		//	delete m_textTime;
 		//	delete m_textPosition;
-		//  delete m_textFps;
-		//  delete m_textUps;
+		delete m_textFps;
+		delete m_textUps;
+		delete m_textExample;
 		delete m_guiExample;
 	}
 
@@ -53,8 +74,8 @@ namespace Demo
 			//	m_textPosition->SetText("POSITION: " + std::to_string(static_cast<int>(position->m_x)) + ", " + std::to_string(static_cast<int>(position->m_y)) + ", " + std::to_string(static_cast<int>(position->m_z)));
 			//}
 
-			//m_textFps->SetText("FPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDeltaRender())));
-			//m_textUps->SetText("UPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDelta())));
+			m_textFps->SetText("FPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDeltaRender())));
+			m_textUps->SetText("UPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDelta())));
 		}
 	}
 

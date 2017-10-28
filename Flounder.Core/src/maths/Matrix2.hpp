@@ -20,13 +20,13 @@ namespace Flounder
 
 			struct
 			{
-				float m_elements[2][2];
+				float m_00, m_01;
+				float m_10, m_11;
 			};
 
 			struct
 			{
-				float m_00, m_01;
-				float m_10, m_11;
+				float m_elements[2][2];
 			};
 		};
 

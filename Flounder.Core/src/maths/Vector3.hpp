@@ -16,12 +16,12 @@ namespace Flounder
 		{
 			struct
 			{
-				float m_elements[3];
+				float m_x, m_y, m_z;
 			};
 
 			struct
 			{
-				float m_x, m_y, m_z;
+				float m_elements[3];
 			};
 		};
 
