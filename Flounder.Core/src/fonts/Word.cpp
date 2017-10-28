@@ -12,10 +12,10 @@ namespace Flounder
 	{
 	}
 
-	bool Word::AddCharacter(Character c)
+	bool Word::AddCharacter(Character c, const float &kerning)
 	{
 		m_characters.push_back(c);
-		m_width += c.GetAdvanceX();
+		m_width += kerning + c.GetAdvanceX();
 		return true;
 	}
 }
