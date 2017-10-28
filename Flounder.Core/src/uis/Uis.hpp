@@ -1,8 +1,7 @@
 #pragma once
 
 #include "../engine/Engine.hpp"
-#include "../fonts/Text.hpp"
-#include "../guis/Gui.hpp"
+#include "../fonts/FontFamily.hpp"
 #include "IManagerUis.hpp"
 #include "UiSelector.hpp"
 
@@ -20,11 +19,12 @@ namespace Flounder
 		UiObject *m_container;
 		std::vector<UiObject*> *m_objects;
 	public:
-		FontType *m_arial;
-		FontType *m_berlinSans;
-		FontType *m_cafeFrancoise;
-		FontType *m_candara;
-		FontType *m_segoe;
+		FontFamily *m_arial;
+		FontFamily *m_berlinSans;
+		FontFamily *m_cafeFrancoise;
+		FontFamily *m_candara;
+		FontFamily *m_proximanova;
+		FontFamily *m_segoe;
 
 		/// <summary>
 		/// Gets this engine instance.

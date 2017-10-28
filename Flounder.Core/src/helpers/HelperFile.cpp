@@ -6,6 +6,17 @@
 
 namespace Flounder
 {
+	bool HelperFile::FileExists(const std::string &filepath)
+	{
+		if (FILE *file = fopen(filepath.c_str(), "r")) 
+		{
+			fclose(file);
+			return true;
+		}
+
+		return false;
+	}
+
 	std::string HelperFile::ReadTextFile(const std::string &filepath)
 	{
 		FILE *file = fopen(filepath.c_str(), "rt");

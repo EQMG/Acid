@@ -8,11 +8,12 @@ namespace Flounder
 		m_selector(new UiSelector()),
 		m_container(new UiObject(nullptr, Vector3(0.5f, 0.5f, true), Vector3(1.0f, 1.0f, true), Vector2(0.5f, 0.5f))),
 		m_objects(new std::vector<UiObject*>()),
-		m_arial(new FontType("res/fonts/arial.png", "res/fonts/arial.fnt")),
-		m_berlinSans(new FontType("res/fonts/berlinSans.png", "res/fonts/berlinSans.fnt")),
-		m_cafeFrancoise(new FontType("res/fonts/cafefrancoise.png", "res/fonts/cafefrancoise.fnt")),
-		m_candara(new FontType("res/fonts/candara.png", "res/fonts/candara.fnt")),
-		m_segoe(new FontType("res/fonts/segoe.png", "res/fonts/segoe.fnt"))
+		m_arial(new FontFamily("arial")),
+		m_berlinSans(new FontFamily("berlinSans")),
+		m_cafeFrancoise(new FontFamily("cafefrancoise")),
+		m_proximanova(new FontFamily("proximanova")),
+		m_candara(new FontFamily("candara")),
+		m_segoe(new FontFamily("segoe"))
 	{
 	}
 
@@ -26,6 +27,7 @@ namespace Flounder
 		delete m_arial;
 		delete m_berlinSans;
 		delete m_cafeFrancoise;
+		delete m_proximanova;
 		delete m_candara;
 		delete m_segoe;
 	}

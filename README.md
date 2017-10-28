@@ -5,41 +5,48 @@
 
 Flounder is a cross platform high speed C++17 Vulkan game engine. Flounder is built from the ground up to provide the most speed, well written code, and features with a modular engine. Flounder is very much a work in progress, much of this code will change.
 
+Libraries:
+ * Vulkan
+ * GLFW
+ * OpenAL
+
 Supported platforms:
  * Windows
  * Linux
  * MacOS
 
 Features:
- * PBR deferred rendering (WIP)
- * STB image loading
- * Cross platform
  * High speed
+ * Cross platform
+ * Vulkan rendering
+ * PBR deferred rendering (WIP)
  * Easy to read documented code
  * Event and tasks systems
- * Component entity system
+ * Component entity system (WIP)
  * 3D audio and music
- * 3D shadow mapping
  * 3D skyboxes
  * 3D terrain and water
- * 3D particle effects
  * OBJ model file loading
  * JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC image file loading
- * Avalable visual drivers and maths classes
- * Flexable inputs
+ * Visual drivers and maths classes
+ * Flexable input classes
  * Networking (WIP)
  * Animations (WIP)
  
-Plans:
- * Switch, PlayStation, XBox
- * Finish the core engine by the end of 2017
+Plans (2017):
+ * Finish the core engine by the end of
  * A physics engine, ragdoll animations
+ * 3D particle effects
+ * 3D shadow mapping
+ 
+Maybe:
+ * Switch, PlayStation, XBox
  
 Preprocessor Definitions:
- * _CRT_SECURE_NO_WARNINGS: Used to ignore 'unsafe' function calls.
- * FLOUNDER_PLATFORM_x: Where x is the platform [WINDOWS, LINUX, MACOS, ...].
- * FLOUNDER_VERBOSE: Enables verbose logging.
- * FLOUNDER_CONFIG_DEBUG or FLOUNDER_CONFIG_RELEASE: Compiling in release or debug mode.
+ * _CRT_SECURE_NO_WARNINGS: Used to ignore 'unsafe' function calls
+ * FLOUNDER_PLATFORM_x: Where x is the platform [WINDOWS, LINUX, MACOS, ...]
+ * FLOUNDER_VERBOSE: Enables verbose logging
+ * FLOUNDER_CONFIG_DEBUG or FLOUNDER_CONFIG_RELEASE: Compiling in release or debug mode
 
 [Read the autogen docs](https://equilibrium-games.github.io/Flounder/Flounder.Core/docs/html/namespace_flounder.html)
 
