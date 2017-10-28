@@ -1,7 +1,10 @@
 #include "RendererGuis.hpp"
 
 #include "../devices/Display.hpp"
+#include "../models/Vertex.hpp"
+#include "../renderer/buffers/UniformBuffer.hpp"
 #include "../uis/Uis.hpp"
+#include "Gui.hpp"
 #include "UbosGuis.hpp"
 
 namespace Flounder

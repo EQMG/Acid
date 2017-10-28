@@ -3,7 +3,10 @@
 #include "../devices/Mouse.hpp"
 #include "../devices/Keyboard.hpp"
 #include "../devices/Joysticks.hpp"
+#include "../fonts/Text.hpp"
+#include "../guis/Gui.hpp"
 #include "../visual/DriverSlide.hpp"
+#include "Uis.hpp"
 
 namespace Flounder
 {
@@ -100,7 +103,7 @@ namespace Flounder
 
 	InputGrabber::InputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IGrabber *grabber, const Justify &justify) :
 		UiObject(parent, position, Vector3(0.0f, 0.0f, true), Vector2(0.5f, 0.5f)),
-		m_text(new Text(this, position, Vector3(0.5f, 0.5f, true), prefix + grabber->GetValue(value), SCALE_NORMAL, Uis::Get()->m_candara, 0.36f, justify)),
+		m_text(new Text(this, position, Vector3(0.5f, 0.5f, true), prefix + grabber->GetValue(value), SCALE_NORMAL, Uis::Get()->m_candara->GetRegular(), 0.36f, justify)),
 		m_background(new Gui(this, position, Vector3(1.0f, 1.0f, true), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
 		m_grabber(grabber),
 		m_prefix(prefix),
