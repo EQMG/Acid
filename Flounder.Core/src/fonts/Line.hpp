@@ -14,6 +14,7 @@ namespace Flounder
 		double m_spaceSize;
 
 		std::vector<Word> m_words;
+		double m_currentWordsLength;
 		double m_currentLineLength;
 	public:
 		/// <summary>
@@ -34,13 +35,15 @@ namespace Flounder
 		/// <param name="word"> The word to try to add.
 		/// </param>
 		/// <returns> {@code true} if the word has successfully been added to the line. </returns>
-		bool AddWord(Word word);
+		bool AddWord(const Word &word);
 
 		double GetMaxLength() const { return m_maxLength; }
 
 		double GetSpaceSize() const { return m_spaceSize; }
 
 		std::vector<Word> GetWords() const { return m_words; }
+
+		double GetCurrentWordsLength() const { return m_currentWordsLength; }
 
 		double GetCurrentLineLength() const { return m_currentLineLength; }
 	};

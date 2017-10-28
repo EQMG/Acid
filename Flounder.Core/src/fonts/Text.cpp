@@ -8,7 +8,7 @@
 namespace Flounder
 {
 	Text::Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const float &maxLineLength, const Justify &justify) :
-		UiObject(parent, position, Vector3(1.0f, 1.0f, true), pivot),
+		UiObject(parent, position, Vector3(1.0f, 1.0f, RelativeScreen), pivot),
 		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
 		m_textString(text),
 		m_textJustify(justify),
@@ -179,13 +179,17 @@ namespace Flounder
 	{
 		// Creates mesh data.
 		std::vector<Line> lines = CreateStructure(object);
-		std::vector<Vertex> vertices = std::vector<Vertex>();
-		CreateQuadVertices(object, lines, vertices);
+		std::vector<Vertex> vertices = CreateQuad(object, lines);
+
+		// Finds the bounding size of the mesh.
+		Vector2 bounding = GetBounding(vertices);
+		bounding.Normalize();
 
 		// Loads mesh data to Vulkan.
-		Model *loaded = new Model(vertices);
-		object->SetModel(loaded);
-		//object->SetDimensions(dimensions);
+		Model *model = new Model(vertices);
+		Aabb *aabb = model->GetAabb();
+		object->SetModel(model);
+		object->SetDimensions(Vector3(bounding.m_x, 1.0f, RelativeScreen));
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)
@@ -245,8 +249,9 @@ namespace Flounder
 		lines.push_back(currentLine);
 	}
 
-	void Text::CreateQuadVertices(Text *object, std::vector<Line> lines, std::vector<Vertex> &vertices)
+	std::vector<Vertex> Text::CreateQuad(Text *object, std::vector<Line> lines)
 	{
+		std::vector<Vertex> vertices = std::vector<Vertex>();
 		object->SetNumberOfLines(static_cast<int>(lines.size()));
 		double cursorX = 0.0;
 		double cursorY = 0.0;
@@ -265,7 +270,7 @@ namespace Flounder
 				cursorX = line.GetMaxLength() - line.GetCurrentLineLength();
 				break;
 			case JustifyFully:
-				cursorX = 0.0; // TODO: Add full justification.
+				cursorX = 0.0;
 				break;
 			}
 
@@ -277,12 +282,21 @@ namespace Flounder
 					cursorX += letter.GetAdvanceX();
 				}
 
-				cursorX += object->GetFontType()->GetMetadata()->GetSpaceWidth();
+				if (object->GetTextJustify() == JustifyFully)
+				{
+					cursorX += (line.GetMaxLength() - line.GetCurrentWordsLength()) / line.GetWords().size();
+				}
+				else
+				{
+					cursorX += object->GetFontType()->GetMetadata()->GetSpaceWidth();
+				}
 			}
 
 			cursorX = 0.0;
 			cursorY += Metafile::LINE_HEIGHT;
 		}
+
+		return vertices;
 	}
 
 	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<Vertex> &vertices)
@@ -309,5 +323,49 @@ namespace Flounder
 	{
 		const Vertex vertex = Vertex(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
 		vertices.push_back(vertex);
+	}
+
+	Vector2 Text::GetBounding(std::vector<Vertex> &vertices)
+	{
+		float minX = +INFINITY;
+		float minY = +INFINITY;
+		float minZ = +INFINITY;
+		float maxX = -INFINITY;
+		float maxY = -INFINITY;
+		float maxZ = -INFINITY;
+
+		for (const auto vertex : vertices)
+		{
+			const Vector3 position = vertex.m_position;
+
+			if (position.m_x < minX)
+			{
+				minX = position.m_x;
+			}
+			else if (position.m_x > maxX)
+			{
+				maxX = position.m_x;
+			}
+
+			if (position.m_y < minY)
+			{
+				minY = position.m_y;
+			}
+			else if (position.m_y > maxY)
+			{
+				maxY = position.m_y;
+			}
+
+			if (position.m_z < minZ)
+			{
+				minZ = position.m_z;
+			}
+			else if (position.m_z > maxZ)
+			{
+				maxZ = position.m_z;
+			}
+		}
+
+		return Vector2((minX + maxX) / 2.0f, (minY + maxY) / 2.0f);
 	}
 }
