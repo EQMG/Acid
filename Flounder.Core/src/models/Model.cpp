@@ -19,6 +19,7 @@ namespace Flounder
 		LoadFromFile();
 		m_vertexBuffer = new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data());
 		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
+		CreateAabb();
 	}
 
 	Model::Model(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices) :
@@ -29,6 +30,7 @@ namespace Flounder
 		m_vertexBuffer(new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data())),
 		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(m_indices[0]), m_indices.size(), m_indices.data()))
 	{
+		CreateAabb();
 	}
 
 	Model::Model(const std::vector<Vertex> &vertices) :
@@ -39,6 +41,7 @@ namespace Flounder
 		m_vertexBuffer(new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data())),
 		m_indexBuffer(nullptr)
 	{
+		CreateAabb();
 	}
 
 	Model::~Model()
@@ -256,38 +259,35 @@ namespace Flounder
 		float maxY = -INFINITY;
 		float maxZ = -INFINITY;
 
-		if (m_vertices.size() > 1)
+		for (const auto vertex : m_vertices)
 		{
-			for (int i = 0; i < m_vertices.size(); i += 3)
+			const Vector3 position = vertex.m_position;
+
+			if (position.m_x < minX)
 			{
-				const Vector3 position = m_vertices.at(i).m_position;
+				minX = position.m_x;
+			}
+			else if (position.m_x > maxX)
+			{
+				maxX = position.m_x;
+			}
 
-				if (position.m_x < minX)
-				{
-					minX = position.m_x;
-				}
-				else if (position.m_x > maxX)
-				{
-					maxX = position.m_x;
-				}
+			if (position.m_y < minY)
+			{
+				minY = position.m_y;
+			}
+			else if (position.m_y > maxY)
+			{
+				maxY = position.m_y;
+			}
 
-				if (position.m_y < minY)
-				{
-					minY = position.m_y;
-				}
-				else if (position.m_y > maxY)
-				{
-					maxY = position.m_y;
-				}
-
-				if (position.m_z < minZ)
-				{
-					minZ = position.m_z;
-				}
-				else if (position.m_z > maxZ)
-				{
-					maxZ = position.m_z;
-				}
+			if (position.m_z < minZ)
+			{
+				minZ = position.m_z;
+			}
+			else if (position.m_z > maxZ)
+			{
+				maxZ = position.m_z;
 			}
 		}
 
