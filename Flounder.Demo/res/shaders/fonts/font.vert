@@ -6,10 +6,10 @@ layout(binding = 0) uniform UboObject
 {
 	vec4 transform;
 	vec4 colour;
-	float alpha;
 	vec4 borderColour;
 	vec2 borderSizes;
 	vec2 edgeData;
+	float alpha;
 } object;
 
 layout(location = 0) in vec3 vertexPosition;

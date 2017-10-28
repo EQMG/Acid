@@ -38,8 +38,8 @@ namespace Flounder
 		/// Creates a new screen object.
 		/// </summary>
 		/// <param name="parent"> The parent screen object. </param>
-		/// <param name="position"> The position in relative space (if Z is not -1 the position will be in screen space, -1 disables screen space). </param>
-		/// <param name="dimensions"> The dimensions of the object (if Z is not -1 the width will be in screen space, -1 disables screen space). </param>
+		/// <param name="position"> The position in relative space (if Z is not false the position will be in screen space, false disables screen space). </param>
+		/// <param name="dimensions"> The dimensions of the object (if Z is not false the width will be in screen space, false disables screen space). </param>
 		/// <param name="pivot"> The pivot vector, this is the bound where the object will be rotated around. Left-Top: (0.0, 0.0), Centre: (0.5, 0.5), Right-Bottom: (1.0, 1.0). </param>
 		/// <param name="inScreenCoords"> If all X dimensions and scales will be taken in tems of the screens aspect ratio. </param>
 		UiObject(UiObject *parent, const Vector3 &position, const Vector3 &dimensions, const Vector2 &pivot); 

@@ -5,9 +5,9 @@
 layout(binding = 0) uniform UboObject
 {
 	vec4 transform;
-	float atlasRows;
-	vec2 atlasOffset;
 	vec4 colourOffset;
+	vec2 atlasOffset;
+	float atlasRows;
 	float alpha;
 } object;
 

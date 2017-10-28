@@ -7,9 +7,9 @@ namespace Flounder
 {
 	const std::vector<Vertex> VERTICES = {
 		Vertex(Vector3(0.0f, 0.0f, 0.0f), Vector2(0.0f, 0.0f)),
-		Vertex(Vector3(1.0f, 0.0f, 0.0f), Vector2(1.0f, 0.0f)),
-		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
-		Vertex(Vector3(0.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
+		Vertex(Vector3(0.5f, 0.0f, 0.0f), Vector2(1.0f, 0.0f)),
+		Vertex(Vector3(0.5f, 0.5f, 0.0f), Vector2(1.0f, 1.0f)),
+		Vertex(Vector3(0.0f, 0.5f, 0.0f), Vector2(0.0f, 1.0f))
 	};
 	const std::vector<uint32_t> INDICES = {
 		0, 1, 2, 2, 3, 0
@@ -21,7 +21,7 @@ namespace Flounder
 		m_model(new Model(VERTICES, INDICES)),
 		m_texture(texture),
 		m_selectedRow(selectedRow),
-		m_textureOffset(new Vector2()),
+		m_atlasOffset(new Vector2()),
 		m_colourOffset(new Colour(1.0f, 1.0f, 1.0f, 1.0f))
 	{
 	}
@@ -30,7 +30,7 @@ namespace Flounder
 	{
 		delete m_uniformObject;
 		delete m_model;
-		delete m_textureOffset;
+		delete m_atlasOffset;
 		delete m_colourOffset;
 	}
 
@@ -39,7 +39,7 @@ namespace Flounder
 		const int numberOfRows = m_texture != nullptr ? m_texture->GetNumberOfRows() : 1;
 		const int column = m_selectedRow % numberOfRows;
 		const int row = m_selectedRow / numberOfRows;
-		m_textureOffset->Set(static_cast<float>(column / numberOfRows), static_cast<float>(row / numberOfRows));
+		m_atlasOffset->Set(static_cast<float>(column / numberOfRows), static_cast<float>(row / numberOfRows));
 	}
 
 	void Gui::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)
@@ -54,9 +54,9 @@ namespace Flounder
 
 		UbosGuis::UboObject uboObject = {};
 		uboObject.transform = Vector4(*GetScreenTransform());
-		uboObject.atlasRows = static_cast<float>(m_texture->GetNumberOfRows());
-		uboObject.atlasOffset = Vector2(*m_textureOffset);
 		uboObject.colourOffset = Colour(*m_colourOffset);
+		uboObject.atlasOffset = Vector2(*m_atlasOffset);
+		uboObject.atlasRows = static_cast<float>(m_texture->GetNumberOfRows());
 		uboObject.alpha = GetAlpha();
 		m_uniformObject->Update(&uboObject);
 

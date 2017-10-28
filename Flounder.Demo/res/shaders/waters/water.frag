@@ -7,12 +7,9 @@
 layout(binding = 1) uniform UboObject
 {
 	mat4 transform;
-
 	vec4 diffuseColour;
-
 	float shineDamper;
 	float reflectivity;
-
 	float ignoreReflections;
 } object;
 
