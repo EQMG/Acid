@@ -28,8 +28,9 @@ namespace Flounder
 		/// Adds a character to the end of the current word and increases the screen-space width of the word.
 		/// </summary>
 		/// <param name="c"> The character to be added. </param>
+		/// <param name="kerning"> The character kerning. </param>
 		/// <returns> {@code true} if the character has successfully been added to the word. </returns>
-		bool AddCharacter(Character c);
+		bool AddCharacter(Character c, const float &kerning);
 
 		std::vector<Character> GetCharacters() const { return m_characters; }
 
