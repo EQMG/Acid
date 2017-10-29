@@ -2,7 +2,7 @@
 
 namespace Demo
 {
-	const float ManagerUis::SLIDE_TIME = 0.5f;
+	const float ManagerUis::SLIDE_TIME = 0.2f;
 
 	ManagerUis::ManagerUis() :
 		IManagerUis(),

@@ -11,9 +11,9 @@ namespace Flounder
 	Colour *const InputButton::COLOUR_NORMAL = new Colour("#000000");
 
 	InputButton::InputButton(UiObject *parent, const Vector3 &position, const std::string &string, const Justify &justify) :
-		UiObject(parent, position, Vector3(0.0f, 0.0f, true), Vector2(0.5f, 0.5f)),
-		m_text(new Text(this, position, Vector3(0.5f, 0.5f, true), string, Uis::Get()->m_candara->GetRegular(), SCALE_NORMAL, justify, 0.36f)),
-		m_background(new Gui(this, position, Vector3(1.0f, 1.0f, true), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
+		UiObject(parent, position, Vector3(0.0f, 0.0f, RelativeScreen), Vector2(0.5f, 0.5f)),
+		m_text(new Text(this, position, Vector3(0.5f, 0.5f, RelativeScreen), string, Uis::Get()->m_candara->GetRegular(), SCALE_NORMAL, justify, 0.36f)),
+		m_background(new Gui(this, position, Vector3(0.36f, 0.05f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
 		m_mouseOver(false),
 		m_actionLeft(nullptr),
 		m_actionRight(nullptr)

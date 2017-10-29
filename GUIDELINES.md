@@ -1,5 +1,5 @@
 # Flounder Guidelines 
-August 30, 2017 
+October 29, 2017 
  
 This document is a rough outline for guidelines for Flounder. This document covers the languages of C++, C#, and GLSL. Flounder is licenced on the MIT Licence, read more on our [LICENSE](LICENSE) file. For more about the project read our read more on our [README](README) file. 
  
@@ -16,8 +16,8 @@ namespace Examples
 {
 	enum FlExample
 	{
-		FL_EXAMPLE_ON = 0,
-		FL_EXAMPLE_OFF = 1,
+		FlEnableOn = 0,
+		FlEnableOff = 1,
 	}
 
 	/// <summary>
@@ -29,6 +29,8 @@ namespace Examples
 		int m_x;
 		std::vector<int> *m_list;
 	public:
+		float m_y;
+		
 		Example(const int &x = 0);
 
 		~Example();
@@ -59,7 +61,8 @@ namespace Examples
 {
 	Example::Example(const int &x) :
 		m_x(x),
-		m_list(new std::vector<int>())
+		m_list(new std::vector<int>()),
+		m_y(-1.0f)
 	{
 	}
 	
@@ -104,7 +107,7 @@ namespace Examples
 ```
 
 # Styling Guide
-Classes, all methods, functions, and files are camelcase + first letter upper. Member variables start with m_, paramaters are normal camelcased. Tabs are used for indentations, and braces are required for all blocks. Use the member initializer list no matter what. Avoid compiler macros where possible! Use multiple lines instead of long lines, const as much as possible.
+Classes, all methods, functions, and files are camelcase + first letter upper. Member variables start with m_, paramaters are normal camelcased. Tabs are used for indentations, and braces are required for all blocks. Use the member initializer list no matter what. Avoid compiler macros where possible! Use multiple lines instead of long lines, const as much as possible. Line length is usualy never wrapped, VS wraps lines for readability.
 
 # GLSL
 ```glsl
@@ -112,15 +115,15 @@ Classes, all methods, functions, and files are camelcase + first letter upper. M
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 0) uniform UBO 
+layout(binding = 0) uniform UboObject 
 {
-	bool passedValue;
-} ubo;
+	float passedValue;
+} object;
 
-layout(location = 0) out vec4 outAlbedo;
+layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
-	outAlbedo = vec4(passedValue, 0.0, 0.0, 1.0);
+	outColour = vec4(passedValue, 0.0, 0.0, 1.0);
 }
 ```
