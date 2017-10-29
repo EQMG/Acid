@@ -9,7 +9,7 @@ namespace Demo
 		//	m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.005f, 0.92f, AlignLeft)),
 		m_textFps(CreateStatus("FPS: 0", 0.005f, 0.95f, JustifyLeft)),
 		m_textUps(CreateStatus("UPS: 0", 0.005f, 0.98f, JustifyLeft)),
-		m_textExample(new Text(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector2(0.5f, 0.25f), "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?", Uis::Get()->m_proximanova->GetRegular(), 1.2f, JustifyCentre, 1.0f, 0.00332f, 0.01f)),
+		m_textExample(new Text(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector2(0.5f, 0.0f), "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sem est. Donec et posuere felis. Sed et sollicitudin odio, ut porta nibh. Suspendisse ac leo purus. Nam mattis ultrices enim vitae cursus. Aenean eu porttitor est. Nulla semper ligula ligula, a tempor metus blandit sed. Cras velit nunc, convallis eu interdum eu, pretium in nulla. Praesent auctor at odio non tincidunt.", Uis::Get()->m_proximanova->GetRegular(), 1.2f, JustifyCentre, 0.7f, 0.002f, 0.01f)),
 		m_guiExample(new Gui(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector3(0.5f, 0.5f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/geometry-grain.jpg"), 1)),
 		m_timerUpdate(new Timer(0.333f))
 	{
@@ -62,8 +62,8 @@ namespace Demo
 			}
 		}*/
 
-	//	m_textExample->SetVisible(false);
-	//	m_guiExample->SetVisible(false);
+		m_textExample->SetVisible(false);
+		m_guiExample->SetVisible(false);
 	}
 
 	OverlayDebug::~OverlayDebug()
