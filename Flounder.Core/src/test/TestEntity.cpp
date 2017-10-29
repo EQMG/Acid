@@ -18,9 +18,9 @@ namespace Flounder
 
 	TestEntity::~TestEntity()
 	{
-		delete m_swapMap;
-		delete m_diffuse;
-		delete m_model;
+	//	delete m_swapMap;
+	//	delete m_diffuse;
+	//	delete m_model;
 		delete m_uniformObject;
 	}
 
