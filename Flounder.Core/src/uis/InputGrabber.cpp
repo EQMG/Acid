@@ -103,7 +103,7 @@ namespace Flounder
 
 	InputGrabber::InputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IGrabber *grabber, const Justify &justify) :
 		UiObject(parent, position, Vector3(0.0f, 0.0f, true), Vector2(0.5f, 0.5f)),
-		m_text(new Text(this, position, Vector3(0.5f, 0.5f, true), prefix + grabber->GetValue(value), SCALE_NORMAL, Uis::Get()->m_candara->GetRegular(), justify)),
+		m_text(new Text(this, position, Vector3(0.5f, 0.5f, true), prefix + grabber->GetValue(value), Uis::Get()->m_candara->GetRegular(), SCALE_NORMAL, justify, 0.36f)),
 		m_background(new Gui(this, position, Vector3(1.0f, 1.0f, true), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
 		m_grabber(grabber),
 		m_prefix(prefix),
@@ -114,8 +114,6 @@ namespace Flounder
 		m_mouseOver(false),
 		m_actionChange(nullptr)
 	{
-		m_text->SetMaxWidth(0.36f);
-		m_text->SetTextColour(Colour("#ffffff"));
 	}
 
 	InputGrabber::~InputGrabber()
