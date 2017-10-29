@@ -158,13 +158,13 @@ namespace Flounder
 
 	float Text::CalculateEdgeStart()
 	{
-		float size = GetScale();
+		float size = 0.5f * GetScale();
 		return 1.0f / 300.0f * size + 137.0f / 300.0f;
 	}
 
 	float Text::CalculateAntialiasSize()
 	{
-		float size = GetScale();
+		float size = 0.5f * GetScale();
 		size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 		return 0.1f / size;
 	}
@@ -180,15 +180,17 @@ namespace Flounder
 		std::vector<Line> lines = CreateStructure(object);
 		std::vector<Vertex> vertices = CreateQuad(object, lines);
 
-		// Finds the bounding size of the mesh.
-		Vector2 bounding = GetBounding(vertices);
-		bounding.Normalize();
-
 		// Loads mesh data to Vulkan.
 		Model *model = new Model(vertices);
 		Aabb *aabb = model->GetAabb();
+
+	//	Vector2 bounding = Vector2((aabb->m_minExtents->m_x + aabb->m_maxExtents->m_x) / 2.0f, (aabb->m_minExtents->m_y + aabb->m_maxExtents->m_y) / 2.0f);
+	//	bounding.Normalize();
+
 		object->m_model = model;
-		object->SetDimensions(Vector3(bounding.m_x, 1.0f, RelativeScreen));
+	//	object->SetDimensions(Vector3(aabb->GetWidth(), 1.0f, RelativeScreen));
+	//	object->SetDimensions(Vector3(bounding.m_x, 1.0f, RelativeScreen));
+	//	object->SetDimensions(Vector3(bounding.m_x, 1.0f, RelativeScreen));
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)
@@ -218,6 +220,9 @@ namespace Flounder
 
 			if (ascii == Metafile::NEWLINE_ASCII)
 			{
+				lines.push_back(currentLine);
+				currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
+				currentLine.AddWord(currentWord);
 				continue;
 			}
 
@@ -322,49 +327,5 @@ namespace Flounder
 	{
 		const Vertex vertex = Vertex(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
 		vertices.push_back(vertex);
-	}
-
-	Vector2 Text::GetBounding(std::vector<Vertex> &vertices)
-	{
-		float minX = +INFINITY;
-		float minY = +INFINITY;
-		float minZ = +INFINITY;
-		float maxX = -INFINITY;
-		float maxY = -INFINITY;
-		float maxZ = -INFINITY;
-
-		for (const auto vertex : vertices)
-		{
-			const Vector3 position = vertex.m_position;
-
-			if (position.m_x < minX)
-			{
-				minX = position.m_x;
-			}
-			else if (position.m_x > maxX)
-			{
-				maxX = position.m_x;
-			}
-
-			if (position.m_y < minY)
-			{
-				minY = position.m_y;
-			}
-			else if (position.m_y > maxY)
-			{
-				maxY = position.m_y;
-			}
-
-			if (position.m_z < minZ)
-			{
-				minZ = position.m_z;
-			}
-			else if (position.m_z > maxZ)
-			{
-				maxZ = position.m_z;
-			}
-		}
-
-		return Vector2((minX + maxX) / 2.0f, (minY + maxY) / 2.0f);
 	}
 }
