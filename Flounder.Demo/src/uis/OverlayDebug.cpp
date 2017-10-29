@@ -3,7 +3,7 @@
 namespace Demo
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :
-		UiObject(parent, Vector3(0.5f, 0.5f, true), Vector3(1.0f, 1.0f, true), Vector2(0.5f, 0.5f)),
+		UiObject(parent, Vector3(0.5f, 0.5f, RelativeScreen), Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f)),
 		//	m_textHeight(CreateStatus("HEIGHT: 0.0", 0.005f, 0.86f, AlignLeft)),
 		//	m_textTime(CreateStatus("TIME: 0.0", 0.005f, 0.89f, AlignLeft)),
 		//	m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.005f, 0.92f, AlignLeft)),
@@ -53,7 +53,7 @@ namespace Demo
 
 	Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const Justify &justify)
 	{
-		Text *result = new Text(this, Vector3(positionX, positionY, true), Vector2(0.0f, 0.0f), content, Uis::Get()->m_candara->GetRegular(), 1.4f, justify);
+		Text *result = new Text(this, Vector3(positionX, positionY, RelativeScreen), Vector2(0.0f, 0.0f), content, Uis::Get()->m_candara->GetRegular(), 1.4f, justify);
 		result->SetTextColour(Colour(1.0f, 1.0f, 1.0f));
 		result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f));
 		result->SetBorder(new DriverConstant(0.04f));

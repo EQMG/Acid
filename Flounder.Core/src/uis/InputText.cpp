@@ -14,9 +14,9 @@ namespace Flounder
 	Colour *const InputText::COLOUR_NORMAL = new Colour("#000000");
 
 	InputText::InputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const Justify &justify) :
-		UiObject(parent, position, Vector3(0.0f, 0.0f, true), Vector2(0.5f, 0.5f)),
+		UiObject(parent, position, Vector3(0.0f, 0.0f, RelativeScreen), Vector2(0.5f, 0.5f)),
 		m_text(new Text(this, position, Vector2(0.5f, 0.5f), prefix + value, Uis::Get()->m_candara->GetRegular(), SCALE_NORMAL, justify, 0.36f)),
-		m_background(new Gui(this, position, Vector2(1.0f, 1.0f), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
+		m_background(new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
 		m_prefix(prefix),
 		m_value(value),
 		m_inputDelay(new InputDelay()),
