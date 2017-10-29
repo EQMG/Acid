@@ -17,15 +17,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entities\EntityTest.hpp" />
+    <ClInclude Include="src\uis\OverlayPaused.hpp" />
     <ClInclude Include="src\FpsCamera.hpp" />
     <ClInclude Include="src\FpsPlayer.hpp" />
     <ClInclude Include="src\Instance.hpp" />
     <ClInclude Include="src\ManagerRender.hpp" />
     <ClInclude Include="src\ManagerUis.hpp" />
     <ClInclude Include="src\uis\OverlayDebug.hpp" />
-    <ClInclude Include="src\uis\OverlayManager.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\uis\OverlayPaused.cpp" />
     <ClCompile Include="src\FpsCamera.cpp" />
     <ClCompile Include="src\FpsPlayer.cpp" />
     <ClCompile Include="src\Instance.cpp" />
@@ -33,7 +34,6 @@
     <ClCompile Include="src\ManagerRender.cpp" />
     <ClCompile Include="src\ManagerUis.cpp" />
     <ClCompile Include="src\uis\OverlayDebug.cpp" />
-    <ClCompile Include="src\uis\OverlayManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
