@@ -29,7 +29,6 @@ namespace Flounder
 		m_deltaRender(nullptr),
 		m_timerUpdate(nullptr),
 		m_timerRender(nullptr),
-		m_timerLog(nullptr),
 		m_modules(new std::multimap<float, std::pair<std::string, IModule*>>())
 	{
 	}
@@ -48,7 +47,6 @@ namespace Flounder
 
 		delete m_timerRender;
 		delete m_timerUpdate;
-		delete m_timerLog;
 	}
 
 	void PlatformUpdater::Create()
@@ -59,7 +57,6 @@ namespace Flounder
 		m_deltaRender = new Delta();
 		m_timerUpdate = new Timer(1.0f / 62.0f);
 		m_timerRender = new Timer(1.0f / -1.0f);
-		m_timerLog = new Timer(2.0f);
 
 		AddModule(UpdatePre, "audio", new Audio());
 		AddModule(UpdateRender, "display", new Display());
@@ -123,15 +120,6 @@ namespace Flounder
 
 			// Render
 			RunUpdate(UpdateRender);
-		}
-
-		// Logs when needed.
-		if (m_timerLog->IsPassedTime())
-		{
-			// Resets the timer.
-			m_timerLog->ResetStartTime();
-
-			printf("FPS: %u\n", static_cast<int>(1.0f / m_deltaRender->GetChange()));
 		}
 	}
 

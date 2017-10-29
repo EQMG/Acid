@@ -69,15 +69,22 @@ namespace Flounder
 			UpdateObject();
 		}
 
-		const float da = m_dimensions->m_z == RelativeScreen ? Display::Get()->GetAspectRatio() : 1.0f;
+		const float da = m_dimensions->m_z == RelativeScreen ? Display::Get()->GetAspectRatio() : m_dimensions->m_z == RelativeInverse ? 1.0f / Display::Get()->GetAspectRatio() : 1.0f;
 		const float dw = (m_dimensions->m_x / da) * m_scale;
 		const float dh = m_dimensions->m_y * m_scale;
 
-		const float pa = m_position->m_z == RelativeScreen ? 1.0f : Display::Get()->GetAspectRatio();
+		const float pa = m_position->m_z == RelativeScreen ? 1.0f : Display::Get()->GetAspectRatio(); // TODO RelativeInverse
 		const float px = (m_position->m_x / pa) - (dw * m_pivot->m_x) + m_positionOffset->m_x;
 		const float py = m_position->m_y - (dh * -m_pivot->m_y) + m_positionOffset->m_y;
 
-		m_screenTransform->Set(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
+		m_screenTransform->Set(dw, dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
+		
+		/*const float dw = (m_dimensions->m_x / Display::Get()->GetAspectRatio()) * m_scale;
+		const float dh = (m_dimensions->m_y) * m_scale;
+
+		const float px = 0.5f;
+		const float py = 0.5f;
+		m_screenTransform->Set(dw, dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);*/
 	}
 
 	void UiObject::UpdateObject()

@@ -3,7 +3,7 @@
 #include <Flounder.hpp>
 
 #include "uis/OverlayDebug.hpp"
-#include "uis/OverlayManager.hpp"
+#include "uis/OverlayPaused.hpp"
 
 using namespace Flounder;
 
@@ -17,9 +17,11 @@ namespace Demo
 	private:
 		Colour *m_primaryColour;
 
+		IButton *m_buttonPause;
+
 		OverlayStartup *m_overlayStartup;
 		OverlayDebug *m_overlayDebug;
-		OverlayManager *m_overlayManager;
+		OverlayPaused *m_overlayPaused;
 	public:
 		ManagerUis();
 
@@ -32,5 +34,7 @@ namespace Demo
 		float GetBlurFactor() override;
 
 		inline Colour *GetPrimaryColour() override { return m_primaryColour; }
+	private:
+		void TogglePause();
 	};
 }

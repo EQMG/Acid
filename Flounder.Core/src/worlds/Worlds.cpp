@@ -8,7 +8,7 @@ namespace Flounder
 {
 	Worlds::Worlds() :
 		IModule(),
-		m_driverDay(new DriverLinear(0.0f, 1.0f, 500.0f)),
+		m_driverDay(new DriverLinear(0.0f, 1.0f, 300.0f)),
 		m_factorDay(0.0f),
 		m_sunPosition(new Vector3()),
 		m_sunColour(new Colour())
@@ -35,8 +35,8 @@ namespace Flounder
 		Matrix4::Rotate(Vector3(0.2f, 0.0f, 0.5f), skyboxRotation, &lightDirection);
 		lightDirection.Normalize();
 		
-		Colour::Interpolate(Colour(0.9f, 0.3f, 0.3f), Colour(0.05f, 0.05f, 0.1f), GetSunriseFactor(), &fogColour);
-		Colour::Interpolate(fogColour, Colour(0.0f, 0.3f, 0.7f, 1.0f), GetShadowFactor(), &fogColour);
+		Colour::Interpolate(Colour("#E14938"), Colour("#0D0D1A"), GetSunriseFactor(), &fogColour);
+		Colour::Interpolate(fogColour, Colour("#2C82C9"), GetShadowFactor(), &fogColour);
 		
 		Vector3::Multiply(lightDirection, Vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
 		
@@ -45,8 +45,8 @@ namespace Flounder
 			Vector3::Add(*m_sunPosition, *Camera::Get()->GetCamera()->GetPosition(), m_sunPosition);
 		}
 
-		Colour::Interpolate(Colour(0.9f, 0.3f, 0.3f), Colour(0.0f, 0.0f, 0.0f), GetSunriseFactor(), m_sunColour);
-		Colour::Interpolate(*m_sunColour, Colour(1.0f, 1.0f, 1.0f), GetShadowFactor(), m_sunColour);
+		Colour::Interpolate(Colour("#E14938"), Colour("#0D0D1A"), GetSunriseFactor(), m_sunColour);
+		Colour::Interpolate(*m_sunColour, Colour("#ffffff"), GetShadowFactor(), m_sunColour);
 		
 		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetSkybox() != nullptr)
 		{
