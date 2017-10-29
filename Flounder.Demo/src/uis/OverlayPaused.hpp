@@ -10,8 +10,6 @@ namespace Demo
 		public UiObject
 	{
 	private:
-		Text *m_textExample;
-		Gui *m_guiExample;
 	public:
 		OverlayPaused(UiObject *parent);
 
