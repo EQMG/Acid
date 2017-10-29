@@ -70,7 +70,14 @@ namespace Demo
 
 		if (Uis::Get() != nullptr && Uis::Get()->GetManager() != nullptr)
 		{
-			m_paused = Uis::Get()->GetManager()->IsGamePaused();
+			const bool newPaused = Uis::Get()->GetManager()->IsGamePaused();
+
+			if (m_paused != newPaused)
+			{
+				Mouse::Get()->SetCursorHidden(!newPaused);
+			}
+
+			m_paused = newPaused;
 		}
 
 		CalculateHorizontalAngle();
