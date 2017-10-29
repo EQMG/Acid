@@ -107,8 +107,12 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
-		vkDestroyImage(logicalDevice, m_image, nullptr);
 		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
+		vkDestroyImage(logicalDevice, m_image, nullptr);
+
+		m_sampler = VK_NULL_HANDLE;
+		m_imageView = VK_NULL_HANDLE;
+		m_image = VK_NULL_HANDLE;
 	}
 
 	DescriptorType Texture::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
