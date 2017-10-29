@@ -3,21 +3,21 @@
   <ItemGroup>
     <ClInclude Include="src\entities\EntityTest.hpp" />
     <ClInclude Include="src\uis\OverlayDebug.hpp" />
-    <ClInclude Include="src\uis\OverlayManager.hpp" />
     <ClInclude Include="src\FpsCamera.hpp" />
     <ClInclude Include="src\FpsPlayer.hpp" />
     <ClInclude Include="src\Instance.hpp" />
     <ClInclude Include="src\ManagerRender.hpp" />
     <ClInclude Include="src\ManagerUis.hpp" />
+    <ClInclude Include="src\uis\OverlayPaused.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\uis\OverlayDebug.cpp" />
-    <ClCompile Include="src\uis\OverlayManager.cpp" />
     <ClCompile Include="src\FpsCamera.cpp" />
     <ClCompile Include="src\FpsPlayer.cpp" />
     <ClCompile Include="src\Instance.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\ManagerRender.cpp" />
     <ClCompile Include="src\ManagerUis.cpp" />
+    <ClCompile Include="src\uis\OverlayPaused.cpp" />
   </ItemGroup>
 </Project>

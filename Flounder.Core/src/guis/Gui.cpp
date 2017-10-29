@@ -7,9 +7,9 @@ namespace Flounder
 {
 	const std::vector<Vertex> VERTICES = {
 		Vertex(Vector3(0.0f, 0.0f, 0.0f), Vector2(0.0f, 0.0f)),
-		Vertex(Vector3(1.0f, 0.0f, 0.0f), Vector2(1.0f, 0.0f)),
-		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
-		Vertex(Vector3(0.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
+		Vertex(Vector3(2.0f, 0.0f, 0.0f), Vector2(1.0f, 0.0f)),
+		Vertex(Vector3(2.0f, 2.0f, 0.0f), Vector2(1.0f, 1.0f)),
+		Vertex(Vector3(0.0f, 2.0f, 0.0f), Vector2(0.0f, 1.0f))
 	};
 	const std::vector<uint32_t> INDICES = {
 		0, 1, 2, 2, 3, 0

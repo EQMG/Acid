@@ -15,8 +15,6 @@ namespace Demo
 	//	Text *m_textPosition;
 		Text *m_textFps;
 		Text *m_textUps;
-		Text *m_textExample;
-		Gui *m_guiExample;
 		Timer *m_timerUpdate;
 	public:
 		OverlayDebug(UiObject *parent);
