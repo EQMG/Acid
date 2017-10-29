@@ -11,7 +11,7 @@ namespace Demo
 		m_buttonExit = new ButtonKeyboard({ GLFW_KEY_DELETE });
 
 #ifdef FLOUNDER_CONFIG_RELEASE
-		Sound *music1 = new Sound("music", "res/ld39Outpost.wav");
+		Sound *music1 = new Sound("music", "res/music/outpost.wav");
 
 		if (music1 != nullptr)
 		{
