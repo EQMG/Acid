@@ -11,6 +11,7 @@
 #include "FontType.hpp"
 #include "Justify.hpp"
 #include "Line.hpp"
+#include "../uis/Uis.hpp"
 
 namespace Flounder
 {
@@ -28,14 +29,13 @@ namespace Flounder
 		std::string m_newString;
 		Justify m_justify;
 
-		FontType *m_fonttype;
-		Colour *m_textColour;
-		Colour *m_borderColour;
-
+		FontType *m_fontType;
+		float m_maxWidth;
 		float m_kerning;
 		float m_leading;
-		float m_maxWidth;
 
+		Colour *m_textColour;
+		Colour *m_borderColour;
 		bool m_solidBorder;
 		bool m_glowBorder;
 
@@ -48,11 +48,17 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new text object.
 		/// </summary>
-		/// <param name="fonttype"> The text that will be set to this object. </param>
-		/// <param name="fontSize"> The initial size of the font (1 is the default). </param>
-		/// <param name="font"> The font type to be used in this text. </param>
-		/// <param name="align"> How the text will align if wrapped. </param>
-		Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const Justify &justify);
+		/// <param name="parent"> The parent screen object. </param>
+		/// <param name="position"> The position in relative space (if Z is UiRelative.RelativeScreen the position will be in screen space, UiRelative.RelativeNone disables screen space). </param>
+		/// <param name="pivot"> The pivot vector, this is the bound where the object will be rotated around. Left-Top: (0.0, 0.0), Centre: (0.5, 0.5), Right-Bottom: (1.0, 1.0). </param>
+		/// <param name="text"> The string text the object will be created with. </param>
+		/// <param name="fontType"> The font type to be used in this text. </param>
+		/// <param name="fontSize"> The font size to be used in this text. </param>
+		/// <param name="justify"> How the text will justify. </param>
+		/// <param name="maxWidth"> The maximum length of a line of this text. </param>
+		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
+		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
+		Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, FontType *fontType = Uis::Get()->m_proximanova->GetRegular(), const float &fontSize = 1.0f, const Justify &justify = JustifyLeft, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		/// <summary>
 		/// Deconstructor for the text.
@@ -62,8 +68,6 @@ namespace Flounder
 		void UpdateObject() override;
 
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline);
-
-		void RecreateMesh();
 
 		/// <summary>
 		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
@@ -90,6 +94,18 @@ namespace Flounder
 		Justify GetTextJustify() const { return m_justify; }
 
 		/// <summary>
+		/// Gets the maximum length of a line of this text.
+		/// </summary>
+		/// <returns> The maximum length of a line. </returns>
+		float GetMaxWidth() const { return m_maxWidth; }
+
+		/// <summary>
+		/// Sets the maximum length of a line of this text.
+		/// </summary>
+		/// <param name="maxWidth"> The new maximum length. </param>
+		void SetMaxWidth(const float &maxWidth) { m_maxWidth = maxWidth; }
+
+		/// <summary>
 		/// Gets the kerning (type character spacing multiplier) of this text.
 		/// </summary>
 		/// <returns> The type kerning. </returns>
@@ -114,28 +130,16 @@ namespace Flounder
 		void SetLeading(const float &leading) { m_leading = leading; }
 
 		/// <summary>
-		/// Gets the maximum length of a line of this text.
-		/// </summary>
-		/// <returns> The maximum length of a line. </returns>
-		float GetMaxWidth() const { return m_maxWidth; }
-
-		/// <summary>
-		/// Sets the maximum length of a line of this text.
-		/// </summary>
-		/// <param name="maxWidth"> The new maximum length. </param>
-		void SetMaxWidth(const float &maxWidth) { m_maxWidth = maxWidth; }
-
-		/// <summary>
 		/// Gets the font used by this text.
 		/// </summary>
 		/// <returns> The font used by this text. </returns>
-		FontType *GetFontType() const { return m_fonttype; }
+		FontType *GetFontType() const { return m_fontType; }
 
 		/// <summary>
 		/// Gets font type texture for this text.
 		/// </summary>
 		/// <returns> The texts texture. </returns>
-		Texture *GetTexture() const { return m_fonttype->GetTexture(); }
+		Texture *GetTexture() const { return m_fontType->GetTexture(); }
 
 		/// <summary>
 		/// Gets the colour of the text.

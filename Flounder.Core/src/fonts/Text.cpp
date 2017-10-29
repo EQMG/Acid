@@ -7,19 +7,19 @@
 
 namespace Flounder
 {
-	Text::Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, const float &fontSize, FontType *fonttype, const Justify &justify) :
+	Text::Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, FontType *fontType, const float &fontSize, const Justify &justify, const float &maxWidth, const float &kerning, const float &leading) :
 		UiObject(parent, position, Vector3(1.0f, 1.0f, RelativeScreen), pivot),
 		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
 		m_model(nullptr),
 		m_string(text),
 		m_newString(""),
 		m_justify(justify),
-		m_fonttype(fonttype),
+		m_fontType(fontType),
+		m_maxWidth(maxWidth),
+		m_kerning(kerning),
+		m_leading(leading),
 		m_textColour(new Colour("#ffffff")),
 		m_borderColour(new Colour("#000000")),
-		m_kerning(0.0f),
-		m_leading(0.0f),
-		m_maxWidth(1.0f),
 		m_solidBorder(false),
 		m_glowBorder(false),
 		m_glowDriver(new DriverConstant(0.0f)),
@@ -28,7 +28,7 @@ namespace Flounder
 		m_borderSize(0.0f)
 	{
 		SetScaleDriver(new DriverConstant(fontSize));
-	//	LoadText(this);
+		LoadText(this);
 	}
 
 	Text::~Text()
@@ -45,9 +45,12 @@ namespace Flounder
 
 	void Text::UpdateObject()
 	{
-		if (!IsLoaded() || IsLoaded() && m_newString != "")
+		if (IsLoaded() && m_newString != "")
 		{
-			RecreateMesh();
+			delete m_model;
+			m_string = m_newString;
+			LoadText(this);
+			m_newString = "";
 		}
 
 		m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
@@ -80,25 +83,12 @@ namespace Flounder
 		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_w);
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformObject->GetWriteDescriptor(0, descriptorSet), m_fonttype->GetTexture()->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this!
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformObject->GetWriteDescriptor(0, descriptorSet), m_fontType->GetTexture()->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this!
 		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_model->CmdRender(commandBuffer);
-	}
-
-	void Text::RecreateMesh()
-	{
-		delete m_model;
-		
-		if (m_newString != "")
-		{
-			m_string = m_newString;
-		}
-
-		LoadText(this);
-		m_newString = "";
 	}
 
 	void Text::SetText(const std::string &newText)
