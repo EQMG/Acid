@@ -9,13 +9,10 @@ namespace Demo
 		//	m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.005f, 0.92f, AlignLeft)),
 		m_textFps(CreateStatus("FPS: 0", 0.005f, 0.95f, JustifyLeft)),
 		m_textUps(CreateStatus("UPS: 0", 0.005f, 0.98f, JustifyLeft)),
-		m_textExample(new Text(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector2(0.5f, 0.25f), "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?", 1.2f, Uis::Get()->m_proximanova->GetRegular(), JustifyCentre)),
+		m_textExample(new Text(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector2(0.5f, 0.25f), "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?", Uis::Get()->m_proximanova->GetRegular(), 1.2f, JustifyCentre, 1.0f, 0.00332f, 0.01f)),
 		m_guiExample(new Gui(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector3(0.5f, 0.5f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/geometry-grain.jpg"), 1)),
 		m_timerUpdate(new Timer(0.333f))
 	{
-		m_textExample->SetKerning(0.00332f);
-		m_textExample->SetLeading(0.01f);
-	//	m_textExample->SetMaxWidth(0.75f); // Disabling this everything works...
 		m_guiExample->SetColourOffset(Colour("#553982"));
 
 		Texture *textureInv = new Texture("res/guis/geometry-grain.jpg");
@@ -24,9 +21,8 @@ namespace Demo
 		Gui *barColour = new Gui(this, Vector3(0.5f, 1.0f, RelativeScreen), Vector3(1.0f, 1.0f, RelativeNone), Vector2(0.5f, 0.0f), new Texture("res/guis/geometry-grain.jpg"), 1);
 		barColour->SetScissor(Vector4(0.0f, 0.875f, 1.0f, 1.0f));
 		barColour->SetColourOffset(Colour("#2969B0"));
-		Text *barTitle = new Text(this, Vector3(0.015f, 0.985f, false), Vector2(0.0f, 0.0f), "Kosmos", 2.5f, Uis::Get()->m_proximanova->GetBold(), JustifyLeft);
-		Text *barCreated = new Text(this, Vector3(0.019f, 0.91f, false), Vector2(0.0f, 0.0f), "Created By: Equilibrium Games", 0.6f, Uis::Get()->m_proximanova->GetLight(), JustifyLeft);
-		barCreated->SetKerning(0.001f);
+		Text *barTitle = new Text(this, Vector3(0.015f, 0.985f, false), Vector2(0.0f, 0.0f), "Kosmos", Uis::Get()->m_proximanova->GetBold(), 2.5f, JustifyLeft);
+		Text *barCreated = new Text(this, Vector3(0.019f, 0.91f, false), Vector2(0.0f, 0.0f), "Created By: Equilibrium Games", Uis::Get()->m_proximanova->GetLight(), 0.6f, JustifyLeft, 1.0f, 0.0013f);
 		Gui *tabPuck = new Gui(this, Vector3(0.0f, 0.875f, false), Vector3(0.0f, 0.01f, true), Vector2(0.0f, 1.0f), texturePuck, 1);
 		tabPuck->SetColourOffset(Colour("#386AB5"));
 
@@ -36,9 +32,7 @@ namespace Demo
 
 		for (int i = 0; i < tabNames.size(); i++)
 		{
-			Text *tabText = new Text(this, Vector3(tabXOffset, 0.947f, false), Vector2(0.0f, 0.0f), tabNames.at(i), 0.9f, Uis::Get()->m_proximanova->GetRegular(), JustifyLeft);
-			tabText->SetKerning(0.0035f);
-			tabText->RecreateMesh(); // Forces the text creation.
+			Text *tabText = new Text(this, Vector3(tabXOffset, 0.947f, false), Vector2(0.0f, 0.0f), tabNames.at(i), Uis::Get()->m_proximanova->GetRegular(), 0.9f, JustifyLeft, 1.0f, 0.0035f);
 			const float width = tabText->GetModel()->GetAabb()->GetWidth();
 
 			if (i == 3)
@@ -113,7 +107,7 @@ namespace Demo
 
 	Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const Justify &justify)
 	{
-		Text *result = new Text(this, Vector3(positionX, positionY, true), Vector2(0.5f, 0.5f), content, 1.0f, Uis::Get()->m_candara->GetRegular(), justify);
+		Text *result = new Text(this, Vector3(positionX, positionY, true), Vector2(0.5f, 0.5f), content, Uis::Get()->m_candara->GetRegular(), 1.0f, justify);
 		result->SetTextColour(Colour(1.0f, 1.0f, 1.0f));
 		result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f));
 		result->SetBorder(new DriverConstant(0.04f));
