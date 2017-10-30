@@ -11,10 +11,11 @@ namespace Demo
 		// Examples.
 		UiObject *uiExamples = new UiObject(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f));
 
-		Text *textExample = new Text(uiExamples, Vector3(0.5f, 0.5f, RelativeScreen), 1.0f, Vector2(0.5f, 0.5f), "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sem est. Donec et posuere felis. Sed et sollicitudin odio, ut porta nibh. Suspendisse ac leo purus. Nam mattis ultrices enim vitae cursus. Aenean eu porttitor est. Nulla semper ligula ligula, a tempor metus blandit sed. Cras velit nunc, convallis eu interdum eu, pretium in nulla. Praesent auctor at odio non tincidunt.", Uis::Get()->m_proximanova->GetRegular(), JustifyCentre, 0.653f, 0.0012f, 0.024f);
+		Text *textExample = new Text(uiExamples, Vector3(0.5f, 0.5f, RelativeScreen), 1.4f, Vector2(0.0f, 0.0f), "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sem est. Donec et posuere felis. Sed et sollicitudin odio, ut porta nibh. Suspendisse ac leo purus. Nam mattis ultrices enim vitae cursus. Aenean eu porttitor est. Nulla semper ligula ligula, a tempor metus blandit sed. Cras velit nunc, convallis eu interdum eu, pretium in nulla. Praesent auctor at odio non tincidunt.", Uis::Get()->m_proximanova->GetRegular(), JustifyCentre, 0.653f, 0.0012f, 0.024f);
 		textExample->SetGlowing(new DriverConstant(0.15f));
 		
 		Gui *guiExample = new Gui(uiExamples, *textExample->GetPosition(), *textExample->GetDimensions(), *textExample->GetPivot(), new Texture("res/guis/geometry-grain.jpg"), 1);
+		guiExample->SetScaleDriver(new DriverConstant(1.4f));
 		guiExample->SetColourOffset(Colour("#553982"));
 		
 	//	uiExamples->SetVisible(false);
