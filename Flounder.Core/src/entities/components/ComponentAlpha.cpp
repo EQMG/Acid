@@ -1,5 +1,7 @@
 ﻿#include "ComponentAlpha.hpp"
 
+#include "../Entity.hpp"
+
 namespace Flounder
 {
 	ComponentAlpha::ComponentAlpha(const float &alpha) :

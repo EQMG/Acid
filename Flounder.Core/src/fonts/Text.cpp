@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	Text::Text(UiObject *parent, const Vector3 &position, const Vector2 &pivot, const std::string &text, FontType *fontType, const float &fontSize, const Justify &justify, const float &maxWidth, const float &kerning, const float &leading) :
+	Text::Text(UiObject *parent, const Vector3 &position, const float &fontSize, const Vector2 &pivot, const std::string &text, FontType *fontType, const Justify &justify, const float &maxWidth, const float &kerning, const float &leading) :
 		UiObject(parent, position, Vector3(1.0f, 1.0f, RelativeScreen), pivot),
 		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
 		m_model(nullptr),
@@ -158,13 +158,13 @@ namespace Flounder
 
 	float Text::CalculateEdgeStart()
 	{
-		float size = 0.5f * GetScale();
+		float size = GetScale();
 		return 1.0f / 300.0f * size + 137.0f / 300.0f;
 	}
 
 	float Text::CalculateAntialiasSize()
 	{
-		float size = 0.5f * GetScale();
+		float size = GetScale();
 		size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 		return 0.1f / size;
 	}
@@ -180,17 +180,59 @@ namespace Flounder
 		std::vector<Line> lines = CreateStructure(object);
 		std::vector<Vertex> vertices = CreateQuad(object, lines);
 
+		Vector2 bounding = Vector2();
+
+		{
+			std::vector<Vertex> vertices2 = std::vector<Vertex>();
+			float minX = +INFINITY;
+			float minY = +INFINITY;
+			float maxX = -INFINITY;
+			float maxY = -INFINITY;
+
+			for (const auto vertex : vertices)
+			{
+				const Vector3 position = vertex.m_position;
+
+				if (position.m_x < minX)
+				{
+					minX = position.m_x;
+				}
+				else if (position.m_x > maxX)
+				{
+					maxX = position.m_x;
+				}
+
+				if (position.m_y < minY)
+				{
+					minY = position.m_y;
+				}
+				else if (position.m_y > maxY)
+				{
+					maxY = position.m_y;
+				}
+			}
+
+			bounding.Set((minX + maxX) / 2.0f, (minY + maxY) / 2.0f);
+			maxX -= minX;
+			maxY -= minY;
+
+			for (auto vertex : vertices)
+			{
+				Vector3 position = Vector3((vertex.m_position.m_x - minX) / maxX, (vertex.m_position.m_y - minY) / maxY, 0.0f);
+				Vertex vertex2 = Vertex(position, Vector2(vertex.m_textures), Vector3(vertex.m_normal), Vector3(vertex.m_tangent));
+				vertices2.push_back(vertex2);
+			}
+
+			vertices = vertices2;
+		}
+
 		// Loads mesh data to Vulkan.
 		Model *model = new Model(vertices);
 		Aabb *aabb = model->GetAabb();
 
-	//	Vector2 bounding = Vector2((aabb->m_minExtents->m_x + aabb->m_maxExtents->m_x) / 2.0f, (aabb->m_minExtents->m_y + aabb->m_maxExtents->m_y) / 2.0f);
-	//	bounding.Normalize();
-
 		object->m_model = model;
-	//	object->SetDimensions(Vector3(aabb->GetWidth(), 1.0f, RelativeScreen));
-	//	object->SetDimensions(Vector3(bounding.m_x, 1.0f, RelativeScreen));
-	//	object->SetDimensions(Vector3(bounding.m_x, 1.0f, RelativeScreen));
+		object->SetDimensions(Vector3(bounding.m_x, bounding.m_y, RelativeScreen));
+	//	object->SetDimensions(Vector3(2.0f, 2.0f, RelativeScreen));
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)
