@@ -11,6 +11,8 @@ namespace Demo
 		m_textUps(CreateStatus("UPS: 0", 0.005f, 0.03f, JustifyLeft)),
 		m_timerUpdate(new Timer(0.333f))
 	{
+		m_textFps->SetVisible(false);
+		m_textUps->SetVisible(false);
 	}
 
 	OverlayDebug::~OverlayDebug()
