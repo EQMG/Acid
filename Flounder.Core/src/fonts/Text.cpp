@@ -231,8 +231,7 @@ namespace Flounder
 		Aabb *aabb = model->GetAabb();
 
 		object->m_model = model;
-		object->SetDimensions(Vector3(bounding.m_x, bounding.m_y, RelativeScreen));
-	//	object->SetDimensions(Vector3(2.0f, 2.0f, RelativeScreen));
+		object->SetDimensions(Vector3(1.0f, bounding.m_y / bounding.m_x, RelativeScreen));
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)
