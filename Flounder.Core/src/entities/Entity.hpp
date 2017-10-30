@@ -34,8 +34,8 @@ namespace Flounder
 
 		void RemoveComponent(IComponent *component);
 
-		template<class t>
-		t GetComponent();
+		template<class T>
+		T GetComponent();
 
 		Vector3 *GetPosition() const { return m_position; }
 
