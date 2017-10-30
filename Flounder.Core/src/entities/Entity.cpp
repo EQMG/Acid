@@ -65,12 +65,12 @@ namespace Flounder
 		}
 	}
 
-	template<class t>
-	t Entity::GetComponent()
+	template<class T>
+	T Entity::GetComponent()
 	{
 		for (auto c : *m_components)
 		{
-			t casted = dynamic_cast<t>(c);
+			T casted = dynamic_cast<T>(c);
 
 			if (casted != nullptr)
 			{

@@ -32,8 +32,8 @@ namespace Demo
 		m_systemTest->setSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
 		particles::get()->addSystem(m_systemTest);*/
 
-		// EntityTest *test = new EntityTest(nullptr, Vector3(), Vector3());
-		// componentalpha *meme = test->getComponent<componentalpha*>();
+		//EntityTest *test = new EntityTest(nullptr, Vector3(), Vector3());
+		//ComponentAlpha *meme = test->GetComponent<ComponentAlpha*>();
 
 		//Model *modelTest = new Model("res/test/model.obj");
 		//Transform *transformTest = new Transform(Vector3(100.892f, -10.0f, -256.0f), Vector3(0.0f, 90.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f));

@@ -77,7 +77,7 @@ namespace Flounder
 		const float px = (m_position->m_x / pa) - (dw * m_pivot->m_x) + m_positionOffset->m_x;
 		const float py = m_position->m_y - (dh * -m_pivot->m_y) + m_positionOffset->m_y;
 
-		m_screenTransform->Set(dw, dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
+		m_screenTransform->Set(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
 	}
 
 	void UiObject::UpdateObject()
