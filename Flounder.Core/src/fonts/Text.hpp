@@ -229,5 +229,7 @@ namespace Flounder
 		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<Vertex> &vertices);
 
 		static void AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<Vertex> &vertices);
+
+		static std::vector<Vertex> NormalizeQuad(Text *object, Vector2 *bounding, const std::vector<Vertex> &vertices);
 	};
 }
