@@ -11,8 +11,8 @@ namespace Demo
 		m_textUps(CreateStatus("UPS: 0", 0.005f, 0.03f, JustifyLeft)),
 		m_timerUpdate(new Timer(0.333f))
 	{
-		m_textFps->SetVisible(false);
-		m_textUps->SetVisible(false);
+	//	m_textFps->SetVisible(false);
+	//	m_textUps->SetVisible(false);
 	}
 
 	OverlayDebug::~OverlayDebug()
@@ -55,7 +55,7 @@ namespace Demo
 
 	Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const Justify &justify)
 	{
-		Text *result = new Text(this, Vector3(positionX, positionY, RelativeScreen), 0.9f, Vector2(0.0f, 0.0f), content, Uis::Get()->m_candara->GetRegular(), justify);
+		Text *result = new Text(this, Vector3(positionX, positionY, RelativeScreen), 1.4f, Vector2(0.0f, 0.0f), content, Uis::Get()->m_candara->GetRegular(), justify);
 		result->SetTextColour(Colour(1.0f, 1.0f, 1.0f));
 		result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f));
 		result->SetBorder(new DriverConstant(0.04f));
