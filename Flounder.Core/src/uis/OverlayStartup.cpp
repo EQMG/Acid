@@ -11,7 +11,7 @@ namespace Flounder
 		UiObject(parent, Vector3(0.5f, 0.5f, RelativeScreen), Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f)),
 		m_guiBackground(new Gui(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/eg_background.png"), 1)),
 		m_guiLogo(new Gui(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector3(0.4f, 0.4f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/equilibrium_games.png"), 1)),
-		m_textCopyright(new Text(this, Vector3(0.5f, 0.18f, RelativeScreen), 2.0f, Vector2(0.5f, 0.5f), "Copyright (C) 2017, Equilibrium Games - All Rights Reserved. This product uses GLFW, Vulkan, and STB Image.", Uis::Get()->m_cafeFrancoise->GetRegular(), JustifyCentre, 0.5f)),
+		m_textCopyright(new Text(this, Vector3(0.5f, 0.18f, RelativeScreen), 2.6f, Vector2(0.5f, 0.5f), "Copyright (C) 2017, Equilibrium Games - All Rights Reserved. This product uses GLFW, Vulkan, and STB Image.", Uis::Get()->m_cafeFrancoise->GetRegular(), JustifyCentre, 0.5f)),
 		m_starting(true)
 	{
 		Events::Get()->AddEvent(new EventTime(3.6f, false, [&]() // 1.649f

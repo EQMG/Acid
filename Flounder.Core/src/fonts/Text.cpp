@@ -158,13 +158,13 @@ namespace Flounder
 
 	float Text::CalculateEdgeStart()
 	{
-		float size = GetScale();
+		float size = 0.5f * GetScale();
 		return 1.0f / 300.0f * size + 137.0f / 300.0f;
 	}
 
 	float Text::CalculateAntialiasSize()
 	{
-		float size = GetScale();
+		float size = 0.5f * GetScale();
 		size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 		return 0.1f / size;
 	}
@@ -177,61 +177,17 @@ namespace Flounder
 	void Text::LoadText(Text *object)
 	{
 		// Creates mesh data.
-		std::vector<Line> lines = CreateStructure(object);
-		std::vector<Vertex> vertices = CreateQuad(object, lines);
+		const std::vector<Line> lines = CreateStructure(object);
+		const std::vector<Vertex> vertices = CreateQuad(object, lines);
 
+		// Calculates the bounds and zormalizes the verticies.
 		Vector2 bounding = Vector2();
-
-		{
-			std::vector<Vertex> vertices2 = std::vector<Vertex>();
-			float minX = +INFINITY;
-			float minY = +INFINITY;
-			float maxX = -INFINITY;
-			float maxY = -INFINITY;
-
-			for (const auto vertex : vertices)
-			{
-				const Vector3 position = vertex.m_position;
-
-				if (position.m_x < minX)
-				{
-					minX = position.m_x;
-				}
-				else if (position.m_x > maxX)
-				{
-					maxX = position.m_x;
-				}
-
-				if (position.m_y < minY)
-				{
-					minY = position.m_y;
-				}
-				else if (position.m_y > maxY)
-				{
-					maxY = position.m_y;
-				}
-			}
-
-			bounding.Set((minX + maxX) / 2.0f, (minY + maxY) / 2.0f);
-			maxX -= minX;
-			maxY -= minY;
-
-			for (auto vertex : vertices)
-			{
-				Vector3 position = Vector3((vertex.m_position.m_x - minX) / maxX, (vertex.m_position.m_y - minY) / maxY, 0.0f);
-				Vertex vertex2 = Vertex(position, Vector2(vertex.m_textures), Vector3(vertex.m_normal), Vector3(vertex.m_tangent));
-				vertices2.push_back(vertex2);
-			}
-
-			vertices = vertices2;
-		}
+		std::vector<Vertex> verticesNormalized = NormalizeQuad(object, &bounding, vertices);
 
 		// Loads mesh data to Vulkan.
-		Model *model = new Model(vertices);
-		Aabb *aabb = model->GetAabb();
-
+		Model *model = new Model(verticesNormalized);
 		object->m_model = model;
-		object->SetDimensions(Vector3(1.0f, bounding.m_y / bounding.m_x, RelativeScreen));
+		object->SetDimensions(Vector3(bounding.m_x, bounding.m_y, RelativeScreen));
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)
@@ -258,6 +214,8 @@ namespace Flounder
 				currentWord = Word();
 				continue;
 			}
+
+			// TODO: TAB_ASCII
 
 			if (ascii == Metafile::NEWLINE_ASCII)
 			{
@@ -300,6 +258,7 @@ namespace Flounder
 	//	object->m_numberLines = static_cast<int>(lines.size());
 		double cursorX = 0.0;
 		double cursorY = 0.0;
+		int lineOrder = static_cast<int>(lines.size());
 
 		for (auto line : lines)
 		{
@@ -327,7 +286,7 @@ namespace Flounder
 					cursorX += object->m_kerning + letter.GetAdvanceX();
 				}
 
-				if (object->GetTextJustify() == JustifyFully)
+				if (object->GetTextJustify() == JustifyFully && lineOrder > 1)
 				{
 					cursorX += (line.GetMaxLength() - line.GetCurrentWordsLength()) / line.GetWords().size();
 				}
@@ -339,6 +298,7 @@ namespace Flounder
 
 			cursorX = 0.0;
 			cursorY += object->m_leading + Metafile::LINE_HEIGHT;
+			lineOrder--;
 		}
 
 		return vertices;
@@ -368,5 +328,51 @@ namespace Flounder
 	{
 		const Vertex vertex = Vertex(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
 		vertices.push_back(vertex);
+	}
+
+	std::vector<Vertex> Text::NormalizeQuad(Text *object, Vector2 *bounding, const std::vector<Vertex> &vertices)
+	{
+		std::vector<Vertex> vertices2 = std::vector<Vertex>();
+		float minX = +INFINITY;
+		float minY = +INFINITY;
+		float maxX = -INFINITY;
+		float maxY = -INFINITY;
+
+		for (const auto vertex : vertices)
+		{
+			const Vector3 position = vertex.m_position;
+
+			if (position.m_x < minX)
+			{
+				minX = position.m_x;
+			}
+			else if (position.m_x > maxX)
+			{
+				maxX = position.m_x;
+			}
+
+			if (position.m_y < minY)
+			{
+				minY = position.m_y;
+			}
+			else if (position.m_y > maxY)
+			{
+				maxY = position.m_y;
+			}
+		}
+
+		bounding->Set((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
+		maxX -= minX;
+		maxY -= minY;
+		// TODO: Ignore min values, they allow better alignment!
+
+		for (auto vertex : vertices)
+		{
+			Vector3 position = Vector3((vertex.m_position.m_x - minX) / maxX, (vertex.m_position.m_y - minY) / maxY, 0.0f);
+			Vertex vertex2 = Vertex(position, Vector2(vertex.m_textures), Vector3(vertex.m_normal), Vector3(vertex.m_tangent));
+			vertices2.push_back(vertex2);
+		}
+
+		return vertices2;
 	}
 }
