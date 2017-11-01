@@ -361,10 +361,11 @@ namespace Flounder
 			}
 		}
 
+		// TODO: Ignore min values, they allow better alignment!
+		// maxY = static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY()) * object->m_numberLines;
 		bounding->Set((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
 		maxX -= minX;
 		maxY -= minY;
-		// TODO: Ignore min values, they allow better alignment!
 
 		for (auto vertex : vertices)
 		{

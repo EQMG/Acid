@@ -11,7 +11,9 @@ namespace Demo
 		// Examples.
 		UiObject *uiExamples = new UiObject(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f));
 
-		Text *textExample = new Text(uiExamples, Vector3(0.6f, 0.5f, RelativeScreen), 1.8f, Vector2(0.0f, 0.5f), "This is a UI testing screen! Controls: \n - WASD, Shift, Space (Movement) \n - N (Noclip toggle) \n - M (Camera lock) \n - Escape (Pause screen)", Uis::Get()->m_proximanova->GetRegular(), JustifyLeft, 0.8f, 0.0012f, 0.024f);
+		InputButton *inputTest1 = new InputButton(uiExamples, Vector3(0.6f, 0.5f, RelativeScreen), "Dank Memes: True", JustifyCentre);
+
+	//	Text *textExample = new Text(uiExamples, Vector3(0.6f, 0.5f, RelativeScreen), 1.8f, Vector2(0.0f, 0.5f), "This is a UI testing screen! Controls: \n - WASD, Shift, Space (Movement) \n - N (Noclip toggle) \n - M (Camera lock) \n - Escape (Pause screen)", Uis::Get()->m_proximanova->GetRegular(), JustifyLeft, 0.8f, 0.0012f, 0.024f);
 
 	//	Gui *guiExample = new Gui(uiExamples, *textExample->GetPosition(), *textExample->GetDimensions(), *textExample->GetPivot(), new Texture("res/guis/geometry-grain.jpg"), 1);
 	//	guiExample->SetScaleDriver(new DriverConstant(2.9f));
@@ -57,7 +59,7 @@ namespace Demo
 		// Inventory.
 		UiObject *uiInventory = new UiObject(this, Vector3(0.5f, 0.5f, RelativeScreen), Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f));
 
-		Text *username = new Text(uiInventory, Vector3(0.05f, 0.8f, RelativeNone), 1.6f, Vector2(0.0f, 0.0f), "Dank Memes", Uis::Get()->m_proximanova->GetRegular(), JustifyLeft, 1.0f, 0.003f);
+		Text *username = new Text(uiInventory, Vector3(0.05f, 0.8f, RelativeNone), 1.8f, Vector2(0.0f, 0.0f), "Dank Memes", Uis::Get()->m_proximanova->GetRegular(), JustifyLeft, 1.0f, 0.003f);
 
 		for (int i = 0; i < 6; i++)
 		{
@@ -83,7 +85,7 @@ namespace Demo
 			}
 		}
 
-	//	uiInventory->SetVisible(false);
+		uiInventory->SetVisible(false);
 	}
 
 	OverlayPaused::~OverlayPaused()
