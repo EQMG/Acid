@@ -5,16 +5,10 @@
 #include "../maths/Vector3.hpp"
 #include "../maths/Vector4.hpp"
 #include "../visual/IDriver.hpp"
+#include "UiBound.hpp"
 
 namespace Flounder
 {
-	enum UiRelative
-	{
-		RelativeNone = 0,
-		RelativeScreen = 1,
-		RelativeInverse = 2
-	};
-
 	/// <summary>
 	/// A representation of a object this is rendered to a screen. This object is contained in a parent and has children.
 	/// The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
@@ -27,9 +21,7 @@ namespace Flounder
 		std::vector<UiObject*> *m_children;
 
 		bool m_visible;
-		Vector3 *m_dimensions;
-		Vector3 *m_position;
-		Vector2 *m_pivot;
+		UiBound *m_rectangle;
 		Vector4 *m_scissor;
 
 		Vector2 *m_positionOffset;
@@ -45,11 +37,8 @@ namespace Flounder
 		/// Creates a new screen object.
 		/// </summary>
 		/// <param name="parent"> The parent screen object. </param>
-		/// <param name="position"> The position in relative space (if Z is UiRelative.RelativeScreen the position will be in screen space, UiRelative.RelativeNone disables screen space). </param>
-		/// <param name="dimensions"> The dimensions of the object (if Z is UiRelative.RelativeScreen the width will be in screen space, UiRelative.RelativeNone disables screen space). </param>
-		/// <param name="pivot"> The pivot vector, this is the bound where the object will be rotated around. Left-Top: (0.0, 0.0), Centre: (0.5, 0.5), Right-Bottom: (1.0, 1.0). </param>
-		/// <param name="inScreenCoords"> If all X dimensions and scales will be taken in tems of the screens aspect ratio. </param>
-		UiObject(UiObject *parent, const Vector3 &position, const Vector3 &dimensions, const Vector2 &pivot); 
+		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
+		UiObject(UiObject *parent, const UiBound &rectangle);
 
 		/// <summary>
 		/// Deconstructor for the screen object.
@@ -98,17 +87,9 @@ namespace Flounder
 
 		void SetVisible(const bool &visible) { m_visible = visible; }
 
-		Vector3 *GetPosition() const { return m_position; }
+		UiBound *GetRectangle() const { return m_rectangle; }
 
-		void SetPosition(const Vector3 &position) const { m_position->Set(position); }
-
-		Vector3 *GetDimensions() const { return m_dimensions; }
-
-		void SetDimensions(const Vector3 &dimensions) const { m_dimensions->Set(dimensions); }
-
-		Vector2 *GetPivot() const { return m_pivot; }
-
-		void SetPivot(const Vector2 &pivot) const { m_pivot->Set(pivot); }
+		void SetRectangle(const UiBound &rectangle) const { m_rectangle->Set(rectangle); }
 
 		Vector4 *GetScissor() const { return m_scissor; }
 
