@@ -29,9 +29,10 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new GUI object.
 		/// </summary>
+		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		/// <param name="texture"> The objects texture. </param>
 		/// <param name="selectedRow"> The default row of the texture to render from. </param>
-		Gui(UiObject *parent, const Vector3 &position, const Vector3 &dimensions, const Vector2 &pivot, Texture *texture, const int &selectedRow);
+		Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow);
 
 		/// <summary>
 		/// Deconstructor for the gui object.

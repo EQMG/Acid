@@ -13,10 +13,10 @@ namespace Flounder
 	Colour *const InputSlider::COLOUR_NORMAL = new Colour("#000000");
 
 	InputSlider::InputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const Justify &justify) :
-		UiObject(parent, position, Vector3(0.0f, 0.0f, RelativeScreen), Vector2(0.5f, 0.5f)),
-		m_text(new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), string, Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
-		m_background(new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
-		m_slider(new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
+		UiObject(parent, UiBound(position, Vector2(1.0f, 1.0f), AspectPosition | AspectSize, Vector2(0.5f, 0.5f))),
+		m_text(nullptr), //new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), string, Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
+		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
+		m_slider(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
 		m_updating(false),
 		m_progressMin(progressMin),
 		m_progressMax(progressMax),
@@ -49,11 +49,11 @@ namespace Flounder
 
 			m_hasChange = true;
 
-			float width = 2.0f * m_background->GetDimensions()->m_x * m_background->GetScreenTransform()->m_z / static_cast<float>(Display::Get()->GetAspectRatio());
-			float positionX = m_background->GetPosition()->m_x;
-			float cursorX = Uis::Get()->GetSelector()->GetCursorX() - positionX;
-			m_value = 2.0f * cursorX / width;
-			m_value = (m_value + 1.0f) * 0.5f;
+		//	float width = 2.0f * m_background->GetDimensions()->m_x * m_background->GetScreenTransform()->m_z / static_cast<float>(Display::Get()->GetAspectRatio());
+		//	float positionX = m_background->GetPosition()->m_x;
+		//	float cursorX = Uis::Get()->GetSelector()->GetCursorX() - positionX;
+		//	m_value = 2.0f * cursorX / width;
+		//	m_value = (m_value + 1.0f) * 0.5f;
 
 			Uis::Get()->GetSelector()->CancelWasEvent();
 		}
@@ -91,23 +91,23 @@ namespace Flounder
 		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 		m_slider->GetColourOffset()->Set(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f);
 
-		// Update background size.
-		m_background->GetDimensions()->Set(*m_text->GetDimensions());
-		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		Vector3::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
-		m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
-	//	m_background->GetPositionOffsets()->Set(*m_text->GetPositionOffsets());
-		m_background->GetPosition()->Set(*m_text->GetPosition());
+	//	// Update background size.
+	//	m_background->GetDimensions()->Set(*m_text->GetDimensions());
+	//	m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
+	//	Vector3::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
+	//	m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
+	////	m_background->GetPositionOffsets()->Set(*m_text->GetPositionOffsets());
+	//	m_background->GetPosition()->Set(*m_text->GetPosition());
 
-		// Update slider size. (This is about the worst looking GUI code, but works well.)
-		m_slider->GetDimensions()->Set(*m_text->GetDimensions());
-		m_slider->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		Vector3::Multiply(*m_text->GetDimensions(), *m_slider->GetDimensions(), m_slider->GetDimensions());
-		m_slider->GetDimensions()->Scale(2.0f * m_text->GetScale());
-	//	m_slider->GetPositionOffsets()->Set(*m_text->GetPositionOffsets());
-		m_slider->GetPosition()->Set(*m_text->GetPosition());
-	//	m_slider->GetPositionOffsets()->m_x -= (m_slider->GetDimensions()->m_x / 2.0f);
-		m_slider->GetDimensions()->m_x *= m_value;
-	//	m_slider->GetPositionOffsets()->m_x += (m_slider->GetDimensions()->m_x / 2.0f);
+	//	// Update slider size. (This is about the worst looking GUI code, but works well.)
+	//	m_slider->GetDimensions()->Set(*m_text->GetDimensions());
+	//	m_slider->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
+	//	Vector3::Multiply(*m_text->GetDimensions(), *m_slider->GetDimensions(), m_slider->GetDimensions());
+	//	m_slider->GetDimensions()->Scale(2.0f * m_text->GetScale());
+	////	m_slider->GetPositionOffsets()->Set(*m_text->GetPositionOffsets());
+	//	m_slider->GetPosition()->Set(*m_text->GetPosition());
+	////	m_slider->GetPositionOffsets()->m_x -= (m_slider->GetDimensions()->m_x / 2.0f);
+	//	m_slider->GetDimensions()->m_x *= m_value;
+	////	m_slider->GetPositionOffsets()->m_x += (m_slider->GetDimensions()->m_x / 2.0f);
 	}
 }

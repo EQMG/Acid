@@ -140,6 +140,7 @@
     <ClCompile Include="src\uis\InputSlider.cpp" />
     <ClCompile Include="src\uis\InputText.cpp" />
     <ClCompile Include="src\uis\OverlayStartup.cpp" />
+    <ClCompile Include="src\uis\UiBound.cpp" />
     <ClCompile Include="src\uis\UiObject.cpp" />
     <ClCompile Include="src\uis\Uis.cpp" />
     <ClCompile Include="src\uis\UiSelector.cpp" />
@@ -318,6 +319,7 @@
     <ClInclude Include="src\uis\InputText.hpp" />
     <ClInclude Include="src\uis\OverlayStartup.hpp" />
     <ClInclude Include="src\fonts\Justify.hpp" />
+    <ClInclude Include="src\uis\UiBound.hpp" />
     <ClInclude Include="src\uis\UiObject.hpp" />
     <ClInclude Include="src\uis\Uis.hpp" />
     <ClInclude Include="src\uis\UiSelector.hpp" />

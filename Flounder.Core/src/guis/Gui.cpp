@@ -15,8 +15,8 @@ namespace Flounder
 		0, 1, 2, 2, 3, 0
 	};
 
-	Gui::Gui(UiObject *parent, const Vector3 &position, const Vector3 &dimensions, const Vector2 &pivot, Texture *texture, const int &selectedRow) :
-		UiObject(parent, position, dimensions, pivot),
+	Gui::Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow) :
+		UiObject(parent, rectangle),
 		m_uniformObject(new UniformBuffer(sizeof(UbosGuis::UboObject))),
 		m_model(new Model(VERTICES, INDICES)),
 		m_texture(texture),
