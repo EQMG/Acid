@@ -7,8 +7,8 @@
 
 namespace Flounder
 {
-	Text::Text(UiObject *parent, const Vector3 &position, const float &fontSize, const Vector2 &pivot, const std::string &text, FontType *fontType, const Justify &justify, const float &maxWidth, const float &kerning, const float &leading) :
-		UiObject(parent, position, Vector3(1.0f, 1.0f, RelativeScreen), pivot),
+	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType, const Justify &justify, const float &maxWidth, const float &kerning, const float &leading) :
+		UiObject(parent, rectangle),
 		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
 		m_model(nullptr),
 		m_string(text),
@@ -187,7 +187,7 @@ namespace Flounder
 		// Loads mesh data to Vulkan.
 		Model *model = new Model(verticesNormalized);
 		object->m_model = model;
-		object->SetDimensions(Vector3(bounding.m_x, bounding.m_y, RelativeScreen));
+		object->GetRectangle()->m_dimensions->Set(bounding.m_x, bounding.m_y);
 	}
 
 	std::vector<Line> Text::CreateStructure(Text *object)

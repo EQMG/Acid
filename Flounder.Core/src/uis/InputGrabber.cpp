@@ -102,9 +102,9 @@ namespace Flounder
 	}
 
 	InputGrabber::InputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IGrabber *grabber, const Justify &justify) :
-		UiObject(parent, position, Vector3(0.0f, 0.0f, RelativeScreen), Vector2(0.5f, 0.5f)),
-		m_text(new Text(this, position, SCALE_NORMAL, Vector3(0.5f, 0.5f, RelativeScreen), prefix + grabber->GetValue(value), Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
-		m_background(new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
+		UiObject(parent, UiBound(position, Vector2(1.0f, 1.0f), AspectPosition | AspectSize, Vector2(0.5f, 0.5f))),
+		m_text(nullptr), //new Text(this, position, SCALE_NORMAL, Vector3(0.5f, 0.5f, RelativeScreen), prefix + grabber->GetValue(value), Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
+		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),
@@ -179,11 +179,11 @@ namespace Flounder
 		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.
-		m_background->GetDimensions()->Set(*m_text->GetDimensions());
-		m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		Vector3::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
-		m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
-		m_background->GetPosition()->Set(*m_text->GetPosition());
+		//m_background->GetDimensions()->Set(*m_text->GetDimensions());
+		//m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
+		//Vector3::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
+		//m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
+		//m_background->GetPosition()->Set(*m_text->GetPosition());
 	}
 
 	void InputGrabber::SetPrefix(const std::string &prefix)
