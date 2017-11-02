@@ -6,13 +6,11 @@
 
 namespace Flounder
 {
-	UiObject::UiObject(UiObject *parent, const Vector3 &position, const Vector3 &dimensions, const Vector2 &pivot) :
+	UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 		m_parent(parent),
 		m_children(new std::vector<UiObject*>()),
 		m_visible(true),
-		m_dimensions(new Vector3(dimensions)),
-		m_position(new Vector3(position)),
-		m_pivot(new Vector2(pivot)),
+		m_rectangle(new UiBound(rectangle)),
 		m_scissor(new Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
 		m_positionOffset(new Vector2()),
 		m_screenTransform(new Vector4()),
@@ -42,9 +40,7 @@ namespace Flounder
 		delete m_children;
 
 		delete m_scissor;
-		delete m_position;
-		delete m_dimensions;
-		delete m_pivot;
+		delete m_rectangle;
 
 		delete m_positionOffset;
 		delete m_screenTransform;
@@ -69,13 +65,16 @@ namespace Flounder
 			UpdateObject();
 		}
 
-		const float da = m_dimensions->m_z == RelativeScreen ? Display::Get()->GetAspectRatio() : m_dimensions->m_z == RelativeInverse ? 1.0f / Display::Get()->GetAspectRatio() : 1.0f;
-		const float dw = (m_dimensions->m_x / da) * m_scale;
-		const float dh = m_dimensions->m_y * m_scale;
+		const bool aspectPosition = m_rectangle->m_flagsAspect & AspectPosition;
+		const bool aspectSize = m_rectangle->m_flagsAspect & AspectSize;
 
-		const float pa = m_position->m_z == RelativeScreen ? 1.0f : Display::Get()->GetAspectRatio(); // TODO RelativeInverse
-		const float px = (m_position->m_x / pa) - (dw * m_pivot->m_x) + m_positionOffset->m_x;
-		const float py = m_position->m_y - (dh * -m_pivot->m_y) + m_positionOffset->m_y;
+		const float da = aspectSize ? Display::Get()->GetAspectRatio() : 1.0f;
+		const float dw = (m_rectangle->m_dimensions->m_x / da) * m_scale;
+		const float dh = m_rectangle->m_dimensions->m_y * m_scale;
+
+		const float pa = aspectPosition ? 1.0f : Display::Get()->GetAspectRatio();
+		const float px = (m_rectangle->m_position->m_x / pa) - (dw * m_rectangle->m_reference->m_x) + m_positionOffset->m_x;
+		const float py = m_rectangle->m_position->m_y - (dh * (-1.0f + m_rectangle->m_reference->m_y)) + m_positionOffset->m_y;
 
 		m_screenTransform->Set(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
 	}

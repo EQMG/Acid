@@ -75,11 +75,11 @@ namespace Flounder
 	bool UiSelector::IsSelected(const UiObject &object) const
 	{
 		// TODO: Account for rotations.
-		float positionX = object.GetPosition()->m_x;
-		float positionY = object.GetPosition()->m_y;
+		float positionX = object.GetRectangle()->m_position->m_x;
+		float positionY = object.GetRectangle()->m_position->m_y;
 
-		float width = 2.0f * object.GetDimensions()->m_x * object.GetScreenTransform()->m_z / static_cast<float>(Display::Get()->GetAspectRatio());
-		float height = 2.0f * object.GetDimensions()->m_y * object.GetScreenTransform()->m_w;
+		float width = 2.0f * object.GetRectangle()->m_dimensions->m_x * object.GetScreenTransform()->m_z / static_cast<float>(Display::Get()->GetAspectRatio());
+		float height = 2.0f * object.GetRectangle()->m_dimensions->m_y * object.GetScreenTransform()->m_w;
 
 		if (Mouse::Get()->IsDisplaySelected() && Display::Get()->IsFocused())
 		{
