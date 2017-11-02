@@ -17,19 +17,21 @@ namespace Flounder
 		{ "ButtomRight", Vector2(1.0f, 0.0f) },
 	};
 
-	UiBound::UiBound(const Vector2 &position, const Vector2 &dimensions, const int &flagsAspect, const Vector2 &reference) :
+	UiBound::UiBound(const Vector2 &position, const Vector2 &reference, const bool &aspectPosition, const bool &aspectSize, const Vector2 &dimensions) :
 		m_position(new Vector2(position)),
-		m_dimensions(new Vector2(dimensions)),
-		m_flagsAspect(flagsAspect),
-		m_reference(new Vector2(reference))
+		m_reference(new Vector2(reference)),
+		m_aspectPosition(aspectPosition),
+		m_aspectSize(aspectSize),
+		m_dimensions(new Vector2(dimensions))
 	{
 	}
 
 	UiBound::UiBound(const UiBound &source) : 
 		m_position(new Vector2(*source.m_position)),
-		m_dimensions(new Vector2(*source.m_dimensions)),
-		m_flagsAspect(source.m_flagsAspect),
-		m_reference(new Vector2(*source.m_reference))
+		m_reference(new Vector2(*source.m_reference)),
+		m_aspectPosition(source.m_aspectPosition),
+		m_aspectSize(source.m_aspectSize),
+		m_dimensions(new Vector2(*source.m_dimensions))
 	{
 	}
 
@@ -43,9 +45,10 @@ namespace Flounder
 	UiBound *UiBound::Set(const UiBound &source)
 	{
 		m_position->Set(*source.m_position);
-		m_dimensions->Set(*source.m_dimensions);
-		m_flagsAspect = source.m_flagsAspect;
 		m_reference->Set(*source.m_reference);
+		m_aspectPosition = source.m_aspectPosition;
+		m_aspectSize = source.m_aspectSize;
+		m_dimensions->Set(*source.m_dimensions);
 		return this;
 	}
 
