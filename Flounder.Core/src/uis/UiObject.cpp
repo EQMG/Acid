@@ -65,14 +65,11 @@ namespace Flounder
 			UpdateObject();
 		}
 
-		const bool aspectPosition = m_rectangle->m_flagsAspect & AspectPosition;
-		const bool aspectSize = m_rectangle->m_flagsAspect & AspectSize;
-
-		const float da = aspectSize ? Display::Get()->GetAspectRatio() : 1.0f;
+		const float da = m_rectangle->m_aspectSize ? Display::Get()->GetAspectRatio() : 1.0f;
 		const float dw = (m_rectangle->m_dimensions->m_x / da) * m_scale;
 		const float dh = m_rectangle->m_dimensions->m_y * m_scale;
 
-		const float pa = aspectPosition ? 1.0f : Display::Get()->GetAspectRatio();
+		const float pa = m_rectangle->m_aspectPosition ? 1.0f : Display::Get()->GetAspectRatio();
 		const float px = (m_rectangle->m_position->m_x / pa) - (dw * m_rectangle->m_reference->m_x) + m_positionOffset->m_x;
 		const float py = m_rectangle->m_position->m_y - (dh * (-1.0f + m_rectangle->m_reference->m_y)) + m_positionOffset->m_y;
 
