@@ -40,7 +40,7 @@ namespace Flounder
 	void InputSlider::UpdateObject()
 	{
 		// Click updates.
-		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->wasLeftClick())
+		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasLeftClick())
 		{
 			if (!m_updating)
 			{

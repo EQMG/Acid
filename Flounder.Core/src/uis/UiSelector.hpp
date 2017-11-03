@@ -65,8 +65,8 @@ namespace Flounder
 
 		bool GetRightClick() const { return m_rightClick; }
 
-		bool wasLeftClick() const { return m_leftWasClick; }
+		bool WasLeftClick() const { return m_leftWasClick; }
 
-		bool wasRightClick() const { return m_rightWasClick; }
+		bool WasRightClick() const { return m_rightWasClick; }
 	};
 }
