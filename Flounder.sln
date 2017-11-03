@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder.Core", "Flounder.C
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder.Demo", "Flounder.Demo\Flounder.Demo.vcxproj", "{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flounder.Json", "Flounder.Json\Flounder.Json.vcxproj", "{C30A1821-F70C-4453-BFAE-3083E216C6B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,14 @@ Global
 		{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}.Release|x64.ActiveCfg = Release|x64
 		{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}.Release|x64.Build.0 = Release|x64
 		{D7F1A3BE-ADDB-420B-8516-A361A9FD051B}.Release|x86.ActiveCfg = Release|x64
+		{C30A1821-F70C-4453-BFAE-3083E216C6B6}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{C30A1821-F70C-4453-BFAE-3083E216C6B6}.Debug|x64.ActiveCfg = Debug|x64
+		{C30A1821-F70C-4453-BFAE-3083E216C6B6}.Debug|x64.Build.0 = Debug|x64
+		{C30A1821-F70C-4453-BFAE-3083E216C6B6}.Debug|x86.ActiveCfg = Debug|x64
+		{C30A1821-F70C-4453-BFAE-3083E216C6B6}.Release|Any CPU.ActiveCfg = Release|x64
+		{C30A1821-F70C-4453-BFAE-3083E216C6B6}.Release|x64.ActiveCfg = Release|x64
+		{C30A1821-F70C-4453-BFAE-3083E216C6B6}.Release|x64.Build.0 = Release|x64
+		{C30A1821-F70C-4453-BFAE-3083E216C6B6}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

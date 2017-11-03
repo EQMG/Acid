@@ -17,7 +17,7 @@ namespace Flounder
 	void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 	{
 		Mouse::Get()->m_mousePositionX = static_cast<float>(xpos) / static_cast<float>(Display::Get()->GetWidth());
-		Mouse::Get()->m_mousePositionY = static_cast<float>(ypos) / static_cast<float>(Display::Get()->GetHeight());
+		Mouse::Get()->m_mousePositionY = 1.0f - (static_cast<float>(ypos) / static_cast<float>(Display::Get()->GetHeight()));
 	}
 
 	void CallbackCursorEnter(GLFWwindow *window, int entered)

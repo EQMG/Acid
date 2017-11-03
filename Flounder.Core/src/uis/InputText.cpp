@@ -92,14 +92,14 @@ namespace Flounder
 		}
 
 		// Click updates.
-		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->wasLeftClick())
+		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasLeftClick())
 		{
 			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
 			m_selected = true;
 
 			Uis::Get()->GetSelector()->CancelWasEvent();
 		}
-		else if (Uis::Get()->GetSelector()->wasLeftClick() && m_selected)
+		else if (Uis::Get()->GetSelector()->WasLeftClick() && m_selected)
 		{
 			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
 			m_selected = false;

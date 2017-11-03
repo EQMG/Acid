@@ -9,9 +9,13 @@ namespace Demo
 		Texture *textureInv = new Texture("res/guis/geometry-grain.jpg");
 
 		// Examples.
-	//	UiObject *uiExamples = new UiObject(this, UiBound(Vector2(0.5f, 0.5f), Vector2(0.5f, 0.5f), true, true, Vector2(1.0f, 1.0f)));
+		UiObject *uiExamples = new UiObject(this, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)));
 
-	//	InputButton *inputTest1 = new InputButton(uiExamples, Vector3(0.6f, 0.5f, RelativeScreen), "Dank Memes: True", JustifyCentre);
+		InputButton *inputTest1 = new InputButton(uiExamples, Vector2(0.5f, 0.5f), "Dank Memes: True", JustifyCentre);
+		inputTest1->SetActionLeft([&]()
+		{
+			printf("The test button was just pressed!\n");
+		});
 
 	//	Text *textExample = new Text(uiExamples, UiBound(Vector2(0.5f, 0.5f), Vector2(), true, true, Vector2(0.5f, 0.5f)), 1.8f, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", Uis::Get()->m_proximanova->GetRegular(), JustifyLeft, 0.8f, 0.0012f, 0.024f);
 
