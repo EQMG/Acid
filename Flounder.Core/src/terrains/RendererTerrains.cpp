@@ -13,7 +13,7 @@ namespace Flounder
 	const DescriptorType RendererTerrains::typeSamplerRock = Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererTerrains::pipelineCreateInfo =
 	{
-		PIPELINE_POLYGON, // pipelineModeFlags
+		PIPELINE_MRT, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
