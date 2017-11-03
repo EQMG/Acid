@@ -23,11 +23,11 @@ namespace Flounder
 		/// Constructor for rectangle.
 		/// </summary>
 		/// <param name="position"> The object screen position. </param>
-		/// <param name="dimensions"> The object dimensions. </param>
+		/// <param name="reference"> The reference pivot vertex (TopLeft, TopCentre, TopRight, CentreLeft, Centre, CentreRight, ButtomLeft, ButtomCentre, ButtomRight). </param>
 		/// <param name="aspectPosition"> The if the x position will change with display width. </param>
 		/// <param name="aspectSize"> The if the width will scale with display width. </param>
-		/// <param name="reference"> The reference pivot vertex. </param>
-		UiBound(const Vector2 &position, const Vector2 &reference = Vector2(0.0f, 1.0f), const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
+		/// <param name="dimensions"> The object dimensions. </param>
+		UiBound(const Vector2 &position, const std::string &reference = "TopLeft", const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
 
 		/// <summary>
 		/// Creates a new rectangle.
