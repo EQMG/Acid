@@ -17,9 +17,9 @@ namespace Flounder
 		{ "ButtomRight", Vector2(1.0f, 0.0f) },
 	};
 
-	UiBound::UiBound(const Vector2 &position, const Vector2 &reference, const bool &aspectPosition, const bool &aspectSize, const Vector2 &dimensions) :
+	UiBound::UiBound(const Vector2 &position, const std::string &reference, const bool &aspectPosition, const bool &aspectSize, const Vector2 &dimensions) :
 		m_position(new Vector2(position)),
-		m_reference(new Vector2(reference)),
+		m_reference(new Vector2(FindPivot(reference))),
 		m_aspectPosition(aspectPosition),
 		m_aspectSize(aspectSize),
 		m_dimensions(new Vector2(dimensions))

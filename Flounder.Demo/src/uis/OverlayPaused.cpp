@@ -3,7 +3,7 @@
 namespace Demo
 {
 	OverlayPaused::OverlayPaused(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), Vector2(0.5f, 0.5f), true, true, Vector2(1.0f, 1.0f)))
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)))
 	{
 		Texture *textureWhite = new Texture("res/guis/white.png");
 		Texture *textureInv = new Texture("res/guis/geometry-grain.jpg");
@@ -22,17 +22,17 @@ namespace Demo
 	//	uiExamples->SetVisible(false);
 
 		// Nav bar.
-		UiObject *uiNavigation = new UiObject(this, UiBound(Vector2(0.5f, 0.5f), Vector2(0.5f, 0.5f), true, true, Vector2(1.0f, 1.0f)));
+		UiObject *uiNavigation = new UiObject(this, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)));
 
-		Gui *barColour = new Gui(uiNavigation, UiBound(Vector2(0.5f, 1.0f), Vector2(0.5f, 1.0f), true, false, Vector2(1.0f, 1.0f)), textureInv, 1);
+		Gui *barColour = new Gui(uiNavigation, UiBound(Vector2(0.5f, 1.0f), "TopCentre", true, false, Vector2(1.0f, 1.0f)), textureInv, 1);
 		barColour->SetScissor(Vector4(0.0f, 0.875f, 1.0f, 1.0f));
 		barColour->SetColourOffset(Colour("#2969B0"));
 		
-		Text *barTitle = new Text(uiNavigation, UiBound(Vector2(0.01f, 0.99f), Vector2(0.0f, 1.0f), false), 4.0f, "Kosmos", Uis::Get()->m_proximanova->GetBold(), JustifyLeft, 1.0f, 0.001f);
+		Text *barTitle = new Text(uiNavigation, UiBound(Vector2(0.01f, 0.99f), "TopLeft", false), 4.0f, "Kosmos", Uis::Get()->m_proximanova->GetBold(), JustifyLeft, 1.0f, 0.001f);
 		
-		Text *barCreated = new Text(uiNavigation, UiBound(Vector2(0.02f, 0.915f), Vector2(0.0f, 1.0f), false), 1.1f, "Created By: Equilibrium Games", Uis::Get()->m_proximanova->GetLight(), JustifyLeft, 1.0f, 0.0013f);
+		Text *barCreated = new Text(uiNavigation, UiBound(Vector2(0.02f, 0.915f), "TopLeft", false), 1.1f, "Created By: Equilibrium Games", Uis::Get()->m_proximanova->GetLight(), JustifyLeft, 1.0f, 0.0013f);
 		
-		Gui *tabPuck = new Gui(uiNavigation, UiBound(Vector2(0.0f, 0.875f), Vector2(0.0f, 0.0f), false, true, Vector2(0.0f, 0.01f)), textureWhite, 1);
+		Gui *tabPuck = new Gui(uiNavigation, UiBound(Vector2(0.0f, 0.875f), "ButtomLeft", false, true, Vector2(0.0f, 0.01f)), textureWhite, 1);
 		tabPuck->SetColourOffset(Colour("#386AB5"));
 
 		std::vector<std::string> tabNames = { "Inventory", "Achievements", "News", "Play", "Settings", "Exit" }; // TODO: Maybe each tab can have a seperate UI for the bar (like settings using some grey gears, news some green paper)
@@ -41,7 +41,7 @@ namespace Demo
 
 		for (int i = 0; i < tabNames.size(); i++)
 		{
-			Text *tabText = new Text(uiNavigation, UiBound(Vector2(tabXOffset, 0.955f), Vector2(0.0f, 1.0f), false), 1.6f, tabNames.at(i), Uis::Get()->m_proximanova->GetRegular(), JustifyLeft, 1.0f, 0.003f);
+			Text *tabText = new Text(uiNavigation, UiBound(Vector2(tabXOffset, 0.955f), "TopLeft", false), 1.6f, tabNames.at(i), Uis::Get()->m_proximanova->GetRegular(), JustifyLeft, 1.0f, 0.003f);
 			const float width = tabText->GetRectangle()->m_dimensions->m_x * 1.6f;
 
 			if (i == 4)
