@@ -36,9 +36,6 @@ namespace Flounder
 
 		static const Colour WATER_COLOUR;
 
-		static const float SHINE_DAMPER;
-		static const float REFLECTIVITY;
-
 		Water(const Vector3 &position = Vector3(), const Vector3 &rotation = Vector3());
 
 		~Water();

@@ -15,7 +15,7 @@ namespace Flounder
 	const DescriptorType RendererTest::typeSamplerSway = Texture::CreateDescriptor(3, VK_SHADER_STAGE_VERTEX_BIT);
 	const PipelineCreateInfo RendererTest::pipelineCreateInfo =
 	{
-		PIPELINE_POLYGON, // pipelineModeFlags
+		PIPELINE_MRT, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
