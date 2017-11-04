@@ -15,9 +15,6 @@ namespace Flounder
 
 	const Colour Water::WATER_COLOUR = Colour("#366996");
 
-	const float Water::SHINE_DAMPER = 1.0f;
-	const float Water::REFLECTIVITY = 0.0f;
-
 	Water::Water(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosWaters::UboObject))),
 		m_model(nullptr),
@@ -71,8 +68,6 @@ namespace Flounder
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		uboObject.diffuseColour = Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b,
 			Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity() : 1.0f);
-		uboObject.shineDamper = SHINE_DAMPER;
-		uboObject.reflectivity = REFLECTIVITY;
 		uboObject.ignoreReflections = !Waters::Get()->GetEnableReflections();
 		m_uniformObject->Update(&uboObject);
 

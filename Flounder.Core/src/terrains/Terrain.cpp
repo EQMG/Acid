@@ -108,8 +108,6 @@ namespace Flounder
 
 		UbosTerrains::UboObject uboObject = {};
 		uboObject.transform = Matrix4(*m_modelMatrix);
-		uboObject.shineDamper = 1.0f;
-		uboObject.reflectivity = 0.0f;
 		m_uniformObject->Update(&uboObject);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_textureGrass->GetWriteDescriptor(2, descriptorSet), m_textureSnow->GetWriteDescriptor(3, descriptorSet), m_samplerSand->GetWriteDescriptor(4, descriptorSet), m_samplerRock->GetWriteDescriptor(5, descriptorSet) }; // TODO: Modulaize this!

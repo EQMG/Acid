@@ -2,6 +2,7 @@
 
 #include <array>
 #include "../../devices/Display.hpp"
+#include "../RenderDeferred.hpp"
 
 namespace Flounder
 {
@@ -10,32 +11,45 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::array<VkAttachmentDescription, 2> attachments = {};
-		attachments[0].flags = 0;
-		attachments[0].format = depthFormat;
-		attachments[0].samples = VK_SAMPLE_COUNT_1_BIT;
-		attachments[0].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-		attachments[0].storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-		attachments[0].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-		attachments[0].stencilStoreOp = VK_ATTACHMENT_STORE_OP_STORE;
-		attachments[0].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-		attachments[0].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+		std::array<VkAttachmentDescription, DeferredCount> attachments = {};
 
-		attachments[1].flags = 0;
-		attachments[1].format = surfaceFormat;
-		attachments[1].samples = VK_SAMPLE_COUNT_1_BIT;
-		attachments[1].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-		attachments[1].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-		attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-		attachments[1].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+		attachments[DeferredDepth].flags = 0;
+		attachments[DeferredDepth].format = depthFormat;
+		attachments[DeferredDepth].samples = VK_SAMPLE_COUNT_1_BIT;
+		attachments[DeferredDepth].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+		attachments[DeferredDepth].storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+		attachments[DeferredDepth].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+		attachments[DeferredDepth].stencilStoreOp = VK_ATTACHMENT_STORE_OP_STORE;
+		attachments[DeferredDepth].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		attachments[DeferredDepth].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-		std::array<VkAttachmentReference, 1> subpass0ColourAttachments = {};
-		subpass0ColourAttachments[0].attachment = 1;
-		subpass0ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		attachments[DeferredColour].flags = 0;
+		attachments[DeferredColour].format = surfaceFormat;
+		attachments[DeferredColour].samples = VK_SAMPLE_COUNT_1_BIT;
+		attachments[DeferredColour].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+		attachments[DeferredColour].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+		attachments[DeferredColour].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		attachments[DeferredColour].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+
+		//attachments[DeferredNormal].flags = 0;
+		//attachments[DeferredNormal].format = surfaceFormat;
+		//attachments[DeferredNormal].samples = VK_SAMPLE_COUNT_1_BIT;
+		//attachments[DeferredNormal].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+		//attachments[DeferredNormal].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+		//attachments[DeferredNormal].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		//attachments[DeferredNormal].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 
 		VkAttachmentReference subpass0DepthStencilAttachment = {};
 		subpass0DepthStencilAttachment.attachment = 0;
 		subpass0DepthStencilAttachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+		std::array<VkAttachmentReference, DeferredCount - 1> subpass0ColourAttachments = {};
+
+		for (uint32_t i = 0; i < DeferredCount - 1; i++)
+		{
+			subpass0ColourAttachments[i].attachment = i + 1;
+			subpass0ColourAttachments[i].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		}
 
 		std::array<VkSubpassDescription, 1> subpasses = {};
 		subpasses[0].pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
