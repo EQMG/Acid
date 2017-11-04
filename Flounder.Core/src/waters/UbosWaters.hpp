@@ -20,8 +20,6 @@ namespace Flounder
 		{
 			Matrix4 transform;
 			Colour diffuseColour;
-			float shineDamper;
-			float reflectivity;
 			float ignoreReflections;
 		};
 	};

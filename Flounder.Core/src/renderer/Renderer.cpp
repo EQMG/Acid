@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include "../devices/Display.hpp"
+#include "RenderDeferred.hpp"
 
 namespace Flounder
 {
@@ -87,13 +88,17 @@ namespace Flounder
 		renderArea.extent.width = Display::Get()->GetWidth();
 		renderArea.extent.height = Display::Get()->GetHeight();
 
-		std::array<VkClearValue, 2> clearValues = {};
-		clearValues[0].depthStencil.depth = 1.0f;
-		clearValues[0].depthStencil.stencil = 0;
-		clearValues[1].color.float32[0] = 0.0f; // R.
-		clearValues[1].color.float32[1] = 0.0f; // G.
-		clearValues[1].color.float32[2] = 0.0f; // B.
-		clearValues[1].color.float32[3] = 1.0f; // A.
+		std::array<VkClearValue, DeferredCount> clearValues = {};
+		clearValues[DeferredDepth].depthStencil.depth = 1.0f;
+		clearValues[DeferredDepth].depthStencil.stencil = 0;
+
+		for (uint32_t i = 1; i < DeferredCount; i++)
+		{
+			clearValues[i].color.float32[0] = 0.0f; // R.
+			clearValues[i].color.float32[1] = 0.0f; // G.
+			clearValues[i].color.float32[2] = 0.0f; // B.
+			clearValues[i].color.float32[3] = 1.0f; // A.
+		}
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
 		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;

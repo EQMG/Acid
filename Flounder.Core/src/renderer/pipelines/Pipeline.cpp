@@ -5,6 +5,7 @@
 #include "../../helpers/HelperFile.hpp"
 #include "../../helpers/HelperString.hpp"
 #include "../Renderer.hpp"
+#include "../RenderDeferred.hpp"
 
 namespace Flounder
 {
@@ -353,9 +354,9 @@ namespace Flounder
 		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.vertexAttributeDescriptions.size());
 		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.vertexAttributeDescriptions.data();
 
-		VkPipelineColorBlendAttachmentState blendAttachmentStates[3] = {};
+		std::array<VkPipelineColorBlendAttachmentState, DeferredCount - 1> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < 3; i++) 
+		for (uint32_t i = 0; i < DeferredCount - 1; i++)
 		{
 			blendAttachmentStates[i].blendEnable = VK_FALSE;
 			blendAttachmentStates[i].srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
@@ -367,8 +368,8 @@ namespace Flounder
 			blendAttachmentStates[i].colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
 		}
 
-		m_colourBlendState.attachmentCount = 3;
-		m_colourBlendState.pAttachments = blendAttachmentStates;
+		m_colourBlendState.attachmentCount = static_cast<uint32_t>(blendAttachmentStates.size());
+		m_colourBlendState.pAttachments = blendAttachmentStates.data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
