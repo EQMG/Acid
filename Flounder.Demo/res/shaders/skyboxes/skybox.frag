@@ -14,8 +14,7 @@ layout(binding = 2) uniform samplerCube samplerCubemap;
 layout(location = 0) in vec3 fragmentTextures;
 
 layout(location = 0) out vec4 outColour;
-//layout(location = 1) out vec4 outNormals;
-//layout(location = 2) out vec4 outExtras;
+layout(location = 1) out vec4 outNormal;
 
 void main(void) 
 {
@@ -28,6 +27,5 @@ void main(void)
 	}
 
 	outColour = vec4(object.skyColour.rgb + cubemapColour, 1.0);
-//	outNormals = vec4(vec3(0.0, 1.0, 0.0) + 1.0 / 2.0, 0.0);
-//	outExtras = vec4(1.0, 0.0, 1.0, 1.0); // Ignores lighting.
+	outNormal = vec4(0.5, 1.0, 0.5, 1.0);
 }

@@ -5,8 +5,6 @@
 layout(binding = 1) uniform UboObject
 {
 	mat4 transform;
-	float shineDamper;
-	float reflectivity;
 } object;
 
 layout(binding = 2) uniform sampler2D samplerGrass;
@@ -19,11 +17,7 @@ layout(location = 1) in vec2 fragmentTextures;
 layout(location = 2) in float fragmentHeight;
 
 layout(location = 0) out vec4 outColour;
-layout(location = 1) out vec4 outNormals;
-layout(location = 2) out vec4 outExtras;
-
-const vec2 lightBias = vec2(0.8, 0.2);
-const vec3 lightDirection = vec3(0.2, -0.3, 0.2);
+layout(location = 1) out vec4 outNormal;
 
 vec3 blend(vec3 left, vec3 right, float blend)
 {
@@ -58,9 +52,7 @@ void main(void)
 	tint = blend(tintRock, tint, blendRock);
 
 	vec3 unitNormal = normalize(fragmentNormal);
-	float diffuseLight = max(dot(-lightDirection, unitNormal), 0.0) * lightBias.x + lightBias.y;
 
-	outColour = vec4(tint * diffuseLight, 1.0);
-	outNormals = vec4(fragmentNormal + 1.0 / 2.0, outColour.a);
-	outExtras = vec4(object.shineDamper, object.reflectivity, 0.0, outColour.a);
+	outColour = vec4(tint, 1.0);
+	outNormal = vec4(fragmentNormal + 1.0 / 2.0, 1.0);
 }

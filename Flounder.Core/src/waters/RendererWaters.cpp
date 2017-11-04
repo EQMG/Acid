@@ -10,7 +10,7 @@ namespace Flounder
 	const DescriptorType RendererWaters::samplerTexture = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererWaters::pipelineCreateInfo =
 	{
-		PIPELINE_POLYGON, // pipelineModeFlags
+		PIPELINE_MRT, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_NONE, // cullModeFlags
 		

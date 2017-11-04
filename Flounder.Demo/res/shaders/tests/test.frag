@@ -8,16 +8,14 @@ layout(location = 0) in vec2 fragmentTextures;
 layout(location = 1) in vec3 fragmentNormal;
 
 layout(location = 0) out vec4 outColour;
-
-const vec2 lightBias = vec2(0.8, 0.2);
-const vec3 lightDirection = vec3(0.2, -0.3, 0.2);
+layout(location = 1) out vec4 outNormal;
 
 void main() 
 {
 	vec3 unitNormal = normalize(fragmentNormal);
-	float diffuseLight = max(dot(-lightDirection, unitNormal), 0.0) * lightBias.x + lightBias.y;
 
 	vec3 textureColour = texture(samplerTexture, fragmentTextures).rgb;
 
-	outColour = vec4(textureColour * diffuseLight, 1.0);
+	outColour = vec4(textureColour, 1.0);
+	outNormal = vec4(1.0, 0.0, 0.0, 1.0);
 }

@@ -31,7 +31,7 @@ namespace Demo
 		m_rendererTerrains->Render(commandBuffer, m_infinity, *camera);
 		m_rendererWaters->Render(commandBuffer, m_infinity, *camera);
 		m_rendererTest->Render(commandBuffer, m_infinity, *camera);
-
+		
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
 	}

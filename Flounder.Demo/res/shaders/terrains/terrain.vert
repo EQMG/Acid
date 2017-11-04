@@ -12,8 +12,6 @@ layout(binding = 0) uniform UboScene
 layout(binding = 1) uniform UboObject
 {
 	mat4 transform;
-	float shineDamper;
-	float reflectivity;
 } object;
 
 layout(location = 0) in vec3 vertexPosition;

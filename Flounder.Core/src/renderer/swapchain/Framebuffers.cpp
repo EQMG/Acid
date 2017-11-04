@@ -2,6 +2,7 @@
 
 #include <array>
 #include "../../devices/Display.hpp"
+#include "../RenderDeferred.hpp"
 
 namespace Flounder
 {
@@ -14,9 +15,10 @@ namespace Flounder
 
 		for (uint32_t i = 0; i < swapchainImageCount; i++)
 		{
-			std::array<VkImageView, 2> attachments = {};
-			attachments[0] = depthImageView;
-			attachments[1] = swapchinImageViews[i];
+			std::array<VkImageView, DeferredCount> attachments = {};
+			attachments[DeferredDepth] = depthImageView;
+			attachments[DeferredColour] = swapchinImageViews[i];
+		//	attachments[DeferredNormal] = swapchinImageViews[i]; // TODO
 
 			VkFramebufferCreateInfo framebufferCreateInfo = {};
 			framebufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;

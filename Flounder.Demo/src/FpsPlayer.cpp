@@ -35,12 +35,12 @@ namespace Demo
 			new ButtonKeyboard({ GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT }),
 			new ButtonJoystick(0, { 1 })
 		})),
-		m_inputCrouch(new ButtonCompound({
-			new ButtonKeyboard({ GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL }),
-			new ButtonJoystick(0,{ 1 })
-		})),
 		m_inputJump(new ButtonCompound({
 			new ButtonKeyboard({ GLFW_KEY_SPACE }),
+			new ButtonJoystick(0,{ 1 })
+		})),
+		m_inputCrouch(new ButtonCompound({
+			new ButtonKeyboard({ GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL }),
 			new ButtonJoystick(0,{ 1 })
 		})),
 		m_toggleNoclip(new ButtonCompound({
