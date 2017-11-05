@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Flounder.hpp>
+#include "deferred/RendererDeferred.hpp"
 
 using namespace Flounder;
 
@@ -18,6 +19,9 @@ namespace Demo
 		RendererTest *m_rendererTest;
 		RendererGuis *m_rendererGuis;
 		RendererFonts *m_rendererFonts;
+
+		RendererDeferred *m_rendererDeferred;
+		FilterGrey *m_filterGrey;
 	public:
 		ManagerRender();
 
