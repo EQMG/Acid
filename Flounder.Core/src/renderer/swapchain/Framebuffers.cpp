@@ -2,11 +2,10 @@
 
 #include <array>
 #include "../../devices/Display.hpp"
-#include "../RenderDeferred.hpp"
 
 namespace Flounder
 {
-	Framebuffers::Framebuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent, const uint32_t &swapchainImageCount, const std::vector<VkImageView> &swapchinImageViews) :
+	Framebuffers::Framebuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent, const uint32_t &swapchainImageCount, const std::vector<VkImageView> &swapchinImageViews, const VkImageView &colourImageView, const VkImageView &normalImageView) :
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -15,10 +14,11 @@ namespace Flounder
 
 		for (uint32_t i = 0; i < swapchainImageCount; i++)
 		{
-			std::array<VkImageView, DeferredCount> attachments = {};
-			attachments[DeferredDepth] = depthImageView;
-			attachments[DeferredColour] = swapchinImageViews[i];
-		//	attachments[DeferredNormal] = swapchinImageViews[i]; // TODO
+			std::array<VkImageView, 4> attachments = {};
+			attachments[0] = depthImageView;
+			attachments[1] = swapchinImageViews[i];
+			attachments[2] = colourImageView; 
+			attachments[3] = normalImageView;
 
 			VkFramebufferCreateInfo framebufferCreateInfo = {};
 			framebufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;

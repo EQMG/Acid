@@ -45,6 +45,11 @@ namespace Flounder
 			const uint32_t &numberOfRows = 1);
 
 		/// <summary>
+		/// A new empty texture object.
+		/// </summary>
+		Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage);
+
+		/// <summary>
 		/// Deconstructor for the texture object.
 		/// </summary>
 		~Texture();
