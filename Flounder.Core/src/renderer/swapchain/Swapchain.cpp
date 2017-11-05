@@ -10,6 +10,8 @@ namespace Flounder
 		m_swapchainImageCount(0),
 		m_swapchinImages(std::vector<VkImage>()),
 		m_swapchinImageViews(std::vector<VkImageView>()),
+		m_colourImage(nullptr),
+		m_normalImage(nullptr),
 		m_extent({})
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -93,11 +95,17 @@ namespace Flounder
 
 			Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews[i]));
 		}
+
+		m_colourImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_B8G8R8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
+		m_normalImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_B8G8R8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
 	}
 
 	Swapchain::~Swapchain()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		delete m_normalImage;
+		delete m_colourImage;
 
 		for (auto imageView : m_swapchinImageViews)
 		{

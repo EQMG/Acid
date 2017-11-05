@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\deferred\RendererDeferred.cpp" />
     <ClCompile Include="src\fonts\FontFamily.cpp" />
     <ClCompile Include="src\helpers\HelperArray.cpp" />
     <ClCompile Include="src\helpers\HelperFile.cpp" />
@@ -157,12 +158,12 @@
     <ClCompile Include="src\worlds\Worlds.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\deferred\RendererDeferred.hpp" />
     <ClInclude Include="src\fonts\FontFamily.hpp" />
     <ClInclude Include="src\fonts\UbosFonts.hpp" />
     <ClInclude Include="src\guis\UbosGuis.hpp" />
     <ClInclude Include="src\renderer\buffers\UniformBuffer.hpp" />
     <ClInclude Include="src\renderer\pipelines\PipelineCreate.hpp" />
-    <ClInclude Include="src\renderer\RenderDeferred.hpp" />
     <ClInclude Include="src\renderer\stencils\DepthStencil.hpp" />
     <ClInclude Include="src\camera\Camera.hpp" />
     <ClInclude Include="src\camera\ICamera.hpp" />

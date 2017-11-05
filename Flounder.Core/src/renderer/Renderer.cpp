@@ -2,10 +2,11 @@
 
 #include <cassert>
 #include "../devices/Display.hpp"
-#include "RenderDeferred.hpp"
 
 namespace Flounder
 {
+	Renderer *Renderer::LAZINESS = nullptr;
+
 	Renderer::Renderer() :
 		IModule(),
 		m_managerRender(nullptr),
@@ -20,18 +21,20 @@ namespace Flounder
 		m_commandPool(VK_NULL_HANDLE),
 		m_commandBuffer(VK_NULL_HANDLE)
 	{
+		LAZINESS = this;
+
 		const VkExtent2D extent2d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()) };
 		const VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
 		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 
-		m_swapchain = new Swapchain(extent2d); // TODO: Meme this up.
-		m_depthStencil = new DepthStencil(extent3d);
-		m_renderPass = new RenderPass(m_depthStencil->GetFormat(), surfaceFormat.format);
-		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), extent2d, m_swapchain->GetImageCount(), m_swapchain->GetImageViews());
-
 		CreateFences();
 		CreateCommandPool();
 		CreatePipelineCache();
+
+		m_swapchain = new Swapchain(extent2d);
+		m_depthStencil = new DepthStencil(extent3d);
+		m_renderPass = new RenderPass(m_depthStencil->GetFormat(), surfaceFormat.format);
+		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), extent2d, m_swapchain->GetImageCount(), m_swapchain->GetImageViews(), m_swapchain->GetColourImage()->GetImageView(), m_swapchain->GetNormalImage()->GetImageView());
 
 		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
 		vkQueueWaitIdle(Display::Get()->GetQueue());
@@ -88,16 +91,22 @@ namespace Flounder
 		renderArea.extent.width = Display::Get()->GetWidth();
 		renderArea.extent.height = Display::Get()->GetHeight();
 
-		std::array<VkClearValue, DeferredCount> clearValues = {};
-		clearValues[DeferredDepth].depthStencil.depth = 1.0f;
-		clearValues[DeferredDepth].depthStencil.stencil = 0;
+		std::array<VkClearValue, 4> clearValues = {};
 
-		for (uint32_t i = 1; i < DeferredCount; i++)
+		for (uint32_t i = 0; i < 4; i++)
 		{
-			clearValues[i].color.float32[0] = 0.0f; // R.
-			clearValues[i].color.float32[1] = 0.0f; // G.
-			clearValues[i].color.float32[2] = 0.0f; // B.
-			clearValues[i].color.float32[3] = 1.0f; // A.
+			if (i == 0)
+			{
+				clearValues[i].depthStencil.depth = 1.0f;
+				clearValues[i].depthStencil.stencil = 0;
+			}
+			else
+			{
+				clearValues[i].color.float32[0] = 0.0f;
+				clearValues[i].color.float32[1] = 0.0f;
+				clearValues[i].color.float32[2] = 0.0f;
+				clearValues[i].color.float32[3] = 1.0f;
+			}
 		}
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
@@ -258,7 +267,7 @@ namespace Flounder
 
 		m_swapchain = new Swapchain(extent2d);
 		m_depthStencil = new DepthStencil(extent3d);
-		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), extent2d, m_swapchain->GetImageCount(), m_swapchain->GetImageViews());
+		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), extent2d, m_swapchain->GetImageCount(), m_swapchain->GetImageViews(), m_swapchain->GetColourImage()->GetImageView(), m_swapchain->GetNormalImage()->GetImageView());
 	}
 
 	VkCommandBuffer Renderer::BeginSingleTimeCommands()

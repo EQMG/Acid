@@ -16,6 +16,7 @@ namespace Flounder
 		PIPELINE_MRT, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_BACK_BIT, // cullModeFlags
+		0, // subpass
 
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions

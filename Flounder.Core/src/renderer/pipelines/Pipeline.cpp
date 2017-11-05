@@ -5,7 +5,6 @@
 #include "../../helpers/HelperFile.hpp"
 #include "../../helpers/HelperString.hpp"
 #include "../Renderer.hpp"
-#include "../RenderDeferred.hpp"
 
 namespace Flounder
 {
@@ -281,7 +280,7 @@ namespace Flounder
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.layout = m_pipelineLayout;
 		pipelineCreateInfo.renderPass = renderPass;
-		pipelineCreateInfo.subpass = 0;
+		pipelineCreateInfo.subpass = m_pipelineCreateInfo.subpass;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
 
@@ -354,9 +353,9 @@ namespace Flounder
 		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.vertexAttributeDescriptions.size());
 		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.vertexAttributeDescriptions.data();
 
-		std::array<VkPipelineColorBlendAttachmentState, DeferredCount - 1> blendAttachmentStates = {};
+		std::array<VkPipelineColorBlendAttachmentState, 3> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < DeferredCount - 1; i++)
+		for (uint32_t i = 0; i < 3; i++)
 		{
 			blendAttachmentStates[i].blendEnable = VK_FALSE;
 			blendAttachmentStates[i].srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
@@ -397,5 +396,38 @@ namespace Flounder
 
 	void Pipeline::CreatePipelineMultiTexture()
 	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto renderPass = Renderer::Get()->GetRenderPass();
+		const auto pipelineCache = Renderer::Get()->GetPipelineCache();
+
+		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
+		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.vertexBindingDescriptions.size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.vertexBindingDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.vertexAttributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.vertexAttributeDescriptions.data();
+
+		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
+		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+		pipelineCreateInfo.layout = m_pipelineLayout;
+		pipelineCreateInfo.renderPass = renderPass;
+		pipelineCreateInfo.subpass = 0;
+		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+		pipelineCreateInfo.basePipelineIndex = -1;
+
+		pipelineCreateInfo.pInputAssemblyState = &m_inputAssemblyState;
+		pipelineCreateInfo.pRasterizationState = &m_rasterizationState;
+		pipelineCreateInfo.pColorBlendState = &m_colourBlendState;
+		pipelineCreateInfo.pMultisampleState = &m_multisampleState;
+		pipelineCreateInfo.pViewportState = &m_viewportState;
+		pipelineCreateInfo.pDepthStencilState = &m_depthStencilState;
+		pipelineCreateInfo.pDynamicState = &m_dynamicState;
+
+		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
+		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_stages.size());
+		pipelineCreateInfo.pStages = m_stages.data();
+
+		// Create the graphics pipeline.
+		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 }

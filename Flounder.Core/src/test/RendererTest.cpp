@@ -18,6 +18,7 @@ namespace Flounder
 		PIPELINE_MRT, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_BACK_BIT, // cullModeFlags
+		0, // subpass
 
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
@@ -37,9 +38,9 @@ namespace Flounder
 		Texture *diffuse = new Texture("res/entities/cuboid/diffuse.png"); // "res/undefined.png"
 		Texture *swapMap = new Texture("res/entities/cuboid/sway.png");
 
-		for (int i = -1; i <= 1; i++)
+		for (int i = 0; i <= 0; i++) // int i = -1; i <= 1; i++
 		{
-			for (int j = -1; j <= 1; j++)
+			for (int j = 0; j <= 0; j++) // int j = -1; j <= 1; j++
 			{
 				const float xv = 0.0f; // Maths::RandomInRange(-10.0f, 10.0f);
 				const float yv = 0.0f; // Maths::RandomInRange(-10.0f, 10.0f);

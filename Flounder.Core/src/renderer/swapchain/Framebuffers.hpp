@@ -10,7 +10,7 @@ namespace Flounder
 	private:
 		std::vector<VkFramebuffer> m_framebuffers;
 	public:
-		Framebuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent, const uint32_t &swapchainImageCount, const std::vector<VkImageView> &swapchinImageViews);
+		Framebuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent, const uint32_t &swapchainImageCount, const std::vector<VkImageView> &swapchinImageViews, const VkImageView &colourImageView, const VkImageView &normalImageView);
 
 		~Framebuffers();
 
