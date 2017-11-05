@@ -14,6 +14,8 @@ namespace Flounder
 		public IModule
 	{
 	private:
+		static Renderer *LAZINESS; // TODO
+
 		IManagerRender *m_managerRender;
 
 		Swapchain *m_swapchain;
@@ -35,7 +37,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Renderer *Get()
 		{
-			return static_cast<Renderer*>(Engine::Get()->GetModule("renderer"));
+			return LAZINESS; //  static_cast<Renderer*>(Engine::Get()->GetModule("renderer"));
 		}
 
 		/// <summary>
@@ -65,6 +67,8 @@ namespace Flounder
 		/// </summary>
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(IManagerRender *managerRender) { m_managerRender = managerRender; }
+
+		Swapchain *GetSwapchain() const { return m_swapchain; }
 
 		VkRenderPass GetRenderPass() const { return m_renderPass->GetRenderPass(); }
 

@@ -9,7 +9,9 @@ namespace Demo
 		m_rendererTerrains(new RendererTerrains()),
 		m_rendererTest(new RendererTest()),
 		m_rendererGuis(new RendererGuis()),
-		m_rendererFonts(new RendererFonts())
+		m_rendererFonts(new RendererFonts()),
+		m_rendererDeferred(new RendererDeferred())
+	//	m_filterGrey(new FilterGrey())
 	{
 	}
 
@@ -21,6 +23,9 @@ namespace Demo
 		delete m_rendererTest;
 		delete m_rendererGuis;
 		delete m_rendererFonts;
+		delete m_rendererDeferred;
+
+	//	delete m_filterGrey;
 	}
 
 	void ManagerRender::Render(const VkCommandBuffer *commandBuffer)
@@ -34,5 +39,8 @@ namespace Demo
 		
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
+
+		m_rendererDeferred->Render(commandBuffer, m_infinity, *camera);
+	//	m_filterGrey->ApplyFilter(commandBuffer);
 	}
 }
