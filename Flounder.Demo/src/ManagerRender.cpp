@@ -38,7 +38,7 @@ namespace Demo
 		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 		
 		// Subpass 1
-	//	m_rendererDeferred->Render(commandBuffer, m_infinity, *camera);
+		m_rendererDeferred->Render(commandBuffer, m_infinity, *camera);
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
 	}
