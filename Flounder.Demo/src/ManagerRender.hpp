@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Flounder.hpp>
-#include "deferred/RendererDeferred.hpp"
 
 using namespace Flounder;
 
@@ -14,14 +13,13 @@ namespace Demo
 		Vector4 m_infinity;
 
 		RendererSkyboxes *m_rendererSkyboxes;
-		RendererWaters *m_rendererWaters;
 		RendererTerrains *m_rendererTerrains;
+		RendererWaters *m_rendererWaters;
 		RendererTest *m_rendererTest;
-		RendererGuis *m_rendererGuis;
-		RendererFonts *m_rendererFonts;
 
 		RendererDeferred *m_rendererDeferred;
-		FilterGrey *m_filterGrey;
+		RendererGuis *m_rendererGuis;
+		RendererFonts *m_rendererFonts;
 	public:
 		ManagerRender();
 

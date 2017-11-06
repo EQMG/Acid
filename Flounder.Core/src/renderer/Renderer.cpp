@@ -71,76 +71,22 @@ namespace Flounder
 
 		const VkResult beganResult = BeginReindering();
 
-		if (beganResult != VK_SUCCESS)
+		if (beganResult != VK_SUCCESS || m_managerRender == nullptr)
 		{
 			return;
 		}
 
-		const auto queue = Display::Get()->GetQueue();
-		const auto renderPass = m_renderPass->GetRenderPass();
-		const auto activeFramebuffer = GetActiveFramebuffer();
-
 		VkCommandBufferBeginInfo commandBufferBeginInfo = {};
 		commandBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		commandBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-		vkBeginCommandBuffer(m_commandBuffer, &commandBufferBeginInfo);
 
-		VkRect2D renderArea = {};
-		renderArea.offset.x = 0;
-		renderArea.offset.y = 0;
-		renderArea.extent.width = Display::Get()->GetWidth();
-		renderArea.extent.height = Display::Get()->GetHeight();
+		Platform::ErrorVk(vkBeginCommandBuffer(m_commandBuffer, &commandBufferBeginInfo));
 
-		std::array<VkClearValue, 4> clearValues = {};
+		RunRenderPass();
 
-		for (uint32_t i = 0; i < 4; i++)
-		{
-			if (i == 0)
-			{
-				clearValues[i].depthStencil.depth = 1.0f;
-				clearValues[i].depthStencil.stencil = 0;
-			}
-			else
-			{
-				clearValues[i].color.float32[0] = 0.0f;
-				clearValues[i].color.float32[1] = 0.0f;
-				clearValues[i].color.float32[2] = 0.0f;
-				clearValues[i].color.float32[3] = 1.0f;
-			}
-		}
+		Platform::ErrorVk(vkEndCommandBuffer(m_commandBuffer));
 
-		VkRenderPassBeginInfo renderPassBeginInfo = {};
-		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassBeginInfo.renderPass = renderPass;
-		renderPassBeginInfo.framebuffer = activeFramebuffer;
-		renderPassBeginInfo.renderArea = renderArea;
-		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
-		renderPassBeginInfo.pClearValues = clearValues.data();
-		vkCmdBeginRenderPass(m_commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-		if (m_managerRender != nullptr)
-		{
-			VkViewport viewport = {};
-			viewport.x = 0.0f;
-			viewport.y = 0.0f;
-			viewport.width = static_cast<float>(Display::Get()->GetWidth());
-			viewport.height = static_cast<float>(Display::Get()->GetHeight());
-			viewport.minDepth = 0.0f;
-			viewport.maxDepth = 1.0f;
-			vkCmdSetViewport(m_commandBuffer, 0, 1, &viewport);
-
-			VkRect2D scissor = {};
-			scissor.offset.x = 0;
-			scissor.offset.y = 0;
-			scissor.extent.width = Display::Get()->GetWidth();
-			scissor.extent.height = Display::Get()->GetHeight();
-			vkCmdSetScissor(m_commandBuffer, 0, 1, &scissor);
-
-			m_managerRender->Render(&m_commandBuffer);
-		}
-		vkCmdEndRenderPass(m_commandBuffer);
-
-		vkEndCommandBuffer(m_commandBuffer);
+		const auto queue = Display::Get()->GetQueue();
 
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -159,56 +105,6 @@ namespace Flounder
 		EndRendering({ m_semaphore });
 	}
 
-	VkResult Renderer::BeginReindering()
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto queue = Display::Get()->GetQueue();
-
-		Platform::ErrorVk(vkQueueWaitIdle(queue));
-		const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage);
-
-		if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
-		{
-			RecreateSwapchain();
-			return VK_ERROR_OUT_OF_DATE_KHR;
-		}
-
-		assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) && "Failed to acquire swapchain image!");
-
-		Platform::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
-		Platform::ErrorVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
-
-		return VK_SUCCESS;
-	}
-
-	void Renderer::EndRendering(std::vector<VkSemaphore> waitSemaphores)
-	{
-		const auto queue = Display::Get()->GetQueue();
-
-		VkResult result = VK_RESULT_MAX_ENUM;
-
-		VkPresentInfoKHR presentInfo = {};
-		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-		presentInfo.waitSemaphoreCount = static_cast<uint32_t>(waitSemaphores.size());
-		presentInfo.pWaitSemaphores = waitSemaphores.data();
-		presentInfo.swapchainCount = 1;
-		presentInfo.pSwapchains = m_swapchain->GetSwapchain();
-		presentInfo.pImageIndices = &m_activeSwapchinImage;
-		presentInfo.pResults = &result;
-
-		const VkResult queueResult = vkQueuePresentKHR(queue, &presentInfo);
-
-		if (queueResult == VK_ERROR_OUT_OF_DATE_KHR || queueResult == VK_SUBOPTIMAL_KHR) 
-		{
-			RecreateSwapchain();
-			return;
-		}
-
-		assert(result == VK_SUCCESS && "Failed to present swapchain image!");
-
-		Platform::ErrorVk(result);
-	}
-
 	void Renderer::CreateFences()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -224,12 +120,14 @@ namespace Flounder
 
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-		vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, nullptr, &m_semaphore);
+
+		Platform::ErrorVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, nullptr, &m_semaphore));
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetGraphicsFamilyIndex();
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+
 		Platform::ErrorVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
@@ -237,7 +135,8 @@ namespace Flounder
 		commandBufferAllocateInfo.commandPool = m_commandPool;
 		commandBufferAllocateInfo.commandBufferCount = 1;
 		commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer);
+
+		Platform::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer));
 	}
 
 	void Renderer::CreatePipelineCache()
@@ -246,6 +145,7 @@ namespace Flounder
 
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
+
 		Platform::ErrorVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
@@ -259,7 +159,7 @@ namespace Flounder
 #if FLOUNDER_VERBOSE
 		printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, extent2d.width, extent2d.height);
 #endif
-		vkQueueWaitIdle(queue);
+		Platform::ErrorVk(vkQueueWaitIdle(queue));
 
 		delete m_framebuffers;
 		delete m_depthStencil;
@@ -282,13 +182,13 @@ namespace Flounder
 		allocInfo.commandBufferCount = 1;
 
 		VkCommandBuffer commandBuffer;
-		vkAllocateCommandBuffers(logicalDevice, &allocInfo, &commandBuffer);
+		Platform::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &allocInfo, &commandBuffer));
 
 		VkCommandBufferBeginInfo beginInfo = {};
 		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
-		vkBeginCommandBuffer(commandBuffer, &beginInfo);
+		Platform::ErrorVk(vkBeginCommandBuffer(commandBuffer, &beginInfo));
 
 		return commandBuffer;
 	}
@@ -299,16 +199,117 @@ namespace Flounder
 		const auto queue = Display::Get()->GetQueue();
 		const auto commandPool = Renderer::Get()->GetCommandPool();
 
-		vkEndCommandBuffer(commandBuffer);
+		Platform::ErrorVk(vkEndCommandBuffer(commandBuffer));
 
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &commandBuffer;
 
-		vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
-		vkQueueWaitIdle(queue);
+		Platform::ErrorVk(vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE));
+
+		Platform::ErrorVk(vkQueueWaitIdle(queue));
 
 		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &commandBuffer);
+	}
+
+	VkResult Renderer::BeginReindering()
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto queue = Display::Get()->GetQueue();
+
+		Platform::ErrorVk(vkQueueWaitIdle(queue));
+		
+		const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage);
+
+		if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
+		{
+			RecreateSwapchain();
+			return VK_ERROR_OUT_OF_DATE_KHR;
+		}
+
+		assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) && "Failed to acquire swapchain image!");
+
+		Platform::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
+		
+		Platform::ErrorVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
+
+		return VK_SUCCESS;
+	}
+
+	void Renderer::RunRenderPass()
+	{
+		const auto renderPass = m_renderPass->GetRenderPass();
+		const auto activeFramebuffer = GetActiveFramebuffer();
+
+		VkRect2D renderArea = {};
+		renderArea.offset.x = 0;
+		renderArea.offset.y = 0;
+		renderArea.extent.width = Display::Get()->GetWidth();
+		renderArea.extent.height = Display::Get()->GetHeight();
+
+		std::array<VkClearValue, 4> clearValues = {};
+		clearValues[0].depthStencil = { 1.0f, 0 };
+		clearValues[1].color = { { 0.0f, 0.0f, 0.0f, 0.0f } };
+		clearValues[2].color = { { 0.0f, 0.0f, 0.0f, 0.0f } };
+		clearValues[3].color = { { 0.0f, 0.0f, 0.0f, 0.0f } };
+
+		VkRenderPassBeginInfo renderPassBeginInfo = {};
+		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+		renderPassBeginInfo.renderPass = renderPass;
+		renderPassBeginInfo.framebuffer = activeFramebuffer;
+		renderPassBeginInfo.renderArea = renderArea;
+		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
+		renderPassBeginInfo.pClearValues = clearValues.data();
+
+		vkCmdBeginRenderPass(m_commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+		VkViewport viewport = {};
+		viewport.x = 0.0f;
+		viewport.y = 0.0f;
+		viewport.width = static_cast<float>(Display::Get()->GetWidth());
+		viewport.height = static_cast<float>(Display::Get()->GetHeight());
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
+		vkCmdSetViewport(m_commandBuffer, 0, 1, &viewport);
+
+		VkRect2D scissor = {};
+		scissor.offset.x = 0;
+		scissor.offset.y = 0;
+		scissor.extent.width = Display::Get()->GetWidth();
+		scissor.extent.height = Display::Get()->GetHeight();
+		vkCmdSetScissor(m_commandBuffer, 0, 1, &scissor);
+
+		m_managerRender->Render(&m_commandBuffer);
+
+		vkCmdEndRenderPass(m_commandBuffer);
+	}
+
+	void Renderer::EndRendering(std::vector<VkSemaphore> waitSemaphores)
+	{
+		const auto queue = Display::Get()->GetQueue();
+
+		VkResult result = VK_RESULT_MAX_ENUM;
+
+		VkPresentInfoKHR presentInfo = {};
+		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+		presentInfo.waitSemaphoreCount = static_cast<uint32_t>(waitSemaphores.size());
+		presentInfo.pWaitSemaphores = waitSemaphores.data();
+		presentInfo.swapchainCount = 1;
+		presentInfo.pSwapchains = m_swapchain->GetSwapchain();
+		presentInfo.pImageIndices = &m_activeSwapchinImage;
+		presentInfo.pResults = &result;
+
+		const VkResult queueResult = vkQueuePresentKHR(queue, &presentInfo);
+
+		if (queueResult == VK_ERROR_OUT_OF_DATE_KHR || queueResult == VK_SUBOPTIMAL_KHR)
+		{
+			RecreateSwapchain();
+			return;
+		}
+
+		assert(result == VK_SUCCESS && "Failed to present swapchain image!");
+
+		Platform::ErrorVk(result);
 	}
 }

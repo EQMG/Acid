@@ -52,10 +52,6 @@ namespace Flounder
 	public:
 		void Update() override;
 
-		VkResult BeginReindering();
-
-		void EndRendering(std::vector<VkSemaphore> waitSemaphores);
-
 		/// <summary>
 		/// Gets the renderer manager.
 		/// </summary>
@@ -91,5 +87,11 @@ namespace Flounder
 		void CreatePipelineCache();
 
 		void RecreateSwapchain();
+
+		VkResult BeginReindering();
+
+		void RunRenderPass();
+
+		void EndRendering(std::vector<VkSemaphore> waitSemaphores);
 	};
 }
