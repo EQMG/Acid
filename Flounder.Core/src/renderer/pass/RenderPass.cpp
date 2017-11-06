@@ -41,17 +41,17 @@ namespace Flounder
 
 
 		VkAttachmentReference subpass0DepthStencilAttachment = {};
-		subpass0DepthStencilAttachment.attachment = 0;
+		subpass0DepthStencilAttachment.attachment = 0; // Depth
 		subpass0DepthStencilAttachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
 		std::array<VkAttachmentReference, 2> subpass0ColourAttachments = {};
-		subpass0ColourAttachments[0].attachment = 2;
+		subpass0ColourAttachments[0].attachment = 2; // Colour
 		subpass0ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-		subpass0ColourAttachments[1].attachment = 3;
+		subpass0ColourAttachments[1].attachment = 3; // Normal
 		subpass0ColourAttachments[1].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 		std::array<VkAttachmentReference, 1> subpass1ColourAttachments = {};
-		subpass0ColourAttachments[0].attachment = 1;
+		subpass0ColourAttachments[0].attachment = 1; // Swapchain
 		subpass0ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 
@@ -73,7 +73,7 @@ namespace Flounder
 		subpasses[1].pColorAttachments = subpass1ColourAttachments.data();
 	//	subpasses[1].pDepthStencilAttachment = &subpass1DepthStencilAttachment;
 
-		std::array<VkSubpassDependency, 2> dependencies = {};
+		std::array<VkSubpassDependency, 1> dependencies = {};
 		dependencies[0].srcSubpass = 0;
 		dependencies[0].dstSubpass = 1;
 		dependencies[0].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
@@ -81,12 +81,12 @@ namespace Flounder
 		dependencies[0].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 		dependencies[0].dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
-		dependencies[1].srcSubpass = 1;
-		dependencies[1].dstSubpass = 2;
-		dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-		dependencies[1].dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
-		dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-		dependencies[1].dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+	//	dependencies[1].srcSubpass = 1;
+	//	dependencies[1].dstSubpass = 2;
+	//	dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+	//	dependencies[1].dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+	//	dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+	//	dependencies[1].dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
 		VkRenderPassCreateInfo renderPassCreateInfo = {};
 		renderPassCreateInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;

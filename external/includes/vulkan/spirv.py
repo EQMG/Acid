@@ -42,7 +42,7 @@
 spv = {
     'MagicNumber' : 0x07230203,
     'Version' : 0x00010100,
-    'Revision' : 7,
+    'Revision' : 8,
     'OpCodeMask' : 0xffff,
     'WordCountShift' : 16,
 
@@ -114,6 +114,7 @@ spv = {
         'SubgroupSize' : 35,
         'SubgroupsPerWorkgroup' : 36,
         'PostDepthCoverage' : 4446,
+        'StencilRefReplacingEXT' : 5027,
     },
 
     'StorageClass' : {
@@ -421,6 +422,7 @@ spv = {
         'BaryCoordSmoothCentroidAMD' : 4996,
         'BaryCoordSmoothSampleAMD' : 4997,
         'BaryCoordPullModelAMD' : 4998,
+        'FragStencilRefEXT' : 5014,
         'ViewportMaskNV' : 5253,
         'SecondaryPositionNV' : 5257,
         'SecondaryViewportMaskNV' : 5258,
@@ -614,12 +616,19 @@ spv = {
         'AtomicStorageOps' : 4445,
         'SampleMaskPostDepthCoverage' : 4447,
         'ImageGatherBiasLodAMD' : 5009,
+        'FragmentMaskAMD' : 5010,
+        'StencilExportEXT' : 5013,
+        'ImageReadWriteLodAMD' : 5015,
         'SampleMaskOverrideCoverageNV' : 5249,
         'GeometryShaderPassthroughNV' : 5251,
+        'ShaderViewportIndexLayerEXT' : 5254,
         'ShaderViewportIndexLayerNV' : 5254,
         'ShaderViewportMaskNV' : 5255,
         'ShaderStereoViewNV' : 5259,
         'PerViewAttributesNV' : 5260,
+        'SubgroupShuffleINTEL' : 5568,
+        'SubgroupBufferBlockIOINTEL' : 5569,
+        'SubgroupImageBlockIOINTEL' : 5570,
     },
 
     'Op' : {
@@ -941,6 +950,16 @@ spv = {
         'OpGroupFMaxNonUniformAMD' : 5005,
         'OpGroupUMaxNonUniformAMD' : 5006,
         'OpGroupSMaxNonUniformAMD' : 5007,
+        'OpFragmentMaskFetchAMD' : 5011,
+        'OpFragmentFetchAMD' : 5012,
+        'OpSubgroupShuffleINTEL' : 5571,
+        'OpSubgroupShuffleDownINTEL' : 5572,
+        'OpSubgroupShuffleUpINTEL' : 5573,
+        'OpSubgroupShuffleXorINTEL' : 5574,
+        'OpSubgroupBlockReadINTEL' : 5575,
+        'OpSubgroupBlockWriteINTEL' : 5576,
+        'OpSubgroupImageBlockReadINTEL' : 5577,
+        'OpSubgroupImageBlockWriteINTEL' : 5578,
     },
 
 }

@@ -16,6 +16,7 @@ out gl_PerVertex
 
 void main(void) 
 {
-	fragmentTextures = vertexTextures;
 	gl_Position = vec4(vertexPosition, 1.0);
+
+	fragmentTextures = vertexTextures;
 }
