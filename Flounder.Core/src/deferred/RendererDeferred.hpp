@@ -3,6 +3,7 @@
 #include "../renderer/IRenderer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
 #include "../models/Model.hpp"
+#include "../textures/Texture.hpp"
 
 namespace Flounder
 {
@@ -15,6 +16,7 @@ namespace Flounder
 		static const PipelineCreateInfo pipelineCreateInfo;
 
 		Pipeline *m_pipeline;
+		Texture *m_textureUndefined;
 		Model *m_model;
 	public:
 		RendererDeferred();

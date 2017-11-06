@@ -81,9 +81,11 @@ namespace Flounder
 
 		void CreatePipelinePolygon();
 
-		void CreatePipelineNoDepth();
+		void CreatePipelinePolygonNoDepth();
 
 		void CreatePipelineMrt();
+
+		void CreatePipelineMrtNoDepth();
 
 		void CreatePipelineMultiTexture();
 	};

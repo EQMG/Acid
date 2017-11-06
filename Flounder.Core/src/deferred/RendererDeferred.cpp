@@ -17,11 +17,11 @@ namespace Flounder
 		0, 1, 2, 2, 3, 0
 	};
 
-	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererDeferred::pipelineCreateInfo =
 	{
-		PIPELINE_NO_DEPTH, // pipelineModeFlags
+		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_NONE, // cullModeFlags
 		1, // subpass
@@ -37,6 +37,7 @@ namespace Flounder
 	RendererDeferred::RendererDeferred() :
 		IRenderer(),
 		m_pipeline(new Pipeline("deferred", pipelineCreateInfo)),
+		m_textureUndefined(new Texture("res/undefined.png")),
 		m_model(new Model(VERTICES, INDICES))
 	{
 	}
@@ -44,6 +45,7 @@ namespace Flounder
 	RendererDeferred::~RendererDeferred()
 	{
 		delete m_model;
+		delete m_textureUndefined;
 		delete m_pipeline;
 	}
 
@@ -54,9 +56,13 @@ namespace Flounder
 
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(0, descriptorSet), Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(1, descriptorSet) }; // TODO: Modulaize this!
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ 
+			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet), 
+			Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(2, descriptorSet) 
+		}; // TODO: Modulaize this!
 		VkDescriptorSet descriptors[] = { m_pipeline->GetDescriptorSet() };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+
 		vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_model->CmdRender(*commandBuffer);
