@@ -56,15 +56,11 @@ namespace Flounder
 
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ 
-			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet), 
-			Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(2, descriptorSet) 
-		}; // TODO: Modulaize this!
+	//	std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet), Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(2, descriptorSet) }; // TODO: Modulaize this!
 		VkDescriptorSet descriptors[] = { m_pipeline->GetDescriptorSet() };
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+	//	vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+	//	vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
-		vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-
-		m_model->CmdRender(*commandBuffer);
+	//	m_model->CmdRender(*commandBuffer);
 	}
 }
