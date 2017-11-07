@@ -22,7 +22,7 @@ namespace Flounder
 
 		bool m_visible;
 		UiBound *m_rectangle;
-		Vector4 *m_scissor;
+		Vector4 *m_scissor; // TODO: Convert to UiBound.
 
 		Vector2 *m_positionOffset;
 		Vector4 *m_screenTransform;
