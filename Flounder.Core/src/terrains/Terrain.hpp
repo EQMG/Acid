@@ -33,7 +33,7 @@ namespace Flounder
 	public:
 		static const float SIDE_LENGTH;
 		static const std::vector<float> SQUARE_SIZES;
-		static const float TEXTURE_SCALE;
+		static const std::vector<float> TEXTURE_SCALES;
 
 		Terrain(const Vector3 &position, const Vector3 &rotation);
 

@@ -220,7 +220,10 @@ namespace Flounder
 
 		m_fullscreen = fullscreen;
 
-		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+		// int monitorCount;
+		// GLFWmonitor **monitors = glfwGetMonitors(&monitorCount);
+
+		GLFWmonitor *monitor = glfwGetPrimaryMonitor(); // monitors[1];
 		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
 
 		if (fullscreen)
