@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\deferred\RendererDeferred.hpp" />
+    <ClInclude Include="src\deferred\UbosDeferred.hpp" />
     <ClInclude Include="src\fonts\FontFamily.hpp" />
     <ClInclude Include="src\fonts\UbosFonts.hpp" />
     <ClInclude Include="src\guis\UbosGuis.hpp" />
