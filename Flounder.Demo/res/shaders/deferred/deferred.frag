@@ -2,8 +2,15 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 0) uniform sampler2D samplerColour;
-layout(binding = 1) uniform sampler2D samplerNormal;
+layout(binding = 0) uniform UboScene 
+{
+	mat4 projection;
+	mat4 view;
+	vec4 clip;
+} scene;
+
+layout(binding = 1) uniform sampler2D samplerColour;
+layout(binding = 2) uniform sampler2D samplerNormal;
 
 layout(location = 0) in vec2 fragmentTextures;
 

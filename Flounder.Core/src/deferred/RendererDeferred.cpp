@@ -4,6 +4,7 @@
 #include "../models/Vertex.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../textures/Texture.hpp"
+#include "UbosDeferred.hpp"
 
 namespace Flounder
 {
@@ -17,8 +18,9 @@ namespace Flounder
 		0, 1, 2, 2, 3, 0
 	};
 
-	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererDeferred::pipelineCreateInfo =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
@@ -29,13 +31,14 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeSamplerColour, typeSamplerNormal }, // descriptors
+		{ typeUboScene, typeSamplerColour, typeSamplerNormal }, // descriptors
 
 		{ "res/shaders/deferred/deferred.vert.spv", "res/shaders/deferred/deferred.frag.spv" } // shaderStages
 	};
 
 	RendererDeferred::RendererDeferred() :
 		IRenderer(),
+		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_pipeline(new Pipeline("deferred", pipelineCreateInfo)),
 		m_textureUndefined(new Texture("res/undefined.png")),
 		m_model(new Model(VERTICES, INDICES))
@@ -51,13 +54,18 @@ namespace Flounder
 
 	void RendererDeferred::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
+		UbosDeferred::UboScene uboScene = {};
+		uboScene.projection = *camera.GetProjectionMatrix();
+		uboScene.view = *camera.GetViewMatrix();
+		m_uniformScene->Update(&uboScene);
+
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-	//	std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(0, descriptorSet), Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(1, descriptorSet) };
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_textureUndefined->GetWriteDescriptor(0, descriptorSet), m_textureUndefined->GetWriteDescriptor(1, descriptorSet) };
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformScene->GetWriteDescriptor(0, descriptorSet), Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet), Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(2, descriptorSet) };
+	//	std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_textureUndefined->GetWriteDescriptor(0, descriptorSet), m_textureUndefined->GetWriteDescriptor(1, descriptorSet) };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		
 		VkDescriptorSet descriptors[1] = { m_pipeline->GetDescriptorSet() };
