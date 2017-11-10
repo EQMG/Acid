@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterNegative::StoreValues()
+	void FilterNegative::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 	}
 }

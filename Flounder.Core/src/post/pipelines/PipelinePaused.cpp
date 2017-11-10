@@ -1,5 +1,7 @@
 #include "PipelinePaused.hpp"
 
+#include "../../maths/Maths.hpp"
+
 namespace Flounder
 {
 	PipelinePaused::PipelinePaused() :
@@ -21,24 +23,17 @@ namespace Flounder
 		delete m_filterCombine;
 	}
 
-	void PipelinePaused::RenderPipeline(const int n_args, va_list args)
+	void PipelinePaused::RenderPipeline(const VkCommandBuffer *commandBuffer)
 	{
-#if 0
-		m_pipelineGaussian1->renderPipeline(n_args, args);
+		m_pipelineGaussian1->RenderPipeline(commandBuffer);
 
-		m_pipelineGaussian2->setScaleValue(1.25f);
-		m_pipelineGaussian2->renderPipelineV(1, m_pipelineGaussian1->getOutput()->getColourTexture(0));
+		m_pipelineGaussian2->SetScaleValue(1.25f);
+		m_pipelineGaussian2->RenderPipeline(commandBuffer);
 
-		m_filterDarken->setFactorValue(Maths::Max(fabs(1.0f - m_blurFactor), 0.45f));
-		m_filterDarken->applyFilter(1, m_pipelineGaussian2->getOutput()->getColourTexture(0));
+		m_filterDarken->SetFactorValue(Maths::Max(fabs(1.0f - m_blurFactor), 0.45f));
+		m_filterDarken->RenderFilter(commandBuffer);
 
-		m_filterCombine->setSlideSpace(m_blurFactor, 1.0f, 0.0f, 1.0f);
-		m_filterCombine->applyFilter(2, args[0], m_filterDarken->getFbo()->getColourTexture(0)); // Darken - Colour
-#endif
-	}
-
-	Fbo *PipelinePaused::GetOutput()
-	{
-		return m_filterCombine->GetFbo();
+		m_filterCombine->SetSlideSpace(m_blurFactor, 1.0f, 0.0f, 1.0f);
+		m_filterCombine->RenderFilter(commandBuffer); // Darken - Colour
 	}
 }

@@ -17,7 +17,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterDarken::StoreValues()
+	void FilterDarken::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 #if 0
 		m_shader->loadUniform1f("factor", m_factorValue);

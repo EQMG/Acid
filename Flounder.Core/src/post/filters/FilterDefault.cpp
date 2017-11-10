@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterDefault::FilterDefault() :
-		IPostFilter("filterDefault", "res/shaders/filters/default.frag.spv", nullptr)
+		IPostFilter("filterDefault", "res/shaders/filters/default.frag.spv")
 	{
 	}
 
@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterDefault::StoreValues()
+	void FilterDefault::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 	}
 }

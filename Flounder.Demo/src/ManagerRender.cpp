@@ -10,6 +10,7 @@ namespace Demo
 		m_rendererWaters(new RendererWaters()),
 		m_rendererTest(new RendererTest()),
 		m_rendererDeferred(new RendererDeferred()),
+		m_filterGrey(new FilterGrey()),
 		m_rendererGuis(new RendererGuis()),
 		m_rendererFonts(new RendererFonts())
 	{
@@ -25,6 +26,7 @@ namespace Demo
 		delete m_rendererTest;
 
 		delete m_rendererDeferred;
+		delete m_filterGrey;
 		delete m_rendererGuis;
 		delete m_rendererFonts;
 	}
@@ -46,6 +48,7 @@ namespace Demo
 		
 		// Subpass 2
 		m_rendererDeferred->Render(commandBuffer, m_infinity, *camera);
+	//	m_filterGrey->RenderFilter(commandBuffer);
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
 	}
