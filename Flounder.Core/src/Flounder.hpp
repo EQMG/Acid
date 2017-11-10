@@ -14,6 +14,8 @@
 #include "devices/Keyboard.hpp"
 #include "devices/Mouse.hpp"
 
+#include "deferred/RendererDeferred.hpp"
+
 #include "engine/Engine.hpp"
 #include "engine/IModule.hpp"
 #include "engine/IUpdater.hpp"

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "../../platforms/Platform.hpp"
+#include "Swapchain.hpp"
 
 namespace Flounder
 {
@@ -10,7 +11,7 @@ namespace Flounder
 	private:
 		std::vector<VkFramebuffer> m_framebuffers;
 	public:
-		Framebuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent, const uint32_t &swapchainImageCount, const std::vector<VkImageView> &swapchinImageViews);
+		Framebuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const Swapchain &swapchain, const VkExtent2D &extent);
 
 		~Framebuffers();
 

@@ -9,8 +9,8 @@
 namespace Flounder
 {
 	const float Terrain::SIDE_LENGTH = 100.0f;
-	const std::vector<float> Terrain::SQUARE_SIZES = { 2.0f, 5.0f, 10.0f, 20.0f }; // 1.0f, 
-	const float Terrain::TEXTURE_SCALE = 5.0f;
+	const std::vector<float> Terrain::SQUARE_SIZES = { 2.0f, 5.0f, 10.0f, 20.0f }; // Models: (1.0 LOD, 2/5 LOD, 1/10 LOD, none)
+	const std::vector<float> Terrain::TEXTURE_SCALES = { 10.0f, 5.0f, 2.0f, 1.0f };
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
@@ -110,9 +110,10 @@ namespace Flounder
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_textureGrass->GetWriteDescriptor(2, descriptorSet), m_textureSnow->GetWriteDescriptor(3, descriptorSet), m_samplerSand->GetWriteDescriptor(4, descriptorSet), m_samplerRock->GetWriteDescriptor(5, descriptorSet) }; // TODO: Modulaize this!
-		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_textureGrass->GetWriteDescriptor(2, descriptorSet), m_textureSnow->GetWriteDescriptor(3, descriptorSet), m_samplerSand->GetWriteDescriptor(4, descriptorSet), m_samplerRock->GetWriteDescriptor(5, descriptorSet) };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+
+		VkDescriptorSet descriptors[1] = { pipeline.GetDescriptorSet() };
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_modelLods[m_currentLod]->CmdRender(commandBuffer);
@@ -120,7 +121,7 @@ namespace Flounder
 
 	int Terrain::CalculateVertexCount(const float &terrainLength, const float &squareSize)
 	{
-		return static_cast<int>((2.0 * terrainLength) / squareSize) + 2;
+		return static_cast<int>((2.0 * terrainLength) / squareSize) + 1;
 	}
 
 	void Terrain::CreateLod(const int &lod)
@@ -131,7 +132,7 @@ namespace Flounder
 		}
 
 #if FLOUNDER_VERBOSE
-		auto debugStart = Engine::Get()->GetTimeMs();
+		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 		const float squareSize = SQUARE_SIZES[lod];
 		const int vertexCount = CalculateVertexCount(SIDE_LENGTH, squareSize);
@@ -147,8 +148,8 @@ namespace Flounder
 				Vector3 position = Vector3((row * squareSize) - (SIDE_LENGTH / 2.0f), 0.0f, (col * squareSize) - (SIDE_LENGTH / 2.0f));
 				position.m_y = Terrains::Get()->GetHeight(position.m_x + m_position->m_x, position.m_z + m_position->m_z); // TODO: Simplify!
 				const Vector2 textures = Vector2(
-					(TEXTURE_SCALE) * static_cast<float>(col) / static_cast<float>(vertexCount),
-					(TEXTURE_SCALE) * static_cast<float>(row) / static_cast<float>(vertexCount)
+					TEXTURE_SCALES[lod] * static_cast<float>(col) / static_cast<float>(vertexCount),
+					TEXTURE_SCALES[lod] * static_cast<float>(row) / static_cast<float>(vertexCount)
 				);
 				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x, position.m_z + m_position->m_z, 1.5f); // squareSize = constant to make normals uniform.
 				const Vector3 tangent = Vector3();
@@ -176,7 +177,7 @@ namespace Flounder
 		Model *result = new Model(vertices, indices);
 
 #if FLOUNDER_VERBOSE
-		auto debugEnd = Engine::Get()->GetTimeMs();
+		const auto debugEnd = Engine::Get()->GetTimeMs();
 		printf("Terrain LOD %i took %fms to build!\n", lod, debugEnd - debugStart);
 #endif
 

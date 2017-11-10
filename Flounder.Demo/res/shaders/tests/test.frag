@@ -17,5 +17,5 @@ void main()
 	vec3 textureColour = texture(samplerTexture, fragmentTextures).rgb;
 
 	outColour = vec4(textureColour, 1.0);
-	outNormal = vec4(1.0, 0.0, 0.0, 1.0);
+	outNormal = vec4(fragmentNormal + 1.0 / 2.0, 1.0);
 }

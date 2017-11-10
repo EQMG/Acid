@@ -9,9 +9,10 @@ namespace Flounder
 	const DescriptorType RendererSkyboxes::typeSamplerCubemap = Cubemap::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererSkyboxes::pipelineCreateInfo =
 	{
-		PIPELINE_NO_DEPTH, // pipelineModeFlags
+		PIPELINE_MRT_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_FRONT_BIT, // cullModeFlags
+		1, // subpass
 
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
