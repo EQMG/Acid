@@ -18,6 +18,9 @@
     <ClCompile Include="src\helpers\HelperString.cpp" />
     <ClCompile Include="src\maths\Colour.cpp" />
     <ClCompile Include="src\models\Vertex.cpp" />
+    <ClCompile Include="src\post\pipelines\PipelineBloom.cpp" />
+    <ClCompile Include="src\post\pipelines\PipelineGaussian.cpp" />
+    <ClCompile Include="src\post\pipelines\PipelinePaused.cpp" />
     <ClCompile Include="src\renderer\buffers\UniformBuffer.cpp" />
     <ClCompile Include="src\renderer\stencils\DepthStencil.cpp" />
     <ClCompile Include="src\camera\Camera.cpp" />
@@ -102,9 +105,6 @@
     <ClCompile Include="src\post\filters\FilterWobble.cpp" />
     <ClCompile Include="src\post\IPostFilter.cpp" />
     <ClCompile Include="src\post\IPostPipeline.cpp" />
-    <ClCompile Include="src\post\pipelines\PipelineBloom.cpp" />
-    <ClCompile Include="src\post\pipelines\PipelineGaussian.cpp" />
-    <ClCompile Include="src\post\pipelines\PipelinePaused.cpp" />
     <ClCompile Include="src\processing\graphic\ProcessorGraphic.cpp" />
     <ClCompile Include="src\processing\Processing.cpp" />
     <ClCompile Include="src\processing\resource\ProcessorResource.cpp" />
@@ -163,6 +163,9 @@
     <ClInclude Include="src\fonts\FontFamily.hpp" />
     <ClInclude Include="src\fonts\UbosFonts.hpp" />
     <ClInclude Include="src\guis\UbosGuis.hpp" />
+    <ClInclude Include="src\post\pipelines\PipelineBloom.hpp" />
+    <ClInclude Include="src\post\pipelines\PipelineGaussian.hpp" />
+    <ClInclude Include="src\post\pipelines\PipelinePaused.hpp" />
     <ClInclude Include="src\renderer\buffers\UniformBuffer.hpp" />
     <ClInclude Include="src\renderer\pipelines\PipelineCreate.hpp" />
     <ClInclude Include="src\renderer\stencils\DepthStencil.hpp" />
@@ -267,9 +270,6 @@
     <ClInclude Include="src\post\filters\FilterWobble.hpp" />
     <ClInclude Include="src\post\IPostFilter.hpp" />
     <ClInclude Include="src\post\IPostPipeline.hpp" />
-    <ClInclude Include="src\post\pipelines\PipelineBloom.hpp" />
-    <ClInclude Include="src\post\pipelines\PipelineGaussian.hpp" />
-    <ClInclude Include="src\post\pipelines\PipelinePaused.hpp" />
     <ClInclude Include="src\processing\graphic\ProcessorGraphic.hpp" />
     <ClInclude Include="src\processing\graphic\RequestGraphic.hpp" />
     <ClInclude Include="src\processing\IProcessor.hpp" />

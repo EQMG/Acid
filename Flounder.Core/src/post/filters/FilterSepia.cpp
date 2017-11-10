@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterSepia::StoreValues()
+	void FilterSepia::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 	}
 }

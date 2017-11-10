@@ -14,6 +14,6 @@ out gl_PerVertex
 
 void main(void) 
 {
-	textureCoords = vec2(1.0 - inTextureCoords.x, inTextureCoords.y);
+	textureCoords = vec2(inTextureCoords.x, inTextureCoords.y);
 	gl_Position = vec4(inPosition, 1.0);
 }

@@ -12,7 +12,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterFxaa::StoreValues()
+	void FilterFxaa::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 #if 0
 		m_shader->loadUniform1f("spanMax", m_spanMax);

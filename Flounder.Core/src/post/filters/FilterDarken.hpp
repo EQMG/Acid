@@ -16,7 +16,7 @@ namespace Flounder
 
 		~FilterDarken();
 
-		void StoreValues() override;
+		void RenderFilter(const VkCommandBuffer *commandBuffer) override;
 
 		float GetFactorValue() const { return m_factorValue; }
 

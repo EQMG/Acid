@@ -17,7 +17,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterTiltshift::StoreValues()
+	void FilterTiltshift::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 #if 0
 		m_shader->loadUniform1f("blurAmount", m_blurAmount);
