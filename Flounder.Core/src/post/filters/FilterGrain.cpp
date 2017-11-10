@@ -12,7 +12,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterGrain::StoreValues()
+	void FilterGrain::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 #if 0
 		m_shader->loadUniform1f("strength", m_strength);
