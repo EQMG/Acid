@@ -1,6 +1,7 @@
 ﻿#include "Swapchain.hpp"
 
 #include "../../devices/Display.hpp"
+#include "../../shadows/Shadows.hpp"
 
 namespace Flounder
 {
@@ -10,6 +11,9 @@ namespace Flounder
 		m_swapchainImageCount(0),
 		m_swapchinImages(std::vector<VkImage>()),
 		m_swapchinImageViews(std::vector<VkImageView>()),
+		m_colourImage(nullptr),
+		m_normalImage(nullptr),
+		m_shadowImage(nullptr),
 		m_extent({})
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -85,6 +89,7 @@ namespace Flounder
 			imageViewCreateInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
 			imageViewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
 			imageViewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+			imageViewCreateInfo.subresourceRange = {};
 			imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 			imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
 			imageViewCreateInfo.subresourceRange.levelCount = 1;
@@ -93,11 +98,19 @@ namespace Flounder
 
 			Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews[i]));
 		}
+
+		m_colourImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_B8G8R8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
+		m_normalImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_B8G8R8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
+		m_shadowImage = new Texture(8192, 8192, VK_FORMAT_B8G8R8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT); // TODO: Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize()
 	}
 
 	Swapchain::~Swapchain()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		delete m_shadowImage;
+		delete m_normalImage;
+		delete m_colourImage;
 
 		for (auto imageView : m_swapchinImageViews)
 		{

@@ -19,12 +19,17 @@ namespace Flounder
 
 	Terrains::~Terrains()
 	{
+		for (auto object : *m_terrains)
+		{
+			delete object;
+		}
+
 		delete m_terrains;
 	}
 
 	void Terrains::Update()
 	{
-		for (Terrain *object : *m_terrains)
+		for (auto object : *m_terrains)
 		{
 			bool inRange = true;
 			bool current = true;
