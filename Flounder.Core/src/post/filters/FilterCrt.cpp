@@ -17,7 +17,7 @@ namespace Flounder
 		delete m_screenColour;
 	}
 
-	void FilterCrt::StoreValues()
+	void FilterCrt::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 #if 0
 		m_shader->loadUniform3f("screenColour", *m_screenColour);

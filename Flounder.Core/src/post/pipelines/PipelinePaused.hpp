@@ -21,9 +21,7 @@ namespace Flounder
 
 		~PipelinePaused();
 
-		void RenderPipeline(const int n_args, va_list args) override;
-
-		Fbo *GetOutput() override;
+		void RenderPipeline(const VkCommandBuffer *commandBuffer) override;
 
 		void SetBlurFactor(const float &blurFactor) { m_blurFactor = blurFactor; }
 	};

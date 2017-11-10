@@ -16,7 +16,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterWobble::StoreValues()
+	void FilterWobble::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 #if 0
 		m_wobbleAmount += m_wobbleSpeed * Engine::Get()->getDeltaRender();

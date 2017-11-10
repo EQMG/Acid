@@ -1,78 +1,52 @@
 #include "IPostFilter.hpp"
 
+#include "../renderer/buffers/UniformBuffer.hpp"
+
 namespace Flounder
 {
-	IPostFilter::IPostFilter(const std::string &filterName, const std::string &fragmentShader, Fbo *fbo) :
-		m_shader(new Shader(filterName, {
-			ShaderStage("res/shaders/filters/default.vert.spv", VK_SHADER_STAGE_VERTEX_BIT),
-			ShaderStage(fragmentShader, VK_SHADER_STAGE_FRAGMENT_BIT)
-		})),
-		m_fbo(fbo),
-		m_model(new Model("res/models/rectangle_flat.obj"))
-	{
-	}
+	const std::vector<Vertex> VERTICES = {
+		Vertex(Vector3(-1.0f, -1.0f, 0.0f), Vector2(0.0f, 0.0f)),
+		Vertex(Vector3(1.0f, -1.0f, 0.0f), Vector2(1.0f, 0.0f)),
+		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
+		Vertex(Vector3(-1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
+	};
+	const std::vector<uint32_t> INDICES = {
+		0, 1, 2, 2, 3, 0
+	};
 
-	IPostFilter::IPostFilter(Shader *shader, Fbo *fbo) :
-		m_shader(shader),
-		m_fbo(fbo),
-		m_model(new Model("res/models/rectangle_flat.obj"))
+	const DescriptorType IPostFilter::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType IPostFilter::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const PipelineCreateInfo IPostFilter::pipelineCreateInfo =
 	{
-	}
+		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
+		VK_POLYGON_MODE_FILL, // polygonMode
+		VK_CULL_MODE_NONE, // cullModeFlags
+		2, // subpass
 
-	IPostFilter::IPostFilter(Shader *shader) :
-		m_shader(shader),
-		m_fbo(new Fbo(true, 1.0f)),
-		m_model(new Model("res/models/rectangle_flat.obj"))
+		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+		{ typeUboScene, typeSamplerColour }, // descriptors
+
+		{ "res/shaders/filters/default.vert.spv", "res/shaders/filters/default.frag.spv" } // shaderStages
+	};
+
+	IPostFilter::IPostFilter(const std::string &filterName, const std::string &fragmentShader) :
+		m_pipeline(nullptr),
+		m_model(new Model(VERTICES, INDICES))
 	{
+		PipelineCreateInfo pipelineCreateInfo = PipelineCreateInfo(this->pipelineCreateInfo);
+		pipelineCreateInfo.shaderStages[1] = fragmentShader; // fragment
+		m_pipeline = new Pipeline(filterName, pipelineCreateInfo);
 	}
 
 	IPostFilter::~IPostFilter()
 	{
-		delete m_shader;
-		delete m_fbo;
+		delete m_model;
+		delete m_pipeline;
 	}
 
-	void IPostFilter::ApplyFilter(const int n_args, ...)
+	void IPostFilter::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
-		va_list args;
-		va_start(args, n_args);
-		ApplyFilter(n_args, args);
-		va_end(args);
-	}
-
-	void IPostFilter::ApplyFilter(const int n_args, va_list args)
-	{
-#if 0
-		if (m_fbo != nullptr)
-		{
-			m_fbo->bindFrameBuffer();
-			renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 1.0f);
-		}
-
-		m_shader->start();
-
-		storeValues();
-
-		renderer::get()->disableDepthTesting();
-		renderer::get()->cullBackFaces(true);
-		renderer::get()->bindVAO(m_model->getVaoID(), 2, 0, 1);
-
-		for (int i = 0; i < n_args; i++)
-		{
-			renderer::get()->bindTexture(texture, GL_TEXTURE_2D, i);
-		}
-
-		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, m_model->getVaoLength()); // Render post filter.
-
-		renderer::get()->unbindVAO(2, 0, 1);
-		m_shader->stop();
-		renderer::get()->disableBlending();
-		renderer::get()->enableDepthTesting();
-
-		if (m_fbo != nullptr)
-		{
-			m_fbo->unbindFrameBuffer();
-		}
-#endif
 	}
 }

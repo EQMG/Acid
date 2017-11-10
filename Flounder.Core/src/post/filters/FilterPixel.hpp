@@ -14,7 +14,7 @@ namespace Flounder
 
 		~FilterPixel();
 
-		void StoreValues() override;
+		void RenderFilter(const VkCommandBuffer *commandBuffer) override;
 
 		float GetPixelSize() const { return m_pixelSize; }
 

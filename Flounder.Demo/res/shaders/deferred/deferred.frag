@@ -54,10 +54,16 @@ const vec3 lightDirection = vec3(0.2, -0.3, 0.2);
 void main(void) 
 {
 	vec4 colour = texture(samplerColour, fragmentTextures);
-	vec3 normal = texture(samplerNormal, fragmentTextures).rgb * 2.0 - 1.0;
-
+	vec4 normal = texture(samplerNormal, fragmentTextures);
 	
-	float diffuseLight = max(dot(-lightDirection, normal), 0.0) * lightBias.x + lightBias.y;
+	float diffuseLight = 1.0;
+	
+	if (normal.a != 0.0)
+	{
+		vec3 unitNormal = normal.rgb * 2.0 - 1.0;
+		diffuseLight = max(dot(-lightDirection, unitNormal), 0.0) * lightBias.x + lightBias.y;
+	}
+
 	outColour = vec4(colour.rgb * diffuseLight, 1.0);
 
 //	float grey = dot(colour.rgb, vec3(0.299, 0.587, 0.114));

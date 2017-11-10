@@ -13,7 +13,7 @@ namespace Flounder
 		delete m_slideSpaceValue;
 	}
 
-	void FilterCombine::StoreValues()
+	void FilterCombine::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 #if 0
 		// TODO: Load and store as seperate floats.
