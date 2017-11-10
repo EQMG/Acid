@@ -38,6 +38,20 @@ namespace Flounder
 
 	std::vector<char> HelperFile::ReadBinaryFile(const std::string &filepath)
 	{
+		/*FILE *file = fopen(filepath.c_str(), "rb");
+
+		assert(file != nullptr && "Could not find file!");
+
+		fseek(file, 0L, SEEK_END);
+		unsigned long length = ftell(file);
+		std::vector<char> data = std::vector<char>(length + 1);
+		memset(data.data(), 0, length + 1);
+		fseek(file, 0, SEEK_SET);
+		fread(data.data(), 1, length, file);
+		fclose(file);
+
+		return data;*/
+
 		// TODO: Move from ifsteam to normal C binary file loading.
 		std::ifstream ifs = std::ifstream(filepath, std::ios::ate | std::ios::binary);
 

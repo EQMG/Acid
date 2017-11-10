@@ -8,8 +8,9 @@ namespace Flounder
 	enum PipelineModeFlags
 	{
 		PIPELINE_POLYGON,
-		PIPELINE_NO_DEPTH,
+		PIPELINE_POLYGON_NO_DEPTH,
 		PIPELINE_MRT,
+		PIPELINE_MRT_NO_DEPTH,
 		PIPELINE_MULTI_TEXTURE
 	};
 
@@ -37,6 +38,7 @@ namespace Flounder
 		PipelineModeFlags pipelineModeFlags = PIPELINE_POLYGON;
 		VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL;
 		VkCullModeFlags cullModeFlags = VK_CULL_MODE_BACK_BIT;
+		int subpass = 0;
 
 		std::vector<VkVertexInputBindingDescription> vertexBindingDescriptions;
 		std::vector<VkVertexInputAttributeDescription> vertexAttributeDescriptions;
