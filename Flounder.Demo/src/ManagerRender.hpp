@@ -20,6 +20,7 @@ namespace Demo
 		RendererTest *m_rendererTest;
 
 		RendererDeferred *m_rendererDeferred;
+		FilterGrey *m_filterGrey;
 		RendererGuis *m_rendererGuis;
 		RendererFonts *m_rendererFonts;
 	public:

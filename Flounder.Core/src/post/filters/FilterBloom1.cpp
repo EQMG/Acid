@@ -1,5 +1,7 @@
 #include "FilterBloom1.hpp"
 
+#include "../../devices/Display.hpp"
+
 namespace Flounder
 {
 	FilterBloom1::FilterBloom1() :
@@ -11,7 +13,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterBloom1::StoreValues()
+	void FilterBloom1::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 	}
 }

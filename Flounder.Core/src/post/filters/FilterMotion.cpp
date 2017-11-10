@@ -16,7 +16,7 @@ namespace Flounder
 		delete m_lastViewMatrix;
 	}
 
-	void FilterMotion::StoreValues()
+	void FilterMotion::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 #if 0
 		icamera *camera = camera::get()->getCamera();
