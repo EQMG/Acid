@@ -19,9 +19,7 @@ namespace Flounder
 
 		~PipelineGaussian();
 
-		void RenderPipeline(const int n_args, va_list args) override;
-
-		Fbo *GetOutput() override;
+		void RenderPipeline(const VkCommandBuffer *commandBuffer) override;
 
 		void SetScaleValue(const float &scaleValue) const;
 	};

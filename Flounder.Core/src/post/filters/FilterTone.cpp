@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterTone::StoreValues()
+	void FilterTone::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 	}
 }
