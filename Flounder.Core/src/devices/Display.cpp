@@ -106,11 +106,11 @@ namespace Flounder
 		m_focused(true),
 		m_windowPosX(0),
 		m_windowPosY(0),
-#if FLOUNDER_VERBOSE
-		m_validationLayers(true),
-#else
+//#if FLOUNDER_VERBOSE
+//		m_validationLayers(true),
+//#else
 		m_validationLayers(false),
-#endif	
+//#endif	
 		m_instanceLayerList(std::vector<const char*>()),
 		m_instanceExtensionList(std::vector<const char*>()),
 		m_deviceExtensionList(std::vector<const char*>()),

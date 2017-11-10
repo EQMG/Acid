@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 
 	if (Terrains::Get() != nullptr)
 	{
-		/*const int n = 3;
+		const int n = 3;
 
 		for (int j = -n; j <= n; j++)
 		{
@@ -78,9 +78,9 @@ int main(int argc, char **argv)
 					Vector3(2.0f * static_cast<float>(j) * Terrain::SIDE_LENGTH, 0.0f, 2.0f * static_cast<float>(w) * Terrain::SIDE_LENGTH), Vector3()
 				));
 			}
-		}*/
+		}
 
-		Terrains::Get()->GetTerrains()->push_back(new Terrain(Vector3(), Vector3()));
+	//	Terrains::Get()->GetTerrains()->push_back(new Terrain(Vector3(), Vector3()));
 	}
 
 	if (Waters::Get() != nullptr)

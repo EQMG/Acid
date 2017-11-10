@@ -22,9 +22,9 @@ namespace Flounder
 	};
 
 	const DescriptorType RendererDeferred::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerShadows = Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerShadows = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererDeferred::pipelineCreateInfo =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
@@ -104,7 +104,7 @@ namespace Flounder
 
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformScene->GetWriteDescriptor(0, descriptorSet), Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(2, descriptorSet), Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(3, descriptorSet), Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(4, descriptorSet) };
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformScene->GetWriteDescriptor(0, descriptorSet), Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet), Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(2, descriptorSet), Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(3, descriptorSet) };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		
 		VkDescriptorSet descriptors[1] = { m_pipeline->GetDescriptorSet() };
