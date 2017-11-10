@@ -16,6 +16,7 @@ namespace Flounder
 		std::vector<VkImageView> m_swapchinImageViews;
 		Texture *m_colourImage;
 		Texture *m_normalImage;
+		Texture *m_shadowImage;
 
 		VkExtent2D m_extent;
 	public:
@@ -32,6 +33,8 @@ namespace Flounder
 		Texture *GetColourImage() const { return m_colourImage; }
 
 		Texture *GetNormalImage() const { return m_normalImage; }
+
+		Texture *GetShadowImage() const { return m_shadowImage; }
 
 		VkExtent2D GetExtent() const { return m_extent; }
 	};
