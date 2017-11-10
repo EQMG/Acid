@@ -34,7 +34,7 @@ namespace Flounder
 		m_swapchain = new Swapchain(extent2d);
 		m_depthStencil = new DepthStencil(extent3d);
 		m_renderPass = new RenderPass(m_depthStencil->GetFormat(), surfaceFormat.format);
-		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), extent2d, m_swapchain->GetImageCount(), m_swapchain->GetImageViews(), m_swapchain->GetColourImage()->GetImageView(), m_swapchain->GetNormalImage()->GetImageView());
+		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), extent2d, m_swapchain->GetImageCount(), m_swapchain->GetImageViews(), m_swapchain->GetColourImage()->GetImageView(), m_swapchain->GetNormalImage()->GetImageView(), m_swapchain->GetShadowImage()->GetImageView());
 
 		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
 		vkQueueWaitIdle(Display::Get()->GetQueue());
@@ -167,7 +167,7 @@ namespace Flounder
 
 		m_swapchain = new Swapchain(extent2d);
 		m_depthStencil = new DepthStencil(extent3d);
-		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), extent2d, m_swapchain->GetImageCount(), m_swapchain->GetImageViews(), m_swapchain->GetColourImage()->GetImageView(), m_swapchain->GetNormalImage()->GetImageView());
+		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), extent2d, m_swapchain->GetImageCount(), m_swapchain->GetImageViews(), m_swapchain->GetColourImage()->GetImageView(), m_swapchain->GetNormalImage()->GetImageView(), m_swapchain->GetShadowImage()->GetImageView());
 	}
 
 	VkCommandBuffer Renderer::BeginSingleTimeCommands()
@@ -248,11 +248,12 @@ namespace Flounder
 		renderArea.extent.width = Display::Get()->GetWidth();
 		renderArea.extent.height = Display::Get()->GetHeight();
 
-		std::array<VkClearValue, 4> clearValues = {};
+		std::array<VkClearValue, 5> clearValues = {};
 		clearValues[0].depthStencil = { 1.0f, 0 };
 		clearValues[1].color = { { 0.0f, 0.0f, 0.0f, 0.0f } };
 		clearValues[2].color = { { 0.0f, 0.0f, 0.0f, 0.0f } };
 		clearValues[3].color = { { 0.0f, 0.0f, 0.0f, 0.0f } };
+		clearValues[4].color = { { 1.0f, 1.0f, 1.0f, 0.0f } };
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
 		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;

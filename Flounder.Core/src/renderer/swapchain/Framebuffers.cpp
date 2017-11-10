@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	Framebuffers::Framebuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent, const uint32_t &swapchainImageCount, const std::vector<VkImageView> &swapchinImageViews, const VkImageView &colourImageView, const VkImageView &normalImageView) :
+	Framebuffers::Framebuffers(const VkRenderPass &renderPass, const VkImageView &depthImageView, const VkExtent2D &extent, const uint32_t &swapchainImageCount, const std::vector<VkImageView> &swapchinImageViews, const VkImageView &colourImageView, const VkImageView &normalImageView, const VkImageView &shadowImageView) :
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -14,11 +14,12 @@ namespace Flounder
 
 		for (uint32_t i = 0; i < swapchainImageCount; i++)
 		{
-			std::array<VkImageView, 4> attachments = {};
+			std::array<VkImageView, 5> attachments = {};
 			attachments[0] = depthImageView;
 			attachments[1] = swapchinImageViews[i];
-			attachments[2] = colourImageView; 
+			attachments[2] = colourImageView;
 			attachments[3] = normalImageView;
+			attachments[4] = shadowImageView;
 
 			VkFramebufferCreateInfo framebufferCreateInfo = {};
 			framebufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
