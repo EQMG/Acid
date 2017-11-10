@@ -21,8 +21,7 @@ layout(location = 1) in vec2 vertexTextures;
 layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
 
-layout(location = 0) out vec3 fragmentNormal;
-layout(location = 1) out vec3 fragmentTextures;
+layout(location = 0) out vec3 fragmentTextures;
 
 out gl_PerVertex 
 {
@@ -37,6 +36,5 @@ void main(void)
     gl_Position = scene.projection * scene.view * worldPosition;
 	gl_ClipDistance[0] = dot(worldPosition, scene.clip);
 	
-	fragmentNormal = vertexNormal;
 	fragmentTextures = vertexPosition;
 }

@@ -19,8 +19,6 @@ namespace Flounder
 
 		~PipelineBloom();
 
-		void RenderPipeline(const int n_args, va_list args) override;
-
-		Fbo *GetOutput() override;
+		void RenderPipeline(const VkCommandBuffer *commandBuffer) override;
 	};
 }

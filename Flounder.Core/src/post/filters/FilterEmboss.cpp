@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterEmboss::StoreValues()
+	void FilterEmboss::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 	}
 }

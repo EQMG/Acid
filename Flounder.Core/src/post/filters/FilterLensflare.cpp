@@ -17,7 +17,7 @@ namespace Flounder
 		delete m_sunPosition;
 	}
 
-	void FilterLensflare::StoreValues()
+	void FilterLensflare::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
 #if 0
 		m_shader->loadUniform3f("sunPosition", *m_sunPosition);
