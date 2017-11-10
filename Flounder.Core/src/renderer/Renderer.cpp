@@ -34,7 +34,7 @@ namespace Flounder
 		m_swapchain = new Swapchain(extent2d);
 		m_depthStencil = new DepthStencil(extent3d);
 		m_renderPass = new RenderPass(m_depthStencil->GetFormat(), surfaceFormat.format);
-		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), extent2d, m_swapchain->GetImageCount(), m_swapchain->GetImageViews(), m_swapchain->GetColourImage()->GetImageView(), m_swapchain->GetNormalImage()->GetImageView(), m_swapchain->GetShadowImage()->GetImageView());
+		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), *m_swapchain, extent2d);
 
 		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
 		vkQueueWaitIdle(Display::Get()->GetQueue());
@@ -167,7 +167,7 @@ namespace Flounder
 
 		m_swapchain = new Swapchain(extent2d);
 		m_depthStencil = new DepthStencil(extent3d);
-		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), extent2d, m_swapchain->GetImageCount(), m_swapchain->GetImageViews(), m_swapchain->GetColourImage()->GetImageView(), m_swapchain->GetNormalImage()->GetImageView(), m_swapchain->GetShadowImage()->GetImageView());
+		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), *m_swapchain, extent2d);
 	}
 
 	VkCommandBuffer Renderer::BeginSingleTimeCommands()
