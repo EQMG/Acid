@@ -17,7 +17,7 @@ namespace Flounder
 
 		~FilterTiltshift();
 
-		void StoreValues() override;
+		void RenderFilter(const VkCommandBuffer *commandBuffer) override;
 
 		float GetBlurAmount() const { return m_blurAmount; }
 
