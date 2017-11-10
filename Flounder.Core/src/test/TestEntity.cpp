@@ -43,9 +43,10 @@ namespace Flounder
 		Matrix4::TransformationMatrix(m_position, m_rotation, 1.0f, &uboObject.transform);
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_diffuse->GetWriteDescriptor(2, descriptorSet) , m_swapMap->GetWriteDescriptor(3, descriptorSet) }; // TODO: Modulaize this!
-		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_diffuse->GetWriteDescriptor(2, descriptorSet) , m_swapMap->GetWriteDescriptor(3, descriptorSet) }; 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+
+		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_model->CmdRender(commandBuffer);

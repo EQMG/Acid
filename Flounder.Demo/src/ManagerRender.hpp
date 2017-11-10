@@ -12,10 +12,14 @@ namespace Demo
 	private:
 		Vector4 m_infinity;
 
+		RendererShadows *m_rendererShadows;
+
 		RendererSkyboxes *m_rendererSkyboxes;
-		RendererWaters *m_rendererWaters;
 		RendererTerrains *m_rendererTerrains;
+		RendererWaters *m_rendererWaters;
 		RendererTest *m_rendererTest;
+
+		RendererDeferred *m_rendererDeferred;
 		RendererGuis *m_rendererGuis;
 		RendererFonts *m_rendererFonts;
 	public:
