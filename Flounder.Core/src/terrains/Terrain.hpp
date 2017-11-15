@@ -20,7 +20,6 @@ namespace Flounder
 		int m_currentLod;
 
 		Texture *m_textureGrass;
-		Texture *m_textureSnow;
 		Texture *m_samplerSand;
 		Texture *m_samplerRock;
 
@@ -46,8 +45,6 @@ namespace Flounder
 		static int CalculateVertexCount(const float &terrainLength, const float &squareSize);
 	private:
 		void CreateLod(const int &lod);
-
-		Vector3 CalculateNormal(const float &x, const float &z, const float &squareSize);
 	public:
 		std::vector<Model*> GetModelLods() const { return m_modelLods; }
 

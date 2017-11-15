@@ -34,19 +34,19 @@ namespace Flounder
 		m_pipeline(new Pipeline("tests", pipelineCreateInfo)),
 		m_testEntities(std::vector<TestEntity*>())
 	{
-		Model *model = new Model("res/entities/cuboid/model.obj");
-		Texture *diffuse = new Texture("res/entities/cuboid/diffuse.png"); // "res/undefined.png"
-		Texture *swapMap = new Texture("res/entities/cuboid/sway.png");
+		Model *model = new Model("res/entities/treePine/model.obj");
+		Texture *diffuse = new Texture("res/entities/treePine/diffuse.png"); // "res/undefined.png"
+		Texture *swapMap = new Texture("res/entities/treePine/sway.png");
 
-		for (int i = -1; i <= 1; i++) 
+		for (int i = -3; i <= 3; i++) 
 		{
-			for (int j = -1; j <= 1; j++)
+			for (int j = -3; j <= 3; j++)
 			{
-				const float xv = 0.0f; // Maths::RandomInRange(-10.0f, 10.0f);
-				const float yv = 0.0f; // Maths::RandomInRange(-10.0f, 10.0f);
+				const float xv = Maths::RandomInRange(-10.0f, 10.0f);
+				const float yv = Maths::RandomInRange(-10.0f, 10.0f);
 				
 				Vector3 position = Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv);
-				position.m_y += 1.0f;
+			//	position.m_y += 1.0f;
 				
 				if (position.m_y > 0.0f)
 				{
