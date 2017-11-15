@@ -13,7 +13,6 @@ namespace Flounder
 		static const DescriptorType typeUboScene;
 		static const DescriptorType typeUboObject;
 		static const DescriptorType typeSamplerGrass;
-		static const DescriptorType typeSamplerSnow;
 		static const DescriptorType typeSamplerSand;
 		static const DescriptorType typeSamplerRock;
 		static const PipelineCreateInfo pipelineCreateInfo;
