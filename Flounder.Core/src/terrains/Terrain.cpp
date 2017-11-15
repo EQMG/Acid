@@ -5,6 +5,7 @@
 #include "../worlds/Worlds.hpp"
 #include "Terrains.hpp"
 #include "UbosTerrains.hpp"
+#include "../models/MeshGenerator.hpp"
 
 namespace Flounder
 {
@@ -17,7 +18,6 @@ namespace Flounder
 		m_modelLods(std::vector<Model*>()),
 		m_currentLod(0),
 		m_textureGrass(new Texture("res/terrains/grass.png")),
-		m_textureSnow(new Texture("res/terrains/snow.png")),
 		m_samplerSand(new Texture("res/terrains/sand.png")),
 		m_samplerRock(new Texture("res/terrains/rock.png")),
 		m_position(new Vector3(position)),
@@ -46,7 +46,6 @@ namespace Flounder
 		}
 
 		delete m_textureGrass;
-		delete m_textureSnow;
 		delete m_samplerSand;
 		delete m_samplerRock;
 
@@ -59,10 +58,10 @@ namespace Flounder
 
 	void Terrain::Update()
 	{
-		Vector3 chunkPosition = Vector3(m_aabb->GetCentreX(), m_aabb->GetCentreY(), m_aabb->GetCentreZ());
-		chunkPosition.m_y = 0.0f;
 		Vector3 cameraPosition = Vector3(*Camera::Get()->GetCamera()->GetPosition());
-		cameraPosition.m_y = 0.0f;
+	//	cameraPosition.m_y = 0.0f;
+		Vector3 chunkPosition = Vector3(m_aabb->GetCentreX(), m_aabb->GetCentreY(), m_aabb->GetCentreZ());
+		chunkPosition.m_y = Terrains::Get()->GetHeight(cameraPosition.m_x, cameraPosition.m_z);
 		const float distance = Vector3::GetDistance(chunkPosition, cameraPosition);
 
 		// lnreg{ (90.5, 0), (181, 1), (362, 2) } = int(-6.500 + 1.443 * log(x) / log(2.718)) + 1
@@ -110,7 +109,7 @@ namespace Flounder
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_textureGrass->GetWriteDescriptor(2, descriptorSet), m_textureSnow->GetWriteDescriptor(3, descriptorSet), m_samplerSand->GetWriteDescriptor(4, descriptorSet), m_samplerRock->GetWriteDescriptor(5, descriptorSet) };
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_textureGrass->GetWriteDescriptor(2, descriptorSet), m_samplerSand->GetWriteDescriptor(3, descriptorSet), m_samplerRock->GetWriteDescriptor(4, descriptorSet) };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
 		VkDescriptorSet descriptors[1] = { pipeline.GetDescriptorSet() };
@@ -135,65 +134,18 @@ namespace Flounder
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 		const float squareSize = SQUARE_SIZES[lod];
+		const float textureScale = TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(SIDE_LENGTH, squareSize);
 
-		std::vector<Vertex> vertices = std::vector<Vertex>();
-		std::vector<uint32_t> indices = std::vector<uint32_t>();
-
-		for (int col = 0; col < vertexCount; col++)
+		m_modelLods[lod] = MeshGenerator::GenerateMesh(SIDE_LENGTH, squareSize, vertexCount, textureScale, MeshType::MeshPattern, [&](float x, float z)
 		{
-			for (int row = 0; row < vertexCount; row++)
-			{
-				// Creates and stores verticies.
-				Vector3 position = Vector3((row * squareSize) - (SIDE_LENGTH / 2.0f), 0.0f, (col * squareSize) - (SIDE_LENGTH / 2.0f));
-				position.m_y = Terrains::Get()->GetHeight(position.m_x + m_position->m_x, position.m_z + m_position->m_z); // TODO: Simplify!
-				const Vector2 textures = Vector2(
-					TEXTURE_SCALES[lod] * static_cast<float>(col) / static_cast<float>(vertexCount),
-					TEXTURE_SCALES[lod] * static_cast<float>(row) / static_cast<float>(vertexCount)
-				);
-				const Vector3 normal = CalculateNormal(position.m_x + m_position->m_x, position.m_z + m_position->m_z, 1.5f); // squareSize = constant to make normals uniform.
-				const Vector3 tangent = Vector3();
-
-				vertices.push_back(Vertex(position, textures, normal, tangent));
-
-				// Creates and stores indicies.
-				if (col < vertexCount - 1 && row < vertexCount - 1)
-				{
-					const uint32_t topLeft = (row * vertexCount) + col;
-					const uint32_t topRight = topLeft + 1;
-					const uint32_t bottomLeft = ((row + 1) * vertexCount) + col;
-					const uint32_t bottomRight = bottomLeft + 1;
-
-					indices.push_back(topLeft);
-					indices.push_back(bottomLeft);
-					indices.push_back(topRight);
-					indices.push_back(topRight);
-					indices.push_back(bottomLeft);
-					indices.push_back(bottomRight);
-				}
-			}
-		}
-
-		Model *result = new Model(vertices, indices);
+			return Terrains::Get()->GetHeight(x + m_position->m_x, z + m_position->m_z);
+		});
 
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 		printf("Terrain LOD %i took %fms to build!\n", lod, debugEnd - debugStart);
 #endif
-
-		m_modelLods[lod] = result;
-	}
-
-	Vector3 Terrain::CalculateNormal(const float &x, const float &z, const float &squareSize)
-	{
-		const float heightL = Terrains::Get()->GetHeight(x - squareSize, z);
-		const float heightR = Terrains::Get()->GetHeight(x + squareSize, z);
-		const float heightD = Terrains::Get()->GetHeight(x, z - squareSize);
-		const float heightU = Terrains::Get()->GetHeight(x, z + squareSize);
-
-		Vector3 normal = Vector3(heightL - heightR, squareSize, heightD - heightU);
-		normal.Normalize();
-		return normal;
 	}
 
 	void Terrain::SetPosition(const Vector3 &position)

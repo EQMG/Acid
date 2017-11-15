@@ -10,7 +10,7 @@ layout(binding = 1) uniform UboObject
 
 layout(binding = 2) uniform sampler2D samplerTexture;
 
-layout(location = 0) in vec3 fragmentNormal;
+layout(location = 0) flat in vec3 fragmentNormal;
 layout(location = 1) in vec2 fragmentTextures;
 
 layout(location = 0) out vec4 outColour;
@@ -22,6 +22,6 @@ void main(void)
 
 	const vec3 tintWater = texture(samplerTexture, fragmentTextures).rgb;
 	
-	outColour = vec4(tintWater, 1.0); // diffuseColour
+	outColour = vec4(object.diffuseColour.rgb, 1.0); // tintWater
 	outNormal = vec4(fragmentNormal + 1.0 / 2.0, 1.0);
 }
