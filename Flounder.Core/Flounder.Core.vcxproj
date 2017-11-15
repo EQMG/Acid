@@ -17,6 +17,7 @@
     <ClCompile Include="src\helpers\HelperFile.cpp" />
     <ClCompile Include="src\helpers\HelperString.cpp" />
     <ClCompile Include="src\maths\Colour.cpp" />
+    <ClCompile Include="src\models\MeshGenerator.cpp" />
     <ClCompile Include="src\models\Vertex.cpp" />
     <ClCompile Include="src\post\pipelines\PipelineBloom.cpp" />
     <ClCompile Include="src\post\pipelines\PipelineGaussian.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="src\fonts\FontFamily.hpp" />
     <ClInclude Include="src\fonts\UbosFonts.hpp" />
     <ClInclude Include="src\guis\UbosGuis.hpp" />
+    <ClInclude Include="src\models\MeshGenerator.hpp" />
     <ClInclude Include="src\post\pipelines\PipelineBloom.hpp" />
     <ClInclude Include="src\post\pipelines\PipelineGaussian.hpp" />
     <ClInclude Include="src\post\pipelines\PipelinePaused.hpp" />

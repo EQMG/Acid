@@ -3,13 +3,15 @@
 #include "../camera/Camera.hpp"
 #include "../devices/Display.hpp"
 #include "../maths/Maths.hpp"
+#include "../models/MeshGenerator.hpp"
 #include "Waters.hpp"
 #include "UbosWaters.hpp"
+#include "../terrains/Terrains.hpp"
 
 namespace Flounder
 {
-	const float Water::SIDE_LENGTH = 4096.0f;
-	const float Water::SQUARE_SIZE = 128.0f;
+	const float Water::SIDE_LENGTH = 2048.0f;
+	const float Water::SQUARE_SIZE = 10.0f;
 	const int Water::VERTEX_COUNT = static_cast<int>((2.0 * SIDE_LENGTH) / SQUARE_SIZE) + 1;
 	const float Water::TEXTURE_SCALE = 10.0f;
 
@@ -82,55 +84,16 @@ namespace Flounder
 
 	void Water::GenerateMesh()
 	{
-		std::vector<Vertex> vertices = std::vector<Vertex>();
-		std::vector<uint32_t> indices = std::vector<uint32_t>();
-
-		for (int col = 0; col < VERTEX_COUNT; col++)
+		m_model = MeshGenerator::GenerateMesh(SIDE_LENGTH, SQUARE_SIZE, VERTEX_COUNT, TEXTURE_SCALE, MeshType::MeshPattern, [&](float x, float z)
 		{
-			for (int row = 0; row < VERTEX_COUNT; row++)
-			{
-				const Vector3 position = Vector3((row * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f), 0.0f, (col * SQUARE_SIZE) - (SIDE_LENGTH / 2.0f));
-				const Vector2 textures = Vector2(
-					TEXTURE_SCALE * static_cast<float>(col) / static_cast<float>(VERTEX_COUNT),
-					TEXTURE_SCALE * static_cast<float>(row) / static_cast<float>(VERTEX_COUNT)
-				);
-				const Vector3 normal = Vector3(0.0f, 2.0f, 0.0f);
-				const Vector3 tangent = Vector3();
-
-				vertices.push_back(Vertex(position, textures, normal, tangent));
-			}
-		}
-
-		for (int col = 0; col < VERTEX_COUNT - 1; col++)
-		{
-			for (int row = 0; row < VERTEX_COUNT - 1; row++)
-			{
-				const uint32_t topLeft = (row * VERTEX_COUNT) + col;
-				const uint32_t topRight = topLeft + 1;
-				const uint32_t bottomLeft = ((row + 1) * VERTEX_COUNT) + col;
-				const uint32_t bottomRight = bottomLeft + 1;
-
-				StoreQuad(indices, topLeft, topRight, bottomLeft, bottomRight);
-			}
-		}
-
-		m_model = new Model(vertices, indices);
+			return 0.0f;
+		});
 
 		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
 		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;
 		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
 		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
-	}
-
-	void Water::StoreQuad(std::vector<uint32_t> &indices, const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight)
-	{
-		indices.push_back(topLeft);
-		indices.push_back(bottomLeft);
-		indices.push_back(topRight);
-		indices.push_back(topRight);
-		indices.push_back(bottomLeft);
-		indices.push_back(bottomRight);
 	}
 
 	void Water::SetPosition(const Vector3 &position)
