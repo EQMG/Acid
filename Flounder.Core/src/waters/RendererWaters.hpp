@@ -9,15 +9,16 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		static const DescriptorType RendererWaters::typeUboScene;
-		static const DescriptorType RendererWaters::typeUboObject;
-		static const DescriptorType RendererWaters::samplerTexture;
-		static const PipelineCreateInfo RendererWaters::pipelineCreateInfo;
+		static const DescriptorType typeUboScene;
+		static const DescriptorType typeUboObject;
+		static const DescriptorType typeSamplerRefraction;
+		static const DescriptorType samplerDudv;
+		static const PipelineCreateInfo pipelineCreateInfo;
 
 		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
 	public:
-		RendererWaters();
+		RendererWaters(const int &subpass);
 
 		~RendererWaters();
 

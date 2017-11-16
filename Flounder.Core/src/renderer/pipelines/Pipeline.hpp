@@ -19,6 +19,7 @@ namespace Flounder
 		std::string m_name;
 
 		PipelineCreateInfo m_pipelineCreateInfo;
+		int m_subpass;
 
 		VkDescriptorSetLayout m_descriptorSetLayout;
 		VkDescriptorPool m_descriptorPool;
@@ -44,7 +45,8 @@ namespace Flounder
 		/// </summary>
 		/// <param name="name"> The pipelines name. </param>
 		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
-		Pipeline(const std::string &name, const PipelineCreateInfo &pipelineCreateInfo);
+		/// <param name="subpass"> The pipelines subpass. </param>
+		Pipeline(const std::string &name, const PipelineCreateInfo &pipelineCreateInfo, const int &subpass);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
@@ -86,7 +88,5 @@ namespace Flounder
 		void CreatePipelineMrt();
 
 		void CreatePipelineMrtNoDepth();
-
-		void CreatePipelineMultiTexture();
 	};
 }

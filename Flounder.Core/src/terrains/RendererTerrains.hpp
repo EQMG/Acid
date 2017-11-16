@@ -20,7 +20,7 @@ namespace Flounder
 		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
 	public:
-		RendererTerrains();
+		RendererTerrains(const int &subpass);
 
 		~RendererTerrains();
 

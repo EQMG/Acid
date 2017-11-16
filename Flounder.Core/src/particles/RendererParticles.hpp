@@ -19,7 +19,7 @@ namespace Flounder
 
 		int m_rendered;
 	public:
-		RendererParticles();
+		RendererParticles(const int &subpass);
 
 		~RendererParticles();
 

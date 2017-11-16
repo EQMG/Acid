@@ -32,7 +32,6 @@ namespace Flounder
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_NONE, // cullModeFlags
-		2, // subpass
 
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
@@ -42,10 +41,10 @@ namespace Flounder
 		{ "res/shaders/deferred/deferred.vert.spv", "res/shaders/deferred/deferred.frag.spv" } // shaderStages
 	};
 
-	RendererDeferred::RendererDeferred() :
+	RendererDeferred::RendererDeferred(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
-		m_pipeline(new Pipeline("deferred", pipelineCreateInfo)),
+		m_pipeline(new Pipeline("deferred", pipelineCreateInfo, subpass)),
 		m_model(new Model(VERTICES, INDICES))
 	{
 	}

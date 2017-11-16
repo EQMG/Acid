@@ -18,7 +18,6 @@ namespace Flounder
 		PIPELINE_MRT, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_BACK_BIT, // cullModeFlags
-		1, // subpass
 
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
@@ -28,10 +27,10 @@ namespace Flounder
 		{ "res/shaders/tests/test.vert.spv", "res/shaders/tests/test.frag.spv" } // shaderStages
 	};
 
-	RendererTest::RendererTest() :
+	RendererTest::RendererTest(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosTest::UboScene))),
-		m_pipeline(new Pipeline("tests", pipelineCreateInfo)),
+		m_pipeline(new Pipeline("tests", pipelineCreateInfo, subpass)),
 		m_testEntities(std::vector<TestEntity*>())
 	{
 		Model *model = new Model("res/entities/treePine/model.obj");

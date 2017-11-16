@@ -12,7 +12,7 @@ namespace Flounder
 	private:
 		//	Fbo *m_fbo;
 	public:
-		RendererShadows();
+		RendererShadows(const int &subpass);
 
 		~RendererShadows();
 

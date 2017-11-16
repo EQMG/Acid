@@ -21,7 +21,7 @@ namespace Flounder
 		Pipeline *m_pipeline;
 		std::vector<TestEntity*> m_testEntities;
 	public:
-		RendererTest();
+		RendererTest(const int &subpass);
 
 		~RendererTest();
 
