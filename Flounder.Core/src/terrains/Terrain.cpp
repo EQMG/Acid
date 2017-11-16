@@ -120,7 +120,7 @@ namespace Flounder
 
 	int Terrain::CalculateVertexCount(const float &terrainLength, const float &squareSize)
 	{
-		return static_cast<int>((2.0 * terrainLength) / squareSize) + 1;
+		return static_cast<int>((2.0 * terrainLength) / squareSize) + 2;
 	}
 
 	void Terrain::CreateLod(const int &lod)
@@ -137,7 +137,7 @@ namespace Flounder
 		const float textureScale = TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(SIDE_LENGTH, squareSize);
 
-		m_modelLods[lod] = MeshGenerator::GenerateMesh(SIDE_LENGTH, squareSize, vertexCount, textureScale, MeshType::MeshPattern, [&](float x, float z)
+		m_modelLods[lod] = MeshGenerator::GenerateMesh(SIDE_LENGTH, squareSize, vertexCount, textureScale, MeshType::MeshSimple, [&](float x, float z)
 		{
 			return Terrains::Get()->GetHeight(x + m_position->m_x, z + m_position->m_z);
 		});

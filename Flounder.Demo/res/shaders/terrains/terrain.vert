@@ -19,9 +19,9 @@ layout(location = 1) in vec2 vertexTextures;
 layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
 
-layout(location = 0) flat out vec3 fragmentNormal;
+layout(location = 0) out vec3 fragmentNormal;
 layout(location = 1) out vec2 fragmentTextures;
-layout(location = 2) flat out float fragmentHeight;
+layout(location = 2) out float fragmentHeight;
 
 out gl_PerVertex 
 {
