@@ -15,7 +15,8 @@ namespace Flounder
 	{
 	private:
 		std::vector<Terrain*> *m_terrains;
-		NoiseFast m_noiseTerrain;
+		NoiseFast m_noise1;
+		NoiseFast m_noise2;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
