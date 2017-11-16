@@ -19,11 +19,12 @@ namespace Flounder
 		Model *m_model;
 
 		Colour *m_colour;
-		Texture *m_textureWater;
+		Texture *m_textureDudv;
 
 		Vector3 *m_position;
 		Vector3 *m_rotation;
 		Vector3 *m_offset;
+		float m_moveFactor;
 		bool m_moved;
 
 		Matrix4 *m_modelMatrix;
@@ -35,6 +36,7 @@ namespace Flounder
 		static const float TEXTURE_SCALE;
 
 		static const Colour WATER_COLOUR;
+		static const float WAVE_SPEED;
 
 		Water(const Vector3 &position = Vector3(), const Vector3 &rotation = Vector3());
 

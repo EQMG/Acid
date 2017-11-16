@@ -8,7 +8,7 @@ namespace Flounder
 		public IPostFilter
 	{
 	public:
-		FilterGrey();
+		FilterGrey(const int &subpass);
 
 		~FilterGrey();
 

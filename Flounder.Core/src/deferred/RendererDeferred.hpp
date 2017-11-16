@@ -21,7 +21,7 @@ namespace Flounder
 		Pipeline *m_pipeline;
 		Model *m_model;
 	public:
-		RendererDeferred();
+		RendererDeferred(const int &subpass);
 
 		~RendererDeferred();
 

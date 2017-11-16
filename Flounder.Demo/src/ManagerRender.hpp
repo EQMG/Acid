@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Flounder.hpp>
+#include "reflection/RendererReflection.hpp"
 
 using namespace Flounder;
 
@@ -12,7 +13,8 @@ namespace Demo
 	private:
 		Vector4 m_infinity;
 
-		RendererShadows *m_rendererShadows;
+		// RendererShadows *m_rendererShadows;
+		RendererReflection *m_rendererReflection;
 
 		RendererSkyboxes *m_rendererSkyboxes;
 		RendererTerrains *m_rendererTerrains;

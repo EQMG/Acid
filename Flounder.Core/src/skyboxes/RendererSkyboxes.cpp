@@ -12,7 +12,6 @@ namespace Flounder
 		PIPELINE_MRT_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_FRONT_BIT, // cullModeFlags
-		1, // subpass
 
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
@@ -22,10 +21,10 @@ namespace Flounder
 		{ "res/shaders/skyboxes/skybox.vert.spv", "res/shaders/skyboxes/skybox.frag.spv" } // shaderStages
 	};
 
-	RendererSkyboxes::RendererSkyboxes() :
+	RendererSkyboxes::RendererSkyboxes(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosSkyboxes::UboScene))),
-		m_pipeline(new Pipeline("skyboxes", pipelineCreateInfo))
+		m_pipeline(new Pipeline("skyboxes", pipelineCreateInfo, subpass))
 	{
 	}
 

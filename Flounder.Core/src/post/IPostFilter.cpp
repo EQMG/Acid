@@ -23,7 +23,6 @@ namespace Flounder
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_NONE, // cullModeFlags
-		2, // subpass
 
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
@@ -33,13 +32,13 @@ namespace Flounder
 		{ "res/shaders/filters/default.vert.spv", "res/shaders/filters/default.frag.spv" } // shaderStages
 	};
 
-	IPostFilter::IPostFilter(const std::string &filterName, const std::string &fragmentShader) :
+	IPostFilter::IPostFilter(const std::string &filterName, const std::string &fragmentShader, const int &subpass) :
 		m_pipeline(nullptr),
 		m_model(new Model(VERTICES, INDICES))
 	{
 		PipelineCreateInfo pipelineCreateInfo = PipelineCreateInfo(this->pipelineCreateInfo);
 		pipelineCreateInfo.shaderStages[1] = fragmentShader; // fragment
-		m_pipeline = new Pipeline(filterName, pipelineCreateInfo);
+		m_pipeline = new Pipeline(filterName, pipelineCreateInfo, subpass);
 	}
 
 	IPostFilter::~IPostFilter()

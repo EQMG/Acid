@@ -10,9 +10,10 @@ namespace Flounder
 {
 	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
-	Pipeline::Pipeline(const std::string &name, const PipelineCreateInfo &pipelineCreateInfo) :
+	Pipeline::Pipeline(const std::string &name, const PipelineCreateInfo &pipelineCreateInfo, const int &subpass) :
 		m_name(name),
 		m_pipelineCreateInfo(pipelineCreateInfo),
+		m_subpass(subpass),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_descriptorSet(VK_NULL_HANDLE),
@@ -52,9 +53,6 @@ namespace Flounder
 			break;
 		case PIPELINE_MRT_NO_DEPTH:
 			CreatePipelineMrtNoDepth();
-			break;
-		case PIPELINE_MULTI_TEXTURE:
-			CreatePipelineMultiTexture();
 			break;
 		default:
 			assert(false);
@@ -283,7 +281,7 @@ namespace Flounder
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.layout = m_pipelineLayout;
 		pipelineCreateInfo.renderPass = renderPass;
-		pipelineCreateInfo.subpass = m_pipelineCreateInfo.subpass;
+		pipelineCreateInfo.subpass = m_subpass;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
 
@@ -354,13 +352,6 @@ namespace Flounder
 
 		m_depthStencilState.depthTestEnable = VK_FALSE;
 		m_depthStencilState.depthWriteEnable = VK_FALSE;
-
-		CreatePipelinePolygon();
-	}
-
-	void Pipeline::CreatePipelineMultiTexture()
-	{
-		// TODO
 
 		CreatePipelinePolygon();
 	}
