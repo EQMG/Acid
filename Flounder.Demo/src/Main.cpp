@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 
 	if (Terrains::Get() != nullptr)
 	{
-		const int n = 3;
+		const int n = 5;
 
 		for (int j = -n; j <= n; j++)
 		{

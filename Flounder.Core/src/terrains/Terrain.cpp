@@ -10,7 +10,7 @@
 namespace Flounder
 {
 	const float Terrain::SIDE_LENGTH = 100.0f;
-	const std::vector<float> Terrain::SQUARE_SIZES = { 2.0f, 5.0f, 10.0f, 20.0f }; // Models: (1.0 LOD, 2/5 LOD, 1/10 LOD, none)
+	const std::vector<float> Terrain::SQUARE_SIZES = { 2.0f, 4.0f, 10.0f, 20.0f }; // Models: (1.0 LOD, 2/5 LOD, 1/10 LOD, none)
 	const std::vector<float> Terrain::TEXTURE_SCALES = { 10.0f, 5.0f, 2.0f, 1.0f };
 
 	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
@@ -59,7 +59,7 @@ namespace Flounder
 	void Terrain::Update()
 	{
 		Vector3 cameraPosition = Vector3(*Camera::Get()->GetCamera()->GetPosition());
-	//	cameraPosition.m_y = 0.0f;
+		cameraPosition.m_y = 0.0f;
 		Vector3 chunkPosition = Vector3(m_aabb->GetCentreX(), m_aabb->GetCentreY(), m_aabb->GetCentreZ());
 		chunkPosition.m_y = Terrains::Get()->GetHeight(cameraPosition.m_x, cameraPosition.m_z);
 		const float distance = Vector3::GetDistance(chunkPosition, cameraPosition);
