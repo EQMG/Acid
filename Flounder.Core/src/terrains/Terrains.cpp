@@ -10,12 +10,12 @@ namespace Flounder
 		m_noiseTerrain(NoiseFast(1963))
 	{
 		m_noiseTerrain.SetNoiseType(NoiseFast::PerlinFractal);
-		m_noiseTerrain.SetFrequency(0.0015f);
+		m_noiseTerrain.SetFrequency(0.0018f);
 		m_noiseTerrain.SetInterp(NoiseFast::Quintic);
 		m_noiseTerrain.SetFractalType(NoiseFast::Fbm);
-		m_noiseTerrain.SetFractalOctaves(5);
+		m_noiseTerrain.SetFractalOctaves(6);
 		m_noiseTerrain.SetFractalLacunarity(2.0f);
-		m_noiseTerrain.SetFractalGain(0.53f);
+		m_noiseTerrain.SetFractalGain(0.5f);
 	}
 
 	Terrains::~Terrains()

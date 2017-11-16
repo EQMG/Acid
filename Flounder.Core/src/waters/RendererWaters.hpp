@@ -11,8 +11,7 @@ namespace Flounder
 	private:
 		static const DescriptorType typeUboScene;
 		static const DescriptorType typeUboObject;
-		static const DescriptorType typeSamplerRefraction;
-		static const DescriptorType samplerDudv;
+		static const DescriptorType typeSamplerReflection;
 		static const PipelineCreateInfo pipelineCreateInfo;
 
 		UniformBuffer *m_uniformScene;
