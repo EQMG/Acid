@@ -13,7 +13,8 @@ layout(binding = 1) uniform UboObject
 {
 	mat4 transform;
 	vec4 diffuseColour;
-	float ignoreReflections;
+	vec3 cameraPosition;
+	float moveFactor;
 } object;
 
 layout(location = 0) in vec3 vertexPosition;
@@ -23,6 +24,8 @@ layout(location = 3) in vec3 vertexTangent;
 
 layout(location = 0) flat out vec3 fragmentNormal;
 layout(location = 1) out vec2 fragmentTextures;
+layout(location = 2) out vec4 fragmentClipSpace;
+layout(location = 3) out vec3 fragmentCameraVector;
 
 out gl_PerVertex 
 {
@@ -42,4 +45,6 @@ void main(void)
 
 	fragmentNormal = normalize((object.transform * totalNormal).xyz);
 	fragmentTextures = vertexTextures;
+	fragmentClipSpace = scene.projection * scene.view * worldPosition;
+	fragmentCameraVector = object.cameraPosition - worldPosition.xyz;
 }

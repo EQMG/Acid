@@ -35,11 +35,11 @@ void main(void)
 	
 	vec3 tint = tintSand;
 	
-	if (fragmentHeight <= 3.0f)
+	/*if (fragmentHeight <= 3.0f)
 	{
 		float blendSand = clamp(fragmentHeight - 1.0f, 0.0f, 1.0f);
 		tint = blend(tintGrass, tint, blendSand);
-	}
+	}*/
 
 	float blendRock = clamp(abs(fragmentNormal.y), 0.0f, 1.0f);
 	tint = blend(tintRock, tint, blendRock);

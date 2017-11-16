@@ -19,7 +19,7 @@ namespace Flounder
 		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
 	public:
-		RendererSkyboxes();
+		RendererSkyboxes(const int &subpass);
 
 		~RendererSkyboxes();
 

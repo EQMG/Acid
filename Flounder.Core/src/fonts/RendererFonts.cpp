@@ -13,7 +13,6 @@ namespace Flounder
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_NONE, // cullModeFlags
-		2, // subpass
 
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
@@ -23,9 +22,9 @@ namespace Flounder
 		{ "res/shaders/fonts/font.vert.spv", "res/shaders/fonts/font.frag.spv" } // shaderStages
 	};
 
-	RendererFonts::RendererFonts() :
+	RendererFonts::RendererFonts(const int &subpass) :
 		IRenderer(),
-		m_pipeline(new Pipeline("fonts", pipelineCreateInfo))
+		m_pipeline(new Pipeline("fonts", pipelineCreateInfo, subpass))
 	{
 	}
 

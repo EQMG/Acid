@@ -4,8 +4,8 @@
 
 namespace Flounder
 {
-	FilterGrey::FilterGrey() :
-		IPostFilter("filterGrey", "res/shaders/filters/grey.frag.spv")
+	FilterGrey::FilterGrey(const int &subpass) :
+		IPostFilter("filterGrey", "res/shaders/filters/grey.frag.spv", subpass)
 	{
 	}
 

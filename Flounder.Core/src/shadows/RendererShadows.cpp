@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	RendererShadows::RendererShadows() :
+	RendererShadows::RendererShadows(const int &subpass) :
 		IRenderer()
 	//	m_fbo(new Fbo(Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize(), DepthTexture, false)),
 	//	m_shader(new Shader("shadows", {

@@ -23,7 +23,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="filterName"> The name for the filter. </param>
 		/// <param name="fragmentShader"> The fragment shader file. </param>
-		IPostFilter(const std::string &filterName, const std::string &fragmentShader);
+		IPostFilter(const std::string &filterName, const std::string &fragmentShader, const int &subpass = 2);
 
 		/// <summary>
 		/// Deconstructor for the post filter.

@@ -4,26 +4,29 @@
 #include "../devices/Display.hpp"
 #include "../maths/Maths.hpp"
 #include "../models/MeshGenerator.hpp"
+#include "../terrains/Terrains.hpp"
+#include "../renderer/Renderer.hpp"
 #include "Waters.hpp"
 #include "UbosWaters.hpp"
-#include "../terrains/Terrains.hpp"
 
 namespace Flounder
 {
 	const float Water::SIDE_LENGTH = 2048.0f;
-	const float Water::SQUARE_SIZE = 10.0f;
+	const float Water::SQUARE_SIZE = 100.0f;
 	const int Water::VERTEX_COUNT = static_cast<int>((2.0 * SIDE_LENGTH) / SQUARE_SIZE) + 1;
-	const float Water::TEXTURE_SCALE = 10.0f;
+	const float Water::TEXTURE_SCALE = 1.0f;
 
 	const Colour Water::WATER_COLOUR = Colour("#366996");
+	const float Water::WAVE_SPEED = 0.0003f;
 
 	Water::Water(const Vector3 &position, const Vector3 &rotation) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosWaters::UboObject))),
 		m_model(nullptr),
 		m_colour(new Colour(WATER_COLOUR)),
-		m_textureWater(new Texture("res/waters/water.png")),
+		m_textureDudv(new Texture("res/waters/dudv.png")),
 		m_position(new Vector3(position)),
 		m_rotation(new Vector3(rotation)),
+		m_moveFactor(0.0f),
 		m_offset(new Vector3()),
 		m_moved(true),
 		m_modelMatrix(new Matrix4()),
@@ -59,6 +62,9 @@ namespace Flounder
 			0.0f,
 			2.0f * SQUARE_SIZE * round(Camera::Get()->GetCamera()->GetPosition()->m_z / (2.0f * SQUARE_SIZE))
 		);
+
+		m_moveFactor += WAVE_SPEED * Engine::Get()->GetDelta();
+		m_moveFactor = fmod(m_moveFactor, 1.0f);
 	}
 
 	void Water::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
@@ -70,10 +76,11 @@ namespace Flounder
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		uboObject.diffuseColour = Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b,
 			Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity() : 1.0f);
-		uboObject.ignoreReflections = !Waters::Get()->GetEnableReflections();
+		uboObject.cameraPosition = Vector3(*Camera::Get()->GetCamera()->GetPosition());
+		uboObject.moveFactor = m_moveFactor;
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_textureWater->GetWriteDescriptor(2, descriptorSet) }; 
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_textureDudv->GetWriteDescriptor(2, descriptorSet), Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(3, descriptorSet) };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
 		VkDescriptorSet descriptors[1] = { pipeline.GetDescriptorSet() };
