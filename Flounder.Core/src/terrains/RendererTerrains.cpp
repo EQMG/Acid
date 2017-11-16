@@ -15,7 +15,6 @@ namespace Flounder
 		PIPELINE_MRT, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
 		VK_CULL_MODE_BACK_BIT, // cullModeFlags
-		1, // subpass
 
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
@@ -25,10 +24,10 @@ namespace Flounder
 		{ "res/shaders/terrains/terrain.vert.spv", "res/shaders/terrains/terrain.frag.spv" } // shaderStages
 	};
 
-	RendererTerrains::RendererTerrains() :
+	RendererTerrains::RendererTerrains(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosTerrains::UboScene))),
-		m_pipeline(new Pipeline("terrains", pipelineCreateInfo))
+		m_pipeline(new Pipeline("terrains", pipelineCreateInfo, subpass))
 	{
 	}
 

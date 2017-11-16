@@ -20,7 +20,8 @@ namespace Flounder
 		{
 			Matrix4 transform;
 			Colour diffuseColour;
-			float ignoreReflections;
+			Vector3 cameraPosition;
+			float moveFactor;
 		};
 	};
 }

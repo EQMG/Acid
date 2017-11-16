@@ -5,3 +5,5 @@ Flounder.Demo/bin/*
 Flounder.Demo/obj/*
 Flounder.Json/bin/*
 Flounder.Json/obj/*
+
+.DS_Store

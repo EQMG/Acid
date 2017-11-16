@@ -16,7 +16,7 @@ namespace Flounder
 
 		Pipeline *m_pipeline;
 	public:
-		RendererFonts();
+		RendererFonts(const int &subpass);
 
 		~RendererFonts();
 

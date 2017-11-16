@@ -10,8 +10,7 @@ namespace Flounder
 		PIPELINE_POLYGON,
 		PIPELINE_POLYGON_NO_DEPTH,
 		PIPELINE_MRT,
-		PIPELINE_MRT_NO_DEPTH,
-		PIPELINE_MULTI_TEXTURE
+		PIPELINE_MRT_NO_DEPTH
 	};
 
 	class DescriptorType
@@ -38,7 +37,6 @@ namespace Flounder
 		PipelineModeFlags pipelineModeFlags = PIPELINE_POLYGON;
 		VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL;
 		VkCullModeFlags cullModeFlags = VK_CULL_MODE_BACK_BIT;
-		int subpass = 0;
 
 		std::vector<VkVertexInputBindingDescription> vertexBindingDescriptions;
 		std::vector<VkVertexInputAttributeDescription> vertexAttributeDescriptions;
