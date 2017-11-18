@@ -3,13 +3,14 @@
 #include "../camera/Camera.hpp"
 #include "../devices/Display.hpp"
 #include "../worlds/Worlds.hpp"
+#include "../models/MeshGenerator.hpp"
+#include "../helpers/HelperArray.hpp"
 #include "Terrains.hpp"
 #include "UbosTerrains.hpp"
-#include "../models/MeshGenerator.hpp"
 
 namespace Flounder
 {
-	const float Terrain::SIDE_LENGTH = 100.0f;
+	const int Terrain::SIDE_LENGTH = 100;
 	const std::vector<float> Terrain::SQUARE_SIZES = { 2.0f, 4.0f, 10.0f, 20.0f }; // Models: (1.0 LOD, 2/5 LOD, 1/10 LOD, none)
 	const std::vector<float> Terrain::TEXTURE_SCALES = { 10.0f, 5.0f, 2.0f, 1.0f };
 
@@ -17,17 +18,14 @@ namespace Flounder
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
 		m_modelLods(std::vector<Model*>()),
 		m_currentLod(0),
-		m_textureGrass(new Texture("res/terrains/grass.png")),
-		m_samplerSand(new Texture("res/terrains/sand.png")),
-		m_samplerRock(new Texture("res/terrains/rock.png")),
 		m_position(new Vector3(position)),
 		m_rotation(new Vector3(rotation)),
 		m_moved(true),
 		m_modelMatrix(new Matrix4()),
 		m_aabb(new Aabb())
 	{
-		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
-		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;
+		m_aabb->m_maxExtents->m_x = static_cast<float>(SIDE_LENGTH);
+		m_aabb->m_maxExtents->m_z = static_cast<float>(SIDE_LENGTH);
 		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
 		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
@@ -44,10 +42,6 @@ namespace Flounder
 		{
 			delete model;
 		}
-
-		delete m_textureGrass;
-		delete m_samplerSand;
-		delete m_samplerRock;
 
 		delete m_position;
 		delete m_rotation;
@@ -109,7 +103,7 @@ namespace Flounder
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet), m_textureGrass->GetWriteDescriptor(2, descriptorSet), m_samplerSand->GetWriteDescriptor(3, descriptorSet), m_samplerRock->GetWriteDescriptor(4, descriptorSet) };
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet) };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
 		VkDescriptorSet descriptors[1] = { pipeline.GetDescriptorSet() };
@@ -118,9 +112,9 @@ namespace Flounder
 		m_modelLods[m_currentLod]->CmdRender(commandBuffer);
 	}
 
-	int Terrain::CalculateVertexCount(const float &terrainLength, const float &squareSize)
+	int Terrain::CalculateVertexCount(const int &terrainLength, const float &squareSize)
 	{
-		return static_cast<int>((2.0 * terrainLength) / squareSize) + 2;
+		return static_cast<int>((2.0 * terrainLength) / static_cast<float>(squareSize)) + 1;
 	}
 
 	void Terrain::CreateLod(const int &lod)
@@ -137,10 +131,15 @@ namespace Flounder
 		const float textureScale = TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(SIDE_LENGTH, squareSize);
 
-		m_modelLods[lod] = MeshGenerator::GenerateMesh(SIDE_LENGTH, squareSize, vertexCount, textureScale, MeshType::MeshSimple, [&](float x, float z)
+		const std::function<float(float, float)> getHeight = [&](float x, float z)
 		{
 			return Terrains::Get()->GetHeight(x + m_position->m_x, z + m_position->m_z);
-		});
+		};
+		const std::function<Vector3(Vector3, Vector3)> getColour = [&](Vector3 position, Vector3 normal)
+		{
+			return Vector3(0.60, 0.17, 0.09);
+		};
+		m_modelLods[lod] = MeshGenerator::GenerateMesh(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, MeshType::MeshSimple, getHeight, getColour);
 
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();

@@ -12,7 +12,12 @@ namespace Flounder
 
 	Frustum::~Frustum()
 	{
-		delete m_frustum;
+		for (int i = 0; i < 6; i++)
+		{
+			delete[] m_frustum[i];
+		}
+
+		delete[] m_frustum;
 	}
 
 	void Frustum::Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
