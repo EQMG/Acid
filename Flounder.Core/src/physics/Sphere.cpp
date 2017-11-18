@@ -63,7 +63,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Intersect *Sphere::Intersects(const ICollider &other)
+	Intersect Sphere::Intersects(const ICollider &other)
 	{
 		/*if (dynamic_cast<aabb*>(other) != 0)
 		{
@@ -111,10 +111,10 @@ namespace Flounder
 		float distance = xDif * xDif + yDif * yDif + zDif * zDif;
 
 		bool intersects = d * d > distance;
-		return new Intersect(intersects, (d * d) - distance);
+		return Intersect(intersects, (d * d) - distance);
 	}
 
-	Intersect *Sphere::Intersects(const Ray &ray)
+	Intersect Sphere::Intersects(const Ray &ray)
 	{
 		Vector3 *L = Vector3::Subtract(*ray.m_origin, *m_position, nullptr);
 
@@ -128,7 +128,7 @@ namespace Flounder
 
 		if (disc < 0.0f)
 		{
-			return new Intersect(false, -1.0f);
+			return Intersect(false, -1.0f);
 		}
 
 		float distSqrt = sqrt(disc);
@@ -155,7 +155,7 @@ namespace Flounder
 
 		if (t1 < 0.0f)
 		{
-			return new Intersect(false, -1.0f);
+			return Intersect(false, -1.0f);
 		}
 
 		float t;
@@ -169,7 +169,7 @@ namespace Flounder
 			t = t0;
 		}
 
-		return new Intersect(true, t);
+		return Intersect(true, t);
 	}
 
 	bool Sphere::InFrustum(const Frustum &frustum)

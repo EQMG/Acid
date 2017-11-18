@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A data structure that stores objects with a notion of flounder.space.
 	/// </summary>
-	template<class T>
+	template<typename T>
 	class ISpatialStructure
 	{
 	public:

@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A structure of spatial objects for a 3D space.
 	/// </summary>
-	template<class T>
+	template<typename T>
 	class StructureBasic :
 		public ISpatialStructure<T>
 	{

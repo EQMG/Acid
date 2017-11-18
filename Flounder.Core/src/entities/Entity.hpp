@@ -12,6 +12,8 @@ namespace Flounder
 		public ISpatialObject
 	{
 	private:
+		UniformBuffer *m_uniformObject;
+
 		ISpatialStructure<Entity*> *m_structure;
 		std::vector<IComponent*> *m_components;
 

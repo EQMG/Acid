@@ -19,6 +19,8 @@
 #include "engine/IUpdater.hpp"
 #include "engine/ModuleUpdate.hpp"
 #include "entities/components/ComponentAlpha.hpp"
+#include "entities/components/ComponentCollider.hpp"
+#include "entities/components/ComponentCollision.hpp"
 #include "entities/components/ComponentModel.hpp"
 #include "entities/components/ComponentSway.hpp"
 #include "entities/Entities.hpp"
