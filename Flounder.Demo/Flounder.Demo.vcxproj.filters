@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="src\entities\EntityTest.hpp" />
     <ClInclude Include="src\uis\OverlayDebug.hpp" />
     <ClInclude Include="src\FpsCamera.hpp" />
     <ClInclude Include="src\FpsPlayer.hpp" />
@@ -9,6 +8,7 @@
     <ClInclude Include="src\ManagerRender.hpp" />
     <ClInclude Include="src\ManagerUis.hpp" />
     <ClInclude Include="src\uis\OverlayPaused.hpp" />
+    <ClInclude Include="src\entities\EntityTreePine.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\uis\OverlayDebug.cpp" />
@@ -19,5 +19,6 @@
     <ClCompile Include="src\ManagerRender.cpp" />
     <ClCompile Include="src\ManagerUis.cpp" />
     <ClCompile Include="src\uis\OverlayPaused.cpp" />
+    <ClCompile Include="src\entities\EntityTreePine.cpp" />
   </ItemGroup>
 </Project>

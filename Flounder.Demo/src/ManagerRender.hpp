@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Flounder.hpp>
-#include "reflection/RendererReflection.hpp"
 
 using namespace Flounder;
 
@@ -19,7 +18,7 @@ namespace Demo
 		RendererSkyboxes *m_rendererSkyboxes;
 		RendererTerrains *m_rendererTerrains;
 		RendererWaters *m_rendererWaters;
-		RendererTest *m_rendererTest;
+		RendererEntities *m_rendererEntities;
 
 		RendererDeferred *m_rendererDeferred;
 		FilterGrey *m_filterGrey;

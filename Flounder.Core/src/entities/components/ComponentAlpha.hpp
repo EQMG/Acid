@@ -16,7 +16,7 @@ namespace Flounder
 
 		void Update() override;
 
-		void Render(EntityRender *render) override;
+		void CmdRender(EntityRender *entityRender) override;
 
 		float GetAlpha() const { return m_alpha; }
 

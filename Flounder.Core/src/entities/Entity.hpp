@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+#include "../maths/Transform.hpp"
+#include "../renderer/pipelines/Pipeline.hpp"
+#include "../renderer/buffers/UniformBuffer.hpp"
 #include "../space/ISpatialStructure.hpp"
 #include "IComponent.hpp"
 
@@ -10,19 +13,18 @@ namespace Flounder
 	{
 	private:
 		ISpatialStructure<Entity*> *m_structure;
-
 		std::vector<IComponent*> *m_components;
 
-		Vector3 *m_position;
-		Vector3 *m_rotation;
-
+		Transform *m_transform;
 		bool m_removed;
 	public:
-		Entity(ISpatialStructure<Entity*> *structure, const Vector3 &position, const Vector3 &rotation);
+		Entity(ISpatialStructure<Entity*> *structure, const Transform &transform);
 
 		~Entity();
 
 		void Update();
+
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
 		ISpatialStructure<Entity*> *GetStructure() const { return m_structure; }
 
@@ -34,16 +36,25 @@ namespace Flounder
 
 		void RemoveComponent(IComponent *component);
 
-		template<class T>
-		T GetComponent();
+		template<typename T>
+		T GetComponent()
+		{
+			for (auto c : *m_components)
+			{
+				T casted = dynamic_cast<T>(c);
 
-		Vector3 *GetPosition() const { return m_position; }
+				if (casted != nullptr)
+				{
+					return casted;
+				}
+			}
 
-		void SetPosition(const Vector3 &position) const { m_position->Set(position); }
+			return nullptr;
+		}
 
-		Vector3 *GetRotation() const { return m_rotation; }
+		Transform *GetTransform() const { return m_transform; }
 
-		void SetRotation(const Vector3 &rotation) const { m_rotation->Set(rotation); }
+		void SetTransform(const Transform &transform) const { m_transform->Set(transform); }
 
 		bool GetRemoved() const { return m_removed; }
 
