@@ -298,7 +298,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Intersect *Aabb::Intersects(const ICollider &other)
+	Intersect Aabb::Intersects(const ICollider &other)
 	{
 		const Aabb &aabb2 = dynamic_cast<const Aabb&>(other);
 
@@ -311,7 +311,7 @@ namespace Flounder
 		delete distance2;
 		delete maxDistance;
 
-		return new Intersect(maxDist < 0.0f, maxDist);
+		return Intersect(maxDist < 0.0f, maxDist);
 
 		/*else if (dynamic_cast<Sphere*>(other) != 0)
 		{
@@ -350,7 +350,7 @@ namespace Flounder
 		}*/
 	}
 
-	Intersect *Aabb::Intersects(const Ray &ray)
+	Intersect Aabb::Intersects(const Ray &ray)
 	{
 		double tmin = (m_minExtents->m_x - ray.m_origin->m_x) / ray.m_currentRay->m_x;
 		double tmax = (m_maxExtents->m_x - ray.m_origin->m_x) / ray.m_currentRay->m_x;
@@ -374,7 +374,7 @@ namespace Flounder
 
 		if ((tmin > tymax) || (tymin > tmax))
 		{
-			return new Intersect(false, 0.0f);
+			return Intersect(false, 0.0f);
 		}
 
 		if (tymin > tmin)
@@ -399,10 +399,10 @@ namespace Flounder
 
 		if ((tmin > tzmax) || (tzmin > tmax))
 		{
-			return new Intersect(false, 0.0f);
+			return Intersect(false, 0.0f);
 		}
 
-		return new Intersect(true, 0.0f);
+		return Intersect(true, 0.0f);
 	}
 
 	bool Aabb::InFrustum(const Frustum &frustum)

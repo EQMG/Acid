@@ -53,14 +53,14 @@ namespace Flounder
 		/// </summary>
 		/// <param name="other"> The other shape being tested for intersection. </param>
 		/// <returns> Data about the calculated shape intersection. </returns>
-		virtual Intersect *Intersects(const ICollider &other) = 0;
+		virtual Intersect Intersects(const ICollider &other) = 0;
 
 		/// <summary>
 		/// Tests whether a ray is intersecting this shape.
 		/// </summary>
 		/// <param name="ray"> The ray being tested for intersection. </param>
 		/// <returns> Data about the calculated ray intersection. </returns>
-		virtual Intersect *Intersects(const Ray &ray) = 0;
+		virtual Intersect Intersects(const Ray &ray) = 0;
 
 		/// <summary>
 		/// Gets if the shape is partially in the view frustum.
