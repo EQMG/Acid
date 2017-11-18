@@ -1,12 +1,12 @@
 ﻿#include "Entity.hpp"
+#include "../devices/Display.hpp"
 
 namespace Flounder
 {
-	Entity::Entity(ISpatialStructure<Entity*> *structure, const Vector3 &position, const Vector3 &rotation) :
+	Entity::Entity(ISpatialStructure<Entity*> *structure, const Transform &transform) :
 		m_structure(structure),
 		m_components(new std::vector<IComponent*>()),
-		m_position(new Vector3(position)),
-		m_rotation(new Vector3(rotation)),
+		m_transform(new Transform(transform)),
 		m_removed(false)
 	{
 		if (m_structure != nullptr)
@@ -26,8 +26,7 @@ namespace Flounder
 
 		delete m_components;
 
-		delete m_position;
-		delete m_rotation;
+		delete m_transform;
 	}
 
 	void Entity::Update()
@@ -36,6 +35,37 @@ namespace Flounder
 		{
 			c->Update();
 		}
+	}
+
+	void Entity::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto descriptorSet = pipeline.GetDescriptorSet();
+
+		EntityRender entityRender = {};
+		entityRender.descriptorSet = descriptorSet;
+		entityRender.uboObject = {};
+		entityRender.descriptorWrites = std::vector<VkWriteDescriptorSet>();
+		entityRender.model = nullptr;
+
+		m_transform->GetWorldMatrix(&entityRender.uboObject.transform);
+
+		for (auto c : *m_components)
+		{
+			c->CmdRender(&entityRender);
+		}
+
+		if (entityRender.model == nullptr)
+		{
+			return;
+		}
+
+		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(entityRender.descriptorWrites.size()), entityRender.descriptorWrites.data(), 0, nullptr);
+
+		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
+		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
+
+		entityRender.model->CmdRender(commandBuffer);
 	}
 
 	void Entity::MoveStructure(ISpatialStructure<Entity*> *structure)
@@ -65,22 +95,6 @@ namespace Flounder
 		}
 	}
 
-	template<class T>
-	T Entity::GetComponent()
-	{
-		for (auto c : *m_components)
-		{
-			T casted = dynamic_cast<T>(c);
-
-			if (casted != nullptr)
-			{
-				return casted;
-			}
-		}
-
-		return nullptr;
-	}
-
 	ICollider *Entity::GetCollider()
 	{
 		return nullptr;
@@ -88,7 +102,8 @@ namespace Flounder
 
 	void Entity::Remove()
 	{
-		m_removed = true;
 		m_structure->Remove(this);
+		m_removed = true;
+		m_structure = nullptr;
 	}
 }

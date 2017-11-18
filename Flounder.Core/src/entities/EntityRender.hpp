@@ -1,24 +1,17 @@
 #pragma once
 
+#include <vector>
+#include "../platforms/Platform.hpp"
 #include "../models/Model.hpp"
+#include "UbosEntities.hpp"
 
 namespace Flounder
 {
 	struct EntityRender
 	{
-		Model *m_model;
-		bool m_shadowRun;
-		bool m_undoing;
-
-		EntityRender(Model *model, const bool &shadowRun)
-		{
-			m_model = model;
-			m_shadowRun = shadowRun;
-			m_undoing = false;
-		}
-
-		~EntityRender()
-		{
-		}
+		VkDescriptorSet descriptorSet;
+		UbosEntities::UboObject uboObject;
+		std::vector<VkWriteDescriptorSet> descriptorWrites;
+		Model *model;
 	};
 }

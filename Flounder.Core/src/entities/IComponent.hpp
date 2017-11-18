@@ -22,7 +22,7 @@ namespace Flounder
 
 		virtual void Update() = 0;
 
-		virtual void Render(EntityRender *render) = 0;
+		virtual void CmdRender(EntityRender *entityRender) = 0;
 
 		Entity *GetEntity() const { return m_entity; }
 

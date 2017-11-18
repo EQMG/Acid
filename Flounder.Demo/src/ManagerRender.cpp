@@ -9,7 +9,7 @@ namespace Demo
 		m_rendererSkyboxes(new RendererSkyboxes(1)),
 		m_rendererTerrains(new RendererTerrains(1)),
 		m_rendererWaters(new RendererWaters(1)),
-		m_rendererTest(new RendererTest(1)),
+		m_rendererEntities(new RendererEntities(1)),
 		m_rendererDeferred(new RendererDeferred(2)),
 		m_filterGrey(new FilterGrey(2)),
 		m_rendererGuis(new RendererGuis(2)),
@@ -25,7 +25,7 @@ namespace Demo
 		delete m_rendererSkyboxes;
 		delete m_rendererTerrains;
 		delete m_rendererWaters;
-		delete m_rendererTest;
+		delete m_rendererEntities;
 
 		delete m_rendererDeferred;
 		delete m_filterGrey;
@@ -46,7 +46,7 @@ namespace Demo
 		m_rendererSkyboxes->Render(commandBuffer, m_infinity, *camera);
 		m_rendererTerrains->Render(commandBuffer, m_infinity, *camera);
 		m_rendererWaters->Render(commandBuffer, m_infinity, *camera);
-		m_rendererTest->Render(commandBuffer, m_infinity, *camera);
+		m_rendererEntities->Render(commandBuffer, m_infinity, *camera);
 		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 		
 		// Subpass 2
