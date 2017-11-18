@@ -42,7 +42,8 @@ namespace Demo
 
 				if (position.m_y > 0.0f)
 				{
-					EntityTreePine *test = new EntityTreePine(Entities::Get()->GetStructure(), Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f)));
+					EntityTreePine *test = new EntityTreePine(nullptr, Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f))); // Entities::Get()->GetStructure()
+					Entities::Get()->GetEntities()->push_back(test);
 				}
 			}
 		}

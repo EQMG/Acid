@@ -39,7 +39,7 @@ namespace Demo
 
 		// Subpass 0
 		// m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
-		m_rendererReflection->Render(commandBuffer, m_infinity, *camera);
+	//	m_rendererReflection->Render(commandBuffer, m_infinity, *camera);
 		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 
 		// Subpass 1
