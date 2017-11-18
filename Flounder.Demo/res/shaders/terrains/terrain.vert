@@ -21,7 +21,8 @@ layout(location = 3) in vec3 vertexTangent;
 
 layout(location = 0) out vec3 fragmentNormal;
 layout(location = 1) out vec2 fragmentTextures;
-layout(location = 2) out float fragmentHeight;
+layout(location = 2) out vec3 fragmentColour;
+layout(location = 3) out float fragmentHeight;
 
 out gl_PerVertex 
 {
@@ -41,5 +42,6 @@ void main(void)
 
 	fragmentNormal = normalize((object.transform * totalNormal).xyz);
 	fragmentTextures = vertexTextures;
+	fragmentColour = vertexTangent;
 	fragmentHeight = vertexPosition.y;
 }

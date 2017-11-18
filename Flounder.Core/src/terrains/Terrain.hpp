@@ -7,7 +7,6 @@
 #include "../models/Model.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
-#include "../textures/Texture.hpp"
 
 namespace Flounder
 {
@@ -19,10 +18,6 @@ namespace Flounder
 		std::vector<Model*> m_modelLods;
 		int m_currentLod;
 
-		Texture *m_textureGrass;
-		Texture *m_samplerSand;
-		Texture *m_samplerRock;
-
 		Vector3 *m_position;
 		Vector3 *m_rotation;
 		bool m_moved;
@@ -30,7 +25,7 @@ namespace Flounder
 		Matrix4 *m_modelMatrix;
 		Aabb *m_aabb;
 	public:
-		static const float SIDE_LENGTH;
+		static const int SIDE_LENGTH;
 		static const std::vector<float> SQUARE_SIZES;
 		static const std::vector<float> TEXTURE_SCALES;
 
@@ -42,7 +37,7 @@ namespace Flounder
 
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
-		static int CalculateVertexCount(const float &terrainLength, const float &squareSize);
+		static int CalculateVertexCount(const int &terrainLength, const float &squareSize);
 	private:
 		void CreateLod(const int &lod);
 	public:
