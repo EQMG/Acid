@@ -1,6 +1,6 @@
 #include "Instance.hpp"
 
-#include "entities/EntityTest.hpp"
+#include "entities/EntityTreePine.hpp"
 
 namespace Demo
 {
@@ -32,22 +32,20 @@ namespace Demo
 		m_systemTest->setSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
 		particles::get()->addSystem(m_systemTest);*/
 
-		//EntityTest *test = new EntityTest(nullptr, Vector3(), Vector3());
-		//ComponentAlpha *meme = test->GetComponent<ComponentAlpha*>();
+		for (int i = -3; i <= 3; i++)
+		{
+			for (int j = -3; j <= 3; j++)
+			{
+				const float xv = Maths::RandomInRange(-10.0f, 10.0f);
+				const float yv = Maths::RandomInRange(-10.0f, 10.0f);
+				const Vector3 position = Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv);
 
-		//Model *modelTest = new Model("res/test/model.obj");
-		//Transform *transformTest = new Transform(Vector3(100.892f, -10.0f, -256.0f), Vector3(0.0f, 90.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f));
-		//Matrix4 *matrixWorld = transformTest->GetWorldMatrix(nullptr);
-
-		//Colour colourHex("#cc6600");
-		//std::cout << colourHex.m_r << ", " << colourHex.m_g << ", " << colourHex.m_b << std::endl;
-		//std::cout << Colour::GetHex(colourHex) << std::endl;
-
-		// float degrees = Maths::Degrees(2.0f * PI);
-
-		//delete matrixWorld;
-		//delete transformTest;
-		//delete modelTest;
+				if (position.m_y > 0.0f)
+				{
+					EntityTreePine *test = new EntityTreePine(Entities::Get()->GetStructure(), Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f)));
+				}
+			}
+		}
 	}
 
 	Instance::~Instance()
