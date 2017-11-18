@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	Model *MeshGenerator::GenerateMesh(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, const MeshType &meshType, const std::function<float(float, float)> &getHeight)
+	Model *MeshGenerator::GenerateMesh(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, const MeshType &meshType, const std::function<float(float, float)> &getHeight, const std::function<Vector3(Vector3, Vector3)> &getColour)
 	{
 		std::vector<Vertex> vertices = std::vector<Vertex>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
@@ -22,7 +22,7 @@ namespace Flounder
 					textureScale * static_cast<float>(row) / static_cast<float>(vertexCount)
 				);
 				const Vector3 normal = CalculateNormal(position.m_x, position.m_z, 1.5f, getHeight);
-				const Vector3 tangent = Vector3();
+				const Vector3 tangent = getColour(position, normal);
 
 				vertices.push_back(Vertex(position, textures, normal, tangent));
 

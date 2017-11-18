@@ -10,13 +10,13 @@ namespace Flounder
 		m_noise1(NoiseFast(56392)),
 		m_noise2(NoiseFast(14159))
 	{
-		m_noise1.SetNoiseType(NoiseFast::PerlinFractal);
+		m_noise1.SetNoiseType(NoiseFast::ValueFractal);
 		m_noise1.SetFrequency(0.004f);
-		m_noise1.SetInterp(NoiseFast::Quintic);
+		m_noise1.SetInterp(NoiseFast::Hermite);
 		m_noise1.SetFractalType(NoiseFast::Fbm);
 		m_noise1.SetFractalOctaves(4);
 		m_noise1.SetFractalLacunarity(2.0f);
-		m_noise1.SetFractalGain(0.6f);
+		m_noise1.SetFractalGain(0.5f);
 
 		m_noise2.SetNoiseType(NoiseFast::CubicFractal);
 		m_noise2.SetFrequency(0.0065f);
@@ -50,7 +50,7 @@ namespace Flounder
 
 	float Terrains::GetHeight(const float &x, const float &z)
 	{
-		const float height1 = (m_noise1.GetNoise(x, z) * 30.0f) + 10.0f;
+		const float height1 = (m_noise1.GetNoise(x, z) * 30.0f) + 15.0f;
 		const float height2 = (pow(m_noise2.GetNoise(x, z), 3.0f) * -30.0f) + 60.0f;
 
 		return height1;

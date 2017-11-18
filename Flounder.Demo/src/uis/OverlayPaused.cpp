@@ -6,7 +6,7 @@ namespace Demo
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)))
 	{
 		Texture *textureWhite = new Texture("res/guis/white.png");
-		Texture *textureInv = new Texture("res/guis/geometry-grain.jpg");
+		Texture *textureInv = new Texture("res/guis/geometry-grain.png");
 
 		// Examples.
 		UiObject *uiExamples = new UiObject(this, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)));
