@@ -6,6 +6,7 @@
 #include "../devices/Joysticks.hpp"
 #include "../devices/Keyboard.hpp"
 #include "../devices/Mouse.hpp"
+#include "../entities/Entities.hpp"
 #include "../events/Events.hpp"
 #include "../particles/Particles.hpp"
 #include "../processing/Processing.hpp"
@@ -65,6 +66,7 @@ namespace Flounder
 		AddModule(UpdatePre, "mouse", new Mouse());
 		AddModule(UpdateRender, "renderer", new Renderer());
 
+		AddModule(UpdatePre, "entities", new Entities());
 		AddModule(UpdatePre, "events", new Events());
 		AddModule(UpdatePre, "tasks", new Tasks());
 		AddModule(UpdatePre, "processing", new Processing());

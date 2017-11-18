@@ -12,6 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\deferred\RendererDeferred.cpp" />
+    <ClCompile Include="src\entities\components\ComponentSway.cpp" />
+    <ClCompile Include="src\entities\components\ComponentModel.cpp" />
+    <ClCompile Include="src\entities\Entities.cpp" />
     <ClCompile Include="src\fonts\FontFamily.cpp" />
     <ClCompile Include="src\helpers\HelperArray.cpp" />
     <ClCompile Include="src\helpers\HelperFile.cpp" />
@@ -133,8 +136,7 @@
     <ClCompile Include="src\terrains\RendererTerrains.cpp" />
     <ClCompile Include="src\terrains\Terrain.cpp" />
     <ClCompile Include="src\terrains\Terrains.cpp" />
-    <ClCompile Include="src\test\RendererTest.cpp" />
-    <ClCompile Include="src\test\TestEntity.cpp" />
+    <ClCompile Include="src\entities\RendererEntities.cpp" />
     <ClCompile Include="src\textures\Cubemap.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\uis\InputButton.cpp" />
@@ -162,6 +164,11 @@
   <ItemGroup>
     <ClInclude Include="src\deferred\RendererDeferred.hpp" />
     <ClInclude Include="src\deferred\UbosDeferred.hpp" />
+    <ClInclude Include="src\entities\components\ComponentSway.hpp" />
+    <ClInclude Include="src\entities\components\ComponentModel.hpp" />
+    <ClInclude Include="src\entities\EntityRender.hpp" />
+    <ClInclude Include="src\entities\Entities.hpp" />
+    <ClInclude Include="src\entities\UbosEntities.hpp" />
     <ClInclude Include="src\fonts\FontFamily.hpp" />
     <ClInclude Include="src\fonts\UbosFonts.hpp" />
     <ClInclude Include="src\guis\UbosGuis.hpp" />
@@ -187,7 +194,6 @@
     <ClInclude Include="src\engine\ModuleUpdate.hpp" />
     <ClInclude Include="src\entities\components\ComponentAlpha.hpp" />
     <ClInclude Include="src\entities\Entity.hpp" />
-    <ClInclude Include="src\entities\EntityRender.hpp" />
     <ClInclude Include="src\entities\IComponent.hpp" />
     <ClInclude Include="src\events\EventChange.hpp" />
     <ClInclude Include="src\events\Events.hpp" />
@@ -313,9 +319,7 @@
     <ClInclude Include="src\terrains\UbosTerrains.hpp" />
     <ClInclude Include="src\terrains\Terrain.hpp" />
     <ClInclude Include="src\terrains\Terrains.hpp" />
-    <ClInclude Include="src\test\RendererTest.hpp" />
-    <ClInclude Include="src\test\TestEntity.hpp" />
-    <ClInclude Include="src\test\UbosTest.hpp" />
+    <ClInclude Include="src\entities\RendererEntities.hpp" />
     <ClInclude Include="src\textures\Cubemap.hpp" />
     <ClInclude Include="src\textures\Texture.hpp" />
     <ClInclude Include="src\uis\IManagerUis.hpp" />

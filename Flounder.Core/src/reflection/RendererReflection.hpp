@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../renderer/IRenderer.hpp"
-#include "../test/RendererTest.hpp"
+#include "../entities/RendererEntities.hpp"
 #include "../terrains/RendererTerrains.hpp"
 #include "../skyboxes/RendererSkyboxes.hpp"
 #include "../waters/RendererWaters.hpp"
@@ -16,7 +16,7 @@ namespace Flounder
 
 		RendererSkyboxes *m_rendererSkyboxes;
 		RendererTerrains *m_rendererTerrains;
-		RendererTest *m_rendererTest;
+		RendererEntities *m_rendererEntities;
 	public:
 		RendererReflection(const int &subpass);
 

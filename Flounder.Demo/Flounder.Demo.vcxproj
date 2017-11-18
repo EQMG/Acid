@@ -16,7 +16,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\entities\EntityTest.hpp" />
+    <ClInclude Include="src\entities\EntityTreePine.hpp" />
     <ClInclude Include="src\uis\OverlayPaused.hpp" />
     <ClInclude Include="src\FpsCamera.hpp" />
     <ClInclude Include="src\FpsPlayer.hpp" />
@@ -26,6 +26,7 @@
     <ClInclude Include="src\uis\OverlayDebug.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\entities\EntityTreePine.cpp" />
     <ClCompile Include="src\uis\OverlayPaused.cpp" />
     <ClCompile Include="src\FpsCamera.cpp" />
     <ClCompile Include="src\FpsPlayer.cpp" />

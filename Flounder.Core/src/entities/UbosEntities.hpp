@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class UbosTest
+	class UbosEntities
 	{
 	public:
 		struct UboScene

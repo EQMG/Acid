@@ -18,20 +18,8 @@ namespace Flounder
 	{
 	}
 
-	void ComponentAlpha::Render(EntityRender *render)
+	void ComponentAlpha::CmdRender(EntityRender *entityRender)
 	{
-		if (render->m_shadowRun)
-		{
-		}
-#if 0
-		if (!render->m_undoing)
-		{
-			render->m_shader->loadUniform1f("alpha", m_alpha);
-		}
-		else
-		{
-			render->m_shader->loadUniform1f("alpha", 1.0f);
-		}
-#endif
+	//	entityRender->uboObject.alpha = m_alpha;
 	}
 }

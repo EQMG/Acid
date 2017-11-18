@@ -3,11 +3,11 @@
 #include "../renderer/IRenderer.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
 #include "../renderer/pipelines/Pipeline.hpp"
-#include "TestEntity.hpp"
+#include "Entity.hpp"
 
 namespace Flounder
 {
-	class RendererTest :
+	class RendererEntities :
 		public IRenderer
 	{
 	private:
@@ -19,11 +19,10 @@ namespace Flounder
 
 		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
-		std::vector<TestEntity*> m_testEntities;
 	public:
-		RendererTest(const int &subpass);
+		RendererEntities(const int &subpass);
 
-		~RendererTest();
+		~RendererEntities();
 
 		void Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
