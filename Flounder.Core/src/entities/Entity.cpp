@@ -4,6 +4,7 @@
 namespace Flounder
 {
 	Entity::Entity(ISpatialStructure<Entity*> *structure, const Transform &transform) :
+		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
 		m_structure(structure),
 		m_components(new std::vector<IComponent*>()),
 		m_transform(new Transform(transform)),
@@ -25,8 +26,8 @@ namespace Flounder
 		}
 
 		delete m_components;
-
 		delete m_transform;
+		delete m_uniformObject;
 	}
 
 	void Entity::Update()
@@ -49,6 +50,8 @@ namespace Flounder
 		entityRender.model = nullptr;
 
 		m_transform->GetWorldMatrix(&entityRender.uboObject.transform);
+		entityRender.descriptorWrites.push_back(uniformScene.GetWriteDescriptor(0, descriptorSet));
+		entityRender.descriptorWrites.push_back(m_uniformObject->GetWriteDescriptor(1, descriptorSet));
 
 		for (auto c : *m_components)
 		{
@@ -59,6 +62,8 @@ namespace Flounder
 		{
 			return;
 		}
+
+		m_uniformObject->Update(&entityRender.uboObject);
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(entityRender.descriptorWrites.size()), entityRender.descriptorWrites.data(), 0, nullptr);
 

@@ -110,9 +110,9 @@ namespace Flounder
 
 		Vector3 *ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination) override;
 
-		Intersect *Intersects(const ICollider &other) override;
+		Intersect Intersects(const ICollider &other) override;
 
-		Intersect *Intersects(const Ray &ray) override;
+		Intersect Intersects(const Ray &ray) override;
 
 		bool InFrustum(const Frustum &frustum) override;
 

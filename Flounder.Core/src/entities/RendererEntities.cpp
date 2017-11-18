@@ -50,9 +50,9 @@ namespace Flounder
 
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-	//	for (auto entity : *Entities::Get()->GetStructure()->GetAll())
-	//	{
-	//		entity->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
-	//	}
+		for (auto entity : *Entities::Get()->GetEntities()) // Entities::Get()->GetStructure()->GetAll()
+		{
+			entity->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
+		}
 	}
 }
