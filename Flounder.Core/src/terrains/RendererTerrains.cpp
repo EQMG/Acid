@@ -7,9 +7,6 @@ namespace Flounder
 {
 	const DescriptorType RendererTerrains::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
 	const DescriptorType RendererTerrains::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL);
-	const DescriptorType RendererTerrains::typeSamplerGrass = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererTerrains::typeSamplerSand = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererTerrains::typeSamplerRock = Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererTerrains::pipelineCreateInfo =
 	{
 		PIPELINE_MRT, // pipelineModeFlags
@@ -19,7 +16,7 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboScene, typeUboObject, typeSamplerGrass, typeSamplerSand, typeSamplerRock }, // descriptors
+		{ typeUboScene, typeUboObject }, // descriptors
 
 		{ "res/shaders/terrains/terrain.vert.spv", "res/shaders/terrains/terrain.frag.spv" } // shaderStages
 	};
