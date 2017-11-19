@@ -45,7 +45,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="viewMatrix"> The view matrix. </param>
 		/// <param name="projectionMatrix"> The projection matrix. </param>
-		void Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
+		void Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) const;
 
 		/// <returns> The planes*value array used to represent the frustum. </returns>
 		float **GetFrustum() const { return m_frustum; };

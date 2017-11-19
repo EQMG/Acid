@@ -124,37 +124,37 @@ namespace Flounder
 		/// Calculates the centre of this aabb on the X axis.
 		/// </summary>
 		/// <returns> The centre location of this aabb on the X axis. </returns>
-		float GetCentreX();
+		float GetCentreX() const;
 
 		/// <summary>
 		/// Calculates the centre of this aabb on the Y axis.
 		/// </summary>
 		/// <returns> The centre location of this aabb on the Y axis. </returns>
-		float GetCentreY();
+		float GetCentreY() const;
 
 		/// <summary>
 		/// Calculates the centre of this aabb on the Z axis.
 		/// </summary>
 		/// <returns> The centre location of this aabb on the Z axis. </returns>
-		float GetCentreZ();
+		float GetCentreZ() const;
 
 		/// <summary>
 		/// Gets the width of this aabb.
 		/// </summary>
 		/// <returns> The width of this aabb. </returns>
-		float GetWidth();
+		float GetWidth() const;
 
 		/// <summary>
 		/// Gets the height of this aabb.
 		/// </summary>
 		/// <returns> The height of this aabb. </returns>
-		float GetHeight();
+		float GetHeight() const;
 
 		/// <summary>
 		/// Gets the depth of this aabb.
 		/// </summary>
 		/// <returns> The depth of this aabb. </returns>
-		float GetDepth();
+		float GetDepth() const;
 
 		Vector3 *GetMinExtents() const { return m_minExtents; }
 

@@ -1,6 +1,7 @@
 #include "FilterGrey.hpp"
 
 #include "../../devices/Display.hpp"
+#include "../../renderer/Renderer.hpp"
 
 namespace Flounder
 {
