@@ -20,7 +20,7 @@ namespace Flounder
 		delete[] m_frustum;
 	}
 
-	void Frustum::Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
+	void Frustum::Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) const
 	{
 		float *view = Matrix4::ToArray(viewMatrix);
 		float *proj = Matrix4::ToArray(projectionMatrix);
@@ -141,7 +141,7 @@ namespace Flounder
 
 	void Frustum::NormalizePlane(float **frustum, const int &side) const
 	{
-		float magnitude = sqrt(m_frustum[side][FrustumA] * m_frustum[side][FrustumA] + m_frustum[side][FrustumB] * m_frustum[side][FrustumB] + m_frustum[side][FrustumC] * m_frustum[side][FrustumC]);
+		const float magnitude = sqrt(m_frustum[side][FrustumA] * m_frustum[side][FrustumA] + m_frustum[side][FrustumB] * m_frustum[side][FrustumB] + m_frustum[side][FrustumC] * m_frustum[side][FrustumC]);
 		m_frustum[side][FrustumA] /= magnitude;
 		m_frustum[side][FrustumB] /= magnitude;
 		m_frustum[side][FrustumC] /= magnitude;

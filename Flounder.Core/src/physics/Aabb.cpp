@@ -305,7 +305,7 @@ namespace Flounder
 		Vector3 *distance1 = Vector3::Subtract(*m_minExtents, *aabb2.m_maxExtents, nullptr);
 		Vector3 *distance2 = Vector3::Subtract(*aabb2.m_minExtents, *m_maxExtents, nullptr);
 		Vector3 *maxDistance = Vector3::MaxVector(*distance1, *distance2, nullptr);
-		float maxDist = Vector3::MaxComponent(*maxDistance);
+		const float maxDist = Vector3::MaxComponent(*maxDistance);
 
 		delete distance1;
 		delete distance2;
@@ -357,7 +357,7 @@ namespace Flounder
 
 		if (tmin > tmax)
 		{
-			double temp = tmax;
+			const double temp = tmax;
 			tmax = tmin;
 			tmin = temp;
 		}
@@ -367,7 +367,7 @@ namespace Flounder
 
 		if (tymin > tymax)
 		{
-			float temp = tymax;
+			const float temp = tymax;
 			tymax = tymin;
 			tymin = temp;
 		}
@@ -392,7 +392,7 @@ namespace Flounder
 
 		if (tzmin > tzmax)
 		{
-			float temp = tzmax;
+			const float temp = tzmax;
 			tzmax = tzmin;
 			tzmin = temp;
 		}
@@ -428,22 +428,27 @@ namespace Flounder
 		{
 			return false;
 		}
+
 		if (point.m_x < m_minExtents->m_x)
 		{
 			return false;
 		}
+
 		if (point.m_y > m_maxExtents->m_y)
 		{
 			return false;
 		}
+
 		if (point.m_y < m_minExtents->m_y)
 		{
 			return false;
 		}
+
 		if (point.m_z > m_maxExtents->m_z)
 		{
 			return false;
 		}
+
 		if (point.m_z < m_minExtents->m_z)
 		{
 			return false;
@@ -452,32 +457,32 @@ namespace Flounder
 		return true;
 	}
 
-	float Aabb::GetCentreX()
+	float Aabb::GetCentreX() const
 	{
 		return (m_minExtents->m_x + m_maxExtents->m_x) / 2.0f;
 	}
 
-	float Aabb::GetCentreY()
+	float Aabb::GetCentreY() const
 	{
 		return (m_minExtents->m_y + m_maxExtents->m_y) / 2.0f;
 	}
 
-	float Aabb::GetCentreZ()
+	float Aabb::GetCentreZ() const
 	{
 		return (m_minExtents->m_z + m_maxExtents->m_z) / 2.0f;
 	}
 
-	float Aabb::GetWidth()
+	float Aabb::GetWidth() const
 	{
 		return m_maxExtents->m_x - m_minExtents->m_x;
 	}
 
-	float Aabb::GetHeight()
+	float Aabb::GetHeight() const
 	{
 		return m_maxExtents->m_y - m_minExtents->m_y;
 	}
 
-	float Aabb::GetDepth()
+	float Aabb::GetDepth() const
 	{
 		return m_maxExtents->m_z - m_minExtents->m_z;
 	}

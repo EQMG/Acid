@@ -2,11 +2,10 @@
 
 #include <cassert>
 #include "../devices/Display.hpp"
+#include "pipelines/Pipeline.hpp"
 
 namespace Flounder
 {
-	Renderer *Renderer::LAZINESS = nullptr;
-
 	Renderer::Renderer() :
 		IModule(),
 		m_managerRender(nullptr),
@@ -21,8 +20,6 @@ namespace Flounder
 		m_commandPool(VK_NULL_HANDLE),
 		m_commandBuffer(VK_NULL_HANDLE)
 	{
-		LAZINESS = this;
-
 		const VkExtent2D extent2d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()) };
 		const VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
 		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();

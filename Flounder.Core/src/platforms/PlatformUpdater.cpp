@@ -59,26 +59,25 @@ namespace Flounder
 		m_timerUpdate = new Timer(1.0f / 62.0f);
 		m_timerRender = new Timer(1.0f / -1.0f);
 
-		AddModule(UpdatePre, "audio", new Audio());
-		AddModule(UpdateRender, "display", new Display());
-		AddModule(UpdatePre, "joysticks", new Joysticks());
-		AddModule(UpdatePre, "keyboard", new Keyboard());
-		AddModule(UpdatePre, "mouse", new Mouse());
-		AddModule(UpdateRender, "renderer", new Renderer());
-
-		AddModule(UpdatePre, "entities", new Entities());
-		AddModule(UpdatePre, "events", new Events());
-		AddModule(UpdatePre, "tasks", new Tasks());
-		AddModule(UpdatePre, "processing", new Processing());
-		AddModule(UpdatePre, "standards", new Standards());
-		AddModule(UpdatePre, "camera", new Camera());
-		AddModule(UpdatePre, "uis", new Uis());
-		AddModule(UpdatePre, "worlds", new Worlds());
-		AddModule(UpdateRender, "shadows", new Shadows());
-		AddModule(UpdatePre, "particles", new Particles());
-		AddModule(UpdatePre, "skyboxes", new Skyboxes());
-		AddModule(UpdatePre, "terrains", new Terrains());
-		AddModule(UpdatePre, "waters", new Waters());
+		ModuleCreate<Audio>(UpdatePre, "audio");
+		ModuleCreate<Display>(UpdatePost, "display");
+		ModuleCreate<Joysticks>(UpdatePre, "joysticks");
+		ModuleCreate<Keyboard>(UpdatePre, "keyboard");
+		ModuleCreate<Mouse>(UpdatePre, "mouse");
+		ModuleCreate<Renderer>(UpdateRender, "renderer");
+		ModuleCreate<Entities>(UpdatePre, "entities");
+		ModuleCreate<Events>(UpdatePre, "events");
+		ModuleCreate<Tasks>(UpdatePre, "tasks");
+		ModuleCreate<Processing>(UpdatePre, "processing");
+		ModuleCreate<Standards>(UpdatePre, "standards");
+		ModuleCreate<Camera>(UpdatePre, "camera");
+		ModuleCreate<Uis>(UpdatePre, "uis");
+		ModuleCreate<Worlds>(UpdatePre, "worlds");
+		ModuleCreate<Shadows>(UpdateRender, "shadows");
+		ModuleCreate<Particles>(UpdatePre, "particles");
+		ModuleCreate<Skyboxes>(UpdatePre, "skyboxes");
+		ModuleCreate<Terrains>(UpdatePre, "terrains");
+		ModuleCreate<Waters>(UpdatePre, "waters");
 	}
 
 	void PlatformUpdater::Update()
