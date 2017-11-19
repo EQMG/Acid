@@ -40,7 +40,7 @@ namespace Demo
 		tabPuck->SetColourOffset(Colour("#386AB5"));
 
 		std::vector<std::string> tabNames = { "Inventory", "Achievements", "News", "Play", "Settings", "Exit" }; // TODO: Maybe each tab can have a seperate UI for the bar (like settings using some grey gears, news some green paper)
-		std::vector<std::string> tabColours = { "#553982", "#41A85F", "#2969B0", "#B8312F", "#475577", "#75706B" }; // Blue: 2969af
+		std::vector<std::string> tabColours = { "#553982", "#41A85F", "#2969af", "#B8312F", "#475577", "#75706B" }; 
 		float tabXOffset = 0.35f;
 
 		for (int i = 0; i < tabNames.size(); i++)

@@ -32,6 +32,9 @@ namespace Flounder
 
 		void Update() override;
 
+		template<typename T>
+		void ModuleCreate(ModuleUpdate typeUpdate, std::string moduleName);
+
 		void AddModule(ModuleUpdate typeUpdate, std::string moduleName, IModule *module) override;
 
 		IModule *GetModule(const std::string &name) override;
@@ -50,4 +53,12 @@ namespace Flounder
 	private:
 		void RunUpdate(ModuleUpdate typeUpdate) const;
 	};
+
+	template<typename T>
+	void PlatformUpdater::ModuleCreate(ModuleUpdate typeUpdate, std::string moduleName)
+	{
+		T *module = static_cast<T*>(malloc(sizeof(T)));
+		AddModule(typeUpdate, moduleName, module);
+		new (module) T();
+	}
 }

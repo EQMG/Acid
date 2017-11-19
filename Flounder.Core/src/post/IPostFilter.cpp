@@ -1,6 +1,7 @@
 #include "IPostFilter.hpp"
 
 #include "../renderer/buffers/UniformBuffer.hpp"
+#include "../textures/Texture.hpp"
 
 namespace Flounder
 {
