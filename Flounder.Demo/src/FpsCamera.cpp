@@ -2,12 +2,12 @@
 
 namespace Demo
 {
-	const float FpsCamera::NEAR_PLANE = 0.01f;
-	const float FpsCamera::FAR_PLANE = 3072.0f;
+	const float FpsCamera::NEAR_PLANE = 0.1f;
+	const float FpsCamera::FAR_PLANE = 2048.0f;
 	const float FpsCamera::FIELD_OF_VIEW = 70.0f;
 
-	const float FpsCamera::ROTATE_AGILITY = 20.0f;
-	const float FpsCamera::PITCH_AGILITY = 20.0f;
+	const float FpsCamera::ROTATE_AGILITY = 32.0f;
+	const float FpsCamera::PITCH_AGILITY = 32.0f;
 
 	const float FpsCamera::INFLUENCE_OF_JOYSTICK_DY = 4.5f;
 	const float FpsCamera::INFLUENCE_OF_JOYSTICK_DX = 4.5f;

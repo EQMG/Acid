@@ -2,7 +2,6 @@
 
 #include "../engine/Engine.hpp"
 #include "pass/RenderPass.hpp"
-#include "pipelines/Pipeline.hpp"
 #include "stencils/DepthStencil.hpp"
 #include "swapchain/Swapchain.hpp"
 #include "swapchain/Framebuffers.hpp"
@@ -14,8 +13,6 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		static Renderer *LAZINESS; // TODO
-
 		IManagerRender *m_managerRender;
 
 		Swapchain *m_swapchain;
@@ -37,7 +34,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Renderer *Get()
 		{
-			return LAZINESS; //  static_cast<Renderer*>(Engine::Get()->GetModule("renderer"));
+			return static_cast<Renderer*>(Engine::Get()->GetModule("renderer"));
 		}
 
 		/// <summary>

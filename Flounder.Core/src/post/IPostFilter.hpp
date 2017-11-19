@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../models/Model.hpp"
-#include "../renderer/Renderer.hpp"
+#include "../renderer/pipelines/Pipeline.hpp"
 
 namespace Flounder
 {
