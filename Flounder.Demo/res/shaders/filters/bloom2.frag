@@ -13,5 +13,5 @@ void main(void)
 {
 	vec4 colour = texture(samplerAlbedo, textureCoords);
 	vec4 bloomColour = texture(samplerBloom1, textureCoords);
-	outColour = vec4(colour.rgb + bloomColour.rgb, 1.0);
+	outColour = vec4(colour.rgb + bloomColour.rgb, 1.0f);
 }

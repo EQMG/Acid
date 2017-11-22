@@ -31,7 +31,7 @@ out gl_PerVertex
 
 void main(void) 
 {
-	vec4 worldPosition = object.transform * vec4(vertexPosition, 1.0);
+	vec4 worldPosition = object.transform * vec4(vertexPosition, 1.0f);
 	
     gl_Position = scene.projection * scene.view * worldPosition;
 	gl_ClipDistance[0] = dot(worldPosition, scene.clip);

@@ -14,18 +14,36 @@ layout(binding = 2) uniform samplerCube samplerCubemap;
 layout(location = 0) in vec3 fragmentTextures;
 
 layout(location = 0) out vec4 outColour;
-layout(location = 1) out vec4 outNormal;
+layout(location = 1) out vec2 outNormal;
+
+vec4 encodeColour(vec3 colour)
+{
+	vec4 result = vec4(0.0f);
+	result.rgb = colour;
+	result.a = 1.0f;
+	return result;
+}
+
+vec2 encodeNormal(vec3 normal)
+{
+	vec2 result = vec2(0.0f);
+	result.x = atan(normal.y, normal.x) / 3.14159f;
+	result.y = normal.z;
+	return result * 0.5f + 0.5f;
+}
 
 void main(void) 
 {
-	vec3 cubemapColour = vec3(0.0);
+	vec3 cubemapColour = vec3(0.0f);
 	
-	if (object.blendFactor >= 0.03)
+	if (object.blendFactor >= 0.03f)
 	{
 		vec3 cubemapNight = texture(samplerCubemap, fragmentTextures).rgb;
-		cubemapColour = mix(vec3(0.0), cubemapNight, object.blendFactor);
+		cubemapColour = mix(vec3(0.0f), cubemapNight, object.blendFactor);
 	}
 
-	outColour = vec4(object.skyColour.rgb + cubemapColour, 1.0);
-	outNormal = vec4(0.0);
+	cubemapColour += object.skyColour.rgb;
+
+	outColour = encodeColour(cubemapColour);
+	outNormal = vec2(0.0f);
 }
