@@ -10,7 +10,11 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		//	Fbo *m_fbo;
+		static const DescriptorType typeUboObject;
+		static const PipelineCreateInfo pipelineCreateInfo;
+
+		UniformBuffer *m_uniformObject;
+		Pipeline *m_pipeline;
 	public:
 		RendererShadows(const int &subpass);
 
@@ -18,12 +22,6 @@ namespace Flounder
 
 		void Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
-		void PrepareRendering(const Vector4 &clipPlane, const ICamera &camera);
-
-		void RenderModel(Model *object, Matrix4 *modelMatrix);
-
-		void EndRendering();
-	public:
-		//	Fbo *GetFbo() const { return m_fbo; }
+		void RenderModel(const VkCommandBuffer *commandBuffer, Model *object, const Matrix4 &modelMatrix);
 	};
 }

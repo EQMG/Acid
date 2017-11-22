@@ -23,15 +23,15 @@ namespace Flounder
 			attachments[i].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		}
 
-		attachments[0].format = depthFormat;
+		attachments[0].format = depthFormat; // Depth
 		attachments[0].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 		attachments[0].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-		attachments[1].format = surfaceFormat;
+		attachments[1].format = surfaceFormat; // Swapchain
 		attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 		attachments[1].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-		attachments[2].format = VK_FORMAT_B8G8R8A8_UNORM;
-		attachments[3].format = VK_FORMAT_B8G8R8A8_UNORM;
-		attachments[4].format = VK_FORMAT_B8G8R8A8_UNORM;
+		attachments[2].format = VK_FORMAT_R8G8B8A8_UNORM; // Colour
+		attachments[3].format = VK_FORMAT_R16G16_SFLOAT; // Normal
+		attachments[4].format = VK_FORMAT_R16_SFLOAT; // Shadow
 
 
 

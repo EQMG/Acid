@@ -1,75 +1,80 @@
 #include "RendererShadows.hpp"
 
+#include "../devices/Display.hpp"
+#include "../entities/Entities.hpp"
+#include "../entities/components/ComponentModel.hpp"
+#include "UbosShadows.hpp"
+
 namespace Flounder
 {
+	const DescriptorType RendererShadows::typeUboObject = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
+	const PipelineCreateInfo RendererShadows::pipelineCreateInfo =
+	{
+		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
+		VK_POLYGON_MODE_FILL, // polygonMode
+		VK_CULL_MODE_FRONT_BIT, // cullModeFlags
+
+		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+		{ typeUboObject }, // descriptors
+
+		{ "res/shaders/shadows/shadow.vert.spv", "res/shaders/shadows/shadow.frag.spv" } // shaderStages
+	};
+
 	RendererShadows::RendererShadows(const int &subpass) :
-		IRenderer()
-	//	m_fbo(new Fbo(Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize(), DepthTexture, false)),
-	//	m_shader(new Shader("shadows", {
-	//		ShaderStage(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/shadows/shadow.vert.spv"),
-	//		ShaderStage(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/shadows/shadow.frag.spv")
-	//	}))
+		IRenderer(),
+		m_uniformObject(new UniformBuffer(sizeof(UbosShadows::UboObject))),
+		m_pipeline(new Pipeline("shadows", pipelineCreateInfo, subpass))
 	{
 	}
 
 	RendererShadows::~RendererShadows()
 	{
+		delete m_pipeline;
 	}
 
 	void RendererShadows::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		PrepareRendering(clipPlane, camera);
+		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
 		for (auto object : *Terrains::Get()->GetTerrains())
 		{
-			RenderModel(object->GetModel(0), object->GetModelMatrix());
+			if (object->GetModel(0) != nullptr)
+			{
+				RenderModel(commandBuffer, object->GetModel(0), *object->GetModelMatrix());
+			}
 		}
 
-		EndRendering();
+		for (auto entity : *Entities::Get()->GetEntities()) // Entities::Get()->GetStructure()->GetAll()
+		{
+			ComponentModel *componentModel = entity->GetComponent<ComponentModel*>();
+
+			if (componentModel != nullptr && componentModel->GetModel() != nullptr)
+			{
+				Matrix4 modelMatrix = Matrix4();
+				entity->GetTransform()->GetModelMatrix(&modelMatrix);
+				RenderModel(commandBuffer, componentModel->GetModel(), modelMatrix);
+			}
+		}
 	}
 
-	void RendererShadows::PrepareRendering(const Vector4 &clipPlane, const ICamera &camera)
+	void RendererShadows::RenderModel(const VkCommandBuffer *commandBuffer, Model *object, const Matrix4 &modelMatrix)
 	{
-#if 0
-		m_fbo->setSize(shadows::get()->getShadowSize(), shadows::get()->getShadowSize());
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
-		// Starts the shader.
-		m_fbo->bindFrameBuffer();
-		renderer::get()->prepareNewRenderParse(0.0f, 0.0f, 0.0f, 1.0f);
-		m_shader->start();
+		UbosShadows::UboObject uboObject = {};
+		uboObject.mvp = Matrix4();
+		Matrix4::Multiply(*Shadows::Get()->GetShadowBox()->GetProjectionViewMatrix(), modelMatrix, &uboObject.mvp);
+		m_uniformObject->Update(&uboObject);
 
-		// Sets the GPU for rendering this object.
-		renderer::get()->enableDepthTesting();
-		renderer::get()->depthMask(true);
-		renderer::get()->cullBackFaces(false);
-#endif
-	}
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformObject->GetWriteDescriptor(0, descriptorSet) };
+		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
-	void RendererShadows::RenderModel(Model *object, Matrix4 *modelMatrix)
-	{
-#if 0
-		// Binds the layouts.
-		renderer::get()->bindVAO(object->getVaoID(), 1, 0);
+		VkDescriptorSet descriptors[1] = { m_pipeline->GetDescriptorSet() };
+		vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
-		// Loads the uniforms.
-		Matrix4 *mvp = Matrix4::multiply(*shadows::get()->getShadowBox()->getProjectionViewMatrix(), *modelMatrix, nullptr);
-		m_shader->loadUniform4fv("mvpMatrix", *mvp);
-		delete mvp;
-
-		// Tells the GPU to render this object.
-		renderer::get()->renderElements(GL_TRIANGLES, GL_UNSIGNED_INT, object->getVaoLength());
-
-		// Unbinds the layouts.
-		renderer::get()->unbindVAO(1, 0);
-#endif
-	}
-
-	void RendererShadows::EndRendering()
-	{
-#if 0
-		// Stops the shader.
-		m_shader->stop();
-		m_fbo->unbindFrameBuffer();
-#endif
+		object->CmdRender(*commandBuffer);
 	}
 }
