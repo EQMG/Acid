@@ -48,7 +48,7 @@ namespace Demo
 			Text *tabText = new Text(uiNavigation, UiBound(Vector2(tabXOffset, 0.955f), "TopLeft", false), 1.6f, tabNames.at(i), Uis::Get()->m_proximanova->GetRegular(), JustifyLeft, 1.0f, 0.003f);
 			const float width = tabText->GetRectangle()->m_dimensions->m_x * 1.6f;
 
-			if (i == 3)
+			if (i == 2)
 			{
 				tabPuck->GetRectangle()->m_position->m_x = tabXOffset;
 				tabPuck->GetRectangle()->m_dimensions->m_x = width;

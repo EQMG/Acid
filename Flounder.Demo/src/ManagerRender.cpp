@@ -4,7 +4,7 @@ namespace Demo
 {
 	ManagerRender::ManagerRender() :
 		m_infinity(Vector4(0.0f, 1.0f, 0.0f, +INFINITY)),
-		// m_rendererShadows(new RendererShadows(0)),
+		m_rendererShadows(new RendererShadows(0)),
 		m_rendererReflection(new RendererReflection(0)),
 		m_rendererSkyboxes(new RendererSkyboxes(1)),
 		m_rendererTerrains(new RendererTerrains(1)),
@@ -19,7 +19,7 @@ namespace Demo
 
 	ManagerRender::~ManagerRender()
 	{
-		// delete m_rendererShadows;
+		delete m_rendererShadows;
 		delete m_rendererReflection;
 
 		delete m_rendererSkyboxes;
@@ -38,7 +38,7 @@ namespace Demo
 		const auto camera = Camera::Get()->GetCamera();
 
 		// Subpass 0
-		// m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
+		m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
 	//	m_rendererReflection->Render(commandBuffer, m_infinity, *camera);
 		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 
