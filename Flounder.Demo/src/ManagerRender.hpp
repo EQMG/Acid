@@ -12,7 +12,7 @@ namespace Demo
 	private:
 		Vector4 m_infinity;
 
-		// RendererShadows *m_rendererShadows;
+		RendererShadows *m_rendererShadows;
 		RendererReflection *m_rendererReflection;
 
 		RendererSkyboxes *m_rendererSkyboxes;

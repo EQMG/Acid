@@ -24,7 +24,8 @@ layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
 
 layout(location = 0) out vec2 fragmentTextures;
-layout(location = 1) out vec3 fragmentNormal;
+layout(location = 1) out vec3 fragmentPosition;
+layout(location = 2) out vec3 fragmentNormal;
 
 out gl_PerVertex 
 {
@@ -34,13 +35,13 @@ out gl_PerVertex
 
 void main() 
 {
-	vec4 localPosition = vec4(vertexPosition, 1.0);
-	vec4 localNormal = vec4(vertexNormal, 0.0);
+	vec4 localPosition = vec4(vertexPosition, 1.0f);
+	vec4 localNormal = vec4(vertexNormal, 0.0f);
 
-	if (object.swaying == 1.0)
+	if (object.swaying == 1.0f)
 	{
 		vec4 swayColour = texture(samplerSway, vertexTextures);
-		float swayPower = 0.5 * exp(log(length(swayColour.rgb)) / 3.0) * length(localPosition.xyz);
+		float swayPower = 0.5f * exp(log(length(swayColour.rgb)) / 3.0f) * length(localPosition.xyz);
 		localPosition.x += swayPower * object.swayOffset.x;
 		localPosition.z += swayPower * object.swayOffset.y;
 	}
@@ -51,5 +52,6 @@ void main()
 	gl_ClipDistance[0] = dot(worldPosition, scene.clip);
 
     fragmentTextures = vertexTextures;
+	fragmentPosition = gl_Position.xyz;
 	fragmentNormal = normalize((object.transform * localNormal).xyz);
 }

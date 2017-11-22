@@ -15,23 +15,39 @@ layout(location = 1) in vec2 fragmentTextures;
 layout(location = 2) in vec4 fragmentClipSpace;
 
 layout(location = 0) out vec4 outColour;
-layout(location = 1) out vec4 outNormal;
+layout(location = 1) out vec2 outNormal;
 
-const float DUDV_STRENGTH = 0.02;
+vec4 encodeColour(vec3 colour)
+{
+	vec4 result = vec4(0.0f);
+	result.rgb = colour;
+	result.a = 1.0f;
+	return result;
+}
+
+vec2 encodeNormal(vec3 normal)
+{
+	vec2 result = vec2(0.0f);
+	result.x = atan(normal.y, normal.x) / 3.14159f;
+	result.y = normal.z;
+	return result * 0.5f + 0.5f;
+}
 
 void main(void) 
 {
-	vec2 ndc = (fragmentClipSpace.xy / fragmentClipSpace.w) / 2.0 + 0.5;
+	vec2 ndc = (fragmentClipSpace.xy / fragmentClipSpace.w) / 2.0f + 0.5f;
 	vec2 reflectTextures = vec2(ndc.x, -ndc.y);
 	// vec2 refractTextures = vec2(ndc.x, ndc.y);
 	
-	vec4 reflectColour = texture(samplerReflection, reflectTextures);
-	// vec4 refractColour = texture(samplerRefraction, refractTextures);
+	vec3 textureReflection = texture(samplerReflection, reflectTextures).rgb;
+	// vec3 textureRefraction = texture(samplerRefraction, refractTextures).rgb;
 	
-	// outColour = mix(reflectColour, refractColour, refractiveFactor);
-	outColour = reflectColour;
-
-	outColour = mix(outColour, object.diffuseColour, 0.5);
-	outColour.a = 0.5f;
-	outNormal = vec4(fragmentNormal + 1.0 / 2.0, 1.0);
+	vec3 unitNormal = normalize(fragmentNormal);
+	
+	// vec3 colour = mix(textureReflection, textureRefraction, refractiveFactor);
+	vec3 waterColour = textureReflection;
+	waterColour = mix(waterColour, object.diffuseColour.rgb, 0.5f);
+	
+	outColour = encodeColour(waterColour);
+	outNormal = encodeNormal(unitNormal);
 }

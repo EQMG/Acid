@@ -16,5 +16,5 @@ out gl_PerVertex
 
 void main(void) 
 {
-	gl_Position = object.mvp * vec4(inPosition, 1.0);
+	gl_Position = object.mvp * vec4(inPosition, 1.0f);
 }

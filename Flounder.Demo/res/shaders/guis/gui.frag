@@ -19,12 +19,12 @@ layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
-	outColour = texture(samplerTexture, fragmentTextures) * vec4(object.colourOffset.rgb, 1.0);
+	outColour = texture(samplerTexture, fragmentTextures) * vec4(object.colourOffset.rgb, 1.0f);
 	outColour.a *= object.alpha;
 
-	if (outColour.a < 0.05)
+	if (outColour.a < 0.05f)
 	{
-		outColour = vec4(0.0);
+		outColour = vec4(0.0f);
 		discard;
 	}
 }

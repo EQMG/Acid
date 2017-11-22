@@ -25,7 +25,7 @@ out gl_PerVertex
 
 void main(void)
 {
-	gl_Position = vec4((vertexPosition.xy * object.transform.xy) + object.transform.zw, 0.0, 1.0);
+	gl_Position = vec4((vertexPosition.xy * object.transform.xy) + object.transform.zw, 0.0f, 1.0f);
 
 	fragmentTextures = (vertexTextures.xy / object.atlasRows) + object.atlasOffset;
 }

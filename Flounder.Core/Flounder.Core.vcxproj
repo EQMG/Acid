@@ -307,6 +307,7 @@
     <ClInclude Include="src\shadows\RendererShadows.hpp" />
     <ClInclude Include="src\shadows\ShadowBox.hpp" />
     <ClInclude Include="src\shadows\Shadows.hpp" />
+    <ClInclude Include="src\shadows\UbosShadows.hpp" />
     <ClInclude Include="src\skyboxes\RendererSkyboxes.hpp" />
     <ClInclude Include="src\skyboxes\Skybox.hpp" />
     <ClInclude Include="src\skyboxes\Skyboxes.hpp" />

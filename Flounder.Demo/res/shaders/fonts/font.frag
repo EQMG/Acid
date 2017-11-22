@@ -21,17 +21,17 @@ layout(location = 0) out vec4 outColour;
 void main(void) 
 {
 	float distance = texture(samplerTexture, fragmentTextures).a;
-	float alpha = smoothstep((1.0 - object.edgeData.x) - object.edgeData.y, 1.0 - object.edgeData.x, distance);
-	float outlineAlpha = smoothstep((1.0 - object.borderSizes.x) - object.borderSizes.y, 1.0 - object.borderSizes.x, distance);
-	float overallAlpha = alpha + (1.0 - alpha) * outlineAlpha;
+	float alpha = smoothstep((1.0f - object.edgeData.x) - object.edgeData.y, 1.0f - object.edgeData.x, distance);
+	float outlineAlpha = smoothstep((1.0f - object.borderSizes.x) - object.borderSizes.y, 1.0f - object.borderSizes.x, distance);
+	float overallAlpha = alpha + (1.0f - alpha) * outlineAlpha;
 	vec3 overallColour = mix(object.borderColour.rgb, object.colour.rgb, alpha / overallAlpha);
 
 	outColour = vec4(overallColour, overallAlpha);
 	outColour.a *= object.alpha; // alpha
 
-	if (outColour.a < 0.05)
+	if (outColour.a < 0.05f)
 	{
-		outColour = vec4(0.0);
+		outColour = vec4(0.0f);
 		discard;
 	}
 }
