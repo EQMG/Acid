@@ -15,6 +15,7 @@ layout(location = 0) in vec3 fragmentTextures;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec3 outNormal;
+layout(location = 2) out vec3 outExtras;
 
 vec4 encodeColour(vec3 colour)
 {
@@ -46,4 +47,5 @@ void main(void)
 
 	outColour = encodeColour(cubemapColour);
 	outNormal = vec3(0.0f);
+	outExtras = vec3(0.0f);
 }

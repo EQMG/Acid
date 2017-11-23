@@ -8,10 +8,11 @@ namespace Flounder
 	class Transform
 	{
 	private:
+	public:
 		Vector3 *m_position;
 		Vector3 *m_rotation;
 		Vector3 *m_scaling;
-	public:
+
 		Transform();
 
 		Transform(const Transform &source);
@@ -30,20 +31,12 @@ namespace Flounder
 
 		void SetPosition(const Vector3 &position) const { m_position->Set(position); }
 
-		void SetPosition(const float &x, const float &y, const float &z) const { m_position->Set(x, y, z); }
-
 		Vector3 *GetRotation() const { return m_rotation; }
 
 		void SetRotation(const Vector3 &rotation) const { m_rotation->Set(rotation); }
 
-		void SetRotation(const float &x, const float &y, const float &z) const { m_rotation->Set(x, y, z); }
-
 		Vector3 *GetScaling() const { return m_scaling; }
 
 		void SetScaling(const Vector3 &scaling) const { m_scaling->Set(scaling); }
-
-		void SetScaling(const float &x, const float &y, const float &z) const { m_scaling->Set(x, y, z); }
-
-		void SetScaling(const float &scale) const { m_scaling->Set(scale, scale, scale); }
 	};
 }

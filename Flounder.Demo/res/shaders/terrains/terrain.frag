@@ -14,6 +14,7 @@ layout(location = 3) in float fragmentHeight;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec3 outNormal;
+layout(location = 2) out vec3 outExtras;
 
 vec3 blend(vec3 left, vec3 right, float blend)
 {
@@ -47,4 +48,5 @@ void main(void)
 
 	outColour = encodeColour(fragmentColour);
 	outNormal = encodeNormal(unitNormal, gl_FragDepth);
+	outExtras = vec3(0.0f);
 }

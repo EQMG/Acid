@@ -10,9 +10,9 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::array<VkAttachmentDescription, 5> attachments = {};
+		std::array<VkAttachmentDescription, 6> attachments = {};
 
-		for (uint32_t i = 0; i < 5; i++)
+		for (uint32_t i = 0; i < 6; i++)
 		{
 			attachments[i].samples = VK_SAMPLE_COUNT_1_BIT;
 			attachments[i].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
@@ -23,15 +23,16 @@ namespace Flounder
 			attachments[i].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		}
 
-		attachments[0].format = depthFormat; // Depth
+		attachments[0].format = depthFormat; // Depth.
 		attachments[0].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 		attachments[0].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-		attachments[1].format = surfaceFormat; // Swapchain
+		attachments[1].format = surfaceFormat; // Swapchain.
 		attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 		attachments[1].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-		attachments[2].format = VK_FORMAT_R8G8B8A8_UNORM; // Colour
-		attachments[3].format = VK_FORMAT_R8G8B8A8_UNORM; // Normal
-		attachments[4].format = VK_FORMAT_R16_SFLOAT; // Shadow
+		attachments[2].format = VK_FORMAT_R8G8B8A8_UNORM; // Colour.
+		attachments[3].format = VK_FORMAT_R8G8B8A8_UNORM; // Normal.
+		attachments[4].format = VK_FORMAT_R8G8B8A8_UNORM; // Extras.
+		attachments[5].format = VK_FORMAT_R16_SFLOAT; // Shadow.
 
 
 
@@ -40,21 +41,23 @@ namespace Flounder
 
 
 		std::array<VkAttachmentReference, 1> subpass0ColourAttachments = {};
-		subpass0ColourAttachments[0].attachment = 4; // Shadow
+		subpass0ColourAttachments[0].attachment = 5; // Shadow.
 		subpass0ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 		VkAttachmentReference subpass1DepthStencilAttachment = {};
-		subpass1DepthStencilAttachment.attachment = 0; // Depth
+		subpass1DepthStencilAttachment.attachment = 0; // Depth.
 		subpass1DepthStencilAttachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-		std::array<VkAttachmentReference, 2> subpass1ColourAttachments = {};
-		subpass1ColourAttachments[0].attachment = 2; // Colour
+		std::array<VkAttachmentReference, 3> subpass1ColourAttachments = {};
+		subpass1ColourAttachments[0].attachment = 2; // Colour.
 		subpass1ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-		subpass1ColourAttachments[1].attachment = 3; // Normal
+		subpass1ColourAttachments[1].attachment = 3; // Normal.
 		subpass1ColourAttachments[1].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		subpass1ColourAttachments[2].attachment = 4; // Extras.
+		subpass1ColourAttachments[2].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 		std::array<VkAttachmentReference, 1> subpass2ColourAttachments = {};
-		subpass2ColourAttachments[0].attachment = 1; // Swapchain
+		subpass2ColourAttachments[0].attachment = 1; // Swapchain.
 		subpass2ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 
