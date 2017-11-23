@@ -131,7 +131,6 @@
 #include "processing/Queue.hpp"
 #include "processing/resource/ProcessorResource.hpp"
 #include "processing/resource/RequestResource.hpp"
-#include "reflection/RendererReflection.hpp"
 #include "renderer/buffers/Buffer.hpp"
 #include "renderer/buffers/IndexBuffer.hpp"
 #include "renderer/buffers/UniformBuffer.hpp"

@@ -25,10 +25,9 @@ namespace Flounder
 
 	const DescriptorType RendererDeferred::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const DescriptorType RendererDeferred::typeUboLights = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerDepth = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerShadows = Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerShadows = Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererDeferred::pipelineCreateInfo =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
@@ -38,7 +37,7 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboScene, typeUboLights, typeSamplerDepth, typeSamplerColour, typeSamplerNormal, typeSamplerShadows }, // descriptors
+		{ typeUboScene, typeUboLights, typeSamplerColour, typeSamplerNormal, typeSamplerShadows }, // descriptors
 
 		{ "res/shaders/deferred/deferred.vert.spv", "res/shaders/deferred/deferred.frag.spv" } // shaderStages
 	};
@@ -68,7 +67,7 @@ namespace Flounder
 		uboScene.view = *camera.GetViewMatrix();
 		uboScene.shadowSpace = Matrix4(*Shadows::Get()->GetShadowBox()->GetToShadowMapSpaceMatrix());
 
-		uboScene.fogColour = Colour(*Skyboxes::Get()->GetFog()->m_colour); // *Skyboxes::Get()->GetFog()->m_colour
+		uboScene.fogColour = Colour(*Skyboxes::Get()->GetFog()->m_colour);
 		uboScene.fogDensity = Skyboxes::Get()->GetFog()->m_density;
 		uboScene.fogGradient = Skyboxes::Get()->GetFog()->m_gradient;
 
@@ -88,9 +87,9 @@ namespace Flounder
 			// TODO: Load real lights.
 			if (i == 0)
 			{
-				uboLights.lightColours[i] = Colour(*Worlds::Get()->GetSunColour());
-				uboLights.lightPositions[i] = Vector3(*Worlds::Get()->GetSunPosition());
-				uboLights.lightAttenuations[i] = Attenuation();
+				uboLights.lightColours[i] = Colour(1.0f, 1.0f, 1.0f, 1.0f); // *Worlds::Get()->GetSunColour()
+				uboLights.lightPositions[i] = Vector3(0.0f, 100.0f, 100.0f); // *Worlds::Get()->GetSunPosition()
+				uboLights.lightAttenuations[i] = Attenuation(1.0f, 0.0f, 0.0f);
 			}
 			else
 			{
@@ -110,10 +109,9 @@ namespace Flounder
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ 
 			m_uniformScene->GetWriteDescriptor(0, descriptorSet), 
 			m_uniformLights->GetWriteDescriptor(1, descriptorSet),
-			Renderer::Get()->GetDepthStencil()->GetWriteDescriptor(2, descriptorSet), 
-			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(3, descriptorSet), 
-			Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(4, descriptorSet), 
-			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(5, descriptorSet) 
+			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(2, descriptorSet), 
+			Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(3, descriptorSet), 
+			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(4, descriptorSet) 
 		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		
