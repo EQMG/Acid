@@ -1,27 +1,35 @@
 #pragma once
 
 #include "../../platforms/Platform.hpp"
+#include "../../renderer/pipelines/PipelineCreate.hpp"
 
 namespace Flounder
 {
 	class DepthStencil
 	{
 	private:
-		VkImage m_depthStencilImage;
-		VkDeviceMemory m_depthStencilImageMemory;
-		VkImageView m_depthStencilImageView;
-		VkFormat m_depthStencilFormat;
+		VkImage m_image;
+		VkDeviceMemory m_imageMemory;
+		VkImageView m_imageView;
+		VkSampler m_sampler;
+		VkFormat m_format;
+
+		VkDescriptorImageInfo m_imageInfo;
 	public:
 		DepthStencil(const VkExtent3D &extent);
 
 		~DepthStencil();
 
-		VkImage GetImage() const { return m_depthStencilImage; }
+		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkDeviceMemory GetImageMemory() const { return m_depthStencilImageMemory; }
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const;
 
-		VkImageView GetImageView() const { return m_depthStencilImageView; }
+		VkImage GetImage() const { return m_image; }
 
-		VkFormat GetFormat() const { return m_depthStencilFormat; }
+		VkDeviceMemory GetImageMemory() const { return m_imageMemory; }
+
+		VkImageView GetImageView() const { return m_imageView; }
+
+		VkFormat GetFormat() const { return m_format; }
 	};
 }
