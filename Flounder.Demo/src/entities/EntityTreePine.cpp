@@ -4,7 +4,7 @@ Model *EntityTreePine::g_model = nullptr;
 Texture *EntityTreePine::g_diffuse = nullptr;
 Texture *EntityTreePine::g_swayMap = nullptr;
 
-EntityTreePine::EntityTreePine(ISpatialStructure<Entity *> *structure, const Transform &transform) :
+EntityTreePine::EntityTreePine(ISpatialStructure<Entity*> *structure, const Transform &transform) :
 	Entity(structure, transform)
 {
 	if (g_model == nullptr)

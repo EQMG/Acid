@@ -1,6 +1,7 @@
 #include "Instance.hpp"
 
 #include "entities/EntityTreePine.hpp"
+#include "entities/EntitySun.hpp"
 
 namespace Demo
 {
@@ -42,11 +43,14 @@ namespace Demo
 
 				if (position.m_y > 0.0f)
 				{
-					EntityTreePine *test = new EntityTreePine(nullptr, Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f))); // Entities::Get()->GetStructure()
+					Entity *test = new EntityTreePine(nullptr, Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f))); // Entities::Get()->GetStructure()
 					Entities::Get()->GetEntities()->push_back(test);
 				}
 			}
 		}
+
+		Entity *sun = new EntitySun(nullptr, Transform(Vector3(), Vector3(), Vector3(8.0f, 8.0f, 8.0f))); // Entities::Get()->GetStructure()
+		Entities::Get()->GetEntities()->push_back(sun);
 	}
 
 	Instance::~Instance()

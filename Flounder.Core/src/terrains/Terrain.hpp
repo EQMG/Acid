@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "../maths/Matrix4.hpp"
-#include "../maths/Vector3.hpp"
+#include "../maths/Transform.hpp"
 #include "../physics/Aabb.hpp"
 #include "../models/Model.hpp"
 #include "../renderer/buffers/UniformBuffer.hpp"
@@ -18,18 +18,15 @@ namespace Flounder
 		std::vector<Model*> m_modelLods;
 		int m_currentLod;
 
-		Vector3 *m_position;
-		Vector3 *m_rotation;
-		bool m_moved;
+		Transform *m_transform;
 
-		Matrix4 *m_modelMatrix;
 		Aabb *m_aabb;
 	public:
 		static const int SIDE_LENGTH;
 		static const std::vector<float> SQUARE_SIZES;
 		static const std::vector<float> TEXTURE_SCALES;
 
-		Terrain(const Vector3 &position, const Vector3 &rotation);
+		Terrain(const Transform &transform);
 
 		~Terrain();
 
@@ -45,15 +42,9 @@ namespace Flounder
 
 		Model *GetModel(const int &lod) const { return m_modelLods[lod]; }
 
-		Vector3 *GetPosition() const { return m_position; }
+		Transform *GetTransform() const { return m_transform; }
 
-		void SetPosition(const Vector3 &position);
-
-		Vector3 *GetRotation() const { return m_rotation; }
-
-		void SetRotation(const Vector3 &rotation);
-
-		Matrix4 *GetModelMatrix() const { return m_modelMatrix; }
+		void SetTransform(const Transform &transform) const;
 
 		Aabb *GetAabb() const { return m_aabb; }
 	};
