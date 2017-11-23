@@ -2,6 +2,8 @@
 
 #include "../devices/Display.hpp"
 #include "../lights/Attenuation.hpp"
+#include "../entities/Entities.hpp"
+#include "../entities/components/ComponentLight.hpp"
 #include "../models/Vertex.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../textures/Texture.hpp"
@@ -27,7 +29,8 @@ namespace Flounder
 	const DescriptorType RendererDeferred::typeUboLights = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerShadows = Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerExtras = Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerShadows = Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererDeferred::pipelineCreateInfo =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
@@ -37,7 +40,7 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboScene, typeUboLights, typeSamplerColour, typeSamplerNormal, typeSamplerShadows }, // descriptors
+		{ typeUboScene, typeUboLights, typeSamplerColour, typeSamplerNormal, typeSamplerExtras, typeSamplerShadows }, // descriptors
 
 		{ "res/shaders/deferred/deferred.vert.spv", "res/shaders/deferred/deferred.frag.spv" } // shaderStages
 	};
@@ -82,21 +85,26 @@ namespace Flounder
 
 		UbosDeferred::UboLights uboLights = {};
 
-		for (int i = 0; i < NUMBER_LIGHTS; i++)
+		int lightsLoaded = 0;
+
+		for (auto entity : *Entities::Get()->GetEntities())
 		{
-			// TODO: Load real lights.
-			if (i == 0)
+			ComponentLight *componentLight = entity->GetComponent<ComponentLight*>();
+
+			if (componentLight != nullptr && lightsLoaded < NUMBER_LIGHTS)
 			{
-				uboLights.lightColours[i] = Colour(1.0f, 1.0f, 1.0f, 1.0f); // *Worlds::Get()->GetSunColour()
-				uboLights.lightPositions[i] = Vector3(0.0f, 100.0f, 100.0f); // *Worlds::Get()->GetSunPosition()
-				uboLights.lightAttenuations[i] = Attenuation(1.0f, 0.0f, 0.0f);
+				uboLights.lightColours[lightsLoaded] = Colour(*componentLight->GetLight()->m_colour);
+				uboLights.lightPositions[lightsLoaded] = Vector3(*componentLight->GetLight()->m_position);
+				uboLights.lightAttenuations[lightsLoaded] = Attenuation(*componentLight->GetLight()->m_attenuation);
+				lightsLoaded++;
 			}
-			else
-			{
-				uboLights.lightColours[i] = Colour(0.0f, 0.0f, 0.0f, 0.0f);
-				uboLights.lightPositions[i] = Vector3();
-				uboLights.lightAttenuations[i] = Attenuation();
-			}
+		}
+
+		for (int i = lightsLoaded; i < NUMBER_LIGHTS; i++)
+		{
+			uboLights.lightColours[i] = Colour(0.0f, 0.0f, 0.0f, 0.0f);
+			uboLights.lightPositions[i] = Vector3();
+			uboLights.lightAttenuations[i] = Attenuation();
 		}
 
 		m_uniformLights->Update(&uboLights);
@@ -109,9 +117,10 @@ namespace Flounder
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ 
 			m_uniformScene->GetWriteDescriptor(0, descriptorSet), 
 			m_uniformLights->GetWriteDescriptor(1, descriptorSet),
-			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(2, descriptorSet), 
-			Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(3, descriptorSet), 
-			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(4, descriptorSet) 
+			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(2, descriptorSet),
+			Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(3, descriptorSet),
+			Renderer::Get()->GetSwapchain()->GetExtrasImage()->GetWriteDescriptor(4, descriptorSet),
+			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(5, descriptorSet) 
 		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		

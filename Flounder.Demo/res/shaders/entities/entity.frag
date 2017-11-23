@@ -9,6 +9,7 @@ layout(location = 1) in vec3 fragmentNormal;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec3 outNormal;
+layout(location = 2) out vec3 outExtras;
 
 vec4 encodeColour(vec3 colour)
 {
@@ -34,4 +35,5 @@ void main()
 
 	outColour = encodeColour(textureColour);
 	outNormal = encodeNormal(unitNormal, gl_FragDepth);
+	outExtras = vec3(0.0f);
 }

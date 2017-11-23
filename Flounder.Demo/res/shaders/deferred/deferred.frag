@@ -31,7 +31,8 @@ layout(binding = 1) uniform Ubolights
 
 layout(binding = 2) uniform sampler2D samplerColour;
 layout(binding = 3) uniform sampler2D samplerNormal;
-layout(binding = 4) uniform sampler2D samplerShadows;
+layout(binding = 4) uniform sampler2D samplerExtras;
+layout(binding = 5) uniform sampler2D samplerShadows;
 
 layout(location = 0) in vec2 fragmentTextures;
 
@@ -39,9 +40,6 @@ layout(location = 0) out vec4 outColour;
 
 vec3 decodeColour(vec4 colour)
 {
-	//vec2 rg = unpackHalf2x16(colour.r);
-	//vec2 bd = unpackHalf2x16(colour.b);
-
 	vec3 result = vec3(0.0f);
 	result.r = colour.r; // rg.x;
 	result.g = colour.g; // rg.y;
@@ -52,7 +50,7 @@ vec3 decodeColour(vec4 colour)
 vec3 decodeNormal(vec4 normal)
 {
 	vec2 spherical = normal.xy * 2.0f - 1.0f;
-	vec2 sinCosTheta = vec2(sin(spherical.x * 3.14159), cos(spherical.x * 3.14159));
+	vec2 sinCosTheta = vec2(sin(spherical.x * 3.14159f), cos(spherical.x * 3.14159f));
 	vec2 sinCosPhi = vec2(sqrt(1.0f - spherical.y * spherical.y), spherical.y);
 	return vec3(sinCosTheta.y * sinCosPhi.x, sinCosTheta.x * sinCosPhi.x, sinCosPhi.y);
 }
@@ -64,8 +62,8 @@ float decodeDepth(vec4 normal)
 
 vec3 decodePosition(float depth) 
 {
-	vec4 p = inverse(scene.projection) * (vec4(fragmentTextures, depth, 1.0) * 2.0 - 1.0);
-	return vec3(inverse(scene.view) * vec4(p.xyz / p.w, 1.0));
+	vec4 p = inverse(scene.projection) * (vec4(fragmentTextures, depth, 1.0f) * 2.0f - 1.0f);
+	return vec3(inverse(scene.view) * vec4(p.xyz / p.w, 1.0f));
 }
 
 float shadow(sampler2D shadowMap, vec4 shadowCoords, float shadowMapSize) 
@@ -103,44 +101,64 @@ void main(void)
 {
 	vec4 textureColour = texture(samplerColour, fragmentTextures);
 	vec4 textureNormal = texture(samplerNormal, fragmentTextures);
+	vec4 textureExtras = texture(samplerExtras, fragmentTextures);
 	
 	vec3 colour = decodeColour(textureColour);
 	vec3 normal = decodeNormal(textureNormal);
 	float depth = decodeDepth(textureNormal);
 	vec3 position = decodePosition(depth);
+	vec3 toCameraVector = (inverse(scene.view) * vec4(0.0, 0.0, 0.0, 1.0)).xyz - position;
 	vec4 positionRelativeToCam = scene.view * vec4(position, 1.0f);
 	
-    vec3 totalDiffuse = vec3(0.0);
-    vec3 totalSpecular = vec3(0.0);
-
-	for (int i = 0; i < NUMBER_LIGHTS; i++) 
-	{
-        if (lights.lightColours[i].a != 0.0f) 
-		{
-			vec3 toLightVector = lights.lightPositions[i] - position.xyz;
-			vec3 unitLightVector = normalize(toLightVector);
-			float lightDistance = length(toLightVector);
-			
-			float attinuationFactor = 1.0f; // lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
-			
-			float lightBrightness = max(dot(normal, unitLightVector), 0.0f);
-			totalDiffuse = totalDiffuse + (lightBrightness * lights.lightColours[i].rgb) / attinuationFactor;
-
-         //   vec3 reflectedLightDirection = reflect(-unitLightVector, normal);
-         //   float specularFactor = max(dot(reflectedLightDirection, normalize(toCameraVector)), 0.0f);
-         //   float dampedFactor = pow(specularFactor, shineDamper);
-         //   totalSpecular = totalSpecular + (dampedFactor * glow * lights.lightColours[i]) / attinuationFactor;
-        }
-    }
-
 	outColour = vec4(colour, 1.0f);
+	
+	// Shadowing.
+	if (textureNormal.rgb != vec3(0.0f))
+	{
+		// vec4 shadowCoords = scene.shadowSpace * vec4(position, 1.0f);
+		// float distanceAway = length(positionRelativeToCam.xyz);
+		// distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
+		// distanceAway = distanceAway / scene.shadowTransition;
+		// shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
+		// outColour *= shadow(samplerShadows, shadowCoords, scene.shadowMapSize);
+	}
 
-	// vec4 shadowCoords = scene.shadowSpace * vec4(position, 1.0f);
-	// float distanceAway = length(positionRelativeToCam.xyz);
-	// distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
-	// distanceAway = distanceAway / scene.shadowTransition;
-	// shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
-	// outColour *= shadow(samplerShadows, shadowCoords, scene.shadowMapSize);
+	// Lighting.
+	if (textureNormal.rgb != vec3(0.0f))
+	{
+		vec3 totalDiffuse = vec3(0.0);
+		vec3 totalSpecular = vec3(0.0);
+		float shineDamper = 0.1f;
 
-	outColour = vec4((max(totalDiffuse, vec3(0.2f)) * outColour.rgb) + totalSpecular, 1.0f);
+		for (int i = 0; i < NUMBER_LIGHTS; i++) 
+		{
+			if (lights.lightColours[i].a != 0.0f) 
+			{
+				vec3 toLightVector = lights.lightPositions[i] - position.xyz;
+				vec3 unitLightVector = normalize(toLightVector);
+				float lightDistance = length(toLightVector);
+			
+				float attinuationFactor = 1.0f; // lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
+			
+				float lightBrightness = max(dot(normal, unitLightVector), 0.0f);
+				totalDiffuse += (lightBrightness * lights.lightColours[i].rgb) / attinuationFactor;
+
+			//  vec3 reflectedLightDirection = reflect(-unitLightVector, normal);
+			//  float specularFactor = max(dot(reflectedLightDirection, normalize(toCameraVector)), 0.0f);
+			//  float dampedFactor = pow(specularFactor, shineDamper);
+			//  totalSpecular += (dampedFactor * lights.lightColours[i].rgb) / attinuationFactor;
+			}
+		}
+
+		totalDiffuse = max(totalDiffuse, vec3(0.3f));
+		outColour = vec4((totalDiffuse * outColour.rgb) + totalSpecular, 1.0f);
+	}
+	
+	// Fog.
+	if (textureNormal.rgb != vec3(0.0f))
+	{
+		// float fogFactor = exp(-pow(length(positionRelativeToCam.xyz) * scene.fogDensity, scene.fogGradient));
+		// fogFactor = clamp(fogFactor, 0.0, 1.0);
+		// outColour = mix(scene.fogColour, outColour, fogFactor);
+	}
 }

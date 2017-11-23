@@ -12,6 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\deferred\RendererDeferred.cpp" />
+    <ClCompile Include="src\entities\components\ComponentGlow.cpp" />
+    <ClCompile Include="src\entities\components\ComponentSun.cpp" />
+    <ClCompile Include="src\entities\components\ComponentLight.cpp" />
     <ClCompile Include="src\entities\components\ComponentCollision.cpp" />
     <ClCompile Include="src\entities\components\ComponentCollider.cpp" />
     <ClCompile Include="src\entities\components\ComponentSway.cpp" />
@@ -165,6 +168,9 @@
   <ItemGroup>
     <ClInclude Include="src\deferred\RendererDeferred.hpp" />
     <ClInclude Include="src\deferred\UbosDeferred.hpp" />
+    <ClInclude Include="src\entities\components\ComponentGlow.hpp" />
+    <ClInclude Include="src\entities\components\ComponentSun.hpp" />
+    <ClInclude Include="src\entities\components\ComponentLight.hpp" />
     <ClInclude Include="src\entities\components\ComponentCollision.hpp" />
     <ClInclude Include="src\entities\components\ComponentCollider.hpp" />
     <ClInclude Include="src\entities\components\ComponentSway.hpp" />

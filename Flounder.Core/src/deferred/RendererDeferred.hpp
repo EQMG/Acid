@@ -15,6 +15,7 @@ namespace Flounder
 		static const DescriptorType typeUboLights;
 		static const DescriptorType typeSamplerColour;
 		static const DescriptorType typeSamplerNormal;
+		static const DescriptorType typeSamplerExtras;
 		static const DescriptorType typeSamplerShadows;
 		static const PipelineCreateInfo pipelineCreateInfo;
 
