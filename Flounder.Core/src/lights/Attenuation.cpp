@@ -9,18 +9,17 @@ namespace Flounder
 	{
 	}
 
-	Attenuation::Attenuation(const float &constant, const float &linear, const float &exponent) :
-		m_constant(constant),
-		m_linear(linear),
-		m_exponent(exponent)
-	{
-		Set(constant, linear, exponent);
-	}
-
 	Attenuation::Attenuation(const Attenuation &source) :
 		m_constant(source.m_constant),
 		m_linear(source.m_linear),
 		m_exponent(source.m_exponent)
+	{
+	}
+
+	Attenuation::Attenuation(const float &constant, const float &linear, const float &exponent) :
+		m_constant(constant),
+		m_linear(linear),
+		m_exponent(exponent)
 	{
 	}
 

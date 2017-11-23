@@ -4,46 +4,35 @@
 
 #define NUMBER_LIGHTS 32
 
-struct Light
+layout(binding = 0) uniform UboScene 
 {
-	vec4 colour;
-	vec3 position;
-//	vec3 attenuation;
-	vec2 enabled;
-};
+	mat4 projection;
+	mat4 view;
+	mat4 shadowSpace;
 
-/*struct Shadow
-{
-	mat4 shadowSpaceMatrix;
+	vec4 fogColour;
+	float fogDensity;
+	float fogGradient;
+
 	float shadowDistance;
 	float shadowTransition;
 	float shadowBias;
 	float shadowDarkness;
 	int shadowMapSize;
 	int shadowPCF;
-};
-
-struct Fog
-{
-	vec4 colour;
-	float density;
-	float gradient;
-};*/
-
-layout(binding = 0) uniform UboScene 
-{
-//	Shadow shadow;
-	Light lights[NUMBER_LIGHTS];
-//	Fog fog;
-
-//	mat4 projection;
-//	mat4 view;
 } scene;
 
-layout(binding = 1) uniform sampler2D samplerDepth;
-layout(binding = 2) uniform sampler2D samplerColour;
-layout(binding = 3) uniform sampler2D samplerNormal;
-layout(binding = 4) uniform sampler2D samplerShadows;
+layout(binding = 1) uniform Ubolights 
+{
+	vec4 lightColours[NUMBER_LIGHTS];
+	vec3 lightPositions[NUMBER_LIGHTS];
+	vec3 lightAttenuations[NUMBER_LIGHTS];
+} lights;
+
+layout(binding = 2) uniform sampler2D samplerDepth;
+layout(binding = 3) uniform sampler2D samplerColour;
+layout(binding = 4) uniform sampler2D samplerNormal;
+layout(binding = 5) uniform sampler2D samplerShadows;
 
 layout(location = 0) in vec2 fragmentTextures;
 
@@ -71,28 +60,27 @@ vec3 decodeNormal(vec4 normal)
 
 vec3 decodePosition(float depth) 
 {
-   // vec4 p = inverse(scene.projection) * (vec4(fragmentTextures, depth, 1.0) * 2.0 - 1.0);
-  //  return vec3(inverse(scene.view) * vec4(p.xyz / p.w, 1.0));
-  return vec3(0.0f);
+	vec4 p = inverse(scene.projection) * (vec4(fragmentTextures, depth, 1.0) * 2.0 - 1.0);
+	return vec3(inverse(scene.view) * vec4(p.xyz / p.w, 1.0));
 }
 
 float shadow(sampler2D shadowMap, vec4 shadowCoords, float shadowMapSize) 
 {
-   /* float totalTextels = (scene.shadow.shadowPCF * 2.0f + 1.0f) * (scene.shadow.shadowPCF * 2.0f + 1.0f);
-    float texelSize = 1.0f / scene.shadow.shadowMapSize;
+    float totalTextels = (scene.shadowPCF * 2.0f + 1.0f) * (scene.shadowPCF * 2.0f + 1.0f);
+    float texelSize = 1.0f / scene.shadowMapSize;
     float total = 0.0f;
 
     if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f) 
 	{
-        for (int x = -scene.shadow.shadowPCF; x <= scene.shadow.shadowPCF; x++) 
+        for (int x = -scene.shadowPCF; x <= scene.shadowPCF; x++) 
 		{
-            for (int y = -scene.shadow.shadowPCF; y <= scene.shadow.shadowPCF; y++) 
+            for (int y = -scene.shadowPCF; y <= scene.shadowPCF; y++) 
 			{
                 float shadowValue = texture(samplerShadows, shadowCoords.xy + vec2(x, y) * texelSize).r;
 
-                if (shadowCoords.z > shadowValue + scene.shadow.shadowBias) 
+                if (shadowCoords.z > shadowValue + scene.shadowBias) 
 				{
-                    total += scene.shadow.shadowDarkness * shadowCoords.w;
+                    total += scene.shadowDarkness * shadowCoords.w;
                 }
             }
         }
@@ -104,8 +92,7 @@ float shadow(sampler2D shadowMap, vec4 shadowCoords, float shadowMapSize)
         total = 0.0f;
     }
 
-    return 1.0f - total;*/
-	return 1.0f;
+    return 1.0f - total;
 }
 
 void main(void) 
@@ -121,31 +108,27 @@ void main(void)
     vec3 totalDiffuse = vec3(0.0);
     vec3 totalSpecular = vec3(0.0);
 
-	outColour = vec4(colour, 1.0f);
-   
 	for (int i = 0; i < NUMBER_LIGHTS; i++) 
 	{
-        if (scene.lights[i].enabled.x == 1.0f) 
+        if (lights.lightColours[i].a != 0.0f) 
 		{
-			outColour = vec4(scene.lights[i].colour.rgb, 1.0f);
-
-         //   vec3 toLightVector = scene.lights[i].position - position.xyz;
-         //   vec3 unitLightVector = normalize(toLightVector);
-         //   float lightDistance = length(toLightVector);
-
-         //   float attinuationFactor = scene.lights[i].attenuation.x + (scene.lights[i].attenuation.y * lightDistance) + (scene.lights[i].attenuation.z * lightDistance * lightDistance);
-
-         //   float lightBrightness = max(dot(normal, unitLightVector), 0.0f);
-         //   totalDiffuse = totalDiffuse + (lightBrightness * scene.lights[i].colour.rgb) / attinuationFactor;
+			vec3 toLightVector = lights.lightPositions[i] - position.xyz;
+			vec3 unitLightVector = normalize(toLightVector);
+			float lightDistance = length(toLightVector);
+			
+			float attinuationFactor = lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
+			
+			float lightBrightness = max(dot(normal, unitLightVector), 0.0f);
+			totalDiffuse = totalDiffuse + (lightBrightness * lights.lightColours[i].rgb) / attinuationFactor;
 
          //   vec3 reflectedLightDirection = reflect(-unitLightVector, normal);
          //   float specularFactor = max(dot(reflectedLightDirection, normalize(toCameraVector)), 0.0f);
          //   float dampedFactor = pow(specularFactor, shineDamper);
-         //   totalSpecular = totalSpecular + (dampedFactor * glow * scene.lights[i].colour) / attinuationFactor;
+         //   totalSpecular = totalSpecular + (dampedFactor * glow * lights.lightColours[i]) / attinuationFactor;
         }
     }
 
-	// outColour = vec4((max(totalDiffuse, vec3(0.1f)) * colour) + totalSpecular, 1.0f);
+	outColour = vec4((max(totalDiffuse, vec3(0.1f)) * colour) + totalSpecular, 1.0f);
 
-//	outColour = vec4(position, 1.0f);
+	outColour = vec4(colour, 1.0f);
 }
