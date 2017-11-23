@@ -14,9 +14,7 @@ layout(location = 1) out vec2 outNormal;
 vec4 encodeColour(vec3 colour, float depth)
 {
 	vec4 result = vec4(0.0f);
-	result.r = packHalf2x16(colour.rg);
-	result.g = packHalf2x16(vec2(colour.b, depth));
-	result.b = 0.0f;
+	result.rgb = colour.rgb;
 	result.a = 1.0f;
 	return result;
 }

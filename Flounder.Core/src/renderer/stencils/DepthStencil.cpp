@@ -8,15 +8,17 @@
 namespace Flounder
 {
 	DepthStencil::DepthStencil(const VkExtent3D &extent) :
-		m_depthStencilImage(VK_NULL_HANDLE),
-		m_depthStencilImageMemory(VK_NULL_HANDLE),
-		m_depthStencilImageView(VK_NULL_HANDLE),
-		m_depthStencilFormat(VK_FORMAT_UNDEFINED)
+		m_image(VK_NULL_HANDLE),
+		m_imageMemory(VK_NULL_HANDLE),
+		m_imageView(VK_NULL_HANDLE),
+		m_sampler(VK_NULL_HANDLE),
+		m_format(VK_FORMAT_UNDEFINED),
+		m_imageInfo({})
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
-		std::vector<VkFormat> tryFormats = 
+		std::vector<VkFormat> tryFormats =
 		{
 			VK_FORMAT_D32_SFLOAT_S8_UINT,
 			VK_FORMAT_D24_UNORM_S8_UINT,
@@ -33,20 +35,20 @@ namespace Flounder
 
 			if (formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)
 			{
-				m_depthStencilFormat = format;
+				m_format = format;
 				break;
 			}
 		}
 
-		if (m_depthStencilFormat != VK_FORMAT_D32_SFLOAT_S8_UINT &&
-			m_depthStencilFormat != VK_FORMAT_D24_UNORM_S8_UINT &&
-			m_depthStencilFormat != VK_FORMAT_D16_UNORM_S8_UINT &&
-			m_depthStencilFormat != VK_FORMAT_S8_UINT)
+		if (m_format != VK_FORMAT_D32_SFLOAT_S8_UINT &&
+			m_format != VK_FORMAT_D24_UNORM_S8_UINT &&
+			m_format != VK_FORMAT_D16_UNORM_S8_UINT &&
+			m_format != VK_FORMAT_S8_UINT)
 		{
-			m_depthStencilFormat = VK_FORMAT_UNDEFINED;
+			m_format = VK_FORMAT_UNDEFINED;
 		}
 
-		if (m_depthStencilFormat == VK_FORMAT_UNDEFINED)
+		if (m_format == VK_FORMAT_UNDEFINED)
 		{
 			assert(false && "Vulkan runtime error, depth stencil format not selected!");
 		}
@@ -55,7 +57,7 @@ namespace Flounder
 		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 		imageCreateInfo.flags = 0;
 		imageCreateInfo.imageType = VK_IMAGE_TYPE_2D;
-		imageCreateInfo.format = m_depthStencilFormat;
+		imageCreateInfo.format = m_format;
 		imageCreateInfo.extent = extent;
 		imageCreateInfo.mipLevels = 1;
 		imageCreateInfo.arrayLayers = 1;
@@ -67,10 +69,10 @@ namespace Flounder
 		imageCreateInfo.pQueueFamilyIndices = nullptr;
 		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
-		Platform::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &m_depthStencilImage));
+		Platform::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &m_image));
 
 		VkMemoryRequirements imageMemoryRequirements = {};
-		vkGetImageMemoryRequirements(logicalDevice, m_depthStencilImage, &imageMemoryRequirements);
+		vkGetImageMemoryRequirements(logicalDevice, m_image, &imageMemoryRequirements);
 
 		const uint32_t memoryTypeIndex = Buffer::FindMemoryType(imageMemoryRequirements.memoryTypeBits,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
@@ -79,35 +81,87 @@ namespace Flounder
 		memoryAllocateInfo.allocationSize = imageMemoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = memoryTypeIndex;
 
-		Platform::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_depthStencilImageMemory));
+		Platform::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_imageMemory));
 
-		Platform::ErrorVk(vkBindImageMemory(logicalDevice, m_depthStencilImage, m_depthStencilImageMemory, 0));
+		Platform::ErrorVk(vkBindImageMemory(logicalDevice, m_image, m_imageMemory, 0));
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-		imageViewCreateInfo.image = m_depthStencilImage;
+		imageViewCreateInfo.image = m_image;
 		imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-		imageViewCreateInfo.format = m_depthStencilFormat;
+		imageViewCreateInfo.format = m_format;
 		imageViewCreateInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
 		imageViewCreateInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
 		imageViewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
 		imageViewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
 		imageViewCreateInfo.subresourceRange = {};
-		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT | (m_depthStencilFormat != VK_FORMAT_UNDEFINED ? VK_IMAGE_ASPECT_STENCIL_BIT : 0);
+		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT | (m_format != VK_FORMAT_UNDEFINED ? VK_IMAGE_ASPECT_STENCIL_BIT : 0);
 		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
 		imageViewCreateInfo.subresourceRange.levelCount = 1;
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 		imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-		Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_depthStencilImageView));
+		Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_imageView));
+
+		VkSamplerCreateInfo samplerCreateInfo = {};
+		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
+		samplerCreateInfo.magFilter = VK_FILTER_LINEAR;
+		samplerCreateInfo.minFilter = VK_FILTER_LINEAR;
+		samplerCreateInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerCreateInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerCreateInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerCreateInfo.mipLodBias = 0.0f;
+		samplerCreateInfo.minLod = 0.0f;
+		samplerCreateInfo.maxLod = 1.0f;
+		samplerCreateInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
+		samplerCreateInfo.compareOp = VK_COMPARE_OP_NEVER;
+		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+
+		Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &m_sampler));
+
+		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		m_imageInfo.imageView = m_imageView;
+		m_imageInfo.sampler = m_sampler;
 	}
 
 	DepthStencil::~DepthStencil()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		vkDestroyImageView(logicalDevice, m_depthStencilImageView, nullptr);
-		vkFreeMemory(logicalDevice, m_depthStencilImageMemory, nullptr);
-		vkDestroyImage(logicalDevice, m_depthStencilImage, nullptr);
+		vkDestroySampler(logicalDevice, m_sampler, nullptr);
+		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
+		vkFreeMemory(logicalDevice, m_imageMemory, nullptr);
+		vkDestroyImage(logicalDevice, m_image, nullptr);
 	}
+
+	DescriptorType DepthStencil::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
+	{
+		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+		descriptorSetLayoutBinding.binding = binding;
+		descriptorSetLayoutBinding.descriptorCount = 1;
+		descriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+		descriptorSetLayoutBinding.stageFlags = stage;
+
+		VkDescriptorPoolSize descriptorPoolSize = {};
+		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorPoolSize.descriptorCount = 1;
+
+		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
+	}
+
+	VkWriteDescriptorSet DepthStencil::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const
+	{
+		VkWriteDescriptorSet descriptorWrite = {};
+		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		descriptorWrite.dstSet = descriptorSet;
+		descriptorWrite.dstBinding = binding;
+		descriptorWrite.dstArrayElement = 0;
+		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorWrite.descriptorCount = 1;
+		descriptorWrite.pImageInfo = &m_imageInfo;
+
+		return descriptorWrite;
+	}
+
 }
