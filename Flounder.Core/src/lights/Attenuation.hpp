@@ -32,6 +32,12 @@ namespace Flounder
 		Attenuation();
 
 		/// <summary>
+		/// Creates a attenuation object used in lights from a source object.
+		/// </summary>
+		/// <param name="source"> The source attenuation object. </param>
+		Attenuation(const Attenuation &source);
+
+		/// <summary>
 		/// Creates a attenuation object used in lights. The calculation used is as follows:<br>
 		/// {@code factor = constant + (linear * cameraDistance) + (exponent * (cameraDistance * cameraDistance))}
 		/// </summary>
@@ -39,12 +45,6 @@ namespace Flounder
 		/// <param name="linear"> The linear attenuation value. </param>
 		/// <param name="exponent"> The exponent attenuation value. </param>
 		Attenuation(const float &constant, const float &linear, const float &exponent);
-
-		/// <summary>
-		/// Creates a attenuation object used in lights from a source object.
-		/// </summary>
-		/// <param name="source"> The source attenuation object. </param>
-		Attenuation(const Attenuation &source);
 
 		/// <summary>
 		/// Deconstructor for attenuation.
