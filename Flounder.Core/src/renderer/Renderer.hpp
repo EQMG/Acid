@@ -63,6 +63,8 @@ namespace Flounder
 
 		Swapchain *GetSwapchain() const { return m_swapchain; }
 
+		DepthStencil *GetDepthStencil() const { return m_depthStencil; }
+
 		VkRenderPass GetRenderPass() const { return m_renderPass->GetRenderPass(); }
 
 		VkCommandPool GetCommandPool() const { return m_commandPool; }
