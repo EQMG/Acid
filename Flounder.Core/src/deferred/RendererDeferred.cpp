@@ -24,10 +24,11 @@ namespace Flounder
 	};
 
 	const DescriptorType RendererDeferred::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerDepth = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerShadows = Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeUboLights = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerDepth = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerShadows = Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererDeferred::pipelineCreateInfo =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
@@ -37,7 +38,7 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboScene, typeSamplerDepth, typeSamplerColour, typeSamplerNormal, typeSamplerShadows }, // descriptors
+		{ typeUboScene, typeUboLights, typeSamplerDepth, typeSamplerColour, typeSamplerNormal, typeSamplerShadows }, // descriptors
 
 		{ "res/shaders/deferred/deferred.vert.spv", "res/shaders/deferred/deferred.frag.spv" } // shaderStages
 	};
@@ -45,65 +46,61 @@ namespace Flounder
 	RendererDeferred::RendererDeferred(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
+		m_uniformLights(new UniformBuffer(sizeof(UbosDeferred::UboLights))),
 		m_pipeline(new Pipeline("deferred", pipelineCreateInfo, subpass)),
 		m_model(new Model(VERTICES, INDICES))
 	{
-		//int sizeShadow = sizeof(UbosDeferred::Shadow); // 88
-		//int sizeLight = sizeof(UbosDeferred::Light); // 44
-		//int sizeFog = sizeof(UbosDeferred::Fog); // 32
-
 	}
 
 	RendererDeferred::~RendererDeferred()
 	{
-		delete m_model;
+		delete m_uniformScene;
+		delete m_uniformLights;
 		delete m_pipeline;
+		delete m_model;
 	}
 
 	void RendererDeferred::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		UbosDeferred::UboScene uboScene = {};
 
-		/*uboScene.shadow = {};
-		uboScene.shadow.shadowSpaceMatrix = Matrix4(*Shadows::Get()->GetShadowBox()->GetToShadowMapSpaceMatrix());
-		uboScene.shadow.shadowDistance = Shadows::Get()->GetShadowBoxDistance();
-		uboScene.shadow.shadowTransition = Shadows::Get()->GetShadowTransition();
-		uboScene.shadow.shadowBias = Shadows::Get()->GetShadowBias();
-		uboScene.shadow.shadowDarkness = Shadows::Get()->GetShadowDarkness();
-		uboScene.shadow.shadowMapSize = Shadows::Get()->GetShadowSize();
-		uboScene.shadow.shadowPCF = Shadows::Get()->GetShadowPcf();*/
+		uboScene.projection = *camera.GetProjectionMatrix();
+		uboScene.view = *camera.GetViewMatrix();
+		uboScene.shadowSpace = Matrix4(*Shadows::Get()->GetShadowBox()->GetToShadowMapSpaceMatrix());
+
+		uboScene.fogColour = Colour(*Skyboxes::Get()->GetFog()->m_colour); // *Skyboxes::Get()->GetFog()->m_colour
+		uboScene.fogDensity = Skyboxes::Get()->GetFog()->m_density;
+		uboScene.fogGradient = Skyboxes::Get()->GetFog()->m_gradient;
+
+		uboScene.shadowDistance = Shadows::Get()->GetShadowBoxDistance();
+		uboScene.shadowTransition = Shadows::Get()->GetShadowTransition();
+		uboScene.shadowBias = Shadows::Get()->GetShadowBias();
+		uboScene.shadowDarkness = Shadows::Get()->GetShadowDarkness();
+		uboScene.shadowMapSize = Shadows::Get()->GetShadowSize();
+		uboScene.shadowPCF = Shadows::Get()->GetShadowPcf();
+
+		m_uniformScene->Update(&uboScene);
+
+		UbosDeferred::UboLights uboLights = {};
 
 		for (int i = 0; i < NUMBER_LIGHTS; i++)
 		{
-			UbosDeferred::Light light = {};
-
 			// TODO: Load real lights.
 			if (i == 0)
 			{
-				light.colour = Colour(0.0f, 0.0f, 1.0f);
-				light.position = Vector3(*Worlds::Get()->GetSunPosition());
-			//	light.attenuation = Attenuation();
-				light.enabled = Vector2(1.0f, 0.0f);
+				uboLights.lightColours[i] = Colour(*Worlds::Get()->GetSunColour());
+				uboLights.lightPositions[i] = Vector3(*Worlds::Get()->GetSunPosition());
+				uboLights.lightAttenuations[i] = Attenuation();
 			}
 			else
 			{
-				light.colour = Colour();
-				light.position = Vector3();
-			//	light.attenuation = Attenuation();
-				light.enabled = Vector2(0.0f, 0.0f);
+				uboLights.lightColours[i] = Colour(0.0f, 0.0f, 0.0f, 0.0f);
+				uboLights.lightPositions[i] = Vector3();
+				uboLights.lightAttenuations[i] = Attenuation();
 			}
-
-			uboScene.lights[i] = light;
 		}
 
-		/*uboScene.fog = {};
-		uboScene.fog.colour = Colour(*Skyboxes::Get()->GetFog()->m_colour);
-		uboScene.fog.density = Skyboxes::Get()->GetFog()->m_density;
-		uboScene.fog.gradient = Skyboxes::Get()->GetFog()->m_gradient;
-
-		uboScene.projection = *camera.GetProjectionMatrix();
-		uboScene.view = *camera.GetViewMatrix();*/
-		m_uniformScene->Update(&uboScene);
+		m_uniformLights->Update(&uboLights);
 
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
@@ -112,10 +109,11 @@ namespace Flounder
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ 
 			m_uniformScene->GetWriteDescriptor(0, descriptorSet), 
-			Renderer::Get()->GetDepthStencil()->GetWriteDescriptor(1, descriptorSet), 
-			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(2, descriptorSet), 
-			Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(3, descriptorSet), 
-			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(4, descriptorSet) 
+			m_uniformLights->GetWriteDescriptor(1, descriptorSet),
+			Renderer::Get()->GetDepthStencil()->GetWriteDescriptor(2, descriptorSet), 
+			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(3, descriptorSet), 
+			Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(4, descriptorSet), 
+			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(5, descriptorSet) 
 		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		
