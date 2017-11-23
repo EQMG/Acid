@@ -27,7 +27,6 @@
     <ClCompile Include="src\post\pipelines\PipelineBloom.cpp" />
     <ClCompile Include="src\post\pipelines\PipelineGaussian.cpp" />
     <ClCompile Include="src\post\pipelines\PipelinePaused.cpp" />
-    <ClCompile Include="src\reflection\RendererReflection.cpp" />
     <ClCompile Include="src\renderer\buffers\UniformBuffer.cpp" />
     <ClCompile Include="src\renderer\stencils\DepthStencil.cpp" />
     <ClCompile Include="src\camera\Camera.cpp" />
@@ -180,7 +179,6 @@
     <ClInclude Include="src\post\pipelines\PipelineBloom.hpp" />
     <ClInclude Include="src\post\pipelines\PipelineGaussian.hpp" />
     <ClInclude Include="src\post\pipelines\PipelinePaused.hpp" />
-    <ClInclude Include="src\reflection\RendererReflection.hpp" />
     <ClInclude Include="src\renderer\buffers\UniformBuffer.hpp" />
     <ClInclude Include="src\renderer\pipelines\PipelineCreate.hpp" />
     <ClInclude Include="src\renderer\stencils\DepthStencil.hpp" />
