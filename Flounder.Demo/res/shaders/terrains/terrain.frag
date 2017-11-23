@@ -13,7 +13,7 @@ layout(location = 2) in vec3 fragmentColour;
 layout(location = 3) in float fragmentHeight;
 
 layout(location = 0) out vec4 outColour;
-layout(location = 1) out vec2 outNormal;
+layout(location = 1) out vec3 outNormal;
 
 vec3 blend(vec3 left, vec3 right, float blend)
 {
@@ -32,12 +32,13 @@ vec4 encodeColour(vec3 colour)
 	return result;
 }
 
-vec2 encodeNormal(vec3 normal)
+vec3 encodeNormal(vec3 normal, float depth)
 {
-	vec2 result = vec2(0.0f);
-	result.x = atan(normal.y, normal.x) / 3.14159;
-	result.y = normal.z;
-	return result * 0.5 + 0.5;
+	vec3 result = vec3(0.0f);
+	result.x = (atan(normal.y, normal.x) / 3.14159f) * 0.5f + 0.5f;
+	result.y = normal.z * 0.5f + 0.5f;
+	result.z = depth;
+	return result;
 }
 
 void main(void) 
@@ -45,5 +46,5 @@ void main(void)
 	vec3 unitNormal = normalize(fragmentNormal);
 
 	outColour = encodeColour(fragmentColour);
-	outNormal = encodeNormal(unitNormal);
+	outNormal = encodeNormal(unitNormal, gl_FragDepth);
 }

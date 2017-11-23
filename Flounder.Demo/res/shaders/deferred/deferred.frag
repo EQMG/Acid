@@ -29,10 +29,9 @@ layout(binding = 1) uniform Ubolights
 	vec3 lightAttenuations[NUMBER_LIGHTS];
 } lights;
 
-layout(binding = 2) uniform sampler2D samplerDepth;
-layout(binding = 3) uniform sampler2D samplerColour;
-layout(binding = 4) uniform sampler2D samplerNormal;
-layout(binding = 5) uniform sampler2D samplerShadows;
+layout(binding = 2) uniform sampler2D samplerColour;
+layout(binding = 3) uniform sampler2D samplerNormal;
+layout(binding = 4) uniform sampler2D samplerShadows;
 
 layout(location = 0) in vec2 fragmentTextures;
 
@@ -56,6 +55,11 @@ vec3 decodeNormal(vec4 normal)
 	vec2 sinCosTheta = vec2(sin(spherical.x * 3.14159), cos(spherical.x * 3.14159));
 	vec2 sinCosPhi = vec2(sqrt(1.0f - spherical.y * spherical.y), spherical.y);
 	return vec3(sinCosTheta.y * sinCosPhi.x, sinCosTheta.x * sinCosPhi.x, sinCosPhi.y);
+}
+
+float decodeDepth(vec4 normal)
+{
+	return normal.z;
 }
 
 vec3 decodePosition(float depth) 
@@ -97,13 +101,14 @@ float shadow(sampler2D shadowMap, vec4 shadowCoords, float shadowMapSize)
 
 void main(void) 
 {
-	vec4 textureDepth = texture(samplerDepth, fragmentTextures);
 	vec4 textureColour = texture(samplerColour, fragmentTextures);
 	vec4 textureNormal = texture(samplerNormal, fragmentTextures);
 	
 	vec3 colour = decodeColour(textureColour);
 	vec3 normal = decodeNormal(textureNormal);
-	vec3 position = decodePosition(textureDepth.r);
+	float depth = decodeDepth(textureNormal);
+	vec3 position = decodePosition(depth);
+	vec4 positionRelativeToCam = scene.view * vec4(position, 1.0f);
 	
     vec3 totalDiffuse = vec3(0.0);
     vec3 totalSpecular = vec3(0.0);
@@ -116,7 +121,7 @@ void main(void)
 			vec3 unitLightVector = normalize(toLightVector);
 			float lightDistance = length(toLightVector);
 			
-			float attinuationFactor = lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
+			float attinuationFactor = 1.0f; // lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
 			
 			float lightBrightness = max(dot(normal, unitLightVector), 0.0f);
 			totalDiffuse = totalDiffuse + (lightBrightness * lights.lightColours[i].rgb) / attinuationFactor;
@@ -128,7 +133,14 @@ void main(void)
         }
     }
 
-	outColour = vec4((max(totalDiffuse, vec3(0.1f)) * colour) + totalSpecular, 1.0f);
-
 	outColour = vec4(colour, 1.0f);
+
+	// vec4 shadowCoords = scene.shadowSpace * vec4(position, 1.0f);
+	// float distanceAway = length(positionRelativeToCam.xyz);
+	// distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
+	// distanceAway = distanceAway / scene.shadowTransition;
+	// shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
+	// outColour *= shadow(samplerShadows, shadowCoords, scene.shadowMapSize);
+
+	outColour = vec4((max(totalDiffuse, vec3(0.2f)) * outColour.rgb) + totalSpecular, 1.0f);
 }
