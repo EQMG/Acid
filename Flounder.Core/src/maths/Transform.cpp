@@ -5,7 +5,7 @@ namespace Flounder
 	Transform::Transform() :
 		m_position(new Vector3()),
 		m_rotation(new Vector3()),
-		m_scaling(new Vector3())
+		m_scaling(new Vector3(1.0f, 1.0f, 1.0f))
 	{
 	}
 

@@ -14,21 +14,18 @@ namespace Flounder
 	const std::vector<float> Terrain::SQUARE_SIZES = { 2.0f, 4.0f, 10.0f, 20.0f }; // Models: (1.0 LOD, 2/5 LOD, 1/10 LOD, none)
 	const std::vector<float> Terrain::TEXTURE_SCALES = { 10.0f, 5.0f, 2.0f, 1.0f };
 
-	Terrain::Terrain(const Vector3 &position, const Vector3 &rotation) :
+	Terrain::Terrain(const Transform &transform) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
 		m_modelLods(std::vector<Model*>()),
 		m_currentLod(0),
-		m_position(new Vector3(position)),
-		m_rotation(new Vector3(rotation)),
-		m_moved(true),
-		m_modelMatrix(new Matrix4()),
+		m_transform(new Transform(transform)),
 		m_aabb(new Aabb())
 	{
 		m_aabb->m_maxExtents->m_x = static_cast<float>(SIDE_LENGTH);
 		m_aabb->m_maxExtents->m_z = static_cast<float>(SIDE_LENGTH);
-		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
-		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
-		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
+		m_transform->m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
+		m_transform->m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
+		m_aabb->Update(*m_transform->m_position, *m_transform->m_rotation, 1.0f, m_aabb);
 
 		for (int i = 0; i < SQUARE_SIZES.size(); i++)
 		{
@@ -43,10 +40,8 @@ namespace Flounder
 			delete model;
 		}
 
-		delete m_position;
-		delete m_rotation;
+		delete m_transform;
 
-		delete m_modelMatrix;
 		delete m_aabb;
 	}
 
@@ -76,12 +71,6 @@ namespace Flounder
 
 			CreateLod(m_currentLod);
 		}
-
-		if (m_moved)
-		{
-			Matrix4::TransformationMatrix(*m_position, *m_rotation, 1.0f, m_modelMatrix);
-			m_moved = false;
-		}
 	}
 
 	void Terrain::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
@@ -100,7 +89,7 @@ namespace Flounder
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
 		UbosTerrains::UboObject uboObject = {};
-		uboObject.transform = Matrix4(*m_modelMatrix);
+		m_transform->GetWorldMatrix(&uboObject.transform);
 		m_uniformObject->Update(&uboObject);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet) };
@@ -133,7 +122,7 @@ namespace Flounder
 
 		const std::function<float(float, float)> getHeight = [&](float x, float z)
 		{
-			return Terrains::Get()->GetHeight(x + m_position->m_x, z + m_position->m_z);
+			return Terrains::Get()->GetHeight(x + m_transform->m_position->m_x, z + m_transform->m_position->m_z);
 		};
 		const std::function<Vector3(Vector3, Vector3)> getColour = [&](Vector3 position, Vector3 normal)
 		{
@@ -147,17 +136,10 @@ namespace Flounder
 #endif
 	}
 
-	void Terrain::SetPosition(const Vector3 &position)
+	void Terrain::SetTransform(const Transform &transform) const
 	{
-		m_position->Set(position);
-		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
-		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
-		m_moved = true;
-	}
-
-	void Terrain::SetRotation(const Vector3 &rotation)
-	{
-		m_rotation->Set(rotation);
-		m_moved = true;
+		m_transform->Set(transform);
+		m_transform->m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
+		m_transform->m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
 	}
 }

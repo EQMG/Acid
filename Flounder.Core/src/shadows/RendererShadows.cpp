@@ -38,11 +38,13 @@ namespace Flounder
 	{
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-		for (auto object : *Terrains::Get()->GetTerrains())
+		for (auto terrain : *Terrains::Get()->GetTerrains())
 		{
-			if (object->GetModel(0) != nullptr)
+			if (terrain->GetModel(0) != nullptr)
 			{
-				RenderModel(commandBuffer, object->GetModel(0), *object->GetModelMatrix());
+				Matrix4 modelMatrix = Matrix4();
+				terrain->GetTransform()->GetModelMatrix(&modelMatrix);
+				RenderModel(commandBuffer, terrain->GetModel(0), modelMatrix);
 			}
 		}
 
