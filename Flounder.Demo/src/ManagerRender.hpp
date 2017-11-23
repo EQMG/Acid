@@ -13,7 +13,6 @@ namespace Demo
 		Vector4 m_infinity;
 
 		RendererShadows *m_rendererShadows;
-		RendererReflection *m_rendererReflection;
 
 		RendererSkyboxes *m_rendererSkyboxes;
 		RendererTerrains *m_rendererTerrains;

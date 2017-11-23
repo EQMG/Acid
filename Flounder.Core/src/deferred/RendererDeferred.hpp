@@ -13,7 +13,6 @@ namespace Flounder
 	private:
 		static const DescriptorType typeUboScene;
 		static const DescriptorType typeUboLights;
-		static const DescriptorType typeSamplerDepth;
 		static const DescriptorType typeSamplerColour;
 		static const DescriptorType typeSamplerNormal;
 		static const DescriptorType typeSamplerShadows;
