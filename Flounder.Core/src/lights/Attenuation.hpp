@@ -8,9 +8,23 @@ namespace Flounder
 	class Attenuation
 	{
 	public:
-		float m_constant;
-		float m_linear;
-		float m_exponent;
+		union
+		{
+			struct
+			{
+				float m_constant, m_linear, m_exponent;
+			};
+
+			struct
+			{
+				float m_x, m_y, m_z;
+			};
+
+			struct
+			{
+				float m_elements[3];
+			};
+		};
 
 		/// <summary>
 		/// Creates a attenuation object used in lights, the default constructor creates a non diminishing attenuation.

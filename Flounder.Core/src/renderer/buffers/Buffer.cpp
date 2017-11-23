@@ -46,9 +46,6 @@ namespace Flounder
 
 		vkDestroyBuffer(logicalDevice, m_buffer, nullptr);
 		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
-
-		m_buffer = VK_NULL_HANDLE;
-		m_bufferMemory = VK_NULL_HANDLE;
 	}
 
 	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties)
