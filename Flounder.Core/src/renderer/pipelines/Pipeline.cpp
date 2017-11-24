@@ -311,9 +311,9 @@ namespace Flounder
 
 	void Pipeline::CreatePipelineMrt()
 	{
-		std::array<VkPipelineColorBlendAttachmentState, 2> blendAttachmentStates = {};
+		std::array<VkPipelineColorBlendAttachmentState, 3> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < 2; i++)
+		for (uint32_t i = 0; i < 3; i++)
 		{
 			blendAttachmentStates[i].blendEnable = VK_FALSE;
 			blendAttachmentStates[i].srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
@@ -333,9 +333,9 @@ namespace Flounder
 
 	void Pipeline::CreatePipelineMrtNoDepth()
 	{
-		std::array<VkPipelineColorBlendAttachmentState, 2> blendAttachmentStates = {};
+		std::array<VkPipelineColorBlendAttachmentState, 3> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < 2; i++)
+		for (uint32_t i = 0; i < 3; i++)
 		{
 			blendAttachmentStates[i].blendEnable = VK_FALSE;
 			blendAttachmentStates[i].srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;

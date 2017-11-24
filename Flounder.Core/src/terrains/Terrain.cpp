@@ -119,13 +119,25 @@ namespace Flounder
 		const float textureScale = TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(SIDE_LENGTH, squareSize);
 
+		const std::array<Colour, 4> biomeColours = { Colour("#553982"), Colour("#41A85F"), Colour("#2969af"), Colour("#B8312F") };
+		const float spread = 0.7f;
+		const float halfSpread = spread / 2.0f;
+		const float amplitude = 45.0f;
+		const float part = 1.0f / (biomeColours.size() - 1);
+
 		const std::function<float(float, float)> getHeight = [&](float x, float z)
 		{
 			return Terrains::Get()->GetHeight(x + m_transform->m_position->m_x, z + m_transform->m_position->m_z);
 		};
 		const std::function<Vector3(Vector3, Vector3)> getColour = [&](Vector3 position, Vector3 normal)
 		{
-			return Vector3(0.60, 0.17, 0.09);
+			float value = (position.m_y + amplitude) / (amplitude * 2.0f);
+			value = Maths::Clamp((value - halfSpread) * (1.0f / spread), 0.0f, 0.9999f);
+			int firstBiome = static_cast<int>(floor(value / part));
+			float blend = (value - (firstBiome * part)) / part;
+			Colour result = Colour();
+			Colour::Interpolate(biomeColours[firstBiome], biomeColours[firstBiome + 1], blend, &result);
+			return result;
 		};
 		m_modelLods[lod] = MeshGenerator::GenerateMesh(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, MeshType::MeshSimple, getHeight, getColour);
 

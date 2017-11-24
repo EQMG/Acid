@@ -34,6 +34,6 @@ void main()
 	vec3 unitNormal = normalize(fragmentNormal);
 
 	outColour = encodeColour(textureColour);
-	outNormal = encodeNormal(unitNormal, gl_FragDepth);
+	outNormal = encodeNormal(unitNormal, gl_FragCoord.z); // gl_FragDepth
 	outExtras = vec3(0.0f);
 }

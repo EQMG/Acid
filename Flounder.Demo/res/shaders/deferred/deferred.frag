@@ -33,6 +33,7 @@ layout(binding = 2) uniform sampler2D samplerColour;
 layout(binding = 3) uniform sampler2D samplerNormal;
 layout(binding = 4) uniform sampler2D samplerExtras;
 layout(binding = 5) uniform sampler2D samplerShadows;
+layout(binding = 6) uniform sampler2D samplerDepth;
 
 layout(location = 0) in vec2 fragmentTextures;
 
@@ -138,7 +139,7 @@ void main(void)
 				vec3 unitLightVector = normalize(toLightVector);
 				float lightDistance = length(toLightVector);
 			
-				float attinuationFactor = lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
+				float attinuationFactor = 1.0f; // lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
 			
 				float lightBrightness = max(dot(normal, unitLightVector), 0.0f);
 				totalDiffuse += (lightBrightness * lights.lightColours[i].rgb) / attinuationFactor;

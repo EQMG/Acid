@@ -10,7 +10,6 @@ layout(binding = 1) uniform UboObject
 layout(location = 0) in vec3 fragmentNormal;
 layout(location = 1) in vec2 fragmentTextures;
 layout(location = 2) in vec3 fragmentColour;
-layout(location = 3) in float fragmentHeight;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec3 outNormal;
@@ -47,6 +46,6 @@ void main(void)
 	vec3 unitNormal = normalize(fragmentNormal);
 
 	outColour = encodeColour(fragmentColour);
-	outNormal = encodeNormal(unitNormal, gl_FragDepth);
+	outNormal = encodeNormal(unitNormal, gl_FragCoord.z); // gl_FragDepth
 	outExtras = vec3(0.0f);
 }

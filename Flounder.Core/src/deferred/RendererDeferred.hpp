@@ -17,6 +17,7 @@ namespace Flounder
 		static const DescriptorType typeSamplerNormal;
 		static const DescriptorType typeSamplerExtras;
 		static const DescriptorType typeSamplerShadows;
+		static const DescriptorType typeSamplerDepth;
 		static const PipelineCreateInfo pipelineCreateInfo;
 
 		UniformBuffer *m_uniformScene;
