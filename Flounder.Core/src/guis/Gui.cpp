@@ -70,7 +70,7 @@ namespace Flounder
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformObject->GetWriteDescriptor(0, descriptorSet), m_texture->GetWriteDescriptor(1, descriptorSet) };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[1] = { pipeline.GetDescriptorSet() };
+		VkDescriptorSet descriptors[1] = { descriptorSet };
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_model->CmdRender(commandBuffer);

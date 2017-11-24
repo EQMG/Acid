@@ -1,4 +1,5 @@
 ﻿#include "Entity.hpp"
+
 #include "../devices/Display.hpp"
 
 namespace Flounder
@@ -67,7 +68,7 @@ namespace Flounder
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(entityRender.descriptorWrites.size()), entityRender.descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[] = { pipeline.GetDescriptorSet() };
+		VkDescriptorSet descriptors[] = { descriptorSet };
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		entityRender.model->CmdRender(commandBuffer);
