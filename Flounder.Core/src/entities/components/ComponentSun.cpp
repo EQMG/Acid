@@ -1,7 +1,5 @@
 ﻿#include "ComponentSun.hpp"
 
-#include "../../camera/Camera.hpp"
-#include "../../engine/Engine.hpp"
 #include "../../worlds/Worlds.hpp"
 #include "../Entity.hpp"
 #include "ComponentLight.hpp"

@@ -65,7 +65,7 @@ namespace Flounder
 		ModuleCreate<Keyboard>(UpdatePre, "keyboard");
 		ModuleCreate<Mouse>(UpdatePre, "mouse");
 		ModuleCreate<Renderer>(UpdateRender, "renderer");
-		ModuleCreate<Entities>(UpdatePre, "entities");
+		ModuleCreate<Entities>(UpdateNormal, "entities");
 		ModuleCreate<Events>(UpdatePre, "events");
 		ModuleCreate<Tasks>(UpdatePre, "tasks");
 		ModuleCreate<Processing>(UpdatePre, "processing");
@@ -74,9 +74,9 @@ namespace Flounder
 		ModuleCreate<Uis>(UpdatePre, "uis");
 		ModuleCreate<Worlds>(UpdatePre, "worlds");
 		ModuleCreate<Shadows>(UpdateRender, "shadows");
-		ModuleCreate<Particles>(UpdatePre, "particles");
-		ModuleCreate<Skyboxes>(UpdatePre, "skyboxes");
-		ModuleCreate<Terrains>(UpdatePre, "terrains");
+		ModuleCreate<Particles>(UpdateNormal, "particles");
+		ModuleCreate<Skyboxes>(UpdateNormal, "skyboxes");
+		ModuleCreate<Terrains>(UpdateNormal, "terrains");
 		ModuleCreate<Waters>(UpdatePre, "waters");
 	}
 

@@ -24,5 +24,5 @@ EntityTreePine::EntityTreePine(ISpatialStructure<Entity*> *structure, const Tran
 
 	AddComponent(new ComponentAlpha(1.0f));
 	AddComponent(new ComponentModel(g_model, g_diffuse));
-	AddComponent(new ComponentSway(g_swayMap));
+	// AddComponent(new ComponentSway(g_swayMap));
 }
