@@ -38,7 +38,7 @@ namespace Flounder
 		Colour::Interpolate(Colour("#E14938"), Colour("#0D0D1A"), GetSunriseFactor(), &fogColour);
 		Colour::Interpolate(fogColour, Colour("#2C82C9"), GetShadowFactor(), &fogColour);
 		
-		Vector3::Multiply(lightDirection, Vector3(-250.0f, -250.0f, -250.0f), m_sunPosition);
+		Vector3::Multiply(lightDirection, Vector3(-500.0f, -500.0f, -500.0f), m_sunPosition);
 		
 		if (Camera::Get() != nullptr && Camera::Get()->GetCamera() != nullptr)
 		{
