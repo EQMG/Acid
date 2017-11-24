@@ -33,24 +33,29 @@ namespace Demo
 		m_systemTest->setSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
 		particles::get()->addSystem(m_systemTest);*/
 
+		Entity *sun = new EntitySun(nullptr, Transform(Vector3(), Vector3(), Vector3(16.0f, 16.0f, 16.0f))); // Entities::Get()->GetStructure()
+		Entities::Get()->GetEntities()->push_back(sun);
+
 		for (int i = -3; i <= 3; i++)
 		{
 			for (int j = -3; j <= 3; j++)
 			{
-				const float xv = Maths::RandomInRange(-10.0f, 10.0f);
-				const float yv = Maths::RandomInRange(-10.0f, 10.0f);
+				const float xv = 0.0f; //  Maths::RandomInRange(-10.0f, 10.0f);
+				const float yv = 0.0f; //  Maths::RandomInRange(-10.0f, 10.0f);
 				const Vector3 position = Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv);
 
 				if (position.m_y > 0.0f)
 				{
 					Entity *test = new EntityTreePine(nullptr, Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f))); // Entities::Get()->GetStructure()
 					Entities::Get()->GetEntities()->push_back(test);
+					
+					if (i == 0 && j == 0)
+					{
+					//	test->AddComponent(new ComponentLight(Light(Colour("#2980b9"), Vector3(), Attenuation(0.0f, 0.01f, 1.0f))));
+					}
 				}
 			}
 		}
-
-		Entity *sun = new EntitySun(nullptr, Transform(Vector3(), Vector3(), Vector3(8.0f, 8.0f, 8.0f))); // Entities::Get()->GetStructure()
-		Entities::Get()->GetEntities()->push_back(sun);
 	}
 
 	Instance::~Instance()

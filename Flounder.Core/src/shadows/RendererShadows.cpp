@@ -43,7 +43,7 @@ namespace Flounder
 			if (terrain->GetModel(0) != nullptr)
 			{
 				Matrix4 modelMatrix = Matrix4();
-				terrain->GetTransform()->GetModelMatrix(&modelMatrix);
+				terrain->GetTransform()->GetWorldMatrix(&modelMatrix);
 				RenderModel(commandBuffer, terrain->GetModel(0), modelMatrix);
 			}
 		}
@@ -55,7 +55,7 @@ namespace Flounder
 			if (componentModel != nullptr && componentModel->GetModel() != nullptr)
 			{
 				Matrix4 modelMatrix = Matrix4();
-				entity->GetTransform()->GetModelMatrix(&modelMatrix);
+				entity->GetTransform()->GetWorldMatrix(&modelMatrix);
 				RenderModel(commandBuffer, componentModel->GetModel(), modelMatrix);
 			}
 		}
@@ -74,7 +74,7 @@ namespace Flounder
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformObject->GetWriteDescriptor(0, descriptorSet) };
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[1] = { m_pipeline->GetDescriptorSet() };
+		VkDescriptorSet descriptors[1] = { descriptorSet };
 		vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		object->CmdRender(*commandBuffer);
