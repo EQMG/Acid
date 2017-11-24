@@ -31,6 +31,7 @@ namespace Flounder
 	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const DescriptorType RendererDeferred::typeSamplerExtras = Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const DescriptorType RendererDeferred::typeSamplerShadows = Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType RendererDeferred::typeSamplerDepth = DepthStencil::CreateDescriptor(6, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererDeferred::pipelineCreateInfo =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
@@ -40,7 +41,7 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboScene, typeUboLights, typeSamplerColour, typeSamplerNormal, typeSamplerExtras, typeSamplerShadows }, // descriptors
+		{ typeUboScene, typeUboLights, typeSamplerColour, typeSamplerNormal, typeSamplerExtras, typeSamplerShadows, typeSamplerDepth }, // descriptors
 
 		{ "res/shaders/deferred/deferred.vert.spv", "res/shaders/deferred/deferred.frag.spv" } // shaderStages
 	};
@@ -120,7 +121,8 @@ namespace Flounder
 			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(2, descriptorSet),
 			Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(3, descriptorSet),
 			Renderer::Get()->GetSwapchain()->GetExtrasImage()->GetWriteDescriptor(4, descriptorSet),
-			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(5, descriptorSet) 
+			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(5, descriptorSet),
+			Renderer::Get()->GetDepthStencil()->GetWriteDescriptor(6, descriptorSet)
 		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		
