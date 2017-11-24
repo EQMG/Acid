@@ -2,7 +2,6 @@
 
 #include "../devices/Display.hpp"
 #include "../camera/Camera.hpp"
-#include "../maths/Maths.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../terrains/Terrains.hpp"
 #include "UbosEntities.hpp"

@@ -16,26 +16,26 @@ Flounder is open to contributions, use the 'Developer Setup' section in the READ
  * Cross platform
  * Vulkan rendering
  * Easy to read documented code
- * PBR deferred rendering (WIP)
  * Event and tasks systems
- * Component entity system (WIP)
  * GUI / Text rendering
  * 3D audio and music
  * 3D skybox
  * 3D terrain and water
- * 3D shadow mapping (WIP)
- * 3D particle effects (WIP)
+ * Deferred rendering
+ * 3D shadow mapping
  * Model file loading (OBJ)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
  * Visual drivers and maths classes
  * Flexable input classes
- * Networking (WIP)
+ * Component entity system (WIP)
+ * Particle effects (WIP)
+ * P2P networking (WIP)
  * Animations (WIP)
 
 ## Plans
  * Finish the core engine by the end of 2017
  * A physics engine, ragdoll animations
- * Switch, PlayStation, XBox
+ * Switch?, PlayStation?, XBox?
 
 ## Developer Setup
 For Windows you need Visual Studios 2015 or newer, use the VS installer and ensure you have "Desktop development with C++" installed. You should also probably update the Windows SDK, the project is setup for "Windows 10 SDK (10.0.15063.0) for UWP: C++" currently. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and now Flounder should compile properly.

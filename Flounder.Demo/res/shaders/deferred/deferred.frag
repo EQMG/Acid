@@ -102,7 +102,7 @@ void main(void)
 	vec4 textureColour = texture(samplerColour, fragmentTextures);
 	vec4 textureNormal = texture(samplerNormal, fragmentTextures);
 	vec4 textureExtras = texture(samplerExtras, fragmentTextures);
-	
+
 	vec3 colour = decodeColour(textureColour);
 	vec3 normal = decodeNormal(textureNormal);
 	float depth = decodeDepth(textureNormal);
@@ -138,7 +138,7 @@ void main(void)
 				vec3 unitLightVector = normalize(toLightVector);
 				float lightDistance = length(toLightVector);
 			
-				float attinuationFactor = 1.0f; // lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
+				float attinuationFactor = lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
 			
 				float lightBrightness = max(dot(normal, unitLightVector), 0.0f);
 				totalDiffuse += (lightBrightness * lights.lightColours[i].rgb) / attinuationFactor;

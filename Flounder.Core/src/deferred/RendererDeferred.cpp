@@ -1,13 +1,13 @@
 #include "RendererDeferred.hpp"
 
 #include "../devices/Display.hpp"
-#include "../lights/Attenuation.hpp"
-#include "../entities/Entities.hpp"
 #include "../entities/components/ComponentLight.hpp"
+#include "../entities/Entities.hpp"
+#include "../lights/Attenuation.hpp"
 #include "../models/Vertex.hpp"
 #include "../renderer/Renderer.hpp"
-#include "../textures/Texture.hpp"
 #include "../shadows/Shadows.hpp"
+#include "../textures/Texture.hpp"
 #include "../worlds/Worlds.hpp"
 #include "UbosDeferred.hpp"
 
@@ -124,7 +124,7 @@ namespace Flounder
 		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 		
-		VkDescriptorSet descriptors[1] = { m_pipeline->GetDescriptorSet() };
+		VkDescriptorSet descriptors[1] = { descriptorSet };
 		vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_model->CmdRender(*commandBuffer);
