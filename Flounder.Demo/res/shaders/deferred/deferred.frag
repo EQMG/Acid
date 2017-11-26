@@ -39,15 +39,6 @@ layout(location = 0) in vec2 fragmentTextures;
 
 layout(location = 0) out vec4 outColour;
 
-vec3 decodeColour(vec4 colour)
-{
-	vec3 result = vec3(0.0f);
-	result.r = colour.r; // rg.x;
-	result.g = colour.g; // rg.y;
-	result.b = colour.b; // bd.x;
-    return result;
-}
-
 vec3 decodeNormal(vec4 normal)
 {
 	vec2 spherical = normal.xy * 2.0f - 1.0f;
@@ -56,15 +47,7 @@ vec3 decodeNormal(vec4 normal)
 	return vec3(sinCosTheta.y * sinCosPhi.x, sinCosTheta.x * sinCosPhi.x, sinCosPhi.y);
 }
 
-float decodeDepth(float depth)
-{
-	float near = 0.1f; // nearFarPlanes.x;
-	float far = 2048.0f; // nearFarPlanes.y;
-	return 2.0 * near * far / (far + near - depth * (far - near));
-	// return normal.z;
-}
-
-vec3 decodePosition(float depth) 
+vec3 decodeWorldPosition(float depth) 
 {
 	vec4 p = inverse(scene.projection) * vec4(fragmentTextures, depth, 1.0f);
 	return vec3(inverse(scene.view) * vec4(p.xyz / p.w, 1.0f));
@@ -108,22 +91,21 @@ void main(void)
 	vec4 textureExtras = texture(samplerExtras, fragmentTextures);
 	vec4 textureDepth = texture(samplerDepth, fragmentTextures);
 
-	vec3 colour = decodeColour(textureColour);
+	vec3 colour = textureColour.rgb;
 	vec3 normal = decodeNormal(textureNormal);
-	float depth = decodeDepth(textureDepth.r);
-	vec3 position = decodePosition(colour.r);
-	vec3 toCameraVector = (inverse(scene.view) * vec4(0.0, 0.0, 0.0, 1.0)).xyz - position;
-	vec4 positionRelativeToCam = scene.view * vec4(position, 1.0f);
+	float depth = textureDepth.r;
+	vec3 worldPosition = decodeWorldPosition(depth);
 
-	//outColour = vec4(normal, 1.0f);
-//	return;
+	outColour = vec4(worldPosition, 1.0f); // Should generate a image like this: http://prntscr.com/hfa65q
 	
-	outColour = vec4(colour, 1.0f);
+	// Disabled while testing depth sampling.
+	/*outColour = vec4(colour, 1.0f);
 	
 	// Shadowing.
 	if (textureNormal.rgb != vec3(0.0f))
 	{
-		// vec4 shadowCoords = scene.shadowSpace * vec4(position, 1.0f);
+		// vec4 positionRelativeToCam = scene.view * vec4(worldPosition, 1.0f);
+		// vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
 		// float distanceAway = length(positionRelativeToCam.xyz);
 		// distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
 		// distanceAway = distanceAway / scene.shadowTransition;
@@ -134,6 +116,7 @@ void main(void)
 	// Lighting.
 	if (textureNormal.rgb != vec3(0.0f))
 	{
+		vec3 toCameraVector = (inverse(scene.view) * vec4(0.0, 0.0, 0.0, 1.0)).xyz - worldPosition;
 		vec3 totalDiffuse = vec3(0.0);
 		vec3 totalSpecular = vec3(0.0);
 		float shineDamper = 0.1f;
@@ -142,7 +125,7 @@ void main(void)
 		{
 			if (lights.lightColours[i].a != 0.0f) 
 			{
-				vec3 toLightVector = lights.lightPositions[i] - position.xyz;
+				vec3 toLightVector = lights.lightPositions[i] - worldPosition.xyz;
 				vec3 unitLightVector = normalize(toLightVector);
 				float lightDistance = length(toLightVector);
 			
@@ -165,8 +148,9 @@ void main(void)
 	// Fog.
 	if (textureNormal.rgb != vec3(0.0f))
 	{
+		// vec4 positionRelativeToCam = scene.view * vec4(worldPosition, 1.0f);
 		// float fogFactor = exp(-pow(length(positionRelativeToCam.xyz) * scene.fogDensity, scene.fogGradient));
 		// fogFactor = clamp(fogFactor, 0.0, 1.0);
 		// outColour = mix(scene.fogColour, outColour, fogFactor);
-	}
+	}*/
 }
