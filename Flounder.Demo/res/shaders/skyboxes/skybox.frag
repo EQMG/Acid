@@ -11,7 +11,7 @@ layout(binding = 1) uniform UboObject
 
 layout(binding = 2) uniform samplerCube samplerCubemap;
 
-layout(location = 0) in vec3 fragmentTextures;
+layout(location = 0) in vec3 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
@@ -39,7 +39,7 @@ void main(void)
 	
 	if (object.blendFactor >= 0.03f)
 	{
-		vec3 cubemapNight = texture(samplerCubemap, fragmentTextures).rgb;
+		vec3 cubemapNight = texture(samplerCubemap, fragmentUv).rgb;
 		cubemapColour = mix(vec3(0.0f), cubemapNight, object.blendFactor);
 	}
 

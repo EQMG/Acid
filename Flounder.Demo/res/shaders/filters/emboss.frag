@@ -5,9 +5,9 @@
 const vec4 LUMCOEFF = vec4(0.299, 0.587, 0.114, 0);
 const float V = 0.001;
 
-layout(binding = 0) uniform sampler2D samplerTexture;
+layout(binding = 0) uniform sampler2D samplerColour;
 
-layout(location = 0) in vec2 textureCoords;
+layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 
@@ -25,7 +25,7 @@ void main(void)
 
 	for(int i = 0; i < 6; i++) 
 	{
-		tc_sampler[i] = texture(samplerTexture, textureCoords + tc_offset[i]);
+		tc_sampler[i] = texture(samplerColour, fragmentUv + tc_offset[i]);
 	}
 
 	vec4 sum = vec4(0.5) + (tc_sampler[0] + tc_sampler[1] + tc_sampler[2]) - (tc_sampler[3] + tc_sampler[4] + tc_sampler[5]);

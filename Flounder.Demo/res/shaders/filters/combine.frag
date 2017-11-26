@@ -10,17 +10,17 @@ layout(binding = 2) uniform UBO
 	vec4 slideSpace;
 } ubo;
 
-layout(location = 0) in vec2 textureCoords;
+layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 
 void main(void)
 {
-   if (ubo.slideSpace.x <= textureCoords.x && ubo.slideSpace.y >= textureCoords.x && 
-		ubo.slideSpace.z <= textureCoords.y && ubo.slideSpace.w >= textureCoords.y) 
+   if (ubo.slideSpace.x <= fragmentUv.x && ubo.slideSpace.y >= fragmentUv.x && 
+		ubo.slideSpace.z <= fragmentUv.y && ubo.slideSpace.w >= fragmentUv.y) 
    {
-	   outColour = texture(samplerOriginal, textureCoords);
+	   outColour = texture(samplerOriginal, fragmentUv);
    } else {
-	   outColour = texture(samplerOther, textureCoords);
+	   outColour = texture(samplerOther, fragmentUv);
    }
 }

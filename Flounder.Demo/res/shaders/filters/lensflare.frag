@@ -12,7 +12,7 @@ layout (binding = 3) uniform UBO
 	vec2 displaySize;
 } ubo;
 
-layout(location = 0) in vec2 textureCoords;
+layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 
@@ -25,10 +25,10 @@ void main(void)
 {
 	vec2 sunCoord = (ubo.sunPosition.xy + 1.0) / 2.0;
 
-	vec4 albedo = texture(samplerAlbedo, textureCoords);
+	vec4 albedo = texture(samplerAlbedo, fragmentUv);
 	float glow = texture(samplerExtras, sunCoord).g;
 	bool process = ubo.sunPosition.z >= 0.0 && (glow > 0.4 || !insideScreen(sunCoord));
-	vec2 uv = (textureCoords - 0.5) * (ubo.displaySize.x / ubo.displaySize.y);
+	vec2 uv = (fragmentUv - 0.5) * (ubo.displaySize.x / ubo.displaySize.y);
 
 	vec2 uvd = uv * length(uv);
 	vec3 colour = vec3(0.0);

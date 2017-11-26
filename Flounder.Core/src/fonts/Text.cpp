@@ -333,7 +333,7 @@ namespace Flounder
 
 	std::vector<Vertex> Text::NormalizeQuad(Text *object, Vector2 *bounding, const std::vector<Vertex> &vertices)
 	{
-		std::vector<Vertex> vertices2 = std::vector<Vertex>();
+		std::vector<Vertex> newVertices = std::vector<Vertex>();
 		float minX = +INFINITY;
 		float minY = +INFINITY;
 		float maxX = -INFINITY;
@@ -368,13 +368,13 @@ namespace Flounder
 		maxX -= minX;
 		maxY -= minY;
 
-		for (auto vertex : vertices)
+		for (const auto vertex : vertices)
 		{
-			Vector3 position = Vector3((vertex.m_position.m_x - minX) / maxX, (vertex.m_position.m_y - minY) / maxY, 0.0f);
-			Vertex vertex2 = Vertex(position, Vector2(vertex.m_textures), Vector3(vertex.m_normal), Vector3(vertex.m_tangent));
-			vertices2.push_back(vertex2);
+			const Vector3 position = Vector3((vertex.m_position.m_x - minX) / maxX, (vertex.m_position.m_y - minY) / maxY, 0.0f);
+			const Vertex newVertex = Vertex(position, Vector2(vertex.m_uv), Vector3(vertex.m_normal), Vector3(vertex.m_tangent));
+			newVertices.push_back(newVertex);
 		}
 
-		return vertices2;
+		return newVertices;
 	}
 }

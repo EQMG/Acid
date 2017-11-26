@@ -2,9 +2,9 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 2) uniform sampler2D samplerTexture;
+layout(binding = 2) uniform sampler2D samplerColour;
 
-layout(location = 0) in vec2 fragmentTextures;
+layout(location = 0) in vec2 fragmentUv;
 layout(location = 1) in vec3 fragmentNormal;
 
 layout(location = 0) out vec4 outColour;
@@ -29,7 +29,7 @@ vec2 encodeNormal(vec3 normal)
 
 void main() 
 {
-	vec3 textureColour = texture(samplerTexture, fragmentTextures).rgb;
+	vec3 textureColour = texture(samplerColour, fragmentUv).rgb;
 	vec3 unitNormal = normalize(fragmentNormal);
 
 	outColour = encodeColour(textureColour);

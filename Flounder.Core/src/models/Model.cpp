@@ -81,7 +81,7 @@ namespace Flounder
 
 		std::vector<uint32_t> indicesList = std::vector<uint32_t>();
 		std::vector<VertexData*> verticesList = std::vector<VertexData*>();
-		std::vector<Vector2> texturesList = std::vector<Vector2>();
+		std::vector<Vector2> uvsList = std::vector<Vector2>();
 		std::vector<Vector3> normalsList = std::vector<Vector3>();
 
 		std::vector<std::string> splitFile = HelperString::Split(std::string(m_filename), "/");
@@ -110,7 +110,7 @@ namespace Flounder
 				else if (prefix == "vt")
 				{
 					const Vector2 texture = Vector2(stof(split.at(1)), 1.0f - stof(split.at(2)));
-					texturesList.push_back(texture);
+					uvsList.push_back(texture);
 				}
 				else if (prefix == "vn")
 				{
@@ -133,7 +133,7 @@ namespace Flounder
 					VertexData *v0 = ProcessDataVertex(Vector3(stof(vertex1.at(0)), stof(vertex1.at(1)), stof(vertex1.at(2))), &verticesList, &indicesList);
 					VertexData *v1 = ProcessDataVertex(Vector3(stof(vertex2.at(0)), stof(vertex2.at(1)), stof(vertex2.at(2))), &verticesList, &indicesList);
 					VertexData *v2 = ProcessDataVertex(Vector3(stof(vertex3.at(0)), stof(vertex3.at(1)), stof(vertex3.at(2))), &verticesList, &indicesList);
-					CalculateTangents(v0, v1, v2, &texturesList);
+					CalculateTangents(v0, v1, v2, &uvsList);
 				}
 				else if (prefix == "o")
 				{
@@ -168,7 +168,7 @@ namespace Flounder
 		for (auto current : verticesList)
 		{
 			const Vector3 position = current->GetPosition();
-			const Vector2 textures = texturesList.at(current->GetTextureIndex());
+			const Vector2 textures = uvsList.at(current->GetTextureIndex());
 			const Vector3 normal = normalsList.at(current->GetNormalIndex());
 			const Vector3 tangent = current->GetAverageTangent();
 
@@ -222,11 +222,11 @@ namespace Flounder
 		return duplicateVertex;
 	}
 
-	void Model::CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *textures)
+	void Model::CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *uvs)
 	{
-		const Vector2 uv0 = textures->at(v0->GetTextureIndex());
-		const Vector2 uv1 = textures->at(v1->GetTextureIndex());
-		const Vector2 uv2 = textures->at(v2->GetTextureIndex());
+		const Vector2 uv0 = uvs->at(v0->GetTextureIndex());
+		const Vector2 uv1 = uvs->at(v1->GetTextureIndex());
+		const Vector2 uv2 = uvs->at(v2->GetTextureIndex());
 
 		Vector2 *deltaUv1 = Vector2::Subtract(uv1, uv0, nullptr);
 		Vector2 *deltaUv2 = Vector2::Subtract(uv2, uv0, nullptr);
