@@ -6,6 +6,10 @@
 
 layout(binding = 0) uniform UboScene 
 {
+	vec4 lightColours[NUMBER_LIGHTS];
+	vec3 lightPositions[NUMBER_LIGHTS];
+	vec3 lightAttenuations[NUMBER_LIGHTS];
+
 	mat4 projection;
 	mat4 view;
 	mat4 shadowSpace;
@@ -22,18 +26,11 @@ layout(binding = 0) uniform UboScene
 	int shadowPCF;
 } scene;
 
-layout(binding = 1) uniform Ubolights 
-{
-	vec4 lightColours[NUMBER_LIGHTS];
-	vec3 lightPositions[NUMBER_LIGHTS];
-	vec3 lightAttenuations[NUMBER_LIGHTS];
-} lights;
-
-layout(binding = 2) uniform sampler2D samplerDepth;
-layout(binding = 3) uniform sampler2D samplerColour;
-layout(binding = 4) uniform sampler2D samplerNormal;
-layout(binding = 5) uniform sampler2D samplerExtras;
-layout(binding = 6) uniform sampler2D samplerShadows;
+layout(binding = 1) uniform sampler2D samplerDepth;
+layout(binding = 2) uniform sampler2D samplerColour;
+layout(binding = 3) uniform sampler2D samplerNormal;
+layout(binding = 4) uniform sampler2D samplerMaterial;
+layout(binding = 5) uniform sampler2D samplerShadows;
 
 layout(location = 0) in vec2 fragmentUv;
 
@@ -49,9 +46,12 @@ vec3 decodeNormal(vec4 normal)
 
 vec3 decodeWorldPosition(vec2 uv, float depth) 
 {
-	vec3 ndc = vec3(uv * 2.0 - vec2(1.0), depth);
-	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0);
-	return p.xyz / p.w;
+//	vec3 ndc = vec3(uv * 2.0 - vec2(1.0), depth);
+//	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0);
+//	return p.xyz / p.w;
+
+	vec4 p = inverse(scene.projection) * vec4(uv, depth, 1.0f);
+	return vec3(inverse(scene.view) * vec4(p.xyz / p.w, 1.0f));
 }
 
 float shadow(sampler2D shadowMap, vec4 shadowCoords, float shadowMapSize) 
@@ -87,21 +87,20 @@ float shadow(sampler2D shadowMap, vec4 shadowCoords, float shadowMapSize)
 
 void main(void) 
 {
+	vec4 textureDepth = texture(samplerDepth, fragmentUv);
 	vec4 textureColour = texture(samplerColour, fragmentUv);
 	vec4 textureNormal = texture(samplerNormal, fragmentUv);
-	vec4 textureExtras = texture(samplerExtras, fragmentUv);
-	vec4 textureDepth = texture(samplerDepth, fragmentUv);
+	vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
 
 	vec3 colour = textureColour.rgb;
 	vec3 normal = decodeNormal(textureNormal);
 	float depth = textureDepth.r;
+	float metallic = textureMaterial.x;
+	float roughness = textureMaterial.y;
 	vec3 worldPosition = decodeWorldPosition(fragmentUv, depth);
+	vec3 cameraPosition = (inverse(scene.view) * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 
-	outColour = vec4(vec3(depth != 0.0f), 1.0f); // Should be white, but is black :(
-	// outColour = vec4(worldPosition, 1.0f); // Should generate a image like this: http://prntscr.com/hfa65q
-	
-	// Disabled while testing depth sampling.
-	/*outColour = vec4(colour, 1.0f);
+	outColour = vec4(colour, 1.0f);
 	
 	// Shadowing.
 	if (textureNormal.rgb != vec3(0.0f))
@@ -118,35 +117,9 @@ void main(void)
 	// Lighting.
 	if (textureNormal.rgb != vec3(0.0f))
 	{
-		vec3 toCameraVector = (inverse(scene.view) * vec4(0.0, 0.0, 0.0, 1.0)).xyz - worldPosition;
-		vec3 totalDiffuse = vec3(0.0);
-		vec3 totalSpecular = vec3(0.0);
-		float shineDamper = 0.1f;
-
-		for (int i = 0; i < NUMBER_LIGHTS; i++) 
-		{
-			if (lights.lightColours[i].a != 0.0f) 
-			{
-				vec3 toLightVector = lights.lightPositions[i] - worldPosition.xyz;
-				vec3 unitLightVector = normalize(toLightVector);
-				float lightDistance = length(toLightVector);
-			
-				float attinuationFactor = lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
-			
-				float lightBrightness = max(dot(normal, unitLightVector), 0.0f);
-				totalDiffuse += (lightBrightness * lights.lightColours[i].rgb) / attinuationFactor;
-
-			//  vec3 reflectedLightDirection = reflect(-unitLightVector, normal);
-			//  float specularFactor = max(dot(reflectedLightDirection, normalize(toCameraVector)), 0.0f);
-			//  float dampedFactor = pow(specularFactor, shineDamper);
-			//  totalSpecular += (dampedFactor * lights.lightColours[i].rgb) / attinuationFactor;
-			}
-		}
-
-		totalDiffuse = max(totalDiffuse, vec3(0.3f));
-		outColour = vec4((totalDiffuse * outColour.rgb) + totalSpecular, 1.0f);
+		outColour = vec4(depth, depth, depth, 1.0f);
 	}
-	
+
 	// Fog.
 	if (textureNormal.rgb != vec3(0.0f))
 	{
@@ -154,5 +127,5 @@ void main(void)
 		// float fogFactor = exp(-pow(length(positionRelativeToCam.xyz) * scene.fogDensity, scene.fogGradient));
 		// fogFactor = clamp(fogFactor, 0.0, 1.0);
 		// outColour = mix(scene.fogColour, outColour, fogFactor);
-	}*/
+	}
 }

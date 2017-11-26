@@ -12,16 +12,14 @@ namespace Flounder
 	{
 	private:
 		static const DescriptorType typeUboScene;
-		static const DescriptorType typeUboLights;
 		static const DescriptorType typeSamplerDepth;
 		static const DescriptorType typeSamplerColour;
 		static const DescriptorType typeSamplerNormal;
-		static const DescriptorType typeSamplerExtras;
+		static const DescriptorType typeSamplerMaterial;
 		static const DescriptorType typeSamplerShadows;
 		static const PipelineCreateInfo pipelineCreateInfo;
 
 		UniformBuffer *m_uniformScene;
-		UniformBuffer *m_uniformLights;
 		Pipeline *m_pipeline;
 		Model *m_model;
 	public:

@@ -31,7 +31,7 @@ namespace Flounder
 		attachments[1].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 		attachments[2].format = VK_FORMAT_R8G8B8A8_UNORM; // Colour.
 		attachments[3].format = VK_FORMAT_R16G16_SFLOAT; // Normal.
-		attachments[4].format = VK_FORMAT_R8G8B8A8_UNORM; // Extras.
+		attachments[4].format = VK_FORMAT_R8G8B8A8_UNORM; // Material.
 		attachments[5].format = VK_FORMAT_R16_SFLOAT; // Shadow.
 
 
@@ -53,7 +53,7 @@ namespace Flounder
 		subpass1ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 		subpass1ColourAttachments[1].attachment = 3; // Normal.
 		subpass1ColourAttachments[1].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-		subpass1ColourAttachments[2].attachment = 4; // Extras.
+		subpass1ColourAttachments[2].attachment = 4; // Material.
 		subpass1ColourAttachments[2].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 		std::array<VkAttachmentReference, 1> subpass2ColourAttachments = {};
