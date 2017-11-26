@@ -13,7 +13,7 @@ namespace Flounder
 		m_swapchinImageViews(std::vector<VkImageView>()),
 		m_colourImage(nullptr),
 		m_normalImage(nullptr),
-		m_extrasImage(nullptr),
+		m_materialImage(nullptr),
 		m_shadowImage(nullptr),
 		m_extent({})
 	{
@@ -102,7 +102,7 @@ namespace Flounder
 
 		m_colourImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
 		m_normalImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
-		m_extrasImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
+		m_materialImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
 		m_shadowImage = new Texture(8192, 8192, VK_FORMAT_R16_SFLOAT, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT); // TODO: Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize() // 8192, 8192
 	}
 
@@ -112,7 +112,7 @@ namespace Flounder
 
 		delete m_shadowImage;
 		delete m_normalImage;
-		delete m_extrasImage;
+		delete m_materialImage;
 		delete m_colourImage;
 
 		for (auto imageView : m_swapchinImageViews)

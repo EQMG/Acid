@@ -16,7 +16,7 @@ layout(location = 2) in vec4 fragmentClipSpace;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
-layout(location = 2) out vec3 outExtras;
+layout(location = 2) out vec3 outMaterial;
 
 vec4 encodeColour(vec3 colour)
 {
@@ -52,5 +52,5 @@ void main(void)
 	
 	outColour = encodeColour(waterColour);
 	outNormal = encodeNormal(unitNormal);
-	outExtras = vec3(0.0f);
+	outMaterial = vec3(0.0f);
 }

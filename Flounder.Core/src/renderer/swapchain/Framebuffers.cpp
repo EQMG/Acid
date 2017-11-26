@@ -19,7 +19,7 @@ namespace Flounder
 			attachments[1] = swapchain.GetImageViews()[i]; // Swapchain.
 			attachments[2] = swapchain.GetColourImage()->GetImageView(); // Colours.
 			attachments[3] = swapchain.GetNormalImage()->GetImageView(); // Normals.
-			attachments[4] = swapchain.GetExtrasImage()->GetImageView(); // Extras.
+			attachments[4] = swapchain.GetMaterialImage()->GetImageView(); // Materials.
 			attachments[5] = swapchain.GetShadowImage()->GetImageView(); // Shadows.
 
 			VkFramebufferCreateInfo framebufferCreateInfo = {};

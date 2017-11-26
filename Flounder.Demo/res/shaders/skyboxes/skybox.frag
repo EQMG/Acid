@@ -15,7 +15,7 @@ layout(location = 0) in vec3 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
-layout(location = 2) out vec3 outExtras;
+layout(location = 2) out vec3 outMaterial;
 
 vec4 encodeColour(vec3 colour)
 {
@@ -47,5 +47,5 @@ void main(void)
 
 	outColour = encodeColour(cubemapColour);
 	outNormal = vec2(0.0f);
-	outExtras = vec3(0.0f);
+	outMaterial = vec3(0.0f);
 }
