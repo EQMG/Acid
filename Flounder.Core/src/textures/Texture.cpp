@@ -173,7 +173,9 @@ namespace Flounder
 		samplerCreateInfo.maxLod = 1.0f;
 		samplerCreateInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
 		samplerCreateInfo.compareOp = VK_COMPARE_OP_NEVER;
+		samplerCreateInfo.compareEnable = VK_FALSE;
 		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+
 		Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &m_sampler));
 
 		Buffer::CopyBuffer(bufferStaging->GetBuffer(), GetBuffer(), m_size);

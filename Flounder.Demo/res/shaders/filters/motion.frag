@@ -15,14 +15,14 @@ layout(binding = 2) uniform UBO
 	float delta;
 } ubo;
 
-layout(location = 0) in vec2 textureCoords;
+layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 
 vec3 decodeLocation() 
 {
-	float depth = texture(samplerDepth, textureCoords).r;
-	vec4 p = inverse(ubo.projectionMatrix) * (vec4(textureCoords, depth, 1.0) * 2.0 - 1.0);
+	float depth = texture(samplerDepth, fragmentUv).r;
+	vec4 p = inverse(ubo.projectionMatrix) * (vec4(fragmentUv, depth, 1.0) * 2.0 - 1.0);
 	return vec3(inverse(ubo.viewMatrix) * vec4(p.xyz / p.w, 1.0));
 }
 
@@ -45,7 +45,7 @@ void main(void)
 
 	for (float i = 1.0; i < SAMPLES; ++i)
 	{
-		sampled_colour += texture(samplerAlbedo, textureCoords + (i * velocity)).rgb;
+		sampled_colour += texture(samplerAlbedo, fragmentUv + (i * velocity)).rgb;
 	}
 
 	outColour = vec4(sampled_colour / SAMPLES, 1.0);

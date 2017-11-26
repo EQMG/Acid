@@ -12,11 +12,11 @@ layout(binding = 0) uniform UboObject
 } object;
 
 layout(location = 0) in vec3 vertexPosition;
-layout(location = 1) in vec2 vertexTextures;
+layout(location = 1) in vec2 vertexUv;
 layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
 
-layout(location = 0) out vec2 fragmentTextures;
+layout(location = 0) out vec2 fragmentUv;
 
 out gl_PerVertex 
 {
@@ -27,5 +27,5 @@ void main(void)
 {
 	gl_Position = vec4((vertexPosition.xy * object.transform.xy) + object.transform.zw, 0.0f, 1.0f);
 
-	fragmentTextures = (vertexTextures.xy / object.atlasRows) + object.atlasOffset;
+	fragmentUv = (vertexUv.xy / object.atlasRows) + object.atlasOffset;
 }

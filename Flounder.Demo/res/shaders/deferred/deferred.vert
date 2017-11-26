@@ -3,11 +3,11 @@
 #extension GL_ARB_separate_shader_objects : enable
 
 layout(location = 0) in vec3 vertexPosition;
-layout(location = 1) in vec2 vertexTextures;
+layout(location = 1) in vec2 vertexUv;
 layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
 
-layout(location = 0) out vec2 fragmentTextures;
+layout(location = 0) out vec2 fragmentUv;
 
 out gl_PerVertex 
 {
@@ -18,5 +18,5 @@ void main(void)
 {
 	gl_Position = vec4(vertexPosition, 1.0f);
 
-	fragmentTextures = vertexTextures;
+	fragmentUv = vertexUv;
 }

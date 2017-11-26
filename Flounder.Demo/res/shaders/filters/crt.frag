@@ -2,7 +2,7 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 0) uniform sampler2D samplerTexture;
+layout(binding = 0) uniform sampler2D samplerColour;
 
 layout(binding = 1) uniform UBO 
 {
@@ -14,13 +14,13 @@ layout(binding = 1) uniform UBO
 	float moveTime;
 } ubo;
 
-layout(location = 0) in vec2 textureCoords;
+layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
-	vec2 tc = vec2(textureCoords.x, textureCoords.y);
+	vec2 tc = vec2(fragmentUv.x, fragmentUv.y);
 
 	// Distance from the center
 	float dx = abs(0.5 - tc.x);
@@ -39,7 +39,7 @@ void main(void)
 	tc.y += 0.5;
 
 	// Get texel, and add in scanline if need be
-	vec4 colour = texture(samplerTexture, tc);
+	vec4 colour = texture(samplerColour, tc);
 	colour.rgb += sin((tc.y + ubo.moveTime) * ubo.scanLineSize) * ubo.scanIntensity;
 
 	// Cutoff

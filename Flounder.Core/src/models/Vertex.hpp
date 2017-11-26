@@ -11,11 +11,11 @@ namespace Flounder
 	{
 	public:
 		Vector3 m_position;
-		Vector2 m_textures;
+		Vector2 m_uv;
 		Vector3 m_normal;
 		Vector3 m_tangent;
 
-		Vertex(const Vector3 &position = Vector3(), const Vector2 &textures = Vector2(), const Vector3 &normal = Vector3(), const Vector3 &tangent = Vector3());
+		Vertex(const Vector3 &position = Vector3(), const Vector2 &uv = Vector2(), const Vector3 &normal = Vector3(), const Vector3 &tangent = Vector3());
 
 		~Vertex();
 

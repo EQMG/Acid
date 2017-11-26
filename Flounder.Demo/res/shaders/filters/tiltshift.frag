@@ -2,7 +2,7 @@
 
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 0) uniform sampler2D samplerTexture;
+layout(binding = 0) uniform sampler2D samplerColour;
 
 layout(binding = 1) uniform UBO 
 {
@@ -12,14 +12,14 @@ layout(binding = 1) uniform UBO
 	float steps;
 } ubo;
 
-layout(location = 0) in vec2 textureCoords;
+layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
 	// Work out how much to blur based on the mid point.
-	float amount = pow((textureCoords.y * ubo.centre) * 2.0 - 1.0, 2.0) * ubo.blurAmount;
+	float amount = pow((fragmentUv.y * ubo.centre) * 2.0 - 1.0, 2.0) * ubo.blurAmount;
 	float offsetMin = (float(ubo.steps - 1.0)) / -2.0;
 	float offsetMax = (float(ubo.steps - 1.0)) / +2.0;
 		
@@ -32,14 +32,14 @@ void main(void)
 		for (float offsetY = offsetMin; offsetY <= offsetMax; ++offsetY) 
 		{
 			// Copy the coord so we can mess with it.
-			vec2 tempTextureCoords = textureCoords.xy;
+			vec2 tempfragmentUv = fragmentUv.xy;
 
 			// Work out which uv we want to sample now.
-			tempTextureCoords.x += offsetX * amount * ubo.stepSize;
-			tempTextureCoords.y += offsetY * amount * ubo.stepSize;
+			tempfragmentUv.x += offsetX * amount * ubo.stepSize;
+			tempfragmentUv.y += offsetY * amount * ubo.stepSize;
 
 			// Accumulate the sample
-			outColour += texture(samplerTexture, tempTextureCoords);
+			outColour += texture(samplerColour, tempfragmentUv);
 		}
 	}
 		

@@ -19,11 +19,11 @@ layout(binding = 1) uniform UboObject
 layout(binding = 3) uniform sampler2D samplerSway;
 
 layout(location = 0) in vec3 vertexPosition;
-layout(location = 1) in vec2 vertexTextures;
+layout(location = 1) in vec2 vertexUv;
 layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
 
-layout(location = 0) out vec2 fragmentTextures;
+layout(location = 0) out vec2 fragmentUv;
 layout(location = 1) out vec3 fragmentNormal;
 
 out gl_PerVertex 
@@ -39,7 +39,7 @@ void main()
 
 	if (object.swaying == 1.0f)
 	{
-		vec4 swayColour = texture(samplerSway, vertexTextures);
+		vec4 swayColour = texture(samplerSway, vertexUv);
 		float swayPower = 0.5f * exp(log(length(swayColour.rgb)) / 3.0f) * length(localPosition.xyz);
 		localPosition.x += swayPower * object.swayOffset.x;
 		localPosition.z += swayPower * object.swayOffset.y;
@@ -50,6 +50,6 @@ void main()
     gl_Position = scene.projection * scene.view * worldPosition;
 	gl_ClipDistance[0] = dot(worldPosition, scene.clip);
 
-    fragmentTextures = vertexTextures;
+    fragmentUv = vertexUv;
 	fragmentNormal = normalize((object.transform * localNormal).xyz);
 }
