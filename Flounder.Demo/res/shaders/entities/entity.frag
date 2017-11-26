@@ -4,6 +4,18 @@
 
 layout(binding = 2) uniform sampler2D samplerColour;
 
+layout(binding = 1) uniform UboObject
+{
+	mat4 transform;
+
+	float swaying;
+
+	float metallic;
+	float roughness;
+
+	vec2 swayOffset;
+} object;
+
 layout(location = 0) in vec2 fragmentUv;
 layout(location = 1) in vec3 fragmentNormal;
 
@@ -34,5 +46,5 @@ void main()
 
 	outColour = encodeColour(textureColour);
 	outNormal = encodeNormal(unitNormal);
-	outMaterial = vec3(0.5f, 0.5f, 0.0f);
+	outMaterial = vec3(object.metallic, object.roughness, 0.0f);
 }

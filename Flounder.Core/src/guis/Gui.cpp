@@ -12,7 +12,7 @@ namespace Flounder
 		Vertex(Vector3(0.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
 	};
 	const std::vector<uint32_t> INDICES = {
-		0, 1, 2, 2, 3, 0
+		0, 3, 2, 2, 1, 0
 	};
 
 	Gui::Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow) :

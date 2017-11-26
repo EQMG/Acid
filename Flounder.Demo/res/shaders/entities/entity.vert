@@ -12,7 +12,12 @@ layout(binding = 0) uniform UboScene
 layout(binding = 1) uniform UboObject
 {
 	mat4 transform;
+
 	float swaying;
+
+	float metallic;
+	float roughness;
+
 	vec2 swayOffset;
 } object;
 

@@ -19,8 +19,15 @@ namespace Flounder
 		struct UboObject
 		{
 			Matrix4 transform;
+
 			float swaying;
+
+			float metallic;
+			float roughness;
+
 			Vector2 swayOffset;
 		};
+
+	//	static_assert(sizeof(UboObject) % 16 == 0);
 	};
 }

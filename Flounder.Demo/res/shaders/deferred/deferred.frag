@@ -1,20 +1,25 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
-#define NUMBER_LIGHTS 32
+#define MAX_LIGHTS 63
+#define PI 3.141592653589793f
+#define EPSILON 0.001f
 
-layout(binding = 0) uniform UboScene 
+struct Light 
 {
-	vec4 lightColours[NUMBER_LIGHTS];
-	vec3 lightPositions[NUMBER_LIGHTS];
-	vec3 lightAttenuations[NUMBER_LIGHTS];
+	vec4 colour;
+	vec3 position;
+	float radius;
+};
 
+layout(set = 0, binding = 0) uniform UboScene 
+{
 	mat4 projection;
 	mat4 view;
 	mat4 shadowSpace;
 
 	vec4 fogColour;
+	vec3 cameraPosition;
 	float fogDensity;
 	float fogGradient;
 
@@ -24,17 +29,29 @@ layout(binding = 0) uniform UboScene
 	float shadowDarkness;
 	int shadowMapSize;
 	int shadowPCF;
+
+	int lightsCount;
 } scene;
 
-layout(binding = 1) uniform sampler2D samplerDepth;
-layout(binding = 2) uniform sampler2D samplerColour;
-layout(binding = 3) uniform sampler2D samplerNormal;
-layout(binding = 4) uniform sampler2D samplerMaterial;
-layout(binding = 5) uniform sampler2D samplerShadows;
+layout(set = 0, binding = 1) uniform UboLights 
+{
+	Light lights[MAX_LIGHTS];
+} lights;
+
+layout(set = 0, binding = 2) uniform sampler2D samplerDepth;
+layout(set = 0, binding = 3) uniform sampler2D samplerColour;
+layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
+layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
+layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
 
 layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
+
+float sqr(float x) 
+{
+	return x * x;
+}
 
 vec3 decodeNormal(vec4 normal)
 {
@@ -46,43 +63,23 @@ vec3 decodeNormal(vec4 normal)
 
 vec3 decodeWorldPosition(vec2 uv, float depth) 
 {
-//	vec3 ndc = vec3(uv * 2.0 - vec2(1.0), depth);
-//	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0);
-//	return p.xyz / p.w;
+	vec3 ndc = vec3(uv * 2.0 - vec2(1.0), depth);
+	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0);
+	return p.xyz / p.w;
 
-	vec4 p = inverse(scene.projection) * vec4(uv, depth, 1.0f);
-	return vec3(inverse(scene.view) * vec4(p.xyz / p.w, 1.0f));
+//	vec4 p = inverse(scene.projection) * vec4(uv, depth, 1.0f);
+//	return vec3(inverse(scene.view) * vec4(p.xyz / p.w, 1.0f));
 }
 
-float shadow(sampler2D shadowMap, vec4 shadowCoords, float shadowMapSize) 
+float attenuation(float radius, float distance)
 {
-    float totalTextels = (scene.shadowPCF * 2.0f + 1.0f) * (scene.shadowPCF * 2.0f + 1.0f);
-    float texelSize = 1.0f / scene.shadowMapSize;
-    float total = 0.0f;
-
-    if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f) 
+	if (radius != -1.0f)
 	{
-        for (int x = -scene.shadowPCF; x <= scene.shadowPCF; x++) 
-		{
-            for (int y = -scene.shadowPCF; y <= scene.shadowPCF; y++) 
-			{
-                float shadowValue = texture(samplerShadows, shadowCoords.xy + vec2(x, y) * texelSize).r;
+		float x = min(distance, radius);
+		return sqr(1.0 - sqr(sqr(x / radius))) / (sqr(x) + 1.0);
+	}
 
-                if (shadowCoords.z > shadowValue + scene.shadowBias) 
-				{
-                    total += scene.shadowDarkness * shadowCoords.w;
-                }
-            }
-        }
-
-        total /= totalTextels;
-    } 
-	else 
-	{
-        total = 0.0f;
-    }
-
-    return 1.0f - total;
+	return 1.0f;
 }
 
 void main(void) 
@@ -95,37 +92,56 @@ void main(void)
 	vec3 colour = textureColour.rgb;
 	vec3 normal = decodeNormal(textureNormal);
 	float depth = textureDepth.r;
-	float metallic = textureMaterial.x;
-	float roughness = textureMaterial.y;
+	float metallic = textureMaterial.r;
+	float roughness = textureMaterial.g;
 	vec3 worldPosition = decodeWorldPosition(fragmentUv, depth);
-	vec3 cameraPosition = (inverse(scene.view) * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-
-	outColour = vec4(colour, 1.0f);
+	vec3 viewDirection = normalize(scene.cameraPosition - worldPosition);
 	
-	// Shadowing.
-	if (textureNormal.rgb != vec3(0.0f))
-	{
-		// vec4 positionRelativeToCam = scene.view * vec4(worldPosition, 1.0f);
-		// vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
-		// float distanceAway = length(positionRelativeToCam.xyz);
-		// distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
-		// distanceAway = distanceAway / scene.shadowTransition;
-		// shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
-		// outColour *= shadow(samplerShadows, shadowCoords, scene.shadowMapSize);
-	}
+	outColour = vec4(colour, 1.0f);
 
 	// Lighting.
 	if (textureNormal.rgb != vec3(0.0f))
 	{
-		outColour = vec4(depth, depth, depth, 1.0f);
-	}
+		vec3 irradiance = vec3(0.0f);
 
-	// Fog.
-	if (textureNormal.rgb != vec3(0.0f))
-	{
-		// vec4 positionRelativeToCam = scene.view * vec4(worldPosition, 1.0f);
-		// float fogFactor = exp(-pow(length(positionRelativeToCam.xyz) * scene.fogDensity, scene.fogGradient));
-		// fogFactor = clamp(fogFactor, 0.0, 1.0);
-		// outColour = mix(scene.fogColour, outColour, fogFactor);
+		for (int i = 0; i < scene.lightsCount; i++) 
+		{
+			Light light = lights.lights[i];
+			
+			vec3 lightDirection = light.position - worldPosition;
+			float distance = length(lightDirection);
+			lightDirection /= distance;
+			
+			float att = attenuation(light.radius, distance);
+			
+			vec3 LvD = normalize(lightDirection + viewDirection);
+			float NoH = max(0.0f, dot(normal, LvD));
+			float NoV = max(0.0f, dot(normal, viewDirection));
+			float NoL = max(0.0f, dot(normal, lightDirection));
+			float HoV = max(0.0f, dot(LvD, viewDirection));
+
+			vec3 F0 = mix(vec3(0.04f), colour, metallic);
+			vec3 F = F0 + (vec3(1.0f) - F0) * pow(1.0f - HoV, 5.0f);
+
+			vec3 kS = F;
+			vec3 kD = (vec3(1.0) - kS) * (1.0f - metallic);
+
+			float D0 = sqr(sqr(roughness));
+			float D = D0 / (sqr(sqr(NoH) * (D0 - 1.0f) + 1.0f) * PI);
+
+			float k = sqr(roughness + 1.0f) / 8.0f;
+			float ggx_v = NoV / (NoV * (1.0f - k) + k);
+			float ggx_l = NoL / (NoV * (1.0f - k) + k);
+			float G = ggx_v * ggx_l;
+
+			vec3 specular = kS * D * G / (4.0f * NoL * NoV + EPSILON);
+			vec3 diffuse = kD * colour * (1.0f / PI);
+
+			vec3 L0 = (diffuse + specular) * NoL;
+			vec3 radiance = light.colour.rgb * att;
+			irradiance += radiance * L0;
+		}
+		
+		outColour = vec4(irradiance, 1.0f);
 	}
 }

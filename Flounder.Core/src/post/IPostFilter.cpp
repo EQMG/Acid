@@ -14,7 +14,7 @@ namespace Flounder
 	};
 	const std::vector<uint32_t> INDICES = 
 	{
-		0, 1, 2, 2, 3, 0
+		0, 3, 2, 2, 1, 0
 	};
 
 	const DescriptorType IPostFilter::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);

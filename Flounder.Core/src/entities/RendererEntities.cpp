@@ -10,7 +10,7 @@
 namespace Flounder
 {
 	const DescriptorType RendererEntities::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
-	const DescriptorType RendererEntities::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_VERTEX_BIT);
+	const DescriptorType RendererEntities::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL);
 	const DescriptorType RendererEntities::typeSamplerDiffuse = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const DescriptorType RendererEntities::typeSamplerSway = Texture::CreateDescriptor(3, VK_SHADER_STAGE_VERTEX_BIT);
 	const PipelineCreateInfo RendererEntities::pipelineCreateInfo =

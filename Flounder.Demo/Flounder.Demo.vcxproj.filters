@@ -10,6 +10,7 @@
     <ClInclude Include="src\uis\OverlayPaused.hpp" />
     <ClInclude Include="src\entities\EntityTreePine.hpp" />
     <ClInclude Include="src\entities\EntitySun.hpp" />
+    <ClInclude Include="src\entities\EntityTesting.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\uis\OverlayDebug.cpp" />
@@ -22,6 +23,7 @@
     <ClCompile Include="src\uis\OverlayPaused.cpp" />
     <ClCompile Include="src\entities\EntityTreePine.cpp" />
     <ClCompile Include="src\entities\EntitySun.cpp" />
+    <ClCompile Include="src\entities\EntityTesting.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\deferred\deferred.frag" />
