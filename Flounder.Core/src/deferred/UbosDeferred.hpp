@@ -14,6 +14,9 @@ namespace Flounder
 
 		struct UboScene
 		{
+			Colour lightColours[NUMBER_LIGHTS];
+			Vector3 lightPositions[NUMBER_LIGHTS];
+			Attenuation lightAttenuations[NUMBER_LIGHTS];
 
 			Matrix4 projection;
 			Matrix4 view;
@@ -29,13 +32,6 @@ namespace Flounder
 			float shadowDarkness;
 			int shadowMapSize;
 			int shadowPCF;
-		};
-
-		struct UboLights
-		{
-			Colour lightColours[NUMBER_LIGHTS];
-			Vector3 lightPositions[NUMBER_LIGHTS];
-			Attenuation lightAttenuations[NUMBER_LIGHTS];
 		};
 	};
 }

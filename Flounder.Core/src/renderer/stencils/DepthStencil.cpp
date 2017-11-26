@@ -52,7 +52,7 @@ namespace Flounder
 		{
 			assert(false && "Vulkan runtime error, depth stencil format not selected!");
 		}
-
+		
 		VkImageCreateInfo imageCreateInfo = {};
 		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 		imageCreateInfo.flags = 0;
@@ -95,7 +95,7 @@ namespace Flounder
 		imageViewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
 		imageViewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
 		imageViewCreateInfo.subresourceRange = {};
-		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT | (m_format != VK_FORMAT_UNDEFINED ? VK_IMAGE_ASPECT_STENCIL_BIT : 0);
+		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT; //  | (m_format != VK_FORMAT_UNDEFINED ? VK_IMAGE_ASPECT_STENCIL_BIT : 0)
 		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
 		imageViewCreateInfo.subresourceRange.levelCount = 1;
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
