@@ -22,9 +22,8 @@ EntitySun::EntitySun(ISpatialStructure<Entity*> *structure, const Transform &tra
 		g_glowMap = new Texture("res/entities/sun/glow.png");
 	}
 
-	AddComponent(new ComponentAlpha(1.0f));
 	AddComponent(new ComponentModel(g_model, g_diffuse));
 	AddComponent(new ComponentGlow(g_glowMap));
-	AddComponent(new ComponentLight(Light()));
+	AddComponent(new ComponentLight(Light(Colour("#FFFFFF"), -1.0f), Vector3()));
 	AddComponent(new ComponentSun());
 }

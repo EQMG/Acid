@@ -22,7 +22,7 @@ EntityTreePine::EntityTreePine(ISpatialStructure<Entity*> *structure, const Tran
 		g_swayMap = new Texture("res/entities/treePine/sway.png");
 	}
 
-	AddComponent(new ComponentAlpha(1.0f));
 	AddComponent(new ComponentModel(g_model, g_diffuse));
+	AddComponent(new ComponentMaterial(0.0f, 0.0f));
 	// AddComponent(new ComponentSway(g_swayMap));
 }

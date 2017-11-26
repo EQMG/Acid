@@ -52,5 +52,5 @@ void main(void)
 	
 	outColour = encodeColour(waterColour);
 	outNormal = encodeNormal(unitNormal);
-	outMaterial = vec3(0.0f);
+	outMaterial = vec3(0.0f, 0.0f, 0.0f);
 }

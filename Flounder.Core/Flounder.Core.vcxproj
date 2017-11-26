@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\deferred\RendererDeferred.cpp" />
+    <ClCompile Include="src\entities\components\ComponentMaterial.cpp" />
     <ClCompile Include="src\entities\components\ComponentGlow.cpp" />
     <ClCompile Include="src\entities\components\ComponentSun.cpp" />
     <ClCompile Include="src\entities\components\ComponentLight.cpp" />
@@ -39,7 +40,6 @@
     <ClCompile Include="src\devices\Keyboard.cpp" />
     <ClCompile Include="src\devices\Mouse.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
-    <ClCompile Include="src\entities\components\ComponentAlpha.cpp" />
     <ClCompile Include="src\entities\Entity.cpp" />
     <ClCompile Include="src\events\EventChange.cpp" />
     <ClCompile Include="src\events\Events.cpp" />
@@ -61,7 +61,6 @@
     <ClCompile Include="src\inputs\ButtonJoystick.cpp" />
     <ClCompile Include="src\inputs\ButtonKeyboard.cpp" />
     <ClCompile Include="src\inputs\ButtonMouse.cpp" />
-    <ClCompile Include="src\lights\Attenuation.cpp" />
     <ClCompile Include="src\lights\Fog.cpp" />
     <ClCompile Include="src\lights\Light.cpp" />
     <ClCompile Include="src\maths\Delta.cpp" />
@@ -168,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="src\deferred\RendererDeferred.hpp" />
     <ClInclude Include="src\deferred\UbosDeferred.hpp" />
+    <ClInclude Include="src\entities\components\ComponentMaterial.hpp" />
     <ClInclude Include="src\entities\components\ComponentGlow.hpp" />
     <ClInclude Include="src\entities\components\ComponentSun.hpp" />
     <ClInclude Include="src\entities\components\ComponentLight.hpp" />
@@ -200,7 +200,6 @@
     <ClInclude Include="src\engine\IModule.hpp" />
     <ClInclude Include="src\engine\IUpdater.hpp" />
     <ClInclude Include="src\engine\ModuleUpdate.hpp" />
-    <ClInclude Include="src\entities\components\ComponentAlpha.hpp" />
     <ClInclude Include="src\entities\Entity.hpp" />
     <ClInclude Include="src\entities\IComponent.hpp" />
     <ClInclude Include="src\events\EventChange.hpp" />
@@ -230,7 +229,6 @@
     <ClInclude Include="src\inputs\ButtonMouse.hpp" />
     <ClInclude Include="src\inputs\IAxis.hpp" />
     <ClInclude Include="src\inputs\IButton.hpp" />
-    <ClInclude Include="src\lights\Attenuation.hpp" />
     <ClInclude Include="src\lights\Fog.hpp" />
     <ClInclude Include="src\lights\Light.hpp" />
     <ClInclude Include="src\maths\Colour.hpp" />
