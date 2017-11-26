@@ -10,8 +10,9 @@ namespace Flounder
 	{
 	private:
 		Light *m_light;
+		Vector3 *m_offset;
 	public:
-		ComponentLight(const Light &light);
+		ComponentLight(const Light &light, const Vector3 &offset);
 
 		~ComponentLight();
 
@@ -22,5 +23,9 @@ namespace Flounder
 		Light *GetLight() const { return m_light; }
 
 		void SetLight(const Light &light) const { m_light->Set(light); }
+
+		Vector3 *GetOffset() const { return m_offset; }
+
+		void SetOffset(const Vector3 &offset) const { m_offset->Set(offset); }
 	};
 }

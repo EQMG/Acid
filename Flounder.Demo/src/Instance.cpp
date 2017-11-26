@@ -1,6 +1,7 @@
 #include "Instance.hpp"
 
 #include "entities/EntityTreePine.hpp"
+#include "entities/EntityTesting.hpp"
 #include "entities/EntitySun.hpp"
 
 namespace Demo
@@ -42,11 +43,20 @@ namespace Demo
 			{
 				const float xv = 0.0f; //  Maths::RandomInRange(-10.0f, 10.0f);
 				const float yv = 0.0f; //  Maths::RandomInRange(-10.0f, 10.0f);
-				const Vector3 position = Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv);
+				Vector3 position = Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv);
 
 				if (position.m_y > 0.0f)
 				{
-					Entity *test = new EntityTreePine(nullptr, Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f))); // Entities::Get()->GetStructure()
+					Entity *test = nullptr;
+					if (i < 0)
+					{
+						test = new EntityTreePine(nullptr, Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f))); // Entities::Get()->GetStructure()
+					}
+					else
+					{
+						position.m_y += 1.0f;
+						test = new EntityTesting(nullptr, Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 3.0f, 1.0f))); // Entities::Get()->GetStructure()
+					}
 					Entities::Get()->GetEntities()->push_back(test);
 					
 					if (i == 0 && j == 0)

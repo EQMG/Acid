@@ -2,7 +2,6 @@
 
 #include "../maths/Colour.hpp"
 #include "../maths/Vector3.hpp"
-#include "Attenuation.hpp"
 
 namespace Flounder
 {
@@ -13,8 +12,8 @@ namespace Flounder
 	{
 	public:
 		Colour *m_colour;
+		float m_radius;
 		Vector3 *m_position;
-		Attenuation *m_attenuation;
 
 		/// <summary>
 		/// Creates a new infinate white point light with unlimited range.
@@ -22,19 +21,12 @@ namespace Flounder
 		Light();
 
 		/// <summary>
-		/// Creates a new point light with unlimited range.
-		/// </summary>
-		/// <param name="colour"> The colour of the light. </param>
-		/// <param name="position"> The world position of the light. </param>
-		Light(const Colour &colour, const Vector3 &position);
-
-		/// <summary>
 		/// Creates a new point light.
 		/// </summary>
 		/// <param name="colour"> The colour of the light. </param>
+		/// <param name="radius"> How far the light will have influence (-1 sets this to a directional light). </param>
 		/// <param name="position"> The world position of the light. </param>
-		/// <param name="attenuation"> How much the intensity of the light is lost over a distance. </param>
-		Light(const Colour &colour, const Vector3 &position, const Attenuation &attenuation);
+		Light(const Colour &colour, const float &radius, const Vector3 &position = Vector3());
 
 		/// <summary>
 		/// Creates a new point light from a source object.
@@ -59,10 +51,10 @@ namespace Flounder
 		/// Sets values in the light.
 		/// </summary>
 		/// <param name="colour"> The colour of the light. </param>
+		/// <param name="radius"> How far the light will have influence (-1 sets this to a directional light). </param>
 		/// <param name="position"> The world position of the light. </param>
-		/// <param name="attenuation"> How much the intensity of the light is lost over a distance. </param>
 		/// <returns> This. </returns>
-		Light *Set(const Colour &colour, const Vector3 &position, const Attenuation &attenuation);
+		Light *Set(const Colour &colour, const float &radius, const Vector3 &position);
 
 		/// <summary>
 		/// Sets values in the light.

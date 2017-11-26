@@ -3,26 +3,29 @@
 #include "../maths/Colour.hpp"
 #include "../maths/Vector3.hpp"
 #include "../maths/Matrix4.hpp"
-#include "../lights/Attenuation.hpp"
 
 namespace Flounder
 {
 	class UbosDeferred
 	{
 	public:
-#define NUMBER_LIGHTS 32
+#define MAX_LIGHTS 63
+
+		struct Light
+		{
+			Colour colour;
+			Vector3 position;
+			float radius;
+		};
 
 		struct UboScene
 		{
-			Colour lightColours[NUMBER_LIGHTS];
-			Vector3 lightPositions[NUMBER_LIGHTS];
-			Attenuation lightAttenuations[NUMBER_LIGHTS];
-
 			Matrix4 projection;
 			Matrix4 view;
 			Matrix4 shadowSpace;
 
 			Colour fogColour;
+			Vector3 cameraPosition;
 			float fogDensity;
 			float fogGradient;
 
@@ -32,6 +35,17 @@ namespace Flounder
 			float shadowDarkness;
 			int shadowMapSize;
 			int shadowPCF;
+
+			int lightsCount;
 		};
+
+		struct UboLights
+		{
+			Light lights[MAX_LIGHTS];
+		};
+
+	//	static_assert(sizeof(Light) % 16 == 0);
+	//	static_assert(sizeof(UboScene) % 16 == 0);
+	//	static_assert(sizeof(UboLights) % 16 == 0);
 	};
 }
