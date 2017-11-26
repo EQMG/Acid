@@ -30,7 +30,7 @@ namespace Flounder
 		attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 		attachments[1].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 		attachments[2].format = VK_FORMAT_R8G8B8A8_UNORM; // Colour.
-		attachments[3].format = VK_FORMAT_R8G8B8A8_UNORM; // Normal.
+		attachments[3].format = VK_FORMAT_R16G16_SFLOAT; // Normal.
 		attachments[4].format = VK_FORMAT_R8G8B8A8_UNORM; // Extras.
 		attachments[5].format = VK_FORMAT_R16_SFLOAT; // Shadow.
 

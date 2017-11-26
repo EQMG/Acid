@@ -14,7 +14,7 @@ layout(binding = 2) uniform samplerCube samplerCubemap;
 layout(location = 0) in vec3 fragmentTextures;
 
 layout(location = 0) out vec4 outColour;
-layout(location = 1) out vec3 outNormal;
+layout(location = 1) out vec2 outNormal;
 layout(location = 2) out vec3 outExtras;
 
 vec4 encodeColour(vec3 colour)
@@ -28,9 +28,9 @@ vec4 encodeColour(vec3 colour)
 vec2 encodeNormal(vec3 normal)
 {
 	vec2 result = vec2(0.0f);
-	result.x = atan(normal.y, normal.x) / 3.14159f;
-	result.y = normal.z;
-	return result * 0.5f + 0.5f;
+	result.x = (atan(normal.y, normal.x) / 3.14159f) * 0.5f + 0.5f;
+	result.y = normal.z * 0.5f + 0.5f;
+	return result;
 }
 
 void main(void) 
@@ -46,6 +46,6 @@ void main(void)
 	cubemapColour += object.skyColour.rgb;
 
 	outColour = encodeColour(cubemapColour);
-	outNormal = vec3(0.0f);
+	outNormal = vec2(0.0f);
 	outExtras = vec3(0.0f);
 }

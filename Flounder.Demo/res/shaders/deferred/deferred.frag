@@ -29,11 +29,11 @@ layout(binding = 1) uniform Ubolights
 	vec3 lightAttenuations[NUMBER_LIGHTS];
 } lights;
 
-layout(binding = 2) uniform sampler2D samplerColour;
-layout(binding = 3) uniform sampler2D samplerNormal;
-layout(binding = 4) uniform sampler2D samplerExtras;
-layout(binding = 5) uniform sampler2D samplerShadows;
-layout(binding = 6) uniform sampler2D samplerDepth;
+layout(binding = 2) uniform sampler2D samplerDepth;
+layout(binding = 3) uniform sampler2D samplerColour;
+layout(binding = 4) uniform sampler2D samplerNormal;
+layout(binding = 5) uniform sampler2D samplerExtras;
+layout(binding = 6) uniform sampler2D samplerShadows;
 
 layout(location = 0) in vec2 fragmentTextures;
 
@@ -56,14 +56,17 @@ vec3 decodeNormal(vec4 normal)
 	return vec3(sinCosTheta.y * sinCosPhi.x, sinCosTheta.x * sinCosPhi.x, sinCosPhi.y);
 }
 
-float decodeDepth(vec4 normal)
+float decodeDepth(float depth)
 {
-	return normal.z;
+	float near = 0.1f; // nearFarPlanes.x;
+	float far = 2048.0f; // nearFarPlanes.y;
+	return 2.0 * near * far / (far + near - depth * (far - near));
+	// return normal.z;
 }
 
 vec3 decodePosition(float depth) 
 {
-	vec4 p = inverse(scene.projection) * (vec4(fragmentTextures, depth, 1.0f) * 2.0f - 1.0f);
+	vec4 p = inverse(scene.projection) * vec4(fragmentTextures, depth, 1.0f);
 	return vec3(inverse(scene.view) * vec4(p.xyz / p.w, 1.0f));
 }
 
@@ -103,13 +106,17 @@ void main(void)
 	vec4 textureColour = texture(samplerColour, fragmentTextures);
 	vec4 textureNormal = texture(samplerNormal, fragmentTextures);
 	vec4 textureExtras = texture(samplerExtras, fragmentTextures);
+	vec4 textureDepth = texture(samplerDepth, fragmentTextures);
 
 	vec3 colour = decodeColour(textureColour);
 	vec3 normal = decodeNormal(textureNormal);
-	float depth = decodeDepth(textureNormal);
-	vec3 position = decodePosition(depth);
+	float depth = decodeDepth(textureDepth.r);
+	vec3 position = decodePosition(colour.r);
 	vec3 toCameraVector = (inverse(scene.view) * vec4(0.0, 0.0, 0.0, 1.0)).xyz - position;
 	vec4 positionRelativeToCam = scene.view * vec4(position, 1.0f);
+
+	//outColour = vec4(normal, 1.0f);
+//	return;
 	
 	outColour = vec4(colour, 1.0f);
 	
@@ -139,7 +146,7 @@ void main(void)
 				vec3 unitLightVector = normalize(toLightVector);
 				float lightDistance = length(toLightVector);
 			
-				float attinuationFactor = 1.0f; // lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
+				float attinuationFactor = lights.lightAttenuations[i].x + (lights.lightAttenuations[i].y * lightDistance) + (lights.lightAttenuations[i].z * lightDistance * lightDistance);
 			
 				float lightBrightness = max(dot(normal, unitLightVector), 0.0f);
 				totalDiffuse += (lightBrightness * lights.lightColours[i].rgb) / attinuationFactor;
