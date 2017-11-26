@@ -5,14 +5,14 @@ namespace Flounder
 	Light::Light() :
 		m_colour(new Colour(1.0f, 1.0f, 1.0f)),
 		m_position(new Vector3()),
-		m_attenuation(new Attenuation(1.0f, 0.0f, 0.0f))
+		m_attenuation(new Attenuation())
 	{
 	}
 
 	Light::Light(const Colour &colour, const Vector3 &position) :
 		m_colour(new Colour(colour)),
 		m_position(new Vector3(position)),
-		m_attenuation(new Attenuation(1.0f, 0.0f, 0.0f))
+		m_attenuation(new Attenuation())
 	{
 	}
 
