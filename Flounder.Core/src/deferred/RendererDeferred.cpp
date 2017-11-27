@@ -13,14 +13,14 @@
 
 namespace Flounder
 {
-	const std::vector<Vertex> VERTICES = 
+	const std::vector<Vertex> VERTICES =
 	{
 		Vertex(Vector3(-1.0f, -1.0f, 0.0f), Vector2(0.0f, 0.0f)),
 		Vertex(Vector3(1.0f, -1.0f, 0.0f), Vector2(1.0f, 0.0f)),
 		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
 		Vertex(Vector3(-1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
 	};
-	const std::vector<uint32_t> INDICES = 
+	const std::vector<uint32_t> INDICES =
 	{
 		0, 3, 2, 2, 1, 0
 	};
@@ -123,8 +123,8 @@ namespace Flounder
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
-		{ 
-			m_uniformScene->GetWriteDescriptor(0, descriptorSet), 
+		{
+			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
 			m_uniformLights->GetWriteDescriptor(1, descriptorSet),
 			Renderer::Get()->GetDepthStencil()->GetWriteDescriptor(2, descriptorSet),
 			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(3, descriptorSet),
@@ -133,7 +133,7 @@ namespace Flounder
 			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(6, descriptorSet),
 		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
-		
+
 		VkDescriptorSet descriptors[1] = { descriptorSet };
 		vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 

@@ -5,7 +5,8 @@
 #include "../../renderer/Renderer.hpp"
 
 namespace Flounder
-{;
+{
+	;
 	const DescriptorType FilterLensflare::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const DescriptorType FilterLensflare::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const DescriptorType FilterLensflare::typeSamplerMaterial = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
@@ -34,7 +35,7 @@ namespace Flounder
 
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
-		{ 
+		{
 			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
 			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet),
 			Renderer::Get()->GetSwapchain()->GetMaterialImage()->GetWriteDescriptor(2, descriptorSet)

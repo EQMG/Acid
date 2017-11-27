@@ -216,7 +216,7 @@ namespace Flounder
 		const auto queue = Display::Get()->GetQueue();
 
 		Platform::ErrorVk(vkQueueWaitIdle(queue));
-		
+
 		const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage);
 
 		if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
@@ -228,7 +228,7 @@ namespace Flounder
 		assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) && "Failed to acquire swapchain image!");
 
 		Platform::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
-		
+
 		Platform::ErrorVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
 
 		return VK_SUCCESS;

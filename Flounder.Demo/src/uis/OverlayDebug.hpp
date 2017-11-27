@@ -10,9 +10,9 @@ namespace Demo
 		public UiObject
 	{
 	private:
-	//	Text *m_textHeight;
-	//	Text *m_textTime;
-	//	Text *m_textPosition;
+		//	Text *m_textHeight;
+		//	Text *m_textTime;
+		//	Text *m_textPosition;
 		Text *m_textFps;
 		Text *m_textUps;
 		Timer *m_timerUpdate;

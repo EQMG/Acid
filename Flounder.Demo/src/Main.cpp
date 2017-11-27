@@ -80,7 +80,7 @@ int main(int argc, char **argv)
 			}
 		}
 
-	//	Terrains::Get()->GetTerrains()->push_back(new Terrain(Vector3(), Vector3()));
+		//	Terrains::Get()->GetTerrains()->push_back(new Terrain(Vector3(), Vector3()));
 	}
 
 	if (Waters::Get() != nullptr)
