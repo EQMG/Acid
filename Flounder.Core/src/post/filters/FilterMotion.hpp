@@ -11,7 +11,7 @@ namespace Flounder
 	private:
 		Matrix4 *m_lastViewMatrix;
 	public:
-		FilterMotion();
+		FilterMotion(const int &subpass);
 
 		~FilterMotion();
 

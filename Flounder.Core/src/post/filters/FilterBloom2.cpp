@@ -2,8 +2,8 @@
 
 namespace Flounder
 {
-	FilterBloom2::FilterBloom2() :
-		IPostFilter("filterBloom2", "res/shaders/filters/bloom2.frag.spv")
+	FilterBloom2::FilterBloom2(const int &subpass) :
+		IPostFilter("filterBloom2", "res/shaders/filters/bloom2.frag.spv", subpass, {})
 	{
 	}
 

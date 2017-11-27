@@ -13,9 +13,9 @@ namespace Flounder
 		FilterBlurHorizontal *m_filterBlurHorizontal;
 		FilterBlurVertical *m_filterBlurVertical;
 	public:
-		PipelineGaussian(const int &width, const int &height);
+		PipelineGaussian(const int &subpass, const int &width, const int &height);
 
-		PipelineGaussian(const float &sizeScalar);
+		PipelineGaussian(const int &subpass, const float &sizeScalar);
 
 		~PipelineGaussian();
 

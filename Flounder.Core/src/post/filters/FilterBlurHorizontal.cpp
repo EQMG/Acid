@@ -4,8 +4,8 @@
 
 namespace Flounder
 {
-	FilterBlurHorizontal::FilterBlurHorizontal(const float &sizeScalar) :
-		IPostFilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontal.frag.spv"),
+	FilterBlurHorizontal::FilterBlurHorizontal(const int &subpass, const float &sizeScalar) :
+		IPostFilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontal.frag.spv", subpass, {}),
 		m_widthValue(static_cast<int>(Display::Get()->GetWidth() * sizeScalar)),
 		m_scaleValue(2.0f),
 		m_fitToDisplay(true),
@@ -13,8 +13,8 @@ namespace Flounder
 	{
 	}
 
-	FilterBlurHorizontal::FilterBlurHorizontal(const int &width, const int &height) :
-		IPostFilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontal.frag.spv"),
+	FilterBlurHorizontal::FilterBlurHorizontal(const int &subpass, const int &width, const int &height) :
+		IPostFilter("filterBlurHorizontal", "res/shaders/filters/blurhorizontal.frag.spv", subpass, {}),
 		m_widthValue(width),
 		m_scaleValue(2.0f),
 		m_fitToDisplay(false),

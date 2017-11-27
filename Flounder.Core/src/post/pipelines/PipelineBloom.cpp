@@ -2,12 +2,12 @@
 
 namespace Flounder
 {
-	PipelineBloom::PipelineBloom() :
+	PipelineBloom::PipelineBloom(const int &subpass) :
 		IPostPipeline()
 	{
-		m_filterBloom1 = new FilterBloom1();
-		m_pipelineGaussian = new PipelineGaussian(0.5f);
-		m_filterBloom2 = new FilterBloom2();
+		m_filterBloom1 = new FilterBloom1(subpass);
+		m_pipelineGaussian = new PipelineGaussian(subpass, 0.5f);
+		m_filterBloom2 = new FilterBloom2(subpass);
 	}
 
 	PipelineBloom::~PipelineBloom()
