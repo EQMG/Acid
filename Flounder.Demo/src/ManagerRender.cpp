@@ -13,6 +13,7 @@ namespace Demo
 		m_filterFxaa(new FilterFxaa(2)),
 		m_filterLensflare(new FilterLensflare(2)),
 		m_filterTiltshift(new FilterTiltshift(2)),
+		m_filterGrain(new FilterGrain(2)),
 		m_rendererGuis(new RendererGuis(2)),
 		m_rendererFonts(new RendererFonts(2))
 	{
@@ -31,6 +32,7 @@ namespace Demo
 		delete m_filterFxaa;
 		delete m_filterLensflare;
 		delete m_filterTiltshift;
+		delete m_filterGrain;
 		delete m_rendererGuis;
 		delete m_rendererFonts;
 	}
@@ -56,7 +58,8 @@ namespace Demo
 	//	m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
 	//	m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
 	//	m_filterLensflare->RenderFilter(commandBuffer);
-		m_filterTiltshift->RenderFilter(commandBuffer);
+	//	m_filterTiltshift->RenderFilter(commandBuffer);
+		m_filterGrain->RenderFilter(commandBuffer);
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
 	}

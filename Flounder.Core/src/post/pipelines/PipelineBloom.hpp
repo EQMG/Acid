@@ -15,7 +15,7 @@ namespace Flounder
 		PipelineGaussian *m_pipelineGaussian;
 		FilterBloom2 *m_filterBloom2;
 	public:
-		PipelineBloom();
+		PipelineBloom(const int &subpass);
 
 		~PipelineBloom();
 

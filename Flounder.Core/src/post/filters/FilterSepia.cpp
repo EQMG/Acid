@@ -2,8 +2,8 @@
 
 namespace Flounder
 {
-	FilterSepia::FilterSepia() :
-		IPostFilter("filterSepia", "res/shaders/filters/sepia.frag.spv")
+	FilterSepia::FilterSepia(const int &subpass) :
+		IPostFilter("filterSepia", "res/shaders/filters/sepia.frag.spv", subpass, {})
 	{
 	}
 

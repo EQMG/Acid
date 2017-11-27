@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../IPostFilter.hpp"
+#include "../../renderer/buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
@@ -8,9 +9,19 @@ namespace Flounder
 		public IPostFilter
 	{
 	private:
+		struct UboScene
+		{
+			float strength;
+		};
+
+		static const DescriptorType typeUboScene;
+		static const DescriptorType typeSamplerColour;
+
+		UniformBuffer *m_uniformScene;
+
 		float m_strength;
 	public:
-		FilterGrain(const float &strength = 2.3f);
+		FilterGrain(const int &subpass);
 
 		~FilterGrain();
 

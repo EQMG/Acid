@@ -13,9 +13,9 @@ namespace Flounder
 		bool m_fitToDisplay;
 		float m_sizeScalar;
 	public:
-		FilterBlurVertical(const float &sizeScalar);
+		FilterBlurVertical(const int &subpass, const float &sizeScalar);
 
-		FilterBlurVertical(const int &width, const int &height);
+		FilterBlurVertical(const int &subpass, const int &width, const int &height);
 
 		~FilterBlurVertical();
 

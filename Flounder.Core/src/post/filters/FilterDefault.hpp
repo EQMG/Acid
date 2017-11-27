@@ -8,7 +8,7 @@ namespace Flounder
 		public IPostFilter
 	{
 	public:
-		FilterDefault();
+		FilterDefault(const int &subpass);
 
 		~FilterDefault();
 
