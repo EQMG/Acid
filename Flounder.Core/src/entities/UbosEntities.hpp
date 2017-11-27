@@ -28,6 +28,6 @@ namespace Flounder
 			Vector2 swayOffset;
 		};
 
-	//	static_assert(sizeof(UboObject) % 16 == 0);
+		//	static_assert(sizeof(UboObject) % 16 == 0);
 	};
 }

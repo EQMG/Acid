@@ -44,8 +44,8 @@ namespace Flounder
 			Light lights[MAX_LIGHTS];
 		};
 
-	//	static_assert(sizeof(Light) % 16 == 0);
-	//	static_assert(sizeof(UboScene) % 16 == 0);
-	//	static_assert(sizeof(UboLights) % 16 == 0);
+		//	static_assert(sizeof(Light) % 16 == 0);
+		//	static_assert(sizeof(UboScene) % 16 == 0);
+		//	static_assert(sizeof(UboLights) % 16 == 0);
 	};
 }

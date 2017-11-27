@@ -17,7 +17,7 @@ namespace Flounder
 		m_curveAmountY(0.1f),
 		m_scanLineSize(1000.0f),
 		m_scanIntensity(0.1f)
-	{ 
+	{
 	}
 
 	FilterCrt::~FilterCrt()

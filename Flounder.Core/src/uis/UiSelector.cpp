@@ -82,7 +82,7 @@ namespace Flounder
 		const float positionX = 0.5f; //  (object.GetScreenTransform()->m_z) + 1.0f / 2.0f;
 		const float positionY = 0.5f; // (object.GetScreenTransform()->m_w - 1.0f) / -2.0f; 
 
-	//	printf("X: %f, Y: %f. W: %f, H: %f\n", m_cursorX, m_cursorY, width, height);
+		//	printf("X: %f, Y: %f. W: %f, H: %f\n", m_cursorX, m_cursorY, width, height);
 
 		if (Mouse::Get()->IsDisplaySelected() && Display::Get()->IsFocused())
 		{

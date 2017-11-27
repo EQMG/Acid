@@ -51,14 +51,14 @@ namespace Demo
 		m_rendererWaters->Render(commandBuffer, m_infinity, *camera);
 		m_rendererEntities->Render(commandBuffer, m_infinity, *camera);
 		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
-		
+
 		// Subpass 2
 		m_rendererDeferred->Render(commandBuffer, m_infinity, *camera);
 		m_filterFxaa->RenderFilter(commandBuffer);
-	//	m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
-	//	m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
-	//	m_filterLensflare->RenderFilter(commandBuffer);
-	//	m_filterTiltshift->RenderFilter(commandBuffer);
+		//	m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
+		//	m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
+		//	m_filterLensflare->RenderFilter(commandBuffer);
+		//	m_filterTiltshift->RenderFilter(commandBuffer);
 		m_filterGrain->RenderFilter(commandBuffer);
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
