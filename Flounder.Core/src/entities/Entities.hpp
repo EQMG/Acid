@@ -12,7 +12,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-	//	ISpatialStructure<Entity*> *m_structure;
+		//	ISpatialStructure<Entity*> *m_structure;
 		std::vector<Entity*> *m_entities;
 	public:
 		/// <summary>
@@ -36,7 +36,7 @@ namespace Flounder
 
 		void Update() override;
 
-	//	ISpatialStructure<Entity*> *GetStructure() const { return m_structure; }
+		//	ISpatialStructure<Entity*> *GetStructure() const { return m_structure; }
 
 		std::vector<Entity*> *GetEntities() const { return m_entities; }
 	};

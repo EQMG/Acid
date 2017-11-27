@@ -27,7 +27,7 @@ namespace Flounder
 	{
 		const std::string filepathPng = "res/fonts/" + name + "/" + name + "-" + type + ".png";
 		const std::string filepathFnt = "res/fonts/" + name + "/" + name + "-" + type + ".fnt";
-		
+
 		if (!HelperFile::FileExists(filepathPng) || !HelperFile::FileExists(filepathFnt))
 		{
 			return nullptr;

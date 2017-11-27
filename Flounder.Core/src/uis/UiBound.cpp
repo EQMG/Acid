@@ -26,7 +26,7 @@ namespace Flounder
 	{
 	}
 
-	UiBound::UiBound(const UiBound &source) : 
+	UiBound::UiBound(const UiBound &source) :
 		m_position(new Vector2(*source.m_position)),
 		m_reference(new Vector2(*source.m_reference)),
 		m_aspectPosition(source.m_aspectPosition),

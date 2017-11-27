@@ -37,11 +37,11 @@ namespace Demo
 		})),
 		m_inputJump(new ButtonCompound({
 			new ButtonKeyboard({ GLFW_KEY_SPACE }),
-			new ButtonJoystick(0,{ 1 })
+			new ButtonJoystick(0, { 1 })
 		})),
 		m_inputCrouch(new ButtonCompound({
 			new ButtonKeyboard({ GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL }),
-			new ButtonJoystick(0,{ 1 })
+			new ButtonJoystick(0, { 1 })
 		})),
 		m_toggleNoclip(new ButtonCompound({
 			new ButtonKeyboard({ GLFW_KEY_N }),
@@ -128,7 +128,7 @@ namespace Demo
 		{
 			m_currentSpeed = 0.0f;
 			m_currentStrafeSpeed = 0.0f;
-		//	m_currentUpwardSpeed = 0.0f;
+			//	m_currentUpwardSpeed = 0.0f;
 		}
 
 		const float terrainHeight = Terrains::Get()->GetHeight(m_position->m_x, m_position->m_z) + 1.74f;

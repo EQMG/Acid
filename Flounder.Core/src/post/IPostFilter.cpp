@@ -6,14 +6,14 @@
 
 namespace Flounder
 {
-	const std::vector<Vertex> VERTICES = 
+	const std::vector<Vertex> VERTICES =
 	{
 		Vertex(Vector3(-1.0f, -1.0f, 0.0f), Vector2(0.0f, 0.0f)),
 		Vertex(Vector3(1.0f, -1.0f, 0.0f), Vector2(1.0f, 0.0f)),
 		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
 		Vertex(Vector3(-1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
 	};
-	const std::vector<uint32_t> INDICES = 
+	const std::vector<uint32_t> INDICES =
 	{
 		0, 3, 2, 2, 1, 0
 	};
@@ -27,7 +27,7 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ }, // descriptors
+		{}, // descriptors
 
 		{ "res/shaders/filters/default.vert.spv", "res/shaders/filters/default.frag.spv" } // shaderStages
 	};

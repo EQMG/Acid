@@ -15,7 +15,7 @@ namespace Demo
 		Uis::Get()->GetSelector()->Load(0, 0, 1, 0, 1);
 
 		m_overlayStartup->SetAlphaDriver(new DriverConstant(1.0f));
-		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f)); 
+		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f));
 		m_overlayPaused->SetAlphaDriver(new DriverConstant(0.0f));
 	}
 
@@ -39,7 +39,7 @@ namespace Demo
 		{
 			m_overlayStartup->SetAlphaDriver(new DriverConstant(0.0f));
 			m_overlayDebug->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
-		//	m_overlayPaused->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
+			//	m_overlayPaused->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
 			m_overlayStartup->SetStarting(false);
 		}
 	}
@@ -65,7 +65,7 @@ namespace Demo
 		{
 			m_overlayPaused->SetAlphaDriver(new DriverSlide(m_overlayPaused->GetAlpha(), 0.0f, SLIDE_TIME));
 		}
-		else 
+		else
 		{
 			m_overlayPaused->SetAlphaDriver(new DriverSlide(m_overlayPaused->GetAlpha(), 1.0f, SLIDE_TIME));
 		}

@@ -59,6 +59,6 @@ namespace Flounder
 	{
 		T *module = static_cast<T*>(malloc(sizeof(T)));
 		AddModule(typeUpdate, moduleName, module);
-		new (module) T();
+		new(module) T();
 	}
 }

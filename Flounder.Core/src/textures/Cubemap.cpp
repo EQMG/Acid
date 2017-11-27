@@ -31,7 +31,7 @@ namespace Flounder
 		}
 
 		stbi_uc *pixels = (stbi_uc*) malloc(m_imageSize);
-		stbi_uc* offset = pixels;
+		stbi_uc *offset = pixels;
 
 		for (const auto suffix : SIDE_FILE_SUFFIXS)
 		{
@@ -39,10 +39,10 @@ namespace Flounder
 			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
 			const stbi_uc *pixelsSide = Texture::LoadPixels(filepathSide, &m_width, &m_height, &m_components);
 			m_depth = m_width; // TODO
-			
+
 			memcpy(offset, pixelsSide, sizeSide);
 			offset += sizeSide;
-		//	delete pixelsSide;
+			//	delete pixelsSide;
 		}
 
 		m_buffer = new Buffer(m_imageSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);

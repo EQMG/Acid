@@ -40,7 +40,7 @@ namespace Flounder
 		ComponentCollider *componentCollider1 = GetEntity()->GetComponent<ComponentCollider*>();
 
 		// Verifies that this entities main collider will work.
-		if (componentCollider1 == nullptr) 
+		if (componentCollider1 == nullptr)
 		{
 			return result;
 		}
@@ -57,7 +57,7 @@ namespace Flounder
 			const Vector3 *pos = dynamic_cast<Sphere*>(componentCollider1->GetCollider())->GetPosition();
 			aabb1 = Aabb(new Vector3(-radius + pos->m_x, -radius + pos->m_y, -radius + pos->m_z), new Vector3(radius + pos->m_x, radius + pos->m_y, radius + pos->m_z));
 		}
-		else 
+		else
 		{
 			return result;
 		}
