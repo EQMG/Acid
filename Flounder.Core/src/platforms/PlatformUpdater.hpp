@@ -35,7 +35,7 @@ namespace Flounder
 		template<typename T>
 		void ModuleCreate(ModuleUpdate typeUpdate, std::string moduleName);
 
-		void AddModule(ModuleUpdate typeUpdate, std::string moduleName, IModule *module) override;
+		void AddModule(const ModuleUpdate &typeUpdate, std::string moduleName, IModule *module) override;
 
 		IModule *GetModule(const std::string &name) override;
 
@@ -51,7 +51,7 @@ namespace Flounder
 
 		float GetTimeMs() override { return GetTime() * 1000.0f; };
 	private:
-		void RunUpdate(ModuleUpdate typeUpdate) const;
+		void RunUpdate(const ModuleUpdate &typeUpdate) const;
 	};
 
 	template<typename T>
