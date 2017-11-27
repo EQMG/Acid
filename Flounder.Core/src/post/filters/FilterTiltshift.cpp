@@ -1,29 +1,44 @@
 #include "FilterTiltshift.hpp"
 
 #include "../../devices/Display.hpp"
+#include "../../renderer/Renderer.hpp"
+#include "../../textures/Texture.hpp"
 
 namespace Flounder
 {
-	FilterTiltshift::FilterTiltshift(const float &blurAmount, const float &centre, const float &stepSize, const float &steps) :
-		IPostFilter("filterTiltshift", "res/shaders/filters/tiltshift.frag.spv"),
-		m_blurAmount(blurAmount),
-		m_centre(centre),
-		m_stepSize(stepSize),
-		m_steps(steps)
+	const DescriptorType FilterTiltshift::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const DescriptorType FilterTiltshift::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
+
+	FilterTiltshift::FilterTiltshift(const int &subpass) :
+		IPostFilter("filterTiltshift", "res/shaders/filters/tiltshift.frag.spv", subpass, { typeUboScene, typeSamplerColour }),
+		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
+		m_blurAmount(1.0f),
+		m_centre(1.1f),
+		m_stepSize(0.004f),
+		m_steps(3.0f)
 	{
 	}
 
 	FilterTiltshift::~FilterTiltshift()
 	{
+		delete m_uniformScene;
 	}
 
 	void FilterTiltshift::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
-#if 0
-		m_shader->loadUniform1f("blurAmount", m_blurAmount);
-		m_shader->loadUniform1f("centre", m_centre);
-		m_shader->loadUniform1f("stepSize", m_stepSize);
-		m_shader->loadUniform1f("steps", m_steps);
-#endif
+		UboScene uboScene = {};
+		uboScene.blurAmount = m_blurAmount;
+		uboScene.centre = m_centre;
+		uboScene.stepSize = m_stepSize;
+		uboScene.steps = m_steps;
+		m_uniformScene->Update(&uboScene);
+
+		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
+		{
+			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
+			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet)
+		};
+		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
 	}
 }
