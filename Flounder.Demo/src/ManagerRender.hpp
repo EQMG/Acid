@@ -23,6 +23,7 @@ namespace Demo
 		FilterFxaa *m_filterFxaa;
 		FilterLensflare *m_filterLensflare;
 		FilterTiltshift *m_filterTiltshift;
+		FilterGrain *m_filterGrain;
 		RendererGuis *m_rendererGuis;
 		RendererFonts *m_rendererFonts;
 	public:

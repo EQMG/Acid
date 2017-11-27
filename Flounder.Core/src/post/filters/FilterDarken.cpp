@@ -2,14 +2,9 @@
 
 namespace Flounder
 {
-	FilterDarken::FilterDarken(const float &factorValue) :
-		IPostFilter("filterDarken", "res/shaders/filters/darken.frag.spv"),
-		m_factorValue(factorValue)
-	{
-	}
-
-	FilterDarken::FilterDarken() :
-		FilterDarken(0.45f)
+	FilterDarken::FilterDarken(const int &subpass) :
+		IPostFilter("filterDarken", "res/shaders/filters/darken.frag.spv", subpass, {}),
+		m_factorValue(0.45f)
 	{
 	}
 

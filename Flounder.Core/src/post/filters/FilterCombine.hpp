@@ -11,7 +11,7 @@ namespace Flounder
 	private:
 		Vector4 *m_slideSpaceValue;
 	public:
-		FilterCombine();
+		FilterCombine(const int &subpass);
 
 		~FilterCombine();
 
