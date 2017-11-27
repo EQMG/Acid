@@ -124,7 +124,7 @@ namespace Flounder
 		}
 	}
 
-	void PlatformUpdater::AddModule(ModuleUpdate typeUpdate, std::string moduleName, IModule *module)
+	void PlatformUpdater::AddModule(const ModuleUpdate &typeUpdate, std::string moduleName, IModule *module)
 	{
 		float offset = typeUpdate + (0.01f * static_cast<float>(m_modules->size()));
 		m_modules->insert(make_pair(offset, make_pair(moduleName, module)));
@@ -143,7 +143,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	void PlatformUpdater::RunUpdate(ModuleUpdate typeUpdate) const
+	void PlatformUpdater::RunUpdate(const ModuleUpdate &typeUpdate) const
 	{
 		for (auto it = m_modules->begin(); it != m_modules->end(); ++it)
 		{

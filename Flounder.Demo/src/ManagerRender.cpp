@@ -10,12 +10,12 @@ namespace Demo
 		m_rendererWaters(new RendererWaters(1)),
 		m_rendererEntities(new RendererEntities(1)),
 		m_rendererDeferred(new RendererDeferred(2)),
-		m_filterFxaa(new FilterFxaa(2)),
-		m_filterLensflare(new FilterLensflare(2)),
-		m_filterTiltshift(new FilterTiltshift(2)),
-		m_filterGrain(new FilterGrain(2)),
-		m_rendererGuis(new RendererGuis(2)),
-		m_rendererFonts(new RendererFonts(2))
+		m_filterFxaa(new FilterFxaa(3)),
+		m_filterLensflare(new FilterLensflare(3)),
+		m_filterTiltshift(new FilterTiltshift(3)),
+		m_filterGrain(new FilterGrain(3)),
+		m_rendererGuis(new RendererGuis(3)),
+		m_rendererFonts(new RendererFonts(3))
 	{
 	}
 
@@ -41,24 +41,27 @@ namespace Demo
 	{
 		const auto camera = Camera::Get()->GetCamera();
 
-		// Subpass 0
+		// Subpass 0.
 		m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
 		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 
-		// Subpass 1
+		// Subpass 1.
 		m_rendererSkyboxes->Render(commandBuffer, m_infinity, *camera);
 		m_rendererTerrains->Render(commandBuffer, m_infinity, *camera);
 		m_rendererWaters->Render(commandBuffer, m_infinity, *camera);
 		m_rendererEntities->Render(commandBuffer, m_infinity, *camera);
 		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 
-		// Subpass 2
+		// Subpass 2.
 		m_rendererDeferred->Render(commandBuffer, m_infinity, *camera);
+		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
+
+		// Subpass 3.
 		m_filterFxaa->RenderFilter(commandBuffer);
 		//	m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
 		//	m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
 		//	m_filterLensflare->RenderFilter(commandBuffer);
-		//	m_filterTiltshift->RenderFilter(commandBuffer);
+		m_filterTiltshift->RenderFilter(commandBuffer);
 		m_filterGrain->RenderFilter(commandBuffer);
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
