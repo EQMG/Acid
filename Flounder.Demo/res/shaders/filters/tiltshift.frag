@@ -33,20 +33,20 @@ void main()
 		for (float offsetY = offsetMin; offsetY <= offsetMax; ++offsetY) 
 		{
 			// Copy the coord so we can mess with it.
-			vec2 tempfragmentUv = fragmentUv.xy;
+			vec2 tempUv = fragmentUv.xy;
 
 			// Work out which uv we want to sample now.
-			tempfragmentUv.x += offsetX * amount * scene.stepSize;
-			tempfragmentUv.y += offsetY * amount * scene.stepSize;
+			tempUv.x += offsetX * amount * scene.stepSize;
+			tempUv.y += offsetY * amount * scene.stepSize;
 
 			// Accumulate the sample
-			outColour += texture(samplerColour, tempfragmentUv);
+			outColour += texture(samplerColour, tempUv);
 		}
 	}
 		
 	// Because we are doing an average, we divide by the amount (x AND y, hence steps * steps).
 	outColour /= float(scene.steps * scene.steps);
-	
+
 	vec2 sizeColour = textureSize(samplerColour, 0);
 	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);
 }

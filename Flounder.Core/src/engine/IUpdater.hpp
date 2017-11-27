@@ -36,7 +36,7 @@ namespace Flounder
 		/// <param name="typeUpdate"> The modules update type. </param>
 		/// <param name="moduleName"> The modules name. </param>
 		/// <param name="module"> The module object. </param>
-		virtual void AddModule(ModuleUpdate typeUpdate, std::string moduleName, IModule *module) = 0;
+		virtual void AddModule(const ModuleUpdate &typeUpdate, std::string moduleName, IModule *module) = 0;
 
 		/// <summary>
 		/// Gets a module from the updater.
