@@ -10,6 +10,7 @@ namespace Demo
 		m_rendererWaters(new RendererWaters(1)),
 		m_rendererEntities(new RendererEntities(1)),
 		m_rendererDeferred(new RendererDeferred(2)),
+		m_filterLensflare(new FilterLensflare(2)),
 		m_filterGrey(new FilterGrey(2)),
 		m_rendererGuis(new RendererGuis(2)),
 		m_rendererFonts(new RendererFonts(2))
@@ -26,6 +27,7 @@ namespace Demo
 		delete m_rendererEntities;
 
 		delete m_rendererDeferred;
+		delete m_filterLensflare;
 		delete m_filterGrey;
 		delete m_rendererGuis;
 		delete m_rendererFonts;
@@ -48,6 +50,9 @@ namespace Demo
 		
 		// Subpass 2
 		m_rendererDeferred->Render(commandBuffer, m_infinity, *camera);
+		m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
+		m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
+		m_filterLensflare->RenderFilter(commandBuffer);
 	//	m_filterGrey->RenderFilter(commandBuffer);
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
