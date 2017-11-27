@@ -1,15 +1,14 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 0) uniform UboScene
+layout(set = 0, binding = 0) uniform UboScene
 {
 	mat4 projection;
 	mat4 view;
 	vec4 clip;
 } scene;
 
-layout(binding = 1) uniform UboObject
+layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 } object;
@@ -29,7 +28,7 @@ out gl_PerVertex
 	float gl_ClipDistance[];
 };
 
-void main(void) 
+void main() 
 {
 	vec4 totalLocalPos = vec4(vertexPosition, 1.0f);
 	vec4 totalNormal = vec4(vertexNormal, 0.0f);

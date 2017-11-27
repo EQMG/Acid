@@ -1,13 +1,12 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
 const float FXAA_REDUCE_MIN = (1.0 / 128.0);
 const float FXAA_REDUCE_MUL = (1.0 / 8.0);
 
-layout(binding = 0) uniform sampler2D samplerColour;
+layout(set = 0, binding = 0) uniform sampler2D samplerColour;
 
-layout(binding = 1) uniform UBO 
+layout(set = 0, binding = 1) uniform UBO 
 {
 	float spanMax;
 } ubo;
@@ -16,7 +15,7 @@ layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 
-void main(void) 
+void main() 
 {
 	ivec2 originalSize = textureSize(samplerColour, 0);
 	vec2 resolution = vec2(originalSize.x, originalSize.y);

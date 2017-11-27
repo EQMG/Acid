@@ -1,7 +1,7 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-#define MAX_LIGHTS 63
+#define MAX_LIGHTS 64
 #define PI 3.141592653589793f
 #define EPSILON 0.001f
 
@@ -44,6 +44,8 @@ layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
 layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
 layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
 
+layout(rgba16f, set = 0, binding = 3) uniform writeonly image2D writeColour;
+
 layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
@@ -82,7 +84,7 @@ float attenuation(float radius, float distance)
 	return 1.0f;
 }
 
-void main(void) 
+void main() 
 {
 	vec4 textureDepth = texture(samplerDepth, fragmentUv);
 	vec4 textureColour = texture(samplerColour, fragmentUv);
@@ -96,6 +98,7 @@ void main(void)
 	float roughness = textureMaterial.g;
 	vec3 worldPosition = decodeWorldPosition(fragmentUv, depth);
 	vec3 viewDirection = normalize(scene.cameraPosition - worldPosition);
+	vec4 positionRelativeToCam = scene.view * vec4(worldPosition, 1.0f);
 	
 	outColour = vec4(colour, 1.0f);
 
@@ -141,7 +144,18 @@ void main(void)
 			vec3 radiance = light.colour.rgb * att;
 			irradiance += radiance * L0;
 		}
-		
+
 		outColour = vec4(irradiance, 1.0f);
 	}
+
+	// Fog.
+	if (textureNormal.rgb != vec3(0.0f))
+	{
+		float fogFactor = exp(-pow(length(positionRelativeToCam.xyz) * scene.fogDensity, scene.fogGradient));
+		fogFactor = clamp(fogFactor, 0.0, 1.0);
+		outColour = mix(scene.fogColour, outColour, fogFactor);
+	}
+
+	vec2 sizeColour = textureSize(samplerColour, 0);
+	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);
 }

@@ -1,15 +1,14 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 0) uniform UboScene
+layout(set = 0, binding = 0) uniform UboScene
 {
 	mat4 projection;
 	mat4 view;
 	vec4 clip;
 } scene;
 
-layout(binding = 1) uniform UboObject
+layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 
@@ -21,7 +20,7 @@ layout(binding = 1) uniform UboObject
 	vec2 swayOffset;
 } object;
 
-layout(binding = 3) uniform sampler2D samplerSway;
+layout(set = 0, binding = 3) uniform sampler2D samplerSway;
 
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec2 vertexUv;

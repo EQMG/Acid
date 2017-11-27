@@ -1,10 +1,9 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 0) uniform sampler2D samplerColour;
+layout(set = 0, binding = 0) uniform sampler2D samplerColour;
 
-layout(binding = 1) uniform UBO 
+layout(set = 0, binding = 1) uniform UBO 
 {
 	float blurAmount;
 	float centre;
@@ -16,7 +15,7 @@ layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 
-void main(void) 
+void main() 
 {
 	// Work out how much to blur based on the mid point.
 	float amount = pow((fragmentUv.y * ubo.centre) * 2.0 - 1.0, 2.0) * ubo.blurAmount;

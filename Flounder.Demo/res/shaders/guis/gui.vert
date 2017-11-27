@@ -1,8 +1,7 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 0) uniform UboObject
+layout(set = 0, binding = 0) uniform UboObject
 {
 	vec4 transform;
 	vec4 colourOffset;
@@ -23,7 +22,7 @@ out gl_PerVertex
 	vec4 gl_Position;
 };
 
-void main(void)
+void main()
 {
 	gl_Position = vec4((vertexPosition.xy * object.transform.xy) + object.transform.zw, 0.0f, 1.0f);
 

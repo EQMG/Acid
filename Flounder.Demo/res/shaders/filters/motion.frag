@@ -1,13 +1,12 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
 const float SAMPLES = 8.0;
 
-layout(binding = 0) uniform sampler2D samplerAlbedo;
-layout(binding = 1) uniform sampler2D samplerDepth;
+layout(set = 0, binding = 0) uniform sampler2D samplerAlbedo;
+layout(set = 0, binding = 1) uniform sampler2D samplerDepth;
 
-layout(binding = 2) uniform UBO 
+layout(set = 0, binding = 2) uniform UBO 
 {
 	mat4 projectionMatrix;
 	mat4 viewMatrix;
@@ -26,7 +25,7 @@ vec3 decodeLocation()
 	return vec3(inverse(ubo.viewMatrix) * vec4(p.xyz / p.w, 1.0));
 }
 
-void main(void) 
+void main() 
 {
 	// Gets the currebt world position for this fragment.
 	vec4 worldPosition = vec4(decodeLocation(), 1.0);

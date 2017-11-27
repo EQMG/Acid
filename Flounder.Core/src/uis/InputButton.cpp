@@ -12,7 +12,7 @@ namespace Flounder
 
 	InputButton::InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const Justify &justify) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(new Text(this, UiBound(position, "Centre"), SCALE_NORMAL, string, Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
+		m_text(new Text(this, UiBound(position, "Centre"), SCALE_NORMAL, string, Uis::Get()->m_proximanova->GetRegular(), justify, 0.36f)),
 		m_background(new Gui(this, UiBound(position, "Centre", true, true, Vector2(0.36f, 0.05f)), new Texture("res/guis/buttonText.png"), 1)),
 		m_mouseOver(false),
 		m_actionLeft(nullptr),

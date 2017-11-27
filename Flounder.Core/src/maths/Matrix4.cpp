@@ -503,11 +503,11 @@ namespace Flounder
 		const float t11 = source.m_01 * f10 + source.m_11 * f11 + source.m_21 * f12;
 		const float t12 = source.m_02 * f10 + source.m_12 * f11 + source.m_22 * f12;
 		const float t13 = source.m_03 * f10 + source.m_13 * f11 + source.m_23 * f12;
+		const float t20 = source.m_00 * f20 + source.m_10 * f21 + source.m_20 * f22;
+		const float t21 = source.m_01 * f20 + source.m_11 * f21 + source.m_21 * f22;
+		const float t22 = source.m_02 * f20 + source.m_12 * f21 + source.m_22 * f22;
+		const float t23 = source.m_03 * f20 + source.m_13 * f21 + source.m_23 * f22;
 
-		destination->m_20 = source.m_00 * f20 + source.m_10 * f21 + source.m_20 * f22;
-		destination->m_21 = source.m_01 * f20 + source.m_11 * f21 + source.m_21 * f22;
-		destination->m_22 = source.m_02 * f20 + source.m_12 * f21 + source.m_22 * f22;
-		destination->m_23 = source.m_03 * f20 + source.m_13 * f21 + source.m_23 * f22;
 		destination->m_00 = t00;
 		destination->m_01 = t01;
 		destination->m_02 = t02;
@@ -516,6 +516,10 @@ namespace Flounder
 		destination->m_11 = t11;
 		destination->m_12 = t12;
 		destination->m_13 = t13;
+		destination->m_20 = t20;
+		destination->m_21 = t21;
+		destination->m_22 = t22;
+		destination->m_23 = t23;
 		return destination;
 	}
 
