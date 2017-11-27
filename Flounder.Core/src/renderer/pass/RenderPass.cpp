@@ -34,12 +34,6 @@ namespace Flounder
 		attachments[4].format = VK_FORMAT_R8G8B8A8_UNORM; // Material.
 		attachments[5].format = VK_FORMAT_R16_SFLOAT; // Shadow.
 
-
-
-
-
-
-
 		std::array<VkAttachmentReference, 1> subpass0ColourAttachments = {};
 		subpass0ColourAttachments[0].attachment = 5; // Shadow.
 		subpass0ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
@@ -59,12 +53,6 @@ namespace Flounder
 		std::array<VkAttachmentReference, 1> subpass2ColourAttachments = {};
 		subpass2ColourAttachments[0].attachment = 1; // Swapchain.
 		subpass2ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-
-
-
-
-
 
 		std::array<VkSubpassDescription, 3> subpasses = {};
 		subpasses[0].pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;

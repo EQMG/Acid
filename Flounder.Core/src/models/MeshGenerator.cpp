@@ -34,7 +34,7 @@ namespace Flounder
 					const uint32_t bottomLeft = ((row + 1) * vertexCount) + col;
 					const uint32_t bottomRight = bottomLeft + 1;
 
-					switch(meshType)
+					switch (meshType)
 					{
 					case MeshSimple:
 						GenerateIndiciesSimple(topLeft, topRight, bottomLeft, bottomRight, indices);
@@ -43,7 +43,6 @@ namespace Flounder
 						GenerateIndiciesPattern(topLeft, topRight, bottomLeft, bottomRight, row % 2 == 0, col % 2 == 0, indices);
 						break;
 					}
-
 				}
 			}
 		}

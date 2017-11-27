@@ -48,7 +48,7 @@ namespace Demo
 				if (position.m_y > 0.0f)
 				{
 					Entity *test = nullptr;
-					
+
 					if (i < 0)
 					{
 						test = new EntityTreePine(nullptr, Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f))); // Entities::Get()->GetStructure()

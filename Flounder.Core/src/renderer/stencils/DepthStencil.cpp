@@ -52,7 +52,7 @@ namespace Flounder
 		{
 			assert(false && "Vulkan runtime error, depth stencil format not selected!");
 		}
-		
+
 		VkImageCreateInfo imageCreateInfo = {};
 		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 		imageCreateInfo.flags = 0;

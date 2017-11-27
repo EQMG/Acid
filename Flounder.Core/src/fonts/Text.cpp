@@ -256,7 +256,7 @@ namespace Flounder
 	std::vector<Vertex> Text::CreateQuad(Text *object, std::vector<Line> lines)
 	{
 		std::vector<Vertex> vertices = std::vector<Vertex>();
-	//	object->m_numberLines = static_cast<int>(lines.size());
+		//	object->m_numberLines = static_cast<int>(lines.size());
 		double cursorX = 0.0;
 		double cursorY = 0.0;
 		int lineOrder = static_cast<int>(lines.size());

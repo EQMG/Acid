@@ -94,8 +94,8 @@ void main()
 	float metallic = textureMaterial.r;
 	float roughness = textureMaterial.g;
 	vec3 worldPosition = decodeWorldPosition(fragmentUv, depth);
+	vec4 screenPosition = scene.view * vec4(worldPosition, 1.0f);
 	vec3 viewDirection = normalize(scene.cameraPosition - worldPosition);
-	vec4 positionRelativeToCam = scene.view * vec4(worldPosition, 1.0f);
 	
 	outColour = vec4(colour, 1.0f);
 
@@ -148,7 +148,7 @@ void main()
 	// Fog.
 	if (textureNormal.rgb != vec3(0.0f))
 	{
-		float fogFactor = exp(-pow(length(positionRelativeToCam.xyz) * scene.fogDensity, scene.fogGradient));
+		float fogFactor = exp(-pow(length(screenPosition.xyz) * scene.fogDensity, scene.fogGradient));
 		fogFactor = clamp(fogFactor, 0.0, 1.0);
 		outColour = mix(scene.fogColour, outColour, fogFactor);
 	}
