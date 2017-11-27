@@ -20,8 +20,9 @@ namespace Demo
 		RendererEntities *m_rendererEntities;
 
 		RendererDeferred *m_rendererDeferred;
+		FilterFxaa *m_filterFxaa;
 		FilterLensflare *m_filterLensflare;
-		FilterGrey *m_filterGrey;
+		FilterTiltshift *m_filterTiltshift;
 		RendererGuis *m_rendererGuis;
 		RendererFonts *m_rendererFonts;
 	public:

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../IPostFilter.hpp"
+#include "../../renderer/buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
@@ -8,12 +9,25 @@ namespace Flounder
 		public IPostFilter
 	{
 	private:
+		struct UboScene
+		{
+			float blurAmount;
+			float centre;
+			float stepSize;
+			float steps;
+		};
+
+		static const DescriptorType typeUboScene;
+		static const DescriptorType typeSamplerColour;
+
+		UniformBuffer *m_uniformScene;
+
 		float m_blurAmount;
 		float m_centre;
 		float m_stepSize;
 		float m_steps;
 	public:
-		FilterTiltshift(const float &blurAmount = 1.0f, const float &centre = 1.1f, const float &stepSize = 0.004f, const float &steps = 3.0f);
+		FilterTiltshift(const int &subpass);
 
 		~FilterTiltshift();
 

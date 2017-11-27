@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../IPostFilter.hpp"
+#include "../../renderer/buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
@@ -8,9 +9,19 @@ namespace Flounder
 		public IPostFilter
 	{
 	private:
+		struct UboScene
+		{
+			float spanMax;
+		};
+
+		static const DescriptorType typeUboScene;
+		static const DescriptorType typeSamplerColour;
+
+		UniformBuffer *m_uniformScene;
+
 		float m_spanMax;
 	public:
-		FilterFxaa(const float &spanMax = 8.0f);
+		FilterFxaa(const int &subpass);
 
 		~FilterFxaa();
 
