@@ -17,7 +17,7 @@ namespace Flounder
 		FilterCombine *m_filterCombine;
 		float m_blurFactor;
 	public:
-		PipelinePaused();
+		PipelinePaused(const int &subpass);
 
 		~PipelinePaused();
 

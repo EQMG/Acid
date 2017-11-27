@@ -10,9 +10,7 @@ namespace Flounder
 	private:
 		float m_factorValue;
 	public:
-		FilterDarken(const float &factorValue);
-
-		FilterDarken();
+		FilterDarken(const int &subpass);
 
 		~FilterDarken();
 

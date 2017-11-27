@@ -8,7 +8,7 @@ namespace Flounder
 		public IPostFilter
 	{
 	public:
-		FilterSepia();
+		FilterSepia(const int &subpass);
 
 		~FilterSepia();
 

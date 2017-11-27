@@ -68,9 +68,6 @@ vec3 decodeWorldPosition(vec2 uv, float depth)
 	vec3 ndc = vec3(uv * 2.0 - vec2(1.0), depth);
 	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0);
 	return p.xyz / p.w;
-
-//	vec4 p = inverse(scene.projection) * vec4(uv, depth, 1.0f);
-//	return vec3(inverse(scene.view) * vec4(p.xyz / p.w, 1.0f));
 }
 
 float attenuation(float radius, float distance)

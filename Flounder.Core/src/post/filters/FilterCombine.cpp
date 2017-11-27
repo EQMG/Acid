@@ -2,8 +2,8 @@
 
 namespace Flounder
 {
-	FilterCombine::FilterCombine() :
-		IPostFilter("filterCombine", "res/shaders/filters/combine.frag.spv"),
+	FilterCombine::FilterCombine(const int &subpass) :
+		IPostFilter("filterCombine", "res/shaders/filters/combine.frag.spv", subpass, {}),
 		m_slideSpaceValue(new Vector4(0.0f, 1.0f, 0.0f, 1.0f))
 	{
 	}

@@ -1,13 +1,15 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(set = 0, binding = 0) uniform sampler2D samplerColour;
-
-layout(set = 0, binding = 1) uniform UBO 
+layout(set = 0, binding = 0) uniform UboScene 
 {
 	float pixelSize;
 	vec2 displaySize;
-} ubo;
+} scene;
+
+layout(set = 0, binding = 1) uniform sampler2D samplerColour;
+
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
 
 layout(location = 0) in vec2 fragmentUv;
 
@@ -19,8 +21,8 @@ void main()
 
 	if (fragmentUv.x < 1.0) 
 	{
-		float dx = ubo.pixelSize * (1.0 / ubo.displaySize.x);
-		float dy = ubo.pixelSize * (1.0 / ubo.displaySize.y);
+		float dx = scene.pixelSize * (1.0 / scene.displaySize.x);
+		float dy = scene.pixelSize * (1.0 / scene.displaySize.y);
 		coord.x = dx * floor(fragmentUv.x / dx);
 		coord.y = dy * floor(fragmentUv.y / dy);
 	} 
@@ -29,6 +31,9 @@ void main()
 		coord = fragmentUv;
 	}
 
-	vec3 colour = texture(samplerColour, coord).rgb;
-	outColour = vec4(colour, 1.0);
+	vec3 textureColour = texture(samplerColour, coord).rgb;
+	outColour = vec4(textureColour, 1.0);
+	
+	vec2 sizeColour = textureSize(samplerColour, 0);
+	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);
 }

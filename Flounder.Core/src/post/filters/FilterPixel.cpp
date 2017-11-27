@@ -4,9 +4,9 @@
 
 namespace Flounder
 {
-	FilterPixel::FilterPixel(const float &pixelSize) :
-		IPostFilter("filterGrain", "res/shaders/filters/grain.frag.spv"),
-		m_pixelSize(pixelSize)
+	FilterPixel::FilterPixel(const int &subpass) :
+		IPostFilter("filterGrain", "res/shaders/filters/grain.frag.spv", subpass, {}),
+		m_pixelSize(2.0f)
 	{
 	}
 
