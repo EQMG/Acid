@@ -1,8 +1,7 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 1) uniform UboObject
+layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 } object;
@@ -40,7 +39,7 @@ vec2 encodeNormal(vec3 normal)
 	return result;
 }
 
-void main(void) 
+void main() 
 {
 	vec3 unitNormal = normalize(fragmentNormal);
 

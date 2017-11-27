@@ -9,7 +9,7 @@ namespace Flounder
 	class UbosDeferred
 	{
 	public:
-#define MAX_LIGHTS 63
+#define MAX_LIGHTS 64
 
 		struct Light
 		{

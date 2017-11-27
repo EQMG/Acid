@@ -11,8 +11,6 @@ namespace Flounder
 	class IPostFilter
 	{
 	private:
-		static const DescriptorType typeUboScene;
-		static const DescriptorType typeSamplerColour;
 		static const PipelineCreateInfo pipelineCreateInfo;
 	protected:
 		Pipeline *m_pipeline;
@@ -23,7 +21,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="filterName"> The name for the filter. </param>
 		/// <param name="fragmentShader"> The fragment shader file. </param>
-		IPostFilter(const std::string &filterName, const std::string &fragmentShader, const int &subpass = 2);
+		IPostFilter(const std::string &filterName, const std::string &fragmentShader, const int &subpass = 2, const std::vector<DescriptorType> &descriptors = {});
 
 		/// <summary>
 		/// Deconstructor for the post filter.
@@ -34,5 +32,7 @@ namespace Flounder
 		/// Renders the filter.
 		/// </summary>
 		virtual void RenderFilter(const VkCommandBuffer *commandBuffer);
+	protected:
+		void CmdRender(const VkCommandBuffer *commandBuffer, const std::vector<VkWriteDescriptorSet> &descriptorWrites);
 	};
 }

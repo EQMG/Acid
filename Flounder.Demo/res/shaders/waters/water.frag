@@ -1,14 +1,13 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 1) uniform UboObject
+layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 	vec4 diffuseColour;
 } object;
 
-layout(binding = 3) uniform sampler2D samplerReflection;
+layout(set = 0, binding = 3) uniform sampler2D samplerReflection;
 
 layout(location = 0) in vec3 fragmentNormal;
 layout(location = 1) in vec2 fragmentUv;
@@ -34,7 +33,7 @@ vec2 encodeNormal(vec3 normal)
 	return result;
 }
 
-void main(void) 
+void main() 
 {
 	// vec2 ndc = (fragmentClipSpace.xy / fragmentClipSpace.w) / 2.0f + 0.5f;
 	// vec2 reflectTextures = vec2(ndc.x, -ndc.y);

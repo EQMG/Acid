@@ -20,6 +20,7 @@ namespace Demo
 		RendererEntities *m_rendererEntities;
 
 		RendererDeferred *m_rendererDeferred;
+		FilterLensflare *m_filterLensflare;
 		FilterGrey *m_filterGrey;
 		RendererGuis *m_rendererGuis;
 		RendererFonts *m_rendererFonts;

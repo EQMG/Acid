@@ -1,15 +1,14 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(binding = 1) uniform UboObject 
+layout(set = 0, binding = 1) uniform UboObject 
 {
 	mat4 transform;
 	vec4 skyColour;
 	float blendFactor;
 } object;
 
-layout(binding = 2) uniform samplerCube samplerCubemap;
+layout(set = 0, binding = 2) uniform samplerCube samplerCubemap;
 
 layout(location = 0) in vec3 fragmentUv;
 
@@ -33,7 +32,7 @@ vec2 encodeNormal(vec3 normal)
 	return result;
 }
 
-void main(void) 
+void main() 
 {
 	vec3 cubemapColour = vec3(0.0f);
 	

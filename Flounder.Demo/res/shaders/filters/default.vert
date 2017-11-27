@@ -1,5 +1,4 @@
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
 layout(location = 0) in vec3 inPosition;
@@ -12,7 +11,7 @@ out gl_PerVertex
 	vec4 gl_Position;
 };
 
-void main(void) 
+void main() 
 {
 	fragmentUv = vec2(infragmentUv.x, infragmentUv.y);
 	gl_Position = vec4(inPosition, 1.0);

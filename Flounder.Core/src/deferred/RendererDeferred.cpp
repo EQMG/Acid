@@ -74,8 +74,8 @@ namespace Flounder
 			if (componentLight != nullptr)
 			{
 				UbosDeferred::Light light = {};
-				light.colour = Colour(*componentLight->GetLight()->m_colour);
-				light.position = Vector3(*componentLight->GetLight()->m_position);
+				light.colour = *componentLight->GetLight()->m_colour;
+				light.position = *componentLight->GetLight()->m_position;
 				light.radius = componentLight->GetLight()->m_radius;
 				sceneLights.push_back(light);
 			}
@@ -122,7 +122,8 @@ namespace Flounder
 
 		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ 
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
+		{ 
 			m_uniformScene->GetWriteDescriptor(0, descriptorSet), 
 			m_uniformLights->GetWriteDescriptor(1, descriptorSet),
 			Renderer::Get()->GetDepthStencil()->GetWriteDescriptor(2, descriptorSet),

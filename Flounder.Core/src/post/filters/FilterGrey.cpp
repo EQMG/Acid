@@ -5,8 +5,10 @@
 
 namespace Flounder
 {
+	const DescriptorType FilterGrey::typeSamplerColour = Texture::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
+
 	FilterGrey::FilterGrey(const int &subpass) :
-		IPostFilter("filterGrey", "res/shaders/filters/grey.frag.spv", subpass)
+		IPostFilter("filterGrey", "res/shaders/filters/grey.frag.spv", subpass, { typeSamplerColour })
 	{
 	}
 
@@ -16,17 +18,11 @@ namespace Flounder
 
 	void FilterGrey::RenderFilter(const VkCommandBuffer *commandBuffer)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
-
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
-
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet) };
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
-
-		VkDescriptorSet descriptors[1] = { descriptorSet };
-		vkCmdBindDescriptorSets(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-
-		m_model->CmdRender(*commandBuffer);
+		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
+		{
+			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(0, descriptorSet)
+		};
+		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
 	}
 }
