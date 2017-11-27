@@ -19,6 +19,7 @@ namespace Flounder
 		m_width(0),
 		m_height(0),
 		m_image(VK_NULL_HANDLE),
+		m_imageMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageInfo({})
@@ -53,8 +54,8 @@ namespace Flounder
 		memcpy(data, pixels, static_cast<size_t>(m_size));
 		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
-		VkDeviceMemory imageMemory = GetBufferMemory();
-		CreateImage(m_width, m_height, m_format, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, imageMemory);
+		m_imageMemory = GetBufferMemory();
+		CreateImage(m_width, m_height, m_format, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), bufferStaging->GetBuffer(), m_image);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
@@ -116,6 +117,7 @@ namespace Flounder
 		m_width(width),
 		m_height(height),
 		m_image(VK_NULL_HANDLE),
+		m_imageMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
 		m_sampler(VK_NULL_HANDLE),
 		m_format(format),
@@ -137,8 +139,8 @@ namespace Flounder
 		memcpy(data, pixels, static_cast<size_t>(m_size));
 		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
-		VkDeviceMemory imageMemory = GetBufferMemory();
-		CreateImage(m_width, m_height, m_format, VK_IMAGE_TILING_OPTIMAL, usage | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, imageMemory);
+		m_imageMemory = GetBufferMemory();
+		CreateImage(m_width, m_height, m_format, VK_IMAGE_TILING_OPTIMAL, usage | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), bufferStaging->GetBuffer(), m_image);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
@@ -183,6 +185,9 @@ namespace Flounder
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
 		m_imageInfo.sampler = m_sampler;
+
+		delete bufferStaging;
+		delete[] pixels;
 	}
 
 	Texture::~Texture()
@@ -191,7 +196,7 @@ namespace Flounder
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
-		// vkFreeMemory(logicalDevice, m_imageMemory, nullptr);
+		vkFreeMemory(logicalDevice, m_imageMemory, nullptr);
 		vkDestroyImage(logicalDevice, m_image, nullptr);
 	}
 

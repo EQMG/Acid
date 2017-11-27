@@ -49,22 +49,7 @@ namespace Flounder
 		~Shadows();
 
 		void Update() override;
-	private:
-		/// <summary>
-		/// Creates the orthographic projection matrix.
-		/// </summary>
-		/// <param name="width"> Shadow box width. </param>
-		/// <param name="height"> Shadow box height. </param>
-		/// <param name="length"> Shadow box length. </param>
-		void UpdateOrthographicProjectionMatrix(const float &width, const float &height, const float &length);
 
-		/// <summary>
-		/// Updates the "view" matrix of the light. The light itself has no position, so the "view" matrix is centered at the center of the shadow box.
-		/// </summary>
-		/// <param name="direction"> The light direct. </param>
-		/// <param name="position"> The center of the shadow box. </param>
-		void UpdateLightViewMatrix(Vector3 *direction, Vector3 *position);
-	public:
 		Vector3 *GetLightDirection() const { return m_lightDirection; }
 
 		void SetLightDirection(const Vector3 &lightDirection) const { m_lightDirection->Set(lightDirection); }
@@ -79,7 +64,7 @@ namespace Flounder
 
 		int GetShadowPcf() const { return m_shadowPcf; }
 
-		void SetShadowPcf(const int &shadowPCF) { m_shadowPcf = shadowPCF; }
+		void SetShadowPcf(const int &shadowPcf) { m_shadowPcf = shadowPcf; }
 
 		float GetShadowBias() const { return m_shadowBias; }
 

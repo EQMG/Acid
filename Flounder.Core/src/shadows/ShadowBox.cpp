@@ -208,6 +208,15 @@ namespace Flounder
 		return point4;
 	}
 
+	void ShadowBox::UpdateOrthoProjectionMatrix() const
+	{
+		m_projectionMatrix->SetIdentity();
+		m_projectionMatrix->m_00 = 2.0f / m_aabb->GetWidth();
+		m_projectionMatrix->m_11 = 2.0f / m_aabb->GetHeight();
+		m_projectionMatrix->m_22 = -2.0f / m_aabb->GetDepth();
+		m_projectionMatrix->m_33 = 1.0f;
+	}
+
 	void ShadowBox::UpdateCenter() const
 	{
 		float x = (m_aabb->m_minExtents->m_x + m_aabb->m_maxExtents->m_x) / 2.0f;
@@ -220,15 +229,6 @@ namespace Flounder
 
 		delete centre4;
 		delete invertedLight;
-	}
-
-	void ShadowBox::UpdateOrthoProjectionMatrix() const
-	{
-		m_projectionMatrix->SetIdentity();
-		m_projectionMatrix->m_00 = 2.0f / m_aabb->GetWidth();
-		m_projectionMatrix->m_11 = 2.0f / m_aabb->GetHeight();
-		m_projectionMatrix->m_22 = -2.0f / m_aabb->GetDepth();
-		m_projectionMatrix->m_33 = 1.0f;
 	}
 
 	void ShadowBox::UpdateLightViewMatrix() const

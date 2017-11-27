@@ -84,12 +84,12 @@ namespace Flounder
 		/// <returns> The relevant corner vertex of the view frustum in light space. </returns>
 		Vector4 *CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width) const;
 
+		void UpdateOrthoProjectionMatrix() const;
+
 		/// <summary>
 		/// Updates the centre of the shadow box (orthographic projection area).
 		/// </summary>
 		void UpdateCenter() const;
-
-		void UpdateOrthoProjectionMatrix() const;
 
 		void UpdateLightViewMatrix() const;
 

@@ -8,12 +8,7 @@ namespace Flounder
 		m_selector(new UiSelector()),
 		m_container(new UiObject(nullptr, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)))),
 		m_objects(new std::vector<UiObject*>()),
-		m_arial(new FontFamily("arial")),
-		m_berlinSans(new FontFamily("berlinSans")),
-		m_cafeFrancoise(new FontFamily("cafefrancoise")),
-		m_proximanova(new FontFamily("proximanova")),
-		m_candara(new FontFamily("candara")),
-		m_segoe(new FontFamily("segoe"))
+		m_proximanova(new FontFamily("proximanova"))
 	{
 	}
 
@@ -24,12 +19,7 @@ namespace Flounder
 		delete m_container;
 		delete m_objects;
 
-		delete m_arial;
-		delete m_berlinSans;
-		delete m_cafeFrancoise;
 		delete m_proximanova;
-		delete m_candara;
-		delete m_segoe;
 	}
 
 	void Uis::Update()
