@@ -30,7 +30,7 @@ namespace Flounder
 		attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 		attachments[1].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 		attachments[2].format = VK_FORMAT_R8G8B8A8_UNORM; // Colour.
-		attachments[3].format = VK_FORMAT_R16G16_SFLOAT; // Normal.
+		attachments[3].format = VK_FORMAT_R16G16_UNORM; // Normal.
 		attachments[4].format = VK_FORMAT_R8G8B8A8_UNORM; // Material.
 		attachments[5].format = VK_FORMAT_R16_SFLOAT; // Shadow.
 
@@ -51,10 +51,14 @@ namespace Flounder
 		subpass1ColourAttachments[2].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 		std::array<VkAttachmentReference, 1> subpass2ColourAttachments = {};
-		subpass2ColourAttachments[0].attachment = 1; // Swapchain.
+		subpass2ColourAttachments[0].attachment = 1; // Swapchin.
 		subpass2ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-		std::array<VkSubpassDescription, 3> subpasses = {};
+		std::array<VkAttachmentReference, 1> subpass3ColourAttachments = {};
+		subpass3ColourAttachments[0].attachment = 1; // Swapchin.
+		subpass3ColourAttachments[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+		std::array<VkSubpassDescription, 4> subpasses = {};
 		subpasses[0].pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 		subpasses[0].colorAttachmentCount = static_cast<uint32_t>(subpass0ColourAttachments.size());
 		subpasses[0].pColorAttachments = subpass0ColourAttachments.data();
@@ -68,20 +72,31 @@ namespace Flounder
 		subpasses[2].colorAttachmentCount = static_cast<uint32_t>(subpass2ColourAttachments.size());
 		subpasses[2].pColorAttachments = subpass2ColourAttachments.data();
 
-		std::array<VkSubpassDependency, 2> dependencies = {};
-		dependencies[0].srcSubpass = 0;
-		dependencies[0].dstSubpass = 1;
-		dependencies[0].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+		subpasses[3].pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+		subpasses[3].colorAttachmentCount = static_cast<uint32_t>(subpass3ColourAttachments.size());
+		subpasses[3].pColorAttachments = subpass3ColourAttachments.data();
+
+		std::array<VkSubpassDependency, 3> dependencies = {};
+		dependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
+		dependencies[0].dstSubpass = 0;
+		dependencies[0].srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
 		dependencies[0].dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
 		dependencies[0].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 		dependencies[0].dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
-		dependencies[1].srcSubpass = 1;
-		dependencies[1].dstSubpass = 2;
+		dependencies[1].srcSubpass = 0;
+		dependencies[1].dstSubpass = 1;
 		dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 		dependencies[1].dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
 		dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 		dependencies[1].dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+
+		dependencies[2].srcSubpass = 1;
+		dependencies[2].dstSubpass = VK_SUBPASS_EXTERNAL;
+		dependencies[2].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+		dependencies[2].dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+		dependencies[2].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+		dependencies[2].dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
 		VkRenderPassCreateInfo renderPassCreateInfo = {};
 		renderPassCreateInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
