@@ -4,12 +4,14 @@
 const float FXAA_REDUCE_MIN = (1.0 / 128.0);
 const float FXAA_REDUCE_MUL = (1.0 / 8.0);
 
-layout(set = 0, binding = 0) uniform sampler2D samplerColour;
-
-layout(set = 0, binding = 1) uniform UBO 
+layout(set = 0, binding = 0) uniform UboScene 
 {
 	float spanMax;
-} ubo;
+} scene;
+
+layout(set = 0, binding = 1) uniform sampler2D samplerColour;
+
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
 
 layout(location = 0) in vec2 fragmentUv;
 
@@ -45,7 +47,7 @@ void main()
 
 	float rcpDirMin = 1.0 / (min(abs(dir.x), abs(dir.y)) + dirReduce);
 
-	dir = min(vec2(ubo.spanMax,ubo.spanMax), max(vec2(-ubo.spanMax, -ubo.spanMax), dir * rcpDirMin)) * inverseResolution;
+	dir = min(vec2(scene.spanMax, scene.spanMax), max(vec2(-scene.spanMax, -scene.spanMax), dir * rcpDirMin)) * inverseResolution;
 
   	vec3 rgbA = (1.0/2.0) * (texture(samplerColour, fragmentUv.xy + dir * (1.0/3.0 - 0.5)).xyz + texture(samplerColour, fragmentUv.xy + dir * (2.0/3.0 - 0.5)).xyz);
   	vec3 rgbB = rgbA * (1.0/2.0) + (1.0/4.0) * (texture(samplerColour, fragmentUv.xy + dir * (0.0/3.0 - 0.5)).xyz + texture(samplerColour, fragmentUv.xy + dir * (3.0/3.0 - 0.5)).xyz);
@@ -59,4 +61,7 @@ void main()
 	{
 		outColour = vec4(rgbB, 1.0);
 	}
+	
+	vec2 sizeColour = textureSize(samplerColour, 0);
+	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);
 }
