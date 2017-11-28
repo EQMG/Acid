@@ -1,5 +1,5 @@
 # Flounder Guidelines 
-October 29, 2017 
+November 27, 2017 
  
 This document is a rough outline for guidelines for Flounder. This document covers the languages of C++, C#, and GLSL. Flounder is licenced on the MIT Licence, read more on our [LICENSE](LICENSE) file. For more about the project read our read more on our [README](README) file. 
  
@@ -101,7 +101,7 @@ namespace Examples
 			i++;
 		} while (i < 8);
 
-		return 0l
+		return 0;
 	}
 }
 ```
@@ -112,7 +112,6 @@ Classes, all methods, functions, and files are camelcase + first letter upper. M
 # GLSL
 ```glsl
 #version 450
-
 #extension GL_ARB_separate_shader_objects : enable
 
 layout(binding = 0) uniform UboObject 
