@@ -1,5 +1,5 @@
 # Flounder Guidelines 
-November 27, 2017 
+December 1, 2017 
  
 This document is a rough outline for guidelines for Flounder. This document covers the languages of C++, C#, and GLSL. Flounder is licenced on the MIT Licence, read more on our [LICENSE](LICENSE) file. For more about the project read our read more on our [README](README) file. 
  
@@ -108,6 +108,9 @@ namespace Examples
 
 # Styling Guide
 Classes, all methods, functions, and files are camelcase + first letter upper. Member variables start with m_, paramaters are normal camelcased. Tabs are used for indentations, and braces are required for all blocks. Use the member initializer list no matter what. Avoid compiler macros where possible! Use multiple lines instead of long lines, const as much as possible. Line length is usualy never wrapped, VS wraps lines for readability.
+
+# Date Guide
+Our date format is day.month.year, for example December 1st 2017 is written as '1.12.17'. 
 
 # GLSL
 ```glsl
