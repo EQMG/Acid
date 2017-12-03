@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\ExampleStarting",
+    "\\FlounderEditor",
+    "\\FlounderEditor\\src",
     "\\FlounderEngine",
-    "\\FlounderEngine\\src",
-    "\\FlounderEngine\\src\\entities\\components"
+    "\\FlounderEngine\\src"
   ],
   "SelectedNode": "\\CMakeLists.txt",
   "PreviewInSolutionExplorer": false
