@@ -86,7 +86,7 @@ namespace Flounder
 		{
 			ISpatialObject *object = static_cast<ISpatialObject*>(value);
 
-			if (object->GetCollider() == nullptr || range->Intersects(*object->GetCollider()) || range->Contains(*object->GetCollider()))
+			if (object->GetCollider() == nullptr || range->Intersects(*object->GetCollider()).IsIntersection() || range->Contains(*object->GetCollider()))
 			{
 				result->push_back(value);
 			}

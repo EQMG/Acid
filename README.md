@@ -6,11 +6,16 @@ Flounder is licenced under MIT, we are open to contributions use the 'Developer 
 
 ## Links
 Windows   [![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt78wov7o?svg=true)](https://ci.appveyor.com/project/Mattparks/flounder)
+
 Linux   [![Build Status](https://travis-ci.org/Equilibrium-Games/Flounder.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Flounder)
 
+
 Website   [Learn more](https://equilibrium.games)
+
 Discord   [Invite Link](https://discord.gg/zNN52T3)
+
 Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs/docs/html/namespace_flounder.html)
+
 Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/LocMetrics.html)
 
 ## Platforms
