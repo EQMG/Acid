@@ -1,6 +1,6 @@
 <img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/LogoFlounder.png" alt="flounder" width=225>
 
-# Flounder v0.4
+# Flounder v0.5
 Flounder is a cross platform high speed C++17 Vulkan game engine. Flounder is built from the ground up to provide the most speed, well written code, and features with a modular engine. Flounder is very much a work in progress, much of this code will change.
 Flounder is licenced under MIT, we are open to contributions use the 'Developer Setup' section in the README to get started with Flounder, and if you want to know about our code style read GUIDELINES.
 
