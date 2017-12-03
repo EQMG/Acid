@@ -4,11 +4,8 @@
     "\\ExampleStarting",
     "\\FlounderEngine",
     "\\FlounderEngine\\src",
-    "\\FlounderEngine\\src\\entities",
-    "\\FlounderEngine\\src\\entities\\components",
-    "\\FlounderEngine\\src\\helpers",
-    "\\FlounderEngine\\src\\post\\pipelines"
+    "\\FlounderEngine\\src\\entities\\components"
   ],
-  "SelectedNode": "\\FlounderEngine\\CMakeLists.txt",
+  "SelectedNode": "\\CMakeLists.txt",
   "PreviewInSolutionExplorer": false
 }
