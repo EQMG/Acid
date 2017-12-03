@@ -1,49 +1,63 @@
 cmake_minimum_required (VERSION 3.9)
+
 project (Flounder)
 
 # Platform
+set(CMAKE_CXX_STANDARD 17)
 set(_CRT_SECURE_NO_WARNINGS 1)
 
-#if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-	set(FLOUNDER_CONFIG_DEBUG TRUE)
-#else()
-#	set(FLOUNDER_CONFIG_RELEASE TRUE)
-#endif()
+add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
-if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-	set(FLOUNDER_64BIT true)
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+	add_definitions(-DFLOUNDER_CONFIG_DEBUG)
+else()
+	add_definitions(-DFLOUNDER_CONFIG_RELEASE)
 endif()
 
 if(WIN32)
-	set(FLOUNDER_PLATFORM_WINDOWS TRUE)
+	add_definitions(-DFLOUNDER_PLATFORM_WINDOWS)
+	set(FLOUNDER_LIBRARY_EXTENSION ".lib")
 elseif(UNIX AND NOT APPLE)
-	set(FLOUNDER_PLATFORM_LINUX TRUE)
+	add_definitions(-DFLOUNDER_PLATFORM_LINUX)
+	set(FLOUNDER_LIBRARY_EXTENSION ".a")
 else(UNIX AND APPLE)
-	set(FLOUNDER_PLATFORM_MACOS TRUE)
+	add_definitions(-DFLOUNDER_PLATFORM_MACOS)
+	set(FLOUNDER_LIBRARY_EXTENSION ".a")
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
 
 if(MSVC)
 	set(CMAKE_CXX_FLAGS "/DWIN32 /D_WINDOWS")
-	
-	if(FLOUNDER_64BIT) # Debug edit and continue for 64-bit
-		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
-	else() # Normal debug for 32-bit
-		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi")
-	endif()
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 	set(BS_COMPILER_FLAGS_COMMON "-Wall -fPIC -fno-exceptions -fno-strict-aliasing -fno-rtti -fno-ms-compatibility
 	-fms-extensions -Wl,-rpath=$ORIGIN")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	set(BS_COMPILER_FLAGS_COMMON "-Wall -fPIC -fno-exceptions -fno-strict-aliasing -fno-rtti -Wl,-rpath=$ORIGIN")
 else()
-
+	# TODO: Other compilers.
 endif()
+
+# Output-directories
+set(FLOUNDER_BINARY_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/../Build/bin)
+set(FLOUNDER_LIBRARY_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/../Build/lib)
+set(FLOUNDER_OBJECT_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/../Build/obj)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${FLOUNDER_BINARY_OUTPUT_DIR}/Debug)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_OPTIMIZEDDEBUG ${FLOUNDER_BINARY_OUTPUT_DIR}/OptimizedDebug)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${FLOUNDER_BINARY_OUTPUT_DIR}/Release)
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${FLOUNDER_BINARY_OUTPUT_DIR}/Debug)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_OPTIMIZEDDEBUG ${FLOUNDER_BINARY_OUTPUT_DIR}/OptimizedDebug)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${FLOUNDER_BINARY_OUTPUT_DIR}/Release)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${FLOUNDER_LIBRARY_OUTPUT_DIR}/Debug)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_OPTIMIZEDDEBUG ${FLOUNDER_LIBRARY_OUTPUT_DIR}/OptimizedDebug)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${FLOUNDER_LIBRARY_OUTPUT_DIR}/Release)
 
 # Sub-directories
 add_subdirectory(FlounderEngine)
-# add_subdirectory(FlounderEditor)
+add_subdirectory(FlounderEditor)
 
 # Executables
 add_subdirectory(ExampleStarting)
