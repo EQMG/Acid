@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <vector>
+#include <cstring>
 #include <string>
 
 namespace Flounder

@@ -78,12 +78,12 @@ namespace Flounder
 
 	float Worlds::GetSunriseFactor() const
 	{
-		return Maths::Clamp(-(sin(2.0f * PI * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
+		return Maths::Clamp(static_cast<float>(-(sin(2.0f * PI * GetDayFactor()) - 1.0f)) / 2.0f, 0.0f, 1.0f);
 	}
 
 	float Worlds::GetShadowFactor() const
 	{
-		return Maths::Clamp(1.7f * sin(2.0f * PI * GetDayFactor()), 0.0f, 1.0f);
+		return Maths::Clamp(static_cast<float>(1.7f * sin(2.0f * PI * GetDayFactor())), 0.0f, 1.0f);
 	}
 
 	float Worlds::GetSunHeight() const
