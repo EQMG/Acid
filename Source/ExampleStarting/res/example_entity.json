@@ -1,0 +1,8 @@
+"example-entity": {
+	"name": "sun",
+	"components": {
+		"alpha": {
+			"alpha": 1.0
+		}
+	}
+},
