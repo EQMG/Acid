@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <locale>
+#include <cstring>
 #include <string>
 
 namespace Flounder
