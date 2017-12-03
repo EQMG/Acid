@@ -40,4 +40,4 @@ build_script:
   - cmake --version
   - clang-cl -v
   - cmake ../Source -GNinja -DCMAKE_CXX_COMPILER=clang-cl
-  - cmake --build . --target check
+  - cmake --build . --target clean
