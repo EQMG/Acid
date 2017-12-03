@@ -13,21 +13,12 @@ install:
   - mkdir C:\Projects\deps
   - cd C:\Projects\deps
 
-  - set NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip"
-  - appveyor DownloadFile %NINJA_URL% -FileName ninja-win.zip
-  - 7z x ninja-win.zip -oC:\Projects\deps\ninja > nul
-  - set PATH=C:\Projects\deps\ninja;%PATH%
-  - ninja --version
-
   - set CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip"
   - appveyor DownloadFile %CMAKE_URL% -FileName cmake-3.9.0-win64-x64.zip
   - 7z x cmake-3.9.0-win64-x64.zip -oC:\Projects\deps > nul
   - move C:\Projects\deps\cmake-* C:\Projects\deps\cmake # Move to a version-agnostic directory
   - set PATH=C:\Projects\deps\cmake\bin;%PATH%
   - cmake --version
-
-  - set PATH="C:\Program Files\LLVM\bin";%PATH%
-  - clang-cl -v
 
 before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
@@ -36,8 +27,5 @@ before_build:
 build_script:
   - mkdir Build
   - cd Build
-  - ninja --version
-  - cmake --version
-  - clang-cl -v
-  - cmake ../Source -GNinja -DCMAKE_CXX_COMPILER=clang-cl
-  - cmake --build . --target clean
+  - cmake ../Source/ -G "Visual Studio 15 2017 Win64"
+  - cmake --build .
