@@ -15,7 +15,7 @@ install:
 
   - set NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip"
   - appveyor DownloadFile %NINJA_URL% -FileName ninja-win.zip
-  - 7z x ninja-win.zip -oC:\Projects\deps > nul
+  - 7z x ninja-win.zip -oC:\Projects\deps\ninja > nul
   - set PATH=C:\Projects\deps\ninja;%PATH%
   - ninja --version
 
@@ -36,5 +36,8 @@ before_build:
 build_script:
   - mkdir Build
   - cd Build
+  - ninja --version
+  - cmake --version
+  - clang-cl -v
   - cmake ../Source -GNinja -DCMAKE_CXX_COMPILER=clang-cl
   - cmake --build . --target check
