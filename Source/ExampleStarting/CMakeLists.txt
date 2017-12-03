@@ -3,7 +3,7 @@ include(CMakeSources.cmake)
 #project(ExampleStarting)
 
 set(EXAMPLESTARTING_INC 
-	"../../external/includes/"
+	"../../External/includes/"
 	"../FlounderEngine/src/"
 	"src/"
 )
