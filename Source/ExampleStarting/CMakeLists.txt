@@ -1,5 +1,4 @@
 include(CMakeSources.cmake)
-
 #project(ExampleStarting)
 
 set(EXAMPLESTARTING_INC 
@@ -16,6 +15,5 @@ else()
 	add_executable(ExampleStarting ${EXAMPLESTARTING_SRC})
 endif()
 
-target_compile_definitions(ExampleStarting PRIVATE -DEXAMPLESTARTING_EXPORTS)
-
 target_link_libraries(ExampleStarting FlounderEngine)
+add_dependencies(ExampleStarting FlounderEngine)

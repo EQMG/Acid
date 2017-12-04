@@ -1,8 +1,8 @@
 #include <iostream>
+#include <functional>
 
-int main(int argc, char **argv)
+int main()
 {
-	std::cout << "Hello world!" << std::endl;
+	[out = std::ref(std::cout << "Hello ")]() {out.get() << "World\n"; }();
 	std::cin.get();
-	return 0;
 }

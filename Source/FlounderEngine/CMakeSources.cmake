@@ -1,4 +1,4 @@
-set(FLOUNDERENGINE_INC_NOFILTER
+set(FLOUNDERENGINE_HEADERS
 	"src/deferred/RendererDeferred.hpp"
 	"src/deferred/UbosDeferred.hpp"
 	"src/entities/components/ComponentMaterial.hpp"
@@ -190,10 +190,7 @@ set(FLOUNDERENGINE_INC_NOFILTER
 	"src/worlds/Worlds.hpp"
 )
 
-set(FLOUNDERENGINE_INC_MANAGERS
-)
-
-set(FLOUNDERENGINE_SRC_NOFILTER
+set(FLOUNDERENGINE_SOURCES
 	"src/deferred/RendererDeferred.cpp"
 	"src/entities/components/ComponentMaterial.cpp"
 	"src/entities/components/ComponentGlow.cpp"
@@ -348,17 +345,10 @@ set(FLOUNDERENGINE_SRC_NOFILTER
 	"src/worlds/Worlds.cpp"
 )
 
-set(FLOUNDERENGINE_SRC_MANAGERS
-)
-
-source_group("Header Files" FILES ${FLOUNDERENGINE_INC_NOFILTER})
-source_group("Header Files//Managers" FILES ${FLOUNDERENGINE_INC_MANAGERS})
-source_group("Source Files" FILES ${FLOUNDERENGINE_SRC_NOFILTER})
-source_group("Source Files//Managers" FILES ${FLOUNDERENGINE_SRC_MANAGERS})
+source_group("Header Files" FILES ${FLOUNDERENGINE_HEADERS})
+source_group("Source Files" FILES ${FLOUNDERENGINE_SOURCES})
 
 set(FLOUNDERENGINE_SRC
-	${FLOUNDERENGINE_INC_NOFILTER}
-	${FLOUNDERENGINE_SRC_NOFILTER}
-	${FLOUNDERENGINE_INC_MANAGERS}
-	${FLOUNDERENGINE_SRC_MANAGERS}
+	${FLOUNDERENGINE_HEADERS}
+	${FLOUNDERENGINE_SOURCES}
 )
