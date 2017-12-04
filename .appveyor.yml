@@ -28,9 +28,3 @@ build_script:
   - cd Build
   - cmake ../Source/ -G "Visual Studio 15 2017 Win64"
   - cmake --build . --config Release
-
-artifacts:
-- path: Build\lib\
-  name: Flounder-Lib
-- path: Build\bin\
-  name: Flounder-Bin
