@@ -17,6 +17,8 @@ matrix:
     sudo: required
     before_install:
     - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    - sudo apt-get -qq update
+    - sudo apt-get install -y deb
     - deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main
     - deb-src http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main
     - sudo apt-get -qq update
