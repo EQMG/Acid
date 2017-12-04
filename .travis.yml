@@ -11,6 +11,9 @@ matrix:
         - ubuntu-toolchain-r-test
         packages:
         - g++-6
+        - libopenal1
+        - libglfw3
+        - libvulkan1
     env:
     - COMPILER=g++-6
     before_install:
@@ -25,13 +28,20 @@ matrix:
       apt:
         sources:
         - ubuntu-toolchain-r-test
-        - llvm-toolchain-trusty-4.0
+        - llvm-toolchain-xenial-5.0
         packages:
         - libc++-dev
-        - clang-4.0
+        - clang-5.0
+        - lldb-5.0
+        - lld-5.0
+        - libopenal1
+        - libglfw3
+        - libvulkan1
     env:
-    - COMPILER=clang++-4.0
+    - COMPILER=clang++-5.0
     - COMPILER_FLAGS=-stdlib=libc++
+    before_install:
+    - sudo apt-get -qq update
   - os: osx
     osx_image: xcode9.1
     language: cpp
@@ -39,10 +49,6 @@ matrix:
     - TOXENV=py33
     before_install:
     - brew update
-
-before_install:
-- sudo apt-get -qq update
-- sudo apt-get install -y x11proto-input-dev libxmu-dev mesa-common-dev freeglut3-dev libx11-xcb-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libopenal1
 
 script:
 - cd $TRAVIS_BUILD_DIR
