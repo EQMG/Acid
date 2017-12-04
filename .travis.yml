@@ -1,7 +1,40 @@
-language: cpp
 sudo: required
+os: linux
 dist: trusty
-compiler:
-- clang
-os:
-- linux
+language: cpp
+compiler: gcc
+
+matrix:
+  include:
+  - compiler: gcc
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-6
+    env:
+    - COMPILER=g++-6
+  - compiler: clang
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - llvm-toolchain-precise-3.9
+        packages:
+        - libc++-dev
+        - clang-3.9
+    env:
+    - COMPILER=clang++-3.9
+    - COMPILER_FLAGS=-stdlib=libc++
+
+before_install:
+- sudo apt-get -qq update
+- sudo apt-get install -y x11proto-input-dev libxmu-dev mesa-common-dev freeglut3-dev libx11-xcb-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
+
+script:
+- cd $TRAVIS_BUILD_DIR
+- mkdir Build
+- cd Build
+- cmake ../Source/ -DCMAKE_C_COMPILER=$clang_bin -DCMAKE_CXX_COMPILER=$clang_xx_bin
+- make
