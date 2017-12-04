@@ -1,7 +1,7 @@
 shallow_clone: true
 
 build:
-  verbosity: detailed
+  verbosity: normal
 
 os:
   - Visual Studio 2017
@@ -16,7 +16,7 @@ install:
   - set CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip"
   - appveyor DownloadFile %CMAKE_URL% -FileName cmake-3.9.0-win64-x64.zip
   - 7z x cmake-3.9.0-win64-x64.zip -oC:\Projects\deps > nul
-  - move C:\Projects\deps\cmake-* C:\Projects\deps\cmake # Move to a version-agnostic directory
+  - move C:\Projects\deps\cmake-* C:\Projects\deps\cmake
   - set PATH=C:\Projects\deps\cmake\bin;%PATH%
   - cmake --version
 

@@ -1,5 +1,4 @@
 include(CMakeSources.cmake)
-
 #project(FlounderEditor)
 
 set(FLOUNDEREDITOR_INC 
@@ -15,4 +14,3 @@ else()
 endif()
 
 target_compile_definitions(FlounderEditor PRIVATE -DFLOUNDEREDITOR_EXPORTS)
-

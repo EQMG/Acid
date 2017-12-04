@@ -1,8 +1,7 @@
 include(CMakeSources.cmake)
-
 #project(FlounderEngine)
 
-set(FLOUNDERENGINE_INC 
+set(FLOUNDERENGINE_INC
 	"../../External/includes/"
 	"src/"
 )
@@ -14,8 +13,7 @@ find_library(GLFW_LIBRARY NAMES glfw3 glfw PATHS ../../External/libs/)
 find_library(OPENAL_LIBRARY NAMES OpenAL32 openal PATHS ../../External/libs/)
 
 add_library(FlounderEngine STATIC ${FLOUNDERENGINE_SRC}) # SHARED / STATIC
-target_compile_definitions(FlounderEngine PRIVATE -DFLOUNDERENGINE_EXPORTS)
 
-target_link_libraries(FlounderEngine PRIVATE ${VULKAN_LIBRARY})
-target_link_libraries(FlounderEngine PRIVATE ${GLFW_LIBRARY})
-target_link_libraries(FlounderEngine PRIVATE ${OPENAL_LIBRARY})
+target_link_libraries(FlounderEngine ${VULKAN_LIBRARY})
+target_link_libraries(FlounderEngine ${GLFW_LIBRARY})
+target_link_libraries(FlounderEngine ${OPENAL_LIBRARY})
