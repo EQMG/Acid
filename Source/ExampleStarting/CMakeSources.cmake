@@ -1,4 +1,4 @@
-set(EXAMPLESTARTING_INC_NOFILTER
+set(EXAMPLESTARTING_HEADERS
 	"src/entities/EntityTreePine.hpp"
 	"src/entities/EntitySun.hpp"
 	"src/entities/EntityTesting.hpp"
@@ -11,10 +11,7 @@ set(EXAMPLESTARTING_INC_NOFILTER
 	"src/uis/OverlayDebug.hpp"
 )
 
-set(EXAMPLESTARTING_INC_MANAGERS
-)
-
-set(EXAMPLESTARTING_SRC_NOFILTER
+set(EXAMPLESTARTING_SOURCES
 	"src/entities/EntityTreePine.cpp"
 	"src/entities/EntitySun.cpp"
 	"src/entities/EntityTesting.cpp"
@@ -28,17 +25,10 @@ set(EXAMPLESTARTING_SRC_NOFILTER
 	"src/uis/OverlayDebug.cpp"
 )
 
-set(EXAMPLESTARTING_SRC_MANAGERS
-)
-
-source_group("Header Files" FILES ${EXAMPLESTARTING_INC_NOFILTER})
-source_group("Header Files//Managers" FILES ${EXAMPLESTARTING_INC_MANAGERS})
-source_group("Source Files" FILES ${EXAMPLESTARTING_SRC_NOFILTER})
-source_group("Source Files//Managers" FILES ${EXAMPLESTARTING_SRC_MANAGERS})
+source_group("Header Files" FILES ${EXAMPLESTARTING_HEADERS})
+source_group("Source Files" FILES ${EXAMPLESTARTING_SOURCES})
 
 set(EXAMPLESTARTING_SRC
-	${EXAMPLESTARTING_INC_NOFILTER}
-	${EXAMPLESTARTING_SRC_NOFILTER}
-	${EXAMPLESTARTING_INC_MANAGERS}
-	${EXAMPLESTARTING_SRC_MANAGERS}
+	${EXAMPLESTARTING_HEADERS}
+	${EXAMPLESTARTING_SOURCES}
 )
