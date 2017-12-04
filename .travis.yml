@@ -3,39 +3,43 @@ matrix:
   - os: linux
     dist: trusty
     sudo: required
-    addons:
+    addons: &gcc6
       apt:
         sources:
-        - ubuntu-toolchain-r/test
+        - ubuntu-toolchain-r-test
         packages:
-        - g++-7
+        - g++-6
         - libopenal1
     language: cpp
     compiler: gcc
     env:
-    - COMPILER=g++-7
+    - COMPILER=g++-6
+    before_install:
+    - sudo apt-get -qq update
   - os: linux
     dist: trusty
     sudo: required
-    addons:
+    addons: &clang40
       apt:
         sources:
-        - ubuntu-toolchain-r/test
+        - ubuntu-toolchain-r-test
         - llvm-toolchain-trusty-5.0
+        - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main'
+          key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
         packages:
-        - libc++-dev
         - clang-5.0
-        - lldb-5.0 
-        - lld-5.0 
         - libopenal1
     language: cpp
     compiler: clang
     env:
     - COMPILER=clang++-5.0
-    - COMPILER_FLAGS=-stdlib=libc++
-
-before_install:
-- sudo apt-get -qq update
+    before_install:
+    - sudo apt-get -qq update
+  - os: osx
+    osx_image: xcode9.1
+    compiler: clang
+    env:
+    - COMPILER=clang++
 
 script:
 - cd $TRAVIS_BUILD_DIR
