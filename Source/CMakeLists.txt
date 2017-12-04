@@ -1,9 +1,7 @@
 cmake_minimum_required (VERSION 3.9)
-
 project (Flounder)
 
-# Platform
-set(CMAKE_CXX_STANDARD 17)
+# Preprocessor
 set(_CRT_SECURE_NO_WARNINGS 1)
 
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
@@ -16,32 +14,26 @@ endif()
 
 if(WIN32)
 	add_definitions(-DFLOUNDER_PLATFORM_WINDOWS)
-	set(FLOUNDER_LIBRARY_EXTENSION ".lib")
 elseif(UNIX AND NOT APPLE)
 	add_definitions(-DFLOUNDER_PLATFORM_LINUX)
-	set(FLOUNDER_LIBRARY_EXTENSION ".a")
 else(UNIX AND APPLE)
 	add_definitions(-DFLOUNDER_PLATFORM_MACOS)
-	set(FLOUNDER_LIBRARY_EXTENSION ".a")
 endif()
 
+# Compiler-options
+set(CMAKE_CXX_STANDARD 17)
 
 if(MSVC)
-	set(CMAKE_CXX_FLAGS "/DWIN32 /D_WINDOWS")
+	set(relFlags "/Ox /Ob2 /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /MP")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS")
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-	set(BS_COMPILER_FLAGS_COMMON "-Wall -fPIC -fno-exceptions -fno-strict-aliasing -fno-rtti -fno-ms-compatibility
-	-fms-extensions -Wl,-rpath=$ORIGIN")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	set(BS_COMPILER_FLAGS_COMMON "-Wall -fPIC -fno-exceptions -fno-strict-aliasing -fno-rtti -Wl,-rpath=$ORIGIN")
-else()
-	# TODO: Other compilers.
 endif()
 
 # Output-directories
 set(FLOUNDER_BINARY_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/../Build/bin)
 set(FLOUNDER_LIBRARY_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/../Build/lib)
-set(FLOUNDER_OBJECT_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/../Build/obj)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${FLOUNDER_BINARY_OUTPUT_DIR}/Debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_OPTIMIZEDDEBUG ${FLOUNDER_BINARY_OUTPUT_DIR}/OptimizedDebug)
@@ -57,7 +49,5 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${FLOUNDER_LIBRARY_OUTPUT_DIR}/Releas
 
 # Sub-directories
 add_subdirectory(FlounderEngine)
-add_subdirectory(FlounderEditor)
-
-# Executables
+#add_subdirectory(FlounderEditor)
 add_subdirectory(ExampleStarting)
