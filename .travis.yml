@@ -32,6 +32,9 @@ matrix:
     - COMPILER=clang++-5.0
     - COMPILER_FLAGS=-stdlib=libc++
 
+before_install:
+- sudo apt-get -qq update
+
 script:
 - cd $TRAVIS_BUILD_DIR
 - mkdir Build
