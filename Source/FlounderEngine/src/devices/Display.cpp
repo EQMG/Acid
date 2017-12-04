@@ -1,6 +1,7 @@
 #include "Display.hpp"
 
 #include <cassert>
+#include <cstring>
 #include <map>
 
 namespace Flounder

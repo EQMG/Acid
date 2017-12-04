@@ -1,5 +1,6 @@
 ﻿#include "VertexBuffer.hpp"
 
+#include <cstring>
 #include "../../devices/Display.hpp"
 
 namespace Flounder

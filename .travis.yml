@@ -36,5 +36,5 @@ script:
 - cd $TRAVIS_BUILD_DIR
 - mkdir Build
 - cd Build
-- cmake ../Source/ -DCMAKE_C_COMPILER=$clang_bin -DCMAKE_CXX_COMPILER=$clang_xx_bin
+- cmake ../Source/ -G "Unix Makefiles"
 - make
