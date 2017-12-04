@@ -12,24 +12,26 @@ matrix:
         sources:
         - ubuntu-toolchain-r-test
         packages:
-        - g++-7
+        - g++-6
     env:
-    - COMPILER=g++-7
+    - COMPILER=g++-6
   - compiler: clang
     addons:
       apt:
         sources:
         - ubuntu-toolchain-r-test
-        - llvm-toolchain-xenial-5.0
+        - llvm-toolchain-trusty-4.0
         packages:
         - libc++-dev
-        - clang-5.0
+        - clang-4.0
     env:
-    - COMPILER=clang++-5.0
+    - COMPILER=clang++-4.0
     - COMPILER_FLAGS=-stdlib=libc++
 
 before_install:
+- sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 - sudo apt-get -qq update
+- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 - sudo apt-get install -y x11proto-input-dev libxmu-dev mesa-common-dev freeglut3-dev libx11-xcb-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
 
 script:
@@ -37,4 +39,4 @@ script:
 - mkdir Build
 - cd Build
 - cmake ../Source/ -G "Unix Makefiles"
-- make release
+- make all
