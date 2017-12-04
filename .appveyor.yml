@@ -12,7 +12,6 @@ configuration:
 install:
   - mkdir C:\Projects\deps
   - cd C:\Projects\deps
-
   - set CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip"
   - appveyor DownloadFile %CMAKE_URL% -FileName cmake-3.9.0-win64-x64.zip
   - 7z x cmake-3.9.0-win64-x64.zip -oC:\Projects\deps > nul
@@ -29,3 +28,7 @@ build_script:
   - cd Build
   - cmake ../Source/ -G "Visual Studio 15 2017 Win64"
   - cmake --build .
+
+artifacts:
+- path: Build\Release\
+  name: Flounder
