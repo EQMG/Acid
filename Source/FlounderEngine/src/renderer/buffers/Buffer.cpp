@@ -1,6 +1,7 @@
 ﻿#include "Buffer.hpp"
 
 #include <cassert>
+#include <cstring>
 #include "../../devices/Display.hpp"
 #include "../Renderer.hpp"
 
