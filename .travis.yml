@@ -17,10 +17,7 @@ matrix:
     sudo: required
     before_install:
     - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-    - sudo apt-get -qq update
-    - sudo apt-get install -y deb
-    - deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main
-    - deb-src http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main
+    - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
     - sudo apt-get -qq update
     - sudo apt-get install -y libc++-dev clang-5.0 lldb-5.0 lld-5.0 libopenal1
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
@@ -29,15 +26,6 @@ matrix:
     env:
     - COMPILER=clang++-5.0
     - COMPILER_FLAGS=-stdlib=libc++
-  - os: osx
-    osx_image: xcode9.1
-    before_install:
-    - brew update
-    - brew install --with-toolchain llvm
-    language: cpp
-    compiler: clang
-    env: 
-    - COMPILER=g++-6
 
 script:
 - cd $TRAVIS_BUILD_DIR
