@@ -1,12 +1,10 @@
-sudo: required
-os: linux
-dist: trusty
-language: cpp
-compiler: gcc
-
 matrix:
   include:
-  - compiler: gcc
+  - os: linux
+    dist: trusty
+    sudo: required
+    language: cpp
+    compiler: gcc
     addons:
       apt:
         sources:
@@ -15,7 +13,14 @@ matrix:
         - g++-6
     env:
     - COMPILER=g++-6
-  - compiler: clang
+    before_install:
+    - sudo apt-get -qq update
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+  - os: linux
+    dist: trusty
+    sudo: required
+    language: cpp
+    compiler: clang
     addons:
       apt:
         sources:
@@ -27,12 +32,17 @@ matrix:
     env:
     - COMPILER=clang++-4.0
     - COMPILER_FLAGS=-stdlib=libc++
+  - os: osx
+    osx_image: xcode9.1
+    language: cpp
+    env: 
+    - TOXENV=py33
+    before_install:
+    - brew update
 
 before_install:
-- sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 - sudo apt-get -qq update
-- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
-- sudo apt-get install -y x11proto-input-dev libxmu-dev mesa-common-dev freeglut3-dev libx11-xcb-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
+- sudo apt-get install -y x11proto-input-dev libxmu-dev mesa-common-dev freeglut3-dev libx11-xcb-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libopenal1
 
 script:
 - cd $TRAVIS_BUILD_DIR
