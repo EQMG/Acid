@@ -3,36 +3,38 @@ matrix:
   - os: linux
     dist: trusty
     sudo: required
+    before_install:
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    - sudo apt-get -qq update
+    - sudo apt-get install -y g++-6 libopenal1
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
     language: cpp
     compiler: gcc
     env:
     - COMPILER=g++-6
-    before_install:
-    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-    - sudo apt-get -qq updateecho "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
-    - sudo apt-get install -y g++-6 libopenal1 libglfw3
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
   - os: linux
     dist: trusty
     sudo: required
+    before_install:
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    - sudo add-apt-repository -y ppa:llvm-toolchain-xenial-5.0
+    - sudo apt-get -qq update
+    - sudo apt-get install -y libc++-dev clang-5.0 lldb-5.0 lld-5.0 libopenal1
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
     language: cpp
     compiler: clang
     env:
     - COMPILER=clang++-5.0
     - COMPILER_FLAGS=-stdlib=libc++
-    before_install:
-    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-    - sudo add-apt-repository -y ppa:llvm-toolchain-xenial-5.0
-    - sudo apt-get -qq updateecho "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
-    - sudo apt-get install -y libc++-dev clang-5.0 lldb-5.0 lld-5.0 libopenal1 libglfw3
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
   - os: osx
     osx_image: xcode9.1
-    language: cpp
-    env: 
-    - COMPILER=g++-6
     before_install:
     - brew update
+    - brew install --with-toolchain llvm
+    language: cpp
+    compiler: clang
+    env: 
+    - COMPILER=g++-6
 
 script:
 - cd $TRAVIS_BUILD_DIR
