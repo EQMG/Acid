@@ -1,4 +1,4 @@
-#include "terrains.hpp"
+#include "Terrains.hpp"
 
 #include "../worlds/Worlds.hpp"
 

@@ -1,6 +1,7 @@
 #include "Texture.hpp"
 
 #include <cassert>
+#include <cstring>
 #include "../devices/Display.hpp"
 #include "../renderer/Renderer.hpp"
 
