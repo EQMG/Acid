@@ -1,6 +1,6 @@
 #include "PlatformUpdater.hpp"
 
-#include "../camera/camera.hpp"
+#include "../camera/Camera.hpp"
 #include "../devices/Audio.hpp"
 #include "../devices/Display.hpp"
 #include "../devices/Joysticks.hpp"

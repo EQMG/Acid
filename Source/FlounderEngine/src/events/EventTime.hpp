@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-#include "../maths/timer.hpp"
+#include "../maths/Timer.hpp"
 #include "IEvent.hpp"
 
 namespace Flounder
