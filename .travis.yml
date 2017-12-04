@@ -12,20 +12,20 @@ matrix:
         sources:
         - ubuntu-toolchain-r-test
         packages:
-        - g++-6
+        - g++-7
     env:
-    - COMPILER=g++-6
+    - COMPILER=g++-7
   - compiler: clang
     addons:
       apt:
         sources:
         - ubuntu-toolchain-r-test
-        - llvm-toolchain-precise-3.9
+        - llvm-toolchain-xenial-5.0
         packages:
         - libc++-dev
-        - clang-3.9
+        - clang-5.0
     env:
-    - COMPILER=clang++-3.9
+    - COMPILER=clang++-5.0
     - COMPILER_FLAGS=-stdlib=libc++
 
 before_install:
@@ -37,4 +37,4 @@ script:
 - mkdir Build
 - cd Build
 - cmake ../Source/ -G "Unix Makefiles"
-- make
+- make release
