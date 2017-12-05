@@ -1,4 +1,4 @@
-set(EXAMPLESTARTING_HEADERS
+set(EXAMPLESTARTING_HEADERS_
 	"src/entities/EntityTreePine.hpp"
 	"src/entities/EntitySun.hpp"
 	"src/entities/EntityTesting.hpp"
@@ -11,7 +11,7 @@ set(EXAMPLESTARTING_HEADERS
 	"src/uis/OverlayDebug.hpp"
 )
 
-set(EXAMPLESTARTING_SOURCES
+set(EXAMPLESTARTING_SOURCES_
 	"src/entities/EntityTreePine.cpp"
 	"src/entities/EntitySun.cpp"
 	"src/entities/EntityTesting.cpp"
@@ -25,10 +25,10 @@ set(EXAMPLESTARTING_SOURCES
 	"src/uis/OverlayDebug.cpp"
 )
 
-source_group("Header Files" FILES ${EXAMPLESTARTING_HEADERS})
-source_group("Source Files" FILES ${EXAMPLESTARTING_SOURCES})
+source_group("Header Files" FILES ${EXAMPLESTARTING_HEADERS_})
+source_group("Source Files" FILES ${EXAMPLESTARTING_SOURCES_})
 
-set(EXAMPLESTARTING_SRC
-	${EXAMPLESTARTING_HEADERS}
-	${EXAMPLESTARTING_SOURCES}
+set(EXAMPLESTARTING_SOURCES
+	${EXAMPLESTARTING_HEADERS_}
+	${EXAMPLESTARTING_SOURCES_}
 )

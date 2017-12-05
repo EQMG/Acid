@@ -1,4 +1,4 @@
-set(FLOUNDERENGINE_HEADERS
+set(FLOUNDERENGINE_HEADERS_
 	"src/deferred/RendererDeferred.hpp"
 	"src/deferred/UbosDeferred.hpp"
 	"src/entities/components/ComponentMaterial.hpp"
@@ -190,7 +190,7 @@ set(FLOUNDERENGINE_HEADERS
 	"src/worlds/Worlds.hpp"
 )
 
-set(FLOUNDERENGINE_SOURCES
+set(FLOUNDERENGINE_SOURCES_
 	"src/deferred/RendererDeferred.cpp"
 	"src/entities/components/ComponentMaterial.cpp"
 	"src/entities/components/ComponentGlow.cpp"
@@ -345,10 +345,10 @@ set(FLOUNDERENGINE_SOURCES
 	"src/worlds/Worlds.cpp"
 )
 
-source_group("Header Files" FILES ${FLOUNDERENGINE_HEADERS})
-source_group("Source Files" FILES ${FLOUNDERENGINE_SOURCES})
+source_group("Header Files" FILES ${FLOUNDERENGINE_HEADERS_})
+source_group("Source Files" FILES ${FLOUNDERENGINE_SOURCES_})
 
-set(FLOUNDERENGINE_SRC
-	${FLOUNDERENGINE_HEADERS}
-	${FLOUNDERENGINE_SOURCES}
+set(FLOUNDERENGINE_SOURCES
+	${FLOUNDERENGINE_HEADERS_}
+	${FLOUNDERENGINE_SOURCES_}
 )

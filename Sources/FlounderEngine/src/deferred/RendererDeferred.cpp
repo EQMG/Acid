@@ -110,7 +110,7 @@ namespace Flounder
 
 		UbosDeferred::UboLights uboLights = {};
 
-		for (int i = 0; i < sceneLights.size(); i++)
+		for (int i = 0; i < static_cast<int>(sceneLights.size()); i++)
 		{
 			uboLights.lights[i] = sceneLights.at(i);
 		}

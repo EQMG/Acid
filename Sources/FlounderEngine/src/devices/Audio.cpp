@@ -6,20 +6,20 @@
 namespace Flounder
 {
 	Audio::Audio() :
-		IModule(),
-		m_alDevice(nullptr),
-		m_alContext(nullptr)
+		IModule()
+	//	m_alDevice(nullptr),
+	//	m_alContext(nullptr)
 	{
-		m_alDevice = alcOpenDevice(NULL);
-		m_alContext = alcCreateContext(m_alDevice, NULL);
-		alcMakeContextCurrent(m_alContext);
+	//	m_alDevice = alcOpenDevice(NULL);
+	//	m_alContext = alcCreateContext(m_alDevice, NULL);
+	//	alcMakeContextCurrent(m_alContext);
 	}
 
 	Audio::~Audio()
 	{
-		alcMakeContextCurrent(NULL);
-		alcDestroyContext(m_alContext);
-		alcCloseDevice(m_alDevice);
+	//	alcMakeContextCurrent(NULL);
+	//	alcDestroyContext(m_alContext);
+	//	alcCloseDevice(m_alDevice);
 	}
 
 	void Audio::Update()
@@ -34,18 +34,18 @@ namespace Flounder
 		if (camera != nullptr)
 		{
 			// Listener position.
-			alListener3f(AL_POSITION, camera->GetPosition()->m_x, camera->GetPosition()->m_y, camera->GetPosition()->m_z);
+		//	alListener3f(AL_POSITION, camera->GetPosition()->m_x, camera->GetPosition()->m_y, camera->GetPosition()->m_z);
 
 			// Listener velocity.
-			alListener3f(AL_VELOCITY, camera->GetVelocity()->m_x, camera->GetVelocity()->m_y, camera->GetVelocity()->m_z);
+		//	alListener3f(AL_VELOCITY, camera->GetVelocity()->m_x, camera->GetVelocity()->m_y, camera->GetVelocity()->m_z);
 
 			// Listener orientation.
 			Vector3 *currentRay = camera->GetViewRay()->m_currentRay;
 			float orientation[6] = { currentRay->m_x, currentRay->m_y, currentRay->m_z, 0.0f, 1.0f, 0.0f };
 
-			alListenerfv(AL_ORIENTATION, orientation);
+		//	alListenerfv(AL_ORIENTATION, orientation);
 
-			Platform::ErrorAl(alGetError());
+		//	Platform::ErrorAl(alGetError());
 		}
 	}
 

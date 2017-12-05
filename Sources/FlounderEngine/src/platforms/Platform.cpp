@@ -84,7 +84,7 @@ namespace Flounder
 		}
 	}
 
-	void Platform::ErrorAl(const ALenum &result)
+/*	void Platform::ErrorAl(const ALenum &result)
 	{
 		if (result == AL_NO_ERROR)
 		{
@@ -95,7 +95,7 @@ namespace Flounder
 		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0); // TODO: Specific messages like Vulkan.
 #endif
 		assert(false && "OpenAL runtime error.");
-	}
+	}*/
 
 	uint32_t Platform::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
 	{
