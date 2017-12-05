@@ -26,7 +26,7 @@ else(UNIX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall") # -Werror -pedantic
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s -O3")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -ggdb3 -O0")
-	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -municode")
+#	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -municode")
 endif()
 
 # Output-directories
@@ -34,6 +34,28 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/bin)
 
-# Sub-directories
-add_subdirectory(Libraries)
-add_subdirectory(Sources)
+# Libraries
+set(GLFW_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glfw/include")
+set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
+set(GLFW_BUILD_TESTS OFF CACHE INTERNAL "Build the GLFW test programs")
+set(GLFW_BUILD_DOCS OFF CACHE INTERNAL "Build the GLFW documentation")
+set(GLFW_INSTALL OFF CACHE INTERNAL "Generate installation target")
+add_subdirectory(Libraries/glfw)
+
+# set(ALSOFT_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/openal-soft/include")
+# set(ALSOFT_UTILS OFF CACHE INTERNAL "Build and install utility programs")
+# set(ALSOFT_EXAMPLES OFF CACHE INTERNAL "Build and install example programs")
+# set(ALSOFT_TESTS OFF CACHE INTERNAL "Build and install test programs")
+# set(ALSOFT_INSTALL OFF CACHE INTERNAL "Install headers and libraries")
+# add_subdirectory(Libraries/openal-soft)
+
+set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
+find_library(VULKAN_LIBRARY NAMES vulkan-1 PATHS "vulkan/libs/")
+# add_subdirectory(Libraries/vulkan)
+
+set(LIBRARIES_INCLUDES ${GLFW_INCLUDES} ${VULKAN_INCLUDES}) # ${ALSOFT_INCLUDES} 
+
+# Sources
+add_subdirectory(Sources/FlounderEngine)
+add_subdirectory(Sources/FlounderEditor)
+add_subdirectory(Sources/ExampleStarting)
