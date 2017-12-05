@@ -1,6 +1,5 @@
+.vs/*
 Build/*
-Build-VS/*
-Source/.vs/*
 
 .DS_Store
 /.metadata/
