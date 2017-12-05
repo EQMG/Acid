@@ -1,7 +1,53 @@
-language: cpp
-sudo: required
-dist: trusty
-compiler:
-- clang
-os:
-- linux
+matrix:
+  include:
+  - os: linux
+    dist: trusty
+    sudo: required
+    addons: &gcc6
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-6
+        - xorg-dev 
+        - libglu1-mesa-dev
+        - libopenal1
+    language: cpp
+    compiler: gcc
+    env:
+    - COMPILER=g++-6
+    before_install:
+    - sudo apt-get -qq update
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+  - os: linux
+    dist: trusty
+    sudo: required
+    addons: &clang40
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - llvm-toolchain-trusty-5.0
+        - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main'
+          key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+        packages:
+        - clang-5.0
+        - libc++-dev
+        - xorg-dev 
+        - libglu1-mesa-dev
+        - libopenal1
+    language: cpp
+    compiler: clang
+    env:
+    - COMPILER=clang++-5.0
+    - COMPILER_FLAGS=-stdlib=libc++
+    before_install:
+    - sudo apt-get -qq update
+    - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-5.0 100
+
+script:
+- cd $TRAVIS_BUILD_DIR
+- git submodule update --init --recursive
+- mkdir Build
+- cd Build
+- cmake .. -G "Unix Makefiles"
+- make all
