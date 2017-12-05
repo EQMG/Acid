@@ -12,9 +12,6 @@ configuration:
 platform: 
   - x64
 
-clone_folder: 
-  - "C:\\Flounder"
-
 install:
   - git submodule update --init --recursive
   - mkdir C:\Projects\deps
