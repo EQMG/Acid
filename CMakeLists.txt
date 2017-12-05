@@ -50,7 +50,7 @@ add_subdirectory(Libraries/glfw)
 # add_subdirectory(Libraries/openal-soft)
 
 set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
-find_library(VULKAN_LIBRARY NAMES vulkan-1 PATHS "vulkan/libs/")
+find_library(VULKAN_LIBRARY NAMES vulkan vulkan-1 PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
 # add_subdirectory(Libraries/vulkan)
 
 set(LIBRARIES_INCLUDES ${GLFW_INCLUDES} ${VULKAN_INCLUDES}) # ${ALSOFT_INCLUDES} 
