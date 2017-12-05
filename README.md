@@ -52,7 +52,11 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * A simple editor
 
 ## Developer Setup
-For Windows you need Visual Studios 2015 or newer, use the VS installer and ensure you have "Desktop development with C++" installed. You should also probably update the Windows SDK, the project is setup for "Windows 10 SDK (10.0.15063.0) for UWP: C++" currently. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and now Flounder should compile properly.
+Once Flounder is cloned run `git submodule update --init --recursive` to update the submodules needed to compile.
+
+On all platforms you can compile using CMake.
+
+For Windows you need Visual Studios 2015 or later, use the VS installer and ensure you have "Desktop development with C++" installed. You should also probably update the Windows SDK, the project is setup for "Windows 10 SDK (10.0.15063.0) for UWP: C++" currently. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and now Flounder should compile properly. You can now run Scripts/generate_vs.bat and an environment will be setup in Build
 
 ## Preprocessor
  * _CRT_SECURE_NO_WARNINGS: Used to ignore 'unsafe' function calls
