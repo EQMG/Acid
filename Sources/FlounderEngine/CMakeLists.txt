@@ -9,4 +9,4 @@ include_directories(${LIBRARIES_INCLUDES} ${FLOUNDERENGINE_INCLUDES})
 
 add_library(FlounderEngine STATIC ${FLOUNDERENGINE_SOURCES}) # SHARED / STATIC
 
-target_link_libraries(FlounderEngine "glfw" "openal-soft" "${VULKAN_LIBRARY}")
+target_link_libraries(FlounderEngine "glfw" "${VULKAN_LIBRARY}") # "openal-soft" 
