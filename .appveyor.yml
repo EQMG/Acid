@@ -24,6 +24,7 @@ before_build:
   - cd C:\Projects\Flounder
 
 build_script:
+  - git submodule update --init --recursive
   - mkdir Build
   - cd Build
   - cmake .. -G "Visual Studio 15 2017 Win64"
