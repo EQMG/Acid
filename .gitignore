@@ -1,9 +1,5 @@
 .vs/*
-Flounder.Core/bin/*
-Flounder.Core/obj/*
-Flounder.Demo/bin/*
-Flounder.Demo/obj/*
-Flounder.Json/bin/*
-Flounder.Json/obj/*
+Build/*
 
 .DS_Store
+/.metadata/
