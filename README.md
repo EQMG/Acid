@@ -48,8 +48,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
 ## Plans
  * Finish the core engine by the end of 2017
  * A physics engine, ragdoll animations
- * Compile for Linux and MacOS
- * A simple editor
+ * A simple editor in the far future
 
 ## Developer Setup
 Once Flounder is cloned run `git submodule update --init --recursive` to update the submodules needed to compile.
@@ -57,10 +56,4 @@ Once Flounder is cloned run `git submodule update --init --recursive` to update 
 On all platforms you can compile using CMake.
 
 For Windows you need Visual Studios 2015 or later, use the VS installer and ensure you have "Desktop development with C++" installed. You should also probably update the Windows SDK, the project is setup for "Windows 10 SDK (10.0.15063.0) for UWP: C++" currently. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and now Flounder should compile properly. You can now run Scripts/generate_vs.bat and an environment will be setup in Build
-
-## Preprocessor
- * _CRT_SECURE_NO_WARNINGS: Used to ignore 'unsafe' function calls
- * FLOUNDER_PLATFORM_x: Where x is the platform [WINDOWS, LINUX, MACOS, ...]
- * FLOUNDER_VERBOSE: Enables verbose logging
- * FLOUNDER_CONFIG_DEBUG or FLOUNDER_CONFIG_RELEASE: Compiling in release or debug mode
 
