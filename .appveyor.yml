@@ -1,0 +1,38 @@
+shallow_clone: true
+
+build:
+  parallel: true
+  verbosity: normal
+
+image:
+  - Visual Studio 2017
+
+platform: 
+  - x64
+
+configuration:
+  - Release
+
+install:
+  - ls
+  - git clone https://github.com/glfw/glfw.git Libraries/glfw
+  - git clone https://github.com/kcat/openal-soft Libraries/openal-soft
+#  - git submodule update --init --recursive
+  - mkdir C:\Projects\deps
+  - cd C:\Projects\deps
+  - set CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip"
+  - appveyor DownloadFile %CMAKE_URL% -FileName cmake-3.9.0-win64-x64.zip
+  - 7z x cmake-3.9.0-win64-x64.zip -oC:\Projects\deps > nul
+  - move C:\Projects\deps\cmake-* C:\Projects\deps\cmake
+  - set PATH=C:\Projects\deps\cmake\bin;%PATH%
+  - cmake --version
+
+before_build:
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
+  - cd C:\Projects\Flounder
+
+build_script:
+  - mkdir Build
+  - cd Build
+  - cmake .. -G "Visual Studio 15 2017 Win64"
+  - cmake --build . --config Release
