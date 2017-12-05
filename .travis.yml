@@ -16,6 +16,7 @@ matrix:
     - COMPILER=g++-6
     before_install:
     - sudo apt-get -qq update
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
   - os: linux
     dist: trusty
     sudo: required
@@ -33,17 +34,14 @@ matrix:
     compiler: clang
     env:
     - COMPILER=clang++-5.0
+    - COMPILER_FLAGS=-stdlib=libc++
     before_install:
     - sudo apt-get -qq update
-  - os: osx
-    osx_image: xcode9.1
-    compiler: clang
-    env:
-    - COMPILER=clang++
+    - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-5.0 100
 
 script:
 - cd $TRAVIS_BUILD_DIR
 - mkdir Build
 - cd Build
-- cmake ../Source/ -G "Unix Makefiles"
+- cmake .. -G "Unix Makefiles"
 - make all
