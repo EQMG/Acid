@@ -3,13 +3,20 @@ shallow_clone: true
 build:
   verbosity: normal
 
-os:
+image:
   - Visual Studio 2017
 
 configuration:
   - Release
 
+platform: 
+  - x64
+
+clone_folder: 
+  - "C:\\Flounder"
+
 install:
+  - git submodule update --init --recursive
   - mkdir C:\Projects\deps
   - cd C:\Projects\deps
   - set CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip"
