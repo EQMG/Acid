@@ -2,10 +2,10 @@ include(CMakeSources.cmake)
 #project(ExampleStarting)
 
 set(EXAMPLESTARTING_INCLUDES
-	"${PROJECT_SOURCE_DIR}/Sources/ExampleStarting/src/"
+	"${PROJECT_SOURCE_DIR}/Sources/ExampleStarting/"
 )
 
-include_directories(${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/FlounderEngine/src/" ${EXAMPLESTARTING_INCLUDES})	# ${FLOUNDERENGINE_INCLUDES}
+include_directories(${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/FlounderEngine/" ${EXAMPLESTARTING_INCLUDES})	# ${FLOUNDERENGINE_INCLUDES}
 
 if(WIN32)
 	add_executable(ExampleStarting WIN32 ${EXAMPLESTARTING_SOURCES})
