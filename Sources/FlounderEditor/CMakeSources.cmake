@@ -2,7 +2,7 @@ set(FLOUNDEREDITOR_HEADERS_
 )
 
 set(FLOUNDEREDITOR_SOURCES_
-	"src/Main.cpp"
+	"Main.cpp"
 )
 
 source_group("Header Files" FILES ${FLOUNDEREDITOR_HEADERS_})

@@ -2,7 +2,7 @@ include(CMakeSources.cmake)
 #project(FlounderEditor)
 
 set(FLOUNDEREDITOR_INCLUDES
-	"${PROJECT_SOURCE_DIR}/Sources/FlounderEditor/src/"
+	"${PROJECT_SOURCE_DIR}/Sources/FlounderEditor/"
 )
 
 include_directories(${FLOUNDEREDITOR_INCLUDES})	
