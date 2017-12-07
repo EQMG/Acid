@@ -10,8 +10,8 @@ namespace Flounder
 	RendererParticles::RendererParticles(const int &subpass) :
 		IRenderer(),
 		//	m_shader(new Shader("particles", {
-		//		ShaderStage(VK_SHADER_STAGE_VERTEX_BIT, "res/shaders/particles/particle.vert.spv"),
-		//	ShaderStage(VK_SHADER_STAGE_FRAGMENT_BIT, "res/shaders/particles/particle.frag.spv")
+		//		ShaderStage(VK_SHADER_STAGE_VERTEX_BIT, "Resources/Shaders/Particles/Particle.vert.spv"),
+		//	ShaderStage(VK_SHADER_STAGE_FRAGMENT_BIT, "Resources/Shaders/Particles/Particle.frag.spv")
 		//	})),
 		m_rendered(0)
 	{

@@ -6,11 +6,11 @@ namespace Flounder
 {
 	FontFamily::FontFamily(const std::string &name) :
 		m_name(name),
-		m_typeThin(LoadFontType(name, "thin")),
-		m_typeLight(LoadFontType(name, "light")),
-		m_typeRegular(LoadFontType(name, "regular")),
-		m_typeSemibold(LoadFontType(name, "semibold")),
-		m_typeBold(LoadFontType(name, "bold"))
+		m_typeThin(LoadFontType(name, "Thin")),
+		m_typeLight(LoadFontType(name, "Light")),
+		m_typeRegular(LoadFontType(name, "Regular")),
+		m_typeSemibold(LoadFontType(name, "Semibold")),
+		m_typeBold(LoadFontType(name, "Bold"))
 	{
 	}
 
@@ -25,8 +25,8 @@ namespace Flounder
 
 	FontType *FontFamily::LoadFontType(const std::string &name, const std::string &type)
 	{
-		const std::string filepathPng = "res/fonts/" + name + "/" + name + "-" + type + ".png";
-		const std::string filepathFnt = "res/fonts/" + name + "/" + name + "-" + type + ".fnt";
+		const std::string filepathPng = "Resources/Fonts/" + name + "/" + name + "-" + type + ".png";
+		const std::string filepathFnt = "Resources/Fonts/" + name + "/" + name + "-" + type + ".fnt";
 
 		if (!HelperFile::FileExists(filepathPng) || !HelperFile::FileExists(filepathFnt))
 		{

@@ -19,9 +19,8 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new post effect filter
 		/// </summary>
-		/// <param name="filterName"> The name for the filter. </param>
 		/// <param name="fragmentShader"> The fragment shader file. </param>
-		IPostFilter(const std::string &filterName, const std::string &fragmentShader, const int &subpass = 2, const std::vector<DescriptorType> &descriptors = {});
+		IPostFilter(const std::string &fragmentShader, const int &subpass = 2, const std::vector<DescriptorType> &descriptors = {});
 
 		/// <summary>
 		/// Deconstructor for the post filter.

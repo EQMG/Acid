@@ -9,7 +9,6 @@ namespace Flounder
 	class Sound
 	{
 	private:
-		std::string m_name;
 		std::string m_filename;
 		unsigned int m_count;
 
@@ -20,7 +19,7 @@ namespace Flounder
 		float m_pitch;
 		float m_gain;
 	public:
-		Sound(const std::string &name, const std::string &filename);
+		Sound(const std::string &filename);
 
 		~Sound();
 
@@ -43,8 +42,6 @@ namespace Flounder
 		void SetPitch(const float &pitch);
 
 		void SetGain(const float &gain);
-
-		std::string GetName() const { return m_name; }
 
 		std::string GetFileName() const { return m_filename; }
 

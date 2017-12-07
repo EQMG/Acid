@@ -1,4 +1,4 @@
-#include "FilterLensflare.hpp"
+#include "FilterLensFlare.hpp"
 
 #include "../../camera/Camera.hpp"
 #include "../../devices/Display.hpp"
@@ -6,13 +6,12 @@
 
 namespace Flounder
 {
-	;
 	const DescriptorType FilterLensflare::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const DescriptorType FilterLensflare::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const DescriptorType FilterLensflare::typeSamplerMaterial = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
 
 	FilterLensflare::FilterLensflare(const int &subpass) :
-		IPostFilter("filterLensflare", "res/shaders/filters/lensflare.frag.spv", subpass, { typeUboScene, typeSamplerColour, typeSamplerMaterial }),
+		IPostFilter("Resources/Shaders/Filters/Lensflare.frag.spv", subpass, { typeUboScene, typeSamplerColour, typeSamplerMaterial }),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_sunPosition(new Vector3()),
 		m_sunHeight(0.0f)

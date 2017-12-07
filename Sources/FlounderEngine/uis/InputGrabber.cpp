@@ -106,7 +106,7 @@ namespace Flounder
 		m_text(nullptr),
 		//new Text(this, position, SCALE_NORMAL, Vector3(0.5f, 0.5f, RelativeScreen), prefix + grabber->GetValue(value), Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
 		m_background(nullptr),
-		//new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("res/guis/buttonText.png"), 1)),
+		//new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("Resources/Guis/Button.png"), 1)),
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),

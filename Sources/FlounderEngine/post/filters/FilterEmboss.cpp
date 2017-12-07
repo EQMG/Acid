@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterEmboss::FilterEmboss(const int &subpass) :
-		IPostFilter("filterEmboss", "res/shaders/filters/emboss.frag.spv", subpass, {})
+		IPostFilter("Resources/Shaders/Filters/Emboss.frag.spv", subpass, {})
 	{
 	}
 

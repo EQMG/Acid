@@ -24,13 +24,13 @@ namespace Flounder
 
 		{ typeUboScene, typeUboObject, typeSamplerDiffuse, typeSamplerSway }, // descriptors
 
-		{ "res/shaders/entities/entity.vert.spv", "res/shaders/entities/entity.frag.spv" } // shaderStages
+		{ "Resources/Shaders/Entities/Entity.vert.spv", "Resources/Shaders/Entities/Entity.frag.spv" } // shaderStages
 	};
 
 	RendererEntities::RendererEntities(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosEntities::UboScene))),
-		m_pipeline(new Pipeline("entities", pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
 	{
 	}
 
@@ -47,7 +47,7 @@ namespace Flounder
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);
 
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+		m_pipeline->BindPipeline(commandBuffer);
 
 		for (auto entity : *Entities::Get()->GetEntities()) // Entities::Get()->GetStructure()->GetAll()
 		{
