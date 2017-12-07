@@ -1,8 +1,8 @@
 ﻿#include "Cubemap.hpp"
 
 #include <cstring>
-#include "../devices/Display.hpp"
-#include "../renderer/Renderer.hpp"
+#include "../Devices/Display.hpp"
+#include "../Renderer/Renderer.hpp"
 
 namespace Flounder
 {

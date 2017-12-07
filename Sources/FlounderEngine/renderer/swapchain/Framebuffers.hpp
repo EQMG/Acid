@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <vector>
-#include "../../platforms/Platform.hpp"
+#include "../../Platforms/Platform.hpp"
 #include "Swapchain.hpp"
 
 namespace Flounder

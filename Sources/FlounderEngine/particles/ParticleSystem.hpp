@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include <vector>
-#include "../maths/Vector3.hpp"
-#include "spawns/ISpawnParticle.hpp"
+#include "../Maths/Vector3.hpp"
+#include "Spawns/ISpawnParticle.hpp"
 #include "Particle.hpp"
 #include "ParticleType.hpp"
 

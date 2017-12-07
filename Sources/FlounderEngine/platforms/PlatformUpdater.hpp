@@ -1,10 +1,10 @@
 #pragma once
 
 #include <map>
-#include "../devices/Display.hpp"
-#include "../engine/IUpdater.hpp"
-#include "../maths/Delta.hpp"
-#include "../maths/Timer.hpp"
+#include "../Devices/Display.hpp"
+#include "../Engine/IUpdater.hpp"
+#include "../Maths/Delta.hpp"
+#include "../Maths/Timer.hpp"
 
 namespace Flounder
 {

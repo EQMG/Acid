@@ -1,9 +1,9 @@
 ﻿#include "Pipeline.hpp"
 
 #include <cassert>
-#include "../../devices/Display.hpp"
-#include "../../helpers/HelperFile.hpp"
-#include "../../helpers/HelperString.hpp"
+#include "../../Devices/Display.hpp"
+#include "../../Helpers/HelperFile.hpp"
+#include "../../Helpers/HelperString.hpp"
 #include "../Renderer.hpp"
 
 namespace Flounder
@@ -29,9 +29,6 @@ namespace Flounder
 		m_multisampleState({}),
 		m_dynamicState({})
 	{
-#if FLOUNDER_VERBOSE
-		printf("Loading Pipeline: '%s'\n", name.c_str());
-#endif
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
 		CreateDescriptorSet();

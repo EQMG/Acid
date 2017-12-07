@@ -1,6 +1,6 @@
 ﻿#include "FontFamily.hpp"
 
-#include "../helpers/HelperFile.hpp"
+#include "../Helpers/HelperFile.hpp"
 
 namespace Flounder
 {

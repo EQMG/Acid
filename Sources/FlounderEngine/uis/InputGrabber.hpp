@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include <functional>
-#include "../fonts/Text.hpp"
-#include "../guis/Gui.hpp"
+#include "../Fonts/Text.hpp"
+#include "../Guis/Gui.hpp"
 #include "InputDelay.hpp"
 #include "UiObject.hpp"
 

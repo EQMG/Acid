@@ -1,8 +1,8 @@
 ﻿#include "ParticleSystem.hpp"
 
-#include "../engine/Engine.hpp"
-#include "../maths/Maths.hpp"
-#include "../maths/Matrix4.hpp"
+#include "../Engine/Engine.hpp"
+#include "../Maths/Maths.hpp"
+#include "../Maths/Matrix4.hpp"
 
 namespace Flounder
 {

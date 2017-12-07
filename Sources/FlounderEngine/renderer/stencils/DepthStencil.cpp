@@ -2,8 +2,8 @@
 
 #include <vector>
 #include <cassert>
-#include "../../devices/Display.hpp"
-#include "../buffers/Buffer.hpp"
+#include "../../Devices/Display.hpp"
+#include "../Buffers/Buffer.hpp"
 
 namespace Flounder
 {

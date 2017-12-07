@@ -1,9 +1,9 @@
 ﻿#include "Water.hpp"
 
-#include "../devices/Display.hpp"
-#include "../models/MeshGenerator.hpp"
-#include "../terrains/Terrains.hpp"
-#include "../renderer/Renderer.hpp"
+#include "../Devices/Display.hpp"
+#include "../Models/MeshGenerator.hpp"
+#include "../Terrains/Terrains.hpp"
+#include "../Renderer/Renderer.hpp"
 #include "Waters.hpp"
 #include "UbosWaters.hpp"
 

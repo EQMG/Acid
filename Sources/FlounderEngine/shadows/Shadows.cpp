@@ -1,6 +1,6 @@
 #include "Shadows.hpp"
 
-#include "../camera/Camera.hpp"
+#include "../Camera/Camera.hpp"
 
 namespace Flounder
 {

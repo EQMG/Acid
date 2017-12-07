@@ -1,11 +1,11 @@
 ﻿#include "RendererEntities.hpp"
 
-#include "../devices/Display.hpp"
-#include "../camera/Camera.hpp"
-#include "../renderer/Renderer.hpp"
-#include "../terrains/Terrains.hpp"
-#include "UbosEntities.hpp"
+#include "../Devices/Display.hpp"
+#include "../Camera/Camera.hpp"
+#include "../Renderer/Renderer.hpp"
+#include "../Terrains/Terrains.hpp"
 #include "Entities.hpp"
+#include "UbosEntities.hpp"
 
 namespace Flounder
 {

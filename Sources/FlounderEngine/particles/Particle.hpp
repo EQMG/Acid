@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include "../maths/Vector2.hpp"
-#include "../maths/Vector3.hpp"
-#include "../space/ISpatialObject.hpp"
+#include "../Maths/Vector2.hpp"
+#include "../Maths/Vector3.hpp"
+#include "../Space/ISpatialObject.hpp"
 #include "ParticleType.hpp"
 
 namespace Flounder

@@ -1,9 +1,7 @@
 ﻿#include "InputSlider.hpp"
 
-#include "../devices/Display.hpp"
-#include "../guis/Gui.hpp"
-#include "../fonts/Text.hpp"
-#include "../visual/DriverSlide.hpp"
+#include "../Devices/Display.hpp"
+#include "../Visual/DriverSlide.hpp"
 
 namespace Flounder
 {

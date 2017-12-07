@@ -2,10 +2,10 @@
 
 #include <string>
 #include <vector>
-#include "../maths/Vector2.hpp"
-#include "../physics/Aabb.hpp"
-#include "../renderer/buffers/VertexBuffer.hpp"
-#include "../renderer/buffers/IndexBuffer.hpp"
+#include "../Maths/Vector2.hpp"
+#include "../Physics/Aabb.hpp"
+#include "../Renderer/Buffers/VertexBuffer.hpp"
+#include "../Renderer/Buffers/IndexBuffer.hpp"
 #include "Vertex.hpp"
 #include "VertexData.hpp"
 
