@@ -6,7 +6,7 @@
 namespace Flounder
 {
 	FilterMotion::FilterMotion(const int &subpass) :
-		IPostFilter("filterMotion", "res/shaders/filters/motion.frag.spv", subpass, {}),
+		IPostFilter("Resources/Shaders/Filters/Motion.frag.spv", subpass, {}),
 		m_lastViewMatrix(new Matrix4())
 	{
 	}

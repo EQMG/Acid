@@ -19,13 +19,13 @@ namespace Flounder
 
 		{ typeUboObject }, // descriptors
 
-		{ "res/shaders/shadows/shadow.vert.spv", "res/shaders/shadows/shadow.frag.spv" } // shaderStages
+		{ "Resources/Shaders/Shadows/Shadow.vert.spv", "Resources/Shaders/Shadows/Shadow.frag.spv" } // shaderStages
 	};
 
 	RendererShadows::RendererShadows(const int &subpass) :
 		IRenderer(),
 		m_uniformObject(new UniformBuffer(sizeof(UbosShadows::UboObject))),
-		m_pipeline(new Pipeline("shadows", pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
 	{
 	}
 
@@ -36,7 +36,7 @@ namespace Flounder
 
 	void RendererShadows::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+		m_pipeline->BindPipeline(commandBuffer);
 
 		for (auto terrain : *Terrains::Get()->GetTerrains())
 		{

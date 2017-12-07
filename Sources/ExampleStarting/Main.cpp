@@ -24,8 +24,8 @@ int main(int argc, char **argv)
 	if (Display::Get() != nullptr)
 	{
 		Display::Get()->SetWindowSize(1080, 720);
-		Display::Get()->SetTitle("Flounder Demo");
-		Display::Get()->SetIcon("res/logo/tail.png");
+		Display::Get()->SetTitle("Example Starting");
+		Display::Get()->SetIcon("Resources/Logo/Tail.png");
 		Display::Get()->SetFpsLimit(0.0f);
 		Display::Get()->SetAntialiasing(true);
 		Display::Get()->SetFullscreen(false);
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 
 	if (Mouse::Get() != nullptr)
 	{
-		Mouse::Get()->SetCustomMouse("res/cursor.png");
+		Mouse::Get()->SetCustomMouse("Resources/Cursor.png");
 	}
 
 	if (Camera::Get() != nullptr)
@@ -60,8 +60,8 @@ int main(int argc, char **argv)
 	if (Skyboxes::Get() != nullptr)
 	{
 		Skyboxes::Get()->SetSkybox(new Skybox(
-			new Cubemap("res/skybox/stars/stars", ".png"),
-			new Model("res/skybox/skyboxCube.obj"),
+			new Cubemap("Resources/Skyboxes/Stars/Stars", ".png"),
+			new Model("Resources/Skyboxes/SkyboxCube.obj"),
 			2048.0f
 		));
 	}

@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterDarken::FilterDarken(const int &subpass) :
-		IPostFilter("filterDarken", "res/shaders/filters/darken.frag.spv", subpass, {}),
+		IPostFilter("Resources/Shaders/Filters/Darken.frag.spv", subpass, {}),
 		m_factorValue(0.45f)
 	{
 	}

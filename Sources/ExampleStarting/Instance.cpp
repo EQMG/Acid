@@ -1,8 +1,8 @@
 #include "Instance.hpp"
 
-#include "entities/EntityTreePine.hpp"
-#include "entities/EntityTesting.hpp"
-#include "entities/EntitySun.hpp"
+#include "Entities/EntityTreePine.hpp"
+#include "Entities/EntityTesting.hpp"
+#include "Entities/EntitySun.hpp"
 
 namespace Demo
 {
@@ -13,7 +13,7 @@ namespace Demo
 		m_buttonExit = new ButtonKeyboard({ GLFW_KEY_DELETE });
 
 #ifdef FLOUNDER_CONFIG_RELEASE
-		Sound *music1 = new Sound("music", "res/music/outpost.wav");
+		Sound *music1 = new Sound("Resources/Music/Outpost.wav");
 
 		if (music1 != nullptr)
 		{
@@ -24,15 +24,14 @@ namespace Demo
 		}
 #endif
 
-		/*std::vector<particletype*> *types = new std::vector<particletype*>();
-		types->push_back(new particletype("blue", texture::newTexture()->setFile("res/particles/blueParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));
-		types->push_back(new particletype("green", texture::newTexture()->setFile("res/particles/greenParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));
-		types->push_back(new particletype("purple", texture::newTexture()->setFile("res/particles/purpleParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));
-		types->push_back(new particletype("red", texture::newTexture()->setFile("res/particles/redParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));
-		types->push_back(new particletype("yellow", texture::newTexture()->setFile("res/particles/yellowParticle.png")->setNumberOfRows(4)->create(), 10.6f, 0.3f));
-		m_systemTest = new particlesystem(types, new spawncircle(30.0f, Vector3(0.0f, 1.0f, 0.0f)), 1000, 1.0f, -0.1f);
-		m_systemTest->setSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
-		particles::get()->addSystem(m_systemTest);*/
+		/*std::vector<ParticleType*> *types = new std::vector<ParticleType*>();
+		types->push_back(new ParticleType("blue", new Texture("Resources/Particles/ParticleBlue.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		types->push_back(new ParticleType("purple", new Texture("Resources/Particles/ParticlePurple.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		types->push_back(new ParticleType("red", new Texture("Resources/Particles/ParticleRed.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		types->push_back(new ParticleType("yellow", new Texture("Resources/Particles/ParticleYellow.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		m_systemTest = new ParticleSystem(types, new SpawnCircle(30.0f, Vector3(0.0f, 1.0f, 0.0f)), 1000, 1.0f, -0.1f);
+		m_systemTest->SetSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
+		Particles::Get()->AddSystem(m_systemTest);*/
 
 		Entity *sun = new EntitySun(nullptr, Transform(Vector3(), Vector3(), Vector3(16.0f, 16.0f, 16.0f))); // Entities::Get()->GetStructure()
 		Entities::Get()->GetEntities()->push_back(sun);

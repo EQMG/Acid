@@ -10,8 +10,7 @@ namespace Flounder
 {
 	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
-	Pipeline::Pipeline(const std::string &name, const PipelineCreateInfo &pipelineCreateInfo, const int &subpass) :
-		m_name(name),
+	Pipeline::Pipeline(const PipelineCreateInfo &pipelineCreateInfo, const int &subpass) :
 		m_pipelineCreateInfo(pipelineCreateInfo),
 		m_subpass(subpass),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
@@ -73,6 +72,11 @@ namespace Flounder
 		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
 		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
+	}
+
+	void Pipeline::BindPipeline(const VkCommandBuffer *commandBuffer)
+	{
+		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline);
 	}
 
 	void Pipeline::CreateDescriptorLayout()

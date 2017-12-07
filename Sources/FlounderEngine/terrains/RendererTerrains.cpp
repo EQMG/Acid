@@ -18,13 +18,13 @@ namespace Flounder
 
 		{ typeUboScene, typeUboObject }, // descriptors
 
-		{ "res/shaders/terrains/terrain.vert.spv", "res/shaders/terrains/terrain.frag.spv" } // shaderStages
+		{ "Resources/Shaders/Terrains/Terrain.vert.spv", "Resources/Shaders/Terrains/Terrain.frag.spv" } // shaderStages
 	};
 
 	RendererTerrains::RendererTerrains(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosTerrains::UboScene))),
-		m_pipeline(new Pipeline("terrains", pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
 	{
 	}
 
@@ -41,7 +41,7 @@ namespace Flounder
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);
 
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+		m_pipeline->BindPipeline(commandBuffer);
 
 		for (auto object : *Terrains::Get()->GetTerrains())
 		{

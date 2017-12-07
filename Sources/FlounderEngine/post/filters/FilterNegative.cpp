@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterNegative::FilterNegative(const int &subpass) :
-		IPostFilter("filterNegative", "res/shaders/filters/negative.frag.spv", subpass, {})
+		IPostFilter("Resources/Shaders/Filters/Negative.frag.spv", subpass, {})
 	{
 	}
 

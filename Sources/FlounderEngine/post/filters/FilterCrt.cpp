@@ -10,7 +10,7 @@ namespace Flounder
 	const DescriptorType FilterCrt::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
 
 	FilterCrt::FilterCrt(const int &subpass) :
-		IPostFilter("filterCrt", "res/shaders/filters/crt.frag.spv", subpass, { typeUboScene, typeSamplerColour }),
+		IPostFilter("Resources/Shaders/Filters/Crt.frag.spv", subpass, { typeUboScene, typeSamplerColour }),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_screenColour(new Colour(0.5f, 1.0f, 0.5f)),
 		m_curveAmountX(0.1f),

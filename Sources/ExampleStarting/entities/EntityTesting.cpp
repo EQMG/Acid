@@ -8,12 +8,12 @@ EntityTesting::EntityTesting(ISpatialStructure<Entity*> *structure, const Transf
 {
 	if (g_model == nullptr)
 	{
-		g_model = new Model("res/models/sphere.obj");
+		g_model = new Model("Resources/Models/ModelSphere.obj");
 	}
 
 	if (g_diffuse == nullptr)
 	{
-		g_diffuse = new Texture("res/guis/white.png");
+		g_diffuse = new Texture("Resources/Guis/White.png");
 	}
 
 	AddComponent(new ComponentModel(g_model, g_diffuse));

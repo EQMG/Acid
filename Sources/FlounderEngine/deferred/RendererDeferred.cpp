@@ -43,14 +43,14 @@ namespace Flounder
 
 		{ typeUboScene, typeUboLights, typeSamplerDepth, typeSamplerColour, typeSamplerNormal, typeSamplerMaterial, typeSamplerShadows }, // descriptors
 
-		{ "res/shaders/deferred/deferred.vert.spv", "res/shaders/deferred/deferred.frag.spv" } // shaderStages
+		{ "Resources/Shaders/Deferred/Deferred.vert.spv", "Resources/Shaders/Deferred/Deferred.frag.spv" } // shaderStages
 	};
 
 	RendererDeferred::RendererDeferred(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_uniformLights(new UniformBuffer(sizeof(UbosDeferred::UboLights))),
-		m_pipeline(new Pipeline("deferred", pipelineCreateInfo, subpass)),
+		m_pipeline(new Pipeline(pipelineCreateInfo, subpass)),
 		m_model(new Model(VERTICES, INDICES))
 	{
 	}
@@ -120,7 +120,7 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+		m_pipeline->BindPipeline(commandBuffer);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
 		{
