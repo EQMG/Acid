@@ -19,13 +19,13 @@ namespace Flounder
 
 		{ typeUboScene, typeUboObject, typeSamplerReflection }, // descriptors
 
-		{ "res/shaders/waters/water.vert.spv", "res/shaders/waters/water.frag.spv" } // shaderStages
+		{ "Resources/Shaders/Waters/Water.vert.spv", "Resources/Shaders/Waters/Water.frag.spv" } // shaderStages
 	};
 
 	RendererWaters::RendererWaters(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosWaters::UboScene))),
-		m_pipeline(new Pipeline("waters", pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
 	{
 	}
 
@@ -42,7 +42,7 @@ namespace Flounder
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);
 
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+		m_pipeline->BindPipeline(commandBuffer);
 
 		if (Waters::Get()->GetWater() != nullptr)
 		{

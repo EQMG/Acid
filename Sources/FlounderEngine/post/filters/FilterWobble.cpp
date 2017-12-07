@@ -6,7 +6,7 @@
 namespace Flounder
 {
 	FilterWobble::FilterWobble(const int &subpass) :
-		IPostFilter("filterWobble", "res/shaders/filters/wobble.frag.spv", subpass, {}),
+		IPostFilter("Resources/Shaders/Filters/Wobble.frag.spv", subpass, {}),
 		m_wobbleSpeed(2.0f),
 		m_wobbleAmount(0.0f)
 	{

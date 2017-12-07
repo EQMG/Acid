@@ -9,17 +9,17 @@ EntityTreePine::EntityTreePine(ISpatialStructure<Entity*> *structure, const Tran
 {
 	if (g_model == nullptr)
 	{
-		g_model = new Model("res/entities/treePine/model.obj");
+		g_model = new Model("Resources/Entities/TreePine/Model.obj");
 	}
 
 	if (g_diffuse == nullptr)
 	{
-		g_diffuse = new Texture("res/entities/treePine/diffuse.png");
+		g_diffuse = new Texture("Resources/Entities/TreePine/Diffuse.png");
 	}
 
 	if (g_swayMap == nullptr)
 	{
-		g_swayMap = new Texture("res/entities/treePine/sway.png");
+		g_swayMap = new Texture("Resources/Entities/TreePine/Sway.png");
 	}
 
 	AddComponent(new ComponentModel(g_model, g_diffuse));

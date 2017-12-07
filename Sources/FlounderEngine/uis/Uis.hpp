@@ -19,7 +19,7 @@ namespace Flounder
 		UiObject *m_container;
 		std::vector<UiObject*> *m_objects;
 	public:
-		FontFamily *m_proximanova;
+		FontFamily *m_proximaNova;
 
 		/// <summary>
 		/// Gets this engine instance.

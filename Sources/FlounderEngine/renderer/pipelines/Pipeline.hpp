@@ -16,8 +16,6 @@ namespace Flounder
 	private:
 		static const std::vector<VkDynamicState> DYNAMIC_STATES;
 
-		std::string m_name;
-
 		PipelineCreateInfo m_pipelineCreateInfo;
 		int m_subpass;
 
@@ -43,21 +41,16 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new pipeline.
 		/// </summary>
-		/// <param name="name"> The pipelines name. </param>
 		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
 		/// <param name="subpass"> The pipelines subpass. </param>
-		Pipeline(const std::string &name, const PipelineCreateInfo &pipelineCreateInfo, const int &subpass);
+		Pipeline(const PipelineCreateInfo &pipelineCreateInfo, const int &subpass);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
 		/// </summary>
 		~Pipeline();
 
-		/// <summary>
-		/// Gets the loaded name for the pipeline.
-		/// </summary>
-		/// <returns> The pipelines name. </returns>
-		std::string GetName() const { return m_name; }
+		void BindPipeline(const VkCommandBuffer *commandBuffer);
 
 		VkDescriptorSetLayout GetDescriptorSetLayout() const { return m_descriptorSetLayout; }
 

@@ -9,7 +9,7 @@ namespace Flounder
 	const DescriptorType FilterGrain::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
 
 	FilterGrain::FilterGrain(const int &subpass) :
-		IPostFilter("filterGrain", "res/shaders/filters/grain.frag.spv", subpass, { typeUboScene, typeSamplerColour }),
+		IPostFilter("Resources/Shaders/Filters/Grain.frag.spv", subpass, { typeUboScene, typeSamplerColour }),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_strength(2.3f)
 	{

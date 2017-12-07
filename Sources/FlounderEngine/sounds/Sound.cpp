@@ -4,8 +4,7 @@
 
 namespace Flounder
 {
-	Sound::Sound(const std::string &name, const std::string &filename) :
-		m_name(name),
+	Sound::Sound(const std::string &filename) :
 		m_filename(filename),
 		m_count(0),
 		m_buffer(0),
