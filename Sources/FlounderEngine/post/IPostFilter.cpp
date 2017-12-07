@@ -29,17 +29,17 @@ namespace Flounder
 
 		{}, // descriptors
 
-		{ "res/shaders/filters/default.vert.spv", "res/shaders/filters/default.frag.spv" } // shaderStages
+		{ "Resources/Shaders/Filters/Default.vert.spv", "Resources/Shaders/Filters/Default.frag.spv" } // shaderStages
 	};
 
-	IPostFilter::IPostFilter(const std::string &filterName, const std::string &fragmentShader, const int &subpass, const std::vector<DescriptorType> &descriptors) :
+	IPostFilter::IPostFilter(const std::string &fragmentShader, const int &subpass, const std::vector<DescriptorType> &descriptors) :
 		m_pipeline(nullptr),
 		m_model(new Model(VERTICES, INDICES))
 	{
 		PipelineCreateInfo pipelineCreateInfo = PipelineCreateInfo(this->pipelineCreateInfo);
 		pipelineCreateInfo.shaderStages[1] = fragmentShader; // fragment
 		pipelineCreateInfo.descriptors = descriptors; // descriptors
-		m_pipeline = new Pipeline(filterName, pipelineCreateInfo, subpass);
+		m_pipeline = new Pipeline(pipelineCreateInfo, subpass);
 	}
 
 	IPostFilter::~IPostFilter()
@@ -57,7 +57,7 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+		m_pipeline->BindPipeline(commandBuffer);
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 

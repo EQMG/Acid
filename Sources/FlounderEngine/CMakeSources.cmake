@@ -345,19 +345,6 @@ set(FLOUNDERENGINE_SOURCES_
 	"worlds/Worlds.cpp"
 )
 
-file(GLOB FLOUNDERENGINE_HEADERS__
-    "*.h"
-    "*.hpp"
-)
-
-file(GLOB FLOUNDERENGINE_SOURCES__
-    "*."
-    "*.cpp"
-)
-
-message(WARNING "Headers: ${FLOUNDERENGINE_HEADERS__}")
-message(WARNING "Sources: ${FLOUNDERENGINE_SOURCES__}")
-
 source_group("Header Files" FILES ${FLOUNDERENGINE_HEADERS_})
 source_group("Source Files" FILES ${FLOUNDERENGINE_SOURCES_})
 

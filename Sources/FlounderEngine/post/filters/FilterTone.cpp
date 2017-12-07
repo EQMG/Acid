@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterTone::FilterTone(const int &subpass) :
-		IPostFilter("filterTone", "res/shaders/filters/tone.frag.spv", subpass, {})
+		IPostFilter("Resources/Shaders/Filters/Tone.frag.spv", subpass, {})
 	{
 	}
 

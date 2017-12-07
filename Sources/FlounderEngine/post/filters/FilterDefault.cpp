@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterDefault::FilterDefault(const int &subpass) :
-		IPostFilter("filterDefault", "res/shaders/filters/default.frag.spv", subpass, {})
+		IPostFilter("Resources/Shaders/Filters/Default.frag.spv", subpass, {})
 	{
 	}
 

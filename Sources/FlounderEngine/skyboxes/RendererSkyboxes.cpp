@@ -18,13 +18,13 @@ namespace Flounder
 
 		{ typeUboScene, typeUboObject, typeSamplerCubemap }, // descriptors
 
-		{ "res/shaders/skyboxes/skybox.vert.spv", "res/shaders/skyboxes/skybox.frag.spv" } // shaderStages
+		{ "Resources/Shaders/Skyboxes/Skybox.vert.spv", "Resources/Shaders/Skyboxes/Skybox.frag.spv" } // shaderStages
 	};
 
 	RendererSkyboxes::RendererSkyboxes(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosSkyboxes::UboScene))),
-		m_pipeline(new Pipeline("skyboxes", pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
 	{
 	}
 
@@ -41,7 +41,7 @@ namespace Flounder
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);
 
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+		m_pipeline->BindPipeline(commandBuffer);
 
 		Skyboxes::Get()->GetSkybox()->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
 	}

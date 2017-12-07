@@ -9,17 +9,17 @@ EntitySun::EntitySun(ISpatialStructure<Entity*> *structure, const Transform &tra
 {
 	if (g_model == nullptr)
 	{
-		g_model = new Model("res/entities/sun/model.obj");
+		g_model = new Model("Resources/Entities/Sun/Model.obj");
 	}
 
 	if (g_diffuse == nullptr)
 	{
-		g_diffuse = new Texture("res/entities/sun/diffuse.png");
+		g_diffuse = new Texture("Resources/Entities/Sun/Diffuse.png");
 	}
 
 	if (g_glowMap == nullptr)
 	{
-		g_glowMap = new Texture("res/entities/sun/glow.png");
+		g_glowMap = new Texture("Resources/Entities/Sun/Glow.png");
 	}
 
 	AddComponent(new ComponentModel(g_model, g_diffuse));

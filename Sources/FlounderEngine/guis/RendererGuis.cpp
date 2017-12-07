@@ -22,12 +22,12 @@ namespace Flounder
 
 		{ typeUboObject, typeSamplerTexture }, // descriptors
 
-		{ "res/shaders/guis/gui.vert.spv", "res/shaders/guis/gui.frag.spv" } // shaderStages
+		{ "Resources/Shaders/Guis/Gui.vert.spv", "Resources/Shaders/Guis/Gui.frag.spv" } // shaderStages
 	};
 
 	RendererGuis::RendererGuis(const int &subpass) :
 		IRenderer(),
-		m_pipeline(new Pipeline("guis", pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
 	{
 	}
 
@@ -38,7 +38,7 @@ namespace Flounder
 
 	void RendererGuis::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+		m_pipeline->BindPipeline(commandBuffer);
 
 		for (auto screenobject : *Uis::Get()->GetObjects())
 		{

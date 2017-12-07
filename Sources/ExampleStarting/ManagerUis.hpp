@@ -2,8 +2,8 @@
 
 #include <Flounder.hpp>
 
-#include "uis/OverlayDebug.hpp"
-#include "uis/OverlayPaused.hpp"
+#include "Uis/OverlayDebug.hpp"
+#include "Uis/OverlayPaused.hpp"
 
 using namespace Flounder;
 

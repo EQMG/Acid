@@ -57,7 +57,7 @@ namespace Demo
 
 	Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const Justify &justify)
 	{
-		Text *result = new Text(this, UiBound(Vector2(positionX, positionY), "TopLeft", true), 1.4f, content, Uis::Get()->m_proximanova->GetRegular(), justify);
+		Text *result = new Text(this, UiBound(Vector2(positionX, positionY), "TopLeft", true), 1.4f, content, Uis::Get()->m_proximaNova->GetRegular(), justify);
 		result->SetTextColour(Colour(1.0f, 1.0f, 1.0f));
 		result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f));
 		result->SetBorder(new DriverConstant(0.04f));

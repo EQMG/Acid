@@ -19,12 +19,12 @@ namespace Flounder
 
 		{ typeUboObject, typeSamplerTexture }, // descriptors
 
-		{ "res/shaders/fonts/font.vert.spv", "res/shaders/fonts/font.frag.spv" } // shaderStages
+		{ "Resources/Shaders/Fonts/Font.vert.spv", "Resources/Shaders/Fonts/Font.frag.spv" } // shaderStages
 	};
 
 	RendererFonts::RendererFonts(const int &subpass) :
 		IRenderer(),
-		m_pipeline(new Pipeline("fonts", pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
 	{
 	}
 
@@ -35,7 +35,7 @@ namespace Flounder
 
 	void RendererFonts::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipeline());
+		m_pipeline->BindPipeline(commandBuffer);
 
 		for (auto screenobject : *Uis::Get()->GetObjects())
 		{

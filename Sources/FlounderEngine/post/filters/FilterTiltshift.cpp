@@ -10,7 +10,7 @@ namespace Flounder
 	const DescriptorType FilterTiltshift::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
 
 	FilterTiltshift::FilterTiltshift(const int &subpass) :
-		IPostFilter("filterTiltshift", "res/shaders/filters/tiltshift.frag.spv", subpass, { typeUboScene, typeSamplerColour }),
+		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag.spv", subpass, { typeUboScene, typeSamplerColour }),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_blurAmount(1.0f),
 		m_centre(1.1f),
