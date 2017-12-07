@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "../guis/Gui.hpp"
-#include "../fonts/Text.hpp"
+#include "../Fonts/Text.hpp"
+#include "../Guis/Gui.hpp"
 
 namespace Flounder
 {

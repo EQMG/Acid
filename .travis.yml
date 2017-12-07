@@ -40,9 +40,10 @@ matrix:
     env:
     - COMPILER=clang++-5.0
     - COMPILER_FLAGS=-stdlib=libc++
+	- CMAKE_CXX_FLAGS=-stdlib=libc++
     before_install:
     - sudo apt-get -qq update
-    - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-5.0 100
+    - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-5.0 90
 
 script:
 - cd $TRAVIS_BUILD_DIR

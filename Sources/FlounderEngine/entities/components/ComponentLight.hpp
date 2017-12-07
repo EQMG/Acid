@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "../IComponent.hpp"
-#include "../../lights/Light.hpp"
+#include "../../Lights/Light.hpp"
 
 namespace Flounder
 {

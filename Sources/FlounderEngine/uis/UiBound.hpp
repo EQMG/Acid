@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../maths/Vector2.hpp"
 #include <map>
+#include "../Maths/Vector2.hpp"
 
 namespace Flounder
 {

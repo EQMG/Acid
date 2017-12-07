@@ -1,6 +1,6 @@
 #include "FilterPixel.hpp"
 
-#include "../../devices/Display.hpp"
+#include "../../Devices/Display.hpp"
 
 namespace Flounder
 {

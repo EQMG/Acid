@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <map>
-#include "../engine/Engine.hpp"
+#include "../Engine/Engine.hpp"
 #include "Particle.hpp"
 #include "ParticleSystem.hpp"
 

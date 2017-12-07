@@ -1,17 +1,17 @@
 ﻿#pragma once
 
 #include <string>
-#include "../maths/Colour.hpp"
-#include "../maths/Vector2.hpp"
-#include "../models/Model.hpp"
-#include "../renderer/buffers/UniformBuffer.hpp"
-#include "../renderer/pipelines/Pipeline.hpp"
-#include "../uis/UiObject.hpp"
-#include "../visual/IDriver.hpp"
+#include "../Maths/Colour.hpp"
+#include "../Maths/Vector2.hpp"
+#include "../Models/Model.hpp"
+#include "../Renderer/Buffers/UniformBuffer.hpp"
+#include "../Renderer/Pipelines/Pipeline.hpp"
+#include "../Uis/UiObject.hpp"
+#include "../Uis/Uis.hpp"
+#include "../Visual/IDriver.hpp"
 #include "FontType.hpp"
 #include "Justify.hpp"
 #include "Line.hpp"
-#include "../uis/Uis.hpp"
 
 namespace Flounder
 {

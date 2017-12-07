@@ -1,7 +1,7 @@
 ﻿#include "Metafile.hpp"
 
-#include "../helpers/HelperFile.hpp"
-#include "../helpers/HelperString.hpp"
+#include "../Helpers/HelperFile.hpp"
+#include "../Helpers/HelperString.hpp"
 
 namespace Flounder
 {

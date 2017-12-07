@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../maths/Timer.hpp"
+#include "../Maths/Timer.hpp"
 
 namespace Flounder
 {

@@ -1,6 +1,6 @@
 ﻿#include "ComponentSun.hpp"
 
-#include "../../worlds/Worlds.hpp"
+#include "../../Worlds/Worlds.hpp"
 #include "../Entity.hpp"
 #include "ComponentLight.hpp"
 

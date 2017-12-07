@@ -1,6 +1,6 @@
 #include "Mouse.hpp"
 
-#include "../maths/Maths.hpp"
+#include "../Maths/Maths.hpp"
 
 namespace Flounder
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../engine/Engine.hpp"
+#include "../Engine/Engine.hpp"
 #include "Water.hpp"
 
 namespace Flounder
@@ -14,7 +14,7 @@ namespace Flounder
 	private:
 		Water *m_water;
 
-		float m_colourIntensity; // 0 being 100% reflective, 1 disables reflections.
+		float m_colourIntensity;
 		bool m_enableReflections;
 		float m_reflectionQuality;
 		bool m_reflectionShadows;

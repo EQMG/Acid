@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#include "../camera/ICamera.hpp"
-#include "../maths/Matrix4.hpp"
-#include "../maths/Vector4.hpp"
-#include "../physics/Aabb.hpp"
+#include "../Camera/ICamera.hpp"
+#include "../Maths/Matrix4.hpp"
+#include "../Maths/Vector4.hpp"
+#include "../Physics/Aabb.hpp"
 
 namespace Flounder
 {

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../maths/Vector3.hpp"
-#include "../maths/Matrix4.hpp"
-#include "../physics/Frustum.hpp"
-#include "../physics/Ray.hpp"
+#include "../Maths/Vector3.hpp"
+#include "../Maths/Matrix4.hpp"
+#include "../Physics/Frustum.hpp"
+#include "../Physics/Ray.hpp"
 #include "IPlayer.hpp"
 
 namespace Flounder

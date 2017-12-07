@@ -1,6 +1,6 @@
 ﻿#include "Gui.hpp"
 
-#include "../devices/Display.hpp"
+#include "../Devices/Display.hpp"
 #include "UbosGuis.hpp"
 
 namespace Flounder

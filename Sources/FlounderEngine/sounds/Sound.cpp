@@ -1,6 +1,6 @@
 ﻿#include "Sound.hpp"
 
-#include "../devices/Audio.hpp"
+#include "../Devices/Audio.hpp"
 
 namespace Flounder
 {

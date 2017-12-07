@@ -1,8 +1,8 @@
 #include "RendererShadows.hpp"
 
-#include "../devices/Display.hpp"
-#include "../entities/Entities.hpp"
-#include "../entities/components/ComponentModel.hpp"
+#include "../Devices/Display.hpp"
+#include "../Entities/Entities.hpp"
+#include "../Entities/Components/ComponentModel.hpp"
 #include "UbosShadows.hpp"
 
 namespace Flounder

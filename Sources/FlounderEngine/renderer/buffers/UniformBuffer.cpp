@@ -1,7 +1,7 @@
 ﻿#include "UniformBuffer.hpp"
 
 #include <cstring>
-#include "../../devices/Display.hpp"
+#include "../../Devices/Display.hpp"
 #include "../Renderer.hpp"
 
 namespace Flounder

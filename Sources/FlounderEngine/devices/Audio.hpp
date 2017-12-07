@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../engine/Engine.hpp"
-#include "../platforms/Platform.hpp"
-#include "../sounds/Sound.hpp"
+#include "../Engine/Engine.hpp"
+#include "../Platforms/Platform.hpp"
+#include "../Sounds/Sound.hpp"
 
 namespace Flounder
 {

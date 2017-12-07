@@ -1,7 +1,7 @@
 #include "FilterFxaa.hpp"
 
-#include "../../renderer/Renderer.hpp"
-#include "../../textures/Texture.hpp"
+#include "../../Renderer/Renderer.hpp"
+#include "../../Textures/Texture.hpp"
 
 namespace Flounder
 {

@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include "../maths/Colour.hpp"
-#include "../maths/Vector2.hpp"
-#include "../models/Model.hpp"
-#include "../textures/Texture.hpp"
-#include "../uis/UiObject.hpp"
-#include "../renderer/buffers/UniformBuffer.hpp"
-#include "../renderer/pipelines/Pipeline.hpp"
+#include "../Maths/Colour.hpp"
+#include "../Maths/Vector2.hpp"
+#include "../Models/Model.hpp"
+#include "../Textures/Texture.hpp"
+#include "../Uis/UiObject.hpp"
+#include "../Renderer/Buffers/UniformBuffer.hpp"
+#include "../Renderer/Pipelines/Pipeline.hpp"
 
 namespace Flounder
 {

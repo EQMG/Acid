@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../maths/Matrix4.hpp"
-#include "../maths/Vector4.hpp"
+#include "../Maths/Matrix4.hpp"
+#include "../Maths/Vector4.hpp"
 
 namespace Flounder
 {

@@ -1,6 +1,6 @@
 #include "Particles.hpp"
 
-#include "../uis/Uis.hpp"
+#include "../Uis/Uis.hpp"
 
 namespace Flounder
 {

@@ -1,8 +1,8 @@
 #include "FilterTiltshift.hpp"
 
-#include "../../devices/Display.hpp"
-#include "../../renderer/Renderer.hpp"
-#include "../../textures/Texture.hpp"
+#include "../../Devices/Display.hpp"
+#include "../../Renderer/Renderer.hpp"
+#include "../../Textures/Texture.hpp"
 
 namespace Flounder
 {

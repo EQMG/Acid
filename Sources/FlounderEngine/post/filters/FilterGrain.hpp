@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../IPostFilter.hpp"
-#include "../../renderer/buffers/UniformBuffer.hpp"
+#include "../../Renderer/Buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {

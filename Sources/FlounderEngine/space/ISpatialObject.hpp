@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../physics/ICollider.hpp"
+#include "../Physics/ICollider.hpp"
 
 namespace Flounder
 {

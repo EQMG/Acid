@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../engine/Engine.hpp"
-#include "../fonts/FontFamily.hpp"
+#include "../Engine/Engine.hpp"
+#include "../Fonts/FontFamily.hpp"
 #include "IManagerUis.hpp"
 #include "UiSelector.hpp"
 

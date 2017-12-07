@@ -1,7 +1,7 @@
 #include "Processing.hpp"
 
-#include "resource/ProcessorResource.hpp"
-#include "graphic/ProcessorGraphic.hpp"
+#include "Resource/ProcessorResource.hpp"
+#include "Graphic/ProcessorGraphic.hpp"
 
 namespace Flounder
 {
