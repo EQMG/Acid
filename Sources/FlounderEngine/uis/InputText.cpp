@@ -1,9 +1,7 @@
 ﻿#include "InputText.hpp"
 
-#include "../devices/Keyboard.hpp"
-#include "../guis/Gui.hpp"
-#include "../fonts/Text.hpp"
-#include "../visual/DriverSlide.hpp"
+#include "../Devices/Keyboard.hpp"
+#include "../Visual/DriverSlide.hpp"
 #include "Uis.hpp"
 
 namespace Flounder

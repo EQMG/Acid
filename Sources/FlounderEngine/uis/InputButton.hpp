@@ -1,9 +1,8 @@
 ﻿#pragma once
 
 #include <functional>
-#include "../fonts/Text.hpp"
-#include "../guis/Gui.hpp"
-#include "../fonts/Text.hpp"
+#include "../Fonts/Text.hpp"
+#include "../Guis/Gui.hpp"
 #include "UiObject.hpp"
 
 namespace Flounder

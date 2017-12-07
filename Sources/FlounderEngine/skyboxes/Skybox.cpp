@@ -1,9 +1,9 @@
 ﻿#include "Skybox.hpp"
 
-#include "../camera/Camera.hpp"
-#include "../devices/Display.hpp"
-#include "UbosSkyboxes.hpp"
+#include "../Camera/Camera.hpp"
+#include "../Devices/Display.hpp"
 #include "Skyboxes.hpp"
+#include "UbosSkyboxes.hpp"
 
 namespace Flounder
 {

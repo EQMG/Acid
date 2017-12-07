@@ -2,8 +2,8 @@
 
 #include <string>
 #include <vector>
-#include "../engine/Engine.hpp"
-#include "../platforms/Platform.hpp"
+#include "../Engine/Engine.hpp"
+#include "../Platforms/Platform.hpp"
 
 namespace Flounder
 {

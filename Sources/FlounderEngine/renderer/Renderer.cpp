@@ -1,8 +1,8 @@
 #include "Renderer.hpp"
 
 #include <cassert>
-#include "../devices/Display.hpp"
-#include "pipelines/Pipeline.hpp"
+#include "../Devices/Display.hpp"
+#include "Pipelines/Pipeline.hpp"
 
 namespace Flounder
 {

@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#include "../maths/Transform.hpp"
-#include "../renderer/pipelines/Pipeline.hpp"
-#include "../renderer/buffers/UniformBuffer.hpp"
-#include "../space/ISpatialStructure.hpp"
+#include "../Maths/Transform.hpp"
+#include "../Renderer/Pipelines/Pipeline.hpp"
+#include "../Renderer/Buffers/UniformBuffer.hpp"
+#include "../Space/ISpatialStructure.hpp"
 #include "IComponent.hpp"
 
 namespace Flounder

@@ -1,7 +1,7 @@
 #include "FilterMotion.hpp"
 
-#include "../../camera/Camera.hpp"
-#include "../../devices/Display.hpp"
+#include "../../Camera/Camera.hpp"
+#include "../../Devices/Display.hpp"
 
 namespace Flounder
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../renderer/IRenderer.hpp"
+#include "../Renderer/IRenderer.hpp"
 #include "Waters.hpp"
 
 namespace Flounder

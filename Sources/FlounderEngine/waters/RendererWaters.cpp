@@ -1,7 +1,7 @@
 #include "RendererWaters.hpp"
 
+#include "../Textures/Texture.hpp"
 #include "UbosWaters.hpp"
-#include "../textures/Texture.hpp"
 
 namespace Flounder
 {

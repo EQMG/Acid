@@ -1,8 +1,8 @@
 #include "FilterCrt.hpp"
 
-#include "../../devices/Display.hpp"
-#include "../../textures/Texture.hpp"
-#include "../../renderer/Renderer.hpp"
+#include "../../Devices/Display.hpp"
+#include "../../Textures/Texture.hpp"
+#include "../../Renderer/Renderer.hpp"
 
 namespace Flounder
 {

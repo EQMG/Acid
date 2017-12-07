@@ -1,7 +1,7 @@
 #include "FilterGrain.hpp"
 
-#include "../../textures/Texture.hpp"
-#include "../../renderer/Renderer.hpp"
+#include "../../Textures/Texture.hpp"
+#include "../../Renderer/Renderer.hpp"
 
 namespace Flounder
 {

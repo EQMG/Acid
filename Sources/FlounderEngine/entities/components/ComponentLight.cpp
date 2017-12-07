@@ -1,6 +1,6 @@
 ﻿#include "ComponentLight.hpp"
 
-#include "../../engine/Engine.hpp"
+#include "../../Engine/Engine.hpp"
 #include "../Entity.hpp"
 
 namespace Flounder

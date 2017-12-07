@@ -1,10 +1,10 @@
 ﻿#include "OverlayStartup.hpp"
 
-#include "../devices/Display.hpp"
-#include "../events/Events.hpp"
-#include "../events/EventTime.hpp"
-#include "../visual/DriverSlide.hpp"
-#include "../visual/DriverConstant.hpp"
+#include "../Devices/Display.hpp"
+#include "../Events/Events.hpp"
+#include "../Events/EventTime.hpp"
+#include "../Visual/DriverSlide.hpp"
+#include "../Visual/DriverConstant.hpp"
 
 namespace Flounder
 {

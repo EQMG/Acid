@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "../IComponent.hpp"
-#include "../../models/Model.hpp"
-#include "../../textures/Texture.hpp"
+#include "../../Models/Model.hpp"
+#include "../../Textures/Texture.hpp"
 
 namespace Flounder
 {

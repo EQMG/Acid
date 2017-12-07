@@ -1,7 +1,7 @@
 ﻿#include "QueueFamily.hpp"
 
 #include <vector>
-#include "../../devices/Display.hpp"
+#include "../../Devices/Display.hpp"
 
 namespace Flounder
 {

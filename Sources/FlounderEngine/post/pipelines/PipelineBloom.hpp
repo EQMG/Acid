@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../filters/FilterBloom1.hpp"
-#include "../filters/FilterBloom2.hpp"
+#include "../Filters/FilterBloom1.hpp"
+#include "../Filters/FilterBloom2.hpp"
 #include "../IPostPipeline.hpp"
 #include "PipelineGaussian.hpp"
 

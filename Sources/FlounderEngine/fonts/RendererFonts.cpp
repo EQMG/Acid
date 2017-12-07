@@ -1,7 +1,7 @@
 #include "RendererFonts.hpp"
 
-#include "../devices/Display.hpp"
-#include "../uis/Uis.hpp"
+#include "../Devices/Display.hpp"
+#include "../Uis/Uis.hpp"
 #include "UbosFonts.hpp"
 
 namespace Flounder

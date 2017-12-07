@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../renderer/IRenderer.hpp"
-#include "../terrains/Terrains.hpp"
+#include "../Renderer/IRenderer.hpp"
+#include "../Terrains/Terrains.hpp"
 #include "Shadows.hpp"
 
 namespace Flounder

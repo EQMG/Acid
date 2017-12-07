@@ -1,9 +1,9 @@
 #include "RendererGuis.hpp"
 
-#include "../devices/Display.hpp"
-#include "../models/Vertex.hpp"
-#include "../renderer/buffers/UniformBuffer.hpp"
-#include "../uis/Uis.hpp"
+#include "../Devices/Display.hpp"
+#include "../Models/Vertex.hpp"
+#include "../Renderer/Buffers/UniformBuffer.hpp"
+#include "../Uis/Uis.hpp"
 #include "Gui.hpp"
 #include "UbosGuis.hpp"
 

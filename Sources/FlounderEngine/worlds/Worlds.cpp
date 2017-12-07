@@ -1,8 +1,8 @@
 #include "Worlds.hpp"
 
-#include "../camera/Camera.hpp"
-#include "../maths/Matrix4.hpp"
-#include "../shadows/Shadows.hpp"
+#include "../Camera/Camera.hpp"
+#include "../Maths/Matrix4.hpp"
+#include "../Shadows/Shadows.hpp"
 
 namespace Flounder
 {

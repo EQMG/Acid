@@ -1,7 +1,7 @@
 ﻿#include "Swapchain.hpp"
 
-#include "../../devices/Display.hpp"
-#include "../../shadows/Shadows.hpp"
+#include "../../Devices/Display.hpp"
+#include "../../Shadows/Shadows.hpp"
 
 namespace Flounder
 {

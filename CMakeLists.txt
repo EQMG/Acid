@@ -4,6 +4,7 @@ project (Flounder)
 # Preprocessor
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	add_definitions(-DFLOUNDER_CONFIG_DEBUG)
+	add_definitions(-DFLOUNDER_VERBOSE)
 else()
 	add_definitions(-DFLOUNDER_CONFIG_RELEASE)
 endif()
@@ -17,6 +18,9 @@ else(UNIX AND APPLE)
 endif()
 
 # Compiler-options
+message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
+
 if(MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /Ox /Ob2 /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /MP")
@@ -26,7 +30,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall") # -Werror -pedantic
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s -O3")
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -ggdb3 -O0")
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	add_definitions(-D__USE_MINGW_ANSI_STDIO=0)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wall") # -Werror -pedantic
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s -O3")
