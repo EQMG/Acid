@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../maths/Vector4.hpp"
+#include "../../Maths/Vector4.hpp"
 #include "../IPostFilter.hpp"
 
 namespace Flounder

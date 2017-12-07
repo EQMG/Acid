@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../engine/Engine.hpp"
-#include "pass/RenderPass.hpp"
-#include "stencils/DepthStencil.hpp"
-#include "swapchain/Swapchain.hpp"
-#include "swapchain/Framebuffers.hpp"
+#include "../Engine/Engine.hpp"
+#include "Pass/RenderPass.hpp"
+#include "Stencils/DepthStencil.hpp"
+#include "Swapchain/Swapchain.hpp"
+#include "Swapchain/Framebuffers.hpp"
 #include "IManagerRender.hpp"
 
 namespace Flounder

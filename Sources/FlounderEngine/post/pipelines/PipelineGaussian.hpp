@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../filters/FilterBlurHorizontal.hpp"
-#include "../filters/FilterBlurVertical.hpp"
+#include "../Filters/FilterBlurHorizontal.hpp"
+#include "../Filters/FilterBlurVertical.hpp"
 #include "../IPostPipeline.hpp"
 
 namespace Flounder

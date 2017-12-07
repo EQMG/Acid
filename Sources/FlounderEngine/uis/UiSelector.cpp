@@ -1,7 +1,7 @@
 ﻿#include "UiSelector.hpp"
 
-#include "../devices/Mouse.hpp"
-#include "../devices/Joysticks.hpp"
+#include "../Devices/Mouse.hpp"
+#include "../Devices/Joysticks.hpp"
 
 namespace Flounder
 {

@@ -1,6 +1,6 @@
 ﻿#include "ComponentCollision.hpp"
 
-#include "../../physics/Sphere.hpp"
+#include "../../Physics/Sphere.hpp"
 #include "../Entity.hpp"
 #include "../Entities.hpp"
 #include "ComponentCollider.hpp"

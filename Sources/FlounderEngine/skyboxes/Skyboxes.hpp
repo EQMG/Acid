@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../engine/Engine.hpp"
-#include "../lights/Fog.hpp"
+#include "../Engine/Engine.hpp"
+#include "../Lights/Fog.hpp"
 #include "Skybox.hpp"
 
 namespace Flounder

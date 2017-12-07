@@ -1,9 +1,9 @@
 ﻿#include "Terrain.hpp"
 
-#include "../camera/Camera.hpp"
-#include "../devices/Display.hpp"
-#include "../worlds/Worlds.hpp"
-#include "../models/MeshGenerator.hpp"
+#include "../Camera/Camera.hpp"
+#include "../Devices/Display.hpp"
+#include "../Worlds/Worlds.hpp"
+#include "../Models/MeshGenerator.hpp"
 #include "Terrains.hpp"
 #include "UbosTerrains.hpp"
 

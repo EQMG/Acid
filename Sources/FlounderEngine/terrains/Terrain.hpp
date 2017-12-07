@@ -1,12 +1,12 @@
 ﻿#pragma once
 
 #include <vector>
-#include "../maths/Matrix4.hpp"
-#include "../maths/Transform.hpp"
-#include "../physics/Aabb.hpp"
-#include "../models/Model.hpp"
-#include "../renderer/buffers/UniformBuffer.hpp"
-#include "../renderer/pipelines/Pipeline.hpp"
+#include "../Maths/Matrix4.hpp"
+#include "../Maths/Transform.hpp"
+#include "../Physics/Aabb.hpp"
+#include "../Models/Model.hpp"
+#include "../Renderer/Buffers/UniformBuffer.hpp"
+#include "../Renderer/Pipelines/Pipeline.hpp"
 
 namespace Flounder
 {

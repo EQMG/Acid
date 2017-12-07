@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "../platforms/Platform.hpp"
-#include "../models/Model.hpp"
+#include "../Platforms/Platform.hpp"
+#include "../Models/Model.hpp"
 #include "UbosEntities.hpp"
 
 namespace Flounder

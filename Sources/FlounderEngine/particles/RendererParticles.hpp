@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "../renderer/IRenderer.hpp"
+#include "../Renderer/IRenderer.hpp"
 #include "Particles.hpp"
 
 namespace Flounder

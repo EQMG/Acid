@@ -1,8 +1,8 @@
-#include "FilterLensFlare.hpp"
+#include "FilterLensflare.hpp"
 
-#include "../../camera/Camera.hpp"
-#include "../../devices/Display.hpp"
-#include "../../renderer/Renderer.hpp"
+#include "../../Camera/Camera.hpp"
+#include "../../Devices/Display.hpp"
+#include "../../Renderer/Renderer.hpp"
 
 namespace Flounder
 {

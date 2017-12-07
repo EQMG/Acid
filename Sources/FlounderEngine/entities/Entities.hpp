@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../engine/Engine.hpp"
+#include "../Engine/Engine.hpp"
 #include "Entity.hpp"
 
 namespace Flounder
@@ -12,7 +12,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		//	ISpatialStructure<Entity*> *m_structure;
+	//	ISpatialStructure<Entity*> *m_structure;
 		std::vector<Entity*> *m_entities;
 	public:
 		/// <summary>

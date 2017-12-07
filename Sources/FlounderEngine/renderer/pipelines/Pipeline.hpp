@@ -3,7 +3,7 @@
 #include <array>
 #include <string>
 #include <vector>
-#include "../../platforms/Platform.hpp"
+#include "../../Platforms/Platform.hpp"
 #include "PipelineCreate.hpp"
 
 namespace Flounder

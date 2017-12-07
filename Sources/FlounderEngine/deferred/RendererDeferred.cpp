@@ -1,14 +1,14 @@
 #include "RendererDeferred.hpp"
 
-#include "../camera/Camera.hpp"
-#include "../devices/Display.hpp"
-#include "../entities/components/ComponentLight.hpp"
-#include "../entities/Entities.hpp"
-#include "../models/Vertex.hpp"
-#include "../renderer/Renderer.hpp"
-#include "../shadows/Shadows.hpp"
-#include "../textures/Texture.hpp"
-#include "../worlds/Worlds.hpp"
+#include "../Camera/Camera.hpp"
+#include "../Devices/Display.hpp"
+#include "../Entities/Components/ComponentLight.hpp"
+#include "../Entities/Entities.hpp"
+#include "../Models/Vertex.hpp"
+#include "../Renderer/Renderer.hpp"
+#include "../Shadows/Shadows.hpp"
+#include "../Textures/Texture.hpp"
+#include "../Worlds/Worlds.hpp"
 #include "UbosDeferred.hpp"
 
 namespace Flounder

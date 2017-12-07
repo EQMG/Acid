@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "../engine/Engine.hpp"
-#include "../noise/NoiseFast.hpp"
+#include "../Engine/Engine.hpp"
+#include "../Noise/NoiseFast.hpp"
 #include "Terrain.hpp"
 
 namespace Flounder

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../maths/Vector3.hpp"
+#include "../Maths/Vector3.hpp"
 #include "Frustum.hpp"
 #include "Intersect.hpp"
 #include "Ray.hpp"

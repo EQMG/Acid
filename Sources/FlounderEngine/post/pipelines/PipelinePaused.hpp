@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../filters/FilterCombine.hpp"
-#include "../filters/FilterDarken.hpp"
+#include "../Filters/FilterCombine.hpp"
+#include "../Filters/FilterDarken.hpp"
 #include "../IPostPipeline.hpp"
 #include "PipelineGaussian.hpp"
 

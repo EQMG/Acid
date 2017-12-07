@@ -2,10 +2,9 @@
 
 #include <cassert>
 #include <limits>
-#include "../devices/Display.hpp"
-#include "../helpers/HelperFile.hpp"
-#include "../helpers/HelperString.hpp"
-#include "../renderer/Renderer.hpp"
+#include "../Devices/Display.hpp"
+#include "../Helpers/HelperFile.hpp"
+#include "../Helpers/HelperString.hpp"
 
 namespace Flounder
 {

@@ -1,7 +1,7 @@
 #include "FilterWobble.hpp"
 
-#include "../../devices/Display.hpp"
-#include "../../engine/Engine.hpp"
+#include "../../Devices/Display.hpp"
+#include "../../Engine/Engine.hpp"
 
 namespace Flounder
 {

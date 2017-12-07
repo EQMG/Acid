@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include <vector>
-#include "../../platforms/Platform.hpp"
-#include "../../textures/Texture.hpp"
+#include "../../Platforms/Platform.hpp"
+#include "../../Textures/Texture.hpp"
 
 namespace Flounder
 {

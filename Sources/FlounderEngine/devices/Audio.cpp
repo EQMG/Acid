@@ -1,7 +1,7 @@
 #include "Audio.hpp"
 
 #include <fstream>
-#include "../camera/Camera.hpp"
+#include "../Camera/Camera.hpp"
 
 namespace Flounder
 {

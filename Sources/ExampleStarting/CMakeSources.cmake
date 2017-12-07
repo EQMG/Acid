@@ -1,28 +1,28 @@
 set(EXAMPLESTARTING_HEADERS_
-	"entities/EntityTreePine.hpp"
-	"entities/EntitySun.hpp"
-	"entities/EntityTesting.hpp"
-	"uis/OverlayPaused.hpp"
-	"uis/OverlayDebug.hpp"
+	"Entities/EntitySun.hpp"
+	"Entities/EntityTesting.hpp"
+	"Entities/EntityTreePine.hpp"
 	"FpsCamera.hpp"
 	"FpsPlayer.hpp"
 	"Instance.hpp"
 	"ManagerRender.hpp"
 	"ManagerUis.hpp"
+	"Uis/OverlayDebug.hpp"
+	"Uis/OverlayPaused.hpp"
 )
 
 set(EXAMPLESTARTING_SOURCES_
-	"entities/EntityTreePine.cpp"
-	"entities/EntitySun.cpp"
-	"entities/EntityTesting.cpp"
-	"uis/OverlayPaused.cpp"
-	"uis/OverlayDebug.cpp"
+	"Entities/EntitySun.cpp"
+	"Entities/EntityTesting.cpp"
+	"Entities/EntityTreePine.cpp"
 	"FpsCamera.cpp"
 	"FpsPlayer.cpp"
 	"Instance.cpp"
 	"Main.cpp"
 	"ManagerRender.cpp"
 	"ManagerUis.cpp"
+	"Uis/OverlayDebug.cpp"
+	"Uis/OverlayPaused.cpp"
 )
 
 source_group("Header Files" FILES ${EXAMPLESTARTING_HEADERS_})
