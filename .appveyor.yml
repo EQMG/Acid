@@ -32,6 +32,6 @@ before_build:
   - cd C:\Projects\Flounder
   - mkdir Build
   - cd Build
-  - cmake .. -G "Visual Studio 15 2017 Win64"
-  - cmake --build . -DCMAKE_BUILD_TYPE=Release
+  - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
+  - cmake --build .
   - cd ../
