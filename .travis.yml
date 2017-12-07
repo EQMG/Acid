@@ -51,4 +51,5 @@ script:
 - mkdir Build
 - cd Build
 - cmake .. -G "Unix Makefiles"
-- make all
+- cmake --build . -DCMAKE_BUILD_TYPE=Release
+- cd ../
