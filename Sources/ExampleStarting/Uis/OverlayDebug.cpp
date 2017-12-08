@@ -1,7 +1,5 @@
 ﻿#include "OverlayDebug.hpp"
 
-#include <uis/UiBound.hpp>
-
 namespace Demo
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :
