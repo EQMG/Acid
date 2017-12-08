@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	{
 		Display::Get()->SetWindowSize(1080, 720);
 		Display::Get()->SetTitle("Example Starting");
-		Display::Get()->SetIcon("Resources/Logo/Tail.png");
+		Display::Get()->SetIcon("Resources/Logos/Tail.png");
 		Display::Get()->SetFpsLimit(0.0f);
 		Display::Get()->SetAntialiasing(true);
 		Display::Get()->SetFullscreen(false);

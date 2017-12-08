@@ -4,8 +4,8 @@
 #include <vector>
 #include <stdexcept>
 #include "../Platforms/Platform.hpp"
-#include "../Renderer/buffers/Buffer.hpp"
-#include "../Renderer/pipelines/PipelineCreate.hpp"
+#include "../Renderer/Buffers/Buffer.hpp"
+#include "../Renderer/Pipelines/PipelineCreate.hpp"
 
 namespace Flounder
 {
