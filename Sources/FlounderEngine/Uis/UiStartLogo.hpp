@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class OverlayStartup :
+	class UiStartLogo :
 		public UiObject
 	{
 	private:
@@ -14,9 +14,9 @@ namespace Flounder
 		Text *m_textCopyright;
 		bool m_starting;
 	public:
-		OverlayStartup(UiObject *parent);
+		UiStartLogo(UiObject *parent);
 
-		~OverlayStartup();
+		~UiStartLogo();
 
 		void UpdateObject() override;
 

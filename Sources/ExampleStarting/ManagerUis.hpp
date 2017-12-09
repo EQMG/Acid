@@ -3,7 +3,7 @@
 #include <Flounder.hpp>
 
 #include "Uis/OverlayDebug.hpp"
-#include "Uis/OverlayPaused.hpp"
+#include "Uis/UiNavigation.hpp"
 
 using namespace Flounder;
 
@@ -19,9 +19,9 @@ namespace Demo
 
 		IButton *m_buttonPause;
 
-		OverlayStartup *m_overlayStartup;
+		UiStartLogo *m_uiStartLogo;
 		OverlayDebug *m_overlayDebug;
-		OverlayPaused *m_overlayPaused;
+		UiNavigation *m_uiNavigation;
 	public:
 		ManagerUis();
 

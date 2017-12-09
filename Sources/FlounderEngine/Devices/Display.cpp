@@ -45,13 +45,13 @@ namespace Flounder
 
 		if (Display::Get()->m_fullscreen)
 		{
-			Display::Get()->m_fullscreenWidth = width;
-			Display::Get()->m_fullscreenHeight = height;
+			Display::Get()->m_fullscreenWidth = static_cast<uint32_t>(width);
+			Display::Get()->m_fullscreenHeight = static_cast<uint32_t>(height);
 		}
 		else
 		{
-			Display::Get()->m_windowWidth = width;
-			Display::Get()->m_windowHeight = height;
+			Display::Get()->m_windowWidth = static_cast<uint32_t>(width);
+			Display::Get()->m_windowHeight = static_cast<uint32_t>(height);
 		}
 
 		Platform::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
@@ -168,7 +168,7 @@ namespace Flounder
 		// TODO
 	}
 
-	void Display::SetWindowSize(const int &width, const int &height)
+	void Display::SetWindowSize(const uint32_t &width, const uint32_t &height)
 	{
 		m_windowWidth = width;
 		m_windowHeight = height;
