@@ -1,5 +1,7 @@
 .vs/*
+.idea/*
+.metadata/
+cmake-build-debug/*
 Build/*
 
 .DS_Store
-/.metadata/
