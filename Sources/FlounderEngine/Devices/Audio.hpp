@@ -25,8 +25,8 @@ namespace Flounder
 		public IModule
 	{
 	private:
-	//	ALCdevice *m_alDevice;
-	//	ALCcontext *m_alContext;
+		ALCdevice *m_alDevice;
+		ALCcontext *m_alContext;
 	public:
 		/// <summary>
 		/// Gets this engine instance.

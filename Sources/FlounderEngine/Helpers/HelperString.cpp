@@ -50,7 +50,7 @@ namespace Flounder
 
 	int HelperString::FindCharPos(const std::string &str, const char &c)
 	{
-		for (int i = 0; i < str.length(); i++)
+		for (int i = 0; i < static_cast<int>(str.length()); i++)
 		{
 			if (str.at(i) == c)
 			{

@@ -174,7 +174,7 @@
 #include "Uis/InputGrabber.hpp"
 #include "Uis/InputSlider.hpp"
 #include "Uis/InputText.hpp"
-#include "Uis/OverlayStartup.hpp"
+#include "Uis/UiStartLogo.hpp"
 #include "Uis/UiBound.hpp"
 #include "Uis/UiObject.hpp"
 #include "Uis/Uis.hpp"
