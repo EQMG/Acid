@@ -7,8 +7,9 @@ set(EXAMPLESTARTING_HEADERS_
 	"Instance.hpp"
 	"ManagerRender.hpp"
 	"ManagerUis.hpp"
-	"Uis/OverlayDebug.hpp"
-	"Uis/OverlayPaused.hpp"
+    "Uis/OverlayDebug.hpp"
+	"Uis/UiInventory.hpp"
+    "Uis/UiNavigation.hpp"
 )
 
 set(EXAMPLESTARTING_SOURCES_
@@ -22,7 +23,8 @@ set(EXAMPLESTARTING_SOURCES_
 	"ManagerRender.cpp"
 	"ManagerUis.cpp"
 	"Uis/OverlayDebug.cpp"
-	"Uis/OverlayPaused.cpp"
+	"Uis/UiInventory.cpp"
+    "Uis/UiNavigation.cpp"
 )
 
 source_group("Header Files" FILES ${EXAMPLESTARTING_HEADERS_})

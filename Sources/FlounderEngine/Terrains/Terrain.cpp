@@ -26,7 +26,7 @@ namespace Flounder
 		m_transform->m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
 		m_aabb->Update(*m_transform->m_position, *m_transform->m_rotation, 1.0f, m_aabb);
 
-		for (int i = 0; i < SQUARE_SIZES.size(); i++)
+		for (int i = 0; i < static_cast<int>(SQUARE_SIZES.size()); i++)
 		{
 			m_modelLods.push_back(nullptr);
 		}

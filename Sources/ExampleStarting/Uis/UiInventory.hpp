@@ -6,14 +6,14 @@ using namespace Flounder;
 
 namespace Demo
 {
-	class OverlayPaused :
+	class UiInventory :
 		public UiObject
 	{
 	private:
 	public:
-		OverlayPaused(UiObject *parent);
+		UiInventory(UiObject *parent);
 
-		~OverlayPaused();
+		~UiInventory();
 
 		virtual void UpdateObject() override;
 	};
