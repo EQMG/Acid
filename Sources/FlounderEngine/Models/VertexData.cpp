@@ -46,7 +46,7 @@ namespace Flounder
 
 	bool VertexData::IsSet() const
 	{
-		return (m_textureIndex != VertexData::NO_INDEX) && (m_normalIndex != VertexData::NO_INDEX);
+		return (static_cast<uint32_t>(m_textureIndex) != NO_INDEX) && (static_cast<uint32_t>(m_normalIndex) != NO_INDEX);
 	}
 
 	bool VertexData::HasSameTextureAndNormal(const int &textureIndexOther, const int &normalIndexOther) const

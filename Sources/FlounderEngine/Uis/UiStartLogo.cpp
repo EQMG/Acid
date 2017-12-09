@@ -1,4 +1,4 @@
-﻿#include "OverlayStartup.hpp"
+﻿#include "UiStartLogo.hpp"
 
 #include "../Devices/Display.hpp"
 #include "../Events/Events.hpp"
@@ -8,7 +8,7 @@
 
 namespace Flounder
 {
-	OverlayStartup::OverlayStartup(UiObject *parent) :
+	UiStartLogo::UiStartLogo(UiObject *parent) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_guiBackground(new Gui(this, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)), new Texture("Resources/Guis/Black.png"), 1)),
 		m_guiLogo(new Gui(this, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(0.4f, 0.4f)), new Texture("Resources/Logos/Equilibrium-Games-02.png"), 1)),
@@ -21,14 +21,14 @@ namespace Flounder
 		}));
 	}
 
-	OverlayStartup::~OverlayStartup()
+	UiStartLogo::~UiStartLogo()
 	{
 		delete m_guiBackground;
 		delete m_guiLogo;
 		delete m_textCopyright;
 	}
 
-	void OverlayStartup::UpdateObject()
+	void UiStartLogo::UpdateObject()
 	{
 		m_guiBackground->GetRectangle()->m_dimensions->m_x = Display::Get()->GetAspectRatio();
 		m_guiBackground->SetScaleDriver(new DriverConstant(2.0f));
