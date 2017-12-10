@@ -18,6 +18,7 @@ else(UNIX AND APPLE)
 endif()
 
 # Compiler-options
+message(STATUS "System: ${CMAKE_SYSTEM}")
 message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
 
@@ -55,7 +56,7 @@ message(STATUS "OpenAL: ${OPENAL_LIBRARY}")
 
 set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
 find_library(VULKAN_LIBRARY NAMES vulkan vulkan-1 PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
-message(STATUS "Vulkan: ${VULKAN_LIBRARY}") 
+message(STATUS "Vulkan: ${VULKAN_LIBRARY}")
 
 set(LIBRARIES_INCLUDES ${GLFW_INCLUDES} ${OPENAL_INCLUDES} ${VULKAN_INCLUDES})
 
