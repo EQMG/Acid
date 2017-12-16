@@ -19,6 +19,8 @@ matrix:
     env:
     - COMPILER=g++-6
     before_install:
+    - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
+    - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - sudo apt-get -qq update
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
   - os: linux
@@ -45,6 +47,8 @@ matrix:
     - COMPILER=clang++-5.0
     - COMPILER_FLAGS=-stdlib=libc++
     before_install:
+    - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
+    - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - sudo apt-get -qq update
     - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-5.0 100
 
