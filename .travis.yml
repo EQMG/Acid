@@ -11,6 +11,8 @@ matrix:
         - g++-6
         - xorg-dev 
         - libglu1-mesa-dev
+        - libglfw3
+        - libglfw3-dev
         - libopenal1
     language: cpp
     compiler: gcc
@@ -34,6 +36,8 @@ matrix:
         - libc++-dev
         - xorg-dev 
         - libglu1-mesa-dev
+        - libglfw3
+        - libglfw3-dev
         - libopenal1
     language: cpp
     compiler: clang
