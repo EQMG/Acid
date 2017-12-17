@@ -1,5 +1,7 @@
 #include "ManagerRender.hpp"
 
+#include <Camera/Camera.hpp>
+
 namespace Demo
 {
 	ManagerRender::ManagerRender() :
@@ -61,8 +63,8 @@ namespace Demo
 		//	m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
 		//	m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
 		//	m_filterLensflare->RenderFilter(commandBuffer);
-		m_filterTiltshift->RenderFilter(commandBuffer);
-		m_filterGrain->RenderFilter(commandBuffer);
+		//  m_filterTiltshift->RenderFilter(commandBuffer);
+		//  m_filterGrain->RenderFilter(commandBuffer);
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
 	}

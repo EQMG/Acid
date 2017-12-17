@@ -1,3 +1,9 @@
+#include <Entities/Components/ComponentModel.hpp>
+#include <Entities/Components/ComponentMaterial.hpp>
+#include <Entities/Components/ComponentGlow.hpp>
+#include <Entities/Components/ComponentLight.hpp>
+#include <Entities/Components/ComponentSun.hpp>
+
 #include "EntitySun.hpp"
 
 Model *EntitySun::g_model = nullptr;

@@ -1,13 +1,15 @@
 #pragma once
 
-#include <Flounder.hpp>
+#include <Uis/UiObject.hpp>
+#include <Fonts/Text.hpp>
+#include <Guis/Gui.hpp>
 
 using namespace Flounder;
 
 namespace Demo
 {
 	class UiNavigation :
-			public UiObject
+		public UiObject
 	{
 	private:
 		UiObject *m_uiBar;

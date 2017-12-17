@@ -1,9 +1,7 @@
 ﻿#include "Buffer.hpp"
 
 #include <cassert>
-#include <cstring>
-#include "../../Devices/Display.hpp"
-#include "../Renderer.hpp"
+#include <Flounder.hpp>
 
 namespace Flounder
 {
@@ -13,17 +11,18 @@ namespace Flounder
 		m_bufferMemory(VK_NULL_HANDLE)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto surface = Display::Get()->GetSurface();
 
-		// QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(physicalDevice, surface);
-		// uint32_t indicesArray[] = { static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily) };
+		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(surface);
+		uint32_t indicesArray[] = { static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily) };
 
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		bufferCreateInfo.size = size;
 		bufferCreateInfo.usage = usage;
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		// bufferInfo.queueFamilyIndexCount = 2;
-		// bufferInfo.pQueueFamilyIndices = indicesArray;
+		bufferCreateInfo.queueFamilyIndexCount = 2;
+		bufferCreateInfo.pQueueFamilyIndices = indicesArray;
 
 		Platform::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
 

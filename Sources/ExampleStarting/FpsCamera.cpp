@@ -1,5 +1,8 @@
 #include "FpsCamera.hpp"
 
+#include <Uis/Uis.hpp>
+#include <Devices/Mouse.hpp>
+
 namespace Demo
 {
 	const float FpsCamera::NEAR_PLANE = 0.1f;

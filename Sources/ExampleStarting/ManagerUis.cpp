@@ -1,5 +1,9 @@
 ﻿#include "ManagerUis.hpp"
 
+#include <Inputs/ButtonKeyboard.hpp>
+#include <Visual/DriverConstant.hpp>
+#include <Visual/DriverSlide.hpp>
+
 namespace Demo
 {
 	const float ManagerUis::SLIDE_TIME = 0.2f;

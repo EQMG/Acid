@@ -1,3 +1,6 @@
+#include <Entities/Components/ComponentModel.hpp>
+#include <Entities/Components/ComponentMaterial.hpp>
+
 #include "EntityTreePine.hpp"
 
 Model *EntityTreePine::g_model = nullptr;

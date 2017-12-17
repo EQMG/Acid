@@ -7,13 +7,13 @@ namespace Demo
 	const std::vector<std::string> TAB_COLOURS = { "#553982", "#41A85F", "#2969af", "#B8312F", "#475577", "#75706B" };
 
 	UiNavigation::UiNavigation(UiObject *parent) :
-			UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
-			m_uiBar(nullptr),
-			m_barBackground(nullptr),
-			m_barTitle(nullptr),
-			m_barCreatedBy(nullptr),
-			m_tabPuck(nullptr),
-			tabTexts(std::vector<Text*>())
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
+		m_uiBar(nullptr),
+		m_barBackground(nullptr),
+		m_barTitle(nullptr),
+		m_barCreatedBy(nullptr),
+		m_tabPuck(nullptr),
+		tabTexts(std::vector<Text*>())
 	{
 		Texture *textureWhite = new Texture("Resources/Guis/White.png");
 		Texture *textureGeometry = new Texture("Resources/Guis/Geometry-Grain.png");
