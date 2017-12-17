@@ -1,5 +1,15 @@
 #include "FpsPlayer.hpp"
 
+#include <Inputs/AxisCompound.hpp>
+#include <Inputs/ButtonKeyboard.hpp>
+#include <Inputs/AxisButton.hpp>
+#include <Inputs/AxisJoystick.hpp>
+#include <Inputs/ButtonCompound.hpp>
+#include <Inputs/ButtonJoystick.hpp>
+#include <Uis/Uis.hpp>
+#include <Terrains/Terrains.hpp>
+#include <Camera/Camera.hpp>
+
 namespace Demo
 {
 	const float FpsPlayer::WALK_SPEED = 3.1f;

@@ -1,5 +1,11 @@
 #include "Instance.hpp"
 
+#include <Inputs/ButtonKeyboard.hpp>
+#include <Entities/Entities.hpp>
+#include <Terrains/Terrains.hpp>
+#include <Maths/Maths.hpp>
+#include <Devices/Display.hpp>
+#include <Devices/Mouse.hpp>
 #include "Entities/EntityTreePine.hpp"
 #include "Entities/EntityTesting.hpp"
 #include "Entities/EntitySun.hpp"

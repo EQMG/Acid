@@ -4,10 +4,8 @@
 #include "../Devices/Display.hpp"
 #include "../Entities/Components/ComponentLight.hpp"
 #include "../Entities/Entities.hpp"
-#include "../Models/Vertex.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "../Shadows/Shadows.hpp"
-#include "../Textures/Texture.hpp"
 #include "../Worlds/Worlds.hpp"
 #include "UbosDeferred.hpp"
 
@@ -45,6 +43,13 @@ namespace Flounder
 
 		{ "Resources/Shaders/Deferred/Deferred.vert.spv", "Resources/Shaders/Deferred/Deferred.frag.spv" } // shaderStages
 	};
+
+	/*m_pipeline(new Pipeline(subpass,
+	 	{ "Resources/Shaders/Deferred/Deferred.vert.spv", "Resources/Shaders/Deferred/Deferred.frag.spv" },// shaderStages
+	 	{ UNIFORM_BUFFER, UNIFORM_BUFFER, DEPTH_STENCIL, TEXTURE, TEXTURE, TEXTURE, TEXTURE }, // descriptors
+	 	PIPELINE_POLYGON_NO_DEPTH, POLYGON_MODE_FILL, CULL_MODE_BACK_BIT, // pipelineModeFlags / polygonMode / cullModeFlags
+	 	Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions() // vertexBindingDescriptions / vertexAttributeDescriptions
+	 )),*/
 
 	RendererDeferred::RendererDeferred(const int &subpass) :
 		IRenderer(),
