@@ -1,6 +1,8 @@
 #pragma once
 
-#include <Flounder.hpp>
+#include <Entities/Entity.hpp>
+#include <Models/Model.hpp>
+#include <Textures/Texture.hpp>
 
 using namespace Flounder;
 

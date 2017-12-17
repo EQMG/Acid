@@ -1,5 +1,7 @@
 ﻿#include "OverlayDebug.hpp"
 
+#include <Visual/DriverConstant.hpp>
+
 namespace Demo
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :

@@ -1,6 +1,8 @@
 ﻿#pragma once
 
-#include <Flounder.hpp>
+#include <Uis/UiObject.hpp>
+#include <Maths/Timer.hpp>
+#include <Fonts/Text.hpp>
 
 using namespace Flounder;
 

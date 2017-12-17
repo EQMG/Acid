@@ -1,6 +1,8 @@
 #pragma once
 
-#include <Flounder.hpp>
+#include <Standards/IStandard.hpp>
+#include <Inputs/IButton.hpp>
+#include <Particles/ParticleSystem.hpp>
 
 using namespace Flounder;
 

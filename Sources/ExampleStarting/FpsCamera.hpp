@@ -1,6 +1,8 @@
 #pragma once
 
-#include <Flounder.hpp>
+#include <Camera/ICamera.hpp>
+#include <Inputs/ButtonJoystick.hpp>
+#include <Inputs/AxisJoystick.hpp>
 
 using namespace Flounder;
 

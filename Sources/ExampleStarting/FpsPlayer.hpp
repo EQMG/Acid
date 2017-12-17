@@ -1,6 +1,8 @@
 #pragma once
 
-#include <Flounder.hpp>
+#include <Camera/IPlayer.hpp>
+#include <Inputs/IAxis.hpp>
+#include <Inputs/IButton.hpp>
 
 using namespace Flounder;
 
