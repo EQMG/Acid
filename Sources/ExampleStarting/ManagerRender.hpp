@@ -1,6 +1,18 @@
 #pragma once
 
-#include <Flounder.hpp>
+#include <Shadows/RendererShadows.hpp>
+#include <Skyboxes/RendererSkyboxes.hpp>
+#include <Renderer/IManagerRender.hpp>
+#include <Terrains/RendererTerrains.hpp>
+#include <Waters/RendererWaters.hpp>
+#include <Entities/RendererEntities.hpp>
+#include <Deferred/RendererDeferred.hpp>
+#include <Fonts/RendererFonts.hpp>
+#include <Post/Filters/FilterFxaa.hpp>
+#include <Post/Filters/FilterTiltshift.hpp>
+#include <Post/Filters/FilterLensflare.hpp>
+#include <Post/Filters/FilterGrain.hpp>
+#include <Guis/RendererGuis.hpp>
 
 using namespace Flounder;
 

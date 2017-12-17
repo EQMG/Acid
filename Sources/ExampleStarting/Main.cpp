@@ -1,7 +1,9 @@
 #include <iostream>
-
-#include <Flounder.hpp>
-
+#include <Platforms/PlatformUpdater.hpp>
+#include <Devices/Mouse.hpp>
+#include <Camera/Camera.hpp>
+#include <Renderer/Renderer.hpp>
+#include <Standards/Standards.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 #include "Instance.hpp"
