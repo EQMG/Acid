@@ -46,7 +46,12 @@ namespace Demo
 		const auto camera = Camera::Get()->GetCamera();
 
 		// Starts Rendering.
-		Renderer::Get()->StartRenderpass(commandBuffer);
+		VkResult startResult = Renderer::Get()->StartRenderpass(commandBuffer);
+
+		if (startResult != VK_SUCCESS)
+		{
+			return;
+		}
 
 		// Subpass 0.
 		m_rendererShadows->Render(commandBuffer, m_infinity, *camera);

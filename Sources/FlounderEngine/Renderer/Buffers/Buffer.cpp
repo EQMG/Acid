@@ -1,9 +1,9 @@
 ﻿#include "Buffer.hpp"
 
 #include <cassert>
-#include <Devices/Display.hpp>
-#include <Renderer/Queue/QueueFamily.hpp>
-#include <Renderer/Renderer.hpp>
+#include "../../Devices/Display.hpp"
+#include "../Queue/QueueFamily.hpp"
+#include "../Renderer.hpp"
 
 namespace Flounder
 {

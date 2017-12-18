@@ -1,7 +1,6 @@
 ﻿#include "UiObject.hpp"
 
 #include "../Devices/Display.hpp"
-#include "../Engine/Engine.hpp"
 #include "../Visual/DriverConstant.hpp"
 
 namespace Flounder

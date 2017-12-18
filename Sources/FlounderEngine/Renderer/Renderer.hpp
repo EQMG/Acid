@@ -49,6 +49,12 @@ namespace Flounder
 	public:
 		void Update() override;
 
+		VkResult StartRenderpass(VkCommandBuffer const &commandBuffer);
+
+		void NextSubpass(const VkCommandBuffer &commandBuffer);
+
+		void EndRenderpass(VkCommandBuffer const &commandBuffer);
+
 		/// <summary>
 		/// Gets the renderer manager.
 		/// </summary>
@@ -76,12 +82,6 @@ namespace Flounder
 		static VkCommandBuffer BeginSingleTimeCommands();
 
 		static void EndSingleTimeCommands(const VkCommandBuffer &commandBuffer);
-
-		void StartRenderpass(VkCommandBuffer const &commandBuffer);
-
-		void NextSubpass(const VkCommandBuffer &commandBuffer);
-
-		void EndRenderpass(VkCommandBuffer const &commandBuffer);
 	private:
 		VkFramebuffer GetActiveFramebuffer() const { return m_framebuffers->GetFramebuffers()[m_activeSwapchinImage]; }
 
@@ -92,9 +92,5 @@ namespace Flounder
 		void CreatePipelineCache();
 
 		void RecreateSwapchain();
-
-		VkResult BeginReindering();
-
-		void EndRendering(std::vector<VkSemaphore> waitSemaphores);
 	};
 }

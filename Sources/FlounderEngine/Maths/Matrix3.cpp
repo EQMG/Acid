@@ -1,7 +1,5 @@
 #include "Matrix3.hpp"
 
-#include "Maths.hpp"
-
 namespace Flounder
 {
 	Matrix3::Matrix3() :

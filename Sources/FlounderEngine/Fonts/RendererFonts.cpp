@@ -1,9 +1,5 @@
 #include "RendererFonts.hpp"
 
-#include "../Devices/Display.hpp"
-#include "../Uis/Uis.hpp"
-#include "UbosFonts.hpp"
-
 namespace Flounder
 {
 	const DescriptorType RendererFonts::typeUboObject = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_ALL);
