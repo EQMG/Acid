@@ -76,6 +76,12 @@ namespace Flounder
 		static VkCommandBuffer BeginSingleTimeCommands();
 
 		static void EndSingleTimeCommands(const VkCommandBuffer &commandBuffer);
+
+		void StartRenderpass(VkCommandBuffer const &commandBuffer);
+
+		void NextSubpass(const VkCommandBuffer &commandBuffer);
+
+		void EndRenderpass(VkCommandBuffer const &commandBuffer);
 	private:
 		VkFramebuffer GetActiveFramebuffer() const { return m_framebuffers->GetFramebuffers()[m_activeSwapchinImage]; }
 
@@ -88,8 +94,6 @@ namespace Flounder
 		void RecreateSwapchain();
 
 		VkResult BeginReindering();
-
-		void RunRenderPass();
 
 		void EndRendering(std::vector<VkSemaphore> waitSemaphores);
 	};

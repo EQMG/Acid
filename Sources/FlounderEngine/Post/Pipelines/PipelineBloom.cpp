@@ -17,7 +17,7 @@ namespace Flounder
 		delete m_filterBloom2;
 	}
 
-	void PipelineBloom::RenderPipeline(const VkCommandBuffer *commandBuffer)
+	void PipelineBloom::RenderPipeline(const VkCommandBuffer &commandBuffer)
 	{
 		m_filterBloom1->RenderFilter(commandBuffer);
 		m_pipelineGaussian->RenderPipeline(commandBuffer);

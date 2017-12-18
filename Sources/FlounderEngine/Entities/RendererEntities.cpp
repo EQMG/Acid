@@ -40,7 +40,7 @@ namespace Flounder
 		delete m_pipeline;
 	}
 
-	void RendererEntities::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererEntities::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		UbosEntities::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
@@ -51,7 +51,7 @@ namespace Flounder
 
 		for (auto entity : *Entities::Get()->GetEntities()) // Entities::Get()->GetStructure()->GetAll()
 		{
-			entity->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
+			entity->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 		}
 	}
 }

@@ -13,7 +13,7 @@ namespace Flounder
 		delete m_slideSpaceValue;
 	}
 
-	void FilterCombine::RenderFilter(const VkCommandBuffer *commandBuffer)
+	void FilterCombine::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 #if 0
 		m_shader->loadUniform4f("slideSpace", *m_slideSpaceValue);

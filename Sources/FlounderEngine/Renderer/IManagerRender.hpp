@@ -25,6 +25,6 @@ namespace Flounder
 		/// <summary>
 		/// Run when rendering the master renderer.
 		/// </summary>
-		virtual void Render(const VkCommandBuffer *commandBuffer) = 0;
+		virtual void Render() = 0;
 	};
 }

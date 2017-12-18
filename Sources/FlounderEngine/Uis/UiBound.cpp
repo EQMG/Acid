@@ -12,9 +12,9 @@ namespace Flounder
 		{ "Centre", Vector2(0.5f, 0.5f) },
 		{ "CentreRight", Vector2(1.0f, 0.5f) },
 
-		{ "ButtomLeft", Vector2(0.0f, 0.0f) },
-		{ "ButtomCentre", Vector2(0.5f, 0.0f) },
-		{ "ButtomRight", Vector2(1.0f, 0.0f) },
+		{ "BottomLeft", Vector2(0.0f, 0.0f) },
+		{ "BottomCentre", Vector2(0.5f, 0.0f) },
+		{ "BottomRight", Vector2(1.0f, 0.0f) },
 	};
 
 	UiBound::UiBound(const Vector2 &position, const std::string &reference, const bool &aspectPosition, const bool &aspectSize, const Vector2 &dimensions) :

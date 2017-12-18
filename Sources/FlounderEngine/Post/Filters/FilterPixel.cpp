@@ -14,7 +14,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterPixel::RenderFilter(const VkCommandBuffer *commandBuffer)
+	void FilterPixel::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 #if 0
 		m_shader->loadUniform1f("pixelSize", m_pixelSize);

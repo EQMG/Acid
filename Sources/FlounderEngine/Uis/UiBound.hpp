@@ -23,7 +23,7 @@ namespace Flounder
 		/// Constructor for rectangle.
 		/// </summary>
 		/// <param name="position"> The object screen position. </param>
-		/// <param name="reference"> The reference pivot vertex (TopLeft, TopCentre, TopRight, CentreLeft, Centre, CentreRight, ButtomLeft, ButtomCentre, ButtomRight). </param>
+		/// <param name="reference"> The reference pivot vertex (TopLeft, TopCentre, TopRight, CentreLeft, Centre, CentreRight, BottomLeft, BottomCentre, BottomRight). </param>
 		/// <param name="aspectPosition"> The if the x position will change with display width. </param>
 		/// <param name="aspectSize"> The if the width will scale with display width. </param>
 		/// <param name="dimensions"> The object dimensions. </param>

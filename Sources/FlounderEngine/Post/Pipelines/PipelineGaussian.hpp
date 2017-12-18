@@ -19,7 +19,7 @@ namespace Flounder
 
 		~PipelineGaussian();
 
-		void RenderPipeline(const VkCommandBuffer *commandBuffer) override;
+		void RenderPipeline(const VkCommandBuffer &commandBuffer) override;
 
 		void SetScaleValue(const float &scaleValue) const;
 	};

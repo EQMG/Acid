@@ -16,7 +16,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterGrey::RenderFilter(const VkCommandBuffer *commandBuffer)
+	void FilterGrey::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>

@@ -30,8 +30,8 @@ namespace Flounder
 		/// <summary>
 		/// Renders the filter.
 		/// </summary>
-		virtual void RenderFilter(const VkCommandBuffer *commandBuffer);
+		virtual void RenderFilter(const VkCommandBuffer &commandBuffer);
 	protected:
-		void CmdRender(const VkCommandBuffer *commandBuffer, const std::vector<VkWriteDescriptorSet> &descriptorWrites);
+		void CmdRender(const VkCommandBuffer &commandBuffer, const std::vector<VkWriteDescriptorSet> &descriptorWrites);
 	};
 }

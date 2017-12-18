@@ -6,6 +6,7 @@
 #include <Maths/Maths.hpp>
 #include <Devices/Display.hpp>
 #include <Devices/Mouse.hpp>
+#include <Sounds/Sound.hpp>
 #include "Entities/EntityTreePine.hpp"
 #include "Entities/EntityTesting.hpp"
 #include "Entities/EntitySun.hpp"

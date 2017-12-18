@@ -24,7 +24,7 @@ namespace Flounder
 		delete m_sunPosition;
 	}
 
-	void FilterLensflare::RenderFilter(const VkCommandBuffer *commandBuffer)
+	void FilterLensflare::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 		UboScene uboScene = {};
 		uboScene.sunPosition = *m_sunPosition;
