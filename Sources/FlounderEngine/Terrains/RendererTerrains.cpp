@@ -34,7 +34,7 @@ namespace Flounder
 		delete m_pipeline;
 	}
 
-	void RendererTerrains::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererTerrains::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		UbosTerrains::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
@@ -45,7 +45,7 @@ namespace Flounder
 
 		for (auto object : *Terrains::Get()->GetTerrains())
 		{
-			object->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
+			object->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 		}
 	}
 }

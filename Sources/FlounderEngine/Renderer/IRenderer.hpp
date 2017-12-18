@@ -30,6 +30,6 @@ namespace Flounder
 		/// </summary>
 		/// <param name="clipPlane"> The current clip plane. </param>
 		/// <param name="camera"> The camera to be used when rendering. </param>
-		virtual void Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera) = 0;
+		virtual void Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) = 0;
 	};
 }

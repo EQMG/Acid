@@ -60,46 +60,7 @@ namespace Flounder
 
 	void Renderer::Update()
 	{
-		if (m_swapchain->GetExtent().width != Display::Get()->GetWidth() || m_swapchain->GetExtent().height != Display::Get()->GetHeight())
-		{
-			RecreateSwapchain();
-			return;
-		}
-
-		const VkResult beganResult = BeginReindering();
-
-		if (beganResult != VK_SUCCESS || m_managerRender == nullptr)
-		{
-			return;
-		}
-
-		VkCommandBufferBeginInfo commandBufferBeginInfo = {};
-		commandBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		commandBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-
-		Platform::ErrorVk(vkBeginCommandBuffer(m_commandBuffer, &commandBufferBeginInfo));
-
-		RunRenderPass();
-
-		Platform::ErrorVk(vkEndCommandBuffer(m_commandBuffer));
-
-		const auto queue = Display::Get()->GetQueue();
-
-		VkSubmitInfo submitInfo = {};
-		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-		submitInfo.waitSemaphoreCount = 0;
-		submitInfo.pWaitSemaphores = nullptr;
-		submitInfo.pWaitDstStageMask = nullptr;
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &m_commandBuffer;
-		submitInfo.signalSemaphoreCount = 1;
-		submitInfo.pSignalSemaphores = &m_semaphore;
-
-		const VkResult queueResult = vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
-
-		assert(queueResult == VK_SUCCESS && "Failed to acquire swapchain image!");
-
-		EndRendering({ m_semaphore });
+		m_managerRender->Render();
 	}
 
 	void Renderer::CreateFences()
@@ -210,32 +171,27 @@ namespace Flounder
 		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &commandBuffer);
 	}
 
-	VkResult Renderer::BeginReindering()
+	void Renderer::StartRenderpass(VkCommandBuffer const &commandBuffer)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto queue = Display::Get()->GetQueue();
-
-		Platform::ErrorVk(vkQueueWaitIdle(queue));
-
-		const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage);
-
-		if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
+		if (m_swapchain->GetExtent().width != Display::Get()->GetWidth() || m_swapchain->GetExtent().height != Display::Get()->GetHeight())
 		{
 			RecreateSwapchain();
-			return VK_ERROR_OUT_OF_DATE_KHR;
+			return;
 		}
 
-		assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) && "Failed to acquire swapchain image!");
+		const VkResult beganResult = BeginReindering();
 
-		Platform::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
+		if (beganResult != VK_SUCCESS || m_managerRender == nullptr)
+		{
+			return;
+		}
 
-		Platform::ErrorVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
+		VkCommandBufferBeginInfo commandBufferBeginInfo = {};
+		commandBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		commandBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
-		return VK_SUCCESS;
-	}
+		Platform::ErrorVk(vkBeginCommandBuffer(commandBuffer, &commandBufferBeginInfo));
 
-	void Renderer::RunRenderPass()
-	{
 		const auto renderPass = m_renderPass->GetRenderPass();
 		const auto activeFramebuffer = GetActiveFramebuffer();
 
@@ -261,7 +217,7 @@ namespace Flounder
 		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 		renderPassBeginInfo.pClearValues = clearValues.data();
 
-		vkCmdBeginRenderPass(m_commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+		vkCmdBeginRenderPass(commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 		VkViewport viewport = {};
 		viewport.x = 0.0f;
@@ -270,18 +226,68 @@ namespace Flounder
 		viewport.height = static_cast<float>(Display::Get()->GetHeight());
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
-		vkCmdSetViewport(m_commandBuffer, 0, 1, &viewport);
+		vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
 
 		VkRect2D scissor = {};
 		scissor.offset.x = 0;
 		scissor.offset.y = 0;
 		scissor.extent.width = Display::Get()->GetWidth();
 		scissor.extent.height = Display::Get()->GetHeight();
-		vkCmdSetScissor(m_commandBuffer, 0, 1, &scissor);
+		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
+	}
 
-		m_managerRender->Render(&m_commandBuffer);
+	void Renderer::NextSubpass(VkCommandBuffer const &commandBuffer)
+	{
+		vkCmdNextSubpass(commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
+	}
 
-		vkCmdEndRenderPass(m_commandBuffer);
+	void Renderer::EndRenderpass(VkCommandBuffer const &commandBuffer)
+	{
+		vkCmdEndRenderPass(commandBuffer);
+
+		Platform::ErrorVk(vkEndCommandBuffer(commandBuffer));
+
+		const auto queue = Display::Get()->GetQueue();
+
+		VkSubmitInfo submitInfo = {};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.waitSemaphoreCount = 0;
+		submitInfo.pWaitSemaphores = nullptr;
+		submitInfo.pWaitDstStageMask = nullptr;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &commandBuffer;
+		submitInfo.signalSemaphoreCount = 1;
+		submitInfo.pSignalSemaphores = &m_semaphore;
+
+		const VkResult queueResult = vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
+
+		assert(queueResult == VK_SUCCESS && "Failed to acquire swapchain image!");
+
+		EndRendering({ m_semaphore });
+	}
+
+	VkResult Renderer::BeginReindering()
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto queue = Display::Get()->GetQueue();
+
+		Platform::ErrorVk(vkQueueWaitIdle(queue));
+
+		const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage);
+
+		if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
+		{
+			RecreateSwapchain();
+			return VK_ERROR_OUT_OF_DATE_KHR;
+		}
+
+		assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) && "Failed to acquire swapchain image!");
+
+		Platform::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
+
+		Platform::ErrorVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
+
+		return VK_SUCCESS;
 	}
 
 	void Renderer::EndRendering(std::vector<VkSemaphore> waitSemaphores)

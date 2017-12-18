@@ -35,7 +35,7 @@ namespace Flounder
 		delete m_pipeline;
 	}
 
-	void RendererWaters::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererWaters::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		UbosWaters::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
@@ -46,7 +46,7 @@ namespace Flounder
 
 		if (Waters::Get()->GetWater() != nullptr)
 		{
-			Waters::Get()->GetWater()->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
+			Waters::Get()->GetWater()->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 		}
 	}
 }

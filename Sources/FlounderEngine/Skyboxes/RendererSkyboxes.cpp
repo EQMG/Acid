@@ -34,7 +34,7 @@ namespace Flounder
 		delete m_pipeline;
 	}
 
-	void RendererSkyboxes::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererSkyboxes::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		UbosSkyboxes::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
@@ -43,6 +43,6 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		Skyboxes::Get()->GetSkybox()->CmdRender(*commandBuffer, *m_pipeline, *m_uniformScene);
+		Skyboxes::Get()->GetSkybox()->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 	}
 }

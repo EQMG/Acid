@@ -10,7 +10,7 @@ namespace Flounder
 	{
 	}
 
-	void IPostPipeline::RenderPipeline(const VkCommandBuffer *commandBuffer)
+	void IPostPipeline::RenderPipeline(const VkCommandBuffer &commandBuffer)
 	{
 	}
 }

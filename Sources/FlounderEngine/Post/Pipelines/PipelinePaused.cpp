@@ -23,7 +23,7 @@ namespace Flounder
 		delete m_filterCombine;
 	}
 
-	void PipelinePaused::RenderPipeline(const VkCommandBuffer *commandBuffer)
+	void PipelinePaused::RenderPipeline(const VkCommandBuffer &commandBuffer)
 	{
 		m_pipelineGaussian1->RenderPipeline(commandBuffer);
 

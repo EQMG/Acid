@@ -43,6 +43,6 @@ namespace Demo
 
 		~ManagerRender();
 
-		void Render(const VkCommandBuffer *commandBuffer) override;
+		void Render() override;
 	};
 }

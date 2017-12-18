@@ -38,7 +38,7 @@ namespace Flounder
 #endif
 	}
 
-	void RendererParticles::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererParticles::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		PrepareRendering(clipPlane, camera);
 

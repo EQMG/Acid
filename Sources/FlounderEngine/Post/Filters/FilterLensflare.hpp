@@ -30,7 +30,7 @@ namespace Flounder
 
 		~FilterLensflare();
 
-		void RenderFilter(const VkCommandBuffer *commandBuffer) override;
+		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
 
 		void SetSunPosition(const Vector3 &sunPosition) const;
 

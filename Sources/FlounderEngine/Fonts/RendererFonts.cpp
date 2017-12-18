@@ -33,7 +33,7 @@ namespace Flounder
 		delete m_pipeline;
 	}
 
-	void RendererFonts::Render(const VkCommandBuffer *commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererFonts::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_pipeline->BindPipeline(commandBuffer);
 
@@ -43,7 +43,7 @@ namespace Flounder
 
 			if (object != nullptr)
 			{
-				object->CmdRender(*commandBuffer, *m_pipeline);
+				object->CmdRender(commandBuffer, *m_pipeline);
 			}
 		}
 	}

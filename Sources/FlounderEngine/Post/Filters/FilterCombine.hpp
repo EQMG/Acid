@@ -15,7 +15,7 @@ namespace Flounder
 
 		~FilterCombine();
 
-		void RenderFilter(const VkCommandBuffer *commandBuffer) override;
+		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
 
 		Vector4 *GetSlideSpaceValue() const { return m_slideSpaceValue; }
 

@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterBloom2::RenderFilter(const VkCommandBuffer *commandBuffer)
+	void FilterBloom2::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 	}
 }
