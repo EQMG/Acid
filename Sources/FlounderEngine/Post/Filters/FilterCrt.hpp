@@ -20,9 +20,6 @@ namespace Flounder
 			float moveTime;
 		};
 
-		static const DescriptorType typeUboScene;
-		static const DescriptorType typeSamplerColour;
-
 		UniformBuffer *m_uniformScene;
 
 		Colour *m_screenColour;

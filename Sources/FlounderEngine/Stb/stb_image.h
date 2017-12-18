@@ -232,7 +232,7 @@ extern int stbi_zlib_decode_noheader_buffer(char *obuffer, int olen, const char 
 
 // define faster low-level operations (typically SIMD support)
 #ifdef STBI_SIMD
-	typedef void(*stbi_idct_8x8)(stbi_uc *out, int out_stride, short data[64], unsigned short *dequantize);
+typedef void(*stbi_idct_8x8)(stbi_uc *out, int out_stride, short data[64], unsigned short *dequantize);
 // compute an integer IDCT on "input"
 //     input[x] = data[x] * dequantize[x]
 //     write results to 'out': 64 samples, each run of 8 spaced by 'out_stride'

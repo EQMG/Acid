@@ -6,11 +6,14 @@
 
 namespace Flounder
 {
-	const DescriptorType FilterCrt::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType FilterCrt::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const std::vector<DescriptorType> DESCRIPTORS =
+	{
+		UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
+		Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
+	};
 
 	FilterCrt::FilterCrt(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Crt.frag.spv", subpass, { typeUboScene, typeSamplerColour }),
+		IPostFilter("Resources/Shaders/Filters/Crt.frag.spv", subpass, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_screenColour(new Colour(0.5f, 1.0f, 0.5f)),
 		m_curveAmountX(0.1f),
@@ -30,11 +33,11 @@ namespace Flounder
 	{
 		UboScene uboScene = {};
 		uboScene.screenColour = *m_screenColour;
-		uboScene.curveAmountX = m_curveAmountX * static_cast<float>(Display::Get()->GetAspectRatio());
+		uboScene.curveAmountX = m_curveAmountX * Display::Get()->GetAspectRatio();
 		uboScene.curveAmountY = m_curveAmountY;
 		uboScene.scanLineSize = m_scanLineSize;
 		uboScene.scanIntensity = m_scanIntensity;
-		uboScene.moveTime = static_cast<float>(Engine::Get()->GetTime()) / 100.0f;
+		uboScene.moveTime = Engine::Get()->GetTime() / 100.0f;
 		m_uniformScene->Update(&uboScene);
 
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();

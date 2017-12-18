@@ -10,9 +10,6 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		static const DescriptorType typeUboObject;
-		static const PipelineCreateInfo pipelineCreateInfo;
-
 		UniformBuffer *m_uniformObject;
 		Pipeline *m_pipeline;
 	public:

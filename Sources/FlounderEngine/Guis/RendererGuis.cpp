@@ -1,6 +1,5 @@
 #include "RendererGuis.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Models/Vertex.hpp"
 #include "../Renderer/Buffers/UniformBuffer.hpp"
 #include "../Uis/Uis.hpp"
@@ -8,9 +7,7 @@
 
 namespace Flounder
 {
-	const DescriptorType RendererGuis::typeUboObject = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_ALL);
-	const DescriptorType RendererGuis::typeSamplerTexture = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const PipelineCreateInfo RendererGuis::pipelineCreateInfo =
+	const PipelineCreateInfo PIPELINE_CREATE_INFO =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
@@ -19,14 +16,17 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboObject, typeSamplerTexture }, // descriptors
+		{
+			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_ALL), // uboObject
+			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerTexture
+		}, // descriptors
 
 		{ "Resources/Shaders/Guis/Gui.vert.spv", "Resources/Shaders/Guis/Gui.frag.spv" } // shaderStages
 	};
 
 	RendererGuis::RendererGuis(const int &subpass) :
 		IRenderer(),
-		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO))
 	{
 	}
 
