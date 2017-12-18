@@ -1,6 +1,7 @@
 #include "ManagerRender.hpp"
 
 #include <Camera/Camera.hpp>
+#include <Renderer/Renderer.hpp>
 
 namespace Demo
 {
@@ -39,24 +40,28 @@ namespace Demo
 		delete m_rendererFonts;
 	}
 
-	void ManagerRender::Render(const VkCommandBuffer *commandBuffer)
+	void ManagerRender::Render()
 	{
+		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
 		const auto camera = Camera::Get()->GetCamera();
+
+		// Starts Rendering.
+		Renderer::Get()->StartRenderpass(commandBuffer);
 
 		// Subpass 0.
 		m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
-		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
+		Renderer::Get()->NextSubpass(commandBuffer);
 
 		// Subpass 1.
 		m_rendererSkyboxes->Render(commandBuffer, m_infinity, *camera);
 		m_rendererTerrains->Render(commandBuffer, m_infinity, *camera);
 		m_rendererWaters->Render(commandBuffer, m_infinity, *camera);
 		m_rendererEntities->Render(commandBuffer, m_infinity, *camera);
-		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
+		Renderer::Get()->NextSubpass(commandBuffer);
 
 		// Subpass 2.
 		m_rendererDeferred->Render(commandBuffer, m_infinity, *camera);
-		vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
+		Renderer::Get()->NextSubpass(commandBuffer);
 
 		// Subpass 3.
 		m_filterFxaa->RenderFilter(commandBuffer);
@@ -67,5 +72,8 @@ namespace Demo
 		//  m_filterGrain->RenderFilter(commandBuffer);
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
+
+		// Ends Rendering.
+		Renderer::Get()->EndRenderpass(commandBuffer);
 	}
 }

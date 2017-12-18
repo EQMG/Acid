@@ -50,7 +50,7 @@ namespace Flounder
 		/// </summary>
 		~Pipeline();
 
-		void BindPipeline(const VkCommandBuffer *commandBuffer);
+		void BindPipeline(const VkCommandBuffer &commandBuffer);
 
 		VkDescriptorSetLayout GetDescriptorSetLayout() const { return m_descriptorSetLayout; }
 

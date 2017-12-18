@@ -19,6 +19,6 @@ namespace Flounder
 
 		~PipelineBloom();
 
-		void RenderPipeline(const VkCommandBuffer *commandBuffer) override;
+		void RenderPipeline(const VkCommandBuffer &commandBuffer) override;
 	};
 }

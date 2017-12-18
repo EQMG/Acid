@@ -14,6 +14,6 @@ namespace Flounder
 
 		~FilterGrey();
 
-		void RenderFilter(const VkCommandBuffer *commandBuffer) override;
+		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
 	};
 }

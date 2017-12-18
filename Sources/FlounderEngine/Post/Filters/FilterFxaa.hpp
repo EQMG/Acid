@@ -25,7 +25,7 @@ namespace Flounder
 
 		~FilterFxaa();
 
-		void RenderFilter(const VkCommandBuffer *commandBuffer) override;
+		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
 
 		float GetSpanMax() const { return m_spanMax; }
 

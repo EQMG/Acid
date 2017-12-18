@@ -20,7 +20,7 @@ namespace Flounder
 		delete m_uniformScene;
 	}
 
-	void FilterFxaa::RenderFilter(const VkCommandBuffer *commandBuffer)
+	void FilterFxaa::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 		UboScene uboScene = {};
 		uboScene.spanMax = m_spanMax;

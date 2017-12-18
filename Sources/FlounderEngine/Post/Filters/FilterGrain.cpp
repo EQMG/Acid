@@ -20,7 +20,7 @@ namespace Flounder
 		delete m_uniformScene;
 	}
 
-	void FilterGrain::RenderFilter(const VkCommandBuffer *commandBuffer)
+	void FilterGrain::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 		UboScene uboScene = {};
 		uboScene.strength = m_strength;

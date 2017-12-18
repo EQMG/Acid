@@ -71,9 +71,9 @@ namespace Flounder
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
 
-	void Pipeline::BindPipeline(const VkCommandBuffer *commandBuffer)
+	void Pipeline::BindPipeline(const VkCommandBuffer &commandBuffer)
 	{
-		vkCmdBindPipeline(*commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline);
+		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline);
 	}
 
 	void Pipeline::CreateDescriptorLayout()

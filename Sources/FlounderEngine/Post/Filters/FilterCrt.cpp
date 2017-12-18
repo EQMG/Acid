@@ -26,7 +26,7 @@ namespace Flounder
 		delete m_screenColour;
 	}
 
-	void FilterCrt::RenderFilter(const VkCommandBuffer *commandBuffer)
+	void FilterCrt::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 		UboScene uboScene = {};
 		uboScene.screenColour = *m_screenColour;
