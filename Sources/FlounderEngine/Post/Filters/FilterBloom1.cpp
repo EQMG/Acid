@@ -1,7 +1,5 @@
 #include "FilterBloom1.hpp"
 
-#include "../../Devices/Display.hpp"
-
 namespace Flounder
 {
 	FilterBloom1::FilterBloom1(const int &subpass) :

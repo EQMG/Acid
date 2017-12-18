@@ -80,12 +80,9 @@ If your name should be here but isn't, let Sean know.
 #endif
 
 #ifndef STBI_NO_STDIO
-#include <stdio.h>
 #endif
 #include <stdlib.h>
-#include <memory.h>
 #include <assert.h>
-#include <stdarg.h>
 
 #ifndef _MSC_VER
 #ifdef __cplusplus
