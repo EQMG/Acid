@@ -23,13 +23,6 @@ namespace Flounder
 		0, 3, 2, 2, 1, 0
 	};
 
-	const DescriptorType RendererDeferred::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeUboLights = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerDepth = DepthStencil::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerColour = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerNormal = Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerMaterial = Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType RendererDeferred::typeSamplerShadows = Texture::CreateDescriptor(6, VK_SHADER_STAGE_FRAGMENT_BIT);
 	const PipelineCreateInfo RendererDeferred::pipelineCreateInfo =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
@@ -39,17 +32,18 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboScene, typeUboLights, typeSamplerDepth, typeSamplerColour, typeSamplerNormal, typeSamplerMaterial, typeSamplerShadows }, // descriptors
+		{
+			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
+			UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // uboLights
+			DepthStencil::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDepth
+			Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
+			Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerNormal
+			Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
+			Texture::CreateDescriptor(6, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerShadows
+		}, // descriptors
 
 		{ "Resources/Shaders/Deferred/Deferred.vert.spv", "Resources/Shaders/Deferred/Deferred.frag.spv" } // shaderStages
 	};
-
-	/*m_pipeline(new Pipeline(subpass,
-	 	{ "Resources/Shaders/Deferred/Deferred.vert.spv", "Resources/Shaders/Deferred/Deferred.frag.spv" },// shaderStages
-	 	{ UNIFORM_BUFFER, UNIFORM_BUFFER, DEPTH_STENCIL, TEXTURE, TEXTURE, TEXTURE, TEXTURE }, // descriptors
-	 	PIPELINE_POLYGON_NO_DEPTH, POLYGON_MODE_FILL, CULL_MODE_BACK_BIT, // pipelineModeFlags / polygonMode / cullModeFlags
-	 	Vertex::GetBindingDescriptions(), Vertex::GetAttributeDescriptions() // vertexBindingDescriptions / vertexAttributeDescriptions
-	 )),*/
 
 	RendererDeferred::RendererDeferred(const int &subpass) :
 		IRenderer(),

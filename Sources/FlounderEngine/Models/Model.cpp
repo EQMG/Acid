@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <limits>
-#include "../Devices/Display.hpp"
 #include "../Helpers/HelperFile.hpp"
 #include "../Helpers/HelperString.hpp"
 

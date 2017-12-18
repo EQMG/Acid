@@ -1,7 +1,5 @@
 ﻿#include "MeshGenerator.hpp"
 
-#include "../Engine/Engine.hpp"
-
 namespace Flounder
 {
 	Model *MeshGenerator::GenerateMesh(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, const MeshType &meshType, const std::function<float(float, float)> &getHeight, const std::function<Vector3(Vector3, Vector3)> &getColour)
