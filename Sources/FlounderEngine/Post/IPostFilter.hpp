@@ -10,8 +10,6 @@ namespace Flounder
 	/// </summary>
 	class IPostFilter
 	{
-	private:
-		static const PipelineCreateInfo pipelineCreateInfo;
 	protected:
 		Pipeline *m_pipeline;
 		Model *m_model;

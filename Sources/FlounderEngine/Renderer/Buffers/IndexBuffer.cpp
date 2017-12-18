@@ -1,5 +1,6 @@
 ﻿#include "IndexBuffer.hpp"
 
+#include <cstring>
 #include "../../Devices/Display.hpp"
 
 namespace Flounder

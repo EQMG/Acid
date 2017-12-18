@@ -11,12 +11,6 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		static const DescriptorType typeUboScene;
-		static const DescriptorType typeUboObject;
-		static const DescriptorType typeSamplerDiffuse;
-		static const DescriptorType typeSamplerSway;
-		static const PipelineCreateInfo pipelineCreateInfo;
-
 		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
 	public:
