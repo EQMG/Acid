@@ -8,11 +8,11 @@
 
 namespace Flounder
 {
-	const std::vector<VkDynamicState> Pipeline::DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
+	const std::vector<VkDynamicState> DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 
-	Pipeline::Pipeline(const PipelineCreateInfo &pipelineCreateInfo, const int &subpass) :
+	Pipeline::Pipeline(const int &subpass, const PipelineCreateInfo &pipelineCreateInfo) :
+			m_subpass(subpass),
 		m_pipelineCreateInfo(pipelineCreateInfo),
-		m_subpass(subpass),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_descriptorSet(VK_NULL_HANDLE),

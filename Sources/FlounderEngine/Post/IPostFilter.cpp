@@ -16,7 +16,7 @@ namespace Flounder
 		0, 3, 2, 2, 1, 0
 	};
 
-	const PipelineCreateInfo IPostFilter::pipelineCreateInfo =
+	const PipelineCreateInfo PIPELINE_CREATE_INFO =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
@@ -34,10 +34,10 @@ namespace Flounder
 		m_pipeline(nullptr),
 		m_model(new Model(VERTICES, INDICES))
 	{
-		PipelineCreateInfo pipelineCreateInfo = PipelineCreateInfo(this->pipelineCreateInfo);
+		PipelineCreateInfo pipelineCreateInfo = PipelineCreateInfo(PIPELINE_CREATE_INFO);
 		pipelineCreateInfo.shaderStages[1] = fragmentShader; // fragment
 		pipelineCreateInfo.descriptors = descriptors; // descriptors
-		m_pipeline = new Pipeline(pipelineCreateInfo, subpass);
+		m_pipeline = new Pipeline(subpass, pipelineCreateInfo);
 	}
 
 	IPostFilter::~IPostFilter()

@@ -11,8 +11,6 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		static const PipelineCreateInfo pipelineCreateInfo;
-
 		UniformBuffer *m_uniformScene;
 		UniformBuffer *m_uniformLights;
 		Pipeline *m_pipeline;

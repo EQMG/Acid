@@ -80,9 +80,12 @@ If your name should be here but isn't, let Sean know.
 #endif
 
 #ifndef STBI_NO_STDIO
+#include <stdio.h>
 #endif
 #include <stdlib.h>
+#include <memory.h>
 #include <assert.h>
+#include <stdarg.h>
 
 #ifndef _MSC_VER
 #ifdef __cplusplus
@@ -183,11 +186,11 @@ static int stdio_eof(void *user)
 }
 
 static stbi_io_callbacks stbi_stdio_callbacks =
-{
-	stdio_read,
-	stdio_skip,
-	stdio_eof,
-};
+		{
+				stdio_read,
+				stdio_skip,
+				stdio_eof,
+		};
 
 static void start_file(stbi *s, FILE *f)
 {
@@ -614,43 +617,43 @@ static unsigned char *convert_format(unsigned char *data, int img_n, int req_com
 		// avoid switch per pixel, so use switch per scanline and massive macros
 		switch (COMBO(img_n, req_comp))
 		{
-		CASE(1, 2)
-				dest[0] = src[0], dest[1] = 255;
-			break;
-		CASE(1, 3)
-				dest[0] = dest[1] = dest[2] = src[0];
-			break;
-		CASE(1, 4)
-				dest[0] = dest[1] = dest[2] = src[0], dest[3] = 255;
-			break;
-		CASE(2, 1)
-				dest[0] = src[0];
-			break;
-		CASE(2, 3)
-				dest[0] = dest[1] = dest[2] = src[0];
-			break;
-		CASE(2, 4)
-				dest[0] = dest[1] = dest[2] = src[0], dest[3] = src[1];
-			break;
-		CASE(3, 4)
-				dest[0] = src[0], dest[1] = src[1], dest[2] = src[2], dest[3] = 255;
-			break;
-		CASE(3, 1)
-				dest[0] = compute_y(src[0], src[1], src[2]);
-			break;
-		CASE(3, 2)
-				dest[0] = compute_y(src[0], src[1], src[2]), dest[1] = 255;
-			break;
-		CASE(4, 1)
-				dest[0] = compute_y(src[0], src[1], src[2]);
-			break;
-		CASE(4, 2)
-				dest[0] = compute_y(src[0], src[1], src[2]), dest[1] = src[3];
-			break;
-		CASE(4, 3)
-				dest[0] = src[0], dest[1] = src[1], dest[2] = src[2];
-			break;
-		default: assert(0);
+			CASE(1, 2)
+					dest[0] = src[0], dest[1] = 255;
+				break;
+			CASE(1, 3)
+					dest[0] = dest[1] = dest[2] = src[0];
+				break;
+			CASE(1, 4)
+					dest[0] = dest[1] = dest[2] = src[0], dest[3] = 255;
+				break;
+			CASE(2, 1)
+					dest[0] = src[0];
+				break;
+			CASE(2, 3)
+					dest[0] = dest[1] = dest[2] = src[0];
+				break;
+			CASE(2, 4)
+					dest[0] = dest[1] = dest[2] = src[0], dest[3] = src[1];
+				break;
+			CASE(3, 4)
+					dest[0] = src[0], dest[1] = src[1], dest[2] = src[2], dest[3] = 255;
+				break;
+			CASE(3, 1)
+					dest[0] = compute_y(src[0], src[1], src[2]);
+				break;
+			CASE(3, 2)
+					dest[0] = compute_y(src[0], src[1], src[2]), dest[1] = 255;
+				break;
+			CASE(4, 1)
+					dest[0] = compute_y(src[0], src[1], src[2]);
+				break;
+			CASE(4, 2)
+					dest[0] = compute_y(src[0], src[1], src[2]), dest[1] = src[3];
+				break;
+			CASE(4, 3)
+					dest[0] = src[0], dest[1] = src[1], dest[2] = src[2];
+				break;
+			default: assert(0);
 		}
 #undef CASE
 	}
@@ -963,19 +966,19 @@ stbi_inline static int extend_receive(jpeg *j, int n)
 // given a value that's at position X in the zigzag stream,
 // where does it appear in the 8x8 matrix coded as row-major?
 static uint8 dezigzag[64 + 15] =
-{
-	0, 1, 8, 16, 9, 2, 3, 10,
-	17, 24, 32, 25, 18, 11, 4, 5,
-	12, 19, 26, 33, 40, 48, 41, 34,
-	27, 20, 13, 6, 7, 14, 21, 28,
-	35, 42, 49, 56, 57, 50, 43, 36,
-	29, 22, 15, 23, 30, 37, 44, 51,
-	58, 59, 52, 45, 38, 31, 39, 46,
-	53, 60, 61, 54, 47, 55, 62, 63,
-	// let corrupt input sample past end
-	63, 63, 63, 63, 63, 63, 63, 63,
-	63, 63, 63, 63, 63, 63, 63
-};
+		{
+				0, 1, 8, 16, 9, 2, 3, 10,
+				17, 24, 32, 25, 18, 11, 4, 5,
+				12, 19, 26, 33, 40, 48, 41, 34,
+				27, 20, 13, 6, 7, 14, 21, 28,
+				35, 42, 49, 56, 57, 50, 43, 36,
+				29, 22, 15, 23, 30, 37, 44, 51,
+				58, 59, 52, 45, 38, 31, 39, 46,
+				53, 60, 61, 54, 47, 55, 62, 63,
+				// let corrupt input sample past end
+				63, 63, 63, 63, 63, 63, 63, 63,
+				63, 63, 63, 63, 63, 63, 63
+		};
 
 // decode one 64-entry block--
 static int decode_block(jpeg *j, short data[64], huffman *hdc, huffman *hac, int b)
@@ -1106,7 +1109,7 @@ static void idct_block(uint8 *out, int out_stride, short data[64], stbi_dequanti
 		else
 		{
 			IDCT_1D(d[0] * dq[0], d[8] * dq[8], d[16] * dq[16], d[24] * dq[24],
-				d[32] * dq[32], d[40] * dq[40], d[48] * dq[48], d[56] * dq[56])
+					d[32] * dq[32], d[40] * dq[40], d[48] * dq[48], d[56] * dq[56])
 			// constants scaled things up by 1<<12; let's bring them back
 			// down, but keep 2 extra bits of precision
 			x0 += 512;
@@ -1295,73 +1298,73 @@ static int process_marker(jpeg *z, int m)
 	int L;
 	switch (m)
 	{
-	case MARKER_none: // no marker found
-		return e("expected marker", "Corrupt JPEG");
+		case MARKER_none: // no marker found
+			return e("expected marker", "Corrupt JPEG");
 
-	case 0xC2: // SOF - progressive
-		return e("progressive jpeg", "JPEG format not supported (progressive)");
+		case 0xC2: // SOF - progressive
+			return e("progressive jpeg", "JPEG format not supported (progressive)");
 
-	case 0xDD: // DRI - specify restart interval
-		if (get16(z->s) != 4)
-			return e("bad DRI len", "Corrupt JPEG");
-		z->restart_interval = get16(z->s);
-		return 1;
+		case 0xDD: // DRI - specify restart interval
+			if (get16(z->s) != 4)
+				return e("bad DRI len", "Corrupt JPEG");
+			z->restart_interval = get16(z->s);
+			return 1;
 
-	case 0xDB: // DQT - define quantization table
-		L = get16(z->s) - 2;
-		while (L > 0)
-		{
-			int q = get8(z->s);
-			int p = q >> 4;
-			int t = q & 15, i;
-			if (p != 0)
-				return e("bad DQT type", "Corrupt JPEG");
-			if (t > 3)
-				return e("bad DQT table", "Corrupt JPEG");
-			for (i = 0; i < 64; ++i)
-				z->dequant[t][dezigzag[i]] = get8u(z->s);
+		case 0xDB: // DQT - define quantization table
+			L = get16(z->s) - 2;
+			while (L > 0)
+			{
+				int q = get8(z->s);
+				int p = q >> 4;
+				int t = q & 15, i;
+				if (p != 0)
+					return e("bad DQT type", "Corrupt JPEG");
+				if (t > 3)
+					return e("bad DQT table", "Corrupt JPEG");
+				for (i = 0; i < 64; ++i)
+					z->dequant[t][dezigzag[i]] = get8u(z->s);
 #ifdef STBI_SIMD
-			for (i = 0; i < 64; ++i)
+				for (i = 0; i < 64; ++i)
 				z->dequant2[t][i] = z->dequant[t][i];
 #endif
-			L -= 65;
-		}
-		return L == 0;
+				L -= 65;
+			}
+			return L == 0;
 
-	case 0xC4: // DHT - define huffman table
-		L = get16(z->s) - 2;
-		while (L > 0)
-		{
-			uint8 *v;
-			int sizes[16], i, m = 0;
-			int q = get8(z->s);
-			int tc = q >> 4;
-			int th = q & 15;
-			if (tc > 1 || th > 3)
-				return e("bad DHT header", "Corrupt JPEG");
-			for (i = 0; i < 16; ++i)
+		case 0xC4: // DHT - define huffman table
+			L = get16(z->s) - 2;
+			while (L > 0)
 			{
-				sizes[i] = get8(z->s);
-				m += sizes[i];
+				uint8 *v;
+				int sizes[16], i, m = 0;
+				int q = get8(z->s);
+				int tc = q >> 4;
+				int th = q & 15;
+				if (tc > 1 || th > 3)
+					return e("bad DHT header", "Corrupt JPEG");
+				for (i = 0; i < 16; ++i)
+				{
+					sizes[i] = get8(z->s);
+					m += sizes[i];
+				}
+				L -= 17;
+				if (tc == 0)
+				{
+					if (!build_huffman(z->huff_dc + th, sizes))
+						return 0;
+					v = z->huff_dc[th].values;
+				}
+				else
+				{
+					if (!build_huffman(z->huff_ac + th, sizes))
+						return 0;
+					v = z->huff_ac[th].values;
+				}
+				for (i = 0; i < m; ++i)
+					v[i] = get8u(z->s);
+				L -= m;
 			}
-			L -= 17;
-			if (tc == 0)
-			{
-				if (!build_huffman(z->huff_dc + th, sizes))
-					return 0;
-				v = z->huff_dc[th].values;
-			}
-			else
-			{
-				if (!build_huffman(z->huff_ac + th, sizes))
-					return 0;
-				v = z->huff_ac[th].values;
-			}
-			for (i = 0; i < m; ++i)
-				v[i] = get8u(z->s);
-			L -= m;
-		}
-		return L == 0;
+			return L == 0;
 	}
 	// check for comment block or APP blocks
 	if ((m >= 0xE0 && m <= 0xEF) || m == 0xFE)
@@ -1588,7 +1591,7 @@ static int decode_jpeg_image(jpeg *j)
 // static jfif-centered resampling (across block boundaries)
 
 typedef uint8 *(*resample_row_func)(uint8 *out, uint8 *in0, uint8 *in1,
-	int w, int hs);
+									int w, int hs);
 
 #define div4(x) ((uint8) ((x) >> 2))
 
@@ -1761,7 +1764,7 @@ typedef struct
 	resample_row_func resample;
 	uint8 *line0, *line1;
 	int hs, vs; // expansion factor in each axis
-	int w_lores; // horizontal pixels pre-expansion 
+	int w_lores; // horizontal pixels pre-expansion
 	int ystep; // how far through vertical expansion we are
 	int ypos; // which pre-expansion row we're on
 } stbi_resample;
@@ -1847,9 +1850,9 @@ static uint8 *load_jpeg_image(jpeg *z, int *out_x, int *out_y, int *comp, int re
 				stbi_resample *r = &res_comp[k];
 				int y_bot = r->ystep >= (r->vs >> 1);
 				coutput[k] = r->resample(z->img_comp[k].linebuf,
-					y_bot ? r->line1 : r->line0,
-					y_bot ? r->line0 : r->line1,
-					r->w_lores, r->hs);
+										 y_bot ? r->line1 : r->line0,
+										 y_bot ? r->line0 : r->line1,
+										 r->w_lores, r->hs);
 				if (++r->ystep >= r->vs)
 				{
 					r->ystep = 0;
@@ -2127,21 +2130,21 @@ static int expand(zbuf *z, int n) // need to make room for n bytes
 }
 
 static int length_base[31] = {
-	3,4,5,6,7,8,9,10,11,13,
-	15,17,19,23,27,31,35,43,51,59,
-	67,83,99,115,131,163,195,227,258,0,0
+		3,4,5,6,7,8,9,10,11,13,
+		15,17,19,23,27,31,35,43,51,59,
+		67,83,99,115,131,163,195,227,258,0,0
 };
 
 static int length_extra[31] =
-	{ 0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0,0,0 };
+		{ 0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0,0,0 };
 
 static int dist_base[32] = {
-	1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,
-	257,385,513,769,1025,1537,2049,3073,4097,6145,8193,12289,16385,24577,0,0
+		1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,
+		257,385,513,769,1025,1537,2049,3073,4097,6145,8193,12289,16385,24577,0,0
 };
 
 static int dist_extra[32] =
-	{ 0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13 };
+		{ 0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13 };
 
 static int parse_huffman_block(zbuf *a)
 {
@@ -2502,9 +2505,9 @@ enum
 };
 
 static uint8 first_row_filter[5] =
-{
-	F_none, F_sub, F_none, F_avg_first, F_paeth_first
-};
+		{
+				F_none, F_sub, F_none, F_avg_first, F_paeth_first
+		};
 
 static int paeth(int a, int b, int c)
 {
@@ -2561,27 +2564,27 @@ static int create_png_image_raw(png *a, uint8 *raw, uint32 raw_len, int out_n, u
 		{
 			switch (filter)
 			{
-			case F_none:
-				cur[k] = raw[k];
-				break;
-			case F_sub:
-				cur[k] = raw[k];
-				break;
-			case F_up:
-				cur[k] = raw[k] + prior[k];
-				break;
-			case F_avg:
-				cur[k] = raw[k] + (prior[k] >> 1);
-				break;
-			case F_paeth:
-				cur[k] = (uint8) (raw[k] + paeth(0, prior[k], 0));
-				break;
-			case F_avg_first:
-				cur[k] = raw[k];
-				break;
-			case F_paeth_first:
-				cur[k] = raw[k];
-				break;
+				case F_none:
+					cur[k] = raw[k];
+					break;
+				case F_sub:
+					cur[k] = raw[k];
+					break;
+				case F_up:
+					cur[k] = raw[k] + prior[k];
+					break;
+				case F_avg:
+					cur[k] = raw[k] + (prior[k] >> 1);
+					break;
+				case F_paeth:
+					cur[k] = (uint8) (raw[k] + paeth(0, prior[k], 0));
+					break;
+				case F_avg_first:
+					cur[k] = raw[k];
+					break;
+				case F_paeth_first:
+					cur[k] = raw[k];
+					break;
 			}
 		}
 		if (img_n != out_n)
@@ -2598,27 +2601,27 @@ static int create_png_image_raw(png *a, uint8 *raw, uint32 raw_len, int out_n, u
                    for (k=0; k < img_n; ++k)
 			switch (filter)
 			{
-			CASE(F_none)
-					cur[k] = raw[k];
-				break;
-			CASE(F_sub)
-					cur[k] = raw[k] + cur[k - img_n];
-				break;
-			CASE(F_up)
-					cur[k] = raw[k] + prior[k];
-				break;
-			CASE(F_avg)
-					cur[k] = raw[k] + ((prior[k] + cur[k - img_n]) >> 1);
-				break;
-			CASE(F_paeth)
-					cur[k] = (uint8) (raw[k] + paeth(cur[k - img_n], prior[k], prior[k - img_n]));
-				break;
-			CASE(F_avg_first)
-					cur[k] = raw[k] + (cur[k - img_n] >> 1);
-				break;
-			CASE(F_paeth_first)
-					cur[k] = (uint8) (raw[k] + paeth(cur[k - img_n], 0, 0));
-				break;
+				CASE(F_none)
+							cur[k] = raw[k];
+					break;
+				CASE(F_sub)
+							cur[k] = raw[k] + cur[k - img_n];
+					break;
+				CASE(F_up)
+							cur[k] = raw[k] + prior[k];
+					break;
+				CASE(F_avg)
+							cur[k] = raw[k] + ((prior[k] + cur[k - img_n]) >> 1);
+					break;
+				CASE(F_paeth)
+							cur[k] = (uint8) (raw[k] + paeth(cur[k - img_n], prior[k], prior[k - img_n]));
+					break;
+				CASE(F_avg_first)
+							cur[k] = raw[k] + (cur[k - img_n] >> 1);
+					break;
+				CASE(F_paeth_first)
+							cur[k] = (uint8) (raw[k] + paeth(cur[k - img_n], 0, 0));
+					break;
 			}
 #undef CASE
 		}
@@ -2631,27 +2634,27 @@ static int create_png_image_raw(png *a, uint8 *raw, uint32 raw_len, int out_n, u
                    for (k=0; k < img_n; ++k)
 			switch (filter)
 			{
-			CASE(F_none)
-					cur[k] = raw[k];
-				break;
-			CASE(F_sub)
-					cur[k] = raw[k] + cur[k - out_n];
-				break;
-			CASE(F_up)
-					cur[k] = raw[k] + prior[k];
-				break;
-			CASE(F_avg)
-					cur[k] = raw[k] + ((prior[k] + cur[k - out_n]) >> 1);
-				break;
-			CASE(F_paeth)
-					cur[k] = (uint8) (raw[k] + paeth(cur[k - out_n], prior[k], prior[k - out_n]));
-				break;
-			CASE(F_avg_first)
-					cur[k] = raw[k] + (cur[k - out_n] >> 1);
-				break;
-			CASE(F_paeth_first)
-					cur[k] = (uint8) (raw[k] + paeth(cur[k - out_n], 0, 0));
-				break;
+				CASE(F_none)
+							cur[k] = raw[k];
+					break;
+				CASE(F_sub)
+							cur[k] = raw[k] + cur[k - out_n];
+					break;
+				CASE(F_up)
+							cur[k] = raw[k] + prior[k];
+					break;
+				CASE(F_avg)
+							cur[k] = raw[k] + ((prior[k] + cur[k - out_n]) >> 1);
+					break;
+				CASE(F_paeth)
+							cur[k] = (uint8) (raw[k] + paeth(cur[k - out_n], prior[k], prior[k - out_n]));
+					break;
+				CASE(F_avg_first)
+							cur[k] = raw[k] + (cur[k - out_n] >> 1);
+					break;
+				CASE(F_paeth_first)
+							cur[k] = (uint8) (raw[k] + paeth(cur[k - out_n], 0, 0));
+					break;
 			}
 #undef CASE
 		}
@@ -2691,7 +2694,7 @@ static int create_png_image(png *a, uint8 *raw, uint32 raw_len, int out_n, int i
 			for (j = 0; j < y; ++j)
 				for (i = 0; i < x; ++i)
 					memcpy(final + (j * yspc[p] + yorig[p]) * a->s->img_x * out_n + (i * xspc[p] + xorig[p]) * out_n,
-						a->out + (j * x + i) * out_n, out_n);
+						   a->out + (j * x + i) * out_n, out_n);
 			free(a->out);
 			raw += (x * out_n + 1) * y;
 			raw_len -= (x * out_n + 1) * y;
@@ -2867,11 +2870,11 @@ static int parse_png_file(png *z, int scan, int req_comp)
 		chunk c = get_chunk_header(s);
 		switch (c.type)
 		{
-		case PNG_TYPE('C', 'g', 'B', 'I'):
-			iphone = stbi_de_iphone_flag;
-			skip(s, c.length);
-			break;
-		case PNG_TYPE('I', 'H', 'D', 'R'):
+			case PNG_TYPE('C', 'g', 'B', 'I'):
+				iphone = stbi_de_iphone_flag;
+				skip(s, c.length);
+				break;
+			case PNG_TYPE('I', 'H', 'D', 'R'):
 			{
 				int depth, color, comp, filter;
 				if (!first)
@@ -2926,7 +2929,7 @@ static int parse_png_file(png *z, int scan, int req_comp)
 				break;
 			}
 
-		case PNG_TYPE('P', 'L', 'T', 'E'):
+			case PNG_TYPE('P', 'L', 'T', 'E'):
 			{
 				if (first)
 					return e("first not IHDR", "Corrupt PNG");
@@ -2945,7 +2948,7 @@ static int parse_png_file(png *z, int scan, int req_comp)
 				break;
 			}
 
-		case PNG_TYPE('t', 'R', 'N', 'S'):
+			case PNG_TYPE('t', 'R', 'N', 'S'):
 			{
 				if (first)
 					return e("first not IHDR", "Corrupt PNG");
@@ -2979,7 +2982,7 @@ static int parse_png_file(png *z, int scan, int req_comp)
 				break;
 			}
 
-		case PNG_TYPE('I', 'D', 'A', 'T'):
+			case PNG_TYPE('I', 'D', 'A', 'T'):
 			{
 				if (first)
 					return e("first not IHDR", "Corrupt PNG");
@@ -3008,7 +3011,7 @@ static int parse_png_file(png *z, int scan, int req_comp)
 				break;
 			}
 
-		case PNG_TYPE('I', 'E', 'N', 'D'):
+			case PNG_TYPE('I', 'E', 'N', 'D'):
 			{
 				uint32 raw_len;
 				if (first)
@@ -3048,24 +3051,24 @@ static int parse_png_file(png *z, int scan, int req_comp)
 				return 1;
 			}
 
-		default:
-			// if critical, fail
-			if (first)
-				return e("first not IHDR", "Corrupt PNG");
-			if ((c.type & (1 << 29)) == 0)
-			{
+			default:
+				// if critical, fail
+				if (first)
+					return e("first not IHDR", "Corrupt PNG");
+				if ((c.type & (1 << 29)) == 0)
+				{
 #ifndef STBI_NO_FAILURE_STRINGS
-				// not threadsafe
-				static char invalid_chunk[] = "XXXX chunk not known";
-				invalid_chunk[0] = (uint8) (c.type >> 24);
-				invalid_chunk[1] = (uint8) (c.type >> 16);
-				invalid_chunk[2] = (uint8) (c.type >> 8);
-				invalid_chunk[3] = (uint8) (c.type >> 0);
+					// not threadsafe
+					static char invalid_chunk[] = "XXXX chunk not known";
+					invalid_chunk[0] = (uint8) (c.type >> 24);
+					invalid_chunk[1] = (uint8) (c.type >> 16);
+					invalid_chunk[2] = (uint8) (c.type >> 8);
+					invalid_chunk[3] = (uint8) (c.type >> 0);
 #endif
-				return e(invalid_chunk, "PNG not supported: unknown chunk type");
-			}
-			skip(s, c.length);
-			break;
+					return e(invalid_chunk, "PNG not supported: unknown chunk type");
+				}
+				skip(s, c.length);
+				break;
 		}
 		// end of chunk, read and skip CRC
 		get32(s);
@@ -3613,11 +3616,11 @@ static stbi_uc *tga_load(stbi *s, int *x, int *y, int *comp, int req_comp)
 
 	//   error check
 	if (//(tga_indexed) ||
-		(tga_width < 1) || (tga_height < 1) ||
-		(tga_image_type < 1) || (tga_image_type > 3) ||
-		((tga_bits_per_pixel != 8) && (tga_bits_per_pixel != 16) &&
-			(tga_bits_per_pixel != 24) && (tga_bits_per_pixel != 32))
-	)
+			(tga_width < 1) || (tga_height < 1) ||
+			(tga_image_type < 1) || (tga_image_type > 3) ||
+			((tga_bits_per_pixel != 8) && (tga_bits_per_pixel != 16) &&
+			 (tga_bits_per_pixel != 24) && (tga_bits_per_pixel != 32))
+			)
 	{
 		return NULL; // we don't report this as a bad TGA because we don't even know if it's TGA
 	}
@@ -3718,34 +3721,34 @@ static stbi_uc *tga_load(stbi *s, int *x, int *y, int *comp, int req_comp)
 			//   convert raw to the intermediate format
 			switch (tga_bits_per_pixel)
 			{
-			case 8:
-				//   Luminous => RGBA
-				trans_data[0] = raw_data[0];
-				trans_data[1] = raw_data[0];
-				trans_data[2] = raw_data[0];
-				trans_data[3] = 255;
-				break;
-			case 16:
-				//   Luminous,Alpha => RGBA
-				trans_data[0] = raw_data[0];
-				trans_data[1] = raw_data[0];
-				trans_data[2] = raw_data[0];
-				trans_data[3] = raw_data[1];
-				break;
-			case 24:
-				//   BGR => RGBA
-				trans_data[0] = raw_data[2];
-				trans_data[1] = raw_data[1];
-				trans_data[2] = raw_data[0];
-				trans_data[3] = 255;
-				break;
-			case 32:
-				//   BGRA => RGBA
-				trans_data[0] = raw_data[2];
-				trans_data[1] = raw_data[1];
-				trans_data[2] = raw_data[0];
-				trans_data[3] = raw_data[3];
-				break;
+				case 8:
+					//   Luminous => RGBA
+					trans_data[0] = raw_data[0];
+					trans_data[1] = raw_data[0];
+					trans_data[2] = raw_data[0];
+					trans_data[3] = 255;
+					break;
+				case 16:
+					//   Luminous,Alpha => RGBA
+					trans_data[0] = raw_data[0];
+					trans_data[1] = raw_data[0];
+					trans_data[2] = raw_data[0];
+					trans_data[3] = raw_data[1];
+					break;
+				case 24:
+					//   BGR => RGBA
+					trans_data[0] = raw_data[2];
+					trans_data[1] = raw_data[1];
+					trans_data[2] = raw_data[0];
+					trans_data[3] = 255;
+					break;
+				case 32:
+					//   BGRA => RGBA
+					trans_data[0] = raw_data[2];
+					trans_data[1] = raw_data[1];
+					trans_data[2] = raw_data[0];
+					trans_data[3] = raw_data[3];
+					break;
 			}
 			//   clear the reading flag for the next pixel
 			read_next_pixel = 0;
@@ -3753,28 +3756,28 @@ static stbi_uc *tga_load(stbi *s, int *x, int *y, int *comp, int req_comp)
 		//   convert to final format
 		switch (req_comp)
 		{
-		case 1:
-			//   RGBA => Luminance
-			tga_data[i * req_comp + 0] = compute_y(trans_data[0], trans_data[1], trans_data[2]);
-			break;
-		case 2:
-			//   RGBA => Luminance,Alpha
-			tga_data[i * req_comp + 0] = compute_y(trans_data[0], trans_data[1], trans_data[2]);
-			tga_data[i * req_comp + 1] = trans_data[3];
-			break;
-		case 3:
-			//   RGBA => RGB
-			tga_data[i * req_comp + 0] = trans_data[0];
-			tga_data[i * req_comp + 1] = trans_data[1];
-			tga_data[i * req_comp + 2] = trans_data[2];
-			break;
-		case 4:
-			//   RGBA => RGBA
-			tga_data[i * req_comp + 0] = trans_data[0];
-			tga_data[i * req_comp + 1] = trans_data[1];
-			tga_data[i * req_comp + 2] = trans_data[2];
-			tga_data[i * req_comp + 3] = trans_data[3];
-			break;
+			case 1:
+				//   RGBA => Luminance
+				tga_data[i * req_comp + 0] = compute_y(trans_data[0], trans_data[1], trans_data[2]);
+				break;
+			case 2:
+				//   RGBA => Luminance,Alpha
+				tga_data[i * req_comp + 0] = compute_y(trans_data[0], trans_data[1], trans_data[2]);
+				tga_data[i * req_comp + 1] = trans_data[3];
+				break;
+			case 3:
+				//   RGBA => RGB
+				tga_data[i * req_comp + 0] = trans_data[0];
+				tga_data[i * req_comp + 1] = trans_data[1];
+				tga_data[i * req_comp + 2] = trans_data[2];
+				break;
+			case 4:
+				//   RGBA => RGBA
+				tga_data[i * req_comp + 0] = trans_data[0];
+				tga_data[i * req_comp + 1] = trans_data[1];
+				tga_data[i * req_comp + 2] = trans_data[2];
+				tga_data[i * req_comp + 3] = trans_data[3];
+				break;
 		}
 		//   in case we're in RLE mode, keep counting down
 		--RLE_count;
@@ -3804,7 +3807,7 @@ static stbi_uc *tga_load(stbi *s, int *x, int *y, int *comp, int req_comp)
 	//   the things I do to get rid of an error message, and yet keep
 	//   Microsoft's C compilers happy... [8^(
 	tga_palette_start = tga_palette_len = tga_palette_bits =
-		tga_x_origin = tga_y_origin = 0;
+	tga_x_origin = tga_y_origin = 0;
 	//   OK, done
 	return tga_data;
 }
@@ -4125,10 +4128,10 @@ static stbi_uc *pic_load2(stbi *s, int width, int height, int *comp, stbi_uc *re
 
 			switch (packet->type)
 			{
-			default:
-				return epuc("bad format", "packet has bad compression type");
+				default:
+					return epuc("bad format", "packet has bad compression type");
 
-			case 0:
+				case 0:
 				{
 					//uncompressed
 					int x;
@@ -4139,7 +4142,7 @@ static stbi_uc *pic_load2(stbi *s, int width, int height, int *comp, stbi_uc *re
 					break;
 				}
 
-			case 1: //Pure RLE
+				case 1: //Pure RLE
 				{
 					int left = width, i;
 
@@ -4162,9 +4165,9 @@ static stbi_uc *pic_load2(stbi *s, int width, int height, int *comp, stbi_uc *re
 						left -= count;
 					}
 				}
-				break;
+					break;
 
-			case 2:
+				case 2:
 				{
 					//Mixed RLE
 					int left = width;
@@ -4553,7 +4556,7 @@ static uint8 *stbi_gif_load_next(stbi *s, stbi_gif *g, int *comp, int req_comp)
 	{
 		switch (get8(s))
 		{
-		case 0x2C: /* Image Descriptor */
+			case 0x2C: /* Image Descriptor */
 			{
 				int32 x, y, w, h;
 				uint8 *o;
@@ -4611,7 +4614,7 @@ static uint8 *stbi_gif_load_next(stbi *s, stbi_gif *g, int *comp, int req_comp)
 				return o;
 			}
 
-		case 0x21: // Comment Extension.
+			case 0x21: // Comment Extension.
 			{
 				int len;
 				if (get8(s) == 0xF9)
@@ -4635,11 +4638,11 @@ static uint8 *stbi_gif_load_next(stbi *s, stbi_gif *g, int *comp, int req_comp)
 				break;
 			}
 
-		case 0x3B: // gif stream termination code
-			return (uint8 *) 1;
+			case 0x3B: // gif stream termination code
+				return (uint8 *) 1;
 
-		default:
-			return epuc("unknown code", "Corrupt GIF");
+			default:
+				return epuc("unknown code", "Corrupt GIF");
 		}
 	}
 }
@@ -4736,16 +4739,16 @@ static void hdr_convert(float *output, stbi_uc *input, int req_comp)
 	{
 		switch (req_comp)
 		{
-		case 4:
-			output[3] = 1; /* fallthrough */
-		case 3:
-			output[0] = output[1] = output[2] = 0;
-			break;
-		case 2:
-			output[1] = 1; /* fallthrough */
-		case 1:
-			output[0] = 0;
-			break;
+			case 4:
+				output[3] = 1; /* fallthrough */
+			case 3:
+				output[0] = output[1] = output[2] = 0;
+				break;
+			case 2:
+				output[1] = 1; /* fallthrough */
+			case 1:
+				output[0] = 0;
+				break;
 		}
 	}
 }
@@ -4813,7 +4816,7 @@ static float *hdr_load(stbi *s, int *x, int *y, int *comp, int req_comp)
 			for (i = 0; i < width; ++i)
 			{
 				stbi_uc rgbe[4];
-			main_decode_loop:
+				main_decode_loop:
 				getn(s, rgbe, 4);
 				hdr_convert(hdr_data + j * width * req_comp + i * req_comp, rgbe, req_comp);
 			}

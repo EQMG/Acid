@@ -5,14 +5,13 @@
 namespace Flounder
 {
 	PipelinePaused::PipelinePaused(const int &subpass) :
-		IPostPipeline()
+		IPostPipeline(),
+		m_filterDarken(new FilterDarken(subpass)),
+		m_pipelineGaussian1(new PipelineGaussian(subpass, 1.0f / 10.0f)),
+		m_pipelineGaussian2(new PipelineGaussian(subpass, 1.0f / 7.0f)),
+		m_filterCombine(new FilterCombine(subpass)),
+		m_blurFactor(0.0f)
 	{
-		m_filterDarken = new FilterDarken(subpass);
-		m_pipelineGaussian1 = new PipelineGaussian(subpass, 1.0f / 10.0f);
-		m_pipelineGaussian2 = new PipelineGaussian(subpass, 1.0f / 7.0f);
-		m_filterCombine = new FilterCombine(subpass);
-
-		m_blurFactor = 0.0f;
 	}
 
 	PipelinePaused::~PipelinePaused()
