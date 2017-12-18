@@ -15,6 +15,6 @@ namespace Flounder
 
 		~FilterMotion();
 
-		void RenderFilter(const VkCommandBuffer *commandBuffer) override;
+		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
 	};
 }

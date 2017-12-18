@@ -24,7 +24,7 @@ namespace Flounder
 		delete m_uniformScene;
 	}
 
-	void FilterTiltshift::RenderFilter(const VkCommandBuffer *commandBuffer)
+	void FilterTiltshift::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 		UboScene uboScene = {};
 		uboScene.blurAmount = m_blurAmount;

@@ -11,8 +11,6 @@ matrix:
         - g++-6
         - xorg-dev 
         - libglu1-mesa-dev
-        - libglfw3
-        - libglfw3-dev
         - libopenal1
     language: cpp
     compiler: gcc
@@ -22,6 +20,7 @@ matrix:
     - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - sudo apt-get -qq update
+    - sudo apt-get install libglfw3 libglfw3-dev
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
   - os: linux
     dist: trusty
@@ -38,8 +37,6 @@ matrix:
         - libc++-dev
         - xorg-dev 
         - libglu1-mesa-dev
-        - libglfw3
-        - libglfw3-dev
         - libopenal1
     language: cpp
     compiler: clang
@@ -50,6 +47,7 @@ matrix:
     - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - sudo apt-get -qq update
+    - sudo apt-get install libglfw3 libglfw3-dev
     - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-5.0 100
 
 script:

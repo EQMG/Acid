@@ -22,7 +22,7 @@ namespace Flounder
 		delete m_filterBlurVertical;
 	}
 
-	void PipelineGaussian::RenderPipeline(const VkCommandBuffer *commandBuffer)
+	void PipelineGaussian::RenderPipeline(const VkCommandBuffer &commandBuffer)
 	{
 		m_filterBlurHorizontal->RenderFilter(commandBuffer);
 		m_filterBlurVertical->RenderFilter(commandBuffer);

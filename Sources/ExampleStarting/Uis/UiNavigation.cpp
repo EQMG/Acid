@@ -28,7 +28,7 @@ namespace Demo
 
 		m_barCreatedBy =new Text(m_uiBar, UiBound(Vector2(0.02f, 0.915f), "TopLeft", false), 1.1f, "Created By: Equilibrium Games", Uis::Get()->m_proximaNova->GetLight(), JustifyLeft, 1.0f, 0.0013f);
 
-		m_tabPuck = new Gui(m_uiBar, UiBound(Vector2(0.0f, 0.875f), "ButtomLeft", false, true, Vector2(0.0f, 0.01f)), textureWhite, 1);
+		m_tabPuck = new Gui(m_uiBar, UiBound(Vector2(0.0f, 0.875f), "BottomLeft", false, true, Vector2(0.0f, 0.01f)), textureWhite, 1);
 		m_tabPuck->SetColourOffset(Colour("#386AB5"));
 
 		float tabXOffset = 0.35f;

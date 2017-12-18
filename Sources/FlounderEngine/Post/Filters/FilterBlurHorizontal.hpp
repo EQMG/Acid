@@ -19,7 +19,7 @@ namespace Flounder
 
 		~FilterBlurHorizontal();
 
-		void RenderFilter(const VkCommandBuffer *commandBuffer) override;
+		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
 
 		float GetScaleValue() const { return m_scaleValue; }
 

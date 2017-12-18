@@ -26,7 +26,7 @@ namespace Flounder
 	{
 	}
 
-	void FilterBlurVertical::RenderFilter(const VkCommandBuffer *commandBuffer)
+	void FilterBlurVertical::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 		if (m_fitToDisplay)
 		{
