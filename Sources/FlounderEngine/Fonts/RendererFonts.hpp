@@ -10,10 +10,6 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		static const DescriptorType typeUboObject;
-		static const DescriptorType typeSamplerTexture;
-		static const PipelineCreateInfo pipelineCreateInfo;
-
 		Pipeline *m_pipeline;
 	public:
 		RendererFonts(const int &subpass);

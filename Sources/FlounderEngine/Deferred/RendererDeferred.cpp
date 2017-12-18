@@ -23,7 +23,7 @@ namespace Flounder
 		0, 3, 2, 2, 1, 0
 	};
 
-	const PipelineCreateInfo RendererDeferred::pipelineCreateInfo =
+	const PipelineCreateInfo PIPELINE_CREATE_INFO =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
@@ -31,7 +31,6 @@ namespace Flounder
 
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
-
 		{
 			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
 			UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // uboLights
@@ -49,7 +48,7 @@ namespace Flounder
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_uniformLights(new UniformBuffer(sizeof(UbosDeferred::UboLights))),
-		m_pipeline(new Pipeline(pipelineCreateInfo, subpass)),
+		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO)),
 		m_model(new Model(VERTICES, INDICES))
 	{
 	}

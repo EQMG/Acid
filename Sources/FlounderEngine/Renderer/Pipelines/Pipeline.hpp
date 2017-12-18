@@ -14,10 +14,8 @@ namespace Flounder
 	class Pipeline
 	{
 	private:
-		static const std::vector<VkDynamicState> DYNAMIC_STATES;
-
-		PipelineCreateInfo m_pipelineCreateInfo;
 		int m_subpass;
+		PipelineCreateInfo m_pipelineCreateInfo;
 
 		VkDescriptorSetLayout m_descriptorSetLayout;
 		VkDescriptorPool m_descriptorPool;
@@ -41,9 +39,9 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new pipeline.
 		/// </summary>
-		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
 		/// <param name="subpass"> The pipelines subpass. </param>
-		Pipeline(const PipelineCreateInfo &pipelineCreateInfo, const int &subpass);
+		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
+		Pipeline(const int &subpass, const PipelineCreateInfo &pipelineCreateInfo);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.

@@ -3,17 +3,17 @@
 namespace Flounder
 {
 	PipelineGaussian::PipelineGaussian(const int &subpass, const int &width, const int &height) :
-		IPostPipeline()
+		IPostPipeline(),
+		m_filterBlurHorizontal(new FilterBlurHorizontal(subpass, width, height)),
+		m_filterBlurVertical(new FilterBlurVertical(subpass, width, height))
 	{
-		m_filterBlurHorizontal = new FilterBlurHorizontal(subpass, width, height);
-		m_filterBlurVertical = new FilterBlurVertical(subpass, width, height);
 	}
 
 	PipelineGaussian::PipelineGaussian(const int &subpass, const float &sizeScalar) :
-		IPostPipeline()
+		IPostPipeline(),
+		m_filterBlurHorizontal(new FilterBlurHorizontal(subpass, sizeScalar)),
+		m_filterBlurVertical(new FilterBlurVertical(subpass, sizeScalar))
 	{
-		m_filterBlurHorizontal = new FilterBlurHorizontal(subpass, sizeScalar);
-		m_filterBlurVertical = new FilterBlurVertical(subpass, sizeScalar);
 	}
 
 	PipelineGaussian::~PipelineGaussian()

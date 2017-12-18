@@ -5,9 +5,7 @@
 
 namespace Flounder
 {
-	const DescriptorType RendererTerrains::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
-	const DescriptorType RendererTerrains::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL);
-	const PipelineCreateInfo RendererTerrains::pipelineCreateInfo =
+	const PipelineCreateInfo PIPELINE_CREATE_INFO =
 	{
 		PIPELINE_MRT, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
@@ -16,7 +14,10 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboScene, typeUboObject }, // descriptors
+		{
+			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
+			UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL) // uboObject
+		}, // descriptors
 
 		{ "Resources/Shaders/Terrains/Terrain.vert.spv", "Resources/Shaders/Terrains/Terrain.frag.spv" } // shaderStages
 	};
@@ -24,7 +25,7 @@ namespace Flounder
 	RendererTerrains::RendererTerrains(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosTerrains::UboScene))),
-		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO))
 	{
 	}
 

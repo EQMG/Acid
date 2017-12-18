@@ -7,8 +7,7 @@
 
 namespace Flounder
 {
-	const DescriptorType RendererShadows::typeUboObject = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
-	const PipelineCreateInfo RendererShadows::pipelineCreateInfo =
+	const PipelineCreateInfo PIPELINE_CREATE_INFO =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
@@ -17,7 +16,9 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboObject }, // descriptors
+		{
+			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT) // uboObject
+		}, // descriptors
 
 		{ "Resources/Shaders/Shadows/Shadow.vert.spv", "Resources/Shaders/Shadows/Shadow.frag.spv" } // shaderStages
 	};
@@ -25,7 +26,7 @@ namespace Flounder
 	RendererShadows::RendererShadows(const int &subpass) :
 		IRenderer(),
 		m_uniformObject(new UniformBuffer(sizeof(UbosShadows::UboObject))),
-		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO))
 	{
 	}
 

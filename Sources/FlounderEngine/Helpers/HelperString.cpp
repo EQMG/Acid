@@ -1,6 +1,7 @@
 #include "HelperString.hpp"
 
 #include <algorithm>
+#include <cctype>
 
 namespace Flounder
 {

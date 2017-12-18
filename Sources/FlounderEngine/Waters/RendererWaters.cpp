@@ -5,10 +5,7 @@
 
 namespace Flounder
 {
-	const DescriptorType RendererWaters::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT);
-	const DescriptorType RendererWaters::typeUboObject = UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL);
-	const DescriptorType RendererWaters::typeSamplerReflection = Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const PipelineCreateInfo RendererWaters::pipelineCreateInfo =
+	const PipelineCreateInfo PIPELINE_CREATE_INFO =
 	{
 		PIPELINE_MRT, // pipelineModeFlags
 		VK_POLYGON_MODE_FILL, // polygonMode
@@ -17,7 +14,11 @@ namespace Flounder
 		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
 		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{ typeUboScene, typeUboObject, typeSamplerReflection }, // descriptors
+		{
+			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
+			UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
+			Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerReflection
+		}, // descriptors
 
 		{ "Resources/Shaders/Waters/Water.vert.spv", "Resources/Shaders/Waters/Water.frag.spv" } // shaderStages
 	};
@@ -25,7 +26,7 @@ namespace Flounder
 	RendererWaters::RendererWaters(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosWaters::UboScene))),
-		m_pipeline(new Pipeline(pipelineCreateInfo, subpass))
+		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO))
 	{
 	}
 
