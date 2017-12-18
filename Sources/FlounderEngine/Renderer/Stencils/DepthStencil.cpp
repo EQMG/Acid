@@ -1,6 +1,5 @@
 #include "DepthStencil.hpp"
 
-#include <vector>
 #include <cassert>
 #include "../../Devices/Display.hpp"
 #include "../Buffers/Buffer.hpp"

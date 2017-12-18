@@ -1,8 +1,5 @@
 #include "FilterMotion.hpp"
 
-#include "../../Camera/Camera.hpp"
-#include "../../Devices/Display.hpp"
-
 namespace Flounder
 {
 	FilterMotion::FilterMotion(const int &subpass) :

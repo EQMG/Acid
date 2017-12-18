@@ -3,10 +3,7 @@
 #include "../Devices/Mouse.hpp"
 #include "../Devices/Keyboard.hpp"
 #include "../Devices/Joysticks.hpp"
-#include "../Fonts/Text.hpp"
-#include "../Guis/Gui.hpp"
 #include "../Visual/DriverSlide.hpp"
-#include "Uis.hpp"
 
 namespace Flounder
 {

@@ -1,7 +1,5 @@
 #include "FilterPixel.hpp"
 
-#include "../../Devices/Display.hpp"
-
 namespace Flounder
 {
 	FilterPixel::FilterPixel(const int &subpass) :
