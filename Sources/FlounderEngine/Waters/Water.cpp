@@ -1,7 +1,7 @@
 ﻿#include "Water.hpp"
 
 #include "../Devices/Display.hpp"
-#include "../Models/MeshGenerator.hpp"
+#include "Models/CreateMesh.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "Waters.hpp"
 #include "UbosWaters.hpp"
@@ -90,7 +90,7 @@ namespace Flounder
 		{
 			return Vector3(0.0f, 0.0f, 1.0f);
 		};
-		m_model = MeshGenerator::GenerateMesh(SIDE_LENGTH, SQUARE_SIZE, VERTEX_COUNT, TEXTURE_SCALE, MeshType::MeshPattern, getHeight, getColour);
+		m_model = CreateMesh::Create(SIDE_LENGTH, SQUARE_SIZE, VERTEX_COUNT, TEXTURE_SCALE, CreateMesh::MeshPattern, getHeight, getColour);
 
 		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
 		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;

@@ -16,7 +16,7 @@ namespace Flounder
 
 		Vector3 m_position;
 
-		int m_textureIndex;
+		int m_uvIndex;
 		int m_normalIndex;
 		VertexData *m_duplicateVertex;
 
@@ -32,9 +32,9 @@ namespace Flounder
 
 		Vector3 GetPosition() const { return m_position; }
 
-		int GetTextureIndex() const { return m_textureIndex; }
+		int GetUvIndex() const { return m_uvIndex; }
 
-		void SetTextureIndex(const int &textureIndex) { m_textureIndex = textureIndex; }
+		void SetUvIndex(const int &uvIndex) { m_uvIndex = uvIndex; }
 
 		int GetNormalIndex() const { return m_normalIndex; }
 

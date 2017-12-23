@@ -1,5 +1,6 @@
 #include "Display.hpp"
 
+#include <stdexcept>
 #include <cassert>
 #include <cstring>
 #include <map>
