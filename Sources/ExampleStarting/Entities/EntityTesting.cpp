@@ -1,6 +1,8 @@
 #include <Entities/Components/ComponentModel.hpp>
 #include <Entities/Components/ComponentMaterial.hpp>
 #include <Entities/Components/ComponentLight.hpp>
+#include <Models/CreateCube.hpp>
+#include <Models/CreateSphere.hpp>
 
 #include "EntityTesting.hpp"
 
@@ -12,7 +14,7 @@ EntityTesting::EntityTesting(ISpatialStructure<Entity*> *structure, const Transf
 {
 	if (g_model == nullptr)
 	{
-		g_model = new Model("Resources/Models/ModelSphere.obj");
+		g_model = CreateSphere::Create(18, 18, 1.0f); // CreateCube::Create(1.0f, 0.5f, 2.0f); // new Model("Resources/Models/ModelSphere.obj");
 	}
 
 	if (g_diffuse == nullptr)

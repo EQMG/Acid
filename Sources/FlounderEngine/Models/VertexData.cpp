@@ -6,7 +6,7 @@ namespace Flounder
 
 	VertexData::VertexData(const uint32_t &index, const Vector3 &position) :
 		m_position(position),
-		m_textureIndex(VertexData::NO_INDEX),
+		m_uvIndex(VertexData::NO_INDEX),
 		m_normalIndex(VertexData::NO_INDEX),
 		m_duplicateVertex(nullptr),
 		m_index(index),
@@ -46,11 +46,11 @@ namespace Flounder
 
 	bool VertexData::IsSet() const
 	{
-		return (static_cast<uint32_t>(m_textureIndex) != NO_INDEX) && (static_cast<uint32_t>(m_normalIndex) != NO_INDEX);
+		return (static_cast<uint32_t>(m_uvIndex) != NO_INDEX) && (static_cast<uint32_t>(m_normalIndex) != NO_INDEX);
 	}
 
 	bool VertexData::HasSameTextureAndNormal(const int &textureIndexOther, const int &normalIndexOther) const
 	{
-		return textureIndexOther == m_textureIndex && normalIndexOther == m_normalIndex;
+		return textureIndexOther == m_uvIndex && normalIndexOther == m_normalIndex;
 	}
 }

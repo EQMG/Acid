@@ -1,5 +1,6 @@
 #include "Audio.hpp"
 
+#include <stdexcept>
 #include <fstream>
 #include "../Camera/Camera.hpp"
 

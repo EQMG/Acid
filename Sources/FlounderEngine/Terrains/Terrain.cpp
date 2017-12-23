@@ -3,7 +3,7 @@
 #include "../Camera/Camera.hpp"
 #include "../Devices/Display.hpp"
 #include "../Worlds/Worlds.hpp"
-#include "../Models/MeshGenerator.hpp"
+#include "Models/CreateMesh.hpp"
 #include "Terrains.hpp"
 #include "UbosTerrains.hpp"
 
@@ -139,7 +139,7 @@ namespace Flounder
 			Colour::Interpolate(biomeColours[firstBiome], biomeColours[firstBiome + 1], blend, &result);
 			return result;
 		};
-		m_modelLods[lod] = MeshGenerator::GenerateMesh(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, MeshType::MeshSimple, getHeight, getColour);
+		m_modelLods[lod] = CreateMesh::Create(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, CreateMesh::MeshSimple, getHeight, getColour);
 
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
