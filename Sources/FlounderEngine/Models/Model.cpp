@@ -139,12 +139,10 @@ namespace Flounder
 				}
 				else if (prefix == "s")
 				{
-					// Smooth faces?
 				}
 				else
 				{
-					printf("OBJ '%s' ", m_filename.c_str()); // TODO
-					printf("unknown line: '%s'.\n", line.c_str());
+					printf("OBJ '%s' unknown line: '%s'.\n", m_filename.c_str(), line.c_str());
 				}
 			}
 		}
@@ -156,7 +154,7 @@ namespace Flounder
 
 			if (!current->IsSet())
 			{
-				current->SetTextureIndex(0);
+				current->SetUvIndex(0);
 				current->SetNormalIndex(0);
 			}
 		}
@@ -167,7 +165,7 @@ namespace Flounder
 		for (auto current : verticesList)
 		{
 			const Vector3 position = current->GetPosition();
-			const Vector2 textures = uvsList.at(current->GetTextureIndex());
+			const Vector2 textures = uvsList.at(current->GetUvIndex());
 			const Vector3 normal = normalsList.at(current->GetNormalIndex());
 			const Vector3 tangent = current->GetAverageTangent();
 
@@ -188,7 +186,7 @@ namespace Flounder
 
 		if (!currentVertex->IsSet())
 		{
-			currentVertex->SetTextureIndex(textureIndex);
+			currentVertex->SetUvIndex(textureIndex);
 			currentVertex->SetNormalIndex(normalIndex);
 			indices->push_back(index);
 			return currentVertex;
@@ -213,7 +211,7 @@ namespace Flounder
 		}
 
 		VertexData *duplicateVertex = new VertexData(static_cast<uint32_t>(vertices->size()), previousVertex->GetPosition());
-		duplicateVertex->SetTextureIndex(newTextureIndex);
+		duplicateVertex->SetUvIndex(newTextureIndex);
 		duplicateVertex->SetNormalIndex(newNormalIndex);
 		previousVertex->SetDuplicateVertex(duplicateVertex);
 		vertices->push_back(duplicateVertex);
@@ -223,9 +221,9 @@ namespace Flounder
 
 	void Model::CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *uvs)
 	{
-		const Vector2 uv0 = uvs->at(v0->GetTextureIndex());
-		const Vector2 uv1 = uvs->at(v1->GetTextureIndex());
-		const Vector2 uv2 = uvs->at(v2->GetTextureIndex());
+		const Vector2 uv0 = uvs->at(v0->GetUvIndex());
+		const Vector2 uv1 = uvs->at(v1->GetUvIndex());
+		const Vector2 uv2 = uvs->at(v2->GetUvIndex());
 
 		Vector2 *deltaUv1 = Vector2::Subtract(uv1, uv0, nullptr);
 		Vector2 *deltaUv2 = Vector2::Subtract(uv2, uv0, nullptr);
