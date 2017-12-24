@@ -2,6 +2,7 @@ set(EXAMPLESTARTING_HEADERS_
 	"Entities/EntitySun.hpp"
 	"Entities/EntityTesting.hpp"
 	"Entities/EntityTreePine.hpp"
+	"ConfigTesting.hpp"
 	"FpsCamera.hpp"
 	"FpsPlayer.hpp"
 	"Instance.hpp"
