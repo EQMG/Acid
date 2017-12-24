@@ -17,9 +17,6 @@ namespace Flounder
 			float steps;
 		};
 
-		static const DescriptorType typeUboScene;
-		static const DescriptorType typeSamplerColour;
-
 		UniformBuffer *m_uniformScene;
 
 		float m_blurAmount;

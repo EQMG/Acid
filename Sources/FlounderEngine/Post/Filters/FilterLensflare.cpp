@@ -6,12 +6,15 @@
 
 namespace Flounder
 {
-	const DescriptorType FilterLensflare::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType FilterLensflare::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType FilterLensflare::typeSamplerMaterial = Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const std::vector<DescriptorType> DESCRIPTORS =
+	{
+		UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
+		Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
+		Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerMaterial
+	};
 
 	FilterLensflare::FilterLensflare(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Lensflare.frag.spv", subpass, { typeUboScene, typeSamplerColour, typeSamplerMaterial }),
+		IPostFilter("Resources/Shaders/Filters/Lensflare.frag.spv", subpass, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_sunPosition(new Vector3()),
 		m_sunHeight(0.0f)

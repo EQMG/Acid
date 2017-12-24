@@ -1,15 +1,17 @@
 #include "FilterTiltshift.hpp"
 
-#include "../../Devices/Display.hpp"
 #include "../../Renderer/Renderer.hpp"
 
 namespace Flounder
 {
-	const DescriptorType FilterTiltshift::typeUboScene = UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
-	const DescriptorType FilterTiltshift::typeSamplerColour = Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const std::vector<DescriptorType> DESCRIPTORS =
+	{
+		UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
+		Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
+	};
 
 	FilterTiltshift::FilterTiltshift(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag.spv", subpass, { typeUboScene, typeSamplerColour }),
+		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag.spv", subpass, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_blurAmount(1.0f),
 		m_centre(1.1f),

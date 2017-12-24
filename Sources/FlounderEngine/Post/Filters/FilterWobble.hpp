@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../IPostFilter.hpp"
+#include "../../Renderer/Buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
@@ -8,6 +9,13 @@ namespace Flounder
 		public IPostFilter
 	{
 	private:
+		struct UboScene
+		{
+			float moveIt;
+		};
+
+		UniformBuffer *m_uniformScene;
+
 		float m_wobbleSpeed;
 		float m_wobbleAmount;
 	public:

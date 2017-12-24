@@ -2,8 +2,12 @@
 
 namespace Flounder
 {
+	const std::vector<DescriptorType> DESCRIPTORS =
+	{
+	};
+
 	FilterDarken::FilterDarken(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Darken.frag.spv", subpass, {}),
+		IPostFilter("Resources/Shaders/Filters/Darken.frag.spv", subpass, DESCRIPTORS),
 		m_factorValue(0.45f)
 	{
 	}

@@ -17,10 +17,6 @@ namespace Flounder
 			Vector2 displaySize;
 		};
 
-		static const DescriptorType typeUboScene;
-		static const DescriptorType typeSamplerColour;
-		static const DescriptorType typeSamplerMaterial;
-
 		UniformBuffer *m_uniformScene;
 
 		Vector3 *m_sunPosition;
