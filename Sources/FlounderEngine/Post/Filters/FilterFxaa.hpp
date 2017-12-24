@@ -14,9 +14,6 @@ namespace Flounder
 			float spanMax;
 		};
 
-		static const DescriptorType typeUboScene;
-		static const DescriptorType typeSamplerColour;
-
 		UniformBuffer *m_uniformScene;
 
 		float m_spanMax;

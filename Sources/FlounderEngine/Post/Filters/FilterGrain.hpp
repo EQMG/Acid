@@ -14,9 +14,6 @@ namespace Flounder
 			float strength;
 		};
 
-		static const DescriptorType typeUboScene;
-		static const DescriptorType typeSamplerColour;
-
 		UniformBuffer *m_uniformScene;
 
 		float m_strength;

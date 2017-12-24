@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../IPostFilter.hpp"
+#include "../../Renderer/Buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
@@ -8,6 +9,14 @@ namespace Flounder
 		public IPostFilter
 	{
 	private:
+		struct UboScene
+		{
+			float pixelSize;
+			Vector2 displaySize;
+		};
+
+		UniformBuffer *m_uniformScene;
+
 		float m_pixelSize;
 	public:
 		FilterPixel(const int &subpass);

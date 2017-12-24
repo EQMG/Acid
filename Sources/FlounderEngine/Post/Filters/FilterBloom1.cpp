@@ -2,8 +2,12 @@
 
 namespace Flounder
 {
+	const std::vector<DescriptorType> DESCRIPTORS =
+	{
+	};
+
 	FilterBloom1::FilterBloom1(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Bloom1.frag.spv", subpass, {})
+		IPostFilter("Resources/Shaders/Filters/Bloom1.frag.spv", subpass, DESCRIPTORS)
 	{
 	}
 
