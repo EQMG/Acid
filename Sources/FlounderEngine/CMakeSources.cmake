@@ -2,6 +2,7 @@ set(FLOUNDERENGINE_HEADERS_
 	"Camera/Camera.hpp"
 	"Camera/ICamera.hpp"
 	"Camera/IPlayer.hpp"
+	"Config/Config.hpp"
 	"Deferred/RendererDeferred.hpp"
 	"Deferred/UbosDeferred.hpp"
 	"Devices/Audio.hpp"
@@ -194,6 +195,7 @@ set(FLOUNDERENGINE_HEADERS_
 
 set(FLOUNDERENGINE_SOURCES_
 	"Camera/Camera.cpp"
+	"Config/Config.cpp"
 	"Deferred/RendererDeferred.cpp"
 	"Devices/Audio.cpp"
 	"Devices/Display.cpp"
