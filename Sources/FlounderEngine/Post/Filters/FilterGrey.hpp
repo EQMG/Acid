@@ -8,7 +8,6 @@ namespace Flounder
 		public IPostFilter
 	{
 	private:
-		static const DescriptorType typeSamplerColour;
 	public:
 		FilterGrey(const int &subpass);
 

@@ -2,8 +2,12 @@
 
 namespace Flounder
 {
+	const std::vector<DescriptorType> DESCRIPTORS =
+	{
+	};
+
 	FilterMotion::FilterMotion(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Motion.frag.spv", subpass, {}),
+		IPostFilter("Resources/Shaders/Filters/Motion.frag.spv", subpass, DESCRIPTORS),
 		m_lastViewMatrix(new Matrix4())
 	{
 	}

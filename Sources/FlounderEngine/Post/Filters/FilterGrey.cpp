@@ -1,14 +1,16 @@
 #include "FilterGrey.hpp"
 
-#include "../../Devices/Display.hpp"
 #include "../../Renderer/Renderer.hpp"
 
 namespace Flounder
 {
-	const DescriptorType FilterGrey::typeSamplerColour = Texture::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT);
+	const std::vector<DescriptorType> DESCRIPTORS =
+	{
+		Texture::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
+	};
 
 	FilterGrey::FilterGrey(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Grey.frag.spv", subpass, { typeSamplerColour })
+		IPostFilter("Resources/Shaders/Filters/Grey.frag.spv", subpass, DESCRIPTORS)
 	{
 	}
 
