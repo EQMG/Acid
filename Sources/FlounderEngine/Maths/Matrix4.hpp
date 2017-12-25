@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+#include <string>
 #include "Vector2.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
@@ -121,6 +123,15 @@ namespace Flounder
 		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> The destination matrix. </returns>
 		static Matrix4 *Multiply(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination);
+
+		/// <summary>
+		/// Divides two matrices from each other and places the result in the destination matrices.
+		/// </summary>
+		/// <param name="left"> The left source matrix. </param>
+		/// <param name="right"> The right source matrix. </param>
+		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
+		/// <returns> The destination matrix. </returns>
+		static Matrix4 *Divide(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination);
 
 		/// <summary>
 		/// Transforms a matrix by a vector and places the result in the destination matrix.
@@ -348,6 +359,28 @@ namespace Flounder
 		/// </summary>
 		/// <returns> This. </returns>
 		Matrix4 *SetZero();
+
+		bool operator==(const Matrix4& other) const;
+		bool operator!=(const Matrix4& other) const;
+
+		Matrix4& operator-();
+
+		friend Matrix4 operator+(Matrix4 left, const Matrix4& right);
+		friend Matrix4 operator-(Matrix4 left, const Matrix4& right);
+		friend Matrix4 operator*(Matrix4 left, const Matrix4& right);
+		friend Matrix4 operator/(Matrix4 left, const Matrix4& right);
+
+		friend Matrix4 operator*(Matrix4 left, Vector4 value);
+		friend Matrix4 operator/(Matrix4 left, Vector4 value);
+
+		Matrix4& operator+=(const Matrix4& other);
+		Matrix4& operator-=(const Matrix4& other);
+		Matrix4& operator*=(const Matrix4& other);
+		Matrix4& operator/=(const Matrix4& other);
+
+		friend std::ostream& operator<<(std::ostream& stream, const Matrix4& matrix);
+
+		std::string ToString() const;
 	private:
 		static float Determinant3x3(const float &t00, const float &t01, const float &t02, const float &t10, const float &t11, const float &t12, const float &t20, const float &t21, const float &t22);
 	};

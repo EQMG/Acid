@@ -99,12 +99,10 @@ namespace Demo
 		UpdatePosition();
 
 		Matrix4::ViewMatrix(*m_position, *m_rotation, m_viewMatrix);
-		Matrix4::PerspectiveMatrix(GetFov(), static_cast<float>(Display::Get()->GetAspectRatio()), GetNearPlane(), GetFarPlane(), m_projectionMatrix);
+		Matrix4::PerspectiveMatrix(GetFov(), Display::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane(), m_projectionMatrix);
 
 		m_viewFrustum->Update(*m_projectionMatrix, *m_viewMatrix);
-		m_viewRay->Update(*m_position, Vector2(static_cast<float>(Mouse::Get()->GetPositionX()), static_cast<float>(Mouse::Get()->GetPositionY())), *m_viewMatrix, *m_projectionMatrix);
-
-		// printf("Position: (%f, %f, %f). Rotation: (%f, %f, %f)\n", m_position->m_x, m_position->m_y, m_position->m_z, m_rotation->m_x, m_rotation->m_y, m_rotation->m_z);
+		m_viewRay->Update(*m_position, Vector2(Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()), *m_viewMatrix, *m_projectionMatrix);
 	}
 
 	void FpsCamera::CalculateHorizontalAngle()
@@ -245,10 +243,7 @@ namespace Demo
 
 	void FpsCamera::UpdatePosition()
 	{
-		m_position->m_x = m_targetPosition->m_x;
-		m_position->m_y = m_targetPosition->m_y;
-		m_position->m_z = m_targetPosition->m_z;
-
+		m_position->Set(*m_targetPosition);
 		m_rotation->m_x = m_angleOfElevation - m_targetRotation->m_z;
 		m_rotation->m_y = m_angleAroundPlayer + m_targetRotation->m_y + DEGREES_IN_HALF_CIRCLE;
 		m_rotation->m_z = 0.0f;

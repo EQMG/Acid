@@ -6,7 +6,7 @@
 #include "../Entities/Entities.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "../Shadows/Shadows.hpp"
-#include "../Worlds/Worlds.hpp"
+#include "../Skyboxes/Skyboxes.hpp"
 #include "UbosDeferred.hpp"
 
 namespace Flounder

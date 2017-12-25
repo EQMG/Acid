@@ -1,5 +1,6 @@
 #include "Matrix4.hpp"
 
+#include <sstream>
 #include "Maths.hpp"
 
 namespace Flounder
@@ -228,6 +229,49 @@ namespace Flounder
 		const float m31 = left.m_01 * right.m_30 + left.m_11 * right.m_31 + left.m_21 * right.m_32 + left.m_31 * right.m_33;
 		const float m32 = left.m_02 * right.m_30 + left.m_12 * right.m_31 + left.m_22 * right.m_32 + left.m_32 * right.m_33;
 		const float m33 = left.m_03 * right.m_30 + left.m_13 * right.m_31 + left.m_23 * right.m_32 + left.m_33 * right.m_33;
+
+		destination->m_00 = m00;
+		destination->m_01 = m01;
+		destination->m_02 = m02;
+		destination->m_03 = m03;
+		destination->m_10 = m10;
+		destination->m_11 = m11;
+		destination->m_12 = m12;
+		destination->m_13 = m13;
+		destination->m_20 = m20;
+		destination->m_21 = m21;
+		destination->m_22 = m22;
+		destination->m_23 = m23;
+		destination->m_30 = m30;
+		destination->m_31 = m31;
+		destination->m_32 = m32;
+		destination->m_33 = m33;
+		return destination;
+	}
+
+	Matrix4 *Matrix4::Divide(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination)
+	{
+		if (destination == nullptr)
+		{
+			destination = new Matrix4();
+		}
+
+		const float m00 = left.m_00 / right.m_00 + left.m_10 / right.m_01 + left.m_20 / right.m_02 + left.m_30 / right.m_03;
+		const float m01 = left.m_01 / right.m_00 + left.m_11 / right.m_01 + left.m_21 / right.m_02 + left.m_31 / right.m_03;
+		const float m02 = left.m_02 / right.m_00 + left.m_12 / right.m_01 + left.m_22 / right.m_02 + left.m_32 / right.m_03;
+		const float m03 = left.m_03 / right.m_00 + left.m_13 / right.m_01 + left.m_23 / right.m_02 + left.m_33 / right.m_03;
+		const float m10 = left.m_00 / right.m_10 + left.m_10 / right.m_11 + left.m_20 / right.m_12 + left.m_30 / right.m_13;
+		const float m11 = left.m_01 / right.m_10 + left.m_11 / right.m_11 + left.m_21 / right.m_12 + left.m_31 / right.m_13;
+		const float m12 = left.m_02 / right.m_10 + left.m_12 / right.m_11 + left.m_22 / right.m_12 + left.m_32 / right.m_13;
+		const float m13 = left.m_03 / right.m_10 + left.m_13 / right.m_11 + left.m_23 / right.m_12 + left.m_33 / right.m_13;
+		const float m20 = left.m_00 / right.m_20 + left.m_10 / right.m_21 + left.m_20 / right.m_22 + left.m_30 / right.m_23;
+		const float m21 = left.m_01 / right.m_20 + left.m_11 / right.m_21 + left.m_21 / right.m_22 + left.m_31 / right.m_23;
+		const float m22 = left.m_02 / right.m_20 + left.m_12 / right.m_21 + left.m_22 / right.m_22 + left.m_32 / right.m_23;
+		const float m23 = left.m_03 / right.m_20 + left.m_13 / right.m_21 + left.m_23 / right.m_22 + left.m_33 / right.m_23;
+		const float m30 = left.m_00 / right.m_30 + left.m_10 / right.m_31 + left.m_20 / right.m_32 + left.m_30 / right.m_33;
+		const float m31 = left.m_01 / right.m_30 + left.m_11 / right.m_31 + left.m_21 / right.m_32 + left.m_31 / right.m_33;
+		const float m32 = left.m_02 / right.m_30 + left.m_12 / right.m_31 + left.m_22 / right.m_32 + left.m_32 / right.m_33;
+		const float m33 = left.m_03 / right.m_30 + left.m_13 / right.m_31 + left.m_23 / right.m_32 + left.m_33 / right.m_33;
 
 		destination->m_00 = m00;
 		destination->m_01 = m01;
@@ -782,6 +826,94 @@ namespace Flounder
 	Matrix4 *Matrix4::SetZero()
 	{
 		return SetZero(this);
+	}
+
+	bool Matrix4::operator==(const Matrix4& other) const
+	{
+		return m_00 == other.m_00 && m_01 == other.m_01 && m_02 == other.m_02 && m_03 == other.m_03 &&
+			   m_10 == other.m_10 && m_11 == other.m_11 && m_12 == other.m_12 && m_13 == other.m_13 &&
+				m_20 == other.m_20 && m_21 == other.m_21 && m_22 == other.m_22 && m_23 == other.m_23 &&
+				m_30 == other.m_30 && m_31 == other.m_31 && m_32 == other.m_32 && m_33 == other.m_33;
+	}
+
+	bool Matrix4::operator!=(const Matrix4& other) const
+	{
+		return !(*this == other);
+	}
+
+	Matrix4 &Matrix4::operator-()
+	{
+		return *this->Negate();
+	}
+
+	Matrix4 operator+(Matrix4 left, const Matrix4& right)
+	{
+		return *Matrix4::Add(left, right, &left);
+	}
+
+	Matrix4 operator-(Matrix4 left, const Matrix4& right)
+	{
+		return *Matrix4::Subtract(left, right, &left);
+	}
+
+	Matrix4 operator*(Matrix4 left, const Matrix4& right)
+	{
+		return *Matrix4::Multiply(left, right, &left);
+	}
+
+	Matrix4 operator/(Matrix4 left, const Matrix4& right)
+	{
+		return *Matrix4::Divide(left, right, &left);
+	}
+
+	Matrix4 operator*(Matrix4 left, Vector4 value)
+	{
+		return *Matrix4::Scale(left, value, &left);
+	}
+
+	Matrix4 operator/(Matrix4 left, Vector4 value)
+	{
+		return *Matrix4::Scale(left, 1.0f / value, &left);
+	}
+
+	Matrix4& Matrix4::operator+=(const Matrix4& other)
+	{
+		Matrix4 result = Matrix4();
+		return *Matrix4::Add(*this, other, &result);
+	}
+
+	Matrix4& Matrix4::operator-=(const Matrix4& other)
+	{
+		Matrix4 result = Matrix4();
+		return *Matrix4::Subtract(*this, other, &result);
+	}
+
+	Matrix4& Matrix4::operator*=(const Matrix4& other)
+	{
+		Matrix4 result = Matrix4();
+		return *Matrix4::Multiply(*this, other, &result);
+	}
+
+	Matrix4& Matrix4::operator/=(const Matrix4& other)
+	{
+		Matrix4 result = Matrix4();
+		return *Matrix4::Divide(*this, other, &result);
+	}
+
+	std::ostream& operator<<(std::ostream& stream, const Matrix4& matrix)
+	{
+		stream << matrix.ToString();
+		return stream;
+	}
+
+	std::string Matrix4::ToString() const
+	{
+		std::stringstream result;
+		result << "Matrix4(" << m_00 << ", " << m_01 << ", " << m_02 << ", " << m_03 << ", " <<
+			   m_10 << ", " << m_11 << ", " << m_12 << ", " << m_13 << ", " <<
+			   m_20 << ", " << m_21 << ", " << m_22 << ", " << m_23 << ", " <<
+				m_30 << ", " << m_31 << ", " << m_32 << ", " << m_33 << ")";
+		return result.str();
 	}
 
 	float Matrix4::Determinant3x3(const float &t00, const float &t01, const float &t02, const float &t10, const float &t11, const float &t12, const float &t20, const float &t21, const float &t22)

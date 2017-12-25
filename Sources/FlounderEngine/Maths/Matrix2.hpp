@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+#include <string>
 #include "Vector2.hpp"
 
 namespace Flounder
@@ -108,6 +110,15 @@ namespace Flounder
 		static Matrix2 *Multiply(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination);
 
 		/// <summary>
+		/// Divides two matrices from each other and places the result in the destination matrices.
+		/// </summary>
+		/// <param name="left"> The left source matrix. </param>
+		/// <param name="right"> The right source matrix. </param>
+		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
+		/// <returns> The destination matrix. </returns>
+		static Matrix2 *Divide(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination);
+
+		/// <summary>
 		/// Transforms a matrix by a vector and places the result in the destination matrix.
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
@@ -198,5 +209,27 @@ namespace Flounder
 		/// </summary>
 		/// <returns> This. </returns>
 		Matrix2 *SetZero();
+
+		bool operator==(const Matrix2& other) const;
+		bool operator!=(const Matrix2& other) const;
+
+		Matrix2& operator-();
+
+		friend Matrix2 operator+(Matrix2 left, const Matrix2& right);
+		friend Matrix2 operator-(Matrix2 left, const Matrix2& right);
+		friend Matrix2 operator*(Matrix2 left, const Matrix2& right);
+		friend Matrix2 operator/(Matrix2 left, const Matrix2& right);
+
+		friend Matrix2 operator*(Matrix2 left, Vector2 value);
+		friend Matrix2 operator/(Matrix2 left, Vector2 value);
+
+		Matrix2& operator+=(const Matrix2& other);
+		Matrix2& operator-=(const Matrix2& other);
+		Matrix2& operator*=(const Matrix2& other);
+		Matrix2& operator/=(const Matrix2& other);
+
+		friend std::ostream& operator<<(std::ostream& stream, const Matrix2& matrix);
+
+		std::string ToString() const;
 	};
 }

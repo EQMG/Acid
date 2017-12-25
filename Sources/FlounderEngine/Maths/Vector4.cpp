@@ -1,6 +1,7 @@
 #include "Vector4.hpp"
 
 #include <assert.h>
+#include <sstream>
 #include "Colour.hpp"
 #include "Maths.hpp"
 #include "Vector3.hpp"
@@ -276,5 +277,157 @@ namespace Flounder
 	float Vector4::LengthSquared() const
 	{
 		return LengthSquared(*this);
+	}
+
+	bool Vector4::operator==(const Vector4& other) const
+	{
+		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z && m_w == other.m_w;
+	}
+
+	bool Vector4::operator!=(const Vector4& other) const
+	{
+		return !(*this == other);
+	}
+
+	bool Vector4::operator<(const Vector4& other) const
+	{
+		return m_x < other.m_x && m_y < other.m_y && m_z < other.m_z && m_w < other.m_w;
+	}
+
+	bool Vector4::operator<=(const Vector4& other) const
+	{
+		return m_x <= other.m_x && m_y <= other.m_y && m_z <= other.m_z && m_w <= other.m_w;
+	}
+
+	bool Vector4::operator>(const Vector4& other) const
+	{
+		return m_x > other.m_x && m_y > other.m_y && m_z > other.m_z && m_w > other.m_w;
+	}
+
+	bool Vector4::operator>=(const Vector4& other) const
+	{
+		return m_x >= other.m_x && m_y >= other.m_y && m_z >= other.m_z && m_w >= other.m_w;
+	}
+
+	Vector4 &Vector4::operator-()
+	{
+		return *this->Negate();
+	}
+
+	Vector4 operator+(Vector4 left, const Vector4& right)
+	{
+		return *Vector4::Add(left, right, &left);
+	}
+
+	Vector4 operator-(Vector4 left, const Vector4& right)
+	{
+		return *Vector4::Subtract(left, right, &left);
+	}
+
+	Vector4 operator*(Vector4 left, const Vector4& right)
+	{
+		return *Vector4::Multiply(left, right, &left);
+	}
+
+	Vector4 operator/(Vector4 left, const Vector4& right)
+	{
+		return *Vector4::Divide(left, right, &left);
+	}
+
+	Vector4 operator+(Vector4 left, float value)
+	{
+		return *Vector4::Add(left, Vector4(value, value, value, value), &left);
+	}
+
+	Vector4 operator-(Vector4 left, float value)
+	{
+		return *Vector4::Subtract(left, Vector4(value, value, value, value), &left);
+	}
+
+	Vector4 operator*(Vector4 left, float value)
+	{
+		return *Vector4::Multiply(left, Vector4(value, value, value, value), &left);
+	}
+
+	Vector4 operator/(Vector4 left, float value)
+	{
+		return *Vector4::Divide(left, Vector4(value, value, value, value), &left);
+	}
+
+	Vector4 operator+(float value, Vector4 left)
+	{
+		return *Vector4::Add(Vector4(value, value, value, value), left, &left);
+	}
+
+	Vector4 operator-(float value, Vector4 left)
+	{
+		return *Vector4::Subtract(Vector4(value, value, value, value), left, &left);
+	}
+
+	Vector4 operator*(float value, Vector4 left)
+	{
+		return *Vector4::Multiply(Vector4(value, value, value, value), left, &left);
+	}
+
+	Vector4 operator/(float value, Vector4 left)
+	{
+		return *Vector4::Divide(Vector4(value, value, value, value), left, &left);
+	}
+
+	Vector4& Vector4::operator+=(const Vector4& other)
+	{
+		Vector4 result = Vector4();
+		return *Vector4::Add(*this, other, &result);
+	}
+
+	Vector4& Vector4::operator-=(const Vector4& other)
+	{
+		Vector4 result = Vector4();
+		return *Vector4::Subtract(*this, other, &result);
+	}
+
+	Vector4& Vector4::operator*=(const Vector4& other)
+	{
+		Vector4 result = Vector4();
+		return *Vector4::Multiply(*this, other, &result);
+	}
+
+	Vector4& Vector4::operator/=(const Vector4& other)
+	{
+		Vector4 result = Vector4();
+		return *Vector4::Divide(*this, other, &result);
+	}
+
+	Vector4& Vector4::operator+=(float value)
+	{
+		return *Vector4::Add(*this, Vector4(value, value, value, value), this);
+	}
+
+	Vector4& Vector4::operator-=(float value)
+	{
+		return *Vector4::Subtract(*this, Vector4(value, value, value, value), this);
+	}
+
+	Vector4& Vector4::operator*=(float value)
+	{
+		return *Vector4::Multiply(*this, Vector4(value, value, value, value), this);
+	}
+
+	Vector4& Vector4::operator/=(float value)
+	{
+		return *Vector4::Divide(*this, Vector4(value, value, value, value), this);
+	}
+
+	std::ostream& operator<<(std::ostream& stream, const Vector4& vector)
+	{
+		stream << vector.ToString();
+		return stream;
+	}
+
+	std::string Vector4::ToString() const
+	{
+		std::stringstream result;
+		result << "Vector4(" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
+		return result.str();
 	}
 }

@@ -202,5 +202,7 @@ namespace Flounder
 		/// </summary>
 		/// <returns> The length squared of the colour. </returns>
 		float LengthSquared();
+
+		// TODO: Operators.
 	};
 }
