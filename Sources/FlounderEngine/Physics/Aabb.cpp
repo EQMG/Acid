@@ -11,10 +11,10 @@ namespace Flounder
 	{
 	}
 
-	Aabb::Aabb(Vector3 *minExtents, Vector3 *maxExtents) :
+	Aabb::Aabb(const Vector3 &minExtents, const Vector3 &maxExtents) :
 		ICollider(),
-		m_minExtents(minExtents),
-		m_maxExtents(maxExtents)
+		m_minExtents(new Vector3(minExtents)),
+		m_maxExtents(new Vector3(maxExtents))
 	{
 	}
 

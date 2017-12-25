@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Renderer/Buffers/UniformBuffer.hpp>
 #include "../IPostFilter.hpp"
 
 namespace Flounder
@@ -8,8 +9,16 @@ namespace Flounder
 		public IPostFilter
 	{
 	private:
-		int m_heightValue;
-		float m_scaleValue;
+		struct UboScene
+		{
+			float blurAmount;
+			Vector2 size;
+		};
+
+		UniformBuffer *m_uniformScene;
+
+		Vector2 m_size;
+		float m_blurAmount;
 		bool m_fitToDisplay;
 		float m_sizeScalar;
 	public:
@@ -21,8 +30,8 @@ namespace Flounder
 
 		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
 
-		float GetScaleValue() const { return m_scaleValue; }
+		float GetBlurAmount() const { return m_blurAmount; }
 
-		void SetScaleValue(const float &scaleValue) { m_scaleValue = scaleValue; }
+		void SetBlurAmount(const float &blurAmount) { m_blurAmount = blurAmount; }
 	};
 }

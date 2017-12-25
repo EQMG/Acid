@@ -1,6 +1,7 @@
 #include "Vector2.hpp"
 
 #include <assert.h>
+#include <sstream>
 #include "Maths.hpp"
 #include "Vector3.hpp"
 
@@ -275,5 +276,157 @@ namespace Flounder
 	float Vector2::LengthSquared() const
 	{
 		return LengthSquared(*this);
+	}
+
+	bool Vector2::operator==(const Vector2& other) const
+	{
+		return m_x == other.m_x && m_y == other.m_x;
+	}
+
+	bool Vector2::operator!=(const Vector2& other) const
+	{
+		return !(*this == other);
+	}
+
+	bool Vector2::operator<(const Vector2& other) const
+	{
+		return m_x < other.m_x && m_y < other.m_y;
+	}
+
+	bool Vector2::operator<=(const Vector2& other) const
+	{
+		return m_x <= other.m_x && m_y <= other.m_y;
+	}
+
+	bool Vector2::operator>(const Vector2& other) const
+	{
+		return m_x > other.m_x && m_y > other.m_y;
+	}
+
+	bool Vector2::operator>=(const Vector2& other) const
+	{
+		return m_x >= other.m_x && m_y >= other.m_y;
+	}
+
+	Vector2 &Vector2::operator-()
+	{
+		return *this->Negate();
+	}
+
+	Vector2 operator+(Vector2 left, const Vector2& right)
+	{
+		return *Vector2::Add(left, right, &left);
+	}
+
+	Vector2 operator-(Vector2 left, const Vector2& right)
+	{
+		return *Vector2::Subtract(left, right, &left);
+	}
+
+	Vector2 operator*(Vector2 left, const Vector2& right)
+	{
+		return *Vector2::Multiply(left, right, &left);
+	}
+
+	Vector2 operator/(Vector2 left, const Vector2& right)
+	{
+		return *Vector2::Divide(left, right, &left);
+	}
+
+	Vector2 operator+(Vector2 left, float value)
+	{
+		return *Vector2::Add(left, Vector2(value, value), &left);
+	}
+
+	Vector2 operator-(Vector2 left, float value)
+	{
+		return *Vector2::Subtract(left, Vector2(value, value), &left);
+	}
+
+	Vector2 operator*(Vector2 left, float value)
+	{
+		return *Vector2::Multiply(left, Vector2(value, value), &left);
+	}
+
+	Vector2 operator/(Vector2 left, float value)
+	{
+		return *Vector2::Divide(left, Vector2(value, value), &left);
+	}
+
+	Vector2 operator+(float value, Vector2 left)
+	{
+		return *Vector2::Add(Vector2(value, value), left, &left);
+	}
+
+	Vector2 operator-(float value, Vector2 left)
+	{
+		return *Vector2::Subtract(Vector2(value, value), left, &left);
+	}
+
+	Vector2 operator*(float value, Vector2 left)
+	{
+		return *Vector2::Multiply(Vector2(value, value), left, &left);
+	}
+
+	Vector2 operator/(float value, Vector2 left)
+	{
+		return *Vector2::Divide(Vector2(value, value), left, &left);
+	}
+
+	Vector2& Vector2::operator+=(const Vector2& other)
+	{
+		Vector2 result = Vector2();
+		return *Vector2::Add(*this, other, &result);
+	}
+
+	Vector2& Vector2::operator-=(const Vector2& other)
+	{
+		Vector2 result = Vector2();
+		return *Vector2::Subtract(*this, other, &result);
+	}
+
+	Vector2& Vector2::operator*=(const Vector2& other)
+	{
+		Vector2 result = Vector2();
+		return *Vector2::Multiply(*this, other, &result);
+	}
+
+	Vector2& Vector2::operator/=(const Vector2& other)
+	{
+		Vector2 result = Vector2();
+		return *Vector2::Divide(*this, other, &result);
+	}
+
+	Vector2& Vector2::operator+=(float value)
+	{
+		return *Vector2::Add(*this, Vector2(value, value), this);
+	}
+
+	Vector2& Vector2::operator-=(float value)
+	{
+		return *Vector2::Subtract(*this, Vector2(value, value), this);
+	}
+
+	Vector2& Vector2::operator*=(float value)
+	{
+		return *Vector2::Multiply(*this, Vector2(value, value), this);
+	}
+
+	Vector2& Vector2::operator/=(float value)
+	{
+		return *Vector2::Divide(*this, Vector2(value, value), this);
+	}
+
+	std::ostream& operator<<(std::ostream& stream, const Vector2& vector)
+	{
+		stream << vector.ToString();
+		return stream;
+	}
+
+	std::string Vector2::ToString() const
+	{
+		std::stringstream result;
+		result << "Vector2(" << m_x << ", " << m_y << ")";
+		return result.str();
 	}
 }
