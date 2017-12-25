@@ -4,7 +4,6 @@
 layout(set = 0, binding = 0) uniform UboScene 
 {
 	float pixelSize;
-	vec2 displaySize;
 } scene;
 
 layout(set = 0, binding = 1) uniform sampler2D samplerColour;
@@ -17,12 +16,13 @@ layout(location = 0) out vec4 outColour;
 
 void main() 
 {
+	vec2 sizeColour = textureSize(samplerColour, 0);
 	vec2 coord;
 
 	if (fragmentUv.x < 1.0) 
 	{
-		float dx = scene.pixelSize * (1.0 / scene.displaySize.x);
-		float dy = scene.pixelSize * (1.0 / scene.displaySize.y);
+		float dx = scene.pixelSize * (1.0 / sizeColour.x);
+		float dy = scene.pixelSize * (1.0 / sizeColour.y);
 		coord.x = dx * floor(fragmentUv.x / dx);
 		coord.y = dy * floor(fragmentUv.y / dy);
 	} 

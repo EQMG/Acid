@@ -55,7 +55,7 @@ namespace Flounder
 		{
 			const float radius = dynamic_cast<Sphere*>(componentCollider1->GetCollider())->GetRadius();
 			const Vector3 *pos = dynamic_cast<Sphere*>(componentCollider1->GetCollider())->GetPosition();
-			aabb1 = Aabb(new Vector3(-radius + pos->m_x, -radius + pos->m_y, -radius + pos->m_z), new Vector3(radius + pos->m_x, radius + pos->m_y, radius + pos->m_z));
+			aabb1 = Aabb(-radius + *pos, radius + *pos);
 		}
 		else
 		{

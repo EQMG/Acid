@@ -238,5 +238,7 @@ namespace Flounder
 		/// <param name="source"> The source quaternion. </param>
 		/// <returns> The length squared of the quaternion. </returns>
 		float LengthSquared() const;
+
+		// TODO: Operators.
 	};
 }

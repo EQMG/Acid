@@ -12,7 +12,6 @@ namespace Flounder
 		struct UboScene
 		{
 			float pixelSize;
-			Vector2 displaySize;
 		};
 
 		UniformBuffer *m_uniformScene;
