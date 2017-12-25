@@ -1,5 +1,8 @@
 #pragma once
 
+#include <ostream>
+#include <string>
+
 namespace Flounder
 {
 	class Colour;
@@ -336,5 +339,43 @@ namespace Flounder
 		/// <param name="source"> The source vector. </param>
 		/// <returns> The length squared of the vector. </returns>
 		float LengthSquared() const;
+
+		bool operator==(const Vector3& other) const;
+		bool operator!=(const Vector3& other) const;
+		bool operator<(const Vector3& other) const;
+		bool operator<=(const Vector3& other) const;
+		bool operator>(const Vector3& other) const;
+		bool operator>=(const Vector3& other) const;
+
+		Vector3& operator-();
+
+		friend Vector3 operator+(Vector3 left, const Vector3& right);
+		friend Vector3 operator-(Vector3 left, const Vector3& right);
+		friend Vector3 operator*(Vector3 left, const Vector3& right);
+		friend Vector3 operator/(Vector3 left, const Vector3& right);
+
+		friend Vector3 operator+(Vector3 left, float value);
+		friend Vector3 operator-(Vector3 left, float value);
+		friend Vector3 operator*(Vector3 left, float value);
+		friend Vector3 operator/(Vector3 left, float value);
+
+		friend Vector3 operator+(float value, Vector3 left);
+		friend Vector3 operator-(float value, Vector3 left);
+		friend Vector3 operator*(float value, Vector3 left);
+		friend Vector3 operator/(float value, Vector3 left);
+
+		Vector3& operator+=(const Vector3& other);
+		Vector3& operator-=(const Vector3& other);
+		Vector3& operator*=(const Vector3& other);
+		Vector3& operator/=(const Vector3& other);
+
+		Vector3& operator+=(float value);
+		Vector3& operator-=(float value);
+		Vector3& operator*=(float value);
+		Vector3& operator/=(float value);
+
+		friend std::ostream& operator<<(std::ostream& stream, const Vector3& vector);
+
+		std::string ToString() const;
 	};
 }

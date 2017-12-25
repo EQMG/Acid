@@ -1,5 +1,7 @@
 #include "Matrix2.hpp"
 
+#include <sstream>
+
 namespace Flounder
 {
 	Matrix2::Matrix2() :
@@ -101,6 +103,25 @@ namespace Flounder
 		const float m01 = left.m_01 * right.m_00 + left.m_11 * right.m_01;
 		const float m10 = left.m_00 * right.m_10 + left.m_10 * right.m_11;
 		const float m11 = left.m_01 * right.m_10 + left.m_11 * right.m_11;
+
+		destination->m_00 = m00;
+		destination->m_01 = m01;
+		destination->m_10 = m10;
+		destination->m_11 = m11;
+		return destination;
+	}
+
+	Matrix2 *Matrix2::Divide(const Matrix2 &left, const Matrix2 &right, Matrix2 *destination)
+	{
+		if (destination == nullptr)
+		{
+			destination = new Matrix2();
+		}
+
+		const float m00 = left.m_00 / right.m_00 + left.m_10 / right.m_01;
+		const float m01 = left.m_01 / right.m_00 + left.m_11 / right.m_01;
+		const float m10 = left.m_00 / right.m_10 + left.m_10 / right.m_11;
+		const float m11 = left.m_01 / right.m_10 + left.m_11 / right.m_11;
 
 		destination->m_00 = m00;
 		destination->m_01 = m01;
@@ -238,5 +259,89 @@ namespace Flounder
 	Matrix2 *Matrix2::SetZero()
 	{
 		return SetZero(this);
+	}
+
+	bool Matrix2::operator==(const Matrix2& other) const
+	{
+		return m_00 == other.m_00 && m_01 == other.m_01 &&
+				m_10 == other.m_10 && m_11 == other.m_11;
+	}
+
+	bool Matrix2::operator!=(const Matrix2& other) const
+	{
+		return !(*this == other);
+	}
+
+	Matrix2 &Matrix2::operator-()
+	{
+		return *this->Negate();
+	}
+
+	Matrix2 operator+(Matrix2 left, const Matrix2& right)
+	{
+		return *Matrix2::Add(left, right, &left);
+	}
+
+	Matrix2 operator-(Matrix2 left, const Matrix2& right)
+	{
+		return *Matrix2::Subtract(left, right, &left);
+	}
+
+	Matrix2 operator*(Matrix2 left, const Matrix2& right)
+	{
+		return *Matrix2::Multiply(left, right, &left);
+	}
+
+	Matrix2 operator/(Matrix2 left, const Matrix2& right)
+	{
+		return *Matrix2::Divide(left, right, &left);
+	}
+
+	Matrix2 operator*(Matrix2 left, Vector2 value)
+	{
+		return *Matrix2::Scale(left, value, &left);
+	}
+
+	Matrix2 operator/(Matrix2 left, Vector2 value)
+	{
+		return *Matrix2::Scale(left, 1.0f / value, &left);
+	}
+
+	Matrix2& Matrix2::operator+=(const Matrix2& other)
+	{
+		Matrix2 result = Matrix2();
+		return *Matrix2::Add(*this, other, &result);
+	}
+
+	Matrix2& Matrix2::operator-=(const Matrix2& other)
+	{
+		Matrix2 result = Matrix2();
+		return *Matrix2::Subtract(*this, other, &result);
+	}
+
+	Matrix2& Matrix2::operator*=(const Matrix2& other)
+	{
+		Matrix2 result = Matrix2();
+		return *Matrix2::Multiply(*this, other, &result);
+	}
+
+	Matrix2& Matrix2::operator/=(const Matrix2& other)
+	{
+		Matrix2 result = Matrix2();
+		return *Matrix2::Divide(*this, other, &result);
+	}
+
+	std::ostream& operator<<(std::ostream& stream, const Matrix2& matrix)
+	{
+		stream << matrix.ToString();
+		return stream;
+	}
+
+	std::string Matrix2::ToString() const
+	{
+		std::stringstream result;
+		result << "Matrix2(" << m_00 << ", " << m_01 << ", " <<
+							m_10 << ", " << m_11 << ")";
+		return result.str();
 	}
 }

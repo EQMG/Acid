@@ -1,6 +1,5 @@
 #include "FilterPixel.hpp"
 
-#include "../../Devices/Display.hpp"
 #include "../../Renderer/Renderer.hpp"
 
 namespace Flounder
@@ -27,7 +26,6 @@ namespace Flounder
 	{
 		UboScene uboScene = {};
 		uboScene.pixelSize = m_pixelSize;
-		uboScene.displaySize = Vector2(Display::Get()->GetWidth(), Display::Get()->GetHeight());
 		m_uniformScene->Update(&uboScene);
 
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();

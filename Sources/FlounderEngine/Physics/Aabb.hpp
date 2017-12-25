@@ -24,7 +24,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="minExtents"> The aabbs min extents. </param>
 		/// <param name="minExtents"> The aabbs max extents. </param>
-		Aabb(Vector3 *minExtents, Vector3 *maxExtents);
+		Aabb(const Vector3 &minExtents, const Vector3 &maxExtents);
 
 		/// <summary>
 		/// Creates a new aabb from another aavv source.

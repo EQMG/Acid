@@ -1,6 +1,7 @@
 #include "Vector3.hpp"
 
 #include <assert.h>
+#include <sstream>
 #include "Colour.hpp"
 #include "Maths.hpp"
 #include "Vector2.hpp"
@@ -352,5 +353,157 @@ namespace Flounder
 	float Vector3::LengthSquared() const
 	{
 		return LengthSquared(*this);
+	}
+
+	bool Vector3::operator==(const Vector3& other) const
+	{
+		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z;
+	}
+
+	bool Vector3::operator!=(const Vector3& other) const
+	{
+		return !(*this == other);
+	}
+
+	bool Vector3::operator<(const Vector3& other) const
+	{
+		return m_x < other.m_x && m_y < other.m_y && m_z < other.m_z;
+	}
+
+	bool Vector3::operator<=(const Vector3& other) const
+	{
+		return m_x <= other.m_x && m_y <= other.m_y && m_z <= other.m_z;
+	}
+
+	bool Vector3::operator>(const Vector3& other) const
+	{
+		return m_x > other.m_x && m_y > other.m_y && m_z > other.m_z;
+	}
+
+	bool Vector3::operator>=(const Vector3& other) const
+	{
+		return m_x >= other.m_x && m_y >= other.m_y && m_z >= other.m_z;
+	}
+
+	Vector3 &Vector3::operator-()
+	{
+		return *this->Negate();
+	}
+
+	Vector3 operator+(Vector3 left, const Vector3& right)
+	{
+		return *Vector3::Add(left, right, &left);
+	}
+
+	Vector3 operator-(Vector3 left, const Vector3& right)
+	{
+		return *Vector3::Subtract(left, right, &left);
+	}
+
+	Vector3 operator*(Vector3 left, const Vector3& right)
+	{
+		return *Vector3::Multiply(left, right, &left);
+	}
+
+	Vector3 operator/(Vector3 left, const Vector3& right)
+	{
+		return *Vector3::Divide(left, right, &left);
+	}
+
+	Vector3 operator+(Vector3 left, float value)
+	{
+		return *Vector3::Add(left, Vector3(value, value, value), &left);
+	}
+
+	Vector3 operator-(Vector3 left, float value)
+	{
+		return *Vector3::Subtract(left, Vector3(value, value, value), &left);
+	}
+
+	Vector3 operator*(Vector3 left, float value)
+	{
+		return *Vector3::Multiply(left, Vector3(value, value, value), &left);
+	}
+
+	Vector3 operator/(Vector3 left, float value)
+	{
+		return *Vector3::Divide(left, Vector3(value, value, value), &left);
+	}
+
+	Vector3 operator+(float value, Vector3 left)
+	{
+		return *Vector3::Add(Vector3(value, value, value), left, &left);
+	}
+
+	Vector3 operator-(float value, Vector3 left)
+	{
+		return *Vector3::Subtract(Vector3(value, value, value), left, &left);
+	}
+
+	Vector3 operator*(float value, Vector3 left)
+	{
+		return *Vector3::Multiply(Vector3(value, value, value), left, &left);
+	}
+
+	Vector3 operator/(float value, Vector3 left)
+	{
+		return *Vector3::Divide(Vector3(value, value, value), left, &left);
+	}
+
+	Vector3& Vector3::operator+=(const Vector3& other)
+	{
+		Vector3 result = Vector3();
+		return *Vector3::Add(*this, other, &result);
+	}
+
+	Vector3& Vector3::operator-=(const Vector3& other)
+	{
+		Vector3 result = Vector3();
+		return *Vector3::Subtract(*this, other, &result);
+	}
+
+	Vector3& Vector3::operator*=(const Vector3& other)
+	{
+		Vector3 result = Vector3();
+		return *Vector3::Multiply(*this, other, &result);
+	}
+
+	Vector3& Vector3::operator/=(const Vector3& other)
+	{
+		Vector3 result = Vector3();
+		return *Vector3::Divide(*this, other, &result);
+	}
+
+	Vector3& Vector3::operator+=(float value)
+	{
+		return *Vector3::Add(*this, Vector3(value, value, value), this);
+	}
+
+	Vector3& Vector3::operator-=(float value)
+	{
+		return *Vector3::Subtract(*this, Vector3(value, value, value), this);
+	}
+
+	Vector3& Vector3::operator*=(float value)
+	{
+		return *Vector3::Multiply(*this, Vector3(value, value, value), this);
+	}
+
+	Vector3& Vector3::operator/=(float value)
+	{
+		return *Vector3::Divide(*this, Vector3(value, value, value), this);
+	}
+
+	std::ostream& operator<<(std::ostream& stream, const Vector3& vector)
+	{
+		stream << vector.ToString();
+		return stream;
+	}
+
+	std::string Vector3::ToString() const
+	{
+		std::stringstream result;
+		result << "Vector3(" << m_x << ", " << m_y << ", " << m_z << ")";
+		return result.str();
 	}
 }

@@ -1,5 +1,7 @@
 #include "Matrix3.hpp"
 
+#include <sstream>
+
 namespace Flounder
 {
 	Matrix3::Matrix3() :
@@ -146,6 +148,35 @@ namespace Flounder
 		const float m20 = left.m_00 * right.m_20 + left.m_10 * right.m_21 + left.m_20 * right.m_22;
 		const float m21 = left.m_01 * right.m_20 + left.m_11 * right.m_21 + left.m_21 * right.m_22;
 		const float m22 = left.m_02 * right.m_20 + left.m_12 * right.m_21 + left.m_22 * right.m_22;
+
+		destination->m_00 = m00;
+		destination->m_01 = m01;
+		destination->m_02 = m02;
+		destination->m_10 = m10;
+		destination->m_11 = m11;
+		destination->m_12 = m12;
+		destination->m_20 = m20;
+		destination->m_21 = m21;
+		destination->m_22 = m22;
+		return destination;
+	}
+
+	Matrix3 *Matrix3::Divide(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination)
+	{
+		if (destination == nullptr)
+		{
+			destination = new Matrix3();
+		}
+
+		const float m00 = left.m_00 / right.m_00 + left.m_10 / right.m_01 + left.m_20 / right.m_02;
+		const float m01 = left.m_01 / right.m_00 + left.m_11 / right.m_01 + left.m_21 / right.m_02;
+		const float m02 = left.m_02 / right.m_00 + left.m_12 / right.m_01 + left.m_22 / right.m_02;
+		const float m10 = left.m_00 / right.m_10 + left.m_10 / right.m_11 + left.m_20 / right.m_12;
+		const float m11 = left.m_01 / right.m_10 + left.m_11 / right.m_11 + left.m_21 / right.m_12;
+		const float m12 = left.m_02 / right.m_10 + left.m_12 / right.m_11 + left.m_22 / right.m_12;
+		const float m20 = left.m_00 / right.m_20 + left.m_10 / right.m_21 + left.m_20 / right.m_22;
+		const float m21 = left.m_01 / right.m_20 + left.m_11 / right.m_21 + left.m_21 / right.m_22;
+		const float m22 = left.m_02 / right.m_20 + left.m_12 / right.m_21 + left.m_22 / right.m_22;
 
 		destination->m_00 = m00;
 		destination->m_01 = m01;
@@ -338,5 +369,91 @@ namespace Flounder
 	Matrix3 *Matrix3::SetZero()
 	{
 		return SetZero(this);
+	}
+
+	bool Matrix3::operator==(const Matrix3& other) const
+	{
+		return m_00 == other.m_00 && m_01 == other.m_01 && m_02 == other.m_02 &&
+				m_10 == other.m_10 && m_11 == other.m_11 && m_12 == other.m_12 &&
+				m_20 == other.m_20 && m_21 == other.m_21 && m_22 == other.m_22;
+	}
+
+	bool Matrix3::operator!=(const Matrix3& other) const
+	{
+		return !(*this == other);
+	}
+
+	Matrix3 &Matrix3::operator-()
+	{
+		return *this->Negate();
+	}
+
+	Matrix3 operator+(Matrix3 left, const Matrix3& right)
+	{
+		return *Matrix3::Add(left, right, &left);
+	}
+
+	Matrix3 operator-(Matrix3 left, const Matrix3& right)
+	{
+		return *Matrix3::Subtract(left, right, &left);
+	}
+
+	Matrix3 operator*(Matrix3 left, const Matrix3& right)
+	{
+		return *Matrix3::Multiply(left, right, &left);
+	}
+
+	Matrix3 operator/(Matrix3 left, const Matrix3& right)
+	{
+		return *Matrix3::Divide(left, right, &left);
+	}
+
+	Matrix3 operator*(Matrix3 left, Vector3 value)
+	{
+		return *Matrix3::Scale(left, value, &left);
+	}
+
+	Matrix3 operator/(Matrix3 left, Vector3 value)
+	{
+		return *Matrix3::Scale(left, 1.0f / value, &left);
+	}
+
+	Matrix3& Matrix3::operator+=(const Matrix3& other)
+	{
+		Matrix3 result = Matrix3();
+		return *Matrix3::Add(*this, other, &result);
+	}
+
+	Matrix3& Matrix3::operator-=(const Matrix3& other)
+	{
+		Matrix3 result = Matrix3();
+		return *Matrix3::Subtract(*this, other, &result);
+	}
+
+	Matrix3& Matrix3::operator*=(const Matrix3& other)
+	{
+		Matrix3 result = Matrix3();
+		return *Matrix3::Multiply(*this, other, &result);
+	}
+
+	Matrix3& Matrix3::operator/=(const Matrix3& other)
+	{
+		Matrix3 result = Matrix3();
+		return *Matrix3::Divide(*this, other, &result);
+	}
+
+	std::ostream& operator<<(std::ostream& stream, const Matrix3& matrix)
+	{
+		stream << matrix.ToString();
+		return stream;
+	}
+
+	std::string Matrix3::ToString() const
+	{
+		std::stringstream result;
+		result << "Matrix3(" << m_00 << ", " << m_01 << ", " << m_02 << ", " <<
+								m_10 << ", " << m_11 << ", " << m_12 << ", " <<
+								m_20 << ", " << m_21 << ", " << m_22 << ")";
+		return result.str();
 	}
 }

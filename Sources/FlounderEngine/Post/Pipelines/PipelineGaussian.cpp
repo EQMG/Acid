@@ -30,7 +30,7 @@ namespace Flounder
 
 	void PipelineGaussian::SetScaleValue(const float &scaleValue) const
 	{
-		m_filterBlurHorizontal->SetScaleValue(scaleValue);
-		m_filterBlurVertical->SetScaleValue(scaleValue);
+		m_filterBlurHorizontal->SetBlurAmount(scaleValue);
+		m_filterBlurVertical->SetBlurAmount(scaleValue);
 	}
 }

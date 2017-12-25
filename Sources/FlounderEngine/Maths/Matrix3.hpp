@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+#include <string>
 #include "Vector3.hpp"
 
 namespace Flounder
@@ -110,6 +112,15 @@ namespace Flounder
 		static Matrix3 *Multiply(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination);
 
 		/// <summary>
+		/// Divides two matrices from each other and places the result in the destination matrices.
+		/// </summary>
+		/// <param name="left"> The left source matrix. </param>
+		/// <param name="right"> The right source matrix. </param>
+		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
+		/// <returns> The destination matrix. </returns>
+		static Matrix3 *Divide(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination);
+
+		/// <summary>
 		/// Transforms a matrix by a vector and places the result in the destination matrix.
 		/// </summary>
 		/// <param name="left"> The left source matrix. </param>
@@ -200,5 +211,27 @@ namespace Flounder
 		/// </summary>
 		/// <returns> This. </returns>
 		Matrix3 *SetZero();
+
+		bool operator==(const Matrix3& other) const;
+		bool operator!=(const Matrix3& other) const;
+
+		Matrix3& operator-();
+
+		friend Matrix3 operator+(Matrix3 left, const Matrix3& right);
+		friend Matrix3 operator-(Matrix3 left, const Matrix3& right);
+		friend Matrix3 operator*(Matrix3 left, const Matrix3& right);
+		friend Matrix3 operator/(Matrix3 left, const Matrix3& right);
+
+		friend Matrix3 operator*(Matrix3 left, Vector3 value);
+		friend Matrix3 operator/(Matrix3 left, Vector3 value);
+
+		Matrix3& operator+=(const Matrix3& other);
+		Matrix3& operator-=(const Matrix3& other);
+		Matrix3& operator*=(const Matrix3& other);
+		Matrix3& operator/=(const Matrix3& other);
+
+		friend std::ostream& operator<<(std::ostream& stream, const Matrix3& matrix);
+
+		std::string ToString() const;
 	};
 }
