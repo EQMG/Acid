@@ -7,6 +7,6 @@ set(FLOUNDERENGINE_INCLUDES
 
 include_directories(${LIBRARIES_INCLUDES} ${FLOUNDERENGINE_INCLUDES})	
 
-add_library(FlounderEngine STATIC ${FLOUNDERENGINE_SOURCES}) # SHARED / STATIC
+add_library(FlounderEngine STATIC ${FLOUNDERENGINE_SOURCES})
 
 target_link_libraries(FlounderEngine "${GLFW_LIBRARY}" "${OPENAL_LIBRARY}" "${VULKAN_LIBRARY}")

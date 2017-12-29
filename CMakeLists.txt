@@ -63,4 +63,4 @@ set(LIBRARIES_INCLUDES ${GLFW_INCLUDES} ${OPENAL_INCLUDES} ${VULKAN_INCLUDES})
 # Sources
 add_subdirectory(Sources/FlounderEngine)
 add_subdirectory(Sources/FlounderEditor)
-add_subdirectory(Sources/ExampleStarting)
+add_subdirectory(Sources/Kosmos)
