@@ -5,6 +5,16 @@
 
 namespace Flounder
 {
+	static const Colour FOG_COLOUR_SUNRISE = Colour("#E14938");
+	static const Colour FOG_COLOUR_NIGHT = Colour("#0D0D1A");
+	static const Colour FOG_COLOUR_DAY = Colour("#ffffff");
+
+	static const Colour SUN_COLOUR_SUNRISE = Colour("#E14938");
+	static const Colour SUN_COLOUR_NIGHT = Colour("#0D0D1A");
+	static const Colour SUN_COLOUR_DAY = Colour("#ffffff");
+
+	static const Colour SKYBOX_COLOUR_DAY = Colour("#00408F");
+
 	Worlds::Worlds() :
 		IModule(),
 		m_driverDay(new DriverLinear(0.0f, 1.0f, 60.0f)),
@@ -25,7 +35,7 @@ namespace Flounder
 	void Worlds::Update()
 	{
 		const float delta = Engine::Get()->GetDelta();
-		m_factorDay = m_driverDay->Update(delta);
+		m_factorDay = 0.25f; // m_driverDay->Update(delta);
 
 		Vector3 skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
 		Vector3 lightDirection = Vector3();
@@ -34,8 +44,8 @@ namespace Flounder
 		Matrix4::Rotate(Vector3(0.2f, 0.0f, 0.5f), skyboxRotation, &lightDirection);
 		lightDirection.Normalize();
 
-		Colour::Interpolate(Colour("#E14938"), Colour("#0D0D1A"), GetSunriseFactor(), &fogColour);
-		Colour::Interpolate(fogColour, Colour("#2C82C9"), GetShadowFactor(), &fogColour);
+		Colour::Interpolate(FOG_COLOUR_SUNRISE, FOG_COLOUR_NIGHT, GetSunriseFactor(), &fogColour);
+		Colour::Interpolate(fogColour, FOG_COLOUR_DAY, GetShadowFactor(), &fogColour);
 
 		Vector3::Multiply(lightDirection, Vector3(-500.0f, -500.0f, -500.0f), m_sunPosition);
 
@@ -44,20 +54,20 @@ namespace Flounder
 			Vector3::Add(*m_sunPosition, *Camera::Get()->GetCamera()->GetPosition(), m_sunPosition);
 		}
 
-		Colour::Interpolate(Colour("#E14938"), Colour("#0D0D1A"), GetSunriseFactor(), m_sunColour);
-		Colour::Interpolate(*m_sunColour, Colour("#ffffff"), GetShadowFactor(), m_sunColour);
-
-		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetSkybox() != nullptr)
-		{
-			Skyboxes::Get()->GetSkybox()->GetRotation()->Set(skyboxRotation);
-			Skyboxes::Get()->GetSkybox()->SetBlend(GetStarIntensity());
-		}
+		Colour::Interpolate(SUN_COLOUR_SUNRISE, SUN_COLOUR_NIGHT, GetSunriseFactor(), m_sunColour);
+		Colour::Interpolate(*m_sunColour, SUN_COLOUR_DAY, GetShadowFactor(), m_sunColour);
 
 		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetFog() != nullptr)
 		{
 			Skyboxes::Get()->GetFog()->m_density = 0.002f + ((1.0f - GetShadowFactor()) * 0.002f);
 			Skyboxes::Get()->GetFog()->m_gradient = 2.20f - ((1.0f - GetShadowFactor()) * 0.380f);
 			Skyboxes::Get()->GetFog()->m_colour->Set(fogColour);
+		}
+
+		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetSkybox() != nullptr)
+		{
+			Skyboxes::Get()->GetSkybox()->GetRotation()->Set(skyboxRotation);
+			Skyboxes::Get()->GetSkybox()->SetBlend(GetStarIntensity());
 		}
 
 		if (Shadows::Get() != nullptr)
@@ -77,17 +87,17 @@ namespace Flounder
 
 	float Worlds::GetSunriseFactor() const
 	{
-		return Maths::Clamp(static_cast<float>(-(sin(2.0f * PI * GetDayFactor()) - 1.0f)) / 2.0f, 0.0f, 1.0f);
+		return Maths::Clamp(-(std::sin(2.0f * PI * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
 	}
 
 	float Worlds::GetShadowFactor() const
 	{
-		return Maths::Clamp(static_cast<float>(1.7f * sin(2.0f * PI * GetDayFactor())), 0.0f, 1.0f);
+		return Maths::Clamp(1.7f * std::sin(2.0f * PI * GetDayFactor()), 0.0f, 1.0f);
 	}
 
 	float Worlds::GetSunHeight() const
 	{
-		return 0.0f; // TODO
+		return m_sunPosition->m_y; // TODO
 	}
 
 	float Worlds::GetStarIntensity() const
