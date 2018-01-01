@@ -11,7 +11,7 @@ namespace Flounder
 		{
 			for (int row = 0; row < vertexCount; row++)
 			{
-				// Creates and stores verticies.
+				// Creates and stores vertices.
 				Vector3 position = Vector3((row * squareSize) - (sideLength / 2.0f), 0.0f, (col * squareSize) - (sideLength / 2.0f));
 				position.m_y = getHeight(position.m_x, position.m_z); // TODO: Simplify!
 
@@ -24,7 +24,7 @@ namespace Flounder
 
 				vertices.push_back(Vertex(position, uv, normal, tangent));
 
-				// Creates and stores indicies.
+				// Creates and stores indices.
 				if (col < vertexCount - 1 && row < vertexCount - 1)
 				{
 					const uint32_t topLeft = (row * vertexCount) + col;
@@ -35,10 +35,10 @@ namespace Flounder
 					switch (meshType)
 					{
 					case MeshSimple:
-						GenerateIndiciesSimple(topLeft, topRight, bottomLeft, bottomRight, indices);
+						GenerateIndicesSimple(topLeft, topRight, bottomLeft, bottomRight, indices);
 						break;
 					case MeshPattern:
-						GenerateIndiciesPattern(topLeft, topRight, bottomLeft, bottomRight, row % 2 == 0, col % 2 == 0, indices);
+						GenerateIndicesPattern(topLeft, topRight, bottomLeft, bottomRight, row % 2 == 0, col % 2 == 0, indices);
 						break;
 					}
 				}
@@ -48,17 +48,17 @@ namespace Flounder
 		return new Model(vertices, indices);
 	}
 
-	void CreateMesh::GenerateIndiciesSimple(const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight, std::vector<uint32_t> &indices)
+	void CreateMesh::GenerateIndicesSimple(const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight, std::vector<uint32_t> &indices)
 	{
 		indices.push_back(topLeft);
 		indices.push_back(bottomLeft);
-		indices.push_back(topRight);
-		indices.push_back(topRight);
-		indices.push_back(bottomLeft);
 		indices.push_back(bottomRight);
+		indices.push_back(topLeft);
+		indices.push_back(bottomRight);
+		indices.push_back(topRight);
 	}
 
-	void CreateMesh::GenerateIndiciesPattern(const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight, const bool &sign, const bool &mixed, std::vector<uint32_t> &indices)
+	void CreateMesh::GenerateIndicesPattern(const uint32_t &topLeft, const uint32_t &topRight, const uint32_t &bottomLeft, const uint32_t &bottomRight, const bool &sign, const bool &mixed, std::vector<uint32_t> &indices)
 	{
 		if (sign)
 		{

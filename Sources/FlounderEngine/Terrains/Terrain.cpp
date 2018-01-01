@@ -10,8 +10,8 @@
 namespace Flounder
 {
 	const int Terrain::SIDE_LENGTH = 100;
-	const std::vector<float> Terrain::SQUARE_SIZES = { 2.0f, 4.0f, 10.0f, 20.0f }; // Models: (1.0 LOD, 2/5 LOD, 1/10 LOD, none)
-	const std::vector<float> Terrain::TEXTURE_SCALES = { 10.0f, 5.0f, 2.0f, 1.0f };
+	const std::vector<float> Terrain::SQUARE_SIZES = { 5.0f, 10.0f, 20.0f };
+	const std::vector<float> Terrain::TEXTURE_SCALES = { 5.0f, 2.0f, 1.0f };
 
 	Terrain::Terrain(const Transform &transform) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
@@ -119,10 +119,10 @@ namespace Flounder
 		const float textureScale = TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(SIDE_LENGTH, squareSize);
 
-		const std::array<Colour, 4> biomeColours = { Colour("#553982"), Colour("#41A85F"), Colour("#2969af"), Colour("#B8312F") };
+		const std::array<Colour, 4> biomeColours = { Colour("#ffcc00"), Colour("#009933"), Colour("#33cc33"), Colour("#ffffff") };
 		const float spread = 0.7f;
 		const float halfSpread = spread / 2.0f;
-		const float amplitude = 45.0f;
+		const float amplitude = 15.0f;
 		const float part = 1.0f / (biomeColours.size() - 1);
 
 		const std::function<float(float, float)> getHeight = [&](float x, float z)
@@ -139,7 +139,7 @@ namespace Flounder
 			Colour::Interpolate(biomeColours[firstBiome], biomeColours[firstBiome + 1], blend, &result);
 			return result;
 		};
-		m_modelLods[lod] = CreateMesh::Create(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, CreateMesh::MeshSimple, getHeight, getColour);
+		m_modelLods[lod] = CreateMesh::Create(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, CreateMesh::MeshPattern, getHeight, getColour);
 
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();

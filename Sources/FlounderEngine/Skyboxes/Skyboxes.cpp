@@ -5,7 +5,7 @@ namespace Flounder
 	Skyboxes::Skyboxes() :
 		IModule(),
 		m_skybox(nullptr),
-		m_fog(new Fog(new Colour(), 0.001f, 2.0f, -150.0f, 350.0f)),
+		m_fog(new Fog(new Colour(), 0.001f, 2.0f, -0.1f, 0.3f)),
 		m_skyColour(new Colour("#3399ff"))
 	{
 	}
