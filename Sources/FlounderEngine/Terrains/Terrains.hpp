@@ -40,7 +40,7 @@ namespace Flounder
 
 		float GetHeight(const float &x, const float &z);
 
-		float GetSlope(const float &x, const float &z);
+		Vector3 GetNormal(const float &x, const float &z);
 
 		Vector3 GetPosition(const float &x, const float &z);
 
