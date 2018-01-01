@@ -30,5 +30,7 @@ namespace Flounder
 		/// Deconstructor for fog.
 		/// </summary>
 		~Fog();
+
+		void Set(const Fog &source);
 	};
 }

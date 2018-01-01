@@ -15,4 +15,13 @@ namespace Flounder
 	{
 		delete m_colour;
 	}
+
+	void Fog::Set(const Fog &source)
+	{
+		m_colour->Set(*source.m_colour);
+		m_density = source.m_density;
+		m_gradient = source.m_gradient;
+		m_lowerLimit = source.m_lowerLimit;
+		m_upperLimit = source.m_upperLimit;
+	}
 }

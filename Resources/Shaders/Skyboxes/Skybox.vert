@@ -12,6 +12,8 @@ layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 	vec4 skyColour;
+	vec4 fogColour;
+	vec2 fogLimits;
 	float blendFactor;
 } object;
 
@@ -21,6 +23,7 @@ layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
 
 layout(location = 0) out vec3 fragmentUv;
+layout(location = 1) out float fragmentHeight;
 
 out gl_PerVertex 
 {
@@ -36,4 +39,5 @@ void main()
 	gl_ClipDistance[0] = dot(worldPosition, scene.clip);
 	
 	fragmentUv = vertexPosition;
+	fragmentHeight = worldPosition.y;
 }

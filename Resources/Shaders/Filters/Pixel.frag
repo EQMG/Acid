@@ -33,7 +33,6 @@ void main()
 
 	vec3 textureColour = texture(samplerColour, coord).rgb;
 	outColour = vec4(textureColour, 1.0);
-	
-	vec2 sizeColour = textureSize(samplerColour, 0);
+
 	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);
 }

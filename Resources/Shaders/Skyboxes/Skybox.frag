@@ -5,12 +5,15 @@ layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 	vec4 skyColour;
+	vec4 fogColour;
+	vec2 fogLimits;
 	float blendFactor;
 } object;
 
 layout(set = 0, binding = 2) uniform samplerCube samplerCubemap;
 
 layout(location = 0) in vec3 fragmentUv;
+layout(location = 1) in float fragmentHeight;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
@@ -43,6 +46,9 @@ void main()
 	}
 
 	cubemapColour += object.skyColour.rgb;
+
+	float fadeFactor = 1.0 - smoothstep(object.fogLimits.x, object.fogLimits.y, fragmentHeight);
+    cubemapColour = mix(cubemapColour, object.fogColour.rgb, fadeFactor);
 
 	outColour = encodeColour(cubemapColour);
 	outNormal = vec2(0.0f);
