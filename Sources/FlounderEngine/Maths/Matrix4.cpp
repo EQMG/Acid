@@ -661,7 +661,7 @@ namespace Flounder
 		}
 
 		// Only scales if there is a scale.
-		if (scale.m_x != 1.0f && scale.m_y != 1.0f && scale.m_z != 1.0f)
+		if (scale.m_x != 1.0f || scale.m_y != 1.0f || scale.m_z != 1.0f)
 		{
 			Matrix4::Scale(*destination, Vector4(scale.m_x, scale.m_y, scale.m_z, 1.0f), destination);
 		}

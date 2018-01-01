@@ -40,7 +40,7 @@ namespace Demo
 		m_systemTest->SetSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
 		Particles::Get()->AddSystem(m_systemTest);*/
 
-		Entity *sun = new EntitySun(nullptr, Transform(Vector3(), Vector3(), Vector3(16.0f, 16.0f, 16.0f))); // Entities::Get()->GetStructure()
+		Entity *sun = new EntitySun(nullptr, Transform(Vector3(), Vector3(), Vector3(1.0f, 1.0f, 1.0f))); // Entities::Get()->GetStructure()
 		Entities::Get()->GetEntities()->push_back(sun);
 
 		for (int i = -5; i <= 0; i++)

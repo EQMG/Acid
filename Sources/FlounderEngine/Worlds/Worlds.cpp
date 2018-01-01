@@ -7,17 +7,17 @@ namespace Flounder
 {
 	static const Colour FOG_COLOUR_SUNRISE = Colour("#E14938");
 	static const Colour FOG_COLOUR_NIGHT = Colour("#0D0D1A");
-	static const Colour FOG_COLOUR_DAY = Colour("#ffffff");
+	static const Colour FOG_COLOUR_DAY = Colour("#e6e6e6");
 
 	static const Colour SUN_COLOUR_SUNRISE = Colour("#E14938");
 	static const Colour SUN_COLOUR_NIGHT = Colour("#0D0D1A");
 	static const Colour SUN_COLOUR_DAY = Colour("#ffffff");
 
-	static const Colour SKYBOX_COLOUR_DAY = Colour("#00408F");
+	static const Colour SKYBOX_COLOUR_DAY = Colour("#003C8A");
 
 	Worlds::Worlds() :
 		IModule(),
-		m_driverDay(new DriverLinear(0.0f, 1.0f, 60.0f)),
+		m_driverDay(new DriverLinear(0.0f, 1.0f, 300.0f)),
 		m_factorDay(0.0f),
 		m_sunPosition(new Vector3()),
 		m_sunColour(new Colour())
@@ -35,7 +35,7 @@ namespace Flounder
 	void Worlds::Update()
 	{
 		const float delta = Engine::Get()->GetDelta();
-		m_factorDay = m_driverDay->Update(delta);
+		m_factorDay = 0.25f; // m_driverDay->Update(delta);
 
 		Vector3 skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
 		Vector3 lightDirection = Vector3();
@@ -60,10 +60,10 @@ namespace Flounder
 		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetFog() != nullptr)
 		{
 			Skyboxes::Get()->GetFog()->m_colour->Set(fogColour);
-			Skyboxes::Get()->GetFog()->m_density = 0.002f + ((1.0f - GetShadowFactor()) * 0.002f);
+			Skyboxes::Get()->GetFog()->m_density = 0.003f + ((1.0f - GetShadowFactor()) * 0.002f);
 			Skyboxes::Get()->GetFog()->m_gradient = 2.20f - ((1.0f - GetShadowFactor()) * 0.380f);
-			Skyboxes::Get()->GetFog()->m_lowerLimit = -50.0f;
-			Skyboxes::Get()->GetFog()->m_upperLimit = 500.0f + ((1.0f - GetShadowFactor()) * 200.0f);
+			Skyboxes::Get()->GetFog()->m_lowerLimit = 0.0f;
+			Skyboxes::Get()->GetFog()->m_upperLimit = 0.15f - ((1.0f - GetShadowFactor()) * 0.03f);
 		}
 
 		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetSkybox() != nullptr)

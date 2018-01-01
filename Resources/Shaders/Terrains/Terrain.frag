@@ -6,7 +6,7 @@ layout(set = 0, binding = 1) uniform UboObject
 	mat4 transform;
 } object;
 
-layout(location = 0) in vec3 fragmentNormal;
+flat layout(location = 0) in vec3 fragmentNormal;
 layout(location = 1) in vec2 fragmentUv;
 layout(location = 2) in vec3 fragmentColour;
 

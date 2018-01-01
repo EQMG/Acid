@@ -7,15 +7,15 @@ namespace Flounder
 	Terrains::Terrains() :
 		IModule(),
 		m_terrains(new std::vector<Terrain*>()),
-		m_noise1(NoiseFast(326256))
+		m_noise1(NoiseFast(9878))
 	{
-		m_noise1.SetNoiseType(NoiseFast::ValueFractal);
+		m_noise1.SetNoiseType(NoiseFast::PerlinFractal);
 		m_noise1.SetFrequency(0.004f);
-		m_noise1.SetInterp(NoiseFast::Hermite);
+		m_noise1.SetInterp(NoiseFast::Quintic);
 		m_noise1.SetFractalType(NoiseFast::Fbm);
-		m_noise1.SetFractalOctaves(4);
-		m_noise1.SetFractalLacunarity(2.0f);
-		m_noise1.SetFractalGain(0.5f);
+		m_noise1.SetFractalOctaves(5);
+		m_noise1.SetFractalLacunarity(2.1f);
+		m_noise1.SetFractalGain(0.6f);
 	}
 
 	Terrains::~Terrains()
@@ -42,7 +42,7 @@ namespace Flounder
 
 	float Terrains::GetHeight(const float &x, const float &z)
 	{
-		const float height1 = (m_noise1.GetNoise(x, z) * 30.0f) + 15.0f;
+		const float height1 = (m_noise1.GetNoise(x, z) * 40.0f) + 7.0f;
 
 		return height1;
 	}

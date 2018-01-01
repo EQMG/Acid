@@ -7,11 +7,11 @@ namespace Demo
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_textInfo(CreateStatus("Build: d0.0.1", 0.002f, 0.03f, JustifyLeft)),
-		m_textTime(CreateStatus("Time: 0:00", 0.002f, 0.12f, JustifyLeft)),
-		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.06f, JustifyLeft)),
-		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.09f, JustifyLeft)),
-		//	m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.002f, 0.09f, JustifyLeft)),
+		m_textInfo(CreateStatus("Build: d0.0.1", 0.002f, 0.002f, JustifyLeft)),
+		m_textTime(CreateStatus("Time: 0:00", 0.002f, 0.022f, JustifyLeft)),
+		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.042f, JustifyLeft)),
+		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.062f, JustifyLeft)),
+		//	m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.002f, 0.082f, JustifyLeft)),
 		m_timerUpdate(new Timer(0.333f))
 	{
 		//	m_textFps->SetVisible(false);
@@ -61,7 +61,7 @@ namespace Demo
 
 	Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const Justify &justify)
 	{
-		Text *result = new Text(this, UiBound(Vector2(positionX, positionY), "TopLeft", true), 1.4f, content, Uis::Get()->m_proximaNova->GetRegular(), justify);
+		Text *result = new Text(this, UiBound(Vector2(positionX, positionY), "BottomLeft", true), 1.1f, content, Uis::Get()->m_proximaNova->GetRegular(), justify);
 		result->SetTextColour(Colour(1.0f, 1.0f, 1.0f));
 		result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f));
 		result->SetBorder(new DriverConstant(0.04f));

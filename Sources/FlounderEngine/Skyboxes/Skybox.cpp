@@ -41,7 +41,7 @@ namespace Flounder
 		uboObject.transform = Matrix4(*m_modelMatrix);
 		uboObject.skyColour = Colour(*Skyboxes::Get()->GetSkyColour());
 		uboObject.fogColour = Colour(*Skyboxes::Get()->GetFog()->m_colour);
-		uboObject.fogLimits = Vector2(Skyboxes::Get()->GetFog()->m_lowerLimit, Skyboxes::Get()->GetFog()->m_upperLimit);
+		uboObject.fogLimits = m_size * Vector2(Skyboxes::Get()->GetFog()->m_lowerLimit, Skyboxes::Get()->GetFog()->m_upperLimit);
 		uboObject.blendFactor = m_blend;
 		m_uniformObject->Update(&uboObject);
 
