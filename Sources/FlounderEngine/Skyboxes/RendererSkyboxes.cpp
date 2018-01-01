@@ -40,6 +40,9 @@ namespace Flounder
 		UbosSkyboxes::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
 		uboScene.view = *camera.GetViewMatrix();
+		uboScene.view.m_30 = 0.0f;
+		uboScene.view.m_31 = 0.0f;
+		uboScene.view.m_32 = 0.0f;
 		m_uniformScene->Update(&uboScene);
 
 		m_pipeline->BindPipeline(commandBuffer);

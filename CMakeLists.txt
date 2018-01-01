@@ -43,7 +43,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/bin)
 
-file(COPY "${PROJECT_SOURCE_DIR}/Resources/" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/")
+#file(COPY "${PROJECT_SOURCE_DIR}/Resources/" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/")
+#mklink /J C:\Users\mattp\Documents\Flounder\Build\bin\Resources C:\Users\mattp\Documents\Flounder\Resources
+ADD_CUSTOM_TARGET(link_target ALL COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/" "${PROJECT_SOURCE_DIR}/Resources/")
 
 # Libraries
 set(GLFW_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glfw/include")
