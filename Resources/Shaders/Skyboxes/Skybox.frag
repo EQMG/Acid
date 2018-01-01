@@ -37,15 +37,8 @@ vec2 encodeNormal(vec3 normal)
 
 void main() 
 {
-	vec3 cubemapColour = vec3(0.0f);
-	
-	if (object.blendFactor >= 0.03f)
-	{
-		vec3 cubemapNight = texture(samplerCubemap, fragmentUv).rgb;
-		cubemapColour = mix(vec3(0.0f), cubemapNight, object.blendFactor);
-	}
-
-	cubemapColour += object.skyColour.rgb;
+	vec3 cubemapNight = texture(samplerCubemap, fragmentUv).rgb;
+	vec3 cubemapColour = mix(object.skyColour.rgb, cubemapNight, object.blendFactor);
 
 	float fadeFactor = 1.0 - smoothstep(object.fogLimits.x, object.fogLimits.y, fragmentHeight);
     cubemapColour = mix(cubemapColour, object.fogColour.rgb, fadeFactor);
