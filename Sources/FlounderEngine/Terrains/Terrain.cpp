@@ -125,9 +125,19 @@ namespace Flounder
 		const float amplitude = 15.0f;
 		const float part = 1.0f / (biomeColours.size() - 1);
 
-		const std::function<float(float, float)> getHeight = [&](float x, float z)
+		const std::function<Vector3(float, float)> getPosition = [&](float x, float z)
 		{
-			return Terrains::Get()->GetHeight(x + m_transform->m_position->m_x, z + m_transform->m_position->m_z);
+			const float variance = 1.1f;
+			const float offsetX = Maths::RandomInRange(-variance, variance);
+			const float offsetZ = Maths::RandomInRange(-variance, variance);
+
+			Vector3 position = Vector3(x + offsetX, 0.0f, z + offsetZ);
+			position.m_y = Terrains::Get()->GetHeight(position.m_x + m_transform->m_position->m_x, position.m_z + m_transform->m_position->m_z);
+			return position;
+		};
+		const std::function<Vector3(Vector3)> getNormal = [&](Vector3 position)
+		{
+			return Terrains::Get()->GetNormal(position.m_x, position.m_z);
 		};
 		const std::function<Vector3(Vector3, Vector3)> getColour = [&](Vector3 position, Vector3 normal)
 		{
@@ -135,11 +145,11 @@ namespace Flounder
 			value = Maths::Clamp((value - halfSpread) * (1.0f / spread), 0.0f, 0.9999f);
 			int firstBiome = static_cast<int>(floor(value / part));
 			float blend = (value - (firstBiome * part)) / part;
-			Colour result = Colour();
-			Colour::Interpolate(biomeColours[firstBiome], biomeColours[firstBiome + 1], blend, &result);
-			return result;
+			Colour colour = Colour();
+			Colour::Interpolate(biomeColours[firstBiome], biomeColours[firstBiome + 1], blend, &colour);
+			return colour;
 		};
-		m_modelLods[lod] = CreateMesh::Create(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, CreateMesh::MeshPattern, getHeight, getColour);
+		m_modelLods[lod] = CreateMesh::Create(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, CreateMesh::MeshPattern, getPosition, getNormal, getColour);
 
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();

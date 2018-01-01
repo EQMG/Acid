@@ -82,15 +82,20 @@ namespace Flounder
 
 	void Water::GenerateMesh()
 	{
-		const std::function<float(float, float)> getHeight = [&](float x, float z)
+		const std::function<Vector3(float, float)> getPosition = [&](float x, float z)
 		{
-			return 0.0f;
+			Vector3 position = Vector3(x, 0.0f, z);
+			return position;
+		};
+		const std::function<Vector3(Vector3)> getNormal = [&](Vector3 position)
+		{
+			return Vector3(0.0f, 1.0f, 0.0f);
 		};
 		const std::function<Vector3(Vector3, Vector3)> getColour = [&](Vector3 position, Vector3 normal)
 		{
-			return Vector3(0.0f, 0.0f, 1.0f);
+			return WATER_COLOUR;
 		};
-		m_model = CreateMesh::Create(SIDE_LENGTH, SQUARE_SIZE, VERTEX_COUNT, TEXTURE_SCALE, CreateMesh::MeshPattern, getHeight, getColour);
+		m_model = CreateMesh::Create(SIDE_LENGTH, SQUARE_SIZE, VERTEX_COUNT, TEXTURE_SCALE, CreateMesh::MeshPattern, getPosition, getNormal, getColour);
 
 		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
 		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;
