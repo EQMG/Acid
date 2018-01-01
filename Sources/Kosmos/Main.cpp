@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 	{
 		Skyboxes::Get()->SetSkybox(new Skybox(
 			new Cubemap("Resources/Skyboxes/Stars/Stars", ".png"),
-			new Model("Resources/Skyboxes/SkyboxCube.obj"),
+			new Model("Resources/Skyboxes/SkyboxSphere.obj"),
 			2048.0f
 		));
 	}

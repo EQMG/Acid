@@ -15,6 +15,7 @@ namespace Flounder
 	private:
 		Skybox *m_skybox;
 		Fog *m_fog;
+		Colour *m_skyColour;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -37,6 +38,10 @@ namespace Flounder
 
 		Fog *GetFog() const { return m_fog; }
 
-		void SetFog(Fog *fog) { m_fog = fog; }
+		void SetFog(const Fog &fog) { m_fog->Set(fog); }
+
+		Colour *GetSkyColour() const { return m_skyColour; }
+
+		void SetSkyColour(const Colour &skyColour) { m_skyColour->Set(skyColour); }
 	};
 }

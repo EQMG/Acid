@@ -46,7 +46,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Steam integration (WIP)
 
 ## Plans
- * Finish the core engine by the end of 2017
+ * Finish the core engine by the end of 2018 Q1
  * A physics engine, ragdoll animations
  * A simple editor in the far future
 
