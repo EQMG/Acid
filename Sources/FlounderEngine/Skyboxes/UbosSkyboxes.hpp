@@ -20,6 +20,8 @@ namespace Flounder
 		{
 			Matrix4 transform;
 			Colour skyColour;
+			Colour fogColour;
+			Vector2 fogLimits;
 			float blendFactor;
 		};
 	};

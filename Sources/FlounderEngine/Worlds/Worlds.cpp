@@ -35,7 +35,7 @@ namespace Flounder
 	void Worlds::Update()
 	{
 		const float delta = Engine::Get()->GetDelta();
-		m_factorDay = 0.25f; // m_driverDay->Update(delta);
+		m_factorDay = m_driverDay->Update(delta);
 
 		Vector3 skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
 		Vector3 lightDirection = Vector3();
@@ -59,15 +59,18 @@ namespace Flounder
 
 		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetFog() != nullptr)
 		{
+			Skyboxes::Get()->GetFog()->m_colour->Set(fogColour);
 			Skyboxes::Get()->GetFog()->m_density = 0.002f + ((1.0f - GetShadowFactor()) * 0.002f);
 			Skyboxes::Get()->GetFog()->m_gradient = 2.20f - ((1.0f - GetShadowFactor()) * 0.380f);
-			Skyboxes::Get()->GetFog()->m_colour->Set(fogColour);
+			Skyboxes::Get()->GetFog()->m_lowerLimit = -50.0f;
+			Skyboxes::Get()->GetFog()->m_upperLimit = 500.0f + ((1.0f - GetShadowFactor()) * 200.0f);
 		}
 
 		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetSkybox() != nullptr)
 		{
 			Skyboxes::Get()->GetSkybox()->GetRotation()->Set(skyboxRotation);
 			Skyboxes::Get()->GetSkybox()->SetBlend(GetStarIntensity());
+			Skyboxes::Get()->SetSkyColour(SKYBOX_COLOUR_DAY);
 		}
 
 		if (Shadows::Get() != nullptr)

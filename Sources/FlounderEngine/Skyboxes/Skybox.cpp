@@ -29,7 +29,7 @@ namespace Flounder
 
 	void Skybox::Update()
 	{
-		Matrix4::TransformationMatrix(*Camera::Get()->GetCamera()->GetPosition(), *m_rotation, m_size, m_modelMatrix);
+		Matrix4::TransformationMatrix(Vector3(), *m_rotation, m_size, m_modelMatrix);
 	}
 
 	void Skybox::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
@@ -39,7 +39,9 @@ namespace Flounder
 
 		UbosSkyboxes::UboObject uboObject = {};
 		uboObject.transform = Matrix4(*m_modelMatrix);
-		uboObject.skyColour = Colour(*Skyboxes::Get()->GetFog()->m_colour);
+		uboObject.skyColour = Colour(*Skyboxes::Get()->GetSkyColour());
+		uboObject.fogColour = Colour(*Skyboxes::Get()->GetFog()->m_colour);
+		uboObject.fogLimits = Vector2(Skyboxes::Get()->GetFog()->m_lowerLimit, Skyboxes::Get()->GetFog()->m_upperLimit);
 		uboObject.blendFactor = m_blend;
 		m_uniformObject->Update(&uboObject);
 
