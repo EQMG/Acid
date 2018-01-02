@@ -48,14 +48,14 @@ namespace Flounder
 
 	Vector3 Terrains::GetNormal(const float &x, const float &z)
 	{
-		const float squareSize = 1.5f;
+		const float squareSize = 1.0f;
 		const float heightL = GetHeight(x - squareSize, z);
 		const float heightR = GetHeight(x + squareSize, z);
 		const float heightD = GetHeight(x, z - squareSize);
 		const float heightU = GetHeight(x, z + squareSize);
 
 		Vector3 normal = Vector3(heightL - heightR, squareSize, heightD - heightU);
-		normal.Normalize();
+	//	normal.Normalize();
 		// float slope = 1.0f - normal.m_y;
 		return normal;
 	}
