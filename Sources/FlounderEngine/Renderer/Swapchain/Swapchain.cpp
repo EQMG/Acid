@@ -101,7 +101,7 @@ namespace Flounder
 		m_colourImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
 		m_normalImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R16G16_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
 		m_materialImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
-		m_shadowImage = new Texture(8192, 8192, VK_FORMAT_R16_SFLOAT, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT); // TODO: Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize() // 8192, 8192
+		m_shadowImage = new Texture(8192, 8192, VK_FORMAT_R16_SFLOAT, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT); // TODO: Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize()
 	}
 
 	Swapchain::~Swapchain()

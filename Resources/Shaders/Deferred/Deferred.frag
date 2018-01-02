@@ -70,12 +70,43 @@ vec3 decodeWorldPosition(vec2 uv, float depth)
 	return p.xyz / p.w;
 }
 
+float shadow(vec4 shadowCoords)
+{
+    float totalTextels = (scene.shadowPCF * 2.0f + 1.0f) * (scene.shadowPCF * 2.0f + 1.0f);
+    float texelSize = 1.0f / scene.shadowMapSize;
+    float total = 0.0f;
+
+    if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f)
+    {
+        for (int x = -scene.shadowPCF; x <= scene.shadowPCF; x++)
+        {
+            for (int y = -scene.shadowPCF; y <= scene.shadowPCF; y++)
+            {
+                float shadowValue = texture(samplerShadows, shadowCoords.xy + vec2(x, y) * texelSize).r;
+
+                if (shadowCoords.z > shadowValue + scene.shadowBias)
+                {
+                    total += scene.shadowDarkness * shadowCoords.w;
+                }
+            }
+        }
+
+        total /= totalTextels;
+    }
+    else
+    {
+        total = 0.0f;
+    }
+
+    return 1.0f - total;
+}
+
 float attenuation(float radius, float distance)
 {
 	if (radius != -1.0f)
 	{
 		float x = min(distance, radius);
-		return sqr(1.0 - sqr(sqr(x / radius))) / (sqr(x) + 1.0);
+		return sqr(1.0f - sqr(sqr(x / radius))) / (sqr(x) + 1.0f);
 	}
 
 	return 1.0f;
@@ -98,6 +129,17 @@ void main()
 	vec3 viewDirection = normalize(scene.cameraPosition - worldPosition);
 	
 	outColour = vec4(colour, 1.0f);
+
+	// Shadows.
+    if (scene.shadowDarkness >= 0.07)
+    {
+        vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
+        float distanceAway = length(screenPosition.xyz);
+        distanceAway = distanceAway - ((scene.shadowDistance * 2.0) - scene.shadowTransition);
+        distanceAway = distanceAway / scene.shadowTransition;
+        shadowCoords.w = clamp(1.0 - distanceAway, 0.0, 1.0);
+        outColour *= shadow(shadowCoords);
+    }
 
 	// Lighting.
 	if (textureNormal.rgb != vec3(0.0f))
