@@ -138,10 +138,10 @@ namespace Flounder
 
 	void ShadowBox::UpdateSizes(const ICamera &camera)
 	{
-		m_farWidth = m_shadowDistance * tan(Maths::Radians(camera.GetFov()));
-		m_nearWidth = camera.GetNearPlane() * tan(Maths::Radians(camera.GetFov()));
-		m_farHeight = m_farWidth / static_cast<float>(Display::Get()->GetAspectRatio());
-		m_nearHeight = m_nearWidth / static_cast<float>(Display::Get()->GetAspectRatio());
+		m_farWidth = m_shadowDistance * std::tan(Maths::Radians(camera.GetFov()));
+		m_nearWidth = camera.GetNearPlane() * std::tan(Maths::Radians(camera.GetFov()));
+		m_farHeight = m_farWidth / Display::Get()->GetAspectRatio();
+		m_nearHeight = m_nearWidth / Display::Get()->GetAspectRatio();
 	}
 
 	Vector4 **ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar) const
@@ -236,9 +236,9 @@ namespace Flounder
 		m_centre->Negate();
 
 		m_lightViewMatrix->SetIdentity();
-		float pitch = acos(Vector2(m_lightDirection->m_x, m_lightDirection->m_z).Length());
+		float pitch = std::acos(Vector2(m_lightDirection->m_x, m_lightDirection->m_z).Length());
 		Matrix4::Rotate(*m_lightViewMatrix, Vector3(1.0f, 0.0f, 0.0f), pitch, m_lightViewMatrix);
-		float yaw = Maths::Degrees(atan(m_lightDirection->m_x / m_lightDirection->m_z));
+		float yaw = Maths::Degrees(std::atan(m_lightDirection->m_x / m_lightDirection->m_z));
 
 		if (m_lightDirection->m_z > 0.0f)
 		{
