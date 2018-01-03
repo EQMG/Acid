@@ -24,7 +24,7 @@ namespace Demo
 		m_barBackground->SetScissor(Vector4(0.0f, 0.875f, 1.0f, 1.0f));
 		m_barBackground->SetColourOffset(Colour("#2969B0"));
 
-		m_barTitle = new Text(m_uiBar, UiBound(Vector2(0.01f, 0.99f), "TopLeft", false), 4.0f, "Kosmos", Uis::Get()->m_proximaNova->GetBold(), JustifyLeft, 1.0f, 0.001f);
+		m_barTitle = new Text(m_uiBar, UiBound(Vector2(0.01f, 0.99f), "TopLeft", false), 4.0f, "ExampleStarting", Uis::Get()->m_proximaNova->GetBold(), JustifyLeft, 1.0f, 0.001f);
 
 		m_barCreatedBy =new Text(m_uiBar, UiBound(Vector2(0.02f, 0.915f), "TopLeft", false), 1.1f, "Created By: Equilibrium Games", Uis::Get()->m_proximaNova->GetLight(), JustifyLeft, 1.0f, 0.0013f);
 
