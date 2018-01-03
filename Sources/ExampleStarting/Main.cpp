@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	if (Display::Get() != nullptr)
 	{
 		Display::Get()->SetWindowSize(1080, 720);
-		Display::Get()->SetTitle("Kosmos");
+		Display::Get()->SetTitle("Example Starting");
 		Display::Get()->SetIcon("Resources/Logos/Tail.png");
 		Display::Get()->SetFpsLimit(0.0f);
 		Display::Get()->SetAntialiasing(true);
