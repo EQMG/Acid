@@ -1,4 +1,4 @@
-set(KOSMOS_HEADERS_
+set(EXAMPLE_STARTING_HEADERS_
 	"Configs/ConfigTesting.hpp"
 	"Entities/EntitySun.hpp"
 	"Entities/EntityTesting.hpp"
@@ -13,7 +13,7 @@ set(KOSMOS_HEADERS_
     "Uis/UiNavigation.hpp"
 )
 
-set(KOSMOS_SOURCES_
+set(EXAMPLE_STARTING_SOURCES_
 	"Entities/EntitySun.cpp"
 	"Entities/EntityTesting.cpp"
 	"Entities/EntityTreePine.cpp"
@@ -28,10 +28,10 @@ set(KOSMOS_SOURCES_
     "Uis/UiNavigation.cpp"
 )
 
-source_group("Header Files" FILES ${KOSMOS_HEADERS_})
-source_group("Source Files" FILES ${KOSMOS_SOURCES_})
+source_group("Header Files" FILES ${EXAMPLE_STARTING_HEADERS_})
+source_group("Source Files" FILES ${EXAMPLE_STARTING_SOURCES_})
 
-set(KOSMOS_SOURCES
-	${KOSMOS_HEADERS_}
-	${KOSMOS_SOURCES_}
+set(EXAMPLE_STARTING_SOURCES
+	${EXAMPLE_STARTING_HEADERS_}
+	${EXAMPLE_STARTING_SOURCES_}
 )
