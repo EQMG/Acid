@@ -62,7 +62,9 @@ message(STATUS "Vulkan: ${VULKAN_LIBRARY}")
 
 set(LIBRARIES_INCLUDES ${GLFW_INCLUDES} ${OPENAL_INCLUDES} ${VULKAN_INCLUDES})
 
-# Sources
+# Engine Sources
 add_subdirectory(Sources/FlounderEngine)
 add_subdirectory(Sources/FlounderEditor)
-add_subdirectory(Sources/Kosmos)
+
+# Example Sources
+add_subdirectory(Sources/ExampleStarting)
