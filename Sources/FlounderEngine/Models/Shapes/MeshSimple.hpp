@@ -15,6 +15,8 @@ namespace Flounder
 		float m_textureScale;
 	public:
 		MeshSimple(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale);
+	protected:
+		void GenerateMesh();
 
 		virtual Vector3 GetPosition(const float &x, const float &z);
 
