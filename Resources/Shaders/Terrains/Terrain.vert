@@ -18,7 +18,7 @@ layout(location = 1) in vec2 vertexUv;
 layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
 
-flat layout(location = 0) out vec3 fragmentNormal;
+layout(location = 0) out vec3 fragmentNormal;
 layout(location = 1) out vec2 fragmentUv;
 layout(location = 2) out vec3 fragmentColour;
 

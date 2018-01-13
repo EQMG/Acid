@@ -7,6 +7,16 @@
 
 namespace Flounder
 {
+	Model::Model() :
+		m_filename(""),
+		m_vertices(std::vector<Vertex>()),
+		m_indices(std::vector<uint32_t>()),
+		m_aabb(new Aabb()),
+		m_vertexBuffer(nullptr),
+		m_indexBuffer(nullptr)
+	{
+	}
+
 	Model::Model(const std::string &filename) :
 		m_filename(filename),
 		m_vertices(std::vector<Vertex>()),
@@ -71,6 +81,17 @@ namespace Flounder
 		{
 			assert(false && "Cannot render model, no buffers exist for it!");
 		}
+	}
+
+	void Model::Set(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices)
+	{
+		m_vertices = std::vector<Vertex>(vertices);
+		m_indices = std::vector<uint32_t>(indices);
+		delete m_vertexBuffer;
+		delete m_indexBuffer;
+		m_vertexBuffer = new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data());
+		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
+		CreateAabb();
 	}
 
 	void Model::LoadFromFile()
