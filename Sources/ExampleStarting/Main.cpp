@@ -4,7 +4,8 @@
 #include <Camera/Camera.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Standards/Standards.hpp>
-#include <Models/CreateSphere.hpp>
+#include <Models/Shapes/Sphere.hpp>
+#include <Models/Shapes/Cube.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 #include "Instance.hpp"
@@ -64,7 +65,7 @@ int main(int argc, char **argv)
 	{
 		Skyboxes::Get()->SetSkybox(new Skybox(
 			new Cubemap("Resources/Skyboxes/Stars/Stars", ".png"),
-			CreateSphere::Create(6, 6, 1.0f), // new Model("Resources/Skyboxes/SkyboxSphere.obj"),
+			new Sphere(6, 6, 1.0f), // new Model("Resources/Skyboxes/SkyboxSphere.obj"),
 			2048.0f
 		));
 	}

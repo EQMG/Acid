@@ -35,7 +35,7 @@ namespace Flounder
 	void Worlds::Update()
 	{
 		const float delta = Engine::Get()->GetDelta();
-		m_factorDay = 0.25f; // m_driverDay->Update(delta);
+		m_factorDay = m_driverDay->Update(delta);
 
 		Vector3 skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
 		Vector3 lightDirection = Vector3();
