@@ -12,22 +12,26 @@ namespace Flounder
 		m_vertexCount(vertexCount),
 		m_textureScale(textureScale)
 	{
+	}
+
+	void MeshSimple::GenerateMesh()
+	{
 		std::vector<Vertex> vertices = std::vector<Vertex>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		// Creates and stores vertices.
-		for (int col = 0; col < vertexCount; col++)
+		for (int col = 0; col < m_vertexCount; col++)
 		{
-			for (int row = 0; row < vertexCount; row++)
+			for (int row = 0; row < m_vertexCount; row++)
 			{
 				// Creates and stores vertices.
 				const Vector3 position = GetPosition(
-						(row * squareSize) - (sideLength / 2.0f),
-						(col * squareSize) - (sideLength / 2.0f)
+						(row * m_squareSize) - (m_sideLength / 2.0f),
+						(col * m_squareSize) - (m_sideLength / 2.0f)
 				);
 				const Vector2 uv = Vector2(
-						textureScale * static_cast<float>(col) / static_cast<float>(vertexCount),
-						textureScale * static_cast<float>(row) / static_cast<float>(vertexCount)
+						m_textureScale * static_cast<float>(col) / static_cast<float>(m_vertexCount),
+						m_textureScale * static_cast<float>(row) / static_cast<float>(m_vertexCount)
 				);
 				const Vector3 normal = GetNormal(position);
 				const Vector3 tangent = GetColour(position, normal);
@@ -36,13 +40,13 @@ namespace Flounder
 		}
 
 		// Creates and stores indices.
-		for (int col = 0; col < vertexCount - 1; col++)
+		for (int col = 0; col < m_vertexCount - 1; col++)
 		{
-			for (int row = 0; row < vertexCount - 1; row++)
+			for (int row = 0; row < m_vertexCount - 1; row++)
 			{
-				const uint32_t topLeft = (row * vertexCount) + col;
+				const uint32_t topLeft = (row * m_vertexCount) + col;
 				const uint32_t topRight = topLeft + 1;
-				const uint32_t bottomLeft = ((row + 1) * vertexCount) + col;
+				const uint32_t bottomLeft = ((row + 1) * m_vertexCount) + col;
 				const uint32_t bottomRight = bottomLeft + 1;
 
 				//	indices.push_back(topLeft);

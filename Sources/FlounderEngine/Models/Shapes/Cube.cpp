@@ -8,26 +8,25 @@ namespace Flounder
 	Cube::Cube(const float &width, const float &height, const float &depth) :
 		Model()
 	{
-		// TODO: Add normals and tangents.
 		std::vector<Vertex> vertices = {
-			Vertex(Vector3(-0.5f, 0.5f, -0.5f), Vector2(0.0f, 0.66f)),
-			Vertex(Vector3(-0.5f, -0.5f, -0.5f), Vector2(0.25f, 0.66f)),
-			Vertex(Vector3(0.5f, 0.5f, -0.5f), Vector2(0.0f, 0.33f)),
-			Vertex(Vector3(0.5f, -0.5f, -0.5f), Vector2(0.25f, 0.33f)),
+			Vertex(Vector3(-0.5f, 0.5f, -0.5f), Vector2(0.0f, 0.66f), Vector3(0.0f, 0.0f, -1.0f)),
+			Vertex(Vector3(-0.5f, -0.5f, -0.5f), Vector2(0.25f, 0.66f), Vector3(0.0f, 0.0f, -1.0f)),
+			Vertex(Vector3(0.5f, 0.5f, -0.5f), Vector2(0.0f, 0.33f), Vector3(0.0f, 0.0f, -1.0f)),
+			Vertex(Vector3(0.5f, -0.5f, -0.5f), Vector2(0.25f, 0.33f), Vector3(0.0f, 0.0f, -1.0f)),
 
-			Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector2(0.5f, 0.66f)),
-			Vertex(Vector3(0.5f, -0.5f, 0.5f), Vector2(0.5f, 0.33f)),
-			Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.75f, 0.66f)),
-			Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector2(0.75f, 0.33f)),
+			Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector2(0.5f, 0.66f), Vector3(0.0f, 0.0f, 1.0f)),
+			Vertex(Vector3(0.5f, -0.5f, 0.5f), Vector2(0.5f, 0.33f), Vector3(0.0f, 0.0f, 1.0f)),
+			Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.75f, 0.66f), Vector3(0.0f, 0.0f, 1.0f)),
+			Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector2(0.75f, 0.33f), Vector3(0.0f, 0.0f, 1.0f)),
 
-			Vertex(Vector3(-0.5f, 0.5f, -0.5f), Vector2(1.0f, 0.66f)),
-			Vertex(Vector3(0.5f, 0.5f, -0.5f), Vector2(1.0f, 0.33f)),
+			Vertex(Vector3(-0.5f, 0.5f, -0.5f), Vector2(1.0f, 0.66f), Vector3(0.0f, 1.0f, 0.0f)),
+			Vertex(Vector3(0.5f, 0.5f, -0.5f), Vector2(1.0f, 0.33f), Vector3(0.0f, 1.0f, 0.0f)),
 
-			Vertex(Vector3(-0.5f, 0.5f, -0.5f), Vector2(0.25f, 1.0f)),
-			Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.5f, 1.0f)),
+			Vertex(Vector3(-0.5f, 0.5f, -0.5f), Vector2(0.25f, 1.0f), Vector3(0.0f, -1.0f, 0.0f)),
+			Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.5f, 1.0f), Vector3(0.0f, -1.0f, 0.0f)),
 
-			Vertex(Vector3(0.5f, 0.5f, -0.5f), Vector2(0.25f, 0.0f)),
-			Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector2(0.5f, 0.0f)),
+			Vertex(Vector3(0.5f, 0.5f, -0.5f), Vector2(0.25f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
+			Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector2(0.5f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
 		};
 		std::vector<uint32_t> indices = {
 			0, 2, 1, // Front
@@ -51,7 +50,6 @@ namespace Flounder
 			vertex.m_position.m_z *= depth;
 		}
 
-		std::reverse(indices.begin(),indices.end());
 		Model::Set(vertices, indices);
 	}
 }

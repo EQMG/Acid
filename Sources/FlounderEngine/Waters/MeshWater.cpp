@@ -8,6 +8,7 @@ namespace Flounder
 	MeshWater::MeshWater(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale) :
 		MeshSimple(sideLength, squareSize, vertexCount, textureScale)
 	{
+		MeshSimple::GenerateMesh();
 	}
 
 	Vector3 MeshWater::GetPosition(const float &x, const float &z)
