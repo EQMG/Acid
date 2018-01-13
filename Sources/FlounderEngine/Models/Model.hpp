@@ -26,6 +26,11 @@ namespace Flounder
 
 		VertexBuffer *m_vertexBuffer;
 		IndexBuffer *m_indexBuffer;
+	protected:
+		/// <summary>
+		/// Creates a new empty model.
+		/// </summary>
+		Model();
 	public:
 		/// <summary>
 		/// Creates a new model.
@@ -58,6 +63,8 @@ namespace Flounder
 		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer; }
 
 		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer; }
+	protected:
+		void Set(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices);
 	private:
 		/// <summary>
 		/// Loads the model object from a OBJ file.

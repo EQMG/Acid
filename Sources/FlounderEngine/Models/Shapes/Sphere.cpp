@@ -1,11 +1,12 @@
-#include "CreateSphere.hpp"
+#include "Sphere.hpp"
 
 #include <algorithm>
-#include "../Maths/Maths.hpp"
+#include "Maths/Maths.hpp"
 
 namespace Flounder
 {
-	Model *CreateSphere::Create(const int &latitudeBands, const int &longitudeBands, const float &radius)
+	Sphere::Sphere(const int &latitudeBands, const int &longitudeBands, const float &radius) :
+		Model()
 	{
 		std::vector<Vertex> vertices = std::vector<Vertex>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
@@ -54,7 +55,10 @@ namespace Flounder
 		}
 
 		std::reverse(indices.begin(),indices.end());
+		Model::Set(vertices, indices);
+	}
 
-		return new Model(vertices, indices);
+	Sphere::~Sphere()
+	{
 	}
 }

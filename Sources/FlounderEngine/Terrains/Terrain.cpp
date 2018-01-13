@@ -3,15 +3,15 @@
 #include "../Camera/Camera.hpp"
 #include "../Devices/Display.hpp"
 #include "../Worlds/Worlds.hpp"
-#include "Models/CreateMesh.hpp"
+#include "MeshTerrain.hpp"
 #include "Terrains.hpp"
 #include "UbosTerrains.hpp"
 
 namespace Flounder
 {
 	const int Terrain::SIDE_LENGTH = 100;
-	const std::vector<float> Terrain::SQUARE_SIZES = { 5.0f, 10.0f, 20.0f };
-	const std::vector<float> Terrain::TEXTURE_SCALES = { 5.0f, 2.0f, 1.0f };
+	const std::vector<float> Terrain::SQUARE_SIZES = { 2.0f, 4.0f, 10.0f, 20.0f }; // Models: (1.0 LOD, 2/5 LOD, 1/10 LOD, none)
+	const std::vector<float> Terrain::TEXTURE_SCALES = { 10.0f, 5.0f, 2.0f, 1.0f };
 
 	Terrain::Terrain(const Transform &transform) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
@@ -118,38 +118,7 @@ namespace Flounder
 		const float squareSize = SQUARE_SIZES[lod];
 		const float textureScale = TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(SIDE_LENGTH, squareSize);
-
-		const std::array<Colour, 4> biomeColours = { Colour("#ffcc00"), Colour("#009933"), Colour("#33cc33"), Colour("#ffffff") };
-		const float spread = 0.7f;
-		const float halfSpread = spread / 2.0f;
-		const float amplitude = 15.0f;
-		const float part = 1.0f / (biomeColours.size() - 1);
-
-		const std::function<Vector3(float, float)> getPosition = [&](float x, float z)
-		{
-			const float variance = 1.1f;
-			const float offsetX = Maths::RandomInRange(-variance, variance);
-			const float offsetZ = Maths::RandomInRange(-variance, variance);
-
-			Vector3 position = Vector3(x + offsetX, 0.0f, z + offsetZ);
-			position.m_y = Terrains::Get()->GetHeight(position.m_x + m_transform->m_position->m_x, position.m_z + m_transform->m_position->m_z);
-			return position;
-		};
-		const std::function<Vector3(Vector3)> getNormal = [&](Vector3 position)
-		{
-			return Terrains::Get()->GetNormal(position.m_x, position.m_z);
-		};
-		const std::function<Vector3(Vector3, Vector3)> getColour = [&](Vector3 position, Vector3 normal)
-		{
-			float value = (position.m_y + amplitude) / (amplitude * 2.0f);
-			value = Maths::Clamp((value - halfSpread) * (1.0f / spread), 0.0f, 0.9999f);
-			int firstBiome = static_cast<int>(floor(value / part));
-			float blend = (value - (firstBiome * part)) / part;
-			Colour colour = Colour();
-			Colour::Interpolate(biomeColours[firstBiome], biomeColours[firstBiome + 1], blend, &colour);
-			return colour;
-		};
-		m_modelLods[lod] = CreateMesh::Create(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, CreateMesh::MeshPattern, getPosition, getNormal, getColour);
+		m_modelLods[lod] = new MeshTerrain(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, m_transform->m_position);
 
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
