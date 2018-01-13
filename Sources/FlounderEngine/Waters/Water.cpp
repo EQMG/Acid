@@ -1,8 +1,8 @@
 ﻿#include "Water.hpp"
 
 #include "../Devices/Display.hpp"
-#include "Models/CreateMesh.hpp"
 #include "../Renderer/Renderer.hpp"
+#include "MeshWater.hpp"
 #include "Waters.hpp"
 #include "UbosWaters.hpp"
 
@@ -82,20 +82,7 @@ namespace Flounder
 
 	void Water::GenerateMesh()
 	{
-		const std::function<Vector3(float, float)> getPosition = [&](float x, float z)
-		{
-			Vector3 position = Vector3(x, 0.0f, z);
-			return position;
-		};
-		const std::function<Vector3(Vector3)> getNormal = [&](Vector3 position)
-		{
-			return Vector3(0.0f, 1.0f, 0.0f);
-		};
-		const std::function<Vector3(Vector3, Vector3)> getColour = [&](Vector3 position, Vector3 normal)
-		{
-			return WATER_COLOUR;
-		};
-		m_model = CreateMesh::Create(SIDE_LENGTH, SQUARE_SIZE, VERTEX_COUNT, TEXTURE_SCALE, CreateMesh::MeshPattern, getPosition, getNormal, getColour);
+		m_model = new MeshWater(SIDE_LENGTH, SQUARE_SIZE, VERTEX_COUNT, TEXTURE_SCALE);
 
 		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
 		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;
