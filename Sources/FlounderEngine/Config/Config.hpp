@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class Config
+	class FileXml
 	{
 	private:
 		std::string m_filename;
@@ -16,9 +16,9 @@ namespace Flounder
 			ActionWrite = 1
 		};
 
-		Config(const std::string &filename);
+		FileXml(const std::string &filename);
 
-		~Config();
+		~FileXml();
 
 		void ReadConfig();
 

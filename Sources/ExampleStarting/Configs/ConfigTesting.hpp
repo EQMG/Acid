@@ -7,7 +7,7 @@ using namespace Flounder;
 namespace Demo
 {
 	class ConfigTesting :
-		public Config
+		public FileXml
 	{
 	public:
 		float x;
@@ -17,7 +17,7 @@ namespace Demo
 		std::string meme;
 
 		ConfigTesting() :
-			Config("Configs/Testing.json")
+			FileXml("Configs/Testing.json")
 		{
 		}
 

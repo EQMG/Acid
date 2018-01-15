@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	std::vector<std::string> HelperString::Split(const std::string &str, const std::string &sep)
+	std::vector<std::string> HelperString::Split(const std::string &str, const std::string &sep, const bool &trim)
 	{
 		char *cstr = const_cast<char*>(str.c_str());
 		std::vector<std::string> arr;
@@ -13,7 +13,14 @@ namespace Flounder
 
 		while (current != nullptr)
 		{
-			arr.push_back(current);
+			std::string currentS = std::string(current);
+
+			if (trim)
+			{
+				currentS = Trim(currentS);
+			}
+
+			arr.push_back(currentS);
 			current = strtok(nullptr, sep.c_str());
 		}
 

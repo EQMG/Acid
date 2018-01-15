@@ -4,6 +4,14 @@
 #include <iostream>
 #include <fstream>
 
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
 namespace Flounder
 {
 	bool HelperFile::FileExists(const std::string &filepath)
@@ -15,6 +23,63 @@ namespace Flounder
 		}
 
 		return false;
+	}
+
+	void HelperFile::DeleteFile(const std::string &filepath)
+	{
+		if (!FileExists(filepath))
+		{
+			return;
+		}
+
+		remove(filepath.c_str());
+	}
+
+	void HelperFile::ClearFile(const std::string &filepath)
+	{
+		if (!FileExists(filepath))
+		{
+			return;
+		}
+
+		// TODO: Convert ofsteam to C function.
+		std::ofstream ofs;
+		ofs.open(filepath, std::ofstream::out | std::ofstream::trunc);
+		ofs.close();
+	}
+
+	void HelperFile::CreateFile(const std::string &filepath)
+	{
+		if (FileExists(filepath))
+		{
+			return;
+		}
+
+		FILE *file = fopen(filepath.c_str(), "rb+");
+
+		if (file == nullptr)
+		{
+			file = fopen(filepath.c_str(), "wb");
+		}
+
+		fclose(file);
+	}
+
+	void HelperFile::CreateFolder(const std::string &path)
+	{
+		int nError = 0;
+
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+		nError = _mkdir(path.c_str());
+#else
+		mode_t nMode = 0733;
+		nError = mkdir(path.c_str(),nMode);
+#endif
+
+		if (nError != 0)
+		{
+		//	assert(false && "Could not create folder!");
+		}
 	}
 
 	std::string HelperFile::ReadTextFile(const std::string &filepath)
@@ -65,5 +130,41 @@ namespace Flounder
 		ifs.close();
 
 		return buffer;
+	}
+
+	void HelperFile::WriteTextFile(const std::string &filepath, const std::string &data)
+	{
+		FILE *fp = fopen(filepath.c_str(), "ab");
+
+		if (fp != NULL)
+		{
+			fputs(data.c_str(), fp);
+			fclose(fp);
+		}
+	}
+
+	void HelperFile::WriteBinaryFile(const std::string &filepath, const std::vector<char> &data)
+	{
+		// TODO: Convert ofsteam to C function.
+		std::string pathname(filepath);
+
+		std::ofstream textout(pathname.c_str(), std::ios::out | std::ios::binary);
+		textout.write((const char*)&data[0], data.size());
+
+		textout.close();
+	}
+
+	std::string HelperFile::GetWorkingDirectory()
+	{
+		char buff[FILENAME_MAX];
+		GetCurrentDir(buff, FILENAME_MAX);
+		std::string currentWorkingDirectory(buff);
+		return currentWorkingDirectory;
+	}
+
+	std::string HelperFile::GetHomeDirectory()
+	{
+		// TODO: Make this work!
+		return "";
 	}
 }
