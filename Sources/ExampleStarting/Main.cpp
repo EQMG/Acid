@@ -5,7 +5,8 @@
 #include <Renderer/Renderer.hpp>
 #include <Standards/Standards.hpp>
 #include <Models/Shapes/Sphere.hpp>
-#include <Models/Shapes/Cube.hpp>
+#include <Helpers/HelperFile.hpp>
+#include <Files/Csv/FileCsv.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 #include "Instance.hpp"
@@ -23,6 +24,18 @@ int main(int argc, char **argv)
 	// Creates the engine object.
 	Engine *m_engine = new Engine();
 	m_engine->SetUpdater(new PlatformUpdater());
+
+	printf("Working Directory: %s\n", HelperFile::GetWorkingDirectory().c_str());
+	printf("Home Directory: %s\n", HelperFile::GetHomeDirectory().c_str());
+
+	HelperFile::CreateFolder(HelperFile::GetWorkingDirectory() + "\\Configs");
+	FileCsv configDisplay = FileCsv(HelperFile::GetWorkingDirectory() + "\\Configs\\Display.csv");
+	configDisplay.SetRow(RowCsv({ "WindowWidth", "1080" }), 0);
+	configDisplay.SetRow(RowCsv({ "WindowHeight", "720" }), 1);
+	configDisplay.SetRow(RowCsv({ "FpsLimit", "0.0" }), 2);
+	configDisplay.SetRow(RowCsv({ "Antialiasing", "FALSE" }), 3);
+	configDisplay.SetRow(RowCsv({ "Fullscreen", "FALSE" }), 4);
+	configDisplay.Save();
 
 	// Initializes the engine modules.
 	if (Display::Get() != nullptr)

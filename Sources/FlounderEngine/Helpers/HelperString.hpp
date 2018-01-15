@@ -18,8 +18,9 @@ namespace Flounder
 		/// </summary>
 		/// <param name="str"> The string. </param>
 		/// <param name="sep"> The seperator. </param>
+		/// <param name="trim"> If each object should be timmed. </param>
 		/// <returns> The split string vector. </returns>
-		static std::vector<std::string> Split(const std::string &str, const std::string &sep);
+		static std::vector<std::string> Split(const std::string &str, const std::string &sep, const bool &trim = false);
 
 		/// <summary>
 		/// Gets if a string starts with a token.

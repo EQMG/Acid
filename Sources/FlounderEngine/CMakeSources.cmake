@@ -33,6 +33,8 @@ set(FLOUNDERENGINE_HEADERS_
 	"Events/EventStandard.hpp"
 	"Events/EventTime.hpp"
 	"Events/IEvent.hpp"
+		"Files/Csv/FileCsv.hpp"
+		"Files/Xml/FileXml.hpp"
 	"Flounder.hpp"
 	"Fonts/Character.hpp"
 	"Fonts/FontFamily.hpp"
@@ -198,7 +200,7 @@ set(FLOUNDERENGINE_HEADERS_
 
 set(FLOUNDERENGINE_SOURCES_
 	"Camera/Camera.cpp"
-	"Config/Config.cpp"
+	"Config/FileCsv.cpp"
 	"Deferred/RendererDeferred.cpp"
 	"Devices/Audio.cpp"
 	"Devices/Display.cpp"
@@ -221,6 +223,8 @@ set(FLOUNDERENGINE_SOURCES_
 	"Events/Events.cpp"
 	"Events/EventStandard.cpp"
 	"Events/EventTime.cpp"
+		"Files/Csv/FileCsv.cpp"
+		"Files/Xml/FileXml.cpp"
 	"Fonts/Character.cpp"
 	"Fonts/FontFamily.cpp"
 	"Fonts/FontType.cpp"

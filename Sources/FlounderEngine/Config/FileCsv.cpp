@@ -2,24 +2,24 @@
 
 namespace Flounder
 {
-	Config::Config(const std::string &filename) :
+	FileXml::FileXml(const std::string &filename) :
 		m_filename(filename)
 	{
 		ReadConfig();
 	}
 
-	Config::~Config()
+	FileXml::~FileXml()
 	{
 		WriteConfig();
 	}
 
-	void Config::ReadConfig()
+	void FileXml::ReadConfig()
 	{
 		// TODO: Read json into config buffer.
 		Action(ActionRead);
 	}
 
-	void Config::WriteConfig()
+	void FileXml::WriteConfig()
 	{
 		Action(ActionWrite);
 		// TODO: Write config buffer into json.
