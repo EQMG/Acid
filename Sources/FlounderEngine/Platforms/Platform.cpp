@@ -3,6 +3,10 @@
 #include <string>
 #include <cassert>
 
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+#include <Windows.h>
+#endif
+
 namespace Flounder
 {
 	void Platform::ErrorVk(const VkResult &result)
@@ -92,7 +96,7 @@ namespace Flounder
 		}
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
-		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0); // TODO: Specific messages like Vulkan.
+		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0);
 #endif
 		assert(false && "OpenAL runtime error.");
 	}
@@ -110,6 +114,9 @@ namespace Flounder
 			}
 		}
 
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+		MessageBox(nullptr, "Couldn't find proper memory type!", "Vulkan Error", 0);
+#endif
 		assert(false && "Vulkan runtime error, couldn't find proper memory type!");
 		return UINT32_MAX;
 	}

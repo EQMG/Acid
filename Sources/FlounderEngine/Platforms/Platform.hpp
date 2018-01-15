@@ -3,10 +3,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../Stb/stb_image.h"
 
-#ifdef FLOUNDER_PLATFORM_WINDOWS
-#include <Windows.h>
-#endif
-
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
