@@ -10,12 +10,10 @@ namespace Flounder
 		m_delimiter(delimiter),
 		m_rows(new std::vector<RowCsv>())
 	{
-		Load();
 	}
 
 	FileCsv::~FileCsv()
 	{
-		Save();
 		delete m_rows;
 	}
 
