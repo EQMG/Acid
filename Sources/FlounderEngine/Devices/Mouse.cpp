@@ -22,7 +22,7 @@ namespace Flounder
 
 	void CallbackCursorEnter(GLFWwindow *window, int entered)
 	{
-		Mouse::Get()->m_displaySelected = entered;
+		Mouse::Get()->m_displaySelected = static_cast<bool>(entered);
 	}
 
 	Mouse::Mouse() :
@@ -55,7 +55,7 @@ namespace Flounder
 
 	Mouse::~Mouse()
 	{
-		delete m_mouseButtons;
+		delete[] m_mouseButtons;
 	}
 
 	void Mouse::Update()

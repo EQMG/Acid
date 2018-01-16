@@ -440,10 +440,11 @@ namespace Flounder
 			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
 			{
 				m_graphicsFamilyIndex = i;
+				foundQueueFamily = true;
 			}
 		}
 
-		assert(!foundQueueFamily && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+		assert(foundQueueFamily && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
 	}
 
 	VkPhysicalDevice Display::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices)
