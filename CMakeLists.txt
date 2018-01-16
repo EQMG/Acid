@@ -49,7 +49,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/bin)
 
 # Libraries
 set(GLFW_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glfw/include")
-find_library(GLFW_LIBRARY NAMES glfw3 PATHS "${PROJECT_SOURCE_DIR}/Libraries/glfw/lib/")
+if(WIN32)
+	find_library(GLFW_LIBRARY NAMES glfw3-win PATHS "${PROJECT_SOURCE_DIR}/Libraries/glfw/lib")
+else()
+	find_library(GLFW_LIBRARY NAMES glfw3 PATHS "${PROJECT_SOURCE_DIR}/Libraries/glfw/lib/")
+endif()
 message(STATUS "Glfw: ${GLFW_LIBRARY}")
 
 set(OPENAL_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/openal/include")
