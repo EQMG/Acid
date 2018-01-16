@@ -14,7 +14,7 @@ EntityTesting::EntityTesting(ISpatialStructure<Entity*> *structure, const Transf
 {
 	if (g_model == nullptr)
 	{
-		g_model = new Cube(1.0f, 1.0f, 1.0f); // Sphere(18, 18, 1.0f) // CreateCube::Create(1.0f, 0.5f, 2.0f); // new Model("Resources/Models/ModelSphere.obj");
+		g_model = new Sphere(18, 18, 1.0f); // Cube(1.0f, 1.0f, 1.0f) // new Model("Resources/Models/ModelSphere.obj");
 	}
 
 	if (g_diffuse == nullptr)

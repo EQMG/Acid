@@ -34,6 +34,12 @@ namespace Flounder
 
 		void Save() override;
 
+		void Clear() override;
+
+		std::map<std::string, std::string> ConfigReadValues() override;
+
+		void ConfigPushValue(const std::string &key, const std::string &value) override;
+
 		size_t GetRowCount() const { return m_rows->size(); }
 
 		RowCsv GetRow(const unsigned int &index);
@@ -41,12 +47,6 @@ namespace Flounder
 		void PushRow(const RowCsv &row);
 
 		void SetRow(const RowCsv &row, const unsigned int &index);
-
-		void Clear() override;
-		
-		std::map<std::string, std::string> ConfigReadValues() override;
-		
-		void ConfigPushValue(const std::string &key, const std::string &value) override;
 	private:
 		void Verify();
 	};

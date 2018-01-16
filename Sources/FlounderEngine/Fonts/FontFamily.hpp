@@ -8,7 +8,7 @@ namespace Flounder
 	class FontFamily
 	{
 	private:
-		std::string m_name;
+		std::string m_filename;
 
 		FontType *m_typeThin;
 		FontType *m_typeLight;
@@ -16,11 +16,11 @@ namespace Flounder
 		FontType *m_typeSemibold;
 		FontType *m_typeBold;
 	public:
-		FontFamily(const std::string &name);
+		FontFamily(const std::string &filename);
 
 		~FontFamily();
 
-		std::string GetName() const { return m_name; }
+		std::string GetFilename() const { return m_filename; }
 
 		FontType *GetThin() const { return m_typeThin; }
 
@@ -32,6 +32,6 @@ namespace Flounder
 
 		FontType *GetBold() const { return m_typeBold; }
 	private:
-		static FontType *LoadFontType(const std::string &name, const std::string &type);
+		static FontType *LoadFontType(const std::string &filename, const std::string &suffex);
 	};
 }

@@ -22,23 +22,23 @@ namespace Flounder
 	{
 	}
 
-	std::string &XmlNode::getAttribute(const std::string &attribute)
+	std::string &XmlNode::GetAttribute(const std::string &attribute)
 	{
 		return m_attributes.at(attribute);
 	}
 
-	void XmlNode::addAttribute(const std::string &attribute, const std::string &value)
+	void XmlNode::AddAttribute(const std::string &attribute, const std::string &value)
 	{
 		m_attributes.insert(std::make_pair(attribute, value));
 	}
 
-	std::vector<XmlNode> XmlNode::getChildren(const std::string &name)
+	std::vector<XmlNode> XmlNode::GetChildren(const std::string &name)
 	{
 		std::vector<XmlNode> nodes = m_childNodes.at(name);
 		return std::vector<XmlNode>(nodes);
 	}
 
-	XmlNode *XmlNode::getChild(const std::string &name)
+	XmlNode *XmlNode::GetChild(const std::string &name)
 	{
 		if (m_childNodes.find(name) == m_childNodes.end())
 		{
@@ -49,9 +49,9 @@ namespace Flounder
 		return !nodes.empty() ? &nodes.at(0) : nullptr;
 	}
 
-	XmlNode *XmlNode::getChildrenWithAttribute(const std::string &name, const std::string &attribute, const std::string &value)
+	XmlNode *XmlNode::GetChildrenWithAttribute(const std::string &name, const std::string &attribute, const std::string &value)
 	{
-		std::vector<XmlNode> children = getChildren(name);
+		std::vector<XmlNode> children = GetChildren(name);
 
 		if (children.empty())
 		{
@@ -60,7 +60,7 @@ namespace Flounder
 
 		for (XmlNode child : children)
 		{
-			std::string val = child.getAttribute(attribute);
+			std::string val = child.GetAttribute(attribute);
 
 			if (value == val)
 			{
@@ -71,7 +71,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	void XmlNode::addChild(const XmlNode &child)
+	void XmlNode::AddChild(const XmlNode &child)
 	{
 		if (m_childNodes.find(child.m_name) == m_childNodes.end())
 		{

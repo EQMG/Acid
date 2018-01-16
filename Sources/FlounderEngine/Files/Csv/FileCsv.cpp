@@ -51,6 +51,29 @@ namespace Flounder
 		HelperFile::WriteTextFile(m_filename, data);
 	}
 
+	void FileCsv::Clear()
+	{
+		m_rows->clear();
+	}
+
+	std::map<std::string, std::string> FileCsv::ConfigReadValues()
+	{
+		auto result = std::map<std::string, std::string>();
+
+		for (unsigned int i = 0; i < m_rows->size(); i++)
+		{
+			RowCsv row = m_rows->at(i);
+			result.insert(std::make_pair(row.m_elements.at(0), row.m_elements.at(1)));
+		}
+
+		return result;
+	}
+
+	void FileCsv::ConfigPushValue(const std::string &key, const std::string &value)
+	{
+		m_rows->push_back(RowCsv({key, value}));
+	}
+
 	RowCsv FileCsv::GetRow(const unsigned int &index)
 	{
 		return m_rows->at(index);
@@ -72,29 +95,6 @@ namespace Flounder
 		}
 
 		m_rows->at(index).m_elements = row.m_elements;
-	}
-
-	void FileCsv::Clear()
-	{
-		m_rows->clear();
-	}
-
-	std::map<std::string, std::string> FileCsv::ConfigReadValues() 
-	{
-		auto result = std::map<std::string, std::string>();
-		
-		for (unsigned int i = 0; i < m_rows->size(); i++)
-		{
-			RowCsv row = m_rows->at(i);
-			result.insert(std::make_pair(row.m_elements.at(0), row.m_elements.at(1)));
-		}
-		
-		return result;
-	}
-	
-	void FileCsv::ConfigPushValue(const std::string &key, const std::string &value) 
-	{
-		m_rows->push_back(RowCsv({key, value}));
 	}
 	
 	void FileCsv::Verify()

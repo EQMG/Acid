@@ -60,6 +60,8 @@ namespace Flounder
 
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const;
 
+		std::string GetFilename() const { return m_filename; };
+
 		/// <summary>
 		/// Gets if the texture has alpha.
 		/// </summary>
