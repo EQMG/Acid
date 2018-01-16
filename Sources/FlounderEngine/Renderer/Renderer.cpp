@@ -65,7 +65,8 @@ namespace Flounder
 
 	VkResult Renderer::StartRenderpass(VkCommandBuffer const &commandBuffer)
 	{
-		if (m_swapchain->GetExtent().width != Display::Get()->GetWidth() || m_swapchain->GetExtent().height != Display::Get()->GetHeight())
+		if (static_cast<int>(m_swapchain->GetExtent().width) != Display::Get()->GetWidth() ||
+				static_cast<int>(m_swapchain->GetExtent().height) != Display::Get()->GetHeight())
 		{
 			RecreateSwapchain();
 			return VK_ERROR_INITIALIZATION_FAILED;

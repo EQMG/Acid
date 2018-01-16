@@ -1,4 +1,4 @@
-#include "HelperFile.hpp"
+#include "FileSystem.hpp"
 
 #include <cassert>
 #include <iostream>
@@ -16,7 +16,7 @@
 
 namespace Flounder
 {
-	bool HelperFile::FileExists(const std::string &filepath)
+	bool FileSystem::FileExists(const std::string &filepath)
 	{
 		if (FILE *file = fopen(filepath.c_str(), "r"))
 		{
@@ -27,7 +27,7 @@ namespace Flounder
 		return false;
 	}
 
-	void HelperFile::DeleteFile(const std::string &filepath)
+	void FileSystem::DeleteFile(const std::string &filepath)
 	{
 		if (!FileExists(filepath))
 		{
@@ -37,7 +37,7 @@ namespace Flounder
 		remove(filepath.c_str());
 	}
 
-	void HelperFile::ClearFile(const std::string &filepath)
+	void FileSystem::ClearFile(const std::string &filepath)
 	{
 		if (!FileExists(filepath))
 		{
@@ -50,7 +50,7 @@ namespace Flounder
 		ofs.close();
 	}
 
-	void HelperFile::CreateFile(const std::string &filepath)
+	void FileSystem::CreateFile(const std::string &filepath)
 	{
 		if (FileExists(filepath))
 		{
@@ -67,7 +67,7 @@ namespace Flounder
 		fclose(file);
 	}
 
-	void HelperFile::CreateFolder(const std::string &path)
+	void FileSystem::CreateFolder(const std::string &path)
 	{
 		int nError = 0;
 
@@ -84,7 +84,7 @@ namespace Flounder
 		}
 	}
 
-	std::string HelperFile::ReadTextFile(const std::string &filepath)
+	std::string FileSystem::ReadTextFile(const std::string &filepath)
 	{
 		FILE *file = fopen(filepath.c_str(), "rt");
 
@@ -103,7 +103,7 @@ namespace Flounder
 		return result;
 	}
 
-	std::vector<char> HelperFile::ReadBinaryFile(const std::string &filepath)
+	std::vector<char> FileSystem::ReadBinaryFile(const std::string &filepath)
 	{
 		/*FILE *file = fopen(filepath.c_str(), "rb");
 
@@ -134,7 +134,7 @@ namespace Flounder
 		return buffer;
 	}
 
-	void HelperFile::WriteTextFile(const std::string &filepath, const std::string &data)
+	void FileSystem::WriteTextFile(const std::string &filepath, const std::string &data)
 	{
 		FILE *fp = fopen(filepath.c_str(), "ab");
 
@@ -145,10 +145,10 @@ namespace Flounder
 		}
 	}
 
-	void HelperFile::WriteBinaryFile(const std::string &filepath, const std::vector<char> &data)
+	void FileSystem::WriteBinaryFile(const std::string &filepath, const std::vector<char> &data)
 	{
 		// TODO: Convert ofsteam to C function.
-		std::string pathname(filepath);
+		std::string pathname = std::string(filepath);
 
 		std::ofstream textout(pathname.c_str(), std::ios::out | std::ios::binary);
 		textout.write(&data[0], data.size());
@@ -156,7 +156,7 @@ namespace Flounder
 		textout.close();
 	}
 
-	std::string HelperFile::GetWorkingDirectory()
+	std::string FileSystem::GetWorkingDirectory()
 	{
 		char buff[FILENAME_MAX];
 		GetCurrentDir(buff, FILENAME_MAX);
@@ -165,7 +165,7 @@ namespace Flounder
 		return currentWorkingDirectory;
 	}
 
-	std::string HelperFile::GetHomeDirectory()
+	std::string FileSystem::GetHomeDirectory()
 	{
 		// TODO: Make this work!
 		return "";

@@ -15,8 +15,6 @@ namespace Flounder
 		public IUpdater
 	{
 	private:
-		float m_startTime;
-		float m_timeOffset;
 		Delta *m_deltaUpdate;
 		Delta *m_deltaRender;
 		Timer *m_timerUpdate;
@@ -39,17 +37,9 @@ namespace Flounder
 
 		IModule *GetModule(const std::string &name) override;
 
-		float GetTimeOffset() override { return m_timeOffset; };
-
-		void SetTimeOffset(const float &timeOffset) override { m_timeOffset = timeOffset; };
-
 		float GetDelta() override { return m_deltaUpdate->GetChange(); };
 
 		float GetDeltaRender() override { return m_deltaRender->GetChange(); };
-
-		float GetTime() override { return (static_cast<float>(glfwGetTime()) - m_startTime) + m_timeOffset; };
-
-		float GetTimeMs() override { return GetTime() * 1000.0f; };
 	private:
 		void RunUpdate(const ModuleUpdate &typeUpdate) const;
 	};

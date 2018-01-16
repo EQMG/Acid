@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include "IModule.hpp"
 #include "IUpdater.hpp"
 
@@ -16,7 +17,13 @@ namespace Flounder
 	class Engine
 	{
 	private:
+		typedef std::chrono::high_resolution_clock HighResolutionClock;
+		typedef std::chrono::duration<float, std::milli> MillisecondsType;
+
 		static Engine *g_instance;
+
+		std::chrono::time_point<HighResolutionClock> m_start;
+		float m_timeOffset;
 
 		bool m_initialized;
 		bool m_running;
@@ -66,13 +73,13 @@ namespace Flounder
 		/// Gets the added/removed time for the engine (seconds).
 		/// </summary>
 		/// <returns> The time offset. </returns>
-		float GetTimeOffset() const { return m_updater->GetTimeOffset(); }
+		float GetTimeOffset() const { return m_timeOffset; }
 
 		/// <summary>
 		/// Sets the time offset for the engine (seconds).
 		/// </summary>
 		/// <param name="timeOffset"> The new time offset. </param>
-		void SetTimeOffset(const float &timeOffset) const { m_updater->SetTimeOffset(timeOffset); }
+		void SetTimeOffset(const float &timeOffset) { m_timeOffset = timeOffset; }
 
 		/// <summary>
 		/// Gets the delta (seconds) between updates.
@@ -90,13 +97,13 @@ namespace Flounder
 		/// Gets the current time of the engine instance.
 		/// </summary>
 		/// <returns> The current engine time in seconds. </returns>
-		float GetTime() const { return m_updater->GetTime(); }
+		float GetTime() const { return GetTimeMs() / 1000.0f; }
 
 		/// <summary>
 		/// Gets the current time of the engine instance.
 		/// </summary>
 		/// <returns> The current engine time in milliseconds. </returns>
-		float GetTimeMs() const { return m_updater->GetTimeMs(); }
+		float GetTimeMs() const { return std::chrono::duration_cast<MillisecondsType>(HighResolutionClock::now() - m_start).count() + (m_timeOffset / 1000.0f); }
 
 		/// <summary>
 		/// Gets if the engine has been initialized.

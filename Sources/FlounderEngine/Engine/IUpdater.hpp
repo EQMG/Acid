@@ -46,18 +46,6 @@ namespace Flounder
 		virtual IModule *GetModule(const std::string &name) = 0;
 
 		/// <summary>
-		/// Gets the added/removed time for the engine (seconds).
-		/// </summary>
-		/// <returns> The time offset. </returns>
-		virtual float GetTimeOffset() = 0;
-
-		/// <summary>
-		/// Sets the time offset for the engine (seconds).
-		/// </summary>
-		/// <param name="timeOffset"> The new time offset. </param>
-		virtual void SetTimeOffset(const float &timeOffset) = 0;
-
-		/// <summary>
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
@@ -68,17 +56,5 @@ namespace Flounder
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
 		virtual float GetDeltaRender() = 0;
-
-		/// <summary>
-		/// Gets the current time of the engine instance.
-		/// </summary>
-		/// <returns> The current engine time in seconds. </returns>
-		virtual float GetTime() = 0;
-
-		/// <summary>
-		/// Gets the current time of the engine instance.
-		/// </summary>
-		/// <returns> The current engine time in milliseconds. </returns>
-		virtual float GetTimeMs() = 0;
 	};
 }

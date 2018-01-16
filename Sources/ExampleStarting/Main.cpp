@@ -5,12 +5,14 @@
 #include <Renderer/Renderer.hpp>
 #include <Standards/Standards.hpp>
 #include <Models/Shapes/Sphere.hpp>
-#include <Helpers/HelperFile.hpp>
+#include <Helpers/FileSystem.hpp>
 #include <Files/Csv/FileCsv.hpp>
 #include <Files/Config.hpp>
+#include <Helpers/Logger.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 #include "Instance.hpp"
+#include "Configs/ConfigManager.hpp"
 #include "ManagerRender.hpp"
 #include "ManagerUis.hpp"
 
@@ -26,19 +28,9 @@ int main(int argc, char **argv)
 	Engine *m_engine = new Engine();
 	m_engine->SetUpdater(new PlatformUpdater());
 
-	printf("Working Directory: %s\n", HelperFile::GetWorkingDirectory().c_str());
-	printf("Home Directory: %s\n", HelperFile::GetHomeDirectory().c_str());
-
-	HelperFile::CreateFolder(HelperFile::GetWorkingDirectory() + "/Configs");
-	Config configGraphics = Config(new FileCsv(HelperFile::GetWorkingDirectory() + "/Configs/Graphics.csv"));
-	configGraphics.Load();
-	configGraphics.Value("WindowWidth", 1080);
-	configGraphics.Value("WindowHeight", 720);
-	configGraphics.Value("FpsLimit", 0.0);
-	configGraphics.Value("Antialiasing", true);
-	configGraphics.Value("Fullscreen", false);
-	configGraphics.Value("ShadowQuality", 3);
-	configGraphics.Save();
+	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+	// printf("Home Directory: %s\n", FileSystem::GetHomeDirectory().c_str());
+	ConfigManager *configManager = new ConfigManager();
 
 	// Initializes the engine modules.
 	if (Display::Get() != nullptr)
@@ -47,8 +39,8 @@ int main(int argc, char **argv)
 		Display::Get()->SetTitle("Example Starting");
 		Display::Get()->SetIcon("Resources/Logos/Tail.png");
 		Display::Get()->SetFpsLimit(0.0f);
-		Display::Get()->SetAntialiasing(true);
-		Display::Get()->SetFullscreen(false);
+		Display::Get()->SetAntialiasing(configManager->GetGraphics()->Get("Antialiasing", true));
+		Display::Get()->SetFullscreen(configManager->GetGraphics()->Get("Fullscreen", false));
 	}
 
 	if (Mouse::Get() != nullptr)
@@ -114,6 +106,7 @@ int main(int argc, char **argv)
 	const int exitCode = m_engine->Run();
 
 	// Deletes the engine.
+	delete configManager;
 	delete m_engine;
 
 	// Pauses the console.

@@ -23,7 +23,7 @@ namespace Flounder
 
 	void CallbackFocus(GLFWwindow *window, int focused)
 	{
-		Display::Get()->m_focused = focused;
+		Display::Get()->m_focused = static_cast<bool>(focused);
 	}
 
 	void CallbackPosition(GLFWwindow *window, int xpos, int ypos)
@@ -66,7 +66,7 @@ namespace Flounder
 	VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData)
 	{
 		printf("%s\n", msg);
-		return false;
+		return static_cast<VkBool32>(false);
 	}
 
 	VkResult Display::FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback)
@@ -169,7 +169,7 @@ namespace Flounder
 		// TODO
 	}
 
-	void Display::SetWindowSize(const uint32_t &width, const uint32_t &height)
+	void Display::SetWindowSize(const int &width, const int &height)
 	{
 		m_windowWidth = width;
 		m_windowHeight = height;
@@ -612,7 +612,7 @@ namespace Flounder
 #if FLOUNDER_VERBOSE
 		printf("-- Selected Device: '%s' --\n", physicalDeviceProperties.deviceName);
 
-		switch (physicalDeviceProperties.deviceType)
+		switch (static_cast<int>(physicalDeviceProperties.deviceType))
 		{
 		case 1:
 			printf("Type: Integrated\n");

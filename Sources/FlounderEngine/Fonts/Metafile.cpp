@@ -1,7 +1,7 @@
 ﻿#include "Metafile.hpp"
 
-#include "../Helpers/HelperFile.hpp"
-#include "../Helpers/HelperString.hpp"
+#include "Helpers/FileSystem.hpp"
+#include "Helpers/FormatString.hpp"
 
 namespace Flounder
 {
@@ -30,22 +30,22 @@ namespace Flounder
 		m_paddingHeight(0),
 		m_maxSizeY(0.0)
 	{
-		std::string fileLoaded = HelperFile::ReadTextFile(file);
-		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
+		std::string fileLoaded = FileSystem::ReadTextFile(file);
+		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n");
 
 		for (auto line : lines)
 		{
 			ProcessNextLine(line);
 
-			if (HelperString::Contains(line, "info"))
+			if (FormatString::Contains(line, "info"))
 			{
 				LoadPaddingData();
 			}
-			else if (HelperString::Contains(line, "common"))
+			else if (FormatString::Contains(line, "common"))
 			{
 				LoadLineSizes();
 			}
-			else if (HelperString::Contains(line, "char") && !HelperString::Contains(line, "chars"))
+			else if (FormatString::Contains(line, "char") && !FormatString::Contains(line, "chars"))
 			{
 				LoadCharacterData();
 			}
@@ -63,11 +63,11 @@ namespace Flounder
 	void Metafile::ProcessNextLine(const std::string &line)
 	{
 		m_values->clear();
-		std::vector<std::string> parts = HelperString::Split(line, SPLITTER);
+		std::vector<std::string> parts = FormatString::Split(line, SPLITTER);
 
 		for (auto part : parts)
 		{
-			std::vector<std::string> pairs = HelperString::Split(part, "=");
+			std::vector<std::string> pairs = FormatString::Split(part, "=");
 
 			if (pairs.size() == 2)
 			{
@@ -142,7 +142,7 @@ namespace Flounder
 
 	std::vector<int> Metafile::GetValuesOfVariable(const std::string &variable)
 	{
-		std::vector<std::string> numbers = HelperString::Split(m_values->at(variable), NUMBER_SEPARATOR);
+		std::vector<std::string> numbers = FormatString::Split(m_values->at(variable), NUMBER_SEPARATOR);
 		std::vector<int> result = std::vector<int>();
 
 		int i = 0;

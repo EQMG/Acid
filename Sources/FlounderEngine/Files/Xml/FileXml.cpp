@@ -1,7 +1,7 @@
 #include "FileXml.hpp"
 
-#include "../../Helpers/HelperString.hpp"
-#include "../../Helpers/HelperFile.hpp"
+#include "Helpers/FormatString.hpp"
+#include "Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -19,20 +19,20 @@ namespace Flounder
 	void FileXml::Load()
 	{
 		Verify();
-		std::string fileLoaded = HelperFile::ReadTextFile(m_filename);
-		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n", true);
+		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
+		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n", true);
 
 		for (std::string line : lines)
 		{
-			/*line = HelperString::Trim(line);
+			/*line = FormatString::Trim(line);
 
-			if (HelperString::StartsWith(line, "</"))
+			if (FormatString::StartsWith(line, "</"))
 			{
 				m_parentNode = nullptr;
 			}
 
-			std::vector<std::string> startTagParts = HelperString::Split(GetStartTag(line), " ");
-			XmlNode *node = new XmlNode(HelperString::Replace(startTagParts.at(0), "/", ""));
+			std::vector<std::string> startTagParts = FormatString::Split(GetStartTag(line), " ");
+			XmlNode *node = new XmlNode(FormatString::Replace(startTagParts.at(0), "/", ""));
 			AddAttributes(startTagParts, node);
 			AddData(line, node);
 
@@ -56,8 +56,8 @@ namespace Flounder
 		std::string data = "";
 
 		Verify();
-		HelperFile::ClearFile(m_filename);
-		HelperFile::WriteTextFile(m_filename, data);
+		FileSystem::ClearFile(m_filename);
+		FileSystem::WriteTextFile(m_filename, data);
 	}
 
 	void FileXml::Clear()
@@ -77,9 +77,9 @@ namespace Flounder
 	
 	void FileXml::Verify()
 	{
-		if (!HelperFile::FileExists(m_filename))
+		if (!FileSystem::FileExists(m_filename))
 		{
-			HelperFile::CreateFile(m_filename);
+			FileSystem::CreateFile(m_filename);
 		}
 	}
 
