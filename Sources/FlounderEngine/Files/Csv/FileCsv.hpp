@@ -34,7 +34,7 @@ namespace Flounder
 
 		void Save() override;
 
-		unsigned int GetRowCount() const { return m_rows->size(); }
+		size_t GetRowCount() const { return m_rows->size(); }
 
 		RowCsv GetRow(const unsigned int &index);
 
