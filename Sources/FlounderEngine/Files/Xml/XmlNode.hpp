@@ -20,22 +20,22 @@ namespace Flounder
 
 		~XmlNode();
 
-		const std::string &getName() const { return m_name; };
+		const std::string &GetName() const { return m_name; };
 
-		const std::string &getData() const { return m_data; };
+		const std::string &GetData() const { return m_data; };
 
-		void setData(const std::string &data) { m_data = data; };
+		void SetData(const std::string &data) { m_data = data; };
 
-		std::string &getAttribute(const std::string &attribute);
+		std::string &GetAttribute(const std::string &attribute);
 
-		void addAttribute(const std::string &attribute, const std::string &value);
+		void AddAttribute(const std::string &attribute, const std::string &value);
 
-		std::vector<XmlNode> getChildren(const std::string &name);
+		std::vector<XmlNode> GetChildren(const std::string &name);
 
-		XmlNode *getChild(const std::string &name);
+		XmlNode *GetChild(const std::string &name);
 
-		XmlNode *getChildrenWithAttribute(const std::string &name, const std::string &attribute, const std::string &value);
+		XmlNode *GetChildrenWithAttribute(const std::string &name, const std::string &attribute, const std::string &value);
 
-		void addChild(const XmlNode &child);
+		void AddChild(const XmlNode &child);
 	};
 }
