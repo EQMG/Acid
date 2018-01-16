@@ -3,6 +3,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include "../IFile.hpp"
 
 namespace Flounder
 {
@@ -17,7 +18,8 @@ namespace Flounder
 		}
 	};
 
-	class FileCsv
+	class FileCsv :
+		public IFile
 	{
 	private:
 		std::string m_filename;
@@ -28,9 +30,9 @@ namespace Flounder
 
 		~FileCsv();
 
-		void Load();
+		void Load() override;
 
-		void Save();
+		void Save() override;
 
 		unsigned int GetRowCount() const { return m_rows->size(); }
 
@@ -40,7 +42,11 @@ namespace Flounder
 
 		void SetRow(const RowCsv &row, const unsigned int &index);
 
-		void Clear();
+		void Clear() override;
+		
+		std::map<std::string, std::string> ConfigReadValues() override;
+		
+		void ConfigPushValue(const std::string &key, const std::string &value) override;
 	private:
 		void Verify();
 	};
