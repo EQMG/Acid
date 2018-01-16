@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 
 	if (Mouse::Get() != nullptr)
 	{
-		Mouse::Get()->SetCustomMouse("Resources/Cursor.png");
+		Mouse::Get()->SetCustomMouse("Resources/Guis/Cursor.png");
 	}
 
 	if (Camera::Get() != nullptr)
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
 	if (Skyboxes::Get() != nullptr)
 	{
 		Skyboxes::Get()->SetSkybox(new Skybox(
-			new Cubemap("Resources/Skyboxes/Stars/Stars", ".png"),
+			new Cubemap("Resources/Skyboxes/Stars", ".png"),
 			new Sphere(6, 6, 1.0f), // new Model("Resources/Skyboxes/SkyboxSphere.obj"),
 			2048.0f
 		));

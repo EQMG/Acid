@@ -4,13 +4,13 @@
 
 namespace Flounder
 {
-	FontFamily::FontFamily(const std::string &name) :
-		m_name(name),
-		m_typeThin(LoadFontType(name, "Thin")),
-		m_typeLight(LoadFontType(name, "Light")),
-		m_typeRegular(LoadFontType(name, "Regular")),
-		m_typeSemibold(LoadFontType(name, "Semibold")),
-		m_typeBold(LoadFontType(name, "Bold"))
+	FontFamily::FontFamily(const std::string &filename) :
+		m_filename(filename),
+		m_typeThin(LoadFontType(filename, "Thin")),
+		m_typeLight(LoadFontType(filename, "Light")),
+		m_typeRegular(LoadFontType(filename, "Regular")),
+		m_typeSemibold(LoadFontType(filename, "Semibold")),
+		m_typeBold(LoadFontType(filename, "Bold"))
 	{
 	}
 
@@ -23,10 +23,10 @@ namespace Flounder
 		delete m_typeBold;
 	}
 
-	FontType *FontFamily::LoadFontType(const std::string &name, const std::string &type)
+	FontType *FontFamily::LoadFontType(const std::string &filename, const std::string &suffex)
 	{
-		const std::string filepathPng = "Resources/Fonts/" + name + "/" + name + "-" + type + ".png";
-		const std::string filepathFnt = "Resources/Fonts/" + name + "/" + name + "-" + type + ".fnt";
+		const std::string filepathPng = filename + "/" + suffex + ".png";
+		const std::string filepathFnt = filename + "/" + suffex + ".fnt";
 
 		if (!HelperFile::FileExists(filepathPng) || !HelperFile::FileExists(filepathFnt))
 		{
