@@ -17,10 +17,10 @@ namespace Flounder
 		static const std::vector<const char*> VALIDATION_LAYERS;
 		static const std::vector<const char*> DEVICE_EXTENSIONS;
 
-		uint32_t m_windowWidth;
-		uint32_t m_windowHeight;
-		uint32_t m_fullscreenWidth;
-		uint32_t m_fullscreenHeight;
+		int m_windowWidth;
+		int m_windowHeight;
+		int m_fullscreenWidth;
+		int m_fullscreenHeight;
 		float m_aspectRatio;
 
 		std::string m_title;
@@ -32,8 +32,8 @@ namespace Flounder
 		GLFWwindow *m_window;
 		bool m_closed;
 		bool m_focused;
-		uint32_t m_windowPosX;
-		uint32_t m_windowPosY;
+		int m_windowPosX;
+		int m_windowPosY;
 
 		bool m_validationLayers;
 
@@ -103,25 +103,25 @@ namespace Flounder
 		/// Gets the width of the display in pixels.
 		/// </summary>
 		/// <returns> The width of the display. </returns>
-		uint32_t GetWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
+		int GetWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
 
 		/// <summary>
 		/// Gets the non-fullscreen width of the display in pixels.
 		/// </summary>
 		/// <returns> The width of the display. </returns>
-		uint32_t GetWindowWidth() const { return m_windowWidth; }
+		int GetWindowWidth() const { return m_windowWidth; }
 
 		/// <summary>
 		/// Gets the height of the display in pixels.
 		/// </summary>
 		/// <returns> The height of the display. </returns>
-		uint32_t GetHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
+		int GetHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
 
 		/// <summary>
 		/// Gets the non-fullscreen height of the display in pixels.
 		/// </summary>
 		/// <returns> The height of the display. </returns>
-		uint32_t GetWindowHeight() const { return m_windowHeight; }
+		int GetWindowHeight() const { return m_windowHeight; }
 
 		/// <summary>
 		/// Gets the aspect ratio between the displays width and height.
@@ -134,7 +134,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="width"> The new width in pixels. </param>
 		/// <param name="height"> The new height in pixels. </param>
-		void SetWindowSize(const uint32_t &width, const uint32_t &height);
+		void SetWindowSize(const int &width, const int &height);
 
 		/// <summary>
 		/// Gets the window's title.

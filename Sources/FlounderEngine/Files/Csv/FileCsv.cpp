@@ -1,7 +1,7 @@
 #include "FileCsv.hpp"
 
-#include "../../Helpers/HelperString.hpp"
-#include "../../Helpers/HelperFile.hpp"
+#include "Helpers/FormatString.hpp"
+#include "Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -21,12 +21,12 @@ namespace Flounder
 	void FileCsv::Load()
 	{
 		Verify();
-		std::string fileLoaded = HelperFile::ReadTextFile(m_filename);
-		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n", true);
+		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
+		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n", true);
 
 		for (std::string line : lines)
 		{
-			RowCsv row = RowCsv(HelperString::Split(line, std::string(1, m_delimiter), true));
+			RowCsv row = RowCsv(FormatString::Split(line, std::string(1, m_delimiter), true));
 			m_rows->push_back(row);
 		}
 	}
@@ -47,8 +47,8 @@ namespace Flounder
 		}
 
 		Verify();
-		HelperFile::ClearFile(m_filename);
-		HelperFile::WriteTextFile(m_filename, data);
+		FileSystem::ClearFile(m_filename);
+		FileSystem::WriteTextFile(m_filename, data);
 	}
 
 	void FileCsv::Clear()
@@ -99,9 +99,9 @@ namespace Flounder
 	
 	void FileCsv::Verify()
 	{
-		if (!HelperFile::FileExists(m_filename))
+		if (!FileSystem::FileExists(m_filename))
 		{
-			HelperFile::CreateFile(m_filename);
+			FileSystem::CreateFile(m_filename);
 		}
 	}
 }
