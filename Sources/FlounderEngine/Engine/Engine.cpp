@@ -7,6 +7,8 @@ namespace Flounder
 	Engine *Engine::g_instance = nullptr;
 
 	Engine::Engine() :
+		m_start(HighResolutionClock::now()),
+		m_timeOffset(0.0f),
 		m_initialized(false),
 		m_running(true),
 		m_error(false),

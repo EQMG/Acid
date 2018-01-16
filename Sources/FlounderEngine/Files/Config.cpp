@@ -39,7 +39,7 @@ namespace Flounder
 		m_file->Save();
 	}
 
-	std::string Config::Value(const std::string &key, const std::string &normal)
+	std::string Config::Get(const std::string &key, const std::string &normal)
 	{
 		if (m_values->find(key) == m_values->end())
 		{
@@ -50,27 +50,27 @@ namespace Flounder
 		return m_values->at(key);
 	}
 
-	bool Config::Value(const std::string &key, const bool &normal)
+	bool Config::Get(const std::string &key, const bool &normal)
 	{
-		std::string value = Value(key, std::to_string(normal));
-		return false; // atob(value.c_str());
+		std::string value = Get(key, std::to_string(normal));
+		return atoi(value.c_str()) == 1; // atob(value.c_str());
 	}
 
-	int Config::Value(const std::string &key, const int &normal)
+	int Config::Get(const std::string &key, const int &normal)
 	{
-		std::string value = Value(key, std::to_string(normal));
+		std::string value = Get(key, std::to_string(normal));
 		return atoi(value.c_str());
 	}
 
-	float Config::Value(const std::string &key, const float &normal)
+	float Config::Get(const std::string &key, const float &normal)
 	{
-		std::string value = Value(key, std::to_string(normal));
+		std::string value = Get(key, std::to_string(normal));
 		return static_cast<float>(atof(value.c_str()));
 	}
 
-	double Config::Value(const std::string &key, const double &normal)
+	double Config::Get(const std::string &key, const double &normal)
 	{
-		std::string value = Value(key, std::to_string(normal));
+		std::string value = Get(key, std::to_string(normal));
 		return atof(value.c_str());
 	}
 }

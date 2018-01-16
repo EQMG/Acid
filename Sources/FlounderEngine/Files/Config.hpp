@@ -20,14 +20,26 @@ namespace Flounder
 
 		void Save();
 
-		std::string Value(const std::string &key, const std::string &normal = "nullptr");
+		template<typename T>
+		void Set(const std::string &key, const T &value)
+		{
+			if (m_values->find(key) == m_values->end())
+			{
+				m_values->insert(std::make_pair(key, std::to_string(value)));
+				return;
+			}
 
-		bool Value(const std::string &key, const bool &normal = false);
+			m_values->at(key) = std::to_string(value);
+		}
 
-		int Value(const std::string &key, const int &normal = 0);
+		std::string Get(const std::string &key, const std::string &normal = "nullptr");
 
-		float Value(const std::string &key, const float &normal = 0.0f);
+		bool Get(const std::string &key, const bool &normal = false);
 
-		double Value(const std::string &key, const double &normal = 0.0);
+		int Get(const std::string &key, const int &normal = 0);
+
+		float Get(const std::string &key, const float &normal = 0.0f);
+
+		double Get(const std::string &key, const double &normal = 0.0);
 	};
 }

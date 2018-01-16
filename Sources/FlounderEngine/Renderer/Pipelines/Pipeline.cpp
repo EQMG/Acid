@@ -2,8 +2,8 @@
 
 #include <cassert>
 #include "../../Devices/Display.hpp"
-#include "../../Helpers/HelperFile.hpp"
-#include "../../Helpers/HelperString.hpp"
+#include "Helpers/FileSystem.hpp"
+#include "Helpers/FormatString.hpp"
 #include "../Renderer.hpp"
 
 namespace Flounder
@@ -151,26 +151,26 @@ namespace Flounder
 
 		for (auto type : m_pipelineCreateInfo.shaderStages)
 		{
-			std::vector<char> shaderCode = HelperFile::ReadBinaryFile(type);
+			std::vector<char> shaderCode = FileSystem::ReadBinaryFile(type);
 			VkShaderStageFlagBits stageFlag = VK_SHADER_STAGE_ALL;
 
-			if (HelperString::Contains(type, "vert.spv"))
+			if (FormatString::Contains(type, "vert.spv"))
 			{
 				stageFlag = VK_SHADER_STAGE_VERTEX_BIT;
 			}
-			else if (HelperString::Contains(type, "tesc.spv"))
+			else if (FormatString::Contains(type, "tesc.spv"))
 			{
 				stageFlag = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
 			}
-			else if (HelperString::Contains(type, "tese.spv"))
+			else if (FormatString::Contains(type, "tese.spv"))
 			{
 				stageFlag = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
 			}
-			else if (HelperString::Contains(type, "geom.spv"))
+			else if (FormatString::Contains(type, "geom.spv"))
 			{
 				stageFlag = VK_SHADER_STAGE_GEOMETRY_BIT;
 			}
-			else if (HelperString::Contains(type, "frag.spv"))
+			else if (FormatString::Contains(type, "frag.spv"))
 			{
 				stageFlag = VK_SHADER_STAGE_FRAGMENT_BIT;
 			}

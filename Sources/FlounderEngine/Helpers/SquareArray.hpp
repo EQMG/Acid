@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A helper for C++ arrays.
 	/// </summary>
-	class HelperArray
+	class SquareArray
 	{
 	public:
 		/// <summary>

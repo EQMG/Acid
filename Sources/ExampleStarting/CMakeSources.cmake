@@ -1,5 +1,5 @@
 set(EXAMPLE_STARTING_HEADERS_
-	"Configs/ConfigTesting.hpp"
+	"Configs/ConfigManager.hpp"
 	"Entities/EntitySun.hpp"
 	"Entities/EntityTesting.hpp"
 	"Entities/EntityTreePine.hpp"
@@ -14,6 +14,7 @@ set(EXAMPLE_STARTING_HEADERS_
 )
 
 set(EXAMPLE_STARTING_SOURCES_
+		"Configs/ConfigManager.cpp"
 	"Entities/EntitySun.cpp"
 	"Entities/EntityTesting.cpp"
 	"Entities/EntityTreePine.cpp"

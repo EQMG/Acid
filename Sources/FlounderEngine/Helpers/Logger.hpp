@@ -2,8 +2,9 @@
 
 namespace Flounder
 {
-	class EntityLoader
+	class Logger
 	{
-
+	public:
+		// TODO
 	};
 }

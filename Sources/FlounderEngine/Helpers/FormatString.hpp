@@ -10,7 +10,7 @@ namespace Flounder
 	/// <summary>
 	/// A helper for C++ strings.
 	/// </summary>
-	class HelperString
+	class FormatString
 	{
 	public:
 		/// <summary>
