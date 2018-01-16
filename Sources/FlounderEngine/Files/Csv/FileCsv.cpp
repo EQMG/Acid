@@ -65,7 +65,7 @@ namespace Flounder
 	{
 		if (m_rows->size() <= index)
 		{
-			for (unsigned int i = m_rows->size(); i <= index; i++)
+			for (size_t i = m_rows->size(); i <= index; i++)
 			{
 				m_rows->push_back(RowCsv({}));
 			}
