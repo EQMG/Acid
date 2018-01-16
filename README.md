@@ -12,7 +12,7 @@ Linux   [![Build Status](https://travis-ci.org/Equilibrium-Games/Flounder.svg?br
 
 Website   [Learn more](https://equilibrium.games)
 
-Discord   [Invite Link](https://discord.gg/zNN52T3)
+Trello   [Board](https://trello.com/b/ZRvpbbYC/flounder)
 
 Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs/docs/html/namespace_flounder.html)
 
@@ -35,25 +35,28 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * 3D terrain and water
  * Model file loading (OBJ)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
+ * Text file and config loading (CSV, JSON, XML) 
  * Visual drivers and maths classes
  * Flexable input classes
  * Component entity system
- * Deferred rendering (WIP)
+ * Deferred rendering
  * 3D shadow mapping (WIP)
+ * Simple physics engine (WIP)
+ * P2P networking (WIP)
  * Particle effects (WIP)
  * Animations (WIP)
- * P2P networking (WIP)
  * Steam integration (WIP)
 
 ## Plans
- * Finish the core engine by the end of 2018 Q1
- * A physics engine, ragdoll animations
- * A simple editor in the far future
+ * Finish the core engine by the end of 2018 Q2
+ * A simple visual editor in the far future
 
 ## Developer Setup
 Once Flounder is cloned run `git submodule update --init --recursive` to update the submodules needed to compile.
 
 On all platforms you can compile using CMake.
 
-For Windows you need Visual Studios 2015 or later, use the VS installer and ensure you have "Desktop development with C++" installed. You should also probably update the Windows SDK, the project is setup for "Windows 10 SDK (10.0.15063.0) for UWP: C++" currently. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and now Flounder should compile properly. You can now run Scripts/generate_vs.bat and an environment will be setup in Build
+For Windows you need Visual Studios 2015 or later, use the VS installer and ensure you have "Desktop development with C++" installed. You should also probably update the Windows SDK, the project is setup for "Windows 10 SDK (10.0.15063.0) for UWP: C++" currently. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and now Flounder should compile properly. You can now run Scripts/generate_vs.bat and an environment will be setup in Build.
 
+## Contributing
+You can contribute to Flounder in any way you want, we are always looking for help.

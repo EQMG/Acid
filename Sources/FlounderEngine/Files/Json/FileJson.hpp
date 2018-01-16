@@ -2,21 +2,18 @@
 
 #include <string>
 #include "../IFile.hpp"
-#include "XmlNode.hpp"
-
-// TODO: https://github.com/TheThinMatrix/OpenGL-Animation/tree/master/ColladaParser/xmlParser
 
 namespace Flounder
 {
-	class FileXml :
+	class FileJson :
 		public IFile
 	{
 	private:
 		std::string m_filename;
 	public:
-		FileXml(const std::string &filename);
+		FileJson(const std::string &filename);
 
-		~FileXml();
+		~FileJson();
 
 		void Load() override;
 
