@@ -22,8 +22,6 @@ namespace Flounder
 {
 	PlatformUpdater::PlatformUpdater() :
 		IUpdater(),
-		m_startTime(0.0f),
-		m_timeOffset(0.0f),
 		m_deltaUpdate(nullptr),
 		m_deltaRender(nullptr),
 		m_timerUpdate(nullptr),
@@ -50,8 +48,6 @@ namespace Flounder
 
 	void PlatformUpdater::Create()
 	{
-		m_startTime = static_cast<float>(glfwGetTime());
-		m_timeOffset = 0.0f;
 		m_deltaUpdate = new Delta();
 		m_deltaRender = new Delta();
 		m_timerUpdate = new Timer(1.0f / 62.0f);

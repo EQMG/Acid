@@ -1,11 +1,11 @@
-#include "HelperString.hpp"
+#include "FormatString.hpp"
 
 #include <algorithm>
 #include <cctype>
 
 namespace Flounder
 {
-	std::vector<std::string> HelperString::Split(const std::string &str, const std::string &sep, const bool &trim)
+	std::vector<std::string> FormatString::Split(const std::string &str, const std::string &sep, const bool &trim)
 	{
 		char *cstr = const_cast<char*>(str.c_str());
 		std::vector<std::string> arr;
@@ -27,7 +27,7 @@ namespace Flounder
 		return arr;
 	}
 
-	bool HelperString::StartsWith(const std::string &str, const std::string &token)
+	bool FormatString::StartsWith(const std::string &str, const std::string &token)
 	{
 		if (str.length() < token.length())
 		{
@@ -37,12 +37,12 @@ namespace Flounder
 		return str.compare(0, token.length(), token) == 0;
 	}
 
-	bool HelperString::Contains(const std::string &str, const std::string &token)
+	bool FormatString::Contains(const std::string &str, const std::string &token)
 	{
 		return str.find(token) != std::string::npos;
 	}
 
-	bool HelperString::IsInteger(const std::string &str)
+	bool FormatString::IsInteger(const std::string &str)
 	{
 		if (str.empty() || ((!isdigit(str[0])) && (str[0] != '-') && (str[0] != '+')))
 		{
@@ -55,7 +55,7 @@ namespace Flounder
 		return *p == 0;
 	}
 
-	int HelperString::FindCharPos(const std::string &str, const char &c)
+	int FormatString::FindCharPos(const std::string &str, const char &c)
 	{
 		for (int i = 0; i < static_cast<int>(str.length()); i++)
 		{
@@ -68,7 +68,7 @@ namespace Flounder
 		return -1;
 	}
 
-	std::string HelperString::Trim(const std::string &str, const std::string &whitespace)
+	std::string FormatString::Trim(const std::string &str, const std::string &whitespace)
 	{
 		const auto strBegin = str.find_first_not_of(whitespace);
 
@@ -86,21 +86,21 @@ namespace Flounder
 		return result;
 	}
 
-	std::string HelperString::Substring(const std::string &str, const int &start, const int &end)
+	std::string FormatString::Substring(const std::string &str, const int &start, const int &end)
 	{
 		std::string result = str;
 		result = result.substr(start, end - start);
 		return result;
 	}
 
-	std::string HelperString::RemoveAll(const std::string &str, const char &token)
+	std::string FormatString::RemoveAll(const std::string &str, const char &token)
 	{
 		std::string result = str;
 		result.erase(remove(result.begin(), result.end(), token), result.end());
 		return result;
 	}
 
-	std::string HelperString::Replace(const std::string &str, const std::string &token, const std::string &to)
+	std::string FormatString::Replace(const std::string &str, const std::string &token, const std::string &to)
 	{
 		std::string result = str;
 		const size_t startPos = result.find(token);

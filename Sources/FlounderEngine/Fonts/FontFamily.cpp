@@ -1,6 +1,6 @@
 ﻿#include "FontFamily.hpp"
 
-#include "../Helpers/HelperFile.hpp"
+#include "Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -28,7 +28,7 @@ namespace Flounder
 		const std::string filepathPng = filename + "/" + suffex + ".png";
 		const std::string filepathFnt = filename + "/" + suffex + ".fnt";
 
-		if (!HelperFile::FileExists(filepathPng) || !HelperFile::FileExists(filepathFnt))
+		if (!FileSystem::FileExists(filepathPng) || !FileSystem::FileExists(filepathFnt))
 		{
 			return nullptr;
 		}

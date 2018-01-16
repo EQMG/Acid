@@ -1,12 +1,12 @@
 #include "Frustum.hpp"
 
 #include <cmath>
-#include "../Helpers/HelperArray.hpp"
+#include "Helpers/SquareArray.hpp"
 
 namespace Flounder
 {
 	Frustum::Frustum() :
-		m_frustum(HelperArray::FloatArray(6, 4))
+		m_frustum(SquareArray::FloatArray(6, 4))
 	{
 	}
 

@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A helper for C++ files.
 	/// </summary>
-	class HelperFile
+	class FileSystem
 	{
 	public:
 		/// <summary>

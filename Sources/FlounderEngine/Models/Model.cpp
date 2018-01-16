@@ -2,8 +2,8 @@
 
 #include <cassert>
 #include <limits>
-#include "../Helpers/HelperFile.hpp"
-#include "../Helpers/HelperString.hpp"
+#include "Helpers/FileSystem.hpp"
+#include "Helpers/FormatString.hpp"
 
 namespace Flounder
 {
@@ -96,22 +96,22 @@ namespace Flounder
 
 	void Model::LoadFromFile()
 	{
-		const std::string fileLoaded = HelperFile::ReadTextFile(std::string(m_filename));
-		std::vector<std::string> lines = HelperString::Split(fileLoaded, "\n");
+		const std::string fileLoaded = FileSystem::ReadTextFile(std::string(m_filename));
+		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n");
 
 		std::vector<uint32_t> indicesList = std::vector<uint32_t>();
 		std::vector<VertexData*> verticesList = std::vector<VertexData*>();
 		std::vector<Vector2> uvsList = std::vector<Vector2>();
 		std::vector<Vector3> normalsList = std::vector<Vector3>();
 
-		std::vector<std::string> splitFile = HelperString::Split(std::string(m_filename), "/");
+		std::vector<std::string> splitFile = FormatString::Split(std::string(m_filename), "/");
 		std::string fileName = splitFile.at(splitFile.size() - 1);
 
 		for (auto it = lines.begin(); it < lines.end(); ++it)
 		{
-			std::string line = HelperString::Trim(*it);
+			std::string line = FormatString::Trim(*it);
 
-			std::vector<std::string> split = HelperString::Split(line, " ");
+			std::vector<std::string> split = FormatString::Split(line, " ");
 
 			if (!split.empty())
 			{
@@ -140,15 +140,15 @@ namespace Flounder
 				else if (prefix == "f")
 				{
 					// The split length of 3 faced + 1 for the f prefix.
-					if (split.size() != 4 || HelperString::Contains(line, "//"))
+					if (split.size() != 4 || FormatString::Contains(line, "//"))
 					{
 						printf("Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", m_filename.c_str());
 						assert(false);
 					}
 
-					std::vector<std::string> vertex1 = HelperString::Split(split.at(1), "/");
-					std::vector<std::string> vertex2 = HelperString::Split(split.at(2), "/");
-					std::vector<std::string> vertex3 = HelperString::Split(split.at(3), "/");
+					std::vector<std::string> vertex1 = FormatString::Split(split.at(1), "/");
+					std::vector<std::string> vertex2 = FormatString::Split(split.at(2), "/");
+					std::vector<std::string> vertex3 = FormatString::Split(split.at(3), "/");
 
 					VertexData *v0 = ProcessDataVertex(Vector3(stof(vertex1.at(0)), stof(vertex1.at(1)), stof(vertex1.at(2))), &verticesList, &indicesList);
 					VertexData *v1 = ProcessDataVertex(Vector3(stof(vertex2.at(0)), stof(vertex2.at(1)), stof(vertex2.at(2))), &verticesList, &indicesList);
