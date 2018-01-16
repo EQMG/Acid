@@ -9,6 +9,7 @@ namespace Flounder
 	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXS = { "Right", "Left", "Top", "Bottom", "Back", "Front" };
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt) :
+		m_filename(filename),
 		m_components(0),
 		m_width(0),
 		m_height(0),
@@ -26,7 +27,7 @@ namespace Flounder
 
 		for (const auto suffix : SIDE_FILE_SUFFIXS)
 		{
-			const std::string filepathSide = filename + suffix + fileExt;
+			const std::string filepathSide = m_filename + "/" + suffix + fileExt;
 			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
 			m_imageSize += sizeSide;
 		}
@@ -36,7 +37,7 @@ namespace Flounder
 
 		for (const auto suffix : SIDE_FILE_SUFFIXS)
 		{
-			const std::string filepathSide = filename + suffix + fileExt;
+			const std::string filepathSide = m_filename + "/" + suffix + fileExt;
 			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
 			const stbi_uc *pixelsSide = Texture::LoadPixels(filepathSide, &m_width, &m_height, &m_components);
 			m_depth = m_width; // TODO

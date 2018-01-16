@@ -9,6 +9,8 @@ namespace Flounder
 	private:
 		static const std::vector<std::string> SIDE_FILE_SUFFIXS;
 
+		std::string m_filename;
+
 		int32_t m_components;
 		int32_t m_width, m_height, m_depth;
 		VkDeviceSize m_imageSize;
@@ -34,6 +36,8 @@ namespace Flounder
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const;
+
+		std::string GetFilename() const { return m_filename; };
 	private:
 		void CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory);
 
