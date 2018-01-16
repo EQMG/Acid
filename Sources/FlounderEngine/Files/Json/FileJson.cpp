@@ -1,21 +1,21 @@
-#include "FileXml.hpp"
+#include "FileJson.hpp"
 
 #include "../../Helpers/HelperString.hpp"
 #include "../../Helpers/HelperFile.hpp"
 
 namespace Flounder
 {
-	FileXml::FileXml(const std::string &filename) :
+	FileJson::FileJson(const std::string &filename) :
 		IFile(),
 		m_filename(filename)
 	{
 	}
 
-	FileXml::~FileXml()
+	FileJson::~FileJson()
 	{
 	}
 
-	void FileXml::Load()
+	void FileJson::Load()
 	{
 		Verify();
 		std::string fileLoaded = HelperFile::ReadTextFile(m_filename);
@@ -23,7 +23,7 @@ namespace Flounder
 
 	}
 
-	void FileXml::Save()
+	void FileJson::Save()
 	{
 		std::string data = "";
 
@@ -32,22 +32,22 @@ namespace Flounder
 		HelperFile::WriteTextFile(m_filename, data);
 	}
 
-	void FileXml::Clear()
+	void FileJson::Clear()
 	{
 
 	}
 
-	std::map<std::string, std::string> FileXml::ConfigReadValues() 
+	std::map<std::string, std::string> FileJson::ConfigReadValues() 
 	{
 		auto result = std::map<std::string, std::string>();
 		return result;
 	}
 	
-	void FileXml::ConfigPushValue(const std::string &key, const std::string &value) 
+	void FileJson::ConfigPushValue(const std::string &key, const std::string &value) 
 	{
 	}
 	
-	void FileXml::Verify()
+	void FileJson::Verify()
 	{
 		if (!HelperFile::FileExists(m_filename))
 		{

@@ -7,7 +7,7 @@
 #include <Models/Shapes/Sphere.hpp>
 #include <Helpers/HelperFile.hpp>
 #include <Files/Csv/FileCsv.hpp>
-#include <Files/Csv/ConfigCsv.hpp>
+#include <Files/Config.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 #include "Instance.hpp"
@@ -30,14 +30,15 @@ int main(int argc, char **argv)
 	printf("Home Directory: %s\n", HelperFile::GetHomeDirectory().c_str());
 
 	HelperFile::CreateFolder(HelperFile::GetWorkingDirectory() + "\\Configs");
-	ConfigCsv configDisplay = ConfigCsv(HelperFile::GetWorkingDirectory() + "\\Configs\\Display.csv");
-	configDisplay.Load();
-	configDisplay.Set("WindowWidth", "1080");
-	configDisplay.Set("WindowHeight", "720");
-	configDisplay.Set("FpsLimit", "0.0");
-	configDisplay.Set("Antialiasing", "FALSE");
-	configDisplay.Set("Fullscreen", "FALSE");
-	configDisplay.Save();
+	Config configGraphics = Config(new FileCsv(HelperFile::GetWorkingDirectory() + "\\Configs\\Graphics.csv"));
+	configGraphics.Load();
+	configGraphics.Value("WindowWidth", 1080);
+	configGraphics.Value("WindowHeight", 720);
+	configGraphics.Value("FpsLimit", 0.0);
+	configGraphics.Value("Antialiasing", true);
+	configGraphics.Value("Fullscreen", false);
+	configGraphics.Value("ShadowQuality", 3);
+	configGraphics.Save();
 
 	// Initializes the engine modules.
 	if (Display::Get() != nullptr)
