@@ -29,8 +29,8 @@ int main(int argc, char **argv)
 	printf("Working Directory: %s\n", HelperFile::GetWorkingDirectory().c_str());
 	printf("Home Directory: %s\n", HelperFile::GetHomeDirectory().c_str());
 
-	HelperFile::CreateFolder(HelperFile::GetWorkingDirectory() + "\\Configs");
-	Config configGraphics = Config(new FileCsv(HelperFile::GetWorkingDirectory() + "\\Configs\\Graphics.csv"));
+	HelperFile::CreateFolder(HelperFile::GetWorkingDirectory() + "/Configs");
+	Config configGraphics = Config(new FileCsv(HelperFile::GetWorkingDirectory() + "/Configs/Graphics.csv"));
 	configGraphics.Load();
 	configGraphics.Value("WindowWidth", 1080);
 	configGraphics.Value("WindowHeight", 720);

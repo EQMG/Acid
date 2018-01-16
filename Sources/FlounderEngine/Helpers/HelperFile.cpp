@@ -3,11 +3,13 @@
 #include <cassert>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else
+#include <sys/stat.h>
 #include <unistd.h>
 #define GetCurrentDir getcwd
 #endif
@@ -73,7 +75,7 @@ namespace Flounder
 		nError = _mkdir(path.c_str());
 #else
 		mode_t nMode = 0733;
-		nError = mkdir(path.c_str(),nMode);
+		nError = mkdir(path.c_str(), nMode);
 #endif
 
 		if (nError != 0)
@@ -136,7 +138,7 @@ namespace Flounder
 	{
 		FILE *fp = fopen(filepath.c_str(), "ab");
 
-		if (fp != NULL)
+		if (fp != nullptr)
 		{
 			fputs(data.c_str(), fp);
 			fclose(fp);
@@ -149,7 +151,7 @@ namespace Flounder
 		std::string pathname(filepath);
 
 		std::ofstream textout(pathname.c_str(), std::ios::out | std::ios::binary);
-		textout.write((const char*)&data[0], data.size());
+		textout.write(&data[0], data.size());
 
 		textout.close();
 	}
@@ -158,7 +160,8 @@ namespace Flounder
 	{
 		char buff[FILENAME_MAX];
 		GetCurrentDir(buff, FILENAME_MAX);
-		std::string currentWorkingDirectory(buff);
+		std::string currentWorkingDirectory = std::string(buff);
+		std::replace(currentWorkingDirectory.begin(), currentWorkingDirectory.end(), '\\', '/');
 		return currentWorkingDirectory;
 	}
 

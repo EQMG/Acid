@@ -39,7 +39,7 @@ namespace Flounder
 
 	Keyboard::~Keyboard()
 	{
-		delete m_keyboardKeys;
+		delete[] m_keyboardKeys;
 	}
 
 	void Keyboard::Update()
