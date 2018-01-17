@@ -6,7 +6,9 @@
 #include <Maths/Maths.hpp>
 #include <Devices/Display.hpp>
 #include <Devices/Mouse.hpp>
+#ifdef FLOUNDER_CONFIG_RELEASE
 #include <Sounds/Sound.hpp>
+#endif
 #include "Entities/EntityTreePine.hpp"
 #include "Entities/EntityTesting.hpp"
 #include "Entities/EntitySun.hpp"
@@ -40,7 +42,7 @@ namespace Demo
 		m_systemTest->SetSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
 		Particles::Get()->AddSystem(m_systemTest);*/
 
-		Entity *sun = new EntitySun(nullptr, Transform(Vector3(), Vector3(), Vector3(1.0f, 1.0f, 1.0f))); // Entities::Get()->GetStructure()
+		Entity *sun = new EntitySun(nullptr, Transform(Vector3(), Vector3(), Vector3(10.0f, 10.0f, 10.0f))); // Entities::Get()->GetStructure()
 		Entities::Get()->GetEntities()->push_back(sun);
 
 		for (int i = -5; i <= 0; i++)
