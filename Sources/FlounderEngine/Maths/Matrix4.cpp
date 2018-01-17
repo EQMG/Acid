@@ -519,8 +519,8 @@ namespace Flounder
 			destination = new Matrix4();
 		}
 
-		const float c = cos(angle);
-		const float s = sin(angle);
+		const float c = std::cos(angle);
+		const float s = std::sin(angle);
 		const float o = 1.0f - c;
 		const float xy = axis.m_x * axis.m_y;
 		const float yz = axis.m_y * axis.m_z;
@@ -663,7 +663,7 @@ namespace Flounder
 		// Only scales if there is a scale.
 		if (scale.m_x != 1.0f || scale.m_y != 1.0f || scale.m_z != 1.0f)
 		{
-			Matrix4::Scale(*destination, Vector4(scale.m_x, scale.m_y, scale.m_z, 1.0f), destination);
+			Matrix4::Scale(*destination, scale, destination);
 		}
 
 		return destination;
