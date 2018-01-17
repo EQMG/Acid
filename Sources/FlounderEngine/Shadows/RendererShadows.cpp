@@ -49,7 +49,7 @@ namespace Flounder
 			}
 		}
 
-		for (auto entity : *Entities::Get()->GetEntities()) // Entities::Get()->GetStructure()->GetAll()
+		for (auto entity : *Entities::Get()->GetStructure()->GetAll())
 		{
 			ComponentModel *componentModel = entity->GetComponent<ComponentModel*>();
 

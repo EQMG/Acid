@@ -26,7 +26,7 @@ namespace Demo
 
 		if (music1 != nullptr)
 		{
-			music1->SetPosition(Vector3(0.0f, 0.0f, 3.0f));
+			music1->SetPosition(Vector3(3.0f, 0.0f, 3.0f));
 			music1->SetGain(0.9f);
 			//	music1->Play();
 			music1->Loop();
@@ -34,16 +34,15 @@ namespace Demo
 #endif
 
 		/*std::vector<ParticleType*> *types = new std::vector<ParticleType*>();
-		types->push_back(new ParticleType("blue", new Texture("Resources/Particles/ParticleBlue.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		types->push_back(new ParticleType("purple", new Texture("Resources/Particles/ParticlePurple.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		types->push_back(new ParticleType("red", new Texture("Resources/Particles/ParticleRed.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		types->push_back(new ParticleType("yellow", new Texture("Resources/Particles/ParticleYellow.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		m_systemTest = new ParticleSystem(types, new SpawnCircle(30.0f, Vector3(0.0f, 1.0f, 0.0f)), 1000, 1.0f, -0.1f);
+		types->push_back(new ParticleType("blue", new Texture("Resources/Particles/Blue/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		types->push_back(new ParticleType("purple", new Texture("Resources/Particles/Purple/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		types->push_back(new ParticleType("red", new Texture("Resources/Particles/Red/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		types->push_back(new ParticleType("yellow", new Texture("Resources/Particles/Yellow/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		m_systemTest = new ParticleSystem(types, new SpawnCircle(30.0f, Vector3(0.0f, 10.0f, 0.0f)), 1000, 1.0f, -0.1f);
 		m_systemTest->SetSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
 		Particles::Get()->AddSystem(m_systemTest);*/
 
-		Entity *sun = new EntitySun(nullptr, Transform(Vector3(), Vector3(), Vector3(10.0f, 10.0f, 10.0f))); // Entities::Get()->GetStructure()
-		Entities::Get()->GetEntities()->push_back(sun);
+		new EntitySun(Entities::Get()->GetStructure(), Transform(Vector3(), Vector3(), Vector3(10.0f, 10.0f, 10.0f)));
 
 		for (int i = -5; i <= 0; i++)
 		{
@@ -55,19 +54,15 @@ namespace Demo
 
 				if (position.m_y > 0.0f)
 				{
-					Entity *test = nullptr;
-
 					if (i < 0)
 					{
-						test = new EntityTreePine(nullptr, Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f))); // Entities::Get()->GetStructure()
+						new EntityTreePine(Entities::Get()->GetStructure(), Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f)));
 					}
 					else
 					{
 						position.m_y += 1.0f;
-						test = new EntityTesting(nullptr, Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f))); // Entities::Get()->GetStructure()
+						new EntityTesting(Entities::Get()->GetStructure(), Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f)));
 					}
-
-					Entities::Get()->GetEntities()->push_back(test);
 				}
 			}
 		}

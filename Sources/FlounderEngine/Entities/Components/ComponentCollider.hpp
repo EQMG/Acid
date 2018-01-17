@@ -28,6 +28,6 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
-		ICollider *GetCollider() const { return m_collider; }
+		ICollider *GetCollider() override { return m_collider; }
 	};
 }
