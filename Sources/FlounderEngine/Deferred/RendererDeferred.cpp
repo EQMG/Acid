@@ -65,7 +65,7 @@ namespace Flounder
 	{
 		std::vector<UbosDeferred::Light> sceneLights = {};
 
-		for (auto entity : *Entities::Get()->GetEntities())
+		for (auto entity : *Entities::Get()->GetStructure()->GetAll())
 		{
 			ComponentLight *componentLight = entity->GetComponent<ComponentLight*>();
 

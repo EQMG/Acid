@@ -47,7 +47,10 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		for (auto entity : *Entities::Get()->GetEntities()) // Entities::Get()->GetStructure()->GetAll()
+	//	std::vector<Entity*> inFrustum = std::vector<Entity*>();
+	//	Entities::Get()->GetStructure()->QueryFrustum(camera.GetViewFrustum(), &inFrustum);
+
+		for (auto entity : *Entities::Get()->GetStructure()->GetAll()) // inFrustum
 		{
 			entity->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 		}
