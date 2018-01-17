@@ -43,14 +43,19 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/bin)
 
-# mklink /J C:\Users\mattp\Documents\Flounder\Build\bin\Resources C:\Users\mattp\Documents\Flounder\Resources
-# file(COPY "${PROJECT_SOURCE_DIR}/Resources/" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/")
-# ADD_CUSTOM_TARGET(link_target ALL COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/" "${PROJECT_SOURCE_DIR}/Resources/")
+#mklink /J C:\Users\mattp\Documents\Flounder\Build\bin\Resources C:\Users\mattp\Documents\Flounder\Resources
+#file(COPY "${PROJECT_SOURCE_DIR}/Resources/" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/")
+#ADD_CUSTOM_TARGET(link_target ALL COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/" "${PROJECT_SOURCE_DIR}/Resources/")
 
 # Libraries
 set(GLFW_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glfw/include")
-find_library(GLFW_LIBRARY NAMES glfw3 PATHS "${PROJECT_SOURCE_DIR}/Libraries/glfw/lib/")
-message(STATUS "Glfw: ${GLFW_LIBRARY}")
+set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
+set(GLFW_BUILD_TESTS OFF CACHE INTERNAL "Build the GLFW test programs")
+set(GLFW_BUILD_DOCS OFF CACHE INTERNAL "Build the GLFW documentation")
+set(GLFW_INSTALL OFF CACHE INTERNAL "Generate installation target")
+add_subdirectory(Libraries/glfw)
+#find_library(GLFW_LIBRARY NAMES glfw3 PATHS "${PROJECT_SOURCE_DIR}/Libraries/glfw/lib/")
+#message(STATUS "Glfw: ${GLFW_LIBRARY}")
 
 set(OPENAL_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/openal/include")
 find_library(OPENAL_LIBRARY NAMES OpenAL32 PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
