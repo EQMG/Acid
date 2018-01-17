@@ -49,13 +49,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/bin)
 
 # Libraries
 set(GLFW_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glfw/include")
+#find_library(GLFW_LIBRARY NAMES glfw3 PATHS "${PROJECT_SOURCE_DIR}/Libraries/glfw/lib/")
 set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
 set(GLFW_BUILD_TESTS OFF CACHE INTERNAL "Build the GLFW test programs")
 set(GLFW_BUILD_DOCS OFF CACHE INTERNAL "Build the GLFW documentation")
 set(GLFW_INSTALL OFF CACHE INTERNAL "Generate installation target")
+set(GLFW_LIBRARY "glfw")
 add_subdirectory(Libraries/glfw)
-#find_library(GLFW_LIBRARY NAMES glfw3 PATHS "${PROJECT_SOURCE_DIR}/Libraries/glfw/lib/")
-#message(STATUS "Glfw: ${GLFW_LIBRARY}")
+message(STATUS "Glfw: ${GLFW_LIBRARY}")
 
 set(OPENAL_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/openal/include")
 find_library(OPENAL_LIBRARY NAMES OpenAL32 PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
