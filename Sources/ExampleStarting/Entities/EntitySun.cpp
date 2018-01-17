@@ -3,6 +3,7 @@
 #include <Entities/Components/ComponentGlow.hpp>
 #include <Entities/Components/ComponentLight.hpp>
 #include <Entities/Components/ComponentSun.hpp>
+#include <Entities/Components/ComponentCollider.hpp>
 
 #include "EntitySun.hpp"
 
@@ -33,4 +34,5 @@ EntitySun::EntitySun(ISpatialStructure<Entity*> *structure, const Transform &tra
 	AddComponent(new ComponentGlow(g_glowMap));
 	AddComponent(new ComponentLight(Light(Colour("#FFFFFF"), -1.0f), Vector3()));
 	AddComponent(new ComponentSun());
+	AddComponent(new ComponentCollider());
 }

@@ -1,5 +1,6 @@
 #include <Entities/Components/ComponentModel.hpp>
 #include <Entities/Components/ComponentMaterial.hpp>
+#include <Entities/Components/ComponentCollider.hpp>
 
 #include "EntityTreePine.hpp"
 
@@ -27,5 +28,6 @@ EntityTreePine::EntityTreePine(ISpatialStructure<Entity*> *structure, const Tran
 
 	AddComponent(new ComponentModel(g_model, g_diffuse));
 	AddComponent(new ComponentMaterial(0.0f, 0.0f));
+	AddComponent(new ComponentCollider());
 	// AddComponent(new ComponentSway(g_swayMap));
 }

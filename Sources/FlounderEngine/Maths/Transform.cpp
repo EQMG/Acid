@@ -46,4 +46,14 @@ namespace Flounder
 		m_rotation->Set(*source.m_rotation);
 		m_scaling->Set(*source.m_scaling);
 	}
+
+	bool Transform::operator==(const Transform &other) const
+	{
+		return m_position == other.m_position && m_rotation == other.m_rotation && m_scaling == other.m_scaling;
+	}
+
+	bool Transform::operator!=(const Transform &other) const
+	{
+		return !(*this == other);
+	}
 }
