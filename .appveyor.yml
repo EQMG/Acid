@@ -15,7 +15,7 @@ configuration:
   - Release
 
 install:
-#  - git clone https://github.com/glfw/glfw.git Libraries/glfw
+  - git clone https://github.com/glfw/glfw.git Libraries/glfw
 #  - git clone https://github.com/kcat/openal-soft Libraries/openal-soft
 #  - git submodule update --init --recursive
   - mkdir C:\Projects\deps
