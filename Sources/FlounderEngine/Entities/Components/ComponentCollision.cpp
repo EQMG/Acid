@@ -67,7 +67,7 @@ namespace Flounder
 		Aabb::Stretch(aabb1, amount, &collisionRange);
 
 		// Goes though all entities in the collision range.
-		for (auto entity : *Entities::Get()->GetEntities())
+		for (auto entity : *Entities::Get()->GetStructure()->GetAll())
 		{
 			// Ignores the original entity.
 			if (entity == GetEntity())

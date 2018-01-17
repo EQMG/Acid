@@ -103,6 +103,14 @@ namespace Flounder
 
 	ICollider *Entity::GetCollider()
 	{
+		for (auto c : *m_components)
+		{
+			if (c->GetCollider() != nullptr)
+			{
+				return c->GetCollider();
+			}
+		}
+
 		return nullptr;
 	}
 
