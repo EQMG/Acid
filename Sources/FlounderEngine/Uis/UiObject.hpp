@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <vector>
+#include <functional>
 #include "../Maths/Vector2.hpp"
 #include "../Maths/Vector3.hpp"
 #include "../Maths/Vector4.hpp"
@@ -32,6 +33,9 @@ namespace Flounder
 
 		IDriver *m_scaleDriver;
 		float m_scale;
+
+		std::function<void()> m_actionLeft;
+		std::function<void()> m_actionRight;
 	public:
 		/// <summary>
 		/// Creates a new screen object.
@@ -112,5 +116,9 @@ namespace Flounder
 		void SetScaleDriver(IDriver *scaleDriver);
 
 		float GetScale() const { return m_scale; }
+
+		void SetActionLeft(std::function<void()> action) { m_actionLeft = action; }
+
+		void SetActionRight(std::function<void()> action) { m_actionRight = action; }
 	};
 }
