@@ -4,53 +4,49 @@ namespace Flounder
 {
 	Joysticks::Joysticks() :
 		IModule(),
-		m_connected(new Joystick[GLFW_JOYSTICK_LAST])
+		m_connected(std::vector<Joystick>())
 	{
 		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
 		{
-			m_connected[i] = Joystick();
-			m_connected[i].id = i;
+			Joystick joystick = Joystick();
+			joystick.id = i;
+			joystick.connected = false;
+			m_connected.push_back(joystick);
 		}
 	}
 
 	Joysticks::~Joysticks()
 	{
-		delete[] m_connected;
 	}
 
 	void Joysticks::Update()
 	{
 		// For each joystick check if connected and update.
-		for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
+		for (auto joystick : m_connected)
 		{
-			Joystick joy = m_connected[i];
-			joy.id = i;
-
-			if (glfwJoystickPresent(i))
+			if (glfwJoystickPresent(joystick.id))
 			{
-				if (!joy.connected)
+				if (!joystick.connected)
 				{
-					printf("Joystick connected: '%s'.\n", glfwGetJoystickName(i));
+					printf("Joystick connected: '%s' to %i.\n", glfwGetJoystickName(joystick.id), joystick.id);
+					joystick.connected = true;
+					joystick.name = glfwGetJoystickName(joystick.id);
+					joystick.axes = glfwGetJoystickAxes(joystick.id, &joystick.axeCount);
+					joystick.buttons = glfwGetJoystickButtons(joystick.id, &joystick.buttonCount);
 				}
-
-				joy.connected = true;
-				joy.name = glfwGetJoystickName(i);
-				joy.axes = glfwGetJoystickAxes(i, &joy.axeCount);
-				joy.buttons = glfwGetJoystickButtons(i, &joy.buttonCount);
 			}
 			else
 			{
-				if (joy.connected)
+				if (joystick.connected)
 				{
-					printf("Joystick disconnected!\n");
+					printf("Joystick disconnected from %i!\n", joystick.id);
+					joystick.connected = false;
+					joystick.name = "";
+					joystick.axes = nullptr;
+					joystick.buttons = nullptr;
+					joystick.axeCount = 0;
+					joystick.buttonCount = 0;
 				}
-
-				joy.connected = false;
-				joy.name = "";
-				joy.axes = nullptr;
-				joy.buttons = nullptr;
-				joy.axeCount = 0;
-				joy.buttonCount = 0;
 			}
 		}
 	}

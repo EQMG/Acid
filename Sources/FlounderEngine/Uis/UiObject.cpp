@@ -2,6 +2,7 @@
 
 #include "../Devices/Display.hpp"
 #include "../Visual/DriverConstant.hpp"
+#include "Uis.hpp"
 
 namespace Flounder
 {
@@ -16,7 +17,9 @@ namespace Flounder
 		m_alphaDriver(new DriverConstant(1.0f)),
 		m_alpha(1.0f),
 		m_scaleDriver(new DriverConstant(1.0f)),
-		m_scale(1.0f)
+		m_scale(1.0f),
+		m_actionLeft(nullptr),
+		m_actionRight(nullptr)
 	{
 		if (parent != nullptr)
 		{
@@ -50,11 +53,32 @@ namespace Flounder
 
 	void UiObject::Update()
 	{
+		// Click updates.
+		if (Uis::Get()->GetSelector()->IsSelected(*this) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasLeftClick())
+		{
+			if (m_actionLeft != nullptr)
+			{
+				m_actionLeft();
+			}
+
+			Uis::Get()->GetSelector()->CancelWasEvent();
+		}
+		else if (Uis::Get()->GetSelector()->IsSelected(*this) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasRightClick())
+		{
+			if (m_actionRight != nullptr)
+			{
+				m_actionRight();
+			}
+
+			Uis::Get()->GetSelector()->CancelWasEvent();
+		}
+
 		for (auto child : *m_children)
 		{
 			child->Update();
 		}
 
+		// Alpha and scale updates.
 		m_alpha = m_alphaDriver->Update(Engine::Get()->GetDelta());
 		m_alpha = Maths::Clamp(m_alpha, 0.0f, 1.0f);
 		m_scale = m_scaleDriver->Update(Engine::Get()->GetDelta());
@@ -64,6 +88,7 @@ namespace Flounder
 			UpdateObject();
 		}
 
+		// Transform updates.
 		const float da = m_rectangle->m_aspectSize ? Display::Get()->GetAspectRatio() : 1.0f;
 		const float dw = (m_rectangle->m_dimensions->m_x / da) * m_scale;
 		const float dh = m_rectangle->m_dimensions->m_y * m_scale;

@@ -677,7 +677,7 @@ namespace Flounder
 		}
 
 		destination->SetIdentity();
-		const float yScale = 1.0f / tan(Maths::Radians(fov / 2.0f));
+		const float yScale = 1.0f / std::tan(Maths::Radians(fov / 2.0f));
 		const float xScale = yScale / aspectRatio;
 		const float length = zFar - zNear;
 

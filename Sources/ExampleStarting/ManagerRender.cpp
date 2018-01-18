@@ -2,6 +2,7 @@
 
 #include <Camera/Camera.hpp>
 #include <Renderer/Renderer.hpp>
+#include <Worlds/Worlds.hpp>
 
 namespace Demo
 {
@@ -54,7 +55,7 @@ namespace Demo
 		}
 
 		// Subpass 0.
-		m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
+	//	m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
 		Renderer::Get()->NextSubpass(commandBuffer);
 
 		// Subpass 1.
@@ -70,9 +71,9 @@ namespace Demo
 
 		// Subpass 3.
 		m_filterFxaa->RenderFilter(commandBuffer);
-		//	m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
-		//	m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
-		//	m_filterLensflare->RenderFilter(commandBuffer);
+		//  m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
+		//  m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
+		//  m_filterLensflare->RenderFilter(commandBuffer);
 		//  m_filterTiltshift->RenderFilter(commandBuffer);
 		//  m_filterGrain->RenderFilter(commandBuffer);
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
