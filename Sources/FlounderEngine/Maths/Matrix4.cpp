@@ -756,8 +756,8 @@ namespace Flounder
 		Vector4 point4 = Vector4(worldSpace.m_x, worldSpace.m_y, worldSpace.m_z, 1.0f);
 		Transform(viewMatrix, point4, &point4);
 		Transform(projectionMatrix, point4, &point4);
-		Vector3 point = Vector3(point4);
 
+		Vector3 point = Vector3(point4);
 		point.m_x /= point.m_z;
 		point.m_y /= point.m_z;
 		return destination->Set(point.m_x, point.m_y, point.m_z);

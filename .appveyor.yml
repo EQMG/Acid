@@ -35,3 +35,9 @@ before_build:
   - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
   - cmake --build .
   - cd ../
+
+artifacts:
+  - path: Build\bin\
+    name: Flounder Bins
+  - path: Build\lib\
+    name: Flounder Libs

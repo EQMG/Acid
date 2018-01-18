@@ -1,3 +1,9 @@
+addons:
+  artifacts: true
+  paths:
+    - Build\bin\
+    - Build\lib\
+
 matrix:
   include:
   - os: linux
