@@ -63,7 +63,10 @@ namespace Flounder
 	{
 		UpdateSizes(camera);
 
-		Matrix4 *rotation = Matrix4::ViewMatrix(Vector3(), *camera.GetPosition(), nullptr);
+		Matrix4 *rotation = new Matrix4(); // = Matrix4::ViewMatrix(Vector3(), *camera.GetPosition(), nullptr);
+		Matrix4::Rotate(*rotation, Vector3(0.0f, 1.0f, 0.0f), Maths::Radians(camera.GetRotation()->m_y), rotation);
+		Matrix4::Rotate(*rotation, Vector3(1.0f, 0.0f, 0.0f), Maths::Radians(-camera.GetRotation()->m_x), rotation);
+
 		Vector4 *forwardVector4 = Matrix4::Transform(*rotation, Vector4(0.0f, 0.0f, -1.0f, 0.0f), nullptr);
 		Vector3 *forwardVector = new Vector3(*forwardVector4);
 
@@ -204,7 +207,6 @@ namespace Flounder
 		Matrix4::Transform(*m_lightViewMatrix, *point4, point4);
 
 		delete point;
-
 		return point4;
 	}
 
@@ -212,7 +214,7 @@ namespace Flounder
 	{
 		m_projectionMatrix->SetIdentity();
 		m_projectionMatrix->m_00 = 2.0f / m_aabb->GetWidth();
-		m_projectionMatrix->m_11 = 2.0f / m_aabb->GetHeight();
+		m_projectionMatrix->m_11 = -2.0f / m_aabb->GetHeight();
 		m_projectionMatrix->m_22 = -2.0f / m_aabb->GetDepth();
 		m_projectionMatrix->m_33 = 1.0f;
 	}
@@ -253,6 +255,8 @@ namespace Flounder
 
 	void ShadowBox::UpdateViewShadowMatrix() const
 	{
+		m_projectionViewMatrix->SetIdentity();
+		m_shadowMapSpaceMatrix->SetIdentity();
 		Matrix4::Multiply(*m_projectionMatrix, *m_lightViewMatrix, m_projectionViewMatrix);
 		Matrix4::Multiply(*m_offset, *m_projectionViewMatrix, m_shadowMapSpaceMatrix);
 	}

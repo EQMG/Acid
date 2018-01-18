@@ -2,6 +2,7 @@
 
 #include <Visual/DriverConstant.hpp>
 #include <Worlds/Worlds.hpp>
+#include <Camera/Camera.hpp>
 
 namespace Demo
 {
@@ -11,11 +12,10 @@ namespace Demo
 		m_textTime(CreateStatus("Time: 0:00", 0.002f, 0.022f, JustifyLeft)),
 		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.042f, JustifyLeft)),
 		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.062f, JustifyLeft)),
-		//	m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.002f, 0.082f, JustifyLeft)),
+		m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.002f, 0.082f, JustifyLeft)),
 		m_timerUpdate(new Timer(0.333f))
 	{
-		//	m_textFps->SetVisible(false);
-		//	m_textUps->SetVisible(false);
+		//	m_textPosition->SetVisible(false);
 	}
 
 	OverlayDebug::~OverlayDebug()
@@ -24,7 +24,7 @@ namespace Demo
 		delete m_textTime;
 		delete m_textFps;
 		delete m_textUps;
-		//	delete m_textPosition;
+		delete m_textPosition;
 		delete m_timerUpdate;
 	}
 
@@ -48,11 +48,11 @@ namespace Demo
 				m_textTime->SetText("Time: " + std::to_string(hour) + ":" + std::to_string(minute));
 			}
 
-			//if (Camera::Get() != nullptr)
-			//{
-			//	Vector3 *position = Camera::Get()->GetCamera()->GetPosition();
-			//	m_textPosition->SetText("POSITION: " + std::to_string(static_cast<int>(position->m_x)) + ", " + std::to_string(static_cast<int>(position->m_y)) + ", " + std::to_string(static_cast<int>(position->m_z)));
-			//}
+			if (Camera::Get() != nullptr)
+			{
+				Vector3 *position = Camera::Get()->GetCamera()->GetPosition();
+				m_textPosition->SetText("POS: " + std::to_string(static_cast<int>(position->m_x)) + ", " + std::to_string(static_cast<int>(position->m_y)) + ", " + std::to_string(static_cast<int>(position->m_z)));
+			}
 
 			m_textFps->SetText("FPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDeltaRender())));
 			m_textUps->SetText("UPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDelta())));
