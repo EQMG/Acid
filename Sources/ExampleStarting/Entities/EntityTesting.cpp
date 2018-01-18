@@ -4,6 +4,7 @@
 #include <Models/Shapes/Cube.hpp>
 #include <Models/Shapes/Sphere.hpp>
 #include <Entities/Components/ComponentCollider.hpp>
+#include <Maths/Maths.hpp>
 
 #include "EntityTesting.hpp"
 
@@ -25,6 +26,6 @@ EntityTesting::EntityTesting(ISpatialStructure<Entity*> *structure, const Transf
 
 	AddComponent(new ComponentModel(g_model, g_diffuse));
 	AddComponent(new ComponentMaterial(0.0f, 0.0f));
-	AddComponent(new ComponentLight(Light(Colour(0.0f, 0.3f, 1.0f), 10.0f), Vector3(0.0f, 3.0f, 0.0f)));
+	AddComponent(new ComponentLight(Light(Colour(Maths::RandomInRange(0.0f, 1.0f), 0.0f, Maths::RandomInRange(0.0f, 1.0f)), 2.0f), Vector3(0.0f, 3.0f, 0.0f)));
 	AddComponent(new ComponentCollider());
 }

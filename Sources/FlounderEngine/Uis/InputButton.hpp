@@ -20,9 +20,6 @@ namespace Flounder
 		Gui *m_background;
 
 		bool m_mouseOver;
-
-		std::function<void()> m_actionLeft;
-		std::function<void()> m_actionRight;
 	public:
 		InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const Justify &justify);
 
@@ -33,9 +30,5 @@ namespace Flounder
 		std::string GetText() const { return m_text->GetText(); }
 
 		void SetText(const std::string &string) const { m_text->SetText(string); }
-
-		void SetActionLeft(std::function<void()> action) { m_actionLeft = action; }
-
-		void SetActionRight(std::function<void()> action) { m_actionRight = action; }
 	};
 }

@@ -1,6 +1,7 @@
 ﻿#include "Text.hpp"
 
 #include "../Devices/Display.hpp"
+#include "../Helpers/FormatString.hpp"
 #include "../Visual/DriverConstant.hpp"
 #include "UbosFonts.hpp"
 
@@ -196,45 +197,52 @@ namespace Flounder
 		Line currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
 		Word currentWord = Word();
 
-		for (auto c : object->GetText())
+		std::string formattedText = FormatString::Replace(object->GetText(), "\t", "    ");
+		std::vector<std::string> textLines = FormatString::Split(formattedText, "\n", true);
+
+		for (unsigned int i = 0; i < textLines.size(); i++)
 		{
-			int ascii = static_cast<int>(c);
-
-			if (ascii == Metafile::SPACE_ASCII)
+			if (textLines.at(i).empty())
 			{
-				bool added = currentLine.AddWord(currentWord);
-
-				if (!added)
-				{
-					lines.push_back(currentLine);
-					currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
-					currentLine.AddWord(currentWord);
-				}
-
-				currentWord = Word();
 				continue;
 			}
 
-			// TODO: TAB_ASCII
+			for (auto c : textLines.at(i))
+			{
+				int ascii = static_cast<int>(c);
 
-			if (ascii == Metafile::NEWLINE_ASCII)
+				if (ascii == Metafile::SPACE_ASCII)
+				{
+					bool added = currentLine.AddWord(currentWord);
+
+					if (!added)
+					{
+						lines.push_back(currentLine);
+						currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
+						currentLine.AddWord(currentWord);
+					}
+
+					currentWord = Word();
+					continue;
+				}
+
+				Character *character = object->GetFontType()->GetMetadata()->GetCharacter(ascii);
+
+				if (character != nullptr)
+				{
+					currentWord.AddCharacter(*character, object->m_kerning);
+				}
+			}
+
+			if (i != textLines.size() - 1)
 			{
 				lines.push_back(currentLine);
 				currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
 				currentLine.AddWord(currentWord);
-				continue;
-			}
-
-			Character *character = object->GetFontType()->GetMetadata()->GetCharacter(ascii);
-
-			if (character != nullptr)
-			{
-				currentWord.AddCharacter(*character, object->m_kerning);
 			}
 		}
 
 		CompleteStructure(lines, currentLine, currentWord, object);
-
 		return lines;
 	}
 
