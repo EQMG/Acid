@@ -44,6 +44,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/bin)
 
 #mklink /J C:\Users\mattp\Documents\Flounder\Build\bin\Resources C:\Users\mattp\Documents\Flounder\Resources
+#ln -s /Volumes/albrmat/Flounder/Resources /Volumes/albrmat/Flounder/Build/bin/Resorces
 #file(COPY "${PROJECT_SOURCE_DIR}/Resources/" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/")
 #ADD_CUSTOM_TARGET(link_target ALL COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/" "${PROJECT_SOURCE_DIR}/Resources/")
 
