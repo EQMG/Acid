@@ -36,6 +36,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Model file loading (OBJ)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
  * Text file and config loading (CSV, XML)
+ * Resource management
  * Visual drivers and maths classes
  * Flexible input classes
  * Component entity system

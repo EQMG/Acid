@@ -6,9 +6,7 @@
 #include <Standards/Standards.hpp>
 #include <Models/Shapes/Sphere.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Files/Csv/FileCsv.hpp>
 #include <Files/Config.hpp>
-#include <Helpers/Logger.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 #include "Instance.hpp"

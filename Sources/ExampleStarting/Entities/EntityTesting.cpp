@@ -8,24 +8,14 @@
 
 #include "EntityTesting.hpp"
 
-Model *EntityTesting::g_model = nullptr;
-Texture *EntityTesting::g_diffuse = nullptr;
-
 EntityTesting::EntityTesting(ISpatialStructure<Entity*> *structure, const Transform &transform) :
 	Entity(structure, transform)
 {
-	if (g_model == nullptr)
-	{
-		g_model = new Sphere(18, 18, 1.0f); // Cube(1.0f, 1.0f, 1.0f) // new Model("Resources/Models/ModelSphere.obj");
-	}
-
-	if (g_diffuse == nullptr)
-	{
-		g_diffuse = new Texture("Resources/Guis/White.png");
-	}
-
-	AddComponent(new ComponentModel(g_model, g_diffuse));
+	AddComponent(new ComponentModel(
+			Sphere::Resource(18, 18, 1.0f), // Cube::Resource("1.0, 1.0, 1.0");
+			Texture::Resource("Resources/Guis/White.png")
+	));
 	AddComponent(new ComponentMaterial(0.0f, 0.0f));
-	AddComponent(new ComponentLight(Light(Colour(Maths::RandomInRange(0.0f, 1.0f), 0.0f, Maths::RandomInRange(0.0f, 1.0f)), 2.0f), Vector3(0.0f, 3.0f, 0.0f)));
+	AddComponent(new ComponentLight(Light(Colour(0.2f, 0.1f, 0.8f), 1.333f), Vector3(0.0f, 3.0f, 0.0f)));
 	AddComponent(new ComponentCollider());
 }
