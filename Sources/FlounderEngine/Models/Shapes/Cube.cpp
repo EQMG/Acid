@@ -1,7 +1,6 @@
 #include "Cube.hpp"
 
 #include <algorithm>
-#include "Maths/Maths.hpp"
 
 namespace Flounder
 {
@@ -50,6 +49,11 @@ namespace Flounder
 			vertex.m_position.m_z *= depth;
 		}
 
-		Model::Set(vertices, indices);
+		Model::Set(vertices, indices, ToFilename(width, height, depth));
+	}
+
+	std::string Cube::ToFilename(const float &width, const float &height, const float &depth)
+	{
+		return "Cube" + std::to_string(width) + "_" + std::to_string(height) + "_" + std::to_string(depth);
 	}
 }

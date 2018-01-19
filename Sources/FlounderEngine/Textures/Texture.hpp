@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdexcept>
 #include "../Platforms/Platform.hpp"
+#include "../Resources/Resources.hpp"
 #include "../Renderer/Buffers/Buffer.hpp"
 #include "../Renderer/Pipelines/PipelineCreate.hpp"
 
@@ -13,6 +14,7 @@ namespace Flounder
 	/// Class that represents a loaded texture.
 	/// </summary>
 	class Texture :
+		public IResource,
 		public Buffer
 	{
 	private:
@@ -36,6 +38,20 @@ namespace Flounder
 
 		VkDescriptorImageInfo m_imageInfo;
 	public:
+		static Texture *Resource(const std::string &filename)
+		{
+			IResource *resource = Resources::Get()->Get(filename);
+
+			if (resource != nullptr)
+			{
+				return dynamic_cast<Texture*>(resource);
+			}
+
+			Texture *result = new Texture(filename);
+			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			return result;
+		}
+
 		/// <summary>
 		/// A new texture object.
 		/// </summary>
@@ -85,6 +101,8 @@ namespace Flounder
 		/// </summary>
 		/// <param name="numberOfRows"> The number of texture rows. </param>
 		void SetNumberOfRows(const int32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
+
+		std::string GetFilename() override { return m_filename; };
 
 		VkImage GetImage() const { return m_image; }
 

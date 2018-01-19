@@ -2,9 +2,13 @@
 
 namespace Demo
 {
-	// TODO: Maybe each tab can have a separate UI for the bar (like settings using some grey gears, news some green paper)
-	static const std::vector<std::string> TAB_NAMES = { "Inventory", "Achievements", "News", "Play", "Settings", "Exit" };
-	static const std::vector<std::string> TAB_COLOURS = { "#553982", "#41A85F", "#2969af", "#B8312F", "#475577", "#75706B" };
+	const std::vector<std::pair<std::string, Colour>> TABS = {
+		{ "Play", Colour("#B8312F") },
+		{ "News", Colour("#2969af") },
+		{ "Achievements", Colour("#41A85F") },
+		{ "Settings", Colour("#475577") },
+		{ "Exit", Colour("#75706B") }
+	};
 
 	UiNavigation::UiNavigation(UiObject *parent) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
@@ -13,7 +17,7 @@ namespace Demo
 		m_barTitle(nullptr),
 		m_barCreatedBy(nullptr),
 		m_tabPuck(nullptr),
-		tabTexts(std::vector<Text*>())
+		m_tabs(std::vector<UiTab*>())
 	{
 		Texture *textureWhite = new Texture("Resources/Guis/White.png");
 		Texture *textureGeometry = new Texture("Resources/Guis/Geometry-Grain.png");
@@ -31,26 +35,25 @@ namespace Demo
 		m_tabPuck->SetColourOffset(Colour("#386AB5"));
 
 		float tabXOffset = 0.35f;
+		int i = 0;
 
-		for (unsigned int i = 0; i < TAB_NAMES.size(); i++)
+		for (auto tabType : TABS)
 		{
-			Text *tabText = new Text(m_uiBar, UiBound(Vector2(tabXOffset, 0.955f), "TopLeft", false), 1.6f, TAB_NAMES.at(i), Uis::Get()->m_proximaNova->GetRegular(), JustifyLeft, 1.0f, 0.003f);
-			float width = tabText->GetRectangle()->m_dimensions->m_x * 1.6f;
-			auto tabAction = [&](){
-				printf("Tab activated: %s\n", TAB_NAMES.at(i).c_str());
-				m_tabPuck->GetRectangle()->m_position->m_x = tabXOffset;
-				m_tabPuck->GetRectangle()->m_dimensions->m_x = width;
-				m_barBackground->SetColourOffset(Colour(TAB_COLOURS.at(i)));
-			};
-			tabText->SetActionLeft(tabAction);
+			UiBound rectangle = UiBound(Vector2(tabXOffset, 0.955f), "TopLeft", false);
+			UiTab *uiTab = new UiTab(m_uiBar, rectangle, tabType.first, tabType.second);
+			tabXOffset += 0.03f + uiTab->GetWidth();
+			m_tabs.push_back(uiTab);
 
-			if (i == 3)
+			//uiTab->SetActionLeft([&](){
+			//	SwitchTab(uiTab->GetName());
+			//});
+
+			if (i == 0)
 			{
-				tabAction();
+				SwitchTab(uiTab->GetName());
 			}
 
-			tabXOffset += 0.03f + width;
-			tabTexts.push_back(tabText);
+			i++;
 		}
 	}
 
@@ -62,7 +65,7 @@ namespace Demo
 		delete m_barCreatedBy;
 		delete m_tabPuck;
 
-		for (auto text : tabTexts)
+		for (auto text : m_tabs)
 		{
 			delete text;
 		}
@@ -70,5 +73,19 @@ namespace Demo
 
 	void UiNavigation::UpdateObject()
 	{
+	}
+
+	void UiNavigation::SwitchTab(const std::string &tabName)
+	{
+		for (UiTab *tab : m_tabs)
+		{
+			if (tab->GetName() == tabName)
+			{
+				printf("Tab activated: %s\n", tab->GetName().c_str());
+				m_tabPuck->GetRectangle()->m_position->m_x = tab->GetRectangle()->m_position->m_x;
+				m_tabPuck->GetRectangle()->m_dimensions->m_x = tab->GetWidth();
+				m_barBackground->SetColourOffset(tab->GetColour());
+			}
+		}
 	}
 }
