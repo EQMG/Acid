@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "../Resources/Resources.hpp"
 #include "Character.hpp"
 
 namespace Flounder
@@ -10,12 +11,14 @@ namespace Flounder
 	/// <summary>
 	/// Provides functionality for getting the values from a font file.
 	/// </summary>
-	class Metafile
+	class Metafile :
+		public IResource
 	{
 	private:
 		std::map<int, Character*> *m_metadata;
 		std::map<std::string, std::string> *m_values;
 
+		std::string m_filename;
 		double m_verticalPerPixelSize;
 		double m_horizontalPerPixelSize;
 		int m_imageWidth;
@@ -25,6 +28,20 @@ namespace Flounder
 		int m_paddingHeight;
 		double m_maxSizeY;
 	public:
+		static Metafile *Resource(const std::string &filename)
+		{
+			IResource *resource = Resources::Get()->Get(filename);
+
+			if (resource != nullptr)
+			{
+				return dynamic_cast<Metafile*>(resource);
+			}
+
+			Metafile *result = new Metafile(filename);
+			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			return result;
+		}
+
 		static const int PAD_TOP;
 		static const int PAD_LEFT;
 		static const int PAD_BOTTOM;
@@ -41,7 +58,7 @@ namespace Flounder
 		/// Creates a new meta file.
 		/// </summary>
 		/// <param name="filepath"> The font file to load from. </param>
-		Metafile(const std::string &file);
+		Metafile(const std::string &filename);
 
 		/// <summary>
 		/// Deconstructor for the meta file.
@@ -49,6 +66,8 @@ namespace Flounder
 		~Metafile();
 
 		Character *GetCharacter(const int &ascii);
+
+		std::string GetFilename() override { return m_filename; }
 
 		double GetSpaceWidth() const { return m_spaceWidth; }
 

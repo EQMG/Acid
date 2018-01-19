@@ -1,21 +1,10 @@
 #include "IPostFilter.hpp"
 
 #include "../Devices/Display.hpp"
+#include "../Models/Shapes/Rectangle.hpp"
 
 namespace Flounder
 {
-	const std::vector<Vertex> VERTICES =
-	{
-		Vertex(Vector3(-1.0f, -1.0f, 0.0f), Vector2(0.0f, 0.0f)),
-		Vertex(Vector3(1.0f, -1.0f, 0.0f), Vector2(1.0f, 0.0f)),
-		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
-		Vertex(Vector3(-1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
-	};
-	const std::vector<uint32_t> INDICES =
-	{
-		0, 3, 2, 2, 1, 0
-	};
-
 	const PipelineCreateInfo PIPELINE_CREATE_INFO =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
@@ -32,7 +21,7 @@ namespace Flounder
 
 	IPostFilter::IPostFilter(const std::string &fragmentShader, const int &subpass, const std::vector<DescriptorType> &descriptors) :
 		m_pipeline(nullptr),
-		m_model(new Model(VERTICES, INDICES))
+		m_model(Rectangle::Resource(-1.0f, 1.0f))
 	{
 		PipelineCreateInfo pipelineCreateInfo = PipelineCreateInfo(PIPELINE_CREATE_INFO);
 		pipelineCreateInfo.shaderStages[1] = fragmentShader; // fragment
