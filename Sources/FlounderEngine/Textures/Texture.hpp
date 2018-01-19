@@ -76,7 +76,7 @@ namespace Flounder
 
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const;
 
-		std::string GetFilename() const { return m_filename; };
+		std::string GetFilename() override { return m_filename; };
 
 		/// <summary>
 		/// Gets if the texture has alpha.
@@ -101,8 +101,6 @@ namespace Flounder
 		/// </summary>
 		/// <param name="numberOfRows"> The number of texture rows. </param>
 		void SetNumberOfRows(const int32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
-
-		std::string GetFilename() override { return m_filename; };
 
 		VkImage GetImage() const { return m_image; }
 

@@ -4,6 +4,7 @@
 #include "../Devices/Display.hpp"
 #include "../Entities/Components/ComponentLight.hpp"
 #include "../Entities/Entities.hpp"
+#include "../Models/Shapes/Rectangle.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "../Shadows/Shadows.hpp"
 #include "../Skyboxes/Skyboxes.hpp"
@@ -11,18 +12,6 @@
 
 namespace Flounder
 {
-	const std::vector<Vertex> VERTICES =
-	{
-		Vertex(Vector3(-1.0f, -1.0f, 0.0f), Vector2(0.0f, 0.0f)),
-		Vertex(Vector3(1.0f, -1.0f, 0.0f), Vector2(1.0f, 0.0f)),
-		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
-		Vertex(Vector3(-1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
-	};
-	const std::vector<uint32_t> INDICES =
-	{
-		0, 3, 2, 2, 1, 0
-	};
-
 	const PipelineCreateInfo PIPELINE_CREATE_INFO =
 	{
 		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
@@ -49,7 +38,7 @@ namespace Flounder
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_uniformLights(new UniformBuffer(sizeof(UbosDeferred::UboLights))),
 		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO)),
-		m_model(new Model(VERTICES, INDICES))
+		m_model(Rectangle::Resource(-1.0f, 1.0f))
 	{
 	}
 

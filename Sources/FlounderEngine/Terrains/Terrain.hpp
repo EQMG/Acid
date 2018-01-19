@@ -37,6 +37,8 @@ namespace Flounder
 		static int CalculateVertexCount(const int &terrainLength, const float &squareSize);
 	private:
 		void CreateLod(const int &lod);
+
+		static std::string ToFilename(const float &x, const float &z, const int &lod);
 	public:
 		std::vector<Model*> GetModelLods() const { return m_modelLods; }
 

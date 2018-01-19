@@ -5,6 +5,7 @@
 namespace Flounder
 {
 	Sound::Sound(const std::string &filename) :
+		IResource(),
 		m_filename(filename),
 		m_count(0),
 		m_buffer(0),

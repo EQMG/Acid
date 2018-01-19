@@ -1,24 +1,15 @@
 ﻿#include "Gui.hpp"
 
 #include "../Devices/Display.hpp"
+#include "../Models/Shapes/Rectangle.hpp"
 #include "UbosGuis.hpp"
 
 namespace Flounder
 {
-	const std::vector<Vertex> VERTICES = {
-		Vertex(Vector3(0.0f, 0.0f, 0.0f), Vector2(0.0f, 0.0f)),
-		Vertex(Vector3(1.0f, 0.0f, 0.0f), Vector2(1.0f, 0.0f)),
-		Vertex(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 1.0f)),
-		Vertex(Vector3(0.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f))
-	};
-	const std::vector<uint32_t> INDICES = {
-		0, 3, 2, 2, 1, 0
-	};
-
 	Gui::Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow) :
 		UiObject(parent, rectangle),
 		m_uniformObject(new UniformBuffer(sizeof(UbosGuis::UboObject))),
-		m_model(new Model(VERTICES, INDICES)),
+		m_model(Rectangle::Resource(0.0f, 1.0f)),
 		m_texture(texture),
 		m_selectedRow(selectedRow),
 		m_atlasOffset(new Vector2()),

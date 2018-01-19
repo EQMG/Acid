@@ -8,10 +8,6 @@ namespace Flounder
 	class Sphere :
 		public Model
 	{
-	private:
-		int m_latitudeBands;
-		int m_longitudeBands;
-		float m_radius;
 	public:
 		static Sphere *Resource(const int &latitudeBands, const int &longitudeBands, const float &radius)
 		{

@@ -17,9 +17,11 @@ namespace Flounder
 	const double Metafile::LINE_HEIGHT = 0.03f;
 	const int Metafile::SPACE_ASCII = 32;
 
-	Metafile::Metafile(const std::string &file) :
+	Metafile::Metafile(const std::string &filename) :
+		IResource(),
 		m_metadata(new std::map<int, Character*>()),
 		m_values(new std::map<std::string, std::string>()),
+		m_filename(filename),
 		m_verticalPerPixelSize(0.0),
 		m_horizontalPerPixelSize(0.0),
 		m_imageWidth(0),
@@ -29,7 +31,7 @@ namespace Flounder
 		m_paddingHeight(0),
 		m_maxSizeY(0.0)
 	{
-		std::string fileLoaded = FileSystem::ReadTextFile(file);
+		std::string fileLoaded = FileSystem::ReadTextFile(filename);
 		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n");
 
 		for (auto line : lines)
@@ -157,7 +159,7 @@ namespace Flounder
 
 	Character *Metafile::GetCharacter(const int &ascii)
 	{
-		std::map<int, Character*>::iterator it = m_metadata->find(ascii);
+		auto it = m_metadata->find(ascii);
 
 		if (it != m_metadata->end())
 		{
