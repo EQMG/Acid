@@ -15,7 +15,6 @@ namespace Flounder
 	const std::string Metafile::NUMBER_SEPARATOR = ",";
 
 	const double Metafile::LINE_HEIGHT = 0.03f;
-	const int Metafile::NEWLINE_ASCII = 10;
 	const int Metafile::SPACE_ASCII = 32;
 
 	Metafile::Metafile(const std::string &file) :

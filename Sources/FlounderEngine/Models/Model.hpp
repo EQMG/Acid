@@ -4,6 +4,7 @@
 #include <vector>
 #include "../Maths/Vector2.hpp"
 #include "../Physics/Aabb.hpp"
+#include "../Resources/Resources.hpp"
 #include "../Renderer/Buffers/VertexBuffer.hpp"
 #include "../Renderer/Buffers/IndexBuffer.hpp"
 #include "Vertex.hpp"
@@ -14,7 +15,8 @@ namespace Flounder
 	/// <summary>
 	/// Class that represents a OBJ model.
 	/// </summary>
-	class Model
+	class Model :
+		public IResource
 	{
 	private:
 		std::string m_filename;
@@ -32,10 +34,24 @@ namespace Flounder
 		/// </summary>
 		Model();
 	public:
+		static Model *Resource(const std::string &filename)
+		{
+			IResource *resource = Resources::Get()->Get(filename);
+
+			if (resource != nullptr)
+			{
+				return dynamic_cast<Model*>(resource);
+			}
+
+			Model *result = new Model(filename);
+			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			return result;
+		}
+
 		/// <summary>
 		/// Creates a new model.
 		/// </summary>
-		/// <param name="name"> The file name. </param>
+		/// <param name="filename"> The file name. </param>
 		Model(const std::string &filename);
 
 		/// <summary>
@@ -43,13 +59,15 @@ namespace Flounder
 		/// </summary>
 		/// <param name="vertices"> The model vertices. </param>
 		/// <param name="indices"> The model indices. </param>
-		Model(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices);
+		/// <param name="name"> The model name. </param>
+		Model(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices, const std::string &name = "");
 
 		/// <summary>
 		/// Creates a new model without indices.
 		/// </summary>
 		/// <param name="vertices"> The model vertices. </param>
-		Model(const std::vector<Vertex> &vertices);
+		/// <param name="name"> The model name. </param>
+		Model(const std::vector<Vertex> &vertices, const std::string &name = "");
 
 		/// <summary>
 		/// Deconstructor for the model.
@@ -63,8 +81,10 @@ namespace Flounder
 		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer; }
 
 		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer; }
+
+		std::string GetFilename() override { return m_filename; };
 	protected:
-		void Set(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices);
+		void Set(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices, const std::string &name = "");
 	private:
 		/// <summary>
 		/// Loads the model object from a OBJ file.

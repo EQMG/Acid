@@ -3,6 +3,7 @@
 #include <Uis/UiObject.hpp>
 #include <Fonts/Text.hpp>
 #include <Guis/Gui.hpp>
+#include "UiTab.hpp"
 
 using namespace Flounder;
 
@@ -17,12 +18,14 @@ namespace Demo
 		Text *m_barTitle;
 		Text *m_barCreatedBy;
 		Gui *m_tabPuck;
-		std::vector<Text*> tabTexts;
+		std::vector<UiTab*> m_tabs;
 	public:
 		UiNavigation(UiObject *parent);
 
 		~UiNavigation();
 
-		virtual void UpdateObject() override;
+		void UpdateObject() override;
+
+		void SwitchTab(const std::string &tabName);
 	};
 }

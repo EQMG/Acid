@@ -8,6 +8,7 @@
 #include "../Entities/Entities.hpp"
 #include "../Events/Events.hpp"
 #include "../Particles/Particles.hpp"
+#include "Resources/Resources.hpp"
 #include "../Processing/Processing.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "../Shadows/Shadows.hpp"
@@ -59,6 +60,7 @@ namespace Flounder
 		ModuleCreate<Keyboard>(UpdatePre, "keyboard");
 		ModuleCreate<Mouse>(UpdatePre, "mouse");
 		ModuleCreate<Renderer>(UpdateRender, "renderer");
+		ModuleCreate<Resources>(UpdatePre, "resources");
 		ModuleCreate<Events>(UpdatePre, "events");
 		ModuleCreate<Tasks>(UpdatePre, "tasks");
 		ModuleCreate<Processing>(UpdatePre, "processing");
