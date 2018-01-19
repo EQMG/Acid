@@ -5,6 +5,7 @@
 namespace Flounder
 {
 	FontFamily::FontFamily(const std::string &filename) :
+		IResource(),
 		m_filename(filename),
 		m_typeThin(LoadFontType(filename, "Thin")),
 		m_typeLight(LoadFontType(filename, "Light")),

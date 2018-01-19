@@ -76,13 +76,13 @@ namespace Flounder
 
 		void CmdRender(const VkCommandBuffer &commandBuffer);
 
+		std::string GetFilename() override { return m_filename; }
+
 		Aabb *GetAabb() const { return m_aabb; }
 
 		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer; }
 
 		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer; }
-
-		std::string GetFilename() override { return m_filename; };
 	protected:
 		void Set(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices, const std::string &name = "");
 	private:

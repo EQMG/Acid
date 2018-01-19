@@ -2,11 +2,16 @@
 
 #include <string>
 #include <vector>
+#include "../Resources/Resources.hpp"
 #include "../Maths/Vector3.hpp"
 
 namespace Flounder
 {
-	class Sound
+	/// <summary>
+	/// Class that represents a loaded sound.
+	/// </summary>
+	class Sound :
+		public IResource
 	{
 	private:
 		std::string m_filename;
@@ -19,6 +24,20 @@ namespace Flounder
 		float m_pitch;
 		float m_gain;
 	public:
+		static Sound *Resource(const std::string &filename)
+		{
+			IResource *resource = Resources::Get()->Get(filename);
+
+			if (resource != nullptr)
+			{
+				return dynamic_cast<Sound*>(resource);
+			}
+
+			Sound *result = new Sound(filename);
+			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			return result;
+		}
+
 		Sound(const std::string &filename);
 
 		~Sound();
@@ -43,7 +62,7 @@ namespace Flounder
 
 		void SetGain(const float &gain);
 
-		std::string GetFileName() const { return m_filename; }
+		std::string GetFilename() override { return m_filename; };
 
 		bool IsPlaying() const { return m_playing; }
 
