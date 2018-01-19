@@ -2,7 +2,7 @@
 
 #include <Uis/UiStartLogo.hpp>
 #include "Uis/OverlayDebug.hpp"
-#include "Uis/UiNavigation.hpp"
+#include "Uis/Navigation/UiNavigation.hpp"
 
 using namespace Flounder;
 

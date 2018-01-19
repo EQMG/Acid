@@ -10,11 +10,12 @@ set(EXAMPLE_STARTING_HEADERS_
 	"ManagerUis.hpp"
     "Uis/OverlayDebug.hpp"
 	"Uis/UiInventory.hpp"
-    "Uis/UiNavigation.hpp"
+	"Uis/Navigation/UiNavigation.hpp"
+	"Uis/Navigation/Uitab.hpp"
 )
 
 set(EXAMPLE_STARTING_SOURCES_
-		"Configs/ConfigManager.cpp"
+	"Configs/ConfigManager.cpp"
 	"Entities/EntitySun.cpp"
 	"Entities/EntityTesting.cpp"
 	"Entities/EntityTreePine.cpp"
@@ -26,7 +27,8 @@ set(EXAMPLE_STARTING_SOURCES_
 	"ManagerUis.cpp"
 	"Uis/OverlayDebug.cpp"
 	"Uis/UiInventory.cpp"
-    "Uis/UiNavigation.cpp"
+	"Uis/Navigation/UiNavigation.cpp"
+	"Uis/Navigation/Uitab.cpp"
 )
 
 source_group("Header Files" FILES ${EXAMPLE_STARTING_HEADERS_})

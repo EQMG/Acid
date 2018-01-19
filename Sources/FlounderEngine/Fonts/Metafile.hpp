@@ -35,7 +35,6 @@ namespace Flounder
 		static const std::string NUMBER_SEPARATOR;
 
 		static const double LINE_HEIGHT;
-		static const int NEWLINE_ASCII;
 		static const int SPACE_ASCII;
 
 		/// <summary>
