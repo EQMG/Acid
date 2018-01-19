@@ -112,6 +112,13 @@ namespace Flounder
 			return;
 		}
 
+		/*Model *resourced = Model::Resource(ToFilename(m_transform->m_position->m_x, m_transform->m_position->m_z, lod));
+		if (resourced != nullptr)
+		{
+			m_modelLods[lod] = resourced;
+			return;
+		}*/
+
 #if FLOUNDER_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
@@ -124,6 +131,11 @@ namespace Flounder
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 		printf("Terrain LOD %i took %fms to build!\n", lod, debugEnd - debugStart);
 #endif
+	}
+
+	std::string Terrain::ToFilename(const float &x, const float &z, const int &lod)
+	{
+		return "Terrain_" + std::to_string(x) + "_" + std::to_string(z) + "_" + std::to_string(lod);
 	}
 
 	void Terrain::SetTransform(const Transform &transform) const

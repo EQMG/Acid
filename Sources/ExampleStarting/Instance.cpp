@@ -22,7 +22,7 @@ namespace Demo
 		m_buttonExit = new ButtonKeyboard({ GLFW_KEY_DELETE });
 
 #ifdef FLOUNDER_CONFIG_RELEASE
-		Sound *music1 = new Sound("Resources/Music/Outpost.wav");
+		Sound *music1 = Sound::Resource("Resources/Music/Outpost.wav");
 
 		if (music1 != nullptr)
 		{
@@ -34,10 +34,10 @@ namespace Demo
 #endif
 
 		/*std::vector<ParticleType*> *types = new std::vector<ParticleType*>();
-		types->push_back(new ParticleType("blue", new Texture("Resources/Particles/Blue/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		types->push_back(new ParticleType("purple", new Texture("Resources/Particles/Purple/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		types->push_back(new ParticleType("red", new Texture("Resources/Particles/Red/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		types->push_back(new ParticleType("yellow", new Texture("Resources/Particles/Yellow/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		types->push_back(new ParticleType("blue", Texture::Resource("Resources/Particles/Blue/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		types->push_back(new ParticleType("purple", Texture::Resource("Resources/Particles/Purple/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		types->push_back(new ParticleType("red", Texture::Resource("Resources/Particles/Red/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
+		types->push_back(new ParticleType("yellow", Texture::Resource("Resources/Particles/Yellow/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
 		m_systemTest = new ParticleSystem(types, new SpawnCircle(30.0f, Vector3(0.0f, 10.0f, 0.0f)), 1000, 1.0f, -0.1f);
 		m_systemTest->SetSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
 		Particles::Get()->AddSystem(m_systemTest);*/

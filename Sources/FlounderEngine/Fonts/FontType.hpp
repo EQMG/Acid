@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// A loader capable of loading font data into a instance of a text mesh.
 	/// </summary>
-	class FontType // TODO: IResource
+	class FontType
 	{
 	private:
 		Texture *m_texture;

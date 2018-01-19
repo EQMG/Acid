@@ -70,8 +70,8 @@ int main(int argc, char **argv)
 	if (Skyboxes::Get() != nullptr)
 	{
 		Skyboxes::Get()->SetSkybox(new Skybox(
-			new Cubemap("Resources/Skyboxes/Stars", ".png"),
-			new Sphere(6, 6, 1.0f), // new Model("Resources/Skyboxes/SkyboxSphere.obj"),
+			Cubemap::Resource("Resources/Skyboxes/Stars", ".png"),
+			Sphere::Resource(6, 6, 1.0f),
 			2048.0f
 		));
 	}

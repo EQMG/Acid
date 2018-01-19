@@ -1,11 +1,13 @@
 ﻿#pragma once
 
 #include <string>
+#include "../Resources/Resources.hpp"
 #include "FontType.hpp"
 
 namespace Flounder
 {
-	class FontFamily
+	class FontFamily :
+		public IResource
 	{
 	private:
 		std::string m_filename;
@@ -16,11 +18,25 @@ namespace Flounder
 		FontType *m_typeSemibold;
 		FontType *m_typeBold;
 	public:
+		static FontFamily *Resource(const std::string &filename)
+		{
+			IResource *resource = Resources::Get()->Get(filename);
+
+			if (resource != nullptr)
+			{
+				return dynamic_cast<FontFamily*>(resource);
+			}
+
+			FontFamily *result = new FontFamily(filename);
+			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			return result;
+		}
+
 		FontFamily(const std::string &filename);
 
 		~FontFamily();
 
-		std::string GetFilename() const { return m_filename; }
+		std::string GetFilename() override { return m_filename; }
 
 		FontType *GetThin() const { return m_typeThin; }
 

@@ -54,6 +54,6 @@ namespace Flounder
 
 	std::string Cube::ToFilename(const float &width, const float &height, const float &depth)
 	{
-		return "Cube" + std::to_string(width) + "_" + std::to_string(height) + "_" + std::to_string(depth);
+		return "Cube_" + std::to_string(width) + "_" + std::to_string(height) + "_" + std::to_string(depth);
 	}
 }
