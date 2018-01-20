@@ -20,7 +20,7 @@ namespace Flounder
 		m_x(x),
 		m_y(y),
 		m_z(z),
-		m_w(z)
+		m_w(w)
 	{
 	}
 

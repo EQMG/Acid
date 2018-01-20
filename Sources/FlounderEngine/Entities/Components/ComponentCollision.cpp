@@ -19,7 +19,7 @@ namespace Flounder
 
 	void ComponentCollision::Update()
 	{
-		ComponentModel *componentModel = GetEntity()->GetComponent<ComponentModel*>();
+		auto componentModel = GetEntity()->GetComponent<ComponentModel>();
 
 		if (componentModel != nullptr)
 		{
@@ -37,7 +37,7 @@ namespace Flounder
 		Vector3 result = Vector3(amount);
 
 		// Gets this entities collider.
-		ComponentCollider *componentCollider1 = GetEntity()->GetComponent<ComponentCollider*>();
+		auto componentCollider1 = GetEntity()->GetComponent<ComponentCollider>();
 
 		// Verifies that this entities main collider will work.
 		if (componentCollider1 == nullptr)
@@ -76,7 +76,7 @@ namespace Flounder
 			}
 
 			// Gets the checked entities collider.
-			ComponentCollider *componentCollider2 = entity->GetComponent<ComponentCollider*>();
+			auto componentCollider2 = entity->GetComponent<ComponentCollider>();
 
 			// Verifies that the checked entities main collider will work.
 			if (componentCollider2 == nullptr)

@@ -17,7 +17,7 @@ namespace Flounder
 
 	void ComponentCollider::Update()
 	{
-		ComponentModel *componentModel = GetEntity()->GetComponent<ComponentModel*>();
+		auto componentModel = GetEntity()->GetComponent<ComponentModel>();
 
 		if (componentModel != nullptr)
 		{

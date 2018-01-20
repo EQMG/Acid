@@ -687,12 +687,6 @@ namespace Flounder
 		destination->m_23 = -1.0f;
 		destination->m_32 = -((2.0f * zNear * zFar) / length);
 		destination->m_33 = 0.0f;
-
-		//	destination->m_10 = -destination->m_10;
-		//	destination->m_11 = -destination->m_11;
-		//	destination->m_12 = -destination->m_12;
-		//	destination->m_13 = -destination->m_13;
-		//
 		return destination;
 	}
 
