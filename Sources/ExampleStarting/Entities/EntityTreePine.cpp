@@ -13,5 +13,5 @@ EntityTreePine::EntityTreePine(ISpatialStructure<Entity*> *structure, const Tran
 	);
 	AddComponent(new ComponentMaterial(0.0f, 0.0f));
 	AddComponent(new ComponentCollider());
-	// AddComponent(new ComponentSway(Resources::Create<Texture>("Resources/Entities/TreePine/Sway.png")));
+	// AddComponent(new ComponentSway(Texture::Resource("Resources/Entities/TreePine/Sway.png")));
 }

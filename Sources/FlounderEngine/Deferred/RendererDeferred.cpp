@@ -60,6 +60,13 @@ namespace Flounder
 
 			if (componentLight != nullptr)
 			{
+			//	Vector3 position = *componentLight->GetLight()->m_position;
+			//	float radius = componentLight->GetLight()->m_radius;
+			//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
+			//	{
+			//		continue;
+			//	}
+
 				UbosDeferred::Light light = {};
 				light.colour = *componentLight->GetLight()->m_colour;
 				light.position = *componentLight->GetLight()->m_position;
@@ -72,6 +79,8 @@ namespace Flounder
 				break;
 			}
 		}
+
+	//	printf("Rendered Lights: %i\n", sceneLights.size());
 
 		UbosDeferred::UboScene uboScene = {};
 
