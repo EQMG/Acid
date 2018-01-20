@@ -1,0 +1,5 @@
+model,"Resources/Entities/Testing/Model.obj","Resources/Entities/Testing/Texture.png"
+material,0.0,0.0
+light,#6432dc,1.333,0.0,3.0,0.0
+collider
+collision

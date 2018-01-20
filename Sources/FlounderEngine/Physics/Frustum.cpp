@@ -100,11 +100,11 @@ namespace Flounder
 		delete[] clip;
 	}
 
-	bool Frustum::PointInFrustum(const float &x, const float &y, const float &z) const
+	bool Frustum::PointInFrustum(const Vector3 &position) const
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			if (m_frustum[i][0] * x + m_frustum[i][1] * y + m_frustum[i][2] * z + m_frustum[i][3] <= 0.0f)
+			if (m_frustum[i][0] * position.m_x + m_frustum[i][1] * position.m_y + m_frustum[i][2] * position.m_z + m_frustum[i][3] <= 0.0f)
 			{
 				return false;
 			}
@@ -113,11 +113,11 @@ namespace Flounder
 		return true;
 	}
 
-	bool Frustum::SphereInFrustum(const float &x, const float &y, const float &z, const float &radius) const
+	bool Frustum::SphereInFrustum(const Vector3 &position, const float &radius) const
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			if (m_frustum[i][0] * x + m_frustum[i][1] * y + m_frustum[i][2] * z + m_frustum[i][3] <= -radius)
+			if (m_frustum[i][0] * position.m_x + m_frustum[i][1] * position.m_y + m_frustum[i][2] * position.m_z + m_frustum[i][3] <= -radius)
 			{
 				return false;
 			}
@@ -126,11 +126,18 @@ namespace Flounder
 		return true;
 	}
 
-	bool Frustum::CubeInFrustum(const float &x1, const float &y1, const float &z1, const float &x2, const float &y2, const float &z2) const
+	bool Frustum::CubeInFrustum(const Vector3 &min, const Vector3 &max) const
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			if (m_frustum[i][0] * x1 + m_frustum[i][1] * y1 + m_frustum[i][2] * z1 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x2 + m_frustum[i][1] * y1 + m_frustum[i][2] * z1 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x1 + m_frustum[i][1] * y2 + m_frustum[i][2] * z1 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x2 + m_frustum[i][1] * y2 + m_frustum[i][2] * z1 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x1 + m_frustum[i][1] * y1 + m_frustum[i][2] * z2 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x2 + m_frustum[i][1] * y1 + m_frustum[i][2] * z2 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x1 + m_frustum[i][1] * y2 + m_frustum[i][2] * z2 + m_frustum[i][3] <= 0.0f && m_frustum[i][0] * x2 + m_frustum[i][1] * y2 + m_frustum[i][2] * z2 + m_frustum[i][3] <= 0.0f)
+			if (m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
+					m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
+					m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
+					m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
+					m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
+					m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
+					m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
+					m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f)
 			{
 				return false;
 			}
@@ -141,7 +148,7 @@ namespace Flounder
 
 	void Frustum::NormalizePlane(float **frustum, const int &side) const
 	{
-		const float magnitude = sqrt(m_frustum[side][FrustumA] * m_frustum[side][FrustumA] + m_frustum[side][FrustumB] * m_frustum[side][FrustumB] + m_frustum[side][FrustumC] * m_frustum[side][FrustumC]);
+		const float magnitude = std::sqrt(m_frustum[side][FrustumA] * m_frustum[side][FrustumA] + m_frustum[side][FrustumB] * m_frustum[side][FrustumB] + m_frustum[side][FrustumC] * m_frustum[side][FrustumC]);
 		m_frustum[side][FrustumA] /= magnitude;
 		m_frustum[side][FrustumB] /= magnitude;
 		m_frustum[side][FrustumC] /= magnitude;
