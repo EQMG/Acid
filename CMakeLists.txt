@@ -50,7 +50,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/bin)
 
 # Libraries
 set(GLFW_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glfw/include")
-#find_library(GLFW_LIBRARY NAMES glfw3 PATHS "${PROJECT_SOURCE_DIR}/Libraries/glfw/lib/")
 set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
 set(GLFW_BUILD_TESTS OFF CACHE INTERNAL "Build the GLFW test programs")
 set(GLFW_BUILD_DOCS OFF CACHE INTERNAL "Build the GLFW documentation")
@@ -58,6 +57,11 @@ set(GLFW_INSTALL OFF CACHE INTERNAL "Generate installation target")
 add_subdirectory(Libraries/glfw)
 set(GLFW_LIBRARY "glfw")
 message(STATUS "Glfw: ${GLFW_LIBRARY}")
+
+set(STB_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/stb/include")
+add_subdirectory(Libraries/stb)
+set(STB_LIBRARY "stb")
+message(STATUS "Stb: ${STB_LIBRARY}")
 
 set(OPENAL_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/openal/include")
 find_library(OPENAL_LIBRARY NAMES OpenAL32 PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
@@ -67,7 +71,7 @@ set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
 find_library(VULKAN_LIBRARY NAMES vulkan vulkan-1 PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
 message(STATUS "Vulkan: ${VULKAN_LIBRARY}")
 
-set(LIBRARIES_INCLUDES ${GLFW_INCLUDES} ${OPENAL_INCLUDES} ${VULKAN_INCLUDES})
+set(LIBRARIES_INCLUDES ${STB_INCLUDES} ${GLFW_INCLUDES} ${OPENAL_INCLUDES} ${VULKAN_INCLUDES})
 
 # Engine Sources
 add_subdirectory(Sources/FlounderEngine)

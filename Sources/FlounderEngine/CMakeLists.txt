@@ -9,4 +9,4 @@ include_directories(${LIBRARIES_INCLUDES} ${FLOUNDERENGINE_INCLUDES})
 
 add_library(FlounderEngine STATIC ${FLOUNDERENGINE_SOURCES})
 
-target_link_libraries(FlounderEngine "${GLFW_LIBRARY}" "${OPENAL_LIBRARY}" "${VULKAN_LIBRARY}")
+target_link_libraries(FlounderEngine "${STB_LIBRARY}" "${GLFW_LIBRARY}" "${OPENAL_LIBRARY}" "${VULKAN_LIBRARY}")
