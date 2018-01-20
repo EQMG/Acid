@@ -112,7 +112,7 @@ namespace Flounder
 		clearValues[2].color = { { 0.0f, 0.0f, 0.0f, 0.0f } }; // Colours.
 		clearValues[3].color = { { 0.0f, 0.0f, 0.0f, 0.0f } }; // Normals.
 		clearValues[4].color = { { 0.0f, 0.0f, 0.0f, 0.0f } }; // Materials.
-		clearValues[5].color = { { 1.0f, 1.0f, 1.0f, 0.0f } }; // Shadows.
+		clearValues[5].color = { 0.0f }; // Shadows.
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
 		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
