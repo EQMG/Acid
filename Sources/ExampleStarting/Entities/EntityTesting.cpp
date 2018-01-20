@@ -4,7 +4,6 @@
 #include <Models/Shapes/Cube.hpp>
 #include <Models/Shapes/Sphere.hpp>
 #include <Entities/Components/ComponentCollider.hpp>
-#include <Maths/Maths.hpp>
 
 #include "EntityTesting.hpp"
 
@@ -12,7 +11,7 @@ EntityTesting::EntityTesting(ISpatialStructure<Entity*> *structure, const Transf
 	Entity(structure, transform)
 {
 	AddComponent(new ComponentModel(
-			Sphere::Resource(18, 18, 1.0f), // Cube::Resource("1.0, 1.0, 1.0");
+			Sphere::Resource(18, 18, 1.0f), // Cube::Resource("1.0, 1.0, 1.0")
 			Texture::Resource("Resources/Guis/White.png")
 	));
 	AddComponent(new ComponentMaterial(0.0f, 0.0f));

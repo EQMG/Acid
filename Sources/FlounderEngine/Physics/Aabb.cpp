@@ -407,7 +407,7 @@ namespace Flounder
 
 	bool Aabb::InFrustum(const Frustum &frustum)
 	{
-		return frustum.CubeInFrustum(m_minExtents->m_x, m_minExtents->m_y, m_minExtents->m_z, m_maxExtents->m_x, m_maxExtents->m_y, m_maxExtents->m_z);
+		return frustum.CubeInFrustum(*m_minExtents, *m_maxExtents);
 	}
 
 	bool Aabb::Contains(const ICollider &other)
