@@ -31,7 +31,7 @@ namespace Flounder
 	void UiStartLogo::UpdateObject()
 	{
 		m_guiBackground->GetRectangle()->m_dimensions->m_x = Display::Get()->GetAspectRatio();
-		m_guiBackground->SetScaleDriver(new DriverConstant(2.0f));
+		m_guiBackground->SetScaleDriver(new DriverConstant(1.6f));
 		m_guiBackground->SetVisible(true);
 		m_guiLogo->SetVisible(true);
 	}

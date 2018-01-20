@@ -41,7 +41,7 @@ namespace Flounder
 		{
 			m_actualTime += static_cast<float>(delta);
 			m_currentTime += static_cast<float>(delta);
-			m_currentTime = fmod(m_currentTime, m_length);
+			m_currentTime = std::fmod(m_currentTime, m_length);
 			float time = m_currentTime / m_length;
 			return Calculate(time);
 		}

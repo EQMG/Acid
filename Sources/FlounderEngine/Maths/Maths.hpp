@@ -215,6 +215,19 @@ namespace Flounder
 		}
 
 		/// <summary>
+		/// Interpolates two values by a blendFactor using linear interpolation.
+		/// </summary>
+		/// <param name="a"> The first value. </param>
+		/// <param name="b"> The second value. </param>
+		/// <param name="blend"> The blend value. </param>
+		/// <returns> Returns a interpolated value. </returns>
+		template<typename T>
+		static T Interpolate(const T &a, const T &b, const T &blend)
+		{
+			return (a * static_cast<T>(1.0f - blend)) + (b * blend);
+		}
+
+		/// <summary>
 		/// Interpolates two values by a blendFactor using cos interpolation.
 		/// </summary>
 		/// <param name="a"> The first value. </param>
@@ -225,8 +238,8 @@ namespace Flounder
 		static T CosInterpolate(const T &a, const T &b, const T &blend)
 		{
 			const float ft = static_cast<T>(blend) * PI;
-			const float f = 1.0f - cos(ft) * 0.5f;
-			return a * static_cast<T>(1.0f - f) + b * f;
+			const float f = 1.0f - std::cos(ft) * 0.5f;
+			return (a * static_cast<T>(1.0f - f)) + (b * f);
 		}
 
 		/// <summary>
