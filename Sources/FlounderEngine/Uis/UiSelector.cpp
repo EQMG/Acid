@@ -74,22 +74,17 @@ namespace Flounder
 
 	bool UiSelector::IsSelected(const UiObject &object) const
 	{
-		// m_screenTransform->Set(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
-		// TODO
-
 		const float width = object.GetScreenTransform()->m_x / 2.0f;
 		const float height = object.GetScreenTransform()->m_y / 2.0f;
-		const float positionX = (object.GetScreenTransform()->m_z) + 1.0f / 2.0f;
+		const float positionX = (object.GetScreenTransform()->m_z + 1.0f) / 2.0f;
 		const float positionY = (object.GetScreenTransform()->m_w - 1.0f) / -2.0f;
 
 		if (Mouse::Get()->IsDisplaySelected() && Display::Get()->IsFocused())
 		{
-			if (m_cursorX >= positionX - (width / 2.0f) && m_cursorX <= positionX + (width / 2.0f))
+			if (m_cursorX >= positionX && m_cursorX <= positionX + width
+			    && m_cursorY >= positionY - height && m_cursorY <= positionY)
 			{
-				if (m_cursorY >= positionY - (height / 2.0f) && m_cursorY <= positionY + (height / 2.0f))
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 
