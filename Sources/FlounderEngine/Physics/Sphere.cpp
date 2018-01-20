@@ -174,15 +174,14 @@ namespace Flounder
 
 	bool Sphere::InFrustum(const Frustum &frustum)
 	{
-		return frustum.SphereInFrustum(m_position->m_x, m_position->m_y, m_position->m_z, m_radius);
+		return frustum.SphereInFrustum(*m_position, m_radius);
 	}
 
 	bool Sphere::Contains(const ICollider &other)
 	{
 		const Sphere &sphere2 = dynamic_cast<const Sphere&>(other);
 
-		return
-			sphere2.m_position->m_x + sphere2.m_radius - 1.0f <= m_position->m_x + m_radius - 1.0f &&
+		return sphere2.m_position->m_x + sphere2.m_radius - 1.0f <= m_position->m_x + m_radius - 1.0f &&
 			sphere2.m_position->m_x - sphere2.m_radius + m_radius >= m_position->m_x - m_radius + 1.0f &&
 			sphere2.m_position->m_y + sphere2.m_radius - 1.0f <= m_position->m_y + m_radius - 1.0f &&
 			sphere2.m_position->m_y - sphere2.m_radius + 1.0f >= m_position->m_y - m_radius + 1.0f &&

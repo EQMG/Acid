@@ -53,33 +53,25 @@ namespace Flounder
 		/// <summary>
 		/// Is the point contained in the frustum?
 		/// </summary>
-		/// <param name="x"> The points X coord. </param>
-		/// <param name="y"> The points Y coord. </param>
-		/// <param name="z"> The points Z coord. </param>
+		/// <param name="position"> The points position. </param>
 		/// <returns> True if contained, false if outside. </returns>
-		bool PointInFrustum(const float &x, const float &y, const float &z) const;
+		bool PointInFrustum(const Vector3 &position) const;
 
 		/// <summary>
 		/// Is the sphere contained in the frustum?
 		/// </summary>
-		/// <param name="x"> The sphere X coord. </param>
-		/// <param name="y"> The sphere Y coord. </param>
-		/// <param name="z"> The sphere Z coord. </param>
+		/// <param name="position"> The points position. </param>
 		/// <param name="radius"> The spheres radius. </param>
 		/// <returns> True if contained, false if outside. </returns>
-		bool SphereInFrustum(const float &x, const float &y, const float &z, const float &radius) const;
+		bool SphereInFrustum(const Vector3 &position, const float &radius) const;
 
 		/// <summary>
 		/// Is the cube contained partially in the frustum?
 		/// </summary>
-		/// <param name="x1"> The point 1's X coord. </param>
-		/// <param name="y1"> The point 1's Y coord. </param>
-		/// <param name="z1"> The point 1's Z coord. </param>
-		/// <param name="x2"> The point 2's X coord. </param>
-		/// <param name="y2"> The point 2's Y coord. </param>
-		/// <param name="z2"> The point 2's Z coord. </param>
+		/// <param name="min"> The point 1st position. </param>
+		/// <param name="max"> The point 2nd position. </param>
 		/// <returns> True if partially contained, false if outside. </returns>
-		bool CubeInFrustum(const float &x1, const float &y1, const float &z1, const float &x2, const float &y2, const float &z2) const;
+		bool CubeInFrustum(const Vector3 &min, const Vector3 &max) const;
 	private:
 		void NormalizePlane(float **frustum, const int &side) const;
 	};
