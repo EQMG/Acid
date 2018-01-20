@@ -157,10 +157,10 @@ namespace Flounder
 			destination = new Colour();
 		}
 
-		const float r = ((1.0f - blend) * left.m_r) + (blend * right.m_r);
-		const float g = ((1.0f - blend) * left.m_g) + (blend * right.m_g);
-		const float b = ((1.0f - blend) * left.m_b) + (blend * right.m_b);
-		const float a = ((1.0f - blend) * left.m_a) + (blend * right.m_a);
+		const float r = Maths::Interpolate(left.m_r, right.m_r, blend);
+		const float g = Maths::Interpolate(left.m_g, right.m_g, blend);
+		const float b = Maths::Interpolate(left.m_b, right.m_b, blend);
+		const float a = Maths::Interpolate(left.m_a, right.m_a, blend);
 		return destination->Set(r, g, b, a);
 	}
 

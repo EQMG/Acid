@@ -13,12 +13,15 @@ namespace Demo
 		public UiObject
 	{
 	private:
-		UiObject *m_uiBar;
 		Gui *m_barBackground;
 		Text *m_barTitle;
 		Text *m_barCreatedBy;
 		Gui *m_tabPuck;
 		std::vector<UiTab*> m_tabs;
+
+		IDriver *m_driverTarget;
+		UiTab *m_currentTab;
+		UiTab *m_targetTab;
 	public:
 		UiNavigation(UiObject *parent);
 

@@ -54,22 +54,14 @@ namespace Flounder
 	void UiObject::Update()
 	{
 		// Click updates.
-		if (Uis::Get()->GetSelector()->IsSelected(*this) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasLeftClick())
+		if (m_actionLeft != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasLeftClick() && Uis::Get()->GetSelector()->IsSelected(*this))
 		{
-			if (m_actionLeft != nullptr)
-			{
-				m_actionLeft();
-			}
-
+			m_actionLeft();
 			Uis::Get()->GetSelector()->CancelWasEvent();
 		}
-		else if (Uis::Get()->GetSelector()->IsSelected(*this) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasRightClick())
+		else if (m_actionRight != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasRightClick() && Uis::Get()->GetSelector()->IsSelected(*this))
 		{
-			if (m_actionRight != nullptr)
-			{
-				m_actionRight();
-			}
-
+			m_actionRight();
 			Uis::Get()->GetSelector()->CancelWasEvent();
 		}
 
@@ -89,11 +81,13 @@ namespace Flounder
 		}
 
 		// Transform updates.
-		const float da = m_rectangle->m_aspectSize ? Display::Get()->GetAspectRatio() : 1.0f;
+		const float aspectRatio = Display::Get()->GetAspectRatio();
+
+		const float da = m_rectangle->m_aspectSize ? aspectRatio : 1.0f;
 		const float dw = (m_rectangle->m_dimensions->m_x / da) * m_scale;
 		const float dh = m_rectangle->m_dimensions->m_y * m_scale;
 
-		const float pa = m_rectangle->m_aspectPosition ? 1.0f : Display::Get()->GetAspectRatio();
+		const float pa = m_rectangle->m_aspectPosition ? 1.0f : aspectRatio;
 		const float px = (m_rectangle->m_position->m_x / pa) - (dw * m_rectangle->m_reference->m_x) + m_positionOffset->m_x;
 		const float py = m_rectangle->m_position->m_y - (dh * (-1.0f + m_rectangle->m_reference->m_y)) + m_positionOffset->m_y;
 
