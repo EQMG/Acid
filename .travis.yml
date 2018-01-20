@@ -1,8 +1,7 @@
 addons:
   artifacts: true
   paths:
-    - Build\bin\
-    - Build\lib\
+    - Build/Release/
 
 matrix:
   include:

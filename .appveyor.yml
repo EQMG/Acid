@@ -37,7 +37,5 @@ before_build:
   - cd ../
 
 artifacts:
-  - path: Build\bin\
-    name: Flounder Bins
-  - path: Build\lib\
-    name: Flounder Libs
+  - path: Build\Release\bin\
+    name: Flounder Release
