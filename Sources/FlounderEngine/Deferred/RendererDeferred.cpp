@@ -56,7 +56,7 @@ namespace Flounder
 
 		for (auto entity : *Entities::Get()->GetStructure()->GetAll())
 		{
-			ComponentLight *componentLight = entity->GetComponent<ComponentLight*>();
+			auto componentLight = entity->GetComponent<ComponentLight>();
 
 			if (componentLight != nullptr)
 			{

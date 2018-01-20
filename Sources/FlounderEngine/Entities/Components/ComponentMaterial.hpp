@@ -10,8 +10,9 @@ namespace Flounder
 	private:
 		float m_metallic;
 		float m_roughness;
+		bool m_castsShadows;
 	public:
-		ComponentMaterial(const float &metallic, const float &roughness);
+		ComponentMaterial(const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true);
 
 		~ComponentMaterial();
 
@@ -26,5 +27,9 @@ namespace Flounder
 		float GetRoughness() const { return m_roughness; }
 
 		void SetRoughness(const float &roughness) { m_roughness = roughness; }
+
+		bool GetCastsShadows() const { return m_castsShadows; }
+
+		void SetCastsShadows(const bool &castsShadows) { m_castsShadows = castsShadows; }
 	};
 }
