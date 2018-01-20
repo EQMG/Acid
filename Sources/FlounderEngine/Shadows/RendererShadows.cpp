@@ -1,3 +1,4 @@
+#include <Entities/Components/ComponentMaterial.hpp>
 #include "RendererShadows.hpp"
 
 #include "../Devices/Display.hpp"
@@ -39,7 +40,7 @@ namespace Flounder
 	{
 		m_pipeline->BindPipeline(commandBuffer);
 
-		for (auto terrain : *Terrains::Get()->GetTerrains())
+		/*for (auto terrain : *Terrains::Get()->GetTerrains())
 		{
 			if (terrain->GetModel(0) != nullptr)
 			{
@@ -47,14 +48,21 @@ namespace Flounder
 				terrain->GetTransform()->GetWorldMatrix(&modelMatrix);
 				RenderModel(commandBuffer, terrain->GetModel(0), modelMatrix);
 			}
-		}
+		}*/
 
 		for (auto entity : *Entities::Get()->GetStructure()->GetAll())
 		{
-			ComponentModel *componentModel = entity->GetComponent<ComponentModel*>();
+			auto componentModel = entity->GetComponent<ComponentModel>();
 
 			if (componentModel != nullptr && componentModel->GetModel() != nullptr)
 			{
+				auto componentMaterial = entity->GetComponent<ComponentMaterial>();
+
+				if (componentMaterial != nullptr && !componentMaterial->GetCastsShadows())
+				{
+					continue;
+				}
+
 				Matrix4 modelMatrix = Matrix4();
 				entity->GetTransform()->GetWorldMatrix(&modelMatrix);
 				RenderModel(commandBuffer, componentModel->GetModel(), modelMatrix);

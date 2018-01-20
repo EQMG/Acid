@@ -4,10 +4,11 @@
 
 namespace Flounder
 {
-	ComponentMaterial::ComponentMaterial(const float &metallic, const float &roughness) :
+	ComponentMaterial::ComponentMaterial(const float &metallic, const float &roughness, const bool &castsShadows) :
 		IComponent(),
 		m_metallic(metallic),
-		m_roughness(roughness)
+		m_roughness(roughness),
+		m_castsShadows(castsShadows)
 	{
 	}
 

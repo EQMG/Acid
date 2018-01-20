@@ -39,11 +39,11 @@ namespace Flounder
 		void RemoveComponent(IComponent *component);
 
 		template<typename T>
-		T GetComponent()
+		T *GetComponent()
 		{
 			for (auto c : *m_components)
 			{
-				T casted = dynamic_cast<T>(c);
+				T *casted = dynamic_cast<T*>(c);
 
 				if (casted != nullptr)
 				{

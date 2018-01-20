@@ -24,7 +24,7 @@ namespace Flounder
 			entityTransform->SetPosition(*Worlds::Get()->GetSunPosition());
 		}
 
-		ComponentLight *componentLight = GetEntity()->GetComponent<ComponentLight*>();
+		auto componentLight = GetEntity()->GetComponent<ComponentLight>();
 
 		if (Worlds::Get() != nullptr && componentLight != nullptr)
 		{
