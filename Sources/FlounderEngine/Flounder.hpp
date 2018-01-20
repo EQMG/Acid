@@ -158,7 +158,6 @@
 #include "Space/StructureBasic.hpp"
 #include "Standards/IStandard.hpp"
 #include "Standards/Standards.hpp"
-#include "Stb/stb_image.h"
 #include "Tasks/Tasks.hpp"
 #include "Terrains/MeshTerrain.hpp"
 #include "Terrains/RendererTerrains.hpp"

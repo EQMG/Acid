@@ -1,7 +1,7 @@
 #pragma once
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "../Stb/stb_image.h"
+#include <STB/stb_image.h>
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
