@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	Resources::Resources() :
-		m_managed(std::vector<IResource*>())
+		m_managed(std::vector<IResource *>())
 	{
 	}
 

@@ -8,21 +8,21 @@
 namespace Flounder
 {
 	const PipelineCreateInfo PIPELINE_CREATE_INFO =
-	{
-		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
-		VK_POLYGON_MODE_FILL, // polygonMode
-		VK_CULL_MODE_BACK_BIT, // cullModeFlags
-
-		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
-
 		{
-			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_ALL), // uboObject
-			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerTexture
-		}, // descriptors
+			PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
+			VK_POLYGON_MODE_FILL, // polygonMode
+			VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
-		{ "Resources/Shaders/Guis/Gui.vert.spv", "Resources/Shaders/Guis/Gui.frag.spv" } // shaderStages
-	};
+			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+			Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+			{
+				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_ALL), // uboObject
+				Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerTexture
+			}, // descriptors
+
+			{"Resources/Shaders/Guis/Gui.vert.spv", "Resources/Shaders/Guis/Gui.frag.spv"} // shaderStages
+		};
 
 	RendererGuis::RendererGuis(const int &subpass) :
 		IRenderer(),
@@ -41,7 +41,7 @@ namespace Flounder
 
 		for (auto screenobject : *Uis::Get()->GetObjects())
 		{
-			Gui *object = dynamic_cast<Gui*>(screenobject);
+			Gui *object = dynamic_cast<Gui *>(screenobject);
 
 			if (object != nullptr)
 			{

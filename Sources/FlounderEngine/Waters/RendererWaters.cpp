@@ -6,22 +6,22 @@
 namespace Flounder
 {
 	const PipelineCreateInfo PIPELINE_CREATE_INFO =
-	{
-		PIPELINE_MRT, // pipelineModeFlags
-		VK_POLYGON_MODE_FILL, // polygonMode
-		VK_CULL_MODE_NONE, // cullModeFlags
-
-		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
-
 		{
-			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
-			UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
-			Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerReflection
-		}, // descriptors
+			PIPELINE_MRT, // pipelineModeFlags
+			VK_POLYGON_MODE_FILL, // polygonMode
+			VK_CULL_MODE_NONE, // cullModeFlags
 
-		{ "Resources/Shaders/Waters/Water.vert.spv", "Resources/Shaders/Waters/Water.frag.spv" } // shaderStages
-	};
+			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+			Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+			{
+				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
+				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
+				Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerReflection
+			}, // descriptors
+
+			{"Resources/Shaders/Waters/Water.vert.spv", "Resources/Shaders/Waters/Water.frag.spv"} // shaderStages
+		};
 
 	RendererWaters::RendererWaters(const int &subpass) :
 		IRenderer(),

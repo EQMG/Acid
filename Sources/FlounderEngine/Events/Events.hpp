@@ -13,7 +13,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		std::vector<IEvent*> *m_events;
+		std::vector<IEvent *> *m_events;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -21,7 +21,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Events *Get()
 		{
-			return static_cast<Events*>(Engine::Get()->GetModule("events"));
+			return dynamic_cast<Events *>(Engine::Get()->GetModule("events"));
 		}
 
 		/// <summary>

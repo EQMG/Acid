@@ -24,11 +24,11 @@ namespace Flounder
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<FontFamily*>(resource);
+				return dynamic_cast<FontFamily *>(resource);
 			}
 
 			FontFamily *result = new FontFamily(filename);
-			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 

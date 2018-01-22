@@ -23,6 +23,7 @@ namespace Flounder
 		/// Deconstructor for constant driver.
 		/// </summary>
 		~DriverConstant();
+
 	protected:
 		float Calculate(const float &time) override;
 	};

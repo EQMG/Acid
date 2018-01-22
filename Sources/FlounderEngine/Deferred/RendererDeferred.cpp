@@ -13,25 +13,27 @@
 namespace Flounder
 {
 	const PipelineCreateInfo PIPELINE_CREATE_INFO =
-	{
-		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
-		VK_POLYGON_MODE_FILL, // polygonMode
-		VK_CULL_MODE_BACK_BIT, // cullModeFlags
-
-		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 		{
-			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
-			UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // uboLights
-			DepthStencil::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDepth
-			Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
-			Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerNormal
-			Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
-			Texture::CreateDescriptor(6, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerShadows
-		}, // descriptors
+			PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
+			VK_POLYGON_MODE_FILL, // polygonMode
+			VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
-		{ "Resources/Shaders/Deferred/Deferred.vert.spv", "Resources/Shaders/Deferred/Deferred.frag.spv" } // shaderStages
-	};
+			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+			Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+			{
+				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
+				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // uboLights
+				DepthStencil::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDepth
+				Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
+				Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerNormal
+				Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
+				Texture::CreateDescriptor(6, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerShadows
+			}, // descriptors
+
+			{
+				"Resources/Shaders/Deferred/Deferred.vert.spv", "Resources/Shaders/Deferred/Deferred.frag.spv"
+			} // shaderStages
+		};
 
 	RendererDeferred::RendererDeferred(const int &subpass) :
 		IRenderer(),
@@ -60,12 +62,12 @@ namespace Flounder
 
 			if (componentLight != nullptr)
 			{
-			//	Vector3 position = *componentLight->GetLight()->m_position;
-			//	float radius = componentLight->GetLight()->m_radius;
-			//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
-			//	{
-			//		continue;
-			//	}
+				//	Vector3 position = *componentLight->GetLight()->m_position;
+				//	float radius = componentLight->GetLight()->m_radius;
+				//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
+				//	{
+				//		continue;
+				//	}
 
 				UbosDeferred::Light light = {};
 				light.colour = *componentLight->GetLight()->m_colour;
@@ -80,7 +82,7 @@ namespace Flounder
 			}
 		}
 
-	//	printf("Rendered Lights: %i\n", sceneLights.size());
+		//	printf("Rendered Lights: %i\n", sceneLights.size());
 
 		UbosDeferred::UboScene uboScene = {};
 
@@ -119,18 +121,18 @@ namespace Flounder
 		m_pipeline->BindPipeline(commandBuffer);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
-		{
-			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
-			m_uniformLights->GetWriteDescriptor(1, descriptorSet),
-			Renderer::Get()->GetDepthStencil()->GetWriteDescriptor(2, descriptorSet),
-			Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(3, descriptorSet),
-			Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(4, descriptorSet),
-			Renderer::Get()->GetSwapchain()->GetMaterialImage()->GetWriteDescriptor(5, descriptorSet),
-			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(6, descriptorSet),
-		};
+			{
+				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
+				m_uniformLights->GetWriteDescriptor(1, descriptorSet),
+				Renderer::Get()->GetDepthStencil()->GetWriteDescriptor(2, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(3, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(4, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetMaterialImage()->GetWriteDescriptor(5, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(6, descriptorSet),
+			};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[1] = { descriptorSet };
+		VkDescriptorSet descriptors[1] = {descriptorSet};
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_model->CmdRender(commandBuffer);

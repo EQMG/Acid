@@ -261,13 +261,13 @@ namespace Flounder
 		return SetZero(this);
 	}
 
-	bool Matrix2::operator==(const Matrix2& other) const
+	bool Matrix2::operator==(const Matrix2 &other) const
 	{
 		return m_00 == other.m_00 && m_01 == other.m_01 &&
-				m_10 == other.m_10 && m_11 == other.m_11;
+			m_10 == other.m_10 && m_11 == other.m_11;
 	}
 
-	bool Matrix2::operator!=(const Matrix2& other) const
+	bool Matrix2::operator!=(const Matrix2 &other) const
 	{
 		return !(*this == other);
 	}
@@ -277,22 +277,22 @@ namespace Flounder
 		return *this->Negate();
 	}
 
-	Matrix2 operator+(Matrix2 left, const Matrix2& right)
+	Matrix2 operator+(Matrix2 left, const Matrix2 &right)
 	{
 		return *Matrix2::Add(left, right, &left);
 	}
 
-	Matrix2 operator-(Matrix2 left, const Matrix2& right)
+	Matrix2 operator-(Matrix2 left, const Matrix2 &right)
 	{
 		return *Matrix2::Subtract(left, right, &left);
 	}
 
-	Matrix2 operator*(Matrix2 left, const Matrix2& right)
+	Matrix2 operator*(Matrix2 left, const Matrix2 &right)
 	{
 		return *Matrix2::Multiply(left, right, &left);
 	}
 
-	Matrix2 operator/(Matrix2 left, const Matrix2& right)
+	Matrix2 operator/(Matrix2 left, const Matrix2 &right)
 	{
 		return *Matrix2::Divide(left, right, &left);
 	}
@@ -307,31 +307,31 @@ namespace Flounder
 		return *Matrix2::Scale(left, 1.0f / value, &left);
 	}
 
-	Matrix2& Matrix2::operator+=(const Matrix2& other)
+	Matrix2 &Matrix2::operator+=(const Matrix2 &other)
 	{
 		Matrix2 result = Matrix2();
 		return *Matrix2::Add(*this, other, &result);
 	}
 
-	Matrix2& Matrix2::operator-=(const Matrix2& other)
+	Matrix2 &Matrix2::operator-=(const Matrix2 &other)
 	{
 		Matrix2 result = Matrix2();
 		return *Matrix2::Subtract(*this, other, &result);
 	}
 
-	Matrix2& Matrix2::operator*=(const Matrix2& other)
+	Matrix2 &Matrix2::operator*=(const Matrix2 &other)
 	{
 		Matrix2 result = Matrix2();
 		return *Matrix2::Multiply(*this, other, &result);
 	}
 
-	Matrix2& Matrix2::operator/=(const Matrix2& other)
+	Matrix2 &Matrix2::operator/=(const Matrix2 &other)
 	{
 		Matrix2 result = Matrix2();
 		return *Matrix2::Divide(*this, other, &result);
 	}
 
-	std::ostream& operator<<(std::ostream& stream, const Matrix2& matrix)
+	std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix)
 	{
 		stream << matrix.ToString();
 		return stream;
@@ -341,7 +341,7 @@ namespace Flounder
 	{
 		std::stringstream result;
 		result << "Matrix2(" << m_00 << ", " << m_01 << ", " <<
-							m_10 << ", " << m_11 << ")";
+			   m_10 << ", " << m_11 << ")";
 		return result.str();
 	}
 }

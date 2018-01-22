@@ -4,7 +4,9 @@
 #include <cassert>
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
+
 #include <Windows.h>
+
 #endif
 
 namespace Flounder

@@ -4,7 +4,7 @@ namespace Flounder
 {
 	Standards::Standards() :
 		IModule(),
-		m_standards(new std::vector<IStandard*>())
+		m_standards(new std::vector<IStandard *>())
 	{
 	}
 

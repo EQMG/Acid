@@ -4,10 +4,10 @@
 
 namespace Flounder
 {
-	Entity::Entity(ISpatialStructure<Entity*> *structure, const Transform &transform) :
+	Entity::Entity(ISpatialStructure<Entity *> *structure, const Transform &transform) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
 		m_structure(structure),
-		m_components(new std::vector<IComponent*>()),
+		m_components(new std::vector<IComponent *>()),
 		m_transform(new Transform(transform)),
 		m_removed(false)
 	{
@@ -68,13 +68,13 @@ namespace Flounder
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(entityRender.descriptorWrites.size()), entityRender.descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[] = { descriptorSet };
+		VkDescriptorSet descriptors[] = {descriptorSet};
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		entityRender.model->CmdRender(commandBuffer);
 	}
 
-	void Entity::MoveStructure(ISpatialStructure<Entity*> *structure)
+	void Entity::MoveStructure(ISpatialStructure<Entity *> *structure)
 	{
 		m_structure->Remove(this);
 		structure->Add(this);

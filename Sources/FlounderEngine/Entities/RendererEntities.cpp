@@ -1,29 +1,28 @@
 ﻿#include "RendererEntities.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "Entities.hpp"
 
 namespace Flounder
 {
 	const PipelineCreateInfo PIPELINE_CREATE_INFO =
-	{
-		PIPELINE_MRT, // pipelineModeFlags
-		VK_POLYGON_MODE_FILL, // polygonMode
-		VK_CULL_MODE_BACK_BIT, // cullModeFlags
-
-		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
-
 		{
-			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
-			UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
-			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDiffuse
-			Texture::CreateDescriptor(3, VK_SHADER_STAGE_VERTEX_BIT) // samplerSway
-		}, // descriptors
+			PIPELINE_MRT, // pipelineModeFlags
+			VK_POLYGON_MODE_FILL, // polygonMode
+			VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
-		{ "Resources/Shaders/Entities/Entity.vert.spv", "Resources/Shaders/Entities/Entity.frag.spv" } // shaderStages
-	};
+			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+			Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+			{
+				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
+				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
+				Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDiffuse
+				Texture::CreateDescriptor(3, VK_SHADER_STAGE_VERTEX_BIT) // samplerSway
+			}, // descriptors
+
+			{"Resources/Shaders/Entities/Entity.vert.spv", "Resources/Shaders/Entities/Entity.frag.spv"} // shaderStages
+		};
 
 	RendererEntities::RendererEntities(const int &subpass) :
 		IRenderer(),
@@ -47,8 +46,8 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-	//	std::vector<Entity*> inFrustum = std::vector<Entity*>();
-	//	Entities::Get()->GetStructure()->QueryFrustum(camera.GetViewFrustum(), &inFrustum);
+		//	std::vector<Entity*> inFrustum = std::vector<Entity*>();
+		//	Entities::Get()->GetStructure()->QueryFrustum(camera.GetViewFrustum(), &inFrustum);
 
 		for (auto entity : *Entities::Get()->GetStructure()->GetAll()) // inFrustum
 		{

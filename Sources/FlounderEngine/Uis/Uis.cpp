@@ -7,7 +7,7 @@ namespace Flounder
 		m_managerUis(nullptr),
 		m_selector(new UiSelector()),
 		m_container(new UiObject(nullptr, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)))),
-		m_objects(new std::vector<UiObject*>()),
+		m_objects(new std::vector<UiObject *>()),
 		m_proximaNova(FontFamily::Resource("Resources/Fonts/ProximaNova"))
 	{
 	}

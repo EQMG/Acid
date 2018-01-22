@@ -9,7 +9,6 @@ namespace Demo
 	class UiInventory :
 		public UiObject
 	{
-	private:
 	public:
 		UiInventory(UiObject *parent);
 

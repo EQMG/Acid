@@ -1,7 +1,6 @@
 ﻿#include "ComponentSway.hpp"
 
 #include <math.h>
-#include "../../Engine/Engine.hpp"
 #include "../Entity.hpp"
 
 namespace Flounder

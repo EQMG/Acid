@@ -16,7 +16,7 @@ namespace Demo
 		IButton *m_buttonLockMouse;
 		IButton *m_buttonExit;
 
-		ParticleSystem *m_systemTest;
+		//	ParticleSystem *m_systemTest;
 	public:
 		Instance();
 

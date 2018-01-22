@@ -10,12 +10,14 @@
 namespace Flounder
 {
 	const int Terrain::SIDE_LENGTH = 100;
-	const std::vector<float> Terrain::SQUARE_SIZES = { 2.0f, 4.0f, 10.0f, 20.0f }; // Models: (1.0 LOD, 2/5 LOD, 1/10 LOD, none)
-	const std::vector<float> Terrain::TEXTURE_SCALES = { 10.0f, 5.0f, 2.0f, 1.0f };
+	const std::vector<float> Terrain::SQUARE_SIZES = {
+		2.0f, 4.0f, 10.0f, 20.0f
+	}; // Models: (1.0 LOD, 2/5 LOD, 1/10 LOD, none)
+	const std::vector<float> Terrain::TEXTURE_SCALES = {10.0f, 5.0f, 2.0f, 1.0f};
 
 	Terrain::Terrain(const Transform &transform) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
-		m_modelLods(std::vector<Model*>()),
+		m_modelLods(std::vector<Model *>()),
 		m_currentLod(0),
 		m_transform(new Transform(transform)),
 		m_aabb(new Aabb())
@@ -91,10 +93,12 @@ namespace Flounder
 		m_transform->GetWorldMatrix(&uboObject.transform);
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet) };
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+			uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet)
+		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[1] = { descriptorSet };
+		VkDescriptorSet descriptors[1] = {descriptorSet};
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_modelLods[m_currentLod]->CmdRender(commandBuffer);

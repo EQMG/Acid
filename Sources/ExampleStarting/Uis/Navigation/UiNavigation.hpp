@@ -17,7 +17,7 @@ namespace Demo
 		Text *m_barTitle;
 		Text *m_barCreatedBy;
 		Gui *m_tabPuck;
-		std::vector<UiTab*> m_tabs;
+		std::vector<UiTab *> m_tabs;
 
 		IDriver *m_driverTarget;
 		UiTab *m_currentTab;

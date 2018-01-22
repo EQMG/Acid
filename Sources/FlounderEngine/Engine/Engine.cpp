@@ -30,20 +30,20 @@ namespace Flounder
 
 	int Engine::Run() const
 	{
-		 try
-		 {
+		try
+		{
 			while (m_running)
 			{
 				m_updater->Update();
 			}
 
 			return EXIT_SUCCESS;
-		 }
-		 catch (const std::runtime_error &e)
-		 {
-		 	printf("%s\n", e.what());
-		 	return EXIT_FAILURE;
-		 }
+		}
+		catch (const std::runtime_error &e)
+		{
+			printf("%s\n", e.what());
+			return EXIT_FAILURE;
+		}
 	}
 
 	void Engine::RequestClose(const bool &error)

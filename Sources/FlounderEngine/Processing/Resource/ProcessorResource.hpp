@@ -15,7 +15,7 @@ namespace Flounder
 	private:
 		static const double MAX_TIME_MILLIS;
 
-		Queue<RequestResource*> *m_queue;
+		Queue<RequestResource *> *m_queue;
 	public:
 		/// <summary>
 		/// Creates a new resource processor.

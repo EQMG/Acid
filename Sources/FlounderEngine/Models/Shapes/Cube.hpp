@@ -15,15 +15,16 @@ namespace Flounder
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Cube*>(resource);
+				return dynamic_cast<Cube *>(resource);
 			}
 
 			Cube *result = new Cube(width, height, depth);
-			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 
 		Cube(const float &width, const float &height, const float &depth);
+
 	private:
 		static std::string ToFilename(const float &width, const float &height, const float &depth);
 	};

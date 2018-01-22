@@ -40,7 +40,8 @@ namespace Flounder
 	void InputSlider::UpdateObject()
 	{
 		// Click updates.
-		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasLeftClick())
+		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f &&
+			Uis::Get()->GetSelector()->WasLeftClick())
 		{
 			if (!m_updating)
 			{
@@ -88,7 +89,8 @@ namespace Flounder
 
 		// Update the background colour.
 		Colour *primary = Uis::Get()->GetManager()->GetPrimaryColour();
-		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
+		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) /
+			(SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 		m_slider->GetColourOffset()->Set(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f);
 
 		//	// Update background size.

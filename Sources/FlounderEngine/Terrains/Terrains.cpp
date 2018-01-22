@@ -6,7 +6,7 @@ namespace Flounder
 {
 	Terrains::Terrains() :
 		IModule(),
-		m_terrains(new std::vector<Terrain*>()),
+		m_terrains(new std::vector<Terrain *>()),
 		m_noise1(NoiseFast(9878))
 	{
 		m_noise1.SetNoiseType(NoiseFast::PerlinFractal);

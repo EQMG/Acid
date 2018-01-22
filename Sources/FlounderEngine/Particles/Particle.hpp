@@ -88,6 +88,7 @@ namespace Flounder
 		float GetDistanceToCamera() const { return m_distanceToCamera; }
 
 		bool operator<(const Particle &other) const;
+
 	private:
 		Vector2 *UpdateTextureOffset(Vector2 *offset, const int &index) const;
 	};

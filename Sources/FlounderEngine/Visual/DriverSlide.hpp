@@ -28,6 +28,7 @@ namespace Flounder
 		/// Deconstructor for slide driver.
 		/// </summary>
 		~DriverSlide();
+
 	protected:
 		float Calculate(const float &time) override;
 	};

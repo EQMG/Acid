@@ -96,7 +96,7 @@ namespace Flounder
 
 		m_rows->at(index).m_elements = row.m_elements;
 	}
-	
+
 	void FileCsv::Verify()
 	{
 		if (!FileSystem::FileExists(m_filename))

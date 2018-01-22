@@ -32,7 +32,7 @@ namespace Demo
 
 		float GetBlurFactor() override;
 
-		inline Colour *GetPrimaryColour() override { return m_primaryColour; }
+		Colour *GetPrimaryColour() override { return m_primaryColour; }
 	private:
 		void TogglePause();
 	};

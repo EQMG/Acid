@@ -210,25 +210,33 @@ namespace Flounder
 		/// <returns> This. </returns>
 		Matrix2 *SetZero();
 
-		bool operator==(const Matrix2& other) const;
-		bool operator!=(const Matrix2& other) const;
+		bool operator==(const Matrix2 &other) const;
 
-		Matrix2& operator-();
+		bool operator!=(const Matrix2 &other) const;
 
-		friend Matrix2 operator+(Matrix2 left, const Matrix2& right);
-		friend Matrix2 operator-(Matrix2 left, const Matrix2& right);
-		friend Matrix2 operator*(Matrix2 left, const Matrix2& right);
-		friend Matrix2 operator/(Matrix2 left, const Matrix2& right);
+		Matrix2 &operator-();
+
+		friend Matrix2 operator+(Matrix2 left, const Matrix2 &right);
+
+		friend Matrix2 operator-(Matrix2 left, const Matrix2 &right);
+
+		friend Matrix2 operator*(Matrix2 left, const Matrix2 &right);
+
+		friend Matrix2 operator/(Matrix2 left, const Matrix2 &right);
 
 		friend Matrix2 operator*(Matrix2 left, Vector2 value);
+
 		friend Matrix2 operator/(Matrix2 left, Vector2 value);
 
-		Matrix2& operator+=(const Matrix2& other);
-		Matrix2& operator-=(const Matrix2& other);
-		Matrix2& operator*=(const Matrix2& other);
-		Matrix2& operator/=(const Matrix2& other);
+		Matrix2 &operator+=(const Matrix2 &other);
 
-		friend std::ostream& operator<<(std::ostream& stream, const Matrix2& matrix);
+		Matrix2 &operator-=(const Matrix2 &other);
+
+		Matrix2 &operator*=(const Matrix2 &other);
+
+		Matrix2 &operator/=(const Matrix2 &other);
+
+		friend std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix);
 
 		std::string ToString() const;
 	};

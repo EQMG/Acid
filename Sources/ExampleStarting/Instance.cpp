@@ -6,21 +6,22 @@
 #include <Maths/Maths.hpp>
 #include <Devices/Display.hpp>
 #include <Devices/Mouse.hpp>
+
 #ifdef FLOUNDER_CONFIG_RELEASE
 #include <Sounds/Sound.hpp>
 #endif
+
 #include "Entities/EntityTreePine.hpp"
 #include "Entities/EntityTesting.hpp"
 #include "Entities/EntitySun.hpp"
 
 namespace Demo
 {
-	Instance::Instance()
+	Instance::Instance() :
+		m_buttonFullscreen(new ButtonKeyboard({GLFW_KEY_F11})),
+		m_buttonLockMouse(new ButtonKeyboard({GLFW_KEY_M})),
+		m_buttonExit(new ButtonKeyboard({GLFW_KEY_DELETE}))
 	{
-		m_buttonFullscreen = new ButtonKeyboard({ GLFW_KEY_F11 });
-		m_buttonLockMouse = new ButtonKeyboard({ GLFW_KEY_M });
-		m_buttonExit = new ButtonKeyboard({ GLFW_KEY_DELETE });
-
 #ifdef FLOUNDER_CONFIG_RELEASE
 		Sound *music1 = Sound::Resource("Resources/Music/Outpost.wav");
 
@@ -74,7 +75,7 @@ namespace Demo
 		delete m_buttonLockMouse;
 		delete m_buttonExit;
 
-		delete m_systemTest;
+		//	delete m_systemTest;
 	}
 
 	void Instance::Update()

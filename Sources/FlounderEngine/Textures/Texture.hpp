@@ -44,11 +44,11 @@ namespace Flounder
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Texture*>(resource);
+				return dynamic_cast<Texture *>(resource);
 			}
 
 			Texture *result = new Texture(filename);
-			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 
@@ -56,11 +56,11 @@ namespace Flounder
 		/// A new texture object.
 		/// </summary>
 		Texture(const std::string &filename, const bool &hasAlpha = false,
-			const bool &clampEdges = false,
-			const uint32_t &mipLevels = 1,
-			const bool &anisotropic = true,
-			const bool &nearest = false,
-			const uint32_t &numberOfRows = 1);
+				const bool &clampEdges = false,
+				const uint32_t &mipLevels = 1,
+				const bool &anisotropic = true,
+				const bool &nearest = false,
+				const uint32_t &numberOfRows = 1);
 
 		/// <summary>
 		/// A new empty texture object.
@@ -111,6 +111,7 @@ namespace Flounder
 		static VkDeviceSize LoadSize(const std::string &filepath);
 
 		static stbi_uc *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
+
 	private:
 		void CreateImage(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory);
 

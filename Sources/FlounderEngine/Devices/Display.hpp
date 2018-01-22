@@ -14,8 +14,8 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		static const std::vector<const char*> VALIDATION_LAYERS;
-		static const std::vector<const char*> DEVICE_EXTENSIONS;
+		static const std::vector<const char *> VALIDATION_LAYERS;
+		static const std::vector<const char *> DEVICE_EXTENSIONS;
 
 		int m_windowWidth;
 		int m_windowHeight;
@@ -37,9 +37,9 @@ namespace Flounder
 
 		bool m_validationLayers;
 
-		std::vector<const char*> m_instanceLayerList;
-		std::vector<const char*> m_instanceExtensionList;
-		std::vector<const char*> m_deviceExtensionList;
+		std::vector<const char *> m_instanceLayerList;
+		std::vector<const char *> m_instanceExtensionList;
+		std::vector<const char *> m_deviceExtensionList;
 		VkDebugReportCallbackEXT m_debugReport;
 
 		VkInstance m_instance;
@@ -72,6 +72,7 @@ namespace Flounder
 		VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback);
 
 		void FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator);
+
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -79,7 +80,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Display *Get()
 		{
-			return static_cast<Display*>(Engine::Get()->GetModule("display"));
+			return dynamic_cast<Display *>(Engine::Get()->GetModule("display"));
 		}
 
 		/// <summary>
@@ -271,7 +272,7 @@ namespace Flounder
 		void CreateSurface();
 
 		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties,
-			const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties);
+									const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties);
 
 		static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription);
 	};
