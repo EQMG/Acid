@@ -131,7 +131,7 @@ namespace Demo
 				m_currentUpwardSpeed = 0.0f;
 				m_jumping = false;
 				m_noclipEnabled = !m_noclipEnabled;
-				printf("Player Noclip: %s\n", m_toggleNoclip ? "true" : "false");
+				printf("Player Noclip: %s\n", m_noclipEnabled ? "true" : "false");
 			}
 		}
 		else

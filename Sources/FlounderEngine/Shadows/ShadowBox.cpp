@@ -63,7 +63,7 @@ namespace Flounder
 	{
 		UpdateSizes(camera);
 
-		Matrix4 *rotation = new Matrix4(); // = Matrix4::ViewMatrix(Vector3(), *camera.GetPosition(), nullptr);
+		Matrix4 *rotation = new Matrix4();
 		Matrix4::Rotate(*rotation, Vector3(0.0f, 1.0f, 0.0f), Maths::Radians(camera.GetRotation()->m_y), rotation);
 		Matrix4::Rotate(*rotation, Vector3(1.0f, 0.0f, 0.0f), Maths::Radians(-camera.GetRotation()->m_x), rotation);
 
@@ -224,13 +224,14 @@ namespace Flounder
 		float x = (m_aabb->m_minExtents->m_x + m_aabb->m_maxExtents->m_x) / 2.0f;
 		float y = (m_aabb->m_minExtents->m_y + m_aabb->m_maxExtents->m_y) / 2.0f;
 		float z = (m_aabb->m_minExtents->m_z + m_aabb->m_maxExtents->m_z) / 2.0f;
+		Vector4 centre = Vector4(x, y, z, 1.0f);
 		Matrix4 *invertedLight = Matrix4::Invert(*m_lightViewMatrix, nullptr);
-		Vector4 *centre4 = Matrix4::Transform(*invertedLight, Vector4(x, y, z, 1.0f), nullptr);
+		Vector4 *centre4 = Matrix4::Transform(*invertedLight, centre, nullptr);
 
 		m_centre->Set(*centre4);
 
-		delete centre4;
 		delete invertedLight;
+		delete centre4;
 	}
 
 	void ShadowBox::UpdateLightViewMatrix() const
