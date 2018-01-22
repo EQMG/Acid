@@ -13,7 +13,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		std::vector<IStandard*> *m_standards;
+		std::vector<IStandard *> *m_standards;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -21,7 +21,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Standards *get()
 		{
-			return static_cast<Standards*>(Engine::Get()->GetModule("standards"));
+			return dynamic_cast<Standards *>(Engine::Get()->GetModule("standards"));
 		}
 
 		Standards();

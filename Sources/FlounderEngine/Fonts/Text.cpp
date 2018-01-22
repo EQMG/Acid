@@ -83,10 +83,13 @@ namespace Flounder
 		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_w);
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformObject->GetWriteDescriptor(0, descriptorSet), m_fontType->GetTexture()->GetWriteDescriptor(1, descriptorSet) };
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+			m_uniformObject->GetWriteDescriptor(0, descriptorSet),
+			m_fontType->GetTexture()->GetWriteDescriptor(1, descriptorSet)
+		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[1] = { descriptorSet };
+		VkDescriptorSet descriptors[1] = {descriptorSet};
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_model->CmdRender(commandBuffer);
@@ -377,7 +380,8 @@ namespace Flounder
 
 		for (const auto vertex : vertices)
 		{
-			const Vector3 position = Vector3((vertex.m_position.m_x - minX) / maxX, (vertex.m_position.m_y - minY) / maxY, 0.0f);
+			const Vector3 position = Vector3(
+				(vertex.m_position.m_x - minX) / maxX, (vertex.m_position.m_y - minY) / maxY, 0.0f);
 			const Vertex newVertex = Vertex(position, Vector2(vertex.m_uv), Vector3(vertex.m_normal), Vector3(vertex.m_tangent));
 			newVertices.push_back(newVertex);
 		}

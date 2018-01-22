@@ -20,7 +20,7 @@ namespace Flounder
 		Timer *m_timerUpdate;
 		Timer *m_timerRender;
 
-		std::multimap<float, std::pair<std::string, IModule*>> *m_modules;
+		std::multimap<float, std::pair<std::string, IModule *>> *m_modules;
 	public:
 		PlatformUpdater();
 
@@ -47,7 +47,7 @@ namespace Flounder
 	template<typename T>
 	void PlatformUpdater::ModuleCreate(ModuleUpdate typeUpdate, std::string moduleName)
 	{
-		T *module = static_cast<T*>(malloc(sizeof(T)));
+		T *module = static_cast<T *>(malloc(sizeof(T)));
 		AddModule(typeUpdate, moduleName, module);
 		new(module) T();
 	}

@@ -65,6 +65,7 @@ namespace Flounder
 
 	std::string Sphere::ToFilename(const int &latitudeBands, const int &longitudeBands, const float &radius)
 	{
-		return "Sphere_" + std::to_string(latitudeBands) + "_" + std::to_string(longitudeBands) + "_" + std::to_string(radius);
+		return "Sphere_" + std::to_string(latitudeBands) + "_" + std::to_string(longitudeBands) + "_" +
+			std::to_string(radius);
 	}
 }

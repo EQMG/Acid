@@ -301,41 +301,61 @@ namespace Flounder
 		/// <returns> The length squared of the vector. </returns>
 		float LengthSquared() const;
 
-		bool operator==(const Vector2& other) const;
-		bool operator!=(const Vector2& other) const;
-		bool operator<(const Vector2& other) const;
-		bool operator<=(const Vector2& other) const;
-		bool operator>(const Vector2& other) const;
-		bool operator>=(const Vector2& other) const;
+		bool operator==(const Vector2 &other) const;
 
-		Vector2& operator-();
+		bool operator!=(const Vector2 &other) const;
 
-		friend Vector2 operator+(Vector2 left, const Vector2& right);
-		friend Vector2 operator-(Vector2 left, const Vector2& right);
-		friend Vector2 operator*(Vector2 left, const Vector2& right);
-		friend Vector2 operator/(Vector2 left, const Vector2& right);
+		bool operator<(const Vector2 &other) const;
+
+		bool operator<=(const Vector2 &other) const;
+
+		bool operator>(const Vector2 &other) const;
+
+		bool operator>=(const Vector2 &other) const;
+
+		Vector2 &operator-();
+
+		friend Vector2 operator+(Vector2 left, const Vector2 &right);
+
+		friend Vector2 operator-(Vector2 left, const Vector2 &right);
+
+		friend Vector2 operator*(Vector2 left, const Vector2 &right);
+
+		friend Vector2 operator/(Vector2 left, const Vector2 &right);
 
 		friend Vector2 operator+(Vector2 left, float value);
+
 		friend Vector2 operator-(Vector2 left, float value);
+
 		friend Vector2 operator*(Vector2 left, float value);
+
 		friend Vector2 operator/(Vector2 left, float value);
 
 		friend Vector2 operator+(float value, Vector2 left);
+
 		friend Vector2 operator-(float value, Vector2 left);
+
 		friend Vector2 operator*(float value, Vector2 left);
+
 		friend Vector2 operator/(float value, Vector2 left);
 
-		Vector2& operator+=(const Vector2& other);
-		Vector2& operator-=(const Vector2& other);
-		Vector2& operator*=(const Vector2& other);
-		Vector2& operator/=(const Vector2& other);
+		Vector2 &operator+=(const Vector2 &other);
 
-		Vector2& operator+=(float value);
-		Vector2& operator-=(float value);
-		Vector2& operator*=(float value);
-		Vector2& operator/=(float value);
+		Vector2 &operator-=(const Vector2 &other);
 
-		friend std::ostream& operator<<(std::ostream& stream, const Vector2& vector);
+		Vector2 &operator*=(const Vector2 &other);
+
+		Vector2 &operator/=(const Vector2 &other);
+
+		Vector2 &operator+=(float value);
+
+		Vector2 &operator-=(float value);
+
+		Vector2 &operator*=(float value);
+
+		Vector2 &operator/=(float value);
+
+		friend std::ostream &operator<<(std::ostream &stream, const Vector2 &vector);
 
 		std::string ToString() const;
 	};

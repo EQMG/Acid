@@ -1,11 +1,10 @@
 ﻿#include "ParticleSystem.hpp"
 
-#include "../Engine/Engine.hpp"
 #include "../Maths/Maths.hpp"
 
 namespace Flounder
 {
-	ParticleSystem::ParticleSystem(std::vector<ParticleType*> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect) :
+	ParticleSystem::ParticleSystem(std::vector<ParticleType *> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect) :
 		m_types(types),
 		m_spawn(spawn),
 		m_pps(pps),
@@ -64,10 +63,13 @@ namespace Flounder
 		ParticleType *emitType = m_types->at(static_cast<int>(floor(Maths::RandomInRange(0, static_cast<int>(m_types->size())))));
 
 		velocity->Normalize();
-		velocity->Scale(GenerateValue(m_averageSpeed, m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError)));
+		velocity->Scale(GenerateValue(m_averageSpeed,
+									  m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError)));
 		Vector3::Add(*velocity, *m_velocityCentre, velocity);
-		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
-		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
+		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() *
+			Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
+		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() *
+			Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
 		Vector3 *spawnPos = Vector3::Add(*m_systemCentre, *m_spawn->GetBaseSpawnPosition(), nullptr);
 
 		Particle *result = new Particle(emitType, *spawnPos, *velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);

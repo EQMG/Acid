@@ -5,6 +5,7 @@
 namespace Flounder
 {
 	class Vector4;
+
 	class Vector3;
 
 	/// <summary>

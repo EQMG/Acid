@@ -11,7 +11,7 @@ namespace Flounder
 		m_duplicateVertex(nullptr),
 		m_index(index),
 		m_length(position.Length()),
-		m_tangents(std::vector<Vector3*>()),
+		m_tangents(std::vector<Vector3 *>()),
 		m_averagedTangent(Vector3())
 	{
 	}

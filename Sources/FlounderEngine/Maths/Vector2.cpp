@@ -135,7 +135,8 @@ namespace Flounder
 		}
 
 		const float theta = Maths::Radians(angle);
-		return destination->Set(source.m_x * cos(theta) - source.m_y * sin(theta), source.m_x * sin(theta) + source.m_y * cos(theta));
+		return destination->Set(
+			source.m_x * cos(theta) - source.m_y * sin(theta), source.m_x * sin(theta) + source.m_y * cos(theta));
 	}
 
 	Vector2 *Vector2::Rotate(const Vector2 &source, const float &angle, const Vector2 &rotationAxis, Vector2 *destination)
@@ -146,7 +147,10 @@ namespace Flounder
 		}
 
 		const float theta = Maths::Radians(angle);
-		return destination->Set(((source.m_x - rotationAxis.m_x) * cos(theta)) - ((source.m_y - rotationAxis.m_y) * sin(theta) + rotationAxis.m_x), ((source.m_x - rotationAxis.m_x) * sin(theta)) + ((source.m_y - rotationAxis.m_y) * cos(theta) + rotationAxis.m_y));
+		return destination->Set(((source.m_x - rotationAxis.m_x) * cos(theta)) -
+									((source.m_y - rotationAxis.m_y) * sin(theta) + rotationAxis.m_x),
+								((source.m_x - rotationAxis.m_x) * sin(theta)) +
+									((source.m_y - rotationAxis.m_y) * cos(theta) + rotationAxis.m_y));
 	}
 
 	Vector2 *Vector2::Negate(const Vector2 &source, Vector2 *destination)
@@ -278,32 +282,32 @@ namespace Flounder
 		return LengthSquared(*this);
 	}
 
-	bool Vector2::operator==(const Vector2& other) const
+	bool Vector2::operator==(const Vector2 &other) const
 	{
 		return m_x == other.m_x && m_y == other.m_x;
 	}
 
-	bool Vector2::operator!=(const Vector2& other) const
+	bool Vector2::operator!=(const Vector2 &other) const
 	{
 		return !(*this == other);
 	}
 
-	bool Vector2::operator<(const Vector2& other) const
+	bool Vector2::operator<(const Vector2 &other) const
 	{
 		return m_x < other.m_x && m_y < other.m_y;
 	}
 
-	bool Vector2::operator<=(const Vector2& other) const
+	bool Vector2::operator<=(const Vector2 &other) const
 	{
 		return m_x <= other.m_x && m_y <= other.m_y;
 	}
 
-	bool Vector2::operator>(const Vector2& other) const
+	bool Vector2::operator>(const Vector2 &other) const
 	{
 		return m_x > other.m_x && m_y > other.m_y;
 	}
 
-	bool Vector2::operator>=(const Vector2& other) const
+	bool Vector2::operator>=(const Vector2 &other) const
 	{
 		return m_x >= other.m_x && m_y >= other.m_y;
 	}
@@ -313,22 +317,22 @@ namespace Flounder
 		return *this->Negate();
 	}
 
-	Vector2 operator+(Vector2 left, const Vector2& right)
+	Vector2 operator+(Vector2 left, const Vector2 &right)
 	{
 		return *Vector2::Add(left, right, &left);
 	}
 
-	Vector2 operator-(Vector2 left, const Vector2& right)
+	Vector2 operator-(Vector2 left, const Vector2 &right)
 	{
 		return *Vector2::Subtract(left, right, &left);
 	}
 
-	Vector2 operator*(Vector2 left, const Vector2& right)
+	Vector2 operator*(Vector2 left, const Vector2 &right)
 	{
 		return *Vector2::Multiply(left, right, &left);
 	}
 
-	Vector2 operator/(Vector2 left, const Vector2& right)
+	Vector2 operator/(Vector2 left, const Vector2 &right)
 	{
 		return *Vector2::Divide(left, right, &left);
 	}
@@ -373,51 +377,51 @@ namespace Flounder
 		return *Vector2::Divide(Vector2(value, value), left, &left);
 	}
 
-	Vector2& Vector2::operator+=(const Vector2& other)
+	Vector2 &Vector2::operator+=(const Vector2 &other)
 	{
 		Vector2 result = Vector2();
 		return *Vector2::Add(*this, other, &result);
 	}
 
-	Vector2& Vector2::operator-=(const Vector2& other)
+	Vector2 &Vector2::operator-=(const Vector2 &other)
 	{
 		Vector2 result = Vector2();
 		return *Vector2::Subtract(*this, other, &result);
 	}
 
-	Vector2& Vector2::operator*=(const Vector2& other)
+	Vector2 &Vector2::operator*=(const Vector2 &other)
 	{
 		Vector2 result = Vector2();
 		return *Vector2::Multiply(*this, other, &result);
 	}
 
-	Vector2& Vector2::operator/=(const Vector2& other)
+	Vector2 &Vector2::operator/=(const Vector2 &other)
 	{
 		Vector2 result = Vector2();
 		return *Vector2::Divide(*this, other, &result);
 	}
 
-	Vector2& Vector2::operator+=(float value)
+	Vector2 &Vector2::operator+=(float value)
 	{
 		return *Vector2::Add(*this, Vector2(value, value), this);
 	}
 
-	Vector2& Vector2::operator-=(float value)
+	Vector2 &Vector2::operator-=(float value)
 	{
 		return *Vector2::Subtract(*this, Vector2(value, value), this);
 	}
 
-	Vector2& Vector2::operator*=(float value)
+	Vector2 &Vector2::operator*=(float value)
 	{
 		return *Vector2::Multiply(*this, Vector2(value, value), this);
 	}
 
-	Vector2& Vector2::operator/=(float value)
+	Vector2 &Vector2::operator/=(float value)
 	{
 		return *Vector2::Divide(*this, Vector2(value, value), this);
 	}
 
-	std::ostream& operator<<(std::ostream& stream, const Vector2& vector)
+	std::ostream &operator<<(std::ostream &stream, const Vector2 &vector)
 	{
 		stream << vector.ToString();
 		return stream;

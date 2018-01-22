@@ -9,5 +9,5 @@ class EntitySun :
 	public Entity
 {
 public:
-	EntitySun(ISpatialStructure<Entity*> *structure, const Transform &transform);
+	EntitySun(ISpatialStructure<Entity *> *structure, const Transform &transform);
 };

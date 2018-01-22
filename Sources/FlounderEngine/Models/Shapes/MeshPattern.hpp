@@ -15,6 +15,7 @@ namespace Flounder
 		float m_textureScale;
 	public:
 		MeshPattern(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale);
+
 	protected:
 		void GenerateMesh();
 

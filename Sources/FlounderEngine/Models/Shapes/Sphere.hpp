@@ -15,17 +15,18 @@ namespace Flounder
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Sphere*>(resource);
+				return dynamic_cast<Sphere *>(resource);
 			}
 
 			Sphere *result = new Sphere(latitudeBands, longitudeBands, radius);
-			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 
 		Sphere(const int &latitudeBands, const int &longitudeBands, const float &radius);
 
 		~Sphere();
+
 	private:
 		static std::string ToFilename(const int &latitudeBands, const int &longitudeBands, const float &radius);
 	};

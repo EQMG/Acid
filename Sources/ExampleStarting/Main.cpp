@@ -85,12 +85,14 @@ int main(int argc, char **argv)
 			for (int w = -n; w <= n; w++)
 			{
 				Terrains::Get()->GetTerrains()->push_back(new Terrain(
-					Transform(Vector3(2.0f * static_cast<float>(j) * Terrain::SIDE_LENGTH, 0.0f, 2.0f * static_cast<float>(w) * Terrain::SIDE_LENGTH))
+					Transform(Vector3(
+						2.0f * static_cast<float>(j) * Terrain::SIDE_LENGTH, 0.0f,
+						2.0f * static_cast<float>(w) * Terrain::SIDE_LENGTH))
 				));
 			}
 		}
 
-		//	Terrains::Get()->GetTerrains()->push_back(new Terrain(Vector3(), Vector3()));
+		//Terrains::Get()->GetTerrains()->push_back(new Terrain(Vector3(), Vector3()));
 	}
 
 	if (Waters::Get() != nullptr)

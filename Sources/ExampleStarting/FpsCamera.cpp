@@ -40,9 +40,9 @@ namespace Demo
 		m_targetRotationAngle(m_angleAroundPlayer),
 		m_sensitivity(0.9f),
 		m_reangleButton(GLFW_MOUSE_BUTTON_LEFT),
-		m_joystickVertical(new AxisJoystick(0, { 3 })),
-		m_joystickHorizontal(new AxisJoystick(0, { 2 })),
-		m_joystickZoom(new ButtonJoystick(0, { 9 })),
+		m_joystickVertical(new AxisJoystick(0, {3})),
+		m_joystickHorizontal(new AxisJoystick(0, {2})),
+		m_joystickZoom(new ButtonJoystick(0, {9})),
 		m_paused(false)
 	{
 	}

@@ -8,8 +8,8 @@ namespace Flounder
 
 	Particles::Particles() :
 		IModule(),
-		m_particleSystems(new std::vector<ParticleSystem*>()),
-		m_particles(new std::map<ParticleType*, std::vector<Particle*>*>())
+		m_particleSystems(new std::vector<ParticleSystem *>()),
+		m_particles(new std::map<ParticleType *, std::vector<Particle *> *>())
 	{
 	}
 
@@ -36,12 +36,12 @@ namespace Flounder
 
 			if (created != nullptr)
 			{
-				std::vector<Particle*> *list = m_particles->find(created->GetParticleType())->second;
+				std::vector<Particle *> *list = m_particles->find(created->GetParticleType())->second;
 
 				if (list == nullptr)
 				{
-					list = new std::vector<Particle*>();
-					m_particles->insert(std::pair<ParticleType*, std::vector<Particle*>*>(created->GetParticleType(), list));
+					list = new std::vector<Particle *>();
+					m_particles->insert(std::pair<ParticleType *, std::vector<Particle *> *>(created->GetParticleType(), list));
 				}
 
 				if (list != nullptr)

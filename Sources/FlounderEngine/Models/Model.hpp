@@ -33,6 +33,7 @@ namespace Flounder
 		/// Creates a new empty model.
 		/// </summary>
 		Model();
+
 	public:
 		static Model *Resource(const std::string &filename)
 		{
@@ -40,11 +41,11 @@ namespace Flounder
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Model*>(resource);
+				return dynamic_cast<Model *>(resource);
 			}
 
 			Model *result = new Model(filename);
-			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 
@@ -85,15 +86,16 @@ namespace Flounder
 		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer; }
 	protected:
 		void Set(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices, const std::string &name = "");
+
 	private:
 		/// <summary>
 		/// Loads the model object from a OBJ file.
 		/// </summary>
 		void LoadFromFile();
 
-		VertexData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData*> *vertices, std::vector<uint32_t> *indices);
+		VertexData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData *> *vertices, std::vector<uint32_t> *indices);
 
-		VertexData *DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexData*> *vertices);
+		VertexData *DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexData *> *vertices);
 
 		void CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *uvs);
 

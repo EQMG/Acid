@@ -39,7 +39,8 @@ namespace Flounder
 
 		void SetScaling(const Vector3 &scaling) const { m_scaling->Set(scaling); }
 
-		bool operator==(const Transform& other) const;
-		bool operator!=(const Transform& other) const;
+		bool operator==(const Transform &other) const;
+
+		bool operator!=(const Transform &other) const;
 	};
 }

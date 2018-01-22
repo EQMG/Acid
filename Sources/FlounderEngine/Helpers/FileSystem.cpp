@@ -6,7 +6,9 @@
 #include <algorithm>
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
+
 #include <direct.h>
+
 #define GetCurrentDir _getcwd
 #else
 #include <sys/stat.h>
@@ -80,7 +82,7 @@ namespace Flounder
 
 		if (nError != 0)
 		{
-		//	assert(false && "Could not create folder!");
+			//	assert(false && "Could not create folder!");
 		}
 	}
 

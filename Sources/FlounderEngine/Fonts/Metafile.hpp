@@ -15,7 +15,7 @@ namespace Flounder
 		public IResource
 	{
 	private:
-		std::map<int, Character*> *m_metadata;
+		std::map<int, Character *> *m_metadata;
 		std::map<std::string, std::string> *m_values;
 
 		std::string m_filename;
@@ -34,11 +34,11 @@ namespace Flounder
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Metafile*>(resource);
+				return dynamic_cast<Metafile *>(resource);
 			}
 
 			Metafile *result = new Metafile(filename);
-			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 

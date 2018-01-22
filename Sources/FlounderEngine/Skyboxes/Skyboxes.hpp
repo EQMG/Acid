@@ -23,7 +23,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Skyboxes *Get()
 		{
-			return static_cast<Skyboxes*>(Engine::Get()->GetModule("skyboxes"));
+			return dynamic_cast<Skyboxes *>(Engine::Get()->GetModule("skyboxes"));
 		}
 
 		Skyboxes();

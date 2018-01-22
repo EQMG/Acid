@@ -12,8 +12,8 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		ISpatialStructure<Entity*> *m_structure;
-	//	std::vector<Entity*> *m_entities;
+		ISpatialStructure<Entity *> *m_structure;
+		//	std::vector<Entity*> *m_entities;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -21,7 +21,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Entities *Get()
 		{
-			return static_cast<Entities*>(Engine::Get()->GetModule("entities"));
+			return dynamic_cast<Entities *>(Engine::Get()->GetModule("entities"));
 		}
 
 		/// <summary>
@@ -36,6 +36,6 @@ namespace Flounder
 
 		void Update() override;
 
-		ISpatialStructure<Entity*> *GetStructure() const { return m_structure; }
+		ISpatialStructure<Entity *> *GetStructure() const { return m_structure; }
 	};
 }

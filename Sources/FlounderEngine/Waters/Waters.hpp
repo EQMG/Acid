@@ -25,7 +25,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Waters *Get()
 		{
-			return static_cast<Waters*>(Engine::Get()->GetModule("waters"));
+			return dynamic_cast<Waters *>(Engine::Get()->GetModule("waters"));
 		}
 
 		/// <summary>

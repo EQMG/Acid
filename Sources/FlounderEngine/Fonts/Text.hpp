@@ -210,6 +210,7 @@ namespace Flounder
 		/// </summary>
 		/// <returns> If the text has been loaded to OpenGL. </returns>
 		bool IsLoaded();
+
 	private:
 		/// <summary>
 		/// Takes in an unloaded text and calculate all of the vertices for the quads on which this text will be rendered.

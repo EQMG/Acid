@@ -13,7 +13,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		std::vector<IResource*> m_managed;
+		std::vector<IResource *> m_managed;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -21,7 +21,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Resources *Get()
 		{
-			return static_cast<Resources*>(Engine::Get()->GetModule("resources"));
+			return dynamic_cast<Resources *>(Engine::Get()->GetModule("resources"));
 		}
 
 		/// <summary>

@@ -11,13 +11,12 @@ namespace Demo
 	ManagerUis::ManagerUis() :
 		IManagerUis(),
 		m_primaryColour(new Colour("#e74c3c")),
-		m_buttonPause(new ButtonKeyboard({ GLFW_KEY_ESCAPE })),
+		m_buttonPause(new ButtonKeyboard({GLFW_KEY_ESCAPE})),
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer())),
 		m_uiNavigation(new UiNavigation(Uis::Get()->GetContainer()))
 	{
 		Uis::Get()->GetSelector()->Load(0, 0, 1, 0, 1);
-
 		m_uiStartLogo->SetAlphaDriver(new DriverConstant(1.0f));
 		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f));
 		m_uiNavigation->SetAlphaDriver(new DriverConstant(0.0f));
@@ -43,7 +42,7 @@ namespace Demo
 		{
 			m_uiStartLogo->SetAlphaDriver(new DriverConstant(0.0f));
 			m_overlayDebug->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
-			//	m_uiNavigation->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
+			//m_uiNavigation->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
 			m_uiStartLogo->SetStarting(false);
 		}
 	}

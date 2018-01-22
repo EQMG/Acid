@@ -73,7 +73,7 @@ namespace Flounder
 		{
 			for (auto value : *m_objects)
 			{
-				ISpatialObject *object = static_cast<ISpatialObject*>(value);
+				ISpatialObject *object = static_cast<ISpatialObject *>(value);
 
 				if (object->GetCollider() == nullptr || object->GetCollider()->InFrustum(*range))
 				{
@@ -88,9 +88,10 @@ namespace Flounder
 		{
 			for (auto value : *m_objects)
 			{
-				ISpatialObject *object = static_cast<ISpatialObject*>(value);
+				ISpatialObject *object = static_cast<ISpatialObject *>(value);
 
-				if (object->GetCollider() == nullptr || range->Intersects(*object->GetCollider()).IsIntersection() || range->Contains(*object->GetCollider()))
+				if (object->GetCollider() == nullptr || range->Intersects(*object->GetCollider()).IsIntersection() ||
+					range->Contains(*object->GetCollider()))
 				{
 					result->push_back(value);
 				}

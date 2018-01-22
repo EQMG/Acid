@@ -7,12 +7,12 @@
 
 #include "EntitySun.hpp"
 
-EntitySun::EntitySun(ISpatialStructure<Entity*> *structure, const Transform &transform) :
+EntitySun::EntitySun(ISpatialStructure<Entity *> *structure, const Transform &transform) :
 	Entity(structure, transform)
 {
 	AddComponent(new ComponentModel(
-			Model::Resource("Resources/Entities/Sun/Model.obj"),
-			Texture::Resource("Resources/Entities/Sun/Diffuse.png")
+		Model::Resource("Resources/Entities/Sun/Model.obj"),
+		Texture::Resource("Resources/Entities/Sun/Diffuse.png")
 	));
 	AddComponent(new ComponentMaterial(0.5f, 0.5f));
 	AddComponent(new ComponentGlow(Texture::Resource("Resources/Entities/Sun/Glow.png")));

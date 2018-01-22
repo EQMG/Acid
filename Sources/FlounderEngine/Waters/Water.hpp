@@ -41,8 +41,10 @@ namespace Flounder
 		void Update();
 
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
+
 	private:
 		void GenerateMesh();
+
 	public:
 		Model *GetModel() const { return m_model; }
 

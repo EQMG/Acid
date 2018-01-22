@@ -360,27 +360,36 @@ namespace Flounder
 		/// <returns> This. </returns>
 		Matrix4 *SetZero();
 
-		bool operator==(const Matrix4& other) const;
-		bool operator!=(const Matrix4& other) const;
+		bool operator==(const Matrix4 &other) const;
 
-		Matrix4& operator-();
+		bool operator!=(const Matrix4 &other) const;
 
-		friend Matrix4 operator+(Matrix4 left, const Matrix4& right);
-		friend Matrix4 operator-(Matrix4 left, const Matrix4& right);
-		friend Matrix4 operator*(Matrix4 left, const Matrix4& right);
-		friend Matrix4 operator/(Matrix4 left, const Matrix4& right);
+		Matrix4 &operator-();
+
+		friend Matrix4 operator+(Matrix4 left, const Matrix4 &right);
+
+		friend Matrix4 operator-(Matrix4 left, const Matrix4 &right);
+
+		friend Matrix4 operator*(Matrix4 left, const Matrix4 &right);
+
+		friend Matrix4 operator/(Matrix4 left, const Matrix4 &right);
 
 		friend Matrix4 operator*(Matrix4 left, Vector4 value);
+
 		friend Matrix4 operator/(Matrix4 left, Vector4 value);
 
-		Matrix4& operator+=(const Matrix4& other);
-		Matrix4& operator-=(const Matrix4& other);
-		Matrix4& operator*=(const Matrix4& other);
-		Matrix4& operator/=(const Matrix4& other);
+		Matrix4 &operator+=(const Matrix4 &other);
 
-		friend std::ostream& operator<<(std::ostream& stream, const Matrix4& matrix);
+		Matrix4 &operator-=(const Matrix4 &other);
+
+		Matrix4 &operator*=(const Matrix4 &other);
+
+		Matrix4 &operator/=(const Matrix4 &other);
+
+		friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
 
 		std::string ToString() const;
+
 	private:
 		static float Determinant3x3(const float &t00, const float &t01, const float &t02, const float &t10, const float &t11, const float &t12, const float &t20, const float &t21, const float &t22);
 	};

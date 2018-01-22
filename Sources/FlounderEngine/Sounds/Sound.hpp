@@ -30,11 +30,11 @@ namespace Flounder
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Sound*>(resource);
+				return dynamic_cast<Sound *>(resource);
 			}
 
 			Sound *result = new Sound(filename);
-			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 

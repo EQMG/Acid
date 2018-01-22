@@ -35,7 +35,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Shadows *Get()
 		{
-			return static_cast<Shadows*>(Engine::Get()->GetModule("shadows"));
+			return dynamic_cast<Shadows *>(Engine::Get()->GetModule("shadows"));
 		}
 
 		/// <summary>
