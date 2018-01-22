@@ -35,7 +35,9 @@ before_build:
   - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
   - cmake --build .
   - cd ../
+  - xcopy "Resources" "Build\bin\Release\" /s/h/e/k/f/c
+  - xcopy "Resources" "Build\bin\Debug\" /s/h/e/k/f/c
 
 artifacts:
-  - path: Build\Release\bin\
+  - path: Build\Release\
     name: Flounder Release
