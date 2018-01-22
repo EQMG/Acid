@@ -23,7 +23,7 @@ namespace Flounder
 		uint32_t m_index;
 		float m_length;
 
-		std::vector<Vector3*> m_tangents;
+		std::vector<Vector3 *> m_tangents;
 		Vector3 m_averagedTangent;
 	public:
 		VertexData(const uint32_t &index, const Vector3 &position);

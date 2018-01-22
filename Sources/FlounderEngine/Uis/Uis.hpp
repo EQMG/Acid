@@ -17,7 +17,7 @@ namespace Flounder
 		IManagerUis *m_managerUis;
 		UiSelector *m_selector;
 		UiObject *m_container;
-		std::vector<UiObject*> *m_objects;
+		std::vector<UiObject *> *m_objects;
 	public:
 		FontFamily *m_proximaNova;
 
@@ -27,7 +27,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Uis *Get()
 		{
-			return static_cast<Uis*>(Engine::Get()->GetModule("uis"));
+			return static_cast<Uis *>(Engine::Get()->GetModule("uis"));
 		}
 
 		/// <summary>
@@ -70,6 +70,6 @@ namespace Flounder
 		/// The rendering objects from the container. Updated each update.
 		/// </summary>
 		/// <returns> The objects. </returns>
-		std::vector<UiObject*> *GetObjects() const { return m_objects; };
+		std::vector<UiObject *> *GetObjects() const { return m_objects; };
 	};
 }

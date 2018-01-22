@@ -14,7 +14,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		std::vector<IProcessor*> *m_processors;
+		std::vector<IProcessor *> *m_processors;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -22,7 +22,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Processing *Get()
 		{
-			return static_cast<Processing*>(Engine::Get()->GetModule("processing"));
+			return dynamic_cast<Processing *>(Engine::Get()->GetModule("processing"));
 		}
 
 		/// <summary>

@@ -17,7 +17,8 @@ namespace Flounder
 	void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 	{
 		Mouse::Get()->m_mousePositionX = static_cast<float>(xpos) / static_cast<float>(Display::Get()->GetWidth());
-		Mouse::Get()->m_mousePositionY = 1.0f - (static_cast<float>(ypos) / static_cast<float>(Display::Get()->GetHeight()));
+		Mouse::Get()->m_mousePositionY =
+			1.0f - (static_cast<float>(ypos) / static_cast<float>(Display::Get()->GetHeight()));
 	}
 
 	void CallbackCursorEnter(GLFWwindow *window, int entered)
@@ -117,11 +118,14 @@ namespace Flounder
 	{
 		if (m_cursorDisabled != disabled)
 		{
-			glfwSetInputMode(Display::Get()->GetWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
+			glfwSetInputMode(Display::Get()->GetWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED
+				: GLFW_CURSOR_NORMAL));
 
 			if (!disabled && m_cursorDisabled)
 			{
-				glfwSetCursorPos(Display::Get()->GetWindow(), m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
+				glfwSetCursorPos(Display::Get()->GetWindow(),
+								 m_mousePositionX * Display::Get()->GetWidth(),
+								 m_mousePositionY * Display::Get()->GetHeight());
 			}
 		}
 

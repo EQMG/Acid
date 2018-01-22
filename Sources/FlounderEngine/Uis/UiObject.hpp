@@ -19,7 +19,7 @@ namespace Flounder
 	{
 	private:
 		UiObject *m_parent;
-		std::vector<UiObject*> *m_children;
+		std::vector<UiObject *> *m_children;
 
 		bool m_visible;
 		UiBound *m_rectangle;
@@ -71,7 +71,7 @@ namespace Flounder
 		/// <param name="list"> The list to add to.
 		/// </param>
 		/// <returns> The list that has been added to. </returns>
-		std::vector<UiObject*> *GetAll(std::vector<UiObject*> *list);
+		std::vector<UiObject *> *GetAll(std::vector<UiObject *> *list);
 
 		/// <summary>
 		/// Gets the parent object.
@@ -85,7 +85,7 @@ namespace Flounder
 		/// <param name="parent"> The new parent object. </param>
 		void SetParent(UiObject *parent);
 
-		std::vector<UiObject*> *GetChildren() const { return m_children; }
+		std::vector<UiObject *> *GetChildren() const { return m_children; }
 
 		bool IsVisible() const;
 

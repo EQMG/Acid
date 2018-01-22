@@ -16,7 +16,9 @@ namespace Flounder
 		int m_keyboardChar;
 
 		friend void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods);
+
 		friend void CallbackChar(GLFWwindow *window, unsigned int codepoint);
+
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -24,7 +26,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Keyboard *Get()
 		{
-			return static_cast<Keyboard*>(Engine::Get()->GetModule("keyboard"));
+			return dynamic_cast<Keyboard *>(Engine::Get()->GetModule("keyboard"));
 		}
 
 		/// <summary>

@@ -7,7 +7,7 @@ namespace Flounder
 	const double ProcessorGraphic::MAX_TIME_MILLIS = 8.0f;
 
 	ProcessorGraphic::ProcessorGraphic() :
-		m_queue(new Queue<RequestGraphic*>())
+		m_queue(new Queue<RequestGraphic *>())
 	{
 	}
 
@@ -45,12 +45,12 @@ namespace Flounder
 
 	void ProcessorGraphic::AddRequestToQueue(IRequest *request)
 	{
-		if (dynamic_cast<RequestGraphic*>(request) == nullptr)
+		if (dynamic_cast<RequestGraphic *>(request) == nullptr)
 		{
 			return;
 		}
 
-		m_queue->AddRequest(static_cast<RequestGraphic*>(request));
+		m_queue->AddRequest(static_cast<RequestGraphic *>(request));
 	}
 
 	void ProcessorGraphic::CompleteAllRequests() const

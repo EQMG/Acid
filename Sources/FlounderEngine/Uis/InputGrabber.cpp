@@ -148,7 +148,8 @@ namespace Flounder
 		}
 
 		// Click updates.
-		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasLeftClick())
+		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f &&
+			Uis::Get()->GetSelector()->WasLeftClick())
 		{
 			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
 			m_selected = true;
@@ -175,7 +176,8 @@ namespace Flounder
 
 		// Update the background colour.
 		Colour *primary = Uis::Get()->GetManager()->GetPrimaryColour();
-		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
+		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) /
+			(SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.
 		//m_background->GetDimensions()->Set(*m_text->GetDimensions());

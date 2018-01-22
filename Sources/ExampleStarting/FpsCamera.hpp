@@ -62,6 +62,7 @@ namespace Demo
 		~FpsCamera();
 
 		void Update(IPlayer *player) override;
+
 	private:
 		void CalculateHorizontalAngle();
 
@@ -72,6 +73,7 @@ namespace Demo
 		void UpdatePitchAngle(const float &delta);
 
 		void UpdatePosition();
+
 	public:
 		void ReflectView(const float &waterHeight) override;
 

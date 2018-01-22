@@ -37,7 +37,7 @@ namespace Flounder
 			destination = new Sphere();
 		}
 
-		Sphere *source = dynamic_cast<Sphere*>(destination);
+		Sphere *source = dynamic_cast<Sphere *>(destination);
 
 		source->m_radius = m_radius * scale;
 		source->m_position->Set(position);
@@ -52,13 +52,13 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-	//	const Sphere &sphere2 = dynamic_cast<const Sphere&>(other);
-	//	float d = sphere2.m_radius + m_radius;
+		//	const Sphere &sphere2 = dynamic_cast<const Sphere&>(other);
+		//	float d = sphere2.m_radius + m_radius;
 
-	//	float xDif = m_position->m_x - sphere2.m_position->m_x;
-	//	float yDif = m_position->m_y - sphere2.m_position->m_y;
-	//	float zDif = m_position->m_z - sphere2.m_position->m_z;
-	//	float distance = xDif * xDif + yDif * yDif + zDif * zDif;
+		//	float xDif = m_position->m_x - sphere2.m_position->m_x;
+		//	float yDif = m_position->m_y - sphere2.m_position->m_y;
+		//	float zDif = m_position->m_z - sphere2.m_position->m_z;
+		//	float distance = xDif * xDif + yDif * yDif + zDif * zDif;
 		// TODO: Resolve!
 		return destination;
 	}
@@ -101,7 +101,7 @@ namespace Flounder
 			return new intersect(distanceSquared > 0.0f, dynamic_cast<float>(sqrt(distanceSquared)));
 		}
 		else */
-		const Sphere &sphere2 = dynamic_cast<const Sphere&>(other);
+		const Sphere &sphere2 = dynamic_cast<const Sphere &>(other);
 
 		float d = sphere2.m_radius + m_radius;
 
@@ -179,7 +179,7 @@ namespace Flounder
 
 	bool Sphere::Contains(const ICollider &other)
 	{
-		const Sphere &sphere2 = dynamic_cast<const Sphere&>(other);
+		const Sphere &sphere2 = dynamic_cast<const Sphere &>(other);
 
 		return sphere2.m_position->m_x + sphere2.m_radius - 1.0f <= m_position->m_x + m_radius - 1.0f &&
 			sphere2.m_position->m_x - sphere2.m_radius + m_radius >= m_position->m_x - m_radius + 1.0f &&

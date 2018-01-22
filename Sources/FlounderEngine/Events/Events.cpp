@@ -4,7 +4,7 @@ namespace Flounder
 {
 	Events::Events() :
 		IModule(),
-		m_events(new std::vector<IEvent*>())
+		m_events(new std::vector<IEvent *>())
 	{
 	}
 

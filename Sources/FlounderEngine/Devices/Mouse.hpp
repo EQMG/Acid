@@ -28,9 +28,13 @@ namespace Flounder
 		bool m_lastCursorDisabled;
 
 		friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
+
 		friend void CallbackMouseButton(GLFWwindow *window, int button, int action, int mods);
+
 		friend void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos);
+
 		friend void CallbackCursorEnter(GLFWwindow *window, int entered);
+
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -38,7 +42,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Mouse *Get()
 		{
-			return static_cast<Mouse*>(Engine::Get()->GetModule("mouse"));
+			return dynamic_cast<Mouse *>(Engine::Get()->GetModule("mouse"));
 		}
 
 		/// <summary>

@@ -8,7 +8,7 @@ namespace Flounder
 {
 	UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 		m_parent(parent),
-		m_children(new std::vector<UiObject*>()),
+		m_children(new std::vector<UiObject *>()),
 		m_visible(true),
 		m_rectangle(new UiBound(rectangle)),
 		m_scissor(new Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
@@ -54,12 +54,14 @@ namespace Flounder
 	void UiObject::Update()
 	{
 		// Click updates.
-		if (m_actionLeft != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasLeftClick() && Uis::Get()->GetSelector()->IsSelected(*this))
+		if (m_actionLeft != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasLeftClick() &&
+			Uis::Get()->GetSelector()->IsSelected(*this))
 		{
 			m_actionLeft();
 			Uis::Get()->GetSelector()->CancelWasEvent();
 		}
-		else if (m_actionRight != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasRightClick() && Uis::Get()->GetSelector()->IsSelected(*this))
+		else if (m_actionRight != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasRightClick() &&
+			Uis::Get()->GetSelector()->IsSelected(*this))
 		{
 			m_actionRight();
 			Uis::Get()->GetSelector()->CancelWasEvent();
@@ -88,8 +90,10 @@ namespace Flounder
 		const float dh = m_rectangle->m_dimensions->m_y * m_scale;
 
 		const float pa = m_rectangle->m_aspectPosition ? 1.0f : aspectRatio;
-		const float px = (m_rectangle->m_position->m_x / pa) - (dw * m_rectangle->m_reference->m_x) + m_positionOffset->m_x;
-		const float py = m_rectangle->m_position->m_y - (dh * (-1.0f + m_rectangle->m_reference->m_y)) + m_positionOffset->m_y;
+		const float px =
+			(m_rectangle->m_position->m_x / pa) - (dw * m_rectangle->m_reference->m_x) + m_positionOffset->m_x;
+		const float py =
+			m_rectangle->m_position->m_y - (dh * (-1.0f + m_rectangle->m_reference->m_y)) + m_positionOffset->m_y;
 
 		m_screenTransform->Set(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
 	}
@@ -111,7 +115,7 @@ namespace Flounder
 		}
 	}
 
-	std::vector<UiObject*> *UiObject::GetAll(std::vector<UiObject *> *list)
+	std::vector<UiObject *> *UiObject::GetAll(std::vector<UiObject *> *list)
 	{
 		if (IsVisible())
 		{

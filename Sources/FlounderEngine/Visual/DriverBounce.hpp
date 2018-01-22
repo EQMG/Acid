@@ -27,6 +27,7 @@ namespace Flounder
 		/// Deconstructor for bounce driver.
 		/// </summary>
 		~DriverBounce();
+
 	protected:
 		float Calculate(const float &time) override;
 	};

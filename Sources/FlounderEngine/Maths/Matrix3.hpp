@@ -212,25 +212,33 @@ namespace Flounder
 		/// <returns> This. </returns>
 		Matrix3 *SetZero();
 
-		bool operator==(const Matrix3& other) const;
-		bool operator!=(const Matrix3& other) const;
+		bool operator==(const Matrix3 &other) const;
 
-		Matrix3& operator-();
+		bool operator!=(const Matrix3 &other) const;
 
-		friend Matrix3 operator+(Matrix3 left, const Matrix3& right);
-		friend Matrix3 operator-(Matrix3 left, const Matrix3& right);
-		friend Matrix3 operator*(Matrix3 left, const Matrix3& right);
-		friend Matrix3 operator/(Matrix3 left, const Matrix3& right);
+		Matrix3 &operator-();
+
+		friend Matrix3 operator+(Matrix3 left, const Matrix3 &right);
+
+		friend Matrix3 operator-(Matrix3 left, const Matrix3 &right);
+
+		friend Matrix3 operator*(Matrix3 left, const Matrix3 &right);
+
+		friend Matrix3 operator/(Matrix3 left, const Matrix3 &right);
 
 		friend Matrix3 operator*(Matrix3 left, Vector3 value);
+
 		friend Matrix3 operator/(Matrix3 left, Vector3 value);
 
-		Matrix3& operator+=(const Matrix3& other);
-		Matrix3& operator-=(const Matrix3& other);
-		Matrix3& operator*=(const Matrix3& other);
-		Matrix3& operator/=(const Matrix3& other);
+		Matrix3 &operator+=(const Matrix3 &other);
 
-		friend std::ostream& operator<<(std::ostream& stream, const Matrix3& matrix);
+		Matrix3 &operator-=(const Matrix3 &other);
+
+		Matrix3 &operator*=(const Matrix3 &other);
+
+		Matrix3 &operator/=(const Matrix3 &other);
+
+		friend std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix);
 
 		std::string ToString() const;
 	};

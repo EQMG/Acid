@@ -34,11 +34,11 @@ namespace Flounder
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Cubemap*>(resource);
+				return dynamic_cast<Cubemap *>(resource);
 			}
 
 			Cubemap *result = new Cubemap(filename, fileExt);
-			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 

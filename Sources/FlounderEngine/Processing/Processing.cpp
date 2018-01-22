@@ -7,7 +7,7 @@ namespace Flounder
 {
 	Processing::Processing() :
 		IModule(),
-		m_processors(new std::vector<IProcessor*>())
+		m_processors(new std::vector<IProcessor *>())
 	{
 		// Manually adds the two base processors, these will be added into the modules loop, but are needed now.
 		// If these are not added in the init loop, nothing will be able to be initially processed!

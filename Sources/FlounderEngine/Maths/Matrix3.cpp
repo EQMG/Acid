@@ -91,7 +91,9 @@ namespace Flounder
 
 	float Matrix3::Determinant(const Matrix3 &source)
 	{
-		return source.m_00 * (source.m_11 * source.m_22 - source.m_12 * source.m_21) + source.m_01 * (source.m_12 * source.m_20 - source.m_10 * source.m_22) + source.m_02 * (source.m_10 * source.m_21 - source.m_11 * source.m_20);
+		return source.m_00 * (source.m_11 * source.m_22 - source.m_12 * source.m_21) +
+			source.m_01 * (source.m_12 * source.m_20 - source.m_10 * source.m_22) +
+			source.m_02 * (source.m_10 * source.m_21 - source.m_11 * source.m_20);
 	}
 
 	Matrix3 *Matrix3::Add(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination)
@@ -371,14 +373,14 @@ namespace Flounder
 		return SetZero(this);
 	}
 
-	bool Matrix3::operator==(const Matrix3& other) const
+	bool Matrix3::operator==(const Matrix3 &other) const
 	{
 		return m_00 == other.m_00 && m_01 == other.m_01 && m_02 == other.m_02 &&
-				m_10 == other.m_10 && m_11 == other.m_11 && m_12 == other.m_12 &&
-				m_20 == other.m_20 && m_21 == other.m_21 && m_22 == other.m_22;
+			m_10 == other.m_10 && m_11 == other.m_11 && m_12 == other.m_12 &&
+			m_20 == other.m_20 && m_21 == other.m_21 && m_22 == other.m_22;
 	}
 
-	bool Matrix3::operator!=(const Matrix3& other) const
+	bool Matrix3::operator!=(const Matrix3 &other) const
 	{
 		return !(*this == other);
 	}
@@ -388,22 +390,22 @@ namespace Flounder
 		return *this->Negate();
 	}
 
-	Matrix3 operator+(Matrix3 left, const Matrix3& right)
+	Matrix3 operator+(Matrix3 left, const Matrix3 &right)
 	{
 		return *Matrix3::Add(left, right, &left);
 	}
 
-	Matrix3 operator-(Matrix3 left, const Matrix3& right)
+	Matrix3 operator-(Matrix3 left, const Matrix3 &right)
 	{
 		return *Matrix3::Subtract(left, right, &left);
 	}
 
-	Matrix3 operator*(Matrix3 left, const Matrix3& right)
+	Matrix3 operator*(Matrix3 left, const Matrix3 &right)
 	{
 		return *Matrix3::Multiply(left, right, &left);
 	}
 
-	Matrix3 operator/(Matrix3 left, const Matrix3& right)
+	Matrix3 operator/(Matrix3 left, const Matrix3 &right)
 	{
 		return *Matrix3::Divide(left, right, &left);
 	}
@@ -418,31 +420,31 @@ namespace Flounder
 		return *Matrix3::Scale(left, 1.0f / value, &left);
 	}
 
-	Matrix3& Matrix3::operator+=(const Matrix3& other)
+	Matrix3 &Matrix3::operator+=(const Matrix3 &other)
 	{
 		Matrix3 result = Matrix3();
 		return *Matrix3::Add(*this, other, &result);
 	}
 
-	Matrix3& Matrix3::operator-=(const Matrix3& other)
+	Matrix3 &Matrix3::operator-=(const Matrix3 &other)
 	{
 		Matrix3 result = Matrix3();
 		return *Matrix3::Subtract(*this, other, &result);
 	}
 
-	Matrix3& Matrix3::operator*=(const Matrix3& other)
+	Matrix3 &Matrix3::operator*=(const Matrix3 &other)
 	{
 		Matrix3 result = Matrix3();
 		return *Matrix3::Multiply(*this, other, &result);
 	}
 
-	Matrix3& Matrix3::operator/=(const Matrix3& other)
+	Matrix3 &Matrix3::operator/=(const Matrix3 &other)
 	{
 		Matrix3 result = Matrix3();
 		return *Matrix3::Divide(*this, other, &result);
 	}
 
-	std::ostream& operator<<(std::ostream& stream, const Matrix3& matrix)
+	std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix)
 	{
 		stream << matrix.ToString();
 		return stream;
@@ -452,8 +454,8 @@ namespace Flounder
 	{
 		std::stringstream result;
 		result << "Matrix3(" << m_00 << ", " << m_01 << ", " << m_02 << ", " <<
-								m_10 << ", " << m_11 << ", " << m_12 << ", " <<
-								m_20 << ", " << m_21 << ", " << m_22 << ")";
+			   m_10 << ", " << m_11 << ", " << m_12 << ", " <<
+			   m_20 << ", " << m_21 << ", " << m_22 << ")";
 		return result.str();
 	}
 }

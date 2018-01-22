@@ -35,7 +35,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Joysticks *Get()
 		{
-			return static_cast<Joysticks*>(Engine::Get()->GetModule("joysticks"));
+			return dynamic_cast<Joysticks *>(Engine::Get()->GetModule("joysticks"));
 		}
 
 		/// <summary>

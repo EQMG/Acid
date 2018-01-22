@@ -6,21 +6,23 @@
 namespace Flounder
 {
 	const PipelineCreateInfo PIPELINE_CREATE_INFO =
-	{
-		PIPELINE_MRT, // pipelineModeFlags
-		VK_POLYGON_MODE_FILL, // polygonMode
-		VK_CULL_MODE_BACK_BIT, // cullModeFlags
-
-		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
-
 		{
-			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
-			UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL) // uboObject
-		}, // descriptors
+			PIPELINE_MRT, // pipelineModeFlags
+			VK_POLYGON_MODE_FILL, // polygonMode
+			VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
-		{ "Resources/Shaders/Terrains/Terrain.vert.spv", "Resources/Shaders/Terrains/Terrain.frag.spv" } // shaderStages
-	};
+			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+			Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+			{
+				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
+				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL) // uboObject
+			}, // descriptors
+
+			{
+				"Resources/Shaders/Terrains/Terrain.vert.spv", "Resources/Shaders/Terrains/Terrain.frag.spv"
+			} // shaderStages
+		};
 
 	RendererTerrains::RendererTerrains(const int &subpass) :
 		IRenderer(),

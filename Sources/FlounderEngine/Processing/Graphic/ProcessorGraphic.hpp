@@ -15,7 +15,7 @@ namespace Flounder
 	private:
 		static const double MAX_TIME_MILLIS;
 
-		Queue<RequestGraphic*> *m_queue;
+		Queue<RequestGraphic *> *m_queue;
 	public:
 		/// <summary>
 		/// Creates a new opengl processor.

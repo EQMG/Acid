@@ -18,6 +18,7 @@ namespace Flounder
 		~RendererShadows();
 
 		void Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+
 	private:
 		void RenderModel(const VkCommandBuffer &commandBuffer, Model *object, const Matrix4 &modelMatrix);
 	};

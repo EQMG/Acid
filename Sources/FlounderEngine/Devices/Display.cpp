@@ -7,8 +7,10 @@
 
 namespace Flounder
 {
-	const std::vector<const char*> Display::VALIDATION_LAYERS = { "VK_LAYER_LUNARG_standard_validation" }; // "VK_LAYER_LUNARG_api_dump"
-	const std::vector<const char*> Display::DEVICE_EXTENSIONS = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+	const std::vector<const char *> Display::VALIDATION_LAYERS = {
+		"VK_LAYER_LUNARG_standard_validation"
+	}; // "VK_LAYER_LUNARG_api_dump"
+	const std::vector<const char *> Display::DEVICE_EXTENSIONS = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
 
 	void CallbackError(int error, const char *description)
 	{
@@ -113,9 +115,9 @@ namespace Flounder
 //#else
 		m_validationLayers(false),
 //#endif	
-		m_instanceLayerList(std::vector<const char*>()),
-		m_instanceExtensionList(std::vector<const char*>()),
-		m_deviceExtensionList(std::vector<const char*>()),
+		m_instanceLayerList(std::vector<const char *>()),
+		m_instanceExtensionList(std::vector<const char *>()),
+		m_deviceExtensionList(std::vector<const char *>()),
 		m_debugReport(VK_NULL_HANDLE),
 
 		m_instance(VK_NULL_HANDLE),
@@ -281,7 +283,8 @@ namespace Flounder
 		}
 
 		// Create a windowed mode window and its OpenGL context.
-		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
+		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight
+			: m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
 
 		// Gets any window errors.
 		if (m_window == nullptr)
@@ -404,7 +407,8 @@ namespace Flounder
 		{
 			VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = {};
 			debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-			debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
+			debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT |
+				VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
 			debugCallBackCreateInfo.pfnCallback = static_cast<PFN_vkDebugReportCallbackEXT>(VkCallbackDebug);
 
 			Platform::ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
@@ -431,7 +435,7 @@ namespace Flounder
 		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
 		std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
 		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount,
-			deviceQueueFamilyProperties.data());
+												 deviceQueueFamilyProperties.data());
 
 		bool foundQueueFamily = false;
 
@@ -444,7 +448,8 @@ namespace Flounder
 			}
 		}
 
-		assert(foundQueueFamily && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+		assert(
+			foundQueueFamily && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
 	}
 
 	VkPhysicalDevice Display::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices)
@@ -547,7 +552,7 @@ namespace Flounder
 
 	void Display::CreateLogicalDevice()
 	{
-		float queuePriorities[] = { 1.0f };
+		float queuePriorities[] = {1.0f};
 		VkDeviceQueueCreateInfo deviceQueueCreateInfo = {};
 		deviceQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		deviceQueueCreateInfo.queueFamilyIndex = m_graphicsFamilyIndex;
@@ -595,7 +600,7 @@ namespace Flounder
 		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, nullptr);
 		std::vector<VkSurfaceFormatKHR> physicalDeviceFormats(physicalDeviceFormatCount);
 		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount,
-			physicalDeviceFormats.data());
+											 physicalDeviceFormats.data());
 
 		m_surfaceFormat.format = VK_FORMAT_B8G8R8A8_UNORM;
 		m_surfaceFormat.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
@@ -607,7 +612,7 @@ namespace Flounder
 	}
 
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties,
-		const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)
+								  const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)
 	{
 #if FLOUNDER_VERBOSE
 		printf("-- Selected Device: '%s' --\n", physicalDeviceProperties.deviceName);
@@ -656,7 +661,7 @@ namespace Flounder
 	}
 
 	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type,
-		const bool &showDescription)
+								  const bool &showDescription)
 	{
 #if FLOUNDER_VERBOSE
 		printf("-- Avalable Layers For: '%s' --\n", type.c_str());

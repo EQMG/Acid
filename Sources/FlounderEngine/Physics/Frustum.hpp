@@ -72,6 +72,7 @@ namespace Flounder
 		/// <param name="max"> The point 2nd position. </param>
 		/// <returns> True if partially contained, false if outside. </returns>
 		bool CubeInFrustum(const Vector3 &min, const Vector3 &max) const;
+
 	private:
 		void NormalizePlane(float **frustum, const int &side) const;
 	};

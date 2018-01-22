@@ -38,8 +38,12 @@ namespace Flounder
 			destination = new Aabb();
 		}
 
-		destination->m_minExtents->Set(source.m_minExtents->m_x * scale.m_x, source.m_minExtents->m_y * scale.m_y, source.m_minExtents->m_z * scale.m_z);
-		destination->m_maxExtents->Set(source.m_maxExtents->m_x * scale.m_x, source.m_maxExtents->m_y * scale.m_y, source.m_maxExtents->m_z * scale.m_z);
+		destination->m_minExtents->Set(
+			source.m_minExtents->m_x * scale.m_x,
+			source.m_minExtents->m_y * scale.m_y, source.m_minExtents->m_z * scale.m_z);
+		destination->m_maxExtents->Set(
+			source.m_maxExtents->m_x * scale.m_x,
+			source.m_maxExtents->m_y * scale.m_y, source.m_maxExtents->m_z * scale.m_z);
 
 		return destination;
 	}
@@ -56,8 +60,12 @@ namespace Flounder
 			destination = new Aabb();
 		}
 
-		destination->m_minExtents->Set(source.m_minExtents->m_x - expand.m_x, source.m_minExtents->m_y - expand.m_y, source.m_minExtents->m_z - expand.m_z);
-		destination->m_maxExtents->Set(source.m_maxExtents->m_x + expand.m_x, source.m_maxExtents->m_y + expand.m_y, source.m_maxExtents->m_z + expand.m_z);
+		destination->m_minExtents->Set(
+			source.m_minExtents->m_x - expand.m_x,
+			source.m_minExtents->m_y - expand.m_y, source.m_minExtents->m_z - expand.m_z);
+		destination->m_maxExtents->Set(
+			source.m_maxExtents->m_x + expand.m_x,
+			source.m_maxExtents->m_y + expand.m_y, source.m_maxExtents->m_z + expand.m_z);
 
 		return destination;
 	}
@@ -147,7 +155,7 @@ namespace Flounder
 			destination = new Aabb();
 		}
 
-		Aabb *aabb2 = dynamic_cast<Aabb*>(destination);
+		Aabb *aabb2 = dynamic_cast<Aabb *>(destination);
 
 		// Sets the destinations values to the sources.
 		aabb2->m_minExtents->Set(*m_minExtents);
@@ -156,8 +164,10 @@ namespace Flounder
 		// Scales the dimensions for the aabb.
 		if (scale != 1.0f)
 		{
-			aabb2->m_minExtents->Set(aabb2->m_minExtents->m_x * scale, aabb2->m_minExtents->m_y * scale, aabb2->m_minExtents->m_z * scale);
-			aabb2->m_maxExtents->Set(aabb2->m_maxExtents->m_x * scale, aabb2->m_maxExtents->m_y * scale, aabb2->m_maxExtents->m_z * scale);
+			aabb2->m_minExtents->Set(
+				aabb2->m_minExtents->m_x * scale, aabb2->m_minExtents->m_y * scale, aabb2->m_minExtents->m_z * scale);
+			aabb2->m_maxExtents->Set(
+				aabb2->m_maxExtents->m_x * scale, aabb2->m_maxExtents->m_y * scale, aabb2->m_maxExtents->m_z * scale);
 		}
 
 		// Creates the 8 aabb corners and rotates them.
@@ -230,7 +240,7 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		const Aabb &aabb2 = dynamic_cast<const Aabb&>(other);
+		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
 
 		if (positionDelta.m_x != 0.0f)
 		{
@@ -300,7 +310,7 @@ namespace Flounder
 
 	Intersect Aabb::Intersects(const ICollider &other)
 	{
-		const Aabb &aabb2 = dynamic_cast<const Aabb&>(other);
+		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
 
 		Vector3 *distance1 = Vector3::Subtract(*m_minExtents, *aabb2.m_maxExtents, nullptr);
 		Vector3 *distance2 = Vector3::Subtract(*aabb2.m_minExtents, *m_maxExtents, nullptr);
@@ -412,7 +422,7 @@ namespace Flounder
 
 	bool Aabb::Contains(const ICollider &other)
 	{
-		const Aabb &aabb2 = dynamic_cast<const Aabb&>(other);
+		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
 
 		return m_minExtents->m_x <= aabb2.m_minExtents->m_x &&
 			aabb2.m_maxExtents->m_x <= m_maxExtents->m_x &&

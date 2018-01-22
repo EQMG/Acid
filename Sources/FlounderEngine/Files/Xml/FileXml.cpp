@@ -65,16 +65,16 @@ namespace Flounder
 
 	}
 
-	std::map<std::string, std::string> FileXml::ConfigReadValues() 
+	std::map<std::string, std::string> FileXml::ConfigReadValues()
 	{
 		auto result = std::map<std::string, std::string>();
 		return result;
 	}
-	
-	void FileXml::ConfigPushValue(const std::string &key, const std::string &value) 
+
+	void FileXml::ConfigPushValue(const std::string &key, const std::string &value)
 	{
 	}
-	
+
 	void FileXml::Verify()
 	{
 		if (!FileSystem::FileExists(m_filename))
@@ -85,9 +85,9 @@ namespace Flounder
 
 	std::string FileXml::GetStartTag(const std::string &line)
 	{
-	//	Matcher match = START_TAG.matcher(line);
-	//	match.find();
-	//	return match.group(1);
+		//	Matcher match = START_TAG.matcher(line);
+		//	match.find();
+		//	return match.group(1);
 		return "";
 	}
 }

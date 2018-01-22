@@ -47,6 +47,7 @@ namespace Flounder
 		void PushRow(const RowCsv &row);
 
 		void SetRow(const RowCsv &row, const unsigned int &index);
+
 	private:
 		void Verify();
 	};
