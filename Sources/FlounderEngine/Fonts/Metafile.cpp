@@ -19,7 +19,7 @@ namespace Flounder
 
 	Metafile::Metafile(const std::string &filename) :
 		IResource(),
-		m_metadata(new std::map<int, Character*>()),
+		m_metadata(new std::map<int, Character *>()),
 		m_values(new std::map<std::string, std::string>()),
 		m_filename(filename),
 		m_verticalPerPixelSize(0.0),
@@ -102,7 +102,7 @@ namespace Flounder
 
 		if (c != nullptr)
 		{
-			m_metadata->insert(std::pair<int, Character*>(c->GetId(), c));
+			m_metadata->insert(std::pair<int, Character *>(c->GetId(), c));
 		}
 	}
 
@@ -116,16 +116,20 @@ namespace Flounder
 			return nullptr;
 		}
 
-		double xTextureCoord = (static_cast<double>(GetValueOfVariable("x")) + (m_padding->at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
-		double yTextureCoord = (static_cast<double>(GetValueOfVariable("y")) + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) / m_imageWidth;
+		double xTextureCoord =
+			(static_cast<double>(GetValueOfVariable("x")) + (m_padding->at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
+		double yTextureCoord =
+			(static_cast<double>(GetValueOfVariable("y")) + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) / m_imageWidth;
 		int width = GetValueOfVariable("width") - (m_paddingWidth - (2 * DESIRED_PADDING));
 		int height = GetValueOfVariable("height") - ((m_paddingHeight) - (2 * DESIRED_PADDING));
 		double quadWidth = width * m_horizontalPerPixelSize;
 		double quadHeight = height * m_verticalPerPixelSize;
 		double xTexSize = static_cast<double>(width) / m_imageWidth;
 		double yTexSize = static_cast<double>(height) / m_imageWidth;
-		double xOffset = (GetValueOfVariable("xoffset") + m_padding->at(PAD_LEFT) - DESIRED_PADDING) * m_horizontalPerPixelSize;
-		double yOffset = (GetValueOfVariable("yoffset") + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) * m_verticalPerPixelSize;
+		double xOffset =
+			(GetValueOfVariable("xoffset") + m_padding->at(PAD_LEFT) - DESIRED_PADDING) * m_horizontalPerPixelSize;
+		double yOffset =
+			(GetValueOfVariable("yoffset") + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) * m_verticalPerPixelSize;
 		double xAdvance = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
 
 		if (quadHeight > m_maxSizeY)

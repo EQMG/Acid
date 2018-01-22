@@ -16,7 +16,9 @@ namespace Flounder
 		const auto surface = Display::Get()->GetSurface();
 
 		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(surface);
-		uint32_t indicesArray[] = { static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily) };
+		uint32_t indicesArray[] = {
+			static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily)
+		};
 
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -60,7 +62,8 @@ namespace Flounder
 		for (uint32_t i = 0; i < physicalDeviceMemoryProperties.memoryTypeCount; i++)
 		{
 			// If typefilter has a bit set to 1 and it contains the properties we indicated.
-			if ((typeFilter & (1 << i)) && (physicalDeviceMemoryProperties.memoryTypes[i].propertyFlags & properties) == properties)
+			if ((typeFilter & (1 << i)) &&
+				(physicalDeviceMemoryProperties.memoryTypes[i].propertyFlags & properties) == properties)
 			{
 				return i;
 			}

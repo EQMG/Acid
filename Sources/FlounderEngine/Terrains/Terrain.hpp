@@ -15,7 +15,7 @@ namespace Flounder
 	private:
 		UniformBuffer *m_uniformObject;
 
-		std::vector<Model*> m_modelLods;
+		std::vector<Model *> m_modelLods;
 		int m_currentLod;
 
 		Transform *m_transform;
@@ -35,12 +35,14 @@ namespace Flounder
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
 		static int CalculateVertexCount(const int &terrainLength, const float &squareSize);
+
 	private:
 		void CreateLod(const int &lod);
 
 		static std::string ToFilename(const float &x, const float &z, const int &lod);
+
 	public:
-		std::vector<Model*> GetModelLods() const { return m_modelLods; }
+		std::vector<Model *> GetModelLods() const { return m_modelLods; }
 
 		Model *GetModel(const int &lod) const { return m_modelLods[lod]; }
 

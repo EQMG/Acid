@@ -6,18 +6,18 @@
 namespace Flounder
 {
 	const PipelineCreateInfo PIPELINE_CREATE_INFO =
-	{
-		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
-		VK_POLYGON_MODE_FILL, // polygonMode
-		VK_CULL_MODE_BACK_BIT, // cullModeFlags
+		{
+			PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
+			VK_POLYGON_MODE_FILL, // polygonMode
+			VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
-		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+			Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
 
-		{}, // descriptors
+			{}, // descriptors
 
-		{ "Resources/Shaders/Filters/Default.vert.spv", "Resources/Shaders/Filters/Default.frag.spv" } // shaderStages
-	};
+			{"Resources/Shaders/Filters/Default.vert.spv", "Resources/Shaders/Filters/Default.frag.spv"} // shaderStages
+		};
 
 	IPostFilter::IPostFilter(const std::string &fragmentShader, const int &subpass, const std::vector<DescriptorType> &descriptors) :
 		m_pipeline(nullptr),
@@ -48,7 +48,7 @@ namespace Flounder
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[1] = { descriptorSet };
+		VkDescriptorSet descriptors[1] = {descriptorSet};
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_model->CmdRender(commandBuffer);

@@ -223,7 +223,9 @@ namespace Flounder
 
 	float Vector4::GetDistance(const Vector4 &point1, const Vector4 &point2)
 	{
-		return sqrt(pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2) + pow(point2.m_z - point1.m_z, 2) + pow(point2.m_w - point1.m_w, 2));
+		return sqrt(
+			pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2) + pow(point2.m_z - point1.m_z, 2) +
+				pow(point2.m_w - point1.m_w, 2));
 	}
 
 	Vector4 *Vector4::GetVectorDistance(const Vector4 &point1, const Vector4 &point2, Vector4 *destination)
@@ -233,7 +235,8 @@ namespace Flounder
 			destination = new Vector4();
 		}
 
-		return destination->Set(pow(point2.m_x - point1.m_x, 2), pow(point2.m_y - point1.m_y, 2), pow(point2.m_z - point1.m_z, 2), pow(point2.m_w - point1.m_w, 2));
+		return destination->Set(pow(point2.m_x - point1.m_x, 2), pow(point2.m_y - point1.m_y, 2), pow(
+			point2.m_z - point1.m_z, 2), pow(point2.m_w - point1.m_w, 2));
 	}
 
 	Vector4 *Vector4::Translate(const float &x, const float &y, const float &z, const float &w)
@@ -279,32 +282,32 @@ namespace Flounder
 		return LengthSquared(*this);
 	}
 
-	bool Vector4::operator==(const Vector4& other) const
+	bool Vector4::operator==(const Vector4 &other) const
 	{
 		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z && m_w == other.m_w;
 	}
 
-	bool Vector4::operator!=(const Vector4& other) const
+	bool Vector4::operator!=(const Vector4 &other) const
 	{
 		return !(*this == other);
 	}
 
-	bool Vector4::operator<(const Vector4& other) const
+	bool Vector4::operator<(const Vector4 &other) const
 	{
 		return m_x < other.m_x && m_y < other.m_y && m_z < other.m_z && m_w < other.m_w;
 	}
 
-	bool Vector4::operator<=(const Vector4& other) const
+	bool Vector4::operator<=(const Vector4 &other) const
 	{
 		return m_x <= other.m_x && m_y <= other.m_y && m_z <= other.m_z && m_w <= other.m_w;
 	}
 
-	bool Vector4::operator>(const Vector4& other) const
+	bool Vector4::operator>(const Vector4 &other) const
 	{
 		return m_x > other.m_x && m_y > other.m_y && m_z > other.m_z && m_w > other.m_w;
 	}
 
-	bool Vector4::operator>=(const Vector4& other) const
+	bool Vector4::operator>=(const Vector4 &other) const
 	{
 		return m_x >= other.m_x && m_y >= other.m_y && m_z >= other.m_z && m_w >= other.m_w;
 	}
@@ -314,22 +317,22 @@ namespace Flounder
 		return *this->Negate();
 	}
 
-	Vector4 operator+(Vector4 left, const Vector4& right)
+	Vector4 operator+(Vector4 left, const Vector4 &right)
 	{
 		return *Vector4::Add(left, right, &left);
 	}
 
-	Vector4 operator-(Vector4 left, const Vector4& right)
+	Vector4 operator-(Vector4 left, const Vector4 &right)
 	{
 		return *Vector4::Subtract(left, right, &left);
 	}
 
-	Vector4 operator*(Vector4 left, const Vector4& right)
+	Vector4 operator*(Vector4 left, const Vector4 &right)
 	{
 		return *Vector4::Multiply(left, right, &left);
 	}
 
-	Vector4 operator/(Vector4 left, const Vector4& right)
+	Vector4 operator/(Vector4 left, const Vector4 &right)
 	{
 		return *Vector4::Divide(left, right, &left);
 	}
@@ -374,51 +377,51 @@ namespace Flounder
 		return *Vector4::Divide(Vector4(value, value, value, value), left, &left);
 	}
 
-	Vector4& Vector4::operator+=(const Vector4& other)
+	Vector4 &Vector4::operator+=(const Vector4 &other)
 	{
 		Vector4 result = Vector4();
 		return *Vector4::Add(*this, other, &result);
 	}
 
-	Vector4& Vector4::operator-=(const Vector4& other)
+	Vector4 &Vector4::operator-=(const Vector4 &other)
 	{
 		Vector4 result = Vector4();
 		return *Vector4::Subtract(*this, other, &result);
 	}
 
-	Vector4& Vector4::operator*=(const Vector4& other)
+	Vector4 &Vector4::operator*=(const Vector4 &other)
 	{
 		Vector4 result = Vector4();
 		return *Vector4::Multiply(*this, other, &result);
 	}
 
-	Vector4& Vector4::operator/=(const Vector4& other)
+	Vector4 &Vector4::operator/=(const Vector4 &other)
 	{
 		Vector4 result = Vector4();
 		return *Vector4::Divide(*this, other, &result);
 	}
 
-	Vector4& Vector4::operator+=(float value)
+	Vector4 &Vector4::operator+=(float value)
 	{
 		return *Vector4::Add(*this, Vector4(value, value, value, value), this);
 	}
 
-	Vector4& Vector4::operator-=(float value)
+	Vector4 &Vector4::operator-=(float value)
 	{
 		return *Vector4::Subtract(*this, Vector4(value, value, value, value), this);
 	}
 
-	Vector4& Vector4::operator*=(float value)
+	Vector4 &Vector4::operator*=(float value)
 	{
 		return *Vector4::Multiply(*this, Vector4(value, value, value, value), this);
 	}
 
-	Vector4& Vector4::operator/=(float value)
+	Vector4 &Vector4::operator/=(float value)
 	{
 		return *Vector4::Divide(*this, Vector4(value, value, value, value), this);
 	}
 
-	std::ostream& operator<<(std::ostream& stream, const Vector4& vector)
+	std::ostream &operator<<(std::ostream &stream, const Vector4 &vector)
 	{
 		stream << vector.ToString();
 		return stream;

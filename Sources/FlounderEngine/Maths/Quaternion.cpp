@@ -187,7 +187,11 @@ namespace Flounder
 			destination = new Quaternion();
 		}
 
-		return destination->Set(left.m_x * right.m_w + left.m_w * right.m_x + left.m_y * right.m_z - left.m_z * right.m_y, left.m_y * right.m_w + left.m_w * right.m_y + left.m_z * right.m_x - left.m_x * right.m_z, left.m_z * right.m_w + left.m_w * right.m_z + left.m_x * right.m_y - left.m_y * right.m_x, left.m_w * right.m_w - left.m_x * right.m_x - left.m_y * right.m_y - left.m_z * right.m_z);
+		return destination->Set(
+			left.m_x * right.m_w + left.m_w * right.m_x + left.m_y * right.m_z - left.m_z * right.m_y,
+			left.m_y * right.m_w + left.m_w * right.m_y + left.m_z * right.m_x - left.m_x * right.m_z,
+			left.m_z * right.m_w + left.m_w * right.m_z + left.m_x * right.m_y - left.m_y * right.m_x,
+			left.m_w * right.m_w - left.m_x * right.m_x - left.m_y * right.m_y - left.m_z * right.m_z);
 	}
 
 	Quaternion *Quaternion::MultiplyInverse(const Quaternion &left, const Quaternion &right, Quaternion *destination)
@@ -199,7 +203,11 @@ namespace Flounder
 
 		float n = LengthSquared(right);
 		n = (n == 0.0f ? n : 1.0f / n);
-		return destination->Set((left.m_x * right.m_w - left.m_w * right.m_x - left.m_y * right.m_z + left.m_z * right.m_y) * n, (left.m_y * right.m_w - left.m_w * right.m_y - left.m_z * right.m_x + left.m_x * right.m_z) * n, (left.m_z * right.m_w - left.m_w * right.m_z - left.m_x * right.m_y + left.m_y * right.m_x) * n, (left.m_w * right.m_w + left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z) * n);
+		return destination->Set(
+			(left.m_x * right.m_w - left.m_w * right.m_x - left.m_y * right.m_z + left.m_z * right.m_y) * n,
+			(left.m_y * right.m_w - left.m_w * right.m_y - left.m_z * right.m_x + left.m_x * right.m_z) * n,
+			(left.m_z * right.m_w - left.m_w * right.m_z - left.m_x * right.m_y + left.m_y * right.m_x) * n,
+			(left.m_w * right.m_w + left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z) * n);
 	}
 
 	float Quaternion::Dot(const Quaternion &left, const Quaternion &right)

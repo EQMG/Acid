@@ -28,34 +28,37 @@ namespace Demo
 		m_jumping(false),
 		m_noclipEnabled(false),
 		m_inputForward(new AxisCompound({
-			new AxisButton(
-				new ButtonKeyboard({ GLFW_KEY_S, GLFW_KEY_DOWN }),
-				new ButtonKeyboard({ GLFW_KEY_W, GLFW_KEY_UP })
-			),
-			new AxisJoystick(0, { 1 })
-		})),
+											new AxisButton(
+												new ButtonKeyboard({GLFW_KEY_S, GLFW_KEY_DOWN}),
+												new ButtonKeyboard({GLFW_KEY_W, GLFW_KEY_UP})
+											),
+											new AxisJoystick(0, {1})
+										})),
 		m_inputStrafe(new AxisCompound({
-			new AxisButton(
-				new ButtonKeyboard({ GLFW_KEY_D, GLFW_KEY_RIGHT }),
-				new ButtonKeyboard({ GLFW_KEY_A, GLFW_KEY_LEFT })
-			),
-			new AxisJoystick(0, { 0 })
-		})),
+										   new AxisButton(
+											   new ButtonKeyboard({GLFW_KEY_D, GLFW_KEY_RIGHT}),
+											   new ButtonKeyboard({GLFW_KEY_A, GLFW_KEY_LEFT})
+										   ),
+										   new AxisJoystick(0, {0})
+									   })),
 		m_inputSprint(new ButtonCompound({
-			new ButtonKeyboard({ GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT }),
-			new ButtonJoystick(0, { 1 })
-		})),
+											 new ButtonKeyboard({GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT}),
+											 new ButtonJoystick(0, {1})
+										 })),
 		m_inputJump(new ButtonCompound({
-			new ButtonKeyboard({ GLFW_KEY_SPACE }),
-			new ButtonJoystick(0, { 1 })
-		})),
+										   new ButtonKeyboard({GLFW_KEY_SPACE}),
+										   new ButtonJoystick(0, {1})
+									   })),
 		m_inputCrouch(new ButtonCompound({
-			new ButtonKeyboard({ GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL }),
-			new ButtonJoystick(0, { 1 })
-		})),
+											 new ButtonKeyboard({
+																	GLFW_KEY_LEFT_CONTROL,
+																	GLFW_KEY_RIGHT_CONTROL
+																}),
+											 new ButtonJoystick(0, {1})
+										 })),
 		m_toggleNoclip(new ButtonCompound({
-			new ButtonKeyboard({ GLFW_KEY_N }),
-		})),
+											  new ButtonKeyboard({GLFW_KEY_N}),
+										  })),
 		m_amountMove(new Vector3()),
 		m_amountRotate(new Vector3()),
 		m_paused(false)
@@ -93,8 +96,10 @@ namespace Demo
 		{
 			const bool sprintDown = m_inputSprint->IsDown();
 			const bool crouchDown = m_inputCrouch->IsDown();
-			m_currentSpeed = (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputForward->GetAmount();
-			m_currentStrafeSpeed = (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputStrafe->GetAmount();
+			m_currentSpeed =
+				(sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputForward->GetAmount();
+			m_currentStrafeSpeed =
+				(sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputStrafe->GetAmount();
 
 			if (m_noclipEnabled)
 			{

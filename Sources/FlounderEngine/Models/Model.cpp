@@ -1,7 +1,6 @@
 #include "Model.hpp"
 
 #include <cassert>
-#include <limits>
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/FormatString.hpp"
 
@@ -68,16 +67,16 @@ namespace Flounder
 	{
 		if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
 		{
-			VkBuffer vertexBuffers[] = { m_vertexBuffer->GetBuffer() };
-			VkDeviceSize offsets[] = { 0 };
+			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetBuffer()};
+			VkDeviceSize offsets[] = {0};
 			vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 			vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer->GetBuffer(), 0, m_indexBuffer->GetIndexType());
 			vkCmdDrawIndexed(commandBuffer, m_indexBuffer->GetIndexCount(), 1, 0, 0, 0);
 		}
 		else if (m_vertexBuffer != nullptr && m_indexBuffer == nullptr)
 		{
-			VkBuffer vertexBuffers[] = { m_vertexBuffer->GetBuffer() };
-			VkDeviceSize offsets[] = { 0 };
+			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetBuffer()};
+			VkDeviceSize offsets[] = {0};
 			vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 			vkCmdDraw(commandBuffer, m_vertexBuffer->GetVertexCount(), 1, 0, 0);
 		}
@@ -105,7 +104,7 @@ namespace Flounder
 		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n");
 
 		std::vector<uint32_t> indicesList = std::vector<uint32_t>();
-		std::vector<VertexData*> verticesList = std::vector<VertexData*>();
+		std::vector<VertexData *> verticesList = std::vector<VertexData *>();
 		std::vector<Vector2> uvsList = std::vector<Vector2>();
 		std::vector<Vector3> normalsList = std::vector<Vector3>();
 
@@ -203,7 +202,7 @@ namespace Flounder
 		}
 	}
 
-	VertexData *Model::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData*> *vertices, std::vector<uint32_t> *indices)
+	VertexData *Model::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData *> *vertices, std::vector<uint32_t> *indices)
 	{
 		const int index = static_cast<int>(vertex.m_x) - 1;
 		const int textureIndex = static_cast<int>(vertex.m_y) - 1;
@@ -221,7 +220,7 @@ namespace Flounder
 		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
 	}
 
-	VertexData *Model::DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexData*> *vertices)
+	VertexData *Model::DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexData *> *vertices)
 	{
 		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{

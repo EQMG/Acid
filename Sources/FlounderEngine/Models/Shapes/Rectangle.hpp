@@ -14,15 +14,16 @@ namespace Flounder
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Rectangle*>(resource);
+				return dynamic_cast<Rectangle *>(resource);
 			}
 
 			Rectangle *result = new Rectangle(min, max);
-			Resources::Get()->Add(dynamic_cast<IResource*>(result));
+			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 
 		Rectangle(const float &width, const float &height);
+
 	private:
 		static std::string ToFilename(const float &min, const float &max);
 	};

@@ -7,7 +7,7 @@ namespace Flounder
 	const double ProcessorResource::MAX_TIME_MILLIS = 8.0f;
 
 	ProcessorResource::ProcessorResource() :
-		m_queue(new Queue<RequestResource*>())
+		m_queue(new Queue<RequestResource *>())
 	{
 	}
 
@@ -45,12 +45,12 @@ namespace Flounder
 
 	void ProcessorResource::AddRequestToQueue(IRequest *request)
 	{
-		if (dynamic_cast<RequestResource*>(request) == nullptr)
+		if (dynamic_cast<RequestResource *>(request) == nullptr)
 		{
 			return;
 		}
 
-		m_queue->AddRequest(static_cast<RequestResource*>(request));
+		m_queue->AddRequest(static_cast<RequestResource *>(request));
 	}
 
 	void ProcessorResource::CompleteAllRequests() const

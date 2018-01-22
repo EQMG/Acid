@@ -12,7 +12,7 @@ namespace Flounder
 		public IButton
 	{
 	private:
-		std::vector<IButton*> m_buttons;
+		std::vector<IButton *> m_buttons;
 		bool m_wasDown;
 	public:
 		/// <summary>
@@ -20,7 +20,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="n_args"> The number buttons being added. </param>
 		/// <param name="..."> The buttons on the being added. </param>
-		ButtonCompound(const std::vector<IButton*> &buttons);
+		ButtonCompound(const std::vector<IButton *> &buttons);
 
 		/// <summary>
 		/// Deconstructor for the compound button.

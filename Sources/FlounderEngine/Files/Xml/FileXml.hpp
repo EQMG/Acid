@@ -24,9 +24,9 @@ namespace Flounder
 		void Save() override;
 
 		void Clear() override;
-		
+
 		std::map<std::string, std::string> ConfigReadValues() override;
-		
+
 		void ConfigPushValue(const std::string &key, const std::string &value) override;
 
 		XmlNode *GetParentNode() { return m_parentNode; }

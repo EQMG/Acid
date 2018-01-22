@@ -21,7 +21,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Tasks *Get()
 		{
-			return static_cast<Tasks*>(Engine::Get()->GetModule("tasks"));
+			return dynamic_cast<Tasks *>(Engine::Get()->GetModule("tasks"));
 		}
 
 		Tasks();

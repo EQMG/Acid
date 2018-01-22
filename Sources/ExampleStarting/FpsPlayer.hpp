@@ -45,8 +45,8 @@ namespace Demo
 
 		void Update() override;
 
-		inline Vector3 *GetPosition() const override { return m_position; }
+		Vector3 *GetPosition() const override { return m_position; }
 
-		inline Vector3 *GetRotation() const override { return m_rotation; }
+		Vector3 *GetRotation() const override { return m_rotation; }
 	};
 }

@@ -14,13 +14,13 @@ namespace Flounder
 	private:
 		UniformBuffer *m_uniformObject;
 
-		ISpatialStructure<Entity*> *m_structure;
-		std::vector<IComponent*> *m_components;
+		ISpatialStructure<Entity *> *m_structure;
+		std::vector<IComponent *> *m_components;
 
 		Transform *m_transform;
 		bool m_removed;
 	public:
-		Entity(ISpatialStructure<Entity*> *structure, const Transform &transform);
+		Entity(ISpatialStructure<Entity *> *structure, const Transform &transform);
 
 		~Entity();
 
@@ -28,11 +28,11 @@ namespace Flounder
 
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
-		ISpatialStructure<Entity*> *GetStructure() const { return m_structure; }
+		ISpatialStructure<Entity *> *GetStructure() const { return m_structure; }
 
-		void MoveStructure(ISpatialStructure<Entity*> *structure);
+		void MoveStructure(ISpatialStructure<Entity *> *structure);
 
-		std::vector<IComponent*> *GetComponents() const { return m_components; }
+		std::vector<IComponent *> *GetComponents() const { return m_components; }
 
 		void AddComponent(IComponent *component);
 
@@ -43,7 +43,7 @@ namespace Flounder
 		{
 			for (auto c : *m_components)
 			{
-				T *casted = dynamic_cast<T*>(c);
+				T *casted = dynamic_cast<T *>(c);
 
 				if (casted != nullptr)
 				{

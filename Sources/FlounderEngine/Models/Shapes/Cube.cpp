@@ -33,7 +33,7 @@ namespace Flounder
 			4, 5, 6, // Back
 			5, 7, 6,
 			6, 7, 8, // Top
-			7, 9 ,8,
+			7, 9, 8,
 			1, 3, 4, // Bottom
 			3, 5, 4,
 			1, 11, 10, // Left

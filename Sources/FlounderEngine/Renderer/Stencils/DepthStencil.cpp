@@ -18,13 +18,13 @@ namespace Flounder
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
 		std::vector<VkFormat> tryFormats =
-		{
-			VK_FORMAT_D32_SFLOAT_S8_UINT,
-			VK_FORMAT_D24_UNORM_S8_UINT,
-			VK_FORMAT_D16_UNORM_S8_UINT,
-			VK_FORMAT_D32_SFLOAT,
-			VK_FORMAT_D16_UNORM
-		};
+			{
+				VK_FORMAT_D32_SFLOAT_S8_UINT,
+				VK_FORMAT_D24_UNORM_S8_UINT,
+				VK_FORMAT_D16_UNORM_S8_UINT,
+				VK_FORMAT_D32_SFLOAT,
+				VK_FORMAT_D16_UNORM
+			};
 
 		for (auto format : tryFormats)
 		{
@@ -32,7 +32,8 @@ namespace Flounder
 
 			vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &formatProperties);
 
-			if (formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT && formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT)
+			if (formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT &&
+				formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT)
 			{
 				m_format = format;
 				break;
@@ -74,7 +75,7 @@ namespace Flounder
 		vkGetImageMemoryRequirements(logicalDevice, m_image, &imageMemoryRequirements);
 
 		const uint32_t memoryTypeIndex = Buffer::FindMemoryType(imageMemoryRequirements.memoryTypeBits,
-			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+																VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 		VkMemoryAllocateInfo memoryAllocateInfo = {};
 		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		memoryAllocateInfo.allocationSize = imageMemoryRequirements.size;

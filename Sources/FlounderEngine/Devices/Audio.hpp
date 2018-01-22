@@ -34,7 +34,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Audio *Get()
 		{
-			return static_cast<Audio*>(Engine::Get()->GetModule("audio"));
+			return dynamic_cast<Audio *>(Engine::Get()->GetModule("audio"));
 		}
 
 		/// <summary>
@@ -52,6 +52,7 @@ namespace Flounder
 		static SoundSourceInfo LoadFileWav(const std::string &path);
 
 		static SoundSourceInfo LoadFileOgg(const std::string &path);
+
 	private:
 		static void LogOpenAlSound(const std::string &path, const SoundSourceInfo &sourceInfo);
 	};

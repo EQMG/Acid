@@ -53,6 +53,8 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * A simple visual editor in the far future
 
 ## Developer Setup
+You will need the [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://www.openal.org/downloads/) to develop and run Flounder.
+
 Once Flounder is cloned run `git submodule update --init --recursive` to update the submodules needed to compile.
 
 On all platforms you can compile using CMake.

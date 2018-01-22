@@ -155,7 +155,9 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		return destination->Set(left.m_y * right.m_z - left.m_z * right.m_y, right.m_x * left.m_z - right.m_z * left.m_x, left.m_x * right.m_y - left.m_y * right.m_x);
+		return destination->Set(
+			left.m_y * right.m_z - left.m_z * right.m_y,
+			right.m_x * left.m_z - right.m_z * left.m_x, left.m_x * right.m_y - left.m_y * right.m_x);
 	}
 
 	Vector3 *Vector3::Scale(const Vector3 &source, const float &scalar, Vector3 *destination)
@@ -246,7 +248,8 @@ namespace Flounder
 
 	float Vector3::GetDistance(const Vector3 &point1, const Vector3 &point2)
 	{
-		return sqrt(pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2) + pow(point2.m_z - point1.m_z, 2));
+		return sqrt(
+			pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2) + pow(point2.m_z - point1.m_z, 2));
 	}
 
 	Vector3 *Vector3::GetVectorDistance(const Vector3 &point1, const Vector3 &point2, Vector3 *destination)
@@ -256,7 +259,8 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		return destination->Set(pow(point2.m_x - point1.m_x, 2), pow(point2.m_y - point1.m_y, 2), pow(point2.m_z - point1.m_z, 2));
+		return destination->Set(pow(point2.m_x - point1.m_x, 2), pow(point2.m_y - point1.m_y, 2), pow(
+			point2.m_z - point1.m_z, 2));
 	}
 
 	Vector3 *Vector3::RandomUnitVector(Vector3 *destination)
@@ -286,8 +290,7 @@ namespace Flounder
 			Vector3 *randomVector = RandomUnitVector(nullptr);
 			Cross(*randomVector, normal, destination);
 			delete randomVector;
-		}
-		while (Length(*destination) == 0.0f);
+		} while (Length(*destination) == 0.0f);
 
 		destination->Normalize();
 		destination->Scale(radius);
@@ -355,32 +358,32 @@ namespace Flounder
 		return LengthSquared(*this);
 	}
 
-	bool Vector3::operator==(const Vector3& other) const
+	bool Vector3::operator==(const Vector3 &other) const
 	{
 		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z;
 	}
 
-	bool Vector3::operator!=(const Vector3& other) const
+	bool Vector3::operator!=(const Vector3 &other) const
 	{
 		return !(*this == other);
 	}
 
-	bool Vector3::operator<(const Vector3& other) const
+	bool Vector3::operator<(const Vector3 &other) const
 	{
 		return m_x < other.m_x && m_y < other.m_y && m_z < other.m_z;
 	}
 
-	bool Vector3::operator<=(const Vector3& other) const
+	bool Vector3::operator<=(const Vector3 &other) const
 	{
 		return m_x <= other.m_x && m_y <= other.m_y && m_z <= other.m_z;
 	}
 
-	bool Vector3::operator>(const Vector3& other) const
+	bool Vector3::operator>(const Vector3 &other) const
 	{
 		return m_x > other.m_x && m_y > other.m_y && m_z > other.m_z;
 	}
 
-	bool Vector3::operator>=(const Vector3& other) const
+	bool Vector3::operator>=(const Vector3 &other) const
 	{
 		return m_x >= other.m_x && m_y >= other.m_y && m_z >= other.m_z;
 	}
@@ -390,22 +393,22 @@ namespace Flounder
 		return *this->Negate();
 	}
 
-	Vector3 operator+(Vector3 left, const Vector3& right)
+	Vector3 operator+(Vector3 left, const Vector3 &right)
 	{
 		return *Vector3::Add(left, right, &left);
 	}
 
-	Vector3 operator-(Vector3 left, const Vector3& right)
+	Vector3 operator-(Vector3 left, const Vector3 &right)
 	{
 		return *Vector3::Subtract(left, right, &left);
 	}
 
-	Vector3 operator*(Vector3 left, const Vector3& right)
+	Vector3 operator*(Vector3 left, const Vector3 &right)
 	{
 		return *Vector3::Multiply(left, right, &left);
 	}
 
-	Vector3 operator/(Vector3 left, const Vector3& right)
+	Vector3 operator/(Vector3 left, const Vector3 &right)
 	{
 		return *Vector3::Divide(left, right, &left);
 	}
@@ -450,51 +453,51 @@ namespace Flounder
 		return *Vector3::Divide(Vector3(value, value, value), left, &left);
 	}
 
-	Vector3& Vector3::operator+=(const Vector3& other)
+	Vector3 &Vector3::operator+=(const Vector3 &other)
 	{
 		Vector3 result = Vector3();
 		return *Vector3::Add(*this, other, &result);
 	}
 
-	Vector3& Vector3::operator-=(const Vector3& other)
+	Vector3 &Vector3::operator-=(const Vector3 &other)
 	{
 		Vector3 result = Vector3();
 		return *Vector3::Subtract(*this, other, &result);
 	}
 
-	Vector3& Vector3::operator*=(const Vector3& other)
+	Vector3 &Vector3::operator*=(const Vector3 &other)
 	{
 		Vector3 result = Vector3();
 		return *Vector3::Multiply(*this, other, &result);
 	}
 
-	Vector3& Vector3::operator/=(const Vector3& other)
+	Vector3 &Vector3::operator/=(const Vector3 &other)
 	{
 		Vector3 result = Vector3();
 		return *Vector3::Divide(*this, other, &result);
 	}
 
-	Vector3& Vector3::operator+=(float value)
+	Vector3 &Vector3::operator+=(float value)
 	{
 		return *Vector3::Add(*this, Vector3(value, value, value), this);
 	}
 
-	Vector3& Vector3::operator-=(float value)
+	Vector3 &Vector3::operator-=(float value)
 	{
 		return *Vector3::Subtract(*this, Vector3(value, value, value), this);
 	}
 
-	Vector3& Vector3::operator*=(float value)
+	Vector3 &Vector3::operator*=(float value)
 	{
 		return *Vector3::Multiply(*this, Vector3(value, value, value), this);
 	}
 
-	Vector3& Vector3::operator/=(float value)
+	Vector3 &Vector3::operator/=(float value)
 	{
 		return *Vector3::Divide(*this, Vector3(value, value, value), this);
 	}
 
-	std::ostream& operator<<(std::ostream& stream, const Vector3& vector)
+	std::ostream &operator<<(std::ostream &stream, const Vector3 &vector)
 	{
 		stream << vector.ToString();
 		return stream;

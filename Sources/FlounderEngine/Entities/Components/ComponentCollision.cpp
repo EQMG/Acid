@@ -47,14 +47,14 @@ namespace Flounder
 
 		Aabb aabb1;
 
-		if (dynamic_cast<Aabb*>(componentCollider1->GetCollider()) != nullptr)
+		if (dynamic_cast<Aabb *>(componentCollider1->GetCollider()) != nullptr)
 		{
-			aabb1 = *dynamic_cast<Aabb*>(componentCollider1->GetCollider());
+			aabb1 = *dynamic_cast<Aabb *>(componentCollider1->GetCollider());
 		}
-		else if (dynamic_cast<Sphere*>(componentCollider1->GetCollider()) != nullptr)
+		else if (dynamic_cast<Sphere *>(componentCollider1->GetCollider()) != nullptr)
 		{
-			const float radius = dynamic_cast<Sphere*>(componentCollider1->GetCollider())->GetRadius();
-			const Vector3 *pos = dynamic_cast<Sphere*>(componentCollider1->GetCollider())->GetPosition();
+			const float radius = dynamic_cast<Sphere *>(componentCollider1->GetCollider())->GetRadius();
+			const Vector3 *pos = dynamic_cast<Sphere *>(componentCollider1->GetCollider())->GetPosition();
 			aabb1 = Aabb(-radius + *pos, radius + *pos);
 		}
 		else

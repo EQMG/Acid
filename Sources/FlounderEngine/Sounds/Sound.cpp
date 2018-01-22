@@ -17,7 +17,8 @@ namespace Flounder
 		SoundSourceInfo sourceInfo = Audio::LoadFileWav(filename);
 
 		alGenBuffers(1, &m_buffer);
-		alBufferData(m_buffer, (sourceInfo.channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sourceInfo.data, sourceInfo.size, sourceInfo.samplesPerSec);
+		alBufferData(m_buffer, (sourceInfo.channels == 2) ? AL_FORMAT_STEREO16
+			: AL_FORMAT_MONO16, sourceInfo.data, sourceInfo.size, sourceInfo.samplesPerSec);
 
 		alGenSources(1, &m_source);
 		alSourcei(m_source, AL_BUFFER, m_buffer);
@@ -95,7 +96,7 @@ namespace Flounder
 
 	void Sound::SetDirection(const Vector3 &direction)
 	{
-		float data[3] = { direction.m_x, direction.m_y, direction.m_z };
+		float data[3] = {direction.m_x, direction.m_y, direction.m_z};
 		alSourcefv(m_source, AL_DIRECTION, data);
 		Platform::ErrorAl(alGetError());
 	}

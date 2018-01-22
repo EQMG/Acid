@@ -10,5 +10,5 @@ class EntityTreePine :
 	public Entity
 {
 public:
-	EntityTreePine(ISpatialStructure<Entity*> *structure, const Transform &transform);
+	EntityTreePine(ISpatialStructure<Entity *> *structure, const Transform &transform);
 };

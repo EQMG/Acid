@@ -171,7 +171,7 @@ namespace Flounder
 		Vector3 *nearTop = Vector3::Add(centreNear, *nearUpVector, nullptr);
 		Vector3 *nearBottom = Vector3::Add(centreNear, *nearDownVector, nullptr);
 
-		Vector4 **points = new Vector4*[8];
+		Vector4 **points = new Vector4 *[8];
 		points[0] = CalculateLightSpaceFrustumCorner(*farTop, *rightVector, m_farWidth);
 		points[1] = CalculateLightSpaceFrustumCorner(*farTop, *leftVector, m_farWidth);
 		points[2] = CalculateLightSpaceFrustumCorner(*farBottom, *rightVector, m_farWidth);

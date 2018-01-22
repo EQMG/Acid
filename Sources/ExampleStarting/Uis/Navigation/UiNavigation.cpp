@@ -5,11 +5,11 @@
 namespace Demo
 {
 	const std::vector<std::pair<std::string, Colour>> TABS = {
-		{ "Play", Colour("#B8312F") },
-		{ "News", Colour("#2969af") },
-		{ "Achievements", Colour("#41A85F") },
-		{ "Settings", Colour("#475577") },
-		{ "Exit", Colour("#75706B") }
+		{"Play",         Colour("#B8312F")},
+		{"News",         Colour("#2969af")},
+		{"Achievements", Colour("#41A85F")},
+		{"Settings",     Colour("#475577")},
+		{"Exit",         Colour("#75706B")}
 	};
 
 	UiNavigation::UiNavigation(UiObject *parent) :
@@ -18,7 +18,7 @@ namespace Demo
 		m_barTitle(nullptr),
 		m_barCreatedBy(nullptr),
 		m_tabPuck(nullptr),
-		m_tabs(std::vector<UiTab*>()),
+		m_tabs(std::vector<UiTab *>()),
 		m_driverTarget(nullptr),
 		m_currentTab(nullptr),
 		m_targetTab(nullptr)
@@ -94,7 +94,7 @@ namespace Demo
 			{
 				m_currentTab = m_targetTab;
 				m_targetTab = nullptr;
-			//	delete m_driverTarget;
+				//	delete m_driverTarget;
 			}
 		}
 	}

@@ -9,20 +9,20 @@
 namespace Flounder
 {
 	const PipelineCreateInfo PIPELINE_CREATE_INFO =
-	{
-		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
-		VK_POLYGON_MODE_FILL, // polygonMode
-		VK_CULL_MODE_FRONT_BIT, // cullModeFlags
-
-		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-		Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
-
 		{
-			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT) // uboObject
-		}, // descriptors
+			PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
+			VK_POLYGON_MODE_FILL, // polygonMode
+			VK_CULL_MODE_FRONT_BIT, // cullModeFlags
 
-		{ "Resources/Shaders/Shadows/Shadow.vert.spv", "Resources/Shaders/Shadows/Shadow.frag.spv" } // shaderStages
-	};
+			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+			Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+
+			{
+				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT) // uboObject
+			}, // descriptors
+
+			{"Resources/Shaders/Shadows/Shadow.vert.spv", "Resources/Shaders/Shadows/Shadow.frag.spv"} // shaderStages
+		};
 
 	RendererShadows::RendererShadows(const int &subpass) :
 		IRenderer(),
@@ -80,10 +80,12 @@ namespace Flounder
 		Matrix4::Multiply(*Shadows::Get()->GetShadowBox()->GetProjectionViewMatrix(), modelMatrix, &uboObject.mvp);
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{ m_uniformObject->GetWriteDescriptor(0, descriptorSet) };
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+			m_uniformObject->GetWriteDescriptor(0, descriptorSet)
+		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[1] = { descriptorSet };
+		VkDescriptorSet descriptors[1] = {descriptorSet};
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		object->CmdRender(commandBuffer);

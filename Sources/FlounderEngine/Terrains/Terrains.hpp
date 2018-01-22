@@ -14,7 +14,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		std::vector<Terrain*> *m_terrains;
+		std::vector<Terrain *> *m_terrains;
 		NoiseFast m_noise1;
 	public:
 		/// <summary>
@@ -23,7 +23,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Terrains *Get()
 		{
-			return static_cast<Terrains*>(Engine::Get()->GetModule("terrains"));
+			return dynamic_cast<Terrains *>(Engine::Get()->GetModule("terrains"));
 		}
 
 		/// <summary>
@@ -44,6 +44,6 @@ namespace Flounder
 
 		Vector3 GetPosition(const float &x, const float &z);
 
-		std::vector<Terrain*> *GetTerrains() const { return m_terrains; }
+		std::vector<Terrain *> *GetTerrains() const { return m_terrains; }
 	};
 }

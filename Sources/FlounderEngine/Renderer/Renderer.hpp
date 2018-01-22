@@ -34,7 +34,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Renderer *Get()
 		{
-			return static_cast<Renderer*>(Engine::Get()->GetModule("renderer"));
+			return dynamic_cast<Renderer *>(Engine::Get()->GetModule("renderer"));
 		}
 
 		/// <summary>
@@ -46,6 +46,7 @@ namespace Flounder
 		/// Deconstructor for the renderer module.
 		/// </summary>
 		~Renderer();
+
 	public:
 		void Update() override;
 
@@ -82,6 +83,7 @@ namespace Flounder
 		static VkCommandBuffer BeginSingleTimeCommands();
 
 		static void EndSingleTimeCommands(const VkCommandBuffer &commandBuffer);
+
 	private:
 		VkFramebuffer GetActiveFramebuffer() const { return m_framebuffers->GetFramebuffers()[m_activeSwapchinImage]; }
 

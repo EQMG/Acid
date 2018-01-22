@@ -17,7 +17,7 @@ namespace Flounder
 		m_childNodes(std::map<std::string, std::vector<XmlNode>>(source.m_childNodes))
 	{
 	}
-	
+
 	XmlNode::~XmlNode()
 	{
 	}

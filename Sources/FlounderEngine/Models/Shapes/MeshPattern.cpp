@@ -1,7 +1,6 @@
 #include "MeshPattern.hpp"
 
 #include <algorithm>
-#include "Maths/Maths.hpp"
 
 namespace Flounder
 {
@@ -26,12 +25,12 @@ namespace Flounder
 			{
 				// Creates and stores vertices.
 				const Vector3 position = GetPosition(
-						(row * m_squareSize) - (m_sideLength / 2.0f),
-						(col * m_squareSize) - (m_sideLength / 2.0f)
+					(row * m_squareSize) - (m_sideLength / 2.0f),
+					(col * m_squareSize) - (m_sideLength / 2.0f)
 				);
 				const Vector2 uv = Vector2(
-						m_textureScale * static_cast<float>(col) / static_cast<float>(m_vertexCount),
-						m_textureScale * static_cast<float>(row) / static_cast<float>(m_vertexCount)
+					m_textureScale * static_cast<float>(col) / static_cast<float>(m_vertexCount),
+					m_textureScale * static_cast<float>(row) / static_cast<float>(m_vertexCount)
 				);
 				const Vector3 normal = GetNormal(position);
 				const Vector3 tangent = GetColour(position, normal);

@@ -35,7 +35,7 @@ namespace Flounder
 		{
 			m_file->ConfigPushValue(value.first, value.second);
 		}
-		
+
 		m_file->Save();
 	}
 

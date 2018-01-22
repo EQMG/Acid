@@ -14,10 +14,10 @@ namespace Demo
 	private:
 		std::string m_name;
 		Colour m_colour;
-		Text* m_text;
+		Text *m_text;
 		float m_width;
 	public:
-		UiTab(UiObject *parent, const UiBound &rectangle, const std::string& name, const Colour& colour);
+		UiTab(UiObject *parent, const UiBound &rectangle, const std::string &name, const Colour &colour);
 
 		~UiTab();
 

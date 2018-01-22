@@ -4,7 +4,7 @@ namespace Flounder
 {
 	float **SquareArray::FloatArray(const int &size1, const int &size2)
 	{
-		float **array = new float*[size1];
+		float **array = new float *[size1];
 
 		for (int i = 0; i < size1; i++)
 		{
@@ -16,7 +16,7 @@ namespace Flounder
 
 	Vector3 **SquareArray::Vector3Array(const int &size1, const int &size2)
 	{
-		Vector3 **array = new Vector3*[size1];
+		Vector3 **array = new Vector3 *[size1];
 
 		for (int i = 0; i < size1; i++)
 		{

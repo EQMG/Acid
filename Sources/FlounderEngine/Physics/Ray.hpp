@@ -66,6 +66,7 @@ namespace Flounder
 		/// <param name="destination"> The destination point. X and Y being screen space coords and Z being the distance to the camera. </param>
 		/// <returns> Returns the destination vector. </returns>
 		Vector3 *ConvertToScreenSpace(const Vector3 &position, Vector3 *destination) const;
+
 	private:
 		void UpdateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY);
 

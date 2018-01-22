@@ -8,7 +8,6 @@
 #include "../Entities/Entities.hpp"
 #include "../Events/Events.hpp"
 #include "../Particles/Particles.hpp"
-#include "Resources/Resources.hpp"
 #include "../Processing/Processing.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "../Shadows/Shadows.hpp"
@@ -27,7 +26,7 @@ namespace Flounder
 		m_deltaRender(nullptr),
 		m_timerUpdate(nullptr),
 		m_timerRender(nullptr),
-		m_modules(new std::multimap<float, std::pair<std::string, IModule*>>())
+		m_modules(new std::multimap<float, std::pair<std::string, IModule *>>())
 	{
 	}
 
@@ -105,7 +104,8 @@ namespace Flounder
 		}
 
 		// Renders when needed.
-		if (m_timerRender->IsPassedTime() || Display::Get()->GetFpsLimit() <= 0.0f || Display::Get()->GetFpsLimit() > 1000.0f)
+		if (m_timerRender->IsPassedTime() || Display::Get()->GetFpsLimit() <= 0.0f ||
+			Display::Get()->GetFpsLimit() > 1000.0f)
 		{
 			// if (maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 7.0f)) {}
 

@@ -20,8 +20,12 @@ namespace Flounder
 		m_commandPool(VK_NULL_HANDLE),
 		m_commandBuffer(VK_NULL_HANDLE)
 	{
-		const VkExtent2D extent2d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()) };
-		const VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
+		const VkExtent2D extent2d = {
+			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
+		};
+		const VkExtent3D extent3d = {
+			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1
+		};
 		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 
 		CreateFences();
@@ -66,7 +70,7 @@ namespace Flounder
 	VkResult Renderer::StartRenderpass(VkCommandBuffer const &commandBuffer)
 	{
 		if (static_cast<int>(m_swapchain->GetExtent().width) != Display::Get()->GetWidth() ||
-				static_cast<int>(m_swapchain->GetExtent().height) != Display::Get()->GetHeight())
+			static_cast<int>(m_swapchain->GetExtent().height) != Display::Get()->GetHeight())
 		{
 			RecreateSwapchain();
 			return VK_ERROR_INITIALIZATION_FAILED;
@@ -85,7 +89,8 @@ namespace Flounder
 			return VK_ERROR_OUT_OF_DATE_KHR;
 		}
 
-		assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) && "Failed to acquire swapchain image!");
+		assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) &&
+				   "Failed to acquire swapchain image!");
 
 		Platform::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
 
@@ -107,12 +112,12 @@ namespace Flounder
 		renderArea.extent.height = Display::Get()->GetHeight();
 
 		std::array<VkClearValue, 6> clearValues = {};
-		clearValues[0].depthStencil = { 1.0f, 0 }; // Depth.
-		clearValues[1].color = { { 0.0f, 0.0f, 0.0f, 0.0f } }; // Swapchain.
-		clearValues[2].color = { { 0.0f, 0.0f, 0.0f, 0.0f } }; // Colours.
-		clearValues[3].color = { { 0.0f, 0.0f, 0.0f, 0.0f } }; // Normals.
-		clearValues[4].color = { { 0.0f, 0.0f, 0.0f, 0.0f } }; // Materials.
-		clearValues[5].color = { 0.0f }; // Shadows.
+		clearValues[0].depthStencil = {1.0f, 0}; // Depth.
+		clearValues[1].color = {{0.0f, 0.0f, 0.0f, 0.0f}}; // Swapchain.
+		clearValues[2].color = {{0.0f, 0.0f, 0.0f, 0.0f}}; // Colours.
+		clearValues[3].color = {{0.0f, 0.0f, 0.0f, 0.0f}}; // Normals.
+		clearValues[4].color = {{0.0f, 0.0f, 0.0f, 0.0f}}; // Materials.
+		clearValues[5].color = {0.0f}; // Shadows.
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
 		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -170,7 +175,7 @@ namespace Flounder
 
 		assert(queueSubmitResult == VK_SUCCESS && "Failed to acquire swapchain image!");
 
-		std::vector<VkSemaphore> waitSemaphores = { m_semaphore };
+		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
 
 		VkResult result = VK_RESULT_MAX_ENUM;
 
@@ -217,7 +222,8 @@ namespace Flounder
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetGraphicsFamilyIndex();
-		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+		commandPoolCreateInfo.flags =
+			VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
 		Platform::ErrorVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 
@@ -244,8 +250,12 @@ namespace Flounder
 	{
 		const auto queue = Display::Get()->GetQueue();
 
-		const VkExtent2D extent2d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()) };
-		const VkExtent3D extent3d = { static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1 };
+		const VkExtent2D extent2d = {
+			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
+		};
+		const VkExtent3D extent3d = {
+			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1
+		};
 
 #if FLOUNDER_VERBOSE
 		printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, extent2d.width, extent2d.height);

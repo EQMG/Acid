@@ -14,7 +14,7 @@ namespace Flounder
 	class ParticleSystem
 	{
 	private:
-		std::vector<ParticleType*> *m_types;
+		std::vector<ParticleType *> *m_types;
 		ISpawnParticle *m_spawn;
 		float m_pps;
 		float m_averageSpeed;
@@ -41,7 +41,7 @@ namespace Flounder
 		/// <param name="pps"> Particles per second. </param>
 		/// <param name="speed"> The particle speed. </param>
 		/// <param name="gravityEffect"> How much gravity will effect the particle. </param>
-		ParticleSystem(std::vector<ParticleType*> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect);
+		ParticleSystem(std::vector<ParticleType *> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect);
 
 		/// <summary>
 		/// Deconstructor for the particle system.
@@ -49,6 +49,7 @@ namespace Flounder
 		~ParticleSystem();
 
 		Particle *GenerateParticles();
+
 	private:
 		Particle *EmitParticle();
 
@@ -57,6 +58,7 @@ namespace Flounder
 		float GenerateRotation() const;
 
 		Vector3 *GenerateRandomUnitVector() const;
+
 	public:
 		void AddParticleType(ParticleType *type) const;
 

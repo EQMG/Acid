@@ -42,7 +42,8 @@ namespace Flounder
 	{
 		PrepareRendering(clipPlane, camera);
 
-		for (auto iter = Particles::Get()->GetParticles()->begin(); iter != Particles::Get()->GetParticles()->end(); ++iter)
+		for (auto iter = Particles::Get()->GetParticles()->begin();
+			 iter != Particles::Get()->GetParticles()->end(); ++iter)
 		{
 			std::vector<float> *vboData = new std::vector<float>();
 			m_rendered = 0;
