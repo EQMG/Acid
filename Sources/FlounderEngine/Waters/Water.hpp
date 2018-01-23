@@ -19,8 +19,7 @@ namespace Flounder
 
 		Colour *m_colour;
 
-		Vector3 *m_position;
-		Vector3 *m_rotation;
+		Transform *m_transform;
 		Vector3 *m_offset;
 		bool m_moved;
 
@@ -34,7 +33,7 @@ namespace Flounder
 
 		static const Colour WATER_COLOUR;
 
-		Water(const Vector3 &position = Vector3(), const Vector3 &rotation = Vector3());
+		Water(const Transform &transform);
 
 		~Water();
 
@@ -52,13 +51,9 @@ namespace Flounder
 
 		void SetColour(const Colour &colour) const { m_colour->Set(colour); }
 
-		Vector3 *GetPosition() const { return m_position; }
+		Transform *GetTransform() const { return m_transform; }
 
-		void SetPosition(const Vector3 &position);
-
-		Vector3 *GetRotation() const { return m_rotation; }
-
-		void SetRotation(const Vector3 &rotation);
+		void SetPosition(const Transform &transform);
 
 		Vector3 *GetOffset() const { return m_offset; }
 

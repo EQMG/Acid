@@ -26,7 +26,7 @@ namespace Flounder
 		m_aabb->m_maxExtents->m_z = static_cast<float>(SIDE_LENGTH);
 		m_transform->m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
 		m_transform->m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
-		m_aabb->Update(*m_transform->m_position, *m_transform->m_rotation, 1.0f, m_aabb);
+		m_aabb->Update(*m_transform, m_aabb);
 
 		for (int i = 0; i < static_cast<int>(SQUARE_SIZES.size()); i++)
 		{

@@ -227,15 +227,6 @@ namespace Flounder
 		static Matrix4 *SetZero(Matrix4 *source);
 
 		/// <summary>
-		/// Rotates a vector and places the result in the destination vector.
-		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <param name="rotation"> The rotation amount. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector3 *Rotate(const Vector3 &source, const Vector3 &rotation, Vector3 *destination);
-
-		/// <summary>
 		/// Creates a new transformation matrix for a object in 2d space.
 		/// </summary>
 		/// <param name="translation"> Translation amount the XY. </param>
@@ -314,15 +305,6 @@ namespace Flounder
 		/// <param name="destination"> The vector to write into. </param>
 		/// <returns> A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). </returns>
 		static Vector3 *WorldToScreenSpace(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix, Vector3 *destination);
-
-		/// <summary>
-		/// Generates a random unit vector from within a cone.
-		/// </summary>
-		/// <param name="coneDirection"> The cones direction. </param>
-		/// <param name="angle"> The cones major angle. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector3 *RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle, Vector3 *destination);
 
 		/// <summary>
 		/// Sets this matrix to be the identity matrix.

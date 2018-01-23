@@ -1,6 +1,6 @@
 #include "Quaternion.hpp"
 
-#include <assert.h>
+#include <cassert>
 #include "Maths.hpp"
 
 namespace Flounder
@@ -63,12 +63,12 @@ namespace Flounder
 
 	Quaternion *Quaternion::Set(const Vector4 &source)
 	{
-		const float n = sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
-		const float s = sin(0.5f * source.m_w) / n;
+		const float n = std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+		const float s = std::sin(0.5f * source.m_w) / n;
 		m_x = source.m_x * s;
 		m_y = source.m_y * s;
 		m_z = source.m_z * s;
-		m_w = cos(0.5f * source.m_w);
+		m_w = std::cos(0.5f * source.m_w);
 		return this;
 	}
 
@@ -83,7 +83,7 @@ namespace Flounder
 
 		if (diagonal > 0.0f)
 		{
-			const float w4 = sqrt(diagonal + 1.0f) * 2.0f;
+			const float w4 = std::sqrt(diagonal + 1.0f) * 2.0f;
 			m_w = w4 / 4.0f;
 			m_x = (source.m_21 - source.m_12) / w4;
 			m_y = (source.m_02 - source.m_20) / w4;
@@ -91,7 +91,7 @@ namespace Flounder
 		}
 		else if ((source.m_00 > source.m_11) && (source.m_00 > source.m_22))
 		{
-			const float x4 = sqrt(1.0f + source.m_00 - source.m_11 - source.m_22) * 2.0f;
+			const float x4 = std::sqrt(1.0f + source.m_00 - source.m_11 - source.m_22) * 2.0f;
 			m_w = (source.m_21 - source.m_12) / x4;
 			m_x = x4 / 4.0f;
 			m_y = (source.m_01 + source.m_10) / x4;
@@ -99,7 +99,7 @@ namespace Flounder
 		}
 		else if (source.m_11 > source.m_22)
 		{
-			const float y4 = sqrt(1.0f + source.m_11 - source.m_00 - source.m_22 * 2.0f);
+			const float y4 = std::sqrt(1.0f + source.m_11 - source.m_00 - source.m_22 * 2.0f);
 			m_w = (source.m_02 - source.m_20) / y4;
 			m_x = (source.m_01 + source.m_10) / y4;
 			m_y = y4 / 4.0f;
@@ -107,7 +107,7 @@ namespace Flounder
 		}
 		else
 		{
-			const float z4 = sqrt(1.0f + source.m_22 - source.m_00 - source.m_11) * 2.0f;
+			const float z4 = std::sqrt(1.0f + source.m_22 - source.m_00 - source.m_11) * 2.0f;
 			m_w = (source.m_10 - source.m_01) / z4;
 			m_x = (source.m_02 + source.m_20) / z4;
 			m_y = (source.m_12 + source.m_21) / z4;
@@ -128,7 +128,7 @@ namespace Flounder
 
 		if (tr >= 0.0)
 		{
-			float s = sqrt(tr + 1.0f);
+			float s = std::sqrt(tr + 1.0f);
 			m_w = s * 0.5f;
 			s = 0.5f / s;
 			m_x = (source.m_21 - source.m_12) * s;
@@ -141,7 +141,7 @@ namespace Flounder
 
 			if (max == source.m_00)
 			{
-				float s = sqrt(source.m_00 - (source.m_11 + source.m_22) + 1.0f);
+				float s = std::sqrt(source.m_00 - (source.m_11 + source.m_22) + 1.0f);
 				m_x = s * 0.5f;
 				s = 0.5f / s;
 				m_y = (source.m_01 + source.m_10) * s;
@@ -150,7 +150,7 @@ namespace Flounder
 			}
 			else if (max == source.m_11)
 			{
-				float s = sqrt(source.m_11 - (source.m_22 + source.m_00) + 1.0f);
+				float s = std::sqrt(source.m_11 - (source.m_22 + source.m_00) + 1.0f);
 				m_y = s * 0.5f;
 				s = 0.5f / s;
 				m_z = (source.m_12 + source.m_21) * s;
@@ -159,7 +159,7 @@ namespace Flounder
 			}
 			else
 			{
-				float s = sqrt(source.m_22 - (source.m_00 + source.m_11) + 1.0f);
+				float s = std::sqrt(source.m_22 - (source.m_00 + source.m_11) + 1.0f);
 				m_z = s * 0.5f;
 				s = 0.5f / s;
 				m_x = (source.m_20 + source.m_02) * s;
@@ -229,10 +229,10 @@ namespace Flounder
 
 		if ((1.0f - absDot) > 0.1f)
 		{
-			const float &angle = acos(absDot);
-			const float &invSinTheta = 1.0f / sin(angle);
-			scale0 = sin((1.0f - progression) * angle) * invSinTheta;
-			scale1 = sin(progression * angle) * invSinTheta;
+			const float &angle = std::acos(absDot);
+			const float &invSinTheta = 1.0f / std::sin(angle);
+			scale0 = std::sin((1.0f - progression) * angle) * invSinTheta;
+			scale1 = std::sin(progression * angle) * invSinTheta;
 		}
 
 		if (d < 0.0f)
@@ -281,7 +281,7 @@ namespace Flounder
 
 	float Quaternion::Length(const Quaternion &source)
 	{
-		return sqrt(LengthSquared(source));
+		return std::sqrt(LengthSquared(source));
 	}
 
 	float Quaternion::LengthSquared(const Quaternion &source)

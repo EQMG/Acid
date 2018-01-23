@@ -75,7 +75,7 @@ namespace Flounder
 		vkGetImageMemoryRequirements(logicalDevice, m_image, &imageMemoryRequirements);
 
 		const uint32_t memoryTypeIndex = Buffer::FindMemoryType(imageMemoryRequirements.memoryTypeBits,
-																VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 		VkMemoryAllocateInfo memoryAllocateInfo = {};
 		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		memoryAllocateInfo.allocationSize = imageMemoryRequirements.size;

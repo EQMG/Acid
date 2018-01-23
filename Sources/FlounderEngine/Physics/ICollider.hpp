@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Maths/Vector3.hpp"
+#include "../Maths/Transform.hpp"
 #include "Frustum.hpp"
 #include "Intersect.hpp"
 #include "Ray.hpp"
@@ -30,12 +30,10 @@ namespace Flounder
 		/// <summary>
 		/// Clones this collder into the destination and updates it.
 		/// </summary>
-		/// <param name="position"> The amount to move. </param>
-		/// <param name="rotation"> The amount to rotate. </param>
-		/// <param name="scale"> The amount to scale the object. </param>
+		/// <param name="transform"> The amount to transform the object. </param>
 		/// <param name="destination"> The collider to store the new data in. </param>
 		/// <returns> The destination. </returns>
-		virtual ICollider *Update(const Vector3 &position, const Vector3 &rotation, const float &scale, ICollider *destination) = 0;
+		virtual ICollider *Update(const Transform &transform, ICollider *destination) = 0;
 
 		/// <summary>
 		/// Adjusts a movement amount so that after the move is performed, the this collider will not intersect the {@code right}.
