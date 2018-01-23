@@ -28,9 +28,8 @@ void main()
 
 	vec4 textureColour = texture(samplerColour, fragmentUv);
 
-	//float metallic = texture(samplerMaterial, sunCoord).r;
-	//bool process = scene.sunPosition.z >= 0.0 && (metallic > 0.4 || !insideScreen(sunCoord));
-	bool process = scene.sunPosition.z >= 0.0;
+	float metallic = texture(samplerMaterial, sunCoord).r;
+	bool process = scene.sunPosition.z >= 0.0 && (metallic > 0.4 || !insideScreen(sunCoord));
 
 	vec2 uv = (fragmentUv - 0.5) * (scene.displaySize.x / scene.displaySize.y);
 

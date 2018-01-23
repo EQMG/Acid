@@ -1,5 +1,6 @@
 #include "Audio.hpp"
 
+#include <cassert>
 #include <fstream>
 #include "../Camera/Camera.hpp"
 
@@ -53,10 +54,7 @@ namespace Flounder
 		std::ifstream file(path.c_str(), std::ifstream::binary);
 		SoundSourceInfo result = {};
 
-		if (!file.is_open())
-		{
-			throw std::runtime_error("Load wave file failure: file couldn't be opened!");
-		}
+		assert(!file.is_open() && "Load wav file failure: file couldn't be opened!");
 
 		char chunkId[5] = "\0";
 
@@ -107,10 +105,7 @@ namespace Flounder
 		std::ifstream file(path.c_str(), std::ifstream::binary);
 		SoundSourceInfo result = {};
 
-		if (!file.is_open())
-		{
-			throw std::runtime_error("Load wave file failure: file couldn't be opened!");
-		}
+		assert(!file.is_open() && "Load ogg file failure: file couldn't be opened!");
 
 		// TODO
 
