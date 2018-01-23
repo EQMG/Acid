@@ -7,9 +7,9 @@
 #include <Devices/Display.hpp>
 #include <Devices/Mouse.hpp>
 
-#ifdef FLOUNDER_CONFIG_RELEASE
+/*#ifdef FLOUNDER_CONFIG_RELEASE
 #include <Sounds/Sound.hpp>
-#endif
+#endif*/
 
 #include "Entities/EntityTreePine.hpp"
 #include "Entities/EntityTesting.hpp"
@@ -22,7 +22,7 @@ namespace Demo
 		m_buttonLockMouse(new ButtonKeyboard({GLFW_KEY_M})),
 		m_buttonExit(new ButtonKeyboard({GLFW_KEY_DELETE}))
 	{
-#ifdef FLOUNDER_CONFIG_RELEASE
+/*#ifdef FLOUNDER_CONFIG_RELEASE
 		Sound *music1 = Sound::Resource("Resources/Music/Outpost.wav");
 
 		if (music1 != nullptr)
@@ -32,7 +32,7 @@ namespace Demo
 			//	music1->Play();
 			music1->Loop();
 		}
-#endif
+#endif*/
 
 		/*std::vector<ParticleType*> *types = new std::vector<ParticleType*>();
 		types->push_back(new ParticleType("blue", Texture::Resource("Resources/Particles/Blue/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
