@@ -283,8 +283,7 @@ namespace Flounder
 		}
 
 		// Create a windowed mode window and its OpenGL context.
-		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight
-			: m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
+		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
 
 		// Gets any window errors.
 		if (m_window == nullptr)
@@ -407,8 +406,7 @@ namespace Flounder
 		{
 			VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = {};
 			debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-			debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT |
-				VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
+			debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
 			debugCallBackCreateInfo.pfnCallback = static_cast<PFN_vkDebugReportCallbackEXT>(VkCallbackDebug);
 
 			Platform::ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
@@ -434,8 +432,7 @@ namespace Flounder
 		uint32_t deviceQueueFamilyPropertyCount;
 		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
 		std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount,
-												 deviceQueueFamilyProperties.data());
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount, deviceQueueFamilyProperties.data());
 
 		bool foundQueueFamily = false;
 
@@ -448,8 +445,7 @@ namespace Flounder
 			}
 		}
 
-		assert(
-			foundQueueFamily && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+		assert(foundQueueFamily && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
 	}
 
 	VkPhysicalDevice Display::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices)
@@ -599,8 +595,7 @@ namespace Flounder
 		uint32_t physicalDeviceFormatCount = 0;
 		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, nullptr);
 		std::vector<VkSurfaceFormatKHR> physicalDeviceFormats(physicalDeviceFormatCount);
-		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount,
-											 physicalDeviceFormats.data());
+		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, physicalDeviceFormats.data());
 
 		m_surfaceFormat.format = VK_FORMAT_B8G8R8A8_UNORM;
 		m_surfaceFormat.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
@@ -611,8 +606,7 @@ namespace Flounder
 		}
 	}
 
-	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties,
-								  const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)
+	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)
 	{
 #if FLOUNDER_VERBOSE
 		printf("-- Selected Device: '%s' --\n", physicalDeviceProperties.deviceName);
@@ -660,8 +654,7 @@ namespace Flounder
 #endif
 	}
 
-	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type,
-								  const bool &showDescription)
+	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription)
 	{
 #if FLOUNDER_VERBOSE
 		printf("-- Avalable Layers For: '%s' --\n", type.c_str());

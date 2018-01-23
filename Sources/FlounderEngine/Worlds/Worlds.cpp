@@ -41,7 +41,7 @@ namespace Flounder
 		Vector3 lightDirection = Vector3();
 		Colour fogColour = Colour();
 
-		Matrix4::Rotate(Vector3(0.2f, 0.0f, 0.5f), skyboxRotation, &lightDirection);
+		Vector3::Rotate(Vector3(0.2f, 0.0f, 0.5f), skyboxRotation, &lightDirection);
 		lightDirection.Normalize();
 
 		Colour::Interpolate(FOG_COLOUR_SUNRISE, FOG_COLOUR_NIGHT, GetSunriseFactor(), &fogColour);
@@ -100,7 +100,7 @@ namespace Flounder
 
 	float Worlds::GetSunHeight() const
 	{
-		return m_sunPosition->m_y; // TODO
+		return m_sunPosition->m_y;
 	}
 
 	float Worlds::GetStarIntensity() const

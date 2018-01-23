@@ -30,7 +30,7 @@ namespace Flounder
 		delete m_position;
 	}
 
-	ICollider *Sphere::Update(const Vector3 &position, const Vector3 &rotation, const float &scale, ICollider *destination)
+	ICollider *Sphere::Update(const Transform &transform, ICollider *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -39,8 +39,8 @@ namespace Flounder
 
 		Sphere *source = dynamic_cast<Sphere *>(destination);
 
-		source->m_radius = m_radius * scale;
-		source->m_position->Set(position);
+		source->m_radius = m_radius * transform.m_scaling->m_x;
+		source->m_position->Set(*transform.m_position);
 
 		return source;
 	}

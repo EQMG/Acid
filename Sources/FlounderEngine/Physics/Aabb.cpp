@@ -148,7 +148,7 @@ namespace Flounder
 		return Stretch(source, Vector3(stretchX, stretchY, stretchZ), destination);
 	}
 
-	ICollider *Aabb::Update(const Vector3 &position, const Vector3 &rotation, const float &scale, ICollider *destination)
+	ICollider *Aabb::Update(const Transform &transform, ICollider *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -162,72 +162,64 @@ namespace Flounder
 		aabb2->m_maxExtents->Set(*m_maxExtents);
 
 		// Scales the dimensions for the aabb.
-		if (scale != 1.0f)
+		if (*transform.m_scaling != 1.0f)
 		{
-			aabb2->m_minExtents->Set(
-				aabb2->m_minExtents->m_x * scale, aabb2->m_minExtents->m_y * scale, aabb2->m_minExtents->m_z * scale);
-			aabb2->m_maxExtents->Set(
-				aabb2->m_maxExtents->m_x * scale, aabb2->m_maxExtents->m_y * scale, aabb2->m_maxExtents->m_z * scale);
+			aabb2->m_minExtents->Set(aabb2->m_minExtents->m_x * transform.m_scaling->m_x, aabb2->m_minExtents->m_y * transform.m_scaling->m_y, aabb2->m_minExtents->m_z * transform.m_scaling->m_z);
+			aabb2->m_maxExtents->Set(aabb2->m_maxExtents->m_x * transform.m_scaling->m_x, aabb2->m_maxExtents->m_y * transform.m_scaling->m_y, aabb2->m_maxExtents->m_z * transform.m_scaling->m_z);
 		}
 
 		// Creates the 8 aabb corners and rotates them.
-		if (!rotation.IsZero())
+		if (*transform.m_rotation != 0.0f)
 		{
-			Vector3 *fll = new Vector3(aabb2->m_minExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_minExtents->m_z);
-			Matrix4::Rotate(*fll, rotation, fll);
+			Vector3 fll = Vector3(aabb2->m_minExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_minExtents->m_z);
+			Vector3::Rotate(fll, *transform.m_rotation, &fll);
 
-			Vector3 *flr = new Vector3(aabb2->m_maxExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_minExtents->m_z);
-			Matrix4::Rotate(*flr, rotation, flr);
+			Vector3 flr = Vector3(aabb2->m_maxExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_minExtents->m_z);
+			Vector3::Rotate(flr, *transform.m_rotation, &flr);
 
-			Vector3 *ful = new Vector3(aabb2->m_minExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_minExtents->m_z);
-			Matrix4::Rotate(*ful, rotation, ful);
+			Vector3 ful = Vector3(aabb2->m_minExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_minExtents->m_z);
+			Vector3::Rotate(ful, *transform.m_rotation, &ful);
 
-			Vector3 *fur = new Vector3(aabb2->m_maxExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_minExtents->m_z);
-			Matrix4::Rotate(*fur, rotation, fur);
+			Vector3 fur = Vector3(aabb2->m_maxExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_minExtents->m_z);
+			Vector3::Rotate(fur, *transform.m_rotation, &fur);
 
-			Vector3 *bur = new Vector3(aabb2->m_maxExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_maxExtents->m_z);
-			Matrix4::Rotate(*bur, rotation, bur);
+			Vector3 bur = Vector3(aabb2->m_maxExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_maxExtents->m_z);
+			Vector3::Rotate(bur, *transform.m_rotation, &bur);
 
-			Vector3 *bul = new Vector3(aabb2->m_minExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_maxExtents->m_z);
-			Matrix4::Rotate(*bul, rotation, bul);
+			Vector3 bul = Vector3(aabb2->m_minExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_maxExtents->m_z);
+			Vector3::Rotate(bul, *transform.m_rotation, &bul);
 
-			Vector3 *blr = new Vector3(aabb2->m_maxExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_maxExtents->m_z);
-			Matrix4::Rotate(*blr, rotation, blr);
+			Vector3 blr = Vector3(aabb2->m_maxExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_maxExtents->m_z);
+			Vector3::Rotate(blr, *transform.m_rotation, &blr);
 
-			Vector3 *bll = new Vector3(aabb2->m_minExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_maxExtents->m_z);
-			Matrix4::Rotate(*bll, rotation, bll);
+			Vector3 bll = Vector3(aabb2->m_minExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_maxExtents->m_z);
+			Vector3::Rotate(bll, *transform.m_rotation, &bll);
 
 			//aabb2->m_minExtents = min(fll, min(flr, min(ful, min(fur, min(bur, min(bul, min(blr, bll)))))));
-			Vector3::MinVector(*fll, *flr, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, *ful, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, *fur, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, *bur, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, *bul, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, *blr, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, *bll, aabb2->m_minExtents);
+			Vector3::MinVector(fll, flr, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, ful, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, fur, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, bur, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, bul, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, blr, aabb2->m_minExtents);
+			Vector3::MinVector(*aabb2->m_minExtents, bll, aabb2->m_minExtents);
 
 			//aabb2->m_maxExtents = max(fll, max(flr, max(ful, max(fur, max(bur, max(bul, max(blr, bll)))))));
-			Vector3::MaxVector(*fll, *flr, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, *ful, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, *fur, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, *bur, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, *bul, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, *blr, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, *bll, aabb2->m_maxExtents);
-
-			delete fll;
-			delete flr;
-			delete ful;
-			delete fur;
-			delete bur;
-			delete bul;
-			delete blr;
-			delete bll;
+			Vector3::MaxVector(fll, flr, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, ful, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, fur, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, bur, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, bul, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, blr, aabb2->m_maxExtents);
+			Vector3::MaxVector(*aabb2->m_maxExtents, bll, aabb2->m_maxExtents);
 		}
 
 		// Transforms the aabb.
-		Vector3::Add(*aabb2->m_minExtents, position, aabb2->m_minExtents);
-		Vector3::Add(*aabb2->m_maxExtents, position, aabb2->m_maxExtents);
+		if (*transform.m_position != 0.0f)
+		{
+			Vector3::Add(*aabb2->m_minExtents, *transform.m_position, aabb2->m_minExtents);
+			Vector3::Add(*aabb2->m_maxExtents, *transform.m_position, aabb2->m_maxExtents);
+		}
 
 		// Returns the final aabb.
 		return aabb2;

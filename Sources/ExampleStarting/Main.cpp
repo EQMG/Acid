@@ -98,7 +98,7 @@ int main(int argc, char **argv)
 	if (Waters::Get() != nullptr)
 	{
 		Waters::Get()->SetWater(new Water(
-			Vector3(0.0f, 0.0f, 0.0f), Vector3()
+			Transform(Vector3(0.0f, 0.0f, 0.0f), Vector3())
 		));
 	}
 

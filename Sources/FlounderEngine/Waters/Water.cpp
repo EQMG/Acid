@@ -15,12 +15,11 @@ namespace Flounder
 
 	const Colour Water::WATER_COLOUR = Colour("#0077be");
 
-	Water::Water(const Vector3 &position, const Vector3 &rotation) :
+	Water::Water(const Transform &transform) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosWaters::UboObject))),
 		m_model(nullptr),
 		m_colour(new Colour(WATER_COLOUR)),
-		m_position(new Vector3(position)),
-		m_rotation(new Vector3(rotation)),
+		m_transform(new Transform(transform)),
 		m_offset(new Vector3()),
 		m_moved(true),
 		m_modelMatrix(new Matrix4()),
@@ -35,8 +34,7 @@ namespace Flounder
 
 		delete m_colour;
 
-		delete m_position;
-		delete m_rotation;
+		delete m_transform;
 		delete m_offset;
 
 		delete m_modelMatrix;
@@ -53,9 +51,9 @@ namespace Flounder
 
 		if (m_moved)
 		{
-			Vector3 offsetPosition = Vector3(*m_position);
+			Vector3 offsetPosition = Vector3(*m_transform->m_position);
 			Vector3::Add(offsetPosition, *m_offset, &offsetPosition);
-			Matrix4::TransformationMatrix(offsetPosition, *m_rotation, 1.0f, m_modelMatrix);
+			Matrix4::TransformationMatrix(offsetPosition, *m_transform->m_rotation, 1.0f, m_modelMatrix);
 			m_moved = false;
 		}
 	}
@@ -67,9 +65,7 @@ namespace Flounder
 
 		UbosWaters::UboObject uboObject = {};
 		uboObject.transform = Matrix4(*m_modelMatrix);
-		uboObject.diffuseColour = Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b,
-										 Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity()
-											 : 1.0f);
+		uboObject.diffuseColour = Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b, Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity() : 1.0f);
 		m_uniformObject->Update(&uboObject);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
@@ -90,20 +86,14 @@ namespace Flounder
 
 		m_aabb->m_maxExtents->m_x = SIDE_LENGTH;
 		m_aabb->m_maxExtents->m_z = SIDE_LENGTH;
-		m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
-		m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
-		m_aabb->Update(*m_position, *m_rotation, 1.0f, m_aabb);
+		m_transform->m_position->m_x -= m_aabb->m_maxExtents->m_x / 2.0f;
+		m_transform->m_position->m_z -= m_aabb->m_maxExtents->m_z / 2.0f;
+		m_aabb->Update(*m_transform, m_aabb);
 	}
 
-	void Water::SetPosition(const Vector3 &position)
+	void Water::SetPosition(const Transform &transform)
 	{
-		m_position->Set(position);
-		m_moved = true;
-	}
-
-	void Water::SetRotation(const Vector3 &rotation)
-	{
-		m_rotation->Set(rotation);
+		m_transform->Set(transform);
 		m_moved = true;
 	}
 }
