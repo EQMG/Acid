@@ -1,8 +1,8 @@
+#include "EntityTreePine.hpp"
+
 #include <Entities/Components/ComponentModel.hpp>
 #include <Entities/Components/ComponentMaterial.hpp>
 #include <Entities/Components/ComponentCollider.hpp>
-
-#include "EntityTreePine.hpp"
 
 EntityTreePine::EntityTreePine(ISpatialStructure<Entity *> *structure, const Transform &transform) :
 	Entity(structure, transform)
