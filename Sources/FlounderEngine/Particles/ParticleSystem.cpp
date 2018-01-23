@@ -53,23 +53,20 @@ namespace Flounder
 
 		if (m_direction != nullptr)
 		{
-			velocity = Matrix4::RandomUnitVectorWithinCone(*m_direction, m_directionDeviation, nullptr);
+			velocity = Vector3::RandomUnitVectorWithinCone(*m_direction, m_directionDeviation, nullptr);
 		}
 		else
 		{
 			velocity = GenerateRandomUnitVector();
 		}
 
-		ParticleType *emitType = m_types->at(static_cast<int>(floor(Maths::RandomInRange(0, static_cast<int>(m_types->size())))));
+		ParticleType *emitType = m_types->at(static_cast<unsigned int>(std::floor(Maths::RandomInRange(0, static_cast<int>(m_types->size())))));
 
 		velocity->Normalize();
-		velocity->Scale(GenerateValue(m_averageSpeed,
-									  m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError)));
+		velocity->Scale(GenerateValue(m_averageSpeed, m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError)));
 		Vector3::Add(*velocity, *m_velocityCentre, velocity);
-		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() *
-			Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
-		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() *
-			Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
+		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
+		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
 		Vector3 *spawnPos = Vector3::Add(*m_systemCentre, *m_spawn->GetBaseSpawnPosition(), nullptr);
 
 		Particle *result = new Particle(emitType, *spawnPos, *velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
@@ -99,9 +96,9 @@ namespace Flounder
 	{
 		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
 		float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
-		float rootOneMinusZSquared = sqrt(1.0f - z * z);
-		float x = rootOneMinusZSquared * cos(theta);
-		float y = rootOneMinusZSquared * sin(theta);
+		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
+		float x = rootOneMinusZSquared * std::cos(theta);
+		float y = rootOneMinusZSquared * std::sin(theta);
 		return new Vector3(x, y, z);
 	}
 

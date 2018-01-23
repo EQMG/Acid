@@ -196,12 +196,12 @@ namespace Flounder
 
 	float Colour::Length(const Colour &source)
 	{
-		return sqrt(LengthSquared(source));
+		return std::sqrt(LengthSquared(source));
 	}
 
 	float Colour::LengthSquared(const Colour &source)
 	{
-		return pow(source.m_r, 2) + pow(source.m_g, 2) + pow(source.m_b, 2) + pow(source.m_a, 2);
+		return std::pow(source.m_r, 2.0f) + std::pow(source.m_g, 2.0f) + std::pow(source.m_b, 2.0f) + std::pow(source.m_a, 2.0f);
 	}
 
 	Colour *Colour::Scale(const float &scalar)

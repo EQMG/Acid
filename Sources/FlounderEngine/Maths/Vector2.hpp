@@ -282,12 +282,6 @@ namespace Flounder
 		Vector2 *Scale(const float &scalar);
 
 		/// <summary>
-		/// Gets if all the components to the vector are zero.
-		/// </summary>
-		/// <returns> If the vector is zero. </returns>
-		bool IsZero() const;
-
-		/// <summary>
 		/// Gets the length of the vector.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
@@ -312,6 +306,10 @@ namespace Flounder
 		bool operator>(const Vector2 &other) const;
 
 		bool operator>=(const Vector2 &other) const;
+
+		bool operator==(const float &value) const;
+
+		bool operator!=(const float &value) const;
 
 		Vector2 &operator-();
 

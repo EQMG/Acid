@@ -1,11 +1,12 @@
 #include "Vector3.hpp"
 
-#include <assert.h>
+#include <cassert>
 #include <sstream>
 #include "Colour.hpp"
 #include "Maths.hpp"
 #include "Vector2.hpp"
 #include "Vector4.hpp"
+#include "Matrix4.hpp"
 
 namespace Flounder
 {
@@ -140,7 +141,7 @@ namespace Flounder
 			dls = 1.0f;
 		}
 
-		return acos(dls);
+		return std::acos(dls);
 	}
 
 	float Vector3::Dot(const Vector3 &left, const Vector3 &right)
@@ -155,8 +156,7 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		return destination->Set(
-			left.m_y * right.m_z - left.m_z * right.m_y,
+		return destination->Set(left.m_y * right.m_z - left.m_z * right.m_y,
 			right.m_x * left.m_z - right.m_z * left.m_x, left.m_x * right.m_y - left.m_y * right.m_x);
 	}
 
@@ -172,8 +172,16 @@ namespace Flounder
 
 	Vector3 *Vector3::Rotate(const Vector3 &source, const Vector3 &rotation, Vector3 *destination)
 	{
-		assert(false && "Instead of calling Vector3::Rotate, call Matrix4::Rotate!");
-		return nullptr;
+		if (destination == nullptr)
+		{
+			destination = new Vector3();
+		}
+
+		Matrix4 *matrix = Matrix4::TransformationMatrix(Vector3(0.0f, 0.0f, 0.0f), rotation, Vector3(1.0f, 1.0f, 1.0f), nullptr);
+		Vector4 direction4 = Vector4(source.m_x, source.m_y, source.m_z, 1.0f);
+		Matrix4::Transform(*matrix, direction4, &direction4);
+		delete matrix;
+		return destination->Set(direction4.m_x, direction4.m_y, direction4.m_z);
 	}
 
 	Vector3 *Vector3::Negate(const Vector3 &source, Vector3 *destination)
@@ -200,7 +208,7 @@ namespace Flounder
 
 	float Vector3::Length(const Vector3 &source)
 	{
-		return sqrt(LengthSquared(source));
+		return std::sqrt(LengthSquared(source));
 	}
 
 	float Vector3::LengthSquared(const Vector3 &source)
@@ -248,8 +256,9 @@ namespace Flounder
 
 	float Vector3::GetDistance(const Vector3 &point1, const Vector3 &point2)
 	{
-		return sqrt(
-			pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2) + pow(point2.m_z - point1.m_z, 2));
+		return std::sqrt(std::pow(point2.m_x - point1.m_x, 2.0f) +
+			std::pow(point2.m_y - point1.m_y, 2.0f) +
+			std::pow(point2.m_z - point1.m_z, 2.0f));
 	}
 
 	Vector3 *Vector3::GetVectorDistance(const Vector3 &point1, const Vector3 &point2, Vector3 *destination)
@@ -259,8 +268,8 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		return destination->Set(pow(point2.m_x - point1.m_x, 2), pow(point2.m_y - point1.m_y, 2), pow(
-			point2.m_z - point1.m_z, 2));
+		return destination->Set(std::pow(point2.m_x - point1.m_x, 2.0f), std::pow(point2.m_y - point1.m_y, 2.0f),
+			std::pow(point2.m_z - point1.m_z, 2.0f));
 	}
 
 	Vector3 *Vector3::RandomUnitVector(Vector3 *destination)
@@ -272,9 +281,9 @@ namespace Flounder
 
 		const float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
 		const float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
-		const float rootOneMinusZSquared = sqrt(1.0f - z * z);
-		const float x = rootOneMinusZSquared * cos(theta);
-		const float y = rootOneMinusZSquared * sin(theta);
+		const float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
+		const float x = rootOneMinusZSquared * std::cos(theta);
+		const float y = rootOneMinusZSquared * std::sin(theta);
 		return destination->Set(x, y, z);
 	}
 
@@ -304,8 +313,8 @@ namespace Flounder
 			b = temp;
 		}
 
-		const float randX = b * cos(2.0f * PI * (a / b));
-		const float randY = b * sin(2.0f * PI * (a / b));
+		const float randX = b * std::cos(2.0f * PI * (a / b));
+		const float randY = b * std::sin(2.0f * PI * (a / b));
 		const float distance = Vector3(randX, randY, 0.0f).Length();
 		destination->Scale(distance);
 		return destination;
@@ -318,6 +327,42 @@ namespace Flounder
 		const float l2 = ((p3.m_z - p1.m_z) * (pos.m_x - p3.m_x) + (p1.m_x - p3.m_x) * (pos.m_y - p3.m_z)) / det;
 		const float l3 = 1.0f - l1 - l2;
 		return l1 * p1.m_y + l2 * p2.m_y + l3 * p3.m_y;
+	}
+
+	Vector3 *Vector3::RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle, Vector3 *destination)
+	{
+		if (destination == nullptr)
+		{
+			destination = new Vector3();
+		}
+
+		const float cosAngle = std::cos(angle);
+		const float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
+		const float z = (cosAngle + Maths::RandomInRange(0.0f, 1.0f)) * (1.0f - cosAngle);
+		const float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
+		const float x = rootOneMinusZSquared * std::cos(theta);
+		const float y = rootOneMinusZSquared * std::sin(theta);
+
+		Vector4 direction = Vector4(x, y, z, 1.0f);
+
+		if ((coneDirection.m_x != 0.0F) || (coneDirection.m_y != 0.0F) ||
+			((coneDirection.m_z != 1.0f) && (coneDirection.m_z != -1.0f)))
+		{
+			Vector3 *rotateAxis = Vector3::Cross(coneDirection, Vector3(0.0f, 0.0f, 1.0f), nullptr);
+			rotateAxis->Normalize();
+			const float rotateAngle = std::acos(Vector3::Dot(coneDirection, Vector3(0.0f, 0.0f, 1.0f)));
+			Matrix4 rotationMatrix = Matrix4();
+			rotationMatrix.SetIdentity();
+			Matrix4::Rotate(rotationMatrix, *rotateAxis, -rotateAngle, &rotationMatrix);
+			Matrix4::Transform(rotationMatrix, direction, &direction);
+			delete rotateAxis;
+		}
+		else if (coneDirection.m_z == -1.0f)
+		{
+			direction.m_z *= -1.0f;
+		}
+
+		return destination->Set(direction);
 	}
 
 	Vector3 *Vector3::Translate(const float &x, const float &y, const float &z)
@@ -341,11 +386,6 @@ namespace Flounder
 	Vector3 *Vector3::Scale(const float &scalar)
 	{
 		return Scale(*this, scalar, this);
-	}
-
-	bool Vector3::IsZero() const
-	{
-		return m_x == 0.0f && m_y == 0.0f && m_z == 0.0f;
 	}
 
 	float Vector3::Length() const
@@ -386,6 +426,16 @@ namespace Flounder
 	bool Vector3::operator>=(const Vector3 &other) const
 	{
 		return m_x >= other.m_x && m_y >= other.m_y && m_z >= other.m_z;
+	}
+
+	bool Vector3::operator==(const float &value) const
+	{
+		return m_x == value && m_y == value && m_z == value;
+	}
+
+	bool Vector3::operator!=(const float &value) const
+	{
+		return !(*this == value);
 	}
 
 	Vector3 &Vector3::operator-()

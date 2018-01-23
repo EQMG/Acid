@@ -221,38 +221,22 @@ namespace Flounder
 			destination = new Matrix4();
 		}
 
-		const float m00 =
-			left.m_00 * right.m_00 + left.m_10 * right.m_01 + left.m_20 * right.m_02 + left.m_30 * right.m_03;
-		const float m01 =
-			left.m_01 * right.m_00 + left.m_11 * right.m_01 + left.m_21 * right.m_02 + left.m_31 * right.m_03;
-		const float m02 =
-			left.m_02 * right.m_00 + left.m_12 * right.m_01 + left.m_22 * right.m_02 + left.m_32 * right.m_03;
-		const float m03 =
-			left.m_03 * right.m_00 + left.m_13 * right.m_01 + left.m_23 * right.m_02 + left.m_33 * right.m_03;
-		const float m10 =
-			left.m_00 * right.m_10 + left.m_10 * right.m_11 + left.m_20 * right.m_12 + left.m_30 * right.m_13;
-		const float m11 =
-			left.m_01 * right.m_10 + left.m_11 * right.m_11 + left.m_21 * right.m_12 + left.m_31 * right.m_13;
-		const float m12 =
-			left.m_02 * right.m_10 + left.m_12 * right.m_11 + left.m_22 * right.m_12 + left.m_32 * right.m_13;
-		const float m13 =
-			left.m_03 * right.m_10 + left.m_13 * right.m_11 + left.m_23 * right.m_12 + left.m_33 * right.m_13;
-		const float m20 =
-			left.m_00 * right.m_20 + left.m_10 * right.m_21 + left.m_20 * right.m_22 + left.m_30 * right.m_23;
-		const float m21 =
-			left.m_01 * right.m_20 + left.m_11 * right.m_21 + left.m_21 * right.m_22 + left.m_31 * right.m_23;
-		const float m22 =
-			left.m_02 * right.m_20 + left.m_12 * right.m_21 + left.m_22 * right.m_22 + left.m_32 * right.m_23;
-		const float m23 =
-			left.m_03 * right.m_20 + left.m_13 * right.m_21 + left.m_23 * right.m_22 + left.m_33 * right.m_23;
-		const float m30 =
-			left.m_00 * right.m_30 + left.m_10 * right.m_31 + left.m_20 * right.m_32 + left.m_30 * right.m_33;
-		const float m31 =
-			left.m_01 * right.m_30 + left.m_11 * right.m_31 + left.m_21 * right.m_32 + left.m_31 * right.m_33;
-		const float m32 =
-			left.m_02 * right.m_30 + left.m_12 * right.m_31 + left.m_22 * right.m_32 + left.m_32 * right.m_33;
-		const float m33 =
-			left.m_03 * right.m_30 + left.m_13 * right.m_31 + left.m_23 * right.m_32 + left.m_33 * right.m_33;
+		const float m00 = left.m_00 * right.m_00 + left.m_10 * right.m_01 + left.m_20 * right.m_02 + left.m_30 * right.m_03;
+		const float m01 = left.m_01 * right.m_00 + left.m_11 * right.m_01 + left.m_21 * right.m_02 + left.m_31 * right.m_03;
+		const float m02 = left.m_02 * right.m_00 + left.m_12 * right.m_01 + left.m_22 * right.m_02 + left.m_32 * right.m_03;
+		const float m03 = left.m_03 * right.m_00 + left.m_13 * right.m_01 + left.m_23 * right.m_02 + left.m_33 * right.m_03;
+		const float m10 = left.m_00 * right.m_10 + left.m_10 * right.m_11 + left.m_20 * right.m_12 + left.m_30 * right.m_13;
+		const float m11 = left.m_01 * right.m_10 + left.m_11 * right.m_11 + left.m_21 * right.m_12 + left.m_31 * right.m_13;
+		const float m12 = left.m_02 * right.m_10 + left.m_12 * right.m_11 + left.m_22 * right.m_12 + left.m_32 * right.m_13;
+		const float m13 = left.m_03 * right.m_10 + left.m_13 * right.m_11 + left.m_23 * right.m_12 + left.m_33 * right.m_13;
+		const float m20 = left.m_00 * right.m_20 + left.m_10 * right.m_21 + left.m_20 * right.m_22 + left.m_30 * right.m_23;
+		const float m21 = left.m_01 * right.m_20 + left.m_11 * right.m_21 + left.m_21 * right.m_22 + left.m_31 * right.m_23;
+		const float m22 = left.m_02 * right.m_20 + left.m_12 * right.m_21 + left.m_22 * right.m_22 + left.m_32 * right.m_23;
+		const float m23 = left.m_03 * right.m_20 + left.m_13 * right.m_21 + left.m_23 * right.m_22 + left.m_33 * right.m_23;
+		const float m30 = left.m_00 * right.m_30 + left.m_10 * right.m_31 + left.m_20 * right.m_32 + left.m_30 * right.m_33;
+		const float m31 = left.m_01 * right.m_30 + left.m_11 * right.m_31 + left.m_21 * right.m_32 + left.m_31 * right.m_33;
+		const float m32 = left.m_02 * right.m_30 + left.m_12 * right.m_31 + left.m_22 * right.m_32 + left.m_32 * right.m_33;
+		const float m33 = left.m_03 * right.m_30 + left.m_13 * right.m_31 + left.m_23 * right.m_32 + left.m_33 * right.m_33;
 
 		destination->m_00 = m00;
 		destination->m_01 = m01;
@@ -280,38 +264,22 @@ namespace Flounder
 			destination = new Matrix4();
 		}
 
-		const float m00 =
-			left.m_00 / right.m_00 + left.m_10 / right.m_01 + left.m_20 / right.m_02 + left.m_30 / right.m_03;
-		const float m01 =
-			left.m_01 / right.m_00 + left.m_11 / right.m_01 + left.m_21 / right.m_02 + left.m_31 / right.m_03;
-		const float m02 =
-			left.m_02 / right.m_00 + left.m_12 / right.m_01 + left.m_22 / right.m_02 + left.m_32 / right.m_03;
-		const float m03 =
-			left.m_03 / right.m_00 + left.m_13 / right.m_01 + left.m_23 / right.m_02 + left.m_33 / right.m_03;
-		const float m10 =
-			left.m_00 / right.m_10 + left.m_10 / right.m_11 + left.m_20 / right.m_12 + left.m_30 / right.m_13;
-		const float m11 =
-			left.m_01 / right.m_10 + left.m_11 / right.m_11 + left.m_21 / right.m_12 + left.m_31 / right.m_13;
-		const float m12 =
-			left.m_02 / right.m_10 + left.m_12 / right.m_11 + left.m_22 / right.m_12 + left.m_32 / right.m_13;
-		const float m13 =
-			left.m_03 / right.m_10 + left.m_13 / right.m_11 + left.m_23 / right.m_12 + left.m_33 / right.m_13;
-		const float m20 =
-			left.m_00 / right.m_20 + left.m_10 / right.m_21 + left.m_20 / right.m_22 + left.m_30 / right.m_23;
-		const float m21 =
-			left.m_01 / right.m_20 + left.m_11 / right.m_21 + left.m_21 / right.m_22 + left.m_31 / right.m_23;
-		const float m22 =
-			left.m_02 / right.m_20 + left.m_12 / right.m_21 + left.m_22 / right.m_22 + left.m_32 / right.m_23;
-		const float m23 =
-			left.m_03 / right.m_20 + left.m_13 / right.m_21 + left.m_23 / right.m_22 + left.m_33 / right.m_23;
-		const float m30 =
-			left.m_00 / right.m_30 + left.m_10 / right.m_31 + left.m_20 / right.m_32 + left.m_30 / right.m_33;
-		const float m31 =
-			left.m_01 / right.m_30 + left.m_11 / right.m_31 + left.m_21 / right.m_32 + left.m_31 / right.m_33;
-		const float m32 =
-			left.m_02 / right.m_30 + left.m_12 / right.m_31 + left.m_22 / right.m_32 + left.m_32 / right.m_33;
-		const float m33 =
-			left.m_03 / right.m_30 + left.m_13 / right.m_31 + left.m_23 / right.m_32 + left.m_33 / right.m_33;
+		const float m00 = left.m_00 / right.m_00 + left.m_10 / right.m_01 + left.m_20 / right.m_02 + left.m_30 / right.m_03;
+		const float m01 = left.m_01 / right.m_00 + left.m_11 / right.m_01 + left.m_21 / right.m_02 + left.m_31 / right.m_03;
+		const float m02 = left.m_02 / right.m_00 + left.m_12 / right.m_01 + left.m_22 / right.m_02 + left.m_32 / right.m_03;
+		const float m03 = left.m_03 / right.m_00 + left.m_13 / right.m_01 + left.m_23 / right.m_02 + left.m_33 / right.m_03;
+		const float m10 = left.m_00 / right.m_10 + left.m_10 / right.m_11 + left.m_20 / right.m_12 + left.m_30 / right.m_13;
+		const float m11 = left.m_01 / right.m_10 + left.m_11 / right.m_11 + left.m_21 / right.m_12 + left.m_31 / right.m_13;
+		const float m12 = left.m_02 / right.m_10 + left.m_12 / right.m_11 + left.m_22 / right.m_12 + left.m_32 / right.m_13;
+		const float m13 = left.m_03 / right.m_10 + left.m_13 / right.m_11 + left.m_23 / right.m_12 + left.m_33 / right.m_13;
+		const float m20 = left.m_00 / right.m_20 + left.m_10 / right.m_21 + left.m_20 / right.m_22 + left.m_30 / right.m_23;
+		const float m21 = left.m_01 / right.m_20 + left.m_11 / right.m_21 + left.m_21 / right.m_22 + left.m_31 / right.m_23;
+		const float m22 = left.m_02 / right.m_20 + left.m_12 / right.m_21 + left.m_22 / right.m_22 + left.m_32 / right.m_23;
+		const float m23 = left.m_03 / right.m_20 + left.m_13 / right.m_21 + left.m_23 / right.m_22 + left.m_33 / right.m_23;
+		const float m30 = left.m_00 / right.m_30 + left.m_10 / right.m_31 + left.m_20 / right.m_32 + left.m_30 / right.m_33;
+		const float m31 = left.m_01 / right.m_30 + left.m_11 / right.m_31 + left.m_21 / right.m_32 + left.m_31 / right.m_33;
+		const float m32 = left.m_02 / right.m_30 + left.m_12 / right.m_31 + left.m_22 / right.m_32 + left.m_32 / right.m_33;
+		const float m33 = left.m_03 / right.m_30 + left.m_13 / right.m_31 + left.m_23 / right.m_32 + left.m_33 / right.m_33;
 
 		destination->m_00 = m00;
 		destination->m_01 = m01;
@@ -650,20 +618,6 @@ namespace Flounder
 		return source;
 	}
 
-	Vector3 *Matrix4::Rotate(const Vector3 &source, const Vector3 &rotation, Vector3 *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		Matrix4 *matrix = TransformationMatrix(Vector3(0.0f, 0.0f, 0.0f), rotation, Vector3(1.0f, 1.0f, 1.0f), nullptr);
-		Vector4 direction4 = Vector4(source.m_x, source.m_y, source.m_z, 1.0f);
-		Transform(*matrix, direction4, &direction4);
-		delete matrix;
-		return destination->Set(direction4.m_x, direction4.m_y, direction4.m_z);
-	}
-
 	Matrix4 *Matrix4::TransformationMatrix(const Vector2 &translation, const float &scale, Matrix4 *destination)
 	{
 		return TransformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(scale, scale, scale), destination);
@@ -765,14 +719,14 @@ namespace Flounder
 
 		destination->SetIdentity();
 
-		if (!rotation.IsZero())
+		if (rotation != 0.0f)
 		{
 			Rotate(*destination, Vector3(1.0f, 0.0f, 0.0f), Maths::Radians(rotation.m_x), destination);
 			Rotate(*destination, Vector3(0.0f, 1.0f, 0.0f), Maths::Radians(-rotation.m_y), destination);
 			Rotate(*destination, Vector3(0.0f, 0.0f, 1.0f), Maths::Radians(rotation.m_z), destination);
 		}
 
-		if (!position.IsZero())
+		if (position != 0.0f)
 		{
 			Translate(*destination, *Vector3(position).Negate(), destination);
 		}
@@ -795,42 +749,6 @@ namespace Flounder
 		point.m_x /= point.m_z;
 		point.m_y /= point.m_z;
 		return destination->Set(point.m_x, point.m_y, point.m_z);
-	}
-
-	Vector3 *Matrix4::RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle, Vector3 *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		const float cosAngle = cos(angle);
-		const float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
-		const float z = (cosAngle + Maths::RandomInRange(0.0f, 1.0f)) * (1.0f - cosAngle);
-		const float rootOneMinusZSquared = sqrt(1.0f - z * z);
-		const float x = rootOneMinusZSquared * cos(theta);
-		const float y = rootOneMinusZSquared * sin(theta);
-
-		Vector4 direction = Vector4(x, y, z, 1.0f);
-
-		if ((coneDirection.m_x != 0.0F) || (coneDirection.m_y != 0.0F) ||
-			((coneDirection.m_z != 1.0f) && (coneDirection.m_z != -1.0f)))
-		{
-			Vector3 *rotateAxis = Vector3::Cross(coneDirection, Vector3(0.0f, 0.0f, 1.0f), nullptr);
-			rotateAxis->Normalize();
-			const float rotateAngle = acos(Vector3::Dot(coneDirection, Vector3(0.0f, 0.0f, 1.0f)));
-			Matrix4 rotationMatrix = Matrix4();
-			rotationMatrix.SetIdentity();
-			Rotate(rotationMatrix, *rotateAxis, -rotateAngle, &rotationMatrix);
-			Transform(rotationMatrix, direction, &direction);
-			delete rotateAxis;
-		}
-		else if (coneDirection.m_z == -1.0f)
-		{
-			direction.m_z *= -1.0f;
-		}
-
-		return destination->Set(direction);
 	}
 
 	Matrix4 *Matrix4::SetIdentity()
@@ -945,9 +863,9 @@ namespace Flounder
 	{
 		std::stringstream result;
 		result << "Matrix4(" << m_00 << ", " << m_01 << ", " << m_02 << ", " << m_03 << ", " <<
-			   m_10 << ", " << m_11 << ", " << m_12 << ", " << m_13 << ", " <<
-			   m_20 << ", " << m_21 << ", " << m_22 << ", " << m_23 << ", " <<
-			   m_30 << ", " << m_31 << ", " << m_32 << ", " << m_33 << ")";
+			m_10 << ", " << m_11 << ", " << m_12 << ", " << m_13 << ", " <<
+			m_20 << ", " << m_21 << ", " << m_22 << ", " << m_23 << ", " <<
+			m_30 << ", " << m_31 << ", " << m_32 << ", " << m_33 << ")";
 		return result.str();
 	}
 

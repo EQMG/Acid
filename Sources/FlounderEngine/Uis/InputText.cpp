@@ -119,8 +119,8 @@ namespace Flounder
 
 		// Update the background colour.
 		Colour::Interpolate(*COLOUR_NORMAL, *Uis::Get()->GetManager()->GetPrimaryColour(),
-							(m_text->GetScale() - SCALE_NORMAL) /
-								(SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
+			(m_text->GetScale() - SCALE_NORMAL) /
+				(SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.
 		//m_background->GetDimensions()->Set(*m_text->GetDimensions());

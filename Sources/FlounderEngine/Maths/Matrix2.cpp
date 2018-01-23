@@ -341,7 +341,7 @@ namespace Flounder
 	{
 		std::stringstream result;
 		result << "Matrix2(" << m_00 << ", " << m_01 << ", " <<
-			   m_10 << ", " << m_11 << ")";
+			m_10 << ", " << m_11 << ")";
 		return result.str();
 	}
 }

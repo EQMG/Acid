@@ -89,8 +89,7 @@ namespace Flounder
 			return VK_ERROR_OUT_OF_DATE_KHR;
 		}
 
-		assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) &&
-				   "Failed to acquire swapchain image!");
+		assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) && "Failed to acquire swapchain image!");
 
 		Platform::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
 

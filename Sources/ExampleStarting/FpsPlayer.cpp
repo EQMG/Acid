@@ -1,5 +1,6 @@
 #include "FpsPlayer.hpp"
 
+#include <Camera/Camera.hpp>
 #include <Inputs/AxisCompound.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/AxisButton.hpp>
@@ -8,12 +9,11 @@
 #include <Inputs/ButtonJoystick.hpp>
 #include <Uis/Uis.hpp>
 #include <Terrains/Terrains.hpp>
-#include <Camera/Camera.hpp>
 
 namespace Demo
 {
 	const float FpsPlayer::WALK_SPEED = 3.1f;
-	const float FpsPlayer::RUN_SPEED = 5.7f; // 5.38 m/s Minecraft
+	const float FpsPlayer::RUN_SPEED = 5.7f;
 	const float FpsPlayer::CROUCH_SPEED = 1.2f;
 	const float FpsPlayer::JUMP_SPEED = 6.5f;
 	const float FpsPlayer::NOCLIP_SPEED = 15.0f;
@@ -28,37 +28,34 @@ namespace Demo
 		m_jumping(false),
 		m_noclipEnabled(false),
 		m_inputForward(new AxisCompound({
-											new AxisButton(
-												new ButtonKeyboard({GLFW_KEY_S, GLFW_KEY_DOWN}),
-												new ButtonKeyboard({GLFW_KEY_W, GLFW_KEY_UP})
-											),
-											new AxisJoystick(0, {1})
-										})),
+			new AxisButton(
+				new ButtonKeyboard({GLFW_KEY_S, GLFW_KEY_DOWN}),
+				new ButtonKeyboard({GLFW_KEY_W, GLFW_KEY_UP})
+			),
+			new AxisJoystick(0, {1})
+		})),
 		m_inputStrafe(new AxisCompound({
-										   new AxisButton(
-											   new ButtonKeyboard({GLFW_KEY_D, GLFW_KEY_RIGHT}),
-											   new ButtonKeyboard({GLFW_KEY_A, GLFW_KEY_LEFT})
-										   ),
-										   new AxisJoystick(0, {0})
-									   })),
+			new AxisButton(
+				new ButtonKeyboard({GLFW_KEY_D, GLFW_KEY_RIGHT}),
+				new ButtonKeyboard({GLFW_KEY_A, GLFW_KEY_LEFT})
+			),
+			new AxisJoystick(0, {0})
+		})),
 		m_inputSprint(new ButtonCompound({
-											 new ButtonKeyboard({GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT}),
-											 new ButtonJoystick(0, {1})
-										 })),
+			new ButtonKeyboard({GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT}),
+			new ButtonJoystick(0, {1})
+		})),
 		m_inputJump(new ButtonCompound({
-										   new ButtonKeyboard({GLFW_KEY_SPACE}),
-										   new ButtonJoystick(0, {1})
-									   })),
+			new ButtonKeyboard({GLFW_KEY_SPACE}),
+			new ButtonJoystick(0, {1})
+		})),
 		m_inputCrouch(new ButtonCompound({
-											 new ButtonKeyboard({
-																	GLFW_KEY_LEFT_CONTROL,
-																	GLFW_KEY_RIGHT_CONTROL
-																}),
-											 new ButtonJoystick(0, {1})
-										 })),
+			new ButtonKeyboard({GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL}),
+			new ButtonJoystick(0, {1})
+		})),
 		m_toggleNoclip(new ButtonCompound({
-											  new ButtonKeyboard({GLFW_KEY_N}),
-										  })),
+			new ButtonKeyboard({GLFW_KEY_N}),
+		})),
 		m_amountMove(new Vector3()),
 		m_amountRotate(new Vector3()),
 		m_paused(false)
@@ -96,10 +93,8 @@ namespace Demo
 		{
 			const bool sprintDown = m_inputSprint->IsDown();
 			const bool crouchDown = m_inputCrouch->IsDown();
-			m_currentSpeed =
-				(sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputForward->GetAmount();
-			m_currentStrafeSpeed =
-				(sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputStrafe->GetAmount();
+			m_currentSpeed = (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputForward->GetAmount();
+			m_currentStrafeSpeed = (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputStrafe->GetAmount();
 
 			if (m_noclipEnabled)
 			{
@@ -156,9 +151,9 @@ namespace Demo
 
 		// Calculates the deltas to the moved distance, and rotations.
 		const float theta = Maths::Radians(Camera::Get()->GetCamera()->GetRotation()->m_y);
-		const float dx = -(m_currentSpeed * sin(theta) + m_currentStrafeSpeed * cos(theta)) * delta;
+		const float dx = -(m_currentSpeed * std::sin(theta) + m_currentStrafeSpeed * std::cos(theta)) * delta;
 		const float dy = m_currentUpwardSpeed * delta;
-		const float dz = -(m_currentSpeed * cos(theta) - m_currentStrafeSpeed * sin(theta)) * delta;
+		const float dz = -(m_currentSpeed * std::cos(theta) - m_currentStrafeSpeed * std::sin(theta)) * delta;
 
 		Vector3::Add(*m_position, *m_amountMove->Set(dx, dy, dz), m_position);
 		Vector3::Add(*m_rotation, *m_amountRotate->Set(0.0f, 0.0f, 0.0f), m_rotation);
