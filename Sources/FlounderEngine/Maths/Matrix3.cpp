@@ -263,6 +263,7 @@ namespace Flounder
 			destination->m_21 = t12 * determinantInv;
 			return destination;
 		}
+
 		return nullptr;
 	}
 
@@ -454,8 +455,8 @@ namespace Flounder
 	{
 		std::stringstream result;
 		result << "Matrix3(" << m_00 << ", " << m_01 << ", " << m_02 << ", " <<
-			   m_10 << ", " << m_11 << ", " << m_12 << ", " <<
-			   m_20 << ", " << m_21 << ", " << m_22 << ")";
+			m_10 << ", " << m_11 << ", " << m_12 << ", " <<
+			m_20 << ", " << m_21 << ", " << m_22 << ")";
 		return result.str();
 	}
 }

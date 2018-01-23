@@ -106,7 +106,7 @@ namespace Flounder
 		/// <returns> A new aabb, stretched by the specified amounts. </returns>
 		static Aabb *Stretch(const Aabb &source, const float &stretchX, const float &stretchY, const float &stretchZ, Aabb *destination);
 
-		ICollider *Update(const Vector3 &position, const Vector3 &rotation, const float &scale, ICollider *destination) override;
+		ICollider *Update(const Transform &transform, ICollider *destination) override;
 
 		Vector3 *ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination) override;
 

@@ -1,6 +1,6 @@
 #include "Vector4.hpp"
 
-#include <assert.h>
+#include <cassert>
 #include <sstream>
 #include "Colour.hpp"
 #include "Maths.hpp"
@@ -132,7 +132,7 @@ namespace Flounder
 			dls = 1.0f;
 		}
 
-		return acos(dls);
+		return std::acos(dls);
 	}
 
 	float Vector4::Dot(const Vector4 &left, const Vector4 &right)
@@ -174,7 +174,7 @@ namespace Flounder
 
 	float Vector4::Length(const Vector4 &source)
 	{
-		return sqrt(LengthSquared(source));
+		return std::sqrt(LengthSquared(source));
 	}
 
 	float Vector4::LengthSquared(const Vector4 &source)
@@ -223,9 +223,10 @@ namespace Flounder
 
 	float Vector4::GetDistance(const Vector4 &point1, const Vector4 &point2)
 	{
-		return sqrt(
-			pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2) + pow(point2.m_z - point1.m_z, 2) +
-				pow(point2.m_w - point1.m_w, 2));
+		return std::sqrt(std::pow(point2.m_x - point1.m_x, 2.0f) +
+			std::pow(point2.m_y - point1.m_y, 2.0f) +
+			std::pow(point2.m_z - point1.m_z, 2.0f) +
+			std::pow(point2.m_w - point1.m_w, 2.0f));
 	}
 
 	Vector4 *Vector4::GetVectorDistance(const Vector4 &point1, const Vector4 &point2, Vector4 *destination)
@@ -235,8 +236,9 @@ namespace Flounder
 			destination = new Vector4();
 		}
 
-		return destination->Set(pow(point2.m_x - point1.m_x, 2), pow(point2.m_y - point1.m_y, 2), pow(
-			point2.m_z - point1.m_z, 2), pow(point2.m_w - point1.m_w, 2));
+		return destination->Set(std::pow(point2.m_x - point1.m_x, 2.0f), std::pow(point2.m_y - point1.m_y, 2.0f),
+			std::pow(point2.m_z - point1.m_z, 2.0f),
+			std::pow(point2.m_w - point1.m_w, 2.0f));
 	}
 
 	Vector4 *Vector4::Translate(const float &x, const float &y, const float &z, const float &w)
@@ -265,11 +267,6 @@ namespace Flounder
 	Vector4 *Vector4::Scale(const float &scalar)
 	{
 		return Scale(*this, scalar, this);
-	}
-
-	bool Vector4::IsZero() const
-	{
-		return m_x == 0.0f && m_y == 0.0f && m_z == 0.0f && m_w == 0.0f;
 	}
 
 	float Vector4::Length() const
@@ -310,6 +307,16 @@ namespace Flounder
 	bool Vector4::operator>=(const Vector4 &other) const
 	{
 		return m_x >= other.m_x && m_y >= other.m_y && m_z >= other.m_z && m_w >= other.m_w;
+	}
+
+	bool Vector4::operator==(const float &value) const
+	{
+		return m_x == value && m_y == value && m_z == value && m_w == value;
+	}
+
+	bool Vector4::operator!=(const float &value) const
+	{
+		return !(*this == value);
 	}
 
 	Vector4 &Vector4::operator-()

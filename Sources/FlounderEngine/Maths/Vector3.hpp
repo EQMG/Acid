@@ -295,6 +295,15 @@ namespace Flounder
 		static float BaryCentric(const Vector3 &p1, const Vector3 &p2, const Vector3 &p3, const Vector3 &pos);
 
 		/// <summary>
+		/// Generates a random unit vector from within a cone.
+		/// </summary>
+		/// <param name="coneDirection"> The cones direction. </param>
+		/// <param name="angle"> The cones major angle. </param>
+		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
+		/// <returns> The destination vector. </returns>
+		static Vector3 *RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle, Vector3 *destination);
+
+		/// <summary>
 		/// Translates this vector.
 		/// </summary>
 		/// <param name="x"> The translation in x. </param>
@@ -323,12 +332,6 @@ namespace Flounder
 		Vector3 *Scale(const float &scalar);
 
 		/// <summary>
-		/// Gets if all the components to the vector are zero.
-		/// </summary>
-		/// <returns> If the vector is zero. </returns>
-		bool IsZero() const;
-
-		/// <summary>
 		/// Gets the length of the vector.
 		/// </summary>
 		/// <param name="source"> The source vector. </param>
@@ -353,6 +356,10 @@ namespace Flounder
 		bool operator>(const Vector3 &other) const;
 
 		bool operator>=(const Vector3 &other) const;
+
+		bool operator==(const float &value) const;
+
+		bool operator!=(const float &value) const;
 
 		Vector3 &operator-();
 

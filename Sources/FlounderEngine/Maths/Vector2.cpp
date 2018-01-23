@@ -1,6 +1,6 @@
 #include "Vector2.hpp"
 
-#include <assert.h>
+#include <cassert>
 #include <sstream>
 #include "Maths.hpp"
 #include "Vector3.hpp"
@@ -109,7 +109,7 @@ namespace Flounder
 			dls = 1.0f;
 		}
 
-		return acos(dls);
+		return std::acos(dls);
 	}
 
 	float Vector2::Dot(const Vector2 &left, const Vector2 &right)
@@ -135,8 +135,8 @@ namespace Flounder
 		}
 
 		const float theta = Maths::Radians(angle);
-		return destination->Set(
-			source.m_x * cos(theta) - source.m_y * sin(theta), source.m_x * sin(theta) + source.m_y * cos(theta));
+		return destination->Set(source.m_x * std::cos(theta) - source.m_y * std::sin(theta),
+			source.m_x * std::sin(theta) + source.m_y * std::cos(theta));
 	}
 
 	Vector2 *Vector2::Rotate(const Vector2 &source, const float &angle, const Vector2 &rotationAxis, Vector2 *destination)
@@ -147,10 +147,8 @@ namespace Flounder
 		}
 
 		const float theta = Maths::Radians(angle);
-		return destination->Set(((source.m_x - rotationAxis.m_x) * cos(theta)) -
-									((source.m_y - rotationAxis.m_y) * sin(theta) + rotationAxis.m_x),
-								((source.m_x - rotationAxis.m_x) * sin(theta)) +
-									((source.m_y - rotationAxis.m_y) * cos(theta) + rotationAxis.m_y));
+		return destination->Set(((source.m_x - rotationAxis.m_x) * std::cos(theta)) - ((source.m_y - rotationAxis.m_y) * std::sin(theta) + rotationAxis.m_x),
+			((source.m_x - rotationAxis.m_x) * std::sin(theta)) + ((source.m_y - rotationAxis.m_y) * std::cos(theta) + rotationAxis.m_y));
 	}
 
 	Vector2 *Vector2::Negate(const Vector2 &source, Vector2 *destination)
@@ -177,7 +175,7 @@ namespace Flounder
 
 	float Vector2::Length(const Vector2 &source)
 	{
-		return sqrt(LengthSquared(source));
+		return std::sqrt(LengthSquared(source));
 	}
 
 	float Vector2::LengthSquared(const Vector2 &source)
@@ -224,7 +222,7 @@ namespace Flounder
 
 	float Vector2::GetDistance(const Vector2 &point1, const Vector2 &point2)
 	{
-		return sqrt(pow(point2.m_x - point1.m_x, 2) + pow(point2.m_y - point1.m_y, 2));
+		return std::sqrt(std::pow(point2.m_x - point1.m_x, 2.0f) + std::pow(point2.m_y - point1.m_y, 2.0f));
 	}
 
 	Vector2 *Vector2::GetVectorDistance(const Vector2 &point1, const Vector2 &point2, Vector2 *destination)
@@ -234,14 +232,14 @@ namespace Flounder
 			destination = new Vector2();
 		}
 
-		return destination->Set(pow(point2.m_x - point1.m_x, 2), pow(point2.m_y - point1.m_y, 2));
+		return destination->Set(std::pow(point2.m_x - point1.m_x, 2.0f), std::pow(point2.m_y - point1.m_y, 2.0f));
 	}
 
 	bool Vector2::PointInTriangle(const Vector2 &point, const Vector2 &v1, const Vector2 &v2, const Vector2 &v3)
 	{
-		const bool b1 = (point.m_x - v2.m_x) * (v1.m_y - v2.m_y) - (v1.m_x - v2.m_x) * (point.m_y - v2.m_y);
-		const bool b2 = (point.m_x - v3.m_x) * (v2.m_y - v3.m_y) - (v2.m_x - v3.m_x) * (point.m_y - v3.m_y);
-		const bool b3 = (point.m_x - v1.m_x) * (v3.m_y - v1.m_y) - (v3.m_x - v1.m_x) * (point.m_y - v1.m_y);
+		const bool b1 = ((point.m_x - v2.m_x) * (v1.m_y - v2.m_y) - (v1.m_x - v2.m_x) * (point.m_y - v2.m_y)) < 0.0f;
+		const bool b2 = ((point.m_x - v3.m_x) * (v2.m_y - v3.m_y) - (v2.m_x - v3.m_x) * (point.m_y - v3.m_y)) < 0.0f;
+		const bool b3 = ((point.m_x - v1.m_x) * (v3.m_y - v1.m_y) - (v3.m_x - v1.m_x) * (point.m_y - v1.m_y)) < 0.0f;
 		return ((b1 == b2) & (b2 == b3));
 	}
 
@@ -265,11 +263,6 @@ namespace Flounder
 	Vector2 *Vector2::Scale(const float &scalar)
 	{
 		return Scale(*this, scalar, this);
-	}
-
-	bool Vector2::IsZero() const
-	{
-		return m_x == 0.0f && m_y == 0.0f;
 	}
 
 	float Vector2::Length() const
@@ -310,6 +303,16 @@ namespace Flounder
 	bool Vector2::operator>=(const Vector2 &other) const
 	{
 		return m_x >= other.m_x && m_y >= other.m_y;
+	}
+
+	bool Vector2::operator==(const float &value) const
+	{
+		return m_x == value && m_y == value;
+	}
+
+	bool Vector2::operator!=(const float &value) const
+	{
+		return !(*this == value);
 	}
 
 	Vector2 &Vector2::operator-()

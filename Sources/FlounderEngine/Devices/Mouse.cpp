@@ -124,8 +124,8 @@ namespace Flounder
 			if (!disabled && m_cursorDisabled)
 			{
 				glfwSetCursorPos(Display::Get()->GetWindow(),
-								 m_mousePositionX * Display::Get()->GetWidth(),
-								 m_mousePositionY * Display::Get()->GetHeight());
+					m_mousePositionX * Display::Get()->GetWidth(),
+					m_mousePositionY * Display::Get()->GetHeight());
 			}
 		}
 

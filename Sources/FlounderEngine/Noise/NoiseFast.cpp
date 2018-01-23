@@ -1,6 +1,6 @@
 ﻿#include "NoiseFast.hpp"
 
-#include <assert.h>
+#include <cassert>
 #include <random>
 #include "../Maths/Maths.hpp"
 
@@ -538,8 +538,8 @@ namespace Flounder
 	float NoiseFast::GetWhiteNoise(float x, float y) const
 	{
 		return ValueCoord2d(m_seed,
-							*reinterpret_cast<int *>(&x) ^ (*reinterpret_cast<int *>(&x) >> 16),
-							*reinterpret_cast<int *>(&y) ^ (*reinterpret_cast<int *>(&y) >> 16));
+			*reinterpret_cast<int *>(&x) ^ (*reinterpret_cast<int *>(&x) >> 16),
+			*reinterpret_cast<int *>(&y) ^ (*reinterpret_cast<int *>(&y) >> 16));
 	}
 
 	float NoiseFast::GetWhiteNoiseInt(int x, int y) const
@@ -758,9 +758,9 @@ namespace Flounder
 	float NoiseFast::GetWhiteNoise(float x, float y, float z) const
 	{
 		return ValueCoord3d(m_seed,
-							*reinterpret_cast<int *>(&x) ^ (*reinterpret_cast<int *>(&x) >> 16),
-							*reinterpret_cast<int *>(&y) ^ (*reinterpret_cast<int *>(&y) >> 16),
-							*reinterpret_cast<int *>(&z) ^ (*reinterpret_cast<int *>(&z) >> 16));
+			*reinterpret_cast<int *>(&x) ^ (*reinterpret_cast<int *>(&x) >> 16),
+			*reinterpret_cast<int *>(&y) ^ (*reinterpret_cast<int *>(&y) >> 16),
+			*reinterpret_cast<int *>(&z) ^ (*reinterpret_cast<int *>(&z) >> 16));
 	}
 
 	float NoiseFast::GetWhiteNoiseInt(int x, int y, int z) const
@@ -901,10 +901,10 @@ namespace Flounder
 	float NoiseFast::GetWhiteNoise(float x, float y, float z, float w) const
 	{
 		return ValueCoord4d(m_seed,
-							*reinterpret_cast<int *>(&x) ^ (*reinterpret_cast<int *>(&x) >> 16),
-							*reinterpret_cast<int *>(&y) ^ (*reinterpret_cast<int *>(&y) >> 16),
-							*reinterpret_cast<int *>(&z) ^ (*reinterpret_cast<int *>(&z) >> 16),
-							*reinterpret_cast<int *>(&w) ^ (*reinterpret_cast<int *>(&w) >> 16));
+			*reinterpret_cast<int *>(&x) ^ (*reinterpret_cast<int *>(&x) >> 16),
+			*reinterpret_cast<int *>(&y) ^ (*reinterpret_cast<int *>(&y) >> 16),
+			*reinterpret_cast<int *>(&z) ^ (*reinterpret_cast<int *>(&z) >> 16),
+			*reinterpret_cast<int *>(&w) ^ (*reinterpret_cast<int *>(&w) >> 16));
 	}
 
 	float NoiseFast::GetWhiteNoiseInt(int x, int y, int z, int w) const
