@@ -129,6 +129,28 @@ namespace Flounder
 
 	bool Frustum::CubeInFrustum(const Vector3 &min, const Vector3 &max) const
 	{
+		// TODO.
+
+		for (int i = 0; i < 6; i++)
+		{
+			if (m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
+				m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
+				m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
+				m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
+				m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
+				m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
+				m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
+				m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	bool Frustum::CubeFullyInFrustum(const Vector3 &min, const Vector3 &max) const
+	{
 		for (int i = 0; i < 6; i++)
 		{
 			if (m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
@@ -156,25 +178,5 @@ namespace Flounder
 		m_frustum[side][FrustumB] /= magnitude;
 		m_frustum[side][FrustumC] /= magnitude;
 		m_frustum[side][FrustumD] /= magnitude;
-	}
-
-	bool Frustum::CubeFullyInFrustum(const Vector3 &min, const Vector3 &max) const
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			if (m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f)
-			{
-				return false;
-			}
-		}
-
-		return true;
 	}
 }

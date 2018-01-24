@@ -36,9 +36,9 @@ before_build:
   - cmake --build .
   - cd ../
   - mkdir Release
-  - xcopy "Resources" "Release\Resources\" /s/h/e/k/f/c
-  - xcopy "Build\Release\bin\Release\" "Release\" /s/h/e/k/f/c
-  - xcopy "Build\Release\lib\Release\" "Release\" /s/h/e/k/f/c
+  - xcopy Resources\ Release\Resources\ /s/h/e/k/f/c
+  - xcopy Build\Release\bin\Release Release\ /s/h/e/k/f/c
+  - xcopy Build\Release\lib\Release Release\ /s/h/e/k/f/c
 
 artifacts:
   - path: Release\

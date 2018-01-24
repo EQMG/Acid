@@ -101,7 +101,7 @@ namespace Demo
 		Matrix4::ViewMatrix(*m_position, *m_rotation, m_viewMatrix);
 		Matrix4::PerspectiveMatrix(GetFov(), Display::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane(), m_projectionMatrix);
 
-		m_viewFrustum->Update(*m_projectionMatrix, *m_viewMatrix);
+		m_viewFrustum->Update(*m_viewMatrix, *m_projectionMatrix);
 		m_viewRay->Update(*m_position, Vector2(Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()), *m_viewMatrix, *m_projectionMatrix);
 	}
 
