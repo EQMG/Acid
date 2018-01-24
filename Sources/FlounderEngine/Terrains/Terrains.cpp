@@ -7,15 +7,15 @@ namespace Flounder
 	Terrains::Terrains() :
 		IModule(),
 		m_terrains(new std::vector<Terrain *>()),
-		m_noise1(NoiseFast(9878))
+		m_noise1(NoiseFast(95661))
 	{
 		m_noise1.SetNoiseType(NoiseFast::PerlinFractal);
-		m_noise1.SetFrequency(0.004f);
+		m_noise1.SetFrequency(0.0038f);
 		m_noise1.SetInterp(NoiseFast::Quintic);
 		m_noise1.SetFractalType(NoiseFast::Fbm);
 		m_noise1.SetFractalOctaves(5);
-		m_noise1.SetFractalLacunarity(2.1f);
-		m_noise1.SetFractalGain(0.6f);
+		m_noise1.SetFractalLacunarity(2.0f);
+		m_noise1.SetFractalGain(0.5f);
 	}
 
 	Terrains::~Terrains()
@@ -42,21 +42,21 @@ namespace Flounder
 
 	float Terrains::GetHeight(const float &x, const float &z)
 	{
-		const float height1 = (m_noise1.GetNoise(x, z) * 40.0f) + 7.0f;
+		const float height1 = (m_noise1.GetNoise(x, z) * 60.0f) + 8.0f;
 		return height1;
 	}
 
 	Vector3 Terrains::GetNormal(const float &x, const float &z)
 	{
-		const float squareSize = 1.5f;
+		const float squareSize = 0.5f;
 		const float heightL = GetHeight(x - squareSize, z);
 		const float heightR = GetHeight(x + squareSize, z);
 		const float heightD = GetHeight(x, z - squareSize);
 		const float heightU = GetHeight(x, z + squareSize);
 
 		Vector3 normal = Vector3(heightL - heightR, squareSize, heightD - heightU);
-		normal.Normalize();
 		// float slope = 1.0f - normal.m_y;
+		normal.Normalize();
 		return normal;
 	}
 
