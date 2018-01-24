@@ -88,7 +88,8 @@ namespace Demo
 
 		if (player != nullptr)
 		{
-			Vector3::Subtract(*player->GetPosition(), *m_targetPosition, m_velocity); // TODO: Improve!
+			Vector3::Subtract(*player->GetPosition(), *m_targetPosition, m_velocity);
+			*m_velocity /= delta;
 
 			m_targetPosition->Set(*player->GetPosition());
 			m_targetRotation->Set(*player->GetRotation());
