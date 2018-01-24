@@ -21,6 +21,7 @@ namespace Flounder
 
 		if (componentModel != nullptr)
 		{
+			delete m_collider; // TODO?
 			componentModel->GetModel()->GetAabb()->Update(*m_entity->GetTransform(), m_collider);
 		}
 		else
