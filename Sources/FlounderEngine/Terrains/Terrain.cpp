@@ -13,7 +13,9 @@ namespace Flounder
 	const std::vector<float> Terrain::SQUARE_SIZES = {
 		2.0f, 4.0f, 10.0f, 20.0f
 	}; // Models: (1.0 LOD, 2/5 LOD, 1/10 LOD, none)
-	const std::vector<float> Terrain::TEXTURE_SCALES = {10.0f, 5.0f, 2.0f, 1.0f};
+	const std::vector<float> Terrain::TEXTURE_SCALES = {
+		10.0f, 5.0f, 2.0f, 1.0f
+	};
 
 	Terrain::Terrain(const Transform &transform) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),

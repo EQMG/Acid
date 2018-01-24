@@ -26,16 +26,16 @@ namespace Flounder
 		static void DeleteFile(const std::string &filepath);
 
 		/// <summary>
-		/// Deletes contents from a file, but leaves it.
-		/// </summary>
-		/// <param name="filepath"> The filepath. </param>
-		static void ClearFile(const std::string &filepath);
-
-		/// <summary>
 		/// Creates a file.
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		static void CreateFile(const std::string &filepath);
+
+		/// <summary>
+		/// Clears the contents from a file.
+		/// </summary>
+		/// <param name="filepath"> The filepath. </param>
+		static void ClearFile(const std::string &filepath);
 
 		/// <summary>
 		/// Creates a directory.
@@ -71,8 +71,10 @@ namespace Flounder
 		/// <param name="data"> The binary data. </param>
 		static void WriteBinaryFile(const std::string &filepath, const std::vector<char> &data);
 
+		/// <summary>
+		/// Gets the current working directory.
+		/// </summary>
+		/// <returns> If the working directory. </returns>
 		static std::string GetWorkingDirectory();
-
-		static std::string GetHomeDirectory();
 	};
 }

@@ -39,19 +39,6 @@ namespace Flounder
 		remove(filepath.c_str());
 	}
 
-	void FileSystem::ClearFile(const std::string &filepath)
-	{
-		if (!FileExists(filepath))
-		{
-			return;
-		}
-
-		// TODO: Convert ofsteam to C function.
-		std::ofstream ofs;
-		ofs.open(filepath, std::ofstream::out | std::ofstream::trunc);
-		ofs.close();
-	}
-
 	void FileSystem::CreateFile(const std::string &filepath)
 	{
 		if (FileExists(filepath))
@@ -67,6 +54,12 @@ namespace Flounder
 		}
 
 		fclose(file);
+	}
+
+	void FileSystem::ClearFile(const std::string &filepath)
+	{
+		DeleteFile(filepath);
+		CreateFile(filepath);
 	}
 
 	void FileSystem::CreateFolder(const std::string &path)
@@ -165,11 +158,5 @@ namespace Flounder
 		std::string currentWorkingDirectory = std::string(buff);
 		std::replace(currentWorkingDirectory.begin(), currentWorkingDirectory.end(), '\\', '/');
 		return currentWorkingDirectory;
-	}
-
-	std::string FileSystem::GetHomeDirectory()
-	{
-		// TODO: Make this work!
-		return "";
 	}
 }
