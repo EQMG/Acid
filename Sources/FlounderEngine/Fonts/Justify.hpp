@@ -10,6 +10,6 @@ namespace Flounder
 		JustifyLeft,
 		JustifyCentre,
 		JustifyRight,
-		JustifyFully // TODO: Fully, FullyLeft FullyCentre, FullyLeft 
+		JustifyFully
 	};
 }
