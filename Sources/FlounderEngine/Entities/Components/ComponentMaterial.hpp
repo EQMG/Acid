@@ -11,8 +11,10 @@ namespace Flounder
 		float m_metallic;
 		float m_roughness;
 		bool m_castsShadows;
+		bool m_ignoreLighting;
+		bool m_ignoreFog;
 	public:
-		ComponentMaterial(const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true);
+		ComponentMaterial(const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false);
 
 		~ComponentMaterial();
 
