@@ -124,6 +124,8 @@ void main()
 	float depth = textureDepth.r;
 	float metallic = textureMaterial.r;
 	float roughness = textureMaterial.g;
+	bool ignoreFog = textureMaterial.b == (1.0f / 3.0f) || textureMaterial.b == (3.0f / 3.0f);
+	bool ignoreLighting = textureMaterial.b == (2.0f / 3.0f) || textureMaterial.b == (3.0f / 3.0f);
 	vec3 worldPosition = decodeWorldPosition(fragmentUv, depth);
 	vec4 screenPosition = scene.view * vec4(worldPosition, 1.0f);
 	vec3 viewDirection = normalize(scene.cameraPosition - worldPosition);
@@ -131,7 +133,7 @@ void main()
 	outColour = vec4(colour, 1.0f);
 
 	// Shadows.
-    /*if (scene.shadowDarkness >= 0.07)
+    /*if (!ignoreLighting && scene.shadowDarkness >= 0.07)
     {
         vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
         float distanceAway = length(screenPosition.xyz);
@@ -142,7 +144,7 @@ void main()
     }*/
 
 	// Lighting.
-	if (textureNormal.rgb != vec3(0.0f))
+	if (!ignoreLighting && textureNormal.rgb != vec3(0.0f))
 	{
 		vec3 irradiance = vec3(0.0f);
 
@@ -188,7 +190,7 @@ void main()
 	}
 
 	// Fog.
-	if (textureNormal.rgb != vec3(0.0f))
+	if (!ignoreFog && textureNormal.rgb != vec3(0.0f))
 	{
 		float fogFactor = exp(-pow(length(screenPosition.xyz) * scene.fogDensity, scene.fogGradient));
 		fogFactor = clamp(fogFactor, 0.0, 1.0);
