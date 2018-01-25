@@ -16,6 +16,7 @@ layout(set = 0, binding = 1) uniform UboObject
 
 	float metallic;
 	float roughness;
+	float ignore;
 
 	vec2 swayOffset;
 } object;

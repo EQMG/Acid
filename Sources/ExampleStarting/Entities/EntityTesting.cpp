@@ -13,7 +13,7 @@ EntityTesting::EntityTesting(ISpatialStructure<Entity *> *structure, const Trans
 		Sphere::Resource(20, 20, 1.0f), // Cube::Resource("1.0, 1.0, 1.0")
 		Texture::Resource("Resources/Guis/Undefined.png")
 	));
-	AddComponent(new ComponentMaterial(0.08f, 0.3f));
+	AddComponent(new ComponentMaterial(0.002f, 0.3f));
 	AddComponent(new ComponentLight(Light(Colour(0.2f, 0.1f, 0.8f), 1.333f), Vector3(0.0f, 3.0f, 0.0f)));
 	AddComponent(new ComponentCollider());
 }

@@ -11,6 +11,7 @@ layout(set = 0, binding = 1) uniform UboObject
 
 	float metallic;
 	float roughness;
+	float ignore;
 
 	vec2 swayOffset;
 } object;
@@ -45,5 +46,5 @@ void main()
 
 	outColour = encodeColour(textureColour);
 	outNormal = encodeNormal(unitNormal);
-	outMaterial = vec3(object.metallic, object.roughness, 0.0f);
+	outMaterial = vec3(object.metallic, object.roughness, object.ignore);
 }
