@@ -24,6 +24,7 @@ namespace Flounder
 
 			float metallic;
 			float roughness;
+			float ignore;
 
 			Vector2 swayOffset;
 		};
