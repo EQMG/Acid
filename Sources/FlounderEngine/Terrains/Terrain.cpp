@@ -108,7 +108,7 @@ namespace Flounder
 
 	int Terrain::CalculateVertexCount(const int &terrainLength, const float &squareSize)
 	{
-		return static_cast<int>((2.0 * terrainLength) / static_cast<float>(squareSize)) + 1;
+		return static_cast<int>((2.0 * terrainLength) / static_cast<float>(squareSize)) + 2;
 	}
 
 	void Terrain::CreateLod(const int &lod)
