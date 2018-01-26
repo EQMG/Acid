@@ -14,6 +14,7 @@ namespace Demo
 
 	ConfigManager::~ConfigManager()
 	{
+		m_configGraphics->Set("FpsLimit", Display::Get()->GetFpsLimit());
 		m_configGraphics->Set("Antialiasing", Display::Get()->IsAntialiasing());
 		m_configGraphics->Set("Fullscreen", Display::Get()->IsFullscreen());
 		m_configGraphics->Save();
