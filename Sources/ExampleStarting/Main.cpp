@@ -16,18 +16,17 @@
 
 using namespace Demo;
 
-//#if (FLOUNDER_CONFIG_RELEASE && FLOUNDER_PLATFORM_WINDOWS)
-//int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
-//#else
+#if (FLOUNDER_CONFIG_RELEASE && FLOUNDER_PLATFORM_WINDOWS)
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
+#else
 int main(int argc, char **argv)
-//#endif
+#endif
 {
 	// Creates the engine object.
 	Engine *m_engine = new Engine();
 	m_engine->SetUpdater(new PlatformUpdater());
 
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
-	// printf("Home Directory: %s\n", FileSystem::GetHomeDirectory().c_str());
 	ConfigManager *configManager = new ConfigManager();
 
 	// Initializes the engine modules.
@@ -36,7 +35,7 @@ int main(int argc, char **argv)
 		Display::Get()->SetWindowSize(1080, 720);
 		Display::Get()->SetTitle("Example Starting");
 		Display::Get()->SetIcon("Resources/Logos/Tail.png");
-		Display::Get()->SetFpsLimit(0.0f);
+		Display::Get()->SetFpsLimit(configManager->GetGraphics()->Get("FpsLimit", 0.0f));
 		Display::Get()->SetAntialiasing(configManager->GetGraphics()->Get("Antialiasing", true));
 		Display::Get()->SetFullscreen(configManager->GetGraphics()->Get("Fullscreen", false));
 	}
@@ -91,8 +90,6 @@ int main(int argc, char **argv)
 				));
 			}
 		}
-
-		//Terrains::Get()->GetTerrains()->push_back(new Terrain(Vector3(), Vector3()));
 	}
 
 	if (Waters::Get() != nullptr)

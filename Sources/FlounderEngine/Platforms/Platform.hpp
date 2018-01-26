@@ -1,15 +1,18 @@
 #pragma once
 
 #define STB_IMAGE_IMPLEMENTATION
-
 #include <STB/stb_image.h>
 
 #define GLFW_INCLUDE_VULKAN
-
 #include <GLFW/glfw3.h>
 
+#ifdef FLOUNDER_PLATFORM_MACOS
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
 #include <AL/al.h>
 #include <AL/alc.h>
+#endif
 
 namespace Flounder
 {
