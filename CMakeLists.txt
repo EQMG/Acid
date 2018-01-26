@@ -70,7 +70,7 @@ if(APPLE)
 else()
 	set(OPENAL_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/openal/include")
 endif()
-find_library(OPENAL_LIBRARY NAMES OpenAL OpenAL32 PATHS "${PROJECT_SOURCE_DIR}/	Libraries/openal/lib/")
+	find_library(OPENAL_LIBRARY NAMES OpenAL32 OpenAL PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
 message(STATUS "OpenAL: ${OPENAL_LIBRARY}")
 
 set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
