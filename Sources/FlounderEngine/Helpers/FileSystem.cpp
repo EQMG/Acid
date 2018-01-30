@@ -100,6 +100,7 @@ namespace Flounder
 
 	std::vector<char> FileSystem::ReadBinaryFile(const std::string &filepath)
 	{
+		// TODO: Move from ifsteam to normal C binary file loading.
 		/*FILE *file = fopen(filepath.c_str(), "rb");
 
 		assert(file != nullptr && "Could not find file!");
@@ -114,7 +115,6 @@ namespace Flounder
 
 		return data;*/
 
-		// TODO: Move from ifsteam to normal C binary file loading.
 		std::ifstream ifs = std::ifstream(filepath, std::ios::ate | std::ios::binary);
 
 		assert(ifs.is_open() && "Could not find file!");
