@@ -18,6 +18,7 @@ elseif(UNIX AND NOT APPLE)
 	add_definitions(-DFLOUNDER_PLATFORM_LINUX)
 elseif(UNIX AND APPLE)
 	add_definitions(-DFLOUNDER_PLATFORM_MACOS)
+	add_definitions(-DVK_USE_PLATFORM_MACOS_MVK)
 endif()
 
 # Compiler-options
@@ -53,6 +54,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYP
 #ADD_CUSTOM_TARGET(link_target ALL COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/" "${PROJECT_SOURCE_DIR}/Resources/")
 
 # Libraries
+if(APPLE)
+    FIND_PATH(VULKAN_INCLUDES mvk_vulkan.h)
+else()
+	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
+endif()
+find_library(VULKAN_LIBRARY NAMES vulkan-1 vulkan moltenvk PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
+message(STATUS "Vulkan: ${VULKAN_LIBRARY}")
+
 set(GLFW_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glfw/include")
 set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
 set(GLFW_BUILD_TESTS OFF CACHE INTERNAL "Build the GLFW test programs")
@@ -60,10 +69,6 @@ set(GLFW_BUILD_DOCS OFF CACHE INTERNAL "Build the GLFW documentation")
 set(GLFW_INSTALL OFF CACHE INTERNAL "Generate installation target")
 add_subdirectory(Libraries/glfw)
 set(GLFW_LIBRARY "glfw")
-
-set(STB_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/stb/include")
-add_subdirectory(Libraries/stb)
-set(STB_LIBRARY "stb")
 
 if(APPLE)
 	FIND_PATH(OPENAL_INCLUDES al.h)
@@ -73,14 +78,9 @@ endif()
 find_library(OPENAL_LIBRARY NAMES OpenAL32 OpenAL PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
 message(STATUS "OpenAL: ${OPENAL_LIBRARY}")
 
-if(APPLE)
-	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/include")
-	find_library(VULKAN_LIBRARY NAMES moltenvk PATHS "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/lib/")
-else()
-	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
-	find_library(VULKAN_LIBRARY NAMES vulkan-1 vulkan PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
-endif()
-message(STATUS "Vulkan: ${VULKAN_LIBRARY}")
+set(STB_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/stb/include")
+add_subdirectory(Libraries/stb)
+set(STB_LIBRARY "stb")
 
 set(LIBRARIES_INCLUDES ${STB_INCLUDES} ${GLFW_INCLUDES} ${OPENAL_INCLUDES} ${VULKAN_INCLUDES})
 set(LIBRARIES_LINKS "${STB_LIBRARY}" "${GLFW_LIBRARY}" "${OPENAL_LIBRARY}" "${VULKAN_LIBRARY}")

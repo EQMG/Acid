@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <stdlib.h>
 #include "../Devices/Display.hpp"
 #include "../Engine/IUpdater.hpp"
 #include "../Maths/Delta.hpp"
