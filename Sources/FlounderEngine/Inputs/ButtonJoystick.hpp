@@ -12,7 +12,7 @@ namespace Flounder
 		public IButton
 	{
 	private:
-		int m_joystick;
+		unsigned int m_joystick;
 		std::vector<int> m_buttons;
 		bool m_wasDown;
 	public:
@@ -21,7 +21,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="joystick"> The joystick. Should be one of the GLFW.JOYSTICK values. </param>
 		/// <param name="buttons"> The buttons on the joystick being checked. </param>
-		ButtonJoystick(const int &joystick, const std::vector<int> &buttons);
+		ButtonJoystick(const unsigned int &joystick, const std::vector<int> &buttons);
 
 		/// <summary>
 		/// Deconstructor for the button joystick.

@@ -14,12 +14,7 @@ namespace Flounder
 		m_rightWasClick(false),
 		m_mouseLeft(new ButtonMouse({GLFW_MOUSE_BUTTON_LEFT})),
 		m_mouseRight(new ButtonMouse({GLFW_MOUSE_BUTTON_RIGHT})),
-		m_joysticksInitialized(false),
-		m_selectedJoystick(0),
-		m_joystickAxisX(nullptr),
-		m_joystickAxisY(nullptr),
-		m_joystickLeft(nullptr),
-		m_joystickRight(nullptr)
+		m_selectorJoystick(nullptr)
 	{
 	}
 
@@ -28,24 +23,24 @@ namespace Flounder
 		delete m_mouseLeft;
 		delete m_mouseRight;
 
-		delete m_joystickAxisX;
-		delete m_joystickAxisY;
-		delete m_joystickLeft;
-		delete m_joystickRight;
+		delete m_selectorJoystick;
 	}
 
-	void UiSelector::Load(const int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
+	void UiSelector::Load(const unsigned int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
 	{
-		m_selectedJoystick = joystick;
-		m_joystickAxisX = new AxisJoystick(joystick, {joystickAxisX});
-		m_joystickAxisY = new AxisJoystick(joystick, {joystickAxisY});
-		m_joystickLeft = new ButtonJoystick(joystick, {joystickLeftClick});
-		m_joystickRight = new ButtonJoystick(joystick, {joystickRightClick});
-		m_joysticksInitialized = true;
+		m_selectorJoystick = new SelectorJoystick{
+			joystick,
+			new ButtonJoystick(joystick, {joystickLeftClick}),
+			new ButtonJoystick(joystick, {joystickRightClick}),
+			new AxisJoystick(joystick, {joystickAxisX}),
+			new AxisJoystick(joystick, {joystickAxisY})
+		};
 	}
 
 	void UiSelector::Update(const bool &paused)
 	{
+		float delta = Engine::Get()->GetDelta();
+
 		m_leftClick = m_mouseLeft->IsDown();
 		m_rightClick = m_mouseRight->IsDown();
 		m_leftWasClick = m_mouseLeft->WasDown();
@@ -54,23 +49,22 @@ namespace Flounder
 		m_cursorX = Mouse::Get()->GetPositionX();
 		m_cursorY = Mouse::Get()->GetPositionY();
 
-		if (m_joysticksInitialized && Joysticks::Get()->IsConnected(m_selectedJoystick) && paused)
+		if (m_selectorJoystick != nullptr && Joysticks::Get()->IsConnected(m_selectorJoystick->joystick) && paused)
 		{
-			if (fabs(Maths::Deadband(0.1f, m_joystickAxisX->GetAmount())) > 0.0 ||
-				fabs(Maths::Deadband(0.1f, m_joystickAxisY->GetAmount())) > 0.0)
+			if (std::fabs(Maths::Deadband(0.1f, m_selectorJoystick->axisX->GetAmount())) > 0.0f ||
+				std::fabs(Maths::Deadband(0.1f, m_selectorJoystick->axisY->GetAmount())) > 0.0f)
 			{
-				m_cursorX += m_joystickAxisX->GetAmount() * 0.75f * Engine::Get()->GetDelta();
-				m_cursorY += -m_joystickAxisY->GetAmount() * 0.75f * Engine::Get()->GetDelta();
+				m_cursorX += m_selectorJoystick->axisX->GetAmount() * 0.75f * delta;
+				m_cursorY += m_selectorJoystick->axisY->GetAmount() * 0.75f * delta;
 				m_cursorX = Maths::Clamp(m_cursorX, 0.0f, 1.0f);
 				m_cursorY = Maths::Clamp(m_cursorY, 0.0f, 1.0f);
-				Mouse::Get()->SetPosition(
-					m_cursorX * Display::Get()->GetWidth(), m_cursorY * Display::Get()->GetHeight());
+				Mouse::Get()->SetPosition(m_cursorX, m_cursorY);
 			}
 
-			m_leftClick = m_leftClick || m_joystickLeft->IsDown();
-			m_rightClick = m_rightClick || m_joystickRight->IsDown();
-			m_leftWasClick = m_leftWasClick || m_joystickLeft->WasDown();
-			m_rightWasClick = m_rightWasClick || m_joystickRight->WasDown();
+			m_leftClick = m_leftClick || m_selectorJoystick->clickLeft->IsDown();
+			m_rightClick = m_rightClick || m_selectorJoystick->clickRight->IsDown();
+			m_leftWasClick = m_leftWasClick || m_selectorJoystick->clickLeft->WasDown();
+			m_rightWasClick = m_rightWasClick || m_selectorJoystick->clickRight->WasDown();
 		}
 	}
 
@@ -84,7 +78,7 @@ namespace Flounder
 		if (Mouse::Get()->IsDisplaySelected() && Display::Get()->IsFocused())
 		{
 			if (m_cursorX >= positionX && m_cursorX <= positionX + width
-				&& m_cursorY >= positionY - height && m_cursorY <= positionY)
+				&& 1.0f - m_cursorY >= positionY - height && 1.0f - m_cursorY <= positionY)
 			{
 				return true;
 			}

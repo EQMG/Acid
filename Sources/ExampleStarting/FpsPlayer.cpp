@@ -32,14 +32,14 @@ namespace Demo
 				new ButtonKeyboard({GLFW_KEY_S, GLFW_KEY_DOWN}),
 				new ButtonKeyboard({GLFW_KEY_W, GLFW_KEY_UP})
 			),
-			new AxisJoystick(0, {1})
+			new AxisJoystick(0, {1}, true)
 		})),
 		m_inputStrafe(new AxisCompound({
 			new AxisButton(
 				new ButtonKeyboard({GLFW_KEY_D, GLFW_KEY_RIGHT}),
 				new ButtonKeyboard({GLFW_KEY_A, GLFW_KEY_LEFT})
 			),
-			new AxisJoystick(0, {0})
+			new AxisJoystick(0, {0}, true)
 		})),
 		m_inputSprint(new ButtonCompound({
 			new ButtonKeyboard({GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT}),
