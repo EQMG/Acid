@@ -40,9 +40,8 @@ namespace Demo
 		m_targetRotationAngle(m_angleAroundPlayer),
 		m_sensitivity(0.9f),
 		m_reangleButton(GLFW_MOUSE_BUTTON_LEFT),
-		m_joystickVertical(new AxisJoystick(0, {3})),
+		m_joystickVertical(new AxisJoystick(0, {3}, true)),
 		m_joystickHorizontal(new AxisJoystick(0, {2})),
-		m_joystickZoom(new ButtonJoystick(0, {9})),
 		m_paused(false)
 	{
 	}
@@ -64,7 +63,6 @@ namespace Demo
 
 		delete m_joystickVertical;
 		delete m_joystickHorizontal;
-		delete m_joystickZoom;
 	}
 
 	void FpsCamera::Update(IPlayer *player)
@@ -112,16 +110,13 @@ namespace Demo
 
 		if (!m_paused)
 		{
-			if (Maths::Deadband(0.05f, m_joystickHorizontal->GetAmount()) != 0.0f && !m_joystickZoom->IsDown())
+			if (Maths::Deadband(0.05f, m_joystickHorizontal->GetAmount()) != 0.0f)
 			{
 				angleChange = m_joystickHorizontal->GetAmount() * INFLUENCE_OF_JOYSTICK_DX * m_sensitivity;
 			}
-			else
+			else if (Mouse::Get()->IsCursorDisabled() || Mouse::Get()->GetButton(m_reangleButton))
 			{
-				if (Mouse::Get()->IsCursorDisabled() || Mouse::Get()->GetButton(m_reangleButton))
-				{
-					angleChange = -Mouse::Get()->GetDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
-				}
+				angleChange = -Mouse::Get()->GetDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
 			}
 		}
 
@@ -152,16 +147,13 @@ namespace Demo
 
 		if (!m_paused)
 		{
-			if (Maths::Deadband(0.05f, m_joystickVertical->GetAmount()) != 0.0f && !m_joystickZoom->IsDown())
+			if (Maths::Deadband(0.05f, m_joystickVertical->GetAmount()) != 0.0f)
 			{
 				angleChange = m_joystickVertical->GetAmount() * INFLUENCE_OF_JOYSTICK_DY * m_sensitivity;
 			}
-			else
+			else if (Mouse::Get()->IsCursorDisabled() || Mouse::Get()->GetButton(m_reangleButton))
 			{
-				if (Mouse::Get()->IsCursorDisabled() || Mouse::Get()->GetButton(m_reangleButton))
-				{
-					angleChange = -Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
-				}
+				angleChange = Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
 			}
 		}
 

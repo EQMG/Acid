@@ -134,7 +134,7 @@ namespace Flounder
 		m_modelLods[lod] = new MeshTerrain(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, m_transform->m_position);
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
-		printf("Terrain LOD %i took %fms to build!\n", lod, debugEnd - debugStart);
+		printf("Terrain LOD %i took %fms to build\n", lod, debugEnd - debugStart);
 #endif
 	}
 

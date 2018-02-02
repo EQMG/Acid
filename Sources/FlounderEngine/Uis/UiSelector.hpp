@@ -7,6 +7,16 @@
 
 namespace Flounder
 {
+	struct SelectorJoystick
+	{
+	public:
+		unsigned int joystick;
+		ButtonJoystick *clickLeft;
+		ButtonJoystick *clickRight;
+		AxisJoystick *axisX;
+		AxisJoystick *axisY;
+	};
+
 	/// <summary>
 	/// Represents a virtual cursor that will be used to determine if a ui action was preformed by a device.
 	/// </summary>
@@ -24,12 +34,7 @@ namespace Flounder
 		ButtonMouse *m_mouseLeft;
 		ButtonMouse *m_mouseRight;
 
-		bool m_joysticksInitialized;
-		int m_selectedJoystick;
-		AxisJoystick *m_joystickAxisX;
-		AxisJoystick *m_joystickAxisY;
-		ButtonJoystick *m_joystickLeft;
-		ButtonJoystick *m_joystickRight;
+		SelectorJoystick *m_selectorJoystick;
 	public:
 		UiSelector();
 
@@ -43,7 +48,7 @@ namespace Flounder
 		/// <param name="joystickRightClick"> The joystick key to be used as the right click. </param>
 		/// <param name="joystickAxisX"> The joystick axis to be used for moving the x axis. </param>
 		/// <param name="joystickAxisY"> The joystick axis to be used for moving the y axis. </param>
-		void Load(const int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY);
+		void Load(const unsigned int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY);
 
 		void Update(const bool &paused);
 

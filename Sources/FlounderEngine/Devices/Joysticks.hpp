@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// A definition for a connected joystick.
 	/// </summary>
-	class Joystick
+	struct Joystick
 	{
 	public:
 		bool connected;
@@ -27,7 +27,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		std::vector<Joystick> m_connected;
+		std::vector<Joystick *> m_connected;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -55,14 +55,14 @@ namespace Flounder
 		/// </summary>
 		/// <param name="id"> The joystick to check connection with. </param>
 		/// <returns> If the joystick is connected. </returns>
-		bool IsConnected(const unsigned int &id) const { return m_connected.at(id).connected; }
+		bool IsConnected(const unsigned int &id) const { return m_connected.at(id)->connected; }
 
 		/// <summary>
 		/// Gets the name of the joystick.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The joysticks name. </returns>
-		const char *GetName(const unsigned int &id) const { return m_connected.at(id).name; }
+		const char *GetName(const unsigned int &id) const { return m_connected.at(id)->name; }
 
 		/// <summary>
 		/// Gets the value of a joysticks axis.
@@ -70,7 +70,7 @@ namespace Flounder
 		/// <param name="id"> The joystick of interest. </param>
 		/// <param name="axis"> The axis of interest. </param>
 		/// <returns> The value of the joystick's axis. </returns>
-		float GetAxis(const int &id, const int &axis) const;
+		float GetAxis(const unsigned int &id, const int &axis) const;
 
 		/// <summary>
 		/// Gets the whether a button on a joystick is pressed.
@@ -78,20 +78,20 @@ namespace Flounder
 		/// <param name="id"> The joystick of interest. </param>
 		/// <param name="button"> The button of interest. </param>
 		/// <returns> Whether a button on a joystick is pressed. </returns>
-		bool GetButton(const int &id, const int &button) const;
+		bool GetButton(const unsigned int &id, const int &button) const;
 
 		/// <summary>
 		/// Gets the number of axes the joystick offers.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		int GetCountAxes(const unsigned int &id) const { return m_connected.at(id).axeCount; }
+		int GetCountAxes(const unsigned int &id) const { return m_connected.at(id)->axeCount; }
 
 		/// <summary>
 		/// Gets the number of buttons the joystick offers.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		int GetCountButtons(const unsigned int &id) const { return m_connected.at(id).buttonCount; }
+		int GetCountButtons(const unsigned int &id) const { return m_connected.at(id)->buttonCount; }
 	};
 }

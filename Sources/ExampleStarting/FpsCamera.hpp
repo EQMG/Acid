@@ -53,7 +53,6 @@ namespace Demo
 		int m_reangleButton;
 		AxisJoystick *m_joystickVertical;
 		AxisJoystick *m_joystickHorizontal;
-		ButtonJoystick *m_joystickZoom;
 
 		bool m_paused;
 	public:
