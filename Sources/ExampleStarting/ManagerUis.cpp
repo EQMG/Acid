@@ -1,5 +1,6 @@
 ﻿#include "ManagerUis.hpp"
 
+#include <Inputs/ButtonCompound.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Visual/DriverConstant.hpp>
 #include <Visual/DriverSlide.hpp>
@@ -11,7 +12,10 @@ namespace Demo
 	ManagerUis::ManagerUis() :
 		IManagerUis(),
 		m_primaryColour(new Colour("#e74c3c")),
-		m_buttonPause(new ButtonKeyboard({GLFW_KEY_ESCAPE})),
+		m_buttonPause((new ButtonCompound({
+			new ButtonKeyboard({GLFW_KEY_ESCAPE}),
+			new ButtonJoystick(0, {7})
+		}))),
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer())),
 		m_uiNavigation(new UiNavigation(Uis::Get()->GetContainer()))
