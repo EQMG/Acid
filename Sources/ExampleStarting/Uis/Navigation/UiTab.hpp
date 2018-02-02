@@ -12,16 +12,19 @@ namespace Demo
 		public UiObject
 	{
 	private:
+		UiObject *m_content;
 		std::string m_name;
 		Colour m_colour;
 		Text *m_text;
 		float m_width;
 	public:
-		UiTab(UiObject *parent, const UiBound &rectangle, const std::string &name, const Colour &colour);
+		UiTab(UiObject *parent, UiObject *content, const UiBound &rectangle, const std::string &name, const Colour &colour);
 
 		~UiTab();
 
 		void UpdateObject() override;
+
+		UiObject *GetContent() const { return m_content; }
 
 		std::string GetName() const { return m_name; }
 

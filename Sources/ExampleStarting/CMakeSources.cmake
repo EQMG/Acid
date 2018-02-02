@@ -11,6 +11,7 @@ set(EXAMPLE_STARTING_HEADERS_
         "Uis/OverlayDebug.hpp"
         "Uis/UiInventory.hpp"
         "Uis/Navigation/UiNavigation.hpp"
+        "Uis/Navigation/ContentExit.hpp"
         "Uis/Navigation/UiTab.hpp"
         )
 
@@ -28,6 +29,7 @@ set(EXAMPLE_STARTING_SOURCES_
         "Uis/OverlayDebug.cpp"
         "Uis/UiInventory.cpp"
         "Uis/Navigation/UiNavigation.cpp"
+        "Uis/Navigation/ContentExit.cpp"
         "Uis/Navigation/UiTab.cpp"
         )
 

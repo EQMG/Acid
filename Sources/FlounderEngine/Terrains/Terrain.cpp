@@ -108,7 +108,7 @@ namespace Flounder
 
 	int Terrain::CalculateVertexCount(const int &terrainLength, const float &squareSize)
 	{
-		return static_cast<int>((2.0 * terrainLength) / static_cast<float>(squareSize)) + 2;
+		return static_cast<int>((2.0 * terrainLength) / static_cast<float>(squareSize)) + 3;
 	}
 
 	void Terrain::CreateLod(const int &lod)
@@ -118,24 +118,24 @@ namespace Flounder
 			return;
 		}
 
-		/*Model *resourced = Model::Resource(ToFilename(m_transform->m_position->m_x, m_transform->m_position->m_z, lod));
-		if (resourced != nullptr)
-		{
-			m_modelLods[lod] = resourced;
-			return;
-		}*/
+	//	Model *resourced = Model::Resource(ToFilename(m_transform->m_position->m_x, m_transform->m_position->m_z, lod));
+	//	if (resourced != nullptr)
+	//	{
+	//		m_modelLods[lod] = resourced;
+	//		return;
+	//	}
 
-//#if FLOUNDER_VERBOSE
-//		const auto debugStart = Engine::Get()->GetTimeMs();
-//#endif
+#if FLOUNDER_VERBOSE
+		const auto debugStart = Engine::Get()->GetTimeMs();
+#endif
 		const float squareSize = SQUARE_SIZES[lod];
 		const float textureScale = TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(SIDE_LENGTH, squareSize);
 		m_modelLods[lod] = new MeshTerrain(static_cast<float>(SIDE_LENGTH), squareSize, vertexCount, textureScale, m_transform->m_position);
-//#if FLOUNDER_VERBOSE
-//		const auto debugEnd = Engine::Get()->GetTimeMs();
-//		printf("Terrain LOD %i took %fms to build!\n", lod, debugEnd - debugStart);
-//#endif
+#if FLOUNDER_VERBOSE
+		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Terrain LOD %i took %fms to build!\n", lod, debugEnd - debugStart);
+#endif
 	}
 
 	std::string Terrain::ToFilename(const float &x, const float &z, const int &lod)
