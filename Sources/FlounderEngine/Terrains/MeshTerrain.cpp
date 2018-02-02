@@ -7,9 +7,9 @@
 namespace Flounder
 {
 	const std::array<Colour, 4> BIOME_COLOURS = {
-		Colour("#ffcc00"), Colour("#009933"), Colour("#33cc33"), Colour("#ffffff")
+		Colour("#ffcc00"), Colour("#E17B35"), Colour("#C35D35"), Colour("#683130")
 	};
-	const float SPREAD = 0.7f;
+	const float SPREAD = 0.76f;
 	const float HALF_SPREAD = SPREAD / 2.0f;
 	const float AMPLITUDE = 20.0f;
 	const float PART = 1.0f / (BIOME_COLOURS.size() - 1);

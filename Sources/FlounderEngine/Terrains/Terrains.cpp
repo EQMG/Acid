@@ -50,7 +50,7 @@ namespace Flounder
 
 	Vector3 Terrains::GetNormal(const float &x, const float &z)
 	{
-		const float squareSize = 0.1f;
+		const float squareSize = 0.01f;
 		const float heightL = GetHeight(x - squareSize, z);
 		const float heightR = GetHeight(x + squareSize, z);
 		const float heightD = GetHeight(x, z - squareSize);
