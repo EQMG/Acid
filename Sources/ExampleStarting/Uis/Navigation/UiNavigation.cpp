@@ -1,6 +1,9 @@
 #include "UiNavigation.hpp"
 
 #include <Visual/DriverSlide.hpp>
+#include <Events/Events.hpp>
+#include <Events/EventTime.hpp>
+#include "ContentExit.hpp"
 
 namespace Demo
 {
@@ -42,7 +45,7 @@ namespace Demo
 		for (auto tabType : TABS)
 		{
 			UiBound rectangle = UiBound(Vector2(tabXOffset, 0.955f), "TopLeft", false);
-			UiTab *uiTab = new UiTab(this, rectangle, tabType.first, tabType.second);
+			UiTab *uiTab = new UiTab(this, new ContentExit(this), rectangle, tabType.first, tabType.second);
 			tabXOffset += 0.03f + uiTab->GetWidth();
 			m_tabs.push_back(uiTab);
 
@@ -110,9 +113,23 @@ namespace Demo
 		{
 			if (tab->GetName() == tabName)
 			{
+				if (m_currentTab != nullptr && m_currentTab->GetName() == tabName)
+				{
+					continue;
+				}
+
 				delete m_driverTarget;
-				m_driverTarget = new DriverSlide(0.0f, 1.0f, 0.6f);
+				m_driverTarget = new DriverSlide(0.0f, 1.0f, 0.7f);
 				m_targetTab = tab;
+
+				if (m_currentTab != nullptr)
+				{
+					m_currentTab->GetContent()->SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 0.3f));
+				}
+
+				Events::Get()->AddEvent(new EventTime(0.4f, false, [&](){
+					m_targetTab->GetContent()->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, 0.3f));
+				}));
 			}
 		}
 	}
