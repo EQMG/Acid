@@ -5,10 +5,11 @@
 
 namespace Flounder
 {
-	AxisJoystick::AxisJoystick(const int &joystick, const std::vector<int> &axes) :
+	AxisJoystick::AxisJoystick(const unsigned int &joystick, const std::vector<int> &axes, const bool &reverse) :
 		IAxis(),
 		m_joystick(joystick),
-		m_axes(std::vector<int>(axes))
+		m_axes(std::vector<int>(axes)),
+		m_reverse(reverse)
 	{
 	}
 
@@ -30,6 +31,6 @@ namespace Flounder
 			result += Joysticks::Get()->GetAxis(m_joystick, axis);
 		}
 
-		return Maths::Clamp(result, -1.0f, 1.0f);
+		return Maths::Clamp(result, -1.0f, 1.0f) * (m_reverse ? -1.0f : 1.0f);
 	}
 }
