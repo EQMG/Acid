@@ -15,5 +15,5 @@ EntityTesting::EntityTesting(ISpatialStructure<Entity *> *structure, const Trans
 	));
 	AddComponent(new ComponentMaterial(0.002f, 0.3f));
 	AddComponent(new ComponentLight(Light(Colour(0.2f, 0.1f, 0.8f), 1.333f), Vector3(0.0f, 3.0f, 0.0f)));
-	AddComponent(new ComponentCollider());
+//	AddComponent(new ComponentCollider());
 }

@@ -19,5 +19,5 @@ EntitySun::EntitySun(ISpatialStructure<Entity *> *structure, const Transform &tr
 	AddComponent(new ComponentGlow(Texture::Resource("Resources/Entities/Sun/Glow.png")));
 	AddComponent(new ComponentLight(Light(Colour("#FFFFFF"), -1.0f), Vector3()));
 	AddComponent(new ComponentSun());
-	AddComponent(new ComponentCollider());
+//	AddComponent(new ComponentCollider());
 }
