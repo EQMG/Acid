@@ -8,6 +8,7 @@
 #include <Devices/Mouse.hpp>
 #include <Entities/EntityRock1.hpp>
 #include <Entities/EntityFoundationWood.hpp>
+#include <Entities/EntityMoon.hpp>
 
 /*#ifdef FLOUNDER_CONFIG_RELEASE
 #include <Sounds/Sound.hpp>
@@ -46,12 +47,13 @@ namespace Demo
 		Particles::Get()->AddSystem(m_systemTest);*/
 
 		new EntitySun(Entities::Get()->GetStructure(), Transform(Vector3(), Vector3(), Vector3(18.0f, 18.0f, 18.0f)));
+		new EntityMoon(Entities::Get()->GetStructure(), Transform(Vector3(), Vector3(), Vector3(9.0f, 9.0f, 9.0f)));
 
 		for (int i = -3; i <= 0; i++)
 		{
 			for (int j = -3; j <= 0; j++)
 			{
-				new EntityFoundationWood(Entities::Get()->GetStructure(), Transform(Vector3(10.0f - (i * 3.0f), 9.0f, -13.0f - (j * 3.0f)), Vector3(), Vector3(1.5f, 1.5f, 1.5f)));
+				new EntityFoundationWood(Entities::Get()->GetStructure(), Transform(Vector3(13.7f - (i * 3.0f), 10.2f, -25.0f - (j * 3.0f)), Vector3(), Vector3(1.5f, 1.5f, 1.5f)));
 			}
 		}
 

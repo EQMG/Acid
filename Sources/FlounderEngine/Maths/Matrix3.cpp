@@ -388,7 +388,7 @@ namespace Flounder
 
 	Matrix3 &Matrix3::operator-()
 	{
-		return *this->Negate();
+		return *Matrix3(*this).Negate();
 	}
 
 	Matrix3 operator+(Matrix3 left, const Matrix3 &right)

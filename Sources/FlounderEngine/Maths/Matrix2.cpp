@@ -274,7 +274,7 @@ namespace Flounder
 
 	Matrix2 &Matrix2::operator-()
 	{
-		return *this->Negate();
+		return *Matrix2(*this).Negate();
 	}
 
 	Matrix2 operator+(Matrix2 left, const Matrix2 &right)

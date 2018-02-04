@@ -31,7 +31,7 @@ namespace Flounder
 	{
 		if (Camera::Get() != nullptr && Camera::Get()->GetCamera() != nullptr)
 		{
-	//		m_shadowBox->Update(*Camera::Get()->GetCamera(), *m_lightDirection, m_shadowBoxOffset, m_shadowBoxDistance);
+			m_shadowBox->Update(*Camera::Get()->GetCamera(), *m_lightDirection, m_shadowBoxOffset, m_shadowBoxDistance);
 		}
 	}
 }
