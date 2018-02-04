@@ -24,7 +24,7 @@
 #include "Entities/Components/ComponentLight.hpp"
 #include "Entities/Components/ComponentMaterial.hpp"
 #include "Entities/Components/ComponentModel.hpp"
-#include "Entities/Components/ComponentSun.hpp"
+#include "Entities/Components/ComponentCelestial.hpp"
 #include "Entities/Components/ComponentSway.hpp"
 #include "Entities/Entities.hpp"
 #include "Entities/Entity.hpp"

@@ -92,8 +92,8 @@ namespace Flounder
 	const float NoiseFast::F3 = 1.0f / 3.0f;
 	const float NoiseFast::G3 = 1.0f / 6.0f;
 
-	const float NoiseFast::F2 = 0.5f * (sqrt(3.0f) - 1.0f);
-	const float NoiseFast::G2 = (3.0f - sqrt(3.0f)) / 6.0f;
+	const float NoiseFast::F2 = 0.5f * (std::sqrt(3.0f) - 1.0f);
+	const float NoiseFast::G2 = (3.0f - std::sqrt(3.0f)) / 6.0f;
 
 	const unsigned char NoiseFast::SIMPLEX_4D[] =
 		{
@@ -106,8 +106,8 @@ namespace Flounder
 			2, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1, 2, 3, 0, 2, 1, 0, 0, 0, 0, 3, 1, 2, 0,
 			2, 1, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 0, 2, 0, 0, 0, 0, 3, 2, 0, 1, 3, 2, 1, 0
 		};
-	const float NoiseFast::F4 = (sqrt(5.0f) - 1.0f) / 4.0f;
-	const float NoiseFast::G4 = (5.0f - sqrt(5.0f)) / 2.0f;
+	const float NoiseFast::F4 = (std::sqrt(5.0f) - 1.0f) / 4.0f;
+	const float NoiseFast::G4 = (5.0f - std::sqrt(5.0f)) / 20.0f;
 
 	const float NoiseFast::CUBIC_2D_BOUNDING = 1.0f / (1.5f * 1.5f);
 	const float NoiseFast::CUBIC_3D_BOUNDING = 1.0f / (1.5f * 1.5f * 1.5f);
@@ -404,7 +404,7 @@ namespace Flounder
 	{
 		m_seed = seed;
 
-		std::mt19937 gen = std::mt19937(seed);
+		std::mt19937_64 gen(seed);
 
 		for (int i = 0; i < 256; i++)
 		{
@@ -413,8 +413,8 @@ namespace Flounder
 
 		for (int j = 0; j < 256; j++)
 		{
-			std::uniform_int_distribution<> dis = std::uniform_int_distribution<>(0, 256 - j);
-			int k = dis(gen) + j;
+			int rng = (int)(gen() % (256 - j));
+			int k = rng + j;
 			int l = m_perm[j];
 			m_perm[j] = m_perm[j + 256] = m_perm[k];
 			m_perm[k] = l;

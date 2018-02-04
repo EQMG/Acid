@@ -440,7 +440,7 @@ namespace Flounder
 
 	Vector3 &Vector3::operator-()
 	{
-		return *this->Negate();
+		return *Vector3(*this).Negate();
 	}
 
 	Vector3 operator+(Vector3 left, const Vector3 &right)

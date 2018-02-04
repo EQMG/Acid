@@ -4,14 +4,21 @@
 
 namespace Flounder
 {
-	class ComponentSun :
+	enum CelestialType
+	{
+		CelestialSun = 0,
+		CelestialMoon = 1
+	};
+
+	class ComponentCelestial :
 		public IComponent
 	{
 	private:
+		CelestialType m_type;
 	public:
-		ComponentSun();
+		ComponentCelestial(const CelestialType &type);
 
-		~ComponentSun();
+		~ComponentCelestial();
 
 		void Update() override;
 
