@@ -6,6 +6,8 @@
 #include <Maths/Maths.hpp>
 #include <Devices/Display.hpp>
 #include <Devices/Mouse.hpp>
+#include <Entities/EntityRock1.hpp>
+#include <Entities/EntityFoundationWood.hpp>
 
 /*#ifdef FLOUNDER_CONFIG_RELEASE
 #include <Sounds/Sound.hpp>
@@ -45,6 +47,14 @@ namespace Demo
 
 		new EntitySun(Entities::Get()->GetStructure(), Transform(Vector3(), Vector3(), Vector3(18.0f, 18.0f, 18.0f)));
 
+		for (int i = -3; i <= 0; i++)
+		{
+			for (int j = -3; j <= 0; j++)
+			{
+				new EntityFoundationWood(Entities::Get()->GetStructure(), Transform(Vector3(10.0f - (i * 3.0f), 9.0f, -13.0f - (j * 3.0f)), Vector3(), Vector3(1.5f, 1.5f, 1.5f)));
+			}
+		}
+
 		for (int i = -5; i <= 0; i++)
 		{
 			for (int j = -5; j <= 0; j++)
@@ -61,8 +71,7 @@ namespace Demo
 					}
 					else
 					{
-						position.m_y += 1.0f;
-						new EntityTesting(Entities::Get()->GetStructure(), Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f)));
+						new EntityRock1(Entities::Get()->GetStructure(), Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f)));
 					}
 				}
 			}
