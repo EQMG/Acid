@@ -1,6 +1,7 @@
 set(EXAMPLE_STARTING_HEADERS_
         "Configs/ConfigManager.hpp"
         "Entities/EntityFoundationWood.hpp"
+        "Entities/EntityMoon.hpp"
         "Entities/EntityRock1.hpp"
         "Entities/EntitySun.hpp"
         "Entities/EntityTesting.hpp"
@@ -20,6 +21,7 @@ set(EXAMPLE_STARTING_HEADERS_
 set(EXAMPLE_STARTING_SOURCES_
         "Configs/ConfigManager.cpp"
         "Entities/EntityFoundationWood.cpp"
+        "Entities/EntityMoon.cpp"
         "Entities/EntityRock1.cpp"
         "Entities/EntitySun.cpp"
         "Entities/EntityTesting.cpp"

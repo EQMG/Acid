@@ -18,7 +18,9 @@ namespace Flounder
 		float m_factorDay;
 
 		Vector3 *m_sunPosition;
+		Vector3 *m_moonPosition;
 		Colour *m_sunColour;
+		Colour *m_moonColour;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -53,6 +55,10 @@ namespace Flounder
 
 		Vector3 *GetSunPosition() const { return m_sunPosition; }
 
+		Vector3 *GetMoonPosition() const { return m_moonPosition; }
+
 		Colour *GetSunColour() const { return m_sunColour; }
+
+		Colour *GetMoonColour() const { return m_moonColour; }
 	};
 }

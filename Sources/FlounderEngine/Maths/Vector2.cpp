@@ -317,7 +317,7 @@ namespace Flounder
 
 	Vector2 &Vector2::operator-()
 	{
-		return *this->Negate();
+		return *Vector2(*this).Negate();
 	}
 
 	Vector2 operator+(Vector2 left, const Vector2 &right)

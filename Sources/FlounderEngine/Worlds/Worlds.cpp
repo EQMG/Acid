@@ -13,6 +13,9 @@ namespace Flounder
 	static const Colour SUN_COLOUR_NIGHT = Colour("#0D0D1A");
 	static const Colour SUN_COLOUR_DAY = Colour("#ffffff");
 
+	static const Colour MOON_COLOUR_NIGHT = Colour("#666699");
+	static const Colour MOON_COLOUR_DAY = Colour("#000000");
+
 	static const Colour SKYBOX_COLOUR_DAY = Colour("#003C8A");
 
 	Worlds::Worlds() :
@@ -20,7 +23,9 @@ namespace Flounder
 		m_driverDay(new DriverLinear(0.0f, 1.0f, 300.0f)),
 		m_factorDay(0.0f),
 		m_sunPosition(new Vector3()),
-		m_sunColour(new Colour())
+		m_moonPosition(new Vector3()),
+		m_sunColour(new Colour()),
+		m_moonColour(new Colour())
 	{
 		m_driverDay->Update(50.0f); // Starts during daytime.
 	}
@@ -30,7 +35,9 @@ namespace Flounder
 		delete m_driverDay;
 
 		delete m_sunPosition;
+		delete m_moonPosition;
 		delete m_sunColour;
+		delete m_moonColour;
 	}
 
 	void Worlds::Update()
@@ -49,14 +56,18 @@ namespace Flounder
 		Colour::Interpolate(fogColour, FOG_COLOUR_DAY, GetShadowFactor(), &fogColour);
 
 		Vector3::Multiply(lightDirection, Vector3(-500.0f, -500.0f, -500.0f), m_sunPosition);
+		Vector3::Multiply(lightDirection, Vector3(500.0f, 500.0f, 500.0f), m_moonPosition);
 
 		if (Camera::Get() != nullptr && Camera::Get()->GetCamera() != nullptr)
 		{
 			Vector3::Add(*m_sunPosition, *Camera::Get()->GetCamera()->GetPosition(), m_sunPosition);
+			Vector3::Add(*m_moonPosition, *Camera::Get()->GetCamera()->GetPosition(), m_moonPosition);
 		}
 
 		Colour::Interpolate(SUN_COLOUR_SUNRISE, SUN_COLOUR_NIGHT, GetSunriseFactor(), m_sunColour);
 		Colour::Interpolate(*m_sunColour, SUN_COLOUR_DAY, GetShadowFactor(), m_sunColour);
+
+		Colour::Interpolate(MOON_COLOUR_NIGHT, MOON_COLOUR_DAY, GetShadowFactor(), m_moonColour);
 
 		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetFog() != nullptr)
 		{

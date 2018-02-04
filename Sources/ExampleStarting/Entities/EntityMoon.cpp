@@ -1,4 +1,4 @@
-#include "EntitySun.hpp"
+#include "EntityMoon.hpp"
 
 #include <Entities/Components/ComponentModel.hpp>
 #include <Entities/Components/ComponentMaterial.hpp>
@@ -8,16 +8,16 @@
 #include <Entities/Components/ComponentCollider.hpp>
 #include <Models/Shapes/Sphere.hpp>
 
-EntitySun::EntitySun(ISpatialStructure<Entity *> *structure, const Transform &transform) :
+EntityMoon::EntityMoon(ISpatialStructure<Entity *> *structure, const Transform &transform) :
 	Entity(structure, transform)
 {
 	AddComponent(new ComponentModel(
-		Sphere::Resource(20, 20, 1.0f), // Model::Resource("Resources/Entities/Sun/Model.obj"),
-		Texture::Resource("Resources/Entities/Sun/Diffuse.png")
+		Sphere::Resource(16, 16, 1.0f),
+		Texture::Resource("Resources/Entities/Moon/Diffuse.png")
 	));
 	AddComponent(new ComponentMaterial(0.5f, 0.5f, false, true, true));
 	AddComponent(new ComponentGlow(Texture::Resource("Resources/Entities/Sun/Glow.png")));
-	AddComponent(new ComponentLight(Light(Colour("#FFFFFF"), -1.0f), Vector3()));
-	AddComponent(new ComponentCelestial(CelestialSun));
+	AddComponent(new ComponentLight(Light(Colour("#1E1E1E"), -1.0f), Vector3()));
+	AddComponent(new ComponentCelestial(CelestialMoon));
 //	AddComponent(new ComponentCollider());
 }
