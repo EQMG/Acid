@@ -123,16 +123,16 @@ namespace Flounder
 	void PlatformUpdater::AddModule(const ModuleUpdate &typeUpdate, std::string moduleName, IModule *module)
 	{
 		float offset = typeUpdate + (0.01f * static_cast<float>(m_modules->size()));
-		m_modules->insert(make_pair(offset, make_pair(moduleName, module)));
+		m_modules->insert(std::make_pair(offset, std::make_pair(moduleName, module)));
 	}
 
 	IModule *PlatformUpdater::GetModule(const std::string &name)
 	{
-		for (auto it = m_modules->begin(); it != m_modules->end(); ++it)
+		for (auto &module : *m_modules)
 		{
-			if ((*it).second.first == name)
+			if (module.second.first == name)
 			{
-				return (*it).second.second;
+				return module.second.second;
 			}
 		}
 
@@ -141,11 +141,11 @@ namespace Flounder
 
 	void PlatformUpdater::RunUpdate(const ModuleUpdate &typeUpdate) const
 	{
-		for (auto it = m_modules->begin(); it != m_modules->end(); ++it)
+		for (auto &module : *m_modules)
 		{
-			if (static_cast<int>(floor((*it).first)) == typeUpdate)
+			if (static_cast<int>(std::floor(module.first)) == typeUpdate)
 			{
-				(*it).second.second->Update();
+				module.second.second->Update();
 			}
 		}
 	}
