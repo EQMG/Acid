@@ -10,9 +10,9 @@ namespace Flounder
 
 	Events::~Events()
 	{
-		for (auto it = m_events->begin(); it != m_events->end(); ++it)
+		for (auto event : *m_events)
 		{
-			delete *it;
+			delete event;
 		}
 
 		delete m_events;
@@ -20,17 +20,17 @@ namespace Flounder
 
 	void Events::Update()
 	{
-		for (auto it = m_events->begin(); it < m_events->end(); ++it)
-		{
-			if ((*it)->EventTriggered())
-			{
-				(*it)->OnEvent();
+		std::vector<IEvent *> copy = std::vector<IEvent *>(*m_events);
 
-				if ((*it)->RemoveAfterEvent())
+		for (auto event : copy)
+		{
+			if (event->EventTriggered())
+			{
+				event->OnEvent();
+
+				if (event->RemoveAfterEvent())
 				{
-					m_events->erase(it);
-					delete *it;
-					return; // it--;
+					RemoveEvent(event);
 				}
 			}
 		}

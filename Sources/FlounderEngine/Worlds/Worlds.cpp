@@ -22,6 +22,7 @@ namespace Flounder
 		m_sunPosition(new Vector3()),
 		m_sunColour(new Colour())
 	{
+		m_driverDay->Update(50.0f); // Starts during daytime.
 	}
 
 	Worlds::~Worlds()
