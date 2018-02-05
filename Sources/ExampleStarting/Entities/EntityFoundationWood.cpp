@@ -6,7 +6,7 @@
 #include <Models/Shapes/Sphere.hpp>
 #include <Entities/Components/ComponentCollider.hpp>
 
-EntityFoundationWood::EntityFoundationWood(ISpatialStructure<Entity *> *structure, const Transform &transform) :
+EntityFoundationWood::EntityFoundationWood(const Transform &transform, ISpatialStructure<Entity *> *structure) :
 	Entity(transform, structure)
 {
 	AddComponent(new ComponentModel(

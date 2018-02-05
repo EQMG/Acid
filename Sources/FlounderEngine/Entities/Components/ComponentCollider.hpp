@@ -22,6 +22,8 @@ namespace Flounder
 	public:
 		ComponentCollider();
 
+		ComponentCollider(ComponentPrefab* prefab);
+
 		~ComponentCollider();
 
 		void Update() override;

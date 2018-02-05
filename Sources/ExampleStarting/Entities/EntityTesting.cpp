@@ -6,7 +6,7 @@
 #include <Models/Shapes/Sphere.hpp>
 #include <Entities/Components/ComponentCollider.hpp>
 
-EntityTesting::EntityTesting(ISpatialStructure<Entity *> *structure, const Transform &transform) :
+EntityTesting::EntityTesting(const Transform &transform, ISpatialStructure<Entity *> *structure) :
 	Entity(transform, structure)
 {
 	AddComponent(new ComponentModel(
