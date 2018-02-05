@@ -45,15 +45,14 @@ namespace Demo
 		m_systemTest->SetSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
 		Particles::Get()->AddSystem(m_systemTest);*/
 
-		new Entity
-		new EntitySun(Entities::Get()->GetStructure(), Transform(Vector3(), Vector3(), Vector3(18.0f, 18.0f, 18.0f)));
-		new EntityMoon(Entities::Get()->GetStructure(), Transform(Vector3(), Vector3(), Vector3(9.0f, 9.0f, 9.0f)));
+		new Entity("Sun", Transform(Vector3(), Vector3(), Vector3(18.0f, 18.0f, 18.0f)));
+		new Entity("Moon", Transform(Vector3(), Vector3(), Vector3(9.0f, 9.0f, 9.0f)));
 
 		for (int i = -3; i <= 0; i++)
 		{
 			for (int j = -3; j <= 0; j++)
 			{
-				new EntityFoundationWood(Entities::Get()->GetStructure(), Transform(Vector3(13.7f - (i * 3.0f), 10.2f, -25.0f - (j * 3.0f)), Vector3(), Vector3(1.5f, 1.5f, 1.5f)));
+				new Entity("FoundationWood", Transform(Vector3(13.7f - (i * 3.0f), 10.2f, -25.0f - (j * 3.0f)), Vector3(), Vector3(1.5f, 1.5f, 1.5f)));
 			}
 		}
 
@@ -69,12 +68,13 @@ namespace Demo
 				{
 					if (i < 0)
 					{
-						new EntityTreePine(Entities::Get()->GetStructure(), Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f)));
+						position.m_y -= 0.1f;
+						new Entity("TreePine", Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f)));
 					}
 					else
 					{
 						position.m_y += 1.0f;
-						new EntityTesting(Entities::Get()->GetStructure(), Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f)));
+						new Entity("Testing", Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f)));
 					}
 				}
 			}

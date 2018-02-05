@@ -64,4 +64,16 @@ namespace Flounder
 
 		return nullptr;
 	}
+
+	std::vector<std::string> EntityPrefab::GetComponents()
+	{
+		std::vector<std::string> keys = std::vector<std::string>();
+
+		for (auto it : *m_components) 
+		{
+			keys.push_back(it.first);
+		}
+
+		return keys;
+	}
 }

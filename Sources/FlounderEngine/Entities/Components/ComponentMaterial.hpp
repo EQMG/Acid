@@ -16,6 +16,8 @@ namespace Flounder
 	public:
 		ComponentMaterial(const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false);
 
+		ComponentMaterial(ComponentPrefab* prefab);
+
 		~ComponentMaterial();
 
 		void Update() override;

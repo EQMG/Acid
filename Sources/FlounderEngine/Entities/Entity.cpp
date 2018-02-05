@@ -2,6 +2,7 @@
 
 #include "../Devices/Display.hpp"
 #include "EntityPrefab.hpp"
+#include "Entities.hpp"
 
 namespace Flounder
 {
@@ -12,12 +13,22 @@ namespace Flounder
 		m_transform(new Transform(transform)),
 		m_removed(false)
 	{
+		if (m_structure == nullptr)
+		{
+			m_structure = Entities::Get()->GetStructure();
+		}
+
 		if (m_structure != nullptr)
 		{
 			m_structure->Add(this);
 		}
 
 		EntityPrefab *entityPrefab = EntityPrefab::Resource("Resources/Entities/" + prefab + "/" + prefab + ".csv");
+		
+		for (auto c : entityPrefab->GetComponents())
+		{
+			ComponentPrefab *cPrefab = entityPrefab->GetComponentData(c);
+		}
 	}
 
 	Entity::Entity(const Transform &transform, ISpatialStructure<Entity *> *structure) :

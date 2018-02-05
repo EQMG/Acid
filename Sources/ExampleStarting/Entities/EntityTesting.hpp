@@ -10,5 +10,5 @@ class EntityTesting :
 	public Entity
 {
 public:
-	EntityTesting(ISpatialStructure<Entity *> *structure, const Transform &transform);
+	EntityTesting(const Transform &transform, ISpatialStructure<Entity *> *structure = nullptr);
 };
