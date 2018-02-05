@@ -6,16 +6,10 @@
 #include <Maths/Maths.hpp>
 #include <Devices/Display.hpp>
 #include <Devices/Mouse.hpp>
-#include <Entities/EntityFoundationWood.hpp>
-#include <Entities/EntityMoon.hpp>
 
 /*#ifdef FLOUNDER_CONFIG_RELEASE
 #include <Sounds/Sound.hpp>
 #endif*/
-
-#include "Entities/EntityTreePine.hpp"
-#include "Entities/EntityTesting.hpp"
-#include "Entities/EntitySun.hpp"
 
 namespace Demo
 {
