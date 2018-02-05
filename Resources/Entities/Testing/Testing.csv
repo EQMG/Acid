@@ -1,5 +1,4 @@
-model,"Resources/Entities/Testing/Model.obj","Resources/Entities/Testing/Texture.png"
-material,0.0,0.0
-light,#6432dc,1.333,0.0,3.0,0.0
-collider
-collision
+ComponentModel,"Sphere_20_20_1.0","Resources/Guis/Undefined.png"
+ComponentMaterial,0.002,0.3
+ComponentLight,"#3319cc",1.333,0.0,3.0,0.0
+ComponentCollider

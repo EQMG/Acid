@@ -7,6 +7,7 @@
 #include <Models/Shapes/Sphere.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Files/Config.hpp>
+#include <Entities/EntityPrefab.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 #include "Instance.hpp"

@@ -86,5 +86,19 @@ namespace Flounder
 		/// <param name="to"> The string to replace the tokens with. </param>
 		/// <returns> The string with the tokens replaced. </returns>
 		static std::string Replace(const std::string &str, const std::string &token, const std::string &to);
+
+		/// <summary>
+		/// Lowercases a string.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <returns> The lowercased string. </returns>
+		static std::string Lowercase(const std::string &str);
+
+		/// <summary>
+		/// uppercased a string.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <returns> The uppercased string. </returns>
+		static std::string Uppercase(const std::string &str);
 	};
 }
