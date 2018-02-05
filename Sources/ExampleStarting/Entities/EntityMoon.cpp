@@ -8,7 +8,7 @@
 #include <Entities/Components/ComponentCollider.hpp>
 #include <Models/Shapes/Sphere.hpp>
 
-EntityMoon::EntityMoon(ISpatialStructure<Entity *> *structure, const Transform &transform) :
+EntityMoon::EntityMoon(const Transform &transform, ISpatialStructure<Entity *> *structure) :
 	Entity(transform, structure)
 {
 	AddComponent(new ComponentModel(

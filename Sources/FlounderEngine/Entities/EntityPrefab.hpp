@@ -56,6 +56,8 @@ namespace Flounder
 
 		std::string GetFilename() override { return m_filename; }
 
+		std::vector<std::string> GetComponents();
+
 		ComponentPrefab *GetComponentData(const std::string &component);
 	};
 }

@@ -10,5 +10,5 @@ class EntityFoundationWood :
 	public Entity
 {
 public:
-	EntityFoundationWood(ISpatialStructure<Entity *> *structure, const Transform &transform);
+	EntityFoundationWood(const Transform &transform, ISpatialStructure<Entity *> *structure = nullptr);
 };

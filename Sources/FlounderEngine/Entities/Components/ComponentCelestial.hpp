@@ -18,6 +18,8 @@ namespace Flounder
 	public:
 		ComponentCelestial(const CelestialType &type);
 
+		ComponentCelestial(ComponentPrefab* prefab);
+
 		~ComponentCelestial();
 
 		void Update() override;

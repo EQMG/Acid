@@ -18,7 +18,6 @@ elseif(UNIX AND NOT APPLE)
 	add_definitions(-DFLOUNDER_PLATFORM_LINUX)
 elseif(UNIX AND APPLE)
 	add_definitions(-DFLOUNDER_PLATFORM_MACOS)
-	add_definitions(-DVK_USE_PLATFORM_MACOS_MVK)
 endif()
 
 # Compiler-options
@@ -55,11 +54,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYP
 
 # Libraries
 if(APPLE)
-    FIND_PATH(VULKAN_INCLUDES mvk_vulkan.h)
+#    FIND_PATH(VULKAN_INCLUDES mvk_vulkan.h)
+	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/include")
+	set(VULKAN_INCLUDE_DIR ${VULKAN_INCLUDES})
+	find_library(VULKAN_LIBRARY NAMES moltenvk PATHS "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/lib/")
 else()
 	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
+	find_library(VULKAN_LIBRARY NAMES vulkan-1 vulkan PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
 endif()
-find_library(VULKAN_LIBRARY NAMES vulkan-1 vulkan moltenvk PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
 message(STATUS "Vulkan: ${VULKAN_LIBRARY}")
 
 set(GLFW_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glfw/include")
