@@ -112,4 +112,18 @@ namespace Flounder
 		result.replace(startPos, token.length(), to);
 		return result;
 	}
+
+	std::string FormatString::Lowercase(const std::string &str)
+	{
+		std::string result = str;
+		std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+		return result;
+	}
+
+	std::string FormatString::Uppercase(const std::string &str)
+	{
+		std::string result = str;
+		std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+		return result;
+	}
 }

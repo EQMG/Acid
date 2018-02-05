@@ -1,10 +1,26 @@
 ﻿#include "Entity.hpp"
 
 #include "../Devices/Display.hpp"
+#include "EntityPrefab.hpp"
 
 namespace Flounder
 {
-	Entity::Entity(ISpatialStructure<Entity *> *structure, const Transform &transform) :
+	Entity::Entity(const std::string &prefab, const Transform &transform, ISpatialStructure<Entity *> *structure) :
+		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
+		m_structure(structure),
+		m_components(new std::vector<IComponent *>()),
+		m_transform(new Transform(transform)),
+		m_removed(false)
+	{
+		if (m_structure != nullptr)
+		{
+			m_structure->Add(this);
+		}
+
+		EntityPrefab *entityPrefab = EntityPrefab::Resource("Resources/Entities/" + prefab + "/" + prefab + ".csv");
+	}
+
+	Entity::Entity(const Transform &transform, ISpatialStructure<Entity *> *structure) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
 		m_structure(structure),
 		m_components(new std::vector<IComponent *>()),
