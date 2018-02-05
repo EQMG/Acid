@@ -28,6 +28,7 @@ namespace Flounder
 		for (auto c : entityPrefab->GetComponents())
 		{
 			ComponentPrefab *cPrefab = entityPrefab->GetComponentData(c);
+			// TODO: Create components map and reference it here, create component.
 		}
 	}
 
