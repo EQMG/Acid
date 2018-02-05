@@ -6,7 +6,6 @@
 #include <Maths/Maths.hpp>
 #include <Devices/Display.hpp>
 #include <Devices/Mouse.hpp>
-#include <Entities/EntityRock1.hpp>
 #include <Entities/EntityFoundationWood.hpp>
 #include <Entities/EntityMoon.hpp>
 
@@ -46,6 +45,7 @@ namespace Demo
 		m_systemTest->SetSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
 		Particles::Get()->AddSystem(m_systemTest);*/
 
+		new Entity
 		new EntitySun(Entities::Get()->GetStructure(), Transform(Vector3(), Vector3(), Vector3(18.0f, 18.0f, 18.0f)));
 		new EntityMoon(Entities::Get()->GetStructure(), Transform(Vector3(), Vector3(), Vector3(9.0f, 9.0f, 9.0f)));
 
@@ -73,7 +73,8 @@ namespace Demo
 					}
 					else
 					{
-						new EntityRock1(Entities::Get()->GetStructure(), Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f)));
+						position.m_y += 1.0f;
+						new EntityTesting(Entities::Get()->GetStructure(), Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), Vector3(1.0f, 1.0f, 1.0f)));
 					}
 				}
 			}

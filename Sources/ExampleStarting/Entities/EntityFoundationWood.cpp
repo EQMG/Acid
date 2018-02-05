@@ -7,7 +7,7 @@
 #include <Entities/Components/ComponentCollider.hpp>
 
 EntityFoundationWood::EntityFoundationWood(ISpatialStructure<Entity *> *structure, const Transform &transform) :
-	Entity(structure, transform)
+	Entity(transform, structure)
 {
 	AddComponent(new ComponentModel(
 		Model::Resource("Resources/Entities/FoundationWood/Model.obj"),
