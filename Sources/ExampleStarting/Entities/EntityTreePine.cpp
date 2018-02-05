@@ -4,7 +4,7 @@
 #include <Entities/Components/ComponentMaterial.hpp>
 #include <Entities/Components/ComponentCollider.hpp>
 
-EntityTreePine::EntityTreePine(ISpatialStructure<Entity *> *structure, const Transform &transform) :
+EntityTreePine::EntityTreePine(const Transform &transform, ISpatialStructure<Entity *> *structure) :
 	Entity(transform, structure)
 {
 	AddComponent(new ComponentModel(

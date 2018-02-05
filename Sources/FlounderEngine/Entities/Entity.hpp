@@ -20,9 +20,9 @@ namespace Flounder
 		Transform *m_transform;
 		bool m_removed;
 	public:
-		Entity(const std::string &prefab, const Transform &transform, ISpatialStructure<Entity *> *structure);
+		Entity(const std::string &prefab, const Transform &transform, ISpatialStructure<Entity *> *structure = nullptr);
 
-		Entity(const Transform &transform, ISpatialStructure<Entity *> *structure);
+		Entity(const Transform &transform, ISpatialStructure<Entity *> *structure = nullptr);
 
 		~Entity();
 

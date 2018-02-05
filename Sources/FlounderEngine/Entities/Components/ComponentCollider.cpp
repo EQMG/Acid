@@ -11,13 +11,19 @@ namespace Flounder
 	{
 	}
 
+	ComponentCollider::ComponentCollider(ComponentPrefab* prefab) :
+		IComponent(),
+		m_collider(nullptr)
+	{
+	}
+
 	ComponentCollider::~ComponentCollider()
 	{
 	}
 
 	void ComponentCollider::Update()
 	{
-		auto componentModel = GetEntity()->GetComponent<ComponentModel>();
+		/*auto componentModel = GetEntity()->GetComponent<ComponentModel>();
 
 		if (componentModel != nullptr)
 		{
@@ -27,7 +33,7 @@ namespace Flounder
 		else
 		{
 			m_collider = nullptr;
-		}
+		}*/
 	}
 
 	void ComponentCollider::CmdRender(EntityRender *entityRender)
