@@ -21,7 +21,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
 ## Platforms
  * Windows
  * Linux
- * MacOS
+ * MacOS (Future)
 
 ## Features
  * High speed
@@ -40,6 +40,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Visual drivers and maths classes
  * Flexible input classes
  * Component entity system
+ * Entity prefab loading
  * Deferred rendering
  * 3D shadow mapping (WIP)
  * Simple physics engine (WIP)
