@@ -13,6 +13,7 @@ set(FLOUNDERENGINE_HEADERS_
         "Engine/IModule.hpp"
         "Engine/IUpdater.hpp"
         "Engine/ModuleUpdate.hpp"
+        "Entities/Components/Components.hpp"
         "Entities/Components/ComponentCollider.hpp"
         "Entities/Components/ComponentCollision.hpp"
         "Entities/Components/ComponentGlow.hpp"

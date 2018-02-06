@@ -11,6 +11,13 @@ namespace Flounder
 	{
 	}
 
+	ComponentLight::ComponentLight(ComponentPrefab *prefab) :
+		IComponent(),
+		m_light(new Light(Colour(prefab->GetString(0)), prefab->GetFloat(1))),
+		m_offset(new Vector3(prefab->GetFloat(2), prefab->GetFloat(3), prefab->GetFloat(4)))
+	{
+	}
+
 	ComponentLight::~ComponentLight()
 	{
 		delete m_light;
@@ -19,8 +26,8 @@ namespace Flounder
 
 	void ComponentLight::Update()
 	{
-		m_light->m_position->Set(*GetEntity()->GetTransform()->m_position);
-		Vector3::Add(*m_light->m_position, *m_offset, m_light->m_position);
+	//	m_light->m_position->Set(*GetEntity()->GetTransform()->m_position);
+	//	Vector3::Add(*m_light->m_position, *m_offset, m_light->m_position);
 	}
 
 	void ComponentLight::CmdRender(EntityRender *entityRender)

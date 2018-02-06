@@ -13,6 +13,11 @@ namespace Flounder
 	{
 	}
 
+	ComponentCollision::ComponentCollision(ComponentPrefab *prefab) :
+		IComponent()
+	{
+	}
+
 	ComponentCollision::~ComponentCollision()
 	{
 	}

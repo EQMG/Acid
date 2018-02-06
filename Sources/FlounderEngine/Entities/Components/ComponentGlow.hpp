@@ -13,6 +13,8 @@ namespace Flounder
 	public:
 		ComponentGlow(Texture *swayMap);
 
+		ComponentGlow(ComponentPrefab* prefab);
+
 		~ComponentGlow();
 
 		void Update() override;

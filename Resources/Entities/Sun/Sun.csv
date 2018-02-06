@@ -1,0 +1,6 @@
+ComponentModel,"Sphere_20_20_1.0","Resources/Entities/Sun/Diffuse.png"
+ComponentGlow,"Resources/Entities/Sun/Glow.png"
+ComponentMaterial,0.5,0.5,0,1,1
+ComponentLight,"#FFFFFF",-1.0,0.0,3.0,0.0
+ComponentCelestial,0
+ComponentCollider
