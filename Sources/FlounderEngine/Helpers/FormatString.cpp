@@ -6,7 +6,8 @@ namespace Flounder
 {
 	std::vector<std::string> FormatString::Split(const std::string &str, const std::string &sep, const bool &trim)
 	{
-		char *cstr = const_cast<char *>(str.c_str());
+		std::string str2 = "" + str;
+		char *cstr = const_cast<char *>(str2.c_str());
 		std::vector<std::string> arr;
 		char *current = strtok(cstr, sep.c_str());
 

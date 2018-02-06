@@ -15,6 +15,8 @@ namespace Flounder
 	public:
 		ComponentModel(Model *model, Texture *diffuse);
 
+		ComponentModel(ComponentPrefab* prefab);
+
 		~ComponentModel();
 
 		void Update() override;

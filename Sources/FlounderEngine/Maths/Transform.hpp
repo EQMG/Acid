@@ -19,6 +19,8 @@ namespace Flounder
 
 		Transform(const Vector3 &position, const Vector3 &rotation = Vector3(), const Vector3 &scaling = Vector3(1.0f, 1.0f, 1.0f));
 
+		Transform(const Vector3 &position, const Vector3 &rotation, const float &scale);
+
 		~Transform();
 
 		Matrix4 *GetWorldMatrix(Matrix4 *destination) const;

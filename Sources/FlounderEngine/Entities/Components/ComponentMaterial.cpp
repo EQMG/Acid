@@ -16,11 +16,11 @@ namespace Flounder
 
 	ComponentMaterial::ComponentMaterial(ComponentPrefab* prefab) :
 		IComponent(),
-		m_metallic(atof(prefab->m_data.at(0).c_str())),
-		m_roughness(atof(prefab->m_data.at(1).c_str())),
-		m_castsShadows(atoi(prefab->m_data.at(2).c_str()) == 1),
-		m_ignoreLighting(atoi(prefab->m_data.at(3).c_str()) == 1),
-		m_ignoreFog(atoi(prefab->m_data.at(4).c_str()) == 1)
+		m_metallic(prefab->GetFloat(0)),
+		m_roughness(prefab->GetFloat(1)),
+		m_castsShadows(prefab->GetBool(2)),
+		m_ignoreLighting(prefab->GetBool(3)),
+		m_ignoreFog(prefab->GetBool(4))
 	{
 	}
 

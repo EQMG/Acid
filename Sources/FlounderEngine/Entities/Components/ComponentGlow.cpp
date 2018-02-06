@@ -10,6 +10,12 @@ namespace Flounder
 	{
 	}
 
+	ComponentGlow::ComponentGlow(ComponentPrefab *prefab) :
+		IComponent(),
+		m_textureGlowMap(Texture::Resource(prefab->GetString(0)))
+	{
+	}
+
 	ComponentGlow::~ComponentGlow()
 	{
 	}
