@@ -37,5 +37,7 @@ namespace Flounder
 		void Update() override;
 
 		ISpatialStructure<Entity *> *GetStructure() const { return m_structure; }
+
+		void SetStructure(ISpatialStructure<Entity *> *structure) { m_structure = structure; }
 	};
 }

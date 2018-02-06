@@ -6,8 +6,8 @@
 #include <Standards/Standards.hpp>
 #include <Models/Shapes/Sphere.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Files/Config.hpp>
-#include <Entities/EntityPrefab.hpp>
+#include <Entities/Entities.hpp>
+#include <Space/StructureBasic.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 #include "Instance.hpp"
@@ -50,6 +50,11 @@ int main(int argc, char **argv)
 	{
 		Camera::Get()->SetCamera(new FpsCamera());
 		Camera::Get()->SetPlayer(new FpsPlayer());
+	}
+
+	if (Entities::Get() != nullptr)
+	{
+		Entities::Get()->SetStructure(new StructureBasic<Entity *>());
 	}
 
 	if (Renderer::Get() != nullptr)
