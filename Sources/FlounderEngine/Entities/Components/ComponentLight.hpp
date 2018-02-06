@@ -14,6 +14,8 @@ namespace Flounder
 	public:
 		ComponentLight(const Light &light, const Vector3 &offset);
 
+		ComponentLight(ComponentPrefab* prefab);
+
 		~ComponentLight();
 
 		void Update() override;

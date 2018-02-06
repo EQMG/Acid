@@ -14,7 +14,7 @@ namespace Flounder
 
 	ComponentCelestial::ComponentCelestial(ComponentPrefab* prefab) :
 		IComponent(),
-		m_type(static_cast<CelestialType>(atoi(prefab->m_data.at(0).c_str())))
+		m_type(static_cast<CelestialType>(prefab->GetInt(0)))
 	{
 	}
 
@@ -26,7 +26,7 @@ namespace Flounder
 	{
 		Transform *entityTransform = GetEntity()->GetTransform();
 
-		if (Worlds::Get() != nullptr)
+		if (Worlds::Get() != nullptr && Worlds::Get()->GetSunPosition() != nullptr)
 		{
 			switch (m_type)
 			{
