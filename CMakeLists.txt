@@ -55,9 +55,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYP
 # Libraries
 if(APPLE)
 #    FIND_PATH(VULKAN_INCLUDES mvk_vulkan.h)
-	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/include")
-	set(VULKAN_INCLUDE_DIR ${VULKAN_INCLUDES})
-	find_library(VULKAN_LIBRARY NAMES moltenvk PATHS "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/lib/")
+#	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/include")
+#	set(VULKAN_INCLUDE_DIR ${VULKAN_INCLUDES})
+#	find_library(VULKAN_LIBRARY NAMES moltenvk PATHS "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/lib/")
+	message(ERROR " No MacOS Vulkan support!")
 else()
 	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
 	find_library(VULKAN_LIBRARY NAMES vulkan-1 vulkan PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
