@@ -1,7 +1,7 @@
 #pragma once
 
 #include "EntityRender.hpp"
-#include "EntityPrefab.hpp"
+#include "Prefabs/EntityPrefab.hpp"
 
 namespace Flounder
 {

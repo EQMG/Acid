@@ -1,9 +1,8 @@
 ﻿#include "Entity.hpp"
 
 #include "../Devices/Display.hpp"
-#include "Components/Components.hpp"
-#include "EntityPrefab.hpp"
 #include "Entities.hpp"
+#include "Prefabs/Components.hpp"
 
 namespace Flounder
 {
@@ -25,31 +24,7 @@ namespace Flounder
 		}
 
 		EntityPrefab *entityPrefab = EntityPrefab::Resource("Resources/Entities/" + prefab + "/" + prefab + ".csv");
-
-		for (const auto cName : entityPrefab->GetComponents())
-		{
-			if (FormatString::StartsWith(cName, "#"))
-			{
-				continue;
-			}
-
-			ComponentPrefab *cPrefab = entityPrefab->GetComponentData(cName);
-
-			if (cPrefab == nullptr)
-			{
-				continue;
-			}
-
-			IComponent *component = Components::CreateComponent(cName, cPrefab);
-
-			if (component == nullptr)
-			{
-				continue;
-			}
-
-			component->SetEntity(this);
-			m_components->push_back(component);
-		}
+		Components::AttachAllTo(entityPrefab, this);
 	}
 
 	Entity::Entity(const Transform &transform, ISpatialStructure<Entity *> *structure) :
