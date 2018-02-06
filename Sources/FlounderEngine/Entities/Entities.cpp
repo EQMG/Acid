@@ -1,13 +1,10 @@
 #include "Entities.hpp"
 
-#include "../Space/StructureBasic.hpp"
-
 namespace Flounder
 {
 	Entities::Entities() :
 		IModule(),
-		m_structure(new StructureBasic<Entity *>())
-	//	m_entities(new std::vector<Entity*>())
+		m_structure(nullptr)
 	{
 	}
 
@@ -19,6 +16,11 @@ namespace Flounder
 
 	void Entities::Update()
 	{
+		if (m_structure == nullptr)
+		{
+			return;
+		}
+
 		for (auto entity : *m_structure->GetAll())
 		{
 			entity->Update();
