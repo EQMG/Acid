@@ -1,14 +1,12 @@
 #include "EntityPrefab.hpp"
 
-#include "../Helpers/FormatString.hpp"
-
 namespace Flounder
 {
 	EntityPrefab::EntityPrefab(const std::string &filename) :
 		IResource(),
 		m_filename(filename),
 		m_fileCsv(new FileCsv(filename)),
-		m_components(new std::map<std::string, ComponentPrefab*>())
+		m_components(new std::unordered_map<std::string, ComponentPrefab*>())
 	{
 		m_fileCsv->Load();
 
@@ -18,7 +16,7 @@ namespace Flounder
 
 			if (!row.m_elements.empty())
 			{
-				std::string name = FormatString::Lowercase(row.m_elements.at(0));
+				std::string name = row.m_elements.at(0);
 				std::vector<std::string> data = std::vector<std::string>(row.m_elements);
 				data.erase(data.begin());
 				m_components->insert(std::make_pair(name, new ComponentPrefab(data)));
@@ -41,7 +39,7 @@ namespace Flounder
 			std::vector<std::string> data = std::vector<std::string>();
 			data.push_back(component.first);
 
-			for (const auto &i : component.second->m_data)
+			for (const auto &i : component.second->GetData())
 			{
 				data.push_back(i);
 			}

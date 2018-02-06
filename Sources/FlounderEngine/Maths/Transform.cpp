@@ -23,6 +23,13 @@ namespace Flounder
 	{
 	}
 
+	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const float &scale) :
+		m_position(new Vector3(position)),
+		m_rotation(new Vector3(rotation)),
+		m_scaling(new Vector3(scale, scale, scale))
+	{
+	}
+
 	Transform::~Transform()
 	{
 		delete m_position;

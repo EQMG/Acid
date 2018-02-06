@@ -11,6 +11,13 @@ namespace Flounder
 	{
 	}
 
+	ComponentSway::ComponentSway(ComponentPrefab *prefab) :
+		IComponent(),
+		m_textureSwayMap(Texture::Resource(prefab->GetString(0)))
+	{
+
+	}
+
 	ComponentSway::~ComponentSway()
 	{
 	}
