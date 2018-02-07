@@ -7,6 +7,7 @@
 #include <GLFW/glfw3.h>
 
 #ifdef FLOUNDER_PLATFORM_MACOS
+#include <MoltenVK/vulkan/vulkan.h>
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #else
