@@ -26,6 +26,8 @@ namespace Flounder
 
 		void Save(ComponentPrefab* prefab) override;
 
+		std::string GetName() const override { return "ComponentMaterial"; };
+
 		float GetMetallic() const { return m_metallic; }
 
 		void SetMetallic(const float &metallic) { m_metallic = metallic; }

@@ -18,6 +18,14 @@ namespace Demo
 		m_buttonLockMouse(new ButtonKeyboard({GLFW_KEY_M})),
 		m_buttonExit(new ButtonKeyboard({GLFW_KEY_DELETE}))
 	{
+		/*{
+			Entity *meme = new Entity(Transform());
+			meme->AddComponent(new ComponentModel(Sphere::Resource(16, 16, 1.1f), Texture::Resource("Resources/Guis/Black.png")));
+			meme->AddComponent(new ComponentMaterial(0.1f, 0.4f));
+			EntityPrefab *prefab = EntityPrefab::Resource("Resources/Entities/Memes/Memes.csv");
+			prefab->Write(meme);
+			prefab->Save();
+		}*/
 /*#ifdef FLOUNDER_CONFIG_RELEASE
 		Sound *music1 = Sound::Resource("Resources/Music/Outpost.wav");
 

@@ -39,11 +39,16 @@ namespace Flounder
 		remove(filepath.c_str());
 	}
 
-	void FileSystem::CreateFile(const std::string &filepath)
+	void FileSystem::CreateFile(const std::string &filepath, const bool &createFolders)
 	{
 		if (FileExists(filepath))
 		{
 			return;
+		}
+
+		if (createFolders)
+		{
+			CreateFolder(filepath.substr(0, filepath.find_last_of("\\/")));
 		}
 
 		FILE *file = fopen(filepath.c_str(), "rb+");
@@ -81,6 +86,12 @@ namespace Flounder
 
 	std::string FileSystem::ReadTextFile(const std::string &filepath)
 	{
+		if (!FileSystem::FileExists(filepath))
+		{
+			printf("File does not exist: '%s'\n", filepath.c_str());
+			return "";
+		}
+
 		FILE *file = fopen(filepath.c_str(), "rt");
 
 		assert(file != nullptr && "Could not find file!");
@@ -100,6 +111,12 @@ namespace Flounder
 
 	std::vector<char> FileSystem::ReadBinaryFile(const std::string &filepath)
 	{
+		if (!FileSystem::FileExists(filepath))
+		{
+			printf("File does not exist: '%s'\n", filepath.c_str());
+			return std::vector<char>();
+		}
+
 		// TODO: Move from ifsteam to normal C binary file loading.
 		/*FILE *file = fopen(filepath.c_str(), "rb");
 
@@ -155,8 +172,13 @@ namespace Flounder
 	{
 		char buff[FILENAME_MAX];
 		GetCurrentDir(buff, FILENAME_MAX);
-		std::string currentWorkingDirectory = std::string(buff);
-		std::replace(currentWorkingDirectory.begin(), currentWorkingDirectory.end(), '\\', '/');
-		return currentWorkingDirectory;
+		return FixPaths(buff);
+	}
+
+	std::string FileSystem::FixPaths(const std::string &filepath)
+	{
+		std::string result = std::string(filepath);
+		std::replace(result.begin(), result.end(), '\\', '/');
+		return result;
 	}
 }
