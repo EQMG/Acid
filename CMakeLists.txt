@@ -4,13 +4,14 @@ project (Flounder)
 # Preprocessor
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	add_definitions(-DFLOUNDER_CONFIG_DEBUG)
-	add_definitions(-DFLOUNDER_VERBOSE)
 elseif("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	add_definitions(-DFLOUNDER_CONFIG_RELEASE)
 elseif("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
 	set(CMAKE_BUILD_TYPE "Release")
 	add_definitions(-DFLOUNDER_CONFIG_RELEASE)
 endif()
+
+add_definitions(-DFLOUNDER_VERBOSE)
 
 if(WIN32)
 	add_definitions(-DFLOUNDER_PLATFORM_WINDOWS)

@@ -91,7 +91,7 @@ namespace Flounder
 		/// <summary>
 		/// Loads the model object from a OBJ file.
 		/// </summary>
-		void LoadFromFile();
+		void LoadFromFile(const std::string &filename);
 
 		VertexData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData *> *vertices, std::vector<uint32_t> *indices);
 

@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cstring>
 #include <map>
+#include "../Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -192,6 +193,12 @@ namespace Flounder
 
 		if (!m_icon.empty())
 		{
+			if (!FileSystem::FileExists(m_icon))
+			{
+				printf("File does not exist: '%s'\n", m_icon.c_str());
+				return;
+			}
+
 			int width = 0;
 			int height = 0;
 			int components = 0;
@@ -475,7 +482,7 @@ namespace Flounder
 		int score = 0;
 
 		/// Adjusts score based on queue families:
-		// Finds an index of a queue family which contiains the necessary commands.
+		// Finds an index of a queue family which contains the necessary commands.
 		/*QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(device, m_surface);
 
 		// Returns a score of 0 if this device has no suitable family.
