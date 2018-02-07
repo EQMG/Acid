@@ -12,6 +12,11 @@ namespace Flounder
 		m_buffer(VK_NULL_HANDLE),
 		m_bufferMemory(VK_NULL_HANDLE)
 	{
+		if (m_size == 0)
+		{
+			return;
+		}
+
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto surface = Display::Get()->GetSurface();
 
