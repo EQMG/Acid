@@ -56,7 +56,10 @@ namespace Flounder
 					continue;
 				}
 
-				entity->AddComponent(component);
+				if (entity != nullptr)
+				{
+					entity->AddComponent(component);
+				}
 			}
 		}
 	};

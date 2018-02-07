@@ -39,4 +39,9 @@ namespace Flounder
 	void ComponentCollider::CmdRender(EntityRender *entityRender)
 	{
 	}
+
+	void ComponentCollider::Save(ComponentPrefab *prefab)
+	{
+
+	}
 }

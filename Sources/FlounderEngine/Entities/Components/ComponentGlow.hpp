@@ -21,6 +21,8 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
+		void Save(ComponentPrefab* prefab) override;
+
 		Texture *GetTextureGlowMap() const { return m_textureGlowMap; }
 
 		void SetTextureGlowMap(Texture *glowMap) { m_textureGlowMap = glowMap; }

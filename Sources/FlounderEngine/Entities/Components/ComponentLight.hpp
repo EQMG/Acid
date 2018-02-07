@@ -22,6 +22,8 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
+		void Save(ComponentPrefab* prefab) override;
+
 		Light *GetLight() const { return m_light; }
 
 		void SetLight(const Light &light) const { m_light->Set(light); }

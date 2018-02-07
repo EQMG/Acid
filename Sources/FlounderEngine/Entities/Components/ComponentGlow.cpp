@@ -29,4 +29,9 @@ namespace Flounder
 		// 	entityRender->descriptorWrites.push_back(m_textureGlowMap->GetWriteDescriptor(4, entityRender->descriptorSet));
 		// TODO
 	}
+
+	void ComponentGlow::Save(ComponentPrefab *prefab)
+	{
+		prefab->SetString(0, m_textureGlowMap->GetFilename());
+	}
 }
