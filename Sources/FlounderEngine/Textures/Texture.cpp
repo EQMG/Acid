@@ -4,13 +4,15 @@
 #include <cstring>
 #include "../Devices/Display.hpp"
 #include "../Renderer/Renderer.hpp"
+#include "Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
+	static const std::string FALLBACK_PATH = "Resources/Undefined.png";
+
 	Texture::Texture(const std::string &filename, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
 		IResource(),
-		Buffer(LoadSize(filename),
-			VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
+		Buffer(LoadSize(filename), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_filename(filename),
 		m_hasAlpha(hasAlpha),
 		m_clampEdges(clampEdges),
@@ -27,6 +29,12 @@ namespace Flounder
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageInfo({})
 	{
+		if (!FileSystem::FileExists(filename))
+		{
+			printf("File does not exist: '%s'\n", filename.c_str());
+			m_filename = FALLBACK_PATH;
+		}
+
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		stbi_uc *pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
@@ -108,6 +116,7 @@ namespace Flounder
 
 		delete bufferStaging;
 		delete[] pixels;
+		m_filename = filename;
 	}
 
 	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage) :
@@ -240,6 +249,12 @@ namespace Flounder
 
 	stbi_uc *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
 	{
+		if (!FileSystem::FileExists(filepath))
+		{
+			printf("File does not exist: '%s'\n", filepath.c_str());
+			return nullptr;
+		}
+
 		stbi_uc *data = nullptr;
 
 		if (stbi_info(filepath.c_str(), width, height, components) == 0)
@@ -251,7 +266,7 @@ namespace Flounder
 
 		if (data == nullptr)
 		{
-			printf("Unable to load texture: '%s'.\n", filepath.c_str());
+			printf("Unable to load texture: '%s'\n", filepath.c_str());
 		}
 
 		return data;
@@ -263,9 +278,21 @@ namespace Flounder
 		int height;
 		int components;
 
-		if (stbi_info(filepath.c_str(), &width, &height, &components) == 0)
+		if (!FileSystem::FileExists(filepath))
 		{
-			assert(false && "Vulkan invalid texture file format.");
+			//	printf("File does not exist: '%s'\n", filepath.c_str());
+
+			if (stbi_info(FALLBACK_PATH.c_str(), &width, &height, &components) == 0)
+			{
+				assert(false && "Vulkan invalid texture file format.");
+			}
+		}
+		else
+		{
+			if (stbi_info(filepath.c_str(), &width, &height, &components) == 0)
+			{
+				assert(false && "Vulkan invalid texture file format.");
+			}
 		}
 
 		return width * height * 4;

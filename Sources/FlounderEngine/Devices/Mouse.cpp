@@ -1,6 +1,7 @@
 #include "Mouse.hpp"
 
 #include "../Maths/Maths.hpp"
+#include "../Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -92,6 +93,12 @@ namespace Flounder
 
 		if (!m_customMouse.empty())
 		{
+			if (!FileSystem::FileExists(m_customMouse))
+			{
+				printf("File does not exist: '%s'\n", m_customMouse.c_str());
+				return;
+			}
+
 			int width = 0;
 			int height = 0;
 			int components = 0;
