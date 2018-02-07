@@ -25,6 +25,8 @@ namespace Flounder
 
 		void Save(ComponentPrefab* prefab) override;
 
+		std::string GetName() const override { return "ComponentModel"; };
+
 		Model *GetModel() const { return m_model; }
 
 		void SetModel(Model *model) { m_model = model; }

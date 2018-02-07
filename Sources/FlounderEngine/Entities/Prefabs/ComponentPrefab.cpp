@@ -14,7 +14,11 @@ namespace Flounder
 
 	void ComponentPrefab::SetRaw(const unsigned int &i, const std::string &data)
 	{
-		// TODO: if (i >= m_data.size())
+		while (m_data.empty() || i >= m_data.size())
+		{
+			m_data.push_back("");
+		}
+
 		m_data.at(i) = data;
 	}
 

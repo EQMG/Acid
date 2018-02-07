@@ -206,7 +206,7 @@ namespace Flounder
 
 			if (data == nullptr)
 			{
-				printf("Unable to load texture: '%s'.\n", m_icon.c_str());
+				printf("Unable to load texture: '%s'\n", m_icon.c_str());
 			}
 			else
 			{
@@ -240,7 +240,7 @@ namespace Flounder
 		if (fullscreen)
 		{
 #if FLOUNDER_VERBOSE
-			printf("Display is going fullscreen.\n");
+			printf("Display is going fullscreen\n");
 #endif
 			m_fullscreenWidth = videoMode->width;
 			m_fullscreenHeight = videoMode->height;
@@ -249,7 +249,7 @@ namespace Flounder
 		else
 		{
 #if FLOUNDER_VERBOSE
-			printf("Display is going windowed.\n");
+			printf("Display is going windowed\n");
 #endif
 			m_windowPosX = (videoMode->width - m_windowWidth) / 2;
 			m_windowPosY = (videoMode->height - m_windowHeight) / 2;

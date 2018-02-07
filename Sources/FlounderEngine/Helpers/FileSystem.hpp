@@ -26,10 +26,11 @@ namespace Flounder
 		static void DeleteFile(const std::string &filepath);
 
 		/// <summary>
-		/// Creates a file.
+		/// Creates a file, and the folder path.
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
-		static void CreateFile(const std::string &filepath);
+		/// <param name="createFolders"> If folders should also be created. </param>
+		static void CreateFile(const std::string &filepath, const bool &createFolders = true);
 
 		/// <summary>
 		/// Clears the contents from a file.
@@ -76,5 +77,11 @@ namespace Flounder
 		/// </summary>
 		/// <returns> If the working directory. </returns>
 		static std::string GetWorkingDirectory();
+
+		/// <summary>
+		/// Removes backslashes from directories.
+		/// </summary>
+		/// <returns> The path with only forward slashes. </returns>
+		static std::string FixPaths(const std::string &filepath);
 	};
 }

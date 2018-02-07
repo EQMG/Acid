@@ -23,6 +23,8 @@ namespace Flounder
 
 		void Save(ComponentPrefab* prefab) override;
 
+		std::string GetName() const override { return "ComponentGlow"; };
+
 		Texture *GetTextureGlowMap() const { return m_textureGlowMap; }
 
 		void SetTextureGlowMap(Texture *glowMap) { m_textureGlowMap = glowMap; }

@@ -8,7 +8,7 @@ namespace Flounder
 
 		if (key < 0 || key > GLFW_KEY_LAST)
 		{
-			printf("Invalid action attempted with key: '%i'.\n", key);
+			printf("Invalid action attempted with key: '%i'\n", key);
 		}
 		else
 		{

@@ -27,6 +27,8 @@ namespace Flounder
 
 		virtual void Save(ComponentPrefab* prefab) = 0;
 
+		virtual std::string GetName() const = 0;
+
 		virtual ICollider *GetCollider() { return nullptr; }
 
 		Entity *GetEntity() const { return m_entity; }

@@ -24,6 +24,8 @@ namespace Flounder
 
 		void Save(ComponentPrefab* prefab) override;
 
+		std::string GetName() const override { return "ComponentLight"; };
+
 		Light *GetLight() const { return m_light; }
 
 		void SetLight(const Light &light) const { m_light->Set(light); }
