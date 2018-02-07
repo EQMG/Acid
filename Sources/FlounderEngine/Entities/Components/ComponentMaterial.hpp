@@ -24,6 +24,8 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
+		void Save(ComponentPrefab* prefab) override;
+
 		float GetMetallic() const { return m_metallic; }
 
 		void SetMetallic(const float &metallic) { m_metallic = metallic; }

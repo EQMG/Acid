@@ -42,4 +42,10 @@ namespace Flounder
 		entityRender->descriptorWrites.push_back(m_textureDiffuse->GetWriteDescriptor(2, entityRender->descriptorSet));
 		entityRender->model = m_model;
 	}
+
+	void ComponentModel::Save(ComponentPrefab *prefab)
+	{
+		prefab->SetString(0, m_model->GetFilename());
+		prefab->SetString(1, m_textureDiffuse->GetFilename());
+	}
 }

@@ -26,11 +26,20 @@ namespace Flounder
 
 	void ComponentLight::Update()
 	{
-	//	m_light->m_position->Set(*GetEntity()->GetTransform()->m_position);
-	//	Vector3::Add(*m_light->m_position, *m_offset, m_light->m_position);
+		m_light->m_position->Set(*GetEntity()->GetTransform()->m_position);
+		Vector3::Add(*m_light->m_position, *m_offset, m_light->m_position);
 	}
 
 	void ComponentLight::CmdRender(EntityRender *entityRender)
 	{
+	}
+
+	void ComponentLight::Save(ComponentPrefab *prefab)
+	{
+		prefab->SetString(0, Colour::GetHex(*m_light->m_colour));
+		prefab->SetFloat(1, m_light->m_radius);
+		prefab->SetFloat(2, m_offset->m_x);
+		prefab->SetFloat(3, m_offset->m_y);
+		prefab->SetFloat(4, m_offset->m_z);
 	}
 }
