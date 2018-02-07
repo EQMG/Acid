@@ -6,6 +6,8 @@
 
 namespace Flounder
 {
+	static const std::string FALLBACK_PATH = "Resources/Undefined.obj";
+
 	Model::Model() :
 		IResource(),
 		m_filename(""),
@@ -26,9 +28,18 @@ namespace Flounder
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr)
 	{
-		LoadFromFile();
-		m_vertexBuffer = new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data());
-		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
+		LoadFromFile(filename);
+
+		if (!m_vertices.empty())
+		{
+			m_vertexBuffer = new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data());
+		}
+
+		if (!m_indices.empty())
+		{
+			m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
+		}
+
 		CreateAabb();
 	}
 
@@ -80,10 +91,10 @@ namespace Flounder
 			vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 			vkCmdDraw(commandBuffer, m_vertexBuffer->GetVertexCount(), 1, 0, 0);
 		}
-		else
-		{
-			assert(false && "Cannot render model, no buffers exist for it!");
-		}
+	//	else
+	//	{
+	//		assert(false && "Cannot render model, no buffers exist for it!");
+	//	}
 	}
 
 	void Model::Set(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices, const std::string &name)
@@ -98,8 +109,15 @@ namespace Flounder
 		CreateAabb();
 	}
 
-	void Model::LoadFromFile()
+	void Model::LoadFromFile(const std::string &filename)
 	{
+		if (!FileSystem::FileExists(m_filename))
+		{
+			printf("File does not exist: '%s'\n", m_filename.c_str());
+			m_filename = FALLBACK_PATH;
+			return;
+		}
+
 		const std::string fileLoaded = FileSystem::ReadTextFile(std::string(m_filename));
 		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n");
 
@@ -200,6 +218,8 @@ namespace Flounder
 
 			delete current;
 		}
+
+		m_filename = fileName;
 	}
 
 	VertexData *Model::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData *> *vertices, std::vector<uint32_t> *indices)
@@ -274,6 +294,11 @@ namespace Flounder
 
 	void Model::CreateAabb()
 	{
+		if (m_vertices.empty())
+		{
+			return;
+		}
+
 		float minX = +std::numeric_limits<float>::infinity();
 		float minY = +std::numeric_limits<float>::infinity();
 		float minZ = +std::numeric_limits<float>::infinity();
