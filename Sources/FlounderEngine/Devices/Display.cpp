@@ -266,7 +266,9 @@ namespace Flounder
 		Platform::ErrorGlfw(glfwInit());
 
 		// Checks Vulkan support on GLFW.
+#ifndef FLOUNDER_PLATFORM_MACOS
 		Platform::ErrorGlfw(glfwVulkanSupported());
+#endif
 
 		// Configures the window.
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
@@ -427,7 +429,11 @@ namespace Flounder
 		std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
 		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, physicalDevices.data());
 
+#ifdef FLOUNDER_PLATFORM_MACOS
+		m_physicalDevice = physicalDevices.at(0);
+#else
 		m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
+#endif
 		assert(m_physicalDevice != nullptr && "Vulkan runtime error, failed to find a suitable gpu!");
 
 		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);

@@ -21,7 +21,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
 ## Platforms
  * Windows
  * Linux
- * MacOS (Future)
+ * MacOS
 
 ## Features
  * High speed
@@ -54,13 +54,15 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * A simple visual editor in the far future
 
 ## Developer Setup
+Once Flounder is cloned run `git submodule update --init --recursive` to update the submodules needed to compile. All platforms depend on CMake to generate IDE/make files.
+
 You will need the [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://www.openal.org/downloads/) to develop and run Flounder.
 
-Once Flounder is cloned run `git submodule update --init --recursive` to update the submodules needed to compile.
-
-On all platforms you can compile using CMake.
-
 For Windows you need Visual Studios 2015 or later, use the VS installer and ensure you have "Desktop development with C++" installed. You should also probably update the Windows SDK, the project is setup for "Windows 10 SDK (10.0.15063.0) for UWP: C++" currently. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and now Flounder should compile properly. You can now run Scripts/generate_vs.bat and an environment will be setup in Build.
+
+On Linux you need a GCC/Clang compiler, each package listed here are for Debian/Apt. GLFW requires `xorg-dev`, you should also have `libopenal1`, `libglfw3`, and `libvulkan` installed.
+
+On MacOS you need [MoltenVK](https://moltengl.com/moltenvk/) in the Libraries/moltenvk directory, creating a Libraries structure shown in [this image](https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/MacOS-Libraries.png).
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.
