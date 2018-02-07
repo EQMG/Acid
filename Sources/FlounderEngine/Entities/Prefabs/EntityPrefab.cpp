@@ -1,6 +1,7 @@
 #include "EntityPrefab.hpp"
 
-//#include "Components.hpp"
+#include "../Entity.hpp"
+#include "../../Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -10,6 +11,11 @@ namespace Flounder
 		m_fileCsv(new FileCsv(filename)),
 		m_components(new std::unordered_map<std::string, ComponentPrefab*>())
 	{
+		if (!FileSystem::FileExists(filename))
+		{
+			FileSystem::CreateFile(filename);
+		}
+
 		m_fileCsv->Load();
 
 		for (unsigned int i = 0; i < m_fileCsv->GetRowCount(); i++)
@@ -28,8 +34,30 @@ namespace Flounder
 
 	EntityPrefab::~EntityPrefab()
 	{
+		for (auto component : *m_components)
+		{
+			delete component.second;
+		}
+
 		delete m_fileCsv;
 		delete m_components;
+	}
+
+	void EntityPrefab::Write(Entity *entity)
+	{
+		for (auto component : *m_components)
+		{
+			delete component.second;
+		}
+
+		m_components->clear();
+
+		for (auto component : *entity->GetComponents())
+		{
+			ComponentPrefab *componentPrefab = new ComponentPrefab(std::vector<std::string>());
+			component->Save(componentPrefab);
+			m_components->insert(std::make_pair(component->GetName(), componentPrefab));
+		}
 	}
 
 	void EntityPrefab::Save()
@@ -38,13 +66,6 @@ namespace Flounder
 
 		for (auto component : *m_components)
 		{
-		//	auto sample = Components::CreateComponent(component.first, nullptr);
-		//	if (sample != nullptr)
-		//	{
-		//		sample->Save(component.second);
-		//		delete sample;
-		//	}
-
 			std::vector<std::string> data = std::vector<std::string>();
 			data.push_back(component.first);
 

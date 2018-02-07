@@ -32,6 +32,8 @@ namespace Flounder
 
 		void Save(ComponentPrefab* prefab) override;
 
+		std::string GetName() const override { return "ComponentCollider"; };
+
 		ICollider *GetCollider() override { return m_collider; }
 	};
 }
