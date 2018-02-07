@@ -10,6 +10,8 @@
 
 namespace Flounder
 {
+	class Entity;
+
 	/// <summary>
 	/// Class that represents a entity prefab.
 	/// </summary>
@@ -42,6 +44,8 @@ namespace Flounder
 		EntityPrefab(const std::string &filename);
 
 		~EntityPrefab();
+
+		void Write(Entity *entity);
 
 		void Save();
 

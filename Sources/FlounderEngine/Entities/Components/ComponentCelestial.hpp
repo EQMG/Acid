@@ -27,5 +27,7 @@ namespace Flounder
 		void CmdRender(EntityRender *entityRender) override;
 
 		void Save(ComponentPrefab* prefab) override;
+
+		std::string GetName() const override { return "ComponentCelestial"; };
 	};
 }

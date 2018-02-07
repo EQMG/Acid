@@ -21,6 +21,8 @@ namespace Flounder
 
 		void Save(ComponentPrefab* prefab) override;
 
+		std::string GetName() const override { return "ComponentCollision"; };
+
 		Vector3 ResolveCollisions(const Vector3 &amount);
 	};
 }

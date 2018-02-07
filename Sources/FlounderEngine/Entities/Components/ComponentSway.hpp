@@ -23,6 +23,8 @@ namespace Flounder
 
 		void Save(ComponentPrefab* prefab) override;
 
+		std::string GetName() const override { return "ComponentSway"; };
+
 		Texture *GetTextureSwayMap() const { return m_textureSwayMap; }
 
 		void SetTextureSwayMap(Texture *swayMap) { m_textureSwayMap = swayMap; }
