@@ -1,5 +1,7 @@
 #include "EntityPrefab.hpp"
 
+//#include "Components.hpp"
+
 namespace Flounder
 {
 	EntityPrefab::EntityPrefab(const std::string &filename) :
@@ -36,6 +38,13 @@ namespace Flounder
 
 		for (auto component : *m_components)
 		{
+		//	auto sample = Components::CreateComponent(component.first, nullptr);
+		//	if (sample != nullptr)
+		//	{
+		//		sample->Save(component.second);
+		//		delete sample;
+		//	}
+
 			std::vector<std::string> data = std::vector<std::string>();
 			data.push_back(component.first);
 

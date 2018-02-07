@@ -36,6 +36,11 @@ namespace Flounder
 	{
 	}
 
+	void ComponentCollision::Save(ComponentPrefab *prefab)
+	{
+
+	}
+
 	Vector3 ComponentCollision::ResolveCollisions(const Vector3 &amount)
 	{
 		// Sets the resulting resolved collisions.

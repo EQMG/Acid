@@ -40,4 +40,9 @@ namespace Flounder
 		const float swayY = swayPower * (cos(0.25f * st) - cos(1.2f * st) + sin(0.5f * st));
 		entityRender->uboObject.swayOffset = Vector2(swayX, swayY);
 	}
+
+	void ComponentSway::Save(ComponentPrefab *prefab)
+	{
+		prefab->SetString(0, m_textureSwayMap->GetFilename());
+	}
 }

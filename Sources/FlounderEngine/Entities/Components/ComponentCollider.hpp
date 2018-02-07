@@ -30,6 +30,8 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
+		void Save(ComponentPrefab* prefab) override;
+
 		ICollider *GetCollider() override { return m_collider; }
 	};
 }
