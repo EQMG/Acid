@@ -19,6 +19,8 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
+		void Save(ComponentPrefab* prefab) override;
+
 		Vector3 ResolveCollisions(const Vector3 &amount);
 	};
 }

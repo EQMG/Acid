@@ -38,4 +38,13 @@ namespace Flounder
 		entityRender->uboObject.roughness = m_roughness;
 		entityRender->uboObject.ignore = (1.0f / 3.0f) * ((float)m_ignoreFog + (2.0f * (float)m_ignoreLighting));
 	}
+
+	void ComponentMaterial::Save(ComponentPrefab *prefab)
+	{
+		prefab->SetFloat(0, m_metallic);
+		prefab->SetFloat(1, m_roughness);
+		prefab->SetBool(2, m_castsShadows);
+		prefab->SetBool(3, m_ignoreLighting);
+		prefab->SetBool(4, m_ignoreFog);
+	}
 }

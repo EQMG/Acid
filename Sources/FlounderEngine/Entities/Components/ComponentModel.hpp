@@ -23,6 +23,8 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
+		void Save(ComponentPrefab* prefab) override;
+
 		Model *GetModel() const { return m_model; }
 
 		void SetModel(Model *model) { m_model = model; }

@@ -26,7 +26,7 @@ namespace Flounder
 	{
 		Transform *entityTransform = GetEntity()->GetTransform();
 
-		if (Worlds::Get() != nullptr && Worlds::Get()->GetSunPosition() != nullptr)
+		if (Worlds::Get() != nullptr)
 		{
 			switch (m_type)
 			{
@@ -58,5 +58,10 @@ namespace Flounder
 	void ComponentCelestial::CmdRender(EntityRender *entityRender)
 	{
 		// TODO: Disable fog/shadows/lighting.
+	}
+
+	void ComponentCelestial::Save(ComponentPrefab *prefab)
+	{
+		prefab->SetInt(0, m_type);
 	}
 }

@@ -25,5 +25,7 @@ namespace Flounder
 		void Update() override;
 
 		void CmdRender(EntityRender *entityRender) override;
+
+		void Save(ComponentPrefab* prefab) override;
 	};
 }

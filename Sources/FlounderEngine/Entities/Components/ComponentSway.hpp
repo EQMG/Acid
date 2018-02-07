@@ -21,6 +21,8 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
+		void Save(ComponentPrefab* prefab) override;
+
 		Texture *GetTextureSwayMap() const { return m_textureSwayMap; }
 
 		void SetTextureSwayMap(Texture *swayMap) { m_textureSwayMap = swayMap; }
