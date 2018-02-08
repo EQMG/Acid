@@ -21,7 +21,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Standards *get()
 		{
-			return dynamic_cast<Standards *>(Engine::Get()->GetModule("standards"));
+			return reinterpret_cast<Standards *>(Engine::Get()->GetModule("standards"));
 		}
 
 		Standards();

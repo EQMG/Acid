@@ -8,7 +8,6 @@
 #include "../Entities/Entities.hpp"
 #include "../Events/Events.hpp"
 #include "../Particles/Particles.hpp"
-#include "../Processing/Processing.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "../Shadows/Shadows.hpp"
 #include "../Skyboxes/Skyboxes.hpp"
@@ -62,7 +61,6 @@ namespace Flounder
 		ModuleCreate<Resources>(UpdatePre, "resources");
 		ModuleCreate<Events>(UpdatePre, "events");
 		ModuleCreate<Tasks>(UpdatePre, "tasks");
-		ModuleCreate<Processing>(UpdatePre, "processing");
 		ModuleCreate<Standards>(UpdatePre, "standards");
 		ModuleCreate<Camera>(UpdatePre, "camera");
 		ModuleCreate<Uis>(UpdatePre, "uis");
@@ -104,8 +102,7 @@ namespace Flounder
 		}
 
 		// Renders when needed.
-		if (m_timerRender->IsPassedTime() || Display::Get()->GetFpsLimit() <= 0.0f ||
-			Display::Get()->GetFpsLimit() > 1000.0f)
+		if (m_timerRender->IsPassedTime() || Display::Get()->GetFpsLimit() <= 0.0f || Display::Get()->GetFpsLimit() > 1000.0f)
 		{
 			// if (maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 7.0f)) {}
 

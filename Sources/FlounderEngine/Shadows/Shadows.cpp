@@ -13,8 +13,8 @@ namespace Flounder
 		m_shadowBias(0.001f),
 		m_shadowDarkness(0.6f),
 		m_shadowTransition(11.0f),
-		m_shadowBoxOffset(25.0f),
-		m_shadowBoxDistance(40.0f),
+		m_shadowBoxOffset(9.0f),
+		m_shadowBoxDistance(70.0f),
 		m_shadowFactor(1.0f),
 		m_shadowBox(new ShadowBox())
 	{

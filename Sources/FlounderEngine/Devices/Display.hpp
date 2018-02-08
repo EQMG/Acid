@@ -80,7 +80,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Display *Get()
 		{
-			return dynamic_cast<Display *>(Engine::Get()->GetModule("display"));
+			return reinterpret_cast<Display *>(Engine::Get()->GetModule("display"));
 		}
 
 		/// <summary>

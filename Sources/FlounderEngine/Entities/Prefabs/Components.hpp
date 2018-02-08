@@ -11,6 +11,7 @@
 #include "../Components/ComponentLight.hpp"
 #include "../Components/ComponentMaterial.hpp"
 #include "../Components/ComponentModel.hpp"
+#include "../Components/ComponentNormal.hpp"
 #include "../Components/ComponentSway.hpp"
 
 namespace Flounder
@@ -22,22 +23,15 @@ namespace Flounder
 		static IComponent *CreateComponent(const std::string &name, ComponentPrefab *prefab)
 		{
 			// TODO: Recreate function to be more modular.
-			if (name == "ComponentCelestial")
-			{ return new ComponentCelestial(prefab); }
-			if (name == "ComponentCollider")
-			{ return new ComponentCollider(prefab); }
-			if (name == "ComponentCollision")
-			{ return new ComponentCollision(prefab); }
-			if (name == "ComponentGlow")
-			{ return new ComponentGlow(prefab); }
-			if (name == "ComponentLight")
-			{ return new ComponentLight(prefab); }
-			if (name == "ComponentMaterial")
-			{ return new ComponentMaterial(prefab); }
-			if (name == "ComponentModel")
-			{ return new ComponentModel(prefab); }
-			if (name == "ComponentSway")
-			{ return new ComponentSway(prefab); }
+			if (name == "ComponentCelestial") { return new ComponentCelestial(prefab); }
+			if (name == "ComponentCollider") { return new ComponentCollider(prefab); }
+			if (name == "ComponentCollision") { return new ComponentCollision(prefab); }
+			if (name == "ComponentGlow") { return new ComponentGlow(prefab); }
+			if (name == "ComponentLight") { return new ComponentLight(prefab); }
+			if (name == "ComponentMaterial") { return new ComponentMaterial(prefab); }
+			if (name == "ComponentModel") { return new ComponentModel(prefab); }
+			if (name == "ComponentNormal") { return new ComponentNormal(prefab); }
+			if (name == "ComponentSway") { return new ComponentSway(prefab); }
 			return nullptr;
 		}
 

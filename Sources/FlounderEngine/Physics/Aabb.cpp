@@ -31,6 +31,13 @@ namespace Flounder
 		delete m_maxExtents;
 	}
 
+	Aabb *Aabb::Set(const Aabb &source)
+	{
+		m_minExtents->Set(*source.m_minExtents);
+		m_maxExtents->Set(*source.m_maxExtents);
+		return this;
+	}
+
 	Aabb *Aabb::Scale(const Aabb &source, const Vector3 &scale, Aabb *destination)
 	{
 		if (destination == nullptr)

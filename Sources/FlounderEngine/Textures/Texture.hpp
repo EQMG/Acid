@@ -55,12 +55,8 @@ namespace Flounder
 		/// <summary>
 		/// A new texture object.
 		/// </summary>
-		Texture(const std::string &filename, const bool &hasAlpha = false,
-				const bool &clampEdges = false,
-				const uint32_t &mipLevels = 1,
-				const bool &anisotropic = true,
-				const bool &nearest = false,
-				const uint32_t &numberOfRows = 1);
+		Texture(const std::string &filename, const bool &hasAlpha = false, const bool &clampEdges = false, const uint32_t &mipLevels = 1,
+				const bool &anisotropic = true, const bool &nearest = false, const uint32_t &numberOfRows = 1);
 
 		/// <summary>
 		/// A new empty texture object.
@@ -94,13 +90,13 @@ namespace Flounder
 		/// Gets the number of texture rows.
 		/// </summary>
 		/// <returns> The number of texture rows. </returns>
-		int32_t GetNumberOfRows() const { return m_numberOfRows; }
+		uint32_t GetNumberOfRows() const { return m_numberOfRows; }
 
 		/// <summary>
 		/// Sets the number of texture rows.
 		/// </summary>
 		/// <param name="numberOfRows"> The number of texture rows. </param>
-		void SetNumberOfRows(const int32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
+		void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
 
 		VkImage GetImage() const { return m_image; }
 

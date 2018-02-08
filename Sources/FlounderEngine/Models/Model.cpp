@@ -11,8 +11,6 @@ namespace Flounder
 	Model::Model() :
 		IResource(),
 		m_filename(""),
-		m_vertices(std::vector<Vertex>()),
-		m_indices(std::vector<uint32_t>()),
 		m_aabb(new Aabb()),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr)
@@ -22,49 +20,46 @@ namespace Flounder
 	Model::Model(const std::string &filename) :
 		IResource(),
 		m_filename(filename),
-		m_vertices(std::vector<Vertex>()),
-		m_indices(std::vector<uint32_t>()),
 		m_aabb(new Aabb()),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr)
 	{
-		LoadFromFile(filename);
+		std::vector<Vertex> vertices = std::vector<Vertex>();
+		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
-		if (!m_vertices.empty())
+		ModelLoaded modelLoaded = LoadFromFile(filename);
+
+		if (!modelLoaded.vertices.empty())
 		{
-			m_vertexBuffer = new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data());
+			m_vertexBuffer = new VertexBuffer(sizeof(modelLoaded.vertices[0]), modelLoaded.vertices.size(), modelLoaded.vertices.data());
 		}
 
-		if (!m_indices.empty())
+		if (!modelLoaded.indices.empty())
 		{
-			m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
+			m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(modelLoaded.indices[0]), modelLoaded.indices.size(), modelLoaded.indices.data());
 		}
 
-		CreateAabb();
+		m_aabb->Set(CalculateAabb(vertices));
 	}
 
-	Model::Model(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices, const std::string &name) :
+	Model::Model(std::vector<Vertex> &vertices, std::vector<uint32_t> &indices, const std::string &name) :
 		IResource(),
 		m_filename(name),
-		m_vertices(std::vector<Vertex>(vertices)),
-		m_indices(std::vector<uint32_t>(indices)),
 		m_aabb(new Aabb()),
-		m_vertexBuffer(new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data())),
-		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(m_indices[0]), m_indices.size(), m_indices.data()))
+		m_vertexBuffer(new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data())),
+		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data()))
 	{
-		CreateAabb();
+		m_aabb->Set(CalculateAabb(vertices));
 	}
 
-	Model::Model(const std::vector<Vertex> &vertices, const std::string &name) :
+	Model::Model(std::vector<Vertex> &vertices, const std::string &name) :
 		IResource(),
 		m_filename(name),
-		m_vertices(std::vector<Vertex>(vertices)),
-		m_indices(std::vector<uint32_t>()),
 		m_aabb(new Aabb()),
-		m_vertexBuffer(new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data())),
+		m_vertexBuffer(new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data())),
 		m_indexBuffer(nullptr)
 	{
-		CreateAabb();
+		m_aabb->Set(CalculateAabb(vertices));
 	}
 
 	Model::~Model()
@@ -97,25 +92,28 @@ namespace Flounder
 		//	}
 	}
 
-	void Model::Set(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices, const std::string &name)
+	void Model::Set(std::vector<Vertex> &vertices, std::vector<uint32_t> &indices, const std::string &name)
 	{
-		m_vertices = std::vector<Vertex>(vertices);
-		m_indices = std::vector<uint32_t>(indices);
 		m_filename = name;
 		delete m_vertexBuffer;
 		delete m_indexBuffer;
-		m_vertexBuffer = new VertexBuffer(sizeof(m_vertices[0]), m_vertices.size(), m_vertices.data());
-		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(m_indices[0]), m_indices.size(), m_indices.data());
-		CreateAabb();
+		m_vertexBuffer = new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data());
+		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
+		m_aabb->Set(CalculateAabb(vertices));
 	}
 
-	void Model::LoadFromFile(const std::string &filename)
+	ModelLoaded Model::LoadFromFile(const std::string &filename)
 	{
+		ModelLoaded modelLoaded = ModelLoaded{
+			std::vector<Vertex>(),
+			std::vector<uint32_t>()
+		};
+
 		if (!FileSystem::FileExists(m_filename))
 		{
 			fprintf(stderr, "File does not exist: '%s'\n", m_filename.c_str());
 			m_filename = FALLBACK_PATH;
-			return;
+			return modelLoaded;
 		}
 
 		const std::string fileLoaded = FileSystem::ReadTextFile(std::string(m_filename));
@@ -202,7 +200,7 @@ namespace Flounder
 			}
 		}
 
-		m_indices.swap(indicesList);
+		modelLoaded.indices.swap(indicesList);
 
 		// Turns the loaded OBJ data into a formal that can be used by OpenGL.
 		for (auto current : verticesList)
@@ -214,12 +212,13 @@ namespace Flounder
 
 			const Vertex vertex = Vertex(position, textures, normal, tangent);
 
-			m_vertices.push_back(vertex);
+			modelLoaded.vertices.push_back(vertex);
 
 			delete current;
 		}
 
 		m_filename = fileName;
+		return modelLoaded;
 	}
 
 	VertexData *Model::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData *> *vertices, std::vector<uint32_t> *indices)
@@ -292,13 +291,8 @@ namespace Flounder
 		delete deltaUv2;
 	}
 
-	void Model::CreateAabb()
+	Aabb Model::CalculateAabb(const std::vector<Vertex> &vertices)
 	{
-		if (m_vertices.empty())
-		{
-			return;
-		}
-
 		float minX = +std::numeric_limits<float>::infinity();
 		float minY = +std::numeric_limits<float>::infinity();
 		float minZ = +std::numeric_limits<float>::infinity();
@@ -306,7 +300,7 @@ namespace Flounder
 		float maxY = -std::numeric_limits<float>::infinity();
 		float maxZ = -std::numeric_limits<float>::infinity();
 
-		for (const auto vertex : m_vertices)
+		for (const auto &vertex : vertices)
 		{
 			const Vector3 position = vertex.m_position;
 
@@ -338,7 +332,6 @@ namespace Flounder
 			}
 		}
 
-		m_aabb->m_minExtents->Set(minX, minY, minZ);
-		m_aabb->m_maxExtents->Set(maxX, maxY, maxZ);
+		return Aabb(Vector3(minX, minY, minZ), Vector3(maxX, maxY, maxZ));
 	}
 }

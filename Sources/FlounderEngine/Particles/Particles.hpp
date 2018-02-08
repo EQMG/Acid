@@ -26,7 +26,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Particles *Get()
 		{
-			return dynamic_cast<Particles *>(Engine::Get()->GetModule("particles"));
+			return reinterpret_cast<Particles *>(Engine::Get()->GetModule("particles"));
 		}
 
 		/// <summary>

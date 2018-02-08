@@ -38,6 +38,13 @@ namespace Flounder
 		~Aabb();
 
 		/// <summary>
+		/// Loads from another Aabb.
+		/// </summary>
+		/// <param name="source"> The source aabb. </param>
+		/// <returns> This. </returns>
+		Aabb *Set(const Aabb &source);
+
+		/// <summary>
 		/// Creates a new aabb equivalent to this, scaled away from the centre origin.
 		/// </summary>
 		/// <param name="source"> The source aabb. </param>

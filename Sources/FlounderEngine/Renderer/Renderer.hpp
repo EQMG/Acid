@@ -34,7 +34,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Renderer *Get()
 		{
-			return dynamic_cast<Renderer *>(Engine::Get()->GetModule("renderer"));
+			return reinterpret_cast<Renderer *>(Engine::Get()->GetModule("renderer"));
 		}
 
 		/// <summary>
