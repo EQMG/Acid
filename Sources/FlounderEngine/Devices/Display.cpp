@@ -266,7 +266,9 @@ namespace Flounder
 		Platform::ErrorGlfw(glfwInit());
 
 		// Checks Vulkan support on GLFW.
-#ifndef FLOUNDER_PLATFORM_MACOS
+#ifdef FLOUNDER_PLATFORM_MACOS
+		glfwVulkanSupported();
+#else
 		Platform::ErrorGlfw(glfwVulkanSupported());
 #endif
 
@@ -355,6 +357,7 @@ namespace Flounder
 					}
 				}
 
+				fprintf(stderr, "Vulkan validation layer not found: '%s'\n", layerName); 
 				assert(layerFound && "Could not find a Vulkan validation layer!");
 				m_instanceLayerList.push_back(layerName);
 			}
