@@ -13,7 +13,7 @@ namespace Flounder
 	public:
 		ComponentGlow(Texture *swayMap);
 
-		ComponentGlow(ComponentPrefab* prefab);
+		ComponentGlow(ComponentPrefab *prefab);
 
 		~ComponentGlow();
 
@@ -21,7 +21,7 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
-		void Save(ComponentPrefab* prefab) override;
+		void Save(ComponentPrefab *prefab) override;
 
 		std::string GetName() const override { return "ComponentGlow"; };
 

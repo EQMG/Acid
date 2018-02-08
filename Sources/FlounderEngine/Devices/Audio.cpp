@@ -103,7 +103,7 @@ namespace Flounder
 		file.read(reinterpret_cast<char *>(result.data), result.size);
 
 		file.close();
-	//	LogOpenAlSound(filename, result);
+		//	LogOpenAlSound(filename, result);
 		return result;
 	}
 
@@ -117,7 +117,7 @@ namespace Flounder
 		// TODO
 
 		file.close();
-	//	LogOpenAlSound(filename, result);
+		//	LogOpenAlSound(filename, result);
 		return result;
 	}
 

@@ -14,7 +14,7 @@ namespace Flounder
 	{
 	}
 
-	ComponentMaterial::ComponentMaterial(ComponentPrefab* prefab) :
+	ComponentMaterial::ComponentMaterial(ComponentPrefab *prefab) :
 		IComponent(),
 		m_metallic(prefab->GetFloat(0)),
 		m_roughness(prefab->GetFloat(1)),
@@ -36,7 +36,7 @@ namespace Flounder
 	{
 		entityRender->uboObject.metallic = m_metallic;
 		entityRender->uboObject.roughness = m_roughness;
-		entityRender->uboObject.ignore = (1.0f / 3.0f) * ((float)m_ignoreFog + (2.0f * (float)m_ignoreLighting));
+		entityRender->uboObject.ignore = (1.0f / 3.0f) * ((float) m_ignoreFog + (2.0f * (float) m_ignoreLighting));
 	}
 
 	void ComponentMaterial::Save(ComponentPrefab *prefab)

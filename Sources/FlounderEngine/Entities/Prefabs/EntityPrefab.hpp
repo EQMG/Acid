@@ -21,7 +21,7 @@ namespace Flounder
 	private:
 		std::string m_filename;
 		FileCsv *m_fileCsv;
-		std::unordered_map<std::string, ComponentPrefab*> *m_components;
+		std::unordered_map<std::string, ComponentPrefab *> *m_components;
 	public:
 		static EntityPrefab *Resource(const std::string &filename)
 		{

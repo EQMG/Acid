@@ -11,7 +11,7 @@ namespace Flounder
 	public:
 		ComponentCollision();
 
-		ComponentCollision(ComponentPrefab* prefab);
+		ComponentCollision(ComponentPrefab *prefab);
 
 		~ComponentCollision();
 
@@ -19,7 +19,7 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
-		void Save(ComponentPrefab* prefab) override;
+		void Save(ComponentPrefab *prefab) override;
 
 		std::string GetName() const override { return "ComponentCollision"; };
 

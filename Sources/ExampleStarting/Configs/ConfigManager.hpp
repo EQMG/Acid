@@ -10,12 +10,11 @@ namespace Demo
 	class ConfigManager
 	{
 	private:
+		Config *m_configAudio;
 		Config *m_configGraphics;
 	public:
 		ConfigManager();
 
 		~ConfigManager();
-
-		Config *GetGraphics() { return m_configGraphics; }
 	};
 }

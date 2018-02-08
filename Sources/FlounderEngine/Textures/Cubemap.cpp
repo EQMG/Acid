@@ -1,7 +1,6 @@
 ﻿#include "Cubemap.hpp"
 
 #include <cstring>
-#include <stdlib.h>
 #include "../Devices/Display.hpp"
 #include "../Renderer/Renderer.hpp"
 
