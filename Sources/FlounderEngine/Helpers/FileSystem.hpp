@@ -83,5 +83,11 @@ namespace Flounder
 		/// </summary>
 		/// <returns> The path with only forward slashes. </returns>
 		static std::string FixPaths(const std::string &filepath);
+
+		/// <summary>
+		/// Gets the file extension for the file.
+		/// </summary>
+		/// <returns> The file extension. </returns>
+		static std::string FindExt(const std::string &filepath);
 	};
 }

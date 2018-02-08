@@ -112,9 +112,17 @@ namespace Flounder
 		std::ifstream file(filename.c_str(), std::ifstream::binary);
 		SoundSourceInfo result = {};
 
-		assert(!file.is_open() && "Load ogg file failure: file couldn't be opened!");
+		assert(file.is_open() && "Load ogg file failure: file couldn't be opened!");
 
-		// TODO
+		int channels;
+		int sample_rate;
+		short * output;
+		int rc = stb_vorbis_decode_filename(filename.c_str(), &channels, &sample_rate, &output);
+		
+		if (rc == -1)
+		{
+			fprintf(stderr, "oops\n");
+		}
 
 		file.close();
 		//	LogOpenAlSound(filename, result);
