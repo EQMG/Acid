@@ -22,9 +22,9 @@ namespace Flounder
 		public IGrabber
 	{
 	private:
-		int m_joystick;
+		unsigned int m_joystick;
 	public:
-		GrabberJoystick(const int &joystick);
+		GrabberJoystick(const unsigned int &joystick);
 
 		int GetCurrent(Text *object) override;
 

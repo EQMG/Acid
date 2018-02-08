@@ -230,6 +230,6 @@ namespace Flounder
 
 		static void AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<Vertex> &vertices);
 
-		static std::vector<Vertex> NormalizeQuad(Text *object, Vector2 *bounding, const std::vector<Vertex> &vertices);
+		static std::vector<Vertex> NormalizeQuad(Vector2 *bounding, const std::vector<Vertex> &vertices);
 	};
 }

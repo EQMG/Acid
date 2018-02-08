@@ -20,7 +20,7 @@ namespace Flounder
 
 	Worlds::Worlds() :
 		IModule(),
-		m_driverDay(new DriverLinear(0.0f, 1.0f, 60.0f)),
+		m_driverDay(new DriverLinear(0.0f, 1.0f, 300.0f)),
 		m_factorDay(0.0f),
 		m_sunPosition(new Vector3()),
 		m_moonPosition(new Vector3()),

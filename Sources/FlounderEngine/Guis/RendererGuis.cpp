@@ -39,9 +39,9 @@ namespace Flounder
 	{
 		m_pipeline->BindPipeline(commandBuffer);
 
-		for (auto screenobject : *Uis::Get()->GetObjects())
+		for (auto screenObject : *Uis::Get()->GetObjects())
 		{
-			Gui *object = dynamic_cast<Gui *>(screenobject);
+			Gui *object = dynamic_cast<Gui *>(screenObject);
 
 			if (object != nullptr)
 			{
