@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "../Devices/Audio.hpp"
 #include "../Resources/Resources.hpp"
 #include "../Maths/Vector3.hpp"
 
@@ -16,7 +17,7 @@ namespace Flounder
 	private:
 		std::string m_filename;
 
-		unsigned int m_buffer;
+		ALuint m_buffer;
 	public:
 		static SoundBuffer *Resource(const std::string &filename)
 		{
@@ -38,6 +39,6 @@ namespace Flounder
 
 		std::string GetFilename() override { return m_filename; };
 
-		unsigned int GetBuffer() const { return m_buffer; };
+		ALuint GetBuffer() const { return m_buffer; };
 	};
 }
