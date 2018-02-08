@@ -27,6 +27,10 @@ namespace Flounder
 			};
 		};
 
+		static const Colour CLEAR;
+		static const Colour WHITE;
+		static const Colour BLACK;
+
 		/// <summary>
 		/// Constructor for colour.
 		/// </summary>

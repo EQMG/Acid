@@ -184,9 +184,9 @@ namespace Flounder
 		const std::vector<Line> lines = CreateStructure(object);
 		const std::vector<Vertex> vertices = CreateQuad(object, lines);
 
-		// Calculates the bounds and zormalizes the verticies.
+		// Calculates the bounds and normalizes the vertices.
 		Vector2 bounding = Vector2();
-		std::vector<Vertex> verticesNormalized = NormalizeQuad(object, &bounding, vertices);
+		std::vector<Vertex> verticesNormalized = NormalizeQuad(&bounding, vertices);
 
 		// Loads mesh data to Vulkan.
 		Model *model = new Model(verticesNormalized);
@@ -271,7 +271,7 @@ namespace Flounder
 		double cursorY = 0.0;
 		int lineOrder = static_cast<int>(lines.size());
 
-		for (auto line : lines)
+		for (const auto &line : lines)
 		{
 			switch (object->GetTextJustify())
 			{
@@ -289,9 +289,9 @@ namespace Flounder
 				break;
 			}
 
-			for (auto word : line.GetWords())
+			for (const auto &word : line.GetWords())
 			{
-				for (auto letter : word.GetCharacters())
+				for (const auto &letter : word.GetCharacters())
 				{
 					AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
 					cursorX += object->m_kerning + letter.GetAdvanceX();
@@ -341,7 +341,7 @@ namespace Flounder
 		vertices.push_back(vertex);
 	}
 
-	std::vector<Vertex> Text::NormalizeQuad(Text *object, Vector2 *bounding, const std::vector<Vertex> &vertices)
+	std::vector<Vertex> Text::NormalizeQuad(Vector2 *bounding, const std::vector<Vertex> &vertices)
 	{
 		std::vector<Vertex> newVertices = std::vector<Vertex>();
 		float minX = +INFINITY;
@@ -349,7 +349,7 @@ namespace Flounder
 		float maxX = -INFINITY;
 		float maxY = -INFINITY;
 
-		for (const auto vertex : vertices)
+		for (const auto &vertex : vertices)
 		{
 			const Vector3 position = vertex.m_position;
 
@@ -378,10 +378,9 @@ namespace Flounder
 		maxX -= minX;
 		maxY -= minY;
 
-		for (const auto vertex : vertices)
+		for (const auto &vertex : vertices)
 		{
-			const Vector3 position = Vector3(
-				(vertex.m_position.m_x - minX) / maxX, (vertex.m_position.m_y - minY) / maxY, 0.0f);
+			const Vector3 position = Vector3((vertex.m_position.m_x - minX) / maxX, (vertex.m_position.m_y - minY) / maxY, 0.0f);
 			const Vertex newVertex = Vertex(position, Vector2(vertex.m_uv), Vector3(vertex.m_normal), Vector3(vertex.m_tangent));
 			newVertices.push_back(newVertex);
 		}

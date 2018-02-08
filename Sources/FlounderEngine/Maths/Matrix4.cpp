@@ -5,6 +5,9 @@
 
 namespace Flounder
 {
+	const Matrix4 Matrix4::IDENTITY = *Matrix4().SetIdentity();
+	const Matrix4 Matrix4::ZERO = *Matrix4().SetZero();
+
 	Matrix4::Matrix4() :
 		m_00(1.0f),
 		m_01(0.0f),
@@ -649,9 +652,9 @@ namespace Flounder
 
 		if (Vector3::LengthSquared(rotation) != 0.0f)
 		{
-			Rotate(*destination, Vector3(1.0f, 0.0f, 0.0f), Maths::Radians(rotation.m_x), destination); // Rotate the X component.
-			Rotate(*destination, Vector3(0.0f, 1.0f, 0.0f), Maths::Radians(rotation.m_y), destination); // Rotate the Y component.
-			Rotate(*destination, Vector3(0.0f, 0.0f, 1.0f), Maths::Radians(rotation.m_z), destination); // Rotate the Z component.
+			Rotate(*destination, Vector3::RIGHT, Maths::Radians(rotation.m_x), destination); // Rotate the X component.
+			Rotate(*destination, Vector3::UP, Maths::Radians(rotation.m_y), destination); // Rotate the Y component.
+			Rotate(*destination, Vector3::FRONT, Maths::Radians(rotation.m_z), destination); // Rotate the Z component.
 		}
 
 		// Only scales if there is a scale.
@@ -721,9 +724,9 @@ namespace Flounder
 
 		if (rotation != 0.0f)
 		{
-			Rotate(*destination, Vector3(1.0f, 0.0f, 0.0f), Maths::Radians(rotation.m_x), destination);
-			Rotate(*destination, Vector3(0.0f, 1.0f, 0.0f), Maths::Radians(-rotation.m_y), destination);
-			Rotate(*destination, Vector3(0.0f, 0.0f, 1.0f), Maths::Radians(rotation.m_z), destination);
+			Rotate(*destination, Vector3::RIGHT, Maths::Radians(rotation.m_x), destination); // Rotate the X component.
+			Rotate(*destination, Vector3::UP, Maths::Radians(-rotation.m_y), destination); // Rotate the Y component.
+			Rotate(*destination, Vector3::FRONT, Maths::Radians(rotation.m_z), destination); // Rotate the Z component.
 		}
 
 		if (position != 0.0f)

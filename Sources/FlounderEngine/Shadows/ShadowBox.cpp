@@ -64,8 +64,8 @@ namespace Flounder
 		UpdateSizes(camera);
 
 		Matrix4 *rotation = new Matrix4();
-		Matrix4::Rotate(*rotation, Vector3(0.0f, 1.0f, 0.0f), Maths::Radians(camera.GetRotation()->m_y), rotation);
-		Matrix4::Rotate(*rotation, Vector3(1.0f, 0.0f, 0.0f), Maths::Radians(-camera.GetRotation()->m_x), rotation);
+		Matrix4::Rotate(*rotation, Vector3::UP, Maths::Radians(camera.GetRotation()->m_y), rotation);
+		Matrix4::Rotate(*rotation, Vector3::RIGHT, Maths::Radians(-camera.GetRotation()->m_x), rotation);
 
 		Vector4 *forwardVector4 = Matrix4::Transform(*rotation, Vector4(0.0f, 0.0f, -1.0f, 0.0f), nullptr);
 		Vector3 *forwardVector = new Vector3(*forwardVector4);
@@ -240,7 +240,7 @@ namespace Flounder
 
 		m_lightViewMatrix->SetIdentity();
 		float pitch = std::acos(Vector2(m_lightDirection->m_x, m_lightDirection->m_z).Length());
-		Matrix4::Rotate(*m_lightViewMatrix, Vector3(1.0f, 0.0f, 0.0f), pitch, m_lightViewMatrix);
+		Matrix4::Rotate(*m_lightViewMatrix, Vector3::RIGHT, pitch, m_lightViewMatrix);
 		float yaw = Maths::Degrees(std::atan(m_lightDirection->m_x / m_lightDirection->m_z));
 
 		if (m_lightDirection->m_z > 0.0f)
@@ -248,7 +248,7 @@ namespace Flounder
 			yaw -= 180.0f;
 		}
 
-		Matrix4::Rotate(*m_lightViewMatrix, Vector3(0.0f, 1.0f, 0.0f), -Maths::Radians(yaw), m_lightViewMatrix);
+		Matrix4::Rotate(*m_lightViewMatrix, Vector3::UP, -Maths::Radians(yaw), m_lightViewMatrix);
 		Matrix4::Translate(*m_lightViewMatrix, *m_centre, m_lightViewMatrix);
 
 		m_centre->Negate();

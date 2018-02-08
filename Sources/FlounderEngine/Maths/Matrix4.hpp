@@ -38,6 +38,9 @@ namespace Flounder
 			};
 		};
 
+		static const Matrix4 IDENTITY;
+		static const Matrix4 ZERO;
+
 		/// <summary>
 		/// Constructor for Matrix4. The matrix is initialised to the identity.
 		/// </summary>

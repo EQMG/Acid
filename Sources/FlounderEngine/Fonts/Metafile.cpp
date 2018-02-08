@@ -5,10 +5,10 @@
 
 namespace Flounder
 {
-	const int Metafile::PAD_TOP = 0;
-	const int Metafile::PAD_LEFT = 1;
-	const int Metafile::PAD_BOTTOM = 2;
-	const int Metafile::PAD_RIGHT = 3;
+	const unsigned int Metafile::PAD_TOP = 0;
+	const unsigned int Metafile::PAD_LEFT = 1;
+	const unsigned int Metafile::PAD_BOTTOM = 2;
+	const unsigned int Metafile::PAD_RIGHT = 3;
 	const int Metafile::DESIRED_PADDING = 8;
 
 	const std::string Metafile::SPLITTER = " ";
@@ -116,20 +116,16 @@ namespace Flounder
 			return nullptr;
 		}
 
-		double xTextureCoord =
-			(static_cast<double>(GetValueOfVariable("x")) + (m_padding->at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
-		double yTextureCoord =
-			(static_cast<double>(GetValueOfVariable("y")) + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) / m_imageWidth;
+		double xTextureCoord = (static_cast<double>(GetValueOfVariable("x")) + (m_padding->at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
+		double yTextureCoord = (static_cast<double>(GetValueOfVariable("y")) + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) / m_imageWidth;
 		int width = GetValueOfVariable("width") - (m_paddingWidth - (2 * DESIRED_PADDING));
 		int height = GetValueOfVariable("height") - ((m_paddingHeight) - (2 * DESIRED_PADDING));
 		double quadWidth = width * m_horizontalPerPixelSize;
 		double quadHeight = height * m_verticalPerPixelSize;
 		double xTexSize = static_cast<double>(width) / m_imageWidth;
 		double yTexSize = static_cast<double>(height) / m_imageWidth;
-		double xOffset =
-			(GetValueOfVariable("xoffset") + m_padding->at(PAD_LEFT) - DESIRED_PADDING) * m_horizontalPerPixelSize;
-		double yOffset =
-			(GetValueOfVariable("yoffset") + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) * m_verticalPerPixelSize;
+		double xOffset = (GetValueOfVariable("xoffset") + m_padding->at(PAD_LEFT) - DESIRED_PADDING) * m_horizontalPerPixelSize;
+		double yOffset = (GetValueOfVariable("yoffset") + (m_padding->at(PAD_TOP) - DESIRED_PADDING)) * m_verticalPerPixelSize;
 		double xAdvance = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
 
 		if (quadHeight > m_maxSizeY)
@@ -152,9 +148,9 @@ namespace Flounder
 
 		int i = 0;
 
-		for (auto number : numbers)
+		for (const auto &number : numbers)
 		{
-			result.push_back(std::stoi(number.c_str()));
+			result.push_back(std::stoi(number));
 			i++;
 		}
 
