@@ -12,7 +12,7 @@ namespace Demo
 		m_colour(colour),
 		m_text(new Text(this, rectangle, 1.6f, name, Uis::Get()->m_proximaNova->GetRegular(), JustifyLeft, 0.5f, 0.003f)),
 		m_width(m_text->GetRectangle()->m_dimensions->m_x * 1.6f),
-		m_soundClick(new Sound("Resources/Sounds/Button1.wav"))
+		m_soundClick(new Sound("Resources/Sounds/Button1.wav")) // Jumping.ogg
 	{
 		this->SetActionLeft([&]()
 		{

@@ -1,6 +1,7 @@
 #include "SoundBuffer.hpp"
 
 #include "../Devices/Audio.hpp"
+#include "../Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -9,7 +10,16 @@ namespace Flounder
 		m_filename(filename),
 		m_buffer(0)
 	{
-		SoundSourceInfo sourceInfo = Audio::LoadFileWav(filename);
+		SoundSourceInfo sourceInfo = SoundSourceInfo{};
+
+		if (FileSystem::FindExt(filename) == "wav")
+		{
+			sourceInfo = Audio::LoadFileWav(filename);
+		}
+		else if (FileSystem::FindExt(filename) == "ogg")
+		{
+			sourceInfo = Audio::LoadFileOgg(filename);
+		}
 
 		alGenBuffers(1, &m_buffer);
 		alBufferData(m_buffer, (sourceInfo.channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sourceInfo.data, sourceInfo.size, sourceInfo.samplesPerSec);
