@@ -54,7 +54,7 @@ namespace Flounder
 	{
 		if (!FileSystem::FileExists(filename))
 		{
-			printf("File does not exist: '%s'\n", filename.c_str());
+			fprintf(stderr, "File does not exist: '%s'\n", filename.c_str());
 			return {};
 		}
 
@@ -118,7 +118,7 @@ namespace Flounder
 	{
 		if (!FileSystem::FileExists(filename))
 		{
-			printf("File does not exist: '%s'\n", filename.c_str());
+			fprintf(stderr, "File does not exist: '%s'\n", filename.c_str());
 			return {};
 		}
 
@@ -134,7 +134,7 @@ namespace Flounder
 		
 		if (size == -1)
 		{
-			fprintf(stderr, "OGG file loading error '%s'\n", filename.c_str());
+			fprintf(stderr, "Error reading the OGG '%s', could not find size! The audio could not be loaded.\n", filename.c_str());
 		}
 
 		file.close();
