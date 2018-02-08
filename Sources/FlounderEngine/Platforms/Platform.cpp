@@ -4,9 +4,7 @@
 #include <cassert>
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
-
 #include <Windows.h>
-
 #endif
 
 namespace Flounder
@@ -20,61 +18,62 @@ namespace Flounder
 			switch (result)
 			{
 			case VK_ERROR_OUT_OF_HOST_MEMORY:
-				failure = "VK_ERROR_OUT_OF_HOST_MEMORY\n";
+				failure = "VK_ERROR_OUT_OF_HOST_MEMORY";
 				break;
 			case VK_ERROR_OUT_OF_DEVICE_MEMORY:
-				failure = "VK_ERROR_OUT_OF_DEVICE_MEMORY\n";
+				failure = "VK_ERROR_OUT_OF_DEVICE_MEMORY";
 				break;
 			case VK_ERROR_INITIALIZATION_FAILED:
-				failure = "VK_ERROR_INITIALIZATION_FAILED\n";
+				failure = "VK_ERROR_INITIALIZATION_FAILED";
 				break;
 			case VK_ERROR_DEVICE_LOST:
-				failure = "VK_ERROR_DEVICE_LOST\n";
+				failure = "VK_ERROR_DEVICE_LOST";
 				break;
 			case VK_ERROR_MEMORY_MAP_FAILED:
-				failure = "VK_ERROR_MEMORY_MAP_FAILED\n";
+				failure = "VK_ERROR_MEMORY_MAP_FAILED";
 				break;
 			case VK_ERROR_LAYER_NOT_PRESENT:
-				failure = "VK_ERROR_LAYER_NOT_PRESENT\n";
+				failure = "VK_ERROR_LAYER_NOT_PRESENT";
 				break;
 			case VK_ERROR_EXTENSION_NOT_PRESENT:
-				failure = "VK_ERROR_EXTENSION_NOT_PRESENT\n";
+				failure = "VK_ERROR_EXTENSION_NOT_PRESENT";
 				break;
 			case VK_ERROR_FEATURE_NOT_PRESENT:
-				failure = "VK_ERROR_FEATURE_NOT_PRESENT\n";
+				failure = "VK_ERROR_FEATURE_NOT_PRESENT";
 				break;
 			case VK_ERROR_INCOMPATIBLE_DRIVER:
-				failure = "VK_ERROR_INCOMPATIBLE_DRIVER\n";
+				failure = "VK_ERROR_INCOMPATIBLE_DRIVER";
 				break;
 			case VK_ERROR_TOO_MANY_OBJECTS:
-				failure = "VK_ERROR_TOO_MANY_OBJECTS\n";
+				failure = "VK_ERROR_TOO_MANY_OBJECTS";
 				break;
 			case VK_ERROR_FORMAT_NOT_SUPPORTED:
-				failure = "VK_ERROR_FORMAT_NOT_SUPPORTED\n";
+				failure = "VK_ERROR_FORMAT_NOT_SUPPORTED";
 				break;
 			case VK_ERROR_SURFACE_LOST_KHR:
-				failure = "VK_ERROR_SURFACE_LOST_KHR\n";
+				failure = "VK_ERROR_SURFACE_LOST_KHR";
 				break;
 			case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
-				failure = "VK_ERROR_NATIVE_WINDOW_IN_USE_KHR\n";
+				failure = "VK_ERROR_NATIVE_WINDOW_IN_USE_KHR";
 				break;
 			case VK_SUBOPTIMAL_KHR:
-				failure = "VK_SUBOPTIMAL_KHR\n";
+				failure = "VK_SUBOPTIMAL_KHR";
 				break;
 			case VK_ERROR_OUT_OF_DATE_KHR:
-				failure = "VK_ERROR_OUT_OF_DATE_KHR\n";
+				failure = "VK_ERROR_OUT_OF_DATE_KHR";
 				break;
 			case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:
-				failure = "VK_ERROR_INCOMPATIBLE_DISPLAY_KHR\n";
+				failure = "VK_ERROR_INCOMPATIBLE_DISPLAY_KHR";
 				break;
 			case VK_ERROR_VALIDATION_FAILED_EXT:
-				failure = "VK_ERROR_VALIDATION_FAILED_EXT\n";
+				failure = "VK_ERROR_VALIDATION_FAILED_EXT";
 				break;
 			default:
 				failure = "VK_RESULT_MAX_ENUM";
 				break;
 			}
 
+			fprintf(stderr, "Vulkan error: %s, %i\n", failure.c_str(), result);
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 			MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
 #endif
@@ -86,6 +85,7 @@ namespace Flounder
 	{
 		if (result == GLFW_FALSE)
 		{
+			fprintf(stderr, "GLFW error: %i\n", result);
 			assert(false && "GLFW runtime error.");
 		}
 	}
@@ -97,6 +97,7 @@ namespace Flounder
 			return;
 		}
 
+		fprintf(stderr, "OpenAL error: %i\n", result);
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0);
 #endif
