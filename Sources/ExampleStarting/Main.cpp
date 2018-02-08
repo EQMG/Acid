@@ -36,9 +36,6 @@ int main(int argc, char **argv)
 		Display::Get()->SetWindowSize(1080, 720);
 		Display::Get()->SetTitle("Example Starting");
 		Display::Get()->SetIcon("Resources/Logos/Tail.png");
-		Display::Get()->SetFpsLimit(configManager->GetGraphics()->Get("FpsLimit", 0.0f));
-		Display::Get()->SetAntialiasing(configManager->GetGraphics()->Get("Antialiasing", true));
-		Display::Get()->SetFullscreen(configManager->GetGraphics()->Get("Fullscreen", false));
 	}
 
 	if (Mouse::Get() != nullptr)

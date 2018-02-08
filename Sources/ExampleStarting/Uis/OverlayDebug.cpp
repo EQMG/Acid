@@ -52,8 +52,8 @@ namespace Demo
 			{
 				Vector3 *position = Camera::Get()->GetCamera()->GetPosition();
 				m_textPosition->SetText("POS: " + std::to_string(static_cast<int>(position->m_x)) + ", " +
-											std::to_string(static_cast<int>(position->m_y)) + ", " +
-											std::to_string(static_cast<int>(position->m_z)));
+					std::to_string(static_cast<int>(position->m_y)) + ", " +
+					std::to_string(static_cast<int>(position->m_z)));
 			}
 
 			m_textFps->SetText("FPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDeltaRender())));

@@ -1,7 +1,6 @@
 #include "Sphere.hpp"
 
 #include <algorithm>
-#include "../../Helpers/FormatString.hpp"
 #include "../../Maths/Maths.hpp"
 
 namespace Flounder
