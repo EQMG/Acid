@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	typedef struct SoundSourceInfo
+	struct SoundSourceInfo
 	{
 		unsigned int size;
 		unsigned char *data;
@@ -16,7 +16,7 @@ namespace Flounder
 		int averageBytesPerSec;
 		short blockAlign;
 		short bitsPerSample;
-	} SoundSourceInfo;
+	};
 
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.
@@ -49,9 +49,9 @@ namespace Flounder
 
 		void Update() override;
 
-		static SoundSourceInfo LoadFileWav(const std::string &filename);
+		static ALuint LoadFileWav(const std::string &filename);
 
-		static SoundSourceInfo LoadFileOgg(const std::string &filename);
+		static ALuint LoadFileOgg(const std::string &filename);
 
 	private:
 		static void LogOpenAlSound(const std::string &path, const SoundSourceInfo &sourceInfo);
