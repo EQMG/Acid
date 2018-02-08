@@ -27,15 +27,12 @@ namespace Demo
 			prefab->Save();
 		}*/
 /*#ifdef FLOUNDER_CONFIG_RELEASE
-		Sound *music1 = Sound::Resource("Resources/Music/Outpost.wav");
+		Sound *music1 = new Sound("Resources/Music/Outpost.wav");
 
-		if (music1 != nullptr)
-		{
-			music1->SetPosition(Vector3(3.0f, 0.0f, 3.0f));
-			music1->SetGain(0.9f);
-			//	music1->Play();
-			music1->Loop();
-		}
+		//	music1->Play();
+		music1->Loop();
+		music1->SetPosition(Vector3(3.0f, 0.0f, 3.0f));
+		music1->SetGain(0.9f);
 #endif*/
 
 		/*std::vector<ParticleType*> *types = new std::vector<ParticleType*>();

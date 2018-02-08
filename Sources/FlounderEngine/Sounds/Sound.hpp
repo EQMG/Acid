@@ -1,8 +1,6 @@
 ﻿#pragma once
 
 #include <string>
-#include <vector>
-#include "../Resources/Resources.hpp"
 #include "../Maths/Vector3.hpp"
 
 namespace Flounder
@@ -10,34 +8,15 @@ namespace Flounder
 	/// <summary>
 	/// Class that represents a loaded sound.
 	/// </summary>
-	class Sound :
-		public IResource
+	class Sound
 	{
 	private:
-		std::string m_filename;
-		unsigned int m_count;
-
-		unsigned int m_buffer;
 		unsigned int m_source;
 
 		bool m_playing;
 		float m_pitch;
 		float m_gain;
 	public:
-		static Sound *Resource(const std::string &filename)
-		{
-			IResource *resource = Resources::Get()->Get(filename);
-
-			if (resource != nullptr)
-			{
-				return dynamic_cast<Sound *>(resource);
-			}
-
-			Sound *result = new Sound(filename);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
-			return result;
-		}
-
 		Sound(const std::string &filename);
 
 		~Sound();
@@ -61,8 +40,6 @@ namespace Flounder
 		void SetPitch(const float &pitch);
 
 		void SetGain(const float &gain);
-
-		std::string GetFilename() override { return m_filename; };
 
 		bool IsPlaying() const { return m_playing; }
 

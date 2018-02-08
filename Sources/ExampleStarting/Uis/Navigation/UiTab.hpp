@@ -3,6 +3,7 @@
 #include <Uis/UiObject.hpp>
 #include <Fonts/Text.hpp>
 #include <Guis/Gui.hpp>
+#include <Sounds/Sound.hpp>
 
 using namespace Flounder;
 
@@ -17,6 +18,8 @@ namespace Demo
 		Colour m_colour;
 		Text *m_text;
 		float m_width;
+
+		Sound *m_soundClick;
 	public:
 		UiTab(UiObject *parent, UiObject *content, const UiBound &rectangle, const std::string &name, const Colour &colour);
 

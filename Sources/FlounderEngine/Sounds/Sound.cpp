@@ -1,29 +1,20 @@
 ﻿#include "Sound.hpp"
 
 #include "../Devices/Audio.hpp"
+#include "SoundBuffer.hpp"
 
 namespace Flounder
 {
 	Sound::Sound(const std::string &filename) :
-		IResource(),
-		m_filename(filename),
-		m_count(0),
-		m_buffer(0),
 		m_source(0),
 		m_playing(false),
 		m_pitch(1.0f),
 		m_gain(1.0f)
 	{
-		SoundSourceInfo sourceInfo = Audio::LoadFileWav(filename);
-
-		alGenBuffers(1, &m_buffer);
-		alBufferData(m_buffer, (sourceInfo.channels == 2) ? AL_FORMAT_STEREO16
-			: AL_FORMAT_MONO16, sourceInfo.data, sourceInfo.size, sourceInfo.samplesPerSec);
+		SoundBuffer *soundBuffer = SoundBuffer::Resource(filename);
 
 		alGenSources(1, &m_source);
-		alSourcei(m_source, AL_BUFFER, m_buffer);
-
-		delete[] sourceInfo.data;
+		alSourcei(m_source, AL_BUFFER, soundBuffer->GetBuffer());
 
 		Platform::ErrorAl(alGetError());
 	}
@@ -31,7 +22,6 @@ namespace Flounder
 	Sound::~Sound()
 	{
 		alDeleteSources(1, &m_source);
-		alDeleteBuffers(1, &m_buffer);
 		Platform::ErrorAl(alGetError());
 	}
 

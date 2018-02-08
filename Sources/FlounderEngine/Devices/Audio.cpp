@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <fstream>
+#include "../Helpers/FileSystem.hpp"
 #include "../Camera/Camera.hpp"
 
 namespace Flounder
@@ -49,12 +50,18 @@ namespace Flounder
 		}
 	}
 
-	SoundSourceInfo Audio::LoadFileWav(const std::string &path)
+	SoundSourceInfo Audio::LoadFileWav(const std::string &filename)
 	{
-		std::ifstream file(path.c_str(), std::ifstream::binary);
+		if (!FileSystem::FileExists(filename))
+		{
+			printf("File does not exist: '%s'\n", filename.c_str());
+			return {};
+		}
+
+		std::ifstream file(filename.c_str(), std::ifstream::binary);
 		SoundSourceInfo result = {};
 
-		assert(!file.is_open() && "Load wav file failure: file couldn't be opened!");
+		assert(file.is_open() && "Load wav file failure: file couldn't be opened!");
 
 		char chunkId[5] = "\0";
 
@@ -96,13 +103,13 @@ namespace Flounder
 		file.read(reinterpret_cast<char *>(result.data), result.size);
 
 		file.close();
-		LogOpenAlSound(path, result);
+	//	LogOpenAlSound(filename, result);
 		return result;
 	}
 
-	SoundSourceInfo Audio::LoadFileOgg(const std::string &path)
+	SoundSourceInfo Audio::LoadFileOgg(const std::string &filename)
 	{
-		std::ifstream file(path.c_str(), std::ifstream::binary);
+		std::ifstream file(filename.c_str(), std::ifstream::binary);
 		SoundSourceInfo result = {};
 
 		assert(!file.is_open() && "Load ogg file failure: file couldn't be opened!");
@@ -110,7 +117,7 @@ namespace Flounder
 		// TODO
 
 		file.close();
-		LogOpenAlSound(path, result);
+	//	LogOpenAlSound(filename, result);
 		return result;
 	}
 
