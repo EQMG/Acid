@@ -9,7 +9,7 @@ namespace Flounder
 		IResource(),
 		m_filename(filename),
 		m_fileCsv(new FileCsv(filename)),
-		m_components(new std::unordered_map<std::string, ComponentPrefab*>())
+		m_components(new std::unordered_map<std::string, ComponentPrefab *>())
 	{
 		if (!FileSystem::FileExists(filename))
 		{
@@ -97,7 +97,7 @@ namespace Flounder
 	{
 		std::vector<std::string> keys = std::vector<std::string>();
 
-		for (auto it : *m_components) 
+		for (auto it : *m_components)
 		{
 			keys.push_back(it.first);
 		}

@@ -25,7 +25,7 @@ namespace Flounder
 
 		virtual void CmdRender(EntityRender *entityRender) = 0;
 
-		virtual void Save(ComponentPrefab* prefab) = 0;
+		virtual void Save(ComponentPrefab *prefab) = 0;
 
 		virtual std::string GetName() const = 0;
 

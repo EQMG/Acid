@@ -16,7 +16,7 @@ namespace Flounder
 	public:
 		ComponentMaterial(const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false);
 
-		ComponentMaterial(ComponentPrefab* prefab);
+		ComponentMaterial(ComponentPrefab *prefab);
 
 		~ComponentMaterial();
 
@@ -24,7 +24,7 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
-		void Save(ComponentPrefab* prefab) override;
+		void Save(ComponentPrefab *prefab) override;
 
 		std::string GetName() const override { return "ComponentMaterial"; };
 

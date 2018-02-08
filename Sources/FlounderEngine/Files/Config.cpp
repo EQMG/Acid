@@ -5,10 +5,9 @@
 
 namespace Flounder
 {
-
 	Config::Config(IFile *file) :
 		m_file(file),
-		m_values(new std::map<std::string, std::string>())
+		m_values(new std::map<std::string, ConfigKey>())
 	{
 	}
 
@@ -24,30 +23,47 @@ namespace Flounder
 
 		auto fileMap = m_file->ConfigReadValues();
 		m_values->clear();
-		m_values->insert(fileMap.begin(), fileMap.end());
+
+		for (auto fm : fileMap)
+		{
+			m_values->insert(std::make_pair(fm.first, ConfigKey(fm.second, true)));
+		}
+	}
+
+	void Config::Update()
+	{
+		for (const auto &value : *m_values)
+		{
+			//	value.second.SetValue(value.second.GetGetter()());
+		}
 	}
 
 	void Config::Save()
 	{
 		m_file->Clear();
 
-		for (auto value : *m_values)
+		for (const auto &value : *m_values)
 		{
-			m_file->ConfigPushValue(value.first, value.second);
+			m_file->ConfigPushValue(value.first, value.second.GetValue());
 		}
 
 		m_file->Save();
 	}
 
-	std::string Config::Get(const std::string &key, const std::string &normal)
+	ConfigKey Config::GetRaw(const std::string &key, const std::string &normal)
 	{
 		if (m_values->find(key) == m_values->end())
 		{
-			m_values->insert(std::make_pair(key, normal));
+			m_values->insert(std::make_pair(key, ConfigKey(normal, false)));
 			return normal;
 		}
 
 		return m_values->at(key);
+	}
+
+	std::string Config::Get(const std::string &key, const std::string &normal)
+	{
+		return GetRaw(key, normal).GetValue();
 	}
 
 	bool Config::Get(const std::string &key, const bool &normal)

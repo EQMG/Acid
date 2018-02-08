@@ -15,7 +15,7 @@ namespace Flounder
 	public:
 		ComponentModel(Model *model, Texture *diffuse);
 
-		ComponentModel(ComponentPrefab* prefab);
+		ComponentModel(ComponentPrefab *prefab);
 
 		~ComponentModel();
 
@@ -23,7 +23,7 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
-		void Save(ComponentPrefab* prefab) override;
+		void Save(ComponentPrefab *prefab) override;
 
 		std::string GetName() const override { return "ComponentModel"; };
 

@@ -12,7 +12,7 @@ namespace Flounder
 	{
 	}
 
-	ComponentCelestial::ComponentCelestial(ComponentPrefab* prefab) :
+	ComponentCelestial::ComponentCelestial(ComponentPrefab *prefab) :
 		IComponent(),
 		m_type(static_cast<CelestialType>(prefab->GetInt(0)))
 	{
