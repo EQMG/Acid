@@ -49,9 +49,9 @@ namespace Flounder
 
 		void Update() override;
 
-		static SoundSourceInfo LoadFileWav(const std::string &path);
+		static SoundSourceInfo LoadFileWav(const std::string &filename);
 
-		static SoundSourceInfo LoadFileOgg(const std::string &path);
+		static SoundSourceInfo LoadFileOgg(const std::string &filename);
 
 	private:
 		static void LogOpenAlSound(const std::string &path, const SoundSourceInfo &sourceInfo);
