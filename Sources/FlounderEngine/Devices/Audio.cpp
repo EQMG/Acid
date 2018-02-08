@@ -50,7 +50,7 @@ namespace Flounder
 		}
 	}
 
-	SoundSourceInfo Audio::LoadFileWav(const std::string &filename)
+	ALuint Audio::LoadFileWav(const std::string &filename)
 	{
 		if (!FileSystem::FileExists(filename))
 		{
@@ -59,7 +59,7 @@ namespace Flounder
 		}
 
 		std::ifstream file(filename.c_str(), std::ifstream::binary);
-		SoundSourceInfo result = {};
+		SoundSourceInfo sourceInfo = {};
 
 		assert(file.is_open() && "Load wav file failure: file couldn't be opened!");
 
@@ -67,7 +67,7 @@ namespace Flounder
 
 		// Read header.
 		file.read(chunkId, 4);
-		file.read(reinterpret_cast<char *>(&result.size), 4);
+		file.read(reinterpret_cast<char *>(&sourceInfo.size), 4);
 
 		chunkId[4] = '\0';
 		file.read(chunkId, 4);
@@ -76,57 +76,77 @@ namespace Flounder
 
 		// Read first chunk header.
 		file.read(chunkId, 4);
-		file.read(reinterpret_cast<char *>(&result.size), 4);
+		file.read(reinterpret_cast<char *>(&sourceInfo.size), 4);
 
 		chunkId[4] = '\0';
 
 		// Read first chunk content.
-		file.read(reinterpret_cast<char *>(&result.formatTag), 2);
-		file.read(reinterpret_cast<char *>(&result.channels), 2);
-		file.read(reinterpret_cast<char *>(&result.samplesPerSec), 4);
-		file.read(reinterpret_cast<char *>(&result.averageBytesPerSec), 4);
-		file.read(reinterpret_cast<char *>(&result.blockAlign), 2);
-		file.read(reinterpret_cast<char *>(&result.bitsPerSample), 2);
+		file.read(reinterpret_cast<char *>(&sourceInfo.formatTag), 2);
+		file.read(reinterpret_cast<char *>(&sourceInfo.channels), 2);
+		file.read(reinterpret_cast<char *>(&sourceInfo.samplesPerSec), 4);
+		file.read(reinterpret_cast<char *>(&sourceInfo.averageBytesPerSec), 4);
+		file.read(reinterpret_cast<char *>(&sourceInfo.blockAlign), 2);
+		file.read(reinterpret_cast<char *>(&sourceInfo.bitsPerSample), 2);
 
-		if (result.size > 16)
+		if (sourceInfo.size > 16)
 		{
-			file.seekg(static_cast<int>(file.tellg()) + (result.size - 16));
+			file.seekg(static_cast<int>(file.tellg()) + (sourceInfo.size - 16));
 		}
 
 		// Read data chunk header.
 		file.read(chunkId, 4);
-		file.read(reinterpret_cast<char *>(&result.size), 4);
+		file.read(reinterpret_cast<char *>(&sourceInfo.size), 4);
 
 		chunkId[4] = '\0';
 
-		result.data = new unsigned char[result.size];
-		file.read(reinterpret_cast<char *>(result.data), result.size);
+		sourceInfo.data = new unsigned char[sourceInfo.size];
+		file.read(reinterpret_cast<char *>(sourceInfo.data), sourceInfo.size);
 
 		file.close();
-		//	LogOpenAlSound(filename, result);
-		return result;
+		//	LogOpenAlSound(filename, sourceInfo);
+
+		ALuint buffer;
+		alGenBuffers(1, &buffer);
+		alBufferData(buffer, (sourceInfo.channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sourceInfo.data, sourceInfo.size, sourceInfo.samplesPerSec);
+
+		delete[] sourceInfo.data;
+
+		return buffer;
 	}
 
-	SoundSourceInfo Audio::LoadFileOgg(const std::string &filename)
+	ALuint Audio::LoadFileOgg(const std::string &filename)
 	{
+		if (!FileSystem::FileExists(filename))
+		{
+			printf("File does not exist: '%s'\n", filename.c_str());
+			return {};
+		}
+
 		std::ifstream file(filename.c_str(), std::ifstream::binary);
-		SoundSourceInfo result = {};
+		SoundSourceInfo sourceInfo = {};
 
 		assert(file.is_open() && "Load ogg file failure: file couldn't be opened!");
 
 		int channels;
-		int sample_rate;
-		short * output;
-		int rc = stb_vorbis_decode_filename(filename.c_str(), &channels, &sample_rate, &output);
+		int samplesPerSec;
+		short *data;
+		int size = stb_vorbis_decode_filename(filename.c_str(), &channels, &samplesPerSec, &data);
 		
-		if (rc == -1)
+		if (size == -1)
 		{
-			fprintf(stderr, "oops\n");
+			fprintf(stderr, "OGG file loading error '%s'\n", filename.c_str());
 		}
 
 		file.close();
-		//	LogOpenAlSound(filename, result);
-		return result;
+		//	LogOpenAlSound(filename, sourceInfo);
+
+		ALuint buffer;
+		alGenBuffers(1, &buffer);
+		alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, samplesPerSec);
+
+		delete[] data;
+
+		return buffer;
 	}
 
 	void Audio::LogOpenAlSound(const std::string &path, const SoundSourceInfo &sourceInfo)
