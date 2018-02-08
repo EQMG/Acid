@@ -2,12 +2,16 @@
 #extension GL_ARB_separate_shader_objects : enable
 
 layout(set = 0, binding = 2) uniform sampler2D samplerColour;
+//layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
+//layout(set = 0, binding = 5) uniform sampler2D samplerGlow;
 
 layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 
 	float swaying;
+	float normals;
+	float glowing;
 
 	float metallic;
 	float roughness;
