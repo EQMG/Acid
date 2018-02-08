@@ -42,7 +42,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Mouse *Get()
 		{
-			return dynamic_cast<Mouse *>(Engine::Get()->GetModule("mouse"));
+			return reinterpret_cast<Mouse *>(Engine::Get()->GetModule("mouse"));
 		}
 
 		/// <summary>

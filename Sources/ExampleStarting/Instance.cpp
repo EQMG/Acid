@@ -27,7 +27,7 @@ namespace Demo
 			prefab->Save();
 		}*/
 /*#ifdef FLOUNDER_CONFIG_RELEASE
-		Sound *music1 = new Sound("Resources/Music/Outpost.wav");
+		Sound *music1 = new Sound("Resources/Music/Outpost.ogg");
 
 		//	music1->Play();
 		music1->Loop();
@@ -47,11 +47,13 @@ namespace Demo
 		new Entity("Sun", Transform(Vector3(), Vector3(), 18.0f));
 		new Entity("Moon", Transform(Vector3(), Vector3(), 9.0f));
 
+		Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
+
 		for (int i = -3; i <= 0; i++)
 		{
 			for (int j = -3; j <= 0; j++)
 			{
-				new Entity("FoundationWood", Transform(Vector3(13.7f - (i * 3.0f), 10.2f, -25.0f - (j * 3.0f)), Vector3(), 1.5f));
+				new Entity("FoundationWood", Transform(foundationCentre + Vector3(i * 3.0f, 2.3f, -j * 3.0f), Vector3(), 1.5f));
 			}
 		}
 
@@ -67,7 +69,7 @@ namespace Demo
 				{
 					if (i < 0)
 					{
-						position.m_y -= 0.1f;
+						position.m_y -= 1.0f;
 						new Entity("TreePine", Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), 1.0f));
 					}
 					else

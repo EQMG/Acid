@@ -21,7 +21,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Events *Get()
 		{
-			return dynamic_cast<Events *>(Engine::Get()->GetModule("events"));
+			return reinterpret_cast<Events *>(Engine::Get()->GetModule("events"));
 		}
 
 		/// <summary>

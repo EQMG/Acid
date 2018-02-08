@@ -12,6 +12,12 @@
 
 namespace Flounder
 {
+	struct ModelLoaded
+	{
+		std::vector<Vertex> vertices;
+		std::vector<uint32_t> indices;
+	};
+
 	/// <summary>
 	/// Class that represents a OBJ model.
 	/// </summary>
@@ -21,13 +27,11 @@ namespace Flounder
 	private:
 		std::string m_filename;
 
-		std::vector<Vertex> m_vertices;
-		std::vector<uint32_t> m_indices;
+		VertexBuffer *m_vertexBuffer;
+		IndexBuffer *m_indexBuffer;
 
 		Aabb *m_aabb;
 
-		VertexBuffer *m_vertexBuffer;
-		IndexBuffer *m_indexBuffer;
 	protected:
 		/// <summary>
 		/// Creates a new empty model.
@@ -61,14 +65,14 @@ namespace Flounder
 		/// <param name="vertices"> The model vertices. </param>
 		/// <param name="indices"> The model indices. </param>
 		/// <param name="name"> The model name. </param>
-		Model(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices, const std::string &name = "");
+		Model(std::vector<Vertex> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
 
 		/// <summary>
 		/// Creates a new model without indices.
 		/// </summary>
 		/// <param name="vertices"> The model vertices. </param>
 		/// <param name="name"> The model name. </param>
-		Model(const std::vector<Vertex> &vertices, const std::string &name = "");
+		Model(std::vector<Vertex> &vertices, const std::string &name = "");
 
 		/// <summary>
 		/// Deconstructor for the model.
@@ -85,13 +89,13 @@ namespace Flounder
 
 		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer; }
 	protected:
-		void Set(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices, const std::string &name = "");
+		void Set(std::vector<Vertex> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
 
 	private:
 		/// <summary>
 		/// Loads the model object from a OBJ file.
 		/// </summary>
-		void LoadFromFile(const std::string &filename);
+		ModelLoaded LoadFromFile(const std::string &filename);
 
 		VertexData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData *> *vertices, std::vector<uint32_t> *indices);
 
@@ -99,6 +103,6 @@ namespace Flounder
 
 		void CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *uvs);
 
-		void CreateAabb();
+		static Aabb CalculateAabb(const std::vector<Vertex> &vertices);
 	};
 }

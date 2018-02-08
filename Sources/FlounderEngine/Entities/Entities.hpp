@@ -21,7 +21,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Entities *Get()
 		{
-			return dynamic_cast<Entities *>(Engine::Get()->GetModule("entities"));
+			return reinterpret_cast<Entities *>(Engine::Get()->GetModule("entities"));
 		}
 
 		/// <summary>
