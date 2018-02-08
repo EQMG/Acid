@@ -1,7 +1,6 @@
 ﻿#include "ComponentCollider.hpp"
 
 #include "../Entity.hpp"
-#include "ComponentModel.hpp"
 
 namespace Flounder
 {
@@ -11,7 +10,7 @@ namespace Flounder
 	{
 	}
 
-	ComponentCollider::ComponentCollider(ComponentPrefab* prefab) :
+	ComponentCollider::ComponentCollider(ComponentPrefab *prefab) :
 		IComponent(),
 		m_collider(nullptr)
 	{

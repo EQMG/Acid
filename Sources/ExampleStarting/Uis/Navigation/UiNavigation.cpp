@@ -127,7 +127,8 @@ namespace Demo
 					m_currentTab->GetContent()->SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 0.3f));
 				}
 
-				Events::Get()->AddEvent(new EventTime(0.4f, false, [&](){
+				Events::Get()->AddEvent(new EventTime(0.4f, false, [&]()
+				{
 					m_targetTab->GetContent()->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, 0.3f));
 				}));
 			}

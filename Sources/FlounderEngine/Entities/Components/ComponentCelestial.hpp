@@ -18,7 +18,7 @@ namespace Flounder
 	public:
 		ComponentCelestial(const CelestialType &type);
 
-		ComponentCelestial(ComponentPrefab* prefab);
+		ComponentCelestial(ComponentPrefab *prefab);
 
 		~ComponentCelestial();
 
@@ -26,7 +26,7 @@ namespace Flounder
 
 		void CmdRender(EntityRender *entityRender) override;
 
-		void Save(ComponentPrefab* prefab) override;
+		void Save(ComponentPrefab *prefab) override;
 
 		std::string GetName() const override { return "ComponentCelestial"; };
 	};

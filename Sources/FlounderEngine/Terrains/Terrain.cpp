@@ -118,12 +118,12 @@ namespace Flounder
 			return;
 		}
 
-	//	Model *resourced = Model::Resource(ToFilename(m_transform->m_position->m_x, m_transform->m_position->m_z, lod));
-	//	if (resourced != nullptr)
-	//	{
-	//		m_modelLods[lod] = resourced;
-	//		return;
-	//	}
+		//	Model *resourced = Model::Resource(ToFilename(m_transform->m_position->m_x, m_transform->m_position->m_z, lod));
+		//	if (resourced != nullptr)
+		//	{
+		//		m_modelLods[lod] = resourced;
+		//		return;
+		//	}
 
 #if FLOUNDER_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();

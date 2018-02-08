@@ -43,8 +43,8 @@ namespace Flounder
 	float Terrains::GetHeight(const float &x, const float &z)
 	{
 		const float height1 = (m_noise1.GetNoise(x, z) * 60.0f) + 8.0f;
-	//	float length = std::sqrt((x * x) + (z * z));
-	//	if (length >= 800.0f) { return height1 / (length - 800.0f); }
+		//	float length = std::sqrt((x * x) + (z * z));
+		//	if (length >= 800.0f) { return height1 / (length - 800.0f); }
 		return height1;
 	}
 

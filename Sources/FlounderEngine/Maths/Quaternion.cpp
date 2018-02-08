@@ -3,7 +3,6 @@
 #include <cassert>
 #include <sstream>
 #include "Maths.hpp"
-#include "Vector4.hpp"
 
 namespace Flounder
 {

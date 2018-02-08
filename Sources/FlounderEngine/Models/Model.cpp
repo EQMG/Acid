@@ -91,10 +91,10 @@ namespace Flounder
 			vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 			vkCmdDraw(commandBuffer, m_vertexBuffer->GetVertexCount(), 1, 0, 0);
 		}
-	//	else
-	//	{
-	//		assert(false && "Cannot render model, no buffers exist for it!");
-	//	}
+		//	else
+		//	{
+		//		assert(false && "Cannot render model, no buffers exist for it!");
+		//	}
 	}
 
 	void Model::Set(const std::vector<Vertex> &vertices, const std::vector<uint32_t> &indices, const std::string &name)
