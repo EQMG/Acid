@@ -113,7 +113,7 @@ namespace Flounder
 	{
 		if (!FileSystem::FileExists(m_filename))
 		{
-			printf("File does not exist: '%s'\n", m_filename.c_str());
+			fprintf(stderr, "File does not exist: '%s'\n", m_filename.c_str());
 			m_filename = FALLBACK_PATH;
 			return;
 		}
@@ -164,7 +164,7 @@ namespace Flounder
 					// The split length of 3 faced + 1 for the f prefix.
 					if (split.size() != 4 || FormatString::Contains(line, "//"))
 					{
-						printf("Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", m_filename.c_str());
+						fprintf(stderr, "Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", m_filename.c_str());
 						assert(false);
 					}
 
@@ -185,7 +185,7 @@ namespace Flounder
 				}
 				else
 				{
-					printf("OBJ '%s' unknown line: '%s'.\n", m_filename.c_str(), line.c_str());
+					fprintf(stderr, "OBJ '%s' unknown line: '%s'.\n", m_filename.c_str(), line.c_str());
 				}
 			}
 		}

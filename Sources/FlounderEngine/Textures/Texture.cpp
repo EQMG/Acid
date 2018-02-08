@@ -31,7 +31,7 @@ namespace Flounder
 	{
 		if (!FileSystem::FileExists(filename))
 		{
-			printf("File does not exist: '%s'\n", filename.c_str());
+			fprintf(stderr, "File does not exist: '%s'\n", filename.c_str());
 			m_filename = FALLBACK_PATH;
 		}
 
@@ -251,7 +251,7 @@ namespace Flounder
 	{
 		if (!FileSystem::FileExists(filepath))
 		{
-			printf("File does not exist: '%s'\n", filepath.c_str());
+			fprintf(stderr, "File does not exist: '%s'\n", filepath.c_str());
 			return nullptr;
 		}
 

@@ -49,7 +49,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYP
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/bin)
 
 #mklink /J C:\Users\mattp\Documents\Flounder\Build\Debug\bin\Resources C:\Users\mattp\Documents\Flounder\Resources
-#ln -s /Volumes/albrmat/Flounder/Resources /Volumes/albrmat/Flounder/Build/Debug/bin/Resorces
+#ln -s /Users/albrmat/Desktop/Flounder/Resources /Users/albrmat/Desktop/Flounder/Build/Debug/bin/Resorces
 #file(COPY "${PROJECT_SOURCE_DIR}/Resources/" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/")
 #ADD_CUSTOM_TARGET(link_target ALL COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/" "${PROJECT_SOURCE_DIR}/Resources/")
 
