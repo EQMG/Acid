@@ -5,11 +5,11 @@
 
 namespace Flounder
 {
-	static const Colour FOG_COLOUR_SUNRISE = Colour("#E14938");
+	static const Colour FOG_COLOUR_SUNRISE = Colour("#ee9a90");
 	static const Colour FOG_COLOUR_NIGHT = Colour("#0D0D1A");
 	static const Colour FOG_COLOUR_DAY = Colour("#e6e6e6");
 
-	static const Colour SUN_COLOUR_SUNRISE = Colour("#E14938");
+	static const Colour SUN_COLOUR_SUNRISE = Colour("#ee9a90");
 	static const Colour SUN_COLOUR_NIGHT = Colour("#0D0D1A");
 	static const Colour SUN_COLOUR_DAY = Colour("#ffffff");
 
@@ -20,7 +20,7 @@ namespace Flounder
 
 	Worlds::Worlds() :
 		IModule(),
-		m_driverDay(new DriverLinear(0.0f, 1.0f, 300.0f)),
+		m_driverDay(new DriverLinear(0.0f, 1.0f, 60.0f)),
 		m_factorDay(0.0f),
 		m_sunPosition(new Vector3()),
 		m_moonPosition(new Vector3()),
