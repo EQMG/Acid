@@ -52,16 +52,16 @@ namespace Flounder
 		}
 
 		// Update and kill particles.
-		for (auto iter = m_particles->begin(); iter != m_particles->end(); ++iter)
+		for (auto &m_particle : *m_particles)
 		{
-			for (auto it = iter->second->begin(); it != iter->second->end(); ++it)
+			for (auto it = m_particle.second->begin(); it != m_particle.second->end(); ++it)
 			{
 				(*it)->update();
 
 				if (!(*it)->isAlive())
 				{
 					delete *it;
-					iter->second->erase(it);
+					m_particle.second->erase(it);
 				}
 			}
 		}

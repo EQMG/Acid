@@ -28,6 +28,11 @@ namespace Flounder
 			};
 		};
 
+		static const Vector4 ZERO;
+		static const Vector4 ONE;
+		static const Vector4 POSITIVE_INFINITY;
+		static const Vector4 NEGATIVE_INFINITY;
+
 		/// <summary>
 		/// Constructor for vector4.
 		/// </summary>

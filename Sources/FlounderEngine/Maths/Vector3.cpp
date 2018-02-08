@@ -10,6 +10,17 @@
 
 namespace Flounder
 {
+	const Vector3 Vector3::ZERO = Vector3(0.0f, 0.0f, 0.0f);
+	const Vector3 Vector3::ONE = Vector3(1.0f, 1.0f, 1.0f);
+	const Vector3 Vector3::LEFT = Vector3(-1.0f, 0.0f, 0.0f);
+	const Vector3 Vector3::RIGHT = Vector3(1.0f, 0.0f, 0.0f);
+	const Vector3 Vector3::UP = Vector3(0.0f, 1.0f, 0.0f);
+	const Vector3 Vector3::DOWN = Vector3(0.0f, -1.0f, 0.0f);
+	const Vector3 Vector3::FRONT = Vector3(0.0f, 0.0f, 1.0f);
+	const Vector3 Vector3::BACK = Vector3(0.0f, 0.0f, -1.0f);
+	const Vector3 Vector3::POSITIVE_INFINITY = Vector3(+INFINITY, +INFINITY, +INFINITY);
+	const Vector3 Vector3::NEGATIVE_INFINITY = Vector3(-INFINITY, -INFINITY, -INFINITY);
+
 	Vector3::Vector3() :
 		m_x(0.0f),
 		m_y(0.0f),
@@ -177,7 +188,7 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		Matrix4 *matrix = Matrix4::TransformationMatrix(Vector3(0.0f, 0.0f, 0.0f), rotation, Vector3(1.0f, 1.0f, 1.0f), nullptr);
+		Matrix4 *matrix = Matrix4::TransformationMatrix(Vector3::ZERO, rotation, Vector3::ONE, nullptr);
 		Vector4 direction4 = Vector4(source.m_x, source.m_y, source.m_z, 1.0f);
 		Matrix4::Transform(*matrix, direction4, &direction4);
 		delete matrix;
@@ -348,9 +359,9 @@ namespace Flounder
 		if ((coneDirection.m_x != 0.0F) || (coneDirection.m_y != 0.0F) ||
 			((coneDirection.m_z != 1.0f) && (coneDirection.m_z != -1.0f)))
 		{
-			Vector3 *rotateAxis = Vector3::Cross(coneDirection, Vector3(0.0f, 0.0f, 1.0f), nullptr);
+			Vector3 *rotateAxis = Vector3::Cross(coneDirection, Vector3::FRONT, nullptr);
 			rotateAxis->Normalize();
-			const float rotateAngle = std::acos(Vector3::Dot(coneDirection, Vector3(0.0f, 0.0f, 1.0f)));
+			const float rotateAngle = std::acos(Vector3::Dot(coneDirection, Vector3::FRONT));
 			Matrix4 rotationMatrix = Matrix4();
 			rotationMatrix.SetIdentity();
 			Matrix4::Rotate(rotationMatrix, *rotateAxis, -rotateAngle, &rotationMatrix);

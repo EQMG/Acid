@@ -32,6 +32,9 @@ namespace Flounder
 			};
 		};
 
+		static const Matrix2 IDENTITY;
+		static const Matrix2 ZERO;
+
 		/// <summary>
 		/// Constructor for Matrix2. The matrix is initialised to the identity.
 		/// </summary>

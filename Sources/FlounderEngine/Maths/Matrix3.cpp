@@ -4,6 +4,9 @@
 
 namespace Flounder
 {
+	const Matrix3 Matrix3::IDENTITY = *Matrix3().SetIdentity();
+	const Matrix3 Matrix3::ZERO = *Matrix3().SetZero();
+
 	Matrix3::Matrix3() :
 		m_00(1.0f),
 		m_01(0.0f),
@@ -236,9 +239,7 @@ namespace Flounder
 				destination = new Matrix3();
 			}
 
-			/*
-			* Does it the ordinary way. inv(A) = 1/det(A) * adj(T), where adj(T) = transpose(Conjugate Matrix) m_00 m_01 m_02 m_10 m_11 m_12 m_20 m_21 m_22
-			*/
+			// Does a determinant the ordinary way. inv(A) = 1/det(A) * adj(T), where adj(T) = transpose(Conjugate Matrix) m_00 m_01 m_02 m_10 m_11 m_12 m_20 m_21 m_22
 			const float determinantInv = 1.0f / d;
 
 			// Get the conjugate matrix.

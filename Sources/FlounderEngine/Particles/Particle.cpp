@@ -1,7 +1,7 @@
 ﻿#include "Particle.hpp"
 
-#include <math.h>
 #include "../Camera/Camera.hpp"
+#include "../Maths/Maths.hpp"
 
 namespace Flounder
 {
@@ -65,10 +65,10 @@ namespace Flounder
 
 		const int stageCount = static_cast<int>(pow(m_particleType->GetTexture()->GetNumberOfRows(), 2));
 		const float atlasProgression = lifeFactor * stageCount;
-		const int index1 = static_cast<int>(floor(atlasProgression));
+		const int index1 = static_cast<int>(std::floor(atlasProgression));
 		const int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
 
-		m_textureBlendFactor = fmod(atlasProgression, 1.0f);
+		m_textureBlendFactor = std::fmod(atlasProgression, 1.0f);
 		UpdateTextureOffset(m_textureOffset1, index1);
 		UpdateTextureOffset(m_textureOffset2, index2);
 	}

@@ -1,10 +1,17 @@
 #include "Quaternion.hpp"
 
 #include <cassert>
+#include <sstream>
 #include "Maths.hpp"
+#include "Vector4.hpp"
 
 namespace Flounder
 {
+	const Quaternion Quaternion::ZERO = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+	const Quaternion Quaternion::ONE = Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
+	const Quaternion Quaternion::POSITIVE_INFINITY = Quaternion(+INFINITY, +INFINITY, +INFINITY, +INFINITY);
+	const Quaternion Quaternion::NEGATIVE_INFINITY = Quaternion(-INFINITY, -INFINITY, -INFINITY, -INFINITY);
+
 	Quaternion::Quaternion() :
 		m_x(0.0f),
 		m_y(0.0f),
@@ -18,6 +25,14 @@ namespace Flounder
 		m_y(y),
 		m_z(z),
 		m_w(w)
+	{
+	}
+
+	Quaternion::Quaternion(const Vector4 &source) :
+		m_x(source.m_x),
+		m_y(source.m_y),
+		m_z(source.m_z),
+		m_w(source.m_w)
 	{
 	}
 
@@ -395,5 +410,74 @@ namespace Flounder
 	float Quaternion::LengthSquared() const
 	{
 		return LengthSquared(*this);
+	}
+
+	bool Quaternion::operator==(const Quaternion &other) const
+	{
+		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z && m_w == other.m_w;
+	}
+
+	bool Quaternion::operator!=(const Quaternion &other) const
+	{
+		return !(*this == other);
+	}
+
+	bool Quaternion::operator<(const Quaternion &other) const
+	{
+		return m_x < other.m_x && m_y < other.m_y && m_z < other.m_z && m_w < other.m_w;
+	}
+
+	bool Quaternion::operator<=(const Quaternion &other) const
+	{
+		return m_x <= other.m_x && m_y <= other.m_y && m_z <= other.m_z && m_w <= other.m_w;
+	}
+
+	bool Quaternion::operator>(const Quaternion &other) const
+	{
+		return m_x > other.m_x && m_y > other.m_y && m_z > other.m_z && m_w > other.m_w;
+	}
+
+	bool Quaternion::operator>=(const Quaternion &other) const
+	{
+		return m_x >= other.m_x && m_y >= other.m_y && m_z >= other.m_z && m_w >= other.m_w;
+	}
+
+	bool Quaternion::operator==(const float &value) const
+	{
+		return m_x == value && m_y == value && m_z == value && m_w == value;
+	}
+
+	bool Quaternion::operator!=(const float &value) const
+	{
+		return !(*this == value);
+	}
+
+	Quaternion &Quaternion::operator-()
+	{
+		return *Quaternion(*this).Negate();
+	}
+
+	Quaternion operator*(Quaternion left, const Quaternion &right)
+	{
+		return *Quaternion::Multiply(left, right, &left);
+	}
+
+	Quaternion &Quaternion::operator*=(const Quaternion &other)
+	{
+		Quaternion result = Quaternion();
+		return *Quaternion::Multiply(*this, other, &result);
+	}
+
+	std::ostream &operator<<(std::ostream &stream, const Quaternion &vector)
+	{
+		stream << vector.ToString();
+		return stream;
+	}
+
+	std::string Quaternion::ToString() const
+	{
+		std::stringstream result;
+		result << "Quaternion(" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
+		return result.str();
 	}
 }

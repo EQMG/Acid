@@ -4,6 +4,9 @@
 
 namespace Flounder
 {
+	const Matrix2 Matrix2::IDENTITY = *Matrix2().SetIdentity();
+	const Matrix2 Matrix2::ZERO = *Matrix2().SetZero();
+
 	Matrix2::Matrix2() :
 		m_00(1.0f),
 		m_01(0.0f),

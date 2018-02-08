@@ -26,6 +26,15 @@ namespace Flounder
 			};
 		};
 
+		static const Vector2 ZERO;
+		static const Vector2 ONE;
+		static const Vector2 LEFT;
+		static const Vector2 RIGHT;
+		static const Vector2 UP;
+		static const Vector2 DOWN;
+		static const Vector2 POSITIVE_INFINITY;
+		static const Vector2 NEGATIVE_INFINITY;
+
 		/// <summary>
 		/// Constructor for vector2.
 		/// </summary>
