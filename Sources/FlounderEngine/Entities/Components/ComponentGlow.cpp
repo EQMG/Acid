@@ -26,8 +26,7 @@ namespace Flounder
 
 	void ComponentGlow::CmdRender(EntityRender *entityRender)
 	{
-		// 	entityRender->descriptorWrites.push_back(m_textureGlowMap->GetWriteDescriptor(4, entityRender->descriptorSet));
-		// TODO
+	// 	entityRender->descriptorWrites.push_back(m_textureGlowMap->GetWriteDescriptor(5, entityRender->descriptorSet));
 	}
 
 	void ComponentGlow::Save(ComponentPrefab *prefab)

@@ -28,7 +28,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Worlds *Get()
 		{
-			return dynamic_cast<Worlds *>(Engine::Get()->GetModule("worlds"));
+			return reinterpret_cast<Worlds *>(Engine::Get()->GetModule("worlds"));
 		}
 
 		/// <summary>

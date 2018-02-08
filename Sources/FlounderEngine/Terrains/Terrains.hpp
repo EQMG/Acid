@@ -23,7 +23,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Terrains *Get()
 		{
-			return dynamic_cast<Terrains *>(Engine::Get()->GetModule("terrains"));
+			return reinterpret_cast<Terrains *>(Engine::Get()->GetModule("terrains"));
 		}
 
 		/// <summary>

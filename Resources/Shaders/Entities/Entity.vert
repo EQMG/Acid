@@ -13,6 +13,8 @@ layout(set = 0, binding = 1) uniform UboObject
 	mat4 transform;
 
 	float swaying;
+	float normals;
+	float glowing;
 
 	float metallic;
 	float roughness;

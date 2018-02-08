@@ -22,7 +22,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Camera *Get()
 		{
-			return dynamic_cast<Camera *>(Engine::Get()->GetModule("camera"));
+			return reinterpret_cast<Camera *>(Engine::Get()->GetModule("camera"));
 		}
 
 		/// <summary>

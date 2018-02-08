@@ -123,7 +123,7 @@ namespace Flounder
 		}
 
 		std::ifstream file(filename.c_str(), std::ifstream::binary);
-		SoundSourceInfo sourceInfo = {};
+	//	SoundSourceInfo sourceInfo = {};
 
 		assert(file.is_open() && "Load ogg file failure: file couldn't be opened!");
 

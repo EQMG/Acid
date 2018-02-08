@@ -21,6 +21,8 @@ namespace Flounder
 			Matrix4 transform;
 
 			float swaying;
+			float normals;
+			float glowing;
 
 			float metallic;
 			float roughness;

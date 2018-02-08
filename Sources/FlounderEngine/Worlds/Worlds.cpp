@@ -72,8 +72,8 @@ namespace Flounder
 		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetFog() != nullptr)
 		{
 			Skyboxes::Get()->GetFog()->m_colour->Set(fogColour);
-			Skyboxes::Get()->GetFog()->m_density = 0.003f + ((1.0f - GetShadowFactor()) * 0.002f);
-			Skyboxes::Get()->GetFog()->m_gradient = 2.20f - ((1.0f - GetShadowFactor()) * 0.380f);
+			Skyboxes::Get()->GetFog()->m_density = 0.0033f + ((1.0f - GetShadowFactor()) * 0.002f);
+			Skyboxes::Get()->GetFog()->m_gradient = 2.221f - ((1.0f - GetShadowFactor()) * 0.380f);
 			Skyboxes::Get()->GetFog()->m_lowerLimit = 0.0f;
 			Skyboxes::Get()->GetFog()->m_upperLimit = 0.15f - ((1.0f - GetShadowFactor()) * 0.03f);
 		}

@@ -34,7 +34,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Audio *Get()
 		{
-			return dynamic_cast<Audio *>(Engine::Get()->GetModule("audio"));
+			return reinterpret_cast<Audio *>(Engine::Get()->GetModule("audio"));
 		}
 
 		/// <summary>
