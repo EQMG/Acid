@@ -1,11 +1,10 @@
 #pragma once
 
 #define STB_IMAGE_IMPLEMENTATION
-
 #include <STB/stb_image.h>
+#include <STB/stb_vorbis.h>
 
 #define GLFW_INCLUDE_VULKAN
-
 #include <GLFW/glfw3.h>
 
 #ifdef FLOUNDER_PLATFORM_MACOS

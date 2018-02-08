@@ -1,9 +1,11 @@
 set(STB_HEADERS_
-	"include/STB/stb_image.h"
+		"include/STB/stb_image.h"
+		"include/STB/stb_vorbis.h"
 )
 
 set(STB_SOURCES_
-	"src/stb_image.c"
+		"src/STB/stb_image.c"
+		"src/STB/stb_vorbis.c"
 )
 
 source_group("Header Files" FILES ${STB_HEADERS_})

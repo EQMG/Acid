@@ -181,4 +181,9 @@ namespace Flounder
 		std::replace(result.begin(), result.end(), '\\', '/');
 		return result;
 	}
+
+	std::string FileSystem::FindExt(const std::string &filepath)
+	{
+		return filepath.substr(filepath.find_last_of('.') + 1, filepath.size());
+	}
 }
