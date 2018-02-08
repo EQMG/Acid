@@ -30,6 +30,17 @@ namespace Flounder
 			};
 		};
 
+		static const Vector3 ZERO;
+		static const Vector3 ONE;
+		static const Vector3 LEFT;
+		static const Vector3 RIGHT;
+		static const Vector3 UP;
+		static const Vector3 DOWN;
+		static const Vector3 FRONT;
+		static const Vector3 BACK;
+		static const Vector3 POSITIVE_INFINITY;
+		static const Vector3 NEGATIVE_INFINITY;
+
 		/// <summary>
 		/// Constructor for Vector3.
 		/// </summary>

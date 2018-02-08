@@ -5,6 +5,8 @@
 
 namespace Flounder
 {
+	class Vector4;
+
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
 	/// </summary>
@@ -24,6 +26,11 @@ namespace Flounder
 			};
 		};
 
+		static const Quaternion ZERO;
+		static const Quaternion ONE;
+		static const Quaternion POSITIVE_INFINITY;
+		static const Quaternion NEGATIVE_INFINITY;
+
 		/// <summary>
 		/// Constructor for quaternion.
 		/// </summary>
@@ -37,6 +44,12 @@ namespace Flounder
 		/// <param name="z"> Start z. </param>
 		/// <param name="w"> Start w. </param>
 		Quaternion(const float &x, const float &y, const float &z, const float &w);
+
+		/// <summary>
+		/// Constructor for quaternion.
+		/// </summary>
+		/// <param name="source"> Creates this quaternion out of a existing one. </param>
+		Quaternion(const Vector4 &source);
 
 		/// <summary>
 		/// Constructor for quaternion.
@@ -239,6 +252,30 @@ namespace Flounder
 		/// <returns> The length squared of the quaternion. </returns>
 		float LengthSquared() const;
 
-		// TODO: Operators.
+		bool operator==(const Quaternion &other) const;
+
+		bool operator!=(const Quaternion &other) const;
+
+		bool operator<(const Quaternion &other) const;
+
+		bool operator<=(const Quaternion &other) const;
+
+		bool operator>(const Quaternion &other) const;
+
+		bool operator>=(const Quaternion &other) const;
+
+		bool operator==(const float &value) const;
+
+		bool operator!=(const float &value) const;
+
+		Quaternion &operator-();
+
+		friend Quaternion operator*(Quaternion left, const Quaternion &right);
+
+		Quaternion &operator*=(const Quaternion &other);
+
+		friend std::ostream &operator<<(std::ostream &stream, const Quaternion &vector);
+
+		std::string ToString() const;
 	};
 }

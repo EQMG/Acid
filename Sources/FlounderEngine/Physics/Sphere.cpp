@@ -131,7 +131,7 @@ namespace Flounder
 			return Intersect(false, -1.0f);
 		}
 
-		float distSqrt = sqrt(disc);
+		float distSqrt = std::sqrt(disc);
 		float q;
 
 		if (b < 0.0f)

@@ -8,6 +8,11 @@
 
 namespace Flounder
 {
+	const Vector4 Vector4::ZERO = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
+	const Vector4 Vector4::ONE = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	const Vector4 Vector4::POSITIVE_INFINITY = Vector4(+INFINITY, +INFINITY, +INFINITY, +INFINITY);
+	const Vector4 Vector4::NEGATIVE_INFINITY = Vector4(-INFINITY, -INFINITY, -INFINITY, -INFINITY);
+
 	Vector4::Vector4() :
 		m_x(0.0f),
 		m_y(0.0f),

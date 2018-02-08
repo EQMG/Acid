@@ -105,8 +105,7 @@ namespace Flounder
 		/// <returns> The current engine time in milliseconds. </returns>
 		float GetTimeMs() const
 		{
-			return std::chrono::duration_cast<MillisecondsType>(HighResolutionClock::now() - m_start).count() +
-				(m_timeOffset / 1000.0f);
+			return std::chrono::duration_cast<MillisecondsType>(HighResolutionClock::now() - m_start).count() + (m_timeOffset / 1000.0f);
 		}
 
 		/// <summary>

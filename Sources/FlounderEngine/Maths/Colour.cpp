@@ -6,6 +6,10 @@
 
 namespace Flounder
 {
+	const Colour Colour::CLEAR = Colour(0.0f, 0.0f, 0.0f, 0.0f);
+	const Colour Colour::WHITE = Colour("#ffffff");
+	const Colour Colour::BLACK = Colour("#000000");
+
 	Colour::Colour() :
 		m_r(0.0f),
 		m_g(0.0f),

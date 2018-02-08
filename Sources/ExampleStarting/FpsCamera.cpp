@@ -182,7 +182,7 @@ namespace Demo
 	{
 		float offset = m_targetRotationAngle - m_angleAroundPlayer;
 
-		if (fabs(offset) > DEGREES_IN_HALF_CIRCLE)
+		if (std::fabs(offset) > DEGREES_IN_HALF_CIRCLE)
 		{
 			if (offset < 0.0f)
 			{
@@ -210,7 +210,7 @@ namespace Demo
 	{
 		float offset = m_targetElevation - m_angleOfElevation;
 
-		if (fabs(offset) > DEGREES_IN_HALF_CIRCLE)
+		if (std::fabs(offset) > DEGREES_IN_HALF_CIRCLE)
 		{
 			if (offset < 0.0f)
 			{
