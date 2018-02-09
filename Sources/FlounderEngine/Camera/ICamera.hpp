@@ -67,7 +67,7 @@ namespace Flounder
 		/// <summary>
 		/// Gets the ray that extends from the cameras position though the screen.
 		/// </summary>
-		/// <returns> The cameras ray. </returns>
+		/// <returns> The cameras view ray. </returns>
 		virtual Ray *GetViewRay() const = 0;
 
 		/// <summary>

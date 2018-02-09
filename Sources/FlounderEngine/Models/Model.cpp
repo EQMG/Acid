@@ -183,7 +183,7 @@ namespace Flounder
 				}
 				else
 				{
-					fprintf(stderr, "OBJ '%s' unknown line: '%s'.\n", m_filename.c_str(), line.c_str());
+					fprintf(stderr, "OBJ '%s' unknown line: '%s'\n", m_filename.c_str(), line.c_str());
 				}
 			}
 		}
