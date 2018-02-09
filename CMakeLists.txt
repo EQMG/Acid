@@ -3,6 +3,7 @@ project (Flounder)
 
 # Preprocessor
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+	add_definitions(-DFLOUNDER_VERBOSE)
 	add_definitions(-DFLOUNDER_CONFIG_DEBUG)
 elseif("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	add_definitions(-DFLOUNDER_CONFIG_RELEASE)
@@ -10,8 +11,6 @@ elseif("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
 	set(CMAKE_BUILD_TYPE "Release")
 	add_definitions(-DFLOUNDER_CONFIG_RELEASE)
 endif()
-
-add_definitions(-DFLOUNDER_VERBOSE)
 
 if(WIN32)
 	add_definitions(-DFLOUNDER_PLATFORM_WINDOWS)
@@ -50,8 +49,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYP
 
 #mklink /J C:\Users\mattp\Documents\Flounder\Build\Debug\bin\Resources C:\Users\mattp\Documents\Flounder\Resources
 #ln -s /Users/albrmat/Desktop/Flounder/Resources /Users/albrmat/Desktop/Flounder/Build/Debug/bin/Resorces
-#file(COPY "${PROJECT_SOURCE_DIR}/Resources/" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/")
-#ADD_CUSTOM_TARGET(link_target ALL COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Resources/" "${PROJECT_SOURCE_DIR}/Resources/")
+#ln -s /home/mattp/Documents/Flounder/Resources /home/mattp/Documents/Flounder/Build/Debug/bin/Resorces
 
 # Libraries
 if(APPLE)
@@ -86,7 +84,7 @@ if(APPLE)
 else()
 	set(OPENAL_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/openal/include")
 endif()
-find_library(OPENAL_LIBRARY NAMES OpenAL32 OpenAL PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
+find_library(OPENAL_LIBRARY NAMES OpenAL32 OpenAL openal PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
 message(STATUS "OpenAL: ${OPENAL_LIBRARY}")
 
 set(STB_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/stb/include")
