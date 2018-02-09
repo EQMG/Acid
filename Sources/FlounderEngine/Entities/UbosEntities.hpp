@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Maths/Colour.hpp"
 #include "../Maths/Matrix4.hpp"
 #include "../Maths/Vector2.hpp"
 #include "../Maths/Vector4.hpp"
@@ -20,17 +21,14 @@ namespace Flounder
 		{
 			Matrix4 transform;
 
-			float swaying;
-			float normals;
-			float glowing;
+			Vector4 diffuse;
 
-			float metallic;
-			float roughness;
-			float ignore;
+			Vector4 samples;
 
-			Vector2 swayOffset;
+			Vector3 surface;
+			Vector2 swaying;
 		};
 
-		//	static_assert(sizeof(UboObject) % 16 == 0);
+	//	static_assert(sizeof(UboObject) % 16 == 0);
 	};
 }

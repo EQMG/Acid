@@ -1,4 +1,5 @@
-ComponentModel,"Resources/Entities/TreePine/Model.obj","Resources/Entities/TreePine/Diffuse.png"
+ComponentModel,"Resources/Entities/TreePine/Model.obj"
+ComponentDiffuse,"Resources/Entities/TreePine/Diffuse.png"
 #ComponentSway,"Resources/Entities/TreePine/Sway.png"
-ComponentMaterial,0.0,0.0,1,0,0
+ComponentMaterial,0.0,0.0,"#FFFFFF",1,0,0,"nullptr"
 ComponentCollider,

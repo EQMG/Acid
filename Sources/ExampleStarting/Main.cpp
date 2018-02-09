@@ -1,5 +1,5 @@
 #include <iostream>
-#include <Platforms/PlatformUpdater.hpp>
+#include <Engine/ModuleUpdater.hpp>
 #include <Devices/Mouse.hpp>
 #include <Camera/Camera.hpp>
 #include <Renderer/Renderer.hpp>
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 {
 	// Creates the engine object.
 	Engine *m_engine = new Engine();
-	m_engine->SetUpdater(new PlatformUpdater());
+	m_engine->SetUpdater(new ModuleUpdater());
 
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 	ConfigManager *configManager = new ConfigManager();

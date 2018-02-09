@@ -1,6 +1,7 @@
 ﻿#include "ComponentCollider.hpp"
 
 #include "../Entity.hpp"
+#include "ComponentModel.hpp"
 
 namespace Flounder
 {
@@ -22,17 +23,16 @@ namespace Flounder
 
 	void ComponentCollider::Update()
 	{
-		/*auto componentModel = GetEntity()->GetComponent<ComponentModel>();
+		auto componentModel = GetEntity()->GetComponent<ComponentModel>();
 
 		if (componentModel != nullptr)
 		{
-			delete m_collider; // TODO?
-			componentModel->GetModel()->GetAabb()->Update(*m_entity->GetTransform(), m_collider);
+			m_collider = componentModel->GetModel()->GetAabb()->Update(*m_entity->GetTransform(), m_collider);
 		}
 		else
 		{
-			m_collider = nullptr;
-		}*/
+			delete m_collider;
+		}
 	}
 
 	void ComponentCollider::CmdRender(EntityRender *entityRender)

@@ -57,13 +57,13 @@ namespace Demo
 			}
 		}
 
-		for (int i = -5; i <= 0; i++)
+		for (int i = -8; i <= 0; i++)
 		{
-			for (int j = -5; j <= 0; j++)
+			for (int j = -8; j <= 0; j++)
 			{
-				const float xv = 0.0f; //  Maths::RandomInRange(-10.0f, 10.0f);
-				const float yv = 0.0f; //  Maths::RandomInRange(-10.0f, 10.0f);
-				Vector3 position = Terrains::Get()->GetPosition((20.0f * i) + xv, (20.0f * j) + yv);
+				const float xv = Maths::RandomInRange(-3.0f, 3.0f);
+				const float yv = Maths::RandomInRange(-3.0f, 3.0f);
+				Vector3 position = Terrains::Get()->GetPosition((13.0f * i) + xv, (13.0f * j) + yv);
 
 				if (position.m_y > 0.0f)
 				{

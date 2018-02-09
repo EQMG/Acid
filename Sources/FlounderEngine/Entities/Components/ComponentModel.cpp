@@ -1,11 +1,11 @@
-﻿#include <Models/Shapes/Sphere.hpp>
-#include "ComponentModel.hpp"
+﻿#include "ComponentModel.hpp"
 
 #include "../Entity.hpp"
+#include "../../Models/Shapes/Sphere.hpp"
 
 namespace Flounder
 {
-	static Model *TempModel(const std::string &filename)
+	static Model *DecodeModelType(const std::string &filename)
 	{
 		auto split = FormatString::Split(filename, "_");
 		if (!split.empty() && split.at(0) == "Sphere")
@@ -15,17 +15,15 @@ namespace Flounder
 		return Model::Resource(filename);
 	}
 
-	ComponentModel::ComponentModel(Model *model, Texture *diffuse) :
+	ComponentModel::ComponentModel(Model *model) :
 		IComponent(),
-		m_model(model),
-		m_textureDiffuse(diffuse)
+		m_model(model)
 	{
 	}
 
 	ComponentModel::ComponentModel(ComponentPrefab *prefab) :
 		IComponent(),
-		m_model(TempModel(prefab->GetString(0))),
-		m_textureDiffuse(Texture::Resource(prefab->GetString(1)))
+		m_model(DecodeModelType(prefab->GetString(0)))
 	{
 	}
 
@@ -39,13 +37,11 @@ namespace Flounder
 
 	void ComponentModel::CmdRender(EntityRender *entityRender)
 	{
-		entityRender->descriptorWrites.push_back(m_textureDiffuse->GetWriteDescriptor(2, entityRender->descriptorSet));
 		entityRender->model = m_model;
 	}
 
 	void ComponentModel::Save(ComponentPrefab *prefab)
 	{
 		prefab->SetString(0, m_model->GetFilename());
-		prefab->SetString(1, m_textureDiffuse->GetFilename());
 	}
 }

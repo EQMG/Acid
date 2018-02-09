@@ -8,8 +8,8 @@
 
 namespace Flounder
 {
-	const float Water::SIDE_LENGTH = 2048.0f;
-	const float Water::SQUARE_SIZE = 100.0f;
+	const float Water::SIDE_LENGTH = 1536.0f;
+	const float Water::SQUARE_SIZE = 256.0f;
 	const int Water::VERTEX_COUNT = static_cast<int>((2.0 * SIDE_LENGTH) / SQUARE_SIZE) + 1;
 	const float Water::TEXTURE_SCALE = 1.0f;
 
@@ -69,8 +69,8 @@ namespace Flounder
 		m_uniformObject->Update(&uboObject);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-			uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet),
-			Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(3, descriptorSet)
+			uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet)
+		//	Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(3, descriptorSet)
 		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
