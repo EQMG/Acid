@@ -7,7 +7,7 @@
 #include "../Components/ComponentCelestial.hpp"
 #include "../Components/ComponentCollider.hpp"
 #include "../Components/ComponentCollision.hpp"
-#include "../Components/ComponentGlow.hpp"
+#include "../Components/ComponentDiffuse.hpp"
 #include "../Components/ComponentLight.hpp"
 #include "../Components/ComponentMaterial.hpp"
 #include "../Components/ComponentModel.hpp"
@@ -26,7 +26,7 @@ namespace Flounder
 			if (name == "ComponentCelestial") { return new ComponentCelestial(prefab); }
 			if (name == "ComponentCollider") { return new ComponentCollider(prefab); }
 			if (name == "ComponentCollision") { return new ComponentCollision(prefab); }
-			if (name == "ComponentGlow") { return new ComponentGlow(prefab); }
+			if (name == "ComponentDiffuse") { return new ComponentDiffuse(prefab); }
 			if (name == "ComponentLight") { return new ComponentLight(prefab); }
 			if (name == "ComponentMaterial") { return new ComponentMaterial(prefab); }
 			if (name == "ComponentModel") { return new ComponentModel(prefab); }

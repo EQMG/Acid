@@ -27,7 +27,9 @@ namespace Flounder
 
 	void ComponentNormal::CmdRender(EntityRender *entityRender)
 	{
-	//	entityRender->descriptorWrites.push_back(m_textureSwayMap->GetWriteDescriptor(4, entityRender->descriptorSet));
+		entityRender->descriptorWrites.push_back(m_textureNormal->GetWriteDescriptor(3, entityRender->descriptorSet));
+
+		entityRender->uboObject.samples.m_y = 1.0f;
 	}
 
 	void ComponentNormal::Save(ComponentPrefab *prefab)
