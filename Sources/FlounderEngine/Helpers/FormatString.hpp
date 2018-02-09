@@ -68,7 +68,7 @@ namespace Flounder
 		/// <param name="start"> The left bound. </param>
 		/// <param name="end"> The right bound. </param>
 		/// <returns> The substring of the string. </returns>
-		static std::string Substring(const std::string &str, const int &start, const int &end);
+		static std::string Substring(const std::string &str, const unsigned int &start, const unsigned int &end);
 
 		/// <summary>
 		/// Removes all tokens from a string.

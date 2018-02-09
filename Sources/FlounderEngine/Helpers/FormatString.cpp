@@ -6,8 +6,8 @@ namespace Flounder
 {
 	std::vector<std::string> FormatString::Split(const std::string &str, const std::string &sep, const bool &trim)
 	{
-		std::string str2 = "" + str;
-		char *cstr = const_cast<char *>(str2.c_str());
+		char *cstr = new char[str.length() + 1];
+		std::strcpy(cstr, str.c_str());
 		std::vector<std::string> arr;
 		char *current = strtok(cstr, sep.c_str());
 
@@ -57,7 +57,7 @@ namespace Flounder
 
 	int FormatString::FindCharPos(const std::string &str, const char &c)
 	{
-		for (int i = 0; i < static_cast<int>(str.length()); i++)
+		for (unsigned int i = 0; i < str.length(); i++)
 		{
 			if (str.at(i) == c)
 			{
@@ -74,7 +74,6 @@ namespace Flounder
 
 		if (strBegin == std::string::npos)
 		{
-			// No content.
 			return "";
 		}
 
@@ -86,7 +85,7 @@ namespace Flounder
 		return result;
 	}
 
-	std::string FormatString::Substring(const std::string &str, const int &start, const int &end)
+	std::string FormatString::Substring(const std::string &str, const unsigned int &start, const unsigned int &end)
 	{
 		std::string result = str;
 		result = result.substr(start, end - start);
