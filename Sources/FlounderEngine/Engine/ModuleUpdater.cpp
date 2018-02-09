@@ -1,4 +1,4 @@
-#include "PlatformUpdater.hpp"
+#include "ModuleUpdater.hpp"
 
 #include "../Camera/Camera.hpp"
 #include "../Devices/Audio.hpp"
@@ -19,7 +19,7 @@
 
 namespace Flounder
 {
-	PlatformUpdater::PlatformUpdater() :
+	ModuleUpdater::ModuleUpdater() :
 		IUpdater(),
 		m_deltaUpdate(nullptr),
 		m_deltaRender(nullptr),
@@ -29,7 +29,7 @@ namespace Flounder
 	{
 	}
 
-	PlatformUpdater::~PlatformUpdater()
+	ModuleUpdater::~ModuleUpdater()
 	{
 		for (auto it = --m_modules->end(); it != m_modules->begin(); --it)
 		{
@@ -45,7 +45,7 @@ namespace Flounder
 		delete m_timerUpdate;
 	}
 
-	void PlatformUpdater::Create()
+	void ModuleUpdater::Create()
 	{
 		m_deltaUpdate = new Delta();
 		m_deltaRender = new Delta();
@@ -73,7 +73,7 @@ namespace Flounder
 		ModuleCreate<Waters>(UpdatePre, "waters");
 	}
 
-	void PlatformUpdater::Update()
+	void ModuleUpdater::Update()
 	{
 		if (Display::Get() != nullptr)
 		{
@@ -117,13 +117,13 @@ namespace Flounder
 		}
 	}
 
-	void PlatformUpdater::AddModule(const ModuleUpdate &typeUpdate, std::string moduleName, IModule *module)
+	void ModuleUpdater::AddModule(const ModuleUpdate &typeUpdate, std::string moduleName, IModule *module)
 	{
 		float offset = typeUpdate + (0.01f * static_cast<float>(m_modules->size()));
 		m_modules->insert(std::make_pair(offset, std::make_pair(moduleName, module)));
 	}
 
-	IModule *PlatformUpdater::GetModule(const std::string &name)
+	IModule *ModuleUpdater::GetModule(const std::string &name)
 	{
 		for (auto &module : *m_modules)
 		{
@@ -136,7 +136,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	void PlatformUpdater::RunUpdate(const ModuleUpdate &typeUpdate) const
+	void ModuleUpdater::RunUpdate(const ModuleUpdate &typeUpdate) const
 	{
 		for (auto &module : *m_modules)
 		{

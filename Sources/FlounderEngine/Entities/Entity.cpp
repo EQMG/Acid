@@ -6,11 +6,12 @@
 
 namespace Flounder
 {
-	Entity::Entity(const std::string &prefab, const Transform &transform, ISpatialStructure<Entity *> *structure) :
+	Entity::Entity(const std::string &prefabName, const Transform &transform, ISpatialStructure<Entity *> *structure) :
 		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
 		m_structure(structure),
 		m_components(new std::vector<IComponent *>()),
 		m_transform(new Transform(transform)),
+		m_prefabName(prefabName),
 		m_removed(false)
 	{
 		if (m_structure == nullptr)
@@ -23,7 +24,7 @@ namespace Flounder
 			m_structure->Add(this);
 		}
 
-		EntityPrefab *entityPrefab = EntityPrefab::Resource("Resources/Entities/" + prefab + "/" + prefab + ".csv");
+		EntityPrefab *entityPrefab = EntityPrefab::Resource("Resources/Entities/" + prefabName + "/" + prefabName + ".csv");
 		Components::AttachAllTo(entityPrefab, this);
 	}
 
@@ -32,6 +33,7 @@ namespace Flounder
 		m_structure(structure),
 		m_components(new std::vector<IComponent *>()),
 		m_transform(new Transform(transform)),
+		m_prefabName(""),
 		m_removed(false)
 	{
 		if (m_structure != nullptr)

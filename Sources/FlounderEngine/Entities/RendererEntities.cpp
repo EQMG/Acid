@@ -46,6 +46,31 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
+		/*auto mapPrefabs = std::map<std::string, std::vector<Entity *>>();
+
+		for (auto entity : *Entities::Get()->GetStructure()->GetAll())
+		{
+			if (entity->GetCollider() != nullptr && !entity->GetCollider()->InFrustum(*camera.GetViewFrustum()))
+			{
+				continue;
+			}
+
+			auto key = mapPrefabs.find(entity->GetPrefabName());
+
+			if (key == mapPrefabs.end())
+			{
+				mapPrefabs.insert(std::make_pair(entity->GetPrefabName(), std::vector<Entity *>()));
+				key = mapPrefabs.find(entity->GetPrefabName());
+			}
+
+			(*key).second.push_back(entity);
+		}
+
+		for (auto prefab : mapPrefabs)
+		{
+		//	printf("%s: %i\n", prefab.first.c_str(), prefab.second.size());
+		}*/
+
 		//	std::vector<Entity*> inFrustum = std::vector<Entity*>();
 		//	Entities::Get()->GetStructure()->QueryFrustum(camera.GetViewFrustum(), &inFrustum);
 

@@ -11,9 +11,8 @@ namespace Flounder
 	{
 	private:
 		Model *m_model;
-		Texture *m_textureDiffuse;
 	public:
-		ComponentModel(Model *model, Texture *diffuse);
+		ComponentModel(Model *model);
 
 		ComponentModel(ComponentPrefab *prefab);
 
@@ -30,9 +29,5 @@ namespace Flounder
 		Model *GetModel() const { return m_model; }
 
 		void SetModel(Model *model) { m_model = model; }
-
-		Texture *GetTextureDiffuse() const { return m_textureDiffuse; }
-
-		void SetTextureDiffuse(Texture *diffuse) { m_textureDiffuse = diffuse; }
 	};
 }
