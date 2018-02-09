@@ -1,3 +1,4 @@
-ComponentModel,"Resources/Entities/FoundationWood/Model.obj","Resources/Entities/FoundationWood/Diffuse.png"
-ComponentMaterial,0.0,0.0,1,0,0
+ComponentModel,"Resources/Entities/FoundationWood/Model.obj"
+ComponentDiffuse,"Resources/Entities/FoundationWood/Diffuse.png"
+ComponentMaterial,0.0,0.0,"#FFFFFF",1,0,0,"nullptr"
 ComponentCollider

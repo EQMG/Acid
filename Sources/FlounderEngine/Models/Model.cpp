@@ -11,18 +11,18 @@ namespace Flounder
 	Model::Model() :
 		IResource(),
 		m_filename(""),
-		m_aabb(new Aabb()),
 		m_vertexBuffer(nullptr),
-		m_indexBuffer(nullptr)
+		m_indexBuffer(nullptr),
+		m_aabb(new Aabb())
 	{
 	}
 
 	Model::Model(const std::string &filename) :
 		IResource(),
 		m_filename(filename),
-		m_aabb(new Aabb()),
 		m_vertexBuffer(nullptr),
-		m_indexBuffer(nullptr)
+		m_indexBuffer(nullptr),
+		m_aabb(new Aabb())
 	{
 		std::vector<Vertex> vertices = std::vector<Vertex>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
@@ -45,9 +45,9 @@ namespace Flounder
 	Model::Model(std::vector<Vertex> &vertices, std::vector<uint32_t> &indices, const std::string &name) :
 		IResource(),
 		m_filename(name),
-		m_aabb(new Aabb()),
 		m_vertexBuffer(new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data())),
-		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data()))
+		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data())),
+		m_aabb(new Aabb())
 	{
 		m_aabb->Set(CalculateAabb(vertices));
 	}
@@ -55,9 +55,9 @@ namespace Flounder
 	Model::Model(std::vector<Vertex> &vertices, const std::string &name) :
 		IResource(),
 		m_filename(name),
-		m_aabb(new Aabb()),
 		m_vertexBuffer(new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data())),
-		m_indexBuffer(nullptr)
+		m_indexBuffer(nullptr),
+		m_aabb(new Aabb())
 	{
 		m_aabb->Set(CalculateAabb(vertices));
 	}

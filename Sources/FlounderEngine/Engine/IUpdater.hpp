@@ -2,10 +2,18 @@
 
 #include <string>
 #include "IModule.hpp"
-#include "ModuleUpdate.hpp"
 
 namespace Flounder
 {
+	enum ModuleUpdate
+	{
+		UpdateAlways = 0,
+		UpdatePre = 1,
+		UpdateNormal = 2,
+		UpdatePost = 3,
+		UpdateRender = 4
+	};
+
 	/// <summary>
 	/// A class used to define how the engine will run updates and timings.
 	/// </summary>

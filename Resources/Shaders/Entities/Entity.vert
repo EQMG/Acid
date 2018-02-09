@@ -12,18 +12,15 @@ layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 
-	float swaying;
-	float normals;
-	float glowing;
+	vec4 diffuse;
 
-	float metallic;
-	float roughness;
-	float ignore;
+	vec4 samples;
 
-	vec2 swayOffset;
+	vec3 surface;
+	vec2 swaying;
 } object;
 
-layout(set = 0, binding = 3) uniform sampler2D samplerSway;
+layout(set = 0, binding = 5) uniform sampler2D samplerSway;
 
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec2 vertexUv;
@@ -44,12 +41,12 @@ void main()
 	vec4 localPosition = vec4(vertexPosition, 1.0f);
 	vec4 localNormal = vec4(vertexNormal, 0.0f);
 
-	if (object.swaying == 1.0f)
+	if (object.samples.w == 1.0f)
 	{
 		vec4 swayColour = texture(samplerSway, vertexUv);
 		float swayPower = 0.5f * exp(log(length(swayColour.rgb)) / 3.0f) * length(localPosition.xyz);
-		localPosition.x += swayPower * object.swayOffset.x;
-		localPosition.z += swayPower * object.swayOffset.y;
+		localPosition.x += swayPower * object.swaying.x;
+		localPosition.z += swayPower * object.swaying.y;
 	}
 
 	vec4 worldPosition = object.transform * localPosition;

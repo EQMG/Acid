@@ -18,9 +18,10 @@ namespace Flounder
 		std::vector<IComponent *> *m_components;
 
 		Transform *m_transform;
+		std::string m_prefabName;
 		bool m_removed;
 	public:
-		Entity(const std::string &prefab, const Transform &transform, ISpatialStructure<Entity *> *structure = nullptr);
+		Entity(const std::string &prefabName, const Transform &transform, ISpatialStructure<Entity *> *structure = nullptr);
 
 		Entity(const Transform &transform, ISpatialStructure<Entity *> *structure = nullptr);
 
@@ -59,6 +60,10 @@ namespace Flounder
 		Transform *GetTransform() const { return m_transform; }
 
 		void SetTransform(const Transform &transform) const { m_transform->Set(transform); }
+
+		std::string GetPrefabName() const { return m_prefabName; }
+
+		void SetPrefabName(const std::string &prefabName) { m_prefabName = prefabName; }
 
 		bool GetRemoved() const { return m_removed; }
 

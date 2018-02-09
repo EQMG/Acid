@@ -7,7 +7,7 @@ layout(set = 0, binding = 1) uniform UboObject
 	vec4 diffuseColour;
 } object;
 
-layout(set = 0, binding = 3) uniform sampler2D samplerReflection;
+//layout(set = 0, binding = 3) uniform sampler2D samplerReflection;
 
 layout(location = 0) in vec3 fragmentNormal;
 layout(location = 1) in vec2 fragmentUv;

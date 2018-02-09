@@ -1,4 +1,6 @@
-ComponentModel,"Sphere_20_20_1.0","Resources/Undefined.png"
-ComponentMaterial,0.002,0.3,1,0,0
+ComponentModel,"Resources/Entities/Testing/Model.obj"
+ComponentDiffuse,"Resources/Entities/Testing/Diffuse.png"
+ComponentNormal,"Resources/Entities/Testing/Normal.png"
+ComponentMaterial,0.002,0.3,"#C37A57",1,0,0,"Resources/Entities/Testing/Material.png"
 ComponentLight,"#3319cc",1.333,0.0,3.0,0.0
 ComponentCollider
