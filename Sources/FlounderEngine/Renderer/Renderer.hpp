@@ -20,7 +20,7 @@ namespace Flounder
 		RenderPass *m_renderPass;
 		Framebuffers *m_framebuffers;
 		VkFence m_fenceSwapchainImage;
-		uint32_t m_activeSwapchinImage;
+		uint32_t m_activeSwapchainImage;
 
 		VkPipelineCache m_pipelineCache;
 
@@ -50,11 +50,24 @@ namespace Flounder
 	public:
 		void Update() override;
 
-		VkResult StartRenderpass(VkCommandBuffer const &commandBuffer);
+		/// <summary>
+		/// Starts a renderpass.
+		/// </summary>
+		/// <param name="commandBuffer"> The command buffer to use. </param>
+		/// <returns> VK_SUCCESS on success. </returns>
+		VkResult StartRenderpass(const VkCommandBuffer &commandBuffer);
 
+		/// <summary>
+		/// Starts the next render subpass.
+		/// </summary>
+		/// <param name="commandBuffer"> The command buffer to use. </param>
 		void NextSubpass(const VkCommandBuffer &commandBuffer);
 
-		void EndRenderpass(VkCommandBuffer const &commandBuffer);
+		/// <summary>
+		/// Ends the renderpass.
+		/// </summary>
+		/// <param name="commandBuffer"> The command buffer to use. </param>
+		void EndRenderpass(const VkCommandBuffer &commandBuffer);
 
 		/// <summary>
 		/// Gets the renderer manager.
@@ -85,7 +98,7 @@ namespace Flounder
 		static void EndSingleTimeCommands(const VkCommandBuffer &commandBuffer);
 
 	private:
-		VkFramebuffer GetActiveFramebuffer() const { return m_framebuffers->GetFramebuffers()[m_activeSwapchinImage]; }
+		VkFramebuffer GetActiveFramebuffer() const { return m_framebuffers->GetFramebuffers()[m_activeSwapchainImage]; }
 
 		void CreateFences();
 

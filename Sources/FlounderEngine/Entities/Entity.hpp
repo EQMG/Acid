@@ -29,6 +29,8 @@ namespace Flounder
 
 		void Update();
 
+		UbosEntities::UboObject GetUboObject();
+
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
 		ISpatialStructure<Entity *> *GetStructure() const { return m_structure; }
