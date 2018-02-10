@@ -14,7 +14,7 @@ namespace Flounder
 		m_renderPass(nullptr),
 		m_framebuffers(nullptr),
 		m_fenceSwapchainImage(VK_NULL_HANDLE),
-		m_activeSwapchinImage(UINT32_MAX),
+		m_activeSwapchainImage(UINT32_MAX),
 		m_pipelineCache(VK_NULL_HANDLE),
 		m_semaphore(VK_NULL_HANDLE),
 		m_commandPool(VK_NULL_HANDLE),
@@ -67,7 +67,7 @@ namespace Flounder
 		m_managerRender->Render();
 	}
 
-	VkResult Renderer::StartRenderpass(VkCommandBuffer const &commandBuffer)
+	VkResult Renderer::StartRenderpass(const VkCommandBuffer &commandBuffer)
 	{
 		if (static_cast<int>(m_swapchain->GetExtent().width) != Display::Get()->GetWidth() ||
 			static_cast<int>(m_swapchain->GetExtent().height) != Display::Get()->GetHeight())
@@ -81,7 +81,7 @@ namespace Flounder
 
 		Platform::ErrorVk(vkQueueWaitIdle(queue));
 
-		const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchinImage);
+		const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
 
 		if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 		{
@@ -107,8 +107,8 @@ namespace Flounder
 		VkRect2D renderArea = {};
 		renderArea.offset.x = 0;
 		renderArea.offset.y = 0;
-		renderArea.extent.width = Display::Get()->GetWidth();
-		renderArea.extent.height = Display::Get()->GetHeight();
+		renderArea.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth());
+		renderArea.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight());
 
 		std::array<VkClearValue, 6> clearValues = {};
 		clearValues[0].depthStencil = {1.0f, 0}; // Depth.
@@ -140,19 +140,19 @@ namespace Flounder
 		VkRect2D scissor = {};
 		scissor.offset.x = 0;
 		scissor.offset.y = 0;
-		scissor.extent.width = Display::Get()->GetWidth();
-		scissor.extent.height = Display::Get()->GetHeight();
+		scissor.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth());
+		scissor.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight());
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 
 		return VK_SUCCESS;
 	}
 
-	void Renderer::NextSubpass(VkCommandBuffer const &commandBuffer)
+	void Renderer::NextSubpass(const VkCommandBuffer &commandBuffer)
 	{
 		vkCmdNextSubpass(commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 	}
 
-	void Renderer::EndRenderpass(VkCommandBuffer const &commandBuffer)
+	void Renderer::EndRenderpass(const VkCommandBuffer &commandBuffer)
 	{
 		const auto queue = Display::Get()->GetQueue();
 
@@ -184,7 +184,7 @@ namespace Flounder
 		presentInfo.pWaitSemaphores = waitSemaphores.data();
 		presentInfo.swapchainCount = 1;
 		presentInfo.pSwapchains = m_swapchain->GetSwapchain();
-		presentInfo.pImageIndices = &m_activeSwapchinImage;
+		presentInfo.pImageIndices = &m_activeSwapchainImage;
 		presentInfo.pResults = &result;
 
 		const VkResult queuePresentResult = vkQueuePresentKHR(queue, &presentInfo);

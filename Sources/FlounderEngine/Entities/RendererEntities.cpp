@@ -1,6 +1,8 @@
 ﻿#include "RendererEntities.hpp"
 
+#include "../Devices/Display.hpp"
 #include "../Renderer/Renderer.hpp"
+#include "Components/ComponentModel.hpp"
 #include "Entities.hpp"
 
 namespace Flounder
@@ -27,7 +29,8 @@ namespace Flounder
 	RendererEntities::RendererEntities(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosEntities::UboScene))),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO))
+		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO)),
+		m_instanceBuffers(new std::map<Model *, EntityInstance *>())
 	{
 	}
 
@@ -35,6 +38,13 @@ namespace Flounder
 	{
 		delete m_uniformScene;
 		delete m_pipeline;
+
+		for (const auto &instance : *m_instanceBuffers)
+		{
+			delete instance.second;
+		}
+
+		delete m_instanceBuffers;
 	}
 
 	void RendererEntities::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
@@ -46,29 +56,50 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		/*auto mapPrefabs = std::map<std::string, std::vector<Entity *>>();
+		/*for (const auto &instance : *m_instanceBuffers)
+		{
+			instance.second->objects.clear();
+		}
 
 		for (auto entity : *Entities::Get()->GetStructure()->GetAll())
 		{
+			auto componentModel = entity->GetComponent<ComponentModel>();
+
+			if (componentModel == nullptr || componentModel->GetModel() == nullptr)
+			{
+				continue;
+			}
+
 			if (entity->GetCollider() != nullptr && !entity->GetCollider()->InFrustum(*camera.GetViewFrustum()))
 			{
 				continue;
 			}
 
-			auto key = mapPrefabs.find(entity->GetPrefabName());
+			auto key = m_instanceBuffers->find(componentModel->GetModel());
 
-			if (key == mapPrefabs.end())
+			if (key == m_instanceBuffers->end())
 			{
-				mapPrefabs.insert(std::make_pair(entity->GetPrefabName(), std::vector<Entity *>()));
-				key = mapPrefabs.find(entity->GetPrefabName());
+				m_instanceBuffers->insert(std::make_pair(componentModel->GetModel(), new EntityInstance()));
+				key = m_instanceBuffers->find(componentModel->GetModel());
 			}
 
-			(*key).second.push_back(entity);
+			(*key).second->objects.push_back(entity->GetUboObject());
 		}
 
-		for (auto prefab : mapPrefabs)
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+
+		for (auto instance : *m_instanceBuffers)
 		{
-		//	printf("%s: %i\n", prefab.first.c_str(), prefab.second.size());
+			instance.second->uniformBuffer->Update(&instance.second->objects);
+
+			std::vector<VkWriteDescriptorSet> descriptorWrites = {m_uniformScene->GetWriteDescriptor(0, descriptorSet), instance.second->uniformBuffer->GetWriteDescriptor(1, descriptorSet)};
+			vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+
+			VkDescriptorSet descriptors[] = {descriptorSet};
+			vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
+
+			instance.first->CmdRender(commandBuffer, instance.second->objects.size());
 		}*/
 
 		//	std::vector<Entity*> inFrustum = std::vector<Entity*>();

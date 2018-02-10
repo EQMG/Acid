@@ -64,7 +64,7 @@ void main()
 	    vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
 	    material.x = textureMaterial.r;
 	    material.y = textureMaterial.g;
-	    material.z += textureMaterial.b;
+	    material.z = textureMaterial.b;
 	}
 
 	outColour = encodeColour(textureColour);

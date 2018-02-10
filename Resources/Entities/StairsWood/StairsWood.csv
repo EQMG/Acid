@@ -1,4 +1,3 @@
 ComponentModel,"Resources/Entities/StairsWood/Model.obj"
-ComponentDiffuse,"Resources/Entities/StairsWood/Diffuse.png"
-ComponentMaterial,0.0,0.0,"#FFFFFF",1,0,0,"nullptr"
+ComponentMaterial,0.0,0.0,"#8b4513",1,0,0,"nullptr"
 ComponentCollider
