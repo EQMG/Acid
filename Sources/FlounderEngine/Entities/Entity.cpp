@@ -64,6 +64,21 @@ namespace Flounder
 		}
 	}
 
+	UbosEntities::UboObject Entity::GetUboObject()
+	{
+		EntityRender entityRender = {};
+		entityRender.uboObject = {};
+
+		m_transform->GetWorldMatrix(&entityRender.uboObject.transform);
+
+		for (auto c : *m_components)
+		{
+			c->CmdRender(&entityRender);
+		}
+
+		return entityRender.uboObject;
+	}
+
 	void Entity::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
