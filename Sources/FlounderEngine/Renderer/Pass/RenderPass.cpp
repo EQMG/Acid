@@ -32,7 +32,7 @@ namespace Flounder
 		attachments[2].format = VK_FORMAT_R8G8B8A8_UNORM; // Colour.
 		attachments[3].format = VK_FORMAT_R16G16_UNORM; // Normal.
 		attachments[4].format = VK_FORMAT_R8G8B8A8_UNORM; // Material.
-		attachments[5].format = VK_FORMAT_R16_SFLOAT; // Shadow.
+		attachments[5].format = VK_FORMAT_R16_UNORM; // Shadow.
 
 		std::array<VkAttachmentReference, 1> subpass0ColourAttachments = {};
 		subpass0ColourAttachments[0].attachment = 5; // Shadow.
