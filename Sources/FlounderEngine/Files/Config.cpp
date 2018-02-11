@@ -32,14 +32,15 @@ namespace Flounder
 
 	void Config::Update()
 	{
-		for (const auto &value : *m_values)
-		{
-			//	value.second.SetValue(value.second.GetGetter()());
-		}
+	//	for (auto value : *m_values)
+	//	{
+	//		value.second.SetValue(value.second.GetGetter()());
+	//	}
 	}
 
 	void Config::Save()
 	{
+		Update();
 		m_file->Clear();
 
 		for (const auto &value : *m_values)
