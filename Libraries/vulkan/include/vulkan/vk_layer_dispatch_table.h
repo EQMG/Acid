@@ -446,6 +446,9 @@ typedef struct VkLayerDispatchTable_ {
     PFN_vkDestroyValidationCacheEXT DestroyValidationCacheEXT;
     PFN_vkMergeValidationCachesEXT MergeValidationCachesEXT;
     PFN_vkGetValidationCacheDataEXT GetValidationCacheDataEXT;
+
+    // ---- VK_EXT_external_memory_host extension commands
+    PFN_vkGetMemoryHostPointerPropertiesEXT GetMemoryHostPointerPropertiesEXT;
 } VkLayerDispatchTable;
 
 

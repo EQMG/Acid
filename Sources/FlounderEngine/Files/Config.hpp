@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include <functional>
+#include "../Tasks/Tasks.hpp"
 #include "IFile.hpp"
 #include "ConfigKey.hpp"
 
@@ -52,11 +53,15 @@ namespace Flounder
 		void Link(const std::string &key, const T &normal, T (*getter)(), void (*setter)(const T &))
 		{
 			ConfigKey configKey = GetRaw(key, std::to_string(normal));
-			//	configKey.SetGetter([]() -> { std::to_string(getter()); });
 
-			if (configKey.IsFromFile())
+			if (getter != nullptr)
 			{
-				//	setter(Get<T>(key, normal));
+				configKey.SetGetter([&]() -> std::string { return std::to_string(getter()); });
+			}
+
+			if (configKey.IsFromFile() && setter != nullptr)
+			{
+				Tasks::Get()->AddTask([&]() -> void { printf("%s, %s\n", key.c_str(), std::to_string(normal).c_str()); });
 			}
 		}
 	};
