@@ -30,7 +30,6 @@ namespace Flounder
 
 		if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_SRC_BIT))
 		{
-			printf("Device does not support blitting from optimal tiled images, using copy instead of blit!\n");
 			supportsBlit = false;
 		}
 
@@ -39,7 +38,6 @@ namespace Flounder
 
 		if (!(formatProperties.linearTilingFeatures & VK_FORMAT_FEATURE_BLIT_DST_BIT))
 		{
-			printf("Device does not support blitting to linear tiled images, using copy instead of blit!\n");
 			supportsBlit = false;
 		}
 
@@ -180,55 +178,26 @@ namespace Flounder
 		FileSystem::CreateFile(filename);
 
 		// Map image memory so we can start copying from it.
-		const char *data;
+		char *data;
 		vkMapMemory(logicalDevice, dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void **) &data);
 		data += subResourceLayout.offset;
 
-		std::ofstream file(filename, std::ios::out | std::ios::binary);
-
-		// PPM file header.
-		file << "P6\n" << width << "\n" << height << "\n" << 255 << "\n";
-
-		// If source is BGR (destination is always RGB) and we can't use blit (which does automatic conversion), we'll have to manually swizzle colour components.
-		bool colourSwizzle = false;
-
-		// Check if source is BGR.
-		if (!supportsBlit)
+		/*for (int i = 0; i < width * height; i++)
 		{
-			std::vector<VkFormat> formatsBGR = {VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM};
-			colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), surfaceFormat.format) != formatsBGR.end();
-		}
+			char x = data[i];
+			unsigned int r = (x & 0x00ff0000) >> 16;
+			unsigned int g = (x & 0x0000ff00) >> 8;
+			unsigned int b = (x & 0x000000ff);
+			data[i] = ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
+		}*/
 
-		// PPM binary pixel data.
-		for (uint32_t y = 0; y < height; y++)
-		{
-			unsigned int *row = (unsigned int *) data;
-
-			for (uint32_t x = 0; x < width; x++)
-			{
-				if (colourSwizzle)
-				{
-					file.write((char *) row + 2, 1);
-					file.write((char *) row + 1, 1);
-					file.write((char *) row, 1);
-				}
-				else
-				{
-					file.write((char *) row, 3);
-				}
-
-				row++;
-			}
-
-			data += subResourceLayout.rowPitch;
-		}
-
-		file.close();
+		stbi_write_png(filename.c_str(), width, height, 4, data, width * 4);
 
 		// Clean up resources.
 		vkUnmapMemory(logicalDevice, dstImageMemory);
 		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
 		vkDestroyImage(logicalDevice, dstImage, nullptr);
+		delete[] data;
 	}
 
 	void Screenshot::InsertImageMemoryBarrier(const VkCommandBuffer &cmdbuffer, const VkImage &image, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout, const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkImageSubresourceRange &subresourceRange)
