@@ -182,15 +182,6 @@ namespace Flounder
 		vkMapMemory(logicalDevice, dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void **) &data);
 		data += subResourceLayout.offset;
 
-		/*for (int i = 0; i < width * height; i++)
-		{
-			char x = data[i];
-			unsigned int r = (x & 0x00ff0000) >> 16;
-			unsigned int g = (x & 0x0000ff00) >> 8;
-			unsigned int b = (x & 0x000000ff);
-			data[i] = ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
-		}*/
-
 		stbi_write_png(filename.c_str(), width, height, 4, data, width * 4);
 
 		// Clean up resources.
