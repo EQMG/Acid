@@ -11,7 +11,7 @@ namespace Demo
 
 	ConfigManager::ConfigManager()
 	{
-		FileSystem::CreateFolder(FileSystem::GetWorkingDirectory() + "/Configs");
+		FileSystem::CreateFolder("Configs");
 
 		m_configAudio = new Config(new FileCsv(FileSystem::GetWorkingDirectory() + "/Configs/Audio.csv"));
 		m_configAudio->Load();

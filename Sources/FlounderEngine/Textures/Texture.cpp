@@ -334,7 +334,7 @@ namespace Flounder
 
 	void Texture::TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout)
 	{
-		const auto commandBuffer = Renderer::BeginSingleTimeCommands();
+		const auto commandBuffer = Platform::BeginSingleTimeCommands();
 
 		VkImageMemoryBarrier imageMemoryBarrier = {};
 		imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -376,12 +376,12 @@ namespace Flounder
 
 		vkCmdPipelineBarrier(commandBuffer, sourceStage, destinationStage, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
 
-		Renderer::EndSingleTimeCommands(commandBuffer);
+		Platform::EndSingleTimeCommands(commandBuffer);
 	}
 
 	void Texture::CopyBufferToImage(const uint32_t &width, const uint32_t &height, const VkBuffer &buffer, const VkImage &image)
 	{
-		const auto commandBuffer = Renderer::BeginSingleTimeCommands();
+		const auto commandBuffer = Platform::BeginSingleTimeCommands();
 
 		VkBufferImageCopy region = {};
 		region.bufferOffset = 0;
@@ -396,6 +396,6 @@ namespace Flounder
 
 		vkCmdCopyBufferToImage(commandBuffer, buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 
-		Renderer::EndSingleTimeCommands(commandBuffer);
+		Platform::EndSingleTimeCommands(commandBuffer);
 	}
 }

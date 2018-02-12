@@ -48,7 +48,7 @@ namespace Flounder
 		/// </summary>
 		~ParticleSystem();
 
-		Particle *GenerateParticles();
+		Particle *GenerateParticle();
 
 	private:
 		Particle *EmitParticle();

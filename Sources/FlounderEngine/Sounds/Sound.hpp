@@ -14,10 +14,10 @@ namespace Flounder
 		unsigned int m_source;
 
 		bool m_playing;
-		float m_pitch;
 		float m_gain;
+		float m_pitch;
 	public:
-		Sound(const std::string &filename);
+		Sound(const std::string &filename, const float &gain = 1.0f, const float &pitch = 1.0f);
 
 		~Sound();
 
@@ -37,14 +37,14 @@ namespace Flounder
 
 		void SetVelocity(const Vector3 &velocity);
 
-		void SetPitch(const float &pitch);
+		bool IsPlaying() const { return m_playing; }
+
+		float GetGain() const { return m_gain; }
 
 		void SetGain(const float &gain);
 
-		bool IsPlaying() const { return m_playing; }
-
 		float GetPitch() const { return m_pitch; }
 
-		float GetGain() const { return m_gain; }
+		void SetPitch(const float &pitch);
 	};
 }

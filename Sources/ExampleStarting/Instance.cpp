@@ -6,44 +6,21 @@
 #include <Maths/Maths.hpp>
 #include <Devices/Display.hpp>
 #include <Devices/Mouse.hpp>
-
-/*#ifdef FLOUNDER_CONFIG_RELEASE
-#include <Sounds/Sound.hpp>
-#endif*/
+#include <Helpers/FileSystem.hpp>
+#include <Particles/Spawns/SpawnCircle.hpp>
+#include <Particles/Particles.hpp>
+#include <Renderer/Renderer.hpp>
+#include <Renderer/Screenshot/Screenshot.hpp>
 
 namespace Demo
 {
 	Instance::Instance() :
 		m_buttonFullscreen(new ButtonKeyboard({GLFW_KEY_F11})),
-		m_buttonLockMouse(new ButtonKeyboard({GLFW_KEY_M})),
-		m_buttonExit(new ButtonKeyboard({GLFW_KEY_DELETE}))
+		m_buttonCaptureMouse(new ButtonKeyboard({GLFW_KEY_M})),
+		m_buttonScreenshot(new ButtonKeyboard({GLFW_KEY_F12})),
+		m_buttonExit(new ButtonKeyboard({GLFW_KEY_DELETE})),
+		m_soundScreenshot(new Sound("Resources/Sounds/Screenshot.ogg"))
 	{
-		/*{
-			Entity *meme = new Entity(Transform());
-			meme->AddComponent(new ComponentModel(Sphere::Resource(16, 16, 1.1f), Texture::Resource("Resources/Guis/Black.png")));
-			meme->AddComponent(new ComponentMaterial(0.1f, 0.4f));
-			EntityPrefab *prefab = EntityPrefab::Resource("Resources/Entities/Memes/Memes.csv");
-			prefab->Write(meme);
-			prefab->Save();
-		}*/
-/*#ifdef FLOUNDER_CONFIG_RELEASE
-		Sound *music1 = new Sound("Resources/Music/Outpost.ogg");
-
-		//	music1->Play();
-		music1->Loop();
-		music1->SetPosition(Vector3(3.0f, 0.0f, 3.0f));
-		music1->SetGain(0.9f);
-#endif*/
-
-		/*std::vector<ParticleType*> *types = new std::vector<ParticleType*>();
-		types->push_back(new ParticleType("blue", Texture::Resource("Resources/Particles/Blue/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		types->push_back(new ParticleType("purple", Texture::Resource("Resources/Particles/Purple/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		types->push_back(new ParticleType("red", Texture::Resource("Resources/Particles/Red/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		types->push_back(new ParticleType("yellow", Texture::Resource("Resources/Particles/Yellow/Texture.png", false, false, 1, true, false, 4), 10.6f, 0.3f));
-		m_systemTest = new ParticleSystem(types, new SpawnCircle(30.0f, Vector3(0.0f, 10.0f, 0.0f)), 1000, 1.0f, -0.1f);
-		m_systemTest->SetSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
-		Particles::Get()->AddSystem(m_systemTest);*/
-
 		new Entity("Sun", Transform(Vector3(), Vector3(), 18.0f));
 		new Entity("Moon", Transform(Vector3(), Vector3(), 9.0f));
 
@@ -80,15 +57,32 @@ namespace Demo
 				}
 			}
 		}
+
+/*#ifdef FLOUNDER_CONFIG_RELEASE
+		Sound *music1 = new Sound("Resources/Music/Outpost.ogg", 0.9f);
+
+		music1->SetPosition(Vector3(0.0f, 7.0f, 0.0f));
+		music1->Loop();
+#endif*/
+
+/*#ifdef FLOUNDER_CONFIG_DEBUG
+		std::vector<ParticleType*> *types = new std::vector<ParticleType*>();
+		types->push_back(new ParticleType("blue", Texture::Resource("Resources/Particles/Blue/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
+		types->push_back(new ParticleType("purple", Texture::Resource("Resources/Particles/Purple/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
+		types->push_back(new ParticleType("red", Texture::Resource("Resources/Particles/Red/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
+		types->push_back(new ParticleType("yellow", Texture::Resource("Resources/Particles/Yellow/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
+		ParticleSystem *systemTest = new ParticleSystem(types, new SpawnCircle(30.0f, Vector3(0.0f, 10.0f, 0.0f)), 1000, 1.0f, -0.1f);
+		systemTest->SetSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
+		Particles::Get()->AddSystem(systemTest);
+#endif*/
 	}
 
 	Instance::~Instance()
 	{
 		delete m_buttonFullscreen;
-		delete m_buttonLockMouse;
+		delete m_buttonCaptureMouse;
+		delete m_buttonScreenshot;
 		delete m_buttonExit;
-
-		//	delete m_systemTest;
 	}
 
 	void Instance::Update()
@@ -98,9 +92,17 @@ namespace Demo
 			Display::Get()->SetFullscreen(!Display::Get()->IsFullscreen());
 		}
 
-		if (m_buttonLockMouse->WasDown())
+		if (m_buttonCaptureMouse->WasDown())
 		{
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorDisabled());
+		}
+
+		if (m_buttonScreenshot->WasDown())
+		{
+			std::string filename = "Screenshots/" + Engine::Get()->GetDateTime() + ".ppm";
+
+			m_soundScreenshot->Play();
+			Screenshot::Capture(filename);
 		}
 
 		if (m_buttonExit->WasDown())
