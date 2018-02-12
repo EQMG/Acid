@@ -91,11 +91,9 @@ namespace Flounder
 
 		VkCommandBuffer GetCommandBuffer() const { return m_commandBuffer; }
 
+		uint32_t GetActiveSwapchainImage() const { return m_activeSwapchainImage; }
+
 		VkPipelineCache GetPipelineCache() const { return m_pipelineCache; }
-
-		static VkCommandBuffer BeginSingleTimeCommands();
-
-		static void EndSingleTimeCommands(const VkCommandBuffer &commandBuffer);
 
 	private:
 		VkFramebuffer GetActiveFramebuffer() const { return m_framebuffers->GetFramebuffers()[m_activeSwapchainImage]; }

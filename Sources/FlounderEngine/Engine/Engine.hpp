@@ -131,5 +131,11 @@ namespace Flounder
 		/// </summary>
 		/// <param name="error"> If a bad error occured. </param>
 		void RequestClose(const bool &error);
+
+		/// <summary>
+		/// Gets the current date time as a string. "%d-%m-%Y %I:%M:%S"
+		/// </summary>
+		/// <returns> The date time as a string. </returns>
+		std::string GetDateTime();
 	};
 }

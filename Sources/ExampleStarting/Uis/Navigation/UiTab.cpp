@@ -12,14 +12,13 @@ namespace Demo
 		m_colour(colour),
 		m_text(new Text(this, rectangle, 1.6f, name, Uis::Get()->m_proximaNova->GetRegular(), JustifyLeft, 0.5f, 0.003f)),
 		m_width(m_text->GetRectangle()->m_dimensions->m_x * 1.6f),
-		m_soundClick(new Sound("Resources/Sounds/Button1.ogg"))
+		m_soundClick(new Sound("Resources/Sounds/Button1.ogg", 0.9f))
 	{
 		this->SetActionLeft([&]()
 		{
 			dynamic_cast<UiNavigation *>(GetParent())->SwitchTab(m_name);
+			m_soundClick->SetPitch(Maths::RandomInRange(0.3f, 0.7f));
 			m_soundClick->Play();
-			m_soundClick->SetGain(0.2f);
-			m_soundClick->SetPitch(Maths::RandomInRange(0.3f, 1.1f));
 		});
 		m_content->SetAlphaDriver(new DriverConstant(0.0f));
 	}

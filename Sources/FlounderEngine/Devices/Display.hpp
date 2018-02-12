@@ -96,11 +96,6 @@ namespace Flounder
 		void Update() override;
 
 		/// <summary>
-		/// Takes a screenshot of the current image of the display and saves it into the screenshots folder a png image.
-		/// </summary>
-		void Screenshot();
-
-		/// <summary>
 		/// Gets the width of the display in pixels.
 		/// </summary>
 		/// <returns> The width of the display. </returns>

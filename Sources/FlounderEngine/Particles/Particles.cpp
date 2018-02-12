@@ -32,21 +32,21 @@ namespace Flounder
 		// Generates particles.
 		for (auto system : *m_particleSystems)
 		{
-			Particle *created = system->GenerateParticles();
+			Particle *created = system->GenerateParticle();
 
 			if (created != nullptr)
 			{
-				std::vector<Particle *> *list = m_particles->find(created->GetParticleType())->second;
+				auto list = m_particles->find(created->GetParticleType());
 
-				if (list == nullptr)
+				if (list == m_particles->end())
 				{
-					list = new std::vector<Particle *>();
-					m_particles->insert(std::pair<ParticleType *, std::vector<Particle *> *>(created->GetParticleType(), list));
+					m_particles->insert(std::make_pair(created->GetParticleType(), new std::vector<Particle *>()));
+					list = m_particles->find(created->GetParticleType());
 				}
 
-				if (list != nullptr)
+				if ((*list).second != nullptr)
 				{
-					list->push_back(created);
+					(*list).second->push_back(created);
 				}
 			}
 		}

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Standards/IStandard.hpp>
+#include <Sounds/Sound.hpp>
 #include <Inputs/IButton.hpp>
-#include <Particles/ParticleSystem.hpp>
+#include <Standards/IStandard.hpp>
 
 using namespace Flounder;
 
@@ -13,10 +13,11 @@ namespace Demo
 	{
 	private:
 		IButton *m_buttonFullscreen;
-		IButton *m_buttonLockMouse;
+		IButton *m_buttonCaptureMouse;
+		IButton *m_buttonScreenshot;
 		IButton *m_buttonExit;
 
-		//	ParticleSystem *m_systemTest;
+		Sound *m_soundScreenshot;
 	public:
 		Instance();
 

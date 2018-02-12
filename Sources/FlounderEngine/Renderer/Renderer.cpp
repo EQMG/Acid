@@ -268,47 +268,4 @@ namespace Flounder
 		m_depthStencil = new DepthStencil(extent3d);
 		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), *m_swapchain, extent2d);
 	}
-
-	VkCommandBuffer Renderer::BeginSingleTimeCommands()
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto commandPool = Renderer::Get()->GetCommandPool();
-
-		VkCommandBufferAllocateInfo allocInfo = {};
-		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandPool = commandPool;
-		allocInfo.commandBufferCount = 1;
-
-		VkCommandBuffer commandBuffer;
-		Platform::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &allocInfo, &commandBuffer));
-
-		VkCommandBufferBeginInfo beginInfo = {};
-		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-
-		Platform::ErrorVk(vkBeginCommandBuffer(commandBuffer, &beginInfo));
-
-		return commandBuffer;
-	}
-
-	void Renderer::EndSingleTimeCommands(const VkCommandBuffer &commandBuffer)
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto queue = Display::Get()->GetQueue();
-		const auto commandPool = Renderer::Get()->GetCommandPool();
-
-		Platform::ErrorVk(vkEndCommandBuffer(commandBuffer));
-
-		VkSubmitInfo submitInfo = {};
-		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &commandBuffer;
-
-		Platform::ErrorVk(vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE));
-
-		Platform::ErrorVk(vkQueueWaitIdle(queue));
-
-		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &commandBuffer);
-	}
 }
