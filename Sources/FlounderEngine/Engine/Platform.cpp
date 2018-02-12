@@ -5,10 +5,10 @@
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 #include <Windows.h>
-#include <Renderer/Renderer.hpp>
-#include <Devices/Display.hpp>
-
 #endif
+
+#include "../Devices/Display.hpp"
+#include "../Renderer/Renderer.hpp"
 
 namespace Flounder
 {
