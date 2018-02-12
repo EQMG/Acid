@@ -99,7 +99,7 @@ namespace Demo
 
 		if (m_buttonScreenshot->WasDown())
 		{
-			std::string filename = "Screenshots/" + Engine::Get()->GetDateTime() + ".ppm";
+			std::string filename = "Screenshots/" + Engine::Get()->GetDateTime() + ".png";
 
 			m_soundScreenshot->Play();
 			Screenshot::Capture(filename);
