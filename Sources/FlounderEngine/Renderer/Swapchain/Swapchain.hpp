@@ -29,6 +29,8 @@ namespace Flounder
 
 		uint32_t GetImageCount() const { return m_swapchainImageCount; }
 
+		std::vector<VkImage> GetImages() const { return m_swapchinImages; }
+
 		std::vector<VkImageView> GetImageViews() const { return m_swapchinImageViews; }
 
 		Texture *GetColourImage() const { return m_colourImage; }

@@ -5,6 +5,9 @@
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 #include <Windows.h>
+#include <Renderer/Renderer.hpp>
+#include <Devices/Display.hpp>
+
 #endif
 
 namespace Flounder
@@ -102,6 +105,49 @@ namespace Flounder
 		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0);
 #endif
 		assert(false && "OpenAL runtime error.");
+	}
+
+	VkCommandBuffer Platform::BeginSingleTimeCommands(const VkCommandBufferLevel &level)
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto commandPool = Renderer::Get()->GetCommandPool();
+
+		VkCommandBufferAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		allocInfo.level = level;
+		allocInfo.commandPool = commandPool;
+		allocInfo.commandBufferCount = 1;
+
+		VkCommandBuffer commandBuffer;
+		Platform::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &allocInfo, &commandBuffer));
+
+		VkCommandBufferBeginInfo beginInfo = {};
+		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+		Platform::ErrorVk(vkBeginCommandBuffer(commandBuffer, &beginInfo));
+
+		return commandBuffer;
+	}
+
+	void Platform::EndSingleTimeCommands(const VkCommandBuffer &commandBuffer)
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto queue = Display::Get()->GetQueue();
+		const auto commandPool = Renderer::Get()->GetCommandPool();
+
+		Platform::ErrorVk(vkEndCommandBuffer(commandBuffer));
+
+		VkSubmitInfo submitInfo = {};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &commandBuffer;
+
+		Platform::ErrorVk(vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE));
+
+		Platform::ErrorVk(vkQueueWaitIdle(queue));
+
+		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &commandBuffer);
 	}
 
 	uint32_t Platform::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)

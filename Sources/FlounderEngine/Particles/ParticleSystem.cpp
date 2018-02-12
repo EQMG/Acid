@@ -29,7 +29,7 @@ namespace Flounder
 		//	particles::get()->removeSystem(this);
 	}
 
-	Particle *ParticleSystem::GenerateParticles()
+	Particle *ParticleSystem::GenerateParticle()
 	{
 		if (m_paused || m_types->empty())
 		{

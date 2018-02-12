@@ -188,7 +188,7 @@ namespace Flounder
 
 	void Cubemap::TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout)
 	{
-		const auto commandBuffer = Renderer::BeginSingleTimeCommands();
+		const auto commandBuffer = Platform::BeginSingleTimeCommands();
 
 		VkImageMemoryBarrier barrier = {};
 		barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -230,12 +230,12 @@ namespace Flounder
 
 		vkCmdPipelineBarrier(commandBuffer, sourceStage, destinationStage, 0, 0, nullptr, 0, nullptr, 1, &barrier);
 
-		Renderer::EndSingleTimeCommands(commandBuffer);
+		Platform::EndSingleTimeCommands(commandBuffer);
 	}
 
 	void Cubemap::CopyBufferToImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkBuffer &buffer, const VkImage &image)
 	{
-		const auto commandBuffer = Renderer::BeginSingleTimeCommands();
+		const auto commandBuffer = Platform::BeginSingleTimeCommands();
 
 		VkBufferImageCopy region = {};
 		region.bufferOffset = 0;
@@ -250,6 +250,6 @@ namespace Flounder
 
 		vkCmdCopyBufferToImage(commandBuffer, buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 
-		Renderer::EndSingleTimeCommands(commandBuffer);
+		Platform::EndSingleTimeCommands(commandBuffer);
 	}
 }

@@ -26,6 +26,10 @@ namespace Flounder
 
 		static void ErrorAl(const ALenum &result);
 
+		static VkCommandBuffer BeginSingleTimeCommands(const VkCommandBufferLevel &level = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+
+		static void EndSingleTimeCommands(const VkCommandBuffer &commandBuffer);
+
 		static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
 	};
 }
