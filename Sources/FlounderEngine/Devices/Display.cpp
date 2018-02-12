@@ -258,14 +258,18 @@ namespace Flounder
 		glfwSetErrorCallback(CallbackError);
 
 		// Initialize the GLFW library.
-		Platform::ErrorGlfw(glfwInit());
+		if (glfwInit() == GLFW_FALSE)
+		{
+			fprintf(stderr, "GLFW error: Failed to initialize!\n");
+			assert(false && "GLFW runtime error.");
+		}
 
 		// Checks Vulkan support on GLFW.
-#ifdef FLOUNDER_PLATFORM_MACOS
-		glfwVulkanSupported();
-#else
-		Platform::ErrorGlfw(glfwVulkanSupported());
-#endif
+		if (glfwVulkanSupported() == GLFW_FALSE)
+		{
+			fprintf(stderr, "GLFW error: Failed to find Vulkan support!\n");
+			assert(false && "GLFW runtime error.");
+		}
 
 		// Configures the window.
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
