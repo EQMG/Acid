@@ -5,11 +5,11 @@
 
 namespace Flounder
 {
-	Sound::Sound(const std::string &filename) :
+	Sound::Sound(const std::string &filename, const float &gain, const float &pitch) :
 		m_source(0),
 		m_playing(false),
-		m_pitch(1.0f),
-		m_gain(1.0f)
+		m_gain(gain),
+		m_pitch(pitch)
 	{
 		SoundBuffer *soundBuffer = SoundBuffer::Resource(filename);
 
@@ -17,6 +17,9 @@ namespace Flounder
 		alSourcei(m_source, AL_BUFFER, soundBuffer->GetBuffer());
 
 		Platform::ErrorAl(alGetError());
+
+		SetGain(gain);
+		SetPitch(pitch);
 	}
 
 	Sound::~Sound()
@@ -97,16 +100,16 @@ namespace Flounder
 		Platform::ErrorAl(alGetError());
 	}
 
-	void Sound::SetPitch(const float &pitch)
-	{
-		alSourcef(m_source, AL_PITCH, pitch);
-		m_pitch = pitch;
-	}
-
 	void Sound::SetGain(const float &gain)
 	{
 		alSourcef(m_source, AL_GAIN, gain);
 		m_gain = gain;
 		Platform::ErrorAl(alGetError());
+	}
+
+	void Sound::SetPitch(const float &pitch)
+	{
+		alSourcef(m_source, AL_PITCH, pitch);
+		m_pitch = pitch;
 	}
 }

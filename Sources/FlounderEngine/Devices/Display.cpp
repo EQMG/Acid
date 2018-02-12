@@ -167,11 +167,6 @@ namespace Flounder
 		m_aspectRatio = static_cast<float>(GetWidth()) / static_cast<float>(GetHeight());
 	}
 
-	void Display::Screenshot()
-	{
-		// TODO
-	}
-
 	void Display::SetWindowSize(const int &width, const int &height)
 	{
 		m_windowWidth = width;
