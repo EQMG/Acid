@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// A definition for a connected joystick.
 	/// </summary>
-	struct Joystick
+	struct F_HIDDEN Joystick
 	{
 	public:
 		bool connected;
@@ -23,7 +23,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
-	class Joysticks :
+	class F_EXPORT Joysticks :
 		public IModule
 	{
 	private:

@@ -6,25 +6,25 @@
 
 namespace Flounder
 {
-	class Sphere :
+	class F_EXPORT ShapeSphere :
 		public Model
 	{
 	public:
-		static Sphere *Resource(const int &latitudeBands, const int &longitudeBands, const float &radius)
+		static ShapeSphere *Resource(const int &latitudeBands, const int &longitudeBands, const float &radius)
 		{
 			IResource *resource = Resources::Get()->Get(ToFilename(latitudeBands, longitudeBands, radius));
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Sphere *>(resource);
+				return dynamic_cast<ShapeSphere *>(resource);
 			}
 
-			Sphere *result = new Sphere(latitudeBands, longitudeBands, radius);
+			ShapeSphere *result = new ShapeSphere(latitudeBands, longitudeBands, radius);
 			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 
-		static Sphere *Resource(const std::string &filename)
+		static ShapeSphere *Resource(const std::string &filename)
 		{
 			auto split = FormatString::Split(filename, "_");
 			int latitudeBands = atoi(split.at(1).c_str());
@@ -33,9 +33,9 @@ namespace Flounder
 			return Resource(latitudeBands, longitudeBands, radius);
 		}
 
-		Sphere(const int &latitudeBands, const int &longitudeBands, const float &radius);
+		ShapeSphere(const int &latitudeBands, const int &longitudeBands, const float &radius);
 
-		~Sphere();
+		~ShapeSphere();
 
 	private:
 		static std::string ToFilename(const int &latitudeBands, const int &longitudeBands, const float &radius);

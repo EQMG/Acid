@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	class RendererDeferred :
+	class F_EXPORT RendererDeferred :
 		public IRenderer
 	{
 	private:

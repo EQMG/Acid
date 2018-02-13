@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
+
 namespace Flounder
 {
 	/// <summary>
 	/// A timer implementation for events.
 	/// </summary>
-	class Timer
+	class F_EXPORT Timer
 	{
 	private:
 		float m_startTime;

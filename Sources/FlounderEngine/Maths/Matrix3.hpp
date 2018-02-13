@@ -2,6 +2,7 @@
 
 #include <ostream>
 #include <string>
+#include "../Prerequisites.hpp"
 #include "Vector3.hpp"
 
 namespace Flounder
@@ -9,7 +10,7 @@ namespace Flounder
 	/// <summary>
 	/// Holds a 2x2 matrix.
 	/// </summary>
-	class Matrix3
+	class F_EXPORT Matrix3
 	{
 	public:
 		union

@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class Buffer
+	class F_EXPORT Buffer
 	{
 	protected:
 		VkDeviceSize m_size;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
 #include "../Maths/Vector3.hpp"
 
 namespace Flounder
@@ -7,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// A helper for C++ arrays.
 	/// </summary>
-	class SquareArray
+	class F_EXPORT SquareArray
 	{
 	public:
 		/// <summary>

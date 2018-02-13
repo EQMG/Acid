@@ -1,8 +1,6 @@
 ﻿#include "RendererEntities.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Renderer/Renderer.hpp"
-#include "Components/ComponentModel.hpp"
 #include "Entities.hpp"
 
 namespace Flounder

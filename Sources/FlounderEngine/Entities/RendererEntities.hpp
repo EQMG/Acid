@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	class EntityInstance
+	class F_HIDDEN EntityInstance
 	{
 	public:
 		UniformBuffer *uniformBuffer;
@@ -25,7 +25,7 @@ namespace Flounder
 		}
 	};
 
-	class RendererEntities :
+	class F_EXPORT RendererEntities :
 		public IRenderer
 	{
 	private:

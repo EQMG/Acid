@@ -1,10 +1,10 @@
-#include "Cube.hpp"
+#include "ShapeCube.hpp"
 
 #include <algorithm>
 
 namespace Flounder
 {
-	Cube::Cube(const float &width, const float &height, const float &depth) :
+	ShapeCube::ShapeCube(const float &width, const float &height, const float &depth) :
 		Model()
 	{
 		std::vector<Vertex> vertices = {
@@ -52,7 +52,7 @@ namespace Flounder
 		Model::Set(vertices, indices, ToFilename(width, height, depth));
 	}
 
-	std::string Cube::ToFilename(const float &width, const float &height, const float &depth)
+	std::string ShapeCube::ToFilename(const float &width, const float &height, const float &depth)
 	{
 		return "Cube_" + std::to_string(width) + "_" + std::to_string(height) + "_" + std::to_string(depth);
 	}

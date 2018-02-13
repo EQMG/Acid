@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class ComponentLight :
+	class F_EXPORT ComponentLight :
 		public IComponent
 	{
 	private:

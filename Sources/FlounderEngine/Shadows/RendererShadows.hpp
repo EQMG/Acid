@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class RendererShadows :
+	class F_EXPORT RendererShadows :
 		public IRenderer
 	{
 	private:

@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class FilterPixel :
+	class F_EXPORT FilterPixel :
 		public IPostFilter
 	{
 	private:

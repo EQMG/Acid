@@ -8,7 +8,7 @@
 
 namespace Flounder
 {
-	class Entity :
+	class F_EXPORT Entity :
 		public ISpatialObject
 	{
 	private:

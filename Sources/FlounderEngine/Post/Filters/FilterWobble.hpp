@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class FilterWobble :
+	class F_EXPORT FilterWobble :
 		public IPostFilter
 	{
 	private:

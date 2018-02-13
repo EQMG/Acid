@@ -8,7 +8,7 @@
 
 namespace Flounder
 {
-	class IGrabber
+	class F_EXPORT IGrabber
 	{
 	public:
 		virtual ~IGrabber() = default;
@@ -18,7 +18,7 @@ namespace Flounder
 		virtual std::string GetValue(const int &value) = 0;
 	};
 
-	class GrabberJoystick :
+	class F_EXPORT GrabberJoystick :
 		public IGrabber
 	{
 	private:
@@ -31,7 +31,7 @@ namespace Flounder
 		std::string GetValue(const int &value) override;
 	};
 
-	class GrabberKeyboard :
+	class F_EXPORT GrabberKeyboard :
 		public IGrabber
 	{
 	public:
@@ -40,7 +40,7 @@ namespace Flounder
 		std::string GetValue(const int &value) override;
 	};
 
-	class GrabberMouse :
+	class F_EXPORT GrabberMouse :
 		public IGrabber
 	{
 	public:
@@ -49,7 +49,7 @@ namespace Flounder
 		std::string GetValue(const int &value) override;
 	};
 
-	class InputGrabber :
+	class F_EXPORT InputGrabber :
 		public UiObject
 	{
 	private:

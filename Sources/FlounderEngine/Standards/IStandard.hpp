@@ -5,7 +5,7 @@ namespace Flounder
 	/// <summary>
 	/// A extension used with standards to define a standards.
 	/// </summary>
-	class IStandard
+	class F_EXPORT IStandard
 	{
 	public:
 		/// <summary>

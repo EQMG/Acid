@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class Screenshot
+	class F_EXPORT Screenshot
 	{
 	public:
 		/// <summary>

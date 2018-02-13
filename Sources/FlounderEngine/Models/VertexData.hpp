@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A class that represents a single model vertex, used when loading OBJ files.
 	/// </summary>
-	class VertexData
+	class F_EXPORT VertexData
 	{
 	private:
 		static const uint32_t NO_INDEX;

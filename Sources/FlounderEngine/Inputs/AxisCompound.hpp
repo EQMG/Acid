@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Axis composed of multiple other axes.
 	/// </summary>
-	class AxisCompound :
+	class F_EXPORT AxisCompound :
 		public IAxis
 	{
 	private:

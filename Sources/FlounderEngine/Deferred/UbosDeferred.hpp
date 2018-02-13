@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class UbosDeferred
+	class F_EXPORT UbosDeferred
 	{
 	public:
 #define MAX_LIGHTS 64

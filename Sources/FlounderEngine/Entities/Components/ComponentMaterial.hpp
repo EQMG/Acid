@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class ComponentMaterial :
+	class F_EXPORT ComponentMaterial :
 		public IComponent
 	{
 	private:

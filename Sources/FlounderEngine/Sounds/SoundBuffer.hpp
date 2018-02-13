@@ -11,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// Class that represents a sound buffer.
 	/// </summary>
-	class SoundBuffer :
+	class F_EXPORT SoundBuffer :
 		public IResource
 	{
 	private:

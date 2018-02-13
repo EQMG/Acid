@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../../Prerequisites.hpp"
+
 namespace Flounder
 {
 	/// <summary>
 	/// A class that smoothly increases its value.
 	/// </summary>
-	class SmoothFloat
+	class F_EXPORT SmoothFloat
 	{
 	private:
 		float m_agility;

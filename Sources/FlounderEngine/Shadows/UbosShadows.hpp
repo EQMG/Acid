@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class UbosShadows
+	class F_EXPORT UbosShadows
 	{
 	public:
 		struct UboObject

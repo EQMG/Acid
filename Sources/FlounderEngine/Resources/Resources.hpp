@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing resources.
 	/// </summary>
-	class Resources :
+	class F_EXPORT Resources :
 		public IModule
 	{
 	private:

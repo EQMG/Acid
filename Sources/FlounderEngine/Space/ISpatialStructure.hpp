@@ -10,7 +10,7 @@ namespace Flounder
 	/// A data structure that stores objects with a notion of flounder.space.
 	/// </summary>
 	template<typename T>
-	class ISpatialStructure
+	class F_EXPORT ISpatialStructure
 	{
 	public:
 		/// <summary>

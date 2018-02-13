@@ -4,13 +4,13 @@
 
 namespace Flounder
 {
-	enum CelestialType
+	enum F_EXPORT CelestialType
 	{
 		CelestialSun = 0,
 		CelestialMoon = 1
 	};
 
-	class ComponentCelestial :
+	class F_EXPORT ComponentCelestial :
 		public IComponent
 	{
 	private:

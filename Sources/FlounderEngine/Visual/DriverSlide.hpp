@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A driver that slides to its destination using cosine interpolation.
 	/// </summary>
-	class DriverSlide :
+	class F_EXPORT DriverSlide :
 		public IDriver
 	{
 	private:

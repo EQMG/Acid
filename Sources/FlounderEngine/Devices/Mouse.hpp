@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
-	class Mouse :
+	class F_EXPORT Mouse :
 		public IModule
 	{
 	private:

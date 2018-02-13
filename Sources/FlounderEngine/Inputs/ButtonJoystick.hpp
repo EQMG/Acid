@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Button from a joystick.
 	/// </summary>
-	class ButtonJoystick :
+	class F_EXPORT ButtonJoystick :
 		public IButton
 	{
 	private:

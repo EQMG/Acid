@@ -5,7 +5,7 @@ namespace Flounder
 	/// <summary>
 	/// A enum that represents how a font will be justified.
 	/// </summary>
-	enum Justify
+	enum F_EXPORT Justify
 	{
 		JustifyLeft,
 		JustifyCentre,

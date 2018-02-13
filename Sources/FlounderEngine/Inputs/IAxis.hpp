@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
+
 namespace Flounder
 {
 	/// <summary>
 	/// Interface for an axis based input device.
 	/// </summary>
-	class IAxis
+	class F_EXPORT IAxis
 	{
 	public:
 		/// <summary>

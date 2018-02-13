@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
+
 namespace Flounder
 {
 	/// <summary>
 	/// A simple interface used for defining engine modules.
 	/// </summary>
-	class IModule
+	class F_EXPORT IModule
 	{
 	public:
 		/// <summary>

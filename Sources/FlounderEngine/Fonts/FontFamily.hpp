@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class FontFamily :
+	class F_EXPORT FontFamily :
 		public IResource
 	{
 	private:

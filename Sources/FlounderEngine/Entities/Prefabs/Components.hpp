@@ -16,7 +16,7 @@
 
 namespace Flounder
 {
-	class Components
+	class F_EXPORT Components
 	{
 	private:
 	public:

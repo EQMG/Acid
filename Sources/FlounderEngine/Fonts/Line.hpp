@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a line of text during the loading of a text.
 	/// </summary>
-	class Line
+	class F_EXPORT Line
 	{
 	private:
 		double m_maxLength;

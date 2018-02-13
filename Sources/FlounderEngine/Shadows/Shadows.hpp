@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing shadow maps in 3D worlds.
 	/// </summary>
-	class Shadows :
+	class F_EXPORT Shadows :
 		public IModule
 	{
 	private:

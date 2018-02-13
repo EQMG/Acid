@@ -3,10 +3,11 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "../../Prerequisites.hpp"
 
 namespace Flounder
 {
-	class XmlNode
+	class F_EXPORT XmlNode
 	{
 	private:
 		std::string m_name;

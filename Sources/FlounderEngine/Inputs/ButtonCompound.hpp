@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Handles multiple buttons at once.
 	/// </summary>
-	class ButtonCompound :
+	class F_EXPORT ButtonCompound :
 		public IButton
 	{
 	private:

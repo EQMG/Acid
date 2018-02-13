@@ -15,7 +15,7 @@ namespace Flounder
 	/// <summary>
 	/// Class that represents a entity prefab.
 	/// </summary>
-	class EntityPrefab :
+	class F_EXPORT EntityPrefab :
 		public IResource
 	{
 	private:

@@ -11,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// Class that represents a Vulkan pipeline.
 	/// </summary>
-	class Pipeline
+	class F_EXPORT Pipeline
 	{
 	private:
 		int m_subpass;

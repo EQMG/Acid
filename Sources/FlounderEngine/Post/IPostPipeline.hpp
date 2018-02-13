@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a system of post effects.
 	/// </summary>
-	class IPostPipeline
+	class F_EXPORT IPostPipeline
 	{
 	public:
 		/// <summary>

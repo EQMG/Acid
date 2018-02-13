@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class RenderPass
+	class F_EXPORT RenderPass
 	{
 	private:
 		VkRenderPass m_renderPass;

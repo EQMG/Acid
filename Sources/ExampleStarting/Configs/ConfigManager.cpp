@@ -17,7 +17,7 @@ namespace Demo
 
 		m_configAudio = new Config(new FileCsv(FileSystem::GetWorkingDirectory() + "/Configs/Audio.csv"));
 		m_configAudio->Load();
-		m_configAudio->Link<float>("MasterVolume", 1.0f, nullptr, nullptr);
+	//	m_configAudio->Link<float>("MasterVolume", 1.0f, nullptr, nullptr);
 
 		m_configGraphics = new Config(new FileCsv(FileSystem::GetWorkingDirectory() + "/Configs/Graphics.csv"));
 		m_configGraphics->Load();

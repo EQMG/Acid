@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Axis from a joystick.
 	/// </summary>
-	class AxisJoystick :
+	class F_EXPORT AxisJoystick :
 		public IAxis
 	{
 	private:
