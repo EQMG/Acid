@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class InputDelay
+	class F_EXPORT InputDelay
 	{
 	private:
 		Timer *m_timerDelay;

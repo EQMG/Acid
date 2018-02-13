@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing events on engine updates.
 	/// </summary>
-	class Events :
+	class F_EXPORT Events :
 		public IModule
 	{
 	private:

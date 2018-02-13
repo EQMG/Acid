@@ -7,7 +7,7 @@ namespace Flounder
 {
 	class Entity;
 
-	class IComponent
+	class F_EXPORT IComponent
 	{
 	protected:
 		Entity *m_entity;

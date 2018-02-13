@@ -3,13 +3,14 @@
 #include <vector>
 #include <cstring>
 #include <string>
+#include "../Prerequisites.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// A helper for C++ files.
 	/// </summary>
-	class FileSystem
+	class F_EXPORT FileSystem
 	{
 	public:
 		/// <summary>

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
 #include "../Maths/Colour.hpp"
 #include "../Maths/Vector3.hpp"
 
@@ -8,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a point light, contains a colour, position and attenuation.
 	/// </summary>
-	class Light
+	class F_EXPORT Light
 	{
 	public:
 		Colour *m_colour;

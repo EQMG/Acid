@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	struct SoundSourceInfo
+	struct F_HIDDEN SoundSourceInfo
 	{
 		unsigned int size;
 		unsigned char *data;
@@ -21,7 +21,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.
 	/// </summary>
-	class Audio :
+	class F_EXPORT Audio :
 		public IModule
 	{
 	private:

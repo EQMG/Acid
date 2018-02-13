@@ -1,11 +1,11 @@
-#include "Sphere.hpp"
+#include "ShapeSphere.hpp"
 
 #include <algorithm>
 #include "../../Maths/Maths.hpp"
 
 namespace Flounder
 {
-	Sphere::Sphere(const int &latitudeBands, const int &longitudeBands, const float &radius) :
+	ShapeSphere::ShapeSphere(const int &latitudeBands, const int &longitudeBands, const float &radius) :
 		Model()
 	{
 		std::vector<Vertex> vertices = std::vector<Vertex>();
@@ -58,11 +58,11 @@ namespace Flounder
 		Model::Set(vertices, indices, ToFilename(latitudeBands, longitudeBands, radius));
 	}
 
-	Sphere::~Sphere()
+	ShapeSphere::~ShapeSphere()
 	{
 	}
 
-	std::string Sphere::ToFilename(const int &latitudeBands, const int &longitudeBands, const float &radius)
+	std::string ShapeSphere::ToFilename(const int &latitudeBands, const int &longitudeBands, const float &radius)
 	{
 		return "Sphere_" + std::to_string(latitudeBands) + "_" + std::to_string(longitudeBands) + "_" +
 			std::to_string(radius);

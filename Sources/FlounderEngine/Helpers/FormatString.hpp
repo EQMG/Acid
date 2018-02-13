@@ -4,13 +4,14 @@
 #include <locale>
 #include <cstring>
 #include <string>
+#include "../Prerequisites.hpp"
 
 namespace Flounder
 {
 	/// <summary>
-	/// A helper for C++ strings.
+	/// A helper for C++ trings.
 	/// </summary>
-	class FormatString
+	class F_EXPORT FormatString
 	{
 	public:
 		/// <summary>

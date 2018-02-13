@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing tasks on engine updates.
 	/// </summary>
-	class Tasks :
+	class F_EXPORT Tasks :
 		public IModule
 	{
 	private:

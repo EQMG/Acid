@@ -9,7 +9,7 @@
 
 namespace Flounder
 {
-	class Skybox
+	class F_EXPORT Skybox
 	{
 	private:
 		UniformBuffer *m_uniformObject;

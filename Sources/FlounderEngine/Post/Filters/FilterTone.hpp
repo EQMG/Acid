@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class FilterTone :
+	class F_EXPORT FilterTone :
 		public IPostFilter
 	{
 	public:

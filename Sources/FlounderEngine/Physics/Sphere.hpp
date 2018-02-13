@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a sphere in a 3d space.
 	/// </summary>
-	class Sphere :
+	class F_EXPORT Sphere :
 		public ICollider
 	{
 	public:

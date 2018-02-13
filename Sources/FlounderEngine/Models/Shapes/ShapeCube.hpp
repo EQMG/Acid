@@ -6,25 +6,25 @@
 
 namespace Flounder
 {
-	class Cube :
+	class F_EXPORT ShapeCube :
 		public Model
 	{
 	public:
-		static Cube *Resource(const float &width, const float &height, const float &depth)
+		static ShapeCube *Resource(const float &width, const float &height, const float &depth)
 		{
 			IResource *resource = Resources::Get()->Get(ToFilename(width, height, depth));
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Cube *>(resource);
+				return dynamic_cast<ShapeCube *>(resource);
 			}
 
-			Cube *result = new Cube(width, height, depth);
+			ShapeCube *result = new ShapeCube(width, height, depth);
 			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
 
-		static Cube *Resource(const std::string &filename)
+		static ShapeCube *Resource(const std::string &filename)
 		{
 			auto split = FormatString::Split(filename, "_");
 			float width = atof(split.at(1).c_str());
@@ -33,7 +33,7 @@ namespace Flounder
 			return Resource(width, height, depth);
 		}
 
-		Cube(const float &width, const float &height, const float &depth);
+		ShapeCube(const float &width, const float &height, const float &depth);
 
 	private:
 		static std::string ToFilename(const float &width, const float &height, const float &depth);

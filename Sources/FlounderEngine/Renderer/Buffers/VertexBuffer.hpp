@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class VertexBuffer :
+	class F_EXPORT VertexBuffer :
 		public Buffer
 	{
 	private:

@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	class InputButton :
+	class F_EXPORT InputButton :
 		public UiObject
 	{
 	private:

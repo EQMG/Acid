@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class FilterGrain :
+	class F_EXPORT FilterGrain :
 		public IPostFilter
 	{
 	private:

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
 #include "../Maths/Vector3.hpp"
 
 namespace Flounder
@@ -7,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// This interface is used to move and add extra rotation to a camera.
 	/// </summary>
-	class IPlayer
+	class F_EXPORT IPlayer
 	{
 	public:
 		/// <summary>

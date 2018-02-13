@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class Rectangle :
+	class F_EXPORT Rectangle :
 		public Model
 	{
 	public:

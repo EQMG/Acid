@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class Swapchain
+	class F_EXPORT Swapchain
 	{
 	private:
 		VkPresentModeKHR m_presentMode;

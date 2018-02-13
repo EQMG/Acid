@@ -20,28 +20,34 @@ elseif(UNIX AND APPLE)
 	add_definitions(-DFLOUNDER_PLATFORM_MACOS)
 endif()
 
-# Compiler-options
+# Compiler Options
 message(STATUS "System: ${CMAKE_SYSTEM}")
 message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
 
 if(MSVC)
+    add_definitions(-DFLOUNDER_COMPILER_MSVC)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /Ox /Ob2 /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /MP")
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    add_definitions(-DFLOUNDER_COMPILER_CLANG)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall") # -Werror -pedantic
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3") # -s
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -ggdb3 -O0")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    add_definitions(-DFLOUNDER_COMPILER_GNU)
 	add_definitions(-D__USE_MINGW_ANSI_STDIO=0)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wall") # -Werror -pedantic
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s -O3")
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -ggdb3 -O0")
 endif()
 
-# Output-directories
+add_definitions(-DFLOUNDER_STATIC_LIB)
+add_definitions(-DF_EXPORTS)
+
+# Output Directories
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/lib)

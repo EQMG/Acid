@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <math.h>
+#include "../Prerequisites.hpp"
 
 #define PI 3.14159265358979323846f
 #define DEGREES_IN_CIRCLE 360.0f

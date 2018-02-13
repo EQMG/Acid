@@ -13,7 +13,7 @@ namespace Flounder
 	/// <summary>
 	/// A object the represents a texture in a GUI.
 	/// </summary>
-	class Gui :
+	class F_EXPORT Gui :
 		public UiObject
 	{
 	private:

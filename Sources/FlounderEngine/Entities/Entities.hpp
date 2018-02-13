@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing entities on engine updates.
 	/// </summary>
-	class Entities :
+	class F_EXPORT Entities :
 		public IModule
 	{
 	private:

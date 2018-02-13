@@ -13,7 +13,7 @@ namespace Flounder
 	/// <summary>
 	/// Class that represents a loaded texture.
 	/// </summary>
-	class Texture :
+	class F_EXPORT Texture :
 		public IResource,
 		public Buffer
 	{

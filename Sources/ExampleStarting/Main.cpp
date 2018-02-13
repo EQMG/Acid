@@ -4,7 +4,7 @@
 #include <Camera/Camera.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Standards/Standards.hpp>
-#include <Models/Shapes/Sphere.hpp>
+#include <Models/Shapes/ShapeSphere.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Entities/Entities.hpp>
 #include <Space/StructureBasic.hpp>
@@ -72,7 +72,7 @@ int main(int argc, char **argv)
 	{
 		Skyboxes::Get()->SetSkybox(new Skybox(
 			Cubemap::Resource("Resources/Skyboxes/Stars", ".png"),
-			Sphere::Resource(6, 6, 1.0f),
+			ShapeSphere::Resource(6, 6, 1.0f),
 			2048.0f
 		));
 	}

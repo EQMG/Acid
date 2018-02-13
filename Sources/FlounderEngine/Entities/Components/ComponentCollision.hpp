@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class ComponentCollision :
+	class F_EXPORT ComponentCollision :
 		public IComponent
 	{
 	private:

@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing water 3D worlds.
 	/// </summary>
-	class Waters :
+	class F_EXPORT Waters :
 		public IModule
 	{
 	private:

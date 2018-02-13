@@ -10,7 +10,7 @@ namespace Flounder
 	/// <summary>
 	/// A simple class that represents a physical shape.
 	/// </summary>
-	class ICollider
+	class F_EXPORT ICollider
 	{
 	public:
 		/// <summary>

@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "../Prerequisites.hpp"
+
 // Hashing
 #define X_PRIME 1619
 #define Y_PRIME 31337
@@ -11,7 +13,7 @@
 
 namespace Flounder
 {
-	class NoiseFast
+	class F_EXPORT NoiseFast
 	{
 	public:
 		enum TypeNoise

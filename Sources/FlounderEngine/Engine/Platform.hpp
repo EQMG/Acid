@@ -17,9 +17,11 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
+#include "../Prerequisites.hpp"
+
 namespace Flounder
 {
-	class Platform
+	class F_EXPORT Platform
 	{
 	public:
 		static void ErrorVk(const VkResult &result);

@@ -5,7 +5,7 @@ namespace Flounder
 	/// <summary>
 	/// A extension used with irenderers to define a master renderer.
 	/// </summary>
-	class IManagerRender
+	class F_EXPORT IManagerRender
 	{
 	public:
 		/// <summary>

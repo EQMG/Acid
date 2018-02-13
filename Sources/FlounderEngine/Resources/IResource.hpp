@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class IResource
+	class F_EXPORT IResource
 	{
 	private:
 	public:

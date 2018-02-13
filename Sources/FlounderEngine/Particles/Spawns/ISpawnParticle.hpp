@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A interface that defines a particle spawn type.
 	/// </summary>
-	class ISpawnParticle
+	class F_EXPORT ISpawnParticle
 	{
 	public:
 		/// <summary>

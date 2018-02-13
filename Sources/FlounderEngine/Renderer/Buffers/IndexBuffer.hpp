@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class IndexBuffer :
+	class F_EXPORT IndexBuffer :
 		public Buffer
 	{
 	private:

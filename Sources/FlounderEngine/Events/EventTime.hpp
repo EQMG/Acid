@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A class that runs a event after a time has passed.
 	/// </summary>
-	class EventTime :
+	class F_EXPORT EventTime :
 		public IEvent
 	{
 	private:

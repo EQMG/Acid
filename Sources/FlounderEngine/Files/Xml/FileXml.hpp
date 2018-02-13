@@ -8,7 +8,7 @@
 
 namespace Flounder
 {
-	class FileXml :
+	class F_EXPORT FileXml :
 		public IFile
 	{
 	private:

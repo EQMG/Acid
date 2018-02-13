@@ -12,7 +12,7 @@ namespace Flounder
 	/// <summary>
 	/// The default GLFW updater for the engine.
 	/// </summary>
-	class ModuleUpdater :
+	class F_EXPORT ModuleUpdater :
 		public IUpdater
 	{
 	private:

@@ -4,30 +4,30 @@
 
 namespace Flounder
 {
+	enum F_HIDDEN FrustumPlanes
+	{
+		FrustumRight = 0,
+		FrustumLeft = 1,
+		FrustumBottom = 2,
+		FrustumTop = 3,
+		FrustumBack = 4,
+		FrustumFront = 5
+	};
+
+	enum F_HIDDEN FrustumFace
+	{
+		FrustumA = 0,
+		FrustumB = 1,
+		FrustumC = 2,
+		FrustumD = 3
+	};
+
 	/// <summary>
 	/// Represents the region of flounder.space in the modeled world that may appear on the screen.
 	/// </summary>
-	class Frustum
+	class F_EXPORT Frustum
 	{
 	private:
-		enum FrustumPlanes
-		{
-			FrustumRight = 0,
-			FrustumLeft = 1,
-			FrustumBottom = 2,
-			FrustumTop = 3,
-			FrustumBack = 4,
-			FrustumFront = 5
-		};
-
-		enum FrustumFace
-		{
-			FrustumA = 0,
-			FrustumB = 1,
-			FrustumC = 2,
-			FrustumD = 3
-		};
-
 		float **m_frustum;
 	public:
 		/// <summary>

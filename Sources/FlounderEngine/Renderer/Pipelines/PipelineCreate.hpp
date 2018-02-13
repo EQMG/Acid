@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	enum PipelineModeFlags
+	enum F_EXPORT PipelineModeFlags
 	{
 		PIPELINE_POLYGON,
 		PIPELINE_POLYGON_NO_DEPTH,
@@ -14,7 +14,7 @@ namespace Flounder
 		PIPELINE_MRT_NO_DEPTH
 	};
 
-	class DescriptorType
+	class F_EXPORT DescriptorType
 	{
 	public:
 		uint32_t binding;
@@ -32,7 +32,7 @@ namespace Flounder
 		}
 	};
 
-	class PipelineCreateInfo
+	class F_EXPORT PipelineCreateInfo
 	{
 	public:
 		PipelineModeFlags pipelineModeFlags = PIPELINE_POLYGON;

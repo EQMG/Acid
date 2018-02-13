@@ -10,7 +10,7 @@ namespace Flounder
 	/// <summary>
 	/// Holds a 3 dimensional ray.
 	/// </summary>
-	class Ray
+	class F_EXPORT Ray
 	{
 	private:
 		bool m_useMouse;

@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	struct SelectorJoystick
+	struct F_HIDDEN SelectorJoystick
 	{
 	public:
 		unsigned int joystick;
@@ -20,7 +20,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a virtual cursor that will be used to determine if a ui action was preformed by a device.
 	/// </summary>
-	class UiSelector
+	class F_EXPORT UiSelector
 	{
 	private:
 		float m_cursorX;

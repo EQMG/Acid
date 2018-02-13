@@ -10,7 +10,7 @@ namespace Flounder
 	/// <summary>
 	/// A instance of a particle type.
 	/// </summary>
-	class Particle :
+	class F_EXPORT Particle :
 		public ISpatialObject
 	{
 	private:

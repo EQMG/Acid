@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Button from a mouse.
 	/// </summary>
-	class ButtonMouse :
+	class F_EXPORT ButtonMouse :
 		public IButton
 	{
 	private:

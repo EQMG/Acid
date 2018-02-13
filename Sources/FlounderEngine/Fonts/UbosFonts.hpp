@@ -9,7 +9,7 @@ namespace Flounder
 	class UbosFonts
 	{
 	public:
-		struct UboObject
+		struct F_EXPORT UboObject
 		{
 			Vector4 transform;
 			Colour colour;

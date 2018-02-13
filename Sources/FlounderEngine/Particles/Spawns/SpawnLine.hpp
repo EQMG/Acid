@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class SpawnLine :
+	class F_EXPORT SpawnLine :
 		public ISpawnParticle
 	{
 	private:

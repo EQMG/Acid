@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// A definition for what a particle should act and look like.
 	/// </summary>
-	class ParticleType
+	class F_EXPORT ParticleType
 	{
 	private:
 		std::string m_name;

@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	class RowCsv
+	class F_EXPORT RowCsv
 	{
 	public:
 		std::vector<std::string> m_elements;
@@ -18,7 +18,7 @@ namespace Flounder
 		}
 	};
 
-	class FileCsv :
+	class F_EXPORT FileCsv :
 		public IFile
 	{
 	private:

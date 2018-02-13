@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// A rectangle made of a position and dimension.
 	/// </summary>
-	class UiBound
+	class F_EXPORT UiBound
 	{
 	private:
 		static std::map<std::string, Vector2> g_pivotMap;

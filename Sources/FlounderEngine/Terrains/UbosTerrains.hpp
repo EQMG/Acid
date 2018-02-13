@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class UbosTerrains
+	class F_EXPORT UbosTerrains
 	{
 	public:
 		struct UboScene

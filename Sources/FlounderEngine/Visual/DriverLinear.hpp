@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A driver that linearly increases its value.
 	/// </summary>
-	class DriverLinear :
+	class F_EXPORT DriverLinear :
 		public IDriver
 	{
 	private:

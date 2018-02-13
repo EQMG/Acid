@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// During the loading of a text this represents one word in the text.
 	/// </summary>
-	class Word
+	class F_EXPORT Word
 	{
 	private:
 		std::vector<Character> m_characters;
