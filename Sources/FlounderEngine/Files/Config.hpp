@@ -50,7 +50,7 @@ namespace Flounder
 		double Get(const std::string &key, const double &normal = 0.0);
 
 		template<typename T>
-		void Link(const std::string &key, const T &normal, const std::function<T()> &getter, const std::function<void(T)> &setter = [&](const T &v) -> void { })
+		void Link(const std::string &key, const T &normal, const std::function<T()> &getter, const std::function<void(T)> &setter = [](const T &v) -> void { })
 		{
 			ConfigKey configKey = GetRaw(key, std::to_string(normal));
 
