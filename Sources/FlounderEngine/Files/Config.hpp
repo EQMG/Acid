@@ -50,7 +50,7 @@ namespace Flounder
 		double Get(const std::string &key, const double &normal = 0.0);
 
 		template<typename T>
-		void Link(const std::string &key, const T &normal, T (*getter)(), void (*setter)(const T &))
+		void Link(const std::string &key, const T &normal, const std::function<T()> &getter, const std::function<void(T)> &setter = [&](const T &v) -> void { })
 		{
 			ConfigKey configKey = GetRaw(key, std::to_string(normal));
 
@@ -59,9 +59,11 @@ namespace Flounder
 				configKey.SetGetter([&]() -> std::string { return std::to_string(getter()); });
 			}
 
-			if (configKey.IsFromFile() && setter != nullptr)
+			if (configKey.IsFromFile())
 			{
-				Tasks::Get()->AddTask([&]() -> void { printf("%s, %s\n", key.c_str(), std::to_string(normal).c_str()); });
+				printf("%s, %s\n", key.c_str(), std::to_string(normal).c_str());
+			//	setter(Get(key, normal));
+			//	Tasks::Get()->AddTask([&]() -> void { printf("%s, %s\n", key.c_str(), std::to_string(normal).c_str()); });
 			}
 		}
 	};
