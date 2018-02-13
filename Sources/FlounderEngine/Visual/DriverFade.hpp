@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A driver that fades from start to end.
 	/// </summary>
-	class DriverFade :
+	class F_EXPORT DriverFade :
 		public IDriver
 	{
 	private:

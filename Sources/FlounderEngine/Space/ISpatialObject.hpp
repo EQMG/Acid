@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents an object that has some notion of space, and can be stored in a <seealso cref="ispatialstructure"/>.
 	/// </summary>
-	class ISpatialObject
+	class F_EXPORT ISpatialObject
 	{
 	private:
 	public:

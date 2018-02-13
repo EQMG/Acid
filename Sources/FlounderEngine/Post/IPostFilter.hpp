@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a post effect shader and on application saves the result into a fbo.
 	/// </summary>
-	class IPostFilter
+	class F_EXPORT IPostFilter
 	{
 	protected:
 		Pipeline *m_pipeline;

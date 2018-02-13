@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class RendererFonts :
+	class F_EXPORT RendererFonts :
 		public IRenderer
 	{
 	private:

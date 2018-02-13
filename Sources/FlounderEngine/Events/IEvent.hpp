@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
+
 namespace Flounder
 {
 	/// <summary>
 	/// A simple event listener and runner.
 	/// </summary>
-	class IEvent
+	class F_EXPORT IEvent
 	{
 	public:
 		/// <summary>

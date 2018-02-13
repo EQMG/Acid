@@ -10,7 +10,7 @@
 
 namespace Flounder
 {
-	class Water
+	class F_EXPORT Water
 	{
 	private:
 		UniformBuffer *m_uniformObject;

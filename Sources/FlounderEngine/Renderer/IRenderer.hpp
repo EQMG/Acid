@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a sub renderer in the engine.
 	/// </summary>
-	class IRenderer
+	class F_EXPORT IRenderer
 	{
 	public:
 		/// <summary>

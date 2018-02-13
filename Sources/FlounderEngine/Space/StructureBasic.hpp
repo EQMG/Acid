@@ -10,7 +10,7 @@ namespace Flounder
 	/// A structure of spatial objects for a 3D space.
 	/// </summary>
 	template<typename T>
-	class StructureBasic :
+	class F_EXPORT StructureBasic :
 		public ISpatialStructure<T>
 	{
 	private:

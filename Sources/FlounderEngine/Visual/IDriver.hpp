@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a driver that changes over time.
 	/// </summary>
-	class IDriver
+	class F_EXPORT IDriver
 	{
 	private:
 		float m_length;

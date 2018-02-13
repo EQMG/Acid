@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class RendererGuis :
+	class F_EXPORT RendererGuis :
 		public IRenderer
 	{
 	private:

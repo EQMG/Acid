@@ -10,7 +10,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing terrains in 3D worlds.
 	/// </summary>
-	class Terrains :
+	class F_EXPORT Terrains :
 		public IModule
 	{
 	private:

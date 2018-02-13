@@ -10,7 +10,7 @@ namespace Flounder
 	/// </summary>
 	/// @param <T> The type of value to find change with. </param>
 	template<typename T>
-	class EventChange :
+	class F_EXPORT EventChange :
 		public IEvent
 	{
 	private:

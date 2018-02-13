@@ -5,7 +5,7 @@ namespace Flounder
 	/// <summary>
 	/// A class that represents bounding intersect data.
 	/// </summary>
-	class Intersect
+	class F_EXPORT Intersect
 	{
 	private:
 		bool m_intersects;

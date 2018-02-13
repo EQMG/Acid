@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class RendererParticles :
+	class F_EXPORT RendererParticles :
 		public IRenderer
 	{
 	private:

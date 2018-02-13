@@ -1,7 +1,7 @@
 ﻿#include "ComponentModel.hpp"
 
 #include "../Entity.hpp"
-#include "../../Models/Shapes/Sphere.hpp"
+#include "Models/Shapes/ShapeSphere.hpp"
 
 namespace Flounder
 {
@@ -10,7 +10,7 @@ namespace Flounder
 		auto split = FormatString::Split(filename, "_");
 		if (!split.empty() && split.at(0) == "Sphere")
 		{
-			return Sphere::Resource(filename);
+			return ShapeSphere::Resource(filename);
 		}
 		return Model::Resource(filename);
 	}

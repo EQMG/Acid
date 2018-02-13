@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class DepthStencil
+	class F_EXPORT DepthStencil
 	{
 	private:
 		VkImage m_image;

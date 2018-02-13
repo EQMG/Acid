@@ -9,4 +9,4 @@ include_directories(${LIBRARIES_INCLUDES} ${FLOUNDERENGINE_INCLUDES})
 
 add_library(FlounderEngine STATIC ${FLOUNDERENGINE_SOURCES})
 
-target_link_libraries(FlounderEngine ${LIBRARIES_LINKS})
+target_link_libraries(FlounderEngine PRIVATE ${LIBRARIES_LINKS})

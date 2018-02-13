@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class FilterSepia :
+	class F_EXPORT FilterSepia :
 		public IPostFilter
 	{
 	public:

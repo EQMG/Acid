@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
 #include "../Maths/Colour.hpp"
 
 namespace Flounder
@@ -7,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a fog in the world.
 	/// </summary>
-	class Fog
+	class F_EXPORT Fog
 	{
 	public:
 		Colour *m_colour;

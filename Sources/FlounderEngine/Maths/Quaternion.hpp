@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
 #include "Matrix3.hpp"
 #include "Matrix4.hpp"
 
@@ -10,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
 	/// </summary>
-	class Quaternion
+	class F_EXPORT Quaternion
 	{
 	public:
 		union

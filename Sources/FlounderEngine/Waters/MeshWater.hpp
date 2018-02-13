@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class MeshWater :
+	class F_EXPORT MeshWater :
 		public MeshSimple
 	{
 	public:

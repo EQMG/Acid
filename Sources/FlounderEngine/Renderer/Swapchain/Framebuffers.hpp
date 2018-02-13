@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class Framebuffers
+	class F_EXPORT Framebuffers
 	{
 	private:
 		std::vector<VkFramebuffer> m_framebuffers;

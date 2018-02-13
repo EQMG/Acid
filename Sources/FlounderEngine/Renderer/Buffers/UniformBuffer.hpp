@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class UniformBuffer :
+	class F_EXPORT UniformBuffer :
 		public Buffer
 	{
 	private:

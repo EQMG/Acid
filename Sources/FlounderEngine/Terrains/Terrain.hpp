@@ -10,7 +10,7 @@
 
 namespace Flounder
 {
-	class Terrain
+	class F_EXPORT Terrain
 	{
 	private:
 		UniformBuffer *m_uniformObject;

@@ -2,11 +2,12 @@
 
 #include <string>
 #include <vector>
+#include "../../Prerequisites.hpp"
 #include "../../Helpers/FormatString.hpp"
 
 namespace Flounder
 {
-	class ComponentPrefab
+	class F_EXPORT ComponentPrefab
 	{
 	private:
 		std::vector<std::string> m_data;

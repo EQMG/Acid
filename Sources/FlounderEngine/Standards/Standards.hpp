@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing simple update injection standards.
 	/// </summary>
-	class Standards :
+	class F_EXPORT Standards :
 		public IModule
 	{
 	private:

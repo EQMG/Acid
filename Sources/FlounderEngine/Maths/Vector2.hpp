@@ -2,6 +2,7 @@
 
 #include <ostream>
 #include <string>
+#include "../Prerequisites.hpp"
 
 namespace Flounder
 {
@@ -10,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// Holds a 2-tuple vector.
 	/// </summary>
-	class Vector2
+	class F_EXPORT Vector2
 	{
 	public:
 		union

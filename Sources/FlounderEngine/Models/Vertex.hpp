@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	class Vertex
+	class F_EXPORT Vertex
 	{
 	public:
 		Vector3 m_position;

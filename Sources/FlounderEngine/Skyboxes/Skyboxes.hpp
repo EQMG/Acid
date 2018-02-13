@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing skyboxes in 3D worlds.
 	/// </summary>
-	class Skyboxes :
+	class F_EXPORT Skyboxes :
 		public IModule
 	{
 	private:

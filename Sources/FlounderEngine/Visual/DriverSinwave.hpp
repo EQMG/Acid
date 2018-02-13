@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A driver that uses a sine wave.
 	/// </summary>
-	class DriverSinwave :
+	class F_EXPORT DriverSinwave :
 		public IDriver
 	{
 	private:

@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class UiStartLogo :
+	class F_EXPORT UiStartLogo :
 		public UiObject
 	{
 	private:

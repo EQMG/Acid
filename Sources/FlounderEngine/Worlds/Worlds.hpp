@@ -10,7 +10,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing worlds.
 	/// </summary>
-	class Worlds :
+	class F_EXPORT Worlds :
 		public IModule
 	{
 	private:

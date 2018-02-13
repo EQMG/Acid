@@ -11,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// A manager that manages particles.
 	/// </summary>
-	class Particles :
+	class F_EXPORT Particles :
 		public IModule
 	{
 	private:

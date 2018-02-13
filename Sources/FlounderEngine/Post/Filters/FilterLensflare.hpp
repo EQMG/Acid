@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class FilterLensflare :
+	class F_EXPORT FilterLensflare :
 		public IPostFilter
 	{
 	private:

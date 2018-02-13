@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class MeshTerrain :
+	class F_EXPORT MeshTerrain :
 		public MeshSimple
 	{
 	private:
