@@ -33,7 +33,6 @@ int main(int argc, char **argv)
 	// Initializes the engine modules.
 	if (Display::Get() != nullptr)
 	{
-		Display::Get()->SetWindowSize(1080, 720);
 		Display::Get()->SetTitle("Example Starting");
 		Display::Get()->SetIcon("Resources/Logos/Tail.png");
 	}
@@ -97,9 +96,7 @@ int main(int argc, char **argv)
 
 	if (Waters::Get() != nullptr)
 	{
-		Waters::Get()->SetWater(new Water(
-			Transform(Vector3(0.0f, 0.0f, 0.0f), Vector3())
-		));
+		Waters::Get()->SetWater(new Water(Transform(Vector3(), Vector3())));
 	}
 
 	// Runs the engine loop.
