@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	enum ModuleUpdate
+	enum F_EXPORT ModuleUpdate
 	{
 		UpdateAlways = 0,
 		UpdatePre = 1,
@@ -17,7 +17,7 @@ namespace Flounder
 	/// <summary>
 	/// A class used to define how the engine will run updates and timings.
 	/// </summary>
-	class IUpdater
+	class F_EXPORT IUpdater
 	{
 	public:
 		/// <summary>

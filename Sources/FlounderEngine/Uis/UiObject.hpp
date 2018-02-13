@@ -15,7 +15,7 @@ namespace Flounder
 	/// The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
 	/// This class can be extended to create a representation for GUI textures, fonts, etc.
 	/// </summary>
-	class UiObject
+	class F_EXPORT UiObject
 	{
 	private:
 		UiObject *m_parent;

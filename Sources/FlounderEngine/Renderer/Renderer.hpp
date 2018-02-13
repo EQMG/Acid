@@ -9,7 +9,7 @@
 
 namespace Flounder
 {
-	class Renderer :
+	class F_EXPORT Renderer :
 		public IModule
 	{
 	private:

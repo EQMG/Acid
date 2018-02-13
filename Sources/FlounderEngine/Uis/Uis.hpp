@@ -10,7 +10,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for that manages gui textures in a container.
 	/// </summary>
-	class Uis :
+	class F_EXPORT Uis :
 		public IModule
 	{
 	private:

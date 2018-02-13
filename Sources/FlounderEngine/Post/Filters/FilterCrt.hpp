@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class FilterCrt :
+	class F_EXPORT FilterCrt :
 		public IPostFilter
 	{
 	private:

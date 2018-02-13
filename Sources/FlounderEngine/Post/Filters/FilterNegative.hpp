@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class FilterNegative :
+	class F_EXPORT FilterNegative :
 		public IPostFilter
 	{
 	public:

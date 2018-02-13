@@ -9,7 +9,7 @@
 
 namespace Flounder
 {
-	class Config
+	class F_EXPORT Config
 	{
 	private:
 		IFile *m_file;
@@ -50,7 +50,7 @@ namespace Flounder
 		double Get(const std::string &key, const double &normal = 0.0);
 
 		template<typename T>
-		void Link(const std::string &key, const T &normal, const std::function<T()> &getter, const std::function<void(T)> &setter = [&](const T &v) -> void { })
+		void Link(const std::string &key, const T &normal, const std::function<T()> &getter, const std::function<void(T)> &setter = [](const T &v) -> void { })
 		{
 			ConfigKey configKey = GetRaw(key, std::to_string(normal));
 
@@ -59,11 +59,9 @@ namespace Flounder
 				configKey.SetGetter([&]() -> std::string { return std::to_string(getter()); });
 			}
 
-			if (configKey.IsFromFile())
+			if (setter != nullptr && configKey.IsFromFile())
 			{
-				printf("%s, %s\n", key.c_str(), std::to_string(normal).c_str());
-			//	setter(Get(key, normal));
-			//	Tasks::Get()->AddTask([&]() -> void { printf("%s, %s\n", key.c_str(), std::to_string(normal).c_str()); });
+				setter(Get(key, normal));
 			}
 		}
 	};

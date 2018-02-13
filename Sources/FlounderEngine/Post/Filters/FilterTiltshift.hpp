@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class FilterTiltshift :
+	class F_EXPORT FilterTiltshift :
 		public IPostFilter
 	{
 	private:

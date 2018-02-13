@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
 #include "../Maths/Vector3.hpp"
 #include "../Maths/Matrix4.hpp"
 #include "../Physics/Frustum.hpp"
@@ -11,7 +12,7 @@ namespace Flounder
 	/// <summary>
 	/// This class is used throughout the engine wherever the camera is involved, so that the engine doesn't rely at all on the camera's implementation.
 	/// </summary>
-	class ICamera
+	class F_EXPORT ICamera
 	{
 	public:
 		/// <summary>

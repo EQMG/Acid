@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	class FilterGrey :
+	class F_EXPORT FilterGrey :
 		public IPostFilter
 	{
 	private:

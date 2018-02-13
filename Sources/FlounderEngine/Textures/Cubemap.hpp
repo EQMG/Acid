@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// Class that represents a loaded cubemap texture.
 	/// </summary>
-	class Cubemap :
+	class F_EXPORT Cubemap :
 		public IResource
 	{
 	private:

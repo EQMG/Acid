@@ -3,7 +3,6 @@
 #include <cassert>
 #include <cstring>
 #include "../Devices/Display.hpp"
-#include "../Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 
 namespace Flounder

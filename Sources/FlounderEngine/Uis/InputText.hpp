@@ -8,7 +8,7 @@
 
 namespace Flounder
 {
-	class InputText :
+	class F_EXPORT InputText :
 		public UiObject
 	{
 	private:

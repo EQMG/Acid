@@ -12,7 +12,7 @@
 
 namespace Flounder
 {
-	struct ModelLoaded
+	struct F_HIDDEN ModelLoaded
 	{
 		std::vector<Vertex> vertices;
 		std::vector<uint32_t> indices;
@@ -21,7 +21,7 @@ namespace Flounder
 	/// <summary>
 	/// Class that represents a OBJ model.
 	/// </summary>
-	class Model :
+	class F_EXPORT Model :
 		public IResource
 	{
 	private:

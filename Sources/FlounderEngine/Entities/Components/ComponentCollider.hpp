@@ -4,12 +4,12 @@
 
 namespace Flounder
 {
-	struct Constraint3
+	struct F_EXPORT Constraint3
 	{
 		bool x, y, z;
 	};
 
-	class ComponentCollider :
+	class F_EXPORT ComponentCollider :
 		public IComponent
 	{
 	private:

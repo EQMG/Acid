@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A driver that has a constant value.
 	/// </summary>
-	class DriverConstant :
+	class F_EXPORT DriverConstant :
 		public IDriver
 	{
 	private:

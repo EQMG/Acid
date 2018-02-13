@@ -1,11 +1,12 @@
 ﻿#pragma once
 
+#include "../Prerequisites.hpp"
 #include "Vector3.hpp"
 #include "Matrix4.hpp"
 
 namespace Flounder
 {
-	class Transform
+	class F_EXPORT Transform
 	{
 	private:
 	public:

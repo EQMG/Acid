@@ -11,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// A system of particles that are to be spawned.
 	/// </summary>
-	class ParticleSystem
+	class F_EXPORT ParticleSystem
 	{
 	private:
 		std::vector<ParticleType *> *m_types;

@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class ComponentSway :
+	class F_EXPORT ComponentSway :
 		public IComponent
 	{
 	private:

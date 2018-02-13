@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Class that represents a loaded sound.
 	/// </summary>
-	class Sound
+	class F_EXPORT Sound
 	{
 	private:
 		unsigned int m_source;

@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Keys from a keyboard.
 	/// </summary>
-	class ButtonKeyboard :
+	class F_EXPORT ButtonKeyboard :
 		public IButton
 	{
 	private:

@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class MeshPattern :
+	class F_EXPORT MeshPattern :
 		public Model
 	{
 	private:

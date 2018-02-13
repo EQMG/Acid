@@ -18,7 +18,7 @@ namespace Flounder
 	/// <summary>
 	/// A object the represents a text in a GUI.
 	/// </summary>
-	class Text :
+	class F_EXPORT Text :
 		public UiObject
 	{
 	private:

@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
+
 namespace Flounder
 {
 	/// <summary>
 	/// Interface for a binary input device.
 	/// </summary>
-	class IButton
+	class F_EXPORT IButton
 	{
 	public:
 		/// <summary>

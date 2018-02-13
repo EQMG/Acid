@@ -2,10 +2,11 @@
 
 #include <string>
 #include <functional>
+#include "../Prerequisites.hpp"
 
 namespace Flounder
 {
-	class ConfigKey
+	class F_EXPORT ConfigKey
 	{
 	private:
 		std::string m_value;

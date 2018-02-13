@@ -11,7 +11,7 @@ namespace Flounder
 	/// <summary>
 	/// Provides functionality for getting the values from a font file.
 	/// </summary>
-	class Metafile :
+	class F_EXPORT Metafile :
 		public IResource
 	{
 	private:

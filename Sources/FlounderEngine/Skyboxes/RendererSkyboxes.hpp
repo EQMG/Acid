@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	class RendererSkyboxes :
+	class F_EXPORT RendererSkyboxes :
 		public IRenderer
 	{
 	private:

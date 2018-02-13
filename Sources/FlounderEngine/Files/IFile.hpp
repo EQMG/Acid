@@ -2,10 +2,11 @@
 
 #include <string>
 #include <map>
+#include "../Prerequisites.hpp"
 
 namespace Flounder
 {
-	class IFile
+	class F_EXPORT IFile
 	{
 	public:
 		virtual ~IFile()

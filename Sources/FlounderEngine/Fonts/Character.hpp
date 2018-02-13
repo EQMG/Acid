@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../Prerequisites.hpp"
+
 namespace Flounder
 {
 	/// <summary>
 	/// Simple data structure class holding information about a certain glyph in the font texture atlas. All sizes are for a font-size of 1.
 	/// </summary>
-	class Character
+	class F_EXPORT Character
 	{
 	private:
 		int m_id;

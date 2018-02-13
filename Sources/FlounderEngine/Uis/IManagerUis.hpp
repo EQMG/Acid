@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A interface used to manage a main UI system.
 	/// </summary>
-	class IManagerUis
+	class F_EXPORT IManagerUis
 	{
 	public:
 		/// <summary>

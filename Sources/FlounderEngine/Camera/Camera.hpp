@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for managing cameras in 2D and 3D worlds.
 	/// </summary>
-	class Camera :
+	class F_EXPORT Camera :
 		public IModule
 	{
 	private:

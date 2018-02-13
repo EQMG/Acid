@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class RendererWaters :
+	class F_EXPORT RendererWaters :
 		public IRenderer
 	{
 	private:

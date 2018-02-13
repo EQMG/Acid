@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// Used to store index of a QueueFamily with particular qualities.
 	/// </summary>
-	struct QueueFamilyIndices
+	struct F_EXPORT QueueFamilyIndices
 	{
 		int graphicsFamily = -1;
 		int transferFamily = -1;
@@ -25,7 +25,7 @@ namespace Flounder
 	/// <summary>
 	/// A Vulkan queue family.
 	/// </summary>
-	class QueueFamily
+	class F_EXPORT QueueFamily
 	{
 	public:
 		/// <summary>

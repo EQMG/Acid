@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A axis-aligned bounding box.
 	/// </summary>
-	class Aabb :
+	class F_EXPORT Aabb :
 		public ICollider
 	{
 	public:

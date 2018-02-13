@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class RendererTerrains :
+	class F_EXPORT RendererTerrains :
 		public IRenderer
 	{
 	private:

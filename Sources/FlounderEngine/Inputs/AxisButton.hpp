@@ -8,7 +8,7 @@ namespace Flounder
 	/// <summary>
 	/// Axis composed of two buttons.
 	/// </summary>
-	class AxisButton :
+	class F_EXPORT AxisButton :
 		public IAxis
 	{
 	private:

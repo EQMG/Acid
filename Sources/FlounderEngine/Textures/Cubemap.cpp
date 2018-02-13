@@ -2,7 +2,6 @@
 
 #include <cstring>
 #include "../Devices/Display.hpp"
-#include "../Renderer/Renderer.hpp"
 
 namespace Flounder
 {

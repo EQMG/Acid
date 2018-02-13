@@ -9,7 +9,7 @@
 
 namespace Flounder
 {
-	class InputSlider :
+	class F_EXPORT InputSlider :
 		public UiObject
 	{
 	private:

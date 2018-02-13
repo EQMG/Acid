@@ -10,7 +10,7 @@ namespace Flounder
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class Display :
+	class F_EXPORT Display :
 		public IModule
 	{
 	private:
