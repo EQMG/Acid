@@ -16,5 +16,7 @@ namespace Demo
 		ConfigManager();
 
 		~ConfigManager();
+
+		void Save();
 	};
 }
