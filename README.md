@@ -1,4 +1,4 @@
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/LogoFlounder.png" alt="flounder" width=225>
+<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Flounder.png" alt="flounder" width=225>
 
 # Flounder v0.5
 Flounder is a cross platform high speed C++17 Vulkan game engine. Flounder is built from the ground up to provide the most speed, well written code, and features with a modular engine. Flounder is very much a work in progress, much of this code will change.
@@ -63,7 +63,7 @@ For Windows you need Visual Studios 2015 or later, use the VS installer and ensu
 
 On Linux you need a GCC/Clang compiler, each package listed here are for Debian/Apt. GLFW requires `xorg-dev`, you should also have `libopenal1`, `libglfw3`, and `libvulkan` installed.
 
-On MacOS you need [MoltenVK](https://moltengl.com/moltenvk/) in the Libraries/moltenvk directory, creating a Libraries structure shown in [this image](https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/MacOS-Libraries.png).
+On MacOS you need [MoltenVK](https://moltengl.com/moltenvk/) in the Libraries/moltenvk directory, creating a Libraries structure shown in [this image](https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Setup-MacOS-Libraries.png).
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.
