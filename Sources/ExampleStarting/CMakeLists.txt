@@ -5,7 +5,7 @@ set(EXAMPLE_STARTING_INCLUDES
         "${PROJECT_SOURCE_DIR}/Sources/ExampleStarting/"
         )
 
-include_directories(${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/FlounderEngine/" ${EXAMPLE_STARTING_INCLUDES}) # ${FLOUNDERENGINE_INCLUDES}
+include_directories(${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/FlounderEngine/" ${EXAMPLE_STARTING_INCLUDES})
 
 #if(FLOUNDER_CONFIG_RELEASE AND WIN32)
 #	add_executable(ExampleStarting WIN32 ${EXAMPLE_STARTING_SOURCES})
@@ -13,7 +13,5 @@ include_directories(${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/Flounde
 add_executable(ExampleStarting ${EXAMPLE_STARTING_SOURCES})
 #endif()
 
-target_compile_definitions(ExampleStarting PRIVATE -DEXAMPLE_STARTING_EXPORTS)
-
-target_link_libraries(ExampleStarting FlounderEngine)
+target_link_libraries(ExampleStarting PRIVATE FlounderEngine)
 add_dependencies(ExampleStarting FlounderEngine)

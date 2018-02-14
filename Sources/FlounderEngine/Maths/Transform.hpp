@@ -6,6 +6,9 @@
 
 namespace Flounder
 {
+	/// <summary>
+	/// Holds position, rotation, and scale components.
+	/// </summary>
 	class F_EXPORT Transform
 	{
 	private:
