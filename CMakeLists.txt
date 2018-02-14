@@ -61,58 +61,16 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYP
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/bin)
 
-#mklink /J C:\Users\mattp\Documents\Flounder\Build\Debug\bin\Resources C:\Users\mattp\Documents\Flounder\Resources
-#ln -s /Users/albrmat/Desktop/Flounder/Resources /Users/albrmat/Desktop/Flounder/Build/Debug/bin/Resorces
-#ln -s /home/mattp/Documents/Flounder/Resources /home/mattp/Documents/Flounder/Build/Debug/bin/Resorces
+# Linked Resources
+#Windows: mklink /J C:\Users\mattp\Documents\Flounder\Build\Debug\bin\Resources C:\Users\mattp\Documents\Flounder\Resources
+#MacOS: ln -s /Users/albrmat/Desktop/Flounder/Resources /Users/albrmat/Desktop/Flounder/Build/Debug/bin/Resorces
+#Linux: ln -s /home/mattp/Documents/Flounder/Resources /home/mattp/Documents/Flounder/Build/Debug/bin/Resorces
 
-# Libraries
-if(APPLE)
-	FIND_PATH(METAL_INCLUDES Metal.h)
-	find_library(METAL_LIBRARY NAMES Metal)
-
-	FIND_PATH(IOSURFACE_INCLUDES IOSurface.h)
-	find_library(IOSURFACE_LIBRARY NAMES IOSurface)
-
-	FIND_PATH(QUARTZCORE_INCLUDES QuartzCore.h)
-	find_library(QUARTZCORE_LIBRARY NAMES QuartzCore)
-
-	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/include")
-	set(VULKAN_INCLUDE_DIR ${VULKAN_INCLUDES})
-	find_library(VULKAN_LIBRARY NAMES MoltenVK PATHS "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/lib/")
-else()
-	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
-	find_library(VULKAN_LIBRARY NAMES vulkan-1 vulkan PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
-endif()
-message(STATUS "Vulkan: ${VULKAN_LIBRARY}")
-
-set(GLFW_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glfw/include")
-# set(BUILD_SHARED_LIBS ON CACHE INTERNAL "Build shared libraries")
-set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
-set(GLFW_BUILD_TESTS OFF CACHE INTERNAL "Build the GLFW test programs")
-set(GLFW_BUILD_DOCS OFF CACHE INTERNAL "Build the GLFW documentation")
-set(GLFW_INSTALL OFF CACHE INTERNAL "Generate installation target")
-add_subdirectory(Libraries/glfw)
-set(GLFW_LIBRARY "glfw")
-
-if(APPLE)
-	FIND_PATH(OPENAL_INCLUDES al.h)
-else()
-	set(OPENAL_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/openal/include")
-endif()
-find_library(OPENAL_LIBRARY NAMES OpenAL32 OpenAL openal PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
-message(STATUS "OpenAL: ${OPENAL_LIBRARY}")
-
-set(STB_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/stb/include")
-add_subdirectory(Libraries/stb)
-set(STB_LIBRARY "stb")
-
-set(LIBRARIES_INCLUDES ${STB_INCLUDES} ${GLFW_INCLUDES} ${OPENAL_INCLUDES} ${VULKAN_INCLUDES})
-set(LIBRARIES_LINKS "${STB_LIBRARY}" "${GLFW_LIBRARY}" "${OPENAL_LIBRARY}" "${VULKAN_LIBRARY}")
-
-if(APPLE)
-	list(APPEND LIBRARIES_INCLUDES ${METAL_INCLUDES} ${IOSURFACE_INCLUDES} ${QUARTZCORE_INCLUDES})
-	list(APPEND LIBRARIES_LINKS "${METAL_LIBRARY}" "${IOSURFACE_LIBRARY}" "${QUARTZCORE_LIBRARY}")
-endif()
+# Dependencies
+include(cmake/FindVulkan.cmake)
+include(cmake/FindOpenAL.cmake)
+include(cmake/FindGLFW.cmake)
+include(cmake/FindSTB.cmake)
 
 # Engine Sources
 add_subdirectory(Sources/FlounderEngine)
