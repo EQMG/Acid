@@ -7,4 +7,4 @@ set(STB_INCLUDES
 
 include_directories(${STB_INCLUDES})
 
-add_library(stb STATIC ${STB_SOURCES})
+add_library(stb ${LIB_TYPE} ${STB_SOURCES})

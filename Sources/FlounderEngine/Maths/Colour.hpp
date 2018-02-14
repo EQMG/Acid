@@ -12,7 +12,7 @@ namespace Flounder
 	/// <summary>
 	/// Holds a RGBA colour.
 	/// </summary>
-	class Colour
+	class F_EXPORT Colour
 	{
 	public:
 		union
