@@ -30,7 +30,7 @@ namespace Demo
 		{
 			for (int j = -3; j <= 0; j++)
 			{
-				new Entity("FoundationWood", Transform(foundationCentre + Vector3(i * 3.0f, 2.3f, -j * 3.0f), Vector3(), 1.5f));
+				new Entity("FoundationWood", Transform(foundationCentre, Vector3(), 1.5f)); //  + Vector3(i * 3.0f, 2.3f, -j * 3.0f)
 			}
 		}
 

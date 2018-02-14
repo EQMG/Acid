@@ -7,6 +7,16 @@ set(FLOUNDERENGINE_INCLUDES
 
 include_directories(${LIBRARIES_INCLUDES} ${FLOUNDERENGINE_INCLUDES})
 
-add_library(FlounderEngine STATIC ${FLOUNDERENGINE_SOURCES})
+add_library(FlounderEngine ${LIB_TYPE} ${FLOUNDERENGINE_SOURCES})
+
+if (BUILD_SHARED_LIBS)
+    target_compile_definitions(FlounderEngine PUBLIC
+            -DF_EXPORTS
+            )
+else()
+    target_compile_definitions(FlounderEngine PUBLIC
+            -DFLOUNDER_STATIC_LIB
+            )
+endif()
 
 target_link_libraries(FlounderEngine PRIVATE ${LIBRARIES_LINKS})
