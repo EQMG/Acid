@@ -13,5 +13,5 @@ include_directories(${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/Flounde
 add_executable(ExampleStarting ${EXAMPLE_STARTING_SOURCES})
 #endif()
 
-target_link_libraries(ExampleStarting PRIVATE FlounderEngine)
+target_link_libraries(ExampleStarting PRIVATE ${LIBRARIES_LINKS} FlounderEngine)
 add_dependencies(ExampleStarting FlounderEngine)
