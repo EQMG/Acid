@@ -57,6 +57,6 @@ script:
 - git submodule update --init --recursive
 - mkdir Build
 - cd Build
-- cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+- cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF
 - make all
 - cd ../
