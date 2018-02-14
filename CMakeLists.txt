@@ -1,6 +1,17 @@
 cmake_minimum_required (VERSION 3.1)
 project (Flounder)
 
+# Options
+option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
+
+set(LIB_TYPE STATIC)
+
+if(BUILD_SHARED_LIBS)
+    set(LIB_TYPE SHARED)
+endif()
+
+message(STATUS "Shared Libs: ${BUILD_SHARED_LIBS}")
+
 # Preprocessor
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	add_definitions(-DFLOUNDER_VERBOSE)
@@ -44,9 +55,6 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -ggdb3 -O0")
 endif()
 
-add_definitions(-DFLOUNDER_STATIC_LIB)
-add_definitions(-DF_EXPORTS)
-
 # Output Directories
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/lib)
@@ -78,6 +86,7 @@ endif()
 message(STATUS "Vulkan: ${VULKAN_LIBRARY}")
 
 set(GLFW_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glfw/include")
+# set(BUILD_SHARED_LIBS ON CACHE INTERNAL "Build shared libraries")
 set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
 set(GLFW_BUILD_TESTS OFF CACHE INTERNAL "Build the GLFW test programs")
 set(GLFW_BUILD_DOCS OFF CACHE INTERNAL "Build the GLFW documentation")
