@@ -408,7 +408,7 @@ namespace Flounder
 
 		for (int i = 0; i < 256; i++)
 		{
-			m_perm[i] = i;
+			m_perm[i] = static_cast<unsigned char>(i);
 		}
 
 		for (int j = 0; j < 256; j++)
@@ -417,8 +417,8 @@ namespace Flounder
 			int k = rng + j;
 			int l = m_perm[j];
 			m_perm[j] = m_perm[j + 256] = m_perm[k];
-			m_perm[k] = l;
-			m_perm12[j] = m_perm12[j + 256] = m_perm[j] % 12;
+			m_perm[k] = static_cast<unsigned char>(l);
+			m_perm12[j] = m_perm12[j + 256] = static_cast<unsigned char>(m_perm[j] % 12);
 		}
 	}
 
