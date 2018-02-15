@@ -33,7 +33,7 @@ namespace Flounder
 			m_imageSize += sizeSide;
 		}
 
-		stbi_uc *pixels = (stbi_uc *) malloc(m_imageSize);
+		stbi_uc *pixels = (stbi_uc *) malloc(static_cast<size_t>(m_imageSize));
 		stbi_uc *offset = pixels;
 
 		for (const auto suffix : SIDE_FILE_SUFFIXS)
@@ -43,7 +43,7 @@ namespace Flounder
 			const stbi_uc *pixelsSide = Texture::LoadPixels(filepathSide, &m_width, &m_height, &m_components);
 			m_depth = m_width;
 
-			memcpy(offset, pixelsSide, sizeSide);
+			memcpy(offset, pixelsSide, static_cast<size_t>(sizeSide));
 			offset += sizeSide;
 			delete[] pixelsSide;
 		}
