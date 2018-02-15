@@ -1,9 +1,7 @@
 include(CMakeSources.cmake)
 #project(ExampleStarting)
 
-set(EXAMPLE_STARTING_INCLUDES
-        "${PROJECT_SOURCE_DIR}/Sources/ExampleStarting/"
-        )
+set(EXAMPLE_STARTING_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/ExampleStarting/")
 
 include_directories(${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/FlounderEngine/" ${EXAMPLE_STARTING_INCLUDES})
 
