@@ -28,7 +28,7 @@ namespace Flounder
 		// Copies the data to the buffer.
 		void *data;
 		vkMapMemory(logicalDevice, m_bufferMemory, 0, m_size, 0, &data);
-		memcpy(data, newData, m_size);
+		memcpy(data, newData, static_cast<size_t>(m_size));
 		vkUnmapMemory(logicalDevice, m_bufferMemory);
 	}
 
