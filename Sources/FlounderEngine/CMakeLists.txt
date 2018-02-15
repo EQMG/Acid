@@ -22,3 +22,4 @@ else()
 endif()
 
 target_link_libraries(FlounderEngine PRIVATE ${LIBRARIES_LINKS})
+add_dependencies(FlounderEngine glfw stb)
