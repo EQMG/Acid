@@ -38,8 +38,9 @@ message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
 
 if(MSVC)
     add_definitions(-DFLOUNDER_COMPILER_MSVC)
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /Ox /Ob2 /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /MP")
+    add_definitions(-D_SCL_SECURE_NO_WARNINGS)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /Ox /Ob2 /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /MP /W4 /wd4251 /wd4592")
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -67,10 +68,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYP
 #Linux: ln -s /home/mattp/Documents/Flounder/Resources /home/mattp/Documents/Flounder/Build/Debug/bin/Resorces
 
 # Dependencies
-include(cmake/FindVulkan.cmake)
-include(cmake/FindOpenAL.cmake)
-include(cmake/FindGLFW.cmake)
-include(cmake/FindSTB.cmake)
+include(Libraries/FindVulkan.cmake)
+include(Libraries/FindOpenAL.cmake)
+include(Libraries/FindGLFW.cmake)
+include(Libraries/FindSTB.cmake)
 
 # Engine Sources
 add_subdirectory(Sources/FlounderEngine)
