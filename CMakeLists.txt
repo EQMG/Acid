@@ -64,8 +64,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYP
 
 # Linked Resources
 #Windows: mklink /J C:\Users\mattp\Documents\Flounder\Build\Debug\bin\Resources C:\Users\mattp\Documents\Flounder\Resources
-#MacOS: ln -s /Users/albrmat/Desktop/Flounder/Resources /Users/albrmat/Desktop/Flounder/Build/Debug/bin/Resorces
-#Linux: ln -s /home/mattp/Documents/Flounder/Resources /home/mattp/Documents/Flounder/Build/Debug/bin/Resorces
+#MacOS: ln -s /Users/albrmat/Desktop/Flounder/Resources /Users/albrmat/Desktop/Flounder/Build/Debug/bin/Resources
+#Linux: ln -s /home/mattp/Documents/Flounder/Resources /home/mattp/Documents/Flounder/Build/Debug/bin/Resources
 
 # Dependencies
 include(Libraries/FindVulkan.cmake)
@@ -75,7 +75,6 @@ include(Libraries/FindSTB.cmake)
 
 # Engine Sources
 add_subdirectory(Sources/FlounderEngine)
-add_subdirectory(Sources/FlounderEditor)
 
 # Example Sources
 add_subdirectory(Sources/ExampleStarting)
