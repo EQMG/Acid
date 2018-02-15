@@ -29,6 +29,7 @@ namespace Flounder
 		m_multisampleState({}),
 		m_dynamicState({})
 	{
+		printf("Creating pipeline: '%s'\n", m_pipelineCreateInfo.shaderStages.at(1).c_str());
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
 		CreateDescriptorSet();
