@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	const uint32_t VertexData::NO_INDEX = -1;
+	const uint32_t VertexData::NO_INDEX = static_cast<uint32_t>(-1);
 
 	VertexData::VertexData(const uint32_t &index, const Vector3 &position) :
 		m_position(position),
