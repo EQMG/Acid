@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	enum F_HIDDEN FrustumPlanes
+	enum FrustumPlanes
 	{
 		FrustumRight = 0,
 		FrustumLeft = 1,
@@ -14,7 +14,7 @@ namespace Flounder
 		FrustumFront = 5
 	};
 
-	enum F_HIDDEN FrustumFace
+	enum FrustumFace
 	{
 		FrustumA = 0,
 		FrustumB = 1,

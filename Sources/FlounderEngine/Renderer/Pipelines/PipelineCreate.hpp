@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	enum F_EXPORT PipelineModeFlags
+	enum PipelineModeFlags
 	{
 		PIPELINE_POLYGON,
 		PIPELINE_POLYGON_NO_DEPTH,

@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	enum F_EXPORT CelestialType
+	enum CelestialType
 	{
 		CelestialSun = 0,
 		CelestialMoon = 1
