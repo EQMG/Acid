@@ -21,6 +21,6 @@ namespace Flounder
 
 		static std::vector<VkVertexInputBindingDescription> GetBindingDescriptions(const VkVertexInputRate &inputRate = VK_VERTEX_INPUT_RATE_VERTEX);
 
-		static std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions();
+		static std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions(const int &usedCount = 3);
 	};
 }
