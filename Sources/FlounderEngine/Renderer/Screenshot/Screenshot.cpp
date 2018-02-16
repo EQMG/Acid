@@ -77,11 +77,6 @@ namespace Flounder
 		// Do the actual blit from the swapchain image to our host visible destination image.
 		VkCommandBuffer copyCmd = Platform::BeginSingleTimeCommands(VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
-		VkImageMemoryBarrier imageMemoryBarrier{};
-		imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-		imageMemoryBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-		imageMemoryBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-
 		// Transition destination image to transfer destination layout.
 		InsertImageMemoryBarrier(
 			copyCmd,

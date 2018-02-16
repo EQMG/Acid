@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	enum F_EXPORT ModuleUpdate
+	enum ModuleUpdate
 	{
 		UpdateAlways = 0,
 		UpdatePre = 1,
