@@ -26,33 +26,45 @@ namespace Flounder
 		return bindingDescriptions;
 	}
 
-	std::vector<VkVertexInputAttributeDescription> Vertex::GetAttributeDescriptions()
+	std::vector<VkVertexInputAttributeDescription> Vertex::GetAttributeDescriptions(const int &usedCount)
 	{
-		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(4);
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(usedCount + 1);
 
 		// Position attribute.
-		attributeDescriptions[0].binding = 0;
-		attributeDescriptions[0].location = 0;
-		attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[0].offset = offsetof(Vertex, m_position);
+		if (usedCount >= 0)
+		{
+			attributeDescriptions[0].binding = 0;
+			attributeDescriptions[0].location = 0;
+			attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
+			attributeDescriptions[0].offset = offsetof(Vertex, m_position);
+		}
 
 		// UV attribute.
-		attributeDescriptions[1].binding = 0;
-		attributeDescriptions[1].location = 1;
-		attributeDescriptions[1].format = VK_FORMAT_R32G32_SFLOAT;
-		attributeDescriptions[1].offset = offsetof(Vertex, m_uv);
+		if (usedCount >= 1)
+		{
+			attributeDescriptions[1].binding = 0;
+			attributeDescriptions[1].location = 1;
+			attributeDescriptions[1].format = VK_FORMAT_R32G32_SFLOAT;
+			attributeDescriptions[1].offset = offsetof(Vertex, m_uv);
+		}
 
 		// Normal attribute.
-		attributeDescriptions[2].binding = 0;
-		attributeDescriptions[2].location = 2;
-		attributeDescriptions[2].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[2].offset = offsetof(Vertex, m_normal);
+		if (usedCount >= 2)
+		{
+			attributeDescriptions[2].binding = 0;
+			attributeDescriptions[2].location = 2;
+			attributeDescriptions[2].format = VK_FORMAT_R32G32B32_SFLOAT;
+			attributeDescriptions[2].offset = offsetof(Vertex, m_normal);
+		}
 
 		// Tangent attribute.
-		attributeDescriptions[3].binding = 0;
-		attributeDescriptions[3].location = 3;
-		attributeDescriptions[3].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[3].offset = offsetof(Vertex, m_tangent);
+		if (usedCount >= 3)
+		{
+			attributeDescriptions[3].binding = 0;
+			attributeDescriptions[3].location = 3;
+			attributeDescriptions[3].format = VK_FORMAT_R32G32B32_SFLOAT;
+			attributeDescriptions[3].offset = offsetof(Vertex, m_tangent);
+		}
 
 		return attributeDescriptions;
 	}
