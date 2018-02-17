@@ -16,7 +16,7 @@ configuration:
 
 install:
   - git clone https://github.com/glfw/glfw.git Libraries/glfw
-#  - git clone https://github.com/kcat/openal-soft Libraries/openal-soft
+  - git clone https://github.com/bulletphysics/bullet3.git Libraries/bullet3
 #  - git submodule update --init --recursive
   - mkdir C:\Projects\deps
   - cd C:\Projects\deps
