@@ -3,13 +3,30 @@ include(CMakeSources.cmake)
 
 set(EXAMPLE_STARTING_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/ExampleStarting/")
 
-include_directories(${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/FlounderEngine/" ${EXAMPLE_STARTING_INCLUDES})
-
 #if(FLOUNDER_CONFIG_RELEASE AND WIN32)
 #	add_executable(ExampleStarting WIN32 ${EXAMPLE_STARTING_SOURCES})
 #else()
 add_executable(ExampleStarting ${EXAMPLE_STARTING_SOURCES})
 #endif()
 
-target_link_libraries(ExampleStarting PRIVATE ${LIBRARIES_LINKS} FlounderEngine)
 add_dependencies(ExampleStarting FlounderEngine)
+
+target_include_directories(ExampleStarting PUBLIC ${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/FlounderEngine/" ${EXAMPLE_STARTING_INCLUDES})
+target_link_libraries(ExampleStarting PRIVATE ${LIBRARIES_LINKS} FlounderEngine)
+
+# Install
+if (FLOUNDER_INSTALL)
+    install(
+            DIRECTORY .
+            DESTINATION include
+            FILES_MATCHING PATTERN "*.h"
+            PATTERN "Private" EXCLUDE
+    )
+
+    install(
+            TARGETS ExampleStarting
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib
+    )
+endif()
