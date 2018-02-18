@@ -68,7 +68,7 @@ include(Libraries/FindVulkan.cmake)
 include(Libraries/FindOpenAL.cmake)
 include(Libraries/FindGLFW.cmake)
 include(Libraries/FindSTB.cmake)
-#include(Libraries/FindBullet.cmake)
+include(Libraries/FindBullet.cmake)
 
 # Engine Sources
 add_subdirectory(Sources/FlounderEngine)

@@ -33,6 +33,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * 3D audio and music
  * 3D skybox
  * 3D terrain and water
+ * Bullet physics
  * Model file loading (OBJ)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
  * Text file and config loading (CSV, XML)
@@ -52,6 +53,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
 ## Plans
  * Finish the core engine by the end of 2018 Q2
  * Allow C# games to be created with Flounder
+ * Replace bullet with custom physics
  * A simple visual editor in the far future
 
 ## Developer Setup
