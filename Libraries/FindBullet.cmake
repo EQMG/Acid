@@ -7,15 +7,14 @@ set(BUILD_EXTRAS OFF CACHE INTERNAL "Set when you want to build the extras")
 set(USE_GLUT OFF CACHE INTERNAL "Use Glut")
 set(BUILD_UNIT_TESTS OFF CACHE INTERNAL "Build Unit Tests")
 add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/bullet3)
+
+list(APPEND LIBRARIES_INCLUDES ${LinearMath_HDRS})
+list(APPEND LIBRARIES_LINKS "LinearMath")
+list(APPEND LIBRARIES_INCLUDES ${BulletCollision_HDRS})
+list(APPEND LIBRARIES_LINKS "BulletCollision")
+
+#if(NOT BULLET_LIBRARY)
+#	message(FATAL_ERROR "bullet library not found!")
+#endif()
+
 set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Adds a postfix for debug-built libraries.")
-set(BULLET_LIBRARY "bullet")
-
-message(WARNING "${BULLET_LIBRARY}")
-
-# Bullet3Collision Bullet3Common Bullet3Dynamics Bullet3Geometry BulletCollision BulletDynamics BulletInverseDynamics BulletSoftBody
-#list(APPEND LIBRARIES_INCLUDES ${BULLET_INCLUDES})
-#list(APPEND LIBRARIES_LINKS "${BULLET_LIBRARY}")
-
-if(NOT BULLET_LIBRARY)
-	message(FATAL_ERROR "bullet library not found!")
-endif()
