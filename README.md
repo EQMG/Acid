@@ -53,7 +53,6 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
 ## Plans
  * Finish the core engine by the end of 2018 Q2
  * Allow C# games to be created with Flounder
- * Replace bullet with custom physics
  * A simple visual editor in the far future
 
 ## Developer Setup

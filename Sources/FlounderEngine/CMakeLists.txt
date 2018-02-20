@@ -4,7 +4,7 @@ include(CMakeSources.cmake)
 set(FLOUNDERENGINE_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/FlounderEngine/")
 
 add_library(FlounderEngine ${LIB_TYPE} ${FLOUNDERENGINE_SOURCES})
-add_dependencies(FlounderEngine glfw stb LinearMath BulletCollision)
+add_dependencies(FlounderEngine glfw stb)
 
 if(WIN32 AND BUILD_SHARED_LIBS)
     set_target_properties(FlounderEngine PROPERTIES PREFIX "")
