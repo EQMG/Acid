@@ -12,7 +12,7 @@ namespace Flounder
 			VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
 			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-			Vertex::GetAttributeDescriptions(), // vertexAttributeDescriptions
+			Vertex::GetAttributeDescriptions(1), // vertexAttributeDescriptions
 
 			{}, // descriptors
 
