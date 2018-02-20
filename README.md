@@ -64,7 +64,7 @@ For Windows you need Visual Studios 2015 or later, use the VS installer and ensu
 
 On Linux you need a GCC/Clang compiler, each package listed here are for Debian/Apt. GLFW requires `xorg-dev`, you should also have `libopenal1`, `libglfw3`, and `libvulkan` installed.
 
-On MacOS you need [MoltenVK](https://moltengl.com/moltenvk/) in the Libraries/moltenvk directory, creating a Libraries structure shown in [this image](https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Setup-MacOS-Libraries.png).
+Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.
