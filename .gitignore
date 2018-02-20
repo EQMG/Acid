@@ -5,6 +5,5 @@ cmake-build-debug/*
 cmake-build-release/*
 Build/*
 Release/*
-Libraries/moltenvk/*
 
 .DS_Store
