@@ -74,8 +74,3 @@ add_subdirectory(Sources/FlounderEngine)
 
 # Example Sources
 add_subdirectory(Sources/ExampleStarting)
-
-# Linked Resources
-#Windows: mklink /J C:\Users\mattp\Documents\Flounder\Build\Debug\bin\Resources C:\Users\mattp\Documents\Flounder\Resources
-#MacOS: ln -s /Users/albrmat/Desktop/Flounder/Resources /Users/albrmat/Desktop/Flounder/Build/Debug/bin/Resources
-#Linux: ln -s /home/mattp/Documents/Flounder/Resources /home/mattp/Documents/Flounder/Build/Debug/bin/Resources
