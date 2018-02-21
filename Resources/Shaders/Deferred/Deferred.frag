@@ -44,7 +44,7 @@ layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
 layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
 layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
 
-layout(rgba16f, set = 0, binding = 3) uniform writeonly image2D writeColour;
+layout(rgba16f, set = 0, binding = 7) uniform writeonly image2D writeColour;
 
 layout(location = 0) in vec2 fragmentUv;
 

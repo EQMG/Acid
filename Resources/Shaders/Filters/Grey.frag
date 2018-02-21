@@ -3,7 +3,7 @@
 
 layout(set = 0, binding = 0) uniform sampler2D samplerColour;
 
-layout(rgba16f, set = 0, binding = 0) uniform writeonly image2D writeColour;
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
 
 layout(location = 0) in vec2 fragmentUv;
 
