@@ -3,14 +3,14 @@
 #include "../Devices/Display.hpp"
 #include "Entities.hpp"
 #include "Prefabs/Components.hpp"
+#include "Prefabs/EntityPrefab.hpp"
 
 namespace Flounder
 {
 	Entity::Entity(const std::string &prefabName, const Transform &transform, ISpatialStructure<Entity *> *structure) :
+		GameObject(transform),
 		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
 		m_structure(structure),
-		m_components(new std::vector<IComponent *>()),
-		m_transform(new Transform(transform)),
 		m_prefabName(prefabName),
 		m_removed(false)
 	{
@@ -29,10 +29,9 @@ namespace Flounder
 	}
 
 	Entity::Entity(const Transform &transform, ISpatialStructure<Entity *> *structure) :
+		GameObject(transform),
 		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
 		m_structure(structure),
-		m_components(new std::vector<IComponent *>()),
-		m_transform(new Transform(transform)),
 		m_prefabName(""),
 		m_removed(false)
 	{
@@ -46,37 +45,11 @@ namespace Flounder
 	{
 		Remove();
 
-		for (auto component : *m_components)
-		{
-			delete component;
-		}
-
-		delete m_components;
-		delete m_transform;
 		delete m_uniformObject;
 	}
 
 	void Entity::Update()
 	{
-		for (auto c : *m_components)
-		{
-			c->Update();
-		}
-	}
-
-	UbosEntities::UboObject Entity::GetUboObject()
-	{
-		EntityRender entityRender = {};
-		entityRender.uboObject = {};
-
-		m_transform->GetWorldMatrix(&entityRender.uboObject.transform);
-
-		for (auto c : *m_components)
-		{
-			c->CmdRender(&entityRender);
-		}
-
-		return entityRender.uboObject;
 	}
 
 	void Entity::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
@@ -94,10 +67,10 @@ namespace Flounder
 		entityRender.descriptorWrites.push_back(uniformScene.GetWriteDescriptor(0, descriptorSet));
 		entityRender.descriptorWrites.push_back(m_uniformObject->GetWriteDescriptor(1, descriptorSet));
 
-		for (auto c : *m_components)
-		{
-			c->CmdRender(&entityRender);
-		}
+	//	for (auto c : *m_components)
+	//	{
+	//		c->CmdRender(&entityRender);
+	//	}
 
 		if (entityRender.model == nullptr)
 		{
@@ -121,34 +94,13 @@ namespace Flounder
 		m_structure = structure;
 	}
 
-	void Entity::AddComponent(IComponent *component)
-	{
-		m_components->push_back(component);
-		component->SetEntity(this);
-	}
-
-	void Entity::RemoveComponent(IComponent *component)
-	{
-		for (auto it = m_components->begin(); it != m_components->end(); ++it)
-		{
-			if (*it == component)
-			{
-				component->SetEntity(nullptr);
-				delete component;
-				m_components->erase(it);
-				return;
-			}
-		}
-	}
-
 	ICollider *Entity::GetCollider()
 	{
-		for (auto c : *m_components)
+		auto componentCollider = GetComponent<ComponentCollider>();
+
+		if (componentCollider != nullptr)
 		{
-			if (c->GetCollider() != nullptr)
-			{
-				return c->GetCollider();
-			}
+			return componentCollider->GetCollider();
 		}
 
 		return nullptr;

@@ -12,6 +12,7 @@ namespace Flounder
 
 	struct ComponentGetSet
 	{
+		std::string name;
 		std::string dataType;
 		std::function<std::string()> getter;
 		std::function<void(std::string)> setter;
@@ -23,7 +24,7 @@ namespace Flounder
 		std::string m_name;
 		GameObject *m_gameObject;
 	private:
-		std::map<std::string, ComponentGetSet> *m_values;
+		std::map<unsigned int, ComponentGetSet> *m_values;
 	public:
 #define LINK_GET(t, f) [&]() -> t { return f; }
 #define LINK_SET(t, f) [&](const t &v) -> void { f; }
@@ -31,6 +32,8 @@ namespace Flounder
 		Component();
 
 		virtual ~Component();
+
+		virtual void Update();
 
 		virtual std::string GetName() const = 0;
 
@@ -45,7 +48,7 @@ namespace Flounder
 		void Write(ComponentPrefab *componentPrefab);
 	protected:
 		template<typename T>
-		void Link(const std::string &name, const std::function<T()> &getter, const std::function<void(T)> &setter = [](const T &v) -> void { })
+		void Link(const unsigned int &index, const std::function<T()> &getter, const std::function<void(T)> &setter = [](const T &v) -> void { })
 		{
 			ComponentGetSet componentGetSet{};
 			componentGetSet.dataType = "Float_Slider";
@@ -60,7 +63,7 @@ namespace Flounder
 				componentGetSet.setter = [&](std::string value) -> void { setter(value); };
 			}
 
-			m_values->insert(std::make_pair(name, componentGetSet));
+			m_values->insert(std::make_pair(index, componentGetSet));
 		}
 	};
 }

@@ -1,6 +1,7 @@
 ﻿#pragma once
 
-#include "../IComponent.hpp"
+#include "../../Objects/Component.hpp"
+#include "../EntityRender.hpp"
 
 namespace Flounder
 {
@@ -10,7 +11,7 @@ namespace Flounder
 	};
 
 	class F_EXPORT ComponentCollider :
-		public IComponent
+		public Component
 	{
 	private:
 		ICollider *m_collider;
@@ -28,12 +29,10 @@ namespace Flounder
 
 		void Update() override;
 
-		void CmdRender(EntityRender *entityRender) override;
-
-		void Save(ComponentPrefab *prefab) override;
+		void CmdRender(EntityRender *entityRender);
 
 		std::string GetName() const override { return "ComponentCollider"; };
 
-		ICollider *GetCollider() override { return m_collider; }
+		ICollider *GetCollider() const { return m_collider; }
 	};
 }

@@ -5,13 +5,13 @@
 namespace Flounder
 {
 	ComponentDiffuse::ComponentDiffuse(Texture *diffuse) :
-		IComponent(),
+		Component(),
 		m_textureDiffuse(diffuse)
 	{
 	}
 
 	ComponentDiffuse::ComponentDiffuse(ComponentPrefab *prefab) :
-		IComponent(),
+		Component(),
 		m_textureDiffuse(Texture::Resource(prefab->GetString(0)))
 	{
 
@@ -32,8 +32,8 @@ namespace Flounder
 		entityRender->uboObject.samples.m_x = 1.0f;
 	}
 
-	void ComponentDiffuse::Save(ComponentPrefab *prefab)
-	{
-		prefab->SetString(0, m_textureDiffuse->GetFilename());
-	}
+//	void ComponentDiffuse::Save(ComponentPrefab *prefab)
+//	{
+//		prefab->SetString(0, m_textureDiffuse->GetFilename());
+//	}
 }

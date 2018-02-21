@@ -23,6 +23,6 @@ namespace Flounder
 
 		void SetEnabled(const bool &enable);
 
-		virtual std::string GetName() = 0;
+		std::string GetName() const override { return "Behaviour"; };
 	};
 }
