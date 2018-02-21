@@ -17,7 +17,7 @@ layout(location = 1) in float fragmentHeight;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
-layout(location = 2) out vec3 outMaterial;
+layout(location = 2) out vec4 outMaterial;
 
 vec4 encodeColour(vec3 colour)
 {
@@ -40,10 +40,10 @@ void main()
 	vec3 cubemapNight = texture(samplerCubemap, fragmentUv).rgb;
 	vec3 cubemapColour = mix(object.skyColour.rgb, cubemapNight, object.blendFactor);
 
-	float fadeFactor = 1.0 - smoothstep(object.fogLimits.x, object.fogLimits.y, fragmentHeight);
+	float fadeFactor = 1.0f - smoothstep(object.fogLimits.x, object.fogLimits.y, fragmentHeight);
     cubemapColour = mix(cubemapColour, object.fogColour.rgb, fadeFactor);
 
 	outColour = encodeColour(cubemapColour);
 	outNormal = vec2(0.0f);
-	outMaterial = vec3(0.0f);
+	outMaterial = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 }

@@ -38,13 +38,13 @@ layout(set = 0, binding = 1) uniform UboLights
 	Light lights[MAX_LIGHTS];
 } lights;
 
-layout(set = 0, binding = 2) uniform sampler2D samplerDepth;
-layout(set = 0, binding = 3) uniform sampler2D samplerColour;
-layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
-layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
-layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
+layout(rgba16f, set = 0, binding = 2) uniform writeonly image2D writeColour;
 
-layout(rgba16f, set = 0, binding = 7) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 3) uniform sampler2D samplerDepth;
+layout(set = 0, binding = 4) uniform sampler2D samplerColour;
+layout(set = 0, binding = 5) uniform sampler2D samplerNormal;
+layout(set = 0, binding = 6) uniform sampler2D samplerMaterial;
+layout(set = 0, binding = 7) uniform sampler2D samplerShadows;
 
 layout(location = 0) in vec2 fragmentUv;
 

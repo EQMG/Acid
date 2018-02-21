@@ -41,6 +41,11 @@ namespace Flounder
 
 		for (auto screenObject : *Uis::Get()->GetObjects())
 		{
+			if (!screenObject->IsVisible())
+			{
+				continue;
+			}
+
 			Gui *object = dynamic_cast<Gui *>(screenObject);
 
 			if (object != nullptr)

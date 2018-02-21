@@ -9,9 +9,9 @@ namespace Flounder
 	const std::vector<DescriptorType> DESCRIPTORS =
 		{
 			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
-			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
-			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
-			Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT) // writeColour
+			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // writeColour
+			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
+			Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerMaterial
 		};
 
 	FilterLensflare::FilterLensflare(const int &subpass) :
@@ -41,8 +41,8 @@ namespace Flounder
 			{
 				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
 				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetMaterialImage()->GetWriteDescriptor(2, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(3, descriptorSet)
+				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(2, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetMaterialImage()->GetWriteDescriptor(3, descriptorSet)
 			};
 		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
 	}

@@ -4,9 +4,9 @@
 const vec4 LUMCOEFF = vec4(0.299, 0.587, 0.114, 0);
 const float EPSILON = 0.001f;
 
-layout(set = 0, binding = 0) uniform sampler2D samplerColour;
+layout(rgba16f, set = 0, binding = 0) uniform writeonly image2D writeColour;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 1) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 fragmentUv;
 
