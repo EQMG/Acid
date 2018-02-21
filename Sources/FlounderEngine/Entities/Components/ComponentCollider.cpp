@@ -6,13 +6,13 @@
 namespace Flounder
 {
 	ComponentCollider::ComponentCollider() :
-		IComponent(),
+		Component(),
 		m_collider(nullptr)
 	{
 	}
 
 	ComponentCollider::ComponentCollider(ComponentPrefab *prefab) :
-		IComponent(),
+		Component(),
 		m_collider(nullptr)
 	{
 	}
@@ -23,11 +23,11 @@ namespace Flounder
 
 	void ComponentCollider::Update()
 	{
-		auto componentModel = GetEntity()->GetComponent<ComponentModel>();
+		auto componentModel = GetGameObject()->GetComponent<ComponentModel>();
 
 		if (componentModel != nullptr)
 		{
-			m_collider = componentModel->GetModel()->GetAabb()->Update(*m_entity->GetTransform(), m_collider);
+			m_collider = componentModel->GetModel()->GetAabb()->Update(*GetGameObject()->GetTransform(), m_collider);
 		}
 		else
 		{
@@ -39,8 +39,8 @@ namespace Flounder
 	{
 	}
 
-	void ComponentCollider::Save(ComponentPrefab *prefab)
-	{
-
-	}
+//	void ComponentCollider::Save(ComponentPrefab *prefab)
+//	{
+//
+//	}
 }

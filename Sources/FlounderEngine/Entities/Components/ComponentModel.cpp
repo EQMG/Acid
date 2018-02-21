@@ -16,13 +16,13 @@ namespace Flounder
 	}
 
 	ComponentModel::ComponentModel(Model *model) :
-		IComponent(),
+		Component(),
 		m_model(model)
 	{
 	}
 
 	ComponentModel::ComponentModel(ComponentPrefab *prefab) :
-		IComponent(),
+		Component(),
 		m_model(DecodeModelType(prefab->GetString(0)))
 	{
 	}
@@ -40,8 +40,8 @@ namespace Flounder
 		entityRender->model = m_model;
 	}
 
-	void ComponentModel::Save(ComponentPrefab *prefab)
-	{
-		prefab->SetString(0, m_model->GetFilename());
-	}
+//	void ComponentModel::Save(ComponentPrefab *prefab)
+//	{
+//		prefab->SetString(0, m_model->GetFilename());
+//	}
 }

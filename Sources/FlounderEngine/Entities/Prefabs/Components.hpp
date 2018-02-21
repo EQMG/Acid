@@ -3,7 +3,8 @@
 #include <map>
 #include <string>
 #include <functional>
-#include "../IComponent.hpp"
+#include "../../Objects/Component.hpp"
+#include "../Prefabs/EntityPrefab.hpp"
 #include "../Components/ComponentCelestial.hpp"
 #include "../Components/ComponentCollider.hpp"
 #include "../Components/ComponentCollision.hpp"
@@ -20,7 +21,7 @@ namespace Flounder
 	{
 	private:
 	public:
-		static IComponent *CreateComponent(const std::string &name, ComponentPrefab *prefab)
+		static Component *CreateComponent(const std::string &name, ComponentPrefab *prefab)
 		{
 			// TODO: Recreate function to be more modular.
 			if (name == "ComponentCelestial") { return new ComponentCelestial(prefab); }
@@ -51,7 +52,7 @@ namespace Flounder
 					continue;
 				}
 
-				IComponent *component = Components::CreateComponent(cName, cPrefab);
+				Component *component = Components::CreateComponent(cName, cPrefab);
 
 				if (component == nullptr)
 				{
