@@ -27,7 +27,8 @@ namespace Flounder
 				Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
 				Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerNormal
 				Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
-				Texture::CreateDescriptor(6, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerShadows
+				Texture::CreateDescriptor(6, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerShadows
+				Texture::CreateDescriptor(7, VK_SHADER_STAGE_FRAGMENT_BIT) // writeColour
 			}, // descriptors
 
 			{
@@ -129,6 +130,7 @@ namespace Flounder
 				Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(4, descriptorSet),
 				Renderer::Get()->GetSwapchain()->GetMaterialImage()->GetWriteDescriptor(5, descriptorSet),
 				Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(6, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(7, descriptorSet),
 			};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 

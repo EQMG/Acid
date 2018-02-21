@@ -1,4 +1,4 @@
-#include "FilterTiltshift.hpp"
+#include "FilterDarken.hpp"
 
 #include "../../Renderer/Renderer.hpp"
 
@@ -11,28 +11,22 @@ namespace Flounder
 			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // writeColour
 		};
 
-	FilterTiltshift::FilterTiltshift(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag.spv", subpass, DESCRIPTORS),
+	FilterDarken::FilterDarken(const int &subpass) :
+		IPostFilter("Resources/Shaders/Filters/Darken.frag.spv", subpass, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
-		m_blurAmount(1.0f),
-		m_centre(1.1f),
-		m_stepSize(0.004f),
-		m_steps(3.0f)
+		m_factor(0.5f)
 	{
 	}
 
-	FilterTiltshift::~FilterTiltshift()
+	FilterDarken::~FilterDarken()
 	{
 		delete m_uniformScene;
 	}
 
-	void FilterTiltshift::RenderFilter(const VkCommandBuffer &commandBuffer)
+	void FilterDarken::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
 		UboScene uboScene = {};
-		uboScene.blurAmount = m_blurAmount;
-		uboScene.centre = m_centre;
-		uboScene.stepSize = m_stepSize;
-		uboScene.steps = m_steps;
+		uboScene.factor = m_factor;
 		m_uniformScene->Update(&uboScene);
 
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();

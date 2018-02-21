@@ -1,23 +1,28 @@
 #pragma once
 
 #include "../Prerequisites.hpp"
+#include "Component.hpp"
 
 namespace Flounder
 {
-	class F_EXPORT Behaviour
+	class F_EXPORT Behaviour :
+		public Component
 	{
 	private:
+		bool m_enabled;
 	public:
 		Behaviour();
 
 		virtual ~Behaviour();
-
-		virtual void Start();
 
 		virtual void Update();
 
 		virtual void OnEnable();
 
 		virtual void OnDisable();
+
+		void SetEnabled(const bool &enable);
+
+		virtual std::string GetName() = 0;
 	};
 }

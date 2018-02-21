@@ -21,7 +21,7 @@ namespace Flounder
 	void GameObject::AddComponent(Component *component)
 	{
 		m_components->push_back(component);
-	//	component->SetGameObject(this);
+		component->SetGameObject(this);
 	}
 
 	void GameObject::RemoveComponent(Component *component)
@@ -30,7 +30,7 @@ namespace Flounder
 		{
 			if (*it == component)
 			{
-			//	component->SetGameObject(nullptr);
+				component->SetGameObject(nullptr);
 				delete component;
 				m_components->erase(it);
 				return;

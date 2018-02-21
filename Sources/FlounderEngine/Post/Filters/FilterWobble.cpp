@@ -7,7 +7,8 @@ namespace Flounder
 	const std::vector<DescriptorType> DESCRIPTORS =
 		{
 			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
-			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
+			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
+			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // writeColour
 		};
 
 	FilterWobble::FilterWobble(const int &subpass) :
@@ -35,7 +36,8 @@ namespace Flounder
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
 			{
 				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet)
+				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(2, descriptorSet)
 			};
 		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
 	}
