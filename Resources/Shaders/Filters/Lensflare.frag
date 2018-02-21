@@ -8,10 +8,10 @@ layout(set = 0, binding = 0) uniform UboScene
 	vec2 displaySize;
 } scene;
 
-layout(set = 0, binding = 1) uniform sampler2D samplerColour;
-layout(set = 0, binding = 2) uniform sampler2D samplerMaterial;
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
 
-layout(rgba16f, set = 0, binding = 3) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 2) uniform sampler2D samplerColour;
+layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
 
 layout(location = 0) in vec2 fragmentUv;
 
@@ -24,7 +24,8 @@ bool insideScreen(vec2 test)
 
 void main() 
 {
-	vec2 sunCoord = (scene.sunPosition.xy + 1.0f) / 2.0f;
+    vec2 sun2 = vec2(scene.sunPosition.x, scene.sunPosition.y);
+	vec2 sunCoord = (sun2 + 1.0f) / 2.0f;
 
 	vec4 textureColour = texture(samplerColour, fragmentUv);
 
@@ -39,24 +40,24 @@ void main()
 	if (process) 
 	{
 		vec2 uvx = mix(uv, uvd, 1.0f);
-		float f2 = max(1.0f / (1.0f + 32.0f * pow(length(uvx + 0.8f * scene.sunPosition.xy), 2.0f)), 0.0f) * 0.25f;
-		float f22 = max(1.0f / (1.0f + 32.0f * pow(length(uvx + 0.85f * scene.sunPosition.xy), 2.0f)), 0.0f) * 0.23f;
-		float f23 = max(1.0f / (1.0f + 32.0f * pow(length(uvx + 0.9f * scene.sunPosition.xy), 2.0f)), 0.0f) * 0.21f;
+		float f2 = max(1.0f / (1.0f + 32.0f * pow(length(uvx + 0.8f * sun2), 2.0f)), 0.0f) * 0.25f;
+		float f22 = max(1.0f / (1.0f + 32.0f * pow(length(uvx + 0.85f * sun2), 2.0f)), 0.0f) * 0.23f;
+		float f23 = max(1.0f / (1.0f + 32.0f * pow(length(uvx + 0.9f * sun2), 2.0f)), 0.0f) * 0.21f;
 
 		uvx = mix(uv, uvd, -0.5f);
-		float f4 = max(0.01f - pow(length(uvx + 0.4f * scene.sunPosition.xy), 2.4f), 0.0f) * 6.0f;
-		float f42 = max(0.01f - pow(length(uvx + 0.45f * scene.sunPosition.xy), 2.4f), 0.0f) * 5.0f;
-		float f43 = max(0.01f - pow(length(uvx + 0.5f * scene.sunPosition.xy), 2.4f), 0.0f) * 3.0f;
+		float f4 = max(0.01f - pow(length(uvx + 0.4f * sun2), 2.4f), 0.0f) * 6.0f;
+		float f42 = max(0.01f - pow(length(uvx + 0.45f * sun2), 2.4f), 0.0f) * 5.0f;
+		float f43 = max(0.01f - pow(length(uvx + 0.5f * sun2), 2.4f), 0.0f) * 3.0f;
 
 		uvx = mix(uv, uvd, -0.4f);
-		float f5 = max(0.01f - pow(length(uvx + 0.2f * scene.sunPosition.xy), 5.5f), 0.0f) * 2.0f;
-		float f52 = max(0.01f - pow(length(uvx + 0.4f * scene.sunPosition.xy), 5.5f), 0.0f) * 2.0f;
-		float f53 = max(0.01f - pow(length(uvx + 0.6f * scene.sunPosition.xy), 5.5f), 0.0f) * 2.0f;
+		float f5 = max(0.01f - pow(length(uvx + 0.2f * sun2), 5.5f), 0.0f) * 2.0f;
+		float f52 = max(0.01f - pow(length(uvx + 0.4f * sun2), 5.5f), 0.0f) * 2.0f;
+		float f53 = max(0.01f - pow(length(uvx + 0.6f * sun2), 5.5f), 0.0f) * 2.0f;
 
 		uvx = mix(uv, uvd, -0.5f);
-		float f6 = max(0.01f - pow(length(uvx - 0.3f * scene.sunPosition.xy), 1.6f), 0.0f) * 6.0f;
-		float f62 = max(0.01f - pow(length(uvx - 0.325f * scene.sunPosition.xy), 1.6f), 0.0f) * 3.0f;
-		float f63 = max(0.01f - pow(length(uvx - 0.35f * scene.sunPosition.xy), 1.6f), 0.0f) * 5.0f;
+		float f6 = max(0.01f - pow(length(uvx - 0.3f * sun2), 1.6f), 0.0f) * 6.0f;
+		float f62 = max(0.01f - pow(length(uvx - 0.325f * sun2), 1.6f), 0.0f) * 3.0f;
+		float f63 = max(0.01f - pow(length(uvx - 0.35f * sun2), 1.6f), 0.0f) * 5.0f;
 
 		colour.r += f2 + f4 + f5 + f6;
 		colour.g += f22 + f42 + f52 + f62;

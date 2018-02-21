@@ -22,7 +22,7 @@ layout(location = 1) in vec3 fragmentNormal;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
-layout(location = 2) out vec3 outMaterial;
+layout(location = 2) out vec4 outMaterial;
 
 vec4 encodeColour(vec3 colour)
 {
@@ -69,5 +69,5 @@ void main()
 
 	outColour = encodeColour(textureColour);
 	outNormal = encodeNormal(unitNormal);
-	outMaterial = vec3(material.x, material.y, object.surface.z);
+	outMaterial = vec4(material.x, material.y, object.surface.z, 1.0f);
 }

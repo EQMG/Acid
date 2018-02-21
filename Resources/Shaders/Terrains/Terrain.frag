@@ -12,7 +12,7 @@ layout(location = 2) in vec3 fragmentColour;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
-layout(location = 2) out vec3 outMaterial;
+layout(location = 2) out vec4 outMaterial;
 
 vec3 blend(vec3 left, vec3 right, float blend)
 {
@@ -45,5 +45,5 @@ void main()
 
 	outColour = encodeColour(fragmentColour);
 	outNormal = encodeNormal(unitNormal);
-	outMaterial = vec3(0.0f);
+	outMaterial = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 }
