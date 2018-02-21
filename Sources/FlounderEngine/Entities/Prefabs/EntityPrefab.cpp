@@ -55,7 +55,7 @@ namespace Flounder
 		for (auto component : *entity->GetComponents())
 		{
 			ComponentPrefab *componentPrefab = new ComponentPrefab(std::vector<std::string>());
-			component->Save(componentPrefab);
+		//	component->Save(componentPrefab);
 			m_components->insert(std::make_pair(component->GetName(), componentPrefab));
 		}
 	}

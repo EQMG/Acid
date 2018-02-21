@@ -1,12 +1,13 @@
 ﻿#pragma once
 
-#include "../IComponent.hpp"
+#include "../../Objects/Component.hpp"
 #include "../../Lights/Light.hpp"
+#include "../EntityRender.hpp"
 
 namespace Flounder
 {
 	class F_EXPORT ComponentLight :
-		public IComponent
+		public Component
 	{
 	private:
 		Light *m_light;
@@ -20,9 +21,7 @@ namespace Flounder
 
 		void Update() override;
 
-		void CmdRender(EntityRender *entityRender) override;
-
-		void Save(ComponentPrefab *prefab) override;
+		void CmdRender(EntityRender *entityRender);
 
 		std::string GetName() const override { return "ComponentLight"; };
 

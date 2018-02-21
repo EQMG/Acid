@@ -9,12 +9,12 @@
 namespace Flounder
 {
 	ComponentCollision::ComponentCollision() :
-		IComponent()
+		Component()
 	{
 	}
 
 	ComponentCollision::ComponentCollision(ComponentPrefab *prefab) :
-		IComponent()
+		Component()
 	{
 	}
 
@@ -24,7 +24,7 @@ namespace Flounder
 
 	void ComponentCollision::Update()
 	{
-		auto componentModel = GetEntity()->GetComponent<ComponentModel>();
+		auto componentModel = GetGameObject()->GetComponent<ComponentModel>();
 
 		if (componentModel != nullptr)
 		{
@@ -36,10 +36,10 @@ namespace Flounder
 	{
 	}
 
-	void ComponentCollision::Save(ComponentPrefab *prefab)
-	{
-
-	}
+//	void ComponentCollision::Save(ComponentPrefab *prefab)
+//	{
+//
+//	}
 
 	Vector3 ComponentCollision::ResolveCollisions(const Vector3 &amount)
 	{
@@ -47,7 +47,7 @@ namespace Flounder
 		Vector3 result = Vector3(amount);
 
 		// Gets this entities collider.
-		auto componentCollider1 = GetEntity()->GetComponent<ComponentCollider>();
+		auto componentCollider1 = GetGameObject()->GetComponent<ComponentCollider>();
 
 		// Verifies that this entities main collider will work.
 		if (componentCollider1 == nullptr)
@@ -80,7 +80,7 @@ namespace Flounder
 		for (auto entity : *Entities::Get()->GetStructure()->GetAll())
 		{
 			// Ignores the original entity.
-			if (entity == GetEntity())
+			if (entity == GetGameObject())
 			{
 				continue;
 			}
