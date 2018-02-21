@@ -7,13 +7,13 @@
 namespace Flounder
 {
 	ComponentCelestial::ComponentCelestial(const CelestialType &type) :
-		IComponent(),
+		Component(),
 		m_type(type)
 	{
 	}
 
 	ComponentCelestial::ComponentCelestial(ComponentPrefab *prefab) :
-		IComponent(),
+		Component(),
 		m_type(static_cast<CelestialType>(prefab->GetInt(0)))
 	{
 	}
@@ -24,7 +24,7 @@ namespace Flounder
 
 	void ComponentCelestial::Update()
 	{
-		Transform *entityTransform = GetEntity()->GetTransform();
+		Transform *entityTransform = GetGameObject()->GetTransform();
 
 		if (Worlds::Get() != nullptr)
 		{
@@ -39,7 +39,7 @@ namespace Flounder
 			}
 		}
 
-		auto componentLight = GetEntity()->GetComponent<ComponentLight>();
+		auto componentLight = GetGameObject()->GetComponent<ComponentLight>();
 
 		if (Worlds::Get() != nullptr && componentLight != nullptr)
 		{
@@ -60,8 +60,8 @@ namespace Flounder
 		// TODO: Disable fog/shadows/lighting.
 	}
 
-	void ComponentCelestial::Save(ComponentPrefab *prefab)
-	{
-		prefab->SetInt(0, m_type);
-	}
+//	void ComponentCelestial::Save(ComponentPrefab *prefab)
+//	{
+//		prefab->SetInt(0, m_type);
+//	}
 }

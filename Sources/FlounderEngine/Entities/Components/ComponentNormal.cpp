@@ -5,13 +5,13 @@
 namespace Flounder
 {
 	ComponentNormal::ComponentNormal(Texture *normal) :
-		IComponent(),
+		Component(),
 		m_textureNormal(normal)
 	{
 	}
 
 	ComponentNormal::ComponentNormal(ComponentPrefab *prefab) :
-		IComponent(),
+		Component(),
 		m_textureNormal(Texture::Resource(prefab->GetString(0)))
 	{
 
@@ -32,8 +32,8 @@ namespace Flounder
 		entityRender->uboObject.samples.m_y = 1.0f;
 	}
 
-	void ComponentNormal::Save(ComponentPrefab *prefab)
-	{
-		prefab->SetString(0, m_textureNormal->GetFilename());
-	}
+//	void ComponentNormal::Save(ComponentPrefab *prefab)
+//	{
+//		prefab->SetString(0, m_textureNormal->GetFilename());
+//	}
 }

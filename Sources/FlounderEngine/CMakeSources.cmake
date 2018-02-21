@@ -26,7 +26,6 @@ set(FLOUNDERENGINE_HEADERS_
         "Entities/Entities.hpp"
         "Entities/Entity.hpp"
         "Entities/EntityRender.hpp"
-        "Entities/IComponent.hpp"
         "Objects/Prefabs/ComponentPrefab.hpp"
         "Entities/Prefabs/Components.hpp"
         "Entities/Prefabs/EntityPrefab.hpp"

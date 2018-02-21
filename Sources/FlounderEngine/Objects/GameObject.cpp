@@ -3,8 +3,9 @@
 namespace Flounder
 {
 
-	GameObject::GameObject() :
-		m_components(new std::vector<Component*>())
+	GameObject::GameObject(const Transform &transform) :
+		m_components(new std::vector<Component*>()),
+		m_transform(new Transform(transform))
 	{
 	}
 
@@ -16,6 +17,15 @@ namespace Flounder
 		}
 
 		delete m_components;
+		delete m_transform;
+	}
+
+	void GameObject::Update()
+	{
+		for (auto c : *m_components)
+		{
+			c->Update();
+		}
 	}
 
 	void GameObject::AddComponent(Component *component)

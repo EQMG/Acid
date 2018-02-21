@@ -5,7 +5,7 @@
 namespace Flounder
 {
 	ComponentMaterial::ComponentMaterial(const float &metallic, const float &roughness, const Colour &diffuse, const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog, Texture *material) :
-		IComponent(),
+		Component(),
 		m_metallic(metallic),
 		m_roughness(roughness),
 		m_diffuse(new Colour(diffuse)),
@@ -17,7 +17,7 @@ namespace Flounder
 	}
 
 	ComponentMaterial::ComponentMaterial(ComponentPrefab *prefab) :
-		IComponent(),
+		Component(),
 		m_metallic(prefab->GetFloat(0)),
 		m_roughness(prefab->GetFloat(1)),
 		m_diffuse(new Colour(prefab->GetString(2))),
@@ -49,14 +49,14 @@ namespace Flounder
 		entityRender->uboObject.surface = Vector3(m_metallic, m_roughness, (1.0f / 3.0f) * ((float) m_ignoreFog + (2.0f * (float) m_ignoreLighting)));
 	}
 
-	void ComponentMaterial::Save(ComponentPrefab *prefab)
-	{
-		prefab->SetFloat(0, m_metallic);
-		prefab->SetFloat(1, m_roughness);
-		prefab->SetString(2, Colour::GetHex(*m_diffuse));
-		prefab->SetBool(3, m_castsShadows);
-		prefab->SetBool(4, m_ignoreLighting);
-		prefab->SetBool(5, m_ignoreFog);
-		prefab->SetString(6, m_textureMaterial != nullptr ? m_textureMaterial->GetFilename() : "nullptr");
-	}
+//	void ComponentMaterial::Save(ComponentPrefab *prefab)
+//	{
+//		prefab->SetFloat(0, m_metallic);
+//		prefab->SetFloat(1, m_roughness);
+//		prefab->SetString(2, Colour::GetHex(*m_diffuse));
+//		prefab->SetBool(3, m_castsShadows);
+//		prefab->SetBool(4, m_ignoreLighting);
+//		prefab->SetBool(5, m_ignoreFog);
+//		prefab->SetString(6, m_textureMaterial != nullptr ? m_textureMaterial->GetFilename() : "nullptr");
+//	}
 }
