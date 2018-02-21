@@ -6,7 +6,7 @@
 #include "../../Helpers/FormatString.hpp"
 #include "../../Resources/Resources.hpp"
 #include "../../Files/Csv/FileCsv.hpp"
-#include "ComponentPrefab.hpp"
+#include "../../Objects/Prefabs/ComponentPrefab.hpp"
 
 namespace Flounder
 {

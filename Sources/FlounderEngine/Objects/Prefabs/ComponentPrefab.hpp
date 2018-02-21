@@ -12,7 +12,7 @@ namespace Flounder
 	private:
 		std::vector<std::string> m_data;
 	public:
-		ComponentPrefab(const std::vector<std::string> &data);
+		ComponentPrefab(const std::vector<std::string> &data = std::vector<std::string>());
 
 		std::string GetRaw(const unsigned int &i);
 
