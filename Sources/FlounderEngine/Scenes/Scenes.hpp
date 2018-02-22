@@ -1,14 +1,14 @@
 #pragma once
 
 #include "../Engine/Engine.hpp"
-#include "GameObject.hpp"
+#include "../Objects/GameObject.hpp"
 
 namespace Flounder
 {
 	/// <summary>
-	/// A module used for managing game objects on engine updates.
+	/// A module used for managing game scenes on engine updates.
 	/// </summary>
-	class F_EXPORT Objects :
+	class F_EXPORT Scenes :
 		public IModule
 	{
 	private:
@@ -18,20 +18,20 @@ namespace Flounder
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Objects *Get()
+		static Scenes *Get()
 		{
-			return reinterpret_cast<Objects *>(Engine::Get()->GetModule("objects"));
+			return reinterpret_cast<Scenes *>(Engine::Get()->GetModule("scenes"));
 		}
 
 		/// <summary>
-		/// Creates a new Entities module.
+		/// Creates a new Scenes module.
 		/// </summary>
-		Objects();
+		Scenes();
 
 		/// <summary>
-		/// Deconstructor for the Entities module.
+		/// Deconstructor for the Scenes module.
 		/// </summary>
-		~Objects();
+		~Scenes();
 
 		void Update() override;
 

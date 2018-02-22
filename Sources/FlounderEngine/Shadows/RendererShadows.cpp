@@ -1,8 +1,9 @@
+#include <Meshes/Mesh.hpp>
 #include "RendererShadows.hpp"
 
 #include "../Devices/Display.hpp"
 #include "../Materials/Material.hpp"
-#include "../Objects/Objects.hpp"
+#include "../Scenes/Scenes.hpp"
 #include "UbosShadows.hpp"
 
 namespace Flounder
@@ -39,33 +40,25 @@ namespace Flounder
 	{
 		m_pipeline->BindPipeline(commandBuffer);
 
-		/*for (auto terrain : *Terrains::Get()->GetTerrains())
+		for (auto object : *Scenes::Get()->GetStructure()->GetAll())
 		{
-			if (terrain->GetModel(0) != nullptr)
+			auto mesh = object->GetComponent<Mesh>();
+
+			if (mesh == nullptr || mesh->GetModel() == nullptr)
 			{
-				Matrix4 modelMatrix = Matrix4();
-				terrain->GetTransform()->GetWorldMatrix(&modelMatrix);
-				RenderModel(commandBuffer, terrain->GetModel(0), modelMatrix);
+				continue;
 			}
-		}*/
 
-		for (auto entity : *Objects::Get()->GetStructure()->GetAll())
-		{
-			auto componentModel = entity->GetComponent<Model>();
+			auto material = object->GetComponent<Material>();
 
-			if (componentModel != nullptr)
+			if (material == nullptr || !material->GetCastsShadows())
 			{
-				auto componentMaterial = entity->GetComponent<Material>();
-
-				if (componentMaterial != nullptr && !componentMaterial->GetCastsShadows())
-				{
-					continue;
-				}
-
-				Matrix4 modelMatrix = Matrix4();
-				entity->GetTransform()->GetWorldMatrix(&modelMatrix);
-				RenderModel(commandBuffer, componentModel, modelMatrix);
+				continue;
 			}
+
+			Matrix4 modelMatrix = Matrix4();
+			object->GetTransform()->GetWorldMatrix(&modelMatrix);
+			RenderModel(commandBuffer, mesh->GetModel(), modelMatrix);
 		}
 	}
 
