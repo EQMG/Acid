@@ -15,7 +15,7 @@ namespace Flounder
 
 		virtual ~Behaviour();
 
-		virtual void Update();
+		virtual void Update() override;
 
 		virtual void OnEnable();
 
