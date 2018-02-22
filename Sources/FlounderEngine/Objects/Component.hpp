@@ -11,12 +11,22 @@ namespace Flounder
 {
 	class GameObject;
 
-	struct ComponentGetSet
+	class ComponentGetSet
 	{
+	public:
 		std::string name;
-		std::string dataType;
-		std::function<std::string()> getter;
-		std::function<void(std::string)> setter;
+		std::function<std::string()> *getter;
+		std::function<void(std::string)> *setter;
+
+		ComponentGetSet()
+		{
+		}
+
+		~ComponentGetSet()
+		{
+			delete getter;
+			delete setter;
+		}
 	};
 
 	class F_EXPORT Component
@@ -25,7 +35,7 @@ namespace Flounder
 		std::string m_name;
 		GameObject *m_gameObject;
 	private:
-		std::map<unsigned int, ComponentGetSet> *m_values;
+		std::map<unsigned int, ComponentGetSet*> *m_values;
 	public:
 #define LINK_GET(f) [&]() -> std::string { return std::to_string(f); }
 #define LINK_GET_STR(f) [&]() -> std::string { return f; }
@@ -51,38 +61,19 @@ namespace Flounder
 		void Write(PrefabComponent *componentPrefab);
 
 	protected:
-		void LinkString(const unsigned int &index, const std::function<std::string()> &getter, const std::function<void(std::string)> &setter = [](const std::string &v) -> void { })
-		{
-			ComponentGetSet componentGetSet{};
-			componentGetSet.dataType = "string";
-
-			if (getter != nullptr)
-			{
-				componentGetSet.getter = [&]() -> std::string { return getter(); };
-			}
-
-			if (setter != nullptr)
-			{
-				componentGetSet.setter = [&](std::string v) -> void {  }; // setter(v);
-			}
-
-			m_values->insert(std::make_pair(index, componentGetSet));
-		}
-
 		template<typename T>
-		void Link(const unsigned int &index, const std::function<std::string()> &getter, const std::function<void(T)> &setter = [](const T &v) -> void { })
+		void Link(const unsigned int &index, std::function<std::string()> getter, std::function<void(T)> setter = [](const T &v) -> void { })
 		{
-			ComponentGetSet componentGetSet{};
-			componentGetSet.dataType = std::string(typeid(T).name());
+			ComponentGetSet *componentGetSet = new ComponentGetSet();
 
 			if (getter != nullptr)
 			{
-				componentGetSet.getter = [&]() -> std::string { return getter(); };
+				componentGetSet->getter = new std::function<std::string()>([&]() -> std::string { return ""; }); // return getter();
 			}
 
 			if (setter != nullptr)
 			{
-				componentGetSet.setter = [&](std::string v) -> void { setter(FormatString::ConvertTo<T>(v)); };
+				componentGetSet->setter = new std::function<void(std::string)>([&](std::string v) -> void {  }); // setter(FormatString::ConvertTo<T>(v));
 			}
 
 			m_values->insert(std::make_pair(index, componentGetSet));

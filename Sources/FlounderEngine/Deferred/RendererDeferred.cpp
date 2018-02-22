@@ -3,7 +3,7 @@
 #include "../Camera/Camera.hpp"
 #include "../Devices/Display.hpp"
 #include "../Lights/Light.hpp"
-#include "../Objects/Objects.hpp"
+#include "../Scenes/Scenes.hpp"
 #include "../Models/Shapes/ShapeRectangle.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "../Shadows/Shadows.hpp"
@@ -57,7 +57,7 @@ namespace Flounder
 	{
 		std::vector<UbosDeferred::Light> sceneLights = {};
 
-		for (auto entity : *Objects::Get()->GetStructure()->GetAll())
+		for (auto entity : *Scenes::Get()->GetStructure()->GetAll())
 		{
 			auto componentLight = entity->GetComponent<Light>();
 

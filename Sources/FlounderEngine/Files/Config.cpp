@@ -34,7 +34,7 @@ namespace Flounder
 	{
 	//	for (auto value : *m_values)
 	//	{
-	//		value.second.SetValue(value.second.GetGetter()());
+	//		value.second.SetValue((*value.second.GetGetter())());
 	//	}
 	}
 

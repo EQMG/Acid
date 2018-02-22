@@ -87,7 +87,7 @@
 #include "Objects/Behaviour.hpp"
 #include "Objects/Component.hpp"
 #include "Objects/GameObject.hpp"
-#include "Objects/Objects.hpp"
+#include "Scenes/Scenes.hpp"
 #include "Objects/Prefabs/PrefabComponent.hpp"
 #include "Objects/Prefabs/PrefabObject.hpp"
 #include "Particles/Particle.hpp"

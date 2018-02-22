@@ -1,7 +1,7 @@
 #include "GameObject.hpp"
 
 #include "Prefabs/PrefabObject.hpp"
-#include "Objects.hpp"
+#include "../Scenes/Scenes.hpp"
 
 #include <Skyboxes/CelestialBody.hpp>
 #include <Entities/EntityRender.hpp>
@@ -26,7 +26,7 @@ namespace Flounder
 	{
 		if (m_structure == nullptr)
 		{
-			m_structure = Objects::Get()->GetStructure();
+			m_structure = Scenes::Get()->GetStructure();
 		}
 
 		if (m_structure != nullptr)
@@ -38,6 +38,8 @@ namespace Flounder
 	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure<GameObject *> *structure) :
 		GameObject(transform, structure)
 	{
+		printf("Loading prefab: '%s'\n", prefabName.c_str());
+
 		m_name = prefabName;
 		PrefabObject *entityPrefab = PrefabObject::Resource("Resources/Entities/" + prefabName + "/" + prefabName + ".csv");
 

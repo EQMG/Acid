@@ -55,7 +55,7 @@ namespace Flounder
 		for (auto component : *gameObject->GetComponents())
 		{
 			PrefabComponent *componentPrefab = new PrefabComponent(std::vector<std::string>());
-		//	component->Save(componentPrefab);
+			component->Write(componentPrefab);
 			m_components->insert(std::make_pair(component->GetName(), componentPrefab));
 		}
 	}

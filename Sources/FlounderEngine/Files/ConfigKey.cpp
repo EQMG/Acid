@@ -5,7 +5,7 @@ namespace Flounder
 	ConfigKey::ConfigKey(const std::string &value, const bool &fromFile) :
 		m_value(value),
 		m_fromFile(fromFile),
-		m_getter([&]() -> std::string { return ""; })
+		m_getter(nullptr)
 	{
 	}
 
