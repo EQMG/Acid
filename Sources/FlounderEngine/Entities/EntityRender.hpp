@@ -2,16 +2,32 @@
 
 #include <vector>
 #include "../Engine/Platform.hpp"
-#include "../Models/Model.hpp"
-#include "UbosEntities.hpp"
+#include "../Objects/Component.hpp"
+#include "../Objects/GameObject.hpp"
+#include "../Renderer/Pipelines/Pipeline.hpp"
+#include "../Renderer/Buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
-	struct EntityRender
+	/// <summary>
+	/// Class used to render a GameObject as a entity.
+	/// </summary>
+	class F_EXPORT EntityRender :
+		public Component
 	{
-		VkDescriptorSet descriptorSet;
-		UbosEntities::UboObject uboObject;
-		std::vector<VkWriteDescriptorSet> descriptorWrites;
-		Model *model;
+	private:
+		UniformBuffer *m_uniformObject;
+	public:
+		EntityRender();
+
+		~EntityRender();
+
+		void Update() override;
+
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
+
+		std::string GetName() const override { return "EntityRender"; };
+
+		UniformBuffer *GetUniformObject() const { return m_uniformObject; }
 	};
 }

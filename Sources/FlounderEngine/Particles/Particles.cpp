@@ -56,9 +56,9 @@ namespace Flounder
 		{
 			for (auto it = m_particle.second->begin(); it != m_particle.second->end(); ++it)
 			{
-				(*it)->update();
+				(*it)->Update();
 
-				if (!(*it)->isAlive())
+				if (!(*it)->IsAlive())
 				{
 					delete *it;
 					m_particle.second->erase(it);

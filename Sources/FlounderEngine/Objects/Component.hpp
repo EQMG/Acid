@@ -4,7 +4,8 @@
 #include <functional>
 #include <map>
 #include "../Prerequisites.hpp"
-#include "Prefabs/ComponentPrefab.hpp"
+#include "../Helpers/FormatString.hpp"
+#include "../Objects/Prefabs/PrefabComponent.hpp"
 
 namespace Flounder
 {
@@ -26,7 +27,9 @@ namespace Flounder
 	private:
 		std::map<unsigned int, ComponentGetSet> *m_values;
 	public:
-#define LINK_GET(t, f) [&]() -> t { return f; }
+#define LINK_GET(f) [&]() -> std::string { return std::to_string(f); }
+#define LINK_GET_STR(f) [&]() -> std::string { return f; }
+#define LINK_GET_RES(f) [&]() -> std::string { return (f == nullptr) ? "nullptr" : f->GetFilename(); }
 #define LINK_SET(t, f) [&](const t &v) -> void { f; }
 
 		Component();
@@ -43,24 +46,43 @@ namespace Flounder
 
 		void SetGameObject(GameObject *gameObject) { m_gameObject = gameObject; }
 
-		void Load(ComponentPrefab *componentPrefab);
+		void Load(PrefabComponent *componentPrefab);
 
-		void Write(ComponentPrefab *componentPrefab);
+		void Write(PrefabComponent *componentPrefab);
+
 	protected:
-		template<typename T>
-		void Link(const unsigned int &index, const std::function<T()> &getter, const std::function<void(T)> &setter = [](const T &v) -> void { })
+		void LinkString(const unsigned int &index, const std::function<std::string()> &getter, const std::function<void(std::string)> &setter = [](const std::string &v) -> void { })
 		{
 			ComponentGetSet componentGetSet{};
-			componentGetSet.dataType = "Float_Slider";
+			componentGetSet.dataType = "string";
 
 			if (getter != nullptr)
 			{
-				componentGetSet.getter = [&]() -> std::string { return std::to_string(getter()); };
+				componentGetSet.getter = [&]() -> std::string { return getter(); };
 			}
 
 			if (setter != nullptr)
 			{
-				componentGetSet.setter = [&](std::string value) -> void { setter(value); };
+				componentGetSet.setter = [&](std::string v) -> void {  }; // setter(v);
+			}
+
+			m_values->insert(std::make_pair(index, componentGetSet));
+		}
+
+		template<typename T>
+		void Link(const unsigned int &index, const std::function<std::string()> &getter, const std::function<void(T)> &setter = [](const T &v) -> void { })
+		{
+			ComponentGetSet componentGetSet{};
+			componentGetSet.dataType = std::string(typeid(T).name());
+
+			if (getter != nullptr)
+			{
+				componentGetSet.getter = [&]() -> std::string { return getter(); };
+			}
+
+			if (setter != nullptr)
+			{
+				componentGetSet.setter = [&](std::string v) -> void { setter(FormatString::ConvertTo<T>(v)); };
 			}
 
 			m_values->insert(std::make_pair(index, componentGetSet));

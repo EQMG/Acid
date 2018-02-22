@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include "Helpers/FileSystem.hpp"
-#include "Helpers/FormatString.hpp"
 
 namespace Flounder
 {
@@ -104,6 +103,9 @@ namespace Flounder
 
 	ModelLoaded Model::LoadFromFile(const std::string &filename)
 	{
+		delete m_indexBuffer;
+		delete m_vertexBuffer;
+
 		ModelLoaded modelLoaded = ModelLoaded{
 			std::vector<Vertex>(),
 			std::vector<uint32_t>()

@@ -2,7 +2,6 @@
 
 #include "../Engine/Engine.hpp"
 #include "../Lights/Fog.hpp"
-#include "Skybox.hpp"
 
 namespace Flounder
 {
@@ -13,7 +12,6 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		Skybox *m_skybox;
 		Fog *m_fog;
 		Colour *m_skyColour;
 	public:
@@ -31,10 +29,6 @@ namespace Flounder
 		~Skyboxes();
 
 		void Update() override;
-
-		Skybox *GetSkybox() const { return m_skybox; }
-
-		void SetSkybox(Skybox *skybox) { m_skybox = skybox; }
 
 		Fog *GetFog() const { return m_fog; }
 

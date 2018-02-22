@@ -6,7 +6,6 @@ namespace Flounder
 {
 	Terrains::Terrains() :
 		IModule(),
-		m_terrains(new std::vector<Terrain *>()),
 		m_noise1(NoiseFast(56854))
 	{
 		m_noise1.SetNoiseType(NoiseFast::PerlinFractal);
@@ -20,24 +19,10 @@ namespace Flounder
 
 	Terrains::~Terrains()
 	{
-		for (auto object : *m_terrains)
-		{
-			delete object;
-		}
-
-		delete m_terrains;
 	}
 
 	void Terrains::Update()
 	{
-		for (auto object : *m_terrains)
-		{
-			// bool inRange = true;
-			// bool current = true;
-			// if !inRange ? delete
-			// if current && !wasCurrent ? addChildren
-			object->Update();
-		}
 	}
 
 	float Terrains::GetHeight(const float &x, const float &z)

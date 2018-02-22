@@ -17,6 +17,7 @@ namespace Flounder
 		DriverLinear *m_driverDay;
 		float m_factorDay;
 
+		Vector3 *m_skyboxRotation;
 		Vector3 *m_sunPosition;
 		Vector3 *m_moonPosition;
 		Colour *m_sunColour;
@@ -52,6 +53,8 @@ namespace Flounder
 		float GetSunHeight() const;
 
 		float GetStarIntensity() const;
+
+		Vector3 *GetSkyboxRotation() const { return m_skyboxRotation; }
 
 		Vector3 *GetSunPosition() const { return m_sunPosition; }
 

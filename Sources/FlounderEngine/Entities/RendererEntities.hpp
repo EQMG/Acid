@@ -3,7 +3,6 @@
 #include "../Renderer/IRenderer.hpp"
 #include "../Renderer/Buffers/UniformBuffer.hpp"
 #include "../Renderer/Pipelines/Pipeline.hpp"
-#include "Entity.hpp"
 
 namespace Flounder
 {

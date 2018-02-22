@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ICollider.hpp"
+#include "Collider.hpp"
 
 namespace Flounder
 {
@@ -8,7 +8,7 @@ namespace Flounder
 	/// A axis-aligned bounding box.
 	/// </summary>
 	class F_EXPORT Aabb :
-		public ICollider
+		public Collider
 	{
 	public:
 		Vector3 *m_minExtents;
@@ -113,19 +113,21 @@ namespace Flounder
 		/// <returns> A new aabb, stretched by the specified amounts. </returns>
 		static Aabb *Stretch(const Aabb &source, const float &stretchX, const float &stretchY, const float &stretchZ, Aabb *destination);
 
-		ICollider *Update(const Transform &transform, ICollider *destination) override;
+		Collider *Update(const Transform &transform, Collider *destination) override;
 
-		Vector3 *ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination) override;
+		Vector3 *ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination) override;
 
-		Intersect Intersects(const ICollider &other) override;
+		Intersect Intersects(const Collider &other) override;
 
 		Intersect Intersects(const Ray &ray) override;
 
 		bool InFrustum(const Frustum &frustum) override;
 
-		bool Contains(const ICollider &other) override;
+		bool Contains(const Collider &other) override;
 
 		bool Contains(const Vector3 &point) override;
+
+		std::string GetName() const override { return "ColliderAabb"; };
 
 		/// <summary>
 		/// Calculates the centre of this aabb on the X axis.

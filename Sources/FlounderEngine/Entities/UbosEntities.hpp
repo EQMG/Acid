@@ -26,7 +26,6 @@ namespace Flounder
 			Vector4 samples;
 
 			Vector3 surface;
-			Vector2 swaying;
 		};
 
 	//	static_assert(sizeof(UboObject) % 16 == 0);

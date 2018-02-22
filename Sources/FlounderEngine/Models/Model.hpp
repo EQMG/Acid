@@ -32,12 +32,6 @@ namespace Flounder
 
 		Aabb *m_aabb;
 
-	protected:
-		/// <summary>
-		/// Creates a new empty model.
-		/// </summary>
-		Model();
-
 	public:
 		static Model *Resource(const std::string &filename)
 		{
@@ -52,6 +46,11 @@ namespace Flounder
 			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
+
+		/// <summary>
+		/// Creates a new empty model.
+		/// </summary>
+		Model();
 
 		/// <summary>
 		/// Creates a new model.
@@ -88,6 +87,7 @@ namespace Flounder
 		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer; }
 
 		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer; }
+
 	protected:
 		void Set(std::vector<Vertex> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
 

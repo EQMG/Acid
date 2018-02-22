@@ -1,5 +1,7 @@
 #include "RendererTerrains.hpp"
 
+#include "../Objects/Objects.hpp"
+#include "../Models/Model.hpp"
 #include "Terrains.hpp"
 #include "UbosTerrains.hpp"
 
@@ -46,9 +48,14 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		for (auto object : *Terrains::Get()->GetTerrains())
+		for (auto object : *Objects::Get()->GetStructure()->GetAll())
 		{
-			object->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+			auto entityRender = object->GetComponent<TerrainRender>();
+
+			if (entityRender != nullptr)
+			{
+				entityRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+			}
 		}
 	}
 }

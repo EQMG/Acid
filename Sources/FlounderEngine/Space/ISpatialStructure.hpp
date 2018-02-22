@@ -2,10 +2,12 @@
 
 #include <vector>
 #include "../Physics/Frustum.hpp"
-#include "ISpatialObject.hpp"
 
 namespace Flounder
 {
+	class GameObject;
+	class Collider;
+
 	/// <summary>
 	/// A data structure that stores objects with a notion of flounder.space.
 	/// </summary>
@@ -81,7 +83,7 @@ namespace Flounder
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<T> *QueryBounding(ICollider *range, std::vector<T> *result) = 0;
+		virtual std::vector<T> *QueryBounding(Collider *range, std::vector<T> *result) = 0;
 
 		/// <summary>
 		/// If the structure contains the object.
@@ -89,6 +91,6 @@ namespace Flounder
 		/// <param name="object"> The object to check for.
 		/// </param>
 		/// <returns> If the structure contains the object. </returns>
-		virtual bool Contains(ISpatialObject *object) = 0;
+		virtual bool Contains(GameObject *object) = 0;
 	};
 }

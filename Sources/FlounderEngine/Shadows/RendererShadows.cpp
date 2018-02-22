@@ -1,9 +1,8 @@
-#include <Entities/Components/ComponentMaterial.hpp>
 #include "RendererShadows.hpp"
 
 #include "../Devices/Display.hpp"
-#include "../Entities/Entities.hpp"
-#include "../Entities/Components/ComponentModel.hpp"
+#include "../Materials/Material.hpp"
+#include "../Objects/Objects.hpp"
 #include "UbosShadows.hpp"
 
 namespace Flounder
@@ -50,13 +49,13 @@ namespace Flounder
 			}
 		}*/
 
-		for (auto entity : *Entities::Get()->GetStructure()->GetAll())
+		for (auto entity : *Objects::Get()->GetStructure()->GetAll())
 		{
-			auto componentModel = entity->GetComponent<ComponentModel>();
+			auto componentModel = entity->GetComponent<Model>();
 
-			if (componentModel != nullptr && componentModel->GetModel() != nullptr)
+			if (componentModel != nullptr)
 			{
-				auto componentMaterial = entity->GetComponent<ComponentMaterial>();
+				auto componentMaterial = entity->GetComponent<Material>();
 
 				if (componentMaterial != nullptr && !componentMaterial->GetCastsShadows())
 				{
@@ -65,7 +64,7 @@ namespace Flounder
 
 				Matrix4 modelMatrix = Matrix4();
 				entity->GetTransform()->GetWorldMatrix(&modelMatrix);
-				RenderModel(commandBuffer, componentModel->GetModel(), modelMatrix);
+				RenderModel(commandBuffer, componentModel, modelMatrix);
 			}
 		}
 	}

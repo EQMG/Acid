@@ -2,9 +2,9 @@
 
 #include "../Camera/Camera.hpp"
 #include "../Devices/Display.hpp"
-#include "../Entities/Components/ComponentLight.hpp"
-#include "../Entities/Entities.hpp"
-#include "../Models/Shapes/Rectangle.hpp"
+#include "../Lights/Light.hpp"
+#include "../Objects/Objects.hpp"
+#include "../Models/Shapes/ShapeRectangle.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "../Shadows/Shadows.hpp"
 #include "../Skyboxes/Skyboxes.hpp"
@@ -41,7 +41,7 @@ namespace Flounder
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_uniformLights(new UniformBuffer(sizeof(UbosDeferred::UboLights))),
 		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO)),
-		m_model(Rectangle::Resource(-1.0f, 1.0f))
+		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
 	}
 
@@ -57,9 +57,9 @@ namespace Flounder
 	{
 		std::vector<UbosDeferred::Light> sceneLights = {};
 
-		for (auto entity : *Entities::Get()->GetStructure()->GetAll())
+		for (auto entity : *Objects::Get()->GetStructure()->GetAll())
 		{
-			auto componentLight = entity->GetComponent<ComponentLight>();
+			auto componentLight = entity->GetComponent<Light>();
 
 			if (componentLight != nullptr)
 			{
@@ -71,9 +71,9 @@ namespace Flounder
 				//	}
 
 				UbosDeferred::Light light = {};
-				light.colour = *componentLight->GetLight()->m_colour;
-				light.position = *componentLight->GetLight()->m_position;
-				light.radius = componentLight->GetLight()->m_radius;
+				light.colour = *componentLight->GetColour();
+				light.position = *componentLight->GetPosition();
+				light.radius = componentLight->GetRadius();
 				sceneLights.push_back(light);
 			}
 
@@ -87,12 +87,12 @@ namespace Flounder
 
 		UbosDeferred::UboScene uboScene = {};
 
-		uboScene.projection = Matrix4(*camera.GetProjectionMatrix());
-		uboScene.view = Matrix4(*camera.GetViewMatrix());
-		uboScene.shadowSpace = Matrix4(*Shadows::Get()->GetShadowBox()->GetToShadowMapSpaceMatrix());
+		uboScene.projection = *camera.GetProjectionMatrix();
+		uboScene.view = *camera.GetViewMatrix();
+		uboScene.shadowSpace = *Shadows::Get()->GetShadowBox()->GetToShadowMapSpaceMatrix();
 
-		uboScene.fogColour = Colour(*Skyboxes::Get()->GetFog()->m_colour);
-		uboScene.cameraPosition = Vector3(*Camera::Get()->GetCamera()->GetPosition());
+		uboScene.fogColour = *Skyboxes::Get()->GetFog()->m_colour;
+		uboScene.cameraPosition = *Camera::Get()->GetCamera()->GetPosition();
 		uboScene.fogDensity = Skyboxes::Get()->GetFog()->m_density;
 		uboScene.fogGradient = Skyboxes::Get()->GetFog()->m_gradient;
 
@@ -109,7 +109,7 @@ namespace Flounder
 
 		UbosDeferred::UboLights uboLights = {};
 
-		for (int i = 0; i < static_cast<int>(sceneLights.size()); i++)
+		for (unsigned int i = 0; i < sceneLights.size(); i++)
 		{
 			uboLights.lights[i] = sceneLights.at(i);
 		}
