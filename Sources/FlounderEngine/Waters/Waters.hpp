@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Engine/Engine.hpp"
-#include "Water.hpp"
+#include "WaterRender.hpp"
 
 namespace Flounder
 {
@@ -12,8 +12,6 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		Water *m_water;
-
 		float m_colourIntensity;
 		bool m_enableReflections;
 		float m_reflectionQuality;
@@ -39,10 +37,6 @@ namespace Flounder
 		~Waters();
 
 		void Update() override;
-
-		Water *GetWater() const { return m_water; }
-
-		void SetWater(Water *water) { m_water = water; }
 
 		float GetColourIntensity() const { return m_colourIntensity; }
 

@@ -1,5 +1,5 @@
-ComponentModel,"Sphere_16_16_1.0"
-ComponentMaterial,0.4,0.0,"#DDE2FF",0,1,1,"nullptr"
-ComponentLight,"#1E1E1E",-1.0,0.0,3.0,0.0
-ComponentCelestial,1
-ComponentCollider
+Mesh,"Sphere_16_16_1.0"
+Material,"#DDE2FF","nullptr",0.4,0.0,0,1,1,"nullptr"
+Light,"#1E1E1E",-1.0,0.0,3.0,0.0
+CelestialBody,0
+SphereCollider

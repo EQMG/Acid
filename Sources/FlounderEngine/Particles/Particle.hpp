@@ -2,7 +2,7 @@
 
 #include "../Maths/Vector2.hpp"
 #include "../Maths/Vector3.hpp"
-#include "../Space/ISpatialObject.hpp"
+#include "../Objects/GameObject.hpp"
 #include "ParticleType.hpp"
 
 namespace Flounder
@@ -11,12 +11,11 @@ namespace Flounder
 	/// A instance of a particle type.
 	/// </summary>
 	class F_EXPORT Particle :
-		public ISpatialObject
+		public GameObject
 	{
 	private:
 		ParticleType *m_particleType;
 
-		Vector3 *m_position;
 		Vector3 *m_velocity;
 		Vector3 *m_change;
 
@@ -53,15 +52,11 @@ namespace Flounder
 		/// <summary>
 		/// Updates the particle.
 		/// </summary>
-		void update();
+		void Update();
 
-		bool isAlive() const { return m_transparency < 1.0f; }
-
-		ICollider *GetCollider() override { return nullptr; }
+		bool IsAlive() const { return m_transparency < 1.0f; }
 
 		ParticleType *GetParticleType() const { return m_particleType; }
-
-		Vector3 *GetPosition() const { return m_position; }
 
 		Vector3 *GetVelocity() const { return m_velocity; }
 

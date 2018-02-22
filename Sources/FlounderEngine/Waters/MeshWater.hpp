@@ -8,7 +8,7 @@ namespace Flounder
 		public MeshSimple
 	{
 	public:
-		MeshWater(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale);
+		MeshWater();
 
 		Vector3 GetPosition(const float &x, const float &z) override;
 

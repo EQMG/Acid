@@ -3,7 +3,7 @@
 #include <vector>
 #include "../Engine/Engine.hpp"
 #include "../Noise/NoiseFast.hpp"
-#include "Terrain.hpp"
+#include "TerrainRender.hpp"
 
 namespace Flounder
 {
@@ -14,7 +14,6 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		std::vector<Terrain *> *m_terrains;
 		NoiseFast m_noise1;
 	public:
 		/// <summary>
@@ -43,7 +42,5 @@ namespace Flounder
 		Vector3 GetNormal(const float &x, const float &z);
 
 		Vector3 GetPosition(const float &x, const float &z);
-
-		std::vector<Terrain *> *GetTerrains() const { return m_terrains; }
 	};
 }
