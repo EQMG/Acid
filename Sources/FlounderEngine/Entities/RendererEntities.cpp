@@ -1,8 +1,11 @@
-﻿#include "RendererEntities.hpp"
+﻿#include <Devices/Display.hpp>
+#include "RendererEntities.hpp"
 
 #include "../Renderer/Renderer.hpp"
 #include "../Models/Model.hpp"
-#include "Entities.hpp"
+#include "../Objects/Objects.hpp"
+#include "UbosEntities.hpp"
+#include "EntityRender.hpp"
 
 namespace Flounder
 {
@@ -19,9 +22,7 @@ namespace Flounder
 				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
 				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
 				Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDiffuse
-				Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerNormal
-				Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
-				Texture::CreateDescriptor(5, VK_SHADER_STAGE_VERTEX_BIT) // samplerSway
+				Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerMaterial
 			}, // descriptors
 
 			{"Resources/Shaders/Entities/Entity.vert.spv", "Resources/Shaders/Entities/Entity.frag.spv"} // shaderStages
@@ -49,12 +50,17 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		//	std::vector<Entity*> inFrustum = std::vector<Entity*>();
-		//	Entities::Get()->GetStructure()->QueryFrustum(camera.GetViewFrustum(), &inFrustum);
+		//	std::vector<GameObject*> inFrustum = std::vector<GameObject*>();
+		//	Objects::Get()->GetStructure()->QueryFrustum(camera.GetViewFrustum(), &inFrustum);
 
-		for (auto entity : *Entities::Get()->GetStructure()->GetAll()) // inFrustum
+		for (auto object : *Objects::Get()->GetStructure()->GetAll()) // inFrustum
 		{
-			entity->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+			auto entityRender = object->GetComponent<EntityRender>();
+
+			if (entityRender != nullptr)
+			{
+				entityRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+			}
 		}
 	}
 }

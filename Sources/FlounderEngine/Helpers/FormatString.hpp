@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <sstream>
 #include <locale>
 #include <cstring>
 #include <string>
@@ -9,7 +10,7 @@
 namespace Flounder
 {
 	/// <summary>
-	/// A helper for C++ trings.
+	/// A helper for C++ strings.
 	/// </summary>
 	class F_EXPORT FormatString
 	{
@@ -101,5 +102,14 @@ namespace Flounder
 		/// <param name="str"> The string. </param>
 		/// <returns> The uppercased string. </returns>
 		static std::string Uppercase(const std::string &str);
+
+		template<typename T>
+		static T ConvertTo(const std::string &str)
+		{
+			std::istringstream ss(str);
+			T num;
+			ss >> num;
+			return num;
+		}
 	};
 }

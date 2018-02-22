@@ -1,7 +1,6 @@
 ﻿#include "Text.hpp"
 
 #include "../Devices/Display.hpp"
-#include "../Helpers/FormatString.hpp"
 #include "../Visual/DriverConstant.hpp"
 #include "UbosFonts.hpp"
 

@@ -1,16 +1,15 @@
 #include "Instance.hpp"
 
 #include <Inputs/ButtonKeyboard.hpp>
-#include <Entities/Entities.hpp>
+#include <Objects/Objects.hpp>
 #include <Terrains/Terrains.hpp>
 #include <Maths/Maths.hpp>
 #include <Devices/Display.hpp>
 #include <Devices/Mouse.hpp>
-#include <Helpers/FileSystem.hpp>
-#include <Particles/Spawns/SpawnCircle.hpp>
 #include <Particles/Particles.hpp>
-#include <Renderer/Renderer.hpp>
 #include <Renderer/Screenshot/Screenshot.hpp>
+
+#include <Flounder.hpp>
 
 namespace Demo
 {
@@ -21,8 +20,20 @@ namespace Demo
 		m_buttonExit(new ButtonKeyboard({GLFW_KEY_DELETE})),
 		m_soundScreenshot(new Sound("Resources/Sounds/Screenshot.ogg"))
 	{
-		new Entity("Sun", Transform(Vector3(), Vector3(), 18.0f));
-		new Entity("Moon", Transform(Vector3(), Vector3(), 9.0f));
+
+		{
+			GameObject *object = new GameObject(Transform(), Objects::Get()->GetStructure());
+			object->AddComponent(new Mesh(Model::Resource("Resources/Entities/Testing/Model.obj")));
+			object->AddComponent(new Material(Colour("#C37A57"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
+				0.002f, 0.3f, true, false, false, Texture::Resource("Resources/Entities/Testing/Material.png")));
+			object->AddComponent(new Aabb());
+			object->AddComponent(new Rigidbody(3.0f, 0.1f));
+			object->AddComponent(new Light(Colour("#3319cc"), 1.333f, Vector3(0.0f, 3.0f, 0.0f)));
+			object->AddComponent(new EntityRender());
+		}
+
+		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
+		new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
 
 		Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
 
@@ -30,7 +41,7 @@ namespace Demo
 		{
 			for (int j = -3; j <= 0; j++)
 			{
-				new Entity("FoundationWood", Transform(foundationCentre, Vector3(), 1.5f)); //  + Vector3(i * 3.0f, 2.3f, -j * 3.0f)
+				new GameObject("FoundationWood", Transform(foundationCentre, Vector3(), 1.5f)); //  + Vector3(i * 3.0f, 2.3f, -j * 3.0f)
 			}
 		}
 
@@ -47,12 +58,12 @@ namespace Demo
 					if (i < 0)
 					{
 						position.m_y -= 1.0f;
-						new Entity("TreePine", Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), 1.0f));
+						new GameObject("TreePine", Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), 1.0f));
 					}
 					else
 					{
 						position.m_y += 1.0f;
-						new Entity("Testing", Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), 1.0f));
+						new GameObject("Testing", Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), 1.0f));
 					}
 				}
 			}

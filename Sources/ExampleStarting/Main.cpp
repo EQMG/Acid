@@ -1,17 +1,21 @@
 #include <iostream>
-#include <Engine/ModuleUpdater.hpp>
-#include <Devices/Mouse.hpp>
 #include <Camera/Camera.hpp>
-#include <Renderer/Renderer.hpp>
-#include <Standards/Standards.hpp>
-#include <Models/Shapes/ShapeSphere.hpp>
+#include <Devices/Mouse.hpp>
+#include <Engine/ModuleUpdater.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Entities/Entities.hpp>
+#include <Meshes/Mesh.hpp>
+#include <Models/Shapes/ShapeSphere.hpp>
+#include <Objects/Objects.hpp>
+#include <Renderer/Renderer.hpp>
+#include <Skyboxes/SkyboxRender.hpp>
 #include <Space/StructureBasic.hpp>
+#include <Standards/Standards.hpp>
+#include <Terrains/LodBehaviour.hpp>
+#include <Waters/MeshWater.hpp>
+#include "Configs/ConfigManager.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 #include "Instance.hpp"
-#include "Configs/ConfigManager.hpp"
 #include "ManagerRender.hpp"
 #include "ManagerUis.hpp"
 
@@ -48,9 +52,9 @@ int main(int argc, char **argv)
 		Camera::Get()->SetPlayer(new FpsPlayer());
 	}
 
-	if (Entities::Get() != nullptr)
+	if (Objects::Get() != nullptr)
 	{
-		Entities::Get()->SetStructure(new StructureBasic<Entity *>());
+		Objects::Get()->SetStructure(new StructureBasic<GameObject *>()); // TODO: Move into scene.
 	}
 
 	if (Renderer::Get() != nullptr)
@@ -70,11 +74,9 @@ int main(int argc, char **argv)
 
 	if (Skyboxes::Get() != nullptr)
 	{
-		Skyboxes::Get()->SetSkybox(new Skybox(
-			Cubemap::Resource("Resources/Skyboxes/Stars", ".png"),
-			ShapeSphere::Resource(6, 6, 1.0f),
-			2048.0f
-		));
+		GameObject *object = new GameObject(Transform(Vector3(), Vector3(), 2048.0f), Objects::Get()->GetStructure());
+		object->AddComponent(new Mesh(ShapeSphere::Resource(6, 6, 1.0f)));
+		object->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Stars", ".png")));
 	}
 
 	if (Terrains::Get() != nullptr)
@@ -85,18 +87,21 @@ int main(int argc, char **argv)
 		{
 			for (int w = -n; w <= n; w++)
 			{
-				Terrains::Get()->GetTerrains()->push_back(new Terrain(
-					Transform(Vector3(
-						2.0f * static_cast<float>(j) * Terrain::SIDE_LENGTH, 0.0f,
-						2.0f * static_cast<float>(w) * Terrain::SIDE_LENGTH))
-				));
+				GameObject *object = new GameObject(Transform(Vector3(
+					2.0f * static_cast<float>(j) * TerrainRender::SIDE_LENGTH, 0.0f,
+					2.0f * static_cast<float>(w) * TerrainRender::SIDE_LENGTH)), Objects::Get()->GetStructure());
+				object->AddComponent(new Mesh());
+				object->AddComponent(new LodBehaviour());
+				object->AddComponent(new TerrainRender());
 			}
 		}
 	}
 
 	if (Waters::Get() != nullptr)
 	{
-		Waters::Get()->SetWater(new Water(Transform(Vector3(), Vector3())));
+		GameObject *object = new GameObject(Transform(Vector3(), Vector3()), Objects::Get()->GetStructure());
+		object->AddComponent(new Mesh(new MeshWater()));
+		object->AddComponent(new WaterRender());
 	}
 
 	// Runs the engine loop.

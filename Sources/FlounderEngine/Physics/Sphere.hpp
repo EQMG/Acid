@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ICollider.hpp"
+#include "Collider.hpp"
 
 namespace Flounder
 {
@@ -8,7 +8,7 @@ namespace Flounder
 	/// Represents a sphere in a 3d space.
 	/// </summary>
 	class F_EXPORT Sphere :
-		public ICollider
+		public Collider
 	{
 	public:
 		float m_radius;
@@ -37,19 +37,21 @@ namespace Flounder
 		/// </summary>
 		~Sphere();
 
-		ICollider *Update(const Transform &transform, ICollider *destination) override;
+		Collider *Update(const Transform &transform, Collider *destination) override;
 
-		Vector3 *ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination) override;
+		Vector3 *ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination) override;
 
-		Intersect Intersects(const ICollider &other) override;
+		Intersect Intersects(const Collider &other) override;
 
 		Intersect Intersects(const Ray &ray) override;
 
 		bool InFrustum(const Frustum &frustum) override;
 
-		bool Contains(const ICollider &other) override;
+		bool Contains(const Collider &other) override;
 
 		bool Contains(const Vector3 &point) override;
+
+		std::string GetName() const override { return "ColliderSphere"; };
 
 		float GetRadius() const { return m_radius; }
 

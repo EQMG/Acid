@@ -5,21 +5,21 @@
 namespace Flounder
 {
 	Sphere::Sphere() :
-		ICollider(),
+		Collider(),
 		m_radius(1.0f),
 		m_position(new Vector3())
 	{
 	}
 
 	Sphere::Sphere(const float &radius, const Vector3 &position) :
-		ICollider(),
+		Collider(),
 		m_radius(radius),
 		m_position(new Vector3(position))
 	{
 	}
 
 	Sphere::Sphere(const Sphere &source) :
-		ICollider(),
+		Collider(),
 		m_radius(source.m_radius),
 		m_position(new Vector3(*source.m_position))
 	{
@@ -30,7 +30,7 @@ namespace Flounder
 		delete m_position;
 	}
 
-	ICollider *Sphere::Update(const Transform &transform, ICollider *destination)
+	Collider *Sphere::Update(const Transform &transform, Collider *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -45,7 +45,7 @@ namespace Flounder
 		return source;
 	}
 
-	Vector3 *Sphere::ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination)
+	Vector3 *Sphere::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -63,7 +63,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Intersect Sphere::Intersects(const ICollider &other)
+	Intersect Sphere::Intersects(const Collider &other)
 	{
 		/*if (dynamic_cast<aabb*>(other) != 0)
 		{
@@ -177,7 +177,7 @@ namespace Flounder
 		return frustum.SphereInFrustum(*m_position, m_radius);
 	}
 
-	bool Sphere::Contains(const ICollider &other)
+	bool Sphere::Contains(const Collider &other)
 	{
 		const Sphere &sphere2 = dynamic_cast<const Sphere &>(other);
 

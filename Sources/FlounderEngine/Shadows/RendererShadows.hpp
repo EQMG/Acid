@@ -2,6 +2,7 @@
 
 #include "../Renderer/IRenderer.hpp"
 #include "../Terrains/Terrains.hpp"
+#include "../Models/Model.hpp"
 #include "Shadows.hpp"
 
 namespace Flounder

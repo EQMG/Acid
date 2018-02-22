@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include "ISpatialStructure.hpp"
+#include "Physics/Collider.hpp"
 
 namespace Flounder
 {
@@ -71,36 +72,36 @@ namespace Flounder
 
 		std::vector<T> *QueryFrustum(Frustum *range, std::vector<T> *result) override
 		{
-			for (auto value : *m_objects)
+			/*for (auto value : *m_objects)
 			{
-				ISpatialObject *object = static_cast<ISpatialObject *>(value);
+				GameObject *object = static_cast<GameObject *>(value);
 
 				if (object->GetCollider() == nullptr || object->GetCollider()->InFrustum(*range))
 				{
 					result->push_back(value);
 				}
-			}
+			}*/
 
 			return result;
 		}
 
-		std::vector<T> *QueryBounding(ICollider *range, std::vector<T> *result) override
+		std::vector<T> *QueryBounding(Collider *range, std::vector<T> *result) override
 		{
-			for (auto value : *m_objects)
+			/*for (auto value : *m_objects)
 			{
-				ISpatialObject *object = static_cast<ISpatialObject *>(value);
+				GameObject *object = static_cast<GameObject *>(value);
 
 				if (object->GetCollider() == nullptr || range->Intersects(*object->GetCollider()).IsIntersection() ||
 					range->Contains(*object->GetCollider()))
 				{
 					result->push_back(value);
 				}
-			}
+			}*/
 
 			return result;
 		}
 
-		bool Contains(ISpatialObject *object) override
+		bool Contains(GameObject *object) override
 		{
 			return std::find(m_objects->begin(), m_objects->end(), object) != m_objects->end();
 		}

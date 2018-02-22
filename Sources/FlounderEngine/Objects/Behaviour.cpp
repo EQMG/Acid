@@ -2,10 +2,11 @@
 
 namespace Flounder
 {
-	Behaviour::Behaviour() :
+	Behaviour::Behaviour(const bool &enabled) :
 		Component(),
 		m_enabled(false)
 	{
+		SetEnabled(enabled);
 	}
 
 	Behaviour::~Behaviour()
