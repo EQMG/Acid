@@ -64,6 +64,6 @@ namespace Flounder
 
 		void StructureRemove();
 	private:
-		static Component *CreateComponent(const std::string &name, PrefabComponent *prefab);
+		static Component *CreateComponent(const std::string &name);
 	};
 }

@@ -38,8 +38,6 @@ namespace Flounder
 	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure<GameObject *> *structure) :
 		GameObject(transform, structure)
 	{
-		printf("Loading prefab: '%s'\n", prefabName.c_str());
-
 		m_name = prefabName;
 		PrefabObject *entityPrefab = PrefabObject::Resource("Resources/Entities/" + prefabName + "/" + prefabName + ".csv");
 
@@ -50,16 +48,16 @@ namespace Flounder
 				continue;
 			}
 
-			PrefabComponent *componentPrefab = entityPrefab->GetComponentData(componentName);
+			Component *component = CreateComponent(componentName);
 
-			if (componentPrefab == nullptr)
+			if (component == nullptr)
 			{
 				continue;
 			}
 
-			Component *component = CreateComponent(componentName, componentPrefab);
+			PrefabComponent *componentPrefab = entityPrefab->GetComponentData(componentName);
 
-			if (component == nullptr)
+			if (componentPrefab == nullptr)
 			{
 				continue;
 			}
@@ -132,7 +130,7 @@ namespace Flounder
 		m_removed = true;
 	}
 
-	Component *GameObject::CreateComponent(const std::string &name, PrefabComponent *prefab)
+	Component *GameObject::CreateComponent(const std::string &name)
 	{
 		if (name == "CelestialBody") { return new CelestialBody(); }
 		if (name == "ColliderAabb") { return new Aabb(); }

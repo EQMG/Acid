@@ -1,10 +1,8 @@
 #include "Mesh.hpp"
 
-#include <cassert>
 #include "../Models/Shapes/ShapeSphere.hpp"
 #include "../Models/Shapes/ShapeCube.hpp"
 #include "../Models/Shapes/ShapeRectangle.hpp"
-#include "Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -12,7 +10,7 @@ namespace Flounder
 		Component(),
 		m_model(model)
 	{
-		Link<std::string>(0, LINK_GET_RES(GetModel()), LINK_SET(std::string, SetModel(DecodeModelType(v))));
+		Link<std::string>(0, LINK_GET_RES(GetModel()), LINK_SET(std::string, TrySetModel(v)));
 	}
 
 	Mesh::~Mesh()
@@ -23,23 +21,30 @@ namespace Flounder
 	{
 	}
 
-	Model *Mesh::DecodeModelType(const std::string &filename)
+	void Mesh::TrySetModel(const std::string &filename)
 	{
+		if (filename.empty() || filename == "nullptr")
+		{
+			return;
+		}
+
 		auto split = FormatString::Split(filename, "_");
 
 		if (!split.empty() && split.at(0) == "Sphere")
 		{
-			return ShapeSphere::Resource(filename);
+			m_model = ShapeSphere::Resource(filename);
 		}
 		else if (!split.empty() && split.at(0) == "Cube")
 		{
-			return ShapeCube::Resource(filename);
+			m_model = ShapeCube::Resource(filename);
 		}
 		else if (!split.empty() && split.at(0) == "Rectangle")
 		{
-			return ShapeRectangle::Resource(filename);
+			m_model = ShapeRectangle::Resource(filename);
 		}
-
-		return Model::Resource(filename);
+		else
+		{
+			m_model = Model::Resource(filename);
+		}
 	}
 }
