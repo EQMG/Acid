@@ -11,7 +11,6 @@
 #include "../Renderer/Renderer.hpp"
 #include "../Shadows/Shadows.hpp"
 #include "../Skyboxes/Skyboxes.hpp"
-#include "../Standards/Standards.hpp"
 #include "../Terrains/Terrains.hpp"
 #include "../Uis/Uis.hpp"
 #include "../Waters/Waters.hpp"
@@ -61,7 +60,6 @@ namespace Flounder
 		ModuleCreate<Resources>(UpdatePre, "resources");
 		ModuleCreate<Events>(UpdatePre, "events");
 		ModuleCreate<Tasks>(UpdatePre, "tasks");
-		ModuleCreate<Standards>(UpdatePre, "standards");
 		ModuleCreate<Camera>(UpdatePre, "camera");
 		ModuleCreate<Uis>(UpdatePre, "uis");
 		ModuleCreate<Worlds>(UpdatePre, "worlds");

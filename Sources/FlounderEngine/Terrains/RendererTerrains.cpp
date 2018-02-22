@@ -48,14 +48,12 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		for (auto object : *Scenes::Get()->GetStructure()->GetAll())
-		{
-			auto terrainRender = object->GetComponent<TerrainRender>();
+		std::vector<TerrainRender *> renderList = std::vector<TerrainRender *>();
+		Scenes::Get()->GetStructure()->QueryComponents<TerrainRender>(&renderList);
 
-			if (terrainRender != nullptr)
-			{
-				terrainRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
-			}
+		for (auto terrainRender : renderList)
+		{
+			terrainRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 		}
 	}
 }
