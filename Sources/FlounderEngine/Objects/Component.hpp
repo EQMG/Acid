@@ -31,11 +31,10 @@ namespace Flounder
 
 	class F_EXPORT Component
 	{
-	protected:
-		std::string m_name;
-		GameObject *m_gameObject;
 	private:
 		std::map<unsigned int, ComponentGetSet*> *m_values;
+		std::string m_name;
+		GameObject *m_gameObject;
 	public:
 #define LINK_GET(f) new std::function<std::string()>([&]() -> std::string { return std::to_string(f); })
 #define LINK_GET_STR(f) new std::function<std::string()>([&]() -> std::string { return f; })

@@ -50,14 +50,12 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		for (auto object : *Scenes::Get()->GetStructure()->GetAll())
-		{
-			auto skyboxRender = object->GetComponent<SkyboxRender>();
+		std::vector<SkyboxRender *> renderList = std::vector<SkyboxRender *>();
+		Scenes::Get()->GetStructure()->QueryComponents(&renderList);
 
-			if (skyboxRender != nullptr)
-			{
-				skyboxRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
-			}
+		for (auto skyboxRender : renderList)
+		{
+			skyboxRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 		}
 	}
 }

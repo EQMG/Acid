@@ -4,23 +4,30 @@ namespace Flounder
 {
 	Scenes::Scenes() :
 		IModule(),
-		m_structure(nullptr)
+		m_scene(nullptr)
 	{
 	}
 
 	Scenes::~Scenes()
 	{
-		delete m_structure;
+		delete m_scene;
 	}
 
 	void Scenes::Update()
 	{
-		if (m_structure == nullptr)
+		if (m_scene == nullptr)
 		{
 			return;
 		}
 
-		for (auto object : *m_structure->GetAll())
+		m_scene->Update();
+
+		if (m_scene->GetStructure() == nullptr)
+		{
+			return;
+		}
+
+		for (auto object : *m_scene->GetStructure()->GetAll())
 		{
 			object->Update();
 		}

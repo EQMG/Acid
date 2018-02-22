@@ -47,14 +47,12 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		for (auto object : *Scenes::Get()->GetStructure()->GetAll())
-		{
-			auto waterRender = object->GetComponent<WaterRender>();
+		std::vector<WaterRender *> renderList = std::vector<WaterRender *>();
+		Scenes::Get()->GetStructure()->QueryComponents<WaterRender>(&renderList);
 
-			if (waterRender != nullptr)
-			{
-				waterRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
-			}
+		for (auto waterRender : renderList)
+		{
+			waterRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 		}
 	}
 }

@@ -4,20 +4,15 @@
 #include <Engine/ModuleUpdater.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Meshes/Mesh.hpp>
-#include <Models/Shapes/ShapeSphere.hpp>
-#include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Skyboxes/SkyboxRender.hpp>
-#include <Space/StructureBasic.hpp>
-#include <Standards/Standards.hpp>
-#include <Terrains/LodBehaviour.hpp>
-#include <Waters/MeshWater.hpp>
+#include <Scenes/Scenes.hpp>
 #include "Configs/ConfigManager.hpp"
-#include "FpsCamera.hpp"
-#include "FpsPlayer.hpp"
-#include "Instance.hpp"
-#include "ManagerRender.hpp"
-#include "ManagerUis.hpp"
+#include "Cameras/FpsCamera.hpp"
+#include "Cameras/FpsPlayer.hpp"
+#include "Scenes/Scene1.hpp"
+#include "Renderers/ManagerRender.hpp"
+#include "Uis/ManagerUis.hpp"
 
 using namespace Demo;
 
@@ -52,11 +47,6 @@ int main(int argc, char **argv)
 		Camera::Get()->SetPlayer(new FpsPlayer());
 	}
 
-	if (Scenes::Get() != nullptr)
-	{
-		Scenes::Get()->SetStructure(new StructureBasic<GameObject *>());
-	}
-
 	if (Renderer::Get() != nullptr)
 	{
 		Renderer::Get()->SetManager(new ManagerRender());
@@ -67,41 +57,9 @@ int main(int argc, char **argv)
 		Uis::Get()->SetManager(new ManagerUis());
 	}
 
-	if (Standards::get() != nullptr)
+	if (Scenes::Get() != nullptr)
 	{
-		Standards::get()->AddStandard(new Instance());
-	}
-
-	if (Skyboxes::Get() != nullptr)
-	{
-		GameObject *object = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
-		object->AddComponent(new Mesh(ShapeSphere::Resource(6, 6, 1.0f)));
-		object->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Stars", ".png")));
-	}
-
-	if (Terrains::Get() != nullptr)
-	{
-		const int n = 4;
-
-		for (int j = -n; j <= n; j++)
-		{
-			for (int w = -n; w <= n; w++)
-			{
-				GameObject *object = new GameObject(Transform(Vector3(
-					2.0f * static_cast<float>(j) * TerrainRender::SIDE_LENGTH, 0.0f,
-					2.0f * static_cast<float>(w) * TerrainRender::SIDE_LENGTH)));
-				object->AddComponent(new Mesh());
-				object->AddComponent(new LodBehaviour());
-				object->AddComponent(new TerrainRender());
-			}
-		}
-	}
-
-	if (Waters::Get() != nullptr)
-	{
-		GameObject *object = new GameObject(Transform(Vector3(), Vector3()));
-		object->AddComponent(new Mesh(new MeshWater()));
-		object->AddComponent(new WaterRender());
+		Scenes::Get()->SetScene(new Scene1());
 	}
 
 	// Runs the engine loop.

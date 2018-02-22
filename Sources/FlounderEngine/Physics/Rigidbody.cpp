@@ -32,7 +32,7 @@ namespace Flounder
 
 	void Rigidbody::Update()
 	{
-		auto componentModel = m_gameObject->GetComponent<Model>();
+		auto componentModel = GetGameObject()->GetComponent<Model>();
 
 		if (componentModel != nullptr)
 		{
@@ -76,7 +76,7 @@ namespace Flounder
 		Aabb::Stretch(aabb1, amount, &collisionRange);
 
 		// Goes though all entities in the collision range.
-		for (auto entity : *m_gameObject->GetStructure()->GetAll())
+		for (auto entity : *GetGameObject()->GetStructure()->GetAll())
 		{
 			// Ignores the original entity.
 			if (entity == GetGameObject())

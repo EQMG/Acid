@@ -13,6 +13,6 @@ namespace Flounder
 
 	void Collider::Update()
 	{
-		Update(*m_gameObject->GetTransform(), this);
+		Update(*GetGameObject()->GetTransform(), this);
 	}
 }
