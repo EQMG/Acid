@@ -38,6 +38,8 @@ namespace Flounder
 
 		void SetTextureDiffuse(Texture *diffuse) { m_textureDiffuse = diffuse; }
 
+		void TrySetTextureDiffuse(const std::string &filename);
+
 		void SetColour(const Colour &colour) { m_colour->Set(colour); }
 
 		float GetMetallic() const { return m_metallic; }
@@ -63,5 +65,7 @@ namespace Flounder
 		Texture *GetTextureMaterial() const { return m_textureMaterial; }
 
 		void SetTextureMaterial(Texture *material) { m_textureMaterial = material; }
+
+		void TrySetTextureMaterial(const std::string &filename);
 	};
 }

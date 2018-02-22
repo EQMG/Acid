@@ -1,3 +1,3 @@
-Mesh,"Resources/Entities/StairsWood/Model.obj"
-Material,"#8b4513","nullptr",0.0,0.0,1,0,0,"nullptr"
+Mesh,Resources/Entities/StairsWood/Model.obj
+Material,#8b4513,nullptr,0.0,0.0,1,0,0,nullptr
 AabbCollider
