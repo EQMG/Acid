@@ -15,6 +15,10 @@ namespace Flounder
 		IFile *m_file;
 		std::map<std::string, ConfigKey> *m_values;
 	public:
+#define CONFIG_GET(f) [&]() -> std::string { return std::to_string(f); }
+#define CONFIG_GET_STR(f) [&]() -> std::string { return f; }
+#define CONFIG_SET(t, f) [&](const t &v) -> void { f; }
+
 		Config(IFile *file);
 
 		~Config();
@@ -50,13 +54,13 @@ namespace Flounder
 		double Get(const std::string &key, const double &normal = 0.0);
 
 		template<typename T>
-		void Link(const std::string &key, const T &normal, const std::function<T()> &getter, const std::function<void(T)> &setter = [](const T &v) -> void { })
+		void Link(const std::string &key, const T &normal, const std::function<std::string()> &getter, const std::function<void(T)> &setter = [](const T &v) -> void { })
 		{
 			ConfigKey configKey = GetRaw(key, std::to_string(normal));
 
 			if (getter != nullptr)
 			{
-				configKey.SetGetter([&]() -> std::string { return std::to_string(getter()); });
+				configKey.SetGetter(new std::function<std::string()>([&]() -> std::string { return getter(); }));
 			}
 
 			if (setter != nullptr && configKey.IsFromFile())

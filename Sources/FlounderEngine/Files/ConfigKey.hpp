@@ -11,7 +11,7 @@ namespace Flounder
 	private:
 		std::string m_value;
 		bool m_fromFile;
-		std::function<std::string()> m_getter;
+		std::function<std::string()> *m_getter;
 	public:
 		ConfigKey(const std::string &value, const bool &fromFile = false);
 
@@ -23,8 +23,8 @@ namespace Flounder
 
 		bool IsFromFile() const { return m_fromFile; }
 
-		std::function<std::string()> GetGetter() const { return m_getter; }
+		std::function<std::string()> *GetGetter() const { return m_getter; }
 
-		void SetGetter(const std::function<std::string()> &getter) { m_getter = getter; }
+		void SetGetter(std::function<std::string()> *getter) { m_getter = getter; }
 	};
 }

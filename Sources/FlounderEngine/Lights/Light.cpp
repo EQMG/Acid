@@ -11,7 +11,7 @@ namespace Flounder
 		m_offset(new Vector3(offset)),
 		m_position(new Vector3())
 	{
-		LinkString(0, LINK_GET_STR(Colour::GetHex(*GetColour())), LINK_SET(std::string, SetColour(Colour(v))));
+		Link<std::string>(0, LINK_GET_STR(Colour::GetHex(*GetColour())), LINK_SET(std::string, SetColour(Colour(v))));
 		Link<float>(1, LINK_GET(GetRadius()), LINK_SET(float, SetRadius(v)));
 		Link<float>(2, LINK_GET(GetOffset()->m_x), LINK_SET(float, GetOffset()->m_x = v));
 		Link<float>(3, LINK_GET(GetOffset()->m_y), LINK_SET(float, GetOffset()->m_y = v));

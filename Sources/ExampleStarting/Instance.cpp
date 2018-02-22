@@ -1,7 +1,7 @@
 #include "Instance.hpp"
 
 #include <Inputs/ButtonKeyboard.hpp>
-#include <Objects/Objects.hpp>
+#include <Scenes/Scenes.hpp>
 #include <Terrains/Terrains.hpp>
 #include <Maths/Maths.hpp>
 #include <Devices/Display.hpp>
@@ -22,7 +22,7 @@ namespace Demo
 	{
 
 		{
-			GameObject *object = new GameObject(Transform(), Objects::Get()->GetStructure());
+			GameObject *object = new GameObject(Transform());
 			object->AddComponent(new Mesh(Model::Resource("Resources/Entities/Testing/Model.obj")));
 			object->AddComponent(new Material(Colour("#C37A57"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
 				0.002f, 0.3f, true, false, false, Texture::Resource("Resources/Entities/Testing/Material.png")));
@@ -30,6 +30,10 @@ namespace Demo
 			object->AddComponent(new Rigidbody(3.0f, 0.1f));
 			object->AddComponent(new Light(Colour("#3319cc"), 1.333f, Vector3(0.0f, 3.0f, 0.0f)));
 			object->AddComponent(new EntityRender());
+			
+			PrefabObject *prefabObject = new PrefabObject("Resources/Memes.csv");
+			prefabObject->Write(object);
+			prefabObject->Save();
 		}
 
 		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));

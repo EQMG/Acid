@@ -1,28 +1,28 @@
-#include "Objects.hpp"
+#include "Scenes.hpp"
 
 namespace Flounder
 {
-	Objects::Objects() :
+	Scenes::Scenes() :
 		IModule(),
 		m_structure(nullptr)
 	{
 	}
 
-	Objects::~Objects()
+	Scenes::~Scenes()
 	{
 		delete m_structure;
 	}
 
-	void Objects::Update()
+	void Scenes::Update()
 	{
 		if (m_structure == nullptr)
 		{
 			return;
 		}
 
-		for (auto entity : *m_structure->GetAll())
+		for (auto object : *m_structure->GetAll())
 		{
-			entity->Update();
+			object->Update();
 		}
 	}
 }

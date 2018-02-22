@@ -1,6 +1,6 @@
 #include "RendererSkyboxes.hpp"
 
-#include "Objects/Objects.hpp"
+#include "../Scenes/Scenes.hpp"
 #include "../Models/Model.hpp"
 #include "UbosSkyboxes.hpp"
 #include "SkyboxRender.hpp"
@@ -50,13 +50,13 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		for (auto object : *Objects::Get()->GetStructure()->GetAll())
+		for (auto object : *Scenes::Get()->GetStructure()->GetAll())
 		{
-			auto entityRender = object->GetComponent<SkyboxRender>();
+			auto skyboxRender = object->GetComponent<SkyboxRender>();
 
-			if (entityRender != nullptr)
+			if (skyboxRender != nullptr)
 			{
-				entityRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+				skyboxRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 			}
 		}
 	}
