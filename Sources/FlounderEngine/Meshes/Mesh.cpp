@@ -12,7 +12,7 @@ namespace Flounder
 		Component(),
 		m_model(model)
 	{
-		LinkString(0, LINK_GET_RES(GetModel()), LINK_SET(std::string, SetModel(DecodeModelType(v))));
+		Link<std::string>(0, LINK_GET_RES(GetModel()), LINK_SET(std::string, SetModel(DecodeModelType(v))));
 	}
 
 	Mesh::~Mesh()

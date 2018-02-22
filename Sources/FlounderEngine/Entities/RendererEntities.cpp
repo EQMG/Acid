@@ -3,7 +3,7 @@
 
 #include "../Renderer/Renderer.hpp"
 #include "../Models/Model.hpp"
-#include "../Objects/Objects.hpp"
+#include "../Scenes/Scenes.hpp"
 #include "UbosEntities.hpp"
 #include "EntityRender.hpp"
 
@@ -53,7 +53,7 @@ namespace Flounder
 		//	std::vector<GameObject*> inFrustum = std::vector<GameObject*>();
 		//	Objects::Get()->GetStructure()->QueryFrustum(camera.GetViewFrustum(), &inFrustum);
 
-		for (auto object : *Objects::Get()->GetStructure()->GetAll()) // inFrustum
+		for (auto object : *Scenes::Get()->GetStructure()->GetAll()) // inFrustum
 		{
 			auto entityRender = object->GetComponent<EntityRender>();
 

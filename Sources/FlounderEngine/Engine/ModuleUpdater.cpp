@@ -5,7 +5,7 @@
 #include "../Devices/Joysticks.hpp"
 #include "../Devices/Keyboard.hpp"
 #include "../Devices/Mouse.hpp"
-#include "../Objects/Objects.hpp"
+#include "../Scenes/Scenes.hpp"
 #include "../Events/Events.hpp"
 #include "../Particles/Particles.hpp"
 #include "../Renderer/Renderer.hpp"
@@ -65,7 +65,7 @@ namespace Flounder
 		ModuleCreate<Camera>(UpdatePre, "camera");
 		ModuleCreate<Uis>(UpdatePre, "uis");
 		ModuleCreate<Worlds>(UpdatePre, "worlds");
-		ModuleCreate<Objects>(UpdateNormal, "objects");
+		ModuleCreate<Scenes>(UpdateNormal, "scenes");
 		ModuleCreate<Particles>(UpdateNormal, "particles");
 		ModuleCreate<Skyboxes>(UpdateNormal, "skyboxes");
 		ModuleCreate<Terrains>(UpdateNormal, "terrains");

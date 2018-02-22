@@ -5,7 +5,7 @@
 #include <Helpers/FileSystem.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Models/Shapes/ShapeSphere.hpp>
-#include <Objects/Objects.hpp>
+#include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Skyboxes/SkyboxRender.hpp>
 #include <Space/StructureBasic.hpp>
@@ -52,9 +52,9 @@ int main(int argc, char **argv)
 		Camera::Get()->SetPlayer(new FpsPlayer());
 	}
 
-	if (Objects::Get() != nullptr)
+	if (Scenes::Get() != nullptr)
 	{
-		Objects::Get()->SetStructure(new StructureBasic<GameObject *>()); // TODO: Move into scene.
+		Scenes::Get()->SetStructure(new StructureBasic<GameObject *>());
 	}
 
 	if (Renderer::Get() != nullptr)
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 
 	if (Skyboxes::Get() != nullptr)
 	{
-		GameObject *object = new GameObject(Transform(Vector3(), Vector3(), 2048.0f), Objects::Get()->GetStructure());
+		GameObject *object = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
 		object->AddComponent(new Mesh(ShapeSphere::Resource(6, 6, 1.0f)));
 		object->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Stars", ".png")));
 	}
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 			{
 				GameObject *object = new GameObject(Transform(Vector3(
 					2.0f * static_cast<float>(j) * TerrainRender::SIDE_LENGTH, 0.0f,
-					2.0f * static_cast<float>(w) * TerrainRender::SIDE_LENGTH)), Objects::Get()->GetStructure());
+					2.0f * static_cast<float>(w) * TerrainRender::SIDE_LENGTH)));
 				object->AddComponent(new Mesh());
 				object->AddComponent(new LodBehaviour());
 				object->AddComponent(new TerrainRender());
@@ -99,7 +99,7 @@ int main(int argc, char **argv)
 
 	if (Waters::Get() != nullptr)
 	{
-		GameObject *object = new GameObject(Transform(Vector3(), Vector3()), Objects::Get()->GetStructure());
+		GameObject *object = new GameObject(Transform(Vector3(), Vector3()));
 		object->AddComponent(new Mesh(new MeshWater()));
 		object->AddComponent(new WaterRender());
 	}
