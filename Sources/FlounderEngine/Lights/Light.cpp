@@ -1,7 +1,5 @@
 #include "Light.hpp"
 
-#include "../Helpers/FormatString.hpp"
-
 namespace Flounder
 {
 	Light::Light(const Colour &colour, const float &radius, const Vector3 &offset) :

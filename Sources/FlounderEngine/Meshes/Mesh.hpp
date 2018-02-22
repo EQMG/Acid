@@ -25,7 +25,7 @@ namespace Flounder
 		Model *GetModel() const { return m_model; }
 
 		void SetModel(Model *model) { m_model = model; }
-	private:
-		static Model *DecodeModelType(const std::string &filename);
+
+		void TrySetModel(const std::string &filename);
 	};
 }

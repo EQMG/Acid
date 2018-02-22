@@ -18,21 +18,18 @@ namespace Flounder
 
 		void SetRaw(const unsigned int &i, const std::string &data);
 
-		std::string GetString(const unsigned int &i);
+		template<typename T>
+		T Get(const unsigned int &i)
+		{
+			std::string data = GetRaw(i);
+			return FormatString::ConvertTo<T>(data);
+		}
 
-		void SetString(const unsigned int &i, const std::string &data);
-
-		int GetInt(const unsigned int &i);
-
-		void SetInt(const unsigned int &i, const int &data);
-
-		float GetFloat(const unsigned int &i);
-
-		void SetFloat(const unsigned int &i, const float &data);
-
-		bool GetBool(const unsigned int &i);
-
-		void SetBool(const unsigned int &i, const bool &data);
+		template<typename T>
+		void Set(const unsigned int &i, const T &data)
+		{
+			SetRaw(i, std::to_string(data));
+		}
 
 		std::vector<std::string> GetData() const { return m_data; }
 	};
