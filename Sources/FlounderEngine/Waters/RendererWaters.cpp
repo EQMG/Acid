@@ -1,5 +1,7 @@
 #include "RendererWaters.hpp"
 
+#include "../Objects/Objects.hpp"
+#include "../Models/Model.hpp"
 #include "../Textures/Texture.hpp"
 #include "UbosWaters.hpp"
 
@@ -45,9 +47,14 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		if (Waters::Get()->GetWater() != nullptr)
+		for (auto object : *Objects::Get()->GetStructure()->GetAll())
 		{
-			Waters::Get()->GetWater()->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+			auto entityRender = object->GetComponent<WaterRender>();
+
+			if (entityRender != nullptr)
+			{
+				entityRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+			}
 		}
 	}
 }

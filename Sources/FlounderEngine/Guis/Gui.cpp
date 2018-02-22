@@ -1,7 +1,7 @@
 ﻿#include "Gui.hpp"
 
 #include "../Devices/Display.hpp"
-#include "../Models/Shapes/Rectangle.hpp"
+#include "../Models/Shapes/ShapeRectangle.hpp"
 #include "UbosGuis.hpp"
 
 namespace Flounder
@@ -9,7 +9,7 @@ namespace Flounder
 	Gui::Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow) :
 		UiObject(parent, rectangle),
 		m_uniformObject(new UniformBuffer(sizeof(UbosGuis::UboObject))),
-		m_model(Rectangle::Resource(0.0f, 1.0f)),
+		m_model(ShapeRectangle::Resource(0.0f, 1.0f)),
 		m_texture(texture),
 		m_selectedRow(selectedRow),
 		m_atlasOffset(new Vector2()),

@@ -22,6 +22,7 @@ namespace Flounder
 		IModule(),
 		m_driverDay(new DriverLinear(0.0f, 1.0f, 300.0f)),
 		m_factorDay(0.0f),
+		m_skyboxRotation(new Vector3),
 		m_sunPosition(new Vector3()),
 		m_moonPosition(new Vector3()),
 		m_sunColour(new Colour()),
@@ -34,6 +35,7 @@ namespace Flounder
 	{
 		delete m_driverDay;
 
+		delete m_skyboxRotation;
 		delete m_sunPosition;
 		delete m_moonPosition;
 		delete m_sunColour;
@@ -45,11 +47,11 @@ namespace Flounder
 		const float delta = Engine::Get()->GetDelta();
 		m_factorDay = m_driverDay->Update(delta);
 
-		Vector3 skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
+		m_skyboxRotation->Set(360.0f * m_factorDay, 0.0f, 0.0f);
 		Vector3 lightDirection = Vector3();
 		Colour fogColour = Colour();
 
-		Vector3::Rotate(Vector3(0.2f, 0.0f, 0.5f), skyboxRotation, &lightDirection);
+		Vector3::Rotate(Vector3(0.2f, 0.0f, 0.5f), *m_skyboxRotation, &lightDirection);
 		lightDirection.Normalize();
 
 		Colour::Interpolate(FOG_COLOUR_SUNRISE, FOG_COLOUR_NIGHT, GetSunriseFactor(), &fogColour);
@@ -78,10 +80,10 @@ namespace Flounder
 			Skyboxes::Get()->GetFog()->m_upperLimit = 0.15f - ((1.0f - GetShadowFactor()) * 0.03f);
 		}
 
-		if (Skyboxes::Get() != nullptr && Skyboxes::Get()->GetSkybox() != nullptr)
+		if (Skyboxes::Get() != nullptr)
 		{
-			Skyboxes::Get()->GetSkybox()->GetRotation()->Set(skyboxRotation);
-			Skyboxes::Get()->GetSkybox()->SetBlend(GetStarIntensity());
+		//	Skyboxes::Get()->GetSkybox()->GetRotation()->Set(*m_skyboxRotation);
+		//	Skyboxes::Get()->GetSkybox()->SetBlend(GetStarIntensity());
 			Skyboxes::Get()->SetSkyColour(SKYBOX_COLOUR_DAY);
 		}
 

@@ -11,7 +11,7 @@ namespace Flounder
 	private:
 		bool m_enabled;
 	public:
-		Behaviour();
+		Behaviour(const bool &enabled = false);
 
 		virtual ~Behaviour();
 

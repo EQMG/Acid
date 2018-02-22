@@ -1,6 +1,6 @@
-ComponentModel,"Resources/Entities/Testing/Model.obj"
-ComponentMaterial,0.002,0.3,"#C37A57",1,0,0,"Resources/Entities/Testing/Material.png"
-ComponentDiffuse,"Resources/Entities/Testing/Diffuse.png"
-ComponentNormal,"Resources/Entities/Testing/Normal.png"
-ComponentLight,"#3319cc",1.333,0.0,3.0,0.0
-ComponentCollider
+Mesh,"Resources/Entities/Testing/Model.obj"
+Material,"#C37A57","Resources/Entities/Testing/Diffuse.png",0.002,0.3,1,0,0,"Resources/Entities/Testing/Material.png"
+#Normal,"Resources/Entities/Testing/Normal.png"
+Light,"#3319cc",1.333,0.0,3.0,0.0
+AabbCollider
+Rigidbody,2.0,0.1

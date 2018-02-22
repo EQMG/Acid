@@ -1,7 +1,7 @@
 #include "IPostFilter.hpp"
 
 #include "../Devices/Display.hpp"
-#include "../Models/Shapes/Rectangle.hpp"
+#include "../Models/Shapes/ShapeRectangle.hpp"
 
 namespace Flounder
 {
@@ -21,7 +21,7 @@ namespace Flounder
 
 	IPostFilter::IPostFilter(const std::string &fragmentShader, const int &subpass, const std::vector<DescriptorType> &descriptors) :
 		m_pipeline(nullptr),
-		m_model(Rectangle::Resource(-1.0f, 1.0f))
+		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
 		PipelineCreateInfo pipelineCreateInfo = PipelineCreateInfo(PIPELINE_CREATE_INFO);
 		pipelineCreateInfo.shaderStages[1] = fragmentShader; // fragment

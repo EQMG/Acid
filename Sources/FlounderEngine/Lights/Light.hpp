@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../Prerequisites.hpp"
+#include "../Objects/Component.hpp"
+#include "../Objects/GameObject.hpp"
 #include "../Maths/Colour.hpp"
 #include "../Maths/Vector3.hpp"
 
@@ -9,25 +11,23 @@ namespace Flounder
 	/// <summary>
 	/// Represents a point light, contains a colour, position and attenuation.
 	/// </summary>
-	class F_EXPORT Light
+	class F_EXPORT Light :
+		public Component
 	{
-	public:
+	private:
 		Colour *m_colour;
 		float m_radius;
+		Vector3 *m_offset;
 		Vector3 *m_position;
 
-		/// <summary>
-		/// Creates a new infinate white point light with unlimited range.
-		/// </summary>
-		Light();
-
+	public:
 		/// <summary>
 		/// Creates a new point light.
 		/// </summary>
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="radius"> How far the light will have influence (-1 sets this to a directional light). </param>
-		/// <param name="position"> The world position of the light. </param>
-		Light(const Colour &colour, const float &radius, const Vector3 &position = Vector3());
+		/// <param name="offset"> The parent offset of the light. </param>
+		Light(const Colour &colour = Colour::WHITE, const float &radius = -1.0f, const Vector3 &offset = Vector3());
 
 		/// <summary>
 		/// Creates a new point light from a source object.
@@ -40,22 +40,24 @@ namespace Flounder
 		/// </summary>
 		~Light();
 
+		void Update() override;
+
 		/// <summary>
 		/// Sets values in the light.
 		/// </summary>
 		/// <param name="colour"> The colour of the light. </param>
-		/// <param name="position"> The world position of the light. </param>
+		/// <param name="offset"> The parent offset of the light. </param>
 		/// <returns> This. </returns>
-		Light *Set(const Colour &colour, const Vector3 &position);
+		Light *Set(const Colour &colour, const Vector3 &offset);
 
 		/// <summary>
 		/// Sets values in the light.
 		/// </summary>
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="radius"> How far the light will have influence (-1 sets this to a directional light). </param>
-		/// <param name="position"> The world position of the light. </param>
+		/// <param name="offset"> The parent offset of the light. </param>
 		/// <returns> This. </returns>
-		Light *Set(const Colour &colour, const float &radius, const Vector3 &position);
+		Light *Set(const Colour &colour, const float &radius, const Vector3 &offset);
 
 		/// <summary>
 		/// Sets values in the light.
@@ -63,5 +65,23 @@ namespace Flounder
 		/// <param name="source"> The source light object. </param>
 		/// <returns> This. </returns>
 		Light *Set(const Light &source);
+
+		std::string GetName() const override { return "Light"; };
+
+		Colour *GetColour() const { return m_colour; }
+
+		void SetColour(const Colour &colour) const { m_colour->Set(colour); }
+
+		float GetRadius() const { return m_radius; }
+
+		void SetRadius(const float &radius) { m_radius = radius; }
+
+		Vector3 *GetOffset() const { return m_offset; }
+
+		void SetOffset(const Vector3 &offset) const { m_offset->Set(offset); }
+
+		Vector3 *GetPosition() const { return m_position; }
+
+		void SetPosition(const Vector3 &position) const { m_position->Set(position); }
 	};
 }

@@ -10,12 +10,10 @@ layout(set = 0, binding = 1) uniform UboObject
 	vec4 samples;
 
 	vec3 surface;
-	vec2 swaying;
 } object;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
-layout(set = 0, binding = 3) uniform sampler2D samplerNormal;
-layout(set = 0, binding = 4) uniform sampler2D samplerMaterial;
+layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
 
 layout(location = 0) in vec2 fragmentUv;
 layout(location = 1) in vec3 fragmentNormal;
@@ -52,13 +50,6 @@ void main()
 	}
 
 	if (object.samples.y == 1.0f)
-	{
-	    // Normal
-	//    vec4 normalMapValue = 2.0f * texture(samplerNormal, fragmentUv, -1.0f) - 1.0f;
-	//    unitNormal = normalize(normalMapValue.xyz);
-	}
-
-	if (object.samples.z == 1.0f)
 	{
 	    // Material
 	    vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
