@@ -40,16 +40,17 @@ namespace Flounder
 	{
 		m_pipeline->BindPipeline(commandBuffer);
 
-		for (auto object : *Scenes::Get()->GetStructure()->GetAll())
-		{
-			auto mesh = object->GetComponent<Mesh>();
+		std::vector<Mesh *> meshList = std::vector<Mesh *>();
+		Scenes::Get()->GetStructure()->QueryComponents(&meshList);
 
-			if (mesh == nullptr || mesh->GetModel() == nullptr)
+		for (auto mesh : meshList)
+		{
+			if (mesh->GetModel() == nullptr)
 			{
 				continue;
 			}
 
-			auto material = object->GetComponent<Material>();
+			auto material = mesh->GetGameObject()->GetComponent<Material>();
 
 			if (material == nullptr || !material->GetCastsShadows())
 			{
@@ -57,7 +58,7 @@ namespace Flounder
 			}
 
 			Matrix4 modelMatrix = Matrix4();
-			object->GetTransform()->GetWorldMatrix(&modelMatrix);
+			mesh->GetGameObject()->GetTransform()->GetWorldMatrix(&modelMatrix);
 			RenderModel(commandBuffer, mesh->GetModel(), modelMatrix);
 		}
 	}

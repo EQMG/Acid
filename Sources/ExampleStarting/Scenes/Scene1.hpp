@@ -2,14 +2,14 @@
 
 #include <Sounds/Sound.hpp>
 #include <Inputs/IButton.hpp>
-#include <Standards/IStandard.hpp>
+#include <Scenes/Scene.hpp>
 
 using namespace Flounder;
 
 namespace Demo
 {
-	class Instance :
-		public IStandard
+	class Scene1 :
+		public Scene
 	{
 	private:
 		IButton *m_buttonFullscreen;
@@ -19,9 +19,9 @@ namespace Demo
 
 		Sound *m_soundScreenshot;
 	public:
-		Instance();
+		Scene1();
 
-		~Instance();
+		~Scene1();
 
 		void Update() override;
 	};

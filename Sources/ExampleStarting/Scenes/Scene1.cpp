@@ -1,4 +1,4 @@
-#include "Instance.hpp"
+#include "Scene1.hpp"
 
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Scenes/Scenes.hpp>
@@ -6,36 +6,52 @@
 #include <Maths/Maths.hpp>
 #include <Devices/Display.hpp>
 #include <Devices/Mouse.hpp>
-#include <Particles/Particles.hpp>
 #include <Renderer/Screenshot/Screenshot.hpp>
-
-#include <Flounder.hpp>
+#include <Meshes/Mesh.hpp>
+#include <Models/Shapes/ShapeSphere.hpp>
+#include <Skyboxes/SkyboxRender.hpp>
+#include <Terrains/LodBehaviour.hpp>
+#include <Waters/MeshWater.hpp>
+#include <Waters/WaterRender.hpp>
 
 namespace Demo
 {
-	Instance::Instance() :
+	Scene1::Scene1() :
 		m_buttonFullscreen(new ButtonKeyboard({GLFW_KEY_F11})),
 		m_buttonCaptureMouse(new ButtonKeyboard({GLFW_KEY_M})),
 		m_buttonScreenshot(new ButtonKeyboard({GLFW_KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({GLFW_KEY_DELETE})),
 		m_soundScreenshot(new Sound("Resources/Sounds/Screenshot.ogg"))
 	{
+		//	Scenes::Get()->SetStructure(new StructureBasic<GameObject *>());
 
+		// Skybox.
+		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
+		skyboxObject->AddComponent(new Mesh(ShapeSphere::Resource(6, 6, 1.0f)));
+		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Stars", ".png")));
+
+		// Terrains.
+		const int n = 4;
+
+		for (int j = -n; j <= n; j++)
 		{
-			GameObject *object = new GameObject(Transform());
-			object->AddComponent(new Mesh(Model::Resource("Resources/Entities/Testing/Model.obj")));
-			object->AddComponent(new Material(Colour("#C37A57"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
-				0.002f, 0.3f, true, false, false, Texture::Resource("Resources/Entities/Testing/Material.png")));
-			object->AddComponent(new Aabb());
-			object->AddComponent(new Rigidbody(3.0f, 0.1f));
-			object->AddComponent(new Light(Colour("#3319cc"), 1.333f, Vector3(0.0f, 3.0f, 0.0f)));
-			object->AddComponent(new EntityRender());
-			
-			PrefabObject *prefabObject = new PrefabObject("Resources/Memes.csv");
-			prefabObject->Write(object);
-			prefabObject->Save();
+			for (int w = -n; w <= n; w++)
+			{
+				GameObject *terrainObject = new GameObject(Transform(Vector3(
+					2.0f * static_cast<float>(j) * TerrainRender::SIDE_LENGTH, 0.0f,
+					2.0f * static_cast<float>(w) * TerrainRender::SIDE_LENGTH)));
+				terrainObject->AddComponent(new Mesh());
+				terrainObject->AddComponent(new LodBehaviour());
+				terrainObject->AddComponent(new TerrainRender());
+			}
 		}
 
+		// Waters.
+		GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
+		waterObject->AddComponent(new Mesh(new MeshWater()));
+		waterObject->AddComponent(new WaterRender());
+
+		// Entities.
 		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
 		new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
 
@@ -72,27 +88,9 @@ namespace Demo
 				}
 			}
 		}
-
-/*#ifdef FLOUNDER_CONFIG_RELEASE
-		Sound *music1 = new Sound("Resources/Music/Outpost.ogg", 0.9f);
-
-		music1->SetPosition(Vector3(0.0f, 7.0f, 0.0f));
-		music1->Loop();
-#endif*/
-
-/*#ifdef FLOUNDER_CONFIG_DEBUG
-		std::vector<ParticleType*> *types = new std::vector<ParticleType*>();
-		types->push_back(new ParticleType("blue", Texture::Resource("Resources/Particles/Blue/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
-		types->push_back(new ParticleType("purple", Texture::Resource("Resources/Particles/Purple/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
-		types->push_back(new ParticleType("red", Texture::Resource("Resources/Particles/Red/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
-		types->push_back(new ParticleType("yellow", Texture::Resource("Resources/Particles/Yellow/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
-		ParticleSystem *systemTest = new ParticleSystem(types, new SpawnCircle(30.0f, Vector3(0.0f, 10.0f, 0.0f)), 1000, 1.0f, -0.1f);
-		systemTest->SetSystemCentre(Vector3(0.0f, 0.0f, 0.0f));
-		Particles::Get()->AddSystem(systemTest);
-#endif*/
 	}
 
-	Instance::~Instance()
+	Scene1::~Scene1()
 	{
 		delete m_buttonFullscreen;
 		delete m_buttonCaptureMouse;
@@ -100,7 +98,7 @@ namespace Demo
 		delete m_buttonExit;
 	}
 
-	void Instance::Update()
+	void Scene1::Update()
 	{
 		if (m_buttonFullscreen->WasDown())
 		{

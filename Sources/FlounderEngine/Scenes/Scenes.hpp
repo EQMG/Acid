@@ -2,6 +2,8 @@
 
 #include "../Engine/Engine.hpp"
 #include "../Objects/GameObject.hpp"
+#include "../Space/StructureBasic.hpp"
+#include "Scene.hpp"
 
 namespace Flounder
 {
@@ -12,7 +14,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		ISpatialStructure<GameObject *> *m_structure;
+		Scene *m_scene;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -35,8 +37,10 @@ namespace Flounder
 
 		void Update() override;
 
-		ISpatialStructure<GameObject *> *GetStructure() const { return m_structure; }
+		StructureBasic<GameObject *> *GetStructure() const { return m_scene->GetStructure(); }
 
-		void SetStructure(ISpatialStructure<GameObject *> *structure) { m_structure = structure; }
+		Scene *GetScene() const { return m_scene; }
+
+		void SetScene(Scene *scene) { m_scene = scene; }
 	};
 }

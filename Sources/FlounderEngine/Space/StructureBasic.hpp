@@ -3,7 +3,9 @@
 #include <vector>
 #include <algorithm>
 #include "ISpatialStructure.hpp"
-#include "Physics/Collider.hpp"
+#include "../Objects/GameObject.hpp"
+#include "../Objects/Component.hpp"
+#include "../Physics/Collider.hpp"
 
 namespace Flounder
 {
@@ -56,15 +58,38 @@ namespace Flounder
 			m_objects->clear();
 		}
 
-		int GetSize() override { return m_objects->size(); }
+		unsigned int GetSize() override { return m_objects->size(); }
 
 		std::vector<T> *GetAll() override { return m_objects; }
 
+		/// <summary>
+		/// Returns a set of all components of a type in the spatial structure.
+		/// </summary>
+		/// <param name="result"> The list to store the data into.
+		/// </param>
+		/// <returns> The list specified by of all components that match the type. </returns>
+		template<typename K>
+		std::vector<K*> *QueryComponents(std::vector<K*> *result)
+		{
+			for (auto object : *GetAll())
+			{
+				auto gameObject = static_cast<GameObject *>(object);
+				auto component = gameObject->GetComponent<K>();
+
+				if (component == nullptr)
+				{
+					result->push_back(component);
+				}
+			}
+
+			return result;
+		}
+
 		std::vector<T> *QueryAll(std::vector<T> *result) override
 		{
-			for (auto value : *m_objects)
+			for (auto object : *m_objects)
 			{
-				result->push_back(value);
+				result->push_back(object);
 			}
 
 			return result;
@@ -72,31 +97,32 @@ namespace Flounder
 
 		std::vector<T> *QueryFrustum(Frustum *range, std::vector<T> *result) override
 		{
-			/*for (auto value : *m_objects)
+			for (auto object : *m_objects)
 			{
-				GameObject *object = static_cast<GameObject *>(value);
+				auto gameObject = static_cast<GameObject *>(object);
+				auto collider = gameObject->GetComponent<Collider>();
 
-				if (object->GetCollider() == nullptr || object->GetCollider()->InFrustum(*range))
+				if (collider == nullptr || collider->InFrustum(*range))
 				{
-					result->push_back(value);
+					result->push_back(object);
 				}
-			}*/
+			}
 
 			return result;
 		}
 
 		std::vector<T> *QueryBounding(Collider *range, std::vector<T> *result) override
 		{
-			/*for (auto value : *m_objects)
+			for (auto object : *m_objects)
 			{
-				GameObject *object = static_cast<GameObject *>(value);
+				auto gameObject = static_cast<GameObject *>(object);
+				auto collider = gameObject->GetComponent<Collider>();
 
-				if (object->GetCollider() == nullptr || range->Intersects(*object->GetCollider()).IsIntersection() ||
-					range->Contains(*object->GetCollider()))
+				if (collider == nullptr || range->Intersects(*collider).IsIntersection() || range->Contains(*collider))
 				{
-					result->push_back(value);
+					result->push_back(object);
 				}
-			}*/
+			}
 
 			return result;
 		}

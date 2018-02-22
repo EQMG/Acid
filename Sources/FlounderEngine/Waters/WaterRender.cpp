@@ -35,7 +35,7 @@ namespace Flounder
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
 		// Gets required components.
-		auto mesh = m_gameObject->GetComponent<Mesh>();
+		auto mesh = GetGameObject()->GetComponent<Mesh>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr)
 		{
@@ -44,7 +44,7 @@ namespace Flounder
 
 		// Creates a UBO object and write descriptor.
 		UbosWaters::UboObject uboObject = {};
-		m_gameObject->GetTransform()->GetWorldMatrix(&uboObject.transform);
+		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		uboObject.diffuseColour = Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b, Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity() : 1.0f);
 		m_uniformObject->Update(&uboObject);
 

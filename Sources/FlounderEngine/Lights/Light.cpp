@@ -34,7 +34,7 @@ namespace Flounder
 
 	void Light::Update()
 	{
-		m_position->Set(*m_gameObject->GetTransform()->m_position + *m_offset);
+		m_position->Set(*GetGameObject()->GetTransform()->m_position + *m_offset);
 	}
 
 	Light *Light::Set(const Colour &colour, const Vector3 &offset)
