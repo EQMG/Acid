@@ -23,7 +23,7 @@ namespace Flounder
 
 	void SkyboxRender::Update()
 	{
-		m_gameObject->GetTransform()->SetRotation(*Worlds::Get()->GetSkyboxRotation());
+		GetGameObject()->GetTransform()->SetRotation(*Worlds::Get()->GetSkyboxRotation());
 		m_blend = Worlds::Get()->GetStarIntensity();
 	}
 
@@ -33,7 +33,7 @@ namespace Flounder
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
 		// Gets required components.
-		auto mesh = m_gameObject->GetComponent<Mesh>();
+		auto mesh = GetGameObject()->GetComponent<Mesh>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr)
 		{
@@ -42,10 +42,10 @@ namespace Flounder
 
 		// Creates a UBO object and write descriptor.
 		UbosSkyboxes::UboObject uboObject = {};
-		m_gameObject->GetTransform()->GetWorldMatrix(&uboObject.transform);
+		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		uboObject.skyColour = Colour(*Skyboxes::Get()->GetSkyColour());
 		uboObject.fogColour = Colour(*Skyboxes::Get()->GetFog()->m_colour);
-		uboObject.fogLimits = m_gameObject->GetTransform()->m_scaling->m_y * Vector2(Skyboxes::Get()->GetFog()->m_lowerLimit,
+		uboObject.fogLimits = GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Skyboxes::Get()->GetFog()->m_lowerLimit,
 			Skyboxes::Get()->GetFog()->m_upperLimit);
 		uboObject.blendFactor = m_blend;
 		m_uniformObject->Update(&uboObject);

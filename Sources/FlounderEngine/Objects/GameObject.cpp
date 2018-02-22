@@ -2,18 +2,17 @@
 
 #include "Prefabs/PrefabObject.hpp"
 #include "../Scenes/Scenes.hpp"
-
-#include <Skyboxes/CelestialBody.hpp>
-#include <Entities/EntityRender.hpp>
-#include <Lights/Light.hpp>
-#include <Physics/Aabb.hpp>
-#include <Physics/Sphere.hpp>
-#include <Materials/Material.hpp>
-#include <Meshes/Mesh.hpp>
-#include <Physics/Rigidbody.hpp>
-#include <Skyboxes/SkyboxRender.hpp>
-#include <Terrains/TerrainRender.hpp>
-#include <Waters/WaterRender.hpp>
+#include "../Skyboxes/CelestialBody.hpp"
+#include "../Entities/EntityRender.hpp"
+#include "../Lights/Light.hpp"
+#include "../Physics/Aabb.hpp"
+#include "../Physics/Sphere.hpp"
+#include "../Materials/Material.hpp"
+#include "../Meshes/Mesh.hpp"
+#include "../Physics/Rigidbody.hpp"
+#include "../Skyboxes/SkyboxRender.hpp"
+#include "../Terrains/TerrainRender.hpp"
+#include "../Waters/WaterRender.hpp"
 
 namespace Flounder
 {

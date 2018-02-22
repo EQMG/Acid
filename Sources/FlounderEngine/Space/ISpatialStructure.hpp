@@ -6,6 +6,7 @@
 namespace Flounder
 {
 	class GameObject;
+	class Component;
 	class Collider;
 
 	/// <summary>
@@ -50,7 +51,7 @@ namespace Flounder
 		/// Gets the size of this structure.
 		/// </summary>
 		/// <returns> The structures size. </returns>
-		virtual int GetSize() = 0;
+		virtual unsigned int GetSize() = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in the spatial structure.

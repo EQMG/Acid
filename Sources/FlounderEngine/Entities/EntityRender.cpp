@@ -28,8 +28,8 @@ namespace Flounder
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
 		// Gets required components.
-		auto mesh = m_gameObject->GetComponent<Mesh>();
-		auto material = m_gameObject->GetComponent<Material>();
+		auto mesh = GetGameObject()->GetComponent<Mesh>();
+		auto material = GetGameObject()->GetComponent<Material>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr || material == nullptr)
 		{
@@ -43,7 +43,7 @@ namespace Flounder
 		descriptorWrites.push_back(uniformScene.GetWriteDescriptor(0, descriptorSet));
 		descriptorWrites.push_back(m_uniformObject->GetWriteDescriptor(1, descriptorSet));
 
-		m_gameObject->GetTransform()->GetWorldMatrix(&uboObject.transform);
+		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 
 		if (material->GetTextureDiffuse() != nullptr)
 		{

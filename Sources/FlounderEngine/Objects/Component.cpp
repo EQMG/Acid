@@ -5,9 +5,9 @@
 namespace Flounder
 {
 	Component::Component() :
+		m_values(new std::map<unsigned int, ComponentGetSet*>()),
 		m_name(""),
-		m_gameObject(nullptr),
-		m_values(new std::map<unsigned int, ComponentGetSet*>())
+		m_gameObject(nullptr)
 	{
 	}
 

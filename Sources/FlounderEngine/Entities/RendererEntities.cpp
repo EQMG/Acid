@@ -50,17 +50,12 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		//	std::vector<GameObject*> inFrustum = std::vector<GameObject*>();
-		//	Objects::Get()->GetStructure()->QueryFrustum(camera.GetViewFrustum(), &inFrustum);
+		std::vector<EntityRender *> renderList = std::vector<EntityRender *>();
+		Scenes::Get()->GetStructure()->QueryComponents<EntityRender>(&renderList);
 
-		for (auto object : *Scenes::Get()->GetStructure()->GetAll()) // inFrustum
+		for (auto entityRender : renderList)
 		{
-			auto entityRender = object->GetComponent<EntityRender>();
-
-			if (entityRender != nullptr)
-			{
-				entityRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
-			}
+			entityRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 		}
 	}
 }

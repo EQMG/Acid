@@ -31,7 +31,7 @@ namespace Flounder
 	{
 		Vector3 cameraPosition = Vector3(*Camera::Get()->GetCamera()->GetPosition());
 		cameraPosition.m_y = 0.0f;
-		Vector3 chunkPosition = Vector3(*m_gameObject->GetTransform()->m_position);
+		Vector3 chunkPosition = Vector3(*GetGameObject()->GetTransform()->m_position);
 		chunkPosition.m_y = Terrains::Get()->GetHeight(cameraPosition.m_x, cameraPosition.m_z);
 		const float distance = Vector3::GetDistance(chunkPosition, cameraPosition);
 
@@ -49,7 +49,7 @@ namespace Flounder
 			}
 			else
 			{
-				auto mesh = m_gameObject->GetComponent<Mesh>();
+				auto mesh = GetGameObject()->GetComponent<Mesh>();
 
 				if (mesh != nullptr)
 				{
@@ -82,7 +82,7 @@ namespace Flounder
 		const float squareSize = TerrainRender::SQUARE_SIZES[lod];
 		const float textureScale = TerrainRender::TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(TerrainRender::SIDE_LENGTH, squareSize);
-		m_modelLods[lod] = new MeshTerrain(static_cast<float>(TerrainRender::SIDE_LENGTH), squareSize, vertexCount, textureScale, m_gameObject->GetTransform()->m_position);
+		m_modelLods[lod] = new MeshTerrain(static_cast<float>(TerrainRender::SIDE_LENGTH), squareSize, vertexCount, textureScale, GetGameObject()->GetTransform()->m_position);
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 

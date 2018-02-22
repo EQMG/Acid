@@ -18,7 +18,7 @@ namespace Flounder
 
 	void CelestialBody::Update()
 	{
-		Transform *entityTransform = m_gameObject->GetTransform();
+		Transform *entityTransform = GetGameObject()->GetTransform();
 
 		if (Worlds::Get() != nullptr)
 		{

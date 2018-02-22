@@ -34,7 +34,7 @@ namespace Flounder
 		const auto descriptorSet = pipeline.GetDescriptorSet();
 
 		// Gets required components.
-		auto mesh = m_gameObject->GetComponent<Mesh>();
+		auto mesh = GetGameObject()->GetComponent<Mesh>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr)
 		{
@@ -43,7 +43,7 @@ namespace Flounder
 
 		// Creates a UBO object and write descriptor.
 		UbosTerrains::UboObject uboObject = {};
-		m_gameObject->GetTransform()->GetWorldMatrix(&uboObject.transform);
+		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		m_uniformObject->Update(&uboObject);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
