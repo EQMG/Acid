@@ -1,7 +1,7 @@
 ﻿#include "Text.hpp"
 
 #include "../Devices/Display.hpp"
-#include "../Visual/DriverConstant.hpp"
+#include "../Maths/Visual/DriverConstant.hpp"
 #include "UbosFonts.hpp"
 
 namespace Flounder

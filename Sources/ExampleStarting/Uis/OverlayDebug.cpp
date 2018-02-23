@@ -1,8 +1,8 @@
 ﻿#include "OverlayDebug.hpp"
 
-#include <Visual/DriverConstant.hpp>
+#include <Maths/Visual/DriverConstant.hpp>
 #include <Worlds/Worlds.hpp>
-#include <Camera/Camera.hpp>
+#include <Scenes/Scenes.hpp>
 
 namespace Demo
 {
@@ -48,9 +48,9 @@ namespace Demo
 				m_textTime->SetText("Time: " + std::to_string(hour) + ":" + std::to_string(minute));
 			}
 
-			if (Camera::Get() != nullptr)
+			if (Scenes::Get() != nullptr)
 			{
-				Vector3 *position = Camera::Get()->GetCamera()->GetPosition();
+				Vector3 *position = Scenes::Get()->GetCamera()->GetPosition();
 				m_textPosition->SetText("POS: " + std::to_string(static_cast<int>(position->m_x)) + ", " +
 					std::to_string(static_cast<int>(position->m_y)) + ", " +
 					std::to_string(static_cast<int>(position->m_z)));

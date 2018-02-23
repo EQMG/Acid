@@ -1,6 +1,6 @@
 #include "UiNavigation.hpp"
 
-#include <Visual/DriverSlide.hpp>
+#include <Maths/Visual/DriverSlide.hpp>
 #include <Events/Events.hpp>
 #include <Events/EventTime.hpp>
 #include "ContentExit.hpp"

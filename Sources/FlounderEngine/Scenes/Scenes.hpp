@@ -2,7 +2,7 @@
 
 #include "../Engine/Engine.hpp"
 #include "../Objects/GameObject.hpp"
-#include "../Space/StructureBasic.hpp"
+#include "../Physics/Space/StructureBasic.hpp"
 #include "Scene.hpp"
 
 namespace Flounder
@@ -37,10 +37,20 @@ namespace Flounder
 
 		void Update() override;
 
-		StructureBasic<GameObject *> *GetStructure() const { return m_scene->GetStructure(); }
-
 		Scene *GetScene() const { return m_scene; }
 
-		void SetScene(Scene *scene) { m_scene = scene; }
+		void SetScene(Scene *scene);
+
+		/// <summary>
+		/// Gets the current camera object.
+		/// </summary>
+		/// <returns> The current camera. </returns>
+		ICamera *GetCamera() const { return m_scene->GetCamera(); }
+
+		/// <summary>
+		/// Gets the GameObjects structure.
+		/// </summary>
+		/// <returns> The GameObjects structure. </returns>
+		StructureBasic<GameObject *> *GetStructure() const { return m_scene->GetStructure(); }
 	};
 }

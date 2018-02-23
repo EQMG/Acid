@@ -1,6 +1,6 @@
 #include "LodBehaviour.hpp"
 
-#include "../Camera/Camera.hpp"
+#include "../Scenes/Scenes.hpp"
 #include "../Maths/Maths.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "Terrains.hpp"
@@ -29,7 +29,7 @@ namespace Flounder
 
 	void LodBehaviour::Update()
 	{
-		Vector3 cameraPosition = Vector3(*Camera::Get()->GetCamera()->GetPosition());
+		Vector3 cameraPosition = Vector3(*Scenes::Get()->GetCamera()->GetPosition());
 		cameraPosition.m_y = 0.0f;
 		Vector3 chunkPosition = Vector3(*GetGameObject()->GetTransform()->m_position);
 		chunkPosition.m_y = Terrains::Get()->GetHeight(cameraPosition.m_x, cameraPosition.m_z);

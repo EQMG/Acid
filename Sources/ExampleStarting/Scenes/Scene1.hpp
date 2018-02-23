@@ -23,6 +23,8 @@ namespace Demo
 
 		~Scene1();
 
+		void Start() override;
+
 		void Update() override;
 	};
 }
