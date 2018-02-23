@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "../Prerequisites.hpp"
-#include "../Space/ISpatialStructure.hpp"
+#include "../Physics/Space/ISpatialStructure.hpp"
 #include "../Maths/Transform.hpp"
 #include "Component.hpp"
 

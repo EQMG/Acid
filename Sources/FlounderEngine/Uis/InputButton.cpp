@@ -1,6 +1,6 @@
 ﻿#include "InputButton.hpp"
 
-#include "../Visual/DriverSlide.hpp"
+#include "../Maths/Visual/DriverSlide.hpp"
 
 namespace Flounder
 {

@@ -3,7 +3,7 @@
 #include <cassert>
 #include <fstream>
 #include "../Helpers/FileSystem.hpp"
-#include "../Camera/Camera.hpp"
+#include "../Scenes/Scenes.hpp"
 
 namespace Flounder
 {
@@ -26,12 +26,7 @@ namespace Flounder
 
 	void Audio::Update()
 	{
-		if (Camera::Get() == nullptr)
-		{
-			return;
-		}
-
-		ICamera *camera = Camera::Get()->GetCamera();
+		ICamera *camera = Scenes::Get()->GetCamera();
 
 		if (camera != nullptr)
 		{

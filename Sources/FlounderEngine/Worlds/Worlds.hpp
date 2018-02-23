@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../Maths/Vector3.hpp"
 #include "../Engine/Engine.hpp"
+#include "../Maths/Vector3.hpp"
+#include "../Maths/Visual/DriverLinear.hpp"
 #include "../Skyboxes/Skyboxes.hpp"
-#include "../Visual/DriverLinear.hpp"
 
 namespace Flounder
 {

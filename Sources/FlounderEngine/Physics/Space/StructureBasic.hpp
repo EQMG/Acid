@@ -3,9 +3,9 @@
 #include <vector>
 #include <algorithm>
 #include "ISpatialStructure.hpp"
-#include "../Objects/GameObject.hpp"
-#include "../Objects/Component.hpp"
-#include "../Physics/Collider.hpp"
+#include "../../Objects/GameObject.hpp"
+#include "../../Objects/Component.hpp"
+#include "../../Physics/Collider.hpp"
 
 namespace Flounder
 {
@@ -65,8 +65,7 @@ namespace Flounder
 		/// <summary>
 		/// Returns a set of all components of a type in the spatial structure.
 		/// </summary>
-		/// <param name="result"> The list to store the data into.
-		/// </param>
+		/// <param name="result"> The list to store the data into.</param>
 		/// <returns> The list specified by of all components that match the type. </returns>
 		template<typename K>
 		std::vector<K*> *QueryComponents(std::vector<K*> *result)
@@ -76,13 +75,34 @@ namespace Flounder
 				auto gameObject = static_cast<GameObject *>(object);
 				auto component = gameObject->GetComponent<K>();
 
-				if (component == nullptr)
+				if (component != nullptr)
 				{
 					result->push_back(component);
 				}
 			}
 
 			return result;
+		}
+
+		/// <summary>
+		/// Returns the first component of a type found in the spatial structure.
+		/// </summary>
+		/// <returns> The first component of the type found. </returns>
+		template<typename K>
+		K *GetComponent()
+		{
+			for (auto object : *GetAll())
+			{
+				auto gameObject = static_cast<GameObject *>(object);
+				auto component = gameObject->GetComponent<K>();
+
+				if (component != nullptr)
+				{
+					return component;
+				}
+			}
+
+			return nullptr;
 		}
 
 		std::vector<T> *QueryAll(std::vector<T> *result) override

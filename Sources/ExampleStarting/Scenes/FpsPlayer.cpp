@@ -1,6 +1,5 @@
 #include "FpsPlayer.hpp"
 
-#include <Camera/Camera.hpp>
 #include <Inputs/AxisCompound.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/AxisButton.hpp>
@@ -9,6 +8,7 @@
 #include <Inputs/ButtonJoystick.hpp>
 #include <Uis/Uis.hpp>
 #include <Terrains/Terrains.hpp>
+#include <Scenes/Scenes.hpp>
 
 namespace Demo
 {
@@ -19,9 +19,7 @@ namespace Demo
 	const float FpsPlayer::NOCLIP_SPEED = 15.0f;
 
 	FpsPlayer::FpsPlayer() :
-		IPlayer(),
-		m_position(new Vector3()),
-		m_rotation(new Vector3()),
+		Behaviour(),
 		m_currentSpeed(0.0f),
 		m_currentStrafeSpeed(0.0f),
 		m_currentUpwardSpeed(0.0f),
@@ -64,9 +62,6 @@ namespace Demo
 
 	FpsPlayer::~FpsPlayer()
 	{
-		delete m_position;
-		delete m_rotation;
-
 		delete m_inputForward;
 		delete m_inputStrafe;
 
@@ -141,7 +136,11 @@ namespace Demo
 			//	m_currentUpwardSpeed = 0.0f;
 		}
 
-		const float terrainHeight = Terrains::Get()->GetHeight(m_position->m_x, m_position->m_z) + 1.74f;
+		auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+		auto position = GetGameObject()->GetTransform()->GetPosition();
+		auto rotation = GetGameObject()->GetTransform()->GetRotation();
+
+		const float terrainHeight = Terrains::Get()->GetHeight(position->m_x, position->m_z) + 1.74f;
 		// const float terrainSlope = Terrains::Get()->GetSlope(m_position->m_x, m_position->m_z);
 
 		/*if (terrainSlope - 0.3 > 0)
@@ -149,22 +148,22 @@ namespace Demo
 			m_currentSpeed *= terrainSlope - 0.5;
 		}*/
 
-		// Calculates the deltas to the moved distance, and rotations.
-		const float theta = Maths::Radians(Camera::Get()->GetCamera()->GetRotation()->m_y);
+		// Calculates the deltas to the moved distance, and rotation.
+		const float theta = Maths::Radians(cameraRotation->m_y);
 		const float dx = -(m_currentSpeed * std::sin(theta) + m_currentStrafeSpeed * std::cos(theta)) * delta;
 		const float dy = m_currentUpwardSpeed * delta;
 		const float dz = -(m_currentSpeed * std::cos(theta) - m_currentStrafeSpeed * std::sin(theta)) * delta;
 
-		Vector3::Add(*m_position, *m_amountMove->Set(dx, dy, dz), m_position);
-		Vector3::Add(*m_rotation, *m_amountRotate->Set(0.0f, 0.0f, 0.0f), m_rotation);
+		Vector3::Add(*position, *m_amountMove->Set(dx, dy, dz), position);
+		Vector3::Add(*rotation, *m_amountRotate->Set(0.0f, 0.0f, 0.0f), rotation);
 
 		if (!m_noclipEnabled)
 		{
 			m_currentUpwardSpeed -= 24.06f * delta;
 
-			if (m_position->m_y < terrainHeight)
+			if (position->m_y < terrainHeight)
 			{
-				m_position->m_y = terrainHeight;
+				position->m_y = terrainHeight;
 				m_currentUpwardSpeed = 0.0f;
 				m_jumping = false;
 			}

@@ -31,5 +31,18 @@ namespace Flounder
 		{
 			object->Update();
 		}
+
+		if (m_scene->GetCamera() == nullptr)
+		{
+			return;
+		}
+
+		m_scene->GetCamera()->Update();
+	}
+
+	void Scenes::SetScene(Scene *scene)
+	{
+		m_scene = scene;
+		m_scene->Start();
 	}
 }

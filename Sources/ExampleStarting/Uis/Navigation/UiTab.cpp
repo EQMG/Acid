@@ -1,6 +1,6 @@
 #include "UiTab.hpp"
 
-#include <Visual/DriverConstant.hpp>
+#include <Maths/Visual/DriverConstant.hpp>
 #include "UiNavigation.hpp"
 
 namespace Demo

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <Camera/Camera.hpp>
 #include <Devices/Mouse.hpp>
 #include <Engine/ModuleUpdater.hpp>
 #include <Helpers/FileSystem.hpp>
@@ -8,10 +7,8 @@
 #include <Skyboxes/SkyboxRender.hpp>
 #include <Scenes/Scenes.hpp>
 #include "Configs/ConfigManager.hpp"
-#include "Cameras/FpsCamera.hpp"
-#include "Cameras/FpsPlayer.hpp"
 #include "Scenes/Scene1.hpp"
-#include "Renderers/ManagerRender.hpp"
+#include "ManagerRender.hpp"
 #include "Uis/ManagerUis.hpp"
 
 using namespace Demo;
@@ -23,11 +20,11 @@ int main(int argc, char **argv)
 //#endif
 {
 	// Creates the engine object.
-	Engine *m_engine = new Engine();
+	auto m_engine = new Engine();
 	m_engine->SetUpdater(new ModuleUpdater());
 
+	auto configManager = new ConfigManager();
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
-	ConfigManager *configManager = new ConfigManager();
 
 	// Initializes the engine modules.
 	if (Display::Get() != nullptr)
@@ -39,12 +36,6 @@ int main(int argc, char **argv)
 	if (Mouse::Get() != nullptr)
 	{
 		Mouse::Get()->SetCustomMouse("Resources/Guis/Cursor.png");
-	}
-
-	if (Camera::Get() != nullptr)
-	{
-		Camera::Get()->SetCamera(new FpsCamera());
-		Camera::Get()->SetPlayer(new FpsPlayer());
 	}
 
 	if (Renderer::Get() != nullptr)

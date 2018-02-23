@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Camera/ICamera.hpp"
+#include "../Scenes/ICamera.hpp"
 #include "../Engine/Platform.hpp"
 
 namespace Flounder

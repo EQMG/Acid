@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../Camera/ICamera.hpp"
+#include "../Scenes/ICamera.hpp"
 #include "../Maths/Matrix4.hpp"
 #include "../Maths/Vector4.hpp"
 #include "../Physics/Aabb.hpp"
