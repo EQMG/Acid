@@ -36,10 +36,10 @@ namespace Flounder
 		std::string m_name;
 		GameObject *m_gameObject;
 	public:
-#define LINK_GET(f) new std::function<std::string()>([&]() -> std::string { return std::to_string(f); })
-#define LINK_GET_STR(f) new std::function<std::string()>([&]() -> std::string { return f; })
-#define LINK_GET_RES(f) new std::function<std::string()>([&]() -> std::string { return (f == nullptr) ? "nullptr" : f->GetFilename(); })
-#define LINK_SET(t, f) new std::function<void(PrefabComponent *, unsigned int)>([&](PrefabComponent *componentPrefab, unsigned int i) -> void { t v = componentPrefab->Get<t>(i); f; })
+#define LINK_GET(f) (new std::function<std::string()>([&]() -> std::string { return std::to_string(f); }))
+#define LINK_GET_STR(f) (new std::function<std::string()>([&]() -> std::string { return f; }))
+#define LINK_GET_RES(f) (new std::function<std::string()>([&]() -> std::string { return (f == nullptr) ? "nullptr" : f->GetFilename(); }))
+#define LINK_SET(t, f) (new std::function<void(PrefabComponent *, unsigned int)>([&](PrefabComponent *componentPrefab, unsigned int i) -> void { t v = componentPrefab->Get<t>(i); f; }))
 
 		Component();
 
@@ -49,15 +49,17 @@ namespace Flounder
 
 		virtual std::string GetName() const = 0;
 
+		void Load(PrefabComponent *componentPrefab);
+
+		void Write(PrefabComponent *componentPrefab);
+
+		std::map<unsigned int, ComponentGetSet*> *GetValues() const { return m_values; }
+
 		void SetName(const std::string &name) { m_name = name; }
 
 		GameObject *GetGameObject() const { return m_gameObject; }
 
 		void SetGameObject(GameObject *gameObject) { m_gameObject = gameObject; }
-
-		void Load(PrefabComponent *componentPrefab);
-
-		void Write(PrefabComponent *componentPrefab);
 
 	protected:
 		template<typename T>

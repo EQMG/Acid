@@ -4,6 +4,7 @@
 #include "../Maths/Vector3.hpp"
 #include "../Objects/Component.hpp"
 #include "../Objects/GameObject.hpp"
+#include "Collider.hpp"
 
 namespace Flounder
 {
@@ -16,6 +17,7 @@ namespace Flounder
 		bool m_useGravity;
 		Constraint3 *m_freezePosition;
 		Constraint3 *m_freezeRotation;
+		Collider *m_colliderCopy;
 	public:
 		Rigidbody(const float &mass = 1.0f, const float &drag = 0.0f, const bool &useGravity = true, const Constraint3 &freezePosition = Constraint3::FALSE, const Constraint3 &freezeRotation = Constraint3::FALSE);
 
@@ -46,5 +48,7 @@ namespace Flounder
 		Constraint3 *GetFreezeRotation() const { return m_freezeRotation; }
 
 		void SetFreezeRotation(const Constraint3 &freezeRotation) const { m_freezeRotation->Set(freezeRotation); }
+
+		Collider *GetCollider() const { return m_colliderCopy; }
 	};
 }
