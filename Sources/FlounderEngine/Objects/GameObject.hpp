@@ -63,7 +63,5 @@ namespace Flounder
 		void StructureSwitch(ISpatialStructure<GameObject *> *structure);
 
 		void StructureRemove();
-	private:
-		static Component *CreateComponent(const std::string &name);
 	};
 }

@@ -6,10 +6,11 @@
 #include <Renderer/Renderer.hpp>
 #include <Skyboxes/SkyboxRender.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Objects/ComponentRegister.hpp>
+#include <Scenes/FpsPlayer.hpp>
 #include "Configs/ConfigManager.hpp"
 #include "Scenes/Scene1.hpp"
 #include "ManagerRender.hpp"
-#include "Uis/ManagerUis.hpp"
 
 using namespace Demo;
 
@@ -43,15 +44,12 @@ int main(int argc, char **argv)
 		Renderer::Get()->SetManager(new ManagerRender());
 	}
 
-	if (Uis::Get() != nullptr)
-	{
-		Uis::Get()->SetManager(new ManagerUis());
-	}
-
 	if (Scenes::Get() != nullptr)
 	{
 		Scenes::Get()->SetScene(new Scene1());
 	}
+
+	ComponentRegister::Register("FpsPlayer", REGISTER_CREATE(FpsPlayer));
 
 	// Runs the engine loop.
 	const int exitCode = m_engine->Run();

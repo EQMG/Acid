@@ -38,6 +38,7 @@ namespace Flounder
 		}
 
 		m_scene->GetCamera()->Update();
+		m_scene->GetUiManager()->Update();
 	}
 
 	void Scenes::SetScene(Scene *scene)

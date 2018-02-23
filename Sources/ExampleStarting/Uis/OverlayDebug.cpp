@@ -48,12 +48,12 @@ namespace Demo
 				m_textTime->SetText("Time: " + std::to_string(hour) + ":" + std::to_string(minute));
 			}
 
-			if (Scenes::Get() != nullptr)
+			if (Scenes::Get()->GetCamera() != nullptr)
 			{
-				Vector3 *position = Scenes::Get()->GetCamera()->GetPosition();
-				m_textPosition->SetText("POS: " + std::to_string(static_cast<int>(position->m_x)) + ", " +
-					std::to_string(static_cast<int>(position->m_y)) + ", " +
-					std::to_string(static_cast<int>(position->m_z)));
+				Vector3 *cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
+				m_textPosition->SetText("POS: " + std::to_string(static_cast<int>(cameraPosition->m_x)) + ", " +
+					std::to_string(static_cast<int>(cameraPosition->m_y)) + ", " +
+					std::to_string(static_cast<int>(cameraPosition->m_z)));
 			}
 
 			m_textFps->SetText("FPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDeltaRender())));

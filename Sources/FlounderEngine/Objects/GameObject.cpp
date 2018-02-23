@@ -2,17 +2,7 @@
 
 #include "Prefabs/PrefabObject.hpp"
 #include "../Scenes/Scenes.hpp"
-#include "../Skyboxes/CelestialBody.hpp"
-#include "../Entities/EntityRender.hpp"
-#include "../Lights/Light.hpp"
-#include "../Physics/Aabb.hpp"
-#include "../Physics/Sphere.hpp"
-#include "../Materials/Material.hpp"
-#include "../Meshes/Mesh.hpp"
-#include "../Physics/Rigidbody.hpp"
-#include "../Skyboxes/SkyboxRender.hpp"
-#include "../Terrains/TerrainRender.hpp"
-#include "../Waters/WaterRender.hpp"
+#include "ComponentRegister.hpp"
 
 namespace Flounder
 {
@@ -47,7 +37,7 @@ namespace Flounder
 				continue;
 			}
 
-			Component *component = CreateComponent(componentName);
+			Component *component = ComponentRegister::Create(componentName);
 
 			if (component == nullptr)
 			{
@@ -127,21 +117,5 @@ namespace Flounder
 		}
 
 		m_removed = true;
-	}
-
-	Component *GameObject::CreateComponent(const std::string &name)
-	{
-		if (name == "CelestialBody") { return new CelestialBody(); }
-		if (name == "ColliderAabb") { return new Aabb(); }
-		if (name == "ColliderSphere") { return new Sphere(); }
-		if (name == "EntityRender") { return new EntityRender(); }
-		if (name == "Light") { return new Light(); }
-		if (name == "Material") { return new Material(); }
-		if (name == "Mesh") { return new Mesh(); }
-		if (name == "Rigidbody") { return new Rigidbody(); }
-		if (name == "SkyboxRender") { return new SkyboxRender(); }
-		if (name == "TerrainRender") { return new TerrainRender(); }
-		if (name == "WaterRender") { return new WaterRender(); }
-		return nullptr;
 	}
 }
