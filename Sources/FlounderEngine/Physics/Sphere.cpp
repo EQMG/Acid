@@ -39,6 +39,12 @@ namespace Flounder
 
 		Sphere *source = dynamic_cast<Sphere *>(destination);
 
+		if (source == nullptr)
+		{
+			delete source;
+			source = new Sphere();
+		}
+
 		source->m_radius = m_radius * transform.m_scaling->m_x;
 		source->m_position->Set(*transform.m_position);
 

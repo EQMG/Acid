@@ -55,6 +55,13 @@ namespace Flounder
 
 		for (auto entityRender : renderList)
 		{
+			auto rigidbody = entityRender->GetGameObject()->GetComponent<Rigidbody>();
+
+			if (rigidbody != nullptr && !rigidbody->GetCollider()->InFrustum(*camera.GetViewFrustum()))
+			{
+				continue;
+			}
+
 			entityRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 		}
 	}

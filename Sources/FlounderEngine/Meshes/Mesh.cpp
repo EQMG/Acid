@@ -49,5 +49,6 @@ namespace Flounder
 		}
 
 		m_model = Model::Resource(filename);
+		GetGameObject()->GetComponent<GameObject>();
 	}
 }
