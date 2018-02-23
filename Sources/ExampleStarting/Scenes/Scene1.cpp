@@ -13,13 +13,14 @@
 #include <Terrains/LodBehaviour.hpp>
 #include <Waters/MeshWater.hpp>
 #include <Waters/WaterRender.hpp>
+#include "../ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 
 namespace Demo
 {
 	Scene1::Scene1() :
-		Scene(new FpsCamera()),
+		Scene(new FpsCamera(), new ManagerUis()),
 		m_buttonFullscreen(new ButtonKeyboard({GLFW_KEY_F11})),
 		m_buttonCaptureMouse(new ButtonKeyboard({GLFW_KEY_M})),
 		m_buttonScreenshot(new ButtonKeyboard({GLFW_KEY_F12})),

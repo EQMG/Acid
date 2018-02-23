@@ -60,7 +60,7 @@ namespace Flounder
 		Vector3::Multiply(lightDirection, Vector3(-500.0f, -500.0f, -500.0f), m_sunPosition);
 		Vector3::Multiply(lightDirection, Vector3(500.0f, 500.0f, 500.0f), m_moonPosition);
 
-		if (Scenes::Get() != nullptr && Scenes::Get()->GetCamera() != nullptr)
+		if (Scenes::Get()->GetCamera() != nullptr)
 		{
 			Vector3::Add(*m_sunPosition, *Scenes::Get()->GetCamera()->GetPosition(), m_sunPosition);
 			Vector3::Add(*m_moonPosition, *Scenes::Get()->GetCamera()->GetPosition(), m_moonPosition);

@@ -2,7 +2,6 @@
 
 #include "../Engine/Engine.hpp"
 #include "../Fonts/FontFamily.hpp"
-#include "IManagerUis.hpp"
 #include "UiSelector.hpp"
 
 namespace Flounder
@@ -14,7 +13,6 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		IManagerUis *m_managerUis;
 		UiSelector *m_selector;
 		UiObject *m_container;
 		std::vector<UiObject *> *m_objects;
@@ -41,18 +39,6 @@ namespace Flounder
 		~Uis();
 
 		void Update() override;
-
-		/// <summary>
-		/// Gets the uis manager.
-		/// </summary>
-		/// <returns> The uis manager. </returns>
-		IManagerUis *GetManager() const { return m_managerUis; };
-
-		/// <summary>
-		/// Sets the current uis manager to a new uis manager.
-		/// </summary>
-		/// <param name="managerUis"> The new uis manager. </param>
-		void SetManager(IManagerUis *managerUis) { m_managerUis = managerUis; }
 
 		/// <summary>
 		/// Gets the screen container.

@@ -1,6 +1,7 @@
 ﻿#include "InputText.hpp"
 
 #include "../Devices/Keyboard.hpp"
+#include "../Scenes/Scenes.hpp"
 #include "../Maths/Visual/DriverSlide.hpp"
 
 namespace Flounder
@@ -118,7 +119,7 @@ namespace Flounder
 		}
 
 		// Update the background colour.
-		Colour::Interpolate(*COLOUR_NORMAL, *Uis::Get()->GetManager()->GetPrimaryColour(),
+		Colour::Interpolate(*COLOUR_NORMAL, *Scenes::Get()->GetUiManager()->GetPrimaryColour(),
 			(m_text->GetScale() - SCALE_NORMAL) /
 				(SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
