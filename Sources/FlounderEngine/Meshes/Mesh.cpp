@@ -33,18 +33,21 @@ namespace Flounder
 		if (!split.empty() && split.at(0) == "Sphere")
 		{
 			m_model = ShapeSphere::Resource(filename);
+			return;
 		}
-		else if (!split.empty() && split.at(0) == "Cube")
+		
+		if (!split.empty() && split.at(0) == "Cube")
 		{
 			m_model = ShapeCube::Resource(filename);
+			return;
 		}
-		else if (!split.empty() && split.at(0) == "Rectangle")
+		
+		if (!split.empty() && split.at(0) == "Rectangle")
 		{
 			m_model = ShapeRectangle::Resource(filename);
+			return;
 		}
-		else
-		{
-			m_model = Model::Resource(filename);
-		}
+
+		m_model = Model::Resource(filename);
 	}
 }

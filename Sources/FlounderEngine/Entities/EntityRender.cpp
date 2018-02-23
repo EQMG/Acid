@@ -59,7 +59,8 @@ namespace Flounder
 
 		uboObject.diffuse = *material->GetColour();
 		uboObject.surface = Vector3(material->GetMetallic(), material->GetRoughness(),
-			(1.0f / 3.0f) * ((float) material->GetIgnoreFog() + (2.0f * (float) material->GetIgnoreLighting())));
+			(1.0f / 3.0f) * (static_cast<float>(material->GetIgnoreFog()) + 
+			(2.0f * static_cast<float>(material->GetIgnoreLighting()))));
 
 		m_uniformObject->Update(&uboObject);
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);

@@ -2,6 +2,8 @@
 
 #include <Uis/Uis.hpp>
 #include <Devices/Mouse.hpp>
+#include <Scenes/Scenes.hpp>
+#include "FpsPlayer.hpp"
 
 namespace Demo
 {
@@ -65,7 +67,7 @@ namespace Demo
 		delete m_joystickHorizontal;
 	}
 
-	void FpsCamera::Update(IPlayer *player)
+	void FpsCamera::Update()
 	{
 		float delta = Maths::Min(1.0f / 60.0f, Engine::Get()->GetDelta());
 
@@ -84,13 +86,18 @@ namespace Demo
 		CalculateHorizontalAngle();
 		CalculateVerticalAngle();
 
+		auto player = Scenes::Get()->GetStructure()->GetComponent<FpsPlayer>();
+
 		if (player != nullptr)
 		{
-			Vector3::Subtract(*player->GetPosition(), *m_targetPosition, m_velocity);
+			auto playerRotation = player->GetGameObject()->GetTransform()->GetRotation();
+			auto playerPosition = player->GetGameObject()->GetTransform()->GetPosition();
+
+			Vector3::Subtract(*playerPosition, *m_targetPosition, m_velocity);
 			*m_velocity /= delta;
 
-			m_targetPosition->Set(*player->GetPosition());
-			m_targetRotation->Set(*player->GetRotation());
+			m_targetPosition->Set(*playerPosition);
+			m_targetRotation->Set(*playerRotation);
 		}
 
 		UpdateHorizontalAngle(delta);

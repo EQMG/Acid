@@ -1,6 +1,6 @@
 #include "ManagerRender.hpp"
 
-#include <Camera/Camera.hpp>
+#include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Worlds/Worlds.hpp>
 
@@ -44,7 +44,7 @@ namespace Demo
 	void ManagerRender::Render()
 	{
 		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-		const auto camera = Camera::Get()->GetCamera();
+		const auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
 		VkResult startResult = Renderer::Get()->StartRenderpass(commandBuffer);

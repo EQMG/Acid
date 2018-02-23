@@ -3,8 +3,8 @@
 #include "../Devices/Display.hpp"
 #include "../Events/Events.hpp"
 #include "../Events/EventTime.hpp"
-#include "../Visual/DriverSlide.hpp"
-#include "../Visual/DriverConstant.hpp"
+#include "../Maths/Visual/DriverConstant.hpp"
+#include "../Maths/Visual/DriverSlide.hpp"
 
 namespace Flounder
 {

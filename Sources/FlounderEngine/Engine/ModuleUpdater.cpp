@@ -1,6 +1,5 @@
 #include "ModuleUpdater.hpp"
 
-#include "../Camera/Camera.hpp"
 #include "../Devices/Audio.hpp"
 #include "../Devices/Joysticks.hpp"
 #include "../Devices/Keyboard.hpp"
@@ -60,7 +59,6 @@ namespace Flounder
 		ModuleCreate<Resources>(UpdatePre, "resources");
 		ModuleCreate<Events>(UpdatePre, "events");
 		ModuleCreate<Tasks>(UpdatePre, "tasks");
-		ModuleCreate<Camera>(UpdatePre, "camera");
 		ModuleCreate<Uis>(UpdatePre, "uis");
 		ModuleCreate<Worlds>(UpdatePre, "worlds");
 		ModuleCreate<Scenes>(UpdateNormal, "scenes");

@@ -5,7 +5,6 @@
 #include "../Maths/Matrix4.hpp"
 #include "../Physics/Frustum.hpp"
 #include "../Physics/Ray.hpp"
-#include "IPlayer.hpp"
 
 namespace Flounder
 {
@@ -30,10 +29,9 @@ namespace Flounder
 		}
 
 		/// <summary>
-		/// Checks inputs and carries out smooth camera movement. Should be called every frame.
+		/// Checks inputs and carries out smooth camera movement. Called before every frame.
 		/// </summary>
-		/// <param name="player"> The movement and rotation controller to read from. </param>
-		virtual void Update(IPlayer *player) = 0;
+		virtual void Update() = 0;
 
 		/// <summary>
 		/// Prepares the camera for the reflection render pass.

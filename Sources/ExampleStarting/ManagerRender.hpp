@@ -6,12 +6,12 @@
 #include <Terrains/RendererTerrains.hpp>
 #include <Waters/RendererWaters.hpp>
 #include <Entities/RendererEntities.hpp>
-#include <Deferred/RendererDeferred.hpp>
-#include <Fonts/RendererFonts.hpp>
+#include <Post/Deferred/RendererDeferred.hpp>
 #include <Post/Filters/FilterFxaa.hpp>
 #include <Post/Filters/FilterTiltshift.hpp>
 #include <Post/Filters/FilterLensflare.hpp>
 #include <Post/Filters/FilterGrain.hpp>
+#include <Fonts/RendererFonts.hpp>
 #include <Guis/RendererGuis.hpp>
 
 using namespace Flounder;

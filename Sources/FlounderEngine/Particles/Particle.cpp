@@ -1,7 +1,6 @@
 ﻿#include "Particle.hpp"
 
-#include "../Camera/Camera.hpp"
-#include "../Maths/Maths.hpp"
+#include "../Scenes/Scenes.hpp"
 
 namespace Flounder
 {
@@ -46,12 +45,12 @@ namespace Flounder
 			m_transparency += 1.0f * Engine::Get()->GetDelta();
 		}
 
-		if (!IsAlive() || Camera::Get()->GetCamera() == nullptr)
+		if (!IsAlive() || Scenes::Get()->GetCamera() == nullptr)
 		{
 			return;
 		}
 
-		Vector3 *cameraToParticle = Vector3::Subtract(*Camera::Get()->GetCamera()->GetPosition(), *m_transform->GetPosition(), nullptr);
+		Vector3 *cameraToParticle = Vector3::Subtract(*Scenes::Get()->GetCamera()->GetPosition(), *m_transform->GetPosition(), nullptr);
 		m_distanceToCamera = cameraToParticle->LengthSquared();
 		delete cameraToParticle;
 

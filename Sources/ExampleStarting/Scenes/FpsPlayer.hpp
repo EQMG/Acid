@@ -1,6 +1,7 @@
 #pragma once
 
-#include <Camera/IPlayer.hpp>
+#include <Objects/Behaviour.hpp>
+#include <Objects/GameObject.hpp>
 #include <Inputs/IAxis.hpp>
 #include <Inputs/IButton.hpp>
 
@@ -9,7 +10,7 @@ using namespace Flounder;
 namespace Demo
 {
 	class FpsPlayer :
-		public IPlayer
+		public Behaviour
 	{
 	private:
 		static const float WALK_SPEED;
@@ -17,9 +18,6 @@ namespace Demo
 		static const float CROUCH_SPEED;
 		static const float JUMP_SPEED;
 		static const float NOCLIP_SPEED;
-
-		Vector3 *m_position;
-		Vector3 *m_rotation;
 
 		float m_currentSpeed;
 		float m_currentStrafeSpeed;
@@ -44,9 +42,5 @@ namespace Demo
 		~FpsPlayer();
 
 		void Update() override;
-
-		Vector3 *GetPosition() const override { return m_position; }
-
-		Vector3 *GetRotation() const override { return m_rotation; }
 	};
 }
