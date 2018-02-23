@@ -11,7 +11,9 @@ namespace Flounder
 	const std::vector<const char *> Display::VALIDATION_LAYERS = {
 		"VK_LAYER_LUNARG_standard_validation"
 	}; // "VK_LAYER_LUNARG_api_dump"
-	const std::vector<const char *> Display::DEVICE_EXTENSIONS = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+	const std::vector<const char *> Display::DEVICE_EXTENSIONS = {
+		VK_KHR_SWAPCHAIN_EXTENSION_NAME
+	};
 
 	void CallbackError(int error, const char *description)
 	{

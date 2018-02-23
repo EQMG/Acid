@@ -65,6 +65,8 @@ namespace Demo
 				terrainObject->AddComponent(new Mesh());
 				terrainObject->AddComponent(new LodBehaviour());
 				terrainObject->AddComponent(new TerrainRender());
+				terrainObject->AddComponent(new Aabb());
+				terrainObject->AddComponent(new Rigidbody());
 			}
 		}
 

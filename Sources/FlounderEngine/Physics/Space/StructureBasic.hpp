@@ -5,7 +5,7 @@
 #include "ISpatialStructure.hpp"
 #include "../../Objects/GameObject.hpp"
 #include "../../Objects/Component.hpp"
-#include "../../Physics/Collider.hpp"
+#include "../../Physics/Rigidbody.hpp"
 
 namespace Flounder
 {
@@ -120,9 +120,9 @@ namespace Flounder
 			for (auto object : *m_objects)
 			{
 				auto gameObject = static_cast<GameObject *>(object);
-				auto collider = gameObject->GetComponent<Collider>();
+				auto rigidbody = gameObject->GetComponent<Rigidbody>();
 
-				if (collider == nullptr || collider->InFrustum(*range))
+				if (rigidbody == nullptr || rigidbody->GetCollider()->InFrustum(*range))
 				{
 					result->push_back(object);
 				}
@@ -136,9 +136,9 @@ namespace Flounder
 			for (auto object : *m_objects)
 			{
 				auto gameObject = static_cast<GameObject *>(object);
-				auto collider = gameObject->GetComponent<Collider>();
+				auto rigidbody = gameObject->GetComponent<Rigidbody>();
 
-				if (collider == nullptr || range->Intersects(*collider).IsIntersection() || range->Contains(*collider))
+				if (rigidbody == nullptr || range->Intersects(*rigidbody->GetCollider()).IsIntersection() || range->Contains(*rigidbody->GetCollider()))
 				{
 					result->push_back(object);
 				}

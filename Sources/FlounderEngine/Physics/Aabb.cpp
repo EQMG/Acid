@@ -162,74 +162,80 @@ namespace Flounder
 			destination = new Aabb();
 		}
 
-		Aabb *aabb2 = dynamic_cast<Aabb *>(destination);
+		Aabb *source = dynamic_cast<Aabb *>(destination);
+
+		if (source == nullptr)
+		{
+			delete source;
+			source = new Aabb();
+		}
 
 		// Sets the destinations values to the sources.
-		aabb2->m_minExtents->Set(*m_minExtents);
-		aabb2->m_maxExtents->Set(*m_maxExtents);
+		source->m_minExtents->Set(*m_minExtents);
+		source->m_maxExtents->Set(*m_maxExtents);
 
 		// Scales the dimensions for the aabb.
 		if (*transform.m_scaling != 1.0f)
 		{
-			aabb2->m_minExtents->Set(aabb2->m_minExtents->m_x * transform.m_scaling->m_x, aabb2->m_minExtents->m_y * transform.m_scaling->m_y, aabb2->m_minExtents->m_z * transform.m_scaling->m_z);
-			aabb2->m_maxExtents->Set(aabb2->m_maxExtents->m_x * transform.m_scaling->m_x, aabb2->m_maxExtents->m_y * transform.m_scaling->m_y, aabb2->m_maxExtents->m_z * transform.m_scaling->m_z);
+			source->m_minExtents->Set(source->m_minExtents->m_x * transform.m_scaling->m_x, source->m_minExtents->m_y * transform.m_scaling->m_y, source->m_minExtents->m_z * transform.m_scaling->m_z);
+			source->m_maxExtents->Set(source->m_maxExtents->m_x * transform.m_scaling->m_x, source->m_maxExtents->m_y * transform.m_scaling->m_y, source->m_maxExtents->m_z * transform.m_scaling->m_z);
 		}
 
 		// Creates the 8 aabb corners and rotates them.
 		if (*transform.m_rotation != 0.0f)
 		{
-			Vector3 fll = Vector3(aabb2->m_minExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_minExtents->m_z);
+			Vector3 fll = Vector3(source->m_minExtents->m_x, source->m_minExtents->m_y, source->m_minExtents->m_z);
 			Vector3::Rotate(fll, *transform.m_rotation, &fll);
 
-			Vector3 flr = Vector3(aabb2->m_maxExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_minExtents->m_z);
+			Vector3 flr = Vector3(source->m_maxExtents->m_x, source->m_minExtents->m_y, source->m_minExtents->m_z);
 			Vector3::Rotate(flr, *transform.m_rotation, &flr);
 
-			Vector3 ful = Vector3(aabb2->m_minExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_minExtents->m_z);
+			Vector3 ful = Vector3(source->m_minExtents->m_x, source->m_maxExtents->m_y, source->m_minExtents->m_z);
 			Vector3::Rotate(ful, *transform.m_rotation, &ful);
 
-			Vector3 fur = Vector3(aabb2->m_maxExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_minExtents->m_z);
+			Vector3 fur = Vector3(source->m_maxExtents->m_x, source->m_maxExtents->m_y, source->m_minExtents->m_z);
 			Vector3::Rotate(fur, *transform.m_rotation, &fur);
 
-			Vector3 bur = Vector3(aabb2->m_maxExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_maxExtents->m_z);
+			Vector3 bur = Vector3(source->m_maxExtents->m_x, source->m_maxExtents->m_y, source->m_maxExtents->m_z);
 			Vector3::Rotate(bur, *transform.m_rotation, &bur);
 
-			Vector3 bul = Vector3(aabb2->m_minExtents->m_x, aabb2->m_maxExtents->m_y, aabb2->m_maxExtents->m_z);
+			Vector3 bul = Vector3(source->m_minExtents->m_x, source->m_maxExtents->m_y, source->m_maxExtents->m_z);
 			Vector3::Rotate(bul, *transform.m_rotation, &bul);
 
-			Vector3 blr = Vector3(aabb2->m_maxExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_maxExtents->m_z);
+			Vector3 blr = Vector3(source->m_maxExtents->m_x, source->m_minExtents->m_y, source->m_maxExtents->m_z);
 			Vector3::Rotate(blr, *transform.m_rotation, &blr);
 
-			Vector3 bll = Vector3(aabb2->m_minExtents->m_x, aabb2->m_minExtents->m_y, aabb2->m_maxExtents->m_z);
+			Vector3 bll = Vector3(source->m_minExtents->m_x, source->m_minExtents->m_y, source->m_maxExtents->m_z);
 			Vector3::Rotate(bll, *transform.m_rotation, &bll);
 
-			//aabb2->m_minExtents = min(fll, min(flr, min(ful, min(fur, min(bur, min(bul, min(blr, bll)))))));
-			Vector3::MinVector(fll, flr, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, ful, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, fur, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, bur, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, bul, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, blr, aabb2->m_minExtents);
-			Vector3::MinVector(*aabb2->m_minExtents, bll, aabb2->m_minExtents);
+			//source->m_minExtents = min(fll, min(flr, min(ful, min(fur, min(bur, min(bul, min(blr, bll)))))));
+			Vector3::MinVector(fll, flr, source->m_minExtents);
+			Vector3::MinVector(*source->m_minExtents, ful, source->m_minExtents);
+			Vector3::MinVector(*source->m_minExtents, fur, source->m_minExtents);
+			Vector3::MinVector(*source->m_minExtents, bur, source->m_minExtents);
+			Vector3::MinVector(*source->m_minExtents, bul, source->m_minExtents);
+			Vector3::MinVector(*source->m_minExtents, blr, source->m_minExtents);
+			Vector3::MinVector(*source->m_minExtents, bll, source->m_minExtents);
 
-			//aabb2->m_maxExtents = max(fll, max(flr, max(ful, max(fur, max(bur, max(bul, max(blr, bll)))))));
-			Vector3::MaxVector(fll, flr, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, ful, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, fur, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, bur, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, bul, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, blr, aabb2->m_maxExtents);
-			Vector3::MaxVector(*aabb2->m_maxExtents, bll, aabb2->m_maxExtents);
+			//source->m_maxExtents = max(fll, max(flr, max(ful, max(fur, max(bur, max(bul, max(blr, bll)))))));
+			Vector3::MaxVector(fll, flr, source->m_maxExtents);
+			Vector3::MaxVector(*source->m_maxExtents, ful, source->m_maxExtents);
+			Vector3::MaxVector(*source->m_maxExtents, fur, source->m_maxExtents);
+			Vector3::MaxVector(*source->m_maxExtents, bur, source->m_maxExtents);
+			Vector3::MaxVector(*source->m_maxExtents, bul, source->m_maxExtents);
+			Vector3::MaxVector(*source->m_maxExtents, blr, source->m_maxExtents);
+			Vector3::MaxVector(*source->m_maxExtents, bll, source->m_maxExtents);
 		}
 
 		// Transforms the aabb.
 		if (*transform.m_position != 0.0f)
 		{
-			Vector3::Add(*aabb2->m_minExtents, *transform.m_position, aabb2->m_minExtents);
-			Vector3::Add(*aabb2->m_maxExtents, *transform.m_position, aabb2->m_maxExtents);
+			Vector3::Add(*source->m_minExtents, *transform.m_position, source->m_minExtents);
+			Vector3::Add(*source->m_maxExtents, *transform.m_position, source->m_maxExtents);
 		}
 
 		// Returns the final aabb.
-		return aabb2;
+		return source;
 	}
 
 	Vector3 *Aabb::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
@@ -239,7 +245,7 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
+		const Aabb &source = dynamic_cast<const Aabb &>(other);
 
 		if (positionDelta.m_x != 0.0f)
 		{
@@ -248,12 +254,12 @@ namespace Flounder
 			if (positionDelta.m_x >= 0.0f)
 			{
 				// Our max == their min
-				newAmountX = aabb2.m_minExtents->m_x - m_maxExtents->m_x;
+				newAmountX = source.m_minExtents->m_x - m_maxExtents->m_x;
 			}
 			else
 			{
 				// Our min == their max
-				newAmountX = aabb2.m_maxExtents->m_x - m_minExtents->m_x;
+				newAmountX = source.m_maxExtents->m_x - m_minExtents->m_x;
 			}
 
 			if (std::fabs(newAmountX) < std::fabs(positionDelta.m_x))
@@ -269,12 +275,12 @@ namespace Flounder
 			if (positionDelta.m_y >= 0.0f)
 			{
 				// Our max == their min
-				newAmountY = aabb2.m_minExtents->m_y - m_maxExtents->m_y;
+				newAmountY = source.m_minExtents->m_y - m_maxExtents->m_y;
 			}
 			else
 			{
 				// Our min == their max
-				newAmountY = aabb2.m_maxExtents->m_y - m_minExtents->m_y;
+				newAmountY = source.m_maxExtents->m_y - m_minExtents->m_y;
 			}
 
 			if (std::fabs(newAmountY) < std::fabs(positionDelta.m_y))
@@ -290,12 +296,12 @@ namespace Flounder
 			if (positionDelta.m_z >= 0.0f)
 			{
 				// Our max == their min
-				newAmountZ = aabb2.m_minExtents->m_z - m_maxExtents->m_z;
+				newAmountZ = source.m_minExtents->m_z - m_maxExtents->m_z;
 			}
 			else
 			{
 				// Our min == their max
-				newAmountZ = aabb2.m_maxExtents->m_z - m_minExtents->m_z;
+				newAmountZ = source.m_maxExtents->m_z - m_minExtents->m_z;
 			}
 
 			if (std::fabs(newAmountZ) < std::fabs(positionDelta.m_z))
@@ -309,10 +315,10 @@ namespace Flounder
 
 	Intersect Aabb::Intersects(const Collider &other)
 	{
-		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
+		const Aabb &source = dynamic_cast<const Aabb &>(other);
 
-		Vector3 *distance1 = Vector3::Subtract(*m_minExtents, *aabb2.m_maxExtents, nullptr);
-		Vector3 *distance2 = Vector3::Subtract(*aabb2.m_minExtents, *m_maxExtents, nullptr);
+		Vector3 *distance1 = Vector3::Subtract(*m_minExtents, *source.m_maxExtents, nullptr);
+		Vector3 *distance2 = Vector3::Subtract(*source.m_minExtents, *m_maxExtents, nullptr);
 		Vector3 *maxDistance = Vector3::MaxVector(*distance1, *distance2, nullptr);
 		const float maxDist = Vector3::MaxComponent(*maxDistance);
 
@@ -421,14 +427,14 @@ namespace Flounder
 
 	bool Aabb::Contains(const Collider &other)
 	{
-		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
+		const Aabb &source = dynamic_cast<const Aabb &>(other);
 
-		return m_minExtents->m_x <= aabb2.m_minExtents->m_x &&
-			aabb2.m_maxExtents->m_x <= m_maxExtents->m_x &&
-			m_minExtents->m_y <= aabb2.m_minExtents->m_y &&
-			aabb2.m_maxExtents->m_y <= m_maxExtents->m_y &&
-			m_minExtents->m_z <= aabb2.m_minExtents->m_z &&
-			aabb2.m_maxExtents->m_z <= m_maxExtents->m_z;
+		return m_minExtents->m_x <= source.m_minExtents->m_x &&
+			source.m_maxExtents->m_x <= m_maxExtents->m_x &&
+			m_minExtents->m_y <= source.m_minExtents->m_y &&
+			source.m_maxExtents->m_y <= m_maxExtents->m_y &&
+			m_minExtents->m_z <= source.m_minExtents->m_z &&
+			source.m_maxExtents->m_z <= m_maxExtents->m_z;
 	}
 
 	bool Aabb::Contains(const Vector3 &point)
