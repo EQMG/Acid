@@ -43,6 +43,11 @@ namespace Flounder
 
 	void Scenes::SetScene(Scene *scene)
 	{
+		if (m_scene != scene)
+		{
+			delete m_scene;
+		}
+
 		m_scene = scene;
 		m_scene->Start();
 	}

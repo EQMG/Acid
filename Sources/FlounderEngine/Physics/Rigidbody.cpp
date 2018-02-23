@@ -2,6 +2,7 @@
 
 #include "../Physics/Sphere.hpp"
 #include "../Models/Model.hpp"
+#include "../Scenes/Scenes.hpp"
 
 namespace Flounder
 {
@@ -11,7 +12,8 @@ namespace Flounder
 		m_drag(drag),
 		m_useGravity(useGravity),
 		m_freezePosition(new Constraint3(freezePosition)),
-		m_freezeRotation(new Constraint3(freezeRotation))
+		m_freezeRotation(new Constraint3(freezeRotation)),
+		m_colliderCopy(nullptr)
 	{
 		Link<float>(0, LINK_GET(GetMass()), LINK_SET(float, SetMass(v)));
 		Link<float>(1, LINK_GET(GetDrag()), LINK_SET(float, SetDrag(v)));
@@ -28,15 +30,16 @@ namespace Flounder
 	{
 		delete m_freezePosition;
 		delete m_freezeRotation;
+		delete m_colliderCopy;
 	}
 
 	void Rigidbody::Update()
 	{
-		auto componentModel = GetGameObject()->GetComponent<Model>();
+		auto collider = GetGameObject()->GetComponent<Collider>();
 
-		if (componentModel != nullptr)
+		if (collider != nullptr)
 		{
-			// TODO: Load quickhull.
+			collider->Update(*GetGameObject()->GetTransform(), m_colliderCopy);
 		}
 	}
 
@@ -45,25 +48,22 @@ namespace Flounder
 		// Sets the resulting resolved collisions.
 		Vector3 result = Vector3(amount);
 
-		// Gets this entities collider.
-		auto componentCollider1 = GetGameObject()->GetComponent<Collider>();
-
-		// Verifies that this entities main collider will work.
-		if (componentCollider1 == nullptr)
+		// Verifies that this  collider will work.
+		if (m_colliderCopy == nullptr)
 		{
 			return result;
 		}
 
 		Aabb aabb1;
 
-		if (dynamic_cast<Aabb *>(componentCollider1) != nullptr)
+		if (dynamic_cast<Aabb *>(m_colliderCopy) != nullptr)
 		{
-			aabb1 = *dynamic_cast<Aabb *>(componentCollider1);
+			aabb1 = *dynamic_cast<Aabb *>(m_colliderCopy);
 		}
-		else if (dynamic_cast<Sphere *>(componentCollider1) != nullptr)
+		else if (dynamic_cast<Sphere *>(m_colliderCopy) != nullptr)
 		{
-			const float radius = dynamic_cast<Sphere *>(componentCollider1)->GetRadius();
-			const Vector3 *pos = dynamic_cast<Sphere *>(componentCollider1)->GetPosition();
+			const float radius = dynamic_cast<Sphere *>(m_colliderCopy)->GetRadius();
+			const Vector3 *pos = dynamic_cast<Sphere *>(m_colliderCopy)->GetPosition();
 			aabb1 = Aabb(-radius + *pos, radius + *pos);
 		}
 		else
@@ -75,39 +75,22 @@ namespace Flounder
 		Aabb collisionRange = Aabb();
 		Aabb::Stretch(aabb1, amount, &collisionRange);
 
+		std::vector<Rigidbody *> rigidbodys = std::vector<Rigidbody *>();
+		Scenes::Get()->GetStructure()->QueryComponents<Rigidbody>(&rigidbodys);
+
 		// Goes though all entities in the collision range.
-		for (auto entity : *GetGameObject()->GetStructure()->GetAll())
+		for (auto rigidbody : rigidbodys)
 		{
 			// Ignores the original entity.
-			if (entity == GetGameObject())
-			{
-				continue;
-			}
-
-			// Gets the checked entities collider.
-			auto componentCollider2 = entity->GetComponent<Collider>();
-
-			// Verifies that the checked entities main collider will work.
-			if (componentCollider2 == nullptr)
+			if (rigidbody->GetGameObject() == GetGameObject())
 			{
 				continue;
 			}
 
 			// If the main collider intersects with the other entities general collider.
-			if (componentCollider2->Intersects(collisionRange).IsIntersection())
+			if (rigidbody->m_colliderCopy->Intersects(collisionRange).IsIntersection())
 			{
-				// If the main colliders are the only ones use them.
-				// bool hull1 = componentCollider1->GetQuickHull() != nullptr && componentCollider1->GetQuickHull()->IsLoaded();
-				// bool hull2 = componentCollider2->GetQuickHull() != nullptr && componentCollider2->GetQuickHull()->IsLoaded();
-				//Collider *colliderLeft = hull1 ? componentCollider1->GetQuickHull() : collider1;
-				//Collider *colliderRight = hull2 ? componentCollider2->GetQuickHull() : collider2;
-				//colliderLeft->ResolveCollision(colliderRight, result, &result);
-
-				//if (hullLeft && hullRight) { // TODO: Make Quick Hull collisions work!
-				//	componentCollider1.getQuickHull().resolveCollision(componentCollider2.getQuickHull(), result, result);
-				//} else {
-				componentCollider1->ResolveCollision(*componentCollider2, result, &result);
-				//}
+				rigidbody->m_colliderCopy->ResolveCollision(*m_colliderCopy, result, &result);
 			}
 		}
 
