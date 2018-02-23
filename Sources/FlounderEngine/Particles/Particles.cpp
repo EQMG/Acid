@@ -1,6 +1,6 @@
 #include "Particles.hpp"
 
-#include "../Uis/Uis.hpp"
+#include "../Scenes/Scenes.hpp"
 
 namespace Flounder
 {
@@ -21,12 +21,9 @@ namespace Flounder
 
 	void Particles::Update()
 	{
-		if (Uis::Get() != nullptr && Uis::Get()->GetManager() != nullptr)
+		if (Scenes::Get()->IsGamePaused())
 		{
-			if (Uis::Get()->GetManager()->IsGamePaused())
-			{
-				return;
-			}
+			return;
 		}
 
 		// Generates particles.

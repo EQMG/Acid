@@ -1,3 +1,4 @@
+#include <Objects/ComponentRegister.hpp>
 #include "ModuleUpdater.hpp"
 
 #include "../Devices/Audio.hpp"
@@ -14,6 +15,18 @@
 #include "../Uis/Uis.hpp"
 #include "../Waters/Waters.hpp"
 #include "../Worlds/Worlds.hpp"
+
+#include "../Skyboxes/CelestialBody.hpp"
+#include "../Entities/EntityRender.hpp"
+#include "../Lights/Light.hpp"
+#include "../Physics/Aabb.hpp"
+#include "../Physics/Sphere.hpp"
+#include "../Materials/Material.hpp"
+#include "../Meshes/Mesh.hpp"
+#include "../Physics/Rigidbody.hpp"
+#include "../Skyboxes/SkyboxRender.hpp"
+#include "../Terrains/TerrainRender.hpp"
+#include "../Waters/WaterRender.hpp"
 
 namespace Flounder
 {
@@ -49,6 +62,18 @@ namespace Flounder
 		m_deltaRender = new Delta();
 		m_timerUpdate = new Timer(1.0f / 62.0f);
 		m_timerRender = new Timer(1.0f / -1.0f);
+
+		ComponentRegister::Register("CelestialBody", REGISTER_CREATE(CelestialBody));
+		ComponentRegister::Register("EntityRender", REGISTER_CREATE(EntityRender));
+		ComponentRegister::Register("Light", REGISTER_CREATE(Light));
+		ComponentRegister::Register("AabbCollider", REGISTER_CREATE(Aabb));
+		ComponentRegister::Register("SphereCollider", REGISTER_CREATE(Sphere));
+		ComponentRegister::Register("Material", REGISTER_CREATE(Material));
+		ComponentRegister::Register("Mesh", REGISTER_CREATE(Mesh));
+		ComponentRegister::Register("Rigidbody", REGISTER_CREATE(Rigidbody));
+		ComponentRegister::Register("SkyboxRender", REGISTER_CREATE(SkyboxRender));
+		ComponentRegister::Register("TerrainRender", REGISTER_CREATE(TerrainRender));
+		ComponentRegister::Register("WaterRender", REGISTER_CREATE(WaterRender));
 
 		ModuleCreate<Audio>(UpdatePre, "audio");
 		ModuleCreate<Display>(UpdatePost, "display");

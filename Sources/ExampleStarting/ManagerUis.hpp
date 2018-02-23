@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <Uis/UiStartLogo.hpp>
+#include <Scenes/IManagerUis.hpp>
 #include "Uis/OverlayDebug.hpp"
 #include "Uis/Navigation/UiNavigation.hpp"
 
