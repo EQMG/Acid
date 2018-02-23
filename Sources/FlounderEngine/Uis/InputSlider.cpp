@@ -1,5 +1,6 @@
 ﻿#include "InputSlider.hpp"
 
+#include "../Scenes/Scenes.hpp"
 #include "../Maths/Visual/DriverSlide.hpp"
 
 namespace Flounder
@@ -88,7 +89,7 @@ namespace Flounder
 		}
 
 		// Update the background colour.
-		Colour *primary = Uis::Get()->GetManager()->GetPrimaryColour();
+		Colour *primary = Scenes::Get()->GetUiManager()->GetPrimaryColour();
 		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) /
 			(SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 		m_slider->GetColourOffset()->Set(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f);

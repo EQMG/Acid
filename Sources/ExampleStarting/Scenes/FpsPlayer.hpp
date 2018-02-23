@@ -34,8 +34,6 @@ namespace Demo
 
 		Vector3 *m_amountMove;
 		Vector3 *m_amountRotate;
-
-		bool m_paused;
 	public:
 		FpsPlayer();
 

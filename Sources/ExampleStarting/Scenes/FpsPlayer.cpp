@@ -55,8 +55,7 @@ namespace Demo
 			new ButtonKeyboard({GLFW_KEY_N}),
 		})),
 		m_amountMove(new Vector3()),
-		m_amountRotate(new Vector3()),
-		m_paused(false)
+		m_amountRotate(new Vector3())
 	{
 	}
 
@@ -79,12 +78,7 @@ namespace Demo
 		// Gets the delta and limits the lowest UPS to 20 (any less and the game is unplayable).
 		const float delta = Maths::Min(Engine::Get()->GetDelta(), 1.0f / 20.0f);
 
-		if (Uis::Get() != nullptr && Uis::Get()->GetManager() != nullptr)
-		{
-			m_paused = Uis::Get()->GetManager()->IsGamePaused();
-		}
-
-		if (!m_paused)
+		if (!Scenes::Get()->IsGamePaused())
 		{
 			const bool sprintDown = m_inputSprint->IsDown();
 			const bool crouchDown = m_inputCrouch->IsDown();

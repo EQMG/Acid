@@ -48,6 +48,18 @@ namespace Flounder
 		ICamera *GetCamera() const { return m_scene->GetCamera(); }
 
 		/// <summary>
+		/// Gets the uis manager.
+		/// </summary>
+		/// <returns> The uis manager. </returns>
+		IManagerUis *GetUiManager() const { return m_scene->GetUiManager(); };
+
+		/// <summary>
+		/// Gets if the scene is paused.
+		/// </summary>
+		/// <returns> If the scene is paused. </returns>
+		bool IsGamePaused() { return m_scene->GetUiManager()->IsGamePaused(); }
+
+		/// <summary>
 		/// Gets the GameObjects structure.
 		/// </summary>
 		/// <returns> The GameObjects structure. </returns>

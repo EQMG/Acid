@@ -1,8 +1,9 @@
 #include "FpsCamera.hpp"
 
-#include <Uis/Uis.hpp>
+#include <Scenes/Scenes.hpp>
 #include <Devices/Mouse.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Maths/Maths.hpp>
 #include "FpsPlayer.hpp"
 
 namespace Demo
@@ -71,17 +72,14 @@ namespace Demo
 	{
 		float delta = Maths::Min(1.0f / 60.0f, Engine::Get()->GetDelta());
 
-		if (Uis::Get() != nullptr && Uis::Get()->GetManager() != nullptr)
+		const bool newPaused = Scenes::Get()->IsGamePaused();
+
+		if (m_paused != newPaused)
 		{
-			const bool newPaused = Uis::Get()->GetManager()->IsGamePaused();
-
-			if (m_paused != newPaused)
-			{
-				Mouse::Get()->SetCursorHidden(!newPaused);
-			}
-
-			m_paused = newPaused;
+			Mouse::Get()->SetCursorHidden(!newPaused);
 		}
+
+		m_paused = newPaused;
 
 		CalculateHorizontalAngle();
 		CalculateVerticalAngle();
