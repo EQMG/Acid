@@ -1,6 +1,6 @@
 #include "FilterLensflare.hpp"
 
-#include "../../Camera/Camera.hpp"
+#include "../../Scenes/Scenes.hpp"
 #include "../../Devices/Display.hpp"
 #include "../../Renderer/Renderer.hpp"
 
@@ -49,7 +49,7 @@ namespace Flounder
 
 	void FilterLensflare::SetSunPosition(const Vector3 &sunPosition) const
 	{
-		ICamera *camera = Camera::Get()->GetCamera();
+		ICamera *camera = Scenes::Get()->GetCamera();
 		Matrix4::WorldToScreenSpace(sunPosition, *camera->GetViewMatrix(), *camera->GetProjectionMatrix(), m_sunPosition);
 	}
 }

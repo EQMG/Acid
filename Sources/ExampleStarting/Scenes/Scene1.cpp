@@ -13,17 +13,38 @@
 #include <Terrains/LodBehaviour.hpp>
 #include <Waters/MeshWater.hpp>
 #include <Waters/WaterRender.hpp>
+#include "FpsCamera.hpp"
+#include "FpsPlayer.hpp"
 
 namespace Demo
 {
 	Scene1::Scene1() :
+		Scene(new FpsCamera()),
 		m_buttonFullscreen(new ButtonKeyboard({GLFW_KEY_F11})),
 		m_buttonCaptureMouse(new ButtonKeyboard({GLFW_KEY_M})),
 		m_buttonScreenshot(new ButtonKeyboard({GLFW_KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({GLFW_KEY_DELETE})),
 		m_soundScreenshot(new Sound("Resources/Sounds/Screenshot.ogg"))
 	{
-		//	Scenes::Get()->SetStructure(new StructureBasic<GameObject *>());
+	}
+
+	Scene1::~Scene1()
+	{
+		delete m_buttonFullscreen;
+		delete m_buttonCaptureMouse;
+		delete m_buttonScreenshot;
+		delete m_buttonExit;
+	}
+
+	void Scene1::Start()
+	{
+	//	// Camera.
+	//	GameObject *cameraObject = new GameObject(Transform(Vector3(), Vector3(), 1.0f));
+	//	cameraObject->AddComponent(new FpsCamera());
+
+		// Player.
+		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(), 1.0f));
+		playerObject->AddComponent(new FpsPlayer());
 
 		// Skybox.
 		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
@@ -88,14 +109,6 @@ namespace Demo
 				}
 			}
 		}
-	}
-
-	Scene1::~Scene1()
-	{
-		delete m_buttonFullscreen;
-		delete m_buttonCaptureMouse;
-		delete m_buttonScreenshot;
-		delete m_buttonExit;
 	}
 
 	void Scene1::Update()

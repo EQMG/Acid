@@ -3,7 +3,6 @@
 
 #include "../Devices/Display.hpp"
 #include "../Meshes/Mesh.hpp"
-#include "Skyboxes.hpp"
 #include "UbosSkyboxes.hpp"
 
 namespace Flounder

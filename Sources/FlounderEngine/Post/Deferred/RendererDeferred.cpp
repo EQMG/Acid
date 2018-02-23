@@ -1,13 +1,12 @@
 #include "RendererDeferred.hpp"
 
-#include "../Camera/Camera.hpp"
-#include "../Devices/Display.hpp"
-#include "../Lights/Light.hpp"
-#include "../Scenes/Scenes.hpp"
-#include "../Models/Shapes/ShapeRectangle.hpp"
-#include "../Renderer/Renderer.hpp"
-#include "../Shadows/Shadows.hpp"
-#include "../Skyboxes/Skyboxes.hpp"
+#include "../../Scenes/Scenes.hpp"
+#include "../../Devices/Display.hpp"
+#include "../../Lights/Light.hpp"
+#include "../../Models/Shapes/ShapeRectangle.hpp"
+#include "../../Renderer/Renderer.hpp"
+#include "../../Shadows/Shadows.hpp"
+#include "../../Skyboxes/Skyboxes.hpp"
 #include "UbosDeferred.hpp"
 
 namespace Flounder
@@ -92,7 +91,7 @@ namespace Flounder
 		uboScene.shadowSpace = *Shadows::Get()->GetShadowBox()->GetToShadowMapSpaceMatrix();
 
 		uboScene.fogColour = *Skyboxes::Get()->GetFog()->m_colour;
-		uboScene.cameraPosition = *Camera::Get()->GetCamera()->GetPosition();
+		uboScene.cameraPosition = *Scenes::Get()->GetCamera()->GetPosition();
 		uboScene.fogDensity = Skyboxes::Get()->GetFog()->m_density;
 		uboScene.fogGradient = Skyboxes::Get()->GetFog()->m_gradient;
 

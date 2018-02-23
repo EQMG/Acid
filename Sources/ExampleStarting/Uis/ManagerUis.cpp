@@ -2,8 +2,8 @@
 
 #include <Inputs/ButtonCompound.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
-#include <Visual/DriverConstant.hpp>
-#include <Visual/DriverSlide.hpp>
+#include <Maths/Visual/DriverConstant.hpp>
+#include <Maths/Visual/DriverSlide.hpp>
 
 namespace Demo
 {

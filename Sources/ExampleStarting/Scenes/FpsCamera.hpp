@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Camera/ICamera.hpp>
+#include <Scenes/ICamera.hpp>
 #include <Inputs/ButtonJoystick.hpp>
 #include <Inputs/AxisJoystick.hpp>
 
@@ -60,7 +60,7 @@ namespace Demo
 
 		~FpsCamera();
 
-		void Update(IPlayer *player) override;
+		void Update() override;
 
 	private:
 		void CalculateHorizontalAngle();
