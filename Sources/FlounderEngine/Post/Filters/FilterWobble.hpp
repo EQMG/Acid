@@ -19,7 +19,7 @@ namespace Flounder
 		float m_wobbleSpeed;
 		float m_wobbleAmount;
 	public:
-		FilterWobble(const int &subpass);
+		FilterWobble(const GraphicsStage &graphicsStage);
 
 		~FilterWobble();
 

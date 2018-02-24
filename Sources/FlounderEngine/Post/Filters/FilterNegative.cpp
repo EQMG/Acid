@@ -10,8 +10,8 @@ namespace Flounder
 			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
 		};
 
-	FilterNegative::FilterNegative(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Negative.frag.spv", subpass, DESCRIPTORS)
+	FilterNegative::FilterNegative(const GraphicsStage &graphicsStage) :
+		IPostFilter("Resources/Shaders/Filters/Negative.frag.spv", graphicsStage, DESCRIPTORS)
 	{
 	}
 

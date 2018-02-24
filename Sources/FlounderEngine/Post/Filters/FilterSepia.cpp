@@ -10,8 +10,8 @@ namespace Flounder
 			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
 		};
 
-	FilterSepia::FilterSepia(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Sepia.frag.spv", subpass, DESCRIPTORS)
+	FilterSepia::FilterSepia(const GraphicsStage &graphicsStage) :
+		IPostFilter("Resources/Shaders/Filters/Sepia.frag.spv", graphicsStage, DESCRIPTORS)
 	{
 	}
 

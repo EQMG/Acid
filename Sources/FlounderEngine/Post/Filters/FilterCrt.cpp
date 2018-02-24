@@ -13,8 +13,8 @@ namespace Flounder
 			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
 		};
 
-	FilterCrt::FilterCrt(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Crt.frag.spv", subpass, DESCRIPTORS),
+	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage) :
+		IPostFilter("Resources/Shaders/Filters/Crt.frag.spv", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_screenColour(new Colour(0.5f, 1.0f, 0.5f)),
 		m_curveAmountX(0.1f),

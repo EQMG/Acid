@@ -19,14 +19,14 @@ namespace Flounder
 			{"Resources/Shaders/Filters/Default.vert.spv", "Resources/Shaders/Filters/Default.frag.spv"} // shaderStages
 		};
 
-	IPostFilter::IPostFilter(const std::string &fragmentShader, const int &subpass, const std::vector<DescriptorType> &descriptors) :
+	IPostFilter::IPostFilter(const std::string &fragmentShader, const GraphicsStage &graphicsStage, const std::vector<DescriptorType> &descriptors) :
 		m_pipeline(nullptr),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
 		PipelineCreate pipelineCreateInfo = PipelineCreate(PIPELINE_CREATE);
 		pipelineCreateInfo.shaderStages[1] = fragmentShader; // fragment
 		pipelineCreateInfo.descriptors = descriptors; // descriptors
-		m_pipeline = new Pipeline(subpass, pipelineCreateInfo);
+		m_pipeline = new Pipeline(graphicsStage, pipelineCreateInfo);
 	}
 
 	IPostFilter::~IPostFilter()

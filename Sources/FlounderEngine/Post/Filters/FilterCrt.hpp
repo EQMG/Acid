@@ -28,7 +28,7 @@ namespace Flounder
 		float m_scanLineSize;
 		float m_scanIntensity;
 	public:
-		FilterCrt(const int &subpass);
+		FilterCrt(const GraphicsStage &graphicsStage);
 
 		~FilterCrt();
 

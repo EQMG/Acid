@@ -1,4 +1,5 @@
 #include <Meshes/Mesh.hpp>
+#include <Entities/EntityRender.hpp>
 #include "RendererShadows.hpp"
 
 #include "../Devices/Display.hpp"
@@ -18,26 +19,33 @@ namespace Flounder
 			Vertex::GetAttributeDescriptions(0), // vertexAttributeDescriptions
 
 			{
-				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT) // uboObject
+				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_ALL), // uboScene
+				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL) // uboObject
 			}, // descriptors
 
 			{"Resources/Shaders/Shadows/Shadow.vert.spv", "Resources/Shaders/Shadows/Shadow.frag.spv"} // shaderStages
 		};
 
-	RendererShadows::RendererShadows(const int &subpass) :
+	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_uniformObject(new UniformBuffer(sizeof(UbosShadows::UboObject))),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE))
+		m_uniformScene(new UniformBuffer(sizeof(UbosShadows::UboScene))),
+		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
 	{
 	}
 
 	RendererShadows::~RendererShadows()
 	{
+		delete m_uniformScene;
 		delete m_pipeline;
 	}
 
 	void RendererShadows::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
+		UbosShadows::UboScene uboScene = {};
+		uboScene.projectionView = *Shadows::Get()->GetShadowBox()->GetProjectionViewMatrix();
+		// uboScene.projectionView = *Scenes::Get()->GetCamera()->GetProjectionMatrix() * *Scenes::Get()->GetCamera()->GetViewMatrix();
+		m_uniformScene->Update(&uboScene);
+
 		m_pipeline->BindPipeline(commandBuffer);
 
 		std::vector<Mesh *> meshList = std::vector<Mesh *>();
@@ -66,17 +74,14 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
-		Matrix4 worldMatrix = Matrix4();
-		gameObject->GetTransform()->GetWorldMatrix(&worldMatrix);
-
-		// Creates a UBO object and write descriptor.
-		UbosShadows::UboObject uboObject = {};
-		uboObject.mvp = (*Scenes::Get()->GetCamera()->GetProjectionMatrix() * *Scenes::Get()->GetCamera()->GetViewMatrix()) * worldMatrix;
-		//	Matrix4::Multiply(*Shadows::Get()->GetShadowBox()->GetProjectionViewMatrix(), modelMatrix, &uboObject.mvp);
-		m_uniformObject->Update(&uboObject);
+		auto entityRender = gameObject->GetComponent<EntityRender>();
+		if (entityRender == nullptr)
+			return;
+		auto uniformObject = entityRender->GetUniformObject();
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-			m_uniformObject->GetWriteDescriptor(0, descriptorSet)
+			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
+			uniformObject->GetWriteDescriptor(1, descriptorSet)
 		};
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
