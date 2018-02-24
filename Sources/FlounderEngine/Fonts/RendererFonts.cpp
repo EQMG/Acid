@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	const PipelineCreateInfo PIPELINE_CREATE_INFO =
+	const PipelineCreate PIPELINE_CREATE =
 		{
 			PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 			VK_POLYGON_MODE_FILL, // polygonMode
@@ -21,7 +21,7 @@ namespace Flounder
 
 	RendererFonts::RendererFonts(const int &subpass) :
 		IRenderer(),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO))
+		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE))
 	{
 	}
 

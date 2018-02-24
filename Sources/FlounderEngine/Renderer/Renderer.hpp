@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../Engine/Engine.hpp"
-#include "Pass/RenderPass.hpp"
+#include "../Devices/Display.hpp"
+#include "Renderer/Pass/Renderpass.hpp"
 #include "Stencils/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
 #include "Swapchain/Framebuffers.hpp"
@@ -14,10 +15,11 @@ namespace Flounder
 	{
 	private:
 		IManagerRender *m_managerRender;
+		RenderpassCreate *m_renderpassCreate;
 
 		Swapchain *m_swapchain;
 		DepthStencil *m_depthStencil;
-		RenderPass *m_renderPass;
+		Renderpass *m_renderpass;
 		Framebuffers *m_framebuffers;
 		VkFence m_fenceSwapchainImage;
 		uint32_t m_activeSwapchainImage;
@@ -50,6 +52,8 @@ namespace Flounder
 	public:
 		void Update() override;
 
+		F_HIDDEN void CreateRenderpass(RenderpassCreate *renderpassCreate);
+
 		/// <summary>
 		/// Starts a renderpass.
 		/// </summary>
@@ -81,11 +85,13 @@ namespace Flounder
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(IManagerRender *managerRender) { m_managerRender = managerRender; }
 
+		RenderpassCreate *GetRenderpassCreate() const { return m_renderpassCreate; }
+
 		Swapchain *GetSwapchain() const { return m_swapchain; }
 
 		DepthStencil *GetDepthStencil() const { return m_depthStencil; }
 
-		VkRenderPass GetRenderPass() const { return m_renderPass->GetRenderPass(); }
+		VkRenderPass GetRenderpass() const { return m_renderpass->GetRenderpass(); }
 
 		VkCommandPool GetCommandPool() const { return m_commandPool; }
 

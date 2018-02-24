@@ -86,7 +86,7 @@ namespace Demo
 		{
 			for (int j = -3; j <= 0; j++)
 			{
-				new GameObject("FoundationWood", Transform(foundationCentre + Vector3(i * 3.0f, 2.3f, -j * 3.0f), Vector3(), 1.5f));
+				new GameObject("FoundationWood", Transform(foundationCentre + Vector3(i * 3.0f, 0.7f, -j * 3.0f), Vector3(), 1.5f));
 			}
 		}
 

@@ -11,7 +11,7 @@
 
 namespace Flounder
 {
-	const PipelineCreateInfo PIPELINE_CREATE_INFO =
+	const PipelineCreate PIPELINE_CREATE =
 		{
 			PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 			VK_POLYGON_MODE_FILL, // polygonMode
@@ -39,7 +39,7 @@ namespace Flounder
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_uniformLights(new UniformBuffer(sizeof(UbosDeferred::UboLights))),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO)),
+		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE)),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
 	}
@@ -123,12 +123,12 @@ namespace Flounder
 			{
 				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
 				m_uniformLights->GetWriteDescriptor(1, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(2, descriptorSet),
 				Renderer::Get()->GetDepthStencil()->GetWriteDescriptor(3, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(4, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetNormalImage()->GetWriteDescriptor(5, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetMaterialImage()->GetWriteDescriptor(6, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(7, descriptorSet)
+				Renderer::Get()->GetSwapchain()->GetTexture(2)->GetWriteDescriptor(2, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetTexture(2)->GetWriteDescriptor(4, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetTexture(3)->GetWriteDescriptor(5, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetTexture(4)->GetWriteDescriptor(6, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetTexture(5)->GetWriteDescriptor(7, descriptorSet)
 			};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 

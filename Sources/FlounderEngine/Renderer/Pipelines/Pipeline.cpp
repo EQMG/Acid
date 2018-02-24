@@ -8,9 +8,11 @@
 
 namespace Flounder
 {
-	const std::vector<VkDynamicState> DYNAMIC_STATES = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR};
+	const std::vector<VkDynamicState> DYNAMIC_STATES = {
+		VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR
+	};
 
-	Pipeline::Pipeline(const int &subpass, const PipelineCreateInfo &pipelineCreateInfo) :
+	Pipeline::Pipeline(const int &subpass, const PipelineCreate &pipelineCreateInfo) :
 		m_subpass(subpass),
 		m_pipelineCreateInfo(pipelineCreateInfo),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
@@ -85,7 +87,7 @@ namespace Flounder
 
 		for (auto type : m_pipelineCreateInfo.descriptors)
 		{
-			bindings.push_back(type.descriptorSetLayoutBinding);
+			bindings.push_back(type.m_descriptorSetLayoutBinding);
 		}
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
@@ -105,7 +107,7 @@ namespace Flounder
 
 		for (auto type : m_pipelineCreateInfo.descriptors)
 		{
-			poolSizes.push_back(type.descriptorPoolSize);
+			poolSizes.push_back(type.m_descriptorPoolSize);
 		}
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
@@ -270,7 +272,7 @@ namespace Flounder
 	void Pipeline::CreatePipelinePolygon()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto renderPass = Renderer::Get()->GetRenderPass();
+		const auto renderpass = Renderer::Get()->GetRenderpass();
 		const auto pipelineCache = Renderer::Get()->GetPipelineCache();
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
@@ -283,7 +285,7 @@ namespace Flounder
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.renderPass = renderPass;
+		pipelineCreateInfo.renderPass = renderpass;
 		pipelineCreateInfo.subpass = m_subpass;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
@@ -314,20 +316,21 @@ namespace Flounder
 
 	void Pipeline::CreatePipelineMrt()
 	{
-		std::array<VkPipelineColorBlendAttachmentState, 3> blendAttachmentStates = {};
+		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < 3; i++)
+		for (uint32_t i = 0; i < Renderer::Get()->GetRenderpassCreate()->subpasses.at(m_subpass).m_attachments.size(); i++)
 		{
-			blendAttachmentStates[i].blendEnable = VK_FALSE;
-			blendAttachmentStates[i].srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-			blendAttachmentStates[i].dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-			blendAttachmentStates[i].colorBlendOp = VK_BLEND_OP_ADD;
-			blendAttachmentStates[i].srcAlphaBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-			blendAttachmentStates[i].dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-			blendAttachmentStates[i].alphaBlendOp = VK_BLEND_OP_ADD;
-			blendAttachmentStates[i].colorWriteMask =
-				VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
-					VK_COLOR_COMPONENT_A_BIT;
+			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
+			blendAttachmentState.blendEnable = VK_FALSE;
+			blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+			blendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+			blendAttachmentState.colorBlendOp = VK_BLEND_OP_ADD;
+			blendAttachmentState.srcAlphaBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+			blendAttachmentState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+			blendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;
+			blendAttachmentState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
+				VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+			blendAttachmentStates.push_back(blendAttachmentState);
 		}
 
 		m_colourBlendState.attachmentCount = static_cast<uint32_t>(blendAttachmentStates.size());
@@ -338,20 +341,21 @@ namespace Flounder
 
 	void Pipeline::CreatePipelineMrtNoDepth()
 	{
-		std::array<VkPipelineColorBlendAttachmentState, 3> blendAttachmentStates = {};
+		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < 3; i++)
+		for (uint32_t i = 0; i < Renderer::Get()->GetRenderpassCreate()->subpasses.at(m_subpass).m_attachments.size(); i++)
 		{
-			blendAttachmentStates[i].blendEnable = VK_FALSE;
-			blendAttachmentStates[i].srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-			blendAttachmentStates[i].dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-			blendAttachmentStates[i].colorBlendOp = VK_BLEND_OP_ADD;
-			blendAttachmentStates[i].srcAlphaBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-			blendAttachmentStates[i].dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-			blendAttachmentStates[i].alphaBlendOp = VK_BLEND_OP_ADD;
-			blendAttachmentStates[i].colorWriteMask =
-				VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
-					VK_COLOR_COMPONENT_A_BIT;
+			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
+			blendAttachmentState.blendEnable = VK_FALSE;
+			blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+			blendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+			blendAttachmentState.colorBlendOp = VK_BLEND_OP_ADD;
+			blendAttachmentState.srcAlphaBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+			blendAttachmentState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+			blendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;
+			blendAttachmentState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
+				VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+			blendAttachmentStates.push_back(blendAttachmentState);
 		}
 
 		m_colourBlendState.attachmentCount = static_cast<uint32_t>(blendAttachmentStates.size());

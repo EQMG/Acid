@@ -9,9 +9,10 @@ namespace Flounder
 	Renderer::Renderer() :
 		IModule(),
 		m_managerRender(nullptr),
+		m_renderpassCreate(),
 		m_swapchain(nullptr),
 		m_depthStencil(nullptr),
-		m_renderPass(nullptr),
+		m_renderpass(nullptr),
 		m_framebuffers(nullptr),
 		m_fenceSwapchainImage(VK_NULL_HANDLE),
 		m_activeSwapchainImage(UINT32_MAX),
@@ -20,25 +21,9 @@ namespace Flounder
 		m_commandPool(VK_NULL_HANDLE),
 		m_commandBuffer(VK_NULL_HANDLE)
 	{
-		const VkExtent2D extent2d = {
-			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
-		};
-		const VkExtent3D extent3d = {
-			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1
-		};
-		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
-
 		CreateFences();
 		CreateCommandPool();
 		CreatePipelineCache();
-
-		m_swapchain = new Swapchain(extent2d);
-		m_depthStencil = new DepthStencil(extent3d);
-		m_renderPass = new RenderPass(m_depthStencil->GetFormat(), surfaceFormat.format);
-		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), *m_swapchain, extent2d);
-
-		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
-		vkQueueWaitIdle(Display::Get()->GetQueue());
 	}
 
 	Renderer::~Renderer()
@@ -57,7 +42,7 @@ namespace Flounder
 		vkDestroyCommandPool(logicalDevice, m_commandPool, nullptr);
 
 		delete m_framebuffers;
-		delete m_renderPass;
+		delete m_renderpass;
 		delete m_depthStencil;
 		delete m_swapchain;
 	}
@@ -65,6 +50,27 @@ namespace Flounder
 	void Renderer::Update()
 	{
 		m_managerRender->Render();
+	}
+
+	void Renderer::CreateRenderpass(RenderpassCreate *renderpassCreate)
+	{
+		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
+		const VkExtent2D extent2d = {
+			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
+		};
+		const VkExtent3D extent3d = {
+			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1
+		};
+
+		m_renderpassCreate = renderpassCreate;
+
+		m_swapchain = new Swapchain(*m_renderpassCreate, extent2d);
+		m_depthStencil = new DepthStencil(extent3d);
+		m_renderpass = new Renderpass(*m_renderpassCreate, m_depthStencil->GetFormat(), surfaceFormat.format);
+		m_framebuffers = new Framebuffers(m_renderpass->GetRenderpass(), m_depthStencil->GetImageView(), *m_swapchain, extent2d);
+
+		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
+		vkQueueWaitIdle(Display::Get()->GetQueue());
 	}
 
 	VkResult Renderer::StartRenderpass(const VkCommandBuffer &commandBuffer)
@@ -101,7 +107,7 @@ namespace Flounder
 
 		Platform::ErrorVk(vkBeginCommandBuffer(commandBuffer, &commandBufferBeginInfo));
 
-		const auto renderPass = m_renderPass->GetRenderPass();
+		const auto renderpass = m_renderpass->GetRenderpass();
 		const auto activeFramebuffer = GetActiveFramebuffer();
 
 		VkRect2D renderArea = {};
@@ -110,17 +116,18 @@ namespace Flounder
 		renderArea.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth());
 		renderArea.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight());
 
-		std::array<VkClearValue, 6> clearValues = {};
+		std::vector<VkClearValue> clearValues(m_renderpassCreate->images.size() + 2);
 		clearValues[0].depthStencil = {1.0f, 0}; // Depth.
 		clearValues[1].color = {{0.0f, 0.0f, 0.0f, 0.0f}}; // Swapchain.
-		clearValues[2].color = {{0.0f, 0.0f, 0.0f, 0.0f}}; // Colours.
-		clearValues[3].color = {{0.0f, 0.0f, 0.0f, 0.0f}}; // Normals.
-		clearValues[4].color = {{0.0f, 0.0f, 0.0f, 0.0f}}; // Materials.
-		clearValues[5].color = {{0.0f}}; // Shadows.
+
+		for (unsigned int j = 2; j < m_renderpassCreate->images.size(); j++)
+		{
+			clearValues[j].color = m_renderpassCreate->images.at(j).m_clearColour;
+		}
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
 		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassBeginInfo.renderPass = renderPass;
+		renderPassBeginInfo.renderPass = renderpass;
 		renderPassBeginInfo.framebuffer = activeFramebuffer;
 		renderPassBeginInfo.renderArea = renderArea;
 		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
@@ -264,8 +271,8 @@ namespace Flounder
 		delete m_depthStencil;
 		delete m_swapchain;
 
-		m_swapchain = new Swapchain(extent2d);
+		m_swapchain = new Swapchain(*m_renderpassCreate, extent2d);
 		m_depthStencil = new DepthStencil(extent3d);
-		m_framebuffers = new Framebuffers(m_renderPass->GetRenderPass(), m_depthStencil->GetImageView(), *m_swapchain, extent2d);
+		m_framebuffers = new Framebuffers(m_renderpass->GetRenderpass(), m_depthStencil->GetImageView(), *m_swapchain, extent2d);
 	}
 }

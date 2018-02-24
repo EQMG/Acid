@@ -6,7 +6,26 @@
 
 namespace Demo
 {
+	RenderpassCreate *RENDERPASS_CREATE = new RenderpassCreate
+		{
+			{
+				// 0, depth
+				// 1, swapchain
+				ImageAttachment(2, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, {{0.0f, 0.0f, 0.0f, 0.0f}}), // colours
+				ImageAttachment(3, VK_FORMAT_R16G16_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, {{0.0f, 0.0f, 0.0f, 0.0f}}), // normals
+				ImageAttachment(4, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, {{0.0f, 0.0f, 0.0f, 0.0f}}), // materials
+				ImageAttachment(5, VK_FORMAT_R16_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, {{0.0f}}) // shadows
+			}, // images
+			{
+				SubpassType(0, false, {5}),
+				SubpassType(1, true, {2, 3, 4}),
+				SubpassType(2, false, {1}),
+				SubpassType(3, false, {1}),
+			}, // subpasses
+		};
+
 	ManagerRender::ManagerRender() :
+		IManagerRender(RENDERPASS_CREATE),
 		m_infinity(Vector4(0.0f, 1.0f, 0.0f, +INFINITY)),
 		m_rendererShadows(new RendererShadows(0)),
 		m_rendererSkyboxes(new RendererSkyboxes(1)),

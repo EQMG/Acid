@@ -15,7 +15,7 @@ namespace Flounder
 	{
 	private:
 		int m_subpass;
-		PipelineCreateInfo m_pipelineCreateInfo;
+		PipelineCreate m_pipelineCreateInfo;
 
 		VkDescriptorSetLayout m_descriptorSetLayout;
 		VkDescriptorPool m_descriptorPool;
@@ -41,7 +41,7 @@ namespace Flounder
 		/// </summary>
 		/// <param name="subpass"> The pipelines subpass. </param>
 		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
-		Pipeline(const int &subpass, const PipelineCreateInfo &pipelineCreateInfo);
+		Pipeline(const int &subpass, const PipelineCreate &pipelineCreateInfo);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
