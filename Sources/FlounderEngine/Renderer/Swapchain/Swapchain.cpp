@@ -5,16 +5,13 @@
 
 namespace Flounder
 {
-	Swapchain::Swapchain(const VkExtent2D &extent) :
+	Swapchain::Swapchain(const RenderpassCreate &renderpassCreate, const VkExtent2D &extent) :
 		m_presentMode(VK_PRESENT_MODE_FIFO_KHR),
 		m_swapchain(VK_NULL_HANDLE),
 		m_swapchainImageCount(0),
 		m_swapchinImages(std::vector<VkImage>()),
 		m_swapchinImageViews(std::vector<VkImageView>()),
-		m_colourImage(nullptr),
-		m_normalImage(nullptr),
-		m_materialImage(nullptr),
-		m_shadowImage(nullptr),
+		m_imageAttachments(std::vector<Texture *>()),
 		m_extent({})
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -99,20 +96,25 @@ namespace Flounder
 			Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews[i]));
 		}
 
-		m_colourImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
-		m_normalImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R16G16_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
-		m_materialImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
-		m_shadowImage = new Texture(Display::Get()->GetWidth(), Display::Get()->GetHeight(), VK_FORMAT_R16_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT); // Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize()
+		m_imageAttachments.push_back(nullptr); // Depth
+		m_imageAttachments.push_back(nullptr); // Swapchain
+
+		for (auto image : renderpassCreate.images)
+		{
+			uint32_t width = image.m_width == 0 ? Display::Get()->GetWidth() : image.m_width;
+			uint32_t height = image.m_height == 0 ? Display::Get()->GetHeight() : image.m_height;
+			m_imageAttachments.push_back(new Texture(width, height, image.m_format, image.m_layout, image.m_usage));
+		}
 	}
 
 	Swapchain::~Swapchain()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		delete m_shadowImage;
-		delete m_normalImage;
-		delete m_materialImage;
-		delete m_colourImage;
+		for (auto image : m_imageAttachments)
+		{
+			delete image;
+		}
 
 		for (auto imageView : m_swapchinImageViews)
 		{

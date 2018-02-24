@@ -50,6 +50,13 @@ namespace Flounder
 				CreateLod(lodi);
 			}
 
+			auto mesh = GetGameObject()->GetComponent<Mesh>();
+
+			if (mesh != nullptr)
+			{
+				mesh->SetModel(m_modelLods[lod]);
+			}
+
 			m_currentLod = lodi;
 		}
 	}
@@ -75,7 +82,7 @@ namespace Flounder
 		const float squareSize = TerrainRender::SQUARE_SIZES[lod];
 		const float textureScale = TerrainRender::TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(TerrainRender::SIDE_LENGTH, squareSize);
-		m_modelLods[lod] = new MeshTerrain(static_cast<float>(TerrainRender::SIDE_LENGTH), 1.026f * squareSize, vertexCount, textureScale, GetGameObject()->GetTransform()->m_position);
+		m_modelLods[lod] = new MeshTerrain(static_cast<float>(TerrainRender::SIDE_LENGTH), 1.028f * squareSize, vertexCount, textureScale, GetGameObject()->GetTransform()->m_position);
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 
@@ -84,13 +91,6 @@ namespace Flounder
 			printf("Terrain LOD %i took %fms to build\n", lod, debugEnd - debugStart);
 		}
 #endif
-
-		auto mesh = GetGameObject()->GetComponent<Mesh>();
-
-		if (mesh != nullptr)
-		{
-			mesh->SetModel(m_modelLods[lod]);
-		}
 	}
 
 	int LodBehaviour::CalculateVertexCount(const int &terrainLength, const float &squareSize)

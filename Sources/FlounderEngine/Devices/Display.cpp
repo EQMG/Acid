@@ -122,14 +122,12 @@ namespace Flounder
 		m_instanceExtensionList(std::vector<const char *>()),
 		m_deviceExtensionList(std::vector<const char *>()),
 		m_debugReport(VK_NULL_HANDLE),
-
 		m_instance(VK_NULL_HANDLE),
 		m_surface(VK_NULL_HANDLE),
 		m_surfaceCapabilities({}),
 		m_surfaceFormat({}),
 		m_logicalDevice(VK_NULL_HANDLE),
 		m_queue(VK_NULL_HANDLE),
-
 		m_physicalDevice(VK_NULL_HANDLE),
 		m_physicalDeviceProperties({}),
 		m_physicalDeviceFeatures({}),
@@ -358,8 +356,12 @@ namespace Flounder
 					}
 				}
 
-				fprintf(stderr, "Vulkan validation layer not found: '%s'\n", layerName); 
-				assert(layerFound && "Could not find a Vulkan validation layer!");
+				if (!layerFound)
+				{
+					fprintf(stderr, "Vulkan validation layer not found: '%s'\n", layerName);
+				//	assert(layerFound && "Could not find a Vulkan validation layer!");
+				}
+
 				m_instanceLayerList.push_back(layerName);
 			}
 
@@ -394,8 +396,8 @@ namespace Flounder
 		applicationInfo.pApplicationName = m_title.c_str();
 		applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
 		applicationInfo.pEngineName = "Flounder";
-		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 2, 0);
-		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 49);
+		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 7, 0);
+		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 65);
 
 		VkInstanceCreateInfo instanceCreateInfo = {};
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
