@@ -99,7 +99,6 @@ namespace Flounder
 		uboScene.shadowTransition = Shadows::Get()->GetShadowTransition();
 		uboScene.shadowBias = Shadows::Get()->GetShadowBias();
 		uboScene.shadowDarkness = Shadows::Get()->GetShadowDarkness();
-		uboScene.shadowMapSize = Shadows::Get()->GetShadowSize();
 		uboScene.shadowPCF = Shadows::Get()->GetShadowPcf();
 
 		uboScene.lightsCount = static_cast<int>(sceneLights.size());

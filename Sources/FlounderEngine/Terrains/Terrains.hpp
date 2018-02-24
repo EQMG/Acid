@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "../Engine/Engine.hpp"
-#include "../Noise/NoiseFast.hpp"
+#include "../Maths/Noise/NoiseFast.hpp"
 #include "TerrainRender.hpp"
 
 namespace Flounder

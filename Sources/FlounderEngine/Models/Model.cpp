@@ -118,16 +118,13 @@ namespace Flounder
 			return modelLoaded;
 		}
 
-		const std::string fileLoaded = FileSystem::ReadTextFile(std::string(m_filename));
+		const std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
 		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n");
 
 		std::vector<uint32_t> indicesList = std::vector<uint32_t>();
 		std::vector<VertexData *> verticesList = std::vector<VertexData *>();
 		std::vector<Vector2> uvsList = std::vector<Vector2>();
 		std::vector<Vector3> normalsList = std::vector<Vector3>();
-
-		std::vector<std::string> splitFile = FormatString::Split(std::string(m_filename), "/");
-		std::string fileName = splitFile.at(splitFile.size() - 1);
 
 		for (auto it = lines.begin(); it < lines.end(); ++it)
 		{
@@ -219,7 +216,7 @@ namespace Flounder
 			delete current;
 		}
 
-		m_filename = fileName;
+		m_filename = filename;
 		return modelLoaded;
 	}
 

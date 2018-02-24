@@ -29,6 +29,11 @@ namespace Flounder
 
 		for (auto object : *m_scene->GetStructure()->GetAll())
 		{
+			if (object == nullptr)
+			{
+				continue;
+			}
+
 			object->Update();
 		}
 

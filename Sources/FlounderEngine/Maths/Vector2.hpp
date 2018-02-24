@@ -323,29 +323,29 @@ namespace Flounder
 
 		Vector2 &operator-();
 
-		friend Vector2 operator+(Vector2 left, const Vector2 &right);
+		friend F_EXPORT Vector2 operator+(Vector2 left, const Vector2 &right);
 
-		friend Vector2 operator-(Vector2 left, const Vector2 &right);
+		friend F_EXPORT Vector2 operator-(Vector2 left, const Vector2 &right);
 
-		friend Vector2 operator*(Vector2 left, const Vector2 &right);
+		friend F_EXPORT Vector2 operator*(Vector2 left, const Vector2 &right);
 
-		friend Vector2 operator/(Vector2 left, const Vector2 &right);
+		friend F_EXPORT Vector2 operator/(Vector2 left, const Vector2 &right);
 
-		friend Vector2 operator+(Vector2 left, float value);
+		friend F_EXPORT Vector2 operator+(Vector2 left, float value);
 
-		friend Vector2 operator-(Vector2 left, float value);
+		friend F_EXPORT Vector2 operator-(Vector2 left, float value);
 
-		friend Vector2 operator*(Vector2 left, float value);
+		friend F_EXPORT Vector2 operator*(Vector2 left, float value);
 
-		friend Vector2 operator/(Vector2 left, float value);
+		friend F_EXPORT Vector2 operator/(Vector2 left, float value);
 
-		friend Vector2 operator+(float value, Vector2 left);
+		friend F_EXPORT Vector2 operator+(float value, Vector2 left);
 
-		friend Vector2 operator-(float value, Vector2 left);
+		friend F_EXPORT Vector2 operator-(float value, Vector2 left);
 
-		friend Vector2 operator*(float value, Vector2 left);
+		friend F_EXPORT Vector2 operator*(float value, Vector2 left);
 
-		friend Vector2 operator/(float value, Vector2 left);
+		friend F_EXPORT Vector2 operator/(float value, Vector2 left);
 
 		Vector2 &operator+=(const Vector2 &other);
 

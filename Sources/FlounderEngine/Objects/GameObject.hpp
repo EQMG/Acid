@@ -18,7 +18,7 @@ namespace Flounder
 		ISpatialStructure<GameObject *> *m_structure;
 		bool m_removed;
 	public:
-		GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure = nullptr);
+		GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure = nullptr, std::string name = "Unnamed");
 
 		GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure<GameObject *> *structure = nullptr);
 
@@ -46,7 +46,28 @@ namespace Flounder
 
 		void AddComponent(Component *component);
 
+		template<typename T>
+		void AddComponent()
+		{
+			AddComponent(new T());
+		}
+
 		void RemoveComponent(Component *component);
+
+		template<typename T>
+		void RemoveComponent()
+		{
+			for (auto c : *m_components)
+			{
+				T *casted = dynamic_cast<T *>(c);
+
+				if (casted != nullptr)
+				{
+					RemoveComponent(c);
+					return;
+				}
+			}
+		}
 
 		std::string GetName() const { return m_name; }
 

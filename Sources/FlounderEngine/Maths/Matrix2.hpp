@@ -220,17 +220,17 @@ namespace Flounder
 
 		Matrix2 &operator-();
 
-		friend Matrix2 operator+(Matrix2 left, const Matrix2 &right);
+		friend F_EXPORT Matrix2 operator+(Matrix2 left, const Matrix2 &right);
 
-		friend Matrix2 operator-(Matrix2 left, const Matrix2 &right);
+		friend F_EXPORT Matrix2 operator-(Matrix2 left, const Matrix2 &right);
 
-		friend Matrix2 operator*(Matrix2 left, const Matrix2 &right);
+		friend F_EXPORT Matrix2 operator*(Matrix2 left, const Matrix2 &right);
 
-		friend Matrix2 operator/(Matrix2 left, const Matrix2 &right);
+		friend F_EXPORT Matrix2 operator/(Matrix2 left, const Matrix2 &right);
 
-		friend Matrix2 operator*(Matrix2 left, Vector2 value);
+		friend F_EXPORT Matrix2 operator*(Matrix2 left, Vector2 value);
 
-		friend Matrix2 operator/(Matrix2 left, Vector2 value);
+		friend F_EXPORT Matrix2 operator/(Matrix2 left, Vector2 value);
 
 		Matrix2 &operator+=(const Matrix2 &other);
 

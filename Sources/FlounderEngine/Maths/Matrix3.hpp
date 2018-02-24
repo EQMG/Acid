@@ -222,17 +222,17 @@ namespace Flounder
 
 		Matrix3 &operator-();
 
-		friend Matrix3 operator+(Matrix3 left, const Matrix3 &right);
+		friend F_EXPORT Matrix3 operator+(Matrix3 left, const Matrix3 &right);
 
-		friend Matrix3 operator-(Matrix3 left, const Matrix3 &right);
+		friend F_EXPORT Matrix3 operator-(Matrix3 left, const Matrix3 &right);
 
-		friend Matrix3 operator*(Matrix3 left, const Matrix3 &right);
+		friend F_EXPORT Matrix3 operator*(Matrix3 left, const Matrix3 &right);
 
-		friend Matrix3 operator/(Matrix3 left, const Matrix3 &right);
+		friend F_EXPORT Matrix3 operator/(Matrix3 left, const Matrix3 &right);
 
-		friend Matrix3 operator*(Matrix3 left, Vector3 value);
+		friend F_EXPORT Matrix3 operator*(Matrix3 left, Vector3 value);
 
-		friend Matrix3 operator/(Matrix3 left, Vector3 value);
+		friend F_EXPORT Matrix3 operator/(Matrix3 left, Vector3 value);
 
 		Matrix3 &operator+=(const Matrix3 &other);
 

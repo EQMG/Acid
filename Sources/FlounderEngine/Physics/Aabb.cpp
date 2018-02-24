@@ -157,17 +157,13 @@ namespace Flounder
 
 	Collider *Aabb::Update(const Transform &transform, Collider *destination)
 	{
-		if (destination == nullptr)
-		{
-			destination = new Aabb();
-		}
-
-		Aabb *source = dynamic_cast<Aabb *>(destination);
+		auto source = dynamic_cast<Aabb *>(destination);
 
 		if (source == nullptr)
 		{
-			delete source;
+			delete destination;
 			source = new Aabb();
+			destination = source;
 		}
 
 		// Sets the destinations values to the sources.
@@ -235,7 +231,7 @@ namespace Flounder
 		}
 
 		// Returns the final aabb.
-		return source;
+		return destination;
 	}
 
 	Vector3 *Aabb::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
@@ -245,7 +241,7 @@ namespace Flounder
 			destination = new Vector3();
 		}
 
-		const Aabb &source = dynamic_cast<const Aabb &>(other);
+		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
 
 		if (positionDelta.m_x != 0.0f)
 		{
@@ -254,12 +250,12 @@ namespace Flounder
 			if (positionDelta.m_x >= 0.0f)
 			{
 				// Our max == their min
-				newAmountX = source.m_minExtents->m_x - m_maxExtents->m_x;
+				newAmountX = aabb2.m_minExtents->m_x - m_maxExtents->m_x;
 			}
 			else
 			{
 				// Our min == their max
-				newAmountX = source.m_maxExtents->m_x - m_minExtents->m_x;
+				newAmountX = aabb2.m_maxExtents->m_x - m_minExtents->m_x;
 			}
 
 			if (std::fabs(newAmountX) < std::fabs(positionDelta.m_x))
@@ -275,12 +271,12 @@ namespace Flounder
 			if (positionDelta.m_y >= 0.0f)
 			{
 				// Our max == their min
-				newAmountY = source.m_minExtents->m_y - m_maxExtents->m_y;
+				newAmountY = aabb2.m_minExtents->m_y - m_maxExtents->m_y;
 			}
 			else
 			{
 				// Our min == their max
-				newAmountY = source.m_maxExtents->m_y - m_minExtents->m_y;
+				newAmountY = aabb2.m_maxExtents->m_y - m_minExtents->m_y;
 			}
 
 			if (std::fabs(newAmountY) < std::fabs(positionDelta.m_y))
@@ -296,12 +292,12 @@ namespace Flounder
 			if (positionDelta.m_z >= 0.0f)
 			{
 				// Our max == their min
-				newAmountZ = source.m_minExtents->m_z - m_maxExtents->m_z;
+				newAmountZ = aabb2.m_minExtents->m_z - m_maxExtents->m_z;
 			}
 			else
 			{
 				// Our min == their max
-				newAmountZ = source.m_maxExtents->m_z - m_minExtents->m_z;
+				newAmountZ = aabb2.m_maxExtents->m_z - m_minExtents->m_z;
 			}
 
 			if (std::fabs(newAmountZ) < std::fabs(positionDelta.m_z))
@@ -315,10 +311,10 @@ namespace Flounder
 
 	Intersect Aabb::Intersects(const Collider &other)
 	{
-		const Aabb &source = dynamic_cast<const Aabb &>(other);
+		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
 
-		Vector3 *distance1 = Vector3::Subtract(*m_minExtents, *source.m_maxExtents, nullptr);
-		Vector3 *distance2 = Vector3::Subtract(*source.m_minExtents, *m_maxExtents, nullptr);
+		Vector3 *distance1 = Vector3::Subtract(*m_minExtents, *aabb2.m_maxExtents, nullptr);
+		Vector3 *distance2 = Vector3::Subtract(*aabb2.m_minExtents, *m_maxExtents, nullptr);
 		Vector3 *maxDistance = Vector3::MaxVector(*distance1, *distance2, nullptr);
 		const float maxDist = Vector3::MaxComponent(*maxDistance);
 
@@ -412,12 +408,7 @@ namespace Flounder
 			tzmin = temp;
 		}
 
-		if ((tmin > tzmax) || (tzmin > tmax))
-		{
-			return Intersect(false, 0.0f);
-		}
-
-		return Intersect(true, 0.0f);
+		return Intersect(!(tmin > tzmax || tzmin > tmax), 0.0f);
 	}
 
 	bool Aabb::InFrustum(const Frustum &frustum)
@@ -427,14 +418,14 @@ namespace Flounder
 
 	bool Aabb::Contains(const Collider &other)
 	{
-		const Aabb &source = dynamic_cast<const Aabb &>(other);
+		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
 
-		return m_minExtents->m_x <= source.m_minExtents->m_x &&
-			source.m_maxExtents->m_x <= m_maxExtents->m_x &&
-			m_minExtents->m_y <= source.m_minExtents->m_y &&
-			source.m_maxExtents->m_y <= m_maxExtents->m_y &&
-			m_minExtents->m_z <= source.m_minExtents->m_z &&
-			source.m_maxExtents->m_z <= m_maxExtents->m_z;
+		return m_minExtents->m_x <= aabb2.m_minExtents->m_x &&
+			aabb2.m_maxExtents->m_x <= m_maxExtents->m_x &&
+			m_minExtents->m_y <= aabb2.m_minExtents->m_y &&
+			aabb2.m_maxExtents->m_y <= m_maxExtents->m_y &&
+			m_minExtents->m_z <= aabb2.m_minExtents->m_z &&
+			aabb2.m_maxExtents->m_z <= m_maxExtents->m_z;
 	}
 
 	bool Aabb::Contains(const Vector3 &point)

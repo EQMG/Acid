@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	const int TerrainRender::SIDE_LENGTH = 100;
+	const int TerrainRender::SIDE_LENGTH = 200;
 	const std::vector<float> TerrainRender::SQUARE_SIZES = {
 		2.0f, 4.0f, 10.0f, 25.0f
 	};
