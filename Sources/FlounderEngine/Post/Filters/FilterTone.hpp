@@ -8,7 +8,7 @@ namespace Flounder
 		public IPostFilter
 	{
 	public:
-		FilterTone(const int &subpass);
+		FilterTone(const GraphicsStage &graphicsStage);
 
 		~FilterTone();
 

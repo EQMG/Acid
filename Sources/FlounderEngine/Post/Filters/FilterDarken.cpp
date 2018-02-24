@@ -11,8 +11,8 @@ namespace Flounder
 			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
 		};
 
-	FilterDarken::FilterDarken(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Darken.frag.spv", subpass, DESCRIPTORS),
+	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage) :
+		IPostFilter("Resources/Shaders/Filters/Darken.frag.spv", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_factor(0.5f)
 	{

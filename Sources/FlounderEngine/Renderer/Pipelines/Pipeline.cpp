@@ -12,8 +12,8 @@ namespace Flounder
 		VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR
 	};
 
-	Pipeline::Pipeline(const int &subpass, const PipelineCreate &pipelineCreateInfo) :
-		m_subpass(subpass),
+	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo) :
+		m_graphicsStage(graphicsStage),
 		m_pipelineCreateInfo(pipelineCreateInfo),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
@@ -272,8 +272,8 @@ namespace Flounder
 	void Pipeline::CreatePipelinePolygon()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto renderpass = Renderer::Get()->GetRenderpass();
 		const auto pipelineCache = Renderer::Get()->GetPipelineCache();
+		const auto pass = Renderer::Get()->GetPass(m_graphicsStage.renderpass);
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -285,8 +285,8 @@ namespace Flounder
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.renderPass = renderpass;
-		pipelineCreateInfo.subpass = m_subpass;
+		pipelineCreateInfo.renderPass = pass->m_renderpass->GetRenderpass();
+		pipelineCreateInfo.subpass = m_graphicsStage.subpass;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
 
@@ -318,7 +318,7 @@ namespace Flounder
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < Renderer::Get()->GetRenderpassCreate()->subpasses.at(m_subpass).m_attachments.size(); i++)
+		for (uint32_t i = 0; i < Renderer::Get()->GetPass(m_graphicsStage.renderpass)->m_imageAttachments; i++)
 		{
 			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
 			blendAttachmentState.blendEnable = VK_FALSE;
@@ -343,7 +343,7 @@ namespace Flounder
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < Renderer::Get()->GetRenderpassCreate()->subpasses.at(m_subpass).m_attachments.size(); i++)
+		for (uint32_t i = 0; i < Renderer::Get()->GetPass(m_graphicsStage.renderpass)->m_imageAttachments; i++)
 		{
 			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
 			blendAttachmentState.blendEnable = VK_FALSE;

@@ -18,7 +18,7 @@ namespace Flounder
 
 		float m_spanMax;
 	public:
-		FilterFxaa(const int &subpass);
+		FilterFxaa(const GraphicsStage &graphicsStage);
 
 		~FilterFxaa();
 

@@ -24,7 +24,7 @@ namespace Demo
 	private:
 		Vector4 m_infinity;
 
-		RendererShadows *m_rendererShadows;
+	//	RendererShadows *m_rendererShadows;
 
 		RendererSkyboxes *m_rendererSkyboxes;
 		RendererTerrains *m_rendererTerrains;
@@ -44,5 +44,10 @@ namespace Demo
 		~ManagerRender();
 
 		void Render() override;
+
+	private:
+		void RenderPass0();
+
+		void RenderPass1();
 	};
 }

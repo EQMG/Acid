@@ -25,10 +25,10 @@ namespace Flounder
 			{"Resources/Shaders/Waters/Water.vert.spv", "Resources/Shaders/Waters/Water.frag.spv"} // shaderStages
 		};
 
-	RendererWaters::RendererWaters(const int &subpass) :
+	RendererWaters::RendererWaters(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosWaters::UboScene))),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE))
+		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
 	{
 	}
 

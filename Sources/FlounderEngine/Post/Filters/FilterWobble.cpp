@@ -11,8 +11,8 @@ namespace Flounder
 			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
 		};
 
-	FilterWobble::FilterWobble(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Wobble.frag.spv", subpass, DESCRIPTORS),
+	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage) :
+		IPostFilter("Resources/Shaders/Filters/Wobble.frag.spv", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_wobbleSpeed(2.0f),
 		m_wobbleAmount(0.0f)

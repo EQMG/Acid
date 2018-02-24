@@ -2,31 +2,36 @@
 
 #include <string>
 #include <vector>
+#include "../../Maths/Colour.hpp"
 #include "../../Engine/Platform.hpp"
 
 namespace Flounder
 {
-	class F_EXPORT ImageAttachment
+	enum AttachmentType
+	{
+		TypeImage = 0,
+		TypeDepth = 1,
+		TypeSwapchain = 2,
+	};
+
+	class F_EXPORT Attachment
 	{
 	public:
 		int m_binding;
+		AttachmentType m_type;
 		VkFormat m_format;
+		Colour m_clearColour;
 		VkImageLayout m_layout;
 		VkImageUsageFlags m_usage;
-		VkClearColorValue m_clearColour;
-		uint32_t m_width;
-		uint32_t m_height;
 
-		ImageAttachment(const int &binding, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-						const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, const VkClearColorValue &clearColour = {{0.0f, 0.0f, 0.0f, 0.0f}},
-						const uint32_t &width = 0, const uint32_t &height = 0) :
+		Attachment(const int &binding, const AttachmentType &type, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::BLACK,
+				   const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) :
 			m_binding(binding),
+			m_type(type),
 			m_format(format),
-			m_layout(layout),
-			m_usage(usage),
 			m_clearColour(clearColour),
-			m_width(width),
-			m_height(height)
+			m_layout(layout),
+			m_usage(usage)
 		{
 		}
 	};
@@ -48,7 +53,9 @@ namespace Flounder
 
 	struct RenderpassCreate
 	{
-		std::vector<ImageAttachment> images = std::vector<ImageAttachment>();
+		std::vector<Attachment> images = std::vector<Attachment>();
 		std::vector<SubpassType> subpasses = std::vector<SubpassType>();
+		uint32_t m_width;
+		uint32_t m_height;
 	};
 }

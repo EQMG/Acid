@@ -12,7 +12,7 @@ namespace Flounder
 		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
 	public:
-		RendererWaters(const int &subpass);
+		RendererWaters(const GraphicsStage &graphicsStage);
 
 		~RendererWaters();
 

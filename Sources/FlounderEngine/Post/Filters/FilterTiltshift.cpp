@@ -11,8 +11,8 @@ namespace Flounder
 			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // aamplerColour
 		};
 
-	FilterTiltshift::FilterTiltshift(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag.spv", subpass, DESCRIPTORS),
+	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage) :
+		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag.spv", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_blurAmount(1.0f),
 		m_centre(1.1f),

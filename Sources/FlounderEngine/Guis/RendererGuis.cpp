@@ -24,9 +24,9 @@ namespace Flounder
 			{"Resources/Shaders/Guis/Gui.vert.spv", "Resources/Shaders/Guis/Gui.frag.spv"} // shaderStages
 		};
 
-	RendererGuis::RendererGuis(const int &subpass) :
+	RendererGuis::RendererGuis(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE))
+		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
 	{
 	}
 

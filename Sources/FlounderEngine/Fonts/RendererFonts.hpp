@@ -12,7 +12,7 @@ namespace Flounder
 	private:
 		Pipeline *m_pipeline;
 	public:
-		RendererFonts(const int &subpass);
+		RendererFonts(const GraphicsStage &graphicsStage);
 
 		~RendererFonts();
 

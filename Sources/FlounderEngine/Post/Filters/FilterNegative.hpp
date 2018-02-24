@@ -8,7 +8,7 @@ namespace Flounder
 		public IPostFilter
 	{
 	public:
-		FilterNegative(const int &subpass);
+		FilterNegative(const GraphicsStage &graphicsStage);
 
 		~FilterNegative();
 
