@@ -45,7 +45,7 @@ namespace Flounder
 
 		if (found == VALUES.end())
 		{
-			fprintf(stderr, "Could not find registered componentL '%s'\n", name.c_str());
+			fprintf(stderr, "Could not find registered component: '%s'\n", name.c_str());
 			return nullptr;
 		}
 

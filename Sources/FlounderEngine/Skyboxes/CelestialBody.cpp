@@ -9,7 +9,7 @@ namespace Flounder
 		Component(),
 		m_type(type)
 	{
-		Link<int>(0, LINK_GET(static_cast<int>(GetType())), LINK_SET(int, SetType(static_cast<CelestialType>(v))));
+		Link<int>(0, "Type", LINK_GET(static_cast<int>(GetType())), LINK_SET(int, SetType(static_cast<CelestialType>(v))));
 	}
 
 	CelestialBody::~CelestialBody()

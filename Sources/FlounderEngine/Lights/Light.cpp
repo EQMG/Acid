@@ -9,11 +9,11 @@ namespace Flounder
 		m_offset(new Vector3(offset)),
 		m_position(new Vector3())
 	{
-		Link<std::string>(0, LINK_GET_STR(Colour::GetHex(*GetColour())), LINK_SET(std::string, SetColour(Colour(v))));
-		Link<float>(1, LINK_GET(GetRadius()), LINK_SET(float, SetRadius(v)));
-		Link<float>(2, LINK_GET(GetOffset()->m_x), LINK_SET(float, GetOffset()->m_x = v));
-		Link<float>(3, LINK_GET(GetOffset()->m_y), LINK_SET(float, GetOffset()->m_y = v));
-		Link<float>(4, LINK_GET(GetOffset()->m_z), LINK_SET(float, GetOffset()->m_z = v));
+		Link<std::string>(0, "Colour", LINK_GET_STR(Colour::GetHex(*GetColour())), LINK_SET(std::string, SetColour(Colour(v))));
+		Link<float>(1, "Radius", LINK_GET(GetRadius()), LINK_SET(float, SetRadius(v)));
+		Link<float>(2, "Offset X", LINK_GET(GetOffset()->m_x), LINK_SET(float, GetOffset()->m_x = v));
+		Link<float>(3, "Offset Y", LINK_GET(GetOffset()->m_y), LINK_SET(float, GetOffset()->m_y = v));
+		Link<float>(4, "Offset Z", LINK_GET(GetOffset()->m_z), LINK_SET(float, GetOffset()->m_z = v));
 	}
 
 	Light::Light(const Light &source) :

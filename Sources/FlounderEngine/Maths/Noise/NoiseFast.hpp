@@ -1,7 +1,12 @@
 ﻿#pragma once
 
-#include "../Prerequisites.hpp"
+#include "../../Prerequisites.hpp"
 
+namespace Flounder
+{
+	class F_EXPORT NoiseFast
+	{
+	public:
 // Hashing
 #define X_PRIME 1619
 #define Y_PRIME 31337
@@ -11,11 +16,6 @@
 // Cellular
 #define FN_CELLULAR_INDEX_MAX 3
 
-namespace Flounder
-{
-	class F_EXPORT NoiseFast
-	{
-	public:
 		enum TypeNoise
 		{
 			Value,

@@ -57,28 +57,32 @@ namespace Flounder
 				continue;
 			}
 
-			Matrix4 modelMatrix = Matrix4();
-			mesh->GetGameObject()->GetTransform()->GetWorldMatrix(&modelMatrix);
-			RenderModel(commandBuffer, mesh->GetModel(), modelMatrix);
+			RenderModel(commandBuffer, mesh->GetModel(), mesh->GetGameObject());
 		}
 	}
 
-	void RendererShadows::RenderModel(const VkCommandBuffer &commandBuffer, Model *object, const Matrix4 &modelMatrix)
+	void RendererShadows::RenderModel(const VkCommandBuffer &commandBuffer, Model *object, GameObject *gameObject)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
+		Matrix4 worldMatrix = Matrix4();
+		gameObject->GetTransform()->GetWorldMatrix(&worldMatrix);
+
+		// Creates a UBO object and write descriptor.
 		UbosShadows::UboObject uboObject = {};
-		uboObject.mvp = Matrix4();
-		Matrix4::Multiply(*Shadows::Get()->GetShadowBox()->GetProjectionViewMatrix(), modelMatrix, &uboObject.mvp);
+		uboObject.mvp = (*Scenes::Get()->GetCamera()->GetProjectionMatrix() * *Scenes::Get()->GetCamera()->GetViewMatrix()) * worldMatrix;
+		//	Matrix4::Multiply(*Shadows::Get()->GetShadowBox()->GetProjectionViewMatrix(), modelMatrix, &uboObject.mvp);
 		m_uniformObject->Update(&uboObject);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
 			m_uniformObject->GetWriteDescriptor(0, descriptorSet)
 		};
+
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[1] = {descriptorSet};
+		// Draws the object.
+		VkDescriptorSet descriptors[] = {descriptorSet};
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		object->CmdRender(commandBuffer);
