@@ -6,10 +6,10 @@ namespace Flounder
 {
 	Terrains::Terrains() :
 		IModule(),
-		m_noise1(NoiseFast(56854))
+		m_noise1(NoiseFast(8420152))
 	{
 		m_noise1.SetNoiseType(NoiseFast::PerlinFractal);
-		m_noise1.SetFrequency(0.0035f);
+		m_noise1.SetFrequency(0.003f);
 		m_noise1.SetInterp(NoiseFast::Quintic);
 		m_noise1.SetFractalType(NoiseFast::Fbm);
 		m_noise1.SetFractalOctaves(5);

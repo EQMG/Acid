@@ -1,6 +1,8 @@
 #include "LodBehaviour.hpp"
 
 #include "../Scenes/Scenes.hpp"
+#include "../Events/Events.hpp"
+#include "../Events/EventTime.hpp"
 #include "../Maths/Maths.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "Terrains.hpp"
@@ -47,17 +49,8 @@ namespace Flounder
 			{
 				CreateLod(lodi);
 			}
-			else
-			{
-				auto mesh = GetGameObject()->GetComponent<Mesh>();
 
-				if (mesh != nullptr)
-				{
-					mesh->SetModel(m_modelLods[lodi]);
-				}
-
-				m_currentLod = lodi;
-			}
+			m_currentLod = lodi;
 		}
 	}
 
@@ -82,19 +75,26 @@ namespace Flounder
 		const float squareSize = TerrainRender::SQUARE_SIZES[lod];
 		const float textureScale = TerrainRender::TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(TerrainRender::SIDE_LENGTH, squareSize);
-		m_modelLods[lod] = new MeshTerrain(static_cast<float>(TerrainRender::SIDE_LENGTH), squareSize, vertexCount, textureScale, GetGameObject()->GetTransform()->m_position);
+		m_modelLods[lod] = new MeshTerrain(static_cast<float>(TerrainRender::SIDE_LENGTH), 1.026f * squareSize, vertexCount, textureScale, GetGameObject()->GetTransform()->m_position);
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 
-		if (debugEnd - debugStart > 13.0f)
+		if (debugEnd - debugStart > 22.0f)
 		{
 			printf("Terrain LOD %i took %fms to build\n", lod, debugEnd - debugStart);
 		}
 #endif
+
+		auto mesh = GetGameObject()->GetComponent<Mesh>();
+
+		if (mesh != nullptr)
+		{
+			mesh->SetModel(m_modelLods[lod]);
+		}
 	}
 
 	int LodBehaviour::CalculateVertexCount(const int &terrainLength, const float &squareSize)
 	{
-		return static_cast<int>((2.0 * terrainLength) / static_cast<float>(squareSize)) + 2;
+		return static_cast<int>((2.0 * terrainLength) / static_cast<float>(squareSize)) + 1;
 	}
 }

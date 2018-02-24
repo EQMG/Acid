@@ -56,13 +56,13 @@ namespace Flounder
 		ModuleCreate<Joysticks>(UpdatePre, "joysticks");
 		ModuleCreate<Keyboard>(UpdatePre, "keyboard");
 		ModuleCreate<Mouse>(UpdatePre, "mouse");
+		ModuleCreate<Scenes>(UpdateNormal, "scenes");
 		ModuleCreate<Renderer>(UpdateRender, "renderer");
 		ModuleCreate<Resources>(UpdatePre, "resources");
 		ModuleCreate<Events>(UpdatePre, "events");
 		ModuleCreate<Tasks>(UpdatePre, "tasks");
 		ModuleCreate<Uis>(UpdatePre, "uis");
 		ModuleCreate<Worlds>(UpdatePre, "worlds");
-		ModuleCreate<Scenes>(UpdateNormal, "scenes");
 		ModuleCreate<Particles>(UpdateNormal, "particles");
 		ModuleCreate<Skyboxes>(UpdateNormal, "skyboxes");
 		ModuleCreate<Terrains>(UpdateNormal, "terrains");

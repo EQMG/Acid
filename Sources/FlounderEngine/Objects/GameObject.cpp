@@ -6,8 +6,8 @@
 
 namespace Flounder
 {
-	GameObject::GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure) :
-		m_name("Unnamed"),
+	GameObject::GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure, std::string name) :
+		m_name(name),
 		m_transform(new Transform(transform)),
 		m_components(new std::vector<Component*>()),
 		m_structure(structure),
@@ -25,10 +25,9 @@ namespace Flounder
 	}
 
 	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure<GameObject *> *structure) :
-		GameObject(transform, structure)
+		GameObject(transform, structure, prefabName)
 	{
 		PrefabObject *entityPrefab = PrefabObject::Resource("Resources/Entities/" + prefabName + "/" + prefabName + ".csv");
-		m_name = prefabName;
 
 		for (const auto &componentName : entityPrefab->GetComponents())
 		{
@@ -71,16 +70,26 @@ namespace Flounder
 
 	void GameObject::Update()
 	{
+		if (m_removed)
+		{
+			return;
+		}
+
 		for (auto c : *m_components)
 		{
+			if (c == nullptr || c->GetGameObject() == nullptr)
+			{
+				continue;
+			}
+
 			c->Update();
 		}
 	}
 
 	void GameObject::AddComponent(Component *component)
 	{
-		m_components->push_back(component);
 		component->SetGameObject(this);
+		m_components->push_back(component);
 	}
 
 	void GameObject::RemoveComponent(Component *component)
@@ -89,7 +98,6 @@ namespace Flounder
 		{
 			if (*it == component)
 			{
-				component->SetGameObject(nullptr);
 				delete component;
 				m_components->erase(it);
 				return;

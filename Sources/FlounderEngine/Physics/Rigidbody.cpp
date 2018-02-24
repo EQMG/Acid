@@ -15,15 +15,15 @@ namespace Flounder
 		m_freezeRotation(new Constraint3(freezeRotation)),
 		m_colliderCopy(nullptr)
 	{
-		Link<float>(0, LINK_GET(GetMass()), LINK_SET(float, SetMass(v)));
-		Link<float>(1, LINK_GET(GetDrag()), LINK_SET(float, SetDrag(v)));
-		Link<bool>(2, LINK_GET(IsUseGravity()), LINK_SET(bool, SetUseGravity(v)));
-		Link<bool>(3, LINK_GET(GetFreezePosition()->m_x), LINK_SET(bool, GetFreezePosition()->m_x = v));
-		Link<bool>(4, LINK_GET(GetFreezePosition()->m_y), LINK_SET(bool, GetFreezePosition()->m_y = v));
-		Link<bool>(5, LINK_GET(GetFreezePosition()->m_z), LINK_SET(bool, GetFreezePosition()->m_z = v));
-		Link<bool>(6, LINK_GET(GetFreezeRotation()->m_x), LINK_SET(bool, GetFreezeRotation()->m_x = v));
-		Link<bool>(7, LINK_GET(GetFreezeRotation()->m_y), LINK_SET(bool, GetFreezeRotation()->m_y = v));
-		Link<bool>(8, LINK_GET(GetFreezeRotation()->m_z), LINK_SET(bool, GetFreezeRotation()->m_z = v));
+		Link<float>(0, "Mass", LINK_GET(GetMass()), LINK_SET(float, SetMass(v)));
+		Link<float>(1, "Drag", LINK_GET(GetDrag()), LINK_SET(float, SetDrag(v)));
+		Link<bool>(2, "Use Gravity", LINK_GET(IsUseGravity()), LINK_SET(bool, SetUseGravity(v)));
+		Link<bool>(3, "Freeze Position X", LINK_GET(GetFreezePosition()->m_x), LINK_SET(bool, GetFreezePosition()->m_x = v));
+		Link<bool>(4, "Freeze Position Y", LINK_GET(GetFreezePosition()->m_y), LINK_SET(bool, GetFreezePosition()->m_y = v));
+		Link<bool>(5, "Freeze Position Z", LINK_GET(GetFreezePosition()->m_z), LINK_SET(bool, GetFreezePosition()->m_z = v));
+		Link<bool>(6, "Freeze Rotation X", LINK_GET(GetFreezeRotation()->m_x), LINK_SET(bool, GetFreezeRotation()->m_x = v));
+		Link<bool>(7, "Freeze Rotation Y", LINK_GET(GetFreezeRotation()->m_y), LINK_SET(bool, GetFreezeRotation()->m_y = v));
+		Link<bool>(8, "Freeze Rotation Z", LINK_GET(GetFreezeRotation()->m_z), LINK_SET(bool, GetFreezeRotation()->m_z = v));
 	}
 
 	Rigidbody::~Rigidbody()
@@ -39,7 +39,7 @@ namespace Flounder
 
 		if (collider != nullptr)
 		{
-			collider->Update(*GetGameObject()->GetTransform(), m_colliderCopy);
+			m_colliderCopy = collider->Update(*GetGameObject()->GetTransform(), m_colliderCopy);
 		}
 	}
 

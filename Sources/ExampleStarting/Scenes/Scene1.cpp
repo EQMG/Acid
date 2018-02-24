@@ -13,7 +13,8 @@
 #include <Terrains/LodBehaviour.hpp>
 #include <Waters/MeshWater.hpp>
 #include <Waters/WaterRender.hpp>
-#include "../ManagerUis.hpp"
+#include <Materials/Material.hpp>
+#include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 
@@ -60,13 +61,13 @@ namespace Demo
 			for (int w = -n; w <= n; w++)
 			{
 				GameObject *terrainObject = new GameObject(Transform(Vector3(
-					2.0f * static_cast<float>(j) * TerrainRender::SIDE_LENGTH, 0.0f,
-					2.0f * static_cast<float>(w) * TerrainRender::SIDE_LENGTH)));
+					static_cast<float>(j) * TerrainRender::SIDE_LENGTH, 0.0f,
+					static_cast<float>(w) * TerrainRender::SIDE_LENGTH)));
 				terrainObject->AddComponent(new Mesh());
-				terrainObject->AddComponent(new LodBehaviour());
+			//	terrainObject->AddComponent(new Material());
 				terrainObject->AddComponent(new TerrainRender());
-				terrainObject->AddComponent(new Aabb());
 				terrainObject->AddComponent(new Rigidbody());
+				terrainObject->AddComponent(new LodBehaviour());
 			}
 		}
 
@@ -85,7 +86,7 @@ namespace Demo
 		{
 			for (int j = -3; j <= 0; j++)
 			{
-				new GameObject("FoundationWood", Transform(foundationCentre, Vector3(), 1.5f)); //  + Vector3(i * 3.0f, 2.3f, -j * 3.0f)
+				new GameObject("FoundationWood", Transform(foundationCentre + Vector3(i * 3.0f, 2.3f, -j * 3.0f), Vector3(), 1.5f));
 			}
 		}
 
