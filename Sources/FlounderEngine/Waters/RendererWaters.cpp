@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	const PipelineCreateInfo PIPELINE_CREATE_INFO =
+	const PipelineCreate PIPELINE_CREATE =
 		{
 			PIPELINE_MRT, // pipelineModeFlags
 			VK_POLYGON_MODE_FILL, // polygonMode
@@ -28,7 +28,7 @@ namespace Flounder
 	RendererWaters::RendererWaters(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosWaters::UboScene))),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO))
+		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE))
 	{
 	}
 

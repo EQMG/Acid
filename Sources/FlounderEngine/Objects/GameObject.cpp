@@ -75,14 +75,14 @@ namespace Flounder
 			return;
 		}
 
-		for (auto c : *m_components)
+		for (auto it = m_components->begin(); it != m_components->end(); it++)
 		{
-			if (c == nullptr || c->GetGameObject() == nullptr)
+			if ((*it) == nullptr || (*it)->GetGameObject() == nullptr)
 			{
 				continue;
 			}
 
-			c->Update();
+			(*it)->Update();
 		}
 	}
 

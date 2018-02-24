@@ -36,8 +36,8 @@ namespace Flounder
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
 			{
 				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(1, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetColourImage()->GetWriteDescriptor(2, descriptorSet)
+				Renderer::Get()->GetSwapchain()->GetTexture(2)->GetWriteDescriptor(1, descriptorSet),
+				Renderer::Get()->GetSwapchain()->GetTexture(2)->GetWriteDescriptor(2, descriptorSet)
 			};
 		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
 	}

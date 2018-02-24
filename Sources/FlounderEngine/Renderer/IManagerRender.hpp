@@ -1,9 +1,11 @@
 #pragma once
 
+#include "Pass/RenderpassCreate.hpp"
+
 namespace Flounder
 {
 	/// <summary>
-	/// A extension used with irenderers to define a master renderer.
+	/// A extension used with IRenderer's to define a master renderer.
 	/// </summary>
 	class F_EXPORT IManagerRender
 	{
@@ -11,16 +13,12 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new master renderer.
 		/// </summary>
-		IManagerRender()
-		{
-		}
+		IManagerRender(RenderpassCreate *renderpassCreate);
 
 		/// <summary>
 		/// Deconstructor for the master renderer.
 		/// </summary>
-		virtual ~IManagerRender()
-		{
-		}
+		virtual ~IManagerRender();
 
 		/// <summary>
 		/// Run when rendering the master renderer.

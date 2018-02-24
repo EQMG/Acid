@@ -17,24 +17,23 @@ namespace Flounder
 	class F_EXPORT DescriptorType
 	{
 	public:
-		uint32_t binding;
-		VkShaderStageFlags stage;
+		uint32_t m_binding;
+		VkShaderStageFlags m_stage;
 
-		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding;
-		VkDescriptorPoolSize descriptorPoolSize;
+		VkDescriptorSetLayoutBinding m_descriptorSetLayoutBinding;
+		VkDescriptorPoolSize m_descriptorPoolSize;
 
 		DescriptorType(const uint32_t &binding, const VkShaderStageFlags &stage, const VkDescriptorSetLayoutBinding &descriptorSetLayoutBinding, const VkDescriptorPoolSize &descriptorPoolSize) :
-			binding(binding),
-			stage(stage),
-			descriptorSetLayoutBinding(descriptorSetLayoutBinding),
-			descriptorPoolSize(descriptorPoolSize)
+			m_binding(binding),
+			m_stage(stage),
+			m_descriptorSetLayoutBinding(descriptorSetLayoutBinding),
+			m_descriptorPoolSize(descriptorPoolSize)
 		{
 		}
 	};
 
-	class F_EXPORT PipelineCreateInfo
+	struct PipelineCreate
 	{
-	public:
 		PipelineModeFlags pipelineModeFlags = PIPELINE_POLYGON;
 		VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL;
 		VkCullModeFlags cullModeFlags = VK_CULL_MODE_BACK_BIT;

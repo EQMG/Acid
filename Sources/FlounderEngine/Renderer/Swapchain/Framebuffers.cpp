@@ -14,13 +14,14 @@ namespace Flounder
 
 		for (uint32_t i = 0; i < swapchain.GetImageCount(); i++)
 		{
-			std::array<VkImageView, 6> attachments = {};
-			attachments[0] = depthImageView; // Depth.
-			attachments[1] = swapchain.GetImageViews()[i]; // Swapchain.
-			attachments[2] = swapchain.GetColourImage()->GetImageView(); // Colours.
-			attachments[3] = swapchain.GetNormalImage()->GetImageView(); // Normals.
-			attachments[4] = swapchain.GetMaterialImage()->GetImageView(); // Materials.
-			attachments[5] = swapchain.GetShadowImage()->GetImageView(); // Shadows.
+			std::vector<VkImageView> attachments(swapchain.GetImageAttachments().size() + 2);
+			attachments[0] = depthImageView; // Depth
+			attachments[1] = swapchain.GetImageViews()[i]; // Swapchain
+
+			for (unsigned int j = 2; j < swapchain.GetImageAttachments().size(); j++)
+			{
+				attachments[j] = swapchain.GetTexture(j)->GetImageView();
+			}
 
 			VkFramebufferCreateInfo framebufferCreateInfo = {};
 			framebufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;

@@ -19,8 +19,7 @@ namespace Flounder
 
 	void Mesh::Update()
 	{
-		// TODO: Make sure this is NOT run in the update loop, or make m_components a iterator.
-		/*if (m_model == nullptr)
+		/*if (m_model == nullptr || m_model->GetAabb() == nullptr)
 		{
 			return;
 		}
