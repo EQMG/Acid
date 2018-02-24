@@ -10,8 +10,8 @@ namespace Flounder
 			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
 		};
 
-	FilterTone::FilterTone(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Tone.frag.spv", subpass, DESCRIPTORS)
+	FilterTone::FilterTone(const GraphicsStage &graphicsStage) :
+		IPostFilter("Resources/Shaders/Filters/Tone.frag.spv", graphicsStage, DESCRIPTORS)
 	{
 	}
 

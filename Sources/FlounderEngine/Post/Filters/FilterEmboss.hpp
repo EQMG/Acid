@@ -8,7 +8,7 @@ namespace Flounder
 		public IPostFilter
 	{
 	public:
-		FilterEmboss(const int &subpass);
+		FilterEmboss(const GraphicsStage &graphicsStage);
 
 		~FilterEmboss();
 

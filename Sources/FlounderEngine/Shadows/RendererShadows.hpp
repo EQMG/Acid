@@ -11,10 +11,10 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		UniformBuffer *m_uniformObject;
+		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
 	public:
-		RendererShadows(const int &subpass);
+		RendererShadows(const GraphicsStage &graphicsStage);
 
 		~RendererShadows();
 

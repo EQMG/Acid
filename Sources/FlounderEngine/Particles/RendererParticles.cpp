@@ -7,7 +7,7 @@ namespace Flounder
 	const int RendererParticles::MAX_INSTANCES = 27500;
 	const int RendererParticles::INSTANCE_DATA_LENGTH = 22;
 
-	RendererParticles::RendererParticles(const int &subpass) :
+	RendererParticles::RendererParticles(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		//	m_shader(new Shader("particles", {
 		//		ShaderStage(VK_SHADER_STAGE_VERTEX_BIT, "Resources/Shaders/Particles/Particle.vert.spv"),

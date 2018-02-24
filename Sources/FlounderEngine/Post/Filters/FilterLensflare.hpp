@@ -22,7 +22,7 @@ namespace Flounder
 		Vector3 *m_sunPosition;
 		float m_sunHeight;
 	public:
-		FilterLensflare(const int &subpass);
+		FilterLensflare(const GraphicsStage &graphicsStage);
 
 		~FilterLensflare();
 

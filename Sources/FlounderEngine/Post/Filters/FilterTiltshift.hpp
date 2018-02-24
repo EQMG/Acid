@@ -24,7 +24,7 @@ namespace Flounder
 		float m_stepSize;
 		float m_steps;
 	public:
-		FilterTiltshift(const int &subpass);
+		FilterTiltshift(const GraphicsStage &graphicsStage);
 
 		~FilterTiltshift();
 

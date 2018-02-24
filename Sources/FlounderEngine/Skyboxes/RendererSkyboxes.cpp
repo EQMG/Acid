@@ -25,10 +25,10 @@ namespace Flounder
 			{"Resources/Shaders/Skyboxes/Skybox.vert.spv", "Resources/Shaders/Skyboxes/Skybox.frag.spv"} // shaderStages
 		};
 
-	RendererSkyboxes::RendererSkyboxes(const int &subpass) :
+	RendererSkyboxes::RendererSkyboxes(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosSkyboxes::UboScene))),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE))
+		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
 	{
 	}
 

@@ -11,8 +11,8 @@ namespace Flounder
 			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
 		};
 
-	FilterFxaa::FilterFxaa(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Fxaa.frag.spv", subpass, DESCRIPTORS),
+	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage) :
+		IPostFilter("Resources/Shaders/Filters/Fxaa.frag.spv", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_spanMax(8.0f)
 	{

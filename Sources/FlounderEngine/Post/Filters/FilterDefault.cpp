@@ -10,8 +10,8 @@ namespace Flounder
 			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
 		};
 
-	FilterDefault::FilterDefault(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Default.frag.spv", subpass, DESCRIPTORS)
+	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage) :
+		IPostFilter("Resources/Shaders/Filters/Default.frag.spv", graphicsStage, DESCRIPTORS)
 	{
 	}
 

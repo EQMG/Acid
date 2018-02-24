@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	IManagerRender::IManagerRender(RenderpassCreate *renderpassCreate)
+	IManagerRender::IManagerRender(std::vector<RenderpassCreate *> renderpassCreate)
 	{
 		Renderer::Get()->CreateRenderpass(renderpassCreate);
 	}
