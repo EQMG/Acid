@@ -11,7 +11,7 @@ namespace Flounder
 	private:
 		Pipeline *m_pipeline;
 	public:
-		RendererGuis(const int &subpass);
+		RendererGuis(const GraphicsStage &graphicsStage);
 
 		~RendererGuis();
 

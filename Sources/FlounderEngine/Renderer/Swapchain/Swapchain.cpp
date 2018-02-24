@@ -96,13 +96,13 @@ namespace Flounder
 			Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews[i]));
 		}
 
-		m_imageAttachments.push_back(nullptr); // Depth
-		m_imageAttachments.push_back(nullptr); // Swapchain
+		uint32_t width = renderpassCreate.m_width == 0 ? Display::Get()->GetWidth() : renderpassCreate.m_width;
+		uint32_t height = renderpassCreate.m_height == 0 ? Display::Get()->GetHeight() : renderpassCreate.m_height;
+		m_imageAttachments.push_back(nullptr); // Depth.
+		m_imageAttachments.push_back(nullptr); // Swapchain.
 
 		for (auto image : renderpassCreate.images)
 		{
-			uint32_t width = image.m_width == 0 ? Display::Get()->GetWidth() : image.m_width;
-			uint32_t height = image.m_height == 0 ? Display::Get()->GetHeight() : image.m_height;
 			m_imageAttachments.push_back(new Texture(width, height, image.m_format, image.m_layout, image.m_usage));
 		}
 	}

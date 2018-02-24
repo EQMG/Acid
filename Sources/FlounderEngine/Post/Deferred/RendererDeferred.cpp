@@ -35,11 +35,11 @@ namespace Flounder
 			} // shaderStages
 		};
 
-	RendererDeferred::RendererDeferred(const int &subpass) :
+	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_uniformLights(new UniformBuffer(sizeof(UbosDeferred::UboLights))),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE)),
+		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE)),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
 	}
@@ -123,12 +123,12 @@ namespace Flounder
 			{
 				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
 				m_uniformLights->GetWriteDescriptor(1, descriptorSet),
-				Renderer::Get()->GetDepthStencil()->GetWriteDescriptor(3, descriptorSet),
+				Renderer::Get()->GetPass(0)->m_depthStencil->GetWriteDescriptor(3, descriptorSet), // TODO
 				Renderer::Get()->GetSwapchain()->GetTexture(2)->GetWriteDescriptor(2, descriptorSet),
 				Renderer::Get()->GetSwapchain()->GetTexture(2)->GetWriteDescriptor(4, descriptorSet),
 				Renderer::Get()->GetSwapchain()->GetTexture(3)->GetWriteDescriptor(5, descriptorSet),
 				Renderer::Get()->GetSwapchain()->GetTexture(4)->GetWriteDescriptor(6, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetTexture(5)->GetWriteDescriptor(7, descriptorSet)
+				Renderer::Get()->GetSwapchain()->GetTexture(3)->GetWriteDescriptor(7, descriptorSet) // TODO: 5
 			};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 

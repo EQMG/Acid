@@ -19,9 +19,9 @@ namespace Flounder
 			{"Resources/Shaders/Fonts/Font.vert.spv", "Resources/Shaders/Fonts/Font.frag.spv"} // shaderStages
 		};
 
-	RendererFonts::RendererFonts(const int &subpass) :
+	RendererFonts::RendererFonts(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE))
+		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
 	{
 	}
 

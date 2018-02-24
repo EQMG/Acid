@@ -18,7 +18,7 @@ namespace Flounder
 
 		float m_strength;
 	public:
-		FilterGrain(const int &subpass);
+		FilterGrain(const GraphicsStage &graphicsStage);
 
 		~FilterGrain();
 

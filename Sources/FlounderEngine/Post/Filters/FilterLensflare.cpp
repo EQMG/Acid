@@ -14,8 +14,8 @@ namespace Flounder
 			Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerMaterial
 		};
 
-	FilterLensflare::FilterLensflare(const int &subpass) :
-		IPostFilter("Resources/Shaders/Filters/Lensflare.frag.spv", subpass, DESCRIPTORS),
+	FilterLensflare::FilterLensflare(const GraphicsStage &graphicsStage) :
+		IPostFilter("Resources/Shaders/Filters/Lensflare.frag.spv", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_sunPosition(new Vector3()),
 		m_sunHeight(0.0f)

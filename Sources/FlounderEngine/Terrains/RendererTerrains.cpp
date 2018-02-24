@@ -26,10 +26,10 @@ namespace Flounder
 			} // shaderStages
 		};
 
-	RendererTerrains::RendererTerrains(const int &subpass) :
+	RendererTerrains::RendererTerrains(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosTerrains::UboScene))),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE))
+		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
 	{
 	}
 

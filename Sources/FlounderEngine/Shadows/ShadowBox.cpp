@@ -65,7 +65,7 @@ namespace Flounder
 
 		Matrix4 *rotation = new Matrix4();
 		Matrix4::Rotate(*rotation, Vector3::UP, Maths::Radians(camera.GetRotation()->m_y), rotation);
-		Matrix4::Rotate(*rotation, Vector3::RIGHT, Maths::Radians(-camera.GetRotation()->m_x), rotation);
+		Matrix4::Rotate(*rotation, Vector3::RIGHT, Maths::Radians(camera.GetRotation()->m_x), rotation);
 
 		Vector4 *forwardVector4 = Matrix4::Transform(*rotation, Vector4(0.0f, 0.0f, -1.0f, 0.0f), nullptr);
 		Vector3 *forwardVector = new Vector3(*forwardVector4);

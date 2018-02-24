@@ -9,11 +9,8 @@ namespace Flounder
 	Renderer::Renderer() :
 		IModule(),
 		m_managerRender(nullptr),
-		m_renderpassCreate(),
+		m_passes(std::vector<Pass *>()),
 		m_swapchain(nullptr),
-		m_depthStencil(nullptr),
-		m_renderpass(nullptr),
-		m_framebuffers(nullptr),
 		m_fenceSwapchainImage(VK_NULL_HANDLE),
 		m_activeSwapchainImage(UINT32_MAX),
 		m_pipelineCache(VK_NULL_HANDLE),
@@ -41,9 +38,11 @@ namespace Flounder
 		vkDestroySemaphore(logicalDevice, m_semaphore, nullptr);
 		vkDestroyCommandPool(logicalDevice, m_commandPool, nullptr);
 
-		delete m_framebuffers;
-		delete m_renderpass;
-		delete m_depthStencil;
+		for (auto pass : m_passes)
+		{
+			delete pass;
+		}
+
 		delete m_swapchain;
 	}
 
@@ -52,7 +51,7 @@ namespace Flounder
 		m_managerRender->Render();
 	}
 
-	void Renderer::CreateRenderpass(RenderpassCreate *renderpassCreate)
+	void Renderer::CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates)
 	{
 		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 		const VkExtent2D extent2d = {
@@ -62,23 +61,29 @@ namespace Flounder
 			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1
 		};
 
-		m_renderpassCreate = renderpassCreate;
+		m_passes.clear();
+		m_swapchain = new Swapchain(*renderpassCreates.back(), extent2d);
 
-		m_swapchain = new Swapchain(*m_renderpassCreate, extent2d);
-		m_depthStencil = new DepthStencil(extent3d);
-		m_renderpass = new Renderpass(*m_renderpassCreate, m_depthStencil->GetFormat(), surfaceFormat.format);
-		m_framebuffers = new Framebuffers(m_renderpass->GetRenderpass(), m_depthStencil->GetImageView(), *m_swapchain, extent2d);
+		for (auto &renderpassCreate : renderpassCreates)
+		{
+			auto pass = new Pass(renderpassCreate);
+			pass->m_depthStencil = new DepthStencil(extent3d);
+			pass->m_renderpass = new Renderpass(*renderpassCreate, pass->m_depthStencil->GetFormat(), surfaceFormat.format);
+			pass->m_framebuffers = new Framebuffers(pass->m_renderpass->GetRenderpass(), pass->m_depthStencil->GetImageView(), *m_swapchain, extent2d);
+			m_passes.push_back(pass);
+		}
 
 		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
 		vkQueueWaitIdle(Display::Get()->GetQueue());
 	}
 
-	VkResult Renderer::StartRenderpass(const VkCommandBuffer &commandBuffer)
+	VkResult Renderer::StartRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i)
 	{
-		if (static_cast<int>(m_swapchain->GetExtent().width) != Display::Get()->GetWidth() ||
-			static_cast<int>(m_swapchain->GetExtent().height) != Display::Get()->GetHeight())
+		const auto pass = GetPass(i);
+
+		if (pass->IsOutOfDate(m_swapchain->GetExtent()))
 		{
-			RecreateSwapchain();
+			RecreatePass(i);
 			return VK_ERROR_INITIALIZATION_FAILED;
 		}
 
@@ -91,7 +96,7 @@ namespace Flounder
 
 		if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 		{
-			RecreateSwapchain();
+			RecreatePass(i);
 			return VK_ERROR_OUT_OF_DATE_KHR;
 		}
 
@@ -107,39 +112,27 @@ namespace Flounder
 
 		Platform::ErrorVk(vkBeginCommandBuffer(commandBuffer, &commandBufferBeginInfo));
 
-		const auto renderpass = m_renderpass->GetRenderpass();
-		const auto activeFramebuffer = GetActiveFramebuffer();
-
 		VkRect2D renderArea = {};
 		renderArea.offset.x = 0;
 		renderArea.offset.y = 0;
-		renderArea.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth());
-		renderArea.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight());
-
-		std::vector<VkClearValue> clearValues(m_renderpassCreate->images.size() + 2);
-		clearValues[0].depthStencil = {1.0f, 0}; // Depth.
-		clearValues[1].color = {{0.0f, 0.0f, 0.0f, 0.0f}}; // Swapchain.
-
-		for (unsigned int j = 2; j < m_renderpassCreate->images.size(); j++)
-		{
-			clearValues[j].color = m_renderpassCreate->images.at(j).m_clearColour;
-		}
+		renderArea.extent.width = pass->GetWidth();
+		renderArea.extent.height = pass->GetHeight();
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
 		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassBeginInfo.renderPass = renderpass;
-		renderPassBeginInfo.framebuffer = activeFramebuffer;
+		renderPassBeginInfo.renderPass = pass->m_renderpass->GetRenderpass();
+		renderPassBeginInfo.framebuffer = pass->GetActiveFramebuffer(m_activeSwapchainImage);
 		renderPassBeginInfo.renderArea = renderArea;
-		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
-		renderPassBeginInfo.pClearValues = clearValues.data();
+		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(pass->m_clearValues.size());
+		renderPassBeginInfo.pClearValues = pass->m_clearValues.data();
 
 		vkCmdBeginRenderPass(commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 		VkViewport viewport = {};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
-		viewport.width = static_cast<float>(Display::Get()->GetWidth());
-		viewport.height = static_cast<float>(Display::Get()->GetHeight());
+		viewport.width = static_cast<float>(pass->GetWidth());
+		viewport.height = static_cast<float>(pass->GetHeight());
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
 		vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
@@ -147,19 +140,14 @@ namespace Flounder
 		VkRect2D scissor = {};
 		scissor.offset.x = 0;
 		scissor.offset.y = 0;
-		scissor.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth());
-		scissor.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight());
+		scissor.extent.width = pass->GetWidth();
+		scissor.extent.height = pass->GetHeight();
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 
 		return VK_SUCCESS;
 	}
 
-	void Renderer::NextSubpass(const VkCommandBuffer &commandBuffer)
-	{
-		vkCmdNextSubpass(commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
-	}
-
-	void Renderer::EndRenderpass(const VkCommandBuffer &commandBuffer)
+	void Renderer::EndRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i)
 	{
 		const auto queue = Display::Get()->GetQueue();
 
@@ -198,13 +186,18 @@ namespace Flounder
 
 		if (queuePresentResult == VK_ERROR_OUT_OF_DATE_KHR || queuePresentResult == VK_SUBOPTIMAL_KHR)
 		{
-			RecreateSwapchain();
+			RecreatePass(i);
 			return;
 		}
 
 		assert(result == VK_SUCCESS && "Failed to present swapchain image!");
 
 		Platform::ErrorVk(result);
+	}
+
+	void Renderer::NextSubpass(const VkCommandBuffer &commandBuffer)
+	{
+		vkCmdNextSubpass(commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 	}
 
 	void Renderer::CreateFences()
@@ -251,7 +244,7 @@ namespace Flounder
 		Platform::ErrorVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
-	void Renderer::RecreateSwapchain()
+	void Renderer::RecreatePass(const int &i)
 	{
 		const auto queue = Display::Get()->GetQueue();
 
@@ -267,12 +260,12 @@ namespace Flounder
 #endif
 		Platform::ErrorVk(vkQueueWaitIdle(queue));
 
-		delete m_framebuffers;
-		delete m_depthStencil;
-		delete m_swapchain;
+		if (i == 1)
+		{
+			delete m_swapchain;
+			m_swapchain = new Swapchain(*m_passes.back()->m_renderpassCreate, extent2d);
+		}
 
-		m_swapchain = new Swapchain(*m_renderpassCreate, extent2d);
-		m_depthStencil = new DepthStencil(extent3d);
-		m_framebuffers = new Framebuffers(m_renderpass->GetRenderpass(), m_depthStencil->GetImageView(), *m_swapchain, extent2d);
+		GetPass(i)->Rebuild(m_swapchain, extent2d, extent3d);
 	}
 }

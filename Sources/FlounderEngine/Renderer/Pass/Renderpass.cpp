@@ -11,29 +11,37 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		// Attachments,
-		std::vector<VkAttachmentDescription> attachments(renderpassCreate.images.size() + 2);
+		std::vector<VkAttachmentDescription> attachments = {};
 
-		for (uint32_t i = 0; i < attachments.size(); i++)
+		for (auto image : renderpassCreate.images)
 		{
-			attachments[i].samples = VK_SAMPLE_COUNT_1_BIT;
-			attachments[i].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-			attachments[i].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-			attachments[i].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-			attachments[i].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-			attachments[i].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-			attachments[i].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-		}
+			VkAttachmentDescription attachment = {};
+			attachment.samples = VK_SAMPLE_COUNT_1_BIT;
+			attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			attachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			attachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 
-		attachments[0].format = depthFormat; // Depth.
-		attachments[0].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-		attachments[0].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-		attachments[1].format = surfaceFormat; // Swapchain.
-		attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-		attachments[1].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+			switch (image.m_type)
+			{
+			case TypeImage:
+				attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				attachment.finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+				attachment.format = image.m_format;
+				break;
+			case TypeDepth:
+				attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+				attachment.format = depthFormat;
+				break;
+			case TypeSwapchain:
+				attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+				attachment.format = surfaceFormat;
+				break;
+			}
 
-		for (unsigned int j = 0; j < renderpassCreate.images.size(); j++)
-		{
-			attachments[j + 2].format = renderpassCreate.images.at(j).m_format;
+			attachments.push_back(attachment);
 		}
 
 		// Subpasses and dependencies.
@@ -97,6 +105,12 @@ namespace Flounder
 			subpassDependency.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
 			dependencies.push_back(subpassDependency);
+		}
+
+
+		if (renderpassCreate.subpasses.size() != 1)
+		{
+			dependencies.clear();
 		}
 
 		// Creates the render pass.

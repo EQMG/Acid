@@ -18,7 +18,7 @@ namespace Flounder
 
 		float m_factor;
 	public:
-		FilterDarken(const int &subpass);
+		FilterDarken(const GraphicsStage &graphicsStage);
 
 		~FilterDarken();
 

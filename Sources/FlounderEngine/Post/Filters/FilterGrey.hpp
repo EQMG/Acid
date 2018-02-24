@@ -9,7 +9,7 @@ namespace Flounder
 	{
 	private:
 	public:
-		FilterGrey(const int &subpass);
+		FilterGrey(const GraphicsStage &graphicsStage);
 
 		~FilterGrey();
 

@@ -32,6 +32,12 @@ namespace Flounder
 		}
 	};
 
+	struct GraphicsStage
+	{
+		unsigned int renderpass;
+		uint32_t subpass;
+	};
+
 	struct PipelineCreate
 	{
 		PipelineModeFlags pipelineModeFlags = PIPELINE_POLYGON;

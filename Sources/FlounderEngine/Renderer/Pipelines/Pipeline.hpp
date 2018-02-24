@@ -14,7 +14,7 @@ namespace Flounder
 	class F_EXPORT Pipeline
 	{
 	private:
-		int m_subpass;
+		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreateInfo;
 
 		VkDescriptorSetLayout m_descriptorSetLayout;
@@ -39,9 +39,9 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new pipeline.
 		/// </summary>
-		/// <param name="subpass"> The pipelines subpass. </param>
+		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
 		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
-		Pipeline(const int &subpass, const PipelineCreate &pipelineCreateInfo);
+		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
