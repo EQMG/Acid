@@ -53,13 +53,6 @@ namespace Flounder
 
 		for (auto terrainRender : renderList)
 		{
-			auto rigidbody = terrainRender->GetGameObject()->GetComponent<Rigidbody>();
-
-			if (rigidbody != nullptr && !rigidbody->GetCollider()->InFrustum(*camera.GetViewFrustum()))
-			{
-				continue;
-			}
-
 			terrainRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
 		}
 	}

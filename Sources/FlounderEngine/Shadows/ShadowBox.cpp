@@ -214,7 +214,7 @@ namespace Flounder
 	{
 		m_projectionMatrix->SetIdentity();
 		m_projectionMatrix->m_00 = 2.0f / m_aabb->GetWidth();
-		m_projectionMatrix->m_11 = -2.0f / m_aabb->GetHeight();
+		m_projectionMatrix->m_11 = 2.0f / m_aabb->GetHeight();
 		m_projectionMatrix->m_22 = -2.0f / m_aabb->GetDepth();
 		m_projectionMatrix->m_33 = 1.0f;
 	}

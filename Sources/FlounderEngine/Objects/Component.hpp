@@ -11,12 +11,13 @@ namespace Flounder
 {
 	class GameObject;
 
-	class ComponentGetSet
+	class F_EXPORT ComponentGetSet
 	{
 	public:
-		std::string name;
-		std::function<std::string()> *getter;
-		std::function<void(PrefabComponent *, unsigned int)> *setter;
+		std::string m_name;
+		std::string m_type;
+		std::function<std::string()> *m_getter;
+		std::function<void(PrefabComponent *, unsigned int)> *m_setter;
 
 		ComponentGetSet()
 		{
@@ -24,8 +25,8 @@ namespace Flounder
 
 		~ComponentGetSet()
 		{
-			delete getter;
-			delete setter;
+			delete m_getter;
+			delete m_setter;
 		}
 	};
 
@@ -63,11 +64,19 @@ namespace Flounder
 
 	protected:
 		template<typename T>
-		void Link(const unsigned int &index, std::function<std::string()> *getter, std::function<void(PrefabComponent *, unsigned int)> *setter = nullptr)
+		void Link(const unsigned int &index, const std::string &name, std::function<std::string()> *getter, std::function<void(PrefabComponent *, unsigned int)> *setter = nullptr)
 		{
 			ComponentGetSet *componentGetSet = new ComponentGetSet();
-			componentGetSet->getter = getter;
-			componentGetSet->setter = setter;
+			componentGetSet->m_name = name;
+			componentGetSet->m_type = typeid(T).name();
+			componentGetSet->m_getter = getter;
+			componentGetSet->m_setter = setter;
+
+			if (FormatString::Contains(componentGetSet->m_type, "basic_string"))
+			{
+				componentGetSet->m_type = "string";
+			}
+
 			m_values->insert(std::make_pair(index, componentGetSet));
 		}
 	};

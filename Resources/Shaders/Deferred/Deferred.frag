@@ -27,7 +27,6 @@ layout(set = 0, binding = 0) uniform UboScene
 	float shadowTransition;
 	float shadowBias;
 	float shadowDarkness;
-	int shadowMapSize;
 	int shadowPCF;
 
 	int lightsCount;
@@ -72,11 +71,11 @@ vec3 decodeWorldPosition(vec2 uv, float depth)
 
 float shadow(vec4 shadowCoords)
 {
+	vec2 texelSize = 1.0f / textureSize(samplerShadows, 0);
     float totalTextels = (scene.shadowPCF * 2.0f + 1.0f) * (scene.shadowPCF * 2.0f + 1.0f);
-    float texelSize = 1.0f / scene.shadowMapSize;
     float total = 0.0f;
 
-    if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f)
+    /*if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f)
     {
         for (int x = -scene.shadowPCF; x <= scene.shadowPCF; x++)
         {
@@ -96,6 +95,13 @@ float shadow(vec4 shadowCoords)
     else
     {
         total = 0.0f;
+    }*/
+
+    float shadowValue = texture(samplerShadows, shadowCoords.xy * texelSize).r;
+
+    if (shadowCoords.z > shadowValue)
+    {
+        total = scene.shadowDarkness * shadowCoords.w;
     }
 
     return 1.0f - total;
@@ -114,6 +120,9 @@ float attenuation(float radius, float distance)
 
 void main() 
 {
+   // float shadowValue = texture(samplerShadows, fragmentUv).r;
+   // outColour = vec4(shadowValue, 0.0f, 0.0f, 1.0f);
+
 	vec4 textureDepth = texture(samplerDepth, fragmentUv);
 	vec4 textureColour = texture(samplerColour, fragmentUv);
 	vec4 textureNormal = texture(samplerNormal, fragmentUv);
@@ -133,7 +142,7 @@ void main()
 	outColour = vec4(colour, 1.0f);
 
 	// Shadows.
-    /*if (!ignoreLighting && scene.shadowDarkness >= 0.07)
+    if (!ignoreLighting && scene.shadowDarkness >= 0.07)
     {
         vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
         float distanceAway = length(screenPosition.xyz);
@@ -141,7 +150,7 @@ void main()
         distanceAway = distanceAway / scene.shadowTransition;
         shadowCoords.w = clamp(1.0 - distanceAway, 0.0, 1.0);
         outColour *= shadow(shadowCoords);
-    }*/
+    }
 
 	// Lighting.
 	if (!ignoreLighting && textureNormal.rgb != vec3(0.0f))
@@ -196,6 +205,8 @@ void main()
 		fogFactor = clamp(fogFactor, 0.0, 1.0);
 		outColour = mix(scene.fogColour, outColour, fogFactor);
 	}
+
+	// outColour.r += texture(samplerShadows, fragmentUv).r;
 
 	vec2 sizeColour = textureSize(samplerColour, 0);
 	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);

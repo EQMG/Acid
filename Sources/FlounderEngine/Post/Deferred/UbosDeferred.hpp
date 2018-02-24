@@ -33,7 +33,6 @@ namespace Flounder
 			float shadowTransition;
 			float shadowBias;
 			float shadowDarkness;
-			int shadowMapSize;
 			int shadowPCF;
 
 			int lightsCount;

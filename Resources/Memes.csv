@@ -1,6 +1,0 @@
-Light,#3319CC,1.333000,0.000000,3.000000,0.000000
-Rigidbody,3.000000,0.100000,1,0,0,0,0,0,0
-ColliderAabb
-EntityRender
-Material,#C37A57,Resources/Entities/Testing/Diffuse.png,0.002000,0.300000,1,0,0,Resources/Entities/Testing/Material.png
-Mesh,Model.obj

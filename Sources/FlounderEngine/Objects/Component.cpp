@@ -27,6 +27,15 @@ namespace Flounder
 
 	void Component::Load(PrefabComponent *componentPrefab)
 	{
+		/*printf("\"%s\": {\n", GetName().c_str());
+
+		for (auto i : *m_values)
+		{
+			printf("  \"%s\": %s,\n", i.second->m_name.c_str(), (*i.second->m_getter)().c_str());
+		}
+
+		printf("},\n");*/
+
 		for (unsigned int i = 0; i < componentPrefab->GetData().size(); i++)
 		{
 			auto value = m_values->find(i);
@@ -37,9 +46,9 @@ namespace Flounder
 				continue;
 			}
 
-			if ((*value).second->setter != nullptr)
+			if ((*value).second->m_setter != nullptr)
 			{
-				(*(*value).second->setter)(componentPrefab, i);
+				(*(*value).second->m_setter)(componentPrefab, i);
 			}
 		}
 	}
@@ -48,9 +57,9 @@ namespace Flounder
 	{
 		for (const auto &value : *m_values)
 		{
-			if (value.second->getter != nullptr)
+			if (value.second->m_getter != nullptr)
 			{
-				componentPrefab->SetRaw(value.first, (*value.second->getter)());
+				componentPrefab->SetRaw(value.first, (*value.second->m_getter)());
 			}
 		}
 	}

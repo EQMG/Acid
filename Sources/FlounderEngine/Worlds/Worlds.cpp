@@ -90,10 +90,10 @@ namespace Flounder
 		if (Shadows::Get() != nullptr)
 		{
 			Shadows::Get()->GetLightDirection()->Set(lightDirection);
-			Shadows::Get()->SetShadowBoxOffset((20.0f * (1.0f - GetShadowFactor())) + 10.0f);
-			Shadows::Get()->SetShadowBoxDistance(35.0f);
-			Shadows::Get()->SetShadowTransition(0.0f);
-			Shadows::Get()->SetShadowFactor(GetShadowFactor());
+		//	Shadows::Get()->SetShadowBoxOffset((20.0f * (1.0f - GetShadowFactor())) + 10.0f);
+		//	Shadows::Get()->SetShadowBoxDistance(35.0f);
+		//	Shadows::Get()->SetShadowTransition(0.0f);
+		//	Shadows::Get()->SetShadowFactor(GetShadowFactor());
 		}
 	}
 

@@ -2,4 +2,5 @@ Mesh,Sphere_20_20_1.0
 Material,#FFF9B5,nullptr,1.0,0.0,0,1,1,nullptr
 Light,#FFFFFF,-1.0,0.0,3.0,0.0
 CelestialBody,0
+EntityRender
 Rigidbody

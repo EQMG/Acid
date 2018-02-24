@@ -304,29 +304,29 @@ namespace Flounder
 
 		Vector4 &operator-();
 
-		friend Vector4 operator+(Vector4 left, const Vector4 &right);
+		friend F_EXPORT Vector4 operator+(Vector4 left, const Vector4 &right);
 
-		friend Vector4 operator-(Vector4 left, const Vector4 &right);
+		friend F_EXPORT Vector4 operator-(Vector4 left, const Vector4 &right);
 
-		friend Vector4 operator*(Vector4 left, const Vector4 &right);
+		friend F_EXPORT Vector4 operator*(Vector4 left, const Vector4 &right);
 
-		friend Vector4 operator/(Vector4 left, const Vector4 &right);
+		friend F_EXPORT Vector4 operator/(Vector4 left, const Vector4 &right);
 
-		friend Vector4 operator+(Vector4 left, float value);
+		friend F_EXPORT Vector4 operator+(Vector4 left, float value);
 
-		friend Vector4 operator-(Vector4 left, float value);
+		friend F_EXPORT Vector4 operator-(Vector4 left, float value);
 
-		friend Vector4 operator*(Vector4 left, float value);
+		friend F_EXPORT Vector4 operator*(Vector4 left, float value);
 
-		friend Vector4 operator/(Vector4 left, float value);
+		friend F_EXPORT Vector4 operator/(Vector4 left, float value);
 
-		friend Vector4 operator+(float value, Vector4 left);
+		friend F_EXPORT Vector4 operator+(float value, Vector4 left);
 
-		friend Vector4 operator-(float value, Vector4 left);
+		friend F_EXPORT Vector4 operator-(float value, Vector4 left);
 
-		friend Vector4 operator*(float value, Vector4 left);
+		friend F_EXPORT Vector4 operator*(float value, Vector4 left);
 
-		friend Vector4 operator/(float value, Vector4 left);
+		friend F_EXPORT Vector4 operator/(float value, Vector4 left);
 
 		Vector4 &operator+=(const Vector4 &other);
 

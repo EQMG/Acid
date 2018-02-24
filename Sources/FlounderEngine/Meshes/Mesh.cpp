@@ -10,7 +10,7 @@ namespace Flounder
 		Component(),
 		m_model(model)
 	{
-		Link<std::string>(0, LINK_GET_RES(GetModel()), LINK_SET(std::string, TrySetModel(v)));
+		Link<std::string>(0, "Model", LINK_GET_RES(GetModel()), LINK_SET(std::string, TrySetModel(v)));
 	}
 
 	Mesh::~Mesh()
@@ -19,6 +19,19 @@ namespace Flounder
 
 	void Mesh::Update()
 	{
+		// TODO: Make sure this is NOT run in the update loop, or make m_components a iterator.
+		/*if (m_model == nullptr)
+		{
+			return;
+		}
+
+		auto aabb = GetGameObject()->GetComponent<Aabb>();
+
+		if (aabb != m_model->GetAabb())
+		{
+			GetGameObject()->RemoveComponent(aabb);
+			GetGameObject()->AddComponent(m_model->GetAabb());
+		}*/
 	}
 
 	void Mesh::TrySetModel(const std::string &filename)
@@ -49,6 +62,5 @@ namespace Flounder
 		}
 
 		m_model = Model::Resource(filename);
-		GetGameObject()->GetComponent<GameObject>();
 	}
 }

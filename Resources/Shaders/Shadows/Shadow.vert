@@ -1,7 +1,7 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(set = 0, binding = 0) uniform UboObject 
+layout(set = 0, binding = 0) uniform UboObject
 {
 	mat4 mvp;
 } object;

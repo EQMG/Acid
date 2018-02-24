@@ -2,7 +2,6 @@
 #include <Devices/Mouse.hpp>
 #include <Engine/ModuleUpdater.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Meshes/Mesh.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Skyboxes/SkyboxRender.hpp>
 #include <Scenes/Scenes.hpp>
@@ -11,6 +10,7 @@
 #include "Configs/ConfigManager.hpp"
 #include "Scenes/Scene1.hpp"
 #include "ManagerRender.hpp"
+#include "Models/Shapes/ShapeSphere.hpp"
 
 using namespace Demo;
 
@@ -26,6 +26,9 @@ int main(int argc, char **argv)
 
 	auto configManager = new ConfigManager();
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+
+	// Adds to the component registry.
+	ComponentRegister::Register("FpsPlayer", REGISTER_CREATE(FpsPlayer));
 
 	// Initializes the engine modules.
 	if (Display::Get() != nullptr)
@@ -48,8 +51,6 @@ int main(int argc, char **argv)
 	{
 		Scenes::Get()->SetScene(new Scene1());
 	}
-
-	ComponentRegister::Register("FpsPlayer", REGISTER_CREATE(FpsPlayer));
 
 	// Runs the engine loop.
 	const int exitCode = m_engine->Run();

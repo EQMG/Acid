@@ -6,10 +6,11 @@ namespace Flounder
 {
 	std::vector<std::string> FormatString::Split(const std::string &str, const std::string &sep, const bool &trim)
 	{
-		char *cstr = new char[str.length() + 1];
-		std::strcpy(cstr, str.c_str());
+		char *copy = (char *)malloc(strlen(str.c_str()) + 1);
+		strcpy(copy, str.c_str());
+
 		std::vector<std::string> arr;
-		char *current = strtok(cstr, sep.c_str());
+		char *current = strtok(copy, sep.c_str());
 
 		while (current != nullptr)
 		{
@@ -24,6 +25,7 @@ namespace Flounder
 			current = strtok(nullptr, sep.c_str());
 		}
 
+		free(copy);
 		return arr;
 	}
 

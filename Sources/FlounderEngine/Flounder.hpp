@@ -86,7 +86,7 @@
 #include "Models/Shapes/ShapeSphere.hpp"
 #include "Models/Vertex.hpp"
 #include "Models/VertexData.hpp"
-#include "Noise/NoiseFast.hpp"
+#include "Maths/Noise/NoiseFast.hpp"
 #include "Objects/Behaviour.hpp"
 #include "Objects/Component.hpp"
 #include "Objects/GameObject.hpp"
