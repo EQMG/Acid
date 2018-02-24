@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	const PipelineCreateInfo PIPELINE_CREATE_INFO =
+	const PipelineCreate PIPELINE_CREATE =
 		{
 			PIPELINE_MRT_NO_DEPTH, // pipelineModeFlags
 			VK_POLYGON_MODE_FILL, // polygonMode
@@ -28,7 +28,7 @@ namespace Flounder
 	RendererSkyboxes::RendererSkyboxes(const int &subpass) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosSkyboxes::UboScene))),
-		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE_INFO))
+		m_pipeline(new Pipeline(subpass, PIPELINE_CREATE))
 	{
 	}
 

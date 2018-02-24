@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	const PipelineCreateInfo PIPELINE_CREATE_INFO =
+	const PipelineCreate PIPELINE_CREATE =
 		{
 			PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
 			VK_POLYGON_MODE_FILL, // polygonMode
@@ -23,7 +23,7 @@ namespace Flounder
 		m_pipeline(nullptr),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
-		PipelineCreateInfo pipelineCreateInfo = PipelineCreateInfo(PIPELINE_CREATE_INFO);
+		PipelineCreate pipelineCreateInfo = PipelineCreate(PIPELINE_CREATE);
 		pipelineCreateInfo.shaderStages[1] = fragmentShader; // fragment
 		pipelineCreateInfo.descriptors = descriptors; // descriptors
 		m_pipeline = new Pipeline(subpass, pipelineCreateInfo);

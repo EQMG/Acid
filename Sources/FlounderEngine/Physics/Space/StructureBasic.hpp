@@ -70,9 +70,9 @@ namespace Flounder
 		template<typename K>
 		std::vector<K*> *QueryComponents(std::vector<K*> *result)
 		{
-			for (auto object : *GetAll())
+			for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
 			{
-				auto gameObject = static_cast<GameObject *>(object);
+				auto gameObject = static_cast<GameObject *>(*it);
 				auto component = gameObject->GetComponent<K>();
 
 				if (component != nullptr)
@@ -91,9 +91,9 @@ namespace Flounder
 		template<typename K>
 		K *GetComponent()
 		{
-			for (auto object : *GetAll())
+			for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
 			{
-				auto gameObject = static_cast<GameObject *>(object);
+				auto gameObject = static_cast<GameObject *>(*it);
 				auto component = gameObject->GetComponent<K>();
 
 				if (component != nullptr)
@@ -107,9 +107,9 @@ namespace Flounder
 
 		std::vector<T> *QueryAll(std::vector<T> *result) override
 		{
-			for (auto object : *m_objects)
+			for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
 			{
-				result->push_back(object);
+				result->push_back(*it);
 			}
 
 			return result;
@@ -117,14 +117,14 @@ namespace Flounder
 
 		std::vector<T> *QueryFrustum(Frustum *range, std::vector<T> *result) override
 		{
-			for (auto object : *m_objects)
+			for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
 			{
-				auto gameObject = static_cast<GameObject *>(object);
+				auto gameObject = static_cast<GameObject *>(*it);
 				auto rigidbody = gameObject->GetComponent<Rigidbody>();
 
 				if (rigidbody == nullptr || rigidbody->GetCollider()->InFrustum(*range))
 				{
-					result->push_back(object);
+					result->push_back(*it);
 				}
 			}
 
@@ -133,14 +133,14 @@ namespace Flounder
 
 		std::vector<T> *QueryBounding(Collider *range, std::vector<T> *result) override
 		{
-			for (auto object : *m_objects)
+			for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
 			{
-				auto gameObject = static_cast<GameObject *>(object);
+				auto gameObject = static_cast<GameObject *>(*it);
 				auto rigidbody = gameObject->GetComponent<Rigidbody>();
 
 				if (rigidbody == nullptr || range->Intersects(*rigidbody->GetCollider()).IsIntersection() || range->Contains(*rigidbody->GetCollider()))
 				{
-					result->push_back(object);
+					result->push_back(*it);
 				}
 			}
 

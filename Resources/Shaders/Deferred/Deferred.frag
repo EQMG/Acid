@@ -97,12 +97,12 @@ float shadow(vec4 shadowCoords)
         total = 0.0f;
     }*/
 
-    float shadowValue = texture(samplerShadows, shadowCoords.xy * texelSize).r;
+    /*float shadowValue = texture(samplerShadows, shadowCoords.xy * texelSize).r;
 
     if (shadowCoords.z > shadowValue)
     {
         total = scene.shadowDarkness * shadowCoords.w;
-    }
+    }*/
 
     return 1.0f - total;
 }
@@ -155,47 +155,24 @@ void main()
 	// Lighting.
 	if (!ignoreLighting && textureNormal.rgb != vec3(0.0f))
 	{
-		vec3 irradiance = vec3(0.0f);
+        vec3 totalDiffuse = vec3(0.0);
 
 		for (int i = 0; i < scene.lightsCount; i++) 
 		{
 			Light light = lights.lights[i];
-			
+
 			vec3 lightDirection = light.position - worldPosition;
 			float distance = length(lightDirection);
 			lightDirection /= distance;
-			
+            vec3 unitLightVector = normalize(lightDirection);
+
 			float att = attenuation(light.radius, 0.1f * distance);
-			
-			vec3 LvD = normalize(lightDirection + viewDirection);
-			float NoH = max(0.0f, dot(normal, LvD));
-			float NoV = max(0.0f, dot(normal, viewDirection));
-			float NoL = max(0.0f, dot(normal, lightDirection));
-			float HoV = max(0.0f, dot(LvD, viewDirection));
 
-			vec3 F0 = mix(vec3(0.04f), outColour.rgb, metallic);
-			vec3 F = F0 + (vec3(1.0f) - F0) * pow(1.0f - HoV, 5.0f);
-
-			vec3 kS = F;
-			vec3 kD = (vec3(1.0) - kS) * (1.0f - metallic);
-
-			float D0 = sqr(sqr(roughness));
-			float D = D0 / (sqr(sqr(NoH) * (D0 - 1.0f) + 1.0f) * PI);
-
-			float k = sqr(roughness + 1.0f) / 8.0f;
-			float ggx_v = NoV / (NoV * (1.0f - k) + k);
-			float ggx_l = NoL / (NoV * (1.0f - k) + k);
-			float G = ggx_v * ggx_l;
-
-			vec3 specular = kS * D * G / (4.0f * NoL * NoV + EPSILON);
-			vec3 diffuse = kD * outColour.rgb * (1.0f / PI);
-
-			vec3 L0 = (diffuse + specular) * NoL;
-			vec3 radiance = light.colour.rgb * att;
-			irradiance += radiance * L0;
+            float brightness = max(dot(normal, unitLightVector), 0.0);
+            totalDiffuse += (brightness * light.colour.rgb) * att;
 		}
 
-		outColour = vec4(irradiance, 1.0f);
+        outColour = vec4(max(totalDiffuse, vec3(0.05f)), 1.0) * outColour;
 	}
 
 	// Fog.
@@ -206,7 +183,7 @@ void main()
 		outColour = mix(scene.fogColour, outColour, fogFactor);
 	}
 
-	// outColour.r += texture(samplerShadows, fragmentUv).r;
+	outColour.r += texture(samplerShadows, fragmentUv).r;
 
 	vec2 sizeColour = textureSize(samplerColour, 0);
 	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);
