@@ -13,6 +13,7 @@
 #include <Post/Filters/FilterGrain.hpp>
 #include <Fonts/RendererFonts.hpp>
 #include <Guis/RendererGuis.hpp>
+#include <Particles/RendererParticles.hpp>
 
 using namespace Flounder;
 
@@ -30,6 +31,7 @@ namespace Demo
 		RendererTerrains *m_rendererTerrains;
 		RendererWaters *m_rendererWaters;
 		RendererEntities *m_rendererEntities;
+	//	RendererParticles *m_rendererParticles;
 
 		RendererDeferred *m_rendererDeferred;
 		FilterFxaa *m_filterFxaa;

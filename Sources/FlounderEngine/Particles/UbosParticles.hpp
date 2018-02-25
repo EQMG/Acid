@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	class F_EXPORT UbosEntities
+	class F_EXPORT UbosParticles
 	{
 	public:
 		struct UboScene
@@ -20,11 +20,9 @@ namespace Flounder
 		{
 			Matrix4 transform;
 
-			Vector4 diffuse;
-
-			Vector4 samples;
-
-			Vector3 surface;
+			Vector4 textureOffsets;
+			float blendFactor;
+			float transparency;
 		};
 	};
 }

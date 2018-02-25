@@ -6,6 +6,7 @@
 #include "../Physics/ColliderAabb.hpp"
 #include "../Physics/ColliderSphere.hpp"
 #include "../Physics/Rigidbody.hpp"
+#include "../Particles/ParticleSystem.hpp"
 #include "../Materials/Material.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "../Skyboxes/SkyboxRender.hpp"
@@ -20,6 +21,7 @@ namespace Flounder
 		std::make_pair("Light", REGISTER_CREATE(Light)),
 		std::make_pair("AabbCollider", REGISTER_CREATE(ColliderAabb)),
 		std::make_pair("SphereCollider", REGISTER_CREATE(ColliderSphere)),
+		std::make_pair("ParticleSystem", REGISTER_CREATE(ParticleSystem)),
 		std::make_pair("Mesh", REGISTER_CREATE(Mesh)),
 		std::make_pair("Material", REGISTER_CREATE(Material)),
 		std::make_pair("Rigidbody", REGISTER_CREATE(Rigidbody)),

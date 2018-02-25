@@ -8,7 +8,7 @@ namespace Demo
 {
 	RenderpassCreate *RENDERPASS_0_CREATE = new RenderpassCreate
 	{
-		8192, 8192, // width / height
+		4096, 4096, // width / height
 		{
 			Attachment(0, TypeImage, VK_FORMAT_R16_UNORM) // shadows
 		}, // images
@@ -41,6 +41,7 @@ namespace Demo
 		m_rendererTerrains(new RendererTerrains({1, 0})),
 		m_rendererWaters(new RendererWaters({1, 0})),
 		m_rendererEntities(new RendererEntities({1, 0})),
+	//	m_rendererParticles(new RendererParticles({1, 0})),
 		m_rendererDeferred(new RendererDeferred({1, 1})),
 		m_filterFxaa(new FilterFxaa({1, 2})),
 		m_filterLensflare(new FilterLensflare({1, 2})),
@@ -113,6 +114,7 @@ namespace Demo
 		m_rendererTerrains->Render(commandBuffer, m_infinity, *camera);
 		m_rendererWaters->Render(commandBuffer, m_infinity, *camera);
 		m_rendererEntities->Render(commandBuffer, m_infinity, *camera);
+	//	m_rendererParticles->Render(commandBuffer, m_infinity, *camera);
 		Renderer::Get()->NextSubpass(commandBuffer);
 
 		// Subpass 1.
@@ -124,7 +126,7 @@ namespace Demo
 		m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
 		m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
 		m_filterLensflare->RenderFilter(commandBuffer);
-		//m_filterTiltshift->RenderFilter(commandBuffer);
+		m_filterTiltshift->RenderFilter(commandBuffer);
 		//m_filterGrain->RenderFilter(commandBuffer);
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);

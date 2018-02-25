@@ -2,6 +2,8 @@
 
 #include <vector>
 #include "../Maths/Vector3.hpp"
+#include "../Objects/Component.hpp"
+#include "../Objects/GameObject.hpp"
 #include "Spawns/ISpawnParticle.hpp"
 #include "Particle.hpp"
 #include "ParticleType.hpp"
@@ -11,19 +13,19 @@ namespace Flounder
 	/// <summary>
 	/// A system of particles that are to be spawned.
 	/// </summary>
-	class F_EXPORT ParticleSystem
+	class F_EXPORT ParticleSystem :
+		public Component
 	{
 	private:
 		std::vector<ParticleType *> *m_types;
 		ISpawnParticle *m_spawn;
+
 		float m_pps;
 		float m_averageSpeed;
 		float m_gravityEffect;
 		bool m_randomRotation;
 
-		Vector3 *m_systemCentre;
-		Vector3 *m_velocityCentre;
-
+		Vector3 *m_systemOffset;
 		Vector3 *m_direction;
 		float m_directionDeviation;
 		float m_speedError;
@@ -39,16 +41,17 @@ namespace Flounder
 		/// <param name="types"> The types of particles to spawn. </param>
 		/// <param name="spawn"> The particle spawn types. </param>
 		/// <param name="pps"> Particles per second. </param>
-		/// <param name="speed"> The particle speed. </param>
-		/// <param name="gravityEffect"> How much gravity will effect the particle. </param>
-		ParticleSystem(std::vector<ParticleType *> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect);
+		/// <param name="averageSpeed"> Particle average speed. </param>
+		/// <param name="gravityEffect"> How much gravity will effect the particles. </param>
+		/// <param name="systemOffset"> The offset from the parents centre. </param>
+		ParticleSystem(std::vector<ParticleType *> *types = new std::vector<ParticleType *>(), ISpawnParticle *spawn = nullptr, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f, const Vector3 &systemOffset = Vector3::ZERO);
 
 		/// <summary>
 		/// Deconstructor for the particle system.
 		/// </summary>
 		~ParticleSystem();
 
-		Particle *GenerateParticle();
+		void Update() override;
 
 	private:
 		Particle *EmitParticle();
@@ -60,6 +63,8 @@ namespace Flounder
 		Vector3 *GenerateRandomUnitVector() const;
 
 	public:
+		std::string GetName() const override { return "ParticleSystem"; };
+
 		void AddParticleType(ParticleType *type) const;
 
 		void RemoveParticleType(ParticleType *type) const;
@@ -84,13 +89,9 @@ namespace Flounder
 
 		void SetRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
 
-		Vector3 *GetSystemCentre() const { return m_systemCentre; }
+		Vector3 *GetOffsetCentre() const { return m_systemOffset; }
 
-		void SetSystemCentre(const Vector3 &systemCentre) const { m_systemCentre->Set(systemCentre); }
-
-		Vector3 *GetVelocityCentre() const { return m_velocityCentre; }
-
-		void SetVelocityCentre(const Vector3 &velocityCentre) const { m_velocityCentre->Set(velocityCentre); }
+		void SetOffsetCentre(const Vector3 &systemOffsetCentre) const { m_systemOffset->Set(systemOffsetCentre); }
 
 		Vector3 *GetDirection() const { return m_direction; }
 
