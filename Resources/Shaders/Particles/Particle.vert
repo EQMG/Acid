@@ -11,19 +11,15 @@ layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 
-	vec4 diffuse;
-
-	vec4 samples;
-
-	vec3 surface;
+    vec4 textureOffsets;
+    float blendFactor;
+    float transparency;
 } object;
 
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec2 vertexUv;
-layout(location = 2) in vec3 vertexNormal;
 
 layout(location = 0) out vec2 fragmentUv;
-layout(location = 1) out vec3 fragmentNormal;
 
 out gl_PerVertex 
 {
@@ -32,12 +28,9 @@ out gl_PerVertex
 
 void main() 
 {
-	vec4 localPosition = vec4(vertexPosition, 1.0f);
-	vec4 localNormal = vec4(vertexNormal, 0.0f);
-	vec4 worldPosition = object.transform * localPosition;
+	vec4 worldPosition = object.transform * vec4(vertexPosition, 1.0f);
 	
     gl_Position = scene.projection * scene.view * worldPosition;
 
     fragmentUv = vertexUv;
-	fragmentNormal = normalize((object.transform * localNormal).xyz);
 }

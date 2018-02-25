@@ -13,7 +13,6 @@ namespace Flounder
 		{
 			Matrix4 projection;
 			Matrix4 view;
-			Vector4 clip;
 		};
 
 		struct UboObject
