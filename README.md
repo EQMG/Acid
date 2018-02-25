@@ -45,6 +45,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * GameObject prefab loading
  * Deferred rendering
  * 3D shadow mapping
+ * Normal, glow, and sway mapping
  * Particle effects
  * Simple physics engine (WIP)
  * P2P networking (WIP)
