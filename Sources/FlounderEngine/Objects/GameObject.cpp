@@ -75,7 +75,7 @@ namespace Flounder
 			return;
 		}
 
-		for (auto it = m_components->begin(); it != m_components->end(); it++)
+		for (auto it = m_components->begin(); it != m_components->end(); ++it)
 		{
 			if ((*it) == nullptr || (*it)->GetGameObject() == nullptr)
 			{
@@ -88,6 +88,11 @@ namespace Flounder
 
 	void GameObject::AddComponent(Component *component)
 	{
+		if (component == nullptr)
+		{
+			return;
+		}
+
 		component->SetGameObject(this);
 		m_components->push_back(component);
 	}
@@ -98,6 +103,11 @@ namespace Flounder
 		{
 			if (*it == component)
 			{
+				if (*it != nullptr)
+				{
+					(*it)->SetGameObject(nullptr);
+				}
+
 				delete component;
 				m_components->erase(it);
 				return;

@@ -1,8 +1,9 @@
-#include <Meshes/Mesh.hpp>
-#include <Entities/EntityRender.hpp>
 #include "RendererShadows.hpp"
 
 #include "../Devices/Display.hpp"
+#include "../Meshes/Mesh.hpp"
+#include "../Entities/EntityRender.hpp"
+#include "../Terrains/TerrainRender.hpp"
 #include "../Materials/Material.hpp"
 #include "../Scenes/Scenes.hpp"
 #include "UbosShadows.hpp"
@@ -74,10 +75,16 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
-		auto entityRender = gameObject->GetComponent<EntityRender>();
-		if (entityRender == nullptr)
-			return;
-		auto uniformObject = entityRender->GetUniformObject();
+		UniformBuffer *uniformObject;
+		{
+			auto entityRender = gameObject->GetComponent<EntityRender>();
+			if (entityRender != nullptr)
+				uniformObject = entityRender->GetUniformObject();
+
+			auto terrainRender = gameObject->GetComponent<TerrainRender>();
+			if (terrainRender != nullptr)
+				uniformObject = terrainRender->GetUniformObject();
+		}
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
 			m_uniformScene->GetWriteDescriptor(0, descriptorSet),

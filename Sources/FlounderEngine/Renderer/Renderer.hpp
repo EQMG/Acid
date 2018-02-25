@@ -2,108 +2,20 @@
 
 #include "../Engine/Engine.hpp"
 #include "../Devices/Display.hpp"
-#include "Renderer/Pass/Renderpass.hpp"
 #include "Stencils/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
-#include "Swapchain/Framebuffers.hpp"
+#include "RenderStage.hpp"
 #include "IManagerRender.hpp"
 
 namespace Flounder
 {
-	class F_EXPORT Pass
-	{
-	public:
-		RenderpassCreate *m_renderpassCreate;
-		DepthStencil *m_depthStencil;
-		Renderpass *m_renderpass;
-		Framebuffers *m_framebuffers;
-
-		std::vector<VkClearValue> m_clearValues;
-		uint32_t m_imageAttachments;
-
-		Pass(RenderpassCreate *renderpassCreate) :
-			m_renderpassCreate(renderpassCreate),
-			m_depthStencil(nullptr),
-			m_renderpass(nullptr),
-			m_framebuffers(nullptr),
-			m_clearValues(std::vector<VkClearValue>()),
-			m_imageAttachments(0)
-		{
-			for (auto image : renderpassCreate->images)
-			{
-				VkClearValue clearValue = {};
-
-				switch (image.m_type)
-				{
-				case TypeImage:
-					clearValue.color = {*image.m_clearColour.m_elements};
-					m_imageAttachments++;
-					break;
-				case TypeDepth:
-					clearValue.depthStencil = {1.0f, 0};
-					break;
-				case TypeSwapchain:
-					clearValue.color = {{0.0f, 0.0f, 0.0f, 0.0f}};
-					break;
-				}
-
-				m_clearValues.push_back(clearValue);
-			}
-		}
-
-		~Pass()
-		{
-			delete m_renderpassCreate;
-			delete m_depthStencil;
-			delete m_renderpass;
-			delete m_framebuffers;
-		}
-
-		uint32_t GetWidth()
-		{
-			if (m_renderpassCreate->m_width != 0)
-			{
-				return m_renderpassCreate->m_width;
-			}
-
-			return static_cast<uint32_t>(Display::Get()->GetWidth());
-		}
-
-		uint32_t GetHeight()
-		{
-			if (m_renderpassCreate->m_height != 0)
-			{
-				return m_renderpassCreate->m_height;
-			}
-
-			return static_cast<uint32_t>(Display::Get()->GetHeight());
-		}
-
-		bool IsOutOfDate(const VkExtent2D &extent2D)
-		{
-			return GetWidth() != extent2D.width || GetHeight() != extent2D.height;
-		}
-
-		void Rebuild(Swapchain *swapchain, const VkExtent2D &extent2D, const VkExtent3D &extent3D)
-		{
-			delete m_depthStencil;
-
-			m_depthStencil = new DepthStencil(extent3D);
-
-			delete m_framebuffers;
-			m_framebuffers = new Framebuffers(m_renderpass->GetRenderpass(), m_depthStencil->GetImageView(), *swapchain, extent2D);
-		}
-
-		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const { return m_framebuffers->GetFramebuffers()[activeSwapchainImage]; }
-	};
-
 	class F_EXPORT Renderer :
 		public IModule
 	{
 	private:
 		IManagerRender *m_managerRender;
 
-		std::vector<Pass *> m_passes;
+		std::vector<RenderStage *> m_renderStages;
 
 		Swapchain *m_swapchain;
 		VkFence m_fenceSwapchainImage;
@@ -171,9 +83,9 @@ namespace Flounder
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(IManagerRender *managerRender) { m_managerRender = managerRender; }
 
-		std::vector<Pass *> GetPasses() const { return m_passes; }
+		std::vector<RenderStage *> GetRenderStages() const { return m_renderStages; }
 
-		Pass *GetPass(const int &i) const { return m_passes.at(i); }
+		RenderStage *GetRenderStage(const int &i) const { return m_renderStages.at(i); }
 
 		Swapchain *GetSwapchain() const { return m_swapchain; }
 

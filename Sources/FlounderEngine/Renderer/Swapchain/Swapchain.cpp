@@ -5,13 +5,12 @@
 
 namespace Flounder
 {
-	Swapchain::Swapchain(const RenderpassCreate &renderpassCreate, const VkExtent2D &extent) :
+	Swapchain::Swapchain(const VkExtent2D &extent) :
 		m_presentMode(VK_PRESENT_MODE_FIFO_KHR),
 		m_swapchain(VK_NULL_HANDLE),
 		m_swapchainImageCount(0),
 		m_swapchinImages(std::vector<VkImage>()),
 		m_swapchinImageViews(std::vector<VkImageView>()),
-		m_imageAttachments(std::vector<Texture *>()),
 		m_extent({})
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -95,26 +94,11 @@ namespace Flounder
 
 			Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews[i]));
 		}
-
-		uint32_t width = renderpassCreate.m_width == 0 ? Display::Get()->GetWidth() : renderpassCreate.m_width;
-		uint32_t height = renderpassCreate.m_height == 0 ? Display::Get()->GetHeight() : renderpassCreate.m_height;
-		m_imageAttachments.push_back(nullptr); // Depth.
-		m_imageAttachments.push_back(nullptr); // Swapchain.
-
-		for (auto image : renderpassCreate.images)
-		{
-			m_imageAttachments.push_back(new Texture(width, height, image.m_format, image.m_layout, image.m_usage));
-		}
 	}
 
 	Swapchain::~Swapchain()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		for (auto image : m_imageAttachments)
-		{
-			delete image;
-		}
 
 		for (auto imageView : m_swapchinImageViews)
 		{

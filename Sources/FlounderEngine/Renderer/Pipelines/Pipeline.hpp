@@ -3,11 +3,14 @@
 #include <array>
 #include <string>
 #include <vector>
+#include "../../Textures/Texture.hpp"
 #include "../../Engine/Platform.hpp"
 #include "PipelineCreate.hpp"
 
 namespace Flounder
 {
+	class DepthStencil;
+
 	/// <summary>
 	/// Class that represents a Vulkan pipeline.
 	/// </summary>
@@ -49,6 +52,12 @@ namespace Flounder
 		~Pipeline();
 
 		void BindPipeline(const VkCommandBuffer &commandBuffer);
+
+		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
+
+		DepthStencil *GetDepthStencil(const int &stage = -1) const;
+
+		Texture *GetTexture(const unsigned int &i, const int &stage = -1) const;
 
 		VkDescriptorSetLayout GetDescriptorSetLayout() const { return m_descriptorSetLayout; }
 

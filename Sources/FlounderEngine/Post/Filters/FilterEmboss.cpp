@@ -24,8 +24,8 @@ namespace Flounder
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
 			{
-				Renderer::Get()->GetSwapchain()->GetTexture(2)->GetWriteDescriptor(0, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetTexture(2)->GetWriteDescriptor(1, descriptorSet)
+				m_pipeline->GetTexture(2)->GetWriteDescriptor(0, descriptorSet),
+				m_pipeline->GetTexture(2)->GetWriteDescriptor(1, descriptorSet)
 			};
 		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
 	}
