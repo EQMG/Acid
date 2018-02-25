@@ -53,29 +53,18 @@ namespace Flounder
 
 	void Renderer::CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates)
 	{
-		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
-		const VkExtent2D extent2D = {
+		const VkExtent2D displayExtent2D = {
 			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
-		};
-		const VkExtent3D extent3D = {
-			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1
 		};
 
 		m_renderStages.clear();
-		m_swapchain = new Swapchain(extent2D);
+		m_swapchain = new Swapchain(displayExtent2D);
 
 		for (auto &renderpassCreate : renderpassCreates)
 		{
 			printf("Creating render stage '%i'\n", m_renderStages.size());
 			auto renderStage = new RenderStage(renderpassCreate);
-
-			if (renderStage->m_hasDepth)
-			{
-				renderStage->m_depthStencil = new DepthStencil(extent3D);
-			}
-
-			renderStage->m_renderpass = new Renderpass(*renderpassCreate, *renderStage->m_depthStencil, surfaceFormat.format);
-			renderStage->m_framebuffers = new Framebuffers(*renderpassCreate, *renderStage->m_renderpass, *m_swapchain, *renderStage->m_depthStencil, extent2D);
+			renderStage->Rebuild(m_swapchain);
 			m_renderStages.push_back(renderStage);
 		}
 
@@ -263,27 +252,23 @@ namespace Flounder
 	void Renderer::RecreatePass(const int &i)
 	{
 		const auto queue = Display::Get()->GetQueue();
+		const auto renderStage = GetRenderStage(i);
 
-		const VkExtent2D extent2D = {
+		const VkExtent2D displayExtent2D = {
 			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
 		};
-		const VkExtent3D extent3D = {
-			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight()), 1
-		};
 
-#if FLOUNDER_VERBOSE
-		printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, extent2D.width, extent2D.height);
-#endif
 		Platform::ErrorVk(vkQueueWaitIdle(queue));
-
-		auto renderStage = GetRenderStage(i);
 
 		if (renderStage->m_hasSwapchain)
 		{
+#if FLOUNDER_VERBOSE
+			printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent2D.width, displayExtent2D.height);
+#endif
 			delete m_swapchain;
-			m_swapchain = new Swapchain(extent2D);
+			m_swapchain = new Swapchain(displayExtent2D);
 		}
 
-		renderStage->RebuildImages(m_swapchain, extent2D, extent3D);
+		renderStage->Rebuild(m_swapchain);
 	}
 }

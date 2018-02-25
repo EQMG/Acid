@@ -132,7 +132,7 @@ void main()
 	outColour = vec4(colour, 1.0f);
 
 	// Shadows.
-    /*if (!ignoreLighting && scene.shadowDarkness >= 0.07f)
+    if (!ignoreLighting && scene.shadowDarkness >= 0.07f)
     {
         vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
         float distanceAway = length(screenPosition.xyz);
@@ -140,7 +140,7 @@ void main()
         distanceAway = distanceAway / scene.shadowTransition;
         shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
         outColour *= shadow(shadowCoords);
-    }*/
+    }
 
 	// Lighting.
 	if (!ignoreLighting && textureNormal.rgb != vec3(0.0f))

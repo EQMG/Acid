@@ -49,10 +49,12 @@ namespace Demo
 
 		// Player.
 		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(), 1.0f));
+		playerObject->SetName("PlayerFps");
 		playerObject->AddComponent(new FpsPlayer());
 
 		// Skybox.
 		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
+		skyboxObject->SetName("SkyboxStars");
 		skyboxObject->AddComponent(new Mesh(ShapeSphere::Resource(6, 6, 1.0f)));
 		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Stars", ".png")));
 
@@ -66,6 +68,7 @@ namespace Demo
 				GameObject *terrainObject = new GameObject(Transform(Vector3(
 					static_cast<float>(j) * TerrainRender::SIDE_LENGTH, 0.0f,
 					static_cast<float>(w) * TerrainRender::SIDE_LENGTH)));
+				terrainObject->SetName("Terrain");
 				terrainObject->AddComponent(new Mesh());
 			//	terrainObject->AddComponent(new Material());
 				terrainObject->AddComponent(new TerrainRender());
@@ -76,6 +79,7 @@ namespace Demo
 
 		// Waters.
 		GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
+		waterObject->SetName("Water");
 		waterObject->AddComponent(new Mesh(new MeshWater()));
 		waterObject->AddComponent(new WaterRender());
 
@@ -103,7 +107,11 @@ namespace Demo
 
 				if (position.m_y > 0.0f)
 				{
-					if (i < 0)
+					if (i == 0 && j == 0)
+					{
+						new GameObject("GemPurple", Transform(position, Vector3(), 1.0f));
+					}
+					else if (i < 0)
 					{
 						position.m_y -= 1.0f;
 						new GameObject("TreePine", Transform(position, Vector3(0.0f, Maths::RandomInRange(0.0f, 360.0f), 0.0f), 1.0f));
@@ -124,7 +132,7 @@ namespace Demo
 		music1->Loop();
 #endif*/
 
-#ifdef FLOUNDER_CONFIG_DEBUG
+/*#ifdef FLOUNDER_CONFIG_DEBUG
 		GameObject *particlesObject = new GameObject(Transform(Vector3(0.0f, 20.0f, 0.0f)));
 		std::vector<ParticleType*> *types = new std::vector<ParticleType*>();
 		types->push_back(new ParticleType("blue", Texture::Resource("Resources/Particles/Blue/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
@@ -132,7 +140,7 @@ namespace Demo
 		types->push_back(new ParticleType("red", Texture::Resource("Resources/Particles/Red/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
 		types->push_back(new ParticleType("yellow", Texture::Resource("Resources/Particles/Yellow/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
 		particlesObject->AddComponent(new ParticleSystem(types, new SpawnCircle(30.0f, Vector3(0.0f, 10.0f, 0.0f)), 1000, 1.0f, -0.1f));
-#endif
+#endif*/
 	}
 
 	void Scene1::Update()
