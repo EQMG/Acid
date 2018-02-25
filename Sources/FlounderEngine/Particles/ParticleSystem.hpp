@@ -25,6 +25,8 @@ namespace Flounder
 		float m_gravityEffect;
 		bool m_randomRotation;
 
+		Vector3 *m_lastPosition;
+
 		Vector3 *m_systemOffset;
 		Vector3 *m_direction;
 		float m_directionDeviation;
@@ -60,7 +62,7 @@ namespace Flounder
 
 		float GenerateRotation() const;
 
-		Vector3 *GenerateRandomUnitVector() const;
+		Vector3 *GenerateRandomUnitVector(Vector3 *destination) const;
 
 	public:
 		std::string GetName() const override { return "ParticleSystem"; };

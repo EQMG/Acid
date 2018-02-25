@@ -52,7 +52,7 @@ namespace Flounder
 		m_frustum[FrustumLeft][FrustumC] = clip[11] - clip[8];
 		m_frustum[FrustumLeft][FrustumD] = clip[15] - clip[12];
 
-		NormalizePlane(m_frustum, FrustumLeft);
+		NormalizePlane(FrustumLeft);
 
 		// This will extract the RIGHT side of the frustum.
 		m_frustum[FrustumRight][FrustumA] = clip[3] + clip[0];
@@ -60,7 +60,7 @@ namespace Flounder
 		m_frustum[FrustumRight][FrustumC] = clip[11] + clip[8];
 		m_frustum[FrustumRight][FrustumD] = clip[15] + clip[12];
 
-		NormalizePlane(m_frustum, FrustumRight);
+		NormalizePlane(FrustumRight);
 
 		// This will extract the BOTTOM side of the frustum.
 		m_frustum[FrustumBottom][FrustumA] = clip[3] + clip[1];
@@ -68,7 +68,7 @@ namespace Flounder
 		m_frustum[FrustumBottom][FrustumC] = clip[11] + clip[9];
 		m_frustum[FrustumBottom][FrustumD] = clip[15] + clip[13];
 
-		NormalizePlane(m_frustum, FrustumBottom);
+		NormalizePlane(FrustumBottom);
 
 		// This will extract the TOP side of the frustum.
 		m_frustum[FrustumTop][FrustumA] = clip[3] - clip[1];
@@ -76,7 +76,7 @@ namespace Flounder
 		m_frustum[FrustumTop][FrustumC] = clip[11] - clip[9];
 		m_frustum[FrustumTop][FrustumD] = clip[15] - clip[13];
 
-		NormalizePlane(m_frustum, FrustumTop);
+		NormalizePlane(FrustumTop);
 
 		// This will extract the BACK side of the frustum.
 		m_frustum[FrustumBack][FrustumA] = clip[3] + clip[2];
@@ -84,7 +84,7 @@ namespace Flounder
 		m_frustum[FrustumBack][FrustumC] = clip[11] + clip[10];
 		m_frustum[FrustumBack][FrustumD] = clip[15] + clip[14];
 
-		NormalizePlane(m_frustum, FrustumBack);
+		NormalizePlane(FrustumBack);
 
 		// This will extract the FRONT side of the frustum.
 		m_frustum[FrustumFront][FrustumA] = clip[3] - clip[2];
@@ -92,7 +92,7 @@ namespace Flounder
 		m_frustum[FrustumFront][FrustumC] = clip[11] - clip[10];
 		m_frustum[FrustumFront][FrustumD] = clip[15] - clip[14];
 
-		NormalizePlane(m_frustum, FrustumFront);
+		NormalizePlane(FrustumFront);
 
 		// Deletes the arrays used to update the frustum.
 		delete[] view;
@@ -104,8 +104,8 @@ namespace Flounder
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			if (m_frustum[i][0] * position.m_x + m_frustum[i][1] * position.m_y + m_frustum[i][2] * position.m_z +
-				m_frustum[i][3] <= 0.0f)
+			if (m_frustum[i][FrustumA] * position.m_x + m_frustum[i][FrustumB] * position.m_y + m_frustum[i][FrustumC] * position.m_z +
+				m_frustum[i][FrustumD] <= 0.0f)
 			{
 				return false;
 			}
@@ -118,7 +118,8 @@ namespace Flounder
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			if (m_frustum[i][0] * position.m_x + m_frustum[i][1] * position.m_y + m_frustum[i][2] * position.m_z + m_frustum[i][3] <= -radius)
+			if (m_frustum[i][FrustumA] * position.m_x + m_frustum[i][FrustumB] * position.m_y + m_frustum[i][FrustumC] * position.m_z +
+				m_frustum[i][FrustumD] <= -radius)
 			{
 				return false;
 			}
@@ -133,14 +134,14 @@ namespace Flounder
 
 		for (int i = 0; i < 6; i++)
 		{
-			if (m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f)
+			if (m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f)
 			{
 				return false;
 			}
@@ -153,14 +154,14 @@ namespace Flounder
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			if (m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-				m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f)
+			if (m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
+				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f)
 			{
 				return false;
 			}
@@ -169,7 +170,7 @@ namespace Flounder
 		return true;
 	}
 
-	void Frustum::NormalizePlane(float **frustum, const int &side) const
+	void Frustum::NormalizePlane(const int &side) const
 	{
 		const float magnitude = std::sqrt(m_frustum[side][FrustumA] * m_frustum[side][FrustumA] +
 			m_frustum[side][FrustumB] * m_frustum[side][FrustumB] +
