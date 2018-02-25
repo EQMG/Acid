@@ -14,6 +14,8 @@ struct Light
 
 layout(set = 0, binding = 0) uniform UboScene 
 {
+	Light lights[MAX_LIGHTS];
+
 	mat4 projection;
 	mat4 view;
 	mat4 shadowSpace;
@@ -32,18 +34,13 @@ layout(set = 0, binding = 0) uniform UboScene
 	int lightsCount;
 } scene;
 
-layout(set = 0, binding = 1) uniform UboLights 
-{
-	Light lights[MAX_LIGHTS];
-} lights;
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
 
-layout(rgba16f, set = 0, binding = 2) uniform writeonly image2D writeColour;
-
-layout(set = 0, binding = 3) uniform sampler2D samplerDepth;
-layout(set = 0, binding = 4) uniform sampler2D samplerColour;
-layout(set = 0, binding = 5) uniform sampler2D samplerNormal;
-layout(set = 0, binding = 6) uniform sampler2D samplerMaterial;
-layout(set = 0, binding = 7) uniform sampler2D samplerShadows;
+layout(set = 0, binding = 2) uniform sampler2D samplerDepth;
+layout(set = 0, binding = 3) uniform sampler2D samplerColour;
+layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
+layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
+layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
 
 layout(location = 0) in vec2 fragmentUv;
 
@@ -64,7 +61,7 @@ vec3 decodeNormal(vec4 normal)
 
 vec3 decodeWorldPosition(vec2 uv, float depth) 
 {
-	vec3 ndc = vec3(uv * 2.0 - vec2(1.0), depth);
+	vec3 ndc = vec3(uv * 2.0f - vec2(1.0f), depth);
 	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0);
 	return p.xyz / p.w;
 }
@@ -135,24 +132,65 @@ void main()
 	outColour = vec4(colour, 1.0f);
 
 	// Shadows.
-    if (!ignoreLighting && scene.shadowDarkness >= 0.07)
+    /*if (!ignoreLighting && scene.shadowDarkness >= 0.07f)
     {
         vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
         float distanceAway = length(screenPosition.xyz);
-        distanceAway = distanceAway - ((scene.shadowDistance * 2.0) - scene.shadowTransition);
+        distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
         distanceAway = distanceAway / scene.shadowTransition;
-        shadowCoords.w = clamp(1.0 - distanceAway, 0.0, 1.0);
+        shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
         outColour *= shadow(shadowCoords);
-    }
+    }*/
 
 	// Lighting.
 	if (!ignoreLighting && textureNormal.rgb != vec3(0.0f))
 	{
-        vec3 totalDiffuse = vec3(0.0);
+		vec3 irradiance = vec3(0.0f);
+
+    	for (int i = 0; i < scene.lightsCount; i++)
+    	{
+    		Light light = scene.lights[i];
+
+    		vec3 lightDirection = light.position - worldPosition;
+    		float distance = length(lightDirection);
+    		lightDirection /= distance;
+
+    		float att = attenuation(light.radius, 0.1f * distance);
+
+    		vec3 LvD = normalize(lightDirection + viewDirection);
+    		float NoH = max(0.0f, dot(normal, LvD));
+    		float NoV = max(0.0f, dot(normal, viewDirection));
+    		float NoL = max(0.0f, dot(normal, lightDirection));
+    		float HoV = max(0.0f, dot(LvD, viewDirection));
+
+    		vec3 F0 = mix(vec3(0.04f), outColour.rgb, metallic);
+    		vec3 F = F0 + (vec3(1.0f) - F0) * pow(1.0f - HoV, 5.0f);
+
+    		vec3 kS = F;
+    		vec3 kD = (vec3(1.0f) - kS) * (1.0f - metallic);
+
+    		float D0 = sqr(sqr(roughness));
+    		float D = D0 / (sqr(sqr(NoH) * (D0 - 1.0f) + 1.0f) * PI);
+
+    		float k = sqr(roughness + 1.0f) / 8.0f;
+    		float ggx_v = NoV / (NoV * (1.0f - k) + k);
+    		float ggx_l = NoL / (NoV * (1.0f - k) + k);
+    		float G = ggx_v * ggx_l;
+
+    		vec3 specular = kS * D * G / (4.0f * NoL * NoV + EPSILON);
+    		vec3 diffuse = kD * outColour.rgb * (1.0f / PI);
+
+    		vec3 L0 = (diffuse + specular) * NoL;
+    		vec3 radiance = light.colour.rgb * att;
+    		irradiance += radiance * L0;
+    	}
+
+    	outColour = vec4(irradiance, 1.0f);
+        /*vec3 totalDiffuse = vec3(0.0f);
 
 		for (int i = 0; i < scene.lightsCount; i++) 
 		{
-			Light light = lights.lights[i];
+			Light light = scene.lights[i];
 
 			vec3 lightDirection = light.position - worldPosition;
 			float distance = length(lightDirection);
@@ -161,18 +199,18 @@ void main()
 
 			float att = attenuation(light.radius, 0.1f * distance);
 
-            float brightness = max(dot(normal, unitLightVector), 0.0);
+            float brightness = max(dot(normal, unitLightVector), 0.0f);
             totalDiffuse += (brightness * light.colour.rgb) * att;
 		}
 
-        outColour = vec4(max(totalDiffuse, vec3(0.05f)), 1.0) * outColour;
+        outColour = vec4(max(totalDiffuse, vec3(0.05f)), 1.0f) * outColour;*/
 	}
 
 	// Fog.
 	if (!ignoreFog && textureNormal.rgb != vec3(0.0f))
 	{
 		float fogFactor = exp(-pow(length(screenPosition.xyz) * scene.fogDensity, scene.fogGradient));
-		fogFactor = clamp(fogFactor, 0.0, 1.0);
+		fogFactor = clamp(fogFactor, 0.0f, 1.0f);
 		outColour = mix(scene.fogColour, outColour, fogFactor);
 	}
 

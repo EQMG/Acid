@@ -1,6 +1,6 @@
-Mesh,Sphere_16_16_1.0
-Material,#DDE2FF,nullptr,0.4,0.0,0,1,1,nullptr
-Light,#1E1E1E,-1.0,0.0,3.0,0.0
-CelestialBody,1
+Rigidbody,1.000000,0.000000,1,0,0,0,0,0,0
+Material,#DDE2FF,nullptr,0.400000,0.000000,0,1,1,nullptr,nullptr
+Light,#1E1E1E,-1.000000,0.000000,3.000000,0.000000
+Mesh,Sphere_16_16_1.000000
 EntityRender
-Rigidbody
+CelestialBody,1
