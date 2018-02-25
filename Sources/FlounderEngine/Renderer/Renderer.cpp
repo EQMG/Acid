@@ -66,10 +66,16 @@ namespace Flounder
 
 		for (auto &renderpassCreate : renderpassCreates)
 		{
+			printf("Creating render stage '%i'\n", m_renderStages.size());
 			auto renderStage = new RenderStage(renderpassCreate);
-			renderStage->m_depthStencil = new DepthStencil(extent3D);
-			renderStage->m_renderpass = new Renderpass(*renderpassCreate, renderStage->m_depthStencil->GetFormat(), surfaceFormat.format);
-			renderStage->m_framebuffers = new Framebuffers(*renderpassCreate, *renderStage->m_renderpass, *m_swapchain, renderStage->m_depthStencil->GetImageView(), extent2D);
+
+			if (renderStage->m_hasDepth)
+			{
+				renderStage->m_depthStencil = new DepthStencil(extent3D);
+			}
+
+			renderStage->m_renderpass = new Renderpass(*renderpassCreate, *renderStage->m_depthStencil, surfaceFormat.format);
+			renderStage->m_framebuffers = new Framebuffers(*renderpassCreate, *renderStage->m_renderpass, *m_swapchain, *renderStage->m_depthStencil, extent2D);
 			m_renderStages.push_back(renderStage);
 		}
 
@@ -160,11 +166,6 @@ namespace Flounder
 
 		Platform::ErrorVk(vkEndCommandBuffer(commandBuffer));
 
-		if (!renderStage->m_hasSwapchain)
-		{
-			return;
-		}
-
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		submitInfo.waitSemaphoreCount = 0;
@@ -178,6 +179,11 @@ namespace Flounder
 		const VkResult queueSubmitResult = vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
 
 		assert(queueSubmitResult == VK_SUCCESS && "Failed to acquire swapchain image!");
+
+		if (!renderStage->m_hasSwapchain)
+		{
+			return;
+		}
 
 		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
 

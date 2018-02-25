@@ -75,13 +75,13 @@ float shadow(vec4 shadowCoords)
     float totalTextels = (scene.shadowPCF * 2.0f + 1.0f) * (scene.shadowPCF * 2.0f + 1.0f);
     float total = 0.0f;
 
-    /*if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f)
+    if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f)
     {
         for (int x = -scene.shadowPCF; x <= scene.shadowPCF; x++)
         {
             for (int y = -scene.shadowPCF; y <= scene.shadowPCF; y++)
             {
-                float shadowValue = texture(samplerShadows, (shadowCoords.xy + vec2(x, y)) * sizeShadows).r;
+                float shadowValue = texture(samplerShadows, shadowCoords.xy + vec2(x, y) * sizeShadows).r;
 
                 if (shadowCoords.z < shadowValue + scene.shadowBias)
                 {
@@ -95,14 +95,14 @@ float shadow(vec4 shadowCoords)
     else
     {
         total = 0.0f;
-    }*/
+    }
 
-    float shadowValue = texture(samplerShadows, shadowCoords.xy).r;
+    /*float shadowValue = texture(samplerShadows, shadowCoords.xy).r;
 
     if (shadowCoords.z <= shadowValue)
     {
         total = scene.shadowDarkness * shadowCoords.w;
-    }
+    }*/
 
     return 1.0f - total;
 }

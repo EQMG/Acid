@@ -36,6 +36,6 @@ namespace Flounder
 
 		bool IsOutOfDate(const VkExtent2D &extent2D) const;
 
-		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const { return m_framebuffers->GetFramebuffers()[activeSwapchainImage]; }
+		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
 	};
 }

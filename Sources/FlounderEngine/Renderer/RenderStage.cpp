@@ -51,7 +51,7 @@ namespace Flounder
 		m_depthStencil = new DepthStencil(extent3D);
 
 		delete m_framebuffers;
-		m_framebuffers = new Framebuffers(*m_renderpassCreate, *m_renderpass, *swapchain, m_depthStencil->GetImageView(), extent2D);
+		m_framebuffers = new Framebuffers(*m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, extent2D);
 	}
 
 	uint32_t RenderStage::GetWidth() const
@@ -77,5 +77,15 @@ namespace Flounder
 	bool RenderStage::IsOutOfDate(const VkExtent2D &extent2D) const
 	{
 		return m_fitDisplaySize ? GetWidth() != extent2D.width || GetHeight() != extent2D.height : false;
+	}
+
+	VkFramebuffer RenderStage::GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const
+	{
+		if (activeSwapchainImage > m_framebuffers->GetFramebuffersCount())
+		{
+			return m_framebuffers->GetFramebuffers()[0];
+		}
+
+		return m_framebuffers->GetFramebuffers()[activeSwapchainImage];
 	}
 }

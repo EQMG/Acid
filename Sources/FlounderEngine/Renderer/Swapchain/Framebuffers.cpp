@@ -2,11 +2,12 @@
 
 #include <array>
 #include "../Renderpass/Renderpass.hpp"
+#include "../Stencils/DepthStencil.hpp"
 #include "../../Devices/Display.hpp"
 
 namespace Flounder
 {
-	Framebuffers::Framebuffers(const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const VkImageView &depthImageView, const VkExtent2D &extent) :
+	Framebuffers::Framebuffers(const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkExtent2D &extent) :
 		m_imageAttachments(std::vector<Texture *>()),
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
@@ -45,7 +46,7 @@ namespace Flounder
 					attachments.push_back(GetTexture(image.m_binding)->GetImageView());
 					break;
 				case TypeDepth:
-					attachments.push_back(depthImageView);
+					attachments.push_back(depthStencil.GetImageView());
 					break;
 				case TypeSwapchain:
 					attachments.push_back(swapchain.GetImageViews()[i]);

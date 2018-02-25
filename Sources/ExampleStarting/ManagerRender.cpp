@@ -7,31 +7,31 @@
 namespace Demo
 {
 	RenderpassCreate *RENDERPASS_0_CREATE = new RenderpassCreate
+	{
+		8192, 8192, // width / height
 		{
-			8192, 8192, // width / height
-			{
-				Attachment(0, TypeImage, VK_FORMAT_R16_UNORM) // shadows
-			}, // images
-			{
-				SubpassType(0, false, {0})
-			} // subpasses
-		};
+			Attachment(0, TypeImage, VK_FORMAT_R16_UNORM) // shadows
+		}, // images
+		{
+			SubpassType(0, {0})
+		} // subpasses
+	};
 	RenderpassCreate *RENDERPASS_1_CREATE = new RenderpassCreate
+	{
+		0, 0, // width / height
 		{
-			0, 0, // width / height
-			{
-				Attachment(0, TypeDepth), // depth
-				Attachment(1, TypeSwapchain), // swapchain
-				Attachment(2, TypeImage, VK_FORMAT_R8G8B8A8_UNORM), // colours
-				Attachment(3, TypeImage, VK_FORMAT_R16G16_UNORM), // normals
-				Attachment(4, TypeImage, VK_FORMAT_R8G8B8A8_UNORM) // materials
-			}, // images
-			{
-				SubpassType(0, true, {2, 3, 4}),
-				SubpassType(1, false, {1}),
-				SubpassType(2, false, {1}),
-			} // subpasses
-		};
+			Attachment(0, TypeDepth), // depth
+			Attachment(1, TypeSwapchain), // swapchain
+			Attachment(2, TypeImage, VK_FORMAT_R8G8B8A8_UNORM), // colours
+			Attachment(3, TypeImage, VK_FORMAT_R16G16_UNORM), // normals
+			Attachment(4, TypeImage, VK_FORMAT_R8G8B8A8_UNORM) // materials
+		}, // images
+		{
+			SubpassType(0, {0, 2, 3, 4}),
+			SubpassType(1, {1}),
+			SubpassType(2, {1}),
+		} // subpasses
+	};
 
 	ManagerRender::ManagerRender() :
 		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE}),
@@ -71,8 +71,7 @@ namespace Demo
 
 	void ManagerRender::Render()
 	{
-	//	RenderPass0();
-
+		RenderPass0();
 		RenderPass1();
 	}
 
@@ -91,7 +90,6 @@ namespace Demo
 
 		// Subpass 0.
 		m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
-		Renderer::Get()->NextSubpass(commandBuffer);
 
 		// Ends Rendering.
 		Renderer::Get()->EndRenderpass(commandBuffer, 0);
