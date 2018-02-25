@@ -12,33 +12,32 @@
 namespace Flounder
 {
 	const PipelineCreate PIPELINE_CREATE =
+	{
+		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
+		VK_POLYGON_MODE_FILL, // polygonMode
+		VK_CULL_MODE_BACK_BIT, // cullModeFlags
+
+		Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
+		Vertex::GetAttributeDescriptions(1), // vertexAttributeDescriptions
 		{
-			PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
-			VK_POLYGON_MODE_FILL, // polygonMode
-			VK_CULL_MODE_BACK_BIT, // cullModeFlags
+			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
+			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // writeColour
+			DepthStencil::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDepth
+			Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
+			Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerNormal
+			Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
+			Texture::CreateDescriptor(6, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerShadows
+		}, // descriptors
 
-			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-			Vertex::GetAttributeDescriptions(1), // vertexAttributeDescriptions
-			{
-				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
-				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // uboLights
-				Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // writeColour
-				DepthStencil::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDepth
-				Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
-				Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerNormal
-				Texture::CreateDescriptor(6, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
-				Texture::CreateDescriptor(7, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerShadows
-			}, // descriptors
-
-			{
-				"Resources/Shaders/Deferred/Deferred.vert.spv", "Resources/Shaders/Deferred/Deferred.frag.spv"
-			} // shaderStages
-		};
+		{
+			"Resources/Shaders/Deferred/Deferred.vert.spv", "Resources/Shaders/Deferred/Deferred.frag.spv"
+		} // shaderStages
+	};
 
 	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
-		m_uniformLights(new UniformBuffer(sizeof(UbosDeferred::UboLights))),
+		//m_uniformLights(new UniformBuffer(sizeof(UbosDeferred::UboLights))),
 		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE)),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
@@ -47,7 +46,7 @@ namespace Flounder
 	RendererDeferred::~RendererDeferred()
 	{
 		delete m_uniformScene;
-		delete m_uniformLights;
+		//delete m_uniformLights;
 		delete m_pipeline;
 		delete m_model;
 	}
@@ -58,22 +57,28 @@ namespace Flounder
 
 		for (auto entity : *Scenes::Get()->GetStructure()->GetAll())
 		{
-			auto componentLight = entity->GetComponent<Light>();
+			auto light = entity->GetComponent<Light>();
 
-			if (componentLight != nullptr)
+			if (light != nullptr)
 			{
-				//	Vector3 position = *componentLight->GetLight()->m_position;
-				//	float radius = componentLight->GetLight()->m_radius;
-				//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
-				//	{
-				//		continue;
-				//	}
+			//	auto position = *light->GetPosition();
+			//	float radius = light->GetRadius();
 
-				UbosDeferred::Light light = {};
-				light.colour = *componentLight->GetColour();
-				light.position = *componentLight->GetPosition();
-				light.radius = componentLight->GetRadius();
-				sceneLights.push_back(light);
+			//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
+			//	{
+			//		continue;
+			//	}
+
+				if (light->GetColour()->LengthSquared() == 0.0f)
+				{
+					continue;
+				}
+
+				UbosDeferred::Light lightObject = {};
+				lightObject.colour = *light->GetColour();
+				lightObject.position = *light->GetPosition();
+				lightObject.radius = light->GetRadius();
+				sceneLights.push_back(lightObject);
 			}
 
 			if (sceneLights.size() >= MAX_LIGHTS)
@@ -82,9 +87,14 @@ namespace Flounder
 			}
 		}
 
-		//	printf("Rendered Lights: %i\n", sceneLights.size());
+	//	printf("Rendered Lights: %i\n", sceneLights.size());
 
 		UbosDeferred::UboScene uboScene = {};
+
+		for (unsigned int i = 0; i < sceneLights.size(); i++)
+		{
+			uboScene.lights[i] = sceneLights.at(i);
+		}
 
 		uboScene.projection = *camera.GetProjectionMatrix();
 		uboScene.view = *camera.GetViewMatrix();
@@ -105,31 +115,21 @@ namespace Flounder
 
 		m_uniformScene->Update(&uboScene);
 
-		UbosDeferred::UboLights uboLights = {};
-
-		for (unsigned int i = 0; i < sceneLights.size(); i++)
-		{
-			uboLights.lights[i] = sceneLights.at(i);
-		}
-
-		m_uniformLights->Update(&uboLights);
-
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
 		m_pipeline->BindPipeline(commandBuffer);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
-			{
-				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
-				m_uniformLights->GetWriteDescriptor(1, descriptorSet),
-				m_pipeline->GetDepthStencil()->GetWriteDescriptor(3, descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(2, descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(4, descriptorSet),
-				m_pipeline->GetTexture(3)->GetWriteDescriptor(5, descriptorSet),
-				m_pipeline->GetTexture(4)->GetWriteDescriptor(6, descriptorSet),
-				m_pipeline->GetTexture(0, 0)->GetWriteDescriptor(7, descriptorSet)
-			};
+		{
+			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
+			m_pipeline->GetTexture(2)->GetWriteDescriptor(1, descriptorSet),
+			m_pipeline->GetDepthStencil()->GetWriteDescriptor(2, descriptorSet),
+			m_pipeline->GetTexture(2)->GetWriteDescriptor(3, descriptorSet),
+			m_pipeline->GetTexture(3)->GetWriteDescriptor(4, descriptorSet),
+			m_pipeline->GetTexture(4)->GetWriteDescriptor(5, descriptorSet),
+			m_pipeline->GetTexture(0, 0)->GetWriteDescriptor(6, descriptorSet)
+		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
 		VkDescriptorSet descriptors[] = {descriptorSet};

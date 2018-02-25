@@ -23,8 +23,9 @@ namespace Flounder
 		bool m_ignoreFog;
 
 		Texture *m_textureMaterial;
+		Texture *m_textureNormal;
 	public:
-		Material(const Colour &colour = Colour::WHITE, Texture *diffuse = nullptr, const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false, Texture *material = nullptr);
+		Material(const Colour &colour = Colour::WHITE, Texture *diffuse = nullptr, const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false, Texture *material = nullptr, Texture *normal = nullptr);
 
 		~Material();
 
@@ -67,5 +68,11 @@ namespace Flounder
 		void SetTextureMaterial(Texture *material) { m_textureMaterial = material; }
 
 		void TrySetTextureMaterial(const std::string &filename);
+
+		Texture *GetTextureNormal() const { return m_textureNormal; }
+
+		void SetTextureNormal(Texture *normal) { m_textureNormal = normal; }
+
+		void TrySetTextureNormal(const std::string &filename);
 	};
 }
