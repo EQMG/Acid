@@ -19,7 +19,7 @@ namespace Flounder
 		m_farWidth(0.0f),
 		m_nearHeight(0.0f),
 		m_nearWidth(0.0f),
-		m_aabb(new Aabb())
+		m_aabb(new ColliderAabb())
 	{
 	}
 

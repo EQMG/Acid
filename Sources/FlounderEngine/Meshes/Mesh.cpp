@@ -19,12 +19,13 @@ namespace Flounder
 
 	void Mesh::Update()
 	{
+		// TODO
 		/*if (m_model == nullptr || m_model->GetAabb() == nullptr)
 		{
 			return;
 		}
 
-		auto aabb = GetGameObject()->GetComponent<Aabb>();
+		auto aabb = GetGameObject()->GetComponent<ColliderAabb>();
 
 		if (aabb != m_model->GetAabb())
 		{

@@ -1,6 +1,6 @@
 ﻿#include "Rigidbody.hpp"
 
-#include "../Physics/Sphere.hpp"
+#include "ColliderSphere.hpp"
 #include "../Models/Model.hpp"
 #include "../Scenes/Scenes.hpp"
 
@@ -54,17 +54,17 @@ namespace Flounder
 			return result;
 		}
 
-		Aabb aabb1;
+		ColliderAabb aabb1;
 
-		if (dynamic_cast<Aabb *>(m_colliderCopy) != nullptr)
+		if (dynamic_cast<ColliderAabb *>(m_colliderCopy) != nullptr)
 		{
-			aabb1 = *dynamic_cast<Aabb *>(m_colliderCopy);
+			aabb1 = *dynamic_cast<ColliderAabb *>(m_colliderCopy);
 		}
-		else if (dynamic_cast<Sphere *>(m_colliderCopy) != nullptr)
+		else if (dynamic_cast<ColliderSphere *>(m_colliderCopy) != nullptr)
 		{
-			const float radius = dynamic_cast<Sphere *>(m_colliderCopy)->GetRadius();
-			const Vector3 *pos = dynamic_cast<Sphere *>(m_colliderCopy)->GetPosition();
-			aabb1 = Aabb(-radius + *pos, radius + *pos);
+			const float radius = dynamic_cast<ColliderSphere *>(m_colliderCopy)->GetRadius();
+			const Vector3 *pos = dynamic_cast<ColliderSphere *>(m_colliderCopy)->GetPosition();
+			aabb1 = ColliderAabb(-radius + *pos, radius + *pos);
 		}
 		else
 		{
@@ -72,8 +72,8 @@ namespace Flounder
 		}
 
 		// Calculates the range in where there can be collisions.
-		Aabb collisionRange = Aabb();
-		Aabb::Stretch(aabb1, amount, &collisionRange);
+		ColliderAabb collisionRange = ColliderAabb();
+		ColliderAabb::Stretch(aabb1, amount, &collisionRange);
 
 		std::vector<Rigidbody *> rigidbodys = std::vector<Rigidbody *>();
 		Scenes::Get()->GetStructure()->QueryComponents<Rigidbody>(&rigidbodys);

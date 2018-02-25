@@ -2,13 +2,15 @@
 
 #include "../Devices/Display.hpp"
 #include "../Meshes/Mesh.hpp"
+#include "../Physics/Rigidbody.hpp"
+#include "../Scenes/Scenes.hpp"
 #include "UbosTerrains.hpp"
 
 namespace Flounder
 {
 	const int TerrainRender::SIDE_LENGTH = 200;
 	const std::vector<float> TerrainRender::SQUARE_SIZES = {
-		2.0f, 4.0f, 10.0f, 25.0f
+		2.0f, 4.0f, 25.0f, 50.0f
 	};
 	const std::vector<float> TerrainRender::TEXTURE_SCALES = {
 		10.0f, 5.0f, 2.0f, 1.0f
@@ -35,10 +37,19 @@ namespace Flounder
 
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
+		auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr)
 		{
 			return;
+		}
+
+		if (rigidbody != nullptr && rigidbody->GetCollider() != nullptr)
+		{
+			if (!rigidbody->GetCollider()->InFrustum(*Scenes::Get()->GetCamera()->GetViewFrustum()))
+			{
+				return;
+			}
 		}
 
 		// Creates a UBO object and write descriptor.

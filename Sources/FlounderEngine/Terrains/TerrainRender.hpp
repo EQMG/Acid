@@ -27,5 +27,7 @@ namespace Flounder
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
 		std::string GetName() const override { return "TerrainRender"; };
+
+		UniformBuffer *GetUniformObject() const { return m_uniformObject; }
 	};
 }

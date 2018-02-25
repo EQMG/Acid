@@ -1,48 +1,48 @@
-#include "Sphere.hpp"
+#include "ColliderSphere.hpp"
 
 #include <cmath>
 
 namespace Flounder
 {
-	Sphere::Sphere() :
+	ColliderSphere::ColliderSphere() :
 		Collider(),
 		m_radius(1.0f),
 		m_position(new Vector3())
 	{
 	}
 
-	Sphere::Sphere(const float &radius, const Vector3 &position) :
+	ColliderSphere::ColliderSphere(const float &radius, const Vector3 &position) :
 		Collider(),
 		m_radius(radius),
 		m_position(new Vector3(position))
 	{
 	}
 
-	Sphere::Sphere(const Sphere &source) :
+	ColliderSphere::ColliderSphere(const ColliderSphere &source) :
 		Collider(),
 		m_radius(source.m_radius),
 		m_position(new Vector3(*source.m_position))
 	{
 	}
 
-	Sphere::~Sphere()
+	ColliderSphere::~ColliderSphere()
 	{
 		delete m_position;
 	}
 
-	Collider *Sphere::Update(const Transform &transform, Collider *destination)
+	Collider *ColliderSphere::Update(const Transform &transform, Collider *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new Sphere();
+			destination = new ColliderSphere();
 		}
 
-		Sphere *source = dynamic_cast<Sphere *>(destination);
+		ColliderSphere *source = dynamic_cast<ColliderSphere *>(destination);
 
 		if (source == nullptr)
 		{
 			delete source;
-			source = new Sphere();
+			source = new ColliderSphere();
 		}
 
 		source->m_radius = m_radius * transform.m_scaling->m_x;
@@ -51,14 +51,14 @@ namespace Flounder
 		return source;
 	}
 
-	Vector3 *Sphere::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
+	Vector3 *ColliderSphere::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
 	{
 		if (destination == nullptr)
 		{
 			destination = new Vector3();
 		}
 
-		//	const Sphere &sphere2 = dynamic_cast<const Sphere&>(other);
+		//	const ColliderSphere &sphere2 = dynamic_cast<const ColliderSphere&>(other);
 		//	float d = sphere2.m_radius + m_radius;
 
 		//	float xDif = m_position->m_x - sphere2.m_position->m_x;
@@ -69,7 +69,7 @@ namespace Flounder
 		return destination;
 	}
 
-	Intersect Sphere::Intersects(const Collider &other)
+	Intersect ColliderSphere::Intersects(const Collider &other)
 	{
 		/*if (dynamic_cast<aabb*>(other) != 0)
 		{
@@ -107,7 +107,7 @@ namespace Flounder
 			return new intersect(distanceSquared > 0.0f, dynamic_cast<float>(sqrt(distanceSquared)));
 		}
 		else */
-		const Sphere &sphere2 = dynamic_cast<const Sphere &>(other);
+		const ColliderSphere &sphere2 = dynamic_cast<const ColliderSphere &>(other);
 
 		float d = sphere2.m_radius + m_radius;
 
@@ -120,7 +120,7 @@ namespace Flounder
 		return Intersect(intersects, (d * d) - distance);
 	}
 
-	Intersect Sphere::Intersects(const Ray &ray)
+	Intersect ColliderSphere::Intersects(const Ray &ray)
 	{
 		Vector3 *L = Vector3::Subtract(*ray.m_origin, *m_position, nullptr);
 
@@ -178,14 +178,14 @@ namespace Flounder
 		return Intersect(true, t);
 	}
 
-	bool Sphere::InFrustum(const Frustum &frustum)
+	bool ColliderSphere::InFrustum(const Frustum &frustum)
 	{
 		return frustum.SphereInFrustum(*m_position, m_radius);
 	}
 
-	bool Sphere::Contains(const Collider &other)
+	bool ColliderSphere::Contains(const Collider &other)
 	{
-		const Sphere &sphere2 = dynamic_cast<const Sphere &>(other);
+		const ColliderSphere &sphere2 = dynamic_cast<const ColliderSphere &>(other);
 
 		return sphere2.m_position->m_x + sphere2.m_radius - 1.0f <= m_position->m_x + m_radius - 1.0f &&
 			sphere2.m_position->m_x - sphere2.m_radius + m_radius >= m_position->m_x - m_radius + 1.0f &&
@@ -195,7 +195,7 @@ namespace Flounder
 			sphere2.m_position->m_z - sphere2.m_radius + 1.0f >= m_position->m_z - m_radius + 1.0f;
 	}
 
-	bool Sphere::Contains(const Vector3 &point)
+	bool ColliderSphere::Contains(const Vector3 &point)
 	{
 		return Vector3::GetDistanceSquared(*m_position, point) <= m_radius * m_radius;
 	}
