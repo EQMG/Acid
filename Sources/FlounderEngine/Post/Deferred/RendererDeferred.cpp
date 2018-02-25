@@ -123,16 +123,16 @@ namespace Flounder
 			{
 				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
 				m_uniformLights->GetWriteDescriptor(1, descriptorSet),
-				Renderer::Get()->GetPass(0)->m_depthStencil->GetWriteDescriptor(3, descriptorSet), // TODO
-				Renderer::Get()->GetSwapchain()->GetTexture(2)->GetWriteDescriptor(2, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetTexture(2)->GetWriteDescriptor(4, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetTexture(3)->GetWriteDescriptor(5, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetTexture(4)->GetWriteDescriptor(6, descriptorSet),
-				Renderer::Get()->GetSwapchain()->GetTexture(3)->GetWriteDescriptor(7, descriptorSet) // TODO: 5
+				m_pipeline->GetDepthStencil()->GetWriteDescriptor(3, descriptorSet),
+				m_pipeline->GetTexture(2)->GetWriteDescriptor(2, descriptorSet),
+				m_pipeline->GetTexture(2)->GetWriteDescriptor(4, descriptorSet),
+				m_pipeline->GetTexture(3)->GetWriteDescriptor(5, descriptorSet),
+				m_pipeline->GetTexture(4)->GetWriteDescriptor(6, descriptorSet),
+				m_pipeline->GetTexture(0, 0)->GetWriteDescriptor(7, descriptorSet)
 			};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 
-		VkDescriptorSet descriptors[1] = {descriptorSet};
+		VkDescriptorSet descriptors[] = {descriptorSet};
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		m_model->CmdRender(commandBuffer);

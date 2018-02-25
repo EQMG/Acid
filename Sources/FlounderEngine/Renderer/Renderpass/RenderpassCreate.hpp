@@ -17,14 +17,14 @@ namespace Flounder
 	class F_EXPORT Attachment
 	{
 	public:
-		int m_binding;
+		unsigned int m_binding;
 		AttachmentType m_type;
 		VkFormat m_format;
 		Colour m_clearColour;
 		VkImageLayout m_layout;
 		VkImageUsageFlags m_usage;
 
-		Attachment(const int &binding, const AttachmentType &type, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::BLACK,
+		Attachment(const unsigned int &binding, const AttachmentType &type, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::BLACK,
 				   const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) :
 			m_binding(binding),
 			m_type(type),
@@ -53,9 +53,10 @@ namespace Flounder
 
 	struct RenderpassCreate
 	{
-		std::vector<Attachment> images = std::vector<Attachment>();
-		std::vector<SubpassType> subpasses = std::vector<SubpassType>();
 		uint32_t m_width;
 		uint32_t m_height;
+
+		std::vector<Attachment> images = std::vector<Attachment>();
+		std::vector<SubpassType> subpasses = std::vector<SubpassType>();
 	};
 }

@@ -36,6 +36,8 @@ namespace Flounder
 
 		std::string GetName() const override { return "WaterRender"; };
 
+		UniformBuffer *GetUniformObject() const { return m_uniformObject; }
+
 		Colour *GetColour() const { return m_colour; }
 
 		void SetColour(const Colour &colour) const { m_colour->Set(colour); }

@@ -1,48 +1,48 @@
-#include "Aabb.hpp"
+#include "ColliderAabb.hpp"
 
 #include "../Maths/Maths.hpp"
 
 namespace Flounder
 {
-	Aabb::Aabb() :
+	ColliderAabb::ColliderAabb() :
 		Collider(),
 		m_minExtents(new Vector3()),
 		m_maxExtents(new Vector3())
 	{
 	}
 
-	Aabb::Aabb(const Vector3 &minExtents, const Vector3 &maxExtents) :
+	ColliderAabb::ColliderAabb(const Vector3 &minExtents, const Vector3 &maxExtents) :
 		Collider(),
 		m_minExtents(new Vector3(minExtents)),
 		m_maxExtents(new Vector3(maxExtents))
 	{
 	}
 
-	Aabb::Aabb(const Aabb &source) :
+	ColliderAabb::ColliderAabb(const ColliderAabb &source) :
 		Collider(),
 		m_minExtents(new Vector3(*source.m_minExtents)),
 		m_maxExtents(new Vector3(*source.m_maxExtents))
 	{
 	}
 
-	Aabb::~Aabb()
+	ColliderAabb::~ColliderAabb()
 	{
 		delete m_minExtents;
 		delete m_maxExtents;
 	}
 
-	Aabb *Aabb::Set(const Aabb &source)
+	ColliderAabb *ColliderAabb::Set(const ColliderAabb &source)
 	{
 		m_minExtents->Set(*source.m_minExtents);
 		m_maxExtents->Set(*source.m_maxExtents);
 		return this;
 	}
 
-	Aabb *Aabb::Scale(const Aabb &source, const Vector3 &scale, Aabb *destination)
+	ColliderAabb *ColliderAabb::Scale(const ColliderAabb &source, const Vector3 &scale, ColliderAabb *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new Aabb();
+			destination = new ColliderAabb();
 		}
 
 		destination->m_minExtents->Set(
@@ -55,16 +55,16 @@ namespace Flounder
 		return destination;
 	}
 
-	Aabb *Aabb::Scale(const Aabb &source, const float &scaleX, const float &scaleY, const float &scaleZ, Aabb *destination)
+	ColliderAabb *ColliderAabb::Scale(const ColliderAabb &source, const float &scaleX, const float &scaleY, const float &scaleZ, ColliderAabb *destination)
 	{
 		return Scale(source, Vector3(scaleX, scaleY, scaleZ), destination);
 	}
 
-	Aabb *Aabb::Expand(const Aabb &source, const Vector3 &expand, Aabb *destination)
+	ColliderAabb *ColliderAabb::Expand(const ColliderAabb &source, const Vector3 &expand, ColliderAabb *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new Aabb();
+			destination = new ColliderAabb();
 		}
 
 		destination->m_minExtents->Set(
@@ -77,16 +77,16 @@ namespace Flounder
 		return destination;
 	}
 
-	Aabb *Aabb::Expand(const Aabb &source, const float &expandX, const float &expandY, const float &expandZ, Aabb *destination)
+	ColliderAabb *ColliderAabb::Expand(const ColliderAabb &source, const float &expandX, const float &expandY, const float &expandZ, ColliderAabb *destination)
 	{
 		return Expand(source, Vector3(expandX, expandY, expandZ), destination);
 	}
 
-	Aabb *Aabb::Combine(const Aabb &left, const Aabb &right, Aabb *destination)
+	ColliderAabb *ColliderAabb::Combine(const ColliderAabb &left, const ColliderAabb &right, ColliderAabb *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new Aabb();
+			destination = new ColliderAabb();
 		}
 
 		float newMinX = Maths::Min(left.m_minExtents->m_x, right.m_minExtents->m_x);
@@ -102,11 +102,11 @@ namespace Flounder
 		return destination;
 	}
 
-	Aabb *Aabb::Stretch(const Aabb &source, const Vector3 &stretch, Aabb *destination)
+	ColliderAabb *ColliderAabb::Stretch(const ColliderAabb &source, const Vector3 &stretch, ColliderAabb *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new Aabb();
+			destination = new ColliderAabb();
 		}
 
 		float newMinX, newMaxX, newMinY, newMaxY, newMinZ, newMaxZ;
@@ -150,19 +150,19 @@ namespace Flounder
 		return destination;
 	}
 
-	Aabb *Aabb::Stretch(const Aabb &source, const float &stretchX, const float &stretchY, const float &stretchZ, Aabb *destination)
+	ColliderAabb *ColliderAabb::Stretch(const ColliderAabb &source, const float &stretchX, const float &stretchY, const float &stretchZ, ColliderAabb *destination)
 	{
 		return Stretch(source, Vector3(stretchX, stretchY, stretchZ), destination);
 	}
 
-	Collider *Aabb::Update(const Transform &transform, Collider *destination)
+	Collider *ColliderAabb::Update(const Transform &transform, Collider *destination)
 	{
-		auto source = dynamic_cast<Aabb *>(destination);
+		auto source = dynamic_cast<ColliderAabb *>(destination);
 
 		if (source == nullptr)
 		{
 			delete destination;
-			source = new Aabb();
+			source = new ColliderAabb();
 			destination = source;
 		}
 
@@ -234,14 +234,14 @@ namespace Flounder
 		return destination;
 	}
 
-	Vector3 *Aabb::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
+	Vector3 *ColliderAabb::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
 	{
 		if (destination == nullptr)
 		{
 			destination = new Vector3();
 		}
 
-		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
+		const ColliderAabb &aabb2 = dynamic_cast<const ColliderAabb &>(other);
 
 		if (positionDelta.m_x != 0.0f)
 		{
@@ -309,9 +309,9 @@ namespace Flounder
 		return destination;
 	}
 
-	Intersect Aabb::Intersects(const Collider &other)
+	Intersect ColliderAabb::Intersects(const Collider &other)
 	{
-		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
+		const ColliderAabb &aabb2 = dynamic_cast<const ColliderAabb &>(other);
 
 		Vector3 *distance1 = Vector3::Subtract(*m_minExtents, *aabb2.m_maxExtents, nullptr);
 		Vector3 *distance2 = Vector3::Subtract(*aabb2.m_minExtents, *m_maxExtents, nullptr);
@@ -324,9 +324,9 @@ namespace Flounder
 
 		return Intersect(maxDist < 0.0f, maxDist);
 
-		/*else if (dynamic_cast<Sphere*>(other) != 0)
+		/*else if (dynamic_cast<ColliderSphere*>(other) != 0)
 		{
-			Sphere *sphere = dynamic_cast<Sphere*>(other);
+			ColliderSphere *sphere = dynamic_cast<ColliderSphere*>(other);
 
 			float distanceSquared = sphere->getRadius() * sphere->getRadius();
 
@@ -361,7 +361,7 @@ namespace Flounder
 		}*/
 	}
 
-	Intersect Aabb::Intersects(const Ray &ray)
+	Intersect ColliderAabb::Intersects(const Ray &ray)
 	{
 		double tmin = (m_minExtents->m_x - ray.m_origin->m_x) / ray.m_currentRay->m_x;
 		double tmax = (m_maxExtents->m_x - ray.m_origin->m_x) / ray.m_currentRay->m_x;
@@ -411,14 +411,14 @@ namespace Flounder
 		return Intersect(!(tmin > tzmax || tzmin > tmax), 0.0f);
 	}
 
-	bool Aabb::InFrustum(const Frustum &frustum)
+	bool ColliderAabb::InFrustum(const Frustum &frustum)
 	{
 		return frustum.CubeInFrustum(*m_minExtents, *m_maxExtents);
 	}
 
-	bool Aabb::Contains(const Collider &other)
+	bool ColliderAabb::Contains(const Collider &other)
 	{
-		const Aabb &aabb2 = dynamic_cast<const Aabb &>(other);
+		const ColliderAabb &aabb2 = dynamic_cast<const ColliderAabb &>(other);
 
 		return m_minExtents->m_x <= aabb2.m_minExtents->m_x &&
 			aabb2.m_maxExtents->m_x <= m_maxExtents->m_x &&
@@ -428,7 +428,7 @@ namespace Flounder
 			aabb2.m_maxExtents->m_z <= m_maxExtents->m_z;
 	}
 
-	bool Aabb::Contains(const Vector3 &point)
+	bool ColliderAabb::Contains(const Vector3 &point)
 	{
 		if (point.m_x > m_maxExtents->m_x)
 		{
@@ -463,32 +463,32 @@ namespace Flounder
 		return true;
 	}
 
-	float Aabb::GetCentreX() const
+	float ColliderAabb::GetCentreX() const
 	{
 		return (m_minExtents->m_x + m_maxExtents->m_x) / 2.0f;
 	}
 
-	float Aabb::GetCentreY() const
+	float ColliderAabb::GetCentreY() const
 	{
 		return (m_minExtents->m_y + m_maxExtents->m_y) / 2.0f;
 	}
 
-	float Aabb::GetCentreZ() const
+	float ColliderAabb::GetCentreZ() const
 	{
 		return (m_minExtents->m_z + m_maxExtents->m_z) / 2.0f;
 	}
 
-	float Aabb::GetWidth() const
+	float ColliderAabb::GetWidth() const
 	{
 		return m_maxExtents->m_x - m_minExtents->m_x;
 	}
 
-	float Aabb::GetHeight() const
+	float ColliderAabb::GetHeight() const
 	{
 		return m_maxExtents->m_y - m_minExtents->m_y;
 	}
 
-	float Aabb::GetDepth() const
+	float ColliderAabb::GetDepth() const
 	{
 		return m_maxExtents->m_z - m_minExtents->m_z;
 	}

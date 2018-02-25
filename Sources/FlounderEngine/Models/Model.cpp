@@ -12,7 +12,7 @@ namespace Flounder
 		m_filename(""),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(new Aabb())
+		m_aabb(new ColliderAabb())
 	{
 	}
 
@@ -21,7 +21,7 @@ namespace Flounder
 		m_filename(filename),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(new Aabb())
+		m_aabb(new ColliderAabb())
 	{
 		std::vector<Vertex> vertices = std::vector<Vertex>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
@@ -46,7 +46,7 @@ namespace Flounder
 		m_filename(name),
 		m_vertexBuffer(new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data())),
 		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data())),
-		m_aabb(new Aabb())
+		m_aabb(new ColliderAabb())
 	{
 		m_aabb->Set(CalculateAabb(vertices));
 	}
@@ -56,7 +56,7 @@ namespace Flounder
 		m_filename(name),
 		m_vertexBuffer(new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data())),
 		m_indexBuffer(nullptr),
-		m_aabb(new Aabb())
+		m_aabb(new ColliderAabb())
 	{
 		m_aabb->Set(CalculateAabb(vertices));
 	}
@@ -290,7 +290,7 @@ namespace Flounder
 		delete deltaUv2;
 	}
 
-	Aabb Model::CalculateAabb(const std::vector<Vertex> &vertices)
+	ColliderAabb Model::CalculateAabb(const std::vector<Vertex> &vertices)
 	{
 		float minX = +std::numeric_limits<float>::infinity();
 		float minY = +std::numeric_limits<float>::infinity();
@@ -331,6 +331,6 @@ namespace Flounder
 			}
 		}
 
-		return Aabb(Vector3(minX, minY, minZ), Vector3(maxX, maxY, maxZ));
+		return ColliderAabb(Vector3(minX, minY, minZ), Vector3(maxX, maxY, maxZ));
 	}
 }

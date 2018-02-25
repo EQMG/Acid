@@ -3,8 +3,8 @@
 #include "../Skyboxes/CelestialBody.hpp"
 #include "../Entities/EntityRender.hpp"
 #include "../Lights/Light.hpp"
-#include "../Physics/Aabb.hpp"
-#include "../Physics/Sphere.hpp"
+#include "../Physics/ColliderAabb.hpp"
+#include "../Physics/ColliderSphere.hpp"
 #include "../Physics/Rigidbody.hpp"
 #include "../Materials/Material.hpp"
 #include "../Meshes/Mesh.hpp"
@@ -18,8 +18,8 @@ namespace Flounder
 		std::make_pair("CelestialBody", REGISTER_CREATE(CelestialBody)),
 		std::make_pair("EntityRender", REGISTER_CREATE(EntityRender)),
 		std::make_pair("Light", REGISTER_CREATE(Light)),
-		std::make_pair("AabbCollider", REGISTER_CREATE(Aabb)),
-		std::make_pair("SphereCollider", REGISTER_CREATE(Sphere)),
+		std::make_pair("AabbCollider", REGISTER_CREATE(ColliderAabb)),
+		std::make_pair("SphereCollider", REGISTER_CREATE(ColliderSphere)),
 		std::make_pair("Mesh", REGISTER_CREATE(Mesh)),
 		std::make_pair("Material", REGISTER_CREATE(Material)),
 		std::make_pair("Rigidbody", REGISTER_CREATE(Rigidbody)),

@@ -3,7 +3,7 @@
 #include <vector>
 #include "../../Engine/Platform.hpp"
 #include "../../Textures/Texture.hpp"
-#include "../Pass/RenderpassCreate.hpp"
+#include "../Renderpass/RenderpassCreate.hpp"
 
 namespace Flounder
 {
@@ -15,11 +15,10 @@ namespace Flounder
 		uint32_t m_swapchainImageCount;
 		std::vector<VkImage> m_swapchinImages;
 		std::vector<VkImageView> m_swapchinImageViews;
-		std::vector<Texture *> m_imageAttachments;
 
 		VkExtent2D m_extent;
 	public:
-		Swapchain(const RenderpassCreate &renderpassCreate, const VkExtent2D &extent);
+		Swapchain(const VkExtent2D &extent);
 
 		~Swapchain();
 
@@ -30,10 +29,6 @@ namespace Flounder
 		std::vector<VkImage> GetImages() const { return m_swapchinImages; }
 
 		std::vector<VkImageView> GetImageViews() const { return m_swapchinImageViews; }
-
-		std::vector<Texture *> GetImageAttachments() const { return m_imageAttachments; }
-
-		Texture *GetTexture(const int &i) const { return m_imageAttachments.at(i); }
 
 		VkExtent2D GetExtent() const { return m_extent; }
 	};

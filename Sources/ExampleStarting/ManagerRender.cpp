@@ -6,18 +6,19 @@
 
 namespace Demo
 {
-	/*RenderpassCreate *RENDERPASS_0_CREATE = new RenderpassCreate
+	RenderpassCreate *RENDERPASS_0_CREATE = new RenderpassCreate
 		{
+			8192, 8192, // width / height
 			{
 				Attachment(0, TypeImage, VK_FORMAT_R16_UNORM) // shadows
 			}, // images
 			{
 				SubpassType(0, false, {0})
-			}, // subpasses
-			8192, 8192 // width / height
-		};*/
+			} // subpasses
+		};
 	RenderpassCreate *RENDERPASS_1_CREATE = new RenderpassCreate
 		{
+			0, 0, // width / height
 			{
 				Attachment(0, TypeDepth), // depth
 				Attachment(1, TypeSwapchain), // swapchain
@@ -29,31 +30,30 @@ namespace Demo
 				SubpassType(0, true, {2, 3, 4}),
 				SubpassType(1, false, {1}),
 				SubpassType(2, false, {1}),
-			}, // subpasses
-			0, 0 // width / height
+			} // subpasses
 		};
 
 	ManagerRender::ManagerRender() :
-		IManagerRender({RENDERPASS_1_CREATE}), // RENDERPASS_0_CREATE,
+		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE}),
 		m_infinity(Vector4(0.0f, 1.0f, 0.0f, +INFINITY)),
-	//	m_rendererShadows(new RendererShadows({0, 0})),
-		m_rendererSkyboxes(new RendererSkyboxes({0, 0})),
-		m_rendererTerrains(new RendererTerrains({0, 0})),
-		m_rendererWaters(new RendererWaters({0, 0})),
-		m_rendererEntities(new RendererEntities({0, 0})),
-		m_rendererDeferred(new RendererDeferred({0, 1})),
-		m_filterFxaa(new FilterFxaa({0, 2})),
-		m_filterLensflare(new FilterLensflare({0, 2})),
-		m_filterTiltshift(new FilterTiltshift({0, 2})),
-		m_filterGrain(new FilterGrain({0, 2})),
-		m_rendererGuis(new RendererGuis({0, 2})),
-		m_rendererFonts(new RendererFonts({0, 2}))
+		m_rendererShadows(new RendererShadows({0, 0})),
+		m_rendererSkyboxes(new RendererSkyboxes({1, 0})),
+		m_rendererTerrains(new RendererTerrains({1, 0})),
+		m_rendererWaters(new RendererWaters({1, 0})),
+		m_rendererEntities(new RendererEntities({1, 0})),
+		m_rendererDeferred(new RendererDeferred({1, 1})),
+		m_filterFxaa(new FilterFxaa({1, 2})),
+		m_filterLensflare(new FilterLensflare({1, 2})),
+		m_filterTiltshift(new FilterTiltshift({1, 2})),
+		m_filterGrain(new FilterGrain({1, 2})),
+		m_rendererGuis(new RendererGuis({1, 2})),
+		m_rendererFonts(new RendererFonts({1, 2}))
 	{
 	}
 
 	ManagerRender::~ManagerRender()
 	{
-	//	delete m_rendererShadows;
+		delete m_rendererShadows;
 
 		delete m_rendererSkyboxes;
 		delete m_rendererTerrains;
@@ -78,7 +78,7 @@ namespace Demo
 
 	void ManagerRender::RenderPass0()
 	{
-		/*const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
 		const auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
@@ -94,7 +94,7 @@ namespace Demo
 		Renderer::Get()->NextSubpass(commandBuffer);
 
 		// Ends Rendering.
-		Renderer::Get()->EndRenderpass(commandBuffer, 0);*/
+		Renderer::Get()->EndRenderpass(commandBuffer, 0);
 	}
 
 	void ManagerRender::RenderPass1()
@@ -103,7 +103,7 @@ namespace Demo
 		const auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
-		VkResult startResult = Renderer::Get()->StartRenderpass(commandBuffer, 0);
+		VkResult startResult = Renderer::Get()->StartRenderpass(commandBuffer, 1);
 
 		if (startResult != VK_SUCCESS)
 		{
@@ -132,6 +132,6 @@ namespace Demo
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
 
 		// Ends Rendering.
-		Renderer::Get()->EndRenderpass(commandBuffer, 0);
+		Renderer::Get()->EndRenderpass(commandBuffer, 1);
 	}
 }

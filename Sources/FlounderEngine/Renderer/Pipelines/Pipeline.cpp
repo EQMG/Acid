@@ -79,6 +79,16 @@ namespace Flounder
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline);
 	}
 
+	DepthStencil *Pipeline::GetDepthStencil(const int &stage) const
+	{
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.renderpass : stage)->m_depthStencil;
+	}
+
+	Texture *Pipeline::GetTexture(const unsigned int &i, const int &stage) const
+	{
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.renderpass : stage)->m_framebuffers->GetTexture(i);
+	}
+
 	void Pipeline::CreateDescriptorLayout()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -152,7 +162,7 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		for (auto type : m_pipelineCreateInfo.shaderStages)
+		for (auto &type : m_pipelineCreateInfo.shaderStages)
 		{
 			std::vector<char> shaderCode = FileSystem::ReadBinaryFile(type);
 			VkShaderStageFlagBits stageFlag = VK_SHADER_STAGE_ALL;
@@ -190,7 +200,7 @@ namespace Flounder
 			pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 			pipelineShaderStageCreateInfo.stage = stageFlag;
 			pipelineShaderStageCreateInfo.module = shaderModule;
-			pipelineShaderStageCreateInfo.pName = "main"; // The shaders entry point.
+			pipelineShaderStageCreateInfo.pName = "main";
 
 			m_modules.push_back(shaderModule);
 			m_stages.push_back(pipelineShaderStageCreateInfo);
@@ -273,7 +283,7 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto pipelineCache = Renderer::Get()->GetPipelineCache();
-		const auto pass = Renderer::Get()->GetPass(m_graphicsStage.renderpass);
+		const auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.renderpass);
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -285,7 +295,7 @@ namespace Flounder
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.renderPass = pass->m_renderpass->GetRenderpass();
+		pipelineCreateInfo.renderPass = renderStage->m_renderpass->GetRenderpass();
 		pipelineCreateInfo.subpass = m_graphicsStage.subpass;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
@@ -318,7 +328,7 @@ namespace Flounder
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < Renderer::Get()->GetPass(m_graphicsStage.renderpass)->m_imageAttachments; i++)
+		for (uint32_t i = 0; i < Renderer::Get()->GetRenderStage(m_graphicsStage.renderpass)->m_imageAttachments; i++)
 		{
 			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
 			blendAttachmentState.blendEnable = VK_FALSE;
@@ -343,7 +353,7 @@ namespace Flounder
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < Renderer::Get()->GetPass(m_graphicsStage.renderpass)->m_imageAttachments; i++)
+		for (uint32_t i = 0; i < Renderer::Get()->GetRenderStage(m_graphicsStage.renderpass)->m_imageAttachments; i++)
 		{
 			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
 			blendAttachmentState.blendEnable = VK_FALSE;

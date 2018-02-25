@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// Represents a sphere in a 3d space.
 	/// </summary>
-	class F_EXPORT Sphere :
+	class F_EXPORT ColliderSphere :
 		public Collider
 	{
 	public:
@@ -17,25 +17,25 @@ namespace Flounder
 		/// <summary>
 		/// Creates a new unit sphere
 		/// </summary>
-		Sphere();
+		ColliderSphere();
 
 		/// <summary>
 		/// Creates a new sphere
 		/// </summary>
 		/// <param name="radius"> The spheres radius. </param>
 		/// <param name="position"> The spheres initial position. </param>
-		Sphere(const float &radius, const Vector3 &position = Vector3());
+		ColliderSphere(const float &radius, const Vector3 &position = Vector3());
 
 		/// <summary>
 		/// Creates a new sphere from another sphere source.
 		/// </summary>
 		/// <param name="source"> The source to create off of. </param>
-		Sphere(const Sphere &source);
+		ColliderSphere(const ColliderSphere &source);
 
 		/// <summary>
 		/// Deconstructor for the sphere.
 		/// </summary>
-		~Sphere();
+		~ColliderSphere();
 
 		Collider *Update(const Transform &transform, Collider *destination) override;
 
