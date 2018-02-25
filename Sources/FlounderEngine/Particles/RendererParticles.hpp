@@ -2,6 +2,8 @@
 
 #include <vector>
 #include "../Renderer/IRenderer.hpp"
+#include "../Renderer/Buffers/UniformBuffer.hpp"
+#include "../Renderer/Pipelines/Pipeline.hpp"
 #include "Particles.hpp"
 
 namespace Flounder
@@ -11,11 +13,10 @@ namespace Flounder
 	{
 	private:
 		static const int MAX_INSTANCES;
-		static const int INSTANCE_DATA_LENGTH;
 
-		//int m_vaoID;
-		//int m_vboID;
-		//int m_vaoLength;
+		UniformBuffer *m_uniformScene;
+		UniformBuffer *m_uniformObject;
+		Pipeline *m_pipeline;
 
 		int m_rendered;
 	public:
@@ -26,12 +27,6 @@ namespace Flounder
 		void Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 	private:
-		void PrepareRendering(const Vector4 &clipPlane, const ICamera &camera);
-
-		void PrepareInstance(Particle *particle, const ICamera &camera, std::vector<float> *vboData);
-
-		void RenderInstances(ParticleType *particleType, std::vector<float> *vboData);
-
-		void EndRendering();
+		Matrix4 ModelMatrix(Particle *particle, const Matrix4 &viewMatrix);
 	};
 }

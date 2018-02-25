@@ -1,18 +1,19 @@
 ﻿#include "ParticleSystem.hpp"
 
 #include "../Maths/Maths.hpp"
+#include "Particles.hpp"
 
 namespace Flounder
 {
-	ParticleSystem::ParticleSystem(std::vector<ParticleType *> *types, ISpawnParticle *spawn, const float &pps, const float &speed, const float &gravityEffect) :
+	ParticleSystem::ParticleSystem(std::vector<ParticleType *> *types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
+		Component(),
 		m_types(types),
 		m_spawn(spawn),
 		m_pps(pps),
-		m_averageSpeed(speed),
+		m_averageSpeed(averageSpeed),
 		m_gravityEffect(gravityEffect),
 		m_randomRotation(false),
-		m_systemCentre(new Vector3()),
-		m_velocityCentre(new Vector3()),
+		m_systemOffset(new Vector3(systemOffset)),
 		m_direction(nullptr),
 		m_directionDeviation(0.0f),
 		m_speedError(0.0f),
@@ -21,34 +22,55 @@ namespace Flounder
 		m_timePassed(0.0f),
 		m_paused(false)
 	{
-		//	particles::get()->addSystem(this);
+	//	Link<std::vector<ParticleType *>>(0, "Types", LINK_GET(GetTypes()), LINK_SET(std::vector<ParticleType *>, SetTypes(v)));
+	//	Link<ISpawnParticle *>(1, "Spawn", LINK_GET(GetSpawn()), LINK_SET(ISpawnParticle *, SetSpawn(v)));
+		Link<float>(2, "PPS", LINK_GET(GetPps()), LINK_SET(float, SetPps(v)));
+		Link<float>(3, "Average Speed", LINK_GET(GetAverageSpeed()), LINK_SET(float, SetAverageSpeed(v)));
+		Link<float>(4, "Gravity Effect", LINK_GET(GetGravityEffect()), LINK_SET(float, SetGravityEffect(v)));
+		Link<float>(5, "OffsetX", LINK_GET(GetOffsetCentre()->m_x), LINK_SET(float, GetOffsetCentre()->m_x = v));;
+		Link<float>(6, "OffsetY", LINK_GET(GetOffsetCentre()->m_y), LINK_SET(float, GetOffsetCentre()->m_y = v));;
+		Link<float>(7, "OffsetZ", LINK_GET(GetOffsetCentre()->m_z), LINK_SET(float, GetOffsetCentre()->m_z = v));
 	}
 
 	ParticleSystem::~ParticleSystem()
 	{
-		//	particles::get()->removeSystem(this);
+		for (auto particleType : *m_types)
+		{
+			delete particleType;
+		}
+
+		delete m_types;
+		delete m_spawn;
+
+		delete m_systemOffset;
+
+		delete m_direction;
 	}
 
-	Particle *ParticleSystem::GenerateParticle()
+	void ParticleSystem::Update()
 	{
 		if (m_paused || m_types->empty())
 		{
-			return nullptr;
+			return;
 		}
 
 		m_timePassed += Engine::Get()->GetDelta();
 
-		if (m_timePassed > (1.0f / m_pps))
+		if (m_timePassed > 1.0f / m_pps)
 		{
+			auto created = EmitParticle();
+			Particles::Get()->AddParticle(created);
 			m_timePassed = 0.0f;
-			return EmitParticle();
 		}
-
-		return nullptr;
 	}
 
 	Particle *ParticleSystem::EmitParticle()
 	{
+		if (m_spawn == nullptr)
+		{
+			return nullptr;
+		}
+
 		Vector3 *velocity;
 
 		if (m_direction != nullptr)
@@ -64,10 +86,11 @@ namespace Flounder
 
 		velocity->Normalize();
 		velocity->Scale(GenerateValue(m_averageSpeed, m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError)));
-		Vector3::Add(*velocity, *m_velocityCentre, velocity);
+	//	Vector3::Add(*velocity, *m_velocityCentre, velocity);
 		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
 		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
-		Vector3 *spawnPos = Vector3::Add(*m_systemCentre, *m_spawn->GetBaseSpawnPosition(), nullptr);
+		Vector3 *spawnPos = Vector3::Add(*GetGameObject()->GetTransform()->GetPosition(), *m_systemOffset, nullptr);
+		Vector3::Add(*spawnPos, *m_spawn->GetBaseSpawnPosition(), spawnPos);
 
 		Particle *result = new Particle(emitType, *spawnPos, *velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
 

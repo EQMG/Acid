@@ -4,7 +4,6 @@
 #include <map>
 #include "../Engine/Engine.hpp"
 #include "Particle.hpp"
-#include "ParticleSystem.hpp"
 
 namespace Flounder
 {
@@ -17,7 +16,6 @@ namespace Flounder
 	private:
 		static const float MAX_ELAPSED_TIME;
 
-		std::vector<ParticleSystem *> *m_particleSystems;
 		std::map<ParticleType *, std::vector<Particle *> *> *m_particles;
 	public:
 		/// <summary>
@@ -41,22 +39,12 @@ namespace Flounder
 
 		void Update() override;
 
+		void AddParticle(Particle *created);
+
 		/// <summary>
 		/// Clears all particles from the scene.
 		/// </summary>
 		void Clear();
-
-		/// <summary>
-		/// Adds a particle system to the recalculateRay loop.
-		/// </summary>
-		/// <param name="system"> The new system to add. </param>
-		void AddSystem(ParticleSystem *system);
-
-		/// <summary>
-		/// Removes a particle system from the recalculateRay loop.
-		/// </summary>
-		/// <param name="system"> The system to remove. </param>
-		void RemoveSystem(ParticleSystem *system);
 
 		/// <summary>
 		/// Gets a list of all particles.
