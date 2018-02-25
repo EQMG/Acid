@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include "../Maths/Vector2.hpp"
-#include "../Physics/Aabb.hpp"
+#include "../Physics/ColliderAabb.hpp"
 #include "../Resources/Resources.hpp"
 #include "../Renderer/Buffers/VertexBuffer.hpp"
 #include "../Renderer/Buffers/IndexBuffer.hpp"
@@ -30,7 +30,7 @@ namespace Flounder
 		VertexBuffer *m_vertexBuffer;
 		IndexBuffer *m_indexBuffer;
 
-		Aabb *m_aabb;
+		ColliderAabb *m_aabb;
 
 	public:
 		static Model *Resource(const std::string &filename)
@@ -82,7 +82,7 @@ namespace Flounder
 
 		std::string GetFilename() override { return m_filename; }
 
-		Aabb *GetAabb() const { return m_aabb; }
+		ColliderAabb *GetAabb() const { return m_aabb; }
 
 		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer; }
 
@@ -103,6 +103,6 @@ namespace Flounder
 
 		void CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *uvs);
 
-		static Aabb CalculateAabb(const std::vector<Vertex> &vertices);
+		static ColliderAabb CalculateAabb(const std::vector<Vertex> &vertices);
 	};
 }

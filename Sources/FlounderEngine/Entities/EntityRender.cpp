@@ -3,6 +3,8 @@
 #include "../Devices/Display.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "../Materials/Material.hpp"
+#include "../Physics/Rigidbody.hpp"
+#include "../Scenes/Scenes.hpp"
 #include "UbosEntities.hpp"
 
 namespace Flounder
@@ -30,10 +32,19 @@ namespace Flounder
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
 		auto material = GetGameObject()->GetComponent<Material>();
+		auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr || material == nullptr)
 		{
 			return;
+		}
+
+		if (rigidbody != nullptr && rigidbody->GetCollider() != nullptr)
+		{
+			if (!rigidbody->GetCollider()->InFrustum(*Scenes::Get()->GetCamera()->GetViewFrustum()))
+			{
+				return;
+			}
 		}
 
 		// Creates a UBO object and write descriptor.
