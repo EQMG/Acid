@@ -82,17 +82,15 @@ namespace Flounder
 
 		if (Skyboxes::Get() != nullptr)
 		{
-		//	Skyboxes::Get()->GetSkybox()->GetRotation()->Set(*m_skyboxRotation);
-		//	Skyboxes::Get()->GetSkybox()->SetBlend(GetStarIntensity());
 			Skyboxes::Get()->SetSkyColour(SKYBOX_COLOUR_DAY);
 		}
 
 		if (Shadows::Get() != nullptr)
 		{
 			Shadows::Get()->GetLightDirection()->Set(lightDirection);
-			Shadows::Get()->SetShadowBoxOffset((20.0f * (1.0f - GetShadowFactor())) + 10.0f);
-			Shadows::Get()->SetShadowBoxDistance(35.0f);
-			Shadows::Get()->SetShadowTransition(0.0f);
+			Shadows::Get()->SetShadowBoxOffset((4.0f * (1.0f - GetShadowFactor())) + 10.0f);
+			Shadows::Get()->SetShadowBoxDistance(40.0f);
+			Shadows::Get()->SetShadowTransition(5.0f);
 			Shadows::Get()->SetShadowFactor(GetShadowFactor());
 		}
 	}

@@ -44,7 +44,6 @@ namespace Flounder
 	{
 		UbosShadows::UboScene uboScene = {};
 		uboScene.projectionView = *Shadows::Get()->GetShadowBox()->GetProjectionViewMatrix();
-		// uboScene.projectionView = *Scenes::Get()->GetCamera()->GetProjectionMatrix() * *Scenes::Get()->GetCamera()->GetViewMatrix();
 		m_uniformScene->Update(&uboScene);
 
 		m_pipeline->BindPipeline(commandBuffer);
@@ -76,14 +75,21 @@ namespace Flounder
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
 		UniformBuffer *uniformObject;
-		{
-			auto entityRender = gameObject->GetComponent<EntityRender>();
-			if (entityRender != nullptr)
-				uniformObject = entityRender->GetUniformObject();
 
-			auto terrainRender = gameObject->GetComponent<TerrainRender>();
-			if (terrainRender != nullptr)
-				uniformObject = terrainRender->GetUniformObject();
+		auto entityRender = gameObject->GetComponent<EntityRender>();
+		auto terrainRender = gameObject->GetComponent<TerrainRender>();
+
+		if (entityRender != nullptr)
+		{
+			uniformObject = entityRender->GetUniformObject();
+		}
+		else if (terrainRender != nullptr)
+		{
+			uniformObject = terrainRender->GetUniformObject();
+		}
+		else
+		{
+			return;
 		}
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{

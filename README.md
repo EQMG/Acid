@@ -30,6 +30,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Easy to read documented code
  * Event and tasks systems
  * GUI / Text rendering
+ * Modular rendering pipeline
  * 3D audio and music
  * 3D skybox
  * 3D terrain and water
@@ -43,10 +44,10 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Component system
  * GameObject prefab loading
  * Deferred rendering
- * 3D shadow mapping (WIP)
+ * 3D shadow mapping
+ * Particle effects
  * Simple physics engine (WIP)
  * P2P networking (WIP)
- * Particle effects (WIP)
  * Animations (WIP)
  * Steam integration (WIP)
 

@@ -71,12 +71,12 @@ vec3 decodeWorldPosition(vec2 uv, float depth)
 
 float shadow(vec4 shadowCoords)
 {
+    float total = 0.0f;
 	vec2 sizeShadows = 1.0f / textureSize(samplerShadows, 0);
     float totalTextels = (scene.shadowPCF * 2.0f + 1.0f) * (scene.shadowPCF * 2.0f + 1.0f);
-    float total = 0.0f;
 
-    if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f)
-    {
+   // if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f)
+   // {
         for (int x = -scene.shadowPCF; x <= scene.shadowPCF; x++)
         {
             for (int y = -scene.shadowPCF; y <= scene.shadowPCF; y++)
@@ -91,18 +91,11 @@ float shadow(vec4 shadowCoords)
         }
 
         total /= totalTextels;
-    }
-    else
-    {
-        total = 0.0f;
-    }
-
-    /*float shadowValue = texture(samplerShadows, shadowCoords.xy).r;
-
-    if (shadowCoords.z <= shadowValue)
-    {
-        total = scene.shadowDarkness * shadowCoords.w;
-    }*/
+   // }
+   // else
+   // {
+   //     total = 0.0f;
+   // }
 
     return 1.0f - total;
 }

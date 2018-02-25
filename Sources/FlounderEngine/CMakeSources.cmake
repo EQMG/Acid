@@ -99,6 +99,7 @@ set(FLOUNDERENGINE_HEADERS_
         "Particles/Spawns/SpawnLine.hpp"
         "Particles/Spawns/SpawnPoint.hpp"
         "Particles/Spawns/SpawnSphere.hpp"
+        "Particles/UbosParticles.hpp"
         "Physics/ColliderAabb.hpp"
         "Physics/Collider.hpp"
         "Physics/Frustum.hpp"

@@ -5,7 +5,6 @@ layout(set = 0, binding = 0) uniform UboScene
 {
 	mat4 projection;
 	mat4 view;
-	vec4 clip;
 } scene;
 
 layout(set = 0, binding = 1) uniform UboObject 
@@ -25,7 +24,6 @@ layout(location = 1) out float fragmentHeight;
 out gl_PerVertex 
 {
 	vec4 gl_Position;
-	float gl_ClipDistance[];
 };
 
 void main() 
@@ -33,7 +31,6 @@ void main()
 	vec4 worldPosition = object.transform * vec4(vertexPosition, 1.0f);
 	
     gl_Position = scene.projection * scene.view * worldPosition;
-	gl_ClipDistance[0] = dot(worldPosition, scene.clip);
 	
 	fragmentUv = vertexPosition;
 	fragmentHeight = worldPosition.y;
