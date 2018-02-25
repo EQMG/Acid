@@ -82,6 +82,6 @@ namespace Flounder
 		bool CubeFullyInFrustum(const Vector3 &min, const Vector3 &max) const;
 
 	private:
-		void NormalizePlane(float **frustum, const int &side) const;
+		void NormalizePlane(const int &side) const;
 	};
 }

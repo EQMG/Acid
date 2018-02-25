@@ -13,6 +13,7 @@ namespace Flounder
 		m_averageSpeed(averageSpeed),
 		m_gravityEffect(gravityEffect),
 		m_randomRotation(false),
+		m_lastPosition(new Vector3()),
 		m_systemOffset(new Vector3(systemOffset)),
 		m_direction(nullptr),
 		m_directionDeviation(0.0f),
@@ -41,6 +42,8 @@ namespace Flounder
 
 		delete m_types;
 		delete m_spawn;
+
+		delete m_lastPosition;
 
 		delete m_systemOffset;
 
@@ -71,33 +74,31 @@ namespace Flounder
 			return nullptr;
 		}
 
-		Vector3 *velocity;
+		Vector3 velocity = Vector3();
+		float delta = Engine::Get()->GetDelta();
+		Vector3::Subtract(*GetGameObject()->GetTransform()->GetPosition(), *m_lastPosition, &velocity);
+		m_lastPosition->Set(*GetGameObject()->GetTransform()->GetPosition());
+		velocity /= delta;
 
 		if (m_direction != nullptr)
 		{
-			velocity = Vector3::RandomUnitVectorWithinCone(*m_direction, m_directionDeviation, nullptr);
+			Vector3::RandomUnitVectorWithinCone(*m_direction, m_directionDeviation, &velocity);
 		}
 		else
 		{
-			velocity = GenerateRandomUnitVector();
+			GenerateRandomUnitVector(&velocity);
 		}
 
-		ParticleType *emitType = m_types->at(static_cast<unsigned int>(std::floor(Maths::RandomInRange(0, static_cast<int>(m_types->size())))));
+		velocity.Normalize();
+		velocity.Scale(GenerateValue(m_averageSpeed, m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError)));
 
-		velocity->Normalize();
-		velocity->Scale(GenerateValue(m_averageSpeed, m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError)));
-	//	Vector3::Add(*velocity, *m_velocityCentre, velocity);
+		ParticleType *emitType = m_types->at(static_cast<unsigned int>(std::floor(Maths::RandomInRange(0, static_cast<int>(m_types->size())))));
 		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
 		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
-		Vector3 *spawnPos = Vector3::Add(*GetGameObject()->GetTransform()->GetPosition(), *m_systemOffset, nullptr);
-		Vector3::Add(*spawnPos, *m_spawn->GetBaseSpawnPosition(), spawnPos);
-
-		Particle *result = new Particle(emitType, *spawnPos, *velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
-
-		delete velocity;
-		delete spawnPos;
-
-		return result;
+		Vector3 spawnPos = Vector3();
+		Vector3::Add(*GetGameObject()->GetTransform()->GetPosition(), *m_systemOffset, &spawnPos);
+		Vector3::Add(spawnPos, *m_spawn->GetBaseSpawnPosition(), &spawnPos);
+		return new Particle(emitType, spawnPos, velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
 	}
 
 	float ParticleSystem::GenerateValue(const float &average, const float &errorMargin) const
@@ -115,14 +116,19 @@ namespace Flounder
 		return 0.0f;
 	}
 
-	Vector3 *ParticleSystem::GenerateRandomUnitVector() const
+	Vector3 *ParticleSystem::GenerateRandomUnitVector(Vector3 *destination) const
 	{
+		if (destination == nullptr)
+		{
+			destination = new Vector3();
+		}
+
 		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
 		float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
 		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * std::cos(theta);
 		float y = rootOneMinusZSquared * std::sin(theta);
-		return new Vector3(x, y, z);
+		return destination->Set(x, y, z);
 	}
 
 	void ParticleSystem::AddParticleType(ParticleType *type) const

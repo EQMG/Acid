@@ -16,13 +16,14 @@ namespace Flounder
 			VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
 			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-			Vertex::GetAttributeDescriptions(2), // vertexAttributeDescriptions
+			Vertex::GetAttributeDescriptions(3), // vertexAttributeDescriptions
 
 			{
 				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
 				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
 				Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDiffuse
-				Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerMaterial
+				Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
+				Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerNormal
 			}, // descriptors
 
 			{"Resources/Shaders/Entities/Entity.vert.spv", "Resources/Shaders/Entities/Entity.frag.spv"} // shaderStages

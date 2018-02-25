@@ -68,6 +68,12 @@ namespace Flounder
 			uboObject.samples.m_y = 1.0f;
 		}
 
+		if (material->GetTextureNormal() != nullptr)
+		{
+			descriptorWrites.push_back(material->GetTextureNormal()->GetWriteDescriptor(4, descriptorSet));
+			uboObject.samples.m_z = 1.0f;
+		}
+
 		uboObject.diffuse = *material->GetColour();
 		uboObject.surface = Vector3(material->GetMetallic(), material->GetRoughness(),
 			(1.0f / 3.0f) * (static_cast<float>(material->GetIgnoreFog()) + 

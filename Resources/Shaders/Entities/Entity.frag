@@ -14,21 +14,15 @@ layout(set = 0, binding = 1) uniform UboObject
 
 layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
 layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
+layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
 
 layout(location = 0) in vec2 fragmentUv;
 layout(location = 1) in vec3 fragmentNormal;
+layout(location = 2) in mat3 tangentSpace;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
 layout(location = 2) out vec4 outMaterial;
-
-vec4 encodeColour(vec3 colour)
-{
-	vec4 result = vec4(0.0f);
-	result.rgb = colour;
-	result.a = 1.0f;
-	return result;
-}
 
 vec2 encodeNormal(vec3 normal)
 {
@@ -40,25 +34,33 @@ vec2 encodeNormal(vec3 normal)
 
 void main() 
 {
-	vec3 textureColour = object.diffuse.rgb;
+	vec4 textureColour = object.diffuse;
 	vec3 unitNormal = normalize(fragmentNormal);
 	vec3 material = vec3(object.surface.x, object.surface.y, 0.0f);
 
 	if (object.samples.x == 1.0f)
 	{
-	    textureColour = texture(samplerDiffuse, fragmentUv).rgb;
+	    textureColour = texture(samplerDiffuse, fragmentUv);
 	}
 
 	if (object.samples.y == 1.0f)
 	{
-	    // Material
 	    vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
 	    material.x *= textureMaterial.r;
 	    material.y *= textureMaterial.g;
 	    material.z = textureMaterial.b;
 	}
 
-	outColour = encodeColour(textureColour);
+	if (object.samples.z == 1.0f)
+	{
+	    vec4 textureNormal = texture(samplerNormal, fragmentUv);
+	    unitNormal = textureNormal.rgb;
+        unitNormal = normalize(textureNormal.rgb * 2.0f - vec3(1.0f));
+        unitNormal = normalize(tangentSpace * unitNormal);
+	}
+
+
+	outColour = textureColour;
 	outNormal = encodeNormal(unitNormal);
 	outMaterial = vec4(material.x, material.y, object.surface.z, 1.0f);
 }

@@ -1,4 +1,4 @@
 Mesh,Resources/Entities/FoundationWood/Model.obj
-Material,#8b4513,nullptr,0.0,0.0,1,0,0,nullptr
+Material,#8B4513,nullptr,0.000000,0.000000,1,0,0,nullptr,nullptr
 EntityRender
-Rigidbody
+Rigidbody,1.000000,0.000000,1,0,0,0,0,0,0

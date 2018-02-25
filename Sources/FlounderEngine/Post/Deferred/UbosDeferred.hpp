@@ -20,6 +20,8 @@ namespace Flounder
 
 		struct UboScene
 		{
+			Light lights[MAX_LIGHTS];
+
 			Matrix4 projection;
 			Matrix4 view;
 			Matrix4 shadowSpace;
@@ -37,14 +39,5 @@ namespace Flounder
 
 			int lightsCount;
 		};
-
-		struct UboLights
-		{
-			Light lights[MAX_LIGHTS];
-		};
-
-		//	static_assert(sizeof(Light) % 16 == 0);
-		//	static_assert(sizeof(UboScene) % 16 == 0);
-		//	static_assert(sizeof(UboLights) % 16 == 0);
 	};
 }
