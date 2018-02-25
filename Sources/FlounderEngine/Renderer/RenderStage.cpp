@@ -45,10 +45,22 @@ namespace Flounder
 		delete m_framebuffers;
 	}
 
-	void RenderStage::RebuildImages(Swapchain *swapchain, const VkExtent2D &extent2D, const VkExtent3D &extent3D)
+	void RenderStage::Rebuild(Swapchain *swapchain)
 	{
-		delete m_depthStencil;
-		m_depthStencil = new DepthStencil(extent3D);
+		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
+		const VkExtent2D extent2D = { GetWidth(), GetHeight() };
+		const VkExtent3D extent3D = { GetWidth(), GetHeight(), 1 };
+
+		if (m_hasDepth)
+		{
+			delete m_depthStencil;
+			m_depthStencil = new DepthStencil(extent3D);
+		}
+
+		if (m_renderpass == nullptr)
+		{
+			m_renderpass = new Renderpass(*m_renderpassCreate, *m_depthStencil, surfaceFormat.format);
+		}
 
 		delete m_framebuffers;
 		m_framebuffers = new Framebuffers(*m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, extent2D);

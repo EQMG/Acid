@@ -24,7 +24,7 @@ namespace Flounder
 
 			Vector4 samples;
 
-			Vector3 surface;
+			Vector4 surface;
 		};
 	};
 }

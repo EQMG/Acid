@@ -15,7 +15,7 @@ layout(set = 0, binding = 1) uniform UboObject
 
 	vec4 samples;
 
-	vec3 surface;
+	vec4 surface;
 } object;
 
 layout(location = 0) in vec3 vertexPosition;

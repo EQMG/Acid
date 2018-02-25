@@ -1,5 +1,5 @@
 Rigidbody,2.000000,0.100000,1,0,0,0,0,0,0
-Material,#C37A57,Resources/Entities/Testing/Diffuse.png,0.200000,0.700000,1,0,0,Resources/Entities/Testing/Material.png,Resources/Entities/Testing/Normal.png
+Material,#C37A57,Resources/Entities/Testing/Diffuse.png,0.200000,0.500000,1,0,0,Resources/Entities/Testing/Material.png,Resources/Entities/Testing/Normal.png
 Light,#3319CC,1.333000,0.000000,3.000000,0.000000
 Mesh,Resources/Entities/Testing/Model.obj
 EntityRender

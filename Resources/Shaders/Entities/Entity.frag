@@ -9,7 +9,7 @@ layout(set = 0, binding = 1) uniform UboObject
 
 	vec4 samples;
 
-	vec3 surface;
+	vec4 surface;
 } object;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
@@ -43,12 +43,19 @@ void main()
 	    textureColour = texture(samplerDiffuse, fragmentUv);
 	}
 
+	float glowing = 0.0f;
+
 	if (object.samples.y == 1.0f)
 	{
 	    vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
 	    material.x *= textureMaterial.r;
 	    material.y *= textureMaterial.g;
 	    material.z = textureMaterial.b;
+
+	    if (material.z > 0.5f)
+	    {
+            glowing = 1.0f;
+        }
 	}
 
 	if (object.samples.z == 1.0f)
@@ -59,8 +66,9 @@ void main()
         unitNormal = normalize(tangentSpace * unitNormal);
 	}
 
+	float encodedSurface = (1.0f / 3.0f) * (object.surface.z + (2.0f * min(object.surface.w + glowing, 1.0f)));
 
 	outColour = textureColour;
 	outNormal = encodeNormal(unitNormal);
-	outMaterial = vec4(material.x, material.y, object.surface.z, 1.0f);
+	outMaterial = vec4(material.x, material.y, encodedSurface, 1.0f);
 }
