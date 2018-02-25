@@ -28,7 +28,7 @@ namespace Flounder
 
 		~RenderStage();
 
-		void RebuildImages(Swapchain *swapchain, const VkExtent2D &extent2D, const VkExtent3D &extent3D);
+		void Rebuild(Swapchain *swapchain);
 
 		uint32_t GetWidth() const;
 
