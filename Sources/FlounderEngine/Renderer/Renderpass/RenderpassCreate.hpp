@@ -40,12 +40,10 @@ namespace Flounder
 	{
 	public:
 		uint32_t m_binding;
-		bool m_useDepth;
 		std::vector<uint32_t> m_attachments;
 
-		SubpassType(const uint32_t &binding, const bool &useDepth, const std::vector<uint32_t> &attachments) :
+		SubpassType(const uint32_t &binding, const std::vector<uint32_t> &attachments) :
 			m_binding(binding),
-			m_useDepth(useDepth),
 			m_attachments(std::vector<uint32_t>(attachments))
 		{
 		}
