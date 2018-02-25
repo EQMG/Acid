@@ -5,12 +5,14 @@
 
 namespace Flounder
 {
+	class DepthStencil;
+
 	class F_EXPORT Renderpass
 	{
 	private:
 		VkRenderPass m_renderPass;
 	public:
-		Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat &depthFormat, const VkFormat &surfaceFormat);
+		Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat);
 
 		~Renderpass();
 

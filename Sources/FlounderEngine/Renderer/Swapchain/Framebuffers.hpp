@@ -7,6 +7,7 @@
 namespace Flounder
 {
 	class Renderpass;
+	class DepthStencil;
 
 	class F_EXPORT Framebuffers
 	{
@@ -14,7 +15,7 @@ namespace Flounder
 		std::vector<Texture *> m_imageAttachments;
 		std::vector<VkFramebuffer> m_framebuffers;
 	public:
-		Framebuffers(const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const VkImageView &depthImageView, const VkExtent2D &extent);
+		Framebuffers(const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkExtent2D &extent);
 
 		~Framebuffers();
 

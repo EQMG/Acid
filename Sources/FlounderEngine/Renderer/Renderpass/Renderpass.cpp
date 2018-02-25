@@ -1,11 +1,12 @@
 ﻿#include "Renderpass.hpp"
 
 #include <array>
+#include "../Stencils/DepthStencil.hpp"
 #include "../../Devices/Display.hpp"
 
 namespace Flounder
 {
-	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat &depthFormat, const VkFormat &surfaceFormat) :
+	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat) :
 		m_renderPass(VK_NULL_HANDLE)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -21,21 +22,19 @@ namespace Flounder
 			attachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 			attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 			attachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
 			switch (image.m_type)
 			{
 			case TypeImage:
-				attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 				attachment.finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				attachment.format = image.m_format;
 				break;
 			case TypeDepth:
-				attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 				attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-				attachment.format = depthFormat;
+				attachment.format = depthStencil.GetFormat();
 				break;
 			case TypeSwapchain:
-				attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 				attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 				attachment.format = surfaceFormat;
 				break;
@@ -50,26 +49,34 @@ namespace Flounder
 
 		for (auto subpassType : renderpassCreate.subpasses)
 		{
-			// Description.
-			std::vector<VkAttachmentReference> subpassColourAttachments = {};
+			// Attachments.
+			std::vector<VkAttachmentReference> *subpassColourAttachments = new std::vector<VkAttachmentReference>{};
+			uint32_t depthAttachment = 9999;
 
-			for (unsigned int attachment : subpassType.m_attachments)
+			for (auto attachment : subpassType.m_attachments)
 			{
+				if (renderpassCreate.images.at(attachment).m_type == TypeDepth)
+				{
+					depthAttachment = attachment;
+					continue;
+				}
+
 				VkAttachmentReference attachmentReference = {};
 				attachmentReference.attachment = attachment;
 				attachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-				subpassColourAttachments.push_back(attachmentReference);
+				subpassColourAttachments->push_back(attachmentReference);
 			}
 
+			// Description.
 			VkSubpassDescription subpassDescription = {};
 			subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-			subpassDescription.colorAttachmentCount = static_cast<uint32_t>(subpassColourAttachments.size());
-			subpassDescription.pColorAttachments = subpassColourAttachments.data();
+			subpassDescription.colorAttachmentCount = static_cast<uint32_t>(subpassColourAttachments->size());
+			subpassDescription.pColorAttachments = subpassColourAttachments->data();
 
-			if (subpassType.m_useDepth)
+			if (depthAttachment != 9999)
 			{
 				VkAttachmentReference subpassDepthStencilAttachment = {};
-				subpassDepthStencilAttachment.attachment = 0;
+				subpassDepthStencilAttachment.attachment = depthAttachment;
 				subpassDepthStencilAttachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 				subpassDescription.pDepthStencilAttachment = &subpassDepthStencilAttachment;
 			}
@@ -78,8 +85,15 @@ namespace Flounder
 
 			// Dependencies.
 			VkSubpassDependency subpassDependency = {};
+			subpassDependency.srcAccessMask = 0;
+			subpassDependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 
-			if (subpassType.m_binding == 0)
+			if (renderpassCreate.subpasses.size() == 1)
+			{
+				subpassDependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+				subpassDependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+			}
+			else if (subpassType.m_binding == 0)
 			{
 				subpassDependency.srcSubpass = VK_SUBPASS_EXTERNAL;
 				subpassDependency.srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
@@ -101,16 +115,7 @@ namespace Flounder
 				subpassDependency.dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
 			}
 
-			subpassDependency.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-			subpassDependency.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
-
 			dependencies.push_back(subpassDependency);
-		}
-
-
-		if (renderpassCreate.subpasses.size() != 1)
-		{
-			dependencies.clear();
 		}
 
 		// Creates the render pass.
