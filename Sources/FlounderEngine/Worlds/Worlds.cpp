@@ -91,7 +91,7 @@ namespace Flounder
 			Shadows::Get()->SetShadowBoxOffset((4.0f * (1.0f - GetShadowFactor())) + 10.0f);
 			Shadows::Get()->SetShadowBoxDistance(40.0f);
 			Shadows::Get()->SetShadowTransition(5.0f);
-			Shadows::Get()->SetShadowFactor(GetShadowFactor());
+			Shadows::Get()->SetShadowDarkness(0.6f * GetShadowFactor());
 		}
 	}
 

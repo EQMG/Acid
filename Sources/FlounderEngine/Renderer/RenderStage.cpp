@@ -3,6 +3,8 @@
 namespace Flounder
 {
 	RenderStage::RenderStage(RenderpassCreate *renderpassCreate) :
+		m_lastWidth(renderpassCreate->m_width),
+		m_lastHeight(renderpassCreate->m_height),
 		m_renderpassCreate(renderpassCreate),
 		m_depthStencil(nullptr),
 		m_renderpass(nullptr),
@@ -86,9 +88,14 @@ namespace Flounder
 		return static_cast<uint32_t>(Display::Get()->GetHeight());
 	}
 
-	bool RenderStage::IsOutOfDate(const VkExtent2D &extent2D) const
+	bool RenderStage::IsOutOfDate(const VkExtent2D &extent2D)
 	{
-		return m_fitDisplaySize ? GetWidth() != extent2D.width || GetHeight() != extent2D.height : false;
+		uint32_t currentWidth = GetWidth();
+		uint32_t currentHeight = GetHeight();
+		bool outOfDate = currentWidth != m_lastWidth || currentHeight != m_lastHeight;
+		m_lastWidth = currentWidth;
+		m_lastHeight = currentHeight;
+		return outOfDate;
 	}
 
 	VkFramebuffer RenderStage::GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const

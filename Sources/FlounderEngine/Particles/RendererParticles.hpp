@@ -4,6 +4,7 @@
 #include "../Renderer/IRenderer.hpp"
 #include "../Renderer/Buffers/UniformBuffer.hpp"
 #include "../Renderer/Pipelines/Pipeline.hpp"
+#include "../Models/Model.hpp"
 #include "Particles.hpp"
 
 namespace Flounder
@@ -12,13 +13,8 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		static const int MAX_INSTANCES;
-
 		UniformBuffer *m_uniformScene;
-		UniformBuffer *m_uniformObject;
 		Pipeline *m_pipeline;
-
-		int m_rendered;
 	public:
 		RendererParticles(const GraphicsStage &graphicsStage);
 

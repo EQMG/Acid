@@ -1,13 +1,11 @@
 #include "RendererParticles.hpp"
 
-#include "../Models/Model.hpp"
+#include "../Devices/Display.hpp"
 #include "../Maths/Maths.hpp"
 #include "UbosParticles.hpp"
 
 namespace Flounder
 {
-	const int RendererParticles::MAX_INSTANCES = 10000;
-
 	const PipelineCreate PIPELINE_CREATE =
 		{
 			PIPELINE_MRT, // pipelineModeFlags
@@ -19,42 +17,41 @@ namespace Flounder
 
 			{
 				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
-				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
-				Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerDiffuse
+				Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerDiffuse
 			}, // descriptors
 
-			{"Resources/Shaders/Particles/Particle.vert.spv", "Resources/Shaders/Particles/Particle.frag.spv"} // shaderStages
+			{ "Resources/Shaders/Particles/Particle.vert.spv", "Resources/Shaders/Particles/Particle.frag.spv"} // shaderStages
 		};
 
 	RendererParticles::RendererParticles(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosParticles::UboScene))),
-		m_uniformObject(new UniformBuffer(sizeof(UbosParticles::UboObject) * MAX_INSTANCES)),
-		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE)),
-		m_rendered(0)
+		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
 	{
 	}
 
 	RendererParticles::~RendererParticles()
 	{
 		delete m_uniformScene;
-		delete m_uniformObject;
 		delete m_pipeline;
 	}
 
 	void RendererParticles::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		/*UbosParticles::UboScene uboScene = {};
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+
+		UbosParticles::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		std::vector<UbosParticles::UboObject> objects = {};
-
-		for (auto iter = Particles::Get()->GetParticles()->begin(); iter != Particles::Get()->GetParticles()->end(); ++iter)
+		/*for (auto iter = Particles::Get()->GetParticles()->begin(); iter != Particles::Get()->GetParticles()->end(); ++iter)
 		{
+			std::vector<UbosParticles::UboObject> objects = {};
+
 			for (auto particle : *(*iter).second)
 			{
 				UbosParticles::UboObject object = {};
@@ -67,9 +64,7 @@ namespace Flounder
 				object.transparency = particle->GetTransparency();
 				objects.push_back(object);
 			}
-		}
-
-		m_uniformObject->Update(objects.data());*/
+		}*/
 	}
 
 	Matrix4 RendererParticles::ModelMatrix(Particle *particle, const Matrix4 &viewMatrix)
