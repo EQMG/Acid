@@ -13,6 +13,7 @@ namespace Flounder
 		m_cubemap(cubemap),
 		m_blend(1.0f)
 	{
+		Link<std::string>(0, "Cubemap", LINK_GET_RES(GetCubemap()), LINK_SET(std::string, TrySetCubemap(v)));
 	}
 
 	SkyboxRender::~SkyboxRender()
@@ -50,7 +51,8 @@ namespace Flounder
 		m_uniformObject->Update(&uboObject);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-			uniformScene.GetWriteDescriptor(0, descriptorSet), m_uniformObject->GetWriteDescriptor(1, descriptorSet),
+			uniformScene.GetWriteDescriptor(0, descriptorSet),
+			m_uniformObject->GetWriteDescriptor(1, descriptorSet),
 			m_cubemap->GetWriteDescriptor(2, descriptorSet)
 		};
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
@@ -60,5 +62,15 @@ namespace Flounder
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 
 		mesh->GetModel()->CmdRender(commandBuffer);
+	}
+
+	void SkyboxRender::TrySetCubemap(const std::string &filename)
+	{
+		if (filename.empty() || filename == "nullptr")
+		{
+			return;
+		}
+
+		m_cubemap = Cubemap::Resource(filename, ".png");
 	}
 }

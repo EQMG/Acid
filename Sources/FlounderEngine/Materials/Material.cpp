@@ -2,19 +2,19 @@
 
 namespace Flounder
 {
-	Material::Material(const Colour &colour, Texture *diffuse, const float &metallic, const float &roughness, const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog, Texture *material, Texture *normal) :
+	Material::Material(const Colour &baseColor, Texture *diffuse, const float &metallic, const float &roughness, const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog, Texture *material, Texture *normal) :
 		Component(),
-		m_colour(new Colour(colour)),
+		m_baseColor(new Colour(baseColor)),
 		m_textureDiffuse(diffuse),
 		m_metallic(metallic),
 		m_roughness(roughness),
 		m_castsShadows(castsShadows),
 		m_ignoreLighting(ignoreLighting),
 		m_ignoreFog(ignoreFog),
-		m_textureMaterial(material),
+		m_textureMaterial(material), // R: Metallic, G: Roughness, B: Emmisive
 		m_textureNormal(normal)
 	{
-		Link<std::string>(0, "Diffuse Colour", LINK_GET_STR(Colour::GetHex(*GetColour())), LINK_SET(std::string, SetColour(Colour(v))));
+		Link<std::string>(0, "Base Colour", LINK_GET_STR(Colour::GetHex(*GetBaseColor())), LINK_SET(std::string, SetBaseColor(Colour(v))));
 		Link<std::string>(1, "Diffuse Texture", LINK_GET_RES(GetTextureDiffuse()), LINK_SET(std::string, TrySetTextureDiffuse(v)));
 		Link<float>(2, "Metallic", LINK_GET(GetMetallic()), LINK_SET(float, SetMetallic(v)));
 		Link<float>(3, "Roughness", LINK_GET(GetRoughness()), LINK_SET(float, SetRoughness(v)));
@@ -27,7 +27,7 @@ namespace Flounder
 
 	Material::~Material()
 	{
-		delete m_colour;
+		delete m_baseColor;
 	}
 
 	void Material::Update()

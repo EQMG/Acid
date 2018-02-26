@@ -14,9 +14,8 @@ namespace Flounder
 	{
 	private:
 		Vector3 *m_lightDirection;
-		float m_brightnessBoost;
 
-		int m_shadowSize;
+		uint32_t m_shadowSize;
 		int m_shadowPcf;
 		float m_shadowBias;
 		float m_shadowDarkness;
@@ -24,8 +23,6 @@ namespace Flounder
 
 		float m_shadowBoxOffset;
 		float m_shadowBoxDistance;
-
-		float m_shadowFactor;
 
 		ShadowBox *m_shadowBox;
 	public:
@@ -54,13 +51,9 @@ namespace Flounder
 
 		void SetLightDirection(const Vector3 &lightDirection) const { m_lightDirection->Set(lightDirection); }
 
-		float GetBrightnessBoost() const { return m_brightnessBoost; }
+		uint32_t GetShadowSize() const { return m_shadowSize; }
 
-		void SetBrightnessBoost(const float &brightnessBoost) { m_brightnessBoost = brightnessBoost; }
-
-		int GetShadowSize() const { return m_shadowSize; }
-
-		void SetShadowSize(const int &shadowSize) { m_shadowSize = shadowSize; }
+		void SetShadowSize(const uint32_t &shadowSize) { m_shadowSize = shadowSize; }
 
 		int GetShadowPcf() const { return m_shadowPcf; }
 
@@ -78,10 +71,6 @@ namespace Flounder
 
 		void SetShadowTransition(const float &shadowTransition) { m_shadowTransition = shadowTransition; }
 
-		float GetShadowFactor() const { return m_shadowFactor; }
-
-		void SetShadowFactor(const float &shadowFactor) { m_shadowFactor = shadowFactor; }
-
 		float GetShadowBoxOffset() const { return m_shadowBoxOffset; }
 
 		void SetShadowBoxOffset(const float &shadowBoxOffset) { m_shadowBoxOffset = shadowBoxOffset; }
@@ -90,7 +79,9 @@ namespace Flounder
 
 		void SetShadowBoxDistance(const float &shadowBoxDistance) { m_shadowBoxDistance = shadowBoxDistance; }
 
-		/// <summary> Get the shadow box, so that it can be used by other class to test if engine.entities are inside the box. </summary>
+		/// <summary>
+		/// Get the shadow box, so that it can be used by other class to test if engine.entities are inside the box.
+		/// </summary>
 		/// <returns> The shadow box. </returns>
 		ShadowBox *GetShadowBox() const { return m_shadowBox; }
 	};

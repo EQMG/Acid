@@ -24,7 +24,7 @@ namespace Flounder
 		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
 		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n", true);
 
-		for (std::string line : lines)
+		for (auto &line : lines)
 		{
 			RowCsv row = RowCsv(FormatString::Split(line, std::string(1, m_delimiter), true));
 			m_rows->push_back(row);
@@ -35,9 +35,9 @@ namespace Flounder
 	{
 		std::string data = "";
 
-		for (RowCsv row : *m_rows)
+		for (auto &row : *m_rows)
 		{
-			for (std::string element : row.m_elements)
+			for (auto &element : row.m_elements)
 			{
 				data += element + m_delimiter;
 			}

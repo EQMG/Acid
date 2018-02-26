@@ -20,7 +20,7 @@ namespace Flounder
 		{
 			Matrix4 transform;
 
-			Vector4 diffuse;
+			Vector4 baseColor;
 
 			Vector4 samples;
 

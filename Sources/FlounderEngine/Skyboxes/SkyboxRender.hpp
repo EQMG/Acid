@@ -34,6 +34,8 @@ namespace Flounder
 
 		void SetCubemap(Cubemap *cubemap) { m_cubemap = cubemap; }
 
+		void TrySetCubemap(const std::string &filename);
+
 		float GetBlend() const { return m_blend; }
 
 		void SetBlend(const float blend) { m_blend = blend; }
