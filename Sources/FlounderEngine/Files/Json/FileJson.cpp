@@ -24,8 +24,8 @@ namespace Flounder
 
 		int bracketLevel = -1;
 		std::string content;
-		LoadedSection *loadedParent = new LoadedSection(nullptr, "", "");
-		LoadedSection *currentSection = loadedParent;
+		JsonSection *loadedParent = new JsonSection(nullptr, "", "");
+		JsonSection *currentSection = loadedParent;
 
 		for (auto &line : lines)
 		{
@@ -46,16 +46,15 @@ namespace Flounder
 					{
 						auto contentSplit = FormatString::Split(content, "\"");
 
-						if (contentSplit.size() - 2 >= 0)
+						if ((int)contentSplit.size() - 2 >= 0)
 						{
 							name = contentSplit.at(contentSplit.size() - 2);
 						}
 					}
 
 					content.clear();
-					currentSection->m_content = FormatString::Replace(currentSection->m_content, "\"" + name + "\":", "");
 
-					auto section = new LoadedSection(currentSection, name, "");
+					auto section = new JsonSection(currentSection, name, "");
 					currentSection->m_children.push_back(section);
 					currentSection = section;
 				}
@@ -73,17 +72,14 @@ namespace Flounder
 			}
 		}
 
-		m_parent = new ValueJson(nullptr, "", "");
-		loadedParent->Covert(m_parent);
-
-		printf("Roughness: %s\n", m_parent->Get("Roughness").c_str());
+		m_parent = loadedParent->Convert(nullptr);
+		delete loadedParent;
 	}
 
 	void FileJson::Save()
 	{
-		std::string data = "";
-
-
+		std::string data;
+		m_parent->AppendData(&data, 0);
 
 		Verify();
 		FileSystem::ClearFile(m_filename);
@@ -92,18 +88,42 @@ namespace Flounder
 
 	void FileJson::Clear()
 	{
+		for (auto child : m_parent->m_children)
+		{
+			delete child;
+		}
+
+		m_parent->m_children.clear();
 	}
 
 	std::map<std::string, std::string> FileJson::ConfigReadValues()
 	{
 		auto result = std::map<std::string, std::string>();
 
+		for (auto child : m_parent->m_children)
+		{
+			if (child->m_value.empty())
+			{
+				continue;
+			}
+
+			result.insert(std::make_pair(child->m_name, child->m_value));
+		}
 
 		return result;
 	}
 
 	void FileJson::ConfigPushValue(const std::string &key, const std::string &value)
 	{
+		ValueJson *exiting = m_parent->GetChild(key);
+
+		if (exiting != nullptr)
+		{
+			exiting->m_value = value;
+			return;
+		}
+
+		m_parent->m_children.push_back(new ValueJson(m_parent, key, value));
 	}
 
 	void FileJson::Verify()

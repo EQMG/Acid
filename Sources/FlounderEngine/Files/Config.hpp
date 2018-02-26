@@ -43,6 +43,7 @@ namespace Flounder
 			m_values->at(key) = ConfigKey(std::to_string(value));
 		}
 
+		// TODO: Convert to templates.
 		std::string Get(const std::string &key, const std::string &normal = "nullptr");
 
 		bool Get(const std::string &key, const bool &normal = false);
