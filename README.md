@@ -37,7 +37,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Bullet physics
  * Model file loading (OBJ)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
- * Text file and config loading (CSV, XML)
+ * Text file and config loading (CSV, Json, XML)
  * Resource management
  * Visual drivers and maths classes
  * Flexible input classes
