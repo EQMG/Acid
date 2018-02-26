@@ -1,7 +1,7 @@
 {
   "Rigidbody": {
-    "Mass": 2.0,
-    "Drag": 0.1,
+    "Mass": 1.0,
+    "Drag": 0.0,
     "Use Gravity": true,
     "Freeze Position": {
       "x": false,
@@ -16,26 +16,26 @@
   },
   "Material": {
     "Base Colour": "#C37A57",
-    "Diffuse Texture": "Resources/Entities/Testing/Diffuse.png",
-    "Metallic": 0.0,
-    "Roughness": 0.0,
+    "Diffuse Texture": "Resources/Entities/GemPurple/Diffuse.png",
+    "Metallic": 0.4,
+    "Roughness": 0.2,
     "Cast Shadows": true,
     "Ignore Lighting": false,
     "Ignore Fog": false,
-    "Material Texture": "",
-    "Normal Texture": "Resources/Entities/Testing/Normal.png"
+    "Material Texture": "Resources/Entities/GemPurple/Material.png",
+    "Normal Texture": ""
   },
   "Light": {
-    "Colour": "#3319CC",
-    "Radius": 1.33,
+    "Colour": "#B66ADA",
+    "Radius": 1.5,
     "Offset": {
       "x": 0.0,
-      "y": 3.0,
+      "y": 0.5,
       "z": 0.0
     }
   },
   "Mesh": {
-    "Model": "Resources/Entities/Testing/Model.obj"
+    "Model": "Resources/Entities/GemPurple/Model.obj"
   },
   "EntityRender": {
   }

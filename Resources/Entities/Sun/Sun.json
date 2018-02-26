@@ -1,0 +1,30 @@
+{
+  "Material": {
+    "Base Colour": "#FFF9B5",
+    "Diffuse Texture": "",
+    "Metallic": 1.0,
+    "Roughness": 0.0,
+    "Cast Shadows": false,
+    "Ignore Lighting": true,
+    "Ignore Fog": true,
+    "Material Texture": "",
+    "Normal Texture": ""
+  },
+  "Light": {
+    "Colour": "#FFFFFF",
+    "Radius": -1.0,
+    "Offset": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  },
+  "Mesh": {
+    "Model": "Sphere_20_20_1.0"
+  },
+  "CelestialBody": {
+    "Type": 0
+  },
+  "EntityRender": {
+  }
+}

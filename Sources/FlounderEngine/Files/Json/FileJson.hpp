@@ -8,18 +8,6 @@
 
 namespace Flounder
 {
-	enum TypeJson
-	{
-		JsonNone = 0,
-		JsonObject = 1,
-		JsonArray = 2,
-		JsonInteger = 3,
-		JsonDouble = 4,
-		JsonString = 5,
-		JsonBool = 6,
-		JsonNull = 7
-	};
-
 	class F_EXPORT ValueJson
 	{
 	public:
@@ -28,84 +16,168 @@ namespace Flounder
 
 		std::string m_name;
 		std::string m_value;
-		TypeJson m_type;
 
-		ValueJson(ValueJson *parent, const std::string &name, const std::string &value, const TypeJson &type = JsonNull) :
+		ValueJson(ValueJson *parent, const std::string &name, const std::string &value) :
 			m_parent(parent),
 			m_name(FormatString::RemoveAll(name, '\"')),
-			m_value(value),
-			m_type(type)
+			m_value(value)
 		{
 		}
 
-		std::string Get(const std::string &name)
+		ValueJson *GetChild(const std::string &name)
 		{
-			if (m_name == name)
+			for (auto child : m_children)
 			{
-				return m_value;
+				if (child->m_name == name)
+				{
+					return child;
+				}
+			}
+
+			return nullptr;
+		}
+
+		std::string GetRaw() const { return m_value; }
+
+		void SetRaw(const std::string &data) { m_value = data; }
+
+		template<typename T>
+		T Get()
+		{
+			std::string data = GetRaw();
+			return FormatString::ConvertTo<T>(data);
+		}
+
+		template<typename T>
+		void Set(const T &data)
+		{
+			SetRaw(std::to_string(data));
+		}
+
+		void AppendData(std::string *data, const int &indentation, const bool &end = false)
+		{
+			std::string indent;
+
+			for (int i = 0; i < indentation; i++)
+			{
+				indent += "  ";
+			}
+
+			*data += indent;
+
+			if (m_name.empty())
+			{
+				*data += "{\n";
+			}
+			else if (m_value.empty())
+			{
+				*data += "\"" + m_name + "\": {\n";
+			}
+			else
+			{
+				*data += "\"" + m_name + "\": " + m_value;
+
+				if (!end)
+				{
+					*data += ", ";
+				}
+
+				*data += "\n";
 			}
 
 			for (auto child : m_children)
 			{
-				std::string value = child->Get(name);
-
-				if (!value.empty())
-				{
-					return value;
-				}
+				child->AppendData(data, indentation + 1, child == m_children.back());
 			}
 
-			return "";
+			if (m_name.empty())
+			{
+				*data += indent;
+				*data += "}\n";
+			}
+			else if (m_value.empty())
+			{
+				*data += indent;
+
+				if (end)
+				{
+					*data += "}\n";
+				}
+				else
+				{
+					*data += "},\n";
+				}
+			}
 		}
 	};
 
-	class F_EXPORT LoadedSection
+	class F_EXPORT JsonSection
 	{
 	public:
-		LoadedSection *m_parent;
-		std::vector<LoadedSection*> m_children;
+		JsonSection *m_parent;
+		std::vector<JsonSection*> m_children;
 
 		std::string m_name;
 		std::string m_content;
 
-		LoadedSection(LoadedSection *parent, const std::string &name, const std::string &content) :
+		JsonSection(JsonSection *parent, const std::string &name, const std::string &content) :
 			m_parent(parent),
 			m_name(name),
 			m_content(content)
 		{
 		}
 
-		void Covert(ValueJson *destination)
+		~JsonSection()
 		{
-			ValueJson *value = new ValueJson(destination, m_name, "");
-			destination->m_children.push_back(value);
-
-			auto contentSplit = FormatString::Split(m_content, ",");
-
-			for (auto data : contentSplit)
+			for (auto child : m_children)
 			{
-				auto dataSplit = FormatString::Split(data, ":", true);
+				delete child;
+			}
+		}
 
-				if (dataSplit.size() != 2)
+		ValueJson *Convert(ValueJson *destination)
+		{
+			ValueJson *thisValue;
+
+			if (destination != nullptr)
+			{
+				thisValue = new ValueJson(destination, m_name, "");
+				destination->m_children.push_back(thisValue);
+
+				auto contentSplit = FormatString::Split(m_content, ",");
+
+				for (auto data : contentSplit)
 				{
-					continue;
-				}
+					auto dataSplit = FormatString::Split(data, ":", true);
 
-				ValueJson *newChild = new ValueJson(value, dataSplit.at(0), dataSplit.at(1));
-				value->m_children.push_back(newChild);
+					if (dataSplit.size() != 2 || dataSplit.at(0).empty() || dataSplit.at(1).empty())
+					{
+						continue;
+					}
+
+					ValueJson *newChild = new ValueJson(thisValue, dataSplit.at(0), dataSplit.at(1));
+					thisValue->m_children.push_back(newChild);
+				}
+			}
+			else
+			{
+				destination = new ValueJson(nullptr, "", "");
+				thisValue = destination;
 			}
 
 			for (auto child : m_children)
 			{
-				child->Covert(value);
+				child->Convert(thisValue);
 			}
+
+			return thisValue;
 		}
 	};
 
 	class F_EXPORT FileJson :
 		public IFile
 	{
-	private:
+	public://private:
 		std::string m_filename;
 		ValueJson *m_parent;
 	public:
@@ -123,6 +195,7 @@ namespace Flounder
 
 		void ConfigPushValue(const std::string &key, const std::string &value) override;
 
+		ValueJson *GetChild(const std::string &name) const { return m_parent->GetChild(name); }
 	private:
 		void Verify();
 	};

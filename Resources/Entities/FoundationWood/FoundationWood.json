@@ -1,7 +1,7 @@
 {
   "Rigidbody": {
-    "Mass": 2.0,
-    "Drag": 0.1,
+    "Mass": 1.0,
+    "Drag": 0.0,
     "Use Gravity": true,
     "Freeze Position": {
       "x": false,
@@ -15,27 +15,18 @@
     }
   },
   "Material": {
-    "Base Colour": "#C37A57",
-    "Diffuse Texture": "Resources/Entities/Testing/Diffuse.png",
+    "Base Colour": "#8b4513",
+    "Diffuse Texture": "",
     "Metallic": 0.0,
     "Roughness": 0.0,
     "Cast Shadows": true,
     "Ignore Lighting": false,
     "Ignore Fog": false,
     "Material Texture": "",
-    "Normal Texture": "Resources/Entities/Testing/Normal.png"
-  },
-  "Light": {
-    "Colour": "#3319CC",
-    "Radius": 1.33,
-    "Offset": {
-      "x": 0.0,
-      "y": 3.0,
-      "z": 0.0
-    }
+    "Normal Texture": ""
   },
   "Mesh": {
-    "Model": "Resources/Entities/Testing/Model.obj"
+    "Model": "Resources/Entities/FoundationWood/Model.obj"
   },
   "EntityRender": {
   }
