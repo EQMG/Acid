@@ -167,7 +167,11 @@ namespace Flounder
 			std::vector<char> shaderCode = FileSystem::ReadBinaryFile(type);
 			VkShaderStageFlagBits stageFlag = VK_SHADER_STAGE_ALL;
 
-			if (FormatString::Contains(type, "vert.spv"))
+			if (FormatString::Contains(type, "comp.spv"))
+			{
+				stageFlag = VK_SHADER_STAGE_COMPUTE_BIT;
+			}
+			else if (FormatString::Contains(type, "vert.spv"))
 			{
 				stageFlag = VK_SHADER_STAGE_VERTEX_BIT;
 			}

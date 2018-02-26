@@ -1,4 +1,5 @@
 #include <iostream>
+#include <Files/Json/FileJson.hpp>
 #include <Devices/Mouse.hpp>
 #include <Engine/ModuleUpdater.hpp>
 #include <Helpers/FileSystem.hpp>
@@ -26,6 +27,9 @@ int main(int argc, char **argv)
 
 	auto configManager = new ConfigManager();
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+
+	auto fileTesting = new FileJson("Resources/Entities/Testing/Testing.json");
+	fileTesting->Load();
 
 	// Adds to the component registry.
 	ComponentRegister::Register("FpsPlayer", REGISTER_CREATE(FpsPlayer));

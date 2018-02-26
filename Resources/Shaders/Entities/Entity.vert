@@ -11,7 +11,7 @@ layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 
-	vec4 diffuse;
+	vec4 baseColor;
 
 	vec4 samples;
 
