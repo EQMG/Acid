@@ -5,7 +5,7 @@ layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
 
-	vec4 diffuse;
+	vec4 baseColor;
 
 	vec4 samples;
 
@@ -34,7 +34,7 @@ vec2 encodeNormal(vec3 normal)
 
 void main() 
 {
-	vec4 textureColour = object.diffuse;
+	vec4 textureColour = object.baseColor;
 	vec3 unitNormal = normalize(fragmentNormal);
 	vec3 material = vec3(object.surface.x, object.surface.y, 0.0f);
 
@@ -50,9 +50,8 @@ void main()
 	    vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
 	    material.x *= textureMaterial.r;
 	    material.y *= textureMaterial.g;
-	    material.z = textureMaterial.b;
 
-	    if (material.z > 0.5f)
+	    if (textureMaterial.b > 0.5f)
 	    {
             glowing = 1.0f;
         }
@@ -66,9 +65,9 @@ void main()
         unitNormal = normalize(tangentSpace * unitNormal);
 	}
 
-	float encodedSurface = (1.0f / 3.0f) * (object.surface.z + (2.0f * min(object.surface.w + glowing, 1.0f)));
+	material.z = (1.0f / 3.0f) * (object.surface.z + (2.0f * min(object.surface.w + glowing, 1.0f)));
 
 	outColour = textureColour;
 	outNormal = encodeNormal(unitNormal);
-	outMaterial = vec4(material.x, material.y, encodedSurface, 1.0f);
+	outMaterial = vec4(material, 1.0f);
 }

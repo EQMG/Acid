@@ -74,7 +74,7 @@ namespace Flounder
 			uboObject.samples.m_z = 1.0f;
 		}
 
-		uboObject.diffuse = *material->GetColour();
+		uboObject.baseColor = *material->GetBaseColor();
 		uboObject.surface = Vector4(material->GetMetallic(), material->GetRoughness(),
 			static_cast<float>(material->GetIgnoreFog()), static_cast<float>(material->GetIgnoreLighting()));
 

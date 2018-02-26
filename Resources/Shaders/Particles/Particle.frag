@@ -1,16 +1,7 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(set = 0, binding = 1) uniform UboObject
-{
-	mat4 transform;
-
-    vec4 textureOffsets;
-    float blendFactor;
-    float transparency;
-} object;
-
-layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
+layout(set = 0, binding = 1) uniform sampler2D samplerDiffuse;
 
 layout(location = 0) in vec2 fragmentUv;
 

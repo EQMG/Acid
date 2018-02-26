@@ -13,7 +13,7 @@ namespace Flounder
 		public Component
 	{
 	private:
-		Colour *m_colour;
+		Colour *m_baseColor;
 		Texture *m_textureDiffuse;
 
 		float m_metallic;
@@ -25,7 +25,7 @@ namespace Flounder
 		Texture *m_textureMaterial;
 		Texture *m_textureNormal;
 	public:
-		Material(const Colour &colour = Colour::WHITE, Texture *diffuse = nullptr, const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false, Texture *material = nullptr, Texture *normal = nullptr);
+		Material(const Colour &baseColor = Colour::WHITE, Texture *diffuse = nullptr, const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false, Texture *material = nullptr, Texture *normal = nullptr);
 
 		~Material();
 
@@ -33,15 +33,15 @@ namespace Flounder
 
 		std::string GetName() const override { return "Material"; };
 
-		Colour *GetColour() const { return m_colour; }
+		Colour *GetBaseColor() const { return m_baseColor; }
+
+		void SetBaseColor(const Colour &baseColor) { m_baseColor->Set(baseColor); }
 
 		Texture *GetTextureDiffuse() const { return m_textureDiffuse; }
 
 		void SetTextureDiffuse(Texture *diffuse) { m_textureDiffuse = diffuse; }
 
 		void TrySetTextureDiffuse(const std::string &filename);
-
-		void SetColour(const Colour &colour) { m_colour->Set(colour); }
 
 		float GetMetallic() const { return m_metallic; }
 

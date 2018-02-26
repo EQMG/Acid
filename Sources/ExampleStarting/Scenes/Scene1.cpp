@@ -132,7 +132,6 @@ namespace Demo
 		music1->Loop();
 #endif*/
 
-/*#ifdef FLOUNDER_CONFIG_DEBUG
 		GameObject *particlesObject = new GameObject(Transform(Vector3(0.0f, 20.0f, 0.0f)));
 		std::vector<ParticleType*> *types = new std::vector<ParticleType*>();
 		types->push_back(new ParticleType("blue", Texture::Resource("Resources/Particles/Blue/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
@@ -140,7 +139,6 @@ namespace Demo
 		types->push_back(new ParticleType("red", Texture::Resource("Resources/Particles/Red/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
 		types->push_back(new ParticleType("yellow", Texture::Resource("Resources/Particles/Yellow/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
 		particlesObject->AddComponent(new ParticleSystem(types, new SpawnCircle(30.0f, Vector3(0.0f, 10.0f, 0.0f)), 1000, 1.0f, -0.1f));
-#endif*/
 	}
 
 	void Scene1::Update()

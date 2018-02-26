@@ -10,6 +10,9 @@ namespace Flounder
 {
 	class F_EXPORT RenderStage
 	{
+	private:
+		uint32_t m_lastWidth;
+		uint32_t m_lastHeight;
 	public:
 		RenderpassCreate *m_renderpassCreate;
 
@@ -34,7 +37,7 @@ namespace Flounder
 
 		uint32_t GetHeight() const;
 
-		bool IsOutOfDate(const VkExtent2D &extent2D) const;
+		bool IsOutOfDate(const VkExtent2D &extent2D);
 
 		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
 	};

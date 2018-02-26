@@ -186,24 +186,6 @@ void main()
     	}
 
     	outColour = vec4(irradiance, 1.0f);
-        /*vec3 totalDiffuse = vec3(0.0f);
-
-		for (int i = 0; i < scene.lightsCount; i++) 
-		{
-			Light light = scene.lights[i];
-
-			vec3 lightDirection = light.position - worldPosition;
-			float distance = length(lightDirection);
-			lightDirection /= distance;
-            vec3 unitLightVector = normalize(lightDirection);
-
-			float att = attenuation(light.radius, 0.1f * distance);
-
-            float brightness = max(dot(normal, unitLightVector), 0.0f);
-            totalDiffuse += (brightness * light.colour.rgb) * att;
-		}
-
-        outColour = vec4(max(totalDiffuse, vec3(0.05f)), 1.0f) * outColour;*/
 	}
 
 	// Fog.
