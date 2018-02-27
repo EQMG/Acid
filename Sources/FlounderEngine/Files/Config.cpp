@@ -1,7 +1,6 @@
 #include "Config.hpp"
 
 #include <sstream>
-#include <algorithm>
 
 namespace Flounder
 {
