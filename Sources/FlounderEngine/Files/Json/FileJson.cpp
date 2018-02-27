@@ -1,5 +1,6 @@
 #include "FileJson.hpp"
 
+#include "../../Engine/Engine.hpp"
 #include "../../Helpers/FileSystem.hpp"
 
 namespace Flounder
@@ -18,6 +19,10 @@ namespace Flounder
 
 	void FileJson::Load()
 	{
+#if FLOUNDER_VERBOSE
+		const auto debugStart = Engine::Get()->GetTimeMs();
+#endif
+
 		Verify();
 		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
 		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n", true);
@@ -72,8 +77,13 @@ namespace Flounder
 			}
 		}
 
-		m_parent = loadedParent->Convert(nullptr);
+		m_parent = ValueJson::Convert(loadedParent, nullptr);
 		delete loadedParent;
+
+#if FLOUNDER_VERBOSE
+		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Json '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+#endif
 	}
 
 	void FileJson::Save()

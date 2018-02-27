@@ -32,8 +32,6 @@ int main(int argc, char **argv)
 	printf("Light Colour: %s\n", fileTesting->GetChild("Light")->GetChild("Colour")->Get<std::string>().c_str());
 	printf("Light Radius: %f\n", fileTesting->GetChild("Light")->GetChild("Radius")->Get<float>());
 //	printf("Light Offset: %s\n", Vector3(fileTesting->GetChild("Light")->GetChild("Radius")->Get<Vector3>().ToString().c_str());
-	fileTesting->m_filename = "Resources/Entities/Testing/Testing1.json";
-	fileTesting->Save();
 
 	// Adds to the component registry.
 	ComponentRegister::Register("FpsPlayer", REGISTER_CREATE(FpsPlayer));
