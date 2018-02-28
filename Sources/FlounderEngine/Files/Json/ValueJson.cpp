@@ -2,7 +2,6 @@
 
 namespace Flounder
 {
-
 	ValueJson::ValueJson(ValueJson *parent, const std::string &name, const std::string &value) :
 		m_parent(parent),
 		m_name(FormatString::RemoveAll(name, '\"')),

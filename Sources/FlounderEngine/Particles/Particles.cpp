@@ -19,7 +19,7 @@ namespace Flounder
 
 	void Particles::Update()
 	{
-		if (Scenes::Get()->IsGamePaused())
+		/*if (Scenes::Get()->IsGamePaused())
 		{
 			return;
 		}
@@ -37,7 +37,7 @@ namespace Flounder
 					m_particle.second->erase(it);
 				}
 			}
-		}
+		}*/
 	}
 
 	void Particles::AddParticle(Particle *created)
