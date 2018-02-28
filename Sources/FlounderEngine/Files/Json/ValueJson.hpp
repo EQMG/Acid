@@ -7,7 +7,6 @@
 
 namespace Flounder
 {
-
 	class F_EXPORT JsonSection
 	{
 	public:
