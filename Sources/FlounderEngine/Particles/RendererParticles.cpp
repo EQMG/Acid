@@ -38,7 +38,7 @@ namespace Flounder
 
 	void RendererParticles::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		/*const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
 		UbosParticles::UboScene uboScene = {};
@@ -46,7 +46,7 @@ namespace Flounder
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);
 
-		m_pipeline->BindPipeline(commandBuffer);
+		m_pipeline->BindPipeline(commandBuffer);*/
 
 		/*for (auto iter = Particles::Get()->GetParticles()->begin(); iter != Particles::Get()->GetParticles()->end(); ++iter)
 		{
