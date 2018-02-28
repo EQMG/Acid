@@ -31,5 +31,7 @@ namespace Flounder
 		std::vector<VkImageView> GetImageViews() const { return m_swapchinImageViews; }
 
 		VkExtent2D GetExtent() const { return m_extent; }
+
+		bool SameExtent(const VkExtent2D &extent2D) { return m_extent.width == extent2D.width && m_extent.height == extent2D.height; }
 	};
 }

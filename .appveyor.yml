@@ -34,11 +34,11 @@ before_build:
   - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=OFF
   - cmake --build . --config Release
   - cd ../
-  - mkdir Release
+  - mkdir Debug
   - xcopy Resources Debug\Resources\ /s/h/e/k/f/c
   - xcopy Build\Release\bin\Debug Debug\ /s/h/e/k/f/c
   - xcopy Build\Release\lib\Debug Debug\ /s/h/e/k/f/c
 
 artifacts:
-  - path: Release\
-    name: Flounder Release
+  - path: Debug\
+    name: Flounder Debug

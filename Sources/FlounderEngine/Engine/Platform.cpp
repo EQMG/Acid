@@ -1,7 +1,7 @@
 #include "Platform.hpp"
 
 #include <string>
-#include <cassert>
+#include <stdexcept>
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 #include <Windows.h>
@@ -80,7 +80,7 @@ namespace Flounder
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 			MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
 #endif
-			assert(false && "Vulkan runtime error.");
+			throw std::runtime_error("Vulkan runtime error.");
 		}
 	}
 
@@ -89,7 +89,7 @@ namespace Flounder
 		if (result == GLFW_FALSE)
 		{
 			fprintf(stderr, "GLFW error: %i\n", result);
-			assert(false && "GLFW runtime error.");
+			throw std::runtime_error("GLFW runtime error.");
 		}
 	}
 
@@ -104,7 +104,7 @@ namespace Flounder
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0);
 #endif
-		assert(false && "OpenAL runtime error.");
+		throw std::runtime_error("OpenAL runtime error.");
 	}
 
 	VkCommandBuffer Platform::BeginSingleTimeCommands(const VkCommandBufferLevel &level)
@@ -166,7 +166,7 @@ namespace Flounder
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 		MessageBox(nullptr, "Couldn't find proper memory type!", "Vulkan Error", 0);
 #endif
-		assert(false && "Vulkan runtime error, couldn't find proper memory type!");
+		throw std::runtime_error("Vulkan runtime error, couldn't find proper memory type!");
 		return UINT32_MAX;
 	}
 }

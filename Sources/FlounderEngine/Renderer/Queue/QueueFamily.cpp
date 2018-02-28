@@ -36,7 +36,7 @@ namespace Flounder
 			// Check for transfer support.
 			if (queueFamily.queueCount > 0 && queueFamily.queueFlags && VK_QUEUE_TRANSFER_BIT)
 			{
-				indices.transferFamily = i;
+				indices.presentFamily = i;
 			}
 
 			if (indices.IsComplete())
