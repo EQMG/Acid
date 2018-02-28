@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <cstring>
 #include <vector>
 #include "../Engine/Engine.hpp"
 #include "../Engine/Platform.hpp"

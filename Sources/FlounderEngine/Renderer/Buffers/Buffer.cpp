@@ -22,7 +22,7 @@ namespace Flounder
 
 		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(surface);
 		uint32_t indicesArray[] = {
-			static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.transferFamily)
+			static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.presentFamily)
 		};
 
 		VkBufferCreateInfo bufferCreateInfo = {};

@@ -10,7 +10,7 @@ namespace Flounder
 	struct QueueFamilyIndices
 	{
 		int graphicsFamily = -1;
-		int transferFamily = -1;
+		int presentFamily = -1;
 
 		/// <summary>
 		/// Gets if an index has been assigned.
@@ -18,7 +18,7 @@ namespace Flounder
 		/// <return> If an index has been assigned. </return>
 		bool IsComplete() const
 		{
-			return graphicsFamily >= 0 && transferFamily >= 0;
+			return graphicsFamily >= 0 && presentFamily >= 0;
 		}
 	};
 

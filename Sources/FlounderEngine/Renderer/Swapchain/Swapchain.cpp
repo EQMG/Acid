@@ -1,5 +1,6 @@
 ﻿#include "Swapchain.hpp"
 
+#include <array>
 #include "../../Devices/Display.hpp"
 #include "../../Shadows/Shadows.hpp"
 #include "../Queue/QueueFamily.hpp"
@@ -32,24 +33,26 @@ namespace Flounder
 			if (presentMode == VK_PRESENT_MODE_MAILBOX_KHR)
 			{
 				m_presentMode = presentMode;
+				break;
 			}
-		}
-
-		if (m_swapchainImageCount < surfaceCapabilities.minImageCount + 1)
-		{
-			m_swapchainImageCount = surfaceCapabilities.minImageCount + 1;
-		}
-
-		if (surfaceCapabilities.maxImageCount > 0)
-		{
-			if (m_swapchainImageCount > surfaceCapabilities.maxImageCount)
+			else if (presentMode == VK_PRESENT_MODE_IMMEDIATE_KHR)
 			{
-				m_swapchainImageCount = surfaceCapabilities.maxImageCount;
+				m_presentMode = presentMode;
 			}
 		}
 
-	//	QueueFamilyIndices queueFamilyIndices = QueueFamily::FindQueueFamilies(surface);
-	//	uint32_t queueFamilyIndices[] = {(uint32_t) queueFamilyIndices.graphicsFamily, (uint32_t) queueFamilyIndices.presentFamily};
+		m_swapchainImageCount = surfaceCapabilities.minImageCount + 1;
+
+		if (surfaceCapabilities.maxImageCount > 0 && m_swapchainImageCount > surfaceCapabilities.maxImageCount)
+		{
+
+			m_swapchainImageCount = surfaceCapabilities.maxImageCount;
+		}
+
+		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(surface);
+		std::array<uint32_t, 2> indicesArray = {
+			static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.presentFamily)
+		};
 
 		VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
 		swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
@@ -60,22 +63,28 @@ namespace Flounder
 		swapchainCreateInfo.imageExtent = extent;
 		swapchainCreateInfo.imageArrayLayers = 1;
 		swapchainCreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-		swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		swapchainCreateInfo.queueFamilyIndexCount = 0;
-		swapchainCreateInfo.pQueueFamilyIndices = nullptr;
-		swapchainCreateInfo.preTransform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
+		swapchainCreateInfo.preTransform = surfaceCapabilities.currentTransform;
 		swapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 		swapchainCreateInfo.presentMode = m_presentMode;
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
+		if (indices.graphicsFamily != indices.presentFamily)
+		{
+			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
+			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(indicesArray.size());
+			swapchainCreateInfo.pQueueFamilyIndices = indicesArray.data();
+		}
+		else
+		{
+			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		}
+
 		Platform::ErrorVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
 
 		Platform::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
-
 		m_swapchinImages.resize(m_swapchainImageCount);
 		m_swapchinImageViews.resize(m_swapchainImageCount);
-
 		Platform::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchinImages.data()));
 
 		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
