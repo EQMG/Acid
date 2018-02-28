@@ -2,6 +2,7 @@
 
 #include "../../Devices/Display.hpp"
 #include "../../Shadows/Shadows.hpp"
+#include "../Queue/QueueFamily.hpp"
 
 namespace Flounder
 {
@@ -46,6 +47,9 @@ namespace Flounder
 				m_swapchainImageCount = surfaceCapabilities.maxImageCount;
 			}
 		}
+
+	//	QueueFamilyIndices queueFamilyIndices = QueueFamily::FindQueueFamilies(surface);
+	//	uint32_t queueFamilyIndices[] = {(uint32_t) queueFamilyIndices.graphicsFamily, (uint32_t) queueFamilyIndices.presentFamily};
 
 		VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
 		swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
