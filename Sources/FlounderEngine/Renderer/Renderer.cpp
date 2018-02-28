@@ -97,7 +97,10 @@ namespace Flounder
 				return VK_ERROR_OUT_OF_DATE_KHR;
 			}
 
-			assert((acquireResult == VK_SUCCESS || acquireResult == VK_SUBOPTIMAL_KHR) && "Failed to acquire swapchain image!");
+			if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
+			{
+				throw std::runtime_error("Renderer failed to acquire swapchain image!");
+			}
 
 			Platform::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
 
@@ -148,18 +151,13 @@ namespace Flounder
 	void Renderer::EndRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i)
 	{
 		const auto renderStage = GetRenderStage(i);
-
 		const auto queue = Display::Get()->GetQueue();
 
 		vkCmdEndRenderPass(commandBuffer);
-
 		Platform::ErrorVk(vkEndCommandBuffer(commandBuffer));
 
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-		submitInfo.waitSemaphoreCount = 0;
-		submitInfo.pWaitSemaphores = nullptr;
-		submitInfo.pWaitDstStageMask = nullptr;
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &commandBuffer;
 
@@ -171,7 +169,12 @@ namespace Flounder
 
 		const VkResult queueSubmitResult = vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
 
-		assert(queueSubmitResult == VK_SUCCESS && "Failed to acquire swapchain image!");
+		if (queueSubmitResult != VK_SUCCESS)
+		{
+			throw std::runtime_error("Renderer failed to acquire swapchain image!");
+		}
+
+		Platform::ErrorVk(vkQueueWaitIdle(queue));
 
 		if (!renderStage->m_hasSwapchain)
 		{
@@ -199,9 +202,13 @@ namespace Flounder
 			return;
 		}
 
-		assert(result == VK_SUCCESS && "Failed to present swapchain image!");
+		if (result != VK_SUCCESS)
+		{
+			throw std::runtime_error("Renderer failed to present swapchain image!");
+		}
 
 		Platform::ErrorVk(result);
+		vkQueueWaitIdle(queue);
 	}
 
 	void Renderer::NextSubpass(const VkCommandBuffer &commandBuffer)
@@ -264,7 +271,7 @@ namespace Flounder
 
 		Platform::ErrorVk(vkQueueWaitIdle(queue));
 
-		if (renderStage->m_hasSwapchain)
+		if (renderStage->m_hasSwapchain && !m_swapchain->SameExtent(displayExtent2D))
 		{
 #if FLOUNDER_VERBOSE
 			printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent2D.width, displayExtent2D.height);
