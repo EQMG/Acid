@@ -5,16 +5,14 @@
 #include <STB/stb_vorbis.h>
 
 #ifdef FLOUNDER_PLATFORM_MACOS
-#include <MoltenVK/vulkan/vulkan.h>
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #else
-#include <vulkan/vulkan.h>
 #include <AL/al.h>
 #include <AL/alc.h>
 #endif
 
-#define GLFW_INCLUDE_VULKAN
+#include <vulkan/vulkan.h>
 #include <GLFW/glfw3.h>
 
 #include "../Prerequisites.hpp"

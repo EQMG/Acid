@@ -1,27 +1,28 @@
 /*
  * mvk_vulkan.h
  *
- * Copyright (c) 2014-2017 The Brenwill Workshop Ltd. All rights reserved.
- * http://www.brenwill.com
+ * Copyright (c) 2014-2018 The Brenwill Workshop Ltd. (http://www.brenwill.com)
  *
- * Use of this document is governed by the Molten License Agreement, as included
- * in the MoltenVK distribution package. CAREFULLY READ THAT LICENSE AGREEMENT BEFORE
- * READING AND USING THIS DOCUMENT. BY READING OR OTHERWISE USING THIS DOCUMENT,
- * YOU ACCEPT AND AGREE TO BE BOUND BY THE TERMS AND CONDITIONS OF THAT LICENSE
- * AGREEMENT. IF YOU DO NOT ACCEPT THE TERMS AND CONDITIONS OF THAT LICENSE AGREEMENT,
- * DO NOT READ OR USE THIS DOCUMENT.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 
 /** 
  * This is a convenience header file that loads vulkan.h with the appropriate MoltenVK
- * Vulkan platform surface extension automatically enabled for iOS or macOS.
+ * Vulkan platform extensions automatically enabled for iOS or macOS.
  *
  * When building for iOS, this header automatically enables the VK_MVK_ios_surface Vulkan extension.
  * When building for macOS, this header automatically enables the VK_MVK_macos_surface Vulkan extension.
- *
- * Use this header file in place of the vulkan.h file, where access to the MoltenVK
- * surface extensions are required.
  *
  * Use the following form when including this header file:
  *
@@ -31,16 +32,17 @@
 #ifndef __mvk_vulkan_h_
 #define __mvk_vulkan_h_ 1
 
-#include "mln_env.h"
 
-#if MLN_IOS
+#include <Availability.h>
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #	define VK_USE_PLATFORM_IOS_MVK				1
 #endif
 
-#if MLN_MACOS
+#ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
 #	define VK_USE_PLATFORM_MACOS_MVK			1
 #endif
 
-#include <MoltenVK/vulkan/vulkan.h>
+#include <vulkan/vulkan.h>
 
 #endif

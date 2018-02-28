@@ -1,6 +1,7 @@
 ﻿#include "Cubemap.hpp"
 
 #include <cstring>
+#include <cstdlib>
 #include "../Devices/Display.hpp"
 
 namespace Flounder
