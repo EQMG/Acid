@@ -31,7 +31,7 @@ namespace Demo
 		RendererTerrains *m_rendererTerrains;
 		RendererWaters *m_rendererWaters;
 		RendererEntities *m_rendererEntities;
-		RendererParticles *m_rendererParticles;
+	//	RendererParticles *m_rendererParticles;
 
 		RendererDeferred *m_rendererDeferred;
 		FilterFxaa *m_filterFxaa;

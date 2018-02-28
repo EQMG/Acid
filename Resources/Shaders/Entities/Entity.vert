@@ -25,7 +25,9 @@ layout(location = 3) in vec3 vertexTangent;
 
 layout(location = 0) out vec2 fragmentUv;
 layout(location = 1) out vec3 fragmentNormal;
-layout(location = 2) out mat3 tangentSpace;
+layout(location = 2) out vec3 tangentT;
+layout(location = 3) out vec3 tangentN;
+layout(location = 4) out vec3 tangentB;
 
 out gl_PerVertex 
 {
@@ -46,9 +48,8 @@ void main()
 	if (object.samples.z == 1.0f)
 	{
         mat3 normal_matrix = transpose(inverse(mat3(object.transform)));
-        vec3 T = normalize(normal_matrix * vertexTangent);
-        vec3 N = normalize(normal_matrix * vertexNormal);
-        vec3 B = normalize(cross(T, N));
-        tangentSpace = mat3(T, B, N);
+        tangentT = normalize(normal_matrix * vertexTangent);
+        tangentN = normalize(normal_matrix * vertexNormal);
+        tangentB = normalize(cross(tangentT, tangentN));
 	}
 }

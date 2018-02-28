@@ -1,15 +1,19 @@
 /*
  * mvk_datatypes.h
  *
- * Copyright (c) 2014-2017 The Brenwill Workshop Ltd. All rights reserved.
- * http://www.brenwill.com
+ * Copyright (c) 2014-2018 The Brenwill Workshop Ltd. (http://www.brenwill.com)
  *
- * Use of this document is governed by the Molten License Agreement, as included
- * in the MoltenVK distribution package. CAREFULLY READ THAT LICENSE AGREEMENT BEFORE
- * READING AND USING THIS DOCUMENT. BY READING OR OTHERWISE USING THIS DOCUMENT,
- * YOU ACCEPT AND AGREE TO BE BOUND BY THE TERMS AND CONDITIONS OF THAT LICENSE
- * AGREEMENT. IF YOU DO NOT ACCEPT THE TERMS AND CONDITIONS OF THAT LICENSE AGREEMENT,
- * DO NOT READ OR USE THIS DOCUMENT.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 
@@ -27,7 +31,7 @@
 extern "C" {
 #endif	//  __cplusplus
 	
-#include <MoltenVK/vulkan/vulkan.h>
+#include <vulkan/vulkan.h>
 
 #import <Metal/Metal.h>
 #import <CoreGraphics/CoreGraphics.h>
@@ -297,7 +301,7 @@ MTLVertexStepFunction mvkMTLVertexStepFunctionFromVkVertexInputRate(VkVertexInpu
 /** Returns the Metal MTLPrimitiveType corresponding to the specified Vulkan VkPrimitiveTopology. */
 MTLPrimitiveType mvkMTLPrimitiveTypeFromVkPrimitiveTopology(VkPrimitiveTopology vkTopology);
 
-#if MLN_MACOS
+#if MVK_MACOS
 /** Returns the Metal MTLPrimitiveTopologyClass corresponding to the specified Vulkan VkPrimitiveTopology. */
 MTLPrimitiveTopologyClass mvkMTLPrimitiveTopologyClassFromVkPrimitiveTopology(VkPrimitiveTopology vkTopology);
 #endif
@@ -378,43 +382,6 @@ MTLCPUCacheMode mvkMTLCPUCacheModeFromVkMemoryPropertyFlags(VkMemoryPropertyFlag
 
 /** Returns the Metal resource option flags corresponding to the specified Vulkan memory flags. */
 MTLResourceOptions mvkMTLResourceOptionsFromVkMemoryPropertyFlags(VkMemoryPropertyFlags vkFlags);
-
-
-#pragma mark -
-#pragma mark Shaders
-
-/** 
- * Enumerates the magic number values to set in the MVKMSLSPIRVHeader when 
- * submitting a SPIR-V stream that contains either Metal Shading Language source 
- * code or Metal Shading Language compiled binary code in place of SPIR-V code.
- */
-typedef enum {
-	kMVKMagicNumberMSLSourceCode	= 0x19960412,	/**< SPIR-V stream contains Metal Shading Language source code. */
-	kMVKMagicNumberMSLCompiledCode	= 0x19981215,	/**< SPIR-V stream contains Metal Shading Language compiled binary code. */
-} MVKMSLMagicNumber;
-
-/** 
- * Describes the header at the start of an SPIR-V stream, when it contains either
- * Metal Shading Language source code or Metal Shading Language compiled binary code.
- *
- * To submit MSL source code to the vkCreateShaderModule() function in place of SPIR-V
- * code, prepend a MVKMSLSPIRVHeader containing the kMVKMagicNumberMSLSourceCode magic
- * number to the MSL source code. The MSL source code must be null-terminated.
- *
- * To submit MSL compiled binary code to the vkCreateShaderModule() function in place of
- * SPIR-V code, prepend a MVKMSLSPIRVHeader containing the kMVKMagicNumberMSLCompiledCode
- * magic number to the MSL compiled binary code.
- *
- * In both cases, the pCode element of VkShaderModuleCreateInfo should pointer to the
- * location of the MVKMSLSPIRVHeader, and the MSL code should start at the byte immediately
- * after the MVKMSLSPIRVHeader.
- *
- * The codeSize element of VkShaderModuleCreateInfo should be set to the entire size of
- * the submitted code memory, including the additional sizeof(MVKMSLSPIRVHeader) bytes 
- * taken up by the MVKMSLSPIRVHeader, and, in the case of MSL source code, including 
- * the null-terminator byte.
- */
-typedef uint32_t MVKMSLSPIRVHeader;
 
 
 #ifdef __cplusplus
