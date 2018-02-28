@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// Used to store index of a QueueFamily with particular qualities.
 	/// </summary>
-	struct F_EXPORT QueueFamilyIndices
+	struct QueueFamilyIndices
 	{
 		int graphicsFamily = -1;
 		int transferFamily = -1;
