@@ -42,7 +42,7 @@ namespace Flounder
 		}
 		catch (const std::runtime_error &e)
 		{
-			printf("%s\n", e.what());
+			fprintf(stderr, "%s\n", e.what());
 			return EXIT_FAILURE;
 		}
 	}

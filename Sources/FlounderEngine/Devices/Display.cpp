@@ -1,8 +1,6 @@
 #include "Display.hpp"
 
 #include <stdexcept>
-#include <cassert>
-#include <cstring>
 #include <map>
 #include "../Helpers/FileSystem.hpp"
 
@@ -261,14 +259,14 @@ namespace Flounder
 		if (glfwInit() == GLFW_FALSE)
 		{
 			fprintf(stderr, "GLFW error: Failed to initialize!\n");
-			assert(false && "GLFW runtime error.");
+			throw std::runtime_error("GLFW runtime error.");
 		}
 
 		// Checks Vulkan support on GLFW.
 		if (glfwVulkanSupported() == GLFW_FALSE)
 		{
 			fprintf(stderr, "GLFW error: Failed to find Vulkan support!\n");
-			assert(false && "GLFW runtime error.");
+			throw std::runtime_error("GLFW runtime error.");
 		}
 
 		// Configures the window.
@@ -307,7 +305,7 @@ namespace Flounder
 		m_windowPosY = (videoMode->height - m_windowHeight) / 2;
 		glfwSetWindowPos(m_window, m_windowPosX, m_windowPosY);
 
-		// Shows the Vulkan window.
+		// Shows the glfw window.
 		glfwShowWindow(m_window);
 
 		// Sets the displays callbacks.
@@ -359,7 +357,6 @@ namespace Flounder
 				if (!layerFound)
 				{
 					fprintf(stderr, "Vulkan validation layer not found: '%s'\n", layerName);
-				//	assert(layerFound && "Could not find a Vulkan validation layer!");
 				}
 
 				m_instanceLayerList.push_back(layerName);
@@ -435,12 +432,12 @@ namespace Flounder
 		std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
 		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, physicalDevices.data());
 
-#ifdef FLOUNDER_PLATFORM_MACOS
-		m_physicalDevice = physicalDevices.at(0);
-#else
 		m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
-#endif
-		assert(m_physicalDevice != nullptr && "Vulkan runtime error, failed to find a suitable gpu!");
+
+		if (m_physicalDevice == nullptr)
+		{
+			throw std::runtime_error("Vulkan runtime error, failed to find a suitable gpu!");
+		}
 
 		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
 		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
@@ -464,7 +461,10 @@ namespace Flounder
 			}
 		}
 
-		assert(foundQueueFamily && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+		if (!foundQueueFamily)
+		{
+			throw std::runtime_error("Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+		}
 	}
 
 	VkPhysicalDevice Display::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices)
@@ -482,7 +482,6 @@ namespace Flounder
 		// Checks to make sure the best candidate scored higher than 0  rbegin points to last element of ranked devices(highest rated), first is its rating.
 		if (rankedDevices.rbegin()->first > 0)
 		{
-			// Returns the second value of the highest rated device (its VkPhysicalDevice component).
 			return rankedDevices.rbegin()->second;
 		}
 
@@ -492,16 +491,6 @@ namespace Flounder
 	int Display::ScorePhysicalDevice(const VkPhysicalDevice &device)
 	{
 		int score = 0;
-
-		/// Adjusts score based on queue families:
-		// Finds an index of a queue family which contains the necessary commands.
-		/*QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(device, m_surface);
-
-		// Returns a score of 0 if this device has no suitable family.
-		if (!indices.IsComplete())
-		{
-			return 0;
-		}*/
 
 		// Checks if the requested extensions are supported.
 		uint32_t extensionPropertyCount;
@@ -531,21 +520,12 @@ namespace Flounder
 			}
 		}
 
-		/// check if this device has an adequate swap chain
-		/*bool swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
-
-		if (!swapChainAdequate)
-		{
-			return 0;
-		}*/
-
 		// Obtain the device features and properties of the current device being rateds.
 		VkPhysicalDeviceProperties physicalDeviceProperties;
 		VkPhysicalDeviceFeatures physicalDeviceFeatures;
 		vkGetPhysicalDeviceProperties(device, &physicalDeviceProperties);
 		vkGetPhysicalDeviceFeatures(device, &physicalDeviceFeatures);
 
-		/// Adjusts score based on properties:
 		// Adds a large score boost for discrete GPUs (dedicated graphics cards).
 		if (physicalDeviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
 		{
@@ -554,13 +534,6 @@ namespace Flounder
 
 		// Gives a higher score to devices with a higher maximum texture size.
 		score += physicalDeviceProperties.limits.maxImageDimension2D;
-
-		/// Adjust score based on features:
-		// Only allow a device if it supports geometry shaders.
-		if (!physicalDeviceFeatures.geometryShader)
-		{
-			return 0;
-		}
 
 		return score;
 	}
@@ -609,7 +582,11 @@ namespace Flounder
 
 		VkBool32 physicalDeviceSurfaceSupport = false;
 		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_graphicsFamilyIndex, m_surface, &physicalDeviceSurfaceSupport);
-		assert(physicalDeviceSurfaceSupport && "Vulkan runtime error, failed to find a physical surface!");
+
+		if (!physicalDeviceSurfaceSupport)
+		{
+			throw std::runtime_error("Vulkan runtime error, failed to find a physical surface!");
+		}
 
 		uint32_t physicalDeviceFormatCount = 0;
 		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, nullptr);
