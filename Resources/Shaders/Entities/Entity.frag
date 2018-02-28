@@ -18,7 +18,9 @@ layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
 
 layout(location = 0) in vec2 fragmentUv;
 layout(location = 1) in vec3 fragmentNormal;
-layout(location = 2) in mat3 tangentSpace;
+layout(location = 2) in vec3 tangentT;
+layout(location = 3) in vec3 tangentN;
+layout(location = 4) in vec3 tangentB;
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
@@ -62,7 +64,7 @@ void main()
 	    vec4 textureNormal = texture(samplerNormal, fragmentUv);
 	    unitNormal = textureNormal.rgb;
         unitNormal = normalize(textureNormal.rgb * 2.0f - vec3(1.0f));
-        unitNormal = normalize(tangentSpace * unitNormal);
+        unitNormal = normalize(mat3(tangentT, tangentN, tangentB) * unitNormal);
 	}
 
 	material.z = (1.0f / 3.0f) * (object.surface.z + (2.0f * min(object.surface.w + glowing, 1.0f)));
