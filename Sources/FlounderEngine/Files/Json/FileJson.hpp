@@ -5,7 +5,7 @@
 #include <vector>
 #include "../../Helpers/FormatString.hpp"
 #include "../IFile.hpp"
-#include "ValueJson.hpp"
+#include "JsonSection.hpp"
 
 namespace Flounder
 {
@@ -14,7 +14,7 @@ namespace Flounder
 	{
 	private:
 		std::string m_filename;
-		ValueJson *m_parent;
+		LoadedValue *m_parent;
 	public:
 		FileJson(const std::string &filename);
 
@@ -30,7 +30,9 @@ namespace Flounder
 
 		void ConfigPushValue(const std::string &key, const std::string &value) override;
 
-		ValueJson *GetChild(const std::string &name) const { return m_parent->GetChild(name); }
+		LoadedValue *GetParent() const { return m_parent; }
+
+		LoadedValue *GetChild(const std::string &name) const { return m_parent->GetChild(name); }
 	private:
 		void Verify();
 	};

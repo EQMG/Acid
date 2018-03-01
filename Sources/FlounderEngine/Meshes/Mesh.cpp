@@ -10,7 +10,6 @@ namespace Flounder
 		Component(),
 		m_model(model)
 	{
-		Link<std::string>(0, "Model", LINK_GET_RES(GetModel()), LINK_SET(std::string, TrySetModel(v)));
 	}
 
 	Mesh::~Mesh()
@@ -34,9 +33,19 @@ namespace Flounder
 		}*/
 	}
 
+	void Mesh::Load(LoadedValue *value)
+	{
+		TrySetModel(value->GetChild("Model")->GetRaw());
+	}
+
+	void Mesh::Write(LoadedValue *value)
+	{
+		value->GetChild("Model", true)->SetRaw(m_model->GetFilename());
+	}
+
 	void Mesh::TrySetModel(const std::string &filename)
 	{
-		if (filename.empty() || filename == "nullptr")
+		if (filename.empty())
 		{
 			return;
 		}

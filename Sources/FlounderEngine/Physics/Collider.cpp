@@ -15,4 +15,14 @@ namespace Flounder
 	{
 	//	Update(*GetGameObject()->GetTransform(), this);
 	}
+
+	void Collider::Load(LoadedValue *value)
+	{
+
+	}
+
+	void Collider::Write(LoadedValue *value)
+	{
+
+	}
 }

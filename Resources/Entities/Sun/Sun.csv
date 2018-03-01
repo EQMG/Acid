@@ -1,6 +1,0 @@
-Rigidbody,1.000000,0.000000,1,0,0,0,0,0,0
-Material,#FFF9B5,nullptr,1.000000,0.000000,0,1,1,nullptr,nullptr
-Light,#FFFFFF,-1.000000,0.000000,3.000000,0.000000
-Mesh,Sphere_20_20_1.000000
-EntityRender
-CelestialBody,0

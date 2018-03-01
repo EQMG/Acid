@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Prerequisites.hpp"
+#include "../Files/LoadedValue.hpp"
 #include "Matrix3.hpp"
 #include "Matrix4.hpp"
 
@@ -65,6 +66,12 @@ namespace Flounder
 		Quaternion(const Matrix4 &source);
 
 		/// <summary>
+		/// Constructor for quaternion.
+		/// </summary>
+		/// <param name="source"> Creates this quaternion out of a loaded value. </param>
+		Quaternion(LoadedValue *value);
+
+		/// <summary>
 		/// Deconstructor for quaternion.
 		/// </summary>
 		~Quaternion();
@@ -106,6 +113,18 @@ namespace Flounder
 		/// <param name="source"> The source matrix. </param>
 		/// <returns> This. </returns>
 		Quaternion *Set(const Matrix3 &source);
+
+		/// <summary>
+		/// Sets values in the quaternion.
+		/// </summary>
+		/// <param name="source"> The source loaded value. </param>
+		Quaternion *Set(LoadedValue *value);
+
+		/// <summary>
+		/// Saves this quaternion into a loaded value.
+		/// </summary>
+		/// <param name="destination"> The destination loaded value. </param>
+		void Write(LoadedValue *destination);
 
 		/// <summary>
 		/// Set the given quaternion to the multiplication identity.

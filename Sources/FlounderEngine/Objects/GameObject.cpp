@@ -27,30 +27,18 @@ namespace Flounder
 	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure<GameObject *> *structure) :
 		GameObject(transform, structure, prefabName)
 	{
-		PrefabObject *entityPrefab = PrefabObject::Resource("Resources/Entities/" + prefabName + "/" + prefabName + ".csv");
+		PrefabObject *entityPrefab = PrefabObject::Resource("Resources/Entities/" + prefabName + "/" + prefabName + ".json");
 
-		for (const auto &componentName : entityPrefab->GetComponents())
+		for (auto value : entityPrefab->GetParent()->m_children)
 		{
-			if (FormatString::StartsWith(componentName, "#"))
-			{
-				continue;
-			}
-
-			Component *component = ComponentRegister::Create(componentName);
+			Component *component = ComponentRegister::Create(value->m_name);
 
 			if (component == nullptr)
 			{
 				continue;
 			}
 
-			PrefabComponent *componentPrefab = entityPrefab->GetComponentData(componentName);
-
-			if (componentPrefab == nullptr)
-			{
-				continue;
-			}
-
-			component->Load(componentPrefab);
+			component->Write(value);
 			AddComponent(component);
 		}
 	}

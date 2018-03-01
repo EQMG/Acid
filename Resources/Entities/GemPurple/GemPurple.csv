@@ -1,5 +1,0 @@
-Rigidbody,1.0,0.0,1,0,0,0,0,0,0
-Material,#C37A57,Resources/Entities/GemPurple/Diffuse.png,0.4,0.2,1,0,0,Resources/Entities/GemPurple/Material.png,nullptr
-Light,#B66ADA,1.5,0.0,0.5,0.0
-Mesh,Resources/Entities/GemPurple/Model.obj
-EntityRender

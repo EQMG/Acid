@@ -234,6 +234,14 @@ namespace Flounder
 		return destination;
 	}
 
+	void ColliderAabb::Load(LoadedValue *value)
+	{
+	}
+
+	void ColliderAabb::Write(LoadedValue *value)
+	{
+	}
+
 	Vector3 *ColliderAabb::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
 	{
 		if (destination == nullptr)

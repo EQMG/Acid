@@ -14,15 +14,6 @@ namespace Flounder
 		m_textureMaterial(material), // R: Metallic, G: Roughness, B: Emmisive
 		m_textureNormal(normal)
 	{
-		Link<std::string>(0, "Base Colour", LINK_GET_STR(Colour::GetHex(*GetBaseColor())), LINK_SET(std::string, SetBaseColor(Colour(v))));
-		Link<std::string>(1, "Diffuse Texture", LINK_GET_RES(GetTextureDiffuse()), LINK_SET(std::string, TrySetTextureDiffuse(v)));
-		Link<float>(2, "Metallic", LINK_GET(GetMetallic()), LINK_SET(float, SetMetallic(v)));
-		Link<float>(3, "Roughness", LINK_GET(GetRoughness()), LINK_SET(float, SetRoughness(v)));
-		Link<bool>(4, "Cast Shadows", LINK_GET(GetCastsShadows()), LINK_SET(bool, SetCastsShadows(v)));
-		Link<bool>(5, "Ignore Lighting", LINK_GET(GetIgnoreLighting()), LINK_SET(bool, SetIgnoreLighting(v)));
-		Link<bool>(6, "Ignore Fog", LINK_GET(GetIgnoreFog()), LINK_SET(bool, SetIgnoreFog(v)));
-		Link<std::string>(7, "Material Texture", LINK_GET_RES(GetTextureMaterial()), LINK_SET(std::string, TrySetTextureMaterial(v)));
-		Link<std::string>(8, "Normal Texture", LINK_GET_RES(GetTextureNormal()), LINK_SET(std::string, TrySetTextureNormal(v)));
 	}
 
 	Material::~Material()
@@ -35,33 +26,52 @@ namespace Flounder
 		Component::Update();
 	}
 
+	void Material::Load(LoadedValue *value)
+	{
+		TrySetTextureDiffuse(value->GetChild("Diffuse Texture")->GetRaw());
+		m_baseColor->Set(value->GetChild("Base Colour")->GetRaw());
+		m_metallic = value->GetChild("Metallic")->Get<float>();
+		m_roughness = value->GetChild("Roughness")->Get<float>();
+		m_castsShadows = value->GetChild("Cast Shadows")->Get<bool>();
+		m_ignoreLighting = value->GetChild("Ignore Lighting")->Get<bool>();
+		m_ignoreFog = value->GetChild("Ignore Fog")->Get<bool>();
+		TrySetTextureMaterial(value->GetChild("Material Texture")->GetRaw());
+		TrySetTextureNormal(value->GetChild("Normal Texture")->GetRaw());
+	}
+
+	void Material::Write(LoadedValue *value)
+	{
+		value->GetChild("Diffuse Texture", true)->SetRaw(m_textureDiffuse == nullptr ? "" : m_textureDiffuse->GetFilename());
+		value->GetChild("Base Colour", true)->SetRaw(Colour::GetHex(*m_baseColor));
+		value->GetChild("Metallic", true)->Set(m_metallic);
+		value->GetChild("Roughness", true)->Set(m_roughness);
+		value->GetChild("Ignore Lighting", true)->Set(m_ignoreLighting);
+		value->GetChild("Ignore Fog", true)->Set(m_ignoreFog);
+		value->GetChild("Material Texture", true)->SetRaw(m_textureMaterial == nullptr ? "" : m_textureMaterial->GetFilename());
+		value->GetChild("Normal Texture", true)->SetRaw(m_textureNormal == nullptr ? "" : m_textureNormal->GetFilename());
+	}
+
 	void Material::TrySetTextureDiffuse(const std::string &filename)
 	{
-		if (filename.empty() || filename == "nullptr")
+		if (!filename.empty())
 		{
-			return;
+			m_textureDiffuse = Texture::Resource(filename);
 		}
-
-		m_textureDiffuse = Texture::Resource(filename);
 	}
 
 	void Material::TrySetTextureMaterial(const std::string &filename)
 	{
-		if (filename.empty() || filename == "nullptr")
+		if (!filename.empty())
 		{
-			return;
+			m_textureMaterial = Texture::Resource(filename);
 		}
-
-		m_textureMaterial = Texture::Resource(filename);
 	}
 
 	void Material::TrySetTextureNormal(const std::string &filename)
 	{
-		if (filename.empty() || filename == "nullptr")
+		if (!filename.empty())
 		{
-			return;
+			m_textureNormal = Texture::Resource(filename);
 		}
-
-		m_textureNormal = Texture::Resource(filename);
 	}
 }

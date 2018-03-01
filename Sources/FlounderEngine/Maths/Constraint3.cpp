@@ -28,6 +28,11 @@ namespace Flounder
 	{
 	}
 
+	Constraint3::Constraint3(LoadedValue *value)
+	{
+		Set(value);
+	}
+
 	Constraint3::~Constraint3()
 	{
 	}
@@ -46,6 +51,21 @@ namespace Flounder
 		m_y = y;
 		m_z = z;
 		return this;
+	}
+
+	Constraint3 *Constraint3::Set(LoadedValue *value)
+	{
+		m_x = value->GetChild("x")->Get<bool>();
+		m_y = value->GetChild("y")->Get<bool>();
+		m_z = value->GetChild("z")->Get<bool>();
+		return this;
+	}
+
+	void Constraint3::Write(LoadedValue *destination)
+	{
+		destination->SetChild<bool>("x", m_x);
+		destination->SetChild<bool>("y", m_y);
+		destination->SetChild<bool>("z", m_z);
 	}
 
 	bool Constraint3::operator==(const Constraint3 &other) const

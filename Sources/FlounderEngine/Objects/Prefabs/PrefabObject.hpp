@@ -5,8 +5,7 @@
 #include <unordered_map>
 #include "../../Helpers/FormatString.hpp"
 #include "../../Resources/Resources.hpp"
-#include "../../Files/Csv/FileCsv.hpp"
-#include "PrefabComponent.hpp"
+#include "../../Files/Json/FileJson.hpp"
 
 namespace Flounder
 {
@@ -20,8 +19,8 @@ namespace Flounder
 	{
 	private:
 		std::string m_filename;
-		FileCsv *m_fileCsv;
-		std::unordered_map<std::string, PrefabComponent *> *m_components;
+		FileJson *m_fileJson;
+		LoadedValue *m_parent;
 	public:
 		static PrefabObject *Resource(const std::string &filename)
 		{
@@ -51,8 +50,6 @@ namespace Flounder
 
 		std::string GetFilename() override { return m_filename; }
 
-		std::vector<std::string> GetComponents();
-
-		PrefabComponent *GetComponentData(const std::string &component);
+		LoadedValue *GetParent() const { m_parent; }
 	};
 }
