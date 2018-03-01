@@ -53,6 +53,11 @@ namespace Flounder
 	{
 	}
 
+	Vector4::Vector4(LoadedValue *value)
+	{
+		Set(value);
+	}
+
 	Vector4::~Vector4()
 	{
 	}
@@ -82,6 +87,23 @@ namespace Flounder
 		m_z = source.m_z;
 		m_w = source.m_w;
 		return this;
+	}
+
+	Vector4 *Vector4::Set(LoadedValue *value)
+	{
+		m_x = value->GetChild("x")->Get<float>();
+		m_y = value->GetChild("y")->Get<float>();
+		m_z = value->GetChild("z")->Get<float>();
+		m_w = value->GetChild("w")->Get<float>();
+		return this;
+	}
+
+	void Vector4::Write(LoadedValue *destination)
+	{
+		destination->SetChild<float>("x", m_x);
+		destination->SetChild<float>("y", m_y);
+		destination->SetChild<float>("z", m_z);
+		destination->SetChild<float>("w", m_w);
 	}
 
 	Vector4 *Vector4::Add(const Vector4 &left, const Vector4 &right, Vector4 *destination)

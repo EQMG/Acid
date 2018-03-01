@@ -31,6 +31,10 @@ namespace Flounder
 
 		void Update() override;
 
+		void Load(LoadedValue *value) override;
+
+		void Write(LoadedValue *value) override;
+
 		std::string GetName() const override { return "Material"; };
 
 		Colour *GetBaseColor() const { return m_baseColor; }

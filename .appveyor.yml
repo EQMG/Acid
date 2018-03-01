@@ -36,8 +36,8 @@ before_build:
   - cd ../
   - mkdir Debug
   - xcopy Resources Debug\Resources\ /s/h/e/k/f/c
-  - xcopy Build\Release\bin\Debug Debug\ /s/h/e/k/f/c
-  - xcopy Build\Release\lib\Debug Debug\ /s/h/e/k/f/c
+  - xcopy Build\Debug\bin\Debug Debug\ /s/h/e/k/f/c
+  - xcopy Build\Debug\lib\Debug Debug\ /s/h/e/k/f/c
 
 artifacts:
   - path: Debug\

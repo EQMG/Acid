@@ -15,15 +15,6 @@ namespace Flounder
 		m_freezeRotation(new Constraint3(freezeRotation)),
 		m_colliderCopy(nullptr)
 	{
-		Link<float>(0, "Mass", LINK_GET(GetMass()), LINK_SET(float, SetMass(v)));
-		Link<float>(1, "Drag", LINK_GET(GetDrag()), LINK_SET(float, SetDrag(v)));
-		Link<bool>(2, "Use Gravity", LINK_GET(IsUseGravity()), LINK_SET(bool, SetUseGravity(v)));
-		Link<bool>(3, "Freeze Position X", LINK_GET(GetFreezePosition()->m_x), LINK_SET(bool, GetFreezePosition()->m_x = v));
-		Link<bool>(4, "Freeze Position Y", LINK_GET(GetFreezePosition()->m_y), LINK_SET(bool, GetFreezePosition()->m_y = v));
-		Link<bool>(5, "Freeze Position Z", LINK_GET(GetFreezePosition()->m_z), LINK_SET(bool, GetFreezePosition()->m_z = v));
-		Link<bool>(6, "Freeze Rotation X", LINK_GET(GetFreezeRotation()->m_x), LINK_SET(bool, GetFreezeRotation()->m_x = v));
-		Link<bool>(7, "Freeze Rotation Y", LINK_GET(GetFreezeRotation()->m_y), LINK_SET(bool, GetFreezeRotation()->m_y = v));
-		Link<bool>(8, "Freeze Rotation Z", LINK_GET(GetFreezeRotation()->m_z), LINK_SET(bool, GetFreezeRotation()->m_z = v));
 	}
 
 	Rigidbody::~Rigidbody()
@@ -41,6 +32,24 @@ namespace Flounder
 		{
 			m_colliderCopy = collider->Update(*GetGameObject()->GetTransform(), m_colliderCopy);
 		}
+	}
+
+	void Rigidbody::Load(LoadedValue *value)
+	{
+		m_mass = value->GetChild("Mass")->Get<float>();
+		m_drag = value->GetChild("Drag")->Get<float>();
+		m_useGravity = value->GetChild("Use Gravity")->Get<bool>();
+		m_freezePosition->Set(value->GetChild("Freeze Position"));
+		m_freezeRotation->Set(value->GetChild("Freeze Rotation"));
+	}
+
+	void Rigidbody::Write(LoadedValue *value)
+	{
+		value->GetChild("Mass", true)->Set(m_mass);
+		value->GetChild("Drag", true)->Set(m_drag);
+		value->GetChild("Use Gravity", true)->Set(m_useGravity);
+		m_freezePosition->Write(value->GetChild("Freeze Position", true));
+		m_freezeRotation->Write(value->GetChild("Freeze Rotation", true));
 	}
 
 	Vector3 Rigidbody::ResolveCollisions(const Vector3 &amount)

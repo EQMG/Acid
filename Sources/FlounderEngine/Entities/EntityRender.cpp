@@ -24,6 +24,14 @@ namespace Flounder
 	{
 	}
 
+	void EntityRender::Load(LoadedValue *value)
+	{
+	}
+
+	void EntityRender::Write(LoadedValue *value)
+	{
+	}
+
 	void EntityRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();

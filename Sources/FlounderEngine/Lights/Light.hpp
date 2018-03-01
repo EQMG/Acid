@@ -42,6 +42,10 @@ namespace Flounder
 
 		void Update() override;
 
+		void Load(LoadedValue *value) override;
+
+		void Write(LoadedValue *value) override;
+
 		/// <summary>
 		/// Sets values in the light.
 		/// </summary>

@@ -115,6 +115,10 @@ namespace Flounder
 
 		Collider *Update(const Transform &transform, Collider *destination) override;
 
+		void Load(LoadedValue *value) override;
+
+		void Write(LoadedValue *value) override;
+
 		Vector3 *ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination) override;
 
 		Intersect Intersects(const Collider &other) override;
