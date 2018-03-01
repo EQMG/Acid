@@ -103,6 +103,10 @@ namespace Flounder
 
 	ModelLoaded Model::LoadFromFile(const std::string &filename)
 	{
+#if FLOUNDER_VERBOSE
+		const auto debugStart = Engine::Get()->GetTimeMs();
+#endif
+
 		delete m_indexBuffer;
 		delete m_vertexBuffer;
 
@@ -215,6 +219,11 @@ namespace Flounder
 
 			delete current;
 		}
+
+#if FLOUNDER_VERBOSE
+		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Obj '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+#endif
 
 		m_filename = filename;
 		return modelLoaded;

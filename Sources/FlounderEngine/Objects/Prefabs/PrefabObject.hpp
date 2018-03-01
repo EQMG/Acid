@@ -20,7 +20,6 @@ namespace Flounder
 	private:
 		std::string m_filename;
 		FileJson *m_fileJson;
-		LoadedValue *m_parent;
 	public:
 		static PrefabObject *Resource(const std::string &filename)
 		{
@@ -50,6 +49,6 @@ namespace Flounder
 
 		std::string GetFilename() override { return m_filename; }
 
-		LoadedValue *GetParent() const { m_parent; }
+		LoadedValue *GetParent() const { return m_fileJson->GetParent(); }
 	};
 }

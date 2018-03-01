@@ -71,5 +71,15 @@ namespace Flounder
 		{
 			SetRaw(std::to_string(data));
 		}
+
+		std::string GetString()
+		{
+			return FormatString::RemoveAll(m_value, '\"');
+		}
+
+		void SetString(const std::string &data)
+		{
+			m_value = "\"" + data + "\"";
+		}
 	};
 }

@@ -29,6 +29,14 @@ namespace Flounder
 	{
 	}
 
+	void WaterRender::Load(LoadedValue *value)
+	{
+	}
+
+	void WaterRender::Write(LoadedValue *value)
+	{
+	}
+
 	void WaterRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
