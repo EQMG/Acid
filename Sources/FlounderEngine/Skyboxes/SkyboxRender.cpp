@@ -13,7 +13,6 @@ namespace Flounder
 		m_cubemap(cubemap),
 		m_blend(1.0f)
 	{
-		Link<std::string>(0, "Cubemap", LINK_GET_RES(GetCubemap()), LINK_SET(std::string, TrySetCubemap(v)));
 	}
 
 	SkyboxRender::~SkyboxRender()
@@ -25,6 +24,16 @@ namespace Flounder
 	{
 		GetGameObject()->GetTransform()->SetRotation(*Worlds::Get()->GetSkyboxRotation());
 		m_blend = Worlds::Get()->GetStarIntensity();
+	}
+
+	void SkyboxRender::Load(LoadedValue *value)
+	{
+		TrySetCubemap(value->GetChild("Cubemap")->GetString());
+	}
+
+	void SkyboxRender::Write(LoadedValue *value)
+	{
+		value->GetChild("Cubemap", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
 	}
 
 	void SkyboxRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
@@ -66,11 +75,9 @@ namespace Flounder
 
 	void SkyboxRender::TrySetCubemap(const std::string &filename)
 	{
-		if (filename.empty() || filename == "nullptr")
+		if (!filename.empty())
 		{
-			return;
+			m_cubemap = Cubemap::Resource(filename, ".png");
 		}
-
-		m_cubemap = Cubemap::Resource(filename, ".png");
 	}
 }

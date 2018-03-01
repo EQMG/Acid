@@ -9,7 +9,6 @@ namespace Flounder
 		Component(),
 		m_type(type)
 	{
-		Link<int>(0, "Type", LINK_GET(static_cast<int>(GetType())), LINK_SET(int, SetType(static_cast<CelestialType>(v))));
 	}
 
 	CelestialBody::~CelestialBody()
@@ -47,5 +46,15 @@ namespace Flounder
 				break;
 			}
 		}
+	}
+
+	void CelestialBody::Load(LoadedValue *value)
+	{
+		m_type = static_cast<CelestialType>(value->GetChild("Type")->Get<int>());
+	}
+
+	void CelestialBody::Write(LoadedValue *value)
+	{
+		value->GetChild("Type", true)->Set(static_cast<int>(m_type));
 	}
 }

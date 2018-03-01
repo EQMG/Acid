@@ -18,7 +18,7 @@ namespace Flounder
 		ISpatialStructure<GameObject *> *m_structure;
 		bool m_removed;
 	public:
-		GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure = nullptr, std::string name = "Unnamed");
+		GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure = nullptr, const std::string &name = "Unnamed");
 
 		GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure<GameObject *> *structure = nullptr);
 

@@ -69,7 +69,7 @@ namespace Flounder
 
 			auto contentSplit = FormatString::Split(source->m_content, ",");
 
-			for (auto data : contentSplit)
+			for (const auto &data : contentSplit)
 			{
 				auto dataSplit = FormatString::Split(data, ":", true);
 

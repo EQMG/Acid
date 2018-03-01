@@ -24,6 +24,10 @@ namespace Flounder
 
 		void Update() override;
 
+		void Load(LoadedValue *value) override;
+
+		void Write(LoadedValue *value) override;
+
 		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene);
 
 		std::string GetName() const override { return "TerrainRender"; };
