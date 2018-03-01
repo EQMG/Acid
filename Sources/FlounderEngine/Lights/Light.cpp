@@ -34,14 +34,14 @@ namespace Flounder
 
 	void Light::Load(LoadedValue *value)
 	{
-		m_colour->Set(value->GetChild("Colour")->GetRaw());
+		m_colour->Set(value->GetChild("Colour")->GetString());
 		m_radius = value->GetChild("Radius")->Get<float>();
 		m_offset->Set(value->GetChild("Offset"));
 	}
 
 	void Light::Write(LoadedValue *value)
 	{
-		value->GetChild("Colour", true)->SetRaw(Colour::GetHex(*m_colour));
+		value->GetChild("Colour", true)->SetString(Colour::GetHex(*m_colour));
 		value->GetChild("Radius", true)->Set(m_radius);
 		m_offset->Write(value->GetChild("Offset", true));
 	}

@@ -28,6 +28,10 @@ namespace Flounder
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageInfo({})
 	{
+#if FLOUNDER_VERBOSE
+		const auto debugStart = Engine::Get()->GetTimeMs();
+#endif
+
 		if (!FileSystem::FileExists(filename))
 		{
 			fprintf(stderr, "File does not exist: '%s'\n", filename.c_str());
@@ -114,8 +118,13 @@ namespace Flounder
 		m_imageInfo.sampler = m_sampler;
 
 		delete bufferStaging;
-		delete[] pixels;
+		free(pixels);
 		m_filename = filename;
+
+#if FLOUNDER_VERBOSE
+		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Texture '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+#endif
 	}
 
 	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage) :

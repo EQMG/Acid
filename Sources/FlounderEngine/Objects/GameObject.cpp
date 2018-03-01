@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	GameObject::GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure, std::string name) :
+	GameObject::GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure, const std::string &name) :
 		m_name(name),
 		m_transform(new Transform(transform)),
 		m_components(new std::vector<Component*>()),
@@ -38,7 +38,7 @@ namespace Flounder
 				continue;
 			}
 
-			component->Write(value);
+			component->Load(value);
 			AddComponent(component);
 		}
 	}

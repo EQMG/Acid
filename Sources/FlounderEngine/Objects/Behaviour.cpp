@@ -17,6 +17,14 @@ namespace Flounder
 	{
 	}
 
+	void Behaviour::Load(LoadedValue *value)
+	{
+	}
+
+	void Behaviour::Write(LoadedValue *value)
+	{
+	}
+
 	void Behaviour::OnEnable()
 	{
 	}

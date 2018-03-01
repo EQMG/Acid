@@ -8,8 +8,7 @@ namespace Flounder
 	PrefabObject::PrefabObject(const std::string &filename) :
 		IResource(),
 		m_filename(filename),
-		m_fileJson(new FileJson(filename)),
-		m_parent(nullptr)
+		m_fileJson(new FileJson(filename))
 	{
 		if (!FileSystem::FileExists(filename))
 		{
@@ -17,7 +16,6 @@ namespace Flounder
 		}
 
 		m_fileJson->Load();
-		m_parent = m_fileJson->GetParent();
 	}
 
 	PrefabObject::~PrefabObject()
@@ -27,11 +25,11 @@ namespace Flounder
 
 	void PrefabObject::Write(GameObject *gameObject)
 	{
-		m_parent->m_children.clear();
+		m_fileJson->GetParent()->m_children.clear();
 
 		for (auto component : *gameObject->GetComponents())
 		{
-			component->Write(m_parent->GetChild(component->GetName(), true));
+			component->Write(m_fileJson->GetParent()->GetChild(component->GetName(), true));
 		}
 	}
 

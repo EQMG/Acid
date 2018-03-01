@@ -77,7 +77,7 @@ namespace Flounder
 			}
 		}
 
-		m_parent = JsonSection::Convert(loadedParent, nullptr);
+		m_parent = JsonSection::Convert(loadedParent, m_parent);
 		delete loadedParent;
 
 #if FLOUNDER_VERBOSE
