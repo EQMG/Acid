@@ -27,11 +27,12 @@ int main(int argc, char **argv)
 	auto configManager = new ConfigManager();
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
-	auto fileTesting = new FileJson("Resources/Entities/Testing/Testing.json");
-	fileTesting->Load();
-	printf("Light Colour: %s\n", fileTesting->GetChild("Light")->GetChild("Colour")->Get<std::string>().c_str());
-	printf("Light Radius: %f\n", fileTesting->GetChild("Light")->GetChild("Radius")->Get<float>());
-//	printf("Light Offset: %s\n", Vector3(fileTesting->GetChild("Light")->GetChild("Radius")->Get<Vector3>().ToString().c_str());
+	auto jsonTesting = new FileJson("Resources/Entities/Testing/Testing.json");
+	jsonTesting->Load();
+	printf("Light Colour: %s\n", jsonTesting->GetChild("Light")->GetChild("Colour")->Get<std::string>().c_str());
+	printf("Light Radius: %f\n", jsonTesting->GetChild("Light")->GetChild("Radius")->Get<float>());
+	printf("Light Offset: %s\n", Vector3(jsonTesting->GetChild("Light")->GetChild("Offset")).ToString().c_str());
+	Vector3 testing = Vector3();
 
 	// Adds to the component registry.
 	ComponentRegister::Register("FpsPlayer", REGISTER_CREATE(FpsPlayer));

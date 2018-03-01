@@ -25,6 +25,10 @@ namespace Flounder
 
 		void Update() override;
 
+		void Load(LoadedValue *value) override;
+
+		void Write(LoadedValue *value) override;
+
 		Vector3 ResolveCollisions(const Vector3 &amount);
 
 		std::string GetName() const override { return "Rigidbody"; };

@@ -46,6 +46,11 @@ namespace Flounder
 	{
 	}
 
+	Matrix3::Matrix3(LoadedValue *value)
+	{
+		Set(value);
+	}
+
 	Matrix3::~Matrix3()
 	{
 	}
@@ -76,6 +81,21 @@ namespace Flounder
 		m_21 = source[7];
 		m_22 = source[8];
 		return this;
+	}
+
+	Matrix3 *Matrix3::Set(LoadedValue *value)
+	{
+		m_0->Set(value->GetChild("m0"));
+		m_1->Set(value->GetChild("m1"));
+		m_2->Set(value->GetChild("m2"));
+		return this;
+	}
+
+	void Matrix3::Write(LoadedValue *destination)
+	{
+		m_0->Write(destination->GetChild("m0", true));
+		m_1->Write(destination->GetChild("m1", true));
+		m_2->Write(destination->GetChild("m2", true));
 	}
 
 	Matrix3 *Matrix3::SetIdentity(Matrix3 *source)

@@ -2,7 +2,9 @@
 
 #include <ostream>
 #include <string>
+#include <sstream>
 #include "../Prerequisites.hpp"
+#include "../Files/LoadedValue.hpp"
 
 namespace Flounder
 {
@@ -80,6 +82,12 @@ namespace Flounder
 		Vector3(const float &x, const float &y, const float &z);
 
 		/// <summary>
+		/// Constructor for Vector3.
+		/// </summary>
+		/// <param name="source"> Creates this vector out of a loaded value. </param>
+		Vector3(LoadedValue *value);
+
+		/// <summary>
 		/// Deconstructor for Vector3.
 		/// </summary>
 		~Vector3();
@@ -113,6 +121,18 @@ namespace Flounder
 		/// <param name="z"> The new Z value. </param>
 		/// <returns> This. </returns>
 		Vector3 *Set(const float &x, const float &y, const float &z);
+
+		/// <summary>
+		/// Sets values in the vector.
+		/// </summary>
+		/// <param name="source"> The source loaded value. </param>
+		Vector3 *Set(LoadedValue *value);
+
+		/// <summary>
+		/// Saves this vector into a loaded value.
+		/// </summary>
+		/// <param name="destination"> The destination loaded value. </param>
+		void Write(LoadedValue *destination);
 
 		/// <summary>
 		/// Adds two vectors together and places the result in the destination vector.

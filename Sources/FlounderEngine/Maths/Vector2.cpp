@@ -40,6 +40,11 @@ namespace Flounder
 	{
 	}
 
+	Vector2::Vector2(LoadedValue *value)
+	{
+		Set(value);
+	}
+
 	Vector2::~Vector2()
 	{
 	}
@@ -63,6 +68,19 @@ namespace Flounder
 		m_x = source.m_x;
 		m_y = source.m_y;
 		return this;
+	}
+
+	Vector2 *Vector2::Set(LoadedValue *value)
+	{
+		m_x = value->GetChild("x")->Get<float>();
+		m_y = value->GetChild("y")->Get<float>();
+		return this;
+	}
+
+	void Vector2::Write(LoadedValue *destination)
+	{
+		destination->SetChild<float>("x", m_x);
+		destination->SetChild<float>("y", m_y);
 	}
 
 	Vector2 *Vector2::Add(const Vector2 &left, const Vector2 &right, Vector2 *destination)

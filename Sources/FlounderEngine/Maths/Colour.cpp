@@ -63,6 +63,11 @@ namespace Flounder
 	{
 	}
 
+	Colour::Colour(LoadedValue *value)
+	{
+		Set(value);
+	}
+
 	Colour::~Colour()
 	{
 	}
@@ -112,6 +117,23 @@ namespace Flounder
 		m_b = source.m_z;
 		m_a = source.m_w;
 		return this;
+	}
+
+	Colour *Colour::Set(LoadedValue *value)
+	{
+		m_r = value->GetChild("r")->Get<float>();
+		m_g = value->GetChild("g")->Get<float>();
+		m_b = value->GetChild("b")->Get<float>();
+		m_a = value->GetChild("a")->Get<float>();
+		return this;
+	}
+
+	void Colour::Write(LoadedValue *destination)
+	{
+		destination->SetChild<float>("r", m_r);
+		destination->SetChild<float>("g", m_g);
+		destination->SetChild<float>("b", m_b);
+		destination->SetChild<float>("a", m_a);
 	}
 
 	Colour *Colour::Add(const Colour &left, const Colour &right, Colour *destination)

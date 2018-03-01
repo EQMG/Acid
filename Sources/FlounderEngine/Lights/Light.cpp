@@ -9,11 +9,6 @@ namespace Flounder
 		m_offset(new Vector3(offset)),
 		m_position(new Vector3())
 	{
-		Link<std::string>(0, "Colour", LINK_GET_STR(Colour::GetHex(*GetColour())), LINK_SET(std::string, SetColour(Colour(v))));
-		Link<float>(1, "Radius", LINK_GET(GetRadius()), LINK_SET(float, SetRadius(v)));
-		Link<float>(2, "Offset X", LINK_GET(GetOffset()->m_x), LINK_SET(float, GetOffset()->m_x = v));
-		Link<float>(3, "Offset Y", LINK_GET(GetOffset()->m_y), LINK_SET(float, GetOffset()->m_y = v));
-		Link<float>(4, "Offset Z", LINK_GET(GetOffset()->m_z), LINK_SET(float, GetOffset()->m_z = v));
 	}
 
 	Light::Light(const Light &source) :
@@ -35,6 +30,20 @@ namespace Flounder
 	void Light::Update()
 	{
 		m_position->Set(*GetGameObject()->GetTransform()->m_position + *m_offset);
+	}
+
+	void Light::Load(LoadedValue *value)
+	{
+		m_colour->Set(value->GetChild("Colour")->GetRaw());
+		m_radius = value->GetChild("Radius")->Get<float>();
+		m_offset->Set(value->GetChild("Offset"));
+	}
+
+	void Light::Write(LoadedValue *value)
+	{
+		value->GetChild("Colour", true)->SetRaw(Colour::GetHex(*m_colour));
+		value->GetChild("Radius", true)->Set(m_radius);
+		m_offset->Write(value->GetChild("Offset", true));
 	}
 
 	Light *Light::Set(const Colour &colour, const Vector3 &offset)

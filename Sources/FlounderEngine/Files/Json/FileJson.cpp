@@ -77,7 +77,7 @@ namespace Flounder
 			}
 		}
 
-		m_parent = ValueJson::Convert(loadedParent, nullptr);
+		m_parent = JsonSection::Convert(loadedParent, nullptr);
 		delete loadedParent;
 
 #if FLOUNDER_VERBOSE
@@ -89,7 +89,7 @@ namespace Flounder
 	void FileJson::Save()
 	{
 		std::string data;
-		m_parent->AppendData(&data, 0);
+		JsonSection::AppendData(m_parent, &data, 0);
 
 		Verify();
 		FileSystem::ClearFile(m_filename);
@@ -125,7 +125,7 @@ namespace Flounder
 
 	void FileJson::ConfigPushValue(const std::string &key, const std::string &value)
 	{
-		ValueJson *exiting = m_parent->GetChild(key);
+		LoadedValue *exiting = m_parent->GetChild(key);
 
 		if (exiting != nullptr)
 		{
@@ -133,7 +133,7 @@ namespace Flounder
 			return;
 		}
 
-		m_parent->m_children.push_back(new ValueJson(m_parent, key, value));
+		m_parent->m_children.push_back(new LoadedValue(m_parent, key, value));
 	}
 
 	void FileJson::Verify()
