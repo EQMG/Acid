@@ -30,6 +30,14 @@ namespace Flounder
 	{
 	}
 
+	void TerrainRender::Load(LoadedValue *value)
+	{
+	}
+
+	void TerrainRender::Write(LoadedValue *value)
+	{
+	}
+
 	void TerrainRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();

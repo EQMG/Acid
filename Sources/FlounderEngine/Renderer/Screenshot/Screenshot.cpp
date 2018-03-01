@@ -11,6 +11,10 @@ namespace Flounder
 {
 	void Screenshot::Capture(const std::string &filename)
 	{
+#if FLOUNDER_VERBOSE
+		const auto debugStart = Engine::Get()->GetTimeMs();
+#endif
+
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
 		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
@@ -184,6 +188,11 @@ namespace Flounder
 		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
 		vkDestroyImage(logicalDevice, dstImage, nullptr);
 		delete[] data;
+
+#if FLOUNDER_VERBOSE
+		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
+#endif
 	}
 
 	void Screenshot::InsertImageMemoryBarrier(const VkCommandBuffer &cmdbuffer, const VkImage &image, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout, const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkImageSubresourceRange &subresourceRange)

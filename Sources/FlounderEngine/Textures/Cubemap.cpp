@@ -23,6 +23,10 @@ namespace Flounder
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageInfo({})
 	{
+#if FLOUNDER_VERBOSE
+		const auto debugStart = Engine::Get()->GetTimeMs();
+#endif
+
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		m_format = VK_FORMAT_R8G8B8A8_UNORM;
@@ -108,6 +112,11 @@ namespace Flounder
 
 		delete bufferStaging;
 		free(pixels);
+
+#if FLOUNDER_VERBOSE
+		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+#endif
 	}
 
 	Cubemap::~Cubemap()

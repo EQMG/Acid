@@ -23,32 +23,31 @@ namespace Flounder
 
 	void Material::Update()
 	{
-		Component::Update();
 	}
 
 	void Material::Load(LoadedValue *value)
 	{
-		TrySetTextureDiffuse(value->GetChild("Diffuse Texture")->GetRaw());
-		m_baseColor->Set(value->GetChild("Base Colour")->GetRaw());
+		TrySetTextureDiffuse(value->GetChild("Diffuse Texture")->GetString());
+		m_baseColor->Set(value->GetChild("Base Colour")->GetString());
 		m_metallic = value->GetChild("Metallic")->Get<float>();
 		m_roughness = value->GetChild("Roughness")->Get<float>();
 		m_castsShadows = value->GetChild("Cast Shadows")->Get<bool>();
 		m_ignoreLighting = value->GetChild("Ignore Lighting")->Get<bool>();
 		m_ignoreFog = value->GetChild("Ignore Fog")->Get<bool>();
-		TrySetTextureMaterial(value->GetChild("Material Texture")->GetRaw());
-		TrySetTextureNormal(value->GetChild("Normal Texture")->GetRaw());
+		TrySetTextureMaterial(value->GetChild("Material Texture")->GetString());
+		TrySetTextureNormal(value->GetChild("Normal Texture")->GetString());
 	}
 
 	void Material::Write(LoadedValue *value)
 	{
-		value->GetChild("Diffuse Texture", true)->SetRaw(m_textureDiffuse == nullptr ? "" : m_textureDiffuse->GetFilename());
-		value->GetChild("Base Colour", true)->SetRaw(Colour::GetHex(*m_baseColor));
+		value->GetChild("Diffuse Texture", true)->SetString(m_textureDiffuse == nullptr ? "" : m_textureDiffuse->GetFilename());
+		value->GetChild("Base Colour", true)->SetString(Colour::GetHex(*m_baseColor));
 		value->GetChild("Metallic", true)->Set(m_metallic);
 		value->GetChild("Roughness", true)->Set(m_roughness);
 		value->GetChild("Ignore Lighting", true)->Set(m_ignoreLighting);
 		value->GetChild("Ignore Fog", true)->Set(m_ignoreFog);
-		value->GetChild("Material Texture", true)->SetRaw(m_textureMaterial == nullptr ? "" : m_textureMaterial->GetFilename());
-		value->GetChild("Normal Texture", true)->SetRaw(m_textureNormal == nullptr ? "" : m_textureNormal->GetFilename());
+		value->GetChild("Material Texture", true)->SetString(m_textureMaterial == nullptr ? "" : m_textureMaterial->GetFilename());
+		value->GetChild("Normal Texture", true)->SetString(m_textureNormal == nullptr ? "" : m_textureNormal->GetFilename());
 	}
 
 	void Material::TrySetTextureDiffuse(const std::string &filename)

@@ -23,14 +23,6 @@ namespace Flounder
 		m_timePassed(0.0f),
 		m_paused(false)
 	{
-	//	Link<std::vector<ParticleType *>>(0, "Types", LINK_GET(GetTypes()), LINK_SET(std::vector<ParticleType *>, SetTypes(v)));
-	//	Link<ISpawnParticle *>(1, "Spawn", LINK_GET(GetSpawn()), LINK_SET(ISpawnParticle *, SetSpawn(v)));
-		Link<float>(2, "PPS", LINK_GET(GetPps()), LINK_SET(float, SetPps(v)));
-		Link<float>(3, "Average Speed", LINK_GET(GetAverageSpeed()), LINK_SET(float, SetAverageSpeed(v)));
-		Link<float>(4, "Gravity Effect", LINK_GET(GetGravityEffect()), LINK_SET(float, SetGravityEffect(v)));
-		Link<float>(5, "OffsetX", LINK_GET(GetOffsetCentre()->m_x), LINK_SET(float, GetOffsetCentre()->m_x = v));;
-		Link<float>(6, "OffsetY", LINK_GET(GetOffsetCentre()->m_y), LINK_SET(float, GetOffsetCentre()->m_y = v));;
-		Link<float>(7, "OffsetZ", LINK_GET(GetOffsetCentre()->m_z), LINK_SET(float, GetOffsetCentre()->m_z = v));
 	}
 
 	ParticleSystem::~ParticleSystem()
@@ -65,6 +57,24 @@ namespace Flounder
 			Particles::Get()->AddParticle(created);
 			m_timePassed = 0.0f;
 		}
+	}
+
+	void ParticleSystem::Load(LoadedValue *value)
+	{
+		//	Link<std::vector<ParticleType *>>(0, "Types", LINK_GET(GetTypes()), LINK_SET(std::vector<ParticleType *>, SetTypes(v)));
+		//	Link<ISpawnParticle *>(1, "Spawn", LINK_GET(GetSpawn()), LINK_SET(ISpawnParticle *, SetSpawn(v)));
+		m_pps = value->GetChild("PPS")->Get<float>();
+		m_averageSpeed = value->GetChild("Average Speed")->Get<float>();
+		m_gravityEffect = value->GetChild("Gravity Effect")->Get<float>();
+		m_systemOffset->Set(value->GetChild("Offset"));
+	}
+
+	void ParticleSystem::Write(LoadedValue *value)
+	{
+		value->GetChild("PPS", true)->Set(m_pps);
+		value->GetChild("Average Speed", true)->Set(m_averageSpeed);
+		value->GetChild("Gravity Effect", true)->Set(m_gravityEffect);
+		m_systemOffset->Write(value->GetChild("Offset", true));
 	}
 
 	Particle *ParticleSystem::EmitParticle()

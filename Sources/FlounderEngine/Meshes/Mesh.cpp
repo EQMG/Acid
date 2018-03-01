@@ -35,12 +35,12 @@ namespace Flounder
 
 	void Mesh::Load(LoadedValue *value)
 	{
-		TrySetModel(value->GetChild("Model")->GetRaw());
+		TrySetModel(value->GetChild("Model")->GetString());
 	}
 
 	void Mesh::Write(LoadedValue *value)
 	{
-		value->GetChild("Model", true)->SetRaw(m_model->GetFilename());
+		value->GetChild("Model", true)->SetString(m_model == nullptr ? "" : m_model->GetFilename());
 	}
 
 	void Mesh::TrySetModel(const std::string &filename)
