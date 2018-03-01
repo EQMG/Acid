@@ -3,6 +3,7 @@
 #include <ostream>
 #include <string>
 #include "../Prerequisites.hpp"
+#include "../Files/LoadedValue.hpp"
 
 namespace Flounder
 {
@@ -35,12 +36,12 @@ namespace Flounder
 		static const Vector4 NEGATIVE_INFINITY;
 
 		/// <summary>
-		/// Constructor for vector4.
+		/// Constructor for Vector4.
 		/// </summary>
 		Vector4();
 
 		/// <summary>
-		/// Constructor for vector4.
+		/// Constructor for Vector4.
 		/// </summary>
 		/// <param name="x"> Start x. </param>
 		/// <param name="y"> Start y. </param>
@@ -49,22 +50,28 @@ namespace Flounder
 		Vector4(const float &x, const float &y, const float &z, const float &w);
 
 		/// <summary>
-		/// Constructor for vector4.
+		/// Constructor for Vector4.
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing one. </param>
 		Vector4(const Vector3 &source);
 
 		/// <summary>
-		/// Constructor for vector4.
+		/// Constructor for Vector4.
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing one. </param>
 		Vector4(const Vector4 &source);
 
 		/// <summary>
-		/// Constructor for vector4.
+		/// Constructor for Vector4.
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing colour. </param>
 		Vector4(const Colour &source);
+
+		/// <summary>
+		/// Constructor for Vector4.
+		/// </summary>
+		/// <param name="source"> Creates this vector out of a loaded value. </param>
+		Vector4(LoadedValue *value);
 
 		/// <summary>
 		/// Deconstructor for vector4.
@@ -94,6 +101,18 @@ namespace Flounder
 		/// <param name="source"> The source vector. </param>
 		/// <returns> This. </returns>
 		Vector4 *Set(const Vector4 &source);
+
+		/// <summary>
+		/// Sets values in the vector.
+		/// </summary>
+		/// <param name="source"> The source loaded value. </param>
+		Vector4 *Set(LoadedValue *value);
+
+		/// <summary>
+		/// Saves this vector into a loaded value.
+		/// </summary>
+		/// <param name="destination"> The destination loaded value. </param>
+		void Write(LoadedValue *destination);
 
 		/// <summary>
 		/// Adds two vectors together and places the result in the destination vector.

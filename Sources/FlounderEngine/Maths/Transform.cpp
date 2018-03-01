@@ -30,6 +30,11 @@ namespace Flounder
 	{
 	}
 
+	Transform::Transform(LoadedValue *value)
+	{
+		Set(value);
+	}
+
 	Transform::~Transform()
 	{
 		delete m_position;
@@ -52,6 +57,21 @@ namespace Flounder
 		m_position->Set(*source.m_position);
 		m_rotation->Set(*source.m_rotation);
 		m_scaling->Set(*source.m_scaling);
+	}
+
+	Transform *Transform::Set(LoadedValue *value)
+	{
+		m_position->Set(value->GetChild("position"));
+		m_rotation->Set(value->GetChild("rotation"));
+		m_scaling->Set(value->GetChild("scaling"));
+		return this;
+	}
+
+	void Transform::Write(LoadedValue *destination)
+	{
+		m_position->Write(destination->GetChild("position", true));
+		m_rotation->Write(destination->GetChild("rotation", true));
+		m_scaling->Write(destination->GetChild("scaling", true));
 	}
 
 	bool Transform::operator==(const Transform &other) const

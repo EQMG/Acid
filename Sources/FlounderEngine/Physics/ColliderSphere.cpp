@@ -51,6 +51,14 @@ namespace Flounder
 		return source;
 	}
 
+	void ColliderSphere::Load(LoadedValue *value)
+	{
+	}
+
+	void ColliderSphere::Write(LoadedValue *value)
+	{
+	}
+
 	Vector3 *ColliderSphere::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
 	{
 		if (destination == nullptr)

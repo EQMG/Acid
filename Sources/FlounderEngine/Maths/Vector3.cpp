@@ -63,6 +63,11 @@ namespace Flounder
 	{
 	}
 
+	Vector3::Vector3(LoadedValue *value)
+	{
+		Set(value);
+	}
+
 	Vector3::~Vector3()
 	{
 	}
@@ -97,6 +102,21 @@ namespace Flounder
 		m_y = y;
 		m_z = z;
 		return this;
+	}
+
+	Vector3 *Vector3::Set(LoadedValue *value)
+	{
+		m_x = value->GetChild("x")->Get<float>();
+		m_y = value->GetChild("y")->Get<float>();
+		m_z = value->GetChild("z")->Get<float>();
+		return this;
+	}
+
+	void Vector3::Write(LoadedValue *destination)
+	{
+		destination->SetChild<float>("x", m_x);
+		destination->SetChild<float>("y", m_y);
+		destination->SetChild<float>("z", m_z);
 	}
 
 	Vector3 *Vector3::Add(const Vector3 &left, const Vector3 &right, Vector3 *destination)

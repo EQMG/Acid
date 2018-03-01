@@ -2,6 +2,7 @@
 
 #include <string>
 #include "../Prerequisites.hpp"
+#include "../Files/LoadedValue.hpp"
 
 namespace Flounder
 {
@@ -72,6 +73,12 @@ namespace Flounder
 		Colour(const Vector4 &source);
 
 		/// <summary>
+		/// Constructor for colour.
+		/// </summary>
+		/// <param name="source"> Creates this vector out of a loaded value. </param>
+		Colour(LoadedValue *value);
+
+		/// <summary>
 		/// Deconstructor for colour.
 		/// </summary>
 		~Colour();
@@ -114,6 +121,18 @@ namespace Flounder
 		/// <param name="source"> The source vector. </param>
 		/// <returns> This. </returns>
 		Colour *Set(const Vector4 &source);
+
+		/// <summary>
+		/// Sets values in the colour.
+		/// </summary>
+		/// <param name="source"> The source loaded value. </param>
+		Colour *Set(LoadedValue *value);
+
+		/// <summary>
+		/// Saves this vector into a loaded value.
+		/// </summary>
+		/// <param name="destination"> The destination loaded value. </param>
+		void Write(LoadedValue *destination);
 
 		/// <summary>
 		/// Adds two colours together and places the result in the destination colour.

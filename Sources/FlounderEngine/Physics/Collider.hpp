@@ -28,6 +28,10 @@ namespace Flounder
 
 		void Update() override;
 
+		void Load(LoadedValue *value) override;
+
+		void Write(LoadedValue *value) override;
+
 		std::string GetName() const override { return "Collider"; };
 
 		/// <summary>

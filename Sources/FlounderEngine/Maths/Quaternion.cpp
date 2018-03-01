@@ -53,6 +53,14 @@ namespace Flounder
 		Set(source);
 	}
 
+	Quaternion::Quaternion(LoadedValue *value) :
+		m_x(value->GetChild("x")->Get<float>()),
+		m_y(value->GetChild("y")->Get<float>()),
+		m_z(value->GetChild("z")->Get<float>()),
+		m_w(value->GetChild("w")->Get<float>())
+	{
+	}
+
 	Quaternion::~Quaternion()
 	{
 	}
@@ -183,6 +191,23 @@ namespace Flounder
 		}
 
 		return this;
+	}
+
+	Quaternion *Quaternion::Set(LoadedValue *value)
+	{
+		m_x = value->GetChild("x")->Get<float>();
+		m_y = value->GetChild("y")->Get<float>();
+		m_z = value->GetChild("z")->Get<float>();
+		m_w = value->GetChild("w")->Get<float>();
+		return this;
+	}
+
+	void Quaternion::Write(LoadedValue *destination)
+	{
+		destination->SetChild<float>("x", m_x);
+		destination->SetChild<float>("y", m_y);
+		destination->SetChild<float>("z", m_z);
+		destination->SetChild<float>("w", m_w);
 	}
 
 	Quaternion *Quaternion::SetIdentity(Quaternion *source)

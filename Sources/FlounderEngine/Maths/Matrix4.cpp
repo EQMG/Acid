@@ -68,6 +68,11 @@ namespace Flounder
 	{
 	}
 
+	Matrix4::Matrix4(LoadedValue *value)
+	{
+		Set(value);
+	}
+
 	Matrix4::~Matrix4()
 	{
 	}
@@ -112,6 +117,23 @@ namespace Flounder
 		m_32 = source[14];
 		m_33 = source[15];
 		return this;
+	}
+
+	Matrix4 *Matrix4::Set(LoadedValue *value)
+	{
+		m_0->Set(value->GetChild("m0"));
+		m_1->Set(value->GetChild("m1"));
+		m_2->Set(value->GetChild("m2"));
+		m_3->Set(value->GetChild("m3"));
+		return this;
+	}
+
+	void Matrix4::Write(LoadedValue *destination)
+	{
+		m_0->Write(destination->GetChild("m0", true));
+		m_1->Write(destination->GetChild("m1", true));
+		m_2->Write(destination->GetChild("m2", true));
+		m_3->Write(destination->GetChild("m3", true));
 	}
 
 	Matrix4 *Matrix4::SetIdentity(Matrix4 *source)

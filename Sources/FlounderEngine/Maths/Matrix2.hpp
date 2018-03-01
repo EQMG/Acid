@@ -3,6 +3,7 @@
 #include <ostream>
 #include <string>
 #include "../Prerequisites.hpp"
+#include "../Files/LoadedValue.hpp"
 #include "Vector2.hpp"
 
 namespace Flounder
@@ -54,6 +55,12 @@ namespace Flounder
 		Matrix2(const float source[4]);
 
 		/// <summary>
+		/// Constructor for Matrix2.
+		/// </summary>
+		/// <param name="source"> Creates this vector out of a loaded value. </param>
+		Matrix2(LoadedValue *value);
+
+		/// <summary>
 		/// Deconstructor for Matrix2.
 		/// </summary>
 		~Matrix2();
@@ -71,6 +78,18 @@ namespace Flounder
 		/// <param name="source"> The source array. </param>
 		/// <returns> This. </returns>
 		Matrix2 *Set(const float source[4]);
+
+		/// <summary>
+		/// Sets values in the matrix.
+		/// </summary>
+		/// <param name="source"> The source loaded value. </param>
+		Matrix2 *Set(LoadedValue *value);
+
+		/// <summary>
+		/// Saves this vector into a loaded value.
+		/// </summary>
+		/// <param name="destination"> The destination loaded value. </param>
+		void Write(LoadedValue *destination);
 
 		/// <summary>
 		/// Set the source matrix to be the identity matrix.

@@ -1,4 +1,0 @@
-EntityRender
-Mesh,Resources/Entities/TreePine/Model.obj
-Rigidbody,1.000000,0.000000,1,0,0,0,0,0,0
-Material,#1D611F,Resources/Entities/TreePine/Diffuse.png,0.000000,0.000000,1,0,0,nullptr,nullptr
