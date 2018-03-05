@@ -12,8 +12,8 @@ namespace Flounder
 	public:
 		std::vector<std::string> m_elements;
 
-		RowCsv(std::vector<std::string> elements) :
-			m_elements(std::move(elements))
+		RowCsv(const std::vector<std::string> &elements) :
+			m_elements(std::vector<std::string>(elements))
 		{
 		}
 	};
