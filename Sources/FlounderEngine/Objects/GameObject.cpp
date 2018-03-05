@@ -31,6 +31,11 @@ namespace Flounder
 
 		for (auto value : entityPrefab->GetParent()->m_children)
 		{
+			if (value->m_name.empty())
+			{
+				continue;
+			}
+
 			Component *component = ComponentRegister::Create(value->m_name);
 
 			if (component == nullptr)
