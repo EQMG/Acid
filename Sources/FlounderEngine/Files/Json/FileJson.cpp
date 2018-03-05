@@ -8,7 +8,7 @@ namespace Flounder
 	FileJson::FileJson(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(nullptr)
+		m_parent(new LoadedValue(nullptr, "", ""))
 	{
 	}
 
@@ -77,6 +77,7 @@ namespace Flounder
 			}
 		}
 
+		delete m_parent;
 		m_parent = JsonSection::Convert(loadedParent, m_parent);
 		delete loadedParent;
 
