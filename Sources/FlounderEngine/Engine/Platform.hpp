@@ -7,12 +7,13 @@
 #ifdef FLOUNDER_PLATFORM_MACOS
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
+#include <MoltenVK/mvk_vulkan.h>
 #else
 #include <AL/al.h>
 #include <AL/alc.h>
+#include <vulkan/vulkan.h>
 #endif
 
-#include <vulkan/vulkan.h>
 #include <GLFW/glfw3.h>
 
 #include "../Prerequisites.hpp"
