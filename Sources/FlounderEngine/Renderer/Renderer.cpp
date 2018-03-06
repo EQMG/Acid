@@ -202,10 +202,12 @@ namespace Flounder
 			return;
 		}
 
+#ifndef FLOUNDER_PLATFORM_MACOS
 		if (result != VK_SUCCESS)
 		{
 			throw std::runtime_error("Renderer failed to present swapchain image!");
 		}
+#endif
 
 		Platform::ErrorVk(result);
 		vkQueueWaitIdle(queue);
