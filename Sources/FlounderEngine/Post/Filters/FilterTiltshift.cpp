@@ -28,6 +28,8 @@ namespace Flounder
 
 	void FilterTiltshift::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
+		auto descriptorSet = *m_pipeline->GetDescriptorSet();
+
 		UboScene uboScene = {};
 		uboScene.blurAmount = m_blurAmount;
 		uboScene.centre = m_centre;
@@ -35,13 +37,12 @@ namespace Flounder
 		uboScene.steps = m_steps;
 		m_uniformScene->Update(&uboScene);
 
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
-			{
-				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(1, descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(2, descriptorSet)
-			};
+		{
+			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
+			m_pipeline->GetTexture(2)->GetWriteDescriptor(1, descriptorSet),
+			m_pipeline->GetTexture(2)->GetWriteDescriptor(2, descriptorSet)
+		};
 		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
 	}
 }

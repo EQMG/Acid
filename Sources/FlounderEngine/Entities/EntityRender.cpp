@@ -34,26 +34,25 @@ namespace Flounder
 
 	void EntityRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto descriptorSet = pipeline.GetDescriptorSet();
+		auto descriptorSet = *pipeline.GetDescriptorSet();
 
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
 		auto material = GetGameObject()->GetComponent<Material>();
-		auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
+		//auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr || material == nullptr)
 		{
 			return;
 		}
 
-		if (rigidbody != nullptr && rigidbody->GetCollider() != nullptr)
-		{
-			if (!rigidbody->GetCollider()->InFrustum(*Scenes::Get()->GetCamera()->GetViewFrustum()))
-			{
-				return;
-			}
-		}
+		//if (rigidbody != nullptr && rigidbody->GetCollider() != nullptr)
+		//{
+		//	if (!rigidbody->GetCollider()->InFrustum(*Scenes::Get()->GetCamera()->GetViewFrustum()))
+		//	{
+		//		return;
+		//	}
+		//}
 
 		// Creates a UBO object and write descriptor.
 		UbosEntities::UboObject uboObject = {};
@@ -87,12 +86,10 @@ namespace Flounder
 			static_cast<float>(material->GetIgnoreFog()), static_cast<float>(material->GetIgnoreLighting()));
 
 		m_uniformObject->Update(&uboObject);
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+		descriptorSet.Update(descriptorWrites);
 
 		// Draws the object.
-		VkDescriptorSet descriptors[] = {descriptorSet};
-		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-
+		descriptorSet.BindDescriptor(commandBuffer, pipeline);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 }

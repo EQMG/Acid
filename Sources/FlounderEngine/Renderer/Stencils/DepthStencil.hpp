@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../Engine/Platform.hpp"
+#include "../Descriptor/DescriptorSet.hpp"
 #include "../Pipelines/PipelineCreate.hpp"
 
 namespace Flounder
@@ -22,7 +23,7 @@ namespace Flounder
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorSet &descriptorSet) const;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const;
 
 		VkImage GetImage() const { return m_image; }
 

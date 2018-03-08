@@ -30,20 +30,21 @@ namespace Flounder
 
 	void FilterLensflare::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
+		auto descriptorSet = *m_pipeline->GetDescriptorSet();
+
 		UboScene uboScene = {};
 		uboScene.sunPosition = *m_sunPosition;
 		uboScene.worldHeight = m_sunHeight;
 		uboScene.displaySize = Vector2(static_cast<float>(Display::Get()->GetWidth()), static_cast<float>(Display::Get()->GetHeight()));
 		m_uniformScene->Update(&uboScene);
 
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
-			{
-				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(1, descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(2, descriptorSet),
-				m_pipeline->GetTexture(4)->GetWriteDescriptor(3, descriptorSet)
-			};
+		{
+			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
+			m_pipeline->GetTexture(2)->GetWriteDescriptor(1, descriptorSet),
+			m_pipeline->GetTexture(2)->GetWriteDescriptor(2, descriptorSet),
+			m_pipeline->GetTexture(4)->GetWriteDescriptor(3, descriptorSet)
+		};
 		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
 	}
 
