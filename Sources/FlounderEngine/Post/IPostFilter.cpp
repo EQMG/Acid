@@ -41,14 +41,14 @@ namespace Flounder
 
 	void IPostFilter::CmdRender(const VkCommandBuffer &commandBuffer, const std::vector<VkWriteDescriptorSet> &descriptorWrites)
 	{
-		auto descriptorSet = *m_pipeline->GetDescriptorSet();
+		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		descriptorSet.Update(descriptorWrites);
+		descriptorSet->Update(descriptorWrites);
 
 		// Draws the object.
-		descriptorSet.BindDescriptor(commandBuffer, *m_pipeline);
+		descriptorSet->BindDescriptor(commandBuffer, *m_pipeline);
 		m_model->CmdRender(commandBuffer);
 	}
 }

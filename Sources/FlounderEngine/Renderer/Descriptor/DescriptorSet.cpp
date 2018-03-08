@@ -5,8 +5,8 @@
 
 namespace Flounder
 {
-	DescriptorSet::DescriptorSet(const std::vector<DescriptorType> &descriptors) :
-		m_descriptors(std::vector<DescriptorType>(descriptors)),
+	DescriptorSet::DescriptorSet(const PipelineCreate &pipelineCreateInfo) :
+		m_pipelineCreateInfo(pipelineCreateInfo),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_descriptorSet(VK_NULL_HANDLE)
@@ -33,7 +33,7 @@ namespace Flounder
 
 	void DescriptorSet::BindDescriptor(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)
 	{
-		VkDescriptorSet descriptors[] = {m_descriptorSet};
+		VkDescriptorSet descriptors[1] = {m_descriptorSet};
 		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
 	}
 
@@ -43,7 +43,7 @@ namespace Flounder
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
 
-		for (auto type : m_descriptors)
+		for (auto type : m_pipelineCreateInfo.descriptors)
 		{
 			bindings.push_back(type.m_descriptorSetLayoutBinding);
 		}
@@ -63,7 +63,7 @@ namespace Flounder
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
 
-		for (auto type : m_descriptors)
+		for (auto type : m_pipelineCreateInfo.descriptors)
 		{
 			poolSizes.push_back(type.m_descriptorPoolSize);
 		}
