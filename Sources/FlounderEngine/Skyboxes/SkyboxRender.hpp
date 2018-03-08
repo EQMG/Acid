@@ -15,6 +15,7 @@ namespace Flounder
 	{
 	private:
 		UniformBuffer *m_uniformObject;
+		DescriptorSet *m_descriptorSet;
 
 		Cubemap *m_cubemap;
 

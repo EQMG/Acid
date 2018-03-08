@@ -13,6 +13,7 @@ namespace Flounder
 	{
 	private:
 		UniformBuffer *m_uniformObject;
+		DescriptorSet *m_descriptorSet;
 	public:
 		static const int SIDE_LENGTH;
 		static const std::vector<float> SQUARE_SIZES;

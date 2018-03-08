@@ -18,6 +18,7 @@ namespace Flounder
 	{
 	private:
 		UniformBuffer *m_uniformObject;
+		DescriptorSet *m_descriptorSet;
 
 		Model *m_model;
 		Texture *m_texture;
