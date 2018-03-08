@@ -32,6 +32,8 @@ namespace Flounder
 
 	void FilterCrt::RenderFilter(const VkCommandBuffer &commandBuffer)
 	{
+		auto descriptorSet = *m_pipeline->GetDescriptorSet();
+
 		UboScene uboScene = {};
 		uboScene.screenColour = *m_screenColour;
 		uboScene.curveAmountX = m_curveAmountX * Display::Get()->GetAspectRatio();
@@ -41,13 +43,12 @@ namespace Flounder
 		uboScene.moveTime = Engine::Get()->GetTime() / 100.0f;
 		m_uniformScene->Update(&uboScene);
 
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
-			{
-				m_uniformScene->GetWriteDescriptor(0, descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(1, descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(2, descriptorSet)
-			};
+		{
+			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
+			m_pipeline->GetTexture(2)->GetWriteDescriptor(1, descriptorSet),
+			m_pipeline->GetTexture(2)->GetWriteDescriptor(2, descriptorSet)
+		};
 		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
 	}
 }

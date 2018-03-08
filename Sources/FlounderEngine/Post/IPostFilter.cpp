@@ -41,16 +41,14 @@ namespace Flounder
 
 	void IPostFilter::CmdRender(const VkCommandBuffer &commandBuffer, const std::vector<VkWriteDescriptorSet> &descriptorWrites)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+		auto descriptorSet = *m_pipeline->GetDescriptorSet();
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+		descriptorSet.Update(descriptorWrites);
 
-		VkDescriptorSet descriptors[1] = {descriptorSet};
-		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-
+		// Draws the object.
+		descriptorSet.BindDescriptor(commandBuffer, *m_pipeline);
 		m_model->CmdRender(commandBuffer);
 	}
 }

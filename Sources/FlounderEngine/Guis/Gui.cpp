@@ -40,8 +40,7 @@ namespace Flounder
 			return;
 		}
 
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto descriptorSet = pipeline.GetDescriptorSet();
+		auto descriptorSet = *pipeline.GetDescriptorSet();
 
 		UbosGuis::UboObject uboObject = {};
 		uboObject.transform = Vector4(*GetScreenTransform());
@@ -58,14 +57,14 @@ namespace Flounder
 		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_w);
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
+		{
 			m_uniformObject->GetWriteDescriptor(0, descriptorSet), m_texture->GetWriteDescriptor(1, descriptorSet)
 		};
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+		descriptorSet.Update(descriptorWrites);
 
-		VkDescriptorSet descriptors[1] = {descriptorSet};
-		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-
+		// Draws the object.
+		descriptorSet.BindDescriptor(commandBuffer, pipeline);
 		m_model->CmdRender(commandBuffer);
 	}
 }

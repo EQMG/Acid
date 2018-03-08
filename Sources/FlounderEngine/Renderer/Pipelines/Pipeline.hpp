@@ -5,6 +5,7 @@
 #include <vector>
 #include "../../Textures/Texture.hpp"
 #include "../../Engine/Platform.hpp"
+#include "../Descriptor/DescriptorSet.hpp"
 #include "PipelineCreate.hpp"
 
 namespace Flounder
@@ -20,12 +21,10 @@ namespace Flounder
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreateInfo;
 
-		VkDescriptorSetLayout m_descriptorSetLayout;
-		VkDescriptorPool m_descriptorPool;
-		VkDescriptorSet m_descriptorSet;
-
 		std::vector<VkShaderModule> m_modules;
 		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
+
+		DescriptorSet *m_descriptorSet;
 
 		VkPipeline m_pipeline;
 		VkPipelineLayout m_pipelineLayout;
@@ -59,22 +58,12 @@ namespace Flounder
 
 		Texture *GetTexture(const unsigned int &i, const int &stage = -1) const;
 
-		VkDescriptorSetLayout GetDescriptorSetLayout() const { return m_descriptorSetLayout; }
-
-		VkDescriptorPool GetDescriptorPool() const { return m_descriptorPool; }
-
-		VkDescriptorSet GetDescriptorSet() const { return m_descriptorSet; }
+		DescriptorSet *GetDescriptorSet() const { return m_descriptorSet; }
 
 		VkPipeline GetPipeline() const { return m_pipeline; }
 
 		VkPipelineLayout GetPipelineLayout() const { return m_pipelineLayout; }
 	private:
-		void CreateDescriptorLayout();
-
-		void CreateDescriptorPool();
-
-		void CreateDescriptorSet();
-
 		void CreatePipelineLayout();
 
 		void CreateShaderStages();
