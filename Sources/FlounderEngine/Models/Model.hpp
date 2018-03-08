@@ -7,7 +7,6 @@
 #include "../Resources/Resources.hpp"
 #include "../Renderer/Buffers/VertexBuffer.hpp"
 #include "../Renderer/Buffers/IndexBuffer.hpp"
-#include "../Renderer/Pipelines/Pipeline.hpp"
 #include "Vertex.hpp"
 #include "VertexData.hpp"
 
