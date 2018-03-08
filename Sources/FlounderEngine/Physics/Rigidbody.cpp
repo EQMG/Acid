@@ -26,12 +26,12 @@ namespace Flounder
 
 	void Rigidbody::Update()
 	{
-	//	auto collider = GetGameObject()->GetComponent<Collider>();
+		auto collider = GetGameObject()->GetComponent<Collider>();
 
-	//	if (collider != nullptr)
-	//	{
-	//		m_colliderCopy = collider->Update(*GetGameObject()->GetTransform(), m_colliderCopy);
-	//	}
+		if (collider != nullptr)
+		{
+			m_colliderCopy = collider->Update(*GetGameObject()->GetTransform(), m_colliderCopy);
+		}
 	}
 
 	void Rigidbody::Load(LoadedValue *value)

@@ -53,7 +53,7 @@ namespace Flounder
 
 	void RendererDeferred::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		auto descriptorSet = *m_pipeline->GetDescriptorSet();
+		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
 		std::vector<UbosDeferred::Light> sceneLights = {};
 
@@ -121,18 +121,19 @@ namespace Flounder
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
 		{
-			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
-			m_pipeline->GetTexture(2)->GetWriteDescriptor(1, descriptorSet),
-			m_pipeline->GetDepthStencil()->GetWriteDescriptor(2, descriptorSet),
-			m_pipeline->GetTexture(2)->GetWriteDescriptor(3, descriptorSet),
-			m_pipeline->GetTexture(3)->GetWriteDescriptor(4, descriptorSet),
-			m_pipeline->GetTexture(4)->GetWriteDescriptor(5, descriptorSet),
-			m_pipeline->GetTexture(0, 0)->GetWriteDescriptor(6, descriptorSet)
+			m_uniformScene->GetWriteDescriptor(0, *descriptorSet),
+			m_pipeline->GetTexture(2)->GetWriteDescriptor(1, *descriptorSet),
+			m_pipeline->GetDepthStencil()->GetWriteDescriptor(2, *descriptorSet),
+			m_pipeline->GetTexture(2)->GetWriteDescriptor(3, *descriptorSet),
+			m_pipeline->GetTexture(3)->GetWriteDescriptor(4, *descriptorSet),
+			m_pipeline->GetTexture(4)->GetWriteDescriptor(5, *descriptorSet),
+			m_pipeline->GetTexture(0, 0)->GetWriteDescriptor(6, *descriptorSet)
 		};
-		descriptorSet.Update(descriptorWrites);
+		descriptorSet->Update(descriptorWrites);
 
-		// Draws the object.
-		descriptorSet.BindDescriptor(commandBuffer, *m_pipeline);
+		VkDescriptorSet descriptors[] = {descriptorSet->GetDescriptorSet()};
+		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
+
 		m_model->CmdRender(commandBuffer);
 	}
 }

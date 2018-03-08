@@ -190,7 +190,7 @@ set(FLOUNDERENGINE_HEADERS_
         "Waters/WaterRender.hpp"
         "Waters/Waters.hpp"
         "Worlds/Worlds.hpp"
-)
+        )
 
 set(FLOUNDERENGINE_SOURCES_
         "Devices/Audio.cpp"
@@ -355,7 +355,7 @@ set(FLOUNDERENGINE_SOURCES_
         "Waters/WaterRender.cpp"
         "Waters/Waters.cpp"
         "Worlds/Worlds.cpp"
-)
+        )
 
 source_group("Header Files" FILES ${FLOUNDERENGINE_HEADERS_})
 source_group("Source Files" FILES ${FLOUNDERENGINE_SOURCES_})
@@ -363,4 +363,4 @@ source_group("Source Files" FILES ${FLOUNDERENGINE_SOURCES_})
 set(FLOUNDERENGINE_SOURCES
         ${FLOUNDERENGINE_HEADERS_}
         ${FLOUNDERENGINE_SOURCES_}
-)
+        )
