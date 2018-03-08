@@ -71,13 +71,12 @@ namespace Flounder
 
 	void RendererShadows::RenderModel(const VkCommandBuffer &commandBuffer, Model *object, GameObject *gameObject)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
-
-		UniformBuffer *uniformObject;
+		auto descriptorSet = *m_pipeline->GetDescriptorSet();
 
 		auto entityRender = gameObject->GetComponent<EntityRender>();
 		auto terrainRender = gameObject->GetComponent<TerrainRender>();
+
+		UniformBuffer *uniformObject;
 
 		if (entityRender != nullptr)
 		{
@@ -92,17 +91,15 @@ namespace Flounder
 			return;
 		}
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
+		{
 			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
 			uniformObject->GetWriteDescriptor(1, descriptorSet)
 		};
-
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+		descriptorSet.Update(descriptorWrites);
 
 		// Draws the object.
-		VkDescriptorSet descriptors[] = {descriptorSet};
-		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-
+		descriptorSet.BindDescriptor(commandBuffer, *m_pipeline);
 		object->CmdRender(commandBuffer);
 	}
 }
