@@ -12,6 +12,7 @@ namespace Flounder
 	{
 	protected:
 		Pipeline *m_pipeline;
+		DescriptorSet *m_descriptorSet;
 		Model *m_model;
 	public:
 		/// <summary>

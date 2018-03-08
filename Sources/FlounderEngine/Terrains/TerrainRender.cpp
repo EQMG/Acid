@@ -18,12 +18,15 @@ namespace Flounder
 
 	TerrainRender::TerrainRender() :
 		Component(),
-		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject)))
+		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),
+		m_descriptorSet(nullptr)
 	{
 	}
 
 	TerrainRender::~TerrainRender()
 	{
+		delete m_uniformObject;
+		delete m_descriptorSet;
 	}
 
 	void TerrainRender::Update()
@@ -40,7 +43,15 @@ namespace Flounder
 
 	void TerrainRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
-		const auto descriptorSet = pipeline.GetDescriptorSet();
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(pipeline);
+			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+				uniformScene.GetWriteDescriptor(0, *m_descriptorSet),
+				m_uniformObject->GetWriteDescriptor(1, *m_descriptorSet)
+			};
+			m_descriptorSet->Update(descriptorWrites);
+		}
 
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
@@ -64,14 +75,8 @@ namespace Flounder
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-			uniformScene.GetWriteDescriptor(0, *descriptorSet),
-			m_uniformObject->GetWriteDescriptor(1, *descriptorSet)
-		};
-		descriptorSet->Update(descriptorWrites);
-
 		// Draws the object.
-		descriptorSet->BindDescriptor(commandBuffer, pipeline);
+		m_descriptorSet->BindDescriptor(commandBuffer, pipeline);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 }

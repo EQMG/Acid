@@ -23,6 +23,8 @@ namespace Flounder
 	{
 	private:
 		UniformBuffer *m_uniformObject;
+		DescriptorSet *m_descriptorSet;
+
 		Model *m_model;
 
 		std::string m_string;

@@ -9,6 +9,7 @@ namespace Flounder
 	Gui::Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow) :
 		UiObject(parent, rectangle),
 		m_uniformObject(new UniformBuffer(sizeof(UbosGuis::UboObject))),
+		m_descriptorSet(nullptr),
 		m_model(ShapeRectangle::Resource(0.0f, 1.0f)),
 		m_texture(texture),
 		m_selectedRow(selectedRow),
@@ -20,6 +21,7 @@ namespace Flounder
 	Gui::~Gui()
 	{
 		delete m_uniformObject;
+		delete m_descriptorSet;
 		delete m_model;
 		delete m_atlasOffset;
 		delete m_colourOffset;
@@ -40,7 +42,15 @@ namespace Flounder
 			return;
 		}
 
-		const auto descriptorSet = pipeline.GetDescriptorSet();
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(pipeline);
+			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+				m_uniformObject->GetWriteDescriptor(0, *m_descriptorSet),
+				m_texture->GetWriteDescriptor(1, *m_descriptorSet)
+			};
+			m_descriptorSet->Update(descriptorWrites);
+		}
 
 		UbosGuis::UboObject uboObject = {};
 		uboObject.transform = Vector4(*GetScreenTransform());
@@ -57,14 +67,8 @@ namespace Flounder
 		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_w);
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-			m_uniformObject->GetWriteDescriptor(0, *descriptorSet),
-			m_texture->GetWriteDescriptor(1, *descriptorSet)
-		};
-		descriptorSet->Update(descriptorWrites);
-
 		// Draws the object.
-		descriptorSet->BindDescriptor(commandBuffer, pipeline);
+		m_descriptorSet->BindDescriptor(commandBuffer, pipeline);
 		m_model->CmdRender(commandBuffer);
 	}
 }

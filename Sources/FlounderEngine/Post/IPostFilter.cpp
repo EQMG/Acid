@@ -21,6 +21,7 @@ namespace Flounder
 
 	IPostFilter::IPostFilter(const std::string &fragmentShader, const GraphicsStage &graphicsStage, const std::vector<DescriptorType> &descriptors) :
 		m_pipeline(nullptr),
+		m_descriptorSet(nullptr),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
 		PipelineCreate pipelineCreateInfo = PipelineCreate(PIPELINE_CREATE);
@@ -41,14 +42,16 @@ namespace Flounder
 
 	void IPostFilter::CmdRender(const VkCommandBuffer &commandBuffer, const std::vector<VkWriteDescriptorSet> &descriptorWrites)
 	{
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(*m_pipeline);
+			m_descriptorSet->Update(descriptorWrites);
+		}
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		descriptorSet->Update(descriptorWrites);
-
 		// Draws the object.
-		descriptorSet->BindDescriptor(commandBuffer, *m_pipeline);
+		m_descriptorSet->BindDescriptor(commandBuffer, *m_pipeline);
 		m_model->CmdRender(commandBuffer);
 	}
 }

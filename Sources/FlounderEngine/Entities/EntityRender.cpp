@@ -11,13 +11,15 @@ namespace Flounder
 {
 	EntityRender::EntityRender() :
 		Component(),
-		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject)))
+		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
+		m_descriptorSet(nullptr)
 	{
 	}
 
 	EntityRender::~EntityRender()
 	{
 		delete m_uniformObject;
+		delete m_descriptorSet;
 	}
 
 	void EntityRender::Update()
@@ -34,8 +36,6 @@ namespace Flounder
 
 	void EntityRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
-		const auto descriptorSet = pipeline.GetDescriptorSet();
-
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
 		auto material = GetGameObject()->GetComponent<Material>();
@@ -46,38 +46,55 @@ namespace Flounder
 			return;
 		}
 
-		if (rigidbody != nullptr && rigidbody->GetCollider() != nullptr)
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(pipeline);
+			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>();
+
+			descriptorWrites.push_back(uniformScene.GetWriteDescriptor(0, *m_descriptorSet));
+			descriptorWrites.push_back(m_uniformObject->GetWriteDescriptor(1, *m_descriptorSet));
+
+			if (material->GetTextureDiffuse() != nullptr)
+			{
+				descriptorWrites.push_back(material->GetTextureDiffuse()->GetWriteDescriptor(2, *m_descriptorSet));
+			}
+
+			if (material->GetTextureMaterial() != nullptr)
+			{
+				descriptorWrites.push_back(material->GetTextureMaterial()->GetWriteDescriptor(3, *m_descriptorSet));
+			}
+
+			if (material->GetTextureNormal() != nullptr)
+			{
+				descriptorWrites.push_back(material->GetTextureNormal()->GetWriteDescriptor(4, *m_descriptorSet));
+			}
+			m_descriptorSet->Update(descriptorWrites);
+		}
+
+		/*if (rigidbody != nullptr && rigidbody->GetCollider() != nullptr)
 		{
 			if (!rigidbody->GetCollider()->InFrustum(*Scenes::Get()->GetCamera()->GetViewFrustum()))
 			{
 				return;
 			}
-		}
+		}*/
 
 		// Creates a UBO object and write descriptor.
 		UbosEntities::UboObject uboObject = {};
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>();
-
-		descriptorWrites.push_back(uniformScene.GetWriteDescriptor(0, *descriptorSet));
-		descriptorWrites.push_back(m_uniformObject->GetWriteDescriptor(1, *descriptorSet));
-
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 
 		if (material->GetTextureDiffuse() != nullptr)
 		{
-			descriptorWrites.push_back(material->GetTextureDiffuse()->GetWriteDescriptor(2, *descriptorSet));
 			uboObject.samples.m_x = 1.0f;
 		}
 
 		if (material->GetTextureMaterial() != nullptr)
 		{
-			descriptorWrites.push_back(material->GetTextureMaterial()->GetWriteDescriptor(3, *descriptorSet));
 			uboObject.samples.m_y = 1.0f;
 		}
 
 		if (material->GetTextureNormal() != nullptr)
 		{
-			descriptorWrites.push_back(material->GetTextureNormal()->GetWriteDescriptor(4, *descriptorSet));
 			uboObject.samples.m_z = 1.0f;
 		}
 
@@ -86,10 +103,9 @@ namespace Flounder
 			static_cast<float>(material->GetIgnoreFog()), static_cast<float>(material->GetIgnoreLighting()));
 
 		m_uniformObject->Update(&uboObject);
-		descriptorSet->Update(descriptorWrites);
 
 		// Draws the object.
-		descriptorSet->BindDescriptor(commandBuffer, pipeline);
+		m_descriptorSet->BindDescriptor(commandBuffer, pipeline);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 }
