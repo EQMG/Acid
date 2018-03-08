@@ -23,19 +23,19 @@ namespace Flounder
 		delete m_uniformScene;
 	}
 
-	void FilterDarken::RenderFilter(const VkCommandBuffer &commandBuffer)
+	void FilterDarken::Render(const VkCommandBuffer &commandBuffer)
 	{
 		UboScene uboScene = {};
 		uboScene.factor = m_factor;
 		m_uniformScene->Update(&uboScene);
 
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+		/*const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
 			{
 				m_uniformScene->GetWriteDescriptor(0, *descriptorSet),
 				m_pipeline->GetTexture(2)->GetWriteDescriptor(1, *descriptorSet),
 				m_pipeline->GetTexture(2)->GetWriteDescriptor(2, *descriptorSet)
-			};
-		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
+			};*/
+		IPostFilter::CmdRender(commandBuffer);
 	}
 }

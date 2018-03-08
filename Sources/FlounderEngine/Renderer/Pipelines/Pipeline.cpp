@@ -28,8 +28,7 @@ namespace Flounder
 		m_depthStencilState({}),
 		m_viewportState({}),
 		m_multisampleState({}),
-		m_dynamicState({}),
-		m_descriptorSet(nullptr)
+		m_dynamicState({})
 	{
 		printf("Creating pipeline: '%s'\n", m_pipelineCreateInfo.shaderStages.at(1).c_str());
 		CreateDescriptorLayout();
@@ -37,8 +36,6 @@ namespace Flounder
 		CreatePipelineLayout();
 		CreateShaderStages();
 		CreateAttributes();
-
-		m_descriptorSet = new DescriptorSet(*this);
 
 		switch (pipelineCreateInfo.pipelineModeFlags)
 		{
@@ -73,8 +70,6 @@ namespace Flounder
 		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
 		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
-
-		delete m_descriptorSet;
 	}
 
 	void Pipeline::BindPipeline(const VkCommandBuffer &commandBuffer) const
@@ -127,7 +122,7 @@ namespace Flounder
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
 		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
-		descriptorPoolCreateInfo.maxSets = 8192;
+		descriptorPoolCreateInfo.maxSets = 16384;
 
 		vkDeviceWaitIdle(logicalDevice);
 		Platform::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));

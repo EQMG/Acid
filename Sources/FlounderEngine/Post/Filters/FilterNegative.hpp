@@ -12,6 +12,6 @@ namespace Flounder
 
 		~FilterNegative();
 
-		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
+		void Render(const VkCommandBuffer &commandBuffer) override;
 	};
 }

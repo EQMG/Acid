@@ -22,7 +22,7 @@ namespace Flounder
 
 		~FilterGrain();
 
-		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
+		void Render(const VkCommandBuffer &commandBuffer) override;
 
 		float GetStrength() const { return m_strength; }
 
