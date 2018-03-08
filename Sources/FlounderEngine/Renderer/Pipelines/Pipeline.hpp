@@ -5,7 +5,7 @@
 #include <vector>
 #include "../../Textures/Texture.hpp"
 #include "../../Engine/Platform.hpp"
-#include "../Descriptor/DescriptorSet.hpp"
+#include "../Pipelines/DescriptorSet.hpp"
 #include "PipelineCreate.hpp"
 
 namespace Flounder
@@ -38,8 +38,6 @@ namespace Flounder
 		VkPipelineViewportStateCreateInfo m_viewportState;
 		VkPipelineMultisampleStateCreateInfo m_multisampleState;
 		VkPipelineDynamicStateCreateInfo m_dynamicState;
-
-		DescriptorSet *m_descriptorSet;
 	public:
 		/// <summary>
 		/// Creates a new pipeline.
@@ -70,8 +68,6 @@ namespace Flounder
 		VkPipeline GetPipeline() const { return m_pipeline; }
 
 		VkPipelineLayout GetPipelineLayout() const { return m_pipelineLayout; }
-
-		DescriptorSet *GetDescriptorSet() const { return m_descriptorSet; }
 	private:
 		void CreateDescriptorLayout();
 

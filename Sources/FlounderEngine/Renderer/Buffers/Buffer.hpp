@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "../../Engine/Platform.hpp"
-#include "../Descriptor/DescriptorSet.hpp"
+#include "../Pipelines/DescriptorSet.hpp"
 
 namespace Flounder
 {

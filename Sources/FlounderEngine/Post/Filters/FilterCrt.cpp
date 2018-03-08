@@ -30,7 +30,7 @@ namespace Flounder
 		delete m_screenColour;
 	}
 
-	void FilterCrt::RenderFilter(const VkCommandBuffer &commandBuffer)
+	void FilterCrt::Render(const VkCommandBuffer &commandBuffer)
 	{
 		UboScene uboScene = {};
 		uboScene.screenColour = *m_screenColour;
@@ -41,13 +41,13 @@ namespace Flounder
 		uboScene.moveTime = Engine::Get()->GetTime() / 100.0f;
 		m_uniformScene->Update(&uboScene);
 
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+		/*const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
 			{
 				m_uniformScene->GetWriteDescriptor(0, *descriptorSet),
 				m_pipeline->GetTexture(2)->GetWriteDescriptor(1, *descriptorSet),
 				m_pipeline->GetTexture(2)->GetWriteDescriptor(2, *descriptorSet)
-			};
-		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
+			};*/
+		IPostFilter::CmdRender(commandBuffer);
 	}
 }

@@ -12,6 +12,8 @@ namespace Flounder
 	{
 	private:
 		VkDescriptorSet m_descriptorSet;
+
+		std::vector<VkWriteDescriptorSet> m_writeSet;
 	public:
 		DescriptorSet(const Pipeline &pipeline);
 
