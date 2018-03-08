@@ -16,12 +16,15 @@ namespace Flounder
 
 	WaterRender::WaterRender() :
 		m_uniformObject(new UniformBuffer(sizeof(UbosWaters::UboObject))),
+		m_descriptorSet(nullptr),
 		m_colour(new Colour(WATER_COLOUR))
 	{
 	}
 
 	WaterRender::~WaterRender()
 	{
+		delete m_uniformObject;
+		delete m_descriptorSet;
 		delete m_colour;
 	}
 
@@ -39,7 +42,15 @@ namespace Flounder
 
 	void WaterRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
-		const auto descriptorSet = pipeline.GetDescriptorSet();
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(pipeline);
+			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+				uniformScene.GetWriteDescriptor(0, *m_descriptorSet),
+				m_uniformObject->GetWriteDescriptor(1, *m_descriptorSet)
+			};
+			m_descriptorSet->Update(descriptorWrites);
+		}
 
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
@@ -55,15 +66,8 @@ namespace Flounder
 		uboObject.diffuseColour = Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b, Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity() : 1.0f);
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-			uniformScene.GetWriteDescriptor(0, *descriptorSet),
-			m_uniformObject->GetWriteDescriptor(1, *descriptorSet)
-		//	Renderer::Get()->GetSwapchain()->GetShadowImage()->GetWriteDescriptor(3, *descriptorSet)
-		};
-		descriptorSet->Update(descriptorWrites);
-
 		// Draws the object.
-		descriptorSet->BindDescriptor(commandBuffer, pipeline);
+		m_descriptorSet->BindDescriptor(commandBuffer, pipeline);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 }

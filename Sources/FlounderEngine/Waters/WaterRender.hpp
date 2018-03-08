@@ -16,6 +16,7 @@ namespace Flounder
 	{
 	private:
 		UniformBuffer *m_uniformObject;
+		DescriptorSet *m_descriptorSet;
 
 		Colour *m_colour;
 	public:
