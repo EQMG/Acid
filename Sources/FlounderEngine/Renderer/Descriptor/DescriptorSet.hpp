@@ -11,13 +11,9 @@ namespace Flounder
 	class F_EXPORT DescriptorSet
 	{
 	private:
-		PipelineCreate m_pipelineCreateInfo;
-
-		VkDescriptorSetLayout m_descriptorSetLayout;
-		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
 	public:
-		DescriptorSet(const PipelineCreate &pipelineCreateInfo);
+		DescriptorSet(const Pipeline &pipeline);
 
 		~DescriptorSet();
 
@@ -25,18 +21,7 @@ namespace Flounder
 
 		void BindDescriptor(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline);
 
-		VkDescriptorSetLayout GetDescriptorSetLayout() const { return m_descriptorSetLayout; }
-
-		VkDescriptorPool GetDescriptorPool() const { return m_descriptorPool; }
-
 		VkDescriptorSet GetDescriptorSet() const { return m_descriptorSet; }
-
-	private:
-		void CreateDescriptorLayout();
-
-		void CreateDescriptorPool();
-
-		void CreateDescriptorSet();
 
 	};
 }

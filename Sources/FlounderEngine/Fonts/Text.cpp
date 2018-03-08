@@ -9,6 +9,7 @@ namespace Flounder
 	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType, const Justify &justify, const float &maxWidth, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
 		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
+		m_descriptorSet(nullptr),
 		m_model(nullptr),
 		m_string(text),
 		m_newString(""),
@@ -33,6 +34,7 @@ namespace Flounder
 	Text::~Text()
 	{
 		delete m_uniformObject;
+		delete m_descriptorSet;
 		delete m_model;
 
 		delete m_textColour;
@@ -63,7 +65,15 @@ namespace Flounder
 			return;
 		}
 
-		const auto descriptorSet = pipeline.GetDescriptorSet();
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(pipeline);
+			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+				m_uniformObject->GetWriteDescriptor(0, *m_descriptorSet),
+				m_fontType->GetTexture()->GetWriteDescriptor(1, *m_descriptorSet)
+			};
+			m_descriptorSet->Update(descriptorWrites);
+		}
 
 		UbosFonts::UboObject uboObject = {};
 		uboObject.transform = Vector4(*GetScreenTransform());
@@ -81,14 +91,8 @@ namespace Flounder
 		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_w);
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-			m_uniformObject->GetWriteDescriptor(0, *descriptorSet),
-			m_fontType->GetTexture()->GetWriteDescriptor(1, *descriptorSet)
-		};
-		descriptorSet->Update(descriptorWrites);
-
 		// Draws the object.
-		descriptorSet->BindDescriptor(commandBuffer, pipeline);
+		m_descriptorSet->BindDescriptor(commandBuffer, pipeline);
 		m_model->CmdRender(commandBuffer);
 	}
 
