@@ -71,12 +71,12 @@ namespace Flounder
 
 	void RendererShadows::RenderModel(const VkCommandBuffer &commandBuffer, Model *object, GameObject *gameObject)
 	{
-		auto descriptorSet = *m_pipeline->GetDescriptorSet();
+		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+
+		UniformBuffer *uniformObject;
 
 		auto entityRender = gameObject->GetComponent<EntityRender>();
 		auto terrainRender = gameObject->GetComponent<TerrainRender>();
-
-		UniformBuffer *uniformObject;
 
 		if (entityRender != nullptr)
 		{
@@ -91,15 +91,15 @@ namespace Flounder
 			return;
 		}
 
-		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
-		{
-			m_uniformScene->GetWriteDescriptor(0, descriptorSet),
-			uniformObject->GetWriteDescriptor(1, descriptorSet)
+		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+			m_uniformScene->GetWriteDescriptor(0, *descriptorSet),
+			uniformObject->GetWriteDescriptor(1, *descriptorSet)
 		};
-		descriptorSet.Update(descriptorWrites);
+
+		descriptorSet->Update(descriptorWrites);
 
 		// Draws the object.
-		descriptorSet.BindDescriptor(commandBuffer, *m_pipeline);
+		descriptorSet->BindDescriptor(commandBuffer, *m_pipeline);
 		object->CmdRender(commandBuffer);
 	}
 }

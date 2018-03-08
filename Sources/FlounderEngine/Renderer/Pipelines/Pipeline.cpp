@@ -2,8 +2,8 @@
 
 #include <cassert>
 #include "../../Devices/Display.hpp"
-#include "../../Helpers/FileSystem.hpp"
-#include "../../Helpers/FormatString.hpp"
+#include "Helpers/FileSystem.hpp"
+#include "Helpers/FormatString.hpp"
 #include "../Renderer.hpp"
 
 namespace Flounder
@@ -30,7 +30,7 @@ namespace Flounder
 		m_dynamicState({})
 	{
 		printf("Creating pipeline: '%s'\n", m_pipelineCreateInfo.shaderStages.at(1).c_str());
-		m_descriptorSet = new DescriptorSet(m_pipelineCreateInfo.descriptors);
+		m_descriptorSet = new DescriptorSet(pipelineCreateInfo);
 		CreatePipelineLayout();
 		CreateShaderStages();
 		CreateAttributes();
@@ -64,7 +64,6 @@ namespace Flounder
 			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
 		}
 
-		delete m_descriptorSet;
 		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
@@ -88,12 +87,12 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkDescriptorSetLayout descriptorSetLayouts[] = {m_descriptorSet->GetDescriptorSetLayout()};
+		VkDescriptorSetLayout layouts[1] = {m_descriptorSet->GetDescriptorSetLayout()};
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutCreateInfo.setLayoutCount = 1;
-		pipelineLayoutCreateInfo.pSetLayouts = descriptorSetLayouts;
+		pipelineLayoutCreateInfo.pSetLayouts = layouts;
 
 		vkDeviceWaitIdle(logicalDevice);
 		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));

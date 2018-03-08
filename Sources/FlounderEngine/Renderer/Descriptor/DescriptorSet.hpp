@@ -8,16 +8,16 @@ namespace Flounder
 {
 	class Pipeline;
 
-	class DescriptorSet
+	class F_EXPORT DescriptorSet
 	{
 	private:
-		std::vector<DescriptorType> m_descriptors;
+		PipelineCreate m_pipelineCreateInfo;
 
 		VkDescriptorSetLayout m_descriptorSetLayout;
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
 	public:
-		DescriptorSet(const std::vector<DescriptorType> &descriptors);
+		DescriptorSet(const PipelineCreate &pipelineCreateInfo);
 
 		~DescriptorSet();
 
@@ -25,7 +25,7 @@ namespace Flounder
 
 		void BindDescriptor(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline);
 
-		VkDescriptorSetLayout GetDescriptorSetLayout() { return m_descriptorSetLayout; }
+		VkDescriptorSetLayout GetDescriptorSetLayout() const { return m_descriptorSetLayout; }
 
 		VkDescriptorPool GetDescriptorPool() const { return m_descriptorPool; }
 
@@ -37,5 +37,6 @@ namespace Flounder
 		void CreateDescriptorPool();
 
 		void CreateDescriptorSet();
+
 	};
 }
