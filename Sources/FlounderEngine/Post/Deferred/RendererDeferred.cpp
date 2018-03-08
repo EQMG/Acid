@@ -53,6 +53,8 @@ namespace Flounder
 
 	void RendererDeferred::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
+		auto descriptorSet = *m_pipeline->GetDescriptorSet();
+
 		std::vector<UbosDeferred::Light> sceneLights = {};
 
 		for (auto entity : *Scenes::Get()->GetStructure()->GetAll())
@@ -115,9 +117,6 @@ namespace Flounder
 
 		m_uniformScene->Update(&uboScene);
 
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
-
 		m_pipeline->BindPipeline(commandBuffer);
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
@@ -130,11 +129,10 @@ namespace Flounder
 			m_pipeline->GetTexture(4)->GetWriteDescriptor(5, descriptorSet),
 			m_pipeline->GetTexture(0, 0)->GetWriteDescriptor(6, descriptorSet)
 		};
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+		descriptorSet.Update(descriptorWrites);
 
-		VkDescriptorSet descriptors[] = {descriptorSet};
-		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline->GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-
+		// Draws the object.
+		descriptorSet.BindDescriptor(commandBuffer, *m_pipeline);
 		m_model->CmdRender(commandBuffer);
 	}
 }

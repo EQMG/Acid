@@ -70,6 +70,7 @@ namespace Flounder
 
 	void Model::CmdRender(const VkCommandBuffer &commandBuffer, const unsigned int &instances)
 	{
+		// Draws the object.
 		if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
 		{
 			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetBuffer()};

@@ -2,8 +2,8 @@
 
 #include <cassert>
 #include "../../Devices/Display.hpp"
-#include "Helpers/FileSystem.hpp"
-#include "Helpers/FormatString.hpp"
+#include "../../Helpers/FileSystem.hpp"
+#include "../../Helpers/FormatString.hpp"
 #include "../Renderer.hpp"
 
 namespace Flounder
@@ -15,11 +15,9 @@ namespace Flounder
 	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo) :
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreateInfo(pipelineCreateInfo),
-		m_descriptorSetLayout(VK_NULL_HANDLE),
-		m_descriptorPool(VK_NULL_HANDLE),
-		m_descriptorSet(VK_NULL_HANDLE),
 		m_modules(std::vector<VkShaderModule>()),
 		m_stages(std::vector<VkPipelineShaderStageCreateInfo>()),
+		m_descriptorSet(nullptr),
 		m_pipeline(VK_NULL_HANDLE),
 		m_pipelineLayout(VK_NULL_HANDLE),
 		m_inputAssemblyState({}),
@@ -32,9 +30,7 @@ namespace Flounder
 		m_dynamicState({})
 	{
 		printf("Creating pipeline: '%s'\n", m_pipelineCreateInfo.shaderStages.at(1).c_str());
-		CreateDescriptorLayout();
-		CreateDescriptorPool();
-		CreateDescriptorSet();
+		m_descriptorSet = new DescriptorSet(m_pipelineCreateInfo.descriptors);
 		CreatePipelineLayout();
 		CreateShaderStages();
 		CreateAttributes();
@@ -68,8 +64,7 @@ namespace Flounder
 			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
 		}
 
-		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
-		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
+		delete m_descriptorSet;
 		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
@@ -89,70 +84,16 @@ namespace Flounder
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.renderpass : stage)->m_framebuffers->GetTexture(i);
 	}
 
-	void Pipeline::CreateDescriptorLayout()
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
-
-		for (auto type : m_pipelineCreateInfo.descriptors)
-		{
-			bindings.push_back(type.m_descriptorSetLayoutBinding);
-		}
-
-		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
-		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(bindings.size());
-		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
-
-		vkDeviceWaitIdle(logicalDevice);
-		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
-	}
-
-	void Pipeline::CreateDescriptorPool()
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
-
-		for (auto type : m_pipelineCreateInfo.descriptors)
-		{
-			poolSizes.push_back(type.m_descriptorPoolSize);
-		}
-
-		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
-		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
-		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
-		descriptorPoolCreateInfo.maxSets = 50;
-
-		vkDeviceWaitIdle(logicalDevice);
-		Platform::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
-	}
-
-	void Pipeline::CreateDescriptorSet()
-	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
-		descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-		descriptorSetAllocateInfo.pNext = nullptr;
-		descriptorSetAllocateInfo.descriptorPool = m_descriptorPool;
-		descriptorSetAllocateInfo.descriptorSetCount = 1;
-		descriptorSetAllocateInfo.pSetLayouts = &m_descriptorSetLayout;
-
-		vkDeviceWaitIdle(logicalDevice);
-		Platform::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
-	}
-
 	void Pipeline::CreatePipelineLayout()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
+		VkDescriptorSetLayout descriptorSetLayouts[] = {m_descriptorSet->GetDescriptorSetLayout()};
+
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutCreateInfo.setLayoutCount = 1;
-		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
+		pipelineLayoutCreateInfo.pSetLayouts = descriptorSetLayouts;
 
 		vkDeviceWaitIdle(logicalDevice);
 		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));

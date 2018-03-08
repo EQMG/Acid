@@ -38,8 +38,7 @@ namespace Flounder
 
 	void SkyboxRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto descriptorSet = pipeline.GetDescriptorSet();
+		auto descriptorSet = *pipeline.GetDescriptorSet();
 
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
@@ -59,17 +58,16 @@ namespace Flounder
 		uboObject.blendFactor = m_blend;
 		m_uniformObject->Update(&uboObject);
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
+		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
+		{
 			uniformScene.GetWriteDescriptor(0, descriptorSet),
 			m_uniformObject->GetWriteDescriptor(1, descriptorSet),
 			m_cubemap->GetWriteDescriptor(2, descriptorSet)
 		};
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+		descriptorSet.Update(descriptorWrites);
 
 		// Draws the object.
-		VkDescriptorSet descriptors[1] = {descriptorSet};
-		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.GetPipelineLayout(), 0, 1, descriptors, 0, nullptr);
-
+		descriptorSet.BindDescriptor(commandBuffer, pipeline);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 
