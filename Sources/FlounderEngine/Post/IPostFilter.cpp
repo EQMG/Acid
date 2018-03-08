@@ -20,8 +20,8 @@ namespace Flounder
 		};
 
 	IPostFilter::IPostFilter(const std::string &fragmentShader, const GraphicsStage &graphicsStage, const std::vector<DescriptorType> &descriptors) :
-		m_pipeline(nullptr),
 		m_descriptorSet(nullptr),
+		m_pipeline(nullptr),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
 		PipelineCreate pipelineCreateInfo = PipelineCreate(PIPELINE_CREATE);
@@ -36,15 +36,17 @@ namespace Flounder
 		delete m_pipeline;
 	}
 
-	void IPostFilter::RenderFilter(const VkCommandBuffer &commandBuffer)
+	void IPostFilter::Render(const VkCommandBuffer &commandBuffer)
 	{
 	}
 
-	void IPostFilter::CmdRender(const VkCommandBuffer &commandBuffer, const std::vector<VkWriteDescriptorSet> &descriptorWrites)
+	void IPostFilter::CmdRender(const VkCommandBuffer &commandBuffer)
 	{
 		if (m_descriptorSet == nullptr)
 		{
 			m_descriptorSet = new DescriptorSet(*m_pipeline);
+			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>();
+		//	FillDescriptor(&descriptorWrites);
 			m_descriptorSet->Update(descriptorWrites);
 		}
 

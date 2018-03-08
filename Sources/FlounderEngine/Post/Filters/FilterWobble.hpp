@@ -23,7 +23,7 @@ namespace Flounder
 
 		~FilterWobble();
 
-		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
+		void Render(const VkCommandBuffer &commandBuffer) override;
 
 		float GetWobbleSpeed() const { return m_wobbleSpeed; }
 

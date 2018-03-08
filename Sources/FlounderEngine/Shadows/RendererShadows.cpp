@@ -71,7 +71,7 @@ namespace Flounder
 
 	void RendererShadows::RenderModel(const VkCommandBuffer &commandBuffer, Model *object, GameObject *gameObject)
 	{
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+		/*const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
 		UniformBuffer *uniformObject;
 
@@ -100,6 +100,6 @@ namespace Flounder
 
 		// Draws the object.
 		descriptorSet->BindDescriptor(commandBuffer, *m_pipeline);
-		object->CmdRender(commandBuffer);
+		object->CmdRender(commandBuffer);*/
 	}
 }

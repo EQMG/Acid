@@ -24,7 +24,7 @@ namespace Flounder
 		delete m_uniformScene;
 	}
 
-	void FilterWobble::RenderFilter(const VkCommandBuffer &commandBuffer)
+	void FilterWobble::Render(const VkCommandBuffer &commandBuffer)
 	{
 		m_wobbleAmount += m_wobbleSpeed * Engine::Get()->GetDeltaRender();
 
@@ -32,13 +32,13 @@ namespace Flounder
 		uboScene.moveIt = m_wobbleAmount;
 		m_uniformScene->Update(&uboScene);
 
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+		/*const auto descriptorSet = m_pipeline->GetDescriptorSet();
 		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
 			{
 				m_uniformScene->GetWriteDescriptor(0, *descriptorSet),
 				m_pipeline->GetTexture(2)->GetWriteDescriptor(1, *descriptorSet),
 				m_pipeline->GetTexture(2)->GetWriteDescriptor(2, *descriptorSet)
-			};
-		IPostFilter::CmdRender(commandBuffer, descriptorWrites);
+			};*/
+		IPostFilter::CmdRender(commandBuffer);
 	}
 }

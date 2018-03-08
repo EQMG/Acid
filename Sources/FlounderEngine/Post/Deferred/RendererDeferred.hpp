@@ -12,6 +12,8 @@ namespace Flounder
 	{
 	private:
 		UniformBuffer *m_uniformScene;
+		DescriptorSet *m_descriptorSet;
+
 		Pipeline *m_pipeline;
 		Model *m_model;
 	public:

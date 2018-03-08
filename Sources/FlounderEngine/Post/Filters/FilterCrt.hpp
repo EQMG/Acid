@@ -32,7 +32,7 @@ namespace Flounder
 
 		~FilterCrt();
 
-		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
+		void Render(const VkCommandBuffer &commandBuffer) override;
 
 		Colour *GetScreenColour() const { return m_screenColour; }
 

@@ -11,8 +11,9 @@ namespace Flounder
 	class F_EXPORT IPostFilter
 	{
 	protected:
-		Pipeline *m_pipeline;
 		DescriptorSet *m_descriptorSet;
+
+		Pipeline *m_pipeline;
 		Model *m_model;
 	public:
 		/// <summary>
@@ -29,9 +30,9 @@ namespace Flounder
 		/// <summary>
 		/// Renders the filter.
 		/// </summary>
-		virtual void RenderFilter(const VkCommandBuffer &commandBuffer);
+		virtual void Render(const VkCommandBuffer &commandBuffer);
 
 	protected:
-		void CmdRender(const VkCommandBuffer &commandBuffer, const std::vector<VkWriteDescriptorSet> &descriptorWrites);
+		void CmdRender(const VkCommandBuffer &commandBuffer);
 	};
 }
