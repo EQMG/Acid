@@ -30,7 +30,7 @@ namespace Demo
 		Texture *textureGeometry = new Texture("Resources/Guis/Geometry-Grain.png");
 
 		m_barBackground = new Gui(this, UiBound(Vector2(0.5f, 1.0f), "TopCentre", true, false, Vector2(1.0f, 1.0f)), textureGeometry, 1);
-		m_barBackground->SetScissor(Vector4(0.0f, 0.875f, 1.0f, 1.0f));
+		m_barBackground->SetScissor(Vector4(0.0f, 0.0f, 1.0f, 0.125f));
 		m_barBackground->SetColourOffset(Colour("#2969B0"));
 
 		m_barTitle = new Text(this, UiBound(Vector2(0.01f, 0.99f), "TopLeft", false), 4.0f, "Starting", Uis::Get()->m_proximaNova->GetBold(), JustifyLeft, 1.0f, 0.001f);

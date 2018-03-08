@@ -12,6 +12,6 @@ namespace Flounder
 
 		~FilterSepia();
 
-		void RenderFilter(const VkCommandBuffer &commandBuffer) override;
+		void Render(const VkCommandBuffer &commandBuffer) override;
 	};
 }

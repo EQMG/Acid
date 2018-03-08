@@ -6,7 +6,8 @@
 namespace Flounder
 {
 	DescriptorSet::DescriptorSet(const Pipeline &pipeline) :
-		m_descriptorSet(VK_NULL_HANDLE)
+		m_descriptorSet(VK_NULL_HANDLE),
+		m_writeSet(std::vector<VkWriteDescriptorSet>())
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -32,6 +33,9 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+
+		m_writeSet.clear();
+		std::copy(descriptorWrites.begin(), descriptorWrites.end(), std::back_inserter(m_writeSet));
 	}
 
 	void DescriptorSet::BindDescriptor(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)

@@ -94,7 +94,7 @@ namespace Demo
 		}
 
 		// Subpass 0.
-		m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
+//		m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
 
 		// Ends Rendering.
 		Renderer::Get()->EndRenderpass(commandBuffer, 0);
@@ -126,14 +126,14 @@ namespace Demo
 		Renderer::Get()->NextSubpass(commandBuffer);
 
 		// Subpass 2.
-#ifndef FLOUNDER_PLATFORM_MACOS
-		m_filterFxaa->RenderFilter(commandBuffer);
-		m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
-		m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
-		m_filterLensflare->RenderFilter(commandBuffer);
-		m_filterTiltshift->RenderFilter(commandBuffer);
-		//m_filterGrain->RenderFilter(commandBuffer);
-#endif
+//#ifndef FLOUNDER_PLATFORM_MACOS
+//		m_filterFxaa->RenderFilter(commandBuffer);
+//		m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
+//		m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
+//		m_filterLensflare->RenderFilter(commandBuffer);
+//		m_filterTiltshift->RenderFilter(commandBuffer);
+//		//m_filterGrain->RenderFilter(commandBuffer);
+//#endif
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
 
