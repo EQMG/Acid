@@ -53,21 +53,23 @@ namespace Flounder
 
 	void RendererDeferred::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
+		// Updates descriptors.
 		if (m_descriptorSet == nullptr)
 		{
 			m_descriptorSet = new DescriptorSet(*m_pipeline);
-			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet> {
-				m_uniformScene->GetWriteDescriptor(0, *m_descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(1, *m_descriptorSet),
-				m_pipeline->GetDepthStencil()->GetWriteDescriptor(2, *m_descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(3, *m_descriptorSet),
-				m_pipeline->GetTexture(3)->GetWriteDescriptor(4, *m_descriptorSet),
-				m_pipeline->GetTexture(4)->GetWriteDescriptor(5, *m_descriptorSet),
-				m_pipeline->GetTexture(0, 0)->GetWriteDescriptor(6, *m_descriptorSet)
-			};
-			m_descriptorSet->Update(descriptorWrites);
 		}
 
+		m_descriptorSet->Update({
+			m_uniformScene,
+			m_pipeline->GetTexture(2),
+			m_pipeline->GetDepthStencil(),
+			m_pipeline->GetTexture(2),
+			m_pipeline->GetTexture(3),
+			m_pipeline->GetTexture(4),
+			m_pipeline->GetTexture(0, 0)
+		});
+
+		// Updates uniforms.
 		std::vector<UbosDeferred::Light> sceneLights = {};
 
 		for (auto entity : *Scenes::Get()->GetStructure()->GetAll())
@@ -129,10 +131,10 @@ namespace Flounder
 		uboScene.lightsCount = static_cast<int>(sceneLights.size());
 		m_uniformScene->Update(&uboScene);
 
+		// Draws the object.
 		m_pipeline->BindPipeline(commandBuffer);
 
-		// Draws the object.
-		m_descriptorSet->BindDescriptor(commandBuffer, *m_pipeline);
+		m_descriptorSet->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }

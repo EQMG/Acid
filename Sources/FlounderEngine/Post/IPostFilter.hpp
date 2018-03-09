@@ -31,8 +31,5 @@ namespace Flounder
 		/// Renders the filter.
 		/// </summary>
 		virtual void Render(const VkCommandBuffer &commandBuffer);
-
-	protected:
-		void CmdRender(const VkCommandBuffer &commandBuffer);
 	};
 }

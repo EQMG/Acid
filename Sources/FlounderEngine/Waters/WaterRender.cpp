@@ -40,18 +40,8 @@ namespace Flounder
 	{
 	}
 
-	void WaterRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
+	void WaterRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformBuffer *uniformScene)
 	{
-		if (m_descriptorSet == nullptr)
-		{
-			m_descriptorSet = new DescriptorSet(pipeline);
-			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-				uniformScene.GetWriteDescriptor(0, *m_descriptorSet),
-				m_uniformObject->GetWriteDescriptor(1, *m_descriptorSet)
-			};
-			m_descriptorSet->Update(descriptorWrites);
-		}
-
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
 
@@ -60,14 +50,25 @@ namespace Flounder
 			return;
 		}
 
-		// Creates a UBO object and write descriptor.
+		// Updates descriptors.
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(pipeline);
+		}
+
+		m_descriptorSet->Update({
+			uniformScene,
+			m_uniformObject
+		});
+
+		// Updates uniforms.
 		UbosWaters::UboObject uboObject = {};
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		uboObject.diffuseColour = Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b, Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity() : 1.0f);
 		m_uniformObject->Update(&uboObject);
 
 		// Draws the object.
-		m_descriptorSet->BindDescriptor(commandBuffer, pipeline);
+		m_descriptorSet->BindDescriptor(commandBuffer);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 }

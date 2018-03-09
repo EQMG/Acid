@@ -30,21 +30,31 @@ namespace Flounder
 
 	void FilterLensflare::Render(const VkCommandBuffer &commandBuffer)
 	{
+		// Updates descriptors.
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(*m_pipeline);
+		}
+
+		m_descriptorSet->Update({
+			m_uniformScene,
+			m_pipeline->GetTexture(2),
+			m_pipeline->GetTexture(2),
+			m_pipeline->GetTexture(4)
+		});
+
+		// Updates uniforms.
 		UboScene uboScene = {};
 		uboScene.sunPosition = *m_sunPosition;
 		uboScene.worldHeight = m_sunHeight;
 		uboScene.displaySize = Vector2(static_cast<float>(Display::Get()->GetWidth()), static_cast<float>(Display::Get()->GetHeight()));
 		m_uniformScene->Update(&uboScene);
 
-		/*const auto descriptorSet = m_pipeline->GetDescriptorSet();
-		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
-			{
-				m_uniformScene->GetWriteDescriptor(0, *descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(1, *descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(2, *descriptorSet),
-				m_pipeline->GetTexture(4)->GetWriteDescriptor(3, *descriptorSet)
-			};*/
-		IPostFilter::CmdRender(commandBuffer);
+		// Draws the object.
+		m_pipeline->BindPipeline(commandBuffer);
+
+		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_model->CmdRender(commandBuffer);
 	}
 
 	void FilterLensflare::SetSunPosition(const Vector3 &sunPosition) const
