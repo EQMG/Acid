@@ -7,6 +7,7 @@ namespace Flounder
 {
 	UniformBuffer::UniformBuffer(const VkDeviceSize &size) :
 		Buffer(size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),
+		Descriptor(),
 		m_bufferInfo({})
 	{
 		m_bufferInfo.buffer = m_buffer;
@@ -38,8 +39,8 @@ namespace Flounder
 		descriptorSetLayoutBinding.binding = binding;
 		descriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 		descriptorSetLayoutBinding.descriptorCount = 1;
-		descriptorSetLayoutBinding.stageFlags = stage;
 		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+		descriptorSetLayoutBinding.stageFlags = stage;
 
 		VkDescriptorPoolSize descriptorPoolSize = {};
 		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;

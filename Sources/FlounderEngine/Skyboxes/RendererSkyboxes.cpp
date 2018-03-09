@@ -55,7 +55,7 @@ namespace Flounder
 
 		for (auto skyboxRender : renderList)
 		{
-			skyboxRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+			skyboxRender->CmdRender(commandBuffer, *m_pipeline, m_uniformScene);
 		}
 	}
 }

@@ -37,21 +37,24 @@ namespace Flounder
 
 	void Gui::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)
 	{
+		// Gets if this should be rendered.
 		if (!IsVisible() || GetAlpha() == 0.0f)
 		{
 			return;
 		}
 
+		// Updates descriptors.
 		if (m_descriptorSet == nullptr)
 		{
 			m_descriptorSet = new DescriptorSet(pipeline);
-			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-				m_uniformObject->GetWriteDescriptor(0, *m_descriptorSet),
-				m_texture->GetWriteDescriptor(1, *m_descriptorSet)
-			};
-			m_descriptorSet->Update(descriptorWrites);
 		}
 
+		m_descriptorSet->Update({
+			m_uniformObject,
+			m_texture,
+		});
+
+		// Updates uniforms.
 		UbosGuis::UboObject uboObject = {};
 		uboObject.transform = Vector4(*GetScreenTransform());
 		uboObject.colourOffset = Colour(*m_colourOffset);
@@ -68,7 +71,7 @@ namespace Flounder
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 		// Draws the object.
-		m_descriptorSet->BindDescriptor(commandBuffer, pipeline);
+		m_descriptorSet->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }

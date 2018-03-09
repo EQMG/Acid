@@ -150,7 +150,7 @@
 #include "Renderer/Renderpass/RenderpassCreate.hpp"
 #include "Renderer/RenderStage.hpp"
 #include "Renderer/Screenshot/Screenshot.hpp"
-#include "Renderer/Stencils/DepthStencil.hpp"
+#include "Renderer/Swapchain/DepthStencil.hpp"
 #include "Renderer/Swapchain/Framebuffers.hpp"
 #include "Renderer/Swapchain/Swapchain.hpp"
 #include "Resources/IResource.hpp"

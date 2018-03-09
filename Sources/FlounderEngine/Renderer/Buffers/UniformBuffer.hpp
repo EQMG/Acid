@@ -1,12 +1,14 @@
 ﻿#pragma once
 
 #include "Buffer.hpp"
+#include "../Pipelines/Descriptor.hpp"
 #include "../Pipelines/PipelineCreate.hpp"
 
 namespace Flounder
 {
 	class F_EXPORT UniformBuffer :
-		public Buffer
+		public Buffer,
+		public Descriptor
 	{
 	private:
 		VkDescriptorBufferInfo m_bufferInfo;
@@ -19,6 +21,6 @@ namespace Flounder
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 	};
 }

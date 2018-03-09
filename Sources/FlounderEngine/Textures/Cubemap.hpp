@@ -8,7 +8,8 @@ namespace Flounder
 	/// Class that represents a loaded cubemap texture.
 	/// </summary>
 	class F_EXPORT Cubemap :
-		public IResource
+		public IResource,
+		public Descriptor
 	{
 	private:
 		static const std::vector<std::string> SIDE_FILE_SUFFIXS;
@@ -54,7 +55,7 @@ namespace Flounder
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
 		std::string GetFilename() override { return m_filename; };
 	private:
