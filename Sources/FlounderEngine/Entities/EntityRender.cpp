@@ -12,7 +12,8 @@ namespace Flounder
 	EntityRender::EntityRender() :
 		Component(),
 		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
-		m_descriptorSet(nullptr)
+		m_descriptorSet(nullptr),
+		m_nullTexture(Texture::Resource(""))
 	{
 	}
 
@@ -64,9 +65,9 @@ namespace Flounder
 		m_descriptorSet->Update({
 			uniformScene,
 			m_uniformObject,
-			material->GetTextureDiffuse(),
-			material->GetTextureMaterial(),
-			material->GetTextureNormal()
+			material->GetTextureDiffuse() == nullptr ? m_nullTexture : material->GetTextureDiffuse(),
+			material->GetTextureMaterial() == nullptr ? m_nullTexture : material->GetTextureMaterial(),
+			material->GetTextureNormal() == nullptr ? m_nullTexture : material->GetTextureNormal()
 		});
 
 		// Updates uniforms.
