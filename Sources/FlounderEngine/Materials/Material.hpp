@@ -6,6 +6,49 @@
 
 namespace Flounder
 {
+	/*class F_EXPORT MaterialDiffuse
+	{
+		Colour *m_baseColor;
+		Texture *m_textureDiffuse;
+
+		MaterialDiffuse::MaterialDiffuse(const Colour &baseColor, Texture *diffuse) :
+			Component(),
+			m_baseColor(new Colour(baseColor)),
+			m_textureDiffuse(diffuse)
+		{
+		}
+	};
+
+	class F_EXPORT MaterialSurface
+	{
+		float m_metallic;
+		float m_roughness;
+		bool m_castsShadows;
+		bool m_ignoreLighting;
+		bool m_ignoreFog;
+		Texture *m_textureMaterial; // R: Metallic, G: Roughness, B: Emmisive
+
+		MaterialSurface::MaterialSurface(const float &metallic, const float &roughness, const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog, Texture *material) :
+			m_metallic(metallic),
+			m_roughness(roughness),
+			m_castsShadows(castsShadows),
+			m_ignoreLighting(ignoreLighting),
+			m_ignoreFog(ignoreFog),
+			m_textureMaterial(material)
+		{
+		}
+	};
+
+	class F_EXPORT MaterialNormal
+	{
+		Texture *m_textureNormal;
+
+		MaterialNormal::MaterialNormal(Texture *normal) :
+			m_textureNormal(normal)
+		{
+		}
+	};*/
+
 	/// <summary>
 	/// Class that represents a material.
 	/// </summary>

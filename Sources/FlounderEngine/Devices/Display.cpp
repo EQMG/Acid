@@ -111,7 +111,7 @@ namespace Flounder
 		m_focused(true),
 		m_windowPosX(0),
 		m_windowPosY(0),
-#if FLOUNDER_VERBOSE
+#if defined(FLOUNDER_VERBOSE) && !defined(FLOUNDER_PLATFORM_MACOS)
 		m_validationLayers(true),
 #else
 		m_validationLayers(false),
@@ -331,16 +331,16 @@ namespace Flounder
 
 	void Display::SetupLayers()
 	{
+		uint32_t instanceLayerPropertyCount;
+		vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, nullptr);
+		std::vector<VkLayerProperties> instanceLayerProperties(instanceLayerPropertyCount);
+		vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, instanceLayerProperties.data());
+
+		LogVulkanLayers(instanceLayerProperties, "Instance", false);
+
 		// Sets up the layers.
 		if (m_validationLayers)
 		{
-			uint32_t instanceLayerPropertyCount;
-			vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, nullptr);
-			std::vector<VkLayerProperties> instanceLayerProperties(instanceLayerPropertyCount);
-			vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, instanceLayerProperties.data());
-
-			LogVulkanLayers(instanceLayerProperties, "Instance", false);
-
 			for (auto layerName : VALIDATION_LAYERS)
 			{
 				bool layerFound = false;
@@ -475,6 +475,8 @@ namespace Flounder
 		// Iterates through all devices and rate their suitability.
 		for (auto device : devices)
 		{
+			VkPhysicalDeviceProperties deviceProperties;
+			vkGetPhysicalDeviceProperties(device, &deviceProperties);
 			int score = ScorePhysicalDevice(device);
 			rankedDevices.insert(std::make_pair(score, device));
 		}
