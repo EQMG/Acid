@@ -1,7 +1,7 @@
 ﻿#include "Renderpass.hpp"
 
 #include <array>
-#include "../Stencils/DepthStencil.hpp"
+#include "Renderer/Swapchain/DepthStencil.hpp"
 #include "../../Devices/Display.hpp"
 
 namespace Flounder

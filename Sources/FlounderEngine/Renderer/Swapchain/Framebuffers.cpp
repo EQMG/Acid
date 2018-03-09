@@ -1,9 +1,9 @@
 ﻿#include "Framebuffers.hpp"
 
 #include <array>
-#include "../Renderpass/Renderpass.hpp"
-#include "../Stencils/DepthStencil.hpp"
 #include "../../Devices/Display.hpp"
+#include "../Renderpass/Renderpass.hpp"
+#include "DepthStencil.hpp"
 
 namespace Flounder
 {

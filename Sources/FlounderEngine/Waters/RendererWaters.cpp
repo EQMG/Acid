@@ -52,7 +52,7 @@ namespace Flounder
 
 		for (auto waterRender : renderList)
 		{
-			waterRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+			waterRender->CmdRender(commandBuffer, *m_pipeline, m_uniformScene);
 		}
 	}
 }

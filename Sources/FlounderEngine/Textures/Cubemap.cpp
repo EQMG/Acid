@@ -10,6 +10,7 @@ namespace Flounder
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt) :
 		IResource(),
+		Descriptor(),
 		m_filename(filename),
 		m_fileExt(fileExt),
 		m_components(0),

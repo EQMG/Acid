@@ -53,6 +53,7 @@ namespace Flounder
 
 		for (auto mesh : meshList)
 		{
+			// Gets required components.
 			if (mesh->GetModel() == nullptr)
 			{
 				continue;
@@ -71,9 +72,8 @@ namespace Flounder
 
 	void RendererShadows::RenderModel(const VkCommandBuffer &commandBuffer, Model *object, GameObject *gameObject)
 	{
-		/*const auto descriptorSet = m_pipeline->GetDescriptorSet();
-
 		UniformBuffer *uniformObject;
+		DescriptorSet *descriptorSet;
 
 		auto entityRender = gameObject->GetComponent<EntityRender>();
 		auto terrainRender = gameObject->GetComponent<TerrainRender>();
@@ -81,25 +81,31 @@ namespace Flounder
 		if (entityRender != nullptr)
 		{
 			uniformObject = entityRender->GetUniformObject();
+		//	descriptorSet = entityRender->GetShadowDescriptorSet();
 		}
 		else if (terrainRender != nullptr)
 		{
 			uniformObject = terrainRender->GetUniformObject();
+		//	descriptorSet = terrainRender->GetShadowDescriptorSet();
 		}
 		else
 		{
 			return;
 		}
 
-		std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-			m_uniformScene->GetWriteDescriptor(0, *descriptorSet),
-			uniformObject->GetWriteDescriptor(1, *descriptorSet)
-		};
+		// Updates descriptors.
+		if (descriptorSet == nullptr)
+		{
+			descriptorSet = new DescriptorSet(*m_pipeline);
+		}
 
-		descriptorSet->Update(descriptorWrites);
+		descriptorSet->Update({
+			m_uniformScene,
+			uniformObject
+		});
 
 		// Draws the object.
-		descriptorSet->BindDescriptor(commandBuffer, *m_pipeline);
-		object->CmdRender(commandBuffer);*/
+		descriptorSet->BindDescriptor(commandBuffer);
+		object->CmdRender(commandBuffer);
 	}
 }

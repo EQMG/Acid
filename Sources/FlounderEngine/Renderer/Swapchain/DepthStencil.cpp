@@ -7,6 +7,7 @@
 namespace Flounder
 {
 	DepthStencil::DepthStencil(const VkExtent3D &extent) :
+		Descriptor(),
 		m_image(VK_NULL_HANDLE),
 		m_imageMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),

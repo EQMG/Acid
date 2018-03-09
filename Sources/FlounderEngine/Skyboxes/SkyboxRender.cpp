@@ -39,19 +39,8 @@ namespace Flounder
 		value->GetChild("Cubemap", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
 	}
 
-	void SkyboxRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, const UniformBuffer &uniformScene)
+	void SkyboxRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformBuffer *uniformScene)
 	{
-		if (m_descriptorSet == nullptr)
-		{
-			m_descriptorSet = new DescriptorSet(pipeline);
-			std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>{
-				uniformScene.GetWriteDescriptor(0, *m_descriptorSet),
-				m_uniformObject->GetWriteDescriptor(1, *m_descriptorSet),
-				m_cubemap->GetWriteDescriptor(2, *m_descriptorSet)
-			};
-			m_descriptorSet->Update(descriptorWrites);
-		}
-
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
 
@@ -60,7 +49,19 @@ namespace Flounder
 			return;
 		}
 
-		// Creates a UBO object and write descriptor.
+		// Updates descriptors.
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(pipeline);
+		}
+
+		m_descriptorSet->Update({
+			uniformScene,
+			m_uniformObject,
+			m_cubemap
+		});
+
+		// Updates uniforms.
 		UbosSkyboxes::UboObject uboObject = {};
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		uboObject.skyColour = Colour(*Skyboxes::Get()->GetSkyColour());
@@ -71,7 +72,7 @@ namespace Flounder
 		m_uniformObject->Update(&uboObject);
 
 		// Draws the object.
-		m_descriptorSet->BindDescriptor(commandBuffer, pipeline);
+		m_descriptorSet->BindDescriptor(commandBuffer);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 

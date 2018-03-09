@@ -6,6 +6,7 @@
 #include "../Engine/Platform.hpp"
 #include "../Resources/Resources.hpp"
 #include "../Renderer/Buffers/Buffer.hpp"
+#include "../Renderer/Pipelines/Descriptor.hpp"
 #include "../Renderer/Pipelines/PipelineCreate.hpp"
 
 namespace Flounder
@@ -15,7 +16,8 @@ namespace Flounder
 	/// </summary>
 	class F_EXPORT Texture :
 		public IResource,
-		public Buffer
+		public Buffer,
+		public Descriptor
 	{
 	private:
 		std::string m_filename;
@@ -70,7 +72,7 @@ namespace Flounder
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
 		std::string GetFilename() override { return m_filename; };
 

@@ -1,12 +1,14 @@
 #pragma once
 
 #include "../../Engine/Platform.hpp"
-#include "../Pipelines/PipelineCreate.hpp"
+#include "../Pipelines/Descriptor.hpp"
 #include "../Pipelines/DescriptorSet.hpp"
+#include "../Pipelines/PipelineCreate.hpp"
 
 namespace Flounder
 {
-	class F_EXPORT DepthStencil
+	class F_EXPORT DepthStencil :
+		public Descriptor
 	{
 	private:
 		VkImage m_image;
@@ -23,7 +25,7 @@ namespace Flounder
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
 		VkImage GetImage() const { return m_image; }
 
