@@ -117,7 +117,7 @@ namespace Demo
 		m_rendererSkyboxes->Render(commandBuffer, m_infinity, *camera);
 		m_rendererTerrains->Render(commandBuffer, m_infinity, *camera);
 		m_rendererWaters->Render(commandBuffer, m_infinity, *camera);
-	//	m_rendererEntities->Render(commandBuffer, m_infinity, *camera);
+		m_rendererEntities->Render(commandBuffer, m_infinity, *camera);
 	//	m_rendererParticles->Render(commandBuffer, m_infinity, *camera);
 		Renderer::Get()->NextSubpass(commandBuffer);
 
@@ -126,12 +126,14 @@ namespace Demo
 		Renderer::Get()->NextSubpass(commandBuffer);
 
 		// Subpass 2.
+#ifndef FLOUNDER_PLATFORM_MACOS
 		m_filterFxaa->Render(commandBuffer);
 		m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
 		m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
 		m_filterLensflare->Render(commandBuffer);
 		m_filterTiltshift->Render(commandBuffer);
 //		m_filterGrain->Render(commandBuffer);
+#endif
 		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
 
