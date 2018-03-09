@@ -56,7 +56,7 @@ namespace Flounder
 
 		for (auto entityRender : renderList)
 		{
-		//	entityRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+			entityRender->CmdRender(commandBuffer, *m_pipeline, m_uniformScene);
 		}
 	}
 }

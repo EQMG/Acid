@@ -2,7 +2,7 @@
 
 #include "../Engine/Engine.hpp"
 #include "../Devices/Display.hpp"
-#include "Stencils/DepthStencil.hpp"
+#include "Renderer/Swapchain/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
 #include "RenderStage.hpp"
 #include "IManagerRender.hpp"

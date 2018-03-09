@@ -53,7 +53,7 @@ namespace Flounder
 
 		for (auto terrainRender : renderList)
 		{
-			terrainRender->CmdRender(commandBuffer, *m_pipeline, *m_uniformScene);
+			terrainRender->CmdRender(commandBuffer, *m_pipeline, m_uniformScene);
 		}
 	}
 }

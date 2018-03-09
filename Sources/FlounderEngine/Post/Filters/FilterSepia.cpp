@@ -21,12 +21,21 @@ namespace Flounder
 
 	void FilterSepia::Render(const VkCommandBuffer &commandBuffer)
 	{
-		/*const auto descriptorSet = m_pipeline->GetDescriptorSet();
-		const std::vector<VkWriteDescriptorSet> descriptorWrites = std::vector<VkWriteDescriptorSet>
-			{
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(0, *descriptorSet),
-				m_pipeline->GetTexture(2)->GetWriteDescriptor(1, *descriptorSet)
-			};*/
-		IPostFilter::CmdRender(commandBuffer);
+		// Updates descriptors.
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(*m_pipeline);
+		}
+
+		m_descriptorSet->Update({
+			m_pipeline->GetTexture(2),
+			m_pipeline->GetTexture(2)
+		});
+
+		// Draws the object.
+		m_pipeline->BindPipeline(commandBuffer);
+
+		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_model->CmdRender(commandBuffer);
 	}
 }
