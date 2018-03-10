@@ -16,15 +16,15 @@
   },
   "Material": {
     "Diffuse": {
-      "Colour": "#1D611F",
+      "Colour": "#1D611F", 
       "Texture": "Resources/Entities/TreePine/Diffuse.png"
     },
     "Surface": {
-      "Metallic": 0.0,
-      "Roughness": 0.0,
-      "Cast Shadows": true,
-      "Ignore Lighting": false,
-      "Ignore Fog": false,
+      "Metallic": 0.0, 
+      "Roughness": 0.0, 
+      "Cast Shadows": true, 
+      "Ignore Lighting": false, 
+      "Ignore Fog": false, 
       "Texture": ""
     },
     "Normal": {

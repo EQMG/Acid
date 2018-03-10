@@ -16,15 +16,15 @@
   },
   "Material": {
     "Diffuse": {
-      "Colour": "#C37A57",
+      "Colour": "#C37A57", 
       "Texture": "Resources/Entities/GemPurple/Diffuse.png"
     },
     "Surface": {
-      "Metallic": 0.4,
-      "Roughness": 0.2,
-      "Cast Shadows": true,
-      "Ignore Lighting": false,
-      "Ignore Fog": false,
+      "Metallic": 0.4, 
+      "Roughness": 0.2, 
+      "Cast Shadows": true, 
+      "Ignore Lighting": false, 
+      "Ignore Fog": false, 
       "Texture": "Resources/Entities/GemPurple/Material.png"
     },
     "Normal": {

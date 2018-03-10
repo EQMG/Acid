@@ -11,7 +11,7 @@
 namespace Flounder
 {
 	LodBehaviour::LodBehaviour() :
-		Behaviour(true),
+		Behaviour(),
 		m_modelLods(std::vector<Model *> ()),
 		m_currentLod(-1)
 	{
@@ -61,14 +61,6 @@ namespace Flounder
 		}
 	}
 
-	void LodBehaviour::OnEnable()
-	{
-	}
-
-	void LodBehaviour::OnDisable()
-	{
-	}
-
 	void LodBehaviour::CreateLod(const int &lod)
 	{
 		if (m_modelLods[lod] != nullptr)
@@ -88,7 +80,7 @@ namespace Flounder
 
 		if (debugEnd - debugStart > 22.0f)
 		{
-			printf("Terrain LOD %i took %fms to build\n", lod, debugEnd - debugStart);
+			printf("Terrain LOD %i built in %fms\n", lod, debugEnd - debugStart);
 		}
 #endif
 	}

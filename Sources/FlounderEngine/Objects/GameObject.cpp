@@ -47,11 +47,11 @@ namespace Flounder
 			AddComponent(component);
 		}
 
-	//	if (prefabName == "Testing")
-	//	{
-	//		entityPrefab->Write(this);
-	//		entityPrefab->Save();
-	//	}
+		if (prefabName == "Testing")
+		{
+		//	entityPrefab->Write(this);
+			entityPrefab->Save();
+		}
 	}
 
 	GameObject::~GameObject()
@@ -81,7 +81,10 @@ namespace Flounder
 				continue;
 			}
 
-			(*it)->Update();
+			if ((*it)->IsEnabled())
+			{
+				(*it)->Update();
+			}
 		}
 	}
 

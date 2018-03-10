@@ -15,21 +15,21 @@
     }
   },
   "Material": {
-	"Diffuse": {
-	  "Colour": "#C37A57",
-	  "Texture": "Resources/Entities/Testing/Diffuse.png"
-	},
-	"Surface": {
-	  "Metallic": 0.0, 
-	  "Roughness": 0.0, 
-	  "Cast Shadows": true, 
-	  "Ignore Lighting": false, 
-	  "Ignore Fog": false, 
-	  "Texture": ""
-	},
-	"Normal": {
-	  "Texture": "Resources/Entities/Testing/Normal.png"
-	}
+    "Diffuse": {
+      "Colour": "#C37A57", 
+      "Texture": "Resources/Entities/Testing/Diffuse.png"
+    },
+    "Surface": {
+      "Metallic": 0.0, 
+      "Roughness": 0.0, 
+      "Cast Shadows": true, 
+      "Ignore Lighting": false, 
+      "Ignore Fog": false, 
+      "Texture": ""
+    },
+    "Normal": {
+      "Texture": "Resources/Entities/Testing/Normal.png"
+    }
   },
   "Light": {
     "Colour": "#3319CC", 
