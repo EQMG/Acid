@@ -90,20 +90,19 @@ namespace Flounder
 			return "";
 		}
 
-		FILE *file = fopen(filepath.c_str(), "rt");
+		FILE* file = fopen(filepath.c_str(), "rb");
 
-		assert(file != nullptr && "Could not find file!");
+		assert(file != nullptr && "Could not open file!");
 
 		fseek(file, 0, SEEK_END);
-		unsigned long length = ftell(file);
-		char *data = new char[length + 1];
-		memset(data, 0, length + 1);
+		int length = ftell(file);
+		assert(length < 100 * 1024 * 1024);
+		std::string result(length, 0);
 		fseek(file, 0, SEEK_SET);
-		fread(data, 1, length, file);
+		fread(&result[0], 1, length, file);
 		fclose(file);
 
-		std::string result = std::string(data);
-		delete[] data;
+		result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
 		return result;
 	}
 
@@ -116,20 +115,6 @@ namespace Flounder
 		}
 
 		// TODO: Move from ifsteam to normal C binary file loading.
-		/*FILE *file = fopen(filepath.c_str(), "rb");
-
-		assert(file != nullptr && "Could not find file!");
-
-		fseek(file, 0L, SEEK_END);
-		unsigned long length = ftell(file);
-		std::vector<char> data = std::vector<char>(length + 1);
-		memset(data.data(), 0, length + 1);
-		fseek(file, 0, SEEK_SET);
-		fread(data.data(), 1, length, file);
-		fclose(file);
-
-		return data;*/
-
 		std::ifstream ifs = std::ifstream(filepath, std::ios::ate | std::ios::binary);
 
 		assert(ifs.is_open() && "Could not find file!");
