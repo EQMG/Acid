@@ -24,17 +24,17 @@ target_include_directories(stb PUBLIC ${LIBRARIES_INCLUDES} ${FLOUNDERENGINE_INC
 target_link_libraries(FlounderEngine PRIVATE ${LIBRARIES_LINKS})
 
 # Shaders
-if(WIN32)
-    add_custom_command(TARGET FlounderEngine
-            POST_BUILD
-            COMMAND cmd /c ${PROJECT_SOURCE_DIR}/Scripts/build_shaders.bat
-    )
-else()
-   add_custom_command(TARGET FlounderEngine
-           POST_BUILD
-           COMMAND cmd /c ${PROJECT_SOURCE_DIR}/Scripts/build_shaders.sh
-   )
-endif()
+#if(WIN32)
+#    add_custom_command(TARGET FlounderEngine
+#            POST_BUILD
+#            COMMAND cmd /c ${PROJECT_SOURCE_DIR}/Scripts/build_shaders.bat
+#    )
+#else()
+#   add_custom_command(TARGET FlounderEngine
+#           POST_BUILD
+#           COMMAND cmd /c ${PROJECT_SOURCE_DIR}/Scripts/build_shaders.sh
+#   )
+#endif()
 
 # Install
 if (FLOUNDER_INSTALL)
