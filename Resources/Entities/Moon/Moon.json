@@ -1,15 +1,15 @@
 {
   "Material": {
     "Diffuse": {
-      "Colour": "#DDE2FF",
+      "Colour": "#DDE2FF", 
       "Texture": ""
     },
     "Surface": {
-      "Metallic": 0.4,
-      "Roughness": 0.0,
-      "Cast Shadows": false,
-      "Ignore Lighting": true,
-      "Ignore Fog": true,
+      "Metallic": 0.4, 
+      "Roughness": 0.0, 
+      "Cast Shadows": false, 
+      "Ignore Lighting": true, 
+      "Ignore Fog": true, 
       "Texture": ""
     },
     "Normal": {

@@ -19,21 +19,21 @@ Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs
 Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/LocMetrics.html)
 
 ## Platforms
- * Desktop: Windows, Linux, MacOS
- * Mobile: IOS, Android (TODO)
- * Console: Switch, XBox, PlayStation (TODO)
+ * Windows, Linux, Android (Vulkan)
+ * MacOS, IOS (MoltenVK)
 
 ## Features
  * High speed
  * Cross platform
  * Vulkan rendering
- * Easy to read documented code
  * Event and tasks systems
  * GUI / Text rendering
  * Modular rendering pipeline
+ * Deferred rendering
  * 3D audio and music
  * 3D skybox
  * 3D terrain and water
+ * 3D shadow mapping
  * Bullet physics
  * Model file loading (OBJ)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
@@ -43,10 +43,8 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Flexible input classes
  * Component system
  * GameObject prefab loading
- * Deferred rendering
- * 3D shadow mapping
  * Normal, glow, and sway mapping
- * Particle effects
+ * Particle effects (WIP)
  * Simple physics engine (WIP)
  * P2P networking (WIP)
  * Animations (WIP)
@@ -68,7 +66,7 @@ On Linux you need a GCC/Clang compiler, each package listed here are for Debian/
 
 Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
 
-Once Flounder has built you need to link the Resources folder into the output directory. For example when using CLion Scripts/generate_vs.bat or .sh can be used to link into Debug and Release builds. You may also want to run Scripts/build_shaders.bat or .sh to compile SPIRV shaders.
+Once Flounder has built you need to link the Resources folder into the output directory. For example when using CLion `Scripts/generate_vs.bat` or `.sh` can be used to link into Debug and Release builds. You may also want to run `Scripts/build_shaders.bat` or `.sh` to compile SPIRV shaders.
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.

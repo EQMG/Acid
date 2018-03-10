@@ -30,7 +30,10 @@ namespace Flounder
 		m_multisampleState({}),
 		m_dynamicState({})
 	{
-		printf("Creating pipeline: '%s'\n", m_pipelineCreateInfo.shaderStages.at(1).c_str());
+#if FLOUNDER_VERBOSE
+		const auto debugStart = Engine::Get()->GetTimeMs();
+#endif
+
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
 		CreatePipelineLayout();
@@ -55,6 +58,11 @@ namespace Flounder
 			assert(false);
 			break;
 		}
+
+#if FLOUNDER_VERBOSE
+		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Pipeline '%s' created in %fms\n", m_pipelineCreateInfo.shaderStages.at(0).c_str(), debugEnd - debugStart);
+#endif
 	}
 
 	Pipeline::~Pipeline()

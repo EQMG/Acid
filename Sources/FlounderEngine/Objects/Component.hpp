@@ -16,6 +16,7 @@ namespace Flounder
 	private:
 		std::string m_name;
 		GameObject *m_gameObject;
+		bool m_enabled;
 	public:
 		Component();
 
@@ -34,5 +35,9 @@ namespace Flounder
 		GameObject *GetGameObject() const { return m_gameObject; }
 
 		void SetGameObject(GameObject *gameObject) { m_gameObject = gameObject; }
+
+		bool IsEnabled() const { return m_enabled; };
+
+		void SetEnabled(const bool &enable) { m_enabled = enable; }
 	};
 }

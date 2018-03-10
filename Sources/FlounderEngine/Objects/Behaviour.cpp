@@ -2,11 +2,9 @@
 
 namespace Flounder
 {
-	Behaviour::Behaviour(const bool &enabled) :
-		Component(),
-		m_enabled(false)
+	Behaviour::Behaviour() :
+		Component()
 	{
-		SetEnabled(enabled);
 	}
 
 	Behaviour::~Behaviour()
@@ -23,27 +21,5 @@ namespace Flounder
 
 	void Behaviour::Write(LoadedValue *value)
 	{
-	}
-
-	void Behaviour::OnEnable()
-	{
-	}
-
-	void Behaviour::OnDisable()
-	{
-	}
-
-	void Behaviour::SetEnabled(const bool &enable)
-	{
-		if (m_enabled && !enable)
-		{
-			OnDisable();
-		}
-		else if (!m_enabled && enable)
-		{
-			OnEnable();
-		}
-
-		m_enabled = enable;
 	}
 }
