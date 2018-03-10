@@ -9,7 +9,7 @@ namespace Flounder
 			VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
 			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-			Vertex::GetAttributeDescriptions(1), // vertexAttributeDescriptions
+			Vertex::GetAttributeDescriptions(2), // vertexAttributeDescriptions
 
 			{
 				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_ALL), // uboObject
