@@ -73,14 +73,6 @@ namespace Flounder
 		/// <returns> True if partially contained, false if outside. </returns>
 		bool CubeInFrustum(const Vector3 &min, const Vector3 &max) const;
 
-		/// <summary>
-		/// Is the cube contained fully in the frustum?
-		/// </summary>
-		/// <param name="min"> The point 1st position. </param>
-		/// <param name="max"> The point 2nd position. </param>
-		/// <returns> True if fully contained, false if outside. </returns>
-		bool CubeFullyInFrustum(const Vector3 &min, const Vector3 &max) const;
-
 	private:
 		void NormalizePlane(const int &side) const;
 	};

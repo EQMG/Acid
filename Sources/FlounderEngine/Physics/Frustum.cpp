@@ -130,28 +130,6 @@ namespace Flounder
 
 	bool Frustum::CubeInFrustum(const Vector3 &min, const Vector3 &max) const
 	{
-		// TODO.
-
-		for (int i = 0; i < 6; i++)
-		{
-			if (m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f)
-			{
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	bool Frustum::CubeFullyInFrustum(const Vector3 &min, const Vector3 &max) const
-	{
 		for (int i = 0; i < 6; i++)
 		{
 			if (m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
