@@ -6,6 +6,7 @@ option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(FLOUNDER_INSTALL "Generate installation target" ON)
 option(FLOUNDER_BUILD_EXAMPLES "Build the Flounder example programs" ON)
 option(FLOUNDER_BUILD_TESTS "Build the Flounder test programs" ON)
+option(FLOUNDER_SET_OUTPUT "If Flounder will set it's own outputs" ON)
 
 set(LIB_TYPE STATIC)
 
@@ -72,9 +73,11 @@ if(FLOUNDER_PLATFORM_ANDROID)
 endif()
 
 # Output Directories
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/bin)
+if (FLOUNDER_SET_OUTPUT)
+	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/lib)
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/lib)
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/bin)
+endif()
 
 # Dependencies
 include(Libraries/FindVulkan.cmake)
