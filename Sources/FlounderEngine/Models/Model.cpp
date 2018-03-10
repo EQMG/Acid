@@ -130,11 +130,9 @@ namespace Flounder
 		std::vector<Vector2> uvsList = std::vector<Vector2>();
 		std::vector<Vector3> normalsList = std::vector<Vector3>();
 
-		for (auto it = lines.begin(); it < lines.end(); ++it)
+		for (const auto &line : lines)
 		{
-			std::string line = FormatString::Trim(*it);
-
-			std::vector<std::string> split = FormatString::Split(line, " ");
+			std::vector<std::string> split = FormatString::Split(line, " ", true);
 
 			if (!split.empty())
 			{
@@ -166,7 +164,7 @@ namespace Flounder
 					if (split.size() != 4 || FormatString::Contains(line, "//"))
 					{
 						fprintf(stderr, "Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", m_filename.c_str());
-						assert(false);
+						throw std::runtime_error("Model loading error.");
 					}
 
 					std::vector<std::string> vertex1 = FormatString::Split(split.at(1), "/");
