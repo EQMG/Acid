@@ -1,36 +1,42 @@
 {
   "Rigidbody": {
-    "Mass": 1.0,
-    "Drag": 0.0,
-    "Use Gravity": true,
+    "Mass": 1.0, 
+    "Drag": 0.0, 
+    "Use Gravity": true, 
     "Freeze Position": {
-      "x": false,
-      "y": false,
+      "x": false, 
+      "y": false, 
       "z": false
     },
     "Freeze Rotation": {
-      "x": false,
-      "y": false,
+      "x": false, 
+      "y": false, 
       "z": false
     }
   },
   "Material": {
-    "Base Colour": "#C37A57",
-    "Diffuse Texture": "Resources/Entities/GemPurple/Diffuse.png",
-    "Metallic": 0.4,
-    "Roughness": 0.2,
-    "Cast Shadows": true,
-    "Ignore Lighting": false,
-    "Ignore Fog": false,
-    "Material Texture": "Resources/Entities/GemPurple/Material.png",
-    "Normal Texture": ""
+    "Diffuse": {
+      "Colour": "#C37A57",
+      "Texture": "Resources/Entities/GemPurple/Diffuse.png"
+    },
+    "Surface": {
+      "Metallic": 0.4,
+      "Roughness": 0.2,
+      "Cast Shadows": true,
+      "Ignore Lighting": false,
+      "Ignore Fog": false,
+      "Texture": "Resources/Entities/GemPurple/Material.png"
+    },
+    "Normal": {
+      "Texture": ""
+    }
   },
   "Light": {
-    "Colour": "#B66ADA",
-    "Radius": 1.5,
+    "Colour": "#B66ADA", 
+    "Radius": 1.5, 
     "Offset": {
-      "x": 0.0,
-      "y": 0.5,
+      "x": 0.0, 
+      "y": 0.5, 
       "z": 0.0
     }
   },

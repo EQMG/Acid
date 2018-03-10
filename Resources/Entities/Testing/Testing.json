@@ -1,36 +1,42 @@
 {
   "Rigidbody": {
-    "Mass": 2.0,
-    "Drag": 0.1,
-    "Use Gravity": true,
+    "Mass": 2.0, 
+    "Drag": 0.1, 
+    "Use Gravity": true, 
     "Freeze Position": {
-      "x": false,
-      "y": false,
+      "x": false, 
+      "y": false, 
       "z": false
     },
     "Freeze Rotation": {
-      "x": false,
-      "y": false,
+      "x": false, 
+      "y": false, 
       "z": false
     }
   },
   "Material": {
-    "Base Colour": "#C37A57",
-    "Diffuse Texture": "Resources/Entities/Testing/Diffuse.png",
-    "Metallic": 0.0,
-    "Roughness": 0.0,
-    "Cast Shadows": true,
-    "Ignore Lighting": false,
-    "Ignore Fog": false,
-    "Material Texture": "",
-    "Normal Texture": "Resources/Entities/Testing/Normal.png"
+	"Diffuse": {
+	  "Colour": "#C37A57",
+	  "Texture": "Resources/Entities/Testing/Diffuse.png"
+	},
+	"Surface": {
+	  "Metallic": 0.0, 
+	  "Roughness": 0.0, 
+	  "Cast Shadows": true, 
+	  "Ignore Lighting": false, 
+	  "Ignore Fog": false, 
+	  "Texture": ""
+	},
+	"Normal": {
+	  "Texture": "Resources/Entities/Testing/Normal.png"
+	}
   },
   "Light": {
-    "Colour": "#3319CC",
-    "Radius": 1.33,
+    "Colour": "#3319CC", 
+    "Radius": 1.33, 
     "Offset": {
-      "x": 0.0,
-      "y": 3.0,
+      "x": 0.0, 
+      "y": 3.0, 
       "z": 0.0
     }
   },

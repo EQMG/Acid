@@ -58,14 +58,14 @@ namespace Flounder
 		}
 	}
 
-	LoadedValue *JsonSection::Convert(JsonSection *source, LoadedValue *destination)
+	LoadedValue *JsonSection::Convert(JsonSection *source, LoadedValue *parent, const bool &isTopSection)
 	{
-		LoadedValue *thisValue;
+		LoadedValue *thisValue = parent;
 
-		if (destination != nullptr)
+		if (!isTopSection)
 		{
-			thisValue = new LoadedValue(destination, source->m_name, "");
-			destination->m_children.push_back(thisValue);
+			thisValue = new LoadedValue(parent, source->m_name, "");
+			parent->m_children.push_back(thisValue);
 
 			auto contentSplit = FormatString::Split(source->m_content, ",");
 
@@ -82,15 +82,10 @@ namespace Flounder
 				thisValue->m_children.push_back(newChild);
 			}
 		}
-		else
-		{
-			destination = new LoadedValue(nullptr, "", "");
-			thisValue = destination;
-		}
 
 		for (auto child : source->m_children)
 		{
-			Convert(child, thisValue);
+			Convert(child, thisValue, false);
 		}
 
 		return thisValue;

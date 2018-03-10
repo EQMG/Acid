@@ -15,15 +15,21 @@
     }
   },
   "Material": {
-    "Base Colour": "#8b4513",
-    "Diffuse Texture": "",
-    "Metallic": 0.0,
-    "Roughness": 0.0,
-    "Cast Shadows": true,
-    "Ignore Lighting": false,
-    "Ignore Fog": false,
-    "Material Texture": "",
-    "Normal Texture": ""
+    "Diffuse": {
+      "Colour": "#8b4513",
+      "Texture": ""
+    },
+    "Surface": {
+      "Metallic": 0.0,
+      "Roughness": 0.0,
+      "Cast Shadows": true,
+      "Ignore Lighting": false,
+      "Ignore Fog": false,
+      "Texture": ""
+    },
+    "Normal": {
+      "Texture": ""
+    }
   },
   "Mesh": {
     "Model": "Resources/Entities/StairsWood/Model.obj"
