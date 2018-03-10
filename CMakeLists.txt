@@ -4,6 +4,8 @@ project (Flounder)
 # Options
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(FLOUNDER_INSTALL "Generate installation target" ON)
+option(FLOUNDER_BUILD_EXAMPLES "Build the Flounder example programs" ON)
+option(FLOUNDER_BUILD_TESTS "Build the Flounder test programs" ON)
 
 set(LIB_TYPE STATIC)
 
@@ -84,4 +86,6 @@ include(Libraries/FindSTB.cmake)
 add_subdirectory(Sources/FlounderEngine)
 
 # Example Sources
-add_subdirectory(Sources/ExampleStarting)
+if (FLOUNDER_BUILD_EXAMPLES)
+	add_subdirectory(Sources/ExampleStarting)
+endif()

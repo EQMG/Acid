@@ -30,3 +30,16 @@ if (FLOUNDER_INSTALL)
             ARCHIVE DESTINATION lib
     )
 endif()
+
+# Shaders
+#if(WIN32)
+#    add_custom_command(TARGET FlounderEngine
+#            POST_BUILD
+#            COMMAND cmd /c ${PROJECT_SOURCE_DIR}/Scripts/build_shaders.bat
+#    )
+#else()
+#   add_custom_command(TARGET FlounderEngine
+#           POST_BUILD
+#           COMMAND cmd /c ${PROJECT_SOURCE_DIR}/Scripts/build_shaders.sh
+#   )
+#endif()
