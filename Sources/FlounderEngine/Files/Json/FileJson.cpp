@@ -81,6 +81,7 @@ namespace Flounder
 		{
 			delete child;
 		}
+
 		m_parent->m_children.clear();
 		JsonSection::Convert(loadedParent, m_parent, true);
 		delete loadedParent;

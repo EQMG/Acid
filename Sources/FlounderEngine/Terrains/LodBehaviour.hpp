@@ -18,10 +18,6 @@ namespace Flounder
 		~LodBehaviour();
 
 		void Update() override;
-
-		void OnEnable() override;
-
-		void OnDisable() override;
 	private:
 		void CreateLod(const int &lod);
 
