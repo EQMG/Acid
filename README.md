@@ -19,9 +19,9 @@ Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs
 Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/LocMetrics.html)
 
 ## Platforms
- * Windows
- * Linux
- * MacOS
+ * Desktop: Windows, Linux, MacOS
+ * Mobile: IOS, Android (TODO)
+ * Console: Switch, XBox, PlayStation (TODO)
 
 ## Features
  * High speed
@@ -67,6 +67,8 @@ For Windows you need Visual Studios 2015 or later, use the VS installer and ensu
 On Linux you need a GCC/Clang compiler, each package listed here are for Debian/Apt. GLFW requires `xorg-dev`, you should also have `libopenal1`, `libglfw3`, and `libvulkan` installed.
 
 Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
+
+Once Flounder has built you need to link the Resources folder into the output directory. For example when using CLion Scripts/generate_vs.bat or .sh can be used to link into Debug and Release builds. You may also want to run Scripts/build_shaders.bat or .sh to compile SPIRV shaders.
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.

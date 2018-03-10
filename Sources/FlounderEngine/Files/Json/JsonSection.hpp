@@ -34,6 +34,6 @@ namespace Flounder
 
 		static void AppendData(LoadedValue *loadedValue, std::string *data, const int &indentation, const bool &end = false);
 
-		static LoadedValue *Convert(JsonSection *source, LoadedValue *destination);
+		static LoadedValue *Convert(JsonSection *source, LoadedValue *parent, const bool &isTopSection);
 	};
 }

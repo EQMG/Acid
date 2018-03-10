@@ -1,5 +1,5 @@
 # Flounder Guidelines 
-December 1, 2017 
+March 9, 2018
  
 This document is a rough outline for guidelines for Flounder. This document covers the languages of C++, C#, and GLSL. Flounder is licenced on the MIT Licence, read more on our [LICENSE](LICENSE) file. For more about the project read our read more on our [README](README) file. 
  
@@ -14,10 +14,10 @@ This is a set of guidelines for Flounder C++17, .NET 4.6.2, and GLSL 450. Our gu
 
 namespace Examples
 {
-	enum FlExample
+	enum Enable
 	{
-		FlEnableOn = 0,
-		FlEnableOff = 1,
+		EnableOn = 0,
+		EnableOff = 1,
 	}
 
 	/// <summary>
