@@ -6,7 +6,8 @@ namespace Flounder
 {
 	Component::Component() :
 		m_name(""),
-		m_gameObject(nullptr)
+		m_gameObject(nullptr),
+		m_enabled(true)
 	{
 	}
 

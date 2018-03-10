@@ -94,7 +94,7 @@ namespace Demo
 		}
 
 		// Subpass 0.
-//		m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
+		m_rendererShadows->Render(commandBuffer, m_infinity, *camera);
 
 		// Ends Rendering.
 		Renderer::Get()->EndRenderpass(commandBuffer, 0);

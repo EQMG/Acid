@@ -9,9 +9,8 @@ namespace Flounder
 		public Component
 	{
 	private:
-		bool m_enabled;
 	public:
-		Behaviour(const bool &enabled = false);
+		Behaviour();
 
 		virtual ~Behaviour();
 
@@ -20,12 +19,6 @@ namespace Flounder
 		void Load(LoadedValue *value) override;
 
 		void Write(LoadedValue *value) override;
-
-		virtual void OnEnable();
-
-		virtual void OnDisable();
-
-		void SetEnabled(const bool &enable);
 
 		std::string GetName() const override { return "Behaviour"; };
 	};
