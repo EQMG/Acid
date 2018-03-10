@@ -61,7 +61,7 @@ namespace Flounder
 
 			auto material = mesh->GetGameObject()->GetComponent<Material>();
 
-			if (material == nullptr || !material->GetCastsShadows())
+			if (material == nullptr || !material->GetSurface()->GetCastsShadows())
 			{
 				continue;
 			}

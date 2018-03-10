@@ -25,6 +25,11 @@ namespace Flounder
 
 	void PrefabObject::Write(GameObject *gameObject)
 	{
+		for (auto child : m_fileJson->GetParent()->m_children)
+		{
+			delete child;
+		}
+
 		m_fileJson->GetParent()->m_children.clear();
 
 		for (auto component : *gameObject->GetComponents())

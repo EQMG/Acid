@@ -6,89 +6,93 @@
 
 namespace Flounder
 {
-	/*class F_EXPORT MaterialDiffuse
-	{
-		Colour *m_baseColor;
-		Texture *m_textureDiffuse;
-
-		MaterialDiffuse::MaterialDiffuse(const Colour &baseColor, Texture *diffuse) :
-			Component(),
-			m_baseColor(new Colour(baseColor)),
-			m_textureDiffuse(diffuse)
-		{
-		}
-	};
-
-	class F_EXPORT MaterialSurface
-	{
-		float m_metallic;
-		float m_roughness;
-		bool m_castsShadows;
-		bool m_ignoreLighting;
-		bool m_ignoreFog;
-		Texture *m_textureMaterial; // R: Metallic, G: Roughness, B: Emmisive
-
-		MaterialSurface::MaterialSurface(const float &metallic, const float &roughness, const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog, Texture *material) :
-			m_metallic(metallic),
-			m_roughness(roughness),
-			m_castsShadows(castsShadows),
-			m_ignoreLighting(ignoreLighting),
-			m_ignoreFog(ignoreFog),
-			m_textureMaterial(material)
-		{
-		}
-	};
-
-	class F_EXPORT MaterialNormal
-	{
-		Texture *m_textureNormal;
-
-		MaterialNormal::MaterialNormal(Texture *normal) :
-			m_textureNormal(normal)
-		{
-		}
-	};*/
-
-	/// <summary>
-	/// Class that represents a material.
-	/// </summary>
-	class F_EXPORT Material :
-		public Component
+	class F_EXPORT MaterialDiffuse
 	{
 	private:
 		Colour *m_baseColor;
-		Texture *m_textureDiffuse;
-
-		float m_metallic;
-		float m_roughness;
-		bool m_castsShadows;
-		bool m_ignoreLighting;
-		bool m_ignoreFog;
-
-		Texture *m_textureMaterial;
-		Texture *m_textureNormal;
+		Texture *m_texture;
 	public:
-		Material(const Colour &baseColor = Colour::WHITE, Texture *diffuse = nullptr, const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false, Texture *material = nullptr, Texture *normal = nullptr);
+		MaterialDiffuse(const Colour &baseColor = Colour::WHITE, Texture *texture = nullptr) :
+			m_baseColor(new Colour(baseColor)),
+			m_texture(texture)
+		{
+		}
 
-		~Material();
+		void Load(LoadedValue *value)
+		{
+			if (value == nullptr)
+			{
+				return;
+			}
+			TrySetTexture(value->GetChild("Texture")->GetString());
+			m_baseColor->Set(value->GetChild("Colour")->GetString());
+		}
 
-		void Update() override;
-
-		void Load(LoadedValue *value) override;
-
-		void Write(LoadedValue *value) override;
-
-		std::string GetName() const override { return "Material"; };
+		void Write(LoadedValue *destination)
+		{
+			destination->GetChild("Texture", true)->SetString(m_texture == nullptr ? "" : m_texture->GetFilename());
+			destination->GetChild("Colour", true)->SetString(Colour::GetHex(*m_baseColor));
+		}
 
 		Colour *GetBaseColor() const { return m_baseColor; }
 
 		void SetBaseColor(const Colour &baseColor) { m_baseColor->Set(baseColor); }
 
-		Texture *GetTextureDiffuse() const { return m_textureDiffuse; }
+		Texture *GetTexture() const { return m_texture; }
 
-		void SetTextureDiffuse(Texture *diffuse) { m_textureDiffuse = diffuse; }
+		void SetTexture(Texture *texture) { m_texture = texture; }
 
-		void TrySetTextureDiffuse(const std::string &filename);
+		void TrySetTexture(const std::string &filename)
+		{
+			if (!filename.empty())
+			{
+				m_texture = Texture::Resource(filename);
+			}
+		}
+	};
+
+	class F_EXPORT MaterialSurface
+	{
+	private:
+		float m_metallic;
+		float m_roughness;
+		bool m_castsShadows;
+		bool m_ignoreLighting;
+		bool m_ignoreFog;
+		Texture *m_texture; // R: Metallic, G: Roughness, B: Emmisive
+	public:
+		MaterialSurface(const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false, Texture *texture = nullptr) :
+			m_metallic(metallic),
+			m_roughness(roughness),
+			m_castsShadows(castsShadows),
+			m_ignoreLighting(ignoreLighting),
+			m_ignoreFog(ignoreFog),
+			m_texture(texture)
+		{
+		}
+
+		void Load(LoadedValue *value)
+		{
+			if (value == nullptr)
+			{
+				return;
+			}
+			m_metallic = value->GetChild("Metallic")->Get<float>();
+			m_roughness = value->GetChild("Roughness")->Get<float>();
+			m_castsShadows = value->GetChild("Cast Shadows")->Get<bool>();
+			m_ignoreLighting = value->GetChild("Ignore Lighting")->Get<bool>();
+			m_ignoreFog = value->GetChild("Ignore Fog")->Get<bool>();
+			TrySetTexture(value->GetChild("Texture")->GetString());
+		}
+
+		void Write(LoadedValue *destination)
+		{
+			destination->GetChild("Metallic", true)->Set(m_metallic);
+			destination->GetChild("Roughness", true)->Set(m_roughness);
+			destination->GetChild("Ignore Lighting", true)->Set(m_ignoreLighting);
+			destination->GetChild("Ignore Fog", true)->Set(m_ignoreFog);
+			destination->GetChild("Texture", true)->SetString(m_texture == nullptr ? "" : m_texture->GetFilename());
+		}
 
 		float GetMetallic() const { return m_metallic; }
 
@@ -110,16 +114,124 @@ namespace Flounder
 
 		void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
 
-		Texture *GetTextureMaterial() const { return m_textureMaterial; }
+		Texture *GetTexture() const { return m_texture; }
 
-		void SetTextureMaterial(Texture *material) { m_textureMaterial = material; }
+		void SetTexture(Texture *texture) { m_texture = texture; }
 
-		void TrySetTextureMaterial(const std::string &filename);
+		void TrySetTexture(const std::string &filename)
+		{
+			if (!filename.empty())
+			{
+				m_texture = Texture::Resource(filename);
+			}
+		}
+	};
 
-		Texture *GetTextureNormal() const { return m_textureNormal; }
+	class F_EXPORT MaterialNormal
+	{
+	private:
+		Texture *m_texture;
+	public:
+		MaterialNormal(Texture *texture = nullptr) :
+			m_texture(texture)
+		{
+		}
 
-		void SetTextureNormal(Texture *normal) { m_textureNormal = normal; }
+		void Load(LoadedValue *value)
+		{
+			if (value == nullptr)
+			{
+				return;
+			}
+			TrySetTexture(value->GetChild("Texture")->GetString());
+		}
 
-		void TrySetTextureNormal(const std::string &filename);
+		void Write(LoadedValue *destination)
+		{
+			destination->GetChild("Texture", true)->SetString(m_texture == nullptr ? "" : m_texture->GetFilename());
+		}
+
+		Texture *GetTexture() const { return m_texture; }
+
+		void SetTexture(Texture *texture) { m_texture = texture; }
+
+		void TrySetTexture(const std::string &filename)
+		{
+			if (!filename.empty())
+			{
+				m_texture = Texture::Resource(filename);
+			}
+		}
+	};
+
+	class F_EXPORT MaterialSway
+	{
+	private:
+		Texture *m_texture;
+	public:
+		MaterialSway(Texture *texture = nullptr) :
+			m_texture(texture)
+		{
+		}
+
+		void Load(LoadedValue *value)
+		{
+			if (value == nullptr)
+			{
+				return;
+			}
+			TrySetTexture(value->GetChild("Texture", true)->GetString());
+		}
+
+		void Write(LoadedValue *destination)
+		{
+			destination->GetChild("Texture", true)->SetString(m_texture == nullptr ? "" : m_texture->GetFilename());
+		}
+
+		Texture *GetTexture() const { return m_texture; }
+
+		void SetTexture(Texture *texture) { m_texture = texture; }
+
+		void TrySetTexture(const std::string &filename)
+		{
+			if (!filename.empty())
+			{
+				m_texture = Texture::Resource(filename);
+			}
+		}
+	};
+
+	/// <summary>
+	/// Class that represents a material.
+	/// </summary>
+	class F_EXPORT Material :
+		public Component
+	{
+	private:
+		MaterialDiffuse *m_diffuse;
+		MaterialSurface *m_surface;
+		MaterialNormal *m_normal;
+		MaterialSway *m_sway;
+
+	public:
+		Material(MaterialDiffuse *diffuse = new MaterialDiffuse(), MaterialSurface *surface = new MaterialSurface(), MaterialNormal *normal = new MaterialNormal(), MaterialSway *sway = new MaterialSway());
+
+		~Material();
+
+		void Update() override;
+
+		void Load(LoadedValue *value) override;
+
+		void Write(LoadedValue *destination) override;
+
+		std::string GetName() const override { return "Material"; };
+
+		MaterialDiffuse *GetDiffuse() const { return m_diffuse; }
+
+		MaterialSurface *GetSurface() const { return m_surface; }
+
+		MaterialNormal *GetNormal() const { return m_normal; }
+
+		MaterialSway *GetSway() const { return m_sway; }
 	};
 }
