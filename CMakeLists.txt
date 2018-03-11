@@ -85,6 +85,9 @@ include(Libraries/FindOpenAL.cmake)
 include(Libraries/FindGLFW.cmake)
 include(Libraries/FindSTB.cmake)
 
+message(${LIBRARIES_INCLUDES})
+message(${LIBRARIES_LINKS})
+
 # Engine Sources
 add_subdirectory(Sources/FlounderEngine)
 
