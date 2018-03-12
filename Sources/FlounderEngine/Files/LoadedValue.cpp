@@ -36,4 +36,18 @@ namespace Flounder
 		m_children.push_back(child);
 		return child;
 	}
+
+	LoadedValue *LoadedValue::GetChild(const unsigned int &index, const bool &addIfNull)
+	{
+		if (m_children.size() >= index)
+		{
+			return m_children.at(index);
+		}
+
+		// TODO
+		//if (!addIfNull)
+		//{
+			return nullptr;
+		//}
+	}
 }
