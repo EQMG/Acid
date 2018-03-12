@@ -21,9 +21,9 @@ namespace Flounder
 
 	Vector3 *SpawnLine::GetBaseSpawnPosition()
 	{
-		m_spawnPosition->Set(*m_axis);
-		m_spawnPosition->Scale(m_length);
-		m_spawnPosition->Scale(Maths::RandomInRange(-0.5f, 0.5f));
+		*m_spawnPosition = *m_axis;
+		*m_spawnPosition *= m_length;
+		*m_spawnPosition *= Maths::RandomInRange(-0.5f, 0.5f);
 		return m_spawnPosition;
 	}
 }

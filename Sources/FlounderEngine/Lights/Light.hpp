@@ -74,7 +74,7 @@ namespace Flounder
 
 		Colour *GetColour() const { return m_colour; }
 
-		void SetColour(const Colour &colour) const { m_colour->Set(colour); }
+		void SetColour(const Colour &colour) { *m_colour = colour; }
 
 		float GetRadius() const { return m_radius; }
 
@@ -82,10 +82,10 @@ namespace Flounder
 
 		Vector3 *GetOffset() const { return m_offset; }
 
-		void SetOffset(const Vector3 &offset) const { m_offset->Set(offset); }
+		void SetOffset(const Vector3 &offset) { *m_offset = offset; }
 
 		Vector3 *GetPosition() const { return m_position; }
 
-		void SetPosition(const Vector3 &position) const { m_position->Set(position); }
+		void SetPosition(const Vector3 &position) { *m_position = position; }
 	};
 }

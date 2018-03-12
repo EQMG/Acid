@@ -25,6 +25,23 @@ namespace Flounder
 
 	void EntityRender::Update()
 	{
+		auto material = GetGameObject()->GetComponent<Material>();
+
+		if (material == nullptr)
+		{
+			return;
+		}
+
+		// Updates uniforms.
+		UbosEntities::UboObject uboObject = {};
+		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
+		uboObject.samples.m_x = material->GetDiffuse()->GetTexture() != nullptr;
+		uboObject.samples.m_y = material->GetSurface()->GetTexture() != nullptr;
+		uboObject.samples.m_z = material->GetNormal()->GetTexture() != nullptr;
+		uboObject.baseColor = *material->GetDiffuse()->GetBaseColor();
+		uboObject.surface = Vector4(material->GetSurface()->GetMetallic(), material->GetSurface()->GetRoughness(),
+			static_cast<float>(material->GetSurface()->GetIgnoreFog()), static_cast<float>(material->GetSurface()->GetIgnoreLighting()));
+		m_uniformObject->Update(&uboObject);
 	}
 
 	void EntityRender::Load(LoadedValue *value)
@@ -69,17 +86,6 @@ namespace Flounder
 			material->GetSurface()->GetTexture() == nullptr ? m_nullTexture : material->GetSurface()->GetTexture(),
 			material->GetNormal()->GetTexture() == nullptr ? m_nullTexture : material->GetNormal()->GetTexture()
 		});
-
-		// Updates uniforms.
-		UbosEntities::UboObject uboObject = {};
-		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		uboObject.samples.m_x = material->GetDiffuse()->GetTexture() != nullptr;
-		uboObject.samples.m_y = material->GetSurface()->GetTexture() != nullptr;
-		uboObject.samples.m_z = material->GetNormal()->GetTexture() != nullptr;
-		uboObject.baseColor = *material->GetDiffuse()->GetBaseColor();
-		uboObject.surface = Vector4(material->GetSurface()->GetMetallic(), material->GetSurface()->GetRoughness(),
-			static_cast<float>(material->GetSurface()->GetIgnoreFog()), static_cast<float>(material->GetSurface()->GetIgnoreLighting()));
-		m_uniformObject->Update(&uboObject);
 
 		// Draws the object.
 		m_descriptorSet->BindDescriptor(commandBuffer);

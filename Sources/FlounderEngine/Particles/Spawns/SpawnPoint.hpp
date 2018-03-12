@@ -18,6 +18,6 @@ namespace Flounder
 
 		Vector3 *getPoint() const { return m_point; }
 
-		void setPoint(const Vector3 &point) const { m_point->Set(point); }
+		void setPoint(const Vector3 &point) { *m_point = point; }
 	};
 }

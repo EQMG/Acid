@@ -24,10 +24,10 @@ namespace Flounder
 
 		Vector3 *GetAxis() const { return m_axis; }
 
-		void SetAxis(const Vector3 &axis) const { m_axis->Set(axis); }
+		void SetAxis(const Vector3 &axis) { *m_axis = axis; }
 
 		Vector3 *GetSpawnPosition() const { return m_spawnPosition; }
 
-		void SetSpawnPosition(const Vector3 &spawnPosition) const { m_spawnPosition->Set(spawnPosition); }
+		void SetSpawnPosition(const Vector3 &spawnPosition) { *m_spawnPosition = spawnPosition; }
 	};
 }

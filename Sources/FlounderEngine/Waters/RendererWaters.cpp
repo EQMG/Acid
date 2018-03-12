@@ -18,8 +18,7 @@ namespace Flounder
 
 			{
 				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
-				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
-				Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerReflection
+				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL) // uboObject
 			}, // descriptors
 
 			{"Resources/Shaders/Waters/Water.vert.spv", "Resources/Shaders/Waters/Water.frag.spv"} // shaderStages

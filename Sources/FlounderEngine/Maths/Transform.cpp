@@ -52,11 +52,12 @@ namespace Flounder
 		return Matrix4::TransformationMatrix(Vector3(), *m_rotation, Vector3(), destination);
 	}
 
-	void Transform::Set(const Transform &source) const
+	Transform *Transform::Set(const Transform &source)
 	{
-		m_position->Set(*source.m_position);
-		m_rotation->Set(*source.m_rotation);
-		m_scaling->Set(*source.m_scaling);
+		*m_position = *source.m_position;
+		*m_rotation = *source.m_rotation;
+		*m_scaling = *source.m_scaling;
+		return this;
 	}
 
 	Transform *Transform::Set(LoadedValue *value)
@@ -72,6 +73,11 @@ namespace Flounder
 		m_position->Write(destination->GetChild("position", true));
 		m_rotation->Write(destination->GetChild("rotation", true));
 		m_scaling->Write(destination->GetChild("scaling", true));
+	}
+
+	Transform &Transform::operator=(const Transform &other)
+	{
+		return *Set(other);
 	}
 
 	bool Transform::operator==(const Transform &other) const

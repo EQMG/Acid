@@ -97,7 +97,7 @@ namespace Flounder
 
 		Vector3 *GetOffsetCentre() const { return m_systemOffset; }
 
-		void SetOffsetCentre(const Vector3 &systemOffsetCentre) const { m_systemOffset->Set(systemOffsetCentre); }
+		void SetOffsetCentre(const Vector3 &systemOffsetCentre) { *m_systemOffset = systemOffsetCentre; }
 
 		Vector3 *GetDirection() const { return m_direction; }
 

@@ -66,7 +66,7 @@ namespace Flounder
 		m_pps = value->GetChild("PPS")->Get<float>();
 		m_averageSpeed = value->GetChild("Average Speed")->Get<float>();
 		m_gravityEffect = value->GetChild("Gravity Effect")->Get<float>();
-		m_systemOffset->Set(value->GetChild("Offset"));
+		*m_systemOffset = value->GetChild("Offset");
 	}
 
 	void ParticleSystem::Write(LoadedValue *value)
@@ -86,8 +86,8 @@ namespace Flounder
 
 		Vector3 velocity = Vector3();
 		float delta = Engine::Get()->GetDelta();
-		Vector3::Subtract(*GetGameObject()->GetTransform()->GetPosition(), *m_lastPosition, &velocity);
-		m_lastPosition->Set(*GetGameObject()->GetTransform()->GetPosition());
+		velocity = *GetGameObject()->GetTransform()->GetPosition() - *m_lastPosition;
+		*m_lastPosition = *GetGameObject()->GetTransform()->GetPosition();
 		velocity /= delta;
 
 		if (m_direction != nullptr)
@@ -100,14 +100,14 @@ namespace Flounder
 		}
 
 		velocity.Normalize();
-		velocity.Scale(GenerateValue(m_averageSpeed, m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError)));
+		velocity *= GenerateValue(m_averageSpeed, m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError));
 
 		ParticleType *emitType = m_types->at(static_cast<unsigned int>(std::floor(Maths::RandomInRange(0, static_cast<int>(m_types->size())))));
 		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
 		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
 		Vector3 spawnPos = Vector3();
-		Vector3::Add(*GetGameObject()->GetTransform()->GetPosition(), *m_systemOffset, &spawnPos);
-		Vector3::Add(spawnPos, *m_spawn->GetBaseSpawnPosition(), &spawnPos);
+		spawnPos = *GetGameObject()->GetTransform()->GetPosition() + *m_systemOffset;
+		spawnPos = spawnPos + *m_spawn->GetBaseSpawnPosition();
 		return new Particle(emitType, spawnPos, velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
 	}
 
@@ -166,7 +166,7 @@ namespace Flounder
 
 	void ParticleSystem::SetDirection(const Vector3 &direction, const float &deviation)
 	{
-		m_direction->Set(direction);
-		m_directionDeviation = static_cast<float>(deviation * PI);
+		*m_direction = direction;
+		m_directionDeviation = deviation * PI;
 	}
 }

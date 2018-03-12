@@ -9,6 +9,7 @@
 #include "../Particles/ParticleSystem.hpp"
 #include "../Materials/Material.hpp"
 #include "../Meshes/Mesh.hpp"
+#include "../Shadows/ShadowRender.hpp"
 #include "../Skyboxes/SkyboxRender.hpp"
 #include "../Terrains/TerrainRender.hpp"
 #include "../Waters/WaterRender.hpp"
@@ -25,6 +26,7 @@ namespace Flounder
 		std::make_pair("Mesh", REGISTER_CREATE(Mesh)),
 		std::make_pair("Material", REGISTER_CREATE(Material)),
 		std::make_pair("Rigidbody", REGISTER_CREATE(Rigidbody)),
+		std::make_pair("ShadowRender", REGISTER_CREATE(ShadowRender)),
 		std::make_pair("SkyboxRender", REGISTER_CREATE(SkyboxRender)),
 		std::make_pair("TerrainRender", REGISTER_CREATE(TerrainRender)),
 		std::make_pair("WaterRender", REGISTER_CREATE(WaterRender))

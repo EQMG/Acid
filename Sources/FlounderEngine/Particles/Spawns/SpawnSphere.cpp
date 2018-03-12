@@ -32,10 +32,10 @@ namespace Flounder
 			b = temp;
 		}
 
-		const float randX = b * cos(2.0f * PI * (a / b));
-		const float randY = b * sin(2.0f * PI * (a / b));
+		const float randX = b * std::cos(2.0f * PI * (a / b));
+		const float randY = b * std::sin(2.0f * PI * (a / b));
 		const float distance = Vector2(randX, randY).Length();
-		m_spawnPosition->Scale(distance);
+		*m_spawnPosition *= distance;
 		return m_spawnPosition;
 	}
 }

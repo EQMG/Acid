@@ -272,6 +272,8 @@ namespace Flounder
 		/// <returns> The length squared of the quaternion. </returns>
 		float LengthSquared() const;
 
+		Quaternion &operator=(const Quaternion &other);
+
 		bool operator==(const Quaternion &other) const;
 
 		bool operator!=(const Quaternion &other) const;
