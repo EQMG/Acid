@@ -6,6 +6,8 @@
 
 namespace Flounder
 {
+	Display *Display::S_INSTANCE = nullptr;
+
 	const std::vector<const char *> Display::VALIDATION_LAYERS = {
 		"VK_LAYER_LUNARG_standard_validation" // "VK_LAYER_LUNARG_api_dump"
 	};
@@ -111,11 +113,11 @@ namespace Flounder
 		m_focused(true),
 		m_windowPosX(0),
 		m_windowPosY(0),
-#if defined(FLOUNDER_VERBOSE) && !defined(FLOUNDER_PLATFORM_MACOS)
-		m_validationLayers(true),
-#else
+//#if defined(FLOUNDER_VERBOSE) && !defined(FLOUNDER_PLATFORM_MACOS)
+//		m_validationLayers(true),
+//#else
 		m_validationLayers(false),
-#endif
+//#endif
 		m_instanceLayerList(std::vector<const char *>()),
 		m_instanceExtensionList(std::vector<const char *>()),
 		m_deviceExtensionList(std::vector<const char *>()),

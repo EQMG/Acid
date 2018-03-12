@@ -75,13 +75,15 @@ namespace Flounder
 		void FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator);
 
 	public:
+		static Display *S_INSTANCE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Display *Get()
 		{
-			return reinterpret_cast<Display *>(Engine::Get()->GetModule("display"));
+			return S_INSTANCE; // reinterpret_cast<Display *>(Engine::Get()->GetModule("display"));
 		}
 
 		/// <summary>

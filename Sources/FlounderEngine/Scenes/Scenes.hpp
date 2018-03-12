@@ -16,13 +16,15 @@ namespace Flounder
 	private:
 		Scene *m_scene;
 	public:
+		static Scenes *S_INSTANCE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Scenes *Get()
 		{
-			return reinterpret_cast<Scenes *>(Engine::Get()->GetModule("scenes"));
+			return S_INSTANCE; // reinterpret_cast<Scenes *>(Engine::Get()->GetModule("scenes"));
 		}
 
 		/// <summary>

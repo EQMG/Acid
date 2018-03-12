@@ -2,6 +2,8 @@
 
 namespace Flounder
 {
+	Keyboard *Keyboard::S_INSTANCE = nullptr;
+
 	void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
 		// TODO: Play with mods.

@@ -17,13 +17,15 @@ namespace Flounder
 		float m_reflectionQuality;
 		bool m_reflectionShadows;
 	public:
+		static Waters *S_INSTANCE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Waters *Get()
 		{
-			return reinterpret_cast<Waters *>(Engine::Get()->GetModule("waters"));
+			return S_INSTANCE; // reinterpret_cast<Waters *>(Engine::Get()->GetModule("waters"));
 		}
 
 		/// <summary>

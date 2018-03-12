@@ -2,6 +2,8 @@
 
 namespace Flounder
 {
+	Waters *Waters::S_INSTANCE = nullptr;
+
 	Waters::Waters() :
 		IModule(),
 		m_colourIntensity(0.7f),

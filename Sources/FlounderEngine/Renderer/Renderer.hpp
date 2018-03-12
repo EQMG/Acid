@@ -27,13 +27,15 @@ namespace Flounder
 		VkCommandPool m_commandPool;
 		VkCommandBuffer m_commandBuffer;
 	public:
+		static Renderer *S_INSTANCE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Renderer *Get()
 		{
-			return reinterpret_cast<Renderer *>(Engine::Get()->GetModule("renderer"));
+			return S_INSTANCE; // reinterpret_cast<Renderer *>(Engine::Get()->GetModule("renderer"));
 		}
 
 		/// <summary>
