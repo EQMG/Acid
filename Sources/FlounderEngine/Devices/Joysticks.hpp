@@ -29,13 +29,15 @@ namespace Flounder
 	private:
 		std::vector<Joystick *> m_connected;
 	public:
+		static Joysticks *S_INSTANCE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Joysticks *Get()
 		{
-			return reinterpret_cast<Joysticks *>(Engine::Get()->GetModule("joysticks"));
+			return S_INSTANCE; // reinterpret_cast<Joysticks *>(Engine::Get()->GetModule("joysticks"));
 		}
 
 		/// <summary>

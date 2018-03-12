@@ -225,12 +225,13 @@ namespace Flounder
 		float y = (m_aabb->m_minExtents->m_y + m_aabb->m_maxExtents->m_y) / 2.0f;
 		float z = (m_aabb->m_minExtents->m_z + m_aabb->m_maxExtents->m_z) / 2.0f;
 		Vector4 centre = Vector4(x, y, z, 1.0f);
-		Matrix4 invertedLight = -*m_lightViewMatrix;
-		Vector4 *centre4 = Matrix4::Transform(invertedLight, centre, nullptr);
+		Matrix4 *invertedLight = Matrix4::Invert(*m_lightViewMatrix, nullptr);
+		Vector4 *centre4 = Matrix4::Transform(*invertedLight, centre, nullptr);
 
 		*m_centre = *centre4;
 
 		delete centre4;
+		delete invertedLight;
 	}
 
 	void ShadowBox::UpdateLightViewMatrix() const

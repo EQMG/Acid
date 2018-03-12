@@ -2,6 +2,8 @@
 
 namespace Flounder
 {
+	Tasks *Tasks::S_INSTANCE = nullptr;
+
 	Tasks::Tasks() :
 		IModule(),
 		m_tasks(new std::vector<std::function<void()>>())

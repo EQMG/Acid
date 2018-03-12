@@ -10,7 +10,6 @@
 #include "../Particles/Particles.hpp"
 #include "../Renderer/Renderer.hpp"
 #include "../Shadows/Shadows.hpp"
-#include "../Skyboxes/Skyboxes.hpp"
 #include "../Terrains/Terrains.hpp"
 #include "../Uis/Uis.hpp"
 #include "../Waters/Waters.hpp"
@@ -48,7 +47,7 @@ namespace Flounder
 	{
 		m_deltaUpdate = new Delta();
 		m_deltaRender = new Delta();
-		m_timerUpdate = new Timer(1.0f / 62.0f);
+		m_timerUpdate = new Timer(1.0f / 66.0f);
 		m_timerRender = new Timer(1.0f / -1.0f);
 
 		ModuleCreate<Audio>(UpdatePre, "audio");
@@ -64,7 +63,6 @@ namespace Flounder
 		ModuleCreate<Uis>(UpdatePre, "uis");
 		ModuleCreate<Worlds>(UpdatePre, "worlds");
 		ModuleCreate<Particles>(UpdateNormal, "particles");
-		ModuleCreate<Skyboxes>(UpdateNormal, "skyboxes");
 		ModuleCreate<Terrains>(UpdateNormal, "terrains");
 		ModuleCreate<Shadows>(UpdateNormal, "shadows");
 		ModuleCreate<Waters>(UpdatePre, "waters");
@@ -77,7 +75,7 @@ namespace Flounder
 			m_timerRender->SetInterval(1.0f / Display::Get()->GetFpsLimit());
 		}
 
-		// Always-Update
+		// Always-Update.
 		RunUpdate(UpdateAlways);
 
 		if (m_timerUpdate->IsPassedTime())
@@ -85,32 +83,36 @@ namespace Flounder
 			// Resets the timer.
 			m_timerUpdate->ResetStartTime();
 
-			// Updates the engines delta.
-			m_deltaUpdate->Update();
-
-			// Pre-Update
+			// Pre-Update.
 			RunUpdate(UpdatePre);
 
-			// Update
+			// Update.
 			RunUpdate(UpdateNormal);
 
-			// Post-Update
+			// Post-Update.
 			RunUpdate(UpdatePost);
+
+			// Updates the engines delta.
+			m_deltaUpdate->Update();
+		}
+
+		// Prioritize updates over rendering.
+		if (!Maths::AlmostEqual(m_timerUpdate->GetInterval(), m_deltaUpdate->GetChange(), 5.0f))
+		{
+			return;
 		}
 
 		// Renders when needed.
 		if (m_timerRender->IsPassedTime() || Display::Get()->GetFpsLimit() <= 0.0f || Display::Get()->GetFpsLimit() > 1000.0f)
 		{
-			// if (maths::almostEqual(m_timerUpdate->getInterval(), m_deltaUpdate->getChange(), 7.0f)) {}
-
 			// Resets the timer.
 			m_timerRender->ResetStartTime();
 
-			// Updates the render delta, and render time extension.
-			m_deltaRender->Update();
-
 			// Render
 			RunUpdate(UpdateRender);
+
+			// Updates the render delta, and render time extension.
+			m_deltaRender->Update();
 		}
 	}
 

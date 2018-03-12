@@ -28,13 +28,15 @@ namespace Flounder
 		ALCdevice *m_alDevice;
 		ALCcontext *m_alContext;
 	public:
+		static Audio *S_INSTANCE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Audio *Get()
 		{
-			return reinterpret_cast<Audio *>(Engine::Get()->GetModule("audio"));
+			return S_INSTANCE; // reinterpret_cast<Audio *>(Engine::Get()->GetModule("audio"));
 		}
 
 		/// <summary>
