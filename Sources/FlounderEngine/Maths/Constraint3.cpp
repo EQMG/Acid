@@ -68,6 +68,11 @@ namespace Flounder
 		destination->SetChild<bool>("z", m_z);
 	}
 
+	Constraint3 &Constraint3::operator=(const Constraint3 &other)
+	{
+		return *Set(other);
+	}
+
 	bool Constraint3::operator==(const Constraint3 &other) const
 	{
 		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z;

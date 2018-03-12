@@ -302,6 +302,11 @@ namespace Flounder
 		return LengthSquared(*this);
 	}
 
+	Vector2 &Vector2::operator=(const Vector2 &other)
+	{
+		return *Set(other);
+	}
+
 	bool Vector2::operator==(const Vector2 &other) const
 	{
 		return m_x == other.m_x && m_y == other.m_x;

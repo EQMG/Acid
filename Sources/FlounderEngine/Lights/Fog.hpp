@@ -32,6 +32,8 @@ namespace Flounder
 		/// </summary>
 		~Fog();
 
-		void Set(const Fog &source);
+		Fog *Set(const Fog &source);
+
+		Fog &operator=(const Fog &other);
 	};
 }

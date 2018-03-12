@@ -87,6 +87,8 @@ namespace Flounder
 		/// <param name="destination"> The destination loaded value. </param>
 		void Write(LoadedValue *destination);
 
+		Constraint3 &operator=(const Constraint3 &other);
+
 		bool operator==(const Constraint3 &other) const;
 
 		bool operator!=(const Constraint3 &other) const;

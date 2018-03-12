@@ -32,7 +32,7 @@ namespace Flounder
 
 		std::string GetName() const { return m_name; }
 
-		void SetName(const std::string &name) { m_name = move(name); }
+		void SetName(const std::string &name) { m_name = name; }
 
 		Texture *GetTexture() const { return m_texture; }
 

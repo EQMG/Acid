@@ -395,6 +395,11 @@ namespace Flounder
 		return SetZero(this);
 	}
 
+	Matrix3 &Matrix3::operator=(const Matrix3 &other)
+	{
+		return *Set(other);
+	}
+
 	bool Matrix3::operator==(const Matrix3 &other) const
 	{
 		return m_00 == other.m_00 && m_01 == other.m_01 && m_02 == other.m_02 &&

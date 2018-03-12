@@ -22,7 +22,6 @@
     "Surface": {
       "Metallic": 0.0, 
       "Roughness": 0.0, 
-      "Cast Shadows": true, 
       "Ignore Lighting": false, 
       "Ignore Fog": false, 
       "Texture": ""
@@ -44,5 +43,7 @@
     "Model": "Resources/Entities/Testing/Model.obj"
   },
   "EntityRender": {
+  },
+  "ShadowRender": {
   }
 }

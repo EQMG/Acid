@@ -39,7 +39,7 @@ namespace Flounder
 
 	void ShadowBox::Update(const ICamera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance)
 	{
-		m_lightDirection->Set(lightPosition);
+		*m_lightDirection = lightPosition;
 		m_lightDirection->Normalize();
 		m_shadowOffset = shadowOffset;
 		m_shadowDistance = shadowDistance;
@@ -225,12 +225,11 @@ namespace Flounder
 		float y = (m_aabb->m_minExtents->m_y + m_aabb->m_maxExtents->m_y) / 2.0f;
 		float z = (m_aabb->m_minExtents->m_z + m_aabb->m_maxExtents->m_z) / 2.0f;
 		Vector4 centre = Vector4(x, y, z, 1.0f);
-		Matrix4 *invertedLight = Matrix4::Invert(*m_lightViewMatrix, nullptr);
-		Vector4 *centre4 = Matrix4::Transform(*invertedLight, centre, nullptr);
+		Matrix4 invertedLight = -*m_lightViewMatrix;
+		Vector4 *centre4 = Matrix4::Transform(invertedLight, centre, nullptr);
 
-		m_centre->Set(*centre4);
+		*m_centre = *centre4;
 
-		delete invertedLight;
 		delete centre4;
 	}
 
@@ -272,10 +271,9 @@ namespace Flounder
 		closestPoint->m_z = Maths::Clamp(entityPos->m_z, m_aabb->m_minExtents->m_z, m_aabb->m_maxExtents->m_z);
 
 		Vector3 *centre = new Vector3(*entityPos);
-		Vector3 *distance = Vector3::Subtract(*centre, *closestPoint, nullptr);
-		float distanceSquared = distance->LengthSquared();
+		Vector3 distance = *centre - *closestPoint;
+		float distanceSquared = distance.LengthSquared();
 
-		delete distance;
 		delete centre;
 		delete closestPoint;
 		delete entityPos;

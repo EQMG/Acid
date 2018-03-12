@@ -152,7 +152,7 @@ namespace Flounder
 		/// Sets the colour of the text.
 		/// </summary>
 		/// <param name="textColour"> The new colour of the text. </param>
-		void SetTextColour(const Colour &textColour) const { m_textColour->Set(textColour); }
+		void SetTextColour(const Colour &textColour) { *m_textColour = textColour; }
 
 		/// <summary>
 		/// Gets the border colour of the text. This is used with border and glow drivers.
@@ -164,7 +164,7 @@ namespace Flounder
 		/// Sets the border colour of the text. This is used with border and glow drivers.
 		/// </summary>
 		/// <param name="borderColour"> The new border colour of the text. </param>
-		void SetBorderColour(const Colour &borderColour) const { m_borderColour->Set(borderColour); }
+		void SetBorderColour(const Colour &borderColour) { *m_borderColour = borderColour; }
 
 		/// <summary>
 		/// Sets a new border driver, will disable glowing.

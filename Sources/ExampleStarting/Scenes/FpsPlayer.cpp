@@ -148,8 +148,8 @@ namespace Demo
 		const float dy = m_currentUpwardSpeed * delta;
 		const float dz = -(m_currentSpeed * std::cos(theta) - m_currentStrafeSpeed * std::sin(theta)) * delta;
 
-		Vector3::Add(*position, *m_amountMove->Set(dx, dy, dz), position);
-		Vector3::Add(*rotation, *m_amountRotate->Set(0.0f, 0.0f, 0.0f), rotation);
+		*position = *position + *m_amountMove->Set(dx, dy, dz);
+		*rotation = *rotation + *m_amountRotate->Set(0.0f, 0.0f, 0.0f);
 
 		if (!m_noclipEnabled)
 		{
