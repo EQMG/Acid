@@ -51,19 +51,6 @@ int main(int argc, char **argv)
 		Scenes::Get()->SetScene(new Scene1());
 	}
 
-#if FLOUNDER_VERBOSE
-	const auto debugStart = Engine::Get()->GetTimeMs();
-#endif
-	for (int i = 0; i < 100000; i++)
-	{
-		Scenes::Get();
-	}
-
-#if FLOUNDER_VERBOSE
-	const auto debugEnd = Engine::Get()->GetTimeMs();
-	printf("Got in %fms\n", debugEnd - debugStart);
-#endif
-
 	// Runs the engine loop.
 	const int exitCode = m_engine->Run();
 

@@ -36,13 +36,15 @@ namespace Flounder
 		friend void CallbackCursorEnter(GLFWwindow *window, int entered);
 
 	public:
+		static Mouse *S_INSTANCE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Mouse *Get()
 		{
-			return reinterpret_cast<Mouse *>(Engine::Get()->GetModule("mouse"));
+			return S_INSTANCE; // reinterpret_cast<Mouse *>(Engine::Get()->GetModule("mouse"));
 		}
 
 		/// <summary>

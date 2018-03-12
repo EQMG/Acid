@@ -31,10 +31,10 @@ namespace Flounder
 		// Updates uniforms.
 		UbosSkyboxes::UboObject uboObject = {};
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		uboObject.skyColour = Colour(*Skyboxes::Get()->GetSkyColour());
-		uboObject.fogColour = Colour(*Skyboxes::Get()->GetFog()->m_colour);
-		uboObject.fogLimits = GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Skyboxes::Get()->GetFog()->m_lowerLimit,
-			Skyboxes::Get()->GetFog()->m_upperLimit);
+		uboObject.skyColour = Colour(*Worlds::Get()->GetSkyColour());
+		uboObject.fogColour = Colour(*Worlds::Get()->GetFog()->m_colour);
+		uboObject.fogLimits = GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Worlds::Get()->GetFog()->m_lowerLimit,
+			Worlds::Get()->GetFog()->m_upperLimit);
 		uboObject.blendFactor = m_blend;
 		m_uniformObject->Update(&uboObject);
 	}

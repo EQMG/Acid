@@ -20,13 +20,15 @@ namespace Flounder
 		friend void CallbackChar(GLFWwindow *window, unsigned int codepoint);
 
 	public:
+		static Keyboard *S_INSTANCE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Keyboard *Get()
 		{
-			return reinterpret_cast<Keyboard *>(Engine::Get()->GetModule("keyboard"));
+			return S_INSTANCE; // reinterpret_cast<Keyboard *>(Engine::Get()->GetModule("keyboard"));
 		}
 
 		/// <summary>

@@ -15,13 +15,15 @@ namespace Flounder
 	private:
 		std::vector<std::function<void()>> *m_tasks;
 	public:
+		static Tasks *S_INSTANCE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Tasks *Get()
 		{
-			return reinterpret_cast<Tasks *>(Engine::Get()->GetModule("tasks"));
+			return S_INSTANCE; // reinterpret_cast<Tasks *>(Engine::Get()->GetModule("tasks"));
 		}
 
 		Tasks();
