@@ -5,6 +5,8 @@
 
 namespace Flounder
 {
+	Mouse *Mouse::S_INSTANCE = nullptr;
+
 	void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 	{
 		Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(yoffset);

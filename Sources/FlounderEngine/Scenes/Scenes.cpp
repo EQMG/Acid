@@ -2,6 +2,8 @@
 
 namespace Flounder
 {
+	Scenes *Scenes::S_INSTANCE = nullptr;
+
 	Scenes::Scenes() :
 		IModule(),
 		m_scene(nullptr)

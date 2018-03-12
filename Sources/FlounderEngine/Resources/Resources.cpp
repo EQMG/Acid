@@ -2,6 +2,8 @@
 
 namespace Flounder
 {
+	Resources *Resources::S_INSTANCE = nullptr;
+
 	Resources::Resources() :
 		m_managed(std::vector<IResource *>())
 	{

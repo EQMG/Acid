@@ -4,6 +4,8 @@
 
 namespace Flounder
 {
+	Shadows *Shadows::S_INSTANCE = nullptr;
+
 	Shadows::Shadows() :
 		IModule(),
 		m_lightDirection(new Vector3(0.5f, 0.0f, 0.5f)),

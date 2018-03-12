@@ -3,7 +3,7 @@
 #include "../Engine/Engine.hpp"
 #include "../Maths/Vector3.hpp"
 #include "../Maths/Visual/DriverLinear.hpp"
-#include "../Skyboxes/Skyboxes.hpp"
+#include "../Lights/Fog.hpp"
 
 namespace Flounder
 {
@@ -22,14 +22,19 @@ namespace Flounder
 		Vector3 *m_moonPosition;
 		Colour *m_sunColour;
 		Colour *m_moonColour;
+
+		Fog *m_fog;
+		Colour *m_skyColour;
 	public:
+		static Worlds *S_INSTANCE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Worlds *Get()
 		{
-			return reinterpret_cast<Worlds *>(Engine::Get()->GetModule("worlds"));
+			return S_INSTANCE; // reinterpret_cast<Worlds *>(Engine::Get()->GetModule("worlds"));
 		}
 
 		/// <summary>
@@ -63,5 +68,13 @@ namespace Flounder
 		Colour *GetSunColour() const { return m_sunColour; }
 
 		Colour *GetMoonColour() const { return m_moonColour; }
+
+		Fog *GetFog() const { return m_fog; }
+
+		void SetFog(const Fog &fog) { *m_fog = fog; }
+
+		Colour *GetSkyColour() const { return m_skyColour; }
+
+		void SetSkyColour(const Colour &skyColour) { *m_skyColour = skyColour; }
 	};
 }
