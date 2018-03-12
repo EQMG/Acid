@@ -1,7 +1,8 @@
 #include "FileXml.hpp"
 
-#include "Helpers/FormatString.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "../../Engine/Engine.hpp"
+#include "../../Helpers/FormatString.hpp"
+#include "../../Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -18,7 +19,16 @@ namespace Flounder
 
 	void FileXml::Load()
 	{
-		Verify();
+#if FLOUNDER_VERBOSE
+		const auto debugStart = Engine::Get()->GetTimeMs();
+#endif
+
+		if (!FileSystem::FileExists(m_filename))
+		{
+			fprintf(stderr, "File does not exist: '%s'\n", m_filename.c_str());
+			return;
+		}
+
 		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
 		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n", true);
 
@@ -49,6 +59,11 @@ namespace Flounder
 
 			m_parentNode = node;*/
 		}
+
+#if FLOUNDER_VERBOSE
+		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Json '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+#endif
 	}
 
 	void FileXml::Save()
