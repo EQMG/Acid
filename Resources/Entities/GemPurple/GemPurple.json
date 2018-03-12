@@ -21,14 +21,10 @@
     },
     "Surface": {
       "Metallic": 0.4, 
-      "Roughness": 0.2, 
-      "Cast Shadows": true, 
+      "Roughness": 0.2,
       "Ignore Lighting": false, 
       "Ignore Fog": false, 
       "Texture": "Resources/Entities/GemPurple/Material.png"
-    },
-    "Normal": {
-      "Texture": ""
     }
   },
   "Light": {
@@ -44,5 +40,7 @@
     "Model": "Resources/Entities/GemPurple/Model.obj"
   },
   "EntityRender": {
+  },
+  "ShadowRender": {
   }
 }

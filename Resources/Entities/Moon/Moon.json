@@ -6,13 +6,9 @@
     },
     "Surface": {
       "Metallic": 0.4, 
-      "Roughness": 0.0, 
-      "Cast Shadows": false, 
+      "Roughness": 0.0,
       "Ignore Lighting": true, 
       "Ignore Fog": true, 
-      "Texture": ""
-    },
-    "Normal": {
       "Texture": ""
     }
   },

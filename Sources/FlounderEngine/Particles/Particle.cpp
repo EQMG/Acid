@@ -37,8 +37,8 @@ namespace Flounder
 	void Particle::Update()
 	{
 		m_velocity->m_y += -10.0f * m_gravityEffect * Engine::Get()->GetDelta();
-		m_change->Set(*m_velocity);
-		m_change->Scale(Engine::Get()->GetDelta());
+		*m_change = *m_velocity;
+		*m_change *= Engine::Get()->GetDelta();
 
 		*m_position += *m_change;
 		m_elapsedTime += Engine::Get()->GetDelta();

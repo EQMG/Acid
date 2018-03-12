@@ -24,6 +24,6 @@ namespace Flounder
 
 		Vector3 *GetHeading() const { return m_heading; }
 
-		void SetHeading(const Vector3 &heading) const { m_heading->Set(heading); }
+		void SetHeading(const Vector3 &heading) { *m_heading = heading; }
 	};
 }

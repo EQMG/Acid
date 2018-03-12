@@ -247,4 +247,167 @@ namespace Flounder
 	{
 		return LengthSquared(*this);
 	}
+
+
+	Colour &Colour::operator=(const Colour &other)
+	{
+		return *Set(other);
+	}
+
+	bool Colour::operator==(const Colour &other) const
+	{
+		return m_r == other.m_r && m_g == other.m_r && m_b == other.m_b && m_a == other.m_a;
+	}
+
+	bool Colour::operator!=(const Colour &other) const
+	{
+		return !(*this == other);
+	}
+
+	bool Colour::operator<(const Colour &other) const
+	{
+		return m_r < other.m_r && m_g < other.m_g && m_b < other.m_b && m_a < other.m_a;
+	}
+
+	bool Colour::operator<=(const Colour &other) const
+	{
+		return m_r <= other.m_r && m_g <= other.m_g && m_b <= other.m_b && m_a <= other.m_a;
+	}
+
+	bool Colour::operator>(const Colour &other) const
+	{
+		return m_r > other.m_r && m_g > other.m_g && m_b > other.m_b && m_a > other.m_a;
+	}
+
+	bool Colour::operator>=(const Colour &other) const
+	{
+		return m_r >= other.m_r && m_g >= other.m_g && m_b >= other.m_b && m_a >= other.m_a;
+	}
+
+	bool Colour::operator==(const float &value) const
+	{
+		return m_r == value && m_g == value && m_b == value && m_a == value;
+	}
+
+	bool Colour::operator!=(const float &value) const
+	{
+		return !(*this == value);
+	}
+
+	Colour operator+(Colour left, const Colour &right)
+	{
+		return *Colour::Add(left, right, &left);
+	}
+
+	Colour operator-(Colour left, const Colour &right)
+	{
+		return *Colour::Subtract(left, right, &left);
+	}
+
+	Colour operator*(Colour left, const Colour &right)
+	{
+		return *Colour::Multiply(left, right, &left);
+	}
+
+	Colour operator/(Colour left, const Colour &right)
+	{
+		return *Colour::Divide(left, right, &left);
+	}
+
+	Colour operator+(Colour left, float value)
+	{
+		return *Colour::Add(left, Colour(value, value, value, value), &left);
+	}
+
+	Colour operator-(Colour left, float value)
+	{
+		return *Colour::Subtract(left, Colour(value, value, value, value), &left);
+	}
+
+	Colour operator*(Colour left, float value)
+	{
+		return *Colour::Multiply(left, Colour(value, value, value, value), &left);
+	}
+
+	Colour operator/(Colour left, float value)
+	{
+		return *Colour::Divide(left, Colour(value, value, value, value), &left);
+	}
+
+	Colour operator+(float value, Colour left)
+	{
+		return *Colour::Add(Colour(value, value, value, value), left, &left);
+	}
+
+	Colour operator-(float value, Colour left)
+	{
+		return *Colour::Subtract(Colour(value, value, value, value), left, &left);
+	}
+
+	Colour operator*(float value, Colour left)
+	{
+		return *Colour::Multiply(Colour(value, value, value, value), left, &left);
+	}
+
+	Colour operator/(float value, Colour left)
+	{
+		return *Colour::Divide(Colour(value, value, value, value), left, &left);
+	}
+
+	Colour &Colour::operator+=(const Colour &other)
+	{
+		Colour result = Colour();
+		return *Colour::Add(*this, other, &result);
+	}
+
+	Colour &Colour::operator-=(const Colour &other)
+	{
+		Colour result = Colour();
+		return *Colour::Subtract(*this, other, &result);
+	}
+
+	Colour &Colour::operator*=(const Colour &other)
+	{
+		Colour result = Colour();
+		return *Colour::Multiply(*this, other, &result);
+	}
+
+	Colour &Colour::operator/=(const Colour &other)
+	{
+		Colour result = Colour();
+		return *Colour::Divide(*this, other, &result);
+	}
+
+	Colour &Colour::operator+=(float value)
+	{
+		return *Colour::Add(*this, Colour(value, value, value, value), this);
+	}
+
+	Colour &Colour::operator-=(float value)
+	{
+		return *Colour::Subtract(*this, Colour(value, value, value, value), this);
+	}
+
+	Colour &Colour::operator*=(float value)
+	{
+		return *Colour::Multiply(*this, Colour(value, value, value, value), this);
+	}
+
+	Colour &Colour::operator/=(float value)
+	{
+		return *Colour::Divide(*this, Colour(value, value, value, value), this);
+	}
+
+	std::ostream &operator<<(std::ostream &stream, const Colour &vector)
+	{
+		stream << vector.ToString();
+		return stream;
+	}
+
+	std::string Colour::ToString() const
+	{
+		std::stringstream result;
+		result << "Colour(" << m_r << ", " << m_g << ", " << m_b << ", " << m_a << ")";
+		return result.str();
+	}
 }

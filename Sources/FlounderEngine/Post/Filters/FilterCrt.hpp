@@ -36,7 +36,7 @@ namespace Flounder
 
 		Colour *GetScreenColour() const { return m_screenColour; }
 
-		void SetScreenColour(const Colour &screenColour) const { m_screenColour->Set(screenColour); }
+		void SetScreenColour(const Colour &screenColour) { *m_screenColour = screenColour; }
 
 		float GetCurveAmountX() const { return m_curveAmountX; }
 

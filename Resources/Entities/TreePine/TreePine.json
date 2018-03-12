@@ -21,13 +21,9 @@
     },
     "Surface": {
       "Metallic": 0.0, 
-      "Roughness": 0.0, 
-      "Cast Shadows": true, 
+      "Roughness": 0.0,
       "Ignore Lighting": false, 
       "Ignore Fog": false, 
-      "Texture": ""
-    },
-    "Normal": {
       "Texture": ""
     }
   },
@@ -35,5 +31,7 @@
     "Model": "Resources/Entities/TreePine/Model.obj"
   },
   "EntityRender": {
+  },
+  "ShadowRender": {
   }
 }

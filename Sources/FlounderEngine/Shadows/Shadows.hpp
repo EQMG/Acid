@@ -49,7 +49,7 @@ namespace Flounder
 
 		Vector3 *GetLightDirection() const { return m_lightDirection; }
 
-		void SetLightDirection(const Vector3 &lightDirection) const { m_lightDirection->Set(lightDirection); }
+		void SetLightDirection(const Vector3 &lightDirection) { *m_lightDirection = lightDirection; }
 
 		uint32_t GetShadowSize() const { return m_shadowSize; }
 

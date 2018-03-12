@@ -56,6 +56,6 @@ namespace Flounder
 
 		Colour *GetColourOffset() const { return m_colourOffset; }
 
-		void SetColourOffset(const Colour &colourOffset) const { m_colourOffset->Set(colourOffset); }
+		void SetColourOffset(const Colour &colourOffset) { *m_colourOffset = colourOffset; }
 	};
 }

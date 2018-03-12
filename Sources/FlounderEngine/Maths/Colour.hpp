@@ -228,6 +228,66 @@ namespace Flounder
 		/// <returns> The length squared of the colour. </returns>
 		float LengthSquared();
 
-		// TODO: Operators.
+		Colour &operator=(const Colour &other);
+
+		bool operator==(const Colour &other) const;
+
+		bool operator!=(const Colour &other) const;
+
+		bool operator<(const Colour &other) const;
+
+		bool operator<=(const Colour &other) const;
+
+		bool operator>(const Colour &other) const;
+
+		bool operator>=(const Colour &other) const;
+
+		bool operator==(const float &value) const;
+
+		bool operator!=(const float &value) const;
+
+		friend F_EXPORT Colour operator+(Colour left, const Colour &right);
+
+		friend F_EXPORT Colour operator-(Colour left, const Colour &right);
+
+		friend F_EXPORT Colour operator*(Colour left, const Colour &right);
+
+		friend F_EXPORT Colour operator/(Colour left, const Colour &right);
+
+		friend F_EXPORT Colour operator+(Colour left, float value);
+
+		friend F_EXPORT Colour operator-(Colour left, float value);
+
+		friend F_EXPORT Colour operator*(Colour left, float value);
+
+		friend F_EXPORT Colour operator/(Colour left, float value);
+
+		friend F_EXPORT Colour operator+(float value, Colour left);
+
+		friend F_EXPORT Colour operator-(float value, Colour left);
+
+		friend F_EXPORT Colour operator*(float value, Colour left);
+
+		friend F_EXPORT Colour operator/(float value, Colour left);
+
+		Colour &operator+=(const Colour &other);
+
+		Colour &operator-=(const Colour &other);
+
+		Colour &operator*=(const Colour &other);
+
+		Colour &operator/=(const Colour &other);
+
+		Colour &operator+=(float value);
+
+		Colour &operator-=(float value);
+
+		Colour &operator*=(float value);
+
+		Colour &operator/=(float value);
+
+		friend std::ostream &operator<<(std::ostream &stream, const Colour &vector);
+
+		std::string ToString() const;
 	};
 }

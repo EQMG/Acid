@@ -233,6 +233,8 @@ namespace Flounder
 		/// <returns> This. </returns>
 		Matrix2 *SetZero();
 
+		Matrix2 &operator=(const Matrix2 &other);
+
 		bool operator==(const Matrix2 &other) const;
 
 		bool operator!=(const Matrix2 &other) const;

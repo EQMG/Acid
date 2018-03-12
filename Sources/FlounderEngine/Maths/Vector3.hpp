@@ -377,6 +377,8 @@ namespace Flounder
 		/// <returns> The length squared of the vector. </returns>
 		float LengthSquared() const;
 
+		Vector3 &operator=(const Vector3 &other);
+
 		bool operator==(const Vector3 &other) const;
 
 		bool operator!=(const Vector3 &other) const;
