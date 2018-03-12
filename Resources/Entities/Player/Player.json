@@ -1,0 +1,37 @@
+{
+  "Rigidbody": {
+    "Mass": 1.0,
+    "Drag": 0.0,
+    "Use Gravity": true, 
+    "Freeze Position": {
+      "x": false, 
+      "y": false, 
+      "z": false
+    },
+    "Freeze Rotation": {
+      "x": false, 
+      "y": true,
+      "z": false
+    }
+  },
+  "Material": {
+    "Diffuse": {
+      "Colour": "#FFFFFF",
+      "Texture": ""
+    },
+    "Surface": {
+      "Metallic": 0.0, 
+      "Roughness": 0.0, 
+      "Ignore Lighting": false, 
+      "Ignore Fog": false, 
+      "Texture": ""
+    }
+  },
+  "Animation": {
+    "Model": "Resources/Entities/Player/Model.json"
+  },
+  "EntityRender": {
+  },
+  "ShadowRender": {
+  }
+}

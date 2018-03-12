@@ -26,7 +26,11 @@ namespace Flounder
 
 		std::vector<LoadedValue*> GetChildren() const { return m_children; }
 
+		unsigned int ChildrenCount() const { return m_children.size(); }
+
 		LoadedValue *GetChild(const std::string &name, const bool &addIfNull = false);
+
+		LoadedValue *GetChild(const unsigned int &index, const bool &addIfNull = false);
 
 		template<typename T>
 		void AddChild(LoadedValue *value)

@@ -23,7 +23,12 @@ namespace Flounder
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		Verify();
+		if (!FileSystem::FileExists(m_filename))
+		{
+			fprintf(stderr, "File does not exist: '%s'\n", m_filename.c_str());
+			return;
+		}
+
 		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
 		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n", true);
 
@@ -36,7 +41,7 @@ namespace Flounder
 		{
 			for (auto &c : line)
 			{
-				if (c == '{')
+				if (c == '{' || c == '[')
 				{
 					bracketLevel++;
 
@@ -63,7 +68,7 @@ namespace Flounder
 					currentSection->m_children.push_back(section);
 					currentSection = section;
 				}
-				else if (c == '}')
+				else if (c == '}' || c == ']')
 				{
 					currentSection = currentSection->m_parent;
 					bracketLevel--;
