@@ -29,27 +29,18 @@ int main(int argc, char **argv)
 	// Adds to the component registry.
 	ComponentRegister::Register("FpsPlayer", REGISTER_CREATE(FpsPlayer));
 
+	// Registers modules.
+
+
 	// Initializes the engine modules.
-	if (Display::Get() != nullptr)
-	{
-		Display::Get()->SetTitle("Example Starting");
-		Display::Get()->SetIcon("Resources/Logos/Tail.png");
-	}
+	Display::Get()->SetTitle("Example Starting");
+	Display::Get()->SetIcon("Resources/Logos/Tail.png");
 
-	if (Mouse::Get() != nullptr)
-	{
-		Mouse::Get()->SetCustomMouse("Resources/Guis/Cursor.png");
-	}
+	Mouse::Get()->SetCustomMouse("Resources/Guis/Cursor.png");
 
-	if (Renderer::Get() != nullptr)
-	{
-		Renderer::Get()->SetManager(new ManagerRender());
-	}
+	Renderer::Get()->SetManager(new ManagerRender());
 
-	if (Scenes::Get() != nullptr)
-	{
-		Scenes::Get()->SetScene(new Scene1());
-	}
+	Scenes::Get()->SetScene(new Scene1());
 
 	// Runs the engine loop.
 	const int exitCode = m_engine->Run();
