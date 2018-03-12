@@ -2,10 +2,8 @@
 
 #include "../Devices/Display.hpp"
 #include "../Meshes/Mesh.hpp"
-#include "../Entities/EntityRender.hpp"
-#include "../Terrains/TerrainRender.hpp"
-#include "../Materials/Material.hpp"
 #include "../Scenes/Scenes.hpp"
+#include "ShadowRender.hpp"
 #include "UbosShadows.hpp"
 
 namespace Flounder
@@ -48,64 +46,12 @@ namespace Flounder
 
 		m_pipeline->BindPipeline(commandBuffer);
 
-		std::vector<Mesh *> meshList = std::vector<Mesh *>();
-		Scenes::Get()->GetStructure()->QueryComponents(&meshList);
+		std::vector<ShadowRender *> renderList = std::vector<ShadowRender *>();
+		Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>(&renderList);
 
-		for (auto mesh : meshList)
+		for (auto shadowRender : renderList)
 		{
-			// Gets required components.
-			if (mesh->GetModel() == nullptr)
-			{
-				continue;
-			}
-
-			auto material = mesh->GetGameObject()->GetComponent<Material>();
-
-			if (material == nullptr || !material->GetSurface()->GetCastsShadows())
-			{
-				continue;
-			}
-
-			RenderModel(commandBuffer, mesh->GetModel(), mesh->GetGameObject());
+			shadowRender->CmdRender(commandBuffer, *m_pipeline, m_uniformScene);
 		}
-	}
-
-	void RendererShadows::RenderModel(const VkCommandBuffer &commandBuffer, Model *object, GameObject *gameObject)
-	{
-		UniformBuffer *uniformObject;
-		DescriptorSet *descriptorSet;
-
-		auto entityRender = gameObject->GetComponent<EntityRender>();
-		auto terrainRender = gameObject->GetComponent<TerrainRender>();
-
-		if (entityRender != nullptr)
-		{
-			uniformObject = entityRender->GetUniformObject();
-		//	descriptorSet = entityRender->GetShadowDescriptorSet();
-		}
-		else if (terrainRender != nullptr)
-		{
-			uniformObject = terrainRender->GetUniformObject();
-		//	descriptorSet = terrainRender->GetShadowDescriptorSet();
-		}
-		else
-		{
-			return;
-		}
-
-		// Updates descriptors.
-		if (descriptorSet == nullptr)
-		{
-			descriptorSet = new DescriptorSet(*m_pipeline);
-		}
-
-		descriptorSet->Update({
-			m_uniformScene,
-			uniformObject
-		});
-
-		// Draws the object.
-		descriptorSet->BindDescriptor(commandBuffer);
-		object->CmdRender(commandBuffer);
 	}
 }

@@ -235,6 +235,8 @@ namespace Flounder
 		/// <returns> This. </returns>
 		Matrix3 *SetZero();
 
+		Matrix3 &operator=(const Matrix3 &other);
+
 		bool operator==(const Matrix3 &other) const;
 
 		bool operator!=(const Matrix3 &other) const;

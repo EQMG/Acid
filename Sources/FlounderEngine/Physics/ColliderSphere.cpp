@@ -46,7 +46,7 @@ namespace Flounder
 		}
 
 		source->m_radius = m_radius * transform.m_scaling->m_x;
-		source->m_position->Set(*transform.m_position);
+		*source->m_position = *transform.m_position;
 
 		return source;
 	}

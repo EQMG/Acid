@@ -39,7 +39,7 @@ namespace Flounder
 
 	void Ray::Update(const Vector3 &currentPosition, const Vector2 &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 	{
-		m_origin->Set(currentPosition);
+		*m_origin = currentPosition;
 
 		if (m_useMouse)
 		{
@@ -49,7 +49,7 @@ namespace Flounder
 		{
 			if (m_screenStart != nullptr)
 			{
-				m_normalizedCoords->Set(*m_screenStart);
+				*m_normalizedCoords = *m_screenStart;
 			}
 			else
 			{
@@ -57,8 +57,8 @@ namespace Flounder
 			}
 		}
 
-		m_viewMatrix->Set(viewMatrix);
-		m_projectionMatrix->Set(projectionMatrix);
+		*m_viewMatrix = viewMatrix;
+		*m_projectionMatrix = projectionMatrix;
 		m_clipCoords->Set(m_normalizedCoords->m_x, m_normalizedCoords->m_y, -1.0f, 1.0f);
 		UpdateEyeCoords(m_clipCoords);
 		UpdateWorldCoords(m_eyeCoords);
@@ -114,6 +114,6 @@ namespace Flounder
 	{
 		Matrix4::Invert(*m_viewMatrix, m_invertedView);
 		Matrix4::Transform(*m_invertedView, *m_eyeCoords, m_rayWorld);
-		m_currentRay->Set(*m_rayWorld);
+		*m_currentRay = *m_rayWorld;
 	}
 }

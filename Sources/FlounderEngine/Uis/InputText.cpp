@@ -124,11 +124,11 @@ namespace Flounder
 				(SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
 
 		// Update background size.
-		//m_background->GetDimensions()->Set(*m_text->GetDimensions());
+		//*m_background->GetDimensions() = *m_text->GetDimensions();
 		//m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		//Vector3::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
-		//m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
-		//m_background->GetPosition()->Set(*m_text->GetPosition());
+		//*m_background->GetDimensions() = *m_text->GetDimensions() * *m_background->GetDimensions();
+		//*m_background->GetDimensions() *= 2.0f * m_text->GetScale();
+		//*m_background->GetPosition() = *m_text->GetPosition));
 	}
 
 	void InputText::SetPrefix(const std::string &prefix)

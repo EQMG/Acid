@@ -56,15 +56,13 @@ namespace Flounder
 	private:
 		float m_metallic;
 		float m_roughness;
-		bool m_castsShadows;
 		bool m_ignoreLighting;
 		bool m_ignoreFog;
 		Texture *m_texture; // R: Metallic, G: Roughness, B: Emmisive
 	public:
-		MaterialSurface(const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false, Texture *texture = nullptr) :
+		MaterialSurface(const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &ignoreLighting = false, const bool &ignoreFog = false, Texture *texture = nullptr) :
 			m_metallic(metallic),
 			m_roughness(roughness),
-			m_castsShadows(castsShadows),
 			m_ignoreLighting(ignoreLighting),
 			m_ignoreFog(ignoreFog),
 			m_texture(texture)
@@ -79,7 +77,6 @@ namespace Flounder
 			}
 			m_metallic = value->GetChild("Metallic")->Get<float>();
 			m_roughness = value->GetChild("Roughness")->Get<float>();
-			m_castsShadows = value->GetChild("Cast Shadows")->Get<bool>();
 			m_ignoreLighting = value->GetChild("Ignore Lighting")->Get<bool>();
 			m_ignoreFog = value->GetChild("Ignore Fog")->Get<bool>();
 			TrySetTexture(value->GetChild("Texture")->GetString());
@@ -101,10 +98,6 @@ namespace Flounder
 		float GetRoughness() const { return m_roughness; }
 
 		void SetRoughness(const float &roughness) { m_roughness = roughness; }
-
-		bool GetCastsShadows() const { return m_castsShadows; }
-
-		void SetCastsShadows(const bool &castsShadows) { m_castsShadows = castsShadows; }
 
 		bool GetIgnoreLighting() const { return m_ignoreLighting; }
 

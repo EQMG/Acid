@@ -17,6 +17,7 @@
 #include <Particles/ParticleType.hpp>
 #include <Particles/Spawns/SpawnCircle.hpp>
 #include <Particles/ParticleSystem.hpp>
+#include <Shadows/ShadowRender.hpp>
 #include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
@@ -71,9 +72,10 @@ namespace Demo
 				terrainObject->SetName("Terrain");
 				terrainObject->AddComponent(new Mesh());
 			//	terrainObject->AddComponent(new Material());
-				terrainObject->AddComponent(new TerrainRender());
 				terrainObject->AddComponent(new Rigidbody());
 				terrainObject->AddComponent(new LodBehaviour());
+				terrainObject->AddComponent(new TerrainRender());
+			//	terrainObject->AddComponent(new ShadowRender());
 			}
 		}
 

@@ -31,6 +31,10 @@ namespace Flounder
 
 	void TerrainRender::Update()
 	{
+		// Updates uniforms.
+		UbosTerrains::UboObject uboObject = {};
+		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
+		m_uniformObject->Update(&uboObject);
 	}
 
 	void TerrainRender::Load(LoadedValue *value)
@@ -51,7 +55,7 @@ namespace Flounder
 			return;
 		}
 
-		auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
+		/*auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
 
 		if (rigidbody != nullptr && rigidbody->GetCollider() != nullptr)
 		{
@@ -59,7 +63,7 @@ namespace Flounder
 			{
 				return;
 			}
-		}
+		}*/
 
 		// Updates descriptors.
 		if (m_descriptorSet == nullptr)
@@ -71,11 +75,6 @@ namespace Flounder
 			uniformScene,
 			m_uniformObject
 		});
-
-		// Updates uniforms.
-		UbosTerrains::UboObject uboObject = {};
-		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		m_uniformObject->Update(&uboObject);
 
 		// Draws the object.
 		m_descriptorSet->BindDescriptor(commandBuffer);

@@ -32,10 +32,10 @@ namespace Flounder
 
 		Fog *GetFog() const { return m_fog; }
 
-		void SetFog(const Fog &fog) { m_fog->Set(fog); }
+		void SetFog(const Fog &fog) { *m_fog = fog; }
 
 		Colour *GetSkyColour() const { return m_skyColour; }
 
-		void SetSkyColour(const Colour &skyColour) { m_skyColour->Set(skyColour); }
+		void SetSkyColour(const Colour &skyColour) { *m_skyColour = skyColour; }
 	};
 }
