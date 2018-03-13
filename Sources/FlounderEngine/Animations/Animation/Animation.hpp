@@ -38,10 +38,17 @@ namespace Flounder
 		float m_length;
 
 		std::vector<Keyframe*> *m_keyframes;
+
+		LoadedValue *m_libraryAnimations;
+		LoadedValue *m_libraryVisualScenes;
+
+		AnimationData *m_animationData;
 	public:
 		Animation(const float &length, const std::vector<Keyframe*> &keyframes);
 
 		Animation(const AnimationData &data);
+
+		Animation(LoadedValue *libraryAnimations, LoadedValue *libraryVisualScenes);
 
 		~Animation();
 
