@@ -1,4 +1,9 @@
 set(FLOUNDERENGINE_HEADERS_
+        "Animations/Animation/Animation.hpp"
+        "Animations/Animator.hpp"
+        "Animations/Joint/Joint.hpp"
+        "Animations/Joint/JointTransform.hpp"
+        "Animations/Keyframe/Keyframe.hpp"
         "Devices/Audio.hpp"
         "Devices/Display.hpp"
         "Devices/Joysticks.hpp"
@@ -194,6 +199,11 @@ set(FLOUNDERENGINE_HEADERS_
         )
 
 set(FLOUNDERENGINE_SOURCES_
+        "Animations/Animation/Animation.cpp"
+        "Animations/Animator.cpp"
+        "Animations/Joint/Joint.cpp"
+        "Animations/Joint/JointTransform.cpp"
+        "Animations/Keyframe/Keyframe.cpp"
         "Devices/Audio.cpp"
         "Devices/Display.cpp"
         "Devices/Joysticks.cpp"
