@@ -1,11 +1,11 @@
-#include "Skeleton.hpp"
+#include "SkeletonLoader.hpp"
 
 #include "../MeshAnimated.hpp"
 
 namespace Flounder
 {
 
-	Skeleton::Skeleton(LoadedValue *parent, std::vector<std::string> boneOrder) :
+	SkeletonLoader::SkeletonLoader(LoadedValue *parent, const std::vector<std::string> &boneOrder) :
 		m_armatureData(nullptr),
 		m_boneOrder(new std::vector<std::string>(boneOrder)),
 		m_jointCount(0),
@@ -20,20 +20,19 @@ namespace Flounder
 			}
 		}
 
-
 		auto headNode = m_armatureData->GetChild("node");
 		JointData *headJoint = LoadJointData(headNode, true);
 		m_skeletonData = new SkeletonData(m_jointCount, headJoint);
 	}
 
-	Skeleton::~Skeleton()
+	SkeletonLoader::~SkeletonLoader()
 	{
 		delete m_boneOrder;
 
 		delete m_skeletonData;
 	}
 
-	JointData *Skeleton::LoadJointData(LoadedValue *jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::LoadJointData(LoadedValue *jointNode, const bool &isRoot)
 	{
 		JointData *joint = ExtractMainJointData(jointNode, isRoot);
 
@@ -45,11 +44,11 @@ namespace Flounder
 		return joint;
 	}
 
-	JointData *Skeleton::ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot)
 	{
 		std::string nameId = jointNode->GetChild("-id")->m_value;
 		auto index = GetBoneIndex(nameId);
-		std::vector<std::string> matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetChild("#text")->m_value, " ");
+		auto matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetChild("#text")->m_value, " ");
 		Matrix4 matrix = ConvertData(matrixData);
 		matrix.Transpose();
 
@@ -63,7 +62,7 @@ namespace Flounder
 		return new JointData(index, nameId, matrix);
 	}
 
-	int Skeleton::GetBoneIndex(const std::string &name)
+	int SkeletonLoader::GetBoneIndex(const std::string &name)
 	{
 		for (unsigned int i = 0; i < m_boneOrder->size(); i++)
 		{
@@ -75,7 +74,8 @@ namespace Flounder
 
 		return -1;
 	}
-	Matrix4 Skeleton::ConvertData(const std::vector<std::string> &rawData)
+
+	Matrix4 SkeletonLoader::ConvertData(const std::vector<std::string> &rawData)
 	{
 		float *data = new float[16];
 

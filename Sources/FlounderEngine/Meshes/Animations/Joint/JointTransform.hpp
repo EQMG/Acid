@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../Maths/Vector3.hpp"
-#include "../../Maths/Quaternion.hpp"
+#include "../../../Maths/Vector3.hpp"
+#include "../../../Maths/Quaternion.hpp"
 
 namespace Flounder
 {
-	class JointTransformData
+	class F_EXPORT JointTransformData
 	{
 	private:
 		std::string m_jointNameId;
@@ -27,7 +27,7 @@ namespace Flounder
 		Matrix4 *GetJointLocalTransform() const { return m_jointLocalTransform; }
 	};
 
-	class JointTransform
+	class F_EXPORT JointTransform
 	{
 	private:
 		Vector3 *m_position;

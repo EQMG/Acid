@@ -1,11 +1,11 @@
 #pragma once
 
 #include "../Joint/Joint.hpp"
-#include "../../Files/LoadedValue.hpp"
+#include "../../../Files/LoadedValue.hpp"
 
 namespace Flounder
 {
-	class SkeletonData
+	class F_EXPORT SkeletonData
 	{
 	private:
 		int m_jointCount;
@@ -27,7 +27,7 @@ namespace Flounder
 		JointData *GetHeadJoint() const { return m_headJoint; }
 	};
 
-	class Skeleton
+	class F_EXPORT SkeletonLoader
 	{
 	private:
 		LoadedValue *m_armatureData;
@@ -37,9 +37,9 @@ namespace Flounder
 
 		SkeletonData *m_skeletonData;
 	public:
-		Skeleton(LoadedValue *parent, std::vector<std::string> boneOrder);
+		SkeletonLoader(LoadedValue *parent, const std::vector<std::string> &boneOrder);
 
-		~Skeleton();
+		~SkeletonLoader();
 
 		SkeletonData *GetData() const { return m_skeletonData; }
 
