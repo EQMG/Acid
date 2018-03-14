@@ -60,7 +60,7 @@ namespace Demo
 		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Stars", ".png")));
 
 		// Terrains.
-		const int n = 3;
+		const int n = 4;
 
 		for (int j = -n; j <= n; j++)
 		{
