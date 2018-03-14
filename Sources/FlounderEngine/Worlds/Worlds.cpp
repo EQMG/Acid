@@ -7,6 +7,8 @@ namespace Flounder
 {
 	Worlds *Worlds::S_INSTANCE = nullptr;
 
+	float Worlds::WORLD_CURVATURE = 600.0f;
+
 	static const Colour FOG_COLOUR_SUNRISE = Colour("#ee9a90");
 	static const Colour FOG_COLOUR_NIGHT = Colour("#0D0D1A");
 	static const Colour FOG_COLOUR_DAY = Colour("#e6e6e6");

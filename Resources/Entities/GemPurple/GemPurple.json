@@ -23,7 +23,8 @@
       "Metallic": 0.4, 
       "Roughness": 0.2,
       "Ignore Lighting": false, 
-      "Ignore Fog": false, 
+      "Ignore Fog": false,
+      "Ignore Curvature": false,
       "Texture": "Resources/Entities/GemPurple/Material.png"
     }
   },

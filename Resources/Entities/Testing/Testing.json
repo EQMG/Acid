@@ -24,6 +24,7 @@
       "Roughness": 0.0, 
       "Ignore Lighting": false, 
       "Ignore Fog": false, 
+      "Ignore Curvature": false, 
       "Texture": ""
     },
     "Normal": {

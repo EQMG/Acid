@@ -42,6 +42,7 @@ namespace Flounder
 	{
 		UbosShadows::UboScene uboScene = {};
 		uboScene.projectionView = *Shadows::Get()->GetShadowBox()->GetProjectionViewMatrix();
+		uboScene.cameraPosition = *Scenes::Get()->GetCamera()->GetPosition();
 		m_uniformScene->Update(&uboScene);
 
 		m_pipeline->BindPipeline(commandBuffer);

@@ -1,6 +1,7 @@
 #include "ShadowRender.hpp"
 
 #include "../Meshes/Mesh.hpp"
+#include "../Worlds/Worlds.hpp"
 #include "UbosShadows.hpp"
 
 namespace Flounder
@@ -23,6 +24,7 @@ namespace Flounder
 		// Updates uniforms.
 		UbosShadows::UboObject uboObject = {};
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
+		uboObject.worldCurvature = Worlds::WORLD_CURVATURE;
 		m_uniformObject->Update(&uboObject);
 	}
 

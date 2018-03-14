@@ -8,7 +8,8 @@
       "Metallic": 1.0, 
       "Roughness": 0.0,
       "Ignore Lighting": true, 
-      "Ignore Fog": true, 
+      "Ignore Fog": true,
+      "Ignore Curvature": true,
       "Texture": ""
     }
   },
