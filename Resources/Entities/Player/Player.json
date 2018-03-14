@@ -28,7 +28,7 @@
       "Texture": ""
     }
   },
-  "Animation": {
+  "MeshAnimated": {
     "Model": "Resources/Entities/Player/Model.json"
   },
   "EntityRender": {
