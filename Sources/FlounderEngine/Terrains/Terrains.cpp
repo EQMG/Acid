@@ -31,12 +31,12 @@ namespace Flounder
 	{
 		float height1 = m_noise1.GetNoise(x, z);
 		height1 = (height1 * 60.0f) + 15.0f;
-		float length = std::sqrt((x * x) + (z * z));
+	//	float length = std::sqrt((x * x) + (z * z));
 
-		if (length >= 700.0f)
-		{
-			height1 = height1 - (0.2f * (length - 700.0f));
-		}
+	//	if (length >= 700.0f)
+	//	{
+	//		height1 = height1 - (0.2f * (length - 700.0f));
+	//	}
 
 		return height1;
 	}
