@@ -10,6 +10,8 @@ layout(set = 0, binding = 1) uniform UboObject
 	vec4 samples;
 
 	vec4 surface;
+
+	float worldCurvature;
 } object;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;

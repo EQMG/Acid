@@ -19,14 +19,6 @@ layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
 layout(location = 2) out vec4 outMaterial;
 
-vec4 encodeColour(vec3 colour)
-{
-	vec4 result = vec4(0.0f);
-	result.rgb = colour;
-	result.a = 1.0f;
-	return result;
-}
-
 vec2 encodeNormal(vec3 normal)
 {
 	vec2 result = vec2(0.0f);
@@ -43,7 +35,7 @@ void main()
 	float fadeFactor = 1.0f - smoothstep(object.fogLimits.x, object.fogLimits.y, fragmentHeight);
     cubemapColour = mix(cubemapColour, object.fogColour.rgb, fadeFactor);
 
-	outColour = encodeColour(cubemapColour);
+	outColour = vec4(cubemapColour, 1.0f);
 	outNormal = vec2(0.0f);
 	outMaterial = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 }

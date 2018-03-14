@@ -10,11 +10,14 @@ namespace Flounder
 		struct UboScene
 		{
 			Matrix4 projectionView;
+			Vector3 cameraPosition;
 		};
 
 		struct UboObject
 		{
 			Matrix4 transform;
+
+			float worldCurvature;
 		};
 	};
 }
