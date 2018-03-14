@@ -7,7 +7,7 @@ namespace Flounder
 {
 	Worlds *Worlds::S_INSTANCE = nullptr;
 
-	float Worlds::WORLD_CURVATURE = 600.0f;
+	float Worlds::WORLD_CURVATURE = 300.0f; // Radius * BS
 
 	static const Colour FOG_COLOUR_SUNRISE = Colour("#ee9a90");
 	static const Colour FOG_COLOUR_NIGHT = Colour("#0D0D1A");
@@ -81,8 +81,8 @@ namespace Flounder
 		Colour::Interpolate(MOON_COLOUR_NIGHT, MOON_COLOUR_DAY, GetShadowFactor(), m_moonColour);
 
 		*m_fog->m_colour = fogColour;
-		m_fog->m_density = 0.0033f + ((1.0f - GetShadowFactor()) * 0.002f);
-		m_fog->m_gradient = 2.221f - ((1.0f - GetShadowFactor()) * 0.380f);
+		m_fog->m_density = 0.002f + ((1.0f - GetShadowFactor()) * 0.002f);
+		m_fog->m_gradient = 2.0f - ((1.0f - GetShadowFactor()) * 0.380f);
 		m_fog->m_lowerLimit = 0.0f;
 		m_fog->m_upperLimit = 0.15f - ((1.0f - GetShadowFactor()) * 0.03f);
 
