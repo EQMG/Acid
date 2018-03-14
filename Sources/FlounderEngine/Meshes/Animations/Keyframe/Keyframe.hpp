@@ -9,31 +9,25 @@ namespace Flounder
 	{
 	private:
 		float m_time;
-		std::vector<JointTransformData*> *m_jointTransforms;
+		std::vector<JointTransformData*> m_jointTransforms;
 	public:
 		KeyframeData(const float &time) :
 			m_time(time),
-			m_jointTransforms(new std::vector<JointTransformData*>())
+			m_jointTransforms(std::vector<JointTransformData*>())
 		{
 		}
 
 		~KeyframeData()
 		{
-			for (auto joint : *m_jointTransforms)
-			{
-				delete joint;
-			}
-
-			delete m_jointTransforms;
 		}
 
 		float GetTime() const { return m_time; }
 
-		std::vector<JointTransformData*> *GetJointTransforms() const { return m_jointTransforms; }
+		std::vector<JointTransformData*> GetJointTransforms() const { return m_jointTransforms; }
 
 		void AddJointTransform(JointTransformData *transform)
 		{
-			m_jointTransforms->push_back(transform);
+			m_jointTransforms.push_back(transform);
 		}
 	};
 

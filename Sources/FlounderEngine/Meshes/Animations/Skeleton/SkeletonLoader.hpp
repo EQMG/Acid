@@ -19,7 +19,6 @@ namespace Flounder
 
 		~SkeletonData()
 		{
-			//	delete m_headJoint;
 		}
 
 		int GetJointCount() const { return m_jointCount; }
@@ -37,7 +36,7 @@ namespace Flounder
 
 		SkeletonData *m_skeletonData;
 	public:
-		SkeletonLoader(LoadedValue *parent, const std::vector<std::string> &boneOrder);
+		SkeletonLoader(LoadedValue *parent, std::vector<std::string> *boneOrder);
 
 		~SkeletonLoader();
 

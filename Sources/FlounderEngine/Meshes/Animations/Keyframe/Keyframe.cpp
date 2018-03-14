@@ -12,7 +12,7 @@ namespace Flounder
 		m_timeStamp(data.GetTime()),
 		m_pose(new std::map<std::string, JointTransform*>())
 	{
-		for (auto jointData : *data.GetJointTransforms())
+		for (auto jointData : data.GetJointTransforms())
 		{
 			JointTransform *jointTransform = new JointTransform(*jointData);
 			m_pose->insert(std::make_pair(jointData->GetJointNameId(), jointTransform));

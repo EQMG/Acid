@@ -13,8 +13,8 @@ namespace Flounder
 		m_rotation(new Quaternion())
 	{
 		auto matrix = data.GetJointLocalTransform();
-		m_position->Set(matrix->m_30, matrix->m_31, matrix->m_32);
-		m_rotation->Set(*matrix);
+		m_position->Set(matrix.m_30, matrix.m_31, matrix.m_32);
+		m_rotation->Set(matrix);
 	}
 
 	JointTransform::JointTransform(const Matrix4 &localTransform) :

@@ -19,7 +19,7 @@ namespace Flounder
 
 		void Update() override;
 	private:
-		void CreateLod(const int &lod);
+		void CreateLod(const unsigned int &lod);
 
 		static int CalculateVertexCount(const int &terrainLength, const float &squareSize);
 	};

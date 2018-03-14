@@ -18,6 +18,8 @@
 #include <Particles/Spawns/SpawnCircle.hpp>
 #include <Particles/ParticleSystem.hpp>
 #include <Shadows/ShadowRender.hpp>
+#include <Voxels/Chunk.hpp>
+#include <Voxels/VoxelRender.hpp>
 #include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
@@ -60,7 +62,7 @@ namespace Demo
 		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Stars", ".png")));
 
 		// Terrains.
-		const int n = 4;
+		/*const int n = 4;
 
 		for (int j = -n; j <= n; j++)
 		{
@@ -77,6 +79,21 @@ namespace Demo
 				terrainObject->AddComponent(new TerrainRender());
 			//	terrainObject->AddComponent(new ShadowRender());
 			}
+		}*/
+
+		// Chunks.
+		const int n = 2;
+
+		for (int j = -n; j <= n; j++)
+		{
+			for (int w = -n; w <= n; w++)
+			{
+				GameObject *chunk = new GameObject(Transform(2.0f * Chunk::SIDE_LENGTH * Vector3(j, -0.25f, w)));
+				chunk->SetName("Chunk" + j + w);
+				chunk->AddComponent(new Chunk());
+				chunk->AddComponent(new Mesh());
+				chunk->AddComponent(new VoxelRender());
+			}
 		}
 
 		// Waters.
@@ -89,7 +106,7 @@ namespace Demo
 		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
 		new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
 
-		Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
+		/*Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
 
 		for (int i = -3; i <= 0; i++)
 		{
@@ -125,7 +142,7 @@ namespace Demo
 					}
 				}
 			}
-		}
+		}*/
 
 		// Music.
 /*#ifdef FLOUNDER_CONFIG_RELEASE

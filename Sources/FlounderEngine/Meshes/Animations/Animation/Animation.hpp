@@ -9,27 +9,21 @@ namespace Flounder
 	{
 	private:
 		float m_lengthSeconds;
-		std::vector<KeyframeData*> *m_keyframes;
+		std::vector<KeyframeData*> m_keyframes;
 	public:
 		AnimationData(const float &lengthSeconds, const std::vector<KeyframeData*> &keyframes) :
 			m_lengthSeconds(lengthSeconds),
-			m_keyframes(new std::vector<KeyframeData*>(keyframes))
+			m_keyframes(std::vector<KeyframeData*>(keyframes))
 		{
 		}
 
 		~AnimationData()
 		{
-			for (auto keyframe : *m_keyframes)
-			{
-				delete keyframe;
-			}
-
-			delete m_keyframes;
 		}
 
 		float GetLengthSeconds() const { return m_lengthSeconds; }
 
-		std::vector<KeyframeData*> *GetKeyframes() const { return m_keyframes; }
+		std::vector<KeyframeData*> GetKeyframes() const { return m_keyframes; }
 	};
 
 	class F_EXPORT Animation
