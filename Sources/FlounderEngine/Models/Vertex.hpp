@@ -17,6 +17,8 @@ namespace Flounder
 
 		Vertex(const Vector3 &position = Vector3(), const Vector2 &uv = Vector2(), const Vector3 &normal = Vector3(), const Vector3 &tangent = Vector3());
 
+		Vertex(const Vertex &source);
+
 		~Vertex();
 
 		static std::vector<VkVertexInputBindingDescription> GetBindingDescriptions(const VkVertexInputRate &inputRate = VK_VERTEX_INPUT_RATE_VERTEX);

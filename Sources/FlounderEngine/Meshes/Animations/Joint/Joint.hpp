@@ -9,41 +9,33 @@ namespace Flounder
 	private:
 		int m_index;
 		std::string m_nameId;
-		Matrix4 *m_bindLocalTransform;
+		Matrix4 m_bindLocalTransform;
 
-		std::vector<JointData*> *m_children;
+		std::vector<JointData*> m_children;
 	public:
 	 	JointData(const int &index, const std::string &nameId, const Matrix4 &bindLocalTransform) :
 			m_index(index),
 			m_nameId(nameId),
-			m_bindLocalTransform(new Matrix4(bindLocalTransform)),
-			m_children(new std::vector<JointData*>())
+			m_bindLocalTransform(Matrix4(bindLocalTransform)),
+			m_children(std::vector<JointData*>())
 	 	{
 		}
 
 		~JointData()
 		{
-			delete m_bindLocalTransform;
-
-			for (auto child : *m_children)
-			{
-				delete child;
-			}
-
-			delete m_children;
 		}
 
 		int GetIndex() const { return m_index; }
 
 		std::string GetNameId() const { return m_nameId; }
 
-		Matrix4 *GetBindLocalTransform() const { return m_bindLocalTransform; }
+		Matrix4 GetBindLocalTransform() const { return m_bindLocalTransform; }
 
-		std::vector<JointData*> *GetChildren() const { return m_children; }
+		std::vector<JointData*> GetChildren() const { return m_children; }
 
 		void AddChild(JointData *child)
 		{
-			m_children->push_back(child);
+			m_children.push_back(child);
 		}
 	};
 

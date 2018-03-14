@@ -41,11 +41,11 @@ namespace Flounder
 		// float lodf = floor(-6.5f + 1.443f * log(distance) / log(2.718f)) + 1.0f;
 		float lod = std::floor(0.0090595f * distance - 1.22865f) + 1.0f;
 		lod = Maths::Clamp(lod, 0.0f, static_cast<float>(TerrainRender::SQUARE_SIZES.size() - 1));
-		int lodi = static_cast<int>(lod);
+		unsigned int lodi = static_cast<unsigned int>(lod);
 
 		if (lodi != m_currentLod)
 		{
-			if (m_modelLods[lodi] == nullptr)
+			if (m_modelLods.at(lodi) == nullptr)
 			{
 				CreateLod(lodi);
 			}
@@ -54,16 +54,16 @@ namespace Flounder
 
 			if (mesh != nullptr)
 			{
-				mesh->SetModel(m_modelLods[lod]);
+				mesh->SetModel(m_modelLods.at(lodi));
 			}
 
 			m_currentLod = lodi;
 		}
 	}
 
-	void LodBehaviour::CreateLod(const int &lod)
+	void LodBehaviour::CreateLod(const unsigned int &lod)
 	{
-		if (m_modelLods[lod] != nullptr)
+		if (m_modelLods.at(lod) != nullptr)
 		{
 			return;
 		}
@@ -74,7 +74,7 @@ namespace Flounder
 		const float squareSize = TerrainRender::SQUARE_SIZES[lod];
 		const float textureScale = TerrainRender::TEXTURE_SCALES[lod];
 		const int vertexCount = CalculateVertexCount(TerrainRender::SIDE_LENGTH, squareSize);
-		m_modelLods[lod] = new MeshTerrain(static_cast<float>(TerrainRender::SIDE_LENGTH), (1.015f + (0.016f * lod)) * squareSize, vertexCount, textureScale, GetGameObject()->GetTransform()->m_position);
+		m_modelLods.at(lod) = new MeshTerrain(static_cast<float>(TerrainRender::SIDE_LENGTH), ((lod == 0) ? 1.0f : (1.015f + (0.016f * lod))) * squareSize, vertexCount, textureScale, GetGameObject()->GetTransform()->m_position);
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 
