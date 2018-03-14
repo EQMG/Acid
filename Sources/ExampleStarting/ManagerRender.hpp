@@ -14,6 +14,7 @@
 #include <Fonts/RendererFonts.hpp>
 #include <Guis/RendererGuis.hpp>
 #include <Particles/RendererParticles.hpp>
+#include <Voxels/RendererVoxels.hpp>
 
 using namespace Flounder;
 
@@ -29,6 +30,7 @@ namespace Demo
 
 		RendererSkyboxes *m_rendererSkyboxes;
 		RendererTerrains *m_rendererTerrains;
+		RendererVoxels *m_rendererVoxels;
 		RendererWaters *m_rendererWaters;
 		RendererEntities *m_rendererEntities;
 	//	RendererParticles *m_rendererParticles;

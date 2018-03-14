@@ -7,7 +7,7 @@ namespace Flounder
 {
 	Worlds *Worlds::S_INSTANCE = nullptr;
 
-	float Worlds::WORLD_CURVATURE = 300.0f; // Radius * BS
+	float Worlds::WORLD_CURVATURE = 300.0f;
 
 	static const Colour FOG_COLOUR_SUNRISE = Colour("#ee9a90");
 	static const Colour FOG_COLOUR_NIGHT = Colour("#0D0D1A");
@@ -24,6 +24,7 @@ namespace Flounder
 
 	Worlds::Worlds() :
 		IModule(),
+		m_noise(new NoiseFast(954627)),
 		m_driverDay(new DriverLinear(0.0f, 1.0f, 300.0f)),
 		m_factorDay(0.0f),
 		m_skyboxRotation(new Vector3),
@@ -34,11 +35,21 @@ namespace Flounder
 		m_fog(new Fog(new Colour(), 0.001f, 2.0f, -0.1f, 0.3f)),
 		m_skyColour(new Colour("#3399ff"))
 	{
+		m_noise->SetNoiseType(NoiseFast::SimplexFractal);
+		m_noise->SetFrequency(0.055f);
+		m_noise->SetInterp(NoiseFast::Quintic);
+		m_noise->SetFractalType(NoiseFast::Fbm);
+		m_noise->SetFractalOctaves(3);
+		m_noise->SetFractalLacunarity(2.0);
+		m_noise->SetFractalGain(0.5f);
+
 		m_driverDay->Update(50.0f); // Starts during daytime.
 	}
 
 	Worlds::~Worlds()
 	{
+		delete m_noise;
+
 		delete m_driverDay;
 
 		delete m_skyboxRotation;

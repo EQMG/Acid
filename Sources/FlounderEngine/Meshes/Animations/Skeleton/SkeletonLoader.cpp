@@ -5,9 +5,9 @@
 namespace Flounder
 {
 
-	SkeletonLoader::SkeletonLoader(LoadedValue *parent, const std::vector<std::string> &boneOrder) :
+	SkeletonLoader::SkeletonLoader(LoadedValue *parent, std::vector<std::string> *boneOrder) :
 		m_armatureData(nullptr),
-		m_boneOrder(new std::vector<std::string>(boneOrder)),
+		m_boneOrder(boneOrder),
 		m_jointCount(0),
 		m_skeletonData(nullptr)
 	{
@@ -27,8 +27,6 @@ namespace Flounder
 
 	SkeletonLoader::~SkeletonLoader()
 	{
-		delete m_boneOrder;
-
 		delete m_skeletonData;
 	}
 
