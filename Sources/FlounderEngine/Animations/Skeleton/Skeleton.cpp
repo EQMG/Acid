@@ -48,7 +48,7 @@ namespace Flounder
 	JointData *Skeleton::ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot)
 	{
 		std::string nameId = jointNode->GetChild("-id")->m_value;
-		ptrdiff_t index = std::find(m_boneOrder->begin(), m_boneOrder->end(), nameId) - m_boneOrder->begin();
+		auto index = GetBoneIndex(nameId);
 		std::vector<std::string> matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetChild("#text")->m_value, " ");
 		Matrix4 matrix = ConvertData(matrixData);
 		matrix.Transpose();
@@ -60,9 +60,21 @@ namespace Flounder
 		}
 
 		m_jointCount++;
-		return new JointData(static_cast<int>(index), nameId, matrix);
+		return new JointData(index, nameId, matrix);
 	}
 
+	int Skeleton::GetBoneIndex(const std::string &name)
+	{
+		for (unsigned int i = 0; i < m_boneOrder->size(); i++)
+		{
+			if (m_boneOrder->at(i) == name)
+			{
+				return i;
+			}
+		}
+
+		return -1;
+	}
 	Matrix4 Skeleton::ConvertData(const std::vector<std::string> &rawData)
 	{
 		float *data = new float[16];
