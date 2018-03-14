@@ -3,6 +3,7 @@
 #include "../Engine/Engine.hpp"
 #include "../Maths/Vector3.hpp"
 #include "../Maths/Visual/DriverLinear.hpp"
+#include "../Maths/Noise/NoiseFast.hpp"
 #include "../Lights/Fog.hpp"
 
 namespace Flounder
@@ -14,6 +15,8 @@ namespace Flounder
 		public IModule
 	{
 	private:
+		NoiseFast *m_noise;
+
 		DriverLinear *m_driverDay;
 		float m_factorDay;
 
@@ -60,6 +63,8 @@ namespace Flounder
 		float GetSunHeight() const;
 
 		float GetStarIntensity() const;
+
+		NoiseFast *GetNoise() const { return m_noise; }
 
 		Vector3 *GetSkyboxRotation() const { return m_skyboxRotation; }
 

@@ -12,7 +12,7 @@ namespace Flounder
 		m_length(data.GetLengthSeconds()),
 		m_keyframes(new std::vector<Keyframe*>())
 	{
-		for (auto frameData : *data.GetKeyframes())
+		for (auto frameData : data.GetKeyframes())
 		{
 			m_keyframes->push_back(new Keyframe(*frameData));
 		}
