@@ -60,7 +60,7 @@ namespace Demo
 		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Stars", ".png")));
 
 		// Terrains.
-		const int n = 4;
+		const int n = 3;
 
 		for (int j = -n; j <= n; j++)
 		{
@@ -107,7 +107,7 @@ namespace Demo
 				const float yv = Maths::RandomInRange(-3.0f, 3.0f);
 				Vector3 position = Terrains::Get()->GetPosition((13.0f * i) + xv, (13.0f * j) + yv);
 
-				if (position.m_y > 0.0f)
+				if (position.m_y >= 0.0f)
 				{
 					if (i == 0 && j == 0)
 					{

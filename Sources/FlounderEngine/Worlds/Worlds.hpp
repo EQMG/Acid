@@ -28,6 +28,8 @@ namespace Flounder
 	public:
 		static Worlds *S_INSTANCE;
 
+		static float WORLD_CURVATURE;
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>

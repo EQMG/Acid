@@ -48,6 +48,8 @@ namespace Flounder
 
 		JointData *ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot);
 
+		int GetBoneIndex(const std::string &name);
+
 		Matrix4 ConvertData(const std::vector<std::string> &rawData);
 	};
 }
