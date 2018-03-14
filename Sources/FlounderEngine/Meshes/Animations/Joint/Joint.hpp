@@ -1,10 +1,11 @@
 #pragma once
 
-#include "../../Maths/Matrix4.hpp"
+#include "../../../Maths/Matrix4.hpp"
 
 namespace Flounder
 {
-	class JointData {
+	class F_EXPORT JointData
+	{
 	private:
 		int m_index;
 		std::string m_nameId;
@@ -20,7 +21,8 @@ namespace Flounder
 	 	{
 		}
 
-		~JointData(){
+		~JointData()
+		{
 			delete m_bindLocalTransform;
 
 			for (auto child : *m_children)
@@ -45,7 +47,7 @@ namespace Flounder
 		}
 	};
 
-	class Joint
+	class F_EXPORT Joint
 	{
 	private:
 		int m_index;
