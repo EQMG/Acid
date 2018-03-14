@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	class KeyframeData
+	class F_EXPORT KeyframeData
 	{
 	private:
 		float m_time;
@@ -37,7 +37,7 @@ namespace Flounder
 		}
 	};
 
-	class Keyframe
+	class F_EXPORT Keyframe
 	{
 	private:
 		float m_timeStamp;

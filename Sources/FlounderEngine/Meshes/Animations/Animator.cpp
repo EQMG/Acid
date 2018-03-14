@@ -1,7 +1,7 @@
 #include "Animator.hpp"
 
-#include "../Engine/Engine.hpp"
 #include <cmath>
+#include "../../Engine/Engine.hpp"
 
 namespace Flounder
 {

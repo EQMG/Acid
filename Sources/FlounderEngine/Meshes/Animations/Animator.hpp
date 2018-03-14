@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Animations/Joint/Joint.hpp"
-#include "Animations/Animation/Animation.hpp"
+#include "Joint/Joint.hpp"
+#include "Animation/Animation.hpp"
 
 namespace Flounder
 {
-	class Animator
+	class F_EXPORT Animator
 	{
 	private:
 		Joint *m_rootJoint;
