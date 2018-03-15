@@ -76,6 +76,8 @@ namespace Flounder
 			SetRaw(std::to_string(data));
 		}
 
+		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value);
+
 		std::string GetString()
 		{
 			return FormatString::RemoveAll(m_value, '\"');
