@@ -51,13 +51,14 @@ namespace Flounder
 
 	//	SkinLoader *skinLoader = new SkinLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
 	//	SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
-	//		*skinLoader->GetData()->GetJointOrder());
+	//		skinLoader->GetData()->GetJointOrder());
 	//	//GeometryLoader *geometry = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skin->GetData()->GetVerticesSkinData());
 	//	AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
 	//		file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
 
 	//	m_animation = new Animation(*animationLoader->GetData());
 
+	//	delete skinLoader;
 	//	delete skeletonLoader;
 	//	delete animationLoader;
 		delete file;

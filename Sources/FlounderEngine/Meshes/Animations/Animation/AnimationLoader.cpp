@@ -31,28 +31,37 @@ namespace Flounder
 
 	std::string AnimationLoader::FindRootJointName()
 	{
-		LoadedValue *skeleton;
+		LoadedValue *skeleton = m_libraryVisualScenes->GetChild("visual_scene")->GetChildWithAttribute("node", "-id", "Armature");
 
-		for (auto child : m_libraryVisualScenes->GetChild("visual_scene")->GetChild("node")->m_children)
-		{
-			if (child->GetChild("-id")->m_value == "Armature")
-			{
-				skeleton = child;
-				break;
-			}
-		}
-
-		return skeleton->GetChild("node")->GetChild("-id")->m_value;
+		return skeleton->GetChild("node")->GetChild("-id")->GetString();
 	}
 
 	std::vector<float> AnimationLoader::GetKeyTimes()
 	{
-		return std::vector<float>();
+		LoadedValue *timeData = m_libraryAnimations->GetChild("animation")->GetChild("source")->GetChild("float_array");
+		auto rawTimes = FormatString::Split(timeData->GetString(), " ");
+		std::vector<float> times = std::vector<float>(rawTimes.size());
+		printf("1\n");
+
+		for (int i = 0; i < times.size(); i++)
+		{
+			times[i] = FormatString::ConvertTo<float>(rawTimes[i]);
+		}
+
+		return times;
 	}
 
 	std::vector<KeyframeData *> AnimationLoader::InitKeyframes(const std::vector<float> &times)
 	{
-		return std::vector<KeyframeData *>();
+		std::vector<KeyframeData *> frames = std::vector<KeyframeData *>(times.size());
+
+		for (int i = 0; i < frames.size(); i++) {
+
+			KeyframeData keyframeData = KeyframeData(times[i]);
+			frames[i] = &keyframeData;
+		}
+
+		return frames;
 	}
 
 	void AnimationLoader::LoadJointTransforms(const std::vector<KeyframeData *> &frames, LoadedValue *jointData, const std::string &rootNodeId)
@@ -60,43 +69,24 @@ namespace Flounder
 		std::string jointNameId = GetJointName(jointData);
 		std::string dataId = GetDataId(jointData);
 
-		LoadedValue *transformData;
+		LoadedValue *transformData = jointData->GetChildWithAttribute("source", "-id", dataId);
 
-		for (auto child : jointData->GetChild("source")->m_children)
-		{
-			if (child->GetChild("-id")->m_value == dataId)
-			{
-				transformData = child;
-				break;
-			}
-		}
-
-		std::string data = transformData->GetChild("float_array")->GetChild("#text")->m_value;
+		std::string data = transformData->GetChild("float_array")->GetChild("#text")->GetString();
 		auto splitData = FormatString::Split(data, " ");
 		ProcessTransforms(jointNameId, splitData, frames, jointNameId == rootNodeId);
 	}
 
 	std::string AnimationLoader::GetDataId(LoadedValue *jointData)
 	{
-		LoadedValue *node;
+		LoadedValue *node = jointData->GetChild("sampler")->GetChildWithAttribute("input", "-semantic", "OUTPUT");
 
-		for (auto child : jointData->GetChild("sampler")->GetChild("input")->m_children)
-		{
-			if (child->GetChild("-semantic")->m_value == "OUTPUT")
-			{
-				node = child;
-				break;
-			}
-		}
-
-		std::string data = node->GetChild("-source")->m_value;
-		return data.substr(1);
+		return node->GetChild("-source")->GetString();
 	}
 
 	std::string AnimationLoader::GetJointName(LoadedValue *jointData)
 	{
 		auto channelNode = jointData->GetChild("channel");
-		std::string data = channelNode->GetChild("-target")->m_value;
+		std::string data = channelNode->GetChild("-target")->GetString();
 		std::vector<std::string> splitData = FormatString::Split(data, "/");
 		return splitData.at(0);
 	}

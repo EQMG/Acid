@@ -225,9 +225,10 @@ namespace Flounder
 			std::vector<int> x = std::vector<int>(3);
 			std::vector<int> q = std::vector<int>(3);
 
-			std::vector<bool> mask = std::vector<bool>(dimensions[u] * dimensions[v]);
+			std::vector<short> mask = std::vector<short>(dimensions[u] * dimensions[v]);
 
 			q[d] = 1;
+
 			for (x[d] = -1; x[d] < dimensions[d];)
 			{
 				// Compute mask.
@@ -251,7 +252,7 @@ namespace Flounder
 				{
 					for (i = 0; i < dimensions[u];)
 					{
-						if (mask[n])
+						if (mask[n] != 0)
 						{
 							// Compute width.
 							for (w = 1; mask[n + w] && i + w < dimensions[u]; ++w)
@@ -286,14 +287,10 @@ namespace Flounder
 							std::vector<int> dv = std::vector<int>(3);
 							dv[v] = h;
 
-						//	unsigned int indexStart = vertices->size();
-						//	BlockFace face = BlockFace(faceType, 2.0f * Vector3(x[0], x[1], x[2]), mask[n], Vector3(r, s, t));
-						//	face.AppendVertices(vertices);
-						//	face.AppendIndices(indices, indexStart);
-							vertices->push_back(Vertex(Vector3(x[0], x[1], x[2])));
-							vertices->push_back(Vertex(Vector3(x[0]+du[0], x[1]+du[1], x[2]+du[2])));
-							vertices->push_back(Vertex(Vector3(x[0]+du[0]+dv[0], x[1]+du[1]+dv[1], x[2]+du[2]+dv[2])));
-							vertices->push_back(Vertex(Vector3(x[0]+dv[0], x[1]+dv[1], x[2]+dv[2])));
+							unsigned int indexStart = vertices->size();
+							BlockFace face = BlockFace(x, du, dv, mask[n]);
+							face.AppendVertices(vertices);
+							face.AppendIndices(indices, indexStart);
 
 							// Zero-out mask.
 							for (l = 0; l < h; ++l)

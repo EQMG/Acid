@@ -25,6 +25,8 @@ namespace Flounder
 	public:
 		BlockFace(const BlockFaceType &faceType, const Vector3 &position, const short &blockType, const Vector3 &scale = Vector3::ONE);
 
+		BlockFace(const std::vector<int> &x, const std::vector<int> &du, const std::vector<int> &dv, const short &blockType);
+
 		BlockFaceType GetFaceType() const { return m_faceType; }
 
 		void AppendVertices(std::vector<Vertex> *vertices) const;

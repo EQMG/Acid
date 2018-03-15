@@ -76,6 +76,37 @@ namespace Flounder
 	{
 	}
 
+	BlockFace::BlockFace(const std::vector<int> &x, const std::vector<int> &du, const std::vector<int> &dv, const short &blockType) :
+		m_faceType(TypeFront),
+		m_position(Vector3()),
+		m_scale(Vector3()),
+		m_blockType(blockType)
+	{
+	//vertices->push_back(Vertex(Vector3(x[0], x[1], x[2])));
+	//vertices->push_back(Vertex(Vector3(x[0]+du[0], x[1]+du[1], x[2]+du[2])));
+	//vertices->push_back(Vertex(Vector3(x[0]+du[0]+dv[0], x[1]+du[1]+dv[1], x[2]+du[2]+dv[2])));
+	//vertices->push_back(Vertex(Vector3(x[0]+dv[0], x[1]+dv[1], x[2]+dv[2])));
+
+		m_position = 2.0f * Vector3(x[0], x[1], x[2]);
+		m_scale = Vector3(du[0] + dv[0], du[1] + dv[1], du[2] + dv[2]);
+		Vector3 test = m_scale - m_position;
+		printf("%s\n", m_scale.ToString().c_str());
+		if (test.m_x != 0 && test.m_z != 0)
+		{
+			m_faceType = BlockFaceType::TypeTop;
+		}
+		else if (test.m_x != 0 && test.m_y != 0)
+		{
+			m_faceType = BlockFaceType::TypeLeft;
+		}
+		else if (test.m_z != 0 && test.m_y != 0)
+		{
+			m_faceType = BlockFaceType::TypeFront;
+		}
+		//printf("%s = %i\n", m_scale.ToString().c_str(), m_faceType);
+		m_scale= Vector3::ONE;
+	}
+
 	void BlockFace::AppendVertices(std::vector<Vertex> *vertices) const
 	{
 		std::vector<Vertex> data = {};

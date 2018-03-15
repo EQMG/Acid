@@ -50,4 +50,17 @@ namespace Flounder
 			return nullptr;
 		//}
 	}
+
+	LoadedValue *LoadedValue::GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value)
+	{
+		for (auto child : this->GetChild(childName)->m_children)
+		{
+			if (child->GetChild(attribute)->GetString() == value)
+			{
+				return child;
+			}
+		}
+
+		return nullptr;
+	}
 }

@@ -36,7 +36,7 @@ namespace Flounder
 
 		SkeletonData *m_skeletonData;
 	public:
-		SkeletonLoader(LoadedValue *parent, std::vector<std::string> *boneOrder);
+		SkeletonLoader(LoadedValue *libraryControllers, std::vector<std::string> boneOrder);
 
 		~SkeletonLoader();
 
