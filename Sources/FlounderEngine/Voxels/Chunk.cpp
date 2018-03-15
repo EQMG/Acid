@@ -213,178 +213,105 @@ namespace Flounder
 
 	void Chunk::CreateGreedyMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices)
 	{
-		// Based off of: https://github.com/Sleaker/Cubed
-		int C_SIZE = 16;
-		int i, j, k, l, h, w, u, v, n, r, s, t;
+		// https://github.com/Alan-FGR/GreedyMesh
+		const int SIZE = 1 << 4;
 
-		BlockFaceType faceType = BlockFaceType::TypeFront;
-		std::vector<int> x = std::vector<int>{0, 0, 0};
-		std::vector<int> q = std::vector<int>{0, 0, 0};
-		std::vector<int> du = {0, 0, 0};
-		std::vector<int> dv = {0, 0, 0};
+		std::vector<int> dimensions = {SIZE, SIZE, SIZE};
 
-		std::vector<char> mask = std::vector<char>(C_SIZE * C_SIZE);
-
-		// First pass is for front face, second pass is for backfaces.
-		for (bool backFace = true, b = false; b != backFace; backFace = backFace && b, b = !b)
+		// Sweep over 3-axes.
+		for (int d = 0; d < 3; ++d)
 		{
-			// Loop over all 3 dimensions.
-			for (int d = 0; d < 3; d++)
+			int i, j, k, l, w, h, u = (d + 1) % 3, v = (d + 2) % 3;
+			std::vector<int> x = std::vector<int>(3);
+			std::vector<int> q = std::vector<int>(3);
+
+			std::vector<bool> mask = std::vector<bool>(dimensions[u] * dimensions[v]);
+
+			q[d] = 1;
+			for (x[d] = -1; x[d] < dimensions[d];)
 			{
-				u = (d + 1) % 3;
-				v = (d + 2) % 3;
+				// Compute mask.
+				int n = 0;
 
-				x[0] = 0;
-				x[1] = 0;
-				x[2] = 0;
-				q[0] = 0;
-				q[1] = 0;
-				q[2] = 0;
-				q[d] = 1;
-
-				// Keep track of what face we are computing.
-				if (d == 0)
+				for (x[v] = 0; x[v] < dimensions[v]; ++x[v])
 				{
-					faceType = backFace ? BlockFaceType::TypeRight : BlockFaceType::TypeLeft;
-				}
-				else if (d == 1)
-				{
-					faceType = backFace ? BlockFaceType::TypeTop : BlockFaceType::TypeBottom;
-				}
-				else if (d == 2)
-				{
-					faceType = backFace ? BlockFaceType::TypeFront : BlockFaceType::TypeBack;
-				}
-
-				// Loop over the entire voxel volume to generate the mask.
-				for (x[d] = 0; x[d] < C_SIZE; x[d]++)
-				{
-					n = 0;
-
-					for (x[v] = 0; x[v] < C_SIZE; x[v]++)
+					for (x[u] = 0; x[u] < dimensions[u]; ++x[u])
 					{
-						for (x[u] = 0; x[u] < C_SIZE; x[u]++)
-						{
-							mask[n++] = IsFaceVisible(x[0], x[1], x[2], faceType) ? 12 : 0; // 12 => GetBlock(x[0], x[1], x[2])->GetType()
-						}
+						mask[n++] = (0 <= x[d] && (GetBlock(x[0], x[1], x[2]) != nullptr)) != (x[d] < dimensions[d] - 1 && (GetBlock(x[0] + q[0], x[1] + q[1], x[2] + q[2]) != nullptr));
 					}
+				}
 
-					n = 0;
+				// Increment x[d].
+				++x[d];
 
-					for (j = 0; j < C_SIZE; j++)
+				// Generate mesh for mask using lexicographic ordering.
+				n = 0;
+
+				for (j = 0; j < dimensions[v]; ++j)
+				{
+					for (i = 0; i < dimensions[u];)
 					{
-						for (i = 0; i < C_SIZE;)
+						if (mask[n])
 						{
-							// Loop until we find a start point.
-							if (mask[n] != 0)
+							// Compute width.
+							for (w = 1; mask[n + w] && i + w < dimensions[u]; ++w)
 							{
-								// Find the width of this mask section, w == current width
-								for (w = 1; w + i < C_SIZE && mask[n + w] != 0 && mask[n + w] == mask[n]; w++)
-								{
-								}
+							}
 
-								bool done = false;
+							// Compute height (this is slightly awkward).
+							bool done = false;
 
-								// Find the height of the mask section, h == current height.
-								for (h = 1; j + h < C_SIZE; h++)
+							for (h = 1; j + h < dimensions[v]; ++h)
+							{
+								for (k = 0; k < w; ++k)
 								{
-									// Make sure a whoel row of each height matches the width.
-									for (k = 0; k < w; k++)
+									if (!mask[n + k + h * dimensions[u]])
 									{
-										if (mask[n + k + h * C_SIZE] == 0 || mask[n + k + h * C_SIZE] != mask[n])
-										{
-											done = true;
-											break;
-										}
-									}
-									if (done)
-									{
+										done = true;
 										break;
 									}
 								}
-
-								x[u] = i;
-								x[v] = j;
-								du[0] = 0;
-								du[1] = 0;
-								du[2] = 0;
-								du[u] = w;
-								dv[0] = 0;
-								dv[1] = 0;
-								dv[2] = 0;
-								dv[v] = h;
-
-								if (!backFace)
+								if (done)
 								{
-									r = x[0];
-									s = x[1];
-									t = x[2];
+									break;
 								}
-								else
-								{
-									r = x[0] + q[0];
-									s = x[1] + q[1];
-									t = x[2] + q[2];
-								}
-
-								/*Vector3 vec0 = Vector3(r, s, t);
-								Vector3 vec1 = Vector3(r + du[0], s + du[1], t + du[2]);
-								Vector3 vec2 = Vector3(r + dv[0], s + dv[1], t + dv[2]);
-								Vector3 vec3 = Vector3(r + du[0] + dv[0], s + du[1] + dv[1], t + du[2] + dv[2]);
-
-								// Each face has a specific order of vertices otherwise the textures rotate incorrectly width/height are flipped when dealing with
-								// left/right/bottom face due to how rotation of dimensions works, and what order the greedy mesher merges them.
-								switch (faceType) {
-								case TOP:
-									writeQuad(verts, indices, normals, vec1, vec3, vec0, vec2, faceType);
-									writeTextureCoords(textCoords, terrain, tmpI.set(x[0], x[1], x[2]), faceType, h, w, MaterialManager.getInstance().getType(mask[n]).getSkin());
-									break;
-								case BOTTOM:
-									writeQuad(verts, indices, normals, vec3, vec1, vec2, vec0, faceType);
-									writeTextureCoords(textCoords, terrain, tmpI.set(x[0], x[1], x[2]), faceType, h, w, MaterialManager.getInstance().getType(mask[n]).getSkin());
-									break;
-								case LEFT:
-									writeQuad(verts, indices, normals, vec0, vec2, vec1, vec3, faceType);
-									writeTextureCoords(textCoords, terrain, tmpI.set(x[0], x[1], x[2]), faceType, h, w, MaterialManager.getInstance().getType(mask[n]).getSkin());
-									break;
-								case RIGHT:
-									// TODO: figure out why right face overwrites transparency.
-									writeQuad(verts, indices, normals, vec2, vec0, vec3, vec1, faceType);
-									writeTextureCoords(textCoords, terrain, tmpI.set(x[0], x[1], x[2]), faceType, h, w, MaterialManager.getInstance().getType(mask[n]).getSkin());
-									break;
-								case FRONT:
-									writeQuad(verts, indices, normals, vec0, vec1, vec2, vec3, faceType);
-									writeTextureCoords(textCoords, terrain, tmpI.set(x[0], x[1], x[2]), faceType, w, h, MaterialManager.getInstance().getType(mask[n]).getSkin());
-									break;
-								case BACK:
-									writeQuad(verts, indices, normals, vec1, vec0, vec3, vec2, faceType);
-									writeTextureCoords(textCoords, terrain, tmpI.set(x[0], x[1], x[2]), faceType, w, h, MaterialManager.getInstance().getType(mask[n]).getSkin());
-									break;
-								}*/
-
-								unsigned int indexStart = vertices->size();
-								BlockFace face = BlockFace(faceType, Vector3(r, s, t), mask[n], Vector3(r + du[0], s + du[1], t + du[2]));
-								face.AppendVertices(vertices);
-								face.AppendIndices(indices, indexStart);
-
-								// Clear the mask.
-								for (l = 0; l < h; ++l)
-								{
-									for (k = 0; k < w; ++k)
-									{
-										mask[n + k + l * C_SIZE] = 0;
-									}
-								}
-
-								// Increment i and n.
-								i += w;
-								n += w;
 							}
-							else
+
+							// Add quad.
+							x[u] = i;
+							x[v] = j;
+
+							std::vector<int> du = std::vector<int>(3);
+							du[u] = w;
+							std::vector<int> dv = std::vector<int>(3);
+							dv[v] = h;
+
+						//	unsigned int indexStart = vertices->size();
+						//	BlockFace face = BlockFace(faceType, 2.0f * Vector3(x[0], x[1], x[2]), mask[n], Vector3(r, s, t));
+						//	face.AppendVertices(vertices);
+						//	face.AppendIndices(indices, indexStart);
+							vertices->push_back(Vertex(Vector3(x[0], x[1], x[2])));
+							vertices->push_back(Vertex(Vector3(x[0]+du[0], x[1]+du[1], x[2]+du[2])));
+							vertices->push_back(Vertex(Vector3(x[0]+du[0]+dv[0], x[1]+du[1]+dv[1], x[2]+du[2]+dv[2])));
+							vertices->push_back(Vertex(Vector3(x[0]+dv[0], x[1]+dv[1], x[2]+dv[2])));
+
+							// Zero-out mask.
+							for (l = 0; l < h; ++l)
 							{
-								i++;
-								n++;
+								for (k = 0; k < w; ++k)
+								{
+									mask[n + k + l * dimensions[u]] = false;
+								}
 							}
+
+							// Increment counters and continue.
+							i += w;
+							n += w;
+						}
+						else
+						{
+							++i;
+							++n;
 						}
 					}
 				}
