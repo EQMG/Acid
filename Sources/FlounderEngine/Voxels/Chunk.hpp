@@ -18,7 +18,9 @@ namespace Flounder
 		bool m_generate;
 		bool m_rebuild;
 	public:
-		static const Vector3 *S_CHUNK_SIZE;
+		static const unsigned int CHUNK_WIDTH;
+		static const unsigned int CHUNK_HEIGHT;
+		static const Vector3 *CHUNK_SIZE;
 
 		Chunk(const bool &generate = false);
 
@@ -48,5 +50,7 @@ namespace Flounder
 		void CreateSimpleMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices);
 
 		void CreateGreedyMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices);
+
+		BlockFaceType GetVoxelFace(const int &x, const int &y, const int &z, const BlockFaceType &faceType);
 	};
 }

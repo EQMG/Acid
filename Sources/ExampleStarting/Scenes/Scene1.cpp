@@ -88,7 +88,7 @@ namespace Demo
 		{
 			for (int w = -n; w <= n; w++)
 			{
-				GameObject *chunk = new GameObject(Transform(2.0f * *Chunk::S_CHUNK_SIZE * Vector3(j, -0.25f, w)));
+				GameObject *chunk = new GameObject(Transform(2.0f * *Chunk::CHUNK_SIZE * Vector3(j, -0.25f, w)));
 				chunk->SetName("Chunk" + j + w);
 				chunk->AddComponent(new Chunk(true));
 				chunk->AddComponent(new Mesh());
