@@ -13,11 +13,11 @@ namespace Flounder
 		Chunk *m_parent;
 
 		Vector3 *m_position;
-		Colour *m_colour;
+		short m_type;
 		bool m_filled;
 
 	public:
-		Block(Chunk *parent, const Vector3 &position, const Colour &colour, const bool &filled = true);
+		Block(Chunk *parent, const Vector3 &position, const short &type, const bool &filled = true);
 
 		~Block();
 
@@ -25,7 +25,7 @@ namespace Flounder
 
 		Vector3 *GetPosition() const { return m_position; }
 
-		Colour *GetColour() const { return m_colour; }
+		short GetType() const { return m_type; }
 
 		bool IsFilled() const { return m_filled; }
 	};

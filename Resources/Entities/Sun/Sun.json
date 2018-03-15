@@ -9,7 +9,7 @@
       "Roughness": 0.0,
       "Ignore Lighting": true, 
       "Ignore Fog": true,
-      "Ignore Curvature": true,
+      "Ignore Curvature": 1,
       "Texture": ""
     }
   },

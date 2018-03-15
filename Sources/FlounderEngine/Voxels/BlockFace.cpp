@@ -68,11 +68,11 @@ namespace Flounder
 		2, 1, 3
 	};
 
-	BlockFace::BlockFace(const BlockFaceType &faceType, const Vector3 &position, Colour *colour) :
+	BlockFace::BlockFace(const BlockFaceType &faceType, const Vector3 &position, const short &blockType, const Vector3 &scale) :
 		m_faceType(faceType),
 		m_position(position),
-		m_scale(Vector3(1.0f, 1.0f, 1.0f)),
-		m_colour(colour)
+		m_scale(Vector3(scale)),
+		m_blockType(blockType)
 	{
 	}
 
@@ -106,7 +106,7 @@ namespace Flounder
 		{
 			Vertex v = Vertex(vertex);
 			v.m_position = (m_scale * v.m_position) + m_position;
-			v.m_tangent = *m_colour;
+			v.m_tangent = Colour("#5E7831");
 			vertices->push_back(v);
 		}
 	}
@@ -145,7 +145,7 @@ namespace Flounder
 
 	bool BlockFace::CompareFaces(const BlockFace &face1, const BlockFace &face2)
 	{
-		if (face1.m_faceType != face2.m_faceType || *face1.m_colour != *face2.m_colour)
+		if (face1.m_faceType != face2.m_faceType || face1.m_blockType != face2.m_blockType)
 		{
 			return false;
 		}
