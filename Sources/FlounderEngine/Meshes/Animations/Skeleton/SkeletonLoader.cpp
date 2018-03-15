@@ -5,23 +5,15 @@
 namespace Flounder
 {
 
-	SkeletonLoader::SkeletonLoader(LoadedValue *parent, std::vector<std::string> *boneOrder) :
+	SkeletonLoader::SkeletonLoader(LoadedValue *libraryControllers, std::vector<std::string> boneOrder) :
 		m_armatureData(nullptr),
-		m_boneOrder(boneOrder),
+		m_boneOrder(&boneOrder),
 		m_jointCount(0),
 		m_skeletonData(nullptr)
 	{
-		for (auto child : parent->GetChild("visual_scene")->GetChild("node")->m_children)
-		{
-			if (child->GetChild("-id")->m_value == "Armature")
-			{
-				m_armatureData = child;
-				break;
-			}
-		}
-
+		m_armatureData = libraryControllers->GetChild("visual_scene")->GetChildWithAttribute("node", "-id", "Armature");
 		auto headNode = m_armatureData->GetChild("node");
-		JointData *headJoint = LoadJointData(headNode, true);
+		auto headJoint = LoadJointData(headNode, true);
 		m_skeletonData = new SkeletonData(m_jointCount, headJoint);
 	}
 
@@ -44,9 +36,9 @@ namespace Flounder
 
 	JointData *SkeletonLoader::ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot)
 	{
-		std::string nameId = jointNode->GetChild("-id")->m_value;
+		std::string nameId = jointNode->GetChild("-id")->GetString();
 		auto index = GetBoneIndex(nameId);
-		auto matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetChild("#text")->m_value, " ");
+		auto matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetChild("#text")->GetString(), " ");
 		Matrix4 matrix = ConvertData(matrixData);
 		matrix.Transpose();
 
@@ -57,7 +49,8 @@ namespace Flounder
 		}
 
 		m_jointCount++;
-		return new JointData(index, nameId, matrix);
+		JointData jointData = JointData(index, nameId, matrix);
+		return &jointData;
 	}
 
 	int SkeletonLoader::GetBoneIndex(const std::string &name)

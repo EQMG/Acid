@@ -82,7 +82,7 @@ namespace Demo
 		}*/
 
 		// Chunks.
-		const int n = 6;
+		const int n = 3; // 6
 
 		for (int j = -n; j <= n; j++)
 		{
@@ -105,6 +105,8 @@ namespace Demo
 		// Entities.
 		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
 		new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
+
+		new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f));
 
 		/*Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
 
