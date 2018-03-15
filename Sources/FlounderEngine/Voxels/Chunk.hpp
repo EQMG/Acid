@@ -18,8 +18,8 @@ namespace Flounder
 		bool m_generate;
 		bool m_rebuild;
 	public:
-		static const unsigned int CHUNK_WIDTH;
-		static const unsigned int CHUNK_HEIGHT;
+		static const int CHUNK_WIDTH;
+		static const int CHUNK_HEIGHT;
 		static const Vector3 *CHUNK_SIZE;
 
 		Chunk(const bool &generate = false);

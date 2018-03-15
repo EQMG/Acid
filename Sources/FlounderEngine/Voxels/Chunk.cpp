@@ -4,8 +4,8 @@
 
 namespace Flounder
 {
-	const unsigned int Chunk::CHUNK_WIDTH = 16;
-	const unsigned int Chunk::CHUNK_HEIGHT = 16;
+	const int Chunk::CHUNK_WIDTH = 16;
+	const int Chunk::CHUNK_HEIGHT = 16;
 	const Vector3 *Chunk::CHUNK_SIZE = new Vector3(CHUNK_WIDTH, CHUNK_HEIGHT, CHUNK_WIDTH);
 
 	Chunk::Chunk(const bool &generate) :
@@ -267,8 +267,6 @@ namespace Flounder
 					side = backFace ? TypeBack : TypeFront;
 				}
 
-				printf("%i < %i\n", x[d], CHUNK_WIDTH);
-
 				// We move through the dimension from front to back.
 				for (x[d] = -1; x[d] < CHUNK_WIDTH;)
 				{
@@ -345,7 +343,7 @@ namespace Flounder
 
 									// And here we call the quad function in order to render a merged quad in the scene.
 									unsigned int indexStart = vertices->size();
-									BlockFace face = BlockFace(side, 2.0f * Vector3(x[0], x[1], x[2]), Vector3(w, 1.0f, h), mask[n]);
+									BlockFace face = BlockFace(side, 2.0f * Vector3(x[0], x[1], x[2]), Vector3(w, h, 1.0f), mask[n]);
 									face.AppendVertices(vertices);
 									face.AppendIndices(indices, indexStart);
 								}
