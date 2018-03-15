@@ -4,10 +4,10 @@
 
 namespace Flounder
 {
-	Block::Block(Chunk *parent, const Vector3 &position, const Colour &colour, const bool &filled) :
+	Block::Block(Chunk *parent, const Vector3 &position, const short &type, const bool &filled) :
 		m_parent(parent),
 		m_position(new Vector3(position)),
-		m_colour(new Colour(colour)),
+		m_type(type),
 		m_filled(filled)
 	{
 	}
@@ -15,10 +15,10 @@ namespace Flounder
 	Block::~Block()
 	{
 		delete m_position;
-		delete m_colour;
 	}
+
 	void Block::SetChanged()
 	{
-
+		m_parent->Rebuild();
 	}
 }
