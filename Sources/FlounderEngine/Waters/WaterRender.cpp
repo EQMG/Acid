@@ -8,8 +8,8 @@
 
 namespace Flounder
 {
-	const float WaterRender::SIDE_LENGTH = 1800.0f;
-	const float WaterRender::SQUARE_SIZE = 200.0f;
+	const float WaterRender::SIDE_LENGTH = 1200.0f;
+	const float WaterRender::SQUARE_SIZE = 100.0f;
 	const int WaterRender::VERTEX_COUNT = static_cast<int>((2.0f * SIDE_LENGTH) / SQUARE_SIZE) + 1;
 	const float WaterRender::TEXTURE_SCALE = 1.0f;
 

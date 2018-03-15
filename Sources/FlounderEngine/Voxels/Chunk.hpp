@@ -3,6 +3,7 @@
 #include "../Objects/Component.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "Block.hpp"
+#include "BlockFace.hpp"
 
 namespace Flounder
 {
@@ -17,7 +18,6 @@ namespace Flounder
 		bool m_rebuild;
 	public:
 		static const unsigned int SIDE_LENGTH;
-		static const unsigned int MAX_HEIGHT;
 
 		Chunk(const bool &generate = true);
 
@@ -42,6 +42,6 @@ namespace Flounder
 
 		void GenerateMesh();
 
-		void AppendFace(const std::vector<Vertex> &dataVertices, const std::vector<uint32_t> &dataIndices, const Block &block, std::vector<Vertex> *vertices, std::vector<uint32_t> *indices);
+		void SearchFaces(const unsigned int &x, const unsigned int &y, const unsigned int &z, Colour *colour, std::vector<BlockFace> *faces);
 	};
 }
