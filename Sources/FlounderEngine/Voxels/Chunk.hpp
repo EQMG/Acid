@@ -13,13 +13,14 @@ namespace Flounder
 		public Component
 	{
 	private:
+		Vector3 *m_position;
 		BlockVector *m_blocks;
 		bool m_generate;
 		bool m_rebuild;
 	public:
-		static const unsigned int SIDE_LENGTH;
+		static const Vector3 *S_CHUNK_SIZE;
 
-		Chunk(const bool &generate = true);
+		Chunk(const bool &generate = false);
 
 		~Chunk();
 
@@ -35,6 +36,8 @@ namespace Flounder
 
 		bool IsBlockFilled(const unsigned int &x, const unsigned int &y, const unsigned int &z);
 
+		bool IsFaceVisible(const unsigned int &x, const unsigned int &y, const unsigned int &z, const BlockFaceType &faceType);
+
 		void Rebuild() { m_rebuild = true; }
 
 	private:
@@ -42,6 +45,8 @@ namespace Flounder
 
 		void GenerateMesh();
 
-		void SearchFaces(const unsigned int &x, const unsigned int &y, const unsigned int &z, Colour *colour, std::vector<BlockFace> *faces);
+		void CreateSimpleMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices);
+
+		void CreateGreedyMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices);
 	};
 }
