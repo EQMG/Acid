@@ -7,12 +7,13 @@ namespace Flounder
 {
 	enum BlockFaceType
 	{
-		TypeFront = 0,
-		TypeBack = 1,
-		TypeTop = 2,
-		TypeBottom = 3,
-		TypeLeft = 4,
-		TypeRight = 5
+		TypeNull = 0,
+		TypeFront = 1,
+		TypeBack = 2,
+		TypeTop = 3,
+		TypeBottom = 4,
+		TypeLeft = 5,
+		TypeRight = 6
 	};
 
 	class BlockFace
@@ -23,9 +24,7 @@ namespace Flounder
 		Vector3 m_position;
 		Vector3 m_scale;
 	public:
-		BlockFace(const BlockFaceType &faceType, const Vector3 &position, const short &blockType, const Vector3 &scale = Vector3::ONE);
-
-		BlockFace(const std::vector<int> &x, const std::vector<int> &du, const std::vector<int> &dv, const short &blockType);
+		BlockFace(const BlockFaceType &faceType, const Vector3 &position, const Vector3 &scale, const short &blockType);
 
 		BlockFaceType GetFaceType() const { return m_faceType; }
 

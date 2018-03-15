@@ -4,7 +4,9 @@
 
 namespace Flounder
 {
-	const Vector3 *Chunk::S_CHUNK_SIZE = new Vector3(16.0f, 16.0f, 16.0f);
+	const unsigned int Chunk::CHUNK_WIDTH = 16;
+	const unsigned int Chunk::CHUNK_HEIGHT = 16;
+	const Vector3 *Chunk::CHUNK_SIZE = new Vector3(CHUNK_WIDTH, CHUNK_HEIGHT, CHUNK_WIDTH);
 
 	Chunk::Chunk(const bool &generate) :
 		Component(),
@@ -13,15 +15,15 @@ namespace Flounder
 		m_generate(generate),
 		m_rebuild(true)
 	{
-		for (unsigned int x = 0; x < S_CHUNK_SIZE->m_x; x++)
+		for (unsigned int x = 0; x < CHUNK_WIDTH; x++)
 		{
 			m_blocks->push_back(std::vector<std::vector<Block*>>());
 
-			for (unsigned int z = 0; z < S_CHUNK_SIZE->m_z; z++)
+			for (unsigned int z = 0; z < CHUNK_WIDTH; z++)
 			{
 				m_blocks->at(x).push_back(std::vector<Block*>());
 
-				for (unsigned int y = 0; y < S_CHUNK_SIZE->m_y; y++)
+				for (unsigned int y = 0; y < CHUNK_HEIGHT; y++)
 				{
 					m_blocks->at(x).at(z).push_back(nullptr);
 				}
@@ -76,7 +78,7 @@ namespace Flounder
 
 	Block *Chunk::GetBlock(const unsigned int &x, const unsigned int &y, const unsigned int &z)
 	{
-		if (x < 0 || x >= S_CHUNK_SIZE->m_x || z < 0 || z >= S_CHUNK_SIZE->m_z || y < 0 || y >= S_CHUNK_SIZE->m_y)
+		if (x < 0 || x >= CHUNK_WIDTH || z < 0 || z >= CHUNK_WIDTH || y < 0 || y >= CHUNK_HEIGHT)
 		{
 			return nullptr;
 		}
@@ -106,9 +108,9 @@ namespace Flounder
 			return IsBlockFilled(x - 1, y, z);
 		case TypeRight:
 			return IsBlockFilled(x + 1, y, z);
+		default:
+			return false;
 		}
-
-		return false;
 	}
 
 	void Chunk::Generate()
@@ -117,11 +119,11 @@ namespace Flounder
 		auto position = *GetGameObject()->GetTransform()->GetPosition() / 2.0f;
 		auto noise = Worlds::Get()->GetNoise();
 
-		for (unsigned int x = 0; x < S_CHUNK_SIZE->m_x; x++)
+		for (unsigned int x = 0; x < CHUNK_WIDTH; x++)
 		{
-			for (unsigned int z = 0; z < S_CHUNK_SIZE->m_z; z++)
+			for (unsigned int z = 0; z < CHUNK_WIDTH; z++)
 			{
-				for (unsigned int y = 0; y < S_CHUNK_SIZE->m_y; y++)
+				for (unsigned int y = 0; y < CHUNK_HEIGHT; y++)
 				{
 					if (noise->GetValue(x + position.m_x, y + position.m_y, z + position.m_z) < 0.1f)
 					{
@@ -151,12 +153,12 @@ namespace Flounder
 		std::vector<Vertex> vertices = {};
 		std::vector<uint32_t> indices = {};
 
-		CreateSimpleMesh(&vertices, &indices);
-	//	CreateGreedyMesh(&vertices, &indices);
+	//	CreateSimpleMesh(&vertices, &indices);
+		CreateGreedyMesh(&vertices, &indices);
 
 		delete mesh->GetModel();
 
-		if (!vertices.empty() && !indices.empty())
+		if (!vertices.empty() || !indices.empty())
 		{
 			Model *model = new Model(vertices, indices, GetName());
 			mesh->SetModel(model);
@@ -176,11 +178,11 @@ namespace Flounder
 	{
 		std::vector<BlockFace> faces = {};
 
-		for (unsigned int x = 0; x < S_CHUNK_SIZE->m_x; x++)
+		for (unsigned int x = 0; x < CHUNK_WIDTH; x++)
 		{
-			for (unsigned int z = 0; z < S_CHUNK_SIZE->m_z; z++)
+			for (unsigned int z = 0; z < CHUNK_WIDTH; z++)
 			{
-				for (unsigned int y = 0; y < S_CHUNK_SIZE->m_y; y++)
+				for (unsigned int y = 0; y < CHUNK_HEIGHT; y++)
 				{
 					Block *block = GetBlock(x, y, z);
 
@@ -191,11 +193,11 @@ namespace Flounder
 
 					Vector3 position = 2.0f * Vector3(x, y, z);
 
-					for (unsigned int faceType = 0; faceType < 6; faceType++)
+					for (unsigned int faceType = 1; faceType < 7; faceType++)
 					{
 						if (IsFaceVisible(x, y, z, (BlockFaceType)faceType))
 						{
-							faces.push_back(BlockFace((BlockFaceType)faceType, position, block->GetType()));
+							faces.push_back(BlockFace((BlockFaceType)faceType, position, Vector3::ONE, block->GetType()));
 						}
 					}
 				}
@@ -213,106 +215,168 @@ namespace Flounder
 
 	void Chunk::CreateGreedyMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices)
 	{
-		// https://github.com/Alan-FGR/GreedyMesh
-		const int SIZE = 1 << 4;
+        // These are just working variables for the algorithm - almost all taken
+		// directly from Mikola Lysenko's javascript implementation.
+		int i, j, k, l, w, h, u, v, n;
+		BlockFaceType side;
 
-		std::vector<int> dimensions = {SIZE, SIZE, SIZE};
+		std::vector<int> x = std::vector<int>{0, 0, 0};
+		std::vector<int> q = std::vector<int>{0, 0, 0};
+		std::vector<int> du = std::vector<int>{0, 0, 0};
+		std::vector<int> dv = std::vector<int>{0, 0, 0};
 
-		// Sweep over 3-axes.
-		for (int d = 0; d < 3; ++d)
+		// We create a mask - this will contain the groups of matching voxel faces
+		// as we proceed through the chunk in 6 directions - once for each face.
+		std::vector<BlockFaceType> mask = std::vector<BlockFaceType>(CHUNK_WIDTH * CHUNK_HEIGHT);
+
+ 		// These are just working variables to hold two faces during comparison.
+		BlockFaceType voxelFace, voxelFace1;
+
+		// We start with the lesser-spotted boolean for-loop (also known as the old flippy floppy).
+		// The variable backFace will be TRUE on the first iteration and FALSE on the second - this allows
+		// us to track which direction the indices should run during creation of the quad.
+		// This loop runs twice, and the inner loop 3 times - totally 6 iterations - one for each voxel face.
+		for (bool backFace = true, b = false; b != backFace; backFace = backFace && b, b = !b)
 		{
-			int i, j, k, l, w, h, u = (d + 1) % 3, v = (d + 2) % 3;
-			std::vector<int> x = std::vector<int>(3);
-			std::vector<int> q = std::vector<int>(3);
-
-			std::vector<short> mask = std::vector<short>(dimensions[u] * dimensions[v]);
-
-			q[d] = 1;
-
-			for (x[d] = -1; x[d] < dimensions[d];)
+			// We sweep over the 3 dimensions - most of what follows is well described by Mikola Lysenko in his post.
+			for (int d = 0; d < 3; d++)
 			{
-				// Compute mask.
-				int n = 0;
+				u = (d + 1) % 3;
+				v = (d + 2) % 3;
 
-				for (x[v] = 0; x[v] < dimensions[v]; ++x[v])
+				x[0] = 0;
+				x[1] = 0;
+				x[2] = 0;
+
+				q[0] = 0;
+				q[1] = 0;
+				q[2] = 0;
+				q[d] = 1;
+
+				// Here we're keeping track of the side that we're meshing.
+				if (d == 0)
 				{
-					for (x[u] = 0; x[u] < dimensions[u]; ++x[u])
-					{
-						mask[n++] = (0 <= x[d] && (GetBlock(x[0], x[1], x[2]) != nullptr)) != (x[d] < dimensions[d] - 1 && (GetBlock(x[0] + q[0], x[1] + q[1], x[2] + q[2]) != nullptr));
-					}
+					side = backFace ? TypeLeft : TypeRight;
+				}
+				else if (d == 1)
+				{
+					side = backFace ? TypeBottom : TypeTop;
+				}
+				else if (d == 2)
+				{
+					side = backFace ? TypeBack : TypeFront;
 				}
 
-				// Increment x[d].
-				++x[d];
+				printf("%i < %i\n", x[d], CHUNK_WIDTH);
 
-				// Generate mesh for mask using lexicographic ordering.
-				n = 0;
-
-				for (j = 0; j < dimensions[v]; ++j)
+				// We move through the dimension from front to back.
+				for (x[d] = -1; x[d] < CHUNK_WIDTH;)
 				{
-					for (i = 0; i < dimensions[u];)
+					// We compute the mask.
+					n = 0;
+
+					for (x[v] = 0; x[v] < CHUNK_HEIGHT; x[v]++)
 					{
-						if (mask[n] != 0)
+						for (x[u] = 0; x[u] < CHUNK_WIDTH; x[u]++)
 						{
-							// Compute width.
-							for (w = 1; mask[n + w] && i + w < dimensions[u]; ++w)
-							{
-							}
+							// Here we retrieve two voxel faces for comparison.
+							voxelFace = (x[d] >= 0 ) ? GetVoxelFace(x[0], x[1], x[2], side) : TypeNull;
+							voxelFace1 = (x[d] < CHUNK_WIDTH - 1) ? GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], side) : TypeNull;
 
-							// Compute height (this is slightly awkward).
-							bool done = false;
+							// We choose the face to add to the mask depending on whether we're moving through on a backface or not.
+							mask[n++] = ((voxelFace != TypeNull && voxelFace1 != TypeNull && voxelFace == voxelFace1))
+								? TypeNull
+								: backFace ? voxelFace1 : voxelFace;
+						}
+					}
 
-							for (h = 1; j + h < dimensions[v]; ++h)
+					x[d]++;
+
+					// Now we generate the mesh for the mask.
+					n = 0;
+
+					for (j = 0; j < CHUNK_HEIGHT; j++)
+					{
+						for (i = 0; i < CHUNK_WIDTH;)
+						{
+							if (mask[n] != TypeNull)
 							{
-								for (k = 0; k < w; ++k)
+								// We compute the width.
+								for (w = 1; i + w < CHUNK_WIDTH && mask[n + w] != TypeNull && mask[n + w] == mask[n]; w++)
 								{
-									if (!mask[n + k + h * dimensions[u]])
+								}
+
+								// Then we compute height.
+								bool done = false;
+
+								for (h = 1; j + h < CHUNK_HEIGHT; h++)
+								{
+									for (k = 0; k < w; k++)
 									{
-										done = true;
+										if (mask[n + k + h * CHUNK_WIDTH] == TypeNull || !mask[n + k + h * CHUNK_WIDTH] == mask[n])
+										{
+											done = true;
+											break;
+										}
+									}
+
+									if (done)
+									{
 										break;
 									}
 								}
-								if (done)
+
+								// Here we check if the BlockFace is transparent, we don't mesh any culled faces.
+							//	if (!mask[n].transparent)
 								{
-									break;
+									// Add quad.
+									x[u] = i;
+									x[v] = j;
+
+									du[0] = 0;
+									du[1] = 0;
+									du[2] = 0;
+									du[u] = w;
+
+									dv[0] = 0;
+									dv[1] = 0;
+									dv[2] = 0;
+									dv[v] = h;
+
+									// And here we call the quad function in order to render a merged quad in the scene.
+									unsigned int indexStart = vertices->size();
+									BlockFace face = BlockFace(side, 2.0f * Vector3(x[0], x[1], x[2]), Vector3(w, 1.0f, h), mask[n]);
+									face.AppendVertices(vertices);
+									face.AppendIndices(indices, indexStart);
 								}
+
+								// We zero out the mask.
+								for (l = 0; l < h; ++l)
+								{
+									for(k = 0; k < w; ++k)
+									{
+										mask[n + k + l * CHUNK_WIDTH] = TypeNull;
+									}
+								}
+
+								// And then finally increment the counters and continue.
+								i += w;
+								n += w;
 							}
-
-							// Add quad.
-							x[u] = i;
-							x[v] = j;
-
-							std::vector<int> du = std::vector<int>(3);
-							du[u] = w;
-							std::vector<int> dv = std::vector<int>(3);
-							dv[v] = h;
-
-							unsigned int indexStart = vertices->size();
-							BlockFace face = BlockFace(x, du, dv, mask[n]);
-							face.AppendVertices(vertices);
-							face.AppendIndices(indices, indexStart);
-
-							// Zero-out mask.
-							for (l = 0; l < h; ++l)
+							else
 							{
-								for (k = 0; k < w; ++k)
-								{
-									mask[n + k + l * dimensions[u]] = false;
-								}
+								i++;
+								n++;
 							}
-
-							// Increment counters and continue.
-							i += w;
-							n += w;
-						}
-						else
-						{
-							++i;
-							++n;
 						}
 					}
 				}
 			}
 		}
+	}
+
+	BlockFaceType Chunk::GetVoxelFace(const int &x, const int &y, const int &z, const BlockFaceType &faceType)
+	{
+		return IsFaceVisible(x, y, z, faceType) ? faceType : TypeNull;
 	}
 }
