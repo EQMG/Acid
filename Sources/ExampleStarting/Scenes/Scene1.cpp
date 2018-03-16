@@ -89,7 +89,7 @@ namespace Demo
 			for (int w = -n; w <= n; w++)
 			{
 				GameObject *chunk = new GameObject(Transform(2.0f * *Chunk::CHUNK_SIZE * Vector3(j, -0.25f, w)));
-				chunk->SetName("Chunk" + j + w);
+				chunk->SetName("Chunk" + std::to_string(j) + "," + std::to_string(w));
 				chunk->AddComponent(new Chunk(MeshGreedy, true));
 				chunk->AddComponent(new Mesh());
 				chunk->AddComponent(new VoxelRender());
