@@ -2,7 +2,7 @@
 
 namespace Flounder
 {
-	std::map<std::string, Vector2> UiBound::g_pivotMap = std::map<std::string, Vector2>
+	std::map<std::string, Vector2> UiBound::s_pivotMap = std::map<std::string, Vector2>
 		{
 			{"TopLeft",      Vector2(0.0f, 1.0f)},
 			{"TopCentre",    Vector2(0.5f, 1.0f)},
@@ -54,9 +54,9 @@ namespace Flounder
 
 	Vector2 UiBound::FindPivot(const std::string &key)
 	{
-		const auto it = g_pivotMap.find(key);
+		const auto it = s_pivotMap.find(key);
 
-		if (it == g_pivotMap.end())
+		if (it == s_pivotMap.end())
 		{
 #if FLOUNDER_VERBOSE
 			printf("Could not find a UiBound pivot from key: %s", key.c_str());

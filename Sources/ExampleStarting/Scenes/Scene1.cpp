@@ -82,7 +82,7 @@ namespace Demo
 		}*/
 
 		// Chunks.
-		const int n = 3; // 6
+		const int n = 6;
 
 		for (int j = -n; j <= n; j++)
 		{
@@ -90,7 +90,7 @@ namespace Demo
 			{
 				GameObject *chunk = new GameObject(Transform(2.0f * *Chunk::CHUNK_SIZE * Vector3(j, -0.25f, w)));
 				chunk->SetName("Chunk" + j + w);
-				chunk->AddComponent(new Chunk(true));
+				chunk->AddComponent(new Chunk(MeshGreedy, true));
 				chunk->AddComponent(new Mesh());
 				chunk->AddComponent(new VoxelRender());
 			}

@@ -5,30 +5,31 @@
 
 namespace Flounder
 {
-	enum FaceType
+	enum FaceSide
 	{
-		FaceNull = 0,
-		FaceFront = 1,
-		FaceBack = 2,
-		FaceTop = 3,
-		FaceBottom = 4,
-		FaceLeft = 5,
-		FaceRight = 6
+		FaceFront = 0,
+		FaceBack = 1,
+		FaceTop = 2,
+		FaceBottom = 3,
+		FaceLeft = 4,
+		FaceRight = 5
 	};
 
 	class BlockFace
 	{
 	private:
-		FaceType m_faceType;
+		static std::map<short, Colour*> s_colours;
+
+		FaceSide m_faceSide;
 		short m_blockType;
 	public:
-		BlockFace(const FaceType &faceType, const short &blockType);
+		BlockFace(const FaceSide &faceSide, const short &blockType);
 
-		FaceType GetFaceType() const { return m_faceType; }
+		FaceSide GetFaceSide() const { return m_faceSide; }
 
-		void AppendVertices(std::vector<Vertex> *vertices, const Vector3 &position, const Vector3 &scale) const;
+		short GetBlockType() const { return m_blockType; }
 
-		void AppendIndices(std::vector<uint32_t> *indices, unsigned int indexStart) const;
+		static Colour *FindColour(const short &key);
 
 		bool operator==(const BlockFace &other) const;
 
