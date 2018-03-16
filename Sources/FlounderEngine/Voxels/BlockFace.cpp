@@ -5,7 +5,9 @@ namespace Flounder
 	std::map<short, Colour*> BlockFace::s_colours = std::map<short, Colour*>
 		{
 			{0, new Colour("#FFFFFF", 0.0f)},
-			{12, new Colour("#5E7831")},
+			{1, new Colour("#5E7831")}, // Grass
+			{2, new Colour("#784800")}, // Dirt
+			{3, new Colour("#8B8D7A")}, // Stone
 		};
 
 	BlockFace::BlockFace(const FaceSide &faceSide, const short &blockType) :

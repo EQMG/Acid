@@ -27,6 +27,8 @@ namespace Flounder
 
 		short GetType() const { return m_type; }
 
+		void SetType(const short &type) { m_type = type; }
+
 		bool IsFilled() const { return m_filled; }
 	};
 }

@@ -127,7 +127,7 @@ namespace Flounder
 						continue;
 					}
 
-					Block *block = new Block(this, 2.0f * Vector3(x, y, z), 12);
+					Block *block = new Block(this, 2.0f * Vector3(x, y, z), 1);
 					m_blocks->at(x).at(z).at(y) = block;
 				}
 			}
@@ -180,26 +180,67 @@ namespace Flounder
 
 	void Chunk::CreateSimpleMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices)
 	{
-		for (int x = 0; x < CHUNK_WIDTH; x++)
+		int u, v;
+		FaceSide currentFace;
+
+		std::vector<int> du = std::vector<int>{0, 0, 0};
+		std::vector<int> dv = std::vector<int>{0, 0, 0};
+
+		// We start with the lesser-spotted boolean for-loop (also known as the old flippy floppy).
+		for (bool backFace = true, b = false; b != backFace; backFace = backFace && b, b = !b)
 		{
-			for (int z = 0; z < CHUNK_WIDTH; z++)
+			// We sweep over the 3 dimensions - most of what follows is well described by Mikola Lysenko in his post.
+			for (int d = 0; d < 3; d++)
 			{
-				for (int y = 0; y < CHUNK_HEIGHT; y++)
+				u = (d + 1) % 3;
+				v = (d + 2) % 3;
+
+				// Here we're keeping track of the side that we're meshing.
+				if (d == 0)
 				{
-					Block *block = GetBlock(x, y, z);
+					currentFace = backFace ? FaceLeft : FaceRight;
+				}
+				else if (d == 1)
+				{
+					currentFace = backFace ? FaceBottom : FaceTop;
+				}
+				else if (d == 2)
+				{
+					currentFace = backFace ? FaceFront : FaceBack;
+				}
 
-					if (block == nullptr || !block->IsFilled())
+				// We move through all of the blocks in the chunk.
+				for (int i = 0; i < CHUNK_WIDTH; i++)
+				{
+					for (int k = 0; k < CHUNK_WIDTH; k++)
 					{
-						continue;
-					}
-
-					Vector3 position = 2.0f * Vector3(x, y, z);
-
-					for (unsigned int faceSide = 0; faceSide < 6; faceSide++)
-					{
-						if (IsFaceVisible(x, y, z, (FaceSide)faceSide))
+						for (int j = 0; j < CHUNK_HEIGHT; j++)
 						{
-							GenerateQuad(vertices, indices, block->GetType(), (FaceSide)faceSide, faceSide % 2 != 0, 1, 1, {x, y, z}, {1, 1, 1}, {1, 1, 1}); // TODO: Fix.
+							// Here we filter out invisible faces.
+							if (!IsFaceVisible(i, j, k, currentFace))
+							{
+								continue;
+							}
+
+							Block *block = GetBlock(i, j, k);
+
+							if (block == nullptr || !block->IsFilled())
+							{
+								continue;
+							}
+
+							du[0] = 0;
+							du[1] = 0;
+							du[2] = 0;
+							du[u] = 1;
+
+							dv[0] = 0;
+							dv[1] = 0;
+							dv[2] = 0;
+							dv[v] = 1;
+
+							// And here we call the quad function in order to render a merged quad in the scene.
+							GenerateQuad(vertices, indices, block->GetType(), currentFace, backFace, 1, 1, {i, j, k}, du, dv);
 						}
 					}
 				}
@@ -377,27 +418,6 @@ namespace Flounder
 		return block != nullptr ? block->GetType() : (short)0;
 	}
 
-	Vector3 Chunk::GetVoxelNormal(const FaceSide &faceType)
-	{
-		switch (faceType)
-		{
-		case FaceFront:
-			return Vector3(0.0f, 0.0f, -1.0f);
-		case FaceBack:
-			return Vector3(0.0f, 0.0f, 1.0f);
-		case FaceTop:
-			return Vector3(0.0f, 1.0f, 0.0f);
-		case FaceBottom:
-			return Vector3(0.0f, -1.0f, 0.0f);
-		case FaceLeft:
-			return Vector3(0.0f, 0.0f, -1.0f);
-		case FaceRight:
-			return Vector3(0.0f, 0.0f, 1.0f);
-		default:
-			return Vector3();
-		}
-	}
-
 	void Chunk::GenerateQuad(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices,
 							 const short &mask, const FaceSide &faceSide, const bool &backFace,
 							 const int &width, const int &height,
@@ -407,9 +427,31 @@ namespace Flounder
 	{
 		unsigned int indexStart = vertices->size();
 
-		auto colour = *BlockFace::FindColour(mask);
-		auto normal = GetVoxelNormal(faceSide);
-	//	printf("%s => (%i, %i, %i)\n", normal.ToString().c_str(), du[0], du[1], du[2]);
+		Colour colour = *BlockFace::FindColour(mask);
+		Vector3 normal = Vector3();
+
+		switch (faceSide)
+		{
+		case FaceFront:
+			normal.Set(0.0f, 0.0f, -1.0f);
+			break;
+		case FaceBack:
+			normal.Set(0.0f, 0.0f, 1.0f);
+			break;
+		case FaceTop:
+			normal.Set(0.0f, 1.0f, 0.0f);
+			break;
+		case FaceBottom:
+			normal.Set(0.0f, -1.0f, 0.0f);
+			break;
+		case FaceLeft:
+			normal.Set(0.0f, 0.0f, -1.0f);
+			break;
+		case FaceRight:
+			normal.Set(0.0f, 0.0f, 1.0f);
+			break;
+		}
+
 		vertices->push_back(Vertex(2.0f * Vector3(x[0], x[1], x[2]), Vector2(), normal, colour));
 		vertices->push_back(Vertex(2.0f * Vector3(x[0] + dv[0], x[1] + dv[1], x[2] + dv[2]), Vector2(), normal, colour));
 		vertices->push_back(Vertex(2.0f * Vector3(x[0] + du[0], x[1] + du[1], x[2] + du[2]), Vector2(), normal, colour));
