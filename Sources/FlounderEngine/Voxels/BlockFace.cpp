@@ -68,15 +68,13 @@ namespace Flounder
 		2, 1, 3
 	};
 
-	BlockFace::BlockFace(const BlockFaceType &faceType, const Vector3 &position, const Vector3 &scale, const short &blockType) :
+	BlockFace::BlockFace(const FaceType &faceType, const short &blockType) :
 		m_faceType(faceType),
-		m_position(position),
-		m_scale(Vector3(scale)),
 		m_blockType(blockType)
 	{
 	}
 
-	void BlockFace::AppendVertices(std::vector<Vertex> *vertices) const
+	void BlockFace::AppendVertices(std::vector<Vertex> *vertices, const Vector3 &position, const Vector3 &scale) const
 	{
 		std::vector<Vertex> data = {};
 
@@ -107,7 +105,7 @@ namespace Flounder
 		for (const auto &vertex : data)
 		{
 			Vertex v = Vertex(vertex);
-			v.m_position = (m_scale * v.m_position) + m_position;
+			v.m_position = (scale * v.m_position) + position;
 			v.m_tangent = Colour("#5E7831");
 			vertices->push_back(v);
 		}
@@ -147,46 +145,9 @@ namespace Flounder
 		}
 	}
 
-	bool BlockFace::CompareFaces(const BlockFace &face1, const BlockFace &face2)
-	{
-		if (face1.m_faceType != face2.m_faceType || face1.m_blockType != face2.m_blockType)
-		{
-			return false;
-		}
-
-		switch (face1.m_faceType)
-		{
-		case TypeFront:
-		case TypeBack:
-			if (face1.m_position.m_z != face2.m_position.m_z)
-			{
-				return false;
-			}
-			break;
-		case TypeTop:
-		case TypeBottom:
-			if (face1.m_position.m_y != face2.m_position.m_y)
-			{
-				return false;
-			}
-			break;
-		case TypeLeft:
-		case TypeRight:
-			if (face1.m_position.m_x != face2.m_position.m_x)
-			{
-				return false;
-			}
-			break;
-		default:
-			return false;
-		}
-
-		return false;
-	}
-
 	bool BlockFace::operator==(const BlockFace &other) const
 	{
-		return m_faceType == other.m_faceType && m_position == other.m_position && m_scale == other.m_scale;
+		return m_faceType == other.m_faceType; // && m_position == other.m_position && m_scale == other.m_scale;
 	}
 
 	bool BlockFace::operator!=(const BlockFace &other) const

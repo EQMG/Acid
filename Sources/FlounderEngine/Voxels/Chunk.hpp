@@ -38,7 +38,7 @@ namespace Flounder
 
 		bool IsBlockFilled(const unsigned int &x, const unsigned int &y, const unsigned int &z);
 
-		bool IsFaceVisible(const unsigned int &x, const unsigned int &y, const unsigned int &z, const BlockFaceType &faceType);
+		bool IsFaceVisible(const unsigned int &x, const unsigned int &y, const unsigned int &z, const FaceType &faceType);
 
 		void Rebuild() { m_rebuild = true; }
 
@@ -51,6 +51,6 @@ namespace Flounder
 
 		void CreateGreedyMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices);
 
-		BlockFaceType GetVoxelFace(const int &x, const int &y, const int &z, const BlockFaceType &faceType);
+		BlockFace GetVoxelFace(const int &x, const int &y, const int &z, const FaceType &faceType);
 	};
 }
