@@ -8,9 +8,9 @@ namespace Flounder
 	const int Chunk::CHUNK_HEIGHT = 16;
 	const Vector3 *Chunk::CHUNK_SIZE = new Vector3(CHUNK_WIDTH, CHUNK_HEIGHT, CHUNK_WIDTH);
 
-	Chunk::Chunk(const bool &generate) :
+	Chunk::Chunk(const ChunkMesh &chunkMesh, const bool &generate) :
 		Component(),
-		m_position(new Vector3()),
+		m_chunkMesh(chunkMesh),
 		m_blocks(new BlockVector()),
 		m_generate(generate),
 		m_rebuild(true)
@@ -33,8 +33,6 @@ namespace Flounder
 
 	Chunk::~Chunk()
 	{
-		delete m_position;
-
 		for (auto x : *m_blocks)
 		{
 			for (auto z : x)
@@ -92,7 +90,7 @@ namespace Flounder
 		return block == nullptr || !block->IsFilled();
 	}
 
-	bool Chunk::IsFaceVisible(const unsigned int &x, const unsigned int &y, const unsigned int &z, const FaceType &faceType)
+	bool Chunk::IsFaceVisible(const unsigned int &x, const unsigned int &y, const unsigned int &z, const FaceSide &faceType)
 	{
 		switch (faceType)
 		{
@@ -115,7 +113,6 @@ namespace Flounder
 
 	void Chunk::Generate()
 	{
-		*m_position = *GetGameObject()->GetTransform()->GetPosition();
 		auto position = *GetGameObject()->GetTransform()->GetPosition() / 2.0f;
 		auto noise = Worlds::Get()->GetNoise();
 
@@ -153,8 +150,15 @@ namespace Flounder
 		std::vector<Vertex> vertices = {};
 		std::vector<uint32_t> indices = {};
 
-	//	CreateSimpleMesh(&vertices, &indices);
-		CreateGreedyMesh(&vertices, &indices);
+		switch (m_chunkMesh)
+		{
+		case MeshGreedy:
+			CreateGreedyMesh(&vertices, &indices);
+			break;
+		case MeshSimple:
+			CreateSimpleMesh(&vertices, &indices);
+			break;
+		}
 
 		delete mesh->GetModel();
 
@@ -176,11 +180,11 @@ namespace Flounder
 
 	void Chunk::CreateSimpleMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices)
 	{
-		for (unsigned int x = 0; x < CHUNK_WIDTH; x++)
+		for (int x = 0; x < CHUNK_WIDTH; x++)
 		{
-			for (unsigned int z = 0; z < CHUNK_WIDTH; z++)
+			for (int z = 0; z < CHUNK_WIDTH; z++)
 			{
-				for (unsigned int y = 0; y < CHUNK_HEIGHT; y++)
+				for (int y = 0; y < CHUNK_HEIGHT; y++)
 				{
 					Block *block = GetBlock(x, y, z);
 
@@ -191,16 +195,11 @@ namespace Flounder
 
 					Vector3 position = 2.0f * Vector3(x, y, z);
 
-					for (unsigned int faceType = 1; faceType < 7; faceType++)
+					for (unsigned int faceSide = 0; faceSide < 6; faceSide++)
 					{
-						if (IsFaceVisible(x, y, z, (FaceType)faceType))
+						if (IsFaceVisible(x, y, z, (FaceSide)faceSide))
 						{
-							BlockFace face = BlockFace((FaceType)faceType, block->GetType());
-
-							unsigned int indexStart = vertices->size();
-
-							face.AppendVertices(vertices, position, Vector3::ONE);
-							face.AppendIndices(indices, indexStart);
+							GenerateQuad(vertices, indices, block->GetType(), (FaceSide)faceSide, faceSide % 2 != 0, 1, 1, {x, y, z}, {1, 1, 1}, {1, 1, 1}); // TODO: Fix.
 						}
 					}
 				}
@@ -210,10 +209,12 @@ namespace Flounder
 
 	void Chunk::CreateGreedyMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices)
 	{
+		// This method is based off of Robert O'Leary's implementation (https://github.com/roboleary/GreedyMesh)
+
         // These are just working variables for the algorithm - almost all taken
 		// directly from Mikola Lysenko's javascript implementation.
 		int i, j, k, l, w, h, u, v, n;
-		FaceType side;
+		FaceSide currentFace;
 
 		std::vector<int> x = std::vector<int>{0, 0, 0};
 		std::vector<int> q = std::vector<int>{0, 0, 0};
@@ -222,11 +223,10 @@ namespace Flounder
 
 		// We create a mask - this will contain the groups of matching voxel faces
 		// as we proceed through the chunk in 6 directions - once for each face.
-		std::vector<BlockFace*> mask = std::vector<BlockFace*>(CHUNK_WIDTH * CHUNK_HEIGHT);
+		std::vector<short> mask = std::vector<short>(CHUNK_WIDTH * CHUNK_HEIGHT);
 
  		// These are just working variables to hold two faces during comparison.
-		BlockFace *voxelFace = nullptr;
-		BlockFace *voxelFace1 = nullptr;
+		short voxelFace, voxelFace1;
 
 		// We start with the lesser-spotted boolean for-loop (also known as the old flippy floppy).
 		// The variable backFace will be TRUE on the first iteration and FALSE on the second - this allows
@@ -252,15 +252,15 @@ namespace Flounder
 				// Here we're keeping track of the side that we're meshing.
 				if (d == 0)
 				{
-					side = backFace ? FaceLeft : FaceRight;
+					currentFace = backFace ? FaceLeft : FaceRight;
 				}
 				else if (d == 1)
 				{
-					side = backFace ? FaceBottom : FaceTop;
+					currentFace = backFace ? FaceBottom : FaceTop;
 				}
 				else if (d == 2)
 				{
-					side = backFace ? FaceBack : FaceFront;
+					currentFace = backFace ? FaceFront : FaceBack;
 				}
 
 				// We move through the dimension from front to back.
@@ -274,12 +274,12 @@ namespace Flounder
 						for (x[u] = 0; x[u] < CHUNK_WIDTH; x[u]++)
 						{
 							// Here we retrieve two voxel faces for comparison.
-							voxelFace = (x[d] >= 0 ) ? GetVoxelFace(x[0], x[1], x[2], side) : nullptr;
-							voxelFace1 = (x[d] < CHUNK_WIDTH - 1) ? GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], side) : nullptr;
+							voxelFace = (x[d] >= 0 ) ? GetVoxelFace(x[0], x[1], x[2], currentFace) : (short)0;
+							voxelFace1 = (x[d] < CHUNK_WIDTH - 1) ? GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], currentFace) : (short)0;
 
 							// We choose the face to add to the mask depending on whether we're moving through on a backface or not.
-							mask[n++] = ((voxelFace != nullptr && voxelFace1 != nullptr && voxelFace == voxelFace1))
-								? nullptr
+							mask[n++] = ((voxelFace != 0 && voxelFace1 != 0 && voxelFace == voxelFace1))
+								? (short)0
 								: backFace ? voxelFace1 : voxelFace;
 						}
 					}
@@ -293,10 +293,10 @@ namespace Flounder
 					{
 						for (i = 0; i < CHUNK_WIDTH;)
 						{
-							if (mask[n] != nullptr)
+							if (mask[n] != 0)
 							{
 								// We compute the width.
-								for (w = 1; i + w < CHUNK_WIDTH && mask[n + w] != nullptr && mask[n + w] == mask[n]; w++)
+								for (w = 1; i + w < CHUNK_WIDTH && mask[n + w] != 0 && mask[n + w] == mask[n]; w++)
 								{
 								}
 
@@ -307,7 +307,7 @@ namespace Flounder
 								{
 									for (k = 0; k < w; k++)
 									{
-										if (mask[n + k + h * CHUNK_WIDTH] == nullptr || mask[n + k + h * CHUNK_WIDTH] != mask[n])
+										if (mask[n + k + h * CHUNK_WIDTH] == 0 || mask[n + k + h * CHUNK_WIDTH] != mask[n])
 										{
 											done = true;
 											break;
@@ -338,9 +338,7 @@ namespace Flounder
 									dv[v] = h;
 
 									// And here we call the quad function in order to render a merged quad in the scene.
-									unsigned int indexStart = vertices->size();
-									mask[n]->AppendVertices(vertices, 2.0f * Vector3(x[0], x[1], x[2]), Vector3(w, h, 1.0f));
-									mask[n]->AppendIndices(indices, indexStart);
+									GenerateQuad(vertices, indices, mask[n], currentFace, backFace, w, h, x, du, dv);
 								}
 
 								// We zero out the mask.
@@ -348,7 +346,7 @@ namespace Flounder
 								{
 									for(k = 0; k < w; ++k)
 									{
-										mask[n + k + l * CHUNK_WIDTH] = nullptr;
+										mask[n + k + l * CHUNK_WIDTH] = 0;
 									}
 								}
 
@@ -368,10 +366,72 @@ namespace Flounder
 		}
 	}
 
-	BlockFace Chunk::GetVoxelFace(const int &x, const int &y, const int &z, const FaceType &faceType)
+	short Chunk::GetVoxelFace(const int &x, const int &y, const int &z, const FaceSide &faceType)
 	{
-		// return IsFaceVisible(x, y, z, faceType) ? faceType : nullptr;
-		auto block = GetBlock(x, y, z);
-		return BlockFace(faceType, block == nullptr ? 0 : block->GetType());
+	//	if (!IsFaceVisible(x, y, z, faceType))
+	//	{
+	//		return 0;
+	//	}
+
+		Block *block = GetBlock(x, y, z);
+		return block != nullptr ? block->GetType() : (short)0;
+	}
+
+	Vector3 Chunk::GetVoxelNormal(const FaceSide &faceType)
+	{
+		switch (faceType)
+		{
+		case FaceFront:
+			return Vector3(0.0f, 0.0f, -1.0f);
+		case FaceBack:
+			return Vector3(0.0f, 0.0f, 1.0f);
+		case FaceTop:
+			return Vector3(0.0f, 1.0f, 0.0f);
+		case FaceBottom:
+			return Vector3(0.0f, -1.0f, 0.0f);
+		case FaceLeft:
+			return Vector3(0.0f, 0.0f, -1.0f);
+		case FaceRight:
+			return Vector3(0.0f, 0.0f, 1.0f);
+		default:
+			return Vector3();
+		}
+	}
+
+	void Chunk::GenerateQuad(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices,
+							 const short &mask, const FaceSide &faceSide, const bool &backFace,
+							 const int &width, const int &height,
+							 const std::vector<int> &x,
+							 const std::vector<int> &du,
+							 const std::vector<int> &dv)
+	{
+		unsigned int indexStart = vertices->size();
+
+		auto colour = *BlockFace::FindColour(mask);
+		auto normal = GetVoxelNormal(faceSide);
+	//	printf("%s => (%i, %i, %i)\n", normal.ToString().c_str(), du[0], du[1], du[2]);
+		vertices->push_back(Vertex(2.0f * Vector3(x[0], x[1], x[2]), Vector2(), normal, colour));
+		vertices->push_back(Vertex(2.0f * Vector3(x[0] + dv[0], x[1] + dv[1], x[2] + dv[2]), Vector2(), normal, colour));
+		vertices->push_back(Vertex(2.0f * Vector3(x[0] + du[0], x[1] + du[1], x[2] + du[2]), Vector2(), normal, colour));
+		vertices->push_back(Vertex(2.0f * Vector3(x[0] + du[0] + dv[0], x[1] + du[1] + dv[1], x[2] + du[2] + dv[2]), Vector2(), normal, colour));
+
+		if (backFace)
+		{
+			indices->push_back(indexStart + 2);
+			indices->push_back(indexStart + 0);
+			indices->push_back(indexStart + 1);
+			indices->push_back(indexStart + 1);
+			indices->push_back(indexStart + 3);
+			indices->push_back(indexStart + 2);
+		}
+		else
+		{
+			indices->push_back(indexStart + 2);
+			indices->push_back(indexStart + 3);
+			indices->push_back(indexStart + 1);
+			indices->push_back(indexStart + 1);
+			indices->push_back(indexStart + 0);
+			indices->push_back(indexStart + 2);
+		}
 	}
 }
