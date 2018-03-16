@@ -11,7 +11,7 @@ namespace Flounder
 	class F_EXPORT UiBound
 	{
 	private:
-		static std::map<std::string, Vector2> g_pivotMap;
+		static std::map<std::string, Vector2> s_pivotMap;
 	public:
 		Vector2 *m_position;
 		Vector2 *m_reference;
