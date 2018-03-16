@@ -65,7 +65,5 @@ namespace Flounder
 						  const std::vector<int> &x,
 						  const std::vector<int> &du,
 						  const std::vector<int> &dv);
-
-		Vector3 GetVoxelNormal(const FaceSide &faceType);
 	};
 }

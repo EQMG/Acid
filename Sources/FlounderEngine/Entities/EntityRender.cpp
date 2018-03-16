@@ -14,7 +14,7 @@ namespace Flounder
 		Component(),
 		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
 		m_descriptorSet(nullptr),
-		m_nullTexture(Texture::Resource(""))
+		m_nullTexture(Texture::Resource("Resources/Undefined.png"))
 	{
 	}
 
