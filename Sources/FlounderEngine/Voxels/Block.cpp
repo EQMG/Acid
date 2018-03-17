@@ -4,7 +4,7 @@
 
 namespace Flounder
 {
-	Block::Block(Chunk *parent, const Vector3 &position, const short &type) :
+	Block::Block(Chunk *parent, const Vector3 &position, const std::string &type) :
 		m_parent(parent),
 		m_position(new Vector3(position)),
 		m_type(type)

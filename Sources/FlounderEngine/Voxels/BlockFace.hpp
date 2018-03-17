@@ -18,18 +18,18 @@ namespace Flounder
 	class BlockFace
 	{
 	private:
-		static std::map<short, Colour*> s_colours;
+		static std::map<std::string, Colour*> s_colours;
 
 		FaceSide m_faceSide;
-		short m_blockType;
+		std::string m_blockType;
 	public:
-		BlockFace(const FaceSide &faceSide, const short &blockType);
+		BlockFace(const FaceSide &faceSide, const std::string &blockType);
 
 		FaceSide GetFaceSide() const { return m_faceSide; }
 
-		short GetBlockType() const { return m_blockType; }
+		std::string GetBlockType() const { return m_blockType; }
 
-		static Colour *FindColour(const short &key);
+		static Colour *FindColour(const std::string &key);
 
 		bool operator==(const BlockFace &other) const;
 

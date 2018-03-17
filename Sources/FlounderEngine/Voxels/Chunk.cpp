@@ -5,30 +5,25 @@
 
 namespace Flounder
 {
-	const int Chunk::CHUNK_WIDTH = 32;
-	const int Chunk::CHUNK_HEIGHT = 32;
-	const float Chunk::VOXEL_SIZE = 1.0f;
+	const int Chunk::CHUNK_WIDTH = 16;
+	const int Chunk::CHUNK_HEIGHT = 16;
+	const float Chunk::VOXEL_SIZE = 2.0f;
 	const Vector3 *Chunk::CHUNK_SIZE = new Vector3(VOXEL_SIZE * CHUNK_WIDTH, VOXEL_SIZE * CHUNK_HEIGHT, VOXEL_SIZE * CHUNK_WIDTH);
 
 	Chunk::Chunk(const ChunkMesh &chunkMesh, const bool &generate) :
 		Component(),
+		m_blocks(new std::vector<std::vector<std::vector<Block*>>>(CHUNK_WIDTH, std::vector<std::vector<Block*>>(CHUNK_WIDTH, std::vector<Block*>(CHUNK_HEIGHT)))),
 		m_chunkMesh(chunkMesh),
-		m_blocks(new BlockVector()),
-		m_surrounding(new std::vector<Chunk *>()),
 		m_generate(generate),
 		m_rebuild(true)
 	{
 		for (unsigned int x = 0; x < CHUNK_WIDTH; x++)
 		{
-			m_blocks->push_back(std::vector<std::vector<Block*>>(CHUNK_WIDTH));
-
 			for (unsigned int z = 0; z < CHUNK_WIDTH; z++)
 			{
-				m_blocks->at(x).push_back(std::vector<Block*>(CHUNK_WIDTH));
-
 				for (unsigned int y = 0; y < CHUNK_HEIGHT; y++)
 				{
-					m_blocks->at(x).at(z).push_back(new Block(this, VOXEL_SIZE * Vector3(x, y, z), 0));
+					m_blocks->at(x).at(z).at(y) = new Block(this, VOXEL_SIZE * Vector3(x, y, z), "");
 				}
 			}
 		}
@@ -48,7 +43,6 @@ namespace Flounder
 		}
 
 		delete m_blocks;
-		delete m_surrounding;
 	}
 
 	void Chunk::Update()
@@ -61,7 +55,7 @@ namespace Flounder
 
 		if (m_rebuild)
 		{
-			m_surrounding->clear();
+			/*m_surrounding->clear();
 
 			std::vector<Chunk *> chunkList = std::vector<Chunk *>();
 			Scenes::Get()->GetStructure()->QueryComponents<Chunk>(&chunkList);
@@ -76,21 +70,17 @@ namespace Flounder
 				}
 
 				Vector3 otherCoord = *other->GetGameObject()->GetTransform()->GetPosition() / *CHUNK_SIZE;
-				Vector3 distance = (thisCoord - otherCoord) / 2.0f;
+				Vector3 distance = thisCoord - otherCoord;
 
-			//	printf("(%i, %i, %i)\n", (int)thisPosition.m_x, (int)thisPosition.m_y, (int)thisPosition.m_z);
-
-				if (std::fabs(distance.m_x) == 1.0f || std::fabs(distance.m_z) == 1.0f)
+				if (std::fabs(distance.m_x) <= 1.0f && std::fabs(distance.m_z) <= 1.0f)
 				{
 					m_surrounding->push_back(other);
 				}
-			}
+			}*/
 
 			GenerateMesh();
 			m_rebuild = false;
 		}
-
-		// TODO: Wrap chunk positions around planet to follow camera.
 	}
 
 	void Chunk::Load(LoadedValue *value)
@@ -103,7 +93,7 @@ namespace Flounder
 		// TODO: Not to game object but to saves.
 	}
 
-	Block *Chunk::GetBlock(const int &x, const int &y, const int &z, const bool &onlyThis)
+	Block *Chunk::GetBlock(const int &x, const int &y, const int &z)
 	{
 		if (x >= 0 && x < CHUNK_WIDTH && z >= 0 && z < CHUNK_WIDTH && y >= 0 && y < CHUNK_HEIGHT)
 		{
@@ -112,7 +102,7 @@ namespace Flounder
 
 		/*if (!onlyThis)
 		{
-			Vector3 thisPosition = *GetGameObject()->GetTransform()->GetPosition() / 2.0f;
+			Vector3 thisPosition = *GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
 			int x1 = x + (int)thisPosition.m_x;
 			int y1 = y + (int)thisPosition.m_y;
 			int z1 = z + (int)thisPosition.m_z;
@@ -120,7 +110,7 @@ namespace Flounder
 
 			for (auto other : *m_surrounding)
 			{
-				Vector3 otherPosition = *other->GetGameObject()->GetTransform()->GetPosition() / 2.0f;
+				Vector3 otherPosition = *other->GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
 				Block *otherBlock = other->GetBlock(x1 - (int)otherPosition.m_x, y1 - (int)otherPosition.m_y, z1 - (int)otherPosition.m_z, true);
 
 				if (otherBlock != nullptr)
@@ -133,28 +123,28 @@ namespace Flounder
 		return nullptr;
 	}
 
-	bool Chunk::IsBlockFilled(const int &x, const int &y, const int &z, const bool &onlyThis)
+	bool Chunk::IsBlockFilled(const int &x, const int &y, const int &z)
 	{
-		Block *block = GetBlock(x, y, z, onlyThis);
-		return block == nullptr || block->GetType() != 0;
+		Block *block = GetBlock(x, y, z);
+		return block == nullptr || !block->GetType().empty();
 	}
 
-	bool Chunk::IsFaceVisible(const int &x, const int &y, const int &z, const FaceSide &faceType, const bool &onlyThis)
+	bool Chunk::IsFaceVisible(const int &x, const int &y, const int &z, const FaceSide &faceType)
 	{
 		switch (faceType)
 		{
 		case FaceFront:
-			return IsBlockFilled(x, y, z - 1, onlyThis);
+			return IsBlockFilled(x, y, z - 1);
 		case FaceBack:
-			return IsBlockFilled(x, y, z + 1, onlyThis);
+			return IsBlockFilled(x, y, z + 1);
 		case FaceTop:
-			return IsBlockFilled(x, y + 1, z, onlyThis);
+			return IsBlockFilled(x, y + 1, z);
 		case FaceBottom:
-			return IsBlockFilled(x, y - 1, z, onlyThis);
+			return IsBlockFilled(x, y - 1, z);
 		case FaceLeft:
-			return IsBlockFilled(x - 1, y, z, onlyThis);
+			return IsBlockFilled(x - 1, y, z);
 		case FaceRight:
-			return IsBlockFilled(x + 1, y, z, onlyThis);
+			return IsBlockFilled(x + 1, y, z);
 		default:
 			return false;
 		}
@@ -162,7 +152,7 @@ namespace Flounder
 
 	void Chunk::Generate()
 	{
-		auto position = *GetGameObject()->GetTransform()->GetPosition() / 2.0f;
+		auto position = *GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
 		auto noise = Worlds::Get()->GetNoise();
 
 		for (unsigned int x = 0; x < CHUNK_WIDTH; x++)
@@ -173,7 +163,7 @@ namespace Flounder
 				{
 					if (noise->GetValue(x + position.m_x, y + position.m_y, z + position.m_z) >= 0.03f)
 					{
-						m_blocks->at(x).at(z).at(y)->SetType(1);
+						m_blocks->at(x).at(z).at(y)->SetType("Grass");
 					}
 				}
 			}
@@ -270,7 +260,7 @@ namespace Flounder
 
 							Block *block = GetBlock(x, y, z);
 
-							if (block == nullptr || block->GetType() != 0)
+							if (block == nullptr || !block->GetType().empty())
 							{
 								continue;
 							}
@@ -302,7 +292,7 @@ namespace Flounder
 	{
 		// This method is based off of Robert O'Leary's implementation (https://github.com/roboleary/GreedyMesh)
 
-        // These are just working variables for the algorithm - almost all taken
+		// These are just working variables for the algorithm - almost all taken
 		// directly from Mikola Lysenko's javascript implementation.
 		int i, j, k, l, w, h, u, v, n;
 		FaceSide currentFace;
@@ -314,10 +304,10 @@ namespace Flounder
 
 		// We create a mask - this will contain the groups of matching voxel faces
 		// as we proceed through the chunk in 6 directions - once for each face.
-		std::vector<short> mask = std::vector<short>(CHUNK_WIDTH * CHUNK_HEIGHT);
+		std::vector<std::string> mask = std::vector<std::string>(CHUNK_WIDTH * CHUNK_HEIGHT);
 
- 		// These are just working variables to hold two faces during comparison.
-		short voxelFace, voxelFace1;
+		// These are just working variables to hold two faces during comparison.
+		std::string voxelFace, voxelFace1;
 
 		// We start with the lesser-spotted boolean for-loop (also known as the old flippy floppy).
 		// The variable backFace will be TRUE on the first iteration and FALSE on the second - this allows
@@ -365,14 +355,14 @@ namespace Flounder
 						for (x[u] = 0; x[u] < CHUNK_WIDTH; x[u]++)
 						{
 							// Here we retrieve two voxel faces for comparison.
-						//	voxelFace = (x[d] >= 0 ) ? GetVoxelFace(x[0], x[1], x[2], currentFace) : (short)0;
-						//	voxelFace1 = (x[d] < CHUNK_WIDTH - 1) ? GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], currentFace) : (short)0;
+							//	voxelFace = (x[d] >= 0 ) ? GetVoxelFace(x[0], x[1], x[2], currentFace) : (short)0;
+							//	voxelFace1 = (x[d] < CHUNK_WIDTH - 1) ? GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], currentFace) : (short)0;
 							voxelFace = GetVoxelFace(x[0], x[1], x[2], currentFace);
 							voxelFace1 = GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], currentFace);
 
 							// We choose the face to add to the mask depending on whether we're moving through on a backface or not.
-							mask[n++] = ((voxelFace != 0 && voxelFace1 != 0 && voxelFace == voxelFace1))
-								? (short)0
+							mask[n++] = ((!voxelFace.empty() && !voxelFace1.empty() && voxelFace == voxelFace1))
+								? ""
 								: backFace ? voxelFace1 : voxelFace;
 						}
 					}
@@ -386,10 +376,10 @@ namespace Flounder
 					{
 						for (i = 0; i < CHUNK_WIDTH;)
 						{
-							if (mask[n] != 0)
+							if (!mask[n].empty())
 							{
 								// We compute the width.
-								for (w = 1; i + w < CHUNK_WIDTH && mask[n + w] != 0 && mask[n + w] == mask[n]; w++)
+								for (w = 1; i + w < CHUNK_WIDTH && !mask[n + w].empty() && mask[n + w] == mask[n]; w++)
 								{
 								}
 
@@ -400,7 +390,7 @@ namespace Flounder
 								{
 									for (k = 0; k < w; k++)
 									{
-										if (mask[n + k + h * CHUNK_WIDTH] == 0 || mask[n + k + h * CHUNK_WIDTH] != mask[n])
+										if (mask[n + k + h * CHUNK_WIDTH].empty() || mask[n + k + h * CHUNK_WIDTH] != mask[n])
 										{
 											done = true;
 											break;
@@ -414,7 +404,7 @@ namespace Flounder
 								}
 
 								// Here we check if the BlockFace is transparent, we don't mesh any culled faces.
-							//	if (!mask[n].transparent)
+								//	if (!mask[n].transparent)
 								{
 									// Add quad.
 									x[u] = i;
@@ -443,7 +433,7 @@ namespace Flounder
 								{
 									for(k = 0; k < w; ++k)
 									{
-										mask[n + k + l * CHUNK_WIDTH] = 0;
+										mask[n + k + l * CHUNK_WIDTH] = "";
 									}
 								}
 
@@ -463,26 +453,26 @@ namespace Flounder
 		}
 	}
 
-	short Chunk::GetVoxelFace(const int &x, const int &y, const int &z, const FaceSide &faceType)
+	std::string Chunk::GetVoxelFace(const int &x, const int &y, const int &z, const FaceSide &faceType)
 	{
-	//	if (!IsFaceVisible(x, y, z, faceType))
-	//	{
-	//		return 0;
-	//	}
+		//	if (!IsFaceVisible(x, y, z, faceType))
+		//	{
+		//		return 0;
+		//	}
 
 		Block *block = GetBlock(x, y, z);
-		return block != nullptr ? block->GetType() : (short)0;
+		return block != nullptr ? block->GetType() : "";
 	}
 
 	void Chunk::GenerateQuad(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices,
 							 const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
 							 const int &width, const int &height,
-							 const short &mask, const FaceSide &faceSide, const bool &backFace)
+							 const std::string &blockType, const FaceSide &faceSide, const bool &backFace)
 	{
 		// Gets where to start indices from.
 		unsigned int indexStart = vertices->size();
 
-		Colour colour = *BlockFace::FindColour(mask);
+		Colour colour = *BlockFace::FindColour(blockType);
 
 		// Calculates the quads normal direction.
 		Vector3 normal = Vector3();
