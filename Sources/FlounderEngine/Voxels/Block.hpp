@@ -13,10 +13,10 @@ namespace Flounder
 		Chunk *m_parent;
 
 		Vector3 *m_position;
-		short m_type;
+		std::string m_type;
 
 	public:
-		Block(Chunk *parent, const Vector3 &position, const short &type);
+		Block(Chunk *parent, const Vector3 &position, const std::string &type);
 
 		~Block();
 
@@ -24,8 +24,8 @@ namespace Flounder
 
 		Vector3 *GetPosition() const { return m_position; }
 
-		short GetType() const { return m_type; }
+		std::string GetType() const { return m_type; }
 
-		void SetType(const short &type) { m_type = type; }
+		void SetType(const std::string &type) { m_type = type; }
 	};
 }
