@@ -36,7 +36,7 @@ namespace Flounder
 		m_skyColour(new Colour("#3399ff"))
 	{
 		m_noise->SetNoiseType(NoiseFast::SimplexFractal);
-		m_noise->SetFrequency(0.055f);
+		m_noise->SetFrequency(0.05f);
 		m_noise->SetInterp(NoiseFast::Quintic);
 		m_noise->SetFractalType(NoiseFast::Fbm);
 		m_noise->SetFractalOctaves(3);

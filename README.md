@@ -44,6 +44,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Component system
  * GameObject prefab loading
  * Normal, glow, and sway mapping
+ * Voxel system
  * Particle effects (WIP)
  * Simple physics engine (WIP)
  * P2P networking (WIP)
