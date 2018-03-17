@@ -82,7 +82,7 @@ namespace Demo
 		}*/
 
 		// Chunks.
-		const int n = 1;
+		const int n = 6;
 
 		for (int j = -n; j <= n; j++)
 		{
