@@ -5,8 +5,8 @@
 
 namespace Flounder
 {
-	const int Chunk::CHUNK_WIDTH = 16;
-	const int Chunk::CHUNK_HEIGHT = 16;
+	const int Chunk::CHUNK_WIDTH = 32;
+	const int Chunk::CHUNK_HEIGHT = 32;
 	const float Chunk::VOXEL_SIZE = 2.0f;
 	const Vector3 *Chunk::CHUNK_SIZE = new Vector3(VOXEL_SIZE * CHUNK_WIDTH, VOXEL_SIZE * CHUNK_HEIGHT, VOXEL_SIZE * CHUNK_WIDTH);
 
