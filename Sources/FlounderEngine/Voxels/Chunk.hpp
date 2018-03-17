@@ -7,8 +7,6 @@
 
 namespace Flounder
 {
-	typedef std::vector<std::vector<std::vector<Block*>>> BlockVector;
-
 	enum ChunkMesh
 	{
 		MeshGreedy = 0,
@@ -19,9 +17,8 @@ namespace Flounder
 		public Component
 	{
 	private:
+		std::vector<std::vector<std::vector<Block*>>> *m_blocks;
 		ChunkMesh m_chunkMesh;
-		BlockVector *m_blocks;
-		std::vector<Chunk *> *m_surrounding;
 		bool m_generate;
 		bool m_rebuild;
 	public:
@@ -42,11 +39,11 @@ namespace Flounder
 
 		std::string GetName() const override { return "Chunk"; };
 
-		Block *GetBlock(const int &x, const int &y, const int &z, const bool &onlyThis = false);
+		Block *GetBlock(const int &x, const int &y, const int &z);
 
-		bool IsBlockFilled(const int &x, const int &y, const int &z, const bool &onlyThis = false);
+		bool IsBlockFilled(const int &x, const int &y, const int &z);
 
-		bool IsFaceVisible(const int &x, const int &y, const int &z, const FaceSide &faceType, const bool &onlyThis = false);
+		bool IsFaceVisible(const int &x, const int &y, const int &z, const FaceSide &faceType);
 
 		void Rebuild() { m_rebuild = true; }
 
@@ -59,11 +56,11 @@ namespace Flounder
 
 		void CreateGreedyMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices);
 
-		short GetVoxelFace(const int &x, const int &y, const int &z, const FaceSide &faceType);
+		std::string GetVoxelFace(const int &x, const int &y, const int &z, const FaceSide &faceType);
 
 		void GenerateQuad(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices,
 						  const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
 						  const int &width, const int &height,
-						  const short &mask, const FaceSide &faceSide, const bool &backFace);
+						  const std::string &blockType, const FaceSide &faceSide, const bool &backFace);
 	};
 }

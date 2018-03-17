@@ -2,28 +2,28 @@
 
 namespace Flounder
 {
-	std::map<short, Colour*> BlockFace::s_colours = std::map<short, Colour*>
+	std::map<std::string, Colour*> BlockFace::s_colours = std::map<std::string, Colour*>
 		{
-			{0, new Colour("#FFFFFF", 0.0f)},
-			{1, new Colour("#5E7831")}, // Grass
-			{2, new Colour("#784800")}, // Dirt
-			{3, new Colour("#8B8D7A")}, // Stone
+			{"", new Colour("#FFFFFF", 0.0f)},
+			{"Grass", new Colour("#5E7831")},
+			{"Dirt", new Colour("#784800")},
+			{"Stone", new Colour("#8B8D7A")},
 		};
 
-	BlockFace::BlockFace(const FaceSide &faceSide, const short &blockType) :
+	BlockFace::BlockFace(const FaceSide &faceSide, const std::string &blockType) :
 		m_faceSide(faceSide),
 		m_blockType(blockType)
 	{
 	}
 
-	Colour *BlockFace::FindColour(const short &key)
+	Colour *BlockFace::FindColour(const std::string &key)
 	{
 		const auto it = s_colours.find(key);
 
 		if (it == s_colours.end())
 		{
 #if FLOUNDER_VERBOSE
-			printf("Could not find a Block Face colour from key: %i", key);
+			printf("Could not find a Block Face colour from key: %s", key.c_str());
 #endif
 			auto colour = new Colour();
 			s_colours.insert(std::make_pair(key, colour));
