@@ -82,17 +82,19 @@ namespace Demo
 		}*/
 
 		// Chunks.
-		const int n = 6;
+		const int n = 1;
 
 		for (int j = -n; j <= n; j++)
 		{
 			for (int w = -n; w <= n; w++)
 			{
-				GameObject *chunk = new GameObject(Transform(2.0f * *Chunk::CHUNK_SIZE * Vector3(j, -0.25f, w)));
+				GameObject *chunk = new GameObject(Transform(*Chunk::CHUNK_SIZE * Vector3(j, 0.0f, w)));
 				chunk->SetName("Chunk" + std::to_string(j) + "," + std::to_string(w));
 				chunk->AddComponent(new Chunk(MeshGreedy, true));
 				chunk->AddComponent(new Mesh());
+			//	chunk->AddComponent(new Material());
 				chunk->AddComponent(new VoxelRender());
+			//	chunk->AddComponent(new ShadowRender());
 			}
 		}
 

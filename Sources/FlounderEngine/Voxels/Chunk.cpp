@@ -1,31 +1,34 @@
 #include "Chunk.hpp"
 
+#include "../Scenes/Scenes.hpp"
 #include "../Worlds/Worlds.hpp"
 
 namespace Flounder
 {
-	const int Chunk::CHUNK_WIDTH = 16;
-	const int Chunk::CHUNK_HEIGHT = 16;
-	const Vector3 *Chunk::CHUNK_SIZE = new Vector3(CHUNK_WIDTH, CHUNK_HEIGHT, CHUNK_WIDTH);
+	const int Chunk::CHUNK_WIDTH = 32;
+	const int Chunk::CHUNK_HEIGHT = 32;
+	const float Chunk::VOXEL_SIZE = 1.0f;
+	const Vector3 *Chunk::CHUNK_SIZE = new Vector3(VOXEL_SIZE * CHUNK_WIDTH, VOXEL_SIZE * CHUNK_HEIGHT, VOXEL_SIZE * CHUNK_WIDTH);
 
 	Chunk::Chunk(const ChunkMesh &chunkMesh, const bool &generate) :
 		Component(),
 		m_chunkMesh(chunkMesh),
 		m_blocks(new BlockVector()),
+		m_surrounding(new std::vector<Chunk *>()),
 		m_generate(generate),
 		m_rebuild(true)
 	{
 		for (unsigned int x = 0; x < CHUNK_WIDTH; x++)
 		{
-			m_blocks->push_back(std::vector<std::vector<Block*>>());
+			m_blocks->push_back(std::vector<std::vector<Block*>>(CHUNK_WIDTH));
 
 			for (unsigned int z = 0; z < CHUNK_WIDTH; z++)
 			{
-				m_blocks->at(x).push_back(std::vector<Block*>());
+				m_blocks->at(x).push_back(std::vector<Block*>(CHUNK_WIDTH));
 
 				for (unsigned int y = 0; y < CHUNK_HEIGHT; y++)
 				{
-					m_blocks->at(x).at(z).push_back(nullptr);
+					m_blocks->at(x).at(z).push_back(new Block(this, VOXEL_SIZE * Vector3(x, y, z), 0));
 				}
 			}
 		}
@@ -45,6 +48,7 @@ namespace Flounder
 		}
 
 		delete m_blocks;
+		delete m_surrounding;
 	}
 
 	void Chunk::Update()
@@ -57,6 +61,31 @@ namespace Flounder
 
 		if (m_rebuild)
 		{
+			m_surrounding->clear();
+
+			std::vector<Chunk *> chunkList = std::vector<Chunk *>();
+			Scenes::Get()->GetStructure()->QueryComponents<Chunk>(&chunkList);
+
+			Vector3 thisCoord = *GetGameObject()->GetTransform()->GetPosition() / *CHUNK_SIZE;
+
+			for (auto other : chunkList)
+			{
+				if (other == this)
+				{
+					continue;
+				}
+
+				Vector3 otherCoord = *other->GetGameObject()->GetTransform()->GetPosition() / *CHUNK_SIZE;
+				Vector3 distance = (thisCoord - otherCoord) / 2.0f;
+
+			//	printf("(%i, %i, %i)\n", (int)thisPosition.m_x, (int)thisPosition.m_y, (int)thisPosition.m_z);
+
+				if (std::fabs(distance.m_x) == 1.0f || std::fabs(distance.m_z) == 1.0f)
+				{
+					m_surrounding->push_back(other);
+				}
+			}
+
 			GenerateMesh();
 			m_rebuild = false;
 		}
@@ -74,38 +103,58 @@ namespace Flounder
 		// TODO: Not to game object but to saves.
 	}
 
-	Block *Chunk::GetBlock(const unsigned int &x, const unsigned int &y, const unsigned int &z)
+	Block *Chunk::GetBlock(const int &x, const int &y, const int &z, const bool &onlyThis)
 	{
-		if (x < 0 || x >= CHUNK_WIDTH || z < 0 || z >= CHUNK_WIDTH || y < 0 || y >= CHUNK_HEIGHT)
+		if (x >= 0 && x < CHUNK_WIDTH && z >= 0 && z < CHUNK_WIDTH && y >= 0 && y < CHUNK_HEIGHT)
 		{
-			return nullptr;
+			return m_blocks->at(x).at(z).at(y);
 		}
 
-		return m_blocks->at(x).at(z).at(y);
+		/*if (!onlyThis)
+		{
+			Vector3 thisPosition = *GetGameObject()->GetTransform()->GetPosition() / 2.0f;
+			int x1 = x + (int)thisPosition.m_x;
+			int y1 = y + (int)thisPosition.m_y;
+			int z1 = z + (int)thisPosition.m_z;
+	//		printf("(%i, %i, %i)\n", (int)thisPosition.m_x, (int)thisPosition.m_y, (int)thisPosition.m_z);
+
+			for (auto other : *m_surrounding)
+			{
+				Vector3 otherPosition = *other->GetGameObject()->GetTransform()->GetPosition() / 2.0f;
+				Block *otherBlock = other->GetBlock(x1 - (int)otherPosition.m_x, y1 - (int)otherPosition.m_y, z1 - (int)otherPosition.m_z, true);
+
+				if (otherBlock != nullptr)
+				{
+					return otherBlock;
+				}
+			}
+		}*/
+
+		return nullptr;
 	}
 
-	bool Chunk::IsBlockFilled(const unsigned int &x, const unsigned int &y, const unsigned int &z)
+	bool Chunk::IsBlockFilled(const int &x, const int &y, const int &z, const bool &onlyThis)
 	{
-		Block *block = GetBlock(x, y, z);
-		return block == nullptr || !block->IsFilled();
+		Block *block = GetBlock(x, y, z, onlyThis);
+		return block == nullptr || block->GetType() != 0;
 	}
 
-	bool Chunk::IsFaceVisible(const unsigned int &x, const unsigned int &y, const unsigned int &z, const FaceSide &faceType)
+	bool Chunk::IsFaceVisible(const int &x, const int &y, const int &z, const FaceSide &faceType, const bool &onlyThis)
 	{
 		switch (faceType)
 		{
 		case FaceFront:
-			return IsBlockFilled(x, y, z - 1);
+			return IsBlockFilled(x, y, z - 1, onlyThis);
 		case FaceBack:
-			return IsBlockFilled(x, y, z + 1);
+			return IsBlockFilled(x, y, z + 1, onlyThis);
 		case FaceTop:
-			return IsBlockFilled(x, y + 1, z);
+			return IsBlockFilled(x, y + 1, z, onlyThis);
 		case FaceBottom:
-			return IsBlockFilled(x, y - 1, z);
+			return IsBlockFilled(x, y - 1, z, onlyThis);
 		case FaceLeft:
-			return IsBlockFilled(x - 1, y, z);
+			return IsBlockFilled(x - 1, y, z, onlyThis);
 		case FaceRight:
-			return IsBlockFilled(x + 1, y, z);
+			return IsBlockFilled(x + 1, y, z, onlyThis);
 		default:
 			return false;
 		}
@@ -122,13 +171,10 @@ namespace Flounder
 			{
 				for (unsigned int y = 0; y < CHUNK_HEIGHT; y++)
 				{
-					if (noise->GetValue(x + position.m_x, y + position.m_y, z + position.m_z) < 0.1f)
+					if (noise->GetValue(x + position.m_x, y + position.m_y, z + position.m_z) >= 0.03f)
 					{
-						continue;
+						m_blocks->at(x).at(z).at(y)->SetType(1);
 					}
-
-					Block *block = new Block(this, 2.0f * Vector3(x, y, z), 1);
-					m_blocks->at(x).at(z).at(y) = block;
 				}
 			}
 		}
@@ -210,21 +256,21 @@ namespace Flounder
 				}
 
 				// We move through all of the blocks in the chunk.
-				for (int i = 0; i < CHUNK_WIDTH; i++)
+				for (int x = 0; x < CHUNK_WIDTH; x++)
 				{
-					for (int k = 0; k < CHUNK_WIDTH; k++)
+					for (int z = 0; z < CHUNK_WIDTH; z++)
 					{
-						for (int j = 0; j < CHUNK_HEIGHT; j++)
+						for (int y = 0; y < CHUNK_HEIGHT; y++)
 						{
 							// Here we filter out invisible faces.
-							if (!IsFaceVisible(i, j, k, currentFace))
+							if (!IsFaceVisible(x, y, z, currentFace))
 							{
 								continue;
 							}
 
-							Block *block = GetBlock(i, j, k);
+							Block *block = GetBlock(x, y, z);
 
-							if (block == nullptr || !block->IsFilled())
+							if (block == nullptr || block->GetType() != 0)
 							{
 								continue;
 							}
@@ -240,7 +286,11 @@ namespace Flounder
 							dv[v] = 1;
 
 							// And here we call the quad function in order to render a merged quad in the scene.
-							GenerateQuad(vertices, indices, block->GetType(), currentFace, backFace, 1, 1, {i, j, k}, du, dv);
+							Vector3 bottomLeft = Vector3(x, y, z);
+							Vector3 topLeft = Vector3(x + dv[0], y + dv[1], z + dv[2]);
+							Vector3 topRight = Vector3(x + du[0] + dv[0], y + du[1] + dv[1], z + du[2] + dv[2]);
+							Vector3 bottomRight = Vector3(x + du[0], y + du[1], z + du[2]);
+							GenerateQuad(vertices, indices, bottomLeft, topLeft, topRight, bottomRight, 1, 1, block->GetType(), currentFace, backFace);
 						}
 					}
 				}
@@ -315,8 +365,10 @@ namespace Flounder
 						for (x[u] = 0; x[u] < CHUNK_WIDTH; x[u]++)
 						{
 							// Here we retrieve two voxel faces for comparison.
-							voxelFace = (x[d] >= 0 ) ? GetVoxelFace(x[0], x[1], x[2], currentFace) : (short)0;
-							voxelFace1 = (x[d] < CHUNK_WIDTH - 1) ? GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], currentFace) : (short)0;
+						//	voxelFace = (x[d] >= 0 ) ? GetVoxelFace(x[0], x[1], x[2], currentFace) : (short)0;
+						//	voxelFace1 = (x[d] < CHUNK_WIDTH - 1) ? GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], currentFace) : (short)0;
+							voxelFace = GetVoxelFace(x[0], x[1], x[2], currentFace);
+							voxelFace1 = GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], currentFace);
 
 							// We choose the face to add to the mask depending on whether we're moving through on a backface or not.
 							mask[n++] = ((voxelFace != 0 && voxelFace1 != 0 && voxelFace == voxelFace1))
@@ -379,7 +431,11 @@ namespace Flounder
 									dv[v] = h;
 
 									// And here we call the quad function in order to render a merged quad in the scene.
-									GenerateQuad(vertices, indices, mask[n], currentFace, backFace, w, h, x, du, dv);
+									Vector3 bottomLeft = Vector3(x[0], x[1], x[2]);
+									Vector3 topLeft = Vector3(x[0] + dv[0], x[1] + dv[1], x[2] + dv[2]);
+									Vector3 bottomRight = Vector3(x[0] + du[0], x[1] + du[1], x[2] + du[2]);
+									Vector3 topRight = Vector3(x[0] + du[0] + dv[0], x[1] + du[1] + dv[1], x[2] + du[2] + dv[2]);
+									GenerateQuad(vertices, indices, bottomLeft, topLeft, topRight, bottomRight, w, h, mask[n], currentFace, backFace);
 								}
 
 								// We zero out the mask.
@@ -419,61 +475,46 @@ namespace Flounder
 	}
 
 	void Chunk::GenerateQuad(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices,
-							 const short &mask, const FaceSide &faceSide, const bool &backFace,
+							 const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
 							 const int &width, const int &height,
-							 const std::vector<int> &x,
-							 const std::vector<int> &du,
-							 const std::vector<int> &dv)
+							 const short &mask, const FaceSide &faceSide, const bool &backFace)
 	{
+		// Gets where to start indices from.
 		unsigned int indexStart = vertices->size();
 
 		Colour colour = *BlockFace::FindColour(mask);
-		Vector3 normal = Vector3();
 
-		switch (faceSide)
+		// Calculates the quads normal direction.
+		Vector3 normal = Vector3();
+		Vector3::Cross(topRight - bottomRight, topLeft - bottomRight, &normal);
+
+		// Flips normal x and z when x is present, I have no clue why.
+		if (normal.m_x != 0.0f)
 		{
-		case FaceFront:
-			normal.Set(0.0f, 0.0f, -1.0f);
-			break;
-		case FaceBack:
-			normal.Set(0.0f, 0.0f, 1.0f);
-			break;
-		case FaceTop:
-			normal.Set(0.0f, 1.0f, 0.0f);
-			break;
-		case FaceBottom:
-			normal.Set(0.0f, -1.0f, 0.0f);
-			break;
-		case FaceLeft:
-			normal.Set(0.0f, 0.0f, -1.0f);
-			break;
-		case FaceRight:
-			normal.Set(0.0f, 0.0f, 1.0f);
-			break;
+			float tempX = normal.m_x;
+
+			normal.m_x = normal.m_z;
+			normal.m_z = tempX;
 		}
 
-		vertices->push_back(Vertex(2.0f * Vector3(x[0], x[1], x[2]), Vector2(), normal, colour));
-		vertices->push_back(Vertex(2.0f * Vector3(x[0] + dv[0], x[1] + dv[1], x[2] + dv[2]), Vector2(), normal, colour));
-		vertices->push_back(Vertex(2.0f * Vector3(x[0] + du[0], x[1] + du[1], x[2] + du[2]), Vector2(), normal, colour));
-		vertices->push_back(Vertex(2.0f * Vector3(x[0] + du[0] + dv[0], x[1] + du[1] + dv[1], x[2] + du[2] + dv[2]), Vector2(), normal, colour));
+		normal.Normalize();
 
 		if (backFace)
 		{
-			indices->push_back(indexStart + 2);
-			indices->push_back(indexStart + 0);
-			indices->push_back(indexStart + 1);
-			indices->push_back(indexStart + 1);
-			indices->push_back(indexStart + 3);
-			indices->push_back(indexStart + 2);
+			normal.Negate();
 		}
-		else
-		{
-			indices->push_back(indexStart + 2);
-			indices->push_back(indexStart + 3);
-			indices->push_back(indexStart + 1);
-			indices->push_back(indexStart + 1);
-			indices->push_back(indexStart + 0);
-			indices->push_back(indexStart + 2);
-		}
+
+		// Pushes vertices and indices from quad.
+		vertices->push_back(Vertex(VOXEL_SIZE * bottomLeft, Vector2(), normal, colour));
+		vertices->push_back(Vertex(VOXEL_SIZE * topLeft, Vector2(), normal, colour));
+		vertices->push_back(Vertex(VOXEL_SIZE * bottomRight, Vector2(), normal, colour));
+		vertices->push_back(Vertex(VOXEL_SIZE * topRight, Vector2(), normal, colour));
+
+		indices->push_back(indexStart + 2);
+		indices->push_back(indexStart + (backFace ? 0 : 3));
+		indices->push_back(indexStart + 1);
+		indices->push_back(indexStart + 1);
+		indices->push_back(indexStart + (backFace ? 3 : 0));
+		indices->push_back(indexStart + 2);
 	}
 }
