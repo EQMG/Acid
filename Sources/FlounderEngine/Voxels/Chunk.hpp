@@ -21,11 +21,13 @@ namespace Flounder
 	private:
 		ChunkMesh m_chunkMesh;
 		BlockVector *m_blocks;
+		std::vector<Chunk *> *m_surrounding;
 		bool m_generate;
 		bool m_rebuild;
 	public:
 		static const int CHUNK_WIDTH;
 		static const int CHUNK_HEIGHT;
+		static const float VOXEL_SIZE;
 		static const Vector3 *CHUNK_SIZE;
 
 		Chunk(const ChunkMesh &chunkMesh = MeshGreedy, const bool &generate = false);
@@ -40,11 +42,11 @@ namespace Flounder
 
 		std::string GetName() const override { return "Chunk"; };
 
-		Block *GetBlock(const unsigned int &x, const unsigned int &y, const unsigned int &z);
+		Block *GetBlock(const int &x, const int &y, const int &z, const bool &onlyThis = false);
 
-		bool IsBlockFilled(const unsigned int &x, const unsigned int &y, const unsigned int &z);
+		bool IsBlockFilled(const int &x, const int &y, const int &z, const bool &onlyThis = false);
 
-		bool IsFaceVisible(const unsigned int &x, const unsigned int &y, const unsigned int &z, const FaceSide &faceType);
+		bool IsFaceVisible(const int &x, const int &y, const int &z, const FaceSide &faceType, const bool &onlyThis = false);
 
 		void Rebuild() { m_rebuild = true; }
 
@@ -60,10 +62,8 @@ namespace Flounder
 		short GetVoxelFace(const int &x, const int &y, const int &z, const FaceSide &faceType);
 
 		void GenerateQuad(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices,
-						  const short &mask, const FaceSide &faceSide, const bool &backFace,
+						  const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
 						  const int &width, const int &height,
-						  const std::vector<int> &x,
-						  const std::vector<int> &du,
-						  const std::vector<int> &dv);
+						  const short &mask, const FaceSide &faceSide, const bool &backFace);
 	};
 }
