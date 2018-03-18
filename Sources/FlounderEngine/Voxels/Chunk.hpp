@@ -61,6 +61,6 @@ namespace Flounder
 		void GenerateQuad(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices,
 						  const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
 						  const int &width, const int &height,
-						  const std::string &blockType, const FaceSide &faceSide, const bool &backFace);
+						  const std::string &blockType, const bool &backFace);
 	};
 }
