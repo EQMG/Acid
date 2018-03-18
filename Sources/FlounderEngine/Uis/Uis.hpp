@@ -17,8 +17,6 @@ namespace Flounder
 		UiObject *m_container;
 		std::vector<UiObject *> *m_objects;
 	public:
-		static Uis *S_INSTANCE;
-
 		FontFamily *m_proximaNova;
 
 		/// <summary>
@@ -27,7 +25,7 @@ namespace Flounder
 		/// <returns> The current module instance. </returns>
 		static Uis *Get()
 		{
-			return S_INSTANCE; // reinterpret_cast<Uis *>(Engine::Get()->GetModule("uis"));
+			return reinterpret_cast<Uis *>(Engine::Get()->GetModule("uis"));
 		}
 
 		/// <summary>

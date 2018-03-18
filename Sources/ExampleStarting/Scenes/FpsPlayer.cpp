@@ -152,26 +152,9 @@ namespace Demo
 		*position = *position + *m_amountMove->Set(dx, dy, dz);
 		*rotation = *rotation + *m_amountRotate->Set(0.0f, 0.0f, 0.0f);
 
-		float gravityCoeff = 1.0f;
-
-		if (Worlds::WORLD_CURVATURE != 0.0f)
-		{
-			float planetRadius = Worlds::WORLD_CURVATURE / 10.0f;
-			float height = planetRadius * std::exp(position->m_y / planetRadius);
-
-			if (position->m_y < 0.0f)
-			{
-				gravityCoeff = height / planetRadius;
-			}
-			else
-			{
-				gravityCoeff = (planetRadius * planetRadius) / (height * height);
-			}
-		}
-
 		if (!m_noclipEnabled)
 		{
-			m_currentUpwardSpeed -= gravityCoeff * 24.06f * delta;
+			m_currentUpwardSpeed -= 24.06f * delta;
 
 			if (position->m_y < terrainHeight)
 			{

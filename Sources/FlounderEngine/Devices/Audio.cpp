@@ -7,8 +7,6 @@
 
 namespace Flounder
 {
-	Audio *Audio::S_INSTANCE = nullptr;
-
 	Audio::Audio() :
 		IModule(),
 		m_alDevice(nullptr),

@@ -18,15 +18,13 @@ namespace Flounder
 
 		std::map<ParticleType *, std::vector<Particle *> *> *m_particles;
 	public:
-		static Particles *S_INSTANCE;
-
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Particles *Get()
 		{
-			return S_INSTANCE; // reinterpret_cast<Particles *>(Engine::Get()->GetModule("particles"));
+			return reinterpret_cast<Particles *>(Engine::Get()->GetModule("particles"));
 		}
 
 		/// <summary>

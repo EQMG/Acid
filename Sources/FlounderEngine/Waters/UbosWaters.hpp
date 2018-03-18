@@ -19,8 +19,6 @@ namespace Flounder
 		{
 			Matrix4 transform;
 			Colour diffuseColour;
-
-			float worldCurvature;
 		};
 	};
 }

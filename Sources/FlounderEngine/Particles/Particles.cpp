@@ -4,8 +4,6 @@
 
 namespace Flounder
 {
-	Particles *Particles::S_INSTANCE = nullptr;
-
 	const float Particles::MAX_ELAPSED_TIME = 5.0f;
 
 	Particles::Particles() :

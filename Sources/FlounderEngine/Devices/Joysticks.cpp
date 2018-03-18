@@ -2,8 +2,6 @@
 
 namespace Flounder
 {
-	Joysticks *Joysticks::S_INSTANCE = nullptr;
-
 	Joysticks::Joysticks() :
 		IModule(),
 		m_connected(std::vector<Joystick *>())
