@@ -82,14 +82,15 @@ namespace Demo
 		}*/
 
 		// Chunks.
-		const int n = 2;
+		const int n = 3;
 
 		for (int x = -n; x <= n; x++)
 		{
 			for (int z = -n; z <= n; z++)
 			{
-				for (int y = -n; y <= n; y++)
-				{
+				int y = 0;
+				//for (int y = -n; y <= n; y++)
+				//{
 					GameObject *chunk = new GameObject(Transform(*Chunk::CHUNK_SIZE * Vector3(x, y, z)));
 					chunk->SetName("Chunk" + std::to_string(x) + "," + std::to_string(z) + "," + std::to_string(y));
 					chunk->AddComponent(new Chunk(MeshGreedy, true));
@@ -97,15 +98,17 @@ namespace Demo
 					//	chunk->AddComponent(new Material());
 					chunk->AddComponent(new VoxelRender());
 					//	chunk->AddComponent(new ShadowRender());
-				}
+				//}
 			}
 		}
 
+		new GameObject("Testing", Transform(Vector3(), Vector3(), 1.0f));
+
 		// Waters.
-	//	GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
-	//	waterObject->SetName("Water");
-	//	waterObject->AddComponent(new Mesh(new MeshWater()));
-	//	waterObject->AddComponent(new WaterRender());
+		GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
+		waterObject->SetName("Water");
+		waterObject->AddComponent(new Mesh(new MeshWater()));
+		waterObject->AddComponent(new WaterRender());
 
 		// Entities.
 		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
