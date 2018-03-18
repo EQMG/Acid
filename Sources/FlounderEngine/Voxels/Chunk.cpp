@@ -5,9 +5,9 @@
 
 namespace Flounder
 {
-	const int Chunk::CHUNK_WIDTH = 32;
-	const int Chunk::CHUNK_HEIGHT = 32;
-	const float Chunk::VOXEL_SIZE = 2.0f;
+	const int Chunk::CHUNK_WIDTH = 16;
+	const int Chunk::CHUNK_HEIGHT = 16;
+	const float Chunk::VOXEL_SIZE = 1.0f;
 	const Vector3 *Chunk::CHUNK_SIZE = new Vector3(VOXEL_SIZE * CHUNK_WIDTH, VOXEL_SIZE * CHUNK_HEIGHT, VOXEL_SIZE * CHUNK_WIDTH);
 
 	Chunk::Chunk(const ChunkMesh &chunkMesh, const bool &generate) :
@@ -55,29 +55,6 @@ namespace Flounder
 
 		if (m_rebuild)
 		{
-			/*m_surrounding->clear();
-
-			std::vector<Chunk *> chunkList = std::vector<Chunk *>();
-			Scenes::Get()->GetStructure()->QueryComponents<Chunk>(&chunkList);
-
-			Vector3 thisCoord = *GetGameObject()->GetTransform()->GetPosition() / *CHUNK_SIZE;
-
-			for (auto other : chunkList)
-			{
-				if (other == this)
-				{
-					continue;
-				}
-
-				Vector3 otherCoord = *other->GetGameObject()->GetTransform()->GetPosition() / *CHUNK_SIZE;
-				Vector3 distance = thisCoord - otherCoord;
-
-				if (std::fabs(distance.m_x) <= 1.0f && std::fabs(distance.m_z) <= 1.0f)
-				{
-					m_surrounding->push_back(other);
-				}
-			}*/
-
 			GenerateMesh();
 			m_rebuild = false;
 		}
@@ -85,12 +62,10 @@ namespace Flounder
 
 	void Chunk::Load(LoadedValue *value)
 	{
-		// TODO: Not from game object but from saved values.
 	}
 
 	void Chunk::Write(LoadedValue *value)
 	{
-		// TODO: Not to game object but to saves.
 	}
 
 	Block *Chunk::GetBlock(const int &x, const int &y, const int &z)
@@ -100,33 +75,13 @@ namespace Flounder
 			return m_blocks->at(x).at(z).at(y);
 		}
 
-		/*if (!onlyThis)
-		{
-			Vector3 thisPosition = *GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
-			int x1 = x + (int)thisPosition.m_x;
-			int y1 = y + (int)thisPosition.m_y;
-			int z1 = z + (int)thisPosition.m_z;
-	//		printf("(%i, %i, %i)\n", (int)thisPosition.m_x, (int)thisPosition.m_y, (int)thisPosition.m_z);
-
-			for (auto other : *m_surrounding)
-			{
-				Vector3 otherPosition = *other->GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
-				Block *otherBlock = other->GetBlock(x1 - (int)otherPosition.m_x, y1 - (int)otherPosition.m_y, z1 - (int)otherPosition.m_z, true);
-
-				if (otherBlock != nullptr)
-				{
-					return otherBlock;
-				}
-			}
-		}*/
-
 		return nullptr;
 	}
 
 	bool Chunk::IsBlockFilled(const int &x, const int &y, const int &z)
 	{
 		Block *block = GetBlock(x, y, z);
-		return block == nullptr || !block->GetType().empty();
+		return block != nullptr && !block->GetType().empty();
 	}
 
 	bool Chunk::IsFaceVisible(const int &x, const int &y, const int &z, const FaceSide &faceType)
@@ -134,17 +89,17 @@ namespace Flounder
 		switch (faceType)
 		{
 		case FaceFront:
-			return IsBlockFilled(x, y, z - 1);
+			return !IsBlockFilled(x, y, z - 1);
 		case FaceBack:
-			return IsBlockFilled(x, y, z + 1);
+			return !IsBlockFilled(x, y, z + 1);
 		case FaceTop:
-			return IsBlockFilled(x, y + 1, z);
+			return !IsBlockFilled(x, y + 1, z);
 		case FaceBottom:
-			return IsBlockFilled(x, y - 1, z);
+			return !IsBlockFilled(x, y - 1, z);
 		case FaceLeft:
-			return IsBlockFilled(x - 1, y, z);
+			return !IsBlockFilled(x - 1, y, z);
 		case FaceRight:
-			return IsBlockFilled(x + 1, y, z);
+			return !IsBlockFilled(x + 1, y, z);
 		default:
 			return false;
 		}
@@ -155,15 +110,30 @@ namespace Flounder
 		auto position = *GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
 		auto noise = Worlds::Get()->GetNoise();
 
-		for (unsigned int x = 0; x < CHUNK_WIDTH; x++)
+		for (int x = 0; x < CHUNK_WIDTH; x++)
 		{
-			for (unsigned int z = 0; z < CHUNK_WIDTH; z++)
+			for (int z = 0; z < CHUNK_WIDTH; z++)
 			{
-				for (unsigned int y = 0; y < CHUNK_HEIGHT; y++)
+				for (int y = 0; y < CHUNK_HEIGHT; y++)
 				{
-					if (noise->GetValue(x + position.m_x, y + position.m_y, z + position.m_z) >= 0.03f)
+					int height = (int) std::floor(CHUNK_HEIGHT * (noise->GetValue(x + position.m_x, y + position.m_y, z + position.m_z) + 0.1f));
+
+					if (y > height)
+					{
+						continue;
+					}
+
+					if (y == height)
 					{
 						m_blocks->at(x).at(z).at(y)->SetType("Grass");
+					}
+					else if (height - y <= 2)
+					{
+						m_blocks->at(x).at(z).at(y)->SetType("Dirt");
+					}
+					else
+					{
+						m_blocks->at(x).at(z).at(y)->SetType("Stone");
 					}
 				}
 			}
@@ -260,7 +230,7 @@ namespace Flounder
 
 							Block *block = GetBlock(x, y, z);
 
-							if (block == nullptr || !block->GetType().empty())
+							if (block == nullptr || block->GetType().empty())
 							{
 								continue;
 							}
@@ -280,7 +250,7 @@ namespace Flounder
 							Vector3 topLeft = Vector3(x + dv[0], y + dv[1], z + dv[2]);
 							Vector3 topRight = Vector3(x + du[0] + dv[0], y + du[1] + dv[1], z + du[2] + dv[2]);
 							Vector3 bottomRight = Vector3(x + du[0], y + du[1], z + du[2]);
-							GenerateQuad(vertices, indices, bottomLeft, topLeft, topRight, bottomRight, 1, 1, block->GetType(), currentFace, backFace);
+							GenerateQuad(vertices, indices, bottomLeft, topLeft, topRight, bottomRight, 1, 1, block->GetType(), backFace);
 						}
 					}
 				}
@@ -355,8 +325,6 @@ namespace Flounder
 						for (x[u] = 0; x[u] < CHUNK_WIDTH; x[u]++)
 						{
 							// Here we retrieve two voxel faces for comparison.
-							//	voxelFace = (x[d] >= 0 ) ? GetVoxelFace(x[0], x[1], x[2], currentFace) : (short)0;
-							//	voxelFace1 = (x[d] < CHUNK_WIDTH - 1) ? GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], currentFace) : (short)0;
 							voxelFace = GetVoxelFace(x[0], x[1], x[2], currentFace);
 							voxelFace1 = GetVoxelFace(x[0] + q[0], x[1] + q[1], x[2] + q[2], currentFace);
 
@@ -425,7 +393,7 @@ namespace Flounder
 									Vector3 topLeft = Vector3(x[0] + dv[0], x[1] + dv[1], x[2] + dv[2]);
 									Vector3 bottomRight = Vector3(x[0] + du[0], x[1] + du[1], x[2] + du[2]);
 									Vector3 topRight = Vector3(x[0] + du[0] + dv[0], x[1] + du[1] + dv[1], x[2] + du[2] + dv[2]);
-									GenerateQuad(vertices, indices, bottomLeft, topLeft, topRight, bottomRight, w, h, mask[n], currentFace, backFace);
+									GenerateQuad(vertices, indices, bottomLeft, topLeft, topRight, bottomRight, w, h, mask[n], backFace);
 								}
 
 								// We zero out the mask.
@@ -455,10 +423,10 @@ namespace Flounder
 
 	std::string Chunk::GetVoxelFace(const int &x, const int &y, const int &z, const FaceSide &faceType)
 	{
-		//	if (!IsFaceVisible(x, y, z, faceType))
-		//	{
-		//		return 0;
-		//	}
+		if (!IsFaceVisible(x, y, z, faceType))
+		{
+			return "";
+		}
 
 		Block *block = GetBlock(x, y, z);
 		return block != nullptr ? block->GetType() : "";
@@ -467,7 +435,7 @@ namespace Flounder
 	void Chunk::GenerateQuad(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices,
 							 const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
 							 const int &width, const int &height,
-							 const std::string &blockType, const FaceSide &faceSide, const bool &backFace)
+							 const std::string &blockType, const bool &backFace)
 	{
 		// Gets where to start indices from.
 		unsigned int indexStart = vertices->size();
