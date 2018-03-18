@@ -2,8 +2,6 @@
 
 namespace Flounder
 {
-	Events *Events::S_INSTANCE = nullptr;
-
 	Events::Events() :
 		IModule(),
 		m_events(new std::vector<IEvent *>())

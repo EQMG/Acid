@@ -35,7 +35,6 @@ namespace Flounder
 		UbosWaters::UboObject uboObject = {};
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		uboObject.diffuseColour = Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b, Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity() : 1.0f);
-		uboObject.worldCurvature = Worlds::WORLD_CURVATURE;
 		m_uniformObject->Update(&uboObject);
 	}
 

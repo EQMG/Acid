@@ -4,8 +4,6 @@
 
 namespace Flounder
 {
-	Terrains *Terrains::S_INSTANCE = nullptr;
-
 	Terrains::Terrains() :
 		IModule(),
 		m_noise1(NoiseFast(8420152))

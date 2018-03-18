@@ -52,7 +52,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Steam integration (WIP)
 
 ## Plans
- * Finish the core engine by the end of 2018 Q2
+ * Finish the core engine by the end of 2018
  * Allow C# games to be created with Flounder
  * A simple visual editor in the far future
 

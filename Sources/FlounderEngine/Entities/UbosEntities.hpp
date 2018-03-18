@@ -25,8 +25,6 @@ namespace Flounder
 			Vector4 samples;
 
 			Vector4 surface;
-
-			float worldCurvature;
 		};
 	};
 }

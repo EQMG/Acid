@@ -6,8 +6,6 @@
 
 namespace Flounder
 {
-	Renderer *Renderer::S_INSTANCE = nullptr;
-
 	Renderer::Renderer() :
 		IModule(),
 		m_managerRender(nullptr),

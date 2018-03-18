@@ -16,15 +16,13 @@ namespace Flounder
 	private:
 		NoiseFast m_noise1;
 	public:
-		static Terrains *S_INSTANCE;
-
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Terrains *Get()
 		{
-			return S_INSTANCE; // reinterpret_cast<Terrains *>(Engine::Get()->GetModule("terrains"));
+			return reinterpret_cast<Terrains *>(Engine::Get()->GetModule("terrains"));
 		}
 
 		/// <summary>

@@ -58,15 +58,13 @@ namespace Flounder
 		float m_roughness;
 		bool m_ignoreLighting;
 		bool m_ignoreFog;
-		bool m_ignoreCurvature;
 		Texture *m_texture; // R: Metallic, G: Roughness, B: Emmisive
 	public:
-		MaterialSurface(const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &ignoreLighting = false, const bool &ignoreFog = false, const bool &ignoreCurvature = false, Texture *texture = nullptr) :
+		MaterialSurface(const float &metallic = 0.0f, const float &roughness = 0.0f, const bool &ignoreLighting = false, const bool &ignoreFog = false, Texture *texture = nullptr) :
 			m_metallic(metallic),
 			m_roughness(roughness),
 			m_ignoreLighting(ignoreLighting),
 			m_ignoreFog(ignoreFog),
-			m_ignoreCurvature(ignoreCurvature),
 			m_texture(texture)
 		{
 		}
@@ -81,7 +79,6 @@ namespace Flounder
 			m_roughness = value->GetChild("Roughness")->Get<float>();
 			m_ignoreLighting = value->GetChild("Ignore Lighting")->Get<bool>();
 			m_ignoreFog = value->GetChild("Ignore Fog")->Get<bool>();
-			m_ignoreCurvature = value->GetChild("Ignore Curvature")->Get<bool>();
 			TrySetTexture(value->GetChild("Texture")->GetString());
 		}
 
@@ -91,7 +88,6 @@ namespace Flounder
 			destination->GetChild("Roughness", true)->Set(m_roughness);
 			destination->GetChild("Ignore Lighting", true)->Set(m_ignoreLighting);
 			destination->GetChild("Ignore Fog", true)->Set(m_ignoreFog);
-			destination->GetChild("Ignore Curvature", true)->Set(m_ignoreCurvature);
 			destination->GetChild("Texture", true)->SetString(m_texture == nullptr ? "" : m_texture->GetFilename());
 		}
 
@@ -110,10 +106,6 @@ namespace Flounder
 		bool GetIgnoreFog() const { return m_ignoreFog; }
 
 		void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
-
-		bool GetIgnoreCurvature() const { return m_ignoreCurvature; }
-
-		void SetIgnoreCurvature(const bool &ignoreCurvature) { m_ignoreCurvature = ignoreCurvature; }
 
 		Texture *GetTexture() const { return m_texture; }
 
