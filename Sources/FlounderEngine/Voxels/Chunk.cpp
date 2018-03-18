@@ -92,9 +92,9 @@ namespace Flounder
 			return !IsBlockFilled(x, y, z - 1);
 		case FaceBack:
 			return !IsBlockFilled(x, y, z + 1);
-		case FaceTop:
+		case FaceUp:
 			return !IsBlockFilled(x, y + 1, z);
-		case FaceBottom:
+		case FaceDown:
 			return !IsBlockFilled(x, y - 1, z);
 		case FaceLeft:
 			return !IsBlockFilled(x - 1, y, z);
@@ -116,7 +116,7 @@ namespace Flounder
 			{
 				for (int y = 0; y < CHUNK_HEIGHT; y++)
 				{
-					int height = (int) std::floor(CHUNK_HEIGHT * (noise->GetValue(x + position.m_x, y + position.m_y, z + position.m_z) + 0.1f));
+					int height = 8; // (int) std::floor(CHUNK_HEIGHT * (noise->GetValue(x + position.m_x, y + position.m_y, z + position.m_z) + 0.1f));
 
 					if (y > height)
 					{
@@ -208,7 +208,7 @@ namespace Flounder
 				}
 				else if (d == 1)
 				{
-					currentFace = backFace ? FaceBottom : FaceTop;
+					currentFace = backFace ? FaceDown : FaceUp;
 				}
 				else if (d == 2)
 				{
@@ -307,7 +307,7 @@ namespace Flounder
 				}
 				else if (d == 1)
 				{
-					currentFace = backFace ? FaceBottom : FaceTop;
+					currentFace = backFace ? FaceDown : FaceUp;
 				}
 				else if (d == 2)
 				{
