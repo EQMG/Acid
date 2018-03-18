@@ -19,25 +19,25 @@ namespace Flounder
 
 	void Particles::Update()
 	{
-		/*if (Scenes::Get()->IsGamePaused())
+		if (Scenes::Get()->IsGamePaused())
 		{
 			return;
 		}
 
 		// Update and kill particles.
-		for (auto &m_particle : *m_particles)
+		for (auto it = m_particles->begin(); it != m_particles->end(); ++it)
 		{
-			for (auto it = m_particle.second->begin(); it != m_particle.second->end(); ++it)
+			for (auto it1 = (*it).second->begin(); it1 != (*it).second->end(); ++it1)
 			{
-				(*it)->Update();
+				(*it1)->Update();
 
-				if (!(*it)->IsAlive())
+				if (!(*it1)->IsAlive())
 				{
-					delete *it;
-					m_particle.second->erase(it);
+					delete *it1;
+					(*it).second->erase(it1);
 				}
 			}
-		}*/
+		}
 	}
 
 	void Particles::AddParticle(Particle *created)

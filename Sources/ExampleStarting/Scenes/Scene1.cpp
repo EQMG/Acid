@@ -20,6 +20,7 @@
 #include <Shadows/ShadowRender.hpp>
 #include <Voxels/Chunk.hpp>
 #include <Voxels/VoxelRender.hpp>
+#include <Voxels/Planet.hpp>
 #include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
@@ -81,33 +82,16 @@ namespace Demo
 			}
 		}*/
 
-		// Chunks.
-		new GameObject("Testing", Transform(Vector3(), Vector3(), 1.0f));
-
-		const int n = 3;
-
-		//for (int s = 0; s < 6; s++)
-		//{
-			for (int x = -n; x <= n; x++)
-			{
-				for (int z = -n; z <= n; z++)
-				{
-					GameObject *chunk = new GameObject(Transform(*Chunk::CHUNK_SIZE * Vector3(x, 0, z)));
-					chunk->SetName("Chunk" + std::to_string(x) + "," + std::to_string(z)); //  + "," + std::to_string(s)
-					chunk->AddComponent(new Chunk(MeshGreedy, true));
-					chunk->AddComponent(new Mesh());
-					//	chunk->AddComponent(new Material());
-					chunk->AddComponent(new VoxelRender());
-					//	chunk->AddComponent(new ShadowRender());
-				}
-			}
-		//}
+		// Planets.
+		GameObject *planet = new GameObject(Transform(Vector3()));
+		planet->SetName("Etaran");
+		planet->AddComponent(new Planet(4));
 
 		// Waters.
-		GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
-		waterObject->SetName("Water");
-		waterObject->AddComponent(new Mesh(new MeshWater()));
-		waterObject->AddComponent(new WaterRender());
+	//	GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
+	//	waterObject->SetName("Water");
+	//	waterObject->AddComponent(new Mesh(new MeshWater()));
+	//	waterObject->AddComponent(new WaterRender());
 
 		// Entities.
 		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));

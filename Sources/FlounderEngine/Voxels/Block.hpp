@@ -12,8 +12,8 @@ namespace Flounder
 	{
 		FaceFront = 0,
 		FaceBack = 1,
-		FaceTop = 2,
-		FaceBottom = 3,
+		FaceUp = 2,
+		FaceDown = 3,
 		FaceLeft = 4,
 		FaceRight = 5
 	};
