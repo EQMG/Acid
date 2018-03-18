@@ -27,14 +27,16 @@ namespace Flounder
 			return;
 		}
 
-		for (auto object : *m_scene->GetStructure()->GetAll())
+		std::vector<GameObject *> gameObjects = *m_scene->GetStructure()->GetAll();
+
+		for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 		{
-			if (object == nullptr)
+			if ((*it) == nullptr)
 			{
 				continue;
 			}
 
-			object->Update();
+			(*it)->Update();
 		}
 
 		if (m_scene->GetCamera() == nullptr)
