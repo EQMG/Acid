@@ -84,7 +84,7 @@ namespace Flounder
 		return block != nullptr && !block->GetType().empty();
 	}
 
-	bool Chunk::IsFaceVisible(const int &x, const int &y, const int &z, const FaceSide &faceType)
+	bool Chunk::IsFaceVisible(const int &x, const int &y, const int &z, const BlockFace &faceType)
 	{
 		switch (faceType)
 		{
@@ -187,7 +187,7 @@ namespace Flounder
 	void Chunk::CreateSimpleMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices)
 	{
 		int u, v;
-		FaceSide currentFace;
+		BlockFace currentFace;
 
 		std::vector<int> du = std::vector<int>{0, 0, 0};
 		std::vector<int> dv = std::vector<int>{0, 0, 0};
@@ -265,7 +265,7 @@ namespace Flounder
 		// These are just working variables for the algorithm - almost all taken
 		// directly from Mikola Lysenko's javascript implementation.
 		int i, j, k, l, w, h, u, v, n;
-		FaceSide currentFace;
+		BlockFace currentFace;
 
 		std::vector<int> x = std::vector<int>{0, 0, 0};
 		std::vector<int> q = std::vector<int>{0, 0, 0};
@@ -421,7 +421,7 @@ namespace Flounder
 		}
 	}
 
-	std::string Chunk::GetVoxelFace(const int &x, const int &y, const int &z, const FaceSide &faceType)
+	std::string Chunk::GetVoxelFace(const int &x, const int &y, const int &z, const BlockFace &faceType)
 	{
 		if (!IsFaceVisible(x, y, z, faceType))
 		{
@@ -440,7 +440,7 @@ namespace Flounder
 		// Gets where to start indices from.
 		unsigned int indexStart = vertices->size();
 
-		Colour colour = *BlockFace::FindColour(blockType);
+		Colour colour = *Block::FindColour(blockType);
 
 		// Calculates the quads normal direction.
 		Vector3 normal = Vector3();

@@ -82,27 +82,26 @@ namespace Demo
 		}*/
 
 		// Chunks.
+		new GameObject("Testing", Transform(Vector3(), Vector3(), 1.0f));
+
 		const int n = 3;
 
-		for (int x = -n; x <= n; x++)
-		{
-			for (int z = -n; z <= n; z++)
+		//for (int s = 0; s < 6; s++)
+		//{
+			for (int x = -n; x <= n; x++)
 			{
-				int y = 0;
-				//for (int y = -n; y <= n; y++)
-				//{
-					GameObject *chunk = new GameObject(Transform(*Chunk::CHUNK_SIZE * Vector3(x, y, z)));
-					chunk->SetName("Chunk" + std::to_string(x) + "," + std::to_string(z) + "," + std::to_string(y));
+				for (int z = -n; z <= n; z++)
+				{
+					GameObject *chunk = new GameObject(Transform(*Chunk::CHUNK_SIZE * Vector3(x, 0, z)));
+					chunk->SetName("Chunk" + std::to_string(x) + "," + std::to_string(z)); //  + "," + std::to_string(s)
 					chunk->AddComponent(new Chunk(MeshGreedy, true));
 					chunk->AddComponent(new Mesh());
 					//	chunk->AddComponent(new Material());
 					chunk->AddComponent(new VoxelRender());
 					//	chunk->AddComponent(new ShadowRender());
-				//}
+				}
 			}
-		}
-
-		new GameObject("Testing", Transform(Vector3(), Vector3(), 1.0f));
+		//}
 
 		// Waters.
 		GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));

@@ -15,15 +15,13 @@ namespace Flounder
 	private:
 		std::vector<IEvent *> *m_events;
 	public:
-		static Events *S_INSTANCE;
-
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Events *Get()
 		{
-			return S_INSTANCE; // reinterpret_cast<Events *>(Engine::Get()->GetModule("events"));
+			return reinterpret_cast<Events *>(Engine::Get()->GetModule("events"));
 		}
 
 		/// <summary>

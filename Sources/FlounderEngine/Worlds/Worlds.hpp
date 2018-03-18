@@ -29,17 +29,13 @@ namespace Flounder
 		Fog *m_fog;
 		Colour *m_skyColour;
 	public:
-		static Worlds *S_INSTANCE;
-
-		static float WORLD_CURVATURE;
-
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Worlds *Get()
 		{
-			return S_INSTANCE; // reinterpret_cast<Worlds *>(Engine::Get()->GetModule("worlds"));
+			return reinterpret_cast<Worlds *>(Engine::Get()->GetModule("worlds"));
 		}
 
 		/// <summary>

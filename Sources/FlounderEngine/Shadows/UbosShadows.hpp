@@ -16,8 +16,6 @@ namespace Flounder
 		struct UboObject
 		{
 			Matrix4 transform;
-
-			float worldCurvature;
 		};
 	};
 }

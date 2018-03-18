@@ -6,8 +6,6 @@
 
 namespace Flounder
 {
-	Display *Display::S_INSTANCE = nullptr;
-
 	const std::vector<const char *> Display::VALIDATION_LAYERS = {
 		"VK_LAYER_LUNARG_standard_validation" // "VK_LAYER_LUNARG_api_dump"
 	};
