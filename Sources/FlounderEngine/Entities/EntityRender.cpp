@@ -42,7 +42,6 @@ namespace Flounder
 		uboObject.baseColor = *material->GetDiffuse()->GetBaseColor();
 		uboObject.surface = Vector4(material->GetSurface()->GetMetallic(), material->GetSurface()->GetRoughness(),
 			static_cast<float>(material->GetSurface()->GetIgnoreFog()), static_cast<float>(material->GetSurface()->GetIgnoreLighting()));
-		uboObject.worldCurvature = !material->GetSurface()->GetIgnoreCurvature() * Worlds::WORLD_CURVATURE;
 		m_uniformObject->Update(&uboObject);
 	}
 

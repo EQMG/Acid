@@ -26,15 +26,13 @@ namespace Flounder
 
 		ShadowBox *m_shadowBox;
 	public:
-		static Shadows *S_INSTANCE;
-
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Shadows *Get()
 		{
-			return S_INSTANCE; // reinterpret_cast<Shadows *>(Engine::Get()->GetModule("shadows"));
+			return reinterpret_cast<Shadows *>(Engine::Get()->GetModule("shadows"));
 		}
 
 		/// <summary>

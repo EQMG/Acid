@@ -35,7 +35,6 @@ namespace Flounder
 		// Updates uniforms.
 		UbosTerrains::UboObject uboObject = {};
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		uboObject.worldCurvature = Worlds::WORLD_CURVATURE;
 		m_uniformObject->Update(&uboObject);
 	}
 

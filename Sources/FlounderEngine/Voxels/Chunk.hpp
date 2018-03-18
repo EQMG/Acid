@@ -3,7 +3,6 @@
 #include "../Objects/Component.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "Block.hpp"
-#include "BlockFace.hpp"
 
 namespace Flounder
 {
@@ -43,7 +42,7 @@ namespace Flounder
 
 		bool IsBlockFilled(const int &x, const int &y, const int &z);
 
-		bool IsFaceVisible(const int &x, const int &y, const int &z, const FaceSide &faceType);
+		bool IsFaceVisible(const int &x, const int &y, const int &z, const BlockFace &faceType);
 
 		void Rebuild() { m_rebuild = true; }
 
@@ -56,7 +55,7 @@ namespace Flounder
 
 		void CreateGreedyMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices);
 
-		std::string GetVoxelFace(const int &x, const int &y, const int &z, const FaceSide &faceType);
+		std::string GetVoxelFace(const int &x, const int &y, const int &z, const BlockFace &faceType);
 
 		void GenerateQuad(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices,
 						  const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,

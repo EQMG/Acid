@@ -15,15 +15,13 @@ namespace Flounder
 	private:
 		std::vector<IResource *> m_managed;
 	public:
-		static Resources *S_INSTANCE;
-
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
 		static Resources *Get()
 		{
-			return S_INSTANCE; // reinterpret_cast<Resources *>(Engine::Get()->GetModule("resources"));
+			return reinterpret_cast<Resources *>(Engine::Get()->GetModule("resources"));
 		}
 
 		/// <summary>

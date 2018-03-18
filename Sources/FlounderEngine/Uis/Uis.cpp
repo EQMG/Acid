@@ -4,8 +4,6 @@
 
 namespace Flounder
 {
-	Uis *Uis::S_INSTANCE = nullptr;
-
 	Uis::Uis() :
 		IModule(),
 		m_selector(new UiSelector()),
