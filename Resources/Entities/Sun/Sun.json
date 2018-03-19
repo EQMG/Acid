@@ -7,9 +7,8 @@
     "Surface": {
       "Metallic": 1.0, 
       "Roughness": 0.0,
-      "Ignore Lighting": true, 
-      "Ignore Fog": true,
-      "Ignore Curvature": 1,
+      "Ignore Lighting": 1,
+      "Ignore Fog": 1,
       "Texture": ""
     }
   },
