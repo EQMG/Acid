@@ -31,12 +31,12 @@ namespace Flounder
 	private:
 		LoadedValue *m_armatureData;
 
-		std::vector<std::string> *m_boneOrder;
+		std::vector<std::string> m_boneOrder;
 		int m_jointCount;
 
 		SkeletonData *m_skeletonData;
 	public:
-		SkeletonLoader(LoadedValue *libraryControllers, std::vector<std::string> boneOrder);
+		SkeletonLoader(LoadedValue *libraryControllers, const std::vector<std::string> &boneOrder);
 
 		~SkeletonLoader();
 
@@ -45,7 +45,7 @@ namespace Flounder
 	private:
 		JointData *LoadJointData(LoadedValue *jointNode, const bool &isRoot);
 
-		JointData *ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot);
+		JointData ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot);
 
 		int GetBoneIndex(const std::string &name);
 

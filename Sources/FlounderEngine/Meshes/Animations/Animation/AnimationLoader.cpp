@@ -38,10 +38,10 @@ namespace Flounder
 
 	std::vector<float> AnimationLoader::GetKeyTimes()
 	{
-		LoadedValue *timeData = m_libraryAnimations->GetChild("animation")->GetChild("source")->GetChild("float_array");
-		auto rawTimes = FormatString::Split(timeData->GetString(), " ");
+		//LoadedValue *timeData = m_libraryAnimations->GetChildWithAttribute("animation", "-id", "Armature_Torso_pose_matrix")->GetChild("float_array")->GetChild("#text");
+		std::string testingTime = "1 0 0 0 0 -0.06466547 -0.997907 0 0 0.997907 -0.06466556 3.810999 0 0 0 1 1 0 0 0 0 -0.06466547 -0.997907 0 0 0.997907 -0.06466556 3.210999 0 0 0 1 1 0 0 0 0 -0.06466547 -0.997907 0 0 0.997907 -0.06466556 3.810999 0 0 0 1 1 0 0 0 0 -0.06466547 -0.997907 0 0 0.997907 -0.06466556 3.210999 0 0 0 1 1 0 0 0 0 -0.06466547 -0.997907 0 0 0.997907 -0.06466556 3.810999 0 0 0 1";
+		auto rawTimes = FormatString::Split(testingTime, " "); // timeData->GetString()
 		std::vector<float> times = std::vector<float>(rawTimes.size());
-		printf("1\n");
 
 		for (int i = 0; i < times.size(); i++)
 		{
@@ -80,7 +80,7 @@ namespace Flounder
 	{
 		LoadedValue *node = jointData->GetChild("sampler")->GetChildWithAttribute("input", "-semantic", "OUTPUT");
 
-		return node->GetChild("-source")->GetString();
+		return node->GetChild("-source")->GetString().substr(1);
 	}
 
 	std::string AnimationLoader::GetJointName(LoadedValue *jointData)
