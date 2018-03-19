@@ -35,7 +35,11 @@ namespace Flounder
 
 		std::string GetName() const override { return "Planet"; };
 
-		static Vector3 GetDirection(const PlanetSide &side);
+		static Vector3 GetSideDirection(const PlanetSide &side);
+
+		static Vector3 GetSideRotation(const PlanetSide &side);
+
+		static Vector3 EvaluateVertex(const Vector3 &position, const int &size);
 
 	private:
 		void Generate();
