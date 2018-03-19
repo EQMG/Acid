@@ -5,16 +5,16 @@
 namespace Flounder
 {
 
-	SkeletonLoader::SkeletonLoader(LoadedValue *libraryControllers, std::vector<std::string> boneOrder) :
+	SkeletonLoader::SkeletonLoader(LoadedValue *libraryControllers, const std::vector<std::string> &boneOrder) :
 		m_armatureData(nullptr),
-		m_boneOrder(&boneOrder),
+		m_boneOrder(boneOrder),
 		m_jointCount(0),
 		m_skeletonData(nullptr)
 	{
 		m_armatureData = libraryControllers->GetChild("visual_scene")->GetChildWithAttribute("node", "-id", "Armature");
 		auto headNode = m_armatureData->GetChild("node");
 		auto headJoint = LoadJointData(headNode, true);
-		m_skeletonData = new SkeletonData(m_jointCount, headJoint);
+	//	m_skeletonData = new SkeletonData(m_jointCount, headJoint);
 	}
 
 	SkeletonLoader::~SkeletonLoader()
@@ -24,17 +24,29 @@ namespace Flounder
 
 	JointData *SkeletonLoader::LoadJointData(LoadedValue *jointNode, const bool &isRoot)
 	{
-		JointData *joint = ExtractMainJointData(jointNode, isRoot);
+		JointData joint = ExtractMainJointData(jointNode, isRoot);
 
-		for (auto childNode : jointNode->GetChild("node")->m_children)
+		if (jointNode->GetChild("node"))
 		{
-			joint->AddChild(LoadJointData(childNode, false));
+			if (!jointNode->GetChild("node")->GetChild("-id"))
+			{
+				for (auto childNode : jointNode->GetChild("node")->m_children)
+				{
+					JointData *childJoint = LoadJointData(childNode, false);
+					joint.AddChild(childJoint);
+				}
+			}
+			else if (!jointNode->GetChild("node")->m_children.empty())
+			{
+				JointData *childJoint = LoadJointData(jointNode->GetChild("node"), false);
+				joint.AddChild(childJoint);
+			}
 		}
 
-		return joint;
+		return &joint;
 	}
 
-	JointData *SkeletonLoader::ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot)
+	JointData SkeletonLoader::ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot)
 	{
 		std::string nameId = jointNode->GetChild("-id")->GetString();
 		auto index = GetBoneIndex(nameId);
@@ -49,15 +61,14 @@ namespace Flounder
 		}
 
 		m_jointCount++;
-		JointData jointData = JointData(index, nameId, matrix);
-		return &jointData;
+		return JointData(index, nameId, matrix);
 	}
 
 	int SkeletonLoader::GetBoneIndex(const std::string &name)
 	{
-		for (unsigned int i = 0; i < m_boneOrder->size(); i++)
+		for (unsigned int i = 0; i < m_boneOrder.size(); i++)
 		{
-			if (m_boneOrder->at(i) == name)
+			if (m_boneOrder[i] == name)
 			{
 				return i;
 			}
@@ -72,7 +83,7 @@ namespace Flounder
 
 		for (unsigned int i = 0; i < rawData.size(); i++)
 		{
-			data[i] = FormatString::ConvertTo<float>(rawData.at(i));
+			data[i] = FormatString::ConvertTo<float>(rawData[i]);
 		}
 
 		Matrix4 result = Matrix4(data);
