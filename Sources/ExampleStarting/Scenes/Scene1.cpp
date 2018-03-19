@@ -97,7 +97,7 @@ namespace Demo
 		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
 		new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
 
-		new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f));
+		new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f)); // Testing animations.
 
 		/*Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
 
@@ -144,6 +144,7 @@ namespace Demo
 		music1->Loop();
 #endif*/
 
+		// Particles.
 		/*GameObject *particlesObject = new GameObject(Transform(Vector3(0.0f, 20.0f, 0.0f)));
 		std::vector<ParticleType*> *types = new std::vector<ParticleType*>();
 		types->push_back(new ParticleType("blue", Texture::Resource("Resources/Particles/Blue/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4

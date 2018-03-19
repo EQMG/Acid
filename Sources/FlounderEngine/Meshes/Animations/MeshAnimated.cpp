@@ -49,17 +49,17 @@ namespace Flounder
 		FileJson *file = new FileJson(filename);
 		file->Load();
 
-	//	SkinLoader *skinLoader = new SkinLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
-	//	SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
-	//		skinLoader->GetData()->GetJointOrder());
+		SkinLoader *skinLoader = new SkinLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
+		SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
+			skinLoader->GetData()->GetJointOrder());
 	//	//GeometryLoader *geometry = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skin->GetData()->GetVerticesSkinData());
 	//	AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
 	//		file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
 
 	//	m_animation = new Animation(*animationLoader->GetData());
 
-	//	delete skinLoader;
-	//	delete skeletonLoader;
+		delete skinLoader;
+		delete skeletonLoader;
 	//	delete animationLoader;
 		delete file;
 	}
