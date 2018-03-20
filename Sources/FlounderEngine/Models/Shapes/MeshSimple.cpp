@@ -15,7 +15,7 @@ namespace Flounder
 
 	void MeshSimple::GenerateMesh()
 	{
-		std::vector<Vertex> vertices = std::vector<Vertex>();
+		std::vector<VertexModel> vertices = std::vector<VertexModel>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		// Creates and stores vertices.
@@ -34,7 +34,7 @@ namespace Flounder
 				);
 				const Vector3 normal = GetNormal(position);
 				const Vector3 tangent = GetColour(position, normal);
-				vertices.push_back(Vertex(position, uv, normal, tangent));
+				vertices.push_back(VertexModel(position, uv, normal, tangent));
 			}
 		}
 

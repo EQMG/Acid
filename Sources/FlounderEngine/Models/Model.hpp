@@ -7,14 +7,14 @@
 #include "../Resources/Resources.hpp"
 #include "../Renderer/Buffers/VertexBuffer.hpp"
 #include "../Renderer/Buffers/IndexBuffer.hpp"
-#include "Vertex.hpp"
+#include "VertexModel.hpp"
 #include "VertexData.hpp"
 
 namespace Flounder
 {
 	struct F_HIDDEN ModelLoaded
 	{
-		std::vector<Vertex> vertices;
+		std::vector<VertexModel> vertices;
 		std::vector<uint32_t> indices;
 	};
 
@@ -64,14 +64,14 @@ namespace Flounder
 		/// <param name="vertices"> The model vertices. </param>
 		/// <param name="indices"> The model indices. </param>
 		/// <param name="name"> The model name. </param>
-		Model(std::vector<Vertex> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
+		Model(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
 
 		/// <summary>
 		/// Creates a new model without indices.
 		/// </summary>
 		/// <param name="vertices"> The model vertices. </param>
 		/// <param name="name"> The model name. </param>
-		Model(std::vector<Vertex> &vertices, const std::string &name = "");
+		Model(std::vector<VertexModel> &vertices, const std::string &name = "");
 
 		/// <summary>
 		/// Deconstructor for the model.
@@ -89,7 +89,7 @@ namespace Flounder
 		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer; }
 
 	protected:
-		void Set(std::vector<Vertex> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
+		void Set(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
 
 	private:
 		/// <summary>
@@ -103,6 +103,6 @@ namespace Flounder
 
 		void CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *uvs);
 
-		static ColliderAabb CalculateAabb(const std::vector<Vertex> &vertices);
+		static ColliderAabb CalculateAabb(const std::vector<VertexModel> &vertices);
 	};
 }

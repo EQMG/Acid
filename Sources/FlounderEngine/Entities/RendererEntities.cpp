@@ -15,8 +15,8 @@ namespace Flounder
 			VK_POLYGON_MODE_FILL, // polygonMode
 			VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
-			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-			Vertex::GetAttributeDescriptions(3), // vertexAttributeDescriptions
+			VertexModel::GetBindingDescriptions(), // vertexBindingDescriptions
+			VertexModel::GetAttributeDescriptions(3), // vertexAttributeDescriptions
 
 			{
 				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene

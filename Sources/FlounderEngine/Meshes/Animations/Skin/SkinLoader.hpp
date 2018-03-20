@@ -21,9 +21,9 @@ namespace Flounder
 		{
 		}
 
-		void AddJointEffect(int jointId, float weight)
+		void AddJointEffect(const int &jointId, const float &weight)
 		{
-			for (int i = 0; i < m_weights.size(); i++)
+			for (unsigned int i = 0; i < m_weights.size(); i++)
 			{
 				if (weight > m_weights.at(i))
 				{
@@ -37,12 +37,12 @@ namespace Flounder
 			m_weights.push_back(weight);
 		}
 
-		void LimitJointNumber(int max)
+		void LimitJointNumber(const unsigned int &max)
 		{
 			if (m_jointIds.size() > max)
 			{
 				std::vector<float> topWeights = std::vector<float>(max);
-				float total = SaveTopWeights(topWeights);
+				float total = SaveTopWeights(&topWeights);
 				RefillWeightList(topWeights, total);
 				RemoveExcessJointIds(max);
 			}
@@ -52,7 +52,7 @@ namespace Flounder
 			}
 		}
 
-		void FillEmptyWeights(int max)
+		void FillEmptyWeights(const unsigned int &max)
 		{
 			while (m_jointIds.size() < max)
 			{
@@ -61,20 +61,20 @@ namespace Flounder
 			}
 		}
 
-		float SaveTopWeights(std::vector<float> topWeightsArray)
+		float SaveTopWeights(std::vector<float> *topWeightsArray)
 		{
 			float total = 0.0f;
 
-			for (int i = 0; i < topWeightsArray.size(); i++)
+			for (unsigned int i = 0; i < topWeightsArray->size(); i++)
 			{
-				topWeightsArray[i] = m_weights.at(i);
-				total += topWeightsArray[i];
+				topWeightsArray->at(i) = m_weights.at(i);
+				total += topWeightsArray->at(i);
 			}
 
 			return total;
 		}
 
-		void RefillWeightList(std::vector<float> topWeights, float total)
+		void RefillWeightList(const std::vector<float> &topWeights, const float &total)
 		{
 			m_weights.clear();
 
@@ -84,7 +84,7 @@ namespace Flounder
 			}
 		}
 
-		void RemoveExcessJointIds(int max)
+		void RemoveExcessJointIds(const unsigned int &max)
 		{
 			while (m_jointIds.size() > max)
 			{

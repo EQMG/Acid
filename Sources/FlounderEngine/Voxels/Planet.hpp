@@ -19,11 +19,11 @@ namespace Flounder
 		public Component
 	{
 	private:
-		std::map<PlanetSide, std::vector<Chunk *>> *m_sides;
-		int m_radius;
+		std::vector<Chunk *> *m_chunks;
+		int m_sideLength;
 		bool m_generate;
 	public:
-		Planet(const int &radius = 3);
+		Planet(const int &sideLength = 4);
 
 		~Planet();
 
@@ -37,10 +37,7 @@ namespace Flounder
 
 		static Vector3 GetSideDirection(const PlanetSide &side);
 
-		static Vector3 GetSideRotation(const PlanetSide &side);
-
-		static Vector3 EvaluateVertex(const Vector3 &position, const int &size);
-
+		static PlanetSide GetSide(const Vector3 &position, const int &sideLength);
 	private:
 		void Generate();
 	};
