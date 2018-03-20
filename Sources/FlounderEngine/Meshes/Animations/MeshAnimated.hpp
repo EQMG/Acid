@@ -7,6 +7,7 @@
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Geometry/GeometryLoader.hpp"
 #include "Skin/SkinLoader.hpp"
+#include "Animator.hpp"
 
 namespace Flounder
 {
@@ -17,7 +18,10 @@ namespace Flounder
 		std::string m_filename;
 
 		Model *m_model;
+		Joint *m_headJoint;
 		Animation *m_animation;
+
+		Animator *m_animator;
 	public:
 		static const Matrix4 *S_CORRECTION;
 		static const int MAX_WEIGHTS;
@@ -35,5 +39,7 @@ namespace Flounder
 		std::string GetName() const override { return "MeshAnimated"; };
 
 		void TrySetModel(const std::string &filename);
+	private:
+		Joint *CreateJoints(JointData *data);
 	};
 }

@@ -10,11 +10,11 @@ namespace Flounder
 	class F_EXPORT GeometryData
 	{
 	private:
-		std::vector<VertexAnimated> m_vertices;
+		std::vector<VertexModel> m_vertices;
 		std::vector<uint32_t> m_indices;
 
 	public:
-		GeometryData(const std::vector<VertexAnimated> &vertices, const std::vector<uint32_t> &indices) :
+		GeometryData(const std::vector<VertexModel> &vertices, const std::vector<uint32_t> &indices) :
 			m_vertices(vertices),
 			m_indices(indices)
 		{
@@ -24,7 +24,7 @@ namespace Flounder
 		{
 		}
 
-		std::vector<VertexAnimated> GetVertices() const { return m_vertices; }
+		std::vector<VertexModel> GetVertices() const { return m_vertices; }
 
 		std::vector<uint32_t> GetIndices() const { return m_indices; }
 	};
@@ -40,7 +40,7 @@ namespace Flounder
 		std::vector<Vector2> m_uvsList;
 		std::vector<Vector3> m_normalsList;
 
-		std::vector<VertexAnimated> m_verticesList;
+		std::vector<VertexModel> m_verticesList;
 		std::vector<uint32_t> m_indicesList;
 
 		GeometryData *m_geometryData;
