@@ -102,7 +102,7 @@
 #include "Models/Shapes/ShapeCube.hpp"
 #include "Models/Shapes/ShapeRectangle.hpp"
 #include "Models/Shapes/ShapeSphere.hpp"
-#include "Models/VertexData.hpp"
+#include "Models/VertexModelData.hpp"
 #include "Models/VertexModel.hpp"
 #include "Objects/Behaviour.hpp"
 #include "Objects/Component.hpp"

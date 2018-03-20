@@ -71,8 +71,8 @@ namespace Flounder
 #if FLOUNDER_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
-		const float squareSize = TerrainRender::SQUARE_SIZES[lod];
-		const float textureScale = TerrainRender::TEXTURE_SCALES[lod];
+		const float squareSize = TerrainRender::SQUARE_SIZES.at(lod);
+		const float textureScale = TerrainRender::TEXTURE_SCALES.at(lod);
 		const int vertexCount = CalculateVertexCount(TerrainRender::SIDE_LENGTH, squareSize);
 		m_modelLods.at(lod) = new MeshTerrain(static_cast<float>(TerrainRender::SIDE_LENGTH), ((lod == 0) ? 1.0f : (1.015f + (0.016f * lod))) * squareSize, vertexCount, textureScale, GetGameObject()->GetTransform()->m_position);
 #if FLOUNDER_VERBOSE

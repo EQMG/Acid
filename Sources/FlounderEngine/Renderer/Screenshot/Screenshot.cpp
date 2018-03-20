@@ -21,7 +21,7 @@ namespace Flounder
 		const auto physicalDeviceMemoryProperties = Display::Get()->GetPhysicalDeviceMemoryProperties();
 		const auto width = Display::Get()->GetWidth();
 		const auto height = Display::Get()->GetHeight();
-		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetImages()[Renderer::Get()->GetActiveSwapchainImage()];
+		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetImages().at(Renderer::Get()->GetActiveSwapchainImage());
 
 		printf("Saving screenshot to: '%s'\n", filename.c_str());
 

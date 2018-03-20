@@ -9,7 +9,7 @@ namespace Flounder
 	/// <summary>
 	/// A class that represents a single model vertex, used when loading OBJ files.
 	/// </summary>
-	class F_EXPORT VertexData
+	class F_EXPORT VertexModelData
 	{
 	private:
 		static const uint32_t NO_INDEX;
@@ -18,7 +18,7 @@ namespace Flounder
 
 		int m_uvIndex;
 		int m_normalIndex;
-		VertexData *m_duplicateVertex;
+		VertexModelData *m_duplicateVertex;
 
 		uint32_t m_index;
 		float m_length;
@@ -26,9 +26,9 @@ namespace Flounder
 		std::vector<Vector3 *> m_tangents;
 		Vector3 m_averagedTangent;
 	public:
-		VertexData(const uint32_t &index, const Vector3 &position);
+		VertexModelData(const uint32_t &index, const Vector3 &position);
 
-		~VertexData();
+		~VertexModelData();
 
 		Vector3 GetPosition() const { return m_position; }
 
@@ -40,9 +40,9 @@ namespace Flounder
 
 		void SetNormalIndex(const int &normalIndex) { m_normalIndex = normalIndex; }
 
-		VertexData *GetDuplicateVertex() const { return m_duplicateVertex; }
+		VertexModelData *GetDuplicateVertex() const { return m_duplicateVertex; }
 
-		void SetDuplicateVertex(VertexData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
+		void SetDuplicateVertex(VertexModelData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
 		uint32_t GetIndex() const { return m_index; }
 

@@ -14,7 +14,7 @@ namespace Flounder
 
 		std::string rootNode = FindRootJointName();
 		std::vector<float> times = GetKeyTimes();
-		m_lengthSeconds = times.at(times.size() - 1);
+		m_lengthSeconds = times[times.size() - 1];
 		CreateKeyframeData(times);
 
 		for (auto jointNode : animationNodes)
@@ -40,15 +40,16 @@ namespace Flounder
 
 	std::vector<float> AnimationLoader::GetKeyTimes()
 	{
-		// TODO
-		// LoadedValue *timeData = m_libraryAnimations->GetChild("animation")->GetChild("source")->GetChild("float_array")->GetChild("#text");
-		std::string tempTesting = "0 0.2083333 0.4166666 0.625 0.8333333";
-		auto rawTimes = FormatString::Split(tempTesting, " "); // timeData->GetString()
+		LoadedValue *animationGroup = m_libraryAnimations->GetChild("animation")->GetChild(0); // TODO
+		std::string sourceInput = animationGroup->GetChild("-id")->GetString() + "-input";
+		LoadedValue *timeData = animationGroup->GetChildWithAttribute("source", "-id", sourceInput)->GetChild("float_array")->GetChild("#text");
+
+		auto rawTimes = FormatString::Split(timeData->GetString(), " ");
 		std::vector<float> times = std::vector<float>(rawTimes.size());
 
 		for (unsigned int i = 0; i < times.size(); i++)
 		{
-			times[i] = stof(rawTimes[i]);
+			times[i] = std::stof(rawTimes[i]);
 		}
 
 		return times;
@@ -56,9 +57,8 @@ namespace Flounder
 
 	void AnimationLoader::CreateKeyframeData(const std::vector<float> &times)
 	{
-		for (unsigned int i = 0; i < times.size(); i++)
+		for (int i = 0; i < times.size(); i++)
 		{
-
 			KeyframeData *keyframeData = new KeyframeData(times[i]);
 			m_keyframeData.push_back(keyframeData);
 		}
@@ -88,7 +88,7 @@ namespace Flounder
 		auto channelNode = jointData->GetChild("channel");
 		std::string data = channelNode->GetChild("-target")->GetString();
 		std::vector<std::string> splitData = FormatString::Split(data, "/");
-		return splitData.at(0);
+		return splitData[0];
 	}
 
 	void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root)
@@ -99,7 +99,7 @@ namespace Flounder
 		{
 			for (unsigned int j = 0; j < 16; j++)
 			{
-				matrixData[j] = stof(rawData.at(i * 16 + j));
+				matrixData[j] = std::stof(rawData[i * 16 + j]);
 			}
 
 			Matrix4 transform = Matrix4(matrixData);
@@ -111,7 +111,7 @@ namespace Flounder
 				Matrix4::Multiply(*MeshAnimated::S_CORRECTION, transform, &transform);
 			}
 
-			m_keyframeData.at(i)->AddJointTransform(new JointTransformData(jointName, transform));
+			m_keyframeData[i]->AddJointTransform(new JointTransformData(jointName, transform));
 		}
 
 		delete[] matrixData;

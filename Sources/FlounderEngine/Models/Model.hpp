@@ -8,7 +8,7 @@
 #include "../Renderer/Buffers/VertexBuffer.hpp"
 #include "../Renderer/Buffers/IndexBuffer.hpp"
 #include "VertexModel.hpp"
-#include "VertexData.hpp"
+#include "VertexModelData.hpp"
 
 namespace Flounder
 {
@@ -97,11 +97,11 @@ namespace Flounder
 		/// </summary>
 		ModelLoaded LoadFromFile(const std::string &filename);
 
-		VertexData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData *> *vertices, std::vector<uint32_t> *indices);
+		VertexModelData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> *vertices, std::vector<uint32_t> *indices);
 
-		VertexData *DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexData *> *vertices);
+		VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexModelData *> *vertices);
 
-		void CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *uvs);
+		void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> *uvs);
 
 		static ColliderAabb CalculateAabb(const std::vector<VertexModel> &vertices);
 	};

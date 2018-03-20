@@ -126,7 +126,7 @@ namespace Flounder
 		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n");
 
 		std::vector<uint32_t> indicesList = std::vector<uint32_t>();
-		std::vector<VertexData *> verticesList = std::vector<VertexData *>();
+		std::vector<VertexModelData *> verticesList = std::vector<VertexModelData *>();
 		std::vector<Vector2> uvsList = std::vector<Vector2>();
 		std::vector<Vector3> normalsList = std::vector<Vector3>();
 
@@ -136,7 +136,7 @@ namespace Flounder
 
 			if (!split.empty())
 			{
-				const std::string prefix = split.at(0);
+				const std::string prefix = split[0];
 
 				if (prefix == "#")
 				{
@@ -144,18 +144,18 @@ namespace Flounder
 				}
 				else if (prefix == "v")
 				{
-					const Vector3 vertex = Vector3(stof(split.at(1)), stof(split.at(2)), stof(split.at(3)));
-					VertexData *newVertex = new VertexData(static_cast<int>(verticesList.size()), vertex);
+					const Vector3 vertex = Vector3(std::stof(split[1]), std::stof(split[2]), std::stof(split[3]));
+					VertexModelData *newVertex = new VertexModelData(static_cast<int>(verticesList.size()), vertex);
 					verticesList.push_back(newVertex);
 				}
 				else if (prefix == "vt")
 				{
-					const Vector2 uv = Vector2(stof(split.at(1)), 1.0f - stof(split.at(2)));
+					const Vector2 uv = Vector2(std::stof(split[1]), 1.0f - std::stof(split[2]));
 					uvsList.push_back(uv);
 				}
 				else if (prefix == "vn")
 				{
-					const Vector3 normal = Vector3(stof(split.at(1)), stof(split.at(2)), stof(split.at(3)));
+					const Vector3 normal = Vector3(std::stof(split[1]), std::stof(split[2]), std::stof(split[3]));
 					normalsList.push_back(normal);
 				}
 				else if (prefix == "f")
@@ -167,13 +167,13 @@ namespace Flounder
 						throw std::runtime_error("Model loading error.");
 					}
 
-					std::vector<std::string> vertex1 = FormatString::Split(split.at(1), "/");
-					std::vector<std::string> vertex2 = FormatString::Split(split.at(2), "/");
-					std::vector<std::string> vertex3 = FormatString::Split(split.at(3), "/");
+					std::vector<std::string> vertex1 = FormatString::Split(split[1], "/");
+					std::vector<std::string> vertex2 = FormatString::Split(split[2], "/");
+					std::vector<std::string> vertex3 = FormatString::Split(split[3], "/");
 
-					VertexData *v0 = ProcessDataVertex(Vector3(stof(vertex1.at(0)), stof(vertex1.at(1)), stof(vertex1.at(2))), &verticesList, &indicesList);
-					VertexData *v1 = ProcessDataVertex(Vector3(stof(vertex2.at(0)), stof(vertex2.at(1)), stof(vertex2.at(2))), &verticesList, &indicesList);
-					VertexData *v2 = ProcessDataVertex(Vector3(stof(vertex3.at(0)), stof(vertex3.at(1)), stof(vertex3.at(2))), &verticesList, &indicesList);
+					VertexModelData *v0 = ProcessDataVertex(Vector3(std::stof(vertex1[0]), std::stof(vertex1[1]), std::stof(vertex1[2])), &verticesList, &indicesList);
+					VertexModelData *v1 = ProcessDataVertex(Vector3(std::stof(vertex2[0]), std::stof(vertex2[1]), std::stof(vertex2[2])), &verticesList, &indicesList);
+					VertexModelData *v2 = ProcessDataVertex(Vector3(std::stof(vertex3[0]), std::stof(vertex3[1]), std::stof(vertex3[2])), &verticesList, &indicesList);
 					CalculateTangents(v0, v1, v2, &uvsList);
 				}
 				else if (prefix == "o")
@@ -207,8 +207,8 @@ namespace Flounder
 		for (auto current : verticesList)
 		{
 			const Vector3 position = current->GetPosition();
-			const Vector2 textures = uvsList.at(current->GetUvIndex());
-			const Vector3 normal = normalsList.at(current->GetNormalIndex());
+			const Vector2 textures = uvsList[current->GetUvIndex()];
+			const Vector3 normal = normalsList[current->GetNormalIndex()];
 			const Vector3 tangent = current->GetAverageTangent();
 
 			const VertexModel vertex = VertexModel(position, textures, normal, tangent);
@@ -227,12 +227,12 @@ namespace Flounder
 		return modelLoaded;
 	}
 
-	VertexData *Model::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexData *> *vertices, std::vector<uint32_t> *indices)
+	VertexModelData *Model::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> *vertices, std::vector<uint32_t> *indices)
 	{
 		const int index = static_cast<int>(vertex.m_x) - 1;
 		const int textureIndex = static_cast<int>(vertex.m_y) - 1;
 		const int normalIndex = static_cast<int>(vertex.m_z) - 1;
-		VertexData *currentVertex = vertices->at(index);
+		VertexModelData *currentVertex = (*vertices)[index];
 
 		if (!currentVertex->IsSet())
 		{
@@ -245,7 +245,7 @@ namespace Flounder
 		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
 	}
 
-	VertexData *Model::DealWithAlreadyProcessedDataVertex(VertexData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexData *> *vertices)
+	VertexModelData *Model::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexModelData *> *vertices)
 	{
 		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{
@@ -253,14 +253,14 @@ namespace Flounder
 			return previousVertex;
 		}
 
-		VertexData *anotherVertex = previousVertex->GetDuplicateVertex();
+		VertexModelData *anotherVertex = previousVertex->GetDuplicateVertex();
 
 		if (anotherVertex != nullptr)
 		{
 			return DealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
 		}
 
-		VertexData *duplicateVertex = new VertexData(static_cast<uint32_t>(vertices->size()), previousVertex->GetPosition());
+		VertexModelData *duplicateVertex = new VertexModelData(static_cast<uint32_t>(vertices->size()), previousVertex->GetPosition());
 		duplicateVertex->SetUvIndex(newTextureIndex);
 		duplicateVertex->SetNormalIndex(newNormalIndex);
 		previousVertex->SetDuplicateVertex(duplicateVertex);
@@ -269,11 +269,11 @@ namespace Flounder
 		return duplicateVertex;
 	}
 
-	void Model::CalculateTangents(VertexData *v0, VertexData *v1, VertexData *v2, std::vector<Vector2> *uvs)
+	void Model::CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> *uvs)
 	{
-		const Vector2 uv0 = uvs->at(v0->GetUvIndex());
-		const Vector2 uv1 = uvs->at(v1->GetUvIndex());
-		const Vector2 uv2 = uvs->at(v2->GetUvIndex());
+		const Vector2 uv0 = (*uvs)[v0->GetUvIndex()];
+		const Vector2 uv1 = (*uvs)[v1->GetUvIndex()];
+		const Vector2 uv2 = (*uvs)[v2->GetUvIndex()];
 
 		Vector2 *deltaUv1 = Vector2::Subtract(uv1, uv0, nullptr);
 		Vector2 *deltaUv2 = Vector2::Subtract(uv2, uv0, nullptr);
