@@ -61,7 +61,7 @@ namespace Flounder
 	std::vector<VertexSkinData *> SkinLoader::GetSkinData(LoadedValue *weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights)
 	{
 		auto rawData = FormatString::Split(weightsDataNode->GetChild("v")->GetString(), " ");
-		std::vector<VertexSkinData*> skinningData = std::vector<VertexSkinData*>();
+		std::vector<VertexSkinData *> skinningData = std::vector<VertexSkinData *>();
 		int pointer = 0;
 
 		for (int count : counts)

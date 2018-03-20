@@ -1,54 +1,16 @@
 #pragma once
 
 #include "../../../Maths/Matrix4.hpp"
+#include "JointData.hpp"
 
 namespace Flounder
 {
-	class F_EXPORT JointData
-	{
-	private:
-		int m_index;
-		std::string m_nameId;
-		Matrix4 m_bindLocalTransform;
-
-		std::vector<JointData*> m_children;
-	public:
-	 	JointData(const int &index, const std::string &nameId, const Matrix4 &bindLocalTransform) :
-			m_index(index),
-			m_nameId(nameId),
-			m_bindLocalTransform(Matrix4(bindLocalTransform)),
-			m_children(std::vector<JointData*>())
-	 	{
-		}
-
-		~JointData()
-		{
-			for (auto child : m_children)
-			{
-				delete child;
-			}
-		}
-
-		int GetIndex() const { return m_index; }
-
-		std::string GetNameId() const { return m_nameId; }
-
-		Matrix4 GetBindLocalTransform() const { return m_bindLocalTransform; }
-
-		std::vector<JointData*> GetChildren() const { return m_children; }
-
-		void AddChild(JointData *child)
-		{
-			m_children.push_back(child);
-		}
-	};
-
 	class F_EXPORT Joint
 	{
 	private:
 		int m_index;
 		std::string m_name;
-		std::vector<Joint*> *m_children;
+		std::vector<Joint *> *m_children;
 
 		Matrix4 *m_localBindTransform;
 		Matrix4 *m_animatedTransform;

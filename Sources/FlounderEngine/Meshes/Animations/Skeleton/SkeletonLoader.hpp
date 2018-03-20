@@ -5,44 +5,23 @@
 
 namespace Flounder
 {
-	class F_EXPORT SkeletonData
-	{
-	private:
-		int m_jointCount;
-		JointData *m_headJoint;
-	public:
-		SkeletonData(const int &jointCount, JointData *headJoint) :
-			m_jointCount(jointCount),
-			m_headJoint(headJoint)
-		{
-		}
-
-		~SkeletonData()
-		{
-			delete m_headJoint;
-		}
-
-		int GetJointCount() const { return m_jointCount; }
-
-		JointData *GetHeadJoint() const { return m_headJoint; }
-	};
-
 	class F_EXPORT SkeletonLoader
 	{
 	private:
 		LoadedValue *m_armatureData;
 
 		std::vector<std::string> m_boneOrder;
-		int m_jointCount;
 
-		SkeletonData *m_skeletonData;
+		int m_jointCount;
+		JointData *m_headJoint;
 	public:
 		SkeletonLoader(LoadedValue *libraryControllers, const std::vector<std::string> &boneOrder);
 
 		~SkeletonLoader();
 
-		SkeletonData *GetData() const { return m_skeletonData; }
+		int GetJointCount() const { return m_jointCount; }
 
+		JointData *GetHeadJoint() const { return m_headJoint; }
 	private:
 		JointData *LoadJointData(LoadedValue *jointNode, const bool &isRoot);
 

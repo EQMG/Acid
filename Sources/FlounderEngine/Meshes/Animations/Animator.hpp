@@ -23,15 +23,15 @@ namespace Flounder
 
 		void IncreaseAnimationTime();
 
-		std::map<std::string, Matrix4*> CalculateCurrentAnimationPose();
+		std::map<std::string, Matrix4 *> CalculateCurrentAnimationPose();
 
-		std::vector<Keyframe*> GetPreviousAndNextFrames();
+		std::vector<Keyframe *> GetPreviousAndNextFrames();
 
 		float CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame);
 
-		std::map<std::string, Matrix4*> InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression);
+		std::map<std::string, Matrix4 *> InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression);
 
-		void ApplyPoseToJoints(const std::map<std::string, Matrix4*> &currentPose, Joint *joint, const Matrix4 &parentTransform);
+		void ApplyPoseToJoints(const std::map<std::string, Matrix4 *> &currentPose, Joint *joint, const Matrix4 &parentTransform);
 
 		Animation *GetCurrentAnimation() const { return m_currentAnimation; }
 

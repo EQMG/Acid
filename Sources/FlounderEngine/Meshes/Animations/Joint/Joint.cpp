@@ -5,7 +5,7 @@ namespace Flounder
 	Joint::Joint(const int &index, const std::string &name, const Matrix4 &bindLocalTransform) :
 		m_index(index),
 		m_name(name),
-		m_children(new std::vector<Joint*>()),
+		m_children(new std::vector<Joint *>()),
 		m_localBindTransform(new Matrix4(bindLocalTransform)),
 		m_animatedTransform(new Matrix4()),
 		m_inverseBindTransform(new Matrix4())

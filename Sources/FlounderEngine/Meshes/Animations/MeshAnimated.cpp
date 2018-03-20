@@ -61,15 +61,17 @@ namespace Flounder
 		SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
 			skinLoader->GetData()->GetJointOrder());
 		GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetData()->GetVerticesSkinData());
-	//	m_model = new Model(geometryLoader->GetData()->GetVertices(), geometryLoader->GetData()->GetIndices());
-		m_headJoint = CreateJoints(skeletonLoader->GetData()->GetHeadJoint());
+		//	auto vertices = geometryLoader->GetVertices();
+		//	auto indices = geometryLoader->GetIndices();
+		//	m_model = new Model(vertices, indices);
+		m_headJoint = CreateJoints(skeletonLoader->GetHeadJoint());
 		delete skinLoader;
 		delete skeletonLoader;
 		delete geometryLoader;
 
 		AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
 			file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
-		m_animation = new Animation(*animationLoader->GetData());
+		m_animation = new Animation(animationLoader->GetLengthSeconds(), animationLoader->GetKeyframeData());
 		delete animationLoader;
 
 		delete file;

@@ -101,11 +101,11 @@ namespace Flounder
 	{
 	private:
 		std::vector<std::string> m_jointOrder;
-		std::vector<VertexSkinData*> m_verticesSkinData;
+		std::vector<VertexSkinData *> m_verticesSkinData;
 	public:
-		SkinningData(const std::vector<std::string> &jointOrder, const std::vector<VertexSkinData*> &verticesSkinData) :
+		SkinningData(const std::vector<std::string> &jointOrder, const std::vector<VertexSkinData *> &verticesSkinData) :
 			m_jointOrder(std::vector<std::string>(jointOrder)),
-			m_verticesSkinData(std::vector<VertexSkinData*>(verticesSkinData))
+			m_verticesSkinData(std::vector<VertexSkinData *>(verticesSkinData))
 		{
 		}
 
@@ -115,7 +115,7 @@ namespace Flounder
 
 		std::vector<std::string> GetJointOrder() const { return m_jointOrder; }
 
-		std::vector<VertexSkinData*> GetVerticesSkinData() const { return m_verticesSkinData; }
+		std::vector<VertexSkinData *> GetVerticesSkinData() const { return m_verticesSkinData; }
 	};
 
 	class F_EXPORT SkinLoader
@@ -140,6 +140,6 @@ namespace Flounder
 
 		std::vector<int> GetEffectiveJointsCounts(LoadedValue *weightsDataNode);
 
-		std::vector<VertexSkinData*> GetSkinData(LoadedValue *weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights);
+		std::vector<VertexSkinData *> GetSkinData(LoadedValue *weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights);
 	};
 }
