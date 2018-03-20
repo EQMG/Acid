@@ -13,7 +13,7 @@ namespace Flounder
 	LodBehaviour::LodBehaviour() :
 		Behaviour(),
 		m_modelLods(std::vector<Model *> ()),
-		m_currentLod(-1)
+		m_currentLod(5)
 	{
 		for (int i = 0; i < static_cast<int>(TerrainRender::SQUARE_SIZES.size()); i++)
 		{

@@ -23,7 +23,7 @@ namespace Flounder
 		m_indexBuffer(nullptr),
 		m_aabb(new ColliderAabb())
 	{
-		std::vector<Vertex> vertices = std::vector<Vertex>();
+		std::vector<VertexModel> vertices = std::vector<VertexModel>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		ModelLoaded modelLoaded = LoadFromFile(filename);
@@ -41,7 +41,7 @@ namespace Flounder
 		m_aabb->Set(CalculateAabb(vertices));
 	}
 
-	Model::Model(std::vector<Vertex> &vertices, std::vector<uint32_t> &indices, const std::string &name) :
+	Model::Model(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices, const std::string &name) :
 		IResource(),
 		m_filename(name),
 		m_vertexBuffer(new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data())),
@@ -51,7 +51,7 @@ namespace Flounder
 		m_aabb->Set(CalculateAabb(vertices));
 	}
 
-	Model::Model(std::vector<Vertex> &vertices, const std::string &name) :
+	Model::Model(std::vector<VertexModel> &vertices, const std::string &name) :
 		IResource(),
 		m_filename(name),
 		m_vertexBuffer(new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data())),
@@ -91,7 +91,7 @@ namespace Flounder
 		//	}
 	}
 
-	void Model::Set(std::vector<Vertex> &vertices, std::vector<uint32_t> &indices, const std::string &name)
+	void Model::Set(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices, const std::string &name)
 	{
 		m_filename = name;
 		delete m_vertexBuffer;
@@ -111,7 +111,7 @@ namespace Flounder
 		delete m_vertexBuffer;
 
 		ModelLoaded modelLoaded = ModelLoaded{
-			std::vector<Vertex>(),
+			std::vector<VertexModel>(),
 			std::vector<uint32_t>()
 		};
 
@@ -150,8 +150,8 @@ namespace Flounder
 				}
 				else if (prefix == "vt")
 				{
-					const Vector2 texture = Vector2(stof(split.at(1)), 1.0f - stof(split.at(2)));
-					uvsList.push_back(texture);
+					const Vector2 uv = Vector2(stof(split.at(1)), 1.0f - stof(split.at(2)));
+					uvsList.push_back(uv);
 				}
 				else if (prefix == "vn")
 				{
@@ -211,7 +211,7 @@ namespace Flounder
 			const Vector3 normal = normalsList.at(current->GetNormalIndex());
 			const Vector3 tangent = current->GetAverageTangent();
 
-			const Vertex vertex = Vertex(position, textures, normal, tangent);
+			const VertexModel vertex = VertexModel(position, textures, normal, tangent);
 
 			modelLoaded.vertices.push_back(vertex);
 
@@ -297,7 +297,7 @@ namespace Flounder
 		delete deltaUv2;
 	}
 
-	ColliderAabb Model::CalculateAabb(const std::vector<Vertex> &vertices)
+	ColliderAabb Model::CalculateAabb(const std::vector<VertexModel> &vertices)
 	{
 		float minX = +std::numeric_limits<float>::infinity();
 		float minY = +std::numeric_limits<float>::infinity();

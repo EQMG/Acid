@@ -5,6 +5,7 @@
 #include "../../Objects/Component.hpp"
 #include "Animation/AnimationLoader.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
+#include "Geometry/GeometryLoader.hpp"
 #include "Skin/SkinLoader.hpp"
 
 namespace Flounder
@@ -15,8 +16,8 @@ namespace Flounder
 	private:
 		std::string m_filename;
 
+		Model *m_model;
 		Animation *m_animation;
-
 	public:
 		static const Matrix4 *S_CORRECTION;
 		static const int MAX_WEIGHTS;

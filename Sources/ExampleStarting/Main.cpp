@@ -27,15 +27,6 @@ int main(int argc, char **argv)
 	auto configManager = new ConfigManager();
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
-	FileJson *animation = new FileJson("Resources/Entities/Player/Model.json");
-	animation->Load();
-	for (auto test : animation->GetParent()->GetChild("COLLADA")->GetChild("library_controllers")
-		->GetChild("controller")->GetChild("skin")->GetChild("vertex_weights")
-		->GetChild("input")->GetChild(0)->GetChildren())
-	{
-		printf("%s: %s\n", test->m_name.c_str(), test->m_value.c_str());
-	}
-
 	// Adds to the component registry.
 	ComponentRegister::Register("FpsPlayer", REGISTER_CREATE(FpsPlayer));
 

@@ -8,7 +8,7 @@ namespace Flounder
 	ShapeSphere::ShapeSphere(const int &latitudeBands, const int &longitudeBands, const float &radius) :
 		Model()
 	{
-		std::vector<Vertex> vertices = std::vector<Vertex>();
+		std::vector<VertexModel> vertices = std::vector<VertexModel>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		for (int latNumber = 0; latNumber <= latitudeBands; latNumber++)
@@ -23,7 +23,7 @@ namespace Flounder
 				float sinPhi = static_cast<float>(sin(phi));
 				float cosPhi = static_cast<float>(cos(phi));
 
-				Vertex vertex = Vertex();
+				VertexModel vertex = VertexModel();
 				vertex.m_normal.m_x = cosPhi * sinTheta;
 				vertex.m_normal.m_y = cosTheta;
 				vertex.m_normal.m_z = sinPhi * sinTheta;
