@@ -85,7 +85,7 @@ namespace Demo
 		// Planets.
 		GameObject *planet = new GameObject(Transform(Vector3()));
 		planet->SetName("Etaran");
-		planet->AddComponent(new Planet(4));
+		planet->AddComponent(new Planet(1));
 
 		// Waters.
 	//	GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));

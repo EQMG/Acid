@@ -14,7 +14,7 @@ namespace Flounder
 		m_armatureData = libraryControllers->GetChild("visual_scene")->GetChildWithAttribute("node", "-id", "Armature");
 		auto headNode = m_armatureData->GetChild("node");
 		auto headJoint = LoadJointData(headNode, true);
-	//	m_skeletonData = new SkeletonData(m_jointCount, headJoint);
+		m_skeletonData = new SkeletonData(m_jointCount, headJoint);
 	}
 
 	SkeletonLoader::~SkeletonLoader()
@@ -83,7 +83,7 @@ namespace Flounder
 
 		for (unsigned int i = 0; i < rawData.size(); i++)
 		{
-			data[i] = FormatString::ConvertTo<float>(rawData[i]);
+			data[i] = stof(rawData[i]);
 		}
 
 		Matrix4 result = Matrix4(data);

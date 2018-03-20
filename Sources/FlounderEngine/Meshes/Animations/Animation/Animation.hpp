@@ -19,6 +19,10 @@ namespace Flounder
 
 		~AnimationData()
 		{
+			for (auto keyframeData : m_keyframes)
+			{
+				delete keyframeData;
+			}
 		}
 
 		float GetLengthSeconds() const { return m_lengthSeconds; }

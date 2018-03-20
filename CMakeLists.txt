@@ -18,12 +18,12 @@ message(STATUS "Shared Libs: ${BUILD_SHARED_LIBS}")
 
 # Preprocessor
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-	add_definitions(-DFLOUNDER_VERBOSE)
-	add_definitions(-DFLOUNDER_CONFIG_DEBUG)
+    add_definitions(-DFLOUNDER_VERBOSE)
+    add_definitions(-DFLOUNDER_CONFIG_DEBUG)
 elseif("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	add_definitions(-DFLOUNDER_CONFIG_RELEASE)
 elseif("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
-	set(CMAKE_BUILD_TYPE "Release")
+    add_definitions(-DFLOUNDER_VERBOSE)
 	add_definitions(-DFLOUNDER_CONFIG_RELEASE)
 endif()
 

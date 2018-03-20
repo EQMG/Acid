@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	class F_EXPORT Vertex
+	class F_EXPORT VertexModel
 	{
 	public:
 		Vector3 m_position;
@@ -15,11 +15,11 @@ namespace Flounder
 		Vector3 m_normal;
 		Vector3 m_tangent;
 
-		Vertex(const Vector3 &position = Vector3(), const Vector2 &uv = Vector2(), const Vector3 &normal = Vector3(), const Vector3 &tangent = Vector3());
+		VertexModel(const Vector3 &position = Vector3(), const Vector2 &uv = Vector2(), const Vector3 &normal = Vector3(), const Vector3 &tangent = Vector3());
 
-		Vertex(const Vertex &source);
+		VertexModel(const VertexModel &source);
 
-		~Vertex();
+		~VertexModel();
 
 		static std::vector<VkVertexInputBindingDescription> GetBindingDescriptions(const VkVertexInputRate &inputRate = VK_VERTEX_INPUT_RATE_VERTEX);
 

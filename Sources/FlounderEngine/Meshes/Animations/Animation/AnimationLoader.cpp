@@ -25,7 +25,6 @@ namespace Flounder
 
 	AnimationLoader::~AnimationLoader()
 	{
-
 		delete m_animationData;
 	}
 
@@ -38,14 +37,14 @@ namespace Flounder
 
 	std::vector<float> AnimationLoader::GetKeyTimes()
 	{
-		//LoadedValue *timeData = m_libraryAnimations->GetChildWithAttribute("animation", "-id", "Armature_Torso_pose_matrix")->GetChild("float_array")->GetChild("#text");
-		std::string testingTime = "1 0 0 0 0 -0.06466547 -0.997907 0 0 0.997907 -0.06466556 3.810999 0 0 0 1 1 0 0 0 0 -0.06466547 -0.997907 0 0 0.997907 -0.06466556 3.210999 0 0 0 1 1 0 0 0 0 -0.06466547 -0.997907 0 0 0.997907 -0.06466556 3.810999 0 0 0 1 1 0 0 0 0 -0.06466547 -0.997907 0 0 0.997907 -0.06466556 3.210999 0 0 0 1 1 0 0 0 0 -0.06466547 -0.997907 0 0 0.997907 -0.06466556 3.810999 0 0 0 1";
-		auto rawTimes = FormatString::Split(testingTime, " "); // timeData->GetString()
+		// LoadedValue *timeData = m_libraryAnimations->GetChild("animation")->GetChild("source")->GetChild("float_array")->GetChild("#text");
+		std::string tempTesting = "0 0.2083333 0.4166666 0.625 0.8333333";
+		auto rawTimes = FormatString::Split(tempTesting, " "); // timeData->GetString()
 		std::vector<float> times = std::vector<float>(rawTimes.size());
 
-		for (int i = 0; i < times.size(); i++)
+		for (unsigned int i = 0; i < times.size(); i++)
 		{
-			times[i] = FormatString::ConvertTo<float>(rawTimes[i]);
+			times[i] = stof(rawTimes[i]);
 		}
 
 		return times;
@@ -55,10 +54,10 @@ namespace Flounder
 	{
 		std::vector<KeyframeData *> frames = std::vector<KeyframeData *>(times.size());
 
-		for (int i = 0; i < frames.size(); i++) {
+		for (unsigned int i = 0; i < frames.size(); i++) {
 
-			KeyframeData keyframeData = KeyframeData(times[i]);
-			frames[i] = &keyframeData;
+			KeyframeData *keyframeData = new KeyframeData(times[i]);
+			frames[i] = keyframeData;
 		}
 
 		return frames;
@@ -99,7 +98,7 @@ namespace Flounder
 		{
 			for (unsigned int j = 0; j < 16; j++)
 			{
-				matrixData[j] = FormatString::ConvertTo<float>(rawData.at(i * 16 + j));
+				matrixData[j] = stof(rawData.at(i * 16 + j));
 			}
 
 			Matrix4 transform = Matrix4(matrixData);
