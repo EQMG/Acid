@@ -23,6 +23,10 @@ namespace Flounder
 
 		~JointData()
 		{
+			for (auto child : m_children)
+			{
+				delete child;
+			}
 		}
 
 		int GetIndex() const { return m_index; }

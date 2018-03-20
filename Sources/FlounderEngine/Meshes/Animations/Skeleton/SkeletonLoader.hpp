@@ -19,6 +19,7 @@ namespace Flounder
 
 		~SkeletonData()
 		{
+			delete m_headJoint;
 		}
 
 		int GetJointCount() const { return m_jointCount; }
@@ -45,7 +46,7 @@ namespace Flounder
 	private:
 		JointData *LoadJointData(LoadedValue *jointNode, const bool &isRoot);
 
-		JointData ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot);
+		JointData *ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot);
 
 		int GetBoneIndex(const std::string &name);
 

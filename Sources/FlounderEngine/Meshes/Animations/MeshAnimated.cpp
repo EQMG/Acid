@@ -12,18 +12,23 @@ namespace Flounder
 		Component(),
 		m_filename(filename),
 		m_model(nullptr),
-		m_animation(nullptr)
+		m_headJoint(nullptr),
+		m_animation(nullptr),
+		m_animator(nullptr)
 	{
 	}
 
 	MeshAnimated::~MeshAnimated()
 	{
-		delete m_animation;
+		delete m_headJoint;
 		delete m_model;
+		delete m_animation;
+		delete m_animator;
 	}
 
 	void MeshAnimated::Update()
 	{
+		m_animator->Update();
 	}
 
 	void MeshAnimated::Load(LoadedValue *value)
@@ -39,7 +44,9 @@ namespace Flounder
 	void MeshAnimated::TrySetModel(const std::string &filename)
 	{
 		delete m_animation;
+		delete m_headJoint;
 		delete m_model;
+		delete m_animator;
 
 		if (!FileSystem::FileExists(filename))
 		{
@@ -55,6 +62,7 @@ namespace Flounder
 			skinLoader->GetData()->GetJointOrder());
 		GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetData()->GetVerticesSkinData());
 	//	m_model = new Model(geometryLoader->GetData()->GetVertices(), geometryLoader->GetData()->GetIndices());
+		m_headJoint = CreateJoints(skeletonLoader->GetData()->GetHeadJoint());
 		delete skinLoader;
 		delete skeletonLoader;
 		delete geometryLoader;
@@ -65,5 +73,20 @@ namespace Flounder
 		delete animationLoader;
 
 		delete file;
+
+		m_animator = new Animator(m_headJoint);
+		m_animator->DoAnimation(m_animation);
+	}
+
+	Joint *MeshAnimated::CreateJoints(JointData *data)
+	{
+		Joint *j = new Joint(data->GetIndex(), data->GetNameId(), data->GetBindLocalTransform());
+
+		for (auto child : data->GetChildren())
+		{
+			j->AddChild(CreateJoints(child));
+		}
+
+		return j;
 	}
 }

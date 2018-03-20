@@ -10,7 +10,7 @@ namespace Flounder
 		m_positionsList(std::vector<std::pair<VertexData *, VertexSkinData*>>()),
 		m_uvsList(std::vector<Vector2>()),
 		m_normalsList(std::vector<Vector3>()),
-		m_verticesList(std::vector<VertexAnimated>()),
+		m_verticesList(std::vector<VertexModel>()),
 		m_indicesList(std::vector<uint32_t>()),
 		m_geometryData(nullptr)
 	{
