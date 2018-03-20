@@ -53,9 +53,16 @@ namespace Flounder
 
 	LoadedValue *LoadedValue::GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value)
 	{
-		for (auto child : this->GetChild(childName)->m_children)
+		if (GetChild(childName) == nullptr)
 		{
-			if (child->GetChild(attribute)->GetString() == value)
+			return nullptr;
+		}
+
+		for (auto child : GetChild(childName)->m_children)
+		{
+			auto attrib = child->GetChild(attribute);
+
+			if (attrib != nullptr && attrib->GetString() == value)
 			{
 				return child;
 			}

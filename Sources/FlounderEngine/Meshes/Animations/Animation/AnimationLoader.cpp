@@ -7,25 +7,28 @@ namespace Flounder
 	AnimationLoader::AnimationLoader(LoadedValue *libraryAnimations, LoadedValue *libraryVisualScenes) :
 		m_libraryAnimations(libraryAnimations),
 		m_libraryVisualScenes(libraryVisualScenes),
-		m_animationData(nullptr)
+		m_lengthSeconds(0.0f),
+		m_keyframeData(std::vector<KeyframeData *>())
 	{
+		auto animationNodes = m_libraryAnimations->GetChild("animation")->m_children;
+
 		std::string rootNode = FindRootJointName();
 		std::vector<float> times = GetKeyTimes();
-		float duration = times.at(times.size() - 1);
-		std::vector<KeyframeData *> keyframes = InitKeyframes(times);
-		auto animationNodes = m_libraryAnimations->GetChild("animation")->m_children;
+		m_lengthSeconds = times.at(times.size() - 1);
+		CreateKeyframeData(times);
 
 		for (auto jointNode : animationNodes)
 		{
-			LoadJointTransforms(keyframes, jointNode, rootNode);
+			LoadJointTransforms(jointNode, rootNode);
 		}
-
-		m_animationData = new AnimationData(duration, keyframes);
 	}
 
 	AnimationLoader::~AnimationLoader()
 	{
-		delete m_animationData;
+		for (auto keyframeData : m_keyframeData)
+		{
+			delete keyframeData;
+		}
 	}
 
 	std::string AnimationLoader::FindRootJointName()
@@ -37,6 +40,7 @@ namespace Flounder
 
 	std::vector<float> AnimationLoader::GetKeyTimes()
 	{
+		// TODO
 		// LoadedValue *timeData = m_libraryAnimations->GetChild("animation")->GetChild("source")->GetChild("float_array")->GetChild("#text");
 		std::string tempTesting = "0 0.2083333 0.4166666 0.625 0.8333333";
 		auto rawTimes = FormatString::Split(tempTesting, " "); // timeData->GetString()
@@ -50,20 +54,17 @@ namespace Flounder
 		return times;
 	}
 
-	std::vector<KeyframeData *> AnimationLoader::InitKeyframes(const std::vector<float> &times)
+	void AnimationLoader::CreateKeyframeData(const std::vector<float> &times)
 	{
-		std::vector<KeyframeData *> frames = std::vector<KeyframeData *>(times.size());
-
-		for (unsigned int i = 0; i < frames.size(); i++) {
+		for (unsigned int i = 0; i < times.size(); i++)
+		{
 
 			KeyframeData *keyframeData = new KeyframeData(times[i]);
-			frames[i] = keyframeData;
+			m_keyframeData.push_back(keyframeData);
 		}
-
-		return frames;
 	}
 
-	void AnimationLoader::LoadJointTransforms(const std::vector<KeyframeData *> &frames, LoadedValue *jointData, const std::string &rootNodeId)
+	void AnimationLoader::LoadJointTransforms(LoadedValue *jointData, const std::string &rootNodeId)
 	{
 		std::string jointNameId = GetJointName(jointData);
 		std::string dataId = GetDataId(jointData);
@@ -72,7 +73,7 @@ namespace Flounder
 
 		std::string data = transformData->GetChild("float_array")->GetChild("#text")->GetString();
 		auto splitData = FormatString::Split(data, " ");
-		ProcessTransforms(jointNameId, splitData, frames, jointNameId == rootNodeId);
+		ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 	}
 
 	std::string AnimationLoader::GetDataId(LoadedValue *jointData)
@@ -90,11 +91,11 @@ namespace Flounder
 		return splitData.at(0);
 	}
 
-	void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const std::vector<KeyframeData *> &keyframes, const bool &root)
+	void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root)
 	{
 		float *matrixData = new float[16];
 
-		for (unsigned int i = 0; i < keyframes.size(); i++)
+		for (unsigned int i = 0; i < m_keyframeData.size(); i++)
 		{
 			for (unsigned int j = 0; j < 16; j++)
 			{
@@ -110,7 +111,7 @@ namespace Flounder
 				Matrix4::Multiply(*MeshAnimated::S_CORRECTION, transform, &transform);
 			}
 
-			keyframes.at(i)->AddJointTransform(new JointTransformData(jointName, transform));
+			m_keyframeData.at(i)->AddJointTransform(new JointTransformData(jointName, transform));
 		}
 
 		delete[] matrixData;

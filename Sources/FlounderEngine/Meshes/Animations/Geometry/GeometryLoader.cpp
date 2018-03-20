@@ -4,15 +4,14 @@
 
 namespace Flounder
 {
-	GeometryLoader::GeometryLoader(LoadedValue *libraryGeometries, const std::vector<VertexSkinData*> &vertexWeights) :
+	GeometryLoader::GeometryLoader(LoadedValue *libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
 		m_meshData(libraryGeometries->GetChild("geometry")->GetChild("mesh")),
 		m_vertexWeights(vertexWeights),
-		m_positionsList(std::vector<std::pair<VertexData *, VertexSkinData*>>()),
+		m_positionsList(std::vector<std::pair<VertexData *, VertexSkinData *>>()),
 		m_uvsList(std::vector<Vector2>()),
 		m_normalsList(std::vector<Vector3>()),
-		m_verticesList(std::vector<VertexModel>()),
-		m_indicesList(std::vector<uint32_t>()),
-		m_geometryData(nullptr)
+		m_vertices(std::vector<VertexAnimated>()),
+		m_indices(std::vector<uint32_t>())
 	{
 		LoadVertices();
 		LoadUvs();
@@ -22,28 +21,25 @@ namespace Flounder
 
 		for (auto current : m_positionsList)
 		{
-			/*const Vector3 position = current.first->GetPosition();
+			const Vector3 position = current.first->GetPosition();
 			const Vector2 textures = m_uvsList.at(current.first->GetUvIndex());
 			const Vector3 normal = m_normalsList.at(current.first->GetNormalIndex());
 			const Vector3 tangent = current.first->GetAverageTangent();
 
-			const VertexSkinData* skin = current.second;
-			const Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
-			const Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
+			//	const VertexSkinData* skin = current.second;
+			//	const Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
+			//	const Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
 
-			VertexAnimated vertex = VertexAnimated(position, textures, normal, tangent, jointIds, weights);
+			VertexAnimated vertex = VertexAnimated(position, textures, normal, tangent); // , jointIds, weights
 
-			m_verticesList.push_back(vertex);*/
+			m_vertices.push_back(vertex);
 
 			delete current.first;
 		}
-
-		m_geometryData = new GeometryData(m_verticesList, m_indicesList);
 	}
 
 	GeometryLoader::~GeometryLoader()
 	{
-		delete m_geometryData;
 	}
 
 	void GeometryLoader::LoadVertices()
@@ -53,12 +49,12 @@ namespace Flounder
 		int positionsCount = stoi(positionsData->GetChild("-count")->GetString());
 		auto positionsRawData = FormatString::Split(positionsData->GetChild("#text")->GetString(), " ");
 
-		for (unsigned int i = 0; i < positionsCount / 3; i++)
+		for (int i = 0; i < positionsCount / 3; i++)
 		{
 			Vector4 position = Vector4(stof(positionsRawData[i * 3]), stof(positionsRawData[i * 3 + 1]), stof(positionsRawData[i * 3 + 2]), 1.0f);
 			Matrix4::Transform(*MeshAnimated::S_CORRECTION, position, &position); // Matrix4::Multiply
 			VertexData *newVertex = new VertexData(m_positionsList.size(), position);
-			m_positionsList.push_back(std::make_pair(newVertex, m_vertexWeights.at(m_verticesList.size())));
+			m_positionsList.push_back(std::make_pair(newVertex, m_vertexWeights.at(m_vertices.size())));
 		}
 	}
 
@@ -69,7 +65,7 @@ namespace Flounder
 		int uvsCount = stoi(uvsData->GetChild("-count")->GetString());
 		auto uvsRawData = FormatString::Split(uvsData->GetChild("#text")->GetString(), " ");
 
-		for (unsigned int i = 0; i < uvsCount / 2; i++)
+		for (int i = 0; i < uvsCount / 2; i++)
 		{
 			Vector2 uv = Vector2(stof(uvsRawData[i * 2]), 1.0f - stof(uvsRawData[i * 2 + 1]));
 			m_uvsList.push_back(uv);
@@ -83,7 +79,7 @@ namespace Flounder
 		int normalsCount = stoi(normalsData->GetChild("-count")->GetString());
 		auto normalsRawData = FormatString::Split(normalsData->GetChild("#text")->GetString(), " ");
 
-		for (unsigned int i = 0; i < normalsCount / 3; i++)
+		for (int i = 0; i < normalsCount / 3; i++)
 		{
 			Vector3 normal = Vector3(stof(normalsRawData[i * 3]), stof(normalsRawData[i * 3 + 1]), stof(normalsRawData[i * 3 + 2]));
 			m_normalsList.push_back(normal);
@@ -95,7 +91,7 @@ namespace Flounder
 		int indexCount = m_meshData->GetChild("polylist")->GetChild("input")->m_children.size();
 		auto indexRawData = FormatString::Split(m_meshData->GetChild("polylist")->GetChild("p")->GetString(), " ");
 
-		for (unsigned int i = 0; i < indexRawData.size() / indexCount; i++)
+		for (int i = 0; i < indexRawData.size() / indexCount; i++)
 		{
 			int positionIndex = stoi(indexRawData[i * indexCount]);
 			int normalIndex = stoi(indexRawData[i * indexCount + 1]);
@@ -112,7 +108,7 @@ namespace Flounder
 		{
 			currentVertex.first->SetUvIndex(uvIndex);
 			currentVertex.first->SetNormalIndex(normalIndex);
-			m_indicesList.push_back(positionIndex);
+			m_indices.push_back(positionIndex);
 			return currentVertex;
 		}
 		else
@@ -125,12 +121,12 @@ namespace Flounder
 	{
 		if (previousVertex.first->HasSameTextureAndNormal(newUvIndex, newNormalIndex))
 		{
-			m_indicesList.push_back(previousVertex.first->GetIndex());
+			m_indices.push_back(previousVertex.first->GetIndex());
 			return previousVertex;
 		}
 		else
 		{
-			std::pair<VertexData *, VertexSkinData*> anotherVertex;
+			std::pair<VertexData *, VertexSkinData *> anotherVertex;
 
 			for (auto position : m_positionsList)
 			{
@@ -152,7 +148,7 @@ namespace Flounder
 				duplicateVertex.first->SetNormalIndex(newNormalIndex);
 				previousVertex.first->SetDuplicateVertex(duplicateVertex.first);
 				m_positionsList.push_back(duplicateVertex);
-				m_indicesList.push_back(duplicateVertex.first->GetIndex());
+				m_indices.push_back(duplicateVertex.first->GetIndex());
 				return duplicateVertex;
 			}
 		}

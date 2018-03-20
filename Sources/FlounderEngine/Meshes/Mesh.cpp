@@ -57,13 +57,13 @@ namespace Flounder
 			m_model = ShapeSphere::Resource(filename);
 			return;
 		}
-		
+
 		if (!split.empty() && split.at(0) == "Cube")
 		{
 			m_model = ShapeCube::Resource(filename);
 			return;
 		}
-		
+
 		if (!split.empty() && split.at(0) == "Rectangle")
 		{
 			m_model = ShapeRectangle::Resource(filename);

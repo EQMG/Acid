@@ -69,7 +69,7 @@ namespace Flounder
 			previousFrame = allFrames->at(i);
 		}
 
-		return { previousFrame, nextFrame };
+		return {previousFrame, nextFrame};
 	}
 
 	float Animator::CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame)
