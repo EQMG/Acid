@@ -2,15 +2,15 @@
 
 namespace Flounder
 {
-	Keyframe::Keyframe(const float &timeStamp, const std::map<std::string, JointTransform*> &pose) :
+	Keyframe::Keyframe(const float &timeStamp, const std::map<std::string, JointTransform *> &pose) :
 		m_timeStamp(timeStamp),
-		m_pose(new std::map<std::string, JointTransform*>(pose))
+		m_pose(new std::map<std::string, JointTransform *>(pose))
 	{
 	}
 
 	Keyframe::Keyframe(const KeyframeData &data) :
 		m_timeStamp(data.GetTime()),
-		m_pose(new std::map<std::string, JointTransform*>())
+		m_pose(new std::map<std::string, JointTransform *>())
 	{
 		for (auto jointData : data.GetJointTransforms())
 		{

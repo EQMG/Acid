@@ -9,17 +9,16 @@ namespace Flounder
 		m_armatureData(nullptr),
 		m_boneOrder(boneOrder),
 		m_jointCount(0),
-		m_skeletonData(nullptr)
+		m_headJoint(nullptr)
 	{
 		m_armatureData = libraryControllers->GetChild("visual_scene")->GetChildWithAttribute("node", "-id", "Armature");
 		auto headNode = m_armatureData->GetChild("node");
-		auto headJoint = LoadJointData(headNode, true);
-		m_skeletonData = new SkeletonData(m_jointCount, headJoint);
+		m_headJoint = LoadJointData(headNode, true);
 	}
 
 	SkeletonLoader::~SkeletonLoader()
 	{
-		delete m_skeletonData;
+		delete m_headJoint;
 	}
 
 	JointData *SkeletonLoader::LoadJointData(LoadedValue *jointNode, const bool &isRoot)

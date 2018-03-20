@@ -2,30 +2,10 @@
 
 #include "../../../Maths/Vector3.hpp"
 #include "../../../Maths/Quaternion.hpp"
+#include "JointTransformData.hpp"
 
 namespace Flounder
 {
-	class F_EXPORT JointTransformData
-	{
-	private:
-		std::string m_jointNameId;
-		Matrix4 m_jointLocalTransform;
-	public:
-		JointTransformData(const std::string &jointNameId, const Matrix4 &jointLocalTransform) :
-			m_jointNameId(jointNameId),
-			m_jointLocalTransform(Matrix4(jointLocalTransform))
-		{
-		}
-
-		~JointTransformData()
-		{
-		}
-
-		std::string GetJointNameId() const { return m_jointNameId; }
-
-		Matrix4 GetJointLocalTransform() const { return m_jointLocalTransform; }
-	};
-
 	class F_EXPORT JointTransform
 	{
 	private:

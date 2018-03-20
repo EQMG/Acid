@@ -4,15 +4,15 @@ namespace Flounder
 {
 	Animation::Animation(const float &length, const std::vector<Keyframe *> &keyframes) :
 		m_length(length),
-		m_keyframes(new std::vector<Keyframe*>(keyframes))
+		m_keyframes(new std::vector<Keyframe *>(keyframes))
 	{
 	}
 
-	Animation::Animation(const AnimationData &data) :
-		m_length(data.GetLengthSeconds()),
-		m_keyframes(new std::vector<Keyframe*>())
+	Animation::Animation(const float &length, const std::vector<KeyframeData *> &keyframeData) :
+		m_length(length),
+		m_keyframes(new std::vector<Keyframe *>())
 	{
-		for (auto frameData : data.GetKeyframes())
+		for (auto frameData : keyframeData)
 		{
 			m_keyframes->push_back(new Keyframe(*frameData));
 		}
