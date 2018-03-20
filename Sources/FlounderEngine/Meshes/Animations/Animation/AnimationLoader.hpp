@@ -7,7 +7,6 @@ namespace Flounder
 	class F_EXPORT AnimationLoader
 	{
 	private:
-
 		LoadedValue *m_libraryAnimations;
 		LoadedValue *m_libraryVisualScenes;
 

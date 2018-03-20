@@ -11,8 +11,8 @@ namespace Flounder
 			VK_POLYGON_MODE_FILL, // polygonMode
 			VK_CULL_MODE_BACK_BIT, // cullModeFlags
 
-			Vertex::GetBindingDescriptions(), // vertexBindingDescriptions
-			Vertex::GetAttributeDescriptions(1), // vertexAttributeDescriptions
+			VertexModel::GetBindingDescriptions(), // vertexBindingDescriptions
+			VertexModel::GetAttributeDescriptions(1), // vertexAttributeDescriptions
 
 			{}, // descriptors
 

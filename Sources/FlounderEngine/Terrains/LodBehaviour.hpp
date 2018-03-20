@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	private:
 		std::vector<Model *> m_modelLods;
-		int m_currentLod;
+		unsigned int m_currentLod;
 	public:
 		LodBehaviour();
 

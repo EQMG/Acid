@@ -226,12 +226,12 @@ namespace Flounder
 
 		static void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, Text *object);
 
-		static std::vector<Vertex> CreateQuad(Text *object, std::vector<Line> lines);
+		static std::vector<VertexModel> CreateQuad(Text *object, std::vector<Line> lines);
 
-		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<Vertex> &vertices);
+		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<VertexModel> &vertices);
 
-		static void AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<Vertex> &vertices);
+		static void AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<VertexModel> &vertices);
 
-		static std::vector<Vertex> NormalizeQuad(Vector2 *bounding, const std::vector<Vertex> &vertices);
+		static std::vector<VertexModel> NormalizeQuad(Vector2 *bounding, const std::vector<VertexModel> &vertices);
 	};
 }

@@ -108,7 +108,7 @@ namespace Flounder
 	void Chunk::Generate()
 	{
 		auto position = *GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
-		auto noise = Worlds::Get()->GetNoise();
+	//	auto noise = Worlds::Get()->GetNoise();
 
 		for (int x = 0; x < CHUNK_WIDTH; x++)
 		{
@@ -116,7 +116,9 @@ namespace Flounder
 			{
 				for (int y = 0; y < CHUNK_HEIGHT; y++)
 				{
-					int height = 8; // (int) std::floor(CHUNK_HEIGHT * (noise->GetValue(x + position.m_x, y + position.m_y, z + position.m_z) + 0.1f));
+					m_blocks->at(x).at(z).at(y)->SetType("Stone");
+
+					/*int height = (int) std::floor(CHUNK_HEIGHT * (noise->GetValue(x + position.m_x, y + position.m_y, z + position.m_z) + 0.1f));
 
 					if (y > height)
 					{
@@ -134,7 +136,7 @@ namespace Flounder
 					else
 					{
 						m_blocks->at(x).at(z).at(y)->SetType("Stone");
-					}
+					}*/
 				}
 			}
 		}
@@ -153,7 +155,7 @@ namespace Flounder
 			return;
 		}
 
-		std::vector<Vertex> vertices = {};
+		std::vector<VertexModel> vertices = {};
 		std::vector<uint32_t> indices = {};
 
 		switch (m_chunkMesh)
@@ -184,7 +186,7 @@ namespace Flounder
 #endif
 	}
 
-	void Chunk::CreateSimpleMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices)
+	void Chunk::CreateSimpleMesh(std::vector<VertexModel> *vertices, std::vector<uint32_t> *indices)
 	{
 		int u, v;
 		BlockFace currentFace;
@@ -258,7 +260,7 @@ namespace Flounder
 		}
 	}
 
-	void Chunk::CreateGreedyMesh(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices)
+	void Chunk::CreateGreedyMesh(std::vector<VertexModel> *vertices, std::vector<uint32_t> *indices)
 	{
 		// This method is based off of Robert O'Leary's implementation (https://github.com/roboleary/GreedyMesh)
 
@@ -432,7 +434,7 @@ namespace Flounder
 		return block != nullptr ? block->GetType() : "";
 	}
 
-	void Chunk::GenerateQuad(std::vector<Vertex> *vertices, std::vector<uint32_t> *indices,
+	void Chunk::GenerateQuad(std::vector<VertexModel> *vertices, std::vector<uint32_t> *indices,
 							 const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
 							 const int &width, const int &height,
 							 const std::string &blockType, const bool &backFace)
@@ -463,10 +465,10 @@ namespace Flounder
 		}
 
 		// Pushes vertices and indices from quad.
-		vertices->push_back(Vertex(VOXEL_SIZE * bottomLeft, Vector2(), normal, colour));
-		vertices->push_back(Vertex(VOXEL_SIZE * topLeft, Vector2(), normal, colour));
-		vertices->push_back(Vertex(VOXEL_SIZE * bottomRight, Vector2(), normal, colour));
-		vertices->push_back(Vertex(VOXEL_SIZE * topRight, Vector2(), normal, colour));
+		vertices->push_back(VertexModel(VOXEL_SIZE * bottomLeft, Vector2(), normal, colour));
+		vertices->push_back(VertexModel(VOXEL_SIZE * topLeft, Vector2(), normal, colour));
+		vertices->push_back(VertexModel(VOXEL_SIZE * bottomRight, Vector2(), normal, colour));
+		vertices->push_back(VertexModel(VOXEL_SIZE * topRight, Vector2(), normal, colour));
 
 		indices->push_back(indexStart + 2);
 		indices->push_back(indexStart + (backFace ? 0 : 3));

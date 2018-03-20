@@ -8,10 +8,10 @@ namespace Flounder
 	const Matrix4 *MeshAnimated::S_CORRECTION = Matrix4::Rotate(Matrix4(), Vector3::RIGHT, Maths::Radians(-90.0f), nullptr);
 	const int MeshAnimated::MAX_WEIGHTS = 3;
 
-
 	MeshAnimated::MeshAnimated(const std::string &filename) :
 		Component(),
 		m_filename(filename),
+		m_model(nullptr),
 		m_animation(nullptr)
 	{
 	}
@@ -19,11 +19,11 @@ namespace Flounder
 	MeshAnimated::~MeshAnimated()
 	{
 		delete m_animation;
+		delete m_model;
 	}
 
 	void MeshAnimated::Update()
 	{
-
 	}
 
 	void MeshAnimated::Load(LoadedValue *value)
@@ -39,6 +39,7 @@ namespace Flounder
 	void MeshAnimated::TrySetModel(const std::string &filename)
 	{
 		delete m_animation;
+		delete m_model;
 
 		if (!FileSystem::FileExists(filename))
 		{
@@ -52,15 +53,17 @@ namespace Flounder
 		SkinLoader *skinLoader = new SkinLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
 		SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
 			skinLoader->GetData()->GetJointOrder());
-	//	//GeometryLoader *geometry = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skin->GetData()->GetVerticesSkinData());
-	//	AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
-	//		file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
-
-	//	m_animation = new Animation(*animationLoader->GetData());
-
+		GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetData()->GetVerticesSkinData());
+	//	m_model = new Model(geometryLoader->GetData()->GetVertices(), geometryLoader->GetData()->GetIndices());
 		delete skinLoader;
 		delete skeletonLoader;
-	//	delete animationLoader;
+		delete geometryLoader;
+
+		AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
+			file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
+		m_animation = new Animation(*animationLoader->GetData());
+		delete animationLoader;
+
 		delete file;
 	}
 }
