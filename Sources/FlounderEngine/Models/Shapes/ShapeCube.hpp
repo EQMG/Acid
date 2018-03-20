@@ -27,9 +27,9 @@ namespace Flounder
 		static ShapeCube *Resource(const std::string &filename)
 		{
 			auto split = FormatString::Split(filename, "_");
-			float width = static_cast<float>(atof(split.at(1).c_str()));
-			float height = static_cast<float>(atof(split.at(2).c_str()));
-			float depth = static_cast<float>(atof(split.at(3).c_str()));
+			float width = static_cast<float>(atof(split[1].c_str()));
+			float height = static_cast<float>(atof(split[2].c_str()));
+			float depth = static_cast<float>(atof(split[3].c_str()));
 			return Resource(width, height, depth);
 		}
 

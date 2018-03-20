@@ -52,19 +52,19 @@ namespace Flounder
 
 		auto split = FormatString::Split(filename, "_");
 
-		if (!split.empty() && split.at(0) == "Sphere")
+		if (!split.empty() && split[0] == "Sphere")
 		{
 			m_model = ShapeSphere::Resource(filename);
 			return;
 		}
 
-		if (!split.empty() && split.at(0) == "Cube")
+		if (!split.empty() && split[0] == "Cube")
 		{
 			m_model = ShapeCube::Resource(filename);
 			return;
 		}
 
-		if (!split.empty() && split.at(0) == "Rectangle")
+		if (!split.empty() && split[0] == "Rectangle")
 		{
 			m_model = ShapeRectangle::Resource(filename);
 			return;

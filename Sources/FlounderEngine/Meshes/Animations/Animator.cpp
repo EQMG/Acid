@@ -47,26 +47,26 @@ namespace Flounder
 	std::map<std::string, Matrix4 *> Animator::CalculateCurrentAnimationPose()
 	{
 		auto frames = GetPreviousAndNextFrames();
-		float progression = CalculateProgression(*frames.at(0), *frames.at(1));
-		return InterpolatePoses(*frames.at(0), *frames.at(1), progression);
+		float progression = CalculateProgression(*frames[0], *frames[1]);
+		return InterpolatePoses(*frames[0], *frames[1], progression);
 	}
 
 	std::vector<Keyframe *> Animator::GetPreviousAndNextFrames()
 	{
 		auto allFrames = m_currentAnimation->GetKeyframes();
-		Keyframe *previousFrame = allFrames->at(0);
-		Keyframe *nextFrame = allFrames->at(0);
+		Keyframe *previousFrame = (*allFrames)[0];
+		Keyframe *nextFrame = (*allFrames)[0];
 
 		for (unsigned int i = 1; i < allFrames->size(); i++)
 		{
-			nextFrame = allFrames->at(i);
+			nextFrame = (*allFrames)[i];
 
 			if (nextFrame->GetTimeStamp() > m_animationTime)
 			{
 				break;
 			}
 
-			previousFrame = allFrames->at(i);
+			previousFrame = (*allFrames)[i];
 		}
 
 		return {previousFrame, nextFrame};

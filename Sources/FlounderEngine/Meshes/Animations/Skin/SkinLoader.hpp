@@ -25,10 +25,10 @@ namespace Flounder
 		{
 			for (unsigned int i = 0; i < m_weights.size(); i++)
 			{
-				if (weight > m_weights.at(i))
+				if (weight > m_weights[i])
 				{
-					m_jointIds.at(i) = jointId;
-					m_weights.at(i) = weight;
+					m_jointIds[i] = jointId;
+					m_weights[i] = weight;
 					return;
 				}
 			}
@@ -67,8 +67,8 @@ namespace Flounder
 
 			for (unsigned int i = 0; i < topWeightsArray->size(); i++)
 			{
-				topWeightsArray->at(i) = m_weights.at(i);
-				total += topWeightsArray->at(i);
+				(*topWeightsArray)[i] = m_weights[i];
+				total += (*topWeightsArray)[i];
 			}
 
 			return total;

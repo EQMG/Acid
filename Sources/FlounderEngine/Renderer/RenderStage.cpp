@@ -102,9 +102,9 @@ namespace Flounder
 	{
 		if (activeSwapchainImage > m_framebuffers->GetFramebuffersCount())
 		{
-			return m_framebuffers->GetFramebuffers()[0];
+			return m_framebuffers->GetFramebuffers().at(0);
 		}
 
-		return m_framebuffers->GetFramebuffers()[activeSwapchainImage];
+		return m_framebuffers->GetFramebuffers().at(activeSwapchainImage);
 	}
 }

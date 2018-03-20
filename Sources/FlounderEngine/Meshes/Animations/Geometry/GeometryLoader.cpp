@@ -7,7 +7,7 @@ namespace Flounder
 	GeometryLoader::GeometryLoader(LoadedValue *libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
 		m_meshData(libraryGeometries->GetChild("geometry")->GetChild("mesh")),
 		m_vertexWeights(vertexWeights),
-		m_positionsList(std::vector<std::pair<VertexData *, VertexSkinData *>>()),
+		m_positionsList(std::vector<std::pair<VertexModelData *, VertexSkinData *>>()),
 		m_uvsList(std::vector<Vector2>()),
 		m_normalsList(std::vector<Vector3>()),
 		m_vertices(std::vector<VertexAnimated>()),
@@ -46,15 +46,15 @@ namespace Flounder
 	{
 		std::string positionsSource = m_meshData->GetChild("vertices")->GetChild("input")->GetChild("-source")->GetString().substr(1);
 		LoadedValue *positionsData = m_meshData->GetChildWithAttribute("source", "-id", positionsSource)->GetChild("float_array");
-		int positionsCount = stoi(positionsData->GetChild("-count")->GetString());
+		int positionsCount = std::stoi(positionsData->GetChild("-count")->GetString());
 		auto positionsRawData = FormatString::Split(positionsData->GetChild("#text")->GetString(), " ");
 
-		for (int i = 0; i < positionsCount / 3; i++)
+		for (unsigned int i = 0; i < positionsCount / 3; i++)
 		{
-			Vector4 position = Vector4(stof(positionsRawData[i * 3]), stof(positionsRawData[i * 3 + 1]), stof(positionsRawData[i * 3 + 2]), 1.0f);
+			Vector4 position = Vector4(std::stof(positionsRawData[i * 3]), std::stof(positionsRawData[i * 3 + 1]), std::stof(positionsRawData[i * 3 + 2]), 1.0f);
 			Matrix4::Transform(*MeshAnimated::S_CORRECTION, position, &position); // Matrix4::Multiply
-			VertexData *newVertex = new VertexData(m_positionsList.size(), position);
-			m_positionsList.push_back(std::make_pair(newVertex, m_vertexWeights.at(m_vertices.size())));
+			VertexModelData *newVertex = new VertexModelData(m_positionsList.size(), position);
+			m_positionsList.push_back(std::make_pair(newVertex, m_vertexWeights[m_vertices.size()]));
 		}
 	}
 
@@ -62,12 +62,12 @@ namespace Flounder
 	{
 		std::string uvsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "-semantic", "TEXCOORD")->GetChild("-source")->GetString().substr(1);
 		LoadedValue *uvsData = m_meshData->GetChildWithAttribute("source", "-id", uvsSource)->GetChild("float_array");
-		int uvsCount = stoi(uvsData->GetChild("-count")->GetString());
+		int uvsCount = std::stoi(uvsData->GetChild("-count")->GetString());
 		auto uvsRawData = FormatString::Split(uvsData->GetChild("#text")->GetString(), " ");
 
-		for (int i = 0; i < uvsCount / 2; i++)
+		for (unsigned int i = 0; i < uvsCount / 2; i++)
 		{
-			Vector2 uv = Vector2(stof(uvsRawData[i * 2]), 1.0f - stof(uvsRawData[i * 2 + 1]));
+			Vector2 uv = Vector2(std::stof(uvsRawData[i * 2]), 1.0f - std::stof(uvsRawData[i * 2 + 1]));
 			m_uvsList.push_back(uv);
 		}
 	}
@@ -76,12 +76,12 @@ namespace Flounder
 	{
 		std::string normalsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "-semantic", "NORMAL")->GetChild("-source")->GetString().substr(1);
 		LoadedValue *normalsData = m_meshData->GetChildWithAttribute("source", "-id", normalsSource)->GetChild("float_array");
-		int normalsCount = stoi(normalsData->GetChild("-count")->GetString());
+		int normalsCount = std::stoi(normalsData->GetChild("-count")->GetString());
 		auto normalsRawData = FormatString::Split(normalsData->GetChild("#text")->GetString(), " ");
 
-		for (int i = 0; i < normalsCount / 3; i++)
+		for (unsigned int i = 0; i < normalsCount / 3; i++)
 		{
-			Vector3 normal = Vector3(stof(normalsRawData[i * 3]), stof(normalsRawData[i * 3 + 1]), stof(normalsRawData[i * 3 + 2]));
+			Vector3 normal = Vector3(std::stof(normalsRawData[i * 3]), std::stof(normalsRawData[i * 3 + 1]), std::stof(normalsRawData[i * 3 + 2]));
 			m_normalsList.push_back(normal);
 		}
 	}
@@ -91,18 +91,18 @@ namespace Flounder
 		int indexCount = m_meshData->GetChild("polylist")->GetChild("input")->m_children.size();
 		auto indexRawData = FormatString::Split(m_meshData->GetChild("polylist")->GetChild("p")->GetString(), " ");
 
-		for (int i = 0; i < indexRawData.size() / indexCount; i++)
+		for (unsigned int i = 0; i < indexRawData.size() / indexCount; i++)
 		{
-			int positionIndex = stoi(indexRawData[i * indexCount]);
-			int normalIndex = stoi(indexRawData[i * indexCount + 1]);
-			int uvIndex = stoi(indexRawData[i * indexCount + 2]);
+			int positionIndex = std::stoi(indexRawData[i * indexCount]);
+			int normalIndex = std::stoi(indexRawData[i * indexCount + 1]);
+			int uvIndex = std::stoi(indexRawData[i * indexCount + 2]);
 			ProcessVertex(positionIndex, normalIndex, uvIndex);
 		}
 	}
 
-	std::pair<VertexData *, VertexSkinData *> GeometryLoader::ProcessVertex(const int &positionIndex, const int &normalIndex, const int &uvIndex)
+	std::pair<VertexModelData *, VertexSkinData *> GeometryLoader::ProcessVertex(const int &positionIndex, const int &normalIndex, const int &uvIndex)
 	{
-		auto currentVertex = m_positionsList.at(positionIndex);
+		auto currentVertex = m_positionsList[positionIndex];
 
 		if (!currentVertex.first->IsSet())
 		{
@@ -117,7 +117,7 @@ namespace Flounder
 		}
 	}
 
-	std::pair<VertexData *, VertexSkinData *> GeometryLoader::DealWithAlreadyProcessedVertex(const std::pair<VertexData *, VertexSkinData *> &previousVertex, const int &newUvIndex, const int &newNormalIndex)
+	std::pair<VertexModelData *, VertexSkinData *> GeometryLoader::DealWithAlreadyProcessedVertex(const std::pair<VertexModelData *, VertexSkinData *> &previousVertex, const int &newUvIndex, const int &newNormalIndex)
 	{
 		if (previousVertex.first->HasSameTextureAndNormal(newUvIndex, newNormalIndex))
 		{
@@ -126,7 +126,7 @@ namespace Flounder
 		}
 		else
 		{
-			std::pair<VertexData *, VertexSkinData *> anotherVertex;
+			std::pair<VertexModelData *, VertexSkinData *> anotherVertex;
 
 			for (auto position : m_positionsList)
 			{
@@ -143,7 +143,7 @@ namespace Flounder
 			}
 			else
 			{
-				auto duplicateVertex = std::make_pair(new VertexData(m_positionsList.size(), previousVertex.first->GetPosition()), previousVertex.second);
+				auto duplicateVertex = std::make_pair(new VertexModelData(m_positionsList.size(), previousVertex.first->GetPosition()), previousVertex.second);
 				duplicateVertex.first->SetUvIndex(newUvIndex);
 				duplicateVertex.first->SetNormalIndex(newNormalIndex);
 				previousVertex.first->SetDuplicateVertex(duplicateVertex.first);
