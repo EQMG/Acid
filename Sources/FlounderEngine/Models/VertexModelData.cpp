@@ -1,13 +1,13 @@
-#include "VertexData.hpp"
+#include "VertexModelData.hpp"
 
 namespace Flounder
 {
-	const uint32_t VertexData::NO_INDEX = static_cast<uint32_t>(-1);
+	const uint32_t VertexModelData::NO_INDEX = static_cast<uint32_t>(-1);
 
-	VertexData::VertexData(const uint32_t &index, const Vector3 &position) :
+	VertexModelData::VertexModelData(const uint32_t &index, const Vector3 &position) :
 		m_position(position),
-		m_uvIndex(VertexData::NO_INDEX),
-		m_normalIndex(VertexData::NO_INDEX),
+		m_uvIndex(VertexModelData::NO_INDEX),
+		m_normalIndex(VertexModelData::NO_INDEX),
 		m_duplicateVertex(nullptr),
 		m_index(index),
 		m_length(position.Length()),
@@ -16,17 +16,17 @@ namespace Flounder
 	{
 	}
 
-	VertexData::~VertexData()
+	VertexModelData::~VertexModelData()
 	{
 		//	delete m_duplicateVertex;
 	}
 
-	void VertexData::AddTangent(Vector3 *tangent)
+	void VertexModelData::AddTangent(Vector3 *tangent)
 	{
 		m_tangents.push_back(tangent);
 	}
 
-	void VertexData::AverageTangents()
+	void VertexModelData::AverageTangents()
 	{
 		if (m_tangents.empty())
 		{
@@ -44,12 +44,12 @@ namespace Flounder
 		}
 	}
 
-	bool VertexData::IsSet() const
+	bool VertexModelData::IsSet() const
 	{
 		return (static_cast<uint32_t>(m_uvIndex) != NO_INDEX) && (static_cast<uint32_t>(m_normalIndex) != NO_INDEX);
 	}
 
-	bool VertexData::HasSameTextureAndNormal(const int &textureIndexOther, const int &normalIndexOther) const
+	bool VertexModelData::HasSameTextureAndNormal(const int &textureIndexOther, const int &normalIndexOther) const
 	{
 		return textureIndexOther == m_uvIndex && normalIndexOther == m_normalIndex;
 	}

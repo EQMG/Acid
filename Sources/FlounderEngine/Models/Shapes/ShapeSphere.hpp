@@ -27,9 +27,9 @@ namespace Flounder
 		static ShapeSphere *Resource(const std::string &filename)
 		{
 			auto split = FormatString::Split(filename, "_");
-			int latitudeBands = atoi(split.at(1).c_str());
-			int longitudeBands = atoi(split.at(2).c_str());
-			float radius = static_cast<float>(atof(split.at(3).c_str()));
+			int latitudeBands = atoi(split[1].c_str());
+			int longitudeBands = atoi(split[2].c_str());
+			float radius = static_cast<float>(atof(split[3].c_str()));
 			return Resource(latitudeBands, longitudeBands, radius);
 		}
 

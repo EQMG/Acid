@@ -14,7 +14,7 @@ namespace Flounder
 
 		std::vector<VertexSkinData *> m_vertexWeights;
 
-		std::vector<std::pair<VertexData *, VertexSkinData *>> m_positionsList;
+		std::vector<std::pair<VertexModelData *, VertexSkinData *>> m_positionsList;
 		std::vector<Vector2> m_uvsList;
 		std::vector<Vector3> m_normalsList;
 
@@ -37,9 +37,9 @@ namespace Flounder
 
 		void AssembleVertices();
 
-		std::pair<VertexData *, VertexSkinData *> ProcessVertex(const int &positionIndex, const int &normalIndex, const int &uvIndex);
+		std::pair<VertexModelData *, VertexSkinData *> ProcessVertex(const int &positionIndex, const int &normalIndex, const int &uvIndex);
 
-		std::pair<VertexData *, VertexSkinData *> DealWithAlreadyProcessedVertex(const std::pair<VertexData *, VertexSkinData *> &previousVertex, const int &newUvIndex, const int &newNormalIndex);
+		std::pair<VertexModelData *, VertexSkinData *> DealWithAlreadyProcessedVertex(const std::pair<VertexModelData *, VertexSkinData *> &previousVertex, const int &newUvIndex, const int &newNormalIndex);
 
 		void RemoveUnusedVertices();
 	};

@@ -82,7 +82,7 @@ namespace Flounder
 
 		for (unsigned int i = 0; i < rawData.size(); i++)
 		{
-			data[i] = stof(rawData[i]);
+			data[i] = std::stof(rawData[i]);
 		}
 
 		Matrix4 result = Matrix4(data);
