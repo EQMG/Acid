@@ -39,7 +39,7 @@ namespace Flounder
 
 		for (int i = 0; i < weights.size(); i++)
 		{
-			weights[i] = stof(rawData[i]);
+			weights[i] = std::stof(rawData[i]);
 		}
 
 		return weights;
@@ -52,7 +52,7 @@ namespace Flounder
 
 		for (int i = 0; i < rawData.size(); i++)
 		{
-			counts[i] = stoi(rawData[i]);
+			counts[i] = std::stoi(rawData[i]);
 		}
 
 		return counts;
@@ -70,8 +70,8 @@ namespace Flounder
 
 			for (int i = 0; i < count; i++)
 			{
-				int jointId = stoi(rawData[pointer++]);
-				int weightId = stoi(rawData[pointer++]);
+				int jointId = std::stoi(rawData[pointer++]);
+				int weightId = std::stoi(rawData[pointer++]);
 				skinData.AddJointEffect(jointId, weights[weightId]);
 			}
 

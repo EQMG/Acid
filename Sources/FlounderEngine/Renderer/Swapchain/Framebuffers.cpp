@@ -49,7 +49,7 @@ namespace Flounder
 					attachments.push_back(depthStencil.GetImageView());
 					break;
 				case TypeSwapchain:
-					attachments.push_back(swapchain.GetImageViews()[i]);
+					attachments.push_back(swapchain.GetImageViews().at(i));
 					break;
 				}
 			}
@@ -63,7 +63,7 @@ namespace Flounder
 			framebufferCreateInfo.height = extent.height;
 			framebufferCreateInfo.layers = 1;
 
-			Platform::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers[i]));
+			Platform::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
 		}
 	}
 

@@ -40,7 +40,7 @@ namespace Flounder
 		int firstBiome = static_cast<int>(std::floor(value / PART));
 		float blend = (value - (firstBiome * PART)) / PART;
 		Colour colour = Colour();
-		Colour::Interpolate(BIOME_COLOURS[firstBiome], BIOME_COLOURS[firstBiome + 1], blend, &colour);
+		Colour::Interpolate(BIOME_COLOURS.at(firstBiome), BIOME_COLOURS.at(firstBiome + 1), blend, &colour);
 		return colour;
 	}
 }
