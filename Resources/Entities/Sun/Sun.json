@@ -1,7 +1,7 @@
 {
   "Material": {
     "Diffuse": {
-      "Colour": "#FFF9B5", 
+      "Colour": "#FFCC00",
       "Texture": ""
     },
     "Surface": {
@@ -22,7 +22,7 @@
     }
   },
   "Mesh": {
-    "Model": "Sphere_20_20_1.0"
+    "Model": "Cube_1.0_1.0_1.0"
   },
   "CelestialBody": {
     "Type": 0
