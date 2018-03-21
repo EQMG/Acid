@@ -11,8 +11,12 @@ namespace Flounder
 	class F_EXPORT IVertex
 	{
 	public:
-		IVertex();
+		IVertex()
+		{
+		}
 
-		virtual ~IVertex();
+		virtual ~IVertex()
+		{
+		}
 	};
 }
