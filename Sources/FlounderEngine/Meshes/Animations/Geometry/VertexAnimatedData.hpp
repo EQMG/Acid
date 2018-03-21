@@ -2,11 +2,12 @@
 
 #include <vector>
 #include <stdint.h>
-#include "../Maths/Vector3.hpp"
+#include "../../../Maths/Vector3.hpp"
+#include "../Skin/VertexSkinData.hpp"
 
 namespace Flounder
 {
-	class F_EXPORT VertexModelData
+	class F_EXPORT VertexAnimatedData
 	{
 	private:
 		static const uint32_t NO_INDEX;
@@ -15,17 +16,19 @@ namespace Flounder
 
 		int m_uvIndex;
 		int m_normalIndex;
-		VertexModelData *m_duplicateVertex;
+		VertexAnimatedData *m_duplicateVertex;
 
 		uint32_t m_index;
 		float m_length;
 
 		std::vector<Vector3 *> m_tangents;
 		Vector3 m_averagedTangent;
-	public:
-		VertexModelData(const uint32_t &index, const Vector3 &position);
 
-		~VertexModelData();
+		VertexSkinData *m_skinData;
+	public:
+		VertexAnimatedData(const uint32_t &index, const Vector3 &position);
+
+		~VertexAnimatedData();
 
 		Vector3 GetPosition() const { return m_position; }
 
@@ -37,9 +40,9 @@ namespace Flounder
 
 		void SetNormalIndex(const int &normalIndex) { m_normalIndex = normalIndex; }
 
-		VertexModelData *GetDuplicateVertex() const { return m_duplicateVertex; }
+		VertexAnimatedData *GetDuplicateVertex() const { return m_duplicateVertex; }
 
-		void SetDuplicateVertex(VertexModelData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
+		void SetDuplicateVertex(VertexAnimatedData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
 		uint32_t GetIndex() const { return m_index; }
 
@@ -54,5 +57,9 @@ namespace Flounder
 		bool IsSet() const;
 
 		bool HasSameTextureAndNormal(const int &textureIndexOther, const int &normalIndexOther) const;
+
+		VertexSkinData *GetSkinData() const { return m_skinData; }
+
+		void SetSkinData(VertexSkinData *skinData) { m_skinData = skinData; }
 	};
 }

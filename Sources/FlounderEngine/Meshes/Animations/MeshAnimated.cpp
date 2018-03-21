@@ -59,8 +59,8 @@ namespace Flounder
 
 		SkinLoader *skinLoader = new SkinLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
 		SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
-			skinLoader->GetData()->GetJointOrder());
-		GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetData()->GetVerticesSkinData());
+			skinLoader->GetJointOrder());
+		GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetVerticesSkinData());
 		//	auto vertices = geometryLoader->GetVertices();
 		//	auto indices = geometryLoader->GetIndices();
 		//	m_model = new Model(vertices, indices);
