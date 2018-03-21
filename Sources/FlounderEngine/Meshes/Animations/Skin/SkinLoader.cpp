@@ -5,27 +5,30 @@ namespace Flounder
 	SkinLoader::SkinLoader(LoadedValue *libraryControllers, const int &maxWeights) :
 		m_skinData(libraryControllers->GetChild("controller")->GetChild("skin")),
 		m_maxWeights(maxWeights),
-		m_skinningData(nullptr)
+		m_jointOrder(std::vector<std::string>()),
+		m_verticesSkinData(std::vector<VertexSkinData *>())
 	{
-		auto jointsList = LoadJointsList();
+		LoadJointsList();
 		auto weights = LoadWeights();
 		LoadedValue *weightsDataNode = m_skinData->GetChild("vertex_weights");
 		auto effectorJointCounts = GetEffectiveJointsCounts(weightsDataNode);
-		auto vertexWeights = GetSkinData(weightsDataNode, effectorJointCounts, weights);
-		m_skinningData = new SkinningData(jointsList, vertexWeights);
+		GetSkinData(weightsDataNode, effectorJointCounts, weights);
 	}
 
 	SkinLoader::~SkinLoader()
 	{
-		delete m_skinningData;
+		for (auto vertex : m_verticesSkinData)
+		{
+			delete vertex;
+		}
 	}
 
-	std::vector<std::string> SkinLoader::LoadJointsList()
+	void SkinLoader::LoadJointsList()
 	{
 		LoadedValue *inputNode = m_skinData->GetChild("vertex_weights");
 		std::string jointDataId = inputNode->GetChildWithAttribute("input", "-semantic", "JOINT")->GetChild("-source")->GetString().substr(1);
 		LoadedValue *jointsNode = m_skinData->GetChildWithAttribute("source", "-id", jointDataId)->GetChild("Name_array");
-		return FormatString::Split(jointsNode->GetChild("#text")->GetString(), " ");
+		m_jointOrder = FormatString::Split(jointsNode->GetChild("#text")->GetString(), " ");
 	}
 
 	std::vector<float> SkinLoader::LoadWeights()
@@ -58,10 +61,9 @@ namespace Flounder
 		return counts;
 	}
 
-	std::vector<VertexSkinData *> SkinLoader::GetSkinData(LoadedValue *weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights)
+	void SkinLoader::GetSkinData(LoadedValue *weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights)
 	{
 		auto rawData = FormatString::Split(weightsDataNode->GetChild("v")->GetString(), " ");
-		std::vector<VertexSkinData *> skinningData = std::vector<VertexSkinData *>();
 		int pointer = 0;
 
 		for (int count : counts)
@@ -76,9 +78,7 @@ namespace Flounder
 			}
 
 			skinData.LimitJointNumber(m_maxWeights);
-			skinningData.push_back(&skinData);
+			m_verticesSkinData.push_back(&skinData);
 		}
-
-		return skinningData;
 	}
 }
