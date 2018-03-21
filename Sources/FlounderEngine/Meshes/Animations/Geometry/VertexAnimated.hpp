@@ -4,10 +4,12 @@
 #include "../../../Maths/Vector2.hpp"
 #include "../../../Maths/Vector3.hpp"
 #include "../../../Engine/Platform.hpp"
+#include "../../../Models/IVertex.hpp"
 
 namespace Flounder
 {
-	class F_EXPORT VertexAnimated
+	class F_EXPORT VertexAnimated :
+		public IVertex
 	{
 	public:
 		Vector3 m_position;
