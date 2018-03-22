@@ -23,7 +23,7 @@ namespace Flounder
 		std::string m_filename;
 
 		bool m_hasAlpha;
-		bool m_clampEdges;
+		bool m_repeatEdges;
 		uint32_t m_mipLevels;
 		bool m_anisotropic;
 		bool m_nearest;
@@ -57,7 +57,7 @@ namespace Flounder
 		/// <summary>
 		/// A new texture object.
 		/// </summary>
-		Texture(const std::string &filename, const bool &hasAlpha = false, const bool &clampEdges = false, const uint32_t &mipLevels = 1,
+		Texture(const std::string &filename, const bool &hasAlpha = false, const bool &repeatEdges = false, const bool &mipmap = true,
 				const bool &anisotropic = true, const bool &nearest = false, const uint32_t &numberOfRows = 1);
 
 		/// <summary>
