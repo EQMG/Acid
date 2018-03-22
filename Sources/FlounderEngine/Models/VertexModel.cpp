@@ -26,6 +26,9 @@ namespace Flounder
 
 	void *VertexModel::GetData(std::vector<IVertex *> &vertices)
 	{
+		size_t dataSize = GetSize() * vertices.size();
+		void *data = new void*[dataSize];
+
 		std::vector<VertexModel> thisVector = std::vector<VertexModel>();
 
 		for (auto vertex : vertices)
@@ -33,7 +36,8 @@ namespace Flounder
 			thisVector.push_back(*((VertexModel*) vertex));
 		}
 
-		return thisVector.data();
+		memcpy(data, thisVector.data(), dataSize);
+		return data;
 	}
 
 	std::vector<VkVertexInputBindingDescription> VertexModel::GetBindingDescriptions(const VkVertexInputRate &inputRate)

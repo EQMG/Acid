@@ -155,50 +155,86 @@ namespace Flounder
 
 		for (auto &type : m_pipelineCreateInfo.shaderStages)
 		{
-			std::vector<char> shaderCode = FileSystem::ReadBinaryFile(type);
 			VkShaderStageFlagBits stageFlag = VK_SHADER_STAGE_ALL;
 
-			if (FormatString::Contains(type, "comp.spv"))
+			if (FormatString::Contains(type, "comp"))
 			{
 				stageFlag = VK_SHADER_STAGE_COMPUTE_BIT;
 			}
-			else if (FormatString::Contains(type, "vert.spv"))
+			else if (FormatString::Contains(type, "vert"))
 			{
 				stageFlag = VK_SHADER_STAGE_VERTEX_BIT;
 			}
-			else if (FormatString::Contains(type, "tesc.spv"))
+			else if (FormatString::Contains(type, "tesc"))
 			{
 				stageFlag = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
 			}
-			else if (FormatString::Contains(type, "tese.spv"))
+			else if (FormatString::Contains(type, "tese"))
 			{
 				stageFlag = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
 			}
-			else if (FormatString::Contains(type, "geom.spv"))
+			else if (FormatString::Contains(type, "geom"))
 			{
 				stageFlag = VK_SHADER_STAGE_GEOMETRY_BIT;
 			}
-			else if (FormatString::Contains(type, "frag.spv"))
+			else if (FormatString::Contains(type, "frag"))
 			{
 				stageFlag = VK_SHADER_STAGE_FRAGMENT_BIT;
 			}
 
-			VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
-			shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-			shaderModuleCreateInfo.codeSize = shaderCode.size();
-			shaderModuleCreateInfo.pCode = reinterpret_cast<const uint32_t *>(shaderCode.data());
+			if (FileSystem::FindExt(type) == "spv")
+			{
+				std::vector<char> shaderCode = FileSystem::ReadBinaryFile(type);
 
-			VkShaderModule shaderModule = VK_NULL_HANDLE;
-			Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
+				VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
+				shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+				shaderModuleCreateInfo.codeSize = shaderCode.size();
+				shaderModuleCreateInfo.pCode = reinterpret_cast<const uint32_t *>(shaderCode.data());
 
-			VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
-			pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-			pipelineShaderStageCreateInfo.stage = stageFlag;
-			pipelineShaderStageCreateInfo.module = shaderModule;
-			pipelineShaderStageCreateInfo.pName = "main";
+				VkShaderModule shaderModule = VK_NULL_HANDLE;
+				Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
 
-			m_modules.push_back(shaderModule);
-			m_stages.push_back(pipelineShaderStageCreateInfo);
+				VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
+				pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+				pipelineShaderStageCreateInfo.stage = stageFlag;
+				pipelineShaderStageCreateInfo.module = shaderModule;
+				pipelineShaderStageCreateInfo.pName = "main";
+
+				m_modules.push_back(shaderModule);
+				m_stages.push_back(pipelineShaderStageCreateInfo);
+			}
+			else
+			{
+				std::string shaderSource = FileSystem::ReadTextFile(type);
+				const char *shaderCode = shaderSource.c_str();
+				size_t size = strlen(shaderCode);
+				assert(size > 0);
+
+				VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
+				shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+				shaderModuleCreateInfo.pNext = NULL;
+				shaderModuleCreateInfo.codeSize = 3 * sizeof(uint32_t) + size + 1;
+				shaderModuleCreateInfo.pCode = (uint32_t*)malloc(shaderModuleCreateInfo.codeSize);
+				shaderModuleCreateInfo.flags = 0;
+
+				// Magic SPV number.
+				((uint32_t *)shaderModuleCreateInfo.pCode)[0] = 0x07230203;
+				((uint32_t *)shaderModuleCreateInfo.pCode)[1] = 0;
+				((uint32_t *)shaderModuleCreateInfo.pCode)[2] = stageFlag;
+				memcpy(((uint32_t *)shaderModuleCreateInfo.pCode + 3), shaderCode, size + 1);
+
+				VkShaderModule shaderModule = VK_NULL_HANDLE;
+				Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
+
+				VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
+				pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+				pipelineShaderStageCreateInfo.stage = stageFlag;
+				pipelineShaderStageCreateInfo.module = shaderModule;
+				pipelineShaderStageCreateInfo.pName = "main";
+
+				m_modules.push_back(shaderModule);
+				m_stages.push_back(pipelineShaderStageCreateInfo);
+			}
 		}
 	}
 

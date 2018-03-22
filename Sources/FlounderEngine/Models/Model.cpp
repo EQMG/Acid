@@ -30,7 +30,9 @@ namespace Flounder
 
 		if (!vertices.empty())
 		{
-			m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), vertices[0]->GetData(vertices));
+			void *verticesData = vertices[0]->GetData(vertices);
+			m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), verticesData);
+			free(verticesData);
 		}
 
 		if (!indices.empty())
@@ -40,19 +42,25 @@ namespace Flounder
 
 		m_aabb->Set(CalculateAabb(vertices));
 
-	//	for (auto vertex : vertices)
-	//	{
-	//		delete vertex;
-	//	}
+		for (auto vertex : vertices)
+		{
+			delete vertex;
+		}
 	}
 
 	Model::Model(std::vector<IVertex*> &vertices, std::vector<uint32_t> &indices, const std::string &name) :
 		IResource(),
 		m_filename(name),
-		m_vertexBuffer(new VertexBuffer(vertices[0]->GetSize(), vertices.size(), vertices[0]->GetData(vertices))),
-		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data())),
+		m_vertexBuffer(nullptr),
+		m_indexBuffer(nullptr),
 		m_aabb(new ColliderAabb())
 	{
+		void *verticesData = vertices[0]->GetData(vertices);
+		m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), verticesData);
+		free(verticesData);
+
+		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
+
 		m_aabb->Set(CalculateAabb(vertices));
 
 		for (auto vertex : vertices)
@@ -64,10 +72,14 @@ namespace Flounder
 	Model::Model(std::vector<IVertex*> &vertices, const std::string &name) :
 		IResource(),
 		m_filename(name),
-		m_vertexBuffer(new VertexBuffer(vertices[0]->GetSize(), vertices.size(), vertices[0]->GetData(vertices))),
+		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
 		m_aabb(new ColliderAabb())
 	{
+		void *verticesData = vertices[0]->GetData(vertices);
+		m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), verticesData);
+		free(verticesData);
+
 		m_aabb->Set(CalculateAabb(vertices));
 
 		for (auto vertex : vertices)
@@ -111,8 +123,19 @@ namespace Flounder
 		m_filename = name;
 		delete m_vertexBuffer;
 		delete m_indexBuffer;
-		m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), vertices[0]->GetData(vertices));
-		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
+
+		if (!vertices.empty())
+		{
+			void *verticesData = vertices[0]->GetData(vertices);
+			m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), verticesData);
+			free(verticesData);
+		}
+
+		if (!indices.empty())
+		{
+			m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
+		}
+
 		m_aabb->Set(CalculateAabb(vertices));
 
 		for (auto vertex : vertices)
