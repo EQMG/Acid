@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <cstring>
+#include <cmath>
 #include "../Devices/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 
@@ -9,14 +10,14 @@ namespace Flounder
 {
 	static const std::string FALLBACK_PATH = "Resources/Undefined.png";
 
-	Texture::Texture(const std::string &filename, const bool &hasAlpha, const bool &clampEdges, const uint32_t &mipLevels, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
+	Texture::Texture(const std::string &filename, const bool &hasAlpha, const bool &repeatEdges, const bool &mipmap, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
 		IResource(),
 		Buffer(LoadSize(filename), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		Descriptor(),
 		m_filename(filename),
 		m_hasAlpha(hasAlpha),
-		m_clampEdges(clampEdges),
-		m_mipLevels(mipLevels),
+		m_repeatEdges(repeatEdges),
+		m_mipLevels(1),
 		m_anisotropic(anisotropic),
 		m_nearest(nearest),
 		m_numberOfRows(numberOfRows),
@@ -26,7 +27,7 @@ namespace Flounder
 		m_image(VK_NULL_HANDLE),
 		m_imageMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
-		m_format(VK_FORMAT_UNDEFINED),
+		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
 	{
 #if FLOUNDER_VERBOSE
@@ -43,24 +44,7 @@ namespace Flounder
 
 		stbi_uc *pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
 
-		/*switch (m_components)
-		{
-		case 1:
-		m_format = VK_FORMAT_R32_SFLOAT;
-		break;
-		case 2:
-		m_format = VK_FORMAT_R32G32_SFLOAT;
-		break;
-		case 3:
-		m_format = VK_FORMAT_R32G32B32_SFLOAT;
-		break;
-		case 4:
-		m_format = VK_FORMAT_R32G32B32A32_SFLOAT;
-		break;
-		default:
-		assert(false && "Vulkan texture components not between 1-4.");
-		}*/
-		m_format = VK_FORMAT_R8G8B8A8_UNORM;
+		m_mipLevels = mipmap ? (uint32_t)std::floor(std::log2(std::max(m_width, m_height))) + 1 : 1;
 
 		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -97,18 +81,21 @@ namespace Flounder
 
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-		samplerCreateInfo.magFilter = VK_FILTER_LINEAR;
-		samplerCreateInfo.minFilter = VK_FILTER_LINEAR;
+		samplerCreateInfo.magFilter = m_nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
+		samplerCreateInfo.minFilter = m_nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
 		samplerCreateInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 		samplerCreateInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 		samplerCreateInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-		samplerCreateInfo.anisotropyEnable = VK_TRUE;
+		samplerCreateInfo.anisotropyEnable = m_anisotropic ? VK_TRUE : VK_FALSE;
 		samplerCreateInfo.maxAnisotropy = 16;
 		samplerCreateInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
 		samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
 		samplerCreateInfo.compareEnable = VK_FALSE;
 		samplerCreateInfo.compareOp = VK_COMPARE_OP_ALWAYS;
 		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+		samplerCreateInfo.mipLodBias = 0.0f;
+		samplerCreateInfo.minLod = 0.0f;
+		samplerCreateInfo.maxLod = 0.0f;
 
 		Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &m_sampler));
 
@@ -132,7 +119,7 @@ namespace Flounder
 		IResource(),
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_hasAlpha(false),
-		m_clampEdges(false),
+		m_repeatEdges(false),
 		m_mipLevels(0),
 		m_anisotropic(false),
 		m_nearest(false),
@@ -191,11 +178,12 @@ namespace Flounder
 
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-		samplerCreateInfo.magFilter = VK_FILTER_LINEAR;
-		samplerCreateInfo.minFilter = VK_FILTER_LINEAR;
-		samplerCreateInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-		samplerCreateInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-		samplerCreateInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+		samplerCreateInfo.magFilter = m_nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
+		samplerCreateInfo.minFilter = m_nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
+		//	samplerCreateInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
+		samplerCreateInfo.addressModeU = m_repeatEdges ? VK_SAMPLER_ADDRESS_MODE_REPEAT : VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+		samplerCreateInfo.addressModeV = m_repeatEdges ? VK_SAMPLER_ADDRESS_MODE_REPEAT : VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+		samplerCreateInfo.addressModeW = m_repeatEdges ? VK_SAMPLER_ADDRESS_MODE_REPEAT : VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
 		samplerCreateInfo.mipLodBias = 0.0f;
 		samplerCreateInfo.minLod = 0.0f;
 		samplerCreateInfo.maxLod = 1.0f;

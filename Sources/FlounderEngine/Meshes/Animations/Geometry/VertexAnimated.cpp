@@ -30,6 +30,9 @@ namespace Flounder
 
 	void *VertexAnimated::GetData(std::vector<IVertex *> &vertices)
 	{
+		size_t dataSize = GetSize() * vertices.size();
+		void *data = new void*[dataSize];
+
 		std::vector<VertexAnimated> thisVector = std::vector<VertexAnimated>();
 
 		for (auto vertex : vertices)
@@ -37,7 +40,8 @@ namespace Flounder
 			thisVector.push_back(*((VertexAnimated*) vertex));
 		}
 
-		return thisVector.data();
+		memcpy(data, thisVector.data(), dataSize);
+		return data;
 	}
 
 	std::vector<VkVertexInputBindingDescription> VertexAnimated::GetBindingDescriptions(const VkVertexInputRate &inputRate)
