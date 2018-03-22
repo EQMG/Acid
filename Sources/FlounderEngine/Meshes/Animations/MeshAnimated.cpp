@@ -28,7 +28,10 @@ namespace Flounder
 
 	void MeshAnimated::Update()
 	{
-		m_animator->Update();
+		if (m_animator != nullptr)
+		{
+			m_animator->Update();
+		}
 	}
 
 	void MeshAnimated::Load(LoadedValue *value)
@@ -57,27 +60,27 @@ namespace Flounder
 		FileJson *file = new FileJson(filename);
 		file->Load();
 
-		SkinLoader *skinLoader = new SkinLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
-		SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
-			skinLoader->GetJointOrder());
-		GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetVerticesSkinData());
-		//	auto vertices = geometryLoader->GetVertices();
-		//	auto indices = geometryLoader->GetIndices();
-		//	m_model = new Model(vertices, indices);
-		m_headJoint = CreateJoints(skeletonLoader->GetHeadJoint());
-		delete skinLoader;
-		delete skeletonLoader;
-		delete geometryLoader;
-
-		AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
-			file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
-		m_animation = new Animation(animationLoader->GetLengthSeconds(), animationLoader->GetKeyframeData());
-		delete animationLoader;
-
+	//	SkinLoader *skinLoader = new SkinLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
+	//	SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
+	//		skinLoader->GetJointOrder());
+	//	GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetVerticesSkinData());
+	//	//	auto vertices = geometryLoader->GetVertices();
+	//	//	auto indices = geometryLoader->GetIndices();
+	//	//	m_model = new Model(vertices, indices);
+	//	m_headJoint = CreateJoints(skeletonLoader->GetHeadJoint());
+	//	delete skinLoader;
+	//	delete skeletonLoader;
+	//	delete geometryLoader;
+//
+	//	AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
+	//		file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
+	//	m_animation = new Animation(animationLoader->GetLengthSeconds(), animationLoader->GetKeyframeData());
+	//	delete animationLoader;
+//
 		delete file;
-
-		m_animator = new Animator(m_headJoint);
-		m_animator->DoAnimation(m_animation);
+//
+	//	m_animator = new Animator(m_headJoint);
+	//	m_animator->DoAnimation(m_animation);
 	}
 
 	Joint *MeshAnimated::CreateJoints(JointData *data)

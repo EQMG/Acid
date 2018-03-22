@@ -28,6 +28,18 @@ namespace Flounder
 	{
 	}
 
+	void *VertexAnimated::GetData(std::vector<IVertex *> &vertices)
+	{
+		std::vector<VertexAnimated> thisVector = std::vector<VertexAnimated>();
+
+		for (auto vertex : vertices)
+		{
+			thisVector.push_back(*((VertexAnimated*) vertex));
+		}
+
+		return thisVector.data();
+	}
+
 	std::vector<VkVertexInputBindingDescription> VertexAnimated::GetBindingDescriptions(const VkVertexInputRate &inputRate)
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
