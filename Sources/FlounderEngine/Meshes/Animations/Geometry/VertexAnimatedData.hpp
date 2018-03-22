@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <stdint.h>
+#include <cstdint>
 #include "../../../Maths/Vector3.hpp"
 #include "../Skin/VertexSkinData.hpp"
 

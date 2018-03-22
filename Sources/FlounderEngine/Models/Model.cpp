@@ -23,42 +23,57 @@ namespace Flounder
 		m_indexBuffer(nullptr),
 		m_aabb(new ColliderAabb())
 	{
-		std::vector<VertexModel> vertices = std::vector<VertexModel>();
+		std::vector<IVertex*> vertices = std::vector<IVertex*>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
-		ModelLoaded modelLoaded = LoadFromFile(filename);
+		LoadFromFile(filename, &vertices, &indices);
 
-		if (!modelLoaded.vertices.empty())
+		if (!vertices.empty())
 		{
-			m_vertexBuffer = new VertexBuffer(sizeof(modelLoaded.vertices[0]), modelLoaded.vertices.size(), modelLoaded.vertices.data());
+			m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), vertices[0]->GetData(vertices));
 		}
 
-		if (!modelLoaded.indices.empty())
+		if (!indices.empty())
 		{
-			m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(modelLoaded.indices[0]), modelLoaded.indices.size(), modelLoaded.indices.data());
+			m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 		}
 
 		m_aabb->Set(CalculateAabb(vertices));
+
+	//	for (auto vertex : vertices)
+	//	{
+	//		delete vertex;
+	//	}
 	}
 
-	Model::Model(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices, const std::string &name) :
+	Model::Model(std::vector<IVertex*> &vertices, std::vector<uint32_t> &indices, const std::string &name) :
 		IResource(),
 		m_filename(name),
-		m_vertexBuffer(new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data())),
+		m_vertexBuffer(new VertexBuffer(vertices[0]->GetSize(), vertices.size(), vertices[0]->GetData(vertices))),
 		m_indexBuffer(new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data())),
 		m_aabb(new ColliderAabb())
 	{
 		m_aabb->Set(CalculateAabb(vertices));
+
+		for (auto vertex : vertices)
+		{
+			delete vertex;
+		}
 	}
 
-	Model::Model(std::vector<VertexModel> &vertices, const std::string &name) :
+	Model::Model(std::vector<IVertex*> &vertices, const std::string &name) :
 		IResource(),
 		m_filename(name),
-		m_vertexBuffer(new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data())),
+		m_vertexBuffer(new VertexBuffer(vertices[0]->GetSize(), vertices.size(), vertices[0]->GetData(vertices))),
 		m_indexBuffer(nullptr),
 		m_aabb(new ColliderAabb())
 	{
 		m_aabb->Set(CalculateAabb(vertices));
+
+		for (auto vertex : vertices)
+		{
+			delete vertex;
+		}
 	}
 
 	Model::~Model()
@@ -91,17 +106,22 @@ namespace Flounder
 		//	}
 	}
 
-	void Model::Set(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices, const std::string &name)
+	void Model::Set(std::vector<IVertex *> &vertices, std::vector<uint32_t> &indices, const std::string &name)
 	{
 		m_filename = name;
 		delete m_vertexBuffer;
 		delete m_indexBuffer;
-		m_vertexBuffer = new VertexBuffer(sizeof(vertices[0]), vertices.size(), vertices.data());
+		m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), vertices[0]->GetData(vertices));
 		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 		m_aabb->Set(CalculateAabb(vertices));
+
+		for (auto vertex : vertices)
+		{
+			delete vertex;
+		}
 	}
 
-	ModelLoaded Model::LoadFromFile(const std::string &filename)
+	void Model::LoadFromFile(const std::string &filename, std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices)
 	{
 #if FLOUNDER_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
@@ -110,16 +130,11 @@ namespace Flounder
 		delete m_indexBuffer;
 		delete m_vertexBuffer;
 
-		ModelLoaded modelLoaded = ModelLoaded{
-			std::vector<VertexModel>(),
-			std::vector<uint32_t>()
-		};
-
 		if (!FileSystem::FileExists(m_filename))
 		{
 			fprintf(stderr, "File does not exist: '%s'\n", m_filename.c_str());
 			m_filename = FALLBACK_PATH;
-			return modelLoaded;
+			return;
 		}
 
 		const std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
@@ -201,9 +216,9 @@ namespace Flounder
 			}
 		}
 
-		modelLoaded.indices.swap(indicesList);
+		indices->swap(indicesList);
 
-		// Turns the loaded OBJ data into a formal that can be used by OpenGL.
+		// Turns the loaded data into a format that can be used by OpenGL.
 		for (auto current : verticesList)
 		{
 			const Vector3 position = current->GetPosition();
@@ -211,9 +226,7 @@ namespace Flounder
 			const Vector3 normal = normalsList[current->GetNormalIndex()];
 			const Vector3 tangent = current->GetAverageTangent();
 
-			const VertexModel vertex = VertexModel(position, textures, normal, tangent);
-
-			modelLoaded.vertices.push_back(vertex);
+			vertices->push_back(new VertexModel(position, textures, normal, tangent));
 
 			delete current;
 		}
@@ -224,7 +237,6 @@ namespace Flounder
 #endif
 
 		m_filename = filename;
-		return modelLoaded;
 	}
 
 	VertexModelData *Model::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> *vertices, std::vector<uint32_t> *indices)
@@ -297,7 +309,7 @@ namespace Flounder
 		delete deltaUv2;
 	}
 
-	ColliderAabb Model::CalculateAabb(const std::vector<VertexModel> &vertices)
+	ColliderAabb Model::CalculateAabb(const std::vector<IVertex*> &vertices)
 	{
 		float minX = +std::numeric_limits<float>::infinity();
 		float minY = +std::numeric_limits<float>::infinity();
@@ -306,9 +318,9 @@ namespace Flounder
 		float maxY = -std::numeric_limits<float>::infinity();
 		float maxZ = -std::numeric_limits<float>::infinity();
 
-		for (const auto &vertex : vertices)
+		for (auto vertex : vertices)
 		{
-			const Vector3 position = vertex.m_position;
+			const Vector3 position = vertex->GetPosition();
 
 			if (position.m_x < minX)
 			{

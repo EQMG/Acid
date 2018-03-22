@@ -1,6 +1,6 @@
 <img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Flounder.png" alt="flounder" width=225>
 
-# Flounder v0.7
+# Flounder v0.8
 Flounder is a cross platform high speed C++17 Vulkan game engine. Flounder is built from the ground up to provide the most speed, well written code, and features with a modular engine. Flounder is very much a work in progress, much of this code will change.
 Flounder is licenced under MIT, we are open to contributions use the 'Developer Setup' section in the README to get started with Flounder, and if you want to know about our code style read GUIDELINES.
 
@@ -19,36 +19,39 @@ Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs
 Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/LocMetrics.html)
 
 ## Platforms
- * Windows, Linux, Android (Vulkan)
- * MacOS, IOS (MoltenVK)
+ * Vulkan: Windows, Linux, Android
+ * MoltenVK: MacOS, IOS
+ * D3D12: TODO
+ * OpenGL: TODO
 
 ## Features
  * High speed
  * Cross platform
- * Vulkan rendering
+ * Only coded for Vulkan rendering
+ * Limited amount of libraries
  * Event and tasks systems
- * GUI / Text rendering
+ * GUI / text rendering
  * Modular rendering pipeline
  * Deferred rendering
- * 3D audio and music
- * 3D skybox
- * 3D terrain and water
+ * Audio and music
+ * Skyboxes
+ * Large amount of post effects (Lensflare, Glow, Blur)
+ * Simple terrain and water
+ * Modular voxel system
  * 3D shadow mapping
- * Bullet physics
  * Model file loading (OBJ)
+ * Animations loading (DAE => JSON)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
- * Text file and config loading (CSV, Json)
+ * Config and class loading/saving (CSV, JSON)
  * Resource management
  * Visual drivers and maths classes
  * Flexible input classes
- * Component system
- * GameObject prefab loading
- * Normal, glow, and sway mapping
- * Voxel system
- * Particle effects (WIP)
+ * GameObjects and component system
+ * GameObject prefab loading/saving (JSON)
+ * Normal, material, glow, and sway maps
+ * Particle effects system
  * Simple physics engine (WIP)
  * P2P networking (WIP)
- * Animations (WIP)
  * Steam integration (WIP)
 
 ## Plans
@@ -68,6 +71,8 @@ On Linux you need a GCC/Clang compiler, each package listed here are for Debian/
 Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
 
 Once Flounder has built you need to link the Resources folder into the output directory. For example when using CLion `Scripts/generate_vs.bat` or `.sh` can be used to link into Debug and Release builds. You may also want to run `Scripts/build_shaders.bat` or `.sh` to compile SPIRV shaders.
+
+Currently Flounder does not run under Release mode (IDK why).
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.

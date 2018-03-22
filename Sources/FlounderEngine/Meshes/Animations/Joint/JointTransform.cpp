@@ -8,6 +8,12 @@ namespace Flounder
 	{
 	}
 
+	JointTransform::JointTransform(const Matrix4 &localTransform) :
+		m_position(new Vector3(localTransform.m_30, localTransform.m_31, localTransform.m_32)),
+		m_rotation(new Quaternion(localTransform))
+	{
+	}
+
 	JointTransform::JointTransform(const JointTransformData &data) :
 		m_position(new Vector3()),
 		m_rotation(new Quaternion())
@@ -15,12 +21,6 @@ namespace Flounder
 		auto matrix = data.GetJointLocalTransform();
 		m_position->Set(matrix.m_30, matrix.m_31, matrix.m_32);
 		m_rotation->Set(matrix);
-	}
-
-	JointTransform::JointTransform(const Matrix4 &localTransform) :
-		m_position(new Vector3(localTransform.m_30, localTransform.m_31, localTransform.m_32)),
-		m_rotation(new Quaternion(localTransform))
-	{
 	}
 
 	JointTransform::~JointTransform()

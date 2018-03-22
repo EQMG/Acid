@@ -24,6 +24,18 @@ namespace Flounder
 	{
 	}
 
+	void *VertexModel::GetData(std::vector<IVertex *> &vertices)
+	{
+		std::vector<VertexModel> thisVector = std::vector<VertexModel>();
+
+		for (auto vertex : vertices)
+		{
+			thisVector.push_back(*((VertexModel*) vertex));
+		}
+
+		return thisVector.data();
+	}
+
 	std::vector<VkVertexInputBindingDescription> VertexModel::GetBindingDescriptions(const VkVertexInputRate &inputRate)
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
