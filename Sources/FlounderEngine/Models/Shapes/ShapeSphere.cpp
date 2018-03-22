@@ -8,7 +8,7 @@ namespace Flounder
 	ShapeSphere::ShapeSphere(const int &latitudeBands, const int &longitudeBands, const float &radius) :
 		Model()
 	{
-		std::vector<VertexModel> vertices = std::vector<VertexModel>();
+		std::vector<IVertex*> vertices = std::vector<IVertex*>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		for (int latNumber = 0; latNumber <= latitudeBands; latNumber++)
@@ -23,15 +23,15 @@ namespace Flounder
 				float sinPhi = static_cast<float>(sin(phi));
 				float cosPhi = static_cast<float>(cos(phi));
 
-				VertexModel vertex = VertexModel();
-				vertex.m_normal.m_x = cosPhi * sinTheta;
-				vertex.m_normal.m_y = cosTheta;
-				vertex.m_normal.m_z = sinPhi * sinTheta;
-				vertex.m_uv.m_x = 1.0f - (longNumber / longitudeBands);
-				vertex.m_uv.m_y = 1.0f - (latNumber / latitudeBands);
-				vertex.m_position.m_x = radius * vertex.m_normal.m_x;
-				vertex.m_position.m_y = radius * vertex.m_normal.m_y;
-				vertex.m_position.m_z = radius * vertex.m_normal.m_z;
+				VertexModel *vertex = new VertexModel();
+				vertex->m_normal.m_x = cosPhi * sinTheta;
+				vertex->m_normal.m_y = cosTheta;
+				vertex->m_normal.m_z = sinPhi * sinTheta;
+				vertex->m_uv.m_x = 1.0f - (longNumber / longitudeBands);
+				vertex->m_uv.m_y = 1.0f - (latNumber / latitudeBands);
+				vertex->m_position.m_x = radius * vertex->m_normal.m_x;
+				vertex->m_position.m_y = radius * vertex->m_normal.m_y;
+				vertex->m_position.m_z = radius * vertex->m_normal.m_z;
 
 				vertices.push_back(vertex);
 			}

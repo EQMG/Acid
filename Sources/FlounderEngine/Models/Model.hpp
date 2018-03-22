@@ -12,12 +12,6 @@
 
 namespace Flounder
 {
-	struct F_HIDDEN ModelLoaded
-	{
-		std::vector<VertexModel> vertices;
-		std::vector<uint32_t> indices;
-	};
-
 	/// <summary>
 	/// Class that represents a OBJ model.
 	/// </summary>
@@ -64,14 +58,14 @@ namespace Flounder
 		/// <param name="vertices"> The model vertices. </param>
 		/// <param name="indices"> The model indices. </param>
 		/// <param name="name"> The model name. </param>
-		Model(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
+		Model(std::vector<IVertex*> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
 
 		/// <summary>
 		/// Creates a new model without indices.
 		/// </summary>
 		/// <param name="vertices"> The model vertices. </param>
 		/// <param name="name"> The model name. </param>
-		Model(std::vector<VertexModel> &vertices, const std::string &name = "");
+		Model(std::vector<IVertex*> &vertices, const std::string &name = "");
 
 		/// <summary>
 		/// Deconstructor for the model.
@@ -89,13 +83,13 @@ namespace Flounder
 		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer; }
 
 	protected:
-		void Set(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
+		void Set(std::vector<IVertex *> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
 
 	private:
 		/// <summary>
 		/// Loads the model object from a OBJ file.
 		/// </summary>
-		ModelLoaded LoadFromFile(const std::string &filename);
+		void LoadFromFile(const std::string &filename, std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices);
 
 		VertexModelData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> *vertices, std::vector<uint32_t> *indices);
 
@@ -103,6 +97,6 @@ namespace Flounder
 
 		void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> *uvs);
 
-		static ColliderAabb CalculateAabb(const std::vector<VertexModel> &vertices);
+		static ColliderAabb CalculateAabb(const std::vector<IVertex*> &vertices);
 	};
 }
