@@ -185,15 +185,15 @@ namespace Flounder
 	void Text::LoadText(Text *object)
 	{
 		// Creates mesh data.
-		const std::vector<Line> lines = CreateStructure(object);
-		const std::vector<VertexModel> vertices = CreateQuad(object, lines);
+		std::vector<Line> lines = CreateStructure(object);
+		std::vector<IVertex*> vertices = CreateQuad(object, lines);
 
 		// Calculates the bounds and normalizes the vertices.
 		Vector2 bounding = Vector2();
-		std::vector<VertexModel> verticesNormalized = NormalizeQuad(&bounding, vertices);
+		NormalizeQuad(&bounding, vertices);
 
 		// Loads mesh data to Vulkan.
-		Model *model = new Model(verticesNormalized);
+		Model *model = new Model(vertices);
 		object->m_model = model;
 		object->GetRectangle()->m_dimensions->Set(bounding.m_x, bounding.m_y);
 	}
@@ -267,9 +267,9 @@ namespace Flounder
 		lines.push_back(currentLine);
 	}
 
-	std::vector<VertexModel> Text::CreateQuad(Text *object, std::vector<Line> lines)
+	std::vector<IVertex*> Text::CreateQuad(Text *object, std::vector<Line> lines)
 	{
-		std::vector<VertexModel> vertices = std::vector<VertexModel>();
+		std::vector<IVertex*> vertices = std::vector<IVertex*>();
 		//	object->m_numberLines = static_cast<int>(lines.size());
 		double cursorX = 0.0;
 		double cursorY = 0.0;
@@ -319,7 +319,7 @@ namespace Flounder
 		return vertices;
 	}
 
-	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<VertexModel> &vertices)
+	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<IVertex*> &vertices)
 	{
 		const double vertexX = cursorX + character.GetOffsetX();
 		const double vertexY = cursorY + character.GetOffsetY();
@@ -339,23 +339,22 @@ namespace Flounder
 		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 	}
 
-	void Text::AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<VertexModel> &vertices)
+	void Text::AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex*> &vertices)
 	{
-		const VertexModel vertex = VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
+		IVertex *vertex = new VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
 		vertices.push_back(vertex);
 	}
 
-	std::vector<VertexModel> Text::NormalizeQuad(Vector2 *bounding, const std::vector<VertexModel> &vertices)
+	void Text::NormalizeQuad(Vector2 *bounding, std::vector<IVertex*> &vertices)
 	{
-		std::vector<VertexModel> newVertices = std::vector<VertexModel>();
 		float minX = +INFINITY;
 		float minY = +INFINITY;
 		float maxX = -INFINITY;
 		float maxY = -INFINITY;
 
-		for (const auto &vertex : vertices)
+		for (auto vertex : vertices)
 		{
-			const Vector3 position = vertex.m_position;
+			const Vector3 position = vertex->GetPosition();
 
 			if (position.m_x < minX)
 			{
@@ -382,13 +381,10 @@ namespace Flounder
 		maxX -= minX;
 		maxY -= minY;
 
-		for (const auto &vertex : vertices)
+		for (auto vertex : vertices)
 		{
-			const Vector3 position = Vector3((vertex.m_position.m_x - minX) / maxX, (vertex.m_position.m_y - minY) / maxY, 0.0f);
-			const VertexModel newVertex = VertexModel(position, Vector2(vertex.m_uv), Vector3(vertex.m_normal), Vector3(vertex.m_tangent));
-			newVertices.push_back(newVertex);
+			Vector3 position = Vector3((vertex->GetPosition().m_x - minX) / maxX, (vertex->GetPosition().m_y - minY) / maxY, 0.0f);
+			vertex->SetPosition(position);
 		}
-
-		return newVertices;
 	}
 }

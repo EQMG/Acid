@@ -155,7 +155,7 @@ namespace Flounder
 			return;
 		}
 
-		std::vector<VertexModel> vertices = {};
+		std::vector<IVertex*> vertices = {};
 		std::vector<uint32_t> indices = {};
 
 		switch (m_chunkMesh)
@@ -186,7 +186,7 @@ namespace Flounder
 #endif
 	}
 
-	void Chunk::CreateSimpleMesh(std::vector<VertexModel> *vertices, std::vector<uint32_t> *indices)
+	void Chunk::CreateSimpleMesh(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices)
 	{
 		int u, v;
 		BlockFace currentFace;
@@ -260,7 +260,7 @@ namespace Flounder
 		}
 	}
 
-	void Chunk::CreateGreedyMesh(std::vector<VertexModel> *vertices, std::vector<uint32_t> *indices)
+	void Chunk::CreateGreedyMesh(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices)
 	{
 		// This method is based off of Robert O'Leary's implementation (https://github.com/roboleary/GreedyMesh)
 
@@ -434,7 +434,7 @@ namespace Flounder
 		return block != nullptr ? block->GetType() : "";
 	}
 
-	void Chunk::GenerateQuad(std::vector<VertexModel> *vertices, std::vector<uint32_t> *indices,
+	void Chunk::GenerateQuad(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices,
 							 const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
 							 const int &width, const int &height,
 							 const std::string &blockType, const bool &backFace)
@@ -465,10 +465,10 @@ namespace Flounder
 		}
 
 		// Pushes vertices and indices from quad.
-		vertices->push_back(VertexModel(VOXEL_SIZE * bottomLeft, Vector2(), normal, colour));
-		vertices->push_back(VertexModel(VOXEL_SIZE * topLeft, Vector2(), normal, colour));
-		vertices->push_back(VertexModel(VOXEL_SIZE * bottomRight, Vector2(), normal, colour));
-		vertices->push_back(VertexModel(VOXEL_SIZE * topRight, Vector2(), normal, colour));
+		vertices->push_back(new VertexModel(VOXEL_SIZE * bottomLeft, Vector2(), normal, colour));
+		vertices->push_back(new VertexModel(VOXEL_SIZE * topLeft, Vector2(), normal, colour));
+		vertices->push_back(new VertexModel(VOXEL_SIZE * bottomRight, Vector2(), normal, colour));
+		vertices->push_back(new VertexModel(VOXEL_SIZE * topRight, Vector2(), normal, colour));
 
 		indices->push_back(indexStart + 2);
 		indices->push_back(indexStart + (backFace ? 0 : 3));

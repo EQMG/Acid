@@ -25,6 +25,14 @@ namespace Flounder
 
 		~VertexAnimated();
 
+		Vector3 GetPosition() const override { return m_position; };
+
+		void SetPosition(const Vector3 &position) override { m_position = position; };
+
+		size_t GetSize() const override { return sizeof(VertexAnimated); }
+
+		void *GetData(std::vector<IVertex *> &vertices) override;
+
 		static std::vector<VkVertexInputBindingDescription> GetBindingDescriptions(const VkVertexInputRate &inputRate = VK_VERTEX_INPUT_RATE_VERTEX);
 
 		static std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions(const int &usedCount = 5);
