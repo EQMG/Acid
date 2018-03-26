@@ -26,10 +26,10 @@ namespace Flounder
 
 		std::string GetName() const override { return "Mesh"; };
 
-		Model *GetModel() const { return m_model; }
+		virtual Model *GetModel() const { return m_model; }
 
-		void SetModel(Model *model) { m_model = model; }
+		virtual void SetModel(Model *model) { m_model = model; }
 
-		void TrySetModel(const std::string &filename);
+		virtual void TrySetModel(const std::string &filename);
 	};
 }

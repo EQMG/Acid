@@ -3,6 +3,7 @@
 #include "../../Maths/Maths.hpp"
 #include "../../Maths/Matrix4.hpp"
 #include "../../Objects/Component.hpp"
+#include "../Mesh.hpp"
 #include "Animation/AnimationLoader.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Geometry/GeometryLoader.hpp"
@@ -12,7 +13,7 @@
 namespace Flounder
 {
 	class F_EXPORT MeshAnimated :
-		public Component
+		public Mesh
 	{
 	private:
 		std::string m_filename;
@@ -22,6 +23,7 @@ namespace Flounder
 		Animation *m_animation;
 
 		Animator *m_animator;
+		std::vector<Matrix4*> m_jointMatrices;
 	public:
 		static const Matrix4 *S_CORRECTION;
 		static const int MAX_WEIGHTS;
@@ -38,13 +40,17 @@ namespace Flounder
 
 		std::string GetName() const override { return "MeshAnimated"; };
 
-		Model *GetModel() const { return m_model; }
+		Model *GetModel() const override { return m_model; }
 
-		void SetModel(Model *model) { m_model = model; }
+		void SetModel(Model *model) override { m_model = model; }
 
-		void TrySetModel(const std::string &filename);
+		void TrySetModel(const std::string &filename) override;
+
+		std::vector<Matrix4*> GetJointTransforms() const { return m_jointMatrices; }
 
 	private:
 		Joint *CreateJoints(JointData *data);
+
+		void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4*> *jointMatrices);
 	};
 }
