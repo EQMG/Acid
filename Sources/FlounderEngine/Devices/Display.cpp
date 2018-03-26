@@ -130,7 +130,8 @@ namespace Flounder
 		m_physicalDeviceProperties({}),
 		m_physicalDeviceFeatures({}),
 		m_physicalDeviceMemoryProperties({}),
-		m_graphicsFamilyIndex(0)
+		m_graphicsFamilyIndex(0),
+		m_spvContext(nullptr)
 	{
 		CreateGlfw();
 		CreateVulkan();
@@ -138,6 +139,8 @@ namespace Flounder
 
 	Display::~Display()
 	{
+		spvContextDestroy(m_spvContext);
+
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(m_logicalDevice);
 
@@ -327,6 +330,7 @@ namespace Flounder
 		CreatePhysicalDevice();
 		CreateLogicalDevice();
 		CreateSurface();
+		CreateSpv();
 	}
 
 	void Display::SetupLayers()
@@ -602,6 +606,11 @@ namespace Flounder
 		{
 			m_surfaceFormat = physicalDeviceFormats[0];
 		}
+	}
+
+	void Display::CreateSpv()
+	{
+		m_spvContext = spvContextCreate(SPV_ENV_VULKAN_1_0);
 	}
 
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)

@@ -1,8 +1,6 @@
 #include "FileSystem.hpp"
 
 #include <cassert>
-#include <iostream>
-#include <fstream>
 #include <algorithm>
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
@@ -106,29 +104,6 @@ namespace Flounder
 		return result;
 	}
 
-	std::vector<char> FileSystem::ReadBinaryFile(const std::string &filepath)
-	{
-		if (!FileSystem::FileExists(filepath))
-		{
-			printf("File does not exist: '%s'\n", filepath.c_str());
-			return std::vector<char>();
-		}
-
-		// TODO: Move from ifsteam to normal C binary file loading.
-		std::ifstream ifs = std::ifstream(filepath, std::ios::ate | std::ios::binary);
-
-		assert(ifs.is_open() && "Could not find file!");
-
-		size_t fileSize = static_cast<size_t>(ifs.tellg());
-		std::vector<char> buffer(fileSize);
-
-		ifs.seekg(0);
-		ifs.read(buffer.data(), fileSize);
-		ifs.close();
-
-		return buffer;
-	}
-
 	void FileSystem::WriteTextFile(const std::string &filepath, const std::string &data)
 	{
 		FILE *fp = fopen(filepath.c_str(), "ab");
@@ -138,17 +113,6 @@ namespace Flounder
 			fputs(data.c_str(), fp);
 			fclose(fp);
 		}
-	}
-
-	void FileSystem::WriteBinaryFile(const std::string &filepath, const std::vector<char> &data)
-	{
-		// TODO: Convert ofsteam to C function.
-		std::string pathname = std::string(filepath);
-
-		std::ofstream textout(pathname.c_str(), std::ios::out | std::ios::binary);
-		textout.write(&data[0], data.size());
-
-		textout.close();
 	}
 
 	std::string FileSystem::GetWorkingDirectory()
