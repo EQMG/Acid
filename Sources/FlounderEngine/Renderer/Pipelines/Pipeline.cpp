@@ -184,7 +184,12 @@ namespace Flounder
 
 			if (FileSystem::FindExt(type) == "spv")
 			{
-				std::vector<char> shaderCode = FileSystem::ReadBinaryFile(type);
+				auto shaderCode = FileSystem::ReadBinaryFile<char>(type, "rb");
+
+			//	auto spvContext = Display::Get()->GetSpvContext();
+			//	spv_text text = nullptr;
+			//	spvBinaryToText(spvContext, shaderCode.data(), shaderCode.size(), 0, &text, nullptr);
+			//	printf("%s\n", text->str);
 
 				VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 				shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -205,23 +210,26 @@ namespace Flounder
 			}
 			else
 			{
+				auto spvContext = Display::Get()->GetSpvContext();
+
 				std::string shaderSource = FileSystem::ReadTextFile(type);
-				const char *shaderCode = shaderSource.c_str();
-				size_t size = strlen(shaderCode);
-				assert(size > 0);
+				spv_text_t text = { shaderSource.c_str(), strlen(shaderSource.c_str()) };
+
+				spv_binary binary = nullptr;
+				spv_diagnostic diagnostic = nullptr;
+				spv_result_t error = spvTextToBinary(spvContext, text.str, text.length, &binary, &diagnostic); // Platform::ErrorSpv(
+
+				if (error != SPV_SUCCESS)
+				{
+					spvDiagnosticPrint(diagnostic);
+					spvDiagnosticDestroy(diagnostic);
+				//	ASSERT_EQ(SPV_SUCCESS, error);
+				}
 
 				VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 				shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-				shaderModuleCreateInfo.pNext = NULL;
-				shaderModuleCreateInfo.codeSize = 3 * sizeof(uint32_t) + size + 1;
-				shaderModuleCreateInfo.pCode = (uint32_t*)malloc(shaderModuleCreateInfo.codeSize);
-				shaderModuleCreateInfo.flags = 0;
-
-				// Magic SPV number.
-				((uint32_t *)shaderModuleCreateInfo.pCode)[0] = 0x07230203;
-				((uint32_t *)shaderModuleCreateInfo.pCode)[1] = 0;
-				((uint32_t *)shaderModuleCreateInfo.pCode)[2] = stageFlag;
-				memcpy(((uint32_t *)shaderModuleCreateInfo.pCode + 3), shaderCode, size + 1);
+				shaderModuleCreateInfo.codeSize = binary->wordCount;
+				shaderModuleCreateInfo.pCode = binary->code;
 
 				VkShaderModule shaderModule = VK_NULL_HANDLE;
 				Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
@@ -234,6 +242,9 @@ namespace Flounder
 
 				m_modules.push_back(shaderModule);
 				m_stages.push_back(pipelineShaderStageCreateInfo);
+
+				spvDiagnosticDestroy(diagnostic);
+				spvBinaryDestroy(binary);
 			}
 		}
 	}

@@ -55,9 +55,55 @@ namespace Flounder
 		/// <summary>
 		/// Reads a binary file into a char array.
 		/// </summary>
-		/// <param name="filepath"> The filepath. </param>
+		///	<param name="filepath"> The filepath. </param>
+		///	<param name="mode"> The read mode. </param>
 		/// <returns> The char array loaded from the file. </returns>
-		static std::vector<char> ReadBinaryFile(const std::string &filepath);
+		template <typename T>
+		static std::vector<T> ReadBinaryFile(const std::string &filepath, const std::string &mode)
+		{
+			std::vector<T> data = {};
+
+			const int bufferSize = 1024;
+			const bool useFile = filepath.c_str() && strcmp("-", filepath.c_str());
+
+			if (FILE* fp = (useFile ? fopen(filepath.c_str(), mode.c_str()) : stdin))
+			{
+				T buf[bufferSize];
+
+				while (size_t len = fread(buf, sizeof(T), bufferSize, fp))
+				{
+					data.insert(data.end(), buf, buf + len);
+				}
+
+				if (ftell(fp) == -1L)
+				{
+					if (ferror(fp))
+					{
+						fprintf(stderr, "Error reading file: '%s'\n", filepath.c_str());
+						return data;
+					}
+				}
+				else
+				{
+					if (sizeof(T) != 1 && (ftell(fp) % sizeof(T)))
+					{
+						fprintf(stderr, "Corrupted word found in file: '%s'\n", filepath.c_str());
+						return data;
+					}
+				}
+
+				if (useFile)
+				{
+					fclose(fp);
+				}
+			}
+			else
+			{
+				fprintf(stderr, "File does not exist: '%s'\n", filepath.c_str());
+			}
+
+			return data;
+		}
 
 		/// <summary>
 		/// Writes to a text file from a string.
@@ -71,7 +117,32 @@ namespace Flounder
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		/// <param name="data"> The binary data. </param>
-		static void WriteBinaryFile(const std::string &filepath, const std::vector<char> &data);
+		template <typename T>
+		static void WriteBinaryFile(const std::string &filepath, const std::string &mode, const std::vector<char> &data)
+		{
+			const bool useStdout = !filepath.c_str() || (filepath.c_str()[0] == '-' && filepath.c_str()[1] == '\0');
+
+			if (FILE* fp = (useStdout ? stdout : fopen(filepath.c_str(), mode.c_str())))
+			{
+				size_t written = fwrite(data.data(), sizeof(T), data.size(), fp);
+
+				if (data.size() != written)
+				{
+					fprintf(stderr, "Could not write to file: '%s'\n", filepath.c_str());
+					return;
+				}
+
+				if (!useStdout)
+				{
+					fclose(fp);
+				}
+			}
+			else
+			{
+				fprintf(stderr, "File could not be opened: '%s'\n", filepath.c_str());
+				return;
+			}
+		}
 
 		/// <summary>
 		/// Gets the current working directory.
