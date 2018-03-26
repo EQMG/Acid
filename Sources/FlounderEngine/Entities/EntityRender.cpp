@@ -2,6 +2,7 @@
 
 #include "../Devices/Display.hpp"
 #include "../Meshes/Mesh.hpp"
+#include "../Meshes/Animations/MeshAnimated.hpp"
 #include "../Worlds/Worlds.hpp"
 #include "../Materials/Material.hpp"
 #include "../Physics/Rigidbody.hpp"
@@ -33,8 +34,32 @@ namespace Flounder
 			return;
 		}
 
+		std::vector<Matrix4> jointTransforms = {};
+		auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
+
+		if (meshAnimated != nullptr)
+		{
+			auto jointMatrices = meshAnimated->GetJointTransforms();
+
+			for (unsigned int i = 0; i < jointMatrices.size(); i++)
+			{
+				jointTransforms.push_back(*jointMatrices.at(i));
+
+				if (jointTransforms.size() >= MAX_JOINTS)
+				{
+					break;
+				}
+			}
+		}
+
 		// Updates uniforms.
 		UbosEntities::UboObject uboObject = {};
+
+		for (unsigned int i = 0; i < jointTransforms.size(); i++)
+		{
+			uboObject.jointTransforms[i] = jointTransforms.at(i);
+		}
+
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		uboObject.samples.m_x = material->GetDiffuse()->GetTexture() != nullptr;
 		uboObject.samples.m_y = material->GetSurface()->GetTexture() != nullptr;

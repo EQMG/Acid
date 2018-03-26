@@ -10,6 +10,9 @@ namespace Flounder
 	class F_EXPORT UbosEntities
 	{
 	public:
+#define MAX_JOINTS 50
+#define MAX_WEIGHTS 3
+
 		struct UboScene
 		{
 			Matrix4 projection;
@@ -18,6 +21,8 @@ namespace Flounder
 
 		struct UboObject
 		{
+			Matrix4 jointTransforms[MAX_JOINTS];
+
 			Matrix4 transform;
 
 			Vector4 baseColor;
