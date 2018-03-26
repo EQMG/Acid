@@ -4,6 +4,7 @@
 #include "../../../Models/Model.hpp"
 #include "../Skin/SkinLoader.hpp"
 #include "VertexAnimated.hpp"
+#include "VertexAnimatedData.hpp"
 
 namespace Flounder
 {
@@ -14,18 +15,18 @@ namespace Flounder
 
 		std::vector<VertexSkinData *> m_vertexWeights;
 
-		std::vector<std::pair<VertexModelData *, VertexSkinData *>> m_positionsList;
+		std::vector<VertexAnimatedData *> m_positionsList;
 		std::vector<Vector2> m_uvsList;
 		std::vector<Vector3> m_normalsList;
 
-		std::vector<VertexAnimated> m_vertices;
+		std::vector<IVertex *> m_vertices;
 		std::vector<uint32_t> m_indices;
 	public:
 		GeometryLoader(LoadedValue *libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights);
 
 		~GeometryLoader();
 
-		std::vector<VertexAnimated> GetVertices() const { return m_vertices; }
+		std::vector<IVertex *> GetVertices() const { return m_vertices; }
 
 		std::vector<uint32_t> GetIndices() const { return m_indices; }
 	private:
@@ -37,9 +38,9 @@ namespace Flounder
 
 		void AssembleVertices();
 
-		std::pair<VertexModelData *, VertexSkinData *> ProcessVertex(const int &positionIndex, const int &normalIndex, const int &uvIndex);
+		VertexAnimatedData *ProcessVertex(const int &positionIndex, const int &normalIndex, const int &uvIndex);
 
-		std::pair<VertexModelData *, VertexSkinData *> DealWithAlreadyProcessedVertex(const std::pair<VertexModelData *, VertexSkinData *> &previousVertex, const int &newUvIndex, const int &newNormalIndex);
+		VertexAnimatedData *DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const int &newUvIndex, const int &newNormalIndex);
 
 		void RemoveUnusedVertices();
 	};

@@ -1,8 +1,13 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
+#define MAX_JOINTS 50
+#define MAX_WEIGHTS 3
+
 layout(set = 0, binding = 1) uniform UboObject
 {
+    mat4 jointTransforms[MAX_JOINTS];
+
 	mat4 transform;
 
 	vec4 baseColor;
@@ -10,8 +15,6 @@ layout(set = 0, binding = 1) uniform UboObject
 	vec4 samples;
 
 	vec4 surface;
-
-	float worldCurvature;
 } object;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;

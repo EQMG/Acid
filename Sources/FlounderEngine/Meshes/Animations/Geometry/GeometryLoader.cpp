@@ -7,10 +7,10 @@ namespace Flounder
 	GeometryLoader::GeometryLoader(LoadedValue *libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
 		m_meshData(libraryGeometries->GetChild("geometry")->GetChild("mesh")),
 		m_vertexWeights(vertexWeights),
-		m_positionsList(std::vector<std::pair<VertexModelData *, VertexSkinData *>>()),
+		m_positionsList(std::vector<VertexAnimatedData *>()),
 		m_uvsList(std::vector<Vector2>()),
 		m_normalsList(std::vector<Vector3>()),
-		m_vertices(std::vector<VertexAnimated>()),
+		m_vertices(std::vector<IVertex *>()),
 		m_indices(std::vector<uint32_t>())
 	{
 		LoadVertices();
@@ -21,20 +21,20 @@ namespace Flounder
 
 		for (auto current : m_positionsList)
 		{
-			const Vector3 position = current.first->GetPosition();
-			const Vector2 textures = m_uvsList.at(current.first->GetUvIndex());
-			const Vector3 normal = m_normalsList.at(current.first->GetNormalIndex());
-			const Vector3 tangent = current.first->GetAverageTangent();
+			const Vector3 position = current->GetPosition();
+			const Vector2 textures = m_uvsList.at(current->GetUvIndex());
+			const Vector3 normal = m_normalsList.at(current->GetNormalIndex());
+			const Vector3 tangent = current->GetAverageTangent();
 
-			//	const VertexSkinData* skin = current.second;
-			//	const Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
+			const VertexSkinData* skin = current->GetSkinData();
+			//  const Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
 			//	const Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
 
-			VertexAnimated vertex = VertexAnimated(position, textures, normal, tangent); // , jointIds, weights
+			VertexAnimated *vertex = new VertexAnimated(position, textures, normal, tangent); // , jointIds, weights
 
 			m_vertices.push_back(vertex);
 
-			delete current.first;
+			delete current;
 		}
 	}
 
@@ -53,8 +53,9 @@ namespace Flounder
 		{
 			Vector4 position = Vector4(std::stof(positionsRawData[i * 3]), std::stof(positionsRawData[i * 3 + 1]), std::stof(positionsRawData[i * 3 + 2]), 1.0f);
 			Matrix4::Transform(*MeshAnimated::S_CORRECTION, position, &position); // Matrix4::Multiply
-			VertexModelData *newVertex = new VertexModelData(m_positionsList.size(), position);
-			m_positionsList.push_back(std::make_pair(newVertex, m_vertexWeights[m_vertices.size()]));
+			VertexAnimatedData *newVertex = new VertexAnimatedData(m_positionsList.size(), position);
+			newVertex->SetSkinData(m_vertexWeights[m_vertices.size()]);
+			m_positionsList.push_back(newVertex);
 		}
 	}
 
@@ -100,14 +101,14 @@ namespace Flounder
 		}
 	}
 
-	std::pair<VertexModelData *, VertexSkinData *> GeometryLoader::ProcessVertex(const int &positionIndex, const int &normalIndex, const int &uvIndex)
+	VertexAnimatedData *GeometryLoader::ProcessVertex(const int &positionIndex, const int &normalIndex, const int &uvIndex)
 	{
 		auto currentVertex = m_positionsList[positionIndex];
 
-		if (!currentVertex.first->IsSet())
+		if (!currentVertex->IsSet())
 		{
-			currentVertex.first->SetUvIndex(uvIndex);
-			currentVertex.first->SetNormalIndex(normalIndex);
+			currentVertex->SetUvIndex(uvIndex);
+			currentVertex->SetNormalIndex(normalIndex);
 			m_indices.push_back(positionIndex);
 			return currentVertex;
 		}
@@ -117,38 +118,39 @@ namespace Flounder
 		}
 	}
 
-	std::pair<VertexModelData *, VertexSkinData *> GeometryLoader::DealWithAlreadyProcessedVertex(const std::pair<VertexModelData *, VertexSkinData *> &previousVertex, const int &newUvIndex, const int &newNormalIndex)
+	VertexAnimatedData *GeometryLoader::DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const int &newUvIndex, const int &newNormalIndex)
 	{
-		if (previousVertex.first->HasSameTextureAndNormal(newUvIndex, newNormalIndex))
+		if (previousVertex->HasSameTextureAndNormal(newUvIndex, newNormalIndex))
 		{
-			m_indices.push_back(previousVertex.first->GetIndex());
+			m_indices.push_back(previousVertex->GetIndex());
 			return previousVertex;
 		}
 		else
 		{
-			std::pair<VertexModelData *, VertexSkinData *> anotherVertex;
+			VertexAnimatedData *anotherVertex = nullptr;
 
 			for (auto position : m_positionsList)
 			{
-				if (position.first == previousVertex.first->GetDuplicateVertex())
+				if (position == previousVertex->GetDuplicateVertex())
 				{
 					anotherVertex = position;
 					break;
 				}
 			}
 
-			if (anotherVertex.first != nullptr)
+			if (anotherVertex != nullptr)
 			{
 				return DealWithAlreadyProcessedVertex(anotherVertex, newUvIndex, newNormalIndex);
 			}
 			else
 			{
-				auto duplicateVertex = std::make_pair(new VertexModelData(m_positionsList.size(), previousVertex.first->GetPosition()), previousVertex.second);
-				duplicateVertex.first->SetUvIndex(newUvIndex);
-				duplicateVertex.first->SetNormalIndex(newNormalIndex);
-				previousVertex.first->SetDuplicateVertex(duplicateVertex.first);
+				auto duplicateVertex = new VertexAnimatedData(m_positionsList.size(), previousVertex->GetPosition());
+				duplicateVertex->SetUvIndex(newUvIndex);
+				duplicateVertex->SetNormalIndex(newNormalIndex);
+				duplicateVertex->SetSkinData(previousVertex->GetSkinData());
+				previousVertex->SetDuplicateVertex(duplicateVertex);
 				m_positionsList.push_back(duplicateVertex);
-				m_indices.push_back(duplicateVertex.first->GetIndex());
+				m_indices.push_back(duplicateVertex->GetIndex());
 				return duplicateVertex;
 			}
 		}
@@ -158,12 +160,12 @@ namespace Flounder
 	{
 		for (auto vertex : m_positionsList)
 		{
-			vertex.first->AverageTangents();
+			vertex->AverageTangents();
 
-			if (!vertex.first->IsSet())
+			if (!vertex->IsSet())
 			{
-				vertex.first->SetUvIndex(0);
-				vertex.first->SetNormalIndex(0);
+				vertex->SetUvIndex(0);
+				vertex->SetNormalIndex(0);
 			}
 		}
 	}

@@ -9,12 +9,13 @@ namespace Flounder
 	const int MeshAnimated::MAX_WEIGHTS = 3;
 
 	MeshAnimated::MeshAnimated(const std::string &filename) :
-		Component(),
+		Mesh(),
 		m_filename(filename),
 		m_model(nullptr),
 		m_headJoint(nullptr),
 		m_animation(nullptr),
-		m_animator(nullptr)
+		m_animator(nullptr),
+		m_jointMatrices(std::vector<Matrix4*>())
 	{
 	}
 
@@ -31,6 +32,12 @@ namespace Flounder
 		if (m_animator != nullptr)
 		{
 			m_animator->Update();
+		}
+
+		if (m_headJoint != nullptr)
+		{
+			m_jointMatrices.clear();
+			AddJointsToArray(*m_headJoint, &m_jointMatrices);
 		}
 	}
 
@@ -60,27 +67,27 @@ namespace Flounder
 		FileJson *file = new FileJson(filename);
 		file->Load();
 
-	//	SkinLoader *skinLoader = new SkinLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
-	//	SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
-	//		skinLoader->GetJointOrder());
-	//	GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetVerticesSkinData());
-	//	//	auto vertices = geometryLoader->GetVertices();
-	//	//	auto indices = geometryLoader->GetIndices();
-	//	//	m_model = new Model(vertices, indices);
-	//	m_headJoint = CreateJoints(skeletonLoader->GetHeadJoint());
+		SkinLoader *skinLoader = new SkinLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
+		SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
+			skinLoader->GetJointOrder());
+		GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetVerticesSkinData());
+		auto vertices = geometryLoader->GetVertices();
+		auto indices = geometryLoader->GetIndices();
+		m_model = new Model(vertices, indices);
+		m_headJoint = CreateJoints(skeletonLoader->GetHeadJoint());
 	//	delete skinLoader;
 	//	delete skeletonLoader;
 	//	delete geometryLoader;
 //
-	//	AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
-	//		file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
-	//	m_animation = new Animation(animationLoader->GetLengthSeconds(), animationLoader->GetKeyframeData());
+		AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
+			file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
+		m_animation = new Animation(animationLoader->GetLengthSeconds(), animationLoader->GetKeyframeData());
 	//	delete animationLoader;
 //
 		delete file;
 //
-	//	m_animator = new Animator(m_headJoint);
-	//	m_animator->DoAnimation(m_animation);
+		m_animator = new Animator(m_headJoint);
+		m_animator->DoAnimation(m_animation);
 	}
 
 	Joint *MeshAnimated::CreateJoints(JointData *data)
@@ -93,5 +100,18 @@ namespace Flounder
 		}
 
 		return j;
+	}
+
+	void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4*> *jointMatrices)
+	{
+		if (headJoint.GetIndex() < jointMatrices->size())
+		{
+			jointMatrices->at(headJoint.GetIndex()) = headJoint.GetAnimatedTransform();
+		}
+
+		for (auto childJoint : *headJoint.GetChildren())
+		{
+			AddJointsToArray(*childJoint, jointMatrices);
+		}
 	}
 }
