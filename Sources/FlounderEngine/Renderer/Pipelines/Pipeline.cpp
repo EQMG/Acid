@@ -1,6 +1,7 @@
 ﻿#include "Pipeline.hpp"
 
 #include <cassert>
+#include <shaderc/shaderc.hpp>
 #include "../../Devices/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/FormatString.hpp"
@@ -186,11 +187,6 @@ namespace Flounder
 			{
 				auto shaderCode = FileSystem::ReadBinaryFile<char>(type, "rb");
 
-			//	auto spvContext = Display::Get()->GetSpvContext();
-			//	spv_text text = nullptr;
-			//	spvBinaryToText(spvContext, shaderCode.data(), shaderCode.size(), 0, &text, nullptr);
-			//	printf("%s\n", text->str);
-
 				VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 				shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 				shaderModuleCreateInfo.codeSize = shaderCode.size();
@@ -210,26 +206,21 @@ namespace Flounder
 			}
 			else
 			{
-				auto spvContext = Display::Get()->GetSpvContext();
+				auto shaderCode = FileSystem::ReadTextFile(type);
 
-				std::string shaderSource = FileSystem::ReadTextFile(type);
-				spv_text_t text = { shaderSource.c_str(), strlen(shaderSource.c_str()) };
+			//	shaderc::Compiler compiler;
+			//	shaderc::CompileOptions compile_options;
+			//	compile_options.SetTargetEnvironment(shaderc_target_env_vulkan, 0);
+			//	compile_options.SetSourceLanguage(shaderc_source_language_glsl);    // TODO: Auto-detect this
+			//	compile_options.SetWarningsAsErrors();  // TODO: Make this configurable from shaders.json or something
+			//	// TODO: Let users set optimization level too
 
-				spv_binary binary = nullptr;
-				spv_diagnostic diagnostic = nullptr;
-				spv_result_t error = spvTextToBinary(spvContext, text.str, text.length, &binary, &diagnostic); // Platform::ErrorSpv(
-
-				if (error != SPV_SUCCESS)
-				{
-					spvDiagnosticPrint(diagnostic);
-					spvDiagnosticDestroy(diagnostic);
-				//	ASSERT_EQ(SPV_SUCCESS, error);
-				}
+			//	auto result = compiler.CompileGlslToSpv(shaderCode.c_str(), shaderCode.size(), stageFlag, type.c_str(), compile_options);
 
 				VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 				shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-				shaderModuleCreateInfo.codeSize = binary->wordCount;
-				shaderModuleCreateInfo.pCode = binary->code;
+			//	shaderModuleCreateInfo.codeSize = spirv.size();
+			//	shaderModuleCreateInfo.pCode = spirv.data();
 
 				VkShaderModule shaderModule = VK_NULL_HANDLE;
 				Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
@@ -242,9 +233,6 @@ namespace Flounder
 
 				m_modules.push_back(shaderModule);
 				m_stages.push_back(pipelineShaderStageCreateInfo);
-
-				spvDiagnosticDestroy(diagnostic);
-				spvBinaryDestroy(binary);
 			}
 		}
 	}

@@ -14,7 +14,7 @@
 #include <vulkan/vulkan.h>
 #endif
 
-#include <spirv-tools/libspirv.h>
+#include <shaderc/shaderc.h>
 
 #include <GLFW/glfw3.h>
 
@@ -26,8 +26,6 @@ namespace Flounder
 	{
 	public:
 		static void ErrorVk(const VkResult &result);
-
-		static void ErrorSpv(const spv_result_t &result);
 
 		static void ErrorGlfw(const int &result);
 
