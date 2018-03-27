@@ -56,8 +56,6 @@ namespace Flounder
 		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
 		uint32_t m_graphicsFamilyIndex;
 
-		spv_context m_spvContext;
-
 		friend void CallbackError(int error, const char *description);
 
 		friend void CallbackClose(GLFWwindow *window);
@@ -246,8 +244,6 @@ namespace Flounder
 		VkPhysicalDeviceMemoryProperties GetPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
 
 		uint32_t GetGraphicsFamilyIndex() const { return m_graphicsFamilyIndex; }
-
-		spv_context GetSpvContext() const { return m_spvContext; }
 	private:
 		void CreateGlfw();
 
@@ -270,8 +266,6 @@ namespace Flounder
 		void CreateLogicalDevice();
 
 		void CreateSurface();
-
-		void CreateSpv();
 
 		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties);
 
