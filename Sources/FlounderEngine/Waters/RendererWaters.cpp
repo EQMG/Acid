@@ -21,7 +21,7 @@ namespace Flounder
 				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL) // uboObject
 			}, // descriptors
 
-			{"Resources/Shaders/Waters/Water.vert.spv", "Resources/Shaders/Waters/Water.frag.spv"} // shaderStages
+			{"Resources/Shaders/Waters/Water.vert", "Resources/Shaders/Waters/Water.frag"} // shaderStages
 		};
 
 	RendererWaters::RendererWaters(const GraphicsStage &graphicsStage) :

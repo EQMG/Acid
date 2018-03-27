@@ -22,7 +22,7 @@ namespace Flounder
 			}, // descriptors
 
 			{
-				"Resources/Shaders/Terrains/Terrain.vert.spv", "Resources/Shaders/Terrains/Terrain.frag.spv"
+				"Resources/Shaders/Terrains/Terrain.vert", "Resources/Shaders/Terrains/Terrain.frag"
 			} // shaderStages
 		};
 

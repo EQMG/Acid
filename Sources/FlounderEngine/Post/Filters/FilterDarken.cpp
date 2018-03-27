@@ -12,7 +12,7 @@ namespace Flounder
 		};
 
 	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Darken.frag.spv", graphicsStage, DESCRIPTORS),
+		IPostFilter("Resources/Shaders/Filters/Darken.frag", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_factor(0.5f)
 	{

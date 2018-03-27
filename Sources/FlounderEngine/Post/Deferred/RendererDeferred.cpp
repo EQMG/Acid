@@ -30,7 +30,7 @@ namespace Flounder
 		}, // descriptors
 
 		{
-			"Resources/Shaders/Deferred/Deferred.vert.spv", "Resources/Shaders/Deferred/Deferred.frag.spv"
+			"Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag"
 		} // shaderStages
 	};
 

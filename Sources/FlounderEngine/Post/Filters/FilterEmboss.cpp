@@ -11,7 +11,7 @@ namespace Flounder
 		};
 
 	FilterEmboss::FilterEmboss(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Emboss.frag.spv", graphicsStage, DESCRIPTORS)
+		IPostFilter("Resources/Shaders/Filters/Emboss.frag", graphicsStage, DESCRIPTORS)
 	{
 	}
 

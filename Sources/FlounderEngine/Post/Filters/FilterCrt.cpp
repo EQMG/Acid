@@ -14,7 +14,7 @@ namespace Flounder
 		};
 
 	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Crt.frag.spv", graphicsStage, DESCRIPTORS),
+		IPostFilter("Resources/Shaders/Filters/Crt.frag", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_screenColour(new Colour(0.5f, 1.0f, 0.5f)),
 		m_curveAmountX(0.1f),

@@ -14,8 +14,8 @@
 #include <vulkan/vulkan.h>
 #endif
 
+#include <GlslangToSpv.h>
 #include <GLFW/glfw3.h>
-
 #include "../Prerequisites.hpp"
 
 namespace Flounder
