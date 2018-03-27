@@ -81,7 +81,7 @@ endif()
 
 # Dependencies
 include(Libraries/FindVulkan.cmake)
-include(Libraries/FindShaderc.cmake)
+include(Libraries/FindGlslang.cmake)
 include(Libraries/FindOpenAL.cmake)
 include(Libraries/FindGLFW.cmake)
 include(Libraries/FindSTB.cmake)
