@@ -14,8 +14,6 @@
 #include <vulkan/vulkan.h>
 #endif
 
-#include <shaderc/shaderc.h>
-
 #include <GLFW/glfw3.h>
 
 #include "../Prerequisites.hpp"

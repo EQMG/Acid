@@ -1,7 +1,7 @@
 ﻿#include "Pipeline.hpp"
 
 #include <cassert>
-#include <shaderc/shaderc.hpp>
+#include <GlslangToSpv.h>
 #include "../../Devices/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/FormatString.hpp"
