@@ -13,7 +13,7 @@ namespace Flounder
 		};
 
 	FilterGrain::FilterGrain(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Grain.frag.spv", graphicsStage, DESCRIPTORS),
+		IPostFilter("Resources/Shaders/Filters/Grain.frag", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_strength(2.3f)
 	{

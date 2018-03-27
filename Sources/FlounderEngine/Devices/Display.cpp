@@ -138,6 +138,8 @@ namespace Flounder
 
 	Display::~Display()
 	{
+		glslang::FinalizeProcess();
+
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(m_logicalDevice);
 
@@ -327,6 +329,8 @@ namespace Flounder
 		CreatePhysicalDevice();
 		CreateLogicalDevice();
 		CreateSurface();
+
+		glslang::InitializeProcess();
 	}
 
 	void Display::SetupLayers()

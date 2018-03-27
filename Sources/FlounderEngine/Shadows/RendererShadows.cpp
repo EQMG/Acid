@@ -22,7 +22,7 @@ namespace Flounder
 				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL) // uboObject
 			}, // descriptors
 
-			{"Resources/Shaders/Shadows/Shadow.vert.spv", "Resources/Shaders/Shadows/Shadow.frag.spv"} // shaderStages
+			{"Resources/Shaders/Shadows/Shadow.vert", "Resources/Shaders/Shadows/Shadow.frag"} // shaderStages
 		};
 
 	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :

@@ -20,7 +20,7 @@ namespace Flounder
 				Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerDiffuse
 			}, // descriptors
 
-			{ "Resources/Shaders/Particles/Particle.vert.spv", "Resources/Shaders/Particles/Particle.frag.spv"} // shaderStages
+			{ "Resources/Shaders/Particles/Particle.vert", "Resources/Shaders/Particles/Particle.frag"} // shaderStages
 		};
 
 	RendererParticles::RendererParticles(const GraphicsStage &graphicsStage) :

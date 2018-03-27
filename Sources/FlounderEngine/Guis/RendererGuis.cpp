@@ -21,7 +21,7 @@ namespace Flounder
 				Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerTexture
 			}, // descriptors
 
-			{"Resources/Shaders/Guis/Gui.vert.spv", "Resources/Shaders/Guis/Gui.frag.spv"} // shaderStages
+			{"Resources/Shaders/Guis/Gui.vert", "Resources/Shaders/Guis/Gui.frag"} // shaderStages
 		};
 
 	RendererGuis::RendererGuis(const GraphicsStage &graphicsStage) :

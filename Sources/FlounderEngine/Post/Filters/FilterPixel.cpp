@@ -12,7 +12,7 @@ namespace Flounder
 		};
 
 	FilterPixel::FilterPixel(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Pixel.frag.spv", graphicsStage, DESCRIPTORS),
+		IPostFilter("Resources/Shaders/Filters/Pixel.frag", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_pixelSize(2.0f)
 	{

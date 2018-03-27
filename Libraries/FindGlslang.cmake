@@ -1,5 +1,6 @@
 set(GLSLANG_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glslang/glslang/Include" "${PROJECT_SOURCE_DIR}/Libraries/glslang/SPIRV")
 set(SKIP_GLSLANG_INSTALL ON CACHE INTERNAL "Skip installation")
+set(BUILD_TESTING OFF CACHE INTERNAL "Enables test builds")
 set(ENABLE_AMD_EXTENSIONS OFF CACHE INTERNAL "Enables support of AMD-specific extensions")
 set(ENABLE_GLSLANG_BINARIES OFF CACHE INTERNAL "Builds glslangValidator and spirv-remap")
 set(ENABLE_NV_EXTENSIONS OFF CACHE INTERNAL "Enables support of Nvidia-specific extensions")
