@@ -26,7 +26,7 @@ namespace Flounder
 				Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerNormal
 			}, // descriptors
 
-			{"Resources/Shaders/Entities/Entity.vert.spv", "Resources/Shaders/Entities/Entity.frag.spv"} // shaderStages
+			{"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"} // shaderStages
 		};
 
 	RendererEntities::RendererEntities(const GraphicsStage &graphicsStage) :

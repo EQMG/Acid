@@ -1,7 +1,6 @@
 ﻿#include "Pipeline.hpp"
 
 #include <cassert>
-#include <GlslangToSpv.h>
 #include "../../Devices/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/FormatString.hpp"
@@ -11,6 +10,104 @@ namespace Flounder
 {
 	const std::vector<VkDynamicState> DYNAMIC_STATES = {
 		VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR
+	};
+
+	const TBuiltInResource DefaultTBuiltInResource =
+	{
+		/* .MaxLights = */ 32,
+		/* .MaxClipPlanes = */ 6,
+		/* .MaxTextureUnits = */ 32,
+		/* .MaxTextureCoords = */ 32,
+		/* .MaxVertexAttribs = */ 64,
+		/* .MaxVertexUniformComponents = */ 4096,
+		/* .MaxVaryingFloats = */ 64,
+		/* .MaxVertexTextureImageUnits = */ 32,
+		/* .MaxCombinedTextureImageUnits = */ 80,
+		/* .MaxTextureImageUnits = */ 32,
+		/* .MaxFragmentUniformComponents = */ 4096,
+		/* .MaxDrawBuffers = */ 32,
+		/* .MaxVertexUniformVectors = */ 128,
+		/* .MaxVaryingVectors = */ 8,
+		/* .MaxFragmentUniformVectors = */ 16,
+		/* .MaxVertexOutputVectors = */ 16,
+		/* .MaxFragmentInputVectors = */ 15,
+		/* .MinProgramTexelOffset = */ -8,
+		/* .MaxProgramTexelOffset = */ 7,
+		/* .MaxClipDistances = */ 8,
+		/* .MaxComputeWorkGroupCountX = */ 65535,
+		/* .MaxComputeWorkGroupCountY = */ 65535,
+		/* .MaxComputeWorkGroupCountZ = */ 65535,
+		/* .MaxComputeWorkGroupSizeX = */ 1024,
+		/* .MaxComputeWorkGroupSizeY = */ 1024,
+		/* .MaxComputeWorkGroupSizeZ = */ 64,
+		/* .MaxComputeUniformComponents = */ 1024,
+		/* .MaxComputeTextureImageUnits = */ 16,
+		/* .MaxComputeImageUniforms = */ 8,
+		/* .MaxComputeAtomicCounters = */ 8,
+		/* .MaxComputeAtomicCounterBuffers = */ 1,
+		/* .MaxVaryingComponents = */ 60,
+		/* .MaxVertexOutputComponents = */ 64,
+		/* .MaxGeometryInputComponents = */ 64,
+		/* .MaxGeometryOutputComponents = */ 128,
+		/* .MaxFragmentInputComponents = */ 128,
+		/* .MaxImageUnits = */ 8,
+		/* .MaxCombinedImageUnitsAndFragmentOutputs = */ 8,
+		/* .MaxCombinedShaderOutputResources = */ 8,
+		/* .MaxImageSamples = */ 0,
+		/* .MaxVertexImageUniforms = */ 0,
+		/* .MaxTessControlImageUniforms = */ 0,
+		/* .MaxTessEvaluationImageUniforms = */ 0,
+		/* .MaxGeometryImageUniforms = */ 0,
+		/* .MaxFragmentImageUniforms = */ 8,
+		/* .MaxCombinedImageUniforms = */ 8,
+		/* .MaxGeometryTextureImageUnits = */ 16,
+		/* .MaxGeometryOutputVertices = */ 256,
+		/* .MaxGeometryTotalOutputComponents = */ 1024,
+		/* .MaxGeometryUniformComponents = */ 1024,
+		/* .MaxGeometryVaryingComponents = */ 64,
+		/* .MaxTessControlInputComponents = */ 128,
+		/* .MaxTessControlOutputComponents = */ 128,
+		/* .MaxTessControlTextureImageUnits = */ 16,
+		/* .MaxTessControlUniformComponents = */ 1024,
+		/* .MaxTessControlTotalOutputComponents = */ 4096,
+		/* .MaxTessEvaluationInputComponents = */ 128,
+		/* .MaxTessEvaluationOutputComponents = */ 128,
+		/* .MaxTessEvaluationTextureImageUnits = */ 16,
+		/* .MaxTessEvaluationUniformComponents = */ 1024,
+		/* .MaxTessPatchComponents = */ 120,
+		/* .MaxPatchVertices = */ 32,
+		/* .MaxTessGenLevel = */ 64,
+		/* .MaxViewports = */ 16,
+		/* .MaxVertexAtomicCounters = */ 0,
+		/* .MaxTessControlAtomicCounters = */ 0,
+		/* .MaxTessEvaluationAtomicCounters = */ 0,
+		/* .MaxGeometryAtomicCounters = */ 0,
+		/* .MaxFragmentAtomicCounters = */ 8,
+		/* .MaxCombinedAtomicCounters = */ 8,
+		/* .MaxAtomicCounterBindings = */ 1,
+		/* .MaxVertexAtomicCounterBuffers = */ 0,
+		/* .MaxTessControlAtomicCounterBuffers = */ 0,
+		/* .MaxTessEvaluationAtomicCounterBuffers = */ 0,
+		/* .MaxGeometryAtomicCounterBuffers = */ 0,
+		/* .MaxFragmentAtomicCounterBuffers = */ 1,
+		/* .MaxCombinedAtomicCounterBuffers = */ 1,
+		/* .MaxAtomicCounterBufferSize = */ 16384,
+		/* .MaxTransformFeedbackBuffers = */ 4,
+		/* .MaxTransformFeedbackInterleavedComponents = */ 64,
+		/* .MaxCullDistances = */ 8,
+		/* .MaxCombinedClipAndCullDistances = */ 8,
+		/* .MaxSamples = */ 4,
+		/* .limits = */ {
+			   /* .nonInductiveForLoops = */ true,
+			   /* .whileLoops = */ true,
+			   /* .doWhileLoops = */ true,
+			   /* .generalUniformIndexing = */ true,
+			   /* .generalAttributeMatrixVectorIndexing = */ true,
+			   /* .generalVaryingIndexing = */ true,
+			   /* .generalSamplerIndexing = */ true,
+			   /* .generalVariableIndexing = */ true,
+			   /* .generalConstantMatrixVectorIndexing = */ true,
+		}
 	};
 
 	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo) :
@@ -38,7 +135,7 @@ namespace Flounder
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
 		CreatePipelineLayout();
-		CreateShaderStages();
+		CreateShaderProgram();
 		CreateAttributes();
 
 		switch (pipelineCreateInfo.pipelineModeFlags)
@@ -150,90 +247,121 @@ namespace Flounder
 		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
-	void Pipeline::CreateShaderStages()
+	void Pipeline::CreateShaderProgram()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
+		std::vector<glslang::TShader> shaders;
+		glslang::TProgram program;
+		EShMessages messages = (EShMessages)(EShMsgSpvRules | EShMsgVulkanRules);
+
 		for (auto &type : m_pipelineCreateInfo.shaderStages)
 		{
-			VkShaderStageFlagBits stageFlag = VK_SHADER_STAGE_ALL;
+			auto shaderCode = FileSystem::ReadTextFile(type);
 
-			if (FormatString::Contains(type, "comp"))
+			VkShaderStageFlagBits stageFlag = GetShaderStage(type);
+			EShLanguage language = GetEshLanguage(stageFlag);
+
+			glslang::TShader shader = glslang::TShader(language);
+			const char *shaderStrings[1];
+			shaderStrings[0] = shaderCode.c_str();
+			shader.setStrings(shaderStrings, 1);
+
+			printf("%i\n", stageFlag);
+
+			if (!shader.parse(&DefaultTBuiltInResource, 100, false, messages))
 			{
-				stageFlag = VK_SHADER_STAGE_COMPUTE_BIT;
-			}
-			else if (FormatString::Contains(type, "vert"))
-			{
-				stageFlag = VK_SHADER_STAGE_VERTEX_BIT;
-			}
-			else if (FormatString::Contains(type, "tesc"))
-			{
-				stageFlag = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
-			}
-			else if (FormatString::Contains(type, "tese"))
-			{
-				stageFlag = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
-			}
-			else if (FormatString::Contains(type, "geom"))
-			{
-				stageFlag = VK_SHADER_STAGE_GEOMETRY_BIT;
-			}
-			else if (FormatString::Contains(type, "frag"))
-			{
-				stageFlag = VK_SHADER_STAGE_FRAGMENT_BIT;
+				printf("SPRIV shader compile failed!\n");
+				printf("%s\n", shader.getInfoLog());
+				printf("%s\n", shader.getInfoDebugLog());
 			}
 
-			if (FileSystem::FindExt(type) == "spv")
+			shaders.push_back(shader);
+			program.addShader(&shader);
+
+			if (!program.link(messages))
 			{
-				auto shaderCode = FileSystem::ReadBinaryFile<char>(type, "rb");
-
-				VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
-				shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-				shaderModuleCreateInfo.codeSize = shaderCode.size();
-				shaderModuleCreateInfo.pCode = reinterpret_cast<const uint32_t *>(shaderCode.data());
-
-				VkShaderModule shaderModule = VK_NULL_HANDLE;
-				Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
-
-				VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
-				pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-				pipelineShaderStageCreateInfo.stage = stageFlag;
-				pipelineShaderStageCreateInfo.module = shaderModule;
-				pipelineShaderStageCreateInfo.pName = "main";
-
-				m_modules.push_back(shaderModule);
-				m_stages.push_back(pipelineShaderStageCreateInfo);
+				printf("Error while linking shader program.\n");
 			}
-			else
-			{
-				auto shaderCode = FileSystem::ReadTextFile(type);
+		}
 
-			//	shaderc::Compiler compiler;
-			//	shaderc::CompileOptions compile_options;
-			//	compile_options.SetTargetEnvironment(shaderc_target_env_vulkan, 0);
-			//	compile_options.SetSourceLanguage(shaderc_source_language_glsl);    // TODO: Auto-detect this
-			//	compile_options.SetWarningsAsErrors();  // TODO: Make this configurable from shaders.json or something
-			//	// TODO: Let users set optimization level too
+		for (auto &type : m_pipelineCreateInfo.shaderStages)
+		{
+			VkShaderStageFlagBits stageFlag = GetShaderStage(type);
 
-			//	auto result = compiler.CompileGlslToSpv(shaderCode.c_str(), shaderCode.size(), stageFlag, type.c_str(), compile_options);
+			EShLanguage stage = EShLanguage::EShLangVertex;
+			std::vector<uint32_t> spirv = {};
+			glslang::GlslangToSpv(*program.getIntermediate(stage), spirv);
 
-				VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
-				shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-			//	shaderModuleCreateInfo.codeSize = spirv.size();
-			//	shaderModuleCreateInfo.pCode = spirv.data();
+			printf("Size: %i\n", spirv.size());
 
-				VkShaderModule shaderModule = VK_NULL_HANDLE;
-				Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
+			VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
+			shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+			shaderModuleCreateInfo.codeSize = spirv.size();
+			shaderModuleCreateInfo.pCode = spirv.data();
 
-				VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
-				pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-				pipelineShaderStageCreateInfo.stage = stageFlag;
-				pipelineShaderStageCreateInfo.module = shaderModule;
-				pipelineShaderStageCreateInfo.pName = "main";
+			VkShaderModule shaderModule = VK_NULL_HANDLE;
+			Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
 
-				m_modules.push_back(shaderModule);
-				m_stages.push_back(pipelineShaderStageCreateInfo);
-			}
+			VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
+			pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+			pipelineShaderStageCreateInfo.stage = stageFlag;
+			pipelineShaderStageCreateInfo.module = shaderModule;
+			pipelineShaderStageCreateInfo.pName = "main";
+
+			m_modules.push_back(shaderModule);
+			m_stages.push_back(pipelineShaderStageCreateInfo);
+		}
+	}
+
+	VkShaderStageFlagBits Pipeline::GetShaderStage(const std::string &filename)
+	{
+		if (FormatString::Contains(filename, ".comp"))
+		{
+			return VK_SHADER_STAGE_COMPUTE_BIT;
+		}
+		else if (FormatString::Contains(filename, ".vert"))
+		{
+			return VK_SHADER_STAGE_VERTEX_BIT;
+		}
+		else if (FormatString::Contains(filename, ".tesc"))
+		{
+			return VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
+		}
+		else if (FormatString::Contains(filename, ".tese"))
+		{
+			return VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
+		}
+		else if (FormatString::Contains(filename, ".geom"))
+		{
+			return VK_SHADER_STAGE_GEOMETRY_BIT;
+		}
+		else if (FormatString::Contains(filename, ".frag"))
+		{
+			return VK_SHADER_STAGE_FRAGMENT_BIT;
+		}
+
+		return VK_SHADER_STAGE_ALL;
+	}
+
+	EShLanguage Pipeline::GetEshLanguage(const VkShaderStageFlagBits &stageFlag)
+	{
+		switch(stageFlag)
+		{
+		case VK_SHADER_STAGE_COMPUTE_BIT:
+			return EShLangCompute;
+		case VK_SHADER_STAGE_VERTEX_BIT:
+			return EShLangVertex;
+		case VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT:
+			return EShLangTessControl;
+		case VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT:
+			return EShLangTessEvaluation;
+		case VK_SHADER_STAGE_GEOMETRY_BIT:
+			return EShLangGeometry;
+		case VK_SHADER_STAGE_FRAGMENT_BIT:
+			return EShLangFragment;
+		default:
+			return EShLangCount;
 		}
 	}
 

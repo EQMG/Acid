@@ -75,7 +75,11 @@ namespace Flounder
 
 		void CreatePipelineLayout();
 
-		void CreateShaderStages();
+		void CreateShaderProgram();
+
+		VkShaderStageFlagBits GetShaderStage(const std::string &filename);
+
+		EShLanguage GetEshLanguage(const VkShaderStageFlagBits &stageFlag);
 
 		void CreateAttributes();
 

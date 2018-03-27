@@ -11,7 +11,7 @@ namespace Flounder
 		};
 
 	FilterNegative::FilterNegative(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Negative.frag.spv", graphicsStage, DESCRIPTORS)
+		IPostFilter("Resources/Shaders/Filters/Negative.frag", graphicsStage, DESCRIPTORS)
 	{
 	}
 

@@ -23,7 +23,7 @@ namespace Flounder
 				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL) // uboObject
 			}, // descriptors
 
-			{"Resources/Shaders/Voxels/Voxel.vert.spv", "Resources/Shaders/Voxels/Voxel.frag.spv"} // shaderStages
+			{"Resources/Shaders/Voxels/Voxel.vert", "Resources/Shaders/Voxels/Voxel.frag"} // shaderStages
 		};
 
 	RendererVoxels::RendererVoxels(const GraphicsStage &graphicsStage) :

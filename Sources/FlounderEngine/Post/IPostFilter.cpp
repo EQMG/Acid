@@ -16,7 +16,7 @@ namespace Flounder
 
 			{}, // descriptors
 
-			{"Resources/Shaders/Filters/Default.vert.spv", "Resources/Shaders/Filters/Default.frag.spv"} // shaderStages
+			{"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Default.frag"} // shaderStages
 		};
 
 	IPostFilter::IPostFilter(const std::string &fragmentShader, const GraphicsStage &graphicsStage, const std::vector<DescriptorType> &descriptors) :

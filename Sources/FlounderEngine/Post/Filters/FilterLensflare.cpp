@@ -15,7 +15,7 @@ namespace Flounder
 		};
 
 	FilterLensflare::FilterLensflare(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Lensflare.frag.spv", graphicsStage, DESCRIPTORS),
+		IPostFilter("Resources/Shaders/Filters/Lensflare.frag", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_sunPosition(new Vector3()),
 		m_sunHeight(0.0f)
