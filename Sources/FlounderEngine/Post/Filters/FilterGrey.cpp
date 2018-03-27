@@ -11,7 +11,7 @@ namespace Flounder
 		};
 
 	FilterGrey::FilterGrey(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Grey.frag.spv", graphicsStage, DESCRIPTORS)
+		IPostFilter("Resources/Shaders/Filters/Grey.frag", graphicsStage, DESCRIPTORS)
 	{
 	}
 

@@ -11,7 +11,7 @@ namespace Flounder
 		};
 
 	FilterTone::FilterTone(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Tone.frag.spv", graphicsStage, DESCRIPTORS)
+		IPostFilter("Resources/Shaders/Filters/Tone.frag", graphicsStage, DESCRIPTORS)
 	{
 	}
 

@@ -22,7 +22,7 @@ namespace Flounder
 				Cubemap::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerCubemap
 			}, // descriptors
 
-			{"Resources/Shaders/Skyboxes/Skybox.vert.spv", "Resources/Shaders/Skyboxes/Skybox.frag.spv"} // shaderStages
+			{"Resources/Shaders/Skyboxes/Skybox.vert", "Resources/Shaders/Skyboxes/Skybox.frag"} // shaderStages
 		};
 
 	RendererSkyboxes::RendererSkyboxes(const GraphicsStage &graphicsStage) :

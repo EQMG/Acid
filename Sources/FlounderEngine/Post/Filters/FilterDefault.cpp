@@ -11,7 +11,7 @@ namespace Flounder
 		};
 
 	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Default.frag.spv", graphicsStage, DESCRIPTORS)
+		IPostFilter("Resources/Shaders/Filters/Default.frag", graphicsStage, DESCRIPTORS)
 	{
 	}
 

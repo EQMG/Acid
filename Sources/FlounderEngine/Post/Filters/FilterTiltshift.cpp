@@ -12,7 +12,7 @@ namespace Flounder
 		};
 
 	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag.spv", graphicsStage, DESCRIPTORS),
+		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag", graphicsStage, DESCRIPTORS),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_blurAmount(1.0f),
 		m_centre(1.1f),

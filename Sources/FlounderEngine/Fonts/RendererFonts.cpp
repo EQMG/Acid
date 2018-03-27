@@ -16,7 +16,7 @@ namespace Flounder
 				Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // amplerTexture
 			}, // descriptors
 
-			{"Resources/Shaders/Fonts/Font.vert.spv", "Resources/Shaders/Fonts/Font.frag.spv"} // shaderStages
+			{"Resources/Shaders/Fonts/Font.vert", "Resources/Shaders/Fonts/Font.frag"} // shaderStages
 		};
 
 	RendererFonts::RendererFonts(const GraphicsStage &graphicsStage) :
