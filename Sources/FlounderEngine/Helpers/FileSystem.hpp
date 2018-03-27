@@ -53,13 +53,20 @@ namespace Flounder
 		static std::string ReadTextFile(const std::string &filepath);
 
 		/// <summary>
+		/// Writes to a text file from a string.
+		/// </summary>
+		/// <param name="filepath"> The filepath. </param>
+		/// <param name="data"> The text data. </param>
+		static void WriteTextFile(const std::string &filepath, const std::string &data);
+
+		/// <summary>
 		/// Reads a binary file into a char array.
 		/// </summary>
 		///	<param name="filepath"> The filepath. </param>
 		///	<param name="mode"> The read mode. </param>
 		/// <returns> The char array loaded from the file. </returns>
 		template <typename T>
-		static std::vector<T> ReadBinaryFile(const std::string &filepath, const std::string &mode)
+		static std::vector<T> ReadBinaryFile(const std::string &filepath, const std::string &mode = "rb")
 		{
 			std::vector<T> data = {};
 
@@ -106,19 +113,12 @@ namespace Flounder
 		}
 
 		/// <summary>
-		/// Writes to a text file from a string.
-		/// </summary>
-		/// <param name="filepath"> The filepath. </param>
-		/// <param name="data"> The text data. </param>
-		static void WriteTextFile(const std::string &filepath, const std::string &data);
-
-		/// <summary>
 		/// Writes to a binary file from a char vector.
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		/// <param name="data"> The binary data. </param>
 		template <typename T>
-		static void WriteBinaryFile(const std::string &filepath, const std::string &mode, const std::vector<char> &data)
+		static void WriteBinaryFile(const std::string &filepath, const std::vector<char> &data, const std::string &mode = "wb")
 		{
 			const bool useStdout = !filepath.c_str() || (filepath.c_str()[0] == '-' && filepath.c_str()[1] == '\0');
 
