@@ -1,21 +1,22 @@
 #pragma once
 
-#include <STB/stb_image.h>
-#include <STB/stb_image_write.h>
-#include <STB/stb_vorbis.h>
+#include <vulkan/vulkan.h>
 
 #ifdef FLOUNDER_PLATFORM_MACOS
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
-#include <MoltenVK/mvk_vulkan.h>
 #else
 #include <AL/al.h>
 #include <AL/alc.h>
-#include <vulkan/vulkan.h>
 #endif
 
 #include <GlslangToSpv.h>
 #include <GLFW/glfw3.h>
+
+#include <STB/stb_image.h>
+#include <STB/stb_image_write.h>
+#include <STB/stb_vorbis.h>
+
 #include "../Prerequisites.hpp"
 
 namespace Flounder
