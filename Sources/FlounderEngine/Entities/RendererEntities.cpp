@@ -28,11 +28,12 @@ namespace Flounder
 
 			{"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"} // shaderStages
 		};
+	const std::vector<std::string> PIPELINE_DEFINES = { "ANIMATED", "COLOUR_MAPPING", "MATERIAL_MAPPING", "NORMAL_MAPPING" };
 
 	RendererEntities::RendererEntities(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosEntities::UboScene))),
-		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
+		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE, PIPELINE_DEFINES))
 	{
 	}
 
