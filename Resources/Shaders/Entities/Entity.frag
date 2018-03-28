@@ -6,26 +6,35 @@
 
 layout(set = 0, binding = 1) uniform UboObject
 {
+#ifdef ANIMATED
     mat4 jointTransforms[MAX_JOINTS];
-
+#endif
 	mat4 transform;
 
 	vec4 baseColor;
-
-	vec4 samples;
-
-	vec4 surface;
+	float metallic;
+	float roughness;
+	float ignoreFog;
+	float ignoreLighting;
 } object;
 
+#if COLOUR_MAPPING
 layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
+#endif
+#if MATERIAL_MAPPING
 layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
+#endif
+#if NORMAL_MAPPING
 layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
+#endif
 
 layout(location = 0) in vec2 fragmentUv;
 layout(location = 1) in vec3 fragmentNormal;
+#if NORMAL_MAPPING
 layout(location = 2) in vec3 tangentT;
 layout(location = 3) in vec3 tangentN;
 layout(location = 4) in vec3 tangentB;
+#endif
 
 layout(location = 0) out vec4 outColour;
 layout(location = 1) out vec2 outNormal;
@@ -44,33 +53,29 @@ void main()
 	vec4 textureColour = object.baseColor;
 	vec3 unitNormal = normalize(fragmentNormal);
 	vec3 material = vec3(object.surface.x, object.surface.y, 0.0f);
-
-	if (object.samples.x == 1.0f)
-	{
-	    textureColour = texture(samplerDiffuse, fragmentUv);
-	}
-
 	float glowing = 0.0f;
 
-	if (object.samples.y == 1.0f)
-	{
-	    vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
-	    material.x *= textureMaterial.r;
-	    material.y *= textureMaterial.g;
+#if COLOUR_MAPPING
+	textureColour = texture(samplerDiffuse, fragmentUv);
+#endif
 
-	    if (textureMaterial.b > 0.5f)
-	    {
-            glowing = 1.0f;
-        }
-	}
+#if MATERIAL_MAPPING
+	vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
+	material.x *= textureMaterial.r;
+	material.y *= textureMaterial.g;
 
-	if (object.samples.z == 1.0f)
+	if (textureMaterial.b > 0.5f)
 	{
-	    vec4 textureNormal = texture(samplerNormal, fragmentUv);
-	    unitNormal = textureNormal.rgb;
-        unitNormal = normalize(textureNormal.rgb * 2.0f - vec3(1.0f));
-        unitNormal = normalize(mat3(tangentT, tangentN, tangentB) * unitNormal);
-	}
+        glowing = 1.0f;
+    }
+#endif
+
+#if NORMAL_MAPPING
+	vec4 textureNormal = texture(samplerNormal, fragmentUv);
+	unitNormal = textureNormal.rgb;
+    unitNormal = normalize(textureNormal.rgb * 2.0f - vec3(1.0f));
+    unitNormal = normalize(mat3(tangentT, tangentN, tangentB) * unitNormal);
+#endif
 
 	material.z = (1.0f / 3.0f) * (object.surface.z + (2.0f * min(object.surface.w + glowing, 1.0f)));
 

@@ -12,29 +12,34 @@ layout(set = 0, binding = 0) uniform UboScene
 
 layout(set = 0, binding = 1) uniform UboObject
 {
+#ifdef ANIMATED
     mat4 jointTransforms[MAX_JOINTS];
-
+#endif
 	mat4 transform;
 
 	vec4 baseColor;
-
-	vec4 samples;
-
-	vec4 surface;
+	float metallic;
+	float roughness;
+	float ignoreFog;
+	float ignoreLighting;
 } object;
 
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec2 vertexUv;
 layout(location = 2) in vec3 vertexNormal;
 layout(location = 3) in vec3 vertexTangent;
+#ifdef ANIMATED
 layout(location = 4) in ivec3 vertexJointIndices;
 layout(location = 5) in vec3 vertexWeights;
+#endif
 
 layout(location = 0) out vec2 fragmentUv;
 layout(location = 1) out vec3 fragmentNormal;
+#if NORMAL_MAPPING
 layout(location = 2) out vec3 tangentT;
 layout(location = 3) out vec3 tangentN;
 layout(location = 4) out vec3 tangentB;
+#endif
 
 out gl_PerVertex 
 {
@@ -46,6 +51,7 @@ void main()
 	vec4 totalLocalPos = vec4(vertexPosition, 1.0f);
 	vec4 totalNormal = vec4(vertexNormal, 0.0f);
 
+#ifdef ANIMATED
     for (int i = 0; i < MAX_WEIGHTS; i++)
     {
  	    mat4 jointTransform = object.jointTransforms[vertexJointIndices[i]];
@@ -55,6 +61,7 @@ void main()
         vec4 worldNormal = jointTransform * totalNormal;
         totalNormal += worldNormal * vertexWeights[i];
     }
+#endif
 
 	vec4 worldPosition = object.transform * totalLocalPos;
 
@@ -63,11 +70,10 @@ void main()
     fragmentUv = vertexUv;
 	fragmentNormal = normalize((object.transform * totalNormal).xyz);
 
-	if (object.samples.z == 1.0f)
-	{
-        mat3 normal_matrix = transpose(inverse(mat3(object.transform)));
-        tangentT = normalize(normal_matrix * vertexTangent);
-        tangentN = normalize(normal_matrix * vertexNormal);
-        tangentB = normalize(cross(tangentT, tangentN));
-	}
+#if NORMAL_MAPPING
+    mat3 normal_matrix = transpose(inverse(mat3(object.transform)));
+    tangentT = normalize(normal_matrix * vertexTangent);
+    tangentN = normalize(normal_matrix * vertexNormal);
+    tangentB = normalize(cross(tangentT, tangentN));
+#endif
 }

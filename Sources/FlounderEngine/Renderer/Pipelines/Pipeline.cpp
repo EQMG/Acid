@@ -12,9 +12,10 @@ namespace Flounder
 		VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR
 	};
 
-	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo) :
+	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<std::string> &defines) :
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreateInfo(pipelineCreateInfo),
+		m_defines(defines),
 		m_modules(std::vector<VkShaderModule>()),
 		m_stages(std::vector<VkPipelineShaderStageCreateInfo>()),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
@@ -153,10 +154,16 @@ namespace Flounder
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
+		std::string defineBlock = "";
+
+		for (const auto &define : m_defines)
+		{
+			defineBlock += "#define " + define + "\n";
+		}
+
 		for (auto &type : m_pipelineCreateInfo.shaderStages)
 		{
-			printf("%s\n", type.c_str());
-			auto shaderCode = FileSystem::ReadTextFile(type);
+			auto shaderCode = InsertDefineBlock(FileSystem::ReadTextFile(type), defineBlock);
 
 			VkShaderStageFlagBits stageFlag = GetShaderStage(type);
 			EShLanguage language = GetEshLanguage(stageFlag);
@@ -190,11 +197,9 @@ namespace Flounder
 			std::vector<uint32_t> spirv = std::vector<uint32_t>();
 			glslang::GlslangToSpv(*program.getIntermediate(language), spirv);
 
-			printf("Size: %i\n", spirv.size());
-
 			VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 			shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-			shaderModuleCreateInfo.codeSize = spirv.size();
+			shaderModuleCreateInfo.codeSize = spirv.size() * sizeof(uint32_t);
 			shaderModuleCreateInfo.pCode = spirv.data();
 
 			VkShaderModule shaderModule = VK_NULL_HANDLE;
@@ -209,6 +214,33 @@ namespace Flounder
 			m_modules.push_back(shaderModule);
 			m_stages.push_back(pipelineShaderStageCreateInfo);
 		}
+	}
+
+	std::string Pipeline::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
+	{
+		/*int i = 0;
+		int newLines = 0;
+		int insertPos = 0;
+
+		for (const auto &c : shaderCode)
+		{
+			if (newLines == 2)
+			{
+				insertPos = i;
+				break;
+			}
+
+			if (c == '\n')
+			{
+				newLines++;
+			}
+
+			i++;
+		}*/
+		// TODO
+		// std::string::iterator it = shaderCode.insert(insertPos, blockCode);
+
+		return shaderCode;
 	}
 
 	VkShaderStageFlagBits Pipeline::GetShaderStage(const std::string &filename)
