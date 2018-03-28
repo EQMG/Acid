@@ -20,6 +20,7 @@ namespace Flounder
 	private:
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreateInfo;
+		std::vector<std::string> m_defines;
 
 		std::vector<VkShaderModule> m_modules;
 		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
@@ -44,7 +45,8 @@ namespace Flounder
 		/// </summary>
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
 		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
-		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo);
+		/// <param name="defines"> A list of names that will be added a #define. </param>
+		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<std::string> &defines = std::vector<std::string>());
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
@@ -76,6 +78,8 @@ namespace Flounder
 		void CreatePipelineLayout();
 
 		void CreateShaderProgram();
+
+		std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
 
 		VkShaderStageFlagBits GetShaderStage(const std::string &filename);
 

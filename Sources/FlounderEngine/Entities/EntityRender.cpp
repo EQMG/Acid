@@ -55,18 +55,17 @@ namespace Flounder
 		// Updates uniforms.
 		UbosEntities::UboObject uboObject = {};
 
-		for (unsigned int i = 0; i < jointTransforms.size(); i++)
-		{
-			uboObject.jointTransforms[i] = jointTransforms.at(i);
-		}
+		// for (unsigned int i = 0; i < jointTransforms.size(); i++)
+		// {
+		// 	uboObject.jointTransforms[i] = jointTransforms.at(i);
+		// }
 
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		uboObject.samples.m_x = material->GetDiffuse()->GetTexture() != nullptr;
-		uboObject.samples.m_y = material->GetSurface()->GetTexture() != nullptr;
-		uboObject.samples.m_z = material->GetNormal()->GetTexture() != nullptr;
 		uboObject.baseColor = *material->GetDiffuse()->GetBaseColor();
-		uboObject.surface = Vector4(material->GetSurface()->GetMetallic(), material->GetSurface()->GetRoughness(),
-			static_cast<float>(material->GetSurface()->GetIgnoreFog()), static_cast<float>(material->GetSurface()->GetIgnoreLighting()));
+		uboObject.metallic = material->GetSurface()->GetMetallic();
+		uboObject.roughness = material->GetSurface()->GetRoughness();
+		uboObject.ignoreFog = static_cast<float>(material->GetSurface()->GetIgnoreFog());
+		uboObject.ignoreLighting = static_cast<float>(material->GetSurface()->GetIgnoreLighting());
 		m_uniformObject->Update(&uboObject);
 	}
 

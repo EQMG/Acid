@@ -21,15 +21,15 @@ namespace Flounder
 
 		struct UboObject
 		{
-			Matrix4 jointTransforms[MAX_JOINTS];
+		//	Matrix4 jointTransforms[MAX_JOINTS];
 
 			Matrix4 transform;
 
 			Vector4 baseColor;
-
-			Vector4 samples;
-
-			Vector4 surface;
+			float metallic;
+			float roughness;
+			float ignoreFog;
+			float ignoreLighting;
 		};
 	};
 }
