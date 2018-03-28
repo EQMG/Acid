@@ -52,7 +52,7 @@ void main()
 {
 	vec4 textureColour = object.baseColor;
 	vec3 unitNormal = normalize(fragmentNormal);
-	vec3 material = vec3(object.surface.x, object.surface.y, 0.0f);
+	vec3 material = vec3(object.metallic, object.roughness, 0.0f);
 	float glowing = 0.0f;
 
 #if COLOUR_MAPPING
@@ -77,7 +77,7 @@ void main()
     unitNormal = normalize(mat3(tangentT, tangentN, tangentB) * unitNormal);
 #endif
 
-	material.z = (1.0f / 3.0f) * (object.surface.z + (2.0f * min(object.surface.w + glowing, 1.0f)));
+	material.z = (1.0f / 3.0f) * (object.ignoreFog + (2.0f * min(object.ignoreLighting + glowing, 1.0f)));
 
 	outColour = textureColour;
 	outNormal = encodeNormal(unitNormal);
