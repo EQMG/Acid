@@ -218,28 +218,6 @@ namespace Flounder
 
 	std::string Pipeline::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
 	{
-		/*int i = 0;
-		int newLines = 0;
-		int insertPos = 0;
-
-		for (const auto &c : shaderCode)
-		{
-			if (newLines == 2)
-			{
-				insertPos = i;
-				break;
-			}
-
-			if (c == '\n')
-			{
-				newLines++;
-			}
-
-			i++;
-		}*/
-		// TODO
-		// std::string::iterator it = shaderCode.insert(insertPos, blockCode);
-
 		return shaderCode;
 	}
 
