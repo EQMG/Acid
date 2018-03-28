@@ -81,6 +81,8 @@ namespace Flounder
 
 		EShLanguage GetEshLanguage(const VkShaderStageFlagBits &stageFlag);
 
+		TBuiltInResource GetResources();
+
 		void CreateAttributes();
 
 		void CreatePipelinePolygon();
