@@ -1,4 +1,4 @@
-if(APPLE)
+if(FLOUNDER_PLATFORM_MACOS)
 	find_path(METAL_INCLUDES Metal.h)
 	find_library(METAL_LIBRARY NAMES Metal)
 
