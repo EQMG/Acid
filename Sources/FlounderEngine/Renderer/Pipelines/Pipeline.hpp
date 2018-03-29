@@ -8,6 +8,7 @@
 #include "../../Engine/Platform.hpp"
 #include "../Pipelines/DescriptorSet.hpp"
 #include "PipelineCreate.hpp"
+#include "ShaderProgram.hpp"
 
 namespace Flounder
 {
@@ -22,6 +23,7 @@ namespace Flounder
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreateInfo;
 		std::vector<std::string> m_defines;
+		ShaderProgram *m_shaderProgram;
 
 		std::vector<VkShaderModule> m_modules;
 		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
@@ -72,21 +74,13 @@ namespace Flounder
 
 		VkPipelineLayout GetPipelineLayout() const { return m_pipelineLayout; }
 	private:
+		void CreateShaderProgram();
+
 		void CreateDescriptorLayout();
 
 		void CreateDescriptorPool();
 
 		void CreatePipelineLayout();
-
-		void CreateShaderProgram();
-
-		std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
-
-		VkShaderStageFlagBits GetShaderStage(const std::string &filename);
-
-		EShLanguage GetEshLanguage(const VkShaderStageFlagBits &stageFlag);
-
-		TBuiltInResource GetResources();
 
 		void CreateAttributes();
 

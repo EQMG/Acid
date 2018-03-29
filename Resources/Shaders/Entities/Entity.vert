@@ -27,7 +27,9 @@ layout(set = 0, binding = 1) uniform UboObject
 layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec2 vertexUv;
 layout(location = 2) in vec3 vertexNormal;
+#ifdef NORMAL_MAPPING
 layout(location = 3) in vec3 vertexTangent;
+#endif
 #ifdef ANIMATED
 layout(location = 4) in ivec3 vertexJointIndices;
 layout(location = 5) in vec3 vertexWeights;
@@ -35,7 +37,7 @@ layout(location = 5) in vec3 vertexWeights;
 
 layout(location = 0) out vec2 fragmentUv;
 layout(location = 1) out vec3 fragmentNormal;
-#if NORMAL_MAPPING
+#ifdef NORMAL_MAPPING
 layout(location = 2) out vec3 tangentT;
 layout(location = 3) out vec3 tangentN;
 layout(location = 4) out vec3 tangentB;
@@ -70,7 +72,7 @@ void main()
     fragmentUv = vertexUv;
 	fragmentNormal = normalize((object.transform * totalNormal).xyz);
 
-#if NORMAL_MAPPING
+#ifdef NORMAL_MAPPING
     mat3 normal_matrix = transpose(inverse(mat3(object.transform)));
     tangentT = normalize(normal_matrix * vertexTangent);
     tangentN = normalize(normal_matrix * vertexNormal);

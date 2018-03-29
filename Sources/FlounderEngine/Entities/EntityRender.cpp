@@ -34,7 +34,7 @@ namespace Flounder
 			return;
 		}
 
-		std::vector<Matrix4> jointTransforms = {};
+		/*std::vector<Matrix4> jointTransforms = {};
 		auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
 
 		if (meshAnimated != nullptr)
@@ -50,7 +50,7 @@ namespace Flounder
 					break;
 				}
 			}
-		}
+		}*/
 
 		// Updates uniforms.
 		UbosEntities::UboObject uboObject = {};

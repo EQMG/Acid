@@ -28,7 +28,7 @@ namespace Flounder
 
 			{"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"} // shaderStages
 		};
-	const std::vector<std::string> PIPELINE_DEFINES = { "ANIMATED", "COLOUR_MAPPING", "MATERIAL_MAPPING", "NORMAL_MAPPING" };
+	const std::vector<std::string> PIPELINE_DEFINES = { "COLOUR_MAPPING", "MATERIAL_MAPPING", "NORMAL_MAPPING" }; // "ANIMATED",
 
 	RendererEntities::RendererEntities(const GraphicsStage &graphicsStage) :
 		IRenderer(),
