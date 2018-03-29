@@ -18,19 +18,19 @@ layout(set = 0, binding = 1) uniform UboObject
 	float ignoreLighting;
 } object;
 
-#if COLOUR_MAPPING
+#ifdef COLOUR_MAPPING
 layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
 #endif
-#if MATERIAL_MAPPING
+#ifdef MATERIAL_MAPPING
 layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
 #endif
-#if NORMAL_MAPPING
+#ifdef NORMAL_MAPPING
 layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
 #endif
 
 layout(location = 0) in vec2 fragmentUv;
 layout(location = 1) in vec3 fragmentNormal;
-#if NORMAL_MAPPING
+#ifdef NORMAL_MAPPING
 layout(location = 2) in vec3 tangentT;
 layout(location = 3) in vec3 tangentN;
 layout(location = 4) in vec3 tangentB;
@@ -55,11 +55,11 @@ void main()
 	vec3 material = vec3(object.metallic, object.roughness, 0.0f);
 	float glowing = 0.0f;
 
-#if COLOUR_MAPPING
+#ifdef COLOUR_MAPPING
 	textureColour = texture(samplerDiffuse, fragmentUv);
 #endif
 
-#if MATERIAL_MAPPING
+#ifdef MATERIAL_MAPPING
 	vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
 	material.x *= textureMaterial.r;
 	material.y *= textureMaterial.g;
@@ -70,7 +70,7 @@ void main()
     }
 #endif
 
-#if NORMAL_MAPPING
+#ifdef NORMAL_MAPPING
 	vec4 textureNormal = texture(samplerNormal, fragmentUv);
 	unitNormal = textureNormal.rgb;
     unitNormal = normalize(textureNormal.rgb * 2.0f - vec3(1.0f));

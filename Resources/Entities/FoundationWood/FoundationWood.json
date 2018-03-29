@@ -15,6 +15,7 @@
     }
   },
   "Material": {
+    "Program": "Resources/Shaders/Entities/Entity.json",
     "Diffuse": {
       "Colour": "#8b4513", 
       "Texture": ""

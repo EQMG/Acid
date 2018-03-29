@@ -71,7 +71,7 @@ On Linux you need a GCC/Clang compiler, each package listed here are for Debian/
 
 Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
 
-Once Flounder has built you need to link the Resources folder into the output directory. For example when using CLion `Scripts/generate_vs.bat` or `.sh` can be used to link into Debug and Release builds.
+Once Flounder has built you need to link the Resources folder into the output directory. For example when using CLion `Scripts/link_resources.bat` or `.sh` can be used to link into Debug and Release builds.
 
 Currently Flounder does not run under Release mode (IDK why).
 

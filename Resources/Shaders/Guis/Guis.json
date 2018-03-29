@@ -1,0 +1,6 @@
+{
+  "Shader": {
+    "Vertex": "Resources/Shaders/Guis/Gui.vert",
+    "Fragment": "Resources/Shaders/Guis/Gui.frag"
+  }
+}
