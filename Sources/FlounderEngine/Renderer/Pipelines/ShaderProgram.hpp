@@ -6,6 +6,7 @@
 #include <GlslangToSpv.h>
 #include "../../Engine/Platform.hpp"
 #include "PipelineCreate.hpp"
+#include <sstream>
 
 namespace Flounder
 {
