@@ -26,7 +26,7 @@ namespace Flounder
 			const Vector3 normal = m_normalsList.at(current->GetNormalIndex());
 			const Vector3 tangent = current->GetAverageTangent();
 
-			const VertexSkinData* skin = current->GetSkinData();
+			//  const VertexSkinData* skin = current->GetSkinData();
 			//  const Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
 			//	const Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
 
@@ -46,7 +46,7 @@ namespace Flounder
 	{
 		std::string positionsSource = m_meshData->GetChild("vertices")->GetChild("input")->GetChild("-source")->GetString().substr(1);
 		LoadedValue *positionsData = m_meshData->GetChildWithAttribute("source", "-id", positionsSource)->GetChild("float_array");
-		int positionsCount = std::stoi(positionsData->GetChild("-count")->GetString());
+		unsigned int positionsCount = std::stoi(positionsData->GetChild("-count")->GetString());
 		auto positionsRawData = FormatString::Split(positionsData->GetChild("#text")->GetString(), " ");
 
 		for (unsigned int i = 0; i < positionsCount / 3; i++)
@@ -63,7 +63,7 @@ namespace Flounder
 	{
 		std::string uvsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "-semantic", "TEXCOORD")->GetChild("-source")->GetString().substr(1);
 		LoadedValue *uvsData = m_meshData->GetChildWithAttribute("source", "-id", uvsSource)->GetChild("float_array");
-		int uvsCount = std::stoi(uvsData->GetChild("-count")->GetString());
+		unsigned int uvsCount = std::stoi(uvsData->GetChild("-count")->GetString());
 		auto uvsRawData = FormatString::Split(uvsData->GetChild("#text")->GetString(), " ");
 
 		for (unsigned int i = 0; i < uvsCount / 2; i++)
@@ -77,7 +77,7 @@ namespace Flounder
 	{
 		std::string normalsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "-semantic", "NORMAL")->GetChild("-source")->GetString().substr(1);
 		LoadedValue *normalsData = m_meshData->GetChildWithAttribute("source", "-id", normalsSource)->GetChild("float_array");
-		int normalsCount = std::stoi(normalsData->GetChild("-count")->GetString());
+		unsigned int normalsCount = std::stoi(normalsData->GetChild("-count")->GetString());
 		auto normalsRawData = FormatString::Split(normalsData->GetChild("#text")->GetString(), " ");
 
 		for (unsigned int i = 0; i < normalsCount / 3; i++)

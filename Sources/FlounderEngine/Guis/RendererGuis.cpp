@@ -10,7 +10,7 @@ namespace Flounder
 	RendererGuis::RendererGuis(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Guis/Gui.vert", "Resources/Shaders/Guis/Gui.frag"},
-			VertexModel::GetBindingDescriptions(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { }))
+			VertexModel::GetInputDescription(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { }))
 	{
 	}
 

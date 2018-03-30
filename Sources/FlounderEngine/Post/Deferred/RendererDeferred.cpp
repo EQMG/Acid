@@ -16,7 +16,7 @@ namespace Flounder
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_descriptorSet(nullptr),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({ "Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag" },
-			VertexModel::GetBindingDescriptions(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { })),
+			VertexModel::GetInputDescription(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { })),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
 	}

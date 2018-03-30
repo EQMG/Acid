@@ -52,6 +52,20 @@ namespace Flounder
 		return Matrix4::TransformationMatrix(Vector3(), *m_rotation, Vector3(), destination);
 	}
 
+	Matrix4 Transform::GetWorldMatrix() const
+	{
+		Matrix4 result = Matrix4();
+		GetWorldMatrix(&result);
+		return result;
+	}
+
+	Matrix4 Transform::GetModelMatrix() const
+	{
+		Matrix4 result = Matrix4();
+		GetModelMatrix(&result);
+		return result;
+	}
+
 	Transform *Transform::Set(const Transform &source)
 	{
 		*m_position = *source.m_position;

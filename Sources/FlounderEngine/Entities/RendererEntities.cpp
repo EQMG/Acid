@@ -13,7 +13,7 @@ namespace Flounder
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosEntities::UboScene))),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"},
-			VertexModel::GetBindingDescriptions(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { })) // "ANIMATED", "COLOUR_MAPPING", "MATERIAL_MAPPING", "NORMAL_MAPPING"
+			VertexModel::GetInputDescription(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { })) // {"ANIMATED"}, {"COLOUR_MAPPING"}, {"MATERIAL_MAPPING"}, {"NORMAL_MAPPING"}
 	{
 	}
 
@@ -29,6 +29,11 @@ namespace Flounder
 		uboScene.projection = *camera.GetProjectionMatrix();
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);
+
+		//m_uniformScene->UpdateMap("UniformScene", pipeline.GetShaderProgram(), {
+		//	{"projection", *camera.GetProjectionMatrix()},
+		//	{"view", *camera.GetViewMatrix()}
+		//});
 
 		m_pipeline->BindPipeline(commandBuffer);
 
