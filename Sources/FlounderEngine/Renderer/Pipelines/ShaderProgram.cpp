@@ -1,6 +1,12 @@
 #include "ShaderProgram.hpp"
 
 #include "../../Helpers/FormatString.hpp"
+#include "../../Maths/Vector2.hpp"
+#include "../../Maths/Vector3.hpp"
+#include "../../Maths/Vector4.hpp"
+#include "../../Maths/Matrix2.hpp"
+#include "../../Maths/Matrix3.hpp"
+#include "../../Maths/Matrix4.hpp"
 #include "../../Textures/Texture.hpp"
 #include "../../Textures/Cubemap.hpp"
 #include "../Buffers/UniformBuffer.hpp"
@@ -11,6 +17,7 @@ namespace Flounder
 		m_uniforms(new std::vector<Uniform*>()),
 		m_uniformBlocks(new std::vector<UniformBlock*>()),
 		m_vertexAttributes(new std::vector<VertexAttribute*>()),
+		m_attributeDescriptions(new std::vector<VkVertexInputAttributeDescription>()),
 		m_descriptors(new std::vector<DescriptorType>())
 	{
 	}
@@ -36,12 +43,13 @@ namespace Flounder
 		delete m_uniformBlocks;
 		delete m_vertexAttributes;
 
+		delete m_attributeDescriptions;
 		delete m_descriptors;
 	}
 
 	void ShaderProgram::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag)
 	{
-		for (int i = program.getNumLiveUniformBlocks(); i >= 0; i--)
+		for (int i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
 		{
 			LoadUniformBlock(program, stageFlag, i);
 		}
@@ -150,6 +158,22 @@ namespace Flounder
 			}
 		}
 
+		// Process attribute descriptions.
+		uint32_t currentOffset = 4;
+
+		for (auto vertexAttribute : *m_vertexAttributes)
+		{
+			VkVertexInputAttributeDescription attributeDescription = {};
+			attributeDescription.binding = 0;
+			attributeDescription.location = vertexAttribute->m_index;
+			attributeDescription.format = GetTypeFormat(vertexAttribute->m_type);
+			attributeDescription.offset = currentOffset;
+			printf("%i: %i\n", vertexAttribute->m_index, currentOffset);
+
+			m_attributeDescriptions->push_back(attributeDescription);
+			currentOffset += GetTypeSize(vertexAttribute->m_type);
+		}
+
 		// Sort descriptors by binding.
 		std::sort(m_descriptors->begin(), m_descriptors->end(),
 			[](DescriptorType l, DescriptorType r)
@@ -188,6 +212,55 @@ namespace Flounder
 			}
 		}
 #endif
+	}
+	int ShaderProgram::GetTypeSize(const BasicTypes &type)
+	{
+		switch (type)
+		{
+		case TypeBool:
+			return sizeof(bool);
+		case TypeInt:
+			return sizeof(int);
+		case TypeFloat:
+			return sizeof(float);
+		case TypeDouble:
+			return sizeof(double);
+		case TypeVec2:
+			return sizeof(Vector2);
+		case TypeVec3:
+			return sizeof(Vector3);
+		case TypeVec4:
+			return sizeof(Vector4);
+		case TypeMat2:
+			return sizeof(Matrix2);
+		case TypeMat3:
+			return sizeof(Matrix3);
+		case TypeMat4:
+			return sizeof(Matrix4);
+		default:
+			return 0;
+		}
+	}
+
+	VkFormat ShaderProgram::GetTypeFormat(const BasicTypes &type)
+	{
+		switch (type)
+		{
+		case TypeBool:
+		case TypeInt:
+			return VK_FORMAT_R8_SINT;
+		case TypeFloat:
+		case TypeDouble:
+			return VK_FORMAT_R32_SFLOAT;
+		case TypeVec2:
+			return VK_FORMAT_R32G32_SFLOAT;
+		case TypeVec3:
+			return VK_FORMAT_R32G32B32_SFLOAT;
+		case TypeVec4:
+			return VK_FORMAT_R32G32B32A32_SFLOAT;
+		default:
+			return VK_FORMAT_UNDEFINED;
+		}
 	}
 
 	std::string ShaderProgram::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)

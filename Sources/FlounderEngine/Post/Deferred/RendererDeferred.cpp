@@ -11,34 +11,12 @@
 
 namespace Flounder
 {
-	const PipelineCreate PIPELINE_CREATE =
-	{
-		PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
-		VK_POLYGON_MODE_FILL, // polygonMode
-		VK_CULL_MODE_BACK_BIT, // cullModeFlags
-
-		VertexModel::GetBindingDescriptions(), // vertexBindingDescriptions
-		VertexModel::GetAttributeDescriptions(1), // vertexAttributeDescriptions
-		{
-			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
-			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // writeColour
-			DepthStencil::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDepth
-			Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerColour
-			Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerNormal
-			Texture::CreateDescriptor(5, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
-			Texture::CreateDescriptor(6, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerShadows
-		}, // descriptors
-
-		{
-			"Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag"
-		} // shaderStages
-	};
-
 	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_descriptorSet(nullptr),
-		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE)),
+		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({ "Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag" },
+			VertexModel::GetBindingDescriptions(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { })),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
 	{
 	}

@@ -8,27 +8,11 @@
 
 namespace Flounder
 {
-	const PipelineCreate PIPELINE_CREATE =
-		{
-			PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
-			VK_POLYGON_MODE_FILL, // polygonMode
-			VK_CULL_MODE_FRONT_BIT, // cullModeFlags
-
-			VertexModel::GetBindingDescriptions(), // vertexBindingDescriptions
-			VertexModel::GetAttributeDescriptions(0), // vertexAttributeDescriptions
-
-			{
-				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_ALL), // uboScene
-				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL) // uboObject
-			}, // descriptors
-
-			{"Resources/Shaders/Shadows/Shadow.vert", "Resources/Shaders/Shadows/Shadow.frag"} // shaderStages
-		};
-
 	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosShadows::UboScene))),
-		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
+		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Shadows/Shadow.vert", "Resources/Shaders/Shadows/Shadow.frag"},
+			VertexModel::GetBindingDescriptions(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT), { }))
 	{
 	}
 

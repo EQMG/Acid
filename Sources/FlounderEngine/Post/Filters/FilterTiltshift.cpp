@@ -4,15 +4,8 @@
 
 namespace Flounder
 {
-	const std::vector<DescriptorType> DESCRIPTORS =
-		{
-			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
-			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // writeColour
-			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // aamplerColour
-		};
-
 	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag", graphicsStage, DESCRIPTORS),
+		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag", graphicsStage, { }),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_blurAmount(1.0f),
 		m_centre(1.1f),
