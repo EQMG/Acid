@@ -14,6 +14,12 @@ namespace Flounder
 {
 	class DepthStencil;
 
+	struct Define
+	{
+		std::string name;
+		std::string value;
+	};
+
 	/// <summary>
 	/// Class that represents a Vulkan pipeline.
 	/// </summary>
@@ -22,7 +28,7 @@ namespace Flounder
 	private:
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreateInfo;
-		std::vector<std::string> m_defines;
+		std::vector<Define> m_defines;
 		ShaderProgram *m_shaderProgram;
 
 		std::vector<VkShaderModule> m_modules;
@@ -48,8 +54,8 @@ namespace Flounder
 		/// </summary>
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
 		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
-		/// <param name="defines"> A list of names that will be added a #define. </param>
-		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<std::string> &defines = std::vector<std::string>());
+		/// <param name="defines"> A list of names that will be added as a #define. </param>
+		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<Define> &defines = std::vector<Define>());
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
@@ -59,6 +65,8 @@ namespace Flounder
 		void BindPipeline(const VkCommandBuffer &commandBuffer) const;
 
 		PipelineCreate GetPipelineCreateInfo() const { return m_pipelineCreateInfo; }
+
+		ShaderProgram *GetShaderProgram() const { return m_shaderProgram; }
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 

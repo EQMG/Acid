@@ -33,8 +33,6 @@ namespace Flounder
 
 		void *GetData(std::vector<IVertex *> &vertices) override;
 
-		static std::vector<VkVertexInputBindingDescription> GetBindingDescriptions(const VkVertexInputRate &inputRate = VK_VERTEX_INPUT_RATE_VERTEX);
-
-		static std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions(const int &usedCount = 5);
+		static std::vector<VkVertexInputBindingDescription> GetInputDescription();
 	};
 }

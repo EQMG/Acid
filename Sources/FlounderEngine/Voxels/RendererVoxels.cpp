@@ -13,7 +13,7 @@ namespace Flounder
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosVoxels::UboScene))),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Voxels/Voxel.vert", "Resources/Shaders/Voxels/Voxel.frag"},
-			VertexModel::GetBindingDescriptions(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { }))
+			VertexModel::GetInputDescription(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { }))
 	{
 	}
 

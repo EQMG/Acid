@@ -56,6 +56,10 @@ namespace Flounder
 
 		Matrix4 *GetModelMatrix(Matrix4 *destination) const;
 
+		Matrix4 GetWorldMatrix() const;
+
+		Matrix4 GetModelMatrix() const;
+
 		Transform *Set(const Transform &source);
 
 		/// <summary>

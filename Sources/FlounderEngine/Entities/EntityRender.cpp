@@ -14,8 +14,7 @@ namespace Flounder
 	EntityRender::EntityRender() :
 		Component(),
 		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
-		m_descriptorSet(nullptr),
-		m_nullTexture(Texture::Resource("Resources/Undefined.png"))
+		m_descriptorSet(nullptr)
 	{
 	}
 
@@ -67,6 +66,16 @@ namespace Flounder
 		uboObject.ignoreFog = static_cast<float>(material->GetSurface()->GetIgnoreFog());
 		uboObject.ignoreLighting = static_cast<float>(material->GetSurface()->GetIgnoreLighting());
 		m_uniformObject->Update(&uboObject);
+
+		//m_uniformObject->UpdateMap("UniformObject", pipeline.GetShaderProgram(), {
+		//	{"jointTransforms", jointTransforms.data()},
+		//	{"transform", GetGameObject()->GetTransform()->GetWorldMatrix()},
+		// 	{"baseColor", *material->GetDiffuse()->GetBaseColor()},
+		//	{"metallic", material->GetSurface()->GetMetallic()},
+		//	{"roughness", material->GetSurface()->GetRoughness()},
+		//	{"ignoreFog", static_cast<float>(material->GetSurface()->GetIgnoreFog())},
+		//	{"ignoreLighting", static_cast<float>(material->GetSurface()->GetIgnoreLighting())}
+		//});
 	}
 
 	void EntityRender::Load(LoadedValue *value)
@@ -104,12 +113,12 @@ namespace Flounder
 			m_descriptorSet = new DescriptorSet(pipeline);
 		}
 
-		m_descriptorSet->Update({
-			uniformScene,
-			m_uniformObject,
-		//	material->GetDiffuse()->GetTexture() == nullptr ? m_nullTexture : material->GetDiffuse()->GetTexture(),
-		//	material->GetSurface()->GetTexture() == nullptr ? m_nullTexture : material->GetSurface()->GetTexture(),
-		//	material->GetNormal()->GetTexture() == nullptr ? m_nullTexture : material->GetNormal()->GetTexture()
+		m_descriptorSet->UpdateMap({
+			{"UboScene", uniformScene},
+			{"UboObject", m_uniformObject},
+			{"samplerDiffuse", material->GetDiffuse()->GetTexture()},
+			{"samplerMaterial", material->GetSurface()->GetTexture()},
+			{"samplerNormal", material->GetNormal()->GetTexture()}
 		});
 
 		// Draws the object.

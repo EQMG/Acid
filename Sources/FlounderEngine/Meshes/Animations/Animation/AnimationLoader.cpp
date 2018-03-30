@@ -57,7 +57,7 @@ namespace Flounder
 
 	void AnimationLoader::CreateKeyframeData(const std::vector<float> &times)
 	{
-		for (int i = 0; i < times.size(); i++)
+		for (unsigned int i = 0; i < times.size(); i++)
 		{
 			KeyframeData *keyframeData = new KeyframeData(times[i]);
 			m_keyframeData.push_back(keyframeData);

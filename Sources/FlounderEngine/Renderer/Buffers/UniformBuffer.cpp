@@ -33,6 +33,23 @@ namespace Flounder
 		vkUnmapMemory(logicalDevice, m_bufferMemory);
 	}
 
+	void UniformBuffer::UpdateMap(const std::string &blockName, ShaderProgram *shaderProgram, const std::unordered_map<std::string, void *> &newDataMap)
+	{
+		void *newData = new void*[m_size];
+
+		for (auto pair : newDataMap)
+		{
+			if (shaderProgram->IsDescriptorDefined(pair.first))
+			{
+				Uniform *uniform = shaderProgram->GetBlockUniform(blockName, pair.first);
+			//	memcpy(newData + uniform->m_offset, pair.first, uniform->m_size);
+			}
+		}
+
+		Update(newData);
+		delete[] newData;
+	}
+
 	DescriptorType UniformBuffer::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};

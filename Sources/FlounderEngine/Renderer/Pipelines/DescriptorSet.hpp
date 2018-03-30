@@ -1,8 +1,10 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 #include "../../Engine/Platform.hpp"
 #include "PipelineCreate.hpp"
+#include "ShaderProgram.hpp"
 
 namespace Flounder
 {
@@ -12,6 +14,7 @@ namespace Flounder
 	class F_EXPORT DescriptorSet
 	{
 	private:
+		ShaderProgram *m_shaderProgram;
 		VkPipelineLayout m_pipelineLayout;
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
@@ -24,9 +27,10 @@ namespace Flounder
 
 		void Update(const std::vector<Descriptor*> &descriptors);
 
+		void UpdateMap(const std::unordered_map<std::string, Descriptor*> &descriptorMap);
+
 		void BindDescriptor(const VkCommandBuffer &commandBuffer);
 
 		VkDescriptorSet GetDescriptorSet() const { return m_descriptorSet; }
-
 	};
 }
