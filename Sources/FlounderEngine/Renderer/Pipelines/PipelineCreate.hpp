@@ -14,6 +14,12 @@ namespace Flounder
 		PIPELINE_MRT_NO_DEPTH
 	};
 
+	struct GraphicsStage
+	{
+		unsigned int renderpass;
+		uint32_t subpass;
+	};
+
 	class F_EXPORT DescriptorType
 	{
 	public:
@@ -32,23 +38,24 @@ namespace Flounder
 		}
 	};
 
-	struct GraphicsStage
+	class F_EXPORT PipelineCreate
 	{
-		unsigned int renderpass;
-		uint32_t subpass;
-	};
+	public:
+		std::vector<std::string> m_shaderStages;
+		std::vector<VkVertexInputBindingDescription> m_vertexBindingDescriptions;
 
-	struct PipelineCreate
-	{
-		PipelineModeFlags pipelineModeFlags = PIPELINE_POLYGON;
-		VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL;
-		VkCullModeFlags cullModeFlags = VK_CULL_MODE_BACK_BIT;
+		PipelineModeFlags m_pipelineModeFlags;
+		VkPolygonMode m_polygonMode;
+		VkCullModeFlags m_cullModeFlags;
 
-		std::vector<VkVertexInputBindingDescription> vertexBindingDescriptions;
-		std::vector<VkVertexInputAttributeDescription> vertexAttributeDescriptions;
-
-		std::vector<DescriptorType> descriptors = std::vector<DescriptorType>();
-
-		std::vector<std::string> shaderStages = std::vector<std::string>();
+		PipelineCreate(const std::vector<std::string> &shaderStages, const std::vector<VkVertexInputBindingDescription> &vertexBindingDescriptions,
+					   const PipelineModeFlags &pipelineModeFlags = PIPELINE_POLYGON, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullModeFlags = VK_CULL_MODE_BACK_BIT) :
+			m_shaderStages(shaderStages),
+			m_vertexBindingDescriptions(vertexBindingDescriptions),
+			m_pipelineModeFlags(pipelineModeFlags),
+			m_polygonMode(polygonMode),
+			m_cullModeFlags(cullModeFlags)
+		{
+		}
 	};
 }

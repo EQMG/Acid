@@ -144,6 +144,7 @@ namespace Flounder
 		std::vector<UniformBlock*> *m_uniformBlocks;
 		std::vector<VertexAttribute*> *m_vertexAttributes;
 
+		std::vector<VkVertexInputAttributeDescription> *m_attributeDescriptions;
 		std::vector<DescriptorType> *m_descriptors;
 
 		ShaderProgram();
@@ -160,6 +161,10 @@ namespace Flounder
 		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
 	public:
 		void ProcessShader();
+
+		static int GetTypeSize(const BasicTypes &type);
+
+		static VkFormat GetTypeFormat(const BasicTypes &type);
 
 		static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
 

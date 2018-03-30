@@ -7,29 +7,11 @@
 
 namespace Flounder
 {
-	const PipelineCreate PIPELINE_CREATE =
-		{
-			PIPELINE_MRT, // pipelineModeFlags
-			VK_POLYGON_MODE_FILL, // polygonMode
-			VK_CULL_MODE_BACK_BIT, // cullModeFlags
-
-			VertexModel::GetBindingDescriptions(), // vertexBindingDescriptions
-			VertexModel::GetAttributeDescriptions(), // vertexAttributeDescriptions
-
-			{
-				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
-				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL) // uboObject
-			}, // descriptors
-
-			{
-				"Resources/Shaders/Terrains/Terrain.vert", "Resources/Shaders/Terrains/Terrain.frag"
-			} // shaderStages
-		};
-
 	RendererTerrains::RendererTerrains(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosTerrains::UboScene))),
-		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
+		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({ "Resources/Shaders/Terrains/Terrain.vert", "Resources/Shaders/Terrains/Terrain.frag" },
+			VertexModel::GetBindingDescriptions(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { }))
 	{
 	}
 

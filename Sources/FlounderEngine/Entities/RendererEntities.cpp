@@ -9,31 +9,11 @@
 
 namespace Flounder
 {
-	const PipelineCreate PIPELINE_CREATE =
-		{
-			PIPELINE_MRT, // pipelineModeFlags
-			VK_POLYGON_MODE_FILL, // polygonMode
-			VK_CULL_MODE_BACK_BIT, // cullModeFlags
-
-			VertexModel::GetBindingDescriptions(), // vertexBindingDescriptions
-			VertexModel::GetAttributeDescriptions(3), // vertexAttributeDescriptions
-
-			{
-				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
-				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
-				Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerDiffuse
-				Texture::CreateDescriptor(3, VK_SHADER_STAGE_FRAGMENT_BIT), // samplerMaterial
-				Texture::CreateDescriptor(4, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerNormal
-			}, // descriptors
-
-			{"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"} // shaderStages
-		};
-	const std::vector<std::string> PIPELINE_DEFINES = { "COLOUR_MAPPING", "MATERIAL_MAPPING", "NORMAL_MAPPING" }; // "ANIMATED",
-
 	RendererEntities::RendererEntities(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosEntities::UboScene))),
-		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE, PIPELINE_DEFINES))
+		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"},
+			VertexModel::GetBindingDescriptions(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { })) // "ANIMATED", "COLOUR_MAPPING", "MATERIAL_MAPPING", "NORMAL_MAPPING"
 	{
 	}
 

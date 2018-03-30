@@ -7,28 +7,11 @@
 
 namespace Flounder
 {
-	const PipelineCreate PIPELINE_CREATE =
-		{
-			PIPELINE_MRT_NO_DEPTH, // pipelineModeFlags
-			VK_POLYGON_MODE_FILL, // polygonMode
-			VK_CULL_MODE_FRONT_BIT, // cullModeFlags
-
-			VertexModel::GetBindingDescriptions(), // vertexBindingDescriptions
-			VertexModel::GetAttributeDescriptions(0), // vertexAttributeDescriptions
-
-			{
-				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_VERTEX_BIT), // uboScene
-				UniformBuffer::CreateDescriptor(1, VK_SHADER_STAGE_ALL), // uboObject
-				Cubemap::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerCubemap
-			}, // descriptors
-
-			{"Resources/Shaders/Skyboxes/Skybox.vert", "Resources/Shaders/Skyboxes/Skybox.frag"} // shaderStages
-		};
-
 	RendererSkyboxes::RendererSkyboxes(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosSkyboxes::UboScene))),
-		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
+		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Skyboxes/Skybox.vert", "Resources/Shaders/Skyboxes/Skybox.frag"},
+			VertexModel::GetBindingDescriptions(), PIPELINE_MRT_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT), { }))
 	{
 	}
 
