@@ -42,7 +42,7 @@ namespace Flounder
 		CreatePipelineLayout();
 		CreateAttributes();
 
-		switch (pipelineCreateInfo.pipelineModeFlags)
+		switch (pipelineCreateInfo.m_pipelineModeFlags)
 		{
 		case PIPELINE_POLYGON:
 			CreatePipelinePolygon();
@@ -63,7 +63,7 @@ namespace Flounder
 
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
-		printf("Pipeline '%s' created in %fms\n", m_pipelineCreateInfo.shaderStages.back().c_str(), debugEnd - debugStart);
+		printf("Pipeline '%s' created in %fms\n", m_pipelineCreateInfo.m_shaderStages.back().c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -109,7 +109,7 @@ namespace Flounder
 			defineBlock += "#define " + define + "\n";
 		}
 
-		for (auto &type : m_pipelineCreateInfo.shaderStages)
+		for (auto &type : m_pipelineCreateInfo.m_shaderStages)
 		{
 			auto shaderCode = ShaderProgram::InsertDefineBlock(FileSystem::ReadTextFile(type), defineBlock);
 
@@ -176,7 +176,7 @@ namespace Flounder
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
 
-		for (auto type : m_pipelineCreateInfo.descriptors)
+		for (auto type : *m_shaderProgram->m_descriptors)
 		{
 			bindings.push_back(type.m_descriptorSetLayoutBinding);
 		}
@@ -196,7 +196,7 @@ namespace Flounder
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
 
-		for (auto type : m_pipelineCreateInfo.descriptors)
+		for (auto type : *m_shaderProgram->m_descriptors)
 		{
 			poolSizes.push_back(type.m_descriptorPoolSize);
 		}
@@ -233,8 +233,8 @@ namespace Flounder
 		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		m_rasterizationState.depthClampEnable = VK_FALSE;
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
-		m_rasterizationState.polygonMode = m_pipelineCreateInfo.polygonMode;
-		m_rasterizationState.cullMode = m_pipelineCreateInfo.cullModeFlags;
+		m_rasterizationState.polygonMode = m_pipelineCreateInfo.m_polygonMode;
+		m_rasterizationState.cullMode = m_pipelineCreateInfo.m_cullModeFlags;
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
 		m_rasterizationState.depthBiasConstantFactor = 0.0f;
@@ -304,10 +304,10 @@ namespace Flounder
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.vertexBindingDescriptions.size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.vertexBindingDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.vertexAttributeDescriptions.size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.vertexAttributeDescriptions.data();
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexBindingDescriptions.size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.m_vertexBindingDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_shaderProgram->m_attributeDescriptions->size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_shaderProgram->m_attributeDescriptions->data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;

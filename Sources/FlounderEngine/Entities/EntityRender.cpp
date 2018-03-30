@@ -107,9 +107,9 @@ namespace Flounder
 		m_descriptorSet->Update({
 			uniformScene,
 			m_uniformObject,
-			material->GetDiffuse()->GetTexture() == nullptr ? m_nullTexture : material->GetDiffuse()->GetTexture(),
-			material->GetSurface()->GetTexture() == nullptr ? m_nullTexture : material->GetSurface()->GetTexture(),
-			material->GetNormal()->GetTexture() == nullptr ? m_nullTexture : material->GetNormal()->GetTexture()
+		//	material->GetDiffuse()->GetTexture() == nullptr ? m_nullTexture : material->GetDiffuse()->GetTexture(),
+		//	material->GetSurface()->GetTexture() == nullptr ? m_nullTexture : material->GetSurface()->GetTexture(),
+		//	material->GetNormal()->GetTexture() == nullptr ? m_nullTexture : material->GetNormal()->GetTexture()
 		});
 
 		// Draws the object.
