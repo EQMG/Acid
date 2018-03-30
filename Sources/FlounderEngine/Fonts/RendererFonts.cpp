@@ -2,26 +2,10 @@
 
 namespace Flounder
 {
-	const PipelineCreate PIPELINE_CREATE =
-		{
-			PIPELINE_POLYGON_NO_DEPTH, // pipelineModeFlags
-			VK_POLYGON_MODE_FILL, // polygonMode
-			VK_CULL_MODE_BACK_BIT, // cullModeFlags
-
-			VertexModel::GetBindingDescriptions(), // vertexBindingDescriptions
-			VertexModel::GetAttributeDescriptions(2), // vertexAttributeDescriptions
-
-			{
-				UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_ALL), // uboObject
-				Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // amplerTexture
-			}, // descriptors
-
-			{"Resources/Shaders/Fonts/Font.vert", "Resources/Shaders/Fonts/Font.frag"} // shaderStages
-		};
-
 	RendererFonts::RendererFonts(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_pipeline(new Pipeline(graphicsStage, PIPELINE_CREATE))
+		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Fonts/Font.vert", "Resources/Shaders/Fonts/Font.frag"},
+			VertexModel::GetBindingDescriptions(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { }))
 	{
 	}
 

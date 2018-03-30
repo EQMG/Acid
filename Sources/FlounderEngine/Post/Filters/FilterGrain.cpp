@@ -5,15 +5,8 @@
 
 namespace Flounder
 {
-	const std::vector<DescriptorType> DESCRIPTORS =
-		{
-			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
-			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // writeColour
-			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
-		};
-
 	FilterGrain::FilterGrain(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Grain.frag", graphicsStage, DESCRIPTORS),
+		IPostFilter("Resources/Shaders/Filters/Grain.frag", graphicsStage, { }),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_strength(2.3f)
 	{

@@ -4,14 +4,8 @@
 
 namespace Flounder
 {
-	const std::vector<DescriptorType> DESCRIPTORS =
-		{
-			Texture::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // writeColour
-			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
-		};
-
 	FilterEmboss::FilterEmboss(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Emboss.frag", graphicsStage, DESCRIPTORS)
+		IPostFilter("Resources/Shaders/Filters/Emboss.frag", graphicsStage, { })
 	{
 	}
 

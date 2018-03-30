@@ -4,15 +4,8 @@
 
 namespace Flounder
 {
-	const std::vector<DescriptorType> DESCRIPTORS =
-		{
-			UniformBuffer::CreateDescriptor(0, VK_SHADER_STAGE_FRAGMENT_BIT), // uboScene
-			Texture::CreateDescriptor(1, VK_SHADER_STAGE_FRAGMENT_BIT), // writeColour
-			Texture::CreateDescriptor(2, VK_SHADER_STAGE_FRAGMENT_BIT) // samplerColour
-		};
-
 	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Wobble.frag", graphicsStage, DESCRIPTORS),
+		IPostFilter("Resources/Shaders/Filters/Wobble.frag", graphicsStage, { }),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_wobbleSpeed(2.0f),
 		m_wobbleAmount(0.0f)
