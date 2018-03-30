@@ -143,7 +143,7 @@ namespace Flounder
 			}
 
 			program.buildReflection();
-			//	program.dumpReflection();
+		//	program.dumpReflection();
 			m_shaderProgram->LoadProgram(program, stageFlag);
 
 			std::vector<uint32_t> spirv = std::vector<uint32_t>();

@@ -107,7 +107,7 @@ namespace Flounder
 			}
 		}
 
-		m_uniformBlocks->push_back(new UniformBlock(program.getUniformBlockName(i), (program.getNumLiveUniformBlocks() - 1) - program.getUniformBlockIndex(i), program.getUniformBlockSize(i), stageFlag));
+		m_uniformBlocks->push_back(new UniformBlock(program.getUniformBlockName(i), (program.getNumLiveUniformBlocks() - 1) - program.getUniformBlockIndex(i), program.getUniformBlockSize(i), stageFlag)); // TODO: Get correct index.
 	}
 
 	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
@@ -120,11 +120,18 @@ namespace Flounder
 			}
 		}
 
-		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), i, program.getAttributeType(i)));
+		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), i, program.getAttributeType(i))); // TODO: Get correct index.
 	}
 
 	void ShaderProgram::ProcessShader()
 	{
+		// Sort descriptors by binding.
+		std::sort(m_descriptors->begin(), m_descriptors->end(),
+			[](DescriptorType l, DescriptorType r)
+			{
+				return l.m_binding < r.m_binding;
+			});
+
 		// Sort uniform block uniforms by offsets.
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
@@ -168,18 +175,11 @@ namespace Flounder
 			attributeDescription.location = vertexAttribute->m_index;
 			attributeDescription.format = GetTypeFormat(vertexAttribute->m_type);
 			attributeDescription.offset = currentOffset;
-			printf("%i: %i\n", vertexAttribute->m_index, currentOffset);
+		//	printf("%i: %i\n", vertexAttribute->m_index, currentOffset);
 
 			m_attributeDescriptions->push_back(attributeDescription);
 			currentOffset += GetTypeSize(vertexAttribute->m_type);
 		}
-
-		// Sort descriptors by binding.
-		std::sort(m_descriptors->begin(), m_descriptors->end(),
-			[](DescriptorType l, DescriptorType r)
-			{
-				return l.m_binding < r.m_binding;
-			});
 
 		// Log loaded shader data.
 #ifdef FLOUNDER_VERBOSE
@@ -198,12 +198,6 @@ namespace Flounder
 		printf("Uniform Blocks: \n");
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
-			std::sort(uniformBlock->m_uniforms->begin(), uniformBlock->m_uniforms->end(),
-				[](Uniform *lhs, Uniform *rhs)
-				{
-					return lhs->m_offset < rhs->m_offset;
-				});
-
 			printf(" - %s\n", uniformBlock->ToString().c_str());
 
 			for (auto uniform : *uniformBlock->m_uniforms)
@@ -213,6 +207,7 @@ namespace Flounder
 		}
 #endif
 	}
+
 	int ShaderProgram::GetTypeSize(const BasicTypes &type)
 	{
 		switch (type)
