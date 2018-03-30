@@ -3,4 +3,4 @@
 	url = https://github.com/glfw/glfw.git
 [submodule "Libraries/glslang"]
 	path = Libraries/glslang
-	url = https://github.com/KhronosGroup/glslang.git
+	url = https://github.com/mattparks/glslang.git

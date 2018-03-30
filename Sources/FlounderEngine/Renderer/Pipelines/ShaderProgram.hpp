@@ -34,13 +34,15 @@ namespace Flounder
 		std::string m_name;
 		int m_binding;
 		int m_offset;
+		int m_size;
 		BasicTypes m_type;
 		VkShaderStageFlagBits m_stageFlags;
 
-		Uniform(const std::string &name, const int &binding, const int &offset, const int &type, const VkShaderStageFlagBits &stageFlags) :
+		Uniform(const std::string &name, const int &binding, const int &offset, const int &size, const int &type, const VkShaderStageFlagBits &stageFlags) :
 			m_name(name),
 			m_binding(binding),
 			m_offset(offset),
+			m_size(size),
 			m_type((BasicTypes)type),
 			m_stageFlags(stageFlags)
 		{
@@ -63,7 +65,7 @@ namespace Flounder
 		std::string ToString() const
 		{
 			std::stringstream result;
-			result << "Uniform(name '" << m_name << "', binding " << m_binding << ", offset " << m_offset << ", type " << m_type << ")";
+			result << "Uniform(name '" << m_name << "', binding " << m_binding << ", offset " << m_offset << ", size " << m_size << ", type " << m_type << ")";
 			return result.str();
 		}
 	};
@@ -72,14 +74,14 @@ namespace Flounder
 	{
 	public:
 		std::string m_name;
-		int m_index;
+		int m_binding;
 		int m_size;
 		VkShaderStageFlagBits m_stageFlags;
 		std::vector<Uniform*> *m_uniforms;
 
-		UniformBlock(const std::string &name, const int &index, const int &size, const VkShaderStageFlagBits &stageFlags) :
+		UniformBlock(const std::string &name, const int &binding, const int &size, const VkShaderStageFlagBits &stageFlags) :
 			m_name(name),
-			m_index(index),
+			m_binding(binding),
 			m_size(size),
 			m_stageFlags(stageFlags),
 			m_uniforms(new std::vector<Uniform*>())
@@ -107,7 +109,7 @@ namespace Flounder
 		std::string ToString() const
 		{
 			std::stringstream result;
-			result << "UniformBlock(name '" << m_name << "', index " << m_index << ", size " << m_size << ")";
+			result << "UniformBlock(name '" << m_name << "', binding " << m_binding << ", size " << m_size << ")";
 			return result.str();
 		}
 	};
@@ -116,12 +118,14 @@ namespace Flounder
 	{
 	public:
 		std::string m_name;
-		int m_index;
+		int m_location;
+		int m_size;
 		BasicTypes m_type;
 
-		VertexAttribute(const std::string &name, const int &index, const int &type) :
+		VertexAttribute(const std::string &name, const int &location, const int &size, const int &type) :
 			m_name(name),
-			m_index(index),
+			m_location(location),
+			m_size(size),
 			m_type((BasicTypes)type)
 		{
 		}
@@ -133,7 +137,7 @@ namespace Flounder
 		std::string ToString() const
 		{
 			std::stringstream result;
-			result << "VertexAttribute(name '" << m_name << "', index " << m_index << ", type " << m_type << ")";
+			result << "VertexAttribute(name '" << m_name << "', location " << m_location << ", size " << m_size << ", type " << m_type << ")";
 			return result.str();
 		}
 	};
@@ -155,9 +159,9 @@ namespace Flounder
 		void LoadProgram(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag);
 
 	private:
-		void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
-
 		void LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
+
+		void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
 
 		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
 	public:
@@ -166,6 +170,10 @@ namespace Flounder
 		static int GetTypeSize(const BasicTypes &type);
 
 		static VkFormat GetTypeFormat(const BasicTypes &type);
+
+		bool IsDescriptorDefined(const std::string &descriptor);
+
+		Uniform *GetBlockUniform(const std::string &blockName, const std::string &uniformName);
 
 		static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
 

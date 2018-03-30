@@ -104,7 +104,7 @@ namespace Flounder
 
 	void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4*> *jointMatrices)
 	{
-		if (headJoint.GetIndex() < jointMatrices->size())
+		if (headJoint.GetIndex() < (int) jointMatrices->size())
 		{
 			jointMatrices->at(headJoint.GetIndex()) = headJoint.GetAnimatedTransform();
 		}

@@ -40,58 +40,15 @@ namespace Flounder
 		return data;
 	}
 
-	std::vector<VkVertexInputBindingDescription> VertexModel::GetBindingDescriptions(const VkVertexInputRate &inputRate)
+	std::vector<VkVertexInputBindingDescription> VertexModel::GetInputDescription()
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
 
 		// The vertex input description.
 		bindingDescriptions[0].binding = 0;
 		bindingDescriptions[0].stride = sizeof(VertexModel);
-		bindingDescriptions[0].inputRate = inputRate;
+		bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
 		return bindingDescriptions;
-	}
-
-	std::vector<VkVertexInputAttributeDescription> VertexModel::GetAttributeDescriptions(const int &usedCount)
-	{
-		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(usedCount + 1);
-
-		// Position attribute.
-		if (usedCount >= 0)
-		{
-			attributeDescriptions[0].binding = 0;
-			attributeDescriptions[0].location = 0;
-			attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
-			attributeDescriptions[0].offset = offsetof(VertexModel, m_position);
-		}
-
-		// UV attribute.
-		if (usedCount >= 1)
-		{
-			attributeDescriptions[1].binding = 0;
-			attributeDescriptions[1].location = 1;
-			attributeDescriptions[1].format = VK_FORMAT_R32G32_SFLOAT;
-			attributeDescriptions[1].offset = offsetof(VertexModel, m_uv);
-		}
-
-		// Normal attribute.
-		if (usedCount >= 2)
-		{
-			attributeDescriptions[2].binding = 0;
-			attributeDescriptions[2].location = 2;
-			attributeDescriptions[2].format = VK_FORMAT_R32G32B32_SFLOAT;
-			attributeDescriptions[2].offset = offsetof(VertexModel, m_normal);
-		}
-
-		// Tangent attribute.
-		if (usedCount >= 3)
-		{
-			attributeDescriptions[3].binding = 0;
-			attributeDescriptions[3].location = 3;
-			attributeDescriptions[3].format = VK_FORMAT_R32G32B32_SFLOAT;
-			attributeDescriptions[3].offset = offsetof(VertexModel, m_tangent);
-		}
-
-		return attributeDescriptions;
 	}
 }

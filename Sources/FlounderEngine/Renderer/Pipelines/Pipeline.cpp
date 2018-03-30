@@ -12,7 +12,7 @@ namespace Flounder
 		VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR
 	};
 
-	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<std::string> &defines) :
+	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<Define> &defines) :
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreateInfo(pipelineCreateInfo),
 		m_defines(defines),
@@ -106,7 +106,7 @@ namespace Flounder
 
 		for (const auto &define : m_defines)
 		{
-			defineBlock += "#define " + define + "\n";
+			defineBlock += "#define " + define.name + " " + define.value + "\n";
 		}
 
 		for (auto &type : m_pipelineCreateInfo.m_shaderStages)
@@ -128,6 +128,15 @@ namespace Flounder
 			shaderStrings[0] = shaderCode.c_str();
 			shader.setStrings(shaderStrings, 1);
 
+			shader.setEnvInput(glslang::EShSourceGlsl, language, glslang::EShClientVulkan, 100);
+			shader.setEnvClient(glslang::EShClientVulkan, glslang::EShTargetVulkan_1_0);
+			shader.setEnvTarget(glslang::EShTargetSpv, glslang::EShTargetSpv_1_0);
+
+		//	if (shader.preprocess(&resources, 100, ENoProfile, false, false, messages, &str, includer))
+		//	{
+		//		fprintf(stderr, "SPRIV shader preprocess failed!\n");
+		//	}
+
 			if (!shader.parse(&resources, 100, false, messages))
 			{
 				printf("%s\n", shader.getInfoLog());
@@ -146,8 +155,13 @@ namespace Flounder
 		//	program.dumpReflection();
 			m_shaderProgram->LoadProgram(program, stageFlag);
 
+			glslang::SpvOptions spvOptions;
+			spvOptions.generateDebugInfo = true;
+			spvOptions.disableOptimizer = false;
+			spvOptions.optimizeSize = false;
+
 			std::vector<uint32_t> spirv = std::vector<uint32_t>();
-			glslang::GlslangToSpv(*program.getIntermediate(language), spirv);
+			glslang::GlslangToSpv(*program.getIntermediate(language), spirv, &spvOptions);
 
 			VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 			shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;

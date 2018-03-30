@@ -18,7 +18,6 @@ namespace Flounder
 	private:
 		UniformBuffer *m_uniformObject;
 		DescriptorSet *m_descriptorSet;
-		Texture *m_nullTexture;
 	public:
 		EntityRender();
 

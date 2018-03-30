@@ -63,7 +63,7 @@ namespace Demo
 		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Stars", ".png")));
 
 		// Terrains.
-		/*const int n = 4;
+		const int n = 4;
 
 		for (int j = -n; j <= n; j++)
 		{
@@ -80,18 +80,18 @@ namespace Demo
 				terrainObject->AddComponent(new TerrainRender());
 			//	terrainObject->AddComponent(new ShadowRender());
 			}
-		}*/
+		}
+
+		// Waters.
+		GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
+		waterObject->SetName("Water");
+		waterObject->AddComponent(new Mesh(new MeshWater()));
+		waterObject->AddComponent(new WaterRender());
 
 		// Planets.
 		GameObject *planet = new GameObject(Transform(Vector3()));
 		planet->SetName("Etaran");
 		planet->AddComponent(new Planet(1));
-
-		// Waters.
-	//	GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
-	//	waterObject->SetName("Water");
-	//	waterObject->AddComponent(new Mesh(new MeshWater()));
-	//	waterObject->AddComponent(new WaterRender());
 
 		// Entities.
 		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
@@ -99,7 +99,7 @@ namespace Demo
 
 		new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f)); // Testing animations.
 
-		/*Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
+		Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
 
 		for (int i = -3; i <= 0; i++)
 		{
@@ -135,7 +135,7 @@ namespace Demo
 					}
 				}
 			}
-		}*/
+		}
 
 		// Music.
 /*#ifdef FLOUNDER_CONFIG_RELEASE

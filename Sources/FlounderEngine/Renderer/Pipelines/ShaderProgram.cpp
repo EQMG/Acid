@@ -65,6 +65,20 @@ namespace Flounder
 		}
 	}
 
+	void ShaderProgram::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
+	{
+		for (auto uniformBlock : *m_uniformBlocks)
+		{
+			if (uniformBlock->m_name == program.getUniformBlockName(i))
+			{
+				uniformBlock->m_stageFlags = VK_SHADER_STAGE_ALL;
+				return;
+			}
+		}
+
+		m_uniformBlocks->push_back(new UniformBlock(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag));
+	}
+
 	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
 	{
 		if (program.getUniformBinding(i) == -1)
@@ -77,7 +91,7 @@ namespace Flounder
 				{
 					if (uniformBlock->m_name == splitName.at(0))
 					{
-						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i), program.getUniformType(i), stageFlag));
+						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
 						return;
 					}
 				}
@@ -88,26 +102,12 @@ namespace Flounder
 		{
 			if (uniform->m_name == program.getUniformName(i))
 			{
-				uniform->m_stageFlags = VK_SHADER_STAGE_ALL; // TODO: Bitshift?
+				uniform->m_stageFlags = VK_SHADER_STAGE_ALL;
 				return;
 			}
 		}
 
-		m_uniforms->push_back(new Uniform(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), program.getUniformType(i), stageFlag));
-	}
-
-	void ShaderProgram::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
-	{
-		for (auto uniformBlock : *m_uniformBlocks)
-		{
-			if (uniformBlock->m_name == program.getUniformBlockName(i))
-			{
-				uniformBlock->m_stageFlags = VK_SHADER_STAGE_ALL; // TODO: Bitshift?
-				return;
-			}
-		}
-
-		m_uniformBlocks->push_back(new UniformBlock(program.getUniformBlockName(i), (program.getNumLiveUniformBlocks() - 1) - program.getUniformBlockIndex(i), program.getUniformBlockSize(i), stageFlag)); // TODO: Get correct index.
+		m_uniforms->push_back(new Uniform(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), program.getUniformSize(i), program.getUniformType(i), stageFlag));
 	}
 
 	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
@@ -120,7 +120,7 @@ namespace Flounder
 			}
 		}
 
-		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), i, program.getAttributeType(i))); // TODO: Get correct index.
+		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeLocation(i), program.getAttributeSize(i), program.getAttributeType(i)));
 	}
 
 	void ShaderProgram::ProcessShader()
@@ -145,7 +145,7 @@ namespace Flounder
 		// Process to descriptors.
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
-			m_descriptors->push_back(UniformBuffer::CreateDescriptor(uniformBlock->m_index, uniformBlock->m_stageFlags));
+			m_descriptors->push_back(UniformBuffer::CreateDescriptor(uniformBlock->m_binding, uniformBlock->m_stageFlags));
 		}
 
 		for (auto uniform : *m_uniforms)
@@ -172,13 +172,12 @@ namespace Flounder
 		{
 			VkVertexInputAttributeDescription attributeDescription = {};
 			attributeDescription.binding = 0;
-			attributeDescription.location = vertexAttribute->m_index;
+			attributeDescription.location = vertexAttribute->m_location;
 			attributeDescription.format = GetTypeFormat(vertexAttribute->m_type);
 			attributeDescription.offset = currentOffset;
-		//	printf("%i: %i\n", vertexAttribute->m_index, currentOffset);
 
 			m_attributeDescriptions->push_back(attributeDescription);
-			currentOffset += GetTypeSize(vertexAttribute->m_type);
+			currentOffset += GetTypeSize(vertexAttribute->m_type); // TODO: vertexAttribute->m_size
 		}
 
 		// Log loaded shader data.
@@ -186,23 +185,23 @@ namespace Flounder
 		printf("Vertex Attributes: \n");
 		for (auto vertexAttribute : *m_vertexAttributes)
 		{
-			printf(" - %s\n", vertexAttribute->ToString().c_str());
+			printf("  - %s\n", vertexAttribute->ToString().c_str());
 		}
 
 		printf("Uniforms: \n");
 		for (auto uniform : *m_uniforms)
 		{
-			printf(" - %s\n", uniform->ToString().c_str());
+			printf("  - %s\n", uniform->ToString().c_str());
 		}
 
 		printf("Uniform Blocks: \n");
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
-			printf(" - %s\n", uniformBlock->ToString().c_str());
+			printf("  - %s\n", uniformBlock->ToString().c_str());
 
 			for (auto uniform : *uniformBlock->m_uniforms)
 			{
-				printf("  - %s\n", uniform->ToString().c_str());
+				printf("    - %s\n", uniform->ToString().c_str());
 			}
 		}
 #endif
@@ -258,6 +257,27 @@ namespace Flounder
 		}
 	}
 
+	bool ShaderProgram::IsDescriptorDefined(const std::string &descriptor)
+	{
+		for (auto uniform : *m_uniforms)
+		{
+			if (uniform->m_name == descriptor)
+			{
+				return true;
+			}
+		}
+
+		for (auto uniformBlock : *m_uniformBlocks)
+		{
+			if (uniformBlock->m_name == descriptor)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	std::string ShaderProgram::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
 	{
 		// TODO: Cleanup.
@@ -267,6 +287,27 @@ namespace Flounder
 		size_t foundIndex2 = result.find('\n', foundIndex1 + 1);
 		result.insert(foundIndex2, blockCode);
 		return result;
+	}
+
+	Uniform *ShaderProgram::GetBlockUniform(const std::string &blockName, const std::string &uniformName)
+	{
+		for (auto uniformBlock : *m_uniformBlocks)
+		{
+			if (uniformBlock->m_name != blockName)
+			{
+				continue;
+			}
+
+			for (auto uniform : *uniformBlock->m_uniforms)
+			{
+				if (uniform->m_name == uniformName)
+				{
+					return uniform;
+				}
+			}
+		}
+
+		return nullptr;
 	}
 
 	VkShaderStageFlagBits ShaderProgram::GetShaderStage(const std::string &filename)
