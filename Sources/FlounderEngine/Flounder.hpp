@@ -57,7 +57,7 @@
 #include "Inputs/IButton.hpp"
 #include "Lights/Fog.hpp"
 #include "Lights/Light.hpp"
-#include "Materials/Material.hpp"
+#include "Materials/MaterialDefault.hpp"
 #include "Maths/Colour.hpp"
 #include "Maths/Constraint3.hpp"
 #include "Maths/Delta.hpp"

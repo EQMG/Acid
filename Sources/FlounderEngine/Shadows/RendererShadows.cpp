@@ -12,7 +12,7 @@ namespace Flounder
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosShadows::UboScene))),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Shadows/Shadow.vert", "Resources/Shaders/Shadows/Shadow.frag"},
-			VertexModel::GetInputDescription(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT), { }))
+			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT), { }))
 	{
 	}
 
