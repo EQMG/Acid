@@ -5,7 +5,7 @@ namespace Flounder
 	RendererFonts::RendererFonts(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Fonts/Font.vert", "Resources/Shaders/Fonts/Font.frag"},
-			VertexModel::GetInputDescription(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { }))
+			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { }))
 	{
 	}
 

@@ -7,7 +7,7 @@
 #include "../Physics/ColliderSphere.hpp"
 #include "../Physics/Rigidbody.hpp"
 #include "../Particles/ParticleSystem.hpp"
-#include "../Materials/Material.hpp"
+#include "Materials/MaterialDefault.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "../Meshes/Animations/MeshAnimated.hpp"
 #include "../Shadows/ShadowRender.hpp"
@@ -26,7 +26,7 @@ namespace Flounder
 		std::make_pair("ParticleSystem", REGISTER_CREATE(ParticleSystem)),
 		std::make_pair("Mesh", REGISTER_CREATE(Mesh)),
 		std::make_pair("MeshAnimated", REGISTER_CREATE(MeshAnimated)),
-		std::make_pair("Material", REGISTER_CREATE(Material)),
+		std::make_pair("MaterialDefault", REGISTER_CREATE(MaterialDefault)),
 		std::make_pair("Rigidbody", REGISTER_CREATE(Rigidbody)),
 		std::make_pair("ShadowRender", REGISTER_CREATE(ShadowRender)),
 		std::make_pair("SkyboxRender", REGISTER_CREATE(SkyboxRender)),

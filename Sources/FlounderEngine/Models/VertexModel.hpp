@@ -1,9 +1,10 @@
 #pragma once
 
 #include <vector>
+#include "../Engine/Platform.hpp"
 #include "../Maths/Vector2.hpp"
 #include "../Maths/Vector3.hpp"
-#include "../Engine/Platform.hpp"
+#include "../Renderer/Pipelines/PipelineCreate.hpp"
 #include "IVertex.hpp"
 
 namespace Flounder
@@ -31,6 +32,6 @@ namespace Flounder
 
 		void *GetData(std::vector<IVertex *> &vertices) override;
 
-		static std::vector<VkVertexInputBindingDescription> GetInputDescription();
+		static VertexInput GetVertexInput();
 	};
 }

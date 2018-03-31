@@ -10,24 +10,6 @@
 
 namespace Flounder
 {
-	enum BasicTypes
-	{
-		TypeBool = 35670,
-		TypeInt = 5124,
-		TypeFloat = 5126,
-		TypeDouble = 5130,
-		TypeVec2 = 35664,
-		TypeVec3 = 35665,
-		TypeVec4 = 35666,
-		TypeMat2 = 35674,
-		TypeMat3 = 35675,
-		TypeMat4 = 35676,
-		TypeSampler2D = 35678,
-		TypeSampler3D = 35680,
-		TypeWrite2D = 36941,
-		TypeWrite3D = 36942,
-	};
-
 	class F_HIDDEN Uniform
 	{
 	public:
@@ -35,15 +17,15 @@ namespace Flounder
 		int m_binding;
 		int m_offset;
 		int m_size;
-		BasicTypes m_type;
+		int m_glType;
 		VkShaderStageFlagBits m_stageFlags;
 
-		Uniform(const std::string &name, const int &binding, const int &offset, const int &size, const int &type, const VkShaderStageFlagBits &stageFlags) :
+		Uniform(const std::string &name, const int &binding, const int &offset, const int &size, const int &glType, const VkShaderStageFlagBits &stageFlags) :
 			m_name(name),
 			m_binding(binding),
 			m_offset(offset),
 			m_size(size),
-			m_type((BasicTypes)type),
+			m_glType(glType),
 			m_stageFlags(stageFlags)
 		{
 		}
@@ -54,7 +36,7 @@ namespace Flounder
 
 		bool operator==(const Uniform &other) const
 		{
-			return m_name == other.m_name && m_binding == other.m_binding && m_offset == other.m_offset && m_type == other.m_type;
+			return m_name == other.m_name && m_binding == other.m_binding && m_offset == other.m_offset && m_glType == other.m_glType;
 		}
 
 		bool operator!=(const Uniform &other) const
@@ -65,7 +47,7 @@ namespace Flounder
 		std::string ToString() const
 		{
 			std::stringstream result;
-			result << "Uniform(name '" << m_name << "', binding " << m_binding << ", offset " << m_offset << ", size " << m_size << ", type " << m_type << ")";
+			result << "Uniform(name '" << m_name << "', binding " << m_binding << ", offset " << m_offset << ", size " << m_size << ", glType " << m_glType << ")";
 			return result.str();
 		}
 	};
@@ -120,13 +102,13 @@ namespace Flounder
 		std::string m_name;
 		int m_location;
 		int m_size;
-		BasicTypes m_type;
+		int m_glType;
 
-		VertexAttribute(const std::string &name, const int &location, const int &size, const int &type) :
+		VertexAttribute(const std::string &name, const int &location, const int &size, const int &glType) :
 			m_name(name),
 			m_location(location),
 			m_size(size),
-			m_type((BasicTypes)type)
+			m_glType(glType)
 		{
 		}
 
@@ -137,7 +119,7 @@ namespace Flounder
 		std::string ToString() const
 		{
 			std::stringstream result;
-			result << "VertexAttribute(name '" << m_name << "', location " << m_location << ", size " << m_size << ", type " << m_type << ")";
+			result << "VertexAttribute(name '" << m_name << "', location " << m_location << ", size " << m_size << ", glType " << m_glType << ")";
 			return result.str();
 		}
 	};
@@ -149,7 +131,6 @@ namespace Flounder
 		std::vector<UniformBlock*> *m_uniformBlocks;
 		std::vector<VertexAttribute*> *m_vertexAttributes;
 
-		std::vector<VkVertexInputAttributeDescription> *m_attributeDescriptions;
 		std::vector<DescriptorType> *m_descriptors;
 
 		ShaderProgram();
@@ -166,10 +147,6 @@ namespace Flounder
 		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
 	public:
 		void ProcessShader();
-
-		static int GetTypeSize(const BasicTypes &type);
-
-		static VkFormat GetTypeFormat(const BasicTypes &type);
 
 		bool IsDescriptorDefined(const std::string &descriptor);
 
