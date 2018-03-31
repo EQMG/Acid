@@ -1,22 +1,16 @@
 {
-  "Material": {
-    "Diffuse": {
-      "Colour": "#551a8b",
-      "Texture": ""
-    },
-    "Surface": {
-      "Metallic": 0.0, 
-      "Roughness": 0.0, 
-      "Ignore Lighting": 1,
-      "Ignore Fog": 0,
-      "Texture": ""
-    },
-    "Normal": {
-      "Texture": ""
-    }
-  },
   "Mesh": {
     "Model": "Sphere_10_10_1.0"
+  },
+  "MaterialDefault": {
+    "Base Colour": "#551a8b",
+    "Diffuse Texture": "",
+    "Metallic": 0.0,
+    "Roughness": 0.0,
+    "Ignore Lighting": 1,
+    "Ignore Fog": 0,
+    "Material Texture": "",
+    "Normal Texture": ""
   },
   "EntityRender": {
   }

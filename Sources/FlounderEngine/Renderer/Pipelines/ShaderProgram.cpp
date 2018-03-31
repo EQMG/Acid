@@ -1,12 +1,7 @@
 #include "ShaderProgram.hpp"
 
+#include <algorithm>
 #include "../../Helpers/FormatString.hpp"
-#include "../../Maths/Vector2.hpp"
-#include "../../Maths/Vector3.hpp"
-#include "../../Maths/Vector4.hpp"
-#include "../../Maths/Matrix2.hpp"
-#include "../../Maths/Matrix3.hpp"
-#include "../../Maths/Matrix4.hpp"
 #include "../../Textures/Texture.hpp"
 #include "../../Textures/Cubemap.hpp"
 #include "../Buffers/UniformBuffer.hpp"
@@ -17,7 +12,6 @@ namespace Flounder
 		m_uniforms(new std::vector<Uniform*>()),
 		m_uniformBlocks(new std::vector<UniformBlock*>()),
 		m_vertexAttributes(new std::vector<VertexAttribute*>()),
-		m_attributeDescriptions(new std::vector<VkVertexInputAttributeDescription>()),
 		m_descriptors(new std::vector<DescriptorType>())
 	{
 	}
@@ -43,7 +37,6 @@ namespace Flounder
 		delete m_uniformBlocks;
 		delete m_vertexAttributes;
 
-		delete m_attributeDescriptions;
 		delete m_descriptors;
 	}
 
@@ -107,7 +100,7 @@ namespace Flounder
 			}
 		}
 
-		m_uniforms->push_back(new Uniform(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), program.getUniformSize(i), program.getUniformType(i), stageFlag));
+		m_uniforms->push_back(new Uniform(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
 	}
 
 	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
@@ -120,7 +113,7 @@ namespace Flounder
 			}
 		}
 
-		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeLocation(i), program.getAttributeSize(i), program.getAttributeType(i)));
+		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), i, -1, program.getAttributeType(i))); // program.getAttributeLocation(i), program.getAttributeSize(i)
 	}
 
 	void ShaderProgram::ProcessShader()
@@ -140,6 +133,17 @@ namespace Flounder
 				{
 					return l->m_offset < r->m_offset;
 				});
+
+			for (unsigned int i = 0; i < uniformBlock->m_uniforms->size(); i++)
+			{
+				if (i == uniformBlock->m_uniforms->size() - 1)
+				{
+					uniformBlock->m_uniforms->at(i)->m_size = uniformBlock->m_size - uniformBlock->m_uniforms->at(i)->m_offset;
+					continue;
+				}
+
+				uniformBlock->m_uniforms->at(i)->m_size = uniformBlock->m_uniforms->at(i + 1)->m_offset - uniformBlock->m_uniforms->at(i)->m_offset;
+			}
 		}
 
 		// Process to descriptors.
@@ -150,14 +154,14 @@ namespace Flounder
 
 		for (auto uniform : *m_uniforms)
 		{
-			switch (uniform->m_type)
+			switch (uniform->m_glType)
 			{
-			case TypeSampler2D:
-			case TypeWrite2D:
+			case 35678:
+			case 36941:
 				m_descriptors->push_back(Texture::CreateDescriptor(uniform->m_binding, uniform->m_stageFlags));
 				break;
-			case TypeSampler3D:
-			case TypeWrite3D:
+			case 35680:
+			case 36942:
 				m_descriptors->push_back(Cubemap::CreateDescriptor(uniform->m_binding, uniform->m_stageFlags));
 				break;
 			default:
@@ -166,7 +170,7 @@ namespace Flounder
 		}
 
 		// Process attribute descriptions.
-		uint32_t currentOffset = 4;
+		/*uint32_t currentOffset = 4;
 
 		for (auto vertexAttribute : *m_vertexAttributes)
 		{
@@ -178,7 +182,7 @@ namespace Flounder
 
 			m_attributeDescriptions->push_back(attributeDescription);
 			currentOffset += GetTypeSize(vertexAttribute->m_type); // TODO: vertexAttribute->m_size
-		}
+		}*/
 
 		// Log loaded shader data.
 #ifdef FLOUNDER_VERBOSE
@@ -205,56 +209,6 @@ namespace Flounder
 			}
 		}
 #endif
-	}
-
-	int ShaderProgram::GetTypeSize(const BasicTypes &type)
-	{
-		switch (type)
-		{
-		case TypeBool:
-			return sizeof(bool);
-		case TypeInt:
-			return sizeof(int);
-		case TypeFloat:
-			return sizeof(float);
-		case TypeDouble:
-			return sizeof(double);
-		case TypeVec2:
-			return sizeof(Vector2);
-		case TypeVec3:
-			return sizeof(Vector3);
-		case TypeVec4:
-			return sizeof(Vector4);
-		case TypeMat2:
-			return sizeof(Matrix2);
-		case TypeMat3:
-			return sizeof(Matrix3);
-		case TypeMat4:
-			return sizeof(Matrix4);
-		default:
-			return 0;
-		}
-	}
-
-	VkFormat ShaderProgram::GetTypeFormat(const BasicTypes &type)
-	{
-		switch (type)
-		{
-		case TypeBool:
-		case TypeInt:
-			return VK_FORMAT_R8_SINT;
-		case TypeFloat:
-		case TypeDouble:
-			return VK_FORMAT_R32_SFLOAT;
-		case TypeVec2:
-			return VK_FORMAT_R32G32_SFLOAT;
-		case TypeVec3:
-			return VK_FORMAT_R32G32B32_SFLOAT;
-		case TypeVec4:
-			return VK_FORMAT_R32G32B32A32_SFLOAT;
-		default:
-			return VK_FORMAT_UNDEFINED;
-		}
 	}
 
 	bool ShaderProgram::IsDescriptorDefined(const std::string &descriptor)

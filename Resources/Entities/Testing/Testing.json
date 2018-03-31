@@ -14,22 +14,18 @@
       "z": false
     }
   },
-  "Material": {
-    "Diffuse": {
-      "Colour": "#C37A57", 
-      "Texture": "Resources/Entities/Testing/Diffuse.png"
-    },
-    "Surface": {
-      "Metallic": 0.0, 
-      "Roughness": 0.0, 
-      "Ignore Lighting": false, 
-      "Ignore Fog": false, 
-      "Ignore Curvature": false, 
-      "Texture": ""
-    },
-    "Normal": {
-      "Texture": "Resources/Entities/Testing/Normal.png"
-    }
+  "Mesh": {
+    "Model": "Resources/Entities/Testing/Model.obj"
+  },
+  "MaterialDefault": {
+    "Base Colour": "#C37A57", 
+    "Diffuse Texture": "Resources/Entities/Testing/Diffuse.png", 
+    "Metallic": 0.0, 
+    "Roughness": 0.0, 
+    "Ignore Lighting": false, 
+    "Ignore Fog": false, 
+    "Material Texture": "", 
+    "Normal Texture": "Resources/Entities/Testing/Normal.png"
   },
   "Light": {
     "Colour": "#3319CC", 
@@ -39,9 +35,6 @@
       "y": 3.0, 
       "z": 0.0
     }
-  },
-  "Mesh": {
-    "Model": "Resources/Entities/Testing/Model.obj"
   },
   "EntityRender": {
   },

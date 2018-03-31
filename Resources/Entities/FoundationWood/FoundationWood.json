@@ -14,23 +14,19 @@
       "z": false
     }
   },
-  "Material": {
-    "Program": "Resources/Shaders/Entities/Entity.json",
-    "Diffuse": {
-      "Colour": "#8b4513", 
-      "Texture": ""
-    },
-    "Surface": {
-      "Metallic": 0.0, 
-      "Roughness": 0.0,
-      "Ignore Lighting": false, 
-      "Ignore Fog": false,
-      "Ignore Curvature": false,
-      "Texture": ""
-    }
-  },
   "Mesh": {
     "Model": "Resources/Entities/FoundationWood/Model.obj"
+  },
+  "MaterialDefault": {
+    "Base Colour": "#8b4513",
+    "Diffuse Texture": "",
+    "Metallic": 0.0,
+    "Roughness": 0.0,
+    "Ignore Lighting": false,
+    "Ignore Fog": false,
+    "Ignore Curvature": false,
+    "Material Texture": "",
+    "Normal Texture": ""
   },
   "EntityRender": {
   },

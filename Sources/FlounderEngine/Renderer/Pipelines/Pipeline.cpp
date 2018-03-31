@@ -152,13 +152,13 @@ namespace Flounder
 			}
 
 			program.buildReflection();
-		//	program.dumpReflection();
+			program.dumpReflection();
 			m_shaderProgram->LoadProgram(program, stageFlag);
 
 			glslang::SpvOptions spvOptions;
 			spvOptions.generateDebugInfo = true;
 			spvOptions.disableOptimizer = false;
-			spvOptions.optimizeSize = false;
+			spvOptions.optimizeSize = true;
 
 			std::vector<uint32_t> spirv = std::vector<uint32_t>();
 			glslang::GlslangToSpv(*program.getIntermediate(language), spirv, &spvOptions);
@@ -318,10 +318,10 @@ namespace Flounder
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexBindingDescriptions.size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.m_vertexBindingDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_shaderProgram->m_attributeDescriptions->size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_shaderProgram->m_attributeDescriptions->data();
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.vertexBindingDescriptions.size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.m_vertexInput.vertexBindingDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.attributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.m_vertexInput.attributeDescriptions.data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;

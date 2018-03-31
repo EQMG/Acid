@@ -13,7 +13,7 @@ namespace Flounder
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosEntities::UboScene))),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"},
-			VertexModel::GetInputDescription(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { })) // {"ANIMATED"}, {"COLOUR_MAPPING"}, {"MATERIAL_MAPPING"}, {"NORMAL_MAPPING"}
+			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { })) // {"ANIMATED"}, {"COLOUR_MAPPING"}, {"MATERIAL_MAPPING"}, {"NORMAL_MAPPING"}
 	{
 	}
 

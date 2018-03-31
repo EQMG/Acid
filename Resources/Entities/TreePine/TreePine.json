@@ -14,22 +14,18 @@
       "z": false
     }
   },
-  "Material": {
-    "Diffuse": {
-      "Colour": "#1D611F", 
-      "Texture": "Resources/Entities/TreePine/Diffuse.png"
-    },
-    "Surface": {
-      "Metallic": 0.0, 
-      "Roughness": 0.0,
-      "Ignore Lighting": false, 
-      "Ignore Fog": false,
-      "Ignore Curvature": false,
-      "Texture": ""
-    }
-  },
   "Mesh": {
     "Model": "Resources/Entities/TreePine/Model.obj"
+  },
+  "MaterialDefault": {
+    "Base Colour": "#1D611F",
+    "Diffuse Texture": "Resources/Entities/TreePine/Diffuse.png",
+    "Metallic": 0.0,
+    "Roughness": 0.0,
+    "Ignore Lighting": false,
+    "Ignore Fog": false,
+    "Material Texture": "",
+    "Normal Texture": ""
   },
   "EntityRender": {
   },

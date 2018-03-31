@@ -13,7 +13,7 @@
 #include <Terrains/LodBehaviour.hpp>
 #include <Waters/MeshWater.hpp>
 #include <Waters/WaterRender.hpp>
-#include <Materials/Material.hpp>
+#include <Materials/MaterialDefault.hpp>
 #include <Particles/ParticleType.hpp>
 #include <Particles/Spawns/SpawnCircle.hpp>
 #include <Particles/ParticleSystem.hpp>

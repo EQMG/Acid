@@ -4,7 +4,7 @@
 #include "../Meshes/Mesh.hpp"
 #include "../Meshes/Animations/MeshAnimated.hpp"
 #include "../Worlds/Worlds.hpp"
-#include "../Materials/Material.hpp"
+#include "Materials/MaterialDefault.hpp"
 #include "../Physics/Rigidbody.hpp"
 #include "../Scenes/Scenes.hpp"
 #include "UbosEntities.hpp"
@@ -26,7 +26,7 @@ namespace Flounder
 
 	void EntityRender::Update()
 	{
-		auto material = GetGameObject()->GetComponent<Material>();
+		auto material = GetGameObject()->GetComponent<MaterialDefault>();
 
 		if (material == nullptr)
 		{
@@ -60,11 +60,11 @@ namespace Flounder
 		// }
 
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		uboObject.baseColor = *material->GetDiffuse()->GetBaseColor();
-		uboObject.metallic = material->GetSurface()->GetMetallic();
-		uboObject.roughness = material->GetSurface()->GetRoughness();
-		uboObject.ignoreFog = static_cast<float>(material->GetSurface()->GetIgnoreFog());
-		uboObject.ignoreLighting = static_cast<float>(material->GetSurface()->GetIgnoreLighting());
+		uboObject.baseColor = *material->GetBaseColor();
+		uboObject.metallic = material->GetMetallic();
+		uboObject.roughness = material->GetRoughness();
+		uboObject.ignoreFog = static_cast<float>(material->IsIgnoringFog());
+		uboObject.ignoreLighting = static_cast<float>(material->IsIgnoringLighting());
 		m_uniformObject->Update(&uboObject);
 
 		//m_uniformObject->UpdateMap("UniformObject", pipeline.GetShaderProgram(), {
@@ -90,7 +90,7 @@ namespace Flounder
 	{
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
-		auto material = GetGameObject()->GetComponent<Material>();
+		auto material = GetGameObject()->GetComponent<MaterialDefault>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr || material == nullptr)
 		{
@@ -116,9 +116,9 @@ namespace Flounder
 		m_descriptorSet->UpdateMap({
 			{"UboScene", uniformScene},
 			{"UboObject", m_uniformObject},
-			{"samplerDiffuse", material->GetDiffuse()->GetTexture()},
-			{"samplerMaterial", material->GetSurface()->GetTexture()},
-			{"samplerNormal", material->GetNormal()->GetTexture()}
+			{"samplerDiffuse", material->GetDiffuseTexture()},
+			{"samplerMaterial", material->GetMaterialTexture()},
+			{"samplerNormal", material->GetNormalTexture()}
 		});
 
 		// Draws the object.
