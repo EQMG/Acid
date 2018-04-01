@@ -1,4 +1,4 @@
-if(FLOUNDER_PLATFORM_MACOS)
+if(APPLE)
 	find_path(METAL_INCLUDES Metal.h)
 	find_library(METAL_LIBRARY NAMES Metal)
 
@@ -23,8 +23,8 @@ if(FLOUNDER_PLATFORM_MACOS)
 	set(LIBRARIES_INCLUDES ${LIBRARIES_INCLUDES} ${METAL_INCLUDES} ${IOSURFACE_INCLUDES} ${QUARTZCORE_INCLUDES})
 	set(LIBRARIES_LINKS ${LIBRARIES_LINKS} "${METAL_LIBRARY}" "${IOSURFACE_LIBRARY}" "${QUARTZCORE_LIBRARY}")
 
-	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
-	find_library(VULKAN_LIBRARY NAMES MoltenVK PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
+	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/include")
+	find_library(VULKAN_LIBRARY NAMES MoltenVK PATHS "${PROJECT_SOURCE_DIR}/Libraries/moltenvk/lib/")
 else()
 	set(VULKAN_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
 	find_library(VULKAN_LIBRARY NAMES vulkan-1 vulkan PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
