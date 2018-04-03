@@ -44,18 +44,20 @@ namespace Flounder
 			return nullptr;
 		}
 
-		void AddComponent(Component *component);
+		Component *AddComponent(Component *component);
 
 		template<typename T>
-		void AddComponent()
+		T *AddComponent()
 		{
-			AddComponent(new T());
+			T *created = new T();
+			AddComponent(created);
+			return created;
 		}
 
-		void RemoveComponent(Component *component);
+		Component *RemoveComponent(Component *component);
 
 		template<typename T>
-		void RemoveComponent()
+		T *RemoveComponent()
 		{
 			for (auto c : *m_components)
 			{
@@ -64,9 +66,11 @@ namespace Flounder
 				if (casted != nullptr)
 				{
 					RemoveComponent(c);
-					return;
+					return c;
 				}
 			}
+
+			return nullptr;
 		}
 
 		std::string GetName() const { return m_name; }

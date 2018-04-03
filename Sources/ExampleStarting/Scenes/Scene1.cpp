@@ -21,6 +21,8 @@
 #include <Voxels/Chunk.hpp>
 #include <Voxels/VoxelRender.hpp>
 #include <Voxels/Planet.hpp>
+#include <Lights/Light.hpp>
+#include <Entities/EntityRender.hpp>
 #include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
@@ -52,7 +54,7 @@ namespace Demo
 	//	cameraObject->AddComponent(new FpsCamera());
 
 		// Player.
-		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(), 1.0f));
+		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f), 1.0f));
 		playerObject->SetName("PlayerFps");
 		playerObject->AddComponent(new FpsPlayer());
 
@@ -60,10 +62,10 @@ namespace Demo
 		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
 		skyboxObject->SetName("SkyboxStars");
 		skyboxObject->AddComponent(new Mesh(ShapeSphere::Resource(6, 6, 1.0f)));
-		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Stars", ".png")));
+		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Snowy", ".png"), false));
 
 		// Terrains.
-		const int n = 4;
+		/*const int n = 4;
 
 		for (int j = -n; j <= n; j++)
 		{
@@ -80,26 +82,43 @@ namespace Demo
 				terrainObject->AddComponent(new TerrainRender());
 			//	terrainObject->AddComponent(new ShadowRender());
 			}
-		}
+		}*/
 
 		// Waters.
-		GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
+		/*GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
 		waterObject->SetName("Water");
 		waterObject->AddComponent(new Mesh(new MeshWater()));
-		waterObject->AddComponent(new WaterRender());
+		waterObject->AddComponent(new WaterRender());*/
 
 		// Planets.
-		GameObject *planet = new GameObject(Transform(Vector3()));
+		/*GameObject *planet = new GameObject(Transform(Vector3()));
 		planet->SetName("Etaran");
-		planet->AddComponent(new Planet(1));
+		planet->AddComponent(new Planet(1));*/
 
 		// Entities.
-		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
-		new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
+		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, -8000.0f), Vector3(), 18.0f));
+		sun->AddComponent(new Light(Colour("#FFFFFF"), -1.0f));
+	//	new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
+	//	new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
 
-		new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f)); // Testing animations.
+	//	new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f)); // Testing animations.
 
-		Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
+		for (int i = 0; i < 5; i++)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, 0.0f), Vector3(), 3.0f));
+				sphere->AddComponent(new Mesh(Model::Resource("Resources/Entities/Testing/Model.obj")));
+				auto material = sphere->AddComponent<MaterialDefault>();
+				material->SetBaseColor(Colour("#ffffff"));
+				material->SetMetallic((float) j / 4.0f);
+				material->SetRoughness((float) i / 4.0f);
+				sphere->AddComponent<EntityRender>();
+				sphere->AddComponent<ShadowRender>();
+			}
+		}
+
+		/*Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
 
 		for (int i = -3; i <= 0; i++)
 		{
@@ -135,7 +154,7 @@ namespace Demo
 					}
 				}
 			}
-		}
+		}*/
 
 		// Music.
 /*#ifdef FLOUNDER_CONFIG_RELEASE

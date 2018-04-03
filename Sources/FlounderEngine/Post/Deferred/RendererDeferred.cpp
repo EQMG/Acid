@@ -16,8 +16,10 @@ namespace Flounder
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_descriptorSet(nullptr),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({ "Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag" },
-			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { })),
-		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
+			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { { "USE_IBL" } })),
+		m_model(ShapeRectangle::Resource(-1.0f, 1.0f)),
+		m_brdflut(Texture::Resource("Resources/brdf_lut.png")),
+		m_environment(Cubemap::Resource("Resources/Skyboxes/Snowy", ".png"))
 	{
 	}
 
@@ -44,8 +46,21 @@ namespace Flounder
 			m_pipeline->GetTexture(2),
 			m_pipeline->GetTexture(3),
 			m_pipeline->GetTexture(4),
-			m_pipeline->GetTexture(0, 0)
+			m_pipeline->GetTexture(0, 0),
+			m_brdflut,
+			m_environment
 		});
+		/*m_descriptorSet->UpdateMap({
+			{"UboScene", m_uniformScene},
+			{"writeColour", m_pipeline->GetTexture(2)},
+			{"samplerDepth", m_pipeline->GetDepthStencil()},
+			{"samplerColour", m_pipeline->GetTexture(2)},
+			{"samplerNormal", m_pipeline->GetTexture(3)},
+			{"samplerMaterial", m_pipeline->GetTexture(4)},
+			{"samplerShadows", m_pipeline->GetTexture(0, 0)},
+			{"samplerBrdflut", m_brdflut},
+			{"samplerEnvironment", m_environment}
+		});*/
 
 		// Updates uniforms.
 		std::vector<UbosDeferred::Light> sceneLights = {};
