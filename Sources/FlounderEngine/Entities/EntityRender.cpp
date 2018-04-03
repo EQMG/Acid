@@ -33,7 +33,7 @@ namespace Flounder
 			return;
 		}
 
-		/*std::vector<Matrix4> jointTransforms = {};
+		std::vector<Matrix4> jointTransforms = {};
 		auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
 
 		if (meshAnimated != nullptr)
@@ -49,15 +49,15 @@ namespace Flounder
 					break;
 				}
 			}
-		}*/
+		}
 
 		// Updates uniforms.
 		UbosEntities::UboObject uboObject = {};
 
-		// for (unsigned int i = 0; i < jointTransforms.size(); i++)
-		// {
-		// 	uboObject.jointTransforms[i] = jointTransforms.at(i);
-		// }
+		for (unsigned int i = 0; i < jointTransforms.size(); i++)
+		{
+			uboObject.jointTransforms[i] = jointTransforms.at(i);
+		}
 
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		uboObject.baseColor = *material->GetBaseColor();
@@ -65,6 +65,7 @@ namespace Flounder
 		uboObject.roughness = material->GetRoughness();
 		uboObject.ignoreFog = static_cast<float>(material->IsIgnoringFog());
 		uboObject.ignoreLighting = static_cast<float>(material->IsIgnoringLighting());
+		uboObject.animated = static_cast<float>(meshAnimated != nullptr);
 		m_uniformObject->Update(&uboObject);
 
 		//m_uniformObject->UpdateMap("UniformObject", pipeline.GetShaderProgram(), {

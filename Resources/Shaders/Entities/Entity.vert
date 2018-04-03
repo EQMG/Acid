@@ -12,9 +12,9 @@ layout(set = 0, binding = 0) uniform UboScene
 
 layout(set = 0, binding = 1) uniform UboObject
 {
-#ifdef ANIMATED
+//#ifdef ANIMATED
     mat4 jointTransforms[MAX_JOINTS];
-#endif
+//#endif
 	mat4 transform;
 
 	vec4 baseColor;
@@ -22,6 +22,8 @@ layout(set = 0, binding = 1) uniform UboObject
 	float roughness;
 	float ignoreFog;
 	float ignoreLighting;
+
+	float animated;
 } object;
 
 layout(location = 0) in vec3 vertexPosition;
@@ -30,10 +32,10 @@ layout(location = 2) in vec3 vertexNormal;
 #ifdef NORMAL_MAPPING
 layout(location = 3) in vec3 vertexTangent;
 #endif
-#ifdef ANIMATED
+//#ifdef ANIMATED
 layout(location = 4) in ivec3 vertexJointIndices;
 layout(location = 5) in vec3 vertexWeights;
-#endif
+//#endif
 
 layout(location = 0) out vec2 fragmentUv;
 layout(location = 1) out vec3 fragmentNormal;
@@ -53,17 +55,20 @@ void main()
 	vec4 totalLocalPos = vec4(vertexPosition, 1.0f);
 	vec4 totalNormal = vec4(vertexNormal, 0.0f);
 
-#ifdef ANIMATED
-    for (int i = 0; i < MAX_WEIGHTS; i++)
+//#ifdef ANIMATED
+    if (object.animated == 1.0f)
     {
- 	    mat4 jointTransform = object.jointTransforms[vertexJointIndices[i]];
-        vec4 posePosition = jointTransform * totalLocalPos;
-        totalLocalPos += posePosition * vertexWeights[i];
+        for (int i = 0; i < MAX_WEIGHTS; i++)
+        {
+            mat4 jointTransform = object.jointTransforms[vertexJointIndices[i]];
+            vec4 posePosition = jointTransform * totalLocalPos;
+            totalLocalPos += posePosition * vertexWeights[i];
 
-        vec4 worldNormal = jointTransform * totalNormal;
-        totalNormal += worldNormal * vertexWeights[i];
+            vec4 worldNormal = jointTransform * totalNormal;
+            totalNormal += worldNormal * vertexWeights[i];
+        }
     }
-#endif
+//#endif
 
 	vec4 worldPosition = object.transform * totalLocalPos;
 

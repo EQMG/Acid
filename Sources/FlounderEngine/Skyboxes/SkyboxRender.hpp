@@ -18,10 +18,11 @@ namespace Flounder
 		DescriptorSet *m_descriptorSet;
 
 		Cubemap *m_cubemap;
+		bool m_enableFog;
 
 		float m_blend;
 	public:
-		SkyboxRender(Cubemap *cubemap = nullptr);
+		SkyboxRender(Cubemap *cubemap = nullptr, const bool &enableFog = true);
 
 		~SkyboxRender();
 

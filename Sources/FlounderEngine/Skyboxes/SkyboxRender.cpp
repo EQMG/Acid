@@ -7,11 +7,12 @@
 
 namespace Flounder
 {
-	SkyboxRender::SkyboxRender(Cubemap *cubemap) :
+	SkyboxRender::SkyboxRender(Cubemap *cubemap, const bool &enableFog) :
 		Component(),
 		m_uniformObject(new UniformBuffer(sizeof(UbosSkyboxes::UboObject))),
 		m_descriptorSet(nullptr),
 		m_cubemap(cubemap),
+		m_enableFog(enableFog),
 		m_blend(1.0f)
 	{
 	}
@@ -25,17 +26,30 @@ namespace Flounder
 
 	void SkyboxRender::Update()
 	{
-		GetGameObject()->GetTransform()->SetRotation(*Worlds::Get()->GetSkyboxRotation());
-		m_blend = Worlds::Get()->GetStarIntensity();
+		if (m_enableFog)
+		{
+			GetGameObject()->GetTransform()->SetRotation(*Worlds::Get()->GetSkyboxRotation());
+			m_blend = Worlds::Get()->GetStarIntensity();
+		}
 
 		// Updates uniforms.
 		UbosSkyboxes::UboObject uboObject = {};
 		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		uboObject.skyColour = Colour(*Worlds::Get()->GetSkyColour());
-		uboObject.fogColour = Colour(*Worlds::Get()->GetFog()->m_colour);
-		uboObject.fogLimits = GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Worlds::Get()->GetFog()->m_lowerLimit,
-			Worlds::Get()->GetFog()->m_upperLimit);
-		uboObject.blendFactor = m_blend;
+
+		if (m_enableFog)
+		{
+			uboObject.skyColour = Colour(*Worlds::Get()->GetSkyColour());
+			uboObject.fogColour = Colour(*Worlds::Get()->GetFog()->m_colour);
+			uboObject.fogLimits = GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Worlds::Get()->GetFog()->m_lowerLimit,
+				Worlds::Get()->GetFog()->m_upperLimit);
+			uboObject.blendFactor = m_blend;
+		}
+		else
+		{
+			uboObject.fogLimits = Vector2(-1000000.0f, -1000000.0f);
+			uboObject.blendFactor = 1.0f;
+		}
+
 		m_uniformObject->Update(&uboObject);
 	}
 

@@ -6,9 +6,9 @@
 
 layout(set = 0, binding = 1) uniform UboObject
 {
-#ifdef ANIMATED
+//#ifdef ANIMATED
     mat4 jointTransforms[MAX_JOINTS];
-#endif
+//#endif
 	mat4 transform;
 
 	vec4 baseColor;
@@ -16,6 +16,8 @@ layout(set = 0, binding = 1) uniform UboObject
 	float roughness;
 	float ignoreFog;
 	float ignoreLighting;
+
+	float animated;
 } object;
 
 #ifdef COLOUR_MAPPING

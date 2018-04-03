@@ -1,9 +1,12 @@
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Flounder.png" alt="flounder" width=225>
+![Flounder](Documents/Flounder.png | width=225)
 
-# Flounder v0.8
+# Flounder
+
+[![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Flounder/issues)
+
 Flounder is a high speed, modular Vulkan game engine written in C++17 providing multiple features such as cross platform support.
 
-Flounder is a work in progress, and much of the code is subject to change.
+Features are broken down into modules, modules can be added or removed from Flounder with ease, and modules are easy to create. Vulkan is the only supported rendering API; however, APIs like Molten are supported through libraries, eventually, OpenGL and DirectX will be supported in this way..
 
 Flounder is licenced under MIT, we are open to contributions use the 'Developer Setup' section in the README to get started with Flounder, and if you want to know about our code style read GUIDELINES.
 
@@ -24,24 +27,21 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
 ## Platforms
  * Vulkan: Windows, Linux, Android
  * MoltenVK: MacOS, IOS
- * D3D12: TODO
- * OpenGL: TODO
 
 ## Features
- * High speed
- * Cross platform
- * Only coded for Vulkan rendering
+ * High speed, multithreaded, cross platform
+ * Only Vulkan rendering
  * On the fly GLSL to SPIR-V compiler
- * Limited amount of libraries
+ * Small amount of dependencies
+ * Modular rendering pipeline
+ * Deferred PBR rendering
+ * Frustum culling
  * Event and tasks systems
  * GUI / text rendering
- * Modular rendering pipeline
- * Deferred rendering
  * Audio and music
- * Skyboxes
- * Large amount of post effects (Lensflare, Glow, Blur)
- * Simple terrain and water
- * Modular voxel system
+ * Skyboxes and fog
+ * Post effects (Lensflare, Glow, Blur, SSAO, ...)
+ * Simple terrain, water, and voxels
  * 3D shadow mapping
  * Model file loading (OBJ)
  * Animations loading (DAE => JSON)
@@ -52,16 +52,20 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Flexible input classes
  * GameObjects and component system
  * GameObject prefab loading/saving (JSON)
+ * Material pipeline system
  * Normal, material, glow, and sway maps
  * Particle effects system
  * Simple physics engine (WIP)
  * P2P networking (WIP)
  * Steam integration (WIP)
+ * Resource packaging (WIP)
 
 ## Plans
  * Finish the core engine by the end of 2018
- * Allow C# games to be created with Flounder
- * A simple visual editor in the far future
+ * Create a simple visual prefab editor
+
+## Screenshots
+![Flounder](Documents/Screenshot1.png | width=430)
 
 ## Developer Setup
 Once Flounder is cloned run `git submodule update --init --recursive` to update the submodules needed to compile. All platforms depend on CMake to generate IDE/make files.

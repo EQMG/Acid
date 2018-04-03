@@ -6,7 +6,7 @@
 layout(set = 0, binding = 1) uniform UboObject
 {
 #ifdef ANIMATED
-    mat4 jointTransforms[MAX_JOINTS];
+	mat4 jointTransforms[MAX_JOINTS];
 #endif
 	mat4 transform;
 
@@ -17,8 +17,8 @@ layout(set = 0, binding = 1) uniform UboObject
 	float ignoreLighting;
 
 //#if SWAY_MAPPING
-//    vec2 swayOffset;
-//    float swayHeight;
+//	vec2 swayOffset;
+//	float swayHeight;
 //#endif
 } object;
 
@@ -63,7 +63,7 @@ void main()
 	float glowing = 0.0f;
 
 #ifdef TANGENT_AS_COLOUR
-    textureColour.rgb = fragmentColour;
+	textureColour.rgb = fragmentColour;
 #endif
 #ifdef COLOUR_MAPPING
 	textureColour = texture(samplerDiffuse, fragmentUv);
@@ -76,15 +76,15 @@ void main()
 
 	if (textureMaterial.b > 0.5f)
 	{
-        glowing = 1.0f;
-    }
+		glowing = 1.0f;
+	}
 #endif
 
 #ifdef NORMAL_MAPPING
 	vec4 textureNormal = texture(samplerNormal, fragmentUv);
 	unitNormal = textureNormal.rgb;
-    unitNormal = normalize(textureNormal.rgb * 2.0f - vec3(1.0f));
-    unitNormal = normalize(mat3(fragmentTangentT, fragmentTangentN, fragmentTangentB) * unitNormal);
+	unitNormal = normalize(textureNormal.rgb * 2.0f - vec3(1.0f));
+	unitNormal = normalize(mat3(fragmentTangentT, fragmentTangentN, fragmentTangentB) * unitNormal);
 #endif
 
 	material.z = (1.0f / 3.0f) * (object.ignoreFog + (2.0f * min(object.ignoreLighting + glowing, 1.0f)));
