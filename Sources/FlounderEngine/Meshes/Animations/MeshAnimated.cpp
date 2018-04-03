@@ -78,14 +78,14 @@ namespace Flounder
 	//	delete skinLoader;
 	//	delete skeletonLoader;
 	//	delete geometryLoader;
-//
+
 		AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
 			file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
 		m_animation = new Animation(animationLoader->GetLengthSeconds(), animationLoader->GetKeyframeData());
 	//	delete animationLoader;
-//
+
 		delete file;
-//
+
 		m_animator = new Animator(m_headJoint);
 		m_animator->DoAnimation(m_animation);
 	}

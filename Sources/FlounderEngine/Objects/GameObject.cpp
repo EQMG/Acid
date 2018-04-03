@@ -88,18 +88,19 @@ namespace Flounder
 		}
 	}
 
-	void GameObject::AddComponent(Component *component)
+	Component *GameObject::AddComponent(Component *component)
 	{
 		if (component == nullptr)
 		{
-			return;
+			return nullptr;
 		}
 
 		component->SetGameObject(this);
 		m_components->push_back(component);
+		return component;
 	}
 
-	void GameObject::RemoveComponent(Component *component)
+	Component *GameObject::RemoveComponent(Component *component)
 	{
 		for (auto it = m_components->begin(); it != m_components->end(); ++it)
 		{
@@ -112,9 +113,11 @@ namespace Flounder
 
 				delete component;
 				m_components->erase(it);
-				return;
+				return *it;
 			}
 		}
+
+		return nullptr;
 	}
 
 	void GameObject::StructureSwitch(ISpatialStructure<GameObject *> *structure)

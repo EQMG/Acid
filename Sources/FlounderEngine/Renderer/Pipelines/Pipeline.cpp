@@ -157,8 +157,8 @@ namespace Flounder
 
 			glslang::SpvOptions spvOptions;
 			spvOptions.generateDebugInfo = true;
-			spvOptions.disableOptimizer = false;
-			spvOptions.optimizeSize = true;
+			spvOptions.disableOptimizer = true;
+			spvOptions.optimizeSize = false;
 
 			std::vector<uint32_t> spirv = std::vector<uint32_t>();
 			glslang::GlslangToSpv(*program.getIntermediate(language), spirv, &spvOptions);

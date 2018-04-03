@@ -4,6 +4,7 @@
 #include "../../Renderer/Buffers/UniformBuffer.hpp"
 #include "../../Renderer/Pipelines/Pipeline.hpp"
 #include "../../Models/Model.hpp"
+#include "../../Textures/Cubemap.hpp"
 
 namespace Flounder
 {
@@ -16,6 +17,9 @@ namespace Flounder
 
 		Pipeline *m_pipeline;
 		Model *m_model;
+
+		Texture *m_brdflut;
+		Cubemap *m_environment;
 	public:
 		RendererDeferred(const GraphicsStage &graphicsStage);
 
