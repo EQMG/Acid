@@ -9,6 +9,7 @@ namespace Flounder
 	/// </summary>
 	class F_EXPORT Cubemap :
 		public IResource,
+		public Buffer,
 		public Descriptor
 	{
 	private:
@@ -17,12 +18,13 @@ namespace Flounder
 		std::string m_filename;
 		std::string m_fileExt;
 
+		uint32_t m_mipLevels;
+
 		int32_t m_components;
 		int32_t m_width, m_height, m_depth;
-		VkDeviceSize m_imageSize;
 
-		Buffer *m_buffer;
 		VkImage m_image;
+		VkDeviceMemory m_imageMemory;
 		VkImageView m_imageView;
 		VkSampler m_sampler;
 		VkFormat m_format;
@@ -46,11 +48,11 @@ namespace Flounder
 		/// <summary>
 		/// A new cubemap object.
 		/// </summary>
-		Cubemap(const std::string &filename, const std::string &fileExt);
+		Cubemap(const std::string &filename, const std::string &fileExt, const bool &mipmap = true);
 
 		/// <summary>
 		/// Deconstructor for the cubemap object.
-		/// </summary>
+		//		/// </summary>
 		~Cubemap();
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
@@ -58,11 +60,9 @@ namespace Flounder
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
 		std::string GetFilename() override { return m_filename; };
-	private:
-		void CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory);
 
-		void TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout);
+		static VkDeviceSize LoadSize(const std::string &filename, const std::string &fileExt);
 
-		void CopyBufferToImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkBuffer &buffer, const VkImage &image);
+		static stbi_uc *LoadPixels(const std::string &filename, const std::string &fileExt, const size_t &bufferSize, int *width, int *height, int *depth, int *components);
 	};
 }

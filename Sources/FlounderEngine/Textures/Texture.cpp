@@ -55,12 +55,13 @@ namespace Flounder
 		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
 		m_imageMemory = GetBufferMemory();
-		CreateImage(m_width, m_height, m_format, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT |
-			VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory);
+		CreateImage(m_width, m_height, 1, m_format, VK_IMAGE_TILING_OPTIMAL,
+			VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
-		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), bufferStaging->GetBuffer(), m_image);
+		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), 1, bufferStaging->GetBuffer(), m_image);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
+		// Create image view.
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 		imageViewCreateInfo.image = m_image;
@@ -79,6 +80,7 @@ namespace Flounder
 
 		Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_imageView));
 
+		// Create sampler
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
 		samplerCreateInfo.magFilter = m_nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
@@ -99,7 +101,7 @@ namespace Flounder
 
 		Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &m_sampler));
 
-		Buffer::CopyBuffer(bufferStaging->GetBuffer(), GetBuffer(), m_size);
+		Buffer::CopyBuffer(bufferStaging->GetBuffer(), m_buffer, m_size);
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
@@ -152,12 +154,13 @@ namespace Flounder
 		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
 		m_imageMemory = GetBufferMemory();
-		CreateImage(m_width, m_height, m_format, VK_IMAGE_TILING_OPTIMAL, usage | VK_IMAGE_USAGE_SAMPLED_BIT |
+		CreateImage(m_width, m_height, 1, m_format, VK_IMAGE_TILING_OPTIMAL, usage | VK_IMAGE_USAGE_SAMPLED_BIT |
 			VK_IMAGE_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
-		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), bufferStaging->GetBuffer(), m_image);
+		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), 1, bufferStaging->GetBuffer(), m_image);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
+		// Create image view.
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 		imageViewCreateInfo.image = m_image;
@@ -176,6 +179,7 @@ namespace Flounder
 
 		Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_imageView));
 
+		// Create sampler.
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
 		samplerCreateInfo.magFilter = m_nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
@@ -295,7 +299,7 @@ namespace Flounder
 		return width * height * 4;
 	}
 
-	void Texture::CreateImage(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory)
+	void Texture::CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -304,9 +308,9 @@ namespace Flounder
 		imageCreateInfo.imageType = VK_IMAGE_TYPE_2D;
 		imageCreateInfo.extent.width = width;
 		imageCreateInfo.extent.height = height;
-		imageCreateInfo.extent.depth = 1;
+		imageCreateInfo.extent.depth = depth;
 		imageCreateInfo.mipLevels = 1;
-		imageCreateInfo.arrayLayers = 1;
+		imageCreateInfo.arrayLayers = arrayLayers;
 		imageCreateInfo.format = format;
 		imageCreateInfo.tiling = tiling;
 		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
@@ -329,7 +333,7 @@ namespace Flounder
 		vkBindImageMemory(logicalDevice, image, imageMemory, 0);
 	}
 
-	void Texture::TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout)
+	void Texture::TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &layerCount)
 	{
 		const auto commandBuffer = Platform::BeginSingleTimeCommands();
 
@@ -344,7 +348,7 @@ namespace Flounder
 		imageMemoryBarrier.subresourceRange.baseMipLevel = 0;
 		imageMemoryBarrier.subresourceRange.levelCount = 1;
 		imageMemoryBarrier.subresourceRange.baseArrayLayer = 0;
-		imageMemoryBarrier.subresourceRange.layerCount = 1;
+		imageMemoryBarrier.subresourceRange.layerCount = layerCount;
 
 		VkPipelineStageFlags sourceStage;
 		VkPipelineStageFlags destinationStage;
@@ -376,7 +380,7 @@ namespace Flounder
 		Platform::EndSingleTimeCommands(commandBuffer);
 	}
 
-	void Texture::CopyBufferToImage(const uint32_t &width, const uint32_t &height, const VkBuffer &buffer, const VkImage &image)
+	void Texture::CopyBufferToImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkBuffer &buffer, const VkImage &image, const uint32_t &layerCount)
 	{
 		const auto commandBuffer = Platform::BeginSingleTimeCommands();
 
@@ -387,9 +391,9 @@ namespace Flounder
 		region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 		region.imageSubresource.mipLevel = 0;
 		region.imageSubresource.baseArrayLayer = 0;
-		region.imageSubresource.layerCount = 1;
+		region.imageSubresource.layerCount = layerCount;
 		region.imageOffset = {0, 0, 0};
-		region.imageExtent = {width, height, 1};
+		region.imageExtent = {width, height, depth};
 
 		vkCmdCopyBufferToImage(commandBuffer, buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 
