@@ -336,6 +336,15 @@ namespace Flounder
 		static Vector3 *RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle, Vector3 *destination);
 
 		/// <summary>
+		/// Gradually changes a vector to a target.
+		/// </summary>
+		/// <param name="current"> The current vector. </param>
+		/// <param name="target"> The target vector. </param>
+		/// <param name="rate"> The rate to go from current to the target. </param>
+		/// <returns> The changed vector. </returns>
+		static Vector3 SmoothDamp(const Vector3 &current, const Vector3 &target, const Vector3 &rate);
+
+		/// <summary>
 		/// Translates this vector.
 		/// </summary>
 		/// <param name="x"> The translation in x. </param>

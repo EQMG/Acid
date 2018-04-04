@@ -396,6 +396,13 @@ namespace Flounder
 		return destination->Set(direction);
 	}
 
+	Vector3 Vector3::SmoothDamp(const Vector3 &current, const Vector3 &target, const Vector3 &rate)
+	{
+		return Vector3(Maths::SmoothDamp(current.m_x, target.m_x, rate.m_x),
+			Maths::SmoothDamp(current.m_y, target.m_y, rate.m_y),
+			Maths::SmoothDamp(current.m_z, target.m_z, rate.m_z));
+	}
+
 	Vector3 *Vector3::Translate(const float &x, const float &y, const float &z)
 	{
 		m_x += x;

@@ -137,8 +137,8 @@ namespace Demo
 //		m_filterTiltshift->Render(commandBuffer);
 //		m_filterGrain->Render(commandBuffer);
 #endif
-		//m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
-		//m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
+		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
+		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
 
 		// Ends Rendering.
 		Renderer::Get()->EndRenderpass(commandBuffer, 1);
