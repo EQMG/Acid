@@ -112,9 +112,9 @@ namespace Flounder
 		m_windowPosX(0),
 		m_windowPosY(0),
 //#if defined(FLOUNDER_VERBOSE) && !defined(FLOUNDER_PLATFORM_MACOS)
-//		m_validationLayers(true),
+		m_validationLayers(true),
 //#else
-		m_validationLayers(false),
+//		m_validationLayers(false),
 //#endif
 		m_instanceLayerList(std::vector<const char *>()),
 		m_instanceExtensionList(std::vector<const char *>()),

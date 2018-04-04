@@ -12,7 +12,7 @@
 #include "Engine/Engine.hpp"
 #include "Engine/IModule.hpp"
 #include "Engine/IUpdater.hpp"
-#include "Engine/ModuleUpdater.hpp"
+#include "Engine/DefaultUpdater.hpp"
 #include "Engine/Platform.hpp"
 #include "Entities/EntityRender.hpp"
 #include "Entities/RendererEntities.hpp"
