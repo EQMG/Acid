@@ -131,14 +131,14 @@ namespace Demo
 		// Subpass 2.
 #ifndef FLOUNDER_PLATFORM_MACOS
 		m_filterFxaa->Render(commandBuffer);
-		m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
-		m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
-		m_filterLensflare->Render(commandBuffer);
-		m_filterTiltshift->Render(commandBuffer);
+//		m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
+//		m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
+//		m_filterLensflare->Render(commandBuffer);
+//		m_filterTiltshift->Render(commandBuffer);
 //		m_filterGrain->Render(commandBuffer);
 #endif
-		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
-		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
+		//m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
+		//m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
 
 		// Ends Rendering.
 		Renderer::Get()->EndRenderpass(commandBuffer, 1);

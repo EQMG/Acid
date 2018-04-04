@@ -67,6 +67,12 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
 ## Screenshots
 <img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot1.png" alt="flounder" width=600>
 
+<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot2.png" alt="flounder" width=600>
+
+<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot3.png" alt="flounder" width=600>
+
+<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot4.png" alt="flounder" width=600>
+
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.
 

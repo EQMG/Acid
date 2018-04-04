@@ -98,10 +98,6 @@ namespace Demo
 		// Entities.
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
 		sun->AddComponent(new Light(Colour("#FFFFFF"), -1.0f));
-	//	new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
-	//	new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
-
-	//	new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f)); // Testing animations.
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -117,6 +113,10 @@ namespace Demo
 				sphere->AddComponent<ShadowRender>();
 			}
 		}
+
+	//	new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
+	//	new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
+	//	new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f)); // Testing animations.
 
 		/*Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
 
