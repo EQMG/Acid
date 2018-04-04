@@ -203,16 +203,34 @@ namespace Flounder
 		}
 
 		/// <summary>
-		/// Checks if two values are almosT equal.
+		/// Checks if two values are almost equal.
 		/// </summary>
 		/// <param name="a"> The first value. </param>
 		/// <param name="b"> The second value. </param>
 		/// <param name="eps"> EPS is the measure of equality. </param>
-		/// <returns> If both are almosT equal. </returns>
+		/// <returns> If both are almost equal. </returns>
 		template<typename T>
 		static bool AlmostEqual(const T &a, const T &b, const T &eps)
 		{
 			return fabs(a - b) < eps;
+		}
+
+		/// <summary>
+		/// Gradually changes a value to a target.
+		/// </summary>
+		/// <param name="current"> The current value. </param>
+		/// <param name="target"> The target value. </param>
+		/// <param name="rate"> The rate to go from current to the target. </param>
+		/// <returns> The changed value. </returns>
+		template<typename T>
+		static T SmoothDamp(const T &current, const T &target, const T &rate)
+		{
+			if (rate < 0.0f)
+			{
+				return target;
+			}
+
+			return current + ((target - current) * rate);
 		}
 
 		/// <summary>

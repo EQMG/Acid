@@ -13,15 +13,7 @@ namespace Demo
 		public Behaviour
 	{
 	private:
-		static const float WALK_SPEED;
-		static const float RUN_SPEED;
-		static const float CROUCH_SPEED;
-		static const float JUMP_SPEED;
-		static const float NOCLIP_SPEED;
-
-		float m_currentSpeed;
-		float m_currentStrafeSpeed;
-		float m_currentUpwardSpeed;
+		Vector3 *m_velocity;
 		bool m_jumping;
 		bool m_noclipEnabled;
 

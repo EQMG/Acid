@@ -284,6 +284,15 @@ namespace Flounder
 		static bool PointInTriangle(const Vector2 &point, const Vector2 &v1, const Vector2 &v2, const Vector2 &v3);
 
 		/// <summary>
+		/// Gradually changes a vector to a target.
+		/// </summary>
+		/// <param name="current"> The current vector. </param>
+		/// <param name="target"> The target vector. </param>
+		/// <param name="rate"> The rate to go from current to the target. </param>
+		/// <returns> The changed vector. </returns>
+		static Vector2 SmoothDamp(const Vector2 &current, const Vector2 &target, const Vector2 &rate);
+
+		/// <summary>
 		/// Translates this vector.
 		/// </summary>
 		/// <param name="x"> The translation in x. </param>

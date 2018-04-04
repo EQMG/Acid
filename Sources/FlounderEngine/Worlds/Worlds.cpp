@@ -60,7 +60,7 @@ namespace Flounder
 
 	void Worlds::Update()
 	{
-		const float delta = Engine::Get()->GetDelta();
+		float delta = Engine::Get()->GetDelta();
 		m_factorDay = m_driverDay->Update(delta);
 
 		m_skyboxRotation->Set(360.0f * m_factorDay, 0.0f, 0.0f);
