@@ -3,7 +3,6 @@
 #include <array>
 #include <string>
 #include <vector>
-#include <GlslangToSpv.h>
 #include "../../Textures/Texture.hpp"
 #include "../../Engine/Platform.hpp"
 #include "../Pipelines/DescriptorSet.hpp"
