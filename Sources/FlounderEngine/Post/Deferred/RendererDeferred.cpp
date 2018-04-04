@@ -1,7 +1,6 @@
 #include "RendererDeferred.hpp"
 
 #include "../../Scenes/Scenes.hpp"
-#include "../../Devices/Display.hpp"
 #include "../../Lights/Light.hpp"
 #include "../../Models/Shapes/ShapeRectangle.hpp"
 #include "../../Renderer/Renderer.hpp"

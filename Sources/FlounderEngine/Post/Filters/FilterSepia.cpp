@@ -1,7 +1,5 @@
 #include "FilterSepia.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterSepia::FilterSepia(const GraphicsStage &graphicsStage) :

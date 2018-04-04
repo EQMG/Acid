@@ -1,8 +1,6 @@
 #include "LodBehaviour.hpp"
 
 #include "../Scenes/Scenes.hpp"
-#include "../Events/Events.hpp"
-#include "../Events/EventTime.hpp"
 #include "../Maths/Maths.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "Terrains.hpp"

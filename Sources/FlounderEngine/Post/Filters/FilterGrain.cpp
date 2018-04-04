@@ -1,8 +1,5 @@
 #include "FilterGrain.hpp"
 
-#include "../../Textures/Texture.hpp"
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterGrain::FilterGrain(const GraphicsStage &graphicsStage) :

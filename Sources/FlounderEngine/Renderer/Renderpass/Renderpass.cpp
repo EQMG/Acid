@@ -1,6 +1,5 @@
 ﻿#include "Renderpass.hpp"
 
-#include <array>
 #include "Renderer/Swapchain/DepthStencil.hpp"
 #include "../../Devices/Display.hpp"
 

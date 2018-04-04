@@ -21,11 +21,12 @@
     "Base Colour": "#C37A57", 
     "Diffuse Texture": "Resources/Entities/Testing/Diffuse.png", 
     "Metallic": 0.0, 
-    "Roughness": 0.0, 
-    "Ignore Lighting": false, 
-    "Ignore Fog": false, 
-    "Material Texture": "", 
-    "Normal Texture": "Resources/Entities/Testing/Normal.png"
+    "Roughness": 0.0,
+    "Material Texture": "",
+    "Normal Texture": "Resources/Entities/Testing/Normal.png",
+    "Casts Shadows": 1,
+    "Ignore Lighting": 0,
+    "Ignore Fog": 0
   },
   "Light": {
     "Colour": "#3319CC", 

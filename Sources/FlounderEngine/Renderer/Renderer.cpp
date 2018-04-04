@@ -1,9 +1,5 @@
 #include "Renderer.hpp"
 
-#include <cassert>
-#include "../Devices/Display.hpp"
-#include "Pipelines/Pipeline.hpp"
-
 namespace Flounder
 {
 	Renderer::Renderer() :

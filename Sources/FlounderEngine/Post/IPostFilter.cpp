@@ -1,6 +1,5 @@
 #include "IPostFilter.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Models/Shapes/ShapeRectangle.hpp"
 
 namespace Flounder

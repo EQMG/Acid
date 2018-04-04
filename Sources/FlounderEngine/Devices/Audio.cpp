@@ -1,6 +1,5 @@
 #include "Audio.hpp"
 
-#include <cassert>
 #include <fstream>
 #include "../Helpers/FileSystem.hpp"
 #include "../Scenes/Scenes.hpp"

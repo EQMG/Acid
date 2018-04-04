@@ -1,8 +1,5 @@
 #include "Platform.hpp"
 
-#include <string>
-#include <stdexcept>
-
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 #include <Windows.h>
 #endif

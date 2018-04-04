@@ -1,7 +1,5 @@
 #include "Matrix3.hpp"
 
-#include <sstream>
-
 namespace Flounder
 {
 	const Matrix3 Matrix3::IDENTITY = *Matrix3().SetIdentity();

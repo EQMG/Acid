@@ -7,10 +7,11 @@
     "Diffuse Texture": "",
     "Metallic": 0.0,
     "Roughness": 0.0,
-    "Ignore Lighting": 1,
-    "Ignore Fog": 0,
     "Material Texture": "",
-    "Normal Texture": ""
+    "Normal Texture": "",
+    "Casts Shadows": 0,
+    "Ignore Lighting": 1,
+    "Ignore Fog": 0
   },
   "EntityRender": {
   }

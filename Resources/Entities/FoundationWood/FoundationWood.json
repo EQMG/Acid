@@ -22,11 +22,11 @@
     "Diffuse Texture": "",
     "Metallic": 0.0,
     "Roughness": 0.0,
-    "Ignore Lighting": false,
-    "Ignore Fog": false,
-    "Ignore Curvature": false,
     "Material Texture": "",
-    "Normal Texture": ""
+    "Normal Texture": "",
+    "Casts Shadows": 1,
+    "Ignore Lighting": 0,
+    "Ignore Fog": 0
   },
   "EntityRender": {
   },

@@ -22,10 +22,11 @@
     "Diffuse Texture": "Resources/Entities/GemPurple/Diffuse.png",
     "Metallic": 0.4,
     "Roughness": 0.2,
-    "Ignore Lighting": false,
-    "Ignore Fog": false,
     "Material Texture": "Resources/Entities/GemPurple/Material.png",
-    "Normal Texture": ""
+    "Normal Texture": "",
+    "Casts Shadows": true,
+    "Ignore Lighting": false,
+    "Ignore Fog": false
   },
   "Light": {
     "Colour": "#B66ADA",

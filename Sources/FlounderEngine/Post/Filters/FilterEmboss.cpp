@@ -1,7 +1,5 @@
 #include "FilterEmboss.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterEmboss::FilterEmboss(const GraphicsStage &graphicsStage) :

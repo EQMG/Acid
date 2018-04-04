@@ -1,7 +1,6 @@
 #include "Vector4.hpp"
 
 #include <cassert>
-#include <sstream>
 #include "Colour.hpp"
 #include "Maths.hpp"
 #include "Vector3.hpp"

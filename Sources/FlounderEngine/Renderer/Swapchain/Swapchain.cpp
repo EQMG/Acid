@@ -1,6 +1,5 @@
 ﻿#include "Swapchain.hpp"
 
-#include <array>
 #include "../../Devices/Display.hpp"
 #include "../../Shadows/Shadows.hpp"
 #include "../Queue/QueueFamily.hpp"

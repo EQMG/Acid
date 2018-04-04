@@ -2,7 +2,6 @@
 
 #include "../Scenes/Scenes.hpp"
 #include "../Models/Model.hpp"
-#include "../Textures/Texture.hpp"
 #include "UbosWaters.hpp"
 
 namespace Flounder
