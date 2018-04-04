@@ -32,18 +32,18 @@ namespace Flounder
 
 		delete m_managerRender;
 
-		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, nullptr);
-
-		vkDestroyFence(logicalDevice, m_fenceSwapchainImage, nullptr);
-		vkDestroySemaphore(logicalDevice, m_semaphore, nullptr);
-		vkDestroyCommandPool(logicalDevice, m_commandPool, nullptr);
-
 		for (auto renderStage : m_renderStages)
 		{
 			delete renderStage;
 		}
 
 		delete m_swapchain;
+
+		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, nullptr);
+
+		vkDestroyFence(logicalDevice, m_fenceSwapchainImage, nullptr);
+		vkDestroySemaphore(logicalDevice, m_semaphore, nullptr);
+		vkDestroyCommandPool(logicalDevice, m_commandPool, nullptr);
 	}
 
 	void Renderer::Update()

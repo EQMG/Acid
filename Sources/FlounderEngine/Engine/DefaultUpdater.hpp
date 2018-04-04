@@ -12,7 +12,7 @@ namespace Flounder
 	/// <summary>
 	/// The default GLFW updater for the engine.
 	/// </summary>
-	class F_EXPORT ModuleUpdater :
+	class F_EXPORT DefaultUpdater :
 		public IUpdater
 	{
 	private:
@@ -23,9 +23,9 @@ namespace Flounder
 
 		std::multimap<float, std::pair<std::string, IModule *>> *m_modules;
 	public:
-		ModuleUpdater();
+		DefaultUpdater();
 
-		~ModuleUpdater();
+		~DefaultUpdater();
 
 		void Create() override;
 
@@ -46,7 +46,7 @@ namespace Flounder
 	};
 
 	template<typename T>
-	void ModuleUpdater::ModuleCreate(ModuleUpdate typeUpdate, std::string moduleName)
+	void DefaultUpdater::ModuleCreate(ModuleUpdate typeUpdate, std::string moduleName)
 	{
 		T *module = static_cast<T *>(malloc(sizeof(T)));
 		AddModule(typeUpdate, moduleName, module);

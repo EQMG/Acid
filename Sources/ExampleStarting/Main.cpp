@@ -1,6 +1,6 @@
 #include <iostream>
 #include <Devices/Mouse.hpp>
-#include <Engine/ModuleUpdater.hpp>
+#include <Engine/DefaultUpdater.hpp>
 #include <Files/Json/FileJson.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Renderer/Renderer.hpp>
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 {
 	// Creates the engine object.
 	auto m_engine = new Engine();
-	m_engine->SetUpdater(new ModuleUpdater());
+	m_engine->SetUpdater(new DefaultUpdater());
 
 	auto configManager = new ConfigManager();
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());

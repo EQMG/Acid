@@ -1,5 +1,5 @@
 #include <Objects/ComponentRegister.hpp>
-#include "ModuleUpdater.hpp"
+#include "DefaultUpdater.hpp"
 
 #include "../Devices/Audio.hpp"
 #include "../Devices/Joysticks.hpp"
@@ -17,7 +17,7 @@
 
 namespace Flounder
 {
-	ModuleUpdater::ModuleUpdater() :
+	DefaultUpdater::DefaultUpdater() :
 		IUpdater(),
 		m_deltaUpdate(nullptr),
 		m_deltaRender(nullptr),
@@ -27,7 +27,7 @@ namespace Flounder
 	{
 	}
 
-	ModuleUpdater::~ModuleUpdater()
+	DefaultUpdater::~DefaultUpdater()
 	{
 		for (auto it = --m_modules->end(); it != m_modules->begin(); --it)
 		{
@@ -43,7 +43,7 @@ namespace Flounder
 		delete m_timerUpdate;
 	}
 
-	void ModuleUpdater::Create()
+	void DefaultUpdater::Create()
 	{
 		m_deltaUpdate = new Delta();
 		m_deltaRender = new Delta();
@@ -68,7 +68,7 @@ namespace Flounder
 		ModuleCreate<Waters>(UpdatePre, "waters");
 	}
 
-	void ModuleUpdater::Update()
+	void DefaultUpdater::Update()
 	{
 		if (Display::Get() != nullptr)
 		{
@@ -116,13 +116,13 @@ namespace Flounder
 		}
 	}
 
-	void ModuleUpdater::AddModule(const ModuleUpdate &typeUpdate, std::string moduleName, IModule *module)
+	void DefaultUpdater::AddModule(const ModuleUpdate &typeUpdate, std::string moduleName, IModule *module)
 	{
 		float offset = typeUpdate + (0.01f * static_cast<float>(m_modules->size()));
 		m_modules->insert(std::make_pair(offset, std::make_pair(moduleName, module)));
 	}
 
-	IModule *ModuleUpdater::GetModule(const std::string &name)
+	IModule *DefaultUpdater::GetModule(const std::string &name)
 	{
 		for (auto &module : *m_modules)
 		{
@@ -135,7 +135,7 @@ namespace Flounder
 		return nullptr;
 	}
 
-	void ModuleUpdater::RunUpdate(const ModuleUpdate &typeUpdate) const
+	void DefaultUpdater::RunUpdate(const ModuleUpdate &typeUpdate) const
 	{
 		for (auto &module : *m_modules)
 		{

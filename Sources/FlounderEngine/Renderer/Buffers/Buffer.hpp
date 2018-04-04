@@ -14,7 +14,7 @@ namespace Flounder
 	public:
 		Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties);
 
-		~Buffer();
+		virtual ~Buffer();
 
 		VkDeviceSize GetSize() const { return m_size; }
 

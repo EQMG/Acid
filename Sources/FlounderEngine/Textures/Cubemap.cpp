@@ -32,7 +32,7 @@ namespace Flounder
 
 		stbi_uc *pixels = LoadPixels(filename, fileExt, static_cast<size_t>(Buffer::GetSize()), &m_width, &m_height, &m_depth, &m_components);
 
-		m_mipLevels = 1; // mipmap ? (uint32_t)std::floor(std::log2(std::max(m_width, m_height))) + 1 : 1;
+		m_mipLevels = mipmap ? Texture::GetMipLevels(m_width, m_height, m_depth) : 1;
 
 		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -44,17 +44,11 @@ namespace Flounder
 
 		m_imageMemory = GetBufferMemory();
 		Texture::CreateImage(m_width, m_height, m_depth, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
-			VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory, 6);
+			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory, 6);
 		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 6);
 		Texture::CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), static_cast<uint32_t>(m_depth), bufferStaging->GetBuffer(), m_image, 6);
+		Texture::CreateMipmaps(m_image, m_width, m_height, m_depth, m_mipLevels, 6);
 		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, 6);
-
-		// Generate the mip chain.
-		for (uint32_t i = 1; i < m_mipLevels; i++)
-		{
-		//	stbi_uc *mipPixels = nullptr;
-		//	stbir_resize_uint8(pixels, m_width, m_height, 0, mipPixels, m_width >> i, m_height >> i, 0, m_components);
-		}
 
 		// Create sampler.
 		VkSamplerCreateInfo samplerCreateInfo = {};

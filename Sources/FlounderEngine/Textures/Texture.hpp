@@ -110,10 +110,15 @@ namespace Flounder
 
 		static stbi_uc *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 
+		static uint32_t GetMipLevels(const uint32_t &width, const uint32_t &height, const uint32_t &depth);
+
 		static void CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers = 1);
 
 		static void TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &layerCount = 1);
 
 		static void CopyBufferToImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkBuffer &buffer, const VkImage &image, const uint32_t &layerCount = 1);
+
+		static void CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
+
 	};
 }
