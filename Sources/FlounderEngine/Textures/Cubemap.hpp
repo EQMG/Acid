@@ -24,7 +24,6 @@ namespace Flounder
 		int32_t m_width, m_height, m_depth;
 
 		VkImage m_image;
-		VkDeviceMemory m_imageMemory;
 		VkImageView m_imageView;
 		VkSampler m_sampler;
 		VkFormat m_format;
