@@ -14,6 +14,7 @@
 #include <GLFW/glfw3.h>
 
 #include <STB/stb_image.h>
+#include <STB/stb_image_resize.h>
 #include <STB/stb_image_write.h>
 #include <STB/stb_vorbis.h>
 

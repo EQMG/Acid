@@ -110,7 +110,7 @@ namespace Flounder
 
 		static stbi_uc *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 
-		static void CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers = 1);
+		static void CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers = 1);
 
 		static void TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &layerCount = 1);
 

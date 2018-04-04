@@ -65,7 +65,7 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Create a simple visual prefab editor
 
 ## Screenshots
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot1.png" alt="flounder" width=430>
+<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot1.png" alt="flounder" width=600>
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.

@@ -44,7 +44,7 @@ namespace Flounder
 
 		stbi_uc *pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
 
-		m_mipLevels = mipmap ? (uint32_t)std::floor(std::log2(std::max(m_width, m_height))) + 1 : 1;
+		m_mipLevels = 1; // mipmap ? (uint32_t)std::floor(std::log2(std::max(m_width, m_height))) + 1 : 1;
 
 		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -55,11 +55,39 @@ namespace Flounder
 		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
 		m_imageMemory = GetBufferMemory();
-		CreateImage(m_width, m_height, 1, m_format, VK_IMAGE_TILING_OPTIMAL,
+		CreateImage(m_width, m_height, 1, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), 1, bufferStaging->GetBuffer(), m_image);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+
+		// Generate the mip chain.
+		for (uint32_t i = 1; i < m_mipLevels; i++)
+		{
+			//	stbi_uc *mipPixels = nullptr;
+			//	stbir_resize_uint8(pixels, m_width, m_height, 0, mipPixels, m_width >> i, m_height >> i, 0, m_components);
+		}
+
+		// Create sampler
+		VkSamplerCreateInfo samplerCreateInfo = {};
+		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
+		samplerCreateInfo.magFilter = m_nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
+		samplerCreateInfo.minFilter = m_nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
+		samplerCreateInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerCreateInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerCreateInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerCreateInfo.anisotropyEnable = m_anisotropic ? VK_TRUE : VK_FALSE;
+		samplerCreateInfo.maxAnisotropy = Display::Get()->GetPhysicalDeviceProperties().limits.maxSamplerAnisotropy;
+		samplerCreateInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
+		samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
+		samplerCreateInfo.compareEnable = VK_FALSE;
+		samplerCreateInfo.compareOp = VK_COMPARE_OP_ALWAYS;
+		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+		samplerCreateInfo.mipLodBias = 0.0f;
+		samplerCreateInfo.minLod = 0.0f;
+		samplerCreateInfo.maxLod = (float)m_mipLevels;
+
+		Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &m_sampler));
 
 		// Create image view.
 		VkImageViewCreateInfo imageViewCreateInfo = {};
@@ -74,32 +102,11 @@ namespace Flounder
 		imageViewCreateInfo.subresourceRange = {};
 		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
-		imageViewCreateInfo.subresourceRange.levelCount = 1;
+		imageViewCreateInfo.subresourceRange.levelCount = m_mipLevels;
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 		imageViewCreateInfo.subresourceRange.layerCount = 1;
 
 		Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_imageView));
-
-		// Create sampler
-		VkSamplerCreateInfo samplerCreateInfo = {};
-		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-		samplerCreateInfo.magFilter = m_nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
-		samplerCreateInfo.minFilter = m_nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
-		samplerCreateInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-		samplerCreateInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-		samplerCreateInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-		samplerCreateInfo.anisotropyEnable = m_anisotropic ? VK_TRUE : VK_FALSE;
-		samplerCreateInfo.maxAnisotropy = 16;
-		samplerCreateInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
-		samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
-		samplerCreateInfo.compareEnable = VK_FALSE;
-		samplerCreateInfo.compareOp = VK_COMPARE_OP_ALWAYS;
-		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-		samplerCreateInfo.mipLodBias = 0.0f;
-		samplerCreateInfo.minLod = 0.0f;
-		samplerCreateInfo.maxLod = 0.0f;
-
-		Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &m_sampler));
 
 		Buffer::CopyBuffer(bufferStaging->GetBuffer(), m_buffer, m_size);
 
@@ -122,7 +129,7 @@ namespace Flounder
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_hasAlpha(false),
 		m_repeatEdges(false),
-		m_mipLevels(0),
+		m_mipLevels(1),
 		m_anisotropic(false),
 		m_nearest(false),
 		m_numberOfRows(1),
@@ -154,7 +161,7 @@ namespace Flounder
 		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
 		m_imageMemory = GetBufferMemory();
-		CreateImage(m_width, m_height, 1, m_format, VK_IMAGE_TILING_OPTIMAL, usage | VK_IMAGE_USAGE_SAMPLED_BIT |
+		CreateImage(m_width, m_height, 1, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL, usage | VK_IMAGE_USAGE_SAMPLED_BIT |
 			VK_IMAGE_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), 1, bufferStaging->GetBuffer(), m_image);
@@ -248,31 +255,6 @@ namespace Flounder
 		return descriptorWrite;
 	}
 
-	stbi_uc *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
-	{
-		if (!FileSystem::FileExists(filepath))
-		{
-			fprintf(stderr, "File does not exist: '%s'\n", filepath.c_str());
-			return nullptr;
-		}
-
-		stbi_uc *data = nullptr;
-
-		if (stbi_info(filepath.c_str(), width, height, components) == 0)
-		{
-			assert(false && "Vulkan invalid texture file format.");
-		}
-
-		data = stbi_load(filepath.c_str(), width, height, components, STBI_rgb_alpha);
-
-		if (data == nullptr)
-		{
-			printf("Unable to load texture: '%s'\n", filepath.c_str());
-		}
-
-		return data;
-	}
-
 	VkDeviceSize Texture::LoadSize(const std::string &filepath)
 	{
 		int width;
@@ -299,7 +281,32 @@ namespace Flounder
 		return width * height * 4;
 	}
 
-	void Texture::CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)
+	stbi_uc *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
+	{
+		if (!FileSystem::FileExists(filepath))
+		{
+			fprintf(stderr, "File does not exist: '%s'\n", filepath.c_str());
+			return nullptr;
+		}
+
+		stbi_uc *data = nullptr;
+
+		if (stbi_info(filepath.c_str(), width, height, components) == 0)
+		{
+			assert(false && "Vulkan invalid texture file format.");
+		}
+
+		data = stbi_load(filepath.c_str(), width, height, components, STBI_rgb_alpha);
+
+		if (data == nullptr)
+		{
+			printf("Unable to load texture: '%s'\n", filepath.c_str());
+		}
+
+		return data;
+	}
+
+	void Texture::CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
