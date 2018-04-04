@@ -1,6 +1,5 @@
 #include "RendererParticles.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Maths/Maths.hpp"
 #include "UbosParticles.hpp"
 

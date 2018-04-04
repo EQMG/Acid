@@ -1,7 +1,5 @@
 #include "Constraint3.hpp"
 
-#include <sstream>
-
 namespace Flounder
 {
 	const Constraint3 Constraint3::FALSE = Constraint3(false, false, false);

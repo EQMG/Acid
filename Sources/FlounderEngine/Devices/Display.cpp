@@ -1,7 +1,5 @@
 #include "Display.hpp"
 
-#include <stdexcept>
-#include <map>
 #include "../Helpers/FileSystem.hpp"
 
 namespace Flounder

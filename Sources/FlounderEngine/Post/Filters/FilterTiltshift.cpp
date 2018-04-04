@@ -1,7 +1,5 @@
 #include "FilterTiltshift.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage) :

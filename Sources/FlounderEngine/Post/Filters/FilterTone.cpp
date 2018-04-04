@@ -1,7 +1,5 @@
 #include "FilterTone.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterTone::FilterTone(const GraphicsStage &graphicsStage) :

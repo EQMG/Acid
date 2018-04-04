@@ -1,7 +1,5 @@
 #include "FilterDarken.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage) :

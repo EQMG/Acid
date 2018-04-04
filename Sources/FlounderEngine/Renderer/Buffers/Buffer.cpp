@@ -1,6 +1,5 @@
 ﻿#include "Buffer.hpp"
 
-#include <cassert>
 #include "../../Devices/Display.hpp"
 #include "../Queue/QueueFamily.hpp"
 #include "../Renderer.hpp"

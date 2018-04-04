@@ -1,7 +1,6 @@
 ﻿#include <Worlds/Worlds.hpp>
 #include "SkyboxRender.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "UbosSkyboxes.hpp"
 

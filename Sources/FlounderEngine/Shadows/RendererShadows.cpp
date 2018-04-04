@@ -1,7 +1,5 @@
 #include "RendererShadows.hpp"
 
-#include "../Devices/Display.hpp"
-#include "../Meshes/Mesh.hpp"
 #include "../Scenes/Scenes.hpp"
 #include "ShadowRender.hpp"
 #include "UbosShadows.hpp"

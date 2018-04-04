@@ -1,12 +1,9 @@
 #include "EntityRender.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "../Meshes/Animations/MeshAnimated.hpp"
 #include "../Worlds/Worlds.hpp"
 #include "Materials/MaterialDefault.hpp"
-#include "../Physics/Rigidbody.hpp"
-#include "../Scenes/Scenes.hpp"
 #include "UbosEntities.hpp"
 
 namespace Flounder

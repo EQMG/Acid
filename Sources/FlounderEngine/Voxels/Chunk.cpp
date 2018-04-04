@@ -1,6 +1,5 @@
 #include "Chunk.hpp"
 
-#include "../Scenes/Scenes.hpp"
 #include "../Worlds/Worlds.hpp"
 
 namespace Flounder

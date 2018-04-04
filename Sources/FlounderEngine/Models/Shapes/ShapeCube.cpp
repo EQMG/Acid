@@ -1,7 +1,5 @@
 #include "ShapeCube.hpp"
 
-#include <algorithm>
-
 namespace Flounder
 {
 	ShapeCube::ShapeCube(const float &width, const float &height, const float &depth) :

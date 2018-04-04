@@ -1,6 +1,5 @@
 ﻿#include "Pipeline.hpp"
 
-#include <cassert>
 #include "../../Devices/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/FormatString.hpp"

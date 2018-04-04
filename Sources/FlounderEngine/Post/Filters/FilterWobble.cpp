@@ -1,7 +1,5 @@
 #include "FilterWobble.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage) :

@@ -1,7 +1,5 @@
 #include "FilterGrey.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterGrey::FilterGrey(const GraphicsStage &graphicsStage) :

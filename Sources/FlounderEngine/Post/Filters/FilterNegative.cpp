@@ -1,7 +1,5 @@
 #include "FilterNegative.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterNegative::FilterNegative(const GraphicsStage &graphicsStage) :

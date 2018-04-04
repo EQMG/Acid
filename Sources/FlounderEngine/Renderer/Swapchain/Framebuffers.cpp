@@ -1,6 +1,5 @@
 ﻿#include "Framebuffers.hpp"
 
-#include <array>
 #include "../../Devices/Display.hpp"
 #include "../Renderpass/Renderpass.hpp"
 #include "DepthStencil.hpp"
