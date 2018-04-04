@@ -106,7 +106,7 @@ namespace Demo
 				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, 0.0f), Vector3(), 3.0f));
 				sphere->AddComponent(new Mesh(Model::Resource("Resources/Entities/Testing/Model.obj")));
 				sphere->AddComponent(new MaterialDefault(Colour("#ffffff"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
-					(float) j / 4.0f, (float) i / 4.0f, nullptr, Texture::Resource("Resources/Entities/Testing/Normal.png")));
+					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Resources/Entities/Testing/Material.png"), Texture::Resource("Resources/Entities/Testing/Normal.png")));
 				sphere->AddComponent<EntityRender>();
 				sphere->AddComponent<ShadowRender>();
 			}

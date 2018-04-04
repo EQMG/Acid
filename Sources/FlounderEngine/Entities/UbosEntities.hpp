@@ -21,7 +21,7 @@ namespace Flounder
 
 		struct UboObject
 		{
-			Matrix4 jointTransforms[MAX_JOINTS];
+		//	Matrix4 jointTransforms[MAX_JOINTS];
 
 			Matrix4 transform;
 
@@ -30,8 +30,6 @@ namespace Flounder
 			float roughness;
 			float ignoreFog;
 			float ignoreLighting;
-
-			float animated;
 		};
 	};
 }
