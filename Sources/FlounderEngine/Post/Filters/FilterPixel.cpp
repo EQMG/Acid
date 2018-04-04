@@ -1,7 +1,5 @@
 #include "FilterPixel.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterPixel::FilterPixel(const GraphicsStage &graphicsStage) :

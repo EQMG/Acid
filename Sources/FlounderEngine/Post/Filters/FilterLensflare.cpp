@@ -2,7 +2,6 @@
 
 #include "../../Scenes/Scenes.hpp"
 #include "../../Devices/Display.hpp"
-#include "../../Renderer/Renderer.hpp"
 
 namespace Flounder
 {

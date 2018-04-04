@@ -1,7 +1,5 @@
 #include "MeshSimple.hpp"
 
-#include <algorithm>
-
 namespace Flounder
 {
 	MeshSimple::MeshSimple(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale) :

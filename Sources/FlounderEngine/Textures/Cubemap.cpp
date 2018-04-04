@@ -1,6 +1,5 @@
 ﻿#include "Cubemap.hpp"
 
-#include <cstring>
 #include <cmath>
 #include "../Devices/Display.hpp"
 

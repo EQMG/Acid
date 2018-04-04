@@ -1,7 +1,5 @@
 #include "MeshPattern.hpp"
 
-#include <algorithm>
-
 namespace Flounder
 {
 	MeshPattern::MeshPattern(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale) :

@@ -1,7 +1,5 @@
 #include "FilterFxaa.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage) :

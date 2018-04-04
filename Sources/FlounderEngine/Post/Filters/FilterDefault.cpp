@@ -1,7 +1,5 @@
 #include "FilterDefault.hpp"
 
-#include "../../Renderer/Renderer.hpp"
-
 namespace Flounder
 {
 	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage) :

@@ -1,7 +1,5 @@
 #include "Texture.hpp"
 
-#include <cassert>
-#include <cstring>
 #include <cmath>
 #include "../Devices/Display.hpp"
 #include "Helpers/FileSystem.hpp"

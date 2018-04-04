@@ -1,11 +1,7 @@
 #include "VoxelRender.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "../Worlds/Worlds.hpp"
-#include "Materials/MaterialDefault.hpp"
-#include "../Physics/Rigidbody.hpp"
-#include "../Scenes/Scenes.hpp"
 #include "UbosVoxels.hpp"
 
 namespace Flounder

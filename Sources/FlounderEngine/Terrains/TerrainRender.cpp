@@ -1,10 +1,7 @@
 ﻿#include "TerrainRender.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "../Worlds/Worlds.hpp"
-#include "../Physics/Rigidbody.hpp"
-#include "../Scenes/Scenes.hpp"
 #include "UbosTerrains.hpp"
 
 namespace Flounder

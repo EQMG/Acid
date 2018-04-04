@@ -1,10 +1,7 @@
 #include "Screenshot.hpp"
 
-#include <algorithm>
-#include <ios>
 #include <fstream>
 #include "../Renderer.hpp"
-#include "../../Devices/Display.hpp"
 #include "../../Helpers/FileSystem.hpp"
 
 namespace Flounder

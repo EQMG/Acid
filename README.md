@@ -24,17 +24,14 @@ Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs
 
 Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/LocMetrics.html)
 
-## Platforms
- * Vulkan: Windows, Linux, Android
- * MoltenVK: MacOS, IOS
-
 ## Features
+This is a list of current features in Flounder:
  * High speed, multithreaded, cross platform
  * Only Vulkan rendering
  * On the fly GLSL to SPIR-V compiler
  * Small amount of dependencies
  * Modular rendering pipeline
- * Deferred PBR rendering
+ * Deferred PBR & IBL rendering
  * Frustum culling
  * Event and tasks systems
  * GUI / text rendering
@@ -61,8 +58,23 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Resource packaging (WIP)
 
 ## Plans
+These are the future plans for Flounder:
  * Finish the core engine by the end of 2018
  * Create a simple visual prefab editor
+
+## Platforms
+Flounder currently can be run on the following platforms:
+ * Vulkan - Windows, Linux, Android
+ * MoltenVK - MacOS, IOS
+
+## Dependencies
+Flounder uses the following libraries:
+ * [stb](https://github.com/nothings/stb) - Image loading
+ * [glfw](https://github.com/glfw/glfw) - Display handling
+ * [glslang](https://github.com/KhronosGroup/glslang) - GLSL processing
+ * [openal](http://kcat.strangesoft.net/openal.html) - Audio interface
+ * [vulkan](https://www.khronos.org/vulkan/) - Vulkan interface
+ * [moltenvk](https://github.com/KhronosGroup/MoltenVK) - Vulkan on Apple
 
 ## Screenshots
 <img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot1.png" alt="flounder" width=600>
@@ -72,6 +84,9 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
 <img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot3.png" alt="flounder" width=600>
 
 <img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot4.png" alt="flounder" width=600>
+
+## License
+Flounder is released under the MIT licence, [LICENSE.md](LICENSE.md) for more details.
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.
@@ -89,4 +104,4 @@ Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead
 
 Once Flounder has built, link the Resources folder into the output directory. For example when using CLion `Scripts/link_resources.bat` or `.sh` can be used to link into Debug and Release builds.
 
-Currently Flounder does not run under Release mode (IDK why).
+Currently Flounder does not run under Release mode in Visual Studios (bug).

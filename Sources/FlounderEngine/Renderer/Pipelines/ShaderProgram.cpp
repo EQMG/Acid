@@ -1,6 +1,5 @@
 #include "ShaderProgram.hpp"
 
-#include <algorithm>
 #include "../../Helpers/FormatString.hpp"
 #include "../../Textures/Texture.hpp"
 #include "../../Textures/Cubemap.hpp"

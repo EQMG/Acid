@@ -1,6 +1,5 @@
 #include "Model.hpp"
 
-#include <cassert>
 #include "Helpers/FileSystem.hpp"
 
 namespace Flounder
