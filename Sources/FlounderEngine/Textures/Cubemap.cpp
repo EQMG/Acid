@@ -19,7 +19,6 @@ namespace Flounder
 		m_height(0),
 		m_depth(0),
 		m_image(VK_NULL_HANDLE),
-		m_imageMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
@@ -30,7 +29,7 @@ namespace Flounder
 
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		stbi_uc *pixels = LoadPixels(filename, fileExt, static_cast<size_t>(Buffer::GetSize()), &m_width, &m_height, &m_depth, &m_components);
+		stbi_uc *pixels = LoadPixels(filename, fileExt, m_size, &m_width, &m_height, &m_depth, &m_components);
 
 		m_mipLevels = mipmap ? Texture::GetMipLevels(m_width, m_height, m_depth) : 1;
 
@@ -39,56 +38,17 @@ namespace Flounder
 
 		void *data;
 		vkMapMemory(logicalDevice, bufferStaging->GetBufferMemory(), 0, m_size, 0, &data);
-		memcpy(data, pixels, static_cast<size_t>(m_size));
+		memcpy(data, pixels, m_size);
 		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
-		m_imageMemory = GetBufferMemory();
 		Texture::CreateImage(m_width, m_height, m_depth, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
-			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory, 6);
-		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 6);
-		Texture::CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), static_cast<uint32_t>(m_depth), bufferStaging->GetBuffer(), m_image, 6);
+			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory, 6);
+		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, 6);
+		Texture::CopyBufferToImage(m_width, m_height, m_depth, bufferStaging->GetBuffer(), m_image, 6);
 		Texture::CreateMipmaps(m_image, m_width, m_height, m_depth, m_mipLevels, 6);
-		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, 6);
-
-		// Create sampler.
-		VkSamplerCreateInfo samplerCreateInfo = {};
-		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-		samplerCreateInfo.magFilter = VK_FILTER_LINEAR;
-		samplerCreateInfo.minFilter = VK_FILTER_LINEAR;
-		samplerCreateInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-		samplerCreateInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-		samplerCreateInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-		samplerCreateInfo.anisotropyEnable = VK_TRUE;
-		samplerCreateInfo.maxAnisotropy = Display::Get()->GetPhysicalDeviceProperties().limits.maxSamplerAnisotropy;
-		samplerCreateInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
-		samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
-		samplerCreateInfo.compareEnable = VK_FALSE;
-		samplerCreateInfo.compareOp = VK_COMPARE_OP_ALWAYS;
-		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-		samplerCreateInfo.mipLodBias = 0.0f;
-		samplerCreateInfo.minLod = 0.0f;
-		samplerCreateInfo.maxLod = (float)m_mipLevels;
-
-		Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &m_sampler));
-
-		// Create image view.
-		VkImageViewCreateInfo imageViewCreateInfo = {};
-		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-		imageViewCreateInfo.image = m_image;
-		imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_CUBE;
-		imageViewCreateInfo.format = m_format;
-		imageViewCreateInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
-		imageViewCreateInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
-		imageViewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
-		imageViewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
-		imageViewCreateInfo.subresourceRange = {};
-		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
-		imageViewCreateInfo.subresourceRange.levelCount = m_mipLevels;
-		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
-		imageViewCreateInfo.subresourceRange.layerCount = 6;
-
-		Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_imageView));
+		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 6);
+		Texture::CreateImageSampler(true, false, m_mipLevels, m_sampler);
+		Texture::CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_CUBE, m_format, m_mipLevels, m_imageView, 6);
 
 		Buffer::CopyBuffer(bufferStaging->GetBuffer(), m_buffer, m_size);
 
@@ -170,7 +130,7 @@ namespace Flounder
 			stbi_uc *pixelsSide = Texture::LoadPixels(filepathSide, width, height, components);
 			depth = width;
 
-			memcpy(offset, pixelsSide, static_cast<size_t>(sizeSide));
+			memcpy(offset, pixelsSide, sizeSide);
 			offset += sizeSide;
 			free(pixelsSide);
 		}

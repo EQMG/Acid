@@ -1,7 +1,7 @@
 #pragma once
 
 //
-// Flounder prerequisites file
+// Flounder prerequisites file.
 //
 
 #if FLOUNDER_PLATFORM_WINDOWS
