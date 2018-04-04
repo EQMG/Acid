@@ -1,4 +1,4 @@
-![Flounder](Documents/Flounder.png | width=225)
+<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Flounder.png" alt="flounder" width=225>
 
 # Flounder
 
@@ -65,7 +65,10 @@ Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/L
  * Create a simple visual prefab editor
 
 ## Screenshots
-![Flounder](Documents/Screenshot1.png | width=430)
+<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot1.png" alt="flounder" width=430>
+
+## Contributing
+You can contribute to Flounder in any way you want, we are always looking for help.
 
 ## Developer Setup
 Once Flounder is cloned run `git submodule update --init --recursive` to update the submodules needed to compile. All platforms depend on CMake to generate IDE/make files.
@@ -81,6 +84,3 @@ Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead
 Once Flounder has built, link the Resources folder into the output directory. For example when using CLion `Scripts/link_resources.bat` or `.sh` can be used to link into Debug and Release builds.
 
 Currently Flounder does not run under Release mode (IDK why).
-
-## Contributing
-You can contribute to Flounder in any way you want, we are always looking for help.

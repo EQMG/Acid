@@ -8,8 +8,9 @@ namespace Flounder
 {
 	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXS = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
-	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt) :
+	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt, const bool &mipmap) :
 		IResource(),
+		Buffer(LoadSize(filename, fileExt), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		Descriptor(),
 		m_filename(filename),
 		m_fileExt(fileExt),
@@ -17,11 +18,10 @@ namespace Flounder
 		m_width(0),
 		m_height(0),
 		m_depth(0),
-		m_imageSize(0),
-		m_buffer(nullptr),
 		m_image(VK_NULL_HANDLE),
+		m_imageMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
-		m_format(VK_FORMAT_UNDEFINED),
+		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
 	{
 #if FLOUNDER_VERBOSE
@@ -30,82 +30,66 @@ namespace Flounder
 
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		m_format = VK_FORMAT_R8G8B8A8_UNORM;
+		stbi_uc *pixels = LoadPixels(filename, fileExt, static_cast<size_t>(Buffer::GetSize()), &m_width, &m_height, &m_depth, &m_components);
 
-		for (const auto suffix : SIDE_FILE_SUFFIXS)
-		{
-			const std::string filepathSide = m_filename + "/" + suffix + m_fileExt;
-			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
-			m_imageSize += sizeSide;
-		}
+		m_mipLevels = mipmap ? (uint32_t)std::floor(std::log2(std::max(m_width, m_height))) + 1 : 1;
 
-		stbi_uc *pixels = (stbi_uc *) malloc(static_cast<size_t>(m_imageSize));
-		stbi_uc *offset = pixels;
-
-		for (const auto suffix : SIDE_FILE_SUFFIXS)
-		{
-			const std::string filepathSide = m_filename + "/" + suffix + m_fileExt;
-			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
-			const stbi_uc *pixelsSide = Texture::LoadPixels(filepathSide, &m_width, &m_height, &m_components);
-			m_depth = m_width;
-
-			memcpy(offset, pixelsSide, static_cast<size_t>(sizeSide));
-			offset += sizeSide;
-			delete[] pixelsSide;
-		}
-
-		m_buffer = new Buffer(m_imageSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT |
-			VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		Buffer *bufferStaging = new Buffer(m_imageSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging->GetBufferMemory(), 0, m_imageSize, 0, &data);
-		memcpy(data, pixels, static_cast<size_t>(m_imageSize));
+		vkMapMemory(logicalDevice, bufferStaging->GetBufferMemory(), 0, m_size, 0, &data);
+		memcpy(data, pixels, static_cast<size_t>(m_size));
 		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
-		VkDeviceMemory imageMemory = m_buffer->GetBufferMemory();
-		CreateImage(m_width, m_height, m_depth, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_TILING_OPTIMAL,
-			VK_IMAGE_USAGE_TRANSFER_DST_BIT |
-				VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, imageMemory);
-		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
-		CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), static_cast<uint32_t>(m_depth), bufferStaging->GetBuffer(), m_image);
-		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+		m_imageMemory = GetBufferMemory();
+		Texture::CreateImage(m_width, m_height, m_depth, m_format, VK_IMAGE_TILING_OPTIMAL,
+			VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_imageMemory, 6);
+		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 6);
+		Texture::CopyBufferToImage(static_cast<uint32_t>(m_width), static_cast<uint32_t>(m_height), static_cast<uint32_t>(m_depth), bufferStaging->GetBuffer(), m_image, 6);
+		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, 6);
 
-		{
-			VkImageViewCreateInfo viewInfo = {};
-			viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-			viewInfo.image = m_image;
-			viewInfo.viewType = VK_IMAGE_VIEW_TYPE_CUBE;
-			viewInfo.format = m_format;
-			viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-			viewInfo.subresourceRange.baseMipLevel = 0;
-			viewInfo.subresourceRange.levelCount = 1;
-			viewInfo.subresourceRange.baseArrayLayer = 0;
-			viewInfo.subresourceRange.layerCount = 6;
+		// Create image view.
+		VkImageViewCreateInfo imageViewCreateInfo = {};
+		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		imageViewCreateInfo.image = m_image;
+		imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_CUBE;
+		imageViewCreateInfo.format = m_format;
+		imageViewCreateInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+		imageViewCreateInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+		imageViewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+		imageViewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+		imageViewCreateInfo.subresourceRange = {};
+		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
+		imageViewCreateInfo.subresourceRange.levelCount = 1;
+		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
+		imageViewCreateInfo.subresourceRange.layerCount = 6;
 
-			Platform::ErrorVk(vkCreateImageView(logicalDevice, &viewInfo, nullptr, &m_imageView));
-		}
-		{
-			VkSamplerCreateInfo samplerInfo = {};
-			samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-			samplerInfo.magFilter = VK_FILTER_LINEAR;
-			samplerInfo.minFilter = VK_FILTER_LINEAR;
-			samplerInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-			samplerInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-			samplerInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-			samplerInfo.anisotropyEnable = VK_TRUE;
-			samplerInfo.maxAnisotropy = 16;
-			samplerInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
-			samplerInfo.unnormalizedCoordinates = VK_FALSE;
-			samplerInfo.compareEnable = VK_FALSE;
-			samplerInfo.compareOp = VK_COMPARE_OP_ALWAYS;
-			samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+		Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_imageView));
+			
+		// Create sampler.
+		VkSamplerCreateInfo samplerCreateInfo = {};
+		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
+		samplerCreateInfo.magFilter = VK_FILTER_LINEAR;
+		samplerCreateInfo.minFilter = VK_FILTER_LINEAR;
+		samplerCreateInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerCreateInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerCreateInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerCreateInfo.anisotropyEnable = VK_TRUE;
+		samplerCreateInfo.maxAnisotropy = 16;
+		samplerCreateInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
+		samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
+		samplerCreateInfo.compareEnable = VK_FALSE;
+		samplerCreateInfo.compareOp = VK_COMPARE_OP_ALWAYS;
+		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+		samplerCreateInfo.mipLodBias = 0.0f;
+		samplerCreateInfo.minLod = 0.0f;
+		samplerCreateInfo.maxLod = 0.0f;
 
-			Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerInfo, nullptr, &m_sampler));
-		}
+		Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &m_sampler));
 
-		Buffer::CopyBuffer(bufferStaging->GetBuffer(), m_buffer->GetBuffer(), m_imageSize);
+		Buffer::CopyBuffer(bufferStaging->GetBuffer(), m_buffer, m_size);
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
@@ -123,8 +107,6 @@ namespace Flounder
 	Cubemap::~Cubemap()
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		delete m_buffer;
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImage(logicalDevice, m_image, nullptr);
@@ -160,106 +142,38 @@ namespace Flounder
 
 		return descriptorWrite;
 	}
-
-	void Cubemap::CreateImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory)
+	
+	VkDeviceSize Cubemap::LoadSize(const std::string &filename, const std::string &fileExt)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		VkDeviceSize size = 0;
+		
+		for (const auto suffix : SIDE_FILE_SUFFIXS)
+		{
+			const std::string filepathSide = filename + "/" + suffix + fileExt;
+			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
+			size += sizeSide;
+		}
 
-		VkImageCreateInfo imageInfo = {};
-		imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
-		imageInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
-		imageInfo.imageType = VK_IMAGE_TYPE_2D;
-		imageInfo.extent.width = width;
-		imageInfo.extent.height = height;
-		imageInfo.extent.depth = 1;
-		imageInfo.mipLevels = 1;
-		imageInfo.arrayLayers = 6;
-		imageInfo.format = format;
-		imageInfo.tiling = tiling;
-		imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-		imageInfo.usage = usage;
-		imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
-		imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-
-		Platform::ErrorVk(vkCreateImage(logicalDevice, &imageInfo, nullptr, &image));
-
-		VkMemoryRequirements memRequirements;
-		vkGetImageMemoryRequirements(logicalDevice, image, &memRequirements);
-
-		VkMemoryAllocateInfo allocInfo = {};
-		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		allocInfo.allocationSize = memRequirements.size;
-		allocInfo.memoryTypeIndex = Buffer::FindMemoryType(memRequirements.memoryTypeBits, properties);;
-
-		Platform::ErrorVk(vkAllocateMemory(logicalDevice, &allocInfo, nullptr, &imageMemory));
-
-		vkBindImageMemory(logicalDevice, image, imageMemory, 0);
+		return size;
 	}
 
-	void Cubemap::TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout)
+	stbi_uc *Cubemap::LoadPixels(const std::string &filename, const std::string &fileExt, const size_t &bufferSize, int *width, int *height, int *depth, int *components)
 	{
-		const auto commandBuffer = Platform::BeginSingleTimeCommands();
+		stbi_uc *pixels = (stbi_uc *) malloc(bufferSize);
+		stbi_uc *offset = pixels;
 
-		VkImageMemoryBarrier barrier = {};
-		barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-		barrier.oldLayout = oldLayout;
-		barrier.newLayout = newLayout;
-		barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-		barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-		barrier.image = image;
-		barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-		barrier.subresourceRange.baseMipLevel = 0;
-		barrier.subresourceRange.levelCount = 1;
-		barrier.subresourceRange.baseArrayLayer = 0;
-		barrier.subresourceRange.layerCount = 6;
-
-		VkPipelineStageFlags sourceStage;
-		VkPipelineStageFlags destinationStage;
-
-		if (oldLayout == VK_IMAGE_LAYOUT_UNDEFINED && newLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL)
+		for (const auto suffix : SIDE_FILE_SUFFIXS)
 		{
-			barrier.srcAccessMask = 0;
-			barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+			std::string filepathSide = filename + "/" + suffix + fileExt;
+			VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
+			stbi_uc *pixelsSide = Texture::LoadPixels(filepathSide, width, height, components);
+			depth = width;
 
-			sourceStage = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
-			destinationStage = VK_PIPELINE_STAGE_TRANSFER_BIT;
-		}
-		else if (oldLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL &&
-			newLayout == VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
-		{
-			barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-			barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
-
-			sourceStage = VK_PIPELINE_STAGE_TRANSFER_BIT;
-			destinationStage = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
-		}
-		else
-		{
-			throw std::invalid_argument("unsupported layout transition!");
+			memcpy(offset, pixelsSide, static_cast<size_t>(sizeSide));
+			offset += sizeSide;
+			free(pixelsSide);
 		}
 
-		vkCmdPipelineBarrier(commandBuffer, sourceStage, destinationStage, 0, 0, nullptr, 0, nullptr, 1, &barrier);
-
-		Platform::EndSingleTimeCommands(commandBuffer);
-	}
-
-	void Cubemap::CopyBufferToImage(const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkBuffer &buffer, const VkImage &image)
-	{
-		const auto commandBuffer = Platform::BeginSingleTimeCommands();
-
-		VkBufferImageCopy region = {};
-		region.bufferOffset = 0;
-		region.bufferRowLength = 0;
-		region.bufferImageHeight = 0;
-		region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-		region.imageSubresource.mipLevel = 0;
-		region.imageSubresource.baseArrayLayer = 0;
-		region.imageSubresource.layerCount = 6;
-		region.imageOffset = {0, 0, 0};
-		region.imageExtent = {width, height, 1};
-
-		vkCmdCopyBufferToImage(commandBuffer, buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
-
-		Platform::EndSingleTimeCommands(commandBuffer);
+		return pixels;
 	}
 }

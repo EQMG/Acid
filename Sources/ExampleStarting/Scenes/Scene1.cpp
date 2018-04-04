@@ -96,7 +96,7 @@ namespace Demo
 		planet->AddComponent(new Planet(1));*/
 
 		// Entities.
-		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, -8000.0f), Vector3(), 18.0f));
+		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
 		sun->AddComponent(new Light(Colour("#FFFFFF"), -1.0f));
 	//	new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
 	//	new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
