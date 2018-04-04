@@ -13,8 +13,25 @@ namespace Flounder
 		m_normalTexture(normalTexture),
 		m_castsShadows(castsShadows),
 		m_ignoreLighting(ignoreLighting),
-		m_ignoreFog(ignoreFog)
+		m_ignoreFog(ignoreFog),
+		m_pipeline(nullptr),
+		m_descriptorSet(nullptr)
 	{
+		std::vector<Define> defines = {}; // {"ANIMATED"}, {"COLOUR_MAPPING"}, {"MATERIAL_MAPPING"}, {"NORMAL_MAPPING"}
+		if (m_diffuseTexture != nullptr)
+		{
+			defines.push_back({"COLOUR_MAPPING"});
+		}
+		if (m_materialTexture != nullptr)
+		{
+			defines.push_back({"MATERIAL_MAPPING"});
+		}
+		/*if (m_normalTexture != nullptr)
+		{
+			defines.push_back({"NORMAL_MAPPING"});
+		}*/
+		m_pipeline = new Pipeline({1, 0}, PipelineCreate({"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"},
+			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), defines);
 	}
 
 	MaterialDefault::~MaterialDefault()
@@ -23,6 +40,8 @@ namespace Flounder
 	//	delete m_diffuseTexture;
 	//	delete m_materialTexture;
 	//	delete m_normalTexture;
+
+		delete m_pipeline;
 	}
 
 	void MaterialDefault::Update()
@@ -57,5 +76,29 @@ namespace Flounder
 		destination->GetChild("Casts Shadows", true)->Set((int) m_castsShadows);
 		destination->GetChild("Ignore Lighting", true)->Set((int) m_ignoreLighting);
 		destination->GetChild("Ignore Fog", true)->Set((int) m_ignoreFog);
+	}
+
+	void MaterialDefault::CmdRender(const VkCommandBuffer &commandBuffer, Model *model, UniformBuffer *uniformScene, UniformBuffer *uniformObject, const unsigned int &instances)
+	{
+		// Binds this pipeline.
+		m_pipeline->BindPipeline(commandBuffer);
+
+		// Sets the descriptors.
+		if (m_descriptorSet == nullptr)
+		{
+			m_descriptorSet = new DescriptorSet(*m_pipeline);
+		}
+
+		m_descriptorSet->UpdateMap({
+			{"UboScene", uniformScene},
+			{"UboObject", uniformObject},
+			{"samplerDiffuse", m_diffuseTexture},
+			{"samplerMaterial", m_materialTexture},
+			{"samplerNormal", m_normalTexture}
+		});
+
+		// Draws the object.
+		m_descriptorSet->BindDescriptor(commandBuffer);
+		model->CmdRender(commandBuffer, instances);
 	}
 }

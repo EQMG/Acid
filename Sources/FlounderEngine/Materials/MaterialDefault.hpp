@@ -1,7 +1,10 @@
 #pragma once
 
-#include "../Objects/Component.hpp"
 #include "../Maths/Colour.hpp"
+#include "../Objects/Component.hpp"
+#include "../Models/Model.hpp"
+#include "../Renderer/Buffers/UniformBuffer.hpp"
+#include "../Renderer/Pipelines/Pipeline.hpp"
 #include "../Textures/Texture.hpp"
 
 namespace Flounder
@@ -24,6 +27,9 @@ namespace Flounder
 		bool m_castsShadows;
 		bool m_ignoreLighting;
 		bool m_ignoreFog;
+
+		Pipeline *m_pipeline;
+		DescriptorSet *m_descriptorSet;
 	public:
 		MaterialDefault(const Colour &baseColor = Colour::WHITE, Texture *diffuseTexture = nullptr,
 				const float &metallic = 0.0f, const float &roughness = 0.0f, Texture *materialTexture = nullptr, Texture *normalTexture = nullptr,
@@ -37,6 +43,8 @@ namespace Flounder
 		void Load(LoadedValue *value) override;
 
 		void Write(LoadedValue *destination) override;
+
+		void CmdRender(const VkCommandBuffer &commandBuffer, Model *model, UniformBuffer *uniformScene, UniformBuffer *uniformObject, const unsigned int &instances = 1);
 
 		std::string GetName() const override { return "MaterialDefault"; };
 
