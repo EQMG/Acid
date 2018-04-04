@@ -270,6 +270,12 @@ namespace Flounder
 		return ((b1 == b2) & (b2 == b3));
 	}
 
+	Vector2 Vector2::SmoothDamp(const Vector2 &current, const Vector2 &target, const Vector2 &rate)
+	{
+		return Vector2(Maths::SmoothDamp(current.m_x, target.m_x, rate.m_x),
+			Maths::SmoothDamp(current.m_y, target.m_y, rate.m_y));
+	}
+
 	Vector2 *Vector2::Translate(const float &x, const float &y)
 	{
 		m_x += x;
