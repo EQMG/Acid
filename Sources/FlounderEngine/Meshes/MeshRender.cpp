@@ -1,27 +1,29 @@
-#include "EntityRender.hpp"
+#include "MeshRender.hpp"
 
 #include "../Meshes/Mesh.hpp"
 #include "../Meshes/Animations/MeshAnimated.hpp"
 #include "../Worlds/Worlds.hpp"
-#include "Materials/MaterialDefault.hpp"
-#include "UbosEntities.hpp"
+#include "../Materials/MaterialDefault.hpp"
 
 namespace Flounder
 {
-	EntityRender::EntityRender() :
+	const float MAX_JOINTS = 50;
+	const float MAX_WEIGHTS = 3;
+
+	MeshRender::MeshRender() :
 		Component(),
-		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
+		m_uniformObject(nullptr),
 		m_descriptorSet(nullptr)
 	{
 	}
 
-	EntityRender::~EntityRender()
+	MeshRender::~MeshRender()
 	{
 		delete m_uniformObject;
 		delete m_descriptorSet;
 	}
 
-	void EntityRender::Update()
+	void MeshRender::Update()
 	{
 		auto materialDefault = GetGameObject()->GetComponent<MaterialDefault>();
 
@@ -32,7 +34,12 @@ namespace Flounder
 
 		auto material = materialDefault->GetMaterial();
 
-		/*std::vector<Matrix4> jointTransforms = {};
+		if (m_uniformObject == nullptr)
+		{
+			m_uniformObject = new UniformBuffer((VkDeviceSize) material->GetPipeline()->GetShaderProgram()->GetUniformBlock("UniformObject")->m_size);
+		}
+
+		std::vector<Matrix4> jointTransforms = {};
 		auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
 
 		if (meshAnimated != nullptr)
@@ -48,28 +55,13 @@ namespace Flounder
 					break;
 				}
 			}
-		}*/
+		}
 
 		// Updates uniforms.
-		UbosEntities::UboObject uboObject = {};
-
-		//for (unsigned int i = 0; i < jointTransforms.size(); i++)
-		//{
-		//	uboObject.jointTransforms[i] = jointTransforms.at(i);
-		//}
-
-		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		uboObject.baseColor = *materialDefault->GetBaseColor();
-		uboObject.metallic = materialDefault->GetMetallic();
-		uboObject.roughness = materialDefault->GetRoughness();
-		uboObject.ignoreFog = static_cast<float>(materialDefault->IsIgnoringFog());
-		uboObject.ignoreLighting = static_cast<float>(materialDefault->IsIgnoringLighting());
-		m_uniformObject->Update(&uboObject);
-
 		//m_uniformObject->UpdateMap("UniformObject", material->GetPipeline()->GetShaderProgram(), {
 		//	{"jointTransforms", jointTransforms.data()},
-		//	{"transform", GetGameObject()->GetTransform()->GetWorldMatrix()},
-		// 	{"baseColor", *materialDefault->GetBaseColor()},
+		//	{"transform", GetGameObject()->GetTransform()->GetWorldMatrix().m_elements},
+		//	{"baseColor", materialDefault->GetBaseColor()->m_elements},
 		//	{"metallic", materialDefault->GetMetallic()},
 		//	{"roughness", materialDefault->GetRoughness()},
 		//	{"ignoreFog", static_cast<float>(materialDefault->IsIgnoringFog())},
@@ -77,15 +69,15 @@ namespace Flounder
 		//});
 	}
 
-	void EntityRender::Load(LoadedValue *value)
+	void MeshRender::Load(LoadedValue *value)
 	{
 	}
 
-	void EntityRender::Write(LoadedValue *value)
+	void MeshRender::Write(LoadedValue *value)
 	{
 	}
 
-	void EntityRender::CmdRender(const VkCommandBuffer &commandBuffer, UniformBuffer *uniformScene)
+	void MeshRender::CmdRender(const VkCommandBuffer &commandBuffer, UniformBuffer *uniformScene)
 	{
 		// Checks if the mesh is in view.
 		/*auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();

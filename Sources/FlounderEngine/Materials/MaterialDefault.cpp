@@ -14,24 +14,9 @@ namespace Flounder
 		m_castsShadows(castsShadows),
 		m_ignoreLighting(ignoreLighting),
 		m_ignoreFog(ignoreFog),
-		m_pipeline(nullptr),
-		m_descriptorSet(nullptr)
+		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"},
+			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), GetDefines()))
 	{
-		std::vector<Define> defines = {}; // {"ANIMATED"}, {"COLOUR_MAPPING"}, {"MATERIAL_MAPPING"}, {"NORMAL_MAPPING"}
-		if (m_diffuseTexture != nullptr)
-		{
-			defines.push_back({"COLOUR_MAPPING"});
-		}
-		if (m_materialTexture != nullptr)
-		{
-			defines.push_back({"MATERIAL_MAPPING"});
-		}
-		/*if (m_normalTexture != nullptr)
-		{
-			defines.push_back({"NORMAL_MAPPING"});
-		}*/
-		m_pipeline = new Pipeline({1, 0}, PipelineCreate({"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), defines);
 	}
 
 	MaterialDefault::~MaterialDefault()
@@ -40,8 +25,6 @@ namespace Flounder
 	//	delete m_diffuseTexture;
 	//	delete m_materialTexture;
 	//	delete m_normalTexture;
-
-		delete m_pipeline;
 	}
 
 	void MaterialDefault::Update()
@@ -78,27 +61,25 @@ namespace Flounder
 		destination->GetChild("Ignore Fog", true)->Set((int) m_ignoreFog);
 	}
 
-	void MaterialDefault::CmdRender(const VkCommandBuffer &commandBuffer, Model *model, UniformBuffer *uniformScene, UniformBuffer *uniformObject, const unsigned int &instances)
+	std::vector<Define> MaterialDefault::GetDefines()
 	{
-		// Binds this pipeline.
-		m_pipeline->BindPipeline(commandBuffer);
+		std::vector<Define> result = {};
 
-		// Sets the descriptors.
-		if (m_descriptorSet == nullptr)
+		if (m_diffuseTexture != nullptr)
 		{
-			m_descriptorSet = new DescriptorSet(*m_pipeline);
+			result.push_back({"COLOUR_MAPPING"});
 		}
 
-		m_descriptorSet->UpdateMap({
-			{"UboScene", uniformScene},
-			{"UboObject", uniformObject},
-			{"samplerDiffuse", m_diffuseTexture},
-			{"samplerMaterial", m_materialTexture},
-			{"samplerNormal", m_normalTexture}
-		});
+		if (m_materialTexture != nullptr)
+		{
+			result.push_back({"MATERIAL_MAPPING"});
+		}
 
-		// Draws the object.
-		m_descriptorSet->BindDescriptor(commandBuffer);
-		model->CmdRender(commandBuffer, instances);
+		/*if (m_normalTexture != nullptr)
+		{
+			result.push_back({"NORMAL_MAPPING"});
+		}*/
+
+		return result;
 	}
 }

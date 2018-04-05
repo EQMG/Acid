@@ -150,6 +150,8 @@ namespace Flounder
 
 		bool IsDescriptorDefined(const std::string &descriptor);
 
+		UniformBlock *GetUniformBlock(const std::string &blockName);
+
 		Uniform *GetBlockUniform(const std::string &blockName, const std::string &uniformName);
 
 		static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);

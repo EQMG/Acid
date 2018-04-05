@@ -11,7 +11,6 @@ namespace Flounder
 	{
 	private:
 		UniformBuffer *m_uniformScene;
-		Pipeline *m_pipeline;
 	public:
 		RendererEntities(const GraphicsStage &graphicsStage);
 
