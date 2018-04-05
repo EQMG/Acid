@@ -6,6 +6,7 @@
 #include "../Renderer/Buffers/UniformBuffer.hpp"
 #include "../Renderer/Pipelines/Pipeline.hpp"
 #include "../Textures/Texture.hpp"
+#include "PipelineMaterial.hpp"
 
 namespace Flounder
 {
@@ -28,8 +29,7 @@ namespace Flounder
 		bool m_ignoreLighting;
 		bool m_ignoreFog;
 
-		Pipeline *m_pipeline;
-		DescriptorSet *m_descriptorSet;
+		PipelineMaterial *m_material;
 	public:
 		MaterialDefault(const Colour &baseColor = Colour::WHITE, Texture *diffuseTexture = nullptr,
 				const float &metallic = 0.0f, const float &roughness = 0.0f, Texture *materialTexture = nullptr, Texture *normalTexture = nullptr,
@@ -44,9 +44,9 @@ namespace Flounder
 
 		void Write(LoadedValue *destination) override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, Model *model, UniformBuffer *uniformScene, UniformBuffer *uniformObject, const unsigned int &instances = 1);
-
 		std::string GetName() const override { return "MaterialDefault"; };
+
+		std::vector<Define> GetDefines();
 
 		Colour *GetBaseColor() const { return m_baseColor; }
 
@@ -107,5 +107,7 @@ namespace Flounder
 		bool IsIgnoringFog() const { return m_ignoreFog; }
 
 		void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
+
+		PipelineMaterial *GetMaterial() const { return m_material; }
 	};
 }

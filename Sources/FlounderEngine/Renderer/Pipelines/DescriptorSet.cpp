@@ -68,11 +68,10 @@ namespace Flounder
 			{
 				descriptors.push_back(pair.second);
 			}
-		}
-
-		if (!m_descriptors.empty() && descriptors == m_descriptors)
-		{
-			return;
+			//else
+			//{
+			//	descriptors.push_back(nullptr);
+			//}
 		}
 
 		Update(descriptors);
