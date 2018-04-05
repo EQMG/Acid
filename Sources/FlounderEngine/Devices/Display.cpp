@@ -626,7 +626,7 @@ namespace Flounder
 			printf("Type: CPU\n");
 			break;
 		default:
-			printf("Type: Other (%x)\n", physicalDeviceProperties.vendorID);
+			printf("Type: Other (%x)\n", physicalDeviceProperties.deviceType);
 		}
 
 		switch (physicalDeviceProperties.vendorID)

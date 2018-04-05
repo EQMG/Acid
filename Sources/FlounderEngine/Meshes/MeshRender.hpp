@@ -10,18 +10,18 @@
 namespace Flounder
 {
 	/// <summary>
-	/// Class used to render a GameObject as a entity.
+	/// Class used to render a mesh.
 	/// </summary>
-	class F_EXPORT EntityRender :
+	class F_EXPORT MeshRender :
 		public Component
 	{
 	private:
 		UniformBuffer *m_uniformObject;
 		DescriptorSet *m_descriptorSet;
 	public:
-		EntityRender();
+		MeshRender();
 
-		~EntityRender();
+		~MeshRender();
 
 		void Update() override;
 
@@ -31,7 +31,7 @@ namespace Flounder
 
 		void CmdRender(const VkCommandBuffer &commandBuffer, UniformBuffer *uniformScene);
 
-		std::string GetName() const override { return "EntityRender"; };
+		std::string GetName() const override { return "MeshRender"; };
 
 		UniformBuffer *GetUniformObject() const { return m_uniformObject; }
 	};

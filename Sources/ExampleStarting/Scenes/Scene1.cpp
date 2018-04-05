@@ -62,7 +62,7 @@ namespace Demo
 		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
 		skyboxObject->SetName("SkyboxStars");
 		skyboxObject->AddComponent(new Mesh(ShapeSphere::Resource(6, 6, 1.0f)));
-		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Snowy", ".png"), false));
+		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Chapel", ".png"), false));
 
 		// Terrains.
 		/*const int n = 4;

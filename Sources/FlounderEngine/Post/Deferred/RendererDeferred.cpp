@@ -17,8 +17,8 @@ namespace Flounder
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({ "Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag" },
 			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { { "USE_IBL" } })),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f)),
-		m_brdflut(Texture::Resource("Resources/brdf_lut.png")),
-		m_environment(Cubemap::Resource("Resources/Skyboxes/Snowy", ".png"))
+		m_brdflut(Texture::Resource("Resources/BrdfLut.png")),
+		m_environment(Cubemap::Resource("Resources/Skyboxes/Chapel", ".png"))
 	{
 	}
 

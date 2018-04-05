@@ -2,16 +2,16 @@
   "Rigidbody": {
     "Mass": 1.0, 
     "Drag": 0.0, 
-    "Use Gravity": true, 
+    "Use Gravity": 1,
     "Freeze Position": {
-      "x": false, 
-      "y": false, 
-      "z": false
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
     "Freeze Rotation": {
-      "x": false, 
-      "y": false, 
-      "z": false
+      "x": 0,
+      "y": 0,
+      "z": 0
     }
   },
   "Mesh": {
