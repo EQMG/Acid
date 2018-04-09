@@ -9,7 +9,7 @@ namespace Flounder
 	const float InputText::CHANGE_TIME = 0.1f;
 	const float InputText::SCALE_NORMAL = 1.6f;
 	const float InputText::SCALE_SELECTED = 1.8f;
-	Colour *const InputText::COLOUR_NORMAL = new Colour("#000000");
+	const Colour *InputText::COLOUR_NORMAL = new Colour("#000000");
 
 	InputText::InputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const Justify &justify) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),

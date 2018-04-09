@@ -13,14 +13,14 @@ namespace Flounder
 		for (int latNumber = 0; latNumber <= latitudeBands; latNumber++)
 		{
 			float theta = latNumber * PI / latitudeBands;
-			float sinTheta = static_cast<float>(sin(theta));
-			float cosTheta = static_cast<float>(cos(theta));
+			float sinTheta = std::sin(theta);
+			float cosTheta = std::cos(theta);
 
 			for (int longNumber = 0; longNumber <= longitudeBands; longNumber++)
 			{
 				float phi = longNumber * 2.0f * PI / longitudeBands;
-				float sinPhi = static_cast<float>(sin(phi));
-				float cosPhi = static_cast<float>(cos(phi));
+				float sinPhi = std::sin(phi);
+				float cosPhi = std::cos(phi);
 
 				VertexModel *vertex = new VertexModel();
 				vertex->m_normal.m_x = cosPhi * sinTheta;

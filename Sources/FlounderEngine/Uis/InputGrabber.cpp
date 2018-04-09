@@ -11,7 +11,7 @@ namespace Flounder
 	const float InputGrabber::CHANGE_TIME = 0.1f;
 	const float InputGrabber::SCALE_NORMAL = 1.6f;
 	const float InputGrabber::SCALE_SELECTED = 1.8f;
-	Colour *const InputGrabber::COLOUR_NORMAL = new Colour("#000000");
+	const Colour *InputGrabber::COLOUR_NORMAL = new Colour("#000000");
 
 	GrabberJoystick::GrabberJoystick(const unsigned int &joystick) :
 		IGrabber(),

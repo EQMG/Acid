@@ -2,7 +2,6 @@
 
 #include "../Meshes/Mesh.hpp"
 #include "../Meshes/Animations/MeshAnimated.hpp"
-#include "../Worlds/Worlds.hpp"
 #include "../Materials/MaterialDefault.hpp"
 
 namespace Flounder
