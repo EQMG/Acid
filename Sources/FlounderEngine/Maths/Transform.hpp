@@ -11,7 +11,6 @@ namespace Flounder
 	/// </summary>
 	class F_EXPORT Transform
 	{
-	private:
 	public:
 		Vector3 *m_position;
 		Vector3 *m_rotation;

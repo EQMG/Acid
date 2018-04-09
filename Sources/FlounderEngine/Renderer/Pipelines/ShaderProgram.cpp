@@ -11,7 +11,8 @@ namespace Flounder
 		m_uniforms(new std::vector<Uniform*>()),
 		m_uniformBlocks(new std::vector<UniformBlock*>()),
 		m_vertexAttributes(new std::vector<VertexAttribute*>()),
-		m_descriptors(new std::vector<DescriptorType>())
+		m_descriptors(new std::vector<DescriptorType>()),
+		m_attributeDescriptions(new std::vector<VkVertexInputAttributeDescription>())
 	{
 	}
 
@@ -37,6 +38,7 @@ namespace Flounder
 		delete m_vertexAttributes;
 
 		delete m_descriptors;
+		delete m_attributeDescriptions;
 	}
 
 	void ShaderProgram::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag)
@@ -51,7 +53,7 @@ namespace Flounder
 			LoadUniform(program, stageFlag, i);
 		}
 
-		for (int i = 0; i < program.getNumLiveAttributes(); i++)
+		for (int i = 0; i < program.getNumLiveAttributes(); i++) // TODO: Load in correct order.
 		{
 			LoadVertexAttribute(program, stageFlag, i);
 		}
@@ -112,7 +114,7 @@ namespace Flounder
 			}
 		}
 
-		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), i, -1, program.getAttributeType(i))); // program.getAttributeLocation(i), program.getAttributeSize(i)
+		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), i, sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i))); // program.getAttributeLocation(i), program.getAttributeSize(i)
 	}
 
 	void ShaderProgram::ProcessShader()
@@ -155,12 +157,12 @@ namespace Flounder
 		{
 			switch (uniform->m_glType)
 			{
-			case 35678:
-			case 36941:
+			case 0x8B5E:
+			case 0x904D:
 				m_descriptors->push_back(Texture::CreateDescriptor(uniform->m_binding, uniform->m_stageFlags));
 				break;
-			case 35680:
-			case 36942:
+			case 0x8B60:
+			case 0x904E:
 				m_descriptors->push_back(Cubemap::CreateDescriptor(uniform->m_binding, uniform->m_stageFlags));
 				break;
 			default:
@@ -169,45 +171,36 @@ namespace Flounder
 		}
 
 		// Process attribute descriptions.
-		/*uint32_t currentOffset = 4;
+		uint32_t currentOffset = 4;
 
 		for (auto vertexAttribute : *m_vertexAttributes)
 		{
 			VkVertexInputAttributeDescription attributeDescription = {};
 			attributeDescription.binding = 0;
 			attributeDescription.location = vertexAttribute->m_location;
-			attributeDescription.format = GetTypeFormat(vertexAttribute->m_type);
+			attributeDescription.format = GlTypeToVk(vertexAttribute->m_glType);
 			attributeDescription.offset = currentOffset;
 
 			m_attributeDescriptions->push_back(attributeDescription);
-			currentOffset += GetTypeSize(vertexAttribute->m_type); // TODO: vertexAttribute->m_size
-		}*/
-
-		// Log loaded shader data.
-#ifdef FLOUNDER_VERBOSE
-		printf("Vertex Attributes: \n");
-		for (auto vertexAttribute : *m_vertexAttributes)
-		{
-			printf("  - %s\n", vertexAttribute->ToString().c_str());
+			currentOffset += vertexAttribute->m_size;
 		}
+	}
 
-		printf("Uniforms: \n");
-		for (auto uniform : *m_uniforms)
+	VkFormat ShaderProgram::GlTypeToVk(const int &type)
+	{
+		switch (type)
 		{
-			printf("  - %s\n", uniform->ToString().c_str());
+		case 0x1406:
+			return VK_FORMAT_R32_SFLOAT;
+		case 0x8B50:
+			return VK_FORMAT_R32G32_SFLOAT;
+		case 0x8B51:
+			return VK_FORMAT_R32G32B32_SFLOAT;
+		case 0x8B52:
+			return VK_FORMAT_R32G32B32A32_SFLOAT;
+		default:
+			return VK_FORMAT_UNDEFINED;
 		}
-
-		printf("Uniform Blocks: \n");
-		for (auto uniformBlock : *m_uniformBlocks)
-		{
-			printf("  - %s\n", uniformBlock->ToString().c_str());
-
-			for (auto uniform : *uniformBlock->m_uniforms)
-			{
-				printf("    - %s\n", uniform->ToString().c_str());
-			}
-		}
-#endif
 	}
 
 	bool ShaderProgram::IsDescriptorDefined(const std::string &descriptor)
@@ -423,5 +416,47 @@ namespace Flounder
 		resources.limits.generalVariableIndexing = 1;
 		resources.limits.generalConstantMatrixVectorIndexing = 1;
 		return resources;
+	}
+
+	std::string ShaderProgram::ToString() const
+	{
+		std::stringstream result;
+
+		if (!m_vertexAttributes->empty())
+		{
+			result << "Vertex Attributes: \n";
+
+			for (auto vertexAttribute : *m_vertexAttributes)
+			{
+				result << "  - " << vertexAttribute->ToString() << "\n";
+			}
+		}
+
+		if (!m_uniforms->empty())
+		{
+			result << "Uniforms: \n";
+
+			for (auto uniform : *m_uniforms)
+			{
+				result << "  - " << uniform->ToString() << "\n";
+			}
+		}
+
+		if (!m_uniformBlocks->empty())
+		{
+			result << "Uniform Blocks: \n";
+
+			for (auto uniformBlock : *m_uniformBlocks)
+			{
+				result << "  - " << uniformBlock->ToString() << " \n";
+
+				for (auto uniform : *uniformBlock->m_uniforms)
+				{
+					result << "    - " << uniform->ToString() << " \n";
+				}
+			}
+		}
+
+		return result.str();
 	}
 }

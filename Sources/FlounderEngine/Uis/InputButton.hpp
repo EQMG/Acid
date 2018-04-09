@@ -14,7 +14,7 @@ namespace Flounder
 		static const float CHANGE_TIME;
 		static const float SCALE_NORMAL;
 		static const float SCALE_SELECTED;
-		static Colour *const COLOUR_NORMAL;
+		static const Colour *COLOUR_NORMAL;
 
 		Text *m_text;
 		Gui *m_background;

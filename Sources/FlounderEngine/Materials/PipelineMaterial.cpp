@@ -1,6 +1,5 @@
 #include "PipelineMaterial.hpp"
 
-#include <cstring>
 #include <numeric>
 
 namespace Flounder

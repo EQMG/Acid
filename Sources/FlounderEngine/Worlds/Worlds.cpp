@@ -5,18 +5,18 @@
 
 namespace Flounder
 {
-	static const Colour FOG_COLOUR_SUNRISE = Colour("#ee9a90");
-	static const Colour FOG_COLOUR_NIGHT = Colour("#0D0D1A");
-	static const Colour FOG_COLOUR_DAY = Colour("#e6e6e6");
+	const Colour *Worlds::FOG_COLOUR_SUNRISE = new Colour("#ee9a90");
+	const Colour *Worlds::FOG_COLOUR_NIGHT = new Colour("#0D0D1A");
+	const Colour *Worlds::FOG_COLOUR_DAY = new Colour("#e6e6e6");
 
-	static const Colour SUN_COLOUR_SUNRISE = Colour("#ee9a90");
-	static const Colour SUN_COLOUR_NIGHT = Colour("#0D0D1A");
-	static const Colour SUN_COLOUR_DAY = Colour("#ffffff");
+	const Colour *Worlds::SUN_COLOUR_SUNRISE = new Colour("#ee9a90");
+	const Colour *Worlds::SUN_COLOUR_NIGHT = new Colour("#0D0D1A");
+	const Colour *Worlds::SUN_COLOUR_DAY = new Colour("#ffffff");
 
-	static const Colour MOON_COLOUR_NIGHT = Colour("#666699");
-	static const Colour MOON_COLOUR_DAY = Colour("#000000");
+	const Colour *Worlds::MOON_COLOUR_NIGHT = new Colour("#666699");
+	const Colour *Worlds::MOON_COLOUR_DAY = new Colour("#000000");
 
-	static const Colour SKYBOX_COLOUR_DAY = Colour("#003C8A");
+	const Colour *Worlds::SKYBOX_COLOUR_DAY = new Colour("#003C8A");
 
 	Worlds::Worlds() :
 		IModule(),
@@ -70,8 +70,8 @@ namespace Flounder
 		Vector3::Rotate(Vector3(0.2f, 0.0f, 0.5f), *m_skyboxRotation, &lightDirection);
 		lightDirection.Normalize();
 
-		Colour::Interpolate(FOG_COLOUR_SUNRISE, FOG_COLOUR_NIGHT, GetSunriseFactor(), &fogColour);
-		Colour::Interpolate(fogColour, FOG_COLOUR_DAY, GetShadowFactor(), &fogColour);
+		Colour::Interpolate(*FOG_COLOUR_SUNRISE, *FOG_COLOUR_NIGHT, GetSunriseFactor(), &fogColour);
+		Colour::Interpolate(fogColour, *FOG_COLOUR_DAY, GetShadowFactor(), &fogColour);
 
 		Vector3::Multiply(lightDirection, Vector3(-300.0f, -300.0f, -300.0f), m_sunPosition);
 		Vector3::Multiply(lightDirection, Vector3(300.0f, 300.0f, 300.0f), m_moonPosition);
@@ -82,10 +82,10 @@ namespace Flounder
 			Vector3::Add(*m_moonPosition, *Scenes::Get()->GetCamera()->GetPosition(), m_moonPosition);
 		}
 
-		Colour::Interpolate(SUN_COLOUR_SUNRISE, SUN_COLOUR_NIGHT, GetSunriseFactor(), m_sunColour);
-		Colour::Interpolate(*m_sunColour, SUN_COLOUR_DAY, GetShadowFactor(), m_sunColour);
+		Colour::Interpolate(*SUN_COLOUR_SUNRISE, *SUN_COLOUR_NIGHT, GetSunriseFactor(), m_sunColour);
+		Colour::Interpolate(*m_sunColour, *SUN_COLOUR_DAY, GetShadowFactor(), m_sunColour);
 
-		Colour::Interpolate(MOON_COLOUR_NIGHT, MOON_COLOUR_DAY, GetShadowFactor(), m_moonColour);
+		Colour::Interpolate(*MOON_COLOUR_NIGHT, *MOON_COLOUR_DAY, GetShadowFactor(), m_moonColour);
 
 		*m_fog->m_colour = fogColour;
 		m_fog->m_density = 0.002f + ((1.0f - GetShadowFactor()) * 0.002f);
@@ -93,7 +93,7 @@ namespace Flounder
 		m_fog->m_lowerLimit = 0.0f;
 		m_fog->m_upperLimit = 0.15f - ((1.0f - GetShadowFactor()) * 0.03f);
 
-		*m_skyColour = SKYBOX_COLOUR_DAY;
+		*m_skyColour = *SKYBOX_COLOUR_DAY;
 
 		if (Shadows::Get() != nullptr)
 		{

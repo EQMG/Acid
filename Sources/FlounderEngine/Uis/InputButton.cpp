@@ -8,7 +8,7 @@ namespace Flounder
 	const float InputButton::CHANGE_TIME = 0.1f;
 	const float InputButton::SCALE_NORMAL = 1.6f;
 	const float InputButton::SCALE_SELECTED = 1.8f;
-	Colour *const InputButton::COLOUR_NORMAL = new Colour("#000000");
+	const Colour *InputButton::COLOUR_NORMAL = new Colour("#000000");
 
 	InputButton::InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const Justify &justify) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),

@@ -46,10 +46,10 @@ namespace Flounder
 
 		Component *AddComponent(Component *component);
 
-		template<typename T>
-		T *AddComponent()
+		template<typename T, typename... Args>
+		T *AddComponent(Args&&... args)
 		{
-			T *created = new T();
+			T *created = new T(std::forward<Args>(args)...);
 			AddComponent(created);
 			return created;
 		}

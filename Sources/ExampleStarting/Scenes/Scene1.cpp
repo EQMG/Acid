@@ -93,20 +93,20 @@ namespace Demo
 		// Planets.
 		/*GameObject *planet = new GameObject(Transform(Vector3()));
 		planet->SetName("Etaran");
-		planet->AddComponent(new Planet(1));*/
+		planet->AddComponent<Planet>(1);*/
 
 		// Entities.
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
-		sun->AddComponent(new Light(Colour("#FFFFFF"), -1.0f));
+		sun->AddComponent<Light>(Colour("#FFFFFF"), -1.0f);
 
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 5; j++)
 			{
 				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, 0.0f), Vector3(), 3.0f));
-				sphere->AddComponent(new Mesh(Model::Resource("Resources/Entities/Testing/Model.obj")));
-				sphere->AddComponent(new MaterialDefault(Colour("#ffffff"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
-					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Resources/Entities/Testing/Material.png"), Texture::Resource("Resources/Entities/Testing/Normal.png")));
+				sphere->AddComponent<Mesh>(Model::Resource("Resources/Entities/Testing/Model.obj"));
+				sphere->AddComponent<MaterialDefault>(Colour("#ffffff"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
+					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Resources/Entities/Testing/Material.png"), Texture::Resource("Resources/Entities/Testing/Normal.png"));
 				sphere->AddComponent<EntityRender>();
 				sphere->AddComponent<ShadowRender>();
 			}
@@ -168,7 +168,7 @@ namespace Demo
 		types->push_back(new ParticleType("purple", Texture::Resource("Resources/Particles/Purple/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
 		types->push_back(new ParticleType("red", Texture::Resource("Resources/Particles/Red/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
 		types->push_back(new ParticleType("yellow", Texture::Resource("Resources/Particles/Yellow/Texture.png"), 10.6f, 0.3f)); // , false, false, 1, true, false, 4
-		particlesObject->AddComponent(new ParticleSystem(types, new SpawnCircle(30.0f, Vector3(0.0f, 10.0f, 0.0f)), 1000, 1.0f, -0.1f));*/
+		particlesObject->AddComponent<ParticleSystem>(types, new SpawnCircle(30.0f, Vector3(0.0f, 10.0f, 0.0f)), 1000, 1.0f, -0.1f);*/
 	}
 
 	void Scene1::Update()
