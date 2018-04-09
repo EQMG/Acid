@@ -13,7 +13,7 @@ namespace Flounder
 
 	void CallbackError(int error, const char *description)
 	{
-		fprintf(stderr, "GLFW Error: %s\n", description);
+		fprintf(stderr, "GLFW Error '%i': '%s'\n", error, description);
 	}
 
 	void CallbackClose(GLFWwindow *window)

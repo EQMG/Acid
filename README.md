@@ -15,6 +15,7 @@ Windows   [![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt
 
 Linux   [![Build Status](https://travis-ci.org/Equilibrium-Games/Flounder.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Flounder)
 
+GitLab   [Issues](https://gitlab.com/mattparks/Flounder/issues)
 
 Website   [Learn more](https://equilibrium.games)
 

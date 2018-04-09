@@ -22,8 +22,8 @@ namespace Flounder
 
 	struct VertexInput
 	{
-		std::vector<VkVertexInputBindingDescription> vertexBindingDescriptions;
-		std::vector<VkVertexInputAttributeDescription> attributeDescriptions;
+		std::vector<VkVertexInputBindingDescription> m_vertexBindingDescriptions;
+		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 	};
 
 	class F_EXPORT DescriptorType

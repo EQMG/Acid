@@ -8,7 +8,7 @@ namespace Flounder
 	const float InputSlider::CHANGE_TIME = 0.1f;
 	const float InputSlider::SCALE_NORMAL = 1.6f;
 	const float InputSlider::SCALE_SELECTED = 1.8f;
-	Colour *const InputSlider::COLOUR_NORMAL = new Colour("#000000");
+	const Colour *InputSlider::COLOUR_NORMAL = new Colour("#000000");
 
 	InputSlider::InputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const Justify &justify) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),

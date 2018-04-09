@@ -132,6 +132,7 @@ namespace Flounder
 		std::vector<VertexAttribute*> *m_vertexAttributes;
 
 		std::vector<DescriptorType> *m_descriptors;
+		std::vector<VkVertexInputAttributeDescription> *m_attributeDescriptions;
 
 		ShaderProgram();
 
@@ -148,6 +149,8 @@ namespace Flounder
 	public:
 		void ProcessShader();
 
+		VkFormat GlTypeToVk(const int &type);
+
 		bool IsDescriptorDefined(const std::string &descriptor);
 
 		UniformBlock *GetUniformBlock(const std::string &blockName);
@@ -161,5 +164,7 @@ namespace Flounder
 		static EShLanguage GetEshLanguage(const VkShaderStageFlagBits &stageFlag);
 
 		static TBuiltInResource GetResources();
+
+		std::string ToString() const;
 	};
 }
