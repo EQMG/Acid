@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	class Chunk;
+	class VoxelChunk;
 
 	enum BlockFace
 	{
@@ -18,20 +18,20 @@ namespace Flounder
 		FaceRight = 5
 	};
 
-	class F_EXPORT Block
+	class F_EXPORT VoxelBlock
 	{
 	private:
 		static std::map<std::string, Colour*> s_colours;
 
-		Chunk *m_parent;
+		VoxelChunk *m_parent;
 
 		Vector3 *m_position;
 		std::string m_type;
 
 	public:
-		Block(Chunk *parent, const Vector3 &position, const std::string &type);
+		VoxelBlock(VoxelChunk *parent, const Vector3 &position, const std::string &type);
 
-		~Block();
+		~VoxelBlock();
 
 		void SetChanged();
 

@@ -3,12 +3,12 @@
 #include <functional>
 #include "../Fonts/Text.hpp"
 #include "../Guis/Gui.hpp"
-#include "InputDelay.hpp"
+#include "UiInputDelay.hpp"
 #include "UiObject.hpp"
 
 namespace Flounder
 {
-	class F_EXPORT InputText :
+	class F_EXPORT UiInputText :
 		public UiObject
 	{
 	private:
@@ -23,7 +23,7 @@ namespace Flounder
 		std::string m_prefix;
 		std::string m_value;
 
-		InputDelay *m_inputDelay;
+		UiInputDelay *m_inputDelay;
 		int m_lastKey;
 
 		bool m_selected;
@@ -31,9 +31,9 @@ namespace Flounder
 
 		std::function<void()> m_actionChange;
 	public:
-		InputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const Justify &justify);
+		UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const FontJustify &justify);
 
-		~InputText();
+		~UiInputText();
 
 		void UpdateObject() override;
 

@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "../Textures/Texture.hpp"
-#include "Metafile.hpp"
+#include "FontMetafile.hpp"
 
 namespace Flounder
 {
@@ -12,7 +12,7 @@ namespace Flounder
 	{
 	private:
 		Texture *m_texture;
-		Metafile *m_metadata;
+		FontMetafile *m_metadata;
 	public:
 		/// <summary>
 		/// Creates a new text loader.
@@ -28,6 +28,6 @@ namespace Flounder
 
 		Texture *GetTexture() const { return m_texture; }
 
-		Metafile *GetMetadata() const { return m_metadata; }
+		FontMetafile *GetMetadata() const { return m_metadata; }
 	};
 }

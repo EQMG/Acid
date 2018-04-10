@@ -18,11 +18,11 @@
 #include <Particles/Spawns/SpawnCircle.hpp>
 #include <Particles/ParticleSystem.hpp>
 #include <Shadows/ShadowRender.hpp>
-#include <Voxels/Chunk.hpp>
+#include <Voxels/VoxelChunk.hpp>
 #include <Voxels/VoxelRender.hpp>
-#include <Voxels/Planet.hpp>
 #include <Lights/Light.hpp>
 #include <Entities/EntityRender.hpp>
+#include <Models/Shapes/ShapeCube.hpp>
 #include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
@@ -60,13 +60,13 @@ namespace Demo
 		playerObject->AddComponent<FpsPlayer>();
 
 		// Skybox.
-		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
-		skyboxObject->SetName("SkyboxClouds");
-		skyboxObject->AddComponent<Mesh>(ShapeSphere::Resource(6, 6, 1.0f));
-		skyboxObject->AddComponent<SkyboxRender>(Cubemap::Resource("Resources/Skyboxes/Clouds", ".png"));
+		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 6048.0f));
+		skyboxObject->SetName("SkyboxStars");
+		skyboxObject->AddComponent<Mesh>(ShapeCube::Resource(1.0f, 1.0f, 1.0f)); // ShapeSphere::Resource(6, 6, 1.0f)
+		skyboxObject->AddComponent<SkyboxRender>(Cubemap::Resource("Resources/Skyboxes/Stars", ".png"), false);
 
 		// Terrains.
-		const int n = 0;
+		/*const int n = 0;
 
 		for (int j = -n; j <= n; j++)
 		{
@@ -89,19 +89,30 @@ namespace Demo
 		GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
 		waterObject->SetName("Water_0_0");
 		waterObject->AddComponent<Mesh>(new MeshWater());
-		waterObject->AddComponent<WaterRender>();
+		waterObject->AddComponent<WaterRender>();*/
 
-		// Planets.
-		/*GameObject *planet = new GameObject(Transform(Vector3()));
-		planet->SetName("Etaran");
-		planet->AddComponent<Planet>(1);*/
+		// Chunks.
+		/*const int n = 0;
+
+		for (int j = -n; j <= n; j++)
+		{
+			for (int w = -n; w <= n; w++)
+			{
+				GameObject *chunk = new GameObject(Transform(*Chunk::CHUNK_SIZE * Vector3(j, 0.0f, w)));
+				chunk->SetName("Chunk_" + std::to_string(j) + "_" + std::to_string(w));
+				chunk->AddComponent(new Chunk(MeshGreedy, true));
+				chunk->AddComponent(new Mesh());
+				chunk->AddComponent(new VoxelRender());
+				//	chunk->AddComponent(new ShadowRender());
+			}
+		}*/
 
 		// Entities.
-		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
-		new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
-		new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f)); // Testing animations.
+		new GameObject("Sun", Transform(Vector3(), Vector3(), 220.0f));
+		new GameObject("Moon", Transform(Vector3(), Vector3(), 50.0f));
+	//	new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f));
 
-		Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
+		/*Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);
 
 		for (int i = -3; i <= 0; i++)
 		{
@@ -137,7 +148,7 @@ namespace Demo
 					}
 				}
 			}
-		}
+		}*/
 
 		// Music.
 		/*Sound *music1 = new Sound("Resources/Music/Outpost.ogg", 0.9f);

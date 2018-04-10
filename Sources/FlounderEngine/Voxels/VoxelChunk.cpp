@@ -1,17 +1,17 @@
-#include "Chunk.hpp"
+#include "VoxelChunk.hpp"
 
 #include "../Worlds/Worlds.hpp"
 
 namespace Flounder
 {
-	const int Chunk::CHUNK_WIDTH = 16;
-	const int Chunk::CHUNK_HEIGHT = 16;
-	const float Chunk::VOXEL_SIZE = 1.0f;
-	const Vector3 *Chunk::CHUNK_SIZE = new Vector3(VOXEL_SIZE * CHUNK_WIDTH, VOXEL_SIZE * CHUNK_HEIGHT, VOXEL_SIZE * CHUNK_WIDTH);
+	const int VoxelChunk::CHUNK_WIDTH = 16;
+	const int VoxelChunk::CHUNK_HEIGHT = 16;
+	const float VoxelChunk::VOXEL_SIZE = 1.0f;
+	const Vector3 *VoxelChunk::CHUNK_SIZE = new Vector3(VOXEL_SIZE * CHUNK_WIDTH, VOXEL_SIZE * CHUNK_HEIGHT, VOXEL_SIZE * CHUNK_WIDTH);
 
-	Chunk::Chunk(const ChunkMesh &chunkMesh, const bool &generate) :
+	VoxelChunk::VoxelChunk(const ChunkMesh &chunkMesh, const bool &generate) :
 		Component(),
-		m_blocks(new std::vector<std::vector<std::vector<Block*>>>(CHUNK_WIDTH, std::vector<std::vector<Block*>>(CHUNK_WIDTH, std::vector<Block*>(CHUNK_HEIGHT)))),
+		m_blocks(new std::vector<std::vector<std::vector<VoxelBlock*>>>(CHUNK_WIDTH, std::vector<std::vector<VoxelBlock*>>(CHUNK_WIDTH, std::vector<VoxelBlock*>(CHUNK_HEIGHT)))),
 		m_chunkMesh(chunkMesh),
 		m_generate(generate),
 		m_rebuild(true)
@@ -22,13 +22,13 @@ namespace Flounder
 			{
 				for (unsigned int y = 0; y < CHUNK_HEIGHT; y++)
 				{
-					m_blocks->at(x).at(z).at(y) = new Block(this, VOXEL_SIZE * Vector3(x, y, z), "");
+					m_blocks->at(x).at(z).at(y) = new VoxelBlock(this, VOXEL_SIZE * Vector3(x, y, z), "");
 				}
 			}
 		}
 	}
 
-	Chunk::~Chunk()
+	VoxelChunk::~VoxelChunk()
 	{
 		for (auto x : *m_blocks)
 		{
@@ -44,7 +44,7 @@ namespace Flounder
 		delete m_blocks;
 	}
 
-	void Chunk::Update()
+	void VoxelChunk::Update()
 	{
 		if (m_generate)
 		{
@@ -59,15 +59,15 @@ namespace Flounder
 		}
 	}
 
-	void Chunk::Load(LoadedValue *value)
+	void VoxelChunk::Load(LoadedValue *value)
 	{
 	}
 
-	void Chunk::Write(LoadedValue *value)
+	void VoxelChunk::Write(LoadedValue *value)
 	{
 	}
 
-	Block *Chunk::GetBlock(const int &x, const int &y, const int &z)
+	VoxelBlock *VoxelChunk::GetBlock(const int &x, const int &y, const int &z)
 	{
 		if (x >= 0 && x < CHUNK_WIDTH && z >= 0 && z < CHUNK_WIDTH && y >= 0 && y < CHUNK_HEIGHT)
 		{
@@ -77,13 +77,13 @@ namespace Flounder
 		return nullptr;
 	}
 
-	bool Chunk::IsBlockFilled(const int &x, const int &y, const int &z)
+	bool VoxelChunk::IsBlockFilled(const int &x, const int &y, const int &z)
 	{
-		Block *block = GetBlock(x, y, z);
+		VoxelBlock *block = GetBlock(x, y, z);
 		return block != nullptr && !block->GetType().empty();
 	}
 
-	bool Chunk::IsFaceVisible(const int &x, const int &y, const int &z, const BlockFace &faceType)
+	bool VoxelChunk::IsFaceVisible(const int &x, const int &y, const int &z, const BlockFace &faceType)
 	{
 		switch (faceType)
 		{
@@ -104,7 +104,7 @@ namespace Flounder
 		}
 	}
 
-	void Chunk::Generate()
+	void VoxelChunk::Generate()
 	{
 		auto position = *GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
 	//	auto noise = Worlds::Get()->GetNoise();
@@ -141,7 +141,7 @@ namespace Flounder
 		}
 	}
 
-	void Chunk::GenerateMesh()
+	void VoxelChunk::GenerateMesh()
 	{
 #if FLOUNDER_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
@@ -185,7 +185,7 @@ namespace Flounder
 #endif
 	}
 
-	void Chunk::CreateSimpleMesh(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices)
+	void VoxelChunk::CreateSimpleMesh(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices)
 	{
 		int u, v;
 		BlockFace currentFace;
@@ -229,7 +229,7 @@ namespace Flounder
 								continue;
 							}
 
-							Block *block = GetBlock(x, y, z);
+							VoxelBlock *block = GetBlock(x, y, z);
 
 							if (block == nullptr || block->GetType().empty())
 							{
@@ -259,7 +259,7 @@ namespace Flounder
 		}
 	}
 
-	void Chunk::CreateGreedyMesh(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices)
+	void VoxelChunk::CreateGreedyMesh(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices)
 	{
 		// This method is based off of Robert O'Leary's implementation (https://github.com/roboleary/GreedyMesh)
 
@@ -422,18 +422,18 @@ namespace Flounder
 		}
 	}
 
-	std::string Chunk::GetVoxelFace(const int &x, const int &y, const int &z, const BlockFace &faceType)
+	std::string VoxelChunk::GetVoxelFace(const int &x, const int &y, const int &z, const BlockFace &faceType)
 	{
 		if (!IsFaceVisible(x, y, z, faceType))
 		{
 			return "";
 		}
 
-		Block *block = GetBlock(x, y, z);
+		VoxelBlock *block = GetBlock(x, y, z);
 		return block != nullptr ? block->GetType() : "";
 	}
 
-	void Chunk::GenerateQuad(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices,
+	void VoxelChunk::GenerateQuad(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices,
 							 const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
 							 const int &width, const int &height,
 							 const std::string &blockType, const bool &backFace)
@@ -441,7 +441,7 @@ namespace Flounder
 		// Gets where to start indices from.
 		unsigned int indexStart = vertices->size();
 
-		Colour colour = *Block::FindColour(blockType);
+		Colour colour = *VoxelBlock::FindColour(blockType);
 
 		// Calculates the quads normal direction.
 		Vector3 normal = Vector3();

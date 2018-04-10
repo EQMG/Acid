@@ -1,25 +1,25 @@
-﻿#include "Metafile.hpp"
+﻿#include "FontMetafile.hpp"
 
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/FormatString.hpp"
 
 namespace Flounder
 {
-	const unsigned int Metafile::PAD_TOP = 0;
-	const unsigned int Metafile::PAD_LEFT = 1;
-	const unsigned int Metafile::PAD_BOTTOM = 2;
-	const unsigned int Metafile::PAD_RIGHT = 3;
-	const int Metafile::DESIRED_PADDING = 8;
+	const unsigned int FontMetafile::PAD_TOP = 0;
+	const unsigned int FontMetafile::PAD_LEFT = 1;
+	const unsigned int FontMetafile::PAD_BOTTOM = 2;
+	const unsigned int FontMetafile::PAD_RIGHT = 3;
+	const int FontMetafile::DESIRED_PADDING = 8;
 
-	const std::string Metafile::SPLITTER = " ";
-	const std::string Metafile::NUMBER_SEPARATOR = ",";
+	const std::string FontMetafile::SPLITTER = " ";
+	const std::string FontMetafile::NUMBER_SEPARATOR = ",";
 
-	const double Metafile::LINE_HEIGHT = 0.03f;
-	const int Metafile::SPACE_ASCII = 32;
+	const double FontMetafile::LINE_HEIGHT = 0.03f;
+	const int FontMetafile::SPACE_ASCII = 32;
 
-	Metafile::Metafile(const std::string &filename) :
+	FontMetafile::FontMetafile(const std::string &filename) :
 		IResource(),
-		m_metadata(new std::map<int, Character *>()),
+		m_metadata(new std::map<int, FontCharacter *>()),
 		m_values(new std::map<std::string, std::string>()),
 		m_filename(filename),
 		m_verticalPerPixelSize(0.0),
@@ -53,7 +53,7 @@ namespace Flounder
 		}
 	}
 
-	Metafile::~Metafile()
+	FontMetafile::~FontMetafile()
 	{
 		delete m_metadata;
 		delete m_values;
@@ -61,7 +61,7 @@ namespace Flounder
 		delete m_padding;
 	}
 
-	void Metafile::ProcessNextLine(const std::string &line)
+	void FontMetafile::ProcessNextLine(const std::string &line)
 	{
 		m_values->clear();
 		std::vector<std::string> parts = FormatString::Split(line, SPLITTER);
@@ -77,7 +77,7 @@ namespace Flounder
 		}
 	}
 
-	void Metafile::LoadPaddingData()
+	void FontMetafile::LoadPaddingData()
 	{
 		for (auto padding : GetValuesOfVariable("padding"))
 		{
@@ -88,7 +88,7 @@ namespace Flounder
 		m_paddingHeight = m_padding->at(PAD_TOP) + m_padding->at(PAD_BOTTOM);
 	}
 
-	void Metafile::LoadLineSizes()
+	void FontMetafile::LoadLineSizes()
 	{
 		int lineHeightPixels = GetValueOfVariable("lineHeight") - m_paddingHeight;
 		m_verticalPerPixelSize = LINE_HEIGHT / static_cast<double>(lineHeightPixels);
@@ -96,17 +96,17 @@ namespace Flounder
 		m_imageWidth = GetValueOfVariable("scaleW");
 	}
 
-	void Metafile::LoadCharacterData()
+	void FontMetafile::LoadCharacterData()
 	{
-		Character *c = LoadCharacter();
+		FontCharacter *c = LoadCharacter();
 
 		if (c != nullptr)
 		{
-			m_metadata->insert(std::pair<int, Character *>(c->GetId(), c));
+			m_metadata->insert(std::pair<int, FontCharacter *>(c->GetId(), c));
 		}
 	}
 
-	Character *Metafile::LoadCharacter()
+	FontCharacter *FontMetafile::LoadCharacter()
 	{
 		int id = GetValueOfVariable("id");
 
@@ -133,15 +133,15 @@ namespace Flounder
 			m_maxSizeY = quadHeight;
 		}
 
-		return new Character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
+		return new FontCharacter(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
 	}
 
-	int Metafile::GetValueOfVariable(const std::string &variable)
+	int FontMetafile::GetValueOfVariable(const std::string &variable)
 	{
 		return std::stoi(m_values->at(variable).c_str());
 	}
 
-	std::vector<int> Metafile::GetValuesOfVariable(const std::string &variable)
+	std::vector<int> FontMetafile::GetValuesOfVariable(const std::string &variable)
 	{
 		std::vector<std::string> numbers = FormatString::Split(m_values->at(variable), NUMBER_SEPARATOR);
 		std::vector<int> result = std::vector<int>();
@@ -157,7 +157,7 @@ namespace Flounder
 		return result;
 	}
 
-	Character *Metafile::GetCharacter(const int &ascii)
+	FontCharacter *FontMetafile::GetCharacter(const int &ascii)
 	{
 		auto it = m_metadata->find(ascii);
 

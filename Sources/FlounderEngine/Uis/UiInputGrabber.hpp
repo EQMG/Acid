@@ -3,36 +3,36 @@
 #include <functional>
 #include "../Fonts/Text.hpp"
 #include "../Guis/Gui.hpp"
-#include "InputDelay.hpp"
+#include "UiInputDelay.hpp"
 #include "UiObject.hpp"
 
 namespace Flounder
 {
-	class F_EXPORT IGrabber
+	class F_EXPORT IUiGrabber
 	{
 	public:
-		virtual ~IGrabber() = default;
+		virtual ~IUiGrabber() = default;
 
 		virtual int GetCurrent(Text *object) = 0;
 
 		virtual std::string GetValue(const int &value) = 0;
 	};
 
-	class F_EXPORT GrabberJoystick :
-		public IGrabber
+	class F_EXPORT UiGrabberJoystick :
+		public IUiGrabber
 	{
 	private:
 		unsigned int m_joystick;
 	public:
-		GrabberJoystick(const unsigned int &joystick);
+		UiGrabberJoystick(const unsigned int &joystick);
 
 		int GetCurrent(Text *object) override;
 
 		std::string GetValue(const int &value) override;
 	};
 
-	class F_EXPORT GrabberKeyboard :
-		public IGrabber
+	class F_EXPORT UiGrabberKeyboard :
+		public IUiGrabber
 	{
 	public:
 		int GetCurrent(Text *object) override;
@@ -40,8 +40,8 @@ namespace Flounder
 		std::string GetValue(const int &value) override;
 	};
 
-	class F_EXPORT GrabberMouse :
-		public IGrabber
+	class F_EXPORT UiGrabberMouse :
+		public IUiGrabber
 	{
 	public:
 		int GetCurrent(Text *object) override;
@@ -49,7 +49,7 @@ namespace Flounder
 		std::string GetValue(const int &value) override;
 	};
 
-	class F_EXPORT InputGrabber :
+	class F_EXPORT UiInputGrabber :
 		public UiObject
 	{
 	private:
@@ -61,12 +61,12 @@ namespace Flounder
 		Text *m_text;
 		Gui *m_background;
 
-		IGrabber *m_grabber;
+		IUiGrabber *m_grabber;
 
 		std::string m_prefix;
 		int m_value;
 
-		InputDelay *m_inputDelay;
+		UiInputDelay *m_inputDelay;
 		int m_lastKey;
 
 		bool m_selected;
@@ -74,9 +74,9 @@ namespace Flounder
 
 		std::function<void()> m_actionChange;
 	public:
-		InputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IGrabber *grabber, const Justify &justify);
+		UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IUiGrabber *grabber, const FontJustify &justify);
 
-		~InputGrabber();
+		~UiInputGrabber();
 
 		void UpdateObject() override;
 

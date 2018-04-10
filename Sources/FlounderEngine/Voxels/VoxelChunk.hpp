@@ -2,7 +2,7 @@
 
 #include "../Objects/Component.hpp"
 #include "../Meshes/Mesh.hpp"
-#include "Block.hpp"
+#include "VoxelBlock.hpp"
 
 namespace Flounder
 {
@@ -12,11 +12,11 @@ namespace Flounder
 		MeshSimple = 1
 	};
 
-	class F_EXPORT Chunk :
+	class F_EXPORT VoxelChunk :
 		public Component
 	{
 	private:
-		std::vector<std::vector<std::vector<Block*>>> *m_blocks;
+		std::vector<std::vector<std::vector<VoxelBlock*>>> *m_blocks;
 		ChunkMesh m_chunkMesh;
 		bool m_generate;
 		bool m_rebuild;
@@ -26,9 +26,9 @@ namespace Flounder
 		static const float VOXEL_SIZE;
 		static const Vector3 *CHUNK_SIZE;
 
-		Chunk(const ChunkMesh &chunkMesh = MeshGreedy, const bool &generate = false);
+		VoxelChunk(const ChunkMesh &chunkMesh = MeshGreedy, const bool &generate = false);
 
-		~Chunk();
+		~VoxelChunk();
 
 		void Update() override;
 
@@ -38,7 +38,7 @@ namespace Flounder
 
 		std::string GetName() const override { return "Chunk"; };
 
-		Block *GetBlock(const int &x, const int &y, const int &z);
+		VoxelBlock *GetBlock(const int &x, const int &y, const int &z);
 
 		bool IsBlockFilled(const int &x, const int &y, const int &z);
 
