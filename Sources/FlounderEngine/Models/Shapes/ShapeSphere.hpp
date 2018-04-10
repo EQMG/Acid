@@ -10,7 +10,7 @@ namespace Flounder
 		public Model
 	{
 	public:
-		static ShapeSphere *Resource(const int &latitudeBands, const int &longitudeBands, const float &radius)
+		static ShapeSphere *Resource(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius)
 		{
 			IResource *resource = Resources::Get()->Get(ToFilename(latitudeBands, longitudeBands, radius));
 
@@ -33,11 +33,11 @@ namespace Flounder
 			return Resource(latitudeBands, longitudeBands, radius);
 		}
 
-		ShapeSphere(const int &latitudeBands, const int &longitudeBands, const float &radius);
+		ShapeSphere(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius);
 
 		~ShapeSphere();
 
 	private:
-		static std::string ToFilename(const int &latitudeBands, const int &longitudeBands, const float &radius);
+		static std::string ToFilename(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius);
 	};
 }

@@ -4,30 +4,28 @@
 
 namespace Flounder
 {
-	ShapeSphere::ShapeSphere(const int &latitudeBands, const int &longitudeBands, const float &radius) :
+	ShapeSphere::ShapeSphere(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius) :
 		Model()
 	{
 		std::vector<IVertex*> vertices = std::vector<IVertex*>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
-		for (int latNumber = 0; latNumber <= latitudeBands; latNumber++)
+		for (unsigned int i = 0; i < longitudeBands + 1; i++)
 		{
-			float theta = latNumber * PI / latitudeBands;
-			float sinTheta = std::sin(theta);
-			float cosTheta = std::cos(theta);
+			float iDivLong = (float)i / (float)longitudeBands;
+			float theta = (i == 0 || i == longitudeBands) ? 0.0f : iDivLong * 2.0f * PI;
 
-			for (int longNumber = 0; longNumber <= longitudeBands; longNumber++)
+			for (unsigned int j = 0; j < latitudeBands + 1; j++)
 			{
-				float phi = longNumber * 2.0f * PI / longitudeBands;
-				float sinPhi = std::sin(phi);
-				float cosPhi = std::cos(phi);
+				float jDivLat = (float)j / (float)latitudeBands;
+				float phi = jDivLat * 2.0f * PI;
 
 				VertexModel *vertex = new VertexModel();
-				vertex->m_normal.m_x = cosPhi * sinTheta;
-				vertex->m_normal.m_y = cosTheta;
-				vertex->m_normal.m_z = sinPhi * sinTheta;
-				vertex->m_uv.m_x = 1.0f - (longNumber / longitudeBands);
-				vertex->m_uv.m_y = 1.0f - (latNumber / latitudeBands);
+				vertex->m_normal.m_x = std::cos(phi) * std::sin(theta);
+				vertex->m_normal.m_y = std::cos(theta);
+				vertex->m_normal.m_z = std::sin(phi) * std::sin(theta);
+				vertex->m_uv.m_x = 1.0f - jDivLat;
+				vertex->m_uv.m_y = 1.0f - iDivLong;
 				vertex->m_position.m_x = radius * vertex->m_normal.m_x;
 				vertex->m_position.m_y = radius * vertex->m_normal.m_y;
 				vertex->m_position.m_z = radius * vertex->m_normal.m_z;
@@ -36,20 +34,20 @@ namespace Flounder
 			}
 		}
 
-		for (int latNumber = 0; latNumber < latitudeBands; latNumber++)
+		for (unsigned int i = 0; i < longitudeBands; i++)
 		{
-			for (int longNumber = 0; longNumber < longitudeBands; longNumber++)
+			for (unsigned int j = 0; j < latitudeBands; j++)
 			{
-				uint32_t first = (latNumber * (longitudeBands + 1)) + longNumber;
-				uint32_t second = first + longitudeBands + 1;
+				uint32_t first = j + ((latitudeBands + 1) * i);
+				uint32_t second = j + ((latitudeBands + 1) * (i + 1));
 
 				indices.push_back(first);
-				indices.push_back(second);
-				indices.push_back(first + 1);
-
-				indices.push_back(second);
 				indices.push_back(second + 1);
+				indices.push_back(second);
+
+				indices.push_back(first);
 				indices.push_back(first + 1);
+				indices.push_back(second + 1);
 			}
 		}
 
@@ -61,7 +59,7 @@ namespace Flounder
 	{
 	}
 
-	std::string ShapeSphere::ToFilename(const int &latitudeBands, const int &longitudeBands, const float &radius)
+	std::string ShapeSphere::ToFilename(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius)
 	{
 		return "Sphere_" + std::to_string(latitudeBands) + "_" + std::to_string(longitudeBands) + "_" +
 			std::to_string(radius);

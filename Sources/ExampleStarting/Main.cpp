@@ -10,6 +10,7 @@
 #include <Scenes/FpsPlayer.hpp>
 #include "Configs/ConfigManager.hpp"
 #include "Scenes/Scene1.hpp"
+#include "Scenes/Scene2.hpp"
 #include "ManagerRender.hpp"
 
 using namespace Demo;
@@ -41,7 +42,7 @@ int main(int argc, char **argv)
 
 	Renderer::Get()->SetManager(new ManagerRender());
 
-	Scenes::Get()->SetScene(new Scene1());
+	Scenes::Get()->SetScene(new Scene2());
 
 	// Runs the engine loop.
 	const int exitCode = m_engine->Run();

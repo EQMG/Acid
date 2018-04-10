@@ -77,7 +77,7 @@ namespace Flounder
 #endif
 	}
 
-	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage) :
+	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels) :
 		IResource(),
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_hasAlpha(false),
@@ -100,11 +100,14 @@ namespace Flounder
 		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
-		float *pixels = new float[width * height]();
-
-		for (uint32_t i = 0; i < width * height; i++)
+		if (pixels == nullptr)
 		{
-			pixels[i] = 0.0f;
+			pixels = new float[width * height]();
+
+			for (uint32_t i = 0; i < width * height; i++)
+			{
+				pixels[i] = 0.0f;
+			}
 		}
 
 		void *data;
