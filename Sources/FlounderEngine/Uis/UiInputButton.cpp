@@ -1,16 +1,16 @@
-﻿#include "InputButton.hpp"
+﻿#include "UiInputButton.hpp"
 
 #include "../Scenes/Scenes.hpp"
 #include "../Maths/Visual/DriverSlide.hpp"
 
 namespace Flounder
 {
-	const float InputButton::CHANGE_TIME = 0.1f;
-	const float InputButton::SCALE_NORMAL = 1.6f;
-	const float InputButton::SCALE_SELECTED = 1.8f;
-	const Colour *InputButton::COLOUR_NORMAL = new Colour("#000000");
+	const float UiInputButton::CHANGE_TIME = 0.1f;
+	const float UiInputButton::SCALE_NORMAL = 1.6f;
+	const float UiInputButton::SCALE_SELECTED = 1.8f;
+	const Colour *UiInputButton::COLOUR_NORMAL = new Colour("#000000");
 
-	InputButton::InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const Justify &justify) :
+	UiInputButton::UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string, const FontJustify &justify) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(new Text(this, UiBound(position, "Centre", true), SCALE_NORMAL, string, Uis::Get()->m_proximaNova->GetRegular(), justify, 0.36f)),
 		m_background(new Gui(this, UiBound(position, "Centre", true, true, Vector2(0.36f, 0.05f)), Texture::Resource("Resources/Guis/Button.png"), 1)),
@@ -18,13 +18,13 @@ namespace Flounder
 	{
 	}
 
-	InputButton::~InputButton()
+	UiInputButton::~UiInputButton()
 	{
 		delete m_text;
 		delete m_background;
 	}
 
-	void InputButton::UpdateObject()
+	void UiInputButton::UpdateObject()
 	{
 		// Mouse over updates.
 		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && !m_mouseOver)

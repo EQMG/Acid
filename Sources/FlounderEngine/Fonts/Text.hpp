@@ -10,8 +10,8 @@
 #include "../Uis/UiObject.hpp"
 #include "../Uis/Uis.hpp"
 #include "FontType.hpp"
-#include "Justify.hpp"
-#include "Line.hpp"
+#include "FontJustify.hpp"
+#include "FontLine.hpp"
 
 namespace Flounder
 {
@@ -29,7 +29,7 @@ namespace Flounder
 
 		std::string m_string;
 		std::string m_newString;
-		Justify m_justify;
+		FontJustify m_justify;
 
 		FontType *m_fontType;
 		float m_maxWidth;
@@ -59,7 +59,7 @@ namespace Flounder
 		/// <param name="maxWidth"> The maximum length of a line of this text. </param>
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
-		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType = Uis::Get()->m_proximaNova->GetRegular(), const Justify &justify = JustifyLeft, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
+		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType = Uis::Get()->m_proximaNova->GetRegular(), const FontJustify &justify = JustifyLeft, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		/// <summary>
 		/// Deconstructor for the text.
@@ -92,7 +92,7 @@ namespace Flounder
 		/// Gets how the text should justify.
 		/// </summary>
 		/// <returns> How the text should justify. </returns>
-		Justify GetTextJustify() const { return m_justify; }
+		FontJustify GetTextJustify() const { return m_justify; }
 
 		/// <summary>
 		/// Gets the maximum length of a line of this text.
@@ -222,13 +222,13 @@ namespace Flounder
 		/// <param name="text"> The unloaded text. </param>
 		static void LoadText(Text *object);
 
-		static std::vector<Line> CreateStructure(Text *object);
+		static std::vector<FontLine> CreateStructure(Text *object);
 
-		static void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, Text *object);
+		static void CompleteStructure(std::vector<FontLine> &lines, FontLine &currentLine, const FontWord &currentWord, Text *object);
 
-		static std::vector<IVertex*> CreateQuad(Text *object, std::vector<Line> lines);
+		static std::vector<IVertex*> CreateQuad(Text *object, std::vector<FontLine> lines);
 
-		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<IVertex*> &vertices);
+		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const FontCharacter &character, std::vector<IVertex*> &vertices);
 
 		static void AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex*> &vertices);
 

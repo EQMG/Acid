@@ -1,6 +1,6 @@
 {
   "Mesh": {
-    "Model": "Cube_1.0_1.0_1.0"
+    "Model": "Sphere_24_24_1.0"
   },
   "MaterialDefault": {
     "Base Colour": "#FFCC00",
@@ -22,8 +22,8 @@
       "z": 0.0
     }
   },
-  "CelestialBody": {
-    "Type": 0
+  "Planet": {
+    "Apoapsis": 0.0
   },
   "EntityRender": {
   }

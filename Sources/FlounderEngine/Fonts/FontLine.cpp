@@ -1,21 +1,21 @@
-﻿#include "Line.hpp"
+﻿#include "FontLine.hpp"
 
 namespace Flounder
 {
-	Line::Line(const double &spaceWidth, const double &maxLength) :
+	FontLine::FontLine(const double &spaceWidth, const double &maxLength) :
 		m_maxLength(maxLength),
 		m_spaceSize(spaceWidth),
-		m_words(std::vector<Word>()),
+		m_words(std::vector<FontWord>()),
 		m_currentWordsLength(0.0),
 		m_currentLineLength(0.0)
 	{
 	}
 
-	Line::~Line()
+	FontLine::~FontLine()
 	{
 	}
 
-	bool Line::AddWord(const Word &word)
+	bool FontLine::AddWord(const FontWord &word)
 	{
 		double additionalLength = word.GetWidth();
 		additionalLength += !m_words.empty() ? m_spaceSize : 0.0;

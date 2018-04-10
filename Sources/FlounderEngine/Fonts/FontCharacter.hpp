@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// Simple data structure class holding information about a certain glyph in the font texture atlas. All sizes are for a font-size of 1.
 	/// </summary>
-	class F_EXPORT Character
+	class F_EXPORT FontCharacter
 	{
 	private:
 		int m_id;
@@ -34,12 +34,12 @@ namespace Flounder
 		/// <param name="sizeX"> The width of the character's quad in screen space. </param>
 		/// <param name="sizeY"> The height of the character's quad in screen space. </param>
 		/// <param name="advanceX"> How far in pixels the cursor should advance after adding this character. </param>
-		Character(const int &id, const double &textureCoordX, const double &textureCoordY, const double &textureSizeX, const double &textureSizeY, const double &offsetX, const double &offsetY, const double &sizeX, const double &sizeY, const double &advanceX);
+		FontCharacter(const int &id, const double &textureCoordX, const double &textureCoordY, const double &textureSizeX, const double &textureSizeY, const double &offsetX, const double &offsetY, const double &sizeX, const double &sizeY, const double &advanceX);
 
 		/// <summary>
 		/// Deconstructor for the character.
 		/// </summary>
-		~Character();
+		~FontCharacter();
 
 		int GetId() const { return m_id; }
 

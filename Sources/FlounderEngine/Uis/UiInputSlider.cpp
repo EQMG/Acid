@@ -1,16 +1,16 @@
-﻿#include "InputSlider.hpp"
+﻿#include "UiInputSlider.hpp"
 
 #include "../Scenes/Scenes.hpp"
 #include "../Maths/Visual/DriverSlide.hpp"
 
 namespace Flounder
 {
-	const float InputSlider::CHANGE_TIME = 0.1f;
-	const float InputSlider::SCALE_NORMAL = 1.6f;
-	const float InputSlider::SCALE_SELECTED = 1.8f;
-	const Colour *InputSlider::COLOUR_NORMAL = new Colour("#000000");
+	const float UiInputSlider::CHANGE_TIME = 0.1f;
+	const float UiInputSlider::SCALE_NORMAL = 1.6f;
+	const float UiInputSlider::SCALE_SELECTED = 1.8f;
+	const Colour *UiInputSlider::COLOUR_NORMAL = new Colour("#000000");
 
-	InputSlider::InputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const Justify &justify) :
+	UiInputSlider::UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const FontJustify &justify) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(nullptr),
 		//new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), string, Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
@@ -29,7 +29,7 @@ namespace Flounder
 		SetValue(value);
 	}
 
-	InputSlider::~InputSlider()
+	UiInputSlider::~UiInputSlider()
 	{
 		delete m_text;
 		delete m_background;
@@ -38,7 +38,7 @@ namespace Flounder
 		delete m_timerChange;
 	}
 
-	void InputSlider::UpdateObject()
+	void UiInputSlider::UpdateObject()
 	{
 		// Click updates.
 		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f &&

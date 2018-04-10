@@ -6,7 +6,7 @@
 
 namespace Flounder
 {
-	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType, const Justify &justify, const float &maxWidth, const float &kerning, const float &leading) :
+	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType, const FontJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
 		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
 		m_descriptorSet(nullptr),
@@ -185,7 +185,7 @@ namespace Flounder
 	void Text::LoadText(Text *object)
 	{
 		// Creates mesh data.
-		std::vector<Line> lines = CreateStructure(object);
+		std::vector<FontLine> lines = CreateStructure(object);
 		std::vector<IVertex*> vertices = CreateQuad(object, lines);
 
 		// Calculates the bounds and normalizes the vertices.
@@ -198,11 +198,11 @@ namespace Flounder
 		object->GetRectangle()->m_dimensions->Set(bounding.m_x, bounding.m_y);
 	}
 
-	std::vector<Line> Text::CreateStructure(Text *object)
+	std::vector<FontLine> Text::CreateStructure(Text *object)
 	{
-		std::vector<Line> lines = std::vector<Line>();
-		Line currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
-		Word currentWord = Word();
+		std::vector<FontLine> lines = std::vector<FontLine>();
+		FontLine currentLine = FontLine(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
+		FontWord currentWord = FontWord();
 
 		std::string formattedText = FormatString::Replace(object->GetText(), "\t", "    ");
 		std::vector<std::string> textLines = FormatString::Split(formattedText, "\n", true);
@@ -218,22 +218,22 @@ namespace Flounder
 			{
 				int ascii = static_cast<int>(c);
 
-				if (ascii == Metafile::SPACE_ASCII)
+				if (ascii == FontMetafile::SPACE_ASCII)
 				{
 					bool added = currentLine.AddWord(currentWord);
 
 					if (!added)
 					{
 						lines.push_back(currentLine);
-						currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
+						currentLine = FontLine(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
 						currentLine.AddWord(currentWord);
 					}
 
-					currentWord = Word();
+					currentWord = FontWord();
 					continue;
 				}
 
-				Character *character = object->GetFontType()->GetMetadata()->GetCharacter(ascii);
+				FontCharacter *character = object->GetFontType()->GetMetadata()->GetCharacter(ascii);
 
 				if (character != nullptr)
 				{
@@ -244,7 +244,7 @@ namespace Flounder
 			if (i != textLines.size() - 1)
 			{
 				lines.push_back(currentLine);
-				currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
+				currentLine = FontLine(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
 				currentLine.AddWord(currentWord);
 			}
 		}
@@ -253,21 +253,21 @@ namespace Flounder
 		return lines;
 	}
 
-	void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, Text *object)
+	void Text::CompleteStructure(std::vector<FontLine> &lines, FontLine &currentLine, const FontWord &currentWord, Text *object)
 	{
 		bool added = currentLine.AddWord(currentWord);
 
 		if (!added)
 		{
 			lines.push_back(currentLine);
-			currentLine = Line(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
+			currentLine = FontLine(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
 			currentLine.AddWord(currentWord);
 		}
 
 		lines.push_back(currentLine);
 	}
 
-	std::vector<IVertex*> Text::CreateQuad(Text *object, std::vector<Line> lines)
+	std::vector<IVertex*> Text::CreateQuad(Text *object, std::vector<FontLine> lines)
 	{
 		std::vector<IVertex*> vertices = std::vector<IVertex*>();
 		//	object->m_numberLines = static_cast<int>(lines.size());
@@ -312,14 +312,14 @@ namespace Flounder
 			}
 
 			cursorX = 0.0;
-			cursorY += object->m_leading + Metafile::LINE_HEIGHT;
+			cursorY += object->m_leading + FontMetafile::LINE_HEIGHT;
 			lineOrder--;
 		}
 
 		return vertices;
 	}
 
-	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const Character &character, std::vector<IVertex*> &vertices)
+	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const FontCharacter &character, std::vector<IVertex*> &vertices)
 	{
 		const double vertexX = cursorX + character.GetOffsetX();
 		const double vertexY = cursorY + character.GetOffsetY();

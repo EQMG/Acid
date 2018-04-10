@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Uis/UiObject.hpp>
-#include <Uis/InputButton.hpp>
+#include <Uis/UiInputButton.hpp>
 #include <Guis/Gui.hpp>
 
 using namespace Flounder;
@@ -13,7 +13,7 @@ namespace Demo
 	{
 	private:
 		Gui *m_background;
-		InputButton *m_button1;
+		UiInputButton *m_button1;
 	public:
 		ContentExit(UiObject *parent);
 

@@ -1,4 +1,4 @@
-﻿#include "InputGrabber.hpp"
+﻿#include "UiInputGrabber.hpp"
 
 #include "../Devices/Mouse.hpp"
 #include "../Devices/Keyboard.hpp"
@@ -8,18 +8,18 @@
 
 namespace Flounder
 {
-	const float InputGrabber::CHANGE_TIME = 0.1f;
-	const float InputGrabber::SCALE_NORMAL = 1.6f;
-	const float InputGrabber::SCALE_SELECTED = 1.8f;
-	const Colour *InputGrabber::COLOUR_NORMAL = new Colour("#000000");
+	const float UiInputGrabber::CHANGE_TIME = 0.1f;
+	const float UiInputGrabber::SCALE_NORMAL = 1.6f;
+	const float UiInputGrabber::SCALE_SELECTED = 1.8f;
+	const Colour *UiInputGrabber::COLOUR_NORMAL = new Colour("#000000");
 
-	GrabberJoystick::GrabberJoystick(const unsigned int &joystick) :
-		IGrabber(),
+	UiGrabberJoystick::UiGrabberJoystick(const unsigned int &joystick) :
+		IUiGrabber(),
 		m_joystick(joystick)
 	{
 	}
 
-	int GrabberJoystick::GetCurrent(Text *object)
+	int UiGrabberJoystick::GetCurrent(Text *object)
 	{
 		int key = -1;
 
@@ -47,12 +47,12 @@ namespace Flounder
 		return key;
 	}
 
-	std::string GrabberJoystick::GetValue(const int &value)
+	std::string UiGrabberJoystick::GetValue(const int &value)
 	{
 		return std::to_string(value);
 	}
 
-	int GrabberKeyboard::GetCurrent(Text *object)
+	int UiGrabberKeyboard::GetCurrent(Text *object)
 	{
 		int key = Keyboard::Get()->GetChar();
 
@@ -64,12 +64,12 @@ namespace Flounder
 		return key;
 	}
 
-	std::string GrabberKeyboard::GetValue(const int &value)
+	std::string UiGrabberKeyboard::GetValue(const int &value)
 	{
 		return std::string(1, static_cast<char>(value));
 	}
 
-	int GrabberMouse::GetCurrent(Text *object)
+	int UiGrabberMouse::GetCurrent(Text *object)
 	{
 		int key = -1;
 
@@ -94,12 +94,12 @@ namespace Flounder
 		return key;
 	}
 
-	std::string GrabberMouse::GetValue(const int &value)
+	std::string UiGrabberMouse::GetValue(const int &value)
 	{
 		return std::to_string(value);
 	}
 
-	InputGrabber::InputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IGrabber *grabber, const Justify &justify) :
+	UiInputGrabber::UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IUiGrabber *grabber, const FontJustify &justify) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(nullptr),
 		//new Text(this, position, SCALE_NORMAL, Vector3(0.5f, 0.5f, RelativeScreen), prefix + grabber->GetValue(value), Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
@@ -108,7 +108,7 @@ namespace Flounder
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),
-		m_inputDelay(new InputDelay()),
+		m_inputDelay(new UiInputDelay()),
 		m_lastKey(0),
 		m_selected(false),
 		m_mouseOver(false),
@@ -116,7 +116,7 @@ namespace Flounder
 	{
 	}
 
-	InputGrabber::~InputGrabber()
+	UiInputGrabber::~UiInputGrabber()
 	{
 		delete m_text;
 		delete m_background;
@@ -126,7 +126,7 @@ namespace Flounder
 		delete m_inputDelay;
 	}
 
-	void InputGrabber::UpdateObject()
+	void UiInputGrabber::UpdateObject()
 	{
 		if (m_selected)
 		{
@@ -188,13 +188,13 @@ namespace Flounder
 		//m_background->GetPosition()->Set(*m_text->GetPosition());
 	}
 
-	void InputGrabber::SetPrefix(const std::string &prefix)
+	void UiInputGrabber::SetPrefix(const std::string &prefix)
 	{
 		m_prefix = prefix;
 		m_text->SetText(prefix + m_grabber->GetValue(m_value));
 	}
 
-	void InputGrabber::SetValue(const int &value)
+	void UiInputGrabber::SetValue(const int &value)
 	{
 		m_value = value;
 		m_text->SetText(m_prefix + m_grabber->GetValue(value));

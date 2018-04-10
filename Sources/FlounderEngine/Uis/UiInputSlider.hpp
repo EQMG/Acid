@@ -9,7 +9,7 @@
 
 namespace Flounder
 {
-	class F_EXPORT InputSlider :
+	class F_EXPORT UiInputSlider :
 		public UiObject
 	{
 	private:
@@ -33,9 +33,9 @@ namespace Flounder
 		Timer *m_timerChange;
 		std::function<void()> m_actionChange;
 	public:
-		InputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const Justify &justify);
+		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const FontJustify &justify);
 
-		~InputSlider();
+		~UiInputSlider();
 
 		void UpdateObject() override;
 
