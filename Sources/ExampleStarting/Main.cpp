@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 
 	Renderer::Get()->SetManager(new ManagerRender());
 
-	Scenes::Get()->SetScene(new Scene2());
+	Scenes::Get()->SetScene(new Scene1());
 
 	// Runs the engine loop.
 	const int exitCode = m_engine->Run();

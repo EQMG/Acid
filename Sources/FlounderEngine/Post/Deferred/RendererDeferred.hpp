@@ -19,7 +19,6 @@ namespace Flounder
 		Model *m_model;
 
 		Texture *m_brdflut;
-		Cubemap *m_environment;
 	public:
 		RendererDeferred(const GraphicsStage &graphicsStage);
 
