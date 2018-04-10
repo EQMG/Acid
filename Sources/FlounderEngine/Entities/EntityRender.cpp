@@ -30,9 +30,9 @@ namespace Flounder
 			return;
 		}
 
-		auto material = materialDefault->GetMaterial();
+		/*auto material = materialDefault->GetMaterial();
 
-		/*std::vector<Matrix4> jointTransforms = {};
+		std::vector<Matrix4> jointTransforms = {};
 		auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
 
 		if (meshAnimated != nullptr)
