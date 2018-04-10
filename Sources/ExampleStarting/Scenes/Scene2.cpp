@@ -39,18 +39,19 @@ namespace Demo
 	{
 	//	// Camera.
 	//	GameObject *cameraObject = new GameObject(Transform(Vector3(), Vector3(), 1.0f));
-	//	cameraObject->AddComponent(new FpsCamera());
+	//	cameraObject->SetName("Camera");
+	//	cameraObject->AddComponent<FpsCamera>();
 
 		// Player.
 		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f), 1.0f));
-		playerObject->SetName("PlayerFps");
-		playerObject->AddComponent(new FpsPlayer());
+		playerObject->SetName("Player");
+		playerObject->AddComponent<FpsPlayer>();
 
 		// Skybox.
 		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
-		skyboxObject->SetName("SkyboxStars");
-		skyboxObject->AddComponent(new Mesh(ShapeSphere::Resource(6, 6, 1.0f)));
-		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Chapel", ".png"), false));
+		skyboxObject->SetName("SkyboxChapel");
+		skyboxObject->AddComponent<Mesh>(ShapeSphere::Resource(6, 6, 1.0f));
+		skyboxObject->AddComponent<SkyboxRender>(Cubemap::Resource("Resources/Skyboxes/Chapel", ".png"));
 
 		// Entities.
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));

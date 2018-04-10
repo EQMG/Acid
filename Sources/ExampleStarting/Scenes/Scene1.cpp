@@ -51,21 +51,22 @@ namespace Demo
 	{
 	//	// Camera.
 	//	GameObject *cameraObject = new GameObject(Transform(Vector3(), Vector3(), 1.0f));
-	//	cameraObject->AddComponent(new FpsCamera());
+	//	cameraObject->SetName("Camera");
+	//	cameraObject->AddComponent<FpsCamera>();
 
 		// Player.
 		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f), 1.0f));
-		playerObject->SetName("PlayerFps");
-		playerObject->AddComponent(new FpsPlayer());
+		playerObject->SetName("Player");
+		playerObject->AddComponent<FpsPlayer>();
 
 		// Skybox.
 		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
-		skyboxObject->SetName("SkyboxStars");
-		skyboxObject->AddComponent(new Mesh(ShapeSphere::Resource(6, 6, 1.0f)));
-		skyboxObject->AddComponent(new SkyboxRender(Cubemap::Resource("Resources/Skyboxes/Clouds", ".png")));
+		skyboxObject->SetName("SkyboxClouds");
+		skyboxObject->AddComponent<Mesh>(ShapeSphere::Resource(6, 6, 1.0f));
+		skyboxObject->AddComponent<SkyboxRender>(Cubemap::Resource("Resources/Skyboxes/Clouds", ".png"));
 
 		// Terrains.
-		const int n = 4;
+		const int n = 0;
 
 		for (int j = -n; j <= n; j++)
 		{
@@ -74,21 +75,21 @@ namespace Demo
 				GameObject *terrainObject = new GameObject(Transform(Vector3(
 					static_cast<float>(j) * TerrainRender::SIDE_LENGTH, 0.0f,
 					static_cast<float>(w) * TerrainRender::SIDE_LENGTH)));
-				terrainObject->SetName("Terrain");
-				terrainObject->AddComponent(new Mesh());
-			//	terrainObject->AddComponent(new MaterialDefault());
-				terrainObject->AddComponent(new Rigidbody());
-				terrainObject->AddComponent(new LodBehaviour());
-				terrainObject->AddComponent(new TerrainRender());
-			//	terrainObject->AddComponent(new ShadowRender());
+				terrainObject->SetName("Terrain_" + std::to_string(j) + "_" + std::to_string(w));
+				terrainObject->AddComponent<Mesh>();
+			//	terrainObject->AddComponent<MaterialDefault>();
+				terrainObject->AddComponent<Rigidbody>();
+				terrainObject->AddComponent<LodBehaviour>();
+				terrainObject->AddComponent<TerrainRender>();
+			//	terrainObject->AddComponent<ShadowRender>();
 			}
 		}
 
 		// Waters.
 		GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
-		waterObject->SetName("Water");
-		waterObject->AddComponent(new Mesh(new MeshWater()));
-		waterObject->AddComponent(new WaterRender());
+		waterObject->SetName("Water_0_0");
+		waterObject->AddComponent<Mesh>(new MeshWater());
+		waterObject->AddComponent<WaterRender>();
 
 		// Planets.
 		/*GameObject *planet = new GameObject(Transform(Vector3()));
@@ -139,11 +140,9 @@ namespace Demo
 		}
 
 		// Music.
-/*#ifdef FLOUNDER_CONFIG_RELEASE
-		Sound *music1 = new Sound("Resources/Music/Outpost.ogg", 0.9f);
-		//music1->SetPosition(Vector3(0.0f, 7.0f, 0.0f));
-		music1->Loop();
-#endif*/
+		/*Sound *music1 = new Sound("Resources/Music/Outpost.ogg", 0.9f);
+		music1->SetPosition(Vector3(0.0f, 15.0f, 0.0f));
+		music1->Loop();*/
 
 		// Particles.
 		/*GameObject *particlesObject = new GameObject(Transform(Vector3(0.0f, 20.0f, 0.0f)));

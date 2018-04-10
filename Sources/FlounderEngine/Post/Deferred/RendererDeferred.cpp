@@ -1,3 +1,4 @@
+#include <Skyboxes/SkyboxRender.hpp>
 #include "RendererDeferred.hpp"
 
 #include "../../Scenes/Scenes.hpp"
@@ -17,8 +18,7 @@ namespace Flounder
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({ "Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag" },
 			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { { "USE_IBL" } })),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f)),
-		m_brdflut(Texture::Resource("Resources/BrdfLut.png")),
-		m_environment(Cubemap::Resource("Resources/Skyboxes/Chapel", ".png"))
+		m_brdflut(Texture::Resource("Resources/BrdfLut.png"))
 	{
 	}
 
@@ -32,6 +32,9 @@ namespace Flounder
 
 	void RendererDeferred::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
+		auto skyboxRender = Scenes::Get()->GetStructure()->GetComponent<SkyboxRender>();
+		Cubemap *environment = (skyboxRender == nullptr) ? nullptr : skyboxRender->GetCubemap();
+
 		// Updates descriptors.
 		if (m_descriptorSet == nullptr)
 		{
@@ -47,7 +50,7 @@ namespace Flounder
 			m_pipeline->GetTexture(4),
 			m_pipeline->GetTexture(0, 0),
 			m_brdflut,
-			m_environment
+			environment
 		});
 		/*m_descriptorSet->UpdateMap({
 			{"UboScene", m_uniformScene},
