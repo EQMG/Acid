@@ -4,7 +4,7 @@ namespace Flounder
 {
 	FontType::FontType(const std::string &textureFile, const std::string &fontFile) :
 		m_texture(Texture::Resource(textureFile)),
-		m_metadata(Metafile::Resource(fontFile))
+		m_metadata(FontMetafile::Resource(fontFile))
 	{
 	}
 

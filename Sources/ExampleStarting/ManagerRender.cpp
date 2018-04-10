@@ -23,7 +23,7 @@ namespace Demo
 			Attachment(0, TypeDepth), // depth
 			Attachment(1, TypeSwapchain), // swapchain
 			Attachment(2, TypeImage, VK_FORMAT_R8G8B8A8_UNORM), // colours
-			Attachment(3, TypeImage, VK_FORMAT_R16G16_SINT), // normals
+			Attachment(3, TypeImage, VK_FORMAT_R16G16_UNORM), // normals
 			Attachment(4, TypeImage, VK_FORMAT_R8G8B8A8_UNORM) // materials
 		}, // images
 		{

@@ -1,4 +1,4 @@
-﻿#include "InputText.hpp"
+﻿#include "UiInputText.hpp"
 
 #include "../Devices/Keyboard.hpp"
 #include "../Scenes/Scenes.hpp"
@@ -6,12 +6,12 @@
 
 namespace Flounder
 {
-	const float InputText::CHANGE_TIME = 0.1f;
-	const float InputText::SCALE_NORMAL = 1.6f;
-	const float InputText::SCALE_SELECTED = 1.8f;
-	const Colour *InputText::COLOUR_NORMAL = new Colour("#000000");
+	const float UiInputText::CHANGE_TIME = 0.1f;
+	const float UiInputText::SCALE_NORMAL = 1.6f;
+	const float UiInputText::SCALE_SELECTED = 1.8f;
+	const Colour *UiInputText::COLOUR_NORMAL = new Colour("#000000");
 
-	InputText::InputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const Justify &justify) :
+	UiInputText::UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const FontJustify &justify) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(nullptr),
 		//new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), prefix + value, Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
@@ -19,7 +19,7 @@ namespace Flounder
 		//new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("Resources/Guis/Button.png"), 1)),
 		m_prefix(prefix),
 		m_value(value),
-		m_inputDelay(new InputDelay()),
+		m_inputDelay(new UiInputDelay()),
 		m_lastKey(0),
 		m_selected(false),
 		m_mouseOver(false),
@@ -28,7 +28,7 @@ namespace Flounder
 		m_background->SetColourOffset(Colour());
 	}
 
-	InputText::~InputText()
+	UiInputText::~UiInputText()
 	{
 		delete m_text;
 		delete m_background;
@@ -36,7 +36,7 @@ namespace Flounder
 		delete m_inputDelay;
 	}
 
-	void InputText::UpdateObject()
+	void UiInputText::UpdateObject()
 	{
 		if (m_selected)
 		{
@@ -131,13 +131,13 @@ namespace Flounder
 		//*m_background->GetPosition() = *m_text->GetPosition));
 	}
 
-	void InputText::SetPrefix(const std::string &prefix)
+	void UiInputText::SetPrefix(const std::string &prefix)
 	{
 		m_prefix = prefix;
 		m_text->SetText(prefix + m_value);
 	}
 
-	void InputText::SetValue(const std::string &value)
+	void UiInputText::SetValue(const std::string &value)
 	{
 		m_value = value;
 		m_text->SetText(m_prefix + value);

@@ -4,18 +4,18 @@
 #include <vector>
 #include <map>
 #include "../Resources/Resources.hpp"
-#include "Character.hpp"
+#include "FontCharacter.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// Provides functionality for getting the values from a font file.
 	/// </summary>
-	class F_EXPORT Metafile :
+	class F_EXPORT FontMetafile :
 		public IResource
 	{
 	private:
-		std::map<int, Character *> *m_metadata;
+		std::map<int, FontCharacter *> *m_metadata;
 		std::map<std::string, std::string> *m_values;
 
 		std::string m_filename;
@@ -28,16 +28,16 @@ namespace Flounder
 		int m_paddingHeight;
 		double m_maxSizeY;
 	public:
-		static Metafile *Resource(const std::string &filename)
+		static FontMetafile *Resource(const std::string &filename)
 		{
 			IResource *resource = Resources::Get()->Get(filename);
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Metafile *>(resource);
+				return dynamic_cast<FontMetafile *>(resource);
 			}
 
-			Metafile *result = new Metafile(filename);
+			FontMetafile *result = new FontMetafile(filename);
 			Resources::Get()->Add(dynamic_cast<IResource *>(result));
 			return result;
 		}
@@ -58,14 +58,14 @@ namespace Flounder
 		/// Creates a new meta file.
 		/// </summary>
 		/// <param name="filepath"> The font file to load from. </param>
-		Metafile(const std::string &filename);
+		FontMetafile(const std::string &filename);
 
 		/// <summary>
 		/// Deconstructor for the meta file.
 		/// </summary>
-		~Metafile();
+		~FontMetafile();
 
-		Character *GetCharacter(const int &ascii);
+		FontCharacter *GetCharacter(const int &ascii);
 
 		std::string GetFilename() override { return m_filename; }
 
@@ -101,7 +101,7 @@ namespace Flounder
 		/// </summary>
 		/// </param>
 		/// <returns> The data about the character. </returns>
-		Character *LoadCharacter();
+		FontCharacter *LoadCharacter();
 
 		/// <summary>
 		/// Gets the {@code int} value of the variable with a certain name on the current line.

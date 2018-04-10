@@ -1,5 +1,6 @@
 set(EXAMPLE_STARTING_HEADERS_
         "Configs/ConfigManager.hpp"
+        "Planets/Planet.hpp"
         "Scenes/Scene1.hpp"
         "Scenes/Scene2.hpp"
         "Scenes/FpsCamera.hpp"
@@ -15,6 +16,7 @@ set(EXAMPLE_STARTING_HEADERS_
 
 set(EXAMPLE_STARTING_SOURCES_
         "Configs/ConfigManager.cpp"
+        "Planets/Planet.cpp"
         "Scenes/Scene1.cpp"
         "Scenes/Scene2.cpp"
         "Scenes/FpsCamera.cpp"

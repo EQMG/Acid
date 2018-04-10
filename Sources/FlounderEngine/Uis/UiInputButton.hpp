@@ -7,7 +7,7 @@
 
 namespace Flounder
 {
-	class F_EXPORT InputButton :
+	class F_EXPORT UiInputButton :
 		public UiObject
 	{
 	private:
@@ -21,9 +21,9 @@ namespace Flounder
 
 		bool m_mouseOver;
 	public:
-		InputButton(UiObject *parent, const Vector2 &position, const std::string &string, const Justify &justify);
+		UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string, const FontJustify &justify);
 
-		~InputButton();
+		~UiInputButton();
 
 		void UpdateObject() override;
 

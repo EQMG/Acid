@@ -1,10 +1,10 @@
-#include "Block.hpp"
+#include "VoxelBlock.hpp"
 
-#include "Chunk.hpp"
+#include "VoxelChunk.hpp"
 
 namespace Flounder
 {
-	std::map<std::string, Colour*> Block::s_colours = std::map<std::string, Colour*>
+	std::map<std::string, Colour*> VoxelBlock::s_colours = std::map<std::string, Colour*>
 		{
 			{"", new Colour("#FFFFFF", 0.0f)},
 			{"Grass", new Colour("#5E7831")},
@@ -12,24 +12,24 @@ namespace Flounder
 			{"Stone", new Colour("#8B8D7A")},
 		};
 
-	Block::Block(Chunk *parent, const Vector3 &position, const std::string &type) :
+	VoxelBlock::VoxelBlock(VoxelChunk *parent, const Vector3 &position, const std::string &type) :
 		m_parent(parent),
 		m_position(new Vector3(position)),
 		m_type(type)
 	{
 	}
 
-	Block::~Block()
+	VoxelBlock::~VoxelBlock()
 	{
 		delete m_position;
 	}
 
-	void Block::SetChanged()
+	void VoxelBlock::SetChanged()
 	{
 		m_parent->Rebuild();
 	}
 
-	Colour *Block::FindColour(const std::string &key)
+	Colour *VoxelBlock::FindColour(const std::string &key)
 	{
 		const auto it = s_colours.find(key);
 
