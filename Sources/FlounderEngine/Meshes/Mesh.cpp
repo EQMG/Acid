@@ -1,8 +1,10 @@
 #include "Mesh.hpp"
 
-#include "../Models/Shapes/ShapeSphere.hpp"
 #include "../Models/Shapes/ShapeCube.hpp"
+#include "../Models/Shapes/ShapeCylinder.hpp"
+#include "../Models/Shapes/ShapeDisk.hpp"
 #include "../Models/Shapes/ShapeRectangle.hpp"
+#include "../Models/Shapes/ShapeSphere.hpp"
 
 namespace Flounder
 {
@@ -52,21 +54,33 @@ namespace Flounder
 
 		auto split = FormatString::Split(filename, "_");
 
-		if (!split.empty() && split[0] == "Sphere")
-		{
-			m_model = ShapeSphere::Resource(filename);
-			return;
-		}
-
 		if (!split.empty() && split[0] == "Cube")
 		{
 			m_model = ShapeCube::Resource(filename);
 			return;
 		}
 
+		if (!split.empty() && split[0] == "Cylinder")
+		{
+			m_model = ShapeCylinder::Resource(filename);
+			return;
+		}
+
+		if (!split.empty() && split[0] == "Disk")
+		{
+			m_model = ShapeDisk::Resource(filename);
+			return;
+		}
+
 		if (!split.empty() && split[0] == "Rectangle")
 		{
 			m_model = ShapeRectangle::Resource(filename);
+			return;
+		}
+
+		if (!split.empty() && split[0] == "Sphere")
+		{
+			m_model = ShapeSphere::Resource(filename);
 			return;
 		}
 
