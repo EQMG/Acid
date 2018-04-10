@@ -23,8 +23,16 @@ namespace Flounder
 
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
 	{
+		// Map from the cube [-1,1] (x, y, z) to the unit sphere.
+		// http://mathproofs.blogspot.com/2005/07/mapping-cube-to-sphere.html
 		Vector3 position = Vector3(x, 0.0f, z);
 		position.m_y = Terrains::Get()->GetHeight(position.m_x + m_position->m_x, position.m_z + m_position->m_z);
+		/*float x2 = position.m_x * position.m_x;
+		float y2 = position.m_y * position.m_y;
+		float z2 = position.m_z * position.m_z;
+		position.Set(position.m_x * std::sqrt(1.0f - (y2 + z2) * 0.5f + y2 * z2 * 0.33333333333333333333f),
+			position.m_y * std::sqrt(1.0f - (z2 + x2) * 0.5f + z2 * x2 * 0.33333333333333333333f),
+			position.m_z * std::sqrt(1.0f - (x2 + y2) * 0.5f + x2 * y2 * 0.33333333333333333333f));*/
 		return position;
 	}
 
