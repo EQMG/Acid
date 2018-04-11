@@ -66,27 +66,34 @@ namespace Demo
 		skyboxObject->AddComponent<SkyboxRender>(Cubemap::Resource("Resources/Skyboxes/Stars", ".png"), false);
 
 		// Terrains.
-		/*const int n = 0;
+		/*const int n = 1;
 
 		for (int j = -n; j <= n; j++)
 		{
 			for (int w = -n; w <= n; w++)
 			{
-				GameObject *terrainObject = new GameObject(Transform(Vector3(
-					static_cast<float>(j) * TerrainRender::SIDE_LENGTH, 0.0f,
+				new GameObject("Terrain", Transform(Vector3(
+					static_cast<float>(j) * TerrainRender::SIDE_LENGTH, 100.0f - ((j + w) * 100.0f),
 					static_cast<float>(w) * TerrainRender::SIDE_LENGTH)));
-				terrainObject->SetName("Terrain_" + std::to_string(j) + "_" + std::to_string(w));
-				terrainObject->AddComponent<Mesh>();
-			//	terrainObject->AddComponent<MaterialDefault>();
-				terrainObject->AddComponent<Rigidbody>();
-				terrainObject->AddComponent<LodBehaviour>();
-				terrainObject->AddComponent<TerrainRender>();
-			//	terrainObject->AddComponent<ShadowRender>();
+			}
+		}*/
+
+	//	new GameObject("PlanetCentre", Transform(Vector3(), Vector3(), 200.0f));
+		for (int j = -1; j < 1; j++)
+		{
+			for (int w = -1; w < 1; w++)
+			{
+				new GameObject("Terrain", Transform(Vector3(j * 200.0f, 100.0f, w * 200.0f), Vector3(0.0f, 0.0f, 0.0f))); // Top.
+				new GameObject("Terrain", Transform(Vector3(j * 200.0f, -100.0f, w * 200.0f), Vector3(180.0f, 0.0f, 0.0f))); // Bottom.
+				new GameObject("Terrain", Transform(Vector3(w * 200.0f, j * 200.0f, 100.0f), Vector3(90.0f, 0.0f, 0.0f))); // Back.
+				new GameObject("Terrain", Transform(Vector3(w * 200.0f, j * 200.0f, -100.0f), Vector3(270.0f, 0.0f, 0.0f))); // Front.
+				new GameObject("Terrain", Transform(Vector3(100.0f, j * 200.0f, w * 200.0f), Vector3(0.0f, 0.0f, 270.0f))); // Right.
+				new GameObject("Terrain", Transform(Vector3(-100.0f, j * 200.0f, w * 200.0f), Vector3(0.0f, 0.0f, 90.0f))); // Left.
 			}
 		}
 
 		// Waters.
-		GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
+		/*GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));
 		waterObject->SetName("Water_0_0");
 		waterObject->AddComponent<Mesh>(new MeshWater());
 		waterObject->AddComponent<WaterRender>();*/
@@ -108,8 +115,8 @@ namespace Demo
 		}*/
 
 		// Entities.
-		new GameObject("Sun", Transform(Vector3(), Vector3(), 220.0f));
-		new GameObject("Moon", Transform(Vector3(), Vector3(), 50.0f));
+		new GameObject("Sun", Transform(Vector3(), Vector3(), 230.0f));
+		new GameObject("Moon", Transform(Vector3(), Vector3(), 190.0f));
 	//	new GameObject("Player", Transform(Vector3(5, 20, 5), Vector3(), 1.0f));
 
 		/*Vector3 foundationCentre = Terrains::Get()->GetPosition(15.7f, -25.0f);

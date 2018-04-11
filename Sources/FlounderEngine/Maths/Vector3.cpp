@@ -27,10 +27,17 @@ namespace Flounder
 	{
 	}
 
-	Vector3::Vector3(const Vector2 &source) :
+	Vector3::Vector3(const float &x, const float &y, const float &z) :
+		m_x(x),
+		m_y(y),
+		m_z(z)
+	{
+	}
+
+	Vector3::Vector3(const Vector2 &source, const float &z) :
 		m_x(source.m_x),
 		m_y(source.m_y),
-		m_z(0.0f)
+		m_z(z)
 	{
 	}
 
@@ -55,13 +62,6 @@ namespace Flounder
 	{
 	}
 
-	Vector3::Vector3(const float &x, const float &y, const float &z) :
-		m_x(x),
-		m_y(y),
-		m_z(z)
-	{
-	}
-
 	Vector3::Vector3(LoadedValue *value)
 	{
 		Set(value);
@@ -69,6 +69,14 @@ namespace Flounder
 
 	Vector3::~Vector3()
 	{
+	}
+
+	Vector3 *Vector3::Set(const float &x, const float &y, const float &z)
+	{
+		m_x = x;
+		m_y = y;
+		m_z = z;
+		return this;
 	}
 
 	Vector3 *Vector3::Set(const Vector2 &source)
@@ -92,14 +100,6 @@ namespace Flounder
 		m_x = source.m_x;
 		m_y = source.m_y;
 		m_z = source.m_z;
-		return this;
-	}
-
-	Vector3 *Vector3::Set(const float &x, const float &y, const float &z)
-	{
-		m_x = x;
-		m_y = y;
-		m_z = z;
 		return this;
 	}
 

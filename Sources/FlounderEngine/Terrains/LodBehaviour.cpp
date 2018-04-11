@@ -69,10 +69,11 @@ namespace Flounder
 #if FLOUNDER_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
-		const float squareSize = TerrainRender::SQUARE_SIZES.at(lod);
-		const float textureScale = TerrainRender::TEXTURE_SCALES.at(lod);
-		const int vertexCount = CalculateVertexCount(TerrainRender::SIDE_LENGTH, squareSize);
-		m_modelLods.at(lod) = new MeshTerrain(static_cast<float>(TerrainRender::SIDE_LENGTH), ((lod == 0) ? 1.0f : (1.015f + (0.016f * lod))) * squareSize, vertexCount, textureScale, GetGameObject()->GetTransform()->m_position);
+		float squareSize = TerrainRender::SQUARE_SIZES.at(lod);
+		float textureScale = TerrainRender::TEXTURE_SCALES.at(lod);
+		int vertexCount = CalculateVertexCount(TerrainRender::SIDE_LENGTH, squareSize);
+		float lodFixScale = 1.0f; // (lod == 0) ? 1.0f : 1.02f + (0.028f * lod);
+		m_modelLods.at(lod) = new MeshTerrain(lodFixScale * static_cast<float>(TerrainRender::SIDE_LENGTH), lodFixScale * squareSize, vertexCount, textureScale, GetGameObject()->GetTransform());
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 

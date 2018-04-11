@@ -858,6 +858,94 @@ namespace Flounder
 		return *Matrix4::Scale(left, 1.0f / value, &left);
 	}
 
+	Matrix4 operator*(Matrix4 left, float value)
+	{
+		Matrix4 result = Matrix4();
+		result.m_00 = left.m_00 * value;
+		result.m_01 = left.m_01 * value;
+		result.m_02 = left.m_02 * value;
+		result.m_03 = left.m_03 * value;
+		result.m_10 = left.m_10 * value;
+		result.m_11 = left.m_11 * value;
+		result.m_12 = left.m_12 * value;
+		result.m_13 = left.m_13 * value;
+		result.m_20 = left.m_20 * value;
+		result.m_21 = left.m_21 * value;
+		result.m_22 = left.m_22 * value;
+		result.m_23 = left.m_23 * value;
+		result.m_30 = left.m_30 * value;
+		result.m_31 = left.m_31 * value;
+		result.m_32 = left.m_32 * value;
+		result.m_33 = left.m_33 * value;
+		return result;
+	}
+
+	Matrix4 operator/(Matrix4 left, float value)
+	{
+		Matrix4 result = Matrix4();
+		result.m_00 = left.m_00 / value;
+		result.m_01 = left.m_01 / value;
+		result.m_02 = left.m_02 / value;
+		result.m_03 = left.m_03 / value;
+		result.m_10 = left.m_10 / value;
+		result.m_11 = left.m_11 / value;
+		result.m_12 = left.m_12 / value;
+		result.m_13 = left.m_13 / value;
+		result.m_20 = left.m_20 / value;
+		result.m_21 = left.m_21 / value;
+		result.m_22 = left.m_22 / value;
+		result.m_23 = left.m_23 / value;
+		result.m_30 = left.m_30 / value;
+		result.m_31 = left.m_31 / value;
+		result.m_32 = left.m_32 / value;
+		result.m_33 = left.m_33 / value;
+		return result;
+	}
+
+	Matrix4 operator*(float value, Matrix4 left)
+	{
+		Matrix4 result = Matrix4();
+		result.m_00 = value * left.m_00;
+		result.m_01 = value * left.m_01;
+		result.m_02 = value * left.m_02;
+		result.m_03 = value * left.m_03;
+		result.m_10 = value * left.m_10;
+		result.m_11 = value * left.m_11;
+		result.m_12 = value * left.m_12;
+		result.m_13 = value * left.m_13;
+		result.m_20 = value * left.m_20;
+		result.m_21 = value * left.m_21;
+		result.m_22 = value * left.m_22;
+		result.m_23 = value * left.m_23;
+		result.m_30 = value * left.m_30;
+		result.m_31 = value * left.m_31;
+		result.m_32 = value * left.m_32;
+		result.m_33 = value * left.m_33;
+		return result;
+	}
+
+	Matrix4 operator/(float value, Matrix4 left)
+	{
+		Matrix4 result = Matrix4();
+		result.m_00 = value / left.m_00;
+		result.m_01 = value / left.m_01;
+		result.m_02 = value / left.m_02;
+		result.m_03 = value / left.m_03;
+		result.m_10 = value / left.m_10;
+		result.m_11 = value / left.m_11;
+		result.m_12 = value / left.m_12;
+		result.m_13 = value / left.m_13;
+		result.m_20 = value / left.m_20;
+		result.m_21 = value / left.m_21;
+		result.m_22 = value / left.m_22;
+		result.m_23 = value / left.m_23;
+		result.m_30 = value / left.m_30;
+		result.m_31 = value / left.m_31;
+		result.m_32 = value / left.m_32;
+		result.m_33 = value / left.m_33;
+		return result;
+	}
+
 	Matrix4 &Matrix4::operator+=(const Matrix4 &other)
 	{
 		Matrix4 result = Matrix4();

@@ -11,6 +11,10 @@ namespace Flounder
 		MeshSimple::GenerateMesh();
 	}
 
+	MeshWater::~MeshWater()
+	{
+	}
+
 	Vector3 MeshWater::GetPosition(const float &x, const float &z)
 	{
 		return Vector3(x, 0.0f, z);
