@@ -8,10 +8,11 @@ namespace Flounder
 		public MeshSimple
 	{
 	private:
+		float m_radius;
 		Transform *m_transform;
 		Matrix4 *m_worldMatrix;
 	public:
-		MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, Transform *transform);
+		MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, const float &radius, Transform *transform);
 
 		~MeshTerrain();
 

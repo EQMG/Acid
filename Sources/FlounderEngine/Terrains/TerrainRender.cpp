@@ -31,8 +31,7 @@ namespace Flounder
 	{
 		// Updates uniforms.
 		UbosTerrains::UboObject uboObject = {};
-		Matrix4::TransformationMatrix(Vector3::ZERO, Vector3::ZERO, Vector3::ONE, &uboObject.transform);
-	//	GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
+		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		m_uniformObject->Update(&uboObject);
 	}
 
