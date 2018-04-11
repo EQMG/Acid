@@ -66,6 +66,41 @@ namespace Demo
 		skyboxObject->AddComponent<SkyboxRender>(Cubemap::Resource("Resources/Skyboxes/Stars", ".png"), false);
 
 		// Terrains.
+	//	new GameObject("PlanetCentre", Transform(Vector3(), Vector3(), 600.0f));
+		int n = 1;
+		float radius = ((2 * n + 1) * TerrainRender::SIDE_LENGTH) / 2.0f;
+		float side = TerrainRender::SIDE_LENGTH;
+
+		for (int j = -n; j < n; j++)
+		{
+			for (int w = -n; w < n; w++)
+			{
+				GameObject *terrainTop = new GameObject("Terrain", Transform());
+				terrainTop->GetComponent<LodBehaviour>()->SetRadius(radius);
+				terrainTop->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(j * side, radius, w * side), Vector3(0.0f, 0.0f, 0.0f), side));
+
+			/*	GameObject *terrainBottom = new GameObject("Terrain", Transform());
+				terrainBottom->GetComponent<LodBehaviour>()->SetRadius(radius);
+				terrainBottom->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(j * side, -radius, w * side), Vector3(180.0f, 0.0f, 0.0f), side));
+
+				GameObject *terrainBack = new GameObject("Terrain", Transform());
+				terrainBack->GetComponent<LodBehaviour>()->SetRadius(radius);
+				terrainBack->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(w * side, j * side, radius), Vector3(90.0f, 0.0f, 0.0f), side));
+
+				GameObject *terrainFront = new GameObject("Terrain", Transform());
+				terrainFront->GetComponent<LodBehaviour>()->SetRadius(radius);
+				terrainFront->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(w * side, j * side, -radius), Vector3(270.0f, 0.0f, 0.0f), side));
+
+				GameObject *terrainRight = new GameObject("Terrain", Transform());
+				terrainRight->GetComponent<LodBehaviour>()->SetRadius(radius);
+				terrainRight->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(radius, j * side, w * side), Vector3(0.0f, 0.0f, 270.0f), side));
+
+				GameObject *terrainLeft = new GameObject("Terrain", Transform());
+				terrainLeft->GetComponent<LodBehaviour>()->SetRadius(radius);
+				terrainLeft->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(-radius, j * side, w * side), Vector3(0.0f, 0.0f, 90.0f), side));*/
+			}
+		}
+
 		/*const int n = 1;
 
 		for (int j = -n; j <= n; j++)
@@ -77,20 +112,6 @@ namespace Demo
 					static_cast<float>(w) * TerrainRender::SIDE_LENGTH)));
 			}
 		}*/
-
-	//	new GameObject("PlanetCentre", Transform(Vector3(), Vector3(), 200.0f));
-		for (int j = -1; j < 1; j++)
-		{
-			for (int w = -1; w < 1; w++)
-			{
-				new GameObject("Terrain", Transform(Vector3(j * 200.0f, 100.0f, w * 200.0f), Vector3(0.0f, 0.0f, 0.0f))); // Top.
-				new GameObject("Terrain", Transform(Vector3(j * 200.0f, -100.0f, w * 200.0f), Vector3(180.0f, 0.0f, 0.0f))); // Bottom.
-				new GameObject("Terrain", Transform(Vector3(w * 200.0f, j * 200.0f, 100.0f), Vector3(90.0f, 0.0f, 0.0f))); // Back.
-				new GameObject("Terrain", Transform(Vector3(w * 200.0f, j * 200.0f, -100.0f), Vector3(270.0f, 0.0f, 0.0f))); // Front.
-				new GameObject("Terrain", Transform(Vector3(100.0f, j * 200.0f, w * 200.0f), Vector3(0.0f, 0.0f, 270.0f))); // Right.
-				new GameObject("Terrain", Transform(Vector3(-100.0f, j * 200.0f, w * 200.0f), Vector3(0.0f, 0.0f, 90.0f))); // Left.
-			}
-		}
 
 		// Waters.
 		/*GameObject *waterObject = new GameObject(Transform(Vector3(), Vector3()));

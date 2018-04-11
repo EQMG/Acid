@@ -8,8 +8,10 @@
 
 namespace Flounder
 {
-	LodBehaviour::LodBehaviour() :
+	LodBehaviour::LodBehaviour(const float &radius, const Transform &transform) :
 		Behaviour(),
+		m_radius(radius),
+		m_transform(new Transform(transform)),
 		m_modelLods(std::vector<Model *> ()),
 		m_currentLod(5)
 	{
@@ -21,6 +23,8 @@ namespace Flounder
 
 	LodBehaviour::~LodBehaviour()
 	{
+		delete m_transform;
+
 		for (auto model : m_modelLods)
 		{
 			delete model;
@@ -31,7 +35,7 @@ namespace Flounder
 	{
 		Vector3 cameraPosition = Vector3(*Scenes::Get()->GetCamera()->GetPosition());
 		cameraPosition.m_y = 0.0f;
-		Vector3 chunkPosition = Vector3(*GetGameObject()->GetTransform()->m_position);
+		Vector3 chunkPosition = Vector3(*m_transform->GetPosition()); // Vector3(*GetGameObject()->GetTransform()->m_position);
 		chunkPosition.m_y = Terrains::Get()->GetHeight(cameraPosition.m_x, cameraPosition.m_z);
 		const float distance = Vector3::GetDistance(chunkPosition, cameraPosition);
 
@@ -73,7 +77,7 @@ namespace Flounder
 		float textureScale = TerrainRender::TEXTURE_SCALES.at(lod);
 		int vertexCount = CalculateVertexCount(TerrainRender::SIDE_LENGTH, squareSize);
 		float lodFixScale = 1.0f; // (lod == 0) ? 1.0f : 1.02f + (0.028f * lod);
-		m_modelLods.at(lod) = new MeshTerrain(lodFixScale * static_cast<float>(TerrainRender::SIDE_LENGTH), lodFixScale * squareSize, vertexCount, textureScale, GetGameObject()->GetTransform());
+		m_modelLods.at(lod) = new MeshTerrain(lodFixScale * static_cast<float>(TerrainRender::SIDE_LENGTH), lodFixScale * squareSize, vertexCount, textureScale, m_radius, m_transform);
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 
