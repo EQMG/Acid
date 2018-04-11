@@ -1,6 +1,6 @@
 {
   "Mesh": {
-    "Model": "Sphere_10_10_1.0"
+    "Model": "Cube_1.0_1.0_1.0"
   },
   "MaterialDefault": {
     "Base Colour": "#551a8b",

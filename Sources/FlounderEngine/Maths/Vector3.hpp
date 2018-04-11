@@ -52,8 +52,17 @@ namespace Flounder
 		/// <summary>
 		/// Constructor for Vector3.
 		/// </summary>
+		/// <param name="x"> Start x. </param>
+		/// <param name="y"> Start y. </param>
+		/// <param name="z"> Start z. </param>
+		Vector3(const float &x, const float &y, const float &z);
+
+		/// <summary>
+		/// Constructor for Vector3.
+		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing one. </param>
-		Vector3(const Vector2 &source);
+		/// <param name="z"> Start z. </param>
+		Vector3(const Vector2 &source, const float &z = 0.0f);
 
 		/// <summary>
 		/// Constructor for Vector3.
@@ -76,14 +85,6 @@ namespace Flounder
 		/// <summary>
 		/// Constructor for Vector3.
 		/// </summary>
-		/// <param name="x"> Start x. </param>
-		/// <param name="y"> Start y. </param>
-		/// <param name="z"> Start z. </param>
-		Vector3(const float &x, const float &y, const float &z);
-
-		/// <summary>
-		/// Constructor for Vector3.
-		/// </summary>
 		/// <param name="source"> Creates this vector out of a loaded value. </param>
 		Vector3(LoadedValue *value);
 
@@ -91,6 +92,15 @@ namespace Flounder
 		/// Deconstructor for Vector3.
 		/// </summary>
 		~Vector3();
+
+		/// <summary>
+		/// Sets values in the vector.
+		/// </summary>
+		/// <param name="x"> The new X value. </param>
+		/// <param name="y"> The new Y value. </param>
+		/// <param name="z"> The new Z value. </param>
+		/// <returns> This. </returns>
+		Vector3 *Set(const float &x, const float &y, const float &z);
 
 		/// <summary>
 		/// Loads from another Vector3.
@@ -112,15 +122,6 @@ namespace Flounder
 		/// <param name="source"> The source vector. </param>
 		/// <returns> This. </returns>
 		Vector3 *Set(const Vector4 &source);
-
-		/// <summary>
-		/// Sets values in the vector.
-		/// </summary>
-		/// <param name="x"> The new X value. </param>
-		/// <param name="y"> The new Y value. </param>
-		/// <param name="z"> The new Z value. </param>
-		/// <returns> This. </returns>
-		Vector3 *Set(const float &x, const float &y, const float &z);
 
 		/// <summary>
 		/// Sets values in the vector.

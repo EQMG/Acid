@@ -22,8 +22,8 @@
       "z": 0.0
     }
   },
-  "Planet": {
-    "Apoapsis": 0.0
+  "CelestialBody": {
+    "Type": 0
   },
   "EntityRender": {
   }

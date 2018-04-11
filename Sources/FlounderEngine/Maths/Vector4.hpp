@@ -52,8 +52,9 @@ namespace Flounder
 		/// <summary>
 		/// Constructor for Vector4.
 		/// </summary>
-		/// <param name="source"> Creates this vector out of a existing one. </param>
-		Vector4(const Vector3 &source);
+		/// <param name="source"> Creates this vector out of a existing one. </param>>
+		/// <param name="w"> Start w. </param>
+		Vector4(const Vector3 &source, const float &w = 1.0f);
 
 		/// <summary>
 		/// Constructor for Vector4.

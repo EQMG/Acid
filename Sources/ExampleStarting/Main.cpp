@@ -7,6 +7,7 @@
 #include <Skyboxes/SkyboxRender.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Objects/ComponentRegister.hpp>
+#include <Terrains/LodBehaviour.hpp>
 #include "Scenes/FpsPlayer.hpp"
 #include "Planets/Planet.hpp"
 #include "Configs/ConfigManager.hpp"
@@ -32,6 +33,7 @@ int main(int argc, char **argv)
 	// Adds to the component registry.
 	ComponentRegister::Register("FpsPlayer", REGISTER_CREATE(FpsPlayer));
 	ComponentRegister::Register("Planet", REGISTER_CREATE(Planet));
+	ComponentRegister::Register("LodBehaviour", REGISTER_CREATE(LodBehaviour));
 
 	// Registers modules.
 

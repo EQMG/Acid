@@ -27,16 +27,10 @@ namespace Flounder
 
 	float Terrains::GetHeight(const float &x, const float &z)
 	{
-		float height1 = m_noise1.GetNoise(x, z);
-		height1 = (height1 * 60.0f) + 15.0f;
-	//	float length = std::sqrt((x * x) + (z * z));
-
-	//	if (length >= 700.0f)
-	//	{
-	//		height1 = height1 - (0.2f * (length - 700.0f));
-	//	}
-
-		return height1;
+	//	float height1 = m_noise1.GetNoise(x, z);
+	//	height1 = (height1 * 60.0f) + 15.0f;
+	//	return height1;
+		return 0.0f;
 	}
 
 	Vector3 Terrains::GetNormal(const float &x, const float &z)

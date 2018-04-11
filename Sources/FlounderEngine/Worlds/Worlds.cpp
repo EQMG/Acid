@@ -73,14 +73,14 @@ namespace Flounder
 		Colour::Interpolate(*FOG_COLOUR_SUNRISE, *FOG_COLOUR_NIGHT, GetSunriseFactor(), &fogColour);
 		Colour::Interpolate(fogColour, *FOG_COLOUR_DAY, GetShadowFactor(), &fogColour);
 
-		Vector3::Multiply(lightDirection, Vector3(-300.0f, -300.0f, -300.0f), m_sunPosition);
-		Vector3::Multiply(lightDirection, Vector3(300.0f, 300.0f, 300.0f), m_moonPosition);
+		Vector3::Multiply(lightDirection, Vector3(-6048.0f, -6048.0f, -6048.0f), m_sunPosition);
+		Vector3::Multiply(lightDirection, Vector3(6048.0f, 6048.0f, 6048.0f), m_moonPosition);
 
-		if (Scenes::Get()->GetCamera() != nullptr)
+		/*if (Scenes::Get()->GetCamera() != nullptr)
 		{
 			Vector3::Add(*m_sunPosition, *Scenes::Get()->GetCamera()->GetPosition(), m_sunPosition);
 			Vector3::Add(*m_moonPosition, *Scenes::Get()->GetCamera()->GetPosition(), m_moonPosition);
-		}
+		}*/
 
 		Colour::Interpolate(*SUN_COLOUR_SUNRISE, *SUN_COLOUR_NIGHT, GetSunriseFactor(), m_sunColour);
 		Colour::Interpolate(*m_sunColour, *SUN_COLOUR_DAY, GetShadowFactor(), m_sunColour);

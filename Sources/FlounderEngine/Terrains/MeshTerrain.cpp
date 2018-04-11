@@ -14,31 +14,32 @@ namespace Flounder
 	const float AMPLITUDE = 20.0f;
 	const float PART = 1.0f / (BIOME_COLOURS.size() - 1);
 
-	MeshTerrain::MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, Vector3 *position) :
+	MeshTerrain::MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, Transform *transform) :
 		MeshSimple(sideLength, squareSize, vertexCount, textureScale),
-		m_position(position)
+		m_transform(transform),
+		m_worldMatrix(new Matrix4())
 	{
+		m_transform->GetWorldMatrix(m_worldMatrix);
 		MeshSimple::GenerateMesh();
+	}
+
+	MeshTerrain::~MeshTerrain()
+	{
+		delete m_worldMatrix;
 	}
 
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
 	{
-		// Map from the cube [-1,1] (x, y, z) to the unit sphere.
-		// http://mathproofs.blogspot.com/2005/07/mapping-cube-to-sphere.html
-		Vector3 position = Vector3(x, 0.0f, z);
-		position.m_y = Terrains::Get()->GetHeight(position.m_x + m_position->m_x, position.m_z + m_position->m_z);
-		/*float x2 = position.m_x * position.m_x;
-		float y2 = position.m_y * position.m_y;
-		float z2 = position.m_z * position.m_z;
-		position.Set(position.m_x * std::sqrt(1.0f - (y2 + z2) * 0.5f + y2 * z2 * 0.33333333333333333333f),
-			position.m_y * std::sqrt(1.0f - (z2 + x2) * 0.5f + z2 * x2 * 0.33333333333333333333f),
-			position.m_z * std::sqrt(1.0f - (x2 + y2) * 0.5f + x2 * y2 * 0.33333333333333333333f));*/
-		return position;
+		Vector4 position = Vector4(x, Terrains::Get()->GetHeight(x + m_transform->GetPosition()->m_x, z + m_transform->GetPosition()->m_z), z, 1.0f);
+		Matrix4::Multiply(*m_worldMatrix, position, &position);
+		return GetSphereCoords(position);
 	}
 
 	Vector3 MeshTerrain::GetNormal(const Vector3 &position)
 	{
-		return Terrains::Get()->GetNormal(position.m_x + m_position->m_x, position.m_z + m_position->m_z);
+		Vector4 normal = Vector4(Terrains::Get()->GetNormal(position.m_x + m_transform->GetPosition()->m_x, position.m_z + m_transform->GetPosition()->m_z), 1.0f);
+		Matrix4::Multiply(*m_worldMatrix, normal, &normal);
+		return normal;
 	}
 
 	Vector3 MeshTerrain::GetColour(const Vector3 &position, const Vector3 &normal)
@@ -50,5 +51,15 @@ namespace Flounder
 		Colour colour = Colour();
 		Colour::Interpolate(BIOME_COLOURS.at(firstBiome), BIOME_COLOURS.at(firstBiome + 1), blend, &colour);
 		return colour;
+	}
+
+	Vector3 MeshTerrain::GetSphereCoords(const Vector3 &position)
+	{
+		float cs = (3.0f * TerrainRender::SIDE_LENGTH) / 2.0f;
+		Vector3 cube = position / cs;
+		float sx = cube.m_x * std::sqrt(1.0f - (cube.m_y * cube.m_y / 2.0f) - (cube.m_z * cube.m_z / 2.0f) + (cube.m_y * cube.m_y * cube.m_z * cube.m_z / 3.0f));
+		float sy = cube.m_y * std::sqrt(1.0f - (cube.m_z * cube.m_z / 2.0f) - (cube.m_x * cube.m_x / 2.0f) + (cube.m_z * cube.m_z * cube.m_x * cube.m_x / 3.0f));
+		float sz = cube.m_z * std::sqrt(1.0f - (cube.m_x * cube.m_x / 2.0f) - (cube.m_y * cube.m_y / 2.0f) + (cube.m_x * cube.m_x * cube.m_y * cube.m_y / 3.0f));
+		return Vector3(sx * cs, sy * cs, sz * cs);
 	}
 }
