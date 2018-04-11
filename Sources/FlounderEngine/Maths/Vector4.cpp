@@ -28,11 +28,11 @@ namespace Flounder
 	{
 	}
 
-	Vector4::Vector4(const Vector3 &source) :
+	Vector4::Vector4(const Vector3 &source, const float &w) :
 		m_x(source.m_x),
 		m_y(source.m_y),
 		m_z(source.m_z),
-		m_w(1.0f)
+		m_w(w)
 	{
 	}
 

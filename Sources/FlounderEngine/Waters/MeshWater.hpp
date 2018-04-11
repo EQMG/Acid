@@ -10,6 +10,8 @@ namespace Flounder
 	public:
 		MeshWater();
 
+		~MeshWater();
+
 		Vector3 GetPosition(const float &x, const float &z) override;
 
 		Vector3 GetNormal(const Vector3 &position) override;

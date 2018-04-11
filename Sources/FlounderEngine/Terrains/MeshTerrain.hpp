@@ -8,14 +8,19 @@ namespace Flounder
 		public MeshSimple
 	{
 	private:
-		Vector3 *m_position;
+		Transform *m_transform;
+		Matrix4 *m_worldMatrix;
 	public:
-		MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, Vector3 *position);
+		MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, Transform *transform);
+
+		~MeshTerrain();
 
 		Vector3 GetPosition(const float &x, const float &z) override;
 
 		Vector3 GetNormal(const Vector3 &position) override;
 
 		Vector3 GetColour(const Vector3 &position, const Vector3 &normal) override;
+
+		Vector3 GetSphereCoords(const Vector3 &position);
 	};
 }
