@@ -13,6 +13,7 @@ namespace Flounder
 		Descriptor(),
 		m_filename(filename),
 		m_fileExt(fileExt),
+		m_mipLevels(1),
 		m_components(0),
 		m_width(0),
 		m_height(0),

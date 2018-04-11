@@ -14,8 +14,9 @@ namespace Flounder
 	const float AMPLITUDE = 20.0f;
 	const float PART = 1.0f / (BIOME_COLOURS.size() - 1);
 
-	MeshTerrain::MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, Transform *transform) :
+	MeshTerrain::MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, const float &radius, Transform *transform) :
 		MeshSimple(sideLength, squareSize, vertexCount, textureScale),
+		m_radius(radius),
 		m_transform(transform),
 		m_worldMatrix(new Matrix4())
 	{
@@ -55,11 +56,15 @@ namespace Flounder
 
 	Vector3 MeshTerrain::GetSphereCoords(const Vector3 &position)
 	{
-		float cs = (3.0f * TerrainRender::SIDE_LENGTH) / 2.0f;
-		Vector3 cube = position / cs;
+		if (m_radius == 0.0f)
+		{
+			return position;
+		}
+
+		Vector3 cube = position / m_radius;
 		float sx = cube.m_x * std::sqrt(1.0f - (cube.m_y * cube.m_y / 2.0f) - (cube.m_z * cube.m_z / 2.0f) + (cube.m_y * cube.m_y * cube.m_z * cube.m_z / 3.0f));
 		float sy = cube.m_y * std::sqrt(1.0f - (cube.m_z * cube.m_z / 2.0f) - (cube.m_x * cube.m_x / 2.0f) + (cube.m_z * cube.m_z * cube.m_x * cube.m_x / 3.0f));
 		float sz = cube.m_z * std::sqrt(1.0f - (cube.m_x * cube.m_x / 2.0f) - (cube.m_y * cube.m_y / 2.0f) + (cube.m_x * cube.m_x * cube.m_y * cube.m_y / 3.0f));
-		return Vector3(sx * cs, sy * cs, sz * cs);
+		return Vector3(sx * m_radius, sy * m_radius, sz * m_radius);
 	}
 }

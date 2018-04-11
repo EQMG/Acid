@@ -225,7 +225,11 @@ namespace Flounder
 
 	uint32_t Texture::GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth)
 	{
+#ifdef FLOUNDER_PLATFORM_MACOS
+		return (uint32_t)std::floor(std::log2(std::max(width, std::max(height, depth))));
+#else
 		return (uint32_t)std::floor(std::log2(std::max(width, std::max(height, depth)))) + 1;
+#endif
 	}
 
 	void Texture::CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)
