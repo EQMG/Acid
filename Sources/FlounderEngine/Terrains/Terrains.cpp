@@ -6,7 +6,7 @@ namespace Flounder
 {
 	Terrains::Terrains() :
 		IModule(),
-		m_noise1(new NoiseFast(8420152))
+		m_noise1(new NoiseFast(69124))
 	{
 		m_noise1->SetNoiseType(NoiseFast::PerlinFractal);
 		m_noise1->SetFrequency(0.003f);
@@ -14,7 +14,7 @@ namespace Flounder
 		m_noise1->SetFractalType(NoiseFast::Fbm);
 		m_noise1->SetFractalOctaves(5);
 		m_noise1->SetFractalLacunarity(2.0);
-		m_noise1->SetFractalGain(0.55f);
+		m_noise1->SetFractalGain(0.5f);
 	}
 
 	Terrains::~Terrains()
