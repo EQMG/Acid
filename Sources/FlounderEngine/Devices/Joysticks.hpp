@@ -11,13 +11,13 @@ namespace Flounder
 	struct F_HIDDEN Joystick
 	{
 	public:
-		bool connected;
-		int id;
-		const char *name;
-		const float *axes;
-		const unsigned char *buttons;
-		int axeCount;
-		int buttonCount;
+		bool m_connected;
+		int m_id;
+		const char *m_name;
+		const float *m_axes;
+		const unsigned char *m_buttons;
+		int m_axeCount;
+		int m_buttonCount;
 	};
 
 	/// <summary>
@@ -27,7 +27,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		std::vector<Joystick *> m_connected;
+		std::vector<Joystick *> *m_connected;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -55,14 +55,14 @@ namespace Flounder
 		/// </summary>
 		/// <param name="id"> The joystick to check connection with. </param>
 		/// <returns> If the joystick is connected. </returns>
-		bool IsConnected(const unsigned int &id) const { return m_connected.at(id)->connected; }
+		bool IsConnected(const unsigned int &id) const { return m_connected->at(id)->m_connected; }
 
 		/// <summary>
 		/// Gets the name of the joystick.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The joysticks name. </returns>
-		const char *GetName(const unsigned int &id) const { return m_connected.at(id)->name; }
+		const char *GetName(const unsigned int &id) const { return m_connected->at(id)->m_name; }
 
 		/// <summary>
 		/// Gets the value of a joysticks axis.
@@ -85,13 +85,13 @@ namespace Flounder
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		int GetCountAxes(const unsigned int &id) const { return m_connected.at(id)->axeCount; }
+		int GetCountAxes(const unsigned int &id) const { return m_connected->at(id)->m_axeCount; }
 
 		/// <summary>
 		/// Gets the number of buttons the joystick offers.
 		/// </summary>
 		/// <param name="id"> The joystick of interest. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		int GetCountButtons(const unsigned int &id) const { return m_connected.at(id)->buttonCount; }
+		int GetCountButtons(const unsigned int &id) const { return m_connected->at(id)->m_buttonCount; }
 	};
 }

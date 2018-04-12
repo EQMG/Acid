@@ -14,7 +14,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		NoiseFast m_noise1;
+		NoiseFast *m_noise1;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -42,5 +42,7 @@ namespace Flounder
 		Vector3 GetNormal(const float &x, const float &z);
 
 		Vector3 GetPosition(const float &x, const float &z);
+
+		NoiseFast *GetNoise() const { return m_noise1;};
 	};
 }

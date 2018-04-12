@@ -61,7 +61,7 @@ namespace Flounder
 
 		// Read header.
 		file.read(chunkId, 4);
-		file.read(reinterpret_cast<char *>(&sourceInfo.size), 4);
+		file.read(reinterpret_cast<char *>(&sourceInfo.m_size), 4);
 
 		chunkId[4] = '\0';
 		file.read(chunkId, 4);
@@ -70,40 +70,40 @@ namespace Flounder
 
 		// Read first chunk header.
 		file.read(chunkId, 4);
-		file.read(reinterpret_cast<char *>(&sourceInfo.size), 4);
+		file.read(reinterpret_cast<char *>(&sourceInfo.m_size), 4);
 
 		chunkId[4] = '\0';
 
 		// Read first chunk content.
-		file.read(reinterpret_cast<char *>(&sourceInfo.formatTag), 2);
-		file.read(reinterpret_cast<char *>(&sourceInfo.channels), 2);
-		file.read(reinterpret_cast<char *>(&sourceInfo.samplesPerSec), 4);
-		file.read(reinterpret_cast<char *>(&sourceInfo.averageBytesPerSec), 4);
-		file.read(reinterpret_cast<char *>(&sourceInfo.blockAlign), 2);
-		file.read(reinterpret_cast<char *>(&sourceInfo.bitsPerSample), 2);
+		file.read(reinterpret_cast<char *>(&sourceInfo.m_formatTag), 2);
+		file.read(reinterpret_cast<char *>(&sourceInfo.m_channels), 2);
+		file.read(reinterpret_cast<char *>(&sourceInfo.m_samplesPerSec), 4);
+		file.read(reinterpret_cast<char *>(&sourceInfo.m_averageBytesPerSec), 4);
+		file.read(reinterpret_cast<char *>(&sourceInfo.m_blockAlign), 2);
+		file.read(reinterpret_cast<char *>(&sourceInfo.m_bitsPerSample), 2);
 
-		if (sourceInfo.size > 16)
+		if (sourceInfo.m_size > 16)
 		{
-			file.seekg(static_cast<int>(file.tellg()) + (sourceInfo.size - 16));
+			file.seekg(static_cast<int>(file.tellg()) + (sourceInfo.m_size - 16));
 		}
 
 		// Read data chunk header.
 		file.read(chunkId, 4);
-		file.read(reinterpret_cast<char *>(&sourceInfo.size), 4);
+		file.read(reinterpret_cast<char *>(&sourceInfo.m_size), 4);
 
 		chunkId[4] = '\0';
 
-		sourceInfo.data = new unsigned char[sourceInfo.size];
-		file.read(reinterpret_cast<char *>(sourceInfo.data), sourceInfo.size);
+		sourceInfo.m_data = new unsigned char[sourceInfo.m_size];
+		file.read(reinterpret_cast<char *>(sourceInfo.m_data), sourceInfo.m_size);
 
 		file.close();
 		//	LogOpenAlSound(filename, sourceInfo);
 
 		ALuint buffer;
 		alGenBuffers(1, &buffer);
-		alBufferData(buffer, (sourceInfo.channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sourceInfo.data, sourceInfo.size, sourceInfo.samplesPerSec);
+		alBufferData(buffer, (sourceInfo.m_channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sourceInfo.m_data, sourceInfo.m_size, sourceInfo.m_samplesPerSec);
 
-		delete[] sourceInfo.data;
+		delete[] sourceInfo.m_data;
 
 		return buffer;
 	}
@@ -147,9 +147,9 @@ namespace Flounder
 	{
 #if FLOUNDER_VERBOSE
 		printf("-- Loading Audio: '%s' --\n", path.c_str());
-		printf("Size: %i bytes\n", sourceInfo.size);
+		printf("Size: %i bytes\n", sourceInfo.m_size);
 
-		switch (sourceInfo.formatTag)
+		switch (sourceInfo.m_formatTag)
 		{
 		case 0x0001:
 			printf("Format: PCM\n");
@@ -168,11 +168,11 @@ namespace Flounder
 			break;
 		}
 
-		printf("Channels: %i\n", sourceInfo.channels);
-		printf("Samples Per Second: %i\n", sourceInfo.samplesPerSec);
-		printf("Average bytes per second: %i\n", sourceInfo.averageBytesPerSec);
-		printf("Block align: %i\n", sourceInfo.blockAlign);
-		printf("Bit per sample: %i\n", sourceInfo.bitsPerSample);
+		printf("Channels: %i\n", sourceInfo.m_channels);
+		printf("Samples Per Second: %i\n", sourceInfo.m_samplesPerSec);
+		printf("Average bytes per second: %i\n", sourceInfo.m_averageBytesPerSec);
+		printf("Block align: %i\n", sourceInfo.m_blockAlign);
+		printf("Bit per sample: %i\n", sourceInfo.m_bitsPerSample);
 		printf("-- Done --\n");
 #endif
 	}

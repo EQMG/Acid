@@ -6,19 +6,20 @@ namespace Flounder
 {
 	Terrains::Terrains() :
 		IModule(),
-		m_noise1(NoiseFast(8420152))
+		m_noise1(new NoiseFast(8420152))
 	{
-		m_noise1.SetNoiseType(NoiseFast::PerlinFractal);
-		m_noise1.SetFrequency(0.003f);
-		m_noise1.SetInterp(NoiseFast::Quintic);
-		m_noise1.SetFractalType(NoiseFast::Fbm);
-		m_noise1.SetFractalOctaves(5);
-		m_noise1.SetFractalLacunarity(2.0);
-		m_noise1.SetFractalGain(0.55f);
+		m_noise1->SetNoiseType(NoiseFast::PerlinFractal);
+		m_noise1->SetFrequency(0.003f);
+		m_noise1->SetInterp(NoiseFast::Quintic);
+		m_noise1->SetFractalType(NoiseFast::Fbm);
+		m_noise1->SetFractalOctaves(5);
+		m_noise1->SetFractalLacunarity(2.0);
+		m_noise1->SetFractalGain(0.55f);
 	}
 
 	Terrains::~Terrains()
 	{
+		delete m_noise1;
 	}
 
 	void Terrains::Update()
@@ -27,10 +28,9 @@ namespace Flounder
 
 	float Terrains::GetHeight(const float &x, const float &z)
 	{
-	//	float height1 = m_noise1.GetNoise(x, z);
-	//	height1 = (height1 * 60.0f) + 15.0f;
-	//	return height1;
-		return 0.0f;
+		float height1 = m_noise1->GetNoise(x, z);
+		height1 = (height1 * 60.0f) + 15.0f;
+		return height1;
 	}
 
 	Vector3 Terrains::GetNormal(const float &x, const float &z)

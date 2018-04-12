@@ -29,7 +29,7 @@ namespace Flounder
 	{
 		PrefabObject *entityPrefab = PrefabObject::Resource("Resources/Entities/" + prefabName + "/" + prefabName + ".json");
 
-		for (auto value : entityPrefab->GetParent()->m_children)
+		for (auto value : *entityPrefab->GetParent()->m_children)
 		{
 			if (value->m_name.empty())
 			{
