@@ -26,5 +26,8 @@ namespace Demo
 		void Start() override;
 
 		void Update() override;
+
+	private:
+		GameObject *CreateChunk(const float &radius, const Transform &transform);
 	};
 }
