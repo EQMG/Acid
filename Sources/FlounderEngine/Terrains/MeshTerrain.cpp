@@ -20,7 +20,8 @@ namespace Flounder
 		m_transform(transform),
 		m_worldMatrix(new Matrix4())
 	{
-		m_transform->GetWorldMatrix(m_worldMatrix);
+		m_worldMatrix = m_transform->GetWorldMatrix(m_worldMatrix);
+		printf("%s\n", m_worldMatrix->ToString().c_str());
 		MeshSimple::GenerateMesh();
 	}
 
@@ -32,14 +33,14 @@ namespace Flounder
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
 	{
 		Vector4 position = Vector4(x, Terrains::Get()->GetHeight(x + m_transform->GetPosition()->m_x, z + m_transform->GetPosition()->m_z), z, 1.0f);
-		Matrix4::Multiply(*m_worldMatrix, position, &position);
+	//	Matrix4::Multiply(*m_worldMatrix, position, &position);
 		return GetSphereCoords(position);
 	}
 
 	Vector3 MeshTerrain::GetNormal(const Vector3 &position)
 	{
 		Vector4 normal = Vector4(Terrains::Get()->GetNormal(position.m_x + m_transform->GetPosition()->m_x, position.m_z + m_transform->GetPosition()->m_z), 1.0f);
-		Matrix4::Multiply(*m_worldMatrix, normal, &normal);
+	//	Matrix4::Multiply(*m_worldMatrix, normal, &normal);
 		return normal;
 	}
 

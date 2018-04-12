@@ -75,29 +75,12 @@ namespace Demo
 		{
 			for (int w = -n; w < n; w++)
 			{
-				GameObject *terrainTop = new GameObject("Terrain", Transform());
-				terrainTop->GetComponent<LodBehaviour>()->SetRadius(radius);
-				terrainTop->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(j * side, radius, w * side), Vector3(0.0f, 0.0f, 0.0f), side));
-
-			/*	GameObject *terrainBottom = new GameObject("Terrain", Transform());
-				terrainBottom->GetComponent<LodBehaviour>()->SetRadius(radius);
-				terrainBottom->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(j * side, -radius, w * side), Vector3(180.0f, 0.0f, 0.0f), side));
-
-				GameObject *terrainBack = new GameObject("Terrain", Transform());
-				terrainBack->GetComponent<LodBehaviour>()->SetRadius(radius);
-				terrainBack->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(w * side, j * side, radius), Vector3(90.0f, 0.0f, 0.0f), side));
-
-				GameObject *terrainFront = new GameObject("Terrain", Transform());
-				terrainFront->GetComponent<LodBehaviour>()->SetRadius(radius);
-				terrainFront->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(w * side, j * side, -radius), Vector3(270.0f, 0.0f, 0.0f), side));
-
-				GameObject *terrainRight = new GameObject("Terrain", Transform());
-				terrainRight->GetComponent<LodBehaviour>()->SetRadius(radius);
-				terrainRight->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(radius, j * side, w * side), Vector3(0.0f, 0.0f, 270.0f), side));
-
-				GameObject *terrainLeft = new GameObject("Terrain", Transform());
-				terrainLeft->GetComponent<LodBehaviour>()->SetRadius(radius);
-				terrainLeft->GetComponent<LodBehaviour>()->SetTransform(Transform(Vector3(-radius, j * side, w * side), Vector3(0.0f, 0.0f, 90.0f), side));*/
+				CreateChunk(radius, Transform(Vector3(j * side, radius, w * side), Vector3(0.0f, 0.0f, 0.0f), side)); // Top.
+				CreateChunk(radius, Transform(Vector3(j * side, -radius, w * side), Vector3(180.0f, 0.0f, 0.0f), side)); // Bottom.
+				CreateChunk(radius, Transform(Vector3(w * side, j * side, radius), Vector3(90.0f, 0.0f, 0.0f), side)); // Back.
+				CreateChunk(radius, Transform(Vector3(w * side, j * side, -radius), Vector3(270.0f, 0.0f, 0.0f), side)); // Front.
+				CreateChunk(radius, Transform(Vector3(radius, j * side, w * side), Vector3(0.0f, 0.0f, 270.0f), side)); // Right.
+				CreateChunk(radius, Transform(Vector3(-radius, j * side, w * side), Vector3(0.0f, 0.0f, 90.0f), side)); // Left.
 			}
 		}
 
@@ -217,5 +200,18 @@ namespace Demo
 		{
 			Engine::Get()->RequestClose(false);
 		}
+	}
+
+	GameObject *Scene1::CreateChunk(const float &radius, const Transform &transform)
+	{
+		GameObject *chunk = new GameObject(Transform());
+		chunk->SetName("Terrain");
+		chunk->AddComponent(new Mesh());
+		//	chunk->AddComponent(new Material());
+		chunk->AddComponent(new Rigidbody());
+		chunk->AddComponent(new LodBehaviour(radius, transform));
+		chunk->AddComponent(new TerrainRender());
+		//	chunk->AddComponent(new ShadowRender());
+		return chunk;
 	}
 }

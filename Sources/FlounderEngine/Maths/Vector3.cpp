@@ -402,6 +402,22 @@ namespace Flounder
 			Maths::SmoothDamp(current.m_z, target.m_z, rate.m_z));
 	}
 
+	Vector3 Vector3::CartesianToPolar(const Vector3 &cartesian)
+	{
+		float radius = std::sqrt(cartesian.m_x * cartesian.m_x + cartesian.m_y * cartesian.m_y + cartesian.m_z * cartesian.m_z);
+		float theta = std::atan(cartesian.m_y / cartesian.m_x);
+		float phi = std::atan(std::sqrt(cartesian.m_x * cartesian.m_x + cartesian.m_y * cartesian.m_y) / cartesian.m_z);
+		return Vector3(radius, theta, phi);
+	}
+
+	Vector3 Vector3::PolarToCartesian(const Vector3 &polar)
+	{
+		float x = polar.m_x * std::sin(polar.m_z) * std::cos(polar.m_z);
+		float y = polar.m_x * std::sin(polar.m_z) * std::sin(polar.m_y);
+		float z = polar.m_x * std::cos(polar.m_z);
+		return Vector3(x, y, z);
+	}
+
 	Vector3 *Vector3::Translate(const float &x, const float &y, const float &z)
 	{
 		m_x += x;
