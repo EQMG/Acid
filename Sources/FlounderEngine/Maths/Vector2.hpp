@@ -293,6 +293,20 @@ namespace Flounder
 		static Vector2 SmoothDamp(const Vector2 &current, const Vector2 &target, const Vector2 &rate);
 
 		/// <summary>
+		/// Converts from rectangular to spherical coordinates.
+		/// </summary>
+		/// <param name="cartesian"> The cartesian coordinates (x, y). </param>
+		/// <returns> The polar coordinates (radius, theta). </returns>
+		static Vector2 CartesianToPolar(const Vector2 &cartesian);
+
+		/// <summary>
+		/// Converts from spherical to rectangular coordinates.
+		/// </summary>
+		/// <param name="cartesian"> The polar coordinates (radius, theta). </param>
+		/// <returns> The cartesian coordinates (x, y). </returns>
+		static Vector2 PolarToCartesian(const Vector2 &polar);
+
+		/// <summary>
 		/// Translates this vector.
 		/// </summary>
 		/// <param name="x"> The translation in x. </param>
