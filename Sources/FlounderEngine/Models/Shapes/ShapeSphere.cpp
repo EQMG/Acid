@@ -12,12 +12,12 @@ namespace Flounder
 
 		for (unsigned int i = 0; i < longitudeBands + 1; i++)
 		{
-			float iDivLong = (float)i / (float)longitudeBands;
+			float iDivLong = static_cast<float>(i) / static_cast<float>(longitudeBands);
 			float theta = (i == 0 || i == longitudeBands) ? 0.0f : iDivLong * 2.0f * PI;
 
 			for (unsigned int j = 0; j < latitudeBands + 1; j++)
 			{
-				float jDivLat = (float)j / (float)latitudeBands;
+				float jDivLat = static_cast<float>(j) / static_cast<float>(latitudeBands);
 				float phi = jDivLat * 2.0f * PI;
 
 				VertexModel *vertex = new VertexModel();

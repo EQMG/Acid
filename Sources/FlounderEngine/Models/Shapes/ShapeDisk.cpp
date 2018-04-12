@@ -12,13 +12,13 @@ namespace Flounder
 
 		for (unsigned int i = 0; i < slices; i++)
 		{
-			float iDivSlices  = i / (float)slices;
+			float iDivSlices = static_cast<float>(i) / static_cast<float>(slices);
 			float alpha = iDivSlices * 2.0f * PI;
 			float xDir = cos(alpha), yDir = sin(alpha);
 
 			for (unsigned int j = 0; j < loops + 1; j++)
 			{
-				const float jDivLoops = (float)j / (float)loops;
+				const float jDivLoops = static_cast<float>(j) / static_cast<float>(loops);
 				const float radius = innerRadius + jDivLoops * (outerRadius - innerRadius);
 
 				VertexModel *vertex = new VertexModel();
