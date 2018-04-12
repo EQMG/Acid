@@ -8,14 +8,14 @@ namespace Flounder
 {
 	struct F_HIDDEN SoundSourceInfo
 	{
-		unsigned int size;
-		unsigned char *data;
-		short formatTag;
-		short channels;
-		int samplesPerSec;
-		int averageBytesPerSec;
-		short blockAlign;
-		short bitsPerSample;
+		unsigned int m_size;
+		unsigned char *m_data;
+		short m_formatTag;
+		short m_channels;
+		int m_samplesPerSec;
+		int m_averageBytesPerSec;
+		short m_blockAlign;
+		short m_bitsPerSample;
 	};
 
 	/// <summary>

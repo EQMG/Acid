@@ -8,10 +8,10 @@ namespace Flounder
 {
 	const int TerrainRender::SIDE_LENGTH = 200;
 	const std::vector<float> TerrainRender::SQUARE_SIZES = {
-		2.0f, 8.0f, 25.0f, 50.0f
+		4.0f, 8.0f, 25.0f, 50.0f, 100.0f
 	};
 	const std::vector<float> TerrainRender::TEXTURE_SCALES = {
-		10.0f, 5.0f, 2.0f, 1.0f
+		10.0f, 5.0f, 2.0f, 1.0f, 0.5f
 	};
 
 	TerrainRender::TerrainRender() :

@@ -21,7 +21,6 @@ namespace Flounder
 		m_worldMatrix(new Matrix4())
 	{
 		m_worldMatrix = m_transform->GetWorldMatrix(m_worldMatrix);
-		printf("%s\n", m_worldMatrix->ToString().c_str());
 		MeshSimple::GenerateMesh();
 	}
 
@@ -32,15 +31,25 @@ namespace Flounder
 
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
 	{
-		Vector4 position = Vector4(x, Terrains::Get()->GetHeight(x + m_transform->GetPosition()->m_x, z + m_transform->GetPosition()->m_z), z, 1.0f);
-	//	Matrix4::Multiply(*m_worldMatrix, position, &position);
-		return GetSphereCoords(position);
+		Vector4 position = Vector4(x, 0.0f, z, 1.0f);
+		Matrix4::Multiply(*m_worldMatrix, position, &position);
+		position.Set(GetSphereCoords(position));
+
+		//if (position.m_x != 0.0f)
+		//{
+		//Vector3 polar = Vector3::CartesianToPolar(position); // Terrains::Get()->GetNoise()->GetValue(Maths::NormalizeAngle(Maths::Degrees(polar.m_y)), Maths::NormalizeAngle(Maths::Degrees(polar.m_z)));
+		float height = Maths::Clamp(Terrains::Get()->GetNoise()->GetValue(3.0f * position.m_x, 3.0f * position.m_y, 3.0f * position.m_z), 0.2f, 2.0f);
+		position *= height;
+		//}
+
+		return position;
 	}
 
 	Vector3 MeshTerrain::GetNormal(const Vector3 &position)
 	{
 		Vector4 normal = Vector4(Terrains::Get()->GetNormal(position.m_x + m_transform->GetPosition()->m_x, position.m_z + m_transform->GetPosition()->m_z), 1.0f);
-	//	Matrix4::Multiply(*m_worldMatrix, normal, &normal);
+		Matrix4::Multiply(*m_worldMatrix, normal, &normal);
+
 		return normal;
 	}
 
@@ -63,9 +72,12 @@ namespace Flounder
 		}
 
 		Vector3 cube = position / m_radius;
-		float sx = cube.m_x * std::sqrt(1.0f - (cube.m_y * cube.m_y / 2.0f) - (cube.m_z * cube.m_z / 2.0f) + (cube.m_y * cube.m_y * cube.m_z * cube.m_z / 3.0f));
-		float sy = cube.m_y * std::sqrt(1.0f - (cube.m_z * cube.m_z / 2.0f) - (cube.m_x * cube.m_x / 2.0f) + (cube.m_z * cube.m_z * cube.m_x * cube.m_x / 3.0f));
-		float sz = cube.m_z * std::sqrt(1.0f - (cube.m_x * cube.m_x / 2.0f) - (cube.m_y * cube.m_y / 2.0f) + (cube.m_x * cube.m_x * cube.m_y * cube.m_y / 3.0f));
+		float dx = cube.m_x * cube.m_x;
+		float dy = cube.m_y * cube.m_y;
+		float dz = cube.m_z * cube.m_z;
+		float sx = cube.m_x * std::sqrt(1.0f - (dy / 2.0f) - (dz / 2.0f) + (dy * dz / 3.0f));
+		float sy = cube.m_y * std::sqrt(1.0f - (dz / 2.0f) - (dx / 2.0f) + (dz * dx / 3.0f));
+		float sz = cube.m_z * std::sqrt(1.0f - (dx / 2.0f) - (dy / 2.0f) + (dx * dy / 3.0f));
 		return Vector3(sx * m_radius, sy * m_radius, sz * m_radius);
 	}
 }
