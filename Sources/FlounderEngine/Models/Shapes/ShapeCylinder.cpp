@@ -12,14 +12,14 @@ namespace Flounder
 
 		for (unsigned int i = 0; i < slices + 1; i++)
 		{
-			float iDivSlices = (float)i / (float)slices;
+			float iDivSlices = static_cast<float>(i) / static_cast<float>(slices);
 			float alpha = (i == 0 || i == slices) ? 0.0f : iDivSlices * 2.0f * PI;
 			float xDir = std::cos(alpha);
 			float zDir = std::sin(alpha);
 
 			for (unsigned int j = 0; j < stacks + 1; j++)
 			{
-				float jDivStacks  = (float)j / (float)stacks;
+				float jDivStacks = static_cast<float>(j) / static_cast<float>(stacks);
 				float radius = radiusBase * (1.0f - jDivStacks) + radiusTop * jDivStacks;
 
 				VertexModel *vertex = new VertexModel();
