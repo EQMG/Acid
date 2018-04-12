@@ -137,6 +137,15 @@ namespace Demo
 		auto position = GetGameObject()->GetTransform()->GetPosition();
 		auto rotation = GetGameObject()->GetTransform()->GetRotation();
 
+		/*Vector3 cartesian = *position - Vector3::ZERO;
+		Vector3 polar = Vector3::CartesianToPolar(cartesian);
+		polar.m_x = Maths::Max(polar.m_x, 102.0f);
+		cartesian = Vector3::PolarToCartesian(polar);
+		if (!isnan(cartesian.m_x) && !isnan(cartesian.m_y) && !isnan(cartesian.m_z))
+		{
+			*position = cartesian;
+		}*/
+	//	printf("%s\n", position->ToString().c_str());
 		float groundHeight = 0.0f; // Terrains::Get()->GetHeight(position->m_x, position->m_z) + 1.74f;
 
 		// Calculates the deltas to the moved distance, and rotation.
