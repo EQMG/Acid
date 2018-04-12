@@ -82,12 +82,12 @@ namespace Flounder
 			}
 		}
 
-		for (auto child : m_parent->m_children)
+		for (auto child : *m_parent->m_children)
 		{
 			delete child;
 		}
 
-		m_parent->m_children.clear();
+		m_parent->m_children->clear();
 		JsonSection::Convert(loadedParent, m_parent, true);
 		delete loadedParent;
 
@@ -109,19 +109,19 @@ namespace Flounder
 
 	void FileJson::Clear()
 	{
-		for (auto child : m_parent->m_children)
+		for (auto child : *m_parent->m_children)
 		{
 			delete child;
 		}
 
-		m_parent->m_children.clear();
+		m_parent->m_children->clear();
 	}
 
 	std::map<std::string, std::string> FileJson::ConfigReadValues()
 	{
 		auto result = std::map<std::string, std::string>();
 
-		for (auto child : m_parent->m_children)
+		for (auto child : *m_parent->m_children)
 		{
 			if (child->m_value.empty())
 			{
@@ -144,7 +144,8 @@ namespace Flounder
 			return;
 		}
 
-		m_parent->m_children.push_back(new LoadedValue(m_parent, key, value));
+		LoadedValue *newChild = new LoadedValue(m_parent, key, value);
+		m_parent->m_children->push_back(newChild);
 	}
 
 	void FileJson::Verify()

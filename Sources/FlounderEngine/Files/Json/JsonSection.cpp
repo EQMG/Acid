@@ -33,9 +33,9 @@ namespace Flounder
 			*data += "\n";
 		}
 
-		for (auto child : loadedValue->m_children)
+		for (auto child : *loadedValue->m_children)
 		{
-			AppendData(child, data, indentation + 1, child == loadedValue->m_children.back());
+			AppendData(child, data, indentation + 1, child == loadedValue->m_children->back());
 		}
 
 		if (loadedValue->m_name.empty())
@@ -65,7 +65,7 @@ namespace Flounder
 		if (!isTopSection)
 		{
 			thisValue = new LoadedValue(parent, source->m_name, "");
-			parent->m_children.push_back(thisValue);
+			parent->m_children->push_back(thisValue);
 
 			auto contentSplit = FormatString::Split(source->m_content, ",");
 
@@ -79,7 +79,7 @@ namespace Flounder
 				}
 
 				LoadedValue *newChild = new LoadedValue(thisValue, dataSplit.at(0), dataSplit.at(1));
-				thisValue->m_children.push_back(newChild);
+				thisValue->m_children->push_back(newChild);
 			}
 		}
 

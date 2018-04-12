@@ -67,20 +67,20 @@ namespace Demo
 
 		// Terrains.
 	//	new GameObject("PlanetCentre", Transform(Vector3(), Vector3(), 600.0f));
-		int n = 1;
+		int n = 0;
 		float radius = ((2 * n + 1) * TerrainRender::SIDE_LENGTH) / 2.0f;
 		float side = TerrainRender::SIDE_LENGTH;
 
-		for (int j = -n; j < n; j++)
+		for (int j = -n; j <= n; j++)
 		{
-			for (int w = -n; w < n; w++)
+			for (int w = -n; w <= n; w++)
 			{
-				CreateChunk(radius, Transform(Vector3(j * side, radius, w * side), Vector3(0.0f, 0.0f, 0.0f), side)); // Top.
-				CreateChunk(radius, Transform(Vector3(j * side, -radius, w * side), Vector3(180.0f, 0.0f, 0.0f), side)); // Bottom.
-				CreateChunk(radius, Transform(Vector3(w * side, j * side, radius), Vector3(90.0f, 0.0f, 0.0f), side)); // Back.
-				CreateChunk(radius, Transform(Vector3(w * side, j * side, -radius), Vector3(270.0f, 0.0f, 0.0f), side)); // Front.
-				CreateChunk(radius, Transform(Vector3(radius, j * side, w * side), Vector3(0.0f, 0.0f, 270.0f), side)); // Right.
-				CreateChunk(radius, Transform(Vector3(-radius, j * side, w * side), Vector3(0.0f, 0.0f, 90.0f), side)); // Left.
+				CreateChunk(radius, Transform(Vector3(j * side, radius, w * side), Vector3(0.0f, 0.0f, 0.0f))); // Top.
+				CreateChunk(radius, Transform(Vector3(j * side, -radius, w * side), Vector3(180.0f, 0.0f, 0.0f))); // Bottom.
+				CreateChunk(radius, Transform(Vector3(w * side, j * side, radius), Vector3(90.0f, 0.0f, 0.0f))); // Back.
+				CreateChunk(radius, Transform(Vector3(w * side, j * side, -radius), Vector3(270.0f, 0.0f, 0.0f))); // Front.
+				CreateChunk(radius, Transform(Vector3(radius, j * side, w * side), Vector3(0.0f, 0.0f, 270.0f))); // Right.
+				CreateChunk(radius, Transform(Vector3(-radius, j * side, w * side), Vector3(0.0f, 0.0f, 90.0f))); // Left.
 			}
 		}
 

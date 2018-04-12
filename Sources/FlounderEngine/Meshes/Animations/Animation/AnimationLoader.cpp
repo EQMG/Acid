@@ -17,7 +17,7 @@ namespace Flounder
 		m_lengthSeconds = times[times.size() - 1];
 		CreateKeyframeData(times);
 
-		for (auto jointNode : animationNodes)
+		for (auto jointNode : *animationNodes)
 		{
 			LoadJointTransforms(jointNode, rootNode);
 		}

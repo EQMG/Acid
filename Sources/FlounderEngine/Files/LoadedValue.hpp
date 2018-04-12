@@ -11,7 +11,7 @@ namespace Flounder
 	{
 	public:
 		LoadedValue *m_parent;
-		std::vector<LoadedValue*> m_children;
+		std::vector<LoadedValue *> *m_children;
 
 		std::string m_name;
 		std::string m_value;
@@ -24,9 +24,9 @@ namespace Flounder
 
 		void SetRaw(const std::string &data) { m_value = data; }
 
-		std::vector<LoadedValue*> GetChildren() const { return m_children; }
+		std::vector<LoadedValue*> *GetChildren() const { return m_children; }
 
-		unsigned int ChildrenCount() const { return m_children.size(); }
+		unsigned int ChildrenCount() const { return m_children->size(); }
 
 		LoadedValue *GetChild(const std::string &name, const bool &addIfNull = false);
 
@@ -44,7 +44,7 @@ namespace Flounder
 			}
 
 			child = value;
-			m_children.push_back(child);
+			m_children->push_back(child);
 		}
 
 		template<typename T>
@@ -56,7 +56,7 @@ namespace Flounder
 			if (child == nullptr)
 			{
 				child = new LoadedValue(this, name, strValue);
-				m_children.push_back(child);
+				m_children->push_back(child);
 				return;
 			}
 
