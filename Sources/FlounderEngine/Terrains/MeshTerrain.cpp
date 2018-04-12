@@ -41,21 +41,22 @@ namespace Flounder
 	//	float height = Maths::Clamp(Terrains::Get()->GetNoise()->GetValue(2.0f * position.m_x, 2.0f * position.m_y, 2.0f * position.m_z), 0.2f, 2.0f);
 	//	position *= height;
 		//}
+	//	position *= Terrains::Get()->GetHeight(position.m_x, position.m_z) / 50.0f;
 
 		return position;
 	}
 
 	Vector3 MeshTerrain::GetNormal(const Vector3 &position)
 	{
-		Vector4 normal = Vector4(Terrains::Get()->GetNormal(position.m_x + m_transform->GetPosition()->m_x, position.m_z + m_transform->GetPosition()->m_z), 1.0f);
-		Matrix4::Multiply(*m_worldMatrix, normal, &normal);
-
-		return normal;
+	//	Vector4 normal = Vector4(Terrains::Get()->GetNormal(position.m_x + m_transform->GetPosition()->m_x, position.m_z + m_transform->GetPosition()->m_z), 1.0f);
+	//	Matrix4::Multiply(*m_worldMatrix, normal, &normal);
+		return GetSphereCoords(position) / m_radius;
 	}
 
 	Vector3 MeshTerrain::GetColour(const Vector3 &position, const Vector3 &normal)
 	{
-		float value = (position.m_y + AMPLITUDE) / (AMPLITUDE * 2.0f);
+		Vector3 polar = Vector3::CartesianToPolar(position);
+		float value = (polar.m_x - m_radius + AMPLITUDE) / (AMPLITUDE * 2.0f);
 		value = Maths::Clamp((value - HALF_SPREAD) * (1.0f / SPREAD), 0.0f, 0.9999f);
 		int firstBiome = static_cast<int>(std::floor(value / PART));
 		float blend = (value - (firstBiome * PART)) / PART;
