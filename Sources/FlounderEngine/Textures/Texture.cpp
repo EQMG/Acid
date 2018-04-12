@@ -428,7 +428,7 @@ namespace Flounder
 		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
 		samplerCreateInfo.mipLodBias = 0.0f;
 		samplerCreateInfo.minLod = 0.0f;
-		samplerCreateInfo.maxLod = (float)mipLevels;
+		samplerCreateInfo.maxLod = static_cast<float>(mipLevels);
 
 		Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &sampler));
 	}

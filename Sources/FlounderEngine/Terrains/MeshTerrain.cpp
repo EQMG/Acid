@@ -38,8 +38,8 @@ namespace Flounder
 		//if (position.m_x != 0.0f)
 		//{
 		//Vector3 polar = Vector3::CartesianToPolar(position); // Terrains::Get()->GetNoise()->GetValue(Maths::NormalizeAngle(Maths::Degrees(polar.m_y)), Maths::NormalizeAngle(Maths::Degrees(polar.m_z)));
-		float height = Maths::Clamp(Terrains::Get()->GetNoise()->GetValue(3.0f * position.m_x, 3.0f * position.m_y, 3.0f * position.m_z), 0.2f, 2.0f);
-		position *= height;
+	//	float height = Maths::Clamp(Terrains::Get()->GetNoise()->GetValue(2.0f * position.m_x, 2.0f * position.m_y, 2.0f * position.m_z), 0.2f, 2.0f);
+	//	position *= height;
 		//}
 
 		return position;
