@@ -33,6 +33,15 @@ namespace Flounder
 		return height1;
 	}
 
+	float Terrains::GetRadius(const float &radius, const float &theta, const float &phi)
+	{
+		float height = m_noise1->GetValue(
+			(radius / 10.0f) * Maths::NormalizeAngle(Maths::Degrees(theta)),
+			(radius / 10.0f) * Maths::NormalizeAngle(Maths::Degrees(phi))
+		);
+		return radius + (28.0f * height);
+	}
+
 	Vector3 Terrains::GetNormal(const float &x, const float &z)
 	{
 		const float squareSize = 0.1f;

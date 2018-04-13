@@ -85,6 +85,13 @@ namespace Demo
 
 		Vector3 targetVelocity = Vector3(0.0f, m_noclipEnabled ? 0.0f : GRAVITY, 0.0f);
 
+		/*{
+			Vector3 cartesian = *GetGameObject()->GetTransform()->GetPosition() - Vector3::ZERO;
+			Vector3 polar = Vector3::CartesianToPolar(cartesian);
+			polar.m_x = m_noclipEnabled ? 0.0f : GRAVITY;
+			targetVelocity = Vector3::PolarToCartesian(polar);
+		}*/
+
 		if (!Scenes::Get()->IsGamePaused())
 		{
 			bool sprintDown = m_inputSprint->IsDown();
@@ -137,16 +144,13 @@ namespace Demo
 		auto position = GetGameObject()->GetTransform()->GetPosition();
 		auto rotation = GetGameObject()->GetTransform()->GetRotation();
 
-		/*Vector3 cartesian = *position - Vector3::ZERO;
+		// Planet collision.
+		Vector3 cartesian = *position - Vector3::ZERO;
 		Vector3 polar = Vector3::CartesianToPolar(cartesian);
-		polar.m_x = Maths::Max(polar.m_x, 102.0f);
+		float planetRadius = Terrains::Get()->GetRadius((3.0f * TerrainRender::SIDE_LENGTH) / 2.0f, polar.m_y, polar.m_z) + 1.74f;
+		polar.m_x = Maths::Max(polar.m_x, planetRadius);
 		cartesian = Vector3::PolarToCartesian(polar);
-		if (!isnan(cartesian.m_x) && !isnan(cartesian.m_y) && !isnan(cartesian.m_z))
-		{
-			*position = cartesian;
-		}*/
-	//	printf("%s\n", position->ToString().c_str());
-		float groundHeight = 0.0f; // Terrains::Get()->GetHeight(position->m_x, position->m_z) + 1.74f;
+		*position = cartesian;
 
 		// Calculates the deltas to the moved distance, and rotation.
 		float theta = Maths::Radians(cameraRotation->m_y);
@@ -157,11 +161,11 @@ namespace Demo
 		*position = *position + *m_amountMove->Set(dx, dy, dz);
 		*rotation = *rotation + *m_amountRotate->Set(0.0f, 0.0f, 0.0f);
 
-		if (!m_noclipEnabled && position->m_y < groundHeight)
+		if (!m_noclipEnabled && polar.m_x <= planetRadius)
 		{
-			m_velocity->m_y = 0.0f;
+		//	m_velocity->m_y = 0.0f;
 			m_jumping = false;
-			position->m_y = groundHeight;
+		//	position->m_y = groundHeight;
 		}
 	}
 }
