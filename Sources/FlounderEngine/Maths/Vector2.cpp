@@ -278,7 +278,7 @@ namespace Flounder
 	Vector2 Vector2::CartesianToPolar(const Vector2 &cartesian)
 	{
 		float radius = std::sqrt(cartesian.m_x * cartesian.m_x + cartesian.m_y * cartesian.m_y);
-		float theta = std::atan(cartesian.m_y / cartesian.m_x);
+		float theta = std::atan2(cartesian.m_y, cartesian.m_x);
 		return Vector2(radius, theta);
 	}
 

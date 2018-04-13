@@ -405,17 +405,35 @@ namespace Flounder
 	Vector3 Vector3::CartesianToPolar(const Vector3 &cartesian)
 	{
 		float radius = std::sqrt(cartesian.m_x * cartesian.m_x + cartesian.m_y * cartesian.m_y + cartesian.m_z * cartesian.m_z);
-		float theta = std::atan(cartesian.m_y / cartesian.m_x);
-		float phi = std::atan(std::sqrt(cartesian.m_x * cartesian.m_x + cartesian.m_y * cartesian.m_y) / cartesian.m_z);
+		float theta = std::atan2(cartesian.m_y, cartesian.m_x);
+		float phi = std::atan2(std::sqrt(cartesian.m_x * cartesian.m_x + cartesian.m_y * cartesian.m_y), cartesian.m_z);
 		return Vector3(radius, theta, phi);
 	}
 
 	Vector3 Vector3::PolarToCartesian(const Vector3 &polar)
 	{
-		float x = polar.m_x * std::sin(polar.m_z) * std::cos(polar.m_z);
+		float x = polar.m_x * std::sin(polar.m_z) * std::cos(polar.m_y);
 		float y = polar.m_x * std::sin(polar.m_z) * std::sin(polar.m_y);
 		float z = polar.m_x * std::cos(polar.m_z);
 		return Vector3(x, y, z);
+	}
+
+
+	Vector3 Vector3::ProjectCubeToSphere(const float &radius, const Vector3 &position)
+	{
+		if (radius == 0.0f)
+		{
+			return position;
+		}
+
+		Vector3 cube = position / radius;
+		float dx = cube.m_x * cube.m_x;
+		float dy = cube.m_y * cube.m_y;
+		float dz = cube.m_z * cube.m_z;
+		float sx = cube.m_x * std::sqrt(1.0f - (dy / 2.0f) - (dz / 2.0f) + (dy * dz / 3.0f));
+		float sy = cube.m_y * std::sqrt(1.0f - (dz / 2.0f) - (dx / 2.0f) + (dz * dx / 3.0f));
+		float sz = cube.m_z * std::sqrt(1.0f - (dx / 2.0f) - (dy / 2.0f) + (dx * dy / 3.0f));
+		return Vector3(sx * radius, sy * radius, sz * radius);
 	}
 
 	Vector3 *Vector3::Translate(const float &x, const float &y, const float &z)

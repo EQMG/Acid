@@ -114,16 +114,30 @@ namespace Flounder
 			}
 		}
 
-		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), i, sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i))); // program.getAttributeLocation(i), program.getAttributeSize(i)
+		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeLocation(i), sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i))); // program.getAttributeLocation(i), program.getAttributeSize(i)
 	}
 
 	void ShaderProgram::ProcessShader()
 	{
-		// Sort descriptors by binding.
-		std::sort(m_descriptors->begin(), m_descriptors->end(),
-			[](DescriptorType l, DescriptorType r)
+		// Sort uniforms by binding.
+		std::sort(m_uniforms->begin(), m_uniforms->end(),
+			[](Uniform *l, Uniform *r)
 			{
-				return l.m_binding < r.m_binding;
+				return l->m_binding < r->m_binding;
+			});
+
+		// Sort uniform blocks by binding.
+		std::sort(m_uniformBlocks->begin(), m_uniformBlocks->end(),
+			[](UniformBlock *l, UniformBlock *r)
+			{
+				return l->m_binding < r->m_binding;
+			});
+
+		// Sort attributes by location.
+		std::sort(m_vertexAttributes->begin(), m_vertexAttributes->end(),
+			[](VertexAttribute *l, VertexAttribute *r)
+			{
+				return l->m_location < r->m_location;
 			});
 
 		// Sort uniform block uniforms by offsets.
@@ -150,7 +164,7 @@ namespace Flounder
 		// Process to descriptors.
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
-			m_descriptors->push_back(UniformBuffer::CreateDescriptor(uniformBlock->m_binding, uniformBlock->m_stageFlags));
+			m_descriptors->push_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->m_binding), uniformBlock->m_stageFlags));
 		}
 
 		for (auto uniform : *m_uniforms)
@@ -159,11 +173,11 @@ namespace Flounder
 			{
 			case 0x8B5E:
 			case 0x904D:
-				m_descriptors->push_back(Texture::CreateDescriptor(uniform->m_binding, uniform->m_stageFlags));
+				m_descriptors->push_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->m_binding), uniform->m_stageFlags));
 				break;
 			case 0x8B60:
 			case 0x904E:
-				m_descriptors->push_back(Cubemap::CreateDescriptor(uniform->m_binding, uniform->m_stageFlags));
+				m_descriptors->push_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->m_binding), uniform->m_stageFlags));
 				break;
 			default:
 				break;
@@ -177,7 +191,7 @@ namespace Flounder
 		{
 			VkVertexInputAttributeDescription attributeDescription = {};
 			attributeDescription.binding = 0;
-			attributeDescription.location = vertexAttribute->m_location;
+			attributeDescription.location = static_cast<uint32_t>(vertexAttribute->m_location);
 			attributeDescription.format = GlTypeToVk(vertexAttribute->m_glType);
 			attributeDescription.offset = currentOffset;
 
@@ -226,7 +240,7 @@ namespace Flounder
 
 	std::string ShaderProgram::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
 	{
-		// TODO: Cleanup.
+		// TODO: Rework.
 		std::string result = shaderCode;
 		size_t foundIndex0 = result.find('\n', 0);
 		size_t foundIndex1 = result.find('\n', foundIndex0 + 1);
@@ -406,15 +420,15 @@ namespace Flounder
 		resources.maxCullDistances = 8;
 		resources.maxCombinedClipAndCullDistances = 8;
 		resources.maxSamples = 4;
-		resources.limits.nonInductiveForLoops = 1;
-		resources.limits.whileLoops = 1;
-		resources.limits.doWhileLoops = 1;
-		resources.limits.generalUniformIndexing = 1;
-		resources.limits.generalAttributeMatrixVectorIndexing = 1;
-		resources.limits.generalVaryingIndexing = 1;
-		resources.limits.generalSamplerIndexing = 1;
-		resources.limits.generalVariableIndexing = 1;
-		resources.limits.generalConstantMatrixVectorIndexing = 1;
+		resources.limits.nonInductiveForLoops = true;
+		resources.limits.whileLoops = true;
+		resources.limits.doWhileLoops = true;
+		resources.limits.generalUniformIndexing = true;
+		resources.limits.generalAttributeMatrixVectorIndexing = true;
+		resources.limits.generalVaryingIndexing = true;
+		resources.limits.generalSamplerIndexing = true;
+		resources.limits.generalVariableIndexing = true;
+		resources.limits.generalConstantMatrixVectorIndexing = true;
 		return resources;
 	}
 

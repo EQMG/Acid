@@ -34,10 +34,8 @@ namespace Flounder
 	void LodBehaviour::Update()
 	{
 		Vector3 cameraPosition = Vector3(*Scenes::Get()->GetCamera()->GetPosition());
-		cameraPosition.m_y = 0.0f;
-		Vector3 chunkPosition = Vector3(*m_transform->GetPosition()); // Vector3(*GetGameObject()->GetTransform()->m_position);
-		chunkPosition.m_y = Terrains::Get()->GetHeight(cameraPosition.m_x, cameraPosition.m_z);
-		const float distance = Vector3::GetDistance(chunkPosition, cameraPosition);
+		Vector3 chunkPosition = Vector3::ProjectCubeToSphere(m_radius, *m_transform->GetPosition()) + *GetGameObject()->GetTransform()->GetPosition();
+		float distance = std::fabs(Vector3::GetDistance(chunkPosition, cameraPosition));
 
 		// lnreg{ (90.5, 0), (181, 1), (362, 2) } = int(-6.500 + 1.443 * log(x) / log(2.718)) + 1
 		// float lodf = floor(-6.5f + 1.443f * log(distance) / log(2.718f)) + 1.0f;

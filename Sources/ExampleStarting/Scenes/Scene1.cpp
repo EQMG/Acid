@@ -67,7 +67,7 @@ namespace Demo
 
 		// Terrains.
 	//	new GameObject("PlanetCentre", Transform(Vector3(), Vector3(), 600.0f));
-		int n = 0;
+		int n = 1;
 		float radius = ((2 * n + 1) * TerrainRender::SIDE_LENGTH) / 2.0f;
 		float side = TerrainRender::SIDE_LENGTH;
 
@@ -191,7 +191,6 @@ namespace Demo
 		if (m_buttonScreenshot->WasDown())
 		{
 			std::string filename = "Screenshots/" + Engine::Get()->GetDateTime() + ".png";
-
 			m_soundScreenshot->Play();
 			Screenshot::Capture(filename);
 		}
@@ -204,6 +203,8 @@ namespace Demo
 
 	GameObject *Scene1::CreateChunk(const float &radius, const Transform &transform)
 	{
+		new GameObject("PlanetCentre", Transform(Vector3::ProjectCubeToSphere(radius, *transform.GetPosition()), *transform.GetRotation(), 5.0f));
+
 		GameObject *chunk = new GameObject(Transform());
 		chunk->SetName("Terrain");
 		chunk->AddComponent(new Mesh());
