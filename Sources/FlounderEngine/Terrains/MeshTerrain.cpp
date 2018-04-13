@@ -7,7 +7,7 @@
 namespace Flounder
 {
 	const std::array<Colour, 4> BIOME_COLOURS = {
-		Colour("#ffcc00"), Colour("#E17B35"), Colour("#C35D35"), Colour("#683130")
+		Colour("#6e3529"), Colour("#934838"), Colour("#9e402c"), Colour("#656565")
 	};
 	const float SPREAD = 0.76f;
 	const float HALF_SPREAD = SPREAD / 2.0f;
@@ -31,26 +31,34 @@ namespace Flounder
 
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
 	{
-		Vector4 position = Vector4(x, 0.0f, z, 1.0f);
-		Matrix4::Multiply(*m_worldMatrix, position, &position);
-		position.Set(GetSphereCoords(position));
+		Vector4 cartesian = Vector4(x, 0.0f, z, 1.0f);
+		Matrix4::Multiply(*m_worldMatrix, cartesian, &cartesian);
+		cartesian.Set(Vector3::ProjectCubeToSphere(m_radius, cartesian));
+		Vector3 polar = Vector3::CartesianToPolar(cartesian);
 
-		//if (position.m_x != 0.0f)
-		//{
-		//Vector3 polar = Vector3::CartesianToPolar(position); // Terrains::Get()->GetNoise()->GetValue(Maths::NormalizeAngle(Maths::Degrees(polar.m_y)), Maths::NormalizeAngle(Maths::Degrees(polar.m_z)));
-	//	float height = Maths::Clamp(Terrains::Get()->GetNoise()->GetValue(2.0f * position.m_x, 2.0f * position.m_y, 2.0f * position.m_z), 0.2f, 2.0f);
+	//	float height = Terrains::Get()->GetNoise()->GetValue(Maths::NormalizeAngle(Maths::Degrees(polar.m_x)), Maths::NormalizeAngle(Maths::Degrees(polar.m_y)), Maths::NormalizeAngle(Maths::Degrees(polar.m_z)));
+	//	polar.m_x *= height;
+
+	//	float height = Maths::Clamp(Terrains::Get()->GetNoise()->GetValue(2.0f * cartesian.m_x, 2.0f * cartesian.m_y, 2.0f * cartesian.m_z), 0.2f, 2.0f);
 	//	position *= height;
-		//}
-	//	position *= Terrains::Get()->GetHeight(position.m_x, position.m_z) / 50.0f;
 
-		return position;
+	//	polar.m_x *= Terrains::Get()->GetHeight(10.0f * Maths::NormalizeAngle(Maths::Degrees(polar.m_x)), 10.0f * Maths::NormalizeAngle(Maths::Degrees(polar.m_z))) / 50.0f;
+
+		float height = Terrains::Get()->GetNoise()->GetValue(
+			(polar.m_x / 10.0f) * Maths::NormalizeAngle(Maths::Degrees(polar.m_y)),
+			(polar.m_x / 10.0f) * Maths::NormalizeAngle(Maths::Degrees(polar.m_z))
+		);
+		polar.m_x += 28.0f * height;
+
+		return Vector3::PolarToCartesian(polar);
 	}
 
 	Vector3 MeshTerrain::GetNormal(const Vector3 &position)
 	{
 	//	Vector4 normal = Vector4(Terrains::Get()->GetNormal(position.m_x + m_transform->GetPosition()->m_x, position.m_z + m_transform->GetPosition()->m_z), 1.0f);
 	//	Matrix4::Multiply(*m_worldMatrix, normal, &normal);
-		return GetSphereCoords(position) / m_radius;
+	//	return Vector3::ProjectCubeToSphere(m_radius, position) / m_radius;
+		return Vector3::ZERO;
 	}
 
 	Vector3 MeshTerrain::GetColour(const Vector3 &position, const Vector3 &normal)
@@ -63,22 +71,5 @@ namespace Flounder
 		Colour colour = Colour();
 		Colour::Interpolate(BIOME_COLOURS.at(firstBiome), BIOME_COLOURS.at(firstBiome + 1), blend, &colour);
 		return colour;
-	}
-
-	Vector3 MeshTerrain::GetSphereCoords(const Vector3 &position)
-	{
-		if (m_radius == 0.0f)
-		{
-			return position;
-		}
-
-		Vector3 cube = position / m_radius;
-		float dx = cube.m_x * cube.m_x;
-		float dy = cube.m_y * cube.m_y;
-		float dz = cube.m_z * cube.m_z;
-		float sx = cube.m_x * std::sqrt(1.0f - (dy / 2.0f) - (dz / 2.0f) + (dy * dz / 3.0f));
-		float sy = cube.m_y * std::sqrt(1.0f - (dz / 2.0f) - (dx / 2.0f) + (dz * dx / 3.0f));
-		float sz = cube.m_z * std::sqrt(1.0f - (dx / 2.0f) - (dy / 2.0f) + (dx * dy / 3.0f));
-		return Vector3(sx * m_radius, sy * m_radius, sz * m_radius);
 	}
 }

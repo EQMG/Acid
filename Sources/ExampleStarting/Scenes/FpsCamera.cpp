@@ -9,7 +9,7 @@
 namespace Demo
 {
 	const float FpsCamera::NEAR_PLANE = 0.1f;
-	const float FpsCamera::FAR_PLANE = 7000.0f;
+	const float FpsCamera::FAR_PLANE = 10000.0f;
 	const float FpsCamera::FIELD_OF_VIEW = 60.0f;
 
 	const float FpsCamera::ROTATE_AGILITY = 32.0f;

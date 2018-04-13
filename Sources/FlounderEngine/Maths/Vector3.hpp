@@ -359,6 +359,15 @@ namespace Flounder
 		/// <returns> The cartesian coordinates (x, y, z). </returns>
 		static Vector3 PolarToCartesian(const Vector3 &polar);
 
+
+		/// <summary>
+		/// Projects a cube coordinate onto a sphere.
+		/// </summary>
+		/// <param name="radius"> The sphere radius. </param>
+		/// <param name="position"> The cartesian coordinates (x, y, z). </param>
+		/// <returns> The projected cartesian coordinates. </returns>
+		static Vector3 ProjectCubeToSphere(const float &radius, const Vector3 &position);
+
 		/// <summary>
 		/// Translates this vector.
 		/// </summary>

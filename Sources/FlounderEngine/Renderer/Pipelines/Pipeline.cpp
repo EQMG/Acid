@@ -62,8 +62,8 @@ namespace Flounder
 
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("%s", m_shaderProgram->ToString().c_str());
 		printf("Pipeline '%s' created in %fms\n", m_pipelineCreateInfo.m_shaderStages.back().c_str(), debugEnd - debugStart);
-		printf("%s\n", m_shaderProgram->ToString().c_str());
 #endif
 	}
 
@@ -321,8 +321,10 @@ namespace Flounder
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.m_vertexBindingDescriptions.size());
 		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.m_vertexInput.m_vertexBindingDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.size()); // m_shaderProgram->m_attributeDescriptions->size()
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.data(); // m_shaderProgram->m_attributeDescriptions->data()
+		//	vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.size());
+		//	vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_shaderProgram->m_attributeDescriptions->size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_shaderProgram->m_attributeDescriptions->data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
