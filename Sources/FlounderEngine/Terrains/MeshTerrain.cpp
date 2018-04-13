@@ -36,19 +36,7 @@ namespace Flounder
 		cartesian.Set(Vector3::ProjectCubeToSphere(m_radius, cartesian));
 		Vector3 polar = Vector3::CartesianToPolar(cartesian);
 
-	//	float height = Terrains::Get()->GetNoise()->GetValue(Maths::NormalizeAngle(Maths::Degrees(polar.m_x)), Maths::NormalizeAngle(Maths::Degrees(polar.m_y)), Maths::NormalizeAngle(Maths::Degrees(polar.m_z)));
-	//	polar.m_x *= height;
-
-	//	float height = Maths::Clamp(Terrains::Get()->GetNoise()->GetValue(2.0f * cartesian.m_x, 2.0f * cartesian.m_y, 2.0f * cartesian.m_z), 0.2f, 2.0f);
-	//	position *= height;
-
-	//	polar.m_x *= Terrains::Get()->GetHeight(10.0f * Maths::NormalizeAngle(Maths::Degrees(polar.m_x)), 10.0f * Maths::NormalizeAngle(Maths::Degrees(polar.m_z))) / 50.0f;
-
-		float height = Terrains::Get()->GetNoise()->GetValue(
-			(polar.m_x / 10.0f) * Maths::NormalizeAngle(Maths::Degrees(polar.m_y)),
-			(polar.m_x / 10.0f) * Maths::NormalizeAngle(Maths::Degrees(polar.m_z))
-		);
-		polar.m_x += 28.0f * height;
+		polar.m_x = Terrains::Get()->GetRadius(m_radius, polar.m_y, polar.m_z);
 
 		return Vector3::PolarToCartesian(polar);
 	}

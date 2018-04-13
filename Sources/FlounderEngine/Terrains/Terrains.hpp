@@ -39,6 +39,8 @@ namespace Flounder
 
 		float GetHeight(const float &x, const float &z);
 
+		float GetRadius(const float &radius, const float &theta, const float &phi);
+
 		Vector3 GetNormal(const float &x, const float &z);
 
 		Vector3 GetPosition(const float &x, const float &z);
