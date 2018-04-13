@@ -16,7 +16,7 @@ layout(set = 0, binding = 1) uniform UboObject
 	float blendFactor;
 } object;
 
-layout(location = 0) in vec3 vertexPosition;
+layout(set = 0, location = 0) in vec3 vertexPosition;
 
 layout(location = 0) out vec3 fragmentUv;
 layout(location = 1) out float fragmentHeight;

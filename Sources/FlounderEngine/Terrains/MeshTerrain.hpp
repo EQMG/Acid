@@ -21,7 +21,5 @@ namespace Flounder
 		Vector3 GetNormal(const Vector3 &position) override;
 
 		Vector3 GetColour(const Vector3 &position, const Vector3 &normal) override;
-
-		Vector3 GetSphereCoords(const Vector3 &position);
 	};
 }

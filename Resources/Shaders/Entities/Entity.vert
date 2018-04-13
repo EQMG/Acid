@@ -24,15 +24,15 @@ layout(set = 0, binding = 1) uniform UboObject
 	float ignoreLighting;
 } object;
 
-layout(location = 0) in vec3 vertexPosition;
-layout(location = 1) in vec2 vertexUv;
-layout(location = 2) in vec3 vertexNormal;
+layout(set = 0, location = 0) in vec3 vertexPosition;
+layout(set = 0, location = 1) in vec2 vertexUv;
+layout(set = 0, location = 2) in vec3 vertexNormal;
 #ifdef NORMAL_MAPPING
-layout(location = 3) in vec3 vertexTangent;
+layout(set = 0, location = 3) in vec3 vertexTangent;
 #endif
 #ifdef ANIMATED
-layout(location = 4) in ivec3 vertexJointIndices;
-layout(location = 5) in vec3 vertexWeights;
+layout(set = 0, location = 4) in ivec3 vertexJointIndices;
+layout(set = 0, location = 5) in vec3 vertexWeights;
 #endif
 
 layout(location = 0) out vec2 fragmentUv;

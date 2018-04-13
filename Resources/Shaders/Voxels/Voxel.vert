@@ -12,10 +12,10 @@ layout(set = 0, binding = 1) uniform UboObject
 	mat4 transform;
 } object;
 
-layout(location = 0) in vec3 vertexPosition;
-layout(location = 1) in vec2 vertexUv;
-layout(location = 2) in vec3 vertexNormal;
-layout(location = 3) in vec3 vertexTangent;
+layout(set = 0, location = 0) in vec3 vertexPosition;
+layout(set = 0, location = 1) in vec2 vertexUv;
+layout(set = 0, location = 2) in vec3 vertexNormal;
+layout(set = 0, location = 3) in vec3 vertexTangent;
 
 layout(location = 0) out vec3 fragmentNormal;
 layout(location = 1) out vec3 fragmentColour;

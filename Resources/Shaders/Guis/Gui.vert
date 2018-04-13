@@ -10,8 +10,8 @@ layout(set = 0, binding = 0) uniform UboObject
 	float alpha;
 } object;
 
-layout(location = 0) in vec3 vertexPosition;
-layout(location = 1) in vec2 vertexUv;
+layout(set = 0, location = 0) in vec3 vertexPosition;
+layout(set = 0, location = 1) in vec2 vertexUv;
 
 layout(location = 0) out vec2 fragmentUv;
 

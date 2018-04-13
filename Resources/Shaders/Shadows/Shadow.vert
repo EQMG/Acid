@@ -12,7 +12,7 @@ layout(set = 0, binding = 1) uniform UboObject
 	mat4 transform;
 } object;
 
-layout(location = 0) in vec3 vertexPosition;
+layout(set = 0, location = 0) in vec3 vertexPosition;
 
 out gl_PerVertex 
 {
