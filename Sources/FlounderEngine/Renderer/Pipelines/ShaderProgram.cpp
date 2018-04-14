@@ -114,7 +114,7 @@ namespace Flounder
 			}
 		}
 
-		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeLocation(i), sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i))); // program.getAttributeLocation(i), program.getAttributeSize(i)
+		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation, sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i))); // program.getAttributeLocation(i), program.getAttributeSize(i)
 	}
 
 	void ShaderProgram::ProcessShader()

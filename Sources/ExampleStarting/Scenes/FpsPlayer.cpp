@@ -83,12 +83,13 @@ namespace Demo
 		// Gets the delta and limits the lowest UPS to 20 (any less and the game is unplayable).
 		float delta = Maths::Min(Engine::Get()->GetDelta(), 1.0f / 20.0f);
 
-		Vector3 targetVelocity = Vector3(0.0f, m_noclipEnabled ? 0.0f : GRAVITY, 0.0f);
+		Vector3 targetVelocity = Vector3();
 
-		/*{
+		/*if (!m_noclipEnabled)
+		{
 			Vector3 cartesian = *GetGameObject()->GetTransform()->GetPosition() - Vector3::ZERO;
 			Vector3 polar = Vector3::CartesianToPolar(cartesian);
-			polar.m_x = m_noclipEnabled ? 0.0f : GRAVITY;
+			polar.m_x = GRAVITY;
 			targetVelocity = Vector3::PolarToCartesian(polar);
 		}*/
 
@@ -97,31 +98,31 @@ namespace Demo
 			bool sprintDown = m_inputSprint->IsDown();
 			bool crouchDown = m_inputCrouch->IsDown();
 
-			targetVelocity.m_z = (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputForward->GetAmount();
-			targetVelocity.m_x = (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputStrafe->GetAmount();
+			targetVelocity.m_z += (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputForward->GetAmount();
+			targetVelocity.m_x += (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputStrafe->GetAmount();
 
 			if (m_noclipEnabled)
 			{
 				if (m_inputJump->IsDown())
 				{
-					targetVelocity.m_y = sprintDown ? RUN_SPEED : WALK_SPEED;
+					targetVelocity.m_y += sprintDown ? RUN_SPEED : WALK_SPEED;
 				}
 				else if (m_inputCrouch->IsDown())
 				{
-					targetVelocity.m_y = sprintDown ? -RUN_SPEED : -WALK_SPEED;
+					targetVelocity.m_y += sprintDown ? -RUN_SPEED : -WALK_SPEED;
 				}
 
 				targetVelocity *= NOCLIP_SPEED;
 			}
-			else
+			/*else
 			{
 				if (m_inputJump->WasDown() && !m_jumping)
 				{
-					targetVelocity.m_y = crouchDown ? CROUCH_JUMP_SPEED : JUMP_SPEED;
-					m_velocity->m_y = targetVelocity.m_y;
+					targetVelocity.m_y += crouchDown ? CROUCH_JUMP_SPEED : JUMP_SPEED;
+					m_velocity->m_y += targetVelocity.m_y;
 					m_jumping = true;
 				}
-			}
+			}*/
 
 			if (m_toggleNoclip->WasDown())
 			{
@@ -131,12 +132,6 @@ namespace Demo
 				printf("Player Noclip: %s\n", m_noclipEnabled ? "true" : "false");
 			}
 		}
-		else
-		{
-			targetVelocity.m_x = 0.0f;
-			//	targetVelocity.m_y = 0.0f;
-			targetVelocity.m_z = 0.0f;
-		}
 
 		*m_velocity = Vector3::SmoothDamp(*m_velocity, targetVelocity, delta * (m_noclipEnabled ? DAMP_NOCLIP : DAMP_NORMAL));
 
@@ -145,12 +140,12 @@ namespace Demo
 		auto rotation = GetGameObject()->GetTransform()->GetRotation();
 
 		// Planet collision.
-		Vector3 cartesian = *position - Vector3::ZERO;
+		/*Vector3 cartesian = *position - Vector3::ZERO;
 		Vector3 polar = Vector3::CartesianToPolar(cartesian);
 		float planetRadius = Terrains::Get()->GetRadius((3.0f * TerrainRender::SIDE_LENGTH) / 2.0f, polar.m_y, polar.m_z) + 1.74f;
 		polar.m_x = Maths::Max(polar.m_x, planetRadius);
 		cartesian = Vector3::PolarToCartesian(polar);
-		*position = cartesian;
+		*position = cartesian;*/
 
 		// Calculates the deltas to the moved distance, and rotation.
 		float theta = Maths::Radians(cameraRotation->m_y);
@@ -161,11 +156,11 @@ namespace Demo
 		*position = *position + *m_amountMove->Set(dx, dy, dz);
 		*rotation = *rotation + *m_amountRotate->Set(0.0f, 0.0f, 0.0f);
 
-		if (!m_noclipEnabled && polar.m_x <= planetRadius)
+		/*if (!m_noclipEnabled && polar.m_x <= planetRadius)
 		{
 		//	m_velocity->m_y = 0.0f;
 			m_jumping = false;
 		//	position->m_y = groundHeight;
-		}
+		}*/
 	}
 }

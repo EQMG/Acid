@@ -10,7 +10,7 @@ namespace Demo
 	{
 		4096, 4096, // width / height
 		{
-			Attachment(0, TypeImage, VK_FORMAT_R16_UNORM) // shadows
+			Attachment(0, TypeImage, VK_FORMAT_R8_UNORM) // shadows
 		}, // images
 		{
 			SubpassType(0, {0})
