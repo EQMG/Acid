@@ -50,8 +50,8 @@ namespace Flounder
 	void RenderStage::Rebuild(Swapchain *swapchain)
 	{
 		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
-		const VkExtent2D extent2D = { GetWidth(), GetHeight() };
-		const VkExtent3D extent3D = { GetWidth(), GetHeight(), 1 };
+		const VkExtent2D extent2D = {GetWidth(), GetHeight()};
+		const VkExtent3D extent3D = {GetWidth(), GetHeight(), 1};
 
 		if (m_hasDepth)
 		{

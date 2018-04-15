@@ -1,6 +1,6 @@
 #include "MeshWater.hpp"
 
-#include "./Maths/Colour.hpp"
+#include "../Maths/Colour.hpp"
 #include "WaterRender.hpp"
 
 namespace Flounder

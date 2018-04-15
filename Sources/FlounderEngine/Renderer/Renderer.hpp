@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../Engine/Engine.hpp"
-#include "../Devices/Display.hpp"
-#include "Renderer/Swapchain/DepthStencil.hpp"
+#include "../Display/Display.hpp"
+#include "Swapchain/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
 #include "RenderStage.hpp"
 #include "IManagerRender.hpp"
@@ -70,6 +70,12 @@ namespace Flounder
 		/// </summary>
 		/// <param name="commandBuffer"> The command buffer to use. </param>
 		void NextSubpass(const VkCommandBuffer &commandBuffer);
+
+		static VkCommandBuffer BeginSingleTimeCommands(const VkCommandBufferLevel &level = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+
+		static void EndSingleTimeCommands(const VkCommandBuffer &commandBuffer);
+
+		static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
 
 		/// <summary>
 		/// Gets the renderer manager.

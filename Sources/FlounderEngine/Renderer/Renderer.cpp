@@ -81,7 +81,7 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto queue = Display::Get()->GetQueue();
 
-		Platform::ErrorVk(vkQueueWaitIdle(queue));
+		Display::ErrorVk(vkQueueWaitIdle(queue));
 
 		if (renderStage->m_hasSwapchain)
 		{
@@ -98,16 +98,16 @@ namespace Flounder
 				throw std::runtime_error("Renderer failed to acquire swapchain image!");
 			}
 
-			Platform::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
+			Display::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
 
-			Platform::ErrorVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
+			Display::ErrorVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
 		}
 
 		VkCommandBufferBeginInfo commandBufferBeginInfo = {};
 		commandBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		commandBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
-		Platform::ErrorVk(vkBeginCommandBuffer(commandBuffer, &commandBufferBeginInfo));
+		Display::ErrorVk(vkBeginCommandBuffer(commandBuffer, &commandBufferBeginInfo));
 
 		VkRect2D renderArea = {};
 		renderArea.offset.x = 0;
@@ -150,7 +150,7 @@ namespace Flounder
 		const auto queue = Display::Get()->GetQueue();
 
 		vkCmdEndRenderPass(commandBuffer);
-		Platform::ErrorVk(vkEndCommandBuffer(commandBuffer));
+		Display::ErrorVk(vkEndCommandBuffer(commandBuffer));
 
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -170,7 +170,7 @@ namespace Flounder
 			throw std::runtime_error("Renderer failed to acquire swapchain image!");
 		}
 
-		Platform::ErrorVk(vkQueueWaitIdle(queue));
+		Display::ErrorVk(vkQueueWaitIdle(queue));
 
 		if (!renderStage->m_hasSwapchain)
 		{
@@ -205,13 +205,76 @@ namespace Flounder
 		}
 #endif
 
-		Platform::ErrorVk(result);
+		Display::ErrorVk(result);
 		vkQueueWaitIdle(queue);
 	}
 
 	void Renderer::NextSubpass(const VkCommandBuffer &commandBuffer)
 	{
 		vkCmdNextSubpass(commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
+	}
+
+	VkCommandBuffer Renderer::BeginSingleTimeCommands(const VkCommandBufferLevel &level)
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto commandPool = Renderer::Get()->GetCommandPool();
+
+		VkCommandBufferAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		allocInfo.level = level;
+		allocInfo.commandPool = commandPool;
+		allocInfo.commandBufferCount = 1;
+
+		VkCommandBuffer commandBuffer;
+		Display::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &allocInfo, &commandBuffer));
+
+		VkCommandBufferBeginInfo beginInfo = {};
+		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+		Display::ErrorVk(vkBeginCommandBuffer(commandBuffer, &beginInfo));
+
+		return commandBuffer;
+	}
+
+	void Renderer::EndSingleTimeCommands(const VkCommandBuffer &commandBuffer)
+	{
+		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto queue = Display::Get()->GetQueue();
+		const auto commandPool = Renderer::Get()->GetCommandPool();
+
+		Display::ErrorVk(vkEndCommandBuffer(commandBuffer));
+
+		VkSubmitInfo submitInfo = {};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &commandBuffer;
+
+		Display::ErrorVk(vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE));
+
+		Display::ErrorVk(vkQueueWaitIdle(queue));
+
+		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &commandBuffer);
+	}
+
+	uint32_t Renderer::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
+	{
+		for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i)
+		{
+			if (memoryRequirements->memoryTypeBits & (1 << i))
+			{
+				if ((deviceMemoryProperties->memoryTypes[i].propertyFlags & requiredProperties) == requiredProperties)
+				{
+					return i;
+				}
+			}
+		}
+
+//#ifdef FLOUNDER_PLATFORM_WINDOWS
+//		MessageBox(nullptr, "Couldn't find proper memory type!", "Vulkan Error", 0);
+//#endif
+		throw std::runtime_error("Vulkan runtime error, couldn't find proper memory type!");
+		return UINT32_MAX;
 	}
 
 	void Renderer::CreateFences()
@@ -230,14 +293,14 @@ namespace Flounder
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		Platform::ErrorVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, nullptr, &m_semaphore));
+		Display::ErrorVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, nullptr, &m_semaphore));
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetGraphicsFamilyIndex();
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
-		Platform::ErrorVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
+		Display::ErrorVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
 		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -245,7 +308,7 @@ namespace Flounder
 		commandBufferAllocateInfo.commandBufferCount = 1;
 		commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 
-		Platform::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer));
+		Display::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer));
 	}
 
 	void Renderer::CreatePipelineCache()
@@ -255,7 +318,7 @@ namespace Flounder
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 
-		Platform::ErrorVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
+		Display::ErrorVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
 	void Renderer::RecreatePass(const int &i)
@@ -267,7 +330,7 @@ namespace Flounder
 			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
 		};
 
-		Platform::ErrorVk(vkQueueWaitIdle(queue));
+		Display::ErrorVk(vkQueueWaitIdle(queue));
 
 		if (renderStage->m_hasSwapchain && !m_swapchain->SameExtent(displayExtent2D))
 		{

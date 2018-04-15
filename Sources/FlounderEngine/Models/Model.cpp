@@ -1,6 +1,6 @@
 #include "Model.hpp"
 
-#include "Helpers/FileSystem.hpp"
+#include "../Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -22,7 +22,7 @@ namespace Flounder
 		m_indexBuffer(nullptr),
 		m_aabb(new ColliderAabb())
 	{
-		std::vector<IVertex*> vertices = std::vector<IVertex*>();
+		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		LoadFromFile(filename, &vertices, &indices);
@@ -47,7 +47,7 @@ namespace Flounder
 		}
 	}
 
-	Model::Model(std::vector<IVertex*> &vertices, std::vector<uint32_t> &indices, const std::string &name) :
+	Model::Model(std::vector<IVertex *> &vertices, std::vector<uint32_t> &indices, const std::string &name) :
 		IResource(),
 		m_filename(name),
 		m_vertexBuffer(nullptr),
@@ -68,7 +68,7 @@ namespace Flounder
 		}
 	}
 
-	Model::Model(std::vector<IVertex*> &vertices, const std::string &name) :
+	Model::Model(std::vector<IVertex *> &vertices, const std::string &name) :
 		IResource(),
 		m_filename(name),
 		m_vertexBuffer(nullptr),
@@ -143,7 +143,7 @@ namespace Flounder
 		}
 	}
 
-	void Model::LoadFromFile(const std::string &filename, std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices)
+	void Model::LoadFromFile(const std::string &filename, std::vector<IVertex *> *vertices, std::vector<uint32_t> *indices)
 	{
 #if FLOUNDER_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
@@ -331,7 +331,7 @@ namespace Flounder
 		delete deltaUv2;
 	}
 
-	ColliderAabb Model::CalculateAabb(const std::vector<IVertex*> &vertices)
+	ColliderAabb Model::CalculateAabb(const std::vector<IVertex *> &vertices)
 	{
 		float minX = +std::numeric_limits<float>::infinity();
 		float minY = +std::numeric_limits<float>::infinity();

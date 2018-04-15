@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Models/Shapes/MeshSimple.hpp"
+#include "../Models/Shapes/MeshSimple.hpp"
 
 namespace Flounder
 {

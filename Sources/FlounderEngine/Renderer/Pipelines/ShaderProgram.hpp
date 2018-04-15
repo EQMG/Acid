@@ -2,11 +2,10 @@
 
 #include <array>
 #include <string>
-#include <vector>
-#include <GlslangToSpv.h>
-#include "../../Engine/Platform.hpp"
-#include "PipelineCreate.hpp"
 #include <sstream>
+#include <vector>
+#include "../../Display/Display.hpp"
+#include "PipelineCreate.hpp"
 
 namespace Flounder
 {
@@ -59,14 +58,14 @@ namespace Flounder
 		int m_binding;
 		int m_size;
 		VkShaderStageFlagBits m_stageFlags;
-		std::vector<Uniform*> *m_uniforms;
+		std::vector<Uniform *> *m_uniforms;
 
 		UniformBlock(const std::string &name, const int &binding, const int &size, const VkShaderStageFlagBits &stageFlags) :
 			m_name(name),
 			m_binding(binding),
 			m_size(size),
 			m_stageFlags(stageFlags),
-			m_uniforms(new std::vector<Uniform*>())
+			m_uniforms(new std::vector<Uniform *>())
 		{
 		}
 
@@ -127,9 +126,9 @@ namespace Flounder
 	class F_HIDDEN ShaderProgram
 	{
 	public:
-		std::vector<Uniform*> *m_uniforms;
-		std::vector<UniformBlock*> *m_uniformBlocks;
-		std::vector<VertexAttribute*> *m_vertexAttributes;
+		std::vector<Uniform *> *m_uniforms;
+		std::vector<UniformBlock *> *m_uniformBlocks;
+		std::vector<VertexAttribute *> *m_vertexAttributes;
 
 		std::vector<DescriptorType> *m_descriptors;
 		std::vector<VkVertexInputAttributeDescription> *m_attributeDescriptions;
@@ -146,6 +145,7 @@ namespace Flounder
 		void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
 
 		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
+
 	public:
 		void ProcessShader();
 

@@ -56,7 +56,7 @@ namespace Flounder
 					{
 						auto contentSplit = FormatString::Split(content, "\"");
 
-						if ((int)contentSplit.size() - 2 >= 0)
+						if ((int) contentSplit.size() - 2 >= 0)
 						{
 							name = contentSplit.at(contentSplit.size() - 2);
 						}

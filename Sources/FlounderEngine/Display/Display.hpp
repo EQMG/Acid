@@ -3,8 +3,10 @@
 #include <string>
 #include <cstring>
 #include <vector>
+#include <vulkan/vulkan.h>
+#include <GlslangToSpv.h>
+#include <GLFW/glfw3.h>
 #include "../Engine/Engine.hpp"
-#include "../Engine/Platform.hpp"
 
 namespace Flounder
 {
@@ -192,6 +194,10 @@ namespace Flounder
 		/// </summary>
 		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
 		void SetFullscreen(const bool &fullscreen);
+
+		static void ErrorVk(const VkResult &result);
+
+		static void ErrorGlfw(const int &result);
 
 		/// <summary>
 		/// Gets the current GLFW window.

@@ -36,7 +36,7 @@ namespace Flounder
 		cartesian = Vector3::ProjectCubeToSphere(m_radius, cartesian);
 		Vector3 polar = Vector3::CartesianToPolar(cartesian);
 
-	//	polar.m_x = m_radius + (28.0f * Terrains::Get()->GetNoise()->GetValue((m_radius / 30.0f) * cartesian.m_x, (m_radius / 30.0f) * cartesian.m_y, (m_radius / 30.0f) * cartesian.m_z));
+		//	polar.m_x = m_radius + (28.0f * Terrains::Get()->GetNoise()->GetValue((m_radius / 30.0f) * cartesian.m_x, (m_radius / 30.0f) * cartesian.m_y, (m_radius / 30.0f) * cartesian.m_z));
 		polar.m_x = Terrains::Get()->GetRadius(m_radius, polar.m_y, polar.m_z);
 
 		return Vector3::PolarToCartesian(polar);
@@ -44,25 +44,25 @@ namespace Flounder
 
 	Vector3 MeshTerrain::GetNormal(const Vector3 &position)
 	{
-	/*	Vector3 polar = Vector3::CartesianToPolar(position);
+		/*	Vector3 polar = Vector3::CartesianToPolar(position);
 
-		float squareSize = 0.1f;
-		Vector3 positionL = GetPosition(polar.m_y - squareSize, polar.m_z);
-		Vector3 positionR = GetPosition(polar.m_y + squareSize, polar.m_z);
-		Vector3 positionD = GetPosition(polar.m_y, polar.m_z - squareSize);
-		Vector3 positionU = GetPosition(polar.m_y, polar.m_z + squareSize);
+			float squareSize = 0.1f;
+			Vector3 positionL = GetPosition(polar.m_y - squareSize, polar.m_z);
+			Vector3 positionR = GetPosition(polar.m_y + squareSize, polar.m_z);
+			Vector3 positionD = GetPosition(polar.m_y, polar.m_z - squareSize);
+			Vector3 positionU = GetPosition(polar.m_y, polar.m_z + squareSize);
 
-		Vector3 normal = Vector3();
-		Vector3::Cross(positionL - positionR, positionD - positionU, &normal);
-		normal.Normalize();
-		return normal;*/
+			Vector3 normal = Vector3();
+			Vector3::Cross(positionL - positionR, positionD - positionU, &normal);
+			normal.Normalize();
+			return normal;*/
 
-	//	Vector3 normal = Vector3();
-	//	Vector3::Cross(positionL - positionR, positionR - positionD, &normal);
-	//	normal.Normalize();
-	//	return normal;
+		//	Vector3 normal = Vector3();
+		//	Vector3::Cross(positionL - positionR, positionR - positionD, &normal);
+		//	normal.Normalize();
+		//	return normal;
 
-	//	return Vector3::ProjectCubeToSphere(m_radius, position);
+		//	return Vector3::ProjectCubeToSphere(m_radius, position);
 		return Vector3::ZERO;
 	}
 

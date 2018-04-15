@@ -1,15 +1,13 @@
 #include "FpsPlayer.hpp"
 
-#include <Inputs/AxisCompound.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/AxisButton.hpp>
-#include <Inputs/AxisJoystick.hpp>
-#include <Inputs/ButtonCompound.hpp>
-#include <Inputs/ButtonJoystick.hpp>
+#include <Inputs/Axes/AxisCompound.hpp>
+#include <Inputs/Buttons/ButtonKeyboard.hpp>
+#include <Inputs/Axes/AxisButton.hpp>
+#include <Inputs/Axes/AxisJoystick.hpp>
+#include <Inputs/Buttons/ButtonCompound.hpp>
+#include <Inputs/Buttons/ButtonJoystick.hpp>
 #include <Uis/Uis.hpp>
-#include <Terrains/Terrains.hpp>
 #include <Scenes/Scenes.hpp>
-#include <Worlds/Worlds.hpp>
 
 namespace Demo
 {
@@ -27,7 +25,7 @@ namespace Demo
 		Behaviour(),
 		m_velocity(new Vector3()),
 		m_jumping(false),
-		m_noclipEnabled(false),
+		m_noclipEnabled(true),
 		m_inputForward(new AxisCompound({
 			new AxisButton(
 				new ButtonKeyboard({GLFW_KEY_S, GLFW_KEY_DOWN}),
@@ -83,15 +81,7 @@ namespace Demo
 		// Gets the delta and limits the lowest UPS to 20 (any less and the game is unplayable).
 		float delta = Maths::Min(Engine::Get()->GetDelta(), 1.0f / 20.0f);
 
-		Vector3 targetVelocity = Vector3();
-
-		/*if (!m_noclipEnabled)
-		{
-			Vector3 cartesian = *GetGameObject()->GetTransform()->GetPosition() - Vector3::ZERO;
-			Vector3 polar = Vector3::CartesianToPolar(cartesian);
-			polar.m_x = GRAVITY;
-			targetVelocity = Vector3::PolarToCartesian(polar);
-		}*/
+		Vector3 targetVelocity = Vector3(0.0f, m_noclipEnabled ? 0.0f : GRAVITY, 0.0f);
 
 		if (!Scenes::Get()->IsGamePaused())
 		{
@@ -114,7 +104,7 @@ namespace Demo
 
 				targetVelocity *= NOCLIP_SPEED;
 			}
-			/*else
+			else
 			{
 				if (m_inputJump->WasDown() && !m_jumping)
 				{
@@ -122,7 +112,7 @@ namespace Demo
 					m_velocity->m_y += targetVelocity.m_y;
 					m_jumping = true;
 				}
-			}*/
+			}
 
 			if (m_toggleNoclip->WasDown())
 			{
@@ -139,13 +129,7 @@ namespace Demo
 		auto position = GetGameObject()->GetTransform()->GetPosition();
 		auto rotation = GetGameObject()->GetTransform()->GetRotation();
 
-		// Planet collision.
-		/*Vector3 cartesian = *position - Vector3::ZERO;
-		Vector3 polar = Vector3::CartesianToPolar(cartesian);
-		float planetRadius = Terrains::Get()->GetRadius((3.0f * TerrainRender::SIDE_LENGTH) / 2.0f, polar.m_y, polar.m_z) + 1.74f;
-		polar.m_x = Maths::Max(polar.m_x, planetRadius);
-		cartesian = Vector3::PolarToCartesian(polar);
-		*position = cartesian;*/
+		float groundHeight = 0.0f;
 
 		// Calculates the deltas to the moved distance, and rotation.
 		float theta = Maths::Radians(cameraRotation->m_y);
@@ -156,11 +140,11 @@ namespace Demo
 		*position = *position + *m_amountMove->Set(dx, dy, dz);
 		*rotation = *rotation + *m_amountRotate->Set(0.0f, 0.0f, 0.0f);
 
-		/*if (!m_noclipEnabled && polar.m_x <= planetRadius)
+		if (!m_noclipEnabled && position->m_y <= groundHeight)
 		{
-		//	m_velocity->m_y = 0.0f;
+			m_velocity->m_y = 0.0f;
 			m_jumping = false;
-		//	position->m_y = groundHeight;
-		}*/
+			position->m_y = groundHeight;
+		}
 	}
 }

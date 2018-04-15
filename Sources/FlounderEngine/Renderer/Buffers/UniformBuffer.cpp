@@ -1,7 +1,5 @@
 ﻿#include "UniformBuffer.hpp"
 
-#include "../../Devices/Display.hpp"
-
 namespace Flounder
 {
 	UniformBuffer::UniformBuffer(const VkDeviceSize &size) :

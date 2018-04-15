@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "../../Textures/Texture.hpp"
-#include "../../Engine/Platform.hpp"
 #include "../Pipelines/DescriptorSet.hpp"
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"

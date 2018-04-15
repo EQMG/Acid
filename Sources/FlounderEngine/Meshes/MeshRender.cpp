@@ -107,11 +107,11 @@ namespace Flounder
 		}
 
 		m_descriptorSet->UpdateMap({
-			{"UboScene", uniformScene},
-			{"UboObject", m_uniformObject},
-			{"samplerDiffuse", materialDefault->GetDiffuseTexture()},
+			{"UboScene",        uniformScene},
+			{"UboObject",       m_uniformObject},
+			{"samplerDiffuse",  materialDefault->GetDiffuseTexture()},
 			{"samplerMaterial", materialDefault->GetMaterialTexture()},
-			{"samplerNormal", materialDefault->GetNormalTexture()}
+			{"samplerNormal",   materialDefault->GetNormalTexture()}
 		});
 
 		// Draws the object.

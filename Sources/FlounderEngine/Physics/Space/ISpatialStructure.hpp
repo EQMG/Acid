@@ -6,7 +6,9 @@
 namespace Flounder
 {
 	class GameObject;
+
 	class Component;
+
 	class Collider;
 
 	/// <summary>

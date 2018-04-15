@@ -45,6 +45,6 @@ namespace Flounder
 
 		Vector3 GetPosition(const float &x, const float &z);
 
-		NoiseFast *GetNoise() const { return m_noise1;};
+		NoiseFast *GetNoise() const { return m_noise1; };
 	};
 }

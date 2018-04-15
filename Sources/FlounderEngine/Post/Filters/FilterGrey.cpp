@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterGrey::FilterGrey(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Grey.frag", graphicsStage, { })
+		IPostFilter("Resources/Shaders/Filters/Grey.frag", graphicsStage, {})
 	{
 	}
 

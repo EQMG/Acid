@@ -15,7 +15,7 @@ namespace Flounder
 		m_headJoint(nullptr),
 		m_animation(nullptr),
 		m_animator(nullptr),
-		m_jointMatrices(std::vector<Matrix4*>())
+		m_jointMatrices(std::vector<Matrix4 *>())
 	{
 	}
 
@@ -75,14 +75,14 @@ namespace Flounder
 		auto indices = geometryLoader->GetIndices();
 		m_model = new Model(vertices, indices);
 		m_headJoint = CreateJoints(skeletonLoader->GetHeadJoint());
-	//	delete skinLoader;
-	//	delete skeletonLoader;
-	//	delete geometryLoader;
+		//	delete skinLoader;
+		//	delete skeletonLoader;
+		//	delete geometryLoader;
 
 		AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
 			file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
 		m_animation = new Animation(animationLoader->GetLengthSeconds(), animationLoader->GetKeyframeData());
-	//	delete animationLoader;
+		//	delete animationLoader;
 
 		delete file;
 
@@ -102,7 +102,7 @@ namespace Flounder
 		return j;
 	}
 
-	void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4*> *jointMatrices)
+	void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4 *> *jointMatrices)
 	{
 		if (headJoint.GetIndex() < (int) jointMatrices->size())
 		{

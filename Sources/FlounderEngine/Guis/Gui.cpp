@@ -1,6 +1,5 @@
 ﻿#include "Gui.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Models/Shapes/ShapeRectangle.hpp"
 #include "UbosGuis.hpp"
 

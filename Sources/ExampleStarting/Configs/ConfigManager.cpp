@@ -1,7 +1,6 @@
 #include "ConfigManager.hpp"
 
-#include <Devices/Display.hpp>
-#include <Devices/Audio.hpp>
+#include <Display/Display.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Files/Json/FileJson.hpp>
 #include <Events/Events.hpp>
@@ -15,7 +14,7 @@ namespace Demo
 
 		m_configAudio = new Config(new FileJson(FileSystem::GetWorkingDirectory() + "/Configs/Audio.json"));
 		m_configAudio->Load();
-	//	m_configAudio->Link<float>("MasterVolume", 1.0f, nullptr, nullptr);
+		//	m_configAudio->Link<float>("MasterVolume", 1.0f, nullptr, nullptr);
 
 		m_configGraphics = new Config(new FileJson(FileSystem::GetWorkingDirectory() + "/Configs/Graphics.json"));
 		m_configGraphics->Load();
@@ -25,7 +24,8 @@ namespace Demo
 		m_configGraphics->Link<int>("Display Width", 1080, CONFIG_GET(Display::Get()->GetWidth()));
 		m_configGraphics->Link<int>("Display Height", 720, CONFIG_GET(Display::Get()->GetHeight()));
 
-		Events::Get()->AddEvent(new EventTime(2.5f, false, [&]() -> void { Save(); }));
+		Events::Get()->AddEvent(new EventTime(2.5f, false, [&]() -> void
+		{ Save(); }));
 	}
 
 	ConfigManager::~ConfigManager()

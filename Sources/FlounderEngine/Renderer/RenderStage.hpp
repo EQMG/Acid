@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../Devices/Display.hpp"
+#include "../Display/Display.hpp"
 #include "Renderpass/Renderpass.hpp"
-#include "Renderer/Swapchain/DepthStencil.hpp"
+#include "Swapchain/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
 #include "Swapchain/Framebuffers.hpp"
 

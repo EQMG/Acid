@@ -1,6 +1,5 @@
 ﻿#include "Swapchain.hpp"
 
-#include "../../Devices/Display.hpp"
 #include "../../Shadows/Shadows.hpp"
 #include "../Queue/QueueFamily.hpp"
 
@@ -79,12 +78,12 @@ namespace Flounder
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		}
 
-		Platform::ErrorVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
+		Display::ErrorVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
 
-		Platform::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
+		Display::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
 		m_swapchinImages.resize(m_swapchainImageCount);
 		m_swapchinImageViews.resize(m_swapchainImageCount);
-		Platform::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchinImages.data()));
+		Display::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchinImages.data()));
 
 		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
 		{
@@ -104,7 +103,7 @@ namespace Flounder
 			imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 			imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-			Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews.at(i)));
+			Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews.at(i)));
 		}
 	}
 

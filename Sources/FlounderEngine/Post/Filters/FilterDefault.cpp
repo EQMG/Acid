@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Default.frag", graphicsStage, { })
+		IPostFilter("Resources/Shaders/Filters/Default.frag", graphicsStage, {})
 	{
 	}
 

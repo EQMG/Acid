@@ -1,7 +1,7 @@
 #include "AxisJoystick.hpp"
 
-#include "../Devices/Joysticks.hpp"
-#include "../Maths/Maths.hpp"
+#include "../../Inputs/Joysticks.hpp"
+#include "../../Maths/Maths.hpp"
 
 namespace Flounder
 {

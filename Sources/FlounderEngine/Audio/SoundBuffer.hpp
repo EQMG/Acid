@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "../Devices/Audio.hpp"
+#include "../Audio/Audio.hpp"
 #include "../Resources/Resources.hpp"
 #include "../Maths/Vector3.hpp"
 
@@ -16,7 +16,6 @@ namespace Flounder
 	{
 	private:
 		std::string m_filename;
-
 		ALuint m_buffer;
 	public:
 		static SoundBuffer *Resource(const std::string &filename)

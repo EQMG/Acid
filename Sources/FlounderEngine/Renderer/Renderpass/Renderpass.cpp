@@ -1,7 +1,6 @@
 ﻿#include "Renderpass.hpp"
 
-#include "Renderer/Swapchain/DepthStencil.hpp"
-#include "../../Devices/Display.hpp"
+#include "../Swapchain/DepthStencil.hpp"
 
 namespace Flounder
 {
@@ -127,7 +126,7 @@ namespace Flounder
 		renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());
 		renderPassCreateInfo.pDependencies = dependencies.data();
 
-		Platform::ErrorVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &m_renderPass));
+		Display::ErrorVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &m_renderPass));
 	}
 
 	Renderpass::~Renderpass()

@@ -1,8 +1,7 @@
 #include "FpsCamera.hpp"
 
 #include <Scenes/Scenes.hpp>
-#include <Devices/Mouse.hpp>
-#include <Scenes/Scenes.hpp>
+#include <Inputs/Mouse.hpp>
 #include <Maths/Maths.hpp>
 #include "FpsPlayer.hpp"
 

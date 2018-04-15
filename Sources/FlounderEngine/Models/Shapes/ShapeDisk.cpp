@@ -7,7 +7,7 @@ namespace Flounder
 	ShapeDisk::ShapeDisk(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops) :
 		Model()
 	{
-		std::vector<IVertex*> vertices = std::vector<IVertex*>();
+		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		for (unsigned int i = 0; i < slices; i++)

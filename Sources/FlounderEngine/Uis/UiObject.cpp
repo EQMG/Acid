@@ -1,6 +1,6 @@
 ﻿#include "UiObject.hpp"
 
-#include "../Devices/Display.hpp"
+#include "../Display/Display.hpp"
 #include "../Maths/Visual/DriverConstant.hpp"
 #include "Uis.hpp"
 

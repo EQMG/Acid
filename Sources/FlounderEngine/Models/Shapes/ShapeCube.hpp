@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-#include <Helpers/FormatString.hpp>
+#include "../../Helpers/FormatString.hpp"
 #include "../Model.hpp"
 
 namespace Flounder

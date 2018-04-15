@@ -1,6 +1,5 @@
 #include "DescriptorSet.hpp"
 
-#include "../../Devices/Display.hpp"
 #include "Descriptor.hpp"
 #include "Pipeline.hpp"
 
@@ -11,7 +10,7 @@ namespace Flounder
 		m_pipelineLayout(pipeline.GetPipelineLayout()),
 		m_descriptorPool(pipeline.GetDescriptorPool()),
 		m_descriptorSet(VK_NULL_HANDLE),
-		m_descriptors(std::vector<Descriptor*>())
+		m_descriptors(std::vector<Descriptor *>())
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -25,7 +24,7 @@ namespace Flounder
 		descriptorSetAllocateInfo.pSetLayouts = layouts;
 
 		vkDeviceWaitIdle(logicalDevice);
-		Platform::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
+		Display::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
 	}
 
 	DescriptorSet::~DescriptorSet()
@@ -36,7 +35,7 @@ namespace Flounder
 		vkFreeDescriptorSets(logicalDevice, m_descriptorPool, 1, descriptors);
 	}
 
-	void DescriptorSet::Update(const std::vector<Descriptor*> &descriptors)
+	void DescriptorSet::Update(const std::vector<Descriptor *> &descriptors)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -52,15 +51,18 @@ namespace Flounder
 
 		for (unsigned int i = 0; i < descriptors.size(); i++)
 		{
-			descriptorWrites.push_back(descriptors.at(i)->GetWriteDescriptor(i, *this));
+			if (descriptors.at(i) != nullptr)
+			{
+				descriptorWrites.push_back(descriptors.at(i)->GetWriteDescriptor(i, *this));
+			}
 		}
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}
 
-	void DescriptorSet::UpdateMap(const std::unordered_map<std::string, Descriptor*> &descriptorMap)
+	void DescriptorSet::UpdateMap(const std::unordered_map<std::string, Descriptor *> &descriptorMap)
 	{
-		std::vector<Descriptor*> descriptors = {};
+		std::vector<Descriptor *> descriptors = {};
 
 		for (auto pair : descriptorMap)
 		{
@@ -68,10 +70,10 @@ namespace Flounder
 			{
 				descriptors.push_back(pair.second);
 			}
-			//else
-			//{
-			//	descriptors.push_back(nullptr);
-			//}
+			//	else
+			//	{
+			//		descriptors.push_back(nullptr);
+			//	}
 		}
 
 		Update(descriptors);

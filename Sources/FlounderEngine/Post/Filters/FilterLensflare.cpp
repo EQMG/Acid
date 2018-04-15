@@ -1,12 +1,11 @@
 #include "FilterLensflare.hpp"
 
 #include "../../Scenes/Scenes.hpp"
-#include "../../Devices/Display.hpp"
 
 namespace Flounder
 {
 	FilterLensflare::FilterLensflare(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Lensflare.frag", graphicsStage, { }),
+		IPostFilter("Resources/Shaders/Filters/Lensflare.frag", graphicsStage, {}),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_sunPosition(new Vector3()),
 		m_sunHeight(0.0f)

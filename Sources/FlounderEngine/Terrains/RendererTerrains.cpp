@@ -10,8 +10,8 @@ namespace Flounder
 	RendererTerrains::RendererTerrains(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosTerrains::UboScene))),
-		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({ "Resources/Shaders/Terrains/Terrain.vert", "Resources/Shaders/Terrains/Terrain.frag" },
-			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { }))
+		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Terrains/Terrain.vert", "Resources/Shaders/Terrains/Terrain.frag"},
+			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {}))
 	{
 	}
 

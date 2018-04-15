@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <string>
+#include "../Audio/Audio.hpp"
 #include "../Maths/Vector3.hpp"
 
 namespace Flounder
@@ -11,7 +12,7 @@ namespace Flounder
 	class F_EXPORT Sound
 	{
 	private:
-		unsigned int m_source;
+		ALuint m_source;
 
 		bool m_playing;
 		float m_gain;

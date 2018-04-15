@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterSepia::FilterSepia(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Sepia.frag", graphicsStage, { })
+		IPostFilter("Resources/Shaders/Filters/Sepia.frag", graphicsStage, {})
 	{
 	}
 
