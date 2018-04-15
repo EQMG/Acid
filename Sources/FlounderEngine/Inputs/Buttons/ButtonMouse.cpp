@@ -1,6 +1,6 @@
 #include "ButtonMouse.hpp"
 
-#include "../Devices/Mouse.hpp"
+#include "../Mouse.hpp"
 
 namespace Flounder
 {

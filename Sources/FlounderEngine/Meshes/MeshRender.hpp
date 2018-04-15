@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "../Engine/Platform.hpp"
 #include "../Objects/Component.hpp"
 #include "../Objects/GameObject.hpp"
 #include "../Renderer/Pipelines/Pipeline.hpp"

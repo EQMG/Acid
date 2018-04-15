@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Fxaa.frag", graphicsStage, { }),
+		IPostFilter("Resources/Shaders/Filters/Fxaa.frag", graphicsStage, {}),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_spanMax(8.0f)
 	{

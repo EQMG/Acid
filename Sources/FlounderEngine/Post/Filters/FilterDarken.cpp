@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Darken.frag", graphicsStage, { }),
+		IPostFilter("Resources/Shaders/Filters/Darken.frag", graphicsStage, {}),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_factor(0.5f)
 	{

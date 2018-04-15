@@ -5,6 +5,9 @@
 
 namespace Flounder
 {
+	/// <summary>
+	/// Represents when a module will update in the game loop.
+	/// </summary>
 	enum ModuleUpdate
 	{
 		UpdateAlways = 0,

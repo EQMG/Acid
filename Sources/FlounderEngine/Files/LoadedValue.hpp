@@ -24,7 +24,7 @@ namespace Flounder
 
 		void SetRaw(const std::string &data) { m_value = data; }
 
-		std::vector<LoadedValue*> *GetChildren() const { return m_children; }
+		std::vector<LoadedValue *> *GetChildren() const { return m_children; }
 
 		unsigned int ChildrenCount() const { return m_children->size(); }
 

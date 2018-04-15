@@ -7,7 +7,7 @@
 #include "../Physics/ColliderSphere.hpp"
 #include "../Physics/Rigidbody.hpp"
 #include "../Particles/ParticleSystem.hpp"
-#include "Materials/MaterialDefault.hpp"
+#include "../Materials/MaterialDefault.hpp"
 #include "../Meshes/Mesh.hpp"
 #include "../Meshes/Animations/MeshAnimated.hpp"
 #include "../Shadows/ShadowRender.hpp"
@@ -17,7 +17,7 @@
 
 namespace Flounder
 {
-	std::map<std::string, std::function<Component*()>*> ComponentRegister::VALUES = {
+	std::map<std::string, std::function<Component *()> *> ComponentRegister::VALUES = {
 		std::make_pair("CelestialBody", REGISTER_CREATE(CelestialBody)),
 		std::make_pair("EntityRender", REGISTER_CREATE(EntityRender)),
 		std::make_pair("Light", REGISTER_CREATE(Light)),

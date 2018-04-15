@@ -12,7 +12,7 @@ namespace Flounder
 		Behaviour(),
 		m_radius(radius),
 		m_transform(new Transform(transform)),
-		m_modelLods(std::vector<Model *> ()),
+		m_modelLods(std::vector<Model *>()),
 		m_currentLod(5)
 	{
 		for (int i = 0; i < static_cast<int>(TerrainRender::SQUARE_SIZES.size()); i++)

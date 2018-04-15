@@ -18,7 +18,7 @@ namespace Flounder
 			m_buffer = Audio::LoadFileOgg(filename);
 		}
 
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	SoundBuffer::~SoundBuffer()

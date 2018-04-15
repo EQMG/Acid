@@ -13,7 +13,7 @@ namespace Flounder
 
 	void MeshSimple::GenerateMesh()
 	{
-		std::vector<IVertex*> vertices = std::vector<IVertex*>();
+		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		// Creates and stores vertices.

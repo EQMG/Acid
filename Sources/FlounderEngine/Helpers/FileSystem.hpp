@@ -65,7 +65,7 @@ namespace Flounder
 		///	<param name="filepath"> The filepath. </param>
 		///	<param name="mode"> The read mode. </param>
 		/// <returns> The char array loaded from the file. </returns>
-		template <typename T>
+		template<typename T>
 		static std::vector<T> ReadBinaryFile(const std::string &filepath, const std::string &mode = "rb")
 		{
 			std::vector<T> data = {};
@@ -73,7 +73,7 @@ namespace Flounder
 			const int bufferSize = 1024;
 			const bool useFile = filepath.c_str() && strcmp("-", filepath.c_str());
 
-			if (FILE* fp = (useFile ? fopen(filepath.c_str(), mode.c_str()) : stdin))
+			if (FILE *fp = (useFile ? fopen(filepath.c_str(), mode.c_str()) : stdin))
 			{
 				T buf[bufferSize];
 
@@ -117,12 +117,12 @@ namespace Flounder
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		/// <param name="data"> The binary data. </param>
-		template <typename T>
+		template<typename T>
 		static void WriteBinaryFile(const std::string &filepath, const std::vector<char> &data, const std::string &mode = "wb")
 		{
 			const bool useStdout = !filepath.c_str() || (filepath.c_str()[0] == '-' && filepath.c_str()[1] == '\0');
 
-			if (FILE* fp = (useStdout ? stdout : fopen(filepath.c_str(), mode.c_str())))
+			if (FILE *fp = (useStdout ? stdout : fopen(filepath.c_str(), mode.c_str())))
 			{
 				size_t written = fwrite(data.data(), sizeof(T), data.size(), fp);
 

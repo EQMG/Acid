@@ -11,7 +11,7 @@ namespace Flounder
 
 	VoxelChunk::VoxelChunk(const ChunkMesh &chunkMesh, const bool &generate) :
 		Component(),
-		m_blocks(new std::vector<std::vector<std::vector<VoxelBlock*>>>(CHUNK_WIDTH, std::vector<std::vector<VoxelBlock*>>(CHUNK_WIDTH, std::vector<VoxelBlock*>(CHUNK_HEIGHT)))),
+		m_blocks(new std::vector<std::vector<std::vector<VoxelBlock *>>>(CHUNK_WIDTH, std::vector<std::vector<VoxelBlock *>>(CHUNK_WIDTH, std::vector<VoxelBlock *>(CHUNK_HEIGHT)))),
 		m_chunkMesh(chunkMesh),
 		m_generate(generate),
 		m_rebuild(true)
@@ -107,7 +107,7 @@ namespace Flounder
 	void VoxelChunk::Generate()
 	{
 		auto position = *GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
-	//	auto noise = Worlds::Get()->GetNoise();
+		//	auto noise = Worlds::Get()->GetNoise();
 
 		for (int x = 0; x < CHUNK_WIDTH; x++)
 		{
@@ -154,7 +154,7 @@ namespace Flounder
 			return;
 		}
 
-		std::vector<IVertex*> vertices = {};
+		std::vector<IVertex *> vertices = {};
 		std::vector<uint32_t> indices = {};
 
 		switch (m_chunkMesh)
@@ -185,7 +185,7 @@ namespace Flounder
 #endif
 	}
 
-	void VoxelChunk::CreateSimpleMesh(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices)
+	void VoxelChunk::CreateSimpleMesh(std::vector<IVertex *> *vertices, std::vector<uint32_t> *indices)
 	{
 		int u, v;
 		BlockFace currentFace;
@@ -259,7 +259,7 @@ namespace Flounder
 		}
 	}
 
-	void VoxelChunk::CreateGreedyMesh(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices)
+	void VoxelChunk::CreateGreedyMesh(std::vector<IVertex *> *vertices, std::vector<uint32_t> *indices)
 	{
 		// This method is based off of Robert O'Leary's implementation (https://github.com/roboleary/GreedyMesh)
 
@@ -400,7 +400,7 @@ namespace Flounder
 								// We zero out the mask.
 								for (l = 0; l < h; ++l)
 								{
-									for(k = 0; k < w; ++k)
+									for (k = 0; k < w; ++k)
 									{
 										mask[n + k + l * CHUNK_WIDTH] = "";
 									}
@@ -433,10 +433,10 @@ namespace Flounder
 		return block != nullptr ? block->GetType() : "";
 	}
 
-	void VoxelChunk::GenerateQuad(std::vector<IVertex*> *vertices, std::vector<uint32_t> *indices,
-							 const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
-							 const int &width, const int &height,
-							 const std::string &blockType, const bool &backFace)
+	void VoxelChunk::GenerateQuad(std::vector<IVertex *> *vertices, std::vector<uint32_t> *indices,
+								  const Vector3 &bottomLeft, const Vector3 &topLeft, const Vector3 &topRight, const Vector3 &bottomRight,
+								  const int &width, const int &height,
+								  const std::string &blockType, const bool &backFace)
 	{
 		// Gets where to start indices from.
 		unsigned int indexStart = vertices->size();

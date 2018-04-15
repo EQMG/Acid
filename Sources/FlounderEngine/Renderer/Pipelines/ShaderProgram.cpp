@@ -8,9 +8,9 @@
 namespace Flounder
 {
 	ShaderProgram::ShaderProgram() :
-		m_uniforms(new std::vector<Uniform*>()),
-		m_uniformBlocks(new std::vector<UniformBlock*>()),
-		m_vertexAttributes(new std::vector<VertexAttribute*>()),
+		m_uniforms(new std::vector<Uniform *>()),
+		m_uniformBlocks(new std::vector<UniformBlock *>()),
+		m_vertexAttributes(new std::vector<VertexAttribute *>()),
 		m_descriptors(new std::vector<DescriptorType>()),
 		m_attributeDescriptions(new std::vector<VkVertexInputAttributeDescription>())
 	{
@@ -114,7 +114,8 @@ namespace Flounder
 			}
 		}
 
-		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation, sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i))); // program.getAttributeLocation(i), program.getAttributeSize(i)
+		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation,
+			sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i))); // program.getAttributeLocation(i), program.getAttributeSize(i)
 	}
 
 	void ShaderProgram::ProcessShader()
@@ -315,7 +316,7 @@ namespace Flounder
 
 	EShLanguage ShaderProgram::GetEshLanguage(const VkShaderStageFlagBits &stageFlag)
 	{
-		switch(stageFlag)
+		switch (stageFlag)
 		{
 		case VK_SHADER_STAGE_COMPUTE_BIT:
 			return EShLangCompute;

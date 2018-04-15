@@ -1,8 +1,8 @@
 ﻿#include "UiInputGrabber.hpp"
 
-#include "../Devices/Mouse.hpp"
-#include "../Devices/Keyboard.hpp"
-#include "../Devices/Joysticks.hpp"
+#include "../Inputs/Mouse.hpp"
+#include "../Inputs/Keyboard.hpp"
+#include "../Inputs/Joysticks.hpp"
 #include "../Scenes/Scenes.hpp"
 #include "../Maths/Visual/DriverSlide.hpp"
 

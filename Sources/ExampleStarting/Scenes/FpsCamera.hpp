@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Scenes/ICamera.hpp>
-#include <Inputs/ButtonJoystick.hpp>
-#include <Inputs/AxisJoystick.hpp>
+#include <Inputs/Buttons/ButtonJoystick.hpp>
+#include <Inputs/Axes/AxisJoystick.hpp>
 
 using namespace Flounder;
 

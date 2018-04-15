@@ -40,8 +40,22 @@ namespace Flounder
 			float orientation[6] = {currentRay->m_x, currentRay->m_y, currentRay->m_z, 0.0f, 1.0f, 0.0f};
 
 			alListenerfv(AL_ORIENTATION, orientation);
-			Platform::ErrorAl(alGetError());
+			ErrorAl(alGetError());
 		}
+	}
+
+	void Audio::ErrorAl(const ALenum &result)
+	{
+		if (result == AL_NO_ERROR)
+		{
+			return;
+		}
+
+		fprintf(stderr, "OpenAL error: %i\n", result);
+//#ifdef FLOUNDER_PLATFORM_WINDOWS
+//		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0);
+//#endif
+		throw std::runtime_error("OpenAL runtime error.");
 	}
 
 	ALuint Audio::LoadFileWav(const std::string &filename)
@@ -49,13 +63,16 @@ namespace Flounder
 		if (!FileSystem::FileExists(filename))
 		{
 			fprintf(stderr, "File does not exist: '%s'\n", filename.c_str());
-			return {};
+			return 0;
 		}
 
 		std::ifstream file(filename.c_str(), std::ifstream::binary);
 		SoundSourceInfo sourceInfo = {};
 
-		assert(file.is_open() && "Load wav file failure: file couldn't be opened!");
+		if (!file.is_open())
+		{
+			throw std::runtime_error("Load wav file failure: file couldn't be opened!");
+		}
 
 		char chunkId[5] = "\0";
 
@@ -117,15 +134,18 @@ namespace Flounder
 		}
 
 		std::ifstream file(filename.c_str(), std::ifstream::binary);
-	//	SoundSourceInfo sourceInfo = {};
+		//	SoundSourceInfo sourceInfo = {};
 
-		assert(file.is_open() && "Load ogg file failure: file couldn't be opened!");
+		if (!file.is_open())
+		{
+			throw std::runtime_error("Load wav file failure: file couldn't be opened!");
+		}
 
 		int channels;
 		int samplesPerSec;
 		short *data;
 		int size = stb_vorbis_decode_filename(filename.c_str(), &channels, &samplesPerSec, &data);
-		
+
 		if (size == -1)
 		{
 			fprintf(stderr, "Error reading the OGG '%s', could not find size! The audio could not be loaded.\n", filename.c_str());

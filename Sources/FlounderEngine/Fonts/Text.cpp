@@ -1,6 +1,5 @@
 ﻿#include "Text.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Maths/Visual/DriverConstant.hpp"
 #include "UbosFonts.hpp"
 
@@ -186,7 +185,7 @@ namespace Flounder
 	{
 		// Creates mesh data.
 		std::vector<FontLine> lines = CreateStructure(object);
-		std::vector<IVertex*> vertices = CreateQuad(object, lines);
+		std::vector<IVertex *> vertices = CreateQuad(object, lines);
 
 		// Calculates the bounds and normalizes the vertices.
 		Vector2 bounding = Vector2();
@@ -267,9 +266,9 @@ namespace Flounder
 		lines.push_back(currentLine);
 	}
 
-	std::vector<IVertex*> Text::CreateQuad(Text *object, std::vector<FontLine> lines)
+	std::vector<IVertex *> Text::CreateQuad(Text *object, std::vector<FontLine> lines)
 	{
-		std::vector<IVertex*> vertices = std::vector<IVertex*>();
+		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		//	object->m_numberLines = static_cast<int>(lines.size());
 		double cursorX = 0.0;
 		double cursorY = 0.0;
@@ -319,7 +318,7 @@ namespace Flounder
 		return vertices;
 	}
 
-	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const FontCharacter &character, std::vector<IVertex*> &vertices)
+	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices)
 	{
 		const double vertexX = cursorX + character.GetOffsetX();
 		const double vertexY = cursorY + character.GetOffsetY();
@@ -339,13 +338,13 @@ namespace Flounder
 		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 	}
 
-	void Text::AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex*> &vertices)
+	void Text::AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex *> &vertices)
 	{
 		IVertex *vertex = new VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
 		vertices.push_back(vertex);
 	}
 
-	void Text::NormalizeQuad(Vector2 *bounding, std::vector<IVertex*> &vertices)
+	void Text::NormalizeQuad(Vector2 *bounding, std::vector<IVertex *> &vertices)
 	{
 		float minX = +INFINITY;
 		float minY = +INFINITY;

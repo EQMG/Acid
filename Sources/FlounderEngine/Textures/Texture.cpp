@@ -1,8 +1,8 @@
 #include "Texture.hpp"
 
 #include <cmath>
-#include "../Devices/Display.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "../Renderer/Renderer.hpp"
+#include "../Helpers/FileSystem.hpp"
 
 namespace Flounder
 {
@@ -68,7 +68,7 @@ namespace Flounder
 		m_imageInfo.sampler = m_sampler;
 
 		delete bufferStaging;
-		free(pixels);
+		stbi_image_free(pixels);
 		m_filename = filename;
 
 #if FLOUNDER_VERBOSE
@@ -228,7 +228,7 @@ namespace Flounder
 #ifdef FLOUNDER_PLATFORM_MACOS
 		return (uint32_t)std::floor(std::log2(std::max(width, std::max(height, depth))));
 #else
-		return (uint32_t)std::floor(std::log2(std::max(width, std::max(height, depth)))) + 1;
+		return (uint32_t) std::floor(std::log2(std::max(width, std::max(height, depth)))) + 1;
 #endif
 	}
 
@@ -251,7 +251,7 @@ namespace Flounder
 		imageCreateInfo.samples = VK_SAMPLE_COUNT_1_BIT;
 		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-		Platform::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &image));
+		Display::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &image));
 
 		VkMemoryRequirements memoryRequirements;
 		vkGetImageMemoryRequirements(logicalDevice, image, &memoryRequirements);
@@ -261,14 +261,14 @@ namespace Flounder
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = Buffer::FindMemoryType(memoryRequirements.memoryTypeBits, properties);;
 
-		Platform::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &imageMemory));
+		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &imageMemory));
 
 		vkBindImageMemory(logicalDevice, image, imageMemory, 0);
 	}
 
 	void Texture::TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &mipLevels, const uint32_t &layerCount)
 	{
-		const auto commandBuffer = Platform::BeginSingleTimeCommands();
+		const auto commandBuffer = Renderer::BeginSingleTimeCommands();
 
 		VkImageMemoryBarrier imageMemoryBarrier = {};
 		imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -310,12 +310,12 @@ namespace Flounder
 
 		vkCmdPipelineBarrier(commandBuffer, sourceStage, destinationStage, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
 
-		Platform::EndSingleTimeCommands(commandBuffer);
+		Renderer::EndSingleTimeCommands(commandBuffer);
 	}
 
 	void Texture::CopyBufferToImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkBuffer &buffer, const VkImage &image, const uint32_t &layerCount)
 	{
-		const auto commandBuffer = Platform::BeginSingleTimeCommands();
+		const auto commandBuffer = Renderer::BeginSingleTimeCommands();
 
 		VkBufferImageCopy region = {};
 		region.bufferOffset = 0;
@@ -330,12 +330,12 @@ namespace Flounder
 
 		vkCmdCopyBufferToImage(commandBuffer, buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 
-		Platform::EndSingleTimeCommands(commandBuffer);
+		Renderer::EndSingleTimeCommands(commandBuffer);
 	}
 
 	void Texture::CreateMipmaps(const VkImage &image, const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount)
 	{
-		VkCommandBuffer commandBuffer = Platform::BeginSingleTimeCommands();
+		VkCommandBuffer commandBuffer = Renderer::BeginSingleTimeCommands();
 
 		VkImageMemoryBarrier barrier = {};
 		barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -362,14 +362,14 @@ namespace Flounder
 				1, &barrier);
 
 			VkImageBlit blit = {};
-			blit.srcOffsets[0] = { 0, 0, 0 };
-			blit.srcOffsets[1] = { width >> (i - 1), height >> (i - 1), depth == 1 ? 1 : depth >> (i - 1) };
+			blit.srcOffsets[0] = {0, 0, 0};
+			blit.srcOffsets[1] = {width >> (i - 1), height >> (i - 1), depth == 1 ? 1 : depth >> (i - 1)};
 			blit.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 			blit.srcSubresource.mipLevel = i - 1;
 			blit.srcSubresource.baseArrayLayer = 0;
 			blit.srcSubresource.layerCount = layerCount;
-			blit.dstOffsets[0] = { 0, 0, 0 };
-			blit.dstOffsets[1] = { width >> i, height >> i, depth == 1 ? 1 : depth >> i };
+			blit.dstOffsets[0] = {0, 0, 0};
+			blit.dstOffsets[1] = {width >> i, height >> i, depth == 1 ? 1 : depth >> i};
 			blit.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 			blit.dstSubresource.mipLevel = i;
 			blit.dstSubresource.baseArrayLayer = 0;
@@ -405,7 +405,7 @@ namespace Flounder
 			0, nullptr,
 			1, &barrier);
 
-		Platform::EndSingleTimeCommands(commandBuffer);
+		Renderer::EndSingleTimeCommands(commandBuffer);
 	}
 
 	void Texture::CreateImageSampler(const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler)
@@ -430,7 +430,7 @@ namespace Flounder
 		samplerCreateInfo.minLod = 0.0f;
 		samplerCreateInfo.maxLod = static_cast<float>(mipLevels);
 
-		Platform::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &sampler));
+		Display::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &sampler));
 	}
 
 	void Texture::CreateImageView(const VkImage &image, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, VkImageView &imageView, const uint32_t &layerCount)
@@ -453,6 +453,6 @@ namespace Flounder
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 		imageViewCreateInfo.subresourceRange.layerCount = layerCount;
 
-		Platform::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &imageView));
+		Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &imageView));
 	}
 }

@@ -1,7 +1,5 @@
 ﻿#include "VertexBuffer.hpp"
 
-#include "../../Devices/Display.hpp"
-
 namespace Flounder
 {
 	VertexBuffer::VertexBuffer(const uint64_t &elementSize, const size_t &vertexCount, void *newData) :

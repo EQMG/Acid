@@ -15,8 +15,8 @@ namespace Flounder
 		IRenderer(),
 		m_uniformScene(new UniformBuffer(sizeof(UbosDeferred::UboScene))),
 		m_descriptorSet(nullptr),
-		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({ "Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag" },
-			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { { "USE_IBL" } })),
+		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag"},
+			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {{"USE_IBL"}})),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f)),
 		m_brdflut(Texture::Resource("Resources/BrdfLut.png"))
 	{
@@ -73,13 +73,13 @@ namespace Flounder
 
 			if (light != nullptr)
 			{
-			//	auto position = *light->GetPosition();
-			//	float radius = light->GetRadius();
+				//	auto position = *light->GetPosition();
+				//	float radius = light->GetRadius();
 
-			//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
-			//	{
-			//		continue;
-			//	}
+				//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
+				//	{
+				//		continue;
+				//	}
 
 				if (light->GetColour()->LengthSquared() == 0.0f)
 				{
@@ -99,7 +99,7 @@ namespace Flounder
 			}
 		}
 
-	//	printf("Rendered Lights: %i\n", sceneLights.size());
+		//	printf("Rendered Lights: %i\n", sceneLights.size());
 
 		UbosDeferred::UboScene uboScene = {};
 

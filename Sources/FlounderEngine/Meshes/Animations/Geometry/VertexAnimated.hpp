@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "../../../Engine/Platform.hpp"
 #include "../../../Maths/Vector2.hpp"
 #include "../../../Maths/Vector3.hpp"
 #include "../../../Models/IVertex.hpp"

@@ -31,10 +31,10 @@ namespace Flounder
 
 	void Config::Update()
 	{
-	//	for (auto value : *m_values)
-	//	{
-	//		value.second.SetValue((*value.second.GetGetter())());
-	//	}
+		//	for (auto value : *m_values)
+		//	{
+		//		value.second.SetValue((*value.second.GetGetter())());
+		//	}
 	}
 
 	void Config::Save()

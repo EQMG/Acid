@@ -1,6 +1,5 @@
 ﻿#include "UiStartLogo.hpp"
 
-#include "../Devices/Display.hpp"
 #include "../Events/Events.hpp"
 #include "../Events/EventTime.hpp"
 #include "../Maths/Visual/DriverConstant.hpp"

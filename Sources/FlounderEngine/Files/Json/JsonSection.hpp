@@ -12,7 +12,7 @@ namespace Flounder
 	{
 	public:
 		JsonSection *m_parent;
-		std::vector<JsonSection*> m_children;
+		std::vector<JsonSection *> m_children;
 
 		std::string m_name;
 		std::string m_content;

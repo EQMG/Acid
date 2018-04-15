@@ -1,7 +1,5 @@
 ﻿#include "QueueFamily.hpp"
 
-#include "../../Devices/Display.hpp"
-
 namespace Flounder
 {
 	QueueFamilyIndices QueueFamily::FindQueueFamilies(const VkSurfaceKHR &surface)

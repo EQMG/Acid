@@ -1,7 +1,5 @@
 ﻿#include "IndexBuffer.hpp"
 
-#include "../../Devices/Display.hpp"
-
 namespace Flounder
 {
 	IndexBuffer::IndexBuffer(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, void *newData) :

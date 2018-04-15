@@ -2,13 +2,14 @@
 
 #include <string>
 #include <unordered_map>
-#include "../../Engine/Platform.hpp"
+#include "../../Display/Display.hpp"
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"
 
 namespace Flounder
 {
 	class Pipeline;
+
 	class Descriptor;
 
 	class F_EXPORT DescriptorSet
@@ -19,15 +20,15 @@ namespace Flounder
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
 
-		std::vector<Descriptor*> m_descriptors;
+		std::vector<Descriptor *> m_descriptors;
 	public:
 		DescriptorSet(const Pipeline &pipeline);
 
 		~DescriptorSet();
 
-		void Update(const std::vector<Descriptor*> &descriptors);
+		void Update(const std::vector<Descriptor *> &descriptors);
 
-		void UpdateMap(const std::unordered_map<std::string, Descriptor*> &descriptorMap);
+		void UpdateMap(const std::unordered_map<std::string, Descriptor *> &descriptorMap);
 
 		void BindDescriptor(const VkCommandBuffer &commandBuffer);
 

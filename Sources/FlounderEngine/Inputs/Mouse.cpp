@@ -1,7 +1,7 @@
 #include "Mouse.hpp"
 
 #include "../Maths/Maths.hpp"
-#include "../Helpers/FileSystem.hpp"
+#include "../Textures/Texture.hpp"
 
 namespace Flounder
 {
@@ -93,16 +93,10 @@ namespace Flounder
 
 		if (!m_customMouse.empty())
 		{
-			if (!FileSystem::FileExists(m_customMouse))
-			{
-				printf("File does not exist: '%s'\n", m_customMouse.c_str());
-				return;
-			}
-
 			int width = 0;
 			int height = 0;
 			int components = 0;
-			stbi_uc *data = stbi_load(m_customMouse.c_str(), &width, &height, &components, 4);
+			stbi_uc *data = Texture::LoadPixels(m_customMouse.c_str(), &width, &height, &components);
 
 			if (data == nullptr)
 			{
@@ -117,6 +111,7 @@ namespace Flounder
 			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
 			glfwSetCursor(Display::Get()->GetWindow(), cursor);
 			stbi_image_free(data);
+			//	delete image;
 		}
 	}
 

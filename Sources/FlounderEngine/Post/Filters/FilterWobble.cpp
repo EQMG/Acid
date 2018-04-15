@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Wobble.frag", graphicsStage, { }),
+		IPostFilter("Resources/Shaders/Filters/Wobble.frag", graphicsStage, {}),
 		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
 		m_wobbleSpeed(2.0f),
 		m_wobbleAmount(0.0f)

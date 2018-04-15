@@ -1,8 +1,7 @@
 ﻿#include "Pipeline.hpp"
 
-#include "../../Devices/Display.hpp"
-#include "Helpers/FileSystem.hpp"
-#include "Helpers/FormatString.hpp"
+#include "../../Helpers/FileSystem.hpp"
+#include "../../Helpers/FormatString.hpp"
 #include "../Renderer.hpp"
 
 namespace Flounder
@@ -132,10 +131,10 @@ namespace Flounder
 			shader.setEnvClient(glslang::EShClientVulkan, glslang::EShTargetVulkan_1_0);
 			shader.setEnvTarget(glslang::EShTargetSpv, glslang::EShTargetSpv_1_0);
 
-		//	if (shader.preprocess(&resources, 100, ENoProfile, false, false, messages, &str, includer))
-		//	{
-		//		fprintf(stderr, "SPRIV shader preprocess failed!\n");
-		//	}
+			//	if (shader.preprocess(&resources, 100, ENoProfile, false, false, messages, &str, includer))
+			//	{
+			//		fprintf(stderr, "SPRIV shader preprocess failed!\n");
+			//	}
 
 			if (!shader.parse(&resources, 100, false, messages))
 			{
@@ -152,7 +151,7 @@ namespace Flounder
 			}
 
 			program.buildReflection();
-		//	program.dumpReflection();
+			//	program.dumpReflection();
 			m_shaderProgram->LoadProgram(program, stageFlag);
 
 			glslang::SpvOptions spvOptions;
@@ -169,7 +168,7 @@ namespace Flounder
 			shaderModuleCreateInfo.pCode = spirv.data();
 
 			VkShaderModule shaderModule = VK_NULL_HANDLE;
-			Platform::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
+			Display::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
 
 			VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
 			pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -201,7 +200,7 @@ namespace Flounder
 		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
 
 		vkDeviceWaitIdle(logicalDevice);
-		Platform::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
+		Display::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
 	void Pipeline::CreateDescriptorPool()
@@ -223,7 +222,7 @@ namespace Flounder
 		descriptorPoolCreateInfo.maxSets = 16384;
 
 		vkDeviceWaitIdle(logicalDevice);
-		Platform::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
+		Display::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
 	void Pipeline::CreatePipelineLayout()
@@ -236,7 +235,7 @@ namespace Flounder
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 
 		vkDeviceWaitIdle(logicalDevice);
-		Platform::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
+		Display::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
 	void Pipeline::CreateAttributes()
@@ -321,10 +320,10 @@ namespace Flounder
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.m_vertexBindingDescriptions.size());
 		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.m_vertexInput.m_vertexBindingDescriptions.data();
-		//	vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.size());
-		//	vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_shaderProgram->m_attributeDescriptions->size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_shaderProgram->m_attributeDescriptions->data();
+		//	vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_shaderProgram->m_attributeDescriptions->size());
+		//	vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_shaderProgram->m_attributeDescriptions->data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -347,7 +346,7 @@ namespace Flounder
 		pipelineCreateInfo.pStages = m_stages.data();
 
 		// Create the graphics pipeline.
-		Platform::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+		Display::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
 	void Pipeline::CreatePipelinePolygonNoDepth()

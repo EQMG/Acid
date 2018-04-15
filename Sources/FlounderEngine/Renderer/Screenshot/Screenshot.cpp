@@ -59,7 +59,7 @@ namespace Flounder
 
 		// Create the image.
 		VkImage dstImage;
-		Platform::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &dstImage));
+		Display::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &dstImage));
 
 		// Create memory to back up the image.
 		VkMemoryRequirements memoryRequirements;
@@ -71,12 +71,12 @@ namespace Flounder
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 
 		// Memory must be host visible to copy from.
-		memoryAllocateInfo.memoryTypeIndex = Platform::FindMemoryTypeIndex(&physicalDeviceMemoryProperties, &memoryRequirements, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		Platform::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &dstImageMemory));
-		Platform::ErrorVk(vkBindImageMemory(logicalDevice, dstImage, dstImageMemory, 0));
+		memoryAllocateInfo.memoryTypeIndex = Renderer::FindMemoryTypeIndex(&physicalDeviceMemoryProperties, &memoryRequirements, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &dstImageMemory));
+		Display::ErrorVk(vkBindImageMemory(logicalDevice, dstImage, dstImageMemory, 0));
 
 		// Do the actual blit from the swapchain image to our host visible destination image.
-		VkCommandBuffer copyCmd = Platform::BeginSingleTimeCommands(VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+		VkCommandBuffer copyCmd = Renderer::BeginSingleTimeCommands(VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
 		// Transition destination image to transfer destination layout.
 		InsertImageMemoryBarrier(
@@ -161,7 +161,7 @@ namespace Flounder
 			VK_PIPELINE_STAGE_TRANSFER_BIT,
 			VkImageSubresourceRange{VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1});
 
-		Platform::EndSingleTimeCommands(copyCmd);
+		Renderer::EndSingleTimeCommands(copyCmd);
 
 		// Get layout of the image (including row pitch).
 		VkImageSubresource subResource{};

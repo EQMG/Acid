@@ -21,7 +21,7 @@ namespace Flounder
 	class F_EXPORT VoxelBlock
 	{
 	private:
-		static std::map<std::string, Colour*> s_colours;
+		static std::map<std::string, Colour *> s_colours;
 
 		VoxelChunk *m_parent;
 

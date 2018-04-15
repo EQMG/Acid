@@ -1,7 +1,7 @@
 ﻿#include "ManagerUis.hpp"
 
-#include <Inputs/ButtonCompound.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
+#include <Inputs/Buttons/ButtonCompound.hpp>
+#include <Inputs/Buttons/ButtonKeyboard.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
 

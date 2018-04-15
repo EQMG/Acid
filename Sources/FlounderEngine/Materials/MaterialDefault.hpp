@@ -32,8 +32,8 @@ namespace Flounder
 		PipelineMaterial *m_material;
 	public:
 		MaterialDefault(const Colour &baseColor = Colour::WHITE, Texture *diffuseTexture = nullptr,
-				const float &metallic = 0.0f, const float &roughness = 0.0f, Texture *materialTexture = nullptr, Texture *normalTexture = nullptr,
-				const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false
+						const float &metallic = 0.0f, const float &roughness = 0.0f, Texture *materialTexture = nullptr, Texture *normalTexture = nullptr,
+						const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false
 		);
 
 		~MaterialDefault();

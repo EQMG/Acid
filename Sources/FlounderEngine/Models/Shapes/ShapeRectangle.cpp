@@ -5,7 +5,7 @@ namespace Flounder
 	ShapeRectangle::ShapeRectangle(const float &min, const float &max) :
 		Model()
 	{
-		std::vector<IVertex*> vertices = {
+		std::vector<IVertex *> vertices = {
 			new VertexModel(Vector3(min, min, 0.0f), Vector2(0.0f, 0.0f)),
 			new VertexModel(Vector3(max, min, 0.0f), Vector2(1.0f, 0.0f)),
 			new VertexModel(Vector3(max, max, 0.0f), Vector2(1.0f, 1.0f)),

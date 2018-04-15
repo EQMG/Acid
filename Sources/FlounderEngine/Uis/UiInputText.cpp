@@ -1,6 +1,6 @@
 ﻿#include "UiInputText.hpp"
 
-#include "../Devices/Keyboard.hpp"
+#include "../Inputs/Keyboard.hpp"
 #include "../Scenes/Scenes.hpp"
 #include "../Maths/Visual/DriverSlide.hpp"
 

@@ -1,7 +1,6 @@
 ﻿#include "Cubemap.hpp"
 
 #include <cmath>
-#include "../Devices/Display.hpp"
 
 namespace Flounder
 {
@@ -57,7 +56,7 @@ namespace Flounder
 		m_imageInfo.sampler = m_sampler;
 
 		delete bufferStaging;
-		free(pixels);
+		stbi_image_free(pixels);
 
 #if FLOUNDER_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
@@ -103,11 +102,11 @@ namespace Flounder
 
 		return descriptorWrite;
 	}
-	
+
 	VkDeviceSize Cubemap::LoadSize(const std::string &filename, const std::string &fileExt)
 	{
 		VkDeviceSize size = 0;
-		
+
 		for (const auto suffix : SIDE_FILE_SUFFIXS)
 		{
 			const std::string filepathSide = filename + "/" + suffix + fileExt;

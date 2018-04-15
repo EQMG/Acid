@@ -1,8 +1,6 @@
 set(EXAMPLE_STARTING_HEADERS_
         "Configs/ConfigManager.hpp"
-        "Planets/Planet.hpp"
         "Scenes/Scene1.hpp"
-        "Scenes/Scene2.hpp"
         "Scenes/FpsCamera.hpp"
         "Scenes/FpsPlayer.hpp"
         "Scenes/ManagerUis.hpp"
@@ -12,13 +10,11 @@ set(EXAMPLE_STARTING_HEADERS_
         "Uis/Navigation/UiTab.hpp"
         "Uis/OverlayDebug.hpp"
         "Uis/UiInventory.hpp"
-)
+        )
 
 set(EXAMPLE_STARTING_SOURCES_
         "Configs/ConfigManager.cpp"
-        "Planets/Planet.cpp"
         "Scenes/Scene1.cpp"
-        "Scenes/Scene2.cpp"
         "Scenes/FpsCamera.cpp"
         "Scenes/FpsPlayer.cpp"
         "Scenes/ManagerUis.cpp"
@@ -29,7 +25,7 @@ set(EXAMPLE_STARTING_SOURCES_
         "Uis/Navigation/UiTab.cpp"
         "Uis/OverlayDebug.cpp"
         "Uis/UiInventory.cpp"
-)
+        )
 
 source_group("Header Files" FILES ${EXAMPLE_STARTING_HEADERS_})
 source_group("Source Files" FILES ${EXAMPLE_STARTING_SOURCES_})
@@ -37,4 +33,4 @@ source_group("Source Files" FILES ${EXAMPLE_STARTING_SOURCES_})
 set(EXAMPLE_STARTING_SOURCES
         ${EXAMPLE_STARTING_HEADERS_}
         ${EXAMPLE_STARTING_SOURCES_}
-)
+        )
