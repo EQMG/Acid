@@ -3,7 +3,7 @@
 namespace Flounder
 {
 	FilterEmboss::FilterEmboss(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Emboss.frag", graphicsStage, { })
+		IPostFilter("Resources/Shaders/Filters/Emboss.frag", graphicsStage, {})
 	{
 	}
 

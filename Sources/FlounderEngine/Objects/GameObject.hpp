@@ -14,7 +14,7 @@ namespace Flounder
 		std::string m_name;
 		Transform *m_transform;
 	private:
-		std::vector<Component*> *m_components;
+		std::vector<Component *> *m_components;
 		ISpatialStructure<GameObject *> *m_structure;
 		bool m_removed;
 	public:
@@ -47,7 +47,7 @@ namespace Flounder
 		Component *AddComponent(Component *component);
 
 		template<typename T, typename... Args>
-		T *AddComponent(Args&&... args)
+		T *AddComponent(Args &&... args)
 		{
 			T *created = new T(std::forward<Args>(args)...);
 			AddComponent(created);

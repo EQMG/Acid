@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../../Engine/Platform.hpp"
+#include "../../Display/Display.hpp"
 
 namespace Flounder
 {

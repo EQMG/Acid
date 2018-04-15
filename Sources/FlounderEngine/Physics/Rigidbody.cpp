@@ -1,8 +1,8 @@
 ﻿#include "Rigidbody.hpp"
 
-#include "ColliderSphere.hpp"
 #include "../Models/Model.hpp"
 #include "../Scenes/Scenes.hpp"
+#include "ColliderSphere.hpp"
 
 namespace Flounder
 {
@@ -38,7 +38,7 @@ namespace Flounder
 	{
 		m_mass = value->GetChild("Mass")->Get<float>();
 		m_drag = value->GetChild("Drag")->Get<float>();
-		m_useGravity = (bool)value->GetChild("Use Gravity")->Get<int>();
+		m_useGravity = (bool) value->GetChild("Use Gravity")->Get<int>();
 		m_freezePosition->Set(value->GetChild("Freeze Position"));
 		m_freezeRotation->Set(value->GetChild("Freeze Rotation"));
 	}
@@ -47,7 +47,7 @@ namespace Flounder
 	{
 		value->GetChild("Mass", true)->Set(m_mass);
 		value->GetChild("Drag", true)->Set(m_drag);
-		value->GetChild("Use Gravity", true)->Set((int)m_useGravity);
+		value->GetChild("Use Gravity", true)->Set((int) m_useGravity);
 		m_freezePosition->Write(value->GetChild("Freeze Position", true));
 		m_freezeRotation->Write(value->GetChild("Freeze Rotation", true));
 	}

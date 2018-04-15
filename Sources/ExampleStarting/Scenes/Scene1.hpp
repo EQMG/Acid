@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Sounds/Sound.hpp>
-#include <Inputs/IButton.hpp>
+#include <Audio/Sound.hpp>
+#include <Inputs/Buttons/IButton.hpp>
 #include <Scenes/Scene.hpp>
 
 using namespace Flounder;
@@ -26,8 +26,5 @@ namespace Demo
 		void Start() override;
 
 		void Update() override;
-
-	private:
-		GameObject *CreateChunk(const float &radius, const Transform &transform);
 	};
 }

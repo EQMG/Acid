@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../Engine/Platform.hpp"
 #include "../Pipelines/Descriptor.hpp"
 #include "../Pipelines/DescriptorSet.hpp"
 #include "../Pipelines/PipelineCreate.hpp"

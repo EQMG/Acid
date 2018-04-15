@@ -4,11 +4,11 @@
 
 namespace Flounder
 {
-	std::map<std::string, Colour*> VoxelBlock::s_colours = std::map<std::string, Colour*>
+	std::map<std::string, Colour *> VoxelBlock::s_colours = std::map<std::string, Colour *>
 		{
-			{"", new Colour("#FFFFFF", 0.0f)},
+			{"",      new Colour("#FFFFFF", 0.0f)},
 			{"Grass", new Colour("#5E7831")},
-			{"Dirt", new Colour("#784800")},
+			{"Dirt",  new Colour("#784800")},
 			{"Stone", new Colour("#8B8D7A")},
 		};
 

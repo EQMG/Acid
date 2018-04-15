@@ -7,7 +7,7 @@ namespace Flounder
 	ShapeCylinder::ShapeCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0) :
 		Model()
 	{
-		std::vector<IVertex*> vertices = std::vector<IVertex*>();
+		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		for (unsigned int i = 0; i < slices + 1; i++)

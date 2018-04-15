@@ -22,9 +22,9 @@ namespace Flounder
 	MaterialDefault::~MaterialDefault()
 	{
 		delete m_baseColor;
-	//	delete m_diffuseTexture;
-	//	delete m_materialTexture;
-	//	delete m_normalTexture;
+		//	delete m_diffuseTexture;
+		//	delete m_materialTexture;
+		//	delete m_normalTexture;
 	}
 
 	void MaterialDefault::Update()

@@ -1,6 +1,6 @@
 #include "Display.hpp"
 
-#include "../Helpers/FileSystem.hpp"
+#include "../Textures/Texture.hpp"
 
 namespace Flounder
 {
@@ -56,7 +56,7 @@ namespace Flounder
 			Display::Get()->m_windowHeight = static_cast<uint32_t>(height);
 		}
 
-		Platform::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
+		Display::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
 	}
 
 	void CallbackFrame(GLFWwindow *window, int width, int height)
@@ -186,16 +186,10 @@ namespace Flounder
 
 		if (!m_icon.empty())
 		{
-			if (!FileSystem::FileExists(m_icon))
-			{
-				printf("File does not exist: '%s'\n", m_icon.c_str());
-				return;
-			}
-
 			int width = 0;
 			int height = 0;
 			int components = 0;
-			stbi_uc *data = stbi_load(m_icon.c_str(), &width, &height, &components, 4);
+			stbi_uc *data = Texture::LoadPixels(m_icon.c_str(), &width, &height, &components);
 
 			if (data == nullptr)
 			{
@@ -247,6 +241,87 @@ namespace Flounder
 			m_windowPosX = (videoMode->width - m_windowWidth) / 2;
 			m_windowPosY = (videoMode->height - m_windowHeight) / 2;
 			glfwSetWindowMonitor(m_window, nullptr, m_windowPosX, m_windowPosY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
+		}
+	}
+
+	void Display::ErrorVk(const VkResult &result)
+	{
+		if (result < 0)
+		{
+			std::string failure;
+
+			switch (result)
+			{
+			case VK_ERROR_OUT_OF_HOST_MEMORY:
+				failure = "VK_ERROR_OUT_OF_HOST_MEMORY";
+				break;
+			case VK_ERROR_OUT_OF_DEVICE_MEMORY:
+				failure = "VK_ERROR_OUT_OF_DEVICE_MEMORY";
+				break;
+			case VK_ERROR_INITIALIZATION_FAILED:
+				failure = "VK_ERROR_INITIALIZATION_FAILED";
+				break;
+			case VK_ERROR_DEVICE_LOST:
+				failure = "VK_ERROR_DEVICE_LOST";
+				break;
+			case VK_ERROR_MEMORY_MAP_FAILED:
+				failure = "VK_ERROR_MEMORY_MAP_FAILED";
+				break;
+			case VK_ERROR_LAYER_NOT_PRESENT:
+				failure = "VK_ERROR_LAYER_NOT_PRESENT";
+				break;
+			case VK_ERROR_EXTENSION_NOT_PRESENT:
+				failure = "VK_ERROR_EXTENSION_NOT_PRESENT";
+				break;
+			case VK_ERROR_FEATURE_NOT_PRESENT:
+				failure = "VK_ERROR_FEATURE_NOT_PRESENT";
+				break;
+			case VK_ERROR_INCOMPATIBLE_DRIVER:
+				failure = "VK_ERROR_INCOMPATIBLE_DRIVER";
+				break;
+			case VK_ERROR_TOO_MANY_OBJECTS:
+				failure = "VK_ERROR_TOO_MANY_OBJECTS";
+				break;
+			case VK_ERROR_FORMAT_NOT_SUPPORTED:
+				failure = "VK_ERROR_FORMAT_NOT_SUPPORTED";
+				break;
+			case VK_ERROR_SURFACE_LOST_KHR:
+				failure = "VK_ERROR_SURFACE_LOST_KHR";
+				break;
+			case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
+				failure = "VK_ERROR_NATIVE_WINDOW_IN_USE_KHR";
+				break;
+			case VK_SUBOPTIMAL_KHR:
+				failure = "VK_SUBOPTIMAL_KHR";
+				break;
+			case VK_ERROR_OUT_OF_DATE_KHR:
+				failure = "VK_ERROR_OUT_OF_DATE_KHR";
+				break;
+			case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:
+				failure = "VK_ERROR_INCOMPATIBLE_DISPLAY_KHR";
+				break;
+			case VK_ERROR_VALIDATION_FAILED_EXT:
+				failure = "VK_ERROR_VALIDATION_FAILED_EXT";
+				break;
+			default:
+				failure = "VK_RESULT_MAX_ENUM";
+				break;
+			}
+
+			fprintf(stderr, "Vulkan error: %s, %i\n", failure.c_str(), result);
+//#ifdef FLOUNDER_PLATFORM_WINDOWS
+//			MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
+//#endif
+			throw std::runtime_error("Vulkan runtime error.");
+		}
+	}
+
+	void Display::ErrorGlfw(const int &result)
+	{
+		if (result == GLFW_FALSE)
+		{
+			fprintf(stderr, "GLFW error: %i\n", result);
+			throw std::runtime_error("GLFW runtime error.");
 		}
 	}
 
@@ -411,7 +486,7 @@ namespace Flounder
 		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
-		Platform::ErrorVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
+		ErrorVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 	}
 
 	void Display::CreateDebugCallback()
@@ -423,7 +498,7 @@ namespace Flounder
 			debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
 			debugCallBackCreateInfo.pfnCallback = static_cast<PFN_vkDebugReportCallbackEXT>(VkCallbackDebug);
 
-			Platform::ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
+			ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
 		}
 	}
 
@@ -572,7 +647,7 @@ namespace Flounder
 		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size());
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 
-		Platform::ErrorVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
+		ErrorVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
 
 		vkGetDeviceQueue(m_logicalDevice, m_graphicsFamilyIndex, 0, &m_queue);
 	}
@@ -580,9 +655,9 @@ namespace Flounder
 	void Display::CreateSurface()
 	{
 		// Creates the Vulkan-GLFW surface.
-		Platform::ErrorVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
+		ErrorVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
 
-		Platform::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
+		ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
 
 		VkBool32 physicalDeviceSurfaceSupport = false;
 		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_graphicsFamilyIndex, m_surface, &physicalDeviceSurfaceSupport);

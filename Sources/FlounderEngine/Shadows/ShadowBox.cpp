@@ -1,6 +1,6 @@
 ﻿#include "ShadowBox.hpp"
 
-#include "../Devices/Display.hpp"
+#include "../Display/Display.hpp"
 #include "../Maths/Maths.hpp"
 
 namespace Flounder

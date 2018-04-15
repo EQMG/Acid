@@ -5,7 +5,7 @@ namespace Flounder
 	ShapeCube::ShapeCube(const float &width, const float &height, const float &depth) :
 		Model()
 	{
-		std::vector<IVertex*> vertices = {
+		std::vector<IVertex *> vertices = {
 			new VertexModel(Vector3(-0.5f, 0.5f, -0.5f), Vector2(0.0f, 0.66f), Vector3(0.0f, 0.0f, -1.0f)),
 			new VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2(0.25f, 0.66f), Vector3(0.0f, 0.0f, -1.0f)),
 			new VertexModel(Vector3(0.5f, 0.5f, -0.5f), Vector2(0.0f, 0.33f), Vector3(0.0f, 0.0f, -1.0f)),

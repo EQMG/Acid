@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <vector>
-#include "../../Engine/Platform.hpp"
 #include "../../Textures/Texture.hpp"
 #include "../Renderpass/RenderpassCreate.hpp"
 

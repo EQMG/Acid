@@ -3,7 +3,8 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
-#include "../Engine/Platform.hpp"
+#include <STB/stb_image.h>
+#include "../Display/Display.hpp"
 #include "../Resources/Resources.hpp"
 #include "../Renderer/Buffers/Buffer.hpp"
 #include "../Renderer/Pipelines/Descriptor.hpp"

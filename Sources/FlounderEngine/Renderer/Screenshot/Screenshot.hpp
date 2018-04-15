@@ -1,7 +1,8 @@
 #pragma once
 
 #include <string>
-#include "../../Engine/Platform.hpp"
+#include <STB/stb_image_write.h>
+#include "../../Display/Display.hpp"
 
 namespace Flounder
 {
@@ -16,7 +17,7 @@ namespace Flounder
 
 	private:
 		static void InsertImageMemoryBarrier(const VkCommandBuffer &cmdbuffer, const VkImage &image, const VkAccessFlags &srcAccessMask,
-									  const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout,
-									  const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkImageSubresourceRange &subresourceRange);
+											 const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout,
+											 const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkImageSubresourceRange &subresourceRange);
 	};
 }

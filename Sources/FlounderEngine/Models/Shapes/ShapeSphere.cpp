@@ -7,7 +7,7 @@ namespace Flounder
 	ShapeSphere::ShapeSphere(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius) :
 		Model()
 	{
-		std::vector<IVertex*> vertices = std::vector<IVertex*>();
+		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
 		for (unsigned int i = 0; i < longitudeBands + 1; i++)

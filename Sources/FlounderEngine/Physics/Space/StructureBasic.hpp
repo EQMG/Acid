@@ -68,7 +68,7 @@ namespace Flounder
 		/// <param name="result"> The list to store the data into.</param>
 		/// <returns> The list specified by of all components that match the type. </returns>
 		template<typename K>
-		std::vector<K*> *QueryComponents(std::vector<K*> *result)
+		std::vector<K *> *QueryComponents(std::vector<K *> *result)
 		{
 			for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
 			{

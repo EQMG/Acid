@@ -1,6 +1,5 @@
 ﻿#include "Framebuffers.hpp"
 
-#include "../../Devices/Display.hpp"
 #include "../Renderpass/Renderpass.hpp"
 #include "DepthStencil.hpp"
 
@@ -62,7 +61,7 @@ namespace Flounder
 			framebufferCreateInfo.height = extent.height;
 			framebufferCreateInfo.layers = 1;
 
-			Platform::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
+			Display::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
 		}
 	}
 

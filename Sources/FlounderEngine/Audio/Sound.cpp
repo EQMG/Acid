@@ -1,6 +1,5 @@
 ﻿#include "Sound.hpp"
 
-#include "../Devices/Audio.hpp"
 #include "SoundBuffer.hpp"
 
 namespace Flounder
@@ -16,7 +15,7 @@ namespace Flounder
 		alGenSources(1, &m_source);
 		alSourcei(m_source, AL_BUFFER, soundBuffer->GetBuffer());
 
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 
 		SetGain(gain);
 		SetPitch(pitch);
@@ -25,7 +24,7 @@ namespace Flounder
 	Sound::~Sound()
 	{
 		alDeleteSources(1, &m_source);
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	void Sound::Play()
@@ -33,7 +32,7 @@ namespace Flounder
 		alSourcei(m_source, AL_LOOPING, false);
 		alSourcePlay(m_source);
 		m_playing = true;
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	void Sound::Loop()
@@ -41,7 +40,7 @@ namespace Flounder
 		alSourcei(m_source, AL_LOOPING, true);
 		alSourcePlay(m_source);
 		m_playing = true;
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	void Sound::Pause()
@@ -53,7 +52,7 @@ namespace Flounder
 
 		alSourcePause(m_source);
 		m_playing = false;
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	void Sound::Resume()
@@ -66,7 +65,7 @@ namespace Flounder
 		alSourcei(m_source, AL_LOOPING, false);
 		alSourcePlay(m_source);
 		m_playing = true;
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	void Sound::Stop()
@@ -78,33 +77,33 @@ namespace Flounder
 
 		alSourceStop(m_source);
 		m_playing = false;
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	void Sound::SetPosition(const Vector3 &position)
 	{
 		alSource3f(m_source, AL_POSITION, position.m_x, position.m_y, position.m_z);
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	void Sound::SetDirection(const Vector3 &direction)
 	{
 		float data[3] = {direction.m_x, direction.m_y, direction.m_z};
 		alSourcefv(m_source, AL_DIRECTION, data);
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	void Sound::SetVelocity(const Vector3 &velocity)
 	{
 		alSource3f(m_source, AL_VELOCITY, velocity.m_x, velocity.m_y, velocity.m_z);
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	void Sound::SetGain(const float &gain)
 	{
 		alSourcef(m_source, AL_GAIN, gain);
 		m_gain = gain;
-		Platform::ErrorAl(alGetError());
+		Audio::ErrorAl(alGetError());
 	}
 
 	void Sound::SetPitch(const float &pitch)

@@ -1,8 +1,14 @@
 #pragma once
 
+#ifdef FLOUNDER_PLATFORM_MACOS
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
+#include <AL/al.h>
+#include <AL/alc.h>
+#endif
+#include <STB/stb_vorbis.h>
 #include "../Engine/Engine.hpp"
-#include "../Engine/Platform.hpp"
-#include "../Sounds/Sound.hpp"
 
 namespace Flounder
 {
@@ -49,11 +55,12 @@ namespace Flounder
 
 		void Update() override;
 
+		static void ErrorAl(const ALenum &result);
+
 		static ALuint LoadFileWav(const std::string &filename);
 
 		static ALuint LoadFileOgg(const std::string &filename);
 
-	private:
 		static void LogOpenAlSound(const std::string &path, const SoundSourceInfo &sourceInfo);
 	};
 }

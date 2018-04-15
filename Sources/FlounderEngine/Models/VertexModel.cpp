@@ -27,13 +27,13 @@ namespace Flounder
 	void *VertexModel::GetData(std::vector<IVertex *> &vertices)
 	{
 		size_t dataSize = GetSize() * vertices.size();
-		void *data = new void*[dataSize];
+		void *data = new void *[dataSize];
 
 		std::vector<VertexModel> thisVector = std::vector<VertexModel>();
 
 		for (auto vertex : vertices)
 		{
-			thisVector.push_back(*((VertexModel*) vertex));
+			thisVector.push_back(*((VertexModel *) vertex));
 		}
 
 		memcpy(data, thisVector.data(), dataSize);

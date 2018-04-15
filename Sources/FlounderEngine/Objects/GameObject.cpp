@@ -9,7 +9,7 @@ namespace Flounder
 	GameObject::GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure, const std::string &name) :
 		m_name(name),
 		m_transform(new Transform(transform)),
-		m_components(new std::vector<Component*>()),
+		m_components(new std::vector<Component *>()),
 		m_structure(structure),
 		m_removed(false)
 	{
@@ -49,7 +49,7 @@ namespace Flounder
 
 		if (prefabName == "Testing")
 		{
-		//	entityPrefab->Write(this);
+			//	entityPrefab->Write(this);
 			entityPrefab->Save();
 		}
 	}

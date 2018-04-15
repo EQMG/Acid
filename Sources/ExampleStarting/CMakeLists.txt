@@ -29,7 +29,7 @@ if (FLOUNDER_INSTALL)
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib
     )
-endif()
+endif ()
 
 # Shaders
 #if(WIN32)

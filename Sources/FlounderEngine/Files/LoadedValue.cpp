@@ -4,7 +4,7 @@ namespace Flounder
 {
 	LoadedValue::LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value) :
 		m_parent(parent),
-		m_children(new std::vector<LoadedValue*>()),
+		m_children(new std::vector<LoadedValue *>()),
 		m_name(FormatString::RemoveAll(name, '\"')),
 		m_value(value)
 	{
@@ -50,7 +50,7 @@ namespace Flounder
 		// TODO
 		//if (!addIfNull)
 		//{
-			return nullptr;
+		return nullptr;
 		//}
 	}
 

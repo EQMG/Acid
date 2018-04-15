@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include "../../Engine/Platform.hpp"
 #include "RenderpassCreate.hpp"
 
 namespace Flounder

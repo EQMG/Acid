@@ -1,6 +1,5 @@
 ﻿#include "Buffer.hpp"
 
-#include "../../Devices/Display.hpp"
 #include "../Queue/QueueFamily.hpp"
 #include "../Renderer.hpp"
 
@@ -32,7 +31,7 @@ namespace Flounder
 		bufferCreateInfo.queueFamilyIndexCount = 2;
 		bufferCreateInfo.pQueueFamilyIndices = indicesArray;
 
-		Platform::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
+		Display::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memoryRequirements;
@@ -43,7 +42,7 @@ namespace Flounder
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
 
-		Platform::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
+		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
 		vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0);
 	}

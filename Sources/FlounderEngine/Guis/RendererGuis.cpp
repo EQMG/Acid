@@ -1,6 +1,6 @@
 #include "RendererGuis.hpp"
 
-#include "Models/VertexModel.hpp"
+#include "../Models/VertexModel.hpp"
 #include "../Uis/Uis.hpp"
 #include "Gui.hpp"
 
@@ -9,7 +9,7 @@ namespace Flounder
 	RendererGuis::RendererGuis(const GraphicsStage &graphicsStage) :
 		IRenderer(),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Guis/Gui.vert", "Resources/Shaders/Guis/Gui.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), { }))
+			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {}))
 	{
 	}
 
