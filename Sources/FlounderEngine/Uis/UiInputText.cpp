@@ -1,8 +1,8 @@
 ﻿#include "UiInputText.hpp"
 
-#include "../Inputs/Keyboard.hpp"
-#include "../Scenes/Scenes.hpp"
-#include "../Maths/Visual/DriverSlide.hpp"
+#include "Inputs/Keyboard.hpp"
+#include "Scenes/Scenes.hpp"
+#include "Maths/Visual/DriverSlide.hpp"
 
 namespace Flounder
 {

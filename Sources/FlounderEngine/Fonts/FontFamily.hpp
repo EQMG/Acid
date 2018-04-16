@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <string>
-#include "../Resources/Resources.hpp"
+#include "Resources/Resources.hpp"
 #include "FontType.hpp"
 
 namespace Flounder

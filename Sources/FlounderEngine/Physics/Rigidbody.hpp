@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#include "../Maths/Constraint3.hpp"
-#include "../Maths/Vector3.hpp"
-#include "../Objects/Component.hpp"
-#include "../Objects/GameObject.hpp"
+#include "Maths/Constraint3.hpp"
+#include "Maths/Vector3.hpp"
+#include "Scenes/Objects/Component.hpp"
+#include "Scenes/Objects/GameObject.hpp"
 #include "Collider.hpp"
 
 namespace Flounder

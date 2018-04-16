@@ -3,8 +3,8 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "../../Helpers/FormatString.hpp"
-#include "../LoadedValue.hpp"
+#include "Helpers/FormatString.hpp"
+#include "Files/LoadedValue.hpp"
 
 namespace Flounder
 {

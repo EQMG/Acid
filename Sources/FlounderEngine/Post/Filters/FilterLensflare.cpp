@@ -1,6 +1,6 @@
 #include "FilterLensflare.hpp"
 
-#include "../../Scenes/Scenes.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace Flounder
 {

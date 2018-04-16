@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <cstdint>
-#include "../Maths/Vector3.hpp"
+#include "Maths/Vector3.hpp"
 
 namespace Flounder
 {

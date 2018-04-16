@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Engine/Engine.hpp"
-#include "../Tasks/Tasks.hpp"
+#include "Engine/Engine.hpp"
+#include "Tasks/Tasks.hpp"
 #include "IEvent.hpp"
 
 namespace Flounder

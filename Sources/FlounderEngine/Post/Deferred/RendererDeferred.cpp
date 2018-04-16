@@ -1,12 +1,12 @@
-#include <Skyboxes/SkyboxRender.hpp>
 #include "RendererDeferred.hpp"
 
-#include "../../Scenes/Scenes.hpp"
-#include "../../Lights/Light.hpp"
-#include "../../Models/Shapes/ShapeRectangle.hpp"
-#include "../../Renderer/Renderer.hpp"
-#include "../../Shadows/Shadows.hpp"
-#include "../../Worlds/Worlds.hpp"
+#include "Scenes/Scenes.hpp"
+#include "Lights/Light.hpp"
+#include "Models/Shapes/ShapeRectangle.hpp"
+#include "Renderer/Renderer.hpp"
+#include "Shadows/Shadows.hpp"
+#include "Skyboxes/SkyboxRender.hpp"
+#include "Worlds/Worlds.hpp"
 #include "UbosDeferred.hpp"
 
 namespace Flounder

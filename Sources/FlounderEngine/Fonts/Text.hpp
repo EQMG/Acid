@@ -1,14 +1,14 @@
 ﻿#pragma once
 
 #include <string>
-#include "../Maths/Colour.hpp"
-#include "../Maths/Vector2.hpp"
-#include "../Maths/Visual/IDriver.hpp"
-#include "../Models/Model.hpp"
-#include "../Renderer/Buffers/UniformBuffer.hpp"
-#include "../Renderer/Pipelines/Pipeline.hpp"
-#include "../Uis/UiObject.hpp"
-#include "../Uis/Uis.hpp"
+#include "Maths/Colour.hpp"
+#include "Maths/Vector2.hpp"
+#include "Maths/Visual/IDriver.hpp"
+#include "Models/Model.hpp"
+#include "Renderer/Buffers/UniformBuffer.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Uis/UiObject.hpp"
+#include "Uis/Uis.hpp"
 #include "FontType.hpp"
 #include "FontJustify.hpp"
 #include "FontLine.hpp"

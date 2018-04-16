@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <string>
-#include "../Textures/Texture.hpp"
+#include "Textures/Texture.hpp"
 
 namespace Flounder
 {

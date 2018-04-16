@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../Textures/Texture.hpp"
+#include "Textures/Texture.hpp"
 #include "FontMetafile.hpp"
 
 namespace Flounder

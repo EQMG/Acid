@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../Prerequisites.hpp"
-#include "../Maths/Vector3.hpp"
-#include "../Maths/Matrix4.hpp"
-#include "../Physics/Frustum.hpp"
-#include "../Physics/Ray.hpp"
+#include "Engine/Exports.hpp"
+#include "Maths/Vector3.hpp"
+#include "Maths/Matrix4.hpp"
+#include "Physics/Frustum.hpp"
+#include "Physics/Ray.hpp"
 
 namespace Flounder
 {

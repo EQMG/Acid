@@ -1,6 +1,6 @@
 #include "ShapeDisk.hpp"
 
-#include "../../Maths/Maths.hpp"
+#include "Maths/Maths.hpp"
 
 namespace Flounder
 {

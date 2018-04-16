@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../Prerequisites.hpp"
+#include "Engine/Exports.hpp"
 #include "Vector3.hpp"
 #include "Matrix4.hpp"
 

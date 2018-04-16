@@ -1,7 +1,7 @@
 #include "Worlds.hpp"
 
-#include "../Scenes/Scenes.hpp"
-#include "../Shadows/Shadows.hpp"
+#include "Scenes/Scenes.hpp"
+#include "Shadows/Shadows.hpp"
 
 namespace Flounder
 {
@@ -20,7 +20,7 @@ namespace Flounder
 
 	Worlds::Worlds() :
 		IModule(),
-		m_noise(new NoiseFast(954627)),
+		m_noiseTerrain(new NoiseFast(69124)),
 		m_driverDay(new DriverLinear(0.0f, 1.0f, 300.0f)),
 		m_factorDay(0.0f),
 		m_skyboxRotation(new Vector3),
@@ -31,20 +31,20 @@ namespace Flounder
 		m_fog(new Fog(new Colour(), 0.001f, 2.0f, -0.1f, 0.3f)),
 		m_skyColour(new Colour("#3399ff"))
 	{
-		m_noise->SetNoiseType(NoiseFast::SimplexFractal);
-		m_noise->SetFrequency(0.025f);
-		m_noise->SetInterp(NoiseFast::Quintic);
-		m_noise->SetFractalType(NoiseFast::Fbm);
-		m_noise->SetFractalOctaves(3);
-		m_noise->SetFractalLacunarity(2.0);
-		m_noise->SetFractalGain(0.5f);
+		m_noiseTerrain->SetNoiseType(NoiseFast::PerlinFractal);
+		m_noiseTerrain->SetFrequency(0.003f);
+		m_noiseTerrain->SetInterp(NoiseFast::Quintic);
+		m_noiseTerrain->SetFractalType(NoiseFast::Fbm);
+		m_noiseTerrain->SetFractalOctaves(5);
+		m_noiseTerrain->SetFractalLacunarity(2.0);
+		m_noiseTerrain->SetFractalGain(0.5f);
 
 		m_driverDay->Update(50.0f); // Starts during daytime.
 	}
 
 	Worlds::~Worlds()
 	{
-		delete m_noise;
+		delete m_noiseTerrain;
 
 		delete m_driverDay;
 
@@ -128,5 +128,14 @@ namespace Flounder
 	float Worlds::GetStarIntensity() const
 	{
 		return Maths::Clamp(1.0f - GetShadowFactor(), 0.0f, 1.0f);
+	}
+
+	float Worlds::GetTerrainRadius(const float &radius, const float &theta, const float &phi)
+	{
+		float height = m_noiseTerrain->GetValue(
+			(radius / 10.0f) * Maths::NormalizeAngle(Maths::Degrees(theta)),
+			(radius / 10.0f) * Maths::NormalizeAngle(Maths::Degrees(phi))
+		);
+		return radius + (28.0f * height);
 	}
 }

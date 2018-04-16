@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Objects/Behaviour.hpp>
-#include <Objects/GameObject.hpp>
+#include <Scenes/Objects/Behaviour.hpp>
+#include <Scenes/Objects/GameObject.hpp>
 #include <Inputs/Axes/IAxis.hpp>
 #include <Inputs/Buttons/IButton.hpp>
 

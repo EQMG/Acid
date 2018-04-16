@@ -3,8 +3,8 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "../../Helpers/FormatString.hpp"
-#include "../IFile.hpp"
+#include "Helpers/FormatString.hpp"
+#include "Files/IFile.hpp"
 #include "JsonSection.hpp"
 
 namespace Flounder

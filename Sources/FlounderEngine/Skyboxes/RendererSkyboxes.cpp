@@ -1,7 +1,7 @@
 #include "RendererSkyboxes.hpp"
 
-#include "../Scenes/Scenes.hpp"
-#include "../Models/Model.hpp"
+#include "Scenes/Scenes.hpp"
+#include "Models/Model.hpp"
 #include "UbosSkyboxes.hpp"
 #include "SkyboxRender.hpp"
 

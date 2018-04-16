@@ -1,8 +1,8 @@
 #include "Texture.hpp"
 
 #include <cmath>
-#include "../Renderer/Renderer.hpp"
-#include "../Helpers/FileSystem.hpp"
+#include "Renderer/Renderer.hpp"
+#include "Helpers/FileSystem.hpp"
 
 namespace Flounder
 {

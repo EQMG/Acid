@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Maths.hpp"
+#include "Maths/Maths.hpp"
 
 namespace Flounder
 {

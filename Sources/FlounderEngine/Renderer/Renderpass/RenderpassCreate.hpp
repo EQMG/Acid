@@ -2,8 +2,8 @@
 
 #include <string>
 #include <vector>
-#include "../../Display/Display.hpp"
-#include "../../Maths/Colour.hpp"
+#include "Display/Display.hpp"
+#include "Maths/Colour.hpp"
 
 namespace Flounder
 {

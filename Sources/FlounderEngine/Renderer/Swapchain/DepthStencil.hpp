@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../Pipelines/Descriptor.hpp"
-#include "../Pipelines/DescriptorSet.hpp"
-#include "../Pipelines/PipelineCreate.hpp"
+#include "Renderer/Pipelines/Descriptor.hpp"
+#include "Renderer/Pipelines/DescriptorSet.hpp"
+#include "Renderer/Pipelines/PipelineCreate.hpp"
 
 namespace Flounder
 {

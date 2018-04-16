@@ -1,9 +1,9 @@
 #include "ShaderProgram.hpp"
 
-#include "../../Helpers/FormatString.hpp"
-#include "../../Textures/Texture.hpp"
-#include "../../Textures/Cubemap.hpp"
-#include "../Buffers/UniformBuffer.hpp"
+#include "Helpers/FormatString.hpp"
+#include "Textures/Texture.hpp"
+#include "Textures/Cubemap.hpp"
+#include "Renderer/Buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {

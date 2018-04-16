@@ -1,12 +1,15 @@
 #include "MeshWater.hpp"
 
-#include "../Maths/Colour.hpp"
-#include "WaterRender.hpp"
-
 namespace Flounder
 {
+	const float MeshWater::SIDE_LENGTH = 1200.0f;
+	const float MeshWater::SQUARE_SIZE = 100.0f;
+	const int MeshWater::VERTEX_COUNT = static_cast<int>((2.0f * SIDE_LENGTH) / SQUARE_SIZE) + 1;
+	const float MeshWater::TEXTURE_SCALE = 1.0f;
+	const Colour MeshWater::WATER_COLOUR = Colour("#0077be");
+
 	MeshWater::MeshWater() :
-		MeshSimple(WaterRender::SIDE_LENGTH, WaterRender::SQUARE_SIZE, WaterRender::VERTEX_COUNT, WaterRender::TEXTURE_SCALE)
+		MeshSimple(SIDE_LENGTH, SQUARE_SIZE, VERTEX_COUNT, TEXTURE_SCALE)
 	{
 		MeshSimple::GenerateMesh();
 	}
@@ -27,6 +30,6 @@ namespace Flounder
 
 	Vector3 MeshWater::GetColour(const Vector3 &position, const Vector3 &normal)
 	{
-		return WaterRender::WATER_COLOUR;
+		return WATER_COLOUR;
 	}
 }

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "../Maths/Vector2.hpp"
-#include "../Maths/Vector3.hpp"
-#include "../Renderer/Pipelines/PipelineCreate.hpp"
+#include "Maths/Vector2.hpp"
+#include "Maths/Vector3.hpp"
+#include "Renderer/Pipelines/PipelineCreate.hpp"
 #include "IVertex.hpp"
 
 namespace Flounder

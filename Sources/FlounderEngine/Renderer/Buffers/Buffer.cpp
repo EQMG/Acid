@@ -1,7 +1,7 @@
 ﻿#include "Buffer.hpp"
 
-#include "../Queue/QueueFamily.hpp"
-#include "../Renderer.hpp"
+#include "Renderer/Queue/QueueFamily.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace Flounder
 {
@@ -72,7 +72,7 @@ namespace Flounder
 			}
 		}
 
-		assert(false && "Failed to find a valid memory type for buffer!");
+		throw std::runtime_error("Failed to find a valid memory type for buffer!");
 		return 0;
 	}
 

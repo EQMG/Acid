@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "../Resources/Resources.hpp"
+#include "Resources/Resources.hpp"
 #include "FontCharacter.hpp"
 
 namespace Flounder

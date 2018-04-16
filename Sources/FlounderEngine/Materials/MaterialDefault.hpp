@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../Maths/Colour.hpp"
-#include "../Objects/Component.hpp"
-#include "../Models/Model.hpp"
-#include "../Renderer/Buffers/UniformBuffer.hpp"
-#include "../Renderer/Pipelines/Pipeline.hpp"
-#include "../Textures/Texture.hpp"
+#include "Maths/Colour.hpp"
+#include "Scenes/Objects/Component.hpp"
+#include "Models/Model.hpp"
+#include "Renderer/Buffers/UniformBuffer.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Textures/Texture.hpp"
 #include "PipelineMaterial.hpp"
 
 namespace Flounder

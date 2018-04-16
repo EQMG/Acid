@@ -6,7 +6,7 @@
 #include <vulkan/vulkan.h>
 #include <GlslangToSpv.h>
 #include <GLFW/glfw3.h>
-#include "../Engine/Engine.hpp"
+#include "Engine/Engine.hpp"
 
 namespace Flounder
 {

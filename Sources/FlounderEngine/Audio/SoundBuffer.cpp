@@ -1,6 +1,6 @@
 #include "SoundBuffer.hpp"
 
-#include "../Helpers/FileSystem.hpp"
+#include "Helpers/FileSystem.hpp"
 
 namespace Flounder
 {

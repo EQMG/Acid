@@ -1,6 +1,6 @@
 #include "ColliderAabb.hpp"
 
-#include "../Maths/Maths.hpp"
+#include "Maths/Maths.hpp"
 
 namespace Flounder
 {

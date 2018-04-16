@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Physics/Space/StructureBasic.hpp"
+#include "Physics/Space/StructureBasic.hpp"
 #include "ICamera.hpp"
 #include "IManagerUis.hpp"
 

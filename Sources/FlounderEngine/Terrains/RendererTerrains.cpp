@@ -1,8 +1,8 @@
 #include "RendererTerrains.hpp"
 
-#include "../Scenes/Scenes.hpp"
-#include "../Models/Model.hpp"
-#include "Terrains.hpp"
+#include "Scenes/Scenes.hpp"
+#include "Models/Model.hpp"
+#include "TerrainRender.hpp"
 #include "UbosTerrains.hpp"
 
 namespace Flounder

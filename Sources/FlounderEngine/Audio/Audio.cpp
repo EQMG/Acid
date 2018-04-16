@@ -1,11 +1,11 @@
 #include "Audio.hpp"
 
 #include <fstream>
-#ifdef FLOUNDER_PLATFORM_WINDOWS
-#include <Windows.h>
-#endif
-#include "../Helpers/FileSystem.hpp"
-#include "../Scenes/Scenes.hpp"
+//#ifdef FLOUNDER_PLATFORM_WINDOWS
+//#include <Windows.h>
+//#endif
+#include "Helpers/FileSystem.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace Flounder
 {
@@ -40,7 +40,7 @@ namespace Flounder
 
 			// Listener orientation.
 			Vector3 *currentRay = camera->GetViewRay()->m_currentRay;
-			float orientation[6] = {currentRay->m_x, currentRay->m_y, currentRay->m_z, 0.0f, 1.0f, 0.0f};
+			ALfloat orientation[6] = {currentRay->m_x, currentRay->m_y, currentRay->m_z, 0.0f, 1.0f, 0.0f};
 
 			alListenerfv(AL_ORIENTATION, orientation);
 			ErrorAl(alGetError());
@@ -55,9 +55,9 @@ namespace Flounder
 		}
 
 		fprintf(stderr, "OpenAL error: %i\n", result);
-#ifdef FLOUNDER_PLATFORM_WINDOWS
-		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0);
-#endif
+//#ifdef FLOUNDER_PLATFORM_WINDOWS
+//		MessageBox(nullptr, "" + result, "OpenAL Error", 0);
+//#endif
 		throw std::runtime_error("OpenAL runtime error.");
 	}
 

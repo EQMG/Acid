@@ -1,18 +1,24 @@
 #include "MeshTerrain.hpp"
 
-#include "../Maths/Maths.hpp"
-#include "../Maths/Colour.hpp"
-#include "Terrains.hpp"
+#include "Worlds/Worlds.hpp"
 
 namespace Flounder
 {
-	const std::array<Colour, 4> BIOME_COLOURS = {
+	const int MeshTerrain::SIDE_LENGTH = 200;
+	const std::vector<float> MeshTerrain::SQUARE_SIZES = {
+		4.0f, 8.0f, 25.0f, 50.0f, 100.0f
+	};
+	const std::vector<float> MeshTerrain::TEXTURE_SCALES = {
+		10.0f, 5.0f, 2.0f, 1.0f, 0.5f
+	};
+
+	const std::array<Colour, 4> COLOUR_BIOMES = {
 		Colour("#6e3529"), Colour("#934838"), Colour("#9e402c"), Colour("#656565")
 	};
-	const float SPREAD = 0.76f;
-	const float HALF_SPREAD = SPREAD / 2.0f;
-	const float AMPLITUDE = 20.0f;
-	const float PART = 1.0f / (BIOME_COLOURS.size() - 1);
+	const float COLOUR_SPREAD = 0.76f;
+	const float COLOUR_HALF_SPREAD = COLOUR_SPREAD / 2.0f;
+	const float COLOUR_AMPLITUDE = 20.0f;
+	const float COLOUR_PART = 1.0f / (COLOUR_BIOMES.size() - 1);
 
 	MeshTerrain::MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, const float &radius, Transform *transform) :
 		MeshSimple(sideLength, squareSize, vertexCount, textureScale),
@@ -37,7 +43,7 @@ namespace Flounder
 		Vector3 polar = Vector3::CartesianToPolar(cartesian);
 
 		//	polar.m_x = m_radius + (28.0f * Terrains::Get()->GetNoise()->GetValue((m_radius / 30.0f) * cartesian.m_x, (m_radius / 30.0f) * cartesian.m_y, (m_radius / 30.0f) * cartesian.m_z));
-		polar.m_x = Terrains::Get()->GetRadius(m_radius, polar.m_y, polar.m_z);
+		polar.m_x = Worlds::Get()->GetTerrainRadius(m_radius, polar.m_y, polar.m_z);
 
 		return Vector3::PolarToCartesian(polar);
 	}
@@ -69,12 +75,12 @@ namespace Flounder
 	Vector3 MeshTerrain::GetColour(const Vector3 &position, const Vector3 &normal)
 	{
 		Vector3 polar = Vector3::CartesianToPolar(position);
-		float value = (polar.m_x - m_radius + AMPLITUDE) / (AMPLITUDE * 2.0f);
-		value = Maths::Clamp((value - HALF_SPREAD) * (1.0f / SPREAD), 0.0f, 0.9999f);
-		int firstBiome = static_cast<int>(std::floor(value / PART));
-		float blend = (value - (firstBiome * PART)) / PART;
+		float value = (polar.m_x - m_radius + COLOUR_AMPLITUDE) / (COLOUR_AMPLITUDE * 2.0f);
+		value = Maths::Clamp((value - COLOUR_HALF_SPREAD) * (1.0f / COLOUR_SPREAD), 0.0f, 0.9999f);
+		int firstBiome = static_cast<int>(std::floor(value / COLOUR_PART));
+		float blend = (value - (firstBiome * COLOUR_PART)) / COLOUR_PART;
 		Colour colour = Colour();
-		Colour::Interpolate(BIOME_COLOURS.at(firstBiome), BIOME_COLOURS.at(firstBiome + 1), blend, &colour);
+		Colour::Interpolate(COLOUR_BIOMES.at(firstBiome), COLOUR_BIOMES.at(firstBiome + 1), blend, &colour);
 		return colour;
 	}
 }

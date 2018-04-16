@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Display/Display.hpp"
+#include "Display/Display.hpp"
 #include "Renderpass/Renderpass.hpp"
 #include "Swapchain/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"

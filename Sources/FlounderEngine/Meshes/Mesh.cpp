@@ -1,10 +1,10 @@
 #include "Mesh.hpp"
 
-#include "../Models/Shapes/ShapeCube.hpp"
-#include "../Models/Shapes/ShapeCylinder.hpp"
-#include "../Models/Shapes/ShapeDisk.hpp"
-#include "../Models/Shapes/ShapeRectangle.hpp"
-#include "../Models/Shapes/ShapeSphere.hpp"
+#include "Models/Shapes/ShapeCube.hpp"
+#include "Models/Shapes/ShapeCylinder.hpp"
+#include "Models/Shapes/ShapeDisk.hpp"
+#include "Models/Shapes/ShapeRectangle.hpp"
+#include "Models/Shapes/ShapeSphere.hpp"
 
 namespace Flounder
 {

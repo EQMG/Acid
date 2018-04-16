@@ -2,8 +2,8 @@
 
 #include <string>
 #include <vector>
-#include "../Objects/Component.hpp"
-#include "../Models/Model.hpp"
+#include "Scenes/Objects/Component.hpp"
+#include "Models/Model.hpp"
 
 namespace Flounder
 {

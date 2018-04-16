@@ -1,6 +1,6 @@
 #include "ButtonJoystick.hpp"
 
-#include "../Joysticks.hpp"
+#include "Inputs/Joysticks.hpp"
 
 namespace Flounder
 {
