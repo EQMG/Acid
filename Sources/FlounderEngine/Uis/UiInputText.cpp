@@ -13,10 +13,8 @@ namespace Flounder
 
 	UiInputText::UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const FontJustify &justify) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(nullptr),
-		//new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), prefix + value, Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
-		m_background(nullptr),
-		//new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("Resources/Guis/Button.png"), 1)),
+		m_text(nullptr), //new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), prefix + value, Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
+		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("Resources/Guis/Button.png"), 1)),
 		m_prefix(prefix),
 		m_value(value),
 		m_inputDelay(new UiInputDelay()),

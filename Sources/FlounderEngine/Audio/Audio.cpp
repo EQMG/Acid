@@ -1,6 +1,9 @@
 #include "Audio.hpp"
 
 #include <fstream>
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+#include <Windows.h>
+#endif
 #include "../Helpers/FileSystem.hpp"
 #include "../Scenes/Scenes.hpp"
 
@@ -11,14 +14,14 @@ namespace Flounder
 		m_alDevice(nullptr),
 		m_alContext(nullptr)
 	{
-		m_alDevice = alcOpenDevice(NULL);
-		m_alContext = alcCreateContext(m_alDevice, NULL);
+		m_alDevice = alcOpenDevice(nullptr);
+		m_alContext = alcCreateContext(m_alDevice, nullptr);
 		alcMakeContextCurrent(m_alContext);
 	}
 
 	Audio::~Audio()
 	{
-		alcMakeContextCurrent(NULL);
+		alcMakeContextCurrent(nullptr);
 		alcDestroyContext(m_alContext);
 		alcCloseDevice(m_alDevice);
 	}
@@ -52,9 +55,9 @@ namespace Flounder
 		}
 
 		fprintf(stderr, "OpenAL error: %i\n", result);
-//#ifdef FLOUNDER_PLATFORM_WINDOWS
-//		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0);
-//#endif
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+		MessageBox(nullptr, "Error: " + result, "OpenAL Error", 0);
+#endif
 		throw std::runtime_error("OpenAL runtime error.");
 	}
 
@@ -67,7 +70,6 @@ namespace Flounder
 		}
 
 		std::ifstream file(filename.c_str(), std::ifstream::binary);
-		SoundSourceInfo sourceInfo = {};
 
 		if (!file.is_open())
 		{
@@ -77,8 +79,10 @@ namespace Flounder
 		char chunkId[5] = "\0";
 
 		// Read header.
+		unsigned int size;
+
 		file.read(chunkId, 4);
-		file.read(reinterpret_cast<char *>(&sourceInfo.m_size), 4);
+		file.read(reinterpret_cast<char *>(&size), 4);
 
 		chunkId[4] = '\0';
 		file.read(chunkId, 4);
@@ -87,40 +91,46 @@ namespace Flounder
 
 		// Read first chunk header.
 		file.read(chunkId, 4);
-		file.read(reinterpret_cast<char *>(&sourceInfo.m_size), 4);
+		file.read(reinterpret_cast<char *>(&size), 4);
 
 		chunkId[4] = '\0';
 
 		// Read first chunk content.
-		file.read(reinterpret_cast<char *>(&sourceInfo.m_formatTag), 2);
-		file.read(reinterpret_cast<char *>(&sourceInfo.m_channels), 2);
-		file.read(reinterpret_cast<char *>(&sourceInfo.m_samplesPerSec), 4);
-		file.read(reinterpret_cast<char *>(&sourceInfo.m_averageBytesPerSec), 4);
-		file.read(reinterpret_cast<char *>(&sourceInfo.m_blockAlign), 2);
-		file.read(reinterpret_cast<char *>(&sourceInfo.m_bitsPerSample), 2);
+		short formatTag;
+		short channels;
+		int samplesPerSec;
+		int averageBytesPerSec;
+		short blockAlign;
+		short bitsPerSample;
 
-		if (sourceInfo.m_size > 16)
+		file.read(reinterpret_cast<char *>(&formatTag), 2);
+		file.read(reinterpret_cast<char *>(&channels), 2);
+		file.read(reinterpret_cast<char *>(&samplesPerSec), 4);
+		file.read(reinterpret_cast<char *>(&averageBytesPerSec), 4);
+		file.read(reinterpret_cast<char *>(&blockAlign), 2);
+		file.read(reinterpret_cast<char *>(&bitsPerSample), 2);
+
+		if (size > 16)
 		{
-			file.seekg(static_cast<int>(file.tellg()) + (sourceInfo.m_size - 16));
+			file.seekg(static_cast<int>(file.tellg()) + (size - 16));
 		}
 
 		// Read data chunk header.
 		file.read(chunkId, 4);
-		file.read(reinterpret_cast<char *>(&sourceInfo.m_size), 4);
+		file.read(reinterpret_cast<char *>(&size), 4);
 
 		chunkId[4] = '\0';
 
-		sourceInfo.m_data = new unsigned char[sourceInfo.m_size];
-		file.read(reinterpret_cast<char *>(sourceInfo.m_data), sourceInfo.m_size);
+		unsigned char *data = new unsigned char[size];
+		file.read(reinterpret_cast<char *>(data), size);
 
 		file.close();
-		//	LogOpenAlSound(filename, sourceInfo);
 
 		ALuint buffer;
 		alGenBuffers(1, &buffer);
-		alBufferData(buffer, (sourceInfo.m_channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sourceInfo.m_data, sourceInfo.m_size, sourceInfo.m_samplesPerSec);
+		alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, samplesPerSec);
 
-		delete[] sourceInfo.m_data;
+		delete[] data;
 
 		return buffer;
 	}
@@ -161,39 +171,5 @@ namespace Flounder
 		delete[] data;
 
 		return buffer;
-	}
-
-	void Audio::LogOpenAlSound(const std::string &path, const SoundSourceInfo &sourceInfo)
-	{
-#if FLOUNDER_VERBOSE
-		printf("-- Loading Audio: '%s' --\n", path.c_str());
-		printf("Size: %i bytes\n", sourceInfo.m_size);
-
-		switch (sourceInfo.m_formatTag)
-		{
-		case 0x0001:
-			printf("Format: PCM\n");
-			break;
-		case 0x0003:
-			printf("Format: IEEE Float\n");
-			break;
-		case 0x0006:
-			printf("Format: 8-bit ITU-T G.711 A-law\n");
-			break;
-		case 0x0007:
-			printf("Format: 8-bit ITU-T G.711 mi-law\n");
-			break;
-		default:
-			printf("Format: Unknown tag\n");
-			break;
-		}
-
-		printf("Channels: %i\n", sourceInfo.m_channels);
-		printf("Samples Per Second: %i\n", sourceInfo.m_samplesPerSec);
-		printf("Average bytes per second: %i\n", sourceInfo.m_averageBytesPerSec);
-		printf("Block align: %i\n", sourceInfo.m_blockAlign);
-		printf("Bit per sample: %i\n", sourceInfo.m_bitsPerSample);
-		printf("-- Done --\n");
-#endif
 	}
 }

@@ -101,10 +101,8 @@ namespace Flounder
 
 	UiInputGrabber::UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IUiGrabber *grabber, const FontJustify &justify) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(nullptr),
-		//new Text(this, position, SCALE_NORMAL, Vector3(0.5f, 0.5f, RelativeScreen), prefix + grabber->GetValue(value), Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
-		m_background(nullptr),
-		//new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("Resources/Guis/Button.png"), 1)),
+		m_text(nullptr), //new Text(this, position, SCALE_NORMAL, Vector3(0.5f, 0.5f, RelativeScreen), prefix + grabber->GetValue(value), Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
+		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("Resources/Guis/Button.png"), 1)),
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),
