@@ -90,10 +90,8 @@ namespace Flounder
 		const float dh = m_rectangle->m_dimensions->m_y * m_scale;
 
 		const float pa = m_rectangle->m_aspectPosition ? 1.0f : aspectRatio;
-		const float px =
-			(m_rectangle->m_position->m_x / pa) - (dw * m_rectangle->m_reference->m_x) + m_positionOffset->m_x;
-		const float py =
-			m_rectangle->m_position->m_y - (dh * (-1.0f + m_rectangle->m_reference->m_y)) + m_positionOffset->m_y;
+		const float px = (m_rectangle->m_position->m_x / pa) - (dw * m_rectangle->m_reference->m_x) + m_positionOffset->m_x;
+		const float py = m_rectangle->m_position->m_y - (dh * (-1.0f + m_rectangle->m_reference->m_y)) + m_positionOffset->m_y;
 
 		m_screenTransform->Set(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
 	}

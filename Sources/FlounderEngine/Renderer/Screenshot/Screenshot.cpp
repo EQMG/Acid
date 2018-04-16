@@ -1,8 +1,8 @@
 #include "Screenshot.hpp"
 
 #include <fstream>
-#include "../Renderer.hpp"
 #include "../../Helpers/FileSystem.hpp"
+#include "../Renderer.hpp"
 
 namespace Flounder
 {

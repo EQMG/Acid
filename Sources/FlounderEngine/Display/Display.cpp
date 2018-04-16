@@ -1,5 +1,8 @@
 #include "Display.hpp"
 
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+#include <Windows.h>
+#endif
 #include "../Textures/Texture.hpp"
 
 namespace Flounder
@@ -309,9 +312,9 @@ namespace Flounder
 			}
 
 			fprintf(stderr, "Vulkan error: %s, %i\n", failure.c_str(), result);
-//#ifdef FLOUNDER_PLATFORM_WINDOWS
-//			MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
-//#endif
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+			MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
+#endif
 			throw std::runtime_error("Vulkan runtime error.");
 		}
 	}
@@ -321,6 +324,9 @@ namespace Flounder
 		if (result == GLFW_FALSE)
 		{
 			fprintf(stderr, "GLFW error: %i\n", result);
+#ifdef FLOUNDER_PLATFORM_WINDOWS
+			MessageBox(nullptr, "" + result, "GLFW Error", 0);
+#endif
 			throw std::runtime_error("GLFW runtime error.");
 		}
 	}
