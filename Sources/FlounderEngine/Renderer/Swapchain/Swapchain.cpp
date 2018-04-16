@@ -1,7 +1,6 @@
 ﻿#include "Swapchain.hpp"
 
-#include "../../Shadows/Shadows.hpp"
-#include "../Queue/QueueFamily.hpp"
+#include "Renderer/Queue/QueueFamily.hpp"
 
 namespace Flounder
 {

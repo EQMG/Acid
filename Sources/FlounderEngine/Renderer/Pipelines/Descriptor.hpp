@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../../Display/Display.hpp"
+#include "Display/Display.hpp"
 #include "DescriptorSet.hpp"
 
 namespace Flounder

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Prerequisites.hpp"
-#include "../Files/LoadedValue.hpp"
+#include "Engine/Exports.hpp"
+#include "Files/LoadedValue.hpp"
 #include "Matrix3.hpp"
 #include "Matrix4.hpp"
 

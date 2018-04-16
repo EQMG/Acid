@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../Maths/Colour.hpp"
-#include "../Maths/Matrix4.hpp"
-#include "../Maths/Vector2.hpp"
-#include "../Maths/Vector4.hpp"
+#include "Maths/Colour.hpp"
+#include "Maths/Matrix4.hpp"
+#include "Maths/Vector2.hpp"
+#include "Maths/Vector4.hpp"
 
 namespace Flounder
 {

@@ -2,9 +2,9 @@
 
 #include <string>
 #include <vector>
-#include "../Audio/Audio.hpp"
-#include "../Resources/Resources.hpp"
-#include "../Maths/Vector3.hpp"
+#include "Audio/Audio.hpp"
+#include "Resources/Resources.hpp"
+#include "Maths/Vector3.hpp"
 
 namespace Flounder
 {

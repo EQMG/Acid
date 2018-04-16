@@ -1,8 +1,7 @@
 #pragma once
 
 #include <chrono>
-#include "IModule.hpp"
-#include "IUpdater.hpp"
+#include "ModuleRegister.hpp"
 
 /// <summary>
 /// The base Flounder folder.
@@ -20,7 +19,7 @@ namespace Flounder
 		typedef std::chrono::high_resolution_clock HighResolutionClock;
 		typedef std::chrono::duration<float, std::milli> MillisecondsType;
 
-		static Engine *g_instance;
+		static Engine *G_INSTANCE;
 
 		std::chrono::time_point<HighResolutionClock> m_start;
 		float m_timeOffset;
@@ -29,7 +28,7 @@ namespace Flounder
 		bool m_running;
 		bool m_error;
 
-		IUpdater *m_updater;
+		ModuleRegister *m_moduleRegister;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -37,7 +36,7 @@ namespace Flounder
 		/// <returns> The current engine instance. </returns>
 		static Engine *Get()
 		{
-			return g_instance;
+			return G_INSTANCE;
 		}
 
 		/// <summary>
@@ -51,23 +50,26 @@ namespace Flounder
 		~Engine();
 
 		/// <summary>
-		/// Loads the updater into the engine.
-		/// </summary>
-		/// <param name="updater"> The updater. </param>
-		void SetUpdater(IUpdater *updater);
-
-		/// <summary>
 		/// The update function for the updater.
 		/// </summary>
-		/// <returns> EXIT_SUCCESS/EXIT_FAILURE. </returns>
+		/// <returns> EXIT_SUCCESS or EXIT_FAILURE. </returns>
 		int Run() const;
+
+		/// <summary>
+		/// Registers a module with the register.
+		/// </summary>
+		/// <param name="update"> The modules update type. </param>
+		/// <param name="name"> The modules name. </param>
+		/// <param name="T"> The modules type. </param>
+		template<typename T>
+		void RegisterModule(const ModuleUpdate &update, const std::string &name) { m_moduleRegister->RegisterModule<T> (update, name); }
 
 		/// <summary>
 		/// Gets a module instance by name.
 		/// </summary>
 		/// <param name="name"> The module name to find. </param>
 		/// <returns> The found module. </returns>
-		IModule *GetModule(const std::string &name) const { return m_updater->GetModule(name); }
+		IModule *GetModule(const std::string &name) const { return m_moduleRegister->GetModule(name); }
 
 		/// <summary>
 		/// Gets the added/removed time for the engine (seconds).
@@ -85,13 +87,13 @@ namespace Flounder
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		float GetDelta() const { return m_updater->GetDelta(); }
+		float GetDelta() const { return m_moduleRegister->GetDelta(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		float GetDeltaRender() const { return m_updater->GetDeltaRender(); }
+		float GetDeltaRender() const { return m_moduleRegister->GetDeltaRender(); }
 
 		/// <summary>
 		/// Gets the current time of the engine instance.

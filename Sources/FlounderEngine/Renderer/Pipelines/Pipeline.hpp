@@ -3,8 +3,8 @@
 #include <array>
 #include <string>
 #include <vector>
-#include "../../Textures/Texture.hpp"
-#include "../Pipelines/DescriptorSet.hpp"
+#include "Textures/Texture.hpp"
+#include "Renderer/Pipelines/DescriptorSet.hpp"
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"
 

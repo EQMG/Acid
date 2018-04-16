@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Objects/Component.hpp"
-#include "../Meshes/Mesh.hpp"
+#include "Scenes/Objects/Component.hpp"
+#include "Meshes/Mesh.hpp"
 #include "VoxelBlock.hpp"
 
 namespace Flounder

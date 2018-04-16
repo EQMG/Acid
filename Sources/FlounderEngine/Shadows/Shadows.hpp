@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Engine/Engine.hpp"
-#include "../Maths/Vector3.hpp"
+#include "Engine/Engine.hpp"
+#include "Maths/Vector3.hpp"
 #include "ShadowBox.hpp"
 
 namespace Flounder

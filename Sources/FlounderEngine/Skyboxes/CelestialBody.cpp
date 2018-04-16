@@ -1,7 +1,7 @@
 ﻿#include "CelestialBody.hpp"
 
-#include "../Worlds/Worlds.hpp"
-#include "../Lights/Light.hpp"
+#include "Worlds/Worlds.hpp"
+#include "Lights/Light.hpp"
 
 namespace Flounder
 {

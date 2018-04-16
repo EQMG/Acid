@@ -1,8 +1,9 @@
 #pragma once
 
-#include "../Engine/Engine.hpp"
-#include "../Objects/GameObject.hpp"
-#include "../Physics/Space/StructureBasic.hpp"
+#include "Engine/Engine.hpp"
+#include "Scenes/Objects/GameObject.hpp"
+#include "Physics/Space/StructureBasic.hpp"
+#include "Scenes/Objects/ComponentRegister.hpp"
 #include "Scene.hpp"
 
 namespace Flounder
@@ -14,6 +15,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
+		ComponentRegister *m_componentRegister;
 		Scene *m_scene;
 	public:
 		/// <summary>
@@ -36,6 +38,22 @@ namespace Flounder
 		~Scenes();
 
 		void Update() override;
+
+		/// <summary>
+		/// Registers a component with the register.
+		/// </summary>
+		/// <param name="update"> The components update type. </param>
+		/// <param name="name"> The components name. </param>
+		/// <param name="T"> The components type. </param>
+		template<typename T>
+		void RegisterComponent(const std::string &name) { m_componentRegister->RegisterComponent<T>(name); }
+
+		/// <summary>
+		/// Creates a new component from the register.
+		/// </summary>
+		/// <param name="name"> The component name to create. </param>
+		/// <returns> The new component. </returns>
+		Component *CreateComponent(const std::string &name) { return m_componentRegister->CreateComponent(name); }
 
 		Scene *GetScene() const { return m_scene; }
 

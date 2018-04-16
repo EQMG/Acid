@@ -1,6 +1,6 @@
 ﻿#include "SpawnLine.hpp"
 
-#include "../../Maths/Maths.hpp"
+#include "Maths/Maths.hpp"
 
 namespace Flounder
 {

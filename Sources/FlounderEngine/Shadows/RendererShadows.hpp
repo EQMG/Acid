@@ -1,8 +1,9 @@
 #pragma once
 
-#include "../Renderer/IRenderer.hpp"
-#include "../Terrains/Terrains.hpp"
-#include "../Models/Model.hpp"
+#include "Renderer/IRenderer.hpp"
+#include "Renderer/Buffers/UniformBuffer.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Models/Model.hpp"
 #include "Shadows.hpp"
 
 namespace Flounder

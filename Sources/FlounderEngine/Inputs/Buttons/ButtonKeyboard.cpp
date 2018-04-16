@@ -1,6 +1,6 @@
 #include "ButtonKeyboard.hpp"
 
-#include "../Keyboard.hpp"
+#include "Inputs/Keyboard.hpp"
 
 namespace Flounder
 {

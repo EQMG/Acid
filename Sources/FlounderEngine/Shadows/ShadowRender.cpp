@@ -1,7 +1,7 @@
 #include "ShadowRender.hpp"
 
-#include "../Meshes/Mesh.hpp"
-#include "../Worlds/Worlds.hpp"
+#include "Meshes/Mesh.hpp"
+#include "Worlds/Worlds.hpp"
 #include "UbosShadows.hpp"
 
 namespace Flounder

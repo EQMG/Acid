@@ -1,6 +1,8 @@
 #pragma once
 
-#include "../Models/Shapes/MeshSimple.hpp"
+#include "Models/Shapes/MeshSimple.hpp"
+#include "Maths/Maths.hpp"
+#include "Maths/Colour.hpp"
 
 namespace Flounder
 {
@@ -12,6 +14,10 @@ namespace Flounder
 		Transform *m_transform;
 		Matrix4 *m_worldMatrix;
 	public:
+		static const int SIDE_LENGTH;
+		static const std::vector<float> SQUARE_SIZES;
+		static const std::vector<float> TEXTURE_SCALES;
+
 		MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, const float &radius, Transform *transform);
 
 		~MeshTerrain();

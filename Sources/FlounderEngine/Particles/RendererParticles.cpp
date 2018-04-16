@@ -1,6 +1,6 @@
 #include "RendererParticles.hpp"
 
-#include "../Maths/Maths.hpp"
+#include "Maths/Maths.hpp"
 #include "UbosParticles.hpp"
 
 namespace Flounder

@@ -1,8 +1,8 @@
 ﻿#include "Pipeline.hpp"
 
-#include "../../Helpers/FileSystem.hpp"
-#include "../../Helpers/FormatString.hpp"
-#include "../Renderer.hpp"
+#include "Helpers/FileSystem.hpp"
+#include "Helpers/FormatString.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace Flounder
 {

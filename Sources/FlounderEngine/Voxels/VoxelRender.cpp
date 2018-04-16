@@ -1,7 +1,7 @@
 #include "VoxelRender.hpp"
 
-#include "../Meshes/Mesh.hpp"
-#include "../Worlds/Worlds.hpp"
+#include "Meshes/Mesh.hpp"
+#include "Worlds/Worlds.hpp"
 #include "UbosVoxels.hpp"
 
 namespace Flounder

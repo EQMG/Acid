@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "../Objects/Component.hpp"
-#include "../Objects/GameObject.hpp"
+#include "Scenes/Objects/Component.hpp"
+#include "Scenes/Objects/GameObject.hpp"
 
 namespace Flounder
 {

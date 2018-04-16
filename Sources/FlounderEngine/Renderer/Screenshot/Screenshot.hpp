@@ -2,7 +2,7 @@
 
 #include <string>
 #include <STB/stb_image_write.h>
-#include "../../Display/Display.hpp"
+#include "Display/Display.hpp"
 
 namespace Flounder
 {

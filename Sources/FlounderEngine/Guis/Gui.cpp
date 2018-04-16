@@ -1,6 +1,6 @@
 ﻿#include "Gui.hpp"
 
-#include "../Models/Shapes/ShapeRectangle.hpp"
+#include "Models/Shapes/ShapeRectangle.hpp"
 #include "UbosGuis.hpp"
 
 namespace Flounder

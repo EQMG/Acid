@@ -2,7 +2,7 @@
 
 #include <string>
 #include <unordered_map>
-#include "../../Display/Display.hpp"
+#include "Display/Display.hpp"
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"
 

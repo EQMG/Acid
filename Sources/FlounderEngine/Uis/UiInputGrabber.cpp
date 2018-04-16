@@ -1,10 +1,10 @@
 ﻿#include "UiInputGrabber.hpp"
 
-#include "../Inputs/Mouse.hpp"
-#include "../Inputs/Keyboard.hpp"
-#include "../Inputs/Joysticks.hpp"
-#include "../Scenes/Scenes.hpp"
-#include "../Maths/Visual/DriverSlide.hpp"
+#include "Inputs/Mouse.hpp"
+#include "Inputs/Keyboard.hpp"
+#include "Inputs/Joysticks.hpp"
+#include "Scenes/Scenes.hpp"
+#include "Maths/Visual/DriverSlide.hpp"
 
 namespace Flounder
 {

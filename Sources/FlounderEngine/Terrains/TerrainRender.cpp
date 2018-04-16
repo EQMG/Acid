@@ -1,19 +1,11 @@
 ﻿#include "TerrainRender.hpp"
 
-#include "../Meshes/Mesh.hpp"
-#include "../Worlds/Worlds.hpp"
+#include "Meshes/Mesh.hpp"
+#include "Worlds/Worlds.hpp"
 #include "UbosTerrains.hpp"
 
 namespace Flounder
 {
-	const int TerrainRender::SIDE_LENGTH = 200;
-	const std::vector<float> TerrainRender::SQUARE_SIZES = {
-		4.0f, 8.0f, 25.0f, 50.0f, 100.0f
-	};
-	const std::vector<float> TerrainRender::TEXTURE_SCALES = {
-		10.0f, 5.0f, 2.0f, 1.0f, 0.5f
-	};
-
 	TerrainRender::TerrainRender() :
 		Component(),
 		m_uniformObject(new UniformBuffer(sizeof(UbosTerrains::UboObject))),

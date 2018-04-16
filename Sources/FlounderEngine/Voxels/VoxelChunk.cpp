@@ -1,6 +1,6 @@
 #include "VoxelChunk.hpp"
 
-#include "../Worlds/Worlds.hpp"
+#include "Worlds/Worlds.hpp"
 
 namespace Flounder
 {

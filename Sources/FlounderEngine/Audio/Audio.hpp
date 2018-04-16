@@ -8,7 +8,7 @@
 #include <AL/alc.h>
 #endif
 #include <STB/stb_vorbis.h>
-#include "../Engine/Engine.hpp"
+#include "Engine/Engine.hpp"
 
 namespace Flounder
 {

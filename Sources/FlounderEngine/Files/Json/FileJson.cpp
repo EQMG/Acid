@@ -1,7 +1,7 @@
 #include "FileJson.hpp"
 
-#include "../../Engine/Engine.hpp"
-#include "../../Helpers/FileSystem.hpp"
+#include "Engine/Engine.hpp"
+#include "Helpers/FileSystem.hpp"
 
 namespace Flounder
 {

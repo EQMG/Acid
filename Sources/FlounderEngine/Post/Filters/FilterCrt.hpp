@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../Maths/Colour.hpp"
-#include "../../Renderer/Buffers/UniformBuffer.hpp"
-#include "../IPostFilter.hpp"
+#include "Maths/Colour.hpp"
+#include "Renderer/Buffers/UniformBuffer.hpp"
+#include "Post/IPostFilter.hpp"
 
 namespace Flounder
 {

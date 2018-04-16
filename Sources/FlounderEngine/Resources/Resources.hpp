@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "../Engine/Engine.hpp"
+#include "Engine/Engine.hpp"
 #include "IResource.hpp"
 
 namespace Flounder

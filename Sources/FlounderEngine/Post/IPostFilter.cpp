@@ -1,6 +1,6 @@
-#include "IPostFilter.hpp"
+#include "Post/IPostFilter.hpp"
 
-#include "../Models/Shapes/ShapeRectangle.hpp"
+#include "Models/Shapes/ShapeRectangle.hpp"
 
 namespace Flounder
 {

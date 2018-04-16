@@ -1,9 +1,9 @@
 ﻿#include "UiStartLogo.hpp"
 
-#include "../Events/Events.hpp"
-#include "../Events/EventTime.hpp"
-#include "../Maths/Visual/DriverConstant.hpp"
-#include "../Maths/Visual/DriverSlide.hpp"
+#include "Events/Events.hpp"
+#include "Events/EventTime.hpp"
+#include "Maths/Visual/DriverConstant.hpp"
+#include "Maths/Visual/DriverSlide.hpp"
 
 namespace Flounder
 {

@@ -1,7 +1,8 @@
 #include "RendererWaters.hpp"
 
-#include "../Scenes/Scenes.hpp"
-#include "../Models/Model.hpp"
+#include "Scenes/Scenes.hpp"
+#include "Models/Model.hpp"
+#include "WaterRender.hpp"
 #include "UbosWaters.hpp"
 
 namespace Flounder

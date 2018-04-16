@@ -1,11 +1,23 @@
 #pragma once
 
-#include "../Prerequisites.hpp"
+#include "Exports.hpp"
 
 namespace Flounder
 {
 	/// <summary>
-	/// A simple interface used for defining engine modules.
+	/// Represents when a module will update in the game loop.
+	/// </summary>
+	enum ModuleUpdate
+	{
+		UpdateAlways = 0,
+		UpdatePre = 1,
+		UpdateNormal = 2,
+		UpdatePost = 3,
+		UpdateRender = 4
+	};
+
+	/// <summary>
+	/// A interface used for defining engine modules.
 	/// </summary>
 	class F_EXPORT IModule
 	{

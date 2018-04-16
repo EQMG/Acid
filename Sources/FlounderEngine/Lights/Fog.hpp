@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Prerequisites.hpp"
-#include "../Maths/Colour.hpp"
+#include "Engine/Exports.hpp"
+#include "Maths/Colour.hpp"
 
 namespace Flounder
 {

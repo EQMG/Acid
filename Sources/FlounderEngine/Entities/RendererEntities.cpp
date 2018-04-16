@@ -1,8 +1,8 @@
 ﻿#include "RendererEntities.hpp"
 
-#include "../Renderer/Renderer.hpp"
-#include "../Models/Model.hpp"
-#include "../Scenes/Scenes.hpp"
+#include "Renderer/Renderer.hpp"
+#include "Models/Model.hpp"
+#include "Scenes/Scenes.hpp"
 #include "UbosEntities.hpp"
 #include "EntityRender.hpp"
 
