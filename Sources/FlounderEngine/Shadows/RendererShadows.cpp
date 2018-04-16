@@ -1,6 +1,6 @@
 #include "RendererShadows.hpp"
 
-#include "../Scenes/Scenes.hpp"
+#include "Scenes/Scenes.hpp"
 #include "ShadowRender.hpp"
 #include "UbosShadows.hpp"
 

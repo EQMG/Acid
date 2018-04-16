@@ -1,7 +1,7 @@
 ﻿#include "Rigidbody.hpp"
 
-#include "../Models/Model.hpp"
-#include "../Scenes/Scenes.hpp"
+#include "Models/Model.hpp"
+#include "Scenes/Scenes.hpp"
 #include "ColliderSphere.hpp"
 
 namespace Flounder

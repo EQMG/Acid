@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 #include <vector>
-#include "../Objects/Component.hpp"
-#include "../Objects/GameObject.hpp"
-#include "../Renderer/Buffers/UniformBuffer.hpp"
-#include "../Renderer/Pipelines/Pipeline.hpp"
+#include "Scenes/Objects/Component.hpp"
+#include "Scenes/Objects/GameObject.hpp"
+#include "Renderer/Buffers/UniformBuffer.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace Flounder
 {
@@ -15,10 +15,6 @@ namespace Flounder
 		UniformBuffer *m_uniformObject;
 		DescriptorSet *m_descriptorSet;
 	public:
-		static const int SIDE_LENGTH;
-		static const std::vector<float> SQUARE_SIZES;
-		static const std::vector<float> TEXTURE_SCALES;
-
 		TerrainRender();
 
 		~TerrainRender();

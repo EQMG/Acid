@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../Engine/Engine.hpp"
-#include "../Maths/Vector3.hpp"
-#include "../Maths/Visual/DriverLinear.hpp"
-#include "../Maths/Noise/NoiseFast.hpp"
-#include "../Lights/Fog.hpp"
+#include "Engine/Engine.hpp"
+#include "Maths/Vector3.hpp"
+#include "Maths/Visual/DriverLinear.hpp"
+#include "Maths/Noise/NoiseFast.hpp"
+#include "Lights/Fog.hpp"
 
 namespace Flounder
 {
@@ -28,7 +28,7 @@ namespace Flounder
 
 		static const Colour *SKYBOX_COLOUR_DAY;
 
-		NoiseFast *m_noise;
+		NoiseFast *m_noiseTerrain;
 
 		DriverLinear *m_driverDay;
 		float m_factorDay;
@@ -73,7 +73,9 @@ namespace Flounder
 
 		float GetStarIntensity() const;
 
-		NoiseFast *GetNoise() const { return m_noise; }
+		float GetTerrainRadius(const float &radius, const float &theta, const float &phi);
+
+		NoiseFast *GetNoiseTerrain() const { return m_noiseTerrain; }
 
 		Vector3 *GetSkyboxRotation() const { return m_skyboxRotation; }
 

@@ -1,7 +1,7 @@
 ﻿#include "UiInputSlider.hpp"
 
-#include "../Scenes/Scenes.hpp"
-#include "../Maths/Visual/DriverSlide.hpp"
+#include "Scenes/Scenes.hpp"
+#include "Maths/Visual/DriverSlide.hpp"
 
 namespace Flounder
 {

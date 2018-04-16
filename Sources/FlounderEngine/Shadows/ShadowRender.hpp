@@ -1,10 +1,10 @@
 #pragma once
 
 #include <vector>
-#include "../Objects/Component.hpp"
-#include "../Objects/GameObject.hpp"
-#include "../Renderer/Pipelines/Pipeline.hpp"
-#include "../Renderer/Buffers/UniformBuffer.hpp"
+#include "Scenes/Objects/Component.hpp"
+#include "Scenes/Objects/GameObject.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {

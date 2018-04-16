@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "../../Display/Display.hpp"
+#include "Display/Display.hpp"
 
 namespace Flounder
 {

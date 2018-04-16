@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../Objects/Behaviour.hpp"
-#include "../Objects/GameObject.hpp"
-#include "../Models/Model.hpp"
+#include "Scenes/Objects/Behaviour.hpp"
+#include "Scenes/Objects/GameObject.hpp"
+#include "Models/Model.hpp"
 
 namespace Flounder
 {

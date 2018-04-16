@@ -1,6 +1,6 @@
 #include "ShapeSphere.hpp"
 
-#include "../../Maths/Maths.hpp"
+#include "Maths/Maths.hpp"
 
 namespace Flounder
 {

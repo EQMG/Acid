@@ -2,8 +2,8 @@
 
 #include <ostream>
 #include <string>
-#include "../Prerequisites.hpp"
-#include "../Files/LoadedValue.hpp"
+#include "Engine/Exports.hpp"
+#include "Files/LoadedValue.hpp"
 #include "Vector2.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"

@@ -1,10 +1,10 @@
 ﻿#pragma once
 
-#include "../Maths/Colour.hpp"
-#include "../Objects/Component.hpp"
-#include "../Objects/GameObject.hpp"
-#include "../Renderer/Buffers/UniformBuffer.hpp"
-#include "../Renderer/Pipelines/Pipeline.hpp"
+#include "Maths/Colour.hpp"
+#include "Scenes/Objects/Component.hpp"
+#include "Scenes/Objects/GameObject.hpp"
+#include "Renderer/Buffers/UniformBuffer.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace Flounder
 {
@@ -20,13 +20,6 @@ namespace Flounder
 
 		Colour *m_colour;
 	public:
-		static const float SIDE_LENGTH;
-		static const float SQUARE_SIZE;
-		static const int VERTEX_COUNT;
-		static const float TEXTURE_SCALE;
-
-		static const Colour WATER_COLOUR;
-
 		WaterRender();
 
 		~WaterRender();

@@ -1,6 +1,6 @@
 #include "Model.hpp"
 
-#include "../Helpers/FileSystem.hpp"
+#include "Helpers/FileSystem.hpp"
 
 namespace Flounder
 {

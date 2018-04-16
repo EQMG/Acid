@@ -1,9 +1,8 @@
 ﻿#include "RendererVoxels.hpp"
 
-#include "../Display/Display.hpp"
-#include "../Renderer/Renderer.hpp"
-#include "../Models/Model.hpp"
-#include "../Scenes/Scenes.hpp"
+#include "Renderer/Renderer.hpp"
+#include "Models/Model.hpp"
+#include "Scenes/Scenes.hpp"
 #include "UbosVoxels.hpp"
 #include "VoxelRender.hpp"
 

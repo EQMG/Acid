@@ -1,9 +1,18 @@
 #include "DepthStencil.hpp"
 
-#include "../Buffers/Buffer.hpp"
+#include "Renderer/Buffers/Buffer.hpp"
 
 namespace Flounder
 {
+	std::vector<VkFormat> TRY_FORMATS =
+	{
+		VK_FORMAT_D32_SFLOAT_S8_UINT,
+		VK_FORMAT_D24_UNORM_S8_UINT,
+		VK_FORMAT_D16_UNORM_S8_UINT,
+		VK_FORMAT_D32_SFLOAT,
+		VK_FORMAT_D16_UNORM
+	};
+
 	DepthStencil::DepthStencil(const VkExtent3D &extent) :
 		Descriptor(),
 		m_image(VK_NULL_HANDLE),
@@ -16,16 +25,7 @@ namespace Flounder
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
-		std::vector<VkFormat> tryFormats =
-			{
-				VK_FORMAT_D32_SFLOAT_S8_UINT,
-				VK_FORMAT_D24_UNORM_S8_UINT,
-				VK_FORMAT_D16_UNORM_S8_UINT,
-				VK_FORMAT_D32_SFLOAT,
-				VK_FORMAT_D16_UNORM
-			};
-
-		for (auto format : tryFormats)
+		for (auto format : TRY_FORMATS)
 		{
 			VkFormatProperties formatProperties = {};
 
@@ -49,7 +49,7 @@ namespace Flounder
 
 		if (m_format == VK_FORMAT_UNDEFINED)
 		{
-			assert(false && "Vulkan runtime error, depth stencil format not selected!");
+			throw std::runtime_error("Vulkan runtime error, depth stencil format not selected!");
 		}
 
 		VkImageCreateInfo imageCreateInfo = {};

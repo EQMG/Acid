@@ -1,8 +1,8 @@
 #include "MeshRender.hpp"
 
-#include "../Meshes/Mesh.hpp"
-#include "../Meshes/Animations/MeshAnimated.hpp"
-#include "../Materials/MaterialDefault.hpp"
+#include "Meshes/Mesh.hpp"
+#include "Animations/MeshAnimated.hpp"
+#include "Materials/MaterialDefault.hpp"
 
 namespace Flounder
 {

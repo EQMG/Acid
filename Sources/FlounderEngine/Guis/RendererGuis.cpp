@@ -1,7 +1,7 @@
 #include "RendererGuis.hpp"
 
-#include "../Models/VertexModel.hpp"
-#include "../Uis/Uis.hpp"
+#include "Models/VertexModel.hpp"
+#include "Uis/Uis.hpp"
 #include "Gui.hpp"
 
 namespace Flounder

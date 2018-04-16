@@ -3,7 +3,7 @@
 #ifdef FLOUNDER_PLATFORM_WINDOWS
 #include <Windows.h>
 #endif
-#include "../Textures/Texture.hpp"
+#include "Textures/Texture.hpp"
 
 namespace Flounder
 {

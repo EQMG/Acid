@@ -2,10 +2,10 @@
 
 #include <vector>
 #include <functional>
-#include "../Maths/Vector2.hpp"
-#include "../Maths/Vector3.hpp"
-#include "../Maths/Vector4.hpp"
-#include "../Maths/Visual/IDriver.hpp"
+#include "Maths/Vector2.hpp"
+#include "Maths/Vector3.hpp"
+#include "Maths/Vector4.hpp"
+#include "Maths/Visual/IDriver.hpp"
 #include "UiBound.hpp"
 
 namespace Flounder

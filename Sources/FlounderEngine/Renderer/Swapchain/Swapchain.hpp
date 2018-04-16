@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include <vector>
-#include "../../Textures/Texture.hpp"
-#include "../Renderpass/RenderpassCreate.hpp"
+#include "Textures/Texture.hpp"
+#include "Renderer/Renderpass/RenderpassCreate.hpp"
 
 namespace Flounder
 {

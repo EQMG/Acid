@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include "../Prerequisites.hpp"
-#include "../Files/LoadedValue.hpp"
+#include "Engine/Exports.hpp"
+#include "Files/LoadedValue.hpp"
 
 namespace Flounder
 {

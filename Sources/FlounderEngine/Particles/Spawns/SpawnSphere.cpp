@@ -1,7 +1,7 @@
 ﻿#include "SpawnSphere.hpp"
 
-#include "../../Maths/Maths.hpp"
-#include "../../Maths/Vector2.hpp"
+#include "Maths/Maths.hpp"
+#include "Maths/Vector2.hpp"
 
 namespace Flounder
 {

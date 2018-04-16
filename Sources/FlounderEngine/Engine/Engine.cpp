@@ -1,10 +1,8 @@
 #include "Engine.hpp"
 
-#include <stdexcept>
-
 namespace Flounder
 {
-	Engine *Engine::g_instance = nullptr;
+	Engine *Engine::G_INSTANCE = nullptr;
 
 	Engine::Engine() :
 		m_start(HighResolutionClock::now()),
@@ -12,20 +10,17 @@ namespace Flounder
 		m_initialized(false),
 		m_running(true),
 		m_error(false),
-		m_updater(nullptr)
+		m_moduleRegister(nullptr)
 	{
-		g_instance = this;
+		G_INSTANCE = this;
+
+		m_moduleRegister = static_cast<ModuleRegister *>(malloc(sizeof(ModuleRegister)));
+		new(m_moduleRegister) ModuleRegister();
 	}
 
 	Engine::~Engine()
 	{
-		delete m_updater;
-	}
-
-	void Engine::SetUpdater(IUpdater *updater)
-	{
-		m_updater = updater;
-		m_updater->Create();
+		delete m_moduleRegister;
 	}
 
 	int Engine::Run() const
@@ -34,7 +29,7 @@ namespace Flounder
 		{
 			while (m_running)
 			{
-				m_updater->Update();
+				m_moduleRegister->Update();
 			}
 
 			return EXIT_SUCCESS;

@@ -4,6 +4,7 @@ namespace Flounder
 {
 	Scenes::Scenes() :
 		IModule(),
+		m_componentRegister(new ComponentRegister()),
 		m_scene(nullptr)
 	{
 	}
@@ -11,6 +12,7 @@ namespace Flounder
 	Scenes::~Scenes()
 	{
 		delete m_scene;
+		delete m_componentRegister;
 	}
 
 	void Scenes::Update()

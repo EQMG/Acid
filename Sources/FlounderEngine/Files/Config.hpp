@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 #include <functional>
-#include "../Tasks/Tasks.hpp"
+#include "Tasks/Tasks.hpp"
 #include "IFile.hpp"
 #include "ConfigKey.hpp"
 
@@ -15,6 +15,7 @@ namespace Flounder
 		IFile *m_file;
 		std::map<std::string, ConfigKey> *m_values;
 	public:
+		// TODO: Clean up defines.
 #define CONFIG_GET(f) (new std::function<std::string()>([&]() -> std::string { return std::to_string(f); }))
 #define CONFIG_GET_STR(f) (new std::function<std::string()>([&]() -> std::string { return f; }))
 #define CONFIG_SET(t, f) (new std::function<void(t)>([&](const t &v) -> void { f; }))

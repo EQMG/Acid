@@ -2,11 +2,11 @@
 
 #include <string>
 #include <vector>
-#include "../Maths/Vector2.hpp"
-#include "../Physics/ColliderAabb.hpp"
-#include "../Resources/Resources.hpp"
-#include "../Renderer/Buffers/VertexBuffer.hpp"
-#include "../Renderer/Buffers/IndexBuffer.hpp"
+#include "Maths/Vector2.hpp"
+#include "Physics/ColliderAabb.hpp"
+#include "Resources/Resources.hpp"
+#include "Renderer/Buffers/VertexBuffer.hpp"
+#include "Renderer/Buffers/IndexBuffer.hpp"
 #include "VertexModel.hpp"
 #include "VertexModelData.hpp"
 

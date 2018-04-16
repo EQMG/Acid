@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Engine/Engine.hpp"
-#include "../Display/Display.hpp"
+#include "Engine/Engine.hpp"
+#include "Display/Display.hpp"
 #include "Swapchain/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
 #include "RenderStage.hpp"

@@ -1,6 +1,6 @@
 ﻿#include "ParticleSystem.hpp"
 
-#include "../Maths/Maths.hpp"
+#include "Maths/Maths.hpp"
 #include "Particles.hpp"
 
 namespace Flounder

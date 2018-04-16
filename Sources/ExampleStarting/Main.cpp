@@ -1,12 +1,10 @@
 #include <iostream>
 #include <Inputs/Mouse.hpp>
-#include <Engine/DefaultUpdater.hpp>
 #include <Files/Json/FileJson.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Skyboxes/SkyboxRender.hpp>
 #include <Scenes/Scenes.hpp>
-#include <Objects/ComponentRegister.hpp>
 #include <Terrains/LodBehaviour.hpp>
 #include "Scenes/FpsPlayer.hpp"
 #include "Configs/ConfigManager.hpp"
@@ -22,35 +20,31 @@ int main(int argc, char **argv)
 //#endif
 {
 	// Creates the engine object.
-	auto m_engine = new Engine();
-	m_engine->SetUpdater(new DefaultUpdater());
+	auto engine = new Engine();
 
 	auto configManager = new ConfigManager();
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
-	// Adds to the component registry.
-	ComponentRegister::Register("FpsPlayer", REGISTER_CREATE(FpsPlayer));
-	ComponentRegister::Register("LodBehaviour", REGISTER_CREATE(LodBehaviour));
-
 	// Registers modules.
+//	Engine::Get()->RegisterModule<Example>("Example");
 
+	// Registers components.
+	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
+	Scenes::Get()->RegisterComponent<LodBehaviour>("LodBehaviour");
 
-	// Initializes the engine modules.
+	// Initializes modules.
 	Display::Get()->SetTitle("Example Starting");
 	Display::Get()->SetIcon("Resources/Logos/Tail.png");
-
 	Mouse::Get()->SetCustomMouse("Resources/Guis/Cursor.png");
-
 	Renderer::Get()->SetManager(new ManagerRender());
-
 	Scenes::Get()->SetScene(new Scene1());
 
-	// Runs the engine loop.
-	const int exitCode = m_engine->Run();
+	// Runs the game loop.
+	const int exitCode = engine->Run();
 
 	// Deletes the engine.
 	delete configManager;
-	delete m_engine;
+	delete engine;
 
 	// Pauses the console.
 	std::cin.get();
