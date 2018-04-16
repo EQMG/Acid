@@ -12,18 +12,6 @@
 
 namespace Flounder
 {
-	struct F_HIDDEN SoundSourceInfo
-	{
-		unsigned int m_size;
-		unsigned char *m_data;
-		short m_formatTag;
-		short m_channels;
-		int m_samplesPerSec;
-		int m_averageBytesPerSec;
-		short m_blockAlign;
-		short m_bitsPerSample;
-	};
-
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.
 	/// </summary>
@@ -60,7 +48,5 @@ namespace Flounder
 		static ALuint LoadFileWav(const std::string &filename);
 
 		static ALuint LoadFileOgg(const std::string &filename);
-
-		static void LogOpenAlSound(const std::string &path, const SoundSourceInfo &sourceInfo);
 	};
 }

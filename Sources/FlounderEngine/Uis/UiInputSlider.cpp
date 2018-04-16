@@ -12,12 +12,9 @@ namespace Flounder
 
 	UiInputSlider::UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const FontJustify &justify) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(nullptr),
-		//new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), string, Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
-		m_background(nullptr),
-		//new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("Resources/Guis/Button.png"), 1)),
-		m_slider(nullptr),
-		//new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("Resources/Guis/Button.png"), 1)),
+		m_text(nullptr), //new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), string, Uis::Get()->m_candara->GetRegular(), justify, 0.36f)),
+		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("Resources/Guis/Button.png"), 1)),
+		m_slider(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), new Texture("Resources/Guis/Button.png"), 1)),
 		m_updating(false),
 		m_progressMin(progressMin),
 		m_progressMax(progressMax),

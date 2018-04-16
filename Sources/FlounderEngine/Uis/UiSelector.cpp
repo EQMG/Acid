@@ -77,8 +77,7 @@ namespace Flounder
 
 		if (Mouse::Get()->IsDisplaySelected() && Display::Get()->IsFocused())
 		{
-			if (m_cursorX >= positionX && m_cursorX <= positionX + width
-				&& 1.0f - m_cursorY >= positionY - height && 1.0f - m_cursorY <= positionY)
+			if (m_cursorX >= positionX && m_cursorX <= positionX + width && 1.0f - m_cursorY >= positionY - height && 1.0f - m_cursorY <= positionY)
 			{
 				return true;
 			}
