@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include "ModuleRegister.hpp"
+#include "IUpdater.hpp"
 
 /// <summary>
 /// The base Flounder folder.
@@ -24,11 +25,14 @@ namespace Flounder
 		std::chrono::time_point<HighResolutionClock> m_start;
 		float m_timeOffset;
 
+		ModuleRegister *m_moduleRegister;
+
+		IUpdater *m_updater;
+		float m_fpsLimit;
+
 		bool m_initialized;
 		bool m_running;
 		bool m_error;
-
-		ModuleRegister *m_moduleRegister;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -56,13 +60,25 @@ namespace Flounder
 		int Run() const;
 
 		/// <summary>
+		/// Loads the updater into the engine.
+		/// </summary>
+		/// <param name="updater"> The updater. </param>
+		void SetUpdater(IUpdater *updater) { m_updater = updater; }
+
+		/// <summary>
 		/// Registers a module with the register.
 		/// </summary>
 		/// <param name="update"> The modules update type. </param>
 		/// <param name="name"> The modules name. </param>
 		/// <param name="T"> The modules type. </param>
 		template<typename T>
-		void RegisterModule(const ModuleUpdate &update, const std::string &name) { m_moduleRegister->RegisterModule<T> (update, name); }
+		void RegisterModule(const ModuleUpdate &update, const std::string &name) { m_moduleRegister->RegisterModule<T>(update, name); }
+
+		/// <summary>
+		/// Deregisters a module.
+		/// </summary>
+		/// <param name="name"> The modules name. </param>
+		void DeregisterModule(const std::string &name) { m_moduleRegister->DeregisterModule(name); }
 
 		/// <summary>
 		/// Gets a module instance by name.
@@ -84,16 +100,28 @@ namespace Flounder
 		void SetTimeOffset(const float &timeOffset) { m_timeOffset = timeOffset; }
 
 		/// <summary>
+		/// Gets the fps limit.
+		/// </summary>
+		/// <returns> The fps limit. </returns>
+		float GetFpsLimit() const { return m_fpsLimit; }
+
+		/// <summary>
+		/// Sets the fps limit. -1 disables limits.
+		/// </summary>
+		/// <param name="fpsLimit"> The new fps limit. </param>
+		void SetFpsLimit(const float &fpsLimit) { m_fpsLimit = fpsLimit; }
+
+		/// <summary>
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		float GetDelta() const { return m_moduleRegister->GetDelta(); }
+		float GetDelta() { return m_updater->GetDelta(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		float GetDeltaRender() const { return m_moduleRegister->GetDeltaRender(); }
+		float GetDeltaRender() { return m_updater->GetDeltaRender(); }
 
 		/// <summary>
 		/// Gets the current time of the engine instance.

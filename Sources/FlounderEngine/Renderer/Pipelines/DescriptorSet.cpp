@@ -60,22 +60,23 @@ namespace Flounder
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}
 
-	void DescriptorSet::UpdateMap(const std::unordered_map<std::string, Descriptor *> &descriptorMap)
+	void DescriptorSet::UpdateMap(const std::map<std::string, Descriptor *> &descriptorMap)
 	{
-		std::vector<Descriptor *> descriptors = {};
+		std::vector<Descriptor *> descriptors = std::vector<Descriptor *>(descriptorMap.size());
 
 		for (auto pair : descriptorMap)
 		{
-			if (m_shaderProgram->IsDescriptorDefined(pair.first))
+			int location = m_shaderProgram->GetDescriptorLocation(pair.first);
+
+			if (location == -1)
 			{
-				descriptors.push_back(pair.second);
+				continue;
 			}
-			//	else
-			//	{
-			//		descriptors.push_back(nullptr);
-			//	}
+
+			descriptors.at(location) = pair.second;
 		}
 
+		descriptors.shrink_to_fit();
 		Update(descriptors);
 	}
 

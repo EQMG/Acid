@@ -1,5 +1,7 @@
 #include "Engine.hpp"
 
+#include "Maths/Maths.hpp"
+
 namespace Flounder
 {
 	Engine *Engine::G_INSTANCE = nullptr;
@@ -7,10 +9,11 @@ namespace Flounder
 	Engine::Engine() :
 		m_start(HighResolutionClock::now()),
 		m_timeOffset(0.0f),
+		m_moduleRegister(nullptr),
+		m_fpsLimit(-1.0f),
 		m_initialized(false),
 		m_running(true),
-		m_error(false),
-		m_moduleRegister(nullptr)
+		m_error(false)
 	{
 		G_INSTANCE = this;
 
@@ -29,7 +32,7 @@ namespace Flounder
 		{
 			while (m_running)
 			{
-				m_moduleRegister->Update();
+				m_updater->Update(m_moduleRegister);
 			}
 
 			return EXIT_SUCCESS;

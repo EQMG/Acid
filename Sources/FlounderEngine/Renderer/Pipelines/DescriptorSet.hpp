@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
+#include <map>
 #include "Display/Display.hpp"
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"
@@ -28,7 +28,7 @@ namespace Flounder
 
 		void Update(const std::vector<Descriptor *> &descriptors);
 
-		void UpdateMap(const std::unordered_map<std::string, Descriptor *> &descriptorMap);
+		void UpdateMap(const std::map<std::string, Descriptor *> &descriptorMap);
 
 		void BindDescriptor(const VkCommandBuffer &commandBuffer);
 

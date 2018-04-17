@@ -10,9 +10,9 @@ namespace Flounder
 	class F_EXPORT ComponentRegister
 	{
 	private:
-		typedef std::function<Component * ()> ComponentCreate;
+		typedef std::function<Component *()> ComponentCreate;
 
-		std::map<std::string, ComponentCreate*> *m_components;
+		std::map<std::string, ComponentCreate *> *m_components;
 	public:
 		/// <summary>
 		/// Creates a new component register.
@@ -39,8 +39,15 @@ namespace Flounder
 				return;
 			}
 
-			m_components->insert(std::make_pair(name, new ComponentCreate([]() -> Component* { return static_cast<Component*>(new T()); })));
+			m_components->insert(std::make_pair(name, new ComponentCreate([]() -> Component *
+			{ return static_cast<Component *>(new T()); })));
 		}
+
+		/// <summary>
+		/// Deregisters a component.
+		/// </summary>
+		/// <param name="name"> The components name. </param>
+		void DeregisterComponent(const std::string &name);
 
 		/// <summary>
 		/// Gets a component create object from the register.

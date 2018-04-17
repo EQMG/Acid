@@ -2,8 +2,11 @@
 
 #include <cassert>
 #include <algorithm>
+
 #ifdef FLOUNDER_PLATFORM_WINDOWS
+
 #include <direct.h>
+
 #define GetCurrentDir _getcwd
 #else
 #include <sys/stat.h>

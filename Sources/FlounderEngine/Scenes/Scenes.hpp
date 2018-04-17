@@ -49,6 +49,12 @@ namespace Flounder
 		void RegisterComponent(const std::string &name) { m_componentRegister->RegisterComponent<T>(name); }
 
 		/// <summary>
+		/// Deregisters a component.
+		/// </summary>
+		/// <param name="name"> The components name. </param>
+		void DeregisterComponent(const std::string &name) { m_componentRegister->DeregisterComponent(name); }
+
+		/// <summary>
 		/// Creates a new component from the register.
 		/// </summary>
 		/// <param name="name"> The component name to create. </param>

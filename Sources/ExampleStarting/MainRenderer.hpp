@@ -1,26 +1,26 @@
 #pragma once
 
-#include <Shadows/RendererShadows.hpp>
-#include <Skyboxes/RendererSkyboxes.hpp>
-#include <Renderer/IManagerRender.hpp>
-#include <Terrains/RendererTerrains.hpp>
-#include <Waters/RendererWaters.hpp>
 #include <Entities/RendererEntities.hpp>
-#include <Post/Deferred/RendererDeferred.hpp>
-#include <Post/Filters/FilterFxaa.hpp>
-#include <Post/Filters/FilterTiltshift.hpp>
-#include <Post/Filters/FilterLensflare.hpp>
-#include <Post/Filters/FilterGrain.hpp>
 #include <Fonts/RendererFonts.hpp>
 #include <Guis/RendererGuis.hpp>
 #include <Particles/RendererParticles.hpp>
+#include <Post/Deferred/RendererDeferred.hpp>
+#include <Post/Filters/FilterFxaa.hpp>
+#include <Post/Filters/FilterGrain.hpp>
+#include <Post/Filters/FilterLensflare.hpp>
+#include <Post/Filters/FilterTiltshift.hpp>
+#include <Renderer/IManagerRender.hpp>
+#include <Shadows/RendererShadows.hpp>
+#include <Skyboxes/RendererSkyboxes.hpp>
+#include <Terrains/RendererTerrains.hpp>
 #include <Voxels/RendererVoxels.hpp>
+#include <Waters/RendererWaters.hpp>
 
 using namespace Flounder;
 
 namespace Demo
 {
-	class ManagerRender :
+	class MainRenderer :
 		public IManagerRender
 	{
 	private:
@@ -43,9 +43,9 @@ namespace Demo
 		RendererGuis *m_rendererGuis;
 		RendererFonts *m_rendererFonts;
 	public:
-		ManagerRender();
+		MainRenderer();
 
-		~ManagerRender();
+		~MainRenderer();
 
 		void Render() override;
 

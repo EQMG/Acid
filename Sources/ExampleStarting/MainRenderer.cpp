@@ -1,4 +1,4 @@
-#include "ManagerRender.hpp"
+#include "MainRenderer.hpp"
 
 #include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
@@ -32,7 +32,7 @@ namespace Demo
 			} // subpasses
 		};
 
-	ManagerRender::ManagerRender() :
+	MainRenderer::MainRenderer() :
 		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE}),
 		m_infinity(Vector4(0.0f, 1.0f, 0.0f, +INFINITY)),
 		m_rendererShadows(new RendererShadows({0, 0})),
@@ -52,7 +52,7 @@ namespace Demo
 	{
 	}
 
-	ManagerRender::~ManagerRender()
+	MainRenderer::~MainRenderer()
 	{
 		delete m_rendererShadows;
 
@@ -72,13 +72,13 @@ namespace Demo
 		delete m_rendererFonts;
 	}
 
-	void ManagerRender::Render()
+	void MainRenderer::Render()
 	{
 		RenderPass0();
 		RenderPass1();
 	}
 
-	void ManagerRender::RenderPass0()
+	void MainRenderer::RenderPass0()
 	{
 		RENDERPASS_0_CREATE->m_width = Shadows::Get()->GetShadowSize();
 		RENDERPASS_0_CREATE->m_height = Shadows::Get()->GetShadowSize();
@@ -101,7 +101,7 @@ namespace Demo
 		Renderer::Get()->EndRenderpass(commandBuffer, 0);
 	}
 
-	void ManagerRender::RenderPass1()
+	void MainRenderer::RenderPass1()
 	{
 		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
 		const auto camera = Scenes::Get()->GetCamera();

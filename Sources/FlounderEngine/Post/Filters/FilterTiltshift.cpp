@@ -25,10 +25,10 @@ namespace Flounder
 			m_descriptorSet = new DescriptorSet(*m_pipeline);
 		}
 
-		m_descriptorSet->Update({
-			m_uniformScene,
-			m_pipeline->GetTexture(2),
-			m_pipeline->GetTexture(2)
+		m_descriptorSet->UpdateMap({
+			{"UboScene",      m_uniformScene},
+			{"writeColour",   m_pipeline->GetTexture(2)},
+			{"samplerColour", m_pipeline->GetTexture(2)}
 		});
 
 		// Updates uniforms.

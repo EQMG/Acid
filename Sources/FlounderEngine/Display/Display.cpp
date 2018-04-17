@@ -1,8 +1,11 @@
 #include "Display.hpp"
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
+
 #include <Windows.h>
+
 #endif
+
 #include "Textures/Texture.hpp"
 
 namespace Flounder
@@ -104,7 +107,6 @@ namespace Flounder
 		m_aspectRatio(1.5f),
 		m_title("Flounder Loading..."),
 		m_icon(""),
-		m_fpsLimit(-1.0f),
 		m_antialiasing(true),
 		m_fullscreen(false),
 		m_window(nullptr),
