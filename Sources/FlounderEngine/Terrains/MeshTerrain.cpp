@@ -23,22 +23,19 @@ namespace Flounder
 	MeshTerrain::MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, const float &radius, Transform *transform) :
 		MeshSimple(sideLength, squareSize, vertexCount, textureScale),
 		m_radius(radius),
-		m_transform(transform),
-		m_worldMatrix(new Matrix4())
+		m_transform(transform)
 	{
-		m_worldMatrix = m_transform->GetWorldMatrix(m_worldMatrix);
 		MeshSimple::GenerateMesh();
 	}
 
 	MeshTerrain::~MeshTerrain()
 	{
-		delete m_worldMatrix;
 	}
 
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
 	{
 		Vector4 cartesian = Vector4(x, 0.0f, z, 1.0f);
-		Matrix4::Multiply(*m_worldMatrix, cartesian, &cartesian);
+		Matrix4::Multiply(m_transform->GetWorldMatrix(), cartesian, &cartesian);
 		cartesian = Vector3::ProjectCubeToSphere(m_radius, cartesian);
 		Vector3 polar = Vector3::CartesianToPolar(cartesian);
 
