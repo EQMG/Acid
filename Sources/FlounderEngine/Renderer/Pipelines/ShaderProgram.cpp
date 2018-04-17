@@ -218,13 +218,13 @@ namespace Flounder
 		}
 	}
 
-	bool ShaderProgram::IsDescriptorDefined(const std::string &descriptor)
+	int ShaderProgram::GetDescriptorLocation(const std::string &descriptor)
 	{
 		for (auto uniform : *m_uniforms)
 		{
 			if (uniform->m_name == descriptor)
 			{
-				return true;
+				return uniform->m_binding;
 			}
 		}
 
@@ -232,11 +232,11 @@ namespace Flounder
 		{
 			if (uniformBlock->m_name == descriptor)
 			{
-				return true;
+				return uniformBlock->m_binding;
 			}
 		}
 
-		return false;
+		return -1;
 	}
 
 	std::string ShaderProgram::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
@@ -278,6 +278,19 @@ namespace Flounder
 				{
 					return uniform;
 				}
+			}
+		}
+
+		return nullptr;
+	}
+
+	VertexAttribute *ShaderProgram::GetVertexAttribute(const std::string &attributeName)
+	{
+		for (auto attribute : *m_vertexAttributes)
+		{
+			if (attribute->m_name == attributeName)
+			{
+				return attribute;
 			}
 		}
 

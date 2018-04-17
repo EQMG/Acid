@@ -22,6 +22,7 @@ set(FLOUNDERENGINE_HEADERS_
         "Engine/Engine.hpp"
         "Engine/Exports.hpp"
         "Engine/IModule.hpp"
+        "Engine/IUpdater.hpp"
         "Engine/ModuleRegister.hpp"
         "Entities/EntityRender.hpp"
         "Entities/RendererEntities.hpp"

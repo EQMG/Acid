@@ -71,9 +71,9 @@ namespace Flounder
 			m_descriptorSet = new DescriptorSet(pipeline);
 		}
 
-		m_descriptorSet->Update({
-			m_uniformObject,
-			m_fontType->GetTexture(),
+		m_descriptorSet->UpdateMap({
+			{"UboObject",     m_uniformObject},
+			{"samplerColour", m_fontType->GetTexture()}
 		});
 
 		// Updates uniforms.

@@ -28,7 +28,6 @@ namespace Flounder
 
 		std::string m_title;
 		std::string m_icon;
-		float m_fpsLimit;
 		bool m_antialiasing;
 		bool m_fullscreen;
 
@@ -158,18 +157,6 @@ namespace Flounder
 		/// </summary>
 		/// <param name="title"> The new icon file. </param>
 		void SetIcon(const std::string &icon);
-
-		/// <summary>
-		/// Gets the fps limit.
-		/// </summary>
-		/// <returns> The fps limit. </returns>
-		float GetFpsLimit() const { return m_fpsLimit; }
-
-		/// <summary>
-		/// Sets the fps limit. -1 disables limits.
-		/// </summary>
-		/// <param name="fpsLimit"> The new fps limit. </param>
-		void SetFpsLimit(const float &fpsLimit) { m_fpsLimit = fpsLimit; }
 
 		/// <summary>
 		/// Gets if the display requests antialiased images.

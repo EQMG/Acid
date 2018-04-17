@@ -19,9 +19,9 @@ namespace Flounder
 			m_descriptorSet = new DescriptorSet(*m_pipeline);
 		}
 
-		m_descriptorSet->Update({
-			m_pipeline->GetTexture(2),
-			m_pipeline->GetTexture(2)
+		m_descriptorSet->UpdateMap({
+			{"writeColour",   m_pipeline->GetTexture(2)},
+			{"samplerColour", m_pipeline->GetTexture(2)}
 		});
 
 		// Draws the object.

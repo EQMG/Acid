@@ -72,16 +72,24 @@ namespace Flounder
 			return;
 		}
 
+		/*m_uniformObject->UpdateMap("UniformObject", pipeline, {
+			{"transform", GetGameObject()->GetTransform()->GetWorldMatrix()},
+			{"skyColour", *Worlds::Get()->GetSkyColour()},
+			{"fogColour", *Worlds::Get()->GetFog()->m_colour},
+			{"fogLimits", GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Worlds::Get()->GetFog()->m_lowerLimit, Worlds::Get()->GetFog()->m_upperLimit)},
+			{"blendFactor", m_blend}
+		});*/
+
 		// Updates descriptors.
 		if (m_descriptorSet == nullptr)
 		{
 			m_descriptorSet = new DescriptorSet(pipeline);
 		}
 
-		m_descriptorSet->Update({
-			uniformScene,
-			m_uniformObject,
-			m_cubemap
+		m_descriptorSet->UpdateMap({
+			{"UboScene",       uniformScene},
+			{"UboObject",      m_uniformObject},
+			{"samplerCubemap", m_cubemap}
 		});
 
 		// Draws the object.
