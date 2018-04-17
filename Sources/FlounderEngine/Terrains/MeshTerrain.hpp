@@ -12,7 +12,6 @@ namespace Flounder
 	private:
 		float m_radius;
 		Transform *m_transform;
-		Matrix4 *m_worldMatrix;
 	public:
 		static const int SIDE_LENGTH;
 		static const std::vector<float> SQUARE_SIZES;

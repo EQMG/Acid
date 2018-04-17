@@ -30,7 +30,7 @@ namespace Flounder
 		vkUnmapMemory(logicalDevice, m_bufferMemory);
 	}
 
-	void UniformBuffer::UpdateMap(const std::string &blockName, ShaderProgram *shaderProgram, const std::unordered_map<std::string, void *> &newDataMap)
+	void UniformBuffer::UpdateMap(const std::string &blockName, ShaderProgram *shaderProgram, const std::map<std::string, void *> &newDataMap)
 	{
 		/*void *newData = malloc(m_size);
 		void *offset = newData;
