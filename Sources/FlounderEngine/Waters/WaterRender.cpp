@@ -53,9 +53,9 @@ namespace Flounder
 			m_descriptorSet = new DescriptorSet(pipeline);
 		}
 
-		m_descriptorSet->Update({
-			uniformScene,
-			m_uniformObject
+		m_descriptorSet->UpdateMap({
+			{"UboScene",  uniformScene},
+			{"UboObject", m_uniformObject}
 		});
 
 		// Draws the object.

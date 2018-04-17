@@ -151,11 +151,13 @@ namespace Flounder
 
 		VkFormat GlTypeToVk(const int &type);
 
-		bool IsDescriptorDefined(const std::string &descriptor);
+		int GetDescriptorLocation(const std::string &descriptor);
 
 		UniformBlock *GetUniformBlock(const std::string &blockName);
 
 		Uniform *GetBlockUniform(const std::string &blockName, const std::string &uniformName);
+
+		VertexAttribute *GetVertexAttribute(const std::string &attributeName);
 
 		static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
 

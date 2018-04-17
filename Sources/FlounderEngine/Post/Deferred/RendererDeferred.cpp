@@ -41,28 +41,17 @@ namespace Flounder
 			m_descriptorSet = new DescriptorSet(*m_pipeline);
 		}
 
-		m_descriptorSet->Update({
-			m_uniformScene,
-			m_pipeline->GetTexture(2),
-			m_pipeline->GetDepthStencil(),
-			m_pipeline->GetTexture(2),
-			m_pipeline->GetTexture(3),
-			m_pipeline->GetTexture(4),
-			m_pipeline->GetTexture(0, 0),
-			m_brdflut,
-			environment
+		m_descriptorSet->UpdateMap({
+			{"UboScene",           m_uniformScene},
+			{"writeColour",        m_pipeline->GetTexture(2)},
+			{"samplerDepth",       m_pipeline->GetDepthStencil()},
+			{"samplerColour",      m_pipeline->GetTexture(2)},
+			{"samplerNormal",      m_pipeline->GetTexture(3)},
+			{"samplerMaterial",    m_pipeline->GetTexture(4)},
+			{"samplerShadows",     m_pipeline->GetTexture(0, 0)},
+			{"samplerBrdflut",     m_brdflut},
+			{"samplerEnvironment", environment}
 		});
-		/*m_descriptorSet->UpdateMap({
-			{"UboScene", m_uniformScene},
-			{"writeColour", m_pipeline->GetTexture(2)},
-			{"samplerDepth", m_pipeline->GetDepthStencil()},
-			{"samplerColour", m_pipeline->GetTexture(2)},
-			{"samplerNormal", m_pipeline->GetTexture(3)},
-			{"samplerMaterial", m_pipeline->GetTexture(4)},
-			{"samplerShadows", m_pipeline->GetTexture(0, 0)},
-			{"samplerBrdflut", m_brdflut},
-			{"samplerEnvironment", m_environment}
-		});*/
 
 		// Updates uniforms.
 		std::vector<UbosDeferred::Light> sceneLights = {};

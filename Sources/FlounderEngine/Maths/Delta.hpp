@@ -7,7 +7,7 @@ namespace Flounder
 	/// <summary>
 	/// A class for handing and calculating deltas.
 	/// </summary>
-	class Delta
+	class F_EXPORT Delta
 	{
 	private:
 		float m_currentFrameTime;

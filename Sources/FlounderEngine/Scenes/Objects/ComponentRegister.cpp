@@ -35,12 +35,12 @@ namespace Flounder
 		RegisterComponent<TerrainRender>("TerrainRender");
 		RegisterComponent<WaterRender>("WaterRender");
 	}
-	
+
 	ComponentRegister::~ComponentRegister()
 	{
-		for (auto component : *m_components)
+		for (auto it = --m_components->end(); it != m_components->begin(); --it)
 		{
-			delete component.second;
+			delete (*it).second;
 		}
 
 		delete m_components;
@@ -57,6 +57,15 @@ namespace Flounder
 		}
 
 		return nullptr;
+	}
+
+	void ComponentRegister::DeregisterComponent(const std::string &name)
+	{
+		for (auto it = --m_components->end(); it != m_components->begin(); --it)
+		{
+			m_components->erase(it);
+			delete (*it).second;
+		}
 	}
 
 	Component *ComponentRegister::CreateComponent(const std::string &name)

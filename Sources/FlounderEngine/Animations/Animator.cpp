@@ -54,19 +54,19 @@ namespace Flounder
 	std::vector<Keyframe *> Animator::GetPreviousAndNextFrames()
 	{
 		auto allFrames = m_currentAnimation->GetKeyframes();
-		Keyframe *previousFrame = (*allFrames)[0];
-		Keyframe *nextFrame = (*allFrames)[0];
+		Keyframe *previousFrame = allFrames->at(0);
+		Keyframe *nextFrame = allFrames->at(0);
 
 		for (unsigned int i = 1; i < allFrames->size(); i++)
 		{
-			nextFrame = (*allFrames)[i];
+			nextFrame = allFrames->at(i);
 
 			if (nextFrame->GetTimeStamp() > m_animationTime)
 			{
 				break;
 			}
 
-			previousFrame = (*allFrames)[i];
+			previousFrame = allFrames->at(i);
 		}
 
 		return {previousFrame, nextFrame};

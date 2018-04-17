@@ -2,11 +2,11 @@
 
 #include "Maths/Maths.hpp"
 #include "Maths/Matrix4.hpp"
-#include "Scenes/Objects/Component.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Animation/AnimationLoader.hpp"
-#include "Skeleton/SkeletonLoader.hpp"
 #include "Geometry/GeometryLoader.hpp"
+#include "Scenes/Objects/Component.hpp"
+#include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"
 #include "Animator.hpp"
 

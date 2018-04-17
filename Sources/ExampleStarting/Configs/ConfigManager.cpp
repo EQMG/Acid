@@ -18,7 +18,7 @@ namespace Demo
 
 		m_configGraphics = new Config(new FileJson(FileSystem::GetWorkingDirectory() + "/Configs/Graphics.json"));
 		m_configGraphics->Load();
-		m_configGraphics->Link<float>("Fps Limit", 0.0f, CONFIG_GET(Display::Get()->GetFpsLimit()), CONFIG_SET(float, Display::Get()->SetFpsLimit(v)));
+		m_configGraphics->Link<float>("Fps Limit", 0.0f, CONFIG_GET(Engine::Get()->GetFpsLimit()), CONFIG_SET(float, Engine::Get()->SetFpsLimit(v)));
 		m_configGraphics->Link<bool>("Is Antialiasing", true, CONFIG_GET(Display::Get()->IsAntialiasing()), CONFIG_SET(bool, Display::Get()->SetAntialiasing(v)));
 		m_configGraphics->Link<bool>("Is Fullscreen", false, CONFIG_GET(Display::Get()->IsFullscreen()), CONFIG_SET(bool, Display::Get()->SetFullscreen(v)));
 		m_configGraphics->Link<int>("Display Width", 1080, CONFIG_GET(Display::Get()->GetWidth()));

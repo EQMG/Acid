@@ -16,7 +16,7 @@ namespace Flounder
 	/// <summary>
 	/// A class that holds many various math functions.
 	/// </summary>
-	class Maths
+	class F_EXPORT Maths
 	{
 	public:
 		/// <summary>
