@@ -10,8 +10,8 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
+		UniformBuffer *m_uniformScene;
 	public:
 		RendererTerrains(const GraphicsStage &graphicsStage);
 

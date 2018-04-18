@@ -170,6 +170,8 @@ namespace Flounder
 
 		Uniform *GetBlockUniform(const std::string &blockName, const std::string &uniformName);
 
+		size_t GetUniformBlockSize(const std::string &blockName) { return static_cast<size_t>(GetUniformBlock(blockName)->m_size); }
+
 		VertexAttribute *GetVertexAttribute(const std::string &attributeName);
 
 		static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
