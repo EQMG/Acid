@@ -17,7 +17,7 @@
   "Mesh": {
     "Model": "Resources/Entities/GemPurple/Model.obj"
   },
-  "MaterialDefault": {
+  "MaterialEntity": {
     "Base Colour": "#C37A57",
     "Diffuse Texture": "Resources/Entities/GemPurple/Diffuse.png",
     "Metallic": 0.4,
@@ -37,7 +37,7 @@
       "z": 0.0
     }
   },
-  "EntityRender": {
+  "MeshRender": {
   },
   "ShadowRender": {
   }

@@ -17,7 +17,7 @@
   "MeshAnimated": {
     "Model": "Resources/Entities/Player/Model.json"
   },
-  "MaterialDefault": {
+  "MaterialEntity": {
     "Base Colour": "#FFFFFF",
     "Diffuse Texture": "",
     "Metallic": 0.0,
@@ -28,7 +28,7 @@
     "Ignore Lighting": 0,
     "Ignore Fog": 0
   },
-  "EntityRender": {
+  "MeshRender": {
   },
   "ShadowRender": {
   }

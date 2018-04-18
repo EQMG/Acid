@@ -27,7 +27,7 @@ namespace Flounder
 	void *VertexModel::GetData(std::vector<IVertex *> &vertices)
 	{
 		size_t dataSize = GetSize() * vertices.size();
-		void *data = new void *[dataSize];
+		void *data = malloc(dataSize); // new void *[dataSize];
 
 		std::vector<VertexModel> thisVector = std::vector<VertexModel>();
 

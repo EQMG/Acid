@@ -17,7 +17,7 @@
   "Mesh": {
     "Model": "Resources/Entities/Testing/Model.obj"
   },
-  "MaterialDefault": {
+  "MaterialEntity": {
     "Base Colour": "#C7BEBE", 
     "Diffuse Texture": "Resources/Entities/Testing/Diffuse.png", 
     "Metallic": 0.0, 
@@ -37,7 +37,7 @@
       "z": 0.0
     }
   },
-  "EntityRender": {
+  "MeshRender": {
   },
   "ShadowRender": {
   }

@@ -17,7 +17,7 @@
   "Mesh": {
     "Model": "Resources/Entities/StairsWood/Model.obj"
   },
-  "MaterialDefault": {
+  "MaterialEntity": {
     "Base Colour": "#8b4513",
     "Diffuse Texture": "",
     "Metallic": 0.0,
@@ -28,7 +28,7 @@
     "Ignore Lighting": 0,
     "Ignore Fog": 0
   },
-  "EntityRender": {
+  "MeshRender": {
   },
   "ShadowRender": {
   }
