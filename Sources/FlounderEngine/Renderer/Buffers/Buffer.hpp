@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Display/Display.hpp"
-#include "Renderer/Pipelines/DescriptorSet.hpp"
+#include "Renderer/Descriptors/DescriptorSet.hpp"
 
 namespace Flounder
 {

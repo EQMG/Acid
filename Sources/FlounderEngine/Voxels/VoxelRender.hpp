@@ -15,8 +15,8 @@ namespace Flounder
 		public Component
 	{
 	private:
-		UniformBuffer *m_uniformObject;
-		DescriptorSet *m_descriptorSet;
+		DescriptorsHandler *m_descriptorSet;
+		UniformHandler *m_uniformObject;
 	public:
 		VoxelRender();
 
@@ -28,10 +28,10 @@ namespace Flounder
 
 		void Write(LoadedValue *value) override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformBuffer *uniformScene);
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene);
 
 		std::string GetName() const override { return "VoxelRender"; };
 
-		UniformBuffer *GetUniformObject() const { return m_uniformObject; }
+		UniformHandler *GetUniformObject() const { return m_uniformObject; }
 	};
 }

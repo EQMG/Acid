@@ -2,29 +2,26 @@
 
 #include "Meshes/Mesh.hpp"
 #include "Worlds/Worlds.hpp"
-#include "UbosShadows.hpp"
 
 namespace Flounder
 {
 	ShadowRender::ShadowRender() :
 		Component(),
-		m_uniformObject(new UniformBuffer(sizeof(UbosShadows::UboObject))),
-		m_descriptorSet(nullptr)
+		m_descriptorSet(new DescriptorsHandler()),
+		m_uniformObject(new UniformHandler())
 	{
 	}
 
 	ShadowRender::~ShadowRender()
 	{
-		delete m_uniformObject;
 		delete m_descriptorSet;
+		delete m_uniformObject;
 	}
 
 	void ShadowRender::Update()
 	{
 		// Updates uniforms.
-		UbosShadows::UboObject uboObject = {};
-		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		m_uniformObject->Update(&uboObject);
+		m_uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
 	}
 
 	void ShadowRender::Load(LoadedValue *value)
@@ -35,7 +32,7 @@ namespace Flounder
 	{
 	}
 
-	void ShadowRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformBuffer *uniformScene)
+	void ShadowRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene)
 	{
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
@@ -46,18 +43,17 @@ namespace Flounder
 		}
 
 		// Updates descriptors.
-		if (m_descriptorSet == nullptr)
+		m_descriptorSet->Push("UboScene", uniformScene);
+		m_descriptorSet->Push("UboObject", m_uniformObject);
+		bool descriptorsSet = m_descriptorSet->Update(pipeline);
+
+		if (!descriptorsSet)
 		{
-			m_descriptorSet = new DescriptorSet(pipeline);
+			return;
 		}
 
-		m_descriptorSet->UpdateMap({
-			{"UboScene",  uniformScene},
-			{"UboObject", m_uniformObject}
-		});
-
 		// Draws the object.
-		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 }

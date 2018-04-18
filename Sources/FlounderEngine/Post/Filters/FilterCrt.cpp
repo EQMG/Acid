@@ -4,7 +4,7 @@ namespace Flounder
 {
 	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Crt.frag", graphicsStage, {}),
-		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
+		m_uniformScene(new UniformHandler()),
 		m_screenColour(new Colour(0.5f, 1.0f, 0.5f)),
 		m_curveAmountX(0.1f),
 		m_curveAmountY(0.1f),
@@ -21,32 +21,29 @@ namespace Flounder
 
 	void FilterCrt::Render(const VkCommandBuffer &commandBuffer)
 	{
-		// Updates descriptors.
-		if (m_descriptorSet == nullptr)
-		{
-			m_descriptorSet = new DescriptorSet(*m_pipeline);
-		}
-
-		m_descriptorSet->UpdateMap({
-			{"UboScene",      m_uniformScene},
-			{"writeColour",   m_pipeline->GetTexture(2)},
-			{"samplerColour", m_pipeline->GetTexture(2)}
-		});
-
 		// Updates uniforms.
-		UboScene uboScene = {};
-		uboScene.screenColour = *m_screenColour;
-		uboScene.curveAmountX = m_curveAmountX * Display::Get()->GetAspectRatio();
-		uboScene.curveAmountY = m_curveAmountY;
-		uboScene.scanLineSize = m_scanLineSize;
-		uboScene.scanIntensity = m_scanIntensity;
-		uboScene.moveTime = Engine::Get()->GetTime() / 100.0f;
-		m_uniformScene->Update(&uboScene);
+		m_uniformScene->Push("screenColour", *m_screenColour);
+		m_uniformScene->Push("curveAmountX", m_curveAmountX * Display::Get()->GetAspectRatio());
+		m_uniformScene->Push("curveAmountY", m_curveAmountY);
+		m_uniformScene->Push("scanLineSize", m_scanLineSize);
+		m_uniformScene->Push("scanIntensity", m_scanIntensity);
+		m_uniformScene->Push("moveTime", Engine::Get()->GetTime() / 100.0f);
+
+		// Updates descriptors.
+		m_descriptorSet->Push("UboScene", m_uniformScene);
+		m_descriptorSet->Push("writeColour", m_pipeline->GetTexture(2));
+		m_descriptorSet->Push("samplerColour", m_pipeline->GetTexture(2));
+		bool descriptorsSet = m_descriptorSet->Update(*m_pipeline);
+
+		if (!descriptorsSet)
+		{
+			return;
+		}
 
 		// Draws the object.
 		m_pipeline->BindPipeline(commandBuffer);
 
-		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }

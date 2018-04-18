@@ -4,7 +4,6 @@
 #include "Scenes/Objects/Component.hpp"
 #include "Scenes/Objects/GameObject.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
@@ -15,8 +14,8 @@ namespace Flounder
 		public Component
 	{
 	private:
-		UniformBuffer *m_uniformObject;
-		DescriptorSet *m_descriptorSet;
+		DescriptorsHandler *m_descriptorSet;
+		UniformHandler *m_uniformObject;
 	public:
 		ShadowRender();
 
@@ -28,10 +27,10 @@ namespace Flounder
 
 		void Write(LoadedValue *value) override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformBuffer *uniformScene);
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene);
 
 		std::string GetName() const override { return "ShadowRender"; };
 
-		UniformBuffer *GetUniformObject() const { return m_uniformObject; }
+		UniformHandler *GetUniformObject() const { return m_uniformObject; }
 	};
 }

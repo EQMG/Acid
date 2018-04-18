@@ -7,8 +7,7 @@
 #include "Display/Display.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
-#include "Renderer/Pipelines/Descriptor.hpp"
-#include "Renderer/Pipelines/PipelineCreate.hpp"
+#include "Renderer/Descriptors/IDescriptor.hpp"
 
 namespace Flounder
 {
@@ -18,7 +17,7 @@ namespace Flounder
 	class F_EXPORT Texture :
 		public IResource,
 		public Buffer,
-		public Descriptor
+		public IDescriptor
 	{
 	private:
 		std::string m_filename;

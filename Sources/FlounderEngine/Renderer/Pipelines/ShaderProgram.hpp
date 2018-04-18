@@ -87,6 +87,19 @@ namespace Flounder
 			m_uniforms->push_back(uniform);
 		}
 
+		Uniform *GetUniform(const std::string &uniformName)
+		{
+			for (auto uniform : *m_uniforms)
+			{
+				if (uniform->m_name == uniformName)
+				{
+					return uniform;
+				}
+			}
+
+			return nullptr;
+		}
+
 		std::string ToString() const
 		{
 			std::stringstream result;
@@ -125,14 +138,14 @@ namespace Flounder
 
 	class F_HIDDEN ShaderProgram
 	{
-	public:
+	private:
 		std::vector<Uniform *> *m_uniforms;
 		std::vector<UniformBlock *> *m_uniformBlocks;
 		std::vector<VertexAttribute *> *m_vertexAttributes;
 
 		std::vector<DescriptorType> *m_descriptors;
 		std::vector<VkVertexInputAttributeDescription> *m_attributeDescriptions;
-
+	public:
 		ShaderProgram();
 
 		~ShaderProgram();
@@ -153,11 +166,15 @@ namespace Flounder
 
 		int GetDescriptorLocation(const std::string &descriptor);
 
+		Uniform *GetUniform(const std::string &uniformName);
+
 		UniformBlock *GetUniformBlock(const std::string &blockName);
 
-		Uniform *GetBlockUniform(const std::string &blockName, const std::string &uniformName);
-
 		VertexAttribute *GetVertexAttribute(const std::string &attributeName);
+
+		std::vector<DescriptorType> *GetDescriptors() const { return m_descriptors; }
+
+		std::vector<VkVertexInputAttributeDescription> *GetAttributeDescriptions() const { return m_attributeDescriptions; }
 
 		static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
 
