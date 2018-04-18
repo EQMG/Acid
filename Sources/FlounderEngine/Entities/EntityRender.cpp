@@ -58,23 +58,23 @@ namespace Flounder
 		//	uboObject.jointTransforms[i] = jointTransforms.at(i);
 		//}
 
-		/*GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
+		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
 		uboObject.baseColor = *materialDefault->GetBaseColor();
 		uboObject.metallic = materialDefault->GetMetallic();
 		uboObject.roughness = materialDefault->GetRoughness();
 		uboObject.ignoreFog = static_cast<float>(materialDefault->IsIgnoringFog());
 		uboObject.ignoreLighting = static_cast<float>(materialDefault->IsIgnoringLighting());
-		m_uniformObject->Update(&uboObject);*/
+		m_uniformObject->Update(&uboObject);
 
-		m_uniformObject->UpdateMap("UniformObject", material->GetPipeline()->GetShaderProgram(), {
-		//	{"jointTransforms", jointTransforms.data()},
+		/*m_uniformObject->UpdateMap("UniformObject", material->GetPipeline()->GetShaderProgram(), {
+			{"jointTransforms", jointTransforms.data()},
 			{"transform", GetGameObject()->GetTransform()->GetWorldMatrix()},
 		 	{"baseColor", *materialDefault->GetBaseColor()},
 			{"metallic", materialDefault->GetMetallic()},
 			{"roughness", materialDefault->GetRoughness()},
 			{"ignoreFog", static_cast<float>(materialDefault->IsIgnoringFog())},
 			{"ignoreLighting", static_cast<float>(materialDefault->IsIgnoringLighting())}
-		});
+		});*/
 	}
 
 	void EntityRender::Load(LoadedValue *value)
