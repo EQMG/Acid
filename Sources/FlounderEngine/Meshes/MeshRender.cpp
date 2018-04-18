@@ -2,7 +2,7 @@
 
 #include "Meshes/Mesh.hpp"
 #include "Animations/MeshAnimated.hpp"
-#include "Materials/MaterialDefault.hpp"
+#include "Entities/MaterialEntity.hpp"
 
 namespace Flounder
 {
@@ -24,21 +24,22 @@ namespace Flounder
 
 	void MeshRender::Update()
 	{
-		auto materialDefault = GetGameObject()->GetComponent<MaterialDefault>();
+		auto materialEntity = GetGameObject()->GetComponent<MaterialEntity>();
 
-		if (materialDefault == nullptr)
+		if (materialEntity == nullptr)
 		{
 			return;
 		}
 
-		auto material = materialDefault->GetMaterial();
+		auto material = materialEntity->GetMaterial();
 
+		// Updates uniforms.
 		if (m_uniformObject == nullptr)
 		{
 			m_uniformObject = new UniformBuffer((VkDeviceSize) material->GetPipeline()->GetShaderProgram()->GetUniformBlock("UniformObject")->m_size);
 		}
 
-		std::vector<Matrix4> jointTransforms = {};
+		/*std::vector<Matrix4> jointTransforms = {};
 		auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
 
 		if (meshAnimated != nullptr)
@@ -54,9 +55,26 @@ namespace Flounder
 					break;
 				}
 			}
-		}
+		}*/
 
-		// Updates uniforms.
+		struct
+		{
+			//	Matrix4 jointTransforms[MAX_JOINTS];
+			Matrix4 transform;
+			Vector4 baseColor;
+			float metallic;
+			float roughness;
+			float ignoreFog;
+			float ignoreLighting;
+		} uboObject;
+		uboObject.transform = GetGameObject()->GetTransform()->GetWorldMatrix();
+		uboObject.baseColor = *materialEntity->GetBaseColor();
+		uboObject.metallic = materialEntity->GetMetallic();
+		uboObject.roughness = materialEntity->GetRoughness();
+		uboObject.ignoreFog = static_cast<float>(materialEntity->IsIgnoringFog());
+		uboObject.ignoreLighting = static_cast<float>(materialEntity->IsIgnoringLighting());
+		m_uniformObject->Update(&uboObject);
+
 		//m_uniformObject->UpdateMap("UniformObject", material->GetPipeline()->GetShaderProgram(), {
 		//	{"jointTransforms", jointTransforms.data()},
 		//	{"transform", GetGameObject()->GetTransform()->GetWorldMatrix().m_elements},
@@ -91,7 +109,7 @@ namespace Flounder
 
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
-		auto materialDefault = GetGameObject()->GetComponent<MaterialDefault>();
+		auto materialDefault = GetGameObject()->GetComponent<MaterialEntity>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr || materialDefault == nullptr || materialDefault->GetMaterial() == nullptr)
 		{

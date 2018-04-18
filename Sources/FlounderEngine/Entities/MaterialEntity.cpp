@@ -1,8 +1,8 @@
-#include "MaterialDefault.hpp"
+#include "MaterialEntity.hpp"
 
 namespace Flounder
 {
-	MaterialDefault::MaterialDefault(const Colour &baseColor, Texture *diffuseTexture,
+	MaterialEntity::MaterialEntity(const Colour &baseColor, Texture *diffuseTexture,
 									 const float &metallic, const float &roughness, Texture *materialTexture, Texture *normalTexture,
 									 const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 		m_baseColor(new Colour(baseColor)),
@@ -19,7 +19,7 @@ namespace Flounder
 	{
 	}
 
-	MaterialDefault::~MaterialDefault()
+	MaterialEntity::~MaterialEntity()
 	{
 		delete m_baseColor;
 		//	delete m_diffuseTexture;
@@ -27,11 +27,11 @@ namespace Flounder
 		//	delete m_normalTexture;
 	}
 
-	void MaterialDefault::Update()
+	void MaterialEntity::Update()
 	{
 	}
 
-	void MaterialDefault::Load(LoadedValue *value)
+	void MaterialEntity::Load(LoadedValue *value)
 	{
 		m_baseColor->Set(value->GetChild("Base Colour")->GetString());
 		TrySetDiffuseTexture(value->GetChild("Diffuse Texture")->GetString());
@@ -46,7 +46,7 @@ namespace Flounder
 		m_ignoreFog = (bool) value->GetChild("Ignore Fog")->Get<int>();
 	}
 
-	void MaterialDefault::Write(LoadedValue *destination)
+	void MaterialEntity::Write(LoadedValue *destination)
 	{
 		destination->GetChild("Base Colour", true)->SetString(Colour::GetHex(*m_baseColor));
 		destination->GetChild("Diffuse Texture", true)->SetString(m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
@@ -61,7 +61,7 @@ namespace Flounder
 		destination->GetChild("Ignore Fog", true)->Set((int) m_ignoreFog);
 	}
 
-	std::vector<Define> MaterialDefault::GetDefines()
+	std::vector<Define> MaterialEntity::GetDefines()
 	{
 		std::vector<Define> result = {};
 
@@ -75,10 +75,10 @@ namespace Flounder
 			result.push_back({"MATERIAL_MAPPING"});
 		}
 
-		/*if (m_normalTexture != nullptr)
+		if (m_normalTexture != nullptr)
 		{
 			result.push_back({"NORMAL_MAPPING"});
-		}*/
+		}
 
 		return result;
 	}
