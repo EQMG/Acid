@@ -3,7 +3,6 @@
 #include "Scenes/Scenes.hpp"
 #include "Models/Model.hpp"
 #include "TerrainRender.hpp"
-#include "UbosTerrains.hpp"
 
 namespace Flounder
 {
@@ -11,22 +10,20 @@ namespace Flounder
 		IRenderer(),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Terrains/Terrain.vert", "Resources/Shaders/Terrains/Terrain.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {})),
-		m_uniformScene(new UniformBuffer(sizeof(UbosTerrains::UboScene)))
+		m_uniformScene(new UniformHandler())
 	{
 	}
 
 	RendererTerrains::~RendererTerrains()
 	{
-		delete m_uniformScene;
 		delete m_pipeline;
+		delete m_uniformScene;
 	}
 
 	void RendererTerrains::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		UbosTerrains::UboScene uboScene = {};
-		uboScene.projection = *camera.GetProjectionMatrix();
-		uboScene.view = *camera.GetViewMatrix();
-		m_uniformScene->Update(&uboScene);
+		m_uniformScene->Push("projection", *camera.GetProjectionMatrix());
+		m_uniformScene->Push("view", *camera.GetViewMatrix());
 
 		m_pipeline->BindPipeline(commandBuffer);
 

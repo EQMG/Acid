@@ -10,8 +10,8 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
+		UniformHandler *m_uniformScene;
 	public:
 		RendererVoxels(const GraphicsStage &graphicsStage);
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Renderer/IRenderer.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Models/Model.hpp"
 #include "Shadows.hpp"
@@ -12,8 +11,8 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		UniformBuffer *m_uniformScene;
 		Pipeline *m_pipeline;
+		UniformHandler *m_uniformScene;
 	public:
 		RendererShadows(const GraphicsStage &graphicsStage);
 

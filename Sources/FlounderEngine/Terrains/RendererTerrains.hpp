@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Renderer/IRenderer.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace Flounder
@@ -11,7 +10,7 @@ namespace Flounder
 	{
 	private:
 		Pipeline *m_pipeline;
-		UniformBuffer *m_uniformScene;
+		UniformHandler *m_uniformScene;
 	public:
 		RendererTerrains(const GraphicsStage &graphicsStage);
 

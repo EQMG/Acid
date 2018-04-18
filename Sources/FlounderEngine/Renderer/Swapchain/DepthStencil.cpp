@@ -14,7 +14,7 @@ namespace Flounder
 		};
 
 	DepthStencil::DepthStencil(const VkExtent3D &extent) :
-		Descriptor(),
+		IDescriptor(),
 		m_image(VK_NULL_HANDLE),
 		m_imageMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
@@ -28,7 +28,6 @@ namespace Flounder
 		for (auto format : TRY_FORMATS)
 		{
 			VkFormatProperties formatProperties = {};
-
 			vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &formatProperties);
 
 			if (formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT &&
@@ -94,7 +93,7 @@ namespace Flounder
 		imageViewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
 		imageViewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
 		imageViewCreateInfo.subresourceRange = {};
-		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT; //  | (m_format != VK_FORMAT_UNDEFINED ? VK_IMAGE_ASPECT_STENCIL_BIT : 0)
+		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
 		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
 		imageViewCreateInfo.subresourceRange.levelCount = 1;
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;

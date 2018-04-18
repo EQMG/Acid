@@ -5,9 +5,9 @@
 #include <Models/Shapes/ShapeSphere.hpp>
 #include <Skyboxes/SkyboxRender.hpp>
 #include <Lights/Light.hpp>
-#include <Entities/MaterialEntity.hpp>
+#include <Materials/MaterialDefault.hpp>
 #include <Shadows/ShadowRender.hpp>
-#include <Meshes/MeshRender.hpp>
+#include <Entities/EntityRender.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Screenshot/Screenshot.hpp>
 #include "ManagerUis.hpp"
@@ -62,9 +62,9 @@ namespace Demo
 			{
 				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, -8.0f), Vector3(), 3.0f));
 				sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
-				sphere->AddComponent<MaterialEntity>(Colour("#ffffff"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
+				sphere->AddComponent<MaterialDefault>(Colour("#ffffff"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Resources/Entities/Testing/Material.png"), Texture::Resource("Resources/Entities/Testing/Normal.png"));
-				sphere->AddComponent<MeshRender>();
+				sphere->AddComponent<EntityRender>();
 				sphere->AddComponent<ShadowRender>();
 			}
 		}

@@ -3,14 +3,14 @@
 #include <string>
 #include <map>
 #include "Display/Display.hpp"
-#include "PipelineCreate.hpp"
-#include "ShaderProgram.hpp"
+#include "Renderer/Pipelines/PipelineCreate.hpp"
+#include "Renderer/Pipelines/ShaderProgram.hpp"
 
 namespace Flounder
 {
-	class Pipeline;
+	class IDescriptor;
 
-	class Descriptor;
+	class Pipeline;
 
 	class F_EXPORT DescriptorSet
 	{
@@ -19,16 +19,12 @@ namespace Flounder
 		VkPipelineLayout m_pipelineLayout;
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
-
-		std::vector<Descriptor *> m_descriptors;
 	public:
 		DescriptorSet(const Pipeline &pipeline);
 
 		~DescriptorSet();
 
-		void Update(const std::vector<Descriptor *> &descriptors);
-
-		void UpdateMap(const std::map<std::string, Descriptor *> &descriptorMap);
+		void Update(const std::vector<IDescriptor *> &descriptors);
 
 		void BindDescriptor(const VkCommandBuffer &commandBuffer);
 
