@@ -87,19 +87,6 @@ namespace Flounder
 			m_uniforms->push_back(uniform);
 		}
 
-		Uniform *GetUniform(const std::string &uniformName)
-		{
-			for (auto u : *m_uniforms)
-			{
-				if (u->m_name == uniformName)
-				{
-					return u;
-				}
-			}
-
-			return nullptr;
-		}
-
 		std::string ToString() const
 		{
 			std::stringstream result;
@@ -169,8 +156,6 @@ namespace Flounder
 		UniformBlock *GetUniformBlock(const std::string &blockName);
 
 		Uniform *GetBlockUniform(const std::string &blockName, const std::string &uniformName);
-
-		size_t GetUniformBlockSize(const std::string &blockName) { return static_cast<size_t>(GetUniformBlock(blockName)->m_size); }
 
 		VertexAttribute *GetVertexAttribute(const std::string &attributeName);
 

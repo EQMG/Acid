@@ -1,30 +1,27 @@
-﻿#include "RendererMeshes.hpp"
+﻿#include "RendererEntities.hpp"
 
 #include "Renderer/Renderer.hpp"
 #include "Models/Model.hpp"
 #include "Scenes/Scenes.hpp"
-#include "MeshRender.hpp"
+#include "UbosEntities.hpp"
+#include "EntityRender.hpp"
 
 namespace Flounder
 {
-	RendererMeshes::RendererMeshes(const GraphicsStage &graphicsStage) :
+	RendererEntities::RendererEntities(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_uniformScene(new UniformBuffer(64))
+		m_uniformScene(new UniformBuffer(sizeof(UbosEntities::UboScene)))
 	{
 	}
 
-	RendererMeshes::~RendererMeshes()
+	RendererEntities::~RendererEntities()
 	{
 		delete m_uniformScene;
 	}
 
-	void RendererMeshes::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererEntities::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		struct
-		{
-			Matrix4 projection;
-			Matrix4 view;
-		} uboScene;
+		UbosEntities::UboScene uboScene = {};
 		uboScene.projection = *camera.GetProjectionMatrix();
 		uboScene.view = *camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);
@@ -34,8 +31,8 @@ namespace Flounder
 		//	{"view", *camera.GetViewMatrix()}
 		//});
 
-		std::vector<MeshRender *> renderList = std::vector<MeshRender *>();
-		Scenes::Get()->GetStructure()->QueryComponents<MeshRender>(&renderList);
+		std::vector<EntityRender *> renderList = std::vector<EntityRender *>();
+		Scenes::Get()->GetStructure()->QueryComponents<EntityRender>(&renderList);
 
 		for (auto entityRender : renderList)
 		{
