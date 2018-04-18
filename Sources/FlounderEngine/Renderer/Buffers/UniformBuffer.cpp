@@ -4,7 +4,7 @@ namespace Flounder
 {
 	UniformBuffer::UniformBuffer(const VkDeviceSize &size) :
 		Buffer(size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),
-		Descriptor(),
+		IDescriptor(),
 		m_bufferInfo({})
 	{
 		m_bufferInfo.buffer = m_buffer;

@@ -3,30 +3,27 @@
 #include "Scenes/Scenes.hpp"
 #include "Models/Model.hpp"
 #include "WaterRender.hpp"
-#include "UbosWaters.hpp"
 
 namespace Flounder
 {
 	RendererWaters::RendererWaters(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_uniformScene(new UniformBuffer(sizeof(UbosWaters::UboScene))),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Waters/Water.vert", "Resources/Shaders/Waters/Water.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_NONE), {}))
+			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_NONE), {})),
+		m_uniformScene(new UniformHandler())
 	{
 	}
 
 	RendererWaters::~RendererWaters()
 	{
-		delete m_uniformScene;
 		delete m_pipeline;
+		delete m_uniformScene;
 	}
 
 	void RendererWaters::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		UbosWaters::UboScene uboScene = {};
-		uboScene.projection = *camera.GetProjectionMatrix();
-		uboScene.view = *camera.GetViewMatrix();
-		m_uniformScene->Update(&uboScene);
+		m_uniformScene->Push("projection", *camera.GetProjectionMatrix());
+		m_uniformScene->Push("view", *camera.GetViewMatrix());
 
 		m_pipeline->BindPipeline(commandBuffer);
 

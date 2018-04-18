@@ -2,23 +2,22 @@
 
 #include "Meshes/Mesh.hpp"
 #include "Animations/MeshAnimated.hpp"
-#include "Worlds/Worlds.hpp"
 #include "Materials/MaterialDefault.hpp"
-#include "UbosEntities.hpp"
+#include "Worlds/Worlds.hpp"
 
 namespace Flounder
 {
 	EntityRender::EntityRender() :
 		Component(),
-		m_uniformObject(new UniformBuffer(sizeof(UbosEntities::UboObject))),
-		m_descriptorSet(nullptr)
+		m_descriptorSet(new DescriptorsHandler()),
+		m_uniformObject(new UniformHandler())
 	{
 	}
 
 	EntityRender::~EntityRender()
 	{
-		delete m_uniformObject;
 		delete m_descriptorSet;
+		delete m_uniformObject;
 	}
 
 	void EntityRender::Update()
@@ -32,49 +31,13 @@ namespace Flounder
 
 		auto material = materialDefault->GetMaterial();
 
-		/*std::vector<Matrix4> jointTransforms = {};
-		auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
-
-		if (meshAnimated != nullptr)
-		{
-			auto jointMatrices = meshAnimated->GetJointTransforms();
-
-			for (unsigned int i = 0; i < jointMatrices.size(); i++)
-			{
-				jointTransforms.push_back(*jointMatrices.at(i));
-
-				if (jointTransforms.size() >= MAX_JOINTS)
-				{
-					break;
-				}
-			}
-		}*/
-
 		// Updates uniforms.
-		UbosEntities::UboObject uboObject = {};
-
-		//for (unsigned int i = 0; i < jointTransforms.size(); i++)
-		//{
-		//	uboObject.jointTransforms[i] = jointTransforms.at(i);
-		//}
-
-		/*GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		uboObject.baseColor = *materialDefault->GetBaseColor();
-		uboObject.metallic = materialDefault->GetMetallic();
-		uboObject.roughness = materialDefault->GetRoughness();
-		uboObject.ignoreFog = static_cast<float>(materialDefault->IsIgnoringFog());
-		uboObject.ignoreLighting = static_cast<float>(materialDefault->IsIgnoringLighting());
-		m_uniformObject->Update(&uboObject);*/
-
-		m_uniformObject->UpdateMap("UniformObject", material->GetPipeline()->GetShaderProgram(), {
-		//	{"jointTransforms", jointTransforms.data()},
-			{"transform", GetGameObject()->GetTransform()->GetWorldMatrix()},
-		 	{"baseColor", *materialDefault->GetBaseColor()},
-			{"metallic", materialDefault->GetMetallic()},
-			{"roughness", materialDefault->GetRoughness()},
-			{"ignoreFog", static_cast<float>(materialDefault->IsIgnoringFog())},
-			{"ignoreLighting", static_cast<float>(materialDefault->IsIgnoringLighting())}
-		});
+		m_uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		m_uniformObject->Push("baseColor", *materialDefault->GetBaseColor());
+		m_uniformObject->Push("metallic", materialDefault->GetMetallic());
+		m_uniformObject->Push("roughness", materialDefault->GetRoughness());
+		m_uniformObject->Push("ignoreFog", static_cast<float>(materialDefault->IsIgnoringFog()));
+		m_uniformObject->Push("ignoreLighting", static_cast<float>(materialDefault->IsIgnoringLighting()));
 	}
 
 	void EntityRender::Load(LoadedValue *value)
@@ -85,7 +48,7 @@ namespace Flounder
 	{
 	}
 
-	void EntityRender::CmdRender(const VkCommandBuffer &commandBuffer, UniformBuffer *uniformScene)
+	void EntityRender::CmdRender(const VkCommandBuffer &commandBuffer, UniformHandler *uniformScene)
 	{
 		// Checks if the mesh is in view.
 		/*auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
@@ -110,20 +73,19 @@ namespace Flounder
 		auto material = materialDefault->GetMaterial();
 
 		// Updates descriptors.
-		if (m_descriptorSet == nullptr)
+		m_descriptorSet->Push("UboScene", uniformScene);
+		m_descriptorSet->Push("UboObject", m_uniformObject);
+		m_descriptorSet->Push("samplerDiffuse", materialDefault->GetDiffuseTexture());
+		m_descriptorSet->Push("samplerMaterial", materialDefault->GetMaterialTexture());
+		m_descriptorSet->Push("samplerNormal", materialDefault->GetNormalTexture());
+		bool descriptorsSet = m_descriptorSet->Update(*material->GetPipeline());
+
+		if (!descriptorsSet)
 		{
-			m_descriptorSet = new DescriptorSet(*material->GetPipeline());
+			return;
 		}
 
-		m_descriptorSet->UpdateMap({
-			{"UboScene",        uniformScene},
-			{"UboObject",       m_uniformObject},
-			{"samplerDiffuse",  materialDefault->GetDiffuseTexture()},
-			{"samplerMaterial", materialDefault->GetMaterialTexture()},
-			{"samplerNormal",   materialDefault->GetNormalTexture()}
-		});
-
 		// Draws the object.
-		material->CmdRender(commandBuffer, mesh->GetModel(), m_descriptorSet);
+		material->CmdRender(commandBuffer, mesh->GetModel(), m_descriptorSet->GetDescriptorSet());
 	}
 }

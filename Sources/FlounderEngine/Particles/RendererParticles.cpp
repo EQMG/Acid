@@ -1,13 +1,12 @@
 #include "RendererParticles.hpp"
 
 #include "Maths/Maths.hpp"
-#include "UbosParticles.hpp"
 
 namespace Flounder
 {
 	RendererParticles::RendererParticles(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_uniformScene(new UniformBuffer(sizeof(UbosParticles::UboScene))),
+		m_uniformScene(new UniformHandler()),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Particles/Particle.vert", "Resources/Shaders/Particles/Particle.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {}))
 	{

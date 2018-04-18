@@ -11,7 +11,7 @@ namespace Flounder
 	class F_EXPORT IPostFilter
 	{
 	protected:
-		DescriptorSet *m_descriptorSet;
+		DescriptorsHandler *m_descriptorSet;
 
 		Pipeline *m_pipeline;
 		Model *m_model;

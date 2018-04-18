@@ -1,14 +1,13 @@
 ﻿#include "Text.hpp"
 
 #include "Maths/Visual/DriverConstant.hpp"
-#include "UbosFonts.hpp"
 
 namespace Flounder
 {
 	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType, const FontJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
-		m_uniformObject(new UniformBuffer(sizeof(UbosFonts::UboObject))),
-		m_descriptorSet(nullptr),
+		m_descriptorSet(new DescriptorsHandler()),
+		m_uniformObject(new UniformHandler()),
 		m_model(nullptr),
 		m_string(text),
 		m_newString(""),
@@ -32,8 +31,8 @@ namespace Flounder
 
 	Text::~Text()
 	{
-		delete m_uniformObject;
 		delete m_descriptorSet;
+		delete m_uniformObject;
 		delete m_model;
 
 		delete m_textColour;
@@ -55,6 +54,14 @@ namespace Flounder
 
 		m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
 		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
+
+		// Updates uniforms.
+		m_uniformObject->Push("transform", *GetScreenTransform());
+		m_uniformObject->Push("colour", *m_textColour);
+		m_uniformObject->Push("borderColour", *m_borderColour);
+		m_uniformObject->Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
+		m_uniformObject->Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
+		m_uniformObject->Push("alpha", GetAlpha());
 	}
 
 	void Text::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)
@@ -66,25 +73,14 @@ namespace Flounder
 		}
 
 		// Updates descriptors.
-		if (m_descriptorSet == nullptr)
+		m_descriptorSet->Push("UboObject", m_uniformObject);
+		m_descriptorSet->Push("samplerColour", m_fontType->GetTexture());
+		bool descriptorsSet = m_descriptorSet->Update(pipeline);
+
+		if (!descriptorsSet)
 		{
-			m_descriptorSet = new DescriptorSet(pipeline);
+			return;
 		}
-
-		m_descriptorSet->UpdateMap({
-			{"UboObject",     m_uniformObject},
-			{"samplerColour", m_fontType->GetTexture()}
-		});
-
-		// Updates uniforms.
-		UbosFonts::UboObject uboObject = {};
-		uboObject.transform = Vector4(*GetScreenTransform());
-		uboObject.colour = Colour(*m_textColour);
-		uboObject.borderColour = Colour(*m_borderColour);
-		uboObject.borderSizes = Vector2(GetTotalBorderSize(), GetGlowSize());
-		uboObject.edgeData = Vector2(CalculateEdgeStart(), CalculateAntialiasSize());
-		uboObject.alpha = GetAlpha();
-		m_uniformObject->Update(&uboObject);
 
 		VkRect2D scissorRect = {};
 		scissorRect.offset.x = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_x);
@@ -94,7 +90,7 @@ namespace Flounder
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 		// Draws the object.
-		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 

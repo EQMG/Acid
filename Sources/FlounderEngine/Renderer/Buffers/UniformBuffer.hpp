@@ -1,8 +1,7 @@
 ﻿#pragma once
 
 #include <map>
-#include "Renderer/Pipelines/Descriptor.hpp"
-#include "Renderer/Pipelines/PipelineCreate.hpp"
+#include "Renderer/Descriptors/IDescriptor.hpp"
 #include "Renderer/Pipelines/ShaderProgram.hpp"
 #include "Buffer.hpp"
 
@@ -10,7 +9,7 @@ namespace Flounder
 {
 	class F_EXPORT UniformBuffer :
 		public Buffer,
-		public Descriptor
+		public IDescriptor
 	{
 	private:
 		VkDescriptorBufferInfo m_bufferInfo;

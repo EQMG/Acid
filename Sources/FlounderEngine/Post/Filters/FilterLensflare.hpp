@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Maths/Vector3.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Post/IPostFilter.hpp"
 
 namespace Flounder
@@ -10,14 +9,7 @@ namespace Flounder
 		public IPostFilter
 	{
 	private:
-		struct UboScene
-		{
-			Vector3 sunPosition;
-			float worldHeight;
-			Vector2 displaySize;
-		};
-
-		UniformBuffer *m_uniformScene;
+		UniformHandler *m_uniformScene;
 
 		Vector3 *m_sunPosition;
 		float m_sunHeight;

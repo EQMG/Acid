@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 #include "Textures/Texture.hpp"
-#include "Renderer/Pipelines/DescriptorSet.hpp"
+#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"
 

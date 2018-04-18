@@ -4,7 +4,6 @@
 #include "Maths/Vector3.hpp"
 #include "Scenes/Objects/Component.hpp"
 #include "Scenes/Objects/GameObject.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Textures/Cubemap.hpp"
 
@@ -14,8 +13,8 @@ namespace Flounder
 		public Component
 	{
 	private:
-		UniformBuffer *m_uniformObject;
-		DescriptorSet *m_descriptorSet;
+		DescriptorsHandler *m_descriptorSet;
+		UniformHandler *m_uniformObject;
 
 		Cubemap *m_cubemap;
 		bool m_enableFog;
@@ -32,7 +31,7 @@ namespace Flounder
 
 		void Write(LoadedValue *value) override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformBuffer *uniformScene);
+		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene);
 
 		std::string GetName() const override { return "SkyboxRender"; };
 
