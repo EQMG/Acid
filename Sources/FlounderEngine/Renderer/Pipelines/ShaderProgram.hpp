@@ -87,6 +87,19 @@ namespace Flounder
 			m_uniforms->push_back(uniform);
 		}
 
+		Uniform *GetUniform(const std::string &uniformName)
+		{
+			for (auto u : *m_uniforms)
+			{
+				if (u->m_name == uniformName)
+				{
+					return u;
+				}
+			}
+
+			return nullptr;
+		}
+
 		std::string ToString() const
 		{
 			std::stringstream result;
