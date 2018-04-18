@@ -4,7 +4,7 @@ namespace Flounder
 {
 	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Fxaa.frag", graphicsStage, {}),
-		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
+		m_uniformScene(new UniformHandler()),
 		m_spanMax(8.0f)
 	{
 	}
@@ -16,27 +16,24 @@ namespace Flounder
 
 	void FilterFxaa::Render(const VkCommandBuffer &commandBuffer)
 	{
-		// Updates descriptors.
-		if (m_descriptorSet == nullptr)
-		{
-			m_descriptorSet = new DescriptorSet(*m_pipeline);
-		}
-
-		m_descriptorSet->UpdateMap({
-			{"UboScene",      m_uniformScene},
-			{"writeColour",   m_pipeline->GetTexture(2)},
-			{"samplerColour", m_pipeline->GetTexture(2)}
-		});
-
 		// Updates uniforms.
-		UboScene uboScene = {};
-		uboScene.spanMax = m_spanMax;
-		m_uniformScene->Update(&uboScene);
+		m_uniformScene->Push("spanMax", m_spanMax);
+
+		// Updates descriptors.
+		m_descriptorSet->Push("UboScene", m_uniformScene);
+		m_descriptorSet->Push("writeColour", m_pipeline->GetTexture(2));
+		m_descriptorSet->Push("samplerColour", m_pipeline->GetTexture(2));
+		bool descriptorsSet = m_descriptorSet->Update(*m_pipeline);
+
+		if (!descriptorsSet)
+		{
+			return;
+		}
 
 		// Draws the object.
 		m_pipeline->BindPipeline(commandBuffer);
 
-		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }

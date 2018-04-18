@@ -12,7 +12,7 @@ namespace Flounder
 	Texture::Texture(const std::string &filename, const bool &hasAlpha, const bool &repeatEdges, const bool &mipmap, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
 		IResource(),
 		Buffer(LoadSize(filename), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
-		Descriptor(),
+		IDescriptor(),
 		m_filename(filename),
 		m_hasAlpha(hasAlpha),
 		m_repeatEdges(repeatEdges),

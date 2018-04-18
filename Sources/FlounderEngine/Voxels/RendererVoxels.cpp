@@ -3,31 +3,28 @@
 #include "Renderer/Renderer.hpp"
 #include "Models/Model.hpp"
 #include "Scenes/Scenes.hpp"
-#include "UbosVoxels.hpp"
 #include "VoxelRender.hpp"
 
 namespace Flounder
 {
 	RendererVoxels::RendererVoxels(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_uniformScene(new UniformBuffer(sizeof(UbosVoxels::UboScene))),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Voxels/Voxel.vert", "Resources/Shaders/Voxels/Voxel.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {}))
+			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {})),
+		m_uniformScene(new UniformHandler())
 	{
 	}
 
 	RendererVoxels::~RendererVoxels()
 	{
-		delete m_uniformScene;
 		delete m_pipeline;
+		delete m_uniformScene;
 	}
 
 	void RendererVoxels::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		UbosVoxels::UboScene uboScene = {};
-		uboScene.projection = *camera.GetProjectionMatrix();
-		uboScene.view = *camera.GetViewMatrix();
-		m_uniformScene->Update(&uboScene);
+		m_uniformScene->Push("projection", *camera.GetProjectionMatrix());
+		m_uniformScene->Push("view", *camera.GetViewMatrix());
 
 		m_pipeline->BindPipeline(commandBuffer);
 

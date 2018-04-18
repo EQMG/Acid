@@ -1,7 +1,7 @@
 #include "DescriptorSet.hpp"
 
-#include "Descriptor.hpp"
-#include "Pipeline.hpp"
+#include "IDescriptor.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace Flounder
 {
@@ -9,8 +9,7 @@ namespace Flounder
 		m_shaderProgram(pipeline.GetShaderProgram()),
 		m_pipelineLayout(pipeline.GetPipelineLayout()),
 		m_descriptorPool(pipeline.GetDescriptorPool()),
-		m_descriptorSet(VK_NULL_HANDLE),
-		m_descriptors(std::vector<Descriptor *>())
+		m_descriptorSet(VK_NULL_HANDLE)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -35,17 +34,9 @@ namespace Flounder
 		vkFreeDescriptorSets(logicalDevice, m_descriptorPool, 1, descriptors);
 	}
 
-	void DescriptorSet::Update(const std::vector<Descriptor *> &descriptors)
+	void DescriptorSet::Update(const std::vector<IDescriptor *> &descriptors)
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		if (!m_descriptors.empty() && descriptors == m_descriptors)
-		{
-			return;
-		}
-
-		m_descriptors.clear();
-		std::copy(descriptors.begin(), descriptors.end(), std::back_inserter(m_descriptors));
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = {};
 
@@ -58,26 +49,6 @@ namespace Flounder
 		}
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
-	}
-
-	void DescriptorSet::UpdateMap(const std::map<std::string, Descriptor *> &descriptorMap)
-	{
-		std::vector<Descriptor *> descriptors = std::vector<Descriptor *>(descriptorMap.size());
-
-		for (auto pair : descriptorMap)
-		{
-			int location = m_shaderProgram->GetDescriptorLocation(pair.first);
-
-			if (location == -1)
-			{
-				continue;
-			}
-
-			descriptors.at(location) = pair.second;
-		}
-
-		descriptors.shrink_to_fit();
-		Update(descriptors);
 	}
 
 	void DescriptorSet::BindDescriptor(const VkCommandBuffer &commandBuffer)

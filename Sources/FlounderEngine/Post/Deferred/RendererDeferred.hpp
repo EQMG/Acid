@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Renderer/IRenderer.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Models/Model.hpp"
 #include "Textures/Cubemap.hpp"
@@ -12,8 +11,8 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		UniformBuffer *m_uniformScene;
-		DescriptorSet *m_descriptorSet;
+		DescriptorsHandler *m_descriptorSet;
+		UniformHandler *m_uniformScene;
 
 		Pipeline *m_pipeline;
 		Model *m_model;

@@ -10,7 +10,7 @@ namespace Flounder
 		public IRenderer
 	{
 	private:
-		UniformBuffer *m_uniformScene;
+		UniformHandler *m_uniformScene;
 	public:
 		RendererEntities(const GraphicsStage &graphicsStage);
 

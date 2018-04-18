@@ -2,14 +2,13 @@
 
 #include "Meshes/Mesh.hpp"
 #include "Worlds/Worlds.hpp"
-#include "UbosSkyboxes.hpp"
 
 namespace Flounder
 {
 	SkyboxRender::SkyboxRender(Cubemap *cubemap, const bool &enableFog) :
 		Component(),
-		m_uniformObject(new UniformBuffer(sizeof(UbosSkyboxes::UboObject))),
-		m_descriptorSet(nullptr),
+		m_descriptorSet(new DescriptorsHandler()),
+		m_uniformObject(new UniformHandler()),
 		m_cubemap(cubemap),
 		m_enableFog(enableFog),
 		m_blend(1.0f)
@@ -18,8 +17,8 @@ namespace Flounder
 
 	SkyboxRender::~SkyboxRender()
 	{
-		delete m_uniformObject;
 		delete m_descriptorSet;
+		delete m_uniformObject;
 		delete m_cubemap;
 	}
 
@@ -32,24 +31,24 @@ namespace Flounder
 		}
 
 		// Updates uniforms.
-		UbosSkyboxes::UboObject uboObject = {};
-		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-
 		if (m_enableFog)
 		{
-			uboObject.skyColour = Colour(*Worlds::Get()->GetSkyColour());
-			uboObject.fogColour = Colour(*Worlds::Get()->GetFog()->m_colour);
-			uboObject.fogLimits = GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Worlds::Get()->GetFog()->m_lowerLimit,
-				Worlds::Get()->GetFog()->m_upperLimit);
-			uboObject.blendFactor = m_blend;
+			m_uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+			m_uniformObject->Push("skyColour", *Worlds::Get()->GetSkyColour());
+			m_uniformObject->Push("fogColour", *Worlds::Get()->GetFog()->m_colour);
+			m_uniformObject->Push("fogLimits", GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Worlds::Get()->GetFog()->m_lowerLimit,
+				Worlds::Get()->GetFog()->m_upperLimit));
+			m_uniformObject->Push("blendFactor", m_blend);
 		}
 		else
 		{
-			uboObject.fogLimits = Vector2(-1000000.0f, -1000000.0f);
-			uboObject.blendFactor = 1.0f;
+			m_uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+			m_uniformObject->Push("skyColour", Colour::WHITE);
+			m_uniformObject->Push("fogColour", Colour::WHITE);
+			m_uniformObject->Push("fogLimits", Vector2(-1000000.0f, -1000000.0f));
+			m_uniformObject->Push("blendFactor", 1.0f);
 		}
 
-		m_uniformObject->Update(&uboObject);
 	}
 
 	void SkyboxRender::Load(LoadedValue *value)
@@ -62,7 +61,7 @@ namespace Flounder
 		value->GetChild("Cubemap", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
 	}
 
-	void SkyboxRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformBuffer *uniformScene)
+	void SkyboxRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene)
 	{
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
@@ -72,28 +71,19 @@ namespace Flounder
 			return;
 		}
 
-		/*m_uniformObject->UpdateMap("UniformObject", pipeline, {
-			{"transform", GetGameObject()->GetTransform()->GetWorldMatrix()},
-			{"skyColour", *Worlds::Get()->GetSkyColour()},
-			{"fogColour", *Worlds::Get()->GetFog()->m_colour},
-			{"fogLimits", GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Worlds::Get()->GetFog()->m_lowerLimit, Worlds::Get()->GetFog()->m_upperLimit)},
-			{"blendFactor", m_blend}
-		});*/
-
 		// Updates descriptors.
-		if (m_descriptorSet == nullptr)
+		m_descriptorSet->Push("UboScene", uniformScene);
+		m_descriptorSet->Push("UboObject", m_uniformObject);
+		m_descriptorSet->Push("samplerCubemap", m_cubemap);
+		bool descriptorsSet = m_descriptorSet->Update(pipeline);
+
+		if (!descriptorsSet)
 		{
-			m_descriptorSet = new DescriptorSet(pipeline);
+			return;
 		}
 
-		m_descriptorSet->UpdateMap({
-			{"UboScene",       uniformScene},
-			{"UboObject",      m_uniformObject},
-			{"samplerCubemap", m_cubemap}
-		});
-
 		// Draws the object.
-		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 

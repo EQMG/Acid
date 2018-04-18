@@ -189,7 +189,7 @@ namespace Flounder
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
 
-		for (auto type : *m_shaderProgram->m_descriptors)
+		for (auto type : *m_shaderProgram->GetDescriptors())
 		{
 			bindings.push_back(type.m_descriptorSetLayoutBinding);
 		}
@@ -209,7 +209,7 @@ namespace Flounder
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
 
-		for (auto type : *m_shaderProgram->m_descriptors)
+		for (auto type : *m_shaderProgram->GetDescriptors())
 		{
 			poolSizes.push_back(type.m_descriptorPoolSize);
 		}
@@ -320,8 +320,8 @@ namespace Flounder
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.m_vertexBindingDescriptions.size());
 		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.m_vertexInput.m_vertexBindingDescriptions.data();
-		//	vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_shaderProgram->m_attributeDescriptions->size());
-		//	vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_shaderProgram->m_attributeDescriptions->data();
+		//	vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_shaderProgram->GetAttributeDescriptions()->size());
+		//	vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_shaderProgram->GetAttributeDescriptions()->data();
 		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.size());
 		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.data();
 
