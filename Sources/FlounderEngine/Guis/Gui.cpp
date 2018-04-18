@@ -1,14 +1,13 @@
 ﻿#include "Gui.hpp"
 
 #include "Models/Shapes/ShapeRectangle.hpp"
-#include "UbosGuis.hpp"
 
 namespace Flounder
 {
 	Gui::Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow) :
 		UiObject(parent, rectangle),
-		m_uniformObject(new UniformBuffer(sizeof(UbosGuis::UboObject))),
-		m_descriptorSet(nullptr),
+		m_descriptorSet(new DescriptorsHandler()),
+		m_uniformObject(new UniformHandler()),
 		m_model(ShapeRectangle::Resource(0.0f, 1.0f)),
 		m_texture(texture),
 		m_selectedRow(selectedRow),
@@ -19,8 +18,8 @@ namespace Flounder
 
 	Gui::~Gui()
 	{
-		delete m_uniformObject;
 		delete m_descriptorSet;
+		delete m_uniformObject;
 		delete m_model;
 		delete m_atlasOffset;
 		delete m_colourOffset;
@@ -32,6 +31,13 @@ namespace Flounder
 		const int column = m_selectedRow % numberOfRows;
 		const int row = m_selectedRow / numberOfRows;
 		m_atlasOffset->Set(static_cast<float>(column / numberOfRows), static_cast<float>(row / numberOfRows));
+
+		// Updates uniforms.
+		m_uniformObject->Push("transform", *GetScreenTransform());
+		m_uniformObject->Push("colourOffset", *m_colourOffset);
+		m_uniformObject->Push("atlasOffset", *m_atlasOffset);
+		m_uniformObject->Push("atlasRows", static_cast<float>(m_texture->GetNumberOfRows()));
+		m_uniformObject->Push("alpha", GetAlpha());
 	}
 
 	void Gui::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)
@@ -43,24 +49,14 @@ namespace Flounder
 		}
 
 		// Updates descriptors.
-		if (m_descriptorSet == nullptr)
+		m_descriptorSet->Push("UboObject", m_uniformObject);
+		m_descriptorSet->Push("samplerColour", m_texture);
+		bool descriptorsSet = m_descriptorSet->Update(pipeline);
+
+		if (!descriptorsSet)
 		{
-			m_descriptorSet = new DescriptorSet(pipeline);
+			return;
 		}
-
-		m_descriptorSet->UpdateMap({
-			{"UboObject",     m_uniformObject},
-			{"samplerColour", m_texture}
-		});
-
-		// Updates uniforms.
-		UbosGuis::UboObject uboObject = {};
-		uboObject.transform = Vector4(*GetScreenTransform());
-		uboObject.colourOffset = Colour(*m_colourOffset);
-		uboObject.atlasOffset = Vector2(*m_atlasOffset);
-		uboObject.atlasRows = static_cast<float>(m_texture->GetNumberOfRows());
-		uboObject.alpha = GetAlpha();
-		m_uniformObject->Update(&uboObject);
 
 		VkRect2D scissorRect = {};
 		scissorRect.offset.x = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_x);
@@ -70,7 +66,7 @@ namespace Flounder
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 		// Draws the object.
-		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }
