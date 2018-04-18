@@ -1,13 +1,13 @@
 #include "ComponentRegister.hpp"
 
 #include "Skyboxes/CelestialBody.hpp"
-#include "Meshes/MeshRender.hpp"
+#include "Entities/EntityRender.hpp"
 #include "Lights/Light.hpp"
 #include "Physics/ColliderAabb.hpp"
 #include "Physics/ColliderSphere.hpp"
 #include "Physics/Rigidbody.hpp"
 #include "Particles/ParticleSystem.hpp"
-#include "Entities/MaterialEntity.hpp"
+#include "Materials/MaterialDefault.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Animations/MeshAnimated.hpp"
 #include "Shadows/ShadowRender.hpp"
@@ -21,14 +21,14 @@ namespace Flounder
 		m_components(new std::map<std::string, ComponentCreate *>())
 	{
 		RegisterComponent<CelestialBody>("CelestialBody");
-		RegisterComponent<MaterialEntity>("MeshRender");
+		RegisterComponent<EntityRender>("EntityRender");
 		RegisterComponent<Light>("Light");
 		RegisterComponent<ColliderAabb>("AabbCollider");
 		RegisterComponent<ColliderSphere>("SphereCollider");
 		RegisterComponent<ParticleSystem>("ParticleSystem");
 		RegisterComponent<Mesh>("Mesh");
 		RegisterComponent<MeshAnimated>("MeshAnimated");
-		RegisterComponent<MaterialEntity>("MaterialEntity");
+		RegisterComponent<MaterialDefault>("MaterialDefault");
 		RegisterComponent<Rigidbody>("Rigidbody");
 		RegisterComponent<ShadowRender>("ShadowRender");
 		RegisterComponent<SkyboxRender>("SkyboxRender");

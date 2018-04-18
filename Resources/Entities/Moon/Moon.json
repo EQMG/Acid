@@ -2,7 +2,7 @@
   "Mesh": {
     "Model": "Sphere_18_18_1.0"
   },
-  "MaterialEntity": {
+  "MaterialDefault": {
     "Base Colour": "#DDE2FF",
     "Diffuse Texture": "",
     "Metallic": 0.4,
@@ -25,6 +25,6 @@
   "CelestialBody": {
     "Type": 1
   },
-  "MeshRender": {
+  "EntityRender": {
   }
 }

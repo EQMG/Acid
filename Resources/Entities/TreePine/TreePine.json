@@ -17,7 +17,7 @@
   "Mesh": {
     "Model": "Resources/Entities/TreePine/Model.obj"
   },
-  "MaterialEntity": {
+  "MaterialDefault": {
     "Base Colour": "#1D611F",
     "Diffuse Texture": "Resources/Entities/TreePine/Diffuse.png",
     "Metallic": 0.0,
@@ -28,7 +28,7 @@
     "Ignore Lighting": 0,
     "Ignore Fog": 0
   },
-  "MeshRender": {
+  "EntityRender": {
   },
   "ShadowRender": {
   }

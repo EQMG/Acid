@@ -83,7 +83,7 @@ namespace Flounder
 
 		for (auto vertex : vertices)
 		{
-			free(vertex);
+			delete vertex;
 		}
 	}
 
