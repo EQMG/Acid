@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Post/IPostFilter.hpp"
 
 namespace Flounder
@@ -10,17 +9,7 @@ namespace Flounder
 		public IPostFilter
 	{
 	private:
-		struct UboScene
-		{
-			Colour screenColour;
-			float curveAmountX;
-			float curveAmountY;
-			float scanLineSize;
-			float scanIntensity;
-			float moveTime;
-		};
-
-		UniformBuffer *m_uniformScene;
+		UniformHandler *m_uniformScene;
 
 		Colour *m_screenColour;
 		float m_curveAmountX;

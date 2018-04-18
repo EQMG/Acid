@@ -3,10 +3,9 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Models/Model.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 #include "Textures/Texture.hpp"
 #include "Uis/UiObject.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace Flounder
 {
@@ -17,8 +16,8 @@ namespace Flounder
 		public UiObject
 	{
 	private:
-		UniformBuffer *m_uniformObject;
-		DescriptorSet *m_descriptorSet;
+		DescriptorsHandler *m_descriptorSet;
+		UniformHandler *m_uniformObject;
 
 		Model *m_model;
 		Texture *m_texture;

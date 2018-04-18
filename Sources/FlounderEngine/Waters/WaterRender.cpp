@@ -2,31 +2,28 @@
 
 #include "Meshes/Mesh.hpp"
 #include "MeshWater.hpp"
-#include "UbosWaters.hpp"
 
 namespace Flounder
 {
 	WaterRender::WaterRender() :
-		m_uniformObject(new UniformBuffer(sizeof(UbosWaters::UboObject))),
-		m_descriptorSet(nullptr),
+		m_descriptorSet(new DescriptorsHandler()),
+		m_uniformObject(new UniformHandler()),
 		m_colour(new Colour(MeshWater::WATER_COLOUR))
 	{
 	}
 
 	WaterRender::~WaterRender()
 	{
-		delete m_uniformObject;
 		delete m_descriptorSet;
+		delete m_uniformObject;
 		delete m_colour;
 	}
 
 	void WaterRender::Update()
 	{
 		// Updates uniforms.
-		UbosWaters::UboObject uboObject = {};
-		GetGameObject()->GetTransform()->GetWorldMatrix(&uboObject.transform);
-		uboObject.diffuseColour = Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b, 1.0f); // Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity() : 1.0f
-		m_uniformObject->Update(&uboObject);
+		m_uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		m_uniformObject->Push("diffuseColour", Colour(m_colour->m_r, m_colour->m_g, m_colour->m_b, 1.0f)); // Waters::Get()->GetEnableReflections() ? Waters::Get()->GetColourIntensity() : 1.0f
 	}
 
 	void WaterRender::Load(LoadedValue *value)
@@ -37,7 +34,7 @@ namespace Flounder
 	{
 	}
 
-	void WaterRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformBuffer *uniformScene)
+	void WaterRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene)
 	{
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
@@ -48,18 +45,17 @@ namespace Flounder
 		}
 
 		// Updates descriptors.
-		if (m_descriptorSet == nullptr)
+		m_descriptorSet->Push("UboScene", uniformScene);
+		m_descriptorSet->Push("UboObject", m_uniformObject);
+		bool descriptorsSet = m_descriptorSet->Update(pipeline);
+
+		if (!descriptorsSet)
 		{
-			m_descriptorSet = new DescriptorSet(pipeline);
+			return;
 		}
 
-		m_descriptorSet->UpdateMap({
-			{"UboScene",  uniformScene},
-			{"UboObject", m_uniformObject}
-		});
-
 		// Draws the object.
-		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 }

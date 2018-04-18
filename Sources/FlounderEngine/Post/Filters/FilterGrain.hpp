@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Post/IPostFilter.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
@@ -9,12 +8,7 @@ namespace Flounder
 		public IPostFilter
 	{
 	private:
-		struct UboScene
-		{
-			float strength;
-		};
-
-		UniformBuffer *m_uniformScene;
+		UniformHandler *m_uniformScene;
 
 		float m_strength;
 	public:

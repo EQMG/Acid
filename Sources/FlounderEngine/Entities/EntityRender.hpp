@@ -4,23 +4,22 @@
 #include "Scenes/Objects/Component.hpp"
 #include "Scenes/Objects/GameObject.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// Class used to render a GameObject as a entity.
 	/// </summary>
-	class F_EXPORT VoxelRender :
+	class F_EXPORT EntityRender :
 		public Component
 	{
 	private:
 		DescriptorsHandler *m_descriptorSet;
 		UniformHandler *m_uniformObject;
 	public:
-		VoxelRender();
+		EntityRender();
 
-		~VoxelRender();
+		~EntityRender();
 
 		void Update() override;
 
@@ -28,9 +27,9 @@ namespace Flounder
 
 		void Write(LoadedValue *value) override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene);
+		void CmdRender(const VkCommandBuffer &commandBuffer, UniformHandler *uniformScene);
 
-		std::string GetName() const override { return "VoxelRender"; };
+		std::string GetName() const override { return "EntityRender"; };
 
 		UniformHandler *GetUniformObject() const { return m_uniformObject; }
 	};

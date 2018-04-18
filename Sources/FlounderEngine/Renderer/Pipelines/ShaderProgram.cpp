@@ -250,6 +250,19 @@ namespace Flounder
 		return result;
 	}
 
+	Uniform *ShaderProgram::GetUniform(const std::string &uniformName)
+	{
+		for (auto uniform : *m_uniforms)
+		{
+			if (uniform->m_name == uniformName)
+			{
+				return uniform;
+			}
+		}
+
+		return nullptr;
+	}
+
 	UniformBlock *ShaderProgram::GetUniformBlock(const std::string &blockName)
 	{
 		for (auto uniformBlock : *m_uniformBlocks)
@@ -257,27 +270,6 @@ namespace Flounder
 			if (uniformBlock->m_name == blockName)
 			{
 				return uniformBlock;
-			}
-		}
-
-		return nullptr;
-	}
-
-	Uniform *ShaderProgram::GetBlockUniform(const std::string &blockName, const std::string &uniformName)
-	{
-		for (auto uniformBlock : *m_uniformBlocks)
-		{
-			if (uniformBlock->m_name != blockName)
-			{
-				continue;
-			}
-
-			for (auto uniform : *uniformBlock->m_uniforms)
-			{
-				if (uniform->m_name == uniformName)
-				{
-					return uniform;
-				}
 			}
 		}
 

@@ -4,7 +4,7 @@ namespace Flounder
 {
 	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag", graphicsStage, {}),
-		m_uniformScene(new UniformBuffer(sizeof(UboScene))),
+		m_uniformScene(new UniformHandler()),
 		m_blurAmount(1.0f),
 		m_centre(1.1f),
 		m_stepSize(0.004f),
@@ -19,30 +19,27 @@ namespace Flounder
 
 	void FilterTiltshift::Render(const VkCommandBuffer &commandBuffer)
 	{
-		// Updates descriptors.
-		if (m_descriptorSet == nullptr)
-		{
-			m_descriptorSet = new DescriptorSet(*m_pipeline);
-		}
-
-		m_descriptorSet->UpdateMap({
-			{"UboScene",      m_uniformScene},
-			{"writeColour",   m_pipeline->GetTexture(2)},
-			{"samplerColour", m_pipeline->GetTexture(2)}
-		});
-
 		// Updates uniforms.
-		UboScene uboScene = {};
-		uboScene.blurAmount = m_blurAmount;
-		uboScene.centre = m_centre;
-		uboScene.stepSize = m_stepSize;
-		uboScene.steps = m_steps;
-		m_uniformScene->Update(&uboScene);
+		m_uniformScene->Push("blurAmount", m_blurAmount);
+		m_uniformScene->Push("centre", m_centre);
+		m_uniformScene->Push("stepSize", m_stepSize);
+		m_uniformScene->Push("steps", m_steps);
+
+		// Updates descriptors.
+		m_descriptorSet->Push("UboScene", m_uniformScene);
+		m_descriptorSet->Push("writeColour", m_pipeline->GetTexture(2));
+		m_descriptorSet->Push("samplerColour", m_pipeline->GetTexture(2));
+		bool descriptorsSet = m_descriptorSet->Update(*m_pipeline);
+
+		if (!descriptorsSet)
+		{
+			return;
+		}
 
 		// Draws the object.
 		m_pipeline->BindPipeline(commandBuffer);
 
-		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }

@@ -10,7 +10,7 @@ namespace Flounder
 	class F_EXPORT Cubemap :
 		public IResource,
 		public Buffer,
-		public Descriptor
+		public IDescriptor
 	{
 	private:
 		static const std::vector<std::string> SIDE_FILE_SUFFIXS;
