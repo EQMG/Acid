@@ -6,15 +6,15 @@
 
 namespace Flounder
 {
-	class F_EXPORT RendererMeshes :
+	class F_EXPORT RendererEntities :
 		public IRenderer
 	{
 	private:
 		UniformBuffer *m_uniformScene;
 	public:
-		RendererMeshes(const GraphicsStage &graphicsStage);
+		RendererEntities(const GraphicsStage &graphicsStage);
 
-		~RendererMeshes();
+		~RendererEntities();
 
 		void Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};

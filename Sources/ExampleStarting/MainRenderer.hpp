@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Meshes/RendererMeshes.hpp>
+#include <Entities/RendererEntities.hpp>
 #include <Fonts/RendererFonts.hpp>
 #include <Guis/RendererGuis.hpp>
 #include <Particles/RendererParticles.hpp>
@@ -32,7 +32,7 @@ namespace Demo
 		RendererTerrains *m_rendererTerrains;
 		RendererVoxels *m_rendererVoxels;
 		RendererWaters *m_rendererWaters;
-		RendererMeshes *m_rendererMeshes;
+		RendererEntities *m_rendererEntities;
 		//	RendererParticles *m_rendererParticles;
 
 		RendererDeferred *m_rendererDeferred;
