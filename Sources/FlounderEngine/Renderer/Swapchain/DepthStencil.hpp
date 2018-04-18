@@ -1,13 +1,11 @@
 #pragma once
 
-#include "Renderer/Pipelines/Descriptor.hpp"
-#include "Renderer/Pipelines/DescriptorSet.hpp"
-#include "Renderer/Pipelines/PipelineCreate.hpp"
+#include "Renderer/Descriptors/IDescriptor.hpp"
 
 namespace Flounder
 {
 	class F_EXPORT DepthStencil :
-		public Descriptor
+		public IDescriptor
 	{
 	private:
 		VkImage m_image;

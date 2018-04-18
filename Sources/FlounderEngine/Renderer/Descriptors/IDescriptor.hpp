@@ -6,12 +6,16 @@
 
 namespace Flounder
 {
-	class F_EXPORT Descriptor
+	class F_EXPORT IDescriptor
 	{
 	public:
-		Descriptor();
+		IDescriptor()
+		{
+		}
 
-		virtual ~Descriptor();
+		virtual ~IDescriptor()
+		{
+		}
 
 		virtual VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const = 0;
 	};

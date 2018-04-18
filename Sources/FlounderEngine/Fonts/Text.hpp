@@ -5,7 +5,6 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Visual/IDriver.hpp"
 #include "Models/Model.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Uis/UiObject.hpp"
 #include "Uis/Uis.hpp"
@@ -22,8 +21,8 @@ namespace Flounder
 		public UiObject
 	{
 	private:
-		UniformBuffer *m_uniformObject;
-		DescriptorSet *m_descriptorSet;
+		DescriptorsHandler *m_descriptorSet;
+		UniformHandler *m_uniformObject;
 
 		Model *m_model;
 

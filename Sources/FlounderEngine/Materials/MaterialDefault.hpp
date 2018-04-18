@@ -6,14 +6,14 @@
 #include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Textures/Texture.hpp"
-#include "Materials/PipelineMaterial.hpp"
+#include "PipelineMaterial.hpp"
 
 namespace Flounder
 {
 	/// <summary>
 	/// Class that represents the default material shader.
 	/// </summary>
-	class F_EXPORT MaterialEntity :
+	class F_EXPORT MaterialDefault :
 		public Component
 	{
 	private:
@@ -31,12 +31,12 @@ namespace Flounder
 
 		PipelineMaterial *m_material;
 	public:
-		MaterialEntity(const Colour &baseColor = Colour::WHITE, Texture *diffuseTexture = nullptr,
+		MaterialDefault(const Colour &baseColor = Colour::WHITE, Texture *diffuseTexture = nullptr,
 						const float &metallic = 0.0f, const float &roughness = 0.0f, Texture *materialTexture = nullptr, Texture *normalTexture = nullptr,
 						const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false
 		);
 
-		~MaterialEntity();
+		~MaterialDefault();
 
 		void Update() override;
 
@@ -44,7 +44,7 @@ namespace Flounder
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "MaterialEntity"; };
+		std::string GetName() const override { return "MaterialDefault"; };
 
 		std::vector<Define> GetDefines();
 

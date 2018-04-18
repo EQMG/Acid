@@ -14,20 +14,19 @@ namespace Flounder
 	void FilterNegative::Render(const VkCommandBuffer &commandBuffer)
 	{
 		// Updates descriptors.
-		if (m_descriptorSet == nullptr)
-		{
-			m_descriptorSet = new DescriptorSet(*m_pipeline);
-		}
+		m_descriptorSet->Push("writeColour", m_pipeline->GetTexture(2));
+		m_descriptorSet->Push("samplerColour", m_pipeline->GetTexture(2));
+		bool descriptorsSet = m_descriptorSet->Update(*m_pipeline);
 
-		m_descriptorSet->UpdateMap({
-			{"writeColour",   m_pipeline->GetTexture(2)},
-			{"samplerColour", m_pipeline->GetTexture(2)}
-		});
+		if (!descriptorsSet)
+		{
+			return;
+		}
 
 		// Draws the object.
 		m_pipeline->BindPipeline(commandBuffer);
 
-		m_descriptorSet->BindDescriptor(commandBuffer);
+		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }
