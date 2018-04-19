@@ -40,7 +40,7 @@ namespace Demo
 		m_rendererTerrains(new RendererTerrains({1, 0})),
 		m_rendererVoxels(new RendererVoxels({1, 0})),
 		m_rendererWaters(new RendererWaters({1, 0})),
-		m_rendererEntities(new RendererEntities({1, 0})),
+		m_rendererMeshes(new RendererMeshes({1, 0})),
 		//	m_rendererParticles(new RendererParticles({1, 0})),
 		m_rendererDeferred(new RendererDeferred({1, 1})),
 		m_filterFxaa(new FilterFxaa({1, 2})),
@@ -60,7 +60,7 @@ namespace Demo
 		delete m_rendererTerrains;
 		delete m_rendererVoxels;
 		delete m_rendererWaters;
-		delete m_rendererEntities;
+		delete m_rendererMeshes;
 		//	delete m_rendererParticles;
 
 		delete m_rendererDeferred;
@@ -119,7 +119,7 @@ namespace Demo
 		m_rendererTerrains->Render(commandBuffer, m_infinity, *camera);
 		m_rendererVoxels->Render(commandBuffer, m_infinity, *camera);
 		m_rendererWaters->Render(commandBuffer, m_infinity, *camera);
-		m_rendererEntities->Render(commandBuffer, m_infinity, *camera);
+		m_rendererMeshes->Render(commandBuffer, m_infinity, *camera);
 		//	m_rendererParticles->Render(commandBuffer, m_infinity, *camera);
 		Renderer::Get()->NextSubpass(commandBuffer);
 

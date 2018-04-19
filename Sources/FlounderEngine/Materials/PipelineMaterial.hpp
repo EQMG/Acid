@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Resources/Resources.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Models/Model.hpp"
 #include "Textures/Texture.hpp"

@@ -8,7 +8,6 @@ namespace Flounder
 		m_filename(ToFilename(graphicsStage, pipelineCreate, defines)),
 		m_pipeline(new Pipeline(graphicsStage, pipelineCreate, defines))
 	{
-		printf("%s\n", m_filename.c_str());
 	}
 
 	PipelineMaterial::~PipelineMaterial()
@@ -32,8 +31,7 @@ namespace Flounder
 		//	auto defineLambda = [](Define a, Define b){a.name + std::to_string(a.value) + b.name + std::to_string(b.value); };
 		//	defineString = std::accumulate(std::begin(defines), std::end(defines), defineString, defineLambda);
 		std::string defineString;
-		for (auto element : defines)
-		{ defineString += element.name + element.value + "_"; }
+		for (auto element : defines) { defineString += element.name + element.value + "_"; }
 
 		return "Material_" + std::to_string(graphicsStage.renderpass) + "_" + std::to_string(graphicsStage.subpass) + "_" + shaderString + "_" + defineString;
 	}

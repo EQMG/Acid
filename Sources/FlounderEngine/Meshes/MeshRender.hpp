@@ -1,25 +1,20 @@
 #pragma once
 
-#include <vector>
-#include "Scenes/Objects/Component.hpp"
-#include "Scenes/Objects/GameObject.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Materials/IMaterial.hpp"
+#include "Mesh.hpp"
 
 namespace Flounder
 {
-	/// <summary>
-	/// Class used to render a GameObject as a entity.
-	/// </summary>
-	class F_EXPORT EntityRender :
+	class F_EXPORT MeshRender :
 		public Component
 	{
 	private:
 		DescriptorsHandler *m_descriptorSet;
 		UniformHandler *m_uniformObject;
 	public:
-		EntityRender();
+		MeshRender();
 
-		~EntityRender();
+		~MeshRender();
 
 		void Update() override;
 
@@ -29,7 +24,7 @@ namespace Flounder
 
 		void CmdRender(const VkCommandBuffer &commandBuffer, UniformHandler *uniformScene);
 
-		std::string GetName() const override { return "EntityRender"; };
+		std::string GetName() const override { return "MeshRender"; };
 
 		UniformHandler *GetUniformObject() const { return m_uniformObject; }
 	};

@@ -5,6 +5,9 @@
 
 namespace Flounder
 {
+	/// <summary>
+	/// Class that handles a descriptor set.
+	/// </summary>
 	class F_EXPORT DescriptorsHandler
 	{
 	private:

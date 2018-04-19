@@ -4,6 +4,9 @@
 
 namespace Flounder
 {
+	/// <summary>
+	/// Class that handles a uniform buffer.
+	/// </summary>
 	class F_EXPORT UniformHandler
 	{
 	private:
