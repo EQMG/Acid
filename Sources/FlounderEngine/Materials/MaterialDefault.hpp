@@ -1,12 +1,9 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
-#include "Scenes/Objects/Component.hpp"
 #include "Models/Model.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
 #include "Textures/Texture.hpp"
-#include "PipelineMaterial.hpp"
+#include "IMaterial.hpp"
 
 namespace Flounder
 {
@@ -14,7 +11,7 @@ namespace Flounder
 	/// Class that represents the default material shader.
 	/// </summary>
 	class F_EXPORT MaterialDefault :
-		public Component
+		public IMaterial
 	{
 	private:
 		Colour *m_baseColor;
@@ -43,6 +40,10 @@ namespace Flounder
 		void Load(LoadedValue *value) override;
 
 		void Write(LoadedValue *destination) override;
+
+		void PushUniforms(UniformHandler *uniformObject) override;
+
+		void PushDescriptors(DescriptorsHandler *descriptorSet) override;
 
 		std::string GetName() const override { return "MaterialDefault"; };
 
@@ -108,6 +109,6 @@ namespace Flounder
 
 		void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
 
-		PipelineMaterial *GetMaterial() const { return m_material; }
+		PipelineMaterial *GetMaterial() const override { return m_material; }
 	};
 }

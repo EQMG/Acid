@@ -5,6 +5,7 @@ namespace Flounder
 	MaterialDefault::MaterialDefault(const Colour &baseColor, Texture *diffuseTexture,
 									 const float &metallic, const float &roughness, Texture *materialTexture, Texture *normalTexture,
 									 const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
+		IMaterial(),
 		m_baseColor(new Colour(baseColor)),
 		m_diffuseTexture(diffuseTexture),
 		m_metallic(metallic),
@@ -22,9 +23,6 @@ namespace Flounder
 	MaterialDefault::~MaterialDefault()
 	{
 		delete m_baseColor;
-		//	delete m_diffuseTexture;
-		//	delete m_materialTexture;
-		//	delete m_normalTexture;
 	}
 
 	void MaterialDefault::Update()
@@ -61,23 +59,40 @@ namespace Flounder
 		destination->GetChild("Ignore Fog", true)->Set((int) m_ignoreFog);
 	}
 
+	void MaterialDefault::PushUniforms(UniformHandler *uniformObject)
+	{
+		uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject->Push("baseColor", *m_baseColor);
+		uniformObject->Push("metallic", m_metallic);
+		uniformObject->Push("roughness", m_roughness);
+		uniformObject->Push("ignoreFog", static_cast<float>(m_ignoreFog));
+		uniformObject->Push("ignoreLighting", static_cast<float>(m_ignoreLighting));
+	}
+
+	void MaterialDefault::PushDescriptors(DescriptorsHandler *descriptorSet)
+	{
+		descriptorSet->Push("samplerDiffuse", m_diffuseTexture);
+		descriptorSet->Push("samplerMaterial", m_materialTexture);
+		descriptorSet->Push("samplerNormal", m_normalTexture);
+	}
+
 	std::vector<Define> MaterialDefault::GetDefines()
 	{
 		std::vector<Define> result = {};
 
 		if (m_diffuseTexture != nullptr)
 		{
-			result.push_back({"COLOUR_MAPPING"});
+			result.push_back({"COLOUR_MAPPING", "TRUE"});
 		}
 
 		if (m_materialTexture != nullptr)
 		{
-			result.push_back({"MATERIAL_MAPPING"});
+			result.push_back({"MATERIAL_MAPPING", "TRUE"});
 		}
 
 		/*if (m_normalTexture != nullptr)
 		{
-			result.push_back({"NORMAL_MAPPING"});
+			result.push_back({"NORMAL_MAPPING", "TRUE"});
 		}*/
 
 		return result;

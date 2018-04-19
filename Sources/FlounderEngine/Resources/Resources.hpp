@@ -13,7 +13,7 @@ namespace Flounder
 		public IModule
 	{
 	private:
-		std::vector<IResource *> m_managed;
+		std::vector<IResource *> *m_managed;
 	public:
 		/// <summary>
 		/// Gets this engine instance.

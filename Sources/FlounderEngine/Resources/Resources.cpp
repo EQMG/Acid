@@ -3,16 +3,18 @@
 namespace Flounder
 {
 	Resources::Resources() :
-		m_managed(std::vector<IResource *>())
+		m_managed(new std::vector<IResource *>())
 	{
 	}
 
 	Resources::~Resources()
 	{
-		for (auto managed : m_managed)
+		for (auto managed : *m_managed)
 		{
 			delete managed;
 		}
+
+		delete m_managed;
 	}
 
 	void Resources::Update()
@@ -21,7 +23,7 @@ namespace Flounder
 
 	IResource *Resources::Get(const std::string &filename)
 	{
-		for (auto managed : m_managed)
+		for (auto managed : *m_managed)
 		{
 			if (managed != nullptr && managed->GetFilename() == filename)
 			{
@@ -34,7 +36,7 @@ namespace Flounder
 
 	void Resources::Add(IResource *managed)
 	{
-		m_managed.push_back(managed);
+		m_managed->push_back(managed);
 	}
 
 	void Resources::Remove(IResource *managed)

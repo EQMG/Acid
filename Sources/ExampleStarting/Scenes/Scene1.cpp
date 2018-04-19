@@ -7,9 +7,10 @@
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
 #include <Shadows/ShadowRender.hpp>
-#include <Entities/EntityRender.hpp>
+#include <Meshes/MeshRender.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Screenshot/Screenshot.hpp>
+#include <Animations/MeshAnimated.hpp>
 #include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
@@ -45,6 +46,7 @@ namespace Demo
 		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f), 1.0f));
 		playerObject->SetName("Player");
 		playerObject->AddComponent<FpsPlayer>();
+	//	playerObject->AddComponent<MeshAnimated>("Resources/Entities/Player/Model.json");
 
 		// Skybox.
 		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
@@ -64,7 +66,7 @@ namespace Demo
 				sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<MaterialDefault>(Colour("#ffffff"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Resources/Entities/Testing/Material.png"), Texture::Resource("Resources/Entities/Testing/Normal.png"));
-				sphere->AddComponent<EntityRender>();
+				sphere->AddComponent<MeshRender>();
 				sphere->AddComponent<ShadowRender>();
 			}
 		}
