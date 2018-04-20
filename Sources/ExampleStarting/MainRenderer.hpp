@@ -11,9 +11,6 @@
 #include <Post/Filters/FilterTiltshift.hpp>
 #include <Renderer/IManagerRender.hpp>
 #include <Shadows/RendererShadows.hpp>
-#include <Terrains/RendererTerrains.hpp>
-#include <Voxels/RendererVoxels.hpp>
-#include <Waters/RendererWaters.hpp>
 
 using namespace Flounder;
 
@@ -28,9 +25,6 @@ namespace Demo
 		RendererShadows *m_rendererShadows;
 
 		RendererMeshes *m_rendererMeshes;
-		RendererTerrains *m_rendererTerrains;
-		RendererVoxels *m_rendererVoxels;
-		RendererWaters *m_rendererWaters;
 		//	RendererParticles *m_rendererParticles;
 
 		RendererDeferred *m_rendererDeferred;

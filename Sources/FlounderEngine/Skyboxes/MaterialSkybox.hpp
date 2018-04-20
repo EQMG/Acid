@@ -1,14 +1,12 @@
 #pragma once
 
-#include "Maths/Colour.hpp"
-#include "Models/Model.hpp"
 #include "Textures/Cubemap.hpp"
 #include "Materials/IMaterial.hpp"
 
 namespace Flounder
 {
 	/// <summary>
-	/// Class that represents the default material shader.
+	/// Class that represents a skybox material shader.
 	/// </summary>
 	class F_EXPORT MaterialSkybox :
 		public IMaterial
@@ -36,8 +34,6 @@ namespace Flounder
 		void PushDescriptors(DescriptorsHandler *descriptorSet) override;
 
 		std::string GetName() const override { return "MaterialSkybox"; };
-
-		std::vector<Define> GetDefines();
 
 		Cubemap *GetCubemap() const { return m_cubemap; }
 

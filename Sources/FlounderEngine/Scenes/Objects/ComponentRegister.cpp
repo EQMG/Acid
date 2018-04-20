@@ -1,17 +1,18 @@
 #include "ComponentRegister.hpp"
 
-#include "Skyboxes/CelestialBody.hpp"
-#include "Meshes/MeshRender.hpp"
+#include "Animations/MeshAnimated.hpp"
 #include "Lights/Light.hpp"
+#include "Materials/MaterialDefault.hpp"
+#include "Meshes/MeshRender.hpp"
+#include "Particles/ParticleSystem.hpp"
 #include "Physics/ColliderSphere.hpp"
 #include "Physics/Rigidbody.hpp"
-#include "Particles/ParticleSystem.hpp"
-#include "Materials/MaterialDefault.hpp"
-#include "Animations/MeshAnimated.hpp"
 #include "Shadows/ShadowRender.hpp"
+#include "Skyboxes/CelestialBody.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
-#include "Terrains/TerrainRender.hpp"
-#include "Waters/WaterRender.hpp"
+#include "Terrains/MaterialTerrain.hpp"
+#include "Voxels/MaterialVoxel.hpp"
+#include "Waters/MaterialWater.hpp"
 
 namespace Flounder
 {
@@ -19,19 +20,20 @@ namespace Flounder
 		m_components(new std::map<std::string, ComponentCreate *>())
 	{
 		RegisterComponent<CelestialBody>("CelestialBody");
-		RegisterComponent<MeshRender>("MeshRender");
-		RegisterComponent<Light>("Light");
 		RegisterComponent<ColliderAabb>("AabbCollider");
 		RegisterComponent<ColliderSphere>("SphereCollider");
-		RegisterComponent<ParticleSystem>("ParticleSystem");
+		RegisterComponent<Light>("Light");
+		RegisterComponent<MaterialDefault>("MaterialDefault");
+		RegisterComponent<MaterialSkybox>("MaterialSkybox");
+		RegisterComponent<MaterialTerrain>("MaterialTerrain");
+		RegisterComponent<MaterialVoxel>("MaterialVoxel");
+		RegisterComponent<MaterialWater>("MaterialWater");
 		RegisterComponent<Mesh>("Mesh");
 		RegisterComponent<MeshAnimated>("MeshAnimated");
-		RegisterComponent<MaterialDefault>("MaterialDefault");
+		RegisterComponent<MeshRender>("MeshRender");
+		RegisterComponent<ParticleSystem>("ParticleSystem");
 		RegisterComponent<Rigidbody>("Rigidbody");
 		RegisterComponent<ShadowRender>("ShadowRender");
-		RegisterComponent<MaterialSkybox>("MaterialSkybox");
-		RegisterComponent<TerrainRender>("TerrainRender");
-		RegisterComponent<WaterRender>("WaterRender");
 	}
 
 	ComponentRegister::~ComponentRegister()
