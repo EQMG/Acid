@@ -22,7 +22,7 @@ namespace Flounder
 		template<typename T>
 		void Push(const T &object, const size_t &offset, const size_t &size)
 		{
-			memcpy((char*)m_data + offset, &object, size);
+			memcpy((char *) m_data + offset, &object, size);
 			m_changed = true;
 		}
 

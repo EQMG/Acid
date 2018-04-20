@@ -4,7 +4,6 @@
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
-#include <Skyboxes/SkyboxRender.hpp>
 #include <Terrains/LodBehaviour.hpp>
 #include "Configs/ConfigManager.hpp"
 #include "MainUpdater.hpp"

@@ -3,7 +3,7 @@
 #include <Inputs/Buttons/ButtonKeyboard.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Models/Shapes/ShapeSphere.hpp>
-#include <Skyboxes/SkyboxRender.hpp>
+#include <Skyboxes/MaterialSkybox.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
 #include <Shadows/ShadowRender.hpp>
@@ -47,12 +47,15 @@ namespace Demo
 		playerObject->SetName("Player");
 		playerObject->AddComponent<FpsPlayer>();
 	//	playerObject->AddComponent<MeshAnimated>("Resources/Entities/Player/Model.json");
+	//	playerObject->AddComponent<MaterialDefault>();
+	//	playerObject->AddComponent<MeshRender>();
 
 		// Skybox.
 		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
 		skyboxObject->SetName("SkyboxChapel");
 		skyboxObject->AddComponent<Mesh>(ShapeSphere::Resource(6, 6, 1.0f));
-		skyboxObject->AddComponent<SkyboxRender>(Cubemap::Resource("Resources/Skyboxes/Chapel", ".png"), false);
+		skyboxObject->AddComponent<MaterialSkybox>(Cubemap::Resource("Resources/Skyboxes/Chapel", ".png"), false);
+		skyboxObject->AddComponent<MeshRender>();
 
 		// Entities.
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));

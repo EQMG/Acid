@@ -3,14 +3,13 @@
 #include "Skyboxes/CelestialBody.hpp"
 #include "Meshes/MeshRender.hpp"
 #include "Lights/Light.hpp"
-#include "Physics/ColliderAabb.hpp"
 #include "Physics/ColliderSphere.hpp"
 #include "Physics/Rigidbody.hpp"
 #include "Particles/ParticleSystem.hpp"
 #include "Materials/MaterialDefault.hpp"
 #include "Animations/MeshAnimated.hpp"
 #include "Shadows/ShadowRender.hpp"
-#include "Skyboxes/SkyboxRender.hpp"
+#include "Skyboxes/MaterialSkybox.hpp"
 #include "Terrains/TerrainRender.hpp"
 #include "Waters/WaterRender.hpp"
 
@@ -30,7 +29,7 @@ namespace Flounder
 		RegisterComponent<MaterialDefault>("MaterialDefault");
 		RegisterComponent<Rigidbody>("Rigidbody");
 		RegisterComponent<ShadowRender>("ShadowRender");
-		RegisterComponent<SkyboxRender>("SkyboxRender");
+		RegisterComponent<MaterialSkybox>("MaterialSkybox");
 		RegisterComponent<TerrainRender>("TerrainRender");
 		RegisterComponent<WaterRender>("WaterRender");
 	}
