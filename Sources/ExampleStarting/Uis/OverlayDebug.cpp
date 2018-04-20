@@ -3,6 +3,7 @@
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Worlds/Worlds.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Guis/Gui.hpp>
 
 namespace Demo
 {
@@ -16,6 +17,10 @@ namespace Demo
 		m_timerUpdate(new Timer(0.333f))
 	{
 		//	m_textPosition->SetVisible(false);
+
+	//	Gui *box = new Gui(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.4f), "CentreRight", true, true, Vector2(0.6f, 0.6f)), Texture::Resource("Resources/Guis/Black.png"), 0);
+	//	Text *title = new Text(box, UiBound(Vector2(0.5f, 0.9f), "TopCentre", true), 3.0f, "Hello World!", Uis::Get()->m_proximaNova->GetSemibold(), JustifyLeft, 0.2f);
+	//	title->SetTextColour(Colour::WHITE);
 	}
 
 	OverlayDebug::~OverlayDebug()

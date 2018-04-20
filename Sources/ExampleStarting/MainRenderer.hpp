@@ -11,7 +11,6 @@
 #include <Post/Filters/FilterTiltshift.hpp>
 #include <Renderer/IManagerRender.hpp>
 #include <Shadows/RendererShadows.hpp>
-#include <Skyboxes/RendererSkyboxes.hpp>
 #include <Terrains/RendererTerrains.hpp>
 #include <Voxels/RendererVoxels.hpp>
 #include <Waters/RendererWaters.hpp>
@@ -28,11 +27,10 @@ namespace Demo
 
 		RendererShadows *m_rendererShadows;
 
-		RendererSkyboxes *m_rendererSkyboxes;
+		RendererMeshes *m_rendererMeshes;
 		RendererTerrains *m_rendererTerrains;
 		RendererVoxels *m_rendererVoxels;
 		RendererWaters *m_rendererWaters;
-		RendererMeshes *m_rendererMeshes;
 		//	RendererParticles *m_rendererParticles;
 
 		RendererDeferred *m_rendererDeferred;

@@ -5,7 +5,7 @@
 #include "Models/Shapes/ShapeRectangle.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Shadows/Shadows.hpp"
-#include "Skyboxes/SkyboxRender.hpp"
+#include "Skyboxes/MaterialSkybox.hpp"
 #include "Worlds/Worlds.hpp"
 
 namespace Flounder
@@ -24,7 +24,7 @@ namespace Flounder
 		m_descriptorSet(new DescriptorsHandler()),
 		m_uniformScene(new UniformHandler()),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {{"USE_IBL", "TRUE"}, {"MAX_LIGHTS", std::to_string(MAX_LIGHTS)}})),
+			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {{"USE_IBL",    "TRUE"}, {"MAX_LIGHTS", std::to_string(MAX_LIGHTS)}})),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f)),
 		m_brdflut(Texture::Resource("Resources/BrdfLut.png"))
 	{
@@ -40,7 +40,7 @@ namespace Flounder
 
 	void RendererDeferred::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		auto skyboxRender = Scenes::Get()->GetStructure()->GetComponent<SkyboxRender>();
+		auto skyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
 		Cubemap *environment = (skyboxRender == nullptr) ? nullptr : skyboxRender->GetCubemap();
 
 		// Updates uniforms.
