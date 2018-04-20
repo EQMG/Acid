@@ -37,9 +37,6 @@ namespace Demo
 		m_infinity(Vector4(0.0f, 1.0f, 0.0f, +INFINITY)),
 		m_rendererShadows(new RendererShadows({0, 0})),
 		m_rendererMeshes(new RendererMeshes({1, 0})),
-		m_rendererTerrains(new RendererTerrains({1, 0})),
-		m_rendererVoxels(new RendererVoxels({1, 0})),
-		m_rendererWaters(new RendererWaters({1, 0})),
 		//	m_rendererParticles(new RendererParticles({1, 0})),
 		m_rendererDeferred(new RendererDeferred({1, 1})),
 		m_filterFxaa(new FilterFxaa({1, 2})),
@@ -56,9 +53,6 @@ namespace Demo
 		delete m_rendererShadows;
 
 		delete m_rendererMeshes;
-		delete m_rendererTerrains;
-		delete m_rendererVoxels;
-		delete m_rendererWaters;
 		//	delete m_rendererParticles;
 
 		delete m_rendererDeferred;
@@ -114,9 +108,6 @@ namespace Demo
 
 		// Subpass 0.
 		m_rendererMeshes->Render(commandBuffer, m_infinity, *camera);
-		m_rendererTerrains->Render(commandBuffer, m_infinity, *camera);
-		m_rendererVoxels->Render(commandBuffer, m_infinity, *camera);
-		m_rendererWaters->Render(commandBuffer, m_infinity, *camera);
 		//	m_rendererParticles->Render(commandBuffer, m_infinity, *camera);
 		Renderer::Get()->NextSubpass(commandBuffer);
 

@@ -10,7 +10,7 @@ namespace Flounder
 		m_enableFog(enableFog),
 		m_blend(1.0f),
 		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Resources/Shaders/Skyboxes/Skybox.vert", "Resources/Shaders/Skyboxes/Skybox.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MRT_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT), GetDefines()))
+			VertexModel::GetVertexInput(), PIPELINE_MRT_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT), {}))
 	{
 	}
 
@@ -64,12 +64,5 @@ namespace Flounder
 	void MaterialSkybox::PushDescriptors(DescriptorsHandler *descriptorSet)
 	{
 		descriptorSet->Push("samplerCubemap", m_cubemap);
-	}
-
-	std::vector<Define> MaterialSkybox::GetDefines()
-	{
-		std::vector<Define> result = {};
-
-		return result;
 	}
 }
