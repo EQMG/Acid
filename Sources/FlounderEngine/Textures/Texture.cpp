@@ -42,7 +42,7 @@ namespace Flounder
 
 		stbi_uc *pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
 
-		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height, 1) + 1 : 1;
+		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height, 1) : 1;
 
 		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -225,11 +225,7 @@ namespace Flounder
 
 	uint32_t Texture::GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth)
 	{
-#ifdef FLOUNDER_PLATFORM_MACOS
-		return (uint32_t)std::floor(std::log2(std::max(width, std::max(height, depth))));
-#else
 		return (uint32_t) std::floor(std::log2(std::max(width, std::max(height, depth)))) + 1;
-#endif
 	}
 
 	void Texture::CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)

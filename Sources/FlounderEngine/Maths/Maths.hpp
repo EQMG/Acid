@@ -2,6 +2,7 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <algorithm>
 #include "Engine/Exports.hpp"
 
 #define PI 3.14159265358979323846f
