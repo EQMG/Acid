@@ -36,7 +36,7 @@
 # include <cassert>
 # define VULKAN_HPP_ASSERT   assert
 #endif
-static_assert( VK_HEADER_VERSION ==  73 , "Wrong VK_HEADER_VERSION!" );
+static_assert( VK_HEADER_VERSION ==  70 , "Wrong VK_HEADER_VERSION!" );
 
 // 32-bit vulkan is not typesafe for handles, so don't allow copy constructors on this platform by default.
 // To enable this feature on 32-bit platforms please define VULKAN_HPP_TYPESAFE_CONVERSION
@@ -85,12 +85,6 @@ static_assert( VK_HEADER_VERSION ==  73 , "Wrong VK_HEADER_VERSION!" );
 # define VULKAN_HPP_TYPESAFE_EXPLICIT explicit
 #endif
 
-#if defined(_MSC_VER) && (_MSC_VER <= 1800)
-# define VULKAN_HPP_CONSTEXPR
-#else
-# define VULKAN_HPP_CONSTEXPR constexpr
-#endif
-
 
 #if !defined(VULKAN_HPP_NAMESPACE)
 #define VULKAN_HPP_NAMESPACE vk
@@ -112,7 +106,7 @@ namespace VULKAN_HPP_NAMESPACE
   class Flags
   {
   public:
-    VULKAN_HPP_CONSTEXPR Flags()
+    Flags()
       : m_mask(0)
     {
     }
@@ -253,7 +247,7 @@ namespace VULKAN_HPP_NAMESPACE
   class ArrayProxy
   {
   public:
-    VULKAN_HPP_CONSTEXPR ArrayProxy(std::nullptr_t)
+    ArrayProxy(std::nullptr_t)
       : m_count(0)
       , m_ptr(nullptr)
     {}
@@ -544,7 +538,6 @@ namespace VULKAN_HPP_NAMESPACE
     eErrorIncompatibleDisplayKHR = VK_ERROR_INCOMPATIBLE_DISPLAY_KHR,
     eErrorValidationFailedEXT = VK_ERROR_VALIDATION_FAILED_EXT,
     eErrorInvalidShaderNV = VK_ERROR_INVALID_SHADER_NV,
-    eErrorFragmentationEXT = VK_ERROR_FRAGMENTATION_EXT,
     eErrorNotPermittedEXT = VK_ERROR_NOT_PERMITTED_EXT
   };
 
@@ -579,7 +572,6 @@ namespace VULKAN_HPP_NAMESPACE
     case Result::eErrorIncompatibleDisplayKHR: return "ErrorIncompatibleDisplayKHR";
     case Result::eErrorValidationFailedEXT: return "ErrorValidationFailedEXT";
     case Result::eErrorInvalidShaderNV: return "ErrorInvalidShaderNV";
-    case Result::eErrorFragmentationEXT: return "ErrorFragmentationEXT";
     case Result::eErrorNotPermittedEXT: return "ErrorNotPermittedEXT";
     default: return "invalid";
     }
@@ -825,14 +817,6 @@ namespace VULKAN_HPP_NAMESPACE
     InvalidShaderNVError( char const * message )
       : SystemError( make_error_code( Result::eErrorInvalidShaderNV ), message ) {}
   };
-  class FragmentationEXTError : public SystemError
-  {
-  public:
-    FragmentationEXTError( std::string const& message )
-      : SystemError( make_error_code( Result::eErrorFragmentationEXT ), message ) {}
-    FragmentationEXTError( char const * message )
-      : SystemError( make_error_code( Result::eErrorFragmentationEXT ), message ) {}
-  };
   class NotPermittedEXTError : public SystemError
   {
   public:
@@ -866,7 +850,6 @@ namespace VULKAN_HPP_NAMESPACE
     case Result::eErrorIncompatibleDisplayKHR: throw IncompatibleDisplayKHRError ( message );
     case Result::eErrorValidationFailedEXT: throw ValidationFailedEXTError ( message );
     case Result::eErrorInvalidShaderNV: throw InvalidShaderNVError ( message );
-    case Result::eErrorFragmentationEXT: throw FragmentationEXTError ( message );
     case Result::eErrorNotPermittedEXT: throw NotPermittedEXTError ( message );
     default: throw SystemError( make_error_code( result ) );
     }
@@ -1792,12 +1775,6 @@ public:
   {
     return ::vkFreeMemory( device, memory, pAllocator);
   }
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  VkResult vkGetAndroidHardwareBufferPropertiesANDROID( VkDevice device, const struct AHardwareBuffer* buffer, VkAndroidHardwareBufferPropertiesANDROID* pProperties  ) const
-  {
-    return ::vkGetAndroidHardwareBufferPropertiesANDROID( device, buffer, pProperties);
-  }
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
   void vkGetBufferMemoryRequirements( VkDevice device, VkBuffer buffer, VkMemoryRequirements* pMemoryRequirements  ) const
   {
     return ::vkGetBufferMemoryRequirements( device, buffer, pMemoryRequirements);
@@ -1912,12 +1889,6 @@ public:
   {
     return ::vkGetInstanceProcAddr( instance, pName);
   }
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  VkResult vkGetMemoryAndroidHardwareBufferANDROID( VkDevice device, const VkMemoryGetAndroidHardwareBufferInfoANDROID* pInfo, struct AHardwareBuffer** pBuffer  ) const
-  {
-    return ::vkGetMemoryAndroidHardwareBufferANDROID( device, pInfo, pBuffer);
-  }
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
   VkResult vkGetMemoryFdKHR( VkDevice device, const VkMemoryGetFdInfoKHR* pGetFdInfo, int* pFd  ) const
   {
     return ::vkGetMemoryFdKHR( device, pGetFdInfo, pFd);
@@ -2672,11 +2643,11 @@ public:
   class DeviceMemory
   {
   public:
-    VULKAN_HPP_CONSTEXPR DeviceMemory()
+    DeviceMemory()
       : m_deviceMemory(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR DeviceMemory( std::nullptr_t )
+    DeviceMemory( std::nullptr_t )
       : m_deviceMemory(VK_NULL_HANDLE)
     {}
 
@@ -2739,11 +2710,11 @@ public:
   class CommandPool
   {
   public:
-    VULKAN_HPP_CONSTEXPR CommandPool()
+    CommandPool()
       : m_commandPool(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR CommandPool( std::nullptr_t )
+    CommandPool( std::nullptr_t )
       : m_commandPool(VK_NULL_HANDLE)
     {}
 
@@ -2806,11 +2777,11 @@ public:
   class Buffer
   {
   public:
-    VULKAN_HPP_CONSTEXPR Buffer()
+    Buffer()
       : m_buffer(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Buffer( std::nullptr_t )
+    Buffer( std::nullptr_t )
       : m_buffer(VK_NULL_HANDLE)
     {}
 
@@ -2873,11 +2844,11 @@ public:
   class BufferView
   {
   public:
-    VULKAN_HPP_CONSTEXPR BufferView()
+    BufferView()
       : m_bufferView(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR BufferView( std::nullptr_t )
+    BufferView( std::nullptr_t )
       : m_bufferView(VK_NULL_HANDLE)
     {}
 
@@ -2940,11 +2911,11 @@ public:
   class Image
   {
   public:
-    VULKAN_HPP_CONSTEXPR Image()
+    Image()
       : m_image(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Image( std::nullptr_t )
+    Image( std::nullptr_t )
       : m_image(VK_NULL_HANDLE)
     {}
 
@@ -3007,11 +2978,11 @@ public:
   class ImageView
   {
   public:
-    VULKAN_HPP_CONSTEXPR ImageView()
+    ImageView()
       : m_imageView(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR ImageView( std::nullptr_t )
+    ImageView( std::nullptr_t )
       : m_imageView(VK_NULL_HANDLE)
     {}
 
@@ -3074,11 +3045,11 @@ public:
   class ShaderModule
   {
   public:
-    VULKAN_HPP_CONSTEXPR ShaderModule()
+    ShaderModule()
       : m_shaderModule(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR ShaderModule( std::nullptr_t )
+    ShaderModule( std::nullptr_t )
       : m_shaderModule(VK_NULL_HANDLE)
     {}
 
@@ -3141,11 +3112,11 @@ public:
   class Pipeline
   {
   public:
-    VULKAN_HPP_CONSTEXPR Pipeline()
+    Pipeline()
       : m_pipeline(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Pipeline( std::nullptr_t )
+    Pipeline( std::nullptr_t )
       : m_pipeline(VK_NULL_HANDLE)
     {}
 
@@ -3208,11 +3179,11 @@ public:
   class PipelineLayout
   {
   public:
-    VULKAN_HPP_CONSTEXPR PipelineLayout()
+    PipelineLayout()
       : m_pipelineLayout(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR PipelineLayout( std::nullptr_t )
+    PipelineLayout( std::nullptr_t )
       : m_pipelineLayout(VK_NULL_HANDLE)
     {}
 
@@ -3275,11 +3246,11 @@ public:
   class Sampler
   {
   public:
-    VULKAN_HPP_CONSTEXPR Sampler()
+    Sampler()
       : m_sampler(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Sampler( std::nullptr_t )
+    Sampler( std::nullptr_t )
       : m_sampler(VK_NULL_HANDLE)
     {}
 
@@ -3342,11 +3313,11 @@ public:
   class DescriptorSet
   {
   public:
-    VULKAN_HPP_CONSTEXPR DescriptorSet()
+    DescriptorSet()
       : m_descriptorSet(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR DescriptorSet( std::nullptr_t )
+    DescriptorSet( std::nullptr_t )
       : m_descriptorSet(VK_NULL_HANDLE)
     {}
 
@@ -3409,11 +3380,11 @@ public:
   class DescriptorSetLayout
   {
   public:
-    VULKAN_HPP_CONSTEXPR DescriptorSetLayout()
+    DescriptorSetLayout()
       : m_descriptorSetLayout(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR DescriptorSetLayout( std::nullptr_t )
+    DescriptorSetLayout( std::nullptr_t )
       : m_descriptorSetLayout(VK_NULL_HANDLE)
     {}
 
@@ -3476,11 +3447,11 @@ public:
   class DescriptorPool
   {
   public:
-    VULKAN_HPP_CONSTEXPR DescriptorPool()
+    DescriptorPool()
       : m_descriptorPool(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR DescriptorPool( std::nullptr_t )
+    DescriptorPool( std::nullptr_t )
       : m_descriptorPool(VK_NULL_HANDLE)
     {}
 
@@ -3543,11 +3514,11 @@ public:
   class Fence
   {
   public:
-    VULKAN_HPP_CONSTEXPR Fence()
+    Fence()
       : m_fence(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Fence( std::nullptr_t )
+    Fence( std::nullptr_t )
       : m_fence(VK_NULL_HANDLE)
     {}
 
@@ -3610,11 +3581,11 @@ public:
   class Semaphore
   {
   public:
-    VULKAN_HPP_CONSTEXPR Semaphore()
+    Semaphore()
       : m_semaphore(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Semaphore( std::nullptr_t )
+    Semaphore( std::nullptr_t )
       : m_semaphore(VK_NULL_HANDLE)
     {}
 
@@ -3677,11 +3648,11 @@ public:
   class Event
   {
   public:
-    VULKAN_HPP_CONSTEXPR Event()
+    Event()
       : m_event(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Event( std::nullptr_t )
+    Event( std::nullptr_t )
       : m_event(VK_NULL_HANDLE)
     {}
 
@@ -3744,11 +3715,11 @@ public:
   class QueryPool
   {
   public:
-    VULKAN_HPP_CONSTEXPR QueryPool()
+    QueryPool()
       : m_queryPool(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR QueryPool( std::nullptr_t )
+    QueryPool( std::nullptr_t )
       : m_queryPool(VK_NULL_HANDLE)
     {}
 
@@ -3811,11 +3782,11 @@ public:
   class Framebuffer
   {
   public:
-    VULKAN_HPP_CONSTEXPR Framebuffer()
+    Framebuffer()
       : m_framebuffer(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Framebuffer( std::nullptr_t )
+    Framebuffer( std::nullptr_t )
       : m_framebuffer(VK_NULL_HANDLE)
     {}
 
@@ -3878,11 +3849,11 @@ public:
   class RenderPass
   {
   public:
-    VULKAN_HPP_CONSTEXPR RenderPass()
+    RenderPass()
       : m_renderPass(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR RenderPass( std::nullptr_t )
+    RenderPass( std::nullptr_t )
       : m_renderPass(VK_NULL_HANDLE)
     {}
 
@@ -3945,11 +3916,11 @@ public:
   class PipelineCache
   {
   public:
-    VULKAN_HPP_CONSTEXPR PipelineCache()
+    PipelineCache()
       : m_pipelineCache(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR PipelineCache( std::nullptr_t )
+    PipelineCache( std::nullptr_t )
       : m_pipelineCache(VK_NULL_HANDLE)
     {}
 
@@ -4012,11 +3983,11 @@ public:
   class ObjectTableNVX
   {
   public:
-    VULKAN_HPP_CONSTEXPR ObjectTableNVX()
+    ObjectTableNVX()
       : m_objectTableNVX(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR ObjectTableNVX( std::nullptr_t )
+    ObjectTableNVX( std::nullptr_t )
       : m_objectTableNVX(VK_NULL_HANDLE)
     {}
 
@@ -4079,11 +4050,11 @@ public:
   class IndirectCommandsLayoutNVX
   {
   public:
-    VULKAN_HPP_CONSTEXPR IndirectCommandsLayoutNVX()
+    IndirectCommandsLayoutNVX()
       : m_indirectCommandsLayoutNVX(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR IndirectCommandsLayoutNVX( std::nullptr_t )
+    IndirectCommandsLayoutNVX( std::nullptr_t )
       : m_indirectCommandsLayoutNVX(VK_NULL_HANDLE)
     {}
 
@@ -4146,11 +4117,11 @@ public:
   class DescriptorUpdateTemplate
   {
   public:
-    VULKAN_HPP_CONSTEXPR DescriptorUpdateTemplate()
+    DescriptorUpdateTemplate()
       : m_descriptorUpdateTemplate(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR DescriptorUpdateTemplate( std::nullptr_t )
+    DescriptorUpdateTemplate( std::nullptr_t )
       : m_descriptorUpdateTemplate(VK_NULL_HANDLE)
     {}
 
@@ -4215,11 +4186,11 @@ public:
   class SamplerYcbcrConversion
   {
   public:
-    VULKAN_HPP_CONSTEXPR SamplerYcbcrConversion()
+    SamplerYcbcrConversion()
       : m_samplerYcbcrConversion(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR SamplerYcbcrConversion( std::nullptr_t )
+    SamplerYcbcrConversion( std::nullptr_t )
       : m_samplerYcbcrConversion(VK_NULL_HANDLE)
     {}
 
@@ -4284,11 +4255,11 @@ public:
   class ValidationCacheEXT
   {
   public:
-    VULKAN_HPP_CONSTEXPR ValidationCacheEXT()
+    ValidationCacheEXT()
       : m_validationCacheEXT(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR ValidationCacheEXT( std::nullptr_t )
+    ValidationCacheEXT( std::nullptr_t )
       : m_validationCacheEXT(VK_NULL_HANDLE)
     {}
 
@@ -4351,11 +4322,11 @@ public:
   class DisplayKHR
   {
   public:
-    VULKAN_HPP_CONSTEXPR DisplayKHR()
+    DisplayKHR()
       : m_displayKHR(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR DisplayKHR( std::nullptr_t )
+    DisplayKHR( std::nullptr_t )
       : m_displayKHR(VK_NULL_HANDLE)
     {}
 
@@ -4418,11 +4389,11 @@ public:
   class DisplayModeKHR
   {
   public:
-    VULKAN_HPP_CONSTEXPR DisplayModeKHR()
+    DisplayModeKHR()
       : m_displayModeKHR(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR DisplayModeKHR( std::nullptr_t )
+    DisplayModeKHR( std::nullptr_t )
       : m_displayModeKHR(VK_NULL_HANDLE)
     {}
 
@@ -4485,11 +4456,11 @@ public:
   class SurfaceKHR
   {
   public:
-    VULKAN_HPP_CONSTEXPR SurfaceKHR()
+    SurfaceKHR()
       : m_surfaceKHR(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR SurfaceKHR( std::nullptr_t )
+    SurfaceKHR( std::nullptr_t )
       : m_surfaceKHR(VK_NULL_HANDLE)
     {}
 
@@ -4552,11 +4523,11 @@ public:
   class SwapchainKHR
   {
   public:
-    VULKAN_HPP_CONSTEXPR SwapchainKHR()
+    SwapchainKHR()
       : m_swapchainKHR(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR SwapchainKHR( std::nullptr_t )
+    SwapchainKHR( std::nullptr_t )
       : m_swapchainKHR(VK_NULL_HANDLE)
     {}
 
@@ -4619,11 +4590,11 @@ public:
   class DebugReportCallbackEXT
   {
   public:
-    VULKAN_HPP_CONSTEXPR DebugReportCallbackEXT()
+    DebugReportCallbackEXT()
       : m_debugReportCallbackEXT(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR DebugReportCallbackEXT( std::nullptr_t )
+    DebugReportCallbackEXT( std::nullptr_t )
       : m_debugReportCallbackEXT(VK_NULL_HANDLE)
     {}
 
@@ -4686,11 +4657,11 @@ public:
   class DebugUtilsMessengerEXT
   {
   public:
-    VULKAN_HPP_CONSTEXPR DebugUtilsMessengerEXT()
+    DebugUtilsMessengerEXT()
       : m_debugUtilsMessengerEXT(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR DebugUtilsMessengerEXT( std::nullptr_t )
+    DebugUtilsMessengerEXT( std::nullptr_t )
       : m_debugUtilsMessengerEXT(VK_NULL_HANDLE)
     {}
 
@@ -8548,12 +8519,6 @@ public:
     eDebugUtilsLabelEXT = VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT,
     eDebugUtilsMessengerCallbackDataEXT = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT,
     eDebugUtilsMessengerCreateInfoEXT = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
-    eAndroidHardwareBufferUsageANDROID = VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_USAGE_ANDROID,
-    eAndroidHardwareBufferPropertiesANDROID = VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID,
-    eAndroidHardwareBufferFormatPropertiesANDROID = VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID,
-    eImportAndroidHardwareBufferInfoANDROID = VK_STRUCTURE_TYPE_IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
-    eMemoryGetAndroidHardwareBufferInfoANDROID = VK_STRUCTURE_TYPE_MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
-    eExternalFormatANDROID = VK_STRUCTURE_TYPE_EXTERNAL_FORMAT_ANDROID,
     ePhysicalDeviceSamplerFilterMinmaxPropertiesEXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT,
     eSamplerReductionModeCreateInfoEXT = VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT,
     eSampleLocationsInfoEXT = VK_STRUCTURE_TYPE_SAMPLE_LOCATIONS_INFO_EXT,
@@ -8569,16 +8534,10 @@ public:
     ePipelineCoverageModulationStateCreateInfoNV = VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV,
     eValidationCacheCreateInfoEXT = VK_STRUCTURE_TYPE_VALIDATION_CACHE_CREATE_INFO_EXT,
     eShaderModuleValidationCacheCreateInfoEXT = VK_STRUCTURE_TYPE_SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT,
-    eDescriptorSetLayoutBindingFlagsCreateInfoEXT = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT,
-    ePhysicalDeviceDescriptorIndexingFeaturesEXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT,
-    ePhysicalDeviceDescriptorIndexingPropertiesEXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT,
-    eDescriptorSetVariableDescriptorCountAllocateInfoEXT = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT,
-    eDescriptorSetVariableDescriptorCountLayoutSupportEXT = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT,
     eDeviceQueueGlobalPriorityCreateInfoEXT = VK_STRUCTURE_TYPE_DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT,
     eImportMemoryHostPointerInfoEXT = VK_STRUCTURE_TYPE_IMPORT_MEMORY_HOST_POINTER_INFO_EXT,
     eMemoryHostPointerPropertiesEXT = VK_STRUCTURE_TYPE_MEMORY_HOST_POINTER_PROPERTIES_EXT,
     ePhysicalDeviceExternalMemoryHostPropertiesEXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT,
-    ePhysicalDeviceShaderCorePropertiesAMD = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD,
     ePhysicalDeviceVertexAttributeDivisorPropertiesEXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT,
     ePipelineVertexInputDivisorStateCreateInfoEXT = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT
   };
@@ -15755,450 +15714,6 @@ public:
   };
   static_assert( sizeof( PhysicalDeviceConservativeRasterizationPropertiesEXT ) == sizeof( VkPhysicalDeviceConservativeRasterizationPropertiesEXT ), "struct and wrapper have different size!" );
 
-  struct PhysicalDeviceShaderCorePropertiesAMD
-  {
-    operator const VkPhysicalDeviceShaderCorePropertiesAMD&() const
-    {
-      return *reinterpret_cast<const VkPhysicalDeviceShaderCorePropertiesAMD*>(this);
-    }
-
-    bool operator==( PhysicalDeviceShaderCorePropertiesAMD const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( shaderEngineCount == rhs.shaderEngineCount )
-          && ( shaderArraysPerEngineCount == rhs.shaderArraysPerEngineCount )
-          && ( computeUnitsPerShaderArray == rhs.computeUnitsPerShaderArray )
-          && ( simdPerComputeUnit == rhs.simdPerComputeUnit )
-          && ( wavefrontsPerSimd == rhs.wavefrontsPerSimd )
-          && ( wavefrontSize == rhs.wavefrontSize )
-          && ( sgprsPerSimd == rhs.sgprsPerSimd )
-          && ( minSgprAllocation == rhs.minSgprAllocation )
-          && ( maxSgprAllocation == rhs.maxSgprAllocation )
-          && ( sgprAllocationGranularity == rhs.sgprAllocationGranularity )
-          && ( vgprsPerSimd == rhs.vgprsPerSimd )
-          && ( minVgprAllocation == rhs.minVgprAllocation )
-          && ( maxVgprAllocation == rhs.maxVgprAllocation )
-          && ( vgprAllocationGranularity == rhs.vgprAllocationGranularity );
-    }
-
-    bool operator!=( PhysicalDeviceShaderCorePropertiesAMD const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::ePhysicalDeviceShaderCorePropertiesAMD;
-
-  public:
-    void* pNext = nullptr;
-    uint32_t shaderEngineCount;
-    uint32_t shaderArraysPerEngineCount;
-    uint32_t computeUnitsPerShaderArray;
-    uint32_t simdPerComputeUnit;
-    uint32_t wavefrontsPerSimd;
-    uint32_t wavefrontSize;
-    uint32_t sgprsPerSimd;
-    uint32_t minSgprAllocation;
-    uint32_t maxSgprAllocation;
-    uint32_t sgprAllocationGranularity;
-    uint32_t vgprsPerSimd;
-    uint32_t minVgprAllocation;
-    uint32_t maxVgprAllocation;
-    uint32_t vgprAllocationGranularity;
-  };
-  static_assert( sizeof( PhysicalDeviceShaderCorePropertiesAMD ) == sizeof( VkPhysicalDeviceShaderCorePropertiesAMD ), "struct and wrapper have different size!" );
-
-  struct PhysicalDeviceDescriptorIndexingFeaturesEXT
-  {
-    PhysicalDeviceDescriptorIndexingFeaturesEXT( Bool32 shaderInputAttachmentArrayDynamicIndexing_ = 0, Bool32 shaderUniformTexelBufferArrayDynamicIndexing_ = 0, Bool32 shaderStorageTexelBufferArrayDynamicIndexing_ = 0, Bool32 shaderUniformBufferArrayNonUniformIndexing_ = 0, Bool32 shaderSampledImageArrayNonUniformIndexing_ = 0, Bool32 shaderStorageBufferArrayNonUniformIndexing_ = 0, Bool32 shaderStorageImageArrayNonUniformIndexing_ = 0, Bool32 shaderInputAttachmentArrayNonUniformIndexing_ = 0, Bool32 shaderUniformTexelBufferArrayNonUniformIndexing_ = 0, Bool32 shaderStorageTexelBufferArrayNonUniformIndexing_ = 0, Bool32 descriptorBindingUniformBufferUpdateAfterBind_ = 0, Bool32 descriptorBindingSampledImageUpdateAfterBind_ = 0, Bool32 descriptorBindingStorageImageUpdateAfterBind_ = 0, Bool32 descriptorBindingStorageBufferUpdateAfterBind_ = 0, Bool32 descriptorBindingUniformTexelBufferUpdateAfterBind_ = 0, Bool32 descriptorBindingStorageTexelBufferUpdateAfterBind_ = 0, Bool32 descriptorBindingUpdateUnusedWhilePending_ = 0, Bool32 descriptorBindingPartiallyBound_ = 0, Bool32 descriptorBindingVariableDescriptorCount_ = 0, Bool32 runtimeDescriptorArray_ = 0 )
-      : shaderInputAttachmentArrayDynamicIndexing( shaderInputAttachmentArrayDynamicIndexing_ )
-      , shaderUniformTexelBufferArrayDynamicIndexing( shaderUniformTexelBufferArrayDynamicIndexing_ )
-      , shaderStorageTexelBufferArrayDynamicIndexing( shaderStorageTexelBufferArrayDynamicIndexing_ )
-      , shaderUniformBufferArrayNonUniformIndexing( shaderUniformBufferArrayNonUniformIndexing_ )
-      , shaderSampledImageArrayNonUniformIndexing( shaderSampledImageArrayNonUniformIndexing_ )
-      , shaderStorageBufferArrayNonUniformIndexing( shaderStorageBufferArrayNonUniformIndexing_ )
-      , shaderStorageImageArrayNonUniformIndexing( shaderStorageImageArrayNonUniformIndexing_ )
-      , shaderInputAttachmentArrayNonUniformIndexing( shaderInputAttachmentArrayNonUniformIndexing_ )
-      , shaderUniformTexelBufferArrayNonUniformIndexing( shaderUniformTexelBufferArrayNonUniformIndexing_ )
-      , shaderStorageTexelBufferArrayNonUniformIndexing( shaderStorageTexelBufferArrayNonUniformIndexing_ )
-      , descriptorBindingUniformBufferUpdateAfterBind( descriptorBindingUniformBufferUpdateAfterBind_ )
-      , descriptorBindingSampledImageUpdateAfterBind( descriptorBindingSampledImageUpdateAfterBind_ )
-      , descriptorBindingStorageImageUpdateAfterBind( descriptorBindingStorageImageUpdateAfterBind_ )
-      , descriptorBindingStorageBufferUpdateAfterBind( descriptorBindingStorageBufferUpdateAfterBind_ )
-      , descriptorBindingUniformTexelBufferUpdateAfterBind( descriptorBindingUniformTexelBufferUpdateAfterBind_ )
-      , descriptorBindingStorageTexelBufferUpdateAfterBind( descriptorBindingStorageTexelBufferUpdateAfterBind_ )
-      , descriptorBindingUpdateUnusedWhilePending( descriptorBindingUpdateUnusedWhilePending_ )
-      , descriptorBindingPartiallyBound( descriptorBindingPartiallyBound_ )
-      , descriptorBindingVariableDescriptorCount( descriptorBindingVariableDescriptorCount_ )
-      , runtimeDescriptorArray( runtimeDescriptorArray_ )
-    {
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT( VkPhysicalDeviceDescriptorIndexingFeaturesEXT const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( PhysicalDeviceDescriptorIndexingFeaturesEXT ) );
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& operator=( VkPhysicalDeviceDescriptorIndexingFeaturesEXT const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( PhysicalDeviceDescriptorIndexingFeaturesEXT ) );
-      return *this;
-    }
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setPNext( void* pNext_ )
-    {
-      pNext = pNext_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setShaderInputAttachmentArrayDynamicIndexing( Bool32 shaderInputAttachmentArrayDynamicIndexing_ )
-    {
-      shaderInputAttachmentArrayDynamicIndexing = shaderInputAttachmentArrayDynamicIndexing_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setShaderUniformTexelBufferArrayDynamicIndexing( Bool32 shaderUniformTexelBufferArrayDynamicIndexing_ )
-    {
-      shaderUniformTexelBufferArrayDynamicIndexing = shaderUniformTexelBufferArrayDynamicIndexing_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setShaderStorageTexelBufferArrayDynamicIndexing( Bool32 shaderStorageTexelBufferArrayDynamicIndexing_ )
-    {
-      shaderStorageTexelBufferArrayDynamicIndexing = shaderStorageTexelBufferArrayDynamicIndexing_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setShaderUniformBufferArrayNonUniformIndexing( Bool32 shaderUniformBufferArrayNonUniformIndexing_ )
-    {
-      shaderUniformBufferArrayNonUniformIndexing = shaderUniformBufferArrayNonUniformIndexing_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setShaderSampledImageArrayNonUniformIndexing( Bool32 shaderSampledImageArrayNonUniformIndexing_ )
-    {
-      shaderSampledImageArrayNonUniformIndexing = shaderSampledImageArrayNonUniformIndexing_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setShaderStorageBufferArrayNonUniformIndexing( Bool32 shaderStorageBufferArrayNonUniformIndexing_ )
-    {
-      shaderStorageBufferArrayNonUniformIndexing = shaderStorageBufferArrayNonUniformIndexing_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setShaderStorageImageArrayNonUniformIndexing( Bool32 shaderStorageImageArrayNonUniformIndexing_ )
-    {
-      shaderStorageImageArrayNonUniformIndexing = shaderStorageImageArrayNonUniformIndexing_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setShaderInputAttachmentArrayNonUniformIndexing( Bool32 shaderInputAttachmentArrayNonUniformIndexing_ )
-    {
-      shaderInputAttachmentArrayNonUniformIndexing = shaderInputAttachmentArrayNonUniformIndexing_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setShaderUniformTexelBufferArrayNonUniformIndexing( Bool32 shaderUniformTexelBufferArrayNonUniformIndexing_ )
-    {
-      shaderUniformTexelBufferArrayNonUniformIndexing = shaderUniformTexelBufferArrayNonUniformIndexing_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setShaderStorageTexelBufferArrayNonUniformIndexing( Bool32 shaderStorageTexelBufferArrayNonUniformIndexing_ )
-    {
-      shaderStorageTexelBufferArrayNonUniformIndexing = shaderStorageTexelBufferArrayNonUniformIndexing_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setDescriptorBindingUniformBufferUpdateAfterBind( Bool32 descriptorBindingUniformBufferUpdateAfterBind_ )
-    {
-      descriptorBindingUniformBufferUpdateAfterBind = descriptorBindingUniformBufferUpdateAfterBind_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setDescriptorBindingSampledImageUpdateAfterBind( Bool32 descriptorBindingSampledImageUpdateAfterBind_ )
-    {
-      descriptorBindingSampledImageUpdateAfterBind = descriptorBindingSampledImageUpdateAfterBind_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setDescriptorBindingStorageImageUpdateAfterBind( Bool32 descriptorBindingStorageImageUpdateAfterBind_ )
-    {
-      descriptorBindingStorageImageUpdateAfterBind = descriptorBindingStorageImageUpdateAfterBind_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setDescriptorBindingStorageBufferUpdateAfterBind( Bool32 descriptorBindingStorageBufferUpdateAfterBind_ )
-    {
-      descriptorBindingStorageBufferUpdateAfterBind = descriptorBindingStorageBufferUpdateAfterBind_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setDescriptorBindingUniformTexelBufferUpdateAfterBind( Bool32 descriptorBindingUniformTexelBufferUpdateAfterBind_ )
-    {
-      descriptorBindingUniformTexelBufferUpdateAfterBind = descriptorBindingUniformTexelBufferUpdateAfterBind_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setDescriptorBindingStorageTexelBufferUpdateAfterBind( Bool32 descriptorBindingStorageTexelBufferUpdateAfterBind_ )
-    {
-      descriptorBindingStorageTexelBufferUpdateAfterBind = descriptorBindingStorageTexelBufferUpdateAfterBind_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setDescriptorBindingUpdateUnusedWhilePending( Bool32 descriptorBindingUpdateUnusedWhilePending_ )
-    {
-      descriptorBindingUpdateUnusedWhilePending = descriptorBindingUpdateUnusedWhilePending_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setDescriptorBindingPartiallyBound( Bool32 descriptorBindingPartiallyBound_ )
-    {
-      descriptorBindingPartiallyBound = descriptorBindingPartiallyBound_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setDescriptorBindingVariableDescriptorCount( Bool32 descriptorBindingVariableDescriptorCount_ )
-    {
-      descriptorBindingVariableDescriptorCount = descriptorBindingVariableDescriptorCount_;
-      return *this;
-    }
-
-    PhysicalDeviceDescriptorIndexingFeaturesEXT& setRuntimeDescriptorArray( Bool32 runtimeDescriptorArray_ )
-    {
-      runtimeDescriptorArray = runtimeDescriptorArray_;
-      return *this;
-    }
-
-    operator const VkPhysicalDeviceDescriptorIndexingFeaturesEXT&() const
-    {
-      return *reinterpret_cast<const VkPhysicalDeviceDescriptorIndexingFeaturesEXT*>(this);
-    }
-
-    bool operator==( PhysicalDeviceDescriptorIndexingFeaturesEXT const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( shaderInputAttachmentArrayDynamicIndexing == rhs.shaderInputAttachmentArrayDynamicIndexing )
-          && ( shaderUniformTexelBufferArrayDynamicIndexing == rhs.shaderUniformTexelBufferArrayDynamicIndexing )
-          && ( shaderStorageTexelBufferArrayDynamicIndexing == rhs.shaderStorageTexelBufferArrayDynamicIndexing )
-          && ( shaderUniformBufferArrayNonUniformIndexing == rhs.shaderUniformBufferArrayNonUniformIndexing )
-          && ( shaderSampledImageArrayNonUniformIndexing == rhs.shaderSampledImageArrayNonUniformIndexing )
-          && ( shaderStorageBufferArrayNonUniformIndexing == rhs.shaderStorageBufferArrayNonUniformIndexing )
-          && ( shaderStorageImageArrayNonUniformIndexing == rhs.shaderStorageImageArrayNonUniformIndexing )
-          && ( shaderInputAttachmentArrayNonUniformIndexing == rhs.shaderInputAttachmentArrayNonUniformIndexing )
-          && ( shaderUniformTexelBufferArrayNonUniformIndexing == rhs.shaderUniformTexelBufferArrayNonUniformIndexing )
-          && ( shaderStorageTexelBufferArrayNonUniformIndexing == rhs.shaderStorageTexelBufferArrayNonUniformIndexing )
-          && ( descriptorBindingUniformBufferUpdateAfterBind == rhs.descriptorBindingUniformBufferUpdateAfterBind )
-          && ( descriptorBindingSampledImageUpdateAfterBind == rhs.descriptorBindingSampledImageUpdateAfterBind )
-          && ( descriptorBindingStorageImageUpdateAfterBind == rhs.descriptorBindingStorageImageUpdateAfterBind )
-          && ( descriptorBindingStorageBufferUpdateAfterBind == rhs.descriptorBindingStorageBufferUpdateAfterBind )
-          && ( descriptorBindingUniformTexelBufferUpdateAfterBind == rhs.descriptorBindingUniformTexelBufferUpdateAfterBind )
-          && ( descriptorBindingStorageTexelBufferUpdateAfterBind == rhs.descriptorBindingStorageTexelBufferUpdateAfterBind )
-          && ( descriptorBindingUpdateUnusedWhilePending == rhs.descriptorBindingUpdateUnusedWhilePending )
-          && ( descriptorBindingPartiallyBound == rhs.descriptorBindingPartiallyBound )
-          && ( descriptorBindingVariableDescriptorCount == rhs.descriptorBindingVariableDescriptorCount )
-          && ( runtimeDescriptorArray == rhs.runtimeDescriptorArray );
-    }
-
-    bool operator!=( PhysicalDeviceDescriptorIndexingFeaturesEXT const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::ePhysicalDeviceDescriptorIndexingFeaturesEXT;
-
-  public:
-    void* pNext = nullptr;
-    Bool32 shaderInputAttachmentArrayDynamicIndexing;
-    Bool32 shaderUniformTexelBufferArrayDynamicIndexing;
-    Bool32 shaderStorageTexelBufferArrayDynamicIndexing;
-    Bool32 shaderUniformBufferArrayNonUniformIndexing;
-    Bool32 shaderSampledImageArrayNonUniformIndexing;
-    Bool32 shaderStorageBufferArrayNonUniformIndexing;
-    Bool32 shaderStorageImageArrayNonUniformIndexing;
-    Bool32 shaderInputAttachmentArrayNonUniformIndexing;
-    Bool32 shaderUniformTexelBufferArrayNonUniformIndexing;
-    Bool32 shaderStorageTexelBufferArrayNonUniformIndexing;
-    Bool32 descriptorBindingUniformBufferUpdateAfterBind;
-    Bool32 descriptorBindingSampledImageUpdateAfterBind;
-    Bool32 descriptorBindingStorageImageUpdateAfterBind;
-    Bool32 descriptorBindingStorageBufferUpdateAfterBind;
-    Bool32 descriptorBindingUniformTexelBufferUpdateAfterBind;
-    Bool32 descriptorBindingStorageTexelBufferUpdateAfterBind;
-    Bool32 descriptorBindingUpdateUnusedWhilePending;
-    Bool32 descriptorBindingPartiallyBound;
-    Bool32 descriptorBindingVariableDescriptorCount;
-    Bool32 runtimeDescriptorArray;
-  };
-  static_assert( sizeof( PhysicalDeviceDescriptorIndexingFeaturesEXT ) == sizeof( VkPhysicalDeviceDescriptorIndexingFeaturesEXT ), "struct and wrapper have different size!" );
-
-  struct PhysicalDeviceDescriptorIndexingPropertiesEXT
-  {
-    operator const VkPhysicalDeviceDescriptorIndexingPropertiesEXT&() const
-    {
-      return *reinterpret_cast<const VkPhysicalDeviceDescriptorIndexingPropertiesEXT*>(this);
-    }
-
-    bool operator==( PhysicalDeviceDescriptorIndexingPropertiesEXT const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( maxUpdateAfterBindDescriptorsInAllPools == rhs.maxUpdateAfterBindDescriptorsInAllPools )
-          && ( shaderUniformBufferArrayNonUniformIndexingNative == rhs.shaderUniformBufferArrayNonUniformIndexingNative )
-          && ( shaderSampledImageArrayNonUniformIndexingNative == rhs.shaderSampledImageArrayNonUniformIndexingNative )
-          && ( shaderStorageBufferArrayNonUniformIndexingNative == rhs.shaderStorageBufferArrayNonUniformIndexingNative )
-          && ( shaderStorageImageArrayNonUniformIndexingNative == rhs.shaderStorageImageArrayNonUniformIndexingNative )
-          && ( shaderInputAttachmentArrayNonUniformIndexingNative == rhs.shaderInputAttachmentArrayNonUniformIndexingNative )
-          && ( robustBufferAccessUpdateAfterBind == rhs.robustBufferAccessUpdateAfterBind )
-          && ( quadDivergentImplicitLod == rhs.quadDivergentImplicitLod )
-          && ( maxPerStageDescriptorUpdateAfterBindSamplers == rhs.maxPerStageDescriptorUpdateAfterBindSamplers )
-          && ( maxPerStageDescriptorUpdateAfterBindUniformBuffers == rhs.maxPerStageDescriptorUpdateAfterBindUniformBuffers )
-          && ( maxPerStageDescriptorUpdateAfterBindStorageBuffers == rhs.maxPerStageDescriptorUpdateAfterBindStorageBuffers )
-          && ( maxPerStageDescriptorUpdateAfterBindSampledImages == rhs.maxPerStageDescriptorUpdateAfterBindSampledImages )
-          && ( maxPerStageDescriptorUpdateAfterBindStorageImages == rhs.maxPerStageDescriptorUpdateAfterBindStorageImages )
-          && ( maxPerStageDescriptorUpdateAfterBindInputAttachments == rhs.maxPerStageDescriptorUpdateAfterBindInputAttachments )
-          && ( maxPerStageUpdateAfterBindResources == rhs.maxPerStageUpdateAfterBindResources )
-          && ( maxDescriptorSetUpdateAfterBindSamplers == rhs.maxDescriptorSetUpdateAfterBindSamplers )
-          && ( maxDescriptorSetUpdateAfterBindUniformBuffers == rhs.maxDescriptorSetUpdateAfterBindUniformBuffers )
-          && ( maxDescriptorSetUpdateAfterBindUniformBuffersDynamic == rhs.maxDescriptorSetUpdateAfterBindUniformBuffersDynamic )
-          && ( maxDescriptorSetUpdateAfterBindStorageBuffers == rhs.maxDescriptorSetUpdateAfterBindStorageBuffers )
-          && ( maxDescriptorSetUpdateAfterBindStorageBuffersDynamic == rhs.maxDescriptorSetUpdateAfterBindStorageBuffersDynamic )
-          && ( maxDescriptorSetUpdateAfterBindSampledImages == rhs.maxDescriptorSetUpdateAfterBindSampledImages )
-          && ( maxDescriptorSetUpdateAfterBindStorageImages == rhs.maxDescriptorSetUpdateAfterBindStorageImages )
-          && ( maxDescriptorSetUpdateAfterBindInputAttachments == rhs.maxDescriptorSetUpdateAfterBindInputAttachments );
-    }
-
-    bool operator!=( PhysicalDeviceDescriptorIndexingPropertiesEXT const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::ePhysicalDeviceDescriptorIndexingPropertiesEXT;
-
-  public:
-    void* pNext = nullptr;
-    uint32_t maxUpdateAfterBindDescriptorsInAllPools;
-    Bool32 shaderUniformBufferArrayNonUniformIndexingNative;
-    Bool32 shaderSampledImageArrayNonUniformIndexingNative;
-    Bool32 shaderStorageBufferArrayNonUniformIndexingNative;
-    Bool32 shaderStorageImageArrayNonUniformIndexingNative;
-    Bool32 shaderInputAttachmentArrayNonUniformIndexingNative;
-    Bool32 robustBufferAccessUpdateAfterBind;
-    Bool32 quadDivergentImplicitLod;
-    uint32_t maxPerStageDescriptorUpdateAfterBindSamplers;
-    uint32_t maxPerStageDescriptorUpdateAfterBindUniformBuffers;
-    uint32_t maxPerStageDescriptorUpdateAfterBindStorageBuffers;
-    uint32_t maxPerStageDescriptorUpdateAfterBindSampledImages;
-    uint32_t maxPerStageDescriptorUpdateAfterBindStorageImages;
-    uint32_t maxPerStageDescriptorUpdateAfterBindInputAttachments;
-    uint32_t maxPerStageUpdateAfterBindResources;
-    uint32_t maxDescriptorSetUpdateAfterBindSamplers;
-    uint32_t maxDescriptorSetUpdateAfterBindUniformBuffers;
-    uint32_t maxDescriptorSetUpdateAfterBindUniformBuffersDynamic;
-    uint32_t maxDescriptorSetUpdateAfterBindStorageBuffers;
-    uint32_t maxDescriptorSetUpdateAfterBindStorageBuffersDynamic;
-    uint32_t maxDescriptorSetUpdateAfterBindSampledImages;
-    uint32_t maxDescriptorSetUpdateAfterBindStorageImages;
-    uint32_t maxDescriptorSetUpdateAfterBindInputAttachments;
-  };
-  static_assert( sizeof( PhysicalDeviceDescriptorIndexingPropertiesEXT ) == sizeof( VkPhysicalDeviceDescriptorIndexingPropertiesEXT ), "struct and wrapper have different size!" );
-
-  struct DescriptorSetVariableDescriptorCountAllocateInfoEXT
-  {
-    DescriptorSetVariableDescriptorCountAllocateInfoEXT( uint32_t descriptorSetCount_ = 0, const uint32_t* pDescriptorCounts_ = nullptr )
-      : descriptorSetCount( descriptorSetCount_ )
-      , pDescriptorCounts( pDescriptorCounts_ )
-    {
-    }
-
-    DescriptorSetVariableDescriptorCountAllocateInfoEXT( VkDescriptorSetVariableDescriptorCountAllocateInfoEXT const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( DescriptorSetVariableDescriptorCountAllocateInfoEXT ) );
-    }
-
-    DescriptorSetVariableDescriptorCountAllocateInfoEXT& operator=( VkDescriptorSetVariableDescriptorCountAllocateInfoEXT const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( DescriptorSetVariableDescriptorCountAllocateInfoEXT ) );
-      return *this;
-    }
-    DescriptorSetVariableDescriptorCountAllocateInfoEXT& setPNext( const void* pNext_ )
-    {
-      pNext = pNext_;
-      return *this;
-    }
-
-    DescriptorSetVariableDescriptorCountAllocateInfoEXT& setDescriptorSetCount( uint32_t descriptorSetCount_ )
-    {
-      descriptorSetCount = descriptorSetCount_;
-      return *this;
-    }
-
-    DescriptorSetVariableDescriptorCountAllocateInfoEXT& setPDescriptorCounts( const uint32_t* pDescriptorCounts_ )
-    {
-      pDescriptorCounts = pDescriptorCounts_;
-      return *this;
-    }
-
-    operator const VkDescriptorSetVariableDescriptorCountAllocateInfoEXT&() const
-    {
-      return *reinterpret_cast<const VkDescriptorSetVariableDescriptorCountAllocateInfoEXT*>(this);
-    }
-
-    bool operator==( DescriptorSetVariableDescriptorCountAllocateInfoEXT const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( descriptorSetCount == rhs.descriptorSetCount )
-          && ( pDescriptorCounts == rhs.pDescriptorCounts );
-    }
-
-    bool operator!=( DescriptorSetVariableDescriptorCountAllocateInfoEXT const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::eDescriptorSetVariableDescriptorCountAllocateInfoEXT;
-
-  public:
-    const void* pNext = nullptr;
-    uint32_t descriptorSetCount;
-    const uint32_t* pDescriptorCounts;
-  };
-  static_assert( sizeof( DescriptorSetVariableDescriptorCountAllocateInfoEXT ) == sizeof( VkDescriptorSetVariableDescriptorCountAllocateInfoEXT ), "struct and wrapper have different size!" );
-
-  struct DescriptorSetVariableDescriptorCountLayoutSupportEXT
-  {
-    operator const VkDescriptorSetVariableDescriptorCountLayoutSupportEXT&() const
-    {
-      return *reinterpret_cast<const VkDescriptorSetVariableDescriptorCountLayoutSupportEXT*>(this);
-    }
-
-    bool operator==( DescriptorSetVariableDescriptorCountLayoutSupportEXT const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( maxVariableDescriptorCount == rhs.maxVariableDescriptorCount );
-    }
-
-    bool operator!=( DescriptorSetVariableDescriptorCountLayoutSupportEXT const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::eDescriptorSetVariableDescriptorCountLayoutSupportEXT;
-
-  public:
-    void* pNext = nullptr;
-    uint32_t maxVariableDescriptorCount;
-  };
-  static_assert( sizeof( DescriptorSetVariableDescriptorCountLayoutSupportEXT ) == sizeof( VkDescriptorSetVariableDescriptorCountLayoutSupportEXT ), "struct and wrapper have different size!" );
-
   struct PipelineVertexInputDivisorStateCreateInfoEXT
   {
     PipelineVertexInputDivisorStateCreateInfoEXT( uint32_t vertexBindingDivisorCount_ = 0, const VertexInputBindingDivisorDescriptionEXT* pVertexBindingDivisors_ = nullptr )
@@ -16317,239 +15832,6 @@ public:
     uint32_t maxVertexAttribDivisor;
   };
   static_assert( sizeof( PhysicalDeviceVertexAttributeDivisorPropertiesEXT ) == sizeof( VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT ), "struct and wrapper have different size!" );
-
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  struct ImportAndroidHardwareBufferInfoANDROID
-  {
-    ImportAndroidHardwareBufferInfoANDROID( struct AHardwareBuffer* buffer_ = nullptr )
-      : buffer( buffer_ )
-    {
-    }
-
-    ImportAndroidHardwareBufferInfoANDROID( VkImportAndroidHardwareBufferInfoANDROID const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( ImportAndroidHardwareBufferInfoANDROID ) );
-    }
-
-    ImportAndroidHardwareBufferInfoANDROID& operator=( VkImportAndroidHardwareBufferInfoANDROID const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( ImportAndroidHardwareBufferInfoANDROID ) );
-      return *this;
-    }
-    ImportAndroidHardwareBufferInfoANDROID& setPNext( const void* pNext_ )
-    {
-      pNext = pNext_;
-      return *this;
-    }
-
-    ImportAndroidHardwareBufferInfoANDROID& setBuffer( struct AHardwareBuffer* buffer_ )
-    {
-      buffer = buffer_;
-      return *this;
-    }
-
-    operator const VkImportAndroidHardwareBufferInfoANDROID&() const
-    {
-      return *reinterpret_cast<const VkImportAndroidHardwareBufferInfoANDROID*>(this);
-    }
-
-    bool operator==( ImportAndroidHardwareBufferInfoANDROID const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( buffer == rhs.buffer );
-    }
-
-    bool operator!=( ImportAndroidHardwareBufferInfoANDROID const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::eImportAndroidHardwareBufferInfoANDROID;
-
-  public:
-    const void* pNext = nullptr;
-    struct AHardwareBuffer* buffer;
-  };
-  static_assert( sizeof( ImportAndroidHardwareBufferInfoANDROID ) == sizeof( VkImportAndroidHardwareBufferInfoANDROID ), "struct and wrapper have different size!" );
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  struct AndroidHardwareBufferUsageANDROID
-  {
-    operator const VkAndroidHardwareBufferUsageANDROID&() const
-    {
-      return *reinterpret_cast<const VkAndroidHardwareBufferUsageANDROID*>(this);
-    }
-
-    bool operator==( AndroidHardwareBufferUsageANDROID const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( androidHardwareBufferUsage == rhs.androidHardwareBufferUsage );
-    }
-
-    bool operator!=( AndroidHardwareBufferUsageANDROID const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::eAndroidHardwareBufferUsageANDROID;
-
-  public:
-    void* pNext = nullptr;
-    uint64_t androidHardwareBufferUsage;
-  };
-  static_assert( sizeof( AndroidHardwareBufferUsageANDROID ) == sizeof( VkAndroidHardwareBufferUsageANDROID ), "struct and wrapper have different size!" );
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  struct AndroidHardwareBufferPropertiesANDROID
-  {
-    operator const VkAndroidHardwareBufferPropertiesANDROID&() const
-    {
-      return *reinterpret_cast<const VkAndroidHardwareBufferPropertiesANDROID*>(this);
-    }
-
-    bool operator==( AndroidHardwareBufferPropertiesANDROID const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( allocationSize == rhs.allocationSize )
-          && ( memoryTypeBits == rhs.memoryTypeBits );
-    }
-
-    bool operator!=( AndroidHardwareBufferPropertiesANDROID const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::eAndroidHardwareBufferPropertiesANDROID;
-
-  public:
-    void* pNext = nullptr;
-    DeviceSize allocationSize;
-    uint32_t memoryTypeBits;
-  };
-  static_assert( sizeof( AndroidHardwareBufferPropertiesANDROID ) == sizeof( VkAndroidHardwareBufferPropertiesANDROID ), "struct and wrapper have different size!" );
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  struct MemoryGetAndroidHardwareBufferInfoANDROID
-  {
-    MemoryGetAndroidHardwareBufferInfoANDROID( DeviceMemory memory_ = DeviceMemory() )
-      : memory( memory_ )
-    {
-    }
-
-    MemoryGetAndroidHardwareBufferInfoANDROID( VkMemoryGetAndroidHardwareBufferInfoANDROID const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( MemoryGetAndroidHardwareBufferInfoANDROID ) );
-    }
-
-    MemoryGetAndroidHardwareBufferInfoANDROID& operator=( VkMemoryGetAndroidHardwareBufferInfoANDROID const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( MemoryGetAndroidHardwareBufferInfoANDROID ) );
-      return *this;
-    }
-    MemoryGetAndroidHardwareBufferInfoANDROID& setPNext( const void* pNext_ )
-    {
-      pNext = pNext_;
-      return *this;
-    }
-
-    MemoryGetAndroidHardwareBufferInfoANDROID& setMemory( DeviceMemory memory_ )
-    {
-      memory = memory_;
-      return *this;
-    }
-
-    operator const VkMemoryGetAndroidHardwareBufferInfoANDROID&() const
-    {
-      return *reinterpret_cast<const VkMemoryGetAndroidHardwareBufferInfoANDROID*>(this);
-    }
-
-    bool operator==( MemoryGetAndroidHardwareBufferInfoANDROID const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( memory == rhs.memory );
-    }
-
-    bool operator!=( MemoryGetAndroidHardwareBufferInfoANDROID const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::eMemoryGetAndroidHardwareBufferInfoANDROID;
-
-  public:
-    const void* pNext = nullptr;
-    DeviceMemory memory;
-  };
-  static_assert( sizeof( MemoryGetAndroidHardwareBufferInfoANDROID ) == sizeof( VkMemoryGetAndroidHardwareBufferInfoANDROID ), "struct and wrapper have different size!" );
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  struct ExternalFormatANDROID
-  {
-    ExternalFormatANDROID( uint64_t externalFormat_ = 0 )
-      : externalFormat( externalFormat_ )
-    {
-    }
-
-    ExternalFormatANDROID( VkExternalFormatANDROID const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( ExternalFormatANDROID ) );
-    }
-
-    ExternalFormatANDROID& operator=( VkExternalFormatANDROID const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( ExternalFormatANDROID ) );
-      return *this;
-    }
-    ExternalFormatANDROID& setPNext( void* pNext_ )
-    {
-      pNext = pNext_;
-      return *this;
-    }
-
-    ExternalFormatANDROID& setExternalFormat( uint64_t externalFormat_ )
-    {
-      externalFormat = externalFormat_;
-      return *this;
-    }
-
-    operator const VkExternalFormatANDROID&() const
-    {
-      return *reinterpret_cast<const VkExternalFormatANDROID*>(this);
-    }
-
-    bool operator==( ExternalFormatANDROID const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( externalFormat == rhs.externalFormat );
-    }
-
-    bool operator!=( ExternalFormatANDROID const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::eExternalFormatANDROID;
-
-  public:
-    void* pNext = nullptr;
-    uint64_t externalFormat;
-  };
-  static_assert( sizeof( ExternalFormatANDROID ) == sizeof( VkExternalFormatANDROID ), "struct and wrapper have different size!" );
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
 
   enum class SubpassContents
   {
@@ -23061,8 +22343,7 @@ public:
 
   enum class DescriptorPoolCreateFlagBits
   {
-    eFreeDescriptorSet = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT,
-    eUpdateAfterBindEXT = VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT
+    eFreeDescriptorSet = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT
   };
 
   using DescriptorPoolCreateFlags = Flags<DescriptorPoolCreateFlagBits, VkDescriptorPoolCreateFlags>;
@@ -23081,7 +22362,7 @@ public:
   {
     enum
     {
-      allFlags = VkFlags(DescriptorPoolCreateFlagBits::eFreeDescriptorSet) | VkFlags(DescriptorPoolCreateFlagBits::eUpdateAfterBindEXT)
+      allFlags = VkFlags(DescriptorPoolCreateFlagBits::eFreeDescriptorSet)
     };
   };
 
@@ -24422,8 +23703,7 @@ public:
     eShuffle = VK_SUBGROUP_FEATURE_SHUFFLE_BIT,
     eShuffleRelative = VK_SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT,
     eClustered = VK_SUBGROUP_FEATURE_CLUSTERED_BIT,
-    eQuad = VK_SUBGROUP_FEATURE_QUAD_BIT,
-    ePartitionedNV = VK_SUBGROUP_FEATURE_PARTITIONED_BIT_NV
+    eQuad = VK_SUBGROUP_FEATURE_QUAD_BIT
   };
 
   using SubgroupFeatureFlags = Flags<SubgroupFeatureFlagBits, VkSubgroupFeatureFlags>;
@@ -24442,7 +23722,7 @@ public:
   {
     enum
     {
-      allFlags = VkFlags(SubgroupFeatureFlagBits::eBasic) | VkFlags(SubgroupFeatureFlagBits::eVote) | VkFlags(SubgroupFeatureFlagBits::eArithmetic) | VkFlags(SubgroupFeatureFlagBits::eBallot) | VkFlags(SubgroupFeatureFlagBits::eShuffle) | VkFlags(SubgroupFeatureFlagBits::eShuffleRelative) | VkFlags(SubgroupFeatureFlagBits::eClustered) | VkFlags(SubgroupFeatureFlagBits::eQuad) | VkFlags(SubgroupFeatureFlagBits::ePartitionedNV)
+      allFlags = VkFlags(SubgroupFeatureFlagBits::eBasic) | VkFlags(SubgroupFeatureFlagBits::eVote) | VkFlags(SubgroupFeatureFlagBits::eArithmetic) | VkFlags(SubgroupFeatureFlagBits::eBallot) | VkFlags(SubgroupFeatureFlagBits::eShuffle) | VkFlags(SubgroupFeatureFlagBits::eShuffleRelative) | VkFlags(SubgroupFeatureFlagBits::eClustered) | VkFlags(SubgroupFeatureFlagBits::eQuad)
     };
   };
 
@@ -25273,8 +24553,7 @@ public:
 
   enum class DescriptorSetLayoutCreateFlagBits
   {
-    ePushDescriptorKHR = VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR,
-    eUpdateAfterBindPoolEXT = VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT
+    ePushDescriptorKHR = VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR
   };
 
   using DescriptorSetLayoutCreateFlags = Flags<DescriptorSetLayoutCreateFlagBits, VkDescriptorSetLayoutCreateFlags>;
@@ -25293,7 +24572,7 @@ public:
   {
     enum
     {
-      allFlags = VkFlags(DescriptorSetLayoutCreateFlagBits::ePushDescriptorKHR) | VkFlags(DescriptorSetLayoutCreateFlagBits::eUpdateAfterBindPoolEXT)
+      allFlags = VkFlags(DescriptorSetLayoutCreateFlagBits::ePushDescriptorKHR)
     };
   };
 
@@ -25387,7 +24666,6 @@ public:
     eD3D12Resource = VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT,
     eD3D12ResourceKHR = VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT,
     eDmaBufEXT = VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT,
-    eAndroidHardwareBufferANDROID = VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID,
     eHostAllocationEXT = VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_BIT_EXT,
     eHostMappedForeignMemoryEXT = VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT
   };
@@ -25408,7 +24686,7 @@ public:
   {
     enum
     {
-      allFlags = VkFlags(ExternalMemoryHandleTypeFlagBits::eOpaqueFd) | VkFlags(ExternalMemoryHandleTypeFlagBits::eOpaqueWin32) | VkFlags(ExternalMemoryHandleTypeFlagBits::eOpaqueWin32Kmt) | VkFlags(ExternalMemoryHandleTypeFlagBits::eD3D11Texture) | VkFlags(ExternalMemoryHandleTypeFlagBits::eD3D11TextureKmt) | VkFlags(ExternalMemoryHandleTypeFlagBits::eD3D12Heap) | VkFlags(ExternalMemoryHandleTypeFlagBits::eD3D12Resource) | VkFlags(ExternalMemoryHandleTypeFlagBits::eDmaBufEXT) | VkFlags(ExternalMemoryHandleTypeFlagBits::eAndroidHardwareBufferANDROID) | VkFlags(ExternalMemoryHandleTypeFlagBits::eHostAllocationEXT) | VkFlags(ExternalMemoryHandleTypeFlagBits::eHostMappedForeignMemoryEXT)
+      allFlags = VkFlags(ExternalMemoryHandleTypeFlagBits::eOpaqueFd) | VkFlags(ExternalMemoryHandleTypeFlagBits::eOpaqueWin32) | VkFlags(ExternalMemoryHandleTypeFlagBits::eOpaqueWin32Kmt) | VkFlags(ExternalMemoryHandleTypeFlagBits::eD3D11Texture) | VkFlags(ExternalMemoryHandleTypeFlagBits::eD3D11TextureKmt) | VkFlags(ExternalMemoryHandleTypeFlagBits::eD3D12Heap) | VkFlags(ExternalMemoryHandleTypeFlagBits::eD3D12Resource) | VkFlags(ExternalMemoryHandleTypeFlagBits::eDmaBufEXT) | VkFlags(ExternalMemoryHandleTypeFlagBits::eHostAllocationEXT) | VkFlags(ExternalMemoryHandleTypeFlagBits::eHostMappedForeignMemoryEXT)
     };
   };
 
@@ -28916,50 +28194,6 @@ public:
 
   using SamplerYcbcrConversionCreateInfoKHR = SamplerYcbcrConversionCreateInfo;
 
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  struct AndroidHardwareBufferFormatPropertiesANDROID
-  {
-    operator const VkAndroidHardwareBufferFormatPropertiesANDROID&() const
-    {
-      return *reinterpret_cast<const VkAndroidHardwareBufferFormatPropertiesANDROID*>(this);
-    }
-
-    bool operator==( AndroidHardwareBufferFormatPropertiesANDROID const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( format == rhs.format )
-          && ( externalFormat == rhs.externalFormat )
-          && ( formatFeatures == rhs.formatFeatures )
-          && ( samplerYcbcrConversionComponents == rhs.samplerYcbcrConversionComponents )
-          && ( suggestedYcbcrModel == rhs.suggestedYcbcrModel )
-          && ( suggestedYcbcrRange == rhs.suggestedYcbcrRange )
-          && ( suggestedXChromaOffset == rhs.suggestedXChromaOffset )
-          && ( suggestedYChromaOffset == rhs.suggestedYChromaOffset );
-    }
-
-    bool operator!=( AndroidHardwareBufferFormatPropertiesANDROID const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::eAndroidHardwareBufferFormatPropertiesANDROID;
-
-  public:
-    void* pNext = nullptr;
-    Format format;
-    uint64_t externalFormat;
-    FormatFeatureFlags formatFeatures;
-    ComponentMapping samplerYcbcrConversionComponents;
-    SamplerYcbcrModelConversion suggestedYcbcrModel;
-    SamplerYcbcrRange suggestedYcbcrRange;
-    ChromaLocation suggestedXChromaOffset;
-    ChromaLocation suggestedYChromaOffset;
-  };
-  static_assert( sizeof( AndroidHardwareBufferFormatPropertiesANDROID ) == sizeof( VkAndroidHardwareBufferFormatPropertiesANDROID ), "struct and wrapper have different size!" );
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-
   enum class BlendOverlapEXT
   {
     eUncorrelated = VK_BLEND_OVERLAP_UNCORRELATED_EXT,
@@ -29440,98 +28674,6 @@ public:
   };
   static_assert( sizeof( PipelineRasterizationConservativeStateCreateInfoEXT ) == sizeof( VkPipelineRasterizationConservativeStateCreateInfoEXT ), "struct and wrapper have different size!" );
 
-  enum class DescriptorBindingFlagBitsEXT
-  {
-    eUpdateAfterBind = VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT,
-    eUpdateUnusedWhilePending = VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT,
-    ePartiallyBound = VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT,
-    eVariableDescriptorCount = VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT
-  };
-
-  using DescriptorBindingFlagsEXT = Flags<DescriptorBindingFlagBitsEXT, VkDescriptorBindingFlagsEXT>;
-
-  VULKAN_HPP_INLINE DescriptorBindingFlagsEXT operator|( DescriptorBindingFlagBitsEXT bit0, DescriptorBindingFlagBitsEXT bit1 )
-  {
-    return DescriptorBindingFlagsEXT( bit0 ) | bit1;
-  }
-
-  VULKAN_HPP_INLINE DescriptorBindingFlagsEXT operator~( DescriptorBindingFlagBitsEXT bits )
-  {
-    return ~( DescriptorBindingFlagsEXT( bits ) );
-  }
-
-  template <> struct FlagTraits<DescriptorBindingFlagBitsEXT>
-  {
-    enum
-    {
-      allFlags = VkFlags(DescriptorBindingFlagBitsEXT::eUpdateAfterBind) | VkFlags(DescriptorBindingFlagBitsEXT::eUpdateUnusedWhilePending) | VkFlags(DescriptorBindingFlagBitsEXT::ePartiallyBound) | VkFlags(DescriptorBindingFlagBitsEXT::eVariableDescriptorCount)
-    };
-  };
-
-  struct DescriptorSetLayoutBindingFlagsCreateInfoEXT
-  {
-    DescriptorSetLayoutBindingFlagsCreateInfoEXT( uint32_t bindingCount_ = 0, const DescriptorBindingFlagsEXT* pBindingFlags_ = nullptr )
-      : bindingCount( bindingCount_ )
-      , pBindingFlags( pBindingFlags_ )
-    {
-    }
-
-    DescriptorSetLayoutBindingFlagsCreateInfoEXT( VkDescriptorSetLayoutBindingFlagsCreateInfoEXT const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( DescriptorSetLayoutBindingFlagsCreateInfoEXT ) );
-    }
-
-    DescriptorSetLayoutBindingFlagsCreateInfoEXT& operator=( VkDescriptorSetLayoutBindingFlagsCreateInfoEXT const & rhs )
-    {
-      memcpy( this, &rhs, sizeof( DescriptorSetLayoutBindingFlagsCreateInfoEXT ) );
-      return *this;
-    }
-    DescriptorSetLayoutBindingFlagsCreateInfoEXT& setPNext( const void* pNext_ )
-    {
-      pNext = pNext_;
-      return *this;
-    }
-
-    DescriptorSetLayoutBindingFlagsCreateInfoEXT& setBindingCount( uint32_t bindingCount_ )
-    {
-      bindingCount = bindingCount_;
-      return *this;
-    }
-
-    DescriptorSetLayoutBindingFlagsCreateInfoEXT& setPBindingFlags( const DescriptorBindingFlagsEXT* pBindingFlags_ )
-    {
-      pBindingFlags = pBindingFlags_;
-      return *this;
-    }
-
-    operator const VkDescriptorSetLayoutBindingFlagsCreateInfoEXT&() const
-    {
-      return *reinterpret_cast<const VkDescriptorSetLayoutBindingFlagsCreateInfoEXT*>(this);
-    }
-
-    bool operator==( DescriptorSetLayoutBindingFlagsCreateInfoEXT const& rhs ) const
-    {
-      return ( sType == rhs.sType )
-          && ( pNext == rhs.pNext )
-          && ( bindingCount == rhs.bindingCount )
-          && ( pBindingFlags == rhs.pBindingFlags );
-    }
-
-    bool operator!=( DescriptorSetLayoutBindingFlagsCreateInfoEXT const& rhs ) const
-    {
-      return !operator==( rhs );
-    }
-
-  private:
-    StructureType sType = StructureType::eDescriptorSetLayoutBindingFlagsCreateInfoEXT;
-
-  public:
-    const void* pNext = nullptr;
-    uint32_t bindingCount;
-    const DescriptorBindingFlagsEXT* pBindingFlags;
-  };
-  static_assert( sizeof( DescriptorSetLayoutBindingFlagsCreateInfoEXT ) == sizeof( VkDescriptorSetLayoutBindingFlagsCreateInfoEXT ), "struct and wrapper have different size!" );
-
   template<typename Dispatch = DispatchLoaderStatic>
   Result enumerateInstanceVersion( uint32_t* pApiVersion, Dispatch const &d = Dispatch() );
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
@@ -29631,11 +28773,11 @@ public:
   class CommandBuffer
   {
   public:
-    VULKAN_HPP_CONSTEXPR CommandBuffer()
+    CommandBuffer()
       : m_commandBuffer(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR CommandBuffer( std::nullptr_t )
+    CommandBuffer( std::nullptr_t )
       : m_commandBuffer(VK_NULL_HANDLE)
     {}
 
@@ -31057,11 +30199,11 @@ public:
   class Queue
   {
   public:
-    VULKAN_HPP_CONSTEXPR Queue()
+    Queue()
       : m_queue(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Queue( std::nullptr_t )
+    Queue( std::nullptr_t )
       : m_queue(VK_NULL_HANDLE)
     {}
 
@@ -31326,11 +30468,11 @@ public:
   class Device
   {
   public:
-    VULKAN_HPP_CONSTEXPR Device()
+    Device()
       : m_device(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Device( std::nullptr_t )
+    Device( std::nullptr_t )
       : m_device(VK_NULL_HANDLE)
     {}
 
@@ -32370,7 +31512,7 @@ public:
     Result getSwapchainCounterEXT( SwapchainKHR swapchain, SurfaceCounterFlagBitsEXT counter, uint64_t* pCounterValue, Dispatch const &d = Dispatch() ) const;
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
     template<typename Dispatch = DispatchLoaderStatic>
-    ResultValueType<uint64_t>::type getSwapchainCounterEXT( SwapchainKHR swapchain, SurfaceCounterFlagBitsEXT counter, Dispatch const &d = Dispatch() ) const;
+    ResultValue<uint64_t> getSwapchainCounterEXT( SwapchainKHR swapchain, SurfaceCounterFlagBitsEXT counter, Dispatch const &d = Dispatch() ) const;
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
     template<typename Dispatch = DispatchLoaderStatic>
@@ -32653,8 +31795,6 @@ public:
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
     template<typename Dispatch = DispatchLoaderStatic>
     DescriptorSetLayoutSupport getDescriptorSetLayoutSupport( const DescriptorSetLayoutCreateInfo & createInfo, Dispatch const &d = Dispatch() ) const;
-    template <typename ...T, typename Dispatch = DispatchLoaderStatic>
-    StructureChain<T...> getDescriptorSetLayoutSupport( const DescriptorSetLayoutCreateInfo & createInfo, Dispatch const &d = Dispatch() ) const;
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
     template<typename Dispatch = DispatchLoaderStatic>
@@ -32662,8 +31802,6 @@ public:
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
     template<typename Dispatch = DispatchLoaderStatic>
     DescriptorSetLayoutSupport getDescriptorSetLayoutSupportKHR( const DescriptorSetLayoutCreateInfo & createInfo, Dispatch const &d = Dispatch() ) const;
-    template <typename ...T, typename Dispatch = DispatchLoaderStatic>
-    StructureChain<T...> getDescriptorSetLayoutSupportKHR( const DescriptorSetLayoutCreateInfo & createInfo, Dispatch const &d = Dispatch() ) const;
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
     template<typename Dispatch = DispatchLoaderStatic>
@@ -32693,26 +31831,6 @@ public:
     template<typename Dispatch = DispatchLoaderStatic>
     ResultValueType<MemoryHostPointerPropertiesEXT>::type getMemoryHostPointerPropertiesEXT( ExternalMemoryHandleTypeFlagBits handleType, const void* pHostPointer, Dispatch const &d = Dispatch() ) const;
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
-
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-    template<typename Dispatch = DispatchLoaderStatic>
-    Result getAndroidHardwareBufferPropertiesANDROID( const struct AHardwareBuffer* buffer, AndroidHardwareBufferPropertiesANDROID* pProperties, Dispatch const &d = Dispatch() ) const;
-#ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-    template<typename Dispatch = DispatchLoaderStatic>
-    ResultValueType<AndroidHardwareBufferPropertiesANDROID>::type getAndroidHardwareBufferPropertiesANDROID( const struct AHardwareBuffer & buffer, Dispatch const &d = Dispatch() ) const;
-    template <typename ...T, typename Dispatch = DispatchLoaderStatic>
-    typename ResultValueType<StructureChain<T...>>::type getAndroidHardwareBufferPropertiesANDROID( const struct AHardwareBuffer & buffer, Dispatch const &d = Dispatch() ) const;
-#endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-    template<typename Dispatch = DispatchLoaderStatic>
-    Result getMemoryAndroidHardwareBufferANDROID( const MemoryGetAndroidHardwareBufferInfoANDROID* pInfo, struct AHardwareBuffer** pBuffer, Dispatch const &d = Dispatch() ) const;
-#ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-    template<typename Dispatch = DispatchLoaderStatic>
-    ResultValueType<struct AHardwareBuffer*>::type getMemoryAndroidHardwareBufferANDROID( const MemoryGetAndroidHardwareBufferInfoANDROID & info, Dispatch const &d = Dispatch() ) const;
-#endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
 
 
 
@@ -34947,11 +34065,11 @@ public:
   }
 #ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
   template<typename Dispatch>
-  VULKAN_HPP_INLINE ResultValueType<uint64_t>::type Device::getSwapchainCounterEXT( SwapchainKHR swapchain, SurfaceCounterFlagBitsEXT counter, Dispatch const &d ) const
+  VULKAN_HPP_INLINE ResultValue<uint64_t> Device::getSwapchainCounterEXT( SwapchainKHR swapchain, SurfaceCounterFlagBitsEXT counter, Dispatch const &d ) const
   {
     uint64_t counterValue;
     Result result = static_cast<Result>( d.vkGetSwapchainCounterEXT( m_device, static_cast<VkSwapchainKHR>( swapchain ), static_cast<VkSurfaceCounterFlagBitsEXT>( counter ), &counterValue ) );
-    return createResultValue( result, counterValue, VULKAN_HPP_NAMESPACE_STRING"::Device::getSwapchainCounterEXT" );
+    return createResultValue( result, counterValue, VULKAN_HPP_NAMESPACE_STRING"::Device::getSwapchainCounterEXT", { Result::eSuccess, Result::eErrorDeviceLost, Result::eErrorOutOfDateKHR } );
   }
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
@@ -35623,14 +34741,6 @@ public:
     d.vkGetDescriptorSetLayoutSupport( m_device, reinterpret_cast<const VkDescriptorSetLayoutCreateInfo*>( &createInfo ), reinterpret_cast<VkDescriptorSetLayoutSupport*>( &support ) );
     return support;
   }
-  template <typename ...T, typename Dispatch>
-  VULKAN_HPP_INLINE StructureChain<T...> Device::getDescriptorSetLayoutSupport( const DescriptorSetLayoutCreateInfo & createInfo, Dispatch const &d ) const
-  {
-    StructureChain<T...> structureChain;
-    DescriptorSetLayoutSupport& support = structureChain.template get<DescriptorSetLayoutSupport>();
-    d.vkGetDescriptorSetLayoutSupport( m_device, reinterpret_cast<const VkDescriptorSetLayoutCreateInfo*>( &createInfo ), reinterpret_cast<VkDescriptorSetLayoutSupport*>( &support ) );
-    return structureChain;
-  }
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
   template<typename Dispatch>
@@ -35645,14 +34755,6 @@ public:
     DescriptorSetLayoutSupport support;
     d.vkGetDescriptorSetLayoutSupportKHR( m_device, reinterpret_cast<const VkDescriptorSetLayoutCreateInfo*>( &createInfo ), reinterpret_cast<VkDescriptorSetLayoutSupport*>( &support ) );
     return support;
-  }
-  template <typename ...T, typename Dispatch>
-  VULKAN_HPP_INLINE StructureChain<T...> Device::getDescriptorSetLayoutSupportKHR( const DescriptorSetLayoutCreateInfo & createInfo, Dispatch const &d ) const
-  {
-    StructureChain<T...> structureChain;
-    DescriptorSetLayoutSupport& support = structureChain.template get<DescriptorSetLayoutSupport>();
-    d.vkGetDescriptorSetLayoutSupportKHR( m_device, reinterpret_cast<const VkDescriptorSetLayoutCreateInfo*>( &createInfo ), reinterpret_cast<VkDescriptorSetLayoutSupport*>( &support ) );
-    return structureChain;
   }
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
@@ -35726,48 +34828,6 @@ public:
   }
 #endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
 
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  template<typename Dispatch>
-  VULKAN_HPP_INLINE Result Device::getAndroidHardwareBufferPropertiesANDROID( const struct AHardwareBuffer* buffer, AndroidHardwareBufferPropertiesANDROID* pProperties, Dispatch const &d) const
-  {
-    return static_cast<Result>( d.vkGetAndroidHardwareBufferPropertiesANDROID( m_device, buffer, reinterpret_cast<VkAndroidHardwareBufferPropertiesANDROID*>( pProperties ) ) );
-  }
-#ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-  template<typename Dispatch>
-  VULKAN_HPP_INLINE ResultValueType<AndroidHardwareBufferPropertiesANDROID>::type Device::getAndroidHardwareBufferPropertiesANDROID( const struct AHardwareBuffer & buffer, Dispatch const &d ) const
-  {
-    AndroidHardwareBufferPropertiesANDROID properties;
-    Result result = static_cast<Result>( d.vkGetAndroidHardwareBufferPropertiesANDROID( m_device, buffer, reinterpret_cast<VkAndroidHardwareBufferPropertiesANDROID*>( &properties ) ) );
-    return createResultValue( result, properties, VULKAN_HPP_NAMESPACE_STRING"::Device::getAndroidHardwareBufferPropertiesANDROID" );
-  }
-  template <typename ...T, typename Dispatch>
-  VULKAN_HPP_INLINE typename ResultValueType<StructureChain<T...>>::type Device::getAndroidHardwareBufferPropertiesANDROID( const struct AHardwareBuffer & buffer, Dispatch const &d ) const
-  {
-    StructureChain<T...> structureChain;
-    AndroidHardwareBufferPropertiesANDROID& properties = structureChain.template get<AndroidHardwareBufferPropertiesANDROID>();
-    Result result = static_cast<Result>( d.vkGetAndroidHardwareBufferPropertiesANDROID( m_device, buffer, reinterpret_cast<VkAndroidHardwareBufferPropertiesANDROID*>( &properties ) ) );
-    return createResultValue( result, structureChain, VULKAN_HPP_NAMESPACE_STRING"::Device::getAndroidHardwareBufferPropertiesANDROID" );
-  }
-#endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  template<typename Dispatch>
-  VULKAN_HPP_INLINE Result Device::getMemoryAndroidHardwareBufferANDROID( const MemoryGetAndroidHardwareBufferInfoANDROID* pInfo, struct AHardwareBuffer** pBuffer, Dispatch const &d) const
-  {
-    return static_cast<Result>( d.vkGetMemoryAndroidHardwareBufferANDROID( m_device, reinterpret_cast<const VkMemoryGetAndroidHardwareBufferInfoANDROID*>( pInfo ), pBuffer ) );
-  }
-#ifndef VULKAN_HPP_DISABLE_ENHANCED_MODE
-  template<typename Dispatch>
-  VULKAN_HPP_INLINE ResultValueType<struct AHardwareBuffer*>::type Device::getMemoryAndroidHardwareBufferANDROID( const MemoryGetAndroidHardwareBufferInfoANDROID & info, Dispatch const &d ) const
-  {
-    struct AHardwareBuffer* buffer;
-    Result result = static_cast<Result>( d.vkGetMemoryAndroidHardwareBufferANDROID( m_device, reinterpret_cast<const VkMemoryGetAndroidHardwareBufferInfoANDROID*>( &info ), &buffer ) );
-    return createResultValue( result, buffer, VULKAN_HPP_NAMESPACE_STRING"::Device::getMemoryAndroidHardwareBufferANDROID" );
-  }
-#endif /*VULKAN_HPP_DISABLE_ENHANCED_MODE*/
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-
 #ifndef VULKAN_HPP_NO_SMART_HANDLE
 
   template <> class UniqueHandleTraits<Device> {public: using deleter = ObjectDestroy<NoParent>; };
@@ -35777,11 +34837,11 @@ public:
   class PhysicalDevice
   {
   public:
-    VULKAN_HPP_CONSTEXPR PhysicalDevice()
+    PhysicalDevice()
       : m_physicalDevice(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR PhysicalDevice( std::nullptr_t )
+    PhysicalDevice( std::nullptr_t )
       : m_physicalDevice(VK_NULL_HANDLE)
     {}
 
@@ -36368,7 +35428,7 @@ public:
     Device device;
     Result result = static_cast<Result>( d.vkCreateDevice( m_physicalDevice, reinterpret_cast<const VkDeviceCreateInfo*>( &createInfo ), reinterpret_cast<const VkAllocationCallbacks*>( static_cast<const AllocationCallbacks*>( allocator ) ), reinterpret_cast<VkDevice*>( &device ) ) );
 
-    ObjectDestroy<NoParent> deleter( allocator );
+    ObjectDestroy<NoParent> deleter( *this, allocator );
     return createResultValue( result, device, VULKAN_HPP_NAMESPACE_STRING"::PhysicalDevice::createDeviceUnique", deleter );
   }
 #endif /*VULKAN_HPP_NO_SMART_HANDLE*/
@@ -37474,11 +36534,11 @@ public:
   class Instance
   {
   public:
-    VULKAN_HPP_CONSTEXPR Instance()
+    Instance()
       : m_instance(VK_NULL_HANDLE)
     {}
 
-    VULKAN_HPP_CONSTEXPR Instance( std::nullptr_t )
+    Instance( std::nullptr_t )
       : m_instance(VK_NULL_HANDLE)
     {}
 
@@ -38509,24 +37569,8 @@ public:
   template <> struct isStructureChainValid<PhysicalDeviceFeatures2, PhysicalDeviceShaderDrawParameterFeatures>{ enum { value = true }; };
   template <> struct isStructureChainValid<PhysicalDeviceProperties2, PhysicalDeviceExternalMemoryHostPropertiesEXT>{ enum { value = true }; };
   template <> struct isStructureChainValid<PhysicalDeviceProperties2, PhysicalDeviceConservativeRasterizationPropertiesEXT>{ enum { value = true }; };
-  template <> struct isStructureChainValid<PhysicalDeviceProperties2, PhysicalDeviceShaderCorePropertiesAMD>{ enum { value = true }; };
-  template <> struct isStructureChainValid<PhysicalDeviceFeatures2, PhysicalDeviceDescriptorIndexingFeaturesEXT>{ enum { value = true }; };
-  template <> struct isStructureChainValid<DeviceCreateInfo, PhysicalDeviceDescriptorIndexingFeaturesEXT>{ enum { value = true }; };
-  template <> struct isStructureChainValid<PhysicalDeviceProperties2, PhysicalDeviceDescriptorIndexingPropertiesEXT>{ enum { value = true }; };
-  template <> struct isStructureChainValid<DescriptorSetAllocateInfo, DescriptorSetVariableDescriptorCountAllocateInfoEXT>{ enum { value = true }; };
-  template <> struct isStructureChainValid<DescriptorSetLayoutSupport, DescriptorSetVariableDescriptorCountLayoutSupportEXT>{ enum { value = true }; };
   template <> struct isStructureChainValid<PipelineVertexInputStateCreateInfo, PipelineVertexInputDivisorStateCreateInfoEXT>{ enum { value = true }; };
   template <> struct isStructureChainValid<PhysicalDeviceProperties2, PhysicalDeviceVertexAttributeDivisorPropertiesEXT>{ enum { value = true }; };
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  template <> struct isStructureChainValid<MemoryAllocateInfo, ImportAndroidHardwareBufferInfoANDROID>{ enum { value = true }; };
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  template <> struct isStructureChainValid<ImageFormatProperties2, AndroidHardwareBufferUsageANDROID>{ enum { value = true }; };
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  template <> struct isStructureChainValid<ImageCreateInfo, ExternalFormatANDROID>{ enum { value = true }; };
-  template <> struct isStructureChainValid<SamplerYcbcrConversionCreateInfo, ExternalFormatANDROID>{ enum { value = true }; };
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
   template <> struct isStructureChainValid<SurfaceCapabilities2KHR, SharedPresentSurfaceCapabilitiesKHR>{ enum { value = true }; };
   template <> struct isStructureChainValid<ImageViewCreateInfo, ImageViewUsageCreateInfo>{ enum { value = true }; };
   template <> struct isStructureChainValid<RenderPassCreateInfo, RenderPassInputAttachmentAspectCreateInfo>{ enum { value = true }; };
@@ -38566,17 +37610,11 @@ public:
   template <> struct isStructureChainValid<PhysicalDeviceProperties2, PhysicalDevicePointClippingProperties>{ enum { value = true }; };
   template <> struct isStructureChainValid<SamplerCreateInfo, SamplerReductionModeCreateInfoEXT>{ enum { value = true }; };
   template <> struct isStructureChainValid<PipelineTessellationStateCreateInfo, PipelineTessellationDomainOriginStateCreateInfo>{ enum { value = true }; };
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-  template <> struct isStructureChainValid<AndroidHardwareBufferPropertiesANDROID, AndroidHardwareBufferFormatPropertiesANDROID>{ enum { value = true }; };
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
   template <> struct isStructureChainValid<PipelineColorBlendStateCreateInfo, PipelineColorBlendAdvancedStateCreateInfoEXT>{ enum { value = true }; };
   template <> struct isStructureChainValid<PipelineMultisampleStateCreateInfo, PipelineCoverageModulationStateCreateInfoNV>{ enum { value = true }; };
   template <> struct isStructureChainValid<DeviceQueueCreateInfo, DeviceQueueGlobalPriorityCreateInfoEXT>{ enum { value = true }; };
   template <> struct isStructureChainValid<InstanceCreateInfo, DebugUtilsMessengerCreateInfoEXT>{ enum { value = true }; };
   template <> struct isStructureChainValid<PipelineRasterizationStateCreateInfo, PipelineRasterizationConservativeStateCreateInfoEXT>{ enum { value = true }; };
-  template <> struct isStructureChainValid<DescriptorSetLayoutCreateInfo, DescriptorSetLayoutBindingFlagsCreateInfoEXT>{ enum { value = true }; };
   template <> struct isStructureChainValid<DeviceCreateInfo, DeviceGroupDeviceCreateInfo>{ enum { value = true }; };
   VULKAN_HPP_INLINE std::string to_string(FramebufferCreateFlagBits)
   {
@@ -39983,12 +39021,6 @@ public:
     case StructureType::eDebugUtilsLabelEXT: return "DebugUtilsLabelEXT";
     case StructureType::eDebugUtilsMessengerCallbackDataEXT: return "DebugUtilsMessengerCallbackDataEXT";
     case StructureType::eDebugUtilsMessengerCreateInfoEXT: return "DebugUtilsMessengerCreateInfoEXT";
-    case StructureType::eAndroidHardwareBufferUsageANDROID: return "AndroidHardwareBufferUsageANDROID";
-    case StructureType::eAndroidHardwareBufferPropertiesANDROID: return "AndroidHardwareBufferPropertiesANDROID";
-    case StructureType::eAndroidHardwareBufferFormatPropertiesANDROID: return "AndroidHardwareBufferFormatPropertiesANDROID";
-    case StructureType::eImportAndroidHardwareBufferInfoANDROID: return "ImportAndroidHardwareBufferInfoANDROID";
-    case StructureType::eMemoryGetAndroidHardwareBufferInfoANDROID: return "MemoryGetAndroidHardwareBufferInfoANDROID";
-    case StructureType::eExternalFormatANDROID: return "ExternalFormatANDROID";
     case StructureType::ePhysicalDeviceSamplerFilterMinmaxPropertiesEXT: return "PhysicalDeviceSamplerFilterMinmaxPropertiesEXT";
     case StructureType::eSamplerReductionModeCreateInfoEXT: return "SamplerReductionModeCreateInfoEXT";
     case StructureType::eSampleLocationsInfoEXT: return "SampleLocationsInfoEXT";
@@ -40004,16 +39036,10 @@ public:
     case StructureType::ePipelineCoverageModulationStateCreateInfoNV: return "PipelineCoverageModulationStateCreateInfoNV";
     case StructureType::eValidationCacheCreateInfoEXT: return "ValidationCacheCreateInfoEXT";
     case StructureType::eShaderModuleValidationCacheCreateInfoEXT: return "ShaderModuleValidationCacheCreateInfoEXT";
-    case StructureType::eDescriptorSetLayoutBindingFlagsCreateInfoEXT: return "DescriptorSetLayoutBindingFlagsCreateInfoEXT";
-    case StructureType::ePhysicalDeviceDescriptorIndexingFeaturesEXT: return "PhysicalDeviceDescriptorIndexingFeaturesEXT";
-    case StructureType::ePhysicalDeviceDescriptorIndexingPropertiesEXT: return "PhysicalDeviceDescriptorIndexingPropertiesEXT";
-    case StructureType::eDescriptorSetVariableDescriptorCountAllocateInfoEXT: return "DescriptorSetVariableDescriptorCountAllocateInfoEXT";
-    case StructureType::eDescriptorSetVariableDescriptorCountLayoutSupportEXT: return "DescriptorSetVariableDescriptorCountLayoutSupportEXT";
     case StructureType::eDeviceQueueGlobalPriorityCreateInfoEXT: return "DeviceQueueGlobalPriorityCreateInfoEXT";
     case StructureType::eImportMemoryHostPointerInfoEXT: return "ImportMemoryHostPointerInfoEXT";
     case StructureType::eMemoryHostPointerPropertiesEXT: return "MemoryHostPointerPropertiesEXT";
     case StructureType::ePhysicalDeviceExternalMemoryHostPropertiesEXT: return "PhysicalDeviceExternalMemoryHostPropertiesEXT";
-    case StructureType::ePhysicalDeviceShaderCorePropertiesAMD: return "PhysicalDeviceShaderCorePropertiesAMD";
     case StructureType::ePhysicalDeviceVertexAttributeDivisorPropertiesEXT: return "PhysicalDeviceVertexAttributeDivisorPropertiesEXT";
     case StructureType::ePipelineVertexInputDivisorStateCreateInfoEXT: return "PipelineVertexInputDivisorStateCreateInfoEXT";
     default: return "invalid";
@@ -40878,7 +39904,6 @@ public:
     switch (value)
     {
     case DescriptorPoolCreateFlagBits::eFreeDescriptorSet: return "FreeDescriptorSet";
-    case DescriptorPoolCreateFlagBits::eUpdateAfterBindEXT: return "UpdateAfterBindEXT";
     default: return "invalid";
     }
   }
@@ -40888,7 +39913,6 @@ public:
     if (!value) return "{}";
     std::string result;
     if (value & DescriptorPoolCreateFlagBits::eFreeDescriptorSet) result += "FreeDescriptorSet | ";
-    if (value & DescriptorPoolCreateFlagBits::eUpdateAfterBindEXT) result += "UpdateAfterBindEXT | ";
     return "{" + result.substr(0, result.size() - 3) + "}";
   }
 
@@ -41174,7 +40198,6 @@ public:
     case SubgroupFeatureFlagBits::eShuffleRelative: return "ShuffleRelative";
     case SubgroupFeatureFlagBits::eClustered: return "Clustered";
     case SubgroupFeatureFlagBits::eQuad: return "Quad";
-    case SubgroupFeatureFlagBits::ePartitionedNV: return "PartitionedNV";
     default: return "invalid";
     }
   }
@@ -41191,7 +40214,6 @@ public:
     if (value & SubgroupFeatureFlagBits::eShuffleRelative) result += "ShuffleRelative | ";
     if (value & SubgroupFeatureFlagBits::eClustered) result += "Clustered | ";
     if (value & SubgroupFeatureFlagBits::eQuad) result += "Quad | ";
-    if (value & SubgroupFeatureFlagBits::ePartitionedNV) result += "PartitionedNV | ";
     return "{" + result.substr(0, result.size() - 3) + "}";
   }
 
@@ -41271,7 +40293,6 @@ public:
     switch (value)
     {
     case DescriptorSetLayoutCreateFlagBits::ePushDescriptorKHR: return "PushDescriptorKHR";
-    case DescriptorSetLayoutCreateFlagBits::eUpdateAfterBindPoolEXT: return "UpdateAfterBindPoolEXT";
     default: return "invalid";
     }
   }
@@ -41281,7 +40302,6 @@ public:
     if (!value) return "{}";
     std::string result;
     if (value & DescriptorSetLayoutCreateFlagBits::ePushDescriptorKHR) result += "PushDescriptorKHR | ";
-    if (value & DescriptorSetLayoutCreateFlagBits::eUpdateAfterBindPoolEXT) result += "UpdateAfterBindPoolEXT | ";
     return "{" + result.substr(0, result.size() - 3) + "}";
   }
 
@@ -41297,7 +40317,6 @@ public:
     case ExternalMemoryHandleTypeFlagBits::eD3D12Heap: return "D3D12Heap";
     case ExternalMemoryHandleTypeFlagBits::eD3D12Resource: return "D3D12Resource";
     case ExternalMemoryHandleTypeFlagBits::eDmaBufEXT: return "DmaBufEXT";
-    case ExternalMemoryHandleTypeFlagBits::eAndroidHardwareBufferANDROID: return "AndroidHardwareBufferANDROID";
     case ExternalMemoryHandleTypeFlagBits::eHostAllocationEXT: return "HostAllocationEXT";
     case ExternalMemoryHandleTypeFlagBits::eHostMappedForeignMemoryEXT: return "HostMappedForeignMemoryEXT";
     default: return "invalid";
@@ -41316,7 +40335,6 @@ public:
     if (value & ExternalMemoryHandleTypeFlagBits::eD3D12Heap) result += "D3D12Heap | ";
     if (value & ExternalMemoryHandleTypeFlagBits::eD3D12Resource) result += "D3D12Resource | ";
     if (value & ExternalMemoryHandleTypeFlagBits::eDmaBufEXT) result += "DmaBufEXT | ";
-    if (value & ExternalMemoryHandleTypeFlagBits::eAndroidHardwareBufferANDROID) result += "AndroidHardwareBufferANDROID | ";
     if (value & ExternalMemoryHandleTypeFlagBits::eHostAllocationEXT) result += "HostAllocationEXT | ";
     if (value & ExternalMemoryHandleTypeFlagBits::eHostMappedForeignMemoryEXT) result += "HostMappedForeignMemoryEXT | ";
     return "{" + result.substr(0, result.size() - 3) + "}";
@@ -41810,29 +40828,6 @@ public:
     }
   }
 
-  VULKAN_HPP_INLINE std::string to_string(DescriptorBindingFlagBitsEXT value)
-  {
-    switch (value)
-    {
-    case DescriptorBindingFlagBitsEXT::eUpdateAfterBind: return "UpdateAfterBind";
-    case DescriptorBindingFlagBitsEXT::eUpdateUnusedWhilePending: return "UpdateUnusedWhilePending";
-    case DescriptorBindingFlagBitsEXT::ePartiallyBound: return "PartiallyBound";
-    case DescriptorBindingFlagBitsEXT::eVariableDescriptorCount: return "VariableDescriptorCount";
-    default: return "invalid";
-    }
-  }
-
-  VULKAN_HPP_INLINE std::string to_string(DescriptorBindingFlagsEXT value)
-  {
-    if (!value) return "{}";
-    std::string result;
-    if (value & DescriptorBindingFlagBitsEXT::eUpdateAfterBind) result += "UpdateAfterBind | ";
-    if (value & DescriptorBindingFlagBitsEXT::eUpdateUnusedWhilePending) result += "UpdateUnusedWhilePending | ";
-    if (value & DescriptorBindingFlagBitsEXT::ePartiallyBound) result += "PartiallyBound | ";
-    if (value & DescriptorBindingFlagBitsEXT::eVariableDescriptorCount) result += "VariableDescriptorCount | ";
-    return "{" + result.substr(0, result.size() - 3) + "}";
-  }
-
   class DispatchLoaderDynamic
   {
   public:
@@ -42025,9 +41020,6 @@ public:
     PFN_vkFreeCommandBuffers vkFreeCommandBuffers = 0;
     PFN_vkFreeDescriptorSets vkFreeDescriptorSets = 0;
     PFN_vkFreeMemory vkFreeMemory = 0;
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-    PFN_vkGetAndroidHardwareBufferPropertiesANDROID vkGetAndroidHardwareBufferPropertiesANDROID = 0;
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
     PFN_vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements = 0;
     PFN_vkGetBufferMemoryRequirements2 vkGetBufferMemoryRequirements2 = 0;
     PFN_vkGetBufferMemoryRequirements2KHR vkGetBufferMemoryRequirements2KHR = 0;
@@ -42058,9 +41050,6 @@ public:
     PFN_vkGetImageSparseMemoryRequirements2KHR vkGetImageSparseMemoryRequirements2KHR = 0;
     PFN_vkGetImageSubresourceLayout vkGetImageSubresourceLayout = 0;
     PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr = 0;
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-    PFN_vkGetMemoryAndroidHardwareBufferANDROID vkGetMemoryAndroidHardwareBufferANDROID = 0;
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
     PFN_vkGetMemoryFdKHR vkGetMemoryFdKHR = 0;
     PFN_vkGetMemoryFdPropertiesKHR vkGetMemoryFdPropertiesKHR = 0;
     PFN_vkGetMemoryHostPointerPropertiesEXT vkGetMemoryHostPointerPropertiesEXT = 0;
@@ -42386,9 +41375,6 @@ public:
       vkFreeCommandBuffers = PFN_vkFreeCommandBuffers(device ? device.getProcAddr( "vkFreeCommandBuffers") : instance.getProcAddr( "vkFreeCommandBuffers"));
       vkFreeDescriptorSets = PFN_vkFreeDescriptorSets(device ? device.getProcAddr( "vkFreeDescriptorSets") : instance.getProcAddr( "vkFreeDescriptorSets"));
       vkFreeMemory = PFN_vkFreeMemory(device ? device.getProcAddr( "vkFreeMemory") : instance.getProcAddr( "vkFreeMemory"));
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-      vkGetAndroidHardwareBufferPropertiesANDROID = PFN_vkGetAndroidHardwareBufferPropertiesANDROID(device ? device.getProcAddr( "vkGetAndroidHardwareBufferPropertiesANDROID") : instance.getProcAddr( "vkGetAndroidHardwareBufferPropertiesANDROID"));
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
       vkGetBufferMemoryRequirements = PFN_vkGetBufferMemoryRequirements(device ? device.getProcAddr( "vkGetBufferMemoryRequirements") : instance.getProcAddr( "vkGetBufferMemoryRequirements"));
       vkGetBufferMemoryRequirements2 = PFN_vkGetBufferMemoryRequirements2(device ? device.getProcAddr( "vkGetBufferMemoryRequirements2") : instance.getProcAddr( "vkGetBufferMemoryRequirements2"));
       vkGetBufferMemoryRequirements2KHR = PFN_vkGetBufferMemoryRequirements2KHR(device ? device.getProcAddr( "vkGetBufferMemoryRequirements2KHR") : instance.getProcAddr( "vkGetBufferMemoryRequirements2KHR"));
@@ -42419,9 +41405,6 @@ public:
       vkGetImageSparseMemoryRequirements2KHR = PFN_vkGetImageSparseMemoryRequirements2KHR(device ? device.getProcAddr( "vkGetImageSparseMemoryRequirements2KHR") : instance.getProcAddr( "vkGetImageSparseMemoryRequirements2KHR"));
       vkGetImageSubresourceLayout = PFN_vkGetImageSubresourceLayout(device ? device.getProcAddr( "vkGetImageSubresourceLayout") : instance.getProcAddr( "vkGetImageSubresourceLayout"));
       vkGetInstanceProcAddr = PFN_vkGetInstanceProcAddr(instance.getProcAddr( "vkGetInstanceProcAddr"));
-#ifdef VK_USE_PLATFORM_ANDROID_ANDROID
-      vkGetMemoryAndroidHardwareBufferANDROID = PFN_vkGetMemoryAndroidHardwareBufferANDROID(device ? device.getProcAddr( "vkGetMemoryAndroidHardwareBufferANDROID") : instance.getProcAddr( "vkGetMemoryAndroidHardwareBufferANDROID"));
-#endif /*VK_USE_PLATFORM_ANDROID_ANDROID*/
       vkGetMemoryFdKHR = PFN_vkGetMemoryFdKHR(device ? device.getProcAddr( "vkGetMemoryFdKHR") : instance.getProcAddr( "vkGetMemoryFdKHR"));
       vkGetMemoryFdPropertiesKHR = PFN_vkGetMemoryFdPropertiesKHR(device ? device.getProcAddr( "vkGetMemoryFdPropertiesKHR") : instance.getProcAddr( "vkGetMemoryFdPropertiesKHR"));
       vkGetMemoryHostPointerPropertiesEXT = PFN_vkGetMemoryHostPointerPropertiesEXT(device ? device.getProcAddr( "vkGetMemoryHostPointerPropertiesEXT") : instance.getProcAddr( "vkGetMemoryHostPointerPropertiesEXT"));

@@ -25,7 +25,9 @@ namespace Demo
 		m_configGraphics->Link<int>("Display Height", 720, CONFIG_GET(Display::Get()->GetHeight()));
 
 		Events::Get()->AddEvent(new EventTime(2.5f, false, [&]() -> void
-		{ Save(); }));
+		{
+			Save();
+		}));
 	}
 
 	ConfigManager::~ConfigManager()

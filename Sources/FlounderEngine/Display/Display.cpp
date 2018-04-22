@@ -639,6 +639,7 @@ namespace Flounder
 		physicalDeviceFeatures.shaderClipDistance = VK_TRUE;
 		physicalDeviceFeatures.shaderCullDistance = VK_TRUE;
 		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
+		physicalDeviceFeatures.fragmentStoresAndAtomics = VK_TRUE;
 
 		VkDeviceCreateInfo deviceCreateInfo = {};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
