@@ -33,8 +33,8 @@ namespace Flounder
 
 	ColliderAabb *ColliderAabb::Set(const ColliderAabb &source)
 	{
-		m_minExtents->Set(*source.m_minExtents);
-		m_maxExtents->Set(*source.m_maxExtents);
+		*m_minExtents = *source.m_minExtents;
+		*m_maxExtents = *source.m_maxExtents;
 		return this;
 	}
 
@@ -45,11 +45,9 @@ namespace Flounder
 			destination = new ColliderAabb();
 		}
 
-		destination->m_minExtents->Set(
-			source.m_minExtents->m_x * scale.m_x,
+		*destination->m_minExtents = Vector3(source.m_minExtents->m_x * scale.m_x,
 			source.m_minExtents->m_y * scale.m_y, source.m_minExtents->m_z * scale.m_z);
-		destination->m_maxExtents->Set(
-			source.m_maxExtents->m_x * scale.m_x,
+		*destination->m_maxExtents = Vector3(source.m_maxExtents->m_x * scale.m_x,
 			source.m_maxExtents->m_y * scale.m_y, source.m_maxExtents->m_z * scale.m_z);
 
 		return destination;
@@ -67,11 +65,9 @@ namespace Flounder
 			destination = new ColliderAabb();
 		}
 
-		destination->m_minExtents->Set(
-			source.m_minExtents->m_x - expand.m_x,
+		*destination->m_minExtents = Vector3(source.m_minExtents->m_x - expand.m_x,
 			source.m_minExtents->m_y - expand.m_y, source.m_minExtents->m_z - expand.m_z);
-		destination->m_maxExtents->Set(
-			source.m_maxExtents->m_x + expand.m_x,
+		*destination->m_maxExtents = Vector3(source.m_maxExtents->m_x + expand.m_x,
 			source.m_maxExtents->m_y + expand.m_y, source.m_maxExtents->m_z + expand.m_z);
 
 		return destination;
@@ -89,15 +85,15 @@ namespace Flounder
 			destination = new ColliderAabb();
 		}
 
-		float newMinX = Maths::Min(left.m_minExtents->m_x, right.m_minExtents->m_x);
-		float newMinY = Maths::Min(left.m_minExtents->m_y, right.m_minExtents->m_y);
-		float newMinZ = Maths::Min(left.m_minExtents->m_z, right.m_minExtents->m_z);
-		float newMaxX = Maths::Max(left.m_maxExtents->m_x, right.m_maxExtents->m_x);
-		float newMaxY = Maths::Max(left.m_maxExtents->m_y, right.m_maxExtents->m_y);
-		float newMaxZ = Maths::Max(left.m_maxExtents->m_z, right.m_maxExtents->m_z);
+		float newMinX = std::min(left.m_minExtents->m_x, right.m_minExtents->m_x);
+		float newMinY = std::min(left.m_minExtents->m_y, right.m_minExtents->m_y);
+		float newMinZ = std::min(left.m_minExtents->m_z, right.m_minExtents->m_z);
+		float newMaxX = std::max(left.m_maxExtents->m_x, right.m_maxExtents->m_x);
+		float newMaxY = std::max(left.m_maxExtents->m_y, right.m_maxExtents->m_y);
+		float newMaxZ = std::max(left.m_maxExtents->m_z, right.m_maxExtents->m_z);
 
-		destination->m_minExtents->Set(newMinX, newMinY, newMinZ);
-		destination->m_maxExtents->Set(newMaxX, newMaxY, newMaxZ);
+		*destination->m_minExtents = Vector3(newMinX, newMinY, newMinZ);
+		*destination->m_maxExtents = Vector3(newMaxX, newMaxY, newMaxZ);
 
 		return destination;
 	}
@@ -144,8 +140,8 @@ namespace Flounder
 			newMaxZ = source.m_maxExtents->m_z + stretch.m_z;
 		}
 
-		destination->m_minExtents->Set(newMinX, newMinY, newMinZ);
-		destination->m_maxExtents->Set(newMaxX, newMaxY, newMaxZ);
+		*destination->m_minExtents = Vector3(newMinX, newMinY, newMinZ);
+		*destination->m_maxExtents = Vector3(newMaxX, newMaxY, newMaxZ);
 
 		return destination;
 	}
@@ -167,67 +163,67 @@ namespace Flounder
 		}
 
 		// Sets the destinations values to the sources.
-		source->m_minExtents->Set(*m_minExtents);
-		source->m_maxExtents->Set(*m_maxExtents);
+		*source->m_minExtents = *m_minExtents;
+		*source->m_maxExtents = *m_maxExtents;
 
 		// Scales the dimensions for the aabb.
 		if (*transform.m_scaling != 1.0f)
 		{
-			source->m_minExtents->Set(source->m_minExtents->m_x * transform.m_scaling->m_x, source->m_minExtents->m_y * transform.m_scaling->m_y, source->m_minExtents->m_z * transform.m_scaling->m_z);
-			source->m_maxExtents->Set(source->m_maxExtents->m_x * transform.m_scaling->m_x, source->m_maxExtents->m_y * transform.m_scaling->m_y, source->m_maxExtents->m_z * transform.m_scaling->m_z);
+			*source->m_minExtents = Vector3(source->m_minExtents->m_x * transform.m_scaling->m_x, source->m_minExtents->m_y * transform.m_scaling->m_y, source->m_minExtents->m_z * transform.m_scaling->m_z);
+			*source->m_maxExtents = Vector3(source->m_maxExtents->m_x * transform.m_scaling->m_x, source->m_maxExtents->m_y * transform.m_scaling->m_y, source->m_maxExtents->m_z * transform.m_scaling->m_z);
 		}
 
 		// Creates the 8 aabb corners and rotates them.
 		if (*transform.m_rotation != 0.0f)
 		{
 			Vector3 fll = Vector3(source->m_minExtents->m_x, source->m_minExtents->m_y, source->m_minExtents->m_z);
-			Vector3::Rotate(fll, *transform.m_rotation, &fll);
+			fll = fll.Rotate(*transform.m_rotation);
 
 			Vector3 flr = Vector3(source->m_maxExtents->m_x, source->m_minExtents->m_y, source->m_minExtents->m_z);
-			Vector3::Rotate(flr, *transform.m_rotation, &flr);
+			flr = flr.Rotate(*transform.m_rotation);
 
 			Vector3 ful = Vector3(source->m_minExtents->m_x, source->m_maxExtents->m_y, source->m_minExtents->m_z);
-			Vector3::Rotate(ful, *transform.m_rotation, &ful);
+			ful = ful.Rotate(*transform.m_rotation);
 
 			Vector3 fur = Vector3(source->m_maxExtents->m_x, source->m_maxExtents->m_y, source->m_minExtents->m_z);
-			Vector3::Rotate(fur, *transform.m_rotation, &fur);
+			fur = fur.Rotate(*transform.m_rotation);
 
 			Vector3 bur = Vector3(source->m_maxExtents->m_x, source->m_maxExtents->m_y, source->m_maxExtents->m_z);
-			Vector3::Rotate(bur, *transform.m_rotation, &bur);
+			bur = bur.Rotate(*transform.m_rotation);
 
 			Vector3 bul = Vector3(source->m_minExtents->m_x, source->m_maxExtents->m_y, source->m_maxExtents->m_z);
-			Vector3::Rotate(bul, *transform.m_rotation, &bul);
+			bul = bul.Rotate(*transform.m_rotation);
 
 			Vector3 blr = Vector3(source->m_maxExtents->m_x, source->m_minExtents->m_y, source->m_maxExtents->m_z);
-			Vector3::Rotate(blr, *transform.m_rotation, &blr);
+			blr = blr.Rotate(*transform.m_rotation);
 
 			Vector3 bll = Vector3(source->m_minExtents->m_x, source->m_minExtents->m_y, source->m_maxExtents->m_z);
-			Vector3::Rotate(bll, *transform.m_rotation, &bll);
+			bll = bll.Rotate(*transform.m_rotation);
 
 			//source->m_minExtents = min(fll, min(flr, min(ful, min(fur, min(bur, min(bul, min(blr, bll)))))));
-			Vector3::MinVector(fll, flr, source->m_minExtents);
-			Vector3::MinVector(*source->m_minExtents, ful, source->m_minExtents);
-			Vector3::MinVector(*source->m_minExtents, fur, source->m_minExtents);
-			Vector3::MinVector(*source->m_minExtents, bur, source->m_minExtents);
-			Vector3::MinVector(*source->m_minExtents, bul, source->m_minExtents);
-			Vector3::MinVector(*source->m_minExtents, blr, source->m_minExtents);
-			Vector3::MinVector(*source->m_minExtents, bll, source->m_minExtents);
+			*source->m_minExtents = Vector3::MinVector(fll, flr);
+			*source->m_minExtents = Vector3::MinVector(*source->m_minExtents, ful);
+			*source->m_minExtents = Vector3::MinVector(*source->m_minExtents, fur);
+			*source->m_minExtents = Vector3::MinVector(*source->m_minExtents, bur);
+			*source->m_minExtents = Vector3::MinVector(*source->m_minExtents, bul);
+			*source->m_minExtents = Vector3::MinVector(*source->m_minExtents, blr);
+			*source->m_minExtents = Vector3::MinVector(*source->m_minExtents, bll);
 
 			//source->m_maxExtents = max(fll, max(flr, max(ful, max(fur, max(bur, max(bul, max(blr, bll)))))));
-			Vector3::MaxVector(fll, flr, source->m_maxExtents);
-			Vector3::MaxVector(*source->m_maxExtents, ful, source->m_maxExtents);
-			Vector3::MaxVector(*source->m_maxExtents, fur, source->m_maxExtents);
-			Vector3::MaxVector(*source->m_maxExtents, bur, source->m_maxExtents);
-			Vector3::MaxVector(*source->m_maxExtents, bul, source->m_maxExtents);
-			Vector3::MaxVector(*source->m_maxExtents, blr, source->m_maxExtents);
-			Vector3::MaxVector(*source->m_maxExtents, bll, source->m_maxExtents);
+			*source->m_maxExtents = Vector3::MaxVector(fll, flr);
+			*source->m_maxExtents = Vector3::MaxVector(*source->m_maxExtents, ful);
+			*source->m_maxExtents = Vector3::MaxVector(*source->m_maxExtents, fur);
+			*source->m_maxExtents = Vector3::MaxVector(*source->m_maxExtents, bur);
+			*source->m_maxExtents = Vector3::MaxVector(*source->m_maxExtents, bul);
+			*source->m_maxExtents = Vector3::MaxVector(*source->m_maxExtents, blr);
+			*source->m_maxExtents = Vector3::MaxVector(*source->m_maxExtents, bll);
 		}
 
 		// Transforms the aabb.
 		if (*transform.m_position != 0.0f)
 		{
-			Vector3::Add(*source->m_minExtents, *transform.m_position, source->m_minExtents);
-			Vector3::Add(*source->m_maxExtents, *transform.m_position, source->m_maxExtents);
+			*source->m_minExtents = *source->m_minExtents + *transform.m_position;
+			*source->m_maxExtents = *source->m_maxExtents + *transform.m_position;
 		}
 
 		// Returns the final aabb.
@@ -321,14 +317,10 @@ namespace Flounder
 	{
 		const ColliderAabb &aabb2 = dynamic_cast<const ColliderAabb &>(other);
 
-		Vector3 *distance1 = Vector3::Subtract(*m_minExtents, *aabb2.m_maxExtents, nullptr);
-		Vector3 *distance2 = Vector3::Subtract(*aabb2.m_minExtents, *m_maxExtents, nullptr);
-		Vector3 *maxDistance = Vector3::MaxVector(*distance1, *distance2, nullptr);
-		const float maxDist = Vector3::MaxComponent(*maxDistance);
-
-		delete distance1;
-		delete distance2;
-		delete maxDistance;
+		Vector3 distance1 = *m_minExtents - *aabb2.m_maxExtents;
+		Vector3 distance2 = *aabb2.m_minExtents - *m_maxExtents;
+		Vector3 maxDistance = Vector3::MaxVector(distance1, distance2);
+		float maxDist = maxDistance.MaxComponent();
 
 		return Intersect(maxDist < 0.0f, maxDist);
 

@@ -63,6 +63,6 @@ namespace Flounder
 
 		Vector3 *GetPosition() const { return m_position; }
 
-		void SetPosition(const Vector3 &position) const { m_position->Set(position); }
+		void SetPosition(const Vector3 &position) const { *m_position = position; }
 	};
 }

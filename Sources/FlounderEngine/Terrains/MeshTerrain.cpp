@@ -35,14 +35,14 @@ namespace Flounder
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
 	{
 		Vector4 cartesian = Vector4(x, 0.0f, z, 1.0f);
-		Matrix4::Multiply(m_transform->GetWorldMatrix(), cartesian, &cartesian);
-		cartesian = Vector3::ProjectCubeToSphere(m_radius, cartesian);
-		Vector3 polar = Vector3::CartesianToPolar(cartesian);
+		cartesian = m_transform->GetWorldMatrix().Multiply(cartesian);
+		cartesian = Vector3(cartesian).ProjectCubeToSphere(m_radius);
+		Vector3 polar = Vector3(cartesian).CartesianToPolar();
 
 		//	polar.m_x = m_radius + (28.0f * Terrains::Get()->GetNoise()->GetValue((m_radius / 30.0f) * cartesian.m_x, (m_radius / 30.0f) * cartesian.m_y, (m_radius / 30.0f) * cartesian.m_z));
 		polar.m_x = Worlds::Get()->GetTerrainRadius(m_radius, polar.m_y, polar.m_z);
 
-		return Vector3::PolarToCartesian(polar);
+		return polar.PolarToCartesian();
 	}
 
 	Vector3 MeshTerrain::GetNormal(const Vector3 &position)
@@ -71,13 +71,12 @@ namespace Flounder
 
 	Vector3 MeshTerrain::GetColour(const Vector3 &position, const Vector3 &normal)
 	{
-		Vector3 polar = Vector3::CartesianToPolar(position);
+		Vector3 polar = position.CartesianToPolar();
 		float value = (polar.m_x - m_radius + COLOUR_AMPLITUDE) / (COLOUR_AMPLITUDE * 2.0f);
 		value = Maths::Clamp((value - COLOUR_HALF_SPREAD) * (1.0f / COLOUR_SPREAD), 0.0f, 0.9999f);
 		int firstBiome = static_cast<int>(std::floor(value / COLOUR_PART));
 		float blend = (value - (firstBiome * COLOUR_PART)) / COLOUR_PART;
-		Colour colour = Colour();
-		Colour::Interpolate(COLOUR_BIOMES.at(firstBiome), COLOUR_BIOMES.at(firstBiome + 1), blend, &colour);
+		Colour colour = COLOUR_BIOMES.at(firstBiome).Interpolate(COLOUR_BIOMES.at(firstBiome + 1), blend);
 		return colour;
 	}
 }

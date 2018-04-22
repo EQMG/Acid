@@ -1,34 +1,17 @@
 #pragma once
 
 #include <string>
-#include "Engine/Exports.hpp"
-#include "Files/LoadedValue.hpp"
+#include "Vector4.hpp"
 
 namespace Flounder
 {
-	class Vector4;
-
-	class Vector3;
-
 	/// <summary>
 	/// Holds a RGBA colour.
 	/// </summary>
-	class F_EXPORT Colour
+	class F_EXPORT Colour :
+		public Vector4
 	{
 	public:
-		union
-		{
-			struct
-			{
-				float m_r, m_g, m_b, m_a;
-			};
-
-			struct
-			{
-				float m_elements[4];
-			};
-		};
-
 		static const Colour CLEAR;
 		static const Colour WHITE;
 		static const Colour BLACK;
@@ -73,220 +56,41 @@ namespace Flounder
 		Colour(const Vector4 &source);
 
 		/// <summary>
-		/// Constructor for colour.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a loaded value. </param>
-		Colour(LoadedValue *value);
-
-		/// <summary>
 		/// Deconstructor for colour.
 		/// </summary>
 		~Colour();
 
 		/// <summary>
-		/// Sets values in the colour.
+		/// Interpolates between this and another colour.
 		/// </summary>
-		/// <param name="r"> The new R value. </param>
-		/// <param name="g"> The new G value. </param>
-		/// <param name="b"> The new B value. </param>
-		/// <param name="a"> The new A value. </param>
-		/// <returns> This. </returns>
-		Colour *Set(const float &r, const float &g, const float &b, const float &a = 1.0f);
-
-		/// <summary>
-		/// Sets values in the colour.
-		/// </summary>
-		/// <param name="hex"> The new values from HEX. </param>
-		/// <param name="a"> The new A value. </param>
-		/// <returns> This. </returns>
-		Colour *Set(const std::string &hex, const float &a = 1.0f);
-
-		/// <summary>
-		/// Sets values in the colour.
-		/// </summary>
-		/// <param name="source"> The source colour. </param>
-		/// <returns> This. </returns>
-		Colour *Set(const Colour &source);
-
-		/// <summary>
-		/// Sets values in the colour.
-		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <returns> This. </returns>
-		Colour *Set(const Vector3 &source);
-
-		/// <summary>
-		/// Sets values in the colour.
-		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <returns> This. </returns>
-		Colour *Set(const Vector4 &source);
-
-		/// <summary>
-		/// Sets values in the colour.
-		/// </summary>
-		/// <param name="source"> The source loaded value. </param>
-		Colour *Set(LoadedValue *value);
-
-		/// <summary>
-		/// Saves this vector into a loaded value.
-		/// </summary>
-		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *destination);
-
-		/// <summary>
-		/// Adds two colours together and places the result in the destination colour.
-		/// </summary>
-		/// <param name="left"> The left source colour. </param>
-		/// <param name="right"> The right source colour. </param>
-		/// <param name="destination"> The destination colour or nullptr if a new colour is to be created. </param>
-		/// <returns> The destination colour. </returns>
-		static Colour *Add(const Colour &left, const Colour &right, Colour *destination);
-
-		/// <summary>
-		/// Subtracts two colours together and places the result in the destination colour.
-		/// </summary>
-		/// <param name="left"> The left source colour. </param>
-		/// <param name="right"> The right source colour. </param>
-		/// <param name="destination"> The destination colour or nullptr if a new colour is to be created. </param>
-		/// <returns> The destination colour. </returns>
-		static Colour *Subtract(const Colour &left, const Colour &right, Colour *destination);
-
-		/// <summary>
-		/// Multiplies two colours together and places the result in the destination colour.
-		/// </summary>
-		/// <param name="left"> The left source colour. </param>
-		/// <param name="right"> The right source colour. </param>
-		/// <param name="destination"> The destination colour or nullptr if a new colour is to be created. </param>
-		/// <returns> The destination colour. </returns>
-		static Colour *Multiply(const Colour &left, const Colour &right, Colour *destination);
-
-		/// <summary>
-		/// Divides two colours together and places the result in the destination colour.
-		/// </summary>
-		/// <param name="left"> The left source colour. </param>
-		/// <param name="right"> The right source colour. </param>
-		/// <param name="destination"> The destination colour or nullptr if a new colour is to be created. </param>
-		/// <returns> The destination colour. </returns>
-		static Colour *Divide(const Colour &left, const Colour &right, Colour *destination);
-
-		/// <summary>
-		/// Interpolates between two colours and places the result in the destination colour.
-		/// </summary>
-		/// <param name="left"> The left source colour. </param>
-		/// <param name="right"> The right source colour. </param>
+		/// <param name="other"> The other colour. </param>
 		/// <param name="blend"> The blend factor. </param>
-		/// <param name="destination"> The destination colour or nullptr if a new colour is to be created. </param>
-		/// <returns> The destination colour. </returns>
-		static Colour *Interpolate(const Colour &left, const Colour &right, float blend, Colour *destination);
+		/// <returns> The interpolated colour. </returns>
+		Colour Interpolate(const Colour &other, float blend) const;
 
 		/// <summary>
 		/// Gets a colour representing the unit value of this colour.
 		/// </summary>
-		/// <param name="source"> The source colour. </param>
-		/// <param name="destination"> The destination colour or nullptr if a new colour is to be created. </param>
-		/// <returns> The destination colour. </returns>
-		static Colour *GetUnit(const Colour &source, Colour *destination);
+		/// <returns> The unit colour. </returns>
+		Colour GetUnit();
 
 		/// <summary>
-		/// Gets the hex code from the colour.
+		/// Gets the hex code from this colour.
 		/// </summary>
-		/// <param name="source"> The source colour. </param>
-		/// <returns> The hex code from the colour. </returns>
-		static std::string GetHex(const Colour &source);
+		/// <returns> The hex code. </returns>
+		std::string GetHex();
 
 		/// <summary>
-		/// Gets the length of the colour.
+		/// Saves this constraint into a loaded value.
 		/// </summary>
-		/// <param name="source"> The source colour. </param>
-		/// <returns> The length of the colour. </returns>
-		static float Length(const Colour &source);
+		/// <param name="destination"> The destination loaded value. </param>
+		void Write(LoadedValue *source);
 
-		/// <summary>
-		/// Gets the length squared of the colour.
-		/// </summary>
-		/// <param name="source"> The source colour. </param>
-		/// <returns> The length squared of the colour. </returns>
-		static float LengthSquared(const Colour &source);
+		Colour &operator=(const std::string &hex);
 
-		/// <summary>
-		/// Scales the colour by a scalar.
-		/// </summary>
-		/// <param name="scalar"> The scaling value. </param>
-		/// <returns> this. </returns>
-		Colour *Scale(const float &scalar);
+		Colour &operator=(LoadedValue *value);
 
-		/// <summary>
-		/// Gets the length of the colour.
-		/// </summary>
-		/// <returns> The length of the colour. </returns>
-		float Length();
-
-		/// <summary>
-		/// Gets the length squared of the colour.
-		/// </summary>
-		/// <returns> The length squared of the colour. </returns>
-		float LengthSquared();
-
-		Colour &operator=(const Colour &other);
-
-		bool operator==(const Colour &other) const;
-
-		bool operator!=(const Colour &other) const;
-
-		bool operator<(const Colour &other) const;
-
-		bool operator<=(const Colour &other) const;
-
-		bool operator>(const Colour &other) const;
-
-		bool operator>=(const Colour &other) const;
-
-		bool operator==(const float &value) const;
-
-		bool operator!=(const float &value) const;
-
-		friend F_EXPORT Colour operator+(Colour left, const Colour &right);
-
-		friend F_EXPORT Colour operator-(Colour left, const Colour &right);
-
-		friend F_EXPORT Colour operator*(Colour left, const Colour &right);
-
-		friend F_EXPORT Colour operator/(Colour left, const Colour &right);
-
-		friend F_EXPORT Colour operator+(Colour left, float value);
-
-		friend F_EXPORT Colour operator-(Colour left, float value);
-
-		friend F_EXPORT Colour operator*(Colour left, float value);
-
-		friend F_EXPORT Colour operator/(Colour left, float value);
-
-		friend F_EXPORT Colour operator+(float value, Colour left);
-
-		friend F_EXPORT Colour operator-(float value, Colour left);
-
-		friend F_EXPORT Colour operator*(float value, Colour left);
-
-		friend F_EXPORT Colour operator/(float value, Colour left);
-
-		Colour &operator+=(const Colour &other);
-
-		Colour &operator-=(const Colour &other);
-
-		Colour &operator*=(const Colour &other);
-
-		Colour &operator/=(const Colour &other);
-
-		Colour &operator+=(float value);
-
-		Colour &operator-=(float value);
-
-		Colour &operator*=(float value);
-
-		Colour &operator/=(float value);
-
-		friend std::ostream &operator<<(std::ostream &stream, const Colour &vector);
+		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &vector);
 
 		std::string ToString() const;
 	};

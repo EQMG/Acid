@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Audio/Sound.hpp>
-#include <Inputs/Buttons/IButton.hpp>
+#include <Inputs/IButton.hpp>
 #include <Scenes/Scene.hpp>
 
 using namespace Flounder;

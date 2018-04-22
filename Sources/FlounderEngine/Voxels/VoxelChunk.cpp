@@ -445,7 +445,7 @@ namespace Flounder
 
 		// Calculates the quads normal direction.
 		Vector3 normal = Vector3();
-		Vector3::Cross(topRight - bottomRight, topLeft - bottomRight, &normal);
+		normal = (topRight - bottomRight).Cross(topLeft - bottomRight);
 
 		// Flips normal x and z when x is present, I have no clue why.
 		if (normal.m_x != 0.0f)

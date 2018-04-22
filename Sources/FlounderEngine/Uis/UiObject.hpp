@@ -97,11 +97,11 @@ namespace Flounder
 
 		Vector4 *GetScissor() const { return m_scissor; }
 
-		void SetScissor(const Vector4 &scissor) const { m_scissor->Set(scissor); }
+		void SetScissor(const Vector4 &scissor) const { *m_scissor = scissor; }
 
 		Vector2 *GetPositionOffset() const { return m_positionOffset; }
 
-		void SetPositionOffset(const Vector2 &positionOffset) const { m_positionOffset->Set(positionOffset); }
+		void SetPositionOffset(const Vector2 &positionOffset) const { *m_positionOffset = positionOffset; }
 
 		/// <summary>
 		/// Gets the ui object screen space transform.

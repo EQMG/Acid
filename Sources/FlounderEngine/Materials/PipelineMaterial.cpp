@@ -15,13 +15,6 @@ namespace Flounder
 		delete m_pipeline;
 	}
 
-	void PipelineMaterial::CmdRender(const VkCommandBuffer &commandBuffer, Model *model, DescriptorSet *descriptorSet)
-	{
-		m_pipeline->BindPipeline(commandBuffer);
-		descriptorSet->BindDescriptor(commandBuffer);
-		model->CmdRender(commandBuffer, 1);
-	}
-
 	std::string PipelineMaterial::ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<Define> &defines)
 	{
 		std::string shaderString;

@@ -29,43 +29,43 @@ namespace Flounder
 
 	void Light::Update()
 	{
-		m_position->Set(*GetGameObject()->GetTransform()->m_position + *m_offset);
+		*m_position = *GetGameObject()->GetTransform()->m_position + *m_offset;
 	}
 
 	void Light::Load(LoadedValue *value)
 	{
-		m_colour->Set(value->GetChild("Colour")->GetString());
+		*m_colour = value->GetChild("Colour")->GetString();
 		m_radius = value->GetChild("Radius")->Get<float>();
-		m_offset->Set(value->GetChild("Offset"));
+		*m_offset = value->GetChild("Offset");
 	}
 
 	void Light::Write(LoadedValue *value)
 	{
-		value->GetChild("Colour", true)->SetString(Colour::GetHex(*m_colour));
+		value->GetChild("Colour", true)->SetString(m_colour->GetHex());
 		value->GetChild("Radius", true)->Set(m_radius);
 		m_offset->Write(value->GetChild("Offset", true));
 	}
 
 	Light *Light::Set(const Colour &colour, const Vector3 &offset)
 	{
-		m_colour->Set(colour);
-		m_offset->Set(offset);
+		*m_colour = colour;
+		*m_offset = offset;
 		return this;
 	}
 
 	Light *Light::Set(const Colour &colour, const float &radius, const Vector3 &offset)
 	{
-		m_colour->Set(colour);
+		*m_colour = colour;
 		m_radius = radius;
-		m_offset->Set(offset);
+		*m_offset = offset;
 		return this;
 	}
 
 	Light *Light::Set(const Light &source)
 	{
-		m_colour->Set(*source.m_colour);
+		*m_colour = *source.m_colour;
 		m_radius = source.m_radius;
-		m_offset->Set(*source.m_offset);
+		*m_offset = *source.m_offset;
 		return this;
 	}
 }

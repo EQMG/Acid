@@ -54,7 +54,7 @@ namespace Flounder
 		/// Create the offset for part of the conversion to shadow map space.
 		/// </summary>
 		/// <returns> The offset as a matrix. </returns>
-		static Matrix4 *CreateOffset();
+		static Matrix4 CreateOffset();
 
 		void UpdateShadowBox(const ICamera &camera);
 
@@ -73,7 +73,7 @@ namespace Flounder
 		/// <param name="centreFar"> - the centre point of the frustum's far plane.
 		/// </param>
 		/// <returns> The vertices of the frustum in light space. </returns>
-		Vector4 **CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar) const;
+		Vector4 *CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar) const;
 
 		/// <summary>
 		/// Calculates one of the corner vertices of the view frustum in world space and converts it to light space.
@@ -83,7 +83,7 @@ namespace Flounder
 		/// <param name="width"> The distance of the corner from the start point.
 		/// </param>
 		/// <returns> The relevant corner vertex of the view frustum in light space. </returns>
-		Vector4 *CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width) const;
+		Vector4 CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width) const;
 
 		void UpdateOrthoProjectionMatrix() const;
 

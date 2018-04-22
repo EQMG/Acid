@@ -56,7 +56,7 @@ namespace Flounder
 		if (isRoot)
 		{
 			// Because in Blender z is up, but in our game y is up.
-			Matrix4::Multiply(*MeshAnimated::S_CORRECTION, matrix, &matrix);
+			matrix *= *MeshAnimated::S_CORRECTION;
 		}
 
 		m_jointCount++;

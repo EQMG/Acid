@@ -305,30 +305,24 @@ namespace Flounder
 
 	void Model::CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> *uvs)
 	{
-		const Vector2 uv0 = (*uvs)[v0->GetUvIndex()];
-		const Vector2 uv1 = (*uvs)[v1->GetUvIndex()];
-		const Vector2 uv2 = (*uvs)[v2->GetUvIndex()];
+		Vector2 uv0 = (*uvs)[v0->GetUvIndex()];
+		Vector2 uv1 = (*uvs)[v1->GetUvIndex()];
+		Vector2 uv2 = (*uvs)[v2->GetUvIndex()];
 
-		Vector2 *deltaUv1 = Vector2::Subtract(uv1, uv0, nullptr);
-		Vector2 *deltaUv2 = Vector2::Subtract(uv2, uv0, nullptr);
-		const float r = 1.0f / (deltaUv1->m_x * deltaUv2->m_y - deltaUv1->m_y * deltaUv2->m_x);
+		Vector2 deltaUv1 = uv1 - uv0;
+		Vector2 deltaUv2 = uv2 - uv0;
+		float r = 1.0f / (deltaUv1.m_x * deltaUv2.m_y - deltaUv1.m_y * deltaUv2.m_x);
 
-		Vector3 *deltaPos1 = Vector3::Subtract(v1->GetPosition(), v0->GetPosition(), nullptr);
-		Vector3 *deltaPos2 = Vector3::Subtract(v2->GetPosition(), v0->GetPosition(), nullptr);
-		deltaPos1->Scale(deltaUv2->m_y);
-		deltaPos2->Scale(deltaUv1->m_y);
+		Vector3 deltaPos1 = v1->GetPosition() - v0->GetPosition();
+		Vector3 deltaPos2 = v2->GetPosition() - v0->GetPosition();
+		deltaPos1 *= deltaUv2.m_y;
+		deltaPos2 *= deltaUv1.m_y;
 
-		Vector3 *tangent = Vector3::Subtract(*deltaPos1, *deltaPos2, nullptr);
-		tangent->Scale(r);
+		Vector3 *tangent = new Vector3(r * (deltaPos1 - deltaPos2));
 
 		v0->AddTangent(tangent);
 		v1->AddTangent(tangent);
 		v2->AddTangent(tangent);
-
-		delete deltaPos1;
-		delete deltaPos2;
-		delete deltaUv1;
-		delete deltaUv2;
 	}
 
 	ColliderAabb Model::CalculateAabb(const std::vector<IVertex *> &vertices)

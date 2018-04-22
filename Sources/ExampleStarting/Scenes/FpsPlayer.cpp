@@ -1,11 +1,11 @@
 #include "FpsPlayer.hpp"
 
-#include <Inputs/Axes/AxisCompound.hpp>
-#include <Inputs/Buttons/ButtonKeyboard.hpp>
-#include <Inputs/Axes/AxisButton.hpp>
-#include <Inputs/Axes/AxisJoystick.hpp>
-#include <Inputs/Buttons/ButtonCompound.hpp>
-#include <Inputs/Buttons/ButtonJoystick.hpp>
+#include <Inputs/AxisCompound.hpp>
+#include <Inputs/ButtonKeyboard.hpp>
+#include <Inputs/AxisButton.hpp>
+#include <Inputs/AxisJoystick.hpp>
+#include <Inputs/ButtonCompound.hpp>
+#include <Inputs/ButtonJoystick.hpp>
 #include <Uis/Uis.hpp>
 #include <Scenes/Scenes.hpp>
 
@@ -79,7 +79,7 @@ namespace Demo
 	void FpsPlayer::Update()
 	{
 		// Gets the delta and limits the lowest UPS to 20 (any less and the game is unplayable).
-		float delta = Maths::Min(Engine::Get()->GetDelta(), 1.0f / 20.0f);
+		float delta = std::min(Engine::Get()->GetDelta(), 1.0f / 20.0f);
 
 		Vector3 targetVelocity = Vector3(0.0f, m_noclipEnabled ? 0.0f : GRAVITY, 0.0f);
 
@@ -123,7 +123,7 @@ namespace Demo
 			}
 		}
 
-		*m_velocity = Vector3::SmoothDamp(*m_velocity, targetVelocity, delta * (m_noclipEnabled ? DAMP_NOCLIP : DAMP_NORMAL));
+		*m_velocity = m_velocity->SmoothDamp(targetVelocity, delta * (m_noclipEnabled ? DAMP_NOCLIP : DAMP_NORMAL));
 
 		auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 		auto position = GetGameObject()->GetTransform()->GetPosition();
@@ -137,8 +137,11 @@ namespace Demo
 		float dy = m_velocity->m_y * delta;
 		float dz = -(m_velocity->m_z * std::cos(theta) - m_velocity->m_x * std::sin(theta)) * delta;
 
-		*position = *position + *m_amountMove->Set(dx, dy, dz);
-		*rotation = *rotation + *m_amountRotate->Set(0.0f, 0.0f, 0.0f);
+		*m_amountMove = Vector3(dx, dy, dz);
+		*m_amountRotate = Vector3(0.0f, 0.0f, 0.0f);
+
+		*position = *position + *m_amountMove;
+		*rotation = *rotation + *m_amountRotate;
 
 		if (!m_noclipEnabled && position->m_y <= groundHeight)
 		{

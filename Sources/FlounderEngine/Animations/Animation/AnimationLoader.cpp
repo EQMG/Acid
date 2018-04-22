@@ -108,7 +108,7 @@ namespace Flounder
 			if (root)
 			{
 				// Because up axis in Blender is different to up axis in game.
-				Matrix4::Multiply(*MeshAnimated::S_CORRECTION, transform, &transform);
+				transform *= *MeshAnimated::S_CORRECTION;
 			}
 
 			m_keyframeData[i]->AddJointTransform(new JointTransformData(jointName, transform));

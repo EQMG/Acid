@@ -34,7 +34,7 @@ namespace Flounder
 
 		Colour *GetColour() const { return m_colour; }
 
-		void SetColour(const Colour &colour) const { m_colour->Set(colour); }
+		void SetColour(const Colour &colour) const { *m_colour = colour; }
 
 		PipelineMaterial *GetMaterial() const override { return m_material; }
 	};

@@ -1,16 +1,21 @@
 #include "Scene1.hpp"
 
-#include <Inputs/Buttons/ButtonKeyboard.hpp>
-#include <Meshes/Mesh.hpp>
-#include <Models/Shapes/ShapeSphere.hpp>
-#include <Skyboxes/MaterialSkybox.hpp>
+#include <Animations/MeshAnimated.hpp>
+#include <Inputs/ButtonKeyboard.hpp>
+#include <Inputs/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
-#include <Shadows/ShadowRender.hpp>
+#include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
-#include <Inputs/Mouse.hpp>
+#include <Models/Shapes/ShapeSphere.hpp>
 #include <Renderer/Screenshot/Screenshot.hpp>
-#include <Animations/MeshAnimated.hpp>
+#include <Shadows/ShadowRender.hpp>
+#include <Skyboxes/MaterialSkybox.hpp>
+#include <Terrains/LodBehaviour.hpp>
+#include <Terrains/MaterialTerrain.hpp>
+#include <Voxels/MaterialVoxel.hpp>
+#include <Voxels/VoxelChunk.hpp>
+#include <Waters/MaterialWater.hpp>
 #include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
@@ -43,6 +48,7 @@ namespace Demo
 		//	cameraObject->AddComponent<FpsCamera>();
 
 		// Player.
+		// GameObject *playerObject = new GameObject("Player", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
 		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f), 1.0f));
 		playerObject->SetName("Player");
 		playerObject->AddComponent<FpsPlayer>();
@@ -51,10 +57,11 @@ namespace Demo
 	//	playerObject->AddComponent<MeshRender>();
 
 		// Skybox.
+		// GameObject *skyboxObject = new GameObject("SkyboxChapel", Transform(Vector3(), Vector3(), 2048.0f));
 		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
 		skyboxObject->SetName("SkyboxChapel");
 		skyboxObject->AddComponent<Mesh>(ShapeSphere::Resource(6, 6, 1.0f));
-		skyboxObject->AddComponent<MaterialSkybox>(Cubemap::Resource("Resources/Skyboxes/Chapel", ".png"), false);
+		skyboxObject->AddComponent<MaterialSkybox>(Cubemap::Resource("Resources/Entities/SkyboxChapel", ".png"), false);
 		skyboxObject->AddComponent<MeshRender>();
 
 		// Entities.
@@ -73,6 +80,27 @@ namespace Demo
 				sphere->AddComponent<ShadowRender>();
 			}
 		}
+
+		/*// Voxels.
+		GameObject *voxelChunk = new GameObject(Transform());
+		voxelChunk->SetName("Chunk_0_0");
+		voxelChunk->AddComponent<VoxelChunk>(MeshGreedy, true);
+		voxelChunk->AddComponent<Mesh>();
+		voxelChunk->AddComponent<MaterialVoxel>();
+		voxelChunk->AddComponent<MeshRender>();
+
+		// Terrains.
+		GameObject *terrainChunk = new GameObject(Transform());
+		terrainChunk->SetName("Terrain");
+		terrainChunk->AddComponent<Mesh>();
+		terrainChunk->AddComponent<LodBehaviour>(0.0f, Transform());
+		terrainChunk->AddComponent<MaterialTerrain>();
+
+		// Waters.
+		GameObject *water = new GameObject(Transform());
+		water->SetName("Water");
+		water->AddComponent<Mesh>();
+		water->AddComponent<MaterialWater>();*/
 	}
 
 	void Scene1::Update()

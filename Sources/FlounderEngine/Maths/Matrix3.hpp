@@ -2,14 +2,12 @@
 
 #include <ostream>
 #include <string>
-#include "Engine/Exports.hpp"
-#include "Files/LoadedValue.hpp"
 #include "Vector3.hpp"
 
 namespace Flounder
 {
 	/// <summary>
-	/// Holds a 2x2 matrix.
+	/// Holds a 3x3 matrix.
 	/// </summary>
 	class F_EXPORT Matrix3
 	{
@@ -57,203 +55,131 @@ namespace Flounder
 		Matrix3(const float source[9]);
 
 		/// <summary>
-		/// Constructor for Matrix3.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a loaded value. </param>
-		Matrix3(LoadedValue *value);
-
-		/// <summary>
 		/// Deconstructor for Matrix3.
 		/// </summary>
 		~Matrix3();
 
 		/// <summary>
-		/// Loads from another Matrix3.
+		/// Adds this matrix to another matrix.
 		/// </summary>
-		/// <param name="source"> The source matrix. </param>
-		/// <returns> This. </returns>
-		Matrix3 *Set(const Matrix3 &source);
+		/// <param name="other"> The other matrix. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix3 Add(const Matrix3 &other) const;
 
 		/// <summary>
-		/// Loads from a 9 element array.
+		/// Subtracts this matrix to another matrix.
 		/// </summary>
-		/// <param name="source"> The source array. </param>
-		/// <returns> This. </returns>
-		Matrix3 *Set(const float source[9]);
+		/// <param name="other"> The other matrix. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix3 Subtract(const Matrix3 &other) const;
 
 		/// <summary>
-		/// Sets values in the matrix.
+		/// Multiplies this matrix by another matrix.
 		/// </summary>
-		/// <param name="source"> The source loaded value. </param>
-		Matrix3 *Set(LoadedValue *value);
+		/// <param name="other"> The other matrix. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix3 Multiply(const Matrix3 &other) const;
 
 		/// <summary>
-		/// Saves this vector into a loaded value.
+		/// Divides this matrix by another matrix.
 		/// </summary>
-		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *destination);
+		/// <param name="other"> The other matrix. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix3 Divide(const Matrix3 &other) const;
 
 		/// <summary>
-		/// Set the source matrix to be the identity matrix.
+		/// Transforms this matrix by a vector.
 		/// </summary>
-		/// <param name="source"> The matrix to set to the identity. </param>
-		/// <returns> The source matrix. </returns>
-		static Matrix3 *SetIdentity(Matrix3 *source);
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Vector3 Transform(const Vector3 &other) const;
 
 		/// <summary>
-		/// Gets the determinant of this matrix.
+		/// Scales this matrix by a vector.
 		/// </summary>
-		/// <param name="source"> The matrix to set to the identity.
-		/// <returns> The determinant of the matrix. </returns>
-		static float Determinant(const Matrix3 &source);
-
-		/// <summary>
-		/// Adds two matrices together and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix3 *Add(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination);
-
-		/// <summary>
-		/// Subtracts two matrices together and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix3 *Subtract(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination);
-
-		/// <summary>
-		/// Multiplies two matrices together and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix3 *Multiply(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination);
-
-		/// <summary>
-		/// Divides two matrices from each other and places the result in the destination matrices.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix3 *Divide(const Matrix3 &left, const Matrix3 &right, Matrix3 *destination);
-
-		/// <summary>
-		/// Transforms a matrix by a vector and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector3 *Transform(const Matrix3 &left, const Vector3 &right, Vector3 *destination);
-
-		/// <summary>
-		/// Scales a matrix by a vector and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix3 *Scale(const Matrix3 &left, const Vector3 &right, Matrix3 *destination);
-
-		/// <summary>
-		/// Inverts the source matrix and puts the result in the destination matrix.
-		/// </summary>
-		/// <param name="source"> The source matrix to be inverted. </param>
-		/// <param name="destination"> The destination matrix, or nullptr if a new one is to be created. </param>
-		/// <returns> The inverted matrix, or nullptr if source can't be reverted. </returns>
-		static Matrix3 *Invert(const Matrix3 &source, Matrix3 *destination);
-
-		/// <summary>
-		/// Negates the source matrix and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="source"> The source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The negated matrix. </returns>
-		static Matrix3 *Negate(const Matrix3 &source, Matrix3 *destination);
-
-		/// <summary>
-		/// Transpose the source matrix and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="source"> The source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The transposed matrix. </returns>
-		static Matrix3 *Transpose(const Matrix3 &source, Matrix3 *destination);
-
-		/// <summary>
-		/// Turns a 3x3 matrix into an array.
-		/// </summary>
-		/// <param name="matrix"> The matrix to turn into an array. </param>
-		/// <returns> A 9 float array. </returns>
-		static float *ToArray(const Matrix3 &matrix);
-
-		/// <summary>
-		/// Sets the source matrix to 0.
-		/// </summary>
-		/// <param name="source"> The matrix to be set to 0. </param>
-		/// <returns> The matrix set to zero. </returns>
-		static Matrix3 *SetZero(Matrix3 *source);
-
-		/// <summary>
-		/// Sets this matrix to be the identity matrix.
-		/// </summary>
-		/// <returns> This. </returns>
-		Matrix3 *SetIdentity();
-
-		/// <summary>
-		/// Gets the determinant of this matrix.
-		/// </summary>
-		/// <returns> The determinant of the matrix. </returns>
-		float Determinant();
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix3 Scale(const Vector3 &other) const;
 
 		/// <summary>
 		/// Inverts this matrix.
 		/// </summary>
-		/// <returns> This. </returns>
-		Matrix3 *Invert();
+		/// <returns> The inverted matrix. </returns>
+		Matrix3 Negate() const;
 
 		/// <summary>
 		/// Negates this matrix.
 		/// </summary>
-		/// <returns> This. </returns>
-		Matrix3 *Negate();
+		/// <returns> The negated matrix. </returns>
+		Matrix3 Invert() const;
 
 		/// <summary>
-		/// Transposes this matrix
+		/// Transposes this matrix.
 		/// </summary>
-		/// <returns> This. </returns>
-		Matrix3 *Transpose();
+		/// <returns> The transposed matrix. </returns>
+		Matrix3 Transpose() const;
+
+		/// <summary>
+		/// Takes the determinant of this matrix.
+		/// </summary>
+		/// <returns> The determinant. </returns>
+		float Determinant() const;
 
 		/// <summary>
 		/// Sets this matrix to 0.
 		/// </summary>
-		/// <returns> This. </returns>
-		Matrix3 *SetZero();
+		/// <returns> The identity matrix. </returns>
+		Matrix3 SetZero();
+
+		/// <summary>
+		/// Sets this matrix to be the identity matrix.
+		/// </summary>
+		/// <returns> The identity matrix. </returns>
+		Matrix3 SetIdentity();
+
+		/// <summary>
+		/// Turns this 3x3 matrix into an array.
+		/// </summary>
+		/// <returns> A 9 float array. </returns>
+		float *ToArray() const;
+
+		/// <summary>
+		/// Saves this matrix into a loaded value.
+		/// </summary>
+		/// <param name="destination"> The destination loaded value. </param>
+		void Write(LoadedValue *destination);
 
 		Matrix3 &operator=(const Matrix3 &other);
+
+		Matrix3 &operator=(const float array[9]);
+
+		Matrix3 &operator=(LoadedValue *value);
 
 		bool operator==(const Matrix3 &other) const;
 
 		bool operator!=(const Matrix3 &other) const;
 
-		Matrix3 &operator-();
+		Matrix3 operator-();
 
-		friend F_EXPORT Matrix3 operator+(Matrix3 left, const Matrix3 &right);
+		F_EXPORT friend Matrix3 operator+(Matrix3 left, const Matrix3 &right);
 
-		friend F_EXPORT Matrix3 operator-(Matrix3 left, const Matrix3 &right);
+		F_EXPORT friend Matrix3 operator-(Matrix3 left, const Matrix3 &right);
 
-		friend F_EXPORT Matrix3 operator*(Matrix3 left, const Matrix3 &right);
+		F_EXPORT friend Matrix3 operator*(Matrix3 left, const Matrix3 &right);
 
-		friend F_EXPORT Matrix3 operator/(Matrix3 left, const Matrix3 &right);
+		F_EXPORT friend Matrix3 operator/(Matrix3 left, const Matrix3 &right);
 
-		friend F_EXPORT Matrix3 operator*(Matrix3 left, Vector3 value);
+		F_EXPORT friend Matrix3 operator*(Matrix3 left, Vector3 value);
 
-		friend F_EXPORT Matrix3 operator/(Matrix3 left, Vector3 value);
+		F_EXPORT friend Matrix3 operator/(Matrix3 left, Vector3 value);
+
+		F_EXPORT friend Matrix3 operator*(Matrix3 left, float value);
+
+		F_EXPORT friend Matrix3 operator/(Matrix3 left, float value);
+
+		F_EXPORT friend Matrix3 operator*(float value, Matrix3 left);
+
+		F_EXPORT friend Matrix3 operator/(float value, Matrix3 left);
 
 		Matrix3 &operator+=(const Matrix3 &other);
 
@@ -263,7 +189,7 @@ namespace Flounder
 
 		Matrix3 &operator/=(const Matrix3 &other);
 
-		friend std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix);
+		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix);
 
 		std::string ToString() const;
 	};

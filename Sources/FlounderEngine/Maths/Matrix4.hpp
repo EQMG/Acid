@@ -2,14 +2,13 @@
 
 #include <ostream>
 #include <string>
-#include "Engine/Exports.hpp"
-#include "Files/LoadedValue.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
 #include "Vector4.hpp"
 
 namespace Flounder
 {
+	class Vector2;
+	class Vector3;
+
 	/// <summary>
 	/// Holds a 4x4 matrix.
 	/// </summary>
@@ -61,211 +60,111 @@ namespace Flounder
 		Matrix4(const float source[16]);
 
 		/// <summary>
-		/// Constructor for Matrix4.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a loaded value. </param>
-		Matrix4(LoadedValue *value);
-
-		/// <summary>
 		/// Deconstructor for Matrix4.
 		/// </summary>
 		~Matrix4();
 
 		/// <summary>
-		/// Loads from another Matrix4.
+		/// Adds this matrix to another matrix.
 		/// </summary>
-		/// <param name="source"> The source matrix. </param>
-		/// <returns> This. </returns>
-		Matrix4 *Set(const Matrix4 &source);
+		/// <param name="other"> The other matrix. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix4 Add(const Matrix4 &other) const;
 
 		/// <summary>
-		/// Loads from a 16 element array.
+		/// Subtracts this matrix to another matrix.
 		/// </summary>
-		/// <param name="source"> The source array. </param>
-		/// <returns> This. </returns>
-		Matrix4 *Set(const float source[16]);
+		/// <param name="other"> The other matrix. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix4 Subtract(const Matrix4 &other) const;
 
 		/// <summary>
-		/// Sets values in the matrix.
+		/// Multiplies this matrix by another matrix.
 		/// </summary>
-		/// <param name="source"> The source loaded value. </param>
-		Matrix4 *Set(LoadedValue *value);
+		/// <param name="other"> The other matrix. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix4 Multiply(const Matrix4 &other) const;
 
 		/// <summary>
-		/// Saves this vector into a loaded value.
+		/// Multiplies this matrix by a vector.
 		/// </summary>
-		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *destination);
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Vector4 Multiply(const Vector4 &other) const;
 
 		/// <summary>
-		/// Set the source matrix to be the identity matrix.
+		/// Divides this matrix by another matrix.
 		/// </summary>
-		/// <param name="source"> The matrix to set to the identity. </param>
-		/// <returns> The source matrix. </returns>
-		static Matrix4 *SetIdentity(Matrix4 *source);
+		/// <param name="other"> The other matrix. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix4 Divide(const Matrix4 &other) const;
 
 		/// <summary>
-		/// Gets the determinant of this matrix.
+		/// Transforms this matrix by a vector.
 		/// </summary>
-		/// <param name="source"> The matrix to set to the identity.
-		/// <returns> The determinant of the matrix. </returns>
-		static float Determinant(const Matrix4 &source);
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Vector4 Transform(const Vector4 &other) const;
 
 		/// <summary>
-		/// Adds two matrices together and places the result in the destination matrix.
+		/// Translates this matrix by a vector.
 		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix4 *Add(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination);
+		/// <param name="other"> The vector. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix4 Translate(const Vector2 &other) const;
 
 		/// <summary>
-		/// Subtracts two matrices together and places the result in the destination matrix.
+		/// Translates this matrix by a vector.
 		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix4 *Subtract(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination);
+		/// <param name="other"> The vector. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix4 Translate(const Vector3 &other) const;
 
 		/// <summary>
-		/// Multiplies a matrix and a vector together and places the result in the destination vector.
+		/// Scales this matrix by a vector.
 		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *Multiply(const Matrix4 &left, const Vector4 &right, Vector4 *destination);
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix4 Scale(const Vector3 &other) const;
 
 		/// <summary>
-		/// Multiplies two matrices together and places the result in the destination matrix.
+		/// Scales this matrix by a vector.
 		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix4 *Multiply(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination);
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant matrix. </returns>
+		Matrix4 Scale(const Vector4 &other) const;
 
 		/// <summary>
-		/// Divides two matrices from each other and places the result in the destination matrices.
+		/// Rotates this matrix around the given axis the specified angle.
 		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix4 *Divide(const Matrix4 &left, const Matrix4 &right, Matrix4 *destination);
-
-		/// <summary>
-		/// Transforms a matrix by a vector and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *Transform(const Matrix4 &left, const Vector4 &right, Vector4 *destination);
-
-		/// <summary>
-		/// Scales a matrix by a vector and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix4 *Scale(const Matrix4 &left, const Vector3 &right, Matrix4 *destination);
-
-		/// <summary>
-		/// Scales a matrix by a vector and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix4 *Scale(const Matrix4 &left, const Vector4 &right, Matrix4 *destination);
-
-		/// <summary>
-		/// Inverts the source matrix and puts the result in the destination matrix.
-		/// </summary>
-		/// <param name="source"> The source matrix to be inverted. </param>
-		/// <param name="destination"> The destination matrix, or nullptr if a new one is to be created. </param>
-		/// <returns> The inverted matrix, or nullptr if source can't be reverted. </returns>
-		static Matrix4 *Invert(const Matrix4 &source, Matrix4 *destination);
-
-		/// <summary>
-		/// Negates the source matrix and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="source"> The source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The negated matrix. </returns>
-		static Matrix4 *Negate(const Matrix4 &source, Matrix4 *destination);
-
-		/// <summary>
-		/// Transpose the source matrix and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="source"> The source matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The transposed matrix. </returns>
-		static Matrix4 *Transpose(const Matrix4 &source, Matrix4 *destination);
-
-		/// <summary>
-		/// Translates a matrix by a vector and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix4 *Translate(const Matrix4 &left, const Vector2 &right, Matrix4 *destination);
-
-		/// <summary>
-		/// Translates a matrix by a vector and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="left"> The left source matrix. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix4 *Translate(const Matrix4 &left, const Vector3 &right, Matrix4 *destination);
-
-		/// <summary>
-		/// Rotates a matrix around the given axis the specified angle and places the result in the destination matrix.
-		/// </summary>
-		/// <param name="source"> The source matrix. </param>
-		/// <param name="axis"> The vector representing the rotation axis. Must be normalized. </param>
 		/// <param name="angle"> the angle, in radians. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The destination matrix. </returns>
-		static Matrix4 *Rotate(const Matrix4 &source, const Vector3 &axis, const float &angle, Matrix4 *destination);
+		/// <param name="axis"> The vector representing the rotation axis. </param>
+		/// <returns> The rotated matrix. </returns>
+		Matrix4 Rotate(const float &angle, const Vector3 &axis) const;
 
 		/// <summary>
-		/// Turns a 4x4 matrix into an array.
+		/// Inverts this matrix.
 		/// </summary>
-		/// <param name="matrix"> The matrix to turn into an array. </param>
-		/// <returns> A 16 float array. </returns>
-		static float *ToArray(const Matrix4 &matrix);
+		/// <returns> The inverted matrix. </returns>
+		Matrix4 Negate() const;
 
 		/// <summary>
-		/// Sets the source matrix to 0.
+		/// Negates this matrix.
 		/// </summary>
-		/// <param name="source"> The matrix to be set to 0. </param>
-		/// <returns> The matrix set to zero. </returns>
-		static Matrix4 *SetZero(Matrix4 *source);
+		/// <returns> The negated matrix. </returns>
+		Matrix4 Invert() const;
 
 		/// <summary>
-		/// Creates a new transformation matrix for a object in 2d space.
+		/// Transposes this matrix.
 		/// </summary>
-		/// <param name="translation"> Translation amount the XY. </param>
-		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 *TransformationMatrix(const Vector2 &translation, const float &scale, Matrix4 *destination);
+		/// <returns> The transposed matrix. </returns>
+		Matrix4 Transpose() const;
 
 		/// <summary>
-		/// Creates a new transformation matrix for a object in 2d space.
+		/// Takes the determinant of this matrix.
 		/// </summary>
-		/// <param name="translation"> Translation amount the XY. </param>
-		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 *TransformationMatrix(const Vector2 &translation, const Vector3 &scale, Matrix4 *destination);
+		/// <returns> The determinant. </returns>
+		float Determinant() const;
 
 		/// <summary>
 		/// Creates a new transformation matrix for a object in 3d space.
@@ -273,9 +172,24 @@ namespace Flounder
 		/// <param name="translation"> Translation amount the XYZ. </param>
 		/// <param name="rotation"> Rotation amount the XYZ. </param>
 		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 *TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const float &scale, Matrix4 *destination);
+		static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale);
+
+		/// <summary>
+		/// Creates a new transformation matrix for a object in 2d space.
+		/// </summary>
+		/// <param name="translation"> Translation amount the XY. </param>
+		/// <param name="scale"> How much to scale the matrix. </param>
+		/// <returns> Returns the transformation matrix. </returns>
+		static Matrix4 TransformationMatrix(const Vector2 &translation, const float &scale);
+
+		/// <summary>
+		/// Creates a new transformation matrix for a object in 2d space.
+		/// </summary>
+		/// <param name="translation"> Translation amount the XY. </param>
+		/// <param name="scale"> How much to scale the matrix. </param>
+		/// <returns> Returns the transformation matrix. </returns>
+		static Matrix4 TransformationMatrix(const Vector2 &translation, const Vector3 &scale);
 
 		/// <summary>
 		/// Creates a new transformation matrix for a object in 3d space.
@@ -283,23 +197,21 @@ namespace Flounder
 		/// <param name="translation"> Translation amount the XYZ. </param>
 		/// <param name="rotation"> Rotation amount the XYZ. </param>
 		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 *TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale, Matrix4 *destination);
+		static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const float &scale);
 
 		/// <summary>
-		/// Creates a new perspective matrix, or updates a existing one.
+		/// Creates a new perspective matrix.
 		/// </summary>
 		/// <param name="fov"> The cameras FOV. </param>
 		/// <param name="aspectRatio"> The cameras aspect ratio. </param>
 		/// <param name="zNear"> The cameras near plane. </param>
 		/// <param name="zFar"> The cameras far plane. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> The transformation matrix. </returns>
-		static Matrix4 *PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar, Matrix4 *destination);
+		static Matrix4 PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar);
 
 		/// <summary>
-		/// Creates a new orthographic matrix, or updates a existing one.
+		/// Creates a new orthographic matrix.
 		/// </summary>
 		/// <param name="left"> The left plane. </param>
 		/// <param name="right"> The right plane. </param>
@@ -309,15 +221,15 @@ namespace Flounder
 		/// <param name="far"> The far plane. </param>
 		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
 		/// <returns> The transformation matrix. </returns>
-		static Matrix4 *OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &near, const float &far, Matrix4 *destination);
+		static Matrix4 OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &near, const float &far);
 
 		/// <summary>
-		/// Creates a new view matrix, or updates a existing one.
+		/// Creates a new view matrix.
 		/// </summary>
 		/// <param name="position"> The cameras position. </param>
 		/// <param name="rotation"> The cameras rotation. </param>
 		/// <returns> The transformation matrix. </returns>
-		static Matrix4 *ViewMatrix(const Vector3 &position, const Vector3 &rotation, Matrix4 *destination);
+		static Matrix4 ViewMatrix(const Vector3 &position, const Vector3 &rotation);
 
 		/// <summary>
 		/// Transforms a 3D world point into screen space.
@@ -325,73 +237,64 @@ namespace Flounder
 		/// <param name="worldSpace"> The point to get into screen space. </param>
 		/// <param name="viewMatrix"> The cameras view matrix. </param>
 		/// <param name="projectionMatrix"> The cameras projection matrix. </param>
-		/// <param name="destination"> The vector to write into. </param>
 		/// <returns> A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). </returns>
-		static Vector3 *WorldToScreenSpace(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix, Vector3 *destination);
-
-		/// <summary>
-		/// Sets this matrix to be the identity matrix.
-		/// </summary>
-		/// <returns> This. </returns>
-		Matrix4 *SetIdentity();
-
-		/// <summary>
-		/// Gets the determinant of this matrix.
-		/// </summary>
-		/// <returns> The determinant of the matrix. </returns>
-		float Determinant();
-
-		/// <summary>
-		/// Inverts this matrix.
-		/// </summary>
-		/// <returns> This. </returns>
-		Matrix4 *Invert();
-
-		/// <summary>
-		/// Negates this matrix.
-		/// </summary>
-		/// <returns> This. </returns>
-		Matrix4 *Negate();
-
-		/// <summary>
-		/// Transposes this matrix
-		/// </summary>
-		/// <returns> This. </returns>
-		Matrix4 *Transpose();
+		static Vector3 WorldToScreenSpace(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
 
 		/// <summary>
 		/// Sets this matrix to 0.
 		/// </summary>
-		/// <returns> This. </returns>
-		Matrix4 *SetZero();
+		/// <returns> The identity matrix. </returns>
+		Matrix4 SetZero();
+
+		/// <summary>
+		/// Sets this matrix to be the identity matrix.
+		/// </summary>
+		/// <returns> The identity matrix. </returns>
+		Matrix4 SetIdentity();
+
+		/// <summary>
+		/// Turns this 4x4 matrix into an array.
+		/// </summary>
+		/// <returns> A 16 float array. </returns>
+		float *ToArray() const;
+
+		/// <summary>
+		/// Saves this matrix into a loaded value.
+		/// </summary>
+		/// <param name="destination"> The destination loaded value. </param>
+		void Write(LoadedValue *destination);
 
 		Matrix4 &operator=(const Matrix4 &other);
+
+		Matrix4 &operator=(const float array[16]);
+
+		Matrix4 &operator=(LoadedValue *value);
 
 		bool operator==(const Matrix4 &other) const;
 
 		bool operator!=(const Matrix4 &other) const;
 
-		Matrix4 &operator-();
+		Matrix4 operator-();
 
-		friend F_EXPORT Matrix4 operator+(Matrix4 left, const Matrix4 &right);
+		F_EXPORT friend Matrix4 operator+(Matrix4 left, const Matrix4 &right);
 
-		friend F_EXPORT Matrix4 operator-(Matrix4 left, const Matrix4 &right);
+		F_EXPORT friend Matrix4 operator-(Matrix4 left, const Matrix4 &right);
 
-		friend F_EXPORT Matrix4 operator*(Matrix4 left, const Matrix4 &right);
+		F_EXPORT friend Matrix4 operator*(Matrix4 left, const Matrix4 &right);
 
-		friend F_EXPORT Matrix4 operator/(Matrix4 left, const Matrix4 &right);
+		F_EXPORT friend Matrix4 operator/(Matrix4 left, const Matrix4 &right);
 
-		friend F_EXPORT Matrix4 operator*(Matrix4 left, Vector4 value);
+		F_EXPORT friend Matrix4 operator*(Matrix4 left, Vector4 value);
 
-		friend F_EXPORT Matrix4 operator/(Matrix4 left, Vector4 value);
+		F_EXPORT friend Matrix4 operator/(Matrix4 left, Vector4 value);
 
-		friend F_EXPORT Matrix4 operator*(Matrix4 left, float value);
+		F_EXPORT friend Matrix4 operator*(Matrix4 left, float value);
 
-		friend F_EXPORT Matrix4 operator/(Matrix4 left, float value);
+		F_EXPORT friend Matrix4 operator/(Matrix4 left, float value);
 
-		friend F_EXPORT Matrix4 operator*(float value, Matrix4 left);
+		F_EXPORT friend Matrix4 operator*(float value, Matrix4 left);
 
-		friend F_EXPORT Matrix4 operator/(float value, Matrix4 left);
+		F_EXPORT friend Matrix4 operator/(float value, Matrix4 left);
 
 		Matrix4 &operator+=(const Matrix4 &other);
 
@@ -401,7 +304,7 @@ namespace Flounder
 
 		Matrix4 &operator/=(const Matrix4 &other);
 
-		friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
+		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
 
 		std::string ToString() const;
 

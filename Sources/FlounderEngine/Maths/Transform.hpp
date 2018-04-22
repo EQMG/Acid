@@ -51,10 +51,6 @@ namespace Flounder
 
 		~Transform();
 
-		Matrix4 *GetWorldMatrix(Matrix4 *destination) const;
-
-		Matrix4 *GetModelMatrix(Matrix4 *destination) const;
-
 		Matrix4 GetWorldMatrix() const;
 
 		Matrix4 GetModelMatrix() const;

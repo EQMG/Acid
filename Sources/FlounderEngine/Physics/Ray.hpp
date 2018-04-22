@@ -55,23 +55,21 @@ namespace Flounder
 		/// Gets a point on the ray.
 		/// </summary>
 		/// <param name="distance"> Distance down the ray to sample. </param>
-		/// <param name="destination"> The destination vector, if nullptr one will be created. </param>
 		/// <returns> Returns the destination vector. </returns>
-		Vector3 *GetPointOnRay(const float &distance, Vector3 *destination) const;
+		Vector3 GetPointOnRay(const float &distance) const;
 
 		/// <summary>
 		/// Converts a position from world space to screen space.
 		/// </summary>
 		/// <param name="position"> The position to convert. </param>
-		/// <param name="destination"> The destination point. X and Y being screen space coords and Z being the distance to the camera. </param>
-		/// <returns> Returns the destination vector. </returns>
-		Vector3 *ConvertToScreenSpace(const Vector3 &position, Vector3 *destination) const;
+		/// <returns> Returns the destination vector X and Y being screen space coords and Z being the distance to the camera. </returns>
+		Vector3 ConvertToScreenSpace(const Vector3 &position) const;
 
 	private:
 		void UpdateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY);
 
-		void UpdateEyeCoords(Vector4 *clipCoords);
+		void UpdateEyeCoords();
 
-		void UpdateWorldCoords(Vector4 *eyeCoords);
+		void UpdateWorldCoords();
 	};
 }

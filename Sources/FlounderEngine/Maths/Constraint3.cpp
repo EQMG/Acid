@@ -26,49 +26,31 @@ namespace Flounder
 	{
 	}
 
-	Constraint3::Constraint3(LoadedValue *value)
-	{
-		Set(value);
-	}
-
 	Constraint3::~Constraint3()
 	{
 	}
 
-	Constraint3 *Constraint3::Set(const Constraint3 &source)
-	{
-		m_x = source.m_x;
-		m_y = source.m_y;
-		m_z = source.m_z;
-		return this;
-	}
-
-	Constraint3 *Constraint3::Set(const bool &x, const bool &y, const bool &z)
-	{
-		m_x = x;
-		m_y = y;
-		m_z = z;
-		return this;
-	}
-
-	Constraint3 *Constraint3::Set(LoadedValue *value)
-	{
-		m_x = (bool) value->GetChild("x")->Get<int>();
-		m_y = (bool) value->GetChild("y")->Get<int>();
-		m_z = (bool) value->GetChild("z")->Get<int>();
-		return this;
-	}
-
 	void Constraint3::Write(LoadedValue *destination)
 	{
-		destination->SetChild<int>("x", (int) m_x);
-		destination->SetChild<int>("y", (int) m_y);
-		destination->SetChild<int>("z", (int) m_z);
+		destination->SetChild<int>("x", static_cast<int>(m_x));
+		destination->SetChild<int>("y", static_cast<int>(m_y));
+		destination->SetChild<int>("z", static_cast<int>(m_z));
 	}
 
 	Constraint3 &Constraint3::operator=(const Constraint3 &other)
 	{
-		return *Set(other);
+		m_x = other.m_x;
+		m_y = other.m_y;
+		m_z = other.m_z;
+		return *this;
+	}
+
+	Constraint3 &Constraint3::operator=(LoadedValue *source)
+	{
+		m_x = static_cast<bool>(source->GetChild("x")->Get<int>());
+		m_y = static_cast<bool>(source->GetChild("y")->Get<int>());
+		m_z = static_cast<bool>(source->GetChild("z")->Get<int>());
+		return *this;
 	}
 
 	bool Constraint3::operator==(const Constraint3 &other) const
