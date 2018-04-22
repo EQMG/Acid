@@ -122,7 +122,7 @@ namespace Flounder
 
 	Matrix3 Matrix3::Scale(const Vector3 &other) const
 	{
-		Matrix3 result = Matrix3();
+		Matrix3 result = Matrix3(*this);
 		result.m_00 = m_00 * other.m_x;
 		result.m_01 = m_01 * other.m_x;
 		result.m_02 = m_02 * other.m_x;

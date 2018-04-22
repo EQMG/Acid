@@ -86,7 +86,7 @@ namespace Flounder
 
 	Matrix2 Matrix2::Scale(const Vector2 &other) const
 	{
-		Matrix2 result = Matrix2();
+		Matrix2 result = Matrix2(*this);
 		result.m_00 = m_00 * other.m_x;
 		result.m_01 = m_01 * other.m_x;
 		result.m_10 = m_10 * other.m_y;
