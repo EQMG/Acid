@@ -19,6 +19,7 @@ namespace Flounder
 
 	Vector3 *SpawnCircle::GetBaseSpawnPosition()
 	{
-		return Vector3::RandomPointOnCircle(*m_heading, m_radius, m_spawnPosition);
+		*m_spawnPosition = Vector3::RandomPointOnCircle(*m_heading, m_radius);
+		return m_spawnPosition;
 	}
 }

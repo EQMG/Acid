@@ -31,7 +31,7 @@ namespace Flounder
 
 		IncreaseAnimationTime();
 		auto currentPose = CalculateCurrentAnimationPose();
-		ApplyPoseToJoints(currentPose, m_rootJoint, *m_animatorTransformation->SetIdentity());
+		ApplyPoseToJoints(currentPose, m_rootJoint, m_animatorTransformation->SetIdentity());
 	}
 
 	void Animator::IncreaseAnimationTime()
@@ -98,17 +98,15 @@ namespace Flounder
 	void Animator::ApplyPoseToJoints(const std::map<std::string, Matrix4 *> &currentPose, Joint *joint, const Matrix4 &parentTransform)
 	{
 		Matrix4 *currentLocalTransform = currentPose.find(joint->GetName())->second;
-		Matrix4 *currentTransform = Matrix4::Multiply(parentTransform, *currentLocalTransform, nullptr);
+		Matrix4 currentTransform = parentTransform * *currentLocalTransform;
 
 		for (auto childJoint : *joint->GetChildren())
 		{
-			ApplyPoseToJoints(currentPose, childJoint, *currentTransform);
+			ApplyPoseToJoints(currentPose, childJoint, currentTransform);
 		}
 
-		Matrix4::Multiply(*currentTransform, *joint->GetInverseBindTransform(), currentTransform);
-		joint->SetAnimatedTransform(*currentTransform);
-
-		delete currentTransform;
+		currentTransform *= *joint->GetInverseBindTransform();
+		joint->SetAnimatedTransform(currentTransform);
 	}
 
 	void Animator::DoAnimation(Animation *animation)

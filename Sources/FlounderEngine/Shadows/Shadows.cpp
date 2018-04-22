@@ -21,7 +21,6 @@ namespace Flounder
 	Shadows::~Shadows()
 	{
 		delete m_lightDirection;
-
 		delete m_shadowBox;
 	}
 

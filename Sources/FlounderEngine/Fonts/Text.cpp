@@ -190,7 +190,7 @@ namespace Flounder
 		// Loads mesh data to Vulkan.
 		Model *model = new Model(vertices);
 		object->m_model = model;
-		object->GetRectangle()->m_dimensions->Set(bounding.m_x, bounding.m_y);
+		*object->GetRectangle()->m_dimensions = Vector2(bounding.m_x, bounding.m_y);
 	}
 
 	std::vector<FontLine> Text::CreateStructure(Text *object)
@@ -372,7 +372,7 @@ namespace Flounder
 
 		// TODO: Ignore min values, they allow better alignment!
 		// maxY = static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY()) * object->m_numberLines;
-		bounding->Set((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
+		*bounding = Vector2((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
 		maxX -= minX;
 		maxY -= minY;
 

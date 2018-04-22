@@ -8,7 +8,6 @@
 namespace Flounder
 {
 	class Colour;
-
 	class Vector3;
 
 	/// <summary>
@@ -22,6 +21,11 @@ namespace Flounder
 			struct
 			{
 				float m_x, m_y, m_z, m_w;
+			};
+
+			struct
+			{
+				float m_r, m_g, m_b, m_a;
 			};
 
 			struct
@@ -69,45 +73,123 @@ namespace Flounder
 		Vector4(const Colour &source);
 
 		/// <summary>
-		/// Constructor for Vector4.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a loaded value. </param>
-		Vector4(LoadedValue *value);
-
-		/// <summary>
 		/// Deconstructor for vector4.
 		/// </summary>
 		~Vector4();
 
 		/// <summary>
-		/// Sets values in the vector.
+		/// Adds this vector to another vector.
 		/// </summary>
-		/// <param name="x"> The new X value. </param>
-		/// <param name="y"> The new Y value. </param>
-		/// <param name="z"> The new Z value. </param>
-		/// <param name="w"> The new W value. </param>
-		/// <returns> This. </returns>
-		Vector4 *Set(const float &x, const float &y, const float &z, const float &w);
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Vector4 Add(const Vector4 &other) const;
 
 		/// <summary>
-		/// Loads from another Vector4.
+		/// Subtracts this vector to another vector.
 		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <returns> This. </returns>
-		Vector4 *Set(const Vector3 &source);
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Vector4 Subtract(const Vector4 &other) const;
 
 		/// <summary>
-		/// Loads from another Vector4.
+		/// Multiplies this vector with another vector.
 		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <returns> This. </returns>
-		Vector4 *Set(const Vector4 &source);
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Vector4 Multiply(const Vector4 &other) const;
 
 		/// <summary>
-		/// Sets values in the vector.
+		/// Divides this vector by another vector.
 		/// </summary>
-		/// <param name="source"> The source loaded value. </param>
-		Vector4 *Set(LoadedValue *value);
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Vector4 Divide(const Vector4 &other) const;
+
+		/// <summary>
+		/// Calculates the angle between this vector and another vector.
+		/// </summary>
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The angle, in radians. </returns>
+		float Angle(const Vector4 &other) const;
+
+		/// <summary>
+		/// Calculates the dot product of the this vector and another vector.
+		/// </summary>
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The dot product. </returns>
+		float Dot(const Vector4 &other) const;
+
+		/// <summary>
+		/// Scales this vector by a scalar.
+		/// </summary>
+		/// <param name="scalar"> The scalar value. </param>
+		/// <returns> The scaled vector. </returns>
+		Vector4 Scale(const float &scalar) const;
+
+		/// <summary>
+		/// Negates this vector.
+		/// </summary>
+		/// <returns> The negated vector. </returns>
+		Vector4 Negate() const;
+
+		/// <summary>
+		/// Normalizes this vector.
+		/// </summary>
+		/// <returns> The normalized vector. </returns>
+		Vector4 Normalize() const;
+
+		/// <summary>
+		/// Gets the length squared of this vector.
+		/// </summary>
+		/// <returns> The length squared. </returns>
+		float LengthSquared() const;
+
+		/// <summary>
+		/// Gets the length of this vector.
+		/// </summary>
+		/// <returns> The length. </returns>
+		float Length() const;
+
+		/// <summary>
+		/// Gets the maximum value in this vector.
+		/// </summary>
+		/// <returns> The largest components. </returns>
+		float MaxComponent() const;
+
+		/// <summary>
+		/// Gets the lowest value in this vector.
+		/// </summary>
+		/// <returns> The smallest components. </returns>
+		float MinComponent() const;
+
+		/// <summary>
+		/// Gets the distance between this vector and another vector.
+		/// </summary>
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The squared distance. </returns>
+		float GetDistanceSquared(const Vector4 &other) const;
+
+		/// <summary>
+		/// Gets the between this vector and another vector.
+		/// </summary>
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The distance. </returns>
+		float GetDistance(const Vector4 &other) const;
+
+		/// <summary>
+		/// Gets the vector distance between this vector and another vector.
+		/// </summary>
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The vector distance. </returns>
+		Vector4 GetVectorDistance(const Vector4 &other) const;
+
+		/// <summary>
+		/// Gradually changes this vector to a target.
+		/// </summary>
+		/// <param name="target"> The target vector. </param>
+		/// <param name="rate"> The rate to go from current to the target. </param>
+		/// <returns> The changed vector. </returns>
+		Vector4 SmoothDamp(const Vector4 &target, const Vector4 &rate) const;
 
 		/// <summary>
 		/// Saves this vector into a loaded value.
@@ -115,198 +197,9 @@ namespace Flounder
 		/// <param name="destination"> The destination loaded value. </param>
 		void Write(LoadedValue *destination);
 
-		/// <summary>
-		/// Adds two vectors together and places the result in the destination vector.
-		/// </summary>
-		/// <param name="left"> The left source vector. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *Add(const Vector4 &left, const Vector4 &right, Vector4 *destination);
-
-		/// <summary>
-		/// Subtracts two vectors from each other and places the result in the destination vector.
-		/// </summary>
-		/// <param name="left"> The left source vector. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *Subtract(const Vector4 &left, const Vector4 &right, Vector4 *destination);
-
-		/// <summary>
-		/// Multiplies two vectors from each other and places the result in the destination vector.
-		/// </summary>
-		/// <param name="left"> The left source vector. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *Multiply(const Vector4 &left, const Vector4 &right, Vector4 *destination);
-
-		/// <summary>
-		/// Divides two vectors from each other and places the result in the destination vector.
-		/// </summary>
-		/// <param name="left"> The left source vector. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *Divide(const Vector4 &left, const Vector4 &right, Vector4 *destination);
-
-		/// <summary>
-		/// Calculates the angle between two vectors.
-		/// </summary>
-		/// <param name="left"> The left source vector. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <returns> The angle between the two vectors, in radians. </returns>
-		static float Angle(const Vector4 &left, const Vector4 &right);
-
-		/// <summary>
-		/// Calculates the dot product of the two vectors.
-		/// </summary>
-		/// <param name="left"> The left source vector. </param>
-		/// <param name="right"> The right source vector. </param>
-		/// <returns> Left dot right. </returns>
-		static float Dot(const Vector4 &left, const Vector4 &right);
-
-		/// <summary>
-		/// Scales a vector by a scalar and places the result in the destination vector.
-		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <param name="scalar"> The scalar value. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *Scale(const Vector4 &source, const float &scalar, Vector4 *destination);
-
-		/// <summary>
-		/// Negates a vector and places the result in the destination vector.
-		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *Negate(const Vector4 &source, Vector4 *destination);
-
-		/// <summary>
-		/// Normalizes a vector and places the result in the destination vector.
-		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *Normalize(const Vector4 &source, Vector4 *destination);
-
-		/// <summary>
-		/// Gets the length of the vector.
-		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <returns> The length of the vector. </returns>
-		static float Length(const Vector4 &source);
-
-		/// <summary>
-		/// Gets the length of the vector.
-		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <returns> The length squared of the vector. </returns>
-		static float LengthSquared(const Vector4 &source);
-
-		/// <summary>
-		/// Gets the maximum vector size.
-		/// </summary>
-		/// <param name="a"> The first vector to get values from. </param>
-		/// <param name="b"> The second vector to get values from. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *MaxVector(const Vector4 &a, const Vector4 &b, Vector4 *destination);
-
-		/// <summary>
-		/// Gets the lowest vector size.
-		/// </summary>
-		/// <param name="a"> The first vector to get values from. </param>
-		/// <param name="b"> The second vector to get values from. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The destination vector. </returns>
-		static Vector4 *MinVector(const Vector4 &a, const Vector4 &b, Vector4 *destination);
-
-		/// <summary>
-		/// Gets the maximum value in a vector.
-		/// </summary>
-		/// <param name="vector"> The value to get the maximum value from. </param>
-		/// <returns> The maximum value. </returns>
-		static float MaxComponent(const Vector4 &vector);
-
-		/// <summary>
-		/// Gets the lowest value in a vector.
-		/// </summary>
-		/// <param name="vector"> The value to get the lowest value from. </param>
-		/// <returns> The lowest value. </returns>
-		static float MinComponent(const Vector4 &vector);
-
-		/// <summary>
-		/// Gets the distance between two points squared.
-		/// </summary>
-		/// <param name="point1"> The first point. </param>
-		/// <param name="point2"> The second point. </param>
-		/// <returns> The squared distance between the two points. </returns>
-		static float GetDistanceSquared(const Vector4 &point1, const Vector4 &point2);
-
-		/// <summary>
-		/// Gets the total distance between 2 vectors.
-		/// </summary>
-		/// <param name="point1"> The first point. </param>
-		/// <param name="point2"> The second point. </param>
-		/// <returns> The total distance between the points. </returns>
-		static float GetDistance(const Vector4 &point1, const Vector4 &point2);
-
-		/// <summary>
-		/// Gets the vector distance between 2 vectors.
-		/// </summary>
-		/// <param name="point1"> The first point. </param>
-		/// <param name="point2"> The second point. </param>
-		/// <param name="destination"> The destination vector or nullptr if a new vector is to be created. </param>
-		/// <returns> The vector distance between the points. </returns>
-		static Vector4 *GetVectorDistance(const Vector4 &point1, const Vector4 &point2, Vector4 *destination);
-
-		/// <summary>
-		/// Translates this vector.
-		/// </summary>
-		/// <param name="x"> The translation in x. </param>
-		/// <param name="y"> the translation in y. </param>
-		/// <param name="z"> the translation in z. </param>
-		/// <param name="w"> the translation in w. </param>
-		/// <returns> This. </returns>
-		Vector4 *Translate(const float &x, const float &y, const float &z, const float &w);
-
-		/// <summary>
-		/// Negates this vector.
-		/// </summary>
-		/// <returns> This. </returns>
-		Vector4 *Negate();
-
-		/// <summary>
-		/// Normalizes this vector.
-		/// </summary>
-		/// <returns> This. </returns>
-		Vector4 *Normalize();
-
-		/// <summary>
-		/// Scales this vector.
-		/// </summary>
-		/// <param name="scalar"> The scale factor. </param>
-		/// <returns> This. </returns>
-		Vector4 *Scale(const float &scalar);
-
-		/// <summary>
-		/// Gets the length of the vector.
-		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <returns> The length of the vector. </returns>
-		float Length() const;
-
-		/// <summary>
-		/// Gets the length squared of the vector.
-		/// </summary>
-		/// <param name="source"> The source vector. </param>
-		/// <returns> The length squared of the vector. </returns>
-		float LengthSquared() const;
-
 		Vector4 &operator=(const Vector4 &other);
+
+		Vector4 &operator=(LoadedValue *value);
 
 		bool operator==(const Vector4 &other) const;
 
@@ -324,31 +217,31 @@ namespace Flounder
 
 		bool operator!=(const float &value) const;
 
-		Vector4 &operator-();
+		Vector4 operator-();
 
-		friend F_EXPORT Vector4 operator+(Vector4 left, const Vector4 &right);
+		F_EXPORT friend Vector4 operator+(Vector4 left, const Vector4 &right);
 
-		friend F_EXPORT Vector4 operator-(Vector4 left, const Vector4 &right);
+		F_EXPORT friend Vector4 operator-(Vector4 left, const Vector4 &right);
 
-		friend F_EXPORT Vector4 operator*(Vector4 left, const Vector4 &right);
+		F_EXPORT friend Vector4 operator*(Vector4 left, const Vector4 &right);
 
-		friend F_EXPORT Vector4 operator/(Vector4 left, const Vector4 &right);
+		F_EXPORT friend Vector4 operator/(Vector4 left, const Vector4 &right);
 
-		friend F_EXPORT Vector4 operator+(Vector4 left, float value);
+		F_EXPORT friend Vector4 operator+(Vector4 left, float value);
 
-		friend F_EXPORT Vector4 operator-(Vector4 left, float value);
+		F_EXPORT friend Vector4 operator-(Vector4 left, float value);
 
-		friend F_EXPORT Vector4 operator*(Vector4 left, float value);
+		F_EXPORT friend Vector4 operator*(Vector4 left, float value);
 
-		friend F_EXPORT Vector4 operator/(Vector4 left, float value);
+		F_EXPORT friend Vector4 operator/(Vector4 left, float value);
 
-		friend F_EXPORT Vector4 operator+(float value, Vector4 left);
+		F_EXPORT friend Vector4 operator+(float value, Vector4 left);
 
-		friend F_EXPORT Vector4 operator-(float value, Vector4 left);
+		F_EXPORT friend Vector4 operator-(float value, Vector4 left);
 
-		friend F_EXPORT Vector4 operator*(float value, Vector4 left);
+		F_EXPORT friend Vector4 operator*(float value, Vector4 left);
 
-		friend F_EXPORT Vector4 operator/(float value, Vector4 left);
+		F_EXPORT friend Vector4 operator/(float value, Vector4 left);
 
 		Vector4 &operator+=(const Vector4 &other);
 
@@ -366,7 +259,7 @@ namespace Flounder
 
 		Vector4 &operator/=(float value);
 
-		friend std::ostream &operator<<(std::ostream &stream, const Vector4 &vector);
+		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Vector4 &vector);
 
 		std::string ToString() const;
 	};

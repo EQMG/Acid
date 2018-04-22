@@ -51,8 +51,7 @@ namespace Flounder
 
 	Matrix4 RendererParticles::ModelMatrix(Particle *particle, const Matrix4 &viewMatrix)
 	{
-		Matrix4 modelMatrix = Matrix4();
-		Matrix4::Translate(modelMatrix, *particle->GetPosition(), &modelMatrix);
+		Matrix4 modelMatrix = modelMatrix.Translate(*particle->GetPosition());
 		modelMatrix.m_00 = viewMatrix.m_00;
 		modelMatrix.m_01 = viewMatrix.m_10;
 		modelMatrix.m_02 = viewMatrix.m_20;
@@ -62,8 +61,8 @@ namespace Flounder
 		modelMatrix.m_20 = viewMatrix.m_02;
 		modelMatrix.m_21 = viewMatrix.m_12;
 		modelMatrix.m_22 = viewMatrix.m_22;
-		Matrix4::Rotate(modelMatrix, Vector3::FRONT, Maths::Radians(particle->GetRotation()), &modelMatrix);
-		Matrix4::Scale(modelMatrix, Vector3(particle->GetScale(), particle->GetScale(), particle->GetScale()), &modelMatrix);
+		modelMatrix = modelMatrix.Rotate(Maths::Radians(particle->GetRotation()), Vector3::FRONT);
+		modelMatrix = modelMatrix.Scale(Vector3(particle->GetScale(), particle->GetScale(), particle->GetScale()));
 		return Matrix4();
 	}
 }

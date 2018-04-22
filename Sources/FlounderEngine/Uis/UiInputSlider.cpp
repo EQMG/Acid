@@ -87,9 +87,8 @@ namespace Flounder
 
 		// Update the background colour.
 		Colour *primary = Scenes::Get()->GetUiManager()->GetPrimaryColour();
-		Colour::Interpolate(*COLOUR_NORMAL, *primary, (m_text->GetScale() - SCALE_NORMAL) /
-			(SCALE_SELECTED - SCALE_NORMAL), m_background->GetColourOffset());
-		m_slider->GetColourOffset()->Set(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f);
+		m_background->SetColourOffset(COLOUR_NORMAL->Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
+		m_slider->SetColourOffset(Colour(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f));
 
 		//	// Update background size.
 		//	m_background->GetDimensions()->Set(*m_text->GetDimensions());

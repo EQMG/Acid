@@ -52,7 +52,7 @@ namespace Flounder
 		for (unsigned int i = 0; i < positionsCount / 3; i++)
 		{
 			Vector4 position = Vector4(std::stof(positionsRawData[i * 3]), std::stof(positionsRawData[i * 3 + 1]), std::stof(positionsRawData[i * 3 + 2]), 1.0f);
-			Matrix4::Transform(*MeshAnimated::S_CORRECTION, position, &position); // Matrix4::Multiply
+			position = MeshAnimated::S_CORRECTION->Transform(position); // Multiply
 			VertexAnimatedData *newVertex = new VertexAnimatedData(m_positionsList.size(), position);
 			newVertex->SetSkinData(m_vertexWeights[m_vertices.size()]);
 			m_positionsList.push_back(newVertex);

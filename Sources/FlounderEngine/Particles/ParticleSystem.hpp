@@ -66,7 +66,7 @@ namespace Flounder
 
 		float GenerateRotation() const;
 
-		Vector3 *GenerateRandomUnitVector(Vector3 *destination) const;
+		Vector3 GenerateRandomUnitVector() const;
 
 	public:
 		std::string GetName() const override { return "ParticleSystem"; };

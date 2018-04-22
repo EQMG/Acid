@@ -51,7 +51,7 @@ namespace Flounder
 
 		Colour *GetBaseColor() const { return m_baseColor; }
 
-		void SetBaseColor(const Colour &baseColor) { m_baseColor->Set(baseColor); }
+		void SetBaseColor(const Colour &baseColor) { *m_baseColor = baseColor; }
 
 		Texture *GetDiffuseTexture() const { return m_diffuseTexture; }
 

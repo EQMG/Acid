@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Inputs/Buttons/IButton.hpp"
+#include "IButton.hpp"
 #include "IAxis.hpp"
 
 namespace Flounder

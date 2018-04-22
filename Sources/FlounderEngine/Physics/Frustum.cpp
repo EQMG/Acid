@@ -22,8 +22,8 @@ namespace Flounder
 
 	void Frustum::Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) const
 	{
-		float *view = Matrix4::ToArray(viewMatrix);
-		float *proj = Matrix4::ToArray(projectionMatrix);
+		float *view = viewMatrix.ToArray();
+		float *proj = projectionMatrix.ToArray();
 		float *clip = new float[16];
 
 		clip[0] = view[0] * proj[0] + view[1] * proj[4] + view[2] * proj[8] + view[3] * proj[12];

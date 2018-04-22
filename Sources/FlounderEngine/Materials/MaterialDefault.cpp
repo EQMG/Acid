@@ -31,7 +31,7 @@ namespace Flounder
 
 	void MaterialDefault::Load(LoadedValue *value)
 	{
-		m_baseColor->Set(value->GetChild("Base Colour")->GetString());
+		*m_baseColor = value->GetChild("Base Colour")->GetString();
 		TrySetDiffuseTexture(value->GetChild("Diffuse Texture")->GetString());
 
 		m_metallic = value->GetChild("Metallic")->Get<float>();
@@ -46,7 +46,7 @@ namespace Flounder
 
 	void MaterialDefault::Write(LoadedValue *destination)
 	{
-		destination->GetChild("Base Colour", true)->SetString(Colour::GetHex(*m_baseColor));
+		destination->GetChild("Base Colour", true)->SetString(m_baseColor->GetHex());
 		destination->GetChild("Diffuse Texture", true)->SetString(m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
 
 		destination->GetChild("Metallic", true)->Set(m_metallic);

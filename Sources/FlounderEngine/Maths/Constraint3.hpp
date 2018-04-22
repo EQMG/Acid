@@ -49,51 +49,25 @@ namespace Flounder
 		Constraint3(const bool &x, const bool &y, const bool &z);
 
 		/// <summary>
-		/// Constructor for Constraint3.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a loaded value. </param>
-		Constraint3(LoadedValue *value);
-
-		/// <summary>
 		/// Deconstructor for Constraint3.
 		/// </summary>
 		~Constraint3();
 
 		/// <summary>
-		/// Loads from another Constraint3.
-		/// </summary>
-		/// <param name="source"> The source constraint. </param>
-		/// <returns> This. </returns>
-		Constraint3 *Set(const Constraint3 &source);
-
-		/// <summary>
-		/// Sets values in the constraint.
-		/// </summary>
-		/// <param name="x"> The new X value. </param>
-		/// <param name="y"> The new Y value. </param>
-		/// <param name="z"> The new Z value. </param>
-		/// <returns> This. </returns>
-		Constraint3 *Set(const bool &x, const bool &y, const bool &z);
-
-		/// <summary>
-		/// Sets values in the constraint.
-		/// </summary>
-		/// <param name="source"> The source loaded value. </param>
-		Constraint3 *Set(LoadedValue *value);
-
-		/// <summary>
 		/// Saves this constraint into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *destination);
+		void Write(LoadedValue *source);
 
 		Constraint3 &operator=(const Constraint3 &other);
+
+		Constraint3 &operator=(LoadedValue *value);
 
 		bool operator==(const Constraint3 &other) const;
 
 		bool operator!=(const Constraint3 &other) const;
 
-		friend std::ostream &operator<<(std::ostream &stream, const Constraint3 &constraint);
+		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Constraint3 &constraint);
 
 		std::string ToString() const;
 	};

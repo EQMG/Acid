@@ -19,8 +19,8 @@ namespace Flounder
 		m_rotation(new Quaternion())
 	{
 		auto matrix = data.GetJointLocalTransform();
-		m_position->Set(matrix.m_30, matrix.m_31, matrix.m_32);
-		m_rotation->Set(matrix);
+		*m_position = Vector3(matrix.m_30, matrix.m_31, matrix.m_32);
+		*m_rotation = Quaternion(matrix);
 	}
 
 	JointTransform::~JointTransform()
@@ -31,19 +31,17 @@ namespace Flounder
 
 	Matrix4 *JointTransform::GetLocalTransform()
 	{
-		Matrix4 *rotationMatrix = Quaternion::ToRotationMatrix(*m_rotation, nullptr);
+		Matrix4 rotationMatrix = m_rotation->ToRotationMatrix();
 		Matrix4 *matrix = new Matrix4();
-		Matrix4::Translate(*matrix, *m_position, matrix);
-		Matrix4::Multiply(*matrix, *rotationMatrix, matrix);
-		delete rotationMatrix;
+		*matrix = matrix->Translate(*m_position);
+		*matrix *= rotationMatrix;
 		return matrix;
 	}
 
 	JointTransform *JointTransform::Interpolate(const JointTransform &frameA, const JointTransform &frameB, const float &progression)
 	{
 		Vector3 pos = Interpolate(*frameA.GetPosition(), *frameB.GetPosition(), progression);
-		Quaternion rot = Quaternion();
-		Quaternion::Slerp(*frameA.GetRotation(), *frameB.GetRotation(), progression, &rot);
+		Quaternion rot = frameA.GetRotation()->Slerp(*frameB.GetRotation(), progression);
 		return new JointTransform(pos, rot);
 	}
 

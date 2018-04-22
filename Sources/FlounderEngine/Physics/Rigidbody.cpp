@@ -39,8 +39,8 @@ namespace Flounder
 		m_mass = value->GetChild("Mass")->Get<float>();
 		m_drag = value->GetChild("Drag")->Get<float>();
 		m_useGravity = (bool) value->GetChild("Use Gravity")->Get<int>();
-		m_freezePosition->Set(value->GetChild("Freeze Position"));
-		m_freezeRotation->Set(value->GetChild("Freeze Rotation"));
+		*m_freezePosition = value->GetChild("Freeze Position");
+		*m_freezeRotation = value->GetChild("Freeze Rotation");
 	}
 
 	void Rigidbody::Write(LoadedValue *value)

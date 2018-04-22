@@ -1,5 +1,6 @@
 #include "Colour.hpp"
 
+#include <sstream>
 #include "Maths.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
@@ -11,121 +12,72 @@ namespace Flounder
 	const Colour Colour::BLACK = Colour("#000000");
 
 	Colour::Colour() :
-		m_r(0.0f),
-		m_g(0.0f),
-		m_b(0.0f),
-		m_a(1.0f)
+		Vector4(0.0f, 0.0f, 0.0f, 1.0f)
 	{
 	}
 
 	Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
-		m_r(r),
-		m_g(g),
-		m_b(b),
-		m_a(a)
+		Vector4(r, g, b, a)
 	{
 	}
 
 	Colour::Colour(const std::string &hex, const float &a) :
-		m_r(0.0f),
-		m_g(0.0f),
-		m_b(0.0f),
-		m_a(a)
+		Vector4(0.0f, 0.0f, 0.0f, a)
 	{
-		int r, g, b;
-		sscanf(hex.c_str() + (hex[0] == '#' ? 1 : 0), "%2x%2x%2x", &r, &g, &b);
-		m_r = static_cast<float>(r) / 255.0f;
-		m_g = static_cast<float>(g) / 255.0f;
-		m_b = static_cast<float>(b) / 255.0f;
+		*this = hex;
 	}
 
 	Colour::Colour(const Colour &source) :
-		m_r(source.m_r),
-		m_g(source.m_g),
-		m_b(source.m_b),
-		m_a(source.m_a)
+		Vector4(source)
 	{
 	}
 
 	Colour::Colour(const Vector3 &source) :
-		m_r(source.m_x),
-		m_g(source.m_y),
-		m_b(source.m_z),
-		m_a(1.0f)
+		Vector4(source.m_x, source.m_y, source.m_z, 1.0f)
 	{
 	}
 
 	Colour::Colour(const Vector4 &source) :
-		m_r(source.m_x),
-		m_g(source.m_y),
-		m_b(source.m_z),
-		m_a(source.m_w)
+		Vector4(source.m_x, source.m_y, source.m_z, source.m_w)
 	{
-	}
-
-	Colour::Colour(LoadedValue *value)
-	{
-		Set(value);
 	}
 
 	Colour::~Colour()
 	{
 	}
 
-	Colour *Colour::Set(const float &r, const float &g, const float &b, const float &a)
+	Colour Colour::Interpolate(const Colour &other, const float blend) const
 	{
-		m_r = r;
-		m_g = g;
-		m_b = b;
-		m_a = a;
-		return this;
+		float r = Maths::Interpolate(m_r, other.m_r, blend);
+		float g = Maths::Interpolate(m_g, other.m_g, blend);
+		float b = Maths::Interpolate(m_b, other.m_b, blend);
+		float a = Maths::Interpolate(m_a, other.m_a, blend);
+		return Colour(r, g, b, a);
 	}
 
-	Colour *Colour::Set(const std::string &hex, const float &a)
+	Colour Colour::GetUnit()
 	{
-		int r, g, b;
-		sscanf(hex.c_str() + (hex[0] == '#' ? 1 : 0), "%2x%2x%2x", &r, &g, &b);
-		m_r = static_cast<float>(r) / 255.0f;
-		m_g = static_cast<float>(g) / 255.0f;
-		m_b = static_cast<float>(b) / 255.0f;
-		m_a = a;
-		return this;
+		float l = Length();
+		return Colour(m_r / l, m_g / l, m_b / l, m_a / l);
 	}
 
-	Colour *Colour::Set(const Colour &source)
+	std::string Colour::GetHex()
 	{
-		m_r = source.m_r;
-		m_g = source.m_g;
-		m_b = source.m_b;
-		m_a = source.m_a;
-		return this;
-	}
+		std::string result = "#";
 
-	Colour *Colour::Set(const Vector3 &source)
-	{
-		m_r = source.m_x;
-		m_g = source.m_y;
-		m_b = source.m_z;
-		m_a = 1.0f;
-		return this;
-	}
+		char r[255];
+		snprintf(r, 255, "%.2X", static_cast<int>(m_r * 255.0f));
+		result.append(r);
 
-	Colour *Colour::Set(const Vector4 &source)
-	{
-		m_r = source.m_x;
-		m_g = source.m_y;
-		m_b = source.m_z;
-		m_a = source.m_w;
-		return this;
-	}
+		char g[255];
+		snprintf(g, 255, "%.2X", static_cast<int>(m_g * 255.0f));
+		result.append(g);
 
-	Colour *Colour::Set(LoadedValue *value)
-	{
-		m_r = value->GetChild("r")->Get<float>();
-		m_g = value->GetChild("g")->Get<float>();
-		m_b = value->GetChild("b")->Get<float>();
-		m_a = value->GetChild("a")->Get<float>();
-		return this;
+		char b[255];
+		snprintf(b, 255, "%.2X", static_cast<int>(m_b * 255.0f));
+		result.append(b);
+
+		return result;
 	}
 
 	void Colour::Write(LoadedValue *destination)
@@ -136,266 +88,23 @@ namespace Flounder
 		destination->SetChild<float>("a", m_a);
 	}
 
-	Colour *Colour::Add(const Colour &left, const Colour &right, Colour *destination)
+	Colour &Colour::operator=(const std::string &hex)
 	{
-		if (destination == nullptr)
-		{
-			destination = new Colour();
-		}
-
-		return destination->Set(left.m_r + right.m_r, left.m_g + right.m_g, left.m_b + right.m_b, left.m_a + right.m_a);
+		int r, g, b;
+		sscanf(hex.c_str() + (hex[0] == '#' ? 1 : 0), "%2x%2x%2x", &r, &g, &b);
+		m_r = static_cast<float>(r) / 255.0f;
+		m_g = static_cast<float>(g) / 255.0f;
+		m_b = static_cast<float>(b) / 255.0f;
+		return *this;
 	}
 
-	Colour *Colour::Subtract(const Colour &left, const Colour &right, Colour *destination)
+	Colour &Colour::operator=(LoadedValue *source)
 	{
-		if (destination == nullptr)
-		{
-			destination = new Colour();
-		}
-
-		return destination->Set(left.m_r - right.m_r, left.m_g - right.m_g, left.m_b - right.m_b, left.m_a - right.m_a);
-	}
-
-	Colour *Colour::Multiply(const Colour &left, const Colour &right, Colour *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Colour();
-		}
-
-		return destination->Set(left.m_r * right.m_r, left.m_g * right.m_g, left.m_b * right.m_b, left.m_a * right.m_a);
-	}
-
-	Colour *Colour::Divide(const Colour &left, const Colour &right, Colour *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Colour();
-		}
-
-		return destination->Set(left.m_r / right.m_r, left.m_g / right.m_g, left.m_b / right.m_b, left.m_a / right.m_a);
-	}
-
-	Colour *Colour::Interpolate(const Colour &left, const Colour &right, const float blend, Colour *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Colour();
-		}
-
-		const float r = Maths::Interpolate(left.m_r, right.m_r, blend);
-		const float g = Maths::Interpolate(left.m_g, right.m_g, blend);
-		const float b = Maths::Interpolate(left.m_b, right.m_b, blend);
-		const float a = Maths::Interpolate(left.m_a, right.m_a, blend);
-		return destination->Set(r, g, b, a);
-	}
-
-	Colour *Colour::GetUnit(const Colour &source, Colour *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Colour();
-		}
-
-		const float l = Length(source);
-		return destination->Set(source)->Scale(1.0f / l);
-	}
-
-	std::string Colour::GetHex(const Colour &source)
-	{
-		std::string result = "#";
-
-		char r[255];
-		snprintf(r, 255, "%.2X", static_cast<int>(source.m_r * 255.0f));
-		result.append(r);
-
-		char g[255];
-		snprintf(g, 255, "%.2X", static_cast<int>(source.m_g * 255.0f));
-		result.append(g);
-
-		char b[255];
-		snprintf(b, 255, "%.2X", static_cast<int>(source.m_b * 255.0f));
-		result.append(b);
-
-		return result;
-	}
-
-	float Colour::Length(const Colour &source)
-	{
-		return std::sqrt(LengthSquared(source));
-	}
-
-	float Colour::LengthSquared(const Colour &source)
-	{
-		return std::pow(source.m_r, 2.0f) + std::pow(source.m_g, 2.0f) + std::pow(source.m_b, 2.0f) + std::pow(source.m_a, 2.0f);
-	}
-
-	Colour *Colour::Scale(const float &scalar)
-	{
-		m_r *= scalar;
-		m_g *= scalar;
-		m_b *= scalar;
-		return this;
-	}
-
-	float Colour::Length()
-	{
-		return Length(*this);
-	}
-
-	float Colour::LengthSquared()
-	{
-		return LengthSquared(*this);
-	}
-
-
-	Colour &Colour::operator=(const Colour &other)
-	{
-		return *Set(other);
-	}
-
-	bool Colour::operator==(const Colour &other) const
-	{
-		return m_r == other.m_r && m_g == other.m_r && m_b == other.m_b && m_a == other.m_a;
-	}
-
-	bool Colour::operator!=(const Colour &other) const
-	{
-		return !(*this == other);
-	}
-
-	bool Colour::operator<(const Colour &other) const
-	{
-		return m_r < other.m_r && m_g < other.m_g && m_b < other.m_b && m_a < other.m_a;
-	}
-
-	bool Colour::operator<=(const Colour &other) const
-	{
-		return m_r <= other.m_r && m_g <= other.m_g && m_b <= other.m_b && m_a <= other.m_a;
-	}
-
-	bool Colour::operator>(const Colour &other) const
-	{
-		return m_r > other.m_r && m_g > other.m_g && m_b > other.m_b && m_a > other.m_a;
-	}
-
-	bool Colour::operator>=(const Colour &other) const
-	{
-		return m_r >= other.m_r && m_g >= other.m_g && m_b >= other.m_b && m_a >= other.m_a;
-	}
-
-	bool Colour::operator==(const float &value) const
-	{
-		return m_r == value && m_g == value && m_b == value && m_a == value;
-	}
-
-	bool Colour::operator!=(const float &value) const
-	{
-		return !(*this == value);
-	}
-
-	Colour operator+(Colour left, const Colour &right)
-	{
-		return *Colour::Add(left, right, &left);
-	}
-
-	Colour operator-(Colour left, const Colour &right)
-	{
-		return *Colour::Subtract(left, right, &left);
-	}
-
-	Colour operator*(Colour left, const Colour &right)
-	{
-		return *Colour::Multiply(left, right, &left);
-	}
-
-	Colour operator/(Colour left, const Colour &right)
-	{
-		return *Colour::Divide(left, right, &left);
-	}
-
-	Colour operator+(Colour left, float value)
-	{
-		return *Colour::Add(left, Colour(value, value, value, value), &left);
-	}
-
-	Colour operator-(Colour left, float value)
-	{
-		return *Colour::Subtract(left, Colour(value, value, value, value), &left);
-	}
-
-	Colour operator*(Colour left, float value)
-	{
-		return *Colour::Multiply(left, Colour(value, value, value, value), &left);
-	}
-
-	Colour operator/(Colour left, float value)
-	{
-		return *Colour::Divide(left, Colour(value, value, value, value), &left);
-	}
-
-	Colour operator+(float value, Colour left)
-	{
-		return *Colour::Add(Colour(value, value, value, value), left, &left);
-	}
-
-	Colour operator-(float value, Colour left)
-	{
-		return *Colour::Subtract(Colour(value, value, value, value), left, &left);
-	}
-
-	Colour operator*(float value, Colour left)
-	{
-		return *Colour::Multiply(Colour(value, value, value, value), left, &left);
-	}
-
-	Colour operator/(float value, Colour left)
-	{
-		return *Colour::Divide(Colour(value, value, value, value), left, &left);
-	}
-
-	Colour &Colour::operator+=(const Colour &other)
-	{
-		Colour result = Colour();
-		return *Colour::Add(*this, other, &result);
-	}
-
-	Colour &Colour::operator-=(const Colour &other)
-	{
-		Colour result = Colour();
-		return *Colour::Subtract(*this, other, &result);
-	}
-
-	Colour &Colour::operator*=(const Colour &other)
-	{
-		Colour result = Colour();
-		return *Colour::Multiply(*this, other, &result);
-	}
-
-	Colour &Colour::operator/=(const Colour &other)
-	{
-		Colour result = Colour();
-		return *Colour::Divide(*this, other, &result);
-	}
-
-	Colour &Colour::operator+=(float value)
-	{
-		return *Colour::Add(*this, Colour(value, value, value, value), this);
-	}
-
-	Colour &Colour::operator-=(float value)
-	{
-		return *Colour::Subtract(*this, Colour(value, value, value, value), this);
-	}
-
-	Colour &Colour::operator*=(float value)
-	{
-		return *Colour::Multiply(*this, Colour(value, value, value, value), this);
-	}
-
-	Colour &Colour::operator/=(float value)
-	{
-		return *Colour::Divide(*this, Colour(value, value, value, value), this);
+		m_r = source->GetChild("r")->Get<float>();
+		m_g = source->GetChild("g")->Get<float>();
+		m_b = source->GetChild("b")->Get<float>();
+		m_a = source->GetChild("a")->Get<float>();
+		return *this;
 	}
 
 	std::ostream &operator<<(std::ostream &stream, const Colour &vector)

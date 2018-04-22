@@ -36,7 +36,7 @@ namespace Flounder
 
 		for (auto it = m_tangents.begin(); it < m_tangents.end(); ++it)
 		{
-			Vector3::Add(m_averagedTangent, **it, &m_averagedTangent);
+			m_averagedTangent += **it;
 		}
 
 		if (m_averagedTangent.Length() > 0.0f)

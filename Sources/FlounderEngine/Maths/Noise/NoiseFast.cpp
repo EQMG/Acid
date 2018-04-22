@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <random>
-#include "Maths/Maths.hpp"
 
 namespace Flounder
 {
@@ -442,11 +441,11 @@ namespace Flounder
 
 	void NoiseFast::SetCellularDistance2Indices(const int &cellularDistanceIndex0, const int &cellularDistanceIndex1)
 	{
-		m_cellularDistanceIndex0 = Maths::Min(cellularDistanceIndex0, cellularDistanceIndex1);
-		m_cellularDistanceIndex1 = Maths::Max(cellularDistanceIndex0, cellularDistanceIndex1);
+		m_cellularDistanceIndex0 = std::min(cellularDistanceIndex0, cellularDistanceIndex1);
+		m_cellularDistanceIndex1 = std::max(cellularDistanceIndex0, cellularDistanceIndex1);
 
-		m_cellularDistanceIndex0 = Maths::Min(Maths::Max(m_cellularDistanceIndex0, 0), FN_CELLULAR_INDEX_MAX);
-		m_cellularDistanceIndex1 = Maths::Min(Maths::Max(m_cellularDistanceIndex1, 0), FN_CELLULAR_INDEX_MAX);
+		m_cellularDistanceIndex0 = std::min(std::max(m_cellularDistanceIndex0, 0), FN_CELLULAR_INDEX_MAX);
+		m_cellularDistanceIndex1 = std::min(std::max(m_cellularDistanceIndex1, 0), FN_CELLULAR_INDEX_MAX);
 	}
 
 	// 2D

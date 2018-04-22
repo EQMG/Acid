@@ -42,28 +42,14 @@ namespace Flounder
 		delete m_scaling;
 	}
 
-	Matrix4 *Transform::GetWorldMatrix(Matrix4 *destination) const
-	{
-		return Matrix4::TransformationMatrix(*m_position, *m_rotation, *m_scaling, destination);
-	}
-
-	Matrix4 *Transform::GetModelMatrix(Matrix4 *destination) const
-	{
-		return Matrix4::TransformationMatrix(Vector3(), *m_rotation, Vector3(), destination);
-	}
-
 	Matrix4 Transform::GetWorldMatrix() const
 	{
-		Matrix4 result = Matrix4();
-		GetWorldMatrix(&result);
-		return result;
+		return Matrix4::TransformationMatrix(*m_position, *m_rotation, *m_scaling);
 	}
 
 	Matrix4 Transform::GetModelMatrix() const
 	{
-		Matrix4 result = Matrix4();
-		GetModelMatrix(&result);
-		return result;
+		return Matrix4::TransformationMatrix(Vector3(), *m_rotation, Vector3());
 	}
 
 	Transform *Transform::Set(const Transform &source)
@@ -76,9 +62,9 @@ namespace Flounder
 
 	Transform *Transform::Set(LoadedValue *value)
 	{
-		m_position->Set(value->GetChild("position"));
-		m_rotation->Set(value->GetChild("rotation"));
-		m_scaling->Set(value->GetChild("scaling"));
+		*m_position = value->GetChild("position");
+		*m_rotation = value->GetChild("rotation");
+		*m_scaling = value->GetChild("scaling");
 		return this;
 	}
 

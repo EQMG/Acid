@@ -69,7 +69,7 @@ namespace Demo
 
 	void FpsCamera::Update()
 	{
-		float delta = Maths::Min(1.0f / 60.0f, Engine::Get()->GetDelta());
+		float delta = std::min(1.0f / 60.0f, Engine::Get()->GetDelta());
 
 		const bool newPaused = Scenes::Get()->IsGamePaused();
 
@@ -99,8 +99,8 @@ namespace Demo
 		UpdatePitchAngle(delta);
 		UpdatePosition();
 
-		Matrix4::ViewMatrix(*m_position, *m_rotation, m_viewMatrix);
-		Matrix4::PerspectiveMatrix(GetFov(), Display::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane(), m_projectionMatrix);
+		*m_viewMatrix = Matrix4::ViewMatrix(*m_position, *m_rotation);
+		*m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFov(), Display::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
 		m_viewFrustum->Update(*m_viewMatrix, *m_projectionMatrix);
 		m_viewRay->Update(*m_position, Vector2(Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()), *m_viewMatrix, *m_projectionMatrix);
@@ -133,13 +133,13 @@ namespace Demo
 
 		m_targetRotationAngle -= angleChange;
 
-		if (m_targetRotationAngle >= DEGREES_IN_HALF_CIRCLE)
+		if (m_targetRotationAngle >= 180.0f)
 		{
-			m_targetRotationAngle -= DEGREES_IN_CIRCLE;
+			m_targetRotationAngle -= 360.0f;
 		}
-		else if (m_targetRotationAngle <= -DEGREES_IN_HALF_CIRCLE)
+		else if (m_targetRotationAngle <= -180.0f)
 		{
-			m_targetRotationAngle += DEGREES_IN_CIRCLE;
+			m_targetRotationAngle += 360.0f;
 		}
 	}
 
@@ -184,27 +184,27 @@ namespace Demo
 	{
 		float offset = m_targetRotationAngle - m_angleAroundPlayer;
 
-		if (std::fabs(offset) > DEGREES_IN_HALF_CIRCLE)
+		if (std::fabs(offset) > 180.0f)
 		{
 			if (offset < 0.0f)
 			{
-				offset = m_targetRotationAngle + DEGREES_IN_CIRCLE - m_angleAroundPlayer;
+				offset = m_targetRotationAngle + 360.0f - m_angleAroundPlayer;
 			}
 			else
 			{
-				offset = m_targetRotationAngle - DEGREES_IN_CIRCLE - m_angleAroundPlayer;
+				offset = m_targetRotationAngle - 360.0f - m_angleAroundPlayer;
 			}
 		}
 
 		m_angleAroundPlayer += offset * delta * ROTATE_AGILITY;
 
-		if (m_angleAroundPlayer >= DEGREES_IN_HALF_CIRCLE)
+		if (m_angleAroundPlayer >= 180.0f)
 		{
-			m_angleAroundPlayer -= DEGREES_IN_CIRCLE;
+			m_angleAroundPlayer -= 360.0f;
 		}
-		else if (m_angleAroundPlayer <= -DEGREES_IN_HALF_CIRCLE)
+		else if (m_angleAroundPlayer <= -180.0f)
 		{
-			m_angleAroundPlayer += DEGREES_IN_CIRCLE;
+			m_angleAroundPlayer += 360.0f;
 		}
 	}
 
@@ -212,27 +212,27 @@ namespace Demo
 	{
 		float offset = m_targetElevation - m_angleOfElevation;
 
-		if (std::fabs(offset) > DEGREES_IN_HALF_CIRCLE)
+		if (std::fabs(offset) > 180.0f)
 		{
 			if (offset < 0.0f)
 			{
-				offset = m_targetElevation + DEGREES_IN_CIRCLE - m_angleOfElevation;
+				offset = m_targetElevation + 360.0f - m_angleOfElevation;
 			}
 			else
 			{
-				offset = m_targetElevation - DEGREES_IN_CIRCLE - m_angleOfElevation;
+				offset = m_targetElevation - 360.0f - m_angleOfElevation;
 			}
 		}
 
 		m_angleOfElevation += offset * delta * PITCH_AGILITY;
 
-		if (m_angleOfElevation >= DEGREES_IN_HALF_CIRCLE)
+		if (m_angleOfElevation >= 180.0f)
 		{
-			m_angleOfElevation -= DEGREES_IN_CIRCLE;
+			m_angleOfElevation -= 360.0f;
 		}
-		else if (m_angleOfElevation <= -DEGREES_IN_HALF_CIRCLE)
+		else if (m_angleOfElevation <= -180.0f)
 		{
-			m_angleOfElevation += DEGREES_IN_CIRCLE;
+			m_angleOfElevation += 360.0f;
 		}
 	}
 
@@ -240,7 +240,7 @@ namespace Demo
 	{
 		*m_position = *m_targetPosition;
 		m_rotation->m_x = m_angleOfElevation - m_targetRotation->m_z;
-		m_rotation->m_y = m_angleAroundPlayer + m_targetRotation->m_y + DEGREES_IN_HALF_CIRCLE;
+		m_rotation->m_y = m_angleAroundPlayer + m_targetRotation->m_y + 180.0f;
 		m_rotation->m_z = 0.0f;
 	}
 
@@ -248,6 +248,6 @@ namespace Demo
 	{
 		m_position->m_y -= 2.0f * (m_position->m_y - waterHeight);
 		m_rotation->m_x = -m_rotation->m_x;
-		Matrix4::ViewMatrix(*m_position, *m_rotation, m_viewMatrix);
+		*m_viewMatrix = Matrix4::ViewMatrix(*m_position, *m_rotation);
 	}
 }

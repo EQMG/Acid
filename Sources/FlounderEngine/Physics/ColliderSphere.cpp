@@ -130,15 +130,13 @@ namespace Flounder
 
 	Intersect ColliderSphere::Intersects(const Ray &ray)
 	{
-		Vector3 *L = Vector3::Subtract(*ray.m_origin, *m_position, nullptr);
+		Vector3 L = *ray.m_origin - *m_position;
 
-		float a = Vector3::Dot(*ray.m_currentRay, *ray.m_currentRay);
-		float b = 2.0f * (Vector3::Dot(*ray.m_currentRay, *L));
-		float c = (Vector3::Dot(*L, *L)) - (m_radius * m_radius);
+		float a = ray.m_currentRay->Dot(*ray.m_currentRay);
+		float b = 2.0f * ray.m_currentRay->Dot(L);
+		float c = L.Dot(L) - (m_radius * m_radius);
 
 		float disc = b * b - 4.0f * a * c;
-
-		delete L;
 
 		if (disc < 0.0f)
 		{
@@ -205,6 +203,6 @@ namespace Flounder
 
 	bool ColliderSphere::Contains(const Vector3 &point)
 	{
-		return Vector3::GetDistanceSquared(*m_position, point) <= m_radius * m_radius;
+		return m_position->GetDistanceSquared(point) <= m_radius * m_radius;
 	}
 }

@@ -28,15 +28,13 @@ namespace Flounder
 
 	void Joint::CalculateInverseBindTransform(const Matrix4 &parentBindTransform)
 	{
-		Matrix4 *bindTransform = Matrix4::Multiply(parentBindTransform, *m_localBindTransform, nullptr);
-		Matrix4::Invert(*bindTransform, m_inverseBindTransform);
+		Matrix4 bindTransform = parentBindTransform * *m_localBindTransform;
+		*m_inverseBindTransform = bindTransform.Invert();
 
 		for (auto child : *m_children)
 		{
-			child->CalculateInverseBindTransform(*bindTransform);
+			child->CalculateInverseBindTransform(bindTransform);
 		}
-
-		delete bindTransform;
 	}
 
 	void Joint::AddChild(Joint *child)

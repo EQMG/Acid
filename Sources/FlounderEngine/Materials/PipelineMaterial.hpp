@@ -35,8 +35,6 @@ namespace Flounder
 
 		~PipelineMaterial();
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, Model *model, DescriptorSet *descriptorSet);
-
 		std::string GetFilename() override { return m_filename; }
 
 		Pipeline *GetPipeline() const { return m_pipeline; }

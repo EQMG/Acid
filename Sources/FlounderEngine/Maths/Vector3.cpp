@@ -1,8 +1,9 @@
 #include "Vector3.hpp"
 
 #include <cassert>
-#include "Colour.hpp"
+#include <sstream>
 #include "Maths.hpp"
+#include "Colour.hpp"
 #include "Vector2.hpp"
 #include "Vector4.hpp"
 #include "Matrix4.hpp"
@@ -62,105 +63,33 @@ namespace Flounder
 	{
 	}
 
-	Vector3::Vector3(LoadedValue *value)
-	{
-		Set(value);
-	}
-
 	Vector3::~Vector3()
 	{
 	}
 
-	Vector3 *Vector3::Set(const float &x, const float &y, const float &z)
+	Vector3 Vector3::Add(const Vector3 &other) const
 	{
-		m_x = x;
-		m_y = y;
-		m_z = z;
-		return this;
+		return Vector3(m_x + other.m_x, m_y + other.m_y, m_z + other.m_z);
 	}
 
-	Vector3 *Vector3::Set(const Vector2 &source)
+	Vector3 Vector3::Subtract(const Vector3 &other) const
 	{
-		m_x = source.m_x;
-		m_y = source.m_y;
-		m_z = 0.0f;
-		return this;
+		return Vector3(m_x - other.m_x, m_y - other.m_y, m_z - other.m_z);
 	}
 
-	Vector3 *Vector3::Set(const Vector3 &source)
+	Vector3 Vector3::Multiply(const Vector3 &other) const
 	{
-		m_x = source.m_x;
-		m_y = source.m_y;
-		m_z = source.m_z;
-		return this;
+		return Vector3(m_x * other.m_x, m_y * other.m_y, m_z * other.m_z);
 	}
 
-	Vector3 *Vector3::Set(const Vector4 &source)
+	Vector3 Vector3::Divide(const Vector3 &other) const
 	{
-		m_x = source.m_x;
-		m_y = source.m_y;
-		m_z = source.m_z;
-		return this;
+		return Vector3(m_x / other.m_x, m_y / other.m_y, m_z / other.m_z);
 	}
 
-	Vector3 *Vector3::Set(LoadedValue *value)
+	float Vector3::Angle(const Vector3 &other) const
 	{
-		m_x = value->GetChild("x")->Get<float>();
-		m_y = value->GetChild("y")->Get<float>();
-		m_z = value->GetChild("z")->Get<float>();
-		return this;
-	}
-
-	void Vector3::Write(LoadedValue *destination)
-	{
-		destination->SetChild<float>("x", m_x);
-		destination->SetChild<float>("y", m_y);
-		destination->SetChild<float>("z", m_z);
-	}
-
-	Vector3 *Vector3::Add(const Vector3 &left, const Vector3 &right, Vector3 *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		return destination->Set(left.m_x + right.m_x, left.m_y + right.m_y, left.m_z + right.m_z);
-	}
-
-	Vector3 *Vector3::Subtract(const Vector3 &left, const Vector3 &right, Vector3 *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		return destination->Set(left.m_x - right.m_x, left.m_y - right.m_y, left.m_z - right.m_z);
-	}
-
-	Vector3 *Vector3::Multiply(const Vector3 &left, const Vector3 &right, Vector3 *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		return destination->Set(left.m_x * right.m_x, left.m_y * right.m_y, left.m_z * right.m_z);
-	}
-
-	Vector3 *Vector3::Divide(const Vector3 &left, const Vector3 &right, Vector3 *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		return destination->Set(left.m_x / right.m_x, left.m_y / right.m_y, left.m_z / right.m_z);
-	}
-
-	float Vector3::Angle(const Vector3 &left, const Vector3 &right)
-	{
-		float dls = Dot(left, right) / (Length(left) * Length(right));
+		float dls = Dot(other) / (Length() * other.Length());
 
 		if (dls < -1.0f)
 		{
@@ -174,259 +103,106 @@ namespace Flounder
 		return std::acos(dls);
 	}
 
-	float Vector3::Dot(const Vector3 &left, const Vector3 &right)
+	float Vector3::Dot(const Vector3 &other) const
 	{
-		return left.m_x * right.m_x + left.m_y * right.m_y + left.m_z * right.m_z;
+		return m_x * other.m_x + m_y * other.m_y;
 	}
 
-	Vector3 *Vector3::Cross(const Vector3 &left, const Vector3 &right, Vector3 *destination)
+	Vector3 Vector3::Cross(const Vector3 &other) const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		return destination->Set(left.m_y * right.m_z - left.m_z * right.m_y,
-			right.m_x * left.m_z - right.m_z * left.m_x, left.m_x * right.m_y - left.m_y * right.m_x);
+		return Vector3(m_y * other.m_z - m_z * other.m_y, other.m_x * m_z - other.m_z * m_x, m_x * other.m_y - m_y * other.m_x);
 	}
 
-	Vector3 *Vector3::Scale(const Vector3 &source, const float &scalar, Vector3 *destination)
+	Vector3 Vector3::Scale(const float &scalar) const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		return destination->Set(source.m_x * scalar, source.m_y * scalar, source.m_z * scalar);
+		return Vector3(m_x * scalar, m_y * scalar, m_z * scalar);
 	}
 
-	Vector3 *Vector3::Rotate(const Vector3 &source, const Vector3 &rotation, Vector3 *destination)
+	Vector3 Vector3::Rotate(const Vector3 &rotation) const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		Matrix4 *matrix = Matrix4::TransformationMatrix(Vector3::ZERO, rotation, Vector3::ONE, nullptr);
-		Vector4 direction4 = Vector4(source.m_x, source.m_y, source.m_z, 1.0f);
-		Matrix4::Transform(*matrix, direction4, &direction4);
-		delete matrix;
-		return destination->Set(direction4.m_x, direction4.m_y, direction4.m_z);
+		Matrix4 matrix = Matrix4::TransformationMatrix(Vector3::ZERO, rotation, Vector3::ONE);
+		Vector4 direction4 = Vector4(m_x, m_y, m_z, 1.0f);
+		direction4 = matrix.Transform(direction4);
+		return Vector3(direction4.m_x, direction4.m_y, direction4.m_z);
 	}
 
-	Vector3 *Vector3::Negate(const Vector3 &source, Vector3 *destination)
+	Vector3 Vector3::Negate() const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		return destination->Set(-source.m_x, -source.m_y, -source.m_z);
+		return Vector3(-m_x, -m_y, -m_z);
 	}
 
-	Vector3 *Vector3::Normalize(const Vector3 &source, Vector3 *destination)
+	Vector3 Vector3::Normalize() const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		const float l = Length(source);
+		float l = Length();
 		assert(l != 0.0f && "Zero length vector!");
-		return destination->Set(source.m_x / l, source.m_y / l, source.m_z / l);
+		return Vector3(m_x / l, m_y / l, m_z / l);
 	}
 
-	float Vector3::Length(const Vector3 &source)
+	float Vector3::LengthSquared() const
 	{
-		return std::sqrt(LengthSquared(source));
+		return m_x * m_x + m_y * m_y + m_z * m_z;
 	}
 
-	float Vector3::LengthSquared(const Vector3 &source)
+	float Vector3::Length() const
 	{
-		return source.m_x * source.m_x + source.m_y * source.m_y + source.m_z * source.m_z;
+		return std::sqrt(LengthSquared());
 	}
 
-	Vector3 *Vector3::MaxVector(const Vector3 &a, const Vector3 &b, Vector3 *destination)
+	float Vector3::MaxComponent() const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		return destination->Set(Maths::Max(a.m_x, b.m_x), Maths::Max(a.m_y, b.m_y), Maths::Max(a.m_z, b.m_z));
+		return std::max(m_x, std::max(m_y, m_z));
 	}
 
-	Vector3 *Vector3::MinVector(const Vector3 &a, const Vector3 &b, Vector3 *destination)
+	float Vector3::MinComponent() const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		return destination->Set(Maths::Min(a.m_x, b.m_x), Maths::Min(a.m_y, b.m_y), Maths::Min(a.m_z, b.m_z));
+		return std::min(m_x, std::min(m_y, m_z));
 	}
 
-	float Vector3::MaxComponent(const Vector3 &vector)
+	float Vector3::GetDistanceSquared(const Vector3 &other) const
 	{
-		return Maths::Max(vector.m_x, Maths::Max(vector.m_y, vector.m_z));
-	}
-
-	float Vector3::MinComponent(const Vector3 &vector)
-	{
-		return Maths::Min(vector.m_x, Maths::Min(vector.m_y, vector.m_z));
-	}
-
-	float Vector3::GetDistanceSquared(const Vector3 &point1, const Vector3 &point2)
-	{
-		const float dx = point1.m_x - point2.m_x;
-		const float dy = point1.m_y - point2.m_y;
-		const float dz = point1.m_z - point2.m_z;
+		float dx = m_x - other.m_x;
+		float dy = m_y - other.m_y;
+		float dz = m_z - other.m_z;
 		return dx * dx + dy * dy + dz * dz;
 	}
 
-	float Vector3::GetDistance(const Vector3 &point1, const Vector3 &point2)
+	float Vector3::GetDistance(const Vector3 &other) const
 	{
-		return std::sqrt(std::pow(point2.m_x - point1.m_x, 2.0f) +
-			std::pow(point2.m_y - point1.m_y, 2.0f) +
-			std::pow(point2.m_z - point1.m_z, 2.0f));
+		return std::sqrt(GetDistanceSquared(other));
 	}
 
-	Vector3 *Vector3::GetVectorDistance(const Vector3 &point1, const Vector3 &point2, Vector3 *destination)
+	Vector3 Vector3::GetVectorDistance(const Vector3 &other) const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		return destination->Set(std::pow(point2.m_x - point1.m_x, 2.0f), std::pow(point2.m_y - point1.m_y, 2.0f),
-			std::pow(point2.m_z - point1.m_z, 2.0f));
+		float dx = m_x - other.m_x;
+		float dy = m_y - other.m_y;
+		float dz = m_z - other.m_z;
+		return Vector3(dx * dx, dy * dy, dz * dz);
 	}
 
-	Vector3 *Vector3::RandomUnitVector(Vector3 *destination)
+	Vector3 Vector3::SmoothDamp(const Vector3 &target, const Vector3 &rate) const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		const float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
-		const float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
-		const float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
-		const float x = rootOneMinusZSquared * std::cos(theta);
-		const float y = rootOneMinusZSquared * std::sin(theta);
-		return destination->Set(x, y, z);
+		return Vector3(Maths::SmoothDamp(m_x, target.m_x, rate.m_x), Maths::SmoothDamp(m_y, target.m_y, rate.m_y), Maths::SmoothDamp(m_z, target.m_z, rate.m_z));
 	}
 
-	Vector3 *Vector3::RandomPointOnCircle(const Vector3 &normal, const float &radius, Vector3 *destination)
+	Vector3 Vector3::CartesianToPolar() const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		do
-		{
-			Vector3 *randomVector = RandomUnitVector(nullptr);
-			Cross(*randomVector, normal, destination);
-			delete randomVector;
-		} while (Length(*destination) == 0.0f);
-
-		destination->Normalize();
-		destination->Scale(radius);
-		float a = Maths::RandomInRange(0.0f, 1.0f);
-		float b = Maths::RandomInRange(0.0f, 1.0f);
-
-		if (a > b)
-		{
-			const float temp = a;
-			a = b;
-			b = temp;
-		}
-
-		const float randX = b * std::cos(2.0f * PI * (a / b));
-		const float randY = b * std::sin(2.0f * PI * (a / b));
-		const float distance = Vector3(randX, randY, 0.0f).Length();
-		destination->Scale(distance);
-		return destination;
-	}
-
-	float Vector3::BaryCentric(const Vector3 &p1, const Vector3 &p2, const Vector3 &p3, const Vector3 &pos)
-	{
-		const float det = (p2.m_z - p3.m_z) * (p1.m_x - p3.m_x) + (p3.m_x - p2.m_x) * (p1.m_z - p3.m_z);
-		const float l1 = ((p2.m_z - p3.m_z) * (pos.m_x - p3.m_x) + (p3.m_x - p2.m_x) * (pos.m_y - p3.m_z)) / det;
-		const float l2 = ((p3.m_z - p1.m_z) * (pos.m_x - p3.m_x) + (p1.m_x - p3.m_x) * (pos.m_y - p3.m_z)) / det;
-		const float l3 = 1.0f - l1 - l2;
-		return l1 * p1.m_y + l2 * p2.m_y + l3 * p3.m_y;
-	}
-
-	Vector3 *Vector3::RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle, Vector3 *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
-		const float cosAngle = std::cos(angle);
-		const float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
-		const float z = (cosAngle + Maths::RandomInRange(0.0f, 1.0f)) * (1.0f - cosAngle);
-		const float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
-		const float x = rootOneMinusZSquared * std::cos(theta);
-		const float y = rootOneMinusZSquared * std::sin(theta);
-
-		Vector4 direction = Vector4(x, y, z, 1.0f);
-
-		if ((coneDirection.m_x != 0.0F) || (coneDirection.m_y != 0.0F) ||
-			((coneDirection.m_z != 1.0f) && (coneDirection.m_z != -1.0f)))
-		{
-			Vector3 *rotateAxis = Vector3::Cross(coneDirection, Vector3::FRONT, nullptr);
-			rotateAxis->Normalize();
-			const float rotateAngle = std::acos(Vector3::Dot(coneDirection, Vector3::FRONT));
-			Matrix4 rotationMatrix = Matrix4();
-			rotationMatrix.SetIdentity();
-			Matrix4::Rotate(rotationMatrix, *rotateAxis, -rotateAngle, &rotationMatrix);
-			Matrix4::Transform(rotationMatrix, direction, &direction);
-			delete rotateAxis;
-		}
-		else if (coneDirection.m_z == -1.0f)
-		{
-			direction.m_z *= -1.0f;
-		}
-
-		return destination->Set(direction);
-	}
-
-	Vector3 Vector3::SmoothDamp(const Vector3 &current, const Vector3 &target, const Vector3 &rate)
-	{
-		return Vector3(Maths::SmoothDamp(current.m_x, target.m_x, rate.m_x),
-			Maths::SmoothDamp(current.m_y, target.m_y, rate.m_y),
-			Maths::SmoothDamp(current.m_z, target.m_z, rate.m_z));
-	}
-
-	Vector3 Vector3::CartesianToPolar(const Vector3 &cartesian)
-	{
-		float radius = std::sqrt(cartesian.m_x * cartesian.m_x + cartesian.m_y * cartesian.m_y + cartesian.m_z * cartesian.m_z);
-		float theta = std::atan2(cartesian.m_y, cartesian.m_x);
-		float phi = std::atan2(std::sqrt(cartesian.m_x * cartesian.m_x + cartesian.m_y * cartesian.m_y), cartesian.m_z);
+		float radius = std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+		float theta = std::atan2(m_y, m_x);
+		float phi = std::atan2(std::sqrt(m_x * m_x + m_y * m_y), m_z);
 		return Vector3(radius, theta, phi);
 	}
 
-	Vector3 Vector3::PolarToCartesian(const Vector3 &polar)
+	Vector3 Vector3::PolarToCartesian() const
 	{
-		float x = polar.m_x * std::sin(polar.m_z) * std::cos(polar.m_y);
-		float y = polar.m_x * std::sin(polar.m_z) * std::sin(polar.m_y);
-		float z = polar.m_x * std::cos(polar.m_z);
+		float x = m_x * std::sin(m_z) * std::cos(m_y);
+		float y = m_x * std::sin(m_z) * std::sin(m_y);
+		float z = m_x * std::cos(m_z);
 		return Vector3(x, y, z);
 	}
 
-
-	Vector3 Vector3::ProjectCubeToSphere(const float &radius, const Vector3 &position)
+	Vector3 Vector3::ProjectCubeToSphere(const float &radius)
 	{
-		if (radius == 0.0f)
-		{
-			return position;
-		}
-
-		Vector3 cube = position / radius;
+		Vector3 cube = *this / radius;
 		float dx = cube.m_x * cube.m_x;
 		float dy = cube.m_y * cube.m_y;
 		float dz = cube.m_z * cube.m_z;
@@ -436,42 +212,113 @@ namespace Flounder
 		return Vector3(sx * radius, sy * radius, sz * radius);
 	}
 
-	Vector3 *Vector3::Translate(const float &x, const float &y, const float &z)
+	float Vector3::BaryCentric(const Vector3 &p1, const Vector3 &p2, const Vector3 &p3)
 	{
-		m_x += x;
-		m_y += y;
-		m_z += z;
-		return this;
+		float det = (p2.m_z - p3.m_z) * (p1.m_x - p3.m_x) + (p3.m_x - p2.m_x) * (p1.m_z - p3.m_z);
+		float l1 = ((p2.m_z - p3.m_z) * (m_x - p3.m_x) + (p3.m_x - p2.m_x) * (m_y - p3.m_z)) / det;
+		float l2 = ((p3.m_z - p1.m_z) * (m_x - p3.m_x) + (p1.m_x - p3.m_x) * (m_y - p3.m_z)) / det;
+		float l3 = 1.0f - l1 - l2;
+		return l1 * p1.m_y + l2 * p2.m_y + l3 * p3.m_y;
 	}
 
-	Vector3 *Vector3::Negate()
+	Vector3 Vector3::MinVector(const Vector3 &a, const Vector3 &b)
 	{
-		return Negate(*this, this);
+		return Vector3(std::min(a.m_x, b.m_x), std::min(a.m_y, b.m_y), std::min(a.m_z, b.m_z));
 	}
 
-	Vector3 *Vector3::Normalize()
+	Vector3 Vector3::MaxVector(const Vector3 &a, const Vector3 &b)
 	{
-		return Normalize(*this, this);
+		return Vector3(std::max(a.m_x, b.m_x), std::max(a.m_y, b.m_y), std::max(a.m_z, b.m_z));
 	}
 
-	Vector3 *Vector3::Scale(const float &scalar)
+	Vector3 Vector3::RandomUnitVector()
 	{
-		return Scale(*this, scalar, this);
+		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
+		float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
+		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
+		float x = rootOneMinusZSquared * std::cos(theta);
+		float y = rootOneMinusZSquared * std::sin(theta);
+		return Vector3(x, y, z);
 	}
 
-	float Vector3::Length() const
+	Vector3 Vector3::RandomPointOnCircle(const Vector3 &normal, const float &radius)
 	{
-		return Length(*this);
+		Vector3 direction = Vector3();
+
+		do
+		{
+			Vector3 randomVector = RandomUnitVector();
+			direction = randomVector.Cross(normal);
+		} while (direction.Length() == 0.0f);
+
+		direction.Normalize();
+		direction *= radius;
+
+		float a = Maths::RandomInRange(0.0f, 1.0f);
+		float b = Maths::RandomInRange(0.0f, 1.0f);
+
+		if (a > b)
+		{
+			float temp = a;
+			a = b;
+			b = temp;
+		}
+
+		float randX = b * std::cos(2.0f * PI * (a / b));
+		float randY = b * std::sin(2.0f * PI * (a / b));
+		float distance = Vector3(randX, randY, 0.0f).Length();
+		return Vector3(direction * distance);
 	}
 
-	float Vector3::LengthSquared() const
+	Vector3 Vector3::RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle)
 	{
-		return LengthSquared(*this);
+		float cosAngle = std::cos(angle);
+		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
+		float z = (cosAngle + Maths::RandomInRange(0.0f, 1.0f)) * (1.0f - cosAngle);
+		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
+		float x = rootOneMinusZSquared * std::cos(theta);
+		float y = rootOneMinusZSquared * std::sin(theta);
+
+		Vector4 direction = Vector4(x, y, z, 1.0f);
+
+		if (coneDirection.m_x != 0.0f || coneDirection.m_y != 0.0f || (coneDirection.m_z != 1.0f && coneDirection.m_z != -1.0f))
+		{
+			Vector3 rotateAxis = coneDirection.Cross(Vector3::FRONT);
+			rotateAxis.Normalize();
+			float rotateAngle = std::acos(coneDirection.Dot(Vector3::FRONT));
+			Matrix4 rotationMatrix = Matrix4().SetIdentity();
+			rotationMatrix = rotationMatrix.Rotate(-rotateAngle, rotateAxis);
+			direction = rotationMatrix.Transform(direction);
+		}
+		else if (coneDirection.m_z == -1.0f)
+		{
+			direction.m_z *= -1.0f;
+		}
+
+		return Vector3(direction);
+	}
+
+	void Vector3::Write(LoadedValue *destination)
+	{
+		destination->SetChild<float>("x", m_x);
+		destination->SetChild<float>("y", m_y);
+		destination->SetChild<float>("z", m_z);
 	}
 
 	Vector3 &Vector3::operator=(const Vector3 &other)
 	{
-		return *Set(other);
+		m_x = other.m_x;
+		m_y = other.m_y;
+		m_z = other.m_z;
+		return *this;
+	}
+
+	Vector3 &Vector3::operator=(LoadedValue *source)
+	{
+		m_x = source->GetChild("x")->Get<float>();
+		m_y = source->GetChild("y")->Get<float>();
+		m_z = source->GetChild("z")->Get<float>();
+		return *this;
 	}
 
 	bool Vector3::operator==(const Vector3 &other) const
@@ -514,113 +361,109 @@ namespace Flounder
 		return !(*this == value);
 	}
 
-	Vector3 &Vector3::operator-()
+	Vector3 Vector3::operator-()
 	{
-		return *Vector3(*this).Negate();
+		return Negate();
 	}
 
 	Vector3 operator+(Vector3 left, const Vector3 &right)
 	{
-		return *Vector3::Add(left, right, &left);
+		return left.Add(right);
 	}
 
 	Vector3 operator-(Vector3 left, const Vector3 &right)
 	{
-		return *Vector3::Subtract(left, right, &left);
+		return left.Subtract(right);
 	}
 
 	Vector3 operator*(Vector3 left, const Vector3 &right)
 	{
-		return *Vector3::Multiply(left, right, &left);
+		return left.Multiply(right);
 	}
 
 	Vector3 operator/(Vector3 left, const Vector3 &right)
 	{
-		return *Vector3::Divide(left, right, &left);
+		return left.Divide(right);
 	}
 
 	Vector3 operator+(Vector3 left, float value)
 	{
-		return *Vector3::Add(left, Vector3(value, value, value), &left);
+		return left.Add(Vector3(value, value, value));
 	}
 
 	Vector3 operator-(Vector3 left, float value)
 	{
-		return *Vector3::Subtract(left, Vector3(value, value, value), &left);
+		return left.Subtract(Vector3(value, value, value));
 	}
 
 	Vector3 operator*(Vector3 left, float value)
 	{
-		return *Vector3::Multiply(left, Vector3(value, value, value), &left);
+		return left.Multiply(Vector3(value, value, value));
 	}
 
 	Vector3 operator/(Vector3 left, float value)
 	{
-		return *Vector3::Divide(left, Vector3(value, value, value), &left);
+		return left.Divide(Vector3(value, value, value));
 	}
 
 	Vector3 operator+(float value, Vector3 left)
 	{
-		return *Vector3::Add(Vector3(value, value, value), left, &left);
+		return Vector3(value, value, value).Add(left);
 	}
 
 	Vector3 operator-(float value, Vector3 left)
 	{
-		return *Vector3::Subtract(Vector3(value, value, value), left, &left);
+		return Vector3(value, value, value).Subtract(left);
 	}
 
 	Vector3 operator*(float value, Vector3 left)
 	{
-		return *Vector3::Multiply(Vector3(value, value, value), left, &left);
+		return Vector3(value, value, value).Multiply(left);
 	}
 
 	Vector3 operator/(float value, Vector3 left)
 	{
-		return *Vector3::Divide(Vector3(value, value, value), left, &left);
+		return Vector3(value, value, value).Divide(left);
 	}
 
 	Vector3 &Vector3::operator+=(const Vector3 &other)
 	{
-		Vector3 result = Vector3();
-		return *Vector3::Add(*this, other, &result);
+		return *this = Add(other);
 	}
 
 	Vector3 &Vector3::operator-=(const Vector3 &other)
 	{
-		Vector3 result = Vector3();
-		return *Vector3::Subtract(*this, other, &result);
+		return *this = Subtract(other);
 	}
 
 	Vector3 &Vector3::operator*=(const Vector3 &other)
 	{
-		Vector3 result = Vector3();
-		return *Vector3::Multiply(*this, other, &result);
+		return *this = Multiply(other);
 	}
 
 	Vector3 &Vector3::operator/=(const Vector3 &other)
 	{
-		Vector3 result = Vector3();
-		return *Vector3::Divide(*this, other, &result);
+		return *this = Divide(other);
 	}
 
 	Vector3 &Vector3::operator+=(float value)
 	{
-		return *Vector3::Add(*this, Vector3(value, value, value), this);
+		return *this = Add(Vector3(value, value, value));
 	}
 
 	Vector3 &Vector3::operator-=(float value)
 	{
-		return *Vector3::Subtract(*this, Vector3(value, value, value), this);
+		return *this = Subtract(Vector3(value, value, value));
 	}
 
 	Vector3 &Vector3::operator*=(float value)
 	{
-		return *Vector3::Multiply(*this, Vector3(value, value, value), this);
+		return *this = Multiply(Vector3(value, value, value));
 	}
 
 	Vector3 &Vector3::operator/=(float value)
 	{
-		return *Vector3::Divide(*this, Vector3(value, value, value), this);
+		return *this = Divide(Vector3(value, value, value));
 	}
 
 	std::ostream &operator<<(std::ostream &stream, const Vector3 &vector)

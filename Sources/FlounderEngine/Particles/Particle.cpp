@@ -80,7 +80,6 @@ namespace Flounder
 
 	Vector2 *Particle::UpdateTextureOffset(Vector2 *offset, const int &index) const
 	{
-		offset->Set(0.0f, 0.0f);
 		const int column = index % m_particleType->GetTexture()->GetNumberOfRows();
 		const int row = index / m_particleType->GetTexture()->GetNumberOfRows();
 		offset->m_x = static_cast<float>(column) / m_particleType->GetTexture()->GetNumberOfRows();

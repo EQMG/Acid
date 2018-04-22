@@ -5,7 +5,7 @@
 
 namespace Flounder
 {
-	const Matrix4 *MeshAnimated::S_CORRECTION = Matrix4::Rotate(Matrix4(), Vector3::RIGHT, Maths::Radians(-90.0f), nullptr);
+	const Matrix4 *MeshAnimated::S_CORRECTION = new Matrix4(Matrix4::IDENTITY.Rotate(Maths::Radians(-90.0f), Vector3::RIGHT));
 	const int MeshAnimated::MAX_WEIGHTS = 3;
 
 	MeshAnimated::MeshAnimated(const std::string &filename) :

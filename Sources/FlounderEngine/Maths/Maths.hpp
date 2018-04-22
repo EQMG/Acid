@@ -2,14 +2,9 @@
 
 #include <cstdlib>
 #include <cmath>
-#include <math.h>
 #include "Engine/Exports.hpp"
 
 #define PI 3.14159265358979323846f
-#define DEGREES_IN_CIRCLE 360.0f
-#define DEGREES_IN_HALF_CIRCLE 180.0f
-#define ANG2RAD PI / DEGREES_IN_HALF_CIRCLE
-#define LOG_HALF log(0.5f)
 
 namespace Flounder
 {
@@ -81,7 +76,7 @@ namespace Flounder
 		template<typename T>
 		static T Radians(const T &degrees)
 		{
-			return degrees / DEGREES_IN_HALF_CIRCLE * PI;
+			return degrees / 180.0f * PI;
 		}
 
 		/// <summary>
@@ -92,43 +87,7 @@ namespace Flounder
 		template<typename T>
 		static T Degrees(const T &radians)
 		{
-			return radians * DEGREES_IN_HALF_CIRCLE / PI;
-		}
-
-		/// <summary>
-		/// Gets the min number from the two provided.
-		/// </summary>
-		/// <param name="a"> The first value. </param>
-		/// <param name="b"> The second value. </param>
-		/// <returns> The smallest value. </returns>
-		template<typename T>
-		static T Min(const T &a, const T &b)
-		{
-			return (a < b) ? a : b;
-		}
-
-		/// <summary>
-		/// Gets the max number from the two provided.
-		/// </summary>
-		/// <param name="a"> The first value. </param>
-		/// <param name="b"> The second value. </param>
-		/// <returns> The largest value. </returns>
-		template<typename T>
-		static T Max(const T &a, const T &b)
-		{
-			return (a > b) ? a : b;
-		}
-
-		/// <summary>
-		/// Does a mod like the GLSL function.
-		/// </summary>
-		/// <param name="x"> The first value. </param>
-		/// <param name="y"> The second value. </param>
-		/// <returns> The resultanT mod. </returns>
-		template<typename T>
-		static T Mod(const T &x, const T &y)
-		{
-			return x - y * floor(x / y);
+			return radians * 180.0f / PI;
 		}
 
 		/// <summary>

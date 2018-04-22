@@ -47,11 +47,11 @@ namespace Flounder
 
 		Constraint3 *GetFreezePosition() const { return m_freezePosition; }
 
-		void SetFreezePosition(const Constraint3 &freezePosition) const { m_freezePosition->Set(freezePosition); }
+		void SetFreezePosition(const Constraint3 &freezePosition) const { *m_freezePosition = freezePosition; }
 
 		Constraint3 *GetFreezeRotation() const { return m_freezeRotation; }
 
-		void SetFreezeRotation(const Constraint3 &freezeRotation) const { m_freezeRotation->Set(freezeRotation); }
+		void SetFreezeRotation(const Constraint3 &freezeRotation) const { *m_freezeRotation = freezeRotation; }
 
 		Collider *GetCollider() const { return m_colliderCopy; }
 	};

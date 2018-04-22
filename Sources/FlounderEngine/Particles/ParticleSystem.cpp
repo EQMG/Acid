@@ -92,11 +92,11 @@ namespace Flounder
 
 		if (m_direction != nullptr)
 		{
-			Vector3::RandomUnitVectorWithinCone(*m_direction, m_directionDeviation, &velocity);
+			velocity = Vector3::RandomUnitVectorWithinCone(*m_direction, m_directionDeviation);
 		}
 		else
 		{
-			GenerateRandomUnitVector(&velocity);
+			velocity = GenerateRandomUnitVector();
 		}
 
 		velocity.Normalize();
@@ -126,19 +126,14 @@ namespace Flounder
 		return 0.0f;
 	}
 
-	Vector3 *ParticleSystem::GenerateRandomUnitVector(Vector3 *destination) const
+	Vector3 ParticleSystem::GenerateRandomUnitVector() const
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
-
 		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
 		float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
 		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * std::cos(theta);
 		float y = rootOneMinusZSquared * std::sin(theta);
-		return destination->Set(x, y, z);
+		return Vector3(x, y, z);
 	}
 
 	void ParticleSystem::AddParticleType(ParticleType *type) const

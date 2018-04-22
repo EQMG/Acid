@@ -33,7 +33,7 @@ namespace Demo
 	void UiTab::UpdateObject()
 	{
 		GetRectangle()->m_position->m_y = 1.0f;
-		GetRectangle()->m_dimensions->Set(*m_text->GetRectangle()->m_dimensions);
+		*GetRectangle()->m_dimensions = *m_text->GetRectangle()->m_dimensions;
 		GetRectangle()->m_dimensions->m_y = 0.125f;
 	}
 }

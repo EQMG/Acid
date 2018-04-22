@@ -2,8 +2,8 @@
 
 #include <Scenes/Objects/Behaviour.hpp>
 #include <Scenes/Objects/GameObject.hpp>
-#include <Inputs/Axes/IAxis.hpp>
-#include <Inputs/Buttons/IButton.hpp>
+#include <Inputs/IAxis.hpp>
+#include <Inputs/IButton.hpp>
 
 using namespace Flounder;
 

@@ -50,6 +50,9 @@ namespace Flounder
 			return;
 		}
 
+		// Binds the material pipeline.
+		material->GetMaterial()->GetPipeline()->BindPipeline(commandBuffer);
+
 		// Updates descriptors.
 		m_descriptorSet->Push("UboScene", uniformScene);
 		m_descriptorSet->Push("UboObject", m_uniformObject);
@@ -62,7 +65,8 @@ namespace Flounder
 		}
 
 		// Draws the object.
-		material->GetMaterial()->CmdRender(commandBuffer, mesh->GetModel(), m_descriptorSet->GetDescriptorSet());
+		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
+		mesh->GetModel()->CmdRender(commandBuffer, 1);
 	}
 
 	void MeshRender::Load(LoadedValue *value)

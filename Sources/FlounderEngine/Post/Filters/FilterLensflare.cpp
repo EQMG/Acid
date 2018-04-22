@@ -47,6 +47,6 @@ namespace Flounder
 	void FilterLensflare::SetSunPosition(const Vector3 &sunPosition) const
 	{
 		ICamera *camera = Scenes::Get()->GetCamera();
-		Matrix4::WorldToScreenSpace(sunPosition, *camera->GetViewMatrix(), *camera->GetProjectionMatrix(), m_sunPosition);
+		*m_sunPosition = Matrix4::WorldToScreenSpace(sunPosition, *camera->GetViewMatrix(), *camera->GetProjectionMatrix());
 	}
 }

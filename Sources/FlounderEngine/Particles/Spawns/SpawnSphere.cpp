@@ -19,7 +19,7 @@ namespace Flounder
 
 	Vector3 *SpawnSphere::GetBaseSpawnPosition()
 	{
-		Vector3::RandomUnitVector(m_spawnPosition);
+		*m_spawnPosition = Vector3::RandomUnitVector();
 
 		m_spawnPosition->Scale(m_radius);
 		float a = Maths::RandomInRange(0.0f, 1.0f);

@@ -30,7 +30,7 @@ namespace Flounder
 		const int numberOfRows = m_texture != nullptr ? m_texture->GetNumberOfRows() : 1;
 		const int column = m_selectedRow % numberOfRows;
 		const int row = m_selectedRow / numberOfRows;
-		m_atlasOffset->Set(static_cast<float>(column / numberOfRows), static_cast<float>(row / numberOfRows));
+		*m_atlasOffset = Vector2(static_cast<float>(column / numberOfRows), static_cast<float>(row / numberOfRows));
 
 		// Updates uniforms.
 		m_uniformObject->Push("transform", *GetScreenTransform());

@@ -1,5 +1,6 @@
 #include "MaterialSkybox.hpp"
 
+#include "Scenes/Scenes.hpp"
 #include "Worlds/Worlds.hpp"
 
 namespace Flounder
@@ -20,6 +21,8 @@ namespace Flounder
 
 	void MaterialSkybox::Update()
 	{
+		GetGameObject()->GetTransform()->SetPosition(*Scenes::Get()->GetCamera()->GetPosition());
+
 		if (m_enableFog)
 		{
 			GetGameObject()->GetTransform()->SetRotation(*Worlds::Get()->GetSkyboxRotation());
@@ -41,21 +44,18 @@ namespace Flounder
 
 	void MaterialSkybox::PushUniforms(UniformHandler *uniformObject)
 	{
+		uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject->Push("skyColour", *Worlds::Get()->GetSkyColour());
+		uniformObject->Push("fogColour", *Worlds::Get()->GetFog()->m_colour);
+
 		// Updates uniforms.
 		if (m_enableFog)
 		{
-			uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
-			uniformObject->Push("skyColour", *Worlds::Get()->GetSkyColour());
-			uniformObject->Push("fogColour", *Worlds::Get()->GetFog()->m_colour);
-			uniformObject->Push("fogLimits", GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Worlds::Get()->GetFog()->m_lowerLimit,
-				Worlds::Get()->GetFog()->m_upperLimit));
+			uniformObject->Push("fogLimits", GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Worlds::Get()->GetFog()->m_lowerLimit, Worlds::Get()->GetFog()->m_upperLimit));
 			uniformObject->Push("blendFactor", m_blend);
 		}
 		else
 		{
-			uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
-			uniformObject->Push("skyColour", Colour::WHITE);
-			uniformObject->Push("fogColour", Colour::WHITE);
 			uniformObject->Push("fogLimits", Vector2(-1000000.0f, -1000000.0f));
 			uniformObject->Push("blendFactor", 1.0f);
 		}

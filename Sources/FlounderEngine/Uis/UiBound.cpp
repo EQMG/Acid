@@ -44,11 +44,11 @@ namespace Flounder
 
 	UiBound *UiBound::Set(const UiBound &source)
 	{
-		m_position->Set(*source.m_position);
-		m_reference->Set(*source.m_reference);
+		*m_position = *source.m_position;
+		*m_reference = *source.m_reference;
 		m_aspectPosition = source.m_aspectPosition;
 		m_aspectSize = source.m_aspectSize;
-		m_dimensions->Set(*source.m_dimensions);
+		*m_dimensions = *source.m_dimensions;
 		return this;
 	}
 

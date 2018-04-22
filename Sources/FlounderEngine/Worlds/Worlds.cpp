@@ -63,18 +63,16 @@ namespace Flounder
 		float delta = Engine::Get()->GetDelta();
 		m_factorDay = m_driverDay->Update(delta);
 
-		m_skyboxRotation->Set(360.0f * m_factorDay, 0.0f, 0.0f);
-		Vector3 lightDirection = Vector3();
-		Colour fogColour = Colour();
+		*m_skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
 
-		Vector3::Rotate(Vector3(0.2f, 0.0f, 0.5f), *m_skyboxRotation, &lightDirection);
+		Vector3 lightDirection = m_skyboxRotation->Rotate(Vector3(0.2f, 0.0f, 0.5f));
 		lightDirection.Normalize();
 
-		Colour::Interpolate(*FOG_COLOUR_SUNRISE, *FOG_COLOUR_NIGHT, GetSunriseFactor(), &fogColour);
-		Colour::Interpolate(fogColour, *FOG_COLOUR_DAY, GetShadowFactor(), &fogColour);
+		Colour fogColour = FOG_COLOUR_SUNRISE->Interpolate(*FOG_COLOUR_NIGHT, GetSunriseFactor());
+		fogColour = fogColour.Interpolate(*FOG_COLOUR_DAY, GetShadowFactor());
 
-		Vector3::Multiply(lightDirection, Vector3(-6048.0f, -6048.0f, -6048.0f), m_sunPosition);
-		Vector3::Multiply(lightDirection, Vector3(6048.0f, 6048.0f, 6048.0f), m_moonPosition);
+		*m_sunPosition = lightDirection * Vector3(-6048.0f, -6048.0f, -6048.0f);
+		*m_moonPosition = lightDirection * Vector3(6048.0f, 6048.0f, 6048.0f);
 
 		/*if (Scenes::Get()->GetCamera() != nullptr)
 		{
@@ -82,10 +80,10 @@ namespace Flounder
 			Vector3::Add(*m_moonPosition, *Scenes::Get()->GetCamera()->GetPosition(), m_moonPosition);
 		}*/
 
-		Colour::Interpolate(*SUN_COLOUR_SUNRISE, *SUN_COLOUR_NIGHT, GetSunriseFactor(), m_sunColour);
-		Colour::Interpolate(*m_sunColour, *SUN_COLOUR_DAY, GetShadowFactor(), m_sunColour);
+		*m_sunColour = SUN_COLOUR_SUNRISE->Interpolate(*SUN_COLOUR_NIGHT, GetSunriseFactor());
+		*m_sunColour = m_sunColour->Interpolate(*SUN_COLOUR_DAY, GetShadowFactor());
 
-		Colour::Interpolate(*MOON_COLOUR_NIGHT, *MOON_COLOUR_DAY, GetShadowFactor(), m_moonColour);
+		*m_moonColour = MOON_COLOUR_NIGHT->Interpolate(*MOON_COLOUR_DAY, GetShadowFactor());
 
 		*m_fog->m_colour = fogColour;
 		m_fog->m_density = 0.002f + ((1.0f - GetShadowFactor()) * 0.002f);
@@ -97,7 +95,7 @@ namespace Flounder
 
 		if (Shadows::Get() != nullptr)
 		{
-			Shadows::Get()->GetLightDirection()->Set(lightDirection);
+			Shadows::Get()->SetLightDirection(lightDirection);
 			Shadows::Get()->SetShadowBoxOffset((4.0f * (1.0f - GetShadowFactor())) + 10.0f);
 			Shadows::Get()->SetShadowBoxDistance(40.0f);
 			Shadows::Get()->SetShadowTransition(5.0f);
