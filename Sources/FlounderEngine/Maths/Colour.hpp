@@ -1,17 +1,34 @@
 #pragma once
 
+#include <ostream>
 #include <string>
-#include "Vector4.hpp"
+#include "Engine/Exports.hpp"
+#include "Files/LoadedValue.hpp"
 
 namespace Flounder
 {
+	class Vector3;
+	class Vector4;
+
 	/// <summary>
 	/// Holds a RGBA colour.
 	/// </summary>
-	class F_EXPORT Colour :
-		public Vector4
+	class F_EXPORT Colour
 	{
 	public:
+		union
+		{
+			struct
+			{
+				float m_r, m_g, m_b, m_a;
+			};
+
+			struct
+			{
+				float m_elements[4];
+			};
+		};
+
 		static const Colour CLEAR;
 		static const Colour WHITE;
 		static const Colour BLACK;
@@ -61,12 +78,73 @@ namespace Flounder
 		~Colour();
 
 		/// <summary>
+		/// Adds this vector to another vector.
+		/// </summary>
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Colour Add(const Colour &other) const;
+
+		/// <summary>
+		/// Subtracts this vector to another vector.
+		/// </summary>
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Colour Subtract(const Colour &other) const;
+
+		/// <summary>
+		/// Multiplies this vector with another vector.
+		/// </summary>
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Colour Multiply(const Colour &other) const;
+
+		/// <summary>
+		/// Divides this vector by another vector.
+		/// </summary>
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Colour Divide(const Colour &other) const;
+
+		/// <summary>
+		/// Scales this vector by a scalar.
+		/// </summary>
+		/// <param name="scalar"> The scalar value. </param>
+		/// <returns> The scaled vector. </returns>
+		Colour Scale(const float &scalar) const;
+
+		/// <summary>
+		/// Normalizes this vector.
+		/// </summary>
+		/// <returns> The normalized vector. </returns>
+		Colour Normalize() const;
+
+		/// <summary>
+		/// Gets the length squared of this vector.
+		/// </summary>
+		/// <returns> The length squared. </returns>
+		float LengthSquared() const;
+
+		/// <summary>
+		/// Gets the length of this vector.
+		/// </summary>
+		/// <returns> The length. </returns>
+		float Length() const;
+
+		/// <summary>
 		/// Interpolates between this and another colour.
 		/// </summary>
 		/// <param name="other"> The other colour. </param>
 		/// <param name="blend"> The blend factor. </param>
 		/// <returns> The interpolated colour. </returns>
 		Colour Interpolate(const Colour &other, float blend) const;
+
+		/// <summary>
+		/// Gradually changes this vector to a target.
+		/// </summary>
+		/// <param name="target"> The target vector. </param>
+		/// <param name="rate"> The rate to go from current to the target. </param>
+		/// <returns> The changed vector. </returns>
+		Colour SmoothDamp(const Colour &target, const Colour &rate) const;
 
 		/// <summary>
 		/// Gets a colour representing the unit value of this colour.
@@ -81,14 +159,72 @@ namespace Flounder
 		std::string GetHex();
 
 		/// <summary>
-		/// Saves this constraint into a loaded value.
+		/// Saves this vector into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *source);
+		void Write(LoadedValue *destination);
+
+		Colour &operator=(const Colour &other);
 
 		Colour &operator=(const std::string &hex);
 
 		Colour &operator=(LoadedValue *value);
+
+		bool operator==(const Colour &other) const;
+
+		bool operator!=(const Colour &other) const;
+
+		bool operator<(const Colour &other) const;
+
+		bool operator<=(const Colour &other) const;
+
+		bool operator>(const Colour &other) const;
+
+		bool operator>=(const Colour &other) const;
+
+		bool operator==(const float &value) const;
+
+		bool operator!=(const float &value) const;
+
+		F_EXPORT friend Colour operator+(Colour left, const Colour &right);
+
+		F_EXPORT friend Colour operator-(Colour left, const Colour &right);
+
+		F_EXPORT friend Colour operator*(Colour left, const Colour &right);
+
+		F_EXPORT friend Colour operator/(Colour left, const Colour &right);
+
+		F_EXPORT friend Colour operator+(Colour left, float value);
+
+		F_EXPORT friend Colour operator-(Colour left, float value);
+
+		F_EXPORT friend Colour operator*(Colour left, float value);
+
+		F_EXPORT friend Colour operator/(Colour left, float value);
+
+		F_EXPORT friend Colour operator+(float value, Colour left);
+
+		F_EXPORT friend Colour operator-(float value, Colour left);
+
+		F_EXPORT friend Colour operator*(float value, Colour left);
+
+		F_EXPORT friend Colour operator/(float value, Colour left);
+
+		Colour &operator+=(const Colour &other);
+
+		Colour &operator-=(const Colour &other);
+
+		Colour &operator*=(const Colour &other);
+
+		Colour &operator/=(const Colour &other);
+
+		Colour &operator+=(float value);
+
+		Colour &operator-=(float value);
+
+		Colour &operator*=(float value);
+
+		Colour &operator/=(float value);
 
 		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &vector);
 

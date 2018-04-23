@@ -19,7 +19,8 @@ namespace Flounder
 		Constraint3 *m_freezeRotation;
 		Collider *m_colliderCopy;
 	public:
-		Rigidbody(const float &mass = 1.0f, const float &drag = 0.0f, const bool &useGravity = true, const Constraint3 &freezePosition = Constraint3::FALSE, const Constraint3 &freezeRotation = Constraint3::FALSE);
+		Rigidbody(const float &mass = 1.0f, const float &drag = 0.0f, const bool &useGravity = true,
+			const Constraint3 &freezePosition = Constraint3(), const Constraint3 &freezeRotation = Constraint3()); // Constraint3::FALSE
 
 		~Rigidbody();
 

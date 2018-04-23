@@ -1,11 +1,8 @@
 #include "Display.hpp"
 
 #ifdef FLOUNDER_PLATFORM_WINDOWS
-
 #include <Windows.h>
-
 #endif
-
 #include "Textures/Texture.hpp"
 
 namespace Flounder
@@ -734,6 +731,7 @@ namespace Flounder
 			VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)
 		};
 		printf("Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
+		printf("Header Version: %i\n", VK_HEADER_VERSION);
 		printf("-- Done --\n");
 #endif
 	}

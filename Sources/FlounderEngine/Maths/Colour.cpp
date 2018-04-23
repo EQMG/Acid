@@ -1,5 +1,6 @@
 #include "Colour.hpp"
 
+#include <cassert>
 #include <sstream>
 #include "Maths.hpp"
 #include "Vector3.hpp"
@@ -12,38 +13,98 @@ namespace Flounder
 	const Colour Colour::BLACK = Colour("#000000");
 
 	Colour::Colour() :
-		Vector4(0.0f, 0.0f, 0.0f, 1.0f)
+		m_r(0.0f),
+		m_g(0.0f),
+		m_b(0.0f),
+		m_a(1.0f)
 	{
 	}
 
 	Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
-		Vector4(r, g, b, a)
+		m_r(r),
+		m_g(g),
+		m_b(b),
+		m_a(a)
 	{
 	}
 
 	Colour::Colour(const std::string &hex, const float &a) :
-		Vector4(0.0f, 0.0f, 0.0f, a)
+		m_r(0.0f),
+		m_g(0.0f),
+		m_b(0.0f),
+		m_a(a)
 	{
 		*this = hex;
 	}
 
 	Colour::Colour(const Colour &source) :
-		Vector4(source)
+		m_r(source.m_r),
+		m_g(source.m_g),
+		m_b(source.m_b),
+		m_a(source.m_a)
 	{
 	}
 
 	Colour::Colour(const Vector3 &source) :
-		Vector4(source.m_x, source.m_y, source.m_z, 1.0f)
+		m_r(source.m_x),
+		m_g(source.m_y),
+		m_b(source.m_z),
+		m_a(1.0f)
 	{
 	}
 
 	Colour::Colour(const Vector4 &source) :
-		Vector4(source.m_x, source.m_y, source.m_z, source.m_w)
+		m_r(source.m_x),
+		m_g(source.m_y),
+		m_b(source.m_z),
+		m_a(source.m_w)
 	{
 	}
 
 	Colour::~Colour()
 	{
+	}
+
+	Colour Colour::Add(const Colour &other) const
+	{
+		return Colour(m_r + other.m_r, m_g + other.m_g, m_b + other.m_b, m_a + other.m_a);
+	}
+
+	Colour Colour::Subtract(const Colour &other) const
+	{
+		return Colour(m_r - other.m_r, m_g - other.m_g, m_b - other.m_b, m_a - other.m_a);
+	}
+
+	Colour Colour::Multiply(const Colour &other) const
+	{
+		return Colour(m_r * other.m_r, m_g * other.m_g, m_b * other.m_b, m_a * other.m_a);
+	}
+
+	Colour Colour::Divide(const Colour &other) const
+	{
+		return Colour(m_r / other.m_r, m_g / other.m_g, m_b / other.m_b, m_a / other.m_a);
+	}
+
+	Colour Colour::Scale(const float &scalar) const
+	{
+		return Colour(m_r * scalar, m_g * scalar, m_b * scalar, m_a * scalar);
+	}
+
+	Colour Colour::Normalize() const
+	{
+		float l = Length();
+		assert(l != 0.0f && "Zero length vector!");
+		return Colour(m_r / l, m_g / l, m_b / l, m_a / l);
+	}
+
+	float Colour::LengthSquared() const
+	{
+		return m_r * m_r + m_g * m_g + m_b * m_b + m_a * m_a;
+	}
+
+	float Colour::Length() const
+	{
+		return std::sqrt(LengthSquared());
 	}
 
 	Colour Colour::Interpolate(const Colour &other, const float blend) const
@@ -53,6 +114,11 @@ namespace Flounder
 		float b = Maths::Interpolate(m_b, other.m_b, blend);
 		float a = Maths::Interpolate(m_a, other.m_a, blend);
 		return Colour(r, g, b, a);
+	}
+
+	Colour Colour::SmoothDamp(const Colour &target, const Colour &rate) const
+	{
+		return Colour(Maths::SmoothDamp(m_r, target.m_r, rate.m_r), Maths::SmoothDamp(m_g, target.m_g, rate.m_g), Maths::SmoothDamp(m_b, target.m_b, rate.m_b), Maths::SmoothDamp(m_a, target.m_a, rate.m_a));
 	}
 
 	Colour Colour::GetUnit()
@@ -88,6 +154,15 @@ namespace Flounder
 		destination->SetChild<float>("a", m_a);
 	}
 
+	Colour &Colour::operator=(const Colour &other)
+	{
+		m_r = other.m_r;
+		m_g = other.m_g;
+		m_b = other.m_b;
+		m_a = other.m_a;
+		return *this;
+	}
+
 	Colour &Colour::operator=(const std::string &hex)
 	{
 		int r, g, b;
@@ -105,6 +180,146 @@ namespace Flounder
 		m_b = source->GetChild("b")->Get<float>();
 		m_a = source->GetChild("a")->Get<float>();
 		return *this;
+	}
+
+	bool Colour::operator==(const Colour &other) const
+	{
+		return m_r == other.m_r && m_g == other.m_r && m_b == other.m_b && m_a == other.m_a;
+	}
+
+	bool Colour::operator!=(const Colour &other) const
+	{
+		return !(*this == other);
+	}
+
+	bool Colour::operator<(const Colour &other) const
+	{
+		return m_r < other.m_r && m_g < other.m_g && m_b < other.m_b && m_a < other.m_a;
+	}
+
+	bool Colour::operator<=(const Colour &other) const
+	{
+		return m_r <= other.m_r && m_g <= other.m_g && m_b <= other.m_b && m_a <= other.m_a;
+	}
+
+	bool Colour::operator>(const Colour &other) const
+	{
+		return m_r > other.m_r && m_g > other.m_g && m_b > other.m_b && m_a > other.m_a;
+	}
+
+	bool Colour::operator>=(const Colour &other) const
+	{
+		return m_r >= other.m_r && m_g >= other.m_g && m_b >= other.m_b && m_a >= other.m_a;
+	}
+
+	bool Colour::operator==(const float &value) const
+	{
+		return m_r == value && m_g == value && m_b == value && m_a == value;
+	}
+
+	bool Colour::operator!=(const float &value) const
+	{
+		return !(*this == value);
+	}
+
+	Colour operator+(Colour left, const Colour &right)
+	{
+		return left.Add(right);
+	}
+
+	Colour operator-(Colour left, const Colour &right)
+	{
+		return left.Subtract(right);
+	}
+
+	Colour operator*(Colour left, const Colour &right)
+	{
+		return left.Multiply(right);
+	}
+
+	Colour operator/(Colour left, const Colour &right)
+	{
+		return left.Divide(right);
+	}
+
+	Colour operator+(Colour left, float value)
+	{
+		return left.Add(Colour(value, value, value, value));
+	}
+
+	Colour operator-(Colour left, float value)
+	{
+		return left.Subtract(Colour(value, value, value, value));
+	}
+
+	Colour operator*(Colour left, float value)
+	{
+		return left.Multiply(Colour(value, value, value, value));
+	}
+
+	Colour operator/(Colour left, float value)
+	{
+		return left.Divide(Colour(value, value, value, value));
+	}
+
+	Colour operator+(float value, Colour left)
+	{
+		return Colour(value, value, value, value).Add(left);
+	}
+
+	Colour operator-(float value, Colour left)
+	{
+		return Colour(value, value, value, value).Subtract(left);
+	}
+
+	Colour operator*(float value, Colour left)
+	{
+		return Colour(value, value, value, value).Multiply(left);
+	}
+
+	Colour operator/(float value, Colour left)
+	{
+		return Colour(value, value, value, value).Divide(left);
+	}
+
+	Colour &Colour::operator+=(const Colour &other)
+	{
+		return *this = Add(other);
+	}
+
+	Colour &Colour::operator-=(const Colour &other)
+	{
+		return *this = Subtract(other);
+	}
+
+	Colour &Colour::operator*=(const Colour &other)
+	{
+		return *this = Multiply(other);
+	}
+
+	Colour &Colour::operator/=(const Colour &other)
+	{
+		return *this = Divide(other);
+	}
+
+	Colour &Colour::operator+=(float value)
+	{
+		return *this = Add(Colour(value, value, value, value));
+	}
+
+	Colour &Colour::operator-=(float value)
+	{
+		return *this = Subtract(Colour(value, value, value, value));
+	}
+
+	Colour &Colour::operator*=(float value)
+	{
+		return *this = Multiply(Colour(value, value, value, value));
+	}
+
+	Colour &Colour::operator/=(float value)
+	{
+		return *this = Divide(Colour(value, value, value, value));
 	}
 
 	std::ostream &operator<<(std::ostream &stream, const Colour &vector)

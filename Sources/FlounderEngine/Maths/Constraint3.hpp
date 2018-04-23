@@ -26,8 +26,8 @@ namespace Flounder
 			};
 		};
 
-		static const Constraint3 FALSE;
-		static const Constraint3 TRUE;
+	//	static const Constraint3 FALSE;
+	//	static const Constraint3 TRUE;
 
 		/// <summary>
 		/// Constructor for Constraint3.
