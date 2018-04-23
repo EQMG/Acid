@@ -119,17 +119,17 @@ namespace Demo
 				}
 
 				delete m_driverTarget;
-				m_driverTarget = new DriverSlide(0.0f, 1.0f, 0.7f);
+				m_driverTarget = new DriverSlide(0.0f, 1.0f, 0.4f);
 				m_targetTab = tab;
 
 				if (m_currentTab != nullptr)
 				{
-					m_currentTab->GetContent()->SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 0.3f));
+					m_currentTab->GetContent()->SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 0.2f));
 				}
 
-				Events::Get()->AddEvent(new EventTime(0.4f, false, [&]()
+				Events::Get()->AddEvent(new EventTime(0.35f, false, [&]()
 				{
-					m_targetTab->GetContent()->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, 0.3f));
+					m_targetTab->GetContent()->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, 0.2f));
 				}));
 			}
 		}
