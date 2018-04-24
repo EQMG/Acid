@@ -41,7 +41,7 @@ namespace Flounder
 				return;
 			}
 
-			Push(object, static_cast<size_t>(uniform->m_offset), static_cast<size_t>(uniform->m_size));
+			Push(object, static_cast<size_t>(uniform->m_offset), sizeof(object)); // static_cast<size_t>(uniform->m_size)
 		}
 
 		bool Update(UniformBlock *uniformBlock);

@@ -85,7 +85,8 @@ namespace Flounder
 				{
 					if (uniformBlock->m_name == splitName.at(0))
 					{
-						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
+						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i),
+							sizeof(float) * program.getUniformTType(i)->computeNumComponents(), program.getUniformType(i), stageFlag));
 						return;
 					}
 				}
@@ -150,7 +151,7 @@ namespace Flounder
 					return l->m_offset < r->m_offset;
 				});
 
-			for (unsigned int i = 0; i < uniformBlock->m_uniforms->size(); i++)
+			/*for (unsigned int i = 0; i < uniformBlock->m_uniforms->size(); i++)
 			{
 				if (i == uniformBlock->m_uniforms->size() - 1)
 				{
@@ -159,7 +160,7 @@ namespace Flounder
 				}
 
 				uniformBlock->m_uniforms->at(i)->m_size = uniformBlock->m_uniforms->at(i + 1)->m_offset - uniformBlock->m_uniforms->at(i)->m_offset;
-			}
+			}*/
 		}
 
 		// Process to descriptors.
