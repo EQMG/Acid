@@ -27,6 +27,10 @@ elseif("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
 	add_definitions(-DFLOUNDER_CONFIG_RELEASE)
 endif()
 
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+	message(ERROR "Cannot compile in 32-bit mode!")
+endif()
+
 if(WIN32)
 	message(STATUS "Platform: Windows")
 	add_definitions(-DFLOUNDER_PLATFORM_WINDOWS)

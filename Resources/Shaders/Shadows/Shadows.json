@@ -1,0 +1,6 @@
+{
+  "Shader": {
+    "Vertex": "Resources/Shaders/Shadows/Shadow.vert",
+    "Fragment": "Resources/Shaders/Shadows/Shadow.frag"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "Shader": {
+    "Vertex": "Resources/Shaders/Waters/Water.vert",
+    "Fragment": "Resources/Shaders/Waters/Water.frag"
+  }
+}
