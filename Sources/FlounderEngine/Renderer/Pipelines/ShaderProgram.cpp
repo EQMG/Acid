@@ -53,7 +53,7 @@ namespace Flounder
 			LoadUniform(program, stageFlag, i);
 		}
 
-		for (int i = 0; i < program.getNumLiveAttributes(); i++) // TODO: Load in correct order.
+		for (int i = 0; i < program.getNumLiveAttributes(); i++)
 		{
 			LoadVertexAttribute(program, stageFlag, i);
 		}
@@ -116,7 +116,7 @@ namespace Flounder
 		}
 
 		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation,
-			sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i))); // program.getAttributeLocation(i), program.getAttributeSize(i)
+			sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i)));
 	}
 
 	void ShaderProgram::ProcessShader()
@@ -135,13 +135,6 @@ namespace Flounder
 				return l->m_binding < r->m_binding;
 			});
 
-		// Sort attributes by location.
-		std::sort(m_vertexAttributes->begin(), m_vertexAttributes->end(),
-			[](VertexAttribute *l, VertexAttribute *r)
-			{
-				return l->m_location < r->m_location;
-			});
-
 		// Sort uniform block uniforms by offsets.
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
@@ -150,18 +143,14 @@ namespace Flounder
 				{
 					return l->m_offset < r->m_offset;
 				});
-
-			/*for (unsigned int i = 0; i < uniformBlock->m_uniforms->size(); i++)
-			{
-				if (i == uniformBlock->m_uniforms->size() - 1)
-				{
-					uniformBlock->m_uniforms->at(i)->m_size = uniformBlock->m_size - uniformBlock->m_uniforms->at(i)->m_offset;
-					continue;
-				}
-
-				uniformBlock->m_uniforms->at(i)->m_size = uniformBlock->m_uniforms->at(i + 1)->m_offset - uniformBlock->m_uniforms->at(i)->m_offset;
-			}*/
 		}
+
+		// Sort attributes by location.
+		std::sort(m_vertexAttributes->begin(), m_vertexAttributes->end(),
+			[](VertexAttribute *l, VertexAttribute *r)
+			{
+				return l->m_location < r->m_location;
+			});
 
 		// Process to descriptors.
 		for (auto uniformBlock : *m_uniformBlocks)

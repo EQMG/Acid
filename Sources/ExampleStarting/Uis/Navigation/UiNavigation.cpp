@@ -124,12 +124,12 @@ namespace Demo
 
 				if (m_currentTab != nullptr)
 				{
-					m_currentTab->GetContent()->SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 0.2f));
+					m_currentTab->GetContent()->SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 0.1f));
 				}
 
-				Events::Get()->AddEvent(new EventTime(0.35f, false, [&]()
+				Events::Get()->AddEvent(new EventTime(0.32f, false, [&]()
 				{
-					m_targetTab->GetContent()->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, 0.2f));
+					m_targetTab->GetContent()->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, 0.1f));
 				}));
 			}
 		}

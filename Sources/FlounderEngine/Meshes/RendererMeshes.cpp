@@ -24,15 +24,11 @@ namespace Flounder
 
 		std::vector<MeshRender *> renderList = std::vector<MeshRender *>();
 		Scenes::Get()->GetStructure()->QueryComponents<MeshRender>(&renderList);
-		int i = 0;
 
 		for (auto meshRender : renderList)
 		{
-			if (i == 0)
-			{
-				meshRender->CmdRender(commandBuffer, m_uniformScene);
-			}
-			i++;
+			meshRender->CmdRender(commandBuffer, m_uniformScene);
+		//	return;
 		}
 	}
 }
