@@ -76,17 +76,17 @@ namespace Demo
 				sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<MaterialDefault>(Colour("#ffffff"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Resources/Entities/Testing/Material.png"), Texture::Resource("Resources/Entities/Testing/Normal.png"));
-				sphere->AddComponent<MeshRender>();
-				sphere->AddComponent<ShadowRender>();
+			//	sphere->AddComponent<MeshRender>();
+			//	sphere->AddComponent<ShadowRender>();
 			}
 		}
 
 		/*// Voxels.
 		GameObject *voxelChunk = new GameObject(Transform());
 		voxelChunk->SetName("Chunk_0_0");
-		voxelChunk->AddComponent<VoxelChunk>(MeshGreedy, true);
 		voxelChunk->AddComponent<Mesh>();
 		voxelChunk->AddComponent<MaterialVoxel>();
+		voxelChunk->AddComponent<VoxelChunk>(MeshGreedy, true);
 		voxelChunk->AddComponent<MeshRender>();
 
 		// Terrains.
@@ -95,12 +95,14 @@ namespace Demo
 		terrainChunk->AddComponent<Mesh>();
 		terrainChunk->AddComponent<LodBehaviour>(0.0f, Transform());
 		terrainChunk->AddComponent<MaterialTerrain>();
+		terrainChunk->AddComponent<MeshRender>();
 
 		// Waters.
 		GameObject *water = new GameObject(Transform());
 		water->SetName("Water");
 		water->AddComponent<Mesh>();
-		water->AddComponent<MaterialWater>();*/
+		water->AddComponent<MaterialWater>();
+		water->AddComponent<MeshRender>();*/
 	}
 
 	void Scene1::Update()

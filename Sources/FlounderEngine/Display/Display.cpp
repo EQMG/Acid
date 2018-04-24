@@ -8,7 +8,7 @@
 namespace Flounder
 {
 	const std::vector<const char *> Display::VALIDATION_LAYERS = {
-		"VK_LAYER_LUNARG_standard_validation" // "VK_LAYER_LUNARG_api_dump"
+		"VK_LAYER_RENDERDOC_Capture", "VK_LAYER_LUNARG_standard_validation"
 	};
 	const std::vector<const char *> Display::DEVICE_EXTENSIONS = {
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
@@ -111,11 +111,11 @@ namespace Flounder
 		m_focused(true),
 		m_windowPosX(0),
 		m_windowPosY(0),
-//#if defined(FLOUNDER_VERBOSE) && !defined(FLOUNDER_PLATFORM_MACOS)
-//		m_validationLayers(true),
-//#else
+#if defined(FLOUNDER_VERBOSE) && !defined(FLOUNDER_PLATFORM_MACOS)
+		m_validationLayers(true),
+#else
 		m_validationLayers(false),
-//#endif
+#endif
 		m_instanceLayerList(std::vector<const char *>()),
 		m_instanceExtensionList(std::vector<const char *>()),
 		m_deviceExtensionList(std::vector<const char *>()),
@@ -443,11 +443,11 @@ namespace Flounder
 
 				m_instanceLayerList.push_back(layerName);
 			}
+		}
 
-			for (auto layerName : DEVICE_EXTENSIONS)
-			{
-				m_deviceExtensionList.push_back(layerName);
-			}
+		for (auto layerName : DEVICE_EXTENSIONS)
+		{
+			m_deviceExtensionList.push_back(layerName);
 		}
 	}
 
@@ -481,13 +481,8 @@ namespace Flounder
 		VkInstanceCreateInfo instanceCreateInfo = {};
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		instanceCreateInfo.pApplicationInfo = &applicationInfo;
-
-		if (m_validationLayers)
-		{
-			instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
-			instanceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
-		}
-
+		instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
+		instanceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
 		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
@@ -643,13 +638,8 @@ namespace Flounder
 		deviceCreateInfo.pEnabledFeatures = &physicalDeviceFeatures;
 		deviceCreateInfo.queueCreateInfoCount = 1;
 		deviceCreateInfo.pQueueCreateInfos = &deviceQueueCreateInfo;
-
-		if (m_validationLayers)
-		{
-			deviceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
-			deviceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
-		}
-
+		deviceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
+		deviceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
 		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size());
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 
