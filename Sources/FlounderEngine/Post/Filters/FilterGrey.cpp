@@ -1,6 +1,6 @@
 #include "FilterGrey.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterGrey::FilterGrey(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Grey.frag", graphicsStage, {})

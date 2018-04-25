@@ -4,7 +4,7 @@
 #include <STB/stb_image_write.h>
 #include "Display/Display.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT Screenshot
 	{

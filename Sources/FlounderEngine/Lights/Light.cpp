@@ -1,6 +1,6 @@
 #include "Light.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Light::Light(const Colour &colour, const float &radius, const Vector3 &offset) :
 		Component(),

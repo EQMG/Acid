@@ -2,7 +2,7 @@
 
 #include "Component.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A class that holds registerd components.

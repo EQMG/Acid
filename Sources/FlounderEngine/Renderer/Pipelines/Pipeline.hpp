@@ -9,7 +9,7 @@
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class DepthStencil;
 

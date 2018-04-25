@@ -2,7 +2,7 @@
 
 #include "MeshWater.hpp"
 
-namespace Flounder
+namespace fl
 {
 	MaterialWater::MaterialWater() :
 		IMaterial(),

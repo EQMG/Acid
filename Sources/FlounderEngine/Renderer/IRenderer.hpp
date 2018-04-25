@@ -3,7 +3,7 @@
 #include "Scenes/ICamera.hpp"
 #include "Display/Display.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Represents a sub renderer in the engine.

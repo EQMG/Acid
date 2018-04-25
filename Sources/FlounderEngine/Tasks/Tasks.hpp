@@ -4,7 +4,7 @@
 #include <vector>
 #include "Engine/Engine.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A module used for managing tasks on engine updates.

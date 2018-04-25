@@ -4,7 +4,7 @@
 #include "Maths/Timer.hpp"
 #include "IEvent.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A class that runs a event after a time has passed.

@@ -1,6 +1,6 @@
 #include "FilterWobble.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Wobble.frag", graphicsStage, {}),

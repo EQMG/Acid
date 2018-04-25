@@ -2,7 +2,7 @@
 
 #include "Renderer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	IManagerRender::IManagerRender(std::vector<RenderpassCreate *> renderpassCreate)
 	{

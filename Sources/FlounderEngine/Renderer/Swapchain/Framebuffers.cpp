@@ -3,7 +3,7 @@
 #include "Renderer/Renderpass/Renderpass.hpp"
 #include "DepthStencil.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Framebuffers::Framebuffers(const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkExtent2D &extent) :
 		m_imageAttachments(std::vector<Texture *>()),

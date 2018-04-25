@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A class that represents bounding intersect data.

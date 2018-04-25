@@ -6,7 +6,7 @@
 #include "Colour.hpp"
 #include "Vector3.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const Vector4 Vector4::ZERO = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
 	const Vector4 Vector4::ONE = Vector4(1.0f, 1.0f, 1.0f, 1.0f);

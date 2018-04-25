@@ -3,7 +3,7 @@
 #include "Scenes/Scenes.hpp"
 #include "ShadowRender.hpp"
 
-namespace Flounder
+namespace fl
 {
 	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :
 		IRenderer(),

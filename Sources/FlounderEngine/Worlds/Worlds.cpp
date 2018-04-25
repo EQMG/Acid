@@ -3,7 +3,7 @@
 #include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const Colour *Worlds::FOG_COLOUR_SUNRISE = new Colour("#ee9a90");
 	const Colour *Worlds::FOG_COLOUR_NIGHT = new Colour("#0D0D1A");

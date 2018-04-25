@@ -5,7 +5,7 @@
 #include "Uis/OverlayDebug.hpp"
 #include "Uis/Navigation/UiNavigation.hpp"
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

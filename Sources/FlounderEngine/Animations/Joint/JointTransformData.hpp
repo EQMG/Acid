@@ -3,7 +3,7 @@
 #include <string>
 #include "Maths/Matrix4.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT JointTransformData
 	{

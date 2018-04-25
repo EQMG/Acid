@@ -2,7 +2,7 @@
 
 #include "Maths/Timer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT UiInputDelay
 	{

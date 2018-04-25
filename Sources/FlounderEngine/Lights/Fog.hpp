@@ -3,7 +3,7 @@
 #include "Engine/Exports.hpp"
 #include "Maths/Colour.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Represents a fog in the world.

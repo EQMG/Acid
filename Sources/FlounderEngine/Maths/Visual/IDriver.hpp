@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Represents a driver that changes over time.

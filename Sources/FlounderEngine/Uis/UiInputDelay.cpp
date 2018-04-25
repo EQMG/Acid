@@ -1,6 +1,6 @@
 ﻿#include "UiInputDelay.hpp"
 
-namespace Flounder
+namespace fl
 {
 	UiInputDelay::UiInputDelay() :
 		m_timerDelay(new Timer(0.4f)),

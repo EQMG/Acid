@@ -1,6 +1,6 @@
 #include "SkinLoader.hpp"
 
-namespace Flounder
+namespace fl
 {
 	SkinLoader::SkinLoader(LoadedValue *libraryControllers, const int &maxWeights) :
 		m_skinData(libraryControllers->GetChild("controller")->GetChild("skin")),

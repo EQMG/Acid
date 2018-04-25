@@ -1,6 +1,6 @@
 ﻿#include "SpawnCircle.hpp"
 
-namespace Flounder
+namespace fl
 {
 	SpawnCircle::SpawnCircle(const float &radius, const Vector3 &heading) :
 		ISpawnParticle(),

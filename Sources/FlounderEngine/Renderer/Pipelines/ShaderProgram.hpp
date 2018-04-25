@@ -7,7 +7,7 @@
 #include "Display/Display.hpp"
 #include "PipelineCreate.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_HIDDEN Uniform
 	{

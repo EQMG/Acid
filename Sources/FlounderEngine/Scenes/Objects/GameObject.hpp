@@ -6,7 +6,7 @@
 #include "Maths/Transform.hpp"
 #include "Component.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT GameObject
 	{

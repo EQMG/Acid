@@ -1,6 +1,6 @@
 #include "MaterialVoxel.hpp"
 
-namespace Flounder
+namespace fl
 {
 	MaterialVoxel::MaterialVoxel() :
 		IMaterial(),

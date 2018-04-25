@@ -4,7 +4,7 @@
 #include <Inputs/ButtonJoystick.hpp>
 #include <Inputs/AxisJoystick.hpp>
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

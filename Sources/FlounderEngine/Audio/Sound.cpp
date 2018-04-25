@@ -2,7 +2,7 @@
 
 #include "SoundBuffer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Sound::Sound(const std::string &filename, const float &gain, const float &pitch) :
 		m_source(0),

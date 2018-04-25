@@ -4,7 +4,7 @@
 #include "Maths/Vector3.hpp"
 #include "ShadowBox.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A module used for managing shadow maps in 3D worlds.

@@ -1,6 +1,6 @@
 #include "Renderer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Renderer::Renderer() :
 		IModule(),

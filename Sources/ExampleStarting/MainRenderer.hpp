@@ -12,7 +12,7 @@
 #include <Renderer/IManagerRender.hpp>
 #include <Shadows/RendererShadows.hpp>
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

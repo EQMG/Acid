@@ -1,6 +1,6 @@
 #include "Behaviour.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Behaviour::Behaviour() :
 		Component()

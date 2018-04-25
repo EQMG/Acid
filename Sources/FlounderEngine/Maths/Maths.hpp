@@ -7,7 +7,7 @@
 
 #define PI 3.14159265358979323846f
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A class that holds many various math functions.

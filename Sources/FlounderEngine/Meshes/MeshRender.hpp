@@ -3,7 +3,7 @@
 #include "Materials/IMaterial.hpp"
 #include "Mesh.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT MeshRender :
 		public Component

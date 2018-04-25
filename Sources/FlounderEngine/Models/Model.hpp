@@ -10,7 +10,7 @@
 #include "VertexModel.hpp"
 #include "VertexModelData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that represents a OBJ model.

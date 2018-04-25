@@ -5,7 +5,7 @@
 #include <vector>
 #include "Helpers/FormatString.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT LoadedValue
 	{

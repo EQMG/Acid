@@ -2,7 +2,7 @@
 
 #include "Scenes/Scenes.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterLensflare::FilterLensflare(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Lensflare.frag", graphicsStage, {}),

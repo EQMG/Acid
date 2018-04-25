@@ -1,6 +1,6 @@
 #include "MeshSimple.hpp"
 
-namespace Flounder
+namespace fl
 {
 	MeshSimple::MeshSimple(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale) :
 		Model(),

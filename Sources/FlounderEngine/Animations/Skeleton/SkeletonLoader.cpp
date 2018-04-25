@@ -2,7 +2,7 @@
 
 #include "Animations/MeshAnimated.hpp"
 
-namespace Flounder
+namespace fl
 {
 
 	SkeletonLoader::SkeletonLoader(LoadedValue *libraryControllers, const std::vector<std::string> &boneOrder) :

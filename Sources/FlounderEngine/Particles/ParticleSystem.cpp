@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Particles.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ParticleSystem::ParticleSystem(std::vector<ParticleType *> *types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
 		Component(),

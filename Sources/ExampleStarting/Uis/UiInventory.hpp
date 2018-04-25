@@ -2,7 +2,7 @@
 
 #include <Uis/UiObject.hpp>
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

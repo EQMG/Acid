@@ -7,7 +7,7 @@
 #include "Files/IFile.hpp"
 #include "JsonSection.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT FileJson :
 		public IFile

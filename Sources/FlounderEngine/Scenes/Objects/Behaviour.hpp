@@ -3,7 +3,7 @@
 #include "Engine/Exports.hpp"
 #include "Component.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT Behaviour :
 		public Component

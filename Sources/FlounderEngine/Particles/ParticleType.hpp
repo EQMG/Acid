@@ -3,7 +3,7 @@
 #include <string>
 #include "Textures/Texture.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A definition for what a particle should act and look like.

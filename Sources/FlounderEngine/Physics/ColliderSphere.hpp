@@ -2,7 +2,7 @@
 
 #include "Collider.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Represents a sphere in a 3d space.

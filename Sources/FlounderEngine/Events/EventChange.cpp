@@ -1,6 +1,6 @@
 #include "EventChange.hpp"
 
-namespace Flounder
+namespace fl
 {
 	template<typename T>
 	EventChange<T>::EventChange(T *reference, const std::function<void()> &onEvent) :

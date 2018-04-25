@@ -1,6 +1,6 @@
 #include "FilterPixel.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterPixel::FilterPixel(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Pixel.frag", graphicsStage, {}),

@@ -5,7 +5,7 @@
 #include "Engine/Exports.hpp"
 #include "Files/LoadedValue.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Holds a 3-tuple vector.

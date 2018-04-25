@@ -5,7 +5,7 @@
 #include "Scenes/Objects/Component.hpp"
 #include "Models/Model.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT Mesh :
 		public Component

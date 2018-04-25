@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 
-namespace Flounder
+namespace fl
 {
 	SpawnLine::SpawnLine(const float &length, const Vector3 &axis) :
 		ISpawnParticle(),

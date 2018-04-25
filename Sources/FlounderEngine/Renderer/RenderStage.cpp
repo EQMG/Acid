@@ -1,6 +1,6 @@
 #include "RenderStage.hpp"
 
-namespace Flounder
+namespace fl
 {
 	RenderStage::RenderStage(RenderpassCreate *renderpassCreate) :
 		m_lastWidth(renderpassCreate->m_width),

@@ -2,7 +2,7 @@
 
 #include "Renderer/Pipelines/Pipeline.hpp"
 
-namespace Flounder
+namespace fl
 {
 	DescriptorsHandler::DescriptorsHandler() :
 		m_shaderProgram(nullptr),

@@ -4,7 +4,7 @@
 #include "Files/LoadedValue.hpp"
 #include "VertexSkinData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT SkinLoader
 	{

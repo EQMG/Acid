@@ -2,7 +2,7 @@
 
 #include "Renderer/Swapchain/DepthStencil.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat) :
 		m_renderPass(VK_NULL_HANDLE)

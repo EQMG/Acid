@@ -3,7 +3,7 @@
 #include <map>
 #include "Maths/Vector2.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A rectangle made of a position and dimension.

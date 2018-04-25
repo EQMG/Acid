@@ -5,7 +5,7 @@
 #include "Models/Model.hpp"
 #include "Textures/Cubemap.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT RendererDeferred :
 		public IRenderer

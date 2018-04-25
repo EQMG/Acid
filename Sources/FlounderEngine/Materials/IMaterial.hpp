@@ -4,7 +4,7 @@
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "PipelineMaterial.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that represents a material shader.

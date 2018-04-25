@@ -3,7 +3,7 @@
 #include <vector>
 #include "FontCharacter.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// During the loading of a text this represents one word in the text.

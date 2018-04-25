@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Joysticks.hpp"
 
-namespace Flounder
+namespace fl
 {
 	AxisJoystick::AxisJoystick(const unsigned int &joystick, const std::vector<int> &axes, const bool &reverse) :
 		IAxis(),

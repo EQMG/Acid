@@ -4,7 +4,7 @@
 #include "Meshes/Mesh.hpp"
 #include "VoxelBlock.hpp"
 
-namespace Flounder
+namespace fl
 {
 	enum ChunkMesh
 	{

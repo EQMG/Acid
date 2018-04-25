@@ -5,7 +5,7 @@
 #include "Textures/Cubemap.hpp"
 #include "Renderer/Buffers/UniformBuffer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ShaderProgram::ShaderProgram() :
 		m_uniforms(new std::vector<Uniform *>()),

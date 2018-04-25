@@ -2,7 +2,7 @@
 
 #include "Texture.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that represents a loaded cubemap texture.

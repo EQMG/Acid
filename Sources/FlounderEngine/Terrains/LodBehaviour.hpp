@@ -4,7 +4,7 @@
 #include "Scenes/Objects/GameObject.hpp"
 #include "Models/Model.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT LodBehaviour :
 		public Behaviour

@@ -5,7 +5,7 @@
 #include <Guis/Gui.hpp>
 #include "UiTab.hpp"
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

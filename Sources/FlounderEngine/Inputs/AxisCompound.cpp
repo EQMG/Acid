@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 
-namespace Flounder
+namespace fl
 {
 	AxisCompound::AxisCompound(const std::vector<IAxis *> &axes) :
 		IAxis(),

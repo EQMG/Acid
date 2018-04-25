@@ -7,7 +7,7 @@
 #include <string>
 #include "Engine/Exports.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A helper for C++ strings.

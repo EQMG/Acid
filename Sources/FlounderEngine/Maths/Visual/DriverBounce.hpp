@@ -2,7 +2,7 @@
 
 #include "IDriver.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A bounce driver that uses a sine wave.

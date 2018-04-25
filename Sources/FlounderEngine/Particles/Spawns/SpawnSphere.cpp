@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Maths/Vector2.hpp"
 
-namespace Flounder
+namespace fl
 {
 	SpawnSphere::SpawnSphere(const float &radius, const Vector3 &heading) :
 		ISpawnParticle(),

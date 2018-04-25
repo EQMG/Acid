@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ShapeDisk::ShapeDisk(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops) :
 		Model()

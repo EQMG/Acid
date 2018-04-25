@@ -5,7 +5,7 @@
 #include "Textures/Texture.hpp"
 #include "IMaterial.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that represents the default material shader.

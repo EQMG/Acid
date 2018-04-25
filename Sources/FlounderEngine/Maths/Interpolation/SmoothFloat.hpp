@@ -2,7 +2,7 @@
 
 #include "Engine/Exports.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A class that smoothly increases its value.

@@ -9,7 +9,7 @@
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Descriptors/IDescriptor.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that represents a loaded texture.

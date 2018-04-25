@@ -3,7 +3,7 @@
 #include "Worlds/Worlds.hpp"
 #include "Lights/Light.hpp"
 
-namespace Flounder
+namespace fl
 {
 	CelestialBody::CelestialBody(const CelestialType &type) :
 		Component(),

@@ -5,7 +5,7 @@
 #include "Engine/Engine.hpp"
 #include "Particle.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A manager that manages particles.

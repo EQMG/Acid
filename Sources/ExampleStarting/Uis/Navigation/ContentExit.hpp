@@ -4,7 +4,7 @@
 #include <Uis/UiInputButton.hpp>
 #include <Guis/Gui.hpp>
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

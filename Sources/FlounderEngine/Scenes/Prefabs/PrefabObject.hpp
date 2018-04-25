@@ -7,7 +7,7 @@
 #include "Resources/Resources.hpp"
 #include "Files/Json/FileJson.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class GameObject;
 

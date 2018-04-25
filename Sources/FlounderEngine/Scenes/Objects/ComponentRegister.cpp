@@ -14,7 +14,7 @@
 #include "Voxels/MaterialVoxel.hpp"
 #include "Waters/MaterialWater.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ComponentRegister::ComponentRegister() :
 		m_components(new std::map<std::string, ComponentCreate *>())

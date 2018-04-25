@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ShapeSphere::ShapeSphere(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius) :
 		Model()

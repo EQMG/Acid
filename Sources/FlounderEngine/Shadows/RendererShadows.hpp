@@ -5,7 +5,7 @@
 #include "Models/Model.hpp"
 #include "Shadows.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT RendererShadows :
 		public IRenderer

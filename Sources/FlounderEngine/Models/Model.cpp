@@ -2,7 +2,7 @@
 
 #include "Helpers/FileSystem.hpp"
 
-namespace Flounder
+namespace fl
 {
 	static const std::string FALLBACK_PATH = "Resources/Undefined.obj";
 

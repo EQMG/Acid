@@ -6,7 +6,7 @@
 #include "Models/IVertex.hpp"
 #include "Renderer/Pipelines/PipelineCreate.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT VertexAnimated :
 		public IVertex

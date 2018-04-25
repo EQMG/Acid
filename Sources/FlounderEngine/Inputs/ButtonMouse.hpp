@@ -3,7 +3,7 @@
 #include <vector>
 #include "IButton.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Button from a mouse.

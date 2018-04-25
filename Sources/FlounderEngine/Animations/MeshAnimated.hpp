@@ -10,7 +10,7 @@
 #include "Skin/SkinLoader.hpp"
 #include "Animator.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT MeshAnimated :
 		public Mesh

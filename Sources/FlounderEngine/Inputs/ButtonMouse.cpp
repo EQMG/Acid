@@ -2,7 +2,7 @@
 
 #include "Mouse.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ButtonMouse::ButtonMouse(const std::vector<int> &buttons) :
 		IButton(),

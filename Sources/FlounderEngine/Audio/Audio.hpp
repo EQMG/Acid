@@ -13,7 +13,7 @@
 #include <STB/stb_vorbis.h>
 #include "Engine/Engine.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.

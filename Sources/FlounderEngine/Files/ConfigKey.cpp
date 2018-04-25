@@ -1,6 +1,6 @@
 #include "ConfigKey.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ConfigKey::ConfigKey(const std::string &value, const bool &fromFile) :
 		m_value(value),

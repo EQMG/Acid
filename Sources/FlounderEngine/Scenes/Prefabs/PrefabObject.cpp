@@ -3,7 +3,7 @@
 #include "Scenes/Objects/GameObject.hpp"
 #include "Helpers/FileSystem.hpp"
 
-namespace Flounder
+namespace fl
 {
 	PrefabObject::PrefabObject(const std::string &filename) :
 		IResource(),

@@ -2,7 +2,7 @@
 
 #include "Post/IPostFilter.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT FilterGrain :
 		public IPostFilter

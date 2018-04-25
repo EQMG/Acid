@@ -3,7 +3,7 @@
 #include <vector>
 #include "Swapchain.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class Renderpass;
 

@@ -1,6 +1,6 @@
 #include "MaterialDefault.hpp"
 
-namespace Flounder
+namespace fl
 {
 	MaterialDefault::MaterialDefault(const Colour &baseColor, Texture *diffuseTexture,
 									 const float &metallic, const float &roughness, Texture *materialTexture, Texture *normalTexture,

@@ -3,7 +3,7 @@
 #include "Scenes/Prefabs/PrefabObject.hpp"
 #include "Scenes/Scenes.hpp"
 
-namespace Flounder
+namespace fl
 {
 	GameObject::GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure, const std::string &name) :
 		m_name(name),

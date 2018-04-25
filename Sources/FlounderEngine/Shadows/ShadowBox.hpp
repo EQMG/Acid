@@ -5,7 +5,7 @@
 #include "Maths/Vector4.hpp"
 #include "Physics/ColliderAabb.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Represents the 3D area of the world in which engine.shadows will be cast (basically represents the orthographic projection area for the shadow render pass).

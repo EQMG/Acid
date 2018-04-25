@@ -3,7 +3,7 @@
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT UiStartLogo :
 		public UiObject

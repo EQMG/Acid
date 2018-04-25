@@ -4,7 +4,7 @@
 #include <string>
 #include "Vector3.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Holds a 3x3 matrix.

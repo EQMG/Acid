@@ -2,7 +2,7 @@
 
 #include "Renderer/Queue/QueueFamily.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Swapchain::Swapchain(const VkExtent2D &extent) :
 		m_presentMode(VK_PRESENT_MODE_FIFO_KHR),

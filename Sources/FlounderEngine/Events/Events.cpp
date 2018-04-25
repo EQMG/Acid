@@ -1,6 +1,6 @@
 #include "Events.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Events::Events() :
 		IModule(),

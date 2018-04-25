@@ -6,7 +6,7 @@
 #include "Resources/Resources.hpp"
 #include "Maths/Vector3.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that represents a sound buffer.

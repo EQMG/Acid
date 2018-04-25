@@ -3,7 +3,7 @@
 #include "Inputs/Mouse.hpp"
 #include "Inputs/Joysticks.hpp"
 
-namespace Flounder
+namespace fl
 {
 	UiSelector::UiSelector() :
 		m_cursorX(0.0f),

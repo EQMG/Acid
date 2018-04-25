@@ -1,6 +1,6 @@
 #include "FilterDarken.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Darken.frag", graphicsStage, {}),

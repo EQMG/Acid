@@ -2,7 +2,7 @@
 
 #include "Animations/MeshAnimated.hpp"
 
-namespace Flounder
+namespace fl
 {
 	AnimationLoader::AnimationLoader(LoadedValue *libraryAnimations, LoadedValue *libraryVisualScenes) :
 		m_libraryAnimations(libraryAnimations),

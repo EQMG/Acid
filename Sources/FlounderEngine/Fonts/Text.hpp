@@ -12,7 +12,7 @@
 #include "FontJustify.hpp"
 #include "FontLine.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A object the represents a text in a GUI.

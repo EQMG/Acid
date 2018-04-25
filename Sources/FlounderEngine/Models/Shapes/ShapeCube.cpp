@@ -1,6 +1,6 @@
 #include "ShapeCube.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ShapeCube::ShapeCube(const float &width, const float &height, const float &depth) :
 		Model()

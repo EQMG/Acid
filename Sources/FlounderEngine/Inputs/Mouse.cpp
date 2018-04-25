@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Textures/Texture.hpp"
 
-namespace Flounder
+namespace fl
 {
 	void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 	{

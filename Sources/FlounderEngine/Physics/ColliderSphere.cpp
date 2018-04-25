@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace Flounder
+namespace fl
 {
 	ColliderSphere::ColliderSphere() :
 		Collider(),

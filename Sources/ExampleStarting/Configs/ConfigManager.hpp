@@ -2,7 +2,7 @@
 
 #include <Files/Config.hpp>
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

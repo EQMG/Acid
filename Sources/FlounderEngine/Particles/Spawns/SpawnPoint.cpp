@@ -1,6 +1,6 @@
 ﻿#include "SpawnPoint.hpp"
 
-namespace Flounder
+namespace fl
 {
 	SpawnPoint::SpawnPoint() :
 		ISpawnParticle(),

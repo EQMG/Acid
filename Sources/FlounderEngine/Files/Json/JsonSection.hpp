@@ -6,7 +6,7 @@
 #include "Helpers/FormatString.hpp"
 #include "Files/LoadedValue.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT JsonSection
 	{

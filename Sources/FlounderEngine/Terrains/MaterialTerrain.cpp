@@ -1,6 +1,6 @@
 #include "MaterialTerrain.hpp"
 
-namespace Flounder
+namespace fl
 {
 	MaterialTerrain::MaterialTerrain() :
 		IMaterial(),

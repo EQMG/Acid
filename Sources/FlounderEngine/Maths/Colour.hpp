@@ -5,7 +5,7 @@
 #include "Engine/Exports.hpp"
 #include "Files/LoadedValue.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class Vector3;
 	class Vector4;

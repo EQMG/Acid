@@ -5,7 +5,7 @@
 #include "Display/Display.hpp"
 #include "Maths/Colour.hpp"
 
-namespace Flounder
+namespace fl
 {
 	enum AttachmentType
 	{

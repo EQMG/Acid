@@ -2,7 +2,7 @@
 
 #include "ISpawnParticle.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT SpawnPoint :
 		public ISpawnParticle

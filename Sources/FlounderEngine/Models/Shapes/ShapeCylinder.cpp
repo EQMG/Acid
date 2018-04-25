@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ShapeCylinder::ShapeCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0) :
 		Model()

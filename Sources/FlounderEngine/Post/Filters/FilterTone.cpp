@@ -1,6 +1,6 @@
 #include "FilterTone.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterTone::FilterTone(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Tone.frag", graphicsStage, {})

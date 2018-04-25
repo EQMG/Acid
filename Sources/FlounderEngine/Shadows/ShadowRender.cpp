@@ -2,7 +2,7 @@
 
 #include "Meshes/Mesh.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ShadowRender::ShadowRender() :
 		Component(),

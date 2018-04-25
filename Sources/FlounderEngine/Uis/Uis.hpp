@@ -4,7 +4,7 @@
 #include "Fonts/FontFamily.hpp"
 #include "UiSelector.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A module used for that manages gui textures in a container.

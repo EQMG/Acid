@@ -13,7 +13,7 @@
 #include "Uis/Uis.hpp"
 #include "Worlds/Worlds.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ModuleRegister::ModuleRegister() :
 		m_modules(new std::multimap<float, ModulePair>())

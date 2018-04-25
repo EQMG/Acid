@@ -3,7 +3,7 @@
 #include <vector>
 #include "Animations/Joint/JointTransformData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT KeyframeData
 	{

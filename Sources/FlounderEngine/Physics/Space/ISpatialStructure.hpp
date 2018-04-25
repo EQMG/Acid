@@ -3,7 +3,7 @@
 #include <vector>
 #include "Physics/Frustum.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class GameObject;
 

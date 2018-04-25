@@ -6,7 +6,7 @@
 #include "Scenes/Objects/GameObject.hpp"
 #include "Collider.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT Rigidbody :
 		public Component

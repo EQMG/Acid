@@ -4,7 +4,7 @@
 #include "Helpers/FormatString.hpp"
 #include "Renderer/Renderer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const std::vector<VkDynamicState> DYNAMIC_STATES = {
 		VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR

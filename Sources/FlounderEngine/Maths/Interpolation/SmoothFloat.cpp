@@ -1,6 +1,6 @@
 #include "SmoothFloat.hpp"
 
-namespace Flounder
+namespace fl
 {
 	SmoothFloat::SmoothFloat(const float &initialValue, const float &agility) :
 		m_agility(agility),

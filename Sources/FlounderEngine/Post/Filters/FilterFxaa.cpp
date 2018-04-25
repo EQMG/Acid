@@ -1,6 +1,6 @@
 #include "FilterFxaa.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Fxaa.frag", graphicsStage, {}),

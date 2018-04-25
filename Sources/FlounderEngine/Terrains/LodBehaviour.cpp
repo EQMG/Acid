@@ -5,7 +5,7 @@
 #include "Meshes/Mesh.hpp"
 #include "MeshTerrain.hpp"
 
-namespace Flounder
+namespace fl
 {
 	LodBehaviour::LodBehaviour(const float &radius, const Transform &transform) :
 		Behaviour(),

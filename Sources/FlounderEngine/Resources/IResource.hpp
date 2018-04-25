@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT IResource
 	{

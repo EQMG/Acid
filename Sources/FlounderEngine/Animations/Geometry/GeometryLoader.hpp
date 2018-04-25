@@ -6,7 +6,7 @@
 #include "VertexAnimated.hpp"
 #include "VertexAnimatedData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT GeometryLoader
 	{

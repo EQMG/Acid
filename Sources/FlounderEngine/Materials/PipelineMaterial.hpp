@@ -5,7 +5,7 @@
 #include "Models/Model.hpp"
 #include "Textures/Texture.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that represents a material pipeline.

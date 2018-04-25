@@ -4,7 +4,7 @@
 #include "Uis/Uis.hpp"
 #include "Gui.hpp"
 
-namespace Flounder
+namespace fl
 {
 	RendererGuis::RendererGuis(const GraphicsStage &graphicsStage) :
 		IRenderer(),

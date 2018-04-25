@@ -2,7 +2,7 @@
 
 #include "Engine/Engine.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Timer::Timer(const float &interval) :
 		m_startTime(0.0f),

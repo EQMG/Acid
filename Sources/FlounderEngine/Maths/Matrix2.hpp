@@ -4,7 +4,7 @@
 #include <string>
 #include "Vector2.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Holds a 2x2 matrix.

@@ -1,6 +1,6 @@
 #include "Scenes.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Scenes::Scenes() :
 		IModule(),

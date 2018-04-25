@@ -3,7 +3,7 @@
 #include <sstream>
 #include "Maths.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const Matrix2 Matrix2::IDENTITY = Matrix2().SetIdentity();
 	const Matrix2 Matrix2::ZERO = Matrix2().SetZero();

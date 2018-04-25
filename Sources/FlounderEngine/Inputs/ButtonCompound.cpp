@@ -1,6 +1,6 @@
 #include "ButtonCompound.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons) :
 		IButton(),

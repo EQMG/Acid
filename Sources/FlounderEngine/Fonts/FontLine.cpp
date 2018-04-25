@@ -1,6 +1,6 @@
 ﻿#include "FontLine.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FontLine::FontLine(const double &spaceWidth, const double &maxLength) :
 		m_maxLength(maxLength),

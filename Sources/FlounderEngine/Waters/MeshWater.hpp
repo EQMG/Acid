@@ -3,7 +3,7 @@
 #include "Models/Shapes/MeshSimple.hpp"
 #include "Maths/Colour.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT MeshWater :
 		public MeshSimple

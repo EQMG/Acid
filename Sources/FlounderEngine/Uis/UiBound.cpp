@@ -1,6 +1,6 @@
 #include "UiBound.hpp"
 
-namespace Flounder
+namespace fl
 {
 	std::map<std::string, Vector2> UiBound::PIVOT_MAP = std::map<std::string, Vector2>
 		{

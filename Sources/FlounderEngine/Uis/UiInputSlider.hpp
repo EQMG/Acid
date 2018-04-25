@@ -7,7 +7,7 @@
 #include "Uis.hpp"
 #include "UiObject.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT UiInputSlider :
 		public UiObject

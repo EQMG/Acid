@@ -3,7 +3,7 @@
 #include "Textures/Cubemap.hpp"
 #include "Materials/IMaterial.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that represents a skybox material shader.

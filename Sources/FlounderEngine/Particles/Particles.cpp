@@ -2,7 +2,7 @@
 
 #include "Scenes/Scenes.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const float Particles::MAX_ELAPSED_TIME = 5.0f;
 

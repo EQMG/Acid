@@ -11,8 +11,8 @@
 #include "Scenes/FpsPlayer.hpp"
 #include "Scenes/Scene1.hpp"
 
-using namespace Flounder;
 using namespace Demo;
+using namespace fl;
 
 //#if (FLOUNDER_CONFIG_RELEASE && FLOUNDER_PLATFORM_WINDOWS)
 //int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)

@@ -1,6 +1,6 @@
 #include "KeyframeData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	KeyframeData::KeyframeData(const float &time) :
 		m_time(time),

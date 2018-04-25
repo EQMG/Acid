@@ -1,6 +1,6 @@
 #include "JointTransform.hpp"
 
-namespace Flounder
+namespace fl
 {
 	JointTransform::JointTransform(const Vector3 &position, const Quaternion &rotation) :
 		m_position(new Vector3(position)),

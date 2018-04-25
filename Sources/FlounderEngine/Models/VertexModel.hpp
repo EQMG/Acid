@@ -6,7 +6,7 @@
 #include "Renderer/Pipelines/PipelineCreate.hpp"
 #include "IVertex.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT VertexModel :
 		public IVertex

@@ -3,7 +3,7 @@
 #include "Renderer/Descriptors/DescriptorSet.hpp"
 #include "UniformHandler.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that handles a descriptor set.

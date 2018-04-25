@@ -2,7 +2,7 @@
 
 #include "Engine/Engine.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Delta::Delta() :
 		m_currentFrameTime(0.0f),

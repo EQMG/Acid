@@ -1,6 +1,6 @@
 #include "Collider.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Collider::Collider() :
 		Component()

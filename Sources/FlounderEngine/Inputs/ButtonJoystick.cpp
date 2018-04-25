@@ -2,7 +2,7 @@
 
 #include "Joysticks.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ButtonJoystick::ButtonJoystick(const unsigned int &joystick, const std::vector<int> &buttons) :
 		IButton(),

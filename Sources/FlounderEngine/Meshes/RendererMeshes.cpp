@@ -4,7 +4,7 @@
 #include "Scenes/Scenes.hpp"
 #include "MeshRender.hpp"
 
-namespace Flounder
+namespace fl
 {
 	RendererMeshes::RendererMeshes(const GraphicsStage &graphicsStage) :
 		IRenderer(),
