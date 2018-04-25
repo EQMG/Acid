@@ -44,6 +44,11 @@ namespace Flounder
 
 	void Renderer::Update()
 	{
+		if (Display::Get()->IsIconified())
+		{
+			return;
+		}
+
 		m_managerRender->Render();
 	}
 

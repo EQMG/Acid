@@ -36,6 +36,7 @@ namespace Flounder
 		bool m_focused;
 		int m_windowPosX;
 		int m_windowPosY;
+		bool m_iconified;
 
 		bool m_validationLayers;
 
@@ -68,6 +69,8 @@ namespace Flounder
 		friend void CallbackSize(GLFWwindow *window, int width, int height);
 
 		friend void CallbackFrame(GLFWwindow *window, int width, int height);
+
+		friend void CallbackIconify(GLFWwindow * window, int iconified);
 
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData);
 
@@ -215,6 +218,12 @@ namespace Flounder
 		/// </summary>
 		/// <returns> The windows Y position. </returns>
 		int GetWindowYPos() const { return m_windowPosY; }
+
+		/// <summary>
+		/// Gets the windows is minimized.
+		/// </summary>
+		/// <returns> If the window is minimized. </returns>
+		bool IsIconified() const { return m_iconified; }
 
 		VkInstance GetInstance() const { return m_instance; }
 

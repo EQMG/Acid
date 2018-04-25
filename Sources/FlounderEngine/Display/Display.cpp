@@ -67,6 +67,11 @@ namespace Flounder
 		Display::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 	}
 
+	void CallbackIconify(GLFWwindow *window, int iconified)
+	{
+		Display::Get()->m_iconified = iconified == GLFW_TRUE;
+	}
+
 	VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData)
 	{
 		printf("%s\n", msg);
@@ -111,6 +116,7 @@ namespace Flounder
 		m_focused(true),
 		m_windowPosX(0),
 		m_windowPosY(0),
+		m_iconified(false),
 #if defined(FLOUNDER_VERBOSE) && !defined(FLOUNDER_PLATFORM_MACOS)
 		m_validationLayers(true),
 #else
@@ -395,6 +401,7 @@ namespace Flounder
 		glfwSetWindowPosCallback(m_window, CallbackPosition);
 		glfwSetWindowSizeCallback(m_window, CallbackSize);
 		glfwSetFramebufferSizeCallback(m_window, CallbackFrame);
+		glfwSetWindowIconifyCallback(m_window, CallbackIconify);
 	}
 
 	void Display::CreateVulkan()
