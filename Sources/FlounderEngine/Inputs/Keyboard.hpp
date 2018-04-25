@@ -3,7 +3,7 @@
 #include "Engine/Engine.hpp"
 #include "Display/Display.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the keyboard keys.

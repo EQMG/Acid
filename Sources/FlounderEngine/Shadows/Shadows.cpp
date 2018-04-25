@@ -2,7 +2,7 @@
 
 #include "Scenes/Scenes.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Shadows::Shadows() :
 		IModule(),

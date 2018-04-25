@@ -1,6 +1,6 @@
 #include "FilterNegative.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterNegative::FilterNegative(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Negative.frag", graphicsStage, {})

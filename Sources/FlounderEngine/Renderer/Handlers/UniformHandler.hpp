@@ -2,7 +2,7 @@
 
 #include "Renderer/Buffers/UniformBuffer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that handles a uniform buffer.

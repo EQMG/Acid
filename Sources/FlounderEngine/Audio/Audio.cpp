@@ -7,7 +7,7 @@
 #include "Helpers/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Audio::Audio() :
 		IModule(),

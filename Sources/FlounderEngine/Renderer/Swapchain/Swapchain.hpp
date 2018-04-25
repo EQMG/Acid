@@ -4,7 +4,7 @@
 #include "Textures/Texture.hpp"
 #include "Renderer/Renderpass/RenderpassCreate.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT Swapchain
 	{

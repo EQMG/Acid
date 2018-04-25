@@ -7,7 +7,7 @@
 /// <summary>
 /// The base Flounder folder.
 /// </summary>
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A engine used for simplifying the creation of complicated applications. By using flexible Module loading and Extension injecting, it allows the engine to be used for Networking, Imaging, AIs, Games, and many more applications.

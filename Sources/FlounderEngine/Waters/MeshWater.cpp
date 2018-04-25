@@ -1,6 +1,6 @@
 #include "MeshWater.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const float MeshWater::SIDE_LENGTH = 1200.0f;
 	const float MeshWater::SQUARE_SIZE = 100.0f;

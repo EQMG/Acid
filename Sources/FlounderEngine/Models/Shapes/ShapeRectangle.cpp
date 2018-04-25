@@ -1,6 +1,6 @@
 #include "ShapeRectangle.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ShapeRectangle::ShapeRectangle(const float &min, const float &max) :
 		Model()

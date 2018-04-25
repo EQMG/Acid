@@ -1,6 +1,6 @@
 #include "Ray.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Ray::Ray(const bool &useMouse, const Vector2 &screenStart) :
 		m_useMouse(useMouse),

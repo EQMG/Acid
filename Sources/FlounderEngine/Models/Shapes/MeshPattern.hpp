@@ -3,7 +3,7 @@
 #include <functional>
 #include "Models/Model.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT MeshPattern :
 		public Model

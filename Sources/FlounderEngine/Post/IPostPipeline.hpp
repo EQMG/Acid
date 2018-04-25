@@ -2,7 +2,7 @@
 
 #include "Post/IPostFilter.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Represents a system of post effects.

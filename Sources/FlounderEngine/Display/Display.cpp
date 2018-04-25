@@ -5,7 +5,7 @@
 #endif
 #include "Textures/Texture.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const std::vector<const char *> Display::VALIDATION_LAYERS = {
 		"VK_LAYER_RENDERDOC_Capture", "VK_LAYER_LUNARG_standard_validation"

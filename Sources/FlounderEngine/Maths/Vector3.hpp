@@ -5,7 +5,7 @@
 #include "Engine/Exports.hpp"
 #include "Files/LoadedValue.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class Colour;
 	class Vector2;

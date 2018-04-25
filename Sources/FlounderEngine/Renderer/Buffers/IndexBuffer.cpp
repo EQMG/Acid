@@ -1,6 +1,6 @@
 ﻿#include "IndexBuffer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	IndexBuffer::IndexBuffer(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, void *newData) :
 		Buffer(elementSize * indexCount, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),

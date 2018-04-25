@@ -2,7 +2,7 @@
 
 #include "Maths/Visual/DriverConstant.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType, const FontJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),

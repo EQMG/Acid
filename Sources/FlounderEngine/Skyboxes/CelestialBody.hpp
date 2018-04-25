@@ -3,7 +3,7 @@
 #include "Scenes/Objects/Component.hpp"
 #include "Scenes/Objects/GameObject.hpp"
 
-namespace Flounder
+namespace fl
 {
 	enum CelestialType
 	{

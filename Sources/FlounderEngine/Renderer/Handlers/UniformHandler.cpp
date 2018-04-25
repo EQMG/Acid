@@ -1,6 +1,6 @@
 #include "UniformHandler.hpp"
 
-namespace Flounder
+namespace fl
 {
 	UniformHandler::UniformHandler() :
 		m_uniformBlock(nullptr),

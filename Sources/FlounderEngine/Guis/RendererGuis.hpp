@@ -3,7 +3,7 @@
 #include "Renderer/IRenderer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT RendererGuis :
 		public IRenderer

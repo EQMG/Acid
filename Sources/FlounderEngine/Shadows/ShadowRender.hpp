@@ -5,7 +5,7 @@
 #include "Scenes/Objects/GameObject.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class used to render a GameObject as a shadow.

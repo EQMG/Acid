@@ -3,7 +3,7 @@
 #include "Animations/Joint/Joint.hpp"
 #include "Files/LoadedValue.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT SkeletonLoader
 	{

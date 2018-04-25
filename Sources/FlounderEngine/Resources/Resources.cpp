@@ -1,6 +1,6 @@
 #include "Resources.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Resources::Resources() :
 		m_managed(new std::vector<IResource *>())

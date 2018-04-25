@@ -3,7 +3,7 @@
 #include <vector>
 #include "IButton.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Handles multiple buttons at once.

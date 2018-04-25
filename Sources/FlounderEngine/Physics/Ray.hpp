@@ -5,7 +5,7 @@
 #include "Maths/Vector3.hpp"
 #include "Maths/Vector4.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Holds a 3 dimensional ray.

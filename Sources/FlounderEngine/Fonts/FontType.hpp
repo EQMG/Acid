@@ -3,7 +3,7 @@
 #include "Textures/Texture.hpp"
 #include "FontMetafile.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A loader capable of loading font data into a instance of a text mesh.

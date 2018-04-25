@@ -3,7 +3,7 @@
 #include "Maths/Colour.hpp"
 #include "Post/IPostFilter.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT FilterCrt :
 		public IPostFilter

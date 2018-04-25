@@ -3,7 +3,7 @@
 #include "Files/Json/FileJson.hpp"
 #include "Helpers/FileSystem.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const Matrix4 *MeshAnimated::S_CORRECTION = new Matrix4(Matrix4::IDENTITY.Rotate(Maths::Radians(-90.0f), Vector3::RIGHT));
 	const int MeshAnimated::MAX_WEIGHTS = 3;

@@ -4,7 +4,7 @@
 #include "Animations/Joint/JointTransform.hpp"
 #include "KeyframeData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Represents one keyframe of an animation. This contains the timestamp of the keyframe,

@@ -1,6 +1,6 @@
 #include "DriverLinear.hpp"
 
-namespace Flounder
+namespace fl
 {
 	DriverLinear::DriverLinear(const float &startValue, const float &endValue, const float &length) :
 		IDriver(length),

@@ -4,7 +4,7 @@
 #include "Maths/Maths.hpp"
 #include "Maths/Colour.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT MeshTerrain :
 		public MeshSimple

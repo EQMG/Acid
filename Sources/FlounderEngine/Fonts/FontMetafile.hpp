@@ -6,7 +6,7 @@
 #include "Resources/Resources.hpp"
 #include "FontCharacter.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Provides functionality for getting the values from a font file.

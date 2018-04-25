@@ -3,7 +3,7 @@
 #include "IDescriptor.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
-namespace Flounder
+namespace fl
 {
 	DescriptorSet::DescriptorSet(const Pipeline &pipeline) :
 		m_shaderProgram(pipeline.GetShaderProgram()),

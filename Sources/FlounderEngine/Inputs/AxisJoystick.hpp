@@ -3,7 +3,7 @@
 #include <vector>
 #include "IAxis.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Axis from a joystick.

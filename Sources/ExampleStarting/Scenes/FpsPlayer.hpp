@@ -5,7 +5,7 @@
 #include <Inputs/IAxis.hpp>
 #include <Inputs/IButton.hpp>
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

@@ -3,7 +3,7 @@
 #include "Maths/Matrix4.hpp"
 #include "JointData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Represents a joint in a "skeleton".

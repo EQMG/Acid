@@ -1,6 +1,6 @@
 #include "FilterGrain.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterGrain::FilterGrain(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Grain.frag", graphicsStage, {}),

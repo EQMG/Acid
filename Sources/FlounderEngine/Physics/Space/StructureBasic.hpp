@@ -7,7 +7,7 @@
 #include "Scenes/Objects/Component.hpp"
 #include "Physics/Rigidbody.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A structure of spatial objects for a 3D space.

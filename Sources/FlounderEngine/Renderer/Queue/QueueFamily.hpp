@@ -2,7 +2,7 @@
 
 #include "Display/Display.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Used to store index of a QueueFamily with particular qualities.

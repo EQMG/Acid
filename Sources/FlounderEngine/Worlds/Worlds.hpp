@@ -6,7 +6,7 @@
 #include "Maths/Noise/NoiseFast.hpp"
 #include "Lights/Fog.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A module used for managing worlds.

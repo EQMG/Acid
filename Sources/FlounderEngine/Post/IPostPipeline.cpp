@@ -1,6 +1,6 @@
 #include "IPostPipeline.hpp"
 
-namespace Flounder
+namespace fl
 {
 	IPostPipeline::IPostPipeline()
 	{

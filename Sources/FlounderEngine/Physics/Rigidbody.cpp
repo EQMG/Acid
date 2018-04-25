@@ -4,7 +4,7 @@
 #include "Scenes/Scenes.hpp"
 #include "ColliderSphere.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Rigidbody::Rigidbody(const float &mass, const float &drag, const bool &useGravity, const Constraint3 &freezePosition, const Constraint3 &freezeRotation) :
 		Component(),

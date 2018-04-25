@@ -4,7 +4,7 @@
 #include <cstdint>
 #include "Maths/Vector3.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT VertexModelData
 	{

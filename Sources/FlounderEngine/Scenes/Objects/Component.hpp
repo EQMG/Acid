@@ -7,7 +7,7 @@
 #include "Files/LoadedValue.hpp"
 #include "Helpers/FormatString.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class GameObject;
 

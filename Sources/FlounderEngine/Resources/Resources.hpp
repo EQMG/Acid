@@ -4,7 +4,7 @@
 #include "Engine/Engine.hpp"
 #include "IResource.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A module used for managing resources.

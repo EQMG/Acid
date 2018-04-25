@@ -3,7 +3,7 @@
 #include "Exports.hpp"
 #include "ModuleRegister.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A class used to define how the engine will run updates and timings.

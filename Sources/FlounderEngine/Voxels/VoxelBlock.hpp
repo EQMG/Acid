@@ -4,7 +4,7 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector3.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class VoxelChunk;
 

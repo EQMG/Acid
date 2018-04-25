@@ -2,7 +2,7 @@
 
 #include "Worlds/Worlds.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const int MeshTerrain::SIDE_LENGTH = 200;
 	const std::vector<float> MeshTerrain::SQUARE_SIZES = {

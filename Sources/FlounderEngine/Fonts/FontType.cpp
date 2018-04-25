@@ -1,6 +1,6 @@
 ﻿#include "FontType.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FontType::FontType(const std::string &textureFile, const std::string &fontFile) :
 		m_texture(Texture::Resource(textureFile)),

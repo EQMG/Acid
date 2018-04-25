@@ -5,7 +5,7 @@
 #include "Renderer/Pipelines/ShaderProgram.hpp"
 #include "Buffer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT UniformBuffer :
 		public Buffer,

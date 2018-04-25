@@ -3,7 +3,7 @@
 #include "Scenes/Scenes.hpp"
 #include "Worlds/Worlds.hpp"
 
-namespace Flounder
+namespace fl
 {
 	MaterialSkybox::MaterialSkybox(Cubemap *cubemap, const bool &enableFog) :
 		IMaterial(),

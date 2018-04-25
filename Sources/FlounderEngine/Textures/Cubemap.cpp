@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace Flounder
+namespace fl
 {
 	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXS = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 

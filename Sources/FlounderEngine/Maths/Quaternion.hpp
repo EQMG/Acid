@@ -5,7 +5,7 @@
 #include "Matrix4.hpp"
 #include "Vector4.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.

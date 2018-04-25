@@ -2,7 +2,7 @@
 
 #include "VoxelChunk.hpp"
 
-namespace Flounder
+namespace fl
 {
 	std::map<std::string, Colour *> VoxelBlock::s_colours = std::map<std::string, Colour *>
 		{

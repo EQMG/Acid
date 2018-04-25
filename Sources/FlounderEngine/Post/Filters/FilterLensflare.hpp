@@ -3,7 +3,7 @@
 #include "Maths/Vector3.hpp"
 #include "Post/IPostFilter.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT FilterLensflare :
 		public IPostFilter

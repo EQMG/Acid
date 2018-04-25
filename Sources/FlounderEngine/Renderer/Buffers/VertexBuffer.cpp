@@ -1,6 +1,6 @@
 ﻿#include "VertexBuffer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	VertexBuffer::VertexBuffer(const uint64_t &elementSize, const size_t &vertexCount, void *newData) :
 		Buffer(elementSize * vertexCount, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),

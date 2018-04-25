@@ -6,7 +6,7 @@
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const Colour Colour::CLEAR = Colour(0.0f, 0.0f, 0.0f, 0.0f);
 	const Colour Colour::WHITE = Colour("#ffffff");

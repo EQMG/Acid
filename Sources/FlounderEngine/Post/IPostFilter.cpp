@@ -2,7 +2,7 @@
 
 #include "Models/Shapes/ShapeRectangle.hpp"
 
-namespace Flounder
+namespace fl
 {
 	IPostFilter::IPostFilter(const std::string &fragmentShader, const GraphicsStage &graphicsStage, const std::vector<Define> &defines) :
 		m_descriptorSet(new DescriptorsHandler()),

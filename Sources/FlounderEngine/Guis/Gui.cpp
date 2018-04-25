@@ -2,7 +2,7 @@
 
 #include "Models/Shapes/ShapeRectangle.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Gui::Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow) :
 		UiObject(parent, rectangle),

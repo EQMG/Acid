@@ -4,7 +4,7 @@
 #include "ICamera.hpp"
 #include "IManagerUis.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A object used to represent a scene.

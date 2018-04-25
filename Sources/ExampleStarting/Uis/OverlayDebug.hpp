@@ -4,7 +4,7 @@
 #include <Maths/Timer.hpp>
 #include <Fonts/Text.hpp>
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

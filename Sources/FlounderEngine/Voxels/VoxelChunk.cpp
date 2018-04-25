@@ -2,7 +2,7 @@
 
 #include "Worlds/Worlds.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const int VoxelChunk::CHUNK_WIDTH = 16;
 	const int VoxelChunk::CHUNK_HEIGHT = 16;

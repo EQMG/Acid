@@ -8,7 +8,7 @@
 #include <GLFW/glfw3.h>
 #include "Engine/Engine.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.

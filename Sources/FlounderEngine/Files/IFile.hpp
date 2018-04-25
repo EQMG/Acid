@@ -4,7 +4,7 @@
 #include <map>
 #include "Engine/Exports.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT IFile
 	{

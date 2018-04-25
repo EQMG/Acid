@@ -3,7 +3,7 @@
 #include "Maths/Colour.hpp"
 #include "Materials/IMaterial.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that represents a water material shader.

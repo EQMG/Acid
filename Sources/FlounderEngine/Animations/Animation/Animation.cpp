@@ -1,6 +1,6 @@
 #include "Animation.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Animation::Animation(const float &length, const std::vector<Keyframe *> &keyframes) :
 		m_length(length),

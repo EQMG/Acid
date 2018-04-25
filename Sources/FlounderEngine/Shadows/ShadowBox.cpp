@@ -3,7 +3,7 @@
 #include "Display/Display.hpp"
 #include "Maths/Maths.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ShadowBox::ShadowBox() :
 		m_lightDirection(new Vector3()),

@@ -2,7 +2,7 @@
 
 #include "Renderer/Descriptors/IDescriptor.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT DepthStencil :
 		public IDescriptor

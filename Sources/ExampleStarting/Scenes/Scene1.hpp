@@ -4,7 +4,7 @@
 #include <Inputs/IButton.hpp>
 #include <Scenes/Scene.hpp>
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

@@ -2,7 +2,7 @@
 
 #include "IDriver.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A driver that slides to its destination using cosine interpolation.

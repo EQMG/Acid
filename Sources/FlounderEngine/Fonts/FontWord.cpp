@@ -1,6 +1,6 @@
 ﻿#include "FontWord.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FontWord::FontWord() :
 		m_characters(std::vector<FontCharacter>()),

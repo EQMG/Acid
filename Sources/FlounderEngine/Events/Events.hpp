@@ -4,7 +4,7 @@
 #include "Tasks/Tasks.hpp"
 #include "IEvent.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A module used for managing events on engine updates.

@@ -3,7 +3,7 @@
 #include <cassert>
 #include <random>
 
-namespace Flounder
+namespace fl
 {
 	const float NoiseFast::GRAD_X[] =
 		{

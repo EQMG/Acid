@@ -5,7 +5,7 @@
 #include "Inputs/ButtonJoystick.hpp"
 #include "Uis/UiObject.hpp"
 
-namespace Flounder
+namespace fl
 {
 	struct F_HIDDEN SelectorJoystick
 	{

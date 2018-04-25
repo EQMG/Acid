@@ -2,7 +2,7 @@
 
 #include "Exports.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Represents when a module will update in the game loop.

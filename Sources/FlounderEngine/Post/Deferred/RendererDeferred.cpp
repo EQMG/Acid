@@ -8,7 +8,7 @@
 #include "Skyboxes/MaterialSkybox.hpp"
 #include "Worlds/Worlds.hpp"
 
-namespace Flounder
+namespace fl
 {
 #define MAX_LIGHTS 64
 

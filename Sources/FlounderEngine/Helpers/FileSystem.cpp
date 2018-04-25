@@ -14,7 +14,7 @@
 #define GetCurrentDir getcwd
 #endif
 
-namespace Flounder
+namespace fl
 {
 	bool FileSystem::FileExists(const std::string &filepath)
 	{

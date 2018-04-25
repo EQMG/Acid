@@ -1,6 +1,6 @@
 #include "Tasks.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Tasks::Tasks() :
 		IModule(),

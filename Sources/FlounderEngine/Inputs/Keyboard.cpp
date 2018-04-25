@@ -1,6 +1,6 @@
 #include "Keyboard.hpp"
 
-namespace Flounder
+namespace fl
 {
 	void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{

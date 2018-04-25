@@ -6,7 +6,7 @@
 #include "Renderer/Pipelines/PipelineCreate.hpp"
 #include "Renderer/Pipelines/ShaderProgram.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class IDescriptor;
 

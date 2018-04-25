@@ -4,7 +4,7 @@
 #include <vector>
 #include "Display/Display.hpp"
 
-namespace Flounder
+namespace fl
 {
 	enum PipelineModeFlags
 	{

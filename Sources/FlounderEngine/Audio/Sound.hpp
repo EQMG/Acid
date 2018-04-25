@@ -4,7 +4,7 @@
 #include "Audio/Audio.hpp"
 #include "Maths/Vector3.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Class that represents a loaded sound.

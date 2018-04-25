@@ -2,7 +2,7 @@
 
 #include "Renderpass/RenderpassCreate.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A extension used with IRenderer's to define a master renderer.

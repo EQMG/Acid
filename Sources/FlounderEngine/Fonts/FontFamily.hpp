@@ -4,7 +4,7 @@
 #include "Resources/Resources.hpp"
 #include "FontType.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT FontFamily :
 		public IResource

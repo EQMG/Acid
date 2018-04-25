@@ -1,6 +1,6 @@
 #include "JsonSection.hpp"
 
-namespace Flounder
+namespace fl
 {
 	void JsonSection::AppendData(LoadedValue *loadedValue, std::string *data, const int &indentation, const bool &end)
 	{

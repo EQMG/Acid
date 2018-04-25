@@ -5,7 +5,7 @@
 #include "Vector2.hpp"
 #include "Vector3.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const Matrix4 Matrix4::IDENTITY = Matrix4().SetIdentity();
 	const Matrix4 Matrix4::ZERO = Matrix4().SetZero();

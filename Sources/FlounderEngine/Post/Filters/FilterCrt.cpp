@@ -1,6 +1,6 @@
 #include "FilterCrt.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Crt.frag", graphicsStage, {}),

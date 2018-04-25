@@ -2,7 +2,7 @@
 
 #include "Maths/Matrix4.hpp"
 
-namespace Flounder
+namespace fl
 {
 	enum FrustumPlanes
 	{

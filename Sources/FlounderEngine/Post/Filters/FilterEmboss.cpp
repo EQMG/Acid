@@ -1,6 +1,6 @@
 #include "FilterEmboss.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterEmboss::FilterEmboss(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Emboss.frag", graphicsStage, {})

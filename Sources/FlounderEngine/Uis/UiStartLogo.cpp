@@ -5,7 +5,7 @@
 #include "Maths/Visual/DriverConstant.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 
-namespace Flounder
+namespace fl
 {
 	UiStartLogo::UiStartLogo(UiObject *parent) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),

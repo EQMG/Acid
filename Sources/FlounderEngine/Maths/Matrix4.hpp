@@ -4,7 +4,7 @@
 #include <string>
 #include "Vector4.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class Vector2;
 	class Vector3;

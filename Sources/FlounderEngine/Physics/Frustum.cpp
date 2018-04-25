@@ -3,7 +3,7 @@
 #include <cmath>
 #include "Helpers/SquareArray.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Frustum::Frustum() :
 		m_frustum(SquareArray::FloatArray(6, 4))

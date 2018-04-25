@@ -1,6 +1,6 @@
 #include "VertexSkinData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	VertexSkinData::VertexSkinData() :
 		m_jointIds(std::vector<int>()),

@@ -1,6 +1,6 @@
 #include "FilterDefault.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Default.frag", graphicsStage, {})

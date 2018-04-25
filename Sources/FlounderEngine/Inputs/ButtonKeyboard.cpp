@@ -2,7 +2,7 @@
 
 #include "Keyboard.hpp"
 
-namespace Flounder
+namespace fl
 {
 	ButtonKeyboard::ButtonKeyboard(const std::vector<int> &keys) :
 		IButton(),

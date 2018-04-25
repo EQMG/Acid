@@ -2,7 +2,7 @@
 
 #include "RenderpassCreate.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class DepthStencil;
 

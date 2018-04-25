@@ -1,6 +1,6 @@
 #include "VertexAnimatedData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const uint32_t VertexAnimatedData::NO_INDEX = static_cast<uint32_t>(-1);
 

@@ -4,7 +4,7 @@
 #include "Maths/Vector3.hpp"
 #include "ParticleType.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A instance of a particle type.

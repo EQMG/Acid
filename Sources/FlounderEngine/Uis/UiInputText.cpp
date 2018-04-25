@@ -4,7 +4,7 @@
 #include "Scenes/Scenes.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const float UiInputText::CHANGE_TIME = 0.1f;
 	const float UiInputText::SCALE_NORMAL = 1.6f;

@@ -2,7 +2,7 @@
 
 #include "Buffer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT IndexBuffer :
 		public Buffer

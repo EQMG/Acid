@@ -1,6 +1,6 @@
 #include "MeshRender.hpp"
 
-namespace Flounder
+namespace fl
 {
 	MeshRender::MeshRender() :
 		Component(),

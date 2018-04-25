@@ -3,7 +3,7 @@
 #include "Models/Model.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Represents a post effect shader and on application saves the result into a fbo.

@@ -2,7 +2,7 @@
 
 #include "Renderer/Buffers/Buffer.hpp"
 
-namespace Flounder
+namespace fl
 {
 	std::vector<VkFormat> TRY_FORMATS =
 		{

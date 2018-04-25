@@ -5,7 +5,7 @@
 #include <vector>
 #include "Files/IFile.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT RowCsv
 	{

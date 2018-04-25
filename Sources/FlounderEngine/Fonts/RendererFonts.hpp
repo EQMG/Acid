@@ -4,7 +4,7 @@
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Text.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT RendererFonts :
 		public IRenderer

@@ -4,7 +4,7 @@
 #include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 
-namespace Flounder
+namespace fl
 {
 	static const std::string FALLBACK_PATH = "Resources/Undefined.png";
 	static const float ANISOTROPY = 16.0f;

@@ -7,7 +7,7 @@
 #include "IFile.hpp"
 #include "ConfigKey.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT Config
 	{

@@ -3,7 +3,7 @@
 #include "IButton.hpp"
 #include "IAxis.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Axis composed of two buttons.

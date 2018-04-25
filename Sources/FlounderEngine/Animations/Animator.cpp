@@ -3,7 +3,7 @@
 #include <cmath>
 #include "Engine/Engine.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Animator::Animator(Joint *rootJoint) :
 		m_rootJoint(rootJoint),

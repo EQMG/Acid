@@ -1,6 +1,6 @@
 #include "Joysticks.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Joysticks::Joysticks() :
 		IModule(),

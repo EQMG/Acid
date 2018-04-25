@@ -6,7 +6,7 @@
 #include "Models/Shapes/ShapeRectangle.hpp"
 #include "Models/Shapes/ShapeSphere.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Mesh::Mesh(Model *model) :
 		Component(),

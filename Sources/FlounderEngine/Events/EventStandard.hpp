@@ -3,7 +3,7 @@
 #include <functional>
 #include "IEvent.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A class that is the most basic implementation of the event interface.

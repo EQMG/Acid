@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 
-namespace Flounder
+namespace fl
 {
 	RendererParticles::RendererParticles(const GraphicsStage &graphicsStage) :
 		IRenderer(),

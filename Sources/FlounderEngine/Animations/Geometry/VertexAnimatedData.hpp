@@ -5,7 +5,7 @@
 #include "Maths/Vector3.hpp"
 #include "Animations/Skin/VertexSkinData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT VertexAnimatedData
 	{

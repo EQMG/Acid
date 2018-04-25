@@ -1,6 +1,6 @@
 #include "RendererFonts.hpp"
 
-namespace Flounder
+namespace fl
 {
 	RendererFonts::RendererFonts(const GraphicsStage &graphicsStage) :
 		IRenderer(),

@@ -7,7 +7,7 @@
 #include "RenderStage.hpp"
 #include "IManagerRender.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT Renderer :
 		public IModule

@@ -3,7 +3,7 @@
 #include "Engine/Exports.hpp"
 #include "Maths/Vector3.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A helper for C++ arrays.

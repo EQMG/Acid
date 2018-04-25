@@ -4,7 +4,7 @@
 #include <sstream>
 #include "Maths.hpp"
 
-namespace Flounder
+namespace fl
 {
 	const Quaternion Quaternion::ZERO = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
 	const Quaternion Quaternion::ONE = Quaternion(1.0f, 1.0f, 1.0f, 1.0f);

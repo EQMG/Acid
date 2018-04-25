@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-namespace Flounder
+namespace fl
 {
 	Config::Config(IFile *file) :
 		m_file(file),

@@ -1,6 +1,6 @@
 #include "Keyframe.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Keyframe::Keyframe(const float &timeStamp, const std::map<std::string, JointTransform *> &pose) :
 		m_timeStamp(timeStamp),

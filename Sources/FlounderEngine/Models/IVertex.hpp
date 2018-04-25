@@ -4,7 +4,7 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT IVertex
 	{

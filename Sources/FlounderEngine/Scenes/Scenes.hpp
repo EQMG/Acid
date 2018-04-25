@@ -6,7 +6,7 @@
 #include "Scenes/Objects/ComponentRegister.hpp"
 #include "Scene.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// A module used for managing game scenes on engine updates.

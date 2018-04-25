@@ -1,6 +1,6 @@
 #include "JointTransformData.hpp"
 
-namespace Flounder
+namespace fl
 {
 	JointTransformData::JointTransformData(const std::string &jointNameId, const Matrix4 &jointLocalTransform) :
 		m_jointNameId(jointNameId),

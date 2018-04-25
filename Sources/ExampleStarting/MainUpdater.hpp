@@ -4,7 +4,7 @@
 #include <Maths/Delta.hpp>
 #include <Maths/Timer.hpp>
 
-using namespace Flounder;
+using namespace fl;
 
 namespace Demo
 {

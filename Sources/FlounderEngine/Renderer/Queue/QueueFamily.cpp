@@ -1,6 +1,6 @@
 ﻿#include "QueueFamily.hpp"
 
-namespace Flounder
+namespace fl
 {
 	QueueFamilyIndices QueueFamily::FindQueueFamilies(const VkSurfaceKHR &surface)
 	{

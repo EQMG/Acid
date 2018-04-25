@@ -1,6 +1,6 @@
 #include "FilterTiltshift.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage) :
 		IPostFilter("Resources/Shaders/Filters/Tiltshift.frag", graphicsStage, {}),

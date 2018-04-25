@@ -2,7 +2,7 @@
 
 #include "GameObject.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Component::Component() :
 		m_name(""),

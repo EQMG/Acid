@@ -2,7 +2,7 @@
 
 #include "Helpers/FileSystem.hpp"
 
-namespace Flounder
+namespace fl
 {
 	FontFamily::FontFamily(const std::string &filename) :
 		IResource(),

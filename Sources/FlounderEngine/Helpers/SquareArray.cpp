@@ -1,6 +1,6 @@
 #include "SquareArray.hpp"
 
-namespace Flounder
+namespace fl
 {
 	float **SquareArray::FloatArray(const int &size1, const int &size2)
 	{

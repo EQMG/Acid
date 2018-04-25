@@ -6,7 +6,7 @@
 #include "Swapchain/Swapchain.hpp"
 #include "Swapchain/Framebuffers.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT RenderStage
 	{

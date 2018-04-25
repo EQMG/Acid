@@ -4,7 +4,7 @@
 #include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT RendererMeshes :
 		public IRenderer

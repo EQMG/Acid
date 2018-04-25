@@ -1,6 +1,6 @@
 #include "VertexModel.hpp"
 
-namespace Flounder
+namespace fl
 {
 	VertexModel::VertexModel(const Vector3 &position, const Vector2 &uv, const Vector3 &normal, const Vector3 &tangent) :
 		IVertex(),

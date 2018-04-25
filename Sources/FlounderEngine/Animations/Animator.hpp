@@ -3,7 +3,7 @@
 #include "Joint/Joint.hpp"
 #include "Animation/Animation.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// This class contains all the functionality to apply an animation to an animated entity.

@@ -3,7 +3,7 @@
 #include <vector>
 #include "Files/LoadedValue.hpp"
 
-namespace Flounder
+namespace fl
 {
 	class F_EXPORT VertexSkinData
 	{

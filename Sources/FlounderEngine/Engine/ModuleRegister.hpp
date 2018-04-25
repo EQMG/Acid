@@ -4,7 +4,7 @@
 #include <string>
 #include "IModule.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// The default updater for the engine.

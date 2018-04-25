@@ -1,6 +1,6 @@
 #include "Scene.hpp"
 
-namespace Flounder
+namespace fl
 {
 	Scene::Scene(ICamera *camera, IManagerUis *managerUis) :
 		m_camera(camera),

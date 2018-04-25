@@ -4,7 +4,7 @@
 #include "Vector3.hpp"
 #include "Matrix4.hpp"
 
-namespace Flounder
+namespace fl
 {
 	/// <summary>
 	/// Holds position, rotation, and scale components.

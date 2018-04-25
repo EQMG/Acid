@@ -1,6 +1,6 @@
 #include "LoadedValue.hpp"
 
-namespace Flounder
+namespace fl
 {
 	LoadedValue::LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value) :
 		m_parent(parent),

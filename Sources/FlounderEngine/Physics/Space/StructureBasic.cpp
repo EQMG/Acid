@@ -1,5 +1,5 @@
 ﻿
 
-namespace Flounder
+namespace fl
 {
 }
