@@ -26,9 +26,13 @@ target_link_libraries(FlounderEngine PRIVATE ${LIBRARIES_LINKS})
 # Install
 if (FLOUNDER_INSTALL)
     install(TARGETS FlounderEngine
-            EXPORT FlounderEngineTargets
-            RUNTIME DESTINATION "bin"
-            ARCHIVE DESTINATION "lib"
-            LIBRARY DESTINATION "lib"
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
             )
+
+    foreach(file ${FLOUNDERENGINE_HEADERS_})
+        get_filename_component(dir ${file} DIRECTORY)
+        install(FILES ${file} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Flounder/${dir})
+    endforeach()
 endif ()

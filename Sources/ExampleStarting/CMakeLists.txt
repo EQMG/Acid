@@ -16,30 +16,13 @@ target_link_libraries(ExampleStarting PRIVATE ${LIBRARIES_LINKS} FlounderEngine)
 
 # Install
 if (FLOUNDER_INSTALL)
-    install(
-            DIRECTORY .
+    install(DIRECTORY .
             DESTINATION include
             FILES_MATCHING PATTERN "*.h"
             PATTERN "Private" EXCLUDE
     )
 
-    install(
-            TARGETS ExampleStarting
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib
+    install(TARGETS ExampleStarting
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
 endif ()
-
-# Shaders
-#if(WIN32)
-#    add_custom_command(TARGET FlounderEngine
-#            POST_BUILD
-#            COMMAND cmd /c ${PROJECT_SOURCE_DIR}/Scripts/build_shaders.bat
-#    )
-#else()
-#   add_custom_command(TARGET FlounderEngine
-#           POST_BUILD
-#           COMMAND cmd /c ${PROJECT_SOURCE_DIR}/Scripts/build_shaders.sh
-#   )
-#endif()

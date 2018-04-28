@@ -63,7 +63,7 @@ This is a list of current features in Flounder:
 Flounder uses the following libraries:
  * [glfw](https://github.com/glfw/glfw) - Display handling
  * [glslang](https://github.com/KhronosGroup/glslang) - GLSL processing
- * [stb](https://github.com/nothings/stb) - Texture loading
+ * [stb](https://github.com/nothings/stb) - Texture and OGG loading
  * [openal](http://kcat.strangesoft.net/openal.html) - Audio interface
  * [vulkan](https://www.khronos.org/vulkan/) - Vulkan interface
  * [moltenvk](https://github.com/KhronosGroup/MoltenVK) - Vulkan for Apple

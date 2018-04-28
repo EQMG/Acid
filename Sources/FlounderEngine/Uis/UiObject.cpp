@@ -85,18 +85,13 @@ namespace fl
 		// Transform updates.
 		float aspectRatio = Display::Get()->GetAspectRatio();
 
-		float rw = 1.0f; // m_parent != nullptr ? m_parent->GetRectangle()->m_dimensions->m_x : 1.0f;
-		float rh = 1.0f; // m_parent != nullptr ? m_parent->GetRectangle()->m_dimensions->m_y : 1.0f;
-		float rx = 0.0f; // m_parent != nullptr ? (m_parent->GetScreenTransform()->m_y + 1.0f) / 2.0f : 0.0f;
-		float ry = 0.0f; // m_parent != nullptr ? (m_parent->GetScreenTransform()->m_z - 1.0f) / -2.0f : 0.0f;
-
 		float da = m_rectangle->m_aspectSize ? aspectRatio : 1.0f;
-		float dw = rw * (m_rectangle->m_dimensions->m_x / da) * m_scale;
-		float dh = rh * m_rectangle->m_dimensions->m_y * m_scale;
+		float dw = (m_rectangle->m_dimensions->m_x / da) * m_scale;
+		float dh = m_rectangle->m_dimensions->m_y * m_scale;
 
 		float pa = m_rectangle->m_aspectPosition ? 1.0f : aspectRatio;
-		float px = rx + (m_rectangle->m_position->m_x / pa) - (dw * m_rectangle->m_reference->m_x) + m_positionOffset->m_x;
-		float py = ry + m_rectangle->m_position->m_y - (dh * (-1.0f + m_rectangle->m_reference->m_y)) + m_positionOffset->m_y;
+		float px = (m_rectangle->m_position->m_x / pa) - (dw * m_rectangle->m_reference->m_x) + m_positionOffset->m_x;
+		float py = m_rectangle->m_position->m_y - (dh * (-1.0f + m_rectangle->m_reference->m_y)) + m_positionOffset->m_y;
 
 		*m_screenTransform = Vector4(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
 	}
