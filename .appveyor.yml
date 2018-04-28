@@ -18,7 +18,6 @@ install:
 # - git submodule update --init --recursive
   - git clone https://github.com/glfw/glfw.git Libraries/glfw
   - git clone https://github.com/KhronosGroup/glslang.git Libraries/glslang
-# - git clone https://github.com/KhronosGroup/MoltenVK.git Libraries/moltenvk
   - mkdir C:\Projects\deps
   - cd C:\Projects\deps
   - set CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip"
@@ -36,11 +35,14 @@ before_build:
   - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=OFF
   - cmake --build . --config Debug
   - cd ../
-  - mkdir Debug
-  - xcopy Resources Debug\Resources\ /s/h/e/k/f/c
-  - xcopy Build\Debug\bin\Debug Debug\ /s/h/e/k/f/c
-  - xcopy Build\Debug\lib\Debug Debug\ /s/h/e/k/f/c
+  - mkdir Flounder
+  - mkdir Demos
+  - xcopy Build\Debug\lib\Debug Flounder\ /s/h/e/k/f/c
+  - xcopy Build\Debug\bin\Debug Demos\ /s/h/e/k/f/c
+  - xcopy Resources Demos\Resources\ /s/h/e/k/f/c
 
 artifacts:
-  - path: Debug\
-    name: Flounder Debug
+  - path: Demos\
+    name: Flounder Demos
+  - path: Flounder\
+    name: Flounder
