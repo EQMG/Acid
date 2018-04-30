@@ -167,7 +167,7 @@ namespace fl
 		std::vector<Vector2> uvsList = std::vector<Vector2>();
 		std::vector<Vector3> normalsList = std::vector<Vector3>();
 
-		for (const auto &line : lines)
+		for (auto line : lines)
 		{
 			std::vector<std::string> split = FormatString::Split(line, " ", true);
 

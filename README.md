@@ -80,11 +80,6 @@ Flounder uses the following libraries:
 ## License
 Flounder is released under the MIT licence, [LICENSE.md](LICENSE.md) for more details.
 
-## Resources
-Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.
-
-History for `Resources` before https://github.com/Equilibrium-Games/Flounder/tree/e2abd26ee8f3eda4feabbd1ff9b8168f17e8fb4f can be found at: https://github.com/Equilibrium-Games/Flounder-Resources
-
 ## Developer Setup
 Once Flounder is cloned run `git submodule update --init --recursive` to update the submodules needed to compile. All platforms depend on CMake to generate IDE/make files.
 
@@ -97,6 +92,11 @@ On Linux a GCC/Clang compiler is required, each package listed here is for Debia
 Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
 
 Currently Flounder does not run under Release mode in Visual Studios (bug).
+
+## Resources
+Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.
+
+Old resources have been removed from the main repo, history for `Resources` before https://github.com/Equilibrium-Games/Flounder/tree/e2abd26ee8f3eda4feabbd1ff9b8168f17e8fb4f can be found at: https://github.com/Equilibrium-Games/Flounder-Resources. Older resources can be found on this fork: https://github.com/mattparks/Flounder.
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.

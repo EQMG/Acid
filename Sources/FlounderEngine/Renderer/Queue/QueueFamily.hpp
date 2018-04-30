@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <array>
 #include "Display/Display.hpp"
 
 namespace fl
@@ -11,6 +12,9 @@ namespace fl
 	{
 		int graphicsFamily = -1;
 		int presentFamily = -1;
+		int computeFamily = -1;
+
+		std::array<uint32_t, 3> array;
 
 		/// <summary>
 		/// Gets if an index has been assigned.
@@ -18,7 +22,7 @@ namespace fl
 		/// <return> If an index has been assigned. </return>
 		bool IsComplete() const
 		{
-			return graphicsFamily >= 0 && presentFamily >= 0;
+			return graphicsFamily >= 0 && presentFamily >= 0 && computeFamily >= 0;
 		}
 	};
 

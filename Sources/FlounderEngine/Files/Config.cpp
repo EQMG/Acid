@@ -42,7 +42,7 @@ namespace fl
 		Update();
 		m_file->Clear();
 
-		for (const auto &value : *m_values)
+		for (auto value : *m_values)
 		{
 			m_file->ConfigPushValue(value.first, value.second.GetValue());
 		}

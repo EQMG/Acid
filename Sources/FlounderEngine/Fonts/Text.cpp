@@ -26,7 +26,7 @@ namespace fl
 		m_borderSize(0.0f)
 	{
 		SetScaleDriver(new DriverConstant(fontSize));
-		LoadText(this);
+		LoadText();
 	}
 
 	Text::~Text()
@@ -46,9 +46,8 @@ namespace fl
 	{
 		if (IsLoaded() && m_newString != "")
 		{
-			delete m_model;
 			m_string = m_newString;
-			LoadText(this);
+			LoadText();
 			m_newString = "";
 		}
 
@@ -177,30 +176,35 @@ namespace fl
 		return !m_string.empty() && m_model != nullptr;
 	}
 
-	void Text::LoadText(Text *object)
+	void Text::LoadText()
 	{
 		// Creates mesh data.
-		std::vector<FontLine> lines = CreateStructure(object);
-		std::vector<IVertex *> vertices = CreateQuad(object, lines);
+		auto lines = CreateStructure();
+		auto vertices = CreateQuad(lines);
+
+		for (auto line : lines)
+		{
+			delete line;
+		}
 
 		// Calculates the bounds and normalizes the vertices.
 		Vector2 bounding = Vector2();
 		NormalizeQuad(&bounding, vertices);
 
-		// Loads mesh data to Vulkan.
-		Model *model = new Model(vertices);
-		object->m_model = model;
-		*object->GetRectangle()->m_dimensions = Vector2(bounding.m_x, bounding.m_y);
+		// Loads the mesh data.
+		delete m_model;
+		m_model = new Model(vertices);
+		GetRectangle()->SetDimensions(Vector2(bounding.m_x, bounding.m_y));
 	}
 
-	std::vector<FontLine> Text::CreateStructure(Text *object)
+	std::vector<FontLine *> Text::CreateStructure()
 	{
-		std::vector<FontLine> lines = std::vector<FontLine>();
-		FontLine currentLine = FontLine(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
-		FontWord currentWord = FontWord();
+		auto lines = std::vector<FontLine *>();
+		auto currentLine = new FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+		auto currentWord = new FontWord();
 
-		std::string formattedText = FormatString::Replace(object->GetText(), "\t", "    ");
-		std::vector<std::string> textLines = FormatString::Split(formattedText, "\n", true);
+		auto formattedText = FormatString::Replace(m_string, "\t", "    ");
+		auto textLines = FormatString::Split(formattedText, "\n", true);
 
 		for (unsigned int i = 0; i < textLines.size(); i++)
 		{
@@ -215,99 +219,100 @@ namespace fl
 
 				if (ascii == FontMetafile::SPACE_ASCII)
 				{
-					bool added = currentLine.AddWord(currentWord);
+					bool added = currentLine->AddWord(currentWord);
 
 					if (!added)
 					{
 						lines.push_back(currentLine);
-						currentLine = FontLine(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
-						currentLine.AddWord(currentWord);
+						currentLine = new FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+						currentLine->AddWord(currentWord);
 					}
 
-					currentWord = FontWord();
+					currentWord = new FontWord();
 					continue;
 				}
 
-				FontCharacter *character = object->GetFontType()->GetMetadata()->GetCharacter(ascii);
+				auto character = m_fontType->GetMetadata()->GetCharacter(ascii);
 
 				if (character != nullptr)
 				{
-					currentWord.AddCharacter(*character, object->m_kerning);
+					currentWord->AddCharacter(character, m_kerning);
 				}
 			}
 
 			if (i != textLines.size() - 1)
 			{
 				lines.push_back(currentLine);
-				currentLine = FontLine(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
-				currentLine.AddWord(currentWord);
+				currentLine = new FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+				currentLine->AddWord(currentWord);
 			}
 		}
 
-		CompleteStructure(lines, currentLine, currentWord, object);
+		CompleteStructure(lines, currentLine, currentWord);
 		return lines;
 	}
 
-	void Text::CompleteStructure(std::vector<FontLine> &lines, FontLine &currentLine, const FontWord &currentWord, Text *object)
+	void Text::CompleteStructure(std::vector<FontLine *> &lines, FontLine *currentLine, FontWord *currentWord)
 	{
-		bool added = currentLine.AddWord(currentWord);
+		bool added = currentLine->AddWord(currentWord);
 
 		if (!added)
 		{
 			lines.push_back(currentLine);
-			currentLine = FontLine(object->GetFontType()->GetMetadata()->GetSpaceWidth(), object->m_maxWidth);
-			currentLine.AddWord(currentWord);
+			currentLine = new FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+			currentLine->AddWord(currentWord);
 		}
 
 		lines.push_back(currentLine);
 	}
 
-	std::vector<IVertex *> Text::CreateQuad(Text *object, std::vector<FontLine> lines)
+	std::vector<IVertex *> Text::CreateQuad(std::vector<FontLine *> lines)
 	{
-		std::vector<IVertex *> vertices = std::vector<IVertex *>();
-		//	object->m_numberLines = static_cast<int>(lines.size());
+		auto vertices = std::vector<IVertex *>();
+		//m_numberLines = static_cast<int>(lines.size());
+
 		double cursorX = 0.0;
 		double cursorY = 0.0;
 		int lineOrder = static_cast<int>(lines.size());
 
-		for (const auto &line : lines)
+		for (auto line : lines)
 		{
-			switch (object->GetTextJustify())
+			switch (m_justify)
 			{
 			case JustifyLeft:
 				cursorX = 0.0;
 				break;
 			case JustifyCentre:
-				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0;
+				cursorX = (line->GetMaxLength() - line->GetCurrentLineLength()) / 2.0;
 				break;
 			case JustifyRight:
-				cursorX = line.GetMaxLength() - line.GetCurrentLineLength();
+				cursorX = line->GetMaxLength() - line->GetCurrentLineLength();
 				break;
 			case JustifyFully:
 				cursorX = 0.0;
 				break;
 			}
 
-			for (const auto &word : line.GetWords())
+			for (auto word : line->GetWords())
 			{
-				for (const auto &letter : word.GetCharacters())
+				for (auto letter : word->GetCharacters())
 				{
-					AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
-					cursorX += object->m_kerning + letter.GetAdvanceX();
+					AddVerticesForCharacter(cursorX, cursorY, *letter, vertices);
+					cursorX += m_kerning + letter->GetAdvanceX();
 				}
 
-				if (object->GetTextJustify() == JustifyFully && lineOrder > 1)
+				if (m_justify == JustifyFully && lineOrder > 1)
 				{
-					cursorX += (line.GetMaxLength() - line.GetCurrentWordsLength()) / line.GetWords().size();
+					cursorX += (line->GetMaxLength() - line->GetCurrentWordsLength()) / line->GetWords().size();
 				}
 				else
 				{
-					cursorX += object->GetFontType()->GetMetadata()->GetSpaceWidth();
+					cursorX += m_fontType->GetMetadata()->GetSpaceWidth();
 				}
 			}
 
 			cursorX = 0.0;
-			cursorY += object->m_leading + FontMetafile::LINE_HEIGHT;
+			cursorY += m_leading + FontMetafile::LINE_HEIGHT;
 			lineOrder--;
 		}
 
@@ -316,15 +321,15 @@ namespace fl
 
 	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices)
 	{
-		const double vertexX = cursorX + character.GetOffsetX();
-		const double vertexY = cursorY + character.GetOffsetY();
-		const double vertexMaxX = vertexX + character.GetSizeX();
-		const double vertexMaxY = vertexY + character.GetSizeY();
+		double vertexX = cursorX + character.GetOffsetX();
+		double vertexY = cursorY + character.GetOffsetY();
+		double vertexMaxX = vertexX + character.GetSizeX();
+		double vertexMaxY = vertexY + character.GetSizeY();
 
-		const double textureX = character.GetTextureCoordX();
-		const double textureY = character.GetTextureCoordY();
-		const double textureMaxX = character.GetMaxTextureCoordX();
-		const double textureMaxY = character.GetMaxTextureCoordY();
+		double textureX = character.GetTextureCoordX();
+		double textureY = character.GetTextureCoordY();
+		double textureMaxX = character.GetMaxTextureCoordX();
+		double textureMaxY = character.GetMaxTextureCoordY();
 
 		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 		AddVertex(vertexX, vertexMaxY, textureX, textureMaxY, vertices);

@@ -590,7 +590,7 @@ namespace fl
 			bool extensionFound = false;
 
 			// Checks if the extension is in the available extensions.
-			for (const auto &extension : extensionProperties)
+			for (auto extension : extensionProperties)
 			{
 				if (strcmp(currentExtension, extension.extensionName) == 0)
 				{
