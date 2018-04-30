@@ -11,7 +11,7 @@ namespace fl
 	class F_EXPORT FontWord
 	{
 	private:
-		std::vector<FontCharacter> m_characters;
+		std::vector<FontCharacter *> m_characters;
 		double m_width;
 	public:
 		/// <summary>
@@ -30,9 +30,9 @@ namespace fl
 		/// <param name="c"> The character to be added. </param>
 		/// <param name="kerning"> The character kerning. </param>
 		/// <returns> {@code true} if the character has successfully been added to the word. </returns>
-		bool AddCharacter(FontCharacter c, const float &kerning);
+		bool AddCharacter(FontCharacter *c, const float &kerning);
 
-		std::vector<FontCharacter> GetCharacters() const { return m_characters; }
+		std::vector<FontCharacter *> GetCharacters() const { return m_characters; }
 
 		double GetWidth() const { return m_width; }
 	};

@@ -9,11 +9,21 @@
 #include "Uis/UiObject.hpp"
 #include "Uis/Uis.hpp"
 #include "FontType.hpp"
-#include "FontJustify.hpp"
 #include "FontLine.hpp"
 
 namespace fl
 {
+	/// <summary>
+	/// A enum that represents how a font will be justified.
+	/// </summary>
+	enum FontJustify
+	{
+		JustifyLeft,
+		JustifyCentre,
+		JustifyRight,
+		JustifyFully
+	};
+
 	/// <summary>
 	/// A object the represents a text in a GUI.
 	/// </summary>
@@ -218,19 +228,18 @@ namespace fl
 		/// The vertex positions and texture coords and calculated based on the information from the font file.
 		/// Then takes the information about the vertices of all the quads and stores it in OpenGL.
 		/// </summary>
-		/// <param name="text"> The unloaded text. </param>
-		static void LoadText(Text *object);
+		void LoadText();
 
-		static std::vector<FontLine> CreateStructure(Text *object);
+		std::vector<FontLine *> CreateStructure();
 
-		static void CompleteStructure(std::vector<FontLine> &lines, FontLine &currentLine, const FontWord &currentWord, Text *object);
+		void CompleteStructure(std::vector<FontLine *> &lines, FontLine *currentLine, FontWord *currentWord);
 
-		static std::vector<IVertex *> CreateQuad(Text *object, std::vector<FontLine> lines);
+		std::vector<IVertex *> CreateQuad(std::vector<FontLine *> lines);
 
-		static void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices);
+		void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices);
 
-		static void AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex *> &vertices);
+		void AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex *> &vertices);
 
-		static void NormalizeQuad(Vector2 *bounding, std::vector<IVertex *> &vertices);
+		void NormalizeQuad(Vector2 *bounding, std::vector<IVertex *> &vertices);
 	};
 }

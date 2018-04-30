@@ -17,6 +17,7 @@ namespace fl
 		const auto surface = Display::Get()->GetSurface();
 		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 		const auto surfaceCapabilities = Display::Get()->GetSurfaceCapabilities();
+		const auto indices = QueueFamily::FindQueueFamilies(surface);
 
 		m_extent = extent;
 
@@ -46,11 +47,6 @@ namespace fl
 			m_swapchainImageCount = surfaceCapabilities.maxImageCount;
 		}
 
-		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(surface);
-		std::array<uint32_t, 2> indicesArray = {
-			static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.presentFamily)
-		};
-
 		VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
 		swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		swapchainCreateInfo.surface = surface;
@@ -69,8 +65,8 @@ namespace fl
 		if (indices.graphicsFamily != indices.presentFamily)
 		{
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
-			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(indicesArray.size());
-			swapchainCreateInfo.pQueueFamilyIndices = indicesArray.data();
+			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(indices.array.size());
+			swapchainCreateInfo.pQueueFamilyIndices = indices.array.data();
 		}
 		else
 		{

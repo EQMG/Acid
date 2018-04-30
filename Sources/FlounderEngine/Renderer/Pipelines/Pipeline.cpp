@@ -103,7 +103,7 @@ namespace fl
 
 		std::string defineBlock = "\n";
 
-		for (const auto &define : m_defines)
+		for (auto define : m_defines)
 		{
 			defineBlock += "#define " + define.name + " " + define.value + "\n";
 		}

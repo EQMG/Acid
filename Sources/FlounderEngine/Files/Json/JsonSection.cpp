@@ -69,7 +69,7 @@ namespace fl
 
 			auto contentSplit = FormatString::Split(source->m_content, ",");
 
-			for (const auto &data : contentSplit)
+			for (auto data : contentSplit)
 			{
 				auto dataSplit = FormatString::Split(data, ":", true);
 

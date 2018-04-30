@@ -148,7 +148,7 @@ namespace fl
 
 		int i = 0;
 
-		for (const auto &number : numbers)
+		for (auto number : numbers)
 		{
 			result.push_back(std::stoi(number));
 			i++;

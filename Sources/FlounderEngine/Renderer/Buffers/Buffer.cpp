@@ -17,19 +17,15 @@ namespace fl
 
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto surface = Display::Get()->GetSurface();
-
-		QueueFamilyIndices indices = QueueFamily::FindQueueFamilies(surface);
-		uint32_t indicesArray[] = {
-			static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.presentFamily)
-		};
+		const auto indices = QueueFamily::FindQueueFamilies(surface);
 
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		bufferCreateInfo.size = size;
 		bufferCreateInfo.usage = usage;
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		bufferCreateInfo.queueFamilyIndexCount = 2;
-		bufferCreateInfo.pQueueFamilyIndices = indicesArray;
+		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(indices.array.size());
+		bufferCreateInfo.pQueueFamilyIndices = indices.array.data();
 
 		Display::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
 
