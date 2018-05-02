@@ -13,7 +13,7 @@ namespace fl
 	/// <summary>
 	/// Holds a RGBA colour.
 	/// </summary>
-	class F_EXPORT Colour
+	class FL_EXPORT Colour
 	{
 	public:
 		union
@@ -186,29 +186,29 @@ namespace fl
 
 		bool operator!=(const float &value) const;
 
-		F_EXPORT friend Colour operator+(Colour left, const Colour &right);
+		FL_EXPORT friend Colour operator+(Colour left, const Colour &right);
 
-		F_EXPORT friend Colour operator-(Colour left, const Colour &right);
+		FL_EXPORT friend Colour operator-(Colour left, const Colour &right);
 
-		F_EXPORT friend Colour operator*(Colour left, const Colour &right);
+		FL_EXPORT friend Colour operator*(Colour left, const Colour &right);
 
-		F_EXPORT friend Colour operator/(Colour left, const Colour &right);
+		FL_EXPORT friend Colour operator/(Colour left, const Colour &right);
 
-		F_EXPORT friend Colour operator+(Colour left, float value);
+		FL_EXPORT friend Colour operator+(Colour left, float value);
 
-		F_EXPORT friend Colour operator-(Colour left, float value);
+		FL_EXPORT friend Colour operator-(Colour left, float value);
 
-		F_EXPORT friend Colour operator*(Colour left, float value);
+		FL_EXPORT friend Colour operator*(Colour left, float value);
 
-		F_EXPORT friend Colour operator/(Colour left, float value);
+		FL_EXPORT friend Colour operator/(Colour left, float value);
 
-		F_EXPORT friend Colour operator+(float value, Colour left);
+		FL_EXPORT friend Colour operator+(float value, Colour left);
 
-		F_EXPORT friend Colour operator-(float value, Colour left);
+		FL_EXPORT friend Colour operator-(float value, Colour left);
 
-		F_EXPORT friend Colour operator*(float value, Colour left);
+		FL_EXPORT friend Colour operator*(float value, Colour left);
 
-		F_EXPORT friend Colour operator/(float value, Colour left);
+		FL_EXPORT friend Colour operator/(float value, Colour left);
 
 		Colour &operator+=(const Colour &other);
 
@@ -226,7 +226,7 @@ namespace fl
 
 		Colour &operator/=(float value);
 
-		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &vector);
+		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &vector);
 
 		std::string ToString() const;
 	};

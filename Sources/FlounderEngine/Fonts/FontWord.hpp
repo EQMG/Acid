@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// During the loading of a text this represents one word in the text.
 	/// </summary>
-	class F_EXPORT FontWord
+	class FL_EXPORT FontWord
 	{
 	private:
 		std::vector<FontCharacter *> m_characters;

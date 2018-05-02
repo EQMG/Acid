@@ -12,7 +12,7 @@ namespace fl
 	/// <summary>
 	/// A simple class that represents a physical shape.
 	/// </summary>
-	class F_EXPORT Collider :
+	class FL_EXPORT Collider :
 		public Component
 	{
 	public:

@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a skybox material shader.
 	/// </summary>
-	class F_EXPORT MaterialSkybox :
+	class FL_EXPORT MaterialSkybox :
 		public IMaterial
 	{
 	private:

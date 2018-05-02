@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// Holds position, rotation, and scale components.
 	/// </summary>
-	class F_EXPORT Transform
+	class FL_EXPORT Transform
 	{
 	public:
 		Vector3 *m_position;

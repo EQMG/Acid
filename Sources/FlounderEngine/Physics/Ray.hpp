@@ -10,7 +10,7 @@ namespace fl
 	/// <summary>
 	/// Holds a 3 dimensional ray.
 	/// </summary>
-	class F_EXPORT Ray
+	class FL_EXPORT Ray
 	{
 	private:
 		bool m_useMouse;

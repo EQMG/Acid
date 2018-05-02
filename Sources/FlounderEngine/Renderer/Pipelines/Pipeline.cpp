@@ -30,7 +30,7 @@ namespace fl
 		m_multisampleState({}),
 		m_dynamicState({})
 	{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -59,9 +59,9 @@ namespace fl
 			break;
 		}
 
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
-		printf("%s", m_shaderProgram->ToString().c_str());
+	//	printf("%s", m_shaderProgram->ToString().c_str());
 		printf("Pipeline '%s' created in %fms\n", m_pipelineCreateInfo.m_shaderStages.back().c_str(), debugEnd - debugStart);
 #endif
 	}

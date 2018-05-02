@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterWobble :
+	class FL_EXPORT FilterWobble :
 		public IPostFilter
 	{
 	private:

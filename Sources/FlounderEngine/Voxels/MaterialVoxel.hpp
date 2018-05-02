@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a voxel material shader.
 	/// </summary>
-	class F_EXPORT MaterialVoxel :
+	class FL_EXPORT MaterialVoxel :
 		public IMaterial
 	{
 	private:

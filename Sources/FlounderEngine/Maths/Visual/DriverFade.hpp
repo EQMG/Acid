@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A driver that fades from start to end.
 	/// </summary>
-	class F_EXPORT DriverFade :
+	class FL_EXPORT DriverFade :
 		public IDriver
 	{
 	private:

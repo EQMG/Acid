@@ -12,7 +12,7 @@ namespace fl
 		MeshSimple = 1
 	};
 
-	class F_EXPORT VoxelChunk :
+	class FL_EXPORT VoxelChunk :
 		public Component
 	{
 	private:

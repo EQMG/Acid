@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	class F_EXPORT IUiGrabber
+	class FL_EXPORT IUiGrabber
 	{
 	public:
 		virtual ~IUiGrabber() = default;
@@ -18,7 +18,7 @@ namespace fl
 		virtual std::string GetValue(const int &value) = 0;
 	};
 
-	class F_EXPORT UiGrabberJoystick :
+	class FL_EXPORT UiGrabberJoystick :
 		public IUiGrabber
 	{
 	private:
@@ -31,7 +31,7 @@ namespace fl
 		std::string GetValue(const int &value) override;
 	};
 
-	class F_EXPORT UiGrabberKeyboard :
+	class FL_EXPORT UiGrabberKeyboard :
 		public IUiGrabber
 	{
 	public:
@@ -40,7 +40,7 @@ namespace fl
 		std::string GetValue(const int &value) override;
 	};
 
-	class F_EXPORT UiGrabberMouse :
+	class FL_EXPORT UiGrabberMouse :
 		public IUiGrabber
 	{
 	public:
@@ -49,7 +49,7 @@ namespace fl
 		std::string GetValue(const int &value) override;
 	};
 
-	class F_EXPORT UiInputGrabber :
+	class FL_EXPORT UiInputGrabber :
 		public UiObject
 	{
 	private:

@@ -35,7 +35,7 @@ namespace fl
 
 		if (it == s_colours.end())
 		{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 			printf("Could not find a Block Face colour from key: %s", key.c_str());
 #endif
 			auto colour = new Colour();

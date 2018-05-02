@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// Represents a sphere in a 3d space.
 	/// </summary>
-	class F_EXPORT ColliderSphere :
+	class FL_EXPORT ColliderSphere :
 		public Collider
 	{
 	public:

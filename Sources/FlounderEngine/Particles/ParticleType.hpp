@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// A definition for what a particle should act and look like.
 	/// </summary>
-	class F_EXPORT ParticleType
+	class FL_EXPORT ParticleType
 	{
 	private:
 		std::string m_name;

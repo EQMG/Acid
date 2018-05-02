@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterCrt :
+	class FL_EXPORT FilterCrt :
 		public IPostFilter
 	{
 	private:

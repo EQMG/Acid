@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT IFile
+	class FL_EXPORT IFile
 	{
 	public:
 		virtual ~IFile()

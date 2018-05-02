@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A bounce driver that uses a sine wave.
 	/// </summary>
-	class F_EXPORT DriverBounce :
+	class FL_EXPORT DriverBounce :
 		public IDriver
 	{
 	private:

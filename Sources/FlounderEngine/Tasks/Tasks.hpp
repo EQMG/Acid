@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// A module used for managing tasks on engine updates.
 	/// </summary>
-	class F_EXPORT Tasks :
+	class FL_EXPORT Tasks :
 		public IModule
 	{
 	private:

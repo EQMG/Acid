@@ -24,7 +24,7 @@ namespace fl
 	/// The inverseBindTransform is that bind transform in model-space, but inversed.
 	/// </para>
 	/// </summary>
-	class F_EXPORT Joint
+	class FL_EXPORT Joint
 	{
 	private:
 		int m_index;

@@ -10,7 +10,7 @@ namespace fl
 	/// <summary>
 	/// A manager that manages particles.
 	/// </summary>
-	class F_EXPORT Particles :
+	class FL_EXPORT Particles :
 		public IModule
 	{
 	private:

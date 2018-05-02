@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT AnimationLoader
+	class FL_EXPORT AnimationLoader
 	{
 	private:
 		LoadedValue *m_libraryAnimations;

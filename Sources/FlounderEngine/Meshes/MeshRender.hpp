@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT MeshRender :
+	class FL_EXPORT MeshRender :
 		public Component
 	{
 	private:

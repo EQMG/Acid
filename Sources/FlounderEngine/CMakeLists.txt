@@ -12,11 +12,11 @@ endif ()
 
 if (BUILD_SHARED_LIBS)
     target_compile_definitions(FlounderEngine PUBLIC
-            -DF_EXPORTS
+            -DFL_EXPORTS
             )
 else ()
     target_compile_definitions(FlounderEngine PUBLIC
-            -DFLOUNDER_STATIC_LIB
+            -DFL_STATICLIB
             )
 endif ()
 

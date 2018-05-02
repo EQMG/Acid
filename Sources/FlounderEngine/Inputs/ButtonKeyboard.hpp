@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Keys from a keyboard.
 	/// </summary>
-	class F_EXPORT ButtonKeyboard :
+	class FL_EXPORT ButtonKeyboard :
 		public IButton
 	{
 	private:

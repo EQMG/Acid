@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT IndexBuffer :
+	class FL_EXPORT IndexBuffer :
 		public Buffer
 	{
 	private:

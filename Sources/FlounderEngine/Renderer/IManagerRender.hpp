@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A extension used with IRenderer's to define a master renderer.
 	/// </summary>
-	class F_EXPORT IManagerRender
+	class FL_EXPORT IManagerRender
 	{
 	public:
 		/// <summary>

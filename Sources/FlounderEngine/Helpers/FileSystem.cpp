@@ -2,11 +2,8 @@
 
 #include <cassert>
 #include <algorithm>
-
-#ifdef FLOUNDER_PLATFORM_WINDOWS
-
+#ifdef FL_BUILD_WINDOWS
 #include <direct.h>
-
 #define GetCurrentDir _getcwd
 #else
 #include <sys/stat.h>
@@ -69,7 +66,7 @@ namespace fl
 	{
 		int nError = 0;
 
-#ifdef FLOUNDER_PLATFORM_WINDOWS
+#ifdef FL_BUILD_WINDOWS
 		nError = _mkdir(path.c_str());
 #else
 		mode_t nMode = 0733;

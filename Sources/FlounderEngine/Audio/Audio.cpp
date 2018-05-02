@@ -1,7 +1,7 @@
 #include "Audio.hpp"
 
 #include <fstream>
-//#ifdef FLOUNDER_PLATFORM_WINDOWS
+//#ifdef FL_BUILD_WINDOWS
 //#include <Windows.h>
 //#endif
 #include "Helpers/FileSystem.hpp"
@@ -55,7 +55,7 @@ namespace fl
 		}
 
 		fprintf(stderr, "OpenAL error: %i\n", result);
-//#ifdef FLOUNDER_PLATFORM_WINDOWS
+//#ifdef FL_BUILD_WINDOWS
 //		MessageBox(nullptr, "" + result, "OpenAL Error", 0);
 //#endif
 		throw std::runtime_error("OpenAL runtime error.");

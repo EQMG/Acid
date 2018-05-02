@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT RendererMeshes :
+	class FL_EXPORT RendererMeshes :
 		public IRenderer
 	{
 	private:

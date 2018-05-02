@@ -11,7 +11,7 @@ namespace fl
 	/// <summary>
 	/// Provides functionality for getting the values from a font file.
 	/// </summary>
-	class F_EXPORT FontMetafile :
+	class FL_EXPORT FontMetafile :
 		public IResource
 	{
 	private:

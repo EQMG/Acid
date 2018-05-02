@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT JointData
+	class FL_EXPORT JointData
 	{
 	private:
 		int m_index;

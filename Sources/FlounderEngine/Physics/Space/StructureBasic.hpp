@@ -13,7 +13,7 @@ namespace fl
 	/// A structure of spatial objects for a 3D space.
 	/// </summary>
 	template<typename T>
-	class F_EXPORT StructureBasic :
+	class FL_EXPORT StructureBasic :
 		public ISpatialStructure<T>
 	{
 	private:

@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a terrain material shader.
 	/// </summary>
-	class F_EXPORT MaterialTerrain :
+	class FL_EXPORT MaterialTerrain :
 		public IMaterial
 	{
 	private:

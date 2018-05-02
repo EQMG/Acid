@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Represents a fog in the world.
 	/// </summary>
-	class F_EXPORT Fog
+	class FL_EXPORT Fog
 	{
 	public:
 		Colour *m_colour;

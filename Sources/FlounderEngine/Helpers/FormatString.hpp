@@ -12,7 +12,7 @@ namespace fl
 	/// <summary>
 	/// A helper for C++ strings.
 	/// </summary>
-	class F_EXPORT FormatString
+	class FL_EXPORT FormatString
 	{
 	public:
 		/// <summary>

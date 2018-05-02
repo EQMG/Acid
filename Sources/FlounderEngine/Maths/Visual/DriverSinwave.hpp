@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A driver that uses a sine wave.
 	/// </summary>
-	class F_EXPORT DriverSinwave :
+	class FL_EXPORT DriverSinwave :
 		public IDriver
 	{
 	private:

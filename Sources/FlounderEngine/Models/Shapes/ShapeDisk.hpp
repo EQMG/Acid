@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT ShapeDisk :
+	class FL_EXPORT ShapeDisk :
 		public Model
 	{
 	public:

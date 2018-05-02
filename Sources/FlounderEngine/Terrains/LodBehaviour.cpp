@@ -34,7 +34,7 @@ namespace fl
 	{
 		Vector3 cameraPosition = Vector3(*Scenes::Get()->GetCamera()->GetPosition());
 		Vector3 chunkPosition = m_transform->GetPosition()->ProjectCubeToSphere(m_radius) + *GetGameObject()->GetTransform()->GetPosition();
-		float distance = std::fabs(chunkPosition.GetDistance(cameraPosition));
+		float distance = std::fabs(chunkPosition.Distance(cameraPosition));
 
 		// lnreg{ (90.5, 0), (181, 1), (362, 2) } = int(-6.500 + 1.443 * log(x) / log(2.718)) + 1
 		// float lodf = floor(-6.5f + 1.443f * log(distance) / log(2.718f)) + 1.0f;
@@ -67,7 +67,7 @@ namespace fl
 			return;
 		}
 
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 		float squareSize = MeshTerrain::SQUARE_SIZES.at(lod);
@@ -75,7 +75,7 @@ namespace fl
 		int vertexCount = CalculateVertexCount(MeshTerrain::SIDE_LENGTH, squareSize);
 		float lodFixScale = 1.0f; // (lod == 0) ? 1.0f : 1.02f + (0.028f * lod);
 		m_modelLods.at(lod) = new MeshTerrain(lodFixScale * static_cast<float>(MeshTerrain::SIDE_LENGTH), lodFixScale * squareSize, vertexCount, textureScale, m_radius, m_transform);
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 
 		if (debugEnd - debugStart > 22.0f)

@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT RendererFonts :
+	class FL_EXPORT RendererFonts :
 		public IRenderer
 	{
 	private:

@@ -19,7 +19,7 @@ namespace fl
 	/// <summary>
 	/// A interface used for defining engine modules.
 	/// </summary>
-	class F_EXPORT IModule
+	class FL_EXPORT IModule
 	{
 	public:
 		/// <summary>

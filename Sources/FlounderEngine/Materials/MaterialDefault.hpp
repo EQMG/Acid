@@ -10,7 +10,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents the default material shader.
 	/// </summary>
-	class F_EXPORT MaterialDefault :
+	class FL_EXPORT MaterialDefault :
 		public IMaterial
 	{
 	private:

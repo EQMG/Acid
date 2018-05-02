@@ -10,7 +10,7 @@ namespace fl
 	/// <summary>
 	/// Holds a 3-tuple vector.
 	/// </summary>
-	class F_EXPORT Constraint3
+	class FL_EXPORT Constraint3
 	{
 	public:
 		union
@@ -67,7 +67,7 @@ namespace fl
 
 		bool operator!=(const Constraint3 &other) const;
 
-		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Constraint3 &constraint);
+		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Constraint3 &constraint);
 
 		std::string ToString() const;
 	};

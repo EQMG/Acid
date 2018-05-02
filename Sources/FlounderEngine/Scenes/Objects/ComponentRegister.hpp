@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A class that holds registerd components.
 	/// </summary>
-	class F_EXPORT ComponentRegister
+	class FL_EXPORT ComponentRegister
 	{
 	private:
 		typedef std::function<Component *()> ComponentCreate;

@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterGrey :
+	class FL_EXPORT FilterGrey :
 		public IPostFilter
 	{
 	public:

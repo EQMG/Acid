@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a loaded cubemap texture.
 	/// </summary>
-	class F_EXPORT Cubemap :
+	class FL_EXPORT Cubemap :
 		public IResource,
 		public Buffer,
 		public IDescriptor

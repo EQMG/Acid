@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the keyboard keys.
 	/// </summary>
-	class F_EXPORT Keyboard :
+	class FL_EXPORT Keyboard :
 		public IModule
 	{
 	private:

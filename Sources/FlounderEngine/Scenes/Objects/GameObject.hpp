@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	class F_EXPORT GameObject
+	class FL_EXPORT GameObject
 	{
 	protected:
 		std::string m_name;

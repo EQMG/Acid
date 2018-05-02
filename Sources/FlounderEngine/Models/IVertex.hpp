@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT IVertex
+	class FL_EXPORT IVertex
 	{
 	public:
 		IVertex()

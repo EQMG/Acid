@@ -13,13 +13,10 @@ namespace fl
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class F_EXPORT Display :
+	class FL_EXPORT Display :
 		public IModule
 	{
 	private:
-		static const std::vector<const char *> VALIDATION_LAYERS;
-		static const std::vector<const char *> DEVICE_EXTENSIONS;
-
 		int m_windowWidth;
 		int m_windowHeight;
 		int m_fullscreenWidth;
@@ -185,7 +182,11 @@ namespace fl
 		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
 		void SetFullscreen(const bool &fullscreen);
 
+		static std::string StringifyResultVk(const VkResult &result);
+
 		static void ErrorVk(const VkResult &result);
+
+		static std::string StringifyResultGlfw(const int &result);
 
 		static void ErrorGlfw(const int &result);
 

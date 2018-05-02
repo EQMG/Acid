@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT IDescriptor
+	class FL_EXPORT IDescriptor
 	{
 	public:
 		IDescriptor()

@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT JointTransformData
+	class FL_EXPORT JointTransformData
 	{
 	private:
 		std::string m_jointNameId;

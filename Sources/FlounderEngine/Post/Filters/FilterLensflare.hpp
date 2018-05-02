@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterLensflare :
+	class FL_EXPORT FilterLensflare :
 		public IPostFilter
 	{
 	private:

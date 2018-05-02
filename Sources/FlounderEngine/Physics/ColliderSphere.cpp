@@ -203,6 +203,6 @@ namespace fl
 
 	bool ColliderSphere::Contains(const Vector3 &point)
 	{
-		return m_position->GetDistanceSquared(point) <= m_radius * m_radius;
+		return m_position->DistanceSquared(point) <= m_radius * m_radius;
 	}
 }

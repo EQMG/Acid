@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT UiInputDelay
+	class FL_EXPORT UiInputDelay
 	{
 	private:
 		Timer *m_timerDelay;

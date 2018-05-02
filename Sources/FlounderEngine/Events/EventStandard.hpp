@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// A class that is the most basic implementation of the event interface.
 	/// </summary>
-	class F_EXPORT EventStandard :
+	class FL_EXPORT EventStandard :
 		public IEvent
 	{
 	private:

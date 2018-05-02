@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// Class that handles a uniform buffer.
 	/// </summary>
-	class F_EXPORT UniformHandler
+	class FL_EXPORT UniformHandler
 	{
 	private:
 		UniformBlock *m_uniformBlock;

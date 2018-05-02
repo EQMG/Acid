@@ -14,7 +14,7 @@
 using namespace Demo;
 using namespace fl;
 
-//#if (FLOUNDER_CONFIG_RELEASE && FLOUNDER_PLATFORM_WINDOWS)
+//#if (FL_BUILD_RELEASE && FL_BUILD_WINDOWS)
 //int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 //#else
 int main(int argc, char **argv)

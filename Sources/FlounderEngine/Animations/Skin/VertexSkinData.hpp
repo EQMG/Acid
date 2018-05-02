@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT VertexSkinData
+	class FL_EXPORT VertexSkinData
 	{
 	private:
 		std::vector<int> m_jointIds;

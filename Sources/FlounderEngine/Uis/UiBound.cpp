@@ -58,7 +58,7 @@ namespace fl
 
 		if (it == PIVOT_MAP.end())
 		{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 			printf("Could not find a UiBound pivot from key: %s", key.c_str());
 #endif
 			return Vector2(0.0f, 1.0f);

@@ -9,7 +9,7 @@
 
 namespace fl
 {
-	class F_EXPORT RendererParticles :
+	class FL_EXPORT RendererParticles :
 		public IRenderer
 	{
 	private:

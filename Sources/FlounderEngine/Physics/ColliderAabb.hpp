@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A axis-aligned bounding box.
 	/// </summary>
-	class F_EXPORT ColliderAabb :
+	class FL_EXPORT ColliderAabb :
 		public Collider
 	{
 	public:

@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// Represents a system of post effects.
 	/// </summary>
-	class F_EXPORT IPostPipeline
+	class FL_EXPORT IPostPipeline
 	{
 	public:
 		/// <summary>

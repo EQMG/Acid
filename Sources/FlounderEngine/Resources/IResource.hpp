@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT IResource
+	class FL_EXPORT IResource
 	{
 	private:
 	public:

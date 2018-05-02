@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterTone :
+	class FL_EXPORT FilterTone :
 		public IPostFilter
 	{
 	public:

@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterPixel :
+	class FL_EXPORT FilterPixel :
 		public IPostFilter
 	{
 	private:

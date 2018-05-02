@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Button from a joystick.
 	/// </summary>
-	class F_EXPORT ButtonJoystick :
+	class FL_EXPORT ButtonJoystick :
 		public IButton
 	{
 	private:

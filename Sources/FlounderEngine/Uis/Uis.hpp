@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// A module used for that manages gui textures in a container.
 	/// </summary>
-	class F_EXPORT Uis :
+	class FL_EXPORT Uis :
 		public IModule
 	{
 	private:

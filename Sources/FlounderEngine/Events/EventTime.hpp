@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// A class that runs a event after a time has passed.
 	/// </summary>
-	class F_EXPORT EventTime :
+	class FL_EXPORT EventTime :
 		public IEvent
 	{
 	private:

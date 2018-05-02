@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Axis composed of multiple other axes.
 	/// </summary>
-	class F_EXPORT AxisCompound :
+	class FL_EXPORT AxisCompound :
 		public IAxis
 	{
 	private:

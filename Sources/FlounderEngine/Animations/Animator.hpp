@@ -20,7 +20,7 @@ namespace fl
 	/// (based on the current animation time). The Animator then updates the transforms all of the joints each frame to match the current desired animation pose.
 	/// </para>
 	/// </summary>
-	class F_EXPORT Animator
+	class FL_EXPORT Animator
 	{
 	private:
 		Joint *m_rootJoint;

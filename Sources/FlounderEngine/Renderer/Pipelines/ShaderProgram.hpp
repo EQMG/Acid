@@ -9,7 +9,7 @@
 
 namespace fl
 {
-	class F_HIDDEN Uniform
+	class FL_HIDDEN Uniform
 	{
 	public:
 		std::string m_name;
@@ -51,7 +51,7 @@ namespace fl
 		}
 	};
 
-	class F_HIDDEN UniformBlock
+	class FL_HIDDEN UniformBlock
 	{
 	public:
 		std::string m_name;
@@ -108,7 +108,7 @@ namespace fl
 		}
 	};
 
-	class F_HIDDEN VertexAttribute
+	class FL_HIDDEN VertexAttribute
 	{
 	public:
 		std::string m_name;
@@ -136,7 +136,7 @@ namespace fl
 		}
 	};
 
-	class F_HIDDEN ShaderProgram
+	class FL_HIDDEN ShaderProgram
 	{
 	private:
 		std::vector<Uniform *> *m_uniforms;

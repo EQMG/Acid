@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT RendererGuis :
+	class FL_EXPORT RendererGuis :
 		public IRenderer
 	{
 	private:

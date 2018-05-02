@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// A module used for managing events on engine updates.
 	/// </summary>
-	class F_EXPORT Events :
+	class FL_EXPORT Events :
 		public IModule
 	{
 	private:

@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT Buffer
+	class FL_EXPORT Buffer
 	{
 	protected:
 		VkDeviceSize m_size;

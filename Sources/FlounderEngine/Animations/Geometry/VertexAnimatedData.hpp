@@ -7,7 +7,7 @@
 
 namespace fl
 {
-	class F_EXPORT VertexAnimatedData
+	class FL_EXPORT VertexAnimatedData
 	{
 	private:
 		static const uint32_t NO_INDEX;

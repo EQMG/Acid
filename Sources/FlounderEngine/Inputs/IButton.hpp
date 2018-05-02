@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// Interface for a binary input device.
 	/// </summary>
-	class F_EXPORT IButton
+	class FL_EXPORT IButton
 	{
 	public:
 		/// <summary>

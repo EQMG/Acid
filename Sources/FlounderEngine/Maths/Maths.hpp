@@ -12,7 +12,7 @@ namespace fl
 	/// <summary>
 	/// A class that holds many various math functions.
 	/// </summary>
-	class F_EXPORT Maths
+	class FL_EXPORT Maths
 	{
 	public:
 		/// <summary>

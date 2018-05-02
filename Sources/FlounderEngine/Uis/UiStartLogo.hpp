@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT UiStartLogo :
+	class FL_EXPORT UiStartLogo :
 		public UiObject
 	{
 	private:

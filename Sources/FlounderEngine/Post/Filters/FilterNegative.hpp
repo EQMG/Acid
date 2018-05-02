@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterNegative :
+	class FL_EXPORT FilterNegative :
 		public IPostFilter
 	{
 	public:

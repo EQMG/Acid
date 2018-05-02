@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Button from a mouse.
 	/// </summary>
-	class F_EXPORT ButtonMouse :
+	class FL_EXPORT ButtonMouse :
 		public IButton
 	{
 	private:

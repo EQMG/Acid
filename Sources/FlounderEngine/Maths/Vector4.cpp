@@ -135,7 +135,7 @@ namespace fl
 		return std::min(m_x, std::min(m_y, std::min(m_z, m_w)));
 	}
 
-	float Vector4::GetDistanceSquared(const Vector4 &other) const
+	float Vector4::DistanceSquared(const Vector4 &other) const
 	{
 		float dx = m_x - other.m_x;
 		float dy = m_y - other.m_y;
@@ -144,12 +144,12 @@ namespace fl
 		return dx * dx + dy * dy + dz * dz + dw * dw;
 	}
 
-	float Vector4::GetDistance(const Vector4 &other) const
+	float Vector4::Distance(const Vector4 &other) const
 	{
-		return std::sqrt(GetDistanceSquared(other));
+		return std::sqrt(DistanceSquared(other));
 	}
 
-	Vector4 Vector4::GetVectorDistance(const Vector4 &other) const
+	Vector4 Vector4::DistanceVector(const Vector4 &other) const
 	{
 		float dx = m_x - other.m_x;
 		float dy = m_y - other.m_y;

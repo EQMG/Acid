@@ -7,7 +7,7 @@
 
 namespace fl
 {
-	class F_EXPORT Mesh :
+	class FL_EXPORT Mesh :
 		public Component
 	{
 	private:

@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT SpawnSphere :
+	class FL_EXPORT SpawnSphere :
 		public ISpawnParticle
 	{
 	private:

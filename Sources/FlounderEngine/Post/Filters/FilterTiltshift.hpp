@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterTiltshift :
+	class FL_EXPORT FilterTiltshift :
 		public IPostFilter
 	{
 	private:

@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A interface that defines a particle spawn type.
 	/// </summary>
-	class F_EXPORT ISpawnParticle
+	class FL_EXPORT ISpawnParticle
 	{
 	public:
 		/// <summary>

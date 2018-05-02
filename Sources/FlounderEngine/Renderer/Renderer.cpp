@@ -54,6 +54,10 @@ namespace fl
 
 	void Renderer::CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates)
 	{
+#if FL_VERBOSE
+		const auto debugStart = Engine::Get()->GetTimeMs();
+#endif
+
 		const VkExtent2D displayExtent2D = {
 			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
 		};
@@ -63,14 +67,18 @@ namespace fl
 
 		for (auto &renderpassCreate : renderpassCreates)
 		{
-			printf("Creating render stage '%i'\n", m_renderStages.size());
-			auto renderStage = new RenderStage(renderpassCreate);
+			auto renderStage = new RenderStage(m_renderStages.size(), renderpassCreate);
 			renderStage->Rebuild(m_swapchain);
 			m_renderStages.push_back(renderStage);
 		}
 
 		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
 		vkQueueWaitIdle(Display::Get()->GetQueue());
+
+#if FL_VERBOSE
+		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Renderpass created in %fms\n", debugEnd - debugStart);
+#endif
 	}
 
 	VkResult Renderer::StartRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i)
@@ -203,7 +211,7 @@ namespace fl
 			return;
 		}
 
-#ifndef FLOUNDER_PLATFORM_MACOS
+#ifndef FL_BUILD_MACOS
 		if (result != VK_SUCCESS)
 		{
 			throw std::runtime_error("Renderer failed to present swapchain image!");
@@ -275,7 +283,7 @@ namespace fl
 			}
 		}
 
-//#ifdef FLOUNDER_PLATFORM_WINDOWS
+//#ifdef FL_BUILD_WINDOWS
 //		MessageBox(nullptr, "Couldn't find proper memory type!", "Vulkan Error", 0);
 //#endif
 		throw std::runtime_error("Vulkan runtime error, couldn't find proper memory type!");
@@ -339,7 +347,7 @@ namespace fl
 
 		if (renderStage->m_hasSwapchain && !m_swapchain->SameExtent(displayExtent2D))
 		{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 			printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent2D.width, displayExtent2D.height);
 #endif
 			delete m_swapchain;

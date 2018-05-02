@@ -12,7 +12,7 @@
 
 namespace fl
 {
-	class F_EXPORT MeshAnimated :
+	class FL_EXPORT MeshAnimated :
 		public Mesh
 	{
 	private:

@@ -25,7 +25,7 @@ namespace fl
 	/// <summary>
 	/// Represents the region of flounder.space in the modeled world that may appear on the screen.
 	/// </summary>
-	class F_EXPORT Frustum
+	class FL_EXPORT Frustum
 	{
 	private:
 		float **m_frustum;

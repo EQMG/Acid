@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT Screenshot
+	class FL_EXPORT Screenshot
 	{
 	public:
 		/// <summary>

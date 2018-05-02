@@ -7,7 +7,7 @@
 
 namespace fl
 {
-	class F_EXPORT UiInputButton :
+	class FL_EXPORT UiInputButton :
 		public UiObject
 	{
 	private:

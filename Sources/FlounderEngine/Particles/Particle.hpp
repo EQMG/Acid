@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// A instance of a particle type.
 	/// </summary>
-	class F_EXPORT Particle
+	class FL_EXPORT Particle
 	{
 	private:
 		ParticleType *m_particleType;
@@ -82,7 +82,7 @@ namespace fl
 
 		float GetTextureBlendFactor() const { return m_textureBlendFactor; }
 
-		float GetDistanceToCamera() const { return m_distanceToCamera; }
+		float DistanceToCamera() const { return m_distanceToCamera; }
 
 		bool operator<(const Particle &other) const;
 

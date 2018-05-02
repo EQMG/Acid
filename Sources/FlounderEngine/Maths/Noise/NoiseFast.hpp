@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT NoiseFast
+	class FL_EXPORT NoiseFast
 	{
 	public:
 // Hashing

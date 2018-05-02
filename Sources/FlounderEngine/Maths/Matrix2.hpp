@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// Holds a 2x2 matrix.
 	/// </summary>
-	class F_EXPORT Matrix2
+	class FL_EXPORT Matrix2
 	{
 	public:
 		union
@@ -159,25 +159,25 @@ namespace fl
 
 		Matrix2 operator-();
 
-		F_EXPORT friend Matrix2 operator+(Matrix2 left, const Matrix2 &right);
+		FL_EXPORT friend Matrix2 operator+(Matrix2 left, const Matrix2 &right);
 
-		F_EXPORT friend Matrix2 operator-(Matrix2 left, const Matrix2 &right);
+		FL_EXPORT friend Matrix2 operator-(Matrix2 left, const Matrix2 &right);
 
-		F_EXPORT friend Matrix2 operator*(Matrix2 left, const Matrix2 &right);
+		FL_EXPORT friend Matrix2 operator*(Matrix2 left, const Matrix2 &right);
 
-		F_EXPORT friend Matrix2 operator/(Matrix2 left, const Matrix2 &right);
+		FL_EXPORT friend Matrix2 operator/(Matrix2 left, const Matrix2 &right);
 
-		F_EXPORT friend Matrix2 operator*(Matrix2 left, Vector2 value);
+		FL_EXPORT friend Matrix2 operator*(Matrix2 left, Vector2 value);
 
-		F_EXPORT friend Matrix2 operator/(Matrix2 left, Vector2 value);
+		FL_EXPORT friend Matrix2 operator/(Matrix2 left, Vector2 value);
 
-		F_EXPORT friend Matrix2 operator*(Matrix2 left, float value);
+		FL_EXPORT friend Matrix2 operator*(Matrix2 left, float value);
 
-		F_EXPORT friend Matrix2 operator/(Matrix2 left, float value);
+		FL_EXPORT friend Matrix2 operator/(Matrix2 left, float value);
 
-		F_EXPORT friend Matrix2 operator*(float value, Matrix2 left);
+		FL_EXPORT friend Matrix2 operator*(float value, Matrix2 left);
 
-		F_EXPORT friend Matrix2 operator/(float value, Matrix2 left);
+		FL_EXPORT friend Matrix2 operator/(float value, Matrix2 left);
 
 		Matrix2 &operator+=(const Matrix2 &other);
 
@@ -187,7 +187,7 @@ namespace fl
 
 		Matrix2 &operator/=(const Matrix2 &other);
 
-		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix);
+		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix);
 
 		std::string ToString() const;
 	};

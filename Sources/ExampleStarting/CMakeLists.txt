@@ -3,7 +3,7 @@ include(CMakeSources.cmake)
 
 set(EXAMPLE_STARTING_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/ExampleStarting/")
 
-#if(FLOUNDER_CONFIG_RELEASE AND WIN32)
+#if(FL_BUILD_RELEASE AND WIN32)
 #	add_executable(ExampleStarting WIN32 ${EXAMPLE_STARTING_SOURCES})
 #else()
 add_executable(ExampleStarting ${EXAMPLE_STARTING_SOURCES})
@@ -20,9 +20,9 @@ if (FLOUNDER_INSTALL)
             DESTINATION include
             FILES_MATCHING PATTERN "*.h"
             PATTERN "Private" EXCLUDE
-    )
+            )
 
     install(TARGETS ExampleStarting
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    )
+            )
 endif ()

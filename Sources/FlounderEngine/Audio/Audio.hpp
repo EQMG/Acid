@@ -1,15 +1,12 @@
 #pragma once
 
-#ifdef FLOUNDER_PLATFORM_MACOS
+#ifdef FL_BUILD_MACOS
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #else
-
 #include <AL/al.h>
 #include <AL/alc.h>
-
 #endif
-
 #include <STB/stb_vorbis.h>
 #include "Engine/Engine.hpp"
 
@@ -18,7 +15,7 @@ namespace fl
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.
 	/// </summary>
-	class F_EXPORT Audio :
+	class FL_EXPORT Audio :
 		public IModule
 	{
 	private:

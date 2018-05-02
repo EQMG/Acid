@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Axis from a joystick.
 	/// </summary>
-	class F_EXPORT AxisJoystick :
+	class FL_EXPORT AxisJoystick :
 		public IAxis
 	{
 	private:

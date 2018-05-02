@@ -12,7 +12,7 @@ namespace fl
 	/// The transform is stored as a position vector and a quaternion (rotation) so that these values can  be easily interpolated,
 	/// a functionality that this class also provides.
 	/// </summary>
-	class F_EXPORT JointTransform
+	class FL_EXPORT JointTransform
 	{
 	private:
 		Vector3 *m_position;

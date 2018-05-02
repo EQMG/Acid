@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT MeshPattern :
+	class FL_EXPORT MeshPattern :
 		public Model
 	{
 	private:

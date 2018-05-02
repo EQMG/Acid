@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT MeshWater :
+	class FL_EXPORT MeshWater :
 		public MeshSimple
 	{
 	public:

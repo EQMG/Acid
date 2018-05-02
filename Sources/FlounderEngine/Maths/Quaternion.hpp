@@ -10,7 +10,7 @@ namespace fl
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
 	/// </summary>
-	class F_EXPORT Quaternion
+	class FL_EXPORT Quaternion
 	{
 	public:
 		union
@@ -185,15 +185,15 @@ namespace fl
 
 		Quaternion operator-();
 
-		F_EXPORT friend Quaternion operator*(Quaternion left, const Quaternion &right);
+		FL_EXPORT friend Quaternion operator*(Quaternion left, const Quaternion &right);
 
-		F_EXPORT friend Quaternion operator*(float value, Quaternion left);
+		FL_EXPORT friend Quaternion operator*(float value, Quaternion left);
 
 		Quaternion &operator*=(const Quaternion &other);
 
 		Quaternion &operator*=(float value);
 
-		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &vector);
+		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &vector);
 
 		std::string ToString() const;
 	};

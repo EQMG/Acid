@@ -21,7 +21,7 @@ namespace fl
 
 	void FileCsv::Load()
 	{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -40,7 +40,7 @@ namespace fl
 			m_rows->push_back(row);
 		}
 
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 		printf("Json '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif

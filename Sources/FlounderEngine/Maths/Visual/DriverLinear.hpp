@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A driver that linearly increases its value.
 	/// </summary>
-	class F_EXPORT DriverLinear :
+	class FL_EXPORT DriverLinear :
 		public IDriver
 	{
 	private:

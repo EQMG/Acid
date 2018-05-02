@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT VertexModelData
+	class FL_EXPORT VertexModelData
 	{
 	private:
 		static const uint32_t NO_INDEX;

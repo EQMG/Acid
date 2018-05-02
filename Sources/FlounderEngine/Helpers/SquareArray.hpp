@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// A helper for C++ arrays.
 	/// </summary>
-	class F_EXPORT SquareArray
+	class FL_EXPORT SquareArray
 	{
 	public:
 		/// <summary>

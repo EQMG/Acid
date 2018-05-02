@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Represents a sub renderer in the engine.
 	/// </summary>
-	class F_EXPORT IRenderer
+	class FL_EXPORT IRenderer
 	{
 	public:
 		/// <summary>

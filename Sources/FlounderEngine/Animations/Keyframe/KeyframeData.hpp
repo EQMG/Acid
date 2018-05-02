@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT KeyframeData
+	class FL_EXPORT KeyframeData
 	{
 	private:
 		float m_time;

@@ -11,7 +11,7 @@ namespace fl
 	/// <summary>
 	/// A module used for managing game scenes on engine updates.
 	/// </summary>
-	class F_EXPORT Scenes :
+	class FL_EXPORT Scenes :
 		public IModule
 	{
 	private:

@@ -13,7 +13,7 @@ namespace fl
 	/// <summary>
 	/// Holds a 4-tuple vector.
 	/// </summary>
-	class F_EXPORT Vector4
+	class FL_EXPORT Vector4
 	{
 	public:
 		union
@@ -167,21 +167,21 @@ namespace fl
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The squared distance. </returns>
-		float GetDistanceSquared(const Vector4 &other) const;
+		float DistanceSquared(const Vector4 &other) const;
 
 		/// <summary>
 		/// Gets the between this vector and another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The distance. </returns>
-		float GetDistance(const Vector4 &other) const;
+		float Distance(const Vector4 &other) const;
 
 		/// <summary>
 		/// Gets the vector distance between this vector and another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
 		/// <returns> The vector distance. </returns>
-		Vector4 GetVectorDistance(const Vector4 &other) const;
+		Vector4 DistanceVector(const Vector4 &other) const;
 
 		/// <summary>
 		/// Gradually changes this vector to a target.
@@ -219,29 +219,29 @@ namespace fl
 
 		Vector4 operator-();
 
-		F_EXPORT friend Vector4 operator+(Vector4 left, const Vector4 &right);
+		FL_EXPORT friend Vector4 operator+(Vector4 left, const Vector4 &right);
 
-		F_EXPORT friend Vector4 operator-(Vector4 left, const Vector4 &right);
+		FL_EXPORT friend Vector4 operator-(Vector4 left, const Vector4 &right);
 
-		F_EXPORT friend Vector4 operator*(Vector4 left, const Vector4 &right);
+		FL_EXPORT friend Vector4 operator*(Vector4 left, const Vector4 &right);
 
-		F_EXPORT friend Vector4 operator/(Vector4 left, const Vector4 &right);
+		FL_EXPORT friend Vector4 operator/(Vector4 left, const Vector4 &right);
 
-		F_EXPORT friend Vector4 operator+(Vector4 left, float value);
+		FL_EXPORT friend Vector4 operator+(Vector4 left, float value);
 
-		F_EXPORT friend Vector4 operator-(Vector4 left, float value);
+		FL_EXPORT friend Vector4 operator-(Vector4 left, float value);
 
-		F_EXPORT friend Vector4 operator*(Vector4 left, float value);
+		FL_EXPORT friend Vector4 operator*(Vector4 left, float value);
 
-		F_EXPORT friend Vector4 operator/(Vector4 left, float value);
+		FL_EXPORT friend Vector4 operator/(Vector4 left, float value);
 
-		F_EXPORT friend Vector4 operator+(float value, Vector4 left);
+		FL_EXPORT friend Vector4 operator+(float value, Vector4 left);
 
-		F_EXPORT friend Vector4 operator-(float value, Vector4 left);
+		FL_EXPORT friend Vector4 operator-(float value, Vector4 left);
 
-		F_EXPORT friend Vector4 operator*(float value, Vector4 left);
+		FL_EXPORT friend Vector4 operator*(float value, Vector4 left);
 
-		F_EXPORT friend Vector4 operator/(float value, Vector4 left);
+		FL_EXPORT friend Vector4 operator/(float value, Vector4 left);
 
 		Vector4 &operator+=(const Vector4 &other);
 
@@ -259,7 +259,7 @@ namespace fl
 
 		Vector4 &operator/=(float value);
 
-		F_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Vector4 &vector);
+		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Vector4 &vector);
 
 		std::string ToString() const;
 	};

@@ -9,7 +9,7 @@
 
 namespace fl
 {
-	class F_EXPORT UiInputSlider :
+	class FL_EXPORT UiInputSlider :
 		public UiObject
 	{
 	private:

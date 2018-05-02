@@ -15,7 +15,7 @@ namespace fl
 	/// A data structure that stores objects with a notion of flounder.space.
 	/// </summary>
 	template<typename T>
-	class F_EXPORT ISpatialStructure
+	class FL_EXPORT ISpatialStructure
 	{
 	public:
 		/// <summary>
