@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT FontFamily :
+	class FL_EXPORT FontFamily :
 		public IResource
 	{
 	private:

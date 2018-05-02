@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT ConfigKey
+	class FL_EXPORT ConfigKey
 	{
 	private:
 		std::string m_value;

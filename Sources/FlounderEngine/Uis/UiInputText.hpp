@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	class F_EXPORT UiInputText :
+	class FL_EXPORT UiInputText :
 		public UiObject
 	{
 	private:

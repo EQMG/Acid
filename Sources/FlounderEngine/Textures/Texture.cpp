@@ -28,7 +28,7 @@ namespace fl
 		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
 	{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -71,7 +71,7 @@ namespace fl
 		stbi_image_free(pixels);
 		m_filename = filename;
 
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 		printf("Texture '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif

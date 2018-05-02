@@ -14,7 +14,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a loaded texture.
 	/// </summary>
-	class F_EXPORT Texture :
+	class FL_EXPORT Texture :
 		public IResource,
 		public Buffer,
 		public IDescriptor

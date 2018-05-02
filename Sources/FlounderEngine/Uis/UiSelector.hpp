@@ -7,7 +7,7 @@
 
 namespace fl
 {
-	struct F_HIDDEN SelectorJoystick
+	struct FL_HIDDEN SelectorJoystick
 	{
 	public:
 		unsigned int joystick;
@@ -20,7 +20,7 @@ namespace fl
 	/// <summary>
 	/// Represents a virtual cursor that will be used to determine if a ui action was preformed by a device.
 	/// </summary>
-	class F_EXPORT UiSelector
+	class FL_EXPORT UiSelector
 	{
 	private:
 		float m_cursorX;

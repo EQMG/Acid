@@ -39,6 +39,7 @@ namespace fl
 		}
 		catch (const std::runtime_error &e)
 		{
+			fprintf(stderr, "Flounder has hit an exception!\n");
 			fprintf(stderr, "%s\n", e.what());
 			return EXIT_FAILURE;
 		}

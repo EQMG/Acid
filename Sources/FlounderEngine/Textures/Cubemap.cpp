@@ -22,7 +22,7 @@ namespace fl
 		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
 	{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -58,7 +58,7 @@ namespace fl
 		delete bufferStaging;
 		stbi_image_free(pixels);
 
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 		printf("Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif

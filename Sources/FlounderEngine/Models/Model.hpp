@@ -15,7 +15,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a OBJ model.
 	/// </summary>
-	class F_EXPORT Model :
+	class FL_EXPORT Model :
 		public IResource
 	{
 	private:

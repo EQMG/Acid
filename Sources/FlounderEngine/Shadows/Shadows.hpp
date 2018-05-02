@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// A module used for managing shadow maps in 3D worlds.
 	/// </summary>
-	class F_EXPORT Shadows :
+	class FL_EXPORT Shadows :
 		public IModule
 	{
 	private:

@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// A definition for a connected joystick.
 	/// </summary>
-	struct F_HIDDEN Joystick
+	struct FL_HIDDEN Joystick
 	{
 	public:
 		bool m_connected;
@@ -23,7 +23,7 @@ namespace fl
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
-	class F_EXPORT Joysticks :
+	class FL_EXPORT Joysticks :
 		public IModule
 	{
 	private:

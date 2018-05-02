@@ -9,7 +9,7 @@
 
 namespace fl
 {
-	class F_EXPORT FileJson :
+	class FL_EXPORT FileJson :
 		public IFile
 	{
 	private:

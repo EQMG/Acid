@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// Represents a line of text during the loading of a text.
 	/// </summary>
-	class F_EXPORT FontLine
+	class FL_EXPORT FontLine
 	{
 	private:
 		double m_maxLength;

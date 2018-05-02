@@ -11,7 +11,7 @@ namespace fl
 		CelestialMoon = 1
 	};
 
-	class F_EXPORT CelestialBody :
+	class FL_EXPORT CelestialBody :
 		public Component
 	{
 	private:

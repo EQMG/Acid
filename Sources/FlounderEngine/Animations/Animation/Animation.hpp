@@ -9,7 +9,7 @@ namespace fl
 	/// Represents an animation that can be carried out by an animated entity.
 	/// It contains the length of the animation in seconds, and a list of <seealso cref="KeyframeJoints"/>s.
 	/// </summary>
-	class F_EXPORT Animation
+	class FL_EXPORT Animation
 	{
 	private:
 		float m_length;

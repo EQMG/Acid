@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT LodBehaviour :
+	class FL_EXPORT LodBehaviour :
 		public Behaviour
 	{
 	private:

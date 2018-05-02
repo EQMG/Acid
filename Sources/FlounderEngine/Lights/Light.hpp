@@ -11,7 +11,7 @@ namespace fl
 	/// <summary>
 	/// Represents a point light, contains a colour, position and attenuation.
 	/// </summary>
-	class F_EXPORT Light :
+	class FL_EXPORT Light :
 		public Component
 	{
 	private:

@@ -2,7 +2,8 @@
 
 namespace fl
 {
-	RenderStage::RenderStage(RenderpassCreate *renderpassCreate) :
+	RenderStage::RenderStage(const int &stageIndex, RenderpassCreate *renderpassCreate) :
+		m_stageIndex(stageIndex),
 		m_lastWidth(renderpassCreate->m_width),
 		m_lastHeight(renderpassCreate->m_height),
 		m_renderpassCreate(renderpassCreate),
@@ -49,6 +50,10 @@ namespace fl
 
 	void RenderStage::Rebuild(Swapchain *swapchain)
 	{
+#if FL_VERBOSE
+		const auto debugStart = Engine::Get()->GetTimeMs();
+#endif
+
 		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 		const VkExtent2D extent2D = {GetWidth(), GetHeight()};
 		const VkExtent3D extent3D = {GetWidth(), GetHeight(), 1};
@@ -66,6 +71,11 @@ namespace fl
 
 		delete m_framebuffers;
 		m_framebuffers = new Framebuffers(*m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, extent2D);
+
+#if FL_VERBOSE
+		const auto debugEnd = Engine::Get()->GetTimeMs();
+		printf("Renderstage '%i' built in %fms\n", m_stageIndex, debugEnd - debugStart);
+#endif
 	}
 
 	uint32_t RenderStage::GetWidth() const

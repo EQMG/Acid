@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// A loader capable of loading font data into a instance of a text mesh.
 	/// </summary>
-	class F_EXPORT FontType
+	class FL_EXPORT FontType
 	{
 	private:
 		Texture *m_texture;

@@ -22,7 +22,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a Vulkan pipeline.
 	/// </summary>
-	class F_EXPORT Pipeline
+	class FL_EXPORT Pipeline
 	{
 	private:
 		GraphicsStage m_graphicsStage;

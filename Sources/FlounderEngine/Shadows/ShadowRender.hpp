@@ -10,7 +10,7 @@ namespace fl
 	/// <summary>
 	/// Class used to render a GameObject as a shadow.
 	/// </summary>
-	class F_EXPORT ShadowRender :
+	class FL_EXPORT ShadowRender :
 		public Component
 	{
 	private:

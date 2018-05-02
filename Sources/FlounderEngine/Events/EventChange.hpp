@@ -10,7 +10,7 @@ namespace fl
 	/// </summary>
 	/// @param <T> The type of value to find change with. </param>
 	template<typename T>
-	class F_EXPORT EventChange :
+	class FL_EXPORT EventChange :
 		public IEvent
 	{
 	private:

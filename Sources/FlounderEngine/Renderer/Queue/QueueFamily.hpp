@@ -29,7 +29,7 @@ namespace fl
 	/// <summary>
 	/// A Vulkan queue family.
 	/// </summary>
-	class F_EXPORT QueueFamily
+	class FL_EXPORT QueueFamily
 	{
 	public:
 		/// <summary>

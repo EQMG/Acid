@@ -11,7 +11,7 @@ namespace fl
 	/// <summary>
 	/// A module used for managing worlds.
 	/// </summary>
-	class F_EXPORT Worlds :
+	class FL_EXPORT Worlds :
 		public IModule
 	{
 	private:

@@ -145,7 +145,7 @@ namespace fl
 
 	void Model::LoadFromFile(const std::string &filename, std::vector<IVertex *> *vertices, std::vector<uint32_t> *indices)
 	{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -253,7 +253,7 @@ namespace fl
 			delete current;
 		}
 
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 		printf("Obj '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif

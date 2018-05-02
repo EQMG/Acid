@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a material shader.
 	/// </summary>
-	class F_EXPORT IMaterial :
+	class FL_EXPORT IMaterial :
 		public Component
 	{
 	public:

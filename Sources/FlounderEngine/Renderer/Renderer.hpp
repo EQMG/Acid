@@ -9,7 +9,7 @@
 
 namespace fl
 {
-	class F_EXPORT Renderer :
+	class FL_EXPORT Renderer :
 		public IModule
 	{
 	private:
@@ -49,7 +49,7 @@ namespace fl
 	public:
 		void Update() override;
 
-		F_HIDDEN void CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates);
+		FL_HIDDEN void CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates);
 
 		/// <summary>
 		/// Starts a renderpass.

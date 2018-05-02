@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// A module used for managing resources.
 	/// </summary>
-	class F_EXPORT Resources :
+	class FL_EXPORT Resources :
 		public IModule
 	{
 	private:

@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT Behaviour :
+	class FL_EXPORT Behaviour :
 		public Component
 	{
 	private:

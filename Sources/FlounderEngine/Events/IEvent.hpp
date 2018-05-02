@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A simple event listener and runner.
 	/// </summary>
-	class F_EXPORT IEvent
+	class FL_EXPORT IEvent
 	{
 	public:
 		/// <summary>

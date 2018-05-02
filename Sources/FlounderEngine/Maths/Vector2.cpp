@@ -133,19 +133,19 @@ namespace fl
 		return std::min(m_x, m_y);
 	}
 
-	float Vector2::GetDistanceSquared(const Vector2 &other) const
+	float Vector2::DistanceSquared(const Vector2 &other) const
 	{
 		float dx = m_x - other.m_x;
 		float dy = m_y - other.m_y;
 		return dx * dx + dy * dy;
 	}
 
-	float Vector2::GetDistance(const Vector2 &other) const
+	float Vector2::Distance(const Vector2 &other) const
 	{
-		return std::sqrt(GetDistanceSquared(other));
+		return std::sqrt(DistanceSquared(other));
 	}
 
-	Vector2 Vector2::GetVectorDistance(const Vector2 &other) const
+	Vector2 Vector2::DistanceVector(const Vector2 &other) const
 	{
 		float dx = m_x - other.m_x;
 		float dy = m_y - other.m_y;

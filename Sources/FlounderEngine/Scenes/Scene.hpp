@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// A object used to represent a scene.
 	/// </summary>
-	class F_EXPORT Scene
+	class FL_EXPORT Scene
 	{
 	private:
 		ICamera *m_camera;

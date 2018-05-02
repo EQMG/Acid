@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// The default updater for the engine.
 	/// </summary>
-	class F_EXPORT ModuleRegister
+	class FL_EXPORT ModuleRegister
 	{
 	private:
 		typedef std::pair<std::string, IModule *> ModulePair;

@@ -8,12 +8,13 @@
 
 namespace fl
 {
-	class F_EXPORT RenderStage
+	class FL_EXPORT RenderStage
 	{
 	private:
 		uint32_t m_lastWidth;
 		uint32_t m_lastHeight;
 	public:
+		int m_stageIndex;
 		RenderpassCreate *m_renderpassCreate;
 
 		DepthStencil *m_depthStencil;
@@ -27,7 +28,7 @@ namespace fl
 
 		bool m_fitDisplaySize;
 
-		RenderStage(RenderpassCreate *renderpassCreate);
+		RenderStage(const int &stageIndex, RenderpassCreate *renderpassCreate);
 
 		~RenderStage();
 

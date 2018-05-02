@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterEmboss :
+	class FL_EXPORT FilterEmboss :
 		public IPostFilter
 	{
 	public:

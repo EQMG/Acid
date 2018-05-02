@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
-	class F_EXPORT Mouse :
+	class FL_EXPORT Mouse :
 		public IModule
 	{
 	private:

@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT SkeletonLoader
+	class FL_EXPORT SkeletonLoader
 	{
 	private:
 		LoadedValue *m_armatureData;

@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	class F_EXPORT VertexAnimated :
+	class FL_EXPORT VertexAnimated :
 		public IVertex
 	{
 	public:

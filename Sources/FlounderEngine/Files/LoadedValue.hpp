@@ -7,7 +7,7 @@
 
 namespace fl
 {
-	class F_EXPORT LoadedValue
+	class FL_EXPORT LoadedValue
 	{
 	public:
 		LoadedValue *m_parent;

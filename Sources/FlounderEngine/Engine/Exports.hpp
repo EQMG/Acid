@@ -4,30 +4,33 @@
 // Flounder exports (prerequisites) file.
 //
 
-#if FLOUNDER_PLATFORM_WINDOWS
-#  if FLOUNDER_COMPILER_MSVC
-#    if defined(FLOUNDER_STATIC_LIB)
-#      define F_EXPORT
+#if FL_BUILD_WINDOWS
+#  if FL_BUILD_MSVC
+#    define FL_ALIGN(x) _declspec(align(x))
+#    if defined(FL_STATICLIB)
+#      define FL_EXPORT
 #    else
-#      if defined(F_EXPORTS)
-#        define F_EXPORT __declspec(dllexport)
+#      if defined(FL_EXPORTS)
+#        define FL_EXPORT __declspec(dllexport)
 #      else
-#        define F_EXPORT __declspec(dllimport)
+#        define FL_EXPORT __declspec(dllimport)
 #      endif
 #	 endif
 #  else
-#    if defined(FLOUNDER_STATIC_LIB)
-#      define F_EXPORT
+#    define FL_ALIGN(x) __attribute__ ((aligned(x)))
+#    if defined(FL_STATICLIB)
+#      define FL_EXPORT
 #    else
-#      if defined(F_EXPORTS)
-#        define F_EXPORT __attribute__ ((dllexport))
+#      if defined(FL_EXPORTS)
+#        define FL_EXPORT __attribute__ ((dllexport))
 #      else
-#        define F_EXPORT __attribute__ ((dllimport))
+#        define FL_EXPORT __attribute__ ((dllimport))
 #      endif
 #	 endif
 #  endif
-#  define F_HIDDEN
+#  define FL_HIDDEN
 #else
-#  define F_EXPORT __attribute__ ((visibility ("default")))
-#  define F_HIDDEN __attribute__ ((visibility ("hidden")))
+#  define FL_ALIGN(x) __attribute__ ((aligned(x)))
+#  define FL_EXPORT __attribute__ ((visibility ("default")))
+#  define FL_HIDDEN __attribute__ ((visibility ("hidden")))
 #endif

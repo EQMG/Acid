@@ -7,7 +7,7 @@
 
 namespace fl
 {
-	class F_EXPORT UniformBuffer :
+	class FL_EXPORT UniformBuffer :
 		public Buffer,
 		public IDescriptor
 	{

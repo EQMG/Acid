@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A driver that slides to its destination using cosine interpolation.
 	/// </summary>
-	class F_EXPORT DriverSlide :
+	class FL_EXPORT DriverSlide :
 		public IDriver
 	{
 	private:

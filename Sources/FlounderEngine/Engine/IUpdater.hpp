@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// A class used to define how the engine will run updates and timings.
 	/// </summary>
-	class F_EXPORT IUpdater
+	class FL_EXPORT IUpdater
 	{
 	public:
 		/// <summary>

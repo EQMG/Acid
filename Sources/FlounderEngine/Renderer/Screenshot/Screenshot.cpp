@@ -8,7 +8,7 @@ namespace fl
 {
 	void Screenshot::Capture(const std::string &filename)
 	{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -186,7 +186,7 @@ namespace fl
 		vkDestroyImage(logicalDevice, dstImage, nullptr);
 		delete[] data;
 
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 		printf("Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif

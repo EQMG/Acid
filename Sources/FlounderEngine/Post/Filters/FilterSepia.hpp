@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterSepia :
+	class FL_EXPORT FilterSepia :
 		public IPostFilter
 	{
 	public:

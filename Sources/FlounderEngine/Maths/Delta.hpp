@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A class for handing and calculating deltas.
 	/// </summary>
-	class F_EXPORT Delta
+	class FL_EXPORT Delta
 	{
 	private:
 		float m_currentFrameTime;

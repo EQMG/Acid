@@ -7,7 +7,7 @@
 
 namespace fl
 {
-	class F_EXPORT RowCsv
+	class FL_EXPORT RowCsv
 	{
 	public:
 		std::vector<std::string> m_elements;
@@ -18,7 +18,7 @@ namespace fl
 		}
 	};
 
-	class F_EXPORT FileCsv :
+	class FL_EXPORT FileCsv :
 		public IFile
 	{
 	private:

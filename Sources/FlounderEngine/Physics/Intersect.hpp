@@ -5,7 +5,7 @@ namespace fl
 	/// <summary>
 	/// A class that represents bounding intersect data.
 	/// </summary>
-	class F_EXPORT Intersect
+	class FL_EXPORT Intersect
 	{
 	private:
 		bool m_intersects;
@@ -39,6 +39,6 @@ namespace fl
 		/// Gets the distance that intersection is at.
 		/// </summary>
 		/// <returns> The distance that intersection is at. </returns>
-		float GetDistance() const { return m_distance; };
+		float Distance() const { return m_distance; };
 	};
 }

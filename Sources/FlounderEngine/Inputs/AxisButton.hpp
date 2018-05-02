@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Axis composed of two buttons.
 	/// </summary>
-	class F_EXPORT AxisButton :
+	class FL_EXPORT AxisButton :
 		public IAxis
 	{
 	private:

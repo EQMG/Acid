@@ -1,16 +1,16 @@
 #include "Display.hpp"
 
-#ifdef FLOUNDER_PLATFORM_WINDOWS
+#ifdef FL_BUILD_WINDOWS
 #include <Windows.h>
 #endif
 #include "Textures/Texture.hpp"
 
 namespace fl
 {
-	const std::vector<const char *> Display::VALIDATION_LAYERS = {
-		"VK_LAYER_RENDERDOC_Capture", "VK_LAYER_LUNARG_standard_validation"
+	static const std::vector<const char *> VALIDATION_LAYERS = {
+		"VK_LAYER_LUNARG_standard_validation" // "VK_LAYER_RENDERDOC_Capture",
 	};
-	const std::vector<const char *> Display::DEVICE_EXTENSIONS = {
+	static const std::vector<const char *> DEVICE_EXTENSIONS = {
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
 	};
 
@@ -117,7 +117,7 @@ namespace fl
 		m_windowPosX(0),
 		m_windowPosY(0),
 		m_iconified(false),
-#if defined(FLOUNDER_VERBOSE) && !defined(FLOUNDER_PLATFORM_MACOS)
+#if defined(FL_VERBOSE) && !defined(FL_BUILD_MACOS)
 		m_validationLayers(true),
 #else
 		m_validationLayers(false),
@@ -234,7 +234,7 @@ namespace fl
 
 		if (fullscreen)
 		{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 			printf("Display is going fullscreen\n");
 #endif
 			m_fullscreenWidth = videoMode->width;
@@ -243,7 +243,7 @@ namespace fl
 		}
 		else
 		{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 			printf("Display is going windowed\n");
 #endif
 			m_windowPosX = (videoMode->width - m_windowWidth) / 2;
@@ -252,85 +252,115 @@ namespace fl
 		}
 	}
 
+	std::string Display::StringifyResultVk(const VkResult &result)
+	{
+		switch (result)
+		{
+		case VK_SUCCESS:
+			return "Success";
+		case VK_NOT_READY:
+			return "A fence or query has not yet completed";
+		case VK_TIMEOUT:
+			return "A wait operation has not completed in the specified time";
+		case VK_EVENT_SET:
+			return "An event is signaled";
+		case VK_EVENT_RESET:
+			return "An event is unsignaled";
+		case VK_INCOMPLETE:
+			return "A return array was too small for the result";
+		case VK_ERROR_OUT_OF_HOST_MEMORY:
+			return "A host memory allocation has failed";
+		case VK_ERROR_OUT_OF_DEVICE_MEMORY:
+			return "A device memory allocation has failed";
+		case VK_ERROR_INITIALIZATION_FAILED:
+			return "Initialization of an object could not be completed for implementation-specific reasons";
+		case VK_ERROR_DEVICE_LOST:
+			return "The logical or physical device has been lost";
+		case VK_ERROR_MEMORY_MAP_FAILED:
+			return "Mapping of a memory object has failed";
+		case VK_ERROR_LAYER_NOT_PRESENT:
+			return "A requested layer is not present or could not be loaded";
+		case VK_ERROR_EXTENSION_NOT_PRESENT:
+			return "A requested extension is not supported";
+		case VK_ERROR_FEATURE_NOT_PRESENT:
+			return "A requested feature is not supported";
+		case VK_ERROR_INCOMPATIBLE_DRIVER:
+			return "The requested version of Vulkan is not supported by the driver or is otherwise incompatible";
+		case VK_ERROR_TOO_MANY_OBJECTS:
+			return "Too many objects of the type have already been created";
+		case VK_ERROR_FORMAT_NOT_SUPPORTED:
+			return "A requested format is not supported on this device";
+		case VK_ERROR_SURFACE_LOST_KHR:
+			return "A surface is no longer available";
+		case VK_SUBOPTIMAL_KHR:
+			return "A swapchain no longer matches the surface properties exactly, but can still be used";
+		case VK_ERROR_OUT_OF_DATE_KHR:
+			return "A surface has changed in such a way that it is no longer compatible with the swapchain";
+		case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:
+			return "The display used by a swapchain does not use the same presentable image layout";
+		case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
+			return "The requested window is already connected to a VkSurfaceKHR, or to some other non-Vulkan API";
+		case VK_ERROR_VALIDATION_FAILED_EXT:
+			return "A validation layer found an error";
+		default:
+			return "ERROR: UNKNOWN VULKAN ERROR";
+		}
+	}
+
 	void Display::ErrorVk(const VkResult &result)
 	{
 		if (result < 0)
 		{
-			std::string failure;
-
-			switch (result)
-			{
-			case VK_ERROR_OUT_OF_HOST_MEMORY:
-				failure = "VK_ERROR_OUT_OF_HOST_MEMORY";
-				break;
-			case VK_ERROR_OUT_OF_DEVICE_MEMORY:
-				failure = "VK_ERROR_OUT_OF_DEVICE_MEMORY";
-				break;
-			case VK_ERROR_INITIALIZATION_FAILED:
-				failure = "VK_ERROR_INITIALIZATION_FAILED";
-				break;
-			case VK_ERROR_DEVICE_LOST:
-				failure = "VK_ERROR_DEVICE_LOST";
-				break;
-			case VK_ERROR_MEMORY_MAP_FAILED:
-				failure = "VK_ERROR_MEMORY_MAP_FAILED";
-				break;
-			case VK_ERROR_LAYER_NOT_PRESENT:
-				failure = "VK_ERROR_LAYER_NOT_PRESENT";
-				break;
-			case VK_ERROR_EXTENSION_NOT_PRESENT:
-				failure = "VK_ERROR_EXTENSION_NOT_PRESENT";
-				break;
-			case VK_ERROR_FEATURE_NOT_PRESENT:
-				failure = "VK_ERROR_FEATURE_NOT_PRESENT";
-				break;
-			case VK_ERROR_INCOMPATIBLE_DRIVER:
-				failure = "VK_ERROR_INCOMPATIBLE_DRIVER";
-				break;
-			case VK_ERROR_TOO_MANY_OBJECTS:
-				failure = "VK_ERROR_TOO_MANY_OBJECTS";
-				break;
-			case VK_ERROR_FORMAT_NOT_SUPPORTED:
-				failure = "VK_ERROR_FORMAT_NOT_SUPPORTED";
-				break;
-			case VK_ERROR_SURFACE_LOST_KHR:
-				failure = "VK_ERROR_SURFACE_LOST_KHR";
-				break;
-			case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
-				failure = "VK_ERROR_NATIVE_WINDOW_IN_USE_KHR";
-				break;
-			case VK_SUBOPTIMAL_KHR:
-				failure = "VK_SUBOPTIMAL_KHR";
-				break;
-			case VK_ERROR_OUT_OF_DATE_KHR:
-				failure = "VK_ERROR_OUT_OF_DATE_KHR";
-				break;
-			case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:
-				failure = "VK_ERROR_INCOMPATIBLE_DISPLAY_KHR";
-				break;
-			case VK_ERROR_VALIDATION_FAILED_EXT:
-				failure = "VK_ERROR_VALIDATION_FAILED_EXT";
-				break;
-			default:
-				failure = "VK_RESULT_MAX_ENUM";
-				break;
-			}
+			std::string failure = StringifyResultVk(result);
 
 			fprintf(stderr, "Vulkan error: %s, %i\n", failure.c_str(), result);
-#ifdef FLOUNDER_PLATFORM_WINDOWS
+#ifdef FL_BUILD_WINDOWS
 			MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
 #endif
 			throw std::runtime_error("Vulkan runtime error.");
 		}
 	}
 
+	std::string Display::StringifyResultGlfw(const int &result)
+	{
+		switch (result)
+		{
+		case GLFW_TRUE:
+			return "Success";
+		case GLFW_NOT_INITIALIZED:
+			return "GLFW has not been initialized.";
+		case GLFW_NO_CURRENT_CONTEXT:
+			return "No context is current for this thread.";
+		case GLFW_INVALID_ENUM:
+			return "One of the arguments to the function was an invalid enum value.";
+		case GLFW_INVALID_VALUE:
+			return "One of the arguments to the function was an invalid value.";
+		case GLFW_OUT_OF_MEMORY:
+			return "A memory allocation failed.";
+		case GLFW_API_UNAVAILABLE:
+			return "GLFW could not find support for the requested API on the system.";
+		case GLFW_VERSION_UNAVAILABLE:
+			return "The requested OpenGL or OpenGL ES version is not available.";
+		case GLFW_PLATFORM_ERROR:
+			return "A platform-specific error occurred that does not match any of the more specific categories.";
+		case GLFW_FORMAT_UNAVAILABLE:
+			return "The requested format is not supported or available.";
+		case GLFW_NO_WINDOW_CONTEXT:
+			return "The specified window does not have an OpenGL or OpenGL ES context.";
+		default:
+			return "ERROR: UNKNOWN GLFW ERROR";
+		}
+	}
+
 	void Display::ErrorGlfw(const int &result)
 	{
-		if (result == GLFW_FALSE)
+		if (result != GLFW_TRUE)
 		{
-			fprintf(stderr, "GLFW error: %i\n", result);
-#ifdef FLOUNDER_PLATFORM_WINDOWS
-			MessageBox(nullptr, "" + result, "GLFW Error", 0);
+			std::string failure = StringifyResultGlfw(result);
+
+			fprintf(stderr, "GLFW error: %s, %i\n", failure.c_str(), result);
+#ifdef FL_BUILD_WINDOWS
+			MessageBox(nullptr, failure.c_str(), "GLFW Error", 0);
 #endif
 			throw std::runtime_error("GLFW runtime error.");
 		}
@@ -686,7 +716,7 @@ namespace fl
 
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)
 	{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		printf("-- Selected Device: '%s' --\n", physicalDeviceProperties.deviceName);
 
 		switch (static_cast<int>(physicalDeviceProperties.deviceType))
@@ -735,7 +765,7 @@ namespace fl
 
 	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription)
 	{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		printf("-- Avalable Layers For: '%s' --\n", type.c_str());
 
 		for (auto layer : layerProperties)

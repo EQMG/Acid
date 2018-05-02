@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT ShapeCube :
+	class FL_EXPORT ShapeCube :
 		public Model
 	{
 	public:

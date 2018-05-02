@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A class that smoothly increases its value.
 	/// </summary>
-	class F_EXPORT SmoothFloat
+	class FL_EXPORT SmoothFloat
 	{
 	private:
 		float m_agility;

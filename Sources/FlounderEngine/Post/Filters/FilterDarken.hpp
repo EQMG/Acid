@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterDarken :
+	class FL_EXPORT FilterDarken :
 		public IPostFilter
 	{
 	private:

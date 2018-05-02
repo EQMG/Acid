@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Handles multiple buttons at once.
 	/// </summary>
-	class F_EXPORT ButtonCompound :
+	class FL_EXPORT ButtonCompound :
 		public IButton
 	{
 	private:

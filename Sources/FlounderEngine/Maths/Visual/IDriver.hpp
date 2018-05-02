@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// Represents a driver that changes over time.
 	/// </summary>
-	class F_EXPORT IDriver
+	class FL_EXPORT IDriver
 	{
 	private:
 		float m_length;

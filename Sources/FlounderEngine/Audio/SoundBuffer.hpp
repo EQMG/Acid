@@ -11,7 +11,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a sound buffer.
 	/// </summary>
-	class F_EXPORT SoundBuffer :
+	class FL_EXPORT SoundBuffer :
 		public IResource
 	{
 	private:

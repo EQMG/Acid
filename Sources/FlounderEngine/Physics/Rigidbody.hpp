@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	class F_EXPORT Rigidbody :
+	class FL_EXPORT Rigidbody :
 		public Component
 	{
 	private:

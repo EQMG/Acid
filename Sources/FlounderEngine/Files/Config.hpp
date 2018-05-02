@@ -9,7 +9,7 @@
 
 namespace fl
 {
-	class F_EXPORT Config
+	class FL_EXPORT Config
 	{
 	private:
 		IFile *m_file;

@@ -143,7 +143,7 @@ namespace fl
 
 	void VoxelChunk::GenerateMesh()
 	{
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -175,7 +175,7 @@ namespace fl
 			mesh->SetModel(model);
 		}
 
-#if FLOUNDER_VERBOSE
+#if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 
 		if (debugEnd - debugStart > 22.0f)

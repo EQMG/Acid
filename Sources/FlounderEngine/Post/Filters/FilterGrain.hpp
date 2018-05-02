@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterGrain :
+	class FL_EXPORT FilterGrain :
 		public IPostFilter
 	{
 	private:

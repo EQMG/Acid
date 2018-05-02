@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// A rectangle made of a position and dimension.
 	/// </summary>
-	class F_EXPORT UiBound
+	class FL_EXPORT UiBound
 	{
 	private:
 		static std::map<std::string, Vector2> PIVOT_MAP;

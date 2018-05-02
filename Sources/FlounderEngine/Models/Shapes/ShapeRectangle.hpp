@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	class F_EXPORT ShapeRectangle :
+	class FL_EXPORT ShapeRectangle :
 		public Model
 	{
 	public:

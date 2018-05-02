@@ -12,7 +12,7 @@ namespace fl
 	/// <summary>
 	/// A object the represents a texture in a GUI.
 	/// </summary>
-	class F_EXPORT Gui :
+	class FL_EXPORT Gui :
 		public UiObject
 	{
 	private:

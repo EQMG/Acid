@@ -10,7 +10,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a material pipeline.
 	/// </summary>
-	class F_EXPORT PipelineMaterial :
+	class FL_EXPORT PipelineMaterial :
 		public IResource
 	{
 	private:

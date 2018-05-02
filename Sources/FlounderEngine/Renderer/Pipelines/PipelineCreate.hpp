@@ -26,7 +26,7 @@ namespace fl
 		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 	};
 
-	class F_EXPORT DescriptorType
+	class FL_EXPORT DescriptorType
 	{
 	public:
 		uint32_t m_binding;
@@ -44,7 +44,7 @@ namespace fl
 		}
 	};
 
-	class F_EXPORT PipelineCreate
+	class FL_EXPORT PipelineCreate
 	{
 	public:
 		std::vector<std::string> m_shaderStages;

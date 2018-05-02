@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	class F_EXPORT JsonSection
+	class FL_EXPORT JsonSection
 	{
 	public:
 		JsonSection *m_parent;

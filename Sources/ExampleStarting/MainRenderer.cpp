@@ -116,7 +116,7 @@ namespace Demo
 		Renderer::Get()->NextSubpass(commandBuffer);
 
 		// Subpass 2.
-#ifndef FLOUNDER_PLATFORM_MACOS
+#ifndef FL_BUILD_MACOS
 		m_filterFxaa->Render(commandBuffer);
 //		m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
 //		m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());

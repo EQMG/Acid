@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a water material shader.
 	/// </summary>
-	class F_EXPORT MaterialWater :
+	class FL_EXPORT MaterialWater :
 		public IMaterial
 	{
 	private:

@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	class F_EXPORT GeometryLoader
+	class FL_EXPORT GeometryLoader
 	{
 	private:
 		LoadedValue *m_meshData;

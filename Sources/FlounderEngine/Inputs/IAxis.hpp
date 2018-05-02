@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// Interface for an axis based input device.
 	/// </summary>
-	class F_EXPORT IAxis
+	class FL_EXPORT IAxis
 	{
 	public:
 		/// <summary>

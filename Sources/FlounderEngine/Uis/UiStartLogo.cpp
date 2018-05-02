@@ -14,7 +14,7 @@ namespace fl
 		m_textCopyright(new Text(this, UiBound(Vector2(0.5f, 0.2f), "Centre", true), 1.4f, "Copyright (C) 2018, Equilibrium Games - All Rights Reserved. This product uses GLFW, Vulkan, MoltenVK, OpenAL, and STB Image", Uis::Get()->m_proximaNova->GetRegular(), JustifyCentre, 0.8f, 0.0012f, 0.024f)),
 		m_starting(true)
 	{
-#ifdef FLOUNDER_CONFIG_DEBUG
+#ifdef FL_BUILD_DEBUG
 		Events::Get()->AddEvent(new EventTime(1.65f, false, [&]()
 #else
 			Events::Get()->AddEvent(new EventTime(3.6f, false, [&]()

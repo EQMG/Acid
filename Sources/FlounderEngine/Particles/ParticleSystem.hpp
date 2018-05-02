@@ -13,7 +13,7 @@ namespace fl
 	/// <summary>
 	/// A system of particles that are to be spawned.
 	/// </summary>
-	class F_EXPORT ParticleSystem :
+	class FL_EXPORT ParticleSystem :
 		public Component
 	{
 	private:

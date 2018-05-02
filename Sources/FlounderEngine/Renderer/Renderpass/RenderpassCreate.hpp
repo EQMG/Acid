@@ -14,7 +14,7 @@ namespace fl
 		TypeSwapchain = 2,
 	};
 
-	class F_EXPORT Attachment
+	class FL_EXPORT Attachment
 	{
 	public:
 		unsigned int m_binding;
@@ -36,7 +36,7 @@ namespace fl
 		}
 	};
 
-	class F_EXPORT SubpassType
+	class FL_EXPORT SubpassType
 	{
 	public:
 		uint32_t m_binding;

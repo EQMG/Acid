@@ -10,7 +10,7 @@ namespace fl
 	/// <summary>
 	/// A helper for C++ files.
 	/// </summary>
-	class F_EXPORT FileSystem
+	class FL_EXPORT FileSystem
 	{
 	public:
 		/// <summary>

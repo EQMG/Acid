@@ -14,7 +14,7 @@ namespace fl
 	/// Start off by creating a new Engine object in your main thread, using Extensions in the constructor. By using Extensions: Modules can be required and therefor loaded into the engine.
 	/// Implementing interfaces like <seealso cref="Standards"/> with your extension can allow you do task specific things with your Extensions. After creating your Engine object call <seealso cref="#Run()"/> to start.
 	/// </summary>
-	class F_EXPORT Engine
+	class FL_EXPORT Engine
 	{
 	private:
 		typedef std::chrono::high_resolution_clock HighResolutionClock;

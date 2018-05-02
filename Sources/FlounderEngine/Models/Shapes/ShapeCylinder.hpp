@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT ShapeCylinder :
+	class FL_EXPORT ShapeCylinder :
 		public Model
 	{
 	public:

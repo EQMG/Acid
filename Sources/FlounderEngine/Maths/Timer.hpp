@@ -7,7 +7,7 @@ namespace fl
 	/// <summary>
 	/// A timer implementation for events.
 	/// </summary>
-	class F_EXPORT Timer
+	class FL_EXPORT Timer
 	{
 	private:
 		float m_startTime;

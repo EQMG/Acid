@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Class that handles a descriptor set.
 	/// </summary>
-	class F_EXPORT DescriptorsHandler
+	class FL_EXPORT DescriptorsHandler
 	{
 	private:
 		ShaderProgram *m_shaderProgram;

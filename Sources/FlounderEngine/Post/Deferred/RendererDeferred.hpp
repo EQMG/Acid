@@ -7,7 +7,7 @@
 
 namespace fl
 {
-	class F_EXPORT RendererDeferred :
+	class FL_EXPORT RendererDeferred :
 		public IRenderer
 	{
 	private:

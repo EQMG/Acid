@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class F_EXPORT FilterFxaa :
+	class FL_EXPORT FilterFxaa :
 		public IPostFilter
 	{
 	private:

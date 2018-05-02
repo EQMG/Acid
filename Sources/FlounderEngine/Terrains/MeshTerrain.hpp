@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT MeshTerrain :
+	class FL_EXPORT MeshTerrain :
 		public MeshSimple
 	{
 	private:

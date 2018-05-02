@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Represents a post effect shader and on application saves the result into a fbo.
 	/// </summary>
-	class F_EXPORT IPostFilter
+	class FL_EXPORT IPostFilter
 	{
 	protected:
 		DescriptorsHandler *m_descriptorSet;

@@ -14,7 +14,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a entity prefab.
 	/// </summary>
-	class F_EXPORT PrefabObject :
+	class FL_EXPORT PrefabObject :
 		public IResource
 	{
 	private:

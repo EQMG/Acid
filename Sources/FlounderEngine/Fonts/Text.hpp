@@ -27,7 +27,7 @@ namespace fl
 	/// <summary>
 	/// A object the represents a text in a GUI.
 	/// </summary>
-	class F_EXPORT Text :
+	class FL_EXPORT Text :
 		public UiObject
 	{
 	private:

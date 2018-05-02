@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// Class that represents a loaded sound.
 	/// </summary>
-	class F_EXPORT Sound
+	class FL_EXPORT Sound
 	{
 	private:
 		ALuint m_source;

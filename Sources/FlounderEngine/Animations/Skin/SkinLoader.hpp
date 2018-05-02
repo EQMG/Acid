@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT SkinLoader
+	class FL_EXPORT SkinLoader
 	{
 	private:
 		LoadedValue *m_skinData;

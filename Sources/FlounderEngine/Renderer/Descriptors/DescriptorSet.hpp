@@ -12,7 +12,7 @@ namespace fl
 
 	class Pipeline;
 
-	class F_EXPORT DescriptorSet
+	class FL_EXPORT DescriptorSet
 	{
 	private:
 		ShaderProgram *m_shaderProgram;

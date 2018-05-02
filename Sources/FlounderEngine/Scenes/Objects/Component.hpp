@@ -11,7 +11,7 @@ namespace fl
 {
 	class GameObject;
 
-	class F_EXPORT Component
+	class FL_EXPORT Component
 	{
 	private:
 		std::string m_name;

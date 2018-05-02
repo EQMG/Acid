@@ -7,7 +7,7 @@
 
 namespace fl
 {
-	class F_EXPORT RendererShadows :
+	class FL_EXPORT RendererShadows :
 		public IRenderer
 	{
 	private:

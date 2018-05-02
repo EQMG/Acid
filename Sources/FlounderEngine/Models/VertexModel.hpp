@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	class F_EXPORT VertexModel :
+	class FL_EXPORT VertexModel :
 		public IVertex
 	{
 	public:

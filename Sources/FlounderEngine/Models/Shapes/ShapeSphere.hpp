@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class F_EXPORT ShapeSphere :
+	class FL_EXPORT ShapeSphere :
 		public Model
 	{
 	public:
