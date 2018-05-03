@@ -2,6 +2,7 @@
 
 #include <Inputs/ButtonCompound.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
+#include <Inputs/Mouse.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
 
@@ -34,6 +35,7 @@ namespace Demo
 			m_uiStartLogo->SetAlphaDriver(new DriverConstant(0.0f));
 			m_overlayDebug->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
 			m_uiStartLogo->SetStarting(false);
+			Mouse::Get()->SetCursorHidden(true);
 		}
 	}
 

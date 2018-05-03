@@ -1,6 +1,6 @@
 <img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Flounder.png" alt="flounder" width=225>
 
-# Flounder
+# Flounder v0.9
 
 [![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Flounder/issues)
 
@@ -18,7 +18,7 @@ Linux   [![Build Status](https://travis-ci.org/Equilibrium-Games/Flounder.svg?br
 ## Links
 Trello   [Board](https://trello.com/b/ZRvpbbYC/flounder)
 
-Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs/docs/html/namespace_flounder.html)
+Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs/docs/html/namespacefl.html)
 
 Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/LocMetrics.html)
 

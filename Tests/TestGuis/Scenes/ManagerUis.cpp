@@ -48,6 +48,8 @@ namespace Demo
 			m_overlayDebug->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
 			//m_uiNavigation->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
 			m_uiStartLogo->SetStarting(false);
+
+			TogglePause(); // Testing.
 		}
 	}
 

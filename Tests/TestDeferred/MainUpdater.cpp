@@ -55,7 +55,7 @@ namespace Demo
 		}
 
 		// Renders when needed.
-		if (m_timerRender->IsPassedTime() || Engine::Get()->GetFpsLimit() <= 0.0f || Engine::Get()->GetFpsLimit() > 1000.0f)
+		if (m_timerRender->IsPassedTime() || Engine::Get()->GetFpsLimit() <= 0.0f)
 		{
 			// Resets the timer.
 			m_timerRender->ResetStartTime();
