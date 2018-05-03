@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 cd ../
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
