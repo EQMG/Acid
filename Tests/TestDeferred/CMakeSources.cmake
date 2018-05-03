@@ -1,4 +1,4 @@
-set(STARTING_HEADERS_
+set(TESTDEFERED_HEADERS_
         "Configs/ConfigManager.hpp"
         "Scenes/Scene1.hpp"
         "Scenes/FpsCamera.hpp"
@@ -6,14 +6,10 @@ set(STARTING_HEADERS_
         "Scenes/ManagerUis.hpp"
         "MainRenderer.hpp"
         "MainUpdater.hpp"
-        "Uis/Navigation/ContentExit.hpp"
-        "Uis/Navigation/UiNavigation.hpp"
-        "Uis/Navigation/UiTab.hpp"
         "Uis/OverlayDebug.hpp"
-        "Uis/UiInventory.hpp"
         )
 
-set(STARTING_SOURCES_
+set(TESTDEFERED_SOURCES_
         "Configs/ConfigManager.cpp"
         "Scenes/Scene1.cpp"
         "Scenes/FpsCamera.cpp"
@@ -22,17 +18,13 @@ set(STARTING_SOURCES_
         "Main.cpp"
         "MainRenderer.cpp"
         "MainUpdater.cpp"
-        "Uis/Navigation/ContentExit.cpp"
-        "Uis/Navigation/UiNavigation.cpp"
-        "Uis/Navigation/UiTab.cpp"
         "Uis/OverlayDebug.cpp"
-        "Uis/UiInventory.cpp"
         )
 
-source_group("Header Files" FILES ${STARTING_HEADERS_})
-source_group("Source Files" FILES ${STARTING_SOURCES_})
+source_group("Header Files" FILES ${TESTDEFERED_HEADERS_})
+source_group("Source Files" FILES ${TESTDEFERED_SOURCES_})
 
-set(STARTING_SOURCES
-        ${STARTING_HEADERS_}
-        ${STARTING_SOURCES_}
+set(TESTDEFERED_SOURCES
+        ${TESTDEFERED_HEADERS_}
+        ${TESTDEFERED_SOURCES_}
         )

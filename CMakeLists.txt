@@ -125,5 +125,6 @@ add_subdirectory(Sources)
 
 # Example Sources
 if (FLOUNDER_BUILD_TESTING)
-	add_subdirectory(Tests/Starting)
+	add_subdirectory(Tests/TestDeferred)
+	add_subdirectory(Tests/TestGuis)
 endif()

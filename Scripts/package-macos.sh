@@ -1,7 +1,7 @@
 cd ../
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
-APP=ExampleStarting
+APP=TestDeferred
 BINPATH=${SCRIPTPATH}/Build/Debug/bin
 BUNDLE=${BINPATH}/${APP}.app
 

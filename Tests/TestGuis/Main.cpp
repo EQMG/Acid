@@ -5,10 +5,8 @@
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Terrains/LodBehaviour.hpp>
-#include "Configs/ConfigManager.hpp"
 #include "MainUpdater.hpp"
 #include "MainRenderer.hpp"
-#include "Scenes/FpsPlayer.hpp"
 #include "Scenes/Scene1.hpp"
 
 using namespace Demo;
@@ -24,19 +22,12 @@ int main(int argc, char **argv)
 	auto engine = new Engine();
 	engine->SetUpdater(new MainUpdater());
 
-	auto configManager = new ConfigManager();
-	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
-
 	// Registers modules.
-//	Engine::Get()->RegisterModule<Example>("Example");
-//	Engine::Get()->DeregisterModule("shadows");
 
 	// Registers components.
-	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
-	Scenes::Get()->RegisterComponent<LodBehaviour>("LodBehaviour");
 
 	// Initializes modules.
-	Display::Get()->SetTitle("Example Starting");
+	Display::Get()->SetTitle("Testing Guis");
 	Display::Get()->SetIcon("Resources/Logos/Tail.png");
 	Mouse::Get()->SetCustomMouse("Resources/Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
@@ -46,7 +37,6 @@ int main(int argc, char **argv)
 	const int exitCode = engine->Run();
 
 	// Deletes the engine.
-	delete configManager;
 	delete engine;
 
 	// Pauses the console.
