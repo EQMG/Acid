@@ -4,7 +4,7 @@ project (Flounder)
 # Options
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(FLOUNDER_INSTALL "Generate installation target" ON)
-option(FLOUNDER_BUILD_EXAMPLES "Build the Flounder example programs" ON)
+option(FLOUNDER_BUILD_TESTING "Build the Flounder example programs" ON)
 option(FLOUNDER_BUILD_TESTS "Build the Flounder test programs" ON)
 option(FLOUNDER_SET_OUTPUT "If Flounder will set it's own outputs" ON)
 
@@ -17,6 +17,10 @@ endif()
 message(STATUS "Shared Libs: ${BUILD_SHARED_LIBS}")
 
 # Preprocessor
+if(CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release;" CACHE INTERNAL "")
+endif()
+
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	add_definitions(-DFL_VERBOSE)
 	add_definitions(-DFL_BUILD_DEBUG)
@@ -25,10 +29,6 @@ elseif("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 elseif("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
 	add_definitions(-DFL_VERBOSE)
 	add_definitions(-DFL_BUILD_RELEASE)
-endif()
-
-if(CMAKE_SIZEOF_VOID_P EQUAL 4)
-	message(ERROR "Cannot compile in 32-bit mode!")
 endif()
 
 if(WIN32)
@@ -45,10 +45,19 @@ elseif(ANDROID)
 	add_definitions(-DFL_BUILD_ANDROID)
 endif()
 
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(FLOUNDER_64BIT true)
+    add_definitions(-DFL_64BIT)
+else()
+    set(FLOUNDER_32BIT true)
+    add_definitions(-DFL_32BIT)
+endif()
+
 # Compiler Options
 message(STATUS "System: ${CMAKE_SYSTEM}")
 message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "Sizeof Void: ${CMAKE_SIZEOF_VOID_P}")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -61,19 +70,25 @@ if(MSVC)
 	add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /Ox /Ob2 /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /arch:SSE2 /MP /W3 /wd4251")
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
-	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /RTC1 /MDd -DDEBUG")
+
+    if (FLOUNDER_64BIT)
+        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
+        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /OPT:ICF")
+    else()
+        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi")
+    endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 	add_definitions(-DFL_BUILD_CLANG)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -msse3 -mfpmath=sse") # -Wextra -Werror -pedantic
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
-	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -DDEBUG")
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -s -DNDEBUG -Wno-unused-variable")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	add_definitions(-DFL_BUILD_GNU)
 	add_definitions(-D__USE_MINGW_ANSI_STDIO=0)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wall -msse3 -mfpmath=sse") # -Wextra -Werror -pedantic
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
-	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -s")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wall -mavx -msse3 -mfpmath=sse") # -Wextra -Werror -pedantic
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -DDEBUG")
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -s -DNDEBUG -Wno-unused-variable")
 endif()
 
 if(ANDROID)
@@ -106,9 +121,9 @@ message(${LIBRARIES_INCLUDES})
 message(${LIBRARIES_LINKS})
 
 # Engine Sources
-add_subdirectory(Sources/FlounderEngine)
+add_subdirectory(Sources)
 
 # Example Sources
-if (FLOUNDER_BUILD_EXAMPLES)
-	add_subdirectory(Sources/ExampleStarting)
+if (FLOUNDER_BUILD_TESTING)
+	add_subdirectory(Tests/Starting)
 endif()
