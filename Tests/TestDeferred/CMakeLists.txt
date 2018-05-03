@@ -9,6 +9,10 @@ set(TESTDEFERED_INCLUDES "${PROJECT_SOURCE_DIR}/Tests/TestDeferred/")
 add_executable(TestDeferred ${TESTDEFERED_SOURCES})
 #endif()
 
+set_target_properties(TestDeferred PROPERTIES
+                      POSITION_INDEPENDENT_CODE ON
+                      FOLDER "Flounder")
+
 add_dependencies(TestDeferred Flounder)
 
 target_include_directories(TestDeferred PUBLIC ${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/" ${TESTDEFERED_INCLUDES})

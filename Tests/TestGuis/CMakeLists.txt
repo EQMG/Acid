@@ -9,6 +9,10 @@ set(TESTGUIS_INCLUDES "${PROJECT_SOURCE_DIR}/Tests/TestGuis/")
 add_executable(TestGuis ${TESTGUIS_SOURCES})
 #endif()
 
+set_target_properties(TestGuis PROPERTIES
+                      POSITION_INDEPENDENT_CODE ON
+                      FOLDER "Flounder")
+
 add_dependencies(TestGuis Flounder)
 
 target_include_directories(TestGuis PUBLIC ${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/" ${TESTGUIS_INCLUDES})

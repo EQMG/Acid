@@ -5,6 +5,10 @@ option(STB_INSTALL "Generate installation target" ON)
 
 add_library(stb ${LIB_TYPE} ${STB_SOURCES})
 
+set_target_properties(stb PROPERTIES
+                      POSITION_INDEPENDENT_CODE ON
+                      FOLDER "STB")
+
 target_include_directories(stb PUBLIC ${STB_INCLUDES})
 
 if(WIN32 AND BUILD_SHARED_LIBS)
