@@ -286,6 +286,12 @@ namespace fl
 
 		Vector3 &operator=(const Vector3 &other);
 
+		Vector3 &operator=(const Vector2 &other);
+
+		Vector3 &operator=(const Vector4 &other);
+
+		Vector3 &operator=(const Colour &other);
+
 		Vector3 &operator=(LoadedValue *value);
 
 		bool operator==(const Vector3 &other) const;

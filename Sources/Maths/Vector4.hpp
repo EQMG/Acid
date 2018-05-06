@@ -199,6 +199,10 @@ namespace fl
 
 		Vector4 &operator=(const Vector4 &other);
 
+		Vector4 &operator=(const Vector3 &other);
+
+		Vector4 &operator=(const Colour &other);
+
 		Vector4 &operator=(LoadedValue *value);
 
 		bool operator==(const Vector4 &other) const;
