@@ -224,6 +224,8 @@ namespace fl
 
 		Vector2 &operator=(const Vector2 &other);
 
+		Vector2 &operator=(const Vector3 &other);
+
 		Vector2 &operator=(LoadedValue *value);
 
 		bool operator==(const Vector2 &other) const;

@@ -1,4 +1,4 @@
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Flounder.png" alt="flounder" width=225>
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Flounder.png" alt="Flounder" height="128px">
 
 # Flounder v0.9
 
@@ -69,13 +69,13 @@ Flounder uses the following libraries:
  * [moltenvk](https://github.com/KhronosGroup/MoltenVK) - Vulkan for Apple
 
 ## Screenshots
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot1.png" alt="flounder" width=600>
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Screenshot1.png" alt="flounder" width="600px">
 
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot2.png" alt="flounder" width=600>
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Screenshot2.png" alt="flounder" width="600px">
 
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot3.png" alt="flounder" width=600>
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Screenshot3.png" alt="flounder" width="600px">
 
-<img src="https://github.com/Equilibrium-Games/Flounder/blob/master/Documents/Screenshot4.png" alt="flounder" width=600>
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Screenshot4.png" alt="flounder" width="600px">
 
 ## License
 Flounder is released under the MIT licence, [LICENSE.md](LICENSE.md) for more details.
