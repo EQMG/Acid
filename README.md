@@ -18,7 +18,9 @@ Linux   [![Build Status](https://travis-ci.org/Equilibrium-Games/Flounder.svg?br
 ## Links
 Trello   [Board](https://trello.com/b/ZRvpbbYC/flounder)
 
-Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs/docs/html/namespacefl.html)
+Readme   [Read more](https://equilibrium-games.github.io/Flounder/)
+
+Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs/)
 
 Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/LocMetrics.html)
 

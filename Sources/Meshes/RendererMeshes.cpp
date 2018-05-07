@@ -28,7 +28,6 @@ namespace fl
 		for (auto meshRender : renderList)
 		{
 			meshRender->CmdRender(commandBuffer, m_uniformScene);
-		//	return;
 		}
 	}
 }

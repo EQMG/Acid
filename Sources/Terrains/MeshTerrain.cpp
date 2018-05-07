@@ -34,6 +34,11 @@ namespace fl
 
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
 	{
+		if (m_radius == 0.0f)
+		{
+			return Vector3(x, 0.0f, z);
+		}
+
 		Vector4 cartesian = Vector4(x, 0.0f, z, 1.0f);
 		cartesian = m_transform->GetWorldMatrix().Multiply(cartesian);
 		cartesian = Vector3(cartesian).ProjectCubeToSphere(m_radius);
