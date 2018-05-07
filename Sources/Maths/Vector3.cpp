@@ -202,6 +202,11 @@ namespace fl
 
 	Vector3 Vector3::ProjectCubeToSphere(const float &radius)
 	{
+		if (radius == 0.0f)
+		{
+			return Vector3(*this);
+		}
+
 		Vector3 cube = *this / radius;
 		float dx = cube.m_x * cube.m_x;
 		float dy = cube.m_y * cube.m_y;
