@@ -3,6 +3,7 @@ project(STB)
 
 option(STB_INSTALL "Generate installation target" ON)
 
+set(STB_INCLUDES "${PROJECT_SOURCE_DIR}/include")
 add_library(stb ${LIB_TYPE} ${STB_SOURCES})
 
 set_target_properties(stb PROPERTIES
@@ -23,8 +24,12 @@ if (STB_INSTALL)
 			LIBRARY DESTINATION "lib"
 	)
 
-    foreach(file ${STB_HEADERS_})
-        get_filename_component(dir ${file} DIRECTORY)
-        install(FILES ${file} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/stb/${dir})
-    endforeach()
+#    foreach(file ${STB_HEADERS_})
+#        get_filename_component(dir ${file} DIRECTORY)
+#        install(FILES ${file} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/stb/${dir})
+#    endforeach()
+
+	if (FLOUNDER_INSTALL)
+		file(COPY "${STB_INCLUDES}/" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/")
+	endif()
 endif()
