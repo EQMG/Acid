@@ -4,7 +4,7 @@
 #include <cstring>
 #include <vector>
 #include <vulkan/vulkan.h>
-#include <GlslangToSpv.h>
+#include <SPIRV/GlslangToSpv.h>
 #include <GLFW/glfw3.h>
 #include "Engine/Engine.hpp"
 

@@ -39,3 +39,8 @@ message(STATUS "Vulkan: ${VULKAN_LIBRARY}")
 if(NOT VULKAN_LIBRARY)
 	message(FATAL_ERROR "Vulkan library not found!")
 endif()
+
+# Install
+if (FLOUNDER_INSTALL)
+    file(COPY "${VULKAN_INCLUDES}/" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/")
+endif()

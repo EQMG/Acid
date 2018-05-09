@@ -13,3 +13,8 @@ message(STATUS "OpenAL: ${OPENAL_LIBRARY}")
 if(NOT OPENAL_LIBRARY)
 	message(FATAL_ERROR "OpenAL library not found!")
 endif()
+
+# Install
+if (FLOUNDER_INSTALL)
+	file(COPY "${OPENAL_INCLUDES}/" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/")
+endif()
