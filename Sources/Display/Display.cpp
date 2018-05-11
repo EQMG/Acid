@@ -3,6 +3,7 @@
 #ifdef FL_BUILD_WINDOWS
 #include <Windows.h>
 #endif
+#include <SPIRV/GlslangToSpv.h>
 #include "Textures/Texture.hpp"
 
 namespace fl

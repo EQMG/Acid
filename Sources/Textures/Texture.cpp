@@ -1,6 +1,7 @@
 #include "Texture.hpp"
 
 #include <cmath>
+#include <cassert>
 #include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 

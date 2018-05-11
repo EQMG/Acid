@@ -7,6 +7,11 @@
 #include "Display/Display.hpp"
 #include "PipelineCreate.hpp"
 
+namespace glslang
+{
+	class TProgram;
+}
+
 namespace fl
 {
 	class FL_HIDDEN Uniform
@@ -179,10 +184,6 @@ namespace fl
 		static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
 
 		static VkShaderStageFlagBits GetShaderStage(const std::string &filename);
-
-		static EShLanguage GetEshLanguage(const VkShaderStageFlagBits &stageFlag);
-
-		static TBuiltInResource GetResources();
 
 		std::string ToString() const;
 	};
