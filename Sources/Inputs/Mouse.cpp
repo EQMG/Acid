@@ -97,7 +97,7 @@ namespace fl
 			int width = 0;
 			int height = 0;
 			int components = 0;
-			stbi_uc *data = Texture::LoadPixels(m_customMouse.c_str(), &width, &height, &components);
+			auto data = Texture::LoadPixels(m_customMouse.c_str(), &width, &height, &components);
 
 			if (data == nullptr)
 			{
@@ -111,7 +111,7 @@ namespace fl
 
 			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
 			glfwSetCursor(Display::Get()->GetWindow(), cursor);
-			stbi_image_free(data);
+			Texture::DeletePixels(data);
 			//	delete image;
 		}
 	}

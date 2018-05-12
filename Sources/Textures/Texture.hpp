@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
-#include <STB/stb_image.h>
 #include "Display/Display.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
@@ -107,7 +106,13 @@ namespace fl
 
 		static VkDeviceSize LoadSize(const std::string &filepath);
 
-		static stbi_uc *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
+		static VkDeviceSize LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes);
+
+		static unsigned char *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
+
+		static unsigned char *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components);
+
+		static void DeletePixels(unsigned char *pixels);
 
 		static uint32_t GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth);
 
