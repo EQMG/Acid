@@ -11,9 +11,9 @@ namespace Demo
 {
 	Scene1::Scene1() :
 		Scene(new FpsCamera(), new ManagerUis()),
-		m_buttonFullscreen(new ButtonKeyboard({GLFW_KEY_F11})),
-		m_buttonScreenshot(new ButtonKeyboard({GLFW_KEY_F12})),
-		m_buttonExit(new ButtonKeyboard({GLFW_KEY_DELETE}))
+		m_buttonFullscreen(new ButtonKeyboard({Key::KEY_F11})),
+		m_buttonScreenshot(new ButtonKeyboard({Key::KEY_F12})),
+		m_buttonExit(new ButtonKeyboard({Key::KEY_DELETE}))
 	{
 	}
 

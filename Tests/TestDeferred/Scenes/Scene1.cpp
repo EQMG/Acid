@@ -24,10 +24,10 @@ namespace Demo
 {
 	Scene1::Scene1() :
 		Scene(new FpsCamera(), new ManagerUis()),
-		m_buttonFullscreen(new ButtonKeyboard({GLFW_KEY_F11})),
-		m_buttonCaptureMouse(new ButtonKeyboard({GLFW_KEY_M, GLFW_KEY_ESCAPE})),
-		m_buttonScreenshot(new ButtonKeyboard({GLFW_KEY_F12})),
-		m_buttonExit(new ButtonKeyboard({GLFW_KEY_DELETE})),
+		m_buttonFullscreen(new ButtonKeyboard({Key::KEY_F11})),
+		m_buttonCaptureMouse(new ButtonKeyboard({Key::KEY_M, Key::KEY_ESCAPE})),
+		m_buttonScreenshot(new ButtonKeyboard({Key::KEY_F12})),
+		m_buttonExit(new ButtonKeyboard({Key::KEY_DELETE})),
 		m_soundScreenshot(new Sound("Resources/Sounds/Screenshot.ogg"))
 	{
 	}

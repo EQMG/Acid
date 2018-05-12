@@ -10,7 +10,7 @@ namespace fl
 	struct FL_HIDDEN SelectorJoystick
 	{
 	public:
-		unsigned int joystick;
+		JoystickPort joystick;
 		ButtonJoystick *clickLeft;
 		ButtonJoystick *clickRight;
 		AxisJoystick *axisX;
@@ -43,12 +43,12 @@ namespace fl
 		/// <summary>
 		/// Sets up the joystick settings to be used for controlling the virtual cursor.
 		/// </summary>
-		/// <param name="joystick"> The joystick ID to attach though. </param>
+		/// <param name="joystick"> The joystick port to attach to. </param>
 		/// <param name="joystickLeftClick"> The joystick key to be used as the left click. </param>
 		/// <param name="joystickRightClick"> The joystick key to be used as the right click. </param>
 		/// <param name="joystickAxisX"> The joystick axis to be used for moving the x axis. </param>
 		/// <param name="joystickAxisY"> The joystick axis to be used for moving the y axis. </param>
-		void Load(const unsigned int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY);
+		void Load(const JoystickPort &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY);
 
 		void Update(const bool &paused);
 

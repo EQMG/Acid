@@ -16,7 +16,7 @@ namespace Demo
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer()))
 	{
-		Uis::Get()->GetSelector()->Load(0, 0, 1, 0, 1);
+		Uis::Get()->GetSelector()->Load(JoystickPort::JOYSTICK_1, 0, 1, 0, 1);
 		m_uiStartLogo->SetAlphaDriver(new DriverConstant(1.0f));
 		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f));
 	}

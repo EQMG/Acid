@@ -1,12 +1,10 @@
 #include "ButtonKeyboard.hpp"
 
-#include "Keyboard.hpp"
-
 namespace fl
 {
-	ButtonKeyboard::ButtonKeyboard(const std::vector<int> &keys) :
+	ButtonKeyboard::ButtonKeyboard(const std::vector<Key> &keys) :
 		IButton(),
-		m_keys(std::vector<int>(keys)),
+		m_keys(std::vector<Key>(keys)),
 		m_wasDown(false)
 	{
 	}

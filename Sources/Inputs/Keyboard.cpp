@@ -1,12 +1,14 @@
 #include "Keyboard.hpp"
 
+#include <GLFW/glfw3.h>
+
 namespace fl
 {
 	void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
 		// TODO: Play with mods.
 
-		if (key < 0 || key > GLFW_KEY_LAST)
+		if (key < 0 || key > Key::KEY_LAST)
 		{
 			printf("Invalid action attempted with key: '%i'\n", key);
 		}
@@ -23,11 +25,11 @@ namespace fl
 
 	Keyboard::Keyboard() :
 		IModule(),
-		m_keyboardKeys(new int[GLFW_KEY_LAST + 1]),
+		m_keyboardKeys(new int[Key::KEY_LAST + 1]),
 		m_keyboardChar(0)
 	{
 		// Sets the default state of the keys to released.
-		for (unsigned int i = 0; i < GLFW_KEY_LAST + 1; i++)
+		for (unsigned int i = 0; i < Key::KEY_LAST + 1; i++)
 		{
 			m_keyboardKeys[i] = GLFW_RELEASE;
 		}
@@ -46,9 +48,9 @@ namespace fl
 	{
 	}
 
-	bool Keyboard::GetKey(const int &key) const
+	bool Keyboard::GetKey(const Key &key) const
 	{
-		if (key < 0 || key > GLFW_KEY_LAST + 1)
+		if (key < 0 || key > Key::KEY_LAST + 1)
 		{
 			return false;
 		}

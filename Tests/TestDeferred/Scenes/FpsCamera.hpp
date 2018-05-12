@@ -3,6 +3,7 @@
 #include <Scenes/ICamera.hpp>
 #include <Inputs/ButtonJoystick.hpp>
 #include <Inputs/AxisJoystick.hpp>
+#include <Inputs/ButtonMouse.hpp>
 
 using namespace fl;
 
@@ -50,7 +51,7 @@ namespace Demo
 		float m_targetRotationAngle;
 
 		float m_sensitivity;
-		int m_reangleButton;
+		MouseButton m_reangleButton;
 		AxisJoystick *m_joystickVertical;
 		AxisJoystick *m_joystickHorizontal;
 
