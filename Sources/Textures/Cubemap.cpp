@@ -4,11 +4,11 @@
 
 namespace fl
 {
-	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXS = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
+	const std::vector<std::string> SIDE_FILE_SUFFIXES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt, const bool &mipmap) :
 		IResource(),
-		Buffer(LoadSize(filename, fileExt), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
+		Buffer(Texture::LoadSize(filename, fileExt, SIDE_FILE_SUFFIXES), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		IDescriptor(),
 		m_filename(filename),
 		m_fileExt(fileExt),
@@ -28,7 +28,7 @@ namespace fl
 
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		stbi_uc *pixels = LoadPixels(filename, fileExt, m_size, &m_width, &m_height, &m_depth, &m_components);
+		auto pixels = Texture::LoadPixels(filename, fileExt, SIDE_FILE_SUFFIXES, m_size, &m_width, &m_height, &m_depth, &m_components);
 
 		m_mipLevels = mipmap ? Texture::GetMipLevels(m_width, m_height, m_depth) : 1;
 
@@ -56,7 +56,7 @@ namespace fl
 		m_imageInfo.sampler = m_sampler;
 
 		delete bufferStaging;
-		stbi_image_free(pixels);
+		Texture::DeletePixels(pixels);
 
 #if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
@@ -101,39 +101,5 @@ namespace fl
 		descriptorWrite.pImageInfo = &m_imageInfo;
 
 		return descriptorWrite;
-	}
-
-	VkDeviceSize Cubemap::LoadSize(const std::string &filename, const std::string &fileExt)
-	{
-		VkDeviceSize size = 0;
-
-		for (const auto suffix : SIDE_FILE_SUFFIXS)
-		{
-			const std::string filepathSide = filename + "/" + suffix + fileExt;
-			const VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
-			size += sizeSide;
-		}
-
-		return size;
-	}
-
-	stbi_uc *Cubemap::LoadPixels(const std::string &filename, const std::string &fileExt, const size_t &bufferSize, int *width, int *height, int *depth, int *components)
-	{
-		stbi_uc *pixels = (stbi_uc *) malloc(bufferSize);
-		stbi_uc *offset = pixels;
-
-		for (const auto suffix : SIDE_FILE_SUFFIXS)
-		{
-			std::string filepathSide = filename + "/" + suffix + fileExt;
-			VkDeviceSize sizeSide = Texture::LoadSize(filepathSide);
-			stbi_uc *pixelsSide = Texture::LoadPixels(filepathSide, width, height, components);
-			depth = width;
-
-			memcpy(offset, pixelsSide, sizeSide);
-			offset += sizeSide;
-			free(pixelsSide);
-		}
-
-		return pixels;
 	}
 }

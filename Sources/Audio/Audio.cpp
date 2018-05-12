@@ -4,6 +4,14 @@
 //#ifdef FL_BUILD_WINDOWS
 //#include <Windows.h>
 //#endif
+#ifdef FL_BUILD_MACOS
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
+#include <AL/al.h>
+#include <AL/alc.h>
+#endif
+#include <STB/stb_vorbis.h>
 #include "Helpers/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"
 
@@ -47,7 +55,7 @@ namespace fl
 		}
 	}
 
-	void Audio::ErrorAl(const ALenum &result)
+	void Audio::ErrorAl(const int &result)
 	{
 		if (result == AL_NO_ERROR)
 		{
@@ -61,7 +69,7 @@ namespace fl
 		throw std::runtime_error("OpenAL runtime error.");
 	}
 
-	ALuint Audio::LoadFileWav(const std::string &filename)
+	unsigned int Audio::LoadFileWav(const std::string &filename)
 	{
 		if (!FileSystem::FileExists(filename))
 		{
@@ -135,7 +143,7 @@ namespace fl
 		return buffer;
 	}
 
-	ALuint Audio::LoadFileOgg(const std::string &filename)
+	unsigned int Audio::LoadFileOgg(const std::string &filename)
 	{
 		if (!FileSystem::FileExists(filename))
 		{

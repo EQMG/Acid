@@ -16,7 +16,7 @@ namespace fl
 	{
 	private:
 		std::string m_filename;
-		ALuint m_buffer;
+		unsigned int m_buffer;
 	public:
 		static SoundBuffer *Resource(const std::string &filename)
 		{
@@ -38,6 +38,6 @@ namespace fl
 
 		std::string GetFilename() override { return m_filename; };
 
-		ALuint GetBuffer() const { return m_buffer; };
+		unsigned int GetBuffer() const { return m_buffer; };
 	};
 }

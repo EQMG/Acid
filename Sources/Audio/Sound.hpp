@@ -12,7 +12,7 @@ namespace fl
 	class FL_EXPORT Sound
 	{
 	private:
-		ALuint m_source;
+		unsigned int m_source;
 
 		bool m_playing;
 		float m_gain;

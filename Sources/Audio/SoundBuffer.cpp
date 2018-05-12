@@ -1,5 +1,12 @@
 #include "SoundBuffer.hpp"
 
+#ifdef FL_BUILD_MACOS
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
+#include <AL/al.h>
+#include <AL/alc.h>
+#endif
 #include "Helpers/FileSystem.hpp"
 
 namespace fl

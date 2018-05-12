@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <cassert>
+#include <STB/stb_image.h>
 #include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 
@@ -41,7 +42,7 @@ namespace fl
 
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		stbi_uc *pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
+		auto pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
 
 		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height, 1) : 1;
 
@@ -69,7 +70,7 @@ namespace fl
 		m_imageInfo.sampler = m_sampler;
 
 		delete bufferStaging;
-		stbi_image_free(pixels);
+		DeletePixels(pixels);
 		m_filename = filename;
 
 #if FL_VERBOSE
@@ -199,7 +200,21 @@ namespace fl
 		return width * height * 4;
 	}
 
-	stbi_uc *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
+	VkDeviceSize Texture::LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes)
+	{
+		VkDeviceSize size = 0;
+
+		for (const auto suffix : fileSuffixes)
+		{
+			const std::string filepathSide = filename + "/" + suffix + fileExt;
+			const VkDeviceSize sizeSide = LoadSize(filepathSide);
+			size += sizeSide;
+		}
+
+		return size;
+	}
+
+	unsigned char *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
 	{
 		if (!FileSystem::FileExists(filepath))
 		{
@@ -222,6 +237,32 @@ namespace fl
 		}
 
 		return data;
+	}
+
+
+	unsigned char *Texture::LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components)
+	{
+		stbi_uc *pixels = (stbi_uc *) malloc(bufferSize);
+		stbi_uc *offset = pixels;
+
+		for (const auto suffix : fileSuffixes)
+		{
+			std::string filepathSide = filename + "/" + suffix + fileExt;
+			VkDeviceSize sizeSide = LoadSize(filepathSide);
+			stbi_uc *pixelsSide = LoadPixels(filepathSide, width, height, components);
+			depth = width;
+
+			memcpy(offset, pixelsSide, sizeSide);
+			offset += sizeSide;
+			free(pixelsSide);
+		}
+
+		return pixels;
+	}
+
+	void Texture::DeletePixels(unsigned char *pixels)
+	{
+		stbi_image_free(pixels);
 	}
 
 	uint32_t Texture::GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth)

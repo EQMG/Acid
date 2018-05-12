@@ -13,8 +13,6 @@ namespace fl
 		public IDescriptor
 	{
 	private:
-		static const std::vector<std::string> SIDE_FILE_SUFFIXS;
-
 		std::string m_filename;
 		std::string m_fileExt;
 
@@ -59,9 +57,5 @@ namespace fl
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
 		std::string GetFilename() override { return m_filename; };
-
-		static VkDeviceSize LoadSize(const std::string &filename, const std::string &fileExt);
-
-		static stbi_uc *LoadPixels(const std::string &filename, const std::string &fileExt, const size_t &bufferSize, int *width, int *height, int *depth, int *components);
 	};
 }

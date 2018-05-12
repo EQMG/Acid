@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <STB/stb_image_write.h>
 #include "Display/Display.hpp"
 
 namespace fl

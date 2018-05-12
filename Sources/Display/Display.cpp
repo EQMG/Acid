@@ -200,7 +200,7 @@ namespace fl
 			int width = 0;
 			int height = 0;
 			int components = 0;
-			stbi_uc *data = Texture::LoadPixels(m_icon.c_str(), &width, &height, &components);
+			auto data = Texture::LoadPixels(m_icon.c_str(), &width, &height, &components);
 
 			if (data == nullptr)
 			{
@@ -216,7 +216,7 @@ namespace fl
 				glfwSetWindowIcon(m_window, 1, icons);
 			}
 
-			stbi_image_free(data);
+			Texture::DeletePixels(data);
 		}
 	}
 
