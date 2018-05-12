@@ -28,32 +28,32 @@ namespace Demo
 		m_noclipEnabled(true),
 		m_inputForward(new AxisCompound({
 			new AxisButton(
-				new ButtonKeyboard({GLFW_KEY_S, GLFW_KEY_DOWN}),
-				new ButtonKeyboard({GLFW_KEY_W, GLFW_KEY_UP})
+				new ButtonKeyboard({Key::KEY_S, Key::KEY_DOWN}),
+				new ButtonKeyboard({Key::KEY_W, Key::KEY_UP})
 			),
-			new AxisJoystick(0, {1}, true)
+			new AxisJoystick(JoystickPort::JOYSTICK_1, {1}, true)
 		})),
 		m_inputStrafe(new AxisCompound({
 			new AxisButton(
-				new ButtonKeyboard({GLFW_KEY_D, GLFW_KEY_RIGHT}),
-				new ButtonKeyboard({GLFW_KEY_A, GLFW_KEY_LEFT})
+				new ButtonKeyboard({Key::KEY_D, Key::KEY_RIGHT}),
+				new ButtonKeyboard({Key::KEY_A, Key::KEY_LEFT})
 			),
-			new AxisJoystick(0, {0}, true)
+			new AxisJoystick(JoystickPort::JOYSTICK_1, {0}, true)
 		})),
 		m_inputSprint(new ButtonCompound({
-			new ButtonKeyboard({GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT}),
-			new ButtonJoystick(0, {1})
+			new ButtonKeyboard({Key::KEY_LEFT_SHIFT, Key::KEY_RIGHT_SHIFT}),
+			new ButtonJoystick(JoystickPort::JOYSTICK_1, {1})
 		})),
 		m_inputJump(new ButtonCompound({
-			new ButtonKeyboard({GLFW_KEY_SPACE}),
-			new ButtonJoystick(0, {1})
+			new ButtonKeyboard({Key::KEY_SPACE}),
+			new ButtonJoystick(JoystickPort::JOYSTICK_1, {1})
 		})),
 		m_inputCrouch(new ButtonCompound({
-			new ButtonKeyboard({GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL}),
-			new ButtonJoystick(0, {1})
+			new ButtonKeyboard({Key::KEY_LEFT_CONTROL, Key::KEY_RIGHT_CONTROL}),
+			new ButtonJoystick(JoystickPort::JOYSTICK_1, {1})
 		})),
 		m_toggleNoclip(new ButtonCompound({
-			new ButtonKeyboard({GLFW_KEY_N}),
+			new ButtonKeyboard({Key::KEY_N}),
 		})),
 		m_amountMove(new Vector3()),
 		m_amountRotate(new Vector3())

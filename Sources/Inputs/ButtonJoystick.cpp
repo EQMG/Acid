@@ -1,10 +1,8 @@
 #include "ButtonJoystick.hpp"
 
-#include "Joysticks.hpp"
-
 namespace fl
 {
-	ButtonJoystick::ButtonJoystick(const unsigned int &joystick, const std::vector<int> &buttons) :
+	ButtonJoystick::ButtonJoystick(const JoystickPort &joystick, const std::vector<int> &buttons) :
 		IButton(),
 		m_joystick(joystick),
 		m_buttons(std::vector<int>(buttons)),

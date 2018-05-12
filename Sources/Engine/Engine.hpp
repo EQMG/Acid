@@ -63,7 +63,7 @@ namespace fl
 		/// Loads the updater into the engine.
 		/// </summary>
 		/// <param name="updater"> The updater. </param>
-		void SetUpdater(IUpdater *updater) { m_updater = updater; }
+		void SetUpdater(IUpdater *updater);
 
 		/// <summary>
 		/// Registers a module with the register.

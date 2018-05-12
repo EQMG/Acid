@@ -12,8 +12,8 @@ namespace fl
 		m_rightClick(false),
 		m_leftWasClick(false),
 		m_rightWasClick(false),
-		m_mouseLeft(new ButtonMouse({GLFW_MOUSE_BUTTON_LEFT})),
-		m_mouseRight(new ButtonMouse({GLFW_MOUSE_BUTTON_RIGHT})),
+		m_mouseLeft(new ButtonMouse({MouseButton::MOUSE_BUTTON_LEFT})),
+		m_mouseRight(new ButtonMouse({MouseButton::MOUSE_BUTTON_RIGHT})),
 		m_selectorJoystick(nullptr)
 	{
 	}
@@ -26,7 +26,7 @@ namespace fl
 		delete m_selectorJoystick;
 	}
 
-	void UiSelector::Load(const unsigned int &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
+	void UiSelector::Load(const JoystickPort &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
 	{
 		m_selectorJoystick = new SelectorJoystick{
 			joystick,

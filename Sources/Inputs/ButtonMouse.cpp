@@ -1,12 +1,10 @@
 #include "ButtonMouse.hpp"
 
-#include "Mouse.hpp"
-
 namespace fl
 {
-	ButtonMouse::ButtonMouse(const std::vector<int> &buttons) :
+	ButtonMouse::ButtonMouse(const std::vector<MouseButton> &buttons) :
 		IButton(),
-		m_buttons(std::vector<int>(buttons)),
+		m_buttons(std::vector<MouseButton>(buttons)),
 		m_wasDown(false)
 	{
 	}
@@ -35,7 +33,7 @@ namespace fl
 
 	bool ButtonMouse::WasDown()
 	{
-		const bool stillDown = m_wasDown && IsDown();
+		bool stillDown = m_wasDown && IsDown();
 		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}

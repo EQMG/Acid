@@ -5,6 +5,22 @@
 
 namespace fl
 {
+	enum MouseButton
+	{
+		MOUSE_BUTTON_1 = 0,
+		MOUSE_BUTTON_2 = 1,
+		MOUSE_BUTTON_3 = 2,
+		MOUSE_BUTTON_4 = 3,
+		MOUSE_BUTTON_5 = 4,
+		MOUSE_BUTTON_6 = 5,
+		MOUSE_BUTTON_7 = 6,
+		MOUSE_BUTTON_8 = 7,
+		MOUSE_BUTTON_LAST = MOUSE_BUTTON_8,
+		MOUSE_BUTTON_LEFT = MOUSE_BUTTON_1,
+		MOUSE_BUTTON_RIGHT = MOUSE_BUTTON_2,
+		MOUSE_BUTTON_MIDDLE = MOUSE_BUTTON_3
+	};
+
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
@@ -81,7 +97,7 @@ namespace fl
 		/// </summary>
 		/// <param name="button"> The mouse button to test. </param>
 		/// <returns> If the mouse button is currently pressed. </returns>
-		bool GetButton(const int &button) const;
+		bool GetButton(const MouseButton &button) const;
 
 		/// <summary>
 		/// Gets the mouses screen x position.

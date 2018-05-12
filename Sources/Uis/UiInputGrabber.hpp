@@ -22,9 +22,9 @@ namespace fl
 		public IUiGrabber
 	{
 	private:
-		unsigned int m_joystick;
+		JoystickPort m_joystick;
 	public:
-		UiGrabberJoystick(const unsigned int &joystick);
+		UiGrabberJoystick(const JoystickPort &joystick);
 
 		int GetCurrent(Text *object) override;
 

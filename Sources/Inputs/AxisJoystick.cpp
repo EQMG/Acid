@@ -1,11 +1,10 @@
 #include "AxisJoystick.hpp"
 
 #include "Maths/Maths.hpp"
-#include "Joysticks.hpp"
 
 namespace fl
 {
-	AxisJoystick::AxisJoystick(const unsigned int &joystick, const std::vector<int> &axes, const bool &reverse) :
+	AxisJoystick::AxisJoystick(const JoystickPort &joystick, const std::vector<int> &axes, const bool &reverse) :
 		IAxis(),
 		m_joystick(joystick),
 		m_axes(std::vector<int>(axes)),

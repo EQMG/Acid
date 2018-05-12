@@ -1,14 +1,16 @@
 #include "Joysticks.hpp"
 
+#include <GLFW/glfw3.h>
+
 namespace fl
 {
 	Joysticks::Joysticks() :
 		IModule(),
 		m_connected(new std::vector<Joystick *>())
 	{
-		for (int i = GLFW_JOYSTICK_1; i < GLFW_JOYSTICK_LAST; i++)
+		for (int i = JoystickPort::JOYSTICK_1; i < JoystickPort::JOYSTICK_LAST; i++)
 		{
-			Joystick *joystick = new Joystick();
+			auto joystick = new Joystick();
 			joystick->m_id = i;
 			joystick->m_connected = false;
 			m_connected->push_back(joystick);
@@ -58,23 +60,23 @@ namespace fl
 		}
 	}
 
-	float Joysticks::GetAxis(const unsigned int &id, const int &axis) const
+	float Joysticks::GetAxis(const JoystickPort &port, const int &axis) const
 	{
-		if (axis < 0 || axis > GetCountAxes(id))
+		if (axis < 0 || axis > GetCountAxes(port))
 		{
 			return false;
 		}
 
-		return m_connected->at(id)->m_axes[axis];
+		return m_connected->at(port)->m_axes[axis];
 	}
 
-	bool Joysticks::GetButton(const unsigned int &id, const int &button) const
+	bool Joysticks::GetButton(const JoystickPort &port, const int &button) const
 	{
-		if (button < 0 || button > GetCountButtons(id))
+		if (button < 0 || button > GetCountButtons(port))
 		{
 			return false;
 		}
 
-		return m_connected->at(id)->m_buttons[button];
+		return m_connected->at(port)->m_buttons[button];
 	}
 }
