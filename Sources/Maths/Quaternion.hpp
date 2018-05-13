@@ -161,6 +161,22 @@ namespace fl
 		/// <param name="destination"> The destination loaded value. </param>
 		void Write(LoadedValue *destination);
 
+		float GetX() const { return m_x; }
+
+		void SetX(const float &x) { m_x = x; }
+
+		float GetY() const { return m_y; }
+
+		void SetY(const float &y) { m_y = y; }
+
+		float GetZ() const { return m_z; }
+
+		void SetZ(const float &z) { m_z = z; }
+
+		float GetW() const { return m_w; }
+
+		void SetW(const float &w) { m_w = w; }
+
 		Quaternion &operator=(const Quaternion &other);
 
 		Quaternion &operator=(const Matrix4 &other);

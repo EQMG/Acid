@@ -47,7 +47,7 @@ namespace fl
 
 		std::string GetName() const override { return "MaterialDefault"; };
 
-		std::vector<Define> GetDefines();
+		std::vector<PipelineDefine> GetDefines();
 
 		Colour *GetBaseColor() const { return m_baseColor; }
 

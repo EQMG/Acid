@@ -3,6 +3,7 @@
 #include "Engine/Engine.hpp"
 
 typedef struct ALCdevice_struct ALCdevice;
+
 typedef struct ALCcontext_struct ALCcontext;
 
 namespace fl
@@ -39,9 +40,5 @@ namespace fl
 		void Update() override;
 
 		static void ErrorAl(const int &result);
-
-		static unsigned int LoadFileWav(const std::string &filename);
-
-		static unsigned int LoadFileOgg(const std::string &filename);
 	};
 }

@@ -16,14 +16,14 @@ namespace fl
 {
 	class FL_HIDDEN Uniform
 	{
-	public:
+	private:
 		std::string m_name;
 		int m_binding;
 		int m_offset;
 		int m_size;
 		int m_glType;
 		VkShaderStageFlagBits m_stageFlags;
-
+	public:
 		Uniform(const std::string &name, const int &binding, const int &offset, const int &size, const int &glType, const VkShaderStageFlagBits &stageFlags) :
 			m_name(name),
 			m_binding(binding),
@@ -37,6 +37,20 @@ namespace fl
 		~Uniform()
 		{
 		}
+
+		std::string GetName() const { return m_name; }
+
+		int GetBinding() const { return m_binding; }
+
+		int GetOffset() const { return m_offset; }
+
+		int GetSize() const { return m_size; }
+
+		int GetGlType() const { return m_glType; }
+
+		VkShaderStageFlagBits GetStageFlags() const { return m_stageFlags; }
+
+		void SetStageFlags(const VkShaderStageFlagBits &stageFlags) { m_stageFlags = stageFlags; }
 
 		bool operator==(const Uniform &other) const
 		{
@@ -58,13 +72,13 @@ namespace fl
 
 	class FL_HIDDEN UniformBlock
 	{
-	public:
+	private:
 		std::string m_name;
 		int m_binding;
 		int m_size;
 		VkShaderStageFlagBits m_stageFlags;
 		std::vector<Uniform *> *m_uniforms;
-
+	public:
 		UniformBlock(const std::string &name, const int &binding, const int &size, const VkShaderStageFlagBits &stageFlags) :
 			m_name(name),
 			m_binding(binding),
@@ -96,7 +110,7 @@ namespace fl
 		{
 			for (auto uniform : *m_uniforms)
 			{
-				if (uniform->m_name == uniformName)
+				if (uniform->GetName() == uniformName)
 				{
 					return uniform;
 				}
@@ -104,6 +118,18 @@ namespace fl
 
 			return nullptr;
 		}
+
+		std::string GetName() const { return m_name; }
+
+		int GetBinding() const { return m_binding; }
+
+		int GetSize() const { return m_size; }
+
+		VkShaderStageFlagBits GetStageFlags() const { return m_stageFlags; }
+
+		void SetStageFlags(const VkShaderStageFlagBits &stageFlags) { m_stageFlags = stageFlags; }
+
+		std::vector<Uniform *> *GetUniforms() const { return m_uniforms; }
 
 		std::string ToString() const
 		{
@@ -115,12 +141,12 @@ namespace fl
 
 	class FL_HIDDEN VertexAttribute
 	{
-	public:
+	private:
 		std::string m_name;
 		int m_location;
 		int m_size;
 		int m_glType;
-
+	public:
 		VertexAttribute(const std::string &name, const int &location, const int &size, const int &glType) :
 			m_name(name),
 			m_location(location),
@@ -132,6 +158,14 @@ namespace fl
 		~VertexAttribute()
 		{
 		}
+
+		std::string GetName() const { return m_name; }
+
+		int GetLocation() const { return m_location; }
+
+		int GetSize() const { return m_size; }
+
+		int GetGlType() const { return m_glType; }
 
 		std::string ToString() const
 		{

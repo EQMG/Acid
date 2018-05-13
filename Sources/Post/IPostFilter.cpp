@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	IPostFilter::IPostFilter(const std::string &fragmentShader, const GraphicsStage &graphicsStage, const std::vector<Define> &defines) :
+	IPostFilter::IPostFilter(const std::string &fragmentShader, const GraphicsStage &graphicsStage, const std::vector<PipelineDefine> &defines) :
 		m_descriptorSet(new DescriptorsHandler()),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Filters/Default.vert", fragmentShader},
 			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), defines)),

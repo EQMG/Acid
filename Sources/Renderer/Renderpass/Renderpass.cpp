@@ -12,7 +12,7 @@ namespace fl
 		// Attachments,
 		std::vector<VkAttachmentDescription> attachments = {};
 
-		for (auto image : renderpassCreate.images)
+		for (auto image : renderpassCreate.GetImages())
 		{
 			VkAttachmentDescription attachment = {};
 			attachment.samples = VK_SAMPLE_COUNT_1_BIT;
@@ -22,11 +22,11 @@ namespace fl
 			attachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 			attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
-			switch (image.m_type)
+			switch (image.GetType())
 			{
 			case TypeImage:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-				attachment.format = image.m_format;
+				attachment.format = image.GetFormat();
 				break;
 			case TypeDepth:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
@@ -45,15 +45,15 @@ namespace fl
 		std::vector<VkSubpassDescription> subpasses = {};
 		std::vector<VkSubpassDependency> dependencies = {};
 
-		for (auto subpassType : renderpassCreate.subpasses)
+		for (auto subpassType : renderpassCreate.GetSubpasses())
 		{
 			// Attachments.
-			std::vector<VkAttachmentReference> *subpassColourAttachments = new std::vector<VkAttachmentReference>{};
+			auto subpassColourAttachments = new std::vector<VkAttachmentReference>{};
 			uint32_t depthAttachment = 9999;
 
-			for (auto attachment : subpassType.m_attachments)
+			for (auto attachment : subpassType.GetAttachments())
 			{
-				if (renderpassCreate.images.at(attachment).m_type == TypeDepth)
+				if (renderpassCreate.GetImages().at(attachment).GetType() == TypeDepth)
 				{
 					depthAttachment = attachment;
 					continue;
@@ -86,30 +86,30 @@ namespace fl
 			subpassDependency.srcAccessMask = 0;
 			subpassDependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 
-			if (renderpassCreate.subpasses.size() == 1)
+			if (renderpassCreate.GetSubpasses().size() == 1)
 			{
 				subpassDependency.srcSubpass = VK_SUBPASS_EXTERNAL;
 				subpassDependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 			}
-			else if (subpassType.m_binding == 0)
+			else if (subpassType.GetBinding() == 0)
 			{
 				subpassDependency.srcSubpass = VK_SUBPASS_EXTERNAL;
 				subpassDependency.srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
 			}
 			else
 			{
-				subpassDependency.srcSubpass = subpassType.m_binding - 1;
+				subpassDependency.srcSubpass = subpassType.GetBinding() - 1;
 				subpassDependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 			}
 
-			if (subpassType.m_binding == renderpassCreate.subpasses.size())
+			if (subpassType.GetBinding() == renderpassCreate.GetSubpasses().size())
 			{
 				subpassDependency.dstSubpass = VK_SUBPASS_EXTERNAL;
 				subpassDependency.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
 			}
 			else
 			{
-				subpassDependency.dstSubpass = subpassType.m_binding;
+				subpassDependency.dstSubpass = subpassType.GetBinding();
 				subpassDependency.dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
 			}
 

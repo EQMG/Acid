@@ -11,15 +11,15 @@ namespace fl
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		uint32_t width = renderpassCreate.m_width == 0 ? Display::Get()->GetWidth() : renderpassCreate.m_width;
-		uint32_t height = renderpassCreate.m_height == 0 ? Display::Get()->GetHeight() : renderpassCreate.m_height;
+		uint32_t width = renderpassCreate.GetWidth() == 0 ? Display::Get()->GetWidth() : renderpassCreate.GetWidth();
+		uint32_t height = renderpassCreate.GetHeight() == 0 ? Display::Get()->GetHeight() : renderpassCreate.GetHeight();
 
-		for (auto image : renderpassCreate.images)
+		for (auto image : renderpassCreate.GetImages())
 		{
-			switch (image.m_type)
+			switch (image.GetType())
 			{
 			case TypeImage:
-				m_imageAttachments.push_back(new Texture(width, height, image.m_format, image.m_layout, image.m_usage));
+				m_imageAttachments.push_back(new Texture(width, height, image.GetFormat(), image.GetLayout(), image.GetUsage()));
 				break;
 			case TypeDepth:
 				m_imageAttachments.push_back(nullptr);
@@ -36,12 +36,12 @@ namespace fl
 		{
 			std::vector<VkImageView> attachments = {};
 
-			for (auto image : renderpassCreate.images)
+			for (auto image : renderpassCreate.GetImages())
 			{
-				switch (image.m_type)
+				switch (image.GetType())
 				{
 				case TypeImage:
-					attachments.push_back(GetTexture(image.m_binding)->GetImageView());
+					attachments.push_back(GetTexture(image.GetBinding())->GetImageView());
 					break;
 				case TypeDepth:
 					attachments.push_back(depthStencil.GetImageView());

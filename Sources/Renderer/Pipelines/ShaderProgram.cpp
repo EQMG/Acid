@@ -64,9 +64,9 @@ namespace fl
 	{
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
-			if (uniformBlock->m_name == program.getUniformBlockName(i))
+			if (uniformBlock->GetName() == program.getUniformBlockName(i))
 			{
-				uniformBlock->m_stageFlags = VK_SHADER_STAGE_ALL;
+				uniformBlock->SetStageFlags(VK_SHADER_STAGE_ALL);
 				return;
 			}
 		}
@@ -84,7 +84,7 @@ namespace fl
 			{
 				for (auto uniformBlock : *m_uniformBlocks)
 				{
-					if (uniformBlock->m_name == splitName.at(0))
+					if (uniformBlock->GetName() == splitName.at(0))
 					{
 						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i),
 							sizeof(float) * program.getUniformTType(i)->computeNumComponents(), program.getUniformType(i), stageFlag));
@@ -96,9 +96,9 @@ namespace fl
 
 		for (auto uniform : *m_uniforms)
 		{
-			if (uniform->m_name == program.getUniformName(i))
+			if (uniform->GetName() == program.getUniformName(i))
 			{
-				uniform->m_stageFlags = VK_SHADER_STAGE_ALL;
+				uniform->SetStageFlags(VK_SHADER_STAGE_ALL);
 				return;
 			}
 		}
@@ -110,7 +110,7 @@ namespace fl
 	{
 		for (auto vertexAttribute : *m_vertexAttributes)
 		{
-			if (vertexAttribute->m_name == program.getAttributeName(i))
+			if (vertexAttribute->GetName() == program.getAttributeName(i))
 			{
 				return;
 			}
@@ -126,23 +126,23 @@ namespace fl
 		std::sort(m_uniforms->begin(), m_uniforms->end(),
 			[](Uniform *l, Uniform *r)
 			{
-				return l->m_binding < r->m_binding;
+				return l->GetBinding() < r->GetBinding();
 			});
 
 		// Sort uniform blocks by binding.
 		std::sort(m_uniformBlocks->begin(), m_uniformBlocks->end(),
 			[](UniformBlock *l, UniformBlock *r)
 			{
-				return l->m_binding < r->m_binding;
+				return l->GetBinding() < r->GetBinding();
 			});
 
 		// Sort uniform block uniforms by offsets.
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
-			std::sort(uniformBlock->m_uniforms->begin(), uniformBlock->m_uniforms->end(),
+			std::sort(uniformBlock->GetUniforms()->begin(), uniformBlock->GetUniforms()->end(),
 				[](Uniform *l, Uniform *r)
 				{
-					return l->m_offset < r->m_offset;
+					return l->GetOffset() < r->GetOffset();
 				});
 		}
 
@@ -150,26 +150,26 @@ namespace fl
 		std::sort(m_vertexAttributes->begin(), m_vertexAttributes->end(),
 			[](VertexAttribute *l, VertexAttribute *r)
 			{
-				return l->m_location < r->m_location;
+				return l->GetLocation() < r->GetLocation();
 			});
 
 		// Process to descriptors.
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
-			m_descriptors->push_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->m_binding), uniformBlock->m_stageFlags));
+			m_descriptors->push_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()), uniformBlock->GetStageFlags()));
 		}
 
 		for (auto uniform : *m_uniforms)
 		{
-			switch (uniform->m_glType)
+			switch (uniform->GetGlType())
 			{
 			case 0x8B5E:
 			case 0x904D:
-				m_descriptors->push_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->m_binding), uniform->m_stageFlags));
+				m_descriptors->push_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags()));
 				break;
 			case 0x8B60:
 			case 0x904E:
-				m_descriptors->push_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->m_binding), uniform->m_stageFlags));
+				m_descriptors->push_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags()));
 				break;
 			default:
 				break;
@@ -183,12 +183,12 @@ namespace fl
 		{
 			VkVertexInputAttributeDescription attributeDescription = {};
 			attributeDescription.binding = 0;
-			attributeDescription.location = static_cast<uint32_t>(vertexAttribute->m_location);
-			attributeDescription.format = GlTypeToVk(vertexAttribute->m_glType);
+			attributeDescription.location = static_cast<uint32_t>(vertexAttribute->GetLocation());
+			attributeDescription.format = GlTypeToVk(vertexAttribute->GetGlType());
 			attributeDescription.offset = currentOffset;
 
 			m_attributeDescriptions->push_back(attributeDescription);
-			currentOffset += vertexAttribute->m_size;
+			currentOffset += vertexAttribute->GetSize();
 		}
 	}
 
@@ -213,17 +213,17 @@ namespace fl
 	{
 		for (auto uniform : *m_uniforms)
 		{
-			if (uniform->m_name == descriptor)
+			if (uniform->GetName() == descriptor)
 			{
-				return uniform->m_binding;
+				return uniform->GetBinding();
 			}
 		}
 
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
-			if (uniformBlock->m_name == descriptor)
+			if (uniformBlock->GetName() == descriptor)
 			{
-				return uniformBlock->m_binding;
+				return uniformBlock->GetBinding();
 			}
 		}
 
@@ -232,7 +232,7 @@ namespace fl
 
 	std::string ShaderProgram::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
 	{
-		// TODO: Rework.
+		// TODO: Needs a rework.
 		std::string result = shaderCode;
 		size_t foundIndex0 = result.find('\n', 0);
 		size_t foundIndex1 = result.find('\n', foundIndex0 + 1);
@@ -245,7 +245,7 @@ namespace fl
 	{
 		for (auto uniform : *m_uniforms)
 		{
-			if (uniform->m_name == uniformName)
+			if (uniform->GetName() == uniformName)
 			{
 				return uniform;
 			}
@@ -258,7 +258,7 @@ namespace fl
 	{
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
-			if (uniformBlock->m_name == blockName)
+			if (uniformBlock->GetName() == blockName)
 			{
 				return uniformBlock;
 			}
@@ -271,7 +271,7 @@ namespace fl
 	{
 		for (auto attribute : *m_vertexAttributes)
 		{
-			if (attribute->m_name == attributeName)
+			if (attribute->GetName() == attributeName)
 			{
 				return attribute;
 			}
@@ -342,7 +342,7 @@ namespace fl
 			{
 				result << "  - " << uniformBlock->ToString() << " \n";
 
-				for (auto uniform : *uniformBlock->m_uniforms)
+				for (auto uniform : *uniformBlock->GetUniforms())
 				{
 					result << "    - " << uniform->ToString() << " \n";
 				}

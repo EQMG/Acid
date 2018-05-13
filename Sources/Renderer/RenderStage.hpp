@@ -13,7 +13,7 @@ namespace fl
 	private:
 		uint32_t m_lastWidth;
 		uint32_t m_lastHeight;
-	public:
+
 		int m_stageIndex;
 		RenderpassCreate *m_renderpassCreate;
 
@@ -27,7 +27,7 @@ namespace fl
 		bool m_hasSwapchain;
 
 		bool m_fitDisplaySize;
-
+	public:
 		RenderStage(const int &stageIndex, RenderpassCreate *renderpassCreate);
 
 		~RenderStage();
@@ -40,6 +40,22 @@ namespace fl
 
 		bool IsOutOfDate(const VkExtent2D &extent2D);
 
+		DepthStencil *GetDepthStencil() const { return m_depthStencil; };
+
+		Renderpass *GetRenderpass() const { return m_renderpass; };
+
+		Framebuffers *GetFramebuffers() const { return m_framebuffers; };
+
 		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
+
+		std::vector<VkClearValue> GetClearValues() const { return m_clearValues; }
+
+		uint32_t GetImageAttachments() const { return m_imageAttachments; }
+
+		bool HasDepth() const { return m_hasDepth; }
+
+		bool HasSwapchain() const { return m_hasSwapchain; }
+
+		bool FitDisplaySize() const { return m_fitDisplaySize; }
 	};
 }

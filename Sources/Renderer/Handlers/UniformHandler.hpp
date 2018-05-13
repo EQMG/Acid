@@ -42,7 +42,7 @@ namespace fl
 			}
 
 		//	printf("name: %s, offset %i, size: %i\n", uniformName.c_str(), uniform->m_offset, (int) sizeof(object));
-			Push(object, static_cast<size_t>(uniform->m_offset), sizeof(object)); // static_cast<size_t>(uniform->m_size)
+			Push(object, static_cast<size_t>(uniform->GetOffset()), sizeof(object)); // static_cast<size_t>(uniform->m_size)
 		}
 
 		bool Update(UniformBlock *uniformBlock);

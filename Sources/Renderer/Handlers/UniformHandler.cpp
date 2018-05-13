@@ -24,8 +24,8 @@ namespace fl
 			delete m_uniformBuffer;
 
 			m_uniformBlock = uniformBlock;
-			m_uniformBuffer = new UniformBuffer(static_cast<VkDeviceSize>(uniformBlock->m_size));
-			m_data = malloc(static_cast<size_t>(uniformBlock->m_size));
+			m_uniformBuffer = new UniformBuffer(static_cast<VkDeviceSize>(uniformBlock->GetSize()));
+			m_data = malloc(static_cast<size_t>(uniformBlock->GetSize()));
 			m_changed = false;
 			return false;
 		}
