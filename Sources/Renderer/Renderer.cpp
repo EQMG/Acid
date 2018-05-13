@@ -96,7 +96,7 @@ namespace fl
 
 		Display::ErrorVk(vkQueueWaitIdle(queue));
 
-		if (renderStage->m_hasSwapchain)
+		if (renderStage->HasSwapchain())
 		{
 			const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
 
@@ -130,11 +130,11 @@ namespace fl
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
 		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassBeginInfo.renderPass = renderStage->m_renderpass->GetRenderpass();
+		renderPassBeginInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
 		renderPassBeginInfo.framebuffer = renderStage->GetActiveFramebuffer(m_activeSwapchainImage);
 		renderPassBeginInfo.renderArea = renderArea;
-		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(renderStage->m_clearValues.size());
-		renderPassBeginInfo.pClearValues = renderStage->m_clearValues.data();
+		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(renderStage->GetClearValues().size());
+		renderPassBeginInfo.pClearValues = renderStage->GetClearValues().data();
 
 		vkCmdBeginRenderPass(commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
@@ -170,7 +170,7 @@ namespace fl
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &commandBuffer;
 
-		if (renderStage->m_hasSwapchain)
+		if (renderStage->HasSwapchain())
 		{
 			submitInfo.signalSemaphoreCount = 1;
 			submitInfo.pSignalSemaphores = &m_semaphore;
@@ -185,7 +185,7 @@ namespace fl
 
 		Display::ErrorVk(vkQueueWaitIdle(queue));
 
-		if (!renderStage->m_hasSwapchain)
+		if (!renderStage->HasSwapchain())
 		{
 			return;
 		}
@@ -338,7 +338,7 @@ namespace fl
 
 		Display::ErrorVk(vkQueueWaitIdle(queue));
 
-		if (renderStage->m_hasSwapchain && !m_swapchain->SameExtent(displayExtent2D))
+		if (renderStage->HasSwapchain() && !m_swapchain->SameExtent(displayExtent2D))
 		{
 #if FL_VERBOSE
 			printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent2D.width, displayExtent2D.height);

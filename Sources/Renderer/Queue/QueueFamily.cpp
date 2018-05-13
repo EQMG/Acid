@@ -6,7 +6,9 @@ namespace fl
 	{
 		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
-		QueueFamilyIndices indices;
+		int graphicsFamily = -1;
+		int presentFamily = -1;
+		int computeFamily = -1;
 		uint32_t queueFamilyCount = 0;
 		vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, nullptr);
 
@@ -31,23 +33,23 @@ namespace fl
 
 				if (presentSupport)
 				{
-					indices.graphicsFamily = i;
+					graphicsFamily = i;
 				}
 			}
 
 			// Check for transfer support.
 			if (queueFamily.queueFlags && VK_QUEUE_TRANSFER_BIT)
 			{
-				indices.presentFamily = i;
+				presentFamily = i;
 			}
 
 			// Check for compute support.
 			if (queueFamily.queueFlags && VK_QUEUE_COMPUTE_BIT)
 			{
-				indices.computeFamily = i;
+				computeFamily = i;
 			}
 
-			if (indices.IsComplete())
+			if (graphicsFamily >= 0 && presentFamily >= 0 && computeFamily >= 0)
 			{
 				break;
 			}
@@ -55,7 +57,6 @@ namespace fl
 			i++;
 		}
 
-		indices.array = { static_cast<uint32_t>(indices.graphicsFamily), static_cast<uint32_t>(indices.presentFamily), static_cast<uint32_t>(indices.computeFamily) };
-		return indices;
+		return QueueFamilyIndices(graphicsFamily, presentFamily, computeFamily);
 	}
 }

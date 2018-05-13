@@ -91,6 +91,6 @@ namespace fl
 		attributeDescriptions[5].format = VK_FORMAT_R32G32B32_SFLOAT;
 		attributeDescriptions[5].offset = offsetof(VertexAnimated, m_vertexWeight);
 
-		return VertexInput{bindingDescriptions, attributeDescriptions};
+		return VertexInput(bindingDescriptions, attributeDescriptions);
 	}
 }

@@ -12,7 +12,7 @@ namespace fl
 		VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR
 	};
 
-	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<Define> &defines) :
+	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<PipelineDefine> &defines) :
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreateInfo(pipelineCreateInfo),
 		m_defines(defines),
@@ -42,7 +42,7 @@ namespace fl
 		CreatePipelineLayout();
 		CreateAttributes();
 
-		switch (pipelineCreateInfo.m_pipelineModeFlags)
+		switch (pipelineCreateInfo.GetModeFlags())
 		{
 		case PIPELINE_POLYGON:
 			CreatePipelinePolygon();
@@ -91,12 +91,12 @@ namespace fl
 
 	DepthStencil *Pipeline::GetDepthStencil(const int &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.renderpass : stage)->m_depthStencil;
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetDepthStencil();
 	}
 
 	Texture *Pipeline::GetTexture(const unsigned int &i, const int &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.renderpass : stage)->m_framebuffers->GetTexture(i);
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetTexture(i);
 	}
 
 
@@ -227,7 +227,7 @@ namespace fl
 
 		for (auto define : m_defines)
 		{
-			defineBlock += "#define " + define.name + " " + define.value + "\n";
+			defineBlock += "#define " + define.GetName() + " " + define.GetValue() + "\n";
 		}
 
 		for (auto &type : m_pipelineCreateInfo.m_shaderStages)
@@ -313,7 +313,7 @@ namespace fl
 
 		for (auto type : *m_shaderProgram->GetDescriptors())
 		{
-			bindings.push_back(type.m_descriptorSetLayoutBinding);
+			bindings.push_back(type.GetLayoutBinding());
 		}
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
@@ -333,7 +333,7 @@ namespace fl
 
 		for (auto type : *m_shaderProgram->GetDescriptors())
 		{
-			poolSizes.push_back(type.m_descriptorPoolSize);
+			poolSizes.push_back(type.GetPoolSize());
 		}
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
@@ -369,8 +369,8 @@ namespace fl
 		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		m_rasterizationState.depthClampEnable = VK_FALSE;
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
-		m_rasterizationState.polygonMode = m_pipelineCreateInfo.m_polygonMode;
-		m_rasterizationState.cullMode = m_pipelineCreateInfo.m_cullModeFlags;
+		m_rasterizationState.polygonMode = m_pipelineCreateInfo.GetPolygonMode();
+		m_rasterizationState.cullMode = m_pipelineCreateInfo.GetCullModeFlags();
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
 		m_rasterizationState.depthBiasConstantFactor = 0.0f;
@@ -436,22 +436,22 @@ namespace fl
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto pipelineCache = Renderer::Get()->GetPipelineCache();
-		const auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.renderpass);
+		const auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.m_vertexBindingDescriptions.size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.m_vertexInput.m_vertexBindingDescriptions.data();
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.GetVertexInput().GetBindingDescriptions().size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.GetVertexInput().GetBindingDescriptions().data();
 		//vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_shaderProgram->GetAttributeDescriptions()->size());
 		//vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_shaderProgram->GetAttributeDescriptions()->data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.m_vertexInput.m_attributeDescriptions.data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.GetVertexInput().GetAttributeDescriptions().size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.GetVertexInput().GetAttributeDescriptions().data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.renderPass = renderStage->m_renderpass->GetRenderpass();
-		pipelineCreateInfo.subpass = m_graphicsStage.subpass;
+		pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
+		pipelineCreateInfo.subpass = m_graphicsStage.GetSubpass();
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
 
@@ -483,7 +483,7 @@ namespace fl
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < Renderer::Get()->GetRenderStage(m_graphicsStage.renderpass)->m_imageAttachments; i++)
+		for (uint32_t i = 0; i < Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass())->GetImageAttachments(); i++)
 		{
 			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
 			blendAttachmentState.blendEnable = VK_FALSE;
@@ -508,7 +508,7 @@ namespace fl
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < Renderer::Get()->GetRenderStage(m_graphicsStage.renderpass)->m_imageAttachments; i++)
+		for (uint32_t i = 0; i < Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass())->GetImageAttachments(); i++)
 		{
 			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
 			blendAttachmentState.blendEnable = VK_FALSE;

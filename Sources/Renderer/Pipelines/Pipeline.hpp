@@ -13,10 +13,21 @@ namespace fl
 {
 	class DepthStencil;
 
-	struct Define
+	class FL_EXPORT PipelineDefine
 	{
-		std::string name;
-		std::string value;
+	private:
+		std::string m_name;
+		std::string m_value;
+	public:
+		PipelineDefine(const std::string &name, const std::string &value) :
+			m_name(name),
+			m_value(value)
+		{
+		}
+
+		std::string GetName() const { return m_name; }
+
+		std::string GetValue() const { return m_value; }
 	};
 
 	/// <summary>
@@ -27,7 +38,7 @@ namespace fl
 	private:
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreateInfo;
-		std::vector<Define> m_defines;
+		std::vector<PipelineDefine> m_defines;
 		ShaderProgram *m_shaderProgram;
 
 		std::vector<VkShaderModule> m_modules;
@@ -54,7 +65,7 @@ namespace fl
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
 		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
 		/// <param name="defines"> A list of names that will be added as a #define. </param>
-		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<Define> &defines = std::vector<Define>());
+		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<PipelineDefine> &defines = std::vector<PipelineDefine>());
 
 		/// <summary>
 		/// Deconstructor for the pipeline.

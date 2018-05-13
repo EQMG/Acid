@@ -75,6 +75,6 @@ namespace fl
 		attributeDescriptions[3].format = VK_FORMAT_R32G32B32_SFLOAT;
 		attributeDescriptions[3].offset = offsetof(VertexModel, m_tangent);
 
-		return VertexInput{bindingDescriptions, attributeDescriptions};
+		return VertexInput(bindingDescriptions, attributeDescriptions);
 	}
 }

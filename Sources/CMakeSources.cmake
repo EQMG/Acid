@@ -265,6 +265,7 @@ set(FLOUNDER_SOURCES_
         "Maths/Colour.cpp"
         "Maths/Constraint3.cpp"
         "Maths/Delta.cpp"
+        "Maths/Maths.cpp"
         "Maths/Interpolation/SmoothFloat.cpp"
         "Maths/Matrix2.cpp"
         "Maths/Matrix3.cpp"

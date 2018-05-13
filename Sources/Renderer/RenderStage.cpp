@@ -4,8 +4,8 @@ namespace fl
 {
 	RenderStage::RenderStage(const int &stageIndex, RenderpassCreate *renderpassCreate) :
 		m_stageIndex(stageIndex),
-		m_lastWidth(renderpassCreate->m_width),
-		m_lastHeight(renderpassCreate->m_height),
+		m_lastWidth(renderpassCreate->GetWidth()),
+		m_lastHeight(renderpassCreate->GetHeight()),
 		m_renderpassCreate(renderpassCreate),
 		m_depthStencil(nullptr),
 		m_renderpass(nullptr),
@@ -14,16 +14,16 @@ namespace fl
 		m_imageAttachments(0),
 		m_hasDepth(false),
 		m_hasSwapchain(false),
-		m_fitDisplaySize(m_renderpassCreate->m_height == 0)
+		m_fitDisplaySize(m_renderpassCreate->GetHeight() == 0)
 	{
-		for (auto image : renderpassCreate->images)
+		for (auto image : renderpassCreate->GetImages())
 		{
 			VkClearValue clearValue = {};
 
-			switch (image.m_type)
+			switch (image.GetType())
 			{
 			case TypeImage:
-				clearValue.color = {*image.m_clearColour.m_elements};
+				clearValue.color = {*image.GetClearColour().m_elements};
 				m_imageAttachments++;
 				break;
 			case TypeDepth:
@@ -82,7 +82,7 @@ namespace fl
 	{
 		if (!m_fitDisplaySize)
 		{
-			return m_renderpassCreate->m_width;
+			return m_renderpassCreate->GetWidth();
 		}
 
 		return static_cast<uint32_t>(Display::Get()->GetWidth());
@@ -92,7 +92,7 @@ namespace fl
 	{
 		if (!m_fitDisplaySize)
 		{
-			return m_renderpassCreate->m_height;
+			return m_renderpassCreate->GetHeight();
 		}
 
 		return static_cast<uint32_t>(Display::Get()->GetHeight());

@@ -39,5 +39,9 @@ namespace fl
 		std::string GetFilename() override { return m_filename; };
 
 		unsigned int GetBuffer() const { return m_buffer; };
+	private:
+		static unsigned int LoadBufferWav(const std::string &filename);
+
+		static unsigned int LoadBufferOgg(const std::string &filename);
 	};
 }

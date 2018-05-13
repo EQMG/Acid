@@ -22,7 +22,7 @@ namespace fl
 		/// <param name="fragmentShader"> The fragment shader file. </param>
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
 		/// <param name="defines"> A list of names that will be added as a #define. </param>
-		IPostFilter(const std::string &fragmentShader, const GraphicsStage &graphicsStage, const std::vector<Define> &defines = std::vector<Define>());
+		IPostFilter(const std::string &fragmentShader, const GraphicsStage &graphicsStage, const std::vector<PipelineDefine> &defines = std::vector<PipelineDefine>());
 
 		/// <summary>
 		/// Deconstructor for the post filter.

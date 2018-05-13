@@ -24,8 +24,8 @@ namespace fl
 		bufferCreateInfo.size = size;
 		bufferCreateInfo.usage = usage;
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(indices.array.size());
-		bufferCreateInfo.pQueueFamilyIndices = indices.array.data();
+		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(indices.GetArray().size());
+		bufferCreateInfo.pQueueFamilyIndices = indices.GetArray().data();
 
 		Display::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
 

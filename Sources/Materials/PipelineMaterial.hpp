@@ -17,7 +17,7 @@ namespace fl
 		std::string m_filename;
 		Pipeline *m_pipeline;
 	public:
-		static PipelineMaterial *Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<Define> &defines)
+		static PipelineMaterial *Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines)
 		{
 			IResource *resource = Resources::Get()->Get(ToFilename(graphicsStage, pipelineCreate, defines));
 
@@ -31,7 +31,7 @@ namespace fl
 			return result;
 		}
 
-		PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<Define> &defines);
+		PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines);
 
 		~PipelineMaterial();
 
@@ -40,6 +40,6 @@ namespace fl
 		Pipeline *GetPipeline() const { return m_pipeline; }
 
 	private:
-		static std::string ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<Define> &defines);
+		static std::string ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines);
 	};
 }
