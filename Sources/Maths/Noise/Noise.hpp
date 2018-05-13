@@ -4,119 +4,82 @@
 
 namespace fl
 {
-	class FL_EXPORT NoiseFast
+	enum NoiseType
 	{
-	public:
-// Hashing
-#define X_PRIME 1619
-#define Y_PRIME 31337
-#define Z_PRIME 6971
-#define W_PRIME 1013
+		TYPE_VALUE = 0,
+		TYPE_VALUEFRACTAL = 1,
+		TYPE_PERLIN = 2,
+		TYPE_PERLINFRACTAL = 3,
+		TYPE_SIMPLEX = 4,
+		TYPE_SIMPLEXFRACTAL = 5,
+		TYPE_CELLULAR = 6,
+		TYPE_WHITENOISE = 7,
+		TYPE_CUBIC = 8,
+		TYPE_CUBICFRACTAL = 9
+	};
 
-// Cellular
-#define FN_CELLULAR_INDEX_MAX 3
+	enum NoiseInterp
+	{
+		INTERP_LINEAR = 0,
+		INTERP_HERMITE = 1,
+		INTERP_QUINTIC = 2
+	};
 
-		enum TypeNoise
-		{
-			Value,
-			ValueFractal,
-			Perlin,
-			PerlinFractal,
-			Simplex,
-			SimplexFractal,
-			Cellular,
-			WhiteNoise,
-			Cubic,
-			CubicFractal
-		};
+	enum NoiseFractal
+	{
+		FRACTAL_FBM = 0,
+		FRACTAL_BILLOW = 1,
+		FRACTAL_RIGIDMULTI = 2
+	};
 
-		enum TypeInterp
-		{
-			Linear,
-			Hermite,
-			Quintic
-		};
+	enum NoiseCellularFunc
+	{
+		CELLULAR_EUCLIDEAN = 0,
+		CELLULAR_MANHATTAN = 1,
+		CELLULAR_NATURAL = 2
+	};
 
-		enum TypeFractal
-		{
-			Fbm,
-			Billow,
-			RigidMulti
-		};
+	enum NoiseCellularReturn
+	{
+		CELLULAR_CELLVALUE = 0,
+		CELLULAR_NOISELOOKUP = 1,
+		CELLULAR_DISTANCE = 2,
+		CELLULAR_DISTANCE2 = 3,
+		CELLULAR_DISTANCE2ADD = 4,
+		CELLULAR_DISTANCE2SUB = 5,
+		CELLULAR_DISTANCE2MUL = 6,
+		CELLULAR_DISTANCE2DIV = 7
+	};
 
-		enum TypeCellularFunction
-		{
-			Euclidean,
-			Manhattan,
-			Natural
-		};
-
-		enum TypeCellularReturn
-		{
-			CellValue,
-			NoiseLookup,
-			Distance,
-			Distance2,
-			Distance2Add,
-			Distance2Sub,
-			Distance2Mul,
-			Distance2Div
-		};
-
+	class FL_EXPORT Noise
+	{
 	private:
-		static const float GRAD_X[];
-		static const float GRAD_Y[];
-		static const float GRAD_Z[];
-
-		static const float GRAD_4D[];
-
-		static const float VAL_LUT[];
-
-		static const float F3;
-		static const float G3;
-
-		static const float F2;
-		static const float G2;
-
-		static const unsigned char SIMPLEX_4D[];
-		static const float F4;
-		static const float G4;
-
-		static const float CUBIC_2D_BOUNDING;
-		static const float CUBIC_3D_BOUNDING;
-
-		static const float CELL_2D_X[];
-		static const float CELL_2D_Y[];
-		static const float CELL_3D_X[];
-		static const float CELL_3D_Y[];
-		static const float CELL_3D_Z[];
-
 		int m_seed;
 		unsigned char *m_perm;
 		unsigned char *m_perm12;
 
 		float m_frequency;
-		TypeInterp m_interp;
-		TypeNoise m_noiseType;
+		NoiseInterp m_interp;
+		NoiseType m_noiseType;
 
 		int m_octaves;
 		float m_lacunarity;
 		float m_gain;
-		TypeFractal m_fractalType;
+		NoiseFractal m_fractalType;
 		float m_fractalBounding;
 
-		TypeCellularFunction m_cellularDistanceFunction;
-		TypeCellularReturn m_cellularReturnType;
-		NoiseFast *m_cellularNoiseLookup;
+		NoiseCellularFunc m_cellularDistanceFunction;
+		NoiseCellularReturn m_cellularReturnType;
+		Noise *m_cellularNoiseLookup;
 		int m_cellularDistanceIndex0;
 		int m_cellularDistanceIndex1;
 		float m_cellularJitter;
 
 		float m_gradientPerturbAmp;
 	public:
-		NoiseFast(const int &seed);
+		Noise(const int &seed);
 
-		~NoiseFast();
+		~Noise();
 
 		// Returns seed used for all noise types
 		int GetSeed() const { return m_seed; }
@@ -133,7 +96,7 @@ namespace fl
 		void SetFrequency(const float &frequency) { m_frequency = frequency; }
 
 		// Returns interpolation method used for supported noise types
-		TypeInterp GetInterp() const { return m_interp; }
+		NoiseInterp GetInterp() const { return m_interp; }
 
 		// Changes the interpolation method used to smooth between noise values
 		// Possible interpolation methods (lowest to highest quality) :
@@ -142,14 +105,14 @@ namespace fl
 		// - Quintic
 		// Used in Value, Perlin Noise and Position Warping
 		// Default: Quintic
-		void SetInterp(const TypeInterp &interp) { m_interp = interp; }
+		void SetInterp(const NoiseInterp &interp) { m_interp = interp; }
 
 		// Returns the noise type used by GetNoise
-		TypeNoise GetNoiseType() const { return m_noiseType; }
+		NoiseType GetNoiseType() const { return m_noiseType; }
 
 		// Sets noise return type of GetNoise(...)
 		// Default: Simplex
-		void SetNoiseType(const TypeNoise &noiseType) { m_noiseType = noiseType; }
+		void SetNoiseType(const NoiseType &noiseType) { m_noiseType = noiseType; }
 
 		// Returns octave count for all fractal noise types
 		int GetFractalOctaves() const { return m_octaves; }
@@ -173,33 +136,33 @@ namespace fl
 		void SetFractalGain(const float &gain);
 
 		// Returns method for combining octaves in all fractal noise types
-		TypeFractal GetFractalType() const { return m_fractalType; }
+		NoiseFractal GetFractalType() const { return m_fractalType; }
 
 		// Sets method for combining octaves in all fractal noise types
 		// Default: FBM
-		void SetFractalType(const TypeFractal &fractalType) { m_fractalType = fractalType; }
+		void SetFractalType(const NoiseFractal &fractalType) { m_fractalType = fractalType; }
 
 		// Returns the distance function used in cellular noise calculations
-		TypeCellularFunction GetCellularDistanceFunction() const { return m_cellularDistanceFunction; }
+		NoiseCellularFunc GetCellularDistanceFunction() const { return m_cellularDistanceFunction; }
 
 		// Sets distance function used in cellular noise calculations
 		// Default: Euclidean
-		void SetCellularDistanceFunction(const TypeCellularFunction &cellularDistanceFunction) { m_cellularDistanceFunction = cellularDistanceFunction; }
+		void SetCellularDistanceFunction(const NoiseCellularFunc &cellularDistanceFunction) { m_cellularDistanceFunction = cellularDistanceFunction; }
 
 		// Returns the return type from cellular noise calculations
-		TypeCellularReturn GetCellularReturnType() const { return m_cellularReturnType; }
+		NoiseCellularReturn GetCellularReturnType() const { return m_cellularReturnType; }
 
 		// Sets return type from cellular noise calculations
 		// Note: NoiseLookup requires another FastNoise object be set with SetCellularNoiseLookup() to function
 		// Default: CellValue
-		void SetCellularReturnType(const TypeCellularReturn &cellularReturnType) { m_cellularReturnType = cellularReturnType; }
+		void SetCellularReturnType(const NoiseCellularReturn &cellularReturnType) { m_cellularReturnType = cellularReturnType; }
 
 		// Returns the noise used to calculate a cell value if the cellular return type is NoiseLookup
-		NoiseFast *GetCellularNoiseLookup() const { return m_cellularNoiseLookup; }
+		Noise *GetCellularNoiseLookup() const { return m_cellularNoiseLookup; }
 
 		// Noise used to calculate a cell value if cellular return type is NoiseLookup
 		// The lookup value is acquired through GetNoise() so ensure you SetNoiseType() on the noise lookup, value, Perlin or simplex is recommended
-		void SetCellularNoiseLookup(NoiseFast *noise) { m_cellularNoiseLookup = noise; }
+		void SetCellularNoiseLookup(Noise *noise) { m_cellularNoiseLookup = noise; }
 
 		// Returns the 2 distance indices used for distance2 return types
 		void GetCellularDistance2Indices(int &cellularDistanceIndex0, int &cellularDistanceIndex1) const;

@@ -9,9 +9,9 @@ namespace fl
 {
 	enum AttachmentType
 	{
-		TypeImage = 0,
-		TypeDepth = 1,
-		TypeSwapchain = 2,
+		ATTACHMENT_IMAGE = 0,
+		ATTACHMENT_DEPTH = 1,
+		ATTACHMENT_SWAPCHAIN = 2,
 	};
 
 	class FL_EXPORT Attachment

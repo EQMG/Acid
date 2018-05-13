@@ -20,7 +20,7 @@ namespace fl
 
 	Worlds::Worlds() :
 		IModule(),
-		m_noiseTerrain(new NoiseFast(69124)),
+		m_noiseTerrain(new Noise(69124)),
 		m_driverDay(new DriverLinear(0.0f, 1.0f, 300.0f)),
 		m_factorDay(0.0f),
 		m_skyboxRotation(new Vector3),
@@ -31,10 +31,10 @@ namespace fl
 		m_fog(new Fog(new Colour(), 0.001f, 2.0f, -0.1f, 0.3f)),
 		m_skyColour(new Colour("#3399ff"))
 	{
-		m_noiseTerrain->SetNoiseType(NoiseFast::PerlinFractal);
+		m_noiseTerrain->SetNoiseType(NoiseType::TYPE_PERLINFRACTAL);
 		m_noiseTerrain->SetFrequency(0.003f);
-		m_noiseTerrain->SetInterp(NoiseFast::Quintic);
-		m_noiseTerrain->SetFractalType(NoiseFast::Fbm);
+		m_noiseTerrain->SetInterp(NoiseInterp::INTERP_QUINTIC);
+		m_noiseTerrain->SetFractalType(NoiseFractal::FRACTAL_FBM);
 		m_noiseTerrain->SetFractalOctaves(5);
 		m_noiseTerrain->SetFractalLacunarity(2.0);
 		m_noiseTerrain->SetFractalGain(0.5f);
@@ -85,11 +85,11 @@ namespace fl
 
 		*m_moonColour = MOON_COLOUR_NIGHT->Interpolate(*MOON_COLOUR_DAY, GetShadowFactor());
 
-		*m_fog->m_colour = fogColour;
-		m_fog->m_density = 0.002f + ((1.0f - GetShadowFactor()) * 0.002f);
-		m_fog->m_gradient = 2.0f - ((1.0f - GetShadowFactor()) * 0.380f);
-		m_fog->m_lowerLimit = 0.0f;
-		m_fog->m_upperLimit = 0.15f - ((1.0f - GetShadowFactor()) * 0.03f);
+		m_fog->SetColour(fogColour);
+		m_fog->SetDensity(0.002f + ((1.0f - GetShadowFactor()) * 0.002f));
+		m_fog->SetGradient(2.0f - ((1.0f - GetShadowFactor()) * 0.380f));
+		m_fog->SetLowerLimit(0.0f);
+		m_fog->SetUpperLimit(0.15f - ((1.0f - GetShadowFactor()) * 0.03f));
 
 		*m_skyColour = *SKYBOX_COLOUR_DAY;
 

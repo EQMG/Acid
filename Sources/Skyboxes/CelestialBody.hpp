@@ -7,8 +7,8 @@ namespace fl
 {
 	enum CelestialType
 	{
-		CelestialSun = 0,
-		CelestialMoon = 1
+		CELESTIAL_SUN = 0,
+		CELESTIAL_MOON = 1
 	};
 
 	class FL_EXPORT CelestialBody :
@@ -17,7 +17,7 @@ namespace fl
 	private:
 		CelestialType m_type;
 	public:
-		CelestialBody(const CelestialType &type = CelestialType::CelestialSun);
+		CelestialBody(const CelestialType &type = CelestialType::CELESTIAL_SUN);
 
 		~CelestialBody();
 

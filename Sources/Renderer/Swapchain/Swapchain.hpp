@@ -12,8 +12,8 @@ namespace fl
 		VkPresentModeKHR m_presentMode;
 		VkSwapchainKHR m_swapchain;
 		uint32_t m_swapchainImageCount;
-		std::vector<VkImage> m_swapchinImages;
-		std::vector<VkImageView> m_swapchinImageViews;
+		std::vector<VkImage> m_swapchainImages;
+		std::vector<VkImageView> m_swapchainImageViews;
 
 		VkExtent2D m_extent;
 	public:
@@ -25,9 +25,9 @@ namespace fl
 
 		uint32_t GetImageCount() const { return m_swapchainImageCount; }
 
-		std::vector<VkImage> GetImages() const { return m_swapchinImages; }
+		std::vector<VkImage> GetImages() const { return m_swapchainImages; }
 
-		std::vector<VkImageView> GetImageViews() const { return m_swapchinImageViews; }
+		std::vector<VkImageView> GetImageViews() const { return m_swapchainImageViews; }
 
 		VkExtent2D GetExtent() const { return m_extent; }
 

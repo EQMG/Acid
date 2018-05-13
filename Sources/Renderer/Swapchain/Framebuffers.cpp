@@ -18,13 +18,13 @@ namespace fl
 		{
 			switch (image.GetType())
 			{
-			case TypeImage:
+			case ATTACHMENT_IMAGE:
 				m_imageAttachments.push_back(new Texture(width, height, image.GetFormat(), image.GetLayout(), image.GetUsage()));
 				break;
-			case TypeDepth:
+			case ATTACHMENT_DEPTH:
 				m_imageAttachments.push_back(nullptr);
 				break;
-			case TypeSwapchain:
+			case ATTACHMENT_SWAPCHAIN:
 				m_imageAttachments.push_back(nullptr);
 				break;
 			}
@@ -40,13 +40,13 @@ namespace fl
 			{
 				switch (image.GetType())
 				{
-				case TypeImage:
+				case ATTACHMENT_IMAGE:
 					attachments.push_back(GetTexture(image.GetBinding())->GetImageView());
 					break;
-				case TypeDepth:
+				case ATTACHMENT_DEPTH:
 					attachments.push_back(depthStencil.GetImageView());
 					break;
-				case TypeSwapchain:
+				case ATTACHMENT_SWAPCHAIN:
 					attachments.push_back(swapchain.GetImageViews().at(i));
 					break;
 				}

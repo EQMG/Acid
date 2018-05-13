@@ -5,7 +5,7 @@
 #include "IUpdater.hpp"
 
 /// <summary>
-/// The base Flounder folder.
+/// The base Flounder namespace.
 /// </summary>
 namespace fl
 {
@@ -60,10 +60,16 @@ namespace fl
 		int Run() const;
 
 		/// <summary>
+		/// Gets the current updater.
+		/// </summary>
+		/// <returns> The current updater. </returns>
+		IUpdater *GetUpdater() const { return m_updater; }
+
+		/// <summary>
 		/// Loads the updater into the engine.
 		/// </summary>
 		/// <param name="updater"> The updater. </param>
-		void SetUpdater(IUpdater *updater);
+		void SetUpdater(IUpdater *updater) { m_updater = updater; }
 
 		/// <summary>
 		/// Registers a module with the register.

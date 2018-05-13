@@ -29,7 +29,7 @@ namespace fl
 
 	void Light::Update()
 	{
-		*m_position = *GetGameObject()->GetTransform()->m_position + *m_offset;
+		*m_position = *GetGameObject()->GetTransform()->GetPosition() + *m_offset;
 	}
 
 	void Light::Load(LoadedValue *value)

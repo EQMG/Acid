@@ -1,5 +1,5 @@
 # Flounder Guidelines 
-March 9, 2018
+May 12, 2018
  
 This document is a rough outline for guidelines for Flounder. This document covers the languages of C++, C#, and GLSL. Flounder is licenced on the MIT Licence, read more on our [LICENSE](LICENSE) file. For more about the project read our read more on our [README](README) file. 
  
@@ -16,8 +16,8 @@ namespace Examples
 {
 	enum Enable
 	{
-		EnableOn = 0,
-		EnableOff = 1,
+		ENABLE_ON = 0,
+		ENABLE_OFF = 1,
 	}
 
 	/// <summary>
@@ -46,7 +46,7 @@ namespace Examples
 	
 		void SetX(const int &x) { m_x = x; }
 
-		bool IsEmpty() const { return m_list->Size() == 0; }
+		bool IsEmpty() const { return m_list->size() == 0; }
 	}
 }
 ```
@@ -128,4 +128,9 @@ void main(void)
 {
 	outColour = vec4(passedValue, 0.0, 0.0, 1.0);
 }
+```
+
+# C#
+```cs
+// TODO
 ```

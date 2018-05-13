@@ -9,11 +9,11 @@ namespace fl
 	/// </summary>
 	enum ModuleUpdate
 	{
-		UpdateAlways = 0,
-		UpdatePre = 1,
-		UpdateNormal = 2,
-		UpdatePost = 3,
-		UpdateRender = 4
+		UPDATE_ALWAYS = 0,
+		UPDATE_PRE = 1,
+		UPDATE_NORMAL = 2,
+		UPDATE_POST = 3,
+		UPDATE_RENDER = 4
 	};
 
 	/// <summary>

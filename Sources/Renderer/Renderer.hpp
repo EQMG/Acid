@@ -57,7 +57,7 @@ namespace fl
 		/// <param name="commandBuffer"> The command buffer to use. </param>
 		/// <param name="i"> The index of the render pass being rendered. </param>
 		/// <returns> VK_SUCCESS on success. </returns>
-		VkResult StartRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i);
+		bool StartRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i);
 
 		/// <summary>
 		/// Ends the renderpass.

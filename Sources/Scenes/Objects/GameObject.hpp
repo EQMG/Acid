@@ -79,7 +79,7 @@ namespace fl
 
 		Transform *GetTransform() const { return m_transform; }
 
-		void SetTransform(const Transform &transform) const { m_transform->Set(transform); }
+		void SetTransform(const Transform &transform) const { *m_transform = transform; }
 
 		ISpatialStructure<GameObject *> *GetStructure() const { return m_structure; }
 

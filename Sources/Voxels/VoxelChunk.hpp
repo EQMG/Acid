@@ -8,8 +8,8 @@ namespace fl
 {
 	enum ChunkMesh
 	{
-		MeshGreedy = 0,
-		MeshSimple = 1
+		MESH_GREEDY = 0,
+		MESH_SIMPLE = 1
 	};
 
 	class FL_EXPORT VoxelChunk :
@@ -26,7 +26,7 @@ namespace fl
 		static const float VOXEL_SIZE;
 		static const Vector3 *CHUNK_SIZE;
 
-		VoxelChunk(const ChunkMesh &chunkMesh = MeshGreedy, const bool &generate = false);
+		VoxelChunk(const ChunkMesh &chunkMesh = MESH_GREEDY, const bool &generate = false);
 
 		~VoxelChunk();
 

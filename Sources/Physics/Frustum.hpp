@@ -6,20 +6,20 @@ namespace fl
 {
 	enum FrustumPlanes
 	{
-		FrustumRight = 0,
-		FrustumLeft = 1,
-		FrustumBottom = 2,
-		FrustumTop = 3,
-		FrustumBack = 4,
-		FrustumFront = 5
+		FRUSTUM_RIGHT = 0,
+		FRUSTUM_LEFT = 1,
+		FRUSTUM_BOTTOM = 2,
+		FRUSTUM_TOP = 3,
+		FRUSTUM_BACK = 4,
+		FRUSTUM_FRONT = 5
 	};
 
 	enum FrustumFace
 	{
-		FrustumA = 0,
-		FrustumB = 1,
-		FrustumC = 2,
-		FrustumD = 3
+		FRUSTUM_A = 0,
+		FRUSTUM_B = 1,
+		FRUSTUM_C = 2,
+		FRUSTUM_D = 3
 	};
 
 	/// <summary>

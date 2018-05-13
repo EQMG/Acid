@@ -3,7 +3,7 @@
 #include "Engine/Engine.hpp"
 #include "Maths/Vector3.hpp"
 #include "Maths/Visual/DriverLinear.hpp"
-#include "Maths/Noise/NoiseFast.hpp"
+#include "Maths/Noise/Noise.hpp"
 #include "Lights/Fog.hpp"
 
 namespace fl
@@ -28,7 +28,7 @@ namespace fl
 
 		static const Colour *SKYBOX_COLOUR_DAY;
 
-		NoiseFast *m_noiseTerrain;
+		Noise *m_noiseTerrain;
 
 		DriverLinear *m_driverDay;
 		float m_factorDay;
@@ -75,7 +75,7 @@ namespace fl
 
 		float GetTerrainRadius(const float &radius, const float &theta, const float &phi);
 
-		NoiseFast *GetNoiseTerrain() const { return m_noiseTerrain; }
+		Noise *GetNoiseTerrain() const { return m_noiseTerrain; }
 
 		Vector3 *GetSkyboxRotation() const { return m_skyboxRotation; }
 

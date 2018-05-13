@@ -159,10 +159,10 @@ namespace fl
 
 		switch (m_chunkMesh)
 		{
-		case MeshGreedy:
+		case MESH_GREEDY:
 			CreateGreedyMesh(&vertices, &indices);
 			break;
-		case MeshSimple:
+		case MESH_SIMPLE:
 			CreateSimpleMesh(&vertices, &indices);
 			break;
 		}

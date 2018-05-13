@@ -18,20 +18,20 @@ namespace fl
 	ModuleRegister::ModuleRegister() :
 		m_modules(new std::multimap<float, ModulePair>())
 	{
-		RegisterModule<Display>(UpdatePost, "display");
-		RegisterModule<Joysticks>(UpdatePre, "joysticks");
-		RegisterModule<Keyboard>(UpdatePre, "keyboard");
-		RegisterModule<Mouse>(UpdatePre, "mouse");
-		RegisterModule<Audio>(UpdatePre, "audio");
-		RegisterModule<Scenes>(UpdateNormal, "scenes");
-		RegisterModule<Renderer>(UpdateRender, "renderer");
-		RegisterModule<Resources>(UpdatePre, "resources");
-		RegisterModule<Events>(UpdatePre, "events");
-		RegisterModule<Tasks>(UpdatePre, "tasks");
-		RegisterModule<Uis>(UpdatePre, "uis");
-		RegisterModule<Worlds>(UpdatePre, "worlds");
-		RegisterModule<Particles>(UpdateNormal, "particles");
-		RegisterModule<Shadows>(UpdateNormal, "shadows");
+		RegisterModule<Display>(UPDATE_POST, "display");
+		RegisterModule<Joysticks>(UPDATE_PRE, "joysticks");
+		RegisterModule<Keyboard>(UPDATE_PRE, "keyboard");
+		RegisterModule<Mouse>(UPDATE_PRE, "mouse");
+		RegisterModule<Audio>(UPDATE_PRE, "audio");
+		RegisterModule<Scenes>(UPDATE_NORMAL, "scenes");
+		RegisterModule<Renderer>(UPDATE_RENDER, "renderer");
+		RegisterModule<Resources>(UPDATE_PRE, "resources");
+		RegisterModule<Events>(UPDATE_ALWAYS, "events");
+		RegisterModule<Tasks>(UPDATE_ALWAYS, "tasks");
+		RegisterModule<Uis>(UPDATE_PRE, "uis");
+		RegisterModule<Worlds>(UPDATE_PRE, "worlds");
+		RegisterModule<Particles>(UPDATE_NORMAL, "particles");
+		RegisterModule<Shadows>(UPDATE_NORMAL, "shadows");
 	}
 
 	ModuleRegister::~ModuleRegister()
