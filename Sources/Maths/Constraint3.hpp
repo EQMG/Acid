@@ -59,6 +59,18 @@ namespace fl
 		/// <param name="destination"> The destination loaded value. </param>
 		void Write(LoadedValue *source);
 
+		bool GetX() const { return m_x; }
+
+		void SetX(const bool &x) { m_x = x; }
+
+		bool GetY() const { return m_y; }
+
+		void SetY(const bool &y) { m_y = y; }
+
+		bool GetZ() const { return m_z; }
+
+		void SetZ(const bool &z) { m_z = z; }
+
 		Constraint3 &operator=(const Constraint3 &other);
 
 		Constraint3 &operator=(LoadedValue *value);

@@ -9,7 +9,7 @@ namespace Demo
 		{
 			0, 0, // width / height
 			{
-				Attachment(1, TypeSwapchain) // swapchain
+				Attachment(1, AttachmentType::ATTACHMENT_SWAPCHAIN) // swapchain
 			}, // images
 			{
 				SubpassType(0, {0}),
@@ -36,9 +36,9 @@ namespace Demo
 		const auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
-		VkResult startResult = Renderer::Get()->StartRenderpass(commandBuffer, 0);
+		auto startResult = Renderer::Get()->StartRenderpass(commandBuffer, 0);
 
-		if (startResult != VK_SUCCESS)
+		if (!startResult)
 		{
 			return;
 		}

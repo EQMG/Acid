@@ -19,7 +19,6 @@ namespace fl
 		float m_radius;
 		Vector3 *m_offset;
 		Vector3 *m_position;
-
 	public:
 		/// <summary>
 		/// Creates a new point light.

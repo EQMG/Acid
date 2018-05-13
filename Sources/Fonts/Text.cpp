@@ -279,16 +279,16 @@ namespace fl
 		{
 			switch (m_justify)
 			{
-			case JustifyLeft:
+			case JUSTIFY_LEFT:
 				cursorX = 0.0;
 				break;
-			case JustifyCentre:
+			case JUSTIFY_CENTRE:
 				cursorX = (line->GetMaxLength() - line->GetCurrentLineLength()) / 2.0;
 				break;
-			case JustifyRight:
+			case JUSTIFY_RIGHT:
 				cursorX = line->GetMaxLength() - line->GetCurrentLineLength();
 				break;
-			case JustifyFully:
+			case JUSTIFY_FULLY:
 				cursorX = 0.0;
 				break;
 			}
@@ -301,7 +301,7 @@ namespace fl
 					cursorX += m_kerning + letter->GetAdvanceX();
 				}
 
-				if (m_justify == JustifyFully && lineOrder > 1)
+				if (m_justify == JUSTIFY_FULLY && lineOrder > 1)
 				{
 					cursorX += (line->GetMaxLength() - line->GetCurrentWordsLength()) / line->GetWords().size();
 				}

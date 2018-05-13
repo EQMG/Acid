@@ -47,52 +47,52 @@ namespace fl
 		clip[15] = view[12] * proj[3] + view[13] * proj[7] + view[14] * proj[11] + view[15] * proj[15];
 
 		// This will extract the LEFT side of the frustum.
-		m_frustum[FrustumLeft][FrustumA] = clip[3] - clip[0];
-		m_frustum[FrustumLeft][FrustumB] = clip[7] - clip[4];
-		m_frustum[FrustumLeft][FrustumC] = clip[11] - clip[8];
-		m_frustum[FrustumLeft][FrustumD] = clip[15] - clip[12];
+		m_frustum[FRUSTUM_LEFT][FRUSTUM_A] = clip[3] - clip[0];
+		m_frustum[FRUSTUM_LEFT][FRUSTUM_B] = clip[7] - clip[4];
+		m_frustum[FRUSTUM_LEFT][FRUSTUM_C] = clip[11] - clip[8];
+		m_frustum[FRUSTUM_LEFT][FRUSTUM_D] = clip[15] - clip[12];
 
-		NormalizePlane(FrustumLeft);
+		NormalizePlane(FRUSTUM_LEFT);
 
 		// This will extract the RIGHT side of the frustum.
-		m_frustum[FrustumRight][FrustumA] = clip[3] + clip[0];
-		m_frustum[FrustumRight][FrustumB] = clip[7] + clip[4];
-		m_frustum[FrustumRight][FrustumC] = clip[11] + clip[8];
-		m_frustum[FrustumRight][FrustumD] = clip[15] + clip[12];
+		m_frustum[FRUSTUM_RIGHT][FRUSTUM_A] = clip[3] + clip[0];
+		m_frustum[FRUSTUM_RIGHT][FRUSTUM_B] = clip[7] + clip[4];
+		m_frustum[FRUSTUM_RIGHT][FRUSTUM_C] = clip[11] + clip[8];
+		m_frustum[FRUSTUM_RIGHT][FRUSTUM_D] = clip[15] + clip[12];
 
-		NormalizePlane(FrustumRight);
+		NormalizePlane(FRUSTUM_RIGHT);
 
 		// This will extract the BOTTOM side of the frustum.
-		m_frustum[FrustumBottom][FrustumA] = clip[3] + clip[1];
-		m_frustum[FrustumBottom][FrustumB] = clip[7] + clip[5];
-		m_frustum[FrustumBottom][FrustumC] = clip[11] + clip[9];
-		m_frustum[FrustumBottom][FrustumD] = clip[15] + clip[13];
+		m_frustum[FRUSTUM_BOTTOM][FRUSTUM_A] = clip[3] + clip[1];
+		m_frustum[FRUSTUM_BOTTOM][FRUSTUM_B] = clip[7] + clip[5];
+		m_frustum[FRUSTUM_BOTTOM][FRUSTUM_C] = clip[11] + clip[9];
+		m_frustum[FRUSTUM_BOTTOM][FRUSTUM_D] = clip[15] + clip[13];
 
-		NormalizePlane(FrustumBottom);
+		NormalizePlane(FRUSTUM_BOTTOM);
 
 		// This will extract the TOP side of the frustum.
-		m_frustum[FrustumTop][FrustumA] = clip[3] - clip[1];
-		m_frustum[FrustumTop][FrustumB] = clip[7] - clip[5];
-		m_frustum[FrustumTop][FrustumC] = clip[11] - clip[9];
-		m_frustum[FrustumTop][FrustumD] = clip[15] - clip[13];
+		m_frustum[FRUSTUM_TOP][FRUSTUM_A] = clip[3] - clip[1];
+		m_frustum[FRUSTUM_TOP][FRUSTUM_B] = clip[7] - clip[5];
+		m_frustum[FRUSTUM_TOP][FRUSTUM_C] = clip[11] - clip[9];
+		m_frustum[FRUSTUM_TOP][FRUSTUM_D] = clip[15] - clip[13];
 
-		NormalizePlane(FrustumTop);
+		NormalizePlane(FRUSTUM_TOP);
 
 		// This will extract the BACK side of the frustum.
-		m_frustum[FrustumBack][FrustumA] = clip[3] + clip[2];
-		m_frustum[FrustumBack][FrustumB] = clip[7] + clip[6];
-		m_frustum[FrustumBack][FrustumC] = clip[11] + clip[10];
-		m_frustum[FrustumBack][FrustumD] = clip[15] + clip[14];
+		m_frustum[FRUSTUM_BACK][FRUSTUM_A] = clip[3] + clip[2];
+		m_frustum[FRUSTUM_BACK][FRUSTUM_B] = clip[7] + clip[6];
+		m_frustum[FRUSTUM_BACK][FRUSTUM_C] = clip[11] + clip[10];
+		m_frustum[FRUSTUM_BACK][FRUSTUM_D] = clip[15] + clip[14];
 
-		NormalizePlane(FrustumBack);
+		NormalizePlane(FRUSTUM_BACK);
 
 		// This will extract the FRONT side of the frustum.
-		m_frustum[FrustumFront][FrustumA] = clip[3] - clip[2];
-		m_frustum[FrustumFront][FrustumB] = clip[7] - clip[6];
-		m_frustum[FrustumFront][FrustumC] = clip[11] - clip[10];
-		m_frustum[FrustumFront][FrustumD] = clip[15] - clip[14];
+		m_frustum[FRUSTUM_FRONT][FRUSTUM_A] = clip[3] - clip[2];
+		m_frustum[FRUSTUM_FRONT][FRUSTUM_B] = clip[7] - clip[6];
+		m_frustum[FRUSTUM_FRONT][FRUSTUM_C] = clip[11] - clip[10];
+		m_frustum[FRUSTUM_FRONT][FRUSTUM_D] = clip[15] - clip[14];
 
-		NormalizePlane(FrustumFront);
+		NormalizePlane(FRUSTUM_FRONT);
 
 		// Deletes the arrays used to update the frustum.
 		delete[] view;
@@ -104,8 +104,8 @@ namespace fl
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			if (m_frustum[i][FrustumA] * position.m_x + m_frustum[i][FrustumB] * position.m_y + m_frustum[i][FrustumC] * position.m_z +
-				m_frustum[i][FrustumD] <= 0.0f)
+			if (m_frustum[i][FRUSTUM_A] * position.m_x + m_frustum[i][FRUSTUM_B] * position.m_y + m_frustum[i][FRUSTUM_C] * position.m_z +
+				m_frustum[i][FRUSTUM_D] <= 0.0f)
 			{
 				return false;
 			}
@@ -118,8 +118,8 @@ namespace fl
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			if (m_frustum[i][FrustumA] * position.m_x + m_frustum[i][FrustumB] * position.m_y + m_frustum[i][FrustumC] * position.m_z +
-				m_frustum[i][FrustumD] <= -radius)
+			if (m_frustum[i][FRUSTUM_A] * position.m_x + m_frustum[i][FRUSTUM_B] * position.m_y + m_frustum[i][FRUSTUM_C] * position.m_z +
+				m_frustum[i][FRUSTUM_D] <= -radius)
 			{
 				return false;
 			}
@@ -132,14 +132,14 @@ namespace fl
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			if (m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * min.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * min.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * min.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f &&
-				m_frustum[i][FrustumA] * max.m_x + m_frustum[i][FrustumB] * max.m_y + m_frustum[i][FrustumC] * max.m_z + m_frustum[i][FrustumD] <= 0.0f)
+			if (m_frustum[i][FRUSTUM_A] * min.m_x + m_frustum[i][FRUSTUM_B] * min.m_y + m_frustum[i][FRUSTUM_C] * min.m_z + m_frustum[i][FRUSTUM_D] <= 0.0f &&
+				m_frustum[i][FRUSTUM_A] * max.m_x + m_frustum[i][FRUSTUM_B] * min.m_y + m_frustum[i][FRUSTUM_C] * min.m_z + m_frustum[i][FRUSTUM_D] <= 0.0f &&
+				m_frustum[i][FRUSTUM_A] * min.m_x + m_frustum[i][FRUSTUM_B] * max.m_y + m_frustum[i][FRUSTUM_C] * min.m_z + m_frustum[i][FRUSTUM_D] <= 0.0f &&
+				m_frustum[i][FRUSTUM_A] * max.m_x + m_frustum[i][FRUSTUM_B] * max.m_y + m_frustum[i][FRUSTUM_C] * min.m_z + m_frustum[i][FRUSTUM_D] <= 0.0f &&
+				m_frustum[i][FRUSTUM_A] * min.m_x + m_frustum[i][FRUSTUM_B] * min.m_y + m_frustum[i][FRUSTUM_C] * max.m_z + m_frustum[i][FRUSTUM_D] <= 0.0f &&
+				m_frustum[i][FRUSTUM_A] * max.m_x + m_frustum[i][FRUSTUM_B] * min.m_y + m_frustum[i][FRUSTUM_C] * max.m_z + m_frustum[i][FRUSTUM_D] <= 0.0f &&
+				m_frustum[i][FRUSTUM_A] * min.m_x + m_frustum[i][FRUSTUM_B] * max.m_y + m_frustum[i][FRUSTUM_C] * max.m_z + m_frustum[i][FRUSTUM_D] <= 0.0f &&
+				m_frustum[i][FRUSTUM_A] * max.m_x + m_frustum[i][FRUSTUM_B] * max.m_y + m_frustum[i][FRUSTUM_C] * max.m_z + m_frustum[i][FRUSTUM_D] <= 0.0f)
 			{
 				return false;
 			}
@@ -150,12 +150,12 @@ namespace fl
 
 	void Frustum::NormalizePlane(const int &side) const
 	{
-		const float magnitude = std::sqrt(m_frustum[side][FrustumA] * m_frustum[side][FrustumA] +
-			m_frustum[side][FrustumB] * m_frustum[side][FrustumB] +
-			m_frustum[side][FrustumC] * m_frustum[side][FrustumC]);
-		m_frustum[side][FrustumA] /= magnitude;
-		m_frustum[side][FrustumB] /= magnitude;
-		m_frustum[side][FrustumC] /= magnitude;
-		m_frustum[side][FrustumD] /= magnitude;
+		const float magnitude = std::sqrt(m_frustum[side][FRUSTUM_A] * m_frustum[side][FRUSTUM_A] +
+			m_frustum[side][FRUSTUM_B] * m_frustum[side][FRUSTUM_B] +
+			m_frustum[side][FRUSTUM_C] * m_frustum[side][FRUSTUM_C]);
+		m_frustum[side][FRUSTUM_A] /= magnitude;
+		m_frustum[side][FRUSTUM_B] /= magnitude;
+		m_frustum[side][FRUSTUM_C] /= magnitude;
+		m_frustum[side][FRUSTUM_D] /= magnitude;
 	}
 }

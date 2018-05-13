@@ -46,12 +46,12 @@ namespace fl
 	{
 		uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
 		uniformObject->Push("skyColour", *Worlds::Get()->GetSkyColour());
-		uniformObject->Push("fogColour", *Worlds::Get()->GetFog()->m_colour);
+		uniformObject->Push("fogColour", *Worlds::Get()->GetFog()->GetColour());
 
 		// Updates uniforms.
 		if (m_enableFog)
 		{
-			uniformObject->Push("fogLimits", GetGameObject()->GetTransform()->m_scaling->m_y * Vector2(Worlds::Get()->GetFog()->m_lowerLimit, Worlds::Get()->GetFog()->m_upperLimit));
+			uniformObject->Push("fogLimits", GetGameObject()->GetTransform()->GetScaling()->m_y * Vector2(Worlds::Get()->GetFog()->GetLowerLimit(), Worlds::Get()->GetFog()->GetUpperLimit()));
 			uniformObject->Push("blendFactor", m_blend);
 		}
 		else

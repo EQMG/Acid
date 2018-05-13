@@ -9,7 +9,7 @@ namespace Demo
 		{
 			4096, 4096, // width / height
 			{
-				Attachment(0, TypeImage, VK_FORMAT_R8_UNORM) // shadows
+				Attachment(0, AttachmentType::ATTACHMENT_IMAGE, VK_FORMAT_R8_UNORM) // shadows
 			}, // images
 			{
 				SubpassType(0, {0})
@@ -19,11 +19,11 @@ namespace Demo
 		{
 			0, 0, // width / height
 			{
-				Attachment(0, TypeDepth), // depth
-				Attachment(1, TypeSwapchain), // swapchain
-				Attachment(2, TypeImage, VK_FORMAT_R8G8B8A8_UNORM), // colours
-				Attachment(3, TypeImage, VK_FORMAT_R16G16_UNORM), // normals
-				Attachment(4, TypeImage, VK_FORMAT_R8G8B8A8_UNORM) // materials
+				Attachment(0, AttachmentType::ATTACHMENT_DEPTH), // depth
+				Attachment(1, AttachmentType::ATTACHMENT_SWAPCHAIN), // swapchain
+				Attachment(2, AttachmentType::ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM), // colours
+				Attachment(3, AttachmentType::ATTACHMENT_IMAGE, VK_FORMAT_R16G16_UNORM), // normals
+				Attachment(4, AttachmentType::ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM) // materials
 			}, // images
 			{
 				SubpassType(0, {0, 2, 3, 4}),
@@ -79,9 +79,9 @@ namespace Demo
 		const auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
-		VkResult startResult = Renderer::Get()->StartRenderpass(commandBuffer, 0);
+		auto startResult = Renderer::Get()->StartRenderpass(commandBuffer, 0);
 
-		if (startResult != VK_SUCCESS)
+		if (!startResult)
 		{
 			return;
 		}
@@ -99,9 +99,9 @@ namespace Demo
 		const auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
-		VkResult startResult = Renderer::Get()->StartRenderpass(commandBuffer, 1);
+		auto startResult = Renderer::Get()->StartRenderpass(commandBuffer, 1);
 
-		if (startResult != VK_SUCCESS)
+		if (!startResult)
 		{
 			return;
 		}

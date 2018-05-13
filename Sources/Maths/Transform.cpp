@@ -30,11 +30,6 @@ namespace fl
 	{
 	}
 
-	Transform::Transform(LoadedValue *value)
-	{
-		Set(value);
-	}
-
 	Transform::~Transform()
 	{
 		delete m_position;
@@ -52,22 +47,6 @@ namespace fl
 		return Matrix4::TransformationMatrix(Vector3(), *m_rotation, Vector3());
 	}
 
-	Transform *Transform::Set(const Transform &source)
-	{
-		*m_position = *source.m_position;
-		*m_rotation = *source.m_rotation;
-		*m_scaling = *source.m_scaling;
-		return this;
-	}
-
-	Transform *Transform::Set(LoadedValue *value)
-	{
-		*m_position = value->GetChild("position");
-		*m_rotation = value->GetChild("rotation");
-		*m_scaling = value->GetChild("scaling");
-		return this;
-	}
-
 	void Transform::Write(LoadedValue *destination)
 	{
 		m_position->Write(destination->GetChild("position", true));
@@ -77,7 +56,18 @@ namespace fl
 
 	Transform &Transform::operator=(const Transform &other)
 	{
-		return *Set(other);
+		*m_position = *other.m_position;
+		*m_rotation = *other.m_rotation;
+		*m_scaling = *other.m_scaling;
+		return *this;
+	}
+
+	Transform &Transform::operator=(LoadedValue *value)
+	{
+		*m_position = value->GetChild("position");
+		*m_rotation = value->GetChild("rotation");
+		*m_scaling = value->GetChild("scaling");
+		return *this;
 	}
 
 	bool Transform::operator==(const Transform &other) const

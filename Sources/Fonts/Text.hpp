@@ -18,10 +18,10 @@ namespace fl
 	/// </summary>
 	enum FontJustify
 	{
-		JustifyLeft,
-		JustifyCentre,
-		JustifyRight,
-		JustifyFully
+		JUSTIFY_LEFT = 0,
+		JUSTIFY_CENTRE = 1,
+		JUSTIFY_RIGHT = 2,
+		JUSTIFY_FULLY = 3
 	};
 
 	/// <summary>
@@ -68,7 +68,7 @@ namespace fl
 		/// <param name="maxWidth"> The maximum length of a line of this text. </param>
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
-		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType = Uis::Get()->m_proximaNova->GetRegular(), const FontJustify &justify = JustifyLeft, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
+		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType = Uis::Get()->m_proximaNova->GetRegular(), const FontJustify &justify = JUSTIFY_LEFT, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		/// <summary>
 		/// Deconstructor for the text.

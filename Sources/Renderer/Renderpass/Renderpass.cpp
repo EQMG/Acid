@@ -24,15 +24,15 @@ namespace fl
 
 			switch (image.GetType())
 			{
-			case TypeImage:
+			case ATTACHMENT_IMAGE:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				attachment.format = image.GetFormat();
 				break;
-			case TypeDepth:
+			case ATTACHMENT_DEPTH:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 				attachment.format = depthStencil.GetFormat();
 				break;
-			case TypeSwapchain:
+			case ATTACHMENT_SWAPCHAIN:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 				attachment.format = surfaceFormat;
 				break;
@@ -53,7 +53,7 @@ namespace fl
 
 			for (auto attachment : subpassType.GetAttachments())
 			{
-				if (renderpassCreate.GetImages().at(attachment).GetType() == TypeDepth)
+				if (renderpassCreate.GetImages().at(attachment).GetType() == ATTACHMENT_DEPTH)
 				{
 					depthAttachment = attachment;
 					continue;

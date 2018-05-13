@@ -22,15 +22,15 @@ namespace fl
 
 			switch (image.GetType())
 			{
-			case TypeImage:
+			case ATTACHMENT_IMAGE:
 				clearValue.color = {*image.GetClearColour().m_elements};
 				m_imageAttachments++;
 				break;
-			case TypeDepth:
+			case ATTACHMENT_DEPTH:
 				clearValue.depthStencil = {1.0f, 0};
 				m_hasDepth = true;
 				break;
-			case TypeSwapchain:
+			case ATTACHMENT_SWAPCHAIN:
 				clearValue.color = {{0.0f, 0.0f, 0.0f, 0.0f}};
 				m_hasSwapchain = true;
 				break;

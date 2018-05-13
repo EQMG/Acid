@@ -44,11 +44,6 @@ namespace fl
 			return EXIT_FAILURE;
 		}
 	}
-	
-	void Engine::SetUpdater(IUpdater *updater)
-	{ 
-		m_updater = updater; 
-	}
 
 	void Engine::RequestClose(const bool &error)
 	{

@@ -8,8 +8,8 @@ namespace fl
 		m_presentMode(VK_PRESENT_MODE_FIFO_KHR),
 		m_swapchain(VK_NULL_HANDLE),
 		m_swapchainImageCount(0),
-		m_swapchinImages(std::vector<VkImage>()),
-		m_swapchinImageViews(std::vector<VkImageView>()),
+		m_swapchainImages(std::vector<VkImage>()),
+		m_swapchainImageViews(std::vector<VkImageView>()),
 		m_extent({})
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -76,15 +76,15 @@ namespace fl
 		Display::ErrorVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
 
 		Display::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
-		m_swapchinImages.resize(m_swapchainImageCount);
-		m_swapchinImageViews.resize(m_swapchainImageCount);
-		Display::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchinImages.data()));
+		m_swapchainImages.resize(m_swapchainImageCount);
+		m_swapchainImageViews.resize(m_swapchainImageCount);
+		Display::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchainImages.data()));
 
 		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
 		{
 			VkImageViewCreateInfo imageViewCreateInfo = {};
 			imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-			imageViewCreateInfo.image = m_swapchinImages.at(i);
+			imageViewCreateInfo.image = m_swapchainImages.at(i);
 			imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
 			imageViewCreateInfo.format = surfaceFormat.format;
 			imageViewCreateInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
@@ -98,7 +98,7 @@ namespace fl
 			imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 			imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-			Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchinImageViews.at(i)));
+			Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchainImageViews.at(i)));
 		}
 	}
 
@@ -106,7 +106,7 @@ namespace fl
 	{
 		const auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		for (auto imageView : m_swapchinImageViews)
+		for (auto imageView : m_swapchainImageViews)
 		{
 			vkDestroyImageView(logicalDevice, imageView, nullptr);
 		}

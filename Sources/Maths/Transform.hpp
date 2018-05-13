@@ -11,11 +11,11 @@ namespace fl
 	/// </summary>
 	class FL_EXPORT Transform
 	{
-	public:
+	private:
 		Vector3 *m_position;
 		Vector3 *m_rotation;
 		Vector3 *m_scaling;
-
+	public:
 		/// <summary>
 		/// Constructor for Transform.
 		/// </summary>
@@ -43,25 +43,11 @@ namespace fl
 		/// <param name="scale"> The scale. </param>
 		Transform(const Vector3 &position, const Vector3 &rotation, const float &scale);
 
-		/// <summary>
-		/// Constructor for Transform.
-		/// </summary>
-		/// <param name="source"> Creates this transform out of a loaded value. </param>
-		Transform(LoadedValue *value);
-
 		~Transform();
 
 		Matrix4 GetWorldMatrix() const;
 
 		Matrix4 GetModelMatrix() const;
-
-		Transform *Set(const Transform &source);
-
-		/// <summary>
-		/// Sets values in the transform.
-		/// </summary>
-		/// <param name="source"> The source loaded value. </param>
-		Transform *Set(LoadedValue *value);
 
 		/// <summary>
 		/// Saves this transform into a loaded value.
@@ -82,6 +68,8 @@ namespace fl
 		void SetScaling(const Vector3 &scaling) { *m_scaling = scaling; }
 
 		Transform &operator=(const Transform &other);
+
+		Transform &operator=(LoadedValue *value);
 
 		bool operator==(const Transform &other) const;
 

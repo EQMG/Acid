@@ -85,10 +85,10 @@ namespace fl
 		m_uniformScene->Push("projection", *camera.GetProjectionMatrix());
 		m_uniformScene->Push("view", *camera.GetViewMatrix());
 		m_uniformScene->Push("shadowSpace", *Shadows::Get()->GetShadowBox()->GetToShadowMapSpaceMatrix());
-		m_uniformScene->Push("fogColour", *Worlds::Get()->GetFog()->m_colour);
+		m_uniformScene->Push("fogColour", *Worlds::Get()->GetFog()->GetColour());
 		m_uniformScene->Push("cameraPosition", *Scenes::Get()->GetCamera()->GetPosition());
-		m_uniformScene->Push("fogDensity", Worlds::Get()->GetFog()->m_density);
-		m_uniformScene->Push("fogGradient", Worlds::Get()->GetFog()->m_gradient);
+		m_uniformScene->Push("fogDensity", Worlds::Get()->GetFog()->GetDensity());
+		m_uniformScene->Push("fogGradient", Worlds::Get()->GetFog()->GetGradient());
 		m_uniformScene->Push("shadowDistance", Shadows::Get()->GetShadowBoxDistance());
 		m_uniformScene->Push("shadowTransition", Shadows::Get()->GetShadowTransition());
 		m_uniformScene->Push("shadowBias", Shadows::Get()->GetShadowBias());
