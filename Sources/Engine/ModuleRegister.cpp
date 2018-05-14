@@ -44,6 +44,19 @@ namespace fl
 		delete m_modules;
 	}
 
+	IModule *ModuleRegister::RegisterModule(IModule *module, const ModuleUpdate &update, const std::string &name)
+	{
+		//	if (m_modules->find(name) != m_modules->end())
+		//	{
+		//		fprintf(stderr, "Module '%s' is already registered!\n", name.c_str());
+		//		return;
+		//	}
+
+		float offset = update + (0.01f * static_cast<float>(m_modules->size()));
+		m_modules->insert(std::make_pair(offset, std::make_pair(name, module)));
+		return module;
+	}
+
 	IModule *ModuleRegister::GetModule(const std::string &name)
 	{
 		for (auto &module : *m_modules)
