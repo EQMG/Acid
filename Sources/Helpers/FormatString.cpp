@@ -1,5 +1,7 @@
 #include "FormatString.hpp"
 
+#include <algorithm>
+
 namespace fl
 {
 	std::vector<std::string> FormatString::Split(const std::string &str, const std::string &sep, const bool &trim)

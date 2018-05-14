@@ -2,8 +2,8 @@
 
 namespace fl
 {
-//	const Constraint3 Constraint3::FALSE = Constraint3(false, false, false);
-//	const Constraint3 Constraint3::TRUE = Constraint3(true, true, true);
+	const Constraint3 Constraint3::ZERO = Constraint3(false, false, false);
+	const Constraint3 Constraint3::ONE = Constraint3(true, true, true);
 
 	Constraint3::Constraint3() :
 		m_x(false),

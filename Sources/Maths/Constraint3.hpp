@@ -26,8 +26,8 @@ namespace fl
 			};
 		};
 
-		//	static const Constraint3 FALSE;
-		//	static const Constraint3 TRUE;
+		static const Constraint3 ZERO;
+		static const Constraint3 ONE;
 
 		/// <summary>
 		/// Constructor for Constraint3.

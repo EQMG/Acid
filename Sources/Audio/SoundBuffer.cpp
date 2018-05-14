@@ -1,16 +1,12 @@
 #include "SoundBuffer.hpp"
 
 #include <fstream>
-
 #ifdef FL_BUILD_MACOS
-
 #include <OpenAL/al.h>
-
 #else
 #include <AL/al.h>
 #include <AL/alc.h>
 #endif
-
 #include <STB/stb_vorbis.h>
 #include "Helpers/FileSystem.hpp"
 
