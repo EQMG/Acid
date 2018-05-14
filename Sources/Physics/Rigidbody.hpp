@@ -2,8 +2,8 @@
 
 #include "Maths/Constraint3.hpp"
 #include "Maths/Vector3.hpp"
-#include "Scenes/Objects/Component.hpp"
-#include "Scenes/Objects/GameObject.hpp"
+#include "Objects/Component.hpp"
+#include "Objects/GameObject.hpp"
 #include "Collider.hpp"
 
 namespace fl
@@ -20,7 +20,7 @@ namespace fl
 		Collider *m_colliderCopy;
 	public:
 		Rigidbody(const float &mass = 1.0f, const float &drag = 0.0f, const bool &useGravity = true,
-			const Constraint3 &freezePosition = Constraint3(), const Constraint3 &freezeRotation = Constraint3()); // Constraint3::FALSE
+				  const Constraint3 &freezePosition = Constraint3(), const Constraint3 &freezeRotation = Constraint3()); // Constraint3::FALSE
 
 		~Rigidbody();
 

@@ -7,8 +7,8 @@ add_library(Flounder ${LIB_TYPE} ${FLOUNDER_SOURCES})
 add_dependencies(Flounder SPIRV glfw stb)
 
 set_target_properties(Flounder PROPERTIES
-                      POSITION_INDEPENDENT_CODE ON
-                      FOLDER "Flounder")
+        POSITION_INDEPENDENT_CODE ON
+        FOLDER "Flounder")
 
 if (WIN32 AND BUILD_SHARED_LIBS)
     set_target_properties(Flounder PROPERTIES PREFIX "")
@@ -35,8 +35,8 @@ if (FLOUNDER_INSTALL)
             INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
             )
 
-    foreach(file ${FLOUNDER_HEADERS_})
+    foreach (file ${FLOUNDER_HEADERS_})
         get_filename_component(dir ${file} DIRECTORY)
         install(FILES ${file} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/fl/${dir})
-    endforeach()
+    endforeach ()
 endif ()

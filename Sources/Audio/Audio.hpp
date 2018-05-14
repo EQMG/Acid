@@ -39,6 +39,8 @@ namespace fl
 
 		void Update() override;
 
+		static std::string StringifyResultAl(const int &result);
+
 		static void ErrorAl(const int &result);
 
 		FL_HIDDEN ALCdevice *GetAlcDevice() const { return m_alDevice; }

@@ -18,7 +18,7 @@ namespace fl
 	std::string PipelineMaterial::ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines)
 	{
 		std::string shaderString;
-		shaderString = std::accumulate(std::begin(pipelineCreate.m_shaderStages), std::end(pipelineCreate.m_shaderStages), shaderString);
+		shaderString = std::accumulate(std::begin(pipelineCreate.GetShaderStages()), std::end(pipelineCreate.GetShaderStages()), shaderString);
 
 		//	std::string defineString;
 		//	auto defineLambda = [](Define a, Define b){a.name + std::to_string(a.value) + b.name + std::to_string(b.value); };

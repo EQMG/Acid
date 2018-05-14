@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Maths/Transform.hpp"
-#include "Scenes/Objects/Component.hpp"
-#include "Scenes/Objects/GameObject.hpp"
+#include "Objects/Component.hpp"
+#include "Objects/GameObject.hpp"
 #include "Frustum.hpp"
 #include "Intersect.hpp"
 #include "Ray.hpp"

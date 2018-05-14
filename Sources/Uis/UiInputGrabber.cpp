@@ -1,8 +1,6 @@
 ﻿#include "UiInputGrabber.hpp"
 
-#include "Inputs/Mouse.hpp"
 #include "Inputs/Keyboard.hpp"
-#include "Inputs/Joysticks.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 
@@ -56,7 +54,7 @@ namespace fl
 	{
 		int key = Keyboard::Get()->GetChar();
 
-		if (key == 0 || !Keyboard::Get()->GetKey((Key)toupper(key)))
+		if (key == 0 || !Keyboard::Get()->GetKey((Key) toupper(key)))
 		{
 			key = -1;
 		}
@@ -75,7 +73,7 @@ namespace fl
 
 		for (int i = 0; i < MouseButton::MOUSE_BUTTON_LAST; i++)
 		{
-			if (Mouse::Get()->GetButton((MouseButton)i))
+			if (Mouse::Get()->GetButton((MouseButton) i))
 			{
 				if (i == 0)
 				{

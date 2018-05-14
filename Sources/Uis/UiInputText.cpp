@@ -41,7 +41,7 @@ namespace fl
 			int key = Keyboard::Get()->GetChar();
 
 			// TODO: Fix inputs that are not GLFW defined.
-			if (key != 0 && Keyboard::Get()->GetKey((Key)toupper(key)))
+			if (key != 0 && Keyboard::Get()->GetKey((Key) toupper(key)))
 			{
 				m_inputDelay->Update(true);
 

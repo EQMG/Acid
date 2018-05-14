@@ -1,9 +1,7 @@
 ﻿#include "Pipeline.hpp"
 
-#include <cassert>
 #include <SPIRV/GlslangToSpv.h>
 #include "Helpers/FileSystem.hpp"
-#include "Helpers/FormatString.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace fl
@@ -63,8 +61,8 @@ namespace fl
 
 #if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
-	//	printf("%s", m_shaderProgram->ToString().c_str());
-		printf("Pipeline '%s' created in %fms\n", m_pipelineCreateInfo.m_shaderStages.back().c_str(), debugEnd - debugStart);
+		//	printf("%s", m_shaderProgram->ToString().c_str());
+		printf("Pipeline '%s' created in %fms\n", m_pipelineCreateInfo.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -230,7 +228,7 @@ namespace fl
 			defineBlock += "#define " + define.GetName() + " " + define.GetValue() + "\n";
 		}
 
-		for (auto &type : m_pipelineCreateInfo.m_shaderStages)
+		for (auto type : m_pipelineCreateInfo.GetShaderStages())
 		{
 			auto shaderCode = ShaderProgram::InsertDefineBlock(FileSystem::ReadTextFile(type), defineBlock);
 

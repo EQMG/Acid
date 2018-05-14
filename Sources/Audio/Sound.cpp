@@ -1,8 +1,8 @@
 ﻿#include "Sound.hpp"
 
+#include <cmath>
 #ifdef FL_BUILD_MACOS
 #include <OpenAL/al.h>
-#include <OpenAL/alc.h>
 #else
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -108,8 +108,9 @@ namespace fl
 
 	void Sound::SetGain(const float &gain)
 	{
-		alSourcef(m_source, AL_GAIN, gain);
-		m_gain = gain;
+		float eulerGain = std::pow(gain, 2.7183f);
+		alSourcef(m_source, AL_GAIN, eulerGain);
+		m_gain = eulerGain;
 		Audio::ErrorAl(alGetError());
 	}
 

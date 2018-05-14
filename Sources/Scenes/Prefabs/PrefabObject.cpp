@@ -1,6 +1,6 @@
 #include "PrefabObject.hpp"
 
-#include "Scenes/Objects/GameObject.hpp"
+#include "Objects/GameObject.hpp"
 #include "Helpers/FileSystem.hpp"
 
 namespace fl

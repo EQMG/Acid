@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "Scenes/Objects/Component.hpp"
+#include "Objects/Component.hpp"
 #include "Models/Model.hpp"
 
 namespace fl

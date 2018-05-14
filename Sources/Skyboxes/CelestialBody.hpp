@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "Scenes/Objects/Component.hpp"
-#include "Scenes/Objects/GameObject.hpp"
+#include "Objects/Component.hpp"
+#include "Objects/GameObject.hpp"
 
 namespace fl
 {

@@ -1,13 +1,15 @@
 #include "FileSystem.hpp"
 
 #include <cassert>
-#include <algorithm>
+
 #ifdef FL_BUILD_WINDOWS
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else
+
 #include <sys/stat.h>
 #include <unistd.h>
+
 #define GetCurrentDir getcwd
 #endif
 

@@ -33,5 +33,11 @@ namespace fl
 		/// Renders the filter.
 		/// </summary>
 		virtual void Render(const VkCommandBuffer &commandBuffer);
+
+		DescriptorsHandler *GetDescriptorSet() const { return m_descriptorSet; }
+
+		Pipeline *GetPipeline() const { return m_pipeline; }
+
+		Model *GetModel() const { return m_model; }
 	};
 }

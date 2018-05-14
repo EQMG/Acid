@@ -312,16 +312,18 @@ namespace fl
 
 	void Display::ErrorVk(const VkResult &result)
 	{
-		if (result < 0)
+		if (result >= 0)
 		{
-			std::string failure = StringifyResultVk(result);
-
-			fprintf(stderr, "Vulkan error: %s, %i\n", failure.c_str(), result);
-#ifdef FL_BUILD_WINDOWS
-			MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
-#endif
-			throw std::runtime_error("Vulkan runtime error.");
+			return;
 		}
+
+		std::string failure = StringifyResultVk(result);
+
+		fprintf(stderr, "Vulkan error: %s, %i\n", failure.c_str(), result);
+#ifdef FL_BUILD_WINDOWS
+		MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
+#endif
+		throw std::runtime_error("Vulkan runtime error.");
 	}
 
 	std::string Display::StringifyResultGlfw(const int &result)
@@ -357,16 +359,18 @@ namespace fl
 
 	void Display::ErrorGlfw(const int &result)
 	{
-		if (result != GLFW_TRUE)
+		if (result == GLFW_TRUE)
 		{
-			std::string failure = StringifyResultGlfw(result);
-
-			fprintf(stderr, "GLFW error: %s, %i\n", failure.c_str(), result);
-#ifdef FL_BUILD_WINDOWS
-			MessageBox(nullptr, failure.c_str(), "GLFW Error", 0);
-#endif
-			throw std::runtime_error("GLFW runtime error.");
+			return;
 		}
+
+		std::string failure = StringifyResultGlfw(result);
+
+		fprintf(stderr, "GLFW error: %s, %i\n", failure.c_str(), result);
+#ifdef FL_BUILD_WINDOWS
+		MessageBox(nullptr, failure.c_str(), "GLFW Error", 0);
+#endif
+		throw std::runtime_error("GLFW runtime error.");
 	}
 
 	void Display::CreateGlfw()

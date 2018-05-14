@@ -5,7 +5,7 @@
 #include "Meshes/Mesh.hpp"
 #include "Animation/AnimationLoader.hpp"
 #include "Geometry/GeometryLoader.hpp"
-#include "Scenes/Objects/Component.hpp"
+#include "Objects/Component.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"
 #include "Animator.hpp"

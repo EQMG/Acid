@@ -67,7 +67,7 @@ namespace fl
 
 		friend void CallbackFrame(GLFWwindow *window, int width, int height);
 
-		friend void CallbackIconify(GLFWwindow * window, int iconified);
+		friend void CallbackIconify(GLFWwindow *window, int iconified);
 
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData);
 

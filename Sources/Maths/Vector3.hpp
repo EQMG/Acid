@@ -8,7 +8,9 @@
 namespace fl
 {
 	class Colour;
+
 	class Vector2;
+
 	class Vector4;
 
 	/// <summary>

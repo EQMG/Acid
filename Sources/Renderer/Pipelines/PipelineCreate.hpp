@@ -76,9 +76,8 @@ namespace fl
 
 	class FL_EXPORT PipelineCreate
 	{
-	public:
-		std::vector<std::string> m_shaderStages;
 	private:
+		std::vector<std::string> m_shaderStages;
 		VertexInput m_vertexInput;
 
 		PipelineModeFlags m_pipelineModeFlags;
@@ -95,6 +94,8 @@ namespace fl
 			m_cullModeFlags(cullModeFlags)
 		{
 		}
+
+		std::vector<std::string> GetShaderStages() const { return m_shaderStages; }
 
 		VertexInput GetVertexInput() const { return m_vertexInput; }
 
