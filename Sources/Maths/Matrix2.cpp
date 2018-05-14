@@ -1,5 +1,6 @@
 #include "Matrix2.hpp"
 
+#include <sstream>
 #include "Maths.hpp"
 
 namespace fl

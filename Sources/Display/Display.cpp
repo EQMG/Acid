@@ -1,6 +1,7 @@
 #include "Display.hpp"
 
 #ifdef FL_BUILD_WINDOWS
+#define NOMINMAX
 #include <Windows.h>
 #endif
 #include <GLFW/glfw3.h>

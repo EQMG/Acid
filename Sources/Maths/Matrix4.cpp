@@ -1,5 +1,6 @@
 #include "Matrix4.hpp"
 
+#include <sstream>
 #include "Maths.hpp"
 #include "Vector2.hpp"
 #include "Vector3.hpp"
