@@ -36,7 +36,7 @@ namespace fl
 		m_noiseTerrain->SetInterp(NoiseInterp::INTERP_QUINTIC);
 		m_noiseTerrain->SetFractalType(NoiseFractal::FRACTAL_FBM);
 		m_noiseTerrain->SetFractalOctaves(5);
-		m_noiseTerrain->SetFractalLacunarity(2.0);
+		m_noiseTerrain->SetFractalLacunarity(2.0f);
 		m_noiseTerrain->SetFractalGain(0.5f);
 
 		m_driverDay->Update(50.0f); // Starts during daytime.

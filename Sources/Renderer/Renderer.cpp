@@ -21,8 +21,8 @@ namespace fl
 
 	Renderer::~Renderer()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto queue = Display::Get()->GetQueue();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		const auto queue = Display::Get()->GetVkQueue();
 
 		vkQueueWaitIdle(queue);
 
@@ -72,8 +72,8 @@ namespace fl
 			m_renderStages.push_back(renderStage);
 		}
 
-		vkDeviceWaitIdle(Display::Get()->GetLogicalDevice());
-		vkQueueWaitIdle(Display::Get()->GetQueue());
+		vkDeviceWaitIdle(Display::Get()->GetVkLogicalDevice());
+		vkQueueWaitIdle(Display::Get()->GetVkQueue());
 
 #if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
@@ -85,20 +85,20 @@ namespace fl
 	{
 		const auto renderStage = GetRenderStage(i);
 
-		if (renderStage->IsOutOfDate(m_swapchain->GetExtent()))
+		if (renderStage->IsOutOfDate(m_swapchain->GetVkExtent()))
 		{
 			RecreatePass(i);
 			return false; // VK_ERROR_INITIALIZATION_FAILED
 		}
 
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto queue = Display::Get()->GetQueue();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		const auto queue = Display::Get()->GetVkQueue();
 
 		Display::ErrorVk(vkQueueWaitIdle(queue));
 
 		if (renderStage->HasSwapchain())
 		{
-			const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
+			const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetVkSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
 
 			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 			{
@@ -130,7 +130,7 @@ namespace fl
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
 		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassBeginInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
+		renderPassBeginInfo.renderPass = renderStage->GetRenderpass()->GetVkRenderpass();
 		renderPassBeginInfo.framebuffer = renderStage->GetActiveFramebuffer(m_activeSwapchainImage);
 		renderPassBeginInfo.renderArea = renderArea;
 		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(renderStage->GetClearValues().size());
@@ -160,7 +160,7 @@ namespace fl
 	void Renderer::EndRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i)
 	{
 		const auto renderStage = GetRenderStage(i);
-		const auto queue = Display::Get()->GetQueue();
+		const auto queue = Display::Get()->GetVkQueue();
 
 		vkCmdEndRenderPass(commandBuffer);
 		Display::ErrorVk(vkEndCommandBuffer(commandBuffer));
@@ -199,7 +199,7 @@ namespace fl
 		presentInfo.waitSemaphoreCount = static_cast<uint32_t>(waitSemaphores.size());
 		presentInfo.pWaitSemaphores = waitSemaphores.data();
 		presentInfo.swapchainCount = 1;
-		presentInfo.pSwapchains = m_swapchain->GetSwapchain();
+		presentInfo.pSwapchains = m_swapchain->GetVkSwapchain();
 		presentInfo.pImageIndices = &m_activeSwapchainImage;
 		presentInfo.pResults = &result;
 
@@ -220,10 +220,10 @@ namespace fl
 		vkCmdNextSubpass(commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 	}
 
-	VkCommandBuffer Renderer::BeginSingleTimeCommands(const VkCommandBufferLevel &level)
+	VkCommandBuffer Renderer::BeginVkSingleCommands(const VkCommandBufferLevel &level)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto commandPool = Renderer::Get()->GetCommandPool();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		const auto commandPool = Renderer::Get()->GetVkCommandPool();
 
 		VkCommandBufferAllocateInfo allocInfo = {};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -243,11 +243,11 @@ namespace fl
 		return commandBuffer;
 	}
 
-	void Renderer::EndSingleTimeCommands(const VkCommandBuffer &commandBuffer)
+	void Renderer::EndVkSingleCommands(const VkCommandBuffer &commandBuffer)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto queue = Display::Get()->GetQueue();
-		const auto commandPool = Renderer::Get()->GetCommandPool();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		const auto queue = Display::Get()->GetVkQueue();
+		const auto commandPool = Renderer::Get()->GetVkCommandPool();
 
 		Display::ErrorVk(vkEndCommandBuffer(commandBuffer));
 
@@ -285,7 +285,7 @@ namespace fl
 
 	void Renderer::CreateFences()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkFenceCreateInfo fenceCreateInfo = {};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
@@ -294,7 +294,7 @@ namespace fl
 
 	void Renderer::CreateCommandPool()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
@@ -303,7 +303,7 @@ namespace fl
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetGraphicsFamilyIndex();
+		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetVkGraphicsFamilyIndex();
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
 		Display::ErrorVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
@@ -319,7 +319,7 @@ namespace fl
 
 	void Renderer::CreatePipelineCache()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
@@ -329,7 +329,7 @@ namespace fl
 
 	void Renderer::RecreatePass(const int &i)
 	{
-		const auto queue = Display::Get()->GetQueue();
+		const auto queue = Display::Get()->GetVkQueue();
 		const auto renderStage = GetRenderStage(i);
 
 		const VkExtent2D displayExtent2D = {
@@ -338,10 +338,10 @@ namespace fl
 
 		Display::ErrorVk(vkQueueWaitIdle(queue));
 
-		if (renderStage->HasSwapchain() && !m_swapchain->SameExtent(displayExtent2D))
+		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent2D))
 		{
 #if FL_VERBOSE
-			printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent2D.width, displayExtent2D.height);
+			printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetVkExtent().width, m_swapchain->GetVkExtent().height, displayExtent2D.width, displayExtent2D.height);
 #endif
 			delete m_swapchain;
 			m_swapchain = new Swapchain(displayExtent2D);

@@ -35,8 +35,8 @@ namespace fl
 		}
 
 		// Sets the keyboards callbacks.
-		glfwSetKeyCallback(Display::Get()->GetWindow(), CallbackKey);
-		glfwSetCharCallback(Display::Get()->GetWindow(), CallbackChar);
+		glfwSetKeyCallback(Display::Get()->GetGlfwWindow(), CallbackKey);
+		glfwSetCharCallback(Display::Get()->GetGlfwWindow(), CallbackChar);
 	}
 
 	Keyboard::~Keyboard()

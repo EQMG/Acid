@@ -17,6 +17,6 @@ namespace fl
 		{
 		}
 
-		virtual VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const = 0;
+		virtual VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const = 0;
 	};
 }

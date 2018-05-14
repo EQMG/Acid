@@ -75,7 +75,7 @@ namespace Demo
 		RENDERPASS_0_CREATE->SetWidth(Shadows::Get()->GetShadowSize());
 		RENDERPASS_0_CREATE->SetHeight(Shadows::Get()->GetShadowSize());
 
-		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+		const auto commandBuffer = Renderer::Get()->GetVkCommandBuffer();
 		const auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
@@ -95,7 +95,7 @@ namespace Demo
 
 	void MainRenderer::RenderPass1()
 	{
-		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+		const auto commandBuffer = Renderer::Get()->GetVkCommandBuffer();
 		const auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.

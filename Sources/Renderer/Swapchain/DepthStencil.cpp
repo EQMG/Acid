@@ -22,8 +22,8 @@ namespace fl
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageInfo({})
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		const auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 
 		for (auto format : TRY_FORMATS)
 		{
@@ -125,7 +125,7 @@ namespace fl
 
 	DepthStencil::~DepthStencil()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
@@ -149,11 +149,11 @@ namespace fl
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
-	VkWriteDescriptorSet DepthStencil::GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const
+	VkWriteDescriptorSet DepthStencil::GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const
 	{
 		VkWriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
+		descriptorWrite.dstSet = descriptorSet.GetVkDescriptorSet();
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;

@@ -9,13 +9,17 @@ namespace fl
 {
 	class FL_EXPORT RowCsv
 	{
-	public:
+	private:
 		std::vector<std::string> m_elements;
-
+	public:
 		RowCsv(const std::vector<std::string> &elements) :
 			m_elements(std::vector<std::string>(elements))
 		{
 		}
+
+		std::vector<std::string> GetElements() const { return m_elements; }
+
+		void SetElements(const std::vector<std::string> &elements) { m_elements = elements; }
 	};
 
 	class FL_EXPORT FileCsv :

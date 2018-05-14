@@ -16,14 +16,14 @@ namespace fl
 
 		virtual ~Buffer();
 
-		VkDeviceSize GetSize() const { return m_size; }
+		VkDeviceSize GetVkSize() const { return m_size; }
 
-		VkBuffer GetBuffer() const { return m_buffer; }
+		VkBuffer GetVkBuffer() const { return m_buffer; }
 
-		VkDeviceMemory GetBufferMemory() const { return m_bufferMemory; }
+		VkDeviceMemory GetVkBufferMemory() const { return m_bufferMemory; }
 
 		static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties);
 
-		static void CopyBuffer(const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size);
+		static void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, const VkDeviceSize &size);
 	};
 }

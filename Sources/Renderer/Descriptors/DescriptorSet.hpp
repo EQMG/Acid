@@ -28,6 +28,6 @@ namespace fl
 
 		void BindDescriptor(const VkCommandBuffer &commandBuffer);
 
-		VkDescriptorSet GetDescriptorSet() const { return m_descriptorSet; }
+		VkDescriptorSet GetVkDescriptorSet() const { return m_descriptorSet; }
 	};
 }

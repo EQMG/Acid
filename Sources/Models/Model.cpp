@@ -98,15 +98,15 @@ namespace fl
 	{
 		if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
 		{
-			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetBuffer()};
+			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetVkBuffer()};
 			VkDeviceSize offsets[] = {0};
 			vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-			vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer->GetBuffer(), 0, m_indexBuffer->GetIndexType());
+			vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer->GetVkBuffer(), 0, m_indexBuffer->GetIndexType());
 			vkCmdDrawIndexed(commandBuffer, m_indexBuffer->GetIndexCount(), instances, 0, 0, 0);
 		}
 		else if (m_vertexBuffer != nullptr && m_indexBuffer == nullptr)
 		{
-			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetBuffer()};
+			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetVkBuffer()};
 			VkDeviceSize offsets[] = {0};
 			vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 			vkCmdDraw(commandBuffer, m_vertexBuffer->GetVertexCount(), instances, 0, 0);

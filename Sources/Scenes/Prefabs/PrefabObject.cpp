@@ -25,12 +25,12 @@ namespace fl
 
 	void PrefabObject::Write(GameObject *gameObject)
 	{
-		for (auto child : *m_fileJson->GetParent()->m_children)
+		for (auto child : *m_fileJson->GetParent()->GetChildren())
 		{
 			delete child;
 		}
 
-		m_fileJson->GetParent()->m_children->clear();
+		m_fileJson->GetParent()->GetChildren()->clear();
 
 		for (auto component : *gameObject->GetComponents())
 		{

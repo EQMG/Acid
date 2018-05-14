@@ -70,7 +70,7 @@ namespace fl
 
 	Pipeline::~Pipeline()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto shaderModule : m_modules)
 		{
@@ -221,7 +221,7 @@ namespace fl
 
 	void Pipeline::CreateShaderProgram()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::string defineBlock = "\n";
 
@@ -307,7 +307,7 @@ namespace fl
 
 	void Pipeline::CreateDescriptorLayout()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
 
@@ -327,7 +327,7 @@ namespace fl
 
 	void Pipeline::CreateDescriptorPool()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
 
@@ -349,7 +349,7 @@ namespace fl
 
 	void Pipeline::CreatePipelineLayout()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -434,8 +434,8 @@ namespace fl
 
 	void Pipeline::CreatePipelinePolygon()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto pipelineCache = Renderer::Get()->GetPipelineCache();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		const auto pipelineCache = Renderer::Get()->GetVkPipelineCache();
 		const auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
@@ -450,7 +450,7 @@ namespace fl
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
+		pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetVkRenderpass();
 		pipelineCreateInfo.subpass = m_graphicsStage.GetSubpass();
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;

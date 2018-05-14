@@ -18,7 +18,7 @@ namespace fl
 
 	void UniformBuffer::Update(void *newData)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		//	const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
 		//	vkCmdUpdateBuffer(commandBuffer, m_buffer, 0, m_size, newData);
@@ -65,11 +65,11 @@ namespace fl
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
-	VkWriteDescriptorSet UniformBuffer::GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const
+	VkWriteDescriptorSet UniformBuffer::GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const
 	{
 		VkWriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
+		descriptorWrite.dstSet = descriptorSet.GetVkDescriptorSet();
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;

@@ -194,7 +194,7 @@ namespace fl
 		/// Gets the current GLFW window.
 		/// </summary>
 		/// <returns> The current GLFW window. </returns>
-		GLFWwindow *GetWindow() const { return m_window; }
+		FL_HIDDEN GLFWwindow *GetGlfwWindow() const { return m_window; }
 
 		/// <summary>
 		/// Gets if the GLFW display is closed.
@@ -226,27 +226,27 @@ namespace fl
 		/// <returns> If the window is minimized. </returns>
 		bool IsIconified() const { return m_iconified; }
 
-		VkInstance GetInstance() const { return m_instance; }
+		FL_HIDDEN VkInstance GetVkInstance() const { return m_instance; }
 
-		VkSurfaceKHR GetSurface() const { return m_surface; }
+		FL_HIDDEN VkSurfaceKHR GetVkSurface() const { return m_surface; }
 
-		VkSurfaceCapabilitiesKHR GetSurfaceCapabilities() const { return m_surfaceCapabilities; }
+		FL_HIDDEN VkSurfaceCapabilitiesKHR GetVkSurfaceCapabilities() const { return m_surfaceCapabilities; }
 
-		VkSurfaceFormatKHR GetSurfaceFormat() const { return m_surfaceFormat; }
+		FL_HIDDEN VkSurfaceFormatKHR GetVkSurfaceFormat() const { return m_surfaceFormat; }
 
-		VkDevice GetLogicalDevice() const { return m_logicalDevice; }
+		FL_HIDDEN VkDevice GetVkLogicalDevice() const { return m_logicalDevice; }
 
-		VkQueue GetQueue() const { return m_queue; }
+		FL_HIDDEN VkQueue GetVkQueue() const { return m_queue; }
 
-		VkPhysicalDevice GetPhysicalDevice() const { return m_physicalDevice; }
+		FL_HIDDEN VkPhysicalDevice GetVkPhysicalDevice() const { return m_physicalDevice; }
 
-		VkPhysicalDeviceProperties GetPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
+		FL_HIDDEN VkPhysicalDeviceProperties GetVkPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
 
-		VkPhysicalDeviceFeatures GetPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
+		FL_HIDDEN VkPhysicalDeviceFeatures GetVkPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
 
-		VkPhysicalDeviceMemoryProperties GetPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
+		FL_HIDDEN VkPhysicalDeviceMemoryProperties GetVkPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
 
-		uint32_t GetGraphicsFamilyIndex() const { return m_graphicsFamilyIndex; }
+		FL_HIDDEN uint32_t GetVkGraphicsFamilyIndex() const { return m_graphicsFamilyIndex; }
 	private:
 		void CreateGlfw();
 

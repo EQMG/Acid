@@ -84,13 +84,13 @@ namespace fl
 
 		Texture *GetTexture(const unsigned int &i, const int &stage = -1) const;
 
-		VkDescriptorSetLayout GetDescriptorSetLayout() const { return m_descriptorSetLayout; }
+		VkDescriptorSetLayout GetVkDescriptorSetLayout() const { return m_descriptorSetLayout; }
 
-		VkDescriptorPool GetDescriptorPool() const { return m_descriptorPool; }
+		VkDescriptorPool GetVkDescriptorPool() const { return m_descriptorPool; }
 
-		VkPipeline GetPipeline() const { return m_pipeline; }
+		VkPipeline GetVkPipeline() const { return m_pipeline; }
 
-		VkPipelineLayout GetPipelineLayout() const { return m_pipelineLayout; }
+		VkPipelineLayout GetVkPipelineLayout() const { return m_pipelineLayout; }
 	private:
 		void CreateShaderProgram();
 

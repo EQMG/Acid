@@ -56,6 +56,11 @@ namespace fl
 		}
 	}
 
+	float Engine::GetTimeMs() const
+	{
+		return std::chrono::duration_cast<MillisecondsType>(HighResolutionClock::now() - m_start).count() + (m_timeOffset / 1000.0f);
+	}
+
 	std::string Engine::GetDateTime()
 	{
 		time_t rawtime;

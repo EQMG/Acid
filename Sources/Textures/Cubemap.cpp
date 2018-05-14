@@ -26,7 +26,7 @@ namespace fl
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		auto pixels = Texture::LoadPixels(filename, fileExt, SIDE_FILE_SUFFIXES, m_size, &m_width, &m_height, &m_depth, &m_components);
 
@@ -36,20 +36,20 @@ namespace fl
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging->GetBufferMemory(), 0, m_size, 0, &data);
+		vkMapMemory(logicalDevice, bufferStaging->GetVkBufferMemory(), 0, m_size, 0, &data);
 		memcpy(data, pixels, m_size);
-		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
+		vkUnmapMemory(logicalDevice, bufferStaging->GetVkBufferMemory());
 
 		Texture::CreateImage(m_width, m_height, m_depth, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory, 6);
 		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, 6);
-		Texture::CopyBufferToImage(m_width, m_height, m_depth, bufferStaging->GetBuffer(), m_image, 6);
+		Texture::CopyBufferToImage(m_width, m_height, m_depth, bufferStaging->GetVkBuffer(), m_image, 6);
 		Texture::CreateMipmaps(m_image, m_width, m_height, m_depth, m_mipLevels, 6);
 		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 6);
 		Texture::CreateImageSampler(true, false, m_mipLevels, m_sampler);
 		Texture::CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_CUBE, m_format, m_mipLevels, m_imageView, 6);
 
-		Buffer::CopyBuffer(bufferStaging->GetBuffer(), m_buffer, m_size);
+		Buffer::CopyBuffer(bufferStaging->GetVkBuffer(), m_buffer, m_size);
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
@@ -66,7 +66,7 @@ namespace fl
 
 	Cubemap::~Cubemap()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImage(logicalDevice, m_image, nullptr);
@@ -89,11 +89,11 @@ namespace fl
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
-	VkWriteDescriptorSet Cubemap::GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const
+	VkWriteDescriptorSet Cubemap::GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const
 	{
 		VkWriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
+		descriptorWrite.dstSet = descriptorSet.GetVkDescriptorSet();
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;

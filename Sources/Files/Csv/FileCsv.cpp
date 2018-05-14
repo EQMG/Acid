@@ -52,7 +52,7 @@ namespace fl
 
 		for (auto &row : *m_rows)
 		{
-			for (auto &element : row.m_elements)
+			for (auto &element : row.GetElements())
 			{
 				data += element + m_delimiter;
 			}
@@ -78,7 +78,7 @@ namespace fl
 		for (unsigned int i = 0; i < m_rows->size(); i++)
 		{
 			RowCsv row = m_rows->at(i);
-			result.insert(std::make_pair(row.m_elements.at(0), row.m_elements.at(1)));
+			result.insert(std::make_pair(row.GetElements().at(0), row.GetElements().at(1)));
 		}
 
 		return result;
@@ -109,7 +109,7 @@ namespace fl
 			}
 		}
 
-		m_rows->at(index).m_elements = row.m_elements;
+		m_rows->at(index).SetElements(row.GetElements());
 	}
 
 	void FileCsv::Verify()

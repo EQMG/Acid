@@ -49,10 +49,10 @@ namespace fl
 		}
 
 		// Sets the mouses callbacks.
-		glfwSetScrollCallback(Display::Get()->GetWindow(), CallbackScroll);
-		glfwSetMouseButtonCallback(Display::Get()->GetWindow(), CallbackMouseButton);
-		glfwSetCursorPosCallback(Display::Get()->GetWindow(), CallbackCursorPos);
-		glfwSetCursorEnterCallback(Display::Get()->GetWindow(), CallbackCursorEnter);
+		glfwSetScrollCallback(Display::Get()->GetGlfwWindow(), CallbackScroll);
+		glfwSetMouseButtonCallback(Display::Get()->GetGlfwWindow(), CallbackMouseButton);
+		glfwSetCursorPosCallback(Display::Get()->GetGlfwWindow(), CallbackCursorPos);
+		glfwSetCursorEnterCallback(Display::Get()->GetGlfwWindow(), CallbackCursorEnter);
 	}
 
 	Mouse::~Mouse()
@@ -110,7 +110,7 @@ namespace fl
 			image->height = height;
 
 			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
-			glfwSetCursor(Display::Get()->GetWindow(), cursor);
+			glfwSetCursor(Display::Get()->GetGlfwWindow(), cursor);
 			Texture::DeletePixels(data);
 			//	delete image;
 		}
@@ -120,11 +120,11 @@ namespace fl
 	{
 		if (m_cursorDisabled != disabled)
 		{
-			glfwSetInputMode(Display::Get()->GetWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
+			glfwSetInputMode(Display::Get()->GetGlfwWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
 
 			if (!disabled && m_cursorDisabled)
 			{
-				glfwSetCursorPos(Display::Get()->GetWindow(), m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
+				glfwSetCursorPos(Display::Get()->GetGlfwWindow(), m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
 			}
 		}
 
@@ -145,6 +145,6 @@ namespace fl
 	{
 		m_mousePositionX = cursorX;
 		m_mousePositionY = cursorY;
-		glfwSetCursorPos(Display::Get()->GetWindow(), cursorX * Display::Get()->GetWidth(), cursorY * Display::Get()->GetHeight());
+		glfwSetCursorPos(Display::Get()->GetGlfwWindow(), cursorX * Display::Get()->GetWidth(), cursorY * Display::Get()->GetHeight());
 	}
 }

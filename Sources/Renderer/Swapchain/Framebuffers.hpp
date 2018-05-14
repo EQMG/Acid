@@ -23,8 +23,6 @@ namespace fl
 
 		Texture *GetTexture(const unsigned int &i) const { return m_imageAttachments.at(i); }
 
-		uint32_t GetFramebuffersCount() const { return static_cast<uint32_t>(m_framebuffers.size()); }
-
-		std::vector<VkFramebuffer> GetFramebuffers() const { return m_framebuffers; }
+		std::vector<VkFramebuffer> GetVkFramebuffers() const { return m_framebuffers; }
 	};
 }
