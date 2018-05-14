@@ -29,22 +29,22 @@ namespace fl
 		/// <summary>
 		/// Registers a module with the register.
 		/// </summary>
+		/// <param name="module"> The modules object. </param>
+		/// <param name="update"> The modules update type. </param>
+		/// <param name="name"> The modules name. </param>
+		IModule *RegisterModule(IModule *module, const ModuleUpdate &update, const std::string &name);
+
+		/// <summary>
+		/// Registers a module with the register.
+		/// </summary>
 		/// <param name="update"> The modules update type. </param>
 		/// <param name="name"> The modules name. </param>
 		/// <param name="T"> The modules type. </param>
 		template<typename T>
-		void RegisterModule(const ModuleUpdate &update, const std::string &name)
+		T *RegisterModule(const ModuleUpdate &update, const std::string &name)
 		{
-			//	if (m_modules->find(name) != m_modules->end())
-			//	{
-			//		fprintf(stderr, "Module '%s' is already registered!\n", name.c_str());
-			//		return;
-			//	}
-
-			T *module = static_cast<T *>(malloc(sizeof(T)));
-			float offset = update + (0.01f * static_cast<float>(m_modules->size()));
-			m_modules->insert(std::make_pair(offset, std::make_pair(name, module)));
-			new(module) T();
+			IModule *module = RegisterModule(new T(), update, name);
+			return static_cast<T *>(module);
 		}
 
 		/// <summary>
