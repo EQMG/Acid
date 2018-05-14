@@ -3,8 +3,8 @@
 #include <vector>
 #include <algorithm>
 #include "ISpatialStructure.hpp"
-#include "Scenes/Objects/GameObject.hpp"
-#include "Scenes/Objects/Component.hpp"
+#include "Objects/GameObject.hpp"
+#include "Objects/Component.hpp"
 #include "Physics/Rigidbody.hpp"
 
 namespace fl

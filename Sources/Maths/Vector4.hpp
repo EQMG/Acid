@@ -8,6 +8,7 @@
 namespace fl
 {
 	class Colour;
+
 	class Vector3;
 
 	/// <summary>

@@ -53,6 +53,27 @@ namespace fl
 		}
 	}
 
+	std::string Audio::StringifyResultAl(const int &result)
+	{
+		switch (result)
+		{
+		case AL_NO_ERROR:
+			return "Success";
+		case AL_INVALID_NAME:
+			return "Invalid name";
+		case AL_INVALID_ENUM:
+			return "Invalid enum";
+		case AL_INVALID_VALUE:
+			return "Invalid value";
+		case AL_INVALID_OPERATION:
+			return "Invalid operation";
+		case AL_OUT_OF_MEMORY:
+			return "A memory allocation failed";
+		default:
+			return "ERROR: UNKNOWN AL ERROR";
+		}
+	}
+
 	void Audio::ErrorAl(const int &result)
 	{
 		if (result == AL_NO_ERROR)
@@ -60,7 +81,9 @@ namespace fl
 			return;
 		}
 
-		fprintf(stderr, "OpenAL error: %i\n", result);
+		std::string failure = StringifyResultAl(result);
+
+		fprintf(stderr, "OpenAL error: %s, %i\n", failure.c_str(), result);
 #ifdef FL_BUILD_WINDOWS
 		MessageBox(nullptr, "" + result, "OpenAL Error", 0);
 #endif

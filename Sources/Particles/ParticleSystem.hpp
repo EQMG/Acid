@@ -2,8 +2,8 @@
 
 #include <vector>
 #include "Maths/Vector3.hpp"
-#include "Scenes/Objects/Component.hpp"
-#include "Scenes/Objects/GameObject.hpp"
+#include "Objects/Component.hpp"
+#include "Objects/GameObject.hpp"
 #include "Spawns/ISpawnParticle.hpp"
 #include "Particle.hpp"
 #include "ParticleType.hpp"

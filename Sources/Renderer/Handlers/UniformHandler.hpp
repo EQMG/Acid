@@ -41,7 +41,7 @@ namespace fl
 				return;
 			}
 
-		//	printf("name: %s, offset %i, size: %i\n", uniformName.c_str(), uniform->m_offset, (int) sizeof(object));
+			//	printf("name: %s, offset %i, size: %i\n", uniformName.c_str(), uniform->m_offset, (int) sizeof(object));
 			Push(object, static_cast<size_t>(uniform->GetOffset()), sizeof(object)); // static_cast<size_t>(uniform->m_size)
 		}
 

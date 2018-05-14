@@ -1,8 +1,5 @@
 ﻿#include "UiSelector.hpp"
 
-#include "Inputs/Mouse.hpp"
-#include "Inputs/Joysticks.hpp"
-
 namespace fl
 {
 	UiSelector::UiSelector() :

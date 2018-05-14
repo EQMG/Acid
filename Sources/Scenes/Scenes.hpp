@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
-#include "Scenes/Objects/GameObject.hpp"
+#include "Objects/GameObject.hpp"
 #include "Physics/Space/StructureBasic.hpp"
-#include "Scenes/Objects/ComponentRegister.hpp"
+#include "Objects/ComponentRegister.hpp"
 #include "Scene.hpp"
 
 namespace fl

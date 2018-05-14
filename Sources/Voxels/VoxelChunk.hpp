@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Scenes/Objects/Component.hpp"
+#include "Objects/Component.hpp"
 #include "Meshes/Mesh.hpp"
 #include "VoxelBlock.hpp"
 
@@ -26,7 +26,7 @@ namespace fl
 		static const float VOXEL_SIZE;
 		static const Vector3 *CHUNK_SIZE;
 
-		VoxelChunk(const ChunkMesh &chunkMesh = MESH_GREEDY, const bool &generate = false);
+		VoxelChunk(const ChunkMesh &chunkMesh = ChunkMesh::MESH_GREEDY, const bool &generate = false);
 
 		~VoxelChunk();
 

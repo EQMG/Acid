@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Scenes/Objects/Component.hpp"
+#include "Objects/Component.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "PipelineMaterial.hpp"
 

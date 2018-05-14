@@ -1,7 +1,6 @@
 #include "Quaternion.hpp"
 
 #include <cassert>
-#include <sstream>
 #include "Maths.hpp"
 
 namespace fl
