@@ -22,14 +22,14 @@ namespace fl
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
+		VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
-		VkImage GetImage() const { return m_image; }
+		VkImage GetVkImage() const { return m_image; }
 
-		VkDeviceMemory GetImageMemory() const { return m_imageMemory; }
+		VkDeviceMemory GetVkImageMemory() const { return m_imageMemory; }
 
-		VkImageView GetImageView() const { return m_imageView; }
+		VkImageView GetVkImageView() const { return m_imageView; }
 
-		VkFormat GetFormat() const { return m_format; }
+		VkFormat GetVkFormat() const { return m_format; }
 	};
 }

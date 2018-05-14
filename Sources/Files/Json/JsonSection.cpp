@@ -13,17 +13,17 @@ namespace fl
 
 		*data += indent;
 
-		if (loadedValue->m_name.empty())
+		if (loadedValue->GetName().empty())
 		{
 			*data += "{\n";
 		}
-		else if (loadedValue->m_value.empty())
+		else if (loadedValue->GetValue().empty())
 		{
-			*data += "\"" + loadedValue->m_name + "\": {\n";
+			*data += "\"" + loadedValue->GetName() + "\": {\n";
 		}
 		else
 		{
-			*data += "\"" + loadedValue->m_name + "\": " + loadedValue->m_value;
+			*data += "\"" + loadedValue->GetName() + "\": " + loadedValue->GetValue();
 
 			if (!end)
 			{
@@ -33,17 +33,17 @@ namespace fl
 			*data += "\n";
 		}
 
-		for (auto child : *loadedValue->m_children)
+		for (auto child : *loadedValue->GetChildren())
 		{
-			AppendData(child, data, indentation + 1, child == loadedValue->m_children->back());
+			AppendData(child, data, indentation + 1, child == loadedValue->GetChildren()->back());
 		}
 
-		if (loadedValue->m_name.empty())
+		if (loadedValue->GetName().empty())
 		{
 			*data += indent;
 			*data += "}\n";
 		}
-		else if (loadedValue->m_value.empty())
+		else if (loadedValue->GetValue().empty())
 		{
 			*data += indent;
 
@@ -65,7 +65,7 @@ namespace fl
 		if (!isTopSection)
 		{
 			thisValue = new LoadedValue(parent, source->m_name, "");
-			parent->m_children->push_back(thisValue);
+			parent->GetChildren()->push_back(thisValue);
 
 			auto contentSplit = FormatString::Split(source->m_content, ",");
 
@@ -79,7 +79,7 @@ namespace fl
 				}
 
 				LoadedValue *newChild = new LoadedValue(thisValue, dataSplit.at(0), dataSplit.at(1));
-				thisValue->m_children->push_back(newChild);
+				thisValue->GetChildren()->push_back(newChild);
 			}
 		}
 

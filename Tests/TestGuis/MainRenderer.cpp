@@ -32,7 +32,7 @@ namespace Demo
 
 	void MainRenderer::Render()
 	{
-		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+		const auto commandBuffer = Renderer::Get()->GetVkCommandBuffer();
 		const auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.

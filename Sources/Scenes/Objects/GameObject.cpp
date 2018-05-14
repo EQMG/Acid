@@ -28,14 +28,14 @@ namespace fl
 	{
 		PrefabObject *entityPrefab = PrefabObject::Resource("Resources/Entities/" + prefabName + "/" + prefabName + ".json");
 
-		for (auto value : *entityPrefab->GetParent()->m_children)
+		for (auto value : *entityPrefab->GetParent()->GetChildren())
 		{
-			if (value->m_name.empty())
+			if (value->GetName().empty())
 			{
 				continue;
 			}
 
-			Component *component = Scenes::Get()->CreateComponent(value->m_name);
+			Component *component = Scenes::Get()->CreateComponent(value->GetName());
 
 			if (component == nullptr)
 			{

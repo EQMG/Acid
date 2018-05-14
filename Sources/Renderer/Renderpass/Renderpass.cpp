@@ -7,7 +7,7 @@ namespace fl
 	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat) :
 		m_renderPass(VK_NULL_HANDLE)
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		// Attachments,
 		std::vector<VkAttachmentDescription> attachments = {};
@@ -30,7 +30,7 @@ namespace fl
 				break;
 			case ATTACHMENT_DEPTH:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-				attachment.format = depthStencil.GetFormat();
+				attachment.format = depthStencil.GetVkFormat();
 				break;
 			case ATTACHMENT_SWAPCHAIN:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
@@ -131,7 +131,7 @@ namespace fl
 
 	Renderpass::~Renderpass()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		vkDestroyRenderPass(logicalDevice, m_renderPass, nullptr);
 	}

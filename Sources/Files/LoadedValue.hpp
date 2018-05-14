@@ -9,20 +9,24 @@ namespace fl
 {
 	class FL_EXPORT LoadedValue
 	{
-	public:
+	private:
 		LoadedValue *m_parent;
 		std::vector<LoadedValue *> *m_children;
 
 		std::string m_name;
 		std::string m_value;
-
+	public:
 		LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value);
 
 		~LoadedValue();
 
-		std::string GetRaw() const { return m_value; }
+		std::string GetName() const { return m_name; }
 
-		void SetRaw(const std::string &data) { m_value = data; }
+		void SetName(const std::string &name) { m_name = name; }
+
+		std::string GetValue() const { return m_value; }
+
+		void SetValue(const std::string &data) { m_value = data; }
 
 		std::vector<LoadedValue *> *GetChildren() const { return m_children; }
 
@@ -66,14 +70,14 @@ namespace fl
 		template<typename T>
 		T Get()
 		{
-			std::string data = GetRaw();
+			std::string data = GetValue();
 			return FormatString::ConvertTo<T>(data);
 		}
 
 		template<typename T>
 		void Set(const T &data)
 		{
-			SetRaw(std::to_string(data));
+			SetValue(std::to_string(data));
 		}
 
 		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value);

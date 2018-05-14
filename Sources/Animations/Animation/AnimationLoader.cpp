@@ -10,7 +10,7 @@ namespace fl
 		m_lengthSeconds(0.0f),
 		m_keyframeData(std::vector<KeyframeData *>())
 	{
-		auto animationNodes = m_libraryAnimations->GetChild("animation")->m_children;
+		auto animationNodes = m_libraryAnimations->GetChild("animation")->GetChildren();
 
 		std::string rootNode = FindRootJointName();
 		std::vector<float> times = GetKeyTimes();

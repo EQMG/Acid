@@ -71,11 +71,11 @@ namespace fl
 		/// <param name="commandBuffer"> The command buffer to use. </param>
 		void NextSubpass(const VkCommandBuffer &commandBuffer);
 
-		static VkCommandBuffer BeginSingleTimeCommands(const VkCommandBufferLevel &level = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+		FL_HIDDEN static VkCommandBuffer BeginVkSingleCommands(const VkCommandBufferLevel &level = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
-		static void EndSingleTimeCommands(const VkCommandBuffer &commandBuffer);
+		FL_HIDDEN static void EndVkSingleCommands(const VkCommandBuffer &commandBuffer);
 
-		static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
+		FL_HIDDEN static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
 
 		/// <summary>
 		/// Gets the renderer manager.
@@ -89,20 +89,19 @@ namespace fl
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(IManagerRender *managerRender) { m_managerRender = managerRender; }
 
-		std::vector<RenderStage *> GetRenderStages() const { return m_renderStages; }
+		FL_HIDDEN std::vector<RenderStage *> GetRenderStages() const { return m_renderStages; }
 
-		RenderStage *GetRenderStage(const int &i) const { return m_renderStages.at(i); }
+		FL_HIDDEN RenderStage *GetRenderStage(const int &i) const { return m_renderStages.at(i); }
 
-		Swapchain *GetSwapchain() const { return m_swapchain; }
+		FL_HIDDEN Swapchain *GetSwapchain() const { return m_swapchain; }
 
-		VkCommandPool GetCommandPool() const { return m_commandPool; }
+		FL_HIDDEN VkCommandPool GetVkCommandPool() const { return m_commandPool; }
 
-		VkCommandBuffer GetCommandBuffer() const { return m_commandBuffer; }
+		FL_HIDDEN VkCommandBuffer GetVkCommandBuffer() const { return m_commandBuffer; }
 
-		uint32_t GetActiveSwapchainImage() const { return m_activeSwapchainImage; }
+		FL_HIDDEN uint32_t GetVkActiveSwapchainImage() const { return m_activeSwapchainImage; }
 
-		VkPipelineCache GetPipelineCache() const { return m_pipelineCache; }
-
+		FL_HIDDEN VkPipelineCache GetVkPipelineCache() const { return m_pipelineCache; }
 	private:
 		void CreateFences();
 

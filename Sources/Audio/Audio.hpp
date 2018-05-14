@@ -40,5 +40,9 @@ namespace fl
 		void Update() override;
 
 		static void ErrorAl(const int &result);
+
+		FL_HIDDEN ALCdevice *GetAlcDevice() const { return m_alDevice; }
+
+		FL_HIDDEN ALCcontext *GetAlcContext() const { return m_alContext; }
 	};
 }

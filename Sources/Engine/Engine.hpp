@@ -132,14 +132,14 @@ namespace fl
 		/// <summary>
 		/// Gets the current time of the engine instance.
 		/// </summary>
-		/// <returns> The current engine time in seconds. </returns>
-		float GetTime() const { return GetTimeMs() / 1000.0f; }
+		/// <returns> The current engine time in milliseconds. </returns>
+		float GetTimeMs() const;
 
 		/// <summary>
 		/// Gets the current time of the engine instance.
 		/// </summary>
-		/// <returns> The current engine time in milliseconds. </returns>
-		float GetTimeMs() const { return std::chrono::duration_cast<MillisecondsType>(HighResolutionClock::now() - m_start).count() + (m_timeOffset / 1000.0f); }
+		/// <returns> The current engine time in seconds. </returns>
+		float GetTime() const { return GetTimeMs() / 1000.0f; }
 
 		/// <summary>
 		/// Gets if the engine has been initialized.

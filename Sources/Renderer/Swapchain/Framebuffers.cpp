@@ -9,7 +9,7 @@ namespace fl
 		m_imageAttachments(std::vector<Texture *>()),
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		uint32_t width = renderpassCreate.GetWidth() == 0 ? Display::Get()->GetWidth() : renderpassCreate.GetWidth();
 		uint32_t height = renderpassCreate.GetHeight() == 0 ? Display::Get()->GetHeight() : renderpassCreate.GetHeight();
@@ -30,9 +30,9 @@ namespace fl
 			}
 		}
 
-		m_framebuffers.resize(swapchain.GetImageCount());
+		m_framebuffers.resize(swapchain.GetVkImageCount());
 
-		for (uint32_t i = 0; i < swapchain.GetImageCount(); i++)
+		for (uint32_t i = 0; i < swapchain.GetVkImageCount(); i++)
 		{
 			std::vector<VkImageView> attachments = {};
 
@@ -44,17 +44,17 @@ namespace fl
 					attachments.push_back(GetTexture(image.GetBinding())->GetImageView());
 					break;
 				case ATTACHMENT_DEPTH:
-					attachments.push_back(depthStencil.GetImageView());
+					attachments.push_back(depthStencil.GetVkImageView());
 					break;
 				case ATTACHMENT_SWAPCHAIN:
-					attachments.push_back(swapchain.GetImageViews().at(i));
+					attachments.push_back(swapchain.GetVkImageViews().at(i));
 					break;
 				}
 			}
 
 			VkFramebufferCreateInfo framebufferCreateInfo = {};
 			framebufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-			framebufferCreateInfo.renderPass = renderPass.GetRenderpass();
+			framebufferCreateInfo.renderPass = renderPass.GetVkRenderpass();
 			framebufferCreateInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
 			framebufferCreateInfo.pAttachments = attachments.data();
 			framebufferCreateInfo.width = extent.width;
@@ -67,7 +67,7 @@ namespace fl
 
 	Framebuffers::~Framebuffers()
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto attachment : m_imageAttachments)
 		{

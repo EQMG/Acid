@@ -7,7 +7,7 @@ namespace fl
 		m_indexType(indexType),
 		m_indexCount(static_cast<uint32_t>(indexCount))
 	{
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		// Copies the index data to the buffer.
 		void *data;

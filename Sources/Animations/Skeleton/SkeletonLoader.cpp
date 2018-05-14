@@ -29,13 +29,13 @@ namespace fl
 		{
 			if (!jointNode->GetChild("node")->GetChild("-id"))
 			{
-				for (auto childNode : *jointNode->GetChild("node")->m_children)
+				for (auto childNode : *jointNode->GetChild("node")->GetChildren())
 				{
 					JointData *childJoint = LoadJointData(childNode, false);
 					joint->AddChild(childJoint);
 				}
 			}
-			else if (!jointNode->GetChild("node")->m_children->empty())
+			else if (!jointNode->GetChild("node")->GetChildren()->empty())
 			{
 				JointData *childJoint = LoadJointData(jointNode->GetChild("node"), false);
 				joint->AddChild(childJoint);

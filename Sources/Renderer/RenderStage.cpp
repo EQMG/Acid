@@ -54,7 +54,7 @@ namespace fl
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
+		const auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
 		const VkExtent2D extent2D = {GetWidth(), GetHeight()};
 		const VkExtent3D extent3D = {GetWidth(), GetHeight(), 1};
 
@@ -110,11 +110,11 @@ namespace fl
 
 	VkFramebuffer RenderStage::GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const
 	{
-		if (activeSwapchainImage > m_framebuffers->GetFramebuffersCount())
+		if (activeSwapchainImage > m_framebuffers->GetVkFramebuffers().size())
 		{
-			return m_framebuffers->GetFramebuffers().at(0);
+			return m_framebuffers->GetVkFramebuffers().at(0);
 		}
 
-		return m_framebuffers->GetFramebuffers().at(activeSwapchainImage);
+		return m_framebuffers->GetVkFramebuffers().at(activeSwapchainImage);
 	}
 }

@@ -28,7 +28,7 @@ namespace fl
 	class FL_EXPORT Frustum
 	{
 	private:
-		float **m_frustum;
+		float **m_frustumArray;
 	public:
 		/// <summary>
 		/// Creates a new frustum.
@@ -48,7 +48,7 @@ namespace fl
 		void Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) const;
 
 		/// <returns> The planes*value array used to represent the frustum. </returns>
-		float **GetFrustum() const { return m_frustum; };
+		float **GetFrustumArray() const { return m_frustumArray; };
 
 		/// <summary>
 		/// Is the point contained in the frustum?

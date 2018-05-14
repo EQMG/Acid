@@ -13,13 +13,13 @@ namespace fl
 		const auto debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto physicalDevice = Display::Get()->GetPhysicalDevice();
-		const auto surfaceFormat = Display::Get()->GetSurfaceFormat();
-		const auto physicalDeviceMemoryProperties = Display::Get()->GetPhysicalDeviceMemoryProperties();
+		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		const auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		const auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
+		const auto physicalDeviceMemoryProperties = Display::Get()->GetVkPhysicalDeviceMemoryProperties();
 		const auto width = Display::Get()->GetWidth();
 		const auto height = Display::Get()->GetHeight();
-		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetImages().at(Renderer::Get()->GetActiveSwapchainImage());
+		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetVkImages().at(Renderer::Get()->GetVkActiveSwapchainImage());
 
 		printf("Saving screenshot to: '%s'\n", filename.c_str());
 
@@ -77,7 +77,7 @@ namespace fl
 		Display::ErrorVk(vkBindImageMemory(logicalDevice, dstImage, dstImageMemory, 0));
 
 		// Do the actual blit from the swapchain image to our host visible destination image.
-		VkCommandBuffer copyCmd = Renderer::BeginSingleTimeCommands(VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+		VkCommandBuffer copyCmd = Renderer::BeginVkSingleCommands(VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
 		// Transition destination image to transfer destination layout.
 		InsertImageMemoryBarrier(
@@ -162,7 +162,7 @@ namespace fl
 			VK_PIPELINE_STAGE_TRANSFER_BIT,
 			VkImageSubresourceRange{VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1});
 
-		Renderer::EndSingleTimeCommands(copyCmd);
+		Renderer::EndVkSingleCommands(copyCmd);
 
 		// Get layout of the image (including row pitch).
 		VkImageSubresource subResource{};

@@ -65,29 +65,29 @@ namespace fl
 					content.clear();
 
 					auto section = new JsonSection(currentSection, name, "");
-					currentSection->m_children.push_back(section);
+					currentSection->GetChildren().push_back(section);
 					currentSection = section;
 				}
 				else if (c == '}' || c == ']')
 				{
-					currentSection = currentSection->m_parent;
+					currentSection = currentSection->GetParent();
 					bracketLevel--;
 					content.clear();
 				}
 				else
 				{
 					content += c;
-					currentSection->m_content += c;
+					currentSection->SetContent(currentSection->GetContent() + c);
 				}
 			}
 		}
 
-		for (auto child : *m_parent->m_children)
+		for (auto child : *m_parent->GetChildren())
 		{
 			delete child;
 		}
 
-		m_parent->m_children->clear();
+		m_parent->GetChildren()->clear();
 		JsonSection::Convert(loadedParent, m_parent, true);
 		delete loadedParent;
 
@@ -109,26 +109,26 @@ namespace fl
 
 	void FileJson::Clear()
 	{
-		for (auto child : *m_parent->m_children)
+		for (auto child : *m_parent->GetChildren())
 		{
 			delete child;
 		}
 
-		m_parent->m_children->clear();
+		m_parent->GetChildren()->clear();
 	}
 
 	std::map<std::string, std::string> FileJson::ConfigReadValues()
 	{
 		auto result = std::map<std::string, std::string>();
 
-		for (auto child : *m_parent->m_children)
+		for (auto child : *m_parent->GetChildren())
 		{
-			if (child->m_value.empty())
+			if (child->GetValue().empty())
 			{
 				continue;
 			}
 
-			result.insert(std::make_pair(child->m_name, child->m_value));
+			result.insert(std::make_pair(child->GetName(), child->GetValue()));
 		}
 
 		return result;
@@ -140,12 +140,12 @@ namespace fl
 
 		if (exiting != nullptr)
 		{
-			exiting->m_value = value;
+			exiting->SetValue(value);
 			return;
 		}
 
 		LoadedValue *newChild = new LoadedValue(m_parent, key, value);
-		m_parent->m_children->push_back(newChild);
+		m_parent->GetChildren()->push_back(newChild);
 	}
 
 	void FileJson::Verify()
