@@ -14,24 +14,88 @@ namespace fl
 		ATTACHMENT_SWAPCHAIN = 2,
 	};
 
+	enum AttachmentFormat
+	{
+		FORMAT_R8_UNORM = 9,
+		FORMAT_R8_SNORM = 10,
+		FORMAT_R8_UINT = 13,
+		FORMAT_R8_SINT = 14,
+		FORMAT_R8_SRGB = 15,
+		FORMAT_R8G8_UNORM = 16,
+		FORMAT_R8G8_SNORM = 17,
+		FORMAT_R8G8_UINT = 20,
+		FORMAT_R8G8_SINT = 21,
+		FORMAT_R8G8_SRGB = 22,
+		FORMAT_R8G8B8_UNORM = 23,
+		FORMAT_R8G8B8_SNORM = 24,
+		FORMAT_R8G8B8_UINT = 27,
+		FORMAT_R8G8B8_SINT = 28,
+		FORMAT_R8G8B8_SRGB = 29,
+		FORMAT_B8G8R8_UNORM = 30,
+		FORMAT_B8G8R8_SNORM = 31,
+		FORMAT_B8G8R8_UINT = 34,
+		FORMAT_B8G8R8_SINT = 35,
+		FORMAT_B8G8R8_SRGB = 36,
+		FORMAT_R8G8B8A8_UNORM = 37,
+		FORMAT_R8G8B8A8_SNORM = 38,
+		FORMAT_R8G8B8A8_UINT = 41,
+		FORMAT_R8G8B8A8_SINT = 42,
+		FORMAT_R8G8B8A8_SRGB = 43,
+		FORMAT_B8G8R8A8_UNORM = 44,
+		FORMAT_B8G8R8A8_SNORM = 45,
+		FORMAT_B8G8R8A8_UINT = 48,
+		FORMAT_B8G8R8A8_SINT = 49,
+		FORMAT_B8G8R8A8_SRGB = 50,
+		FORMAT_R16_UNORM = 70,
+		FORMAT_R16_SNORM = 71,
+		FORMAT_R16_UINT = 74,
+		FORMAT_R16_SINT = 75,
+		FORMAT_R16_SFLOAT = 76,
+		FORMAT_R16G16_UNORM = 77,
+		FORMAT_R16G16_SNORM = 78,
+		FORMAT_R16G16_UINT = 81,
+		FORMAT_R16G16_SINT = 82,
+		FORMAT_R16G16_SFLOAT = 83,
+		FORMAT_R16G16B16_UNORM = 84,
+		FORMAT_R16G16B16_SNORM = 85,
+		FORMAT_R16G16B16_UINT = 88,
+		FORMAT_R16G16B16_SINT = 89,
+		FORMAT_R16G16B16_SFLOAT = 90,
+		FORMAT_R16G16B16A16_UNORM = 91,
+		FORMAT_R16G16B16A16_SNORM = 92,
+		FORMAT_R16G16B16A16_UINT = 95,
+		FORMAT_R16G16B16A16_SINT = 96,
+		FORMAT_R16G16B16A16_SFLOAT = 97,
+		FORMAT_R32_UINT = 98,
+		FORMAT_R32_SINT = 99,
+		FORMAT_R32_SFLOAT = 100,
+		FORMAT_R32G32_UINT = 101,
+		FORMAT_R32G32_SINT = 102,
+		FORMAT_R32G32_SFLOAT = 103,
+		FORMAT_R32G32B32_UINT = 104,
+		FORMAT_R32G32B32_SINT = 105,
+		FORMAT_R32G32B32_SFLOAT = 106,
+		FORMAT_R32G32B32A32_UINT = 107,
+		FORMAT_R32G32B32A32_SINT = 108,
+		FORMAT_R32G32B32A32_SFLOAT = 109,
+		FORMAT_D16_UNORM = 124,
+		FORMAT_D32_SFLOAT = 126,
+		FORMAT_S8_UINT = 127
+	};
+
 	class FL_EXPORT Attachment
 	{
 	private:
 		unsigned int m_binding;
 		AttachmentType m_type;
-		VkFormat m_format;
+		AttachmentFormat m_format;
 		Colour m_clearColour;
-		VkImageLayout m_layout;
-		VkImageUsageFlags m_usage;
 	public:
-		Attachment(const unsigned int &binding, const AttachmentType &type, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::BLACK,
-				   const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) :
+		Attachment(const unsigned int &binding, const AttachmentType &type, const AttachmentFormat &format = FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::BLACK) :
 			m_binding(binding),
 			m_type(type),
 			m_format(format),
-			m_clearColour(clearColour),
-			m_layout(layout),
-			m_usage(usage)
+			m_clearColour(clearColour)
 		{
 		}
 
@@ -39,13 +103,9 @@ namespace fl
 
 		AttachmentType GetType() const { return m_type; }
 
-		VkFormat GetFormat() const { return m_format; }
+		AttachmentFormat GetFormat() const { return m_format; }
 
 		Colour GetClearColour() const { return m_clearColour; }
-
-		VkImageLayout GetLayout() const { return m_layout; }
-
-		VkImageUsageFlags GetUsage() const { return m_usage; }
 	};
 
 	class FL_EXPORT SubpassType

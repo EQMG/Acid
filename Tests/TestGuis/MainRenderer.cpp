@@ -9,7 +9,7 @@ namespace Demo
 		{
 			0, 0, // width / height
 			{
-				Attachment(1, AttachmentType::ATTACHMENT_SWAPCHAIN) // swapchain
+				Attachment(1, ATTACHMENT_SWAPCHAIN) // swapchain
 			}, // images
 			{
 				SubpassType(0, {0}),

@@ -19,7 +19,7 @@ namespace fl
 			switch (image.GetType())
 			{
 			case ATTACHMENT_IMAGE:
-				m_imageAttachments.push_back(new Texture(width, height, image.GetFormat(), image.GetLayout(), image.GetUsage()));
+				m_imageAttachments.push_back(new Texture(width, height, static_cast<VkFormat>(image.GetFormat()), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT));
 				break;
 			case ATTACHMENT_DEPTH:
 				m_imageAttachments.push_back(nullptr);

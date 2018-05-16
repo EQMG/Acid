@@ -24,8 +24,7 @@ namespace fl
 		m_descriptorSet(new DescriptorsHandler()),
 		m_uniformScene(new UniformHandler()),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {{"USE_IBL",    "TRUE"},
-																													 {"MAX_LIGHTS", std::to_string(MAX_LIGHTS)}})),
+			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), {{"USE_IBL", "TRUE"}, {"MAX_LIGHTS", std::to_string(MAX_LIGHTS)}})),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f)),
 		m_brdflut(Texture::Resource("Resources/BrdfLut.png"))
 	{

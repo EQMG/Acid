@@ -26,7 +26,7 @@ namespace fl
 			{
 			case ATTACHMENT_IMAGE:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-				attachment.format = image.GetFormat();
+				attachment.format = static_cast<VkFormat>(image.GetFormat());
 				break;
 			case ATTACHMENT_DEPTH:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;

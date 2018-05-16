@@ -6,12 +6,27 @@
 
 namespace fl
 {
-	enum PipelineModeFlags
+	enum PipelineMode
 	{
-		PIPELINE_POLYGON = 0,
-		PIPELINE_POLYGON_NO_DEPTH = 1,
-		PIPELINE_MRT = 2,
-		PIPELINE_MRT_NO_DEPTH = 3
+		PIPELINE_MODE_POLYGON = 0,
+		PIPELINE_MODE_POLYGON_NO_DEPTH = 1,
+		PIPELINE_MODE_MRT = 2,
+		PIPELINE_MODE_MRT_NO_DEPTH = 3
+	};
+
+	enum PipelinePolygonMode
+	{
+		PIPELINE_POLYGON_MODE_FILL = 0,
+		PIPELINE_POLYGON_MODE_LINE = 1,
+		PIPELINE_POLYGON_MODE_POINT = 2,
+	};
+
+	enum PipelineCullMode
+	{
+		PIPELINE_CULL_MODE_NONE = 0,
+		PIPELINE_CULL_MODE_FRONT = 1,
+		PIPELINE_CULL_MODE_BACK = 2,
+		PIPELINE_CULL_MODE_ALL = 3,
 	};
 
 	class FL_EXPORT GraphicsStage
@@ -80,18 +95,18 @@ namespace fl
 		std::vector<std::string> m_shaderStages;
 		VertexInput m_vertexInput;
 
-		PipelineModeFlags m_pipelineModeFlags;
-		VkPolygonMode m_polygonMode;
-		VkCullModeFlags m_cullModeFlags;
+		PipelineMode m_pipelineMode;
+		PipelinePolygonMode m_polygonMode;
+		PipelineCullMode m_cullMode;
 	public:
 
 		PipelineCreate(const std::vector<std::string> &shaderStages, const VertexInput &vertexInput,
-					   const PipelineModeFlags &pipelineModeFlags = PIPELINE_POLYGON, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullModeFlags = VK_CULL_MODE_BACK_BIT) :
+					   const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelinePolygonMode &polygonMode = PipelinePolygonMode::PIPELINE_POLYGON_MODE_FILL, const PipelineCullMode &cullMode = PipelineCullMode::PIPELINE_CULL_MODE_BACK) :
 			m_shaderStages(shaderStages),
 			m_vertexInput(vertexInput),
-			m_pipelineModeFlags(pipelineModeFlags),
+			m_pipelineMode(pipelineMode),
 			m_polygonMode(polygonMode),
-			m_cullModeFlags(cullModeFlags)
+			m_cullMode(cullMode)
 		{
 		}
 
@@ -99,10 +114,10 @@ namespace fl
 
 		VertexInput GetVertexInput() const { return m_vertexInput; }
 
-		PipelineModeFlags GetModeFlags() const { return m_pipelineModeFlags; }
+		PipelineMode GetMode() const { return m_pipelineMode; }
 
-		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
+		PipelinePolygonMode GetPolygonMode() const { return m_polygonMode; }
 
-		VkCullModeFlags GetCullModeFlags() const { return m_cullModeFlags; }
+		PipelineCullMode GetCullModeF() const { return m_cullMode; }
 	};
 }

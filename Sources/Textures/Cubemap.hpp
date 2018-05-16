@@ -52,9 +52,9 @@ namespace fl
 		//		/// </summary>
 		~Cubemap();
 
-		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
+		FL_HIDDEN static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
+		FL_HIDDEN VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
 		std::string GetFilename() override { return m_filename; };
 	};
