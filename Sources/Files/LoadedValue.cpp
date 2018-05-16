@@ -73,4 +73,14 @@ namespace fl
 
 		return nullptr;
 	}
+
+	std::string LoadedValue::GetString()
+	{
+		return FormatString::RemoveAll(m_value, '\"');
+	}
+
+	void LoadedValue::SetString(const std::string &data)
+	{
+		m_value = "\"" + data + "\"";
+	}
 }

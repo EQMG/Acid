@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	GameObject::GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure, const std::string &name) :
+	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure, const std::string &name) :
 		m_name(name),
 		m_transform(new Transform(transform)),
 		m_components(new std::vector<Component *>()),
@@ -23,7 +23,7 @@ namespace fl
 		}
 	}
 
-	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure<GameObject *> *structure) :
+	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure *structure) :
 		GameObject(transform, structure, prefabName)
 	{
 		PrefabObject *entityPrefab = PrefabObject::Resource("Resources/Entities/" + prefabName + "/" + prefabName + ".json");
@@ -119,7 +119,7 @@ namespace fl
 		return nullptr;
 	}
 
-	void GameObject::StructureSwitch(ISpatialStructure<GameObject *> *structure)
+	void GameObject::StructureSwitch(ISpatialStructure *structure)
 	{
 		if (m_structure != nullptr)
 		{

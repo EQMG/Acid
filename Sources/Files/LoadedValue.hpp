@@ -82,14 +82,8 @@ namespace fl
 
 		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value);
 
-		std::string GetString()
-		{
-			return FormatString::RemoveAll(m_value, '\"');
-		}
+		std::string GetString();
 
-		void SetString(const std::string &data)
-		{
-			m_value = "\"" + data + "\"";
-		}
+		void SetString(const std::string &data);
 	};
 }

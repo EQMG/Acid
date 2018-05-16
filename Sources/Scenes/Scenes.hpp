@@ -2,8 +2,8 @@
 
 #include "Engine/Engine.hpp"
 #include "Objects/GameObject.hpp"
-#include "Physics/Space/StructureBasic.hpp"
 #include "Objects/ComponentRegister.hpp"
+#include "SceneStructure.hpp"
 #include "Scene.hpp"
 
 namespace fl
@@ -87,6 +87,6 @@ namespace fl
 		/// Gets the GameObjects structure.
 		/// </summary>
 		/// <returns> The GameObjects structure. </returns>
-		StructureBasic<GameObject *> *GetStructure() const { return m_scene->GetStructure(); }
+		SceneStructure *GetStructure() const { return m_scene->GetStructure(); }
 	};
 }
