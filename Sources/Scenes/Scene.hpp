@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Physics/Space/StructureBasic.hpp"
 #include "ICamera.hpp"
 #include "IManagerUis.hpp"
+#include "SceneStructure.hpp"
 
 namespace fl
 {
@@ -14,7 +14,7 @@ namespace fl
 	private:
 		ICamera *m_camera;
 		IManagerUis *m_managerUis;
-		StructureBasic<GameObject *> *m_structure;
+		SceneStructure *m_structure;
 	public:
 		/// <summary>
 		/// Creates a new scene.
@@ -63,6 +63,6 @@ namespace fl
 		/// Gets the GameObjects structure.
 		/// </summary>
 		/// <returns> The GameObjects structure. </returns>
-		StructureBasic<GameObject *> *GetStructure() const { return m_structure; }
+		SceneStructure *GetStructure() const { return m_structure; }
 	};
 }

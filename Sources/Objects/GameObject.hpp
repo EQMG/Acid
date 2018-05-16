@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "Engine/Exports.hpp"
-#include "Physics/Space/ISpatialStructure.hpp"
+#include "Scenes/ISpatialStructure.hpp"
 #include "Maths/Transform.hpp"
 #include "Component.hpp"
 
@@ -15,12 +15,12 @@ namespace fl
 		Transform *m_transform;
 	private:
 		std::vector<Component *> *m_components;
-		ISpatialStructure<GameObject *> *m_structure;
+		ISpatialStructure *m_structure;
 		bool m_removed;
 	public:
-		GameObject(const Transform &transform, ISpatialStructure<GameObject *> *structure = nullptr, const std::string &name = "Unnamed");
+		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr, const std::string &name = "Unnamed");
 
-		GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure<GameObject *> *structure = nullptr);
+		GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure *structure = nullptr);
 
 		virtual ~GameObject();
 
@@ -81,11 +81,11 @@ namespace fl
 
 		void SetTransform(const Transform &transform) const { *m_transform = transform; }
 
-		ISpatialStructure<GameObject *> *GetStructure() const { return m_structure; }
+		ISpatialStructure *GetStructure() const { return m_structure; }
 
 		bool GetRemoved() const { return m_removed; }
 
-		void StructureSwitch(ISpatialStructure<GameObject *> *structure);
+		void StructureSwitch(ISpatialStructure *structure);
 
 		void StructureRemove();
 	};

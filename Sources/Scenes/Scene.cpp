@@ -5,7 +5,7 @@ namespace fl
 	Scene::Scene(ICamera *camera, IManagerUis *managerUis) :
 		m_camera(camera),
 		m_managerUis(managerUis),
-		m_structure(new StructureBasic<GameObject *>())
+		m_structure(new SceneStructure())
 	{
 	}
 
