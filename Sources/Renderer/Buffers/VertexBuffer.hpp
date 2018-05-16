@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class FL_EXPORT VertexBuffer :
+	class FL_HIDDEN VertexBuffer :
 		public Buffer
 	{
 	private:

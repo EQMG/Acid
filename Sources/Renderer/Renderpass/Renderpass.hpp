@@ -6,7 +6,7 @@ namespace fl
 {
 	class DepthStencil;
 
-	class FL_EXPORT Renderpass
+	class FL_HIDDEN Renderpass
 	{
 	private:
 		VkRenderPass m_renderPass;

@@ -8,7 +8,7 @@ namespace fl
 	/// <summary>
 	/// Used to store index of a QueueFamily with particular qualities.
 	/// </summary>
-	class FL_EXPORT QueueFamilyIndices
+	class FL_HIDDEN QueueFamilyIndices
 	{
 	private:
 		int m_graphicsFamily;
@@ -46,7 +46,7 @@ namespace fl
 	/// <summary>
 	/// A Vulkan queue family.
 	/// </summary>
-	class FL_EXPORT QueueFamily
+	class FL_HIDDEN QueueFamily
 	{
 	public:
 		/// <summary>

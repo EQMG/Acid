@@ -15,7 +15,7 @@ namespace fl
 		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		commandBufferAllocateInfo.commandPool = commandPool;
 		commandBufferAllocateInfo.commandBufferCount = 1;
-		commandBufferAllocateInfo.level = bufferLevel == BufferLevelPrimary ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
+		commandBufferAllocateInfo.level = bufferLevel == BUFFER_LEVEL_PRIMARY ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
 
 		Display::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer));
 

@@ -9,7 +9,7 @@ namespace fl
 
 	class DepthStencil;
 
-	class FL_EXPORT Framebuffers
+	class FL_HIDDEN Framebuffers
 	{
 	private:
 		std::vector<Texture *> m_imageAttachments;

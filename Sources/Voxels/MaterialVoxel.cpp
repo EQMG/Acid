@@ -5,7 +5,7 @@ namespace fl
 	MaterialVoxel::MaterialVoxel() :
 		IMaterial(),
 		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Resources/Shaders/Voxels/Voxel.vert", "Resources/Shaders/Voxels/Voxel.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {}))
+			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), {}))
 	{
 	}
 

@@ -77,7 +77,7 @@ namespace fl
 		Display::ErrorVk(vkBindImageMemory(logicalDevice, dstImage, dstImageMemory, 0));
 
 		// Do the actual blit from the swapchain image to our host visible destination image.
-		CommandBuffer *copyCmd = new CommandBuffer(true, CommandBufferLevel::BufferLevelPrimary);
+		CommandBuffer *copyCmd = new CommandBuffer(true, CommandBufferLevel::BUFFER_LEVEL_PRIMARY);
 
 		// Transition destination image to transfer destination layout.
 		InsertImageMemoryBarrier(

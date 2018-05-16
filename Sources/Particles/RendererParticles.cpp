@@ -8,7 +8,7 @@ namespace fl
 		IRenderer(),
 		m_uniformScene(new UniformHandler()),
 		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Particles/Particle.vert", "Resources/Shaders/Particles/Particle.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT), {}))
+			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), {}))
 	{
 	}
 

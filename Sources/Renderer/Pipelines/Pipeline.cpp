@@ -40,18 +40,18 @@ namespace fl
 		CreatePipelineLayout();
 		CreateAttributes();
 
-		switch (pipelineCreateInfo.GetModeFlags())
+		switch (pipelineCreateInfo.GetMode())
 		{
-		case PIPELINE_POLYGON:
+		case PIPELINE_MODE_POLYGON:
 			CreatePipelinePolygon();
 			break;
-		case PIPELINE_POLYGON_NO_DEPTH:
+		case PIPELINE_MODE_POLYGON_NO_DEPTH:
 			CreatePipelinePolygonNoDepth();
 			break;
-		case PIPELINE_MRT:
+		case PIPELINE_MODE_MRT:
 			CreatePipelineMrt();
 			break;
-		case PIPELINE_MRT_NO_DEPTH:
+		case PIPELINE_MODE_MRT_NO_DEPTH:
 			CreatePipelineMrtNoDepth();
 			break;
 		default:
@@ -367,8 +367,8 @@ namespace fl
 		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		m_rasterizationState.depthClampEnable = VK_FALSE;
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
-		m_rasterizationState.polygonMode = m_pipelineCreateInfo.GetPolygonMode();
-		m_rasterizationState.cullMode = m_pipelineCreateInfo.GetCullModeFlags();
+		m_rasterizationState.polygonMode = static_cast<VkPolygonMode>(m_pipelineCreateInfo.GetPolygonMode());
+		m_rasterizationState.cullMode = static_cast<VkCullModeFlags>(m_pipelineCreateInfo.GetCullModeF());
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
 		m_rasterizationState.depthBiasConstantFactor = 0.0f;
@@ -383,8 +383,7 @@ namespace fl
 		m_blendAttachmentStates[0].srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
 		m_blendAttachmentStates[0].dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
 		m_blendAttachmentStates[0].alphaBlendOp = VK_BLEND_OP_ADD;
-		m_blendAttachmentStates[0].colorWriteMask =
-			VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+		m_blendAttachmentStates[0].colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
 
 		m_colourBlendState.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 		m_colourBlendState.logicOpEnable = VK_FALSE;
