@@ -40,7 +40,7 @@ namespace fl
 		m_uniformObject->Push("alpha", GetAlpha());
 	}
 
-	void Gui::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline)
+	void Gui::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline)
 	{
 		// Gets if this should be rendered.
 		if (!IsVisible() || GetAlpha() == 0.0f)
@@ -63,7 +63,7 @@ namespace fl
 		scissorRect.offset.y = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_y);
 		scissorRect.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_z);
 		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_w);
-		vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
+		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.
 		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);

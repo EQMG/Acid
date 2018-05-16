@@ -22,7 +22,7 @@ namespace fl
 
 		void Write(LoadedValue *value) override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, UniformHandler *uniformScene);
+		void CmdRender(const CommandBuffer &commandBuffer, UniformHandler *uniformScene);
 
 		std::string GetName() const override { return "MeshRender"; };
 

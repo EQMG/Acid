@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	class FL_EXPORT RenderStage
+	class FL_HIDDEN RenderStage
 	{
 	private:
 		uint32_t m_lastWidth;

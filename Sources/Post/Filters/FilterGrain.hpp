@@ -16,7 +16,7 @@ namespace fl
 
 		~FilterGrain();
 
-		void Render(const VkCommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		float GetStrength() const { return m_strength; }
 

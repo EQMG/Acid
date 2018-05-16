@@ -16,7 +16,7 @@ namespace fl
 
 		~FilterDarken();
 
-		void Render(const VkCommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		float GetFactor() const { return m_factor; }
 

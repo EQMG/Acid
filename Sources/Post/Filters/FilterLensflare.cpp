@@ -18,7 +18,7 @@ namespace fl
 		delete m_sunPosition;
 	}
 
-	void FilterLensflare::Render(const VkCommandBuffer &commandBuffer)
+	void FilterLensflare::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_uniformScene->Push("sunPosition", *m_sunPosition);

@@ -306,7 +306,7 @@ namespace fl
 
 	void Texture::TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &mipLevels, const uint32_t &layerCount)
 	{
-		const auto commandBuffer = Renderer::BeginVkSingleCommands();
+		CommandBuffer *commandBuffer = new CommandBuffer();
 
 		VkImageMemoryBarrier imageMemoryBarrier = {};
 		imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -346,14 +346,14 @@ namespace fl
 			throw std::invalid_argument("Unsupported texture layout transition!");
 		}
 
-		vkCmdPipelineBarrier(commandBuffer, sourceStage, destinationStage, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
+		vkCmdPipelineBarrier(commandBuffer->GetVkCommandBuffer(), sourceStage, destinationStage, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
 
-		Renderer::EndVkSingleCommands(commandBuffer);
+		delete commandBuffer;
 	}
 
 	void Texture::CopyBufferToImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkBuffer &buffer, const VkImage &image, const uint32_t &layerCount)
 	{
-		const auto commandBuffer = Renderer::BeginVkSingleCommands();
+		CommandBuffer *commandBuffer = new CommandBuffer();
 
 		VkBufferImageCopy region = {};
 		region.bufferOffset = 0;
@@ -366,14 +366,14 @@ namespace fl
 		region.imageOffset = {0, 0, 0};
 		region.imageExtent = {static_cast<uint32_t>(width), static_cast<uint32_t>(height), static_cast<uint32_t>(depth)};
 
-		vkCmdCopyBufferToImage(commandBuffer, buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
+		vkCmdCopyBufferToImage(commandBuffer->GetVkCommandBuffer(), buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 
-		Renderer::EndVkSingleCommands(commandBuffer);
+		delete commandBuffer;
 	}
 
 	void Texture::CreateMipmaps(const VkImage &image, const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount)
 	{
-		VkCommandBuffer commandBuffer = Renderer::BeginVkSingleCommands();
+		CommandBuffer *commandBuffer = new CommandBuffer();
 
 		VkImageMemoryBarrier barrier = {};
 		barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -393,7 +393,7 @@ namespace fl
 			barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 			barrier.dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
 
-			vkCmdPipelineBarrier(commandBuffer,
+			vkCmdPipelineBarrier(commandBuffer->GetVkCommandBuffer(),
 				VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0,
 				0, nullptr,
 				0, nullptr,
@@ -413,7 +413,7 @@ namespace fl
 			blit.dstSubresource.baseArrayLayer = 0;
 			blit.dstSubresource.layerCount = layerCount;
 
-			vkCmdBlitImage(commandBuffer,
+			vkCmdBlitImage(commandBuffer->GetVkCommandBuffer(),
 				image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
 				image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
 				1, &blit,
@@ -424,7 +424,7 @@ namespace fl
 			barrier.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
 			barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
-			vkCmdPipelineBarrier(commandBuffer,
+			vkCmdPipelineBarrier(commandBuffer->GetVkCommandBuffer(),
 				VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0,
 				0, nullptr,
 				0, nullptr,
@@ -437,13 +437,13 @@ namespace fl
 		barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 		barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
-		vkCmdPipelineBarrier(commandBuffer,
+		vkCmdPipelineBarrier(commandBuffer->GetVkCommandBuffer(),
 			VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0,
 			0, nullptr,
 			0, nullptr,
 			1, &barrier);
 
-		Renderer::EndVkSingleCommands(commandBuffer);
+		delete commandBuffer;
 	}
 
 	void Texture::CreateImageSampler(const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler)

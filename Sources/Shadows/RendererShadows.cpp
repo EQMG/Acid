@@ -19,7 +19,7 @@ namespace fl
 		delete m_uniformScene;
 	}
 
-	void RendererShadows::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererShadows::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_uniformScene->Push("projectionView", *Shadows::Get()->GetShadowBox()->GetProjectionViewMatrix());
 		m_uniformScene->Push("cameraPosition", *Scenes::Get()->GetCamera()->GetPosition());

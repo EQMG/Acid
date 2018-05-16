@@ -182,13 +182,13 @@ namespace fl
 		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
 		void SetFullscreen(const bool &fullscreen);
 
-		static std::string StringifyResultVk(const VkResult &result);
+		FL_HIDDEN static std::string StringifyResultVk(const VkResult &result);
 
-		static void ErrorVk(const VkResult &result);
+		FL_HIDDEN static void ErrorVk(const VkResult &result);
 
-		static std::string StringifyResultGlfw(const int &result);
+		FL_HIDDEN static std::string StringifyResultGlfw(const int &result);
 
-		static void ErrorGlfw(const int &result);
+		FL_HIDDEN static void ErrorGlfw(const int &result);
 
 		/// <summary>
 		/// Gets the current GLFW window.

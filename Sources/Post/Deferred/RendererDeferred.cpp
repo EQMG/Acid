@@ -39,7 +39,7 @@ namespace fl
 		delete m_model;
 	}
 
-	void RendererDeferred::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		auto skyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
 		Cubemap *environment = (skyboxRender == nullptr) ? nullptr : skyboxRender->GetCubemap();

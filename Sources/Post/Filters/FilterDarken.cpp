@@ -14,7 +14,7 @@ namespace fl
 		delete m_uniformScene;
 	}
 
-	void FilterDarken::Render(const VkCommandBuffer &commandBuffer)
+	void FilterDarken::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_uniformScene->Push("factor", m_factor);

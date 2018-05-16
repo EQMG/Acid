@@ -72,7 +72,7 @@ namespace fl
 		/// </summary>
 		~Model();
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const unsigned int &instances = 1);
+		void CmdRender(const CommandBuffer &commandBuffer, const unsigned int &instances = 1);
 
 		std::string GetFilename() override { return m_filename; }
 

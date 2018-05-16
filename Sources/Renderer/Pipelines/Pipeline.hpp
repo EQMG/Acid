@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Textures/Texture.hpp"
+#include "Renderer/Buffers/CommandBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "PipelineCreate.hpp"
@@ -72,7 +73,7 @@ namespace fl
 		/// </summary>
 		~Pipeline();
 
-		void BindPipeline(const VkCommandBuffer &commandBuffer) const;
+		void BindPipeline(const CommandBuffer &commandBuffer) const;
 
 		PipelineCreate GetPipelineCreateInfo() const { return m_pipelineCreateInfo; }
 

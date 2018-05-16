@@ -12,6 +12,6 @@ namespace fl
 
 		~FilterEmboss();
 
-		void Render(const VkCommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 	};
 }

@@ -31,7 +31,7 @@ namespace fl
 	{
 	}
 
-	void ShadowRender::CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene)
+	void ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene)
 	{
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();

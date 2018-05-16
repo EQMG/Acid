@@ -18,7 +18,7 @@ namespace fl
 		delete m_pipeline;
 	}
 
-	void RendererParticles::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererParticles::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		/*const auto logicalDevice = Display::Get()->GetLogicalDevice();
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();

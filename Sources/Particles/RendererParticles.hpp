@@ -20,7 +20,7 @@ namespace fl
 
 		~RendererParticles();
 
-		void Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 	private:
 		Matrix4 ModelMatrix(Particle *particle, const Matrix4 &viewMatrix);

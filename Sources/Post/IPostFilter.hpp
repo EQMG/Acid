@@ -32,7 +32,7 @@ namespace fl
 		/// <summary>
 		/// Renders the filter.
 		/// </summary>
-		virtual void Render(const VkCommandBuffer &commandBuffer);
+		virtual void Render(const CommandBuffer &commandBuffer);
 
 		DescriptorsHandler *GetDescriptorSet() const { return m_descriptorSet; }
 

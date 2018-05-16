@@ -28,7 +28,7 @@ namespace fl
 		material->PushUniforms(m_uniformObject);
 	}
 
-	void MeshRender::CmdRender(const VkCommandBuffer &commandBuffer, UniformHandler *uniformScene)
+	void MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler *uniformScene)
 	{
 		// Checks if the mesh is in view.
 		/*auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();

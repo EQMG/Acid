@@ -77,7 +77,7 @@ namespace fl
 
 		void UpdateObject() override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline);
+		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
 
 		/// <summary>
 		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
