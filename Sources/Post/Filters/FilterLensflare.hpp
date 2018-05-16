@@ -18,7 +18,7 @@ namespace fl
 
 		~FilterLensflare();
 
-		void Render(const VkCommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		void SetSunPosition(const Vector3 &sunPosition) const;
 

@@ -19,7 +19,7 @@ namespace fl
 		delete m_screenColour;
 	}
 
-	void FilterCrt::Render(const VkCommandBuffer &commandBuffer)
+	void FilterCrt::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_uniformScene->Push("screenColour", *m_screenColour);

@@ -82,9 +82,9 @@ namespace fl
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
 
-	void Pipeline::BindPipeline(const VkCommandBuffer &commandBuffer) const
+	void Pipeline::BindPipeline(const CommandBuffer &commandBuffer) const
 	{
-		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline);
+		vkCmdBindPipeline(commandBuffer.GetVkCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline);
 	}
 
 	DepthStencil *Pipeline::GetDepthStencil(const int &stage) const

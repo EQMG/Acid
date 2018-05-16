@@ -16,7 +16,7 @@ namespace fl
 
 		~FilterFxaa();
 
-		void Render(const VkCommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		float GetSpanMax() const { return m_spanMax; }
 

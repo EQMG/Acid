@@ -27,7 +27,7 @@ namespace fl
 
 		void Write(LoadedValue *value) override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene);
+		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene);
 
 		std::string GetName() const override { return "ShadowRender"; };
 

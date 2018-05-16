@@ -2,6 +2,7 @@
 
 #include "Engine/Engine.hpp"
 #include "Display/Display.hpp"
+#include "Buffers/CommandBuffer.hpp"
 #include "Swapchain/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
 #include "RenderStage.hpp"
@@ -25,7 +26,8 @@ namespace fl
 
 		VkSemaphore m_semaphore;
 		VkCommandPool m_commandPool;
-		VkCommandBuffer m_commandBuffer;
+
+		CommandBuffer *m_commandBuffer;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -57,23 +59,19 @@ namespace fl
 		/// <param name="commandBuffer"> The command buffer to use. </param>
 		/// <param name="i"> The index of the render pass being rendered. </param>
 		/// <returns> VK_SUCCESS on success. </returns>
-		bool StartRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i);
+		bool StartRenderpass(const CommandBuffer &commandBuffer, const unsigned int &i);
 
 		/// <summary>
 		/// Ends the renderpass.
 		/// </summary>
 		/// <param name="commandBuffer"> The command buffer to use. </param>
-		void EndRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i);
+		void EndRenderpass(const CommandBuffer &commandBuffer, const unsigned int &i);
 
 		/// <summary>
 		/// Starts the next render subpass.
 		/// </summary>
 		/// <param name="commandBuffer"> The command buffer to use. </param>
-		void NextSubpass(const VkCommandBuffer &commandBuffer);
-
-		FL_HIDDEN static VkCommandBuffer BeginVkSingleCommands(const VkCommandBufferLevel &level = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
-
-		FL_HIDDEN static void EndVkSingleCommands(const VkCommandBuffer &commandBuffer);
+		void NextSubpass(const CommandBuffer &commandBuffer);
 
 		FL_HIDDEN static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
 
@@ -89,15 +87,15 @@ namespace fl
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(IManagerRender *managerRender) { m_managerRender = managerRender; }
 
-		FL_HIDDEN std::vector<RenderStage *> GetRenderStages() const { return m_renderStages; }
+		std::vector<RenderStage *> GetRenderStages() const { return m_renderStages; }
 
-		FL_HIDDEN RenderStage *GetRenderStage(const int &i) const { return m_renderStages.at(i); }
+		RenderStage *GetRenderStage(const int &i) const { return m_renderStages.at(i); }
 
-		FL_HIDDEN Swapchain *GetSwapchain() const { return m_swapchain; }
+		Swapchain *GetSwapchain() const { return m_swapchain; }
 
 		FL_HIDDEN VkCommandPool GetVkCommandPool() const { return m_commandPool; }
 
-		FL_HIDDEN VkCommandBuffer GetVkCommandBuffer() const { return m_commandBuffer; }
+		CommandBuffer *GetCommandBuffer() const { return m_commandBuffer; }
 
 		FL_HIDDEN uint32_t GetVkActiveSwapchainImage() const { return m_activeSwapchainImage; }
 

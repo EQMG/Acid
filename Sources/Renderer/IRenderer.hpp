@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Scenes/ICamera.hpp"
 #include "Display/Display.hpp"
+#include "Scenes/ICamera.hpp"
+#include "Maths/Vector4.hpp"
+#include "Buffers/CommandBuffer.hpp"
 
 namespace fl
 {
@@ -30,6 +32,6 @@ namespace fl
 		/// </summary>
 		/// <param name="clipPlane"> The current clip plane. </param>
 		/// <param name="camera"> The camera to be used when rendering. </param>
-		virtual void Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) = 0;
+		virtual void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) = 0;
 	};
 }

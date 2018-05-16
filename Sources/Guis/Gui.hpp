@@ -41,7 +41,7 @@ namespace fl
 
 		void UpdateObject() override;
 
-		void CmdRender(const VkCommandBuffer &commandBuffer, const Pipeline &pipeline);
+		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
 
 		Texture *GetTexture() const { return m_texture; }
 

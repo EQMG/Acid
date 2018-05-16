@@ -18,6 +18,6 @@ namespace fl
 
 		~RendererShadows();
 
-		void Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

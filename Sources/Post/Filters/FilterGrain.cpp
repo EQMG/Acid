@@ -14,7 +14,7 @@ namespace fl
 		delete m_uniformScene;
 	}
 
-	void FilterGrain::Render(const VkCommandBuffer &commandBuffer)
+	void FilterGrain::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_uniformScene->Push("strength", m_strength);

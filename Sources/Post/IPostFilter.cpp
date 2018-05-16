@@ -19,7 +19,7 @@ namespace fl
 		delete m_model;
 	}
 
-	void IPostFilter::Render(const VkCommandBuffer &commandBuffer)
+	void IPostFilter::Render(const CommandBuffer &commandBuffer)
 	{
 	}
 }

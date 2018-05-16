@@ -12,7 +12,7 @@ namespace fl
 		m_pipelineCache(VK_NULL_HANDLE),
 		m_semaphore(VK_NULL_HANDLE),
 		m_commandPool(VK_NULL_HANDLE),
-		m_commandBuffer(VK_NULL_HANDLE)
+		m_commandBuffer(nullptr)
 	{
 		CreateFences();
 		CreateCommandPool();
@@ -34,6 +34,7 @@ namespace fl
 		}
 
 		delete m_swapchain;
+		delete m_commandBuffer;
 
 		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, nullptr);
 
@@ -81,7 +82,7 @@ namespace fl
 #endif
 	}
 
-	bool Renderer::StartRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i)
+	bool Renderer::StartRenderpass(const CommandBuffer &commandBuffer, const unsigned int &i)
 	{
 		const auto renderStage = GetRenderStage(i);
 
@@ -120,7 +121,7 @@ namespace fl
 		commandBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		commandBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
-		Display::ErrorVk(vkBeginCommandBuffer(commandBuffer, &commandBufferBeginInfo));
+		Display::ErrorVk(vkBeginCommandBuffer(commandBuffer.GetVkCommandBuffer(), &commandBufferBeginInfo));
 
 		VkRect2D renderArea = {};
 		renderArea.offset.x = 0;
@@ -136,7 +137,7 @@ namespace fl
 		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(renderStage->GetClearValues().size());
 		renderPassBeginInfo.pClearValues = renderStage->GetClearValues().data();
 
-		vkCmdBeginRenderPass(commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+		vkCmdBeginRenderPass(commandBuffer.GetVkCommandBuffer(), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 		VkViewport viewport = {};
 		viewport.x = 0.0f;
@@ -145,30 +146,32 @@ namespace fl
 		viewport.height = static_cast<float>(renderStage->GetHeight());
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
-		vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
+		vkCmdSetViewport(commandBuffer.GetVkCommandBuffer(), 0, 1, &viewport);
 
 		VkRect2D scissor = {};
 		scissor.offset.x = 0;
 		scissor.offset.y = 0;
 		scissor.extent.width = renderStage->GetWidth();
 		scissor.extent.height = renderStage->GetHeight();
-		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
+		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissor);
 
 		return true; // VK_SUCCESS
 	}
 
-	void Renderer::EndRenderpass(const VkCommandBuffer &commandBuffer, const unsigned int &i)
+	void Renderer::EndRenderpass(const CommandBuffer &commandBuffer, const unsigned int &i)
 	{
 		const auto renderStage = GetRenderStage(i);
 		const auto queue = Display::Get()->GetVkQueue();
 
-		vkCmdEndRenderPass(commandBuffer);
-		Display::ErrorVk(vkEndCommandBuffer(commandBuffer));
+		vkCmdEndRenderPass(commandBuffer.GetVkCommandBuffer());
+		Display::ErrorVk(vkEndCommandBuffer(commandBuffer.GetVkCommandBuffer()));
+
+		VkCommandBuffer commandBuffers = commandBuffer.GetVkCommandBuffer();
 
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &commandBuffer;
+		submitInfo.pCommandBuffers = &commandBuffers;
 
 		if (renderStage->HasSwapchain())
 		{
@@ -215,52 +218,9 @@ namespace fl
 		vkQueueWaitIdle(queue);
 	}
 
-	void Renderer::NextSubpass(const VkCommandBuffer &commandBuffer)
+	void Renderer::NextSubpass(const CommandBuffer &commandBuffer)
 	{
-		vkCmdNextSubpass(commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
-	}
-
-	VkCommandBuffer Renderer::BeginVkSingleCommands(const VkCommandBufferLevel &level)
-	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		const auto commandPool = Renderer::Get()->GetVkCommandPool();
-
-		VkCommandBufferAllocateInfo allocInfo = {};
-		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		allocInfo.level = level;
-		allocInfo.commandPool = commandPool;
-		allocInfo.commandBufferCount = 1;
-
-		VkCommandBuffer commandBuffer;
-		Display::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &allocInfo, &commandBuffer));
-
-		VkCommandBufferBeginInfo beginInfo = {};
-		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-
-		Display::ErrorVk(vkBeginCommandBuffer(commandBuffer, &beginInfo));
-
-		return commandBuffer;
-	}
-
-	void Renderer::EndVkSingleCommands(const VkCommandBuffer &commandBuffer)
-	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		const auto queue = Display::Get()->GetVkQueue();
-		const auto commandPool = Renderer::Get()->GetVkCommandPool();
-
-		Display::ErrorVk(vkEndCommandBuffer(commandBuffer));
-
-		VkSubmitInfo submitInfo = {};
-		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &commandBuffer;
-
-		Display::ErrorVk(vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE));
-
-		Display::ErrorVk(vkQueueWaitIdle(queue));
-
-		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &commandBuffer);
+		vkCmdNextSubpass(commandBuffer.GetVkCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
 	}
 
 	uint32_t Renderer::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
@@ -308,13 +268,7 @@ namespace fl
 
 		Display::ErrorVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 
-		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
-		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		commandBufferAllocateInfo.commandPool = m_commandPool;
-		commandBufferAllocateInfo.commandBufferCount = 1;
-		commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-
-		Display::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer));
+		m_commandBuffer = new CommandBuffer(false);
 	}
 
 	void Renderer::CreatePipelineCache()

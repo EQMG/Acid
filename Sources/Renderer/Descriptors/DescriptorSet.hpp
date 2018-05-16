@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include "Display/Display.hpp"
+#include "Renderer/Buffers/CommandBuffer.hpp"
 #include "Renderer/Pipelines/PipelineCreate.hpp"
 #include "Renderer/Pipelines/ShaderProgram.hpp"
 
@@ -26,7 +27,7 @@ namespace fl
 
 		void Update(const std::vector<IDescriptor *> &descriptors);
 
-		void BindDescriptor(const VkCommandBuffer &commandBuffer);
+		void BindDescriptor(const CommandBuffer &commandBuffer);
 
 		VkDescriptorSet GetVkDescriptorSet() const { return m_descriptorSet; }
 	};

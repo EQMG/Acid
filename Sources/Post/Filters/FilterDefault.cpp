@@ -11,7 +11,7 @@ namespace fl
 	{
 	}
 
-	void FilterDefault::Render(const VkCommandBuffer &commandBuffer)
+	void FilterDefault::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates descriptors.
 		m_descriptorSet->Push("writeColour", m_pipeline->GetTexture(2));

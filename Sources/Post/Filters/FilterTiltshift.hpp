@@ -19,7 +19,7 @@ namespace fl
 
 		~FilterTiltshift();
 
-		void Render(const VkCommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		float GetBlurAmount() const { return m_blurAmount; }
 

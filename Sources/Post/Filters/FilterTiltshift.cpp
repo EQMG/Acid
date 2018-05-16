@@ -17,7 +17,7 @@ namespace fl
 		delete m_uniformScene;
 	}
 
-	void FilterTiltshift::Render(const VkCommandBuffer &commandBuffer)
+	void FilterTiltshift::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_uniformScene->Push("blurAmount", m_blurAmount);

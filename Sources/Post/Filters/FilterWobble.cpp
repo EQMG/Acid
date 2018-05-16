@@ -15,7 +15,7 @@ namespace fl
 		delete m_uniformScene;
 	}
 
-	void FilterWobble::Render(const VkCommandBuffer &commandBuffer)
+	void FilterWobble::Render(const CommandBuffer &commandBuffer)
 	{
 		m_wobbleAmount += m_wobbleSpeed * Engine::Get()->GetDeltaRender();
 

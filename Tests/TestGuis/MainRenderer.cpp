@@ -32,11 +32,11 @@ namespace Demo
 
 	void MainRenderer::Render()
 	{
-		const auto commandBuffer = Renderer::Get()->GetVkCommandBuffer();
+		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
 		const auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
-		auto startResult = Renderer::Get()->StartRenderpass(commandBuffer, 0);
+		auto startResult = Renderer::Get()->StartRenderpass(*commandBuffer, 0);
 
 		if (!startResult)
 		{
@@ -44,10 +44,10 @@ namespace Demo
 		}
 
 		// Subpass 0.
-		m_rendererGuis->Render(commandBuffer, m_infinity, *camera);
-		m_rendererFonts->Render(commandBuffer, m_infinity, *camera);
+		m_rendererGuis->Render(*commandBuffer, m_infinity, *camera);
+		m_rendererFonts->Render(*commandBuffer, m_infinity, *camera);
 
 		// Ends Rendering.
-		Renderer::Get()->EndRenderpass(commandBuffer, 0);
+		Renderer::Get()->EndRenderpass(*commandBuffer, 0);
 	}
 }

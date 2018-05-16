@@ -18,7 +18,7 @@ namespace fl
 		delete m_pipeline;
 	}
 
-	void RendererGuis::Render(const VkCommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererGuis::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_pipeline->BindPipeline(commandBuffer);
 

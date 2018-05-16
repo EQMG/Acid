@@ -21,7 +21,7 @@ namespace fl
 
 		~FilterCrt();
 
-		void Render(const VkCommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		Colour *GetScreenColour() const { return m_screenColour; }
 

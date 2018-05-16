@@ -43,8 +43,9 @@ namespace fl
 		template<typename T>
 		T *RegisterModule(const ModuleUpdate &update, const std::string &name)
 		{
-			IModule *module = RegisterModule(new T(), update, name);
-			return static_cast<T *>(module);
+			T *module = static_cast<T *>(malloc(sizeof(T)));
+			RegisterModule(module, update, name);
+			return new(module) T();
 		}
 
 		/// <summary>

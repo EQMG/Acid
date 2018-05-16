@@ -51,9 +51,9 @@ namespace fl
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}
 
-	void DescriptorSet::BindDescriptor(const VkCommandBuffer &commandBuffer)
+	void DescriptorSet::BindDescriptor(const CommandBuffer &commandBuffer)
 	{
 		VkDescriptorSet descriptors[1] = {m_descriptorSet};
-		vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipelineLayout, 0, 1, descriptors, 0, nullptr);
+		vkCmdBindDescriptorSets(commandBuffer.GetVkCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipelineLayout, 0, 1, descriptors, 0, nullptr);
 	}
 }

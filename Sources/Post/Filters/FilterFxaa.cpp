@@ -14,7 +14,7 @@ namespace fl
 		delete m_uniformScene;
 	}
 
-	void FilterFxaa::Render(const VkCommandBuffer &commandBuffer)
+	void FilterFxaa::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_uniformScene->Push("spanMax", m_spanMax);

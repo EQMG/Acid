@@ -94,22 +94,22 @@ namespace fl
 		delete m_aabb;
 	}
 
-	void Model::CmdRender(const VkCommandBuffer &commandBuffer, const unsigned int &instances)
+	void Model::CmdRender(const CommandBuffer &commandBuffer, const unsigned int &instances)
 	{
 		if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
 		{
 			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetVkBuffer()};
 			VkDeviceSize offsets[] = {0};
-			vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-			vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer->GetVkBuffer(), 0, m_indexBuffer->GetIndexType());
-			vkCmdDrawIndexed(commandBuffer, m_indexBuffer->GetIndexCount(), instances, 0, 0, 0);
+			vkCmdBindVertexBuffers(commandBuffer.GetVkCommandBuffer(), 0, 1, vertexBuffers, offsets);
+			vkCmdBindIndexBuffer(commandBuffer.GetVkCommandBuffer(), m_indexBuffer->GetVkBuffer(), 0, m_indexBuffer->GetIndexType());
+			vkCmdDrawIndexed(commandBuffer.GetVkCommandBuffer(), m_indexBuffer->GetIndexCount(), instances, 0, 0, 0);
 		}
 		else if (m_vertexBuffer != nullptr && m_indexBuffer == nullptr)
 		{
 			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetVkBuffer()};
 			VkDeviceSize offsets[] = {0};
-			vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-			vkCmdDraw(commandBuffer, m_vertexBuffer->GetVertexCount(), instances, 0, 0);
+			vkCmdBindVertexBuffers(commandBuffer.GetVkCommandBuffer(), 0, 1, vertexBuffers, offsets);
+			vkCmdDraw(commandBuffer.GetVkCommandBuffer(), m_vertexBuffer->GetVertexCount(), instances, 0, 0);
 		}
 		//	else
 		//	{

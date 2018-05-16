@@ -16,7 +16,7 @@ namespace fl
 
 		~FilterPixel();
 
-		void Render(const VkCommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		float GetPixelSize() const { return m_pixelSize; }
 

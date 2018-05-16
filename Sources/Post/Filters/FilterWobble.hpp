@@ -17,7 +17,7 @@ namespace fl
 
 		~FilterWobble();
 
-		void Render(const VkCommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		float GetWobbleSpeed() const { return m_wobbleSpeed; }
 
