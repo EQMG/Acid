@@ -104,16 +104,35 @@ namespace fl
 		int GetWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
 
 		/// <summary>
-		/// Gets the non-fullscreen width of the display in pixels.
+		/// Sets the width of the display in pixels.
 		/// </summary>
-		/// <returns> The width of the display. </returns>
-		int GetWindowWidth() const { return m_windowWidth; }
+		/// <param name="width"> The new width in pixels. </param>
+		void SetWidth(const int &width) { SetWindowSize(width, GetHeight()); }
 
 		/// <summary>
 		/// Gets the height of the display in pixels.
 		/// </summary>
 		/// <returns> The height of the display. </returns>
 		int GetHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
+
+		/// <summary>
+		/// Sets the height of the display in pixels.
+		/// </summary>
+		/// <param name="height"> The new height in pixels. </param>
+		void SetHeight(const int &height) { SetWindowSize(GetWidth(), height); }
+
+		/// <summary>
+		/// Sets window size to a new size.
+		/// </summary>
+		/// <param name="width"> The new width in pixels. </param>
+		/// <param name="height"> The new height in pixels. </param>
+		void SetWindowSize(const int &width, const int &height);
+
+		/// <summary>
+		/// Gets the non-fullscreen width of the display in pixels.
+		/// </summary>
+		/// <returns> The width of the display. </returns>
+		int GetWindowWidth() const { return m_windowWidth; }
 
 		/// <summary>
 		/// Gets the non-fullscreen height of the display in pixels.
@@ -126,13 +145,6 @@ namespace fl
 		/// </summary>
 		/// <returns> The aspect ratio. </returns>
 		float GetAspectRatio() const { return m_aspectRatio; }
-
-		/// <summary>
-		/// Sets window size to a new size.
-		/// </summary>
-		/// <param name="width"> The new width in pixels. </param>
-		/// <param name="height"> The new height in pixels. </param>
-		void SetWindowSize(const int &width, const int &height);
 
 		/// <summary>
 		/// Gets the window's title.
