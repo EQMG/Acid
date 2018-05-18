@@ -5,21 +5,21 @@
 namespace fl
 {
 	ColliderSphere::ColliderSphere() :
-		Collider(),
+		ICollider(),
 		m_radius(1.0f),
 		m_position(new Vector3())
 	{
 	}
 
 	ColliderSphere::ColliderSphere(const float &radius, const Vector3 &position) :
-		Collider(),
+		ICollider(),
 		m_radius(radius),
 		m_position(new Vector3(position))
 	{
 	}
 
 	ColliderSphere::ColliderSphere(const ColliderSphere &source) :
-		Collider(),
+		ICollider(),
 		m_radius(source.m_radius),
 		m_position(new Vector3(*source.m_position))
 	{
@@ -30,7 +30,15 @@ namespace fl
 		delete m_position;
 	}
 
-	Collider *ColliderSphere::Update(const Transform &transform, Collider *destination)
+	void ColliderSphere::Load(LoadedValue *value)
+	{
+	}
+
+	void ColliderSphere::Write(LoadedValue *value)
+	{
+	}
+
+	ICollider *ColliderSphere::UpdateCollider(const Transform &transform, ICollider *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -51,15 +59,7 @@ namespace fl
 		return source;
 	}
 
-	void ColliderSphere::Load(LoadedValue *value)
-	{
-	}
-
-	void ColliderSphere::Write(LoadedValue *value)
-	{
-	}
-
-	Vector3 *ColliderSphere::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
+	Vector3 *ColliderSphere::ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -77,7 +77,7 @@ namespace fl
 		return destination;
 	}
 
-	Intersect ColliderSphere::Intersects(const Collider &other)
+	Intersect ColliderSphere::Intersects(const ICollider &other)
 	{
 		/*if (dynamic_cast<aabb*>(other) != 0)
 		{
@@ -189,7 +189,7 @@ namespace fl
 		return frustum.SphereInFrustum(*m_position, m_radius);
 	}
 
-	bool ColliderSphere::Contains(const Collider &other)
+	bool ColliderSphere::Contains(const ICollider &other)
 	{
 		const ColliderSphere &sphere2 = dynamic_cast<const ColliderSphere &>(other);
 

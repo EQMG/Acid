@@ -5,21 +5,21 @@
 namespace fl
 {
 	ColliderAabb::ColliderAabb() :
-		Collider(),
+		ICollider(),
 		m_minExtents(new Vector3()),
 		m_maxExtents(new Vector3())
 	{
 	}
 
 	ColliderAabb::ColliderAabb(const Vector3 &minExtents, const Vector3 &maxExtents) :
-		Collider(),
+		ICollider(),
 		m_minExtents(new Vector3(minExtents)),
 		m_maxExtents(new Vector3(maxExtents))
 	{
 	}
 
 	ColliderAabb::ColliderAabb(const ColliderAabb &source) :
-		Collider(),
+		ICollider(),
 		m_minExtents(new Vector3(*source.m_minExtents)),
 		m_maxExtents(new Vector3(*source.m_maxExtents))
 	{
@@ -151,7 +151,15 @@ namespace fl
 		return Stretch(source, Vector3(stretchX, stretchY, stretchZ), destination);
 	}
 
-	Collider *ColliderAabb::Update(const Transform &transform, Collider *destination)
+	void ColliderAabb::Load(LoadedValue *value)
+	{
+	}
+
+	void ColliderAabb::Write(LoadedValue *value)
+	{
+	}
+
+	ICollider *ColliderAabb::UpdateCollider(const Transform &transform, ICollider *destination)
 	{
 		auto source = dynamic_cast<ColliderAabb *>(destination);
 
@@ -230,15 +238,7 @@ namespace fl
 		return destination;
 	}
 
-	void ColliderAabb::Load(LoadedValue *value)
-	{
-	}
-
-	void ColliderAabb::Write(LoadedValue *value)
-	{
-	}
-
-	Vector3 *ColliderAabb::ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination)
+	Vector3 *ColliderAabb::ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination)
 	{
 		if (destination == nullptr)
 		{
@@ -313,7 +313,7 @@ namespace fl
 		return destination;
 	}
 
-	Intersect ColliderAabb::Intersects(const Collider &other)
+	Intersect ColliderAabb::Intersects(const ICollider &other)
 	{
 		const ColliderAabb &aabb2 = dynamic_cast<const ColliderAabb &>(other);
 
@@ -416,7 +416,7 @@ namespace fl
 		return frustum.CubeInFrustum(*m_minExtents, *m_maxExtents);
 	}
 
-	bool ColliderAabb::Contains(const Collider &other)
+	bool ColliderAabb::Contains(const ICollider &other)
 	{
 		const ColliderAabb &aabb2 = dynamic_cast<const ColliderAabb &>(other);
 

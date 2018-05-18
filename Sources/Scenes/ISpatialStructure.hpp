@@ -9,7 +9,7 @@ namespace fl
 
 	class Component;
 
-	class Collider;
+	class ICollider;
 
 	/// <summary>
 	/// A data structure that stores objects with a notion of flounder.space.
@@ -85,7 +85,7 @@ namespace fl
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<GameObject *> *QueryBounding(Collider *range, std::vector<GameObject *> *result) = 0;
+		virtual std::vector<GameObject *> *QueryBounding(ICollider *range, std::vector<GameObject *> *result) = 0;
 
 		/// <summary>
 		/// If the structure contains the object.

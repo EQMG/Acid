@@ -39,9 +39,9 @@ namespace fl
 
 		void UpdateObject() override;
 
-		std::string GetText() const { return m_text->GetText(); }
+		std::string GetText() const { return m_text->GetString(); }
 
-		void SetText(const std::string &string) const { m_text->SetText(string); }
+		void SetText(const std::string &string) const { m_text->SetString(string); }
 
 		float GetProgressMin() const { return m_progressMin; }
 

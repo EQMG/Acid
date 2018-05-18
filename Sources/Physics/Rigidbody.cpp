@@ -26,11 +26,11 @@ namespace fl
 
 	void Rigidbody::Update()
 	{
-		auto collider = GetGameObject()->GetComponent<Collider>();
+		auto collider = GetGameObject()->GetComponent<ICollider>();
 
 		if (collider != nullptr)
 		{
-			m_colliderCopy = collider->Update(*GetGameObject()->GetTransform(), m_colliderCopy);
+			m_colliderCopy = collider->UpdateCollider(*GetGameObject()->GetTransform(), m_colliderCopy);
 		}
 	}
 
