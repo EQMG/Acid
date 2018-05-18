@@ -93,11 +93,11 @@ namespace fl
 		m_model->CmdRender(commandBuffer);
 	}
 
-	void Text::SetText(const std::string &newText)
+	void Text::SetString(const std::string &newString)
 	{
-		if (m_string != newText)
+		if (m_string != newString)
 		{
-			m_newString = newText;
+			m_newString = newString;
 		}
 	}
 

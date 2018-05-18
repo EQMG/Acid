@@ -76,17 +76,17 @@ namespace Demo
 				sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<MaterialDefault>(Colour("#ffffff"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Resources/Entities/Testing/Material.png"), Texture::Resource("Resources/Entities/Testing/Normal.png"));
-			//	sphere->AddComponent<MeshRender>();
+				sphere->AddComponent<MeshRender>();
 			//	sphere->AddComponent<ShadowRender>();
 			}
 		}
 
-		/*// Voxels.
-		GameObject *voxelChunk = new GameObject(Transform());
+		// Voxels.
+		/*GameObject *voxelChunk = new GameObject(Transform());
 		voxelChunk->SetName("Chunk_0_0");
 		voxelChunk->AddComponent<Mesh>();
 		voxelChunk->AddComponent<MaterialVoxel>();
-		voxelChunk->AddComponent<VoxelChunk>(MeshGreedy, true);
+		voxelChunk->AddComponent<VoxelChunk>(MESH_GREEDY, true);
 		voxelChunk->AddComponent<MeshRender>();
 
 		// Terrains.

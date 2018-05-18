@@ -131,7 +131,7 @@ namespace fl
 			if (key != -1)
 			{
 				m_value = key;
-				m_text->SetText(m_prefix + m_grabber->GetValue(m_value));
+				m_text->SetString(m_prefix + m_grabber->GetValue(m_value));
 
 				if (m_actionChange != 0)
 				{
@@ -186,12 +186,12 @@ namespace fl
 	void UiInputGrabber::SetPrefix(const std::string &prefix)
 	{
 		m_prefix = prefix;
-		m_text->SetText(prefix + m_grabber->GetValue(m_value));
+		m_text->SetString(prefix + m_grabber->GetValue(m_value));
 	}
 
 	void UiInputGrabber::SetValue(const int &value)
 	{
 		m_value = value;
-		m_text->SetText(m_prefix + m_grabber->GetValue(value));
+		m_text->SetString(m_prefix + m_grabber->GetValue(value));
 	}
 }

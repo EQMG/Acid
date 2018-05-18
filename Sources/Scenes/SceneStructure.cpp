@@ -61,7 +61,7 @@ namespace fl
 		return result;
 	}
 
-	std::vector<GameObject *> *SceneStructure::QueryBounding(Collider *range, std::vector<GameObject *> *result)
+	std::vector<GameObject *> *SceneStructure::QueryBounding(ICollider *range, std::vector<GameObject *> *result)
 	{
 		for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
 		{

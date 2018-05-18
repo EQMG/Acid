@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Collider.hpp"
+#include "ICollider.hpp"
 
 namespace fl
 {
@@ -8,7 +8,7 @@ namespace fl
 	/// Represents a sphere in a 3d space.
 	/// </summary>
 	class FL_EXPORT ColliderSphere :
-		public Collider
+		public ICollider
 	{
 	public:
 		float m_radius;
@@ -37,21 +37,21 @@ namespace fl
 		/// </summary>
 		~ColliderSphere();
 
-		Collider *Update(const Transform &transform, Collider *destination) override;
-
 		void Load(LoadedValue *value) override;
 
 		void Write(LoadedValue *value) override;
 
-		Vector3 *ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination) override;
+		ICollider *UpdateCollider(const Transform &transform, ICollider *destination) override;
 
-		Intersect Intersects(const Collider &other) override;
+		Vector3 *ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination) override;
+
+		Intersect Intersects(const ICollider &other) override;
 
 		Intersect Intersects(const Ray &ray) override;
 
 		bool InFrustum(const Frustum &frustum) override;
 
-		bool Contains(const Collider &other) override;
+		bool Contains(const ICollider &other) override;
 
 		bool Contains(const Vector3 &point) override;
 

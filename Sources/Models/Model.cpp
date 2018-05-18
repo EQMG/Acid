@@ -1,5 +1,6 @@
 #include "Model.hpp"
 
+#include <cassert>
 #include "Helpers/FileSystem.hpp"
 
 namespace fl
@@ -111,10 +112,10 @@ namespace fl
 			vkCmdBindVertexBuffers(commandBuffer.GetVkCommandBuffer(), 0, 1, vertexBuffers, offsets);
 			vkCmdDraw(commandBuffer.GetVkCommandBuffer(), m_vertexBuffer->GetVertexCount(), instances, 0, 0);
 		}
-		//	else
-		//	{
-		//		assert(false && "Cannot render model, no buffers exist for it!");
-		//	}
+		else
+		{
+			assert(false && "Cannot render model, no buffers exist for it!");
+		}
 	}
 
 	void Model::Set(std::vector<IVertex *> &vertices, std::vector<uint32_t> &indices, const std::string &name)

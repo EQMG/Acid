@@ -89,13 +89,13 @@ namespace fl
 		/// Gets the string of text represented.
 		/// </summary>
 		/// <returns> The string of text. </returns>
-		std::string GetText() const { return m_string; }
+		std::string GetString() const { return m_string; }
 
 		/// <summary>
 		/// Changed the current string in this text.
 		/// </summary>
-		/// <param name="newText"> The new text, </param>
-		void SetText(const std::string &newText);
+		/// <param name="newString"> The new text, </param>
+		void SetString(const std::string &newString);
 
 		/// <summary>
 		/// Gets how the text should justify.

@@ -66,7 +66,7 @@ namespace fl
 
 		// Draws the object.
 		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
-		mesh->GetModel()->CmdRender(commandBuffer, 1);
+		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 
 	void MeshRender::Load(LoadedValue *value)

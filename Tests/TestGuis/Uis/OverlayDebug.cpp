@@ -50,19 +50,19 @@ namespace Demo
 					hour -= 24;
 				}
 
-				m_textTime->SetText("Time: " + std::to_string(hour) + ":" + std::to_string(minute));
+				m_textTime->SetString("Time: " + std::to_string(hour) + ":" + std::to_string(minute));
 			}
 
 			if (Scenes::Get()->GetCamera() != nullptr)
 			{
 				Vector3 *cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
-				m_textPosition->SetText("POS: " + std::to_string(static_cast<int>(cameraPosition->m_x)) + ", " +
+				m_textPosition->SetString("POS: " + std::to_string(static_cast<int>(cameraPosition->m_x)) + ", " +
 					std::to_string(static_cast<int>(cameraPosition->m_y)) + ", " +
 					std::to_string(static_cast<int>(cameraPosition->m_z)));
 			}
 
-			m_textFps->SetText("FPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDeltaRender())));
-			m_textUps->SetText("UPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDelta())));
+			m_textFps->SetString("FPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDeltaRender())));
+			m_textUps->SetString("UPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDelta())));
 		}
 	}
 

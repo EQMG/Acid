@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Collider.hpp"
+#include "ICollider.hpp"
 
 namespace fl
 {
@@ -8,7 +8,7 @@ namespace fl
 	/// A axis-aligned bounding box.
 	/// </summary>
 	class FL_EXPORT ColliderAabb :
-		public Collider
+		public ICollider
 	{
 	public:
 		Vector3 *m_minExtents;
@@ -113,21 +113,21 @@ namespace fl
 		/// <returns> A new aabb, stretched by the specified amounts. </returns>
 		static ColliderAabb *Stretch(const ColliderAabb &source, const float &stretchX, const float &stretchY, const float &stretchZ, ColliderAabb *destination);
 
-		Collider *Update(const Transform &transform, Collider *destination) override;
-
 		void Load(LoadedValue *value) override;
 
 		void Write(LoadedValue *value) override;
 
-		Vector3 *ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination) override;
+		ICollider *UpdateCollider(const Transform &transform, ICollider *destination) override;
 
-		Intersect Intersects(const Collider &other) override;
+		Vector3 *ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination) override;
+
+		Intersect Intersects(const ICollider &other) override;
 
 		Intersect Intersects(const Ray &ray) override;
 
 		bool InFrustum(const Frustum &frustum) override;
 
-		bool Contains(const Collider &other) override;
+		bool Contains(const ICollider &other) override;
 
 		bool Contains(const Vector3 &point) override;
 

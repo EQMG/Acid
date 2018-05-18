@@ -48,7 +48,7 @@ namespace fl
 				if (m_lastKey != key || m_inputDelay->CanInput())
 				{
 					m_value += static_cast<char>(key);
-					m_text->SetText(m_prefix + m_value);
+					m_text->SetString(m_prefix + m_value);
 
 					if (m_actionChange != nullptr)
 					{
@@ -65,7 +65,7 @@ namespace fl
 				if (m_lastKey != 8 || m_inputDelay->CanInput())
 				{
 					m_value = m_value.substr(0, m_value.length() - 1);
-					m_text->SetText(m_prefix + m_value);
+					m_text->SetString(m_prefix + m_value);
 
 					if (m_actionChange != nullptr)
 					{
@@ -131,12 +131,12 @@ namespace fl
 	void UiInputText::SetPrefix(const std::string &prefix)
 	{
 		m_prefix = prefix;
-		m_text->SetText(prefix + m_value);
+		m_text->SetString(prefix + m_value);
 	}
 
 	void UiInputText::SetValue(const std::string &value)
 	{
 		m_value = value;
-		m_text->SetText(m_prefix + value);
+		m_text->SetString(m_prefix + value);
 	}
 }

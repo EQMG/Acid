@@ -12,27 +12,33 @@ namespace fl
 	/// <summary>
 	/// A simple class that represents a physical shape.
 	/// </summary>
-	class FL_EXPORT Collider :
+	class FL_EXPORT ICollider :
 		public Component
 	{
 	public:
 		/// <summary>
 		/// Creates a new collider.
 		/// </summary>
-		Collider();
+		ICollider()
+		{
+		}
 
 		/// <summary>
 		/// Deconstructor for the collider.
 		/// </summary>
-		~Collider();
+		virtual ~ICollider()
+		{
+		}
 
-		void Update() override;
+		void Update() override
+		{
+		}
 
-		void Load(LoadedValue *value) override;
+		virtual void Load(LoadedValue *value) override = 0;
 
-		void Write(LoadedValue *value) override;
+		virtual void Write(LoadedValue *value) override = 0;
 
-		std::string GetName() const override { return "Collider"; };
+		virtual std::string GetName() const override = 0;
 
 		/// <summary>
 		/// Clones this collder into the destination and updates it.
@@ -40,7 +46,7 @@ namespace fl
 		/// <param name="transform"> The amount to transform the object. </param>
 		/// <param name="destination"> The collider to store the new data in. </param>
 		/// <returns> The destination. </returns>
-		virtual Collider *Update(const Transform &transform, Collider *destination) = 0;
+		virtual ICollider *UpdateCollider(const Transform &transform, ICollider *destination) = 0;
 
 		/// <summary>
 		/// Adjusts a movement amount so that after the move is performed, the this collider will not intersect the {@code right}.
@@ -51,14 +57,14 @@ namespace fl
 		/// <param name="positionDelta"> The delta movement for the left collider. </param>
 		/// <param name="destination"> Where the final resolved delta should be stored. </param>
 		/// <returns> The new, adjusted verifyMove delta that guarantees no intersection. </returns>
-		virtual Vector3 *ResolveCollision(const Collider &other, const Vector3 &positionDelta, Vector3 *destination) = 0;
+		virtual Vector3 *ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination) = 0;
 
 		/// <summary>
 		/// Tests whether a shape is intersecting this shape.
 		/// </summary>
 		/// <param name="other"> The other shape being tested for intersection. </param>
 		/// <returns> Data about the calculated shape intersection. </returns>
-		virtual Intersect Intersects(const Collider &other) = 0;
+		virtual Intersect Intersects(const ICollider &other) = 0;
 
 		/// <summary>
 		/// Tests whether a ray is intersecting this shape.
@@ -79,7 +85,7 @@ namespace fl
 		/// </summary>
 		/// <param name="other"> The shape being tested for containment. </param>
 		/// <returns> True if {@code other} is contained by this shape, false otherwise. </returns>
-		virtual bool Contains(const Collider &other) = 0;
+		virtual bool Contains(const ICollider &other) = 0;
 
 		/// <summary>
 		/// Gets if a point is contained in this shape.

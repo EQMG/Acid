@@ -4,7 +4,7 @@
 #include "Maths/Vector3.hpp"
 #include "Objects/Component.hpp"
 #include "Objects/GameObject.hpp"
-#include "Collider.hpp"
+#include "ICollider.hpp"
 
 namespace fl
 {
@@ -17,7 +17,7 @@ namespace fl
 		bool m_useGravity;
 		Constraint3 *m_freezePosition;
 		Constraint3 *m_freezeRotation;
-		Collider *m_colliderCopy;
+		ICollider *m_colliderCopy;
 	public:
 		Rigidbody(const float &mass = 1.0f, const float &drag = 0.0f, const bool &useGravity = true,
 				  const Constraint3 &freezePosition = Constraint3::ZERO, const Constraint3 &freezeRotation = Constraint3::ZERO);
@@ -54,6 +54,6 @@ namespace fl
 
 		void SetFreezeRotation(const Constraint3 &freezeRotation) const { *m_freezeRotation = freezeRotation; }
 
-		Collider *GetCollider() const { return m_colliderCopy; }
+		ICollider *GetCollider() const { return m_colliderCopy; }
 	};
 }
