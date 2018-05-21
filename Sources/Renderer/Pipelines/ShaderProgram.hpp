@@ -14,7 +14,7 @@ namespace glslang
 
 namespace fl
 {
-	class FL_HIDDEN Uniform
+	class FL_EXPORT Uniform
 	{
 	private:
 		std::string m_name;
@@ -70,7 +70,7 @@ namespace fl
 		}
 	};
 
-	class FL_HIDDEN UniformBlock
+	class FL_EXPORT UniformBlock
 	{
 	private:
 		std::string m_name;
@@ -139,7 +139,7 @@ namespace fl
 		}
 	};
 
-	class FL_HIDDEN VertexAttribute
+	class FL_EXPORT VertexAttribute
 	{
 	private:
 		std::string m_name;
@@ -175,7 +175,7 @@ namespace fl
 		}
 	};
 
-	class FL_HIDDEN ShaderProgram
+	class FL_EXPORT ShaderProgram
 	{
 	private:
 		std::vector<Uniform *> *m_uniforms;

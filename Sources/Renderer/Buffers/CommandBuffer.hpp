@@ -22,6 +22,6 @@ namespace fl
 
 		void Begin();
 
-		FL_HIDDEN VkCommandBuffer GetVkCommandBuffer() const { return m_commandBuffer; }
+		VkCommandBuffer GetVkCommandBuffer() const { return m_commandBuffer; }
 	};
 }

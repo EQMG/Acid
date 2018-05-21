@@ -51,7 +51,7 @@ namespace fl
 	public:
 		void Update() override;
 
-		FL_HIDDEN void CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates);
+		void CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates);
 
 		/// <summary>
 		/// Starts a renderpass.
@@ -73,7 +73,7 @@ namespace fl
 		/// <param name="commandBuffer"> The command buffer to use. </param>
 		void NextSubpass(const CommandBuffer &commandBuffer);
 
-		FL_HIDDEN static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
+		static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
 
 		/// <summary>
 		/// Gets the renderer manager.
@@ -93,13 +93,13 @@ namespace fl
 
 		Swapchain *GetSwapchain() const { return m_swapchain; }
 
-		FL_HIDDEN VkCommandPool GetVkCommandPool() const { return m_commandPool; }
+		VkCommandPool GetVkCommandPool() const { return m_commandPool; }
 
 		CommandBuffer *GetCommandBuffer() const { return m_commandBuffer; }
 
-		FL_HIDDEN uint32_t GetVkActiveSwapchainImage() const { return m_activeSwapchainImage; }
+		uint32_t GetVkActiveSwapchainImage() const { return m_activeSwapchainImage; }
 
-		FL_HIDDEN VkPipelineCache GetVkPipelineCache() const { return m_pipelineCache; }
+		VkPipelineCache GetVkPipelineCache() const { return m_pipelineCache; }
 	private:
 		void CreateFences();
 

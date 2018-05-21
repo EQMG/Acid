@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	class FL_HIDDEN Swapchain
+	class FL_EXPORT Swapchain
 	{
 	private:
 		VkPresentModeKHR m_presentMode;

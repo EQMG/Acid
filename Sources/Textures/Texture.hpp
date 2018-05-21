@@ -61,16 +61,16 @@ namespace fl
 		/// <summary>
 		/// A new empty texture object.
 		/// </summary>
-		FL_HIDDEN Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels = nullptr);
+		Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels = nullptr);
 
 		/// <summary>
 		/// Deconstructor for the texture object.
 		/// </summary>
 		~Texture();
 
-		FL_HIDDEN static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
+		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		FL_HIDDEN VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
+		VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
 		std::string GetFilename() override { return m_filename; };
 
@@ -98,15 +98,15 @@ namespace fl
 		/// <param name="numberOfRows"> The number of texture rows. </param>
 		void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
 
-		FL_HIDDEN VkImage GetImage() const { return m_image; }
+		VkImage GetImage() const { return m_image; }
 
-		FL_HIDDEN VkImageView GetImageView() const { return m_imageView; }
+		VkImageView GetImageView() const { return m_imageView; }
 
-		FL_HIDDEN VkSampler GetSampler() const { return m_sampler; }
+		VkSampler GetSampler() const { return m_sampler; }
 
-		FL_HIDDEN static VkDeviceSize LoadSize(const std::string &filepath);
+		static VkDeviceSize LoadSize(const std::string &filepath);
 
-		FL_HIDDEN static VkDeviceSize LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes);
+		static VkDeviceSize LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes);
 
 		static unsigned char *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 
@@ -116,16 +116,16 @@ namespace fl
 
 		static uint32_t GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth);
 
-		FL_HIDDEN static void CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers = 1);
+		static void CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers = 1);
 
-		FL_HIDDEN static void TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
+		static void TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
 
-		FL_HIDDEN static void CopyBufferToImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkBuffer &buffer, const VkImage &image, const uint32_t &layerCount = 1);
+		static void CopyBufferToImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkBuffer &buffer, const VkImage &image, const uint32_t &layerCount = 1);
 
-		FL_HIDDEN static void CreateMipmaps(const VkImage &image, const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
+		static void CreateMipmaps(const VkImage &image, const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
 
-		FL_HIDDEN static void CreateImageSampler(const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler);
+		static void CreateImageSampler(const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler);
 
-		FL_HIDDEN static void CreateImageView(const VkImage &image, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, VkImageView &imageView, const uint32_t &layerCount = 1);
+		static void CreateImageView(const VkImage &image, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, VkImageView &imageView, const uint32_t &layerCount = 1);
 	};
 }
