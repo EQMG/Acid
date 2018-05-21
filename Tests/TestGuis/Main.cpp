@@ -4,7 +4,6 @@
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
-#include <Terrains/LodBehaviour.hpp>
 #include "MainUpdater.hpp"
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
