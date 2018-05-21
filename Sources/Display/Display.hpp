@@ -194,18 +194,14 @@ namespace fl
 		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
 		void SetFullscreen(const bool &fullscreen);
 
-		FL_HIDDEN static std::string StringifyResultVk(const VkResult &result);
+		static std::string StringifyResultVk(const VkResult &result);
 
-		FL_HIDDEN static void ErrorVk(const VkResult &result);
+		static void ErrorVk(const VkResult &result);
 
 		FL_HIDDEN static std::string StringifyResultGlfw(const int &result);
 
 		FL_HIDDEN static void ErrorGlfw(const int &result);
 
-		/// <summary>
-		/// Gets the current GLFW window.
-		/// </summary>
-		/// <returns> The current GLFW window. </returns>
 		FL_HIDDEN GLFWwindow *GetGlfwWindow() const { return m_window; }
 
 		/// <summary>
@@ -238,27 +234,27 @@ namespace fl
 		/// <returns> If the window is minimized. </returns>
 		bool IsIconified() const { return m_iconified; }
 
-		FL_HIDDEN VkInstance GetVkInstance() const { return m_instance; }
+		VkInstance GetVkInstance() const { return m_instance; }
 
-		FL_HIDDEN VkSurfaceKHR GetVkSurface() const { return m_surface; }
+		VkSurfaceKHR GetVkSurface() const { return m_surface; }
 
-		FL_HIDDEN VkSurfaceCapabilitiesKHR GetVkSurfaceCapabilities() const { return m_surfaceCapabilities; }
+		VkSurfaceCapabilitiesKHR GetVkSurfaceCapabilities() const { return m_surfaceCapabilities; }
 
-		FL_HIDDEN VkSurfaceFormatKHR GetVkSurfaceFormat() const { return m_surfaceFormat; }
+		VkSurfaceFormatKHR GetVkSurfaceFormat() const { return m_surfaceFormat; }
 
-		FL_HIDDEN VkDevice GetVkLogicalDevice() const { return m_logicalDevice; }
+		VkDevice GetVkLogicalDevice() const { return m_logicalDevice; }
 
-		FL_HIDDEN VkQueue GetVkQueue() const { return m_queue; }
+		VkQueue GetVkQueue() const { return m_queue; }
 
-		FL_HIDDEN VkPhysicalDevice GetVkPhysicalDevice() const { return m_physicalDevice; }
+		VkPhysicalDevice GetVkPhysicalDevice() const { return m_physicalDevice; }
 
-		FL_HIDDEN VkPhysicalDeviceProperties GetVkPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
+		VkPhysicalDeviceProperties GetVkPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
 
-		FL_HIDDEN VkPhysicalDeviceFeatures GetVkPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
+		VkPhysicalDeviceFeatures GetVkPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
 
-		FL_HIDDEN VkPhysicalDeviceMemoryProperties GetVkPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
+		VkPhysicalDeviceMemoryProperties GetVkPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
 
-		FL_HIDDEN uint32_t GetVkGraphicsFamilyIndex() const { return m_graphicsFamilyIndex; }
+		uint32_t GetVkGraphicsFamilyIndex() const { return m_graphicsFamilyIndex; }
 	private:
 		void CreateGlfw();
 

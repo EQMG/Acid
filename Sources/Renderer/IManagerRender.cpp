@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	IManagerRender::IManagerRender(std::vector<RenderpassCreate *> renderpassCreate)
+	IManagerRender::IManagerRender(const std::vector<RenderpassCreate *> &renderpassCreate)
 	{
 		Renderer::Get()->CreateRenderpass(renderpassCreate);
 	}

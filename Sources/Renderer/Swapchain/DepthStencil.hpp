@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	class FL_HIDDEN DepthStencil :
+	class FL_EXPORT DepthStencil :
 		public IDescriptor
 	{
 	private:

@@ -1,6 +1,7 @@
 #include "Audio.hpp"
 
 #ifdef FL_BUILD_WINDOWS
+#define NOMINMAX
 #include <Windows.h>
 #endif
 #ifdef FL_BUILD_MACOS
