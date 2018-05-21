@@ -180,9 +180,6 @@ set(FLOUNDER_HEADERS_
         "Skyboxes/CelestialBody.hpp"
         "Skyboxes/MaterialSkybox.hpp"
         "Tasks/Tasks.hpp"
-        "Terrains/LodBehaviour.hpp"
-        "Terrains/MaterialTerrain.hpp"
-        "Terrains/MeshTerrain.hpp"
         "Textures/Cubemap.hpp"
         "Textures/Texture.hpp"
         "Uis/UiBound.hpp"
@@ -195,11 +192,6 @@ set(FLOUNDER_HEADERS_
         "Uis/Uis.hpp"
         "Uis/UiSelector.hpp"
         "Uis/UiStartLogo.hpp"
-        "Voxels/MaterialVoxel.hpp"
-        "Voxels/VoxelBlock.hpp"
-        "Voxels/VoxelChunk.hpp"
-        "Waters/MaterialWater.hpp"
-        "Waters/MeshWater.hpp"
         "Worlds/Worlds.hpp"
         )
 
@@ -363,9 +355,6 @@ set(FLOUNDER_SOURCES_
         "Skyboxes/CelestialBody.cpp"
         "Skyboxes/MaterialSkybox.cpp"
         "Tasks/Tasks.cpp"
-        "Terrains/LodBehaviour.cpp"
-        "Terrains/MaterialTerrain.cpp"
-        "Terrains/MeshTerrain.cpp"
         "Textures/Cubemap.cpp"
         "Textures/Texture.cpp"
         "Uis/UiBound.cpp"
@@ -378,11 +367,6 @@ set(FLOUNDER_SOURCES_
         "Uis/Uis.cpp"
         "Uis/UiSelector.cpp"
         "Uis/UiStartLogo.cpp"
-        "Voxels/MaterialVoxel.cpp"
-        "Voxels/VoxelBlock.cpp"
-        "Voxels/VoxelChunk.cpp"
-        "Waters/MaterialWater.cpp"
-        "Waters/MeshWater.cpp"
         "Worlds/Worlds.cpp"
         )
 

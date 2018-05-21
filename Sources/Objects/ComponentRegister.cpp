@@ -10,9 +10,6 @@
 #include "Shadows/ShadowRender.hpp"
 #include "Skyboxes/CelestialBody.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
-#include "Terrains/MaterialTerrain.hpp"
-#include "Voxels/MaterialVoxel.hpp"
-#include "Waters/MaterialWater.hpp"
 
 namespace fl
 {
@@ -25,9 +22,6 @@ namespace fl
 		RegisterComponent<Light>("Light");
 		RegisterComponent<MaterialDefault>("MaterialDefault");
 		RegisterComponent<MaterialSkybox>("MaterialSkybox");
-		RegisterComponent<MaterialTerrain>("MaterialTerrain");
-		RegisterComponent<MaterialVoxel>("MaterialVoxel");
-		RegisterComponent<MaterialWater>("MaterialWater");
 		RegisterComponent<Mesh>("Mesh");
 		RegisterComponent<MeshAnimated>("MeshAnimated");
 		RegisterComponent<MeshRender>("MeshRender");
