@@ -16,6 +16,8 @@ namespace fl
 	private:
 		std::string m_filename;
 		Pipeline *m_pipeline;
+
+		UniformHandler *m_uniformScene;
 	public:
 		static PipelineMaterial *Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines)
 		{
@@ -39,6 +41,7 @@ namespace fl
 
 		Pipeline *GetPipeline() const { return m_pipeline; }
 
+		UniformHandler *GetUniformScene() const { return m_uniformScene; }
 	private:
 		static std::string ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines);
 	};

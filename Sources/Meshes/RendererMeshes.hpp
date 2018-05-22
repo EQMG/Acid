@@ -10,7 +10,6 @@ namespace fl
 		public IRenderer
 	{
 	private:
-		UniformHandler *m_uniformScene;
 	public:
 		RendererMeshes(const GraphicsStage &graphicsStage);
 
