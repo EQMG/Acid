@@ -5,7 +5,7 @@
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
 
-namespace Demo
+namespace test
 {
 	const float ManagerUis::SLIDE_TIME = 0.2f;
 

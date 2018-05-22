@@ -4,7 +4,7 @@
 
 using namespace fl;
 
-namespace Demo
+namespace test
 {
 	class UiInventory :
 		public UiObject

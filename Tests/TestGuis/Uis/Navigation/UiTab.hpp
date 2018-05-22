@@ -7,7 +7,7 @@
 
 using namespace fl;
 
-namespace Demo
+namespace test
 {
 	class UiTab :
 		public UiObject

@@ -7,7 +7,7 @@
 #include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 
-namespace Demo
+namespace test
 {
 	Scene1::Scene1() :
 		Scene(new FpsCamera(), new ManagerUis()),

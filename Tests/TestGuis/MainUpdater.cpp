@@ -3,7 +3,7 @@
 #include <Engine/Engine.hpp>
 #include <Maths/Maths.hpp>
 
-namespace Demo
+namespace test
 {
 	MainUpdater::MainUpdater() :
 		IUpdater(),

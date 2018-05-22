@@ -3,7 +3,7 @@
 #include <Maths/Visual/DriverConstant.hpp>
 #include "UiNavigation.hpp"
 
-namespace Demo
+namespace test
 {
 	UiTab::UiTab(UiObject *parent, UiObject *content, const UiBound &rectangle, const std::string &name, const Colour &colour) :
 		UiObject(parent, rectangle),

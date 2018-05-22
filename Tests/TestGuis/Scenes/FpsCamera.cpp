@@ -4,7 +4,7 @@
 #include <Inputs/Mouse.hpp>
 #include <Maths/Maths.hpp>
 
-namespace Demo
+namespace test
 {
 	const float FpsCamera::NEAR_PLANE = 0.1f;
 	const float FpsCamera::FAR_PLANE = 10000.0f;

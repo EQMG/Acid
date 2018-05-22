@@ -6,7 +6,7 @@
 
 using namespace fl;
 
-namespace Demo
+namespace test
 {
 	class ContentExit :
 		public UiObject

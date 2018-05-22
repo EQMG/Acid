@@ -3,7 +3,7 @@
 #include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
 
-namespace Demo
+namespace test
 {
 	RenderpassCreate *RENDERPASS_0_CREATE = new RenderpassCreate
 		{
