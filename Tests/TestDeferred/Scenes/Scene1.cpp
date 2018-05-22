@@ -15,7 +15,7 @@
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 
-namespace Demo
+namespace test
 {
 	Scene1::Scene1() :
 		Scene(new FpsCamera(), new ManagerUis()),

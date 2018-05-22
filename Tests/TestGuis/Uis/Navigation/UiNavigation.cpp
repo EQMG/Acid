@@ -5,7 +5,7 @@
 #include <Events/EventTime.hpp>
 #include "ContentExit.hpp"
 
-namespace Demo
+namespace test
 {
 	const std::vector<std::pair<std::string, Colour>> TABS = {
 		{"Play",         Colour("#B8312F")},

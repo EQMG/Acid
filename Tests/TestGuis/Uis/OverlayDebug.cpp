@@ -5,7 +5,7 @@
 #include <Scenes/Scenes.hpp>
 #include <Guis/Gui.hpp>
 
-namespace Demo
+namespace test
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),

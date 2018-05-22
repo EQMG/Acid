@@ -5,7 +5,7 @@
 
 using namespace fl;
 
-namespace Demo
+namespace test
 {
 	class Scene1 :
 		public Scene

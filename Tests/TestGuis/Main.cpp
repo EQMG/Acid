@@ -8,7 +8,7 @@
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
 
-using namespace Demo;
+using namespace test;
 using namespace fl;
 
 //#if (FL_BUILD_RELEASE && FL_BUILD_WINDOWS)
