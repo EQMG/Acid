@@ -23,6 +23,6 @@ namespace fl
 		/// <summary>
 		/// Renders the post pipeline.
 		/// </summary>
-		virtual void RenderPipeline(const CommandBuffer &commandBuffer);
+		virtual void Render(const CommandBuffer &commandBuffer) = 0;
 	};
 }

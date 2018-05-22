@@ -1,10 +1,10 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(set = 0, binding = 0) uniform UboScreen 
+layout(set = 0, binding = 0) uniform UboScene
 {
 	float strength;
-} screen;
+} scene;
 
 layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
 
@@ -18,8 +18,8 @@ void main()
 {
 	vec4 textureColour = texture(samplerColour, fragmentUv);
 
-	float x = (fragmentUv.x + 4.0) * (fragmentUv.y + 4.0) * 10.0;
-	vec4 grain = vec4(mod((mod(x, 13.0) + 1.0) * (mod(x, 123.0) + 1.0), 0.01) - 0.005) * screen.strength;
+	float x = (fragmentUv.x + 4.0f) * (fragmentUv.y + 4.0f) * 10.0f;
+	vec4 grain = vec4(mod((mod(x, 13.0f) + 1.0f) * (mod(x, 123.0f) + 1.0f), 0.01f) - 0.005f) * scene.strength;
 
 	outColour = textureColour + grain;
 	

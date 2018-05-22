@@ -2,6 +2,7 @@
 
 #include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
+#include <Worlds/Worlds.hpp>
 
 namespace Demo
 {
@@ -37,12 +38,13 @@ namespace Demo
 		m_infinity(Vector4(0.0f, 1.0f, 0.0f, +INFINITY)),
 		m_rendererShadows(new RendererShadows({0, 0})),
 		m_rendererMeshes(new RendererMeshes({1, 0})),
-		//	m_rendererParticles(new RendererParticles({1, 0})),
+		//m_rendererParticles(new RendererParticles({1, 0})),
 		m_rendererDeferred(new RendererDeferred({1, 1})),
 		m_filterFxaa(new FilterFxaa({1, 2})),
 		m_filterLensflare(new FilterLensflare({1, 2})),
 		m_filterTiltshift(new FilterTiltshift({1, 2})),
 		m_filterGrain(new FilterGrain({1, 2})),
+		m_pipelineGaussian(new PipelineGaussian({1, 2})),
 		m_rendererGuis(new RendererGuis({1, 2})),
 		m_rendererFonts(new RendererFonts({1, 2}))
 	{
@@ -60,6 +62,7 @@ namespace Demo
 		delete m_filterLensflare;
 		delete m_filterTiltshift;
 		delete m_filterGrain;
+		delete m_pipelineGaussian;
 		delete m_rendererGuis;
 		delete m_rendererFonts;
 	}
@@ -116,14 +119,14 @@ namespace Demo
 		Renderer::Get()->NextSubpass(*commandBuffer);
 
 		// Subpass 2.
-#ifndef FL_BUILD_MACOS
 		m_filterFxaa->Render(*commandBuffer);
-//		m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
-//		m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
-//		m_filterLensflare->Render(*commandBuffer);
-//		m_filterTiltshift->Render(*commandBuffer);
-//		m_filterGrain->Render(*commandBuffer);
-#endif
+	//	m_filterLensflare->SetSunPosition(*Worlds::Get()->GetSunPosition());
+	//	m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
+	//	m_filterLensflare->Render(*commandBuffer);
+	//	m_filterTiltshift->Render(*commandBuffer);
+	//	m_filterGrain->Render(*commandBuffer);
+	//	m_pipelineGaussian->Render(*commandBuffer);
+
 		m_rendererGuis->Render(*commandBuffer, m_infinity, *camera);
 		m_rendererFonts->Render(*commandBuffer, m_infinity, *camera);
 

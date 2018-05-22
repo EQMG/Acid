@@ -520,8 +520,8 @@ namespace fl
 		applicationInfo.pApplicationName = m_title.c_str();
 		applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
 		applicationInfo.pEngineName = "Flounder";
-		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 7, 0);
-		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 65);
+		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 9, 2);
+		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 72);
 
 		VkInstanceCreateInfo instanceCreateInfo = {};
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
