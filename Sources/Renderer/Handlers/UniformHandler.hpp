@@ -10,12 +10,13 @@ namespace fl
 	class FL_EXPORT UniformHandler
 	{
 	private:
+		bool m_multipipeline;
 		UniformBlock *m_uniformBlock;
 		UniformBuffer *m_uniformBuffer;
 		void *m_data;
 		bool m_changed;
 	public:
-		UniformHandler();
+		UniformHandler(const bool &multipipeline = false);
 
 		~UniformHandler();
 

@@ -9,6 +9,7 @@
 #include <Post/Filters/FilterGrain.hpp>
 #include <Post/Filters/FilterLensflare.hpp>
 #include <Post/Filters/FilterTiltshift.hpp>
+#include <Post/Pipelines/PipelineGaussian.hpp>
 #include <Renderer/IManagerRender.hpp>
 #include <Shadows/RendererShadows.hpp>
 
@@ -32,6 +33,7 @@ namespace Demo
 		FilterLensflare *m_filterLensflare;
 		FilterTiltshift *m_filterTiltshift;
 		FilterGrain *m_filterGrain;
+		PipelineGaussian *m_pipelineGaussian;
 		RendererGuis *m_rendererGuis;
 		RendererFonts *m_rendererFonts;
 	public:

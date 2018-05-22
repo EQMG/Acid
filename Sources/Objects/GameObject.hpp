@@ -10,12 +10,12 @@ namespace fl
 {
 	class FL_EXPORT GameObject
 	{
-	protected:
+	private:
 		std::string m_name;
 		Transform *m_transform;
-	private:
 		std::vector<Component *> *m_components;
 		ISpatialStructure *m_structure;
+		GameObject *m_parent;
 		bool m_removed;
 	public:
 		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr, const std::string &name = "Unnamed");
@@ -84,6 +84,10 @@ namespace fl
 		ISpatialStructure *GetStructure() const { return m_structure; }
 
 		bool GetRemoved() const { return m_removed; }
+
+		GameObject *GetParent() const { return m_parent; }
+
+		void SetParent(GameObject *parent) { m_parent = parent; }
 
 		void StructureSwitch(ISpatialStructure *structure);
 

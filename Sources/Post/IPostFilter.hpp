@@ -19,10 +19,10 @@ namespace fl
 		/// <summary>
 		/// Creates a new post effect filter
 		/// </summary>
-		/// <param name="fragmentShader"> The fragment shader file. </param>
+		/// <param name="shaderStages"> The pipelines shader stages. </param>
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
 		/// <param name="defines"> A list of names that will be added as a #define. </param>
-		IPostFilter(const std::string &fragmentShader, const GraphicsStage &graphicsStage, const std::vector<PipelineDefine> &defines = std::vector<PipelineDefine>());
+		IPostFilter(const std::vector<std::string> &shaderStages, const GraphicsStage &graphicsStage, const std::vector<PipelineDefine> &defines = {});
 
 		/// <summary>
 		/// Deconstructor for the post filter.
@@ -32,7 +32,7 @@ namespace fl
 		/// <summary>
 		/// Renders the filter.
 		/// </summary>
-		virtual void Render(const CommandBuffer &commandBuffer);
+		virtual void Render(const CommandBuffer &commandBuffer) = 0;
 
 		DescriptorsHandler *GetDescriptorSet() const { return m_descriptorSet; }
 
