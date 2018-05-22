@@ -2,7 +2,8 @@
 
 namespace fl
 {
-	UniformHandler::UniformHandler() :
+	UniformHandler::UniformHandler(const bool &multipipeline) :
+		m_multipipeline(multipipeline),
 		m_uniformBlock(nullptr),
 		m_uniformBuffer(nullptr),
 		m_data(nullptr),
@@ -18,7 +19,7 @@ namespace fl
 
 	bool UniformHandler::Update(UniformBlock *uniformBlock)
 	{
-		if (m_uniformBlock != uniformBlock)
+		if ((m_multipipeline && m_uniformBlock == nullptr) || (!m_multipipeline && m_uniformBlock != uniformBlock))
 		{
 			free(m_data);
 			delete m_uniformBuffer;

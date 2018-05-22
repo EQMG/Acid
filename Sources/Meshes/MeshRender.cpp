@@ -1,7 +1,5 @@
 #include "MeshRender.hpp"
 
-#include "Scenes/Scenes.hpp"
-
 namespace fl
 {
 	MeshRender::MeshRender() :
@@ -26,15 +24,11 @@ namespace fl
 			return;
 		}
 
-		auto uniformScene = material->GetMaterial()->GetUniformScene();
-		uniformScene->Push("projection", *Scenes::Get()->GetCamera()->GetProjectionMatrix());
-		uniformScene->Push("view", *Scenes::Get()->GetCamera()->GetViewMatrix());
-
 		// Updates uniforms.
 		material->PushUniforms(m_uniformObject);
 	}
 
-	void MeshRender::CmdRender(const CommandBuffer &commandBuffer)
+	void MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler *uniformScene)
 	{
 		// Checks if the mesh is in view.
 		/*auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
@@ -60,7 +54,7 @@ namespace fl
 		material->GetMaterial()->GetPipeline()->BindPipeline(commandBuffer);
 
 		// Updates descriptors.
-		m_descriptorSet->Push("UboScene", material->GetMaterial()->GetUniformScene());
+		m_descriptorSet->Push("UboScene", uniformScene);
 		m_descriptorSet->Push("UboObject", m_uniformObject);
 		material->PushDescriptors(m_descriptorSet);
 		bool descriptorsSet = m_descriptorSet->Update(*material->GetMaterial()->GetPipeline());
