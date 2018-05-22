@@ -23,7 +23,7 @@ namespace fl
 			switch (image.GetType())
 			{
 			case ATTACHMENT_IMAGE:
-				clearValue.color = {*image.GetClearColour().m_elements};
+				clearValue.color = {{image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a}};
 				m_imageAttachments++;
 				break;
 			case ATTACHMENT_DEPTH:
