@@ -32,7 +32,7 @@ namespace fl
 
 		virtual void PushDescriptors(DescriptorsHandler *descriptorSet) = 0;
 
-		virtual std::string GetName() const override { return "IMaterial"; };
+		virtual std::string GetName() const override = 0;
 
 		virtual PipelineMaterial *GetMaterial() const = 0;
 	};

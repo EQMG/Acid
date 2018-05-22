@@ -6,13 +6,15 @@ namespace fl
 {
 	PipelineMaterial::PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines) :
 		m_filename(ToFilename(graphicsStage, pipelineCreate, defines)),
-		m_pipeline(new Pipeline(graphicsStage, pipelineCreate, defines))
+		m_pipeline(new Pipeline(graphicsStage, pipelineCreate, defines)),
+		m_uniformScene(new UniformHandler())
 	{
 	}
 
 	PipelineMaterial::~PipelineMaterial()
 	{
 		delete m_pipeline;
+		delete m_uniformScene;
 	}
 
 	std::string PipelineMaterial::ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines)
