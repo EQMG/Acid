@@ -7,22 +7,27 @@
 namespace fl
 {
 	RendererMeshes::RendererMeshes(const GraphicsStage &graphicsStage) :
-		IRenderer()
+		IRenderer(),
+		m_uniformScene(new UniformHandler(true))
 	{
 	}
 
 	RendererMeshes::~RendererMeshes()
 	{
+		delete m_uniformScene;
 	}
 
 	void RendererMeshes::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
+		m_uniformScene->Push("projection", *camera.GetProjectionMatrix());
+		m_uniformScene->Push("view", *camera.GetViewMatrix());
+
 		std::vector<MeshRender *> renderList = std::vector<MeshRender *>();
 		Scenes::Get()->GetStructure()->QueryComponents<MeshRender>(&renderList);
 
 		for (auto meshRender : renderList)
 		{
-			meshRender->CmdRender(commandBuffer);
+			meshRender->CmdRender(commandBuffer, m_uniformScene);
 		}
 	}
 }
