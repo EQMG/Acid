@@ -38,7 +38,7 @@ namespace fl
 	{
 	private:
 		GraphicsStage m_graphicsStage;
-		PipelineCreate m_pipelineCreateInfo;
+		PipelineCreate m_pipelineCreate;
 		std::vector<PipelineDefine> m_defines;
 		ShaderProgram *m_shaderProgram;
 
@@ -64,9 +64,9 @@ namespace fl
 		/// Creates a new pipeline.
 		/// </summary>
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
-		/// <param name="pipelineCreateInfo"> The pipelines creation info. </param>
+		/// <param name="pipelineCreate"> The pipelines creation info. </param>
 		/// <param name="defines"> A list of names that will be added as a #define. </param>
-		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<PipelineDefine> &defines = std::vector<PipelineDefine>());
+		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines = {});
 
 		/// <summary>
 		/// Deconstructor for the pipeline.
@@ -75,7 +75,7 @@ namespace fl
 
 		void BindPipeline(const CommandBuffer &commandBuffer) const;
 
-		PipelineCreate GetPipelineCreateInfo() const { return m_pipelineCreateInfo; }
+		PipelineCreate GetPipelineCreate() const { return m_pipelineCreate; }
 
 		ShaderProgram *GetShaderProgram() const { return m_shaderProgram; }
 

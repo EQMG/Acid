@@ -51,13 +51,13 @@ matrix:
     - sudo apt-get -qq update
     - sudo apt-get install --allow-unauthenticated libglfw3 libglfw3-dev
     - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-5.0 100
-  - os: osx
-    osx_image: xcode9
-    sudo: required
-    language: cpp
-    compiler: clang
-    env:
-    - COMPILER=clang++
+#  - os: osx
+#    osx_image: xcode9
+#    sudo: required
+#    language: cpp
+#    compiler: clang
+#    env:
+#    - COMPILER=clang++
 
 script:
 - cd $TRAVIS_BUILD_DIR

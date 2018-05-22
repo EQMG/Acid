@@ -9,8 +9,4 @@ namespace fl
 	IPostPipeline::~IPostPipeline()
 	{
 	}
-
-	void IPostPipeline::RenderPipeline(const CommandBuffer &commandBuffer)
-	{
-	}
 }

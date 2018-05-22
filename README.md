@@ -4,11 +4,13 @@
 
 [![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Flounder/issues)
 
-Flounder is a high speed, modular Vulkan game engine written in C++17 providing multiple features such as cross platform support.
+Flounder is a high speed, modular, light game framework written in C++17 providing multiple features such as cross-platform support.
+
+The Vulkan API is used as the only rendering API; therefore, Vulkan structs and commands can be used directly in games. Flounder allows for direct usage of Vulkan API calls but provides more than enough function to where this type of usage can be avoided.
 
 Features are broken down into modules, modules can be added or removed from Flounder with ease, and modules are easy to create. Vulkan is the only supported rendering API; however, APIs like Molten are supported through libraries, eventually, OpenGL and DirectX will be supported in this way.
 
-Flounder is licenced under MIT, we are open to contributions use the 'Developer Setup' section in the README to get started with Flounder, and if you want to know about our code style read GUIDELINES.
+Flounder is licensed under MIT, we are open to contributions use the 'Developer Setup' section in the README to get started with Flounder, and if you want to know about our code style read GUIDELINES.
 
 ## Builds
 Windows   [![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt78wov7o?svg=true)](https://ci.appveyor.com/project/Mattparks/flounder)
@@ -40,7 +42,6 @@ This is a list of current features in Flounder:
  * Normal, material, glow, and sway maps
  * Post effects (Lensflare, Glow, Blur, SSAO, ...)
  * GUI / text rendering
- * Simple terrain, water, and voxels
  * Particle effects system
  * Skyboxes and fog
  * Resource management
@@ -56,7 +57,8 @@ This is a list of current features in Flounder:
  * GameObjects and component system
  * Visual drivers and maths classes
  * Flexible input classes
- * Simple physics engine (WIP)
+ * C# generated files
+ * Physics engine (WIP)
  * P2P networking (WIP)
  * Steam integration (WIP)
  * Resource packaging (WIP)

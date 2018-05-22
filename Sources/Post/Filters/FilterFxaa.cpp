@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage) :
-		IPostFilter("Resources/Shaders/Filters/Fxaa.frag", graphicsStage, {}),
+		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Fxaa.frag"}, graphicsStage, {}),
 		m_uniformScene(new UniformHandler()),
 		m_spanMax(8.0f)
 	{
@@ -30,9 +30,10 @@ namespace fl
 			return;
 		}
 
-		// Draws the object.
+		// Binds the pipeline.
 		m_pipeline->BindPipeline(commandBuffer);
 
+		// Draws the object.
 		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
