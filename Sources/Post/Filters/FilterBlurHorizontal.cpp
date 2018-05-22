@@ -1,23 +1,27 @@
-#include "FilterDarken.hpp"
+#include "FilterBlurHorizontal.hpp"
 
 namespace fl
 {
-	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Darken.frag"}, graphicsStage, {}),
+	FilterBlurHorizontal::FilterBlurHorizontal(const GraphicsStage &graphicsStage, const float &scale) :
+		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/BlurHorizontal.frag"}, graphicsStage, {}),
 		m_uniformScene(new UniformHandler()),
-		m_factor(0.5f)
+		m_scale(scale),
+		m_width(0.0f)
 	{
 	}
 
-	FilterDarken::~FilterDarken()
+	FilterBlurHorizontal::~FilterBlurHorizontal()
 	{
 		delete m_uniformScene;
 	}
 
-	void FilterDarken::Render(const CommandBuffer &commandBuffer)
+	void FilterBlurHorizontal::Render(const CommandBuffer &commandBuffer)
 	{
+		m_width = Display::Get()->GetHeight();
+
 		// Updates uniforms.
-		m_uniformScene->Push("factor", m_factor);
+		m_uniformScene->Push("width", m_width);
+		m_uniformScene->Push("scale", m_scale);
 
 		// Updates descriptors.
 		m_descriptorSet->Push("UboScene", m_uniformScene);
@@ -30,9 +34,10 @@ namespace fl
 			return;
 		}
 
-		// Draws the object.
+		// Binds the pipeline.
 		m_pipeline->BindPipeline(commandBuffer);
 
+		// Draws the object.
 		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}

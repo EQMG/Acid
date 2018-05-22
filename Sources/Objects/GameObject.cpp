@@ -10,6 +10,7 @@ namespace fl
 		m_transform(new Transform(transform)),
 		m_components(new std::vector<Component *>()),
 		m_structure(structure),
+		m_parent(nullptr),
 		m_removed(false)
 	{
 		if (m_structure == nullptr)

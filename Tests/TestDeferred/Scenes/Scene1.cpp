@@ -71,7 +71,7 @@ namespace Demo
 				sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<MaterialDefault>(Colour("#ffffff"), Texture::Resource("Resources/Entities/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Resources/Entities/Testing/Material.png"), Texture::Resource("Resources/Entities/Testing/Normal.png"));
-			//	sphere->AddComponent<MeshRender>();
+				sphere->AddComponent<MeshRender>();
 			//	sphere->AddComponent<ShadowRender>();
 			}
 		}

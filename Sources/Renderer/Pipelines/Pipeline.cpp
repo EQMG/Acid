@@ -10,9 +10,9 @@ namespace fl
 		VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR
 	};
 
-	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreateInfo, const std::vector<PipelineDefine> &defines) :
+	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines) :
 		m_graphicsStage(graphicsStage),
-		m_pipelineCreateInfo(pipelineCreateInfo),
+		m_pipelineCreate(pipelineCreate),
 		m_defines(defines),
 		m_shaderProgram(new ShaderProgram()),
 		m_modules(std::vector<VkShaderModule>()),
@@ -40,7 +40,7 @@ namespace fl
 		CreatePipelineLayout();
 		CreateAttributes();
 
-		switch (pipelineCreateInfo.GetMode())
+		switch (pipelineCreate.GetMode())
 		{
 		case PIPELINE_MODE_POLYGON:
 			CreatePipelinePolygon();
@@ -62,7 +62,7 @@ namespace fl
 #if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();
 		//	printf("%s", m_shaderProgram->ToString().c_str());
-		printf("Pipeline '%s' created in %fms\n", m_pipelineCreateInfo.GetShaderStages().back().c_str(), debugEnd - debugStart);
+		printf("Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -228,7 +228,7 @@ namespace fl
 			defineBlock += "#define " + define.GetName() + " " + define.GetValue() + "\n";
 		}
 
-		for (auto type : m_pipelineCreateInfo.GetShaderStages())
+		for (auto type : m_pipelineCreate.GetShaderStages())
 		{
 			auto shaderCode = ShaderProgram::InsertDefineBlock(FileSystem::ReadTextFile(type), defineBlock);
 
@@ -367,8 +367,8 @@ namespace fl
 		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		m_rasterizationState.depthClampEnable = VK_FALSE;
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
-		m_rasterizationState.polygonMode = static_cast<VkPolygonMode>(m_pipelineCreateInfo.GetPolygonMode());
-		m_rasterizationState.cullMode = static_cast<VkCullModeFlags>(m_pipelineCreateInfo.GetCullModeF());
+		m_rasterizationState.polygonMode = static_cast<VkPolygonMode>(m_pipelineCreate.GetPolygonMode());
+		m_rasterizationState.cullMode = static_cast<VkCullModeFlags>(m_pipelineCreate.GetCullModeF());
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
 		m_rasterizationState.depthBiasConstantFactor = 0.0f;
@@ -437,12 +437,12 @@ namespace fl
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.GetVertexInput().GetBindingDescriptions().size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreateInfo.GetVertexInput().GetBindingDescriptions().data();
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreate.GetVertexInput().GetBindingDescriptions().size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreate.GetVertexInput().GetBindingDescriptions().data();
 		//vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_shaderProgram->GetAttributeDescriptions()->size());
 		//vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_shaderProgram->GetAttributeDescriptions()->data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreateInfo.GetVertexInput().GetAttributeDescriptions().size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreateInfo.GetVertexInput().GetAttributeDescriptions().data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreate.GetVertexInput().GetAttributeDescriptions().size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreate.GetVertexInput().GetAttributeDescriptions().data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;

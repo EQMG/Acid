@@ -8,7 +8,7 @@ namespace fl
 {
 	RendererMeshes::RendererMeshes(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_uniformScene(new UniformHandler())
+		m_uniformScene(new UniformHandler(true))
 	{
 	}
 
