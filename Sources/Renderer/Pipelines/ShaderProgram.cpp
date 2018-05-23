@@ -8,7 +8,8 @@
 
 namespace fl
 {
-	ShaderProgram::ShaderProgram() :
+	ShaderProgram::ShaderProgram(const std::string &name) :
+		m_name(name),
 		m_uniforms(new std::vector<Uniform *>()),
 		m_uniformBlocks(new std::vector<UniformBlock *>()),
 		m_vertexAttributes(new std::vector<VertexAttribute *>()),

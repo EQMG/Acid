@@ -14,7 +14,7 @@ namespace fl
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreate(pipelineCreate),
 		m_defines(defines),
-		m_shaderProgram(new ShaderProgram()),
+		m_shaderProgram(new ShaderProgram(pipelineCreate.GetShaderStages().back())),
 		m_modules(std::vector<VkShaderModule>()),
 		m_stages(std::vector<VkPipelineShaderStageCreateInfo>()),
 		m_descriptorSetLayout(VK_NULL_HANDLE),

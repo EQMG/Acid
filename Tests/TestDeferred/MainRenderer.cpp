@@ -124,7 +124,7 @@ namespace test
 	//	m_filterLensflare->SetSunHeight(Worlds::Get()->GetSunHeight());
 	//	m_filterLensflare->Render(*commandBuffer);
 	//	m_filterTiltshift->Render(*commandBuffer);
-	//	m_filterGrain->Render(*commandBuffer);
+		m_filterGrain->Render(*commandBuffer);
 	//	m_pipelineGaussian->Render(*commandBuffer);
 
 		m_rendererGuis->Render(*commandBuffer, m_infinity, *camera);
