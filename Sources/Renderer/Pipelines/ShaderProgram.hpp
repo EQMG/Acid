@@ -178,6 +178,7 @@ namespace fl
 	class FL_EXPORT ShaderProgram
 	{
 	private:
+		std::string m_name;
 		std::vector<Uniform *> *m_uniforms;
 		std::vector<UniformBlock *> *m_uniformBlocks;
 		std::vector<VertexAttribute *> *m_vertexAttributes;
@@ -185,7 +186,7 @@ namespace fl
 		std::vector<DescriptorType> *m_descriptors;
 		std::vector<VkVertexInputAttributeDescription> *m_attributeDescriptions;
 	public:
-		ShaderProgram();
+		ShaderProgram(const std::string &name);
 
 		~ShaderProgram();
 
@@ -199,6 +200,8 @@ namespace fl
 		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
 
 	public:
+		std::string GetName() const { return m_name; }
+
 		void ProcessShader();
 
 		VkFormat GlTypeToVk(const int &type);
