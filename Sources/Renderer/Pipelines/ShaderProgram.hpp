@@ -185,6 +185,8 @@ namespace fl
 
 		std::vector<DescriptorType> *m_descriptors;
 		std::vector<VkVertexInputAttributeDescription> *m_attributeDescriptions;
+
+		std::vector<std::string> m_notFoundNames;
 	public:
 		ShaderProgram(const std::string &name);
 
@@ -192,15 +194,9 @@ namespace fl
 
 		void LoadProgram(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag);
 
-	private:
-		void LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
-
-		void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
-
-		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
-
-	public:
 		std::string GetName() const { return m_name; }
+
+		bool ReportedNotFound(const std::string &name, const bool &reportIfFound);
 
 		void ProcessShader();
 
@@ -223,5 +219,11 @@ namespace fl
 		static VkShaderStageFlagBits GetShaderStage(const std::string &filename);
 
 		std::string ToString() const;
+	private:
+		void LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
+
+		void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
+
+		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
 	};
 }

@@ -14,23 +14,6 @@ namespace fl
 {
 	class DepthStencil;
 
-	class FL_EXPORT PipelineDefine
-	{
-	private:
-		std::string m_name;
-		std::string m_value;
-	public:
-		PipelineDefine(const std::string &name, const std::string &value) :
-			m_name(name),
-			m_value(value)
-		{
-		}
-
-		std::string GetName() const { return m_name; }
-
-		std::string GetValue() const { return m_value; }
-	};
-
 	/// <summary>
 	/// Class that represents a Vulkan pipeline.
 	/// </summary>

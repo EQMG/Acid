@@ -29,67 +29,69 @@ namespace fl
 			return;
 		}
 
-		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
-		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n", true);
-
-		int bracketLevel = -1;
-		std::string content;
-		JsonSection *loadedParent = new JsonSection(nullptr, "", "");
-		JsonSection *currentSection = loadedParent;
-
-		for (auto &line : lines)
-		{
-			for (auto &c : line)
-			{
-				if (c == '{' || c == '[')
-				{
-					bracketLevel++;
-
-					if (bracketLevel == 0)
-					{
-						continue;
-					}
-
-					std::string name;
-
-					if (!content.empty())
-					{
-						auto contentSplit = FormatString::Split(content, "\"");
-
-						if ((int) contentSplit.size() - 2 >= 0)
-						{
-							name = contentSplit.at(contentSplit.size() - 2);
-						}
-					}
-
-					content.clear();
-
-					auto section = new JsonSection(currentSection, name, "");
-					currentSection->GetChildren().push_back(section);
-					currentSection = section;
-				}
-				else if (c == '}' || c == ']')
-				{
-					currentSection = currentSection->GetParent();
-					bracketLevel--;
-					content.clear();
-				}
-				else
-				{
-					content += c;
-					currentSection->SetContent(currentSection->GetContent() + c);
-				}
-			}
-		}
-
 		for (auto child : *m_parent->GetChildren())
 		{
 			delete child;
 		}
 
 		m_parent->GetChildren()->clear();
-		JsonSection::Convert(loadedParent, m_parent, true);
-		delete loadedParent;
+
+		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
+		JsonSection *currentSection = nullptr;
+		std::string summation;
+
+		printf("%s:\n", m_filename.c_str());
+
+		for (auto &c : fileLoaded)
+		{
+			if (c == '{' || c == '[')
+			{
+				if (currentSection == nullptr)
+				{
+					currentSection = new JsonSection(nullptr, "", "");
+					continue;
+				}
+
+				std::string name;
+
+				if (!summation.empty())
+				{
+					auto contentSplit = FormatString::Split(summation, "\"");
+
+					if ((int) contentSplit.size() - 2 >= 0)
+					{
+						name = contentSplit.at(contentSplit.size() - 2);
+					}
+				}
+
+				currentSection->SetContent(currentSection->GetContent() + summation);
+				summation.clear();
+
+				auto section = new JsonSection(currentSection, name, "");
+				currentSection->AddChild(section);
+				currentSection = section;
+			}
+			else if (c == '}' || c == ']')
+			{
+				currentSection->SetContent(currentSection->GetContent() + summation);
+				summation.clear();
+
+				if (currentSection->GetParent() != nullptr)
+				{
+					currentSection = currentSection->GetParent();
+				}
+			}
+			else if (c == '\n')
+			{
+			}
+			else
+			{
+				summation += c;
+			}
+		}
+
+		JsonSection::Convert(currentSection, m_parent, true);
+		delete currentSection;
 
 #if FL_VERBOSE
 		const auto debugEnd = Engine::Get()->GetTimeMs();

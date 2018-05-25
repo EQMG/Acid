@@ -14,7 +14,6 @@ namespace fl
 		ShaderProgram *m_shaderProgram;
 		DescriptorSet *m_descriptorSet;
 		std::vector<IDescriptor *> *m_descriptors;
-		std::vector<std::string> m_notFoundNames;
 		bool m_changed;
 	public:
 		DescriptorsHandler();

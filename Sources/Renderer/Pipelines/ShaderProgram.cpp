@@ -1,5 +1,6 @@
 #include "ShaderProgram.hpp"
 
+#include <algorithm>
 #include <SPIRV/GlslangToSpv.h>
 #include "Helpers/FormatString.hpp"
 #include "Textures/Texture.hpp"
@@ -14,7 +15,8 @@ namespace fl
 		m_uniformBlocks(new std::vector<UniformBlock *>()),
 		m_vertexAttributes(new std::vector<VertexAttribute *>()),
 		m_descriptors(new std::vector<DescriptorType>()),
-		m_attributeDescriptions(new std::vector<VkVertexInputAttributeDescription>())
+		m_attributeDescriptions(new std::vector<VkVertexInputAttributeDescription>()),
+		m_notFoundNames(std::vector<std::string>())
 	{
 	}
 
@@ -61,64 +63,21 @@ namespace fl
 		}
 	}
 
-	void ShaderProgram::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
+
+	bool ShaderProgram::ReportedNotFound(const std::string &name, const bool &reportIfFound)
 	{
-		for (auto uniformBlock : *m_uniformBlocks)
+
+		if (std::find(m_notFoundNames.begin(), m_notFoundNames.end(), name) == m_notFoundNames.end())
 		{
-			if (uniformBlock->GetName() == program.getUniformBlockName(i))
+			if (reportIfFound)
 			{
-				uniformBlock->SetStageFlags(VK_SHADER_STAGE_ALL);
-				return;
+				m_notFoundNames.push_back(name);
 			}
+
+			return true;
 		}
 
-		m_uniformBlocks->push_back(new UniformBlock(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag));
-	}
-
-	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
-	{
-		if (program.getUniformBinding(i) == -1)
-		{
-			auto splitName = FormatString::Split(program.getUniformName(i), ".");
-
-			if (splitName.size() == 2)
-			{
-				for (auto uniformBlock : *m_uniformBlocks)
-				{
-					if (uniformBlock->GetName() == splitName.at(0))
-					{
-						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i),
-							sizeof(float) * program.getUniformTType(i)->computeNumComponents(), program.getUniformType(i), stageFlag));
-						return;
-					}
-				}
-			}
-		}
-
-		for (auto uniform : *m_uniforms)
-		{
-			if (uniform->GetName() == program.getUniformName(i))
-			{
-				uniform->SetStageFlags(VK_SHADER_STAGE_ALL);
-				return;
-			}
-		}
-
-		m_uniforms->push_back(new Uniform(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
-	}
-
-	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
-	{
-		for (auto vertexAttribute : *m_vertexAttributes)
-		{
-			if (vertexAttribute->GetName() == program.getAttributeName(i))
-			{
-				return;
-			}
-		}
-
-		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation,
-			sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i)));
+		return false;
 	}
 
 	void ShaderProgram::ProcessShader()
@@ -351,5 +310,65 @@ namespace fl
 		}
 
 		return result.str();
+	}
+
+	void ShaderProgram::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
+	{
+		for (auto uniformBlock : *m_uniformBlocks)
+		{
+			if (uniformBlock->GetName() == program.getUniformBlockName(i))
+			{
+				uniformBlock->SetStageFlags(VK_SHADER_STAGE_ALL);
+				return;
+			}
+		}
+
+		m_uniformBlocks->push_back(new UniformBlock(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag));
+	}
+
+	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
+	{
+		if (program.getUniformBinding(i) == -1)
+		{
+			auto splitName = FormatString::Split(program.getUniformName(i), ".");
+
+			if (splitName.size() == 2)
+			{
+				for (auto uniformBlock : *m_uniformBlocks)
+				{
+					if (uniformBlock->GetName() == splitName.at(0))
+					{
+						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i),
+							sizeof(float) * program.getUniformTType(i)->computeNumComponents(), program.getUniformType(i), stageFlag));
+						return;
+					}
+				}
+			}
+		}
+
+		for (auto uniform : *m_uniforms)
+		{
+			if (uniform->GetName() == program.getUniformName(i))
+			{
+				uniform->SetStageFlags(VK_SHADER_STAGE_ALL);
+				return;
+			}
+		}
+
+		m_uniforms->push_back(new Uniform(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
+	}
+
+	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
+	{
+		for (auto vertexAttribute : *m_vertexAttributes)
+		{
+			if (vertexAttribute->GetName() == program.getAttributeName(i))
+			{
+				return;
+			}
+		}
+
+		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation,
+			sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i)));
 	}
 }

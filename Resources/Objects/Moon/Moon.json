@@ -1,0 +1,30 @@
+{
+  "Mesh": {
+    "Model": "Sphere_18_18_1.0"
+  },
+  "MaterialDefault": {
+    "Base Colour": "#DDE2FF",
+    "Diffuse Texture": "",
+    "Metallic": 0.4,
+    "Roughness": 0.0,
+    "Material Texture": "",
+    "Normal Texture": "",
+    "Casts Shadows": 0,
+    "Ignore Lighting": 1,
+    "Ignore Fog": 1
+  },
+  "Light": {
+    "Colour": "#FFFFFF",
+    "Radius": -1.0,
+    "Offset": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  },
+  "CelestialBody": {
+    "Type": 1
+  },
+  "MeshRender": {
+  }
+}

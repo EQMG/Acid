@@ -17,6 +17,33 @@ Windows   [![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt
 
 Linux/MacOS   [![Build Status](https://travis-ci.org/Equilibrium-Games/Flounder.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Flounder)
 
+# Code snippets
+```cpp
+// Imports a 2D texture.
+Texture *guiBlack = Texture::Resource("Resources/Guis/Black.png");
+
+// Imports a 3D cubemap.
+Cubemap *skyboxSnowy = Cubemap::Resource("Resources/Objects/SkyboxSnowy", ".png");
+
+// Imports a model.
+Model *dragon = Model::Resource("Resources/Objects/Testing/Model_Dragon.obj");
+
+// Plays a 3D sound, at the origin, at half volume.
+Sound jump = Sound("Resources/Sounds/Jump.ogg", 0.5f);
+jump.SetPosition(Vector3::ZERO);
+jump.Play();
+
+// Imports a game object.
+GameObject *playerObject = new GameObject("Player", Transform());
+
+// Creates a game object.
+GameObject *sphere = new GameObject(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3(), 3.0f));
+sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
+sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Resources/Objects/Testing/Diffuse.png"),
+    0.0f, 0.0f, Texture::Resource("Resources/Objects/Testing/Material.png"), Texture::Resource("Resources/Objects/Testing/Normal.png"));
+sphere->AddComponent<MeshRender>();
+```
+
 ## Links
 Trello   [Board](https://trello.com/b/ZRvpbbYC/flounder)
 

@@ -1,6 +1,5 @@
 #include "DescriptorsHandler.hpp"
 
-#include <algorithm>
 #include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace fl
@@ -9,7 +8,6 @@ namespace fl
 		m_shaderProgram(nullptr),
 		m_descriptorSet(nullptr),
 		m_descriptors(new std::vector<IDescriptor *>()),
-		m_notFoundNames(std::vector<std::string>()),
 		m_changed(false)
 	{
 	}
@@ -31,11 +29,12 @@ namespace fl
 
 		if (location == -1)
 		{
-			if (std::find(m_notFoundNames.begin(), m_notFoundNames.end(), descriptorName) == m_notFoundNames.end())
+#ifdef FL_VERBOSE
+			if (m_shaderProgram->ReportedNotFound(descriptorName, true))
 			{
-				fprintf(stderr, "Could not find descriptor in shader '%s' named: '%s'\n", m_shaderProgram->GetName().c_str(), descriptorName.c_str()); // TODO: Log shader name.
-				m_notFoundNames.push_back(descriptorName);
+				fprintf(stderr, "Could not find descriptor in shader '%s' of name '%s'\n", m_shaderProgram->GetName().c_str(), descriptorName.c_str());
 			}
+#endif
 
 			return;
 		}

@@ -1,7 +1,7 @@
 #include "GameObject.hpp"
 
-#include "Scenes/Prefabs/PrefabObject.hpp"
 #include "Scenes/Scenes.hpp"
+#include "Prefabs/PrefabObject.hpp"
 
 namespace fl
 {
@@ -27,9 +27,9 @@ namespace fl
 	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure *structure) :
 		GameObject(transform, structure, prefabName)
 	{
-		PrefabObject *entityPrefab = PrefabObject::Resource("Resources/Entities/" + prefabName + "/" + prefabName + ".json");
+		PrefabObject *prefabObject = PrefabObject::Resource("Resources/Objects/" + prefabName + "/" + prefabName + ".json");
 
-		for (auto value : *entityPrefab->GetParent()->GetChildren())
+		for (auto value : *prefabObject->GetParent()->GetChildren())
 		{
 			if (value->GetName().empty())
 			{
@@ -47,10 +47,10 @@ namespace fl
 			AddComponent(component);
 		}
 
-		if (prefabName == "Testing")
+		if (prefabName == "Testing2")
 		{
-			//	entityPrefab->Write(this);
-			entityPrefab->Save();
+			prefabObject->Write(this);
+			prefabObject->Save();
 		}
 	}
 

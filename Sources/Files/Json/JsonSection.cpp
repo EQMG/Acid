@@ -2,8 +2,29 @@
 
 namespace fl
 {
+	JsonSection::JsonSection(JsonSection *parent, const std::string &name, const std::string &content) :
+		m_parent(parent),
+		m_name(name),
+		m_content(content)
+	{
+	}
+
+	JsonSection::~JsonSection()
+	{
+		for (auto child : m_children)
+		{
+			delete child;
+		}
+	}
+
 	void JsonSection::AppendData(LoadedValue *loadedValue, std::string *data, const int &indentation, const bool &end)
 	{
+	//	printf("%s = %s\n", loadedValue->GetName().c_str(), loadedValue->GetValue().c_str());
+	//	for (auto child : *loadedValue->GetChildren())
+	//	{
+	//		AppendData(child, data, indentation + 1, child == loadedValue->GetChildren()->back());
+	//	}
+
 		std::string indent;
 
 		for (int i = 0; i < indentation; i++)
@@ -67,7 +88,7 @@ namespace fl
 			thisValue = new LoadedValue(parent, source->m_name, "");
 			parent->GetChildren()->push_back(thisValue);
 
-			auto contentSplit = FormatString::Split(source->m_content, ",");
+			auto contentSplit = FormatString::Split(source->m_content, ",", true);
 
 			for (auto data : contentSplit)
 			{
