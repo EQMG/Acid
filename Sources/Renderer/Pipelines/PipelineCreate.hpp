@@ -89,6 +89,23 @@ namespace fl
 		VkDescriptorPoolSize GetPoolSize() const { return m_descriptorPoolSize; }
 	};
 
+	class FL_EXPORT PipelineDefine
+	{
+	private:
+		std::string m_name;
+		std::string m_value;
+	public:
+		PipelineDefine(const std::string &name, const std::string &value) :
+			m_name(name),
+			m_value(value)
+		{
+		}
+
+		std::string GetName() const { return m_name; }
+
+		std::string GetValue() const { return m_value; }
+	};
+
 	class FL_EXPORT PipelineCreate
 	{
 	private:

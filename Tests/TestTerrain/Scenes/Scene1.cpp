@@ -52,7 +52,7 @@ namespace test
 		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f), 1.0f));
 		playerObject->SetName("Player");
 		playerObject->AddComponent<FpsPlayer>();
-	//	playerObject->AddComponent<MeshAnimated>("Resources/Entities/Player/Model.json");
+	//	playerObject->AddComponent<MeshAnimated>("Resources/Objects/Player/Model.json");
 	//	playerObject->AddComponent<MaterialDefault>();
 	//	playerObject->AddComponent<MeshRender>();
 
@@ -61,10 +61,10 @@ namespace test
 		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
 		skyboxObject->SetName("SkyboxClouds");
 		skyboxObject->AddComponent<Mesh>(ShapeSphere::Resource(6, 6, 1.0f));
-		skyboxObject->AddComponent<MaterialSkybox>(Cubemap::Resource("Resources/Entities/SkyboxClouds", ".png"), false);
+		skyboxObject->AddComponent<MaterialSkybox>(Cubemap::Resource("Resources/Objects/SkyboxClouds", ".png"), false);
 		skyboxObject->AddComponent<MeshRender>();
 
-		// Entities.
+		// Objects.
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour("#FFFFFF"), -1.0f);
 

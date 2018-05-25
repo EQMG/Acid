@@ -228,11 +228,17 @@ namespace fl
 			defineBlock += "#define " + define.GetName() + " " + define.GetValue() + "\n";
 		}
 
-		for (auto type : m_pipelineCreate.GetShaderStages())
+		for (auto shaderStage : m_pipelineCreate.GetShaderStages())
 		{
-			auto shaderCode = ShaderProgram::InsertDefineBlock(FileSystem::ReadTextFile(type), defineBlock);
+			if (!FileSystem::FileExists(shaderStage))
+			{
+				fprintf(stderr, "File does not exist: '%s'\n", shaderStage.c_str());
+				throw std::runtime_error("Could not create pipeline, missing shader stage!");
+			}
 
-			VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(type);
+			auto shaderCode = ShaderProgram::InsertDefineBlock(FileSystem::ReadTextFile(shaderStage), defineBlock);
+
+			VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(shaderStage);
 			EShLanguage language = GetEshLanguage(stageFlag);
 
 			// Starts converting GLSL to SPIR-V.

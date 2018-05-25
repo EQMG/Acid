@@ -1,0 +1,18 @@
+{
+  "Mesh": {
+    "Model": "Cube_1.0_1.0_1.0"
+  },
+  "MaterialDefault": {
+    "Base Colour": "#551a8b",
+    "Diffuse Texture": "",
+    "Metallic": 0.0,
+    "Roughness": 0.0,
+    "Material Texture": "",
+    "Normal Texture": "",
+    "Casts Shadows": 0,
+    "Ignore Lighting": 1,
+    "Ignore Fog": 0
+  },
+  "MeshRender": {
+  }
+}

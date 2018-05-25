@@ -10,6 +10,11 @@ namespace fl
 
 	SceneStructure::~SceneStructure()
 	{
+		for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
+		{
+			delete *it;
+		}
+
 		delete m_objects;
 	}
 

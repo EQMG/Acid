@@ -1,5 +1,7 @@
 #include "LoadedValue.hpp"
 
+#include <sstream>
+
 namespace fl
 {
 	LoadedValue::LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value) :

@@ -17,24 +17,15 @@ namespace fl
 		std::string m_name;
 		std::string m_content;
 	public:
-		JsonSection(JsonSection *parent, const std::string &name, const std::string &content) :
-			m_parent(parent),
-			m_name(name),
-			m_content(content)
-		{
-		}
+		JsonSection(JsonSection *parent, const std::string &name, const std::string &content);
 
-		~JsonSection()
-		{
-			for (auto child : m_children)
-			{
-				delete child;
-			}
-		}
+		~JsonSection();
 
 		JsonSection *GetParent() const { return m_parent; }
 
 		std::vector<JsonSection *> GetChildren() const { return m_children; }
+
+		void AddChild(JsonSection *child) { m_children.push_back(child); }
 
 		std::string GetName() const { return m_name; }
 
