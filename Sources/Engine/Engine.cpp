@@ -6,7 +6,7 @@ namespace fl
 {
 	Engine *Engine::G_INSTANCE = nullptr;
 
-	Engine::Engine() :
+	Engine::Engine(const bool &emptyRegister) :
 		m_start(HighResolutionClock::now()),
 		m_timeOffset(0.0f),
 		m_moduleRegister(nullptr),
@@ -18,7 +18,7 @@ namespace fl
 		G_INSTANCE = this;
 
 		m_moduleRegister = static_cast<ModuleRegister *>(malloc(sizeof(ModuleRegister)));
-		new(m_moduleRegister) ModuleRegister();
+		new(m_moduleRegister) ModuleRegister(emptyRegister);
 	}
 
 	Engine::~Engine()

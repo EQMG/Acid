@@ -19,7 +19,8 @@ namespace fl
 		/// <summary>
 		/// Creates a new module register.
 		/// </summary>
-		ModuleRegister();
+		/// <param name="emptyRegister"> If this will start empty. </param>
+		ModuleRegister(const bool &emptyRegister);
 
 		/// <summary>
 		/// Deconstructor for the module register.

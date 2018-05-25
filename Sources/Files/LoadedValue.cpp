@@ -37,7 +37,7 @@ namespace fl
 			return nullptr;
 		}
 
-		LoadedValue *child = new LoadedValue(this, m_name, "");
+		LoadedValue *child = new LoadedValue(this, name, "");
 		m_children->push_back(child);
 		return child;
 	}
