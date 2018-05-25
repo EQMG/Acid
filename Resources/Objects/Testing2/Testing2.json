@@ -1,7 +1,7 @@
 {
   "Rigidbody": {
-    "Mass": 2.0, 
-    "Drag": 0.1, 
+    "Mass": 2.000000, 
+    "Drag": 0.100000, 
     "Use Gravity": 1, 
     "Freeze Position": {
       "x": 0, 
@@ -20,8 +20,8 @@
   "MaterialDefault": {
     "Base Colour": "#C7BEBE", 
     "Diffuse Texture": "Resources/Objects/Testing2/Diffuse.png", 
-    "Metallic": 0.0, 
-    "Roughness": 0.0, 
+    "Metallic": 0.000000, 
+    "Roughness": 0.000000, 
     "Material Texture": "Resources/Objects/Testing2/Material.png", 
     "Normal Texture": "Resources/Objects/Testing2/Normal.png", 
     "Casts Shadows": 1, 
@@ -30,11 +30,11 @@
   },
   "Light": {
     "Colour": "#3319CC", 
-    "Radius": 1.33, 
+    "Radius": 1.330000, 
     "Offset": {
-      "x": 0.0, 
-      "y": 3.0, 
-      "z": 0.0
+      "x": 0.000000, 
+      "y": 3.000000, 
+      "z": 0.000000
     }
   },
   "MeshRender": {
