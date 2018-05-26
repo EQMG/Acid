@@ -46,12 +46,6 @@ namespace fl
 			component->Load(value);
 			AddComponent(component);
 		}
-
-		if (prefabName == "Testing2")
-		{
-			prefabObject->Write(this);
-			prefabObject->Save();
-		}
 	}
 
 	GameObject::~GameObject()

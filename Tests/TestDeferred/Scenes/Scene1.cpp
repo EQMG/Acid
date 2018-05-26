@@ -75,9 +75,6 @@ namespace test
 			//	sphere->AddComponent<ShadowRender>();
 			}
 		}
-
-		// Testing.
-		GameObject *testing2 = new GameObject("Testing2", Transform());
 	}
 
 	void Scene1::Update()

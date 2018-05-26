@@ -5,6 +5,7 @@
 #include <locale>
 #include <cstring>
 #include <string>
+#include <typeinfo>
 #include "Engine/Exports.hpp"
 
 namespace fl
@@ -106,6 +107,11 @@ namespace fl
 		template<typename T>
 		static T ConvertTo(const std::string &str)
 		{
+			if (typeid(T) == typeid(bool))
+			{
+				return Trim(Lowercase(str)) == "true" || ConvertTo<int>(str) == 1;
+			}
+
 			std::istringstream ss(str);
 			T num;
 			ss >> num;
