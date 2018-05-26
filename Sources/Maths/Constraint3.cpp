@@ -32,9 +32,9 @@ namespace fl
 
 	void Constraint3::Write(LoadedValue *destination)
 	{
-		destination->SetChild<int>("x", static_cast<int>(m_x));
-		destination->SetChild<int>("y", static_cast<int>(m_y));
-		destination->SetChild<int>("z", static_cast<int>(m_z));
+		destination->SetChild<bool>("x", m_x);
+		destination->SetChild<bool>("y", m_y);
+		destination->SetChild<bool>("z", m_z);
 	}
 
 	Constraint3 &Constraint3::operator=(const Constraint3 &other)
@@ -47,9 +47,9 @@ namespace fl
 
 	Constraint3 &Constraint3::operator=(LoadedValue *source)
 	{
-		m_x = static_cast<bool>(source->GetChild("x")->Get<int>());
-		m_y = static_cast<bool>(source->GetChild("y")->Get<int>());
-		m_z = static_cast<bool>(source->GetChild("z")->Get<int>());
+		m_x = source->GetChild("x")->Get<bool>();
+		m_y = source->GetChild("y")->Get<bool>();
+		m_z = source->GetChild("z")->Get<bool>();
 		return *this;
 	}
 

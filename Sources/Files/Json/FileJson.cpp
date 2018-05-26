@@ -40,8 +40,6 @@ namespace fl
 		JsonSection *currentSection = nullptr;
 		std::string summation;
 
-		printf("%s:\n", m_filename.c_str());
-
 		for (auto &c : fileLoaded)
 		{
 			if (c == '{' || c == '[')
