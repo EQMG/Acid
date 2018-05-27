@@ -12,14 +12,13 @@ namespace test
 		public MeshSimple
 	{
 	private:
-		float m_radius;
 		Transform *m_transform;
 	public:
 		static const int SIDE_LENGTH;
 		static const std::vector<float> SQUARE_SIZES;
 		static const std::vector<float> TEXTURE_SCALES;
 
-		MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, const float &radius, Transform *transform);
+		MeshTerrain(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale, Transform *transform);
 
 		~MeshTerrain();
 
@@ -28,5 +27,9 @@ namespace test
 		Vector3 GetNormal(const Vector3 &position) override;
 
 		Vector3 GetColour(const Vector3 &position, const Vector3 &normal) override;
+	private:
+		static float GetHeight(const float &x, const float &z);
+
+		static Vector3 GetNormal(const float &x, const float &z);
 	};
 }

@@ -3,8 +3,8 @@
     "Model": "Sphere_6_6_1.0"
   },
   "MaterialSkybox": {
-    "Skybox Texture": "Resources/Entities/SkyboxSnowy/",
-    "Enable Fog": 1
+    "Cubemap Texture": "Resources/Objects/SkyboxSnowy/",
+    "Enable Fog": true
   },
   "MeshRender": {
   }

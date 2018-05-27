@@ -33,7 +33,7 @@ namespace fl
 	void MaterialSkybox::Load(LoadedValue *value)
 	{
 		TrySetCubemap(value->GetChild("Cubemap Texture")->GetString());
-		m_enableFog = (bool) value->GetChild("Enable Fog")->Get<int>();
+		m_enableFog = value->GetChild("Enable Fog")->Get<bool>();
 	}
 
 	void MaterialSkybox::Write(LoadedValue *destination)

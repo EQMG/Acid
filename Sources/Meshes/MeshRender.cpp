@@ -45,7 +45,7 @@ namespace fl
 		auto material = GetGameObject()->GetComponent<IMaterial>();
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
 
-		if (material == nullptr || mesh == nullptr)
+		if (material == nullptr || mesh == nullptr || mesh->GetModel() == nullptr)
 		{
 			return;
 		}

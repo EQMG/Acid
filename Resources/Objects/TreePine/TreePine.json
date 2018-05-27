@@ -2,16 +2,16 @@
   "Rigidbody": {
     "Mass": 1.0, 
     "Drag": 0.0, 
-    "Use Gravity": 1,
+    "Use Gravity": false,
     "Freeze Position": {
-      "x": 0,
-      "y": 0,
-      "z": 0
+      "x": true,
+      "y": true,
+      "z": true
     },
     "Freeze Rotation": {
-      "x": 0,
-      "y": 0,
-      "z": 0
+      "x": true,
+      "y": true,
+      "z": true
     }
   },
   "Mesh": {
@@ -24,9 +24,9 @@
     "Roughness": 0.0,
     "Material Texture": "",
     "Normal Texture": "",
-    "Casts Shadows": 1,
-    "Ignore Lighting": 0,
-    "Ignore Fog": 0
+    "Casts Shadows": true,
+    "Ignore Lighting": false,
+    "Ignore Fog": false
   },
   "MeshRender": {
   }
