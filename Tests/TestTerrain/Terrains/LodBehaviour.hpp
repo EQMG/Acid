@@ -12,24 +12,14 @@ namespace test
 		public Behaviour
 	{
 	private:
-		float m_radius;
-		Transform *m_transform;
 		std::vector<Model *> m_modelLods;
 		unsigned int m_currentLod;
 	public:
-		LodBehaviour(const float &radius = 0.0f, const Transform &transform = Transform());
+		LodBehaviour();
 
 		~LodBehaviour();
 
 		void Update() override;
-
-		Transform *GetTransform() const { return m_transform; }
-
-		void SetTransform(const Transform &transform) { *m_transform = transform; }
-
-		float GetRadius() const { return m_radius; }
-
-		void SetRadius(const float &radius) { m_radius = radius; }
 	private:
 		void CreateLod(const unsigned int &lod);
 

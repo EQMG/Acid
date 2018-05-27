@@ -39,9 +39,9 @@ namespace fl
 		TrySetMaterialTexture(value->GetChild("Material Texture")->GetString());
 		TrySetNormalTexture(value->GetChild("Normal Texture")->GetString());
 
-		m_castsShadows = (bool) value->GetChild("Casts Shadows")->Get<int>();
-		m_ignoreLighting = (bool) value->GetChild("Ignore Lighting")->Get<int>();
-		m_ignoreFog = (bool) value->GetChild("Ignore Fog")->Get<int>();
+		m_castsShadows = value->GetChild("Casts Shadows")->Get<bool>();
+		m_ignoreLighting = value->GetChild("Ignore Lighting")->Get<bool>();
+		m_ignoreFog = value->GetChild("Ignore Fog")->Get<bool>();
 	}
 
 	void MaterialDefault::Write(LoadedValue *destination)
@@ -54,9 +54,9 @@ namespace fl
 		destination->GetChild("Material Texture", true)->SetString(m_materialTexture == nullptr ? "" : m_materialTexture->GetFilename());
 		destination->GetChild("Normal Texture", true)->SetString(m_normalTexture == nullptr ? "" : m_normalTexture->GetFilename());
 
-		destination->GetChild("Casts Shadows", true)->Set((int) m_castsShadows);
-		destination->GetChild("Ignore Lighting", true)->Set((int) m_ignoreLighting);
-		destination->GetChild("Ignore Fog", true)->Set((int) m_ignoreFog);
+		destination->GetChild("Casts Shadows", true)->Set(m_castsShadows);
+		destination->GetChild("Ignore Lighting", true)->Set(m_ignoreLighting);
+		destination->GetChild("Ignore Fog", true)->Set(m_ignoreFog);
 	}
 
 	void MaterialDefault::PushUniforms(UniformHandler *uniformObject)

@@ -2,16 +2,16 @@
   "Rigidbody": {
     "Mass": 2.0, 
     "Drag": 0.1, 
-    "Use Gravity": 1, 
+    "Use Gravity": true,
     "Freeze Position": {
-      "x": 0, 
-      "y": 0, 
-      "z": 0
+      "x": false,
+      "y": false,
+      "z": false
     },
     "Freeze Rotation": {
-      "x": 0, 
-      "y": 0, 
-      "z": 0
+      "x": false,
+      "y": false,
+      "z": false
     }
   },
   "Mesh": {
@@ -24,9 +24,9 @@
     "Roughness": 0.0, 
     "Material Texture": "Resources/Entities/Testing/Material.png", 
     "Normal Texture": "Resources/Entities/Testing/Normal.png", 
-    "Casts Shadows": 1, 
-    "Ignore Lighting": 0, 
-    "Ignore Fog": 0
+    "Casts Shadows": true,
+    "Ignore Lighting": false,
+    "Ignore Fog": false
   },
   "Light": {
     "Colour": "#3319CC", 

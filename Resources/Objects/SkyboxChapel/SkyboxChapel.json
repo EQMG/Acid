@@ -3,8 +3,8 @@
     "Model": "Sphere_6_6_1.0"
   },
   "MaterialSkybox": {
-    "Skybox Texture": "Resources/Entities/SkyboxChapel/",
-    "Enable Fog": 0
+    "Cubemap Texture": "Resources/Objects/SkyboxChapel",
+    "Enable Fog": false
   },
   "MeshRender": {
   }

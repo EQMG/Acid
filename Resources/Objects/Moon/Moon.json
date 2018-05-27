@@ -9,9 +9,9 @@
     "Roughness": 0.0,
     "Material Texture": "",
     "Normal Texture": "",
-    "Casts Shadows": 0,
-    "Ignore Lighting": 1,
-    "Ignore Fog": 1
+    "Casts Shadows": false,
+    "Ignore Lighting": true,
+    "Ignore Fog": true
   },
   "Light": {
     "Colour": "#FFFFFF",

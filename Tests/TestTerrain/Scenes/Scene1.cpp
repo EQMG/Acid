@@ -11,6 +11,8 @@
 #include <Renderer/Screenshot/Screenshot.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Skyboxes/MaterialSkybox.hpp>
+#include <Waters/MeshWater.hpp>
+#include "Terrains/MeshTerrain.hpp"
 #include "Terrains/LodBehaviour.hpp"
 #include "Terrains/MaterialTerrain.hpp"
 #include "Voxels/VoxelChunk.hpp"
@@ -48,25 +50,39 @@ namespace test
 		//	cameraObject->AddComponent<FpsCamera>();
 
 		// Player.
-		// GameObject *playerObject = new GameObject("Player", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
-		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f), 1.0f));
-		playerObject->SetName("Player");
-		playerObject->AddComponent<FpsPlayer>();
-	//	playerObject->AddComponent<MeshAnimated>("Resources/Objects/Player/Model.json");
-	//	playerObject->AddComponent<MaterialDefault>();
-	//	playerObject->AddComponent<MeshRender>();
+		new GameObject("Player", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
 
 		// Skybox.
-		// GameObject *skyboxObject = new GameObject("SkyboxChapel", Transform(Vector3(), Vector3(), 2048.0f));
-		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
-		skyboxObject->SetName("SkyboxClouds");
-		skyboxObject->AddComponent<Mesh>(ShapeSphere::Resource(6, 6, 1.0f));
-		skyboxObject->AddComponent<MaterialSkybox>(Cubemap::Resource("Resources/Objects/SkyboxClouds", ".png"), false);
-		skyboxObject->AddComponent<MeshRender>();
+		new GameObject("SkyboxStars", Transform(Vector3(), Vector3(), 2048.0f));
 
 		// Objects.
-		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
-		sun->AddComponent<Light>(Colour("#FFFFFF"), -1.0f);
+		new GameObject("Sun", Transform(Vector3(), Vector3(), 18.0f));
+		new GameObject("Moon", Transform(Vector3(), Vector3(), 9.0f));
+
+		// Terrains.
+		const int n = 4;
+
+		for (int j = -n; j <= n; j++)
+		{
+			for (int w = -n; w <= n; w++)
+			{
+				GameObject *terrainChunk = new GameObject(Transform(Vector3(
+					static_cast<float>(j) * MeshTerrain::SIDE_LENGTH, 0.0f,
+					static_cast<float>(w) * MeshTerrain::SIDE_LENGTH)));
+				terrainChunk->SetName("Terrain");
+				terrainChunk->AddComponent<Mesh>();
+				terrainChunk->AddComponent<LodBehaviour>();
+				terrainChunk->AddComponent<MaterialTerrain>();
+				terrainChunk->AddComponent<MeshRender>();
+			}
+		}
+
+		// Waters.
+		GameObject *water = new GameObject(Transform());
+		water->SetName("Water");
+		water->AddComponent<Mesh>(new MeshWater());
+		water->AddComponent<MaterialWater>();
+		water->AddComponent<MeshRender>();
 
 		/*// Voxels.
 		GameObject *voxelChunk = new GameObject(Transform());
@@ -75,21 +91,6 @@ namespace test
 		voxelChunk->AddComponent<MaterialVoxel>();
 		voxelChunk->AddComponent<VoxelChunk>(MESH_GREEDY, true);
 		voxelChunk->AddComponent<MeshRender>();*/
-
-		// Terrains.
-		GameObject *terrainChunk = new GameObject(Transform());
-		terrainChunk->SetName("Terrain");
-		terrainChunk->AddComponent<Mesh>();
-		terrainChunk->AddComponent<LodBehaviour>(0.0f, Transform());
-		terrainChunk->AddComponent<MaterialTerrain>();
-		terrainChunk->AddComponent<MeshRender>();
-
-		/*// Waters.
-		GameObject *water = new GameObject(Transform());
-		water->SetName("Water");
-		water->AddComponent<Mesh>();
-		water->AddComponent<MaterialWater>();
-		water->AddComponent<MeshRender>();*/
 	}
 
 	void Scene1::Update()
