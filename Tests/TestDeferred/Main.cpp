@@ -4,6 +4,7 @@
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Animations/MaterialAnimated.hpp>
 #include "Configs/ConfigManager.hpp"
 #include "MainUpdater.hpp"
 #include "MainRenderer.hpp"
@@ -32,6 +33,7 @@ int main(int argc, char **argv)
 
 	// Registers components.
 	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
+	Scenes::Get()->RegisterComponent<MaterialAnimated>("MaterialAnimated");
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Test Deferred");

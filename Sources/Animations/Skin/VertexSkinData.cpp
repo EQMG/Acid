@@ -18,8 +18,8 @@ namespace fl
 		{
 			if (weight > m_weights.at(i))
 			{
-				m_jointIds.at(i) = jointId;
-				m_weights.at(i) = weight;
+				m_jointIds.insert(m_jointIds.begin() + i, jointId);
+				m_weights.insert(m_weights.begin() + i, weight);
 				return;
 			}
 		}

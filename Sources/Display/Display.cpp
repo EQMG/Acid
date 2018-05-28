@@ -414,6 +414,12 @@ namespace fl
 			m_aspectRatio = static_cast<float>(videoMode->width) / static_cast<float>(videoMode->height);
 		}
 
+		glfwWindowHint(GLFW_RED_BITS, videoMode->redBits);
+		glfwWindowHint(GLFW_GREEN_BITS, videoMode->greenBits);
+		glfwWindowHint(GLFW_BLUE_BITS, videoMode->blueBits);
+		glfwWindowHint(GLFW_REFRESH_RATE, videoMode->refreshRate);
+		// glfwWindowHint(GLFW_DECORATED, GL_FALSE); // TODO: Borderless window.
+
 		// Create a windowed mode window and its OpenGL context.
 		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
 

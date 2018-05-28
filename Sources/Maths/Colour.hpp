@@ -31,8 +31,22 @@ namespace fl
 		};
 
 		static const Colour CLEAR;
-		static const Colour WHITE;
 		static const Colour BLACK;
+		static const Colour GREY;
+		static const Colour SILVER;
+		static const Colour WHITE;
+		static const Colour MAROON;
+		static const Colour RED;
+		static const Colour OLIVE;
+		static const Colour YELLOW;
+		static const Colour GREEN;
+		static const Colour LIME;
+		static const Colour TEAL;
+		static const Colour AQUA;
+		static const Colour NAVY;
+		static const Colour BLUE;
+		static const Colour PURPLE;
+		static const Colour FUCHSIA;
 
 		/// <summary>
 		/// Constructor for colour.

@@ -11,6 +11,7 @@
 #include <Renderer/Screenshot/Screenshot.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Skyboxes/MaterialSkybox.hpp>
+#include <Animations/MaterialAnimated.hpp>
 #include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
@@ -37,31 +38,23 @@ namespace test
 
 	void Scene1::Start()
 	{
-		//	// Camera.
-		//	GameObject *cameraObject = new GameObject(Transform(Vector3(), Vector3(), 1.0f));
-		//	cameraObject->SetName("Camera");
-		//	cameraObject->AddComponent<FpsCamera>();
-
 		// Player.
-		// GameObject *playerObject = new GameObject("Player", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
-		GameObject *playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f), 1.0f));
-		playerObject->SetName("Player");
-		playerObject->AddComponent<FpsPlayer>();
-	//	playerObject->AddComponent<MeshAnimated>("Resources/Objects/Player/Model.json");
-	//	playerObject->AddComponent<MaterialDefault>();
-	//	playerObject->AddComponent<MeshRender>();
+		GameObject *playerObject = new GameObject("Player", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
 
 		// Skybox.
-		// GameObject *skyboxObject = new GameObject("SkyboxChapel", Transform(Vector3(), Vector3(), 2048.0f));
-		GameObject *skyboxObject = new GameObject(Transform(Vector3(), Vector3(), 2048.0f));
-		skyboxObject->SetName("SkyboxChapel");
-		skyboxObject->AddComponent<Mesh>(ShapeSphere::Resource(6, 6, 1.0f));
-		skyboxObject->AddComponent<MaterialSkybox>(Cubemap::Resource("Resources/Objects/SkyboxChapel", ".png"), false);
-		skyboxObject->AddComponent<MeshRender>();
+		GameObject *skyboxObject = new GameObject("SkyboxChapel", Transform(Vector3(), Vector3(), 2048.0f));
+
+		// Animated.
+		GameObject *animatedObject = new GameObject(Transform());
+		animatedObject->SetName("Animated");
+		animatedObject->AddComponent<MeshAnimated>("Resources/Objects/Animated/Model.json");
+		animatedObject->AddComponent<MaterialAnimated>();
+		animatedObject->AddComponent<MeshRender>();
+		//animatedObject->AddComponent<ShadowRender>();
 
 		// Entities.
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
-		sun->AddComponent<Light>(Colour("#FFFFFF"), -1.0f);
+		sun->AddComponent<Light>(Colour::WHITE, -1.0f);
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -69,7 +62,7 @@ namespace test
 			{
 				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, -8.0f), Vector3(), 3.0f));
 				sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
-				sphere->AddComponent<MaterialDefault>(Colour("#ffffff"), Texture::Resource("Resources/Objects/Testing/Diffuse.png"),
+				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Resources/Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Resources/Objects/Testing/Material.png"), Texture::Resource("Resources/Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
 			//	sphere->AddComponent<ShadowRender>();
