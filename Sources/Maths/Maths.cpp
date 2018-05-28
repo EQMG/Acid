@@ -60,27 +60,14 @@ namespace fl
 
 	float Maths::NormalizeAngle(const float &degrees)
 	{
-		// TODO: Fix function!
-		/*float x = std::fmod(degrees, 360.0f);
+		float x = std::fmod(degrees, 360.0f);
 
 		if (x < 0.0f)
 		{
 			x += 360.0f;
 		}
 
-		return x;*/
-
-		if (degrees >= 360.0f)
-		{
-			return degrees - 360.0f;
-		}
-
-		if (degrees < 0.0f)
-		{
-			return degrees + 360.0f;
-		}
-
-		return degrees;
+		return x;
 	}
 
 	float Maths::RoundToPlace(const float &value, const int &place)

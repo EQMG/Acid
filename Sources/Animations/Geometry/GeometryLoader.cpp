@@ -21,14 +21,14 @@ namespace fl
 
 		for (auto current : m_positionsList)
 		{
-			const Vector3 position = current->GetPosition();
-			const Vector2 textures = m_uvsList.at(current->GetUvIndex());
-			const Vector3 normal = m_normalsList.at(current->GetNormalIndex());
-			const Vector3 tangent = current->GetAverageTangent();
+			Vector3 position = current->GetPosition();
+			Vector2 textures = m_uvsList.at(current->GetUvIndex());
+			Vector3 normal = m_normalsList.at(current->GetNormalIndex());
+			Vector3 tangent = current->GetAverageTangent();
 
-			//  const VertexSkinData* skin = current->GetSkinData();
-			//  const Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
-			//	const Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
+		//	VertexSkinData* skin = current->GetSkinData();
+		//	Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
+		//	Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
 
 			VertexAnimated *vertex = new VertexAnimated(position, textures, normal, tangent); // , jointIds, weights
 
@@ -54,7 +54,7 @@ namespace fl
 			Vector4 position = Vector4(std::stof(positionsRawData[i * 3]), std::stof(positionsRawData[i * 3 + 1]), std::stof(positionsRawData[i * 3 + 2]), 1.0f);
 			position = MeshAnimated::S_CORRECTION->Transform(position); // Multiply
 			VertexAnimatedData *newVertex = new VertexAnimatedData(m_positionsList.size(), position);
-			newVertex->SetSkinData(m_vertexWeights[m_vertices.size()]);
+			newVertex->SetSkinData(m_vertexWeights[m_positionsList.size()]);
 			m_positionsList.push_back(newVertex);
 		}
 	}

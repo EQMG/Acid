@@ -17,6 +17,7 @@ namespace fl
 		m_animator(nullptr),
 		m_jointMatrices(std::vector<Matrix4 *>())
 	{
+		TrySetModel(m_filename);
 	}
 
 	MeshAnimated::~MeshAnimated()
@@ -75,14 +76,14 @@ namespace fl
 		auto indices = geometryLoader->GetIndices();
 		m_model = new Model(vertices, indices);
 		m_headJoint = CreateJoints(skeletonLoader->GetHeadJoint());
-		//	delete skinLoader;
-		//	delete skeletonLoader;
-		//	delete geometryLoader;
+		delete skeletonLoader;
+		delete skinLoader;
+		delete geometryLoader;
 
 		AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
 			file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
 		m_animation = new Animation(animationLoader->GetLengthSeconds(), animationLoader->GetKeyframeData());
-		//	delete animationLoader;
+		delete animationLoader;
 
 		delete file;
 
