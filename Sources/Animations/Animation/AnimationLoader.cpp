@@ -40,12 +40,12 @@ namespace fl
 
 	std::vector<float> AnimationLoader::GetKeyTimes()
 	{
-		LoadedValue *animationGroup = m_libraryAnimations->GetChild("animation")->GetChild(0); // TODO
+		LoadedValue *animationGroup = m_libraryAnimations->GetChild("animation")->GetChild(0); // FIXME: Find by child `source`
 		std::string sourceInput = animationGroup->GetChild("-id")->GetString() + "-input";
 		LoadedValue *timeData = animationGroup->GetChildWithAttribute("source", "-id", sourceInput)->GetChild("float_array")->GetChild("#text");
 
 		auto rawTimes = FormatString::Split(timeData->GetString(), " ");
-		std::vector<float> times = std::vector<float>(rawTimes.size());
+		auto times = std::vector<float>(rawTimes.size());
 
 		for (unsigned int i = 0; i < times.size(); i++)
 		{
@@ -57,10 +57,9 @@ namespace fl
 
 	void AnimationLoader::CreateKeyframeData(const std::vector<float> &times)
 	{
-		for (unsigned int i = 0; i < times.size(); i++)
+		for (auto time : times)
 		{
-			KeyframeData *keyframeData = new KeyframeData(times[i]);
-			m_keyframeData.push_back(keyframeData);
+			m_keyframeData.push_back(new KeyframeData(time));
 		}
 	}
 
@@ -103,7 +102,7 @@ namespace fl
 			}
 
 			Matrix4 transform = Matrix4(matrixData);
-			transform.Transpose();
+			transform = transform.Transpose();
 
 			if (root)
 			{

@@ -31,14 +31,12 @@ namespace fl
 			{
 				for (auto childNode : *jointNode->GetChild("node")->GetChildren())
 				{
-					JointData *childJoint = LoadJointData(childNode, false);
-					joint->AddChild(childJoint);
+					joint->AddChild(LoadJointData(childNode, false));
 				}
 			}
 			else if (!jointNode->GetChild("node")->GetChildren()->empty())
 			{
-				JointData *childJoint = LoadJointData(jointNode->GetChild("node"), false);
-				joint->AddChild(childJoint);
+				joint->AddChild(LoadJointData(jointNode->GetChild("node"), false));
 			}
 		}
 
@@ -51,11 +49,11 @@ namespace fl
 		auto index = GetBoneIndex(nameId);
 		auto matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetChild("#text")->GetString(), " ");
 		Matrix4 matrix = ConvertData(matrixData);
-		matrix.Transpose();
+		matrix = matrix.Transpose();
 
 		if (isRoot)
 		{
-			// Because in Blender z is up, but in our game y is up.
+			// Because in Blender z is up, but the engine is y up.
 			matrix *= *MeshAnimated::S_CORRECTION;
 		}
 

@@ -15,12 +15,9 @@ namespace fl
 	}
 
 	JointTransform::JointTransform(const JointTransformData &data) :
-		m_position(new Vector3()),
-		m_rotation(new Quaternion())
+		m_position(new Vector3(data.GetJointLocalTransform()->m_30, data.GetJointLocalTransform()->m_31, data.GetJointLocalTransform()->m_32)),
+		m_rotation(new Quaternion(*data.GetJointLocalTransform()))
 	{
-		auto matrix = data.GetJointLocalTransform();
-		*m_position = Vector3(matrix.m_30, matrix.m_31, matrix.m_32);
-		*m_rotation = Quaternion(matrix);
 	}
 
 	JointTransform::~JointTransform()
@@ -29,20 +26,20 @@ namespace fl
 		delete m_rotation;
 	}
 
-	Matrix4 *JointTransform::GetLocalTransform()
+	Matrix4 JointTransform::GetLocalTransform()
 	{
 		Matrix4 rotationMatrix = m_rotation->ToRotationMatrix();
-		Matrix4 *matrix = new Matrix4();
-		*matrix = matrix->Translate(*m_position);
-		*matrix *= rotationMatrix;
+		Matrix4 matrix = Matrix4();
+		matrix = matrix.Translate(*m_position);
+		matrix *= rotationMatrix;
 		return matrix;
 	}
 
-	JointTransform *JointTransform::Interpolate(const JointTransform &frameA, const JointTransform &frameB, const float &progression)
+	JointTransform JointTransform::Interpolate(const JointTransform &frameA, const JointTransform &frameB, const float &progression)
 	{
 		Vector3 pos = Interpolate(*frameA.GetPosition(), *frameB.GetPosition(), progression);
 		Quaternion rot = frameA.GetRotation()->Slerp(*frameB.GetRotation(), progression);
-		return new JointTransform(pos, rot);
+		return JointTransform(pos, rot);
 	}
 
 	Vector3 JointTransform::Interpolate(const Vector3 &start, const Vector3 &end, const float &progression)

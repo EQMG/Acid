@@ -9,7 +9,7 @@ namespace fl
 	{
 	private:
 		std::string m_jointNameId;
-		Matrix4 m_jointLocalTransform;
+		Matrix4 *m_jointLocalTransform;
 	public:
 		JointTransformData(const std::string &jointNameId, const Matrix4 &jointLocalTransform);
 
@@ -17,6 +17,6 @@ namespace fl
 
 		std::string GetJointNameId() const { return m_jointNameId; }
 
-		Matrix4 GetJointLocalTransform() const { return m_jointLocalTransform; }
+		Matrix4 *GetJointLocalTransform() const { return m_jointLocalTransform; }
 	};
 }

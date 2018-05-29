@@ -26,11 +26,11 @@ namespace fl
 			Vector3 normal = m_normalsList.at(current->GetNormalIndex());
 			Vector3 tangent = current->GetAverageTangent();
 
-		//	VertexSkinData* skin = current->GetSkinData();
-		//	Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
-		//	Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
+			VertexSkinData* skin = current->GetSkinData();
+			Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
+			Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
 
-			VertexAnimated *vertex = new VertexAnimated(position, textures, normal, tangent); // , jointIds, weights
+			VertexAnimated *vertex = new VertexAnimated(position, textures, normal, tangent, jointIds, weights);
 
 			m_vertices.push_back(vertex);
 
@@ -52,7 +52,7 @@ namespace fl
 		for (unsigned int i = 0; i < positionsCount / 3; i++)
 		{
 			Vector4 position = Vector4(std::stof(positionsRawData[i * 3]), std::stof(positionsRawData[i * 3 + 1]), std::stof(positionsRawData[i * 3 + 2]), 1.0f);
-			position = MeshAnimated::S_CORRECTION->Transform(position); // Multiply
+			position = MeshAnimated::S_CORRECTION->Transform(position); // FIXME: Multiply?
 			VertexAnimatedData *newVertex = new VertexAnimatedData(m_positionsList.size(), position);
 			newVertex->SetSkinData(m_vertexWeights[m_positionsList.size()]);
 			m_positionsList.push_back(newVertex);
@@ -83,6 +83,7 @@ namespace fl
 		for (unsigned int i = 0; i < normalsCount / 3; i++)
 		{
 			Vector3 normal = Vector3(std::stof(normalsRawData[i * 3]), std::stof(normalsRawData[i * 3 + 1]), std::stof(normalsRawData[i * 3 + 2]));
+			normal = MeshAnimated::S_CORRECTION->Transform(normal); // FIXME: Multiply?
 			m_normalsList.push_back(normal);
 		}
 	}

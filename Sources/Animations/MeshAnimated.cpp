@@ -6,6 +6,7 @@
 namespace fl
 {
 	const Matrix4 *MeshAnimated::S_CORRECTION = new Matrix4(Matrix4::IDENTITY.Rotate(Maths::Radians(-90.0f), Vector3::RIGHT));
+	const int MeshAnimated::MAX_JOINTS = 50;
 	const int MeshAnimated::MAX_WEIGHTS = 3;
 
 	MeshAnimated::MeshAnimated(const std::string &filename) :
@@ -15,7 +16,7 @@ namespace fl
 		m_headJoint(nullptr),
 		m_animation(nullptr),
 		m_animator(nullptr),
-		m_jointMatrices(std::vector<Matrix4 *>())
+		m_jointMatrices(std::vector<Matrix4>())
 	{
 		TrySetModel(m_filename);
 	}
@@ -38,6 +39,7 @@ namespace fl
 		if (m_headJoint != nullptr)
 		{
 			m_jointMatrices.clear();
+			m_jointMatrices.resize(MAX_JOINTS);
 			AddJointsToArray(*m_headJoint, &m_jointMatrices);
 		}
 	}
@@ -103,11 +105,12 @@ namespace fl
 		return j;
 	}
 
-	void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4 *> *jointMatrices)
+	void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> *jointMatrices)
 	{
-		if (headJoint.GetIndex() < (int) jointMatrices->size())
+		if (headJoint.GetIndex() < jointMatrices->size())
 		{
-			jointMatrices->at(headJoint.GetIndex()) = headJoint.GetAnimatedTransform();
+		//	jointMatrices->insert(jointMatrices->begin() + headJoint.GetIndex(), *headJoint.GetAnimatedTransform());
+			jointMatrices->at(headJoint.GetIndex()) = *headJoint.GetAnimatedTransform();
 		}
 
 		for (auto childJoint : *headJoint.GetChildren())

@@ -33,7 +33,7 @@ namespace fl
 		size_t dataSize = GetSize() * vertices.size();
 		void *data = new void *[dataSize];
 
-		std::vector<VertexAnimated> thisVector = std::vector<VertexAnimated>();
+		auto thisVector = std::vector<VertexAnimated>();
 
 		for (auto vertex : vertices)
 		{
@@ -82,7 +82,7 @@ namespace fl
 		// Joint Id attribute.
 		attributeDescriptions[4].binding = 0;
 		attributeDescriptions[4].location = 4;
-		attributeDescriptions[4].format = VK_FORMAT_R32G32B32_SFLOAT;
+		attributeDescriptions[4].format = VK_FORMAT_R32G32B32_SINT;
 		attributeDescriptions[4].offset = offsetof(VertexAnimated, m_jointId);
 
 		// Vertex Weight attribute.

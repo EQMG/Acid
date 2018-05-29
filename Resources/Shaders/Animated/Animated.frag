@@ -24,7 +24,7 @@ vec2 encodeNormal(vec3 normal)
 
 void main() 
 {
-	vec4 textureColour = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	vec4 textureColour = vec4(0.94f, 0.94f, 0.94f, 1.0f);
 	vec3 unitNormal = normalize(fragmentNormal);
 	vec3 material = vec3(0.0f, 0.0f, 0.0f);
 
