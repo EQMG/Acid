@@ -14,8 +14,7 @@ namespace fl
 	{
 		for (auto jointData : data.GetJointTransforms())
 		{
-			JointTransform *jointTransform = new JointTransform(*jointData);
-			m_pose->insert(std::make_pair(jointData->GetJointNameId(), jointTransform));
+			m_pose->insert(std::make_pair(jointData->GetJointNameId(), new JointTransform(*jointData)));
 		}
 	}
 

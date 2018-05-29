@@ -41,7 +41,7 @@ namespace fl
 		/// The rotation is applied by first converting the quaternion into a rotation matrix, which is then multiplied with the transform matrix.
 		/// </summary>
 		/// <returns> The local-space transform as a matrix. </returns>
-		Matrix4 *GetLocalTransform();
+		Matrix4 GetLocalTransform();
 
 		/// <summary>
 		/// Interpolates between two transforms based on the progression value.
@@ -57,7 +57,7 @@ namespace fl
 		/// Everything else gives a transform somewhere in-between the two.
 		/// </param>
 		/// <returns> A new interpolated joint transformation. </returns>
-		static JointTransform *Interpolate(const JointTransform &frameA, const JointTransform &frameB, const float &progression);
+		static JointTransform Interpolate(const JointTransform &frameA, const JointTransform &frameB, const float &progression);
 
 		/// <summary>
 		/// Linearly interpolates between two translations based on a "progression" value.

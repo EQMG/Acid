@@ -68,17 +68,17 @@ namespace fl
 
 		for (int count : counts)
 		{
-			VertexSkinData skinData = VertexSkinData();
+			auto skinData = new VertexSkinData();
 
 			for (int i = 0; i < count; i++)
 			{
 				int jointId = std::stoi(rawData[pointer++]);
 				int weightId = std::stoi(rawData[pointer++]);
-				skinData.AddJointEffect(jointId, weights[weightId]);
+				skinData->AddJointEffect(jointId, weights[weightId]);
 			}
 
-			skinData.LimitJointNumber(m_maxWeights);
-			m_verticesSkinData.push_back(&skinData);
+			skinData->LimitJointNumber(m_maxWeights);
+			m_verticesSkinData.push_back(skinData);
 		}
 	}
 }

@@ -28,7 +28,7 @@ namespace fl
 		}
 
 		template<typename T>
-		void Push(const std::string &uniformName, const T &object)
+		void Push(const std::string &uniformName, const T &object, const size_t &size = 0)
 		{
 			if (m_uniformBlock == nullptr)
 			{
@@ -43,7 +43,7 @@ namespace fl
 			}
 
 			//	printf("name: %s, offset %i, size: %i\n", uniformName.c_str(), uniform->m_offset, (int) sizeof(object));
-			Push(object, static_cast<size_t>(uniform->GetOffset()), sizeof(object)); // static_cast<size_t>(uniform->m_size)
+			Push(object, static_cast<size_t>(uniform->GetOffset()), size == 0 ? sizeof(object) : size); // static_cast<size_t>(uniform->m_size)
 		}
 
 		bool Update(UniformBlock *uniformBlock);

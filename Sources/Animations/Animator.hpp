@@ -27,8 +27,6 @@ namespace fl
 
 		float m_animationTime;
 		Animation *m_currentAnimation;
-		Matrix4 *m_animatorTransformation;
-
 	public:
 		/// <summary>
 		/// Creates a new animator.
@@ -68,7 +66,7 @@ namespace fl
 		/// </summary>
 		/// <returns> The current pose as a map of the desired local-space transforms for all the joints.
 		/// The transforms are indexed by the name ID of the joint that they should be applied to. </returns>
-		std::map<std::string, Matrix4 *> CalculateCurrentAnimationPose();
+		std::map<std::string, Matrix4> CalculateCurrentAnimationPose();
 
 		/// <summary>
 		/// Finds the previous keyframe in the animation and the next keyframe in the animation, and returns them in an array of length 2.
@@ -97,7 +95,7 @@ namespace fl
 		/// </param>
 		/// <returns> The local-space transforms for all the joints for the desired current pose.
 		/// They are returned in a map, indexed by the name of the joint to which they should be applied. </returns>
-		std::map<std::string, Matrix4 *> InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression);
+		std::map<std::string, Matrix4> InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression);
 
 		/// <summary>
 		/// This method applies the current pose to a given joint, and all of its descendants.
@@ -124,7 +122,7 @@ namespace fl
 		/// <param name="currentPose"> A map of the local-space transforms for all the joints for the desired pose. The map is indexed by the name of the joint which the transform corresponds to. </param>
 		/// <param name="joint"> The current joint which the pose should be applied to. </param>
 		/// <param name="parentTransform"> The desired model-space transform of the parent joint for the pose. </param>
-		void ApplyPoseToJoints(const std::map<std::string, Matrix4 *> &currentPose, Joint *joint, const Matrix4 &parentTransform);
+		void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint *joint, const Matrix4 &parentTransform);
 
 		Animation *GetCurrentAnimation() const { return m_currentAnimation; }
 

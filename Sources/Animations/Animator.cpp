@@ -8,8 +8,7 @@ namespace fl
 	Animator::Animator(Joint *rootJoint) :
 		m_rootJoint(rootJoint),
 		m_animationTime(0.0f),
-		m_currentAnimation(nullptr),
-		m_animatorTransformation(new Matrix4())
+		m_currentAnimation(nullptr)
 	{
 	}
 
@@ -18,12 +17,10 @@ namespace fl
 		delete m_rootJoint;
 
 		delete m_currentAnimation;
-		delete m_animatorTransformation;
 	}
 
 	void Animator::Update()
 	{
-
 		if (m_currentAnimation == nullptr)
 		{
 			return;
@@ -31,7 +28,7 @@ namespace fl
 
 		IncreaseAnimationTime();
 		auto currentPose = CalculateCurrentAnimationPose();
-		ApplyPoseToJoints(currentPose, m_rootJoint, m_animatorTransformation->SetIdentity());
+		ApplyPoseToJoints(currentPose, m_rootJoint, Matrix4::IDENTITY);
 	}
 
 	void Animator::IncreaseAnimationTime()
@@ -44,7 +41,7 @@ namespace fl
 		}
 	}
 
-	std::map<std::string, Matrix4 *> Animator::CalculateCurrentAnimationPose()
+	std::map<std::string, Matrix4> Animator::CalculateCurrentAnimationPose()
 	{
 		auto frames = GetPreviousAndNextFrames();
 		float progression = CalculateProgression(*frames[0], *frames[1]);
@@ -79,39 +76,38 @@ namespace fl
 		return currentTime / totalTime;
 	}
 
-	std::map<std::string, Matrix4 *> Animator::InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression)
+	std::map<std::string, Matrix4> Animator::InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression)
 	{
-		auto currentPose = std::map<std::string, Matrix4 *>();
+		auto currentPose = std::map<std::string, Matrix4>();
 
 		for (auto joint : *previousFrame.GetPose())
 		{
 			JointTransform *previousTransform = previousFrame.GetPose()->find(joint.first)->second;
 			JointTransform *nextTransform = nextFrame.GetPose()->find(joint.first)->second;
-			JointTransform *currentTransform = JointTransform::Interpolate(*previousTransform, *nextTransform, progression);
-			currentPose.insert(std::make_pair(joint.first, currentTransform->GetLocalTransform()));
-			delete currentTransform;
+			JointTransform currentTransform = JointTransform::Interpolate(*previousTransform, *nextTransform, progression);
+			currentPose.insert(std::make_pair(joint.first, currentTransform.GetLocalTransform()));
 		}
 
 		return currentPose;
 	}
 
-	void Animator::ApplyPoseToJoints(const std::map<std::string, Matrix4 *> &currentPose, Joint *joint, const Matrix4 &parentTransform)
+	void Animator::ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint *joint, const Matrix4 &parentTransform)
 	{
-		Matrix4 *currentLocalTransform = currentPose.find(joint->GetName())->second;
-		Matrix4 currentTransform = parentTransform * *currentLocalTransform;
+		Matrix4 currentLocalTransform = currentPose.find(joint->GetName())->second;
+		Matrix4 currentTransform = parentTransform * currentLocalTransform;
 
 		for (auto childJoint : *joint->GetChildren())
 		{
 			ApplyPoseToJoints(currentPose, childJoint, currentTransform);
 		}
 
-		currentTransform *= *joint->GetInverseBindTransform();
+		currentTransform = currentTransform * *joint->GetInverseBindTransform();
 		joint->SetAnimatedTransform(currentTransform);
 	}
 
 	void Animator::DoAnimation(Animation *animation)
 	{
-		m_animationTime = 0;
+		m_animationTime = 0.0f;
 		m_currentAnimation = animation;
 	}
 }

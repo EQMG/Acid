@@ -82,7 +82,10 @@ namespace fl
 
 	Quaternion Quaternion::Slerp(const Quaternion &other, const float &progression)
 	{
-		float d = m_x * other.m_x + m_y * other.m_y + m_z * other.m_z + m_w * other.m_w;
+		Quaternion start = this->Normalize();
+		Quaternion end = other.Normalize();
+
+		float d = start.m_x * end.m_x + start.m_y * end.m_y + start.m_z * end.m_z + start.m_w * end.m_w;
 		float absDot = d < 0.0f ? -d : d;
 		float scale0 = 1.0f - progression;
 		float scale1 = progression;
@@ -100,10 +103,10 @@ namespace fl
 			scale1 = -scale1;
 		}
 
-		float x = (scale0 * m_x) + (scale1 * other.m_x);
-		float y = (scale0 * m_y) + (scale1 * other.m_y);
-		float z = (scale0 * m_z) + (scale1 * other.m_z);
-		float w = (scale0 * m_w) + (scale1 * other.m_w);
+		float x = (scale0 * start.m_x) + (scale1 * end.m_x);
+		float y = (scale0 * start.m_y) + (scale1 * end.m_y);
+		float z = (scale0 * start.m_z) + (scale1 * end.m_z);
+		float w = (scale0 * start.m_w) + (scale1 * end.m_w);
 		return Quaternion(x, y, z, w);
 	}
 

@@ -23,9 +23,10 @@ namespace fl
 		Animation *m_animation;
 
 		Animator *m_animator;
-		std::vector<Matrix4 *> m_jointMatrices;
+		std::vector<Matrix4> m_jointMatrices;
 	public:
 		static const Matrix4 *S_CORRECTION;
+		static const int MAX_JOINTS;
 		static const int MAX_WEIGHTS;
 
 		MeshAnimated(const std::string &filename = "");
@@ -46,11 +47,11 @@ namespace fl
 
 		void TrySetModel(const std::string &filename) override;
 
-		std::vector<Matrix4 *> GetJointTransforms() const { return m_jointMatrices; }
+		std::vector<Matrix4> GetJointTransforms() const { return m_jointMatrices; }
 
 	private:
 		Joint *CreateJoints(JointData *data);
 
-		void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4 *> *jointMatrices);
+		void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> *jointMatrices);
 	};
 }
