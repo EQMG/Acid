@@ -8,16 +8,16 @@ namespace fl
 		public ISpawnParticle
 	{
 	private:
-		Vector3 *m_point;
+		Vector3 m_point;
 	public:
 		SpawnPoint();
 
 		~SpawnPoint();
 
-		Vector3 *GetBaseSpawnPosition() override;
+		Vector3 GetBaseSpawnPosition() override;
 
-		Vector3 *getPoint() const { return m_point; }
+		Vector3 GetPoint() const { return m_point; }
 
-		void setPoint(const Vector3 &point) { *m_point = point; }
+		void SetPoint(const Vector3 &point) { m_point = point; }
 	};
 }

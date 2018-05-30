@@ -14,13 +14,13 @@ namespace fl
 	private:
 		ParticleType *m_particleType;
 
-		Vector3 *m_position;
+		Vector3 m_position;
 
-		Vector3 *m_velocity;
-		Vector3 *m_change;
+		Vector3 m_velocity;
+		Vector3 m_change;
 
-		Vector2 *m_textureOffset1;
-		Vector2 *m_textureOffset2;
+		Vector2 m_textureOffset1;
+		Vector2 m_textureOffset2;
 
 		float m_lifeLength;
 		float m_rotation;
@@ -58,15 +58,15 @@ namespace fl
 
 		ParticleType *GetParticleType() const { return m_particleType; }
 
-		Vector3 *GetPosition() const { return m_position; }
+		Vector3 GetPosition() const { return m_position; }
 
-		Vector3 *GetVelocity() const { return m_velocity; }
+		Vector3 GetVelocity() const { return m_velocity; }
 
-		Vector3 *GetChange() const { return m_change; }
+		Vector3 GetChange() const { return m_change; }
 
-		Vector2 *GetTextureOffset1() const { return m_textureOffset1; }
+		Vector2 GetTextureOffset1() const { return m_textureOffset1; }
 
-		Vector2 *GetTextureOffset2() const { return m_textureOffset2; }
+		Vector2 GetTextureOffset2() const { return m_textureOffset2; }
 
 		float GetLifeLength() const { return m_lifeLength; }
 
@@ -87,6 +87,6 @@ namespace fl
 		bool operator<(const Particle &other) const;
 
 	private:
-		Vector2 *UpdateTextureOffset(Vector2 *offset, const int &index) const;
+		Vector2 CalculateTextureOffset(const int &index) const;
 	};
 }

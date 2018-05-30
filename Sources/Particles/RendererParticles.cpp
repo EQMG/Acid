@@ -51,7 +51,7 @@ namespace fl
 
 	Matrix4 RendererParticles::ModelMatrix(Particle *particle, const Matrix4 &viewMatrix)
 	{
-		Matrix4 modelMatrix = modelMatrix.Translate(*particle->GetPosition());
+		Matrix4 modelMatrix = modelMatrix.Translate(particle->GetPosition());
 		modelMatrix.m_00 = viewMatrix.m_00;
 		modelMatrix.m_01 = viewMatrix.m_10;
 		modelMatrix.m_02 = viewMatrix.m_20;

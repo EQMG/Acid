@@ -7,11 +7,11 @@ namespace fl
 {
 	Particle::Particle(ParticleType *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
 		m_particleType(particleType),
-		m_position(new Vector3(position)),
-		m_velocity(new Vector3(velocity)),
-		m_change(new Vector3()),
-		m_textureOffset1(new Vector2()),
-		m_textureOffset2(new Vector2()),
+		m_position(Vector3(position)),
+		m_velocity(Vector3(velocity)),
+		m_change(Vector3()),
+		m_textureOffset1(Vector2()),
+		m_textureOffset2(Vector2()),
 		m_lifeLength(lifeLength),
 		m_rotation(rotation),
 		m_scale(scale),
@@ -25,22 +25,15 @@ namespace fl
 
 	Particle::~Particle()
 	{
-		delete m_position;
-
-		delete m_velocity;
-		delete m_change;
-
-		delete m_textureOffset1;
-		delete m_textureOffset2;
 	}
 
 	void Particle::Update()
 	{
-		m_velocity->m_y += -10.0f * m_gravityEffect * Engine::Get()->GetDelta();
-		*m_change = *m_velocity;
-		*m_change *= Engine::Get()->GetDelta();
+		m_velocity.m_y += -10.0f * m_gravityEffect * Engine::Get()->GetDelta();
+		m_change = m_velocity;
+		m_change *= Engine::Get()->GetDelta();
 
-		*m_position += *m_change;
+		m_position += m_change;
 		m_elapsedTime += Engine::Get()->GetDelta();
 
 		if (m_elapsedTime > m_lifeLength)
@@ -53,7 +46,7 @@ namespace fl
 			return;
 		}
 
-		Vector3 cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - *m_position;
+		Vector3 cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - m_position;
 		m_distanceToCamera = cameraToParticle.LengthSquared();
 
 		float lifeFactor = m_elapsedTime / m_lifeLength;
@@ -69,8 +62,8 @@ namespace fl
 		int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
 
 		m_textureBlendFactor = std::fmod(atlasProgression, 1.0f);
-		UpdateTextureOffset(m_textureOffset1, index1);
-		UpdateTextureOffset(m_textureOffset2, index2);
+		m_textureOffset1 = CalculateTextureOffset(index1);
+		m_textureOffset2 = CalculateTextureOffset(index2);
 	}
 
 	bool Particle::operator<(const Particle &other) const
@@ -78,12 +71,13 @@ namespace fl
 		return m_distanceToCamera > other.m_distanceToCamera;
 	}
 
-	Vector2 *Particle::UpdateTextureOffset(Vector2 *offset, const int &index) const
+	Vector2 Particle::CalculateTextureOffset(const int &index) const
 	{
-		const int column = index % m_particleType->GetTexture()->GetNumberOfRows();
-		const int row = index / m_particleType->GetTexture()->GetNumberOfRows();
-		offset->m_x = static_cast<float>(column) / m_particleType->GetTexture()->GetNumberOfRows();
-		offset->m_y = static_cast<float>(row) / m_particleType->GetTexture()->GetNumberOfRows();
-		return offset;
+		int column = index % m_particleType->GetTexture()->GetNumberOfRows();
+		int row = index / m_particleType->GetTexture()->GetNumberOfRows();
+		Vector2 result = Vector2();
+		result.m_x = static_cast<float>(column) / m_particleType->GetTexture()->GetNumberOfRows();
+		result.m_y = static_cast<float>(row) / m_particleType->GetTexture()->GetNumberOfRows();
+		return result;
 	}
 }

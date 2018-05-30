@@ -11,8 +11,8 @@ namespace test
 
 	ManagerUis::ManagerUis() :
 		IManagerUis(),
-		m_primaryColour(new Colour("#e74c3c")),
-		m_selectorJoystick(new SelectorJoystick(JoystickPort::JOYSTICK_1, 0, 1, 0, 1)),
+		m_primaryColour(Colour("#e74c3c")),
+		m_selectorJoystick(SelectorJoystick(JoystickPort::JOYSTICK_1, 0, 1, 0, 1)),
 		m_buttonPause((new ButtonCompound({
 			new ButtonKeyboard({Key::KEY_ESCAPE}),
 			new ButtonJoystick(JoystickPort::JOYSTICK_1, {7})
@@ -28,8 +28,6 @@ namespace test
 
 	ManagerUis::~ManagerUis()
 	{
-		delete m_primaryColour;
-		delete m_selectorJoystick;
 		delete m_buttonPause;
 		delete m_uiStartLogo;
 		delete m_overlayDebug;

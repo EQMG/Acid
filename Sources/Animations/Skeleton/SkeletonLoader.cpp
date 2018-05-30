@@ -76,15 +76,13 @@ namespace fl
 
 	Matrix4 SkeletonLoader::ConvertData(const std::vector<std::string> &rawData)
 	{
-		float *data = new float[16];
+		Matrix4 result = Matrix4();
 
 		for (unsigned int i = 0; i < rawData.size(); i++)
 		{
-			data[i] = std::stof(rawData[i]);
+			result.m_linear[i] = std::stof(rawData[i]);
 		}
 
-		Matrix4 result = Matrix4(data);
-		delete[] data;
 		return result;
 	}
 }

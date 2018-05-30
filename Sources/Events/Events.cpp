@@ -18,18 +18,18 @@ namespace fl
 
 	void Events::Update()
 	{
-		std::vector<IEvent *> copy = std::vector<IEvent *>(m_events); // TODO: Remove copying.
-
-		for (auto event : copy)
+		for (auto event : std::vector<IEvent *>(m_events)) // TODO: Remove copying.
 		{
-			if (event->EventTriggered())
+			if (!event->EventTriggered())
 			{
-				event->OnEvent();
+				continue;
+			}
 
-				if (event->RemoveAfterEvent())
-				{
-					RemoveEvent(event);
-				}
+			event->OnEvent();
+
+			if (event->RemoveAfterEvent())
+			{
+				RemoveEvent(event);
 			}
 		}
 	}

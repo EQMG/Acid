@@ -86,12 +86,12 @@ namespace fl
 		float aspectRatio = Display::Get()->GetAspectRatio();
 
 		float da = m_rectangle->m_aspectSize ? aspectRatio : 1.0f;
-		float dw = (m_rectangle->m_dimensions->m_x / da) * m_scale;
-		float dh = m_rectangle->m_dimensions->m_y * m_scale;
+		float dw = (m_rectangle->GetDimensions().m_x / da) * m_scale;
+		float dh = m_rectangle->GetDimensions().m_y * m_scale;
 
 		float pa = m_rectangle->m_aspectPosition ? 1.0f : aspectRatio;
-		float px = (m_rectangle->m_position->m_x / pa) - (dw * m_rectangle->m_reference->m_x) + m_positionOffset->m_x;
-		float py = m_rectangle->m_position->m_y - (dh * (-1.0f + m_rectangle->m_reference->m_y)) + m_positionOffset->m_y;
+		float px = (m_rectangle->GetPosition().m_x / pa) - (dw * m_rectangle->GetReference().m_x) + m_positionOffset->m_x;
+		float py = m_rectangle->GetPosition().m_y - (dh * (-1.0f + m_rectangle->GetReference().m_y)) + m_positionOffset->m_y;
 
 		*m_screenTransform = Vector4(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
 	}

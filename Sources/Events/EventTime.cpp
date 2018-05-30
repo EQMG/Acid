@@ -4,7 +4,7 @@ namespace fl
 {
 	EventTime::EventTime(const float &interval, const bool &repeat, const std::function<void()> &onEvent) :
 		IEvent(),
-		m_timer(new Timer(interval)),
+		m_timer(Timer(interval)),
 		m_repeat(repeat),
 		m_onEvent(onEvent)
 	{
@@ -12,14 +12,13 @@ namespace fl
 
 	EventTime::~EventTime()
 	{
-		delete m_timer;
 	}
 
 	bool EventTime::EventTriggered()
 	{
-		if (m_timer->IsPassedTime())
+		if (m_timer.IsPassedTime())
 		{
-			m_timer->ResetStartTime();
+			m_timer.ResetStartTime();
 			return true;
 		}
 
