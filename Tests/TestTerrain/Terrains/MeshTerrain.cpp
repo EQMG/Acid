@@ -34,13 +34,13 @@ namespace test
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
 	{
 		Vector3 position = Vector3(x, 0.0f, z);
-		position.m_y = GetHeight(position.m_x + m_transform->GetPosition()->m_x, position.m_z + m_transform->GetPosition()->m_z);
+		position.m_y = GetHeight(position.m_x + m_transform->GetPosition().m_x, position.m_z + m_transform->GetPosition().m_z);
 		return position;
 	}
 
 	Vector3 MeshTerrain::GetNormal(const Vector3 &position)
 	{
-		return GetNormal(position.m_x + m_transform->GetPosition()->m_x, position.m_z + m_transform->GetPosition()->m_z);
+		return GetNormal(position.m_x + m_transform->GetPosition().m_x, position.m_z + m_transform->GetPosition().m_z);
 	}
 
 	Vector3 MeshTerrain::GetColour(const Vector3 &position, const Vector3 &normal)
@@ -55,7 +55,7 @@ namespace test
 
 	float MeshTerrain::GetHeight(const float &x, const float &z)
 	{
-		float height1 = Worlds::Get()->GetNoiseTerrain()->GetNoise(x, z);
+		float height1 = Worlds::Get()->GetNoiseTerrain().GetNoise(x, z);
 		height1 = (height1 * 60.0f) + 15.0f;
 		//	float length = std::sqrt((x * x) + (z * z));
 

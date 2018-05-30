@@ -1,6 +1,7 @@
 #pragma once
 
 #include <chrono>
+#include <array>
 #include "ModuleRegister.hpp"
 #include "IUpdater.hpp"
 

@@ -12,8 +12,8 @@ namespace test
 		public IManagerUis
 	{
 	private:
-		Colour m_primaryColour;
-		SelectorJoystick m_selectorJoystick;
+		Colour *m_primaryColour;
+		SelectorJoystick *m_selectorJoystick;
 
 		UiStartLogo *m_uiStartLogo;
 		OverlayDebug *m_overlayDebug;
@@ -30,8 +30,8 @@ namespace test
 
 		float GetBlurFactor() override;
 
-		Colour GetPrimaryColour() const override { return m_primaryColour; }
+		Colour *GetPrimaryColour() const override { return m_primaryColour; }
 
-		SelectorJoystick GetSelectorJoystick() const override { return m_selectorJoystick; };
+		SelectorJoystick *GetSelectorJoystick() const override { return m_selectorJoystick; };
 	};
 }

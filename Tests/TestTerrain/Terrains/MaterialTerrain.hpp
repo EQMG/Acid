@@ -13,7 +13,7 @@ namespace test
 		public IMaterial
 	{
 	private:
-		PipelineMaterial *m_material;
+		std::shared_ptr<PipelineMaterial> m_material;
 	public:
 		MaterialTerrain();
 
@@ -31,6 +31,6 @@ namespace test
 
 		std::string GetName() const override { return "MaterialTerrain"; };
 
-		PipelineMaterial *GetMaterial() const override { return m_material; }
+		std::shared_ptr<PipelineMaterial> GetMaterial() const override { return m_material; }
 	};
 }

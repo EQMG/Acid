@@ -32,21 +32,21 @@ namespace test
 		static const float MAX_ANGLE_OF_ELEVATION;
 		static const float MIN_ANGLE_OF_ELEVATION;
 
-		Vector3 *m_position;
-		Vector3 *m_velocity;
-		Vector3 *m_rotation;
+		Vector3 m_position;
+		Vector3 m_velocity;
+		Vector3 m_rotation;
 
-		Matrix4 *m_viewMatrix;
-		Matrix4 *m_projectionMatrix;
+		Matrix4 m_viewMatrix;
+		Matrix4 m_projectionMatrix;
 
-		Frustum *m_viewFrustum;
-		Ray *m_viewRay;
+		Frustum m_viewFrustum;
+		Ray m_viewRay;
 
 		float m_angleOfElevation;
 		float m_angleAroundPlayer;
 
-		Vector3 *m_targetPosition;
-		Vector3 *m_targetRotation;
+		Vector3 m_targetPosition;
+		Vector3 m_targetRotation;
 		float m_targetElevation;
 		float m_targetRotationAngle;
 
@@ -83,18 +83,18 @@ namespace test
 
 		float GetFov() const override { return FIELD_OF_VIEW; }
 
-		Frustum *GetViewFrustum() const override { return m_viewFrustum; }
+		Frustum GetViewFrustum() const override { return m_viewFrustum; }
 
-		Ray *GetViewRay() const override { return m_viewRay; }
+		Ray GetViewRay() const override { return m_viewRay; }
 
-		Matrix4 *GetViewMatrix() const override { return m_viewMatrix; }
+		Matrix4 GetViewMatrix() const override { return m_viewMatrix; }
 
-		Matrix4 *GetProjectionMatrix() const override { return m_projectionMatrix; }
+		Matrix4 GetProjectionMatrix() const override { return m_projectionMatrix; }
 
-		Vector3 *GetPosition() const override { return m_position; }
+		Vector3 GetPosition() const override { return m_position; }
 
-		Vector3 *GetVelocity() const override { return m_velocity; }
+		Vector3 GetVelocity() const override { return m_velocity; }
 
-		Vector3 *GetRotation() const override { return m_rotation; }
+		Vector3 GetRotation() const override { return m_rotation; }
 	};
 }
