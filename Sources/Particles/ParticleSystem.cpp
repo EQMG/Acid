@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	ParticleSystem::ParticleSystem(std::vector<ParticleType *> *types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
+	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
 		Component(),
 		m_types(types),
 		m_spawn(spawn),
@@ -13,9 +13,9 @@ namespace fl
 		m_averageSpeed(averageSpeed),
 		m_gravityEffect(gravityEffect),
 		m_randomRotation(false),
-		m_lastPosition(new Vector3()),
-		m_systemOffset(new Vector3(systemOffset)),
-		m_direction(nullptr),
+		m_lastPosition(Vector3()),
+		m_systemOffset(Vector3(systemOffset)),
+		m_direction(Vector3()),
 		m_directionDeviation(0.0f),
 		m_speedError(0.0f),
 		m_lifeError(0.0f),
@@ -27,24 +27,12 @@ namespace fl
 
 	ParticleSystem::~ParticleSystem()
 	{
-		for (auto particleType : *m_types)
-		{
-			delete particleType;
-		}
-
-		delete m_types;
 		delete m_spawn;
-
-		delete m_lastPosition;
-
-		delete m_systemOffset;
-
-		delete m_direction;
 	}
 
 	void ParticleSystem::Update()
 	{
-		if (m_paused || m_types->empty())
+		if (m_paused || m_types.empty())
 		{
 			return;
 		}
@@ -66,7 +54,7 @@ namespace fl
 		m_pps = value->GetChild("PPS")->Get<float>();
 		m_averageSpeed = value->GetChild("Average Speed")->Get<float>();
 		m_gravityEffect = value->GetChild("Gravity Effect")->Get<float>();
-		*m_systemOffset = value->GetChild("Offset");
+		m_systemOffset = value->GetChild("Offset");
 	}
 
 	void ParticleSystem::Write(LoadedValue *value)
@@ -74,7 +62,7 @@ namespace fl
 		value->GetChild("PPS", true)->Set(m_pps);
 		value->GetChild("Average Speed", true)->Set(m_averageSpeed);
 		value->GetChild("Gravity Effect", true)->Set(m_gravityEffect);
-		m_systemOffset->Write(value->GetChild("Offset", true));
+		m_systemOffset.Write(value->GetChild("Offset", true));
 	}
 
 	Particle *ParticleSystem::EmitParticle()
@@ -86,27 +74,27 @@ namespace fl
 
 		Vector3 velocity = Vector3();
 		float delta = Engine::Get()->GetDelta();
-		velocity = GetGameObject()->GetTransform()->GetPosition() - *m_lastPosition;
-		*m_lastPosition = GetGameObject()->GetTransform()->GetPosition();
+		velocity = GetGameObject()->GetTransform()->GetPosition() - m_lastPosition;
+		m_lastPosition = GetGameObject()->GetTransform()->GetPosition();
 		velocity /= delta;
 
-		if (m_direction != nullptr)
+		if (m_direction == 0.0f)
 		{
-			velocity = Vector3::RandomUnitVectorWithinCone(*m_direction, m_directionDeviation);
+			velocity = Vector3::RandomUnitVectorWithinCone(m_direction, m_directionDeviation);
 		}
 		else
 		{
 			velocity = GenerateRandomUnitVector();
 		}
 
-		velocity.Normalize();
+		velocity = velocity.Normalize();
 		velocity *= GenerateValue(m_averageSpeed, m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError));
 
-		ParticleType *emitType = m_types->at(static_cast<unsigned int>(std::floor(Maths::RandomInRange(0, static_cast<int>(m_types->size())))));
+		auto emitType = m_types.at(static_cast<unsigned int>(std::floor(Maths::RandomInRange(0, static_cast<int>(m_types.size())))));
 		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
 		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
 		Vector3 spawnPos = Vector3();
-		spawnPos = GetGameObject()->GetTransform()->GetPosition() + *m_systemOffset;
+		spawnPos = GetGameObject()->GetTransform()->GetPosition() + m_systemOffset;
 		spawnPos = spawnPos + m_spawn->GetBaseSpawnPosition();
 		return new Particle(emitType, spawnPos, velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
 	}
@@ -136,18 +124,18 @@ namespace fl
 		return Vector3(x, y, z);
 	}
 
-	void ParticleSystem::AddParticleType(ParticleType *type) const
+	void ParticleSystem::AddParticleType(std::shared_ptr<ParticleType> type)
 	{
-		m_types->push_back(type);
+		m_types.push_back(type);
 	}
 
-	void ParticleSystem::RemoveParticleType(ParticleType *type) const
+	void ParticleSystem::RemoveParticleType(std::shared_ptr<ParticleType> type)
 	{
-		for (auto it = m_types->begin(); it != m_types->end(); ++it)
+		for (auto it = m_types.begin(); it != m_types.end(); ++it)
 		{
 			if (*it == type)
 			{
-				m_types->erase(it);
+				m_types.erase(it);
 				return;
 			}
 		}
@@ -161,7 +149,7 @@ namespace fl
 
 	void ParticleSystem::SetDirection(const Vector3 &direction, const float &deviation)
 	{
-		*m_direction = direction;
+		m_direction = direction;
 		m_directionDeviation = deviation * PI;
 	}
 }

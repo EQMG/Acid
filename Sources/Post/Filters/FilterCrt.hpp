@@ -9,9 +9,9 @@ namespace fl
 		public IPostFilter
 	{
 	private:
-		UniformHandler *m_uniformScene;
+		UniformHandler m_uniformScene;
 
-		Colour *m_screenColour;
+		Colour m_screenColour;
 		float m_curveAmountX;
 		float m_curveAmountY;
 		float m_scanLineSize;
@@ -23,9 +23,9 @@ namespace fl
 
 		void Render(const CommandBuffer &commandBuffer) override;
 
-		Colour *GetScreenColour() const { return m_screenColour; }
+		Colour GetScreenColour() const { return m_screenColour; }
 
-		void SetScreenColour(const Colour &screenColour) { *m_screenColour = screenColour; }
+		void SetScreenColour(const Colour &screenColour) { m_screenColour = screenColour; }
 
 		float GetCurveAmountX() const { return m_curveAmountX; }
 

@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	Particle::Particle(ParticleType *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
+	Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
 		m_particleType(particleType),
 		m_position(Vector3(position)),
 		m_velocity(Vector3(velocity)),

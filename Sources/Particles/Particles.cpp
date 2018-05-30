@@ -8,7 +8,7 @@ namespace fl
 
 	Particles::Particles() :
 		IModule(),
-		m_particles(std::map<ParticleType *, std::vector<Particle *>>())
+		m_particles(std::map<std::shared_ptr<ParticleType>, std::vector<Particle *>>())
 	{
 	}
 

@@ -12,7 +12,7 @@ namespace fl
 	class FL_EXPORT Particle
 	{
 	private:
-		ParticleType *m_particleType;
+		std::shared_ptr<ParticleType> m_particleType;
 
 		Vector3 m_position;
 
@@ -42,7 +42,7 @@ namespace fl
 		/// <param name="rotation"> The particles rotation. </param>
 		/// <param name="scale"> The particles scale. </param>
 		/// <param name="gravityEffect"> The particles gravity effect. </param>
-		Particle(ParticleType *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect);
+		Particle(std::shared_ptr<ParticleType> particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect);
 
 		/// <summary>
 		/// Deconstructor for the particle.
@@ -56,7 +56,7 @@ namespace fl
 
 		bool IsAlive() const { return m_transparency < 1.0f; }
 
-		ParticleType *GetParticleType() const { return m_particleType; }
+		std::shared_ptr<ParticleType> GetParticleType() const { return m_particleType; }
 
 		Vector3 GetPosition() const { return m_position; }
 

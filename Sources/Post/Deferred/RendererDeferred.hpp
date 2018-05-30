@@ -11,10 +11,10 @@ namespace fl
 		public IRenderer
 	{
 	private:
-		DescriptorsHandler *m_descriptorSet;
-		UniformHandler *m_uniformScene;
+		DescriptorsHandler m_descriptorSet;
+		UniformHandler m_uniformScene;
 
-		Pipeline *m_pipeline;
+		Pipeline m_pipeline;
 		std::shared_ptr<Model> m_model;
 
 		std::shared_ptr<Texture> m_brdflut;

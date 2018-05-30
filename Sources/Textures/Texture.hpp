@@ -59,7 +59,7 @@ namespace fl
 				const bool &anisotropic = true, const bool &nearest = false, const uint32_t &numberOfRows = 1);
 
 		/// <summary>
-		/// A new empty texture object.
+		/// A new texture object from a array of pixels.
 		/// </summary>
 		Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels = nullptr);
 
