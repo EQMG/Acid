@@ -46,7 +46,7 @@ namespace fl
 
 	void FilterLensflare::SetSunPosition(const Vector3 &sunPosition) const
 	{
-		ICamera *camera = Scenes::Get()->GetCamera();
+		auto camera = Scenes::Get()->GetCamera();
 		*m_sunPosition = Matrix4::WorldToScreenSpace(sunPosition, *camera->GetViewMatrix(), *camera->GetProjectionMatrix());
 	}
 }

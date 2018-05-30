@@ -26,8 +26,8 @@ namespace test
 		m_currentTab(nullptr),
 		m_targetTab(nullptr)
 	{
-		Texture *textureWhite = new Texture("Resources/Guis/White.png");
-		Texture *textureGeometry = new Texture("Resources/Guis/Geometry-Grain.png");
+		auto textureWhite = Texture::Resource("Resources/Guis/White.png");
+		auto textureGeometry = Texture::Resource("Resources/Guis/Geometry-Grain.png");
 
 		m_barBackground = new Gui(this, UiBound(Vector2(0.5f, 1.0f), "TopCentre", true, false, Vector2(1.0f, 1.0f)), textureGeometry, 1);
 		m_barBackground->SetScissor(Vector4(0.0f, 0.0f, 1.0f, 0.125f));

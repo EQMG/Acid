@@ -15,18 +15,18 @@ namespace fl
 		public IModule
 	{
 	private:
-		static const Colour *FOG_COLOUR_SUNRISE;
-		static const Colour *FOG_COLOUR_NIGHT;
-		static const Colour *FOG_COLOUR_DAY;
+		static const Colour FOG_COLOUR_SUNRISE;
+		static const Colour FOG_COLOUR_NIGHT;
+		static const Colour FOG_COLOUR_DAY;
 
-		static const Colour *SUN_COLOUR_SUNRISE;
-		static const Colour *SUN_COLOUR_NIGHT;
-		static const Colour *SUN_COLOUR_DAY;
+		static const Colour SUN_COLOUR_SUNRISE;
+		static const Colour SUN_COLOUR_NIGHT;
+		static const Colour SUN_COLOUR_DAY;
 
-		static const Colour *MOON_COLOUR_NIGHT;
-		static const Colour *MOON_COLOUR_DAY;
+		static const Colour MOON_COLOUR_NIGHT;
+		static const Colour MOON_COLOUR_DAY;
 
-		static const Colour *SKYBOX_COLOUR_DAY;
+		static const Colour SKYBOX_COLOUR_DAY;
 
 		Noise *m_noiseTerrain;
 

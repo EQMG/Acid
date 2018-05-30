@@ -12,6 +12,7 @@ namespace test
 	ManagerUis::ManagerUis() :
 		IManagerUis(),
 		m_primaryColour(new Colour("#e74c3c")),
+		m_selectorJoystick(new SelectorJoystick(JoystickPort::JOYSTICK_1, 0, 1, 0, 1)),
 		m_buttonPause((new ButtonCompound({
 			new ButtonKeyboard({Key::KEY_ESCAPE}),
 			new ButtonJoystick(JoystickPort::JOYSTICK_1, {7})
@@ -20,7 +21,6 @@ namespace test
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer())),
 		m_uiNavigation(new UiNavigation(Uis::Get()->GetContainer()))
 	{
-		Uis::Get()->GetSelector()->Load(JoystickPort::JOYSTICK_1, 0, 1, 0, 1);
 		m_uiStartLogo->SetAlphaDriver(new DriverConstant(1.0f));
 		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f));
 		m_uiNavigation->SetAlphaDriver(new DriverConstant(0.0f));
@@ -29,6 +29,7 @@ namespace test
 	ManagerUis::~ManagerUis()
 	{
 		delete m_primaryColour;
+		delete m_selectorJoystick;
 		delete m_buttonPause;
 		delete m_uiStartLogo;
 		delete m_overlayDebug;

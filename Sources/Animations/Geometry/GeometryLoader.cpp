@@ -52,7 +52,7 @@ namespace fl
 		for (unsigned int i = 0; i < positionsCount / 3; i++)
 		{
 			Vector4 position = Vector4(std::stof(positionsRawData[i * 3]), std::stof(positionsRawData[i * 3 + 1]), std::stof(positionsRawData[i * 3 + 2]), 1.0f);
-			position = MeshAnimated::S_CORRECTION->Transform(position); // FIXME: Multiply?
+			position = MeshAnimated::CORRECTION->Transform(position); // FIXME: Multiply?
 			VertexAnimatedData *newVertex = new VertexAnimatedData(m_positionsList.size(), position);
 			newVertex->SetSkinData(m_vertexWeights[m_positionsList.size()]);
 			m_positionsList.push_back(newVertex);
@@ -83,7 +83,7 @@ namespace fl
 		for (unsigned int i = 0; i < normalsCount / 3; i++)
 		{
 			Vector3 normal = Vector3(std::stof(normalsRawData[i * 3]), std::stof(normalsRawData[i * 3 + 1]), std::stof(normalsRawData[i * 3 + 2]));
-			normal = MeshAnimated::S_CORRECTION->Transform(normal); // FIXME: Multiply?
+			normal = MeshAnimated::CORRECTION->Transform(normal); // FIXME: Multiply?
 			m_normalsList.push_back(normal);
 		}
 	}
