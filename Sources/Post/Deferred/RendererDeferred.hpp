@@ -15,10 +15,12 @@ namespace fl
 		UniformHandler *m_uniformScene;
 
 		Pipeline *m_pipeline;
-		Model *m_model;
+		std::shared_ptr<Model> m_model;
 
-		Texture *m_brdflut;
+		std::shared_ptr<Texture> m_brdflut;
 	public:
+		static const int MAX_LIGHTS;
+		
 		RendererDeferred(const GraphicsStage &graphicsStage);
 
 		~RendererDeferred();

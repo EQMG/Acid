@@ -24,7 +24,7 @@ namespace fl
 		/// </summary>
 		/// <param name="radius"> The spheres radius. </param>
 		/// <param name="position"> The spheres initial position. </param>
-		ColliderSphere(const float &radius, const Vector3 &position = Vector3());
+		ColliderSphere(const float &radius, const Vector3 &position = Vector3::ZERO);
 
 		/// <summary>
 		/// Creates a new sphere from another sphere source.

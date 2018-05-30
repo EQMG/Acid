@@ -14,7 +14,7 @@ namespace fl
 		DescriptorsHandler *m_descriptorSet;
 
 		Pipeline *m_pipeline;
-		Model *m_model;
+		std::shared_ptr<Model> m_model;
 	public:
 		/// <summary>
 		/// Creates a new post effect filter
@@ -38,6 +38,6 @@ namespace fl
 
 		Pipeline *GetPipeline() const { return m_pipeline; }
 
-		Model *GetModel() const { return m_model; }
+		std::shared_ptr<Model> GetModel() const { return m_model; }
 	};
 }

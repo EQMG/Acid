@@ -33,7 +33,6 @@ namespace fl
 	{
 		delete m_descriptorSet;
 		delete m_uniformObject;
-		delete m_model;
 
 		delete m_textColour;
 		delete m_borderColour;
@@ -192,8 +191,7 @@ namespace fl
 		NormalizeQuad(&bounding, vertices);
 
 		// Loads the mesh data.
-		delete m_model;
-		m_model = new Model(vertices);
+		m_model = std::make_shared<Model>(vertices);
 		GetRectangle()->SetDimensions(Vector2(bounding.m_x, bounding.m_y));
 	}
 

@@ -17,17 +17,17 @@ namespace fl
 		std::string m_filename;
 		Pipeline *m_pipeline;
 	public:
-		static PipelineMaterial *Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines)
+		static std::shared_ptr<PipelineMaterial> Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines)
 		{
-			IResource *resource = Resources::Get()->Get(ToFilename(graphicsStage, pipelineCreate, defines));
+			auto resource = Resources::Get()->Get(ToFilename(graphicsStage, pipelineCreate, defines));
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<PipelineMaterial *>(resource);
+				return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 			}
 
-			PipelineMaterial *result = new PipelineMaterial(graphicsStage, pipelineCreate, defines);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<PipelineMaterial>(graphicsStage, pipelineCreate, defines);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 

@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	Gui::Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow) :
+	Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const int &selectedRow) :
 		UiObject(parent, rectangle),
 		m_descriptorSet(new DescriptorsHandler()),
 		m_uniformObject(new UniformHandler()),
@@ -20,7 +20,6 @@ namespace fl
 	{
 		delete m_descriptorSet;
 		delete m_uniformObject;
-		delete m_model;
 		delete m_atlasOffset;
 		delete m_colourOffset;
 	}

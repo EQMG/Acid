@@ -96,8 +96,7 @@ namespace fl
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetTexture(i);
 	}
-
-
+	
 	EShLanguage GetEshLanguage(const VkShaderStageFlagBits &stageFlag)
 	{
 		switch (stageFlag)

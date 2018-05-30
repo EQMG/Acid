@@ -175,38 +175,38 @@ namespace fl
 		*source->m_maxExtents = *m_maxExtents;
 
 		// Scales the dimensions for the aabb.
-		if (*transform.GetScaling() != 1.0f)
+		if (transform.GetScaling() != 1.0f)
 		{
-			*source->m_minExtents = Vector3(source->m_minExtents->m_x * transform.GetScaling()->m_x, source->m_minExtents->m_y * transform.GetScaling()->m_y, source->m_minExtents->m_z * transform.GetScaling()->m_z);
-			*source->m_maxExtents = Vector3(source->m_maxExtents->m_x * transform.GetScaling()->m_x, source->m_maxExtents->m_y * transform.GetScaling()->m_y, source->m_maxExtents->m_z * transform.GetScaling()->m_z);
+			*source->m_minExtents = Vector3(source->m_minExtents->m_x * transform.GetScaling().m_x, source->m_minExtents->m_y * transform.GetScaling().m_y, source->m_minExtents->m_z * transform.GetScaling().m_z);
+			*source->m_maxExtents = Vector3(source->m_maxExtents->m_x * transform.GetScaling().m_x, source->m_maxExtents->m_y * transform.GetScaling().m_y, source->m_maxExtents->m_z * transform.GetScaling().m_z);
 		}
 
 		// Creates the 8 aabb corners and rotates them.
-		if (*transform.GetRotation() != 0.0f)
+		if (transform.GetRotation() != 0.0f)
 		{
 			Vector3 fll = Vector3(source->m_minExtents->m_x, source->m_minExtents->m_y, source->m_minExtents->m_z);
-			fll = fll.Rotate(*transform.GetRotation());
+			fll = fll.Rotate(transform.GetRotation());
 
 			Vector3 flr = Vector3(source->m_maxExtents->m_x, source->m_minExtents->m_y, source->m_minExtents->m_z);
-			flr = flr.Rotate(*transform.GetRotation());
+			flr = flr.Rotate(transform.GetRotation());
 
 			Vector3 ful = Vector3(source->m_minExtents->m_x, source->m_maxExtents->m_y, source->m_minExtents->m_z);
-			ful = ful.Rotate(*transform.GetRotation());
+			ful = ful.Rotate(transform.GetRotation());
 
 			Vector3 fur = Vector3(source->m_maxExtents->m_x, source->m_maxExtents->m_y, source->m_minExtents->m_z);
-			fur = fur.Rotate(*transform.GetRotation());
+			fur = fur.Rotate(transform.GetRotation());
 
 			Vector3 bur = Vector3(source->m_maxExtents->m_x, source->m_maxExtents->m_y, source->m_maxExtents->m_z);
-			bur = bur.Rotate(*transform.GetRotation());
+			bur = bur.Rotate(transform.GetRotation());
 
 			Vector3 bul = Vector3(source->m_minExtents->m_x, source->m_maxExtents->m_y, source->m_maxExtents->m_z);
-			bul = bul.Rotate(*transform.GetRotation());
+			bul = bul.Rotate(transform.GetRotation());
 
 			Vector3 blr = Vector3(source->m_maxExtents->m_x, source->m_minExtents->m_y, source->m_maxExtents->m_z);
-			blr = blr.Rotate(*transform.GetRotation());
+			blr = blr.Rotate(transform.GetRotation());
 
 			Vector3 bll = Vector3(source->m_minExtents->m_x, source->m_minExtents->m_y, source->m_maxExtents->m_z);
-			bll = bll.Rotate(*transform.GetRotation());
+			bll = bll.Rotate(transform.GetRotation());
 
 			//source->m_minExtents = min(fll, min(flr, min(ful, min(fur, min(bur, min(bul, min(blr, bll)))))));
 			*source->m_minExtents = Vector3::MinVector(fll, flr);
@@ -228,10 +228,10 @@ namespace fl
 		}
 
 		// Transforms the aabb.
-		if (*transform.GetPosition() != 0.0f)
+		if (transform.GetPosition() != 0.0f)
 		{
-			*source->m_minExtents = *source->m_minExtents + *transform.GetPosition();
-			*source->m_maxExtents = *source->m_maxExtents + *transform.GetPosition();
+			*source->m_minExtents = *source->m_minExtents + transform.GetPosition();
+			*source->m_maxExtents = *source->m_maxExtents + transform.GetPosition();
 		}
 
 		// Returns the final aabb.

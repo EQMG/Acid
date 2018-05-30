@@ -28,7 +28,7 @@ namespace fl
 		m_moonPosition(new Vector3()),
 		m_sunColour(new Colour()),
 		m_moonColour(new Colour()),
-		m_fog(new Fog(new Colour(), 0.001f, 2.0f, -0.1f, 0.3f)),
+		m_fog(new Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f)),
 		m_skyColour(new Colour("#3399ff"))
 	{
 		m_noiseTerrain->SetNoiseType(NoiseType::TYPE_PERLINFRACTAL);

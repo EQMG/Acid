@@ -11,7 +11,7 @@ namespace fl
 	class FL_EXPORT Fog
 	{
 	private:
-		Colour *m_colour;
+		Colour m_colour;
 		float m_density;
 		float m_gradient;
 		float m_lowerLimit;
@@ -25,16 +25,16 @@ namespace fl
 		/// <param name="gradient"> The gradient of the fog. </param>
 		/// <param name="lowerLimit"> At what height will the skybox fog begin to appear. </param>
 		/// <param name="upperLimit"> At what height will there be skybox no fog. </param>
-		Fog(Colour *colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit);
+		Fog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit);
 
 		/// <summary>
 		/// Deconstructor for fog.
 		/// </summary>
 		~Fog();
 
-		Colour *GetColour() const { return m_colour; }
+		Colour GetColour() const { return m_colour; }
 
-		void SetColour(const Colour &colour) { *m_colour = colour; }
+		void SetColour(const Colour &colour) { m_colour = colour; }
 
 		float GetDensity() const { return m_density; }
 

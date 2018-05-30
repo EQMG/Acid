@@ -98,7 +98,7 @@ namespace fl
 		/// Gets the (optional) model to be used in the <seealso cref="BoundingRenderer"/>.
 		/// </summary>
 		/// <returns> A model that can be used to render this shape. </returns>
-		virtual Model *GetRenderModel() = 0;
+		virtual std::shared_ptr<Model> GetRenderModel() = 0;
 
 		/// <summary>
 		/// Gets the centre for the rendered model.

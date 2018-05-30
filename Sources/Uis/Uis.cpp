@@ -18,8 +18,6 @@ namespace fl
 		delete m_selector;
 		delete m_container;
 		delete m_objects;
-
-		delete m_proximaNova;
 	}
 
 	void Uis::Update()

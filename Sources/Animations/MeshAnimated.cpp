@@ -24,7 +24,6 @@ namespace fl
 	MeshAnimated::~MeshAnimated()
 	{
 		delete m_headJoint;
-		delete m_model;
 		delete m_animation;
 		delete m_animator;
 	}
@@ -58,7 +57,6 @@ namespace fl
 	{
 		delete m_animation;
 		delete m_headJoint;
-		delete m_model;
 		delete m_animator;
 
 		if (!FileSystem::FileExists(filename))
@@ -76,7 +74,7 @@ namespace fl
 		GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetVerticesSkinData());
 		auto vertices = geometryLoader->GetVertices();
 		auto indices = geometryLoader->GetIndices();
-		m_model = new Model(vertices, indices);
+		m_model = std::make_shared<Model>(vertices, indices, filename);
 		m_headJoint = CreateJoints(skeletonLoader->GetHeadJoint());
 		delete skeletonLoader;
 		delete skinLoader;

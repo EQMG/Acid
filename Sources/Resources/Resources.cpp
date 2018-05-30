@@ -3,47 +3,57 @@
 namespace fl
 {
 	Resources::Resources() :
-		m_managed(new std::vector<IResource *>())
+		m_resources(std::vector<std::shared_ptr<IResource>>())
 	{
 	}
 
 	Resources::~Resources()
 	{
-		for (auto managed : *m_managed)
-		{
-			delete managed;
-		}
-
-		delete m_managed;
 	}
 
 	void Resources::Update()
 	{
 	}
 
-	IResource *Resources::Get(const std::string &filename)
+	std::shared_ptr<IResource> Resources::Get(const std::string &filename)
 	{
-		for (auto managed : *m_managed)
+		for (auto resource : m_resources)
 		{
-			if (managed != nullptr && managed->GetFilename() == filename)
+			if (resource != nullptr && resource->GetFilename() == filename)
 			{
-				return managed;
+				return resource;
 			}
 		}
 
 		return nullptr;
 	}
 
-	void Resources::Add(IResource *managed)
+	void Resources::Add(std::shared_ptr<IResource> resource)
 	{
-		m_managed->push_back(managed);
+		m_resources.emplace_back(resource);
 	}
 
-	void Resources::Remove(IResource *managed)
+	void Resources::Remove(std::shared_ptr<IResource> resource)
 	{
+		for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
+		{
+			if (*it == resource)
+			{
+			//	delete (*it);
+				m_resources.erase(it);
+			}
+		}
 	}
 
 	void Resources::Remove(const std::string &filename)
 	{
+		for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
+		{
+			if ((*it)->GetFilename() == filename)
+			{
+			//	delete *it;
+				m_resources.erase(it);
+			}
+		}
 	}
 }

@@ -18,17 +18,17 @@ namespace fl
 		FontType *m_typeSemibold;
 		FontType *m_typeBold;
 	public:
-		static FontFamily *Resource(const std::string &filename)
+		static std::shared_ptr<FontFamily> Resource(const std::string &filename)
 		{
-			IResource *resource = Resources::Get()->Get(filename);
+			auto resource = Resources::Get()->Get(filename);
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<FontFamily *>(resource);
+				return std::dynamic_pointer_cast<FontFamily>(resource);
 			}
 
-			FontFamily *result = new FontFamily(filename);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<FontFamily>(filename);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 

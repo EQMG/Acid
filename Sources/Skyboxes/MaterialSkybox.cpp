@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	MaterialSkybox::MaterialSkybox(Cubemap *cubemap, const bool &enableFog) :
+	MaterialSkybox::MaterialSkybox(std::shared_ptr<Cubemap> cubemap, const bool &enableFog) :
 		IMaterial(),
 		m_cubemap(cubemap),
 		m_enableFog(enableFog),
@@ -46,12 +46,12 @@ namespace fl
 	{
 		uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
 		uniformObject->Push("skyColour", *Worlds::Get()->GetSkyColour());
-		uniformObject->Push("fogColour", *Worlds::Get()->GetFog()->GetColour());
+		uniformObject->Push("fogColour", Worlds::Get()->GetFog()->GetColour());
 
 		// Updates uniforms.
 		if (m_enableFog)
 		{
-			uniformObject->Push("fogLimits", GetGameObject()->GetTransform()->GetScaling()->m_y * Vector2(Worlds::Get()->GetFog()->GetLowerLimit(), Worlds::Get()->GetFog()->GetUpperLimit()));
+			uniformObject->Push("fogLimits", GetGameObject()->GetTransform()->GetScaling().m_y * Vector2(Worlds::Get()->GetFog()->GetLowerLimit(), Worlds::Get()->GetFog()->GetUpperLimit()));
 			uniformObject->Push("blendFactor", m_blend);
 		}
 		else

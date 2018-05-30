@@ -11,7 +11,7 @@ namespace fl
 		public IMaterial
 	{
 	private:
-		PipelineMaterial *m_material;
+		std::shared_ptr<PipelineMaterial> m_material;
 	public:
 		MaterialAnimated();
 
@@ -29,6 +29,6 @@ namespace fl
 
 		std::string GetName() const override { return "MaterialAnimated"; };
 
-		PipelineMaterial *GetMaterial() const override { return m_material; }
+		std::shared_ptr<PipelineMaterial> GetMaterial() const override { return m_material; }
 	};
 }

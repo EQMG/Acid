@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include "Engine/Engine.hpp"
 #include "IResource.hpp"
 
@@ -13,7 +14,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::vector<IResource *> *m_managed;
+		std::vector<std::shared_ptr<IResource>> m_resources;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -36,11 +37,11 @@ namespace fl
 
 		void Update() override;
 
-		IResource *Get(const std::string &filename);
+		std::shared_ptr<IResource> Get(const std::string &filename);
 
-		void Add(IResource *managed);
+		void Add(std::shared_ptr<IResource> resource);
 
-		void Remove(IResource *managed);
+		void Remove(std::shared_ptr<IResource> resource);
 
 		void Remove(const std::string &filename);
 	};

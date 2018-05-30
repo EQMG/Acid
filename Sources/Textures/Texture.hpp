@@ -38,17 +38,17 @@ namespace fl
 
 		VkDescriptorImageInfo m_imageInfo;
 	public:
-		static Texture *Resource(const std::string &filename)
+		static std::shared_ptr<Texture> Resource(const std::string &filename)
 		{
-			IResource *resource = Resources::Get()->Get(filename);
+			auto resource = Resources::Get()->Get(filename);
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Texture *>(resource);
+				return std::dynamic_pointer_cast<Texture>(resource);
 			}
 
-			Texture *result = new Texture(filename);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<Texture>(filename);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
