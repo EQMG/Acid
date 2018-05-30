@@ -53,8 +53,8 @@ namespace fl
 			source = new ColliderSphere();
 		}
 
-		source->m_radius = m_radius * transform.GetScaling()->m_x;
-		*source->m_position = *transform.GetScaling();
+		source->m_radius = m_radius * transform.GetScaling().MaxComponent();
+		*source->m_position = transform.GetScaling();
 
 		return source;
 	}

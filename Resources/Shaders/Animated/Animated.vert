@@ -30,15 +30,12 @@ out gl_PerVertex
 
 void main() 
 {
-	//vec4 totalLocalPos = vec4(vertexPosition, 1.0f);
-	//vec4 totalNormal = vec4(vertexNormal, 0.0f);
-
 	vec4 totalLocalPos = vec4(0.0f);
 	vec4 totalNormal = vec4(0.0f);
 
     for (int i = 0; i < MAX_WEIGHTS; i++)
     {
-        mat4 jointTransform = object.jointTransforms[ivec3(vertexJointIndices)[i]];
+        mat4 jointTransform = object.jointTransforms[int(vertexJointIndices[i])];
         vec4 posePosition = jointTransform * vec4(vertexPosition, 1.0);
         totalLocalPos += posePosition * vertexWeights[i];
 

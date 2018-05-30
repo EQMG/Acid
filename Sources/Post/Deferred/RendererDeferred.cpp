@@ -10,9 +10,9 @@
 
 namespace fl
 {
-#define MAX_LIGHTS 64
+	const int RendererDeferred::MAX_LIGHTS = 64;
 
-	struct DeferredLight
+	struct DeferredLight // TODO: Replace struct with actual light object.
 	{
 		Colour colour;
 		Vector3 position;
@@ -35,13 +35,12 @@ namespace fl
 		delete m_descriptorSet;
 		delete m_uniformScene;
 		delete m_pipeline;
-		delete m_model;
 	}
 
 	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		auto skyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
-		Cubemap *environment = (skyboxRender == nullptr) ? nullptr : skyboxRender->GetCubemap();
+		auto environment = (skyboxRender == nullptr) ? nullptr : skyboxRender->GetCubemap();
 
 		// Updates uniforms.
 		std::vector<DeferredLight> sceneLights = {};
@@ -60,14 +59,14 @@ namespace fl
 				//		continue;
 				//	}
 
-				if (light->GetColour()->LengthSquared() == 0.0f)
+				if (light->GetColour().LengthSquared() == 0.0f)
 				{
 					continue;
 				}
 
 				DeferredLight lightObject = {};
-				lightObject.colour = *light->GetColour();
-				lightObject.position = *light->GetPosition();
+				lightObject.colour = light->GetColour();
+				lightObject.position = light->GetPosition();
 				lightObject.radius = light->GetRadius();
 				sceneLights.push_back(lightObject);
 			}
@@ -85,7 +84,7 @@ namespace fl
 		m_uniformScene->Push("projection", *camera.GetProjectionMatrix());
 		m_uniformScene->Push("view", *camera.GetViewMatrix());
 		m_uniformScene->Push("shadowSpace", *Shadows::Get()->GetShadowBox()->GetToShadowMapSpaceMatrix());
-		m_uniformScene->Push("fogColour", *Worlds::Get()->GetFog()->GetColour());
+		m_uniformScene->Push("fogColour", Worlds::Get()->GetFog()->GetColour());
 		m_uniformScene->Push("cameraPosition", *Scenes::Get()->GetCamera()->GetPosition());
 		m_uniformScene->Push("fogDensity", Worlds::Get()->GetFog()->GetDensity());
 		m_uniformScene->Push("fogGradient", Worlds::Get()->GetFog()->GetGradient());

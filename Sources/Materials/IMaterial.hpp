@@ -34,6 +34,6 @@ namespace fl
 
 		virtual std::string GetName() const override = 0;
 
-		virtual PipelineMaterial *GetMaterial() const = 0;
+		virtual std::shared_ptr<PipelineMaterial> GetMaterial() const = 0;
 	};
 }

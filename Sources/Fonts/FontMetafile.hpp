@@ -28,17 +28,17 @@ namespace fl
 		int m_paddingHeight;
 		double m_maxSizeY;
 	public:
-		static FontMetafile *Resource(const std::string &filename)
+		static std::shared_ptr<FontMetafile> Resource(const std::string &filename)
 		{
-			IResource *resource = Resources::Get()->Get(filename);
+			auto resource = Resources::Get()->Get(filename);
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<FontMetafile *>(resource);
+				return std::dynamic_pointer_cast<FontMetafile>(resource);
 			}
 
-			FontMetafile *result = new FontMetafile(filename);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<FontMetafile>(filename);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 

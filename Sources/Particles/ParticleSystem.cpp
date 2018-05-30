@@ -86,8 +86,8 @@ namespace fl
 
 		Vector3 velocity = Vector3();
 		float delta = Engine::Get()->GetDelta();
-		velocity = *GetGameObject()->GetTransform()->GetPosition() - *m_lastPosition;
-		*m_lastPosition = *GetGameObject()->GetTransform()->GetPosition();
+		velocity = GetGameObject()->GetTransform()->GetPosition() - *m_lastPosition;
+		*m_lastPosition = GetGameObject()->GetTransform()->GetPosition();
 		velocity /= delta;
 
 		if (m_direction != nullptr)
@@ -106,7 +106,7 @@ namespace fl
 		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
 		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
 		Vector3 spawnPos = Vector3();
-		spawnPos = *GetGameObject()->GetTransform()->GetPosition() + *m_systemOffset;
+		spawnPos = GetGameObject()->GetTransform()->GetPosition() + *m_systemOffset;
 		spawnPos = spawnPos + *m_spawn->GetBaseSpawnPosition();
 		return new Particle(emitType, spawnPos, velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
 	}

@@ -10,21 +10,21 @@ namespace fl
 		public Model
 	{
 	public:
-		static ShapeDisk *Resource(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops)
+		static std::shared_ptr<ShapeDisk> Resource(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops)
 		{
-			IResource *resource = Resources::Get()->Get(ToFilename(innerRadius, outerRadius, slices, loops));
+			auto resource = Resources::Get()->Get(ToFilename(innerRadius, outerRadius, slices, loops));
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<ShapeDisk *>(resource);
+				return std::dynamic_pointer_cast<ShapeDisk>(resource);
 			}
 
-			ShapeDisk *result = new ShapeDisk(innerRadius, outerRadius, slices, loops);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<ShapeDisk>(innerRadius, outerRadius, slices, loops);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
-		static ShapeDisk *Resource(const std::string &filename)
+		static std::shared_ptr<ShapeDisk> Resource(const std::string &filename)
 		{
 			auto split = FormatString::Split(filename, "_");
 			float innerRadius = static_cast<float>(atof(split[1].c_str()));

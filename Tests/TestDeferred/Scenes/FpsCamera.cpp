@@ -90,9 +90,9 @@ namespace test
 			auto playerRotation = player->GetGameObject()->GetTransform()->GetRotation();
 			auto playerPosition = player->GetGameObject()->GetTransform()->GetPosition();
 
-			*m_velocity = (*playerPosition - *m_targetPosition) / delta;
-			*m_targetPosition = *playerPosition;
-			*m_targetRotation = *playerRotation;
+			*m_velocity = (playerPosition - *m_targetPosition) / delta;
+			*m_targetPosition = playerPosition;
+			*m_targetRotation = playerRotation;
 		}
 
 		UpdateHorizontalAngle(delta);

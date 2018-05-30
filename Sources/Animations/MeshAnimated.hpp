@@ -18,7 +18,7 @@ namespace fl
 	private:
 		std::string m_filename;
 
-		Model *m_model;
+		std::shared_ptr<Model> m_model;
 		Joint *m_headJoint;
 		Animation *m_animation;
 
@@ -41,9 +41,9 @@ namespace fl
 
 		std::string GetName() const override { return "MeshAnimated"; };
 
-		Model *GetModel() const override { return m_model; }
+		std::shared_ptr<Model> GetModel() const override { return m_model; }
 
-		void SetModel(Model *model) override { m_model = model; }
+		void SetModel(std::shared_ptr<Model> model) override { m_model = model; }
 
 		void TrySetModel(const std::string &filename) override;
 

@@ -12,9 +12,9 @@ namespace fl
 	class FL_EXPORT Transform
 	{
 	private:
-		Vector3 *m_position;
-		Vector3 *m_rotation;
-		Vector3 *m_scaling;
+		Vector3 m_position;
+		Vector3 m_rotation;
+		Vector3 m_scaling;
 	public:
 		/// <summary>
 		/// Constructor for Transform.
@@ -33,7 +33,7 @@ namespace fl
 		/// <param name="position"> The position. </param>
 		/// <param name="rotation"> The rotation. </param>
 		/// <param name="scaling"> The scaling. </param>
-		Transform(const Vector3 &position, const Vector3 &rotation = Vector3(), const Vector3 &scaling = Vector3(1.0f, 1.0f, 1.0f));
+		Transform(const Vector3 &position, const Vector3 &rotation = Vector3::ZERO, const Vector3 &scaling = Vector3::ONE);
 
 		/// <summary>
 		/// Constructor for Transform.
@@ -55,17 +55,17 @@ namespace fl
 		/// <param name="destination"> The destination loaded value. </param>
 		void Write(LoadedValue *destination);
 
-		Vector3 *GetPosition() const { return m_position; }
+		Vector3 GetPosition() const { return m_position; }
 
-		void SetPosition(const Vector3 &position) { *m_position = position; }
+		void SetPosition(const Vector3 &position) { m_position = position; }
 
-		Vector3 *GetRotation() const { return m_rotation; }
+		Vector3 GetRotation() const { return m_rotation; }
 
-		void SetRotation(const Vector3 &rotation) { *m_rotation = rotation; }
+		void SetRotation(const Vector3 &rotation) { m_rotation = rotation; }
 
-		Vector3 *GetScaling() const { return m_scaling; }
+		Vector3 GetScaling() const { return m_scaling; }
 
-		void SetScaling(const Vector3 &scaling) { *m_scaling = scaling; }
+		void SetScaling(const Vector3 &scaling) { m_scaling = scaling; }
 
 		Transform &operator=(const Transform &other);
 

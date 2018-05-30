@@ -34,7 +34,7 @@ namespace fl
 		DescriptorsHandler *m_descriptorSet;
 		UniformHandler *m_uniformObject;
 
-		Model *m_model;
+		std::shared_ptr<Model> m_model;
 
 		std::string m_string;
 		std::string m_newString;
@@ -83,7 +83,7 @@ namespace fl
 		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
 		/// </summary>
 		/// <returns> The model of the text. </returns>
-		Model *GetModel() const { return m_model; }
+		std::shared_ptr<Model> GetModel() const { return m_model; }
 
 		/// <summary>
 		/// Gets the string of text represented.
@@ -149,7 +149,7 @@ namespace fl
 		/// Gets font type texture for this text.
 		/// </summary>
 		/// <returns> The texts texture. </returns>
-		Texture *GetTexture() const { return m_fontType->GetTexture(); }
+		std::shared_ptr<Texture> GetTexture() const { return m_fontType->GetTexture(); }
 
 		/// <summary>
 		/// Gets the colour of the text.

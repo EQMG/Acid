@@ -17,7 +17,7 @@ namespace fl
 		m_gain(gain),
 		m_pitch(pitch)
 	{
-		SoundBuffer *soundBuffer = SoundBuffer::Resource(filename);
+		auto soundBuffer = SoundBuffer::Resource(filename);
 
 		alGenSources(1, &m_source);
 		alSourcei(m_source, AL_BUFFER, soundBuffer->GetBuffer());

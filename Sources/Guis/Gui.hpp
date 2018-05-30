@@ -19,8 +19,8 @@ namespace fl
 		DescriptorsHandler *m_descriptorSet;
 		UniformHandler *m_uniformObject;
 
-		Model *m_model;
-		Texture *m_texture;
+		std::shared_ptr<Model> m_model;
+		std::shared_ptr<Texture> m_texture;
 		int m_selectedRow;
 
 		Vector2 *m_atlasOffset;
@@ -32,7 +32,7 @@ namespace fl
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		/// <param name="texture"> The objects texture. </param>
 		/// <param name="selectedRow"> The default row of the texture to render from. </param>
-		Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow);
+		Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const int &selectedRow);
 
 		/// <summary>
 		/// Deconstructor for the gui object.
@@ -43,9 +43,9 @@ namespace fl
 
 		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
 
-		Texture *GetTexture() const { return m_texture; }
+		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 
-		void SetTexture(Texture *texture) { m_texture = texture; }
+		void SetTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
 		int GetSelectedRow() const { return m_selectedRow; }
 

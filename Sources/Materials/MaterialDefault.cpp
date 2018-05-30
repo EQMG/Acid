@@ -2,8 +2,8 @@
 
 namespace fl
 {
-	MaterialDefault::MaterialDefault(const Colour &baseColor, Texture *diffuseTexture,
-									 const float &metallic, const float &roughness, Texture *materialTexture, Texture *normalTexture,
+	MaterialDefault::MaterialDefault(const Colour &baseColor, std::shared_ptr<Texture> diffuseTexture,
+									 const float &metallic, const float &roughness, std::shared_ptr<Texture> materialTexture, std::shared_ptr<Texture> normalTexture,
 									 const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 		IMaterial(),
 		m_baseColor(new Colour(baseColor)),

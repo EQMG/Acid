@@ -27,7 +27,7 @@ namespace fl
 	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure *structure) :
 		GameObject(transform, structure, prefabName)
 	{
-		PrefabObject *prefabObject = PrefabObject::Resource("Resources/Objects/" + prefabName + "/" + prefabName + ".json");
+		auto prefabObject = PrefabObject::Resource("Resources/Objects/" + prefabName + "/" + prefabName + ".json");
 
 		for (auto value : *prefabObject->GetParent()->GetChildren())
 		{

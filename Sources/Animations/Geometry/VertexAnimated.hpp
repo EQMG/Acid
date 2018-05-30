@@ -19,7 +19,7 @@ namespace fl
 		Vector3 m_jointId;
 		Vector3 m_vertexWeight;
 
-		VertexAnimated(const Vector3 &position = Vector3(), const Vector2 &uv = Vector2(), const Vector3 &normal = Vector3(), const Vector3 &tangent = Vector3(), const Vector3 &jointId = Vector3(), const Vector3 &vertexWeight = Vector3());
+		VertexAnimated(const Vector3 &position = Vector3::ZERO, const Vector2 &uv = Vector2::ZERO, const Vector3 &normal = Vector3::ZERO, const Vector3 &tangent = Vector3::ZERO, const Vector3 &jointId = Vector3::ZERO, const Vector3 &vertexWeight = Vector3::ZERO);
 
 		VertexAnimated(const VertexAnimated &source);
 

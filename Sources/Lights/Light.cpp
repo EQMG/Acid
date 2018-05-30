@@ -4,68 +4,58 @@ namespace fl
 {
 	Light::Light(const Colour &colour, const float &radius, const Vector3 &offset) :
 		Component(),
-		m_colour(new Colour(colour)),
-		m_radius(radius),
-		m_offset(new Vector3(offset)),
-		m_position(new Vector3())
+		m_colour(Colour(colour)),
+		m_position(Vector3()),
+		m_offset(Vector3(offset)),
+		m_radius(radius)
 	{
 	}
 
 	Light::Light(const Light &source) :
 		Component(),
-		m_colour(new Colour(*source.m_colour)),
-		m_radius(source.m_radius),
-		m_offset(new Vector3(*source.m_offset)),
-		m_position(new Vector3())
+		m_colour(Colour(source.m_colour)),
+		m_position(Vector3()),
+		m_offset(Vector3(source.m_offset)),
+		m_radius(source.m_radius)
 	{
 	}
 
 	Light::~Light()
 	{
-		delete m_colour;
-		delete m_offset;
-		delete m_position;
 	}
 
 	void Light::Update()
 	{
-		*m_position = *GetGameObject()->GetTransform()->GetPosition() + *m_offset;
+		m_position = GetGameObject()->GetTransform()->GetPosition() + m_offset;
 	}
 
 	void Light::Load(LoadedValue *value)
 	{
-		*m_colour = value->GetChild("Colour")->GetString();
+		m_colour = value->GetChild("Colour")->GetString();
+		m_offset = value->GetChild("Offset");
 		m_radius = value->GetChild("Radius")->Get<float>();
-		*m_offset = value->GetChild("Offset");
 	}
 
 	void Light::Write(LoadedValue *value)
 	{
-		value->GetChild("Colour", true)->SetString(m_colour->GetHex());
+		value->GetChild("Colour", true)->SetString(m_colour.GetHex());
+		m_offset.Write(value->GetChild("Offset", true));
 		value->GetChild("Radius", true)->Set(m_radius);
-		m_offset->Write(value->GetChild("Offset", true));
 	}
 
-	Light *Light::Set(const Colour &colour, const Vector3 &offset)
+	Light &Light::operator=(const Light &other)
 	{
-		*m_colour = colour;
-		*m_offset = offset;
-		return this;
+		m_colour = other.m_colour;
+		m_offset = other.m_offset;
+		m_radius = other.m_radius;
+		return *this;
 	}
 
-	Light *Light::Set(const Colour &colour, const float &radius, const Vector3 &offset)
+	Light &Light::operator=(LoadedValue *source)
 	{
-		*m_colour = colour;
-		m_radius = radius;
-		*m_offset = offset;
-		return this;
-	}
-
-	Light *Light::Set(const Light &source)
-	{
-		*m_colour = *source.m_colour;
-		m_radius = source.m_radius;
-		*m_offset = *source.m_offset;
-		return this;
+		m_colour = source->GetChild("colour");
+		m_offset = source->GetChild("offset");
+		m_radius = source->GetChild("radius")->Get<float>();
+		return *this;
 	}
 }

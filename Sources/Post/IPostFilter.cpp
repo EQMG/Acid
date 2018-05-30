@@ -16,6 +16,5 @@ namespace fl
 	{
 		delete m_descriptorSet;
 		delete m_pipeline;
-		delete m_model;
 	}
 }
