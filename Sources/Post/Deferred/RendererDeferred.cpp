@@ -81,11 +81,11 @@ namespace fl
 
 		m_uniformScene->Push("lights", *sceneLights.data());
 		m_uniformScene->Push("lightsCount", static_cast<int>(sceneLights.size()));
-		m_uniformScene->Push("projection", *camera.GetProjectionMatrix());
-		m_uniformScene->Push("view", *camera.GetViewMatrix());
+		m_uniformScene->Push("projection", camera.GetProjectionMatrix());
+		m_uniformScene->Push("view", camera.GetViewMatrix());
 		m_uniformScene->Push("shadowSpace", *Shadows::Get()->GetShadowBox()->GetToShadowMapSpaceMatrix());
 		m_uniformScene->Push("fogColour", Worlds::Get()->GetFog()->GetColour());
-		m_uniformScene->Push("cameraPosition", *Scenes::Get()->GetCamera()->GetPosition());
+		m_uniformScene->Push("cameraPosition", camera.GetPosition());
 		m_uniformScene->Push("fogDensity", Worlds::Get()->GetFog()->GetDensity());
 		m_uniformScene->Push("fogGradient", Worlds::Get()->GetFog()->GetGradient());
 		m_uniformScene->Push("shadowDistance", Shadows::Get()->GetShadowBoxDistance());

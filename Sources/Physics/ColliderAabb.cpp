@@ -363,8 +363,8 @@ namespace fl
 
 	Intersect ColliderAabb::Intersects(const Ray &ray)
 	{
-		double tmin = (m_minExtents->m_x - ray.m_origin->m_x) / ray.m_currentRay->m_x;
-		double tmax = (m_maxExtents->m_x - ray.m_origin->m_x) / ray.m_currentRay->m_x;
+		double tmin = (m_minExtents->m_x - ray.GetOrigin().m_x) / ray.GetCurrentRay().m_x;
+		double tmax = (m_maxExtents->m_x - ray.GetOrigin().m_x) / ray.GetCurrentRay().m_x;
 
 		if (tmin > tmax)
 		{
@@ -373,8 +373,8 @@ namespace fl
 			tmin = temp;
 		}
 
-		float tymin = (m_minExtents->m_y - ray.m_origin->m_y) / ray.m_currentRay->m_y;
-		float tymax = (m_maxExtents->m_y - ray.m_origin->m_y) / ray.m_currentRay->m_y;
+		float tymin = (m_minExtents->m_y - ray.GetOrigin().m_y) / ray.GetCurrentRay().m_y;
+		float tymax = (m_maxExtents->m_y - ray.GetOrigin().m_y) / ray.GetCurrentRay().m_y;
 
 		if (tymin > tymax)
 		{
@@ -398,8 +398,8 @@ namespace fl
 			tmax = tymax;
 		}
 
-		float tzmin = (m_minExtents->m_z - ray.m_origin->m_z) / ray.m_currentRay->m_z;
-		float tzmax = (m_maxExtents->m_z - ray.m_origin->m_z) / ray.m_currentRay->m_z;
+		float tzmin = (m_minExtents->m_z - ray.GetOrigin().m_z) / ray.GetCurrentRay().m_z;
+		float tzmax = (m_maxExtents->m_z - ray.GetOrigin().m_z) / ray.GetCurrentRay().m_z;
 
 		if (tzmin > tzmax)
 		{

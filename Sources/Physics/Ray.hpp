@@ -14,22 +14,22 @@ namespace fl
 	{
 	private:
 		bool m_useMouse;
-		Vector2 *m_screenStart;
+		Vector2 m_screenStart;
 
-		Matrix4 *m_viewMatrix;
-		Matrix4 *m_projectionMatrix;
+		Matrix4 m_viewMatrix;
+		Matrix4 m_projectionMatrix;
 
-		Vector2 *m_normalizedCoords;
-		Vector4 *m_clipCoords;
-		Vector4 *m_eyeCoords;
+		Vector2 m_normalizedCoords;
+		Vector4 m_clipCoords;
+		Vector4 m_eyeCoords;
 
-		Matrix4 *m_invertedProjection;
-		Matrix4 *m_invertedView;
-		Vector4 *m_rayWorld;
+		Matrix4 m_invertedProjection;
+		Matrix4 m_invertedView;
+		Vector4 m_rayWorld;
+
+		Vector3 m_origin;
+		Vector3 m_currentRay;
 	public:
-		Vector3 *m_origin;
-		Vector3 *m_currentRay;
-
 		/// <summary>
 		/// Creates a new 3D ray.
 		/// </summary>
@@ -65,6 +65,9 @@ namespace fl
 		/// <returns> Returns the destination vector X and Y being screen space coords and Z being the distance to the camera. </returns>
 		Vector3 ConvertToScreenSpace(const Vector3 &position) const;
 
+		Vector3 GetOrigin() const { return m_origin; }
+
+		Vector3 GetCurrentRay() const { return m_currentRay; }
 	private:
 		void UpdateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY);
 

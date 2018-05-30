@@ -21,7 +21,7 @@ namespace fl
 
 	void MaterialSkybox::Update()
 	{
-		GetGameObject()->GetTransform()->SetPosition(*Scenes::Get()->GetCamera()->GetPosition());
+		GetGameObject()->GetTransform()->SetPosition(Scenes::Get()->GetCamera()->GetPosition());
 
 		if (m_enableFog)
 		{

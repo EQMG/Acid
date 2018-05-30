@@ -53,20 +53,20 @@ namespace fl
 			return;
 		}
 
-		Vector3 cameraToParticle = *Scenes::Get()->GetCamera()->GetPosition() - *m_position;
+		Vector3 cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - *m_position;
 		m_distanceToCamera = cameraToParticle.LengthSquared();
 
-		const float lifeFactor = m_elapsedTime / m_lifeLength;
+		float lifeFactor = m_elapsedTime / m_lifeLength;
 
 		if (m_particleType->GetTexture() == nullptr)
 		{
 			return;
 		}
 
-		const int stageCount = static_cast<int>(pow(m_particleType->GetTexture()->GetNumberOfRows(), 2));
-		const float atlasProgression = lifeFactor * stageCount;
-		const int index1 = static_cast<int>(std::floor(atlasProgression));
-		const int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
+		int stageCount = static_cast<int>(pow(m_particleType->GetTexture()->GetNumberOfRows(), 2));
+		float atlasProgression = lifeFactor * stageCount;
+		int index1 = static_cast<int>(std::floor(atlasProgression));
+		int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
 
 		m_textureBlendFactor = std::fmod(atlasProgression, 1.0f);
 		UpdateTextureOffset(m_textureOffset1, index1);

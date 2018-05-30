@@ -38,6 +38,11 @@ namespace fl
 			{
 				float m_elements[4][4];
 			};
+
+			struct
+			{
+				float m_linear[16];
+			};
 		};
 
 		static const Matrix4 IDENTITY;
