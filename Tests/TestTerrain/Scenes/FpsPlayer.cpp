@@ -126,13 +126,13 @@ namespace test
 		*m_velocity = m_velocity->SmoothDamp(targetVelocity, delta * (m_noclipEnabled ? DAMP_NOCLIP : DAMP_NORMAL));
 
 		auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
-		auto position = GetGameObject()->GetTransform()->GetPosition();
-		auto rotation = GetGameObject()->GetTransform()->GetRotation();
+		Vector3 newPosition = GetGameObject()->GetTransform()->GetPosition();
+		Vector3 newRotation = GetGameObject()->GetTransform()->GetRotation();
 
 		float groundHeight = 0.0f;
 
 		// Calculates the deltas to the moved distance, and rotation.
-		float theta = Maths::Radians(cameraRotation->m_y);
+		float theta = Maths::Radians(cameraRotation.m_y);
 		float dx = -(m_velocity->m_z * std::sin(theta) + m_velocity->m_x * std::cos(theta)) * delta;
 		float dy = m_velocity->m_y * delta;
 		float dz = -(m_velocity->m_z * std::cos(theta) - m_velocity->m_x * std::sin(theta)) * delta;
@@ -140,14 +140,17 @@ namespace test
 		*m_amountMove = Vector3(dx, dy, dz);
 		*m_amountRotate = Vector3(0.0f, 0.0f, 0.0f);
 
-		*position = *position + *m_amountMove;
-		*rotation = *rotation + *m_amountRotate;
+		newPosition += *m_amountMove;
+		newRotation += *m_amountRotate;
 
-		if (!m_noclipEnabled && position->m_y <= groundHeight)
+		if (!m_noclipEnabled && newPosition.m_y <= groundHeight)
 		{
 			m_velocity->m_y = 0.0f;
 			m_jumping = false;
-			position->m_y = groundHeight;
+			newPosition.m_y = groundHeight;
 		}
+
+		GetGameObject()->GetTransform()->SetPosition(newPosition);
+		GetGameObject()->GetTransform()->SetRotation(newRotation);
 	}
 }

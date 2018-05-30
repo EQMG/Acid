@@ -14,9 +14,9 @@ namespace test
 		public IMaterial
 	{
 	private:
-		Colour *m_colour;
+		Colour m_colour;
 
-		PipelineMaterial *m_material;
+		std::shared_ptr<PipelineMaterial> m_material;
 	public:
 		MaterialWater();
 
@@ -34,10 +34,10 @@ namespace test
 
 		std::string GetName() const override { return "MaterialWater"; };
 
-		Colour *GetColour() const { return m_colour; }
+		Colour GetColour() const { return m_colour; }
 
-		void SetColour(const Colour &colour) const { *m_colour = colour; }
+		void SetColour(const Colour &colour) { m_colour = colour; }
 
-		PipelineMaterial *GetMaterial() const override { return m_material; }
+		std::shared_ptr<PipelineMaterial> GetMaterial() const override { return m_material; }
 	};
 }

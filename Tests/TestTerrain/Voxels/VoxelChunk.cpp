@@ -106,7 +106,7 @@ namespace test
 
 	void VoxelChunk::Generate()
 	{
-		auto position = *GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
+		auto position = GetGameObject()->GetTransform()->GetPosition() / VOXEL_SIZE;
 		//	auto noise = Worlds::Get()->GetNoise();
 
 		for (int x = 0; x < CHUNK_WIDTH; x++)
@@ -167,11 +167,11 @@ namespace test
 			break;
 		}
 
-		delete mesh->GetModel();
+	// 	delete mesh->GetModel();
 
 		if (!vertices.empty() || !indices.empty())
 		{
-			Model *model = new Model(vertices, indices, GetName());
+			auto model = std::make_shared<Model>(vertices, indices, GetName());
 			mesh->SetModel(model);
 		}
 

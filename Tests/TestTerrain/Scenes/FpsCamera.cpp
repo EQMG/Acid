@@ -27,17 +27,17 @@ namespace test
 	const float FpsCamera::MIN_ANGLE_OF_ELEVATION = -85.0f;
 
 	FpsCamera::FpsCamera() :
-		m_position(new Vector3()),
-		m_velocity(new Vector3()),
-		m_rotation(new Vector3()),
-		m_viewMatrix(new Matrix4()),
-		m_projectionMatrix(new Matrix4()),
-		m_viewFrustum(new Frustum()),
-		m_viewRay(new Ray(false, Vector2(0.5f, 0.5f))),
+		m_position(Vector3()),
+		m_velocity(Vector3()),
+		m_rotation(Vector3()),
+		m_viewMatrix(Matrix4()),
+		m_projectionMatrix(Matrix4()),
+		m_viewFrustum(Frustum()),
+		m_viewRay(Ray(false, Vector2(0.5f, 0.5f))),
 		m_angleOfElevation(25.0f),
 		m_angleAroundPlayer(0.0f),
-		m_targetPosition(new Vector3()),
-		m_targetRotation(new Vector3()),
+		m_targetPosition(Vector3()),
+		m_targetRotation(Vector3()),
 		m_targetElevation(m_angleOfElevation),
 		m_targetRotationAngle(m_angleAroundPlayer),
 		m_sensitivity(0.9f),
@@ -50,19 +50,6 @@ namespace test
 
 	FpsCamera::~FpsCamera()
 	{
-		delete m_position;
-		delete m_velocity;
-		delete m_rotation;
-
-		delete m_viewMatrix;
-		delete m_projectionMatrix;
-
-		delete m_viewFrustum;
-		delete m_viewRay;
-
-		delete m_targetPosition;
-		delete m_targetRotation;
-
 		delete m_joystickVertical;
 		delete m_joystickHorizontal;
 	}
@@ -90,20 +77,20 @@ namespace test
 			auto playerRotation = player->GetGameObject()->GetTransform()->GetRotation();
 			auto playerPosition = player->GetGameObject()->GetTransform()->GetPosition();
 
-			*m_velocity = (*playerPosition - *m_targetPosition) / delta;
-			*m_targetPosition = *playerPosition;
-			*m_targetRotation = *playerRotation;
+			m_velocity = (playerPosition - m_targetPosition) / delta;
+			m_targetPosition = playerPosition;
+			m_targetRotation = playerRotation;
 		}
 
 		UpdateHorizontalAngle(delta);
 		UpdatePitchAngle(delta);
 		UpdatePosition();
 
-		*m_viewMatrix = Matrix4::ViewMatrix(*m_position, *m_rotation);
-		*m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFov(), Display::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
+		m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);
+		m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFov(), Display::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
-		m_viewFrustum->Update(*m_viewMatrix, *m_projectionMatrix);
-		m_viewRay->Update(*m_position, Vector2(Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()), *m_viewMatrix, *m_projectionMatrix);
+		m_viewFrustum.Update(m_viewMatrix, m_projectionMatrix);
+		m_viewRay.Update(m_position, Vector2(Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()), m_viewMatrix, m_projectionMatrix);
 	}
 
 	void FpsCamera::CalculateHorizontalAngle()
@@ -238,16 +225,16 @@ namespace test
 
 	void FpsCamera::UpdatePosition()
 	{
-		*m_position = *m_targetPosition;
-		m_rotation->m_x = m_angleOfElevation - m_targetRotation->m_z;
-		m_rotation->m_y = m_angleAroundPlayer + m_targetRotation->m_y + 180.0f;
-		m_rotation->m_z = 0.0f;
+		m_position = m_targetPosition;
+		m_rotation.m_x = m_angleOfElevation - m_targetRotation.m_z;
+		m_rotation.m_y = m_angleAroundPlayer + m_targetRotation.m_y + 180.0f;
+		m_rotation.m_z = 0.0f;
 	}
 
 	void FpsCamera::ReflectView(const float &waterHeight)
 	{
-		m_position->m_y -= 2.0f * (m_position->m_y - waterHeight);
-		m_rotation->m_x = -m_rotation->m_x;
-		*m_viewMatrix = Matrix4::ViewMatrix(*m_position, *m_rotation);
+		m_position.m_y -= 2.0f * (m_position.m_y - waterHeight);
+		m_rotation.m_x = -m_rotation.m_x;
+		m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);
 	}
 }
