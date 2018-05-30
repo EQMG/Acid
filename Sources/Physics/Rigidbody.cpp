@@ -71,9 +71,9 @@ namespace fl
 		}
 		else if (dynamic_cast<ColliderSphere *>(m_colliderCopy) != nullptr)
 		{
-			const float radius = dynamic_cast<ColliderSphere *>(m_colliderCopy)->GetRadius();
-			const Vector3 *pos = dynamic_cast<ColliderSphere *>(m_colliderCopy)->GetPosition();
-			aabb1 = ColliderAabb(-radius + *pos, radius + *pos);
+			float radius = dynamic_cast<ColliderSphere *>(m_colliderCopy)->GetRadius();
+			Vector3 pos = dynamic_cast<ColliderSphere *>(m_colliderCopy)->GetPosition();
+			aabb1 = ColliderAabb(-radius + pos, radius + pos);
 		}
 		else
 		{

@@ -13,7 +13,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::vector<IEvent *> *m_events;
+		std::vector<IEvent *> m_events;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -40,12 +40,12 @@ namespace fl
 		/// Adds an event to the listening list.
 		/// </summary>
 		/// <param name="event"> The event to add. </param>
-		void AddEvent(IEvent *event) const;
+		void AddEvent(IEvent *event);
 
 		/// <summary>
 		/// Removes a event to the listening list.
 		/// </summary>
 		/// <param name="event"> The event to remove. </param>
-		void RemoveEvent(IEvent *event) const;
+		void RemoveEvent(IEvent *event);
 	};
 }

@@ -15,21 +15,21 @@ namespace fl
 	class FL_EXPORT ShadowBox
 	{
 	private:
-		Vector3 *m_lightDirection;
+		Vector3 m_lightDirection;
 		float m_shadowOffset;
 		float m_shadowDistance;
 
-		Matrix4 *m_projectionMatrix;
-		Matrix4 *m_lightViewMatrix;
-		Matrix4 *m_projectionViewMatrix;
-		Matrix4 *m_shadowMapSpaceMatrix;
-		Matrix4 *m_offset;
-		Vector3 *m_centre;
+		Matrix4 m_projectionMatrix;
+		Matrix4 m_lightViewMatrix;
+		Matrix4 m_projectionViewMatrix;
+		Matrix4 m_shadowMapSpaceMatrix;
+		Matrix4 m_offset;
+		Vector3 m_centre;
 
 		float m_farHeight, m_farWidth;
 		float m_nearHeight, m_nearWidth;
 
-		ColliderAabb *m_aabb;
+		ColliderAabb m_aabb;
 	public:
 		/// <summary>
 		/// Creates a new shadow box and calculates some initial values relating to the camera's view frustum.
@@ -73,7 +73,7 @@ namespace fl
 		/// <param name="centreFar"> - the centre point of the frustum's far plane.
 		/// </param>
 		/// <returns> The vertices of the frustum in light space. </returns>
-		Vector4 *CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar) const;
+		std::array<Vector4, 8> CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar);
 
 		/// <summary>
 		/// Calculates one of the corner vertices of the view frustum in world space and converts it to light space.
@@ -83,18 +83,18 @@ namespace fl
 		/// <param name="width"> The distance of the corner from the start point.
 		/// </param>
 		/// <returns> The relevant corner vertex of the view frustum in light space. </returns>
-		Vector4 CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width) const;
+		Vector4 CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width);
 
-		void UpdateOrthoProjectionMatrix() const;
+		void UpdateOrthoProjectionMatrix();
 
 		/// <summary>
 		/// Updates the centre of the shadow box (orthographic projection area).
 		/// </summary>
-		void UpdateCenter() const;
+		void UpdateCenter();
 
-		void UpdateLightViewMatrix() const;
+		void UpdateLightViewMatrix();
 
-		void UpdateViewShadowMatrix() const;
+		void UpdateViewShadowMatrix();
 
 	public:
 		/// <summary>
@@ -106,20 +106,20 @@ namespace fl
 		/// <returns> {@code true} if the sphere intersects the box. </returns>
 		bool IsInBox(const Vector3 &position, const float &radius) const;
 
-		Matrix4 *GetProjectionViewMatrix() const { return m_projectionViewMatrix; }
+		Matrix4 GetProjectionViewMatrix() const { return m_projectionViewMatrix; }
 
 		/// <summary>
 		/// This biased projection-view matrix is used to convert fragments into "shadow map space" when rendering the main render pass.
 		/// </summary>
 		/// <returns> The to-shadow-map-space matrix. </returns>
-		Matrix4 *GetToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
+		Matrix4 GetToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
 
 		/// <summary>
 		/// Gets the light's "view" matrix
 		/// </summary>
 		/// <returns> The light's "view" matrix. </returns>
-		Matrix4 *GetLightSpaceTransform() const { return m_lightViewMatrix; }
+		Matrix4 GetLightSpaceTransform() const { return m_lightViewMatrix; }
 
-		ColliderAabb *GetAabb() const { return m_aabb; }
+		ColliderAabb GetAabb() const { return m_aabb; }
 	};
 }

@@ -40,7 +40,7 @@ namespace fl
 			m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 		}
 
-		m_aabb->Set(CalculateAabb(vertices));
+		*m_aabb = CalculateAabb(vertices);
 
 		for (auto vertex : vertices)
 		{
@@ -61,7 +61,7 @@ namespace fl
 
 		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 
-		m_aabb->Set(CalculateAabb(vertices));
+		*m_aabb = CalculateAabb(vertices);
 
 		for (auto vertex : vertices)
 		{
@@ -80,7 +80,7 @@ namespace fl
 		m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), verticesData);
 		free(verticesData);
 
-		m_aabb->Set(CalculateAabb(vertices));
+		*m_aabb = CalculateAabb(vertices);
 
 		for (auto vertex : vertices)
 		{
@@ -136,7 +136,7 @@ namespace fl
 			m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 		}
 
-		m_aabb->Set(CalculateAabb(vertices));
+		*m_aabb = CalculateAabb(vertices);
 
 		for (auto vertex : vertices)
 		{

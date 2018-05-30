@@ -16,8 +16,8 @@ namespace fl
 		m_maxWidth(maxWidth),
 		m_kerning(kerning),
 		m_leading(leading),
-		m_textColour(new Colour("#ffffff")),
-		m_borderColour(new Colour("#000000")),
+		m_textColour(Colour("#ffffff")),
+		m_borderColour(Colour("#000000")),
 		m_solidBorder(false),
 		m_glowBorder(false),
 		m_glowDriver(new DriverConstant(0.0f)),
@@ -33,9 +33,6 @@ namespace fl
 	{
 		delete m_descriptorSet;
 		delete m_uniformObject;
-
-		delete m_textColour;
-		delete m_borderColour;
 
 		delete m_glowDriver;
 		delete m_borderDriver;
@@ -55,8 +52,8 @@ namespace fl
 
 		// Updates uniforms.
 		m_uniformObject->Push("transform", *GetScreenTransform());
-		m_uniformObject->Push("colour", *m_textColour);
-		m_uniformObject->Push("borderColour", *m_borderColour);
+		m_uniformObject->Push("colour", m_textColour);
+		m_uniformObject->Push("borderColour", m_borderColour);
 		m_uniformObject->Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
 		m_uniformObject->Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
 		m_uniformObject->Push("alpha", GetAlpha());
@@ -191,7 +188,8 @@ namespace fl
 		NormalizeQuad(&bounding, vertices);
 
 		// Loads the mesh data.
-		m_model = std::make_shared<Model>(vertices);
+		delete m_model;
+		m_model = new Model(vertices);
 		GetRectangle()->SetDimensions(Vector2(bounding.m_x, bounding.m_y));
 	}
 

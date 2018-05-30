@@ -13,7 +13,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		Vector3 *m_lightDirection;
+		Vector3 m_lightDirection;
 
 		uint32_t m_shadowSize;
 		int m_shadowPcf;
@@ -24,7 +24,7 @@ namespace fl
 		float m_shadowBoxOffset;
 		float m_shadowBoxDistance;
 
-		ShadowBox *m_shadowBox;
+		ShadowBox m_shadowBox;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -47,9 +47,9 @@ namespace fl
 
 		void Update() override;
 
-		Vector3 *GetLightDirection() const { return m_lightDirection; }
+		Vector3 GetLightDirection() const { return m_lightDirection; }
 
-		void SetLightDirection(const Vector3 &lightDirection) { *m_lightDirection = lightDirection; }
+		void SetLightDirection(const Vector3 &lightDirection) { m_lightDirection = lightDirection; }
 
 		uint32_t GetShadowSize() const { return m_shadowSize; }
 
@@ -83,6 +83,6 @@ namespace fl
 		/// Get the shadow box, so that it can be used by other class to test if engine.entities are inside the box.
 		/// </summary>
 		/// <returns> The shadow box. </returns>
-		ShadowBox *GetShadowBox() const { return m_shadowBox; }
+		ShadowBox GetShadowBox() const { return m_shadowBox; }
 	};
 }

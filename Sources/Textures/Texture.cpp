@@ -233,7 +233,7 @@ namespace fl
 
 		if (data == nullptr)
 		{
-			printf("Unable to load texture: '%s'\n", filepath.c_str());
+			fprintf(stderr, "Unable to load texture: '%s'\n", filepath.c_str());
 		}
 
 		return data;

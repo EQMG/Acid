@@ -205,18 +205,16 @@ namespace fl
 
 			if (data == nullptr)
 			{
-				printf("Unable to load texture: '%s'\n", m_icon.c_str());
-			}
-			else
-			{
-				GLFWimage icons[1];
-				icons[0].pixels = data;
-				icons[0].width = width;
-				icons[0].height = height;
-
-				glfwSetWindowIcon(m_window, 1, icons);
+				fprintf(stderr, "Unable to load texture: '%s'\n", m_icon.c_str());
+				return;
 			}
 
+			GLFWimage icons[1];
+			icons[0].pixels = data;
+			icons[0].width = width;
+			icons[0].height = height;
+
+			glfwSetWindowIcon(m_window, 1, icons);
 			Texture::DeletePixels(data);
 		}
 	}

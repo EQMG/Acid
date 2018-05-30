@@ -101,18 +101,18 @@ namespace fl
 
 			if (data == nullptr)
 			{
-				printf("Unable to load texture: '%s'.\n", m_customMouse.c_str());
+				fprintf(stderr, "Unable to load texture: '%s'.\n", m_customMouse.c_str());
+				return;
 			}
 
-			GLFWimage *image = new GLFWimage();
-			image->pixels = data;
-			image->width = width;
-			image->height = height;
+			GLFWimage image[1];
+			image[0].pixels = data;
+			image[0].width = width;
+			image[0].height = height;
 
 			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
 			glfwSetCursor(Display::Get()->GetGlfwWindow(), cursor);
 			Texture::DeletePixels(data);
-			//	delete image;
 		}
 	}
 

@@ -6,41 +6,30 @@
 namespace fl
 {
 	ShadowBox::ShadowBox() :
-		m_lightDirection(new Vector3()),
+		m_lightDirection(Vector3()),
 		m_shadowOffset(0.0f),
 		m_shadowDistance(0.0f),
-		m_projectionMatrix(new Matrix4()),
-		m_lightViewMatrix(new Matrix4()),
-		m_projectionViewMatrix(new Matrix4()),
-		m_shadowMapSpaceMatrix(new Matrix4()),
-		m_offset(new Matrix4(CreateOffset())),
-		m_centre(new Vector3()),
+		m_projectionMatrix(Matrix4()),
+		m_lightViewMatrix(Matrix4()),
+		m_projectionViewMatrix(Matrix4()),
+		m_shadowMapSpaceMatrix(Matrix4()),
+		m_offset(Matrix4(CreateOffset())),
+		m_centre(Vector3()),
 		m_farHeight(0.0f),
 		m_farWidth(0.0f),
 		m_nearHeight(0.0f),
 		m_nearWidth(0.0f),
-		m_aabb(new ColliderAabb())
+		m_aabb(ColliderAabb())
 	{
 	}
 
 	ShadowBox::~ShadowBox()
 	{
-		delete m_lightDirection;
-
-		delete m_projectionMatrix;
-		delete m_lightViewMatrix;
-		delete m_projectionViewMatrix;
-		delete m_shadowMapSpaceMatrix;
-		delete m_offset;
-		delete m_centre;
-
-		delete m_aabb;
 	}
 
 	void ShadowBox::Update(const ICamera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance)
 	{
-		*m_lightDirection = lightPosition;
-		m_lightDirection->Normalize();
+		m_lightDirection = lightPosition.Normalize();
 		m_shadowOffset = shadowOffset;
 		m_shadowDistance = shadowDistance;
 
@@ -75,7 +64,7 @@ namespace fl
 		Vector3 centreNear = toNear + camera.GetPosition();
 		Vector3 centreFar = toFar + camera.GetPosition();
 
-		Vector4 *points = CalculateFrustumVertices(rotation, forwardVector, centreNear, centreFar);
+		auto points = CalculateFrustumVertices(rotation, forwardVector, centreNear, centreFar);
 
 		for (int i = 0; i < 8; i++)
 		{
@@ -83,47 +72,45 @@ namespace fl
 
 			if (i == 0)
 			{
-				m_aabb->m_minExtents->m_x = point.m_x;
-				m_aabb->m_maxExtents->m_x = point.m_x;
-				m_aabb->m_minExtents->m_y = point.m_y;
-				m_aabb->m_maxExtents->m_y = point.m_y;
-				m_aabb->m_minExtents->m_z = point.m_z;
-				m_aabb->m_maxExtents->m_z = point.m_z;
+				m_aabb.m_minExtents.m_x = point.m_x;
+				m_aabb.m_maxExtents.m_x = point.m_x;
+				m_aabb.m_minExtents.m_y = point.m_y;
+				m_aabb.m_maxExtents.m_y = point.m_y;
+				m_aabb.m_minExtents.m_z = point.m_z;
+				m_aabb.m_maxExtents.m_z = point.m_z;
 			}
 			else
 			{
-				if (point.m_x > m_aabb->m_maxExtents->m_x)
+				if (point.m_x > m_aabb.m_maxExtents.m_x)
 				{
-					m_aabb->m_maxExtents->m_x = point.m_x;
+					m_aabb.m_maxExtents.m_x = point.m_x;
 				}
-				else if (point.m_x < m_aabb->m_minExtents->m_x)
+				else if (point.m_x < m_aabb.m_minExtents.m_x)
 				{
-					m_aabb->m_minExtents->m_x = point.m_x;
-				}
-
-				if (point.m_y > m_aabb->m_maxExtents->m_y)
-				{
-					m_aabb->m_maxExtents->m_y = point.m_y;
-				}
-				else if (point.m_y < m_aabb->m_minExtents->m_y)
-				{
-					m_aabb->m_minExtents->m_y = point.m_y;
+					m_aabb.m_minExtents.m_x = point.m_x;
 				}
 
-				if (point.m_z > m_aabb->m_maxExtents->m_z)
+				if (point.m_y > m_aabb.m_maxExtents.m_y)
 				{
-					m_aabb->m_maxExtents->m_z = point.m_z;
+					m_aabb.m_maxExtents.m_y = point.m_y;
 				}
-				else if (point.m_z < m_aabb->m_minExtents->m_z)
+				else if (point.m_y < m_aabb.m_minExtents.m_y)
 				{
-					m_aabb->m_minExtents->m_z = point.m_z;
+					m_aabb.m_minExtents.m_y = point.m_y;
+				}
+
+				if (point.m_z > m_aabb.m_maxExtents.m_z)
+				{
+					m_aabb.m_maxExtents.m_z = point.m_z;
+				}
+				else if (point.m_z < m_aabb.m_minExtents.m_z)
+				{
+					m_aabb.m_minExtents.m_z = point.m_z;
 				}
 			}
 		}
 
-		m_aabb->m_maxExtents->m_z += m_shadowOffset;
-
-		delete[] points;
+		m_aabb.m_maxExtents.m_z += m_shadowOffset;
 	}
 
 	void ShadowBox::UpdateSizes(const ICamera &camera)
@@ -134,7 +121,7 @@ namespace fl
 		m_nearHeight = m_nearWidth / Display::Get()->GetAspectRatio();
 	}
 
-	Vector4 *ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar) const
+	std::array<Vector4, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar)
 	{
 		Vector4 upVector4 = rotation.Transform(Vector4(0.0f, 1.0f, 0.0f, 0.0f));
 		Vector3 upVector = Vector3(upVector4);
@@ -152,7 +139,7 @@ namespace fl
 		Vector3 nearTop = centreNear + nearUpVector;
 		Vector3 nearBottom = centreNear + nearDownVector;
 
-		Vector4 *points = new Vector4[8];
+		auto points = std::array<Vector4, 8>();
 		points[0] = CalculateLightSpaceFrustumCorner(farTop, rightVector, m_farWidth);
 		points[1] = CalculateLightSpaceFrustumCorner(farTop, leftVector, m_farWidth);
 		points[2] = CalculateLightSpaceFrustumCorner(farBottom, rightVector, m_farWidth);
@@ -164,71 +151,66 @@ namespace fl
 		return points;
 	}
 
-	Vector4 ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width) const
+	Vector4 ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width)
 	{
 		Vector3 point = startPoint + (direction * width);
 		Vector4 point4 = Vector4(point);
-		point4 = m_lightViewMatrix->Transform(point4);
+		point4 = m_lightViewMatrix.Transform(point4);
 		return point4;
 	}
 
-	void ShadowBox::UpdateOrthoProjectionMatrix() const
+	void ShadowBox::UpdateOrthoProjectionMatrix()
 	{
-		m_projectionMatrix->SetIdentity();
-		m_projectionMatrix->m_00 = 2.0f / m_aabb->GetWidth();
-		m_projectionMatrix->m_11 = 2.0f / m_aabb->GetHeight();
-		m_projectionMatrix->m_22 = -2.0f / m_aabb->GetDepth();
-		m_projectionMatrix->m_33 = 1.0f;
+		m_projectionMatrix = m_projectionMatrix.SetIdentity();
+		m_projectionMatrix.m_00 = 2.0f / m_aabb.GetWidth();
+		m_projectionMatrix.m_11 = 2.0f / m_aabb.GetHeight();
+		m_projectionMatrix.m_22 = -2.0f / m_aabb.GetDepth();
+		m_projectionMatrix.m_33 = 1.0f;
 	}
 
-	void ShadowBox::UpdateCenter() const
+	void ShadowBox::UpdateCenter()
 	{
-		float x = (m_aabb->m_minExtents->m_x + m_aabb->m_maxExtents->m_x) / 2.0f;
-		float y = (m_aabb->m_minExtents->m_y + m_aabb->m_maxExtents->m_y) / 2.0f;
-		float z = (m_aabb->m_minExtents->m_z + m_aabb->m_maxExtents->m_z) / 2.0f;
+		float x = (m_aabb.m_minExtents.m_x + m_aabb.m_maxExtents.m_x) / 2.0f;
+		float y = (m_aabb.m_minExtents.m_y + m_aabb.m_maxExtents.m_y) / 2.0f;
+		float z = (m_aabb.m_minExtents.m_z + m_aabb.m_maxExtents.m_z) / 2.0f;
 		Vector4 centre = Vector4(x, y, z, 1.0f);
-		Matrix4 invertedLight = m_lightViewMatrix->Invert();
-		Vector4 centre4 = invertedLight.Transform(centre);
+		Matrix4 invertedLight = m_lightViewMatrix.Invert();
 
-		*m_centre = centre4;
+		m_centre = invertedLight.Transform(centre);
 	}
 
-	void ShadowBox::UpdateLightViewMatrix() const
+	void ShadowBox::UpdateLightViewMatrix()
 	{
-		m_centre->Negate();
+		m_lightViewMatrix = m_lightViewMatrix.SetIdentity();
+		float pitch = std::acos(Vector2(m_lightDirection.m_x, m_lightDirection.m_z).Length());
+		m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3::RIGHT);
+		float yaw = Maths::Degrees(std::atan(m_lightDirection.m_x / m_lightDirection.m_z));
 
-		m_lightViewMatrix->SetIdentity();
-		float pitch = std::acos(Vector2(m_lightDirection->m_x, m_lightDirection->m_z).Length());
-		*m_lightViewMatrix = m_lightViewMatrix->Rotate(pitch, Vector3::RIGHT);
-		float yaw = Maths::Degrees(std::atan(m_lightDirection->m_x / m_lightDirection->m_z));
-
-		if (m_lightDirection->m_z > 0.0f)
+		if (m_lightDirection.m_z > 0.0f)
 		{
 			yaw -= 180.0f;
 		}
 
-		*m_lightViewMatrix = m_lightViewMatrix->Rotate(-Maths::Radians(yaw), Vector3::UP);
-		*m_lightViewMatrix = m_lightViewMatrix->Translate(*m_centre);
-
-		m_centre->Negate();
+		m_lightViewMatrix = m_lightViewMatrix.Rotate(-Maths::Radians(yaw), Vector3::UP);
+		m_lightViewMatrix = m_lightViewMatrix.Translate(-m_centre);
 	}
 
-	void ShadowBox::UpdateViewShadowMatrix() const
+	void ShadowBox::UpdateViewShadowMatrix()
 	{
-		m_projectionViewMatrix->SetIdentity();
-		m_shadowMapSpaceMatrix->SetIdentity();
-		*m_projectionViewMatrix = *m_projectionMatrix * *m_lightViewMatrix;
-		*m_shadowMapSpaceMatrix = *m_offset * *m_projectionViewMatrix;
+		m_projectionViewMatrix = m_projectionViewMatrix.SetIdentity();
+		m_shadowMapSpaceMatrix = m_shadowMapSpaceMatrix.SetIdentity();
+		m_projectionViewMatrix = m_projectionMatrix * m_lightViewMatrix;
+		m_shadowMapSpaceMatrix = m_offset * m_projectionViewMatrix;
 	}
 
 	bool ShadowBox::IsInBox(const Vector3 &position, const float &radius) const
 	{
-		Vector4 entityPos = m_lightViewMatrix->Transform(Vector4(position));
+		Vector4 entityPos = m_lightViewMatrix.Transform(Vector4(position));
 
 		Vector3 closestPoint = Vector3();
-		closestPoint.m_x = Maths::Clamp(entityPos.m_x, m_aabb->m_minExtents->m_x, m_aabb->m_maxExtents->m_x);
-		closestPoint.m_y = Maths::Clamp(entityPos.m_y, m_aabb->m_minExtents->m_y, m_aabb->m_maxExtents->m_y);
-		closestPoint.m_z = Maths::Clamp(entityPos.m_z, m_aabb->m_minExtents->m_z, m_aabb->m_maxExtents->m_z);
+		closestPoint.m_x = Maths::Clamp(entityPos.m_x, m_aabb.m_minExtents.m_x, m_aabb.m_maxExtents.m_x);
+		closestPoint.m_y = Maths::Clamp(entityPos.m_y, m_aabb.m_minExtents.m_y, m_aabb.m_maxExtents.m_y);
+		closestPoint.m_z = Maths::Clamp(entityPos.m_z, m_aabb.m_minExtents.m_z, m_aabb.m_maxExtents.m_z);
 
 		Vector3 centre = Vector3(entityPos);
 		Vector3 distance = centre - closestPoint;

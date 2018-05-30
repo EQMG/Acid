@@ -12,19 +12,14 @@ namespace fl
 	{
 	public:
 		float m_radius;
-		Vector3 *m_position;
-
-		/// <summary>
-		/// Creates a new unit sphere
-		/// </summary>
-		ColliderSphere();
+		Vector3 m_position;
 
 		/// <summary>
 		/// Creates a new sphere
 		/// </summary>
 		/// <param name="radius"> The spheres radius. </param>
 		/// <param name="position"> The spheres initial position. </param>
-		ColliderSphere(const float &radius, const Vector3 &position = Vector3::ZERO);
+		ColliderSphere(const float &radius = 0.0f, const Vector3 &position = Vector3::ZERO);
 
 		/// <summary>
 		/// Creates a new sphere from another sphere source.
@@ -61,8 +56,14 @@ namespace fl
 
 		void SetRadius(const float &radius) { m_radius = radius; }
 
-		Vector3 *GetPosition() const { return m_position; }
+		Vector3 GetPosition() const { return m_position; }
 
-		void SetPosition(const Vector3 &position) const { *m_position = position; }
+		void SetPosition(const Vector3 &position) { m_position = position; }
+
+		ColliderSphere &operator=(const ColliderSphere &other);
+
+		bool operator==(const ColliderSphere &other) const;
+
+		bool operator!=(const ColliderSphere &other) const;
 	};
 }
