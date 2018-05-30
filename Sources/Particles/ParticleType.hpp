@@ -16,6 +16,8 @@ namespace fl
 		float m_lifeLength;
 		float m_scale;
 	public:
+		// TODO: Switch to using a resource function `std::shared_ptr<ParticleType>`.
+
 		/// <summary>
 		/// Creates a new particle type.
 		/// </summary>

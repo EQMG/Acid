@@ -6,16 +6,14 @@ namespace fl
 {
 	RendererParticles::RendererParticles(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_uniformScene(new UniformHandler()),
-		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Particles/Particle.vert", "Resources/Shaders/Particles/Particle.frag"},
+		m_uniformScene(UniformHandler()),
+		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Particles/Particle.vert", "Resources/Shaders/Particles/Particle.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), {}))
 	{
 	}
 
 	RendererParticles::~RendererParticles()
 	{
-		delete m_uniformScene;
-		delete m_pipeline;
 	}
 
 	void RendererParticles::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)

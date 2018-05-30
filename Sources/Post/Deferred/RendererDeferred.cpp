@@ -21,9 +21,9 @@ namespace fl
 
 	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_descriptorSet(new DescriptorsHandler()),
-		m_uniformScene(new UniformHandler()),
-		m_pipeline(new Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag"},
+		m_descriptorSet(DescriptorsHandler()),
+		m_uniformScene(UniformHandler()),
+		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Deferred/Deferred.vert", "Resources/Shaders/Deferred/Deferred.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), {{"USE_IBL", "TRUE"}, {"MAX_LIGHTS", std::to_string(MAX_LIGHTS)}})),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f)),
 		m_brdflut(Texture::Resource("Resources/BrdfLut.png"))
@@ -32,9 +32,6 @@ namespace fl
 
 	RendererDeferred::~RendererDeferred()
 	{
-		delete m_descriptorSet;
-		delete m_uniformScene;
-		delete m_pipeline;
 	}
 
 	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
@@ -79,32 +76,32 @@ namespace fl
 
 		//	printf("Rendered Lights: %i\n", sceneLights.size());
 
-		m_uniformScene->Push("lights", *sceneLights.data());
-		m_uniformScene->Push("lightsCount", static_cast<int>(sceneLights.size()));
-		m_uniformScene->Push("projection", camera.GetProjectionMatrix());
-		m_uniformScene->Push("view", camera.GetViewMatrix());
-		m_uniformScene->Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
-		m_uniformScene->Push("fogColour", Worlds::Get()->GetFog().GetColour());
-		m_uniformScene->Push("cameraPosition", camera.GetPosition());
-		m_uniformScene->Push("fogDensity", Worlds::Get()->GetFog().GetDensity());
-		m_uniformScene->Push("fogGradient", Worlds::Get()->GetFog().GetGradient());
-		m_uniformScene->Push("shadowDistance", Shadows::Get()->GetShadowBoxDistance());
-		m_uniformScene->Push("shadowTransition", Shadows::Get()->GetShadowTransition());
-		m_uniformScene->Push("shadowBias", Shadows::Get()->GetShadowBias());
-		m_uniformScene->Push("shadowDarkness", Shadows::Get()->GetShadowDarkness());
-		m_uniformScene->Push("shadowPCF", Shadows::Get()->GetShadowPcf());
+		m_uniformScene.Push("lights", *sceneLights.data());
+		m_uniformScene.Push("lightsCount", static_cast<int>(sceneLights.size()));
+		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
+		m_uniformScene.Push("view", camera.GetViewMatrix());
+		m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
+		m_uniformScene.Push("fogColour", Worlds::Get()->GetFog().GetColour());
+		m_uniformScene.Push("cameraPosition", camera.GetPosition());
+		m_uniformScene.Push("fogDensity", Worlds::Get()->GetFog().GetDensity());
+		m_uniformScene.Push("fogGradient", Worlds::Get()->GetFog().GetGradient());
+		m_uniformScene.Push("shadowDistance", Shadows::Get()->GetShadowBoxDistance());
+		m_uniformScene.Push("shadowTransition", Shadows::Get()->GetShadowTransition());
+		m_uniformScene.Push("shadowBias", Shadows::Get()->GetShadowBias());
+		m_uniformScene.Push("shadowDarkness", Shadows::Get()->GetShadowDarkness());
+		m_uniformScene.Push("shadowPCF", Shadows::Get()->GetShadowPcf());
 
 		// Updates descriptors.
-		m_descriptorSet->Push("UboScene", m_uniformScene);
-		m_descriptorSet->Push("writeColour", m_pipeline->GetTexture(2));
-		m_descriptorSet->Push("samplerDepth", m_pipeline->GetDepthStencil());
-		m_descriptorSet->Push("samplerColour", m_pipeline->GetTexture(2));
-		m_descriptorSet->Push("samplerNormal", m_pipeline->GetTexture(3));
-		m_descriptorSet->Push("samplerMaterial", m_pipeline->GetTexture(4));
-		m_descriptorSet->Push("samplerShadows", m_pipeline->GetTexture(0, 0));
-		m_descriptorSet->Push("samplerBrdflut", m_brdflut);
-		m_descriptorSet->Push("samplerEnvironment", environment);
-		bool descriptorsSet = m_descriptorSet->Update(*m_pipeline);
+		m_descriptorSet.Push("UboScene", &m_uniformScene);
+		m_descriptorSet.Push("writeColour", m_pipeline.GetTexture(2));
+		m_descriptorSet.Push("samplerDepth", m_pipeline.GetDepthStencil());
+		m_descriptorSet.Push("samplerColour", m_pipeline.GetTexture(2));
+		m_descriptorSet.Push("samplerNormal", m_pipeline.GetTexture(3));
+		m_descriptorSet.Push("samplerMaterial", m_pipeline.GetTexture(4));
+		m_descriptorSet.Push("samplerShadows", m_pipeline.GetTexture(0, 0));
+		m_descriptorSet.Push("samplerBrdflut", m_brdflut);
+		m_descriptorSet.Push("samplerEnvironment", environment);
+		bool descriptorsSet = m_descriptorSet.Update(m_pipeline);
 
 		if (!descriptorsSet)
 		{
@@ -112,9 +109,9 @@ namespace fl
 		}
 
 		// Draws the object.
-		m_pipeline->BindPipeline(commandBuffer);
+		m_pipeline.BindPipeline(commandBuffer);
 
-		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
+		m_descriptorSet.GetDescriptorSet()->BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }

@@ -82,6 +82,8 @@ namespace fl
 	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels) :
 		IResource(),
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
+		IDescriptor(),
+		m_filename(""),
 		m_hasAlpha(false),
 		m_repeatEdges(false),
 		m_mipLevels(1),

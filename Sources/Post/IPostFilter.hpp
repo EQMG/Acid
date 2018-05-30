@@ -11,9 +11,9 @@ namespace fl
 	class FL_EXPORT IPostFilter
 	{
 	protected:
-		DescriptorsHandler *m_descriptorSet;
+		DescriptorsHandler m_descriptorSet;
 
-		Pipeline *m_pipeline;
+		Pipeline m_pipeline;
 		std::shared_ptr<Model> m_model;
 	public:
 		/// <summary>
@@ -34,9 +34,9 @@ namespace fl
 		/// </summary>
 		virtual void Render(const CommandBuffer &commandBuffer) = 0;
 
-		DescriptorsHandler *GetDescriptorSet() const { return m_descriptorSet; }
+		DescriptorsHandler GetDescriptorSet() const { return m_descriptorSet; }
 
-		Pipeline *GetPipeline() const { return m_pipeline; }
+		Pipeline GetPipeline() const { return m_pipeline; }
 
 		std::shared_ptr<Model> GetModel() const { return m_model; }
 	};

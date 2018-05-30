@@ -13,8 +13,8 @@ namespace fl
 		public IRenderer
 	{
 	private:
-		UniformHandler *m_uniformScene;
-		Pipeline *m_pipeline;
+		UniformHandler m_uniformScene;
+		Pipeline m_pipeline;
 	public:
 		RendererParticles(const GraphicsStage &graphicsStage);
 

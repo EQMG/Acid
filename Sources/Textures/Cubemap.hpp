@@ -48,8 +48,13 @@ namespace fl
 		Cubemap(const std::string &filename, const std::string &fileExt, const bool &mipmap = true);
 
 		/// <summary>
+		/// A new cubemap object from a array of pixels.
+		/// </summary>
+		Cubemap(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels = nullptr);
+
+		/// <summary>
 		/// Deconstructor for the cubemap object.
-		//		/// </summary>
+		/// </summary>
 		~Cubemap();
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
