@@ -83,7 +83,7 @@ namespace fl
 	{
 		if (!FileSystem::FileExists(filepath))
 		{
-			printf("File does not exist: '%s'\n", filepath.c_str());
+			fprintf(stderr, "File does not exist: '%s'\n", filepath.c_str());
 			return "";
 		}
 

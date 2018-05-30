@@ -11,20 +11,15 @@ namespace fl
 		public ICollider
 	{
 	public:
-		Vector3 *m_minExtents;
-		Vector3 *m_maxExtents;
-
-		/// <summary>
-		/// Creates a new unit aabb.
-		/// </summary>
-		ColliderAabb();
+		Vector3 m_minExtents;
+		Vector3 m_maxExtents;
 
 		/// <summary>
 		/// Creates a new aabb
 		/// </summary>
 		/// <param name="minExtents"> The aabbs min extents. </param>
 		/// <param name="minExtents"> The aabbs max extents. </param>
-		ColliderAabb(const Vector3 &minExtents, const Vector3 &maxExtents);
+		ColliderAabb(const Vector3 &minExtents = Vector3::ZERO, const Vector3 &maxExtents = Vector3::ZERO);
 
 		/// <summary>
 		/// Creates a new aabb from another aavv source.
@@ -36,13 +31,6 @@ namespace fl
 		/// Deconstructor for the aabb.
 		/// </summary>
 		~ColliderAabb();
-
-		/// <summary>
-		/// Loads from another Aabb.
-		/// </summary>
-		/// <param name="source"> The source aabb. </param>
-		/// <returns> This. </returns>
-		ColliderAabb *Set(const ColliderAabb &source);
 
 		/// <summary>
 		/// Creates a new aabb equivalent to this, scaled away from the centre origin.
@@ -169,12 +157,18 @@ namespace fl
 		/// <returns> The depth of this aabb. </returns>
 		float GetDepth() const;
 
-		Vector3 *GetMinExtents() const { return m_minExtents; }
+		Vector3 GetMinExtents() const { return m_minExtents; }
 
-		void SetMinExtents(const Vector3 &minExtents) const { *m_minExtents = minExtents; }
+		void SetMinExtents(const Vector3 &minExtents) { m_minExtents = minExtents; }
 
-		Vector3 *GetMaxExtents() const { return m_maxExtents; }
+		Vector3 GetMaxExtents() const { return m_maxExtents; }
 
-		void SetMaxExtents(const Vector3 &maxExtents) const { *m_maxExtents = maxExtents; }
+		void SetMaxExtents(const Vector3 &maxExtents) { m_maxExtents = maxExtents; }
+
+		ColliderAabb &operator=(const ColliderAabb &other);
+
+		bool operator==(const ColliderAabb &other) const;
+
+		bool operator!=(const ColliderAabb &other) const;
 	};
 }

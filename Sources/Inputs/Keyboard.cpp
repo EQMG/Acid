@@ -10,7 +10,7 @@ namespace fl
 
 		if (key < 0 || key > Key::KEY_LAST)
 		{
-			printf("Invalid action attempted with key: '%i'\n", key);
+			fprintf(stderr, "Invalid action attempted with key: '%i'\n", key);
 		}
 		else
 		{

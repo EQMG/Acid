@@ -34,7 +34,7 @@ namespace fl
 		DescriptorsHandler *m_descriptorSet;
 		UniformHandler *m_uniformObject;
 
-		std::shared_ptr<Model> m_model;
+		Model *m_model;
 
 		std::string m_string;
 		std::string m_newString;
@@ -45,8 +45,8 @@ namespace fl
 		float m_kerning;
 		float m_leading;
 
-		Colour *m_textColour;
-		Colour *m_borderColour;
+		Colour m_textColour;
+		Colour m_borderColour;
 		bool m_solidBorder;
 		bool m_glowBorder;
 
@@ -83,7 +83,7 @@ namespace fl
 		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
 		/// </summary>
 		/// <returns> The model of the text. </returns>
-		std::shared_ptr<Model> GetModel() const { return m_model; }
+		Model *GetModel() const { return m_model; }
 
 		/// <summary>
 		/// Gets the string of text represented.
@@ -155,25 +155,25 @@ namespace fl
 		/// Gets the colour of the text.
 		/// </summary>
 		/// <returns> The colour of the text. </returns>
-		Colour *GetTextColour() const { return m_textColour; }
+		Colour GetTextColour() const { return m_textColour; }
 
 		/// <summary>
 		/// Sets the colour of the text.
 		/// </summary>
 		/// <param name="textColour"> The new colour of the text. </param>
-		void SetTextColour(const Colour &textColour) { *m_textColour = textColour; }
+		void SetTextColour(const Colour &textColour) { m_textColour = textColour; }
 
 		/// <summary>
 		/// Gets the border colour of the text. This is used with border and glow drivers.
 		/// </summary>
 		/// <returns> The border colour of the text. </returns>
-		Colour *GetBorderColour() const { return m_borderColour; }
+		Colour GetBorderColour() const { return m_borderColour; }
 
 		/// <summary>
 		/// Sets the border colour of the text. This is used with border and glow drivers.
 		/// </summary>
 		/// <param name="borderColour"> The new border colour of the text. </param>
-		void SetBorderColour(const Colour &borderColour) { *m_borderColour = borderColour; }
+		void SetBorderColour(const Colour &borderColour) { m_borderColour = borderColour; }
 
 		/// <summary>
 		/// Sets a new border driver, will disable glowing.

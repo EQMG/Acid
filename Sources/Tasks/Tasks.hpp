@@ -13,7 +13,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::vector<std::function<void()>> *m_tasks;
+		std::vector<std::function<void()>> m_tasks;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -34,6 +34,6 @@ namespace fl
 		/// Adds an task to the que.
 		/// </summary>
 		/// <param name="task"> The task to add. </param>
-		void AddTask(std::function<void()> task) const;
+		void AddTask(std::function<void()> task);
 	};
 }
