@@ -25,7 +25,7 @@ namespace fl
 		Animator *m_animator;
 		std::vector<Matrix4> m_jointMatrices;
 	public:
-		static const Matrix4 *S_CORRECTION;
+		static const Matrix4 *CORRECTION;
 		static const int MAX_JOINTS;
 		static const int MAX_WEIGHTS;
 

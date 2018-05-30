@@ -5,18 +5,18 @@
 
 namespace fl
 {
-	const Colour *Worlds::FOG_COLOUR_SUNRISE = new Colour("#ee9a90");
-	const Colour *Worlds::FOG_COLOUR_NIGHT = new Colour("#0D0D1A");
-	const Colour *Worlds::FOG_COLOUR_DAY = new Colour("#e6e6e6");
+	const Colour Worlds::FOG_COLOUR_SUNRISE = Colour("#ee9a90");
+	const Colour Worlds::FOG_COLOUR_NIGHT = Colour("#0D0D1A");
+	const Colour Worlds::FOG_COLOUR_DAY = Colour("#e6e6e6");
 
-	const Colour *Worlds::SUN_COLOUR_SUNRISE = new Colour("#ee9a90");
-	const Colour *Worlds::SUN_COLOUR_NIGHT = new Colour("#0D0D1A");
-	const Colour *Worlds::SUN_COLOUR_DAY = new Colour("#ffffff");
+	const Colour Worlds::SUN_COLOUR_SUNRISE = Colour("#ee9a90");
+	const Colour Worlds::SUN_COLOUR_NIGHT = Colour("#0D0D1A");
+	const Colour Worlds::SUN_COLOUR_DAY = Colour("#ffffff");
 
-	const Colour *Worlds::MOON_COLOUR_NIGHT = new Colour("#666699");
-	const Colour *Worlds::MOON_COLOUR_DAY = new Colour("#000000");
+	const Colour Worlds::MOON_COLOUR_NIGHT = Colour("#666699");
+	const Colour Worlds::MOON_COLOUR_DAY = Colour("#000000");
 
-	const Colour *Worlds::SKYBOX_COLOUR_DAY = new Colour("#003C8A");
+	const Colour Worlds::SKYBOX_COLOUR_DAY = Colour("#003C8A");
 
 	Worlds::Worlds() :
 		IModule(),
@@ -68,8 +68,8 @@ namespace fl
 		Vector3 lightDirection = m_skyboxRotation->Rotate(Vector3(0.2f, 0.0f, 0.5f));
 		lightDirection.Normalize();
 
-		Colour fogColour = FOG_COLOUR_SUNRISE->Interpolate(*FOG_COLOUR_NIGHT, GetSunriseFactor());
-		fogColour = fogColour.Interpolate(*FOG_COLOUR_DAY, GetShadowFactor());
+		Colour fogColour = FOG_COLOUR_SUNRISE.Interpolate(FOG_COLOUR_NIGHT, GetSunriseFactor());
+		fogColour = fogColour.Interpolate(FOG_COLOUR_DAY, GetShadowFactor());
 
 		*m_sunPosition = lightDirection * Vector3(-6048.0f, -6048.0f, -6048.0f);
 		*m_moonPosition = lightDirection * Vector3(6048.0f, 6048.0f, 6048.0f);
@@ -80,10 +80,10 @@ namespace fl
 			Vector3::Add(*m_moonPosition, *Scenes::Get()->GetCamera()->GetPosition(), m_moonPosition);
 		}*/
 
-		*m_sunColour = SUN_COLOUR_SUNRISE->Interpolate(*SUN_COLOUR_NIGHT, GetSunriseFactor());
-		*m_sunColour = m_sunColour->Interpolate(*SUN_COLOUR_DAY, GetShadowFactor());
+		*m_sunColour = SUN_COLOUR_SUNRISE.Interpolate(SUN_COLOUR_NIGHT, GetSunriseFactor());
+		*m_sunColour = m_sunColour->Interpolate(SUN_COLOUR_DAY, GetShadowFactor());
 
-		*m_moonColour = MOON_COLOUR_NIGHT->Interpolate(*MOON_COLOUR_DAY, GetShadowFactor());
+		*m_moonColour = MOON_COLOUR_NIGHT.Interpolate(MOON_COLOUR_DAY, GetShadowFactor());
 
 		m_fog->SetColour(fogColour);
 		m_fog->SetDensity(0.002f + ((1.0f - GetShadowFactor()) * 0.002f));
@@ -91,7 +91,7 @@ namespace fl
 		m_fog->SetLowerLimit(0.0f);
 		m_fog->SetUpperLimit(0.15f - ((1.0f - GetShadowFactor()) * 0.03f));
 
-		*m_skyColour = *SKYBOX_COLOUR_DAY;
+		*m_skyColour = SKYBOX_COLOUR_DAY;
 
 		if (Shadows::Get() != nullptr)
 		{

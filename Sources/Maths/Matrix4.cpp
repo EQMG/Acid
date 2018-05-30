@@ -74,7 +74,6 @@ namespace fl
 	{
 	}
 
-
 	Matrix4 Matrix4::Add(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();

@@ -54,7 +54,7 @@ namespace fl
 		if (isRoot)
 		{
 			// Because in Blender z is up, but the engine is y up.
-			matrix *= *MeshAnimated::S_CORRECTION;
+			matrix *= *MeshAnimated::CORRECTION;
 		}
 
 		m_jointCount++;

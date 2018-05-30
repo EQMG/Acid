@@ -24,7 +24,11 @@ namespace fl
 	{
 		m_objects->clear();
 
-		m_selector->Update(Scenes::Get()->IsGamePaused());
+		if (Scenes::Get()->GetUiManager() != nullptr && Scenes::Get()->GetUiManager()->GetSelectorJoystick() != nullptr)
+		{
+			m_selector->Update(Scenes::Get()->IsGamePaused(), *Scenes::Get()->GetUiManager()->GetSelectorJoystick());
+		}
+
 		m_container->Update();
 		m_container->GetAll(m_objects);
 	}
