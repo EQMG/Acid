@@ -30,7 +30,7 @@ namespace fl
 	Mouse::Mouse() :
 		IModule(),
 		m_customMouse(""),
-		m_mouseButtons(new int[MouseButton::MOUSE_BUTTON_LAST + 1]),
+		m_mouseButtons(std::array<int, MOUSE_BUTTON_LAST + 1>()),
 		m_lastMousePositionX(0.5f),
 		m_lastMousePositionY(0.5f),
 		m_mousePositionX(0.5f),
@@ -43,7 +43,7 @@ namespace fl
 		m_lastCursorDisabled(false)
 	{
 		// Sets the default state of the buttons to released.
-		for (int i = 0; i < MouseButton::MOUSE_BUTTON_LAST + 1; i++)
+		for (int i = 0; i < MOUSE_BUTTON_LAST + 1; i++)
 		{
 			m_mouseButtons[i] = GLFW_RELEASE;
 		}
@@ -57,7 +57,6 @@ namespace fl
 
 	Mouse::~Mouse()
 	{
-		delete[] m_mouseButtons;
 	}
 
 	void Mouse::Update()
@@ -133,7 +132,7 @@ namespace fl
 
 	bool Mouse::GetButton(const MouseButton &button) const
 	{
-		if (button < 0 || button > MouseButton::MOUSE_BUTTON_LAST + 1)
+		if (button < 0 || button > MOUSE_BUTTON_LAST + 1)
 		{
 			return false;
 		}

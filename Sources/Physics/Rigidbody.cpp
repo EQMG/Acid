@@ -11,16 +11,14 @@ namespace fl
 		m_mass(mass),
 		m_drag(drag),
 		m_useGravity(useGravity),
-		m_freezePosition(new Constraint3(freezePosition)),
-		m_freezeRotation(new Constraint3(freezeRotation)),
+		m_freezePosition(freezePosition),
+		m_freezeRotation(freezeRotation),
 		m_colliderCopy(nullptr)
 	{
 	}
 
 	Rigidbody::~Rigidbody()
 	{
-		delete m_freezePosition;
-		delete m_freezeRotation;
 		delete m_colliderCopy;
 	}
 
@@ -39,8 +37,8 @@ namespace fl
 		m_mass = value->GetChild("Mass")->Get<float>();
 		m_drag = value->GetChild("Drag")->Get<float>();
 		m_useGravity = value->GetChild("Use Gravity")->Get<bool>();
-		*m_freezePosition = value->GetChild("Freeze Position");
-		*m_freezeRotation = value->GetChild("Freeze Rotation");
+		m_freezePosition = value->GetChild("Freeze Position");
+		m_freezeRotation = value->GetChild("Freeze Rotation");
 	}
 
 	void Rigidbody::Write(LoadedValue *value)
@@ -48,8 +46,8 @@ namespace fl
 		value->GetChild("Mass", true)->Set(m_mass);
 		value->GetChild("Drag", true)->Set(m_drag);
 		value->GetChild("Use Gravity", true)->Set(m_useGravity);
-		m_freezePosition->Write(value->GetChild("Freeze Position", true));
-		m_freezeRotation->Write(value->GetChild("Freeze Rotation", true));
+		m_freezePosition.Write(value->GetChild("Freeze Position", true));
+		m_freezeRotation.Write(value->GetChild("Freeze Rotation", true));
 	}
 
 	Vector3 Rigidbody::ResolveCollisions(const Vector3 &amount)
@@ -87,6 +85,8 @@ namespace fl
 		std::vector<Rigidbody *> rigidbodys = std::vector<Rigidbody *>();
 		Scenes::Get()->GetStructure()->QueryComponents<Rigidbody>(&rigidbodys);
 
+		Vector3 currentPosition = GetGameObject()->GetTransform()->GetPosition();
+
 		// Goes though all entities in the collision range.
 		for (auto rigidbody : rigidbodys)
 		{
@@ -99,7 +99,7 @@ namespace fl
 			// If the main collider intersects with the other entities general collider.
 			if (rigidbody->m_colliderCopy->Intersects(collisionRange).IsIntersection())
 			{
-				rigidbody->m_colliderCopy->ResolveCollision(*m_colliderCopy, result, &result);
+				result = rigidbody->m_colliderCopy->ResolveCollision(*m_colliderCopy, currentPosition, result);
 			}
 		}
 

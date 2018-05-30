@@ -222,12 +222,9 @@ namespace fl
 		return destination;
 	}
 
-	Vector3 *ColliderAabb::ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination)
+	Vector3 ColliderAabb::ResolveCollision(const ICollider &other, const Vector3 &positionStart, const Vector3 &positionDelta)
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
+		Vector3 result = Vector3();
 
 		auto aabb2 = dynamic_cast<const ColliderAabb &>(other);
 
@@ -248,7 +245,7 @@ namespace fl
 
 			if (std::fabs(newAmountX) < std::fabs(positionDelta.m_x))
 			{
-				destination->m_x = newAmountX;
+				result.m_x = newAmountX;
 			}
 		}
 
@@ -269,7 +266,7 @@ namespace fl
 
 			if (std::fabs(newAmountY) < std::fabs(positionDelta.m_y))
 			{
-				destination->m_y = newAmountY;
+				result.m_y = newAmountY;
 			}
 		}
 
@@ -290,11 +287,11 @@ namespace fl
 
 			if (std::fabs(newAmountZ) < std::fabs(positionDelta.m_z))
 			{
-				destination->m_z = newAmountZ;
+				result.m_z = newAmountZ;
 			}
 		}
 
-		return destination;
+		return result;
 	}
 
 	Intersect ColliderAabb::Intersects(const ICollider &other)
