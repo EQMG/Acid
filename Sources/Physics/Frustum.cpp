@@ -22,9 +22,9 @@ namespace fl
 
 	void Frustum::Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) const
 	{
-		float *view = viewMatrix.ToArray();
-		float *proj = projectionMatrix.ToArray();
-		float *clip = new float[16];
+		auto view = viewMatrix.m_linear;
+		auto proj = projectionMatrix.m_linear;
+		auto clip = std::array<float, 16>();
 
 		clip[0] = view[0] * proj[0] + view[1] * proj[4] + view[2] * proj[8] + view[3] * proj[12];
 		clip[1] = view[0] * proj[1] + view[1] * proj[5] + view[2] * proj[9] + view[3] * proj[13];
@@ -93,11 +93,6 @@ namespace fl
 		m_frustumArray[FRUSTUM_FRONT][FRUSTUM_D] = clip[15] - clip[14];
 
 		NormalizePlane(FRUSTUM_FRONT);
-
-		// Deletes the arrays used to update the frustum.
-		delete[] view;
-		delete[] proj;
-		delete[] clip;
 	}
 
 	bool Frustum::PointInFrustum(const Vector3 &position) const

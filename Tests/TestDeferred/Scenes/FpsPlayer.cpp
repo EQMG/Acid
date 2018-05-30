@@ -132,7 +132,7 @@ namespace test
 		float groundHeight = 0.0f;
 
 		// Calculates the deltas to the moved distance, and rotation.
-		float theta = Maths::Radians(cameraRotation->m_y);
+		float theta = Maths::Radians(cameraRotation.m_y);
 		float dx = -(m_velocity->m_z * std::sin(theta) + m_velocity->m_x * std::cos(theta)) * delta;
 		float dy = m_velocity->m_y * delta;
 		float dz = -(m_velocity->m_z * std::cos(theta) - m_velocity->m_x * std::sin(theta)) * delta;

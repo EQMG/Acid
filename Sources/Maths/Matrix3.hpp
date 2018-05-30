@@ -32,6 +32,11 @@ namespace fl
 			{
 				float m_elements[3][3];
 			};
+
+			struct
+			{
+				float m_linear[9];
+			};
 		};
 
 		static const Matrix3 IDENTITY;

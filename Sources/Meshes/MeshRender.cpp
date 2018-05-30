@@ -35,7 +35,7 @@ namespace fl
 
 		if (rigidbody != nullptr && rigidbody->GetCollider() != nullptr)
 		{
-			if (!rigidbody->GetCollider()->InFrustum(*Scenes::Get()->GetCamera()->GetViewFrustum()))
+			if (!rigidbody->GetCollider()->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
 			{
 				return;
 			}

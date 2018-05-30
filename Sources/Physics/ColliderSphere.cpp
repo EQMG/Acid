@@ -130,10 +130,10 @@ namespace fl
 
 	Intersect ColliderSphere::Intersects(const Ray &ray)
 	{
-		Vector3 L = *ray.m_origin - *m_position;
+		Vector3 L = ray.GetOrigin() - *m_position;
 
-		float a = ray.m_currentRay->Dot(*ray.m_currentRay);
-		float b = 2.0f * ray.m_currentRay->Dot(L);
+		float a = ray.GetCurrentRay().Dot(ray.GetCurrentRay());
+		float b = 2.0f * ray.GetCurrentRay().Dot(L);
 		float c = L.Dot(L) - (m_radius * m_radius);
 
 		float disc = b * b - 4.0f * a * c;

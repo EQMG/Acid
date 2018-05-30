@@ -76,8 +76,8 @@ namespace fl
 
 		/*if (Scenes::Get()->GetCamera() != nullptr)
 		{
-			Vector3::Add(*m_sunPosition, *Scenes::Get()->GetCamera()->GetPosition(), m_sunPosition);
-			Vector3::Add(*m_moonPosition, *Scenes::Get()->GetCamera()->GetPosition(), m_moonPosition);
+			Vector3::Add(*m_sunPosition, Scenes::Get()->GetCamera()->GetPosition(), m_sunPosition);
+			Vector3::Add(*m_moonPosition, Scenes::Get()->GetCamera()->GetPosition(), m_moonPosition);
 		}*/
 
 		*m_sunColour = SUN_COLOUR_SUNRISE.Interpolate(SUN_COLOUR_NIGHT, GetSunriseFactor());

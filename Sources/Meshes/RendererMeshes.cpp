@@ -19,8 +19,8 @@ namespace fl
 
 	void RendererMeshes::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		m_uniformScene->Push("projection", *camera.GetProjectionMatrix());
-		m_uniformScene->Push("view", *camera.GetViewMatrix());
+		m_uniformScene->Push("projection", camera.GetProjectionMatrix());
+		m_uniformScene->Push("view", camera.GetViewMatrix());
 
 		std::vector<MeshRender *> renderList = std::vector<MeshRender *>();
 		Scenes::Get()->GetStructure()->QueryComponents<MeshRender>(&renderList);

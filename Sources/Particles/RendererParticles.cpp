@@ -24,8 +24,8 @@ namespace fl
 		const auto descriptorSet = m_pipeline->GetDescriptorSet();
 
 		UbosParticles::UboScene uboScene = {};
-		uboScene.projection = *camera.GetProjectionMatrix();
-		uboScene.view = *camera.GetViewMatrix();
+		uboScene.projection = camera.GetProjectionMatrix();
+		uboScene.view = camera.GetViewMatrix();
 		m_uniformScene->Update(&uboScene);
 
 		m_pipeline->BindPipeline(commandBuffer);*/
@@ -37,7 +37,7 @@ namespace fl
 			for (auto particle : *(*iter).second)
 			{
 				UbosParticles::UboObject object = {};
-				object.transform = ModelMatrix(particle, *camera.GetViewMatrix());
+				object.transform = ModelMatrix(particle, camera.GetViewMatrix());
 				object.textureOffsets.m_x = particle->GetTextureOffset1()->m_x;
 				object.textureOffsets.m_y = particle->GetTextureOffset1()->m_y;
 				object.textureOffsets.m_z = particle->GetTextureOffset2()->m_x;

@@ -64,16 +64,16 @@ namespace fl
 		UpdateSizes(camera);
 
 		Matrix4 rotation = Matrix4();
-		rotation = rotation.Rotate(Maths::Radians(camera.GetRotation()->m_y), Vector3::UP);
-		rotation = rotation.Rotate(Maths::Radians(camera.GetRotation()->m_x), Vector3::RIGHT);
+		rotation = rotation.Rotate(Maths::Radians(camera.GetRotation().m_y), Vector3::UP);
+		rotation = rotation.Rotate(Maths::Radians(camera.GetRotation().m_x), Vector3::RIGHT);
 
 		Vector4 forwardVector4 = rotation.Transform(Vector4(0.0f, 0.0f, -1.0f, 0.0f));
 		Vector3 forwardVector = Vector3(forwardVector4);
 
 		Vector3 toFar = forwardVector * m_shadowDistance;
 		Vector3 toNear = forwardVector * camera.GetNearPlane();
-		Vector3 centreNear = toNear + *camera.GetPosition();
-		Vector3 centreFar = toFar + *camera.GetPosition();
+		Vector3 centreNear = toNear + camera.GetPosition();
+		Vector3 centreFar = toFar + camera.GetPosition();
 
 		Vector4 *points = CalculateFrustumVertices(rotation, forwardVector, centreNear, centreFar);
 
