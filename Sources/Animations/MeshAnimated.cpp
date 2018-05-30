@@ -107,7 +107,6 @@ namespace fl
 	{
 		if (headJoint.GetIndex() < jointMatrices->size())
 		{
-		//	jointMatrices->insert(jointMatrices->begin() + headJoint.GetIndex(), *headJoint.GetAnimatedTransform());
 			jointMatrices->at(headJoint.GetIndex()) = *headJoint.GetAnimatedTransform();
 		}
 

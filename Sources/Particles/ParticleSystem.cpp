@@ -107,7 +107,7 @@ namespace fl
 		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
 		Vector3 spawnPos = Vector3();
 		spawnPos = GetGameObject()->GetTransform()->GetPosition() + *m_systemOffset;
-		spawnPos = spawnPos + *m_spawn->GetBaseSpawnPosition();
+		spawnPos = spawnPos + m_spawn->GetBaseSpawnPosition();
 		return new Particle(emitType, spawnPos, velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
 	}
 

@@ -13,11 +13,11 @@ namespace fl
 	private:
 		static std::map<std::string, Vector2> PIVOT_MAP;
 	public:
-		Vector2 *m_position;
-		Vector2 *m_reference;
+		Vector2 m_position;
+		Vector2 m_reference;
 		bool m_aspectPosition;
 		bool m_aspectSize;
-		Vector2 *m_dimensions;
+		Vector2 m_dimensions;
 
 		/// <summary>
 		/// Constructor for rectangle.
@@ -40,20 +40,13 @@ namespace fl
 		/// </summary>
 		~UiBound();
 
-		/// <summary>
-		/// Loads from another Rectangle.
-		/// </summary>
-		/// <param name="source"> The source rectangle. </param>
-		/// <returns> This. </returns>
-		UiBound *Set(const UiBound &source);
+		Vector2 GetPosition() const { return m_position; }
 
-		Vector2 *GetPosition() const { return m_position; }
+		void SetPosition(const Vector2 &position) { m_position = position; }
 
-		void SetPosition(const Vector2 &position) { *m_position = position; }
+		Vector2 GetReference() const { return m_reference; }
 
-		Vector2 *GetReference() const { return m_reference; }
-
-		void SetReference(Vector2 *reference) { m_reference = reference; }
+		void SetReference(const Vector2 &reference) { m_reference = reference; }
 
 		bool IsAspectPosition() const { return m_aspectPosition; }
 
@@ -63,9 +56,15 @@ namespace fl
 
 		void SetAspectSize(const bool &aspectSize) { m_aspectSize = aspectSize; }
 
-		Vector2 *GetDimensions() const { return m_dimensions; }
+		Vector2 GetDimensions() const { return m_dimensions; }
 
-		void SetDimensions(const Vector2 &dimensions) { *m_dimensions = dimensions; }
+		void SetDimensions(const Vector2 &dimensions) { m_dimensions = dimensions; }
+
+		UiBound &operator=(const UiBound &other);
+
+		bool operator==(const UiBound &other) const;
+
+		bool operator!=(const UiBound &other) const;
 
 		static Vector2 FindPivot(const std::string &key);
 	};

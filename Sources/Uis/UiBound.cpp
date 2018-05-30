@@ -18,38 +18,45 @@ namespace fl
 		};
 
 	UiBound::UiBound(const Vector2 &position, const std::string &reference, const bool &aspectPosition, const bool &aspectSize, const Vector2 &dimensions) :
-		m_position(new Vector2(position)),
-		m_reference(new Vector2(FindPivot(reference))),
+		m_position(Vector2(position)),
+		m_reference(Vector2(FindPivot(reference))),
 		m_aspectPosition(aspectPosition),
 		m_aspectSize(aspectSize),
-		m_dimensions(new Vector2(dimensions))
+		m_dimensions(Vector2(dimensions))
 	{
 	}
 
 	UiBound::UiBound(const UiBound &source) :
-		m_position(new Vector2(*source.m_position)),
-		m_reference(new Vector2(*source.m_reference)),
+		m_position(Vector2(source.m_position)),
+		m_reference(Vector2(source.m_reference)),
 		m_aspectPosition(source.m_aspectPosition),
 		m_aspectSize(source.m_aspectSize),
-		m_dimensions(new Vector2(*source.m_dimensions))
+		m_dimensions(Vector2(source.m_dimensions))
 	{
 	}
 
 	UiBound::~UiBound()
 	{
-		delete m_position;
-		delete m_dimensions;
-		delete m_reference;
 	}
 
-	UiBound *UiBound::Set(const UiBound &source)
+	UiBound &UiBound::operator=(const UiBound &other)
 	{
-		*m_position = *source.m_position;
-		*m_reference = *source.m_reference;
-		m_aspectPosition = source.m_aspectPosition;
-		m_aspectSize = source.m_aspectSize;
-		*m_dimensions = *source.m_dimensions;
-		return this;
+		m_position = other.m_position;
+		m_reference = other.m_reference;
+		m_aspectPosition = other.m_aspectPosition;
+		m_aspectSize = other.m_aspectSize;
+		m_dimensions = other.m_dimensions;
+		return *this;
+	}
+
+	bool UiBound::operator==(const UiBound &other) const
+	{
+		return m_position == other.m_position && m_reference == other.m_reference && m_aspectPosition == other.m_aspectPosition && m_aspectSize == other.m_aspectSize && m_dimensions == other.m_dimensions;
+	}
+
+	bool UiBound::operator!=(const UiBound &other) const
+	{
+		return !(*this == other);
 	}
 
 	Vector2 UiBound::FindPivot(const std::string &key)

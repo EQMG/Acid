@@ -93,7 +93,7 @@ namespace fl
 
 		UiBound *GetRectangle() const { return m_rectangle; }
 
-		void SetRectangle(const UiBound &rectangle) const { m_rectangle->Set(rectangle); }
+		void SetRectangle(const UiBound &rectangle) { *m_rectangle = rectangle; }
 
 		Vector4 *GetScissor() const { return m_scissor; }
 

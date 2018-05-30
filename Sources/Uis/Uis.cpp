@@ -8,7 +8,7 @@ namespace fl
 		IModule(),
 		m_selector(new UiSelector()),
 		m_container(new UiObject(nullptr, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)))),
-		m_objects(new std::vector<UiObject *>()),
+		m_objects(std::vector<UiObject *>()),
 		m_proximaNova(FontFamily::Resource("Resources/Fonts/ProximaNova"))
 	{
 	}
@@ -17,12 +17,11 @@ namespace fl
 	{
 		delete m_selector;
 		delete m_container;
-		delete m_objects;
 	}
 
 	void Uis::Update()
 	{
-		m_objects->clear();
+		m_objects.clear();
 
 		if (Scenes::Get()->GetUiManager() != nullptr && Scenes::Get()->GetUiManager()->GetSelectorJoystick() != nullptr)
 		{
@@ -30,6 +29,6 @@ namespace fl
 		}
 
 		m_container->Update();
-		m_container->GetAll(m_objects);
+		m_container->GetAll(&m_objects);
 	}
 }
