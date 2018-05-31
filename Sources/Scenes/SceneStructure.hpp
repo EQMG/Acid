@@ -43,14 +43,13 @@ namespace fl
 		/// </summary>
 		/// <returns> The list specified by of all components that match the type. </returns>
 		template<typename T>
-		std::vector<T *> QueryComponents()
+		std::vector<std::shared_ptr<T>> QueryComponents()
 		{
-			auto result = std::vector<T *>();
+			auto result = std::vector<std::shared_ptr<T>>();
 
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
-				auto gameObject = static_cast<GameObject *>(*it);
-				auto component = gameObject->GetComponent<T>();
+				auto component = (*it)->GetComponent<T>();
 
 				if (component != nullptr)
 				{
@@ -66,12 +65,11 @@ namespace fl
 		/// </summary>
 		/// <returns> The first component of the type found. </returns>
 		template<typename T>
-		T *GetComponent()
+		std::shared_ptr<T> GetComponent()
 		{
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
-				auto gameObject = static_cast<GameObject *>(*it);
-				auto component = gameObject->GetComponent<T>();
+				auto component = (*it)->GetComponent<T>();
 
 				if (component != nullptr)
 				{

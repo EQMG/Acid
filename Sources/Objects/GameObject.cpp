@@ -8,7 +8,7 @@ namespace fl
 	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure) :
 		m_name(""),
 		m_transform(new Transform(transform)),
-		m_components(std::vector<Component *>()),
+		m_components(std::vector<std::shared_ptr<Component>>()),
 		m_structure(structure),
 		m_parent(nullptr),
 		m_removed(false)
@@ -36,7 +36,7 @@ namespace fl
 				continue;
 			}
 
-			Component *component = Scenes::Get()->CreateComponent(value->GetName());
+			auto component = Scenes::Get()->CreateComponent(value->GetName());
 
 			if (component == nullptr)
 			{
@@ -53,12 +53,6 @@ namespace fl
 	GameObject::~GameObject()
 	{
 		StructureRemove();
-
-		for (auto component : m_components)
-		{
-			delete component;
-		}
-
 		delete m_transform;
 	}
 
@@ -83,7 +77,7 @@ namespace fl
 		}
 	}
 
-	Component *GameObject::AddComponent(Component *component)
+	std::shared_ptr<Component> GameObject::AddComponent(std::shared_ptr<Component> component)
 	{
 		if (component == nullptr)
 		{
@@ -95,7 +89,7 @@ namespace fl
 		return component;
 	}
 
-	Component *GameObject::RemoveComponent(Component *component)
+	std::shared_ptr<Component> GameObject::RemoveComponent(std::shared_ptr<Component> component)
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
@@ -106,7 +100,6 @@ namespace fl
 					(*it)->SetGameObject(nullptr);
 				}
 
-				delete component;
 				m_components.erase(it);
 				return *it;
 			}

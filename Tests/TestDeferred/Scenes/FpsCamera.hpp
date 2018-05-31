@@ -75,7 +75,7 @@ namespace test
 		void UpdatePosition();
 
 	public:
-		void ReflectView(const float &waterHeight) override;
+		void ReflectView(const float &height) override;
 
 		float GetNearPlane() const override { return NEAR_PLANE; }
 
