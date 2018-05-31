@@ -5,8 +5,8 @@
 
 namespace fl
 {
-	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure, const std::string &name) :
-		m_name(name),
+	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure) :
+		m_name(""),
 		m_transform(new Transform(transform)),
 		m_components(std::vector<Component *>()),
 		m_structure(structure),
@@ -25,7 +25,7 @@ namespace fl
 	}
 
 	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure *structure) :
-		GameObject(transform, structure, prefabName)
+		GameObject(transform, structure)
 	{
 		auto prefabObject = PrefabObject::Resource("Resources/Objects/" + prefabName + "/" + prefabName + ".json");
 
@@ -46,6 +46,8 @@ namespace fl
 			component->Load(value);
 			AddComponent(component);
 		}
+
+		m_name = prefabName;
 	}
 
 	GameObject::~GameObject()

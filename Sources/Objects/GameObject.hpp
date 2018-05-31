@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include "Engine/Exports.hpp"
 #include "Scenes/ISpatialStructure.hpp"
 #include "Maths/Transform.hpp"
@@ -15,10 +16,10 @@ namespace fl
 		Transform *m_transform;
 		std::vector<Component *> m_components;
 		ISpatialStructure *m_structure;
-		GameObject *m_parent;
+		GameObject* m_parent;
 		bool m_removed;
 	public:
-		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr, const std::string &name = "Unnamed");
+		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr);
 
 		GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure *structure = nullptr);
 

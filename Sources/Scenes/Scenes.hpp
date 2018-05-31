@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
-#include "Objects/GameObject.hpp"
 #include "Objects/ComponentRegister.hpp"
 #include "SceneStructure.hpp"
 #include "Scene.hpp"

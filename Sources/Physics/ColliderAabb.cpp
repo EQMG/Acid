@@ -22,117 +22,82 @@ namespace fl
 	{
 	}
 
-	ColliderAabb *ColliderAabb::Scale(const ColliderAabb &source, const Vector3 &scale, ColliderAabb *destination)
+	ColliderAabb ColliderAabb::Scale(const Vector3 &scale)
 	{
-		if (destination == nullptr)
-		{
-			destination = new ColliderAabb();
-		}
+		Vector3 minExtents = Vector3(m_minExtents.m_x * scale.m_x,
+			m_minExtents.m_y * scale.m_y, m_minExtents.m_z * scale.m_z);
+		Vector3 maxExtents = Vector3(m_maxExtents.m_x * scale.m_x,
+			m_maxExtents.m_y * scale.m_y, m_maxExtents.m_z * scale.m_z);
 
-		destination->m_minExtents = Vector3(source.m_minExtents.m_x * scale.m_x,
-			source.m_minExtents.m_y * scale.m_y, source.m_minExtents.m_z * scale.m_z);
-		destination->m_maxExtents = Vector3(source.m_maxExtents.m_x * scale.m_x,
-			source.m_maxExtents.m_y * scale.m_y, source.m_maxExtents.m_z * scale.m_z);
-
-		return destination;
+		return ColliderAabb(minExtents, maxExtents);
 	}
 
-	ColliderAabb *ColliderAabb::Scale(const ColliderAabb &source, const float &scaleX, const float &scaleY, const float &scaleZ, ColliderAabb *destination)
+	ColliderAabb ColliderAabb::Expand(const Vector3 &expand)
 	{
-		return Scale(source, Vector3(scaleX, scaleY, scaleZ), destination);
+		Vector3 minExtents = Vector3(m_minExtents.m_x - expand.m_x,
+			m_minExtents.m_y - expand.m_y, m_minExtents.m_z - expand.m_z);
+		Vector3 maxExtents = Vector3(m_maxExtents.m_x + expand.m_x,
+			m_maxExtents.m_y + expand.m_y, m_maxExtents.m_z + expand.m_z);
+
+		return ColliderAabb(minExtents, maxExtents);
 	}
 
-	ColliderAabb *ColliderAabb::Expand(const ColliderAabb &source, const Vector3 &expand, ColliderAabb *destination)
+	ColliderAabb ColliderAabb::Combine(const ColliderAabb &other)
 	{
-		if (destination == nullptr)
-		{
-			destination = new ColliderAabb();
-		}
+		float newMinX = std::min(m_minExtents.m_x, other.m_minExtents.m_x);
+		float newMinY = std::min(m_minExtents.m_y, other.m_minExtents.m_y);
+		float newMinZ = std::min(m_minExtents.m_z, other.m_minExtents.m_z);
+		float newMaxX = std::max(m_maxExtents.m_x, other.m_maxExtents.m_x);
+		float newMaxY = std::max(m_maxExtents.m_y, other.m_maxExtents.m_y);
+		float newMaxZ = std::max(m_maxExtents.m_z, other.m_maxExtents.m_z);
 
-		destination->m_minExtents = Vector3(source.m_minExtents.m_x - expand.m_x,
-			source.m_minExtents.m_y - expand.m_y, source.m_minExtents.m_z - expand.m_z);
-		destination->m_maxExtents = Vector3(source.m_maxExtents.m_x + expand.m_x,
-			source.m_maxExtents.m_y + expand.m_y, source.m_maxExtents.m_z + expand.m_z);
+		Vector3 minExtents = Vector3(newMinX, newMinY, newMinZ);
+		Vector3 maxExtents = Vector3(newMaxX, newMaxY, newMaxZ);
 
-		return destination;
+		return ColliderAabb(minExtents, maxExtents);
 	}
 
-	ColliderAabb *ColliderAabb::Expand(const ColliderAabb &source, const float &expandX, const float &expandY, const float &expandZ, ColliderAabb *destination)
+	ColliderAabb ColliderAabb::Stretch(const Vector3 &stretch)
 	{
-		return Expand(source, Vector3(expandX, expandY, expandZ), destination);
-	}
-
-	ColliderAabb *ColliderAabb::Combine(const ColliderAabb &left, const ColliderAabb &right, ColliderAabb *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new ColliderAabb();
-		}
-
-		float newMinX = std::min(left.m_minExtents.m_x, right.m_minExtents.m_x);
-		float newMinY = std::min(left.m_minExtents.m_y, right.m_minExtents.m_y);
-		float newMinZ = std::min(left.m_minExtents.m_z, right.m_minExtents.m_z);
-		float newMaxX = std::max(left.m_maxExtents.m_x, right.m_maxExtents.m_x);
-		float newMaxY = std::max(left.m_maxExtents.m_y, right.m_maxExtents.m_y);
-		float newMaxZ = std::max(left.m_maxExtents.m_z, right.m_maxExtents.m_z);
-
-		destination->m_minExtents = Vector3(newMinX, newMinY, newMinZ);
-		destination->m_maxExtents = Vector3(newMaxX, newMaxY, newMaxZ);
-
-		return destination;
-	}
-
-	ColliderAabb *ColliderAabb::Stretch(const ColliderAabb &source, const Vector3 &stretch, ColliderAabb *destination)
-	{
-		if (destination == nullptr)
-		{
-			destination = new ColliderAabb();
-		}
-
 		float newMinX, newMaxX, newMinY, newMaxY, newMinZ, newMaxZ;
 
 		if (stretch.m_x < 0.0f)
 		{
-			newMinX = source.m_minExtents.m_x + stretch.m_x;
-			newMaxX = source.m_maxExtents.m_x;
+			newMinX = m_minExtents.m_x + stretch.m_x;
+			newMaxX = m_maxExtents.m_x;
 		}
 		else
 		{
-			newMinX = source.m_minExtents.m_x;
-			newMaxX = source.m_maxExtents.m_x + stretch.m_x;
+			newMinX = m_minExtents.m_x;
+			newMaxX = m_maxExtents.m_x + stretch.m_x;
 		}
 
 		if (stretch.m_y < 0.0f)
 		{
-			newMinY = source.m_minExtents.m_y + stretch.m_y;
-			newMaxY = source.m_maxExtents.m_y;
+			newMinY = m_minExtents.m_y + stretch.m_y;
+			newMaxY = m_maxExtents.m_y;
 		}
 		else
 		{
-			newMinY = source.m_minExtents.m_y;
-			newMaxY = source.m_maxExtents.m_y + stretch.m_y;
+			newMinY = m_minExtents.m_y;
+			newMaxY = m_maxExtents.m_y + stretch.m_y;
 		}
 
 		if (stretch.m_z < 0.0f)
 		{
-			newMinZ = source.m_minExtents.m_z + stretch.m_z;
-			newMaxZ = source.m_maxExtents.m_z;
+			newMinZ = m_minExtents.m_z + stretch.m_z;
+			newMaxZ = m_maxExtents.m_z;
 		}
 		else
 		{
-			newMinZ = source.m_minExtents.m_z;
-			newMaxZ = source.m_maxExtents.m_z + stretch.m_z;
+			newMinZ = m_minExtents.m_z;
+			newMaxZ = m_maxExtents.m_z + stretch.m_z;
 		}
 
-		destination->m_minExtents = Vector3(newMinX, newMinY, newMinZ);
-		destination->m_maxExtents = Vector3(newMaxX, newMaxY, newMaxZ);
+		Vector3 minExtents = Vector3(newMinX, newMinY, newMinZ);
+		Vector3 maxExtents = Vector3(newMaxX, newMaxY, newMaxZ);
 
-		return destination;
-	}
-
-	ColliderAabb *ColliderAabb::Stretch(const ColliderAabb &source, const float &stretchX, const float &stretchY, const float &stretchZ, ColliderAabb *destination)
-	{
-		return Stretch(source, Vector3(stretchX, stretchY, stretchZ), destination);
+		return ColliderAabb(minExtents, maxExtents);
 	}
 
 	void ColliderAabb::Load(LoadedValue *value)

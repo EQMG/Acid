@@ -10,10 +10,6 @@ namespace fl
 
 	SceneStructure::~SceneStructure()
 	{
-		for (auto object : m_objects)
-		{
-			delete object;
-		}
 	}
 
 	void SceneStructure::Add(GameObject *object)
