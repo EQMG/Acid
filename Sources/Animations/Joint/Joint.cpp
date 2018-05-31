@@ -33,12 +33,12 @@ namespace fl
 
 	void Joint::AddChild(Joint *child)
 	{
-		m_children.push_back(child);
+		m_children.emplace_back(child);
 	}
 
 	void Joint::AddSelfAndChildren(std::vector<Joint *> *children)
 	{
-		children->push_back(this);
+		children->emplace_back(this);
 
 		for (auto child : *children)
 		{

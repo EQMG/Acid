@@ -89,7 +89,7 @@ namespace fl
 		}
 
 		component->SetGameObject(this);
-		m_components.push_back(component);
+		m_components.emplace_back(component);
 		return component;
 	}
 

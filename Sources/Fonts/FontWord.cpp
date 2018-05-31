@@ -14,7 +14,7 @@ namespace fl
 
 	bool FontWord::AddCharacter(const FontCharacter &character, const float &kerning)
 	{
-		m_characters.push_back(character);
+		m_characters.emplace_back(character);
 		m_width += kerning + character.GetAdvanceX();
 		return true;
 	}

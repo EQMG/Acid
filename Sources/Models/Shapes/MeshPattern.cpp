@@ -32,7 +32,7 @@ namespace fl
 				);
 				Vector3 normal = GetNormal(position);
 				Vector3 tangent = GetColour(position, normal);
-				vertices.push_back(new VertexModel(position, uv, normal, tangent));
+				vertices.emplace_back(new VertexModel(position, uv, normal, tangent));
 			}
 		}
 
@@ -49,21 +49,21 @@ namespace fl
 
 				if (row % 2 == 0)
 				{
-					indices.push_back(topLeft);
-					indices.push_back(bottomLeft);
-					indices.push_back(mixed ? topRight : bottomRight);
-					indices.push_back(bottomRight);
-					indices.push_back(topRight);
-					indices.push_back(mixed ? bottomLeft : topLeft);
+					indices.emplace_back(topLeft);
+					indices.emplace_back(bottomLeft);
+					indices.emplace_back(mixed ? topRight : bottomRight);
+					indices.emplace_back(bottomRight);
+					indices.emplace_back(topRight);
+					indices.emplace_back(mixed ? bottomLeft : topLeft);
 				}
 				else
 				{
-					indices.push_back(topRight);
-					indices.push_back(topLeft);
-					indices.push_back(mixed ? bottomRight : bottomLeft);
-					indices.push_back(bottomLeft);
-					indices.push_back(bottomRight);
-					indices.push_back(mixed ? topLeft : topRight);
+					indices.emplace_back(topRight);
+					indices.emplace_back(topLeft);
+					indices.emplace_back(mixed ? bottomRight : bottomLeft);
+					indices.emplace_back(bottomLeft);
+					indices.emplace_back(bottomRight);
+					indices.emplace_back(mixed ? topLeft : topRight);
 				}
 			}
 		}

@@ -24,6 +24,6 @@ namespace fl
 
 	void Tasks::AddTask(std::function<void()> task)
 	{
-		m_tasks.push_back(task);
+		m_tasks.emplace_back(task);
 	}
 }

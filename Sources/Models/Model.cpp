@@ -147,7 +147,7 @@ namespace fl
 	void Model::LoadFromFile(const std::string &filename, std::vector<IVertex *> *vertices, std::vector<uint32_t> *indices)
 	{
 #if FL_VERBOSE
-		const auto debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
 		delete m_indexBuffer;
@@ -161,20 +161,20 @@ namespace fl
 		}
 
 		const std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
-		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n");
+		auto lines = FormatString::Split(fileLoaded, "\n");
 
-		std::vector<uint32_t> indicesList = std::vector<uint32_t>();
-		std::vector<VertexModelData *> verticesList = std::vector<VertexModelData *>();
-		std::vector<Vector2> uvsList = std::vector<Vector2>();
-		std::vector<Vector3> normalsList = std::vector<Vector3>();
+		auto indicesList = std::vector<uint32_t>();
+		auto verticesList = std::vector<VertexModelData *>();
+		auto uvsList = std::vector<Vector2>();
+		auto normalsList = std::vector<Vector3>();
 
 		for (auto line : lines)
 		{
-			std::vector<std::string> split = FormatString::Split(line, " ", true);
+			auto split = FormatString::Split(line, " ", true);
 
 			if (!split.empty())
 			{
-				const std::string prefix = split[0];
+				std::string prefix = split[0];
 
 				if (prefix == "#")
 				{
@@ -182,19 +182,19 @@ namespace fl
 				}
 				else if (prefix == "v")
 				{
-					const Vector3 vertex = Vector3(std::stof(split[1]), std::stof(split[2]), std::stof(split[3]));
+					Vector3 vertex = Vector3(std::stof(split[1]), std::stof(split[2]), std::stof(split[3]));
 					VertexModelData *newVertex = new VertexModelData(static_cast<int>(verticesList.size()), vertex);
-					verticesList.push_back(newVertex);
+					verticesList.emplace_back(newVertex);
 				}
 				else if (prefix == "vt")
 				{
-					const Vector2 uv = Vector2(std::stof(split[1]), 1.0f - std::stof(split[2]));
-					uvsList.push_back(uv);
+					Vector2 uv = Vector2(std::stof(split[1]), 1.0f - std::stof(split[2]));
+					uvsList.emplace_back(uv);
 				}
 				else if (prefix == "vn")
 				{
-					const Vector3 normal = Vector3(std::stof(split[1]), std::stof(split[2]), std::stof(split[3]));
-					normalsList.push_back(normal);
+					Vector3 normal = Vector3(std::stof(split[1]), std::stof(split[2]), std::stof(split[3]));
+					normalsList.emplace_back(normal);
 				}
 				else if (prefix == "f")
 				{
@@ -205,9 +205,9 @@ namespace fl
 						throw std::runtime_error("Model loading error.");
 					}
 
-					std::vector<std::string> vertex1 = FormatString::Split(split[1], "/");
-					std::vector<std::string> vertex2 = FormatString::Split(split[2], "/");
-					std::vector<std::string> vertex3 = FormatString::Split(split[3], "/");
+					auto vertex1 = FormatString::Split(split[1], "/");
+					auto vertex2 = FormatString::Split(split[2], "/");
+					auto vertex3 = FormatString::Split(split[3], "/");
 
 					VertexModelData *v0 = ProcessDataVertex(Vector3(std::stof(vertex1[0]), std::stof(vertex1[1]), std::stof(vertex1[2])), &verticesList, &indicesList);
 					VertexModelData *v1 = ProcessDataVertex(Vector3(std::stof(vertex2[0]), std::stof(vertex2[1]), std::stof(vertex2[2])), &verticesList, &indicesList);
@@ -244,18 +244,18 @@ namespace fl
 		// Turns the loaded data into a format that can be used by OpenGL.
 		for (auto current : verticesList)
 		{
-			const Vector3 position = current->GetPosition();
-			const Vector2 textures = uvsList[current->GetUvIndex()];
-			const Vector3 normal = normalsList[current->GetNormalIndex()];
-			const Vector3 tangent = current->GetAverageTangent();
+			Vector3 position = current->GetPosition();
+			Vector2 textures = uvsList[current->GetUvIndex()];
+			Vector3 normal = normalsList[current->GetNormalIndex()];
+			Vector3 tangent = current->GetAverageTangent();
 
-			vertices->push_back(new VertexModel(position, textures, normal, tangent));
+			vertices->emplace_back(new VertexModel(position, textures, normal, tangent));
 
 			delete current;
 		}
 
 #if FL_VERBOSE
-		const auto debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::Get()->GetTimeMs();
 		printf("Obj '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 
@@ -264,16 +264,16 @@ namespace fl
 
 	VertexModelData *Model::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> *vertices, std::vector<uint32_t> *indices)
 	{
-		const int index = static_cast<int>(vertex.m_x) - 1;
-		const int textureIndex = static_cast<int>(vertex.m_y) - 1;
-		const int normalIndex = static_cast<int>(vertex.m_z) - 1;
+		int index = static_cast<int>(vertex.m_x) - 1;
+		int textureIndex = static_cast<int>(vertex.m_y) - 1;
+		int normalIndex = static_cast<int>(vertex.m_z) - 1;
 		VertexModelData *currentVertex = (*vertices)[index];
 
 		if (!currentVertex->IsSet())
 		{
 			currentVertex->SetUvIndex(textureIndex);
 			currentVertex->SetNormalIndex(normalIndex);
-			indices->push_back(index);
+			indices->emplace_back(index);
 			return currentVertex;
 		}
 
@@ -284,7 +284,7 @@ namespace fl
 	{
 		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{
-			indices->push_back(previousVertex->GetIndex());
+			indices->emplace_back(previousVertex->GetIndex());
 			return previousVertex;
 		}
 
@@ -299,8 +299,8 @@ namespace fl
 		duplicateVertex->SetUvIndex(newTextureIndex);
 		duplicateVertex->SetNormalIndex(newNormalIndex);
 		previousVertex->SetDuplicateVertex(duplicateVertex);
-		vertices->push_back(duplicateVertex);
-		indices->push_back(duplicateVertex->GetIndex());
+		vertices->emplace_back(duplicateVertex);
+		indices->emplace_back(duplicateVertex->GetIndex());
 		return duplicateVertex;
 	}
 

@@ -60,15 +60,15 @@ namespace fl
 	void FontMetafile::ProcessNextLine(const std::string &line)
 	{
 		m_values.clear();
-		std::vector<std::string> parts = FormatString::Split(line, SPLITTER);
+		auto parts = FormatString::Split(line, SPLITTER);
 
 		for (auto part : parts)
 		{
-			std::vector<std::string> pairs = FormatString::Split(part, "=");
+			auto pairs = FormatString::Split(part, "=");
 
 			if (pairs.size() == 2)
 			{
-				m_values.insert(std::pair<std::string, std::string>(pairs.at(0), pairs.at(1)));
+				m_values.emplace(pairs.at(0), pairs.at(1));
 			}
 		}
 	}
@@ -77,7 +77,7 @@ namespace fl
 	{
 		for (auto padding : GetValuesOfVariable("padding"))
 		{
-			m_padding.push_back(padding);
+			m_padding.emplace_back(padding);
 		}
 
 		m_paddingWidth = m_padding.at(PAD_LEFT) + m_padding.at(PAD_RIGHT);
@@ -120,7 +120,7 @@ namespace fl
 		}
 
 		FontCharacter character = FontCharacter(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
-		m_metadata.insert(std::pair<int, FontCharacter>(character.GetId(), character));
+		m_metadata.emplace(character.GetId(), character);
 	}
 
 	int FontMetafile::GetValueOfVariable(const std::string &variable)
@@ -137,7 +137,7 @@ namespace fl
 
 		for (auto number : numbers)
 		{
-			result.push_back(std::stoi(number));
+			result.emplace_back(std::stoi(number));
 			i++;
 		}
 

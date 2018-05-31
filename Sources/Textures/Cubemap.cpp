@@ -23,10 +23,10 @@ namespace fl
 		m_imageInfo({})
 	{
 #if FL_VERBOSE
-		const auto debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		auto pixels = Texture::LoadPixels(filename, fileExt, SIDE_FILE_SUFFIXES, m_size, &m_width, &m_height, &m_depth, &m_components);
 
@@ -59,7 +59,7 @@ namespace fl
 		Texture::DeletePixels(pixels);
 
 #if FL_VERBOSE
-		const auto debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::Get()->GetTimeMs();
 		printf("Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -81,10 +81,10 @@ namespace fl
 		m_imageInfo({})
 	{
 #if FL_VERBOSE
-		const auto debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -123,14 +123,14 @@ namespace fl
 		delete[] pixels;
 
 #if FL_VERBOSE
-		const auto debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::Get()->GetTimeMs();
 		printf("Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 
 	Cubemap::~Cubemap()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImage(logicalDevice, m_image, nullptr);

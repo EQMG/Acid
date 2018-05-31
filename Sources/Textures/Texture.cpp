@@ -31,7 +31,7 @@ namespace fl
 		m_imageInfo({})
 	{
 #if FL_VERBOSE
-		const auto debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
 		if (!FileSystem::FileExists(filename))
@@ -40,7 +40,7 @@ namespace fl
 			m_filename = FALLBACK_PATH;
 		}
 
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		auto pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
 
@@ -74,7 +74,7 @@ namespace fl
 		m_filename = filename;
 
 #if FL_VERBOSE
-		const auto debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::Get()->GetTimeMs();
 		printf("Texture '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -99,7 +99,7 @@ namespace fl
 		m_format(format),
 		m_imageInfo({})
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -139,7 +139,7 @@ namespace fl
 
 	Texture::~Texture()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
@@ -206,7 +206,7 @@ namespace fl
 	{
 		VkDeviceSize size = 0;
 
-		for (const auto suffix : fileSuffixes)
+		for (auto suffix : fileSuffixes)
 		{
 			const std::string filepathSide = filename + "/" + suffix + fileExt;
 			const VkDeviceSize sizeSide = LoadSize(filepathSide);
@@ -247,7 +247,7 @@ namespace fl
 		stbi_uc *pixels = (stbi_uc *) malloc(bufferSize);
 		stbi_uc *offset = pixels;
 
-		for (const auto suffix : fileSuffixes)
+		for (auto suffix : fileSuffixes)
 		{
 			std::string filepathSide = filename + "/" + suffix + fileExt;
 			VkDeviceSize sizeSide = LoadSize(filepathSide);
@@ -274,7 +274,7 @@ namespace fl
 
 	void Texture::CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkImageCreateInfo imageCreateInfo = {};
 		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -450,7 +450,7 @@ namespace fl
 
 	void Texture::CreateImageSampler(const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler)
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -475,7 +475,7 @@ namespace fl
 
 	void Texture::CreateImageView(const VkImage &image, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, VkImageView &imageView, const uint32_t &layerCount)
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;

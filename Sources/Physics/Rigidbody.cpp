@@ -82,13 +82,12 @@ namespace fl
 		ColliderAabb collisionRange = ColliderAabb();
 		ColliderAabb::Stretch(aabb1, amount, &collisionRange);
 
-		std::vector<Rigidbody *> rigidbodys = std::vector<Rigidbody *>();
-		Scenes::Get()->GetStructure()->QueryComponents<Rigidbody>(&rigidbodys);
+		auto rigidbodyList = Scenes::Get()->GetStructure()->QueryComponents<Rigidbody>();
 
 		Vector3 currentPosition = GetGameObject()->GetTransform()->GetPosition();
 
 		// Goes though all entities in the collision range.
-		for (auto rigidbody : rigidbodys)
+		for (auto rigidbody : rigidbodyList)
 		{
 			// Ignores the original entity.
 			if (rigidbody->GetGameObject() == GetGameObject())

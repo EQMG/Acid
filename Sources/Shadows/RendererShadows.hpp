@@ -11,7 +11,7 @@ namespace fl
 		public IRenderer
 	{
 	private:
-		Pipeline *m_pipeline;
+		Pipeline m_pipeline;
 		UniformHandler m_uniformScene;
 	public:
 		RendererShadows(const GraphicsStage &graphicsStage);

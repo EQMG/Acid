@@ -23,7 +23,7 @@ namespace fl
 	{
 		if (parent != nullptr)
 		{
-			parent->m_children->push_back(this);
+			parent->m_children->emplace_back(this);
 		}
 	}
 
@@ -117,7 +117,7 @@ namespace fl
 	{
 		if (IsVisible())
 		{
-			list->push_back(this);
+			list->emplace_back(this);
 
 			for (auto child : *m_children)
 			{
@@ -131,7 +131,7 @@ namespace fl
 	void UiObject::SetParent(UiObject *parent)
 	{
 		m_parent->RemoveChild(this);
-		parent->m_children->push_back(this);
+		parent->m_children->emplace_back(this);
 		m_parent = parent;
 	}
 

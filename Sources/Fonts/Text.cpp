@@ -82,7 +82,7 @@ namespace fl
 		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.
-		m_descriptorSet.GetDescriptorSet()->BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 
@@ -211,7 +211,7 @@ namespace fl
 
 					if (!added)
 					{
-						lines.push_back(currentLine);
+						lines.emplace_back(currentLine);
 						currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 						currentLine.AddWord(currentWord);
 					}
@@ -230,7 +230,7 @@ namespace fl
 
 			if (i != textLines.size() - 1)
 			{
-				lines.push_back(currentLine);
+				lines.emplace_back(currentLine);
 				currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 				currentLine.AddWord(currentWord);
 			}
@@ -246,12 +246,12 @@ namespace fl
 
 		if (!added)
 		{
-			lines.push_back(currentLine);
+			lines.emplace_back(currentLine);
 			currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 			currentLine.AddWord(currentWord);
 		}
 
-		lines.push_back(currentLine);
+		lines.emplace_back(currentLine);
 	}
 
 	std::vector<IVertex *> Text::CreateQuad(const std::vector<FontLine> &lines)
@@ -330,7 +330,7 @@ namespace fl
 	void Text::AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex *> &vertices)
 	{
 		IVertex *vertex = new VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
-		vertices.push_back(vertex);
+		vertices.emplace_back(vertex);
 	}
 
 	void Text::NormalizeQuad(Vector2 *bounding, std::vector<IVertex *> &vertices)

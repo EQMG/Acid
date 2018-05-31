@@ -24,8 +24,8 @@ namespace fl
 			}
 		}
 
-		m_jointIds.push_back(jointId);
-		m_weights.push_back(weight);
+		m_jointIds.emplace_back(jointId);
+		m_weights.emplace_back(weight);
 	}
 
 	void VertexSkinData::LimitJointNumber(const unsigned int &max)
@@ -47,8 +47,8 @@ namespace fl
 	{
 		while (m_jointIds.size() < max)
 		{
-			m_jointIds.push_back(0);
-			m_weights.push_back(0.0f);
+			m_jointIds.emplace_back(0);
+			m_weights.emplace_back(0.0f);
 		}
 	}
 
@@ -71,7 +71,7 @@ namespace fl
 
 		for (float topWeight : topWeights)
 		{
-			m_weights.push_back(topWeight / total);
+			m_weights.emplace_back(topWeight / total);
 		}
 	}
 

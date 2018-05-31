@@ -14,7 +14,7 @@ namespace test
 	{
 		for (int i = 0; i < static_cast<int>(MeshTerrain::SQUARE_SIZES.size()); i++)
 		{
-			m_modelLods.push_back(nullptr);
+			m_modelLods.emplace_back(nullptr);
 		}
 	}
 
@@ -60,7 +60,7 @@ namespace test
 		}
 
 #if FL_VERBOSE
-		const auto debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 		float squareSize = MeshTerrain::SQUARE_SIZES.at(lod);
 		float textureScale = MeshTerrain::TEXTURE_SCALES.at(lod);
@@ -68,7 +68,7 @@ namespace test
 		float lodFixScale = 1.0f; // (lod == 0) ? 1.0f : 1.02f + (0.028f * lod);
 		m_modelLods.at(lod) = std::make_shared<MeshTerrain>(lodFixScale * static_cast<float>(MeshTerrain::SIDE_LENGTH), lodFixScale * squareSize, vertexCount, textureScale, GetGameObject()->GetTransform());
 #if FL_VERBOSE
-		const auto debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::Get()->GetTimeMs();
 
 		if (debugEnd - debugStart > 22.0f)
 		{

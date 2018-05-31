@@ -22,7 +22,7 @@ namespace fl
 
 		if (m_currentLineLength + additionalLength <= m_maxLength)
 		{
-			m_words.push_back(word);
+			m_words.emplace_back(word);
 			m_currentWordsLength += word.GetWidth();
 			m_currentLineLength += additionalLength;
 			return true;

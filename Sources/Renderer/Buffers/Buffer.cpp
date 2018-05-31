@@ -15,9 +15,9 @@ namespace fl
 			return;
 		}
 
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		const auto surface = Display::Get()->GetVkSurface();
-		const auto indices = QueueFamily::FindQueueFamilies(surface);
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto surface = Display::Get()->GetVkSurface();
+		auto indices = QueueFamily::FindQueueFamilies(surface);
 
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -45,7 +45,7 @@ namespace fl
 
 	Buffer::~Buffer()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		vkDestroyBuffer(logicalDevice, m_buffer, nullptr);
 		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
@@ -53,7 +53,7 @@ namespace fl
 
 	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties)
 	{
-		const auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 
 		VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
 		vkGetPhysicalDeviceMemoryProperties(physicalDevice, &physicalDeviceMemoryProperties);
@@ -74,9 +74,9 @@ namespace fl
 
 	void Buffer::CopyBuffer(const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		const auto queue = Display::Get()->GetVkQueue();
-		const auto commandPool = Renderer::Get()->GetVkCommandPool();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto queue = Display::Get()->GetVkQueue();
+		auto commandPool = Renderer::Get()->GetVkCommandPool();
 
 		// Makes a temporary command buffer for the memory transfer operation.
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};

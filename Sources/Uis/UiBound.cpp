@@ -61,7 +61,7 @@ namespace fl
 
 	Vector2 UiBound::FindPivot(const std::string &key)
 	{
-		const auto it = PIVOT_MAP.find(key);
+		auto it = PIVOT_MAP.find(key);
 
 		if (it == PIVOT_MAP.end())
 		{

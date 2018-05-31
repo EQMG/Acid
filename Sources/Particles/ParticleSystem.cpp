@@ -126,7 +126,7 @@ namespace fl
 
 	void ParticleSystem::AddParticleType(std::shared_ptr<ParticleType> type)
 	{
-		m_types.push_back(type);
+		m_types.emplace_back(type);
 	}
 
 	void ParticleSystem::RemoveParticleType(std::shared_ptr<ParticleType> type)

@@ -8,8 +8,8 @@ namespace fl
 		m_bufferLevel(bufferLevel),
 		m_commandBuffer(VK_NULL_HANDLE)
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		const auto commandPool = Renderer::Get()->GetVkCommandPool();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto commandPool = Renderer::Get()->GetVkCommandPool();
 
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
 		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -27,9 +27,9 @@ namespace fl
 
 	CommandBuffer::~CommandBuffer()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		const auto queue = Display::Get()->GetVkQueue();
-		const auto commandPool = Renderer::Get()->GetVkCommandPool();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto queue = Display::Get()->GetVkQueue();
+		auto commandPool = Renderer::Get()->GetVkCommandPool();
 
 		Display::ErrorVk(vkEndCommandBuffer(m_commandBuffer));
 

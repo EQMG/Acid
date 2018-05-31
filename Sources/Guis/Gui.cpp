@@ -61,7 +61,7 @@ namespace fl
 		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.
-		m_descriptorSet.GetDescriptorSet()->BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }

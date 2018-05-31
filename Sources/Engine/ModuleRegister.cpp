@@ -54,7 +54,7 @@ namespace fl
 		//	}
 
 		float offset = update + (0.01f * static_cast<float>(m_modules.size()));
-		m_modules.insert(std::make_pair(offset, std::make_pair(name, module)));
+		m_modules.emplace(offset, std::make_pair(name, module));
 		return module;
 	}
 

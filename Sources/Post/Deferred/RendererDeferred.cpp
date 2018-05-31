@@ -42,7 +42,9 @@ namespace fl
 		// Updates uniforms.
 		std::vector<DeferredLight> sceneLights = {};
 
-		for (auto entity : *Scenes::Get()->GetStructure()->GetAll())
+		auto gameObjects = Scenes::Get()->GetStructure()->GetAll();
+
+		for (auto entity : gameObjects)
 		{
 			auto light = entity->GetComponent<Light>();
 
@@ -65,7 +67,7 @@ namespace fl
 				lightObject.colour = light->GetColour();
 				lightObject.position = light->GetPosition();
 				lightObject.radius = light->GetRadius();
-				sceneLights.push_back(lightObject);
+				sceneLights.emplace_back(lightObject);
 			}
 
 			if (sceneLights.size() >= MAX_LIGHTS)
@@ -111,7 +113,7 @@ namespace fl
 		// Draws the object.
 		m_pipeline.BindPipeline(commandBuffer);
 
-		m_descriptorSet.GetDescriptorSet()->BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }

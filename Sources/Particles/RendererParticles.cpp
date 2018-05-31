@@ -18,8 +18,8 @@ namespace fl
 
 	void RendererParticles::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		/*const auto logicalDevice = Display::Get()->GetLogicalDevice();
-		const auto descriptorSet = m_pipeline->GetDescriptorSet();
+		/*auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto descriptorSet = m_pipeline->GetDescriptorSet();
 
 		UbosParticles::UboScene uboScene = {};
 		uboScene.projection = camera.GetProjectionMatrix();
@@ -42,7 +42,7 @@ namespace fl
 				object.textureOffsets.m_w = particle->GetTextureOffset2()->m_y;
 				object.blendFactor = particle->GetTextureBlendFactor();
 				object.transparency = particle->GetTransparency();
-				objects.push_back(object);
+				objects.emplace_back(object);
 			}
 		}*/
 	}

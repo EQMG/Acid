@@ -47,7 +47,7 @@ namespace test
 			UiBound rectangle = UiBound(Vector2(tabXOffset, 0.955f), "TopLeft", false);
 			UiTab *uiTab = new UiTab(this, new ContentExit(this), rectangle, tabType.first, tabType.second);
 			tabXOffset += 0.03f + uiTab->GetWidth();
-			m_tabs.push_back(uiTab);
+			m_tabs.emplace_back(uiTab);
 
 			if (i == 0)
 			{

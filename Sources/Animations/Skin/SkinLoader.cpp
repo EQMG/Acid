@@ -78,7 +78,7 @@ namespace fl
 			}
 
 			skinData->LimitJointNumber(m_maxWeights);
-			m_verticesSkinData.push_back(skinData);
+			m_verticesSkinData.emplace_back(skinData);
 		}
 	}
 }
