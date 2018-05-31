@@ -10,21 +10,21 @@ namespace fl
 		public Model
 	{
 	public:
-		static ShapeCylinder *Resource(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0)
+		static std::shared_ptr<ShapeCylinder> Resource(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0)
 		{
-			IResource *resource = Resources::Get()->Get(ToFilename(radiusBase, radiusTop, height, slices, stacks, y0));
+			auto resource = Resources::Get()->Get(ToFilename(radiusBase, radiusTop, height, slices, stacks, y0));
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<ShapeCylinder *>(resource);
+				return std::dynamic_pointer_cast<ShapeCylinder>(resource);
 			}
 
-			ShapeCylinder *result = new ShapeCylinder(radiusBase, radiusTop, height, slices, stacks, y0);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<ShapeCylinder>(radiusBase, radiusTop, height, slices, stacks, y0);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
-		static ShapeCylinder *Resource(const std::string &filename)
+		static std::shared_ptr<ShapeCylinder> Resource(const std::string &filename)
 		{
 			auto split = FormatString::Split(filename, "_");
 			float radiusBase = static_cast<float>(atof(split[1].c_str()));

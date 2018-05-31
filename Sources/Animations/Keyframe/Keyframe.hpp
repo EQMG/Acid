@@ -18,7 +18,7 @@ namespace fl
 	{
 	private:
 		float m_timeStamp;
-		std::map<std::string, JointTransform *> *m_pose;
+		std::map<std::string, JointTransform *> m_pose;
 	public:
 		/// <summary>
 		/// Creates a new keyframe at a timestamp.
@@ -42,6 +42,6 @@ namespace fl
 		/// indexed by the name of the joint that they correspond to.
 		/// </summary>
 		/// <returns> The desired local-space transforms. </returns>
-		std::map<std::string, JointTransform *> *GetPose() const { return m_pose; }
+		std::map<std::string, JointTransform *> GetPose() const { return m_pose; }
 	};
 }

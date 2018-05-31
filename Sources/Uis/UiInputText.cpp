@@ -9,7 +9,7 @@ namespace fl
 	const float UiInputText::CHANGE_TIME = 0.1f;
 	const float UiInputText::SCALE_NORMAL = 1.6f;
 	const float UiInputText::SCALE_SELECTED = 1.8f;
-	const Colour *UiInputText::COLOUR_NORMAL = new Colour("#000000");
+	const Colour UiInputText::COLOUR_NORMAL = Colour("#000000");
 
 	UiInputText::UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const FontJustify &justify) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
@@ -118,7 +118,7 @@ namespace fl
 
 		// Update the background colour.
 		Colour *primary = Scenes::Get()->GetUiManager()->GetPrimaryColour();
-		m_background->SetColourOffset(COLOUR_NORMAL->Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
+		m_background->SetColourOffset(COLOUR_NORMAL.Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
 
 		// Update background size.
 		//*m_background->GetDimensions() = *m_text->GetDimensions();

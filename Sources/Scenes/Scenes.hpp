@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
-#include "Objects/GameObject.hpp"
 #include "Objects/ComponentRegister.hpp"
 #include "SceneStructure.hpp"
 #include "Scene.hpp"
@@ -59,7 +58,7 @@ namespace fl
 		/// </summary>
 		/// <param name="name"> The component name to create. </param>
 		/// <returns> The new component. </returns>
-		Component *CreateComponent(const std::string &name) { return m_componentRegister->CreateComponent(name); }
+		std::shared_ptr<Component> CreateComponent(const std::string &name) { return m_componentRegister->CreateComponent(name); }
 
 		Scene *GetScene() const { return m_scene; }
 

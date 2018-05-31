@@ -10,8 +10,8 @@ namespace fl
 		public IPostPipeline
 	{
 	private:
-		FilterBlurVertical *m_filterBlurVertical;
-		FilterBlurHorizontal *m_filterBlurHorizontal;
+		FilterBlurVertical m_filterBlurVertical;
+		FilterBlurHorizontal m_filterBlurHorizontal;
 	public:
 		PipelineGaussian(const GraphicsStage &graphicsStage, const float &scale = 2.0f);
 

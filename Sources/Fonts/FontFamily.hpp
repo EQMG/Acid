@@ -12,23 +12,23 @@ namespace fl
 	private:
 		std::string m_filename;
 
-		FontType *m_typeThin;
-		FontType *m_typeLight;
-		FontType *m_typeRegular;
-		FontType *m_typeSemibold;
-		FontType *m_typeBold;
+		std::shared_ptr<FontType> m_typeThin;
+		std::shared_ptr<FontType> m_typeLight;
+		std::shared_ptr<FontType> m_typeRegular;
+		std::shared_ptr<FontType> m_typeSemibold;
+		std::shared_ptr<FontType> m_typeBold;
 	public:
-		static FontFamily *Resource(const std::string &filename)
+		static std::shared_ptr<FontFamily> Resource(const std::string &filename)
 		{
-			IResource *resource = Resources::Get()->Get(filename);
+			auto resource = Resources::Get()->Get(filename);
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<FontFamily *>(resource);
+				return std::dynamic_pointer_cast<FontFamily>(resource);
 			}
 
-			FontFamily *result = new FontFamily(filename);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<FontFamily>(filename);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
@@ -38,16 +38,16 @@ namespace fl
 
 		std::string GetFilename() override { return m_filename; }
 
-		FontType *GetThin() const { return m_typeThin; }
+		std::shared_ptr<FontType> GetThin() const { return m_typeThin; }
 
-		FontType *GetLight() const { return m_typeLight; }
+		std::shared_ptr<FontType> GetLight() const { return m_typeLight; }
 
-		FontType *GetRegular() const { return m_typeRegular; }
+		std::shared_ptr<FontType> GetRegular() const { return m_typeRegular; }
 
-		FontType *GetSemibold() const { return m_typeSemibold; }
+		std::shared_ptr<FontType> GetSemibold() const { return m_typeSemibold; }
 
-		FontType *GetBold() const { return m_typeBold; }
+		std::shared_ptr<FontType> GetBold() const { return m_typeBold; }
 	private:
-		static FontType *LoadFontType(const std::string &filename, const std::string &suffex);
+		static std::shared_ptr<FontType> LoadFontType(const std::string &filename, const std::string &suffex);
 	};
 }

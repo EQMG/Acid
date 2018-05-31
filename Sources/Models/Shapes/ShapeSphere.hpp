@@ -10,21 +10,21 @@ namespace fl
 		public Model
 	{
 	public:
-		static ShapeSphere *Resource(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius)
+		static std::shared_ptr<ShapeSphere> Resource(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius)
 		{
-			IResource *resource = Resources::Get()->Get(ToFilename(latitudeBands, longitudeBands, radius));
+			auto resource = Resources::Get()->Get(ToFilename(latitudeBands, longitudeBands, radius));
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<ShapeSphere *>(resource);
+				return std::dynamic_pointer_cast<ShapeSphere>(resource);
 			}
 
-			ShapeSphere *result = new ShapeSphere(latitudeBands, longitudeBands, radius);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<ShapeSphere>(latitudeBands, longitudeBands, radius);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
-		static ShapeSphere *Resource(const std::string &filename)
+		static std::shared_ptr<ShapeSphere> Resource(const std::string &filename)
 		{
 			auto split = FormatString::Split(filename, "_");
 			int latitudeBands = atoi(split[1].c_str());

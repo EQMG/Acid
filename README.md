@@ -20,24 +20,24 @@ Linux/MacOS   [![Build Status](https://travis-ci.org/Equilibrium-Games/Flounder.
 # Code snippets
 ```cpp
 // Imports a 2D texture.
-Texture *guiBlack = Texture::Resource("Resources/Guis/Black.png");
+auto guiBlack = Texture::Resource("Resources/Guis/Black.png");
 
 // Imports a 3D cubemap.
-Cubemap *skyboxSnowy = Cubemap::Resource("Resources/Objects/SkyboxSnowy", ".png");
+auto skyboxSnowy = Cubemap::Resource("Resources/Objects/SkyboxSnowy", ".png");
 
 // Imports a model.
-Model *dragon = Model::Resource("Resources/Objects/Testing/Model_Dragon.obj");
+auto dragon = Model::Resource("Resources/Objects/Testing/Model_Dragon.obj");
 
 // Plays a 3D sound, at the origin, at half volume.
-Sound jump = Sound("Resources/Sounds/Jump.ogg", 0.5f);
+auto jump = Sound("Resources/Sounds/Jump.ogg", 0.5f);
 jump.SetPosition(Vector3::ZERO);
 jump.Play();
 
 // Imports a game object.
-GameObject *playerObject = new GameObject("Player", Transform());
+auto playerObject = new GameObject("Player", Transform());
 
 // Creates a game object.
-GameObject *sphere = new GameObject(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3(), 3.0f));
+auto sphere = new GameObject(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3(), 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Resources/Objects/Testing/Diffuse.png"),
     0.0f, 0.0f, Texture::Resource("Resources/Objects/Testing/Material.png"), Texture::Resource("Resources/Objects/Testing/Normal.png"));
@@ -49,9 +49,9 @@ Trello   [Board](https://trello.com/b/ZRvpbbYC/flounder)
 
 Readme   [Read more](https://equilibrium-games.github.io/Flounder/)
 
-Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs/)
+Documentation   [Autogen docs](https://equilibrium-games.github.io/FlounderDocs/)
 
-Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/LocMetrics.html)
+Metrics   [Code metrics](https://equilibrium-games.github.io/FlounderDocs/loc/LocMetrics.html)
 
 Website   [Learn more](https://equilibrium.games)
 
@@ -127,7 +127,7 @@ Currently Flounder does not run under Release mode in Visual Studios (bug).
 ## Resources
 Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.
 
-Old resources have been removed from the main repo, history for `Resources` before https://github.com/Equilibrium-Games/Flounder/tree/e2abd26ee8f3eda4feabbd1ff9b8168f17e8fb4f can be found at: https://github.com/Equilibrium-Games/Flounder-Resources. Older resources can be found on this fork: https://github.com/mattparks/Flounder.
+Old resources have been removed from the main repo, older resources can be found on this fork: https://github.com/mattparks/Flounder.
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.

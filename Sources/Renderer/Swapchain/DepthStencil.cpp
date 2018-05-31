@@ -22,8 +22,8 @@ namespace fl
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageInfo({})
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		const auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 
 		for (auto format : TRY_FORMATS)
 		{
@@ -125,7 +125,7 @@ namespace fl
 
 	DepthStencil::~DepthStencil()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImageView(logicalDevice, m_imageView, nullptr);

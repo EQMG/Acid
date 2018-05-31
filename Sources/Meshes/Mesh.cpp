@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	Mesh::Mesh(Model *model) :
+	Mesh::Mesh(std::shared_ptr<Model> model) :
 		Component(),
 		m_model(model)
 	{

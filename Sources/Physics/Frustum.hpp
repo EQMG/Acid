@@ -28,7 +28,7 @@ namespace fl
 	class FL_EXPORT Frustum
 	{
 	private:
-		float **m_frustumArray;
+		float **m_frustumArray; // TODO: Move to using a `std::array` instead.
 	public:
 		/// <summary>
 		/// Creates a new frustum.

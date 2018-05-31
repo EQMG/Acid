@@ -38,17 +38,17 @@ namespace fl
 
 		VkDescriptorImageInfo m_imageInfo;
 	public:
-		static Texture *Resource(const std::string &filename)
+		static std::shared_ptr<Texture> Resource(const std::string &filename)
 		{
-			IResource *resource = Resources::Get()->Get(filename);
+			auto resource = Resources::Get()->Get(filename);
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Texture *>(resource);
+				return std::dynamic_pointer_cast<Texture>(resource);
 			}
 
-			Texture *result = new Texture(filename);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<Texture>(filename);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
@@ -59,7 +59,7 @@ namespace fl
 				const bool &anisotropic = true, const bool &nearest = false, const uint32_t &numberOfRows = 1);
 
 		/// <summary>
-		/// A new empty texture object.
+		/// A new texture object from a array of pixels.
 		/// </summary>
 		Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels = nullptr);
 

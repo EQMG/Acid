@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include "Physics/Frustum.hpp"
 
 namespace fl
@@ -59,24 +60,22 @@ namespace fl
 		/// </summary>
 		/// </param>
 		/// <returns> The list specified by of all objects. </returns>
-		virtual std::vector<GameObject *> *GetAll() = 0;
+		virtual std::vector<GameObject *> GetAll() = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in the spatial structure.
 		/// </summary>
-		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list specified by of all objects. </returns>
-		virtual std::vector<GameObject *> *QueryAll(std::vector<GameObject *> *result) = 0;
+		virtual std::vector<GameObject *> QueryAll() = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in a specific range of the spatial structure.
 		/// </summary>
 		/// <param name="range"> The frustum range of space being queried. </param>
-		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<GameObject *> *QueryFrustum(Frustum *range, std::vector<GameObject *> *result) = 0;
+		virtual std::vector<GameObject *> QueryFrustum(const Frustum &range) = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in a specific range of the spatial structure.
@@ -85,7 +84,7 @@ namespace fl
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<GameObject *> *QueryBounding(ICollider *range, std::vector<GameObject *> *result) = 0;
+		virtual std::vector<GameObject *> QueryBounding(ICollider *range) = 0;
 
 		/// <summary>
 		/// If the structure contains the object.

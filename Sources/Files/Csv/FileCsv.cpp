@@ -22,7 +22,7 @@ namespace fl
 	void FileCsv::Load()
 	{
 #if FL_VERBOSE
-		const auto debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
 		if (!FileSystem::FileExists(m_filename))
@@ -32,16 +32,16 @@ namespace fl
 		}
 
 		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
-		std::vector<std::string> lines = FormatString::Split(fileLoaded, "\n", true);
+		auto lines = FormatString::Split(fileLoaded, "\n", true);
 
 		for (auto &line : lines)
 		{
 			RowCsv row = RowCsv(FormatString::Split(line, std::string(1, m_delimiter), true));
-			m_rows->push_back(row);
+			m_rows->emplace_back(row);
 		}
 
 #if FL_VERBOSE
-		const auto debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::Get()->GetTimeMs();
 		printf("Json '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -78,7 +78,7 @@ namespace fl
 		for (unsigned int i = 0; i < m_rows->size(); i++)
 		{
 			RowCsv row = m_rows->at(i);
-			result.insert(std::make_pair(row.GetElements().at(0), row.GetElements().at(1)));
+			result.emplace(row.GetElements().at(0), row.GetElements().at(1));
 		}
 
 		return result;
@@ -86,7 +86,7 @@ namespace fl
 
 	void FileCsv::ConfigPushValue(const std::string &key, const std::string &value)
 	{
-		m_rows->push_back(RowCsv({key, value}));
+		m_rows->emplace_back(RowCsv({key, value}));
 	}
 
 	RowCsv FileCsv::GetRow(const unsigned int &index)
@@ -96,7 +96,7 @@ namespace fl
 
 	void FileCsv::PushRow(const RowCsv &row)
 	{
-		m_rows->push_back(row);
+		m_rows->emplace_back(row);
 	}
 
 	void FileCsv::SetRow(const RowCsv &row, const unsigned int &index)
@@ -105,7 +105,7 @@ namespace fl
 		{
 			for (size_t i = m_rows->size(); i <= index; i++)
 			{
-				m_rows->push_back(RowCsv({}));
+				m_rows->emplace_back(RowCsv({}));
 			}
 		}
 

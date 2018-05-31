@@ -38,6 +38,11 @@ namespace fl
 			{
 				float m_elements[4][4];
 			};
+
+			struct
+			{
+				float m_linear[16];
+			};
 		};
 
 		static const Matrix4 IDENTITY;
@@ -252,12 +257,6 @@ namespace fl
 		/// </summary>
 		/// <returns> The identity matrix. </returns>
 		Matrix4 SetIdentity();
-
-		/// <summary>
-		/// Turns this 4x4 matrix into an array.
-		/// </summary>
-		/// <returns> A 16 float array. </returns>
-		float *ToArray() const;
 
 		/// <summary>
 		/// Saves this matrix into a loaded value.

@@ -235,21 +235,6 @@ namespace fl
 		return *this;
 	}
 
-	float *Matrix3::ToArray() const
-	{
-		float *result = new float[9];
-		result[0] = m_00;
-		result[1] = m_01;
-		result[2] = m_02;
-		result[3] = m_10;
-		result[4] = m_11;
-		result[5] = m_12;
-		result[6] = m_20;
-		result[7] = m_21;
-		result[8] = m_22;
-		return result;
-	}
-
 	void Matrix3::Write(LoadedValue *destination)
 	{
 		m_0->Write(destination->GetChild("m0", true));

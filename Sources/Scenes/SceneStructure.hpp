@@ -16,7 +16,7 @@ namespace fl
 		public ISpatialStructure
 	{
 	private:
-		std::vector<GameObject *> *m_objects;
+		std::vector<GameObject *> m_objects;
 	public:
 		/// <summary>
 		/// Creates a new basic structure.
@@ -34,26 +34,26 @@ namespace fl
 
 		void Clear() override;
 
-		unsigned int GetSize() override { return m_objects->size(); }
+		unsigned int GetSize() override { return m_objects.size(); }
 
-		std::vector<GameObject *> *GetAll() override { return m_objects; }
+		std::vector<GameObject *> GetAll() override { return m_objects; }
 
 		/// <summary>
 		/// Returns a set of all components of a type in the spatial structure.
 		/// </summary>
-		/// <param name="result"> The list to store the data into.</param>
 		/// <returns> The list specified by of all components that match the type. </returns>
 		template<typename T>
-		std::vector<T *> *QueryComponents(std::vector<T *> *result)
+		std::vector<std::shared_ptr<T>> QueryComponents()
 		{
-			for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
+			auto result = std::vector<std::shared_ptr<T>>();
+
+			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
-				auto gameObject = static_cast<GameObject *>(*it);
-				auto component = gameObject->GetComponent<T>();
+				auto component = (*it)->GetComponent<T>();
 
 				if (component != nullptr)
 				{
-					result->push_back(component);
+					result.emplace_back(component);
 				}
 			}
 
@@ -65,12 +65,11 @@ namespace fl
 		/// </summary>
 		/// <returns> The first component of the type found. </returns>
 		template<typename T>
-		T *GetComponent()
+		std::shared_ptr<T> GetComponent()
 		{
-			for (auto it = m_objects->begin(); it != m_objects->end(); ++it)
+			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
-				auto gameObject = static_cast<GameObject *>(*it);
-				auto component = gameObject->GetComponent<T>();
+				auto component = (*it)->GetComponent<T>();
 
 				if (component != nullptr)
 				{
@@ -81,11 +80,11 @@ namespace fl
 			return nullptr;
 		}
 
-		std::vector<GameObject *> *QueryAll(std::vector<GameObject *> *result) override;
+		std::vector<GameObject *> QueryAll() override;
 
-		std::vector<GameObject *> *QueryFrustum(Frustum *range, std::vector<GameObject *> *result) override;
+		std::vector<GameObject *> QueryFrustum(const Frustum &range) override;
 
-		std::vector<GameObject *> *QueryBounding(ICollider *range, std::vector<GameObject *> *result) override;
+		std::vector<GameObject *> QueryBounding(ICollider *range) override;
 
 		bool Contains(GameObject *object) override;
 	};

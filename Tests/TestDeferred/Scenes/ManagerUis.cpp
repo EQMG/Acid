@@ -13,10 +13,10 @@ namespace test
 	ManagerUis::ManagerUis() :
 		IManagerUis(),
 		m_primaryColour(new Colour("#e74c3c")),
+		m_selectorJoystick(new SelectorJoystick(JoystickPort::JOYSTICK_1, 0, 1, 0, 1)),
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer()))
 	{
-		Uis::Get()->GetSelector()->Load(JoystickPort::JOYSTICK_1, 0, 1, 0, 1);
 		m_uiStartLogo->SetAlphaDriver(new DriverConstant(1.0f));
 		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f));
 	}
@@ -24,6 +24,7 @@ namespace test
 	ManagerUis::~ManagerUis()
 	{
 		delete m_primaryColour;
+		delete m_selectorJoystick;
 		delete m_uiStartLogo;
 		delete m_overlayDebug;
 	}

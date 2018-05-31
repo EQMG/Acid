@@ -18,17 +18,17 @@ namespace fl
 		std::string m_filename;
 		unsigned int m_buffer;
 	public:
-		static SoundBuffer *Resource(const std::string &filename)
+		static std::shared_ptr<SoundBuffer> Resource(const std::string &filename)
 		{
-			IResource *resource = Resources::Get()->Get(filename);
+			auto resource = Resources::Get()->Get(filename);
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<SoundBuffer *>(resource);
+				return std::dynamic_pointer_cast<SoundBuffer>(resource);
 			}
 
-			SoundBuffer *result = new SoundBuffer(filename);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<SoundBuffer>(filename);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 

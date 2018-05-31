@@ -9,9 +9,9 @@ namespace fl
 		public IPostFilter
 	{
 	private:
-		UniformHandler *m_uniformScene;
+		UniformHandler m_uniformScene;
 
-		Vector3 *m_sunPosition;
+		Vector3 m_sunPosition;
 		float m_sunHeight;
 	public:
 		FilterLensflare(const GraphicsStage &graphicsStage);
@@ -20,9 +20,9 @@ namespace fl
 
 		void Render(const CommandBuffer &commandBuffer) override;
 
-		void SetSunPosition(const Vector3 &sunPosition) const;
+		Vector3 GetSunPosition() const { return m_sunPosition; }
 
-		Vector3 *GetSunPosition() const { return m_sunPosition; }
+		void SetSunPosition(const Vector3 &sunPosition);
 
 		float GetSunHeight() const { return m_sunHeight; }
 

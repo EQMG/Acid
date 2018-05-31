@@ -25,7 +25,7 @@ namespace fl
 
 		std::vector<JsonSection *> GetChildren() const { return m_children; }
 
-		void AddChild(JsonSection *child) { m_children.push_back(child); }
+		void AddChild(JsonSection *child) { m_children.emplace_back(child); }
 
 		std::string GetName() const { return m_name; }
 

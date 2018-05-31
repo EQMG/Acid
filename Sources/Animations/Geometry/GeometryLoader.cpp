@@ -32,7 +32,7 @@ namespace fl
 
 			VertexAnimated *vertex = new VertexAnimated(position, textures, normal, tangent, jointIds, weights);
 
-			m_vertices.push_back(vertex);
+			m_vertices.emplace_back(vertex);
 
 			delete current;
 		}
@@ -52,10 +52,10 @@ namespace fl
 		for (unsigned int i = 0; i < positionsCount / 3; i++)
 		{
 			Vector4 position = Vector4(std::stof(positionsRawData[i * 3]), std::stof(positionsRawData[i * 3 + 1]), std::stof(positionsRawData[i * 3 + 2]), 1.0f);
-			position = MeshAnimated::S_CORRECTION->Transform(position); // FIXME: Multiply?
+			position = MeshAnimated::CORRECTION.Transform(position);
 			VertexAnimatedData *newVertex = new VertexAnimatedData(m_positionsList.size(), position);
 			newVertex->SetSkinData(m_vertexWeights[m_positionsList.size()]);
-			m_positionsList.push_back(newVertex);
+			m_positionsList.emplace_back(newVertex);
 		}
 	}
 
@@ -69,7 +69,7 @@ namespace fl
 		for (unsigned int i = 0; i < uvsCount / 2; i++)
 		{
 			Vector2 uv = Vector2(std::stof(uvsRawData[i * 2]), 1.0f - std::stof(uvsRawData[i * 2 + 1]));
-			m_uvsList.push_back(uv);
+			m_uvsList.emplace_back(uv);
 		}
 	}
 
@@ -83,8 +83,8 @@ namespace fl
 		for (unsigned int i = 0; i < normalsCount / 3; i++)
 		{
 			Vector3 normal = Vector3(std::stof(normalsRawData[i * 3]), std::stof(normalsRawData[i * 3 + 1]), std::stof(normalsRawData[i * 3 + 2]));
-			normal = MeshAnimated::S_CORRECTION->Transform(normal); // FIXME: Multiply?
-			m_normalsList.push_back(normal);
+			normal = MeshAnimated::CORRECTION.Transform(normal);
+			m_normalsList.emplace_back(normal);
 		}
 	}
 
@@ -110,7 +110,7 @@ namespace fl
 		{
 			currentVertex->SetUvIndex(uvIndex);
 			currentVertex->SetNormalIndex(normalIndex);
-			m_indices.push_back(positionIndex);
+			m_indices.emplace_back(positionIndex);
 			return currentVertex;
 		}
 		else
@@ -123,7 +123,7 @@ namespace fl
 	{
 		if (previousVertex->HasSameTextureAndNormal(newUvIndex, newNormalIndex))
 		{
-			m_indices.push_back(previousVertex->GetIndex());
+			m_indices.emplace_back(previousVertex->GetIndex());
 			return previousVertex;
 		}
 		else
@@ -150,8 +150,8 @@ namespace fl
 				duplicateVertex->SetNormalIndex(newNormalIndex);
 				duplicateVertex->SetSkinData(previousVertex->GetSkinData());
 				previousVertex->SetDuplicateVertex(duplicateVertex);
-				m_positionsList.push_back(duplicateVertex);
-				m_indices.push_back(duplicateVertex->GetIndex());
+				m_positionsList.emplace_back(duplicateVertex);
+				m_indices.emplace_back(duplicateVertex->GetIndex());
 				return duplicateVertex;
 			}
 		}

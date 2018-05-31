@@ -8,7 +8,7 @@ namespace fl
 		public IPostFilter
 	{
 	private:
-		UniformHandler *m_uniformScene;
+		UniformHandler m_uniformScene;
 
 		float m_blurAmount;
 		float m_centre;

@@ -13,7 +13,7 @@ namespace fl
 		auto animationNodes = m_libraryAnimations->GetChild("animation")->GetChildren();
 
 		std::string rootNode = FindRootJointName();
-		std::vector<float> times = GetKeyTimes();
+		auto times = GetKeyTimes();
 		m_lengthSeconds = times[times.size() - 1];
 		CreateKeyframeData(times);
 
@@ -59,7 +59,7 @@ namespace fl
 	{
 		for (auto time : times)
 		{
-			m_keyframeData.push_back(new KeyframeData(time));
+			m_keyframeData.emplace_back(new KeyframeData(time));
 		}
 	}
 
@@ -86,33 +86,30 @@ namespace fl
 	{
 		auto channelNode = jointData->GetChild("channel");
 		std::string data = channelNode->GetChild("-target")->GetString();
-		std::vector<std::string> splitData = FormatString::Split(data, "/");
+		auto splitData = FormatString::Split(data, "/");
 		return splitData[0];
 	}
 
 	void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root)
 	{
-		float *matrixData = new float[16];
-
 		for (unsigned int i = 0; i < m_keyframeData.size(); i++)
 		{
+			Matrix4 transform = Matrix4();
+
 			for (unsigned int j = 0; j < 16; j++)
 			{
-				matrixData[j] = std::stof(rawData[i * 16 + j]);
+				transform.m_linear[j] = std::stof(rawData[i * 16 + j]);
 			}
 
-			Matrix4 transform = Matrix4(matrixData);
 			transform = transform.Transpose();
 
 			if (root)
 			{
 				// Because up axis in Blender is different to up axis in game.
-				transform *= *MeshAnimated::S_CORRECTION;
+				transform *= MeshAnimated::CORRECTION;
 			}
 
 			m_keyframeData[i]->AddJointTransform(new JointTransformData(jointName, transform));
 		}
-
-		delete[] matrixData;
 	}
 }

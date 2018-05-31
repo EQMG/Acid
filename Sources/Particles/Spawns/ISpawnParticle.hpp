@@ -28,6 +28,6 @@ namespace fl
 		/// Gets the base spawn position.
 		/// </summary>
 		/// <returns> The base spawn position. </returns>
-		virtual Vector3 *GetBaseSpawnPosition() = 0;
+		virtual Vector3 GetBaseSpawnPosition() = 0;
 	};
 }

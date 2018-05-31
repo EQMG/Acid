@@ -30,6 +30,11 @@ namespace fl
 			{
 				float m_elements[2][2];
 			};
+
+			struct
+			{
+				float m_linear[4];
+			};
 		};
 
 		static const Matrix2 IDENTITY;
@@ -134,12 +139,6 @@ namespace fl
 		/// </summary>
 		/// <returns> The identity matrix. </returns>
 		Matrix2 SetIdentity();
-
-		/// <summary>
-		/// Turns this 2x2 matrix into an array.
-		/// </summary>
-		/// <returns> A 4 float array. </returns>
-		float *ToArray() const;
 
 		/// <summary>
 		/// Saves this matrix into a loaded value.

@@ -33,7 +33,7 @@ namespace fl
 
 		for (auto vertex : vertices)
 		{
-			thisVector.push_back(*((VertexModel *) vertex));
+			thisVector.emplace_back(*((VertexModel *) vertex));
 		}
 
 		memcpy(data, thisVector.data(), dataSize);

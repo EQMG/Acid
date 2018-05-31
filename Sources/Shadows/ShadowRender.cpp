@@ -6,21 +6,19 @@ namespace fl
 {
 	ShadowRender::ShadowRender() :
 		Component(),
-		m_descriptorSet(new DescriptorsHandler()),
-		m_uniformObject(new UniformHandler())
+		m_descriptorSet(DescriptorsHandler()),
+		m_uniformObject(UniformHandler())
 	{
 	}
 
 	ShadowRender::~ShadowRender()
 	{
-		delete m_descriptorSet;
-		delete m_uniformObject;
 	}
 
 	void ShadowRender::Update()
 	{
 		// Updates uniforms.
-		m_uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		m_uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
 	}
 
 	void ShadowRender::Load(LoadedValue *value)
@@ -31,7 +29,7 @@ namespace fl
 	{
 	}
 
-	void ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene)
+	void ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
@@ -42,17 +40,17 @@ namespace fl
 		}
 
 		// Updates descriptors.
-		m_descriptorSet->Push("UboScene", uniformScene);
-		m_descriptorSet->Push("UboObject", m_uniformObject);
-		bool descriptorsSet = m_descriptorSet->Update(pipeline);
+		m_descriptorSet.Push("UboScene", uniformScene);
+		m_descriptorSet.Push("UboObject", m_uniformObject);
+		bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-		if (!descriptorsSet)
+		if (!updateSuccess)
 		{
 			return;
 		}
 
 		// Draws the object.
-		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 }

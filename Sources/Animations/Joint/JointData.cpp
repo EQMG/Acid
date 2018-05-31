@@ -20,6 +20,6 @@ namespace fl
 
 	void JointData::AddChild(JointData *child)
 	{
-		m_children.push_back(child);
+		m_children.emplace_back(child);
 	}
 }

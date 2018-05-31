@@ -18,9 +18,9 @@ namespace fl
 
 	void UniformBuffer::Update(void *newData)
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		//	const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+		//	auto commandBuffer = Renderer::Get()->GetCommandBuffer();
 		//	vkCmdUpdateBuffer(commandBuffer, m_buffer, 0, m_size, newData);
 
 		// Copies the data to the buffer.

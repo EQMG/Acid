@@ -27,7 +27,7 @@ namespace fl
 	};
 
 	/// <summary>
-	/// A definition for a connected joystick.
+	/// A definition for a GLFW managed joystick.
 	/// </summary>
 	struct FL_HIDDEN Joystick
 	{
@@ -48,7 +48,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::vector<Joystick *> *m_connected;
+		std::array<Joystick, JOYSTICK_LAST + 1> m_connected;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -76,14 +76,14 @@ namespace fl
 		/// </summary>
 		/// <param name="port"> The joystick to check connection with. </param>
 		/// <returns> If the joystick is connected. </returns>
-		bool IsConnected(const JoystickPort &port) const { return m_connected->at(port)->m_connected; }
+		bool IsConnected(const JoystickPort &port) const { return m_connected.at(port).m_connected; }
 
 		/// <summary>
 		/// Gets the name of the joystick.
 		/// </summary>
 		/// <param name="port"> The joystick to get the name of. </param>
 		/// <returns> The joysticks name. </returns>
-		const char *GetName(const JoystickPort &port) const { return m_connected->at(port)->m_name; }
+		const char *GetName(const JoystickPort &port) const { return m_connected.at(port).m_name; }
 
 		/// <summary>
 		/// Gets the value of a joysticks axis.
@@ -106,13 +106,13 @@ namespace fl
 		/// </summary>
 		/// <param name="port"> The joystick to the the axis count from. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		int GetCountAxes(const JoystickPort &port) const { return m_connected->at(port)->m_axeCount; }
+		int GetCountAxes(const JoystickPort &port) const { return m_connected.at(port).m_axeCount; }
 
 		/// <summary>
 		/// Gets the number of buttons the joystick offers.
 		/// </summary>
 		/// <param name="port"> The joystick to the the button count from. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		int GetCountButtons(const JoystickPort &port) const { return m_connected->at(port)->m_buttonCount; }
+		int GetCountButtons(const JoystickPort &port) const { return m_connected.at(port).m_buttonCount; }
 	};
 }

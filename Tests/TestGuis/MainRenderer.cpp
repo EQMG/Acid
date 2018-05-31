@@ -32,8 +32,8 @@ namespace test
 
 	void MainRenderer::Render()
 	{
-		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-		const auto camera = Scenes::Get()->GetCamera();
+		auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+		auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
 		auto startResult = Renderer::Get()->StartRenderpass(*commandBuffer, 0);

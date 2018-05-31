@@ -16,6 +16,7 @@ namespace test
 		static const float SLIDE_TIME;
 	private:
 		Colour *m_primaryColour;
+		SelectorJoystick *m_selectorJoystick;
 
 		IButton *m_buttonPause;
 
@@ -33,7 +34,9 @@ namespace test
 
 		float GetBlurFactor() override;
 
-		Colour *GetPrimaryColour() override { return m_primaryColour; }
+		Colour *GetPrimaryColour() const override { return m_primaryColour; }
+
+		SelectorJoystick *GetSelectorJoystick() const override { return m_selectorJoystick; };
 	private:
 		void TogglePause();
 	};
